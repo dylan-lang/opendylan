@@ -16,16 +16,16 @@ the *table-extensions* module.
 Basics
 ------
 
-The *table-extensions* module exports the class *<string-table>* ; the
-type *<hash-state>* ; the generic function *remove-all-keys!* and two
+The *table-extensions* module exports the class ``<string-table>`` ; the
+type ``<hash-state>`` ; the generic function *remove-all-keys!* and two
 methods thereon; and the functions *collection-hash*, *sequence-hash*,
 *string-hash*, *values-hash*, *case-insensitive-string-hash*, and
 *case-insensitive-equal*.
 
-The *<string-table>* class is a class of tables that use strings for
+The ``<string-table>`` class is a class of tables that use strings for
 keys.
 
-The *<hash-state>* type implements *hash states*. A hash state is
+The ``<hash-state>`` type implements *hash states*. A hash state is
 defined by the DRM, page 123, as “an implementation-dependent type that
 is associated with a hash id and can be used by the implementation to
 determine whether the hash id has been invalidated.” See pages 122–123
@@ -55,10 +55,10 @@ Weak tables
 -----------
 
 Common Dylan allows all general instances of the built-in class
-*<table>* to be *weak*. See :ref:`weak tables <weak-tables>` of
+``<table>`` to be *weak*. See :ref:`weak tables <weak-tables>` of
 this volume for information about weakness.
 
-You can create weak tables with the *<table>* class’s *weak:*
+You can create weak tables with the ``<table>`` class’s *weak:*
 init-keyword. The legal values for this keyword are:
 
 -  *#"key"* Creates a table with weak keys. When there are no longer any
@@ -95,16 +95,16 @@ See Superclasses.
 
 Description
 
-The *<string-table>* class is the class of tables that use instances of
-*<string>* for their keys. It is an error to use a key that is not an
-instance of *<string>*.
+The ``<string-table>`` class is the class of tables that use instances of
+``<string>`` for their keys. It is an error to use a key that is not an
+instance of ``<string>``.
 
 Keys are compared with the equivalence predicate *\\=*.
 
-The elements of the table are instances of *<object>*.
+The elements of the table are instances of ``<object>``.
 
 It is an error to modify a key once it has been used to add an element
-to a *<string-table>*. The effects of modification are not defined.
+to a ``<string-table>``. The effects of modification are not defined.
 
 <hash-state>
 ------------
@@ -147,16 +147,16 @@ initial-state* #key *ordered* => *hash-id* *hash-state*
 
 Arguments
 
--  *key-hash-function* An instance of *<function>*.
--  *elt-hash-function* An instance of *<function>*.
--  *collection* An instance of *<collection>*.
--  *initial-state* An instance of *<hash-state>*.
--  *ordered* An instance of *<boolean>*. Default value: *#f*.
+-  *key-hash-function* An instance of ``<function>``.
+-  *elt-hash-function* An instance of ``<function>``.
+-  *collection* An instance of ``<collection>``.
+-  *initial-state* An instance of ``<hash-state>``.
+-  *ordered* An instance of ``<boolean>``. Default value: *#f*.
 
 Values
 
--  *hash-id* An instance of *<integer>*.
--  *result-state* An instance of *<hash-state>*.
+-  *hash-id* An instance of ``<integer>``.
+-  *result-state* An instance of ``<hash-state>``.
 
 Description
 
@@ -185,14 +185,14 @@ sequence-hash *elt-hash-function* *sequence* *initial-state*
 
 Arguments
 
--  *elt-hash-function* An instance of *<function>*.
--  *sequence* An instance of *<sequence>*.
--  *initial-state* An instance of *<hash-state>*.
+-  *elt-hash-function* An instance of ``<function>``.
+-  *sequence* An instance of ``<sequence>``.
+-  *initial-state* An instance of ``<hash-state>``.
 
 Values
 
--  *hash-id* An instance of *<integer>*.
--  *result-state* An instance of *<hash-state>*.
+-  *hash-id* An instance of ``<integer>``.
+-  *result-state* An instance of ``<hash-state>``.
 
 Description
 
@@ -220,15 +220,15 @@ values-hash *elt-hash-function* *initial-state* #rest *arguments* =>
 
 Arguments
 
--  *elt-hash-function* An instance of *<function>*.
--  *hash-state* An instance of *<hash-state>*.
--  *arguments* Instances of *<object>*.
--  *initial-state* An instance of *<hash-state>*.
+-  *elt-hash-function* An instance of ``<function>``.
+-  *hash-state* An instance of ``<hash-state>``.
+-  *arguments* Instances of ``<object>``.
+-  *initial-state* An instance of ``<hash-state>``.
 
 Values
 
--  *hash-id* An instance of *<integer>*.
--  *result-state* An instance of *<hash-state>*.
+-  *hash-id* An instance of ``<integer>``.
+-  *result-state* An instance of ``<hash-state>``.
 
 Description
 
@@ -255,13 +255,13 @@ string-hash *string* *initial-state* => *hash-id* *result-state*
 
 Arguments
 
--  *string* An instance of *<string>*.
--  *initial-state* An instance of *<hash-state>*.
+-  *string* An instance of ``<string>``.
+-  *initial-state* An instance of ``<hash-state>``.
 
 Values
 
--  *hash-id* An instance of *<integer>*.
--  *result-state* An instance of *<hash-state>*.
+-  *hash-id* An instance of ``<integer>``.
+-  *result-state* An instance of ``<hash-state>``.
 
 Description
 
@@ -283,13 +283,13 @@ case-insensitive-string-hash *string* *initial-state* => *hash-id*
 
 Arguments
 
--  *string* An instance of *<string>*.
--  *initial-state* An instance of *<hash-state>*.
+-  *string* An instance of ``<string>``.
+-  *initial-state* An instance of ``<hash-state>``.
 
 Values
 
--  *hash-id* An instance of *<integer>*.
--  *result-state* An instance of *<hash-state>*.
+-  *hash-id* An instance of ``<integer>``.
+-  *result-state* An instance of ``<hash-state>``.
 
 Description
 
@@ -317,12 +317,12 @@ case-insensitive-equal *string1* *string2* => *boolean*
 
 Arguments
 
--  *string1* An instance of *<string>*.
--  *string2* An instance of *<string>*.
+-  *string1* An instance of ``<string>``.
+-  *string2* An instance of ``<string>``.
 
 Values
 
--  *boolean* An instance of *<boolean>*.
+-  *boolean* An instance of ``<boolean>``.
 
 Description
 
@@ -371,11 +371,11 @@ remove-all-keys! *collection* => *collection*
 
 Arguments
 
--  *collection* An instance of *<mutable-explicit-key-collection>*.
+-  *collection* An instance of ``<mutable-explicit-key-collection>``.
 
 Values
 
--  *collection* An instance of *<mutable-explicit-key-collection>*.
+-  *collection* An instance of ``<mutable-explicit-key-collection>``.
 
 Description
 
@@ -383,7 +383,7 @@ Modifies *collection* by removing all its keys and elements, and leaves
 it empty.
 
 .. note:: To empty collections that are not instances of
-   *<mutable-explicit-key-collection>*, use *size-setter*.
+   ``<mutable-explicit-key-collection>``, use *size-setter*.
 
 remove-all-keys!
 ----------------
@@ -400,11 +400,11 @@ remove-all-keys! *collection* => *collection*
 
 Arguments
 
--  *collection* An instance of *<mutable-explicit-key-collection>*.
+-  *collection* An instance of ``<mutable-explicit-key-collection>``.
 
 Values
 
--  *collection* An instance of *<mutable-explicit-key-collection>*.
+-  *collection* An instance of ``<mutable-explicit-key-collection>``.
 
 Description
 
@@ -413,7 +413,7 @@ it empty. This method implements the generic function by making repeated
 calls to *remove-key!*.
 
 .. note:: To empty collections that are not instances of
-   *<mutable-explicit-key-collection>*, use *size-setter*.
+   ``<mutable-explicit-key-collection>``, use *size-setter*.
 
 remove-all-keys!
 ----------------
@@ -430,11 +430,11 @@ remove-all-keys! *table* => *table*
 
 Arguments
 
--  *table* An instance of *<table>*.
+-  *table* An instance of ``<table>``.
 
 Values
 
--  *table* An instance of *<table>*.
+-  *table* An instance of ``<table>``.
 
 Description
 
@@ -444,4 +444,4 @@ empty.
 This method does not use *remove-key!*.
 
 .. note:: To empty collections that are not instances of
-   *<mutable-explicit-key-collection>*, use *size-setter*.
+   ``<mutable-explicit-key-collection>``, use *size-setter*.

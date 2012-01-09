@@ -36,7 +36,7 @@ state.
 In some circumstances, when a slot or a variable is specialized to be of
 a particularly constrained type, the Threads module does not guarantee
 atomicity of assignments. Such a type may include a subtype of
-*<double-float>* or a subtype of *<extended-float>*. It may not include
+``<double-float>`` or a subtype of ``<extended-float>``. It may not include
 any other type that is either defined in the current specification of
 the Dylan language, or that could be created from standard facilities
 provided by the current specification of the language. This restriction
@@ -258,11 +258,11 @@ Dylan language constructs.
 
 The library guarantees that *element* and *element-setter* will be
 atomic for all of Dylan’s non-stretchy built-in collection classes, and
-for *<table>*, except for subclasses of *<string>*, and limited
+for ``<table>``, except for subclasses of ``<string>``, and limited
 collections where the elements are constrained to be either of a type
 for which slots and variables do not guarantee atomicity (see
-`Atomicity`_) or a subtype of *<character>*, or of a proper subtype of
-*<integer>*. This design is intended to permit implementations to use
+`Atomicity`_) or a subtype of ``<character>``, or of a proper subtype of
+``<integer>``. This design is intended to permit implementations to use
 efficient representations for element values, which use either more or
 less space than a normal Dylan value. It is undefined whether any of
 the other standard Dylan functions are atomic. Where atomicity is not
@@ -450,9 +450,9 @@ Superclasses
 Init-keywords
 
 -  *function* An in
--  stance of *<function>*. Required.
+-  stance of ``<function>``. Required.
 -  *priority* A signed integer.
--  *name* An instance of *<string>*.
+-  *name* An instance of ``<string>``.
 
 Description
 
@@ -549,7 +549,7 @@ Arguments
 Values
 
 -  *thread-joined* An instance of `\<thread\>`_. The thread that was joined.
--  *results* Zero or more instances of *<object>*. The values returned
+-  *results* Zero or more instances of ``<object>``. The values returned
    from the thread that was joined.
 
 Exceptions
@@ -557,9 +557,9 @@ Exceptions
 An implementation of *join-thread* is permitted to signal the following
 condition:
 
-*<duplicate-join-error>*
+``<duplicate-join-error>``
 
--  A condition of this class (a subclass of *<error>*) may be signalled
+-  A condition of this class (a subclass of ``<error>``) may be signalled
    when a thread is passed to *join-thread*, if that thread has already
    been joined by an earlier call to *join-thread*, or if that thread
    is currently active in another call to *join-thread*.
@@ -655,7 +655,7 @@ Superclasses
 
 Init-keywords
 
--  *name:* An instance of *<string>*.
+-  *name:* An instance of ``<string>``.
 
 Description
 
@@ -673,7 +673,7 @@ object’s name for convenience purposes, such as debugging.
 
 Operations
 
-The class *<synchronization>* provides the following operations:
+The class ``<synchronization>`` provides the following operations:
 
 -  `wait-for`_ Block until synchronization can be achieved.
 -  *`release`_* Release the object to make it available for synchronization.
@@ -701,11 +701,11 @@ Arguments
 -  *object* An instance of `\<synchronization\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
-   *<real>*, corresponding to the desired interval in seconds.
+   ``<real>``, corresponding to the desired interval in seconds.
 
 Values
 
--  *success* An instance of *<boolean>*.
+-  *success* An instance of ``<boolean>``.
 
 Description
 
@@ -808,12 +808,12 @@ between synchronization and release. A macro *`with-lock`_* is provided
 for this purpose. When a thread uses a lock for *mutual-exclusion* in this
 way, the thread is said to *own the lock*.
 
-*<lock>* has no direct instances; calling *make* on *<lock>* returns an
-instance of *<simple-lock>*.
+``<lock>`` has no direct instances; calling *make* on ``<lock>`` returns an
+instance of ``<simple-lock>``.
 
 Operations
 
-The class *<lock>* provides the following operations:
+The class ``<lock>`` provides the following operations:
 
 -  *`with-lock`_* Execute a body of code between `wait-for`_ and
    `release`_ operations.
@@ -846,14 +846,14 @@ Arguments
 
 Values
 
--  *values* Zero or more instances of *<object>*.
+-  *values* Zero or more instances of ``<object>``.
 
 Exceptions
 
 *with-lock* may signal a condition of the following class (a subclass of
-*<serious-condition>*):
+``<serious-condition>``):
 
-*<timeout-expired>*
+``<timeout-expired>``
 
 -  This is signalled when *with-lock* did not succeed in claiming the
    lock within the timeout period.
@@ -864,7 +864,7 @@ Execute the *body* with *lock* held. If a *failure* clause is supplied,
 then it will be evaluated and its values returned from *with-lock* if
 the lock cannot be claimed (because a timeout occurred). The default, if
 no *failure* clause is supplied, is to signal an exception of class
-*<timeout-expired>*. If there is no failure, *with-lock* returns the
+``<timeout-expired>``. If there is no failure, *with-lock* returns the
 results of evaluating the body.
 
 Example
@@ -905,8 +905,8 @@ Superclasses
 
 Description
 
-The *<semaphore>* class is a class representing a traditional counting
-semaphore. An instance of *<semaphore>* contains a counter in its
+The ``<semaphore>`` class is a class representing a traditional counting
+semaphore. An instance of ``<semaphore>`` contains a counter in its
 internal state. Calling `release`_ on a semaphore increments the
 internal count. Calling `wait-for`_ on a semaphore decrements the internal
 count, unless it is zero, in which case the thread blocks until another
@@ -948,11 +948,11 @@ Arguments
 -  *object* An instance of `\<semaphore\>`_. The semaphore object to wait for.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
-   *<real>*, corresponding to the desired interval in seconds.
+   ``<real>``, corresponding to the desired interval in seconds.
 
 Values
 
--  *success* An instance of *<boolean>*.
+-  *success* An instance of ``<boolean>``.
 
 Description
 
@@ -988,9 +988,9 @@ Values
 Exceptions
 
 An implementation of this *release* method is permitted to signal a
-condition of the following class, which is a subclass of *<error>* :
+condition of the following class, which is a subclass of ``<error>`` :
 
-*<count-exceeded-error>*
+``<count-exceeded-error>``
 
 -  This may be signalled when an attempt is made to release a
    `\<semaphore\>`_ when the internal counter is
@@ -1028,20 +1028,20 @@ The class of locks which prohibit unlocking by threads that do not own
 the lock.
 
 The notion of ownership is directly supported by the class, and a thread
-can test whether an *<exclusive-lock>* is currently owned. An instance
-of *<exclusive-lock>* can only be owned by one thread at a time, by
+can test whether an ``<exclusive-lock>`` is currently owned. An instance
+of ``<exclusive-lock>`` can only be owned by one thread at a time, by
 calling *wait-for* on the lock.
 
 Once owned, any attempt by any other thread to wait for the lock will
 cause that thread to block. It is an error for a thread to release an
-*<exclusive-lock>* if another thread owns it.
+``<exclusive-lock>`` if another thread owns it.
 
-*<exclusive-lock>* has no direct instances; calling *make* on
-*<exclusive-lock>* returns an instance of `\<simple-lock\>`_.
+``<exclusive-lock>`` has no direct instances; calling *make* on
+``<exclusive-lock>`` returns an instance of `\<simple-lock\>`_.
 
 Operations
 
-The class *<exclusive-lock>* provides the following operations:
+The class ``<exclusive-lock>`` provides the following operations:
 
 -  `owned?`_ Tests to see if the lock has been claimed by the current thread.
 
@@ -1071,9 +1071,9 @@ Exceptions
 
 Implementations of *release* methods for subclasses of `\<exclusive-lock\>`_
 are permitted to signal a condition of the following class, which is a
-subclass of *<error>* :
+subclass of ``<error>`` :
 
-*<not-owned-error>*
+``<not-owned-error>``
 
 -  This may be signalled when an attempt is made to release an
    `\<exclusive-lock\>`_ when the lock is not owned by the current thread.
@@ -1108,7 +1108,7 @@ Arguments
 
 Values
 
--  *owned?* An instance of *<boolean>*.
+-  *owned?* An instance of ``<boolean>``.
 
 Description
 
@@ -1133,7 +1133,7 @@ Superclasses
 
 Description
 
-A thread can lock a *<recursive-lock>* multiple times, recursively, but
+A thread can lock a ``<recursive-lock>`` multiple times, recursively, but
 the lock must later be released the same number of times. The lock will
 be freed on the last of these releases.
 
@@ -1156,11 +1156,11 @@ Arguments
 -  *object* An instance of `\<recursive-lock\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
-   *<real>*, corresponding to the desired interval in seconds.
+   ``<real>``, corresponding to the desired interval in seconds.
 
 Values
 
--  *success* An instance of *<boolean>*.
+-  *success* An instance of ``<boolean>``.
 
 Description
 
@@ -1217,7 +1217,7 @@ Arguments
 
 Values
 
--  *owned?* An instance of *<boolean>*.
+-  *owned?* An instance of ``<boolean>``.
 
 Description
 
@@ -1242,9 +1242,9 @@ Superclasses
 
 Description
 
-The *<simple-lock>* class represents the most simple and efficient
+The ``<simple-lock>`` class represents the most simple and efficient
 mutual exclusion synchronization primitive. It is an error to lock a
-*<simple-lock>* recursively. An attempt to do so might result in an
+``<simple-lock>`` recursively. An attempt to do so might result in an
 error being signalled, or deadlock occurring.
 
 wait-for
@@ -1266,11 +1266,11 @@ Arguments
 -  *object* An instance of `\<simple-lock\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
-   *<real>*, corresponding to the desired interval in seconds.
+   ``<real>``, corresponding to the desired interval in seconds.
 
 Values
 
--  *success* An instance of *<boolean>*.
+-  *success* An instance of ``<boolean>``.
 
 Description
 
@@ -1330,7 +1330,7 @@ Arguments
 
 Values
 
--  *owned?* An instance of *<boolean>*.
+-  *owned?* An instance of ``<boolean>``.
 
 Description
 
@@ -1357,23 +1357,23 @@ Description
 
 The class of locks that can have multiple readers but only one writer.
 
-The *<read-write-lock>* class can be locked in either of two modes,
+The ``<read-write-lock>`` class can be locked in either of two modes,
 *read* and *write*. A write lock is exclusive, and implies ownership of
 the lock. However, a read lock is non-exclusive, and an instance can be
 locked multiple times in read mode, whether by multiple threads,
 recursively by a single thread, or a combination of both.
 
-A *<read-write-lock>* can only be locked in write mode if the lock is
+A ``<read-write-lock>`` can only be locked in write mode if the lock is
 free, and the operation will block if necessary. It can only be freed by
 the thread that owns it.
 
-A *<read-write-lock>* can be locked in read mode provided that it is not
+A ``<read-write-lock>`` can be locked in read mode provided that it is not
 owned with a write lock. The operation will block while the lock is
 owned. Each time it is locked in read mode, an internal counter is
 incremented. This counter is decremented each time a read-mode lock is
 released. The lock is freed when the counter becomes zero.
 
-The *<read-write-lock>* class is less efficient than the other lock
+The ``<read-write-lock>`` class is less efficient than the other lock
 classes defined in the Threads module. However, it provides an
 efficient and convenient means to protect data that is frequently read
 and may occasionally be written by multiple concurrent threads.
@@ -1397,14 +1397,14 @@ Arguments
 -  *object* An instance of `\<read-write-lock\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
-   *<real>*, corresponding to the desired interval in seconds.
+   ``<real>``, corresponding to the desired interval in seconds.
 -  *mode* The mode of the lock to wait for. Valid values are *#"read"*
    (the default) and *#"write"*, which wait for locks in read mode and
    write mode respectively.
 
 Values
 
--  *success* An instance of *<boolean>*.
+-  *success* An instance of ``<boolean>``.
 
 Description
 
@@ -1450,7 +1450,7 @@ If the lock is owned by the calling thread, it is freed. If the lock is
 locked in read mode, the count of the number of locks held is
 decremented; the lock is freed if the count becomes zero. Otherwise it
 is an error to release the lock, and an implementation is permitted to
-signal a *<not-owned-error>* condition.
+signal a ``<not-owned-error>`` condition.
 
 owned?
 ------
@@ -1473,7 +1473,7 @@ Arguments
 
 Values
 
--  *owned?* An instance of *<boolean>*.
+-  *owned?* An instance of ``<boolean>``.
 
 Description
 
@@ -1509,7 +1509,7 @@ The class of objects that can be used to notify threads of a change of
 state elsewhere in the program. Notifications are used in association
 with locks, and are sometimes called *condition variables*. They may be
 used to support the sharing of data between threads using *monitors*.
-Each *<notification>* is permanently associated with a `\<simple-lock\>`_,
+Each ``<notification>`` is permanently associated with a `\<simple-lock\>`_,
 although the same lock may be associated with many notifications.
 
 The required *lock* is associated with the notification, and it is only
@@ -1521,7 +1521,7 @@ Threads wait for the change of state to be notified by calling
 
 Operations
 
-The class *<notification>* provides the following operations:
+The class ``<notification>`` provides the following operations:
 
 -  `associated-lock`_ Returns the lock associated with the notification object.
 -  `wait-for`_ Wait for the notification of the
@@ -1538,9 +1538,9 @@ Example
 
 This example shows how to use a notification and an associated lock to
 implement a queue. The variable *\*queue\** is the actual queue object
-(a *<deque>*). Queue access is performed by interlocking pushes and
-pops on the *<deque>*. The *\*queue\** variable can be a constant,
-since it is the *<deque>* which is mutated and not the value of
+(a ``<deque>``). Queue access is performed by interlocking pushes and
+pops on the ``<deque>``. The *\*queue\** variable can be a constant,
+since it is the ``<deque>`` which is mutated and not the value of
 *\*queue\**.
 
 .. code-block:: dylan
@@ -1558,8 +1558,8 @@ notify other threads that an object is being put onto an empty queue.
 
 .. code-block:: dylan
 
-    define constant \*something-queued\* =
-      make(<notification>, lock: \*lock\*);
+    define constant *something-queued* =
+      make(<notification>, lock: *lock*);
 
 The function *put-on-queue* pushes an object onto the queue. If the
 queue was initially empty, then all threads which are waiting for the
@@ -1639,11 +1639,11 @@ Arguments
 -  *notification* An instance of `\<notification\>`_.
 -  *timeout* Time-out interval. If the value is *#f* (the default), the
    time-out interval never elapses. Otherwise the value should be a
-   *<real>*, corresponding to the desired interval in seconds.
+   ``<real>``, corresponding to the desired interval in seconds.
 
 Values
 
--  *success* An instance of *<boolean>*.
+-  *success* An instance of ``<boolean>``.
 
 Description
 
@@ -1665,9 +1665,9 @@ if the notification wait times out.
 Exceptions
 
 Implementations of this *wait-for* method are permitted to signal a
-condition of the following class, which is a subclass of *<error>* :
+condition of the following class, which is a subclass of ``<error>`` :
 
-*<not-owned-error>*
+``<not-owned-error>``
 
 -  Implementations can signal this error if the application attempts to
    wait for a notification when the associated lock is not owned by the
@@ -1699,9 +1699,9 @@ None.
 Exceptions
 
 Implementations of this *release* method are permitted to signal a
-condition of the following class, which is a subclass of *<error>* :
+condition of the following class, which is a subclass of ``<error>`` :
 
-*<not-owned-error>*
+``<not-owned-error>``
 
 -  Implementations can signal this error if the application attempts to
    release a notification when the associated lock is not owned by the
@@ -1737,9 +1737,9 @@ Arguments
 Exceptions
 
 Implementations of the *release-all* function are permitted to signal a
-condition of the following class, which is a subclass of *<error>* :
+condition of the following class, which is a subclass of ``<error>`` :
 
-*<not-owned-error>*
+``<not-owned-error>``
 
 -  This may be signalled when an attempt is made to release a
    notification when the associated lock is not owned by the current
@@ -1771,7 +1771,7 @@ sleep *interval* => ()
 
 Arguments
 
--  *interval* An instance of *<real>*.
+-  *interval* An instance of ``<real>``.
 
 Values
 
@@ -1849,6 +1849,8 @@ the module scope.
 Example
 
 The following example shows the dynamic binding of a single variable.
+
+.. code-block:: dylan
 
     dynamic-bind (\*standard-output\* = new-val())
       top-level-loop ()
@@ -2048,7 +2050,7 @@ in the current module scope. See `Locked variables`_.
 Exceptions
 
 *conditional-update!* may signal a condition of the following class
-(which is a subclass of *<error>*), unless a *failure* clause is
+(which is a subclass of ``<error>``), unless a *failure* clause is
 supplied.
 
 <conditional-update-error>
@@ -2087,11 +2089,11 @@ Arguments
 -  *place* A Dylan variable-namebnf.
 -  If the implementation provides the extended form of
    *conditional-update!*, *place* can also be a function call.
--  *by* An instance of *<object>*. Default value: 1.
+-  *by* An instance of ``<object>``. Default value: 1.
 
 Values
 
--  *new-value* An instance of *<object>*.
+-  *new-value* An instance of ``<object>``.
 
 Description
 
@@ -2142,11 +2144,11 @@ Arguments
 -  *place* A Dylan variable-namebnf.
 -  If the implementation provides the extended form of
    *conditional-update!*, *place* can also be a function call.
--  *by* An instance of *<object>*. Default value: 1.
+-  *by* An instance of ``<object>``. Default value: 1.
 
 Values
 
--  *new-value* An instance of *<object>*.
+-  *new-value* An instance of ``<object>``.
 
 Description
 

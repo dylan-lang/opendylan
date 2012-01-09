@@ -49,13 +49,13 @@ Signature
 
 Arguments
 
-*b* An instance of type *<real>*.
+*b* An instance of type ``<real>``.
 
-*x* An instance of type *<real>*.
+*x* An instance of type ``<real>``.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -89,12 +89,12 @@ acos *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians. If *x* is not
+*x* An instance of type ``<real>``. The angle, in radians. If *x* is not
 in the range *[-1,+1]*, an error is signalled.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -122,11 +122,11 @@ acosh *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -154,12 +154,12 @@ asin *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians. If *x* is not
+*x* An instance of type ``<real>``. The angle, in radians. If *x* is not
 in the range *[-1,+1]*, an error is signalled.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -187,11 +187,11 @@ asinh *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -219,12 +219,12 @@ atan *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians. If *x* is not
+*x* An instance of type ``<real>``. The angle, in radians. If *x* is not
 in the range *[-1,+1]*, an error is signalled.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -252,13 +252,13 @@ atan2 *x* *y* => *z*
 
 Arguments
 
-*x* An instance of type *<real>*. The first angle, in radians.
+*x* An instance of type ``<real>``. The first angle, in radians.
 
-*y* An instance of type *<real>*. The second angle, in radians.
+*y* An instance of type ``<real>``. The second angle, in radians.
 
 Values
 
-*z* An instance of type *<float>*.
+*z* An instance of type ``<float>``.
 
 Description
 
@@ -285,11 +285,11 @@ atanh *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -317,11 +317,11 @@ cos *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -349,11 +349,11 @@ cosh *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -378,11 +378,11 @@ floating point number.
 
 Type
 
-*<double-float>*
+``<double-float>``
 
 Superclass
 
-*<float>*
+``<float>``
 
 Description
 
@@ -405,11 +405,11 @@ The value of π as a double precision floating point number.
 
 Type
 
-*<double-float>*
+``<double-float>``
 
 Superclass
 
-*<float>*
+``<float>``
 
 Description
 
@@ -436,11 +436,11 @@ exp *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*.
+*x* An instance of type ``<real>``.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -467,11 +467,11 @@ isqrt *x* => *y*
 
 Arguments
 
-*x* An instance of type *<integer>*.
+*x* An instance of type ``<integer>``.
 
 Values
 
-*y* An instance of type *<integer>*.
+*y* An instance of type ``<integer>``.
 
 Description
 
@@ -503,7 +503,7 @@ Arguments
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -563,11 +563,11 @@ sin *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -649,11 +649,11 @@ sinh *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -681,11 +681,11 @@ sqrt *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -713,11 +713,11 @@ tan *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 
@@ -741,11 +741,11 @@ tanh *x* => *y*
 
 Arguments
 
-*x* An instance of type *<real>*. The angle, in radians.
+*x* An instance of type ``<real>``. The angle, in radians.
 
 Values
 
-*y* An instance of type *<float>*.
+*y* An instance of type ``<float>``.
 
 Description
 

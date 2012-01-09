@@ -11,8 +11,8 @@ are available from the Dylan library.
 
 Throughout this chapter, arguments are instances of the class specified
 by the argument name, unless otherwise noted. Thus, the arguments
-*machine-word* and *integer* are instances of *<machine-word>* and
-*<integer>*, respectively.
+*machine-word* and *integer* are instances of ``<machine-word>`` and
+``<integer>``, respectively.
 
 The class ``<machine-word>`` is a sealed subclass of ``<object>``, defined
 in the Dylan library. The class ``<machine-word>`` represents a limited
@@ -176,8 +176,8 @@ machine word values (see `$maximum-signed-machine-word`_ and related
 constants below).
 
 For convenience, the values of *min* and/or *max* may also be instances
-of *<abstract-integer>*, in which case they are coerced to instances of
-*<machine-word>* as if by using *as*.
+of ``<abstract-integer>``, in which case they are coerced to instances of
+``<machine-word>`` as if by using *as*.
 
 The MACHINE-WORDS module
 ========================
@@ -197,7 +197,7 @@ values.
 
 Superclasses
 
-*<object>*
+``<object>``
 
 Init-keywords
 
@@ -213,14 +213,14 @@ Module
 
 Description
 
-The class *<machine-word>* represents a limited range of integral
+The class ``<machine-word>`` represents a limited range of integral
 values. The representation used has the natural size suggested by the
-implementation architecture. The class *<machine-word>* is disjoint from
+implementation architecture. The class ``<machine-word>`` is disjoint from
 all other classes specified by the Dylan language.
 
 Operations
 
-The *<machine-words>* class provides the operations described below and
+The ``<machine-words>`` class provides the operations described below and
 in `Useful functions from the Dylan module`_.
 
 Variables
@@ -237,7 +237,7 @@ Constant
 
     $machine-word-size :: <integer>
 
-The number of bits in the representation of a *<machine-word>*.
+The number of bits in the representation of a ``<machine-word>``.
 
 $maximum-signed-machine-word
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -294,15 +294,15 @@ Function
     as-unsigned (t :: *type*, m :: <machine-word>) => *result*
 
 The value of *m* is interpreted as an unsigned value and converted to an
-instance of *<abstract-integer>*, then the result of that conversion is
+instance of ``<abstract-integer>``, then the result of that conversion is
 converted to type *t* using *as*.
 
 Basic and signed single word operations
 ---------------------------------------
 
 For all of the following functions, all arguments that are specified as
-being specialized to *<machine-word>* accept an instance of
-*<abstract-integer>*, which is then coerced to a *<machine-word>*
+being specialized to ``<machine-word>`` accept an instance of
+``<abstract-integer>``, which is then coerced to a ``<machine-word>``
 before performing the operation.
 
 %logior
@@ -343,7 +343,7 @@ Function
 
 These four functions have the same semantics as *logior*, *logxor*,
 *logand*, and *lognot* in the Dylan library, but they operate on
-*<machine-word>* s instead of *<integer>* s.
+``<machine-word>`` s instead of ``<integer>`` s.
 
 %logbit?
 ^^^^^^^^
@@ -561,8 +561,8 @@ Overflow signalling operations
 ------------------------------
 
 For all of the following functions, all arguments that are specified as
-being specialized to *<machine-word>* accept an instance of
-*<abstract-integer>*, which is then coerced to a *<machine-word>*
+being specialized to ``<machine-word>`` accept an instance of
+``<abstract-integer>``, which is then coerced to a ``<machine-word>``
 before performing the operation.
 
 so%+
@@ -640,8 +640,8 @@ Signed double word operations
 -----------------------------
 
 For all of the following functions, all arguments that are specified as
-being specialized to *<machine-word>* accept an instance of
-*<abstract-integer>*, which is then coerced to a *<machine-word>*
+being specialized to ``<machine-word>`` accept an instance of
+``<abstract-integer>``, which is then coerced to a ``<machine-word>``
 before performing the operation.
 
 d%floor/
@@ -733,8 +733,8 @@ Unsigned single word operations
 -------------------------------
 
 For all of the following functions, all arguments that are specified as
-being specialized to *<machine-word>* accept an instance of
-*<abstract-integer>*, which is then coerced to a *<machine-word>*
+being specialized to ``<machine-word>`` accept an instance of
+``<abstract-integer>``, which is then coerced to a ``<machine-word>``
 before performing the operation.
 
 u%+
@@ -861,8 +861,8 @@ Unsigned double word operations
 -------------------------------
 
 For all of the following functions, all arguments that are specified as
-being specialized to *<machine-word>* accept an instance of
-*<abstract-integer>*, which is then coerced to a *<machine-word>*
+being specialized to ``<machine-word>`` accept an instance of
+``<abstract-integer>``, which is then coerced to a ``<machine-word>``
 before performing the operation.
 
 ud%divide

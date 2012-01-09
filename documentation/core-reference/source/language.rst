@@ -164,7 +164,7 @@ The *keyed-by* clause allows iteration over table elements:
 .. code-block:: dylan
 
     for (my-element keyed-by my-key in my-table)
-      …
+      ...
     end;
 
 The *in* … *using* clause allows you to specify a iteration protocol
@@ -173,7 +173,7 @@ other than the default (*forward-iteration-protocol*):
 .. code-block:: dylan
 
     for (element in my-sequence using backward-iteration-protocol)
-      …
+      ...
     end;
 
 .. _weak-tables:
@@ -202,7 +202,7 @@ by the garbage collector preserving entries (a key/value pair) solely
 because the table object itself has a reference to the entry’s key or
 value.
 
-Common Dylan provides weakness options for instances of *<table>*. A
+Common Dylan provides weakness options for instances of ``<table>``. A
 table can have *weak keys* or *weak values*:
 
 .. code-block:: dylan
@@ -305,12 +305,12 @@ Signature
 
 Arguments
 
--  *table* An instance of *<table>*.
+-  *table* An instance of ``<table>``.
 
 Values
 
-- *test-function* An instance of *<function>*.
-- *hash-function* An instance of *<function>*.
+- *test-function* An instance of ``<function>``.
+- *hash-function* An instance of ``<function>``.
 
 Library
 
@@ -323,7 +323,7 @@ dylan
 Description
 
 Returns the functions used to iterate over tables. These functions are
-in turn used to implement the other collection operations on *<table>*.
+in turn used to implement the other collection operations on ``<table>``.
 
 The *test-function* argument is for the table test function, which is
 used to compare table keys. It returns true if, according to the table’s
@@ -337,7 +337,7 @@ computes the hash code of a key. Its signature must be:
 
 hash-function *key* *initial-state* => *id* *result-state*
 
-In this signature, *initial-state* is an instance of *<hash-state>*.
+In this signature, *initial-state* is an instance of ``<hash-state>``.
 The hash function computes the hash code of *key*, using the hash
 function that is associated with the table’s equivalence predicate. The
 hash code is returned as two values: an integer *id* and a hash-state
@@ -363,13 +363,13 @@ Signature
 
 Arguments
 
-- *id1* An instance of *<integer>*.
-- *id2* An instance of *<integer>*.
-- *ordered* An instance of *<boolean>*. Default value: *#f*.
+- *id1* An instance of ``<integer>``.
+- *id2* An instance of ``<integer>``.
+- *ordered* An instance of ``<boolean>``. Default value: *#f*.
 
 Values
 
--  *merged-id* An instance of *<integer>*.
+-  *merged-id* An instance of ``<integer>``.
 
 Description
 
@@ -408,13 +408,13 @@ Signature
 
 Arguments
 
-- *object* An instance of *<integer>*.
-- *initial-state* An instance of *<hash-state>*.
+- *object* An instance of ``<integer>``.
+- *initial-state* An instance of ``<hash-state>``.
 
 Values
 
-- *hash-id* An instance of *<integer>*.
-- *result-state* An instance of *<hash-state>*.
+- *hash-id* An instance of ``<integer>``.
+- *result-state* An instance of ``<hash-state>``.
 
 Description
 

@@ -441,7 +441,7 @@ Sealed class
 
 Summary
 
-The class of 8-bit characters that instances of *<byte-string>* can
+The class of 8-bit characters that instances of ``<byte-string>`` can
 contain.
 
 Superclasses
@@ -454,7 +454,7 @@ None.
 
 Description
 
-The class of 8-bit characters that instances of *<byte-string>* can
+The class of 8-bit characters that instances of ``<byte-string>`` can
 contain.
 
 concatenate!
@@ -474,15 +474,15 @@ concatenate! *sequence* #rest *more-sequences* => *result-sequence*
 
 Arguments
 
-*sequence* An instance of *<sequence>*.
+*sequence* An instance of ``<sequence>``.
 
 *more-sequences*
 
-Instances of *<sequence>*.
+Instances of ``<sequence>``.
 
 Values
 
-*result-sequence* An instance of *<sequence>*.
+*result-sequence* An instance of ``<sequence>``.
 
 Description
 
@@ -498,13 +498,13 @@ Example
 
 ::
 
-    > define variable \*x\* = "great-";
+    > define variable *x* = "great-";
     "great-"
-    > define variable \*y\* = "abs";
+    > define variable *y* = "abs";
     "abs"
-    > concatenate! (\*x\*, \*y\*);
+    > concatenate! (*x*, *y*);
     "great-abs"
-    > \*x\*;
+    > *x*;
     "great-abs"
     >
 
@@ -524,17 +524,17 @@ condition-to-string *condition* => *string*
 
 Arguments
 
-*condition* An instance of *<condition>*.
+*condition* An instance of ``<condition>``.
 
 Values
 
-*string* An instance of *<string>*.
+*string* An instance of ``<string>``.
 
 Description
 
-Returns a string representation of a general instance of *<condition>*.
+Returns a string representation of a general instance of ``<condition>``.
 There is a method on `<format-string-condition\>`_ and method on
-*<type-error>*.
+``<type-error>``.
 
 debug-assert
 ------------
@@ -600,9 +600,9 @@ debug-message *format-string* #rest *format-args* => ()
 
 Arguments
 
-*format-string* An instance of *<string>*.
+*format-string* An instance of ``<string>``.
 
-*format-args* Instances of *<object>*.
+*format-args* Instances of ``<object>``.
 
 Values
 
@@ -632,7 +632,7 @@ default-handler *warning* => *false*
 
 Arguments
 
-*warning* An instance of *<warning>*.
+*warning* An instance of ``<warning>``.
 
 Values
 
@@ -648,7 +648,7 @@ described on page 361 of the DRM as printing the warning’s message in an
 implementation-defined way. We document this method here because our
 implementation of it uses the function `debug-message`_, which is defined
 in the Harlequin-Extensions library. Thus to use this *default-handler* method
-on *<warning>*, your library needs to use the Harlequin-Extensions
+on ``<warning>``, your library needs to use the Harlequin-Extensions
 library or a library that uses it (such as Harlequin-Dylan), rather than
 simply using the Dylan library.
 
@@ -703,7 +703,7 @@ Arguments
 
 *serious-condition*
 
-A object of class *<serious-condition>*.
+A object of class ``<serious-condition>``.
 
 *next-handler* A function.
 
@@ -714,7 +714,7 @@ None.
 Description
 
 A handler utility function defined on objects of class
-*<serious-condition>* that can be by bound dynamically around a
+``<serious-condition>`` that can be by bound dynamically around a
 computation via *let* *handler* or installed globally via
 *last-handler-definer*.
 
@@ -766,7 +766,7 @@ Arguments
 
 *name* A Dylan name*bnf*.
 
-*type* A Dylan operand*bnf*. Default value: *<table>*.
+*type* A Dylan operand*bnf*. Default value: ``<table>``.
 
 *key* A Dylan expression*bnf*.
 
@@ -779,9 +779,9 @@ it to a new table object, filled in with the keys and elements
 specified.
 
 If the argument *type* is supplied, the new table created is an instance
-of that type. Therefore *type* must be *<table>* or a subclass thereof.
+of that type. Therefore *type* must be ``<table>`` or a subclass thereof.
 If *type* is not supplied, the new table created is an instance of a
-concrete subclass of *<table>*.
+concrete subclass of ``<table>``.
 
 Example
 
@@ -810,15 +810,15 @@ difference *sequence* *1* *sequence* *2* #key *test* =>
 
 Arguments
 
-*sequence* *1* An instance of *<sequence>*.
+*sequence* *1* An instance of ``<sequence>``.
 
-*sequence* *2* An instance of *<sequence>*.
+*sequence* *2* An instance of ``<sequence>``.
 
-*test* An instance of *<function>*. Default value: *\\==*.
+*test* An instance of ``<function>``. Default value: *\\==*.
 
 Values
 
-*result-sequence* An instance of *<sequence>*.
+*result-sequence* An instance of ``<sequence>``.
 
 Description
 
@@ -850,13 +850,13 @@ false-or *type* #rest *more-types* => *result-type*
 
 Arguments
 
-*type* An instance of *<type>*.
+*type* An instance of ``<type>``.
 
-*more-types* Instances of *<type>*.
+*more-types* Instances of ``<type>``.
 
 Values
 
-*result-type* An instance of *<type>*.
+*result-type* An instance of ``<type>``.
 
 Description
 
@@ -890,15 +890,15 @@ fill-table! *table* *keys-and-elements* => *table*
 
 Arguments
 
-*table* An instance of *<table>*.
+*table* An instance of ``<table>``.
 
 *keys-and-elements*
 
-An instance of *<sequence>*.
+An instance of ``<sequence>``.
 
 Values
 
-*table* An instance of *<table>*.
+*table* An instance of ``<table>``.
 
 Description
 
@@ -932,17 +932,17 @@ find-element *collection* *function* #key *skip* *failure* => *element*
 
 Arguments
 
-*collection* An instance of *<collection>*.
+*collection* An instance of ``<collection>``.
 
-*predicate* An instance of *<function>*.
+*predicate* An instance of ``<function>``.
 
-*skip* An instance of *<integer>*. Default value: 0.
+*skip* An instance of ``<integer>``. Default value: 0.
 
-*failure* An instance of *<object>*. Default value: *#f*.
+*failure* An instance of ``<object>``. Default value: *#f*.
 
 Values
 
-*element* An instance of *<object>*.
+*element* An instance of ``<object>``.
 
 Description
 
@@ -968,11 +968,11 @@ float-to-string *float* => *string*
 
 Arguments
 
-*float* An instance of *<float>*.
+*float* An instance of ``<float>``.
 
 Values
 
-*string* An instance of *<string>*.
+*string* An instance of ``<string>``.
 
 Description
 
@@ -1002,7 +1002,7 @@ Description
 The class of conditions that take a format string, as defined by the
 DRM.
 
-It is the superclass of Dylan’s *<simple-condition>*.
+It is the superclass of Dylan’s ``<simple-condition>``.
 
 See also
 
@@ -1024,11 +1024,11 @@ found? *object* => *boolean*
 
 Arguments
 
-*object* An instance of *<object>*.
+*object* An instance of ``<object>``.
 
 Values
 
-*boolean* An instance of *<boolean>*.
+*boolean* An instance of ``<boolean>``.
 
 Description
 
@@ -1180,17 +1180,17 @@ integer-to-string *integer* #key *base* *size* *fill* => *string*
 
 Arguments
 
-*integer* An instance of *<integer>*.
+*integer* An instance of ``<integer>``.
 
-*base* An instance of *<integer>*. Default value: 10.
+*base* An instance of ``<integer>``. Default value: 10.
 
-*size* An instance of *<integer>* or *#f*. Default value: *#f*.
+*size* An instance of ``<integer>`` or *#f*. Default value: *#f*.
 
-*fill* An instance of *<character>*. Default value: 0.
+*fill* An instance of ``<character>``. Default value: 0.
 
 Values
 
-*string* An instance of *<byte-string>*.
+*string* An instance of ``<byte-string>``.
 
 Description
 
@@ -1228,7 +1228,7 @@ Arguments
 
 Values
 
-Zero or more instances of *<object>*.
+Zero or more instances of ``<object>``.
 
 Description
 
@@ -1306,7 +1306,7 @@ Example
 
 The following form defines a last-handler function called
 *default-last-handler* that is invoked on conditions of class
-*<serious-condition>*:
+``<serious-condition>``:
 
 .. code-block:: dylan
 
@@ -1336,13 +1336,13 @@ one-of *object* #rest *more-objects* => *type*
 
 Arguments
 
-*object* An instance of *<object>*.
+*object* An instance of ``<object>``.
 
-*more-objects* Instances of *<object>*.
+*more-objects* Instances of ``<object>``.
 
 Values
 
-*type* An instance of *<type>*.
+*type* An instance of ``<type>``.
 
 Description
 
@@ -1375,22 +1375,22 @@ position *sequence* *target* #key *test* *start* *end* *skip* *count* => *positi
 
 Arguments
 
-*sequence* An instance of *<sequence>*.
+*sequence* An instance of ``<sequence>``.
 
-*target* An instance of *<object>*.
+*target* An instance of ``<object>``.
 
-*test* An instance of *<function>*. Default value: *\\==*.
+*test* An instance of ``<function>``. Default value: *\\==*.
 
-*start* An instance of *<integer>*. Default value: 0.
-
-
-*end* An instance of *<object>*. Default value: #f.
+*start* An instance of ``<integer>``. Default value: 0.
 
 
-*skip* An instance of *<integer>*. Default value: 0.
+*end* An instance of ``<object>``. Default value: #f.
 
 
-*count* An instance of *<object>*. Default value: #f.
+*skip* An instance of ``<integer>``. Default value: 0.
+
+
+*count* An instance of ``<object>``. Default value: #f.
 
 Values
 
@@ -1431,7 +1431,7 @@ Arguments
 
 *mutable-collection*
 
-An instance of *<mutable-collection>*.
+An instance of ``<mutable-collection>``.
 
 Values
 
@@ -1440,7 +1440,7 @@ None.
 Description
 
 Modifies *mutable-collection* by removing all its keys and leaving it
-empty. There is a predefined method on *<table>*.
+empty. There is a predefined method on ``<table>``.
 
 <simple-condition>
 ------------------
@@ -1462,8 +1462,8 @@ None.
 
 Description
 
-The class of simple conditions. It is the superclass of *<simple-error>*,
-*<simple-warning>*, and *<simple-restart>*.
+The class of simple conditions. It is the superclass of ``<simple-error>``,
+``<simple-warning>``, and ``<simple-restart>``.
 
 Operations
 
@@ -1515,15 +1515,15 @@ None.
 
 Description
 
-The class of tables that use instances of *<string>* for their keys. It
-is an error to use a key that is not an instance of *<string>*.
+The class of tables that use instances of ``<string>`` for their keys. It
+is an error to use a key that is not an instance of ``<string>``.
 
 Keys are compared with the equivalence predicate *\\=*.
 
-The elements of the table are instances of *<object>*.
+The elements of the table are instances of ``<object>``.
 
 It is an error to modify a key once it has been used to add an element
-to a *<string-table>*. The effects of modification are not defined.
+to a ``<string-table>``. The effects of modification are not defined.
 
 .. note:: This class is also exported from the *table-extensions* module
    of the *table-extensions* library.
@@ -1546,22 +1546,22 @@ string-to-integer *string* #key *base* *start* *end* *default* =>
 
 Arguments
 
-*string* An instance of *<byte-string>*.
+*string* An instance of ``<byte-string>``.
 
-*base* An instance of *<integer>*. Default value: 10.
+*base* An instance of ``<integer>``. Default value: 10.
 
-*start* An instance of *<integer>*. Default value: 0.
+*start* An instance of ``<integer>``. Default value: 0.
 
-*end* An instance of *<integer>*. Default value: *sizeof(* *string* *)*
+*end* An instance of ``<integer>``. Default value: *sizeof(* *string* *)*
 .
 
-*default* An instance of *<integer>*. Default value: *$unsupplied*.
+*default* An instance of ``<integer>``. Default value: *$unsupplied*.
 
 Values
 
-*integer* An instance of *<integer>*.
+*integer* An instance of ``<integer>``.
 
-*next-key* An instance of *<integer>*.
+*next-key* An instance of ``<integer>``.
 
 Description
 
@@ -1595,11 +1595,11 @@ subclass *class* => *subclass-type*
 
 Arguments
 
-*class* An instance of *<class>*.
+*class* An instance of ``<class>``.
 
 Values
 
-*subclass-type* An instance of *<type>*.
+*subclass-type* An instance of ``<type>``.
 
 Description
 
@@ -1644,19 +1644,19 @@ Always false.
 
 SUBTYPE-4: subtype?(subclass(*X*), *Y*)
 
-where *Y* is not a subclass type. True if *Y* is *<class>* or any proper
-superclass of *<class>* (including *<object>*, any
+where *Y* is not a subclass type. True if *Y* is ``<class>`` or any proper
+superclass of ``<class>`` (including ``<object>``, any
 implementation-defined supertypes, and unions involving any of these).
 There may be other implementation-defined combinations of types *X* and
 *Y* for which this is also true.
 
 SUBTYPE-5: subtype?(*X*, subclass(*Y*))
 
-where *X* is not a subclass type. True if *Y* is *<object>* or any
-proper supertype of *<object>* and *X* is a subclass of *<class>*.
+where *X* is not a subclass type. True if *Y* is ``<object>`` or any
+proper supertype of ``<object>`` and *X* is a subclass of ``<class>``.
 
 Note that by subclass relationships *SUBTYPE-4* and *SUBTYPE-5*, we get
-this correspondence: *<class>* and *subclass(<object>)* are type
+this correspondence: ``<class>`` and *subclass(<object>)* are type
 equivalent.
 
 Where the *subtype?* test has not been sufficient to determine an
@@ -1678,8 +1678,8 @@ criteria for subclass types (note that a rule applies only when no
 preceding rule matches):
 
 *DISJOINTNESS+1*. A subclass type *subclass(* *X* *)* and a type *Y*
-are disjoint if *Y* is disjoint from *<class>*, or if *Y* is a subclass
-of *<class>* without instance classes that are also subclasses of *X*.
+are disjoint if *Y* is disjoint from ``<class>``, or if *Y* is a subclass
+of ``<class>`` without instance classes that are also subclasses of *X*.
 
 *DISJOINTNESS+2*. Two subclass types *subclass(* *X* *)* and
 *subclass(* *Y* *)* are disjoint if the classes *X* and *Y* are
@@ -1726,7 +1726,7 @@ method foo-using-type (subclass(<C>))
 
 method foo-using-type (subclass(<D>))
 
-that for a direct instance *D* *1* of *<D>* :
+that for a direct instance *D* *1* of ``<D>`` :
 
 foo-using-type(<D>)
 
@@ -1807,13 +1807,13 @@ supplied? *object* => *supplied?*
 
 Arguments
 
-*object* An instance of *<object>*.
+*object* An instance of ``<object>``.
 
 Values
 
 *supplied?*
 
-An instance of *<boolean>*.
+An instance of ``<boolean>``.
 
 Description
 
@@ -1850,9 +1850,9 @@ Arguments
 
 Values
 
-*seconds* An instance of *<integer>*.
+*seconds* An instance of ``<integer>``.
 
-*microseconds* An instance of *<integer>*.
+*microseconds* An instance of ``<integer>``.
 
 Description
 
@@ -1959,11 +1959,11 @@ unfound? *object* => *unfound?*
 
 Arguments
 
-*object* An instance of *<object>*.
+*object* An instance of ``<object>``.
 
 Values
 
-*unfound?* An instance of *<boolean>*.
+*unfound?* An instance of ``<boolean>``.
 
 Description
 
@@ -2064,11 +2064,11 @@ unsupplied? *value* => *boolean*
 
 Arguments
 
-*value* An instance of *<object>*.
+*value* An instance of ``<object>``.
 
 Values
 
-*boolean* An instance of *<boolean>*.
+*boolean* An instance of ``<boolean>``.
 
 Description
 
@@ -2107,7 +2107,7 @@ Arguments
 
 Values
 
-Zero or more instances of *<object>*.
+Zero or more instances of ``<object>``.
 
 Description
 
@@ -2148,11 +2148,11 @@ format-out *format-string* #rest *format-arguments* => ()
 
 Arguments
 
-*format-string* An instance of *<byte-string>*.
+*format-string* An instance of ``<byte-string>``.
 
 *format-arguments*
 
-Instances of *<object>*.
+Instances of ``<object>``.
 
 Values
 
@@ -2181,15 +2181,15 @@ format-to-string *format-string* #rest *format-arguments* => *string*
 
 Arguments
 
-*format-string* An instance of *<byte-string>*.
+*format-string* An instance of ``<byte-string>``.
 
 *format-arguments*
 
-Instances of *<object>*.
+Instances of ``<object>``.
 
 Values
 
-*result-string* An instance of *<byte-string>*.
+*result-string* An instance of ``<byte-string>``.
 
 Exceptions
 
@@ -2227,7 +2227,7 @@ Superclasses
 
 Init-keywords
 
-*seed* An instance of *<integer>*. Default value: computed to be
+*seed* An instance of ``<integer>``. Default value: computed to be
 random.
 
 Description
@@ -2256,15 +2256,15 @@ random *upperbound* #key *random* => *random-integer*
 
 Arguments
 
-*range* An instance of *<integer>*.
+*range* An instance of ``<integer>``.
 
-*random* An instance of *<random>*.
+*random* An instance of ``<random>``.
 
 Values
 
 *random-integer*
 
-An instance of *<integer>*.
+An instance of ``<integer>``.
 
 Description
 
@@ -2298,7 +2298,7 @@ None.
 
 Values
 
-*enabled?* An instance of *<boolean>*. Default value: *#f*.
+*enabled?* An instance of ``<boolean>``. Default value: *#f*.
 
 Description
 
@@ -2330,7 +2330,7 @@ automatic-finalization-enabled?-setter *newval* => ()
 
 Arguments
 
-*newval* An instance of *<boolean>*.
+*newval* An instance of ``<boolean>``.
 
 Values
 
@@ -2420,11 +2420,11 @@ finalize-when-unreachable *object* => *object*
 
 Arguments
 
-*object* An instance of *<object>*.
+*object* An instance of ``<object>``.
 
 Values
 
-*object* An instance of *<object>*.
+*object* An instance of ``<object>``.
 
 Description
 
@@ -2464,7 +2464,7 @@ finalize *object* => ()
 
 Arguments
 
-*object* An instance of *<object>*.
+*object* An instance of ``<object>``.
 
 Values
 
@@ -2477,7 +2477,7 @@ Finalizes *object*.
 You can define methods on *finalize* to perform class-specific
 finalization procedures. These methods are called *finalizers*.
 
-A default `finalize`_ method on *<object>* is provided.
+A default `finalize`_ method on ``<object>`` is provided.
 
 The main interface to finalization is the function `drain-finalization-queue`_,
 which calls *finalize* on each object awaiting finalization. Objects join the
@@ -2524,7 +2524,7 @@ finalize *object* => ()
 
 Arguments
 
-*object* An instance of *<object>*.
+*object* An instance of ``<object>``.
 
 Values
 
