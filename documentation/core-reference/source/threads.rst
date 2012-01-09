@@ -393,71 +393,42 @@ It is essential that no instance can ever be observed in a state where
 the boolean indicates a known value before the value is present. The
 low-level synchronization functions ensure this cannot happen.
 
-define class <lazy-value> (<object>)
+.. code-block:: dylan
 
-slot thunk :: <function>,
+    define class <lazy-value> (<object>)
+      slot thunk :: <function>,
+        required-init-keyword: thunk:;
+      slot internal-guard :: <boolean> = #t;
+      slot computed-value;
+    end class;
 
-required-init-keyword: thunk:;
-
-slot internal-guard :: <boolean> = #t;
-
-slot computed-value;
-
-end class;
-
-define method lazy-value (lv :: <lazy-value>)
-
-=> (value)
-
-if (lv.internal-guard)
-
-// Don’t yet have a value == so compute it now;
-
-let value = lv.thunk();
-
-// Store the value in place
-
-lv.computed-value := value;
-
-// Before droppping the guard, synchronize side
-
-// effects to ensure there is no possibility that
-
-// other threads might see the lowered guard
-
-// before seeing the value
-
-synchronize-side-effects();
-
-// Now we can drop the guard to permit other
-
-// threads to use this value
-
-lv.internal-guard := #f;
-
-// Finally, return the computed value
-
-value
-
-else // The value has already been computed and
-
-// stored, so use it
-
-// First, need a sequence-point to force the
-
-// compiler not to move the read of the
-
-// computed-value so that it is performed BEFORE
-
-// the read of the guard.
-
-sequence-point();
-
-lv.computed-value;
-
-end if;
-
-end method;
+    define method lazy-value (lv :: <lazy-value>)
+     => (value)
+      if (lv.internal-guard)
+        // Don’t yet have a value == so compute it now;
+        let value = lv.thunk();
+        // Store the value in place
+        lv.computed-value := value;
+        // Before dropping the guard, synchronize side
+        // effects to ensure there is no possibility that
+        // other threads might see the lowered guard
+        // before seeing the value
+        synchronize-side-effects();
+        // Now we can drop the guard to permit other
+        // threads to use this value
+        lv.internal-guard := #f;
+        // Finally, return the computed value
+        value
+      else // The value has already been computed and
+        // stored, so use it
+        // First, need a sequence-point to force the
+        // compiler not to move the read of the
+        // computed-value so that it is performed BEFORE
+        // the read of the guard.
+        sequence-point();
+        lv.computed-value;
+      end if;
+    end method;
 
 Operations on threads
 ---------------------
@@ -901,27 +872,19 @@ Example
 If no *failure* clause is supplied, the macro expands into code
 equivalent to the following:
 
-let the-lock = *lock* ;
+.. code-block:: dylan
 
-if (wait-for(the-lock, *keys ...*))
-
-block ()
-
-*body*...
-
-cleanup
-
-release(the-lock)
-
-end block
-
-else
-
-signal(make(<timeout-expired>,
-
-synchronization: the-lock)
-
-end if
+    let the-lock = *lock*;
+    if (wait-for(the-lock, *keys ...*))
+      block ()
+        *body*...
+      cleanup
+        release(the-lock)
+      end block
+    else
+      signal(make(<timeout-expired>,
+                  synchronization: the-lock)
+    end if
 
 Semaphores
 ----------
@@ -1580,38 +1543,38 @@ pops on the *<deque>*. The *\*queue\** variable can be a constant,
 since it is the *<deque>* which is mutated and not the value of
 *\*queue\**.
 
-define constant \*queue\* = make(<deque>);
+.. code-block:: dylan
+
+    define constant *queue* = make(<deque>);
 
 The variable *\*lock\** is used to isolate access to the queue
 
-define constant \*lock\* = make(<lock>);
+.. code-block:: dylan
+
+    define constant *lock* = make(<lock>);
 
 The variable *\*something-queued\** is a notification which is used to
 notify other threads that an object is being put onto an empty queue.
 
-define constant \*something-queued\* =
+.. code-block:: dylan
 
-make(<notification>, lock: \*lock\*);
+    define constant \*something-queued\* =
+      make(<notification>, lock: \*lock\*);
 
 The function *put-on-queue* pushes an object onto the queue. If the
 queue was initially empty, then all threads which are waiting for the
 queue to fill are notified that there is a new entry.
 
-define method put-on-queue (object) => ()
+.. code-block:: dylan
 
-with-lock (\*lock\*)
-
-if (\*queue\*.empty?)
-
-release-all(\*something-queued\*)
-
-end;
-
-push(\*queue\*, object)
-
-end with-lock
-
-end method;
+    define method put-on-queue (object) => ()
+      with-lock (*lock*)
+        if (*queue*.empty?)
+          release-all(*something-queued*)
+        end;
+        push(*queue*, object)
+      end with-lock
+    end method;
 
 The *get-from-queue* function returns an object from the queue. If no
 object is immediately available, then it blocks until it receives a
@@ -1619,21 +1582,16 @@ notification that the queue is no longer empty. After receiving the
 notification it tests again to see if an object is present, in case it
 was popped by another thread.
 
-define method get-from-queue () => (object)
+.. code-block:: dylan
 
-with-lock (\*lock\*)
-
-while (\*queue\*.empty?)
-
-wait-for(\*something-queued\*)
-
-end;
-
-pop(\*queue\*)
-
-end with-lock
-
-end method;
+    define method get-from-queue () => (object)
+      with-lock (*lock*)
+        while (*queue*.empty?)
+          wait-for(*something-queued*)
+        end;
+        pop(*queue*)
+      end with-lock
+    end method;
 
 associated-lock
 ---------------
@@ -1892,31 +1850,23 @@ Example
 
 The following example shows the dynamic binding of a single variable.
 
-dynamic-bind (\*standard-output\* = new-val())
-
-top-level-loop ()
-
-end;
+    dynamic-bind (\*standard-output\* = new-val())
+      top-level-loop ()
+    end;
 
 This expands into code equivalent to the following:
 
-begin
+.. code-block:: dylan
 
-let old-value = \*standard-output\*;
-
-block ()
-
-\*standard-output\* := new-val();
-
-top-level-loop()
-
-cleanup
-
-\*standard-output\* := old-value
-
-end
-
-end
+    begin
+      let old-value = *standard-output*;
+      block ()
+        *standard-output* := new-val();
+        top-level-loop()
+      cleanup
+        *standard-output* := old-value
+      end
+    end
 
 An extended form of dynamic-bind
 --------------------------------
@@ -1972,19 +1922,19 @@ Example
 
 The following example shows the extended form of *dynamic-bind*.
 
-dynamic-bind (object.a-slot = new-slot-val())
+.. code-block:: dylan
 
-inner-body(object)
-
-end;
+    dynamic-bind (object.a-slot = new-slot-val())
+      inner-body(object)
+    end;
 
 This expands into code equivalent to the following:
 
-a-slot-dynamic-binder(new-slot-val(),
+.. code-block:: dylan
 
-method () inner-body(object) end,
-
-object)
+    a-slot-dynamic-binder(new-slot-val(),
+                          method () inner-body(object) end,
+                          object)
 
 Locked variables
 ================
@@ -2022,7 +1972,9 @@ Operations
 
 Example
 
-define locked variable \*number-detected\* = 0;
+.. code-block:: dylan
+
+    define locked variable *number-detected* = 0;
 
 Conditional update
 ==================
@@ -2103,20 +2055,16 @@ supplied.
 
 Example
 
-The following example does an atomic increment of *\*number-detected\**
-.
+The following example does an atomic increment of *\*number-detected\**.
 
-until (conditional-update!
+.. code-block:: dylan
 
-(current-val = \*number-detected\*)
-
-current-val + 1
-
-failure #f
-
-end conditional-update!)
-
-end until
+    until (conditional-update!
+             (current-val = *number-detected*)
+             current-val + 1
+             failure #f
+           end conditional-update!)
+    end until
 
 atomic-increment!
 -----------------
@@ -2169,7 +2117,9 @@ Example
 The following example atomically increments *\*number-detected\** by 2,
 and returns the incremented value.
 
-atomic-increment!(\*number-detected\*, 2);
+.. code-block:: dylan
+
+    atomic-increment!(*number-detected*, 2);
 
 atomic-decrement!
 -----------------

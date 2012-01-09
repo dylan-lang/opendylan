@@ -496,23 +496,17 @@ returned by *type-for-copy* of *sequence*.
 
 Example
 
-> define variable \*x\* = "great-";
+::
 
-"great-"
-
-> define variable \*y\* = "abs";
-
-"abs"
-
-> concatenate! (\*x\*, \*y\*);
-
-"great-abs"
-
-> \*x\*;
-
-"great-abs"
-
->
+    > define variable \*x\* = "great-";
+    "great-"
+    > define variable \*y\* = "abs";
+    "abs"
+    > concatenate! (\*x\*, \*y\*);
+    "great-abs"
+    > \*x\*;
+    "great-abs"
+    >
 
 condition-to-string
 -------------------
@@ -663,31 +657,26 @@ Example
 In the following code, the signalled messages appear in the Harlequin
 Dylan debugger window.
 
-define class <my-warning> (<warning>)
+.. code-block:: dylan
 
-end class;
+    define class <my-warning> (<warning>)
+    end class;
 
-define method say-hello()
+    define method say-hello()
+      format-out("hello there!\\n");
+      signal("help!");
+      signal(make(<my-warning>));
+      format-out("goodbye\\n");
+    end method say-hello;
 
-format-out("hello there!\\n");
+    say-hello();
 
-signal("help!");
+The following messages appear in the debugger messages pane::
 
-signal(make(<my-warning>));
+    Application Dylan message: Warning: help!
+    Application Dylan message: Warning: {<my-warning>}
 
-format-out("goodbye\\n");
-
-end method say-hello;
-
-say-hello();
-
-The following messages appear in the debugger messages pane:
-
-Application Dylan message: Warning: help!
-
-Application Dylan message: Warning: {<my-warning>}
-
-Where *{<my-warning>}* means an instance of *<my-warning>*.
+Where ``{<my-warning>}`` means an instance of ``<my-warning>``.
 
 See also
 
@@ -740,13 +729,16 @@ Example
 
 The following form defines a dynamic handler around some body:
 
-let handler <serious-condition> = default-last-handler;
+.. code-block:: dylan
+
+    let handler <serious-condition> = default-last-handler;
 
 while the following form installs a globally visible last-handler:
 
-define last-handler <serious-condition>
+.. code-block:: dylan
 
-= default-last-handler;
+    define last-handler <serious-condition>
+      = default-last-handler;
 
 See also
 
@@ -793,13 +785,12 @@ concrete subclass of *<table>*.
 
 Example
 
-define table $colors :: <object-table>
+.. code-block:: dylan
 
-= { #"red" => $red,
-
-#"green" => $green,
-
-#"blue" => $blue };
+    define table $colors :: <object-table>
+      = { #"red" => $red,
+          #"green" => $green,
+          #"blue" => $blue };
 
 difference
 ----------
@@ -837,11 +828,11 @@ function as *test*.
 
 Example
 
-> difference(#(1,2,3), #(2,3,4));
+::
 
-#(1)
-
->
+    > difference(#(1,2,3), #(2,3,4));
+    #(1)
+    >
 
 false-or
 --------
@@ -1091,19 +1082,19 @@ Example
 
 This function ignores some of its arguments:
 
-define method foo (x ::<integer>, #rest args)
+.. code-block:: dylan
 
-ignore(args);
-
-…
-
-end
+    define method foo (x ::<integer>, #rest args)
+      ignore(args);
+      ...
+    end
 
 Here, we use *ignore* to ignore one of the values returned by *fn* :
 
-let (x,y,z) = fn();
+.. code-block:: dylan
 
-ignore(y);
+    let (x,y,z) = fn();
+    ignore(y);
 
 See also
 
@@ -1155,19 +1146,19 @@ Example
 
 This function ignores some of its arguments:
 
-define method foo (x ::<integer>, #rest args)
+.. code-block:: dylan
 
-ignorable(args);
-
-…
-
-end
+    define method foo (x ::<integer>, #rest args)
+      ignorable(args);
+      ...
+    end
 
 Here, we use *ignorable* to ignore one of the values returned by *fn* :
 
-let (x,y,z) = fn();
+.. code-block:: dylan
 
-ignorable(y);
+    let (x,y,z) = fn();
+    ignorable(y);
 
 See also
 
@@ -1315,11 +1306,12 @@ Example
 
 The following form defines a last-handler function called
 *default-last-handler* that is invoked on conditions of class
-*<serious-condition>* :
+*<serious-condition>*:
 
-define last-handler <serious-condition>
+.. code-block:: dylan
 
-= default-last-handler;
+    define last-handler <serious-condition>
+      = default-last-handler;
 
 See also
 
@@ -1354,14 +1346,18 @@ Values
 
 Description
 
-Returns a union type comprised of *singleton(* *object* *)* and the
+Returns a union type comprised of ``singleton(object)`` and the
 singletons of any other objects passed with *more-object*.
 
-one-of(*x*, *y*, *z*)
+.. code-block:: dylan
+
+    one-of(x, y, z)
 
 Is a type expression that is equivalent to
 
-type-union(singleton(*x*), singleton(*y*), singleton(*z*))
+.. code-block:: dylan
+
+    type-union(singleton(x), singleton(y), singleton(z))
 
 position
 --------
@@ -1871,17 +1867,14 @@ Example
 
 An example:
 
-timing ()
+.. code-block:: dylan
 
-for (i from 0 to 200)
-
-format-to-string("%d %d", i, i + 1)
-
-end
-
-end;
-
-=> 1 671000
+    timing ()
+      for (i from 0 to 200)
+        format-to-string("%d %d", i, i + 1)
+      end
+    end;
+    => 1 671000
 
 $unfound
 --------
@@ -2127,11 +2120,11 @@ false.
 
 Example
 
-when (x < 0)
+.. code-block:: dylan
 
-~ x;
-
-end;
+    when (x < 0)
+      ~ x;
+    end;
 
 The SIMPLE-FORMAT module
 ========================
