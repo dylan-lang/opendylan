@@ -1,6 +1,8 @@
+C3 superclass linearization
+===========================
+
 ==============  =============================================
 DEP #:          3
-Title:          C3 superclass linearization
 Type:           Standards Track
 Author:         Hannes Mehnert
 Status:         Draft
