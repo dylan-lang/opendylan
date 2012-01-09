@@ -1,6 +1,8 @@
+Define Function
+===============
+
 ==============  =============================================
 DEP #:          2
-Title:          Define Function
 Type:           Standards Track
 Author:         Bill Chiles
 Status:         Accepted

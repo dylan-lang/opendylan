@@ -1,6 +1,8 @@
+DEP Purpose and Guidelines
+==========================
+
 ==============  =============================================
 DEP #:          1
-Title:          DEP Purpose and Guidelines
 Type:           Process
 Author:         Carl Gay
 Status:         Draft
@@ -234,13 +236,12 @@ Fix any errors that are displayed.
 DEP Header Preamble
 ===================
 
-Each DEP must begin with an RFC 822 style header preamble in simple
-RST table format.  The headers must appear in the following order.
-Headers marked with "*" are optional and are described below.  All
-other headers are required. ::
+Each DEP must begin with a title, followed by an RFC 822 style header
+preamble in simple RST table format.  The headers must appear in the
+following order.  Headers marked with "*" are optional and are
+described below.  All other headers are required. ::
 
     DEP: <DEP number>
-    Title: <DEP title>
     Version: <git revision string>
     Last-Modified: <git date string>
     Author: <list of authors' real names and optionally, email addrs>
