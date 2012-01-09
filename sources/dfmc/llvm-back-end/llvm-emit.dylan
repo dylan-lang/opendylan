@@ -38,6 +38,12 @@ define method emit-all (back-end :: <llvm-back-end>,
           for (literal in literals)
             apply(emit-dfm, back-end, stream, literal, flags);
           end for;
+          for (code in heap.heap-root-system-init-code)
+            apply(emit-dfm, back-end, stream, code.^iep, flags);
+          end for;
+          for (code in heap.heap-root-init-code)
+            apply(emit-dfm, back-end, stream, code.^iep, flags);
+          end for;
         end with-build-area-output;
       end if;
       
