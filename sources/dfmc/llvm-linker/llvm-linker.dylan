@@ -96,6 +96,9 @@ define method link-all
                      compilation-record-name(cr));
 
       emit-init-code-definition(back-end, m, heap, top-level-id);
+
+      // Externs referenced by the code generator
+      emit-code-externs(back-end, m);
     end dynamic-bind;
   end with-simple-abort-retry-restart;
 end method;
@@ -221,4 +224,24 @@ define method emit-init-code-definition
   cleanup
     back-end.llvm-builder-function := #f;
   end block;
+end method;
+
+
+/// Externs referenced from <computation> expansions (and not explictly in DFM)
+
+define constant $code-extern-names
+  = #[#"%resolve-symbol",
+      #"unbound-instance-slot",
+      #"type-check-error"];
+
+define method emit-code-externs
+    (back-end :: <llvm-back-end>, m :: <llvm-module>)
+ => ();
+  for (function-name in $code-extern-names)
+    let iep = ^iep(dylan-value(function-name));
+    let def = llvm-builder-global(back-end, emit-name(back-end, m, iep));
+    if (instance?(def, <llvm-symbolic-constant>))
+      emit-extern(back-end, m, iep);
+    end if;
+  end for;
 end method;
