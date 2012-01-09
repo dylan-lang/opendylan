@@ -216,6 +216,80 @@ bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	@$(BOOTSTRAP_3_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
 
+cli3:
+	@$(BOOTSTRAP_3_ENV) $(BOOTSTRAP_3_COMPILER)
+
+BACKENDS = x86-win32 \
+	   x86-darwin \
+	   x86_64-darwin \
+	   x86-linux \
+	   x86_64-linux \
+	   x86-freebsd \
+	   x86_64-freebsd
+
+rtg:
+	$(MAKE) bootstrap-stage-3 BOOTSTRAP_3_LIBRARIES=llvm-runtime-generator
+	for target in $(BACKENDS); do \
+	  ./Bootstrap.3/bin/llvm-runtime-generator $(abs_srcdir)/sources/dylan/dylan.lid $$target && \
+	  llvm-dis $$target-runtime.bc && \
+	  llc -O3 $$target-runtime.bc; \
+	done
+
+BOOTSTRAP_4_ENV = \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.3 \
+	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.3 \
+	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.3/build \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
+	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.4.$(fd_build)/build/logs \
+	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.4.$(fd_build) \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(fd_build) \
+	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.4.$(fd_build)/build \
+	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
+
+BOOTSTRAP_4_LIBRARIES = dylan-compiler
+
+BOOTSTRAP_4_COMPILER = \
+	$(abs_builddir)/Bootstrap.3/bin/dylan-compiler $(arch_flag) -build -dfm
+
+
+
+$(abs_builddir)/Bootstrap.4.$(fd_build):
+	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)
+	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/bin
+	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/lib
+	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/lib/runtime
+	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/build
+	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/build/logs
+
+bootstrap-stage-4: $(abs_builddir)/Bootstrap.4.$(fd_build)
+	@echo Building Open Dylan bootstrap stage 4...
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(fd_build) \
+	  $(MAKE) -C $(rt_build) install
+	@$(BOOTSTRAP_4_ENV) \
+	  $(fdmake) --compiler="$(BOOTSTRAP_4_COMPILER)" \
+	  $(BOOTSTRAP_4_LIBRARIES)
+
+cli4:
+	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
+
+testc:
+	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <A
+	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <B
+
+testl: $(abs_builddir)/Bootstrap.4.$(fd_build)
+	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <Al
+	@(cd Bootstrap.4.$(fd_build)/build/dylan; for i in *.bc; do echo $$i; llvm-dis $$i; opt -O3 -o - $$i | llc -O3 --filetype=asm -O3 -o `basename $$i .bc`.s && as -o `basename $$i .bc`.o `basename $$i .bc`.s; done)
+	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <Bl
+	@(cd Bootstrap.4.$(fd_build)/build/common-dylan; for i in *.bc; do echo $$i; llvm-dis $$i; opt -O3 -o - $$i | llc -O3 --filetype=asm -O3 -o `basename $$i .bc`.s && as -o `basename $$i .bc`.o `basename $$i .bc`.s; done)
+
+xtestl:
+	for target in $(BACKENDS); do \
+	  $(MAKE) testl fd_build=$$target; \
+	done
+
 ###
 # Install stage installs stage 3 into prefix
 $(prefix)/sources:
