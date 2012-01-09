@@ -390,7 +390,6 @@ Statement macro
 '''''''''''''''
 
 Summary
-       
 
 Signals an error if the expression passed to it evaluates to false.
 
@@ -446,19 +445,14 @@ The class of 8-bit characters that instances of *<byte-string>* can
 contain.
 
 Superclasses
-            
 
 <character>
-           
 
 Init-keywords
-             
 
 None.
-     
 
 Description
-           
 
 The class of 8-bit characters that instances of *<byte-string>* can
 contain.
@@ -470,37 +464,27 @@ Open generic function
 '''''''''''''''''''''
 
 Summary
-       
 
 A destructive version of the Dylan language’s *concatenate* ; that is,
 one that might modify its first argument.
 
 Signature
-         
 
 concatenate! *sequence* #rest *more-sequences* => *result-sequence*
-                                                                   
 
 Arguments
-         
 
 *sequence* An instance of *<sequence>*.
-                                        
 
 *more-sequences*
-                
 
 Instances of *<sequence>*.
-                           
 
 Values
-      
 
 *result-sequence* An instance of *<sequence>*.
-                                               
 
 Description
-           
 
 A destructive version of the Dylan language’s *concatenate* ; that is,
 one that might modify its first argument.
@@ -511,32 +495,24 @@ freshly allocated, then, as for *concatenate*, it is of the type
 returned by *type-for-copy* of *sequence*.
 
 Example
-       
 
 > define variable \*x\* = "great-";
-                                   
 
 "great-"
-        
 
 > define variable \*y\* = "abs";
 
 "abs"
-     
 
 > concatenate! (\*x\*, \*y\*);
-                              
 
 "great-abs"
-           
 
 > \*x\*;
-        
 
 "great-abs"
 
 >
- 
 
 condition-to-string
 -------------------
@@ -545,30 +521,22 @@ Open generic function
 '''''''''''''''''''''
 
 Summary
-       
 
 Returns a string representation of a condition object.
 
 Signature
-         
 
 condition-to-string *condition* => *string*
-                                           
 
 Arguments
-         
 
 *condition* An instance of *<condition>*.
-                                          
 
 Values
-      
 
 *string* An instance of *<string>*.
-                                    
 
 Description
-           
 
 Returns a string representation of a general instance of *<condition>*.
 There is a method on `<format-string-condition\>`_ and method on
@@ -581,43 +549,31 @@ Statement macro
 '''''''''''''''
 
 Summary
-       
 
 Signals an error if the expression passed to it evaluates to false — but
 only when the code is compiled in interactive development mode.
 
 Macro call (1)
-              
 
 debug-assert *expression* *format-string* [ *format-arg* ]\* => *false*
-                                                                       
 
 Macro call (2)
-              
 
 debug-assert *expression* => *false*
-                                    
 
 Arguments
-         
 
 *expression* A Dylan expression*bnf*.
-                                      
 
 *format-string* A Dylan expression*bnf*.
-                                         
 
 *format-arg* A Dylan expression*bnf*.
-                                      
 
 Values
-      
 
 *false* *#f*.
-              
 
 Description
-           
 
 Signals an error if *expression* evaluates to false — but only when the
 code is compiled in debugging mode.
@@ -641,33 +597,24 @@ Function
 ''''''''
 
 Summary
-       
 
 Formats a string and outputs it to the debugger.
 
 Signature
-         
 
 debug-message *format-string* #rest *format-args* => ()
-                                                       
 
 Arguments
-         
 
 *format-string* An instance of *<string>*.
-                                           
 
 *format-args* Instances of *<object>*.
-                                       
 
 Values
-      
 
 None.
-     
 
 Description
-           
 
 Formats a string and outputs it to the debugger.
 
@@ -681,31 +628,23 @@ G.f. method
 '''''''''''
 
 Summary
-       
 
 Prints the message of a warning instance to the Open Dylan debugger
 window’s messages pane.
 
 Syntax
-      
 
 default-handler *warning* => *false*
-                                    
 
 Arguments
-         
 
 *warning* An instance of *<warning>*.
-                                      
 
 Values
-      
 
 *false* *#f*.
-              
 
 Description
-           
 
 Prints the message of a warning instance to the Open Dylan debugger
 window’s messages pane. It uses `debug-message`_, to do so.
@@ -720,19 +659,15 @@ library or a library that uses it (such as Harlequin-Dylan), rather than
 simply using the Dylan library.
 
 Example
-       
 
 In the following code, the signalled messages appear in the Harlequin
 Dylan debugger window.
 
 define class <my-warning> (<warning>)
-                                     
 
 end class;
-          
 
 define method say-hello()
-                         
 
 format-out("hello there!\\n");
 
@@ -743,23 +678,18 @@ signal(make(<my-warning>));
 format-out("goodbye\\n");
 
 end method say-hello;
-                     
 
 say-hello();
-            
 
 The following messages appear in the debugger messages pane:
 
 Application Dylan message: Warning: help!
-                                         
 
 Application Dylan message: Warning: {<my-warning>}
-                                                  
 
 Where *{<my-warning>}* means an instance of *<my-warning>*.
 
 See also
-        
 
 `debug-message`_.
 
@@ -772,36 +702,27 @@ Function
 ''''''''
 
 Summary
-       
 
 Formats and outputs a Dylan condition using *format-out* and passes
 control on to the next handler.
 
 Syntax
-      
 
 default-last-handler *serious-condition* *next-handler* => ()
-                                                             
 
 Arguments
-         
 
 *serious-condition*
-                   
 
 A object of class *<serious-condition>*.
-                                         
 
 *next-handler* A function.
-                          
 
 Values
-      
 
 None.
 
 Description
-           
 
 A handler utility function defined on objects of class
 *<serious-condition>* that can be by bound dynamically around a
@@ -816,23 +737,18 @@ This function is automatically installed as the last handler if your
 library uses the Harlequin-Extensions library.
 
 Example
-       
 
 The following form defines a dynamic handler around some body:
 
 let handler <serious-condition> = default-last-handler;
-                                                       
 
 while the following form installs a globally visible last-handler:
 
 define last-handler <serious-condition>
-                                       
 
 = default-last-handler;
-                       
 
 See also
-        
 
 `last-handler-definer`_
 
@@ -846,34 +762,25 @@ Definition macro
 ''''''''''''''''
 
 Summary
-       
 
 Defines a constant binding in the current module and initializes it to a
 new table object.
 
 Macro call
-          
 
 define table *name* [ :: *type* ] = { [ *key* => *element* ]\* }
-                                                                
 
 Arguments
-         
 
 *name* A Dylan name*bnf*.
-                          
 
 *type* A Dylan operand*bnf*. Default value: *<table>*.
-                                                        
 
 *key* A Dylan expression*bnf*.
-                               
 
 *element* A Dylan expression*bnf*.
-                                   
 
 Description
-           
 
 Defines a constant binding *name* in the current module, and initializes
 it to a new table object, filled in with the keys and elements
@@ -885,17 +792,14 @@ If *type* is not supplied, the new table created is an instance of a
 concrete subclass of *<table>*.
 
 Example
-       
 
 define table $colors :: <object-table>
-                                      
 
 = { #"red" => $red,
 
 #"green" => $green,
 
 #"blue" => $blue };
-                   
 
 difference
 ----------
@@ -904,53 +808,40 @@ Open generic function
 '''''''''''''''''''''
 
 Summary
-       
 
 Returns a sequence containing the elements of one sequence that are not
 members of a second.
 
 Signature
-         
 
 difference *sequence* *1* *sequence* *2* #key *test* =>
 *result-sequence*
-                                                                         
 
 Arguments
-         
 
 *sequence* *1* An instance of *<sequence>*.
-                                            
 
 *sequence* *2* An instance of *<sequence>*.
-                                            
 
 *test* An instance of *<function>*. Default value: *\\==*.
-                                                            
 
 Values
-      
 
 *result-sequence* An instance of *<sequence>*.
-                                               
 
 Description
-           
 
 Returns a sequence containing the elements of *sequence* *1* that are
 not members of *sequence* *2*. You can supply a membership test
 function as *test*.
 
 Example
-       
 
 > difference(#(1,2,3), #(2,3,4));
-                                 
 
 #(1)
 
 >
- 
 
 false-or
 --------
@@ -959,33 +850,24 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns a union type comprised of *singleton(#f)* and one or more types.
 
 Signature
-         
 
 false-or *type* #rest *more-types* => *result-type*
-                                                   
 
 Arguments
-         
 
 *type* An instance of *<type>*.
-                                
 
 *more-types* Instances of *<type>*.
-                                    
 
 Values
-      
 
 *result-type* An instance of *<type>*.
-                                       
 
 Description
-           
 
 Returns a union type comprised of *singleton(#f)*, *type*, any other
 types passed as *more-types*.
@@ -996,12 +878,10 @@ values.
 The expression
 
 false-or(*t* *1*, *t* *2*, ..)
-                                
 
 is type-equivalent to
 
 type-union(singleton(#f), *t* *1*, *t* *2*, ..)
-                                                 
 
 fill-table!
 -----------
@@ -1010,36 +890,26 @@ Function
 ''''''''
 
 Summary
-       
 
 Fills a table with the keys and elements supplied.
 
 Signature
-         
 
 fill-table! *table* *keys-and-elements* => *table*
-                                                  
 
 Arguments
-         
 
 *table* An instance of *<table>*.
-                                  
 
 *keys-and-elements*
-                   
 
 An instance of *<sequence>*.
-                             
 
 Values
-      
 
 *table* An instance of *<table>*.
-                                  
 
 Description
-           
 
 Modifies table so that it contains the keys and elements supplied in the
 sequence *keys-and-elements*.
@@ -1061,40 +931,29 @@ Open generic function
 '''''''''''''''''''''
 
 Summary
-       
 
 Returns an element from a collection such that the element satisfies a
 predicate.
 
 Signature
-         
 
 find-element *collection* *function* #key *skip* *failure* => *element*
-                                                                       
 
 Arguments
-         
 
 *collection* An instance of *<collection>*.
-                                            
 
 *predicate* An instance of *<function>*.
-                                         
 
 *skip* An instance of *<integer>*. Default value: 0.
-                                                     
 
 *failure* An instance of *<object>*. Default value: *#f*.
-                                                           
 
 Values
-      
 
 *element* An instance of *<object>*.
-                                     
 
 Description
-           
 
 Returns a collection element that satisfies *predicate*.
 
@@ -1109,30 +968,22 @@ Function
 ''''''''
 
 Summary
-       
 
 Formats a floating-point number to a string.
 
 Signature
-         
 
 float-to-string *float* => *string*
-                                   
 
 Arguments
-         
 
 *float* An instance of *<float>*.
-                                  
 
 Values
-      
 
 *string* An instance of *<string>*.
-                                    
 
 Description
-           
 
 Formats a floating-point number to a string. It uses scientific notation
 where necessary.
@@ -1144,24 +995,18 @@ Sealed instantiable class
 '''''''''''''''''''''''''
 
 Summary
-       
 
 The class of conditions that take a format string.
 
 Superclasses
-            
 
 <condition>
-           
 
 Init-keywords
-             
 
 None.
-     
 
 Description
-           
 
 The class of conditions that take a format string, as defined by the
 DRM.
@@ -1169,7 +1014,6 @@ DRM.
 It is the superclass of Dylan’s *<simple-condition>*.
 
 See also
-        
 
 The Format library.
 
@@ -1180,30 +1024,22 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns true if *object* is not equal to `$unfound`_, and false otherwise.
 
 Signature
-         
 
 found? *object* => *boolean*
-                            
 
 Arguments
-         
 
 *object* An instance of *<object>*.
-                                    
 
 Values
-      
 
 *boolean* An instance of *<boolean>*.
-                                      
 
 Description
-           
 
 Returns true if *object* is not equal to `$unfound`_, and false otherwise.
 
@@ -1216,31 +1052,23 @@ Function
 ''''''''
 
 Summary
-       
 
 A compiler directive that tells the compiler it must not issue a warning
 if its argument is bound but not referenced.
 
 Signature
-         
 
 ignore *variable* => ()
-                       
 
 Arguments
-         
 
 *variable* A Dylan variable-name*bnf*.
-                                       
 
 Values
-      
 
 None.
-     
 
 Description
-           
 
 When the compiler encounters a variable that is bound but not
 referenced, it normally issues a warning. The *ignore* function is a
@@ -1260,30 +1088,24 @@ the *ignore* being violated, and do not wish to be warned if violation
 occurs, use `ignorable`_ instead.
 
 Example
-       
 
 This function ignores some of its arguments:
 
 define method foo (x ::<integer>, #rest args)
-                                             
 
 ignore(args);
 
 …
 
 end
-   
 
 Here, we use *ignore* to ignore one of the values returned by *fn* :
 
 let (x,y,z) = fn();
-                   
 
 ignore(y);
-          
 
 See also
-        
 
 `ignorable`_
 
@@ -1294,30 +1116,23 @@ Function
 ''''''''
 
 Summary
-       
 
 A compiler directive that tells the compiler it *need not* issue a
 warning if its argument is bound but not referenced.
 
 Signature
-         
 
 ignorable *variable* => ()
-                          
 
 Arguments
-         
 
 *variable* A Dylan variable-name*bnf*.
-                                       
 
 Values
-      
 
 None.
 
 Description
-           
 
 When the compiler encounters a variable that is bound but not
 referenced, it normally issues a warning. The *ignorable* function is a
@@ -1337,30 +1152,24 @@ prefer *ignorable* to `ignore`_ if you are not concerned about such
 violations and do not wish to be warned about them.
 
 Example
-       
 
 This function ignores some of its arguments:
 
 define method foo (x ::<integer>, #rest args)
-                                             
 
 ignorable(args);
 
 …
 
 end
-   
 
 Here, we use *ignorable* to ignore one of the values returned by *fn* :
 
 let (x,y,z) = fn();
-                   
 
 ignorable(y);
-             
 
 See also
-        
 
 `ignore`_
 
@@ -1371,39 +1180,28 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns a string representation of an integer.
 
 Signature
-         
 
 integer-to-string *integer* #key *base* *size* *fill* => *string*
-                                                                 
 
 Arguments
-         
 
 *integer* An instance of *<integer>*.
-                                      
 
 *base* An instance of *<integer>*. Default value: 10.
-                                                      
 
 *size* An instance of *<integer>* or *#f*. Default value: *#f*.
-                                                                 
 
 *fill* An instance of *<character>*. Default value: 0.
-                                                       
 
 Values
-      
 
 *string* An instance of *<byte-string>*.
-                                         
 
 Description
-           
 
 Returns a string representation of *integer* in the given *base*, which
 must be between 2 and 36. The size of the string is right-aligned to
@@ -1418,41 +1216,30 @@ Statement macro
 '''''''''''''''
 
 Summary
-       
 
 Iterates over a body.
 
 Macro call
-          
 
 iterate *name* ({*argument* [ = *init-value* ]}\*)
  [ *body* ]
  end [ iterate ]
-                                                  
 
 Arguments
-         
 
 *name* A Dylan variable-name*bnf*.
-                                   
 
 *argument* A Dylan variable-name*bnf*.
-                                       
 
 *init-value* A Dylan expression*bnf*.
-                                      
 
 *body* A Dylan body*bnf*.
-                          
 
 Values
-      
 
 Zero or more instances of *<object>*.
-                                      
 
 Description
-           
 
 Defines a function that can be used to iterate over a body. It is
 similar to *for*, but allows you to control when iteration will occur.
@@ -1469,53 +1256,40 @@ Definition macro
 ''''''''''''''''
 
 Summary
-       
 
 Defines a “last-handler” to be used after any dynamic handlers and
 before calling *default-handler*.
 
 Definition
-          
 
 define last-handler (*condition*, #key *test*, *init-args*)
-                                                              
 
 = *handler* ;
-             
 
 define last-handler condition = handler;
-                                        
 
 define last-handler;
-                    
 
 Arguments
-         
 
 *condition* A Dylan expression*bnf*. The class of condition for which
 the handler should be invoked.
-                                                                                                     
 
 *test* A Dylan expression*bnf*. A function of one argument called on
 the condition to test applicability of the handler.
-                                                                                                                         
 
 *init-args* A Dylan expression*bnf*. A sequence of initialization
 arguments used to make an instance of the handler’s condition class.
-                                                                                                                                       
 
 *handler* A Dylan expression*bnf*. A function of two arguments,
 *condition* and *next-handler*, that is called on a condition which
 matches the handler’s condition class and test function.
-                                                                                                                                                                                              
 
 Values
-      
 
 None.
 
 Description
-           
 
 A last-handler is a global form of the dynamic handler introduced via
 *let* *handler*, and is defined using an identical syntax. The last
@@ -1538,20 +1312,16 @@ the application, trying to abort the current application operation, or
 entering a connected debugger.
 
 Example
-       
 
 The following form defines a last-handler function called
 *default-last-handler* that is invoked on conditions of class
 *<serious-condition>* :
 
 define last-handler <serious-condition>
-                                       
 
 = default-last-handler;
-                       
 
 See also
-        
 
 `one-of`_
 
@@ -1565,44 +1335,33 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns a union type comprised of singletons formed from its arguments.
 
 Signature
-         
 
 one-of *object* #rest *more-objects* => *type*
-                                              
 
 Arguments
-         
 
 *object* An instance of *<object>*.
-                                    
 
 *more-objects* Instances of *<object>*.
-                                        
 
 Values
-      
 
 *type* An instance of *<type>*.
-                                
 
 Description
-           
 
 Returns a union type comprised of *singleton(* *object* *)* and the
 singletons of any other objects passed with *more-object*.
 
 one-of(*x*, *y*, *z*)
-                        
 
 Is a type expression that is equivalent to
 
 type-union(singleton(*x*), singleton(*y*), singleton(*z*))
-                                                             
 
 position
 --------
@@ -1611,27 +1370,20 @@ Open generic function
 '''''''''''''''''''''
 
 Summary
-       
 
 Returns the key at which a particular value occurs in a sequence.
 
 Signature
-         
 
 position *sequence* *target* #key *test* *start* *end* *skip* *count* => *position*
-                                                            
 
 Arguments
-         
 
 *sequence* An instance of *<sequence>*.
-                                        
 
 *target* An instance of *<object>*.
-                                   
 
 *test* An instance of *<function>*. Default value: *\\==*.
-                                                                 
 
 *start* An instance of *<integer>*. Default value: 0.
 
@@ -1643,16 +1395,12 @@ Arguments
 
 
 *count* An instance of *<object>*. Default value: #f.
-                                                     
 
 Values
-      
 
 *position* An instance of *false-or(<integer>)*.
-                                 
 
 Description
-           
 
 Returns the position at which *target* occurs in *sequence*.
 
@@ -1676,33 +1424,24 @@ Open generic function
 '''''''''''''''''''''
 
 Summary
-       
 
 Removes all keys in a mutable collection, leaving it empty.
 
 Signature
-         
 
 remove-all-keys! *mutable-collection* => ()
-                                           
 
 Arguments
-         
 
 *mutable-collection*
-                    
 
 An instance of *<mutable-collection>*.
-                                       
 
 Values
-      
 
 None.
-     
 
 Description
-           
 
 Modifies *mutable-collection* by removing all its keys and leaving it
 empty. There is a predefined method on *<table>*.
@@ -1714,37 +1453,29 @@ Sealed instantiable class
 '''''''''''''''''''''''''
 
 Summary
-       
 
 The class of simple conditions.
 
 Superclasses
-            
 
 <format-string-condition>
-                         
 
 Init-keywords
-             
 
 None.
-     
 
 Description
-           
 
 The class of simple conditions. It is the superclass of *<simple-error>*,
 *<simple-warning>*, and *<simple-restart>*.
 
 Operations
-          
 
 *condition-format-string*
 
 *condition-format-args*
 
 Example
-       
 
 <stretchy-sequence>
 -------------------
@@ -1753,24 +1484,18 @@ Open abstract class
 '''''''''''''''''''
 
 Summary
-       
 
 The class of stretchy sequences.
 
 Superclasses
-            
 
 <sequence> <stretchy-collection>
-                                
 
 Init-keywords
-             
 
 None.
-     
 
 Description
-           
 
 The class of stretchy sequences.
 
@@ -1781,24 +1506,18 @@ Sealed instantiable class
 '''''''''''''''''''''''''
 
 Summary
-       
 
 The class of tables that use strings for keys.
 
 Superclasses
-            
 
 <table>
-       
 
 Init-keywords
-             
 
 None.
-     
 
 Description
-           
 
 The class of tables that use instances of *<string>* for their keys. It
 is an error to use a key that is not an instance of *<string>*.
@@ -1820,48 +1539,35 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns the integer represented by its string argument, or by a
 substring of that argument, in a number base between 2 and 36.
 
 Signature
-         
 
 string-to-integer *string* #key *base* *start* *end* *default* =>
 *integer* *next-key*
-                                                                                      
 
 Arguments
-         
 
 *string* An instance of *<byte-string>*.
-                                         
 
 *base* An instance of *<integer>*. Default value: 10.
-                                                      
 
 *start* An instance of *<integer>*. Default value: 0.
-                                                      
 
 *end* An instance of *<integer>*. Default value: *sizeof(* *string* *)*
 .
-                                                                          
 
 *default* An instance of *<integer>*. Default value: *$unsupplied*.
-                                                                     
 
 Values
-      
 
 *integer* An instance of *<integer>*.
-                                      
 
 *next-key* An instance of *<integer>*.
-                                       
 
 Description
-           
 
 Returns the integer represented by the characters of *string* in the
 number base *base*, where *base* is between 2 and 36. You can constrain
@@ -1884,30 +1590,22 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns a type representing a class and its subclasses.
 
 Signature
-         
 
 subclass *class* => *subclass-type*
-                                   
 
 Arguments
-         
 
 *class* An instance of *<class>*.
-                                  
 
 Values
-      
 
 *subclass-type* An instance of *<type>*.
-                                         
 
 Description
-           
 
 Returns a type that describes all the objects representing subclasses of
 the given class. We term such a type a *subclass type*.
@@ -1930,7 +1628,6 @@ For an object *O* and class *Y*, the following *instance?* relationship
 applies:
 
 INSTANCE-1: instance?(*O*, subclass(*Y*))
-                                           
 
 True if and only if *O* is a class and *O* is a subclass of *Y*.
 
@@ -1938,22 +1635,18 @@ For classes *X* and *Y* the following *subtype?* relationships hold
 (note that a rule applies only when no preceding rule matches):
 
 SUBTYPE-1: subtype?(subclass(*X*), subclass(*Y*))
-                                                   
 
 True if and only if *X* is a subclass of *Y*.
 
 SUBTYPE-2: subtype?(singleton(*X*), subclass(*Y*))
-                                                    
 
 True if and only if *X* is a class and *X* is a subclass of *Y*.
 
 SUBTYPE-3: subtype?(subclass(*X*), singleton(*Y*))
-                                                    
 
 Always false.
 
 SUBTYPE-4: subtype?(subclass(*X*), *Y*)
-                                         
 
 where *Y* is not a subclass type. True if *Y* is *<class>* or any proper
 superclass of *<class>* (including *<object>*, any
@@ -1962,7 +1655,6 @@ There may be other implementation-defined combinations of types *X* and
 *Y* for which this is also true.
 
 SUBTYPE-5: subtype?(*X*, subclass(*Y*))
-                                         
 
 where *X* is not a subclass type. True if *Y* is *<object>* or any
 proper supertype of *<object>* and *X* is a subclass of *<class>*.
@@ -2007,7 +1699,6 @@ to corresponding methods on corresponding subclass types called with the
 class of that instance. So, for example, given the heterarchy:
 
 <object>
-        
 
 \|
 
@@ -2020,97 +1711,78 @@ class of that instance. So, for example, given the heterarchy:
 \\ /
 
 <D>
-   
 
 and methods:
 
 method foo (<A>)
-                
 
 method foo (<B>)
 
 method foo (<C>)
 
 method foo (<D>)
-                
 
 method foo-using-type (subclass(<A>))
-                                     
 
 method foo-using-type (subclass(<B>))
 
 method foo-using-type (subclass(<C>))
 
 method foo-using-type (subclass(<D>))
-                                     
 
 that for a direct instance *D* *1* of *<D>* :
 
 foo-using-type(<D>)
-                   
 
 should behave analogously to:
 
 foo(D1)
-       
 
 with respect to method selection.
 
 Example
-       
 
 define class <A> (<object>) end;
-                                
 
 define class <B> (<A>) end;
 
 define class <C> (<A>) end;
 
 define class <D> (<B>, <C>) end;
-                                
 
 define method make (class :: subclass(<A>), #key)
-                                                 
 
 print("Making an <A>");
 
 next-method();
 
 end method;
-           
 
 define method make (class :: subclass(<B>), #key)
-                                                 
 
 print("Making a <B>");
 
 next-method();
 
 end method;
-           
 
 define method make (class :: subclass(<C>), #key)
-                                                 
 
 print("Making a <C>");
 
 next-method();
 
 end method;
-           
 
 define method make (class :: subclass(<D>), #key)
-                                                 
 
 print("Making a <D>");
 
 next-method();
 
 end method;
-           
 
 ? make(<D>);
-            
 
 Making a <D>
 
@@ -2121,7 +1793,6 @@ Making a <C>
 Making an <A>
 
 {instance of <D>}
-                 
 
 supplied?
 ---------
@@ -2130,41 +1801,31 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns true if its argument is not equal to the unique “unsupplied”
 value, `$unsupplied`_, and false if it is.
 
 Signature
-         
 
 supplied? *object* => *supplied?*
-                                 
 
 Arguments
-         
 
 *object* An instance of *<object>*.
-                                    
 
 Values
-      
 
 *supplied?*
-           
 
 An instance of *<boolean>*.
-                            
 
 Description
-           
 
 Returns true if *object* is not equal to the unique “unsupplied” value,
 `$unsupplied`_, and false if it is. It uses
 *\\=* as the equivalence predicate.
 
 See also
-        
 
 `$unsupplied`_
 
@@ -2179,34 +1840,25 @@ Statement macro
 '''''''''''''''
 
 Summary
-       
 
 Returns the time, in seconds and microseconds, spent executing the body
 of code it is wrapped around.
 
 Macro call
-          
 
 timing () [ *body* ] end [ timing ]
-                                   
 
 Arguments
-         
 
 *body* A Dylan body*bnf*
-                        
 
 Values
-      
 
 *seconds* An instance of *<integer>*.
-                                      
 
 *microseconds* An instance of *<integer>*.
-                                           
 
 Description
-           
 
 Returns the time, in seconds and microseconds, spent executing the body
 of code it is wrapped around.
@@ -2216,12 +1868,10 @@ The second value returned is the number of microseconds spent in
 *body* in addition to *seconds*.
 
 Example
-       
 
 An example:
 
 timing ()
-         
 
 for (i from 0 to 200)
 
@@ -2230,10 +1880,8 @@ format-to-string("%d %d", i, i + 1)
 end
 
 end;
-    
 
 => 1 671000
-           
 
 $unfound
 --------
@@ -2242,30 +1890,24 @@ Constant
 ''''''''
 
 Summary
-       
 
 A unique value that can be used to indicate that a search operation
 failed.
 
 Type
-    
 
 <list>
-      
 
 Value
-     
 
 A unique value.
 
 Description
-           
 
 A unique value that can be used to indicate that a search operation
 failed.
 
 See also
-        
 
 `found?`_
 
@@ -2280,35 +1922,26 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns the unique “unfound” value, `$unfound`_.
 
 Signature
-         
 
 unfound () => *unfound-marker*
-                              
 
 Arguments
-         
 
 None.
-     
 
 Values
-      
 
 *unfound-marker* The value `$unfound`_.
-                                                                  
 
 Description
-           
 
 Returns the unique “unfound” value, `$unfound`_.
 
 See also
-        
 
 `found?`_
 
@@ -2323,38 +1956,29 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns true if its argument is equal to the unique “unfound” value,
 `$unfound`_, and false if it is not.
 
 Signature
-         
 
 unfound? *object* => *unfound?*
-                               
 
 Arguments
-         
 
 *object* An instance of *<object>*.
-                                    
 
 Values
-      
 
 *unfound?* An instance of *<boolean>*.
-                                       
 
 Description
-           
 
 Returns true if *object* is equal to the unique “unfound” value,
 `$unfound`_, and false if it is not. It uses *\\=*
 as the equivalence predicate.
 
 See also
-        
 
 `found?`_
 
@@ -2369,30 +1993,24 @@ Constant
 ''''''''
 
 Summary
-       
 
 A unique value that can be used to indicate that a keyword was not
 supplied.
 
 Type
-    
 
 <list>
-      
 
 Value
-     
 
 A unique value.
 
 Description
-           
 
 A unique value that can be used to indicate that a keyword was not
 supplied.
 
 See also
-        
 
 `supplied?`_
 
@@ -2407,38 +2025,28 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns the unique “unsupplied” value, `$unsupplied`_.
 
 Signature
-         
 
 unsupplied () => *unsupplied-marker*
-                                    
 
 Arguments
-         
 
 None.
-     
 
 Values
-      
 
 *unsupplied-marker*
-                   
 
 The value `$unsupplied`_.
-                                                    
 
 Description
-           
 
 Returns the unique “unsupplied” value, `$unsupplied`_.
 
 See also
-        
 
 `supplied?`_
 
@@ -2453,38 +2061,29 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns true if its argument is equal to the unique “unsupplied” value,
 `$unsupplied`_, and false if it is not.
 
 Signature
-         
 
 unsupplied? *value* => *boolean*
-                                
 
 Arguments
-         
 
 *value* An instance of *<object>*.
-                                   
 
 Values
-      
 
 *boolean* An instance of *<boolean>*.
-                                      
 
 Description
-           
 
 Returns true if its argument is equal to the unique “unsupplied” value,
 `$unsupplied`_, and false if it is not. It
 uses *\\=* as the equivalence predicate.
 
 See also
-        
 
 `supplied?`_
 
@@ -2499,34 +2098,25 @@ Statement macro
 '''''''''''''''
 
 Summary
-       
 
 Executes an implicit body if a test expression is true, and does nothing
 if the test is false.
 
 Macro call
-          
 
 when (*test*) [ *consequent* ] end [ when ]
-                                            
 
 Arguments
-         
 
 *test* A Dylan expression*bnf*.
-                                
 
 *consequent* A Dylan body*bnf*.
-                                
 
 Values
-      
 
 Zero or more instances of *<object>*.
-                                      
 
 Description
-           
 
 Executes *consequent* if *test* is true, and does nothing if *test* is
 false.
@@ -2536,15 +2126,12 @@ except that there is no alternative flow of execution when the test is
 false.
 
 Example
-       
 
 when (x < 0)
-            
 
 ~ x;
 
 end;
-    
 
 The SIMPLE-FORMAT module
 ========================
@@ -2559,36 +2146,26 @@ Function
 ''''''''
 
 Summary
-       
 
 Formats its arguments to the standard output.
 
 Signature
-         
 
 format-out *format-string* #rest *format-arguments* => ()
-                                                         
 
 Arguments
-         
 
 *format-string* An instance of *<byte-string>*.
-                                                
 
 *format-arguments*
-                  
 
 Instances of *<object>*.
-                         
 
 Values
-      
 
 None.
-     
 
 Description
-           
 
 Formats its arguments to the standard output.
 
@@ -2602,42 +2179,31 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns a formatted string constructed from its arguments.
 
 Signature
-         
 
 format-to-string *format-string* #rest *format-arguments* => *string*
-                                                                     
 
 Arguments
-         
 
 *format-string* An instance of *<byte-string>*.
-                                                
 
 *format-arguments*
-                  
 
 Instances of *<object>*.
-                         
 
 Values
-      
 
 *result-string* An instance of *<byte-string>*.
-                                                
 
 Exceptions
-          
 
 This function signals an error if any of the format directives in
 *format-string* are invalid.
 
 Description
-           
 
 Returns a formatted string constructed from its arguments, which include
 a *format-string* of formatting directives and a series of
@@ -2659,25 +2225,19 @@ Sealed instantiable class
 '''''''''''''''''''''''''
 
 Summary
-       
 
 The class of random number generators.
 
 Superclasses
-            
 
 <object>
-        
 
 Init-keywords
-             
 
 *seed* An instance of *<integer>*. Default value: computed to be
 random.
-                                                                         
 
 Description
-           
 
 The class of random number generators.
 
@@ -2685,7 +2245,6 @@ The seed value from which to start the sequence of integers. Default
 value: computed to be random.
 
 Example
-       
 
 random
 ------
@@ -2694,37 +2253,27 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns a pseudorandomly generated number greater than or equal to zero
 and less than a specified value.
 
 Signature
-         
 
 random *upperbound* #key *random* => *random-integer*
-                                                     
 
 Arguments
-         
 
 *range* An instance of *<integer>*.
-                                    
 
 *random* An instance of *<random>*.
-                                    
 
 Values
-      
 
 *random-integer*
-                
 
 An instance of *<integer>*.
-                            
 
 Description
-           
 
 Returns a pseudorandomly generated number greater than or equal to zero
 and less than *range*.
@@ -2743,34 +2292,26 @@ Function
 ''''''''
 
 Summary
-       
 
 Returns true if automatic finalization is enabled, and false otherwise.
 
 Signature
-         
 
 automatic-finalization-enabled? () => *enabled?*
-                                                
 
 Arguments
-         
 
 None.
 
 Values
-      
 
 *enabled?* An instance of *<boolean>*. Default value: *#f*.
-                                                             
 
 Description
-           
 
 Returns true if automatic finalization is enabled, and false otherwise.
 
 See also
-        
 
 `automatic-finalization-enabled?-setter`_
 
@@ -2787,29 +2328,22 @@ Function
 ''''''''
 
 Summary
-       
 
 Sets the automatic finalization system state.
 
 Signature
-         
 
 automatic-finalization-enabled?-setter *newval* => ()
-                                                     
 
 Arguments
-         
 
 *newval* An instance of *<boolean>*.
-                                     
 
 Values
-      
 
 None.
 
 Description
-           
 
 Sets the automatic finalization system state to *newval*.
 
@@ -2819,7 +2353,6 @@ inside an empty dynamic environment (that is, no dynamic condition
 handlers). If the state changes from *#t* to *#f*, the thread exits.
 
 See also
-        
 
 `automatic-finalization-enabled?`_
 
@@ -2836,29 +2369,23 @@ Function
 ''''''''
 
 Summary
-       
 
 Calls `finalize`_ on every object in the
 finalization queue.
 
 Signature
-         
 
 drain-finalization-queue () => ()
-                                 
 
 Arguments
-         
 
 None.
 
 Values
-      
 
 None.
 
 Description
-           
 
 Calls `finalize`_ on each object that is
 awaiting finalization.
@@ -2875,7 +2402,6 @@ is not defined. Applications should not make any assumptions about
 finalization ordering.
 
 See also
-        
 
 `finalize-when-unreachable`_
 
@@ -2892,30 +2418,22 @@ Function
 ''''''''
 
 Summary
-       
 
 Registers an object for finalization.
 
 Signature
-         
 
 finalize-when-unreachable *object* => *object*
-                                              
 
 Arguments
-         
 
 *object* An instance of *<object>*.
-                                    
 
 Values
-      
 
 *object* An instance of *<object>*.
-                                    
 
 Description
-           
 
 Registers *object* for finalization. If *object* becomes unreachable, it
 is added to the finalization queue rather than being immediately
@@ -2928,7 +2446,6 @@ by calling the generic function `finalize`_ on it.
 The function returns its argument.
 
 See also
-        
 
 `finalize`_
 
@@ -2945,29 +2462,22 @@ Open generic function
 '''''''''''''''''''''
 
 Summary
-       
 
 Finalizes an object.
 
 Signature
-         
 
 finalize *object* => ()
-                       
 
 Arguments
-         
 
 *object* An instance of *<object>*.
-                                    
 
 Values
-      
 
 None.
 
 Description
-           
 
 Finalizes *object*.
 
@@ -2994,7 +2504,6 @@ Do not write singleton methods on `finalize`_. A singleton method would itself
 reference the object, and hence prevent it from becoming unreachable.
 
 See also
-        
 
 `finalize`_.
 
@@ -3013,37 +2522,28 @@ G.f. method
 '''''''''''
 
 Summary
-       
 
 Finalizes an object.
 
 Signature
-         
 
 finalize *object* => ()
-                       
 
 Arguments
-         
 
 *object* An instance of *<object>*.
-                                    
 
 Values
-      
 
 None.
-     
 
 Description
-           
 
 This method is a default finalizer for all objects. It does nothing, and
 is provided only to make *next-method* calls safe for all methods on
 `finalize`_.
 
 See also
-        
 
 `finalize-when-unreachable`_
 

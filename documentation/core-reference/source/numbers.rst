@@ -21,7 +21,6 @@ The goals of the extensions to the Dylan language described in this
 chapter are as follows:
 
 Provide arithmetic operations that are closed over small integers.
-                                                                  
 
 This allows type inference to propagate small integer declarations more
 widely, because there is no possibility of automatic coercion into some
@@ -29,24 +28,20 @@ more general format.
 
 Make the arithmetic operations that are closed over small integers
 easily accessible to programmers.
-                                                                                                    
 
 Allow the Dylan library to be described in such a way that only small
 integers are present by default, moving support for infinite precision
 integer arithmetic to the Big-Integers library, which must be explicitly
 used.
-                                                                                                                                                                                                                           
 
 Support infinite precision integer arithmetic through the Big-Integers
 library.
-                                                                               
 
 .. note:: Using that library in another library does not have a negative
    effect on the correctness or performance of other libraries in the same
    application that do not use it.
 
 Maintain compatibility with the DRM specification.
-                                                  
 
 In particular, the extensions support the production of efficient code
 for programs written to be portable with respect to the DRM
@@ -62,7 +57,6 @@ inefficient implementations.
 Specify that the class *<integer>* has a finite,
 implementation-dependent range, bounded by the constants
 *$minimum-integer* and *$maximum-integer*.
-                                                                                                                                                     
 
 The representation for integers must be at least 28 bits, including the
 sign. That is, the minimum conforming value for *$maximum-integer* is
@@ -77,7 +71,6 @@ need that functionality.
 
 Define the type *<machine-number>* to be the type union of *<float>* and
 *<integer>*.
-                                                                                      
 
 The Dylan library provides implementations of the generic functions and
 functions described in this chapter. If the result of one of these
@@ -120,12 +113,10 @@ G.f. method
 '''''''''''
 
 Summary
-       
 
 Defines a new type that represents a subset of the class *<integer>*.
 
 Arguments
-         
 
 -  *singleton(<integer>)*
 -  *min:* The lower bound of the range. The default is
@@ -133,12 +124,10 @@ Arguments
 -  *max: The upper bound of the range. The default is $maximum-integer*
 
 Signature
-         
 
 limited *integer-class* #key *min* *max* => *limited-type*
 
 Description
-           
 
 The *integer-class* argument is the class *<integer>*, and all other
 arguments are instances of *<integer>*. The range of *<integer>* is
@@ -151,20 +140,16 @@ Function
 ''''''''
 
 Summary
-       
 
 This function is used to specify ranges of numbers.
 
 Arguments
-         
 
 Signature
-         
 
 range (#key from:, to:, above:, below:, by:, size:) => <range>
 
 Description
-           
 
 All of the supplied arguments must be instances of *<machine-number>*.
 
@@ -181,19 +166,16 @@ Generic function, Sealed domain, G.f. method
 ''''''''''''''''''''''''''''''''''''''''''''
 
 Summary
-       
 
 Tests its arguments to see if they are of the same magnitude.
 
 Signature
-         
 
 = *object1* *object2* => *boolean* (*Generic function*)
  = *complex1* *complex2* => *boolean* (*Sealed domain*)
  = *machine-number1* *machine-number2* => *boolean* (*G.f. method*)
 
 Value
-     
 
 *<boolean>*
 
@@ -212,7 +194,6 @@ Generic function, Sealed domain, G.f. method
 ''''''''''''''''''''''''''''''''''''''''''''
 
 Summary
-       
 
 Returns #t if its first argument is less than its second argument.
 
@@ -239,7 +220,6 @@ Open generic function, Sealed domain, G.f. method
 '''''''''''''''''''''''''''''''''''''''''''''''''
 
 Summary
-       
 
 Tests whether the argument supplied represents an odd value.
 
@@ -258,7 +238,6 @@ Open generic function, Sealed domain, G.f. method
 '''''''''''''''''''''''''''''''''''''''''''''''''
 
 Summary
-       
 
 Tests whether the argument supplied represents an even value
 
@@ -271,104 +250,80 @@ Signature
     even? *integer* => *boolean* (*G.f. method*)
 
 zero?
-     
 
 Open generic function
-                     
 
 zero? *object* => *boolean*
 
 zero?
-     
 
 Sealed domain
-             
 
 zero? *complex*
 
 zero?
-     
 
 G.f. method
-           
 
 zero? *machine-number* => *boolean*
 
 Tests whether the argument supplied represents a zero value.
 
 positive?
-         
 
 Open generic function
-                     
 
 positive? *object* => *boolean*
 
 positive?
-         
 
 Sealed domain
-             
 
 positive? *complex*
 
 positive?
-         
 
 G.f. method
-           
 
 positive? *machine-number* => *boolean*
 
 Tests whether the argument supplied represents a positive value.
 
 negative?
-         
 
 Open generic function
-                     
 
 negative? *object* => *boolean*
 
 negative?
-         
 
 Sealed domain
-             
 
 negative? *complex*
 
 negative?
-         
 
 G.f. method
-           
 
 negative? *machine-number* => *boolean*
 
 Tests whether the argument supplied represents a negative value.
 
 integral?
-         
 
 Open generic function
-                     
 
 integral? *object* => *boolean*
 
 integral?
-         
 
 Sealed domain
-             
 
 integral? *complex*
 
 integral?
-         
 
 G.f. method
-           
 
 integral? *machine-number* => *boolean*
 
@@ -380,34 +335,26 @@ Arithmetic operations
 The following arithmetic operations are available in the Dylan library:
 
 +
- 
 
 Open generic function
-                     
 
 + *object1* *object2* => #rest *object*
 
 +
- 
 
 Sealed domain
-             
 
 + *complex1* *complex* 2
 
 +
- 
 
 G.f. method
-           
 
 + *integer1* *integer* 2 => *integer*
 
 +
- 
 
 G.f. method
-           
 
 + *machine-number1* *machine-number2* => *machine-number*
 
@@ -416,34 +363,26 @@ value is determined by the contagion rules when applied to the
 arguments.
 
 -
- 
 
 Open generic function
-                     
 
 - *object1* *object2* => #rest *object*
 
 -
- 
 
 Sealed domain
-             
 
 - *complex1* *complex2*
 
 -
- 
 
 G.f. method
-           
 
 - *integer1 integer2* => *integer*
 
 -
- 
 
 G.f. method
-           
 
 - *machine-number1* *machine-number2* => *machine-number*
 
@@ -452,34 +391,26 @@ The actual type of the value is determined by the contagion rules when
 applied to the arguments.
 
 \*
-  
 
 Open generic function
-                     
 
 \* *object1* *object2* => #rest *object*
 
 \*
-  
 
 Sealed domain
-             
 
 \* *complex1* *complex2*
 
 \*
-  
 
 G.f. method
-           
 
 \* *integer1* *integer* 2 => *integer*
 
 \*
-  
 
 G.f. method
-           
 
 \* *machine-number1* *machine-number2* => *machine-number*
 
@@ -488,26 +419,20 @@ the value is determined by the contagion rules when applied to the
 arguments.
 
 /
- 
 
 Open generic function
-                     
 
 / *object1* *object2* => #rest *object*
 
 /
- 
 
 Sealed domain
-             
 
 / *complex1* *complex2*
 
 /
- 
 
 G.f. method
-           
 
 / *float1* *float* 2 => *float*
 
@@ -516,34 +441,26 @@ actual type of the value is determined by the contagion rules when
 applied to the arguments.
 
 negative
-        
 
 Open generic function
-                     
 
 negative *object* => #rest *negative-object*
 
 negative
-        
 
 Sealed domain
-             
 
 negative *complex*
 
 negative
-        
 
 G.f. method
-           
 
 negative *integer* => *negative-integer*
 
 negative
-        
 
 G.f. method
-           
 
 negative *float* => *negative-float*
 
@@ -551,10 +468,8 @@ Negates the supplied argument. The returned value is of the same float
 format as the supplied argument.
 
 floor
-     
 
 Function
-        
 
 floor *machine-number* => *integer* *machine-number*
  floor *integer* => *integer* *integer*
@@ -565,10 +480,8 @@ returned as *integer*, the remainder is of the same float format as the
 argument.
 
 ceiling
-       
 
 Function
-        
 
 ceiling *machine-number* => *integer* *machine-number*
  ceiling *integer* => *integer* *integer*
@@ -579,10 +492,8 @@ returned as *integer*, the remainder is of the same float format as the
 argument.
 
 round
-     
 
 Function
-        
 
 round *machine-number* => *integer* *machine-number*
  round *integer* => *integer* *integer*
@@ -594,10 +505,8 @@ format as the argument. If the argument is exactly between two integers,
 then the result *integer* will be a multiple of two.
 
 truncate
-        
 
 Function
-        
 
 truncate *machine-number* => *integer* *machine-number*
  truncate *integer* => *integer* *integer*
@@ -607,7 +516,6 @@ Truncates a number toward zero. The integer part is returned as
 *integer*, the remainder is of the same float format as the argument.
 
 floor/
-      
 
 Function
 
@@ -623,7 +531,6 @@ the type of the remainder is determined by the contagion rules when
 applied to the arguments.
 
 ceiling/
-        
 
 Function
 
@@ -639,7 +546,6 @@ the type of the remainder is determined by the contagion rules when
 applied to the arguments.
 
 round/
-      
 
 Function
 
@@ -655,7 +561,6 @@ the nearest mathematical integer. The integer part is returned as
 rules when applied to the arguments.
 
 truncate/
-         
 
 Function
 
@@ -671,7 +576,6 @@ remainder is determined by the contagion rules when applied to the
 arguments.
 
 modulo
-      
 
 Function
 
@@ -686,7 +590,6 @@ actual type of the second value is determined by the contagion rules
 when applied to the arguments.
 
 remainder
-         
 
 Function
 
@@ -701,34 +604,26 @@ actual type of the second value is determined by the contagion rules
 when applied to the arguments.
 
 ^
- 
 
 Open generic function
-                     
 
 ^ *object1* *object2* => #rest *object*
 
 ^
- 
 
 Sealed domain
-             
 
 ^ *complex1* *complex* 2
 
 ^
- 
 
 G.f. method
-           
 
 ^ *integer1* *integer2* => *integer*
 
 ^
- 
 
 G.f. method
-           
 
 ^ *float1* *integer2* => *float*
 
@@ -737,34 +632,26 @@ The value is of the same float format as the first argument. An error is
 signalled if both arguments are 0.
 
 abs
-   
 
 Open generic function
-                     
 
 abs *object* => #rest *object*
 
 abs
-   
 
 Sealed domain
-             
 
 abs *complex*
 
 abs
-   
 
 G.f. method
-           
 
 abs *integer* => *integer*
 
 abs
-   
 
 G.f. method
-           
 
 abs *float* => *float*
 
@@ -772,50 +659,40 @@ Returns the absolute value of the argument. The value is of the same
 float format as the argument.
 
 logior
-      
 
 Function
-        
 
 logior #rest *integers* => *integer*
 
 Returns the bitwise inclusive *OR* of its integer arguments.
 
 logxor
-      
 
 Function
-        
 
 logxor #rest *integers* => *integer*
 
 Returns the bitwise exclusive *OR* of its integer arguments.
 
 logand
-      
 
 Function
-        
 
 logand #rest *integers* => *integer*
 
 Returns the bitwise *AND* of its integer arguments.
 
 lognot
-      
 
 Function
-        
 
 lognot *integer1* => *integer2*
 
 Returns the bitwise *NOT* of its integer arguments.
 
 logbit?
-       
 
 Function
-        
 
 logbit? *index* *integer* => *boolean*
 
@@ -823,30 +700,24 @@ Tests the value of a particular bit in its integer argument. The *index*
 argument is an instance of *<integer>*.
 
 ash
-   
 
 Function
-        
 
 ash *integer1* *count* => *integer*
 
 Performs an arithmetic shift on its first argument.
 
 lcm
-   
 
 Function
-        
 
 lcm *integer1* *integer2* => *integer*
 
 Returns the least common multiple of its two arguments.
 
 gcd
-   
 
 Function
-        
 
 gcd *integer1* *integer2* => *integer*
 
@@ -866,10 +737,8 @@ The following functions in the Dylan library are extended. Note that the
 hash IDs for tables are always instances of *<integer>*.
 
 merge-hash-codes
-                
 
 Function
-        
 
 merge-hash-codes *id1* *state1* *id2* *state2* #key *ordered?*
  => *merged-id* *merged-state*
@@ -881,10 +750,8 @@ instance of *<boolean>*. The returned merged values are instances of
 *<integer>* and *<object>*, as determined by the name of each argument.
 
 object-hash
-           
 
 Function
-        
 
 object-hash *object* => *hash-id* *hash-state*
 
@@ -895,10 +762,8 @@ Iteration constructs
 --------------------
 
 for
-   
 
 Statement macro
-               
 
 The *start*, *bound*, and *increment* expressions in a numeric clause
 must evaluate to instances of *<machine-number>* for this macro.
@@ -928,7 +793,6 @@ part of the following class hierarchy:
 <big-integer>
 
 <double-integer>
-                
 
 (The classes *<big-integer>* and *<double-integer>* are implementation
 classes. You do not need to use them.)
@@ -977,10 +841,8 @@ Specific constructors
 ---------------------
 
 range
-     
 
 Function
-        
 
 range #key *from* *to* *above* *below* *by* *size* => *range*
 
@@ -1044,7 +906,6 @@ ash *abstract-integer1* *integer* => *abstract-integer*
 lcm *abstract-integer1* *abstract-integer2* => *abstract-integer*
 
 gcd *abstract-integer1* *abstract-integer2* => *abstract-integer*
-                                                                 
 
 Iteration constructs
 --------------------
@@ -1056,10 +917,8 @@ uses generic arithmetic in numeric clauses is provided, rather than
 requiring programmers who want that feature to reconstruct it.
 
 for
-   
 
 Statement macro
-               
 
 The *start*, *bound*, and *increment* expressions in a numeric clause
 must evaluate to instances of *<machine-number>* for this macro.
@@ -1107,7 +966,6 @@ ash
 lcm gcd
 
 for
-   
 
 The Dylan-Arithmetic module
 ---------------------------
@@ -1152,7 +1010,6 @@ common-dylan
 generic-arithmetic
 
 *special-arithmetic-implementation-library*
-                                           
 
 So for Big-Integers you would write:
 
@@ -1167,20 +1024,16 @@ use big-integers;
 …
 
 end library foo;
-                
 
 Next you have to declare a module. There are three ways of using
 big-integer arithmetic that we can arrange with a suitable module
 declaration:
 
 Replace all integer arithmetic with the big-integer arithmetic
-                                                              
 
 Use both, with normal arithmetic remaining the default
-                                                      
 
 Use both, with the big-integer arithmetic becoming the default
-                                                              
 
 To get one of the three different effects described above, you need to
 arrange the *define* *module* declaration accordingly. To replace all
@@ -1188,7 +1041,6 @@ integer arithmetic with big-integer arithmetic, include the following in
 your *define* *module* declaration:
 
 use generic-arithmetic-common-dylan;
-                                    
 
 (Note that the module definition should not use the Big-Integers module.
 The Big-Integers library is used as a side-effects library only, that
@@ -1211,7 +1063,6 @@ do this, use the same libraries but instead of using the
 use common-dylan;
 
 use generic-arithmetic, prefix: "ga/"; // use any prefix you like
-                                                                 
 
 This imports the big-integer arithmetic binding names, but gives them a
 prefix *ga/*, using the standard renaming mechanism available in module
@@ -1227,7 +1078,6 @@ ga/-
 ga/\*
 
 …
- 
 
 The operations take either instances of *<integer>* or *ga/<integer>* (a
 subclass of *<integer>*) and return instances of *ga/<integer>*.
@@ -1237,12 +1087,10 @@ you have to use prefix rather than infix syntax when calling them. For
 example:
 
 ga/+ (5, 4);
-            
 
 not:
 
 5 ga/+ 4;
-         
 
 The existing functions like *+* and *-* will only accept *<integer>*
 instances and *ga/<integer>* instances small enough to be represented as
@@ -1259,7 +1107,6 @@ declaration should contain:
 use generic-arithmetic-common-dylan;
 
 use dylan-arithmetic, prefix: "dylan/"; //use any prefix you like
-                                                                 
 
 The Big-Integers library
 ========================
@@ -1278,10 +1125,8 @@ The Big-Integers library extends the functionality of specific
 constructors in the Dylan library as follows:
 
 limited
-       
 
 G.f. method
-           
 
 limited *abstract-integer-class* #key *min* *max* => *limited-type*
 
@@ -1302,7 +1147,6 @@ The Limited Integer Type Protocol is extended to account for limited
 Instances and subtypes in the Big-Integers library
 
 :: todo Fix header style here---
-                                                  
 
 This is true if and only if …
 
@@ -1361,7 +1205,6 @@ subtype?
 Type-equivalence in the Big-Integers library
 :: todo Fix header style here---
                                                   
-                                            
 
 This is type equivalent to …
 

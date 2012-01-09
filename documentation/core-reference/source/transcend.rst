@@ -39,34 +39,25 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns its first argument, raised to the power indicated by its second
 argument.
 
 Signature
-         
 
 ^ *b* *x* => *y*
-                
 
 Arguments
-         
 
 *b* An instance of type *<real>*.
-                                  
 
 *x* An instance of type *<real>*.
-                                  
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns *b* raised to the power *x*. If *b* is *0* and *x* is not
 positive, an error is signalled. If *b* is negative and *x* is not an
@@ -79,7 +70,6 @@ The floating point precision is given by the precision of *b*. The
 result is a single-float if *b* is an integer.
 
 See also
-        
 
 See the function `exp`_.
 
@@ -90,38 +80,29 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the arc cosine of its argument.
 
 Signature
-         
 
 acos *x* => *y*
-               
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians. If *x* is not
 in the range *[-1,+1]*, an error is signalled.
-                                                                                                                       
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the arc cosine of its argument. The floating point precision of
 the result is given by the precision of *x*. The result is a
 single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `asin`_ and `atan`_.
 
@@ -132,37 +113,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the hyperbolic arc cosine of its argument.
 
 Signature
-         
 
 acosh *x* => *y*
-                
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the hyperbolic arc cosine of its argument. The floating point
 precision of the result is given by the precision of *x*. The result is
 a single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `asinh`_ and `atanh`_.
 
@@ -173,38 +145,29 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the arc sine of its argument.
 
 Signature
-         
 
 asin *x* => *y*
-               
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians. If *x* is not
 in the range *[-1,+1]*, an error is signalled.
-                                                                                                                       
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the arc sine of its argument. The floating point precision of
 the result is given by the precision of *x*. The result is a
 single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `acos`_ and `atan`_.
 
@@ -215,37 +178,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the hyperbolic arc sine of its argument.
 
 Signature
-         
 
 asinh *x* => *y*
-                
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the hyperbolic arc sine of its argument. The floating point
 precision of the result is given by the precision of *x*. The result is
 a single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `acosh`_ and `atanh`_.
 
@@ -256,38 +210,29 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the arc tangent of its argument.
 
 Signature
-         
 
 atan *x* => *y*
-               
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians. If *x* is not
 in the range *[-1,+1]*, an error is signalled.
-                                                                                                                       
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the arc tangent of its argument. The floating point precision of
 the result is given by the precision of *x*. The result is a
 single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `acos`_ and `asin`_.
 
@@ -298,33 +243,24 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the arc tangent of one angle divided by another.
 
 Signature
-         
 
 atan2 *x* *y* => *z*
-                    
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The first angle, in radians.
-                                                               
 
 *y* An instance of type *<real>*. The second angle, in radians.
-                                                                
 
 Values
-      
 
 *z* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the arc tangent of *x* divided by *y*. x may be zero if y is
 not zero. The signs of x and y are used to derive what quadrant the
@@ -340,37 +276,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the hyperbolic arc tangent of its argument.
 
 Signature
-         
 
 atanh *x* => *y*
-                
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the hyperbolic arc tangent of its argument. The floating point
 precision of the result is given by the precision of *x*. The result is
 a single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `acosh`_ and `asinh`_.
 
@@ -381,37 +308,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the cosine of its argument.
 
 Signature
-         
 
 cos *x* => *y*
-              
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the cosine of its argument. The floating point precision of the
 result is given by the precision of *x*. The result is a single-float
 if *x* is an integer.
 
 See also
-        
 
 See the functions `sin`_ and `tan`_.
 
@@ -422,37 +340,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the hyperbolic cosine of its argument.
 
 Signature
-         
 
 cosh *x* => *y*
-               
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the hyperbolic cosine of its argument. The floating point
 precision of the result is given by the precision of *x*. The result is
 a single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `sinh`_ and `tanh`_.
 
@@ -463,30 +372,24 @@ Constant
 --------
 
 Summary
-       
 
 The value of *e*, the base of natural logarithms, as a double precision
 floating point number.
 
 Type
-    
 
 *<double-float>*
-                
 
 Superclass
-          
 
 *<float>*
 
 Description
-           
 
 The value of *e*, the base of natural logarithms, as a double precision
 floating point number.
 
 See also
-        
 
 See the constant `$single-e`_.
 
@@ -497,30 +400,22 @@ Constant
 --------
 
 Summary
-       
 
 The value of π as a double precision floating point number.
-                                                           
 
 Type
-    
 
 *<double-float>*
-                
 
 Superclass
-          
 
 *<float>*
 
 Description
-           
 
 The value of π as a double precision floating point number.
-                                                           
 
 See also
-        
 
 See the constant `$single-pi`_.
 
@@ -531,37 +426,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns *e*, the base of natural logarithms, raised to the power
 indicated by its argument.
 
 Signature
-         
 
 exp *x* => *y*
-              
 
 Arguments
-         
 
 *x* An instance of type *<real>*.
-                                  
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns *e*, the base of natural logarithms, raised to the power *x*.
 The floating point precision is given by the precision of *x*.
 
 See also
-        
 
 See the functions `^`_ and `log`_.
 
@@ -572,37 +458,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the integer square root of its argument.
 
 Signature
-         
 
 isqrt *x* => *y*
-                
 
 Arguments
-         
 
 *x* An instance of type *<integer>*.
-                                     
 
 Values
-      
 
 *y* An instance of type *<integer>*.
-                                     
 
 Description
-           
 
 Returns the integer square root of *x*, that is the greatest integer
 less than or equal to the exact positive square root of *x*. If *x* <
 *0*, an error is signalled.
 
 See also
-        
 
 See the function `sqrt`_.
 
@@ -613,30 +490,22 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the natural logarithm of its argument.
 
 Signature
-         
 
 log *x* => *y*
-              
 
 Arguments
-         
 
 *x* An instance of type *<real>.*
-                                 
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the natural logarithm of *x* to the base e. If x <= 0 <= 1, an
 error is signalled. The floating point precision of the result is given
@@ -644,7 +513,6 @@ by the precision of *x*. The result is a single-float if *x* is an
 integer.
 
 See also
-        
 
 See also `exp`_, and `logn`_.
 
@@ -655,26 +523,20 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the logarithm of its argument to the given base.
 
 Signature
-         
 
 logn number, base
 
 Arguments
-         
 
 number
-      
 
 *base* A number greater than *1*.
-                                  
 
 Description
-           
 
 Returns the logarithm of *number* to the base *base*. If x <= 0 <= 1,
 an error is signalled. The floating point precision of the result is
@@ -682,7 +544,6 @@ given by the precision of *number*. The result is a single-float if
 *number* is an integer.
 
 See also
-        
 
 See also `log`_, and `exp`_.
 
@@ -693,37 +554,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the sine of its argument.
 
 Signature
-         
 
 sin *x* => *y*
-              
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the sine of its argument. The floating point precision of the
 result is given by the precision of *x*. The result is a single-float
 if *x* is an integer.
 
 See also
-        
 
 See the functions `cos`_ and `tan`_.
 
@@ -734,31 +586,24 @@ Constant
 --------
 
 Summary
-       
 
 The value of *e*, the base of natural logarithms, as a single precision
 floating point number.
 
 Type
-    
 
 <single-float>
-              
 
 Superclass
-          
 
 <float>
-       
 
 Description
-           
 
 The value of *e*, the base of natural logarithms, as a single precision
 floating point number.
 
 See also
-        
 
 See the constant `$double-e`_.
 
@@ -769,31 +614,22 @@ Constant
 --------
 
 Summary
-       
 
 The value of π as a single precision floating point number.
-                                                           
 
 Type
-    
 
 <single-float>
-              
 
 Superclass
-          
 
 <float>
-       
 
 Description
-           
 
 The value of π as a single precision floating point number.
-                                                           
 
 See also
-        
 
 See the constant `$double-pi`_.
 
@@ -804,37 +640,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the hyperbolic sine of its argument.
 
 Signature
-         
 
 sinh *x* => *y*
-               
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the hyperbolic sine of its argument. The floating point
 precision of the result is given by the precision of *x*. The result is
 a single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `cosh`_ and `tanh`_.
 
@@ -845,37 +672,28 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the square root of its argument.
 
 Signature
-         
 
 sqrt *x* => *y*
-               
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the square root of x. If x is less than zero an error is
 signalled. The floating point precision of the result is given by the
 precision of *x*. The result is a single-float if *x* is an integer.
 
 See also
-        
 
 See the function `isqrt`_.
 
@@ -886,30 +704,22 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the tangent of its argument.
 
 Signature
-         
 
 tan *x* => *y*
-              
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the tangent of its argument. The floating point precision of the
 result is given by the precision of *x*. The result is a single-float
@@ -922,36 +732,27 @@ G.f. method
 -----------
 
 Summary
-       
 
 Returns the hyperbolic tangent of its argument.
 
 Signature
-         
 
 tanh *x* => *y*
-               
 
 Arguments
-         
 
 *x* An instance of type *<real>*. The angle, in radians.
-                                                         
 
 Values
-      
 
 *y* An instance of type *<float>*.
-                                   
 
 Description
-           
 
 Returns the hyperbolic tangent of its argument. The floating point
 precision of the result is given by the precision of *x*. The result is
 a single-float if *x* is an integer.
 
 See also
-        
 
 See the functions `cosh`_ and `sinh`_.

@@ -42,12 +42,10 @@ Different hash functions are not required to return the same hash code
 for equal or even identical objects. For instance,
 
 collection-hash(#(), object-hash, object-hash);
-                                               
 
 is not guaranteed to return the same values as
 
 sequence-hash(#(), object-hash);
-                                
 
 Furthermore, *collection-hash* with *ordered: #t* is not guaranteed to
 return the same hash code as *collection-hash* with *ordered: #f*. Such
@@ -96,7 +94,6 @@ Init-keywords
 See Superclasses.
 
 Description
-           
 
 The *<string-table>* class is the class of tables that use instances of
 *<string>* for their keys. It is an error to use a key that is not an

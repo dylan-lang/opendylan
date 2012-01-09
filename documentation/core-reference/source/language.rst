@@ -152,7 +152,6 @@ find-method
 remove-method
 
 applicable-method?
-                  
 
 Extensions to the FOR iteration construct
 -----------------------------------------
