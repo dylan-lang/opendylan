@@ -12,7 +12,7 @@ define constant $report-width = 72;
 define constant $report-separator
   = make(<byte-string>, size: $report-width, fill: '-');
 
-define constant <report-format> = one-of(#"text", #"html", #"xml");
+define constant <report-format> = one-of(#"text", #"dot", #"html", #"xml");
 
 define abstract class <report> (<object>)
   sealed constant slot report-format :: <report-format> = #"text",
@@ -101,6 +101,7 @@ define function report-info-format-name
   //---*** Make this extensible...
   select (format)
     #"text" => "Text";
+    #"dot"  => "Dot (Graphviz)";
     #"html" => "HTML";
     #"xml"  => "XML";
   end
