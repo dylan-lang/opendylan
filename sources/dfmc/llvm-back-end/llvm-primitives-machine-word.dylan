@@ -898,10 +898,27 @@ define sign-extend overflow side-effect-free stateless dynamic-extent &primitive
   ins--select(be, neg, x-negative, x);
 end;
 
-define sign-extend overflow side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-shift-left-signal-overflow
+define sign-extend overflow side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-shift-left-signal-overflow
     (x :: <raw-machine-word>, shift :: <raw-machine-word>)
  => (result :: <raw-machine-word>);
-  //---*** Fill this in...
+  let trap = make(<llvm-basic-block>);
+  let return = make(<llvm-basic-block>);
+
+  let y = ins--shl(be, 1, shift);
+  let result
+    = ins--call-intrinsic(be, "llvm.smul.with.overflow", vector(x, y));
+  let product = ins--extractvalue(be, result, 0);
+  let overflow = ins--extractvalue(be, result, 1);
+  ins--br(be, overflow, trap, return);
+
+  // Signal <arithmetic-overflow-error>
+  ins--block(be, trap);
+  op--overflow-trap(be);
+  ins--unreachable(be);
+
+  // Return the shifted value
+  ins--block(be, return);
+  product
 end;
 
 define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-floor/-quotient
