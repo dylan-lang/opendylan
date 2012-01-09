@@ -115,8 +115,8 @@ Standards Track DEPs consist of two parts, a design document and a
 reference implementation.  The DEP should be reviewed and accepted
 before a reference implementation is begun, unless a reference
 implementation will aid people in studying the DEP.  Standards Track
-DEPs must include an implementation -- in the form of code, a patch,
-or a URL to same -- before it can be considered Final.
+DEPs must include an implementation -- in the form of a Git branch URL
+-- before it can be considered Final.
 
 DEP authors are responsible for collecting community feedback on a DEP
 before submitting it for review. However, wherever possible, long
