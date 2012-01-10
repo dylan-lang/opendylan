@@ -8,12 +8,14 @@
 /* flag to select Linux */
 #define LINUX_PLATFORM
 #define X86_LINUX_PLATFORM
-//#define BOEHM_GC
 
 #include <sys/signal.h>
 
+#ifdef BOEHM_GC
+#include "boehm-collector.c"
+#else
 #include "collector.c"
-
+#endif
 
 /* HACK -- Implement GC_malloc and GC_free
  *

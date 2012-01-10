@@ -25,6 +25,7 @@
 #include <sys/types.h>
 
 #ifdef BOEHM_GC
+#define GC_PTHREADS
 #include <gc/gc.h>
 #endif
 
