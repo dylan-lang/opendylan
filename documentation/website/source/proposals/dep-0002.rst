@@ -62,7 +62,9 @@ Rationale
    says to other programmers that the function is not part of any
    generic operation; furthermore, the function won't be extended as a
    generic function, and calling it need not involve any generic
-   dispatch.  The two main choices in current practice are::
+   dispatch.  The two main choices in current practice are:
+
+   .. code-block:: dylan
 
      define constant cube = method (x) x * x * x end;
 
@@ -83,13 +85,17 @@ Rationale
 Examples
 ========
 
-   An example use::
+   An example use:
+
+   .. code-block:: dylan
 
      define function cube (x) x * x * x end;
 
    Below is one possible implementation of the macro.  This implementation
    supports whatever adjectives are supported by "define constant".
-   Other implementations are possible.  ::
+   Other implementations are possible.
+
+   .. code-block:: dylan
 
      define macro function-definer
          { define ?adjectives:* function ?name:name 
