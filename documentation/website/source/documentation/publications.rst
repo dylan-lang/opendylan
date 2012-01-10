@@ -109,6 +109,21 @@ detection**
     syntax, the approach taken to describe and represent that syntax
     is distinctly Lisp-like in philosophy.
 
+**Modern languages and Microsoft's component object model**
+(by David N. Gray, John Hotchkiss, Seth Laforge, Andrew Shalit and
+Toby Weinberg - Communications of the ACM May 1998
+`bib <../_static/documentation/gray1998.bib>`__)
+
+    As the computer industry's reliance on component software increases,
+    it becomes increasingly difficult to integrate complex component
+    systems. Modern development environments take a variety of approaches
+    to simplifying this programming problem. This article describes how
+    three programming language implementations provide access to Microsoft's
+    Component Object Model (COM), and how they attempt to reduce the
+    complexity of writing nad using COM objects.
+
+    http://dl.acm.org/citation.cfm?id=274957
+
 **A Monotonic Superclass Linearization for Dylan**
 (by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and
 Keith Playford and P. Tucker Withington at OOPSLA 1996
