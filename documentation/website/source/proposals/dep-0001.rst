@@ -7,7 +7,8 @@ DEP #:          1
 Type:           Process
 Author:         Carl Gay
 Status:         Draft
-Created:        07-Jan-2011
+Created:        07-Jan-2012
+Last-Modified:  10-Jan-2012
 Post-History:   None
 ==============  =============================================
 
@@ -240,19 +241,19 @@ DEP Header Preamble
 Each DEP must begin with a title, followed by an RFC 822 style header
 preamble in simple RST table format.  The headers must appear in the
 following order.  Headers marked with "*" are optional and are
-described below.  All other headers are required. ::
+described below.  All other headers are required.  All dates must
+be in dd-mm-yyyy format::
 
-    DEP: <DEP number>
-    Version: <git revision string>
-    Last-Modified: <git date string>
+    DEP #: <DEP number>
     Author: <list of authors' real names and optionally, email addrs>
     Status: <Draft | Active | Accepted | Deferred | Rejected |
              Withdrawn | Final | Superseded>
     Type: <Standards Track | Informational | Process>
-  * Requires: <DEP numbers>
-    Created: <date created on, in dd-mmm-yyyy format>
-  * Dylan-Version: <version number>
+    Created: <date created>
+    Last-Modified: <date last modified>
     Post-History: <dates of postings to hackers list>
+  * Dylan-Version: <version number>
+  * Requires: <DEP numbers>
   * Replaces: <DEP number>
   * Superseded-By: <DEP number>
   * Resolution: <url>
