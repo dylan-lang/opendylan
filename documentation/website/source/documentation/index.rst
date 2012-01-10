@@ -41,7 +41,8 @@ Documentation
 [`epub <getting-started/GettingStartedWithOpenDylan.epub>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
 
-    Describes Open Dylan's interactive development environment.
+    Describes Open Dylan's interactive development environment. This is
+    only useful if you are using the Open Dylan IDE on Windows.
 
 `Building Applications Using DUIM <building-with-duim/index.html>`_
 [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__]
@@ -49,7 +50,8 @@ Documentation
 [`old HTML <http://opendylan.org/documentation/opendylan/dguide/index.htm>`__]
 
     Describes how to use DUIM (Dylan User Interface Manager),
-    the portable window programming toolkit.
+    the portable window programming toolkit. This is only useful
+    if you are using Open Dylan on Windows.
 
 .. raw:: html
 
