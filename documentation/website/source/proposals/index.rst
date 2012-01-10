@@ -14,8 +14,8 @@ Open Proposals (under consideration)
 ====================================
 
 ====  =============================================
-0001  `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <https://raw.github.com/dylan-lang/website/dev/source/proposals/dep-0001.rst>`__)
-0003  `C3 superclass linearization <dep-0003.html>`_  (`source <https://raw.github.com/dylan-lang/website/dev/source/proposals/dep-0003.rst>`__)
+0001  `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0001.rst>`__)
+0003  `C3 superclass linearization <dep-0003.html>`_  (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0003.rst>`__)
 ====  =============================================
 
 
@@ -23,7 +23,7 @@ Accepted Proposals
 ==================
 
 ====  =============================================
-0002  `define function <dep-0002.html>`_ (`source <https://raw.github.com/dylan-lang/website/dev/source/proposals/dep-0002.rst>`__)
+0002  `define function <dep-0002.html>`_ (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0002.rst>`__)
 ====  =============================================
 
 
@@ -37,8 +37,8 @@ All Proposals by Number
 =======================
 
 ====  =============================================
-0001  `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <https://raw.github.com/dylan-lang/website/dev/source/proposals/dep-0001.rst>`__)
-0002  `define function <dep-0002.html>`_ (`source <https://raw.github.com/dylan-lang/website/dev/source/proposals/dep-0002.rst>`__)
-0003  `C3 superclass linearization <dep-0003.html>`_  (`source <https://raw.github.com/dylan-lang/website/dev/source/proposals/dep-0003.rst>`__)
+0001  `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0001.rst>`__)
+0002  `define function <dep-0002.html>`_ (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0002.rst>`__)
+0003  `C3 superclass linearization <dep-0003.html>`_  (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0003.rst>`__)
 ====  =============================================
 
