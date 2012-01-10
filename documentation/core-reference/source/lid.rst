@@ -342,8 +342,7 @@ conventionally use, standard filename suffixes to identify the filetype
 (such as MacOS), then you must rename your source files as follows:
 
 - LID files must be given filenames with the suffix ``.lid``.
-- Dylan source files must be given filenames with the suffix ``.dylan`` or
-  ``.dyl``.
+- Dylan source files must be given filenames with the suffix ``.dylan``.
 
 The file designators that appear in LID files may be a string of
 characters of any length, constructed from the set of hyphen,
@@ -381,7 +380,7 @@ library.
     Files: fact-def
            fact
 
-File: *fact-def.dyl*. Defines the *factorial* library and its one
+File: *fact-def.dylan*. Defines the *factorial* library and its one
 module.
 
 .. code-block:: dylan
@@ -397,7 +396,7 @@ module.
       export fact;
     end;
 
-File: *fact.dyl*. Defines the method for calculating a factorial.
+File: *fact.dylan*. Defines the method for calculating a factorial.
 
 .. code-block:: dylan
 
@@ -425,7 +424,7 @@ File: *app.lid*. LID file describing the components of the
     Start-Module: factorial-application
     Start-Function: main
 
-File: *appdef.dyl*. Defines the *factorial-application* library and its
+File: *appdef.dylan*. Defines the *factorial-application* library and its
 one module.
 
 .. code-block:: dylan
@@ -442,7 +441,7 @@ one module.
       use factorial;
     end module;
 
-File: *app.dyl*. Defines a routine that calls the factorial routine.
+File: *app.dylan*. Defines a routine that calls the factorial routine.
 
 .. code-block:: dylan
 
