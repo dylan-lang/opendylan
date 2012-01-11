@@ -129,13 +129,68 @@ define method llvm-signature-dbg-types
 end method;
 
 define method llvm-reference-dbg-type
-    (back-end :: <llvm-back-end>, o :: <&raw-type>)
+    (back-end :: <llvm-back-end>, o :: <&raw-struct-type>)
  => (dbg-type :: <llvm-metadata-value>);
-  error("raw dbg type ref %=", o);
+  element(back-end.%dbg-type-table, o, default: #f)
+    | (back-end.%dbg-type-table[o]
+         := begin
+              let placeholder = make(<llvm-symbolic-metadata>, name: 0);
+              let (type-size, type-alignment, member-bit-offsets)
+                = compute-raw-aggregate-layout(o);
+              let elements
+                = map(method (member, index)
+                        let member-type = member.member-raw-type;
+                        let member-size = raw-type-size(member-type);
+                        let member-alignment = raw-type-alignment(member-type);
+                        let member-dbg-type
+                          = llvm-reference-dbg-type(back-end, member-type);
+                        let member-offset = member-bit-offsets[member];
+                        llvm-make-dbg-derived-type
+                          (#"member", placeholder,
+                           format-to-string("F%d", index),
+                           #f, #f, 8 * member-size, 8 * member-alignment,
+                           member-offset, member-dbg-type)
+                      end,
+                      o.raw-aggregate-members, range(from: 0));
+              let aggregate
+                = llvm-make-dbg-composite-type
+                    (#"struct", #f,
+                     o.^debug-name | "",
+                     #f, #f, type-size, type-alignment, elements, #f);
+              placeholder.llvm-placeholder-value-forward := aggregate
+            end)
 end method;
 
 define method llvm-reference-dbg-type
-    (back-end :: <llvm-back-end>, o)
+    (back-end :: <llvm-back-end>, o :: <&raw-type>)
+ => (dbg-type :: <llvm-metadata-value>);
+  element(back-end.%dbg-type-table, o, default: #f)
+    | (back-end.%dbg-type-table[o]
+         := begin
+              let type-name = o.^debug-name;
+              let type-size = o.raw-type-size;
+              let type-alignment = o.raw-type-alignment;
+              let kind = 
+                select (o)
+                  dylan-value(#"<raw-pointer>") => #"pointer";
+                  dylan-value(#"<raw-byte>")    => #"unsigned-char";
+                  otherwise =>
+                    error("No debug type mapping for %s", type-name);
+                end;
+              if (kind == #"pointer")
+                llvm-make-dbg-derived-type
+                  (kind, #f,
+                   type-name, #f, #f, 8 * type-size, 8 * type-alignment, 0, #f)
+              else
+                llvm-make-dbg-basic-type
+                  (kind, #f,
+                   type-name, 8 * type-size, 8 * type-alignment, 0)
+              end if
+            end)
+end method;
+
+define method llvm-reference-dbg-type
+    (back-end :: <llvm-back-end>, o :: <&type>)
  => (dbg-type :: <llvm-metadata-value>);
   let obj-type = dylan-value(#"<object>");
   let word-size = back-end-word-size(back-end);

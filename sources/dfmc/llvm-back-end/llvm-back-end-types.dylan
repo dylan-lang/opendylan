@@ -213,6 +213,32 @@ define method llvm-reference-type
   back-end.%raw-type-table[o]
 end method;
 
+// Raw structure types
+define method llvm-reference-type
+    (back-end :: <llvm-back-end>, o :: <&raw-struct-type>)
+ => (type :: <llvm-type>);
+  let name = concatenate("struct.", o.^debug-name);
+
+  // Locate the memoized type, if any, with that name
+  let type-table = back-end.llvm-builder-module.llvm-type-table;
+  let type = element(type-table, name, default: #f);
+  if (type)
+    type
+  else
+    let elements = make(<stretchy-object-vector>);
+    for (member in o.raw-aggregate-members)
+      let member-type = member.member-raw-type;
+      if (member.member-bitfield-width = 0)  // not a bitfield
+        add!(elements, llvm-reference-type(back-end, member-type));
+      else
+        error ("Can't generate LLVM types for C-struct bitfields yet");
+      end if;
+    end for;
+    element(type-table, name)
+      := make(<llvm-struct-type>, name: name, elements: elements)
+  end
+end method;
+
 // References to most objects use the object pointer type
 define method llvm-reference-type
     (back-end :: <llvm-back-end>, o)
