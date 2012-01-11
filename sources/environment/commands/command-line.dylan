@@ -930,13 +930,9 @@ define method command-line-choose-file
       empty?(filename) => values(#f, #f);
 
       file-exists?(filename) =>
-        let locator = as(<file-locator>, filename);
-        values(if (locator-relative?(locator))
-                 merge-locators(locator, working-directory())
-               else
-                 locator
-               end,
-               #f);
+        let locator = merge-locators(expand-pathname(as(<file-locator>, filename)),
+                                     working-directory());
+        values(locator, #f);
 
       otherwise =>
         message(server.server-context, "File %s does not exist", filename);
@@ -1066,7 +1062,8 @@ define method parse-next-argument
   let (filename, next-index)
     = parse-next-word(text, start: start, end: stop);
   if (filename)
-    let locator = merge-locators(as(type, filename), working-directory());
+    let locator = merge-locators(expand-pathname(as(type, filename)),
+                                 working-directory());
     values(locator, next-index)
   else
     parse-error("Missing filename argument")

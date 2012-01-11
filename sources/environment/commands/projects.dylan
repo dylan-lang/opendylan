@@ -123,7 +123,7 @@ end command-line open;
 define function open-project-from-locator
     (locator :: <file-locator>)
  => (project :: false-or(<project-object>), invalid? :: <boolean>)
-  let pathname = merge-locators(locator, working-directory());
+  let pathname = merge-locators(expand-pathname(locator), working-directory());
   let extension = locator-extension(pathname);
   select (extension by \=)
     lid-file-extension() =>
