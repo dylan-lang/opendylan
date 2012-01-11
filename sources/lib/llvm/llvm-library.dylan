@@ -472,11 +472,14 @@ define module llvm-internals
   use dylan-extensions,
     import: { <double-integer>, %double-integer-low, %double-integer-high,
               decode-single-float, decode-double-float,
-              encode-single-float, encode-double-float };
+              encode-single-float, encode-double-float,
+              debug-name, address-of };
   use machine-word-lowlevel;
   use common-dylan, exclude: { format-to-string };
   use streams;
   use format;
+  use print;
+  use pprint;
   use file-system;
   use locators;
   use machine-words;

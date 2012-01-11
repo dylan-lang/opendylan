@@ -5,6 +5,7 @@ Files:        llvm-library
 	      double-machine-word
 	      llvm-module
 	      llvm-type
+	      llvm-type-print
 	      llvm-value
 	      llvm-operator
 	      llvm-constant
