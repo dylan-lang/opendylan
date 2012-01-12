@@ -1,0 +1,33 @@
+Content and Dylan domain syntax / support issues:
+ * Fix extended form of dynamic-bind in threads.rst.
+ * Fix extended form of conditional-update! in threads.rst
+ * Fix dylandomain to support variable definition adjective
+   macros and update :macro:`thread` and :macro:`locked`.
+ * Figure out what to do about 'See Also' blocks.
+ * Figure out what to do about terminology between DRM,
+   what |Agent currently has, and what was in the original
+   Open Dylan documentation.
+ * Better handling of the .. module: block at the top. How
+   much should be in the module block? Maybe nothing and
+   just use ".. current-module:: threads" ?
+ * Need to link to at least the genindex and probably the
+   API index as well (are they sufficiently different?
+   what value does the API index have over the index?)
+
+Visual / Display issues:
+ * CSS killed inter-paragraph spacing in things like
+   descriptions.
+ * The left column of tables is too short and causing things
+   to wrap.
+ * Better differentiation between items visually.
+ * Move the 'open generic function', 'statement macro', etc
+   text to the right away from what it is describing.
+ * Can we auto-link superclasses?
+ * Can we put the summary into :summary: but still display
+   it like it is today?
+ * ``...`` looks different (and better) from :func:`foo`.
+ * Can :signature: automaticaly be treated as a dylan
+   code block? Or at least formatted better?
+ * Stop turning things in bullet lists gray (CSS).
+ * Better display of the 'Operations' data (DRM does it
+   as a table).
