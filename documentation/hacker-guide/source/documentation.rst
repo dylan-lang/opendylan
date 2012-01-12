@@ -82,7 +82,7 @@ A skip-list is a data type equivalent to a balanced (binary) tree.
    
 .. generic-function:: element-sequence
    
-   :argument list:   A skip list.
+   :param list:      A skip list.
    :value sequence:  An instance of :drm:`<sequence>`.
    
    One of the useful features of skip lists is that they can be ordered.
@@ -98,8 +98,8 @@ A skip-list is a data type equivalent to a balanced (binary) tree.
    
    A specialization of :drm:`element`.
    
-   :argument collection:    An instance of :class:`<skip-list>`.
-   :argument key:           The key of an element. An instance of :drm:`<object>`.
-   :argument #key default:  A value to return if the element is not found. If
-                            omitted and element not found, signals an error.
-   :value    object:        The element associated with the key.
+   :param collection:    An instance of :class:`<skip-list>`.
+   :param key:           The key of an element. An instance of :drm:`<object>`.
+   :param #key default:  A value to return if the element is not found. If
+                         omitted and element not found, signals an error.
+   :value object:        The element associated with the key.
