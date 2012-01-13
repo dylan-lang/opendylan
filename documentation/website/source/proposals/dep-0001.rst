@@ -9,9 +9,12 @@ Author:         Carl Gay
 Status:         Draft
 Created:        07-Jan-2012
 Last-Modified:  10-Jan-2012
-Post-History:   None
+Post-History:   10-Jan-2012
 ==============  =============================================
 
+.. changes to be made...
+   * Language-Change header
+   * Time period for feedback: 2 weeks?
 
 Preamble
 ========
@@ -25,13 +28,19 @@ the Dylan team to work from.
 What is a DEP?
 ==============
 
-DEP stands for Dylan Enhancement Proposal.  A DEP is a design
-document providing information to the Dylan community, or describing
-a new feature for Dylan or its processes or environment.  The DEP
-should provide a concise technical specification of the feature and a
-rationale for the feature.
+DEP stands for Dylan Enhancement Proposal.  A DEP is a design document
+which
 
-We intend DEPs to be the primary mechanisms for proposing new
+  * provides information to the Dylan community, or
+  * describes a new feature for the Dylan language or its standard
+    libraries, or
+  * describes changes to the processes or environment surrounding
+    Dylan or its reference implementation, Open Dylan.
+
+The DEP should provide a concise technical specification of, and
+rationale for, the feature or process.
+
+We intend DEPs to be the primary mechanism for proposing new
 features, for collecting community input on an issue, and for
 documenting the design decisions that have gone into Dylan.  The DEP
 author is responsible for building consensus within the community and
@@ -48,7 +57,7 @@ DEP Types
 There are three kinds of DEP:
 
 1. A **Standards Track** DEP describes a new feature or implementation
-   for Dylan.
+   for Dylan or its standard libraries.
 
 2. An **Informational** DEP describes a Dylan design issue, or
    provides general guidelines or information to the Dylan community,
@@ -289,7 +298,7 @@ versions of the DEP are posted to the hackers list.  Both
 headers should be in dd-mmm-yyyy format, e.g. 14-Aug-2001.
 
 Standards Track DEPs must have a Dylan-Version header which indicates
-the version of Dylan that the feature will be released with.
+the version of Open Dylan that the feature will be released with.
 Informational and Process DEPs do not need a Dylan-Version header.
 
 DEPs may have a Requires header, indicating the DEP numbers that this
