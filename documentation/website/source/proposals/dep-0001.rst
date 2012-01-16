@@ -19,7 +19,8 @@ Post-History:   10-Jan-2012
 Preamble
 ========
 
-This document is based heavily on Python PEP 1, "PEP Purpose and
+This document is based heavily on Python `PEP 1
+<http://www.python.org/dev/peps/pep-0001/>`_, "PEP Purpose and
 Guidelines", by Barry Warsaw, Jeremy Hylton, and David Goodger.  The
 author would like to thank them for providing an excellent base for
 the Dylan team to work from.
