@@ -40,7 +40,7 @@ Open Dylan (OD)
 
 Standard libraries
     The set of libraries that are officially maintained alongside Open
-    Dylan.  They are officially maintained in follow sense:
+    Dylan.  They are officially maintained in the following sense:
 
       * Commits are reviewed for bugs and style.
       * They are tested prior to each OD release.
