@@ -357,7 +357,7 @@ Created
 ~~~~~~~
 
 The Created header records the date that the DEP was assigned a
-number.  It should be in dd-mmm-yyyy format.
+number.
 
 Last-Modified
 ~~~~~~~~~~~~~
@@ -365,13 +365,13 @@ Last-Modified
 The Last-Modified header is included because it may be useful to those
 reading DEPs without access to git.  It should be updated when
 substantive changes are made to the DEP.  It need not be updated when
-fixing typos, changed URLs, etc.  It must be in dd-mmm-yyyy format.
+fixing typos, changed URLs, etc.
 
 Post-History
 ~~~~~~~~~~~~
 
 This field should list the dates when DEP drafts were posted to the
-hackers mailing list, in dd-mmm-yyyy format.
+hackers mailing list.
 
 Resolution
 ~~~~~~~~~~
