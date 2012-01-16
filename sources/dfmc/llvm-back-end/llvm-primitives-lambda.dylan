@@ -7,9 +7,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Calling Convention
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-function-parameter
+define constant $function-parameter-name :: <string> = ".function";
+
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-function-parameter
     () => (fn :: <function>);
-  //---*** Fill this in...
+  llvm-builder-local(be, $function-parameter-name)
 end;
 
 /*
@@ -19,10 +21,12 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
 end;
 */
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-next-methods-parameter
+define constant $next-methods-parameter-name :: <string> = ".next";
+
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-next-methods-parameter
     () => (nm :: <list>);
-  //---*** Fill this in...
-end; 
+  llvm-builder-local(be, $next-methods-parameter-name)
+end;
 
 define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-set-generic-function-entrypoints // runtime
     (gf :: <generic-function>) => ();

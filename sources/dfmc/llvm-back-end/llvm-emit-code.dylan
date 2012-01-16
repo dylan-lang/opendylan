@@ -77,6 +77,16 @@ define method emit-code
             range(below: parameter-types.size),
             parameters(o));
 
+    let calling-convention-parameters
+      = vector(make(<llvm-argument>,
+                    type: $llvm-object-pointer-type,
+                    name: $next-methods-parameter-name,
+                    index: parameter-types.size),
+               make(<llvm-argument>,
+                    type: $llvm-object-pointer-type,
+                    name: $function-parameter-name,
+                    index: parameter-types.size + 1));
+
     let linkage
       = if (o.model-definition & ~init?) #"external" else #"internal" end;
     let section
@@ -88,7 +98,7 @@ define method emit-code
         := make(<llvm-function>,
                 name: function-name,
                 type: llvm-pointer-to(back-end, function-type),
-                arguments: arguments,
+                arguments: concatenate(arguments, calling-convention-parameters),
                 linkage: linkage,
                 section: llvm-section-name(back-end, section),
                 calling-convention:
@@ -104,6 +114,11 @@ define method emit-code
         for (argument in arguments, param in parameters(o))
           ins--local(back-end, argument.llvm-argument-name, argument);
           temporary-value(param) := argument;
+        end for;
+
+        // Add calling convention parameters to the function's value table
+        for (argument in calling-convention-parameters)
+          ins--local(back-end, argument.llvm-argument-name, argument);
         end for;
 
         // Emit debug information for the function

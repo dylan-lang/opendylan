@@ -160,7 +160,8 @@ define method emit-init-code-definition
            varargs?: #f);
   let init-code-function-type
     = llvm-pointer-to(back-end, init-code-function-type);
-  
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+
   // System init code
   block ()
     let system-init-name = concatenate(name, $system-init-code-tag);
@@ -173,15 +174,15 @@ define method emit-init-code-definition
               section: llvm-section-name(back-end, #"init-code"),
               calling-convention: $llvm-calling-convention-fast);
     ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
-    
+
     for (code in heap.heap-root-system-init-code)
       // Emit the generated init function
       emit-definition(back-end, m, code.^iep);
 
       // Generate a call to the init function
       let iep-name = emit-name(back-end, m, code.^iep);
-      ins--call(back-end, llvm-builder-global(back-end, iep-name), #(),
-                type: $llvm-object-pointer-type,
+      ins--call(back-end, llvm-builder-global(back-end, iep-name),
+                vector(undef, undef),
                 calling-convention: $llvm-calling-convention-fast);
     end for;
     
@@ -212,8 +213,8 @@ define method emit-init-code-definition
 
       // Generate a call to the init function
       let iep-name = emit-name(back-end, m, code.^iep);
-      ins--call(back-end, llvm-builder-global(back-end, iep-name), #(),
-                type: $llvm-object-pointer-type,
+      ins--call(back-end, llvm-builder-global(back-end, iep-name),
+                vector(undef, undef),
                 calling-convention: $llvm-calling-convention-fast);
     end for;
     

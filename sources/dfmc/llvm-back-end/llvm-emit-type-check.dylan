@@ -48,7 +48,9 @@ define method do-emit-type-check
   let tce-iep = dylan-value(#"type-check-error").^iep;
   let tce-name = emit-name(back-end, module, tce-iep);
   let tce-global = llvm-builder-global(back-end, tce-name);
-  ins--tail-call(back-end, tce-global, vector(object, type-ref),
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  ins--tail-call(back-end, tce-global,
+                 vector(object, type-ref, undef, undef),
                  type: $llvm-object-pointer-type,
                  calling-convention:
                    llvm-calling-convention(back-end, tce-iep));
@@ -87,8 +89,9 @@ define method do-emit-instance-cmp
   let iep-func = ins--bitcast(back-end, iep, func-type);
 
   // Call it and return the truth value
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   let call
-    = ins--call(back-end, iep-func, vector(object, type-ref),
+    = ins--call(back-end, iep-func, vector(object, type-ref, undef, undef),
                 calling-convention:
                   llvm-calling-convention(back-end,
                                           typical-instance?-iep));

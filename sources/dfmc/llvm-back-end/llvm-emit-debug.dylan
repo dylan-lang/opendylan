@@ -102,19 +102,22 @@ define method llvm-signature-dbg-types
   let obj-type = dylan-value(#"<object>");
   let parameter-types = make(<stretchy-object-vector>);
 
-  // Required arguments
+  // Required parameters
   for (type in ^signature-required(signature),
        i from 0 below ^signature-number-required(signature))
     add!(parameter-types, llvm-reference-dbg-type(back-end, type));
   end for;
-  // Optional arguments
+  // Optional parameters
   if (^signature-optionals?(signature))
     add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
   end if;
-  // Keyword arguments
+  // Keyword parameters
   for (spec in spec-argument-key-variable-specs(sig-spec))
     add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
   end for;
+  // Calling convention parameters (next-methods, function)
+  add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
+  add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
 
   let return-type
     = llvm-reference-dbg-type(back-end, back-end.%mv-struct-type);

@@ -490,15 +490,14 @@ define method emit-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      c :: <simple-call>, f :: <&iep>)
  => ();
-  if (^next?(function(f)))
-    error("%= has #next", f);
-  end if;
   let name = emit-name(back-end, m, f);
   let global = llvm-builder-global(back-end, name);
   let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   let call
     = ins--call(back-end, global,
-                map(curry(emit-reference, back-end, m), c.arguments),
+                concatenate(map(curry(emit-reference, back-end, m), c.arguments),
+                            vector(undef, undef)),
                 type: return-type,
                 calling-convention:
                   llvm-calling-convention(back-end, f));
@@ -593,7 +592,9 @@ define method emit-computation
       (uis-global.llvm-value-type,
        llvm-pointer-to(back-end, llvm-lambda-type(back-end, uis-iep)));
     let offset-ref = emit-reference(back-end, m, c.computation-slot-offset);
-    ins--tail-call(back-end, uis-global, vector(instance, offset-ref),
+    let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+    ins--tail-call(back-end, uis-global,
+                   vector(instance, offset-ref, undef, undef),
                    calling-convention:
                      llvm-calling-convention(back-end, uis-iep));
     ins--unreachable(back-end);

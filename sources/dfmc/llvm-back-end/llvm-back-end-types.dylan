@@ -281,19 +281,23 @@ define method llvm-signature-types
  => (parameter-types :: <sequence>);
   let parameter-types = make(<stretchy-object-vector>);
 
-  // Required arguments
+  // Required parameters
   for (type in ^signature-required(sig),
        i from 0 below ^signature-number-required(sig))
     add!(parameter-types, llvm-reference-type(back-end, type));
   end for;
-  // Optional arguments
+  // Optional parameters
   if (^signature-optionals?(sig))
     add!(parameter-types, $llvm-object-pointer-type);
   end if;
-  // Keyword arguments
+  // Keyword parameters
   for (spec in spec-argument-key-variable-specs(sig-spec))
     add!(parameter-types, $llvm-object-pointer-type);
   end for;
+  // Calling convention parameters
+  add!(parameter-types, $llvm-object-pointer-type); // next-methods
+  add!(parameter-types, $llvm-object-pointer-type); // function
+
   parameter-types
 end method;
 
@@ -302,18 +306,22 @@ define method llvm-dynamic-signature-types
  => (parameter-types :: <sequence>);
   let parameter-types = make(<stretchy-object-vector>);
 
-  // Required arguments
+  // Required parameters
   for (spec in spec-argument-required-variable-specs(sig-spec))
     add!(parameter-types, $llvm-object-pointer-type);
   end for;
-  // Optional arguments
+  // Optional parameters
   if (spec-argument-optionals?(sig-spec))
     add!(parameter-types, $llvm-object-pointer-type);
   end if;
+  // Keyword parameters
   for (spec in spec-argument-key-variable-specs(sig-spec))
     add!(parameter-types, $llvm-object-pointer-type);
   end for;
-  
+  // Calling convention parameters
+  add!(parameter-types, $llvm-object-pointer-type); // next-methods
+  add!(parameter-types, $llvm-object-pointer-type); // function
+
   parameter-types
 end method;
 
