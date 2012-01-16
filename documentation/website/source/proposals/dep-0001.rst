@@ -143,12 +143,12 @@ As updates are necessary, the DEP author may commit new versions.
 
 Wait for at least ten days to receive feedback on each draft.
 
-**Reach consensus** -- We rely on reaching consensus on the hackers
-mailing list.  Consensus _must_ be reached for the DEP to be approved.
-Exactly what "consensus" means here is left undefined, as we expect
-most cases to be obvious and we wish to keep the process informal for
-now.  At such time as this becomes a problem we may implement a more
-formal scheme (e.g., voting).
+**Reach consensus** -- We rely on reaching consensus on the
+hackers@opendylan.org mailing list.  Consensus _must_ be reached for
+the DEP to be approved.  Exactly what "consensus" means here is left
+undefined, as we expect most cases to be obvious and we wish to keep
+the process informal for now.  At such time as this becomes a problem
+we may implement a more formal scheme (e.g., voting).
 
 Standards Track DEPs consist of two parts, a design document and a
 reference implementation.  The DEP should be reviewed and accepted
@@ -464,8 +464,8 @@ Once the DEP is ready for the repository, the DEP author will:
   Commit your changes, push them to your fork of the repository and
   submit a pull request.
 
-* Monitor opendylan.org to make sure the DEP gets added to the site
-  properly.
+* Monitor `opendylan.org <http://opendylan.org>`_ to make sure the DEP
+  gets added to the site properly.
 
 Resources:
 
