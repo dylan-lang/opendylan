@@ -3,7 +3,7 @@ DEP Purpose and Guidelines
 **************************
 
 ==============  =============================================
-DEP #:          1
+DEP Number:     1
 Type:           Process
 Author:         Carl Gay
 Status:         Draft
@@ -12,9 +12,9 @@ Last-Modified:  10-Jan-2012
 Post-History:   10-Jan-2012
 ==============  =============================================
 
-.. changes to be made...
-   * Language-Change header
-   * Time period for feedback: 2 weeks?
+.. contents:: Contents
+   :local:
+
 
 Preamble
 ========
@@ -81,48 +81,51 @@ There are three kinds of DEP:
 DEP Work Flow
 =============
 
-The DEP process begins with a new idea for Dylan.  It is highly
-recommended that a single DEP contain a single key proposal or new
-idea. Small enhancements or patches often don't need a DEP and can be
-injected into the Dylan development work flow with a patch submission
-to the issue tracker for the appropriate repository on GitHub. The
-more focussed the DEP, the more successful it tends to be.  If in
-doubt, split your DEP into several well-focussed ones.
+**Have an idea** -- The DEP process begins with a new idea for Dylan.
+It is highly recommended that a single DEP contain a **single key
+proposal** or new idea. Small enhancements or patches often don't need
+a DEP and can be injected into the Dylan development work flow with a
+patch submission to the issue tracker for the appropriate repository
+on GitHub. The more focussed the DEP, the more successful it tends to
+be.  If in doubt, split your DEP into several well-focussed ones.
 
-Each DEP must have a champion -- someone who writes the DEP using the
-style and format described below, shepherds the discussions in the
-appropriate forums, and attempts to build community consensus around
-the idea.  The DEP champion (a.k.a. Author) should first attempt to
-ascertain whether the idea is DEP-able.  Posting to
-hackers@opendylan.org is the best way to go about this.
+**Have a champion** -- Each DEP must have a champion -- someone who
+writes the DEP using the style and format described below, shepherds
+the discussions in the appropriate forums, and attempts to build
+community consensus around the idea.  The DEP champion (a.k.a. Author)
+should first attempt to ascertain whether the idea is DEP-able.
+Posting to hackers@opendylan.org is the best way to go about this.
 
-Vetting an idea publicly before going as far as writing a DEP is meant
-to save the potential author time.  Many ideas have been brought
-forward for changing Dylan that have been rejected for various
-reasons. Asking the Dylan community first if an idea is original
-helps prevent too much time being spent on something that is
-guaranteed to be rejected based on prior discussions (searching
-the internet does not always do the trick). It also helps to make sure
-the idea is applicable to the entire community and not just the author.
-Just because an idea sounds good to the author does not
-mean it will work for most people in most areas where Dylan is used.
+**Vet the idea publicly** -- Vetting an idea publicly before going as
+far as writing a DEP is meant to save the potential author time.  Many
+ideas have been brought forward for changing Dylan that have been
+rejected for various reasons. Asking the Dylan community first if an
+idea is original helps prevent too much time being spent on something
+that is guaranteed to be rejected based on prior discussions
+(searching the internet does not always do the trick). It also helps
+to make sure the idea is applicable to the entire community and not
+just the author.  Just because an idea sounds good to the author does
+not mean it will work for most people in most areas where Dylan is
+used.
 
-Once the champion has asked the Dylan community whether an idea has
-any chance of acceptance, a properly formatted draft DEP should be
-presented to hackers@opendylan.org.  The initial DEP status should be
-"Draft".  The DEP author should assign the next available DEP number
-to the DEP by looking at the `DEP directory <index.html>`_ to find the
-highest used number.  The DEP number is not assured until the DEP has
-been committed to the `origin Git repository
+**Present a draft** -- Once the champion has asked the Dylan community
+whether an idea has any chance of acceptance, a properly formatted
+draft DEP should be presented to hackers@opendylan.org.  The initial
+DEP status should be **Draft**.  The DEP author should assign the next
+available DEP number to the DEP by looking at the `DEP directory
+<index.html>`_ to find the highest used number.  The DEP number is not
+assured until the DEP has been committed to the `origin Git repository
 <https://github.com/dylan-lang/website/tree/master/source/proposals>`_.
 As updates are necessary, the DEP author may commit new versions.
 
-We rely on reaching consensus on the hackers mailing list.  Consensus
-_must_ be reached for the DEP to be approved.  Exactly what
-"consensus" means here is left undefined, as we expect most cases to
-be obvious and we wish to keep the process informal for now.  At such
-time as this becomes a problem we may implement a more formal scheme
-(e.g., voting).
+Wait for at least two weeks to receive feedback on each draft.
+
+**Reach consensus** -- We rely on reaching consensus on the hackers
+mailing list.  Consensus _must_ be reached for the DEP to be approved.
+Exactly what "consensus" means here is left undefined, as we expect
+most cases to be obvious and we wish to keep the process informal for
+now.  At such time as this becomes a problem we may implement a more
+formal scheme (e.g., voting).
 
 Standards Track DEPs consist of two parts, a design document and a
 reference implementation.  The DEP should be reviewed and accepted
@@ -139,7 +142,7 @@ separate SIG mailing list for the topic, having the DEP author accept
 private comments in the early design phases, setting up a wiki page,
 etc.  DEP authors should use their discretion here.
 
-For a DEP to be accepted it must meet certain minimum criteria.  It
+For a DEP to be **Accepted** it must meet certain minimum criteria.  It
 must be a clear and complete description of the proposed enhancement.
 The enhancement must represent a net improvement.  The proposed
 implementation, if applicable, must be solid and must not unduly add
@@ -147,18 +150,18 @@ complication.
 
 Once a DEP has been accepted, the reference implementation must be
 completed.  When the reference implementation is complete and accepted
-by the community, the status may be changed to "Final".
+by the community, the status may be changed to **Final**.
 
-A DEP can also be assigned status "Deferred".  The DEP author or
+A DEP can also be assigned status **Deferred**.  The DEP author or
 editor can assign the DEP this status when no progress is being made
 on the DEP.  Once a DEP is deferred, the DEP editor can re-assign it
 to draft status.
 
-A DEP can also be "Rejected".  Perhaps after all is said and done it
+A DEP can also be **Rejected**.  Perhaps after all is said and done it
 was not a good idea.  It is still important to have a record of this
 fact.
 
-DEPs can also be superseded by a different DEP, rendering the original
+DEPs can also be **superseded by** a different DEP, rendering the original
 obsolete.  This is intended for Informational DEPs, where version 2 of
 an API can replace version 1.
 
@@ -166,8 +169,9 @@ The possible paths of the status of DEPs are as follows:
 
 .. image:: ../_static/dep-0001-states.png
 
-Some Informational and Process DEPs may also have a status of "Active"
-if they are never meant to be completed.  E.g. DEP 1 (this DEP).
+Some Informational and Process DEPs may also have a status of
+**Active** if they are never meant to be completed.  E.g. DEP 1 (this
+DEP).
 
 
 What belongs in a successful DEP?
@@ -175,30 +179,37 @@ What belongs in a successful DEP?
 
 Each DEP should have the following parts:
 
-1. Preamble -- RFC 822 style headers containing meta-data about the
+1. Title
+
+#. Preamble -- RFC 822 style headers containing meta-data about the
    DEP, including the DEP number, a short descriptive title (limited
    to a maximum of 44 characters), the names, and optionally the
    contact info for each author, etc.
 
-2. Abstract -- a short (~200 word) description of the technical issue
+#. Table of contents::
+
+     .. contents: Contents
+        :local:
+
+#. Abstract -- a short (~200 word) description of the technical issue
    being addressed.
 
-3. Copyright/public domain -- Each DEP must either be explicitly
+#. Copyright/public domain -- Each DEP must either be explicitly
    labelled as placed in the public domain (see this DEP as an
    example) or licensed under the `Open Publication License`_.
 
-4. Specification -- The technical specification should describe the
-   syntax and semantics of any new language feature.  The
+#. Specification -- The technical specification should describe the
+   syntax and semantics of any new language or library feature.  The
    specification should be detailed enough to allow competing,
-   interoperable implementations for any of the current Dylan
-   platforms.
+   interoperable Dylan implementations.  If the DEP proposes changes
+   to the language itself it *must* clearly indicate all such changes.
 
-5. Motivation -- The motivation is critical for DEPs that want to
+#. Motivation -- The motivation is critical for DEPs that want to
    change the Dylan language.  It should clearly explain why the
    existing language specification is inadequate to address the
    problem that the DEP solves.
 
-6. Rationale -- The rationale fleshes out the specification by
+#. Rationale -- The rationale fleshes out the specification by
    describing what motivated the design and why particular design
    decisions were made.  It should describe alternate designs that
    were considered and related work, e.g. how the feature is supported
@@ -208,12 +219,12 @@ Each DEP should have the following parts:
    community and discuss important objections or concerns raised
    during discussion.
 
-7. Backwards Compatibility -- All DEPs that introduce backwards
+#. Backwards Compatibility -- All DEPs that introduce backwards
    incompatibilities must include a section describing these
    incompatibilities and their severity.  The DEP must explain how the
    author proposes to deal with these incompatibilities.
 
-8. Reference Implementation -- The reference implementation must be
+#. Reference Implementation -- The reference implementation must be
    completed before any DEP is given status "Final", but it need not
    be completed before the DEP is accepted.  It is better to finish
    the specification and rationale first and reach consensus on it
@@ -251,21 +262,34 @@ Each DEP must begin with a title, followed by an RFC 822 style header
 preamble in simple RST table format.  The headers must appear in the
 following order.  Headers marked with "*" are optional and are
 described below.  All other headers are required.  All dates must
-be in dd-mm-yyyy format::
+be in dd-mm-yyyy format.  ::
 
-    DEP #: <DEP number>
+    DEP-Number: <DEP number>
     Author: <list of authors' real names and optionally, email addrs>
     Status: <Draft | Active | Accepted | Deferred | Rejected |
              Withdrawn | Final | Superseded>
     Type: <Standards Track | Informational | Process>
+    Affects-DRM: Yes/No
     Created: <date created>
     Last-Modified: <date last modified>
     Post-History: <dates of postings to hackers list>
-  * Dylan-Version: <version number>
+    Resolution: <url>   [required for Standards Track DEPs only]
+  * Target-Version: <OD version number>
   * Requires: <DEP numbers>
   * Replaces: <DEP number>
   * Superseded-By: <DEP number>
-  * Resolution: <url>
+
+DEP Number
+~~~~~~~~~~
+
+Authors may assign DEP numbers themselves by looking at the last
+number in the `numerical list of DEPs
+<http://opendylan.org/proposals/index.html>`_ and incrementing it by
+one.  To prevent collisions, the author should set the ``DEP-Number``
+header to "Unassigned" until just before the DEP is committed to git.
+
+Author
+~~~~~~
 
 The Author header lists the names, and optionally the email addresses
 of all the authors/owners of the DEP.  The format of the Author header
@@ -285,26 +309,60 @@ following RFC 2822 continuation line conventions.
 .. Not yet: Note that personal email addresses in DEPs will be
    obscured as a defense against spam harvesters.
 
-*Note: The Resolution header is required for Standards Track DEPs
-only.  It contains a URL that should point to an email message or
-other web resource where the pronouncement about the DEP is made.*
+Status
+~~~~~~
+
+See `DEP Work Flow`_ for a description of this field.
+
+Type
+~~~~
 
 The Type header specifies the type of DEP: Standards Track,
 Informational, or Process.
 
+Affects-DRM
+~~~~~~~~~~~
+
+This field is only required for Standards Track DEPs.  The value
+should be **Yes** if the DEP proposes a change to the Dylan language
+definition, and otherwise **No**.  The language definition is composed
+of the Dylan Reference Manual plus any **Accepted** DEPs for which
+this field is **Yes**.  If this field is set to **Yes** then the DEP
+*must* clearly list exactly how it affects the language definition.
+
+Created
+~~~~~~~
+
 The Created header records the date that the DEP was assigned a
 number, while Post-History is used to record the dates of when new
-versions of the DEP are posted to the hackers list.  Both
-headers should be in dd-mmm-yyyy format, e.g. 14-Aug-2001.
+versions of the DEP are posted to the hackers list.  Both headers
+should be in dd-mmm-yyyy format, e.g. 14-Aug-2001.
 
-Standards Track DEPs must have a Dylan-Version header which indicates
-the version of Open Dylan that the feature will be released with.
-Informational and Process DEPs do not need a Dylan-Version header.
+Resolution
+~~~~~~~~~~
+
+The Resolution header is required for Standards Track DEPs only.  It
+contains a URL that should point to an email message or other web
+resource where the pronouncement about the DEP is made.
+
+Target-Version
+~~~~~~~~~~~~~~
+
+Standards Track DEPs must have a Target-Version header which indicates
+the version of Open Dylan in which the feature is expected to be
+released.  Informational and Process DEPs do not need a Target-Version
+header.
+
+Requires
+~~~~~~~~
 
 DEPs may have a Requires header, indicating the DEP numbers that this
 DEP depends on.
 
-DEPs may also have a Superseded-By header indicating that a DEP has
+Superseded-By and Replaces
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+DEPs may also have a Superseded-By header indicating that they have
 been rendered obsolete by a later document; the value is the number of
 the DEP that replaces the current document.  The newer DEP must have a
 Replaces header containing the number of the DEP that it rendered
@@ -315,9 +373,10 @@ Auxiliary Files
 ===============
 
 DEPs may include auxiliary files such as diagrams.  Such files must be
-named ``dep-XXXX-aaaa.ext``, where "XXXX" is the DEP number, "aaaa" is
-arbitrary text to indicate the file content (e.g., "state-diagram"),
-and "ext" is replaced by the actual file extension (e.g. "png").
+named ``dep-XXXX-aaaa.ext``, where "XXXX" is the DEP number (padded
+with leading zeros), "aaaa" is arbitrary text to indicate the file
+content (e.g., "state-diagram"), and "ext" is replaced by the actual
+file extension (e.g. "png").
 
 
 Reporting DEP Bugs, or Submitting DEP Updates
