@@ -112,12 +112,12 @@ pull request to the issue tracker for the appropriate repository on
 GitHub. The more focussed the DEP, the more successful it tends to be.
 If in doubt, split your DEP into several well-focussed ones.
 
-**Have a champion** -- Each DEP must have a champion -- someone who
+**Have an author** -- Each DEP must have an author -- someone who
 writes the DEP using the style and format described below, shepherds
 the discussions in the appropriate forums, and attempts to build
-community consensus around the idea.  The DEP champion (a.k.a. Author)
-should first attempt to ascertain whether the idea is DEP-able.
-Posting to hackers@opendylan.org is the best way to go about this.
+community consensus around the idea.  The DEP author should first
+attempt to ascertain whether the idea is DEP-able.  Posting to
+hackers@opendylan.org is the best way to go about this.
 
 **Vet the idea publicly** -- Vetting an idea publicly before going as
 far as writing a DEP is meant to save the potential author time.  Many
@@ -131,7 +131,7 @@ just the author.  Just because an idea sounds good to the author does
 not mean it will work for most people in most areas where Dylan is
 used.
 
-**Present a draft** -- Once the champion has asked the Dylan community
+**Present a draft** -- Once the author has asked the Dylan community
 whether an idea has any chance of acceptance, a properly formatted
 draft DEP should be presented to hackers@opendylan.org.  The initial
 DEP status should be **Draft**.  The DEP author should assign the next
