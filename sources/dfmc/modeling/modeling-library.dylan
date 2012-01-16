@@ -258,7 +258,6 @@ define module-with-models dfmc-modeling
     <&copy-down-method>,
     <&accessor-method>,
       &slot method-slot-descriptor,
-      ^accessor-method-xep-string,
 //    <&getter-accessor-method>,
     <&setter-accessor-method>,
 //    <&single-accessor-method>,

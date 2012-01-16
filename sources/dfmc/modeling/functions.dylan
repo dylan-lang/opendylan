@@ -680,33 +680,6 @@ define method ^slot-accessor-name (m :: <&repeated-setter-method>)
 end method;
 */
 
-define generic ^accessor-method-xep-string (m :: <&accessor-method>) => (v :: <string>);
-
-define method ^accessor-method-xep-string (m :: <&repeated-getter-method>) => (v :: <string>)
-  "slotacc_repeated_instance_getter_xep"
-end method;
-
-define method ^accessor-method-xep-string (m :: <&repeated-setter-method>) => (v :: <string>)
-  "slotacc_repeated_instance_setter_xep"
-end method;
-
-define method ^accessor-method-xep-string (m :: <&getter-method>) => (v :: <string>)
-  if (instance?(^method-slot-descriptor(m), <&any-class-slot-descriptor>))
-    "slotacc_single_q_class_getter_xep"
-  else
-    "slotacc_single_q_instance_getter_xep"
-  end if
-end method;
-
-define method ^accessor-method-xep-string (m :: <&setter-method>) => (v :: <string>)
-  if (instance?(^method-slot-descriptor(m), <&any-class-slot-descriptor>))
-    "slotacc_single_q_class_setter_xep"
-  else
-    "slotacc_single_q_instance_setter_xep"
-  end if
-end method;
-
-
 // markt, this represents a copy-down method skeleton.
 
 define &class <copy-down-method> (<method>)
