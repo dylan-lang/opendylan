@@ -30,7 +30,7 @@ Terminology
 ===========
 
 Dylan Reference Manual (DRM)
-    The manual written by Andrew Shallit, plus its errata.
+    The manual written by Andrew Shalit, plus its errata.
 
 Dylan language specification
     The DRM *plus* any **Accepted** DEPs that modify the Dylan
@@ -161,7 +161,7 @@ DEP authors are responsible for collecting community feedback on a DEP
 before submitting it for review. However, wherever possible, long
 open-ended discussions on public mailing lists should be avoided.
 Strategies to keep the discussions efficient include: setting up a
-separate SIG mailing list for the topic, having the DEP author accept
+separate mailing list for the topic, having the DEP author accept
 private comments in the early design phases, setting up a wiki page,
 etc.  DEP authors should use their discretion here.
 
