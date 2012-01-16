@@ -25,6 +25,28 @@ author would like to thank them for providing an excellent base for
 the Dylan team to work from.
 
 
+Terminology
+===========
+
+Dylan Reference Manual (DRM)
+    The manual written by Andrew Shallit, plus its errata.
+
+Dylan language specification
+    The DRM *plus* any **Accepted** DEPs that modify the Dylan
+    language specification.
+
+Open Dylan (OD)
+    The reference implementation of the Dylan language specification.
+
+Standard libraries
+    The set of libraries that are officially maintained alongside Open
+    Dylan.  They are officially maintained in follow sense:
+
+      * Commits are reviewed for bugs and style.
+      * They are tested prior to each OD release.
+      * They are packaged with each OD release.
+
+
 What is a DEP?
 ==============
 
@@ -35,7 +57,7 @@ which
   * describes a new feature for the Dylan language or its standard
     libraries, or
   * describes changes to the processes or environment surrounding
-    Dylan or its reference implementation, Open Dylan.
+    the Dylan language or Open Dylan.
 
 The DEP should provide a concise technical specification of, and
 rationale for, the feature or process.
@@ -118,7 +140,7 @@ assured until the DEP has been committed to the `origin Git repository
 <https://github.com/dylan-lang/website/tree/master/source/proposals>`_.
 As updates are necessary, the DEP author may commit new versions.
 
-Wait for at least two weeks to receive feedback on each draft.
+Wait for at least ten days to receive feedback on each draft.
 
 **Reach consensus** -- We rely on reaching consensus on the hackers
 mailing list.  Consensus _must_ be reached for the DEP to be approved.
@@ -334,9 +356,21 @@ Created
 ~~~~~~~
 
 The Created header records the date that the DEP was assigned a
-number, while Post-History is used to record the dates of when new
-versions of the DEP are posted to the hackers list.  Both headers
-should be in dd-mmm-yyyy format, e.g. 14-Aug-2001.
+number.  It should be in dd-mmm-yyyy format.
+
+Last-Modified
+~~~~~~~~~~~~~
+
+The Last-Modified header is included because it may be useful to those
+reading DEPs without access to git.  It should be updated when
+substantive changes are made to the DEP.  It need not be updated when
+fixing typos, changed URLs, etc.  It must be in dd-mmm-yyyy format.
+
+Post-History
+~~~~~~~~~~~~
+
+This field should list the dates when DEP drafts were posted to the
+hackers mailing list, in dd-mmm-yyyy format.
 
 Resolution
 ~~~~~~~~~~
