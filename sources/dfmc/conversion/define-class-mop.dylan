@@ -983,13 +983,6 @@ define function ^compute-class-precedence-list (c :: <&class>)
           class1,
           class2, 
           witness1, witness2);
-        // gts,98apr03:  a naive attempt to keep going
-        // remove a superclass,
-        c-direct-superclasses := remove(c-direct-superclasses, class2);
-        // and try again
-        merge-lists(list(c), 
-                    concatenate(map(^all-superclasses, c-direct-superclasses),
-                                list(c-direct-superclasses)));
       end
     end
   end;
