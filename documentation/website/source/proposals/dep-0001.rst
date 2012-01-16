@@ -33,7 +33,7 @@ Dylan Reference Manual (DRM)
     The manual written by Andrew Shalit, plus its errata.
 
 Dylan language specification
-    The DRM *plus* any **Accepted** DEPs that modify the Dylan
+    The DRM *plus* all **Accepted** DEPs that modify the Dylan
     language specification.
 
 Open Dylan (OD)
