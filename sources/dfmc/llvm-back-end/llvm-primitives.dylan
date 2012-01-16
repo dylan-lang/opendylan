@@ -374,7 +374,7 @@ define method llvm-primitive-function-type
   // Compute return type
   let return-type
     = if (values-rest?)
-        $llvm-object-pointer-type // FIXME
+        llvm-reference-type(back-end, back-end.%mv-struct-type)
       elseif (required-value-type-specs.empty?)
         $llvm-void-type
       else
