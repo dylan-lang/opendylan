@@ -1069,16 +1069,14 @@ define method emit-computation
         = ins--insertvalue(back-end, undef-struct,
                            emit-reference(back-end, m, &false), 0);
       let value-count-struct
-        = ins--insertvalue(back-end, value-struct,
-                           back-end.%byte-character-constants[0], 1);
+        = ins--insertvalue(back-end, value-struct, i8(0), 1);
       ins--ret(back-end, value-count-struct);
     elseif (mv.head.size = 1)
       // FIXME
       let value-struct
         = ins--insertvalue(back-end, undef-struct, mv.head.first, 0);
       let value-count-struct
-        = ins--insertvalue(back-end, value-struct,
-                           back-end.%byte-character-constants[1], 1);
+        = ins--insertvalue(back-end, value-struct, i8(1), 1);
       ins--ret(back-end, value-count-struct);
     else
       error("FIXME: MV return %d", c.computation-value.required-values);

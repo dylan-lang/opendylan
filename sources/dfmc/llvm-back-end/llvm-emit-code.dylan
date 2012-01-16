@@ -151,8 +151,7 @@ define method emit-code
         = ins--insertvalue(back-end, undef-struct,
                            emit-reference(back-end, module, #x4300430), 0);
       let value-count-struct
-        = ins--insertvalue(back-end, value-struct,
-                           back-end.%byte-character-constants[0], 1);
+        = ins--insertvalue(back-end, value-struct, i8(0), 1);
       ins--ret(back-end, value-count-struct);
       format(*standard-output*, "emit %s: %s\n", function-name, e);
       force-output(*standard-output*);

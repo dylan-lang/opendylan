@@ -7,6 +7,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Support
 
+// Cast an integer as an i8 integer constant
+define inline function i8
+    (value :: <integer>) => (llvm-value :: <llvm-integer-constant>)
+  current-back-end().%byte-character-constants[value]
+end function;
+
 // Cast an integer as an i32 integer constant
 define inline function i32
     (value :: <abstract-integer>) => (llvm-value :: <llvm-integer-constant>)
@@ -117,6 +123,5 @@ end method;
 
 define method op--overflow-trap
     (be :: <llvm-x86-back-end>) => ();
-  ins--call-intrinsic(be, "llvm.x86.int",
-                      vector(be.%byte-character-constants[4]));
+  ins--call-intrinsic(be, "llvm.x86.int", vector(i8(4)));
 end method;
