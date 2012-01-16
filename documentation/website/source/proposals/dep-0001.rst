@@ -384,9 +384,8 @@ Target-Version
 ~~~~~~~~~~~~~~
 
 Standards Track DEPs must have a Target-Version header which indicates
-the version of Open Dylan in which the feature is expected to be
-released.  Informational and Process DEPs do not need a Target-Version
-header.
+the version of Open Dylan in which the feature will be released.
+Informational and Process DEPs do not need a Target-Version header.
 
 Requires
 ~~~~~~~~
