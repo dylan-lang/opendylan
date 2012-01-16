@@ -1,0 +1,331 @@
+* LLVM Project
+** Document bitcode format
+*** TODO Document records in the CONSTANTS_BLOCK
+*** TODO Document records in the FUNCTION_BLOCK
+** llvm-externalize tool?
+** Generate Windows native debugging info from LLVM-MC
+* Open Dylan LLVM IR library
+** Bitcode abbreviations
+*** TODO Implement bitcode abbreviation infrastructure
+*** TODO Analyze records with high relative bit counts in DFMC-generated output
+*** TODO Add abbreviations to inefficient records
+*** TODO Use efficient encoding for debug info
+* Open Dylan LLVM back-end
+** Primitives implementation
+*** TODO primitive-invoke-debugger
+*** DONE primitive-inside-debugger?
+*** TODO primitive-debug-message
+*** DONE primitive-word-size
+*** DONE primitive-header-size
+*** DONE primitive-untraced-allocate
+*** DONE primitive-manual-allocate
+*** DONE primitive-manual-free
+*** DONE primitive-allocate-wrapper
+*** DONE primitive-byte-allocate-leaf-filled-terminated
+*** DONE primitive-byte-allocate-leaf-filled
+*** DONE primitive-allocate-in-awl-pool
+*** DONE primitive-allocate-weak-in-awl-pool
+*** primitive-set-class-breakpoint
+*** primitive-clear-class-breakpoint
+*** primitive-display-class-breakpoints
+*** DONE primitive-element
+*** DONE primitive-element-setter
+*** DONE primitive-byte-element
+*** DONE primitive-byte-element-setter
+*** primitive-bit-element
+*** primitive-bit-element-setter
+*** TODO primitive-bit-field
+*** TODO primitive-bit-field-setter
+*** TODO primitive-fill!
+*** TODO primitive-fill-bytes!
+*** TODO primitive-replace!
+*** TODO primitive-replace-bytes!
+*** TODO primitive-pin-object
+*** TODO primitive-unpin-object
+*** primitive-mps-finalize
+*** primitive-mps-finalization-queue-first
+*** primitive-mps-park
+*** primitive-mps-clamp
+*** primitive-mps-release
+*** primitive-mps-collect
+*** primitive-mps-collection-stats
+*** primitive-mps-enable-gc-messages
+*** primitive-mps-committed
+*** primitive-mps-begin-ramp-alloc
+*** primitive-mps-end-ramp-alloc
+*** primitive-mps-begin-ramp-alloc-all
+*** primitive-mps-end-ramp-alloc-all
+*** TODO primitive-allocation-count
+*** TODO primitive-initialize-allocation-count
+*** primitive-begin-heap-alloc-stats
+*** primitive-end-heap-alloc-stats
+*** DONE primitive-runtime-module-handle
+*** primitive-keyboard-interrupt-signaled
+*** primitive-keyboard-interrupt-signaled-setter
+*** primitive-keyboard-interrupt-polling
+*** primitive-keyboard-interrupt-polling-setter
+*** primitive-keyboard-interrupt-polling-thread
+*** primitive-keyboard-interrupt-polling-thread-setter
+*** DONE primitive-unicode-character-as-raw
+*** DONE primitive-raw-as-unicode-character
+*** DONE primitive-byte-character-as-raw
+*** DONE primitive-raw-as-byte-character
+*** DONE primitive-cast-pointer-as-raw
+*** DONE primitive-cast-raw-as-pointer
+*** DONE primitive-type-check
+*** DONE primitive-range-check
+*** DONE primitive-raw-as-boolean
+*** DONE primitive-boolean-as-raw
+*** DONE primitive-as-boolean
+*** DONE primitive-not
+*** DONE primitive-id?
+*** DONE primitive-not-id?
+*** TODO primitive-compare-bytes
+*** TODO primitive-compare-words
+*** DONE primitive-repeated-slot-as-raw
+*** DONE primitive-repeated-slot-offset
+*** TODO primitive-vector
+*** DONE primitive-copy-vector
+*** DONE primitive-vector-element
+*** DONE primitive-vector-element-setter
+*** DONE primitive-vector-size
+*** DONE primitive-vector-as-raw
+*** DONE primitive-strlen
+*** DONE primitive-string-as-raw
+*** DONE primitive-raw-as-string
+*** DONE primitive-object-class
+*** DONE primitive-slot-value
+*** DONE primitive-initialized-slot-value
+*** DONE primitive-slot-value-setter
+*** DONE primitive-repeated-slot-value
+*** DONE primitive-repeated-slot-value-setter
+*** DONE primitive-function-parameter
+*** DONE primitive-next-methods-parameter
+*** TODO primitive-set-generic-function-entrypoints
+*** TODO primitive-set-accessor-method-xep
+Fix dfmc/modeling/primitives.dylan definition (missing 'what')
+*** TODO primitive-xep-apply
+*** TODO primitive-mep-apply
+*** TODO primitive-mep-apply-with-optionals
+*** TODO primitive-engine-node-apply-with-optionals
+*** TODO primitive-iep-apply
+*** TODO primitive-initialize-engine-node
+*** TODO primitive-initialize-discriminator
+*** TODO primitive-values
+*** primitive-resolve-symbol
+*** primitive-string-as-symbol
+*** primitive-preboot-symbols
+*** DONE primitive-unwrap-c-pointer
+*** TODO primitive-wrap-c-pointer
+*** TODO primitive-*-at
+*** TODO primitive-*-at-setter
+*** TODO primitive-*-field
+*** TODO primitive-*-field-setter
+*** TODO primitive-exit-application
+*** TODO primitive-start-timer
+*** TODO primitive-stop-timer
+*** DONE primitive-single-float-as-raw
+*** DONE primitive-raw-as-single-float
+*** DONE primitive-single-float-as-integer
+*** DONE primitive-integer-as-single-float
+*** DONE primitive-single-float-as-double-integer
+*** DONE primitive-double-integer-as-single-float
+*** DONE primitive-cast-single-float-as-machine-word
+*** DONE primitive-cast-machine-word-as-single-float
+*** DONE primitive-single-float-negate
+*** DONE primitive-single-float-add
+*** DONE primitive-single-float-subtract
+*** DONE primitive-single-float-multiply
+*** DONE primitive-single-float-divide
+*** DONE primitive-single-float-equals?
+*** DONE primitive-single-float-less-than?
+*** DONE primitive-single-float-sqrt
+*** DONE primitive-single-float-log
+*** DONE primitive-single-float-exp
+*** DONE primitive-single-float-expt
+*** DONE primitive-single-float-sin
+*** DONE primitive-single-float-cos
+*** TODO primitive-single-float-tan
+*** TODO primitive-single-float-asin
+*** TODO primitive-single-float-acos
+*** TODO primitive-single-float-atan
+*** DONE primitive-double-float-as-raw
+*** DONE primitive-raw-as-double-float
+*** DONE primitive-double-float-as-integer
+*** DONE primitive-integer-as-double-float
+*** DONE primitive-double-float-as-double-integer
+*** DONE primitive-double-integer-as-double-float
+*** DONE primitive-cast-double-float-as-machine-words
+*** DONE primitive-cast-machine-words-as-double-float
+*** DONE primitive-double-float-negate
+*** DONE primitive-double-float-add
+*** DONE primitive-double-float-subtract
+*** DONE primitive-double-float-multiply
+*** DONE primitive-double-float-divide
+*** DONE primitive-double-float-equals?
+*** DONE primitive-double-float-less-than?
+*** DONE primitive-double-float-sqrt
+*** DONE primitive-double-float-log
+*** DONE primitive-double-float-exp
+*** DONE primitive-double-float-expt
+*** DONE primitive-double-float-sin
+*** DONE primitive-double-float-cos
+*** TODO primitive-double-float-tan
+*** TODO primitive-double-float-asin
+*** TODO primitive-double-float-acos
+*** TODO primitive-double-float-atan
+*** DONE primitive-single-float-as-double
+*** DONE primitive-double-float-as-single
+*** DONE primitive-single-float-class
+*** DONE primitive-double-float-class
+*** DONE primitive-integer?
+*** DONE primitive-machine-word-equal?
+*** DONE primitive-machine-word-not-equal?
+*** DONE primitive-machine-word-less-than?
+*** DONE primitive-machine-word-not-less-than?
+*** DONE primitive-machine-word-greater-than?
+*** DONE primitive-machine-word-not-greater-than?
+*** DONE primitive-wrap-machine-word
+*** DONE primitive-unwrap-machine-word
+*** DONE primitive-cast-raw-as-integer
+*** DONE primitive-cast-integer-as-raw
+*** DONE primitive-wrap-abstract-integer
+*** DONE primitive-wrap-unsigned-abstract-integer
+*** DONE primitive-unwrap-abstract-integer
+*** DONE primitive-machine-word-logand
+*** DONE primitive-machine-word-logior
+*** DONE primitive-machine-word-logxor
+*** DONE primitive-machine-word-logbit?
+*** DONE primitive-machine-word-lognot
+*** DONE primitive-machine-word-logbit-set
+*** DONE primitive-machine-word-logbit-clear
+*** DONE primitive-machine-word-bit-field-deposit
+*** DONE primitive-machine-word-bit-field-extract
+*** DONE primitive-machine-word-count-low-zeros
+*** DONE primitive-machine-word-count-high-zeros
+*** DONE primitive-machine-word-add
+*** DONE primitive-machine-word-add-with-overflow
+*** DONE primitive-machine-word-subtract
+*** DONE primitive-machine-word-subtract-with-overflow
+*** DONE primitive-machine-word-multiply-low
+*** DONE primitive-machine-word-multiply-high
+*** DONE primitive-machine-word-multiply-low/high
+*** DONE primitive-machine-word-multiply-low-with-overflow
+*** DONE primitive-machine-word-multiply-with-overflow
+*** DONE primitive-machine-word-negative
+*** DONE primitive-machine-word-negative-with-overflow
+*** DONE primitive-machine-word-abs
+*** DONE primitive-machine-word-abs-with-overflow
+*** DONE primitive-machine-word-floor/-quotient
+*** DONE primitive-machine-word-floor/-remainder
+*** DONE primitive-machine-word-floor/
+*** DONE primitive-machine-word-ceiling/-quotient
+*** DONE primitive-machine-word-ceiling/-remainder
+*** DONE primitive-machine-word-ceiling/
+*** DONE primitive-machine-word-round/-quotient
+*** DONE primitive-machine-word-round/-remainder
+*** DONE primitive-machine-word-round/
+*** DONE primitive-machine-word-truncate/-quotient
+*** DONE primitive-machine-word-truncate/-remainder
+*** DONE primitive-machine-word-truncate/
+*** DONE primitive-machine-word-divide-quotient
+*** DONE primitive-machine-word-divide-remainder
+*** DONE primitive-machine-word-divide
+*** DONE primitive-machine-word-shift-left-low
+*** DONE primitive-machine-word-shift-left-high
+*** DONE primitive-machine-word-shift-left-low/high
+*** TODO primitive-machine-word-shift-left-low-with-overflow
+*** TODO primitive-machine-word-shift-left-with-overflow
+*** DONE primitive-machine-word-shift-right
+*** DONE primitive-machine-word-add-signal-overflow
+*** DONE primitive-machine-word-subtract-signal-overflow
+*** DONE primitive-machine-word-multiply-signal-overflow
+*** DONE primitive-machine-word-negative-signal-overflow
+*** DONE primitive-machine-word-abs-signal-overflow
+*** DONE primitive-machine-word-shift-left-signal-overflow
+*** TODO primitive-machine-word-double-floor/-quotient
+*** TODO primitive-machine-word-double-floor/-remainder
+*** TODO primitive-machine-word-double-floor/
+*** TODO primitive-machine-word-double-ceiling/-quotient
+*** TODO primitive-machine-word-double-ceiling/-remainder
+*** TODO primitive-machine-word-double-ceiling/
+*** TODO primitive-machine-word-double-round/-quotient
+*** TODO primitive-machine-word-double-round/-remainder
+*** TODO primitive-machine-word-double-round/
+*** TODO primitive-machine-word-double-truncate/-quotient
+*** TODO primitive-machine-word-double-truncate/-remainder
+*** TODO primitive-machine-word-double-truncate/
+*** TODO primitive-machine-word-double-divide-quotient
+*** TODO primitive-machine-word-double-divide-remainder
+*** TODO primitive-machine-word-double-divide
+*** DONE primitive-machine-word-unsigned-less-than?
+*** DONE primitive-machine-word-unsigned-greater-than?
+*** DONE primitive-machine-word-unsigned-not-less-than?
+*** DONE primitive-machine-word-unsigned-not-greater-than?
+*** DONE primitive-machine-word-unsigned-add-with-carry
+*** DONE primitive-machine-word-unsigned-subtract-with-borrow
+*** DONE primitive-machine-word-unsigned-multiply-high
+*** DONE primitive-machine-word-unsigned-multiply
+*** DONE primitive-machine-word-unsigned-divide-quotient
+*** DONE primitive-machine-word-unsigned-divide-remainder
+*** DONE primitive-machine-word-unsigned-divide
+*** DONE primitive-machine-word-unsigned-rotate-left
+*** DONE primitive-machine-word-unsigned-rotate-right
+*** DONE primitive-machine-word-unsigned-shift-right
+*** TODO primitive-machine-word-unsigned-double-divide-quotient
+*** TODO primitive-machine-word-unsigned-double-divide-remainder
+*** TODO primitive-machine-word-unsigned-double-divide
+*** TODO primitive-machine-word-unsigned-shift-left-high
+*** DONE primitive-machine-word-unsigned-double-shift-left-high
+*** DONE primitive-machine-word-unsigned-double-shift-left
+*** DONE primitive-machine-word-unsigned-double-shift-right-low
+*** TODO primitive-machine-word-unsigned-double-shift-right-high
+*** DONE primitive-machine-word-unsigned-double-shift-right
+** TEB and GC-TEB
+*** TODO Define structures
+*** TODO Define accessor/setter functions
+General raw struct accessors?
+** TODO Thread-Local Variables
+** TODO Entry points definitions
+*** TODO xep
+*** TODO rest-xep
+*** TODO rest-key-xep
+*** TODO rest-key-mep
+*** TODO gf-xep
+*** TODO key-mep
+*** TODO gf-optional-xep
+*** TODO apply-xep
+*** TODO general-engine-node-n
+*** TODO general-engine-node-n-optionals
+*** TODO general-engine-node-spread-optionals
+*** TODO unrestricted-keyed-single-method-entry
+*** TODO explicit-keyed-single-method-entry
+*** TODO implicit-keyed-single-method-entry
+*** TODO discriminate-on-argument-entry
+*** TODO if-type-discriminator-engine
+*** TODO typecheck-discriminator-engine
+*** TODO monomorphic-by-class-discriminator-engine
+** TODO Function calls
+*** TODO <simple-call>
+*** TODO <method-call>
+*** TODO <engine-node-call>
+*** TODO <apply>
+** TODO Closure construction
+** TODO Local exits
+** TODO Non-local exits
+** TODO Cleanups (unwind-protect)
+** TODO MV transfers
+** TODO Box construction
+** TODO 'tbaa' (Type-Based Alias Analysis) metadata
+See http://llvm.org/llvm/docs/LangRef.html#tbaa
+* Open Dylan LLVM linker
+** TODO Emit gluefile
+** TODO Emit mainfile
+** TODO Jamfile
+* Open Dylan LLVM Runtime Generator
+** TODO Entry points generation
+** TODO C header output generator
+** TODO Support file generator
+* Open Dylan LLVM Runtime
+** TODO GC primitives implementation/adaptation
+** TODO Threads primitives implementation/adaptation
