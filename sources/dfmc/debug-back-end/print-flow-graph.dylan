@@ -185,6 +185,10 @@ define method entry-point-character (c :: <function-call>, o :: <&iep>)
   'i'
 end method entry-point-character;
 
+define method entry-point-character (c :: <function-call>, o :: <&generic-function>)
+  'g'
+end method entry-point-character;
+
 define method operation-name (c :: <function-call>)
   "UNKNOWN CALL"
 end method operation-name;
@@ -193,12 +197,20 @@ define method operation-name (c :: <simple-call>)
   "CALL"
 end method operation-name;
 
+define method operation-name (c :: <engine-node-call>)
+  "ENGINE-NODE-CALL"
+end method operation-name;
+
 define method operation-name (c :: <method-call>)
   "METHOD-CALL"
 end method operation-name;
 
 define method operation-name (c :: <apply>)
   "APPLY"
+end method operation-name;
+
+define method operation-name (c :: <engine-node-apply>)
+  "ENGINE-NODE-APPLY"
 end method operation-name;
 
 define method print-args (stream :: <stream>, arguments)
