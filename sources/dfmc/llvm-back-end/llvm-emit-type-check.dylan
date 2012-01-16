@@ -45,20 +45,29 @@ define method do-emit-type-check
 
   // Not an instance: throw an error
   ins--block(back-end, error-bb);
+  op--type-check-error(back-end, object, type-ref);
+
+  // Instance check succeeded
+  ins--block(back-end, result-bb);
+  emit-reference(back-end, module, &true)
+end method;
+
+define method op--type-check-error
+    (back-end :: <llvm-back-end>, object :: <llvm-value>,
+     type-ref :: <llvm-value>)
+ => ();
+  let module = back-end.llvm-builder-module;
+
   let tce-iep = dylan-value(#"type-check-error").^iep;
   let tce-name = emit-name(back-end, module, tce-iep);
   let tce-global = llvm-builder-global(back-end, tce-name);
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   ins--tail-call(back-end, tce-global,
                  vector(object, type-ref, undef, undef),
-                 type: $llvm-object-pointer-type,
+                 type: llvm-reference-type(back-end, back-end.%mv-struct-type),
                  calling-convention:
                    llvm-calling-convention(back-end, tce-iep));
   ins--unreachable(back-end);
-
-  // Instance check succeeded
-  ins--block(back-end, result-bb);
-  emit-reference(back-end, module, &true)
 end method;
 
 
