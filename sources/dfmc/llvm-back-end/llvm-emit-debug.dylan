@@ -100,15 +100,6 @@ define method llvm-signature-dbg-types
  => (return-type :: false-or(<llvm-metadata-value>),
      parameter-types :: <sequence>);
   let obj-type = dylan-value(#"<object>");
-
-  let return-type
-    = if (~signature | spec-value-rest?(sig-spec))
-        llvm-reference-dbg-type(back-end, obj-type)
-      else
-        llvm-reference-dbg-type
-          (back-end, first(^signature-values(signature), default: obj-type))
-      end if;
-
   let parameter-types = make(<stretchy-object-vector>);
 
   // Required arguments
@@ -125,6 +116,8 @@ define method llvm-signature-dbg-types
     add!(parameter-types, llvm-reference-dbg-type(back-end, obj-type));
   end for;
 
+  let return-type
+    = llvm-reference-dbg-type(back-end, back-end.%mv-struct-type);
   values(return-type, parameter-types)
 end method;
 

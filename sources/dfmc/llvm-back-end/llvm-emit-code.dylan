@@ -128,7 +128,17 @@ define method emit-code
       back-end.llvm-builder-function.llvm-function-basic-blocks.size := 0;
       remove-all-keys!(back-end.llvm-builder-function.llvm-function-value-table);
       ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
-      ins--ret(back-end, emit-reference(back-end, module, #x4300430));
+      // Return a dummy value
+      let undef-struct
+        = make(<llvm-undef-constant>,
+               type: function-type.llvm-function-type-return-type);
+      let value-struct
+        = ins--insertvalue(back-end, undef-struct,
+                           emit-reference(back-end, module, #x4300430), 0);
+      let value-count-struct
+        = ins--insertvalue(back-end, value-struct,
+                           back-end.%byte-character-constants[0], 1);
+      ins--ret(back-end, value-count-struct);
       format(*standard-output*, "emit %s: %s\n", function-name, e);
       force-output(*standard-output*);
     end block;

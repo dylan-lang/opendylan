@@ -495,13 +495,15 @@ define method emit-call
   end if;
   let name = emit-name(back-end, m, f);
   let global = llvm-builder-global(back-end, name);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
   let call
     = ins--call(back-end, global,
                 map(curry(emit-reference, back-end, m), c.arguments),
-                type: $llvm-object-pointer-type,
+                type: return-type,
                 calling-convention:
                   llvm-calling-convention(back-end, f));
-  computation-result(back-end, c, call); // FIXME
+  let primary = ins--extractvalue(back-end, call, 0);
+  computation-result(back-end, c, primary); // FIXME
 end method;
 
 /*
@@ -1056,13 +1058,27 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <return>) => ();
+  let undef-struct
+    = make(<llvm-undef-constant>,
+           type: llvm-reference-type(back-end, back-end.%mv-struct-type));
   if (instance?(c.computation-value, <multiple-value-temporary>))
     let mv :: <pair> = temporary-value(c.computation-value);
     if (mv.head.size = 0)      // FIXME
-      ins--ret(back-end, emit-reference(back-end, m, &false));
+      let value-struct
+        = ins--insertvalue(back-end, undef-struct,
+                           emit-reference(back-end, m, &false), 0);
+      let value-count-struct
+        = ins--insertvalue(back-end, value-struct,
+                           back-end.%byte-character-constants[0], 1);
+      ins--ret(back-end, value-count-struct);
     elseif (mv.head.size = 1)
       // FIXME
-      ins--ret(back-end, mv.head.first);
+      let value-struct
+        = ins--insertvalue(back-end, undef-struct, mv.head.first, 0);
+      let value-count-struct
+        = ins--insertvalue(back-end, value-struct,
+                           back-end.%byte-character-constants[1], 1);
+      ins--ret(back-end, value-count-struct);
     else
       error("FIXME: MV return %d", c.computation-value.required-values);
     end if;

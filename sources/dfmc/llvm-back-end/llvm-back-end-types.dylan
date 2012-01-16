@@ -324,16 +324,6 @@ define method llvm-lambda-type
   let fun = function(o);
   let signature = ^function-signature(fun);
 
-  // Compute return type
-  let return-type
-    = if (~signature | spec-value-rest?(signature-spec(fun)))
-        $llvm-object-pointer-type
-      else
-        llvm-reference-type
-          (back-end, 
-           first(^signature-values(signature),
-                 default: dylan-value(#"<object>")))
-      end if;
   // Compute parameter types
   let parameter-types
     = if (signature)
@@ -342,7 +332,7 @@ define method llvm-lambda-type
         llvm-dynamic-signature-types(back-end, o, signature-spec(fun))
       end if;
   make(<llvm-function-type>,
-       return-type: return-type,
+       return-type: llvm-reference-type(back-end, back-end.%mv-struct-type),
        parameter-types: parameter-types,
        varargs?: #f)
 end method;
@@ -361,10 +351,12 @@ define method llvm-entry-point-type
   if (type)
     type
   else
+    let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+
     // FIXME
     element(type-table, name)
       := make(<llvm-function-type>,
-              return-type: $llvm-object-pointer-type,
+              return-type: return-type,
               parameter-types: #(),
               varargs?: #f)
   end if

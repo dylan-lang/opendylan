@@ -87,11 +87,12 @@ define method do-emit-instance-cmp
   let iep-func = ins--bitcast(back-end, iep, func-type);
 
   // Call it and return the truth value
-  let result
+  let call
     = ins--call(back-end, iep-func, vector(object, type-ref),
                 calling-convention:
                   llvm-calling-convention(back-end,
                                           typical-instance?-iep));
+  let result = ins--extractvalue(back-end, call, 0);
   ins--icmp-ne(back-end, result, emit-reference(back-end, module, &false));
 end method;
 
@@ -159,6 +160,7 @@ define method do-emit-instance-cmp
         = ins--load(back-end, wrapper-slot-ptr, alignment: word-size);
 
       // Compare against the class's wrapper
+      // (This assumes there is exactly one wrapper instance for each class.)
       let type-wrapper = ^class-mm-wrapper(type);
       let wrapper-cmp
         = ins--icmp-eq(back-end, wrapper,

@@ -58,6 +58,9 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   // LLVM debug type for each defined <&raw-type> instance (or <object>)
   constant slot %dbg-type-table :: <object-table>
     = make(<object-table>);
+
+  // Precomputed multiple value return structure type
+  slot %mv-struct-type;
 end;
 
 define generic llvm-back-end-target-triple
@@ -69,6 +72,19 @@ define generic llvm-back-end-data-layout
 define sealed method initialize
     (back-end :: <llvm-back-end>, #key, #all-keys) => ()
   next-method();
+
+  // Initialize MV return value structure
+  back-end.%mv-struct-type
+    := make(<&raw-struct-type>,
+            debug-name: "MV",
+            options: #[],
+            members:
+              vector(make(<raw-aggregate-ordinary-member>,
+                          raw-type: dylan-value(#"<raw-pointer>")),
+                     make(<raw-aggregate-ordinary-member>,
+                          raw-type: dylan-value(#"<raw-byte>"))));
+
+  // Initialize predefined/raw LLVM types
   initialize-type-table(back-end);
 
   // Create canonical instances of the 256 i8 constants
