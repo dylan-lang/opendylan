@@ -19,7 +19,8 @@ Post-History:   10-Jan-2012
 Preamble
 ========
 
-This document is based heavily on Python PEP 1, "PEP Purpose and
+This document is based heavily on Python `PEP 1
+<http://www.python.org/dev/peps/pep-0001/>`_, "PEP Purpose and
 Guidelines", by Barry Warsaw, Jeremy Hylton, and David Goodger.  The
 author would like to thank them for providing an excellent base for
 the Dylan team to work from.
@@ -29,10 +30,10 @@ Terminology
 ===========
 
 Dylan Reference Manual (DRM)
-    The manual written by Andrew Shallit, plus its errata.
+    The manual written by Andrew Shalit, plus its errata.
 
 Dylan language specification
-    The DRM *plus* any **Accepted** DEPs that modify the Dylan
+    The DRM *plus* all **Accepted** DEPs that modify the Dylan
     language specification.
 
 Open Dylan (OD)
@@ -107,16 +108,16 @@ DEP Work Flow
 It is highly recommended that a single DEP contain a **single key
 proposal** or new idea. Small enhancements or patches often don't need
 a DEP and can be injected into the Dylan development work flow with a
-patch submission to the issue tracker for the appropriate repository
-on GitHub. The more focussed the DEP, the more successful it tends to
-be.  If in doubt, split your DEP into several well-focussed ones.
+pull request to the issue tracker for the appropriate repository on
+GitHub. The more focussed the DEP, the more successful it tends to be.
+If in doubt, split your DEP into several well-focussed ones.
 
-**Have a champion** -- Each DEP must have a champion -- someone who
+**Have an author** -- Each DEP must have an author -- someone who
 writes the DEP using the style and format described below, shepherds
 the discussions in the appropriate forums, and attempts to build
-community consensus around the idea.  The DEP champion (a.k.a. Author)
-should first attempt to ascertain whether the idea is DEP-able.
-Posting to hackers@opendylan.org is the best way to go about this.
+community consensus around the idea.  The DEP author should first
+attempt to ascertain whether the idea is DEP-able.  Posting to
+hackers@opendylan.org is the best way to go about this.
 
 **Vet the idea publicly** -- Vetting an idea publicly before going as
 far as writing a DEP is meant to save the potential author time.  Many
@@ -130,7 +131,7 @@ just the author.  Just because an idea sounds good to the author does
 not mean it will work for most people in most areas where Dylan is
 used.
 
-**Present a draft** -- Once the champion has asked the Dylan community
+**Present a draft** -- Once the author has asked the Dylan community
 whether an idea has any chance of acceptance, a properly formatted
 draft DEP should be presented to hackers@opendylan.org.  The initial
 DEP status should be **Draft**.  The DEP author should assign the next
@@ -142,12 +143,12 @@ As updates are necessary, the DEP author may commit new versions.
 
 Wait for at least ten days to receive feedback on each draft.
 
-**Reach consensus** -- We rely on reaching consensus on the hackers
-mailing list.  Consensus _must_ be reached for the DEP to be approved.
-Exactly what "consensus" means here is left undefined, as we expect
-most cases to be obvious and we wish to keep the process informal for
-now.  At such time as this becomes a problem we may implement a more
-formal scheme (e.g., voting).
+**Reach consensus** -- We rely on reaching consensus on the
+hackers@opendylan.org mailing list.  Consensus _must_ be reached for
+the DEP to be approved.  Exactly what "consensus" means here is left
+undefined, as we expect most cases to be obvious and we wish to keep
+the process informal for now.  At such time as this becomes a problem
+we may implement a more formal scheme (e.g., voting).
 
 Standards Track DEPs consist of two parts, a design document and a
 reference implementation.  The DEP should be reviewed and accepted
@@ -160,7 +161,7 @@ DEP authors are responsible for collecting community feedback on a DEP
 before submitting it for review. However, wherever possible, long
 open-ended discussions on public mailing lists should be avoided.
 Strategies to keep the discussions efficient include: setting up a
-separate SIG mailing list for the topic, having the DEP author accept
+separate mailing list for the topic, having the DEP author accept
 private comments in the early design phases, setting up a wiki page,
 etc.  DEP authors should use their discretion here.
 
@@ -356,7 +357,7 @@ Created
 ~~~~~~~
 
 The Created header records the date that the DEP was assigned a
-number.  It should be in dd-mmm-yyyy format.
+number.
 
 Last-Modified
 ~~~~~~~~~~~~~
@@ -364,13 +365,13 @@ Last-Modified
 The Last-Modified header is included because it may be useful to those
 reading DEPs without access to git.  It should be updated when
 substantive changes are made to the DEP.  It need not be updated when
-fixing typos, changed URLs, etc.  It must be in dd-mmm-yyyy format.
+fixing typos, changed URLs, etc.
 
 Post-History
 ~~~~~~~~~~~~
 
 This field should list the dates when DEP drafts were posted to the
-hackers mailing list, in dd-mmm-yyyy format.
+hackers mailing list.
 
 Resolution
 ~~~~~~~~~~
@@ -383,9 +384,8 @@ Target-Version
 ~~~~~~~~~~~~~~
 
 Standards Track DEPs must have a Target-Version header which indicates
-the version of Open Dylan in which the feature is expected to be
-released.  Informational and Process DEPs do not need a Target-Version
-header.
+the version of Open Dylan in which the feature will be released.
+Informational and Process DEPs do not need a Target-Version header.
 
 Requires
 ~~~~~~~~
@@ -463,8 +463,8 @@ Once the DEP is ready for the repository, the DEP author will:
   Commit your changes, push them to your fork of the repository and
   submit a pull request.
 
-* Monitor opendylan.org to make sure the DEP gets added to the site
-  properly.
+* Monitor `opendylan.org <http://opendylan.org>`_ to make sure the DEP
+  gets added to the site properly.
 
 Resources:
 
