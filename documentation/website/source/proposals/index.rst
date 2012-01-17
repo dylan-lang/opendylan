@@ -9,25 +9,31 @@ Dylan Enhancement Proposals
    regardless of status.  Open proposals must ADDITIONALLY be in the
    "Open Proposals" table.
 
-Key to proposal types:
+Introduction
+============
 
-    Proc = Process, Std = Standards Track, Info = Informational
+This is the index of all Dylan Enhancement Proposals, known as DEPs. A
+DEP number is never changed.  The historical record of the DEP texts
+is in the `GitHub website repository
+<https://github.com/dylan-lang/website/tree/master/source/proposals>`_
+.
+
 
 
 Open Proposals (under consideration)
 ====================================
 
-==== ==== ========== =============================================
-0001 Proc Draft      `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0001.rst>`__)
-0003 Std  Draft      `C3 superclass linearization <dep-0003.html>`_  (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0003.rst>`__)
-==== ==== ========== =============================================
+==== ======== ========== =============================================
+1    Process  Draft      `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <../_sources/proposals/dep-0001.txt>`__)
+3    Standard  Draft      `C3 superclass linearization <dep-0003.html>`_  (`source <../_sources/proposals/dep-0003.txt>`__)
+==== ======== ========== =============================================
 
 
 All Proposals by Number
 =======================
 
-==== ==== ========== =============================================
-0001 Proc Draft      `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0001.rst>`__)
-0002 Std  Final      `define function <dep-0002.html>`_ (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0002.rst>`__)
-0003 Std  Draft      `C3 superclass linearization <dep-0003.html>`_  (`source <https://raw.github.com/dylan-lang/website/master/source/proposals/dep-0003.rst>`__)
-==== ==== ========== =============================================
+==== ======== ========== =============================================
+1    Process  Draft      `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <../_sources/proposals/dep-0001.txt>`__)
+2    Standard  Final      `define function <dep-0002.html>`_ (`source <../_sources/proposals/dep-0002.txt>`__)
+3    Standard  Draft      `C3 superclass linearization <dep-0003.html>`_  (`source <../_sources/proposals/dep-0003.txt>`__)
+==== ======== ========== =============================================
