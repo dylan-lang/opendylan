@@ -14,8 +14,6 @@ The Common Dylan library exports the following modules:
 
 -  *common-extensions*
    Miscellaneous extensions to the Dylan language.
--  *harlequin-extensions*
-   Provided for backward compatibility.
 -  *simple-format* Simple formatting facilities. For more flexible
    formatting and printing, consider the separate Format and Print
    libraries.
