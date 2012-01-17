@@ -5,6 +5,7 @@ Define Function
 ==============  =============================================
 DEP #:          2
 Type:           Standards Track
+Affects-DRM:    Yes
 Author:         Bill Chiles
 Status:         Accepted
 Created:        26-Jan-1996
