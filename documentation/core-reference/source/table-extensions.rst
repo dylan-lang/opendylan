@@ -2,6 +2,9 @@
 The Collections library
 ***********************
 
+.. current-library:: collections
+.. current-module:: table-extensions
+
 Introduction
 ============
 
@@ -16,24 +19,25 @@ the *table-extensions* module.
 Basics
 ------
 
-The *table-extensions* module exports the class ``<string-table>`` ; the
-type ``<hash-state>`` ; the generic function *remove-all-keys!* and two
-methods thereon; and the functions *collection-hash*, *sequence-hash*,
-*string-hash*, *values-hash*, *case-insensitive-string-hash*, and
-*case-insensitive-equal*.
+The *table-extensions* module exports the class :class:`<string-table>`;
+the type :class:`<hash-state>` ; the generic function
+:gf:`remove-all-keys!` and two methods thereon; and the functions
+:func:`collection-hash`, :func:`sequence-hash`, :func:`string-hash`,
+:func:`values-hash`, :func:`case-insensitive-string-hash`, and
+:func:`case-insensitive-equal`.
 
-The ``<string-table>`` class is a class of tables that use strings for
-keys.
+The :class:`<string-table>` class is a class of tables that use strings
+for keys.
 
-The ``<hash-state>`` type implements *hash states*. A hash state is
+The :class:`<hash-state>` type implements *hash states*. A hash state is
 defined by the DRM, page 123, as “an implementation-dependent type that
 is associated with a hash id and can be used by the implementation to
 determine whether the hash id has been invalidated.” See pages 122–123
 of the DRM for more details.
 
-The various hash functions and the *case-insensitive-equal* equivalence
-predicate are convenient building blocks for creating new table classes
-and hash functions.
+The various hash functions and the :func:`case-insensitive-equal`
+equivalence predicate are convenient building blocks for creating new
+table classes and hash functions.
 
 Hash functions
 --------------
@@ -41,15 +45,20 @@ Hash functions
 Different hash functions are not required to return the same hash code
 for equal or even identical objects. For instance,
 
-collection-hash(#(), object-hash, object-hash);
+.. code-block:: dylan
+
+  collection-hash(#(), object-hash, object-hash);
 
 is not guaranteed to return the same values as
 
-sequence-hash(#(), object-hash);
+.. code-block:: dylan
 
-Furthermore, *collection-hash* with *ordered: #t* is not guaranteed to
-return the same hash code as *collection-hash* with *ordered: #f*. Such
-a requirement would render the *ordered:* keyword useless.
+  sequence-hash(#(), object-hash);
+
+Furthermore, :func:`collection-hash` with ``ordered: #t`` is not
+guaranteed to return the same hash code as :func:`collection-hash` with
+``ordered: #f``. Such a requirement would render the ``ordered:``
+keyword useless.
 
 Weak tables
 -----------
@@ -76,372 +85,246 @@ The TABLE-EXTENSIONS module
 This section contains a reference description for each item exported
 from the module *table-extensions*.
 
-<string-table>
---------------
+.. class:: <string-table>
+   :sealed:
 
-Sealed class
+   A table class that uses strings for keys.
 
-Summary
+   :superclasses: <table>
 
-A table class that uses strings for keys.
+   :description:
 
-Superclasses
+     The ``<string-table>`` class is the class of tables that use
+     instances of ``<string>`` for their keys. It is an error to use a
+     key that is not an instance of ``<string>``.
 
-<table>
+     Keys are compared with the equivalence predicate ``\=``.
 
-Init-keywords
+     The elements of the table are instances of ``<object>``.
 
-See Superclasses.
+     It is an error to modify a key once it has been used to add an
+     element to a ``<string-table>``. The effects of modification are
+     not defined.
 
-Description
+.. class:: <hash-state>
 
-The ``<string-table>`` class is the class of tables that use instances of
-``<string>`` for their keys. It is an error to use a key that is not an
-instance of ``<string>``.
+   A hash state.
 
-Keys are compared with the equivalence predicate *\\=*.
+   :superclasses:  <object>
 
-The elements of the table are instances of ``<object>``.
+   :description:
 
-It is an error to modify a key once it has been used to add an element
-to a ``<string-table>``. The effects of modification are not defined.
+     Anything that the Dylan Reference Manual describes as a *hash
+     state* is an instance of this type.
 
-<hash-state>
-------------
+     Examples of hash states include the second argument and second
+     return value of ``object-hash``.
 
-Type
+.. function:: collection-hash
 
-Summary
+   Hashes the elements of a collection.
 
-A hash state.
+   :signature: collection-hash *key-hash-function* *elt-hash-function* *collection* *initial-state* #key *ordered* => *hash-id* *hash-state*
 
-Supertypes
+   :parameter key-hash-function: An instance of ``<function>``.
+   :parameter elt-hash-function: An instance of ``<function>``.
+   :parameter collection: An instance of ``<collection>``.
+   :parameter initial-state: An instance of ``<hash-state>``.
+   :parameter #key ordered: An instance of ``<boolean>``. Default value: ``#f``.
+   :value hash-id: An instance of ``<integer>``.
+   :value result-state: An instance of ``<hash-state>``.
 
-<object>
+   :description:
 
-Init-keywords
+     Hashes every element of *collection* using *key-hash-function* on
+     the keys and *elt-hash-function* on the elements, and merges the
+     resulting hash codes in order.
 
-None.
+     The *ordered* keyword is passed on to *merge-hash-ids*.
 
-Description
+     The functions *key-hash-function* and *elt-hash-function* must be
+     suitable for use as hash functions. See page 123 of the DRM.
 
-Anything that the Dylan Reference Manual describes as a *hash state* is
-an instance of this type.
+.. function:: sequence-hash
 
-Examples of hash states include the second argument and second return
-value of *object-hash*.
+   Hashes the elements of a sequence.
 
-collection-hash
----------------
+   :signature: sequence-hash *elt-hash-function* *sequence* *initial-state* #key *ordered* => *hash-id* *result-state*
 
-Function
+   :parameter elt-hash-function: An instance of ``<function>``.
+   :parameter sequence: An instance of ``<sequence>``.
+   :parameter initial-state: An instance of ``<hash-state>``.
+   :parameter #key ordered: An instance of ``<boolean>``. Default value: ``#f``.
+   :value hash-id: An instance of ``<integer>``.
+   :value result-state: An instance of ``<hash-state>``.
 
-Summary
+   :description:
 
-Hashes the elements of a collection.
+     Hashes every element of *sequence* using *elt-hash-function*, and
+     merges the resulting hash codes in order.
 
-Signature
+     The function *elt-hash-function* must be suitable for use as a hash
+     function. See page 123 of the Dylan Reference Manual.
 
-collection-hash *key-hash-function* *elt-hash-function* *collection
-initial-state* #key *ordered* => *hash-id* *hash-state*
+     The *ordered* keyword is passed on to *merge-hash-ids*.
 
-Arguments
+.. function:: values-hash
 
--  *key-hash-function* An instance of ``<function>``.
--  *elt-hash-function* An instance of ``<function>``.
--  *collection* An instance of ``<collection>``.
--  *initial-state* An instance of ``<hash-state>``.
--  *ordered* An instance of ``<boolean>``. Default value: *#f*.
+   Hashes the values passed to it.
 
-Values
+   :signature: values-hash *elt-hash-function* *initial-state* #rest *arguments* => *hash-id* *result-state*
 
--  *hash-id* An instance of ``<integer>``.
--  *result-state* An instance of ``<hash-state>``.
+   :parameter elt-hash-function: An instance of ``<function>``.
+   :parameter hash-state: An instance of ``<hash-state>``.
+   :parameter initial-state: An instance of ``<hash-state>``.
+   :parameter #rest arguments: Instances of ``<object>``.
+   :value hash-id: An instance of ``<integer>``.
+   :value result-state: An instance of ``<hash-state>``.
 
-Description
+   :description:
 
-Hashes every element of *collection* using *key-hash-function* on the
-keys and *elt-hash-function* on the elements, and merges the resulting
-hash codes in order.
+     Hashes every object in *arguments* using *elt-hash-function*, and
+     merges the resulting hash codes in order.
 
-The *ordered* keyword is passed on to *merge-hash-ids*.
+     The function *elt-hash-function* must be suitable for use as a hash
+     function. See page 123 of the Dylan Reference Manual.
 
-The functions *key-hash-function* and *elt-hash-function* must be
-suitable for use as hash functions. See page 123 of the DRM.
+     The *ordered* keyword is passed on to *merge-hash-ids*.
 
-sequence-hash
--------------
+.. function:: string-hash
 
-Function
+   Hashes a string.
 
-Summary
+   :signature: string-hash *string* *initial-state* => *hash-id* *result-state*
 
-Hashes the elements of a sequence.
+   :parameter string: An instance of ``<string>``.
+   :parameter initial-state: An instance of ``<hash-state>``.
+   :value hash-id: An instance of ``<integer>``.
+   :value result-state: An instance of ``<hash-state>``.
 
-Signature
+   :description:
 
-sequence-hash *elt-hash-function* *sequence* *initial-state*
- #key *ordered* => *hash-id* *result-state*
+     Produces a hash code for a string, using the equivalence predicate
+     ``\=``.
 
-Arguments
+.. function:: case-insensitive-string-hash
 
--  *elt-hash-function* An instance of ``<function>``.
--  *sequence* An instance of ``<sequence>``.
--  *initial-state* An instance of ``<hash-state>``.
+   Hashes a string, without considering case information.
 
-Values
+   :signature: case-insensitive-string-hash *string* *initial-state* => *hash-id* *result-state*
 
--  *hash-id* An instance of ``<integer>``.
--  *result-state* An instance of ``<hash-state>``.
+   :parameter string: An instance of ``<string>``.
+   :parameter initial-state: An instance of ``<hash-state>``.
+   :value hash-id: An instance of ``<integer>``.
+   :value result-state: An instance of ``<hash-state>``.
 
-Description
+   :description:
 
-Hashes every element of *sequence* using *elt-hash-function*, and
-merges the resulting hash codes in order.
+     Produces a hash code for a string using the equivalence predicate
+     :func:`case-insensitive-equal`, which does not consider the case of
+     the characters in the strings it compares.
 
-The function *elt-hash-function* must be suitable for use as a hash
-function. See page 123 of the Dylan Reference Manual.
+   See also
 
-The *ordered* keyword is passed on to *merge-hash-ids*.
+   :func:`case-insensitive-equal`
 
-values-hash
------------
+.. function:: case-insensitive-equal
 
-Function
+   Compares two strings for equality, ignoring case differences between
+   them.
 
-Summary
+   :signature: case-insensitive-equal *string1* *string2* => *boolean*
 
-Hashes the values passed to it.
+   :parameter string1: An instance of ``<string>``.
+   :parameter string2: An instance of ``<string>``.
+   :value boolean: An instance of ``<boolean>``.
 
-Signature
+   :description:
 
-values-hash *elt-hash-function* *initial-state* #rest *arguments* =>
-*hash-id* *result-state*
+     Compares *string1* and *string2* for equality, ignoring any case
+     differences between them. Returns true if they are equal and false
+     otherwise.
 
-Arguments
+     The function has the same behavior as Dylan’s standard method on *=* for
+     sequences, except that when comparing alphabetical characters, it
+     ignores any case differences.
 
--  *elt-hash-function* An instance of ``<function>``.
--  *hash-state* An instance of ``<hash-state>``.
--  *arguments* Instances of ``<object>``.
--  *initial-state* An instance of ``<hash-state>``.
+     This function is used as an equivalence predicate by
+     :func:`case-insensitive-string-hash`.
 
-Values
+     This function uses *as-uppercase* or *as-lowercase* to convert the
+     characters in its string arguments.
 
--  *hash-id* An instance of ``<integer>``.
--  *result-state* An instance of ``<hash-state>``.
+   :example:
 
-Description
+     The *case-insensitive-equal* function returns true if passed the
+     following strings:
 
-Hashes every object in *arguments* using *elt-hash-function*, and
-merges the resulting hash codes in order.
+     .. code-block:: dylan
 
-The function *elt-hash-function* must be suitable for use as a hash
-function. See page 123 of the Dylan Reference Manual.
+       "The Cat SAT ON the Mat"
+       "The cat sat on the Mat"
 
-The *ordered* keyword is passed on to *merge-hash-ids*.
+     Conversely, the standard method on *=* returns false when passed those
+     strings.
 
-string-hash
------------
+   See also
 
-Function
+   :func:`case-insensitive-string-hash`
 
-Summary
+.. generic-function:: remove-all-keys!
+   :open:
 
-Hashes a string.
+   Removes all keys from a collection and leaves it empty.
 
-Signature
+   :signature: remove-all-keys! *collection* => *collection*
 
-string-hash *string* *initial-state* => *hash-id* *result-state*
+   :parameter collection: An instance of ``<mutable-explicit-key-collection>``.
+   :value collection: An instance of ``<mutable-explicit-key-collection>``.
 
-Arguments
+   :description:
 
--  *string* An instance of ``<string>``.
--  *initial-state* An instance of ``<hash-state>``.
+     Modifies *collection* by removing all its keys and elements, and leaves
+     it empty.
 
-Values
+     .. note:: To empty collections that are not instances of
+        ``<mutable-explicit-key-collection>``, use *size-setter*.
 
--  *hash-id* An instance of ``<integer>``.
--  *result-state* An instance of ``<hash-state>``.
+.. method:: remove-all-keys!
+   :specializer: <mutable-explicit-key-collection>
 
-Description
+   Removes all keys from a collection and leaves it empty.
 
-Produces a hash code for a string, using the equivalence predicate *\\=*.
+   :signature: remove-all-keys! *collection* => *collection*
 
-case-insensitive-string-hash
-----------------------------
+   :parameter collection: An instance of ``<mutable-explicit-key-collection>``.
+   :value collection: An instance of ``<mutable-explicit-key-collection>``.
 
-Function
+   :description
 
-Summary
+     Modifies *collection* by removing all its keys and elements, and
+     leaves it empty. This method implements the generic function by
+     making repeated calls to ``remove-key!``.
 
-Hashes a string, without considering case information.
+     .. note:: To empty collections that are not instances of
+        ``<mutable-explicit-key-collection>``, use *size-setter*.
 
-Signature
+.. method:: remove-all-keys!
+   :specializer: <table>
 
-case-insensitive-string-hash *string* *initial-state* => *hash-id*
-*result-state*
+   Removes all keys from a table and leaves it empty.
 
-Arguments
+   :signature: remove-all-keys! *table* => *table*
 
--  *string* An instance of ``<string>``.
--  *initial-state* An instance of ``<hash-state>``.
+   :parameter table: An instance of ``<table>``.
+   :parameter table: An instance of ``<table>``.
 
-Values
+   :description:
 
--  *hash-id* An instance of ``<integer>``.
--  *result-state* An instance of ``<hash-state>``.
+     Modifies *table* by removing all its keys and elements, and leaves
+     it empty.
 
-Description
+     This method does not use ``remove-key!``.
 
-Produces a hash code for a string using the equivalence predicate
-*case-insensitive-equal*, which does not consider the case of the
-characters in the strings it compares.
-
-See also
-
-`case-insensitive-equal`_
-
-case-insensitive-equal
-----------------------
-
-Function
-
-Summary
-
-Compares two strings for equality, ignoring case differences between
-them.
-
-Signature
-
-case-insensitive-equal *string1* *string2* => *boolean*
-
-Arguments
-
--  *string1* An instance of ``<string>``.
--  *string2* An instance of ``<string>``.
-
-Values
-
--  *boolean* An instance of ``<boolean>``.
-
-Description
-
-Compares *string1* and *string2* for equality, ignoring any case
-differences between them. Returns true if they are equal and false
-otherwise.
-
-The function has the same behavior as Dylan’s standard method on *=* for
-sequences, except that when comparing alphabetical characters, it
-ignores any case differences.
-
-This function is used as an equivalence predicate by
-`case-insensitive-string-hash`_.
-
-This function uses *as-uppercase* or *as-lowercase* to convert the
-characters in its string arguments.
-
-Example
-
-The *case-insensitive-equal* function returns true if passed the
-following strings:
-
-"The Cat SAT ON the Mat"
-
-"The cat sat on the Mat"
-
-Conversely, the standard method on *=* returns false when passed those
-strings.
-
-See also
-
-`case-insensitive-string-hash`_
-
-remove-all-keys!
-----------------
-
-Open generic function
-
-Summary
-
-Removes all keys from a collection and leaves it empty.
-
-Signature
-
-remove-all-keys! *collection* => *collection*
-
-Arguments
-
--  *collection* An instance of ``<mutable-explicit-key-collection>``.
-
-Values
-
--  *collection* An instance of ``<mutable-explicit-key-collection>``.
-
-Description
-
-Modifies *collection* by removing all its keys and elements, and leaves
-it empty.
-
-.. note:: To empty collections that are not instances of
-   ``<mutable-explicit-key-collection>``, use *size-setter*.
-
-remove-all-keys!
-----------------
-
-G.f. method
-
-Summary
-
-Removes all keys from a collection and leaves it empty.
-
-Signature
-
-remove-all-keys! *collection* => *collection*
-
-Arguments
-
--  *collection* An instance of ``<mutable-explicit-key-collection>``.
-
-Values
-
--  *collection* An instance of ``<mutable-explicit-key-collection>``.
-
-Description
-
-Modifies *collection* by removing all its keys and elements, and leaves
-it empty. This method implements the generic function by making repeated
-calls to *remove-key!*.
-
-.. note:: To empty collections that are not instances of
-   ``<mutable-explicit-key-collection>``, use *size-setter*.
-
-remove-all-keys!
-----------------
-
-Sealed g.f. method
-
-Summary
-
-Removes all keys from a table and leaves it empty.
-
-Signature
-
-remove-all-keys! *table* => *table*
-
-Arguments
-
--  *table* An instance of ``<table>``.
-
-Values
-
--  *table* An instance of ``<table>``.
-
-Description
-
-Modifies *table* by removing all its keys and elements, and leaves it
-empty.
-
-This method does not use *remove-key!*.
-
-.. note:: To empty collections that are not instances of
-   ``<mutable-explicit-key-collection>``, use *size-setter*.
+     .. note:: To empty collections that are not instances of
+        ``<mutable-explicit-key-collection>``, use *size-setter*.
