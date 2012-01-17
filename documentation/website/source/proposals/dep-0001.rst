@@ -109,8 +109,8 @@ It is highly recommended that a single DEP contain a **single key
 proposal** or new idea. Small enhancements or patches often don't need
 a DEP and can be injected into the Dylan development work flow with a
 pull request to the issue tracker for the appropriate repository on
-GitHub. The more focussed the DEP, the more successful it tends to be.
-If in doubt, split your DEP into several well-focussed ones.
+GitHub. The more focused the DEP, the more successful it tends to be.
+If in doubt, split your DEP into several well-focused ones.
 
 **Have an author** -- Each DEP must have an author -- someone who
 writes the DEP using the style and format described below, shepherds
