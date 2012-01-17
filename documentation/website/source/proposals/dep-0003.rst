@@ -5,6 +5,7 @@ C3 superclass linearization
 ==============  =============================================
 DEP #:          3
 Type:           Standards Track
+Affects-DRM:    Yes
 Author:         Hannes Mehnert
 Status:         Draft
 Created:        09-Jan-2012
