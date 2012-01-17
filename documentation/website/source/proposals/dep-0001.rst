@@ -284,22 +284,23 @@ DEP Header Preamble
 Each DEP must begin with a title, followed by an RFC 822 style header
 preamble in simple RST table format.  The headers must appear in the
 following order.  Headers marked with "*" are optional and are
-described below.  All other headers are required.  All dates must
-be in dd-mm-yyyy format.  ::
+described below.  All other headers are required.  All dates must be
+in dd-mm-yyyy format.  A list of values must use a comma as
+separator. ::
 
     DEP-Number: <DEP number>
-    Author: <list of authors' real names and optionally, email addrs>
+    Author: <list of authors' real names and optionally, email addresses>
     Status: <Draft | Active | Accepted | Deferred | Rejected |
              Withdrawn | Final | Superseded>
     Type: <Standards Track | Informational | Process>
-    Affects-DRM: Yes/No
+    Affects-DRM: <Yes | No>
     Created: <date created>
     Last-Modified: <date last modified>
-    Post-History: <dates of postings to hackers list>
-    Resolution: <url>   [required for Standards Track DEPs only]
+    Post-History: <date(s) of postings to hackers list>
+  * Resolution: <url>
   * Target-Version: <OD version number>
-  * Requires: <DEP numbers>
-  * Replaces: <DEP number>
+  * Requires: <DEP number(s)>
+  * Replaces: <DEP number(s)>
   * Superseded-By: <DEP number>
 
 DEP Number
