@@ -2,6 +2,8 @@
 The Common Dylan Library
 ************************
 
+.. current-library:: common-dylan
+
 Introduction
 ============
 
@@ -135,7 +137,7 @@ collector.
 
 The garbage collector maintains a register of objects requiring
 finalization before being reclaimed. To add an object to the register,
-call the function `finalize-when-unreachable`_ on the object.
+call the function :func:`finalize-when-unreachable` on the object.
 Objects on the register are said to be *finalizable*.
 
 If the garbage collector discovers that a finalizable object is no
@@ -151,7 +153,7 @@ Draining the finalization queue
 -------------------------------
 
 Objects in the finalization queue wait there until the application
-drains it by calling the function `drain-finalization-queue`_. This function
+drains it by calling the function :func:`drain-finalization-queue`. This function
 finalizes every object in the queue.
 
 The finalization queue is not normally drained automatically. See
@@ -166,16 +168,16 @@ up a thread to do so.
 Finalizers
 ----------
 
-The `drain-finalization-queue`_ function
+The :func:`drain-finalization-queue` function
 finalizes each object in the finalization queue by calling the generic
-function `finalize`_ on it. You should define
-methods for `finalize`_ on those classes
+function :gf:`finalize` on it. You should define
+methods for :gf:`finalize` on those classes
 whose instances may require finalization. These methods are called
 *finalizers*.
 
 The recommended interface to finalization is through
-`finalize-when-unreachable`_ and `drain-finalization-queue`_, but
-calling `finalize`_ on an object directly is also
+:func:`finalize-when-unreachable` and :func:`drain-finalization-queue`, but
+calling :gf:`finalize` on an object directly is also
 permitted. If you are certain you are finished with an object, it may be
 desirable to do so. For example, you might want to finalize an object
 created in a local binding before it goes out of scope.
@@ -185,15 +187,15 @@ created in a local binding before it goes out of scope.
    into the finalization queue. Calling *finalize* on an object directly
    does not affect its registration status.
 
-The `drain-finalization-queue`_ function
-makes each call to `finalize`_ inside
+The :func:`drain-finalization-queue` function
+makes each call to :gf:`finalize` inside
 whatever dynamic handler environment is present when
 ``drain-finalization-queue`` is called. If the call to
 ``drain-finalization-queue`` is aborted via a non-local exit during a call
 to ``finalize``, the finalization queue retains all the objects that had
 been added to it but which had not been passed to ``finalize``.
 
-There is a default method for `finalize`_ on
+There is a default method for :gf:`finalize` on
 ``<object>``. The method does nothing. It is available so that it is safe
 for all finalizers to call ``next-method``, a practice that we strongly
 encourage. See `Writing finalizers`_.
@@ -227,7 +229,7 @@ The effects of multiple registrations
 Sometimes objects are registered for finalization more than once. The
 effects of multiple registration are defined as follows:
 
-Calling `finalize-when-unreachable`_ on an
+Calling :func:`finalize-when-unreachable` on an
 object *n* times causes that object to be added to the finalization
 queue up to *n* times, where *n* is greater than or equal to zero. There
 is no guarantee that the object will be added exactly *n* times.
@@ -286,9 +288,9 @@ For more on weak tables, see :ref:`Weak tables <weak-tables>`.
 Writing finalizers
 ------------------
 
-Because the default `finalize`_ method, on
+Because the default :gf:`finalize` method, on
 ``<object>``, does nothing, you must define your own
-`finalize`_ methods to get results from the
+:gf:`finalize` methods to get results from the
 finalization interface. This section contains useful information about
 writing finalizers.
 
@@ -296,7 +298,7 @@ Class-based finalization
 ------------------------
 
 If your application defines a class for which all instances require
-finalization, call `finalize-when-unreachable`_ in its ``initialize``
+finalization, call :func:`finalize-when-unreachable` in its ``initialize``
 method.
 
 Parallels with INITIALIZE methods
@@ -341,7 +343,7 @@ graph (in some graph-specific well-ordered fashion) and call the
 Singleton finalizers
 --------------------
 
-Do not write singleton methods on `finalize`_. The singleton method
+Do not write singleton methods on :gf:`finalize`. The singleton method
 itself would refer to the object, and hence prevent it from becoming
 unreachable.
 
@@ -356,12 +358,12 @@ How can my application drain the finalization queue automatically?
 
 If you would prefer the queue to be drained asynchronously, use the
 automatic finalization interface. For more details, see
-`automatic-finalization-enabled?`_ and
-`automatic-finalization-enabled?-setter`_.
+:func:`automatic-finalization-enabled?` and
+:func:`automatic-finalization-enabled?-setter`.
 
 Libraries that do not wish to depend on automatic finalization should
 not use those functions. They should call
-`drain-finalization-queue`_ synchronously at
+:func:`drain-finalization-queue` synchronously at
 useful times, such as whenever they call ``finalize-when-unreachable``.
 
 Libraries that are not written to depend on automatic finalization
@@ -373,7 +375,7 @@ When should my application drain the finalization queue?
 
 If you do not use automatic finalization, drain the queue synchronously
 at useful points in your application, such as whenever you call
-`finalize-when-unreachable`_ on an object.
+:func:`finalize-when-unreachable` on an object.
 
 The COMMON-EXTENSIONS module
 ============================
@@ -2272,278 +2274,177 @@ and less than *range*.
 The FINALIZATION module
 =======================
 
+.. current-module:: finalization
+
 This section contains a reference description for each item in the
 finalization interface. These items are exported from the
-*common-extensions* library in a module called *finalization*.
+*common-dylan* library in a module called *finalization*.
 
-automatic-finalization-enabled?
--------------------------------
+.. function:: automatic-finalization-enabled?
 
-Function
-''''''''
+   Returns true if automatic finalization is enabled, and false otherwise.
 
-Summary
+   :signature: automatic-finalization-enabled? () => *enabled?*
 
-Returns true if automatic finalization is enabled, and false otherwise.
+   :value enabled?: An instance of ``<boolean>``. Default value: ``#f``.
 
-Signature
+   :description:
 
-automatic-finalization-enabled? () => *enabled?*
+     Returns true if automatic finalization is enabled, and false otherwise.
 
-Arguments
+   See also
 
-None.
+   - :func:`automatic-finalization-enabled?-setter`
+   - :func:`drain-finalization-queue`
+   - :func:`finalize-when-unreachable`
+   - :gf:`finalize`
 
-Values
+.. function:: automatic-finalization-enabled?-setter
 
-*enabled?* An instance of ``<boolean>``. Default value: *#f*.
+   Sets the automatic finalization system state.
 
-Description
+   :signature: automatic-finalization-enabled?-setter *newval* => ()
 
-Returns true if automatic finalization is enabled, and false otherwise.
+   :parameter newval: An instance of ``<boolean>``.
 
-See also
+   :description:
 
-`automatic-finalization-enabled?-setter`_
+     Sets the automatic finalization system state to *newval*.
 
-`drain-finalization-queue`_
+     The initial state is ``#f``. If the state changes from ``#f`` to
+     ``#t``, a new thread is created which regularly calls
+     :func:`drain-finalization-queue` inside an empty dynamic
+     environment (that is, no dynamic condition handlers). If the state
+     changes from ``#t`` to ``#f``, the thread exits.
 
-`finalize-when-unreachable`_
+   See also
 
-`finalize`_
+   - :func:`automatic-finalization-enabled?`
+   - :func:`drain-finalization-queue`
+   - :func:`finalize-when-unreachable`
+   - :gf:`finalize`
 
-automatic-finalization-enabled?-setter
---------------------------------------
+.. function:: drain-finalization-queue
 
-Function
-''''''''
+   Calls :gf:`finalize` on every object in the finalization queue.
 
-Summary
+   :signature: drain-finalization-queue () => ()
 
-Sets the automatic finalization system state.
+   :description:
 
-Signature
+     Calls :gf:`finalize` on each object that is awaiting finalization.
 
-automatic-finalization-enabled?-setter *newval* => ()
+     Each call to :gf:`finalize` is made inside whatever dynamic handler
+     environment is present when ``drain-finalization-queue`` is called.
+     If the call to ``drain-finalization-queue`` is aborted via a
+     non-local exit during a call to ``finalize``, the finalization
+     queue retains all the objects that had been added to it but which
+     had not been passed to ``finalize``.
 
-Arguments
+     The order in which objects in the finalization queue will be
+     finalized is not defined. Applications should not make any
+     assumptions about finalization ordering.
 
-*newval* An instance of ``<boolean>``.
+   See also
 
-Values
+   - :func:`finalize-when-unreachable`
+   - :gf:`finalize`
+   - :func:`automatic-finalization-enabled?`
+   - :func:`automatic-finalization-enabled?-setter`
 
-None.
+.. function:: finalize-when-unreachable
 
-Description
+   Registers an object for finalization.
 
-Sets the automatic finalization system state to *newval*.
+   :signature: finalize-when-unreachable *object* => *object*
 
-The initial state is *#f*. If the state changes from *#f* to *#t*, a
-new thread is created which regularly calls `drain-finalization-queue`_
-inside an empty dynamic environment (that is, no dynamic condition
-handlers). If the state changes from *#t* to *#f*, the thread exits.
+   :parameter object: An instance of ``<object>``.
+   :value object: An instance of ``<object>``.
 
-See also
+   :description:
 
-`automatic-finalization-enabled?`_
+     Registers *object* for finalization. If *object* becomes
+     unreachable, it is added to the finalization queue rather than
+     being immediately reclaimed.
 
-`drain-finalization-queue`_
+     *Object* waits in the finalization queue until the application
+     calls :func:`drain-finalization-queue`, which processes each object
+     in the queue by calling the generic function :gf:`finalize` on it.
 
-`finalize-when-unreachable`_
+     The function returns its argument.
 
-`finalize`_
+   See also
 
-drain-finalization-queue
-------------------------
+   - :gf:`finalize`
+   - :func:`drain-finalization-queue`
+   - :func:`automatic-finalization-enabled?`
+   - :func:`automatic-finalization-enabled?-setter`
 
-Function
-''''''''
+.. generic-function:: finalize
 
-Summary
+   Finalizes an object.
 
-Calls `finalize`_ on every object in the
-finalization queue.
+   :signature: finalize *object* => ()
 
-Signature
+   :parameter object: An instance of ``<object>``.
 
-drain-finalization-queue () => ()
+   :description:
 
-Arguments
+     Finalizes *object*.
 
-None.
+     You can define methods on ``finalize`` to perform class-specific
+     finalization procedures. These methods are called *finalizers*.
 
-Values
+     A default :meth:`finalize <finalize(<object>)>` method on
+     ``<object>`` is provided.
 
-None.
+     The main interface to finalization is the function
+     :func:`drain-finalization-queue`, which calls ``finalize`` on each
+     object awaiting finalization. Objects join the finalization queue
+     if they become unreachable after being registered for finalization
+     with :func:`finalize-when-unreachable`. However, you can call
+     ``finalize`` directly if you wish.
 
-Description
+     Once finalized, *object* is available for reclamation by the
+     garbage collector, unless finalization made it reachable again.
+     (This is called *resurrection* ; see `The effects of resurrecting
+     objects`_.) Because the object has been taken off the garbage
+     collector’s finalization register, it will not be added to the
+     finalization queue again, unless it is resurrected. However, it
+     might still appear in the queue if it was registered more than
+     once.
 
-Calls `finalize`_ on each object that is
-awaiting finalization.
+     Do not write singleton methods on :gf:`finalize`. A singleton
+     method would itself reference the object, and hence prevent it from
+     becoming unreachable.
 
-Each call to `finalize`_ is made inside
-whatever dynamic handler environment is present when
-*drain-finalization-queue* is called. If the call to
-*drain-finalization-queue* is aborted via a non-local exit during a call
-to *finalize*, the finalization queue retains all the objects that had
-been added to it but which had not been passed to *finalize*.
+   See also
 
-The order in which objects in the finalization queue will be finalized
-is not defined. Applications should not make any assumptions about
-finalization ordering.
+   - :meth:`finalize <finalize(<object>)>`
+   - :func:`finalize-when-unreachable`
+   - :func:`drain-finalization-queue`
+   - :func:`automatic-finalization-enabled?`
+   - :func:`automatic-finalization-enabled?-setter`
 
-See also
+.. method:: finalize
+   :specializer: <object>
 
-`finalize-when-unreachable`_
+   Finalizes an object.
 
-`finalize`_
+   :signature: finalize *object* => ()
 
-`automatic-finalization-enabled?`_
+   :parameter object: An instance of ``<object>``.
 
-`automatic-finalization-enabled?-setter`_
+   :description:
 
-finalize-when-unreachable
--------------------------
+     This method is a default finalizer for all objects. It does nothing, and
+     is provided only to make ``next-method`` calls safe for all methods on
+     :gf:`finalize`.
 
-Function
-''''''''
+   See also
 
-Summary
-
-Registers an object for finalization.
-
-Signature
-
-finalize-when-unreachable *object* => *object*
-
-Arguments
-
-*object* An instance of ``<object>``.
-
-Values
-
-*object* An instance of ``<object>``.
-
-Description
-
-Registers *object* for finalization. If *object* becomes unreachable, it
-is added to the finalization queue rather than being immediately
-reclaimed.
-
-*Object* waits in the finalization queue until the application calls
-`drain-finalization-queue`_, which processes each object in the queue
-by calling the generic function `finalize`_ on it.
-
-The function returns its argument.
-
-See also
-
-`finalize`_
-
-`drain-finalization-queue`_
-
-`automatic-finalization-enabled?`_
-
-`automatic-finalization-enabled?-setter`_
-
-finalize
---------
-
-Open generic function
-'''''''''''''''''''''
-
-Summary
-
-Finalizes an object.
-
-Signature
-
-finalize *object* => ()
-
-Arguments
-
-*object* An instance of ``<object>``.
-
-Values
-
-None.
-
-Description
-
-Finalizes *object*.
-
-You can define methods on *finalize* to perform class-specific
-finalization procedures. These methods are called *finalizers*.
-
-A default `finalize`_ method on ``<object>`` is provided.
-
-The main interface to finalization is the function `drain-finalization-queue`_,
-which calls *finalize* on each object awaiting finalization. Objects join the
-finalization queue if they become unreachable after being registered for
-finalization with `finalize-when-unreachable`_. However, you can
-call *finalize* directly if you wish.
-
-Once finalized, *object* is available for reclamation by the garbage
-collector, unless finalization made it reachable again. (This is called
-*resurrection* ; see `The effects of resurrecting
-objects`_.) Because the object has been taken off
-the garbage collector’s finalization register, it will not be added to
-the finalization queue again, unless it is resurrected. However, it
-might still appear in the queue if it was registered more than once.
-
-Do not write singleton methods on `finalize`_. A singleton method would itself
-reference the object, and hence prevent it from becoming unreachable.
-
-See also
-
-`finalize`_.
-
-`finalize-when-unreachable`_
-
-`drain-finalization-queue`_
-
-`automatic-finalization-enabled?`_
-
-`automatic-finalization-enabled?-setter`_
-
-finalize
---------
-
-G.f. method
-'''''''''''
-
-Summary
-
-Finalizes an object.
-
-Signature
-
-finalize *object* => ()
-
-Arguments
-
-*object* An instance of ``<object>``.
-
-Values
-
-None.
-
-Description
-
-This method is a default finalizer for all objects. It does nothing, and
-is provided only to make *next-method* calls safe for all methods on
-`finalize`_.
-
-See also
-
-`finalize-when-unreachable`_
-
-`finalize`_
-
-`drain-finalization-queue`_
-
-`automatic-finalization-enabled?`_
-
-`automatic-finalization-enabled?-setter`_
-
-
+   - :func:`finalize-when-unreachable`
+   - :gf:`finalize`
+   - :func:`drain-finalization-queue`
+   - :func:`automatic-finalization-enabled?`
+   - :func:`automatic-finalization-enabled?-setter`
