@@ -184,7 +184,7 @@ A DEP can also be **Rejected**.  Perhaps after all is said and done it
 was not a good idea.  It is still important to have a record of this
 fact.
 
-DEPs can also be **superseded by** a different DEP, rendering the original
+DEPs can also be **Superseded-By** a different DEP, rendering the original
 obsolete.  This is intended for Informational DEPs, where version 2 of
 an API can replace version 1.
 
