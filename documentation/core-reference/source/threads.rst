@@ -1217,7 +1217,7 @@ Notifications
      is owned.
 
      Threads wait for the change of state to be notified by calling
-     :meth:`wait-for <wait-for(<notification>)`. Threads notify other
+     :meth:`wait-for <wait-for(<notification>)>`. Threads notify other
      threads of the change of state by calling :meth:`release
      <release(<notification>)>`.
 
