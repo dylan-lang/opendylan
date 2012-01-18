@@ -1431,8 +1431,7 @@ Thread variables
 ================
 
 .. macro:: thread
-
-   XXX: Variable definition adjective
+   :macro-type: variable definition adjective
 
    An adjective to *define variable* for defining thread variables.
 
@@ -1581,8 +1580,7 @@ Locked variables
 ================
 
 .. macro:: locked
-
-   XXX: Variable definition adjective
+   :macro-type: variable definition adjective
 
    Defines a locked variable.
 
