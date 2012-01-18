@@ -756,7 +756,7 @@ Function
 object-hash *object* => *hash-id* *hash-state*
 
 The hash function for the equivalence predicate *==*. The return values
-are of the same types as the return values of *merge-hash-codes*.
+are of the same types as the return values of :drm:`merge-hash-codes`.
 
 Iteration constructs
 --------------------

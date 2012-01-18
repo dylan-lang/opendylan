@@ -118,7 +118,7 @@ from the module *table-extensions*.
      state* is an instance of this type.
 
      Examples of hash states include the second argument and second
-     return value of ``object-hash``.
+     return value of :func:`object-hash`.
 
 .. function:: collection-hash
 
@@ -140,7 +140,7 @@ from the module *table-extensions*.
      the keys and *elt-hash-function* on the elements, and merges the
      resulting hash codes in order.
 
-     The *ordered* keyword is passed on to *merge-hash-ids*.
+     The *ordered* keyword is passed on to :func:`merge-hash-ids`.
 
      The functions *key-hash-function* and *elt-hash-function* must be
      suitable for use as hash functions. See page 123 of the DRM.
@@ -166,7 +166,7 @@ from the module *table-extensions*.
      The function *elt-hash-function* must be suitable for use as a hash
      function. See page 123 of the Dylan Reference Manual.
 
-     The *ordered* keyword is passed on to *merge-hash-ids*.
+     The *ordered* keyword is passed on to :func:`merge-hash-ids`.
 
 .. function:: values-hash
 
@@ -189,7 +189,7 @@ from the module *table-extensions*.
      The function *elt-hash-function* must be suitable for use as a hash
      function. See page 123 of the Dylan Reference Manual.
 
-     The *ordered* keyword is passed on to *merge-hash-ids*.
+     The *ordered* keyword is passed on to :func:`merge-hash-ids`.
 
 .. function:: string-hash
 
