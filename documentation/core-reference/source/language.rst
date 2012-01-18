@@ -160,7 +160,7 @@ The ``keyed-by`` clause allows iteration over table elements:
     end;
 
 The ``in … using`` clause allows you to specify a iteration protocol
-other than the default (``forward-iteration-protocol``):
+other than the default (:drm:`forward-iteration-protocol`):
 
 .. code-block:: dylan
 
@@ -349,7 +349,7 @@ a Table-extensions module, which you can read about in
      result in a better distribution of hash IDs. However, *ordered*
      must only be true if that will not cause the hash function to
      violate the second constraint on hash functions, described on page
-     123 of the DRM.
+     :drm:`123 of the DRM <Tables#XREF-1049>`.
 
 .. function:: object-hash
 

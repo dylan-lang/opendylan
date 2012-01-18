@@ -143,7 +143,8 @@ from the module *table-extensions*.
      The *ordered* keyword is passed on to :func:`merge-hash-ids`.
 
      The functions *key-hash-function* and *elt-hash-function* must be
-     suitable for use as hash functions. See page 123 of the DRM.
+     suitable for use as hash functions. See page :drm:`123 of the DRM
+     <Tables#XREF-1049>`.
 
 .. function:: sequence-hash
 
@@ -164,7 +165,7 @@ from the module *table-extensions*.
      merges the resulting hash codes in order.
 
      The function *elt-hash-function* must be suitable for use as a hash
-     function. See page 123 of the Dylan Reference Manual.
+     function. See page :drm:`123 of the DRM <Tables#XREF-1049>`.
 
      The *ordered* keyword is passed on to :func:`merge-hash-ids`.
 
@@ -187,7 +188,7 @@ from the module *table-extensions*.
      merges the resulting hash codes in order.
 
      The function *elt-hash-function* must be suitable for use as a hash
-     function. See page 123 of the Dylan Reference Manual.
+     function. See page :drm:`123 of the DRM <Tables#XREF-1049>`.
 
      The *ordered* keyword is passed on to :func:`merge-hash-ids`.
 
