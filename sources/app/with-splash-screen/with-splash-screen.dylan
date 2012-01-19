@@ -249,91 +249,6 @@ define function hide-splash-screen (window :: <HWND>) => ()
   PostMessage(window, $WM-CLOSE, 0, 0);
 end function hide-splash-screen;
 
-/// Registry query to get Service Pack
-
-define class <registry-entry-lookup-error> (<simple-error>)
-  keyword format-string: = "Registry entry lookup error \"%s\" with code: %d";
-end class <registry-entry-lookup-error>;
-
-define method make
-    (class :: subclass(<registry-entry-lookup-error>), #key name, result)
- => (condition :: <registry-entry-lookup-error>)
-  next-method(class, format-arguments: vector(name, result))
-end method make;
-
-define macro with-open-registry-subkey
-  { with-open-registry-subkey (?subkey:name = ?key:expression, ?name:expression) ?body:body end }
-    => { do-with-open-registry-subkey(?key, ?name, method (?subkey) ?body end) };
-end macro with-open-registry-subkey;
-
-define method do-with-open-registry-subkey
-    (key, subkeyname, body :: <function>) => (#rest values)
-  let (result, subkey)
-    = RegOpenKeyEx(key, subkeyname, 0,
-		   %logior($KEY-ENUMERATE-SUB-KEYS, $KEY-QUERY-VALUE));
-  if (result = $ERROR-SUCCESS)
-    block ()
-      body(subkey)
-    cleanup
-      RegCloseKey(subkey)
-    end
-  else
-    error(make(<registry-entry-lookup-error>, name: subkeyname, result: result))
-  end
-end method do-with-open-registry-subkey;
-
-define macro with-open-registry-path
-  { with-open-registry-path (?subkey:name = ?key:expression, ?path:*) ?body:body end }
-    => { do-with-open-registry-path(?key, list(?path), method (?subkey) ?body end) }
-end macro with-open-registry-path;
-
-define method do-with-open-registry-path
-    (key, path, body :: <function>) => (#rest values)
-  if (empty?(path))
-    body(key)
-  else
-    with-open-registry-subkey (subkey = key, first(path))
-      do-with-open-registry-path(subkey, rest(path), body)
-    end
-  end
-end method do-with-open-registry-path;
-
-
-define method read-registry-string
-    (key, name) => (value)
-  let buffer-size :: <integer> = 2048;
-  with-stack-structure (buffer :: <C-string>, size: buffer-size)
-    with-stack-structure (count :: <LPDWORD>)
-      pointer-value(count) := buffer-size;
-      let (result, type)
-        = RegQueryValueEx(key, name, null-pointer(<LPDWORD>), buffer, count);
-      if (result ~= $ERROR-SUCCESS | type ~= $REG-SZ)
-	error(make(<registry-entry-lookup-error>, name: name, result: result))
-      else
-	as(<byte-string>, buffer)
-      end
-    end
-  end
-end method read-registry-string;
-
-define function update-version (key :: <byte-string>)
-  block ()
-    with-open-registry-path (fd-key = $HKEY-LOCAL-MACHINE, 
-                                      "Software",
-                                      "Open Dylan",
-                                      "Open Dylan",
-                                      key)
-      let service-pack-string :: <byte-string> = read-registry-string(fd-key, "Service-Pack");
-      let service-pack :: <integer> = string-to-integer(service-pack-string, default: 0);
-      if (service-pack > 0)
-        *version* := format-to-string("%s [Service Pack %d]", *version*, service-pack)
-      end
-    end
-  exception (condition :: <registry-entry-lookup-error>)
-    #f
-  end
-end function update-version;
-
 /// Application Handling
 
 define function do-launch-app
@@ -435,7 +350,6 @@ define method main () => ()
       end;
       i := i + 1;
     end;
-    update-version(key);
     when (command-line)
       let window = show-splash-screen();
       make(<thread>, function: method () launch-app(command-line, window) end);
