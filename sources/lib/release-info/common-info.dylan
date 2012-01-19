@@ -139,24 +139,6 @@ define method library-pack-number (pack :: <symbol>) => (pack :: false-or(<integ
   end
 end method library-pack-number;
 
-define method library-pack-required? (pack :: <integer>) => (required? :: <boolean>)
-  let info = find-library-pack-info(pack);
-  if (info)
-    info.info-required?
-  else
-    #f
-  end
-end method library-pack-required?;
-
-define method library-pack-required? (pack :: <symbol>) => (required? :: <boolean>)
-  let info = find-library-pack-info(pack);
-  if (info)
-    info.info-required?
-  else
-    #f
-  end
-end method library-pack-required?;
-
 define method release-contains-library-pack? (pack :: <integer>) => (installed? :: <boolean>)
   let encoded-packs = release-encoded-library-packs();
   %logbit?(pack - 1, encoded-packs)

@@ -88,8 +88,7 @@ define module release-info
          release-contains-library-pack?,
          library-pack-name,
 	 library-pack-full-name,
-         library-pack-number,
-         library-pack-required?;
+         library-pack-number;
 
   // Merged library DLL information
   export merged-project-name,
