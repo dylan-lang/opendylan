@@ -26,13 +26,13 @@ define class <namespace-report> (<project-report>, <multi-file-report>)
 end class <namespace-report>;
 
 define class <library-report> (<namespace-report>)
-  constant slot report-dtd :: <string> = $default-dtd, 
+  constant slot report-dtd :: <string> = $default-dtd,
     init-keyword: dtd:;
   constant slot report-organization :: <string> = $default-organization,
     init-keyword: organization:;
-  constant slot report-copyright :: <string> = $default-copyright, 
+  constant slot report-copyright :: <string> = $default-copyright,
     init-keyword: copyright:;
-  constant slot report-version :: <string> = $default-version, 
+  constant slot report-version :: <string> = $default-version,
     init-keyword: version:;
   slot report-children :: <stretchy-vector> = make(<stretchy-vector>);
   slot report-contents-file :: false-or(<locator>) = #f;
@@ -41,12 +41,12 @@ define class <library-report> (<namespace-report>)
 end class <library-report>;
 
 install-report(#"interface-reference", "Library interface reference",
-	       <library-report>,
-	       formats: #[#"text", #"html", #"xml"],
-	       multi-file?: #t);
+               <library-report>,
+               formats: #[#"text", #"html", #"xml"],
+               multi-file?: #t);
 
 define class <module-report> (<namespace-report>)
-  sealed constant slot report-namespace :: <namespace-object>, 
+  sealed constant slot report-namespace :: <namespace-object>,
     required-init-keyword: namespace:;
   sealed constant slot report-parent :: <library-report>,
     required-init-keyword: parent:;
@@ -79,8 +79,8 @@ define method write-library-report
   end if;
   let library = report.report-project.project-library;
   let stream
-    = make(stream-class-for-report(report.report-format), 
-	   inner-stream: stream);
+    = make(stream-class-for-report(report.report-format),
+           inner-stream: stream);
   write-definition-report(stream, report, library);
 end method write-library-report;
 
@@ -152,7 +152,7 @@ define method write-definition-report
   write-definition-header(stream, report, definition);
   write-definition-body(stream, report, definition);
   write-definition-footer(stream, report, definition);
-end method write-definition-report;    
+end method write-definition-report;
 
 define method write-definition-report
     (stream :: <report-stream>, report :: <namespace-report>,
@@ -162,7 +162,7 @@ define method write-definition-report
 end method write-definition-report;
 
 define method write-definition-header
-    (stream :: <report-stream>, report :: <namespace-report>, 
+    (stream :: <report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
  => ()
   write-definition-name(stream, report, definition);
@@ -170,7 +170,7 @@ define method write-definition-header
 end method write-definition-header;
 
 define method write-definition-separator
-    (stream :: <report-stream>, report :: <namespace-report>, 
+    (stream :: <report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
  => ()
 end method write-definition-separator;
@@ -188,13 +188,13 @@ define method write-definition-contents
 end method write-definition-contents;
 
 define method write-definition-body
-    (stream :: <report-stream>, report :: <namespace-report>, 
+    (stream :: <report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
  => ()
 end method write-definition-body;
 
 define method write-definition-footer
-    (stream :: <report-stream>, report :: <namespace-report>, 
+    (stream :: <report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
  => ()
   write-description(stream, report, definition);
@@ -209,7 +209,7 @@ define method write-description
 end method write-description;
 
 define method write-see-also
-    (stream :: <report-stream>, report :: <namespace-report>, 
+    (stream :: <report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
  => ()
 end method write-see-also;
@@ -224,12 +224,12 @@ define method write-definition-contents
     let module = name-value(project, name);
     report.report-children :=
       add!(report.report-children,
-	   make(<module-report>,
-		format: report.report-format,
-		multi-file?: report.report-multi-file?,
-		project: project,
-		parent:  report,
-		namespace:  module));
+           make(<module-report>,
+                format: report.report-format,
+                multi-file?: report.report-multi-file?,
+                project: project,
+                parent:  report,
+                namespace:  module));
   end for;
 end method write-definition-contents;
 
@@ -242,15 +242,15 @@ define method write-definition-body
     if (subreport.report-multi-file?)
       let filename = report-object-filename(subreport, module);
       with-open-file (stream = filename, direction: #"output")
-	let stream
-	  = make(stream-class-for-report(report.report-format),
-		 inner-stream: stream);
-	with-html-rubric (istream = stream.inner-stream, // ---*** push this down into HTML method
-			  format-to-string("%s %s",
+        let stream
+          = make(stream-class-for-report(report.report-format),
+                 inner-stream: stream);
+        with-html-rubric (istream = stream.inner-stream, // ---*** push this down into HTML method
+                          format-to-string("%s %s",
                                            definition-name(subreport, module),
                                            definition-kind(module)))
-	  write-definition-report(stream, subreport, module)
-	end with-html-rubric;
+          write-definition-report(stream, subreport, module)
+        end with-html-rubric;
       end with-open-file;
     else
       write-definition-report(stream, subreport, module)
@@ -321,19 +321,19 @@ define method write-definition-body
 end method write-definition-body;
 
 define method write-variable-type
-    (stream :: <report-stream>, report :: <module-report>, 
+    (stream :: <report-stream>, report :: <module-report>,
      variable :: <variable-object>)
  => ()
 end method write-variable-type;
 
 define method write-variable-value
-    (stream :: <report-stream>, report :: <module-report>, 
+    (stream :: <report-stream>, report :: <module-report>,
      variable :: <variable-object>)
  => ()
 end method write-variable-value;
 
 define method write-class-superclasses
-    (stream :: <report-stream>, report :: <module-report>, 
+    (stream :: <report-stream>, report :: <module-report>,
      class :: <class-object>)
  => ()
   let project = report.report-project;
@@ -370,7 +370,7 @@ define method write-superclasses-footer
 end method write-superclasses-footer;
 
 define method write-class-init-keywords
-    (stream :: <report-stream>, report :: <module-report>, 
+    (stream :: <report-stream>, report :: <module-report>,
      class :: <class-object>)
  => ()
   let project = report.report-project;
@@ -379,13 +379,13 @@ define method write-class-init-keywords
   let types = make(<table>);
   do-init-keywords
     (method
-	 (definition :: <definition-object>,
-	  keyword :: <symbol>,
-	  type :: false-or(<environment-object>),
-	  required? :: <boolean>,
-	  inherited? :: <boolean>)
+         (definition :: <definition-object>,
+          keyword :: <symbol>,
+          type :: false-or(<environment-object>),
+          required? :: <boolean>,
+          inherited? :: <boolean>)
        unless (element(types, keyword, default: #f))
-	 types[keyword] := type
+         types[keyword] := type
        end unless;
      end,
      project,
@@ -416,13 +416,13 @@ define method write-init-keywords-footer
 end method write-init-keywords-footer;
 
 define method write-operations
-    (stream :: <report-stream>, report :: <module-report>, 
+    (stream :: <report-stream>, report :: <module-report>,
      class :: <class-object>)
  => ()
 end method write-operations;
 
 define method write-function-signature
-    (stream :: <report-stream>, report :: <module-report>, 
+    (stream :: <report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
   let project = report.report-project;
@@ -432,16 +432,16 @@ define method write-function-signature
   write-function-name(stream, report, function);
   format(stream, " (");
   local method do-parameter (parameter :: <parameter>) => ()
-	  format(stream, "%s",
-		 if (instance?(parameter, <optional-parameter>))
-		   parameter.parameter-keyword
-		 end
-		   | parameter.parameter-name)
-	end method do-parameter;
+          format(stream, "%s",
+                 if (instance?(parameter, <optional-parameter>))
+                   parameter.parameter-keyword
+                 end
+                   | parameter.parameter-name)
+        end method do-parameter;
   local method do-parameters (parameters :: <parameters>) => ()
-	  for (parameter :: <parameter> in parameters,
-	       separator = "" then " ")
-	    format(stream, separator);
+          for (parameter :: <parameter> in parameters,
+               separator = "" then " ")
+            format(stream, separator);
             do-parameter(parameter)
           end for;
         end method do-parameters;
@@ -469,8 +469,8 @@ define method write-function-signature
       print-separator();
       format(stream, "#key ");
       do-parameters(key);
-      if (all-keys?) 
-	format(stream, " #all-keys")
+      if (all-keys?)
+        format(stream, " #all-keys")
       end;
     all-keys? =>
       print-separator();
@@ -492,7 +492,7 @@ define method write-function-signature
 end method write-function-signature;
 
 define method write-function-arguments
-    (stream :: <report-stream>, report :: <module-report>, 
+    (stream :: <report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
   let project = report.report-project;
@@ -500,10 +500,10 @@ define method write-function-arguments
   let (required, rest, key, all-keys?, next, required-values, rest-value)
     = function-parameters(project, function);
   local method do-parameter (parameter :: <parameter>) => ()
-	  write-function-parameter(stream, report, parameter)
-	end method do-parameter;
+          write-function-parameter(stream, report, parameter)
+        end method do-parameter;
   local method do-parameters (parameters :: <parameters>) => ()
-	  do(do-parameter, parameters)
+          do(do-parameter, parameters)
         end method do-parameters;
   write-function-parameters-header(stream, report, function);
   do-parameters(required);
@@ -515,7 +515,7 @@ define method write-function-arguments
 end method write-function-arguments;
 
 define method write-function-values
-    (stream :: <report-stream>, report :: <module-report>, 
+    (stream :: <report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
   let project = report.report-project;
@@ -523,10 +523,10 @@ define method write-function-values
   let (required, rest, key, all-keys?, next, required-values, rest-value)
     = function-parameters(project, function);
   local method do-parameter (parameter :: <parameter>) => ()
-	  write-function-parameter(stream, report, parameter, kind: #"output");
-	end method do-parameter;
+          write-function-parameter(stream, report, parameter, kind: #"output");
+        end method do-parameter;
   local method do-parameters (parameters :: <parameters>) => ()
-	  do(do-parameter, parameters)
+          do(do-parameter, parameters)
         end method do-parameters;
   write-function-parameters-header(stream, report, function, kind: #"output");
   do-parameters(required-values);
@@ -564,7 +564,7 @@ define method stream-class-for-report
 end method stream-class-for-report;
 
 define method write-definition-separator
-    (stream :: <text-report-stream>, report :: <namespace-report>, 
+    (stream :: <text-report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
  => ()
   format(stream, "%s\n", $report-separator);
@@ -574,8 +574,8 @@ define method write-definition-name
     (stream :: <text-report-stream>, report :: <namespace-report>, namespace :: <namespace-object>)
  => ()
   format(stream, "%s %s\n\n",
-	 definition-kind(namespace),
-	 environment-object-primitive-name(report.report-project, namespace));
+         definition-kind(namespace),
+         environment-object-primitive-name(report.report-project, namespace));
 end method write-definition-name;
 
 define method write-definition-name
@@ -586,10 +586,10 @@ define method write-definition-name
   let type = definition-type-description(project, definition);
   let padding = max(6, $report-width - title.size - type.size);
   format(stream, "%s%s%s\n",
-	 title, 
-	 make(<byte-string>, fill: ' ', size: padding),
-	 type)
-end method write-definition-name;    
+         title,
+         make(<byte-string>, fill: ' ', size: padding),
+         type)
+end method write-definition-name;
 
 define method write-superclasses-header
     (stream :: <text-report-stream>, report :: <module-report>,
@@ -621,11 +621,11 @@ define method write-init-keyword
 end method write-init-keyword;
 
 define method write-function-name
-    (stream :: <text-report-stream>, report :: <module-report>, 
+    (stream :: <text-report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
   format(stream, "\n%s ",
-	 definition-name(report, function));
+         definition-name(report, function));
 end method write-function-name;
 
 define method write-function-parameter
@@ -636,11 +636,11 @@ define method write-function-parameter
   let module = report.report-namespace;
   let type = parameter.parameter-type;
   format(stream, "%s :: %s",
-	     if (instance?(parameter, <optional-parameter>))
-	       parameter.parameter-keyword
-	     end
-	       | parameter.parameter-name,
-	 definition-name(report, type));
+             if (instance?(parameter, <optional-parameter>))
+               parameter.parameter-keyword
+             end
+               | parameter.parameter-name,
+         definition-name(report, type));
   new-line(stream);
 end method write-function-parameter;
 
@@ -648,7 +648,7 @@ end method write-function-parameter;
 /// HTML implementation
 
 /// ----------------------------------------------------------------------
-/// HTML 
+/// HTML
 
 define class <html-report-stream> (<report-stream>)
 end class <html-report-stream>;
@@ -656,7 +656,7 @@ end class <html-report-stream>;
 define method initialize (stream :: <html-report-stream>, #key inner-stream)
   next-method();
   stream.inner-stream := ensure-html-stream(inner-stream);
-  
+
 end method initialize;
 
 define method ensure-html-stream (stream :: <stream>)
@@ -692,8 +692,8 @@ define method write-definition-name
  => ()
   let title = definition-name(report, definition);
   write-html(stream,
-	     #"h3", make(<html-anchor>, name: title),
-	     title, #"/h3", '\n');
+             #"h3", make(<html-anchor>, name: title),
+             title, #"/h3", '\n');
 end method write-definition-name;
 
 
@@ -746,11 +746,11 @@ define method write-init-keywords-footer
 end method write-init-keywords-footer;
 
 define method write-function-name
-    (stream :: <html-report-stream>, report :: <module-report>, 
+    (stream :: <html-report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
   format(stream, "%s ",
-	 definition-name(report, function));
+         definition-name(report, function));
 end method write-function-name;
 
 define method write-function-parameter
@@ -760,12 +760,12 @@ define method write-function-parameter
   let project = report.report-project;
   let module = report.report-namespace;
   let type = parameter.parameter-type;
-  write-html(stream, #"li", 
-	     if (instance?(parameter, <optional-parameter>))
-	       parameter.parameter-keyword
-	     end
-	       | parameter.parameter-name,
-	     " :: ");
+  write-html(stream, #"li",
+             if (instance?(parameter, <optional-parameter>))
+               parameter.parameter-keyword
+             end
+               | parameter.parameter-name,
+             " :: ");
   print-environment-object-name
     (stream, project, type, namespace: module);
   write-html(stream, #"/li", '\n')
@@ -797,12 +797,12 @@ define method write-definition-contents
     with-html-output (stream = stream.inner-stream, format-to-string("%s Library", library-name))
       write-html(stream, #"ul", '\n');
       for (report in report.report-children)
-	let module = report.report-namespace;
-	let filename = report-object-filename(report, module);
-	write-html(stream,
-		   #"li", make(<html-reference>, name: filename),
-		   environment-object-primitive-name(project, module),
-		   " Module", #"/a");
+        let module = report.report-namespace;
+        let filename = report-object-filename(report, module);
+        write-html(stream,
+                   #"li", make(<html-reference>, name: filename),
+                   environment-object-primitive-name(project, module),
+                   " Module", #"/a");
       end for;
     end with-html-output;
   end if;
@@ -850,22 +850,22 @@ define method write-definition-header
      definition :: <library-object>)
  => ()
   format(stream,
-	 "<?xml version=\"1.0\"?>\n"
-	   "<!DOCTYPE refman SYSTEM \"%s\">\n"
-	   "<refman>\n"
-	   "\n"
-	   "<head>\n"
-	   "<title>Open Dylan %s Reference Manual</title>\n"
-	   "<organization>%s</organization>\n"
-	   "<copyright>%s</copyright>\n"
-	   "<version>%s</version>\n"
-	   "</head>\n"
-	   "\n",
-	 report.report-dtd,
-	 definition-name(report, report.report-namespace),
-	 report.report-organization,
-	 report.report-copyright,
-	 report.report-version);
+         "<?xml version=\"1.0\"?>\n"
+           "<!DOCTYPE refman SYSTEM \"%s\">\n"
+           "<refman>\n"
+           "\n"
+           "<head>\n"
+           "<title>Open Dylan %s Reference Manual</title>\n"
+           "<organization>%s</organization>\n"
+           "<copyright>%s</copyright>\n"
+           "<version>%s</version>\n"
+           "</head>\n"
+           "\n",
+         report.report-dtd,
+         definition-name(report, report.report-namespace),
+         report.report-organization,
+         report.report-copyright,
+         report.report-version);
   next-method();
 end method write-definition-header;
 
@@ -879,14 +879,14 @@ define method write-definition-header
 end method write-definition-header;
 
 define method write-definition-footer
-    (stream :: <xml-report-stream>, report :: <namespace-report>, 
+    (stream :: <xml-report-stream>, report :: <namespace-report>,
      definition :: <namespace-object>)
   => ()
   format(stream, "</%s>\n", as-lowercase(definition-kind(definition)));
 end method write-definition-footer;
 
 define method write-definition-footer
-    (stream :: <xml-report-stream>, report :: <library-report>, 
+    (stream :: <xml-report-stream>, report :: <library-report>,
      definition :: <library-object>)
   => ()
   next-method();
@@ -894,7 +894,7 @@ define method write-definition-footer
 end method write-definition-footer;
 
 define method write-definition-header
-    (stream :: <xml-report-stream>, report :: <namespace-report>, 
+    (stream :: <xml-report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
  => ()
   let project = report.report-project;
@@ -904,7 +904,7 @@ define method write-definition-header
 end method write-definition-header;
 
 define method write-definition-header
-    (stream :: <xml-report-stream>, report :: <namespace-report>, 
+    (stream :: <xml-report-stream>, report :: <namespace-report>,
      class :: <class-object>)
  => ()
   next-method();
@@ -912,7 +912,7 @@ define method write-definition-header
 end method write-definition-header;
 
 define method write-definition-header
-    (stream :: <xml-report-stream>, report :: <namespace-report>, 
+    (stream :: <xml-report-stream>, report :: <namespace-report>,
      function :: <generic-function-object>)
  => ()
   next-method();
@@ -921,7 +921,7 @@ define method write-definition-header
 end method write-definition-header;
 
 define method write-definition-footer
-    (stream :: <xml-report-stream>, report :: <namespace-report>, 
+    (stream :: <xml-report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
   => ()
   let project = report.report-project;
@@ -931,14 +931,14 @@ define method write-definition-footer
 end method write-definition-footer;
 
 define method write-definition-separator
-    (stream :: <xml-report-stream>, report :: <namespace-report>, 
+    (stream :: <xml-report-stream>, report :: <namespace-report>,
      definition :: <definition-object>)
  => ()
   new-line(stream)
 end method write-definition-separator;
 
 define method write-definition-separator
-    (stream :: <xml-report-stream>, report :: <library-report>, 
+    (stream :: <xml-report-stream>, report :: <library-report>,
      definition :: <library-object>)
  => ()
 end method write-definition-separator;
@@ -947,7 +947,7 @@ define method write-definition-name
     (stream :: <xml-report-stream>, report :: <library-report>, library :: <namespace-object>)
  => ()
   format(stream, "  <name>%s</name>\n\n",
-	 environment-object-primitive-name(report.report-project, library));
+         environment-object-primitive-name(report.report-project, library));
 end method write-definition-name;
 
 define method write-definition-name
@@ -955,10 +955,10 @@ define method write-definition-name
  => ()
   let name = definition-name(report, definition);
   format(stream, "  <name><![CDATA[%s]]></name>\n", name);
-end method write-definition-name;    
+end method write-definition-name;
 
 define method write-variable-type
-    (stream :: <xml-report-stream>, report :: <module-report>, 
+    (stream :: <xml-report-stream>, report :: <module-report>,
      variable :: <variable-object>)
  => ()
   let type = variable-type(report.report-project, variable);
@@ -967,7 +967,7 @@ define method write-variable-type
 end method write-variable-type;
 
 define method write-variable-value
-    (stream :: <xml-report-stream>, report :: <module-report>, 
+    (stream :: <xml-report-stream>, report :: <module-report>,
      variable :: <variable-object>)
  => ()
   let value = variable-value(report.report-project, variable);
@@ -1009,17 +1009,17 @@ define method write-init-keyword
      keyword :: <symbol>, type :: false-or(<environment-object>))
  => ()
   format(stream,
-	 "      <keyword>\n"
-	   "        <name>%s:</name>\n"
-	   "        <type><![CDATA[%s]]></type>\n"
-	   "        <description></description>\n"
-	   "      </keyword>\n",
-	 as(<string>, keyword),
-	 if (type)
-	   definition-name(report, type)
-	 else
-	   "<object>"
-	 end if);
+         "      <keyword>\n"
+           "        <name>%s:</name>\n"
+           "        <type><![CDATA[%s]]></type>\n"
+           "        <description></description>\n"
+           "      </keyword>\n",
+         as(<string>, keyword),
+         if (type)
+           definition-name(report, type)
+         else
+           "<object>"
+         end if);
 end method write-init-keyword;
 
 define method write-init-keywords-footer
@@ -1030,13 +1030,13 @@ define method write-init-keywords-footer
 end method write-init-keywords-footer;
 
 define method write-function-signature
-    (stream :: <xml-report-stream>, report :: <module-report>, 
+    (stream :: <xml-report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
 end method write-function-signature;
 
 define method write-function-arguments
-    (stream :: <xml-report-stream>, report :: <module-report>, 
+    (stream :: <xml-report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
   let project = report.report-project;
@@ -1045,11 +1045,11 @@ define method write-function-arguments
     = function-parameters(project, function);
   local method do-parameter
             (parameter :: <parameter>, kind :: <argument-kind>) => ()
-	  write-function-parameter(stream, report, parameter, kind: kind)
-	end method do-parameter;
+          write-function-parameter(stream, report, parameter, kind: kind)
+        end method do-parameter;
   local method do-parameters
             (parameters :: <parameters>, kind :: <argument-kind>) => ()
-	  do(rcurry(do-parameter, kind), parameters)
+          do(rcurry(do-parameter, kind), parameters)
         end method do-parameters;
   write-function-parameters-header(stream, report, function);
   do-parameters(required, #"input");
@@ -1062,7 +1062,7 @@ define method write-function-arguments
 end method write-function-arguments;
 
 define method write-function-values
-    (stream :: <xml-report-stream>, report :: <module-report>, 
+    (stream :: <xml-report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
   let project = report.report-project;
@@ -1072,10 +1072,10 @@ define method write-function-values
   local method do-parameter
             (parameter :: <parameter>, kind :: <argument-kind>) => ();
           write-function-parameter(stream, report, parameter, kind: kind);
-	end method do-parameter;
+        end method do-parameter;
   local method do-parameters
             (parameters :: <parameters>, kind :: <argument-kind>) => ()
-	  do(rcurry(do-parameter, kind), parameters)
+          do(rcurry(do-parameter, kind), parameters)
         end method do-parameters;
   write-function-parameters-header(stream, report, function, kind: #"output");
   do-parameters(required-values, #"output");
@@ -1119,17 +1119,17 @@ define method write-function-parameter
         #"output-rest" => "rest-out"
       end select;
   format(stream,
-	 "      <%s>\n"
-	 "        <name>%s</name>\n"
-	   "        <type><![CDATA[%s]]></type>\n"
-	   "        <description></description>\n"
-	   "      </%s>\n",
+         "      <%s>\n"
+         "        <name>%s</name>\n"
+           "        <type><![CDATA[%s]]></type>\n"
+           "        <description></description>\n"
+           "      </%s>\n",
          tag,
          (if (instance?(parameter, <optional-parameter>))
             parameter.parameter-keyword
           end
           | parameter.parameter-name),
-	 definition-name(report, type),
+         definition-name(report, type),
          tag);
 end method write-function-parameter;
 
@@ -1141,7 +1141,7 @@ define method write-description
 end method write-description;
 
 define method write-see-also
-    (stream :: <xml-report-stream>, report :: <module-report>, 
+    (stream :: <xml-report-stream>, report :: <module-report>,
      definition :: <definition-object>)
   => ()
   format(stream, "  <seealso></seealso>\n");
@@ -1157,41 +1157,41 @@ define method report-object-filename
   let table = parent.report-object-filenames;
   element(table, object, default: #f)
     | begin
-	let directory = parent.report-directory;
-	let file
-	  = select (object by instance?)
-	      <definition-object> =>
-		let name = mangle-for-filename(definition-name(report, object));
-		format-to-string("%s-reference.htm", name);
-	      otherwise =>
-		let next-count = parent.report-anonymous-count + 1;
-		parent.report-anonymous-count := next-count;
-		format-to-string("anonymous-%d.htm", next-count);
-	    end;
-	as(<string>, merge-locators(as(<file-locator>, file),
-				    as(<directory-locator>, directory)))
+        let directory = parent.report-directory;
+        let file
+          = select (object by instance?)
+              <definition-object> =>
+                let name = mangle-for-filename(definition-name(report, object));
+                format-to-string("%s-reference.htm", name);
+              otherwise =>
+                let next-count = parent.report-anonymous-count + 1;
+                parent.report-anonymous-count := next-count;
+                format-to-string("anonymous-%d.htm", next-count);
+            end;
+        as(<string>, merge-locators(as(<file-locator>, file),
+                                    as(<directory-locator>, directory)))
       end
 end method report-object-filename;
 
-define method mangle-for-filename 
+define method mangle-for-filename
     (filename :: <string>)
  => (mangled :: <string>)
   let chars = make(<stretchy-vector>);
   for (c in filename)
     let next = select (c)
-		 '<' => "lt";
-		 '>' => "gt";
-		 '?' => "qm";
-		 '$' => "dl";
-		 otherwise => c;
-	       end select;
+                 '<' => "lt";
+                 '>' => "gt";
+                 '?' => "qm";
+                 '$' => "dl";
+                 otherwise => c;
+               end select;
     select (next by instance?)
-      <string> => 
-	for (n in next)
-	  chars := add!(chars, n)
-	end for;
+      <string> =>
+        for (n in next)
+          chars := add!(chars, n)
+        end for;
       <character> =>
-	chars := add!(chars, next);
+        chars := add!(chars, next);
     end
   end;
   as(<string>, chars)
@@ -1203,9 +1203,9 @@ define method write-object-reference
  => ()
   let reference = html-object-reference(report, object);
   write-html(stream,
-	     make(<html-reference>, name: reference),
-	     definition-name(report, object),
-	     #"/a")
+             make(<html-reference>, name: reference),
+             definition-name(report, object),
+             #"/a")
 end method write-object-reference;
 
 define method html-object-reference
@@ -1229,17 +1229,17 @@ define function namespace-sorted-names
   do-namespace-names
     (method (name :: <name-object>)
        if (internal? | name-exported?(project, name))
-	 add!(names, name)
+         add!(names, name)
        end
      end,
      project, namespace);
   sort(names,
        test: method
-		 (name1 :: <name-object>, name2 :: <name-object>)
-	       let p1 = environment-object-primitive-name(project, name1);
-	       let p2 = environment-object-primitive-name(project, name2);
-	       p1 < p2
-	     end)
+                 (name1 :: <name-object>, name2 :: <name-object>)
+               let p1 = environment-object-primitive-name(project, name1);
+               let p2 = environment-object-primitive-name(project, name2);
+               p1 < p2
+             end)
 end function namespace-sorted-names;
 
 define method definition-name
@@ -1305,14 +1305,14 @@ define method definition-type-description
     (project :: <project-object>, function :: <generic-function-object>)
  => (description :: <string>)
     concatenate(generic-function-modifiers(project, function),
-		definition-kind(function))
+                definition-kind(function))
 end method definition-type-description;
 
 define method definition-type-description
     (project :: <project-object>, class :: <class-object>)
  => (description :: <string>)
     concatenate(class-modifiers(project, class),
-		definition-kind(class))
+                definition-kind(class))
 end method definition-type-description;
 
 define method class-modifiers
@@ -1322,7 +1322,7 @@ define method class-modifiers
   let open?     = member?(#"open", modifiers);
   let abstract? = member?(#"abstract", modifiers);
   let primary?  = member?(#"primary", modifiers);
-  let instantiable? = #f;	// How can we get this?
+  let instantiable? = #f;        // How can we get this?
   with-output-to-string (stream)
     open?         & write(stream, "Open ");
     abstract?     & write(stream, "Abstract ");
@@ -1340,5 +1340,5 @@ define method generic-function-modifiers
   with-output-to-string (stream)
     open?         & write(stream, "Open ");
     dynamic?      & write(stream, "Dynamic ");
-  end  
+  end
 end method generic-function-modifiers;
