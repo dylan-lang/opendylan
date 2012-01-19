@@ -21,11 +21,7 @@ define module release-info
   export <release-info>,
          <named-release-info>,
          <described-release-info>,
-         release-name,
          release-product-name,
-         release-edition,
-         release-contains-console-tools?,
-         release-service-pack,
          release-version,
          release-short-version,
          release-copyright,
@@ -87,14 +83,10 @@ define module release-info
          <numbered-library-pack-info>,
          find-library-pack-info,
          installed-library-packs,
-	 release-library-packs,
-         release-required-library-packs,
-	 release-optional-library-packs,
          release-contains-library-pack?,
          library-pack-name,
 	 library-pack-full-name,
-         library-pack-number,
-         library-pack-required?;
+         library-pack-number;
 
   // Merged library DLL information
   export merged-project-name,
@@ -140,20 +132,6 @@ define module release-info
   */
 
   // Settings
-  export <general-open-dylan-local-settings>,
-	 <general-open-dylan-user-settings>,
-	 <unversioned-open-dylan-local-settings>,
-         <unversioned-open-dylan-user-settings>,
-         <open-dylan-local-settings-1-0>,
-         <open-dylan-local-settings-1-1>,
-         <open-dylan-local-settings-1-2>,
-         <open-dylan-local-settings-2-0>,
-         <open-dylan-local-settings-2-1>,
-	 <open-dylan-local-settings>,
-	 <open-dylan-user-settings-1-0>,
-	 <open-dylan-user-settings-1-1>,
-	 <open-dylan-user-settings-1-2>,
-	 <open-dylan-user-settings-2-0>,
-	 <open-dylan-user-settings-2-1>,
+  export <open-dylan-local-settings>,
 	 <open-dylan-user-settings>;
 end module release-info;

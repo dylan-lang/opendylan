@@ -129,7 +129,6 @@ Section "${APPNAME} Core" SecOpendylanCore
   File /r /x .git $%OPEN_DYLAN_RELEASE_SOURCES%\*.*
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Library-Packs" "0xffff"
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Console-Tools" "Yes"
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "User" \
               "Open Dylan Hacker"
@@ -199,7 +198,7 @@ Section "Associate .hdp files" SecAssocHDP
               "Open Dylan Project"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\DefaultIcon" "" \
               "$INSTDIR\\bin\\win32-environment.exe,2"
-  WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.Project.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -218,7 +217,7 @@ Section "Associate .spec files" SecAssocSPEC
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\DefaultIcon" "" \
               "$INSTDIR\\bin\\win32-environment.exe,5"
-  WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Developer.ToolSpec.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -235,7 +234,7 @@ Section "Associate .lid files" SecAssocLID
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File" "" "Dylan Library Interchange Description"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\DefaultIcon" "" "$INSTDIR\\bin\\win32-environment.exe,4"
-  WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.LID.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -254,7 +253,7 @@ Section "Associate .dyl, .dylan files" SecAssocDYLAN
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File" "" "Dylan Source File"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File" "AlwaysShowExt" ""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\DefaultIcon" "" "$INSTDIR\\bin\\win32-environment.exe,1"
-  WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
+  WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\command" "" "$INSTDIR\\bin\\with-splash-screen.exe /v $\"Version ${APPVERSION}$\" win32-environment.exe $\"%1$\""
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec" "" "[OpenFile($\"%1$\")]"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec\Application" "" "FunctionalDeveloper"
   WriteRegStr HKEY_CLASSES_ROOT "Dylan.Source.File\shell\open\ddeexec\ifexec" "" "[]"
@@ -286,21 +285,21 @@ Section "Start Menu Shortcuts" SecStartMenuShortcuts
   CreateDirectory "$SMPROGRAMS\Open Dylan"
   CreateShortCut "$SMPROGRAMS\Open Dylan\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
   Delete "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" ; Delete older link if exists
-  CreateShortCut "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateShortCut "$SMPROGRAMS\Open Dylan\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 Section "Desktop Shortcut" SecDesktopShortcut
   SectionIn 1 2
   ;; For past users, cleanup previous icon if still on desktop
   Delete "$DESKTOP\${APPNAMEANDVERSION}.lnk"
-  CreateShortCut "$DESKTOP\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateShortCut "$DESKTOP\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 Section "Quick Launch Shortcut" SecQuickLaunchShortcut
   SectionIn 2
 
   Delete "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk"
-  CreateShortCut "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/k 1.0 /v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
+  CreateShortCut "$QUICKLAUNCH\${APPNAMEANDVERSION}.lnk" "$\"$INSTDIR\bin\with-splash-screen.exe$\"" "/v $\"Version ${APPVERSION}$\" win32-environment.exe" "$INSTDIR\bin\win32-environment.exe" 0
 SectionEnd
 
 ;;;--------------------------------
