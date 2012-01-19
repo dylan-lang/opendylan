@@ -121,11 +121,11 @@ define table $project-wizard-strings
 	  "change the default version information."],
       #"wizard-intro" =>
 	vector(pair("This Wizard helps you to create a new %s project.",
-		    method () vector(release-product-name()) end)),
+		    method () vector(release-name()) end)),
       #"chooser-description" =>
 	vector("This page lets you choose libraries your project will use,",
 	       pair("from groups of libraries provided with %s,",
-		    method () vector(release-product-name()) end),
+		    method () vector(release-name()) end),
 	       "and which modules to use from those libraries.",
 	       "Double-click on an item in one of the lists above to change",
 	       "whether it is used.  Use the check box below each list",
@@ -170,7 +170,7 @@ define function initialize-wizard-strings () => ()
     for (string keyed-by key in $strings-mentioning-environment-name)
       $strings-mentioning-environment-name[key]
         := format-to-string($strings-mentioning-environment-name[key],
-			    release-product-name());
+			    release-name());
     end;
 /* For multi-line text:
     for (value keyed-by key in $project-wizard-strings)
@@ -876,7 +876,7 @@ define sealed frame <project-wizard-frame> (<wizard-frame>)
 "and decide whether to generate a client or server project, or both.";
 "These projects will use some or all of the 'protocol', 'stubs' and 'skeletons'";
 format-to-string("libraries which %s will generate automatically from the IDL file.",
-                 release-product-name());
+                 release-name());
                end;
 	       grouping ("CORBA IDL file",
 			 max-width: $fill)
@@ -1096,7 +1096,7 @@ format-to-string("libraries which %s will generate automatically from the IDL fi
 	       indenting ($radio-indent) labels
 "The following pages will lead you through options for using libraries for several";
 format-to-string("main areas of support provided by %s.",
-                 release-product-name());
+                 release-name());
 	       end; end;
 	     end;
 	     vertically (y-spacing: 4)
@@ -1104,7 +1104,7 @@ format-to-string("main areas of support provided by %s.",
 	       indenting ($radio-indent) labels
 "The next page will let you choose exactly which libraries your project will use"; 
 format-to-string("from the groups of libraries supplied with %s.",
-                 release-product-name());
+                 release-name());
 	       end; end;
 	     end;
 	   end,
@@ -1226,7 +1226,7 @@ format-to-string("from the groups of libraries supplied with %s.",
 	       make(<radio-button>, label: "Win32 API", id: #"win32");
 	       indenting ($radio-indent) labels
 format-to-string("Use libraries for access to much of the Win32 API via the %s",
-                 release-product-name());
+                 release-name());
 "C Foreign Function Interface.";
 	       end; end;
 	     end;
@@ -1341,7 +1341,7 @@ format-to-string("Use libraries for access to much of the Win32 API via the %s",
 	       indenting ($radio-indent) labels
 "Use the ODBC-FFI library, which provides a low-level interface to the";
 format-to-string("Microsoft ODBC API, via the %s C Foreign Function Interface.",
-                 release-product-name());
+                 release-name());
 "This is not recommended for new users.";
 	       end; end;
 	     end;
@@ -1389,7 +1389,7 @@ format-to-string("Microsoft ODBC API, via the %s C Foreign Function Interface.",
       labels
 "This page lets you choose which groups of libraries to use from the libraries";
 format-to-string("provided with %s.",
-                 release-product-name());
+                 release-name());
 "";
 "Double-click on an item in the list to change whether it is used.";
 "";

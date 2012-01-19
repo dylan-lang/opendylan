@@ -103,7 +103,7 @@ define method generate-frame-title
   let project = frame.frame-project;
   concatenate("Profiling ",
               frame-default-object-name(frame, project),
-              " - ", release-product-name())
+              " - ", release-name())
 end method generate-frame-title;
 
 define method frame-selection-message-setter

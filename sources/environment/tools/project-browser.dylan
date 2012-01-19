@@ -281,7 +281,7 @@ define method frame-can-exit?
 			       project-name);
 	  let (save-db?, exit-type) = environment-question
 					(message,
-					 title: release-product-name(),
+					 title: release-name(),
 					 owner: frame,
 					 style: #"warning",
 					 exit-style: #"yes-no-cancel");
@@ -412,7 +412,7 @@ define method generate-frame-title
 //  locator-name(location)
   concatenate("Project ",
 	      environment-object-primitive-name(project, project),
-              " - ", release-product-name())
+              " - ", release-name())
 end method generate-frame-title;
 
 

@@ -124,7 +124,7 @@ end method find-command-line-window;
 
 define method generate-frame-title
     (frame :: <command-line-window>) => (title :: <string>)
-  concatenate("Command Line", " - ", release-product-name())
+  concatenate("Command Line", " - ", release-name())
 end method generate-frame-title;
 
 define command-table *command-line-window-file-command-table* (*global-command-table*)

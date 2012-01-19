@@ -499,7 +499,7 @@ define variable *environment-editor-token* :: false-or(<symbol>) = #f;
 define function environment-editor-token () => (token :: <symbol>)
   unless (*environment-editor-token*)
     *environment-editor-token*
-      := as(<symbol>, concatenate(release-product-name(), " Editor"));
+      := as(<symbol>, concatenate(release-name(), " Editor"));
   end;
   *environment-editor-token*
 end function;

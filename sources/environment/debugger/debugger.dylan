@@ -138,7 +138,7 @@ define sealed method generate-frame-title
       write(stream, machine.machine-hostname)
     end;
     write(stream, " - ");
-    write(stream, release-product-name())
+    write(stream, release-name())
   end
 end method generate-frame-title;
 

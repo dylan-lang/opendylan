@@ -50,7 +50,7 @@ end method do-environment-handler;
 define method do-environment-handler
     (condition :: <out-of-memory-condition>, next-handler :: <function>)
  => ()
-  let product-name = safe-release-product-name();
+  let product-name = safe-release-name();
   let message
     = format-to-string
         ("%s is running very low on memory, so unsaved data may be lost.\n"
@@ -85,23 +85,23 @@ end method choose-condition-action;
 define variable $internal-error-bitmap = #f;
 
 
-/// SAFE-RELEASE-PRODUCT-NAME
+/// SAFE-RELEASE-NAME
 //
-// Unfortunately, release-product-name isn't available until the edition
+// Unfortunately, release-name isn't available until the edition
 // specific DLL has been initialized, and this error handler can kick in
 // before then. So just use "Open Dylan" if we can't do better,
 // because we really shouldn't be crashing here.
 
 define constant $product-name = "Open Dylan";
 
-define function safe-release-product-name
+define function safe-release-name
     () => (name :: <string>)
   block ()
-    release-product-name()
+    release-name()
   exception (error :: <error>)
     $product-name
   end
-end function safe-release-product-name;
+end function safe-release-name;
 
 
 /// SAFE-CONDITION-TO-STRING
@@ -126,7 +126,7 @@ end method safe-condition-to-string;
 /// <ENVIRONMENT-HANDLER-DIALOG>
 
 define frame <environment-handler-dialog> (<dialog-frame>)
-  keyword title: = safe-release-product-name();
+  keyword title: = safe-release-name();
   keyword cancel-callback: = #f;
   constant slot handler-dialog-condition :: <condition>,
     required-init-keyword: condition:;
@@ -174,7 +174,7 @@ end method initialize;
 
 define method compute-handler-action-items 
     () => (items)
-  let product-name = safe-release-product-name();
+  let product-name = safe-release-name();
   local method add-product-name (item :: <pair>)
 	  pair(head(item),
 	       format-to-string(tail(item), product-name))

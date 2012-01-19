@@ -162,7 +162,7 @@ define frame <choose-project-dialog> (<dialog-frame>)
 	      max-width: $fill)
       frame.debug-options
     end;
-  keyword title: = release-product-name();
+  keyword title: = release-name();
   keyword center?: = #t;
 end frame <choose-project-dialog>;
 
@@ -263,7 +263,7 @@ define frame <application-attach-dialog> (<dialog-frame>)
 	frame.new-connection-button
       end
     end;
-  keyword title: = release-product-name();
+  keyword title: = release-name();
 end frame <application-attach-dialog>;
 
 define method sort-processes

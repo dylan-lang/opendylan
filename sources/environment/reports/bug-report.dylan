@@ -74,7 +74,7 @@ end method write-report-as;
 
 define method write-report-as
     (stream :: <stream>, report :: <bug-report>, _format == #"html") => ()
-  let title = format-to-string("%s Bug Report", release-product-name());
+  let title = format-to-string("%s Bug Report", release-name());
   with-html-output (stream, title)
     local method write-section
               (section :: <vector>) => ()
@@ -139,9 +139,7 @@ define method write-bug-report-section
         #"winme"   => "Windows ME";
         #"win3.1"  => "Windows 3.1"
       end;
-  let edition-name
-    = format-to-string("%s %s", release-product-name(), release-edition());
-  record-property("Software edition", edition-name);
+  record-property("Software edition", release-name());
   record-property("Software version", release-version());
   record-property("Operating system",
                   format-to-string("%s %s",
@@ -444,9 +442,7 @@ define method write-html-bug-report-section
         #"winme"   => "Windows ME";
         #"win3.1"  => "Windows 3.1"
       end;
-  let edition-name
-    = format-to-string("%s %s", release-product-name(), release-edition());
-  record-property("Software edition", edition-name);
+  record-property("Software edition", release-name());
   record-property("Software version", release-version());
   record-property("Operating system",
                   format-to-string("%s %s",

@@ -1184,7 +1184,7 @@ define method frame-warn-if-application-tethered
       = message
           | format-to-string("%s is connected to %s application '%s'.\n\n"
                              "Stop connected application and continue?",
-                             release-product-name(),
+                             release-name(),
                              state-word,
                              project-full-debug-pathname(project));
     if (environment-question

@@ -127,7 +127,7 @@ begin
        label: "CORBA",
        // If you change this, change the #"interoperability" one at the end
        libraries: #[#"dylan-orb"],
-       documentation: format-to-string("%s CORBA library", release-product-name()));
+       documentation: format-to-string("%s CORBA library", release-name()));
 
   // --- This must come after the Databases, OLE and Win32 groups are created.
   make(<project-library-group>,
@@ -197,7 +197,7 @@ begin
 		  #"threads",
 		  #(#"transcendentals")],
        documentation: format-to-string("Dylan language and %s language extensions",
-                                       release-product-name()));
+                                       release-name()));
 
   // Doc volume: "Core Features and Mathematics".
   make(<project-library>,
@@ -216,7 +216,7 @@ begin
 		  #"threads",
 		  #(#"transcendentals")],
        documentation: format-to-string("Dylan language and %s language extensions",
-                                       release-product-name()));
+                                       release-name()));
 
 
   //////
@@ -539,7 +539,7 @@ begin
        label: "Dylan-ORB",
        library-packs: library-packs(#[#"CORBA", #"Network"]),
        modules: #[#"dylan-orb"],
-       documentation: format-to-string("%s CORBA ORB", release-product-name()));
+       documentation: format-to-string("%s CORBA ORB", release-name()));
 
 
 /* ---------- Other libraries, not yet advertised/shipped ----------

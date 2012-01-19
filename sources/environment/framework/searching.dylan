@@ -981,7 +981,7 @@ define method frame-short-title
   let suffix
     = $frame-title-optional-suffix
         | begin
-	    let suffix = concatenate(" - ", release-product-name());
+	    let suffix = concatenate(" - ", release-name());
 	    $frame-title-optional-suffix := suffix
 	  end;
   let title = frame-title(frame);

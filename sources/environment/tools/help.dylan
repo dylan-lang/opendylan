@@ -33,7 +33,7 @@ define frame <license-agreement-box> (<dialog-frame>)
 	 read-only?: #t, tab-stop?: #f);
   layout (frame)
     frame.license-agreement-copyright-pane;
-  keyword title: = format-to-string("%s License Agreement", release-name());
+  keyword title: = "License Agreement";
   keyword cancel-callback: = #f;
   keyword center?: = #t;
 end frame <license-agreement-box>;
@@ -93,8 +93,8 @@ define frame <about-box> (<dialog-frame>)
       end
     end;
   keyword title: = format-to-string("About %s %s",
-				    release-product-name(),
-				    release-edition());
+				    release-name(),
+				    release-short-version());
   keyword exit-buttons?: = #f;
   keyword center?: = #t;
   //--- This would be a good idea if DUIM didn't screw it up!
@@ -153,7 +153,7 @@ define constant $functional-dylan-quotes
 define variable *quote-index* :: <integer> = 0;
 
 define frame <help-quote> (<dialog-frame>)
-  keyword title: = format-to-string("%s Beginnings", release-product-name());
+  keyword title: = format-to-string("%s Beginnings", release-name());
   keyword cancel-callback: = #f;
   pane help-credits-text-pane (help-credits)
     make(<text-editor>,
@@ -247,7 +247,7 @@ define method do-frame-help
 	    (format-to-string
 	       ("%s online documentation is not installed.  "
 		  "Download it from the web?",
-		release-product-name()),
+		release-name()),
 	     owner: frame,
 	     exit-style: #"yes-no"))
 	frame-open-dylan-web-page(frame, page: $download-doc-page)
@@ -270,7 +270,7 @@ end method show-documentation;
 // define constant $tutorial-title = "Tutorial"; // ---*** not used yet
 
 //---*** The release-info backend isn't available during initialization... :-(
-//define constant $help-about-title = format-to-string("About %s", release-product-name());
+//define constant $help-about-title = format-to-string("About %s", release-name());
 define constant $help-about-title = "About Open Dylan";
 
 //---*** Not yet implemented
@@ -291,7 +291,7 @@ add-command-table-menu-item
    update-callback: method (menu-box :: <menu-box>)
 		      let items
 			= vector(format-to-string("Register %s",
-						  release-product-name()));
+						  release-name()));
 		      gadget-items(menu-box) := items
 		    end,
    label-key: identity,

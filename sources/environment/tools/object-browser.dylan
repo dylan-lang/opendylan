@@ -372,7 +372,7 @@ define method generate-frame-title
               end,
               "Browsing ",
               frame-default-object-name(frame, project),
-              " - ", release-product-name())
+              " - ", release-name())
 end method generate-frame-title;
 
 

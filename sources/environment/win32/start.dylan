@@ -30,7 +30,7 @@ define method process-arguments
         environment-startup-error
           ("Invalid filename '%s' passed to %s",
            argument,
-           release-product-name());
+           release-name());
       end
     end
   end;

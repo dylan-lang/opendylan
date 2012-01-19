@@ -22,8 +22,6 @@ define module release-info
          <named-release-info>,
          <described-release-info>,
          release-name,
-         release-product-name,
-         release-edition,
          release-contains-console-tools?,
          release-service-pack,
          release-version,

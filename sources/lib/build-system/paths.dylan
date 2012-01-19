@@ -61,7 +61,7 @@ define function application-filename-path
  => (path :: <directory-locator>)
   let exe = application-filename();
   unless (exe)
-    error("Cannot locate %s release directory", release-product-name())
+    error("Cannot locate %s release directory", release-name())
   end;
   let exe-directory = locator-directory(as(<file-locator>, exe));
   locator-directory(exe-directory)
