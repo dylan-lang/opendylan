@@ -13,94 +13,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // the Open Dylan compiler.  Maybe they should be called something
 // like <dylan-hackers-settings>? --tc
 
-define settings <general-open-dylan-local-settings>
+define settings <open-dylan-local-settings>
     (<local-software-settings>)
-  key-name "Open Dylan";
-end settings <general-open-dylan-local-settings>;
-
-define settings <unversioned-open-dylan-local-settings>
-    (<general-open-dylan-local-settings>)
-  key-name "Open Dylan";
-end settings <unversioned-open-dylan-local-settings>;
-
-define settings <open-dylan-local-settings-1-0>
-    (<unversioned-open-dylan-local-settings>)
   key-name "1.0";
   slot library-packs :: <machine-word> = as(<machine-word>, 0);
-end settings <open-dylan-local-settings-1-0>;
+end settings <open-dylan-local-settings>;
 
-define settings <open-dylan-local-settings-1-1>
-    (<unversioned-open-dylan-local-settings>)
-  key-name "1.1";
-  slot service-pack :: <integer> = 0;
-  slot library-packs :: <machine-word> = as(<machine-word>, 0);
-  slot console-tools :: <boolean> = #f;
-end settings <open-dylan-local-settings-1-1>;
-
-define settings <open-dylan-local-settings-1-2>
-    (<unversioned-open-dylan-local-settings>)
-  key-name "1.2";
-  slot service-pack :: <integer> = 0;
-  slot library-packs :: <machine-word> = as(<machine-word>, 0);
-  slot console-tools :: <boolean> = #f;
-end settings <open-dylan-local-settings-1-2>;
-
-define settings <open-dylan-local-settings-2-0>
-    (<unversioned-open-dylan-local-settings>)
-  key-name "2.0";
-  slot service-pack :: <integer> = 0;
-  slot library-packs :: <machine-word> = as(<machine-word>, 0);
-  slot console-tools :: <boolean> = #f;
-end settings <open-dylan-local-settings-2-0>;
-
-define settings <open-dylan-local-settings-2-1>
-    (<unversioned-open-dylan-local-settings>)
-  key-name "2.1";
-  slot service-pack :: <integer> = 0;
-  slot library-packs :: <machine-word> = as(<machine-word>, 0);
-  slot console-tools :: <boolean> = #f;
-end settings <open-dylan-local-settings-2-1>;
-
-define constant <open-dylan-local-settings>
-  = <open-dylan-local-settings-1-0>;
-
-define settings <general-open-dylan-user-settings>
+define settings <open-dylan-user-settings>
     (<current-user-software-settings>)
-  key-name "Open Dylan";
-end settings <general-open-dylan-user-settings>;
-
-define settings <unversioned-open-dylan-user-settings>
-    (<general-open-dylan-user-settings>)
-  key-name "Open Dylan";
-end settings <unversioned-open-dylan-user-settings>;
-
-define settings <open-dylan-user-settings-1-0>
-    (<unversioned-open-dylan-user-settings>)
   key-name "1.0";
-end settings <open-dylan-user-settings-1-0>;
-
-define settings <open-dylan-user-settings-1-1>
-    (<unversioned-open-dylan-user-settings>)
-  key-name "1.1";
-end settings <open-dylan-user-settings-1-1>;
-
-define settings <open-dylan-user-settings-1-2>
-    (<unversioned-open-dylan-user-settings>)
-  key-name "1.2";
-end settings <open-dylan-user-settings-1-2>;
-
-define settings <open-dylan-user-settings-2-0>
-    (<unversioned-open-dylan-user-settings>)
-  key-name "2.0";
-end settings <open-dylan-user-settings-2-0>;
-
-define settings <open-dylan-user-settings-2-1>
-    (<unversioned-open-dylan-user-settings>)
-  key-name "2.1";
-end settings <open-dylan-user-settings-2-1>;
-
-define constant <open-dylan-user-settings>
-  = <open-dylan-user-settings-1-0>;
+end settings <open-dylan-user-settings>;
 
 
 /// Library and service pack settings
