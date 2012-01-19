@@ -20,7 +20,7 @@ define constant $release-web-address
 
 define constant $bug-report-template-filename = "bug-report.txt";
 define constant $license-agreement-filename   = "License.txt";
-define constant $help-filename                = "Documentation/opendylan.chm";
+define constant $help-filename                = "opendylan.chm";
 
 
 /// Release constants
@@ -179,7 +179,7 @@ define function release-sources-directory
   if (user-directory)
     as(<directory-locator>, user-directory)
   else
-    release-subdirectory("Sources/")
+    release-subdirectory("sources/")
   end
 end function release-sources-directory;
 
@@ -218,6 +218,7 @@ end function release-license-agreement-location;
 
 define function release-help-location
     () => (location :: <file-locator>)
-  release-file($help-filename)
+  release-file($help-filename,
+               directory: release-subdirectory("Documentation/"))
 end function release-help-location;
 
