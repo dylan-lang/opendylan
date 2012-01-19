@@ -48,7 +48,7 @@ define method release-short-version () => (version :: <string>)
 end method release-short-version;
 
 define method release-version () => (version :: <string>)
-  release-full-version($release-version)
+  concatenate("Version ", $release-version)
 end method release-version;
 
 define method release-copyright () => (copyright :: <string>)
@@ -194,24 +194,6 @@ define method release-contains-library-pack? (pack :: <symbol>) => (installed? :
   pack
     & release-contains-library-pack?(pack)
 end method release-contains-library-pack?;
-
-define function release-service-pack-message
-    () => (message :: false-or(<string>))
-  let service-pack = release-service-pack();
-  if (service-pack > 0)
-    format-to-string("Service Pack %d", service-pack)
-  end
-end function release-service-pack-message;
-
-define function release-full-version
-    (version :: <string>) => (full-version :: <string>)
-  let service-pack-message  = release-service-pack-message();
-  let strings
-    = vector("Version ",
-             version,
-	     service-pack-message  & format-to-string(" [%s]", service-pack-message),
-  apply(concatenate-as, <string>, remove(strings, #f))
-end function release-full-version;
 
 
 /// Release disk layout information

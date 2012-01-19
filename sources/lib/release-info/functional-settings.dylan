@@ -26,7 +26,6 @@ end settings <unversioned-open-dylan-local-settings>;
 define settings <open-dylan-local-settings-1-0>
     (<unversioned-open-dylan-local-settings>)
   key-name "1.0";
-  slot service-pack :: <integer> = 0;
   slot library-packs :: <machine-word> = as(<machine-word>, 0);
 end settings <open-dylan-local-settings-1-0>;
 
@@ -164,8 +163,3 @@ define function release-encoded-optional-library-packs
     packs
   end
 end function release-encoded-optional-library-packs;
-
-define function release-service-pack
-    () => (service-pack :: <integer>)
-  $local-settings.service-pack
-end function release-service-pack;
