@@ -168,7 +168,7 @@ end method;
 /// ----------------------------------------------------------------------
 /// THE REPOSITORY AS <CHOICE>S
 /// The functions hereunder control what is made visible from the
-/// repository, in terms of "release-edition-type()".
+/// repository
 
 /// Making <choice>s from the repository.
 // --- Note: "map(..., as(<vector>, ...))" is used 'cos map-as fails in
