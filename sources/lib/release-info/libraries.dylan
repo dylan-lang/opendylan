@@ -160,8 +160,6 @@ define class <library-pack-info> (<described-release-info>)
     init-keyword: manual:;
   constant slot info-pack-number :: false-or(<integer>) = #f,
     init-keyword: number:;
-  constant slot info-required? :: <boolean> = #f,
-    init-keyword: required?:;
   constant slot info-author :: false-or(<string>) = #f,
     init-keyword: author:;
   constant slot info-company :: false-or(<string>) = #f,
