@@ -20,12 +20,11 @@ define constant $release-web-address
 
 define constant $bug-report-template-filename = "bug-report.txt";
 define constant $license-agreement-filename   = "License.txt";
-define constant $help-filename                = "Documentation/opendylan.chm";
+define constant $help-filename                = "opendylan.chm";
 
 
 /// Release constants
 define constant $release-product-name     = "Open Dylan";
-define constant $release-edition          = "Hacker Edition";
 define constant $release-version          = "2012.1pre1";
 
 define constant $release-copyright
@@ -38,10 +37,6 @@ define constant $release-copyright
 define method release-product-name () => (name :: <string>)
   $release-product-name
 end method release-product-name;
-
-define method release-edition () => (edition :: <string>)
-  $release-edition
-end method release-edition;
 
 define method release-short-version () => (version :: <string>)
   $release-version
@@ -57,21 +52,17 @@ end method release-copyright;
 
 
 /// Implementations
-define sideways method release-name () => (name :: <string>)
-  format-to-string("%s", release-edition())
-end method release-name;
-
 define function release-full-name
     () => (full-name :: <string>)
   format-to-string("%s %s",
-		   release-name(),
+		   release-product-name(),
 		   release-version())
 end function release-full-name;
 
 define function release-full-copyright
     () => (full-copyright :: <string>)
   format-to-string("%s\n%s\n%s\n\n%s",
-		   release-name(),
+		   release-product-name(),
 		   release-copyright(),
 		   release-version(),
 		   $release-full-copyright)
@@ -253,7 +244,7 @@ define function release-sources-directory
   if (user-directory)
     as(<directory-locator>, user-directory)
   else
-    release-subdirectory("Sources/")
+    release-subdirectory("sources/")
   end
 end function release-sources-directory;
 
@@ -292,6 +283,7 @@ end function release-license-agreement-location;
 
 define function release-help-location
     () => (location :: <file-locator>)
-  release-file($help-filename)
+  release-file($help-filename,
+               directory: release-subdirectory("Documentation/"))
 end function release-help-location;
 
