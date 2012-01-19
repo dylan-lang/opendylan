@@ -15,9 +15,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $default-dtd
   = "./refman.dtd";
 define constant $default-organization
-  = "Functional Objects, Inc.";
+  = "Dylan Hackers";
 define constant $default-copyright
-  = "Copyright (c) 1999 Functional Objects, Inc. All rights reserved.";
+  = "Copyright (c) 2012 Dylan Hackers. All rights reserved.";
 define constant $default-version
   = "1.0";
 
