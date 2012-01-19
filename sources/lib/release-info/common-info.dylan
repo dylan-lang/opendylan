@@ -89,33 +89,6 @@ end function release-web-address;
 
 /// Library pack information
 
-define function release-library-packs
-    (#key encoded-packs = release-encoded-library-packs())
- => (library-packs :: <sequence>)
-  let packs = make(<stretchy-object-vector>);
-  let pack = 1;
-  while (~zero?(encoded-packs))
-    if (%logbit?(0, encoded-packs))
-      add!(packs, pack)
-    end;
-    encoded-packs := u%shift-right(encoded-packs, 1);
-    pack := pack + 1;
-  end;
-  packs
-end function release-library-packs;
-
-define function release-required-library-packs
-    () => (library-packs :: <sequence>)
-  let encoded-packs = release-encoded-required-library-packs();
-  release-library-packs(encoded-packs: encoded-packs)
-end function release-required-library-packs;
-
-define function release-optional-library-packs
-    () => (library-packs :: <sequence>)
-  let encoded-packs = release-encoded-optional-library-packs();
-  release-library-packs(encoded-packs: encoded-packs)
-end function release-optional-library-packs;
-
 define method library-pack-name (pack :: <integer>) => (name :: <string>)
   let info = find-library-pack-info(pack);
   if (info)
