@@ -33,7 +33,7 @@ define frame <license-agreement-box> (<dialog-frame>)
 	 read-only?: #t, tab-stop?: #f);
   layout (frame)
     frame.license-agreement-copyright-pane;
-  keyword title: = format-to-string("%s License Agreement", release-name());
+  keyword title: = "License Agreement";
   keyword cancel-callback: = #f;
   keyword center?: = #t;
 end frame <license-agreement-box>;
@@ -94,7 +94,7 @@ define frame <about-box> (<dialog-frame>)
     end;
   keyword title: = format-to-string("About %s %s",
 				    release-product-name(),
-				    release-edition());
+				    release-short-version());
   keyword exit-buttons?: = #f;
   keyword center?: = #t;
   //--- This would be a good idea if DUIM didn't screw it up!
