@@ -129,7 +129,6 @@ Section "${APPNAME} Core" SecOpendylanCore
   File /r /x .git $%OPEN_DYLAN_RELEASE_SOURCES%\*.*
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Library-Packs" "0xffff"
-  WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\1.0" "Console-Tools" "Yes"
 
   WriteRegStr HKEY_LOCAL_MACHINE "${REGISTRY_KEY}\License" "User" \
               "Open Dylan Hacker"
