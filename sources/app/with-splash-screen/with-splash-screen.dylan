@@ -72,7 +72,6 @@ define variable *hBitmap* // splash-screen bitmap
     :: <HBITMAP> = null-handle(<HBITMAP>);
 
 define variable *version* :: false-or(<byte-string>) = #f;
-define variable *edition* :: false-or(<byte-string>) = #f;
 
 // Set up the global splash-screen bitmap and return its width and height
 // (or two zeros, if the bitmap couldn't be found).
@@ -113,7 +112,7 @@ define function paint-window (hWnd :: <HWND>) => ()
       when (GetObject(*hBitmap*, size-of(<BITMAP>), pBitmap) == 0) exit(); end;
       BitBlt(hdc, 0, 0, pBitmap.bmWidth-value, pBitmap.bmHeight-value,
              hdcMem, 1, 1, $SRCCOPY) | exit();
-      when (*version* | *edition*)
+      when (*version*)
 	with-stack-structure (lpsize :: <LPSIZE>)
 	  let hFnt :: <HFONT> = pointer-cast(<HFONT>, GetStockObject($ANSI-VAR-FONT));
 	  when (null-pointer?(hFnt)) exit() end;
@@ -149,17 +148,6 @@ define function paint-window (hWnd :: <HWND>) => ()
 		    let x = pBitmap.bmWidth-value - lpsize.cx-value - 5;
 		    let y = 5;
 		    TextOut(hdc, x, y, c-version, version-size);
-		  end;
-		end;
-	      end;
-	      when (*edition*)
-		with-c-string (c-edition = *edition*)
-		  let edition-size = size(*edition*);
-		  if (GetTextExtentPoint32(hdc, c-edition, edition-size, lpsize) = 0) exit()
-		  else
-		    let x = pBitmap.bmWidth-value - lpsize.cx-value - 5;
-		    let y = truncate/(3 * pBitmap.bmHeight-value, 4);
-		    TextOut(hdc, x, y, c-edition, edition-size);
 		  end;
 		end;
 	      end;
@@ -319,7 +307,6 @@ define method main () => ()
     initialize-dde-server();
     let args = application-arguments();
     let arg-count = size(args);
-    let key :: <byte-string> = "2.0";           // Older installers didn't pass this value...
     let command-line = #f;
     let building-cl? :: <boolean> = #f;
     let i = 0;
@@ -333,16 +320,6 @@ define method main () => ()
 	  when (i < arg-count)
 	    *version* := args[i]
 	  end
-	elseif (arg = "/edition" | arg = "/e")
-	  i := i + 1;
-	  when (i < arg-count)
-	    *edition* := args[i]
-	  end
-        elseif (arg = "/key" | arg = "/k")
-          i := i + 1;
-          when (i < arg-count)
-            key := args[i]
-          end
 	else
 	  command-line := requote-if-needed(arg);
 	  building-cl? := #t
