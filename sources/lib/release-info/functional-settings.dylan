@@ -28,7 +28,6 @@ define settings <open-dylan-local-settings-1-0>
   key-name "1.0";
   slot service-pack :: <integer> = 0;
   slot library-packs :: <machine-word> = as(<machine-word>, 0);
-  slot console-tools :: <boolean> = #f;
 end settings <open-dylan-local-settings-1-0>;
 
 define settings <open-dylan-local-settings-1-1>
@@ -65,7 +64,6 @@ end settings <open-dylan-local-settings-2-1>;
 
 define constant <open-dylan-local-settings>
   = <open-dylan-local-settings-1-0>;
-
 
 define settings <general-open-dylan-user-settings>
     (<current-user-software-settings>)
@@ -171,8 +169,3 @@ define function release-service-pack
     () => (service-pack :: <integer>)
   $local-settings.service-pack
 end function release-service-pack;
-
-define function release-contains-console-tools?
-    () => (tools? :: <boolean>)
-  $local-settings.console-tools
-end function release-contains-console-tools?;

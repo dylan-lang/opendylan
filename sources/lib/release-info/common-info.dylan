@@ -206,12 +206,10 @@ end function release-service-pack-message;
 define function release-full-version
     (version :: <string>) => (full-version :: <string>)
   let service-pack-message  = release-service-pack-message();
-  let console-tools-message = if (release-contains-console-tools?()) "Console Tools" end;
   let strings
     = vector("Version ",
              version,
 	     service-pack-message  & format-to-string(" [%s]", service-pack-message),
-	     console-tools-message & format-to-string(" [%s]", console-tools-message));
   apply(concatenate-as, <string>, remove(strings, #f))
 end function release-full-version;
 
