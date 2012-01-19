@@ -241,7 +241,7 @@ define frame <initial-dialog> (<dialog-frame>)
 				 end);
   layout (frame)
     frame.%dialog-radio-box;
-  keyword title: = release-product-name();
+  keyword title: = release-name();
   keyword exit-buttons-position: = #"bottom";
   keyword center?: = #t;
 end frame <initial-dialog>;

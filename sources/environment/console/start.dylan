@@ -32,7 +32,7 @@ end function main;
 define function dylan-banner
     () => (banner :: <string>)
   format-to-string("Welcome to %s\n%s\n%s",
-                   release-product-name(),
+                   release-name(),
                    release-version(),
                    release-copyright())
 end function dylan-banner;

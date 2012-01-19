@@ -569,7 +569,7 @@ define method generate-frame-title
 	      else
 		""
 	      end,
-              " - ", release-product-name())
+              " - ", release-name())
 end method generate-frame-title;
 
 define method make-environment-tool-bar-buttons

@@ -24,7 +24,7 @@ define constant $help-filename                = "Documentation/opendylan.chm";
 
 
 /// Release constants
-define constant $release-product-name     = "Open Dylan";
+define constant $release-name             = "Open Dylan";
 define constant $release-version          = "2012.1pre1";
 
 define constant $release-copyright
@@ -34,9 +34,9 @@ define constant $release-copyright
 
 
 /// Release info querying functions
-define method release-product-name () => (name :: <string>)
-  $release-product-name
-end method release-product-name;
+define method release-name () => (name :: <string>)
+  $release-name
+end method release-name;
 
 define method release-short-version () => (version :: <string>)
   $release-version
@@ -55,14 +55,14 @@ end method release-copyright;
 define function release-full-name
     () => (full-name :: <string>)
   format-to-string("%s %s",
-		   release-product-name(),
+		   release-name(),
 		   release-version())
 end function release-full-name;
 
 define function release-full-copyright
     () => (full-copyright :: <string>)
   format-to-string("%s\n%s\n%s\n\n%s",
-		   release-product-name(),
+		   release-name(),
 		   release-copyright(),
 		   release-version(),
 		   $release-full-copyright)

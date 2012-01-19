@@ -31,7 +31,7 @@ define function environment-message
  => ()
   assert-owner-supplied(owner);
   apply(notify-user, message,
-	title: title | release-product-name(),
+	title: title | release-name(),
 	style: #"information",
 	keys);
 end function environment-message;
@@ -45,7 +45,7 @@ define function environment-warning-message
  => ()
   assert-owner-supplied(owner);
   apply(notify-user, message,
-	title: title | release-product-name(),
+	title: title | release-name(),
 	style: #"warning",
 	keys);
 end function environment-warning-message;
@@ -59,7 +59,7 @@ define function environment-error-message
  => ()
   assert-owner-supplied(owner);
   apply(notify-user, message,
-	title: title | release-product-name(),
+	title: title | release-name(),
 	style: #"error",
 	keys);
 end function environment-error-message;
@@ -75,7 +75,7 @@ define function environment-question
  => (ok? :: <boolean>, exit-type :: <exit-type>)
   assert-owner-supplied(owner);
   apply(notify-user, message,
-	title: title | release-product-name(),
+	title: title | release-name(),
 	exit-style: case
 		      exit-style => exit-style;
 		      cancel     => #"yes-no-cancel";
@@ -909,7 +909,7 @@ define method frame-short-title
   let suffix
     = $frame-title-optional-suffix
         | begin
-	    let suffix = concatenate(" - ", release-product-name());
+	    let suffix = concatenate(" - ", release-name());
 	    $frame-title-optional-suffix := suffix
 	  end;
   let title = frame-title(frame);

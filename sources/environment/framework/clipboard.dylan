@@ -268,7 +268,7 @@ define function clipboard-function-disabled-message
 	  format-to-string("Cannot %s from this gadget.", type);
       end;
   notify-user(message, 
-	      title: release-product-name(),
+	      title: release-name(),
 	      style: #"error",
 	      owner: sheet-frame(gadget))
 end function clipboard-function-disabled-message;

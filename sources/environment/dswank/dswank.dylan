@@ -55,7 +55,7 @@ define swank-function connection-info ()
   list(#":pid", 23,
        #":style", #":fd-handler",
        #":lisp-implementation", list(#":type", "dylan",
-                                     #":name", release-product-name(),
+                                     #":name", release-name(),
                                      #":version", release-version()),
        #":version", "2011-02-13",
        #":package", #(#":name", "opendylan", #":prompt", "opendylan"))

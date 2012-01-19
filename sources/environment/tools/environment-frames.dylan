@@ -75,7 +75,7 @@ define open generic frame-current-project
 
 define method generate-frame-title 
     (frame :: <environment-frame>) => (title :: <string>)
-  release-product-name()
+  release-name()
 end method generate-frame-title;
 
 define method frame-current-project 

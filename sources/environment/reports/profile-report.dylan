@@ -144,7 +144,7 @@ end method write-report-as;
 define method write-report-as
     (stream :: <stream>, report :: <raw-profile-report>, _format == #"html")
  => ()
-  let title = format-to-string("%s Bug Report", release-product-name());
+  let title = format-to-string("%s Bug Report", release-name());
   with-html-output (stream, title)
     for (section in $profile-report-sections)
       let section-title   = section[0];
@@ -336,7 +336,7 @@ end method write-report-as;
 /*
 define method write-report-as
     (stream :: <stream>, report :: <profile-summary-report>, _format == #"html") => ()
-  let title = format-to-string("%s Bug Report", release-product-name());
+  let title = format-to-string("%s Bug Report", release-name());
   with-html-output (stream, title)
     for (section in $profile-report-sections)
       let section-title   = section[0];
@@ -376,7 +376,7 @@ define method write-report-as
     (stream :: <stream>, report :: <profile-call-history-report>,
      _format == #"html")
  => ()
-  let title = format-to-string("%s Bug Report", release-product-name());
+  let title = format-to-string("%s Bug Report", release-name());
   with-html-output (stream, title)
     for (section in $profile-report-sections)
       let section-title   = section[0];
@@ -562,7 +562,7 @@ end method write-report-as;
 
 define method write-report-as
     (stream :: <stream>, report :: <full-profile-report>, _format == #"html") => ()
-  let title = format-to-string("%s Bug Report", release-product-name());
+  let title = format-to-string("%s Bug Report", release-name());
   with-html-output (stream, title)
     for (section in $profile-report-sections)
       let section-title   = section[0];
