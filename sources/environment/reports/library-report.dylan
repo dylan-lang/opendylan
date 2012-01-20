@@ -42,7 +42,7 @@ end class <library-report>;
 
 install-report(#"interface-reference", "Library interface reference",
                <library-report>,
-               formats: #[#"text", #"html", #"xml"],
+               formats: #[#"text", #"html", #"rst", #"xml"],
                multi-file?: #t);
 
 define class <module-report> (<namespace-report>)
@@ -636,6 +636,99 @@ define method write-function-parameter
   let module = report.report-namespace;
   let type = parameter.parameter-type;
   format(stream, "%s :: %s",
+             if (instance?(parameter, <optional-parameter>))
+               parameter.parameter-keyword
+             end
+               | parameter.parameter-name,
+         definition-name(report, type));
+  new-line(stream);
+end method write-function-parameter;
+
+
+/// <RST-REPORT-STREAM> methods
+
+define class <rst-report-stream> (<report-stream>)
+end class <rst-report-stream>;
+
+define method stream-class-for-report
+    (_format == #"rst") => (class :: subclass(<report-stream>))
+  <rst-report-stream>
+end method stream-class-for-report;
+
+define method write-definition-separator
+    (stream :: <rst-report-stream>, report :: <namespace-report>,
+     definition :: <definition-object>)
+ => ()
+  format(stream, "%s\n", $report-separator);
+end method write-definition-separator;
+
+define method write-definition-name
+    (stream :: <rst-report-stream>, report :: <namespace-report>, namespace :: <namespace-object>)
+ => ()
+  format(stream, "%s %s\n\n",
+         definition-kind(namespace),
+         environment-object-primitive-name(report.report-project, namespace));
+end method write-definition-name;
+
+define method write-definition-name
+    (stream :: <rst-report-stream>, report :: <module-report>, definition :: <definition-object>)
+ => ()
+  let project = report.report-project;
+  let title = definition-name(report, definition);
+  let type = definition-type-description(project, definition);
+  let padding = max(6, $report-width - title.size - type.size);
+  format(stream, "%s%s%s\n",
+         title,
+         make(<byte-string>, fill: ' ', size: padding),
+         type)
+end method write-definition-name;
+
+define method write-superclasses-header
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     class :: <class-object>)
+ => ()
+  format(stream, "\n   :superclasses: ");
+end method write-superclasses-header;
+
+define method write-superclass
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     superclass :: <definition-object>,
+     #key last? :: <boolean> = #f, first? :: <boolean> = #f)
+ => ()
+  format(stream, "%s", definition-name(report, superclass))
+end method write-superclass;
+
+define method write-superclasses-footer
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     superclass :: <class-object>)
+ => ()
+  new-line(stream)
+end method write-superclasses-footer;
+
+define method write-init-keyword
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     keyword :: <symbol>, type :: false-or(<environment-object>))
+ => ()
+  format(stream, "   :keyword %s:\n", as(<string>, keyword))
+end method write-init-keyword;
+
+define method write-function-name
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     function :: <function-object>)
+ => ()
+  format(stream, "\n   :signature: %s ",
+         definition-name(report, function));
+end method write-function-name;
+
+define method write-function-parameter
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     parameter :: <parameter>, #key kind :: <argument-kind> = #"input")
+ => ()
+  let project = report.report-project;
+  let module = report.report-namespace;
+  let type = parameter.parameter-type;
+  format(stream, "   :%s %s: An instance of %s.",
+             if (kind = #"input") "parameter" else "value" end,
              if (instance?(parameter, <optional-parameter>))
                parameter.parameter-keyword
              end
