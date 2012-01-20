@@ -2,28 +2,31 @@
 The Open Dylan Win32 API Libraries
 **********************************
 
+.. current-library:: win32-kernel
+.. current-module:: win32-kernel
+
 Introduction
 ============
 
-This chapter is about Harlequin Dylan’s set of Win32 API interface
+This chapter is about Open Dylan’s set of Win32 API interface
 libraries. These libraries provide a low-level Dylan interface to the
 Win32 API in Microsoft Windows and Microsoft Windows NT.
 
 Each Dylan library is a simple translation of Win32 API header files
-into a set of interface declarations from Harlequin Dylan’s C-FFI
+into a set of interface declarations from Open Dylan’s C-FFI
 library. So you can write Windows applications in Dylan by using the
 same functions and types as you would in C, albeit with slightly
 modified names so that they conform to Dylan naming conventions and
 requirements.
 
-The Harlequin Dylan Win32 API has been constructed from several Dylan
+The Open Dylan Win32 API has been constructed from several Dylan
 libraries. Win32 functionality is divided among these libraries,
 matching the contents of Microsoft’s DLLs, allowing Dylan applications
 to avoid references to DLLs they do not need to use.
 
 With the exception of changes necessitated by Dylan naming conventions
 and requirements, the names of C items have been preserved in the
-Harlequin Dylan Win32 API libraries. Hence this chapter does not provide
+Open Dylan Win32 API libraries. Hence this chapter does not provide
 an exhaustive list of the items available in the libraries. Instead, it
 explains the name mapping scheme we used in the conversion, and provides
 a collection of tips for writing Dylan applications with the libraries.
@@ -57,7 +60,7 @@ Win32-Common
 -  Win32-GDI Graphics Device Interface, drawing graphics and text, and
    printing. Corresponds to *WINGDI.H* and *GDI32.DLL*.
 -  Win32-User Other windowing functions. Corresponds to *WINUSER.H* and
-   *USER32.DLL*. Also contains *win32-last-handler* which can handle
+   *USER32.DLL*. Also contains :func:`win32-last-handler` which can handle
    conditions and display them to the application user a simply Win32
    dialog. That function is exported from the module
    Win32-Default-Handler.
@@ -82,13 +85,11 @@ Win32-Rich-Edit
 -  Win32-Shell API for querying and extending the Windows Shell.
    Corresponds to *SHELLAPI.H* and *SHELL32.DLL*.
 -  Winsock2 Corresponds to *WINSOCK2.H*, *QOS.H*, and *MSWSOCK.H*.
-   This library is not available in the Harlequin Dylan Personal
-   edition.
 
 Content and organization of the Win32 API libraries
 ===================================================
 
-The Harlequin Dylan Win32 API libraries are modeled closely upon
+The Open Dylan Win32 API libraries are modeled closely upon
 Microsoft’s Win32 C libraries. Most names available in the Dylan
 libraries are the same as those available in the C libraries, though of
 course to conform to Dylan naming conventions and restrictions, many of
@@ -100,7 +101,7 @@ the C names have been translated.
    and Windows 95/98.
 
    If there is an additional area of Win32 you would like to see these
-   libraries support, please inform the Harlequin Dylan support team.
+   libraries support, please inform the Open Dylan support team.
 
 Notes on the translations
 -------------------------
@@ -333,121 +334,115 @@ Error messages
 
 The Win32-Kernel library provides the following utility functions.
 
-win32-error-message
--------------------
+.. function:: win32-error-message
 
-Function
+   :signature: win32-error-message *error-code* => *message*
 
-.. code-block:: dylan
+   :description:
 
-    win32-error-message *error-code* => *message*
+     The *error-code* is an instance of ``<integer>`` or ``<machine-word>`` (type
+     unioned).
 
-The *error-code* is an instance of ``<integer>`` or ``<machine-word>`` (type
-unioned).
+     The *error-code* argument is either a Windows a Windows error code
+     (such as returned by ``GetLastError``) or an ``SCODE`` (also known
+     as an ``HRESULT``) value (such as returned by most OLE/COM
+     functions).
 
-The *error-code* argument is either a Windows a Windows error code (such
-as returned by *GetLastError*) or an *SCODE* (also known as an
-*HRESULT*) value (such as returned by most OLE/COM functions).
+     The function returns a text message (in a string) corresponding to
+     the error code, ``#f`` if the code is not recognized. The returned
+     string might have more than one line but does not have a newline at
+     the end.
 
-The function returns a text message (in a string) corresponding to the
-error code, ``#f`` if the code is not recognized. The returned string
-might have more than one line but does not have a newline at the end.
-For example:
+   :example:
 
-.. code-block:: dylan
+     .. code-block:: dylan
 
-    win32-error-message(5) => "Access is denied."
+         win32-error-message(5) => "Access is denied."
 
-report-win32-error
-------------------
+.. function:: report-win32-error
 
-Function
+   :signature: report-win32-error *name* #key *error*
 
-.. code-block:: dylan
+   :description:
 
-    report-win32-error *name* #key *error*
+     Signals a Dylan error if the Win 32 error code specified is not
+     ``NO_ERROR``. If no code is specified, the value returned by the
+     Win32 API ``GetLastError`` is used. The error that is signaled
+     includes both the error code and the error message, as computed by
+     the function :func:`win32-error-message`.
 
-Signals a Dylan error if the Win 32 error code specified is not
-*NO\_ERROR*. If no code is specified, the value returned by the Win32
-API *GetLastError* is used. The error that is signaled includes both the
-error code and the error message, as computed by the function
-*win32-error-message*.
+.. function:: check-win32-result
 
-check-win32-result
-------------------
+   :signature: check-win32-result *name* *result*
 
-Function
+   :description:
 
-.. code-block:: dylan
+     Many Windows functions return ``#f`` or ``NULL`` to mean failure.
+     The function ``check-win32-result`` checks the result to see if it
+     indicates failure, and if so it calls :func:`report-win32-error`.
 
-    check-win32-result *name* *result*
+   :example:
 
-Many Windows functions return ``#f`` or ``NULL`` to mean failure. The
-function *check-win32-result* checks the result to see if it indicates
-failure, and if so it calls `report-win32-error`_.
-For example,
+     .. code-block:: dylan
 
-.. code-block:: dylan
+         check-win32-result("SetWindowText", SetWindowText(handle, label))
 
-    check-win32-result("SetWindowText", SetWindowText(handle, label))
+.. function:: ensure-no-win32-error
 
-ensure-no-win32-error
----------------------
+   :signature: ensure-no-win32-error *name*
 
-Function
+   :description:
 
-.. code-block:: dylan
-
-    ensure-no-win32-error *name*
-
-Ensures that the Win32 API *GetLastError* does not indicate that an
-error occurred. If an occurs, it is signaled using `report-win32-error`_.
+     Ensures that the Win32 API ``GetLastError`` does not indicate that
+     an error occurred. If an occurs, it is signaled using
+     :func:`report-win32-error`.
 
 Handling Dylan conditions in a Win32 application
 ================================================
 
 The Win32-User library exports from its Win32-Default-Handler module a
-handler utility function called *win32-last-handler*, defined on
+handler utility function called :func:`win32-last-handler`, defined on
 objects of class ``<serious-condition>``.
 
-win32-last-handler
-------------------
+.. function:: win32-last-handler
+   :library: win32-user
+   :module: win32-user
 
-Function
+   :description:
 
-Displays a rudimentary Win32 dialog to allow the user to decide what to
-do with the Dylan condition that has been signalled.
+     Displays a rudimentary Win32 dialog to allow the user to decide
+     what to do with the Dylan condition that has been signalled.
 
-It is a handler utility function that can be by bound dynamically around
-a computation via *let* *handler* or installed globally via
-*last-handler-definer*. It is automatically installed as the last
-handler simply by using the Win32-User library.
+     It is a handler utility function that can be by bound dynamically
+     around a computation via ``let handler`` or installed globally via
+     ``last-handler-definer``. It is automatically installed as the last
+     handler simply by using the Win32-User library.
 
-The function has the following call syntax:
+     The function has the following call syntax:
 
-.. code-block:: dylan
+     .. code-block:: dylan
 
-    win32-last-handler (serious-condition, next-handler)
+         win32-last-handler (serious-condition, next-handler)
 
-The *serious-condition* argument is an object of class serious
-condition. The *next-handler* argument is a function. The
-*win32-last-handler* function returns no values.
+     The *serious-condition* argument is an object of class serious
+     condition. The *next-handler* argument is a function. The
+     *win32-last-handler* function returns no values.
 
-The following form defines a dynamic handler around some body:
+     The following form defines a dynamic handler around some body:
 
-.. code-block:: dylan
+     .. code-block:: dylan
 
-    let handler <serious-condition> = win32-last-handler;
+         let handler <serious-condition> = win32-last-handler;
 
-while the following form installs a globally visible last-handler:
+     while the following form installs a globally visible last-handler:
 
-.. code-block:: dylan
+     .. code-block:: dylan
 
-    define last-handler <serious-condition> = win32-last-handler;
+         define last-handler <serious-condition> = win32-last-handler;
 
-See also *last-handler-definer* and *default-last-handler*, exported
-from the Functional Dylan-Extensions library and module, in the
-*Core Features* reference manual.
+     See also *last-handler-definer* and *default-last-handler*, exported
+     from the Functional Dylan-Extensions library and module, in the
+     *Core Features* reference manual.
 
 Dealing with the C function WinMain
 ===================================
@@ -472,10 +467,9 @@ parameter because on Win32, that parameter is always null, even for
 Win32s as well as NT and Windows 95.
 
 The program can be terminated, with an exit code, by calling either the
-Win32 *ExitProcess* function or the *exit-application* function in
-Harlequin Dylan’s Operating-system library. The latter method is
-preferred if the application might actually be run as part of another
-process.
+Win32 ``ExitProcess`` function or the ``exit-application`` function in
+Open Dylan’s System library. The latter method is preferred if the
+application might actually be run as part of another process.
 
 The start of an application program might look something like this:
 
@@ -505,7 +499,7 @@ For a complete example program, see
 
     Examples\\Win32\\windows-ffi-example\\example.dylan
 
-in the Harlequin Dylan installation directory.
+in the Open Dylan installation directory.
 
 Combining bit mask constants
 ============================
@@ -541,8 +535,8 @@ The types ``<FARPROC>`` and ``<PROC>`` are defined as equivalent to
 to a routine taking a ``<FARPROC>`` without needing to do any type
 conversion like that needed in C.
 
-Type casts between handles and integers (``<integer>`` or ``<machine-word>``
-) can be done by using *as*. For example:
+Type casts between handles and integers (``<integer>`` or
+``<machine-word>``) can be done by using *as*. For example:
 
 .. code-block:: dylan
 
@@ -553,11 +547,11 @@ Note that pointers and handles must be compared using *=*, not *==*,
 in order to compare the C address instead of the Dylan wrapper objects.
 
 For type casts from one pointer type to another, use the function
-*pointer-cast* instead of *as*. Think of *as* as converting the data
-structure pointed to, while *pointer-cast* operates on just the pointer
-itself.
+:func:`pointer-cast` instead of ``as``. Think of ``as`` as converting
+the data structure pointed to, while ``pointer-cast`` operates on just
+the pointer itself.
 
-The Dylan function ``pointer-value`` can be used to convert between a
+The Dylan function :gf:`pointer-value` can be used to convert between a
 Dylan integer and a *LARGE-INTEGER* or *ULARGE-INTEGER*. For example:
 
 .. code-block:: dylan
