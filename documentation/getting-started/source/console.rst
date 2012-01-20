@@ -1,11 +1,16 @@
-***********************************
+******************************
 Open Dylan Console Environment
-***********************************
+******************************
 
-.. index:: console environment
+.. index:: console environment, dylan-compiler
 
 In Open Dylan, you can develop Dylan applications using the IDE or
-command-line tools.  This appendix describes the command-line tools.
+command-line tools.  The compiler executable is called
+``dylan-compiler``.  There is a helper application called
+``make-dylan-app``, which can be used to generate some boilerplate for
+a new project, and finally there's ``dswank`` which is a back-end for
+interactive development in Emacs.  This appendix describes these
+command-line tools.
 
 Hello World
 ===========
@@ -26,9 +31,9 @@ to adjust for your local shell.  ::
 Ta da!  Now a quick review of the steps with a little bit of
 explanation.
 
-First we must set PATH so that ``make-dylan-app`` and
-``dylan-compiler`` will be found.  We added ``~/Open-Dylan/bin`` to
-the PATH as well because this is where ``dylan-compiler`` puts the
+First you must set PATH so that ``make-dylan-app`` and
+``dylan-compiler`` will be found.  You must add ``~/Open-Dylan/bin``
+to the PATH as well because this is where ``dylan-compiler`` puts the
 executables it builds.
 
 ``make-dylan-app`` creates a directory with the same name as the
@@ -47,32 +52,63 @@ application and three files:
 ``dylan-compiler`` has both a batch mode and an interactive mode.  The
 ``-build`` option says to build the project in batch mode.  When you
 pass a .lid file to the compiler it builds the library described by
-that file.  In the next section we'll see that it can also pass the
+that file.  In the next section you'll see that it can also pass the
 name of the project (without ".lid") and it will use "registries" to
 find the project sources.
 
 
-About the Dylan console compilers
-=================================
+Using Source Registries
+=======================
 
-.. index:: dylan-compiler, dylan-compiler-with-tools,
-  dylan-environment, dylan-environment-with-tools
+Passing the name of a .lid file to ``dylan-compiler`` works great when
+you have a single library that only uses other libraries that are part
+of Open Dylan, but what if you want to use a second library that you
+wrote yourself?  How will ``dylan-compiler`` find the sources for that
+library?  The answer is registries.  For each Dylan library that isn't
+part of Open Dylan itself, you create a file in the registry that
+points to the .lid file for the library.  Here's an example for
+hello-world::
 
-The Open Dylan console compiler is an executable application called
-``dylan-compiler``.  You can find it in the *bin* folder of your Open
-Dylan installation. The console compiler is a command line alternative
-for batch compilation.
+  $ mkdir -p src/registry/generic
+  $ echo abstract://dylan/hello-world/hello-world.lid > src/registry/generic/hello-world
+  $ export OPEN_DYLAN_USER_REGISTRIES=`pwd`/src/registry
 
-The console environment is an executable called *dylan-environment*.
-It is a command line alternative for performing any of the development
-tasks you might perform in the regular Open Dylan environment. You can
-use it as a batch compiler, or you can develop and debug applications
-using the interactive mode interface.
+What's going on here?  First of all, the registry mechanism makes it
+possible to have platform specific libraries.  Anything
+platform-independent can be put under the "generic" directory.  Other
+supported platform names are amd64-freebsd, x86-linux, x86-win32, etc.
+For a full list see `the Open Dylan registry
+<https://github.com/dylan-lang/opendylan/tree/master/sources/registry>`_.
 
-Both console applications are available in two flavors, with and
-without tools interface (including CORBA IDL (scepter) and OLE
-(motley)). The binaries with the tools interface have *-with-tools*
-appended to their name.
+Platform-specific registry directories are searched before the
+"generic" registry, so if you have a library that has a special case
+for Windows, you could use two registry entries: one in the
+"x86-win32" directory and one in the "generic" directory.
+
+Now let's look at the actual content of our hello-world registry file::
+
+  abstract://dylan/hello-world/hello-world.lid
+
+What this is doing is locating a file *relative to the directory that
+the registry itself is in*.  If the "registry" directory is
+``/home/you/dylan/registry`` then this registry file says the
+hello-world .lid file is in
+``/home/you/dylan/hello-world/hello-world.lid``.  "abstract://dylan/"
+is just boilerplate.
+
+Once you've set the ``OPEN_DYLAN_USER_REGISTRIES`` environment variable
+to point to our new registry, ``dylan-compiler`` can find the
+hello-world library source no matter what directory you're currently
+working in.  You only need to specify the library name::
+
+  $ cd /tmp
+  $ dylan-compiler -build hello-world
+
+You can add more than one registry to ``OPEN_DYLAN_USER_REGISTRIES`` by
+separating them with colons::
+
+  $ export OPEN_DYLAN_USER_REGISTRIES=/my/registry:/their/registry
+
 
 Using dylan-compiler in batch mode
 ==================================
