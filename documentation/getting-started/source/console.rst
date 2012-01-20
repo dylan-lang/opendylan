@@ -4,9 +4,53 @@ Open Dylan Console Environment
 
 .. index:: console environment
 
-In Open Dylan, you can develop Dylan applications using the
-interactive development environment or the Open Dylan console
-environment. This appendix describes the console binaries.
+In Open Dylan, you can develop Dylan applications using the IDE or
+command-line tools.  This appendix describes the command-line tools.
+
+Hello World
+===========
+
+You have just downloaded Open Dylan and installed it in
+``/opt/opendylan-2012.1``.  So how do you write the canonical Hello
+World app?  This example assumes bash is being used.  You may need
+to adjust for your local shell.  ::
+
+  $ export PATH=~/Open-Dylan/bin:/opt/opendylan-2012.1/bin:$PATH
+  $ make-dylan-app hello-world
+  $ cd hello-world
+  $ dylan-compiler -build hello-world.lid
+  ...lots of output...
+  $ hello-world
+  Hello, world!
+
+Ta da!  Now a quick review of the steps with a little bit of
+explanation.
+
+First we must set PATH so that ``make-dylan-app`` and
+``dylan-compiler`` will be found.  We added ``~/Open-Dylan/bin`` to
+the PATH as well because this is where ``dylan-compiler`` puts the
+executables it builds.
+
+``make-dylan-app`` creates a directory with the same name as the
+application and three files:
+
+    1. hello-world.lid -- This says what other files are part of the
+       project.  The order in which the files are listed here determines
+       the order in which the code in them is loaded.
+
+    2. hello-world-exports.dylan contains simple library and module
+       definitions.  These can be extended as your project grows more
+       complex.
+
+    3. hello-world.dylan contains the main program logic.
+
+``dylan-compiler`` has both a batch mode and an interactive mode.  The
+``-build`` option says to build the project in batch mode.  When you
+pass a .lid file to the compiler it builds the library described by
+that file.  In the next section we'll see that it can also pass the
+name of the project (without ".lid") and it will use "registries" to
+find the project sources.
+
 
 About the Dylan console compilers
 =================================
@@ -15,7 +59,7 @@ About the Dylan console compilers
   dylan-environment, dylan-environment-with-tools
 
 The Open Dylan console compiler is an executable application called
-*dylan-compiler*. You can find it in the *bin* folder of your Open
+``dylan-compiler``.  You can find it in the *bin* folder of your Open
 Dylan installation. The console compiler is a command line alternative
 for batch compilation.
 
