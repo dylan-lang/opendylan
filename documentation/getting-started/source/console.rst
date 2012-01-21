@@ -4,8 +4,8 @@ Open Dylan Console Environment
 
 .. index:: console environment, dylan-compiler
 
-In Open Dylan, you can develop Dylan applications using the IDE or
-command-line tools.  The compiler executable is called
+In Open Dylan, you can develop Dylan applications using the IDE (on
+Windows) or command-line tools.  The compiler executable is called
 ``dylan-compiler``.  There is a helper application called
 ``make-dylan-app``, which can be used to generate some boilerplate for
 a new project, and finally there's ``dswank`` which is a back-end for
@@ -109,119 +109,36 @@ separating them with colons::
 
   $ export OPEN_DYLAN_USER_REGISTRIES=/my/registry:/their/registry
 
+A few more quick tips:
 
-Using dylan-compiler in batch mode
-==================================
+  1. Add ``-clean`` to the command line to do a clean build::
 
-To use the Open Dylan console compiler in batch mode, go to a shell,
-and enter *dylan-compiler*, followed by command options and a list of
-one or more projects to perform the commands upon (and, optionally, a
-list of projects to compile). The basic form of this call is::
+       dylan-compiler -build -clean /my/project.lid
 
-    dylan-compiler [*options* ] [*project* ]
+  2. Use ``dylan-compiler -help`` to see all the options.  Options that
+     don't take an argument may be negated by adding "no".  e.g. -nologo
 
-The default behavior is to open the project. You can specify projects
-with a pathname to either a project file (*.hdp* ) or a LID (*.lid* )
-file.
+  3. The ``-build`` option builds both an executable and a shared
+     library.  
 
-Therefore::
-
-    dylan-compiler c:\users\dylan\projects\*my-project*\*my-project*.lid
-
-opens the project *my-project*. The console compiler prints an error
-and exits if the given file is not a project file or a project name.
-
-The following options are available for use with *dylan-compiler* :
-
-+----------------------------+---------------------------------------------+
-| Options                    | Description                                 |
-+============================+=============================================+
-| *-HELP*                    | Print help                                  |
-+----------------------------+---------------------------------------------+
-| *-BUILD-SCRIPT* file       | Use the provided (Jam) build script         |
-+----------------------------+---------------------------------------------+
-| *-TARGET* symbol           | Type of the executable: "dll" (shared       |
-|                            | library) or "executable"                    |
-+----------------------------+---------------------------------------------+
-| *-ARCH* symbol             | Architecture ("i386" or "x86_64")           |
-+----------------------------+---------------------------------------------+
-| *-LOGO*                    | Print the copyright information             |
-+----------------------------+---------------------------------------------+
-| *-VERSION*                 | Print the version string                    |
-+----------------------------+---------------------------------------------+
-| *-SHORTVERION*             | Print  the short version string             |
-+----------------------------+---------------------------------------------+
-| *-DEBUGGER*                | Enter the debugger if the compiler crashes  |
-+----------------------------+---------------------------------------------+
-| *-ECHO-INPUT*              | Echoes all console-dylan input to the       |
-|                            | console                                     |
-+----------------------------+---------------------------------------------+
-| *-IMPORT*                  | Import a *.LID* file and generate a *.HDP*  |
-|                            | file                                        |
-+----------------------------+---------------------------------------------+
-| *-BUILD*                   | Build and link the project                  |
-+----------------------------+---------------------------------------------+
-| *-COMPILE*                 | Compile the project                         |
-+----------------------------+---------------------------------------------+
-| *-LINK*                    | Link the project                            |
-+----------------------------+---------------------------------------------+
-| *-CLEAN*                   | Force a clean build of the project          |
-+----------------------------+---------------------------------------------+
-| *-RELEASE*                 | Build a release for the project             |
-+----------------------------+---------------------------------------------+
-| *-SUBPROJECTS*             | Build subprojects as well if necessary      |
-+----------------------------+---------------------------------------------+
-| *-FORCE*                   | Force relink the executable                 |
-+----------------------------+---------------------------------------------+
-| *-PERSONAL-ROOT* directory | Personal root directory (build products go  |
-|                            | here                                        |
-+----------------------------+---------------------------------------------+
-| *-SYSTEM-ROOT* directory   | System root directory                       |
-+----------------------------+---------------------------------------------+
-| *-INTERNAL-DEBUG* list     | List of targets to print debug messages (e. |
-|                            | g. linker, project-manager)                 |
-+----------------------------+---------------------------------------------+
-| *-UNIFY*                   | Combine libraries into a single executable  |
-+----------------------------+---------------------------------------------+
-| *-PROFILE-COMMANDS*        | Profile the execution of each command       |
-+----------------------------+---------------------------------------------+
-| *-HARP*                    | Generate HARP output file                   |
-+----------------------------+---------------------------------------------+
-| *-ASSEMBLE*                | Generate assembly-language output file      |
-+----------------------------+---------------------------------------------+
-| *-DFM*                     | Generate DFM output file                    |
-+----------------------------+---------------------------------------------+
-
-Examples:
-
-#. Compile and link a library as an executable (EXE) file, you can do
-   this in two ways::
-
-    dylan-compiler -build *my-executable*
-
-    dylan-compiler -compile -link *my-executable*
-
-Recompile a project from scratch and link it as an executable::
-
-    dylan-compiler -build -clean c:/dylan/*my-project*.hdp
-
-The options that do not take arguments are flags that can be turned on
-and off. By default, only ``-logo`` and ``-subprojects`` are turned on. To
-turn flags off, precede the option with “*-no* …”, for instance:
-``-nologo`` and ``-nosubprojects``.
+You should now have enough information to start working on your Dylan
+project.  The next few sections go into more detail on using
+``dylan-compiler``, which also has an interactive mode that can make
+the edit/build/debug cycle a bit faster.  Or if you're an Emacs user
+you may prefer to jump directly to the section on the `Dylan
+Interactor Mode for Emacs (DIME)`_.
 
 
 Using dylan-compiler interactively
 ==================================
 
-The interactive mode of the console compiler allows you to carry out
+The interactive mode of ``dylan-compiler`` allows you to carry out
 multiple development tasks over a period of time without having to
-restart the console compiler each time. To start the console
-environment in interactive mode, double-click *dylan-compiler* in the
-*bin* folder of your Dylan installation, or enter *dylan-compiler*
-without any arguments at a shell. For example::
+restart the console compiler each time.  To start the console
+environment in interactive mode, enter ``dylan-compiler`` without any
+arguments at a shell. For example::
 
-    # dylan-compiler
+    $ dylan-compiler
     Hacker Edition
     Version 2011.1
     Copyright (c) 1997-2004, Functional Objects, Inc.
@@ -229,13 +146,12 @@ without any arguments at a shell. For example::
     Portions Copyright (c) 2001-2002, Ravenbrook Ltd.
     >
 
-Working at the prompt within the Dylan console compiler is similar
-to working in the interactor in the regular Open Dylan development
-environment (in other words, in the interaction pane in the Debugger).
+If you've used the Open Dylan IDE on Windows, note that using
+``dylan-compiler`` interactively is similar to working in the IDE's
+interactor.
 
 You can find a list of command groups by entering the command
-``help`` at the command line. The command groups in the console
-compiler are:
+``help``. The command groups in the console compiler are:
 
 +------------------+----------------------------+
 | Command Group    | Description                |
@@ -317,6 +233,10 @@ Then, to examine the ``OPEN`` command, type::
 
       FILE - the filename of the project
 
+Properties can be display via the ``show`` command.  For example to
+see the value of the "projects" property listed previously, use ``show
+projects``.
+
 To exit the console environment, use the command ``exit``.
 
 .. index:: command line
@@ -324,7 +244,10 @@ To exit the console environment, use the command ``exit``.
 An example of dylan-environment interactive functionality
 =========================================================
 
-.. index:: dylan-environment, dylan-environment-with-tools
+.. index:: dylan-environment
+
+**Note:** ``dylan-environment`` is currently only supported on
+Windows.  Unix users may wish to skip this section.
 
 The dylan-environment has a few more options and command groups, which
 will be presented briefly here:
@@ -404,3 +327,7 @@ Choose **File > Command Line...** from the main window and use commands at
 the *?* prompt.
 
 
+Dylan Interactor Mode for Emacs (DIME)
+======================================
+
+TODO
