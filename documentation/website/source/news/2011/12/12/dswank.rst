@@ -33,7 +33,7 @@ subclass hierarchy.
 +===================+==========================================+
 |M-x dime           |start dime                                |
 +-------------------+------------------------------------------+
-| , change-package  | select project (in the repl buffer)      |
+| , change-project  | select project (in the repl buffer)      |
 +-------------------+------------------------------------------+
 | M-.               | jump to definition                       |
 +-------------------+------------------------------------------+
