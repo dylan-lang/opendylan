@@ -222,11 +222,6 @@ define generic limits (type :: <limited-type>)
   => (class :: <class>);
 
 define method limited 
-    (class :: subclass(<collection>), #key, #all-keys) => (type :: <type>)
-  class
-end method;
-
-define method limited 
     (class == <string>, #key of, size, #all-keys) => (type :: <type>)
   limited-string(of, size)
 end method;
