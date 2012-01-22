@@ -2,9 +2,10 @@
 Copyright
 *********
 
-Copyright © 1995-2000 Functional Objects, Inc.
 
-Portions copyright © 2011 Dylan Hackers.
+Copyright © 2011-2012 Dylan Hackers.
+
+Portions copyright © 1995-2000 Functional Objects, Inc.
 
 Companies, names and data used in examples herein are fictitious unless
 otherwise noted.
