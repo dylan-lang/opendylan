@@ -423,7 +423,16 @@ define function limited-collection-instance?
     (x, t :: <limited-collection-type>) => (well? :: <boolean>)
   let lc-size       = limited-collection-size(t);
   let lc-dimensions = limited-collection-dimensions(t);
-  instance?(x, <limited-collection>)
+  //---*** this is unfortunate and needs a redesign of limited (collection)
+  //       types! it'd be much nicer to have the inheritance hierarchy fixed
+  //       and thus <simple-vector> should subclas <limited-collection>, but
+  //       currently not doable - hannes (Jan 2012)
+  (instance?(x, <limited-collection>) | instance?(x, <simple-vector>) |
+     instance?(x, <limited-stretchy-vector>) | instance?(x, <simple-array>) /* |
+     //not sure how useful the following are, they don't have element-type
+     //specialized - hannes (Jan 2012)
+     instance?(x, <object-table>) | instance?(x, <object-set>) |
+     instance?(x, <deque>) */ )
     & instance?(x, limited-collection-class(t))
     & type-equivalent?(element-type(x), limited-collection-element-type(t))
     & (~lc-size | size(x) = lc-size)
