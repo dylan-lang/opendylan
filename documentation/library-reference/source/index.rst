@@ -1,19 +1,17 @@
-Core Reference
-==============
+Dylan Library Reference
+=======================
 
 Contents:
 
 .. toctree::
+   :titlesonly:
    :maxdepth: 2
 
    copyright
-   language
-   extensions
-   table-extensions
-   threads
+   dylan/index
+   common-dylan/index
+   collections/table-extensions
    numbers
-   mwords
-   transcend
    lid
 
 

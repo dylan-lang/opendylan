@@ -277,7 +277,7 @@ explicit synchronization, as appropriate.
 The Threads class hierarchy
 ===========================
 
-.. figure:: images/threads.png
+.. figure:: ../images/threads.png
    :align: center
 
    Threads class hierarchy.

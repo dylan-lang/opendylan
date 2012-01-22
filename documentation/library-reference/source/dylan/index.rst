@@ -68,7 +68,7 @@ extensions made to the Dylan library as it is defined in DRM. These
 extensions are available to applications in the *dylan* library’s
 *dylan* module.
 
-All the other language extensions are described in :doc:`extensions`.
+All the other language extensions are described in :doc:`../common-dylan/index`.
 
 Function Definition
 -------------------
@@ -279,7 +279,7 @@ protocol.
 
 This section describes the items that have been changed. We also provide
 a Table-extensions module, which you can read about in
-:doc:`table-extensions`.
+:doc:`../collections/table-extensions`.
 
 .. generic-function:: table-protocol
    :open:
