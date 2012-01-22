@@ -369,6 +369,7 @@ project, and also make sure you have a registry entry for it.  See
 **Start dime:**  ::
 
     $ cd ...dir containing registry...
+    $ echo abstract://dylan/dime-test/dime-test.lid > registry/generic/dime-test
     $ make-dylan-app dime-test
     $ cd dime-test
     $ emacs dime-test.dylan
