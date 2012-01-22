@@ -25,7 +25,6 @@ Open Proposals (under consideration)
 
 ==== ============= ========== =============================================
 1    Process       Draft      `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <../_sources/proposals/dep-0001.txt>`__)
-3    Standard      Draft      `C3 superclass linearization <dep-0003.html>`_  (`source <../_sources/proposals/dep-0003.txt>`__)
 ==== ============= ========== =============================================
 
 
@@ -35,5 +34,5 @@ All Proposals by Number
 ==== ============= ========== =============================================
 1    Process       Draft      `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <../_sources/proposals/dep-0001.txt>`__)
 2    Standard      Final      `define function <dep-0002.html>`_ (`source <../_sources/proposals/dep-0002.txt>`__)
-3    Standard      Draft      `C3 superclass linearization <dep-0003.html>`_  (`source <../_sources/proposals/dep-0003.txt>`__)
+3    Standard      Final      `C3 superclass linearization <dep-0003.html>`_  (`source <../_sources/proposals/dep-0003.txt>`__)
 ==== ============= ========== =============================================
