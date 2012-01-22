@@ -8,68 +8,40 @@ The Simple Random module
 Common Dylan provides a simple facility for generating sequences of
 pseudo-random integers via the *simple-random* module.
 
-Instances of the sealed class `\<random\>`_
-generate pseudo-random integers. Given an instance of ``<random>``, the
-function `random`_ will return a
-pseudo-random integer.
+Instances of the sealed class :class:`<random\>` generate pseudo-random
+integers. Given an instance of :class:`<random>`, the function
+:func:`random` will return a pseudo-random integer.
 
-<random>
---------
+.. class:: <random>
+   :sealed:
+   :instantiable:
 
-Sealed instantiable class
-'''''''''''''''''''''''''
+   The class of random number generators.
 
-Summary
+   :superclasses: <object>
 
-The class of random number generators.
+   :keyword seed: An instance of ``<integer>``. Default value: computed
+     to be random.
 
-Superclasses
+   :description:
 
-<object>
+     The class of random number generators.
 
-Init-keywords
+     The seed value from which to start the sequence of integers. Default
+     value: computed to be random.
 
-*seed* An instance of ``<integer>``. Default value: computed to be
-random.
+.. function:: random
 
-Description
+   Returns a pseudorandomly generated number greater than or equal to
+   zero and less than a specified value.
 
-The class of random number generators.
+   :signature: random *upperbound* #key *random* => *random-integer*
 
-The seed value from which to start the sequence of integers. Default
-value: computed to be random.
+   :parameter range: An instance of ``<integer>``.
+   :parameter #key random: An instance of :class:`<random>`.
+   :value random-integer: An instance of ``<integer>``.
 
-Example
+   :description:
 
-random
-------
-
-Function
-''''''''
-
-Summary
-
-Returns a pseudorandomly generated number greater than or equal to zero
-and less than a specified value.
-
-Signature
-
-random *upperbound* #key *random* => *random-integer*
-
-Arguments
-
-*range* An instance of ``<integer>``.
-
-*random* An instance of ``<random>``.
-
-Values
-
-*random-integer*
-
-An instance of ``<integer>``.
-
-Description
-
-Returns a pseudorandomly generated number greater than or equal to zero
-and less than *range*.
-
+     Returns a pseudorandomly generated number greater than or equal to zero
+     and less than *range*.
