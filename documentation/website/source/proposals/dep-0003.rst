@@ -18,7 +18,8 @@ Abstract
 ========
 
 The Dylan superclass linearization is sometimes counter-intuitive. The
-C3 superclass linearization algorithm is more intuitive.
+C3 superclass linearization algorithm is more intuitive and allows for
+greater optimization.
 
 Copyright
 =========
@@ -32,7 +33,7 @@ The C3 superclass linearization has been proposed in 1996 by Kim
 Barrett, Bob Cassels, Paul Haahr, David A. Moon, Keith Playford, and
 P. Tucker Withington in a `paper
 <http://dx.doi.org/10.1145/236337.236343>`_ (`html version
-<http://192.220.96.201/dylan/linearizations.html>`_).
+<http://www.webcom.com/haahr/dylan/linearization-oopsla96.html>`_).
 
 A superclass linearization (also known as a class precedence list) is
 used for resolving conflicts among multiply-inherited superclasses
@@ -42,7 +43,8 @@ Unfortunately the algorithm presented in the Dylan Reference Manual
 (`computing the class precedence list
 <http://opendylan.org/books/drm/Classes#HEADING-41-25>`_) is not
 consistent with the extended precedence graph, and may lead to
-counter-intuitive linearizations. To fix that, C3 was developed.
+counter-intuitive linearizations. To fix that, the C3 linearization
+was developed.
 
 Motivation
 ==========
@@ -51,17 +53,17 @@ In order to allow for more optimizations, especially compression of
 dispatch tables, which requires monotonicity of method orderings, a
 consistent superclass linearization algorithm is needed.
 
-C3 has been proposed in 1996 and was subsequently adapted to Python
-2.3 (`article <http://www.python.org/download/releases/2.3/mro/>`__)
+After the C3 linearization was proposed in 1996, it was subsequently
+adapted in Python 2.3 (`article <http://www.python.org/download/releases/2.3/mro/>`__)
 and Perl 6 (`article
 <http://use.perl.org/~autrijus/journal/25768>`__).
 
 Rationale
 =========
 
-C3 has been around for long enough, it does not break any existing
-code, and it is the right thing to do according to the mailing list
-discussions.
+The C3 linearization has been around for a long time, does not break
+any existing code, and is commonly agreed upon as being the right thing
+to do (in mailing list discussions).
 
 Examples
 ========
@@ -79,11 +81,21 @@ The example from the paper is given here, consider the following Dylan classes:
 
 
 The Dylan linearization is:
+
+.. code-block:: dylan
+
     <editable-scrollable-pane>, <scrollable-pane>, <editable-pane>, <pane>, <editing-mixin>, <scrolling-mixin>, <object>
 
 The C3 linearization is:
+
+.. code-block:: dylan
+
     <editable-scrollable-pane>, <scrollable-pane>, <editable-pane>, <pane>, <scrolling-mixin>, <editing-mixin>, <object>
 
+The difference in the ordering of ``<scrolling-mixin>`` and
+``<editing-mixin>`` and having that match the ordering of
+``<scrollable-pane>`` and ``<editable-pane>`` is clearly
+more intuitive and consistent.
 
 Backwards Compatibility
 =======================
