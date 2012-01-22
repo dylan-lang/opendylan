@@ -19,11 +19,11 @@ Hello World
 ===========
 
 You have just downloaded Open Dylan and installed it in
-``/opt/opendylan-2012.1``.  So how do you write the canonical Hello
+``/opt/opendylan-2011.1``.  So how do you write the canonical Hello
 World app?  This example assumes bash is being used.  You may need
 to adjust for your local shell.  ::
 
-  $ export PATH=~/Open-Dylan/bin:/opt/opendylan-2012.1/bin:$PATH
+  $ export PATH=$HOME/Open-Dylan/bin:/opt/opendylan-2011.1/bin:$PATH
   $ make-dylan-app hello-world
   $ cd hello-world
   $ dylan-compiler -build hello-world.lid
@@ -35,7 +35,7 @@ Ta da!  Now a quick review of the steps with a little bit of
 explanation.
 
 First you must set PATH so that ``make-dylan-app`` and
-``dylan-compiler`` will be found.  You must add ``~/Open-Dylan/bin``
+``dylan-compiler`` will be found.  You must add ``$HOME/Open-Dylan/bin``
 to the PATH as well because this is where ``dylan-compiler`` puts the
 executables it builds.
 
@@ -50,7 +50,7 @@ application and three files:
        definitions.  These can be extended as your project grows more
        complex.
 
-    3. hello-world.dylan contains the main program logic.
+    3. hello-world.dylan contains the main program.
 
 ``dylan-compiler`` has both a batch mode and an interactive mode.  The
 ``-build`` option says to build the project in batch mode.  When you
@@ -121,8 +121,10 @@ A few more quick tips:
   2. Use ``dylan-compiler -help`` to see all the options.  Options that
      don't take an argument may be negated by adding "no".  e.g. -nologo
 
-  3. The ``-build`` option builds both an executable and a shared
-     library.  
+  3. The ``-build`` option builds an executable unless you add this
+     line to your .lid file::
+
+       target-type: dll
 
 You should now have enough information to start working on your Dylan
 project.  The next few sections go into more detail on using
@@ -364,7 +366,7 @@ For this tutorial let's use a "dime-test" project created with
 project, and also make sure you have a registry entry for it.  See
 `Using Source Registries`_ if you're not sure how to set that up.
 
-::
+**Start dime:**  ::
 
     $ cd ...dir containing registry...
     $ make-dylan-app dime-test
@@ -372,47 +374,52 @@ project, and also make sure you have a registry entry for it.  See
     $ emacs dime-test.dylan
     M-x dime <Enter>
 
-You should now have a buffer called "\*dime-repl nil\*" that looks
+You should now have a buffer called ``*dime-repl nil*`` that looks
 like this::
 
     Welcome to dswank - the Hacker Edition Version 2011.1 SLIME interface
     opendylan> 
 
 This is the Open Dylan compiler interactive shell.  You can issue
-commands such as "help", "open my-project" or "build" here.  Comma (,)
-is a special command in the DIME REPL.  To switch to your dime-test
-project do this::
+commands directly here if you like, but mostly you'll issue dime
+commands from your Dylan source buffers.
 
-    opendylan> ,change-project
-    Project: dime-test
-    dime-test>
+**Change projects:** Switch back to the dime-test.dylan buffer and
+type ``C-c M-p dime-test`` to tell DIME to switch to the dime-test
+project.  If DIME doesn't let you enter "dime-test" as the project
+name that means it couldn't find the registry entry.  Press <Tab> to
+see a complete list of available projects.
 
-If DIME wouldn't let you enter "dime-test" as the project name that
-means it couldn't find the registry entry.
+**Compile:** To build the project, type ``C-c C-k``.  You should see
+something like "Compilation finished: 3 warnings, 18 notes".  (The
+reason there are so many warnings is because there are some warnings
+in the dylan library itself.  This is a bug that should be fixed
+eventually.)
 
-Build the project::
+**Edit definition:** There's not much code in dime-test.dylan except
+for a ``main`` method.  Move the cursor onto the call to "format-out"
+and type ``M-.``.  It should jump to the format-out definition in the
+``io-internals`` module.
 
-    dime-test> build
-    Number of libraries to compile: 4
-    ...mountains of compiler output, yes we should fix this...
-    Build of 'dime-test' completed
-    Done.
-    dime-test> 
+**Compiler warnings:** Switch back to the dime-test.dylan buffer and
+make a change that causes a compiler warning, such as removing the
+semicolon at the end of the ``format-out`` line.  Recompile with ``C-c
+C-k`` and you should see something like "Compilation finished: 6
+warnings, 18 notes".  You can jump to the first warning using the
+standard for emacs: ``C-x ```.
 
-Most DIME commands work only when you're in a dylan-mode buffer, so
-read your dime-test.dylan file into a buffer.  There's not much code
-in this file except for a ``main`` method.  Move the cursor onto the
-call to "format-out" and type "M-.".  It should jump immediately to
-the format-out definition in the ``io-internals`` module.
+**Argument lists:** Note that when you type an open parenthesis, or
+comma, or space after a function name dime will display the **argument
+list** and return values in the emacs minibuffer.  e.g., try typing
+``+(``.
 
-Switch back to the dime-test.dylan buffer and make a change that
-causes a compiler warning, such as removing the semicolon after the
-``format-out`` call.  Recompile with ``C-c C-k`` and you should see
-something like "Compilation finished: 6 warnings, 18 notes".  You can
-then jump to the first warning using the standard for emacs: ``C-x
-\```.  (The reason there are so many warnings is because there are
-some warnings in the dylan module itself.  This is a bug that should
-be fixed eventually.)
+**Cross references:** To list cross references (e.g., who calls
+function F?) move the cursor over the name you want to look up and
+type ``C-c C-w C-c`` ('c' for call).  DIME will display a list of
+callers in a ``*dime-xref*`` buffer.  ``C-M-.`` will take you to the
+next caller.  Use it repeatedly to move to each caller definition in
+turn.  Move the cursor to a particular caller in the ``*dime-xref*``
+buffer and press <Enter> to jump to that caller.
 
 That should be enough to give you the flavor of DIME.  Following is a
 table of useful commands, and you can of course find many more using
@@ -423,7 +430,9 @@ the standard emacs tools such as ``C-h b`` and ``M-x apropos``.
     +===================+==========================================+
     |M-x dime           |start dime                                |
     +-------------------+------------------------------------------+
-    | , change-project  | select project (in the repl buffer)      |
+    | , change-project  | change project (in the repl buffer)      |
+    +-------------------+------------------------------------------+
+    | C-c M-p           | change project (in Dylan source buffers) |
     +-------------------+------------------------------------------+
     | M-.               | jump to definition                       |
     +-------------------+------------------------------------------+
