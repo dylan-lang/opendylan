@@ -6,21 +6,14 @@ This preface describes the *Getting Started with Open Dylan*
 manual. It discusses the purpose of the manual and the conventions it
 uses. It also gives a brief description of each chapter in the manual.
 
-Assumptions
-===========
-
-We assume that you are familiar with the basics of one of the Windows
-NT, Windows ’95, and Windows ’98 operating systems.
-
 About this guide
 ================
 
-This guide explains how to use Open Dylan to develop and deliver
-Dylan applications.
-
-The main example in this guide is an implementation of the board game
-Reversi. We use this example to illustrate all aspects of development in
-Open Dylan.
+This guide explains how to use Open Dylan to develop and deliver Dylan
+applications.  There are three relatively independent sections
+covering command-line usage, Dylan Interaction Mode for Emacs (DIME),
+and then the IDE (Windows only) which makes up the bulk of this
+document.
 
 Conventions in this guide
 =========================
@@ -64,12 +57,19 @@ the *Dylan Reference Manual* as “the DRM”.
 Chapters in this guide
 ======================
 
-The early chapters in this guide give you a quick tour of the
+The first two chapters in this guide cover how to use Open Dylan from
+the command-line and how to use DIME (Dylan Interaction Mode for
+Emacs).  The remainder of the guide is dedicated to doing development
+with the IDE (on Windows only).
+
+The early chapters on the IDE give you a quick tour of the
 application development cycle under Open Dylan, using the Reversi
 example for illustration. In these early chapters we come across most of
 the Open Dylan development tools. Later chapters examine those
 tools more directly, and provide a broader view of the development
 process in Open Dylan.
+
+:doc:`console`, shows how to use Open Dylan from the command-line.
 
 :doc:`quick-start`, shows how to build a
 standalone executable application in Open Dylan. It discusses the

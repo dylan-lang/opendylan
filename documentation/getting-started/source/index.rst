@@ -9,6 +9,7 @@ Contents:
 
    copyright
    preface
+   console
    quick-start
    expanding
    model
@@ -20,7 +21,6 @@ Contents:
    delivery
    editopt
    com-projects
-   console
 
 
 Indices and tables
