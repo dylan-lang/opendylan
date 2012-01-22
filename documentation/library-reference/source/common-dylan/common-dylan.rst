@@ -11,670 +11,490 @@ extensions to the Dylan language.
 The Common Dylan extensions are:
 
 -  Collection model extensions: `\<stretchy-sequence\>`_, `\<string-table\>`_,
-   `difference`_, `fill-table!`_, `find-element`_, `position`_,
-   `remove-all-keys!`_, and `define table`_.
--  Condition system extensions: `\<format-string-condition\>`_,
-   `\<simple-condition\>`_, and `condition-to-string`_.
+   :gf:`difference`, :func:`fill-table!`, :gf:`find-element`, `position`_,
+   `remove-all-keys!`_, and :macro:`define table`.
+-  Condition system extensions: :class:`<format-string-condition>`,
+   `\<simple-condition\>`_, and :gf:`condition-to-string`.
 -  Program constructs: `iterate`_ and `when`_.
--  Application development conveniences: `iterate`_, `debug-message`_,
+-  Application development conveniences: `iterate`_, :func:`debug-message`,
    `ignore`_, `ignorable`_, *profiling*, `timing`_, `$unsupplied`_,
-   `unsupplied?`_, `unsupplied`_, `when`_, `$unfound`_, `one-of`_,
-   `unfound?`_, and `found?`_.
+   `unsupplied?`_, `unsupplied`_, `when`_, :const:`$unfound`, `one-of`_,
+   :func:`unfound?`, and :func:`found?`.
 -  Type conversion functions: `integer-to-string`_, `string-to-integer`_,
-   and `float-to-string`_.
+   and :func:`float-to-string`.
 
-assert
-------
+.. macro:: assert
+   :statement:
 
-Statement macro
-'''''''''''''''
+   Signals an error if the expression passed to it evaluates to false.
 
-Summary
+   :macrocall:
 
-Signals an error if the expression passed to it evaluates to false.
+     .. code-block:: dylan
 
-Macro call (1)
+       assert *expression* *format-string* [*format-arg* ]* => *false*
 
-.. code-block:: dylan
+     .. code-block:: dylan
 
-    assert *expression* *format-string* [*format-arg* ]* => *false*
+       assert *expression* => *false*
 
-Macro call (2)
+   :parameter expression: A Dylan expression *bnf*.
+   :parameter format-string: A Dylan expression *bnf*.
+   :parameter format-arg: A Dylan expression *bnf*.
 
-.. code-block:: dylan
+   :value false: ``#f``.
 
-    assert *expression* => *false*
+   :description:
 
-Arguments
+     Signals an error if *expression* evaluates to ``#f``.
 
-- *expression* A Dylan expression *bnf*.
-- *format-string* A Dylan expression *bnf*.
-- *format-arg* A Dylan expression *bnf*.
+     An assertion or “assert” is a simple tool for testing that
+     conditions hold in program code.
 
-Values
+     The *format-string* is a format string as defined on page 112 of
+     the DRM. If *format-string* is supplied, the error is formatted
+     accordingly, along with any instances of *format-arg*.
 
-    *false* *#f*.
+     If *expression* is not ``#f``, ``assert`` does not evaluate
+     *format-string* or any instances of *format-arg*.
 
-Description
+   See also
 
-Signals an error if *expression* evaluates to ``#f``.
+   - :macro:`debug-assert`
 
-An assertion or “assert” is a simple tool for testing that conditions
-hold in program code.
+.. class:: <byte-character>
+   :sealed:
 
-The *format-string* is a format string as defined on page 112 of the
-DRM. If *format-string* is supplied, the error is formatted accordingly,
-along with any instances of *format-arg*.
+   The class of 8-bit characters that instances of ``<byte-string>`` can
+   contain.
 
-If *expression* is not ``#f``, ``assert`` does not evaluate *format-string*
-or any instances of *format-arg*.
+   :superclasses: <character>
 
-See also
+   :description:
 
-`debug-assert`_
+     The class of 8-bit characters that instances of ``<byte-string>``
+     can contain.
 
-<byte-character>
-----------------
+.. generic-function:: concatenate!
+   :open:
 
-Sealed class
-''''''''''''
+   A destructive version of the Dylan language’s :drm:`concatenate`;
+   that is, one that might modify its first argument.
 
-Summary
+   :signature: concatenate! *sequence* #rest *more-sequences* => *result-sequence*
 
-The class of 8-bit characters that instances of ``<byte-string>`` can
-contain.
+   :parameter sequence: An instance of ``<sequence>``.
+   :parameter #rest more-sequences: Instances of ``<sequence>``.
+   :value result-sequence: An instance of ``<sequence>``.
 
-Superclasses
+   :description:
 
-<character>
+     A destructive version of the Dylan language’s :drm:`concatenate`;
+     that is, one that might modify its first argument.
 
-Init-keywords
+     It returns the concatenation of one or more sequences, in a
+     sequence that may or may not be freshly allocated. If
+     *result-sequence* is freshly allocated, then, as for
+     :drm:`concatenate`, it is of the type returned by
+     :drm:`type-for-copy` of *sequence*.
 
-None.
+   :example:
 
-Description
+     .. code-block:: dylan
 
-The class of 8-bit characters that instances of ``<byte-string>`` can
-contain.
+       > define variable *x* = "great-";
+       "great-"
+       > define variable *y* = "abs";
+       "abs"
+       > concatenate! (*x*, *y*);
+       "great-abs"
+       > *x*;
+       "great-abs"
+       >
 
-concatenate!
-------------
+.. generic-function:: condition-to-string
+   :open:
 
-Open generic function
-'''''''''''''''''''''
+   Returns a string representation of a condition object.
 
-Summary
+   :signature: condition-to-string *condition* => *string*
 
-A destructive version of the Dylan language’s *concatenate* ; that is,
-one that might modify its first argument.
+   :parameter condition: An instance of ``<condition>``.
+   :value string: An instance of ``<string>``.
 
-Signature
+   :description:
 
-concatenate! *sequence* #rest *more-sequences* => *result-sequence*
+     Returns a string representation of a general instance of
+     ``<condition>``. There is a method on
+     :class:`<format-string-condition>` and method on
+     :drm:`<type-error>`.
 
-Arguments
+.. macro:: debug-assert
+   :statement:
 
-*sequence* An instance of ``<sequence>``.
+   Signals an error if the expression passed to it evaluates to false —
+   but only when the code is compiled in interactive development mode.
 
-*more-sequences*
+   :macrocall:
+     .. code-block:: dylan
 
-Instances of ``<sequence>``.
+       debug-assert *expression* *format-string* [ *format-arg* ]* => *false*
 
-Values
+     .. code-block:: dylan
 
-*result-sequence* An instance of ``<sequence>``.
+       debug-assert *expression* => *false*
 
-Description
+   :parameter expression: A Dylan expression *bnf*.
+   :parameter format-string: A Dylan expression *bnf*.
+   :parameter format-arg: A Dylan expression *bnf*.
+   :value false: ``#f``.
 
-A destructive version of the Dylan language’s *concatenate* ; that is,
-one that might modify its first argument.
+   :description:
 
-It returns the concatenation of one or more sequences, in a sequence
-that may or may not be freshly allocated. If *result-sequence* is
-freshly allocated, then, as for *concatenate*, it is of the type
-returned by *type-for-copy* of *sequence*.
+     Signals an error if *expression* evaluates to false — but only when
+     the code is compiled in debugging mode.
 
-Example
+     An assertion or “assert” is a simple and popular development tool
+     for testing conditions in program code.
 
-::
+     This macro is identical to *assert*, except that the assert is
+     defined to take place only while debugging.
 
-    > define variable *x* = "great-";
-    "great-"
-    > define variable *y* = "abs";
-    "abs"
-    > concatenate! (*x*, *y*);
-    "great-abs"
-    > *x*;
-    "great-abs"
-    >
+     The Open Dylan compiler removes debug-assertions when it compiles
+     code in “production” mode as opposed to “debugging” mode.
 
-condition-to-string
--------------------
+     The *format-string* is a format string as defined on page 112 of
+     the DRM.
 
-Open generic function
-'''''''''''''''''''''
+.. function:: debug-message
 
-Summary
+   Formats a string and outputs it to the debugger.
 
-Returns a string representation of a condition object.
+   :signature: debug-message *format-string* #rest *format-args* => ()
 
-Signature
+   :parameter format-string:An instance of ``<string>``.
+   :parameter #rest format-args: Instances of ``<object>``.
 
-condition-to-string *condition* => *string*
+   :description:
 
-Arguments
+     Formats a string and outputs it to the debugger.
 
-*condition* An instance of ``<condition>``.
+     The *format-string* is a format string as defined on page 112 of
+     the DRM.
 
-Values
+.. method:: default-handler
+   :specializer: <warning>
 
-*string* An instance of ``<string>``.
+   Prints the message of a warning instance to the Open Dylan debugger
+   window’s messages pane.
 
-Description
+   :signature: default-handler *warning* => *false*
 
-Returns a string representation of a general instance of ``<condition>``.
-There is a method on `<format-string-condition\>`_ and method on
-``<type-error>``.
+   :parameter warning: An instance of :drm:`<warning>`.
+   :value false: ``#f``.
 
-debug-assert
-------------
+   :description:
 
-Statement macro
-'''''''''''''''
+     Prints the message of a warning instance to the Open Dylan debugger
+     window’s messages pane. It uses :func:`debug-message`, to do so.
 
-Summary
+     This method is a required, predefined method in the Dylan language,
+     described on page 361 of the DRM as printing the warning’s message
+     in an implementation-defined way. We document this method here
+     because our implementation of it uses the function
+     :func:`debug-message`, which is defined in the *common-dylan*
+     library. Thus to use this ``default-handler`` method on
+     ``<warning>``, your library needs to use the *common-dylan* library
+     or a library that uses it, rather than simply using the Dylan
+     library.
 
-Signals an error if the expression passed to it evaluates to false — but
-only when the code is compiled in interactive development mode.
+   :example:
 
-Macro call (1)
+     In the following code, the signalled messages appear in the Harlequin
+     Dylan debugger window.
 
-debug-assert *expression* *format-string* [ *format-arg* ]\* => *false*
+     .. code-block:: dylan
 
-Macro call (2)
+       define class <my-warning> (<warning>)
+       end class;
 
-debug-assert *expression* => *false*
+       define method say-hello()
+         format-out("hello there!\\n");
+         signal("help!");
+         signal(make(<my-warning>));
+         format-out("goodbye\\n");
+       end method say-hello;
 
-Arguments
+       say-hello();
 
-*expression* A Dylan expression*bnf*.
+     The following messages appear in the debugger messages pane::
 
-*format-string* A Dylan expression*bnf*.
+       Application Dylan message: Warning: help!
+       Application Dylan message: Warning: {<my-warning>}
 
-*format-arg* A Dylan expression*bnf*.
+     Where ``{<my-warning>}`` means an instance of ``<my-warning>``.
 
-Values
+   See also
 
-*false* *#f*.
+   - :func:`debug-message`.
+   - :drm:`default-handler`, page 361 of the DRM.
 
-Description
+.. function:: default-last-handler
 
-Signals an error if *expression* evaluates to false — but only when the
-code is compiled in debugging mode.
+   Formats and outputs a Dylan condition using *format-out* and passes
+   control on to the next handler.
 
-An assertion or “assert” is a simple and popular development tool for
-testing conditions in program code.
+   :signature: default-last-handler *serious-condition* *next-handler* => ()
 
-This macro is identical to *assert*, except that the assert is defined
-to take place only while debugging.
+   :parameter serious-condition: A object of class ``<serious-condition>``.
+   :parameter next-handler: A function.
 
-The Open Dylan compiler removes debug-assertions when it compiles code in
-“production” mode as opposed to “debugging” mode.
+   :description:
 
-The *format-string* is a format string as defined on page 112 of the
-DRM.
+     A handler utility function defined on objects of class
+     ``<serious-condition>`` that can be by bound dynamically around a
+     computation via :drm:`let handler <handler>` or installed globally
+     via `last-handler-definer`_.
 
-debug-message
--------------
+     This function formats and outputs the Dylan condition
+     *serious-condition* using *format-out* from the Format-Out library,
+     and passes control on to the next handler.
 
-Function
-''''''''
+     This function is automatically installed as the last handler if
+     your library uses the Common Dylan library.
 
-Summary
+   :example:
 
-Formats a string and outputs it to the debugger.
+     The following form defines a dynamic handler around some body:
 
-Signature
+     .. code-block:: dylan
 
-debug-message *format-string* #rest *format-args* => ()
+       let handler <serious-condition> = default-last-handler;
 
-Arguments
+     while the following form installs a globally visible last-handler:
 
-*format-string* An instance of ``<string>``.
+     .. code-block:: dylan
 
-*format-args* Instances of ``<object>``.
+       define last-handler <serious-condition>
+         = default-last-handler;
 
-Values
+   See also
 
-None.
+   - `last-handler-definer`_
+   - *win32-last-handler* in the *C FFI and Win32* library reference, under
+     library *win32-user* and module *win32-default-handler*.
 
-Description
+.. macro:: define table
+   :defining:
 
-Formats a string and outputs it to the debugger.
+   Defines a constant binding in the current module and initializes it
+   to a new table object.
 
-The *format-string* is a format string as defined on page 112 of the
-DRM.
+   :macrocall:
+     .. code-block:: dylan
 
-default-handler
----------------
+       define table *name* [ :: *type* ] = { [ *key* => *element* ]* }
 
-G.f. method
-'''''''''''
+   :parameter name: A Dylan name *bnf*.
+   :parameter type: A Dylan operand *bnf*. Default value: ``<table>``.
+   :parameter key: A Dylan expression *bnf*.
+   :parameter element: A Dylan expression *bnf*.
 
-Summary
+   :description:
 
-Prints the message of a warning instance to the Open Dylan debugger
-window’s messages pane.
+     Defines a constant binding *name* in the current module, and
+     initializes it to a new table object, filled in with the keys and
+     elements specified.
 
-Syntax
+     If the argument *type* is supplied, the new table created is an
+     instance of that type. Therefore *type* must be ``<table>`` or a
+     subclass thereof. If *type* is not supplied, the new table created
+     is an instance of a concrete subclass of ``<table>``.
 
-default-handler *warning* => *false*
+   :example:
 
-Arguments
+     .. code-block:: dylan
 
-*warning* An instance of ``<warning>``.
+       define table $colors :: <object-table>
+         = { #"red" => $red,
+             #"green" => $green,
+             #"blue" => $blue };
 
-Values
+.. generic-function:: difference
+   :open:
 
-*false* *#f*.
+   Returns a sequence containing the elements of one sequence that are
+   not members of a second.
 
-Description
+   :signature: difference *sequence-1* *sequence-2* #key *test* => *result-sequence*
 
-Prints the message of a warning instance to the Open Dylan debugger
-window’s messages pane. It uses `debug-message`_, to do so.
+   :parameter sequence-1: An instance of ``<sequence>``.
+   :parameter sequence-2: An instance of ``<sequence>``.
+   :parameter test: An instance of ``<function>``. Default value: ``\==``.
+   :value result-sequence: An instance of ``<sequence>``.
 
-This method is a required, predefined method in the Dylan language,
-described on page 361 of the DRM as printing the warning’s message in an
-implementation-defined way. We document this method here because our
-implementation of it uses the function `debug-message`_, which is defined
-in the Harlequin-Extensions library. Thus to use this *default-handler* method
-on ``<warning>``, your library needs to use the Harlequin-Extensions
-library or a library that uses it (such as Harlequin-Dylan), rather than
-simply using the Dylan library.
+   :description:
 
-Example
+     Returns a sequence containing the elements of *sequence-1* that are
+     not members of *sequence-2*. You can supply a membership test
+     function as *test*.
 
-In the following code, the signalled messages appear in the Harlequin
-Dylan debugger window.
+   :example:
 
-.. code-block:: dylan
+     .. code-block:: dylan
 
-    define class <my-warning> (<warning>)
-    end class;
+       > difference(#(1,2,3), #(2,3,4));
+       #(1)
+       >
 
-    define method say-hello()
-      format-out("hello there!\\n");
-      signal("help!");
-      signal(make(<my-warning>));
-      format-out("goodbye\\n");
-    end method say-hello;
+.. function:: false-or
 
-    say-hello();
+   Returns a union type comprised of ``singleton(#f)`` and one or more types.
 
-The following messages appear in the debugger messages pane::
+   :signature: false-or *type* #rest *more-types* => *result-type*
 
-    Application Dylan message: Warning: help!
-    Application Dylan message: Warning: {<my-warning>}
+   :parameter type: An instance of ``<type>``.
+   :parameter #rest more-types: Instances of ``<type>``.
+   :value result-type: An instance of ``<type>``.
 
-Where ``{<my-warning>}`` means an instance of ``<my-warning>``.
+   :description:
 
-See also
+     Returns a union type comprised of ``singleton(#f)``, *type*, any
+     other types passed as *more-types*.
 
-`debug-message`_.
+     This function is useful for specifying slot types and function
+     return values.
 
-*default-handler*, page 361 of the DRM.
+     The expression
 
-default-last-handler
---------------------
+     .. code-block:: dylan
 
-Function
-''''''''
+       false-or(*t-1*, *t-2*, ..)
 
-Summary
+     is type-equivalent to
 
-Formats and outputs a Dylan condition using *format-out* and passes
-control on to the next handler.
+     .. code-block:: dylan
 
-Syntax
+       type-union(singleton(#f), *t-1*, *t-2*, ..)
 
-default-last-handler *serious-condition* *next-handler* => ()
+.. function:: fill-table!
 
-Arguments
+   Fills a table with the keys and elements supplied.
 
-*serious-condition*
+   :signature: fill-table! *table* *keys-and-elements* => *table*
 
-A object of class ``<serious-condition>``.
+   :parameter table: An instance of ``<table>``.
+   :parameter keys-and-elements: An instance of ``<sequence>``.
+   :value table: An instance of ``<table>``.
 
-*next-handler* A function.
+   :description:
 
-Values
+     Modifies table so that it contains the keys and elements supplied
+     in the sequence *keys-and-elements*.
 
-None.
+     This function interprets *keys-and-elements* as key-element pairs,
+     that is, it treats the first element as a table key, the second as
+     the table element corresponding to that key, and so on. The keys
+     and elements should be suitable for *table*.
 
-Description
+     Because *keys-and-elements* is treated as a sequence of paired
+     key-element values, it should contain an even number of elements;
+     if it contains an odd number of elements, *fill-table!* ignores the
+     last element (which would have been treated as a key).
 
-A handler utility function defined on objects of class
-``<serious-condition>`` that can be by bound dynamically around a
-computation via *let* *handler* or installed globally via
-*last-handler-definer*.
+.. generic-function:: find-element
+   :open:
 
-This function formats and outputs the Dylan condition
-*serious-condition* using *format-out* from the Format-Out library, and
-passes control on to the next handler.
+   Returns an element from a collection such that the element satisfies
+   a predicate.
 
-This function is automatically installed as the last handler if your
-library uses the Harlequin-Extensions library.
+   :signature: find-element *collection* *function* #key *skip* *failure* => *element*
 
-Example
+   :parameter collection: An instance of ``<collection>``.
+   :parameter predicate: An instance of ``<function>``.
+   :parameter #key skip: An instance of ``<integer>``. Default value: 0.
+   :parameter #key failure: An instance of ``<object>``. Default value: ``#f``.
+   :value element: An instance of ``<object>``.
 
-The following form defines a dynamic handler around some body:
+   :description:
 
-.. code-block:: dylan
+     Returns a collection element that satisfies *predicate*.
 
-    let handler <serious-condition> = default-last-handler;
+     This function is identical to Dylan’s :drm:`find-key`, but it
+     returns the element that satisfies *predicate* rather than the key
+     that corresponds to the element.
 
-while the following form installs a globally visible last-handler:
+.. function:: float-to-string
 
-.. code-block:: dylan
+   Formats a floating-point number to a string.
 
-    define last-handler <serious-condition>
-      = default-last-handler;
+   :signature: float-to-string *float* => *string*
 
-See also
+   :parameter float: An instance of ``<float>``.
+   :value string: An instance of ``<string>``.
 
-`last-handler-definer`_
+   :description:
 
-*win32-last-handler* in the *C FFI and Win32* library reference, under
-library *win32-user* and module *win32-default-handler*.
+     Formats a floating-point number to a string. It uses scientific
+     notation where necessary.
 
-define table
-------------
+.. class:: <format-string-condition>
+   :sealed:
+   :instantiable:
 
-Definition macro
-''''''''''''''''
+   The class of conditions that take a format string.
 
-Summary
+   :superclasses: <condition>
 
-Defines a constant binding in the current module and initializes it to a
-new table object.
+   :description:
 
-Macro call
+     The class of conditions that take a format string, as defined by
+     the DRM.
 
-define table *name* [ :: *type* ] = { [ *key* => *element* ]\* }
+     It is the superclass of Dylan’s :class:`<simple-condition>`.
 
-Arguments
+   See also
 
-*name* A Dylan name*bnf*.
+   The Format library.
 
-*type* A Dylan operand*bnf*. Default value: ``<table>``.
+.. function:: format-to-string
 
-*key* A Dylan expression*bnf*.
+   Returns a formatted string constructed from its arguments.
 
-*element* A Dylan expression*bnf*.
+   :signature: format-to-string *format-string* #rest *format-arguments* => *string*
 
-Description
+   :parameter format-string: An instance of ``<byte-string>``.
+   :parameter #rest format-arguments: Instances of ``<object>``.
+   :value result-string: An instance of ``<byte-string>``.
 
-Defines a constant binding *name* in the current module, and initializes
-it to a new table object, filled in with the keys and elements
-specified.
+   :conditions:
 
-If the argument *type* is supplied, the new table created is an instance
-of that type. Therefore *type* must be ``<table>`` or a subclass thereof.
-If *type* is not supplied, the new table created is an instance of a
-concrete subclass of ``<table>``.
+     This function signals an error if any of the format directives in
+     *format-string* are invalid.
 
-Example
+   :description:
 
-.. code-block:: dylan
+     Returns a formatted string constructed from its arguments, which
+     include a *format-string* of formatting directives and a series of
+     *format-arguments* to be formatted according to those directives.
 
-    define table $colors :: <object-table>
-      = { #"red" => $red,
-          #"green" => $green,
-          #"blue" => $blue };
+     The *format-string* must be a Dylan format string as described on
+     :drm:`pages 112–114 of the DRM <Condition_Messages>`.
 
-difference
-----------
+.. function:: found?
 
-Open generic function
-'''''''''''''''''''''
+   Returns true if *object* is not equal to :const:`$unfound`, and false otherwise.
 
-Summary
+   :signature: found? *object* => *boolean*
 
-Returns a sequence containing the elements of one sequence that are not
-members of a second.
+   :parameter object: An instance of ``<object>``.
+   :value boolean: An instance of ``<boolean>``.
 
-Signature
+   :description:
 
-difference *sequence* *1* *sequence* *2* #key *test* =>
-*result-sequence*
+     Returns true if *object* is not equal to :const:`$unfound`, and false otherwise.
 
-Arguments
-
-*sequence* *1* An instance of ``<sequence>``.
-
-*sequence* *2* An instance of ``<sequence>``.
-
-*test* An instance of ``<function>``. Default value: *\\==*.
-
-Values
-
-*result-sequence* An instance of ``<sequence>``.
-
-Description
-
-Returns a sequence containing the elements of *sequence* *1* that are
-not members of *sequence* *2*. You can supply a membership test
-function as *test*.
-
-Example
-
-::
-
-    > difference(#(1,2,3), #(2,3,4));
-    #(1)
-    >
-
-false-or
---------
-
-Function
-''''''''
-
-Summary
-
-Returns a union type comprised of *singleton(#f)* and one or more types.
-
-Signature
-
-false-or *type* #rest *more-types* => *result-type*
-
-Arguments
-
-*type* An instance of ``<type>``.
-
-*more-types* Instances of ``<type>``.
-
-Values
-
-*result-type* An instance of ``<type>``.
-
-Description
-
-Returns a union type comprised of *singleton(#f)*, *type*, any other
-types passed as *more-types*.
-
-This function is useful for specifying slot types and function return
-values.
-
-The expression
-
-false-or(*t* *1*, *t* *2*, ..)
-
-is type-equivalent to
-
-type-union(singleton(#f), *t* *1*, *t* *2*, ..)
-
-fill-table!
------------
-
-Function
-''''''''
-
-Summary
-
-Fills a table with the keys and elements supplied.
-
-Signature
-
-fill-table! *table* *keys-and-elements* => *table*
-
-Arguments
-
-*table* An instance of ``<table>``.
-
-*keys-and-elements*
-
-An instance of ``<sequence>``.
-
-Values
-
-*table* An instance of ``<table>``.
-
-Description
-
-Modifies table so that it contains the keys and elements supplied in the
-sequence *keys-and-elements*.
-
-This function interprets *keys-and-elements* as key-element pairs, that
-is, it treats the first element as a table key, the second as the table
-element corresponding to that key, and so on. The keys and elements
-should be suitable for *table*.
-
-Because *keys-and-elements* is treated as a sequence of paired
-key-element values, it should contain an even number of elements; if it
-contains an odd number of elements, *fill-table!* ignores the last
-element (which would have been treated as a key).
-
-find-element
-------------
-
-Open generic function
-'''''''''''''''''''''
-
-Summary
-
-Returns an element from a collection such that the element satisfies a
-predicate.
-
-Signature
-
-find-element *collection* *function* #key *skip* *failure* => *element*
-
-Arguments
-
-*collection* An instance of ``<collection>``.
-
-*predicate* An instance of ``<function>``.
-
-*skip* An instance of ``<integer>``. Default value: 0.
-
-*failure* An instance of ``<object>``. Default value: *#f*.
-
-Values
-
-*element* An instance of ``<object>``.
-
-Description
-
-Returns a collection element that satisfies *predicate*.
-
-This function is identical to Dylan’s *find-key*, but it returns the
-element that satisfies *predicate* rather than the key that corresponds
-to the element.
-
-float-to-string
----------------
-
-Function
-''''''''
-
-Summary
-
-Formats a floating-point number to a string.
-
-Signature
-
-float-to-string *float* => *string*
-
-Arguments
-
-*float* An instance of ``<float>``.
-
-Values
-
-*string* An instance of ``<string>``.
-
-Description
-
-Formats a floating-point number to a string. It uses scientific notation
-where necessary.
-
-<format-string-condition>
--------------------------
-
-Sealed instantiable class
-'''''''''''''''''''''''''
-
-Summary
-
-The class of conditions that take a format string.
-
-Superclasses
-
-<condition>
-
-Init-keywords
-
-None.
-
-Description
-
-The class of conditions that take a format string, as defined by the
-DRM.
-
-It is the superclass of Dylan’s ``<simple-condition>``.
-
-See also
-
-The Format library.
-
-found?
-------
-
-Function
-''''''''
-
-Summary
-
-Returns true if *object* is not equal to `$unfound`_, and false otherwise.
-
-Signature
-
-found? *object* => *boolean*
-
-Arguments
-
-*object* An instance of ``<object>``.
-
-Values
-
-*boolean* An instance of ``<boolean>``.
-
-Description
-
-Returns true if *object* is not equal to `$unfound`_, and false otherwise.
-
-It uses *\\=* as the equivalence predicate.
+     It uses ``\=`` as the equivalence predicate.
 
 ignore
 ------
@@ -1516,108 +1336,63 @@ An example:
     end;
     => 1 671000
 
-$unfound
---------
+.. constant:: $unfound
 
-Constant
-''''''''
+   A unique value that can be used to indicate that a search operation
+   failed.
 
-Summary
+   :type: <list>
 
-A unique value that can be used to indicate that a search operation
-failed.
+   :description:
 
-Type
+     A unique value that can be used to indicate that a search operation
+     failed.
 
-<list>
+  See also
 
-Value
+  - :func:`found?`
+  - :func:`unfound?`
+  - :func:`unfound`
 
-A unique value.
+.. function:: unfound
 
-Description
+   Returns the unique “unfound” value, :const:`$unfound`.
 
-A unique value that can be used to indicate that a search operation
-failed.
+   :signature: unfound () => *unfound-marker*
 
-See also
+   :value unfound-marker: The value :const:`$unfound`.
 
-`found?`_
+   :description:
 
-`unfound?`_
+   Returns the unique “unfound” value, :const:`$unfound`.
 
-`unfound`_
+   See also
 
-unfound
--------
+   - :func:`found?`
+   - :func:`unfound?`
+   - :const:`$unfound`
 
-Function
-''''''''
+.. function:: unfound?
 
-Summary
+   Returns true if its argument is equal to the unique “unfound” value,
+   :const:`$unfound`, and false if it is not.
 
-Returns the unique “unfound” value, `$unfound`_.
+   :signature: unfound? *object* => *unfound?*
 
-Signature
+   :parameter object: An instance of ``<object>``.
+   :value unfound?: An instance of ``<boolean>``.
 
-unfound () => *unfound-marker*
+   :description:
 
-Arguments
+     Returns true if *object* is equal to the unique “unfound” value,
+     :const:`$unfound`, and false if it is not. It uses ``\=``
+     as the equivalence predicate.
 
-None.
+   See also
 
-Values
-
-*unfound-marker* The value `$unfound`_.
-
-Description
-
-Returns the unique “unfound” value, `$unfound`_.
-
-See also
-
-`found?`_
-
-`unfound?`_
-
-`$unfound`_
-
-unfound?
---------
-
-Function
-''''''''
-
-Summary
-
-Returns true if its argument is equal to the unique “unfound” value,
-`$unfound`_, and false if it is not.
-
-Signature
-
-unfound? *object* => *unfound?*
-
-Arguments
-
-*object* An instance of ``<object>``.
-
-Values
-
-*unfound?* An instance of ``<boolean>``.
-
-Description
-
-Returns true if *object* is equal to the unique “unfound” value,
-`$unfound`_, and false if it is not. It uses *\\=*
-as the equivalence predicate.
-
-See also
-
-`found?`_
-
-`$unfound`_
-
-`unfound`_
+   - :func:`found?`
+   - :const:`$unfound`
+   - :func:`unfound`
 
 $unsupplied
 -----------
@@ -1765,82 +1540,3 @@ Example
     when (x < 0)
       ~ x;
     end;
-
-The SIMPLE-FORMAT module
-========================
-
-This section contains a reference entry for each item exported from the
-Harlequin-extensions library’s *simple-format* module.
-
-format-out
-----------
-
-Function
-''''''''
-
-Summary
-
-Formats its arguments to the standard output.
-
-Signature
-
-format-out *format-string* #rest *format-arguments* => ()
-
-Arguments
-
-*format-string* An instance of ``<byte-string>``.
-
-*format-arguments*
-
-Instances of ``<object>``.
-
-Values
-
-None.
-
-Description
-
-Formats its arguments to the standard output.
-
-This function does not use the *\*standard-output\** stream defined by
-the Standard-IO library.
-
-format-to-string
-----------------
-
-Function
-''''''''
-
-Summary
-
-Returns a formatted string constructed from its arguments.
-
-Signature
-
-format-to-string *format-string* #rest *format-arguments* => *string*
-
-Arguments
-
-*format-string* An instance of ``<byte-string>``.
-
-*format-arguments*
-
-Instances of ``<object>``.
-
-Values
-
-*result-string* An instance of ``<byte-string>``.
-
-Exceptions
-
-This function signals an error if any of the format directives in
-*format-string* are invalid.
-
-Description
-
-Returns a formatted string constructed from its arguments, which include
-a *format-string* of formatting directives and a series of
-*format-arguments* to be formatted according to those directives.
-
-The *format-string* must be a Dylan format string as described on pages
-112–114 of the DRM.
