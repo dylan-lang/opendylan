@@ -301,7 +301,7 @@ from the module *table-extensions*.
    :parameter collection: An instance of ``<mutable-explicit-key-collection>``.
    :value collection: An instance of ``<mutable-explicit-key-collection>``.
 
-   :description
+   :description:
 
      Modifies *collection* by removing all its keys and elements, and
      leaves it empty. This method implements the generic function by
