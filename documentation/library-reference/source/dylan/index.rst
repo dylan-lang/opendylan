@@ -44,7 +44,7 @@ formatting (*simple-format*), pseudo-random integer generation
 
 Open Dylan provides a convenience library, *common-dylan*, that
 combines the *dylan* and *common-extensions* libraries to provide a
-convenient “dialect” of Dylan, exported from the module *common-dylan* :
+convenient “dialect” of Dylan, exported from the module *common-dylan*:
 
 .. code-block:: dylan
 
@@ -73,11 +73,11 @@ All the other language extensions are described in :doc:`../common-dylan/index`.
 Function Definition
 -------------------
 
-The ``define function`` definition macro provides a convenient way to
-define functions that have no generic properties and hence are not
-suitable for definition with ``define generic`` or ``define method``.
-This extension has been accepted as part of the language since the DRM
-was published.
+The :macro:`define function` definition macro provides a convenient way
+to define functions that have no generic properties and hence are not
+suitable for definition with :drm:`define generic <generic>` or
+:drm:`define method <method>`. This extension has been accepted as part
+of the language since the DRM was published.
 
 The ``define function`` macro provides a way of defining a function that
 says clearly to other programmers that the function is not part of any
@@ -93,7 +93,7 @@ specify what it expands into, so that Dylan implementations have
 latitude to support this definer in the best way suited to the
 implementation.
 
-.. macro:: define-function
+.. macro:: define function
    :defining:
 
    Defines a constant binding in the current module and initializes it to a
@@ -130,20 +130,20 @@ implementation.
      The following functions return the same values as they would if the
      function had been defined as a bare method with the same signature:
 
-     - ``function-specializers``
-     - ``function-arguments``
-     - ``function-return-values``
+     - :drm:`function-specializers`
+     - :drm:`function-arguments`
+     - :drm:`function-return-values`
 
      Calling some of the following reflective operations on a function
-     defined with *define function* may be an error:
+     defined with ``define function`` may be an error:
 
-     - generic-function-methods
-     - add-method
-     - generic-function-mandatory-keywords
-     - sorted-applicable-methods
-     - find-method
-     - remove-method
-     - applicable-method?
+     - :drm:`generic-function-methods`
+     - :drm:`add-method`
+     - :drm:`generic-function-mandatory-keywords`
+     - :drm:`sorted-applicable-methods`
+     - :drm:`find-method`
+     - :drm:`remove-method`
+     - :drm:`applicable-method?`
 
 Extensions to the FOR iteration construct
 -----------------------------------------
