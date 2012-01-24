@@ -11,6 +11,7 @@ Contents:
    dylan/index
    common-dylan/index
    collections/table-extensions
+   io/index
    numbers
    network/index
    system/index
