@@ -377,10 +377,10 @@ library.
     Synopsis: Provides a naive implementation of the factorial
               function
     Keywords: factorial, integer, simple, recursive
-    Files: fact-def
+    Files: library
            fact
 
-File: *fact-def.dylan*. Defines the *factorial* library and its one
+File: *library.dylan*. Defines the *factorial* library and its one
 module.
 
 .. code-block:: dylan
@@ -419,12 +419,12 @@ File: *app.lid*. LID file describing the components of the
 
     Library: factorial-application
     Synopsis: Computes factorial 100
-    Files: appdef
+    Files: library
            app
     Start-Module: factorial-application
     Start-Function: main
 
-File: *appdef.dylan*. Defines the *factorial-application* library and its
+File: *library.dylan*. Defines the *factorial-application* library and its
 one module.
 
 .. code-block:: dylan
