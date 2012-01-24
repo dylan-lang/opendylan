@@ -661,7 +661,7 @@ The class of TCP client sockets.
    :keyword element-type: An instance of ``<class>``. Useful values for
      :class:`<tcp-streams>` are :class:`<byte-character>`` and ``<byte>``.
      This keyword is an inherited streams class keyword. See
-     :doc:`streams` for a full description.
+     :doc:`../io/streams` for a full description.
 
 .. generic-function:: remote-port
    :open:
@@ -713,7 +713,7 @@ The class of UDP client sockets.
      port to connect to. Required unless ``service:`` is supplied.
    :keyword element-type: An instance of ``<class>``. Useful values for
      ``<udp-socket>`` s are ``<byte-character>`` and ``<byte>``. This
-     keyword is an inherited streams class keyword. See :doc:`streams` for
+     keyword is an inherited streams class keyword. See :doc:`../io/streams` for
      a full description.
 
    :description:
