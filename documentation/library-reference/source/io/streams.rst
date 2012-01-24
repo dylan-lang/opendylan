@@ -294,7 +294,7 @@ The exported streams class heterarchy includes the classes shown in `
 Streams module classes.`_. Classes shown in bold are
 all instantiable.
 
-.. figure:: images/streams.png
+.. figure:: ../images/streams.png
    :align: center
 
 * s - sealed  | o - open
