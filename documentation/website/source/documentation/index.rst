@@ -113,25 +113,19 @@ Documentation
 
     The official definition of the Dylan language and standard library.
 
-`Core library reference <core-reference/index.html>`_
-[`pdf <core-reference/CoreReference.pdf>`__]
-[`epub <core-reference/CoreReference.epub>`__]
-[`old HTML <http://opendylan.org/documentation/opendylan/core/index.htm>`__]
+`Dylan Library Reference <library-reference/index.html>`_
+[`pdf <library-reference/DylanLibraryReference.pdf>`__]
+[`epub <library-reference/DylanLibraryReference.epub>`__]
 
     Describes the Open Dylan implementation of the Dylan language, a
     core set of Dylan libraries, and a library interchange mechanism.
     The core libraries provide many language extensions, a threads
-    interface, and object finalization.
-
-`System and I/O library reference <system-io-reference/index.html>`_
-[`pdf <system-io-reference/SystemAndIOReference.pdf>`__]
-[`epub <system-io-reference/SystemandIOReference.epub>`__]
-[`old HTML <http://opendylan.org/documentation/opendylan/io/index.htm>`__]
-
-    Describes Open Dylan's printing and output formatting modules,
+    interface, and object finalization, printing and output formatting modules,
     a streams module, a sockets module, and modules providing an
     interface to operating system features such as the file system,
-    time and date information, and the host machine environment.
+    time and date information, the host machine environment, as well
+    as a foreign function interface and some low-level access to the
+    Microsoft Win32 API.
 
 `DUIM library reference
 <http://opendylan.org/documentation/opendylan/dref/index.htm>`_
@@ -139,15 +133,6 @@ Documentation
     Describes the libraries forming DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. It complements
     Building Applications Using DUIM.
-
-`C FFI and Win32 library reference <cffi-win32-reference/index.html>`_
-[`pdf <cffi-win32-reference/C-FFIandWin32Reference.pdf>`__]
-[`epub <cffi-win32-reference/C-FFIandWin32Reference.epub>`__]
-[`old HTML <http://opendylan.org/documentation/opendylan/interop1/index.htm>`__]
-
-    Describes a foreign function interface library for interoperation
-    with C programs, and several libraries providing a low-level interface
-    to the Microsoft Win32 API.
 
 .. raw:: html
 
