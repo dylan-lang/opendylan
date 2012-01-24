@@ -2,6 +2,9 @@
 The Format Module
 *****************
 
+.. current-library:: io
+.. current-module:: format
+
 Introduction
 ============
 
@@ -41,31 +44,30 @@ specification. The following are examples of valid format directives:
 
 The directives are:
 
--  ``%S`` Prints the next format argument as a message by calling the
-   function ``print-message`` on the format argument and the stream. This
-   directive is the same as Dylan’s ``%S`` format-string directive except
-   for two features: (i) this module’s ``%S`` directive outputs character
-   objects, and (ii) you can extend the ``%S`` functionality by adding
-   methods to ``print-message``.
--  ``%=`` Prints the next format argument by calling the
-   ` <print.htm#58823>`_ function from the Print module on the format
-   argument and the stream. You can extend the ``%=`` functionality by
-   adding methods to the ` <print.htm#63563>`_ function from the Print
-   module.
--  ``%C`` Print the next format argument, which must be a character,
-   according to Dylan’s ``%S`` format-string directive. This module’s ``%C``
-   directive is the same as this module’s ``%S`` directive.
--  ``%D`` Prints a decimal representation of the next format argument,
-   which must be an integer.
--  ``%B`` Prints a binary representation of the next format argument,
-   which must be an integer.
--  ``%O`` Prints an octal representation of the next format argument,
-   which must be an integer.
--  ``%X`` Prints a hexadecimal representation of the next format argument,
-   which must be an integer.
--  ``%M`` Invokes the next format argument, which must be a function, on
-   the stream passed to ``format``.
--  ``%%`` Outputs a single ``%`` character.
+- ``%S`` Prints the next format argument as a message by calling the
+  function :gf:`print-message` on the format argument and the stream.
+  This directive is the same as Dylan’s ``%S`` format-string directive
+  except for two features: (i) this module’s ``%S`` directive outputs
+  character objects, and (ii) you can extend the ``%S`` functionality by
+  adding methods to :gf:`print-message`.
+- ``%=`` Prints the next format argument by calling the :gf:`print`
+  function from the Print module on the format argument and the stream.
+  You can extend the ``%=`` functionality by adding methods to the
+  :gf:`print-object` function from the Print module.
+- ``%C`` Print the next format argument, which must be a character,
+  according to Dylan’s ``%S`` format-string directive. This module’s
+  ``%C`` directive is the same as this module’s ``%S`` directive.
+- ``%D`` Prints a decimal representation of the next format argument,
+  which must be an integer.
+- ``%B`` Prints a binary representation of the next format argument,
+  which must be an integer.
+- ``%O`` Prints an octal representation of the next format argument,
+  which must be an integer.
+- ``%X`` Prints a hexadecimal representation of the next format
+  argument, which must be an integer.
+- ``%M`` Invokes the next format argument, which must be a function, on
+  the stream passed to :gf:`format`.
+- ``%%`` Outputs a single ``%`` character.
 
 The FORMAT module
 =================
@@ -73,235 +75,148 @@ The FORMAT module
 This section contains a reference entry for each item exported from the
 Format module.
 
-format
-------
+.. generic-function:: format
 
-Function
+   Outputs a control string to a stream.
 
-Summary
+   :signature: format *stream* *control-string* #rest *arguments* => ()
 
-Outputs a control string to a stream.
+   :parameter stream: An instance of :class:`<stream>`. The stream to
+     which formatted output should be sent.
+   :parameter control-string: An instance of ``<string>``. A string
+     containing format directives.
+   :parameter #rest arguments: Instances of ``<object>``.
 
-Signature
+   :description:
 
-.. code-block:: dylan
+     Sends output to *stream* according to the format directives in
+     *control-string*. Each directive consumes one argument from
+     *arguments*. See `Control strings`_ for a description of the
+     control strings that can be used.
 
-    format *stream* *control-string* *arguments* => ()
+     The *control-string* contents that are not part of any directive are
+     output directly to *stream*, as if by the Streams module’s :gf:`write`
+     function.
 
-Arguments
+.. method:: format
+   :specializer: <byte-string>
 
--  ``stream`` An instance of ``<stream>``. The stream to which formatted
-   output should be sent.
--  ``control-string`` An instance of ``<string>``. A string containing
-   format directives.
--  ``arguments`` Instances of ``<object>``.
+   Outputs a control string to a stream.
 
-Values
+   :parameter stream: An instance of :class:`<stream>`.
+   :parameter control-string: An instance of ``<byte-string>``.
+   :parameter #rest arguments: Instances of ``<object>``.
 
-None.
+   :description:
 
-Description
+     There is one method for :gf:`format`, and it is specialized to
+     ``<byte-string>``.
 
-Sends output to ``stream`` according to the format directives in
-``control-string``. Each directive consumes one argument from ``arguments``.
-See `Control strings`_ for a description of the control strings that can
-be used.
+.. generic-function:: format-to-string
 
-The ``control-string`` contents that are not part of any directive are
-output directly to ``stream``, as if by the Streams module’s ``write``
-function.
+   Returns a formatted string based on a format control string.
 
-format
-------
+   :signature: format-to-string *control-string* #rest *arguments* => *result*
 
-G.f. method
+   :parameter control-string: An instance of ``<string>``.
+   :parameter #rest arguments: Instances of ``<object>``.
+   :value result: An instance of ``<string>``.
 
-Summary
+   :description:
 
-Outputs a control string to a stream.
+     Calls ``format`` to produce output according to *control-string*
+     and returns the output as a string.
 
-Arguments
+.. method:: format-to-string
+   :specializer: <byte-string>
 
--  ``stream`` An instance of ``<stream>``.
--  ``control-string`` An instance of ``<byte-string>``.
--  ``arguments`` Instances of ``<object>``.
+   Returns a formatted string based on a format control string.
 
-Values
+   :parameter control-string: An instance of ``<byte-string>``.
+   :parameter #rest arguments: Instances of ``<object>``.
+   :value result: An instance of ``<byte-string>``.
 
-None.
+   :description:
 
-Description
+     There is one method for :gf:`format-to-string`. The *control-string*
+     argument must be a ``<byte-string>``. Result is a ``<byte-string>``.
 
-There is one method for ``format``, and it is specialized to
-``<byte-string>``.
+.. generic-function:: print-message
 
-format-to-string
-----------------
+   Prints an object to a stream.
 
-Function
+   :parameter object: An instance of ``<object>``.
+   :parameter stream: An instance of :class:`<stream>`.
 
-Summary
+   :description:
 
-Returns a formatted string based on a format control string.
+     Prints ``object`` to ``stream``.
 
-Arguments
+     Methods for this function should print objects as a message, as
+     opposed to printing them in any form intending to represent Dylan
+     data, literal syntax, and so on.
 
--  ``control-string`` An instance of ``<string>``.
--  ``arguments`` Instances of ``<object>``.
+     For example, printing a condition object with this function
+     presents the condition as an error message, but printing the
+     condition object with the :gf:`print` function from the Print module
+     prints the condition in some form such as::
 
-Values
+         {Simple-error}
 
--  ``result`` An instance of ``<string>``.
+     See the individual methods for the details of how this function
+     prints various objects. This function exists to define the behavior
+     of the ``%S`` format directive and to allow users the ability to
+     extend the ``%S`` directive. Users should have little need to call
+     this function directly.
 
-Description
+.. method:: print-message
+   :sealed:
+   :specializer: <condition>
 
-Calls ``format`` to produce output according to ``control-string`` and
-returns the output as a string.
+   Prints a condition to a stream as an error message.
 
-format-to-string
-----------------
+   :parameter condition: An instance of ``<condition>``.
+   :parameter stream: An instance of :class:`<stream>`.
 
-G.f. method
+   :description:
 
-Summary
+     Prints ``condition`` as an error message, as described for the
+     Dylan ``%S`` format directive. You should not specialize the
+     :gf:`print-message` protocol for subclasses of ``<condition>``, but
+     instead extend the :gf:`print-message` protocol to new condition
+     objects by specializing methods on :gf:`report-condition`.
 
-Returns a formatted string based on a format control string.
+     .. note:: This doesn't actually work. Fix.
 
-Arguments
+.. method:: print-message
+   :sealed:
+   :specializer: <symbol>
 
--  ``control-string`` An instance of ``<byte-string>``.
--  ``arguments`` Instances of ``<object>``.
+   Prints a symbol to a stream.
 
-Values
+   :signature: print-message *symbol* *stream* => ()
 
--  ``result`` An instance of ``<byte-string>``.
+   :parameter symbol: An instance of ``<symbol>``.
+   :parameter stream: An instance of :class:`<stream>`.
 
-Description
+   :description:
 
-There is one method for ``format-to-string``. The ``control-string``
-argument must be a ``<byte-string>``. Result is a ``<byte-string>``.
+   Prints ``symbol`` to ``stream`` by converting it to a string with the
+   :drm:`as` function and then writing the string with the :gf:`write`
+   function from the Streams module.
 
-print-message
--------------
+.. method:: print-message
+   :sealed:
+   :specializer: <string> or <character>
 
-Function
+   Prints an object to a stream.
 
-Summary
+   :signature: print-message *object* *stream* => ()
 
-Prints an object to a stream.
+   :parameter object: An instance of ``type-union(<string>, <character>)``.
+   :parameter stream: An instance of ``<stream>``.
 
-Arguments
+   :description:
 
--  ``object`` An instance of ``<object>``.
--  ``stream`` An instance of ``<stream>``.
-
-Values
-
-None.
-
-Description
-
-Prints ``object`` to ``stream``.
-
-Methods for this function should print objects as a message, as opposed
-to printing them in any form intending to represent Dylan data, literal
-syntax, and so on.
-
-For example, printing a condition object with this function presents the
-condition as an error message, but printing the condition object with
-the ``print`` function from the Print module prints the condition in some
-form such as
-
-::
-
-    {Simple-error}
-
-See the individual methods for the details of how this function prints
-various objects. This function exists to define the behavior of the ``%S``
-format directive and to allow users the ability to extend the ``%S``
-directive. Users should have little need to call this function directly.
-
-print-message
--------------
-
-Sealed g.f method
-
-Summary
-
-Prints a condition to a stream as an error message.
-
-Arguments
-
--  ``condition`` An instance of ``<condition>``.
--  ``stream`` An instance of ``<stream>``.
-
-Values
-
-None.
-
-Description
-
-Prints ``condition`` as an error message, as described for the Dylan ``%S``
-format directive. You should not specialize the ``print-message`` protocol
-for subclasses of ``<condition>``, but instead extend the ``print-message``
-protocol to new condition objects by specializing methods on
-``report-condition``.
-
-print-message
--------------
-
-Sealed g.f. method
-
-Summary
-
-Prints a symbol to a stream.
-
-Signature
-
-.. code-block:: dylan
-
-    print-message *symbol* *stream* => ()
-
-Arguments
-
--  ``symbol`` An instance of ``<symbol>``.
--  ``stream`` An instance of ``<stream>``.
-
-Values
-
-None.
-
-Description
-
-Prints ``symbol`` to ``stream`` by converting it to a string with the ``as``
-function and then writing the string with the ``write`` function from the
-Streams module.
-
-print-message
--------------
-
-Sealed g.f. method
-
-Summary
-
-Prints an object to a stream.
-
-Signature
-
-.. code-block:: dylan
-
-    print-message *object* *stream* => ()
-
-Arguments
-
--  ``object`` An instance of ``type-union(<string>, <character>)``.
--  ``stream`` An instance of ``<stream>``.
-
-Values
-
-None.
-
-Description
-
-Prints ``object`` to ``stream`` by calling the ``write`` function from the
-``streams`` module.
+     Prints *object* to *stream* by calling the :gf:`write` function
+     from the Streams module.

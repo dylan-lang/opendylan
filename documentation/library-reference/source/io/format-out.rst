@@ -2,13 +2,16 @@
 The Format-Out Module
 *********************
 
+.. current-library:: io
+.. current-module:: format-out
+
 Introduction
 ============
 
 The Format-Out module is a convenient repackaging of two libraries that
 provides a simple way to send text to the platform’s standard output
 stream. For this purpose, Format-Out uses the Format module and the
-Standard-IO module and defines a function `format-out`_. The Format-Out
+Standard-IO module and defines a function :gf:`format-out`. The Format-Out
 module exports all the identifiers described in this document. The
 Format-Out module re-exports two modules, ``format`` from the Format
 library and ``standard-io`` from the Standard-IO library.
@@ -22,64 +25,38 @@ The FORMAT-OUT module
 This section contains a reference entry for each item exported from the
 *format-out* module.
 
-format-out
-----------
+.. generic-function:: format-out
 
-Function
+   Formats its arguments on the standard output.
 
-Summary
+   :signature: format-out *control-string* #rest *arguments* => ()
 
-Formats its arguments on the standard output.
+   :parameter control-string: An instance of ``<string>``.
+   :parameter #rest arguments: Instances of ``<object>``.
 
-Signature
+   :description:
 
-.. code-block:: dylan
+     Calls the :gf:`format` function from the *format* module on
+     :var:`*standard-output*` from the *standard-io* module,
+     *control-string*, and *arguments*.
 
-    format-out *control-string* #rest *arguments* => ()
+   See also
 
-Arguments
+   - :gf:`format`
+   - :var:`*standard-output*`
 
-- *control-string* An instance of ``<string>``.
-- *arguments* Instances of ``<object>``.
+.. method:: format-out
+   :sealed:
+   :specializer: <byte-string>
 
-Values
+   Formats its arguments on the standard output.
 
-None.
+   :signature: format-out *control-string* #rest *arguments* => ()
 
-Description
+   :parameter control-string: An instance of ``<byte-string>``.
+   :parameter #rest arguments: Instances of ``<object>``.
 
-Calls the *format* function from the *format* module on
-` <standard-io.htm#17449>`_ from the *standard-io* module,
-*control-string*, and *arguments*.
+   :description:
 
-See also
-`format <format.htm#12592>`_
-` <standard-io.htm#17449>`_
-
-format-out
-----------
-
-Sealed g.f. method
-
-Summary
-Formats its arguments on the standard output.
-
-Signature
-
-.. code-block:: dylan
-
-    format-out *control-string* #rest *arguments* => ()
-
-Arguments
-
-- *control-string* An instance of ``<byte-string>``.
-- *arguments* Instances of ``<object>``.
-
-Values
-
-None.
-
-Description
-
-Formats its arguments on the standard output. There is one method for
-*format-out*, and it is specialized to instances of ``<byte-string>``.
+   Formats its arguments on the standard output. There is one method for
+   :gf:`format-out`, and it is specialized to instances of ``<byte-string>``.
