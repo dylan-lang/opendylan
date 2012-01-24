@@ -12,9 +12,6 @@ Contents:
    print
    streams
    standard-io
-   date
-   file-system
-   operating-system
 
 Indices and tables
 ==================
