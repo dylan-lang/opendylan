@@ -1,6 +1,6 @@
-**********************************
-The Open Dylan Win32 API Libraries
-**********************************
+***********************
+The Win32 API Libraries
+***********************
 
 .. current-library:: win32-kernel
 .. current-module:: win32-kernel

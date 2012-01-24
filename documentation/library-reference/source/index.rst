@@ -15,6 +15,8 @@ Contents:
    numbers
    network/index
    system/index
+   c-ffi/index
+   win32/index
    lid
 
 
