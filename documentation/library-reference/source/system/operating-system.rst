@@ -2,6 +2,9 @@
 The Operating-System Module
 ***************************
 
+.. current-library:: system
+.. current-module:: operating-system
+
 Introduction
 ------------
 
@@ -20,125 +23,32 @@ environment of the host machine. As well as providing constants that you
 can use in your code, you can examine and set the value of any
 environment variable in the system.
 
-The following constants contain machine-specific information.
+The following constants contain machine-specific information:
 
-$architecture-little-endian
-
-Constant
-
-$machine-name
-
-Constant
-
-$os-name
-
-Constant
-
-$os-variant
-
-Constant
-
-$os-version
-
-Constant
-
-$platform-name
-
-Constant
+- :const:`$architecture-little-endian`
+- :const:`$machine-name`
+- :const:`$os-name`
+- :const:`$os-variant`
+- :const:`$os-version`
+- :const:`$platform-name`
 
 These constants contain information about the hardware and software
 resident on the host machine. The constants let you programmatically
 check the current system conditions before executing a piece of code.
 
-The constant *$architecture-little-endian* is a boolean value that is
-true if the processor architecture is little-endian and false if it is
-big-endian. (A processor is little-endian if the rightmost bit in a word
-is the least-significant bit.) For processors implementing the Intel x86
-architecture this value is ``#t``.
-
-The constant *$machine-name* specifies the hardware installed in the
-machine. The constant *$os-name* specifies the operating system that is
-running.
-
-The constant *$os-variant* is a symbol value distinguishing between
-variants of the operating system identified by *$os-name*, where
-relevant; otherwise it has the same value as *$os-name*. On Windows,
-the possible values are *#"win3.1"*, *#"win95"*, *#"win98"*, and
-*#"winnt"*.
-
-The constant *$os-version* is a string value that identifies the version
-of the operating system. For Windows NT, a typical value would be
-*"4.0.1381 Service Pack 3"*. For Windows 95, a typical value would be
-*"4.0.1212 B"*.
-
-The *$platform-name* constant is an amalgam of the information contained
-in *$machine-name* and *$os-name*, to enable you to conveniently
-conditionalize your code based on both values.
-
 The following two functions let you manipulate the values of any
 environment variables in the system.
 
-environment-variable
-
-Function
-
-environment-variable-setter
-
-Function
-
-environment-variable *name* => *value*
-
-environment-variable-setter *new-value* *name* => *new-value*
-
-The function *environment-variable* returns the current value of any
-environment variable. The function *environment-variable-setter* lets
-you specify the value of any environment variable. All arguments and
-returns values in these functions are instances of ``<byte-string>``.If
-the environment variable passed to *environment-variable* does not
-exist, it creates it. For *environment-variable-setter*, if *new-value*
-is ``#f``, then the environment variable specified is undefined, if
-undefining environment variables is supported.
+- :func:`environment-variable`
+- :func:`environment-variable-setter`
 
 The following functions access information about the user logged on to
 the current machine, where available.
 
-login-name
-
-Function
-
-login-name () => *name-or-false*
-
-Returns as an instance of ``<string>`` the name of the user logged on to
-the current machine, or ``#f`` if unavailable.
-
-login-group
-
-Function
-
-login-group () => *group-or-false*
-
-Returns as an instance of ``<string>`` the group (for example NT domain,
-or Windows Workgroup) of which the user logged on to the current machine
-is a member, or ``#f`` if the group unavailable.
-
-owner-name
-
-Function
-
-owner-name () => *name-or-false*
-
-Returns as an instance of ``<string>`` the name of the user who owns the
-current machine (that is, the name entered when the machine was
-registered), or ``#f`` if the name unavailable.
-
-owner-organization
-
-Function
-
-owner-organization () => *organization-or-false*
-
-Returns as an instance of ``<string>`` the organization to which the user
-who owns the current machine belongs, or ``#f`` if the name unavailable.
+- :func:`login-name`
+- :func:`login-group`
+- :func:`owner-name`
+- :func:`owner-organization`
 
 Manipulating application information
 ------------------------------------
@@ -149,83 +59,12 @@ the environment as a whole. You can run or quit any application, and
 interrogate the running application for application-specific
 information.
 
-run-application
-
-Function
-
-run-application *command* #key *under-shell?* *inherit-console?*
-
-*activate?* *minimize?*
-
-=> *status*
-
-Runs the application specified by *command*. Using this function is
-equivalent to typing *command* in an MS-DOS console window. The function
-returns the exit status of the application.
-
-If *under-shell?* is ``#t``, an MS-DOS shell is created to run the
-application; otherwise, the application is run directly. It is ``#f`` by
-default.
-
-If *inherit-console?* is ``#t``, the new application uses the same
-console window as the current application; otherwise, the new
-application is created with a separate console window. It is ``#t`` by
-default.
-
-If the *activate?* keyword is ``#t``, the shell window becomes the active
-window. It is ``#t`` by default.
-
-If the *minimize?* keyword is ``#t``, the command’s shell will appear
-minimized. It is ``#f`` by default.
-
-exit-application
-
-Function
-
-exit-application *status* => ()
-
-Terminates the running application. Returns the value of *status*.
-
-application-arguments
-
-Function
-
-application-name
-
-Function
-
-application-filename
-
-Function
-
-application-arguments () => *arguments*
-
-application-name () => *name*
-
-application-filename () => *false-or-filename*
-
-These functions respectively return the arguments passed to the running
-application, the name of the running application, and the full filename
-(that is, the absolute pathname) of the running application.
-
-These functions take no arguments. The function *application-arguments*
-returns an instance of ``<simple-object-vector>`` ; *application-name*
-returns an instance of ``<byte-string>`` ; and *application-filename*
-returns an instance of *false-or(<byte-string>)*.
-
-tokenize-command-string
-
-Function
-
-tokenize-command-string *line* => *command* #rest *arguments*
-
-This argument passed to this function is an MS-DOS command that could be
-used to start an application from the MS-DOS command line. It returns
-the command itself, together with any command-line arguments. All
-arguments and return values are instances of ``<byte-string>``. (In the
-case of the arguments returned, each individual argument is an instance
-of ``<byte-string>``.) You can use this function to break up any MS-DOS
-command into its constituent parts.
+- :func:`run-application`
+- :func:`exit-application`
+- :func:`application-arguments`
+- :func:`application-name`
+- :func:`application-filename`
+- :func:`tokenize-command-string`
 
 The OPERATING-SYSTEM module
 ---------------------------
@@ -233,623 +72,391 @@ The OPERATING-SYSTEM module
 This section contains a reference entry for each item exported from the
 Operating-System module’s Operating-System module.
 
-application-arguments
-^^^^^^^^^^^^^^^^^^^^~
+.. function:: application-arguments
 
-Function
-^^^^^^^^
+   Returns the arguments passed to the running application.
 
-Summary
+   :signature: application-arguments => *arguments*
 
-Returns the arguments passed to the running application.
+   :value arguments: An instance of ``<simple-object-vector>``.
 
-Signature
+   :description:
 
-application-arguments => *arguments*
+     Returns the arguments passed to the running application as a vector
+     of instances of ``<byte-string>``.
 
-Arguments
+   See also
 
-None.
+   - :func:`application-filename`
+   - :func:`application-name`
+   - :func:`tokenize-command-string`
 
-Values
+.. function:: application-filename
 
-*arguments* An instance of ``<simple-object-vector>``.
+   Returns the full filename of the running application.
 
-Description
+   :signature: application-filename => *false-or-filename*
 
-Returns the arguments passed to the running application as a vector of
-instances of ``<byte-string>``.
+   :value false-or-filename: An instance of ``false-or(<byte-string>)``.
 
-See also
+   :description:
 
-`application-filename`_
+     Returns the full filename (that is, the absolute pathname) of the
+     running application, or ``#f`` if the filename cannot be
+     determined.
 
-`application-name`_
+   :example:
 
-`tokenize-command-string`_
+     The following is an example of an absolute pathname naming an
+     application::
 
-application-filename
-^^^^^^^^^^^^^^^^^^^^
+       "C:\\Program Files\\foo\\bar.exe"
 
-Function
-^^^^^^^^
+   See also
 
-Summary
+   - :func:`application-arguments`
+   - :func:`application-name`
+   - :func:`tokenize-command-string`
 
-Returns the full filename of the running application.
+.. function:: application-name
 
-Signature
+   Returns the name of the running application.
 
-application-filename => *false-or-filename*
+   :signature: application-name => *name*
 
-Arguments
+   :value name: An instance of ``<byte-string>``.
 
-None.
+   :description:
 
-Values
+     Returns the name of the running application. This is normally the
+     command name as typed on the command line and may be a non-absolute
+     pathname.
 
-*false-or-filename* An instance of *false-or(<byte-string>)*.
+   :example:
 
-Description
+     The following is an example of a non-absolute pathname used to refer to
+     the application name::
 
-Returns the full filename (that is, the absolute pathname) of the
-running application, or ``#f`` if the filename cannot be determined.
+       "foo\\bar.exe"
 
-Example
+   See also
 
-The following is an example of an absolute pathname naming an
-application:
+   - :func:`application-arguments`
+   - :func:`application-filename`
+   - :func:`tokenize-command-string`
 
-"C:\\Program Files\\foo\\bar.exe"
+.. constant:: $architecture-little-endian
 
-See also
+   Constant specifying whether the processor architecture is little-endian.
 
-`application-arguments`_
+   :type: <boolean>
 
-`application-name`_
+   :description:
 
-`tokenize-command-string`_
+     This constant is a boolean value that is true if the processor
+     architecture is little-endian and false if it is big-endian. (A
+     processor is little-endian if the rightmost bit in a word is the
+     least-significant bit.) For processors implementing the Intel x86
+     architecture this value is ``#t``.
 
-application-name
-^^^^^^^^^^^^^^^^
+   See also
 
-Function
-^^^^^^^^
+   - :const:`$machine-name`
+   - :const:`$os-name`
+   - :const:`$os-variant`
+   - :const:`$os-version`
+   - :const:`$platform-name`
 
-Summary
+.. function:: environment-variable
 
-Returns the name of the running application.
+   Returns the value of a specified environment variable.
 
-Signature
+   :signature: environment-variable *name* => *value*
 
-application-name => *name*
+   :parameter name: An instance of ``<byte-string>``.
+   :value value: An instance of ``<byte-string>``, or ``#f``.
 
-Arguments
+   :description:
 
-None.
+     Returns the value of the environment variable specified by *name*,
+     or ``#f`` if there is no such environment variable.
 
-Values
+   See also
 
-*name* An instance of ``<byte-string>``.
+   - :func:`environment-variable-setter`
 
-Description
+.. function:: environment-variable-setter
 
-Returns the name of the running application. This is normally the
-command name as typed on the command line and may be a non-absolute
-pathname.
+   Sets the value of an environment variable.
 
-Example
+   :signature: environment-variable-setter *new-value* *name* => *new-value*
 
-The following is an example of a non-absolute pathname used to refer to
-the application name.
+   :parameter new-value: An instance of ``<byte-string>``, or ``#f``.
+   :parameter name: An instance of ``<byte-string>``.
+   :value new-value: An instance of ``<byte-string>``, or ``#f``.
 
-"foo\\bar.exe"
+   :description:
 
-See also
+     Changes the value of the environment variable specified by *name*
+     to *new-value*. If *new-value* is ``#f``, the environment variable
+     is undefined. If the environment variable does not already exist,
+     *environment-variable-setter* creates it.
 
-`application-arguments`_
+     .. note:: Windows 95 places restrictions on the number of
+       environment variables allowed, based on the total length of the
+       names and values of the existing environment variables. The
+       function *environment-variable-setter* only creates a new
+       environment variable if it is possible within these restrictions.
+       See the relevant Windows 95 documentation for more details.
 
-`application-filename`_
+   See also
 
-`tokenize-command-string`_
+   - :func:`environment-variable`
 
-environment-variable
-^^^^^^^^^^^^^^^^^^^^
+.. function:: exit-application
 
-Function
-^^^^^^^^
+   Terminates execution of the running application.
 
-Summary
+   :signature: exit-application *status* => ()
 
-Returns the value of a specified environment variable.
+   :parameter status: An instance of ``<integer>``.
 
-Signature
+   :description:
 
-environment-variable *name* => *value*
+     Terminates execution of the running application, returning the
+     value of *status* to whatever launched the application, for example
+     an MS-DOS window or Windows 95/NT shell.
 
-Arguments
+   See also
 
-*name* An instance of ``<byte-string>``.
+   - :func:`run-application`
 
-Values
+.. function:: login-name
 
-*value* An instance of ``<byte-string>``, or ``#f``.
+   Returns as an instance of ``<string>`` the name of the user logged on
+   to the current machine, or ``#f`` if unavailable.
 
-Description
+   :signature: login-name () => *name-or-false*
 
-Returns the value of the environment variable specified by *name*, or
-``#f`` if there is no such environment variable.
+   :value name-or-false: An instance of ``false-or(<string>)``.
 
-See also
+   :description:
 
-`environment-variable-setter`_
+     Returns as an instance of ``<string>`` the name of the user logged
+     on to the current machine, or ``#f`` if unavailable.
 
-environment-variable-setter
-^^^^^^^^^^^^^^^^^^^^^^^^^^~
+   See also
 
-Function
-^^^^^^^^
+   - :func:`login-group`
 
-Summary
+.. function:: login-group
 
-Sets the value of an environment variable.
+   :signature: login-group () => *group-or-false*
 
-Signature
+   :value group-or-false: An instance of ``false-or(<string>)``.
 
-environment-variable-setter *new-value* *name* => *new-value*
+   :description:
 
-Arguments
+     Returns as an instance of ``<string>`` the group (for example NT
+     domain, or Windows Workgroup) of which the user logged on to the
+     current machine is a member, or ``#f`` if the group is unavailable.
 
-*new-value* An instance of ``<byte-string>``, or ``#f``.
+   See also
 
-*name* An instance of ``<byte-string>``.
+   - :func:`login-name`
 
-Values
+.. constant:: $machine-name
 
-*new-value* An instance of ``<byte-string>``, or ``#f``.
+   Constant specifying the type of hardware installed in the host machine.
 
-Description
+   :type: <symbol>
+   :value: #"x86", #"x86-64", #"ppc"
 
-Changes the value of the environment variable specified by *name* to
-*new-value*. If *new-value* is ``#f``, the environment variable is
-undefined. If the environment variable does not already exist,
-*environment-variable-setter* creates it.
+   :description:
 
-*Note:* Windows 95 places restrictions on the number of environment
-variables allowed, based on the total length of the names and values of
-the existing environment variables. The function
-*environment-variable-setter* only creates a new environment variable if
-it is possible within these restrictions. See the relevant Windows 95
-documentation for more details.
+     This constant is a symbol that represents the type of hardware
+     installed in the host machine.
 
-See also
+   See also
 
-`environment-variable`_
+   - :const:`$architecture-little-endian`
+   - :const:`$os-name`
+   - :const:`$os-variant`
+   - :const:`$os-version`
+   - :const:`$platform-name`
 
-exit-application
-^^^^^^^^^^^^^^^^
+.. constant:: $os-name
 
-Function
-^^^^^^^^
+   Constant specifying the operating system running on the host machine.
 
-Summary
+   :type: <symbol>
+   :value: #"win32", #"linux", #"darwin", #"freebsd"
 
-Terminates execution of the running application.
+   :description:
 
-Signature
+     This constant is a symbol that represents the operating system
+     running on the host machine.
 
-exit-application *status* => ()
+   See also
 
-Arguments
+   - :const:`$architecture-little-endian`
+   - :const:`$machine-name`
+   - :const:`$os-variant`
+   - :const:`$os-version`
+   - :const:`$platform-name`
 
-*status* An instance of ``<integer>``.
+.. constant:: $os-variant
 
-Values
+   Constant specifying which variant of an operating system the current
+   machine is running, where relevant.
 
-None.
+   :type: <symbol>
 
-Description
+   :description:
 
-Terminates execution of the running application, returning the value of
-*status* to whatever launched the application, for example an MS-DOS
-window or Windows 95/NT shell.
+     This constant is a symbol value distinguishing between variants of
+     the operating system identified by ``$os-name``, where relevant;
+     otherwise it has the same value as ``$os-name``. On Windows, the
+     possible values are ``#"win3.1"``, ``#"win95"``, ``#"win98"``, and
+     ``#"winnt"``.
 
-See also
+   See also
 
-`run-application`_
+   - :const:`$architecture-little-endian`
+   - :const:`$machine-name`
+   - :const:`$os-name`
+   - :const:`$os-version`
+   - :const:`$platform-name`
 
-login-name
-^^^^^^^^^^
+.. constant:: $os-version
 
-Function
-^^^^^^^^
+   Constant specifying which version of an operating system the current
+   machine is running.
 
-Summary
+   :type: <string>
 
-Returns as an instance of ``<string>`` the name of the user logged on to
-the current machine, or ``#f`` if unavailable.
+   :description:
 
-Signature
+     The constant *$os-version* is a string value that identifies the
+     version of the operating system. For Windows NT, a typical value
+     would be *"4.0.1381 Service Pack 3"*. For Windows 95, a typical
+     value would be *"4.0.1212 B"*.
 
-login-name () => *name-or-false*
+   See also
 
-Arguments
+   - :const:`$architecture-little-endian`
+   - :const:`$machine-name`
+   - :const:`$os-name`
+   - :const:`$os-variant`
+   - :const:`$platform-name`
 
-None.
+.. function:: owner-name
 
-Values
+   Returns the name of the user who owns the current machine, if available.
 
-*name-or-false* An instance of *false-or(<string>)*.
+   :signature: owner-name () => *name-or-false*
 
-Description
+   :value name-or-false: An instance of ``false-or(<string>)``.
 
-Returns as an instance of ``<string>`` the name of the user logged on to
-the current machine, or ``#f`` if unavailable.
+   :description:
 
-See also
+     Returns as an instance of ``<string>`` the name of the user who
+     owns the current machine (that is, the name entered when the
+     machine was registered), or ``#f`` if the name is unavailable.
 
-`login-group`_
+.. function:: owner-organization
 
-login-group
-^^^^^^^^^^~
+   Returns the organization to which the user who owns the current
+   machine belongs, if available.
 
-Function
-^^^^^^^^
+   :signature: owner-organization () => *organization-or-false*
 
-Signature
+   :value organization-or-false: An instance of ``false-or(<string>)``.
 
-login-group () => *group-or-false*
+   :description:
 
-Arguments
+     Returns as an instance of ``<string>`` the organization to which
+     the user who owns the current machine belongs, or ``#f`` if the
+     name is unavailable.
 
-None.
+.. constant:: $platform-name
 
-Values
+   Constant specifying the operating system running on and the type of
+   hardware installed in the host machine.
 
-*group-or-false* An instance of *false-or(<string>)*.
+   :type: <symbol>
+   :value: #"x86-win32", #"x86-linux", etc.
 
-Description
+   :description:
 
-Returns as an instance of ``<string>`` the group (for example NT domain,
-or Windows Workgroup) of which the user logged on to the current machine
-is a member, or ``#f`` if the group is unavailable.
+     This constant is a symbol that represents the both the operating
+     system running on, and the type of hardware installed in, the host
+     machine. It is a combination of the :const:`$os-name` and
+     :const:`$machine-name` constants.
 
-See also
+   :example:
 
-`login-name`_
+     ``#"x86-win32"``, ``#"alpha-osf3"``
 
-$machine-name
-^^^^^^^^^^^^~
+   See also
+   - `$machine-name`
+   - `$os-name`
 
-Constant
-^^^^^^^^
+.. function:: run-application
 
-Summary
+   Launches an application using the specified name and arguments.
 
-Constant specifying the type of hardware installed in the host machine.
+   :signature: run-application *command* #key *minimize?* *activate?* *under-shell?* *inherit-console?* => *status*
 
-Type
+   :parameter command: An instance of ``<string>``.
+   :parameter #key minimize?: An instance of ``<boolean>``.
+   :parameter #key activate?: An instance of ``<boolean>``.
+   :parameter #key under-shell?: An instance of ``<boolean>``.
+   :parameter #key inherit-console?: An instance of ``<boolean>``.
+   :value status: An instance of ``<integer>``.
 
-Symbol.
+   :description:
 
-Initial value
+     Launches an application using the name and arguments specified in
+     command. Using this function is equivalent to typing the command in
+     a MS-DOS window. The return value is the exit status returned by
+     the application.
 
-#"x86"
+     If the *minimize?* keyword is ``#t``, the command’s shell will
+     appear minimized. It is ``#f`` by default.
 
-Description
+     If the *activate?* keyword is ``#t``, the shell window becomes the
+     active window. It is ``#t`` by default.
 
-This constant is a symbol that represents the type of hardware installed
-in the host machine.
+     If the *under-shell?* keyword is ``#t``, an MS-DOS shell is created
+     to run the application; otherwise, the application is run directly.
+     It is ``#f`` by default.
 
-Example
+     If the *inherit-console?* keyword is ``#t``, the new application
+     uses the same console window as the current application; otherwise,
+     the new application is created with a separate console window. It
+     is ``#t`` by default.
 
-*#"x86"*, *#"alpha"*
+   See also
+   - :func:`exit-application`
 
-See also
+.. function:: tokenize-command-string
 
-`$os-name`_
+   Parses a command line into a command name and arguments.
 
-`$os-variant`_
+   :signature: tokenize-command-string *line* => *command* #rest *arguments*
 
-`$os-version`_
+   :parameter line: An instance of ``<byte-string>``.
+   :value command: An instance of ``<byte-string>``.
+   :value #rest arguments: Instances of ``<byte-string>``.
 
-`$platform-name`_
+   :description:
 
-$os-name
-^^^^^^^^
+     Parses the command specified in *line* into a command name and
+     arguments. The rules used to tokenize the string are given in
+     Microsoft’s C/C++ reference in the section `“Parsing C Command-Line
+     Arguments” <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
 
-Constant
-^^^^^^^^
-
-Summary
-
-Constant specifying the operating system running on the host machine.
-
-Type
-
-Symbol.
-
-Initial value
-
-#"win32"
-
-Description
-
-This constant is a symbol that represents the operating system running
-on the host machine.
-
-Example
-
-*#"win32"*, *#"osf3"*
-
-See also
-
-`$machine-name`_
-
-`$os-variant`_
-
-`$os-version`_
-
-`$platform-name`_
-
-$os-variant
-^^^^^^^^^^~
-
-Constant
-^^^^^^^^
-
-Summary
-
-Constant specifying which variant of an operating system the current
-machine is running, where relevant.
-
-Type
-
-Symbol.
-
-Initial value
-
-See Description.
-
-Description
-
-This constant is a symbol value distinguishing between variants of the
-operating system identified by *$os-name*, where relevant; otherwise it
-has the same value as *$os-name*. On Windows, the possible values are
-*#"win3.1"*, *#"win95"*, *#"win98"*, and *#"winnt"*.
-
-See also
-
-`$machine-name`_
-
-`$os-name`_
-
-`$os-version`_
-
-`$platform-name`_
-
-$os-version
-^^^^^^^^^^~
-
-Constant
-^^^^^^^^
-
-Summary
-
-Constant specifying which version of an operating system the current
-machine is running.
-
-Type
-
-``<string>``
-
-Initial value
-
-See Description.
-
-Description
-
-The constant *$os-version* is a string value that identifies the version
-of the operating system. For Windows NT, a typical value would be
-*"4.0.1381 Service Pack 3"*. For Windows 95, a typical value would be
-*"4.0.1212 B"*.
-
-See also
-
-`$machine-name`_
-
-`$os-name`_
-
-`$os-variant`_
-
-`$platform-name`_
-
-owner-name
-^^^^^^^^^^
-
-Function
-^^^^^^^^
-
-Summary
-
-Returns the name of the user who owns the current machine, if available.
-
-Signature
-
-owner-name () => *name-or-false*
-
-Arguments
-
-None.
-
-Values
-
-name-or-false An instance of *false-or(<string>)*.
-
-Description
-
-Returns as an instance of ``<string>`` the name of the user who owns the
-current machine (that is, the name entered when the machine was
-registered), or ``#f`` if the name is unavailable.
-
-owner-organization
-^^^^^^^^^^^^^^^^^^
-
-Function
-^^^^^^^^
-
-Summary
-
-Returns the organization to which the user who owns the current machine
-belongs, if available.
-
-Signature
-
-owner-organization () => *organization-or-false*
-
-Arguments
-
-None.
-
-Values
-
-*organization-or-false*
-
-An instance of *false-or(<string>)*.
-
-Description
-
-Returns as an instance of ``<string>`` the organization to which the user
-who owns the current machine belongs, or ``#f`` if the name is
-unavailable.
-
-$platform-name
-^^^^^^^^^^^^^^
-
-Constant
-^^^^^^^^
-
-Summary
-
-Constant specifying the operating system running on and the type of
-hardware installed in the host machine.
-
-Type
-
-Symbol.
-
-Initial value
-
-#"x86-win32"
-
-Description
-
-This constant is a symbol that represents the both the operating system
-running on, and the type of hardware installed in, the host machine. It
-is a combination of the `$os-name`_ and
-`$machine-name`_ constants.
-
-Example
-
-*#"x86-win32"*, *#"alpha-osf3"*
-
-See also
-
-`$machine-name`_
-
-`$os-name`_
-
-run-application
-^^^^^^^^^^^^^^~
-
-Function
-^^^^^^^^
-
-Summary
-
-Launches an application using the specified name and arguments.
-
-Signature
-
-run-application *command* #key *minimize?* *activate?*
-
-*under-shell?* *inherit-console?*
-
-=> *status*
-
-Arguments
-
-*command* An instance of ``<string>``.
-
-*minimize?* An instance of ``<boolean>``.
-
-*activate?* An instance of ``<boolean>``.
-
-** Values
-
-*status* An instance of ``<integer>``.
-
-Description
-
-Launches an application using the name and arguments specified in
-command. Using this function is equivalent to typing the command in a
-MS-DOS window. The return value is the exit status returned by the
-application.
-
-If the *minimize?* keyword is ``#t``, the command’s shell will appear
-minimized. It is ``#f`` by default.
-
-If the *activate?* keyword is ``#t``, the shell window becomes the active
-window. It is ``#t`` by default.
-
-If the *under-shell?* keyword is ``#t``, an MS-DOS shell is created to
-run the application; otherwise, the application is run directly. It is
-``#f`` by default.
-
-If the *inherit-console?* keyword is ``#t``, the new application uses the
-same console window as the current application; otherwise, the new
-application is created with a separate console window. It is ``#t`` by
-default.
-
-See also
-
-`exit-application`_
-
-tokenize-command-string
-^^^^^^^^^^^^^^^^^^^^^^~
-
-Function
-^^^^^^^^
-
-Summary
-
-Parses a command line into a command name and arguments.
-
-Signature
-
-tokenize-command-string *line* => *command* #rest *arguments*
-
-Arguments
-
-*line* An instance of ``<byte-string>``.
-
-Values
-
-*command* An instance of ``<byte-string>``.
-
-*arguments* Instances of ``<byte-string>``.
-
-Description
-
-Parses the command specified in *line* into a command name and
-arguments. The rules used to tokenize the string are given in
-Microsoft’s C/C++ reference in the section “Parsing C Command-Line
-Arguments”.
-
-See also
-
-`application-arguments`_
-
-`application-name`_
-
-
+   See also
+   - :func:`application-arguments`
+   - :func:`application-name`

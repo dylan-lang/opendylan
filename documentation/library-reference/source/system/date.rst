@@ -2,6 +2,9 @@
 The Date Module
 ***************
 
+.. current-library:: system
+.. current-module:: date
+
 Introduction
 ------------
 
