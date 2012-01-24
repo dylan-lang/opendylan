@@ -15,7 +15,6 @@ Contents:
    date
    file-system
    operating-system
-   network
 
 Indices and tables
 ==================

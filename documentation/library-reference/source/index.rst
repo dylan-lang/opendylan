@@ -12,6 +12,7 @@ Contents:
    common-dylan/index
    collections/table-extensions
    numbers
+   network/index
    lid
 
 
