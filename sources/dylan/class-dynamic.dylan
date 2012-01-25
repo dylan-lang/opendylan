@@ -579,6 +579,58 @@ define function compute-implementation-class-precedence-list (c :: <implementati
 	    reverse!(partial-cpl)
 	  else
 	    local 
+                  method candidate (s :: <implementation-class>) 
+                    local 
+                          method tail? (l :: <list>)
+                            member?(s, tail(l))
+                          end method;
+
+                    ~any?(tail?, remaining-lists) 
+                      & s
+                  end method,
+
+                  method candidate-at-head (l :: <list>)
+                    ~empty?(l) & candidate(head(l))
+                  end method;
+          
+            let next = any?(candidate-at-head, remaining-lists);
+	    
+	    if (next)
+	      local method remove-next (l :: <list>)
+		      if (head(l) == next) tail(l) else l end
+		    end method;
+	      merge-lists(pair (next, partial-cpl),
+			  map-into(remaining-lists, remove-next, remaining-lists))
+	    else
+	      error(make(<inconsistent-precedence-class-error>,
+			 format-string: "Inconsistent precedence graph"))
+	    end
+	  end
+	end;
+  
+  let c-direct-superclasses = map-as(<list>, convert, direct-superclasses(c));
+  let c3 = merge-lists(list(c),
+                       concatenate(map(rcurry(all-iclass-superclasses, u),
+                                       c-direct-superclasses),
+                                   list(c-direct-superclasses)));
+  let old = compute-implementation-class-precedence-list-old(c, u);
+  unless (every?(\=, c3, old))
+    signal("The class precedence list of %= differ, Dylan: %=; C3: %=", c, old, c3)
+  end;
+  c3;
+end function compute-implementation-class-precedence-list;
+
+
+define function compute-implementation-class-precedence-list-old
+    (c :: <implementation-class>, u :: <subjunctive-class-universe>)
+ => cpl :: <list>;
+  let convert = scu-converter(u);
+  local method merge-lists (partial-cpl :: <list>, remaining-lists :: <list>)
+	  // The partial-cpl is in reverse order at this point.
+	  if (every?(empty?, remaining-lists))
+	    reverse!(partial-cpl)
+	  else
+	    local 
 	      method unconstrained-class (s)
 		let s :: <implementation-class> = scu-entry(s, u);
 		local 
@@ -619,7 +671,7 @@ define function compute-implementation-class-precedence-list (c :: <implementati
               add(map(rcurry(all-iclass-superclasses, u), c-direct-superclasses),
                   c-direct-superclasses))
   
-end function compute-implementation-class-precedence-list;
+end function compute-implementation-class-precedence-list-old;
 
 
 
