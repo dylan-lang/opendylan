@@ -134,6 +134,7 @@ C3:
 Reference Implementation
 ========================
 
-A reference implementation is available in the hannesm/c3 branch on
-GitHub: `hannesm/c3 <https://github.com/hannesm/opendylan/tree/c3>`_
+The `pull request #168
+<https://github.com/dylan-lang/opendylan/pull/168#issuecomment-3645980>`_
+was finally merged into master.
 
