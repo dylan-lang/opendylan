@@ -927,6 +927,100 @@ define function ^compute-class-precedence-list (c :: <&class>)
       reverse!(partial-cpl)
     else
       local 
+        method candidate (s :: <&class>) 
+          local 
+            method tail? (l :: <list>)
+              member?(s, tail(l))
+            end method;
+
+          ~any?(tail?, remaining-lists) 
+            & s
+        end method,
+
+        method candidate-at-head (l :: <list>)
+          ~empty?(l) & candidate(head(l))
+        end method;
+          
+      let next = any?(candidate-at-head, remaining-lists);
+          
+      if (next)
+        local method remove-next (l :: <list>)
+          if (head(l) == next) tail(l) else l end
+        end method;
+        merge-lists(pair (next, partial-cpl),
+                    map-into(remaining-lists, remove-next, remaining-lists))
+      else
+        // We are trying to build a class with an inconsistent CPL.
+        // Find two classes, and two witnesses, such that
+        // witness 1 < witness 2 in CPL of class 1 and reverse in class 2
+        let (witness1, witness2, index-of-class1, index-of-class2) =
+          block (return)
+            for (i from 0 below remaining-lists.size)
+              unless (empty?(remaining-lists[i]))
+                let candidate = remaining-lists[i].head;
+                let constraints = remaining-lists[i].tail;
+                for (j from i + 1 below remaining-lists.size)
+                  unless (empty?(remaining-lists[j]))
+                    if ( member?(remaining-lists[j].head, constraints) 
+                       & member?(candidate, remaining-lists[j].tail) )
+                      return (candidate, remaining-lists[j].head, i, j)
+                    end if
+                  end unless
+                end for
+              end unless
+            end for;
+          end block;
+
+        // Signal an error explaining what has gone wrong.
+        let class1 = if (index-of-class1 = 0) 
+                       c 
+                     else 
+                       c-direct-superclasses[index-of-class1 - 1] 
+                     end;
+        let class2 = c-direct-superclasses[index-of-class2 - 1];
+        note-CPL-inconsistency(
+          c,
+          class1,
+          class2, 
+          witness1, witness2);
+      end
+    end
+  end;
+  
+  let c3 = merge-lists(list(c),
+                       concatenate(map(^all-superclasses, c-direct-superclasses),
+                                   list(c-direct-superclasses)));
+  let old = ^compute-class-precedence-list-old(c);
+  unless (every?(\=, c3, old))
+    let name = compose(fragment-identifier, model-variable-name);
+    note(<cpl-differ>,
+         source-location: c.model-source-location,
+         class-name: c.name,
+         dylan-linearization: map(name, old),
+         cthree-linearization: map(name, c3))
+  end;
+  c3;
+end function ^compute-class-precedence-list;
+
+define serious-program-warning <cpl-differ>
+  slot class-name, init-keyword: class-name:;
+  slot dylan-linearization, init-keyword: dylan-linearization:;
+  slot cthree-linearization, init-keyword: cthree-linearization:;
+  format-string "The class precedence list of %= differ, Dylan: %=; C3: %=";
+  format-arguments class-name, dylan-linearization, cthree-linearization;
+end;
+
+define function ^compute-class-precedence-list-old (c :: <&class>)
+    => cpl :: <list>;
+  let c-direct-superclasses = as(<list>, ^direct-superclasses(c));
+
+  local method merge-lists 
+      (partial-cpl :: <list>, remaining-lists :: <list>)
+    // The partial-cpl is in reverse order at this point.
+    if (every?(empty?, remaining-lists))
+      reverse!(partial-cpl)
+    else
+      local 
         method unconstrained-class (s :: <&class>) 
           local 
             method s-in-and-unconstrained-in? (l :: <list>) 
@@ -1002,8 +1096,7 @@ define function ^compute-class-precedence-list (c :: <&class>)
   merge-lists(list(c),
               pair(c-direct-superclasses,
                    map(^all-superclasses, c-direct-superclasses)));
-end function ^compute-class-precedence-list;
-
+end function ^compute-class-precedence-list-old;
 
 define serious-program-warning <inconsistent-CPL>
   slot class-1-name,   init-keyword: class-1:;
