@@ -1,0 +1,20 @@
+:Author: Hannes Mehnert
+:Date: 2012-01-21 00:00:00
+
+C3 linearization
+================
+
+We implemented the C3 superclass linearization algorithm in the Open
+Dylan compiler. This is more intuitive in some corner cases, and
+allows further performance improvements, especially compression of
+dispatch tables. It has been merged into the `opendylan GitHub
+repository <https://github.com/dylan-lang/opendylan/>`_ and will be
+the default in the next release (2012.1). A serious warning will be
+issued if the new C3 linearization is different from the old
+`linearization specified in the DRM
+<http://opendylan.org/books/drm/Classes#HEADING-41-25>`_.
+
+Further information is available in the accepted Dylan enhancement
+proposal `here </proposals/dep-0003.html>`_ and in the original `paper
+<http://192.220.96.201/dylan/linearization-oopsla96.html>`_ (`doi
+<http://dx.doi.org/10.1145/236337.236343>`_).

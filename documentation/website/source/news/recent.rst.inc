@@ -1,5 +1,14 @@
 
-**Dswank - emacs and SLIME**
+**C3 superclass linearization**
+*2012-01-21*
+
+We implemented the C3 superclass linearization algorithm and
+enabled it by default. This is more intuitive and will allow for
+further performance improvements.
+
+:doc:`Read more... </news/2012/01/21/c3>`
+
+**Dswank - emacs and DIME**
 *2011-12-12*
 
 We developed DIME, the Dylan interaction mode for emacs, based

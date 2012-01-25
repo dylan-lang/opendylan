@@ -2,16 +2,17 @@
 C3 superclass linearization
 ***************************
 
-==============  =============================================
-DEP #:          3
-Type:           Standards Track
-Affects-DRM:    Yes
-Author:         Hannes Mehnert
-Status:         Draft
-Created:        09-Jan-2012
-Last-Modified:  09-Jan-2012
-Post-History:   09-Jan-2012
-==============  =============================================
+===============  =============================================
+DEP-Number:      3
+Type:            Standards Track
+Affects-DRM:     Yes
+Author:          Hannes Mehnert
+Status:          Accepted
+Created:         09-Jan-2012
+Last-Modified:   09-Jan-2012
+Post-History:    09-Jan-2012
+Target-Version:  2012.1
+===============  =============================================
 
 
 Abstract
