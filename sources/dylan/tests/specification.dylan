@@ -10,6 +10,7 @@ define library-spec dylan ()
   module dylan;
   suite dylan-control-suite;
   suite dylan-regressions;
+  suite types;
 end library-spec dylan;
 
 define module-spec dylan ()
