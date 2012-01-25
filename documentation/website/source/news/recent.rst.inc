@@ -1,6 +1,6 @@
 
 **C3 superclass linearization**
-*2012-01-21*
+*2012-01-25*
 
 We implemented the C3 superclass linearization algorithm and
 enabled it by default. This is more intuitive and will allow for
