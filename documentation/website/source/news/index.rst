@@ -11,6 +11,26 @@ News & Articles
 
 .. include:: recent.rst.inc
 
+**New Documentation**
+*2011-11-22*
+
+We're revitalizing our documentation and moving to a new
+publishing system. We'll soon be able to provide our
+documentation in PDF and ePub as well as HTML, with it
+looking much better and being more maintainable than
+in the past.
+
+:doc:`Read more... </news/2011/11/22/new_documentation>`
+
+**Welcome to the New Website!**
+*2011-11-22*
+
+As part of recharging Open Dylan development, we've re-done the
+website and cleaned up a lot of the old, out-dated material here.
+
+If you're looking for some of the old material, it can be found
+over at `<http://old.opendylan.org/>`_.
+
 .. raw:: html
 
     </div>
