@@ -2,6 +2,57 @@ body {
   padding-top: 50px;
 }
 
+/* Make the headerlink less obnoxiously visible */
+a.headerlink {
+  color: silver;
+}
+
+/* Improve appearance of the documented object type */
+em.property {
+  float: right;
+  font-style: normal;
+  text-transform: capitalize;
+}
+
+/* Underline and better spacing under object type name */
+dl.class > dt,
+dl.constant > dt,
+dl.function > dt,
+dl.generic-function > dt,
+dl.macro > dt,
+dl.method > dt,
+dl.type > dt,
+dl.variable > dt {
+  padding-top: 1em;
+  padding-bottom: 0.4em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid;
+}
+
+/* Don't allow field names to wrap */
+.field-list .field-name {
+  white-space: nowrap;
+}
+
+/* Undo an annoyance from Bootstrap */
+li {
+  color: black;
+}
+
+/* Make all xref / tt stuff look the same as literal below */
+tt.xref, a tt {
+  background-color: whitesmoke;
+  font-weight: normal;
+}
+
+/* Add back inter-paragraph spacing.
+   Use top rather than bottom since the first paragraph
+   isn't in a <p> tag. */
+.field-list p,
+.field-list pre {
+  margin-top: 9px;
+}
+
 .topbar .logo {
   float: left;
   padding: 5px 5px;
