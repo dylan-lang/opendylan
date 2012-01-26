@@ -53,6 +53,30 @@ define test c3-linearization ()
   check-equal("C3 linearization paper example works", res, <editable-scrollable-pane>.all-superclasses)
 end;
 
+define test limited-is-limited ()
+  let <integer-vector> = limited(<vector>, of: <integer>);
+  let x = make(<integer-vector>, size: 10, fill: 10);
+  check-instance?("x is an instance of object", <object>, x);
+  check-instance?("x is an instance of vector", <vector>, x);
+  check-instance?("x is an instance of vector of integers",
+                  <integer-vector>, x);
+  do(method(a) check-equal("element is 10", 10, a) end, x);
+  check-equal("size of x is 10", 10, size(x));
+  check-instance?("x is an instance of vector with size 10",
+                  limited(<vector>, size: 10), x);
+  check-instance?("x is an instance of vector of integer with size 10",
+                  limited(<vector>, of: <integer>, size: 10), x);
+  //---*** sadly, the following fails due to limited-vector being ill-defined
+  //       (look especially on the method in vector.dylan on of == <object>
+  //       and what happens if of == #f) - hannes (Jan 2012)
+  check-false("x is not instance of a vector with size 5",
+              instance?(x, limited(<vector>, size: 5)));
+  check-false("x is not instance of a vector of float",
+              instance?(x, limited(<vector>, of: <single-float>)));
+  check-false("x is not instance of a vector of integer with size 5",
+              instance?(x, limited(<vector>, of: <integer>, size: 5)));
+end;
+
 define suite types ()
   test pane-linearization;
   test scrolling-mixin-linearization;
@@ -60,4 +84,5 @@ define suite types ()
   test scrollable-pane-linearization;
   test editable-pane-linearization;
   test c3-linearization;
+  test limited-is-limited;
 end;
