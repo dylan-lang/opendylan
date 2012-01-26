@@ -804,8 +804,8 @@ The Common Dylan extensions are:
 
    :operations:
 
-   - :drm:`condition-format-string`
-   - :drm:`condition-format-args`
+     - :drm:`condition-format-string`
+     - :drm:`condition-format-args`
 
 .. class:: <stretchy-sequence>
    :open:

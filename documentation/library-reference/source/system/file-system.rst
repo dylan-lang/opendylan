@@ -127,8 +127,8 @@ File-System module.
 
    :operations:
 
-   - :func:`copy-file`
-   - :func:`rename-file`
+     - :func:`copy-file`
+     - :func:`rename-file`
 
    See also
 
@@ -480,7 +480,7 @@ File-System module.
 
    :operations:
 
-   - :func:`do-directory`
+     - :func:`do-directory`
 
 .. function:: home-directory
 
@@ -508,19 +508,19 @@ File-System module.
 
    :operations:
 
-   - :func:`copy-file`
-   - :func:`create-directory`
-   - :func:`delete-directory`
-   - :func:`delete-file`
-   - :func:`do-directory`
-   - :func:`ensure-directories-exist`
-   - :func:`file-exists?`
-   - :func:`file-properties`
-   - :func:`file-property`
-   - :func:`file-property-setter`
-   - :func:`file-type`
-   - :func:`home-directory`
-   - :func:`rename-file`
+     - :func:`copy-file`
+     - :func:`create-directory`
+     - :func:`delete-directory`
+     - :func:`delete-file`
+     - :func:`do-directory`
+     - :func:`ensure-directories-exist`
+     - :func:`file-exists?`
+     - :func:`file-properties`
+     - :func:`file-property`
+     - :func:`file-property-setter`
+     - :func:`file-type`
+     - :func:`home-directory`
+     - :func:`rename-file`
 
 .. function:: rename-file
 
