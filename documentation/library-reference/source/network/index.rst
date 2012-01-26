@@ -512,7 +512,7 @@ The <SERVER-SOCKET> class
 
    :description:
 
-     Creates an instance of :class:`<server-socket>``, using the
+     Creates an instance of :class:`<server-socket>`, using the
      (optional) *server-class* argument and keyword arguments to make
      the :class:`<server-socket>`, and binds it to the local variable
      named by *server-var*. The *body* is evaluated in the context of
