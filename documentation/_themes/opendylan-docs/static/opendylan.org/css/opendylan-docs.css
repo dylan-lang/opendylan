@@ -11,18 +11,10 @@ a.headerlink {
 em.property {
   float: right;
   font-style: normal;
-  text-transform: capitalize;
 }
 
 /* Underline and better spacing under object type name */
-dl.class > dt,
-dl.constant > dt,
-dl.function > dt,
-dl.generic-function > dt,
-dl.macro > dt,
-dl.method > dt,
-dl.type > dt,
-dl.variable > dt {
+dt.dylan-api {
   padding-top: 1em;
   padding-bottom: 0.4em;
   margin-bottom: 1em;
