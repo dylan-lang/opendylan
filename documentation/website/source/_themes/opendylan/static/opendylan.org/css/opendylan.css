@@ -17,3 +17,12 @@ body {
   -moz-border-radius:3px;
   border-radius:3px;
 }
+/* Make the headerlink less obnoxiously visible */
+a.headerlink {
+  color: silver;
+}
+/* Undo an annoyance from Bootstrap */
+li {
+  color: black;
+}
+
