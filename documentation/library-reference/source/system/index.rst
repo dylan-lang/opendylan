@@ -4,12 +4,10 @@ The System Library
 
 .. current-library:: system
 
-Introduction
-============
-
 The System library exports the following modules:
 
 .. toctree::
+   :maxdepth: 2
 
    date
    file-system

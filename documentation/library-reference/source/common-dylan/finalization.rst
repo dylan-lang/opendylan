@@ -5,16 +5,13 @@ The Finalization module
 .. current-library:: common-dylan
 .. current-module:: finalization
 
-Finalization
-============
-
 Common Dylan provides a finalization interface in the *finalization*
 module of *common-dylan*. This section explains finalization, the
 finalization interface provided, and how to use the interface in
 applications.
 
 What is finalization?
----------------------
+=====================
 
 The `Memory Management Reference <http://www.memorymanagement.org>`_ defines
 finalization as follows:
@@ -36,13 +33,13 @@ may be necessary to free the memory resources of the foreign object when
 the Dylan object is reclaimed.
 
 How the finalization interface works
-------------------------------------
+====================================
 
 The following sections give a broad overview of how finalization works
 and how to use the interface.
 
 Registering objects for finalization
-------------------------------------
+====================================
 
 Finalization works through cooperation with the garbage collector.
 Objects that are no longer referenced by the application that created
@@ -69,7 +66,7 @@ The garbage collector will not reclaim the objects until they have been
 finalized.
 
 Draining the finalization queue
--------------------------------
+===============================
 
 Objects in the finalization queue wait there until the application
 drains it by calling the function :func:`drain-finalization-queue`. This
@@ -84,7 +81,7 @@ for details of how you can set up a thread to do so.
    about finalization ordering.
 
 Finalizers
-----------
+==========
 
 The :func:`drain-finalization-queue` function
 finalizes each object in the finalization queue by calling the generic
@@ -119,7 +116,7 @@ for all finalizers to call ``next-method``, a practice that we strongly
 encourage. See `Writing finalizers`_.
 
 After finalization
-------------------
+==================
 
 Once an object in the finalization queue has been finalized, it
 typically becomes available for reclamation by the garbage collector.
@@ -131,7 +128,7 @@ register, it will not be queued up for finalization again.
    resurrecting objects`_.
 
 Upon application exit
----------------------
+=====================
 
 There are no guarantees that objects which are registered for
 finalization will actually be finalized before the application exits.
@@ -142,7 +139,7 @@ Where it is necessary to guarantee an action at the time the application
 exits, you should use a more explicit mechanism.
 
 The effects of multiple registrations
--------------------------------------
+=====================================
 
 Sometimes objects are registered for finalization more than once. The
 effects of multiple registration are defined as follows:
@@ -163,7 +160,7 @@ idempotent: that is, the effect of multiple ``finalize`` calls on an
 object should is the same as the effect of a single call.
 
 The effects of resurrecting objects
------------------------------------
+===================================
 
 If a finalizer makes an object reachable again, by storing a reference
 to the object in a variable, slot, or collection, we say it has
@@ -183,7 +180,7 @@ If you do resurrect objects, note that they will not be finalized again
 unless you re-register them.
 
 The effects of finalizing objects directly
-------------------------------------------
+==========================================
 
 Any object that has been finalized directly, through the application
 itself calling ``finalize`` on it, may not yet be unreachable. Like any
@@ -193,7 +190,7 @@ using ``finalize-when-unreachable``, it can end up being finalized again
 via the queue mechanism.
 
 Finalization and weak tables
-----------------------------
+============================
 
 If an object is both registered for finalization and is weakly referred
 to from a weak table, finalization occurs *first*, with weak references
@@ -204,7 +201,7 @@ references die only when an object’s storage is finally reclaimed.
 For more on weak tables, see :ref:`Weak tables <weak-tables>`.
 
 Writing finalizers
-------------------
+==================
 
 Because the default :gf:`finalize` method, on
 ``<object>``, does nothing, you must define your own
@@ -213,14 +210,14 @@ finalization interface. This section contains useful information about
 writing finalizers.
 
 Class-based finalization
-------------------------
+========================
 
 If your application defines a class for which all instances require
 finalization, call :func:`finalize-when-unreachable` in its ``initialize``
 method.
 
 Parallels with INITIALIZE methods
----------------------------------
+=================================
 
 The default method on ``<object>`` is provided to make it safe to call
 ``next-method`` in all finalizers. This situation is parallel to that for
@@ -232,7 +229,7 @@ By contrast, finalizers should call ``next-method`` last, in case they
 depend on the superclass finalizer not being run.
 
 Simplicity and robustness
--------------------------
+=========================
 
 Write finalizers that are simple and robust. They might be called in any
 context, including within other threads; with careful design, your
@@ -259,20 +256,20 @@ graph (in some graph-specific well-ordered fashion) and call the
 ``finalize`` method for each object in the graph requiring finalization.
 
 Singleton finalizers
---------------------
+====================
 
 Do not write singleton methods on :gf:`finalize`. The singleton method
 itself would refer to the object, and hence prevent it from becoming
 unreachable.
 
 Using finalization in applications
-----------------------------------
+==================================
 
 This section answers questions about using finalization in an
 application.
 
 How can my application drain the finalization queue automatically?
-------------------------------------------------------------------
+==================================================================
 
 If you would prefer the queue to be drained asynchronously, use the
 automatic finalization interface. For more details, see
@@ -289,7 +286,7 @@ should always behave correctly if they are used in an application that
 does use it.
 
 When should my application drain the finalization queue?
---------------------------------------------------------
+========================================================
 
 If you do not use automatic finalization, drain the queue synchronously
 at useful points in your application, such as whenever you call

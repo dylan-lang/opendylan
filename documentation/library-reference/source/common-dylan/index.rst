@@ -4,9 +4,6 @@ The Common Dylan Library
 
 .. current-library:: common-dylan
 
-Introduction
-============
-
 The Common Dylan library contains the Common Extensions library and the
 Dylan library. It provides a number of features that were either omitted
 from the Dylan language described in the DRM, or that Open Dylan's
@@ -31,7 +28,7 @@ The Common Dylan library exports the following modules:
   values.
 
 .. toctree::
-   :hidden:
+   :maxdepth: 2
 
    common-dylan
    finalization

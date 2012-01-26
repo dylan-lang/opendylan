@@ -1,11 +1,9 @@
 Dylan Library Reference
 =======================
 
-Contents:
-
 .. toctree::
-   :titlesonly:
    :maxdepth: 2
+   :titlesonly:
 
    copyright
    dylan/index
@@ -18,11 +16,4 @@ Contents:
    c-ffi/index
    win32/index
    lid
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`search`
 
