@@ -649,17 +649,18 @@ define type-inference-rules type-infer-calls
   call :: <loop-call>               == make(<type-estimate-bottom>);
   call :: <any-slot-value> 
     == as(<type-estimate>, ^slot-type(computation-slot-descriptor(call)));
-  call :: <any-repeated-slot-value> 
+  call :: <any-repeated-slot-value>
     == begin
-	 let instance-te = type-estimate(computation-instance(call));
-	 if (instance?(instance-te, <type-estimate-limited-collection>))
-	   type-estimate-of(instance-te)
-	 else 
-	   as(<type-estimate>, 
-	      repeated-representation
-		(^slot-type(computation-slot-descriptor(call))))
-	 end if
-       end 
+         let stype = ^slot-type(computation-slot-descriptor(call));
+         let ltype =
+           if (stype == dylan-value(#"<object>"))
+             let instance-te = type-estimate(computation-instance(call));
+             if (instance?(instance-te, <type-estimate-limited-collection>))
+               type-estimate-of(instance-te)
+             end;
+           end;
+         ltype | as(<type-estimate>, repeated-representation(stype))
+       end;
 end;
 
 /* [gts, 2/98, wait until harp backend ready]
