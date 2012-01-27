@@ -2,6 +2,11 @@ body {
   padding-top: 50px;
 }
 
+/* We don't want indenting here. */
+dt.dylan-api + dd {
+  margin-left: 0;
+}
+
 /* Make the headerlink less obnoxiously visible */
 a.headerlink {
   color: silver;
@@ -21,9 +26,11 @@ dt.dylan-api {
   border-bottom: 1px solid;
 }
 
-/* Don't allow field names to wrap */
+/* Don't allow field names to wrap
+   and set the width so that it is consistent. */
 .field-list .field-name {
   white-space: nowrap;
+  width: 7em;
 }
 
 /* Undo an annoyance from Bootstrap */
