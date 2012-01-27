@@ -33,6 +33,12 @@ dt.dylan-api {
   width: 7em;
 }
 
+/* Without this, the UL content is too far to the
+   left and breaks the box for the column it is in. */
+.field-list ul {
+  margin-left: 0.5em;
+}
+
 /* Undo an annoyance from Bootstrap */
 li {
   color: black;
