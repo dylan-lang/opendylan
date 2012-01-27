@@ -1064,7 +1064,7 @@ Operations
 
    The class of streams over byte strings.
 
-   :superclasses :class:`<string-stream>`
+   :superclasses: :class:`<string-stream>`
 
    :keyword contents: A general instance of ``<sequence>``.
    :keyword direction: Specifies the direction of the stream. It must
@@ -1096,7 +1096,7 @@ Operations
 
    :operations:
 
-   - :meth:`make(<byte-string-stream-class>)`
+     - :meth:`make(<byte-string-stream-class>)`
 
    See also
 
@@ -1152,6 +1152,10 @@ Operations
      If *abort* is false, any pending data is forced out and
      synchronized with the file’s destination. If *abort* is true, then
      any errors caused by closing the file are ignored.
+
+   See also
+
+   - :gf:`close`
 
 .. generic-function:: discard-input
    :open:
@@ -1329,8 +1333,8 @@ Operations
 
    :operations:
 
-   - :meth:`close(<file-stream>)`
-   - :meth:`make(<file-stream>)`
+     - :meth:`close(<file-stream>)`
+     - :meth:`make(<file-stream>)`
 
    See also
 
@@ -1442,7 +1446,7 @@ Operations
    Error type signalled when accessing a file in a way that conflicts
    with the permissions of the file.
 
-   :superclasses :class:`<file-error>`
+   :superclasses: :class:`<file-error>`
 
    :keyword: See Superclasses.
 
@@ -1774,11 +1778,11 @@ Operations
 
    :operations:
 
-   - :gf:`adjust-stream-position`
-   - :gf:`stream-contents`
-   - :gf:`stream-position`
-   - :gf:`stream-position-setter`
-   - :gf:`unread-element`
+     - :gf:`adjust-stream-position`
+     - :gf:`stream-contents`
+     - :gf:`stream-position`
+     - :gf:`stream-position-setter`
+     - :gf:`unread-element`
 
 <position-type>
 ^^^^^^^^^^^^^^~
@@ -2165,7 +2169,7 @@ See also
 
    :operations:
 
-   - :meth:`make(<sequence-stream>)`
+     - :meth:`make(<sequence-stream>)`
 
    See also
 
@@ -2221,32 +2225,32 @@ See also
 
    :operations:
 
-   - :gf:`close`
-   - :gf:`discard-input`
-   - :gf:`discard-output`
-   - :gf:`force-output`
-   - :gf:`new-line`
-   - :gf:`outer-stream`
-   - :gf:`outer-stream-setter`
-   - :gf:`peek`
-   - :gf:`read`
-   - :gf:`read-element`
-   - :gf:`read-into!`
-   - :gf:`read-line`
-   - :gf:`read-line-into!`
-   - :gf:`read-through`
-   - :gf:`read-to`
-   - :gf:`read-to-end`
-   - :gf:`skip-through`
-   - :gf:`stream-at-end?`
-   - :gf:`stream-element-type`
-   - :gf:`stream-input-available?`
-   - :gf:`stream-lock`
-   - :gf:`stream-lock-setter`
-   - :gf:`stream-open?`
-   - :gf:`synchronize-output`
-   - :gf:`write`
-   - :gf:`write-element`
+     - :gf:`close`
+     - :gf:`discard-input`
+     - :gf:`discard-output`
+     - :gf:`force-output`
+     - :gf:`new-line`
+     - :gf:`outer-stream`
+     - :gf:`outer-stream-setter`
+     - :gf:`peek`
+     - :gf:`read`
+     - :gf:`read-element`
+     - :gf:`read-into!`
+     - :gf:`read-line`
+     - :gf:`read-line-into!`
+     - :gf:`read-through`
+     - :gf:`read-to`
+     - :gf:`read-to-end`
+     - :gf:`skip-through`
+     - :gf:`stream-at-end?`
+     - :gf:`stream-element-type`
+     - :gf:`stream-input-available?`
+     - :gf:`stream-lock`
+     - :gf:`stream-lock-setter`
+     - :gf:`stream-open?`
+     - :gf:`synchronize-output`
+     - :gf:`write`
+     - :gf:`write-element`
 
 .. generic-function:: stream-at-end?
    :open:
@@ -2501,9 +2505,9 @@ See also
 
    :operations:
 
-   - :gf:`as`
-   - :gf:`stream-position-setter`
-   - :gf:`stream-size`
+     - :gf:`as`
+     - :gf:`stream-position-setter`
+     - :gf:`stream-size`
 
    See also
 
@@ -2545,6 +2549,7 @@ See also
        ``adjust-stream-position`` instead.
 
    See also
+
    - :gf:`adjust-stream-position`
    - :class:`<stream-position>`
 
@@ -2618,7 +2623,7 @@ See also
 
    :operations:
 
-   - :meth:`make(<string-stream>)`
+     - :meth:`make(<string-stream>)`
 
    See also
 
@@ -2762,7 +2767,7 @@ Operations
 
    :operations:
 
-   - :meth:`make(<unicode-string-stream>)`
+     - :meth:`make(<unicode-string-stream>)`
 
    See also
 
@@ -2871,7 +2876,7 @@ Operations
 
    See also
 
-   - :gf:`close`
+   - :meth:`close(<file-stream>)`
    - :class:`<file-stream>`
    - :meth:`make(<file-stream>)`
 
@@ -2899,9 +2904,9 @@ Operations
 
    :operations:
 
-   - :gf:`inner-stream`
-   - :gf:`inner-stream-setter`
-   - :gf:`outer-stream-setter`
+     - :gf:`inner-stream`
+     - :gf:`inner-stream-setter`
+     - :gf:`outer-stream-setter`
 
    :example:
 
