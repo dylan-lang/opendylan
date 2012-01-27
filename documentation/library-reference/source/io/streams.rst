@@ -59,8 +59,8 @@ By contrast, the following example names the class of which the
 condition signaled is guaranteed to be a general instance:
 
 If the end of the stream is encountered and no value was supplied for
-*on-end-of-stream*, *read-last-element* signals an `
-<end-of-stream-error>`_ condition.
+*on-end-of-stream*, *read-last-element* signals an
+:class:`<end-of-stream-error>` condition.
 
 If the name of the condition class is given, applications are permitted
 to specialize error handlers on that class.
@@ -358,7 +358,7 @@ when the stream is created. These init-keywords are discussed in more
 detail in `Options when creating file streams`_.
 
 The *buffer-size:* init-keyword can be used to suggest the size of a
-stream’s buffer. See `<buffered-stream>`_.
+stream’s buffer. See :class:`<buffered-stream>`.
 
 The *element-type:* init-keyword specifies the type of the elements in
 the file named by *filename*. See `Options when creating file
@@ -408,15 +408,14 @@ If the file system does not support file versioning, the default is
    This option is only useful if the file is writeable.
 -  *#"truncate"* If the file exists, it is truncated, setting the size
    of the file to 0. If the file does not exist, create a new file.
--  *#"signal"* Signal a `<file-exists-error>`_
+-  *#"signal"* Signal a :class:`<file-exists-error>`
    condition.
 
 The *if-does-not-exist:* init-keyword allows you to specify an action to
 take if the file named by *filename* does not exist. The options are:
 
 -  ``#f`` No action.
--  *#"signal"* ** Signal a `
-   <file-does-not-exist-error>`_ condition. This is
+-  *#"signal"* ** Signal a :class:`<file-does-not-exist-error>` condition. This is
    the default when the stream’s direction is *#"input"*.
 -  *#"create"* Create a new zero-length file. This is the default when
    the stream’s direction is *#"output"* or *#"input-output"*.
@@ -428,7 +427,7 @@ file stream instance initialization.
 File permissions are checked when creating and opening file streams, and
 if the user attempts to open a file for input, and has no read
 permission, or to open a file for output, and has no write permission,
-then an `<invalid-file-permissions-error>`_
+then an :class:`<invalid-file-permissions-error>`
 condition is signalled at the time the file stream is created.
 
 The *element-type:* init-keyword controls how the elements of the
@@ -938,7 +937,7 @@ are exported from the *streams* module.
 .. method:: as
    :specializer: <integer>, <stream-position>
 
-   Coerces a `<stream-position>`_ to an integer.
+   Coerces a :class:`<stream-position>` to an integer.
 
    :signature: as *integer-class* *stream-position* => *integer*
 
@@ -948,7 +947,7 @@ are exported from the *streams* module.
 
    :description:
 
-     Coerces a `<stream-position>`_ to an integer. The *integer-class*
+     Coerces a :class:`<stream-position>` to an integer. The *integer-class*
      argument is the class ``<integer>``.
 
    See also
@@ -1516,7 +1515,7 @@ Operations
      ``#"create"``. Default value: depends on the value of *direction*.
    :parameter #key buffer-size: An instance of ``<integer>``.
    :parameter #key element-type: One of `<byte-character>`_,
-     `<unicode-character>`_, or ` <byte>`_, or ``#f``.
+     `<unicode-character>`_, or `<byte>`_, or ``#f``.
    :value file-stream-instance: An instance of :class:`<file-stream>`.
 
    :description:
@@ -1690,7 +1689,7 @@ Operations
 
      Writes a newline sequence to *output-stream*.
 
-     A method for ``new-line` is defined on :class:`<string-stream>`
+     A method for ``new-line`` is defined on :class:`<string-stream>`
      that writes the character ``\n`` to the string stream.
 
 .. generic-function:: outer-stream
@@ -1802,12 +1801,12 @@ None.
 
 A type used to represent a position in a stream. In practice, positions
 within a stream are defined as instances of ``<integer>``, but this type,
-together with the `<stream-position>`_ class, allows for cases where
+together with the :class:`<stream-position>` class, allows for cases where
 this might not be possible.
 
 See also
 
-`<stream-position>`_
+- :class:`<stream-position>`
 
 .. generic-function:: read
    :open:
@@ -2497,7 +2496,7 @@ See also
      compression will have some state associated with each position in
      the stream that a single integer is not sufficient to represent.
 
-     The ``<stream-position>` class is disjoint from the class
+     The ``<stream-position>`` class is disjoint from the class
      ``<integer>``.
 
    :operations:
@@ -3013,8 +3012,8 @@ Operations
    :example:
 
      The following forms bind *stream* to an output stream over an empty
-     string and create the string “I see!”, using the function `
-     stream-contents`_ to access all of the stream’s
+     string and create the string “I see!”, using the function
+     :gf:`stream-contents` to access all of the stream’s
      elements.
 
      .. code-block:: dylan
