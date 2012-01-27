@@ -795,7 +795,7 @@ The Common Dylan extensions are:
 
    The class of simple conditions.
 
-   :superclasses: <format-string-condition>
+   :superclasses: :class:`<format-string-condition>`
 
    :description:
 

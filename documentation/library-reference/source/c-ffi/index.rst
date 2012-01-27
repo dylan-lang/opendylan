@@ -728,7 +728,7 @@ fundamental integer designator types.
    :sealed:
    :abstract:
 
-   :superclasses: <C-value>
+   :superclasses: :class:`<C-value>`
 
    :description:
 
@@ -771,7 +771,7 @@ these classes.
    :open:
    :abstract:
 
-   :superclasses: <C-value>
+   :superclasses: :class:`<C-value>`
 
    :description:
 
@@ -846,7 +846,7 @@ these classes.
    :open:
    :concrete:
 
-   :superclasses: <C-pointer>
+   :superclasses: :class:`<C-pointer>`
 
    :description:
 
@@ -857,7 +857,7 @@ these classes.
    :open:
    :abstract:
 
-   :superclasses: <C-pointer>
+   :superclasses: :class:`<C-pointer>`
 
    :description:
 
@@ -3131,7 +3131,7 @@ using :macro:`define c-mapped-subtype`.
    :open:
    :abstract:
 
-   :superclasses: <C-void*>
+   :superclasses: :class:`<C-void*>`
 
    :description:
 

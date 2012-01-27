@@ -311,7 +311,7 @@ IPV4 addresses
    :primary:
    :instantiable:
 
-   :superclasses: <numeric-address>
+   :superclasses: :class:`<numeric-address>`
 
    :keyword value: An instance of :class:`<machine-word>`. Required.
    :keyword order: One of ``#"network-order"`` or ``#"host-order"``. Required.
@@ -363,7 +363,7 @@ IPV4 addresses
 
    Concrete subclass for network-order numeric addresses.
 
-   :superclasses: <ipv4-numeric-address>
+   :superclasses: :class:`<ipv4-numeric-address>`
 
    :description:
 
@@ -383,7 +383,7 @@ IPV4 addresses
 
    Concrete subclass for host order numeric addresses.
 
-   :superclasses: <ipv4-numeric-address>
+   :superclasses: :class:`<ipv4-numeric-address>`
 
 Sockets
 -------
@@ -455,7 +455,7 @@ The <SERVER-SOCKET> class
    :primary:
    :instantiable:
 
-   :superclasses: <abstract-socket>
+   :superclasses: :class:`<abstract-socket>`
 
    :keyword service: An instance of ``<string>`` containing an abstract
      name for a service with a “well-known” port, such as ``"ftp"`` or
@@ -587,7 +587,7 @@ The <SOCKET> class
 
    The class of general client sockets. All client sockets are streams.
 
-   :superclasses: <abstract-socket>, <external-stream>
+   :superclasses: :class:`<abstract-socket>`, :class:`<external-stream>`
 
    :keyword direction: Specifies the direction of the stream. It must be
      one of ``#"input"``, ``#"output"``, and ``"#input-output"``. This
@@ -605,7 +605,7 @@ The <BUFFERED-SOCKET> class
 
 .. class:: <buffered-socket>
 
-   :superclasses: <socket>, <double-buffered-stream>
+   :superclasses: :class:`<socket>`, :class:`<double-buffered-stream>`
 
 
    :keyword force-output-before-read?: An instance of ``<boolean>``.
@@ -640,7 +640,7 @@ The class of TCP client sockets.
 
    The class of TCP client sockets.
 
-   :superclasses: <buffered-socket>
+   :superclasses: :class:`<buffered-socket>`
 
    :keyword host: An instance of :class:`<internet-address>` or
      ``<string>``. The remote host to connect to. The ``<string>`` may be
@@ -692,7 +692,7 @@ The class of UDP client sockets.
 
    The class of UDP client sockets.
 
-   :superclasses: <buffered-socket>
+   :superclasses: :class:`<buffered-socket>`
 
    :keyword host: An instance of :class:`<internet-address>` or
      ``<string>``. The remote host to connect to. The ``<string>`` may be
@@ -755,7 +755,7 @@ This section lists the socket condition classes in the Network library.
    All socket conditions are general instances of ``<socket-condition>``.
    Some are recoverable and others are not.
 
-   :superclasses: <simple-condition>
+   :superclasses: :class:`<simple-condition>`
 
    :description:
 
@@ -782,7 +782,7 @@ This section lists the socket condition classes in the Network library.
    The class ``<socket-error>`` is the superclass of all unrecoverable socket
    conditions.
 
-   :superclasses: <socket-condition>
+   :superclasses: :class:`<socket-condition>`
 
    The class of socket conditions from which no recovery is possible.
 
@@ -791,7 +791,7 @@ This section lists the socket condition classes in the Network library.
    The class ``<internal-socket-error>`` is the class of unexpected
    socket errors.
 
-   :superclasses: <socket-error>
+   :superclasses: :class:`<socket-error>`
 
    :description:
 
@@ -807,7 +807,7 @@ This section lists the socket condition classes in the Network library.
    socket conditions for which an application may be able to take some
    remedial action.
 
-   :superclasses: <socket-condition>
+   :superclasses: :class:`<socket-condition>`
 
    :description:
 
@@ -826,14 +826,14 @@ This section lists the socket condition classes in the Network library.
 
    The network — probably a local network — is down. Try again later.
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
 .. class:: <invalid-address>
 
    A badly formed address string has been passed to a function trying to
    make an `<internet-address>`.
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
 .. class:: <host-not-found>
 
@@ -841,24 +841,24 @@ This section lists the socket condition classes in the Network library.
    internet address. Try again with a different (correct) name or
    address.
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
 .. class:: <server-not-responding>
 
    The Domain Name Server (DNS) did not respond or returned an ambiguous
    result. Try again.
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
 .. class:: <host-unreachable>
 
    The remote host cannot be reached from this host at this time.
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
 .. class:: <socket-closed>
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
    :description:
 
@@ -870,7 +870,7 @@ This section lists the socket condition classes in the Network library.
 
 .. class:: <connection-failed>
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
    :description:
 
@@ -881,7 +881,7 @@ This section lists the socket condition classes in the Network library.
 
 .. class:: <connection-closed>
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
    :description:
 
@@ -890,7 +890,7 @@ This section lists the socket condition classes in the Network library.
 
 .. class:: <address-in-use>
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
    :description:
 
@@ -904,11 +904,11 @@ This section lists the socket condition classes in the Network library.
    A blocking socket call, like :gf:`read`, :gf:`write` or :gf:`accept`,
    was interrupted.
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
 .. class:: <out-of-resources>
 
-   :superclasses: <recoverable-socket-condition>
+   :superclasses: :class:`<recoverable-socket-condition>`
 
    :description:
 
@@ -919,7 +919,7 @@ This section lists the socket condition classes in the Network library.
 
 .. class:: <socket-accessor-error>
 
-   :superclasses: <socket-error>
+   :superclasses: :class:`<socket-error>`
 
    :description:
 
@@ -930,7 +930,7 @@ This section lists the socket condition classes in the Network library.
 
 .. class:: <win32-socket-error>
 
-   :superclasses: <socket-accessor-error>
+   :superclasses: :class:`<socket-accessor-error>`
 
    :description:
 

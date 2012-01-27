@@ -441,7 +441,7 @@ File-System module.
    Error type signaled when any other functions in the File-System
    module signal an error.
 
-   :superclasses: <error>, <simple-condition>
+   :superclasses: <error>, :class:`<simple-condition>`
 
    :description:
 

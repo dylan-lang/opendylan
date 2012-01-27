@@ -666,7 +666,7 @@ Locks
 
    The class of locks.
 
-   :superclasses: <synchronization>
+   :superclasses: :class:`<synchronization>`
 
    :description:
 
@@ -761,7 +761,7 @@ Semaphores
 
    The class of traditional counting semaphores.
 
-   :superclasses: <lock>
+   :superclasses: :class:`<lock>`
 
    :keyword initial-count: A non-negative integer, corresponding to the
       initial state of the internal counter. The default value is 0.
@@ -855,7 +855,7 @@ Exclusive locks
    The class of locks which prohibit unlocking by threads that do not own
    the lock.
 
-   :superclasses: <lock>
+   :superclasses: :class:`<lock>`
 
    :description:
 
@@ -938,7 +938,7 @@ Recursive locks
 
    The class of locks that can be locked recursively.
 
-   :superclasses: <exclusive-lock>
+   :superclasses: :class:`<exclusive-lock>`
 
    :description:
 
@@ -1011,7 +1011,7 @@ Simple locks
 
    A simple and efficient lock.
 
-   :superclasses: <exclusive-lock>
+   :superclasses: :class:`<exclusive-lock>`
 
    :description:
 
@@ -1086,7 +1086,7 @@ Multiple reader / single writer locks
 
    The class of locks that can have multiple readers but only one writer.
 
-   :superclasses: <exclusive-lock>
+   :superclasses: :class:`<exclusive-lock>`
 
    :description:
 
@@ -1197,7 +1197,7 @@ Notifications
    The class of objects that can be used to notify threads of a change
    of state elsewhere in the program.
 
-   :superclasses: <synchronization>
+   :superclasses: :class:`<synchronization>`
 
    :keyword lock: An instance of :class:`<simple-lock>`.
      Required.
