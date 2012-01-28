@@ -12,6 +12,12 @@ The easiest way to do this is to get it from the `Python Package Index
 
     sudo easy_install -U Sphinx
 
+You will also need to have the git submodule for our Sphinx extension
+populated.  If this is not present for you, try doing this at the
+top level of the opendylan repository::
+
+    git submodule init && git submodule update
+
 Building
 ========
 
