@@ -1,0 +1,2 @@
+remake-dylan-app is a simple replacement/clone for/of OpenDylan's
+"make-dylan-app" (which depends on Perl) written in Dylan.
