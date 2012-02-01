@@ -1,15 +1,8 @@
 module: make-dylan-app
 synopsis: make-dylan-app is a tool to create new Dylan projects.
-author: Rosario Raulin
-copyright: (C) 2012 Rosario Raulin, see License.txt file
-
-define argument-parser <make-dylan-app-argparser> ()
-  synopsis print-synopsis,
-    usage: "make-dylan-app [options] [project name]",
-    description: "make-dylan-app is a tool to create new Dylan projects.";
-  
-  regular-arguments file-paths;
-end argument-parser <make-dylan-app-argparser>;
+copyright: Original Code is Copyright (c) 1995-2004 Functional Objects, Inc. All rights reserved.
+license: See License.txt in this distribution for details.
+warranty: Distributed WITHOUT WARRANTY OF ANY KIND
 
 // The <template> class is used to encapuslate constant format strings
 // ("templates") and its arguments.
@@ -33,20 +26,20 @@ end method print-object;
 define function write-templates(#rest templates :: <template>) => ();
   for (template in templates)
     with-open-file (stream = output-path(template), direction: #"output",
-		    if-does-not-exist: #"create")
+                    if-does-not-exist: #"create")
       print-object(template, stream);
     end with-open-file;
   end for;
 end function write-templates;
 
-define function make-dylan-app (app-name :: <string>, options) => ()
+define function make-dylan-app (app-name :: <string>) => ()
   let project-dir
     = create-directory(working-directory(), app-name);
 
   local method to-target-path (#rest args) => (target)
           merge-locators(as(<file-locator>, apply(concatenate, args)),
                          project-dir);
-	end method to-target-path;
+        end method to-target-path;
   
   let main :: <template>
     = make(<template>, output-path: to-target-path(app-name, ".dylan"),
@@ -64,35 +57,23 @@ define function make-dylan-app (app-name :: <string>, options) => ()
   write-templates(main, lib, lid);
 end function make-dylan-app;
 
-define constant $invalid-pathname-chars = #('\\', '/', ':');
-
-define function valid-pathname? (pathname :: <string>) => (valid? :: <boolean>)
-  local method invalid-char? (x :: <character>) => (invalid? :: <boolean>)
-          any?(curry(\=, x), $invalid-pathname-chars)
-        end method invalid-char?;
-  
-  ~ any?(invalid-char?, pathname)
-end function valid-pathname?;
-
 define function main(app-name :: <string>, arguments :: <vector>) => ()
-  let options = make(<make-dylan-app-argparser>);
-
   if (arguments.size < 1)
-    print-synopsis(options, *standard-error*);
+    format(*standard-error*, "usage: make-dylan-app [project name]\n");
     exit-application(1);
   else
-    parse-arguments(options, arguments);
-    let pathname :: <string> = options.file-paths[0];
+    let pathname :: <string> = arguments[0];
 
-    if(valid-pathname?(pathname))
+    if(is-valid-dylan-name?(pathname))
       block()
-          make-dylan-app(pathname, options);
-          exit-application(0);
+        make-dylan-app(pathname);
+        exit-application(0);
       exception (condition :: <condition>)
         format(*standard-error*, "error: %=\n", condition);
       end block;
     else
-      format(*standard-error*, "error: malicious project name!\n");
+      format(*standard-error*,
+             "error: Invalid name! Please use a valid Dylan library name.\n");
       exit-application(1);
     end if;
 
