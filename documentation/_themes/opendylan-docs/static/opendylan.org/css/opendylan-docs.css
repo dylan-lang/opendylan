@@ -1,3 +1,7 @@
+.navbar {
+  margin-bottom: 5px;
+}
+
 .section h1,
 .section h2,
 .section h3 {
@@ -64,6 +68,8 @@ tt.xref, a tt {
 .navbar .logo {
   float: left;
   padding: 5px 5px;
+  width: 32px;
+  height: 30px;
 }
 
 .literal {
