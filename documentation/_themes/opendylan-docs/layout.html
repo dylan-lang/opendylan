@@ -6,10 +6,10 @@
     :license: MIT.
 #}
 {% extends "basic/layout.html" %}
-{% set css_files = css_files + ['_static/opendylan.org/css/bootstrap/1.4.0/bootstrap.min.css',
+{% set css_files = css_files + ['_static/bootstrap/2.0/css/bootstrap.min.css',
+                                '_static/bootstrap/2.0/css/bootstrap.min.responsive',
                                 '_static/opendylan.org/css/opendylan-docs.css'] -%}
-{% set script_files = script_files + ['_static/opendylan.org/js/bootstrap-scrollspy.js',
-                                      '_static/opendylan.org/js/bootstrap-dropdown.js'] -%}
+{% set script_files = script_files + ['_static/bootstrap/2.0/js/bootstrap.min.js'] -%}
 {% set reldelim1 = '<span class="divider">&raquo;</span>' -%}
 {% set navigation_bar = [
     ('index', 'Home'),
@@ -28,7 +28,7 @@
     <script>
       (function($) {
         $(function() {
-          var int_sideheight = $(window).height() - $('.topbar').height() - 10;
+          var int_sideheight = $(window).height() - $('.navbar').height() - 10;
           $('.pinned').css('height', int_sideheight+'px');
           $(window).scroll(function() {
             if ($(this).scrollTop() > 0) {
@@ -44,26 +44,21 @@
 {% endblock %}
 
 {% block header %}
-   <div class="topbar" data-scrollspy="scrollspy" data-dropdown="dropdown">
-     <div class="fill">
+   <div class="navbar navbar-fixed-top">
+     <div class="navbar-inner">
        <div class="container">
          <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}" alt="Dylan Logo" />
          <a class="brand" href="http://opendylan.org/">Open Dylan</a>
-         <ul id="nav">
+         <ul class="nav">
          {% for page, caption in navigation_bar -%}
            <li{% if page == active_page %} class="active"{% endif %}><a href="http://opendylan.org/{{ page }}.html">{{ caption|e }}</a>
          {% endfor -%}
          </ul>
-         <div class="pull-right">
-           <form class="search" action="search.html" method="get">
-             <p>
-               <input type="text" name="q" placeholder="Search this document" />
-               <input type="submit" value="Go" />
-               <input type="hidden" name="check_keywords" value="yes" />
-               <input type="hidden" name="area" value="default" />
-             </p>
-           </form>
-         </div>
+         <form class="navbar-search pull-right" action="search.html" method="get">
+           <input type="text" name="q" class="search-query" placeholder="Search this document" />
+           <input type="hidden" name="check_keywords" value="yes" />
+           <input type="hidden" name="area" value="default" />
+         </form>
        </div>
      </div>
     </div>
@@ -89,12 +84,12 @@
         </ul>
       </div>
       <div class="row">
-        <div class="content span12">
+        <div class="content span8">
         {%- block document %}
           {{ super() }}
         {%- endblock %}
         </div>
-        <div class="doc-sidebar span4">
+        <div class="doc-sidebar span3">
           <div class="pinned">
             {%- block sidebartoc %}
             <h3>{{ _('Table Of Contents') }}</h3>
