@@ -2,6 +2,13 @@ body {
   padding-top: 50px;
 }
 
+.section h1,
+.section h2,
+.section h3 {
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 10px;
+}
+
 /* We don't want indenting here. */
 dt.dylan-api + dd {
   margin-left: 0;
