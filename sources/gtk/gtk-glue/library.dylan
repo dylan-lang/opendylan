@@ -1,6 +1,9 @@
 Module:    dylan-user
 Author:    Hannes Mehnert, Andreas Bogk
-Copyright: (C) 2007,.  All rights reserved.
+copyright: Original Code is Copyright (c) 2007 Dylan Hackers;
+           All rights reversed.
+License:   See License.txt in this distribution for details.
+Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library gtk
   use common-dylan;

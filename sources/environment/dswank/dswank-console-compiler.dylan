@@ -1,4 +1,9 @@
-module: dswank
+module:    dswank
+author:    Andreas Bogk and Hannes Mehnert
+copyright: Original Code is Copyright (c) 2008-2012 Dylan Hackers;
+           All rights reversed.
+License:   See License.txt in this distribution for details.
+Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method start-compiler (stream)
   let input-stream = make(<string-stream>, direction: #"input");

@@ -1,7 +1,10 @@
-module: openssl-wrapper
-synopsis: ssl support for sockets
-author: Hannes Mehnert, hannes@mehnert.org
-copyright: BSD, GNU LGPL
+module:    openssl-wrapper
+synopsis:  ssl support for sockets
+author:    Hannes Mehnert
+copyright: Original Code is Copyright (c) 2010 Dylan Hackers;
+           All rights reversed.
+License:   See License.txt in this distribution for details.
+Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 define C-function SSL-library-init
   result success :: <C-int>;

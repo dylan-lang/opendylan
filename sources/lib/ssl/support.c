@@ -1,7 +1,10 @@
 /*
- synopsis: ssl support for sockets
- author: Hannes Mehnert, hannes@mehnert.org
- copyright: BSD, GNU LGPL
+synopsis: ssl support for sockets
+author:    Hannes Mehnert
+copyright: Original Code is Copyright (c) 2010 Dylan Hackers;
+           All rights reversed.
+License:   See License.txt in this distribution for details.
+Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 */
 #include <openssl/ssl.h>
 #include <openssl/pem.h>

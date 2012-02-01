@@ -1,7 +1,10 @@
-module: dswank
-synopsis: swank support for opendylan. swank is the protocol of SLIME
-author: Andreas Bogk and Hannes Mehnert
-copyright: (c) 2008; All rights reversed.
+module:    dswank
+synopsis:  swank support for opendylan. swank is the protocol of SLIME
+author:    Andreas Bogk and Hannes Mehnert
+copyright: Original Code is Copyright (c) 2008-2012 Dylan Hackers;
+           All rights reversed.
+License:   See License.txt in this distribution for details.
+Warranty:  Distributed WITHOUT WARRANTY OF ANY KIND
 
 define thread variable *server* = #f;
 define thread variable *project* = #f;
