@@ -22,7 +22,7 @@ AS = as -L
 AR = ar -q
 
 CFLAGS		= -D_REENTRANT=1 \
-		  -O -g \
+		  -O -g -I/usr/local/include -DBOEHM_GC=1 \
 		  -I$(MPS)/code -I$(srcdir) -I$(runtime_srcdir)
 
 OBJS		= x86-linux-collector.o \
@@ -37,7 +37,11 @@ RUNTIMELIBDEST	 = $(LIBDEST)/runtime/
 
 all:	$(OBJS)
 
-x86-linux-collector.o:       $(runtime_srcdir)/collector.c
+x86-linux-collector.o:
+
+collector.o:       $(runtime_srcdir)/collector.c
+
+boehm-collector.o:       $(runtime_srcdir)/boehm-collector.c
 
 x86-linux-threads-primitives.o:  $(runtime_srcdir)/linux-threads-primitives.c
 
@@ -68,8 +72,7 @@ $(LIBDEST)/dylan-elf-dll.script: $(srcdir)/dylan-elf-dll.script
 $(LIBDEST)/dylan-elf-exe.script: $(srcdir)/dylan-elf-exe.script
 	cp -fp $(srcdir)/dylan-elf-exe.script $(LIBDEST)
 
-install-build: $(LIBDEST)/libmmdw.a $(LIBDEST)/libmpsplan.a \
-	       $(LIBDEST)/x86-freebsd-build.jam $(LIBDEST)/mini-jambase.jam \
+install-build: $(LIBDEST)/x86-freebsd-build.jam $(LIBDEST)/mini-jambase.jam \
                $(LIBDEST)/dylan-elf-dll.script $(LIBDEST)/dylan-elf-exe.script
 
 install-runtime: $(OBJS) $(SRCOBJS)
