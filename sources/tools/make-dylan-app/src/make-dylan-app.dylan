@@ -1,6 +1,6 @@
 module: make-dylan-app
 synopsis: make-dylan-app is a tool to create new Dylan projects.
-copyright: Original Code is Copyright (c) 1995-2004 Functional Objects, Inc. All rights reserved.
+copyright: Original Code is Copyright (c) 2012 Dylan Hackers. All rights reserved.
 license: See License.txt in this distribution for details.
 warranty: Distributed WITHOUT WARRANTY OF ANY KIND
 
@@ -57,9 +57,32 @@ define function make-dylan-app (app-name :: <string>) => ()
   write-templates(main, lib, lid);
 end function make-dylan-app;
 
+define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
+  local method is-name? (c :: <character>) => (name? :: <boolean>)
+          alphanumeric?(c) | graphic?(c) |
+          any?(curry(\=, c), #('-', '+', '~', '?', '/'));
+        end method is-name?;
+
+  every?(is-name?, word) &
+  case
+    alphabetic?(word[0]) => #t;
+    graphic?(word[0]) => (word.size > 1) & any?(alphabetic?, word);
+    word[0] = '\\' => (word.size > 1);
+    digit?(word[0])
+      => (word.size > 2) &
+        block(return)
+          for(i from 1 below word.size - 1)
+            if(alphabetic?(word[i]) & alphabetic?(word[i + 1]))
+              return(#t)
+            end if;
+          end for;
+        end block;
+  end case;
+end function is-valid-dylan-name?;
+
 define function main(app-name :: <string>, arguments :: <vector>) => ()
   if (arguments.size < 1)
-    format(*standard-error*, "usage: make-dylan-app [project name]\n");
+    format(*standard-error*, "usage: make-dylan-app project-name\n");
     exit-application(1);
   else
     let pathname :: <string> = arguments[0];
