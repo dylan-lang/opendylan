@@ -3,6 +3,7 @@ synopsis: make-dylan-app is a tool to create new Dylan projects.
 author: Rosario Raulin
 copyright: (C) 2012 Rosario Raulin, see License.txt file
 
+/*
 define argument-parser <make-dylan-app-argparser> ()
   synopsis print-synopsis,
     usage: "make-dylan-app [options] [project name]",
@@ -10,6 +11,13 @@ define argument-parser <make-dylan-app-argparser> ()
   
   regular-arguments file-paths;
 end argument-parser <make-dylan-app-argparser>;
+*/
+
+// NOTE: Once command-line-parser is available this function should be removed!
+define function print-synopsis ()
+  format(*standard-error*, "usage: make-dylan-app [options] [project name]\n");
+  format(*standard-error*, "make-dylan-app is a tool to create new Dylan projects.\n");
+end function print-synopsis;
 
 // The <template> class is used to encapuslate constant format strings
 // ("templates") and its arguments.
@@ -33,20 +41,20 @@ end method print-object;
 define function write-templates(#rest templates :: <template>) => ();
   for (template in templates)
     with-open-file (stream = output-path(template), direction: #"output",
-		    if-does-not-exist: #"create")
+                    if-does-not-exist: #"create")
       print-object(template, stream);
     end with-open-file;
   end for;
 end function write-templates;
 
-define function make-dylan-app (app-name :: <string>, options) => ()
+define function make-dylan-app (app-name :: <string>) => ()
   let project-dir
     = create-directory(working-directory(), app-name);
 
   local method to-target-path (#rest args) => (target)
           merge-locators(as(<file-locator>, apply(concatenate, args)),
                          project-dir);
-	end method to-target-path;
+        end method to-target-path;
   
   let main :: <template>
     = make(<template>, output-path: to-target-path(app-name, ".dylan"),
@@ -75,18 +83,15 @@ define function valid-pathname? (pathname :: <string>) => (valid? :: <boolean>)
 end function valid-pathname?;
 
 define function main(app-name :: <string>, arguments :: <vector>) => ()
-  let options = make(<make-dylan-app-argparser>);
-
   if (arguments.size < 1)
-    print-synopsis(options, *standard-error*);
+    print-synopsis();
     exit-application(1);
   else
-    parse-arguments(options, arguments);
-    let pathname :: <string> = options.file-paths[0];
+    let pathname :: <string> = arguments[0];
 
     if(valid-pathname?(pathname))
       block()
-          make-dylan-app(pathname, options);
+          make-dylan-app(pathname);
           exit-application(0);
       exception (condition :: <condition>)
         format(*standard-error*, "error: %=\n", condition);
