@@ -238,7 +238,7 @@ INSTALL_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(prefix)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(prefix)/sources
 
-INSTALL_LIBRARIES = dylan-compiler dswank
+INSTALL_LIBRARIES = dylan-compiler dswank make-dylan-app
 
 INSTALL_LIBRARY_PACKS = @LIBRARY_PACKS@
 
