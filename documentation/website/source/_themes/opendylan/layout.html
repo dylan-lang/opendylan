@@ -9,9 +9,10 @@
 {% block doctype %}
 <!DOCTYPE html>
 {% endblock %}
-{% set css_files = css_files + ['_static/opendylan.org/css/bootstrap/1.4.0/bootstrap.min.css',
+{% set css_files = css_files + ['_static/bootstrap/2.0/css/bootstrap.min.css',
+                                '_static/bootstrap/2.0/css/bootstrap.min.responsive',
                                 '_static/opendylan.org/css/opendylan.css'] -%}
-{% set script_files = script_files + ['_static/opendylan.org/js/bootstrap-scrollspy.js'] -%}
+{% set script_files = script_files + ['_static/bootstrap/2.0/js/bootstrap.min.js'] -%}
 {% set navigation_bar = [
     ('index', 'Home'),
     ('about/index', 'About'),
@@ -31,22 +32,25 @@
 {% endblock %}
 
 {% block header %}
-   <div class="topbar" data-scrollspy="scrollspy" data-dropdown="dropdown">
-     <div class="fill">
+   <div class="navbar navbar-fixed-top">
+     <div class="navbar-inner">
        <div class="container">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </a>
          <img class="logo" src="{{ pathto('_static/opendylan.org/images/dylan-squares.png', 1) }}" alt="Dylan Logo" />
          <a class="brand" href="{{ pathto('index') }}">Open Dylan</a>
-         <ul id="nav">
-         {% for page, caption in navigation_bar -%}
-           <li{% if page == active_page %} class="active"{% endif %}><a href="{{ pathto(page) }}">{{ caption|e }}</a>
-         {% endfor -%}
-         </ul>
-         <div class="pull-right">
-           <form method="get" action="http://search.yahoo.com/search">
-             <p>
-               <input type="text" name="va" size="16" maxlength="255" value="" placeholder="Search" />
-               <input type="hidden" name="vs" value="opendylan.org" />
-             </p>
+         <div class="nav-collapse">
+           <ul class="nav">
+           {% for page, caption in navigation_bar -%}
+             <li{% if page == active_page %} class="active"{% endif %}><a href="{{ pathto(page) }}">{{ caption|e }}</a>
+           {% endfor -%}
+           </ul>
+           <form class="navbar-search pull-right" method="get" action="http://search.yahoo.com/search">
+             <input class="search-query" type="text" name="va" size="16" maxlength="255" value="" placeholder="Search" />
+             <input type="hidden" name="vs" value="opendylan.org" />
            </form>
          </div>
        </div>

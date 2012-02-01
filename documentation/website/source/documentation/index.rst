@@ -6,16 +6,16 @@ Documentation
    publishing system. Some documents are not entirely correct yet. We've
    retained links to the 'Old HTML' where relevant. These will be going away
    in the near future.
-   :class: alert-message warning
+   :class: alert alert-block alert-warning
 
 .. raw:: html
 
    <div class="row">
-     <div class="span8">
+     <div class="span6">
 
      <h2>Learning Dylan</h2>
 
-     <div class="alert-message block-message success">
+     <div class="alert alert-block alert-success">
        <p>Just getting started with Open Dylan?  We recommend that
        you read the <a href="intro-dylan/">Introduction to Dylan</a>
        to get a feel for the language. After that, you can broaden
@@ -58,7 +58,7 @@ Documentation
      <hr>
      <h2>Cheat Sheets</h2>
 
-     <div class="alert-message block-message info">
+     <div class="alert alert-block alert-info">
        <p>Quick one-page sheets for common tasks.</p>
      </div>
 
@@ -71,7 +71,7 @@ Documentation
      <hr>
      <h2>Articles</h2>
 
-    <div class="alert-message block-message info">
+    <div class="alert alert-block alert-info">
       <p>Featured articles and blog postings.</p>
     </div>
 
@@ -98,11 +98,11 @@ Documentation
 .. raw:: html
 
      </div>
-     <div class="span8">
+     <div class="span6">
 
      <h2>References</h2>
 
-     <div class="alert-message block-message info">
+     <div class="alert alert-block alert-info">
        <p>These are some lengthier reference materials. While they
        make for dry reading, they're full of invaluable information!</p>
      </div>
@@ -139,7 +139,7 @@ Documentation
      <hr>
      <h2>For Open Dylan Developers</h2>
 
-     <div class="alert-message block-message info">
+     <div class="alert alert-block alert-info">
        <p>Notes and materials useful to those working on
        Open Dylan itself or those who have an interest in the low
        level details.</p>
@@ -176,7 +176,7 @@ Documentation
       <hr>
       <h2>Archived Documentation</h2>
 
-      <div class="alert-message block-message warning">
+      <div class="alert alert-block alert-warning">
         <p>This is old documentation that we don't plan to
         bring forward. Let us know if there's interest in this
         material.</p>

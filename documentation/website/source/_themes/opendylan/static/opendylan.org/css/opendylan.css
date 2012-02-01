@@ -1,7 +1,7 @@
 body {
   padding-top: 50px;
 }
-.topbar .logo {
+.navbar .logo {
   float: left;
   padding: 5px 5px;
   height: 30px;
@@ -21,8 +21,27 @@ body {
 a.headerlink {
   color: silver;
 }
-/* Undo an annoyance from Bootstrap */
-li {
-  color: black;
+
+/* Responsive Docs
+-------------------------------------------------- */
+@media (max-width: 480px) {
+  /* Reduce padding above body */
+  body {
+    padding-top: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Remove any padding from the body */
+  body {
+    padding-top: 0;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 980px) {
+  /* Remove any padding from the body */
+  body {
+    padding-top: 0;
+  }
 }
 

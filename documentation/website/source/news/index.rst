@@ -5,7 +5,7 @@ News & Articles
 .. raw:: html
 
    <div class="row">
-     <div class="span8">
+     <div class="span6">
 
      <h2>News</h2>
 
@@ -34,7 +34,7 @@ over at `<http://old.opendylan.org/>`_.
 .. raw:: html
 
     </div>
-    <div class="span8">
+    <div class="span6">
 
     <h2>Articles</h2>
 

@@ -20,11 +20,11 @@ Welcome to Open Dylan!
    </div>
 
    <div class="row">
-     <div class="span8">
+     <div class="span6">
 
      <h2>Recent News</h2>
 
-     <div class="alert-message block-message info">
+     <div class="alert alert-block alert-info">
        <p>Keep up to date by subscribing to our <a href="rss.xml">RSS
        Feed <img src="_static/feed-icon-14x14.png" alt=""></a> or
        joining our <a href="community/index.html#mailing-lists">mailing
@@ -37,11 +37,11 @@ Welcome to Open Dylan!
 
        <div class="pull-right"><a href="news/index.html" class="btn primary large">All news &raquo;</a></div>
      </div>
-     <div class="span8">
+     <div class="span6">
 
      <h2>Get Started</h2>
 
-     <div class="alert-message block-message success">
+     <div class="alert alert-block alert-success">
        <p>Just getting started with Open Dylan?  We recommend that
        you read the <a href="documentation/intro-dylan/">Introduction to
        Dylan</a> to get a feel for the language. After that, you can broaden

@@ -15,14 +15,14 @@ Open Dylan IDE
 .. warning:: The 32 bit version of Open Dylan does NOT work on 64 bit Windows.
    There is no workaround at this time, unfortunately. We hope to resolve this
    in an upcoming release.
-   :class: alert-message warning
+   :class: alert alert-warning
 
 For installation, double-click on the installer, and follow instructions.
 You need to have either the PellesC linker or the linker of VC++ 6.0, 7.0
 or the current .NET platform SDK installed.
 
 .. table::
-   :class: zebra-striped
+   :class: table-striped
 
    +-----------------------+--------------------+--------------------+-------------+
    | Platform              | Version            | Date Released      | Revision ID |
@@ -40,7 +40,7 @@ linking. Note that these versions only have a command-line compiler
 and no IDE.
 
 .. table::
-   :class: zebra-striped
+   :class: table-striped
 
    +-----------------------+--------------------+--------------------+-------------+
    | Platform              | Version            | Date Released      | Revision ID |
