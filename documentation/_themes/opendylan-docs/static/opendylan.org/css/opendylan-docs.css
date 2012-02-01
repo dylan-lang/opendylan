@@ -1,5 +1,12 @@
-body {
-  padding-top: 50px;
+.navbar {
+  margin-bottom: 5px;
+}
+
+.section h1,
+.section h2,
+.section h3 {
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 10px;
 }
 
 /* We don't want indenting here. */
@@ -58,9 +65,11 @@ tt.xref, a tt {
   margin-top: 9px;
 }
 
-.topbar .logo {
+.navbar .logo {
   float: left;
   padding: 5px 5px;
+  width: 32px;
+  height: 30px;
 }
 
 .literal {
