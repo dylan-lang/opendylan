@@ -70,9 +70,9 @@ define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
     word[0] = '\\' => (word.size > 1);
     digit?(word[0])
       => (word.size > 2) &
-        block(return)
-          for(i from 1 below word.size - 1)
-            if(alphabetic?(word[i]) & alphabetic?(word[i + 1]))
+        block (return)
+          for (i from 1 below word.size - 1)
+            if (alphabetic?(word[i]) & alphabetic?(word[i + 1]))
               return(#t)
             end if;
           end for;
@@ -87,8 +87,8 @@ define function main(app-name :: <string>, arguments :: <vector>) => ()
   else
     let pathname :: <string> = arguments[0];
 
-    if(is-valid-dylan-name?(pathname))
-      block()
+    if (is-valid-dylan-name?(pathname))
+      block ()
         make-dylan-app(pathname);
         exit-application(0);
       exception (condition :: <condition>)
