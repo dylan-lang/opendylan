@@ -1,5 +1,5 @@
 library: dswank
 executable: dswank
-files: dswank-exports
+files: library
   dswank-console-compiler
   dswank

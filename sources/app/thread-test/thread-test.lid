@@ -1,4 +1,4 @@
 library: thread-test
 executable: thread-test
-files: thread-test-exports
+files: library
   thread-test
