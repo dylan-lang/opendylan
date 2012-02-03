@@ -11,7 +11,11 @@
 //#define BOEHM_GC
 
 
+#ifdef BOEHM_GC
+#include "boehm-collector.c"
+#else
 #include "collector.c"
+#endif
 
 
 /* HACK -- Implement GC_malloc and GC_free
