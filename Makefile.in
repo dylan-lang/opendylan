@@ -309,7 +309,8 @@ CHECK_APPS = \
 	duim-test-suite-app \
 	deuce-test-suite-app \
 	jam-test-suite-app \
-	channels-tests
+	channels-tests \
+	command-line-parser-test-suite-app
 
 CHECK_ENV = \
 	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
