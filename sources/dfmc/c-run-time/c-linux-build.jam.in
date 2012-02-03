@@ -22,7 +22,7 @@ DEFINES += GC_LINUX_THREADS _REENTRANT ;
 # Runtime
 #
 
-RTOBJS ?= dummy-threads.o
+RTOBJS ?= posix-threads.o
 	  debug-print.o
 	  run-time.o ;
 
