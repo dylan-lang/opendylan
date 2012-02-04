@@ -21,7 +21,7 @@ AR = ar -q
 
 CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 -fPIC \
 		  -fno-strict-aliasing \
-		  $(arch_flag) -O -g -I$(srcdir) -I$(runtime_srcdir) \
+		  $(arch_flag) -O2 -g -I$(srcdir) -I$(runtime_srcdir) \
 		  -I$(gc_prefix)/include -L$(gc_prefix)/lib
 
 OBJS		= dummy-threads.o \
