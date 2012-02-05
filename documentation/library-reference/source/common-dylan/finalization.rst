@@ -112,7 +112,7 @@ been added to it but which had not been passed to ``finalize``.
 
 There is a default method for :gf:`finalize` on
 ``<object>``. The method does nothing. It is available so that it is safe
-for all finalizers to call ``next-method``, a practice that we strongly
+for all finalizers to call :drm:`next-method`, a practice that we strongly
 encourage. See `Writing finalizers`_.
 
 After finalization
@@ -220,8 +220,8 @@ Parallels with INITIALIZE methods
 =================================
 
 The default method on ``<object>`` is provided to make it safe to call
-``next-method`` in all finalizers. This situation is parallel to that for
-class ``initialize`` methods, which call ``next-method`` before performing
+:drm:`next-method` in all finalizers. This situation is parallel to that for
+class :drm:`initialize` methods, which call ``next-method`` before performing
 their own initializations. By doing so, ``initialize`` methods guarantee
 that the most specific initializations occur last.
 
