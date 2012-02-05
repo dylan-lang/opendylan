@@ -6,7 +6,7 @@ define constant $main-template-simple :: <string>
        "author: \n"
        "copyright: \n"
        "\n"
-       "define function main(name, arguments)\n"
+       "define function main (name, arguments)\n"
        "  format-out(\"Hello, world!\\n\");\n"
        "  exit-application(0);\n"
        "end function main;\n"
