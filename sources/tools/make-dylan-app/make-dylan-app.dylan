@@ -67,16 +67,14 @@ define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
   case
     alphabetic?(word[0]) => #t;
     graphic?(word[0]) => (word.size > 1) & any?(alphabetic?, word);
-    word[0] = '\\' => (word.size > 1);
     digit?(word[0])
-      => (word.size > 2) &
-        block (return)
-          for (i from 1 below word.size - 1)
-            if (alphabetic?(word[i]) & alphabetic?(word[i + 1]))
-              return(#t)
-            end if;
-          end for;
-        end block;
+      => block (return)
+           for (i from 1 below word.size - 1)
+             if (alphabetic?(word[i]) & alphabetic?(word[i + 1]))
+               return(#t)
+             end if;
+           end for;
+         end block;
   end case;
 end function is-valid-dylan-name?;
 
