@@ -159,10 +159,10 @@ LID file keyword
 
 Any additional comments about the library.
 
-Common Dylan’s LID extensions
-=============================
+Open Dylan’s LID extensions
+===========================
 
-This section contains extensions to LID that Common Dylan supports.
+This section contains extensions to LID that Open Dylan supports.
 
 Specifying foreign files and resource files
 -------------------------------------------
