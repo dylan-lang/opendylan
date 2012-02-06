@@ -83,7 +83,7 @@ including:
 -  A standard object-printing package such as Smalltalk’s *printOn:* or
    Lisp’s *print-object*, or a formatted printing facility such as
    Lisp’s *format*. These facilities are provided by the Print, Format,
-   and Format-out libraries. For convenience, the Harlequin-Extensions
+   and Format-out libraries. For convenience, the Common Dylan
    library also provides simple formatting capabilities.
 -  General object dumping and loading.
 -  A comprehensive range of I/O facilities for using memory-mapped

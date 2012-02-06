@@ -212,7 +212,7 @@ The Common Dylan extensions are:
 
    :example:
 
-     In the following code, the signalled messages appear in the Harlequin
+     In the following code, the signalled messages appear in the Open
      Dylan debugger window.
 
      .. code-block:: dylan
