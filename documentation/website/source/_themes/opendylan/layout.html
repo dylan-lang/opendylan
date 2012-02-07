@@ -70,6 +70,7 @@
 
 {% block footer %}
     <footer class="container">
+      <hr>
       <div class="pull-left">
         {%- if show_source and has_source and sourcename %}
           <a href="{{ pathto('_sources/' + sourcename, true)|e }}"
