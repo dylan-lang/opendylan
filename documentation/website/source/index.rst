@@ -14,8 +14,8 @@ Welcome to Open Dylan!
      arguments, object introspection, macros, and many other advanced
      features...  --Peter Hinely</em></p>
      <div>
-       <div class="pull-left"><a href="documentation/index.html" class="btn primary large">Learn more &raquo;</a></div>
-       <div class="pull-right"><a href="download/index.html" class="btn primary large">Get it now &raquo;</a></div>
+       <div class="pull-left"><a href="documentation/index.html" class="btn btn-primary btn-large">Learn more &raquo;</a></div>
+       <div class="pull-right"><a href="download/index.html" class="btn btn-primary btn-large">Get it now &raquo;</a></div>
      </div>
    </div>
 
@@ -35,7 +35,7 @@ Welcome to Open Dylan!
 
 .. raw:: html
 
-       <div class="pull-right"><a href="news/index.html" class="btn primary large">All news &raquo;</a></div>
+       <div class="pull-right"><a href="news/index.html" class="btn btn-primary btn-large">All news &raquo;</a></div>
      </div>
      <div class="span6">
 
