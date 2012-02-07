@@ -9,6 +9,7 @@ Development
 ===========
 
 - `All of our repositories on GitHub <https://github.com/dylan-lang/>`_
+- `Continuous build server <https://jenkins.opendylan.org/>`_.
 - `TODO lists tracked on Trello <https://trello.com/opendylan>`_
 - `Open bugs for Open Dylan <https://github.com/dylan-lang/opendylan/issues>`_
 - `How to contribute </documentation/hacker-guide/contribute.html>`_
