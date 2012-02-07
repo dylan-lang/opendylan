@@ -77,5 +77,5 @@ Old builds can be found by browsing the `download directories`_.
 .. _Linux (x86): http://opendylan.org/downloads/opendylan/2011.1/opendylan-2011.1-x86-linux.tar.bz2
 .. _Linux (x86-64): http://opendylan.org/downloads/opendylan/2011.1/opendylan-2011.1-x86_64-linux.tar.bz2
 .. _FreeBSD (x86): http://opendylan.org/downloads/opendylan/2011.1/opendylan-2011.1-x86-FreeBSD.tar.bz2
-.. _FreeBSD (x86-64): http://opendylan.org/downloads/opendylan/1.0beta5/opendylan-1.0beta5-r11990-amd64-FreeBSD7.tar.bz2
+.. _FreeBSD (x86-64): http://opendylan.org/downloads/opendylan/old/1.0beta5/opendylan-1.0beta5-r11990-amd64-FreeBSD7.tar.bz2
 .. _download directories: http://opendylan.org/downloads/opendylan/
