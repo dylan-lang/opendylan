@@ -70,9 +70,10 @@ __ https://lists.opendylan.org/pipermail/announce/
 __ https://lists.opendylan.org/mailman/listinfo/chatter
 __ https://lists.opendylan.org/pipermail/chatter/
 
-Social Media
+Other sites:
 ============
 
 - `Twitter <https://twitter.com/DylanLanguage>`_
 - `Google Plus <https://plus.google.com/109036375650377247852>`_
+- `Stack Overflow <http://stackoverflow.com/questions/tagged/dylan>`_
 
