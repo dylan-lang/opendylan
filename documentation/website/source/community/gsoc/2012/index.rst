@@ -14,6 +14,7 @@ If you are interested in being a mentor, please contact Bruce Mitchener
 via one of the above means.
 
 .. toctree::
+   :titlesonly:
    
    dylint
    javascript

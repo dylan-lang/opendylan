@@ -8,4 +8,7 @@ internal compiler datastructures.
 
 This can draw inspiration from:
 
-- *fill in details*
+- `PMD <http://pmd.sourceforge.net/>`_
+- `PyLint <http://pypi.python.org/pypi/pylint>`_
+- `AnalysisTool <http://www.karppinen.fi/analysistool/>`_
+- Clang plugins
