@@ -227,14 +227,22 @@ define method split
                          parts :: <list> = #(),
                          nparts :: <integer> = 1)
              let (sep-start, sep-end) = find-separator(seq, bpos, epos);
-             if (sep-start & sep-end & (sep-end <= epos) & (nparts < count))
+             if (sep-start & sep-end & (sep-end <= epos))
                let part = copy-sequence(seq, start: bpos, end: sep-start);
-               let remove? = remove-if-empty & empty?(part);
-               loop(sep-end,
-                    if (remove?) parts else pair(part, parts) end,
-                    if (remove?) nparts else nparts + 1 end)
+               if (remove-if-empty & empty?(part))
+                 loop(sep-end, parts, nparts)
+               elseif (nparts < count)
+                 loop(sep-end, pair(part, parts), nparts + 1)
+               else
+                 pair(copy-sequence(seq, start: bpos, end: epos), parts);
+               end
              else
-               pair(copy-sequence(seq, start: bpos, end: epos), parts)
+               let part = copy-sequence(seq, start: bpos, end: epos);
+               if (remove-if-empty & empty?(part))
+                 parts
+               else
+                 pair(part, parts)
+               end
              end
            end)
 end method split;
