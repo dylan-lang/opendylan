@@ -353,6 +353,36 @@ define common-extensions function-test split ()
     check-equal(fmt("split with count = 1"),
                 split("a/b/c/d", separator, count: 1),
                 #["a/b/c/d"]);
+    check-equal(fmt("split with remove-if-empty"),
+                split("/a/b/", separator, remove-if-empty: #t),
+                #["a", "b"]);
+    check-equal(fmt("split with remove-if-empty and separator only"),
+                split("/", separator, remove-if-empty: #t),
+                #[]);
+    check-equal(fmt("split with remove-if-empty and separators only"),
+                split("///", separator, remove-if-empty: #t),
+                #[]);
+    check-equal(fmt("split with remove-if-empty and start, only separator"),
+                split("a/", separator, start: 1, remove-if-empty: #t),
+                #[]);
+    check-equal(fmt("split with remove-if-empty and start"),
+                split("/a", separator, start: 1, remove-if-empty: #t),
+                #["a"]);
+    check-equal(fmt("split with remove-if-empty and end, only separator"),
+                split("/a", separator, end: 1, remove-if-empty: #t),
+                #[]);
+    check-equal(fmt("split with remove-if-empty and end"),
+                split("a/", separator, end: 1, remove-if-empty: #t),
+                #["a"]);
+    check-equal(fmt("split with remove-if-empty and count"),
+                split("/a/b", separator, count: 1, remove-if-empty: #t),
+                #["a/b"]);
+    check-equal(fmt("split with remove-if-empty and count, only separator character"),
+                split("/", separator, count: 1, remove-if-empty: #t),
+                #[]);
+    check-equal(fmt("split with test"),
+                split("a/", separator, test: \~==),
+                #["", "/"]);
   end for;
   check-equal("split with separator crossing start:",
               split("xxx one xxx two xxx", "xxx", start: 1),
