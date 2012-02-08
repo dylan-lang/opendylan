@@ -234,7 +234,7 @@ define method split
                elseif (nparts < count)
                  loop(sep-end, pair(part, parts), nparts + 1)
                else
-                 pair(copy-sequence(seq, start: bpos, end: epos), parts);
+                 pair(copy-sequence(seq, start: bpos, end: epos), parts)
                end
              else
                let part = copy-sequence(seq, start: bpos, end: epos);
