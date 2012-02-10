@@ -18,7 +18,7 @@ my $build_logs = $ENV{'OPEN_DYLAN_BUILD_LOGS'};
 
 my $verbose;
 my $debugger;
-my $compiler = 'dylan-compile';
+my $compiler = 'dylan-compiler';
 my @library_packs;
 &GetOptions('verbose' => \$verbose,
             'debugger' => \$debugger,
