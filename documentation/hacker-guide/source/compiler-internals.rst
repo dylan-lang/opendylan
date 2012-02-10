@@ -274,6 +274,61 @@ It is noteworthy that still no intra-library information is present,
 this is top-level Dylan code without any context. All macros are
 expanded.
 
+Excursion into run-time and compile-time
+========================================
+
+NB: not sure whether this should be here or somewhere different.
+
+Some objects are defined in the compiler, but are injected into the
+Dylan world. How does this happen?
+
+So, in the Dylan library you see ``// BOOTED:`` comments here and
+there. The source location of well-known basic types and functions is
+dylan:dylan-user:boot-dylan-definitions().
+
+There is no method/function definition for this specific method call.
+
+It is actually intercepted in
+dfmc-definitions:top-level-convert.dylan: boot-definitions-form? is a
+function which checks exactly for this function
+name. top-level-convert-forms behaves differently is
+boot-definitions-form? returns true, namely it calls
+booted-source-sequence(), which is defined in boot-definitions.dylan.
+This method grabs the boot-record and returns it sorted as a vector.
+
+But what is a boot-record after all? Well, it's definition is all in
+boot-definitions.dylan, with the explanation "records the set of
+things that must be inserted into a Dylan world at the very
+start. Some of things are core definitions, such as converters and
+macros, and these are booted at the definition level. The rest are
+expressed as source to be fed to the compiler."
+
+The constant ``*boot-record*`` is filled by do-define-core-\*. These
+are called by dfmc-modeling. Namely, primitives (which names and
+signatures are installed), macros, modules, libraries, classes.
+
+Be aware that the actual implementation of the primitives is in the
+runtime (either c-run-time.c or the runtime-generator generates a
+runtime.o containing those definitions), but some crucial bits, like
+the adjectives (side-effect-free, dynamic-extent, stateless and
+opposited) are in dfmc-modeling and used in the optimization!
+
+The core classes are emitted from modeling with actual constructors
+(be aware that the runtime layout is also recorded in run-time.h).
+
+The dylan library and module definitions are in
+modeling/namespaces.dylan.
+
+A noteworthy comment is that a compiler (comp-0, generation 0) loads
+the Dylan library (dylan-0), which contains the definitions
+(defs-0). When compiling itself (comp-1), first a fresh Dylan library
+(dylan-1) is built, which contains still the old booted definitions
+(defs-0). It emits new definitions (defs-1) and a new boot-record when
+dumping dfmc-definitions. Now the next generation compiler (comp-1)
+will use these new definitions in the next Dylan (dylan-2)
+library. Beware of dragons.
+
+
 dfmc-macro-expander
 ===================
 
