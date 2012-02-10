@@ -1,8 +1,16 @@
 Welcome to Open Dylan!
 ======================
 
-Open Dylan is a compiler for the Dylan programming language. It has two
-back-ends, HARP (which translates to native x86 code) and a C back-end.
+Open Dylan is a compiler and a set of libraries for the Dylan
+programming language.  If you're interested in working on the compiler
+and core libraries then you've come to the right place.  If you want
+to write your own Dylan libraries and *use* the compiler then you
+should `download a binary release <http://opendylan.org/download/>`_
+and then read the `Getting Started
+<http://opendylan.org/documentation/getting-started/>`_ guide.
+
+Open Dylan has two back-ends, HARP (which translates to native x86
+code) and a C back-end.
 
 The HARP back-end uses the Memory Pool System (MPS) from Ravenbrook,
 Limited to do its memory management.  The MPS is available from
@@ -26,11 +34,10 @@ Once installed, the following command-line will produce a binary in
 Compilation of the compiler itself
 ==================================
 
-* clone this git repository:
-
-::
+Clone the git repository::
 
   git clone git://github.com/dylan-lang/opendylan.git --recursive
+
 
 Compilation on UNIX
 ===================
