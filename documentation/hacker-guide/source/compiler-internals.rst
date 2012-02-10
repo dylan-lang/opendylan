@@ -286,15 +286,14 @@ So, in the Dylan library you see ``// BOOTED:`` comments here and
 there. The source location of well-known basic types and functions is
 dylan:dylan-user:boot-dylan-definitions().
 
-There is no method/function definition for this specific method call.
+There is no definition of this specific method.
 
-It is actually intercepted in
-dfmc-definitions:top-level-convert.dylan: boot-definitions-form? is a
-function which checks exactly for this function
-name. top-level-convert-forms behaves differently is
-boot-definitions-form? returns true, namely it calls
-booted-source-sequence(), which is defined in boot-definitions.dylan.
-This method grabs the boot-record and returns it sorted as a vector.
+The method dfmc-definitions:top-level-convert.dylan:
+boot-definitions-form? checks exactly for this name. The method
+top-level-convert-forms behaves differently if boot-definitions-form?
+returns true, namely it calls booted-source-sequence(), which is
+defined in boot-definitions.dylan. This method grabs the boot-record
+and returns it sorted as a vector.
 
 But what is a boot-record after all? Well, it's definition is all in
 boot-definitions.dylan, with the explanation "records the set of
