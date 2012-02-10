@@ -41,8 +41,9 @@ Documentation
 [`epub <getting-started/GettingStartedWithOpenDylan.epub>`__]
 [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
 
-    Describes Open Dylan's interactive development environment. This is
-    only useful if you are using the Open Dylan IDE on Windows.
+    Describes Open Dylan's development environment. The first two
+    chapters are useful on any platform, whereas the remaining
+    chapters document the Open Dylan IDE on Windows.
 
 `Building Applications Using DUIM <building-with-duim/index.html>`_
 [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__]
