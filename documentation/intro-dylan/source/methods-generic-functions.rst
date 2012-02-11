@@ -292,67 +292,80 @@ regular parameters already being in scope. Variable names may be
 different from keyword names, a handy tool for preventing name
 conflicts.
 
-Programmers may also specify ``#all-keys`` or ``#key`` without any actual keys
-in order to dictate how other methods in the same generic function should handle
-keyword arguments.
+A generic function can restrict the parameter lists of its methods. This table
+shows the different kinds of parameter lists that a generic function can have,
+and what effects they have on the parameter lists of its methods.
 
-A generic function can dictate the parameter list of its methods as described in
-this table. Based on the generic function's parameter list on the left, every
-method added to the generic function has to include or omit the parts of the
-parameter list shown on the right.
-
-   =================================  =========  =========  =========  =========
-   Generic function's parameter list  #key       #key a, b  #all-keys  #rest    
-   =================================  =========  =========  =========  =========
-   \(x)                               Forbidden  Forbidden  Forbidden  Forbidden
-   \(x, #key)                         Required   Allowed    Allowed    Allowed  
-   \(x, #key a, b)                    Required   Required   Allowed    Allowed  
-   \(x, #key, #all-keys)              Required   Allowed    Automatic  Allowed  
-   \(x, #key a, b, #all-keys)         Required   Required   Automatic  Allowed  
-   \(x, #rest r)                      Forbidden  Forbidden  Forbidden  Required 
-   =================================  =========  =========  =========  =========
+   =================================  =========  =============  =============  =========
+   Generic function's parameter list  ``#key``   ``#key a, b``  ``#all-keys``  ``#rest``    
+   =================================  =========  =============  =============  =========
+   ``(x)``                            Forbidden  Forbidden      Forbidden      Forbidden
+   ``(x, #key)``                      Required   Allowed        Allowed        Allowed  
+   ``(x, #key a, b)``                 Required   Required       Allowed        Allowed  
+   ``(x, #key, #all-keys)``           Required   Allowed        Automatic      Allowed  
+   ``(x, #key a, b, #all-keys)``      Required   Required       Automatic      Allowed  
+   ``(x, #rest r)``                   Forbidden  Forbidden      Forbidden      Required 
+   =================================  =========  =============  =============  =========
 
    Automatic
-      This means the method's parameter list automatically has that part.
+      Every method effectively has ``#all-keys`` in its parameter list.
 
-The methods contained in a generic function are sorted according to how specific
-their arguments are. In general, less specific methods have arguments with
-shorter inheritance chains while more specific methods have arguments with
-longer inheritance chains. This is discussed in more detail in
-:ref:`generic-functions-objects`; when you call :drm:`next-method`, you are
-calling a less specific method.
+A method can expand on the keyword arguments specified by its generic function.
+This table shows the different kinds of parameter lists that a method can have,
+what the ``r`` argument contains for each, and which keyword arguments are
+permitted by each. It is a run-time error to call a method with a keyword
+argument that it does not permit.
 
-The concept of specificity is relevant here because less specific methods can
-affect which keyword arguments are legal to pass to a more specific method. This
-table shows the different kinds of parameter lists a method can have; what the
-``r`` argument contains for each; and what keyword arguments the method permits.
-It is a run-time error to call a method with a keyword argument that it does not
-permit.
-
-   ===================================  ===============  =================  ================
-   Method's parameter list              Contents of r    Permits a: and b:  Permits c:
-   ===================================  ===============  =================  ================
-   \(x)                                 —                No                 No        
-   \(x, #key)                           —                As less specific   As less specific     
-   \(x, #key a, b)                      —                Yes                As less specific
-   \(x, #key, #all-keys)                —                Yes                Yes       
-   \(x, #key a, b, #all-keys)           —                Yes                Yes       
-   \(x, #rest r)                        Extra arguments  No                 No        
-   \(x, #rest r, #key)                  Keywords/values  As less specific   As less specific
-   \(x, #rest r, #key a, b)             Keywords/values  Yes                As less specific
-   \(x, #rest r, #key, #all-keys)       Keywords/values  Yes                Yes       
-   \(x, #rest r, #key a, b, #all-keys)  Keywords/values  Yes                Yes       
-   ===================================  ===============  =================  ================
+   ======================================  =================  =========================  ==============
+   Method's parameter list                 Contents of ``r``  Permits ``a:`` and ``b:``  Permits ``c:``
+   ======================================  =================  =========================  ==============
+   ``(x)``                                 —                  No                         No            
+   ``(x, #key)``                           —                  As similar                 As similar    
+   ``(x, #key a, b)``                      —                  Yes                        As similar    
+   ``(x, #key, #all-keys)``                —                  Yes                        Yes           
+   ``(x, #key a, b, #all-keys)``           —                  Yes                        Yes           
+   ``(x, #rest r)``                        Extra arguments    No                         No            
+   ``(x, #rest r, #key)``                  Keywords/values    As similar                 As similar    
+   ``(x, #rest r, #key a, b)``             Keywords/values    Yes                        As similar    
+   ``(x, #rest r, #key, #all-keys)``       Keywords/values    Yes                        Yes           
+   ``(x, #rest r, #key a, b, #all-keys)``  Keywords/values    Yes                        Yes           
+   ======================================  =================  =========================  ==============
 
    Keywords/values
-      This means ``r`` is set to a :drm:`<sequence>` containing all the keywords
-      and values passed to the method. The first element of the sequence is one
-      of the keywords, the second is the corresponding value, the third is
-      another keyword, the fourth is its corresponding value, etc.
-   As less specific
-      This means the method only permits a keyword argument if a less specific
-      method permits it. In other words, the method inherits its permitted
-      keyword arguments from other methods in the same generic function.
+      The local variable ``r`` is set to a :drm:`<sequence>` containing all the
+      keywords and values passed to the method. The first element of the
+      sequence is one of the keywords, the second is the corresponding value,
+      the third is another keyword, the fourth is its corresponding value, etc.
+   As similar
+      The method only permits a keyword argument if some other applicable method
+      permits it. This rule is handy when you want to allow for future keywords
+      that make sense within a particular family of related classes but you do
+      not want to be overly permissive.
+
+To illustrate the "as similar" rule, say we have the following definitions:
+
+.. code-block:: dylan
+   
+   define class <shape> (<object>) ... end;
+   define class <polygon> (<shape>) ... end;
+
+   define class <oval> (<shape>) ... end;
+   define class <triangle> (<polygon>) ... end;
+   
+   define generic area (s :: <shape>, #key unit);
+   
+   define method area (s :: <oval>, #key unit) ... end;
+   define method area (s :: <polygon>, #key unit, sides) ... end;
+   define method area (s :: <triangle>, #key unit) ... end;
+
+The methods on ``<polygon>`` and ``<triangle>`` permit the ``unit:`` and
+``sides:`` keywords. The method on ``<triangle>`` permits the ``sides:`` keyword
+only because the method on ``<polygon>`` both applies to a ``<triangle>`` object
+and permits the ``sides:`` keyword.
+
+However, the method on ``<oval>`` only permits the ``unit:`` keyword, because
+the method on ``<polygon>`` is not applicable to ``<oval>`` objects — they
+branch off separately from ``<shape>``.
 
 For more information on keyword arguments, especially their use
 with :ref:`generic functions <generic-functions>`, see the DRM.
