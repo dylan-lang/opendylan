@@ -59,7 +59,7 @@ their data. A simple Dylan class shows how slots are declared:
 
 .. code-block:: dylan
 
-    define class <vehicle> (&object;)
+    define class <vehicle> (<object>)
       slot serial-number;
       slot owner;
     end;
@@ -72,7 +72,7 @@ fixes both problems:
 
 .. code-block:: dylan
 
-    define class <vehicle> (&object;)
+    define class <vehicle> (<object>)
       slot serial-number :: <integer>,
         required-init-keyword: sn:;
       slot owner :: <string>,
@@ -142,11 +142,11 @@ function which dispatches on the first parameter.
 
 .. code-block:: dylan
 
-    define generic tax(v :: <vehicle>)
-      => tax-in-dollars :: <float>;
+    define generic tax (v :: <vehicle>)
+     => tax-in-dollars :: <float>;
 
-    define method tax(v :: <vehicle>)
-      => tax-in-dollars :: <float>;
+    define method tax (v :: <vehicle>)
+     => tax-in-dollars :: <float>;
       100.00;
     end;
 
@@ -156,21 +156,20 @@ function which dispatches on the first parameter.
     end;
 
     define class <truck> (<vehicle>)
-      slot capacity,
-        required-init-keyword: tons:;
+      slot capacity, required-init-keyword: tons:;
     end;
 
     //=== Two new "tax" methods
 
-    define method tax( c :: <car> )
-      => tax-in-dollars :: <float>;
+    define method tax (c :: <car> )
+     => tax-in-dollars :: <float>;
       50.00;
     end method;
 
-    define method tax( t :: <truck> )
-      => tax-in-dollars :: <float>;
+    define method tax (t :: <truck> )
+     => tax-in-dollars :: <float>;
       // standard vehicle tax plus $10/ton
-      next-method( ) + t.capacity * 10.00;
+      next-method() + t.capacity * 10.00;
     end method;
 
 The function ``tax`` could be invoked as
@@ -191,8 +190,8 @@ may be passed explicitly using ``#next``.
 
 .. code-block:: dylan
 
-    define method tax(t :: <truck>, #next next-method)
-      => tax-in-dollars :: <float>;
+    define method tax (t :: <truck>, #next next-method)
+     => tax-in-dollars :: <float>;
       // standard vehicle tax plus $10/ton
       next-method() + t.capacity * 10.00;
     end method;
@@ -227,8 +226,8 @@ example, if vehicle serial numbers must be at least seven digits:
 
 .. code-block:: dylan
 
-    define method initialize(v :: <vehicle>, #all-keys) // accepts all keywords
-      next-method( );
+    define method initialize (v :: <vehicle>, #all-keys) // accepts all keywords
+      next-method();
       if (v.serial-number < 1000000)
         error("Bad serial number!");
       end if;
@@ -268,14 +267,13 @@ intelligent creation of vehicles based on some criteria, thus making
 
 .. code-block:: dylan
 
-    define method make(class == <vehicle>,
-      #rest keys, #key big? (#f), #all-keys)
-      => <vehicle>;
-
-      if ( big? )
-        make( <truck>, keys, tons: 2 );
+    define method make
+     (class == <vehicle>, #rest keys, #key big? (#f), #all-keys)
+     => <vehicle>;
+      if (big?)
+        make(<truck>, keys, tons: 2);
       else
-        make( <car>, keys );
+        make(<car>, keys);
       end;
     end;
 
@@ -291,9 +289,9 @@ could be invoked in any of the following fashions:
 .. code-block:: dylan
 
     let x = 1000000;
-    make(<vehicle>, sn: x, big?: #f); =>car
-    make(<vehicle>, sn: x, big?: #t); =>truck
-    make(<vehicle>, sn: x);           =>car
+    make(<vehicle>, sn: x, big?: #f); //=> car
+    make(<vehicle>, sn: x, big?: #t); //=> truck
+    make(<vehicle>, sn: x);           //=> car
 
 Methods added to ``make`` don't actually need to create new objects. Dylan
 officially allows them to return existing objects. This can be used to

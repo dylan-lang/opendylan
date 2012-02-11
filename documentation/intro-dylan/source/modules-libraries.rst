@@ -151,7 +151,7 @@ use a similar syntax:
 
 .. code-block:: dylan
 
-    define open generic sample-function( o :: <object> ) => ();
+    define open generic sample-function (o :: <object>) => ();
 
 A third form, ``define inert domain``, partially
 seals a generic function, disallowing only some additions from outside

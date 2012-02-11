@@ -9,7 +9,7 @@ might look like the following:
 
 .. code-block:: dylan
 
-    define method hello-world()
+    define method hello-world ()
       puts("Hello, world!");
     end;
 
@@ -19,7 +19,7 @@ above code more clear, the function could be rewritten as follows:
 
 .. code-block:: dylan
 
-    define method hello-world() => ();
+    define method hello-world () => ();
       puts("Hello, world!");
     end method;
 
@@ -39,8 +39,8 @@ optionally be untyped. Both of the following methods are legal:
 
 .. code-block:: dylan
 
-    define method foo(x :: <integer>, y) end;
-    define method bar(m, s :: <string>) end;
+    define method foo (x :: <integer>, y) end;
+    define method bar (m, s :: <string>) end;
 
 Both ``foo`` and ``bar`` have
 one typed and one untyped parameter, but neither has a well-defined
@@ -55,7 +55,7 @@ would appear something like the following in Dylan:
 
 .. code-block:: dylan
 
-    define method printf(format-string :: <string>, #rest arguments) => ();
+    define method printf (format-string :: <string>, #rest arguments) => ();
       // Print the format string, extracting one at a time from "arguments".
       // Note that Dylan actually allows us to verify the types of variables,
       // preventing those nasty printf errors, such as using %d instead of %ld.
@@ -73,7 +73,7 @@ object:
 
 .. code-block:: dylan
 
-    define method sell(car :: <car>, new-owner :: <string>) => ();
+    define method sell (car :: <car>, new-owner :: <string>) => ();
       if (credit-check(new-owner))
         car.owner := new-owner;
       else
@@ -99,11 +99,11 @@ the value of the last expression in its body.
 
 .. code-block:: dylan
 
-    define method foo() => sample :: <string>;
+    define method foo () => sample :: <string>;
       "Sample string.";  // return string
     end;
 
-    define method bar() => my-untyped-value;
+    define method bar () => my-untyped-value;
      if (weekend-day?(today()))
         "Let's party!";  // return string
      else
@@ -111,13 +111,13 @@ the value of the last expression in its body.
       end if;
     end method;
 
-    define method moby( )
+    define method moby ()
       =>sample :: <string>, my-untyped-value;
-      values( foo(), bar() );  // return both!
+      values(foo(), bar());  // return both!
     end;
 
-    define method baz( ) => ( );
-      let (x,y) = moby( );  // assign both
+    define method baz () => ();
+      let (x,y) = moby();  // assign both
     end;
 
 Bare Methods
@@ -131,7 +131,7 @@ method:
 
 .. code-block:: dylan
 
-    define method square-list(in :: <list>)
+    define method square-list (in :: <list>)
      => out :: <list>
       map(method(x) x * x end, in);
     end;
@@ -146,8 +146,8 @@ follows:
 
 .. code-block:: dylan
 
-    square-list( #(1,2,3,4) );
-    => #(1,4,9,16)
+    square-list(#(1, 2, 3, 4));
+    => #(1, 4, 9, 16)
 
 Local Methods
 =============
@@ -159,11 +159,11 @@ functions.
 
 .. code-block:: dylan
 
-    define method sum-squares(in :: <list>) => sum-of-element-squares :: <integer>;
-      local method square( x )
+    define method sum-squares (in :: <list>) => sum-of-element-squares :: <integer>;
+      local method square (x)
               x * x;
             end,
-            method sum(list :: <list>)
+            method sum (list :: <list>)
               reduce1(\+, list);
             end;
       sum(map(square, in));
@@ -175,14 +175,14 @@ bound in a local method, allowing some interesting techniques:
 
 .. code-block:: dylan
 
-    define method build-put(string :: <string>) => (res :: <function>);
+    define method build-put (string :: <string>) => (res :: <function>);
       local method string-putter()
               puts(string);
             end;
       string-putter;  // return local method
     end;
 
-    define method print-hello() => ();
+    define method print-hello () => ();
       let f = build-put("Hello!");
       f();  // print "Hello!"
     end;
@@ -204,15 +204,15 @@ each of which acted on a different data type:
 
 .. code-block:: dylan
 
-    define method display(i :: <integer>)
+    define method display (i :: <integer>)
       do-display-integer(i);
     end;
 
-    define method display(s :: <string>)
+    define method display (s :: <string>)
       do-display-string(s);
     end;
 
-    define method display(f :: <float>)
+    define method display (f :: <float>)
       do-display-float(f);
     end;
 
@@ -228,7 +228,7 @@ executing. This makes it possible to define methods like:
 
 .. code-block:: dylan
 
-    define method display(c :: <collection>)
+    define method display (c :: <collection>)
       for (item in c)
         display(item);  // runtime dispatch
       end;
@@ -249,7 +249,7 @@ methods to single parameter and no return value:
 
 .. code-block:: dylan
 
-    define generic display(thing :: &object;) => ()
+    define generic display (thing :: <object>) => ()
 
 Generic functions are explained in greater detail in the chapter on
 :doc:`multiple dispatch <multiple-dispatch>`.
@@ -266,9 +266,9 @@ records to an output device:
 
 .. code-block:: dylan
 
-    define method print-records(records :: <collection>,
-      #key init-codes = "", lines-per-page = 66) => ();
-
+    define method print-records
+     (records :: <collection>, #key init-codes = "", lines-per-page = 66)
+     => ();
       send-init-codes(init-codes);
       // ...print the records
     end method;

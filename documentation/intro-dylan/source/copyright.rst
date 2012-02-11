@@ -4,7 +4,7 @@ Copyright
 
 Copyright © 1995, 1996, 1998, 1999 Eric Kidd
 
-Copyright © 2002, 2003, 2004, 2011 The Dylan Hackers
+Copyright © 2002, 2003, 2004, 2011, 2012 The Dylan Hackers
 
 Companies, names and data used in examples herein are fictitious unless
 otherwise noted.
