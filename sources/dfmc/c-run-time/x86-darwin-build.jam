@@ -39,7 +39,7 @@ SUFMKF	?= .mkf ;   # build-system files
 
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=i386) ;
 
-CCFLAGS ?= -fno-strict-aliasing -fPIC -g $(ARCHFLAG) ;
+CCFLAGS ?= -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
 
 LINKFLAGS ?= $(ARCHFLAG) ;
 
