@@ -626,7 +626,7 @@ The <BUFFERED-SOCKET> class
    :description:
 
      Socket streams whose elements are bytes or characters. These
-     inherit buffering protocols and the implications of :gf:read`,
+     inherit buffering protocols and the implications of :gf:`read`,
      :gf:`write`, :gf:`read-element`, :gf:`write-element`,
      :gf:`force-output` and suchlike methods from
      :class:`<double-buffered-stream>`.
