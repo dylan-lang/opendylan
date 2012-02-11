@@ -655,15 +655,9 @@ define method stream-class-for-report
   <rst-report-stream>
 end method stream-class-for-report;
 
-define method write-definition-separator
-    (stream :: <rst-report-stream>, report :: <namespace-report>,
-     definition :: <definition-object>)
- => ()
-  format(stream, "%s\n", $report-separator);
-end method write-definition-separator;
-
 define method write-definition-name
-    (stream :: <rst-report-stream>, report :: <namespace-report>, namespace :: <namespace-object>)
+    (stream :: <rst-report-stream>, report :: <namespace-report>,
+     namespace :: <namespace-object>)
  => ()
   format(stream, "%s %s\n\n",
          definition-kind(namespace),
@@ -671,16 +665,61 @@ define method write-definition-name
 end method write-definition-name;
 
 define method write-definition-name
-    (stream :: <rst-report-stream>, report :: <module-report>, definition :: <definition-object>)
+    (stream :: <rst-report-stream>, report :: <namespace-report>,
+     library :: <library-object>)
+ => ()
+  let title = concatenate("The ",
+                          as-uppercase(definition-name(report, library)),
+                          " library");
+  let decorator = make(<byte-string>, fill: '*', size: title.size);
+  format(stream, "%s\n%s\n%s\n",
+         decorator,
+         title,
+         decorator)
+end method write-definition-name;
+
+define method write-definition-name
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     module :: <module-object>)
+ => ()
+  let title = concatenate("The ",
+                          as-uppercase(definition-name(report, module)),
+                          " module");
+  format(stream, "\n%s\n%s\n",
+         title,
+         make(<byte-string>, fill: '-', size: title.size))
+end method write-definition-name;
+
+define method write-definition-name
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     class :: <class-object>)
+ => ()
+  next-method();
+  do(method (mod) format(stream, "   :%s:\n", as-lowercase(mod)) end,
+     split(class-modifiers(report.report-project, class), " ",
+           remove-if-empty: #t))
+end method write-definition-name;
+
+define method write-definition-name
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     function :: <generic-function-object>)
+ => ()
+  next-method();
+  do(method (mod) format(stream, "   :%s:\n", as-lowercase(mod)) end,
+     split(generic-function-modifiers(report.report-project, function), " ",
+           remove-if-empty: #t))
+end method write-definition-name;
+
+define method write-definition-name
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     definition :: <definition-object>)
  => ()
   let project = report.report-project;
   let title = definition-name(report, definition);
-  let type = definition-type-description(project, definition);
-  let padding = max(6, $report-width - title.size - type.size);
-  format(stream, "%s%s%s\n",
-         title,
-         make(<byte-string>, fill: ' ', size: padding),
-         type)
+  let type = definition-kind(definition);
+  format(stream, "\n.. %s:: %s\n",
+         as-lowercase(type),
+         title)
 end method write-definition-name;
 
 define method write-superclasses-header
@@ -705,6 +744,13 @@ define method write-superclasses-footer
   new-line(stream)
 end method write-superclasses-footer;
 
+define method write-init-keywords-header
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     class :: <class-object>)
+ => ()
+  new-line(stream)
+end method write-init-keywords-header;
+
 define method write-init-keyword
     (stream :: <rst-report-stream>, report :: <module-report>,
      keyword :: <symbol>, type :: false-or(<environment-object>))
@@ -716,9 +762,18 @@ define method write-function-name
     (stream :: <rst-report-stream>, report :: <module-report>,
      function :: <function-object>)
  => ()
-  format(stream, "\n   :signature: %s ",
+  format(stream, "\n   :signature: %s",
          definition-name(report, function));
 end method write-function-name;
+
+define method write-function-parameters-header
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     function :: <function-object>, #key kind :: <argument-kind> = #"input")
+ => ()
+  when (kind = #"input")
+    new-line(stream)
+  end
+end method write-function-parameters-header;
 
 define method write-function-parameter
     (stream :: <rst-report-stream>, report :: <module-report>,
