@@ -310,23 +310,23 @@ and what effects they have on the parameter lists of its methods.
    Automatic
       Every method effectively has ``#all-keys`` in its parameter list.
 
-A method can expand on the keyword arguments specified by its generic function.
+A method can expand on the keyword parameters specified by its generic function.
 This table shows the different kinds of parameter lists that a method can have,
-what the ``r`` argument contains for each, and which keyword arguments are
-permitted by each. It is a run-time error to call a method with a keyword
-argument that it does not permit.
+what the ``r`` argument contains for each, and which keywords are permitted by
+each. It is a run-time error to call a method with a keyword argument that it
+does not permit.
 
    ======================================  =================  =========================  ==============
    Method's parameter list                 Contents of ``r``  Permits ``a:`` and ``b:``  Permits ``c:``
    ======================================  =================  =========================  ==============
    ``(x)``                                 —                  No                         No            
-   ``(x, #key)``                           —                  As similar                 As similar    
-   ``(x, #key a, b)``                      —                  Yes                        As similar    
+   ``(x, #key)``                           —                  Next method                Next method   
+   ``(x, #key a, b)``                      —                  Yes                        Next method  
    ``(x, #key, #all-keys)``                —                  Yes                        Yes           
    ``(x, #key a, b, #all-keys)``           —                  Yes                        Yes           
    ``(x, #rest r)``                        Extra arguments    No                         No            
-   ``(x, #rest r, #key)``                  Keywords/values    As similar                 As similar    
-   ``(x, #rest r, #key a, b)``             Keywords/values    Yes                        As similar    
+   ``(x, #rest r, #key)``                  Keywords/values    Next method                Next method   
+   ``(x, #rest r, #key a, b)``             Keywords/values    Yes                        Next method 
    ``(x, #rest r, #key, #all-keys)``       Keywords/values    Yes                        Yes           
    ``(x, #rest r, #key a, b, #all-keys)``  Keywords/values    Yes                        Yes           
    ======================================  =================  =========================  ==============
@@ -336,36 +336,43 @@ argument that it does not permit.
       keywords and values passed to the method. The first element of the
       sequence is one of the keywords, the second is the corresponding value,
       the third is another keyword, the fourth is its corresponding value, etc.
-   As similar
-      The method only permits a keyword argument if some other applicable method
-      permits it. This rule is handy when you want to allow for future keywords
-      that make sense within a particular family of related classes but you do
-      not want to be overly permissive.
+   Next method
+      The method only permits a keyword if some other applicable method permits
+      it. In other words, it permits all the keywords in the :drm:`next-method`
+      chain, effectively inheriting them. This rule is handy when you want to
+      allow for future keywords that make sense within a particular family of
+      related classes but you do not want to be overly permissive.
 
-To illustrate the "as similar" rule, say we have the following definitions:
+To illustrate the "next method" rule, say we have the following definitions:
 
 .. code-block:: dylan
    
    define class <shape> (<object>) ... end;
    define class <polygon> (<shape>) ... end;
+   define class <ellipse> (<shape>) ... end;
 
-   define class <oval> (<shape>) ... end;
+   define class <circle> (<ellipse>) ... end;
    define class <triangle> (<polygon>) ... end;
    
-   define generic area (s :: <shape>, #key unit);
+   define generic draw (s :: <shape>, #key);
    
-   define method area (s :: <oval>, #key unit) ... end;
-   define method area (s :: <polygon>, #key unit, sides) ... end;
-   define method area (s :: <triangle>, #key unit) ... end;
+   define method draw (s :: <circle>, #key radius) ... end;
+   define method draw (s :: <polygon>, #key sides) ... end;
+   define method draw (s :: <triangle>, #key) ... end;
 
-The methods on ``<polygon>`` and ``<triangle>`` permit the ``unit:`` and
-``sides:`` keywords. The method on ``<triangle>`` permits the ``sides:`` keyword
-only because the method on ``<polygon>`` both applies to a ``<triangle>`` object
-and permits the ``sides:`` keyword.
+The ``draw`` methods for ``<polygon>`` and ``<triangle>`` permit the ``sides:``
+keyword. The method for ``<triangle>`` permits ``sides:`` because the method for
+``<polygon>`` objects also applies to ``<triangle>`` objects and that method
+permits ``sides:``.
 
-However, the method on ``<oval>`` only permits the ``unit:`` keyword, because
-the method on ``<polygon>`` is not applicable to ``<oval>`` objects — they
-branch off separately from ``<shape>``.
+However, the ``draw`` method for ``<circle>`` only permits the ``radius:``
+keyword, because the ``draw`` method for ``<polygon>`` does not apply to
+``<circle>`` objects — the two classes branch off separately from ``<shape>``.
+
+Finally, the method for ``<ellipse>`` does not permit the ``radius:`` keyword
+because, while a circle is a kind of ellipse, an ellipse is *not* a kind of
+circle. ``<circle>`` does not inherit from ``<ellipse>`` and the ``draw`` method
+for ``<circle>`` objects does not apply to ``<ellipse>`` objects.
 
 For more information on keyword arguments, especially their use
 with :ref:`generic functions <generic-functions>`, see the DRM.
