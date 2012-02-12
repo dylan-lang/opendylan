@@ -14,16 +14,16 @@ sorts of conditions.
 Signaling
 =========
 
-Unlike the exceptions as used in C++ or Java, signaling a condition does *not*
-itself cause the current function or block to exit. Instead, calling the
-:drm:`signal` function is just like calling any other function. The ``signal``
-function just locates an appropriate handler and calls it in turn.
+Unlike the exceptions of C++ or Java, signaling a condition does *not* itself
+cause the current function or block to exit. Instead, calling the :drm:`signal`
+function is just like calling any other function. The ``signal`` function just
+locates an appropriate handler and calls it normally.
 
 One consequence of this is that a handler can signal another condition in a very
-straightforward manner. For example, imagine code that searches for a person by
-name, and if it cannot find one, searches for a pet by the same name, and if it
-cannot find the pet either, it breaks into the debugger. Given an unknown name,
-you might see the following backtrace:
+straightforward manner. For example, imagine a program that searches for a
+person by name, and if it cannot find one, it searches for a pet by the same
+name, and if it cannot find the pet either, it breaks into the debugger. Given
+an unknown name, you might see the following backtrace:
 
 1. ``break({condition <key-not-found-error>: "Toby"})``
 2. ``handle-no-pet-found({condition <key-not-found-error>: "Toby"})``
@@ -44,14 +44,14 @@ Handlers
 
 A function :term:`establishes a handler` with the :drm:`let handler
 <let_handler>` statement. The handler remains in effect until the function
-exits. Others functions called by the first can establish a new handler. When
-the ``signal`` function looks for a handler, it looks for the most recently
-established one for the condition.
+exits. Other functions called by the first can establish new handlers. When the
+``signal`` function looks for a handler, it looks for the most recently
+established handler that fits the condition.
 
 In the example above, there are two handlers: ``handle-no-person-found`` and
 ``handle-no-pet-found``. Both handlers are for the ``<key-not-found-error>``
-condition. We can assume that the ``find-person-or-pet`` function established
-the ``handle-no-person-found`` handler, and that the ``find-pet`` function
+condition. Let us assume that the ``find-person-or-pet`` function established
+the ``handle-no-person-found`` handler and that the ``find-pet`` function
 established the ``handle-no-pet-found`` handler. Since ``handle-no-pet-found``
 was established later, it was the one chosen and called by ``signal`` in frame
 3.
@@ -62,13 +62,13 @@ The code to establish the handlers may have looked like this:
 
    let handler <key-not-found-error> = handle-no-pet-found;
    
-A handler can be normal function, but it can also be an anonymous or local
-method with access to local variables.
+A handler can be normal function, but it can also be an local method or bare
+method, complete with access to local variables.
 
 Recovery
 ========
 
-Dylan's condition system allows it to offer several useful error recovery
+Dylan's condition system allows it to offer a couple of useful error recovery
 techniques.
 
 Returning from ``signal``
@@ -88,22 +88,31 @@ condition and then taking the return value of the ``signal`` function.
 Restart handlers
 ----------------
 
-You can return a fallback value from the ``signal`` function to recover from a
-condition, but that technique has limitations. It does not provide much
-encapsulation or allow for complicated recovery information, and the recovery
-information has to be processed locally.
+You can recover from a problem by returning a fall-back value from the
+``signal`` function, but that technique has limitations. It does not provide
+much encapsulation or allow for complicated recovery information, and the
+recovery information has to be processed locally.
 
 Another way to return recovery information is through the use of a
 :term:`restart`. A restart is a condition that includes recovery information.
-This condition does not indicate a problem, but instead provides a solution. A
-restart handler — which may be established anywhere useful — can use the
-information included in the restart to work around the problem.
+But unlike most conditions, this condition provides a solution instead of
+indicating a problem. A restart handler — which may be established anywhere
+useful — can use the information included in the restart to work around the
+problem.
 
-Of course, when the restart handler finishes, it returns, and its caller
-returns, and so on until the original ``signal`` function returns and the
-program resumes operation where it left off. You cannot use restart handlers or
-conditions alone to escape the program's normal flow of control. For that, Dylan
-offers blocks.
+For example, if the ``find-pet`` function above does not succeed, the
+``handle-no-pet-found`` function could create a new goldfish object and signal a
+``<possible-new-pet>`` restart, returning the goldfish. The callers of
+``find-pet`` would establish a handler for that restart. The restart handler
+established by the ``find-person-or-pet`` function would probably ignore the
+goldfish and signal a different condition instead, but other callers may
+establish different restart handlers with the appropriate behavior.
+
+Regardless, when the restart handler finishes, it returns, and then its caller
+returns, and so on until the original ``signal`` function returns, at which
+point the program resumes work where it left off. You cannot use restart
+handlers or conditions to escape the program's normal flow of control. For that,
+Dylan offers blocks.
 
 Blocks
 ======
@@ -137,10 +146,12 @@ depending on the color of the sky.
       "All's well."
     end block;
 
-Many programs need to dispose of resources or perform other cleanup
-work, regardless of how a block is exited. Blocks may contain
-an optional ``cleanup`` clause, which doesn't affect
-the return value of the block and will always be executed.
+Many programs need to dispose of resources or perform other cleanup work when
+exiting a block. The block may contain optional ``afterwards`` and ``cleanup``
+clauses. Neither affects the block's return value. The ``afterwards`` clause
+executes if the block ends normally without using its nonlocal exit, and the
+``cleanup`` clause executes when the block ends whether it ends normally or via
+nonlocal exit.
 
 .. code-block:: dylan
 
@@ -151,6 +162,8 @@ the return value of the block and will always be executed.
         return(errorcode);
       end if;
       process-data(data);
+    afterwards
+      report-success();
     cleanup
       close(fd);
     end;
@@ -158,10 +171,11 @@ the return value of the block and will always be executed.
 Blocks and conditions
 ---------------------
 
-In addition to the ``cleanup`` clause, a block may also contain an ``exception``
-clause. The exception clause establishes a handler for a condition much like the
-``let handler`` statement, but this handler calls the exit procedure before it
-runs. This takes a short cut out of the normal flow of control. The ``signal``
+In addition to the ``afterwards`` and ``cleanup`` clauses, a block may also
+contain an ``exception`` clause. The exception clause establishes a handler for
+a condition much like the ``let handler`` statement, but before it runs the
+handler calls the block's exit procedure and takes a nonlocal exit. In other
+words, it takes a short cut out of the normal flow of control. The ``signal``
 function that signaled the condition never returns to its caller. Instead, the
 program resumes execution after the block.
 
@@ -181,7 +195,8 @@ Java:
     end;
    
 You can use a block with a restart to abort some work entirely and fall back to
-the data supplied by the restart object:
+the data supplied by the restart object, neatly circumventing the problem mentioned
+at the end of the `Restart handlers`_ section above:
 
 .. code-block:: dylan
 
