@@ -1,4 +1,5 @@
 library: String-extensions
+target-type: dll
 unique-id-base: 654
 files: library.dylan
  character-type.dylan
