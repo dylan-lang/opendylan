@@ -124,7 +124,7 @@ define method parse-options (options, options-fragment, name)
            variable-name:   name,
            options:         collected(unrecognized));
     end;
-    // Are any of the options specified exlusive of any others?
+    // Are any of the options specified exclusive of any others?
     let problems = options-contradictory?(options, val-table);
     if (problems)
       for (problem-pair in problems)

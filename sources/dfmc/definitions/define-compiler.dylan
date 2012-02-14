@@ -91,7 +91,7 @@ define method do-define-some-kind-of-an-expander
     end with-expansion-module;
 end method;
 
-// TODO: Allow the special case word categrory for macro definers to be
+// TODO: Allow the special case word category for macro definers to be
 // declared in the definition somewhere instead of using these name
 // spotting hacks.
 

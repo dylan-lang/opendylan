@@ -48,7 +48,7 @@ define method form-compile-stage-only?
          & begin
 	     let binding = form-variable-binding(form);
              let modifying = untracked-binding-modifying-definitions(binding);
-             // You can get empty modifiers for an implictly-defined generic
+             // You can get empty modifiers for an implicitly-defined generic
              // only if a virtual slot declaration was the generator.
              ~empty?(modifying)
                 & every?(method (mod-form) 

@@ -639,7 +639,7 @@ end function;
 
 define function retract-form-dispatch-decisions (form :: <top-level-form>)
   // TODO: Need to bring this under dependency tracking.  For now this
-  // means that dispatch decision recording is only meaninful in a full
+  // means that dispatch decision recording is only meaningful in a full
   // compilation.
   form.form-compilation-record.compilation-record-dispatch-decisions := #();
 end;

@@ -255,7 +255,7 @@ define method install-top-level-form-bindings
   else
     if (~def)
       // Generate an implicit definition.  This must be the first method
-      // definiton, since otherwise would have generated an implicit def
+      // definition, since otherwise would have generated an implicit def
       // last time around and name would be defined.
       // TODO: While hygiene is suspect, ensure the result of constructing
       // an implicit definition is in the same place as the generating 

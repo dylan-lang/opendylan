@@ -241,7 +241,7 @@ define dood-class <expander-defining-form> (<variable-defining-form>) /* abstrac
     required-init-keyword: macro-object:;
   weak slot form-expander,
     required-init-keyword: expander:;
-  // set by initalize method.
+  // set by initialize method.
   lazy slot form-macro-word;
   lazy slot form-macro-word-class;
 end;
