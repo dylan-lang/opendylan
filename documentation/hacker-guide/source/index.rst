@@ -13,6 +13,7 @@ Contents:
    compiler-internals
    compiler-design
    runtime
+   documentation
    glossary
 
 

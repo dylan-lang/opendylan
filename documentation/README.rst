@@ -1,7 +1,7 @@
 This is the documentation for Open Dylan.
 
-It is built using `Sphinx <http://sphinx.pocoo.org>`_.  All content is written using
-ReStructured Text with Sphinx extensions.
+It is built using `Sphinx <http://sphinx.pocoo.org>`_. All content is written
+using ReStructured Text with Sphinx extensions.
 
 Preparation
 ===========
@@ -59,3 +59,11 @@ are as follows:
 
 Note that most files will correspond to a chapter and hence will start
 with "`*`".  By convention we use over *and* under markup at this level.
+
+
+Dylan Language Markup
+=====================
+
+We have created a Dylan language Sphinx domain to make it easier to document and
+refer to Dylan language entities. This domain is documented in the
+"dylandomain/reference.rst" file in the "sphinx-extensions" repository.
