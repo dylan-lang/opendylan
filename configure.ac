@@ -75,7 +75,7 @@ AC_ARG_WITH(arch,
             AC_HELP_STRING([--with-arch=ARCH],
                            [Runtime architecture, e.g., i386 or x86_64.]),
             [arch_flag="-arch $with_arch"],
-	    [arch_flag=$arch_target])
+            [arch_flag=$arch_target])
 AC_SUBST(arch_flag)
 
 AC_ARG_WITH(mps,
@@ -85,7 +85,7 @@ AC_SUBST(with_mps)
 
 AC_ARG_WITH(gc,
             AC_HELP_STRING([--with-gc=PATH],
-			   [Path of Boehm GC installation.]))
+                           [Path of Boehm GC installation.]))
 AC_SUBST(with_gc)
 
 AC_ARG_WITH(library-source,
@@ -96,22 +96,30 @@ AC_SUBST(with_library_source)
 AC_MSG_CHECKING(for Library Packs to include)
 LIBRARY_PACKS=Core
 AC_ARG_ENABLE(network,
-	      AC_HELP_STRING([--disable-network],
-	                     [Do not build the basic networking library]),
-	      ,LIBRARY_PACKS="$LIBRARY_PACKS Network")
+              AC_HELP_STRING([--disable-network],
+                             [Do not build the basic networking library]),
+              ,LIBRARY_PACKS="$LIBRARY_PACKS Network")
 AC_ARG_ENABLE(testworks,
-	      AC_HELP_STRING([--enable-testworks],
-	                     [Build the unit test framework library]),
-	      LIBRARY_PACKS="$LIBRARY_PACKS TestWorks")
+              AC_HELP_STRING([--enable-testworks],
+                             [Build the unit test framework library]),
+              LIBRARY_PACKS="$LIBRARY_PACKS TestWorks")
 AC_ARG_ENABLE(dood,
-	      AC_HELP_STRING([--enable-dood],
-	                     [Build the DOOD persistent storage library]),
-	      LIBRARY_PACKS="$LIBRARY_PACKS DOOD")
+              AC_HELP_STRING([--enable-dood],
+                             [Build the DOOD persistent storage library]),
+              LIBRARY_PACKS="$LIBRARY_PACKS DOOD")
 AC_MSG_RESULT($LIBRARY_PACKS)
 AC_SUBST(LIBRARY_PACKS)
 
 # for now, replace mps only in pentium-linux
-# gc is replaced in sources/dfmc/c-run-time
-AC_CONFIG_FILES(Makefile sources/lib/run-time/pentium-linux/Makefile sources/lib/run-time/pentium-freebsd/Makefile sources/dfmc/c-run-time/Makefile)
+# gc is also replaced in sources/dfmc/c-run-time
+AC_CONFIG_FILES(Makefile
+                sources/lib/run-time/pentium-linux/Makefile
+                sources/lib/run-time/pentium-freebsd/Makefile
+                sources/dfmc/c-run-time/Makefile
+                sources/dfmc/c-run-time/c-freebsd-build.jam
+                sources/dfmc/c-run-time/c-linux-build.jam
+                sources/dfmc/c-run-time/ppc-darwin-build.jam
+                sources/dfmc/c-run-time/x86-darwin-build.jam
+                sources/dfmc/c-run-time/x86_64-darwin-build.jam)
 
 AC_OUTPUT
