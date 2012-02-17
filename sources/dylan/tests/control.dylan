@@ -650,10 +650,8 @@ define test bind-exits ()
 end test bind-exits;
 
 define test unwind-protects ()
-//---*** This results in a Bus error when the C back-end is used
-//       - hannes (Jan 2012)
-//  check-equal("unwind-protect returns protected",
-//	      block () 1 cleanup 2 end, 1);
+  check-equal("unwind-protect returns protected",
+	      block () 1 cleanup 2 end, 1);
   check-equal("unwind-protect returns protected even with throw",
 	      block (return) return(1) cleanup 2 end, 1);
   check-equal("unwind-protect cleanup takes precedence",
