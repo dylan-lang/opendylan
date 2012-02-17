@@ -419,10 +419,12 @@ define method delete-computation! (c :: <unwind-protect>) => ();
         values(c.cleanups,
                previous-computation(c.cleanups-end), 
                #t);
-      else                   // cleanup #f or empty
+      elseif (has-body?(c))   // cleanup #f or empty
         values(c.body, 
                previous-computation(c.protected-end), 
                #f);
+      else                    // neither body nor cleanup
+        values(next-c, prev-c, #f)
       end if;
   
   redirect-previous-computations!(c, first-c);  // fixup next-computation values
