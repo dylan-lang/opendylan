@@ -2,7 +2,11 @@
 # Configuration variables
 #
 
-CC     ?= gcc -fPIC -L/usr/local/lib -I/usr/local/include -O0 ;
+GC_PREFIX = "@with_gc@" ;
+GC_LIBDIR = $(GC_PREFIX)/lib ;
+GC_INCDIR = $(GC_PREFIX)/include ;
+
+CC     ?= gcc -I$(GC_INCDIR) -fPIC -L/usr/local/lib -I/usr/local/include -O0 ;
 
 MKF    ?= dylanmakefile.mkf ;
 
@@ -42,7 +46,8 @@ RTOBJS ?= posix-threads.o
 	  debug-print.o
 	  run-time.o ;
 
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lgc -lm ;
+# This variable is passed to the link rule by way of the dylan.lid file.
+rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -L$(GC_LIBDIR) -lgc -lm ;
 
 guilflags ?= ;
 
@@ -351,7 +356,8 @@ rule LinkEXE {
 }
 
 actions LinkEXE bind NEEDLIBS {
-  $(CC) -o $(<)  -Wl,-rpath,"$(LIBPATH:J=:)" $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  # Link GC here as well as in rtlibs because it might not be statically linked
+  $(CC) -o $(<)  -Wl,-rpath,"$(LIBPATH:J=:)" $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc
 }
 
 #
