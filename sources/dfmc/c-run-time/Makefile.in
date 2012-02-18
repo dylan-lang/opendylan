@@ -49,13 +49,13 @@ $(RUNTIMELIBDEST):
 # files to be present; only one will be used, so the others can be missing.
 install-build:
 	cp -fp $(top_srcdir)/sources/lib/run-time/mini-jambase.jam $(LIBDEST)
-	-cp -fp $(runtime_srcdir)/c-freebsd-build.jam $(LIBDEST)
-	-cp -fp $(runtime_srcdir)/c-linux-build.jam $(LIBDEST)
+	-cp -fp c-freebsd-build.jam $(LIBDEST)
+	-cp -fp c-linux-build.jam $(LIBDEST)
 	-cp -fp $(runtime_srcdir)/x86-linux-build.jam $(LIBDEST)
 	-cp -fp $(runtime_srcdir)/x86_64-linux-build.jam $(LIBDEST)
-	-cp -fp $(runtime_srcdir)/x86-darwin-build.jam $(LIBDEST)
-	-cp -fp $(runtime_srcdir)/x86_64-darwin-build.jam $(LIBDEST)
-	-cp -fp $(runtime_srcdir)/ppc-darwin-build.jam $(LIBDEST)
+	-cp -fp x86-darwin-build.jam $(LIBDEST)
+	-cp -fp x86_64-darwin-build.jam $(LIBDEST)
+	-cp -fp ppc-darwin-build.jam $(LIBDEST)
 
 install-header:	$(runtime_srcdir)/run-time.h $(INCDEST)
 	cp -fp $(runtime_srcdir)/run-time.h $(INCDEST)
