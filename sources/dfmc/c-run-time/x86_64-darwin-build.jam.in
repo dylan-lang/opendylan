@@ -12,6 +12,10 @@ SUFLIB	?= .a ;			# static library suffix
 SUFDLL	?= .dylib ;	# shared library suffix
 SUFMKF	?= .mkf ;   # build-system files
 
+GC_PREFIX = "@with_gc@" ;
+GC_LIBDIR = $(GC_PREFIX)/lib ;
+GC_INCDIR = $(GC_PREFIX)/include ;
+
 {
   local _lib = lib ;
   local _bin = bin ;
@@ -39,7 +43,7 @@ SUFMKF	?= .mkf ;   # build-system files
 
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=x86_64) ;
 
-CCFLAGS ?= -fno-strict-aliasing -fPIC -g $(ARCHFLAG) ;
+CCFLAGS ?= -I$(GC_INCDIR) -fno-strict-aliasing -fPIC -g $(ARCHFLAG) ;
 
 LINKFLAGS ?= $(ARCHFLAG) ;
 
@@ -53,7 +57,8 @@ RTOBJS ?= dummy-threads.o
 	  debug-print.o
 	  run-time.o ;
 
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lgc -ldl -lm ;
+# This variable is passed to the link rule by way of the dylan.lid file.
+rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -L$(GC_LIBDIR) -lgc -ldl -lm ;
 
 guilflags ?= ;
 
@@ -369,7 +374,8 @@ rule LinkEXE {
 }
 
 actions together LinkEXE bind NEEDLIBS {
-   $(CC) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -lgc -lc
+   # Link GC here as well as in rtlibs because it might not be statically linked
+   $(CC) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
 }
 
 #
