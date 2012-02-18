@@ -85,7 +85,8 @@ AC_SUBST(with_mps)
 
 AC_ARG_WITH(gc,
             AC_HELP_STRING([--with-gc=PATH],
-                           [Path of Boehm GC installation.]))
+                           [Path of Boehm GC installation.]),
+            [gc_prefix=$withval])
 AC_SUBST(with_gc)
 
 AC_ARG_WITH(library-source,
@@ -109,6 +110,29 @@ AC_ARG_ENABLE(dood,
               LIBRARY_PACKS="$LIBRARY_PACKS DOOD")
 AC_MSG_RESULT($LIBRARY_PACKS)
 AC_SUBST(LIBRARY_PACKS)
+
+
+#-----------------------------------
+# Set up garbage collector variables
+#-----------------------------------
+
+AS_IF([test x$gc_prefix != x],          # if Boehm GC path given
+                [gc_includedirs="${gc_prefix}/include"
+                 gc_libdirs="${gc_prefix}/lib"
+                 gc_libnames="gc"],
+      # else no garbage collector
+      [gc_includedirs=""
+       gc_libdirs=""
+       gc_libnames=""]
+)
+AC_SUBST(gc_includedirs)
+AC_SUBST(gc_libdirs)
+AC_SUBST(gc_libnames)
+
+
+#--------------------------
+# Do substitutions & output
+#--------------------------
 
 # for now, replace mps only in pentium-linux
 # gc is also replaced in sources/dfmc/c-run-time
