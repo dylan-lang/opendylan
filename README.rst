@@ -61,8 +61,8 @@ to double its value)
   make
   sudo make install
 
-The first generation will be in Bootstrap.2/bin/dylan-compiler ,
-and a second generation will be in /opt/opendylan-current/bin/dylan-compiler
+The first generation will be in Bootstrap.2/bin/dylan-compiler,
+and a second generation will be in /opt/opendylan-current/bin/dylan-compiler.
 
 Make sure that the target installation directory has been deleted. If you try
 to install into a directory that already has an older version of Open Dylan in
