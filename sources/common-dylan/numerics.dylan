@@ -270,7 +270,7 @@ define method scale-float
           = %logior(%logand(decoded-high, $sign-bit-mask),
                     u%shift-left(#x7FF,
                                  $ieee-754-double-float-digits - 1));
-        encode-double-float($machine-word-zero);
+        encode-double-float($machine-word-zero, $machine-word-zero);
       end if;
 
     scaled-exponent < $minimum-double-float-exponent =>
