@@ -53,12 +53,12 @@ DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
 # Runtime
 #
 
-RTOBJS ?= dummy-threads.o
+RTOBJS ?= posix-threads.o
 	  debug-print.o
 	  run-time.o ;
 
 # This variable is passed to the link rule by way of the dylan.lid file.
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -L$(GC_LIBDIR) -lgc -ldl -lm ;
+rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -L$(GC_LIBDIR) -lgc -ldl -lm -lpthread ;
 
 guilflags ?= ;
 
