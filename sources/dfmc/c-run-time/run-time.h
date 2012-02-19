@@ -55,6 +55,30 @@ typedef char*			DBSTR;
 typedef const char*		DCBSTR;
 typedef void* 			D;
 
+/* COMPILER-SPECIFIC INTRINSICS */
+
+#ifdef _GNUC_
+#define PURE_FUNCTION __attribute__((pure))
+#else
+#define PURE_FUNCTION
+#endif
+
+#ifdef _GNUC_
+#define CONDITIONAL_UPDATE(var, new_val, old_val) \
+  (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
+#else
+#define CONDITIONAL_UPDATE(var, new_val, old_val) \
+  ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
+#endif
+
+#ifdef _GNUC_
+#define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
+#define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
+#else
+#define SYNCHRONIZE_SIDE_EFFECTS()
+#define SEQUENCE_POINT()
+#endif
+
 /* DYLAN TAGGING */
 
 #define TAG_BITS(x) (((unsigned long) x)&3)
@@ -445,7 +469,7 @@ typedef struct _teb {
 #define Pnext_methods_ get_teb()->next_methods
 #define Preturn_values get_teb()->return_values
 
-__attribute__((pure)) TEB* get_teb();
+PURE_FUNCTION TEB* get_teb();
 TEB* make_teb();
 
 /* CALLING CONVENTION ENTRY POINTS */
@@ -1544,9 +1568,6 @@ extern D MAKE_DDFLT_CELL(DDFLT);
 
 /* THREAD SUPPORT */
 
-#define CONDITIONAL_UPDATE(var, new_val, old_val) \
-  ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
-
 extern void initialize_threads_primitives();
 
 extern D primitive_release_simple_lock(D l);
@@ -1586,8 +1607,8 @@ extern D primitive_read_thread_variable(D h);
 extern D primitive_write_thread_variable(D h, D nv);
 extern D primitive_unlock_simple_lock(D l);
 extern D primitive_unlock_recursive_lock(D l);
-#define primitive_sequence_point()
-#define primitive_synchronize_side_effects()
+#define primitive_sequence_point() SEQUENCE_POINT()
+#define primitive_synchronize_side_effects() SYNCHRONIZE_SIDE_EFFECTS()
 
 /* RUN-TIME CALLBACKS */
 
