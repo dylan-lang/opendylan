@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define sealed class <c-address-options-descriptor> (<object>)
   constant slot c-address-c-name = #f, init-keyword: c-name:;
-  constant slot c-address-import = #{ #f }, init-keyword: import:;
+  constant slot c-address-import = #f, init-keyword: import:;
 end class;
 
 define option <c-address-c-name-option>
@@ -35,7 +35,7 @@ define &macro c-address-definer
     let options = apply(make, <c-address-options-descriptor>, initargs);
     let c-name = c-address-c-name(options);
     if (c-name)
-      let import = c-address-import(options);
+      let import = c-address-import(options) | #{ #f };
       #{ define constant ?var-name
            = make(check-c-address-designator(?var-name, ?pointer-designator),
 	          address: primitive-wrap-machine-word
@@ -78,9 +78,9 @@ end &macro;
 //
 
 define class <c-variable-options-descriptor> (<object>)
-  constant slot c-variable-setter-name = #{ #t }, init-keyword: setter:;
+  constant slot c-variable-setter-name = #f, init-keyword: setter:;
   constant slot c-variable-c-name = #f, init-keyword: c-name:;
-  constant slot c-variable-import = #{ #f }, init-keyword: import:;
+  constant slot c-variable-import = #f, init-keyword: import:;
 end class;
 
 define option <c-variable-setter-option>
@@ -122,15 +122,15 @@ define &macro c-variable-definer
     else
       let pointer-type-name = #{ "pointer-type-defined-for-" ## ?accessor };
       let pointer-name = #{ "$pointer-to-" ## ?accessor };
-      let import = c-variable-import(options);
+      let import = c-variable-import(options) | #{ #f };
+      let setter = c-variable-setter-name(options) | #{ #t };
       let setter-name
-        = macro-case (c-variable-setter-name(options))
+        = macro-case (setter)
             { #f } => #f;
             { #t } => #{ ?accessor ## "-setter" };
             { ?:name } => name;
             { ?anything-else:* }
               => begin
-		   let setter = c-variable-setter-name(options);
 		   note(<invalid-c-variable-setter>,
 			source-location: fragment-source-location(setter),
 			form-name: accessor,
