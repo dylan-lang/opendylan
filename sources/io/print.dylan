@@ -367,14 +367,20 @@ define open generic print-object (object, stream :: <stream>)
 define method print-object (object :: <object>, stream :: <stream>) => ()
   printing-logical-block (stream, prefix: "{", suffix: "}")
     let obj-class = object.object-class;
-    let name = obj-class.debug-name;
-    if (name)
-      write(stream, as-lowercase(as(<byte-string>, name)));
+    let cname = obj-class.debug-name;
+    if (cname)
+      write(stream, as-lowercase(as(<byte-string>, cname)));
     else
       print(obj-class, stream);
     end if;
-    write(stream, " ");
-    write(stream, machine-word-to-string(address-of(object)));
+    let oname = object.debug-name;
+    if (oname)
+      write(stream, " ");
+      write(stream, oname);
+    else
+      write(stream, " ");
+      write(stream, machine-word-to-string(address-of(object)));
+    end if;
   end;
 end method;
 
