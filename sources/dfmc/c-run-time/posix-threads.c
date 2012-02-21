@@ -371,8 +371,8 @@ D primitive_destroy_thread(D t)
 /* 3 */
 D primitive_thread_join_single(D t)
 {
-  DTHREAD       *thread = t;
-  uintptr_t      state, completed;
+  volatile DTHREAD *thread = t;
+  uintptr_t         state, completed;
 
   assert(thread != NULL);
 
@@ -412,18 +412,21 @@ D primitive_thread_join_single(D t)
 /* 4 */
 D primitive_thread_join_multiple(D v)
 {
-  SOV           *thread_vector = v;
-  DTHREAD      **threads, *joined_thread = NULL;
-  int            i, result;
-  uintptr_t      size, state;
+  SOV               *thread_vector = v;
+  volatile DTHREAD **threads;
+  volatile DTHREAD  *joined_thread = NULL;
+  int                i, result;
+  uintptr_t          size, state;
 
   assert(thread_vector != NULL);
   assert(IS_ZINT(thread_vector->size));
 
   size  = ((uintptr_t)(thread_vector->size)) >> 2;
-  threads = (DTHREAD **)(thread_vector->data);
+  threads = (volatile DTHREAD **)(thread_vector->data);
 
   if (pthread_mutex_lock(&thread_join_lock)) {
+    MSG0("thread-join-multiple: error obtaining thread join lock\n");
+    return GENERAL_ERROR;
   }
 
   /* Make sure none of the threads is already
@@ -432,6 +435,7 @@ D primitive_thread_join_multiple(D v)
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
     if (state & MARKED || state & JOINED) {
+      MSG0("thread-join-multiple: duplicate join error\n");
       return GENERAL_ERROR;
     }
   }
@@ -453,7 +457,7 @@ D primitive_thread_join_multiple(D v)
 
   while (joined_thread == NULL) {
     if (pthread_cond_wait(&thread_exit_event, &thread_join_lock)) {
-      MSG0("thread-join-single: error waiting for thread exit event\n");
+      MSG0("thread-join-multiple: error waiting for thread exit event\n");
       return GENERAL_ERROR;
     }
     for (i = 0; i < size; i++) {
@@ -473,11 +477,11 @@ D primitive_thread_join_multiple(D v)
   }
 
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
-    MSG0("thread-join-single: error releasing thread join lock\n");
+    MSG0("thread-join-multiple: error releasing thread join lock\n");
     return GENERAL_ERROR;
   }
 
-  return joined_thread;
+  return (DTHREAD*)joined_thread;
 }
 
 /* 4.5 */
