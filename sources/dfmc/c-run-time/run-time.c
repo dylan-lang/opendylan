@@ -105,9 +105,9 @@ static void mps_finalization_proc(D obj, struct _mps_finalization_queue *cons) {
 
 void primitive_mps_finalize(D obj) {
   GC_register_finalizer(obj,
-			(GC_finalization_proc)mps_finalization_proc,
-			GC_NEW(struct _mps_finalization_queue),
-			NULL, NULL);
+                        (GC_finalization_proc)mps_finalization_proc,
+                        GC_NEW(struct _mps_finalization_queue),
+                        NULL, NULL);
 }
   
 D primitive_mps_finalization_queue_first() {
@@ -197,8 +197,8 @@ void primitive_replace_bytesX
      D src, DSINT src_base_offset, DSINT src_offset, DSINT size) {
   if (size > 0)
     memcpy(&(((char*)(&(((D*)dst)[dst_base_offset])))[dst_offset]),
-	   &(((char*)(&(((D*)src)[src_base_offset])))[src_offset]),
-	   (size_t)size);
+           &(((char*)(&(((D*)src)[src_base_offset])))[src_offset]),
+           (size_t)size);
 }
 
 #define COPY_WORDS(dst, src, size) memcpy((dst), (src), (size) * sizeof(D))
@@ -209,23 +209,23 @@ void primitive_replaceX
   ignore(src_base_offset);
   if (size > 0)
     COPY_WORDS(&(((D*)dst)[dst_base_offset + dst_offset]),
-	       &(((D*)src)[dst_base_offset + src_offset]),
-	       size);
+               &(((D*)src)[dst_base_offset + src_offset]),
+               size);
 }
 
 
 D primitive_compare_bytes(D base1, DSINT offset1,
-			  D base2, DSINT offset2, DSINT size) {
+                          D base2, DSINT offset2, DSINT size) {
   return (RAWASBOOL(memcmp(&((((BS*)base1)->data)[offset1]),
-			   &((((BS*)base2)->data)[offset2]),
-			   (size_t)size)));
+                           &((((BS*)base2)->data)[offset2]),
+                           (size_t)size)));
 }
 
 D primitive_compare_words(D base1, DSINT offset1,
-			  D base2, DSINT offset2, DSINT size) {
+                          D base2, DSINT offset2, DSINT size) {
   return (RAWASBOOL(memcmp(&((((BS*)base1)->data)[offset1]),
-			   &((((BS*)base2)->data)[offset2]),
-			   size * sizeof(D))));
+                           &((((BS*)base2)->data)[offset2]),
+                           size * sizeof(D))));
 }
 
 
@@ -415,7 +415,7 @@ typedef union {
 D primitive_raw_as_single_float(DSFLT x) {
   return(primitive_allocate_filled
            (2, &KLsingle_floatGVKdW, 1, 
-	    (D)primitive_cast_single_float_as_machine_word(x), 0, 0));
+            (D)primitive_cast_single_float_as_machine_word(x), 0, 0));
 }
 
 DMINT primitive_single_float_as_double_integer(DSFLT f) {
@@ -541,7 +541,7 @@ D primitive_wrap_abstract_integer(DMINT x) {
   DUMINT hs = (DUMINT)x & HIGH_BITS_AND_SIGN;
   if (hs != 0 && hs != HIGH_BITS_AND_SIGN) {
     xd = primitive_allocate_filled
-	   (3, &KLdouble_integerGVKeW, 2, (D)0, 0, 0);
+           (3, &KLdouble_integerGVKeW, 2, (D)0, 0, 0);
     (DBI)xd->low = (DUMINT)x;
     /* Propogate the sign of x through the high word of the <double-integer> */
     (DBI)xd->high = (x < 0) ? -1 : 0;
@@ -554,7 +554,7 @@ D primitive_wrap_abstract_integer(DMINT x) {
 D primitive_wrap_unsigned_abstract_integer(DMINT x) {
   if ((DUMINT)x & HIGH_BITS != 0) {
     D xd = primitive_allocate_filled
-	     (3, &KLdouble_integerGVKeW, 2, (D)0, 0, 0);
+             (3, &KLdouble_integerGVKeW, 2, (D)0, 0, 0);
     /* When x is treated as an unsigned value, the high word of the
        resulting <double-integer> will always be 0 */
     (DBI)xd->low = (DUMINT)x;
@@ -1567,11 +1567,11 @@ D primitive_xep_apply (FN* fn, int n, D a[]) {
   return(xep(fn,n,
              a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
              a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
-	     a[20],a[21],a[22],a[23],a[24],a[25],a[26],a[27],a[28],a[29],
-	     a[30],a[31],a[32],a[33],a[34],a[35],a[36],a[37],a[38],a[39],
-	     a[40],a[41],a[42],a[43],a[44],a[45],a[46],a[47],a[48],a[49],
-	     a[50],a[51],a[52],a[53],a[54],a[55],a[56],a[57],a[58],a[59],
-	     a[60],a[61],a[62],a[63]));
+             a[20],a[21],a[22],a[23],a[24],a[25],a[26],a[27],a[28],a[29],
+             a[30],a[31],a[32],a[33],a[34],a[35],a[36],a[37],a[38],a[39],
+             a[40],a[41],a[42],a[43],a[44],a[45],a[46],a[47],a[48],a[49],
+             a[50],a[51],a[52],a[53],a[54],a[55],a[56],a[57],a[58],a[59],
+             a[60],a[61],a[62],a[63]));
   }
 }
 
@@ -1647,7 +1647,7 @@ teb->a[32], teb->a[33], teb->a[34], teb->a[35], teb->a[36], teb->a[37], teb->a[3
 teb->a[40], teb->a[41], teb->a[42], teb->a[43], teb->a[44], teb->a[45], teb->a[46], teb->a[47],
 teb->a[48], teb->a[49], teb->a[50], teb->a[51], teb->a[52], teb->a[53], teb->a[54], teb->a[55],
 teb->a[56], teb->a[57], teb->a[58], teb->a[59], teb->a[60], teb->a[61], teb->a[62], teb->a[63]
-							 ));
+                                                         ));
   }
 }
 
@@ -1767,11 +1767,11 @@ D iep_apply (DLFN iep, int n, D a[]) {
     primitive_break();
   return(iep(a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
              a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
-	     a[20],a[21],a[22],a[23],a[24],a[25],a[26],a[27],a[28],a[29],
-	     a[30],a[31],a[32],a[33],a[34],a[35],a[36],a[37],a[38],a[39],
-	     a[40],a[41],a[42],a[43],a[44],a[45],a[46],a[47],a[48],a[49],
-	     a[50],a[51],a[52],a[53],a[54],a[55],a[56],a[57],a[58],a[59],
-	     a[60],a[61],a[62],a[63]));
+             a[20],a[21],a[22],a[23],a[24],a[25],a[26],a[27],a[28],a[29],
+             a[30],a[31],a[32],a[33],a[34],a[35],a[36],a[37],a[38],a[39],
+             a[40],a[41],a[42],a[43],a[44],a[45],a[46],a[47],a[48],a[49],
+             a[50],a[51],a[52],a[53],a[54],a[55],a[56],a[57],a[58],a[59],
+             a[60],a[61],a[62],a[63]));
   }
 }
 
@@ -2018,7 +2018,7 @@ D primitive_set_accessor_method_xep (D accmeth, D what) {
 INLINE void default_arguments
     (int number_required, D* arguments, 
      int number_keywords, D* keyword_specifiers,  
-     int keyword_arguments_offset, D* new_arguments) {	
+     int keyword_arguments_offset, D* new_arguments) {  
   int i, j;
 
   /* copy arguments into staging ground */
@@ -2048,7 +2048,7 @@ INLINE void process_keyword_parameters
          new_arguments[k] = value;
          break;
       } } }
-}	
+}       
 
 extern D unknown_keyword_argument_errorVKi(D function, D keyword);
 
@@ -2110,8 +2110,8 @@ INLINE int process_keyword_call_and_restify_into
      &arguments[number_required], optionals_count);
   return(process_keyword_call_into
           (new_arguments, function, argument_count, 
-	   number_required, arguments, optionals_count, 
-	   &arguments[number_required], rest_arguments));
+           number_required, arguments, optionals_count, 
+           &arguments[number_required], rest_arguments));
 }
 
 INLINE D* process_keyword_call
@@ -2663,8 +2663,8 @@ D general_engine_node_n_engine (D a1, ...) {
       svdata[0] = a1;
       va_start(ap, a1);
       for(i=1; i<impargs; i++) {
-	D argument = va_arg(ap, D);
-	svdata[i] = argument;
+        D argument = va_arg(ap, D);
+        svdata[i] = argument;
       }
     }
     return(cb(svec, e, parent));
@@ -2700,13 +2700,13 @@ D general_engine_node_spread_engine (D a1, ...) {
       BUFFER_VARARGS(nreq, a1, &teb->arguments[1]);
       { SOV* optargvec = (SOV*)teb->arguments[nreq];
         D* optargdata = vector_data(optargvec);
-	int nopts = vector_size(optargvec);
-	DEF_STACK_VECTOR_INITTED(svec, nreq + nopts);
-	D* svdata = vector_data(svec);
-	int i;
-	for(i=0; i<nreq; i++) svdata[i] = teb->arguments[i];
-	for(i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
-	return(cb(svec, e, parent));
+        int nopts = vector_size(optargvec);
+        DEF_STACK_VECTOR_INITTED(svec, nreq + nopts);
+        D* svdata = vector_data(svec);
+        int i;
+        for(i=0; i<nreq; i++) svdata[i] = teb->arguments[i];
+        for(i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
+        return(cb(svec, e, parent));
       } }
   } else if (impargs > 7) {
     /* We have a vector of MEP args, and no optionals, so just use that vector. */
@@ -2721,8 +2721,8 @@ D general_engine_node_spread_engine (D a1, ...) {
       svdata[0] = a1;
       va_start(ap, a1);
       for(i=1; i<nreq; i++) {
-	D argument = va_arg(ap, D);
-	svdata[i] = argument;
+        D argument = va_arg(ap, D);
+        svdata[i] = argument;
       }
     }
     return(cb(svec, e, parent));
@@ -2892,7 +2892,7 @@ D raw_byte_repeated_instance_slot_setter_engine (D newval, D object, D idx) {
         _gubble(0, a1)
 #define KLUDGEARGS2(_gubble) \
      _gubble(0, a1); \
-	_gubble(1, a2)
+        _gubble(1, a2)
 #define KLUDGEARGS3(_gubble) \
      _gubble(0, a1); \
      _gubble(1, a2); \
@@ -2948,7 +2948,7 @@ D single_method_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
     teb->function = meth; \
     teb->next_methods = e->data; \
     return(mep(ARGTEMPLATE##_nparams)); \
-				   }
+                                   }
 
 
 DEFINE_SINGLE_METHOD_ENGINE(0)
@@ -2982,8 +2982,8 @@ D check_explicit_kwds (SOV* optionals, SOV* kwds, int kwdskip) {
     for(i=0; i<optsize; i+=2) {
       D kwdarg = optdata[i];
       for(j=0; j<kwdsize; j+=kwdskip) {
-	D kwd = kwddata[j];
-	if (kwd == kwdarg) goto check_next;
+        D kwd = kwddata[j];
+        if (kwd == kwdarg) goto check_next;
       }
       return(kwdarg);
     check_next: ;
@@ -3027,7 +3027,7 @@ extern D Kinvalid_keyword_trapVKeI(D gfargs, D gf, D engine, D badkwd, D keys, D
      Kodd_number_of_keyword_args_trapVKeI((invargvec_), (invgf_), (invengine_)) \
    : \
      Kinvalid_keyword_trapVKeI((invargvec_), (invgf_), (invengine_), (invbadkwd_), \
-						   (invengine_)->keywords, DFALSE))
+                                                   (invengine_)->keywords, DFALSE))
 
 
 #define INVALID_KEYWORD_implicit(invgf_, invargvec_, invbadkwd_, invmeth_, invengine_) \
@@ -3035,15 +3035,15 @@ extern D Kinvalid_keyword_trapVKeI(D gfargs, D gf, D engine, D badkwd, D keys, D
      Kodd_number_of_keyword_args_trapVKeI((invargvec_), (invgf_), (invengine_)) \
    : \
      Kinvalid_keyword_trapVKeI((invargvec_), (invgf_), (invengine_), (invbadkwd_), \
-						   ((KFN*)(invengine_)->meth)->keyword_specifiers, \
-						   DTRUE))
+                                                   ((KFN*)(invengine_)->meth)->keyword_specifiers, \
+                                                   DTRUE))
 
 #define INVALID_KEYWORD_unrestricted(invgf_, invargvec_, invbadkwd_, invmeth_, invengine_) \
   ( ((invbadkwd_) == DFALSE) ? \
      Kodd_number_of_keyword_args_trapVKeI((invargvec_), (invgf_), (invengine_)) \
     : \
      Kinvalid_keyword_trapVKeI((invargvec_), (invgf_), (invengine_), (invbadkwd_), \
-						   DFALSE, DFALSE))
+                                                   DFALSE, DFALSE))
 
 
 #define DEFINE_KEYED_SINGLE_METHOD_ENGINE(_how, _nparams) \
@@ -3478,8 +3478,8 @@ extern D Ddirect_object_mm_wrappersVKi;
     D parent_ = teb->next_methods; \
     DWORD key = (DWORD)(FI(MONO_WRAPPER_KEY(ARGUMENTNAME##_argnum))); \
     ENGINE* newengine_ = (ENGINE*)((key == d_->key) \
-				    ? d_->nextnode \
-				    : Dabsent_engine_nodeVKg);	\
+                                    ? d_->nextnode \
+                                    : Dabsent_engine_nodeVKg);  \
     DLFN ncb_ = newengine_->entry_point; \
     teb->function = (FN*)newengine_; \
     teb->next_methods = parent_; \
@@ -3527,8 +3527,8 @@ D monomorphic_discriminator_engine_n_n (SOV* args) {
   OBJECT* arg = (OBJECT*)a[argnum];
   DWORD key = (DWORD)(FI(MONO_WRAPPER_KEY(arg)));
   ENGINE* newengine = (ENGINE*)((key == e->key)
-				? e->nextnode
-				: Dabsent_engine_nodeVKg);
+                                ? e->nextnode
+                                : Dabsent_engine_nodeVKg);
   if (FUNCTIONP(newengine)) {
     return(primitive_mep_apply_with_optionals((FN*)newengine, parent, args));
   } else {
@@ -3548,8 +3548,8 @@ extern D Dinapplicable_engine_nodeVKg;
     IFTYPEDISCRIMINATOR* d_ = (IFTYPEDISCRIMINATOR*)teb->function; \
     D parent_ = teb->next_methods; \
     ENGINE* newengine_ = (ENGINE*)((INSTANCEP((ARGUMENTNAME##_argnum),d_->type)) \
-				   ? d_->thennode \
-				   : d_->elsenode); \
+                                   ? d_->thennode \
+                                   : d_->elsenode); \
     DLFN ncb_ = newengine_->entry_point; \
     teb->function = (FN*)newengine_; \
     teb->next_methods = parent_; \
@@ -3596,8 +3596,8 @@ D if_type_discriminator_engine_n_n (SOV* args) {
   D* a = vector_data(args);
   D arg = a[argnum];
   ENGINE* newengine = (ENGINE*)(INSTANCEP(arg, e->type)
-				? e->thennode
-				: e->elsenode);
+                                ? e->thennode
+                                : e->elsenode);
   if (FUNCTIONP(newengine)) {
     return(primitive_mep_apply_with_optionals((FN*)newengine, parent, args));
   } else {
@@ -3617,8 +3617,8 @@ extern D Dinapplicable_engine_nodeVKg;
     TYPECHECKDISCRIMINATOR* d_ = (TYPECHECKDISCRIMINATOR*)teb->function; \
     D parent_ = teb->next_methods; \
     ENGINE* newengine_ = (ENGINE*)((INSTANCEP((ARGUMENTNAME##_argnum),d_->type)) \
-				   ? d_->nextnode \
-				   : Dinapplicable_engine_nodeVKg); \
+                                   ? d_->nextnode \
+                                   : Dinapplicable_engine_nodeVKg); \
     DLFN ncb_ = newengine_->entry_point; \
     teb->function = (FN*)newengine_; \
     teb->next_methods = parent_; \
@@ -3665,8 +3665,8 @@ D typecheck_discriminator_engine_n_n (SOV* args) {
   D* a = vector_data(args);
   D arg = a[argnum];
   ENGINE* newengine = (ENGINE*)(INSTANCEP(arg, e->type)
-				? e->nextnode
-				: Dinapplicable_engine_nodeVKg);
+                                ? e->nextnode
+                                : Dinapplicable_engine_nodeVKg);
   if (FUNCTIONP(newengine)) {
     return(primitive_mep_apply_with_optionals((FN*)newengine, parent, args));
   } else {
@@ -4053,33 +4053,33 @@ void verify_nlx () {
   int i = 0;
   Unwind_protect_frame* ptr = teb->uwp_frame;
   for(ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
-	  if(ptr == Ptop_unwind_protect_frame) {
-		  break;
-	  }
-	  if(ptr == NULL) {
-		  invalid = 1;
-		  break;
-	  }
-	  if(ptr == ptr->previous_unwind_protect_frame) {
-		  invalid = 1;
-		  break;
-	  }
-	  i++;
+          if(ptr == Ptop_unwind_protect_frame) {
+                  break;
+          }
+          if(ptr == NULL) {
+                  invalid = 1;
+                  break;
+          }
+          if(ptr == ptr->previous_unwind_protect_frame) {
+                  invalid = 1;
+                  break;
+          }
+          i++;
   }
   printf("    %d uwp frames active\n", i);
   if(!ptr) {
-	  printf("BUG: unwind chain invalid.\n");
-	  printf(" cur=%p top=%p\n", teb->uwp_frame, Ptop_unwind_protect_frame);
-	  i = 0;
-	  for (ptr = teb->uwp_frame; ptr != NULL; ptr = ptr->previous_unwind_protect_frame) {
-		  printf("  %d: %p prev=%p\n", i++, ptr, ptr->previous_unwind_protect_frame);
-		  if(ptr == Ptop_unwind_protect_frame) {
-			  break;
-		  }
-		  if(ptr == ptr->previous_unwind_protect_frame) {
-			  break;
-		  }
-	  }
+          printf("BUG: unwind chain invalid.\n");
+          printf(" cur=%p top=%p\n", teb->uwp_frame, Ptop_unwind_protect_frame);
+          i = 0;
+          for (ptr = teb->uwp_frame; ptr != NULL; ptr = ptr->previous_unwind_protect_frame) {
+                  printf("  %d: %p prev=%p\n", i++, ptr, ptr->previous_unwind_protect_frame);
+                  if(ptr == Ptop_unwind_protect_frame) {
+                          break;
+                  }
+                  if(ptr == ptr->previous_unwind_protect_frame) {
+                          break;
+                  }
+          }
   }
   fflush(stdout);
 }
@@ -4092,7 +4092,7 @@ void nlx_step (Bind_exit_frame* ultimate_destination) {
       ultimate_destination->present_unwind_protect_frame) {
 #ifdef DEBUG_NLX
     printf("    reached uwp %p\n", teb->uwp_frame);
-	fflush(stdout);
+        fflush(stdout);
 #endif
     /* invalidate current frame */
     teb->uwp_frame->ultimate_destination = NULL;
@@ -4100,20 +4100,20 @@ void nlx_step (Bind_exit_frame* ultimate_destination) {
   } else {
     Unwind_protect_frame* next_frame = teb->uwp_frame;
 #ifdef DEBUG_NLX
-	printf("    unwinding to %p\n", next_frame->previous_unwind_protect_frame);
-	if(teb->uwp_frame != NULL) {
-		if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
-			printf("    BUG: previous uwp is null\n");
-		}
-	}
-	fflush(stdout);
+        printf("    unwinding to %p\n", next_frame->previous_unwind_protect_frame);
+        if(teb->uwp_frame != NULL) {
+                if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
+                        printf("    BUG: previous uwp is null\n");
+                }
+        }
+        fflush(stdout);
 #endif
     /* pop current unwind protect frame */
     teb->uwp_frame = next_frame->previous_unwind_protect_frame;
     /* register ultimate destination of non-local exit in cupf */
     teb->uwp_frame->ultimate_destination = ultimate_destination;
 #ifdef DEBUG_NLX
-	verify_nlx();
+        verify_nlx();
 #endif
     /* do cleanup step in next unwind protect frame */
     longjmp(next_frame->destination, 1);
@@ -4125,7 +4125,7 @@ D FALL_THROUGH_UNWIND (D argument) {
 #ifdef DEBUG_NLX
   printf("  FALL_THROUGH uwp %p\n", teb->uwp_frame);
   if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
-	  printf("    BUG: previous uwp is null\n");
+          printf("    BUG: previous uwp is null\n");
   }
   verify_nlx();
 #endif
@@ -4137,7 +4137,7 @@ D FALL_THROUGH_UNWIND (D argument) {
        &teb->return_values.value[1], teb->return_values.count - 1);
   /* invalidate current frame */
   teb->uwp_frame->ultimate_destination = NULL;
-  return((D)0);			/* Keeps some compilers happy */
+  return((D)0);                 /* Keeps some compilers happy */
 }
 
 D CONTINUE_UNWIND () {
@@ -4145,41 +4145,41 @@ D CONTINUE_UNWIND () {
   if (teb->uwp_frame->ultimate_destination) { /* nlx? */
 #ifdef DEBUG_NLX
     printf("  UNWIND from uwp %p for bef %p\n", teb->uwp_frame, teb->uwp_frame->ultimate_destination);
-	if(teb->uwp_frame == Ptop_unwind_protect_frame) {
-		printf("    BUG: continue reaches top\n");
-	}
-	if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
-		printf("    BUG: previous uwp is null\n");
-	}
+        if(teb->uwp_frame == Ptop_unwind_protect_frame) {
+                printf("    BUG: continue reaches top\n");
+        }
+        if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
+                printf("    BUG: previous uwp is null\n");
+        }
     fflush(stdout);
 #endif
     nlx_step(teb->uwp_frame->ultimate_destination);
-	return(DFALSE);     /* Keeps some compilers happy */
+        return(DFALSE);     /* Keeps some compilers happy */
   } else {
     int i;
     int n = teb->uwp_frame->return_values.count;
     teb->return_values.count = n;
     for (i = 0; i < n; i++)
       teb->return_values.value[i]
-	= teb->uwp_frame->return_values.value[i];
+        = teb->uwp_frame->return_values.value[i];
     /* pop current unwind protect frame */
 #ifdef DEBUG_NLX
     printf("  CONTINUE from uwp %p to uwp %p\n", teb->uwp_frame, teb->uwp_frame->previous_unwind_protect_frame);
-	if(teb->uwp_frame == Ptop_unwind_protect_frame) {
-		printf("    BUG: continue reaches top\n");
-	}
-	if(teb->uwp_frame == NULL) {
-		printf("    BUG: current uwp is null\n");
-	}
-	if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
-		printf("    BUG: previous uwp is null\n");
-	}
+        if(teb->uwp_frame == Ptop_unwind_protect_frame) {
+                printf("    BUG: continue reaches top\n");
+        }
+        if(teb->uwp_frame == NULL) {
+                printf("    BUG: current uwp is null\n");
+        }
+        if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
+                printf("    BUG: previous uwp is null\n");
+        }
     fflush(stdout);
 #endif
     teb->uwp_frame
       = teb->uwp_frame->previous_unwind_protect_frame;
 #ifdef DEBUG_NLX
-	verify_nlx();
+        verify_nlx();
 #endif
     return n == 0 ? DFALSE : teb->return_values.value[0];
   }
@@ -4198,7 +4198,7 @@ D NLX (Bind_exit_frame* target, D argument) {
       (&target->return_values.value[1], 
        &teb->return_values.value[1], teb->return_values.count - 1);
   nlx_step(target);
-  return((D)0);			/* Keeps some compilers happy -- Won't actually get here */
+  return((D)0);                 /* Keeps some compilers happy -- Won't actually get here */
 }
 
 D MAKE_EXIT_FRAME () {
@@ -4207,7 +4207,7 @@ D MAKE_EXIT_FRAME () {
     = (Bind_exit_frame*)allocate(sizeof(Bind_exit_frame));
 #ifdef DEBUG_NLX
   printf("  MAKE_EXIT_FRAME %p cur=%p prev=%p\n",
-		 frame, teb->uwp_frame, teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
+                 frame, teb->uwp_frame, teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
   fflush(stdout);
 #endif
   frame->present_unwind_protect_frame = teb->uwp_frame;
@@ -4223,7 +4223,7 @@ D MAKE_UNWIND_FRAME () {
     = (Unwind_protect_frame*)allocate(sizeof(Unwind_protect_frame));
 #ifdef DEBUG_NLX
   printf("  MAKE_UNWIND_FRAME %p cur=%p prev=%p\n",
-		 frame, teb->uwp_frame, teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
+                 frame, teb->uwp_frame, teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
   fflush(stdout);
 #endif
   frame->previous_unwind_protect_frame = teb->uwp_frame;
@@ -4240,7 +4240,7 @@ D FRAME_DEST (D frame)
   
 D FRAME_RETVAL (D frame)
   { /* TODO: real multiple values */
-	  TEB* teb = get_teb();
+          TEB* teb = get_teb();
     Bind_exit_frame *bef = ((Bind_exit_frame*) frame);
     /* Copy the multiple values into the result values MV */
     COPY_WORDS

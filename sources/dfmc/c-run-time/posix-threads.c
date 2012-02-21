@@ -77,40 +77,40 @@ void initialize_threads_primitives()
 __attribute__((pure))
 TEB* get_teb()
 {
-	return (TEB*)pthread_getspecific(teb_key);
+  return (TEB*)pthread_getspecific(teb_key);
 }
 
 void set_teb(TEB* teb)
 {
-	pthread_setspecific(teb_key, (void*)teb);
+  pthread_setspecific(teb_key, (void*)teb);
 }
 
 TEB* make_teb()
 {
-	TEB* teb = (TEB*)malloc(sizeof(TEB));
-	char* tebs = ((char*)teb);
-	char* tebe = ((char*)teb + sizeof(TEB));
+  TEB* teb = (TEB*)malloc(sizeof(TEB));
+  char* tebs = ((char*)teb);
+  char* tebe = ((char*)teb + sizeof(TEB));
 
-	teb->uwp_frame = Ptop_unwind_protect_frame;
+  teb->uwp_frame = Ptop_unwind_protect_frame;
 
-	GC_add_roots(tebs, tebe);
+  GC_add_roots(tebs, tebe);
 
-	set_teb(teb);
+  set_teb(teb);
 
-	return teb;
+  return teb;
 }
 
 void free_teb()
 {
-	TEB* teb = get_teb();
-	char* tebs = ((char*)teb);
-	char* tebe = ((char*)teb + sizeof(TEB));
+  TEB* teb = get_teb();
+  char* tebs = ((char*)teb);
+  char* tebe = ((char*)teb + sizeof(TEB));
 
-	set_teb(NULL);
+  set_teb(NULL);
 
-	GC_remove_roots(tebs, tebe);
+  GC_remove_roots(tebs, tebe);
 
-	free(teb);
+  free(teb);
 }
 
 void *make_dylan_vector(int n)
@@ -458,8 +458,8 @@ D primitive_thread_join_multiple(D v)
     }
     for (i = 0; i < size; i++) {
       if ((uintptr_t)threads[i]->handle1 & COMPLETED) {
-	joined_thread = threads[i];
-	break;
+        joined_thread = threads[i];
+        break;
       }
     }
   }
@@ -519,7 +519,7 @@ D primitive_wait_for_simple_lock(D l)
 
   if (slock->owner == thread) {
     MSG1("wait-for-simple-lock: Error, thread %d already owns the lock\n",
-	 thread);
+         thread);
     return ALREADY_LOCKED;
   }
 
@@ -773,8 +773,8 @@ D primitive_wait_for_semaphore_timed(D l, D m)
 
   while (!timeout && semaphore->count <= 0) {
     timeout = pthread_cond_timedwait(&semaphore->cond,
-				     &semaphore->mutex,
-				     &time_limit);
+                                     &semaphore->mutex,
+                                     &time_limit);
   }
 
   if (!timeout)
@@ -894,8 +894,8 @@ D primitive_release_recursive_lock(D l)
     // Give up the lock
     rlock->owner = 0;
     if (pthread_mutex_lock(&rlock->mutex)
-	|| pthread_cond_signal(&rlock->cond)
-	|| pthread_mutex_unlock(&rlock->mutex)) {
+        || pthread_cond_signal(&rlock->cond)
+        || pthread_mutex_unlock(&rlock->mutex)) {
       MSG0("release-recursive-lock: error signalling cond\n");
       return GENERAL_ERROR;
     }
