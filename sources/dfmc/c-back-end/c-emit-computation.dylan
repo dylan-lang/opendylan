@@ -390,9 +390,19 @@ define method emit-computation
   end if;
 end method;
 
+define constant $primitive-read-thread-variable-string
+  = c-raw-mangle("primitive-read-thread-variable");
+
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <variable-reference>) 
-  format-emit(b, s, d, "\t#@;\n", c.temporary, c.referenced-binding);
+  if (c.referenced-binding.binding-thread?)
+    format-emit(b, s, d, "\t#~(@);\n",
+                c.temporary,
+                $primitive-read-thread-variable-string,
+                c.referenced-binding);
+  else
+    format-emit(b, s, d, "\t#@;\n", c.temporary, c.referenced-binding);
+  end if;
 end method;
 
 // define method emit-computation
@@ -943,11 +953,37 @@ define method emit-computation
   end if;
 end method;
 
+define constant $primitive-write-thread-variable-string
+  = c-raw-mangle("primitive-write-thread-variable");
+
 define method emit-computation 
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <assignment>)
   // TODO: split out <definition>, tie that to the actual definiton
-  format-emit(b, s, d, "\t#@ = @;\n", 
-              c.temporary, c.assigned-binding, c.computation-value);
+  if (c.assigned-binding.binding-thread?)
+    format-emit(b, s, d, "\t#~(@, @);\n",
+                c.temporary,
+                $primitive-write-thread-variable-string,
+                c.assigned-binding, c.computation-value);
+  else
+    format-emit(b, s, d, "\t#@ = @;\n", 
+                c.temporary, c.assigned-binding, c.computation-value);
+  end if;
+end method;
+
+define constant $primitive-allocate-thread-variable-string
+  = c-raw-mangle("primitive-allocate-thread-variable");
+
+define method emit-computation
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <definition>)
+  if (c.assigned-binding.binding-thread?)
+    format-emit(b, s, d, "\t#@ = ~(@);\n",
+                c.temporary,
+                c.assigned-binding,
+                $primitive-allocate-thread-variable-string,
+                c.computation-value);
+  else
+    next-method();
+  end if;
 end method;
 
 define method emit-computation 
