@@ -15,6 +15,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+#include <stdio.h>
+
 #include <pthread.h>
 #include <time.h>
 
@@ -153,12 +155,18 @@ void set_current_thread_handle(void *handle)
   get_teb()->thread_handle = handle;
 }
 
+//#define DEBUG_TLS
 
 /* Grow a single TLV vector
  */
 TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize)
 {
   TLV_VECTOR  new_vector;
+
+#ifdef DEBUG_TLS
+  printf("Growing vector %p.\n", vector);
+  fsync(stdout);
+#endif
 
   // allocate a new vector and copy the values in the old across
   new_vector = make_dylan_vector(newsize);
@@ -173,6 +181,11 @@ void grow_all_tlv_vectors(newsize)
 {
   TLV_VECTOR_LIST list;
   TLV_VECTOR new_default;
+
+#ifdef DEBUG_TLS
+  printf("Growing all vectors to size %d.\n", newsize);
+  fsync(stdout);
+#endif
 
   // Grow the default vector
   new_default = make_dylan_vector(newsize);
@@ -211,6 +224,11 @@ update_tlv_vectors(int offset, D value)
   TLV_VECTOR_LIST list = tlv_vector_list;
   D *destination;
 
+#ifdef DEBUG_TLS
+  printf("Global update of offset %d with value %p.\n", offset, value);
+  fsync(stdout);
+#endif
+
   while (list != NULL) {
     destination = (D *)(list->tlv_vector + offset);
     *destination = value;
@@ -229,6 +247,11 @@ add_tlv_vector(DTHREAD *thread, TLV_VECTOR tlv_vector)
 
   assert(new_element != NULL);
 
+#ifdef DEBUG_TLS
+  printf("Adding vector %p for thread %p.\n", tlv_vector, thread);
+  fsync(stdout);
+#endif
+
   // initialise the new element and put it on the front of the list
   new_element->thread = thread;
   new_element->tlv_vector = tlv_vector; 
@@ -244,6 +267,11 @@ int
 remove_tlv_vector(DTHREAD *thread)
 {
   TLV_VECTOR_LIST last, current;
+
+#ifdef DEBUG_TLS
+  printf("Removing vector for thread %p.\n", thread);
+  fsync(stdout);
+#endif
 
   if (tlv_vector_list == NULL)  // empty list
     return(1);
@@ -1282,6 +1310,11 @@ D primitive_allocate_thread_variable(D v)
   // increment offset for the next new variable
   TLV_vector_offset++;
 
+#ifdef DEBUG_TLS
+  printf("Allocating variable at offset %d.\n", variable_offset);
+  fsync(stdout);
+#endif
+
   // First check if we need to grow the TLV vectors
   size = (uintptr_t)(default_tlv_vector[1]) >> 2;
   limit = size + 2;
@@ -1315,6 +1348,12 @@ D primitive_read_thread_variable(D h)
   // stored in the TLV.
   offset = (uintptr_t)h;
   tlv_vector = get_tlv_vector();
+
+#ifdef DEBUG_TLS
+  printf("Reading offset %d from vector %p.\n", offset, tlv_vector);
+  fsync(stdout);
+#endif
+
   value = tlv_vector[offset];
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
@@ -1336,6 +1375,12 @@ D primitive_write_thread_variable(D h, D nv)
   // stored in the TLV.
   offset = (uintptr_t)h;
   tlv_vector = get_tlv_vector();
+
+#ifdef DEBUG_TLS
+  printf("Writing offset %d in vector %p.\n", offset, tlv_vector);
+  fsync(stdout);
+#endif
+
   destination = tlv_vector[offset] = nv;
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
