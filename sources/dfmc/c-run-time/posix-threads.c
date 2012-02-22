@@ -45,7 +45,7 @@ pthread_key_t teb_key;
 pthread_mutex_t  tlv_vector_lock = PTHREAD_MUTEX_INITIALIZER;
 TLV_VECTOR       default_tlv_vector = NULL;
 
-pthread_mutex_t  tlv_vector_list_lock;
+pthread_mutex_t  tlv_vector_list_lock = PTHREAD_MUTEX_INITIALIZER;
 TLV_VECTOR_LIST  tlv_vector_list;
 
 intptr_t  TLV_vector_offset = 2;
@@ -68,13 +68,6 @@ void  copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source);
 void update_tlv_vectors(int offset, D value);
 void add_tlv_vector(DTHREAD *thread, TLV_VECTOR tlv_vector);
 int remove_tlv_vector(DTHREAD *thread);
-
-void initialize_threads_primitives()
-{
-  MSG0("Initializing threads primitives\n");
-  default_tlv_vector = make_dylan_vector(TLV_VECTOR_INITIAL_SIZE);
-  pthread_key_create(&teb_key, NULL);
-}
 
 __attribute__((pure))
 TEB* get_teb()
@@ -304,6 +297,50 @@ remove_tlv_vector(DTHREAD *thread)
   return(1);
 }
 
+/*
+ * Set up the TLV vector for the given thread.
+ *
+ * Note that THREAD may be NULL in case of the initial thread,
+ * which does not need this marker since its vectors will
+ * never be removed.
+ */
+void setup_tlv_vector(DTHREAD *thread)
+{
+  TLV_VECTOR   tlv_vector;
+  uintptr_t    size;
+
+  pthread_mutex_lock(&tlv_vector_list_lock);
+
+  // Now set up a vector for the Dylan thread variables
+  size = (uintptr_t)(default_tlv_vector[1]) >> 2;
+  tlv_vector = make_dylan_vector(size);
+  set_tlv_vector(tlv_vector);
+
+  // Initialise the vector with the values from the default vector
+  copy_tlv_vector(tlv_vector, default_tlv_vector);
+
+  // Add thread to active thread list
+  add_tlv_vector(thread, tlv_vector);
+
+  pthread_mutex_unlock(&tlv_vector_list_lock);
+}
+
+/*
+ * Called once from _Init_Run_Time() to initialize globally.
+ */
+void initialize_threads_primitives()
+{
+  MSG0("Initializing threads primitives\n");
+
+  // Set up vector of default values for thread variables
+  default_tlv_vector = make_dylan_vector(TLV_VECTOR_INITIAL_SIZE);
+
+  // Allocate key for the TEB
+  pthread_key_create(&teb_key, NULL);
+
+  // Initialize the TLV vector
+  setup_tlv_vector(NULL);
+}
 
 
 /*****************************************************************************/
@@ -319,6 +356,8 @@ void *trampoline (void *arg)
   assert(thread != NULL);
 
   f = (D)(thread->handle2);
+
+  setup_tlv_vector(thread);
 
   result = CALL0(f);
 
@@ -1393,8 +1432,6 @@ D primitive_write_thread_variable(D h, D nv)
 D primitive_initialize_current_thread(D t, DBOOL synchronize)
 {
   DTHREAD     *thread = (DTHREAD *)t;
-  TLV_VECTOR   tlv_vector;
-  uintptr_t    size;
 
   assert(thread != NULL);
 
@@ -1404,20 +1441,8 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
   set_current_thread(thread);
   set_current_thread_handle((void *)thread->tid);
 
-  pthread_mutex_lock(&tlv_vector_list_lock);
-
-  // Now set up a vector for the Dylan thread variables
-  size = (uintptr_t)(default_tlv_vector[1]) >> 2;
-  tlv_vector = make_dylan_vector(size);
-  set_tlv_vector(tlv_vector);
-
-  // Initialise the vector with the values from the default vector
-  copy_tlv_vector(tlv_vector, default_tlv_vector);
-
-  // Add thread to active thread list
-  add_tlv_vector(thread, tlv_vector);
-
-  pthread_mutex_unlock(&tlv_vector_list_lock);
+  // Create and register the TLV vector
+  setup_tlv_vector(thread);
 
   // Clear the handle2 slot in the thread object
   // (which contained the address of the starting function)
