@@ -16,10 +16,16 @@ define open generic locator-directory
     (locator :: <locator>) => (directory :: false-or(<directory-locator>));
 define open generic locator-relative?
     (locator :: <locator>) => (relative? :: <boolean>);
+
+// For locator /a/b/c.d this will return #("a", "b").
 define open generic locator-path
     (locator :: <locator>) => (path :: <sequence>);
+
+// The locator name without the extension.  e.g., for locator /a/b/c.d
+// this will return "c".
 define open generic locator-base
     (locator :: <locator>) => (base :: false-or(<string>));
+
 define open generic locator-extension
     (locator :: <locator>) => (extension :: false-or(<string>));
 
