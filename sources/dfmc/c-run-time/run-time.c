@@ -74,6 +74,8 @@ void primitive_break() {
   DebugBreak();
 #else
 #ifdef SIGTRAP
+  fprintf(stderr, "Breaking into debugger.\n");
+  fflush(stderr);
   raise(SIGTRAP);
 #else
   int *ptr = (int*)0;
