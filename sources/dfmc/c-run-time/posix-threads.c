@@ -86,16 +86,7 @@ TEB* make_teb()
 {
   TEB* teb = (TEB*)GC_malloc_uncollectable(sizeof(TEB));
 
-#if 0
-  char* tebs = ((char*)teb);
-  char* tebe = ((char*)teb + sizeof(TEB));
-#endif
-
   teb->uwp_frame = Ptop_unwind_protect_frame;
-
-#if 0
-  GC_add_roots(tebs, tebe);
-#endif
 
   set_teb(teb);
 
@@ -106,16 +97,7 @@ void free_teb()
 {
   TEB* teb = get_teb();
 
-#if 0
-  char* tebs = ((char*)teb);
-  char* tebe = ((char*)teb + sizeof(TEB));
-#endif
-
   set_teb(NULL);
-
-#if 0
-  GC_remove_roots(tebs, tebe);
-#endif
 
   GC_free(teb);
 }
@@ -124,10 +106,6 @@ void *make_tlv_vector(int n)
 {
   D *vector;
   size_t size;
-#if 0
-  char* vecstart;
-  char* vecend;
-#endif
 
   // compute actual (byte) size
   size = (n + 2) * sizeof(D);
@@ -137,15 +115,6 @@ void *make_tlv_vector(int n)
   vector[0] = NULL;
   vector[1] = I(n);
 
-#if 0
-  // compute start and end pointers
-  vecstart = ((char*)vector);
-  vecend   = ((char*)vecstart + size);
-
-  // register as a root
-  GC_add_roots(vecstart, vecend);
-#endif
-
   // done
   return vector;
 }
@@ -154,22 +123,9 @@ void free_tlv_vector()
 {
   D *vector = get_tlv_vector();
   size_t size;
-#if 0
-  char* vecstart;
-  char* vecend;
-#endif
 
   // compute actual (byte) size
   size = (R(vector[1]) + 2) * sizeof(D);
-
-#if 0
-  // compute start and end pointers
-  vecstart = ((char*)vector);
-  vecend   = ((char*)vecstart + size);
-
-  // unregister roots
-  GC_remove_roots(vecstart, vecend);
-#endif
 
   // free the memory
   GC_free(vector);
