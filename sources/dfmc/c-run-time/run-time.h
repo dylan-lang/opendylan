@@ -1,3 +1,6 @@
+#ifndef OPENDYLAN_CRT_RUNTIME_H
+#define OPENDYLAN_CRT_RUNTIME_H
+
 #include <setjmp.h>
 
 #define OPTIONAL_ARGUMENT_CHECK(fn, req, count)
@@ -1797,5 +1800,6 @@ extern DMINT primitive_machine_word_unsigned_double_divide_byref(DMINT xl, DMINT
 extern DMINT primitive_machine_word_unsigned_double_shift_left_byref(DMINT xl, DMINT xh, DMINT y, DMINT* v2);
 extern DMINT primitive_machine_word_unsigned_double_shift_right_byref(DMINT xl, DMINT xh, DMINT y, DMINT* v2);
 
+#endif /* OPENDYLAN_CRT_RUNTIME_H */
 
 /* eof */

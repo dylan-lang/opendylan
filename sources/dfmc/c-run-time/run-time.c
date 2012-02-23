@@ -1,4 +1,6 @@
 #include "run-time.h"
+#include "trace.h"
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -4092,30 +4094,24 @@ void nlx_step (Bind_exit_frame* ultimate_destination) {
   /* handled all unwind protect frames presently in force? */
   if (teb->uwp_frame == 
       ultimate_destination->present_unwind_protect_frame) {
-#ifdef DEBUG_NLX
-    printf("    reached uwp %p\n", teb->uwp_frame);
-        fflush(stdout);
-#endif
+    trace_nlx("step: reached uwp %p", teb->uwp_frame);
     /* invalidate current frame */
     teb->uwp_frame->ultimate_destination = NULL;
     longjmp(ultimate_destination->destination, 1);
   } else {
     Unwind_protect_frame* next_frame = teb->uwp_frame;
-#ifdef DEBUG_NLX
-        printf("    unwinding to %p\n", next_frame->previous_unwind_protect_frame);
-        if(teb->uwp_frame != NULL) {
-                if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
-                        printf("    BUG: previous uwp is null\n");
-                }
-        }
-        fflush(stdout);
-#endif
+    trace_nlx("step: unwinding to %p", next_frame->previous_unwind_protect_frame);
+    if(teb->uwp_frame != NULL) {
+      if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
+        trace_nlx("BUG: previous uwp is null");
+      }
+    }
     /* pop current unwind protect frame */
     teb->uwp_frame = next_frame->previous_unwind_protect_frame;
     /* register ultimate destination of non-local exit in cupf */
     teb->uwp_frame->ultimate_destination = ultimate_destination;
 #ifdef DEBUG_NLX
-        verify_nlx();
+    verify_nlx();
 #endif
     /* do cleanup step in next unwind protect frame */
     longjmp(next_frame->destination, 1);
@@ -4124,11 +4120,11 @@ void nlx_step (Bind_exit_frame* ultimate_destination) {
 
 D FALL_THROUGH_UNWIND (D argument) {
   TEB* teb = get_teb();
-#ifdef DEBUG_NLX
-  printf("  FALL_THROUGH uwp %p\n", teb->uwp_frame);
+  trace_nlx("fall-through from uwp %p", teb->uwp_frame);
   if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
-          printf("    BUG: previous uwp is null\n");
+    trace_nlx("BUG: previous uwp is null");
   }
+#ifdef DEBUG_NLX
   verify_nlx();
 #endif
   teb->uwp_frame->return_values.count = teb->return_values.count;
@@ -4145,16 +4141,15 @@ D FALL_THROUGH_UNWIND (D argument) {
 D CONTINUE_UNWIND () {
   TEB* teb = get_teb();
   if (teb->uwp_frame->ultimate_destination) { /* nlx? */
-#ifdef DEBUG_NLX
-    printf("  UNWIND from uwp %p for bef %p\n", teb->uwp_frame, teb->uwp_frame->ultimate_destination);
-        if(teb->uwp_frame == Ptop_unwind_protect_frame) {
-                printf("    BUG: continue reaches top\n");
-        }
-        if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
-                printf("    BUG: previous uwp is null\n");
-        }
-    fflush(stdout);
-#endif
+    trace_nlx("unwinding uwp %p towards bef %p", teb->uwp_frame,
+              teb->uwp_frame->ultimate_destination);
+    if(teb->uwp_frame == Ptop_unwind_protect_frame) {
+      trace_nlx("BUG: unwind reached top");
+    }
+    if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
+      trace_nlx("BUG: previous uwp is null");
+    }
+
     nlx_step(teb->uwp_frame->ultimate_destination);
         return(DFALSE);     /* Keeps some compilers happy */
   } else {
@@ -4164,20 +4159,18 @@ D CONTINUE_UNWIND () {
     for (i = 0; i < n; i++)
       teb->return_values.value[i]
         = teb->uwp_frame->return_values.value[i];
+    trace_nlx("continue uwp %p to uwp %p", teb->uwp_frame,
+              teb->uwp_frame->previous_unwind_protect_frame);
+    if(teb->uwp_frame == Ptop_unwind_protect_frame) {
+      trace_nlx("BUG: continue reaches top");
+    }
+    if(teb->uwp_frame == NULL) {
+      trace_nlx("BUG: current uwp is null");
+    }
+    if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
+      trace_nlx("BUG: previous uwp is null");
+    }
     /* pop current unwind protect frame */
-#ifdef DEBUG_NLX
-    printf("  CONTINUE from uwp %p to uwp %p\n", teb->uwp_frame, teb->uwp_frame->previous_unwind_protect_frame);
-        if(teb->uwp_frame == Ptop_unwind_protect_frame) {
-                printf("    BUG: continue reaches top\n");
-        }
-        if(teb->uwp_frame == NULL) {
-                printf("    BUG: current uwp is null\n");
-        }
-        if(teb->uwp_frame->previous_unwind_protect_frame == NULL) {
-                printf("    BUG: previous uwp is null\n");
-        }
-    fflush(stdout);
-#endif
     teb->uwp_frame
       = teb->uwp_frame->previous_unwind_protect_frame;
 #ifdef DEBUG_NLX
@@ -4189,10 +4182,7 @@ D CONTINUE_UNWIND () {
 
 D NLX (Bind_exit_frame* target, D argument) {
   TEB* teb = get_teb();
-#ifdef DEBUG_NLX
-  printf("  NLX to bef %p from uwp %p\n", target, teb->uwp_frame);
-  fflush(stdout);
-#endif
+  trace_nlx("nlx towards bef %p from uwp %p", target, teb->uwp_frame);
   target->return_values.count = teb->return_values.count;
   target->return_values.value[0] = argument;
   if (teb->return_values.count > 1)
@@ -4207,11 +4197,9 @@ D MAKE_EXIT_FRAME () {
   TEB* teb = get_teb();
   Bind_exit_frame* frame 
     = (Bind_exit_frame*)allocate(sizeof(Bind_exit_frame));
-#ifdef DEBUG_NLX
-  printf("  MAKE_EXIT_FRAME %p cur=%p prev=%p\n",
-                 frame, teb->uwp_frame, teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
-  fflush(stdout);
-#endif
+  trace_nlx("make exit frame %p from uwp %p with previous %p",
+            frame, teb->uwp_frame,
+            teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
   frame->present_unwind_protect_frame = teb->uwp_frame;
 #ifdef DEBUG_NLX
   verify_nlx();
@@ -4223,11 +4211,9 @@ D MAKE_UNWIND_FRAME () {
   TEB* teb = get_teb();
   Unwind_protect_frame* frame 
     = (Unwind_protect_frame*)allocate(sizeof(Unwind_protect_frame));
-#ifdef DEBUG_NLX
-  printf("  MAKE_UNWIND_FRAME %p cur=%p prev=%p\n",
-                 frame, teb->uwp_frame, teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
-  fflush(stdout);
-#endif
+  trace_nlx("make unwind frame %p from uwp %p with previous %p",
+            frame, teb->uwp_frame,
+            teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
   frame->previous_unwind_protect_frame = teb->uwp_frame;
   teb->uwp_frame = frame;
   frame->ultimate_destination = (Bind_exit_frame*)0;
@@ -4699,6 +4685,8 @@ void _Init_Run_Time ()
   static initp = 0;
   if (!initp) {
     initp = 1;
+    trace_init();
+    trace_runtime("Initializing runtime");
     GC_init();
     initialize_threads_primitives();
     GC_set_max_heap_size(MAX_HEAP_SIZE);

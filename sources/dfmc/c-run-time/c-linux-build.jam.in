@@ -24,7 +24,8 @@ DEFINES += GC_LINUX_THREADS _REENTRANT ;
 
 RTOBJS ?= posix-threads.o
 	  debug-print.o
-	  run-time.o ;
+	  run-time.o
+      trace.o ;
 
 # These variables are passed to the link rule by way of the dylan.lid file.
 rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) ;

@@ -19,14 +19,15 @@ INCDEST		= $(OPEN_DYLAN_USER_INSTALL)/include
 AS = as -L
 AR = ar -q
 
-CFLAGS		= -Wall -Wno-unused-variable -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 -fPIC \
+CFLAGS		= -Wall -Wno-unused-variable -Wno-unused-but-set-variable -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 -fPIC \
 		  -fno-strict-aliasing \
 		  $(arch_flag) -O2 -g -I$(srcdir) -I$(runtime_srcdir) \
 		  -I$(gc_prefix)/include -L$(gc_prefix)/lib
 
 OBJS		= posix-threads.o \
 		  debug-print.o \
-		  run-time.o
+		  run-time.o \
+          trace.o
 
 RUNTIMELIBDEST	 = $(LIBDEST)/runtime/
 
@@ -37,6 +38,8 @@ dummy-threads.o:       $(runtime_srcdir)/dummy-threads.c
 posix-threads.o:       $(runtime_srcdir)/posix-threads.c
 
 debug-print.o:  $(runtime_srcdir)/debug-print.c
+
+trace.o: $(runtime_srcdir)/trace.c
 
 run-time.o: $(runtime_srcdir)/run-time.c
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -60,6 +63,7 @@ install-build:
 	-cp -fp ppc-darwin-build.jam $(LIBDEST)
 
 install-header:	$(runtime_srcdir)/run-time.h $(INCDEST)
+	cp -fp $(runtime_srcdir)/trace.h $(INCDEST)
 	cp -fp $(runtime_srcdir)/run-time.h $(INCDEST)
 
 install-runtime: $(OBJS) $(RUNTIMELIBDEST)
