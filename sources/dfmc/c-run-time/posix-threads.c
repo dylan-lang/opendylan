@@ -23,7 +23,7 @@
 #include <gc/gc.h>
 
 
-#define DEBUG_TLV
+//#define DEBUG_TLV
 
 
 /*****************************************************************************/
@@ -58,7 +58,7 @@ intptr_t  TLV_vector_offset = 2;
 /*****************************************************************************/
 
 void  initialize_threads_primitives();
-void *make_dylan_vector(int);
+void *make_tlv_vector(int);
 int   priority_map(int);
 
 void *get_tlv_vector();
@@ -110,14 +110,51 @@ void free_teb()
   free(teb);
 }
 
-void *make_dylan_vector(int n)
+void *make_tlv_vector(int n)
 {
   D *vector;
+  size_t size;
+  char* vecstart;
+  char* vecend;
 
-  vector = malloc((n + 2) * sizeof(D));
+  // compute actual (byte) size
+  size = (n + 2) * sizeof(D);
+
+  // fill int the vector
+  vector = malloc(size);
   vector[0] = NULL;
   vector[1] = I(n);
+
+  // compute start and end pointers
+  vecstart = ((char*)vector);
+  vecend   = ((char*)vecstart + size);
+
+  // register as a root
+  GC_add_roots(vecstart, vecend);
+
+  // done
   return vector;
+}
+
+void free_tlv_vector()
+{
+  D *vector = get_tlv_vector();
+  size_t size;
+  char* vecstart;
+  char* vecend;
+
+  // compute actual (byte) size
+  size = (R(vector[1]) + 2) * sizeof(D);
+
+  // compute start and end pointers
+  vecstart = ((char*)vector);
+  vecend   = ((char*)vecstart + size);
+
+  // unregister roots
+  GC_remove_roots(vecstart, vecend);
+
+  // free the memory
+  free(vector);
 }
 
 void *get_tlv_vector()
@@ -163,7 +200,7 @@ TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize)
 #endif
 
   // allocate a new vector and copy the values in the old across
-  new_vector = make_dylan_vector(newsize);
+  new_vector = make_tlv_vector(newsize);
   copy_tlv_vector(new_vector, vector);
 
   // return the new vector
@@ -182,7 +219,7 @@ void grow_all_tlv_vectors(newsize)
 #endif
 
   // Grow the default vector
-  new_default = make_dylan_vector(newsize);
+  new_default = make_tlv_vector(newsize);
   copy_tlv_vector(new_default, default_tlv_vector);
   default_tlv_vector = new_default;
 
@@ -274,7 +311,7 @@ remove_tlv_vector(DTHREAD *thread)
   if (tlv_vector_list->thread == thread) {
     // matches first entry in list
     tlv_vector_list = tlv_vector_list->next;
-    free(last->tlv_vector);
+    free_tlv_vector(last->tlv_vector);
     free(last);
     return(0);
   }
@@ -284,7 +321,7 @@ remove_tlv_vector(DTHREAD *thread)
     if (current->thread == thread) {
       // found the right entry, so cut it out
       last->next = current->next;
-      free(current->tlv_vector);
+      free_tlv_vector(current->tlv_vector);
       free(current);
       return(0);
     }
@@ -322,7 +359,7 @@ void setup_tlv_vector(DTHREAD *thread)
   if(!tlv_vector) {
     // Now set up a vector for the Dylan thread variables
     size = (uintptr_t)(default_tlv_vector[1]) >> 2;
-    tlv_vector = make_dylan_vector(size);
+    tlv_vector = make_tlv_vector(size);
     set_tlv_vector(tlv_vector);
 
     // Initialise the vector with the values from the default vector
@@ -343,7 +380,7 @@ void initialize_threads_primitives()
   MSG0("Initializing threads primitives\n");
 
   // Set up vector of default values for thread variables
-  default_tlv_vector = make_dylan_vector(TLV_VECTOR_INITIAL_SIZE);
+  default_tlv_vector = make_tlv_vector(TLV_VECTOR_INITIAL_SIZE);
 
   // Allocate key for the TEB
   pthread_key_create(&teb_key, NULL);
