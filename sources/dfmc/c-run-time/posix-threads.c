@@ -1421,7 +1421,7 @@ D primitive_write_thread_variable(D h, D nv)
   tlv_vector = get_tlv_vector();
 
 #ifdef DEBUG_TLV
-  fprintf(stderr, "Writing offset %d in vector %p.\n", offset, tlv_vector);
+  fprintf(stderr, "Writing offset %u in vector %p.\n", offset, tlv_vector);
   fflush(stderr);
 #endif
 
