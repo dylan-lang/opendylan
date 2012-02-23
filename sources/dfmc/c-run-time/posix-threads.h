@@ -89,7 +89,13 @@ typedef struct _ctr2
 } DTHREAD;
 
 typedef void * D_NAME;
+typedef D *TLV_VECTOR;
 
+
+/* Synchronization structures
+ *
+ * CAUTION! These are manually allocated and no GC roots.
+ */
 
 typedef struct simple_lock {
   pthread_t        owner;
@@ -116,8 +122,13 @@ typedef struct {
   pthread_cond_t   cond;
 } NOTIFICATION;
 
-typedef D *TLV_VECTOR;
 
+/* This structure is used for growing TLV vectors.
+ *
+ * The THREAD field is rooted by the TEB.
+ *
+ * The TLV_VECTOR is allocated manually by code using this struct.
+ */
 typedef struct tlv_vector_list_element
 {
   DTHREAD                         *thread;
