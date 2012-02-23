@@ -1411,7 +1411,6 @@ D primitive_read_thread_variable(D h)
 D primitive_write_thread_variable(D h, D nv)
 {
   TLV_VECTOR   tlv_vector;
-  D           *destination;
   uintptr_t    offset;
 
   pthread_mutex_lock(&tlv_vector_list_lock);
@@ -1426,7 +1425,7 @@ D primitive_write_thread_variable(D h, D nv)
   fflush(stderr);
 #endif
 
-  destination = tlv_vector[offset] = nv;
+  tlv_vector[offset] = nv;
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
 
