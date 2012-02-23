@@ -132,6 +132,7 @@ typedef struct {
 typedef struct tlv_vector_list_element
 {
   DTHREAD                         *thread;
+  TEB                             *teb;
   TLV_VECTOR                       tlv_vector;
   struct tlv_vector_list_element  *next;
 } *TLV_VECTOR_LIST;

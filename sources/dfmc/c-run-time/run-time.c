@@ -160,12 +160,12 @@ D primitive_untraced_allocate (DSINT size) {
 
 D primitive_manual_allocate (D sizeObject) {
   size_t size = (size_t)R(sizeObject);
-  void* p = malloc(size);
+  void* p = GC_malloc_uncollectable(size);
   return(primitive_wrap_machine_word((DMINT)p));
 }
 
 void primitive_manual_free (D object) {
-  free((void*)primitive_unwrap_c_pointer(object));
+  GC_free((void*)primitive_unwrap_c_pointer(object));
 }
 
 void primitive_fillX(D dst, int base_offset, int offset, int size, D value) {
@@ -4699,6 +4699,7 @@ void _Init_Run_Time ()
   static initp = 0;
   if (!initp) {
     initp = 1;
+    GC_init();
     initialize_threads_primitives();
     GC_set_max_heap_size(MAX_HEAP_SIZE);
     Ptop_unwind_protect_frame->ultimate_destination = (Bind_exit_frame*)0;

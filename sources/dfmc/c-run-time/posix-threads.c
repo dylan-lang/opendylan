@@ -23,7 +23,7 @@
 #include <gc/gc.h>
 
 
-//#define DEBUG_TLV
+// #define DEBUG_TLV
 
 
 /*****************************************************************************/
@@ -68,7 +68,7 @@ TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize);
 void grow_all_tlv_vectors(int newsize);
 void  copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source);
 void update_tlv_vectors(int offset, D value);
-void add_tlv_vector(DTHREAD *thread, TLV_VECTOR tlv_vector);
+void add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector);
 int remove_tlv_vector(DTHREAD *thread);
 
 __attribute__((pure))
@@ -84,13 +84,18 @@ void set_teb(TEB* teb)
 
 TEB* make_teb()
 {
-  TEB* teb = (TEB*)calloc(1, sizeof(TEB));
+  TEB* teb = (TEB*)GC_malloc_uncollectable(sizeof(TEB));
+
+#if 0
   char* tebs = ((char*)teb);
   char* tebe = ((char*)teb + sizeof(TEB));
+#endif
 
   teb->uwp_frame = Ptop_unwind_protect_frame;
 
+#if 0
   GC_add_roots(tebs, tebe);
+#endif
 
   set_teb(teb);
 
@@ -100,37 +105,46 @@ TEB* make_teb()
 void free_teb()
 {
   TEB* teb = get_teb();
+
+#if 0
   char* tebs = ((char*)teb);
   char* tebe = ((char*)teb + sizeof(TEB));
+#endif
 
   set_teb(NULL);
 
+#if 0
   GC_remove_roots(tebs, tebe);
+#endif
 
-  free(teb);
+  GC_free(teb);
 }
 
 void *make_tlv_vector(int n)
 {
   D *vector;
   size_t size;
+#if 0
   char* vecstart;
   char* vecend;
+#endif
 
   // compute actual (byte) size
   size = (n + 2) * sizeof(D);
 
   // fill int the vector
-  vector = malloc(size);
+  vector = GC_malloc_uncollectable(size);
   vector[0] = NULL;
   vector[1] = I(n);
 
+#if 0
   // compute start and end pointers
   vecstart = ((char*)vector);
   vecend   = ((char*)vecstart + size);
 
   // register as a root
   GC_add_roots(vecstart, vecend);
+#endif
 
   // done
   return vector;
@@ -140,21 +154,25 @@ void free_tlv_vector()
 {
   D *vector = get_tlv_vector();
   size_t size;
+#if 0
   char* vecstart;
   char* vecend;
+#endif
 
   // compute actual (byte) size
   size = (R(vector[1]) + 2) * sizeof(D);
 
+#if 0
   // compute start and end pointers
   vecstart = ((char*)vector);
   vecend   = ((char*)vecstart + size);
 
   // unregister roots
   GC_remove_roots(vecstart, vecend);
+#endif
 
   // free the memory
-  free(vector);
+  GC_free(vector);
 }
 
 void *get_tlv_vector()
@@ -227,6 +245,7 @@ void grow_all_tlv_vectors(newsize)
   list = tlv_vector_list;
   while(list != NULL) {
     list->tlv_vector = grow_tlv_vector(list->tlv_vector, newsize);
+    list->teb->tlv_vector = list->tlv_vector;
     list = list->next;
   }
 }
@@ -272,9 +291,9 @@ update_tlv_vectors(int offset, D value)
  * Assumes the thread vector has already been initialised.
  */
 void
-add_tlv_vector(DTHREAD *thread, TLV_VECTOR tlv_vector)
+add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector)
 {
-  TLV_VECTOR_LIST new_element = malloc(sizeof(struct tlv_vector_list_element));
+  TLV_VECTOR_LIST new_element = GC_malloc_uncollectable(sizeof(struct tlv_vector_list_element));
 
   assert(new_element != NULL);
 
@@ -285,7 +304,8 @@ add_tlv_vector(DTHREAD *thread, TLV_VECTOR tlv_vector)
 
   // initialise the new element and put it on the front of the list
   new_element->thread = thread;
-  new_element->tlv_vector = tlv_vector; 
+  new_element->teb = teb;
+  new_element->tlv_vector = tlv_vector;
   new_element->next = tlv_vector_list;
   tlv_vector_list = new_element;
 }
@@ -312,7 +332,7 @@ remove_tlv_vector(DTHREAD *thread)
     // matches first entry in list
     tlv_vector_list = tlv_vector_list->next;
     free_tlv_vector(last->tlv_vector);
-    free(last);
+    GC_free(last);
     return(0);
   }
 
@@ -322,7 +342,7 @@ remove_tlv_vector(DTHREAD *thread)
       // found the right entry, so cut it out
       last->next = current->next;
       free_tlv_vector(current->tlv_vector);
-      free(current);
+      GC_free(current);
       return(0);
     }
     else {
@@ -344,6 +364,7 @@ remove_tlv_vector(DTHREAD *thread)
  */
 void setup_tlv_vector(DTHREAD *thread)
 {
+  TEB         *teb;
   TLV_VECTOR   tlv_vector;
   uintptr_t    size;
 
@@ -351,6 +372,8 @@ void setup_tlv_vector(DTHREAD *thread)
   fprintf(stderr, "Setting up TLV vector for thread %p.\n", thread);
   fflush(stderr);
 #endif
+
+  teb = get_teb();
 
   pthread_mutex_lock(&tlv_vector_list_lock);
 
@@ -366,7 +389,7 @@ void setup_tlv_vector(DTHREAD *thread)
     copy_tlv_vector(tlv_vector, default_tlv_vector);
 
     // Add thread to active thread list
-    add_tlv_vector(thread, tlv_vector);
+    add_tlv_vector(thread, teb, tlv_vector);
   }
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
