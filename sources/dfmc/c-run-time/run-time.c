@@ -4700,7 +4700,6 @@ void _Init_Run_Time ()
   if (!initp) {
     initp = 1;
     initialize_threads_primitives();
-    teb = make_teb();
     GC_set_max_heap_size(MAX_HEAP_SIZE);
     Ptop_unwind_protect_frame->ultimate_destination = (Bind_exit_frame*)0;
     IKJboole_xor_ = primitive_string_as_symbol(&bs_boole_xor_);

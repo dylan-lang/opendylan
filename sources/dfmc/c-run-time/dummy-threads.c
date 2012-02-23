@@ -14,6 +14,7 @@ D one_true_thread = DFALSE;
 #define THREAD_SUCCESS I(0)
 
 void initialize_threads_primitives() {
+  make_teb();
 }
 
 TEB dylan_teb;
@@ -21,16 +22,16 @@ TEB dylan_teb;
 __attribute__((pure))
 TEB* get_teb()
 {
-	return &dylan_teb;
+  return &dylan_teb;
 }
 
 TEB* make_teb()
 {
-	TEB* teb = &dylan_teb;
+  TEB* teb = &dylan_teb;
 
-	teb->uwp_frame = Ptop_unwind_protect_frame;
+  teb->uwp_frame = Ptop_unwind_protect_frame;
 
-	return teb;
+  return teb;
 }
 
 void threads_get_stuffed () {

@@ -84,7 +84,7 @@ void set_teb(TEB* teb)
 
 TEB* make_teb()
 {
-  TEB* teb = (TEB*)malloc(sizeof(TEB));
+  TEB* teb = (TEB*)calloc(1, sizeof(TEB));
   char* tebs = ((char*)teb);
   char* tebe = ((char*)teb + sizeof(TEB));
 
@@ -317,16 +317,20 @@ void setup_tlv_vector(DTHREAD *thread)
 
   pthread_mutex_lock(&tlv_vector_list_lock);
 
-  // Now set up a vector for the Dylan thread variables
-  size = (uintptr_t)(default_tlv_vector[1]) >> 2;
-  tlv_vector = make_dylan_vector(size);
-  set_tlv_vector(tlv_vector);
+  tlv_vector = get_tlv_vector();
 
-  // Initialise the vector with the values from the default vector
-  copy_tlv_vector(tlv_vector, default_tlv_vector);
+  if(!tlv_vector) {
+    // Now set up a vector for the Dylan thread variables
+    size = (uintptr_t)(default_tlv_vector[1]) >> 2;
+    tlv_vector = make_dylan_vector(size);
+    set_tlv_vector(tlv_vector);
 
-  // Add thread to active thread list
-  add_tlv_vector(thread, tlv_vector);
+    // Initialise the vector with the values from the default vector
+    copy_tlv_vector(tlv_vector, default_tlv_vector);
+
+    // Add thread to active thread list
+    add_tlv_vector(thread, tlv_vector);
+  }
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
 }
@@ -344,7 +348,10 @@ void initialize_threads_primitives()
   // Allocate key for the TEB
   pthread_key_create(&teb_key, NULL);
 
-  // Initialize the TLV vector
+  // Allocate the TEB for the initial thread
+  make_teb();
+
+  // Initialize the TLV vector for the initial thread
   setup_tlv_vector(NULL);
 }
 
@@ -1395,11 +1402,16 @@ D primitive_read_thread_variable(D h)
   tlv_vector = get_tlv_vector();
 
 #ifdef DEBUG_TLV
-  fprintf(stderr, "Reading offset %u from vector %p.\n", offset, tlv_vector);
+  fprintf(stderr, "Reading offset %u from vector %p: ", offset, tlv_vector);
   fflush(stderr);
 #endif
 
   value = tlv_vector[offset];
+
+#ifdef DEBUG_TLV
+  fprintf(stderr, "%p\n", value);
+  fflush(stderr);
+#endif
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
 
@@ -1421,7 +1433,7 @@ D primitive_write_thread_variable(D h, D nv)
   tlv_vector = get_tlv_vector();
 
 #ifdef DEBUG_TLV
-  fprintf(stderr, "Writing offset %u in vector %p.\n", offset, tlv_vector);
+  fprintf(stderr, "Writing offset %u in vector %p: %p.\n", offset, tlv_vector, nv);
   fflush(stderr);
 #endif
 
