@@ -27,7 +27,7 @@ $DIE && exit 1
 echo "processing (ignore errors and warnings from automake)..."
 
 ( cd $srcdir
-  mkdir build-aux
+  mkdir -p build-aux
   aclocal
   automake --foreign --add-missing
   autoconf )
