@@ -16,6 +16,7 @@
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <inttypes.h>
 
 #include <stdio.h>
 
@@ -1364,7 +1365,7 @@ D primitive_allocate_thread_variable(D v)
   // increment offset for the next new variable
   TLV_vector_offset++;
 
-  trace_tlv("Allocating variable at offset %d", variable_offset);
+  trace_tlv("Allocating variable at offset %"PRIxPTR, variable_offset);
 
   // First check if we need to grow the TLV vectors
   size = (uintptr_t)(default_tlv_vector[1]) >> 2;
@@ -1402,7 +1403,7 @@ D primitive_read_thread_variable(D h)
 
   value = tlv_vector[offset];
 
-  trace_tlv("Reading offset %u from vector %p: %p", offset, tlv_vector);
+  trace_tlv("Reading offset %"PRIxPTR" from vector %p: %p", offset, tlv_vector, value);
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
 
@@ -1423,7 +1424,7 @@ D primitive_write_thread_variable(D h, D nv)
   offset = (uintptr_t)h;
   tlv_vector = get_tlv_vector();
 
-  trace_tlv("Writing offset %u in vector %p: %p", offset, tlv_vector, nv);
+  trace_tlv("Writing offset %"PRIxPTR" in vector %p: %p", offset, tlv_vector, nv);
 
   tlv_vector[offset] = nv;
 
