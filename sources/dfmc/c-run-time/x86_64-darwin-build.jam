@@ -1,41 +1,35 @@
+
+#
+# Include the common jam library
+#
+
+include $(SYSTEM_ROOT)/lib/common.jam ;
+
 #
 # Configuration variables
 #
 
-GC_PREFIX = "@with_gc@" ;
-GC_LIBDIR = $(GC_PREFIX)/lib ;
-GC_INCDIR = $(GC_PREFIX)/include ;
+CC	?= gcc ;
 
-CC     ?= gcc -g -O2 -fPIC -I$(GC_INCDIR) ;
+SUFDLL	?= .dylib ;	# shared library suffix
 
-MKF    ?= dylanmakefile.mkf ;
+# The architecture flag needs to be set for both the Link actions and the Cc
+# action. The Cc action in mini-jambase.jam is shared across different platforms
+# and so we cannot add the Darwin-only -arch flag to it; we have to use these
+# flag variables instead.
 
-SUFOBJ ?= .o ;    # object files suffix
-SUFASM ?= .s ;    # assembly source files suffix
-SUFLIB ?= .a ;    # static library suffix
-SUFDLL ?= .so ;   # shared library suffix
-SUFMKF ?= .mkf ;  # build-system files
+ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=x86_64) ;
 
-DEFINES += GC_LINUX_THREADS _REENTRANT ;
+CCFLAGS ?= -I$(GC_INCDIR) -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
 
-#
-# Runtime
-#
+LINKFLAGS ?= $(ARCHFLAG) ;
 
-RTOBJS ?= posix-threads.o
-          debug-print.o
-          run-time.o
-          trace.o ;
-
-# These variables are passed to the link rule by way of the dylan.lid file.
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) ;
-rtclibs ?= -L$(GC_LIBDIR) -lgc -lpthread -ldl -lm ;
-
-guilflags ?= ;
+DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
 
 #
 # Jambase
 #
+
 include $(SYSTEM_LIBDIR)/mini-jambase.jam ;
 
 #
@@ -60,11 +54,13 @@ rule DylanLibrary image : version {
   # Link a Dylan library as a shared library or executable image.
 
   local _dll = [ FDLLName $(image) ] ;
+  local _lib = [ FLIBName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
   # Here we save the name and search directory of the DLL for this library.
   
   _dll_$(image[1]:L) = $(_dll) ;
+  _lib_$(image[1]:L) = $(_lib) ;
   if ! $(SYSTEM) && ! $(PERSONAL_ROOT) {
     _dir_$(image[1]:L) = $(LIBDIR) ;
   }
@@ -102,7 +98,7 @@ rule DylanLibrary image : version {
  
   Cc $(_obj) : $(_c) ;
   Depends $(_exe) : $(_dll) ;
-  LINKLIBS on $(_exe) += -l$(image[1]:L) ;
+  LINKLIBS on $(_exe) += $(_lib) ;
   LinkEXE $(_exe) : $(_obj) ;
 
   # If this is the top-level project, make the dll, exe, and clean
@@ -184,20 +180,15 @@ rule DylanLibraryCLibraries image : libraries {
   # Link C (or other externally-derived) libraries into the shared library.
   
   local _dll = [ FDLLName $(image) ] ;
-  local _exe = [ FEXEName $(image) ] ;
 
   for lib in $(libraries) {
     switch $(lib) {
-      case -L* :
-	  	   _clib_$(image[1]:L) += $(lib) ;
-	  	   LINKLIBS on $(_dll) $(_exe) += $(lib) ;
-      case -l* :
-	  	   _clib_$(image[1]:L) += $(lib) ;
-	  	   LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+      case -L* : LINKLIBS on $(_dll) += $(lib) ;
+      case -l* : LINKLIBS on $(_dll) += $(lib) ;
       case *.a : lib = [ FGristFiles $(lib) ] ;
-        SEARCH on $(lib) = $(SEARCH_SOURCE) ;
-        Depends $(_dll) : $(lib) ;
-        NEEDLIBS on $(_dll) += $(lib) ;
+		 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
+		 Depends $(_dll) : $(lib) ;
+		 NEEDLIBS on $(_dll) += $(lib) ;
       case * :   Exit Unknown C library $(lib) ;
     }
   }
@@ -257,7 +248,11 @@ rule DylanLibraryRCFiles image : rcfiles {
 rule DylanLibraryJamIncludes image : includes {
   # DylanLibraryJamIncludes image : includes ;
   
-  Echo Ignoring Jam include file(s) $(includes) ;
+  local _i ;
+  for _i in [ FGristFiles $(includes) ] {
+    SEARCH on $(_i) = $(SEARCH_SOURCE) ;
+    include $(_i) ;
+  }
 }
 
 rule DylanLibraryUses image : library : dir {
@@ -292,11 +287,11 @@ rule DylanLibraryUses image : library : dir {
 
       local LIBDIR BINDIR ;
       {
-        local _lib = lib ;
-        local _bin = bin ;
+	local _lib = lib ;
+	local _bin = bin ;
 
-        LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
-        BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+	LIBDIR = $(_lib:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
+	BINDIR = $(_bin:P=$(PERSONAL_ROOT:E=$(LOCATE_TARGET:P))) ;
       }
 
       local _mkf = $(MKF:G=$(library:L)) ;
@@ -309,8 +304,6 @@ rule DylanLibraryUses image : library : dir {
 }
 
 rule DylanLibraryClosure image : libraries {
-  #Echo DylanLibraryClosure $(image) ":" $(libraries) ;
-
   local _dll = [ FDLLName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
@@ -319,8 +312,8 @@ rule DylanLibraryClosure image : libraries {
     if ! $(_i) in $(_use_$(image[1]:L)) {
       _use_$(image[1]:L) += $(_i) ;
       Depends $(_dll) $(_exe) : $(_dll_$(_i)) ;
-      LINKLIBS on $(_dll) $(_exe) += -l$(_i) ;
-      LINKLIBS on $(_dll) $(_exe) += $(_clib_$(_i)) ;
+
+      LINKLIBS on $(_dll) $(_exe) += $(_lib_$(_i)) ;
 
       LIBPATH on $(_dll) $(_exe) += $(_dir_$(_i)) ;
 
@@ -338,16 +331,16 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(CC) -shared -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(CC) -dynamiclib -install_name @rpath/$(<:BS=$(SUFDLL)) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
 }
 
 rule LinkEXE {
   Depends $(<) : $(>) ;
 }
 
-actions LinkEXE bind NEEDLIBS {
-  # Link GC here as well as in rtlibs because it might not be statically linked
-  $(CC) -o $(<)  -Wl,-rpath,"\$ORIGIN/../lib/" $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc
+actions together LinkEXE bind NEEDLIBS {
+   # Link GC here as well as in rtlibs because it might not be statically linked
+   $(CC) -Wl,-rpath,@executable_path/../lib/ -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
 }
 
 #
@@ -355,7 +348,19 @@ actions LinkEXE bind NEEDLIBS {
 #
 
 rule FDLLName {
-  return lib$(<[1]:LS=$(SUFDLL)) ;
+  if $(<[2]) {
+    return lib$(<[2]:LS=$(SUFDLL)) ;
+  } else {
+    return lib$(<[1]:LS=$(SUFDLL)) ;
+  }
+}
+
+rule FLIBName {
+  if $(<[2]) {
+    return -l$(<[2]:L) ;
+  } else {
+    return -l$(<[1]:L) ;
+  }
 }
 
 rule FEXEName {

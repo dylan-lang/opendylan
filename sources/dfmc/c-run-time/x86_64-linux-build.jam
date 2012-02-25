@@ -1,22 +1,3 @@
 
-{
-  local _lib = lib ;
-  local _bin = bin ;
-  local _inc = include ;
-
-  # SYSTEM_ROOT is set by the build-system
-  SYSTEM_LIBDIR ?= $(_lib:P=$(SYSTEM_ROOT)) ;
-  SYSTEM_BINDIR ?= $(_bin:P=$(SYSTEM_ROOT)) ;
-  SYSTEM_INCDIR ?= $(_inc:P=$(SYSTEM_ROOT)) ;
-
-  # PERSONAL_ROOT is set by the build-system
-  PERSONAL_LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT)) ;
-  PERSONAL_BINDIR ?= $(_bin:P=$(PERSONAL_ROOT)) ;
-
-  # . is set by the build system
-  LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT:E=$(.:P))) ;
-  BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
-  HDRS ?= $(SYSTEM_INCDIR) ;
-}
-
-include $(SYSTEM_LIBDIR)/c-linux-build.jam ;
+# Include common linux definitions
+include $(SYSTEM_ROOT)/lib/c-linux-build.jam ;

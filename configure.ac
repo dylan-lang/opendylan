@@ -116,10 +116,6 @@ AC_CONFIG_FILES(Makefile
                 sources/lib/run-time/pentium-linux/Makefile
                 sources/lib/run-time/pentium-freebsd/Makefile
                 sources/dfmc/c-run-time/Makefile
-                sources/dfmc/c-run-time/c-freebsd-build.jam
-                sources/dfmc/c-run-time/c-linux-build.jam
-                sources/dfmc/c-run-time/ppc-darwin-build.jam
-                sources/dfmc/c-run-time/x86-darwin-build.jam
-                sources/dfmc/c-run-time/x86_64-darwin-build.jam)
+                sources/dfmc/c-run-time/config.jam)
 
 AC_OUTPUT

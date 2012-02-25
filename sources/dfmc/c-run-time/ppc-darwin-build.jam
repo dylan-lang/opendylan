@@ -1,47 +1,24 @@
+
+#
+# Include the common jam library
+#
+
+include $(SYSTEM_ROOT)/lib/common.jam ;
+
 #
 # Configuration variables
 #
 
 CC	?= gcc ;
 
-MKF	?= dylanmakefile.mkf ;
-
-SUFOBJ	?= .o ;			# object files suffix
-SUFASM	?= .s ;			# assembly source files suffix
-SUFLIB	?= .a ;			# static library suffix
 SUFDLL	?= .dylib ;	# shared library suffix
-SUFMKF	?= .mkf ;   # build-system files
-
-GC_PREFIX = "@with_gc@" ;
-GC_LIBDIR = $(GC_PREFIX)/lib ;
-GC_INCDIR = $(GC_PREFIX)/include ;
-
-{
-  local _lib = lib ;
-  local _bin = bin ;
-  local _inc = include ;
-
-  # SYSTEM_ROOT is set by the build-system
-  SYSTEM_LIBDIR ?= $(_lib:P=$(SYSTEM_ROOT)) ;
-  SYSTEM_BINDIR ?= $(_bin:P=$(SYSTEM_ROOT)) ;
-  SYSTEM_INCDIR ?= $(_inc:P=$(SYSTEM_ROOT)) ;
-
-  # PERSONAL_ROOT is set by the build-system
-  PERSONAL_LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT)) ;
-  PERSONAL_BINDIR ?= $(_bin:P=$(PERSONAL_ROOT)) ;
-
-  # . is set by the build system
-  LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT:E=$(.:P))) ;
-  BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
-  HDRS ?= $(SYSTEM_INCDIR) ;
-}
 
 # The architecture flag needs to be set for both the Link actions and the Cc
 # action. The Cc action in mini-jambase.jam is shared across different platforms
 # and so we cannot add the Darwin-only -arch flag to it; we have to use these
 # flag variables instead.
 
-ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=i386) ;
+ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=ppc) ;
 
 CCFLAGS ?= -I$(GC_INCDIR) -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
 
@@ -50,22 +27,9 @@ LINKFLAGS ?= $(ARCHFLAG) ;
 DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
 
 #
-# Runtime
-#
-
-RTOBJS ?= posix-threads.o
-          debug-print.o
-          run-time.o
-          trace.o ;
-
-# This variable is passed to the link rule by way of the dylan.lid file.
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -L$(GC_LIBDIR) -lgc -ldl -lm -lpthread ;
-
-guilflags ?= ;
-
-#
 # Jambase
 #
+
 include $(SYSTEM_LIBDIR)/mini-jambase.jam ;
 
 #
