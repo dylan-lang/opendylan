@@ -2,6 +2,12 @@
 # Configuration variables
 #
 
+gc_incdirs =  @gc_includedirs@ ;
+gc_libdirs =  @gc_libdirs@ ;
+gc_libnames = @gc_libnames@ ;
+GC_CCFLAGS = -I$(gc_incdirs) ;
+GC_LDFLAGS = -L$(gc_libdirs) -l$(gc_libnames) ;
+
 CC	?= gcc ;
 
 MKF	?= dylanmakefile.mkf ;
@@ -11,10 +17,6 @@ SUFASM	?= .s ;			# assembly source files suffix
 SUFLIB	?= .a ;			# static library suffix
 SUFDLL	?= .dylib ;	# shared library suffix
 SUFMKF	?= .mkf ;   # build-system files
-
-GC_PREFIX = "@with_gc@" ;
-GC_LIBDIR = $(GC_PREFIX)/lib ;
-GC_INCDIR = $(GC_PREFIX)/include ;
 
 {
   local _lib = lib ;
@@ -43,7 +45,7 @@ GC_INCDIR = $(GC_PREFIX)/include ;
 
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=i386) ;
 
-CCFLAGS ?= -I$(GC_INCDIR) -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
+CCFLAGS ?= $(GC_CCFLAGS) -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
 
 LINKFLAGS ?= $(ARCHFLAG) ;
 
@@ -58,7 +60,7 @@ RTOBJS ?= dummy-threads.o
 	  run-time.o ;
 
 # This variable is passed to the link rule by way of the dylan.lid file.
-rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -L$(GC_LIBDIR) -lgc -ldl -lm ;
+rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) $(GC_LDFLAGS) -ldl -lm ;
 
 guilflags ?= ;
 
@@ -374,8 +376,8 @@ rule LinkEXE {
 }
 
 actions together LinkEXE bind NEEDLIBS {
-   # Link GC here as well as in rtlibs because it might not be statically linked
-   $(CC) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
+   # Link GC here as well as in $rtlibs since the GC libs may be dynamically linked
+   $(CC) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) $(GC_LDFLAGS) -lc
 }
 
 #
