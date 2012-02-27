@@ -27,3 +27,4 @@ via one of the above means.
    gtk
    staticlink
    frontend-lisp
+   project_manager
