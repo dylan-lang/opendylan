@@ -43,7 +43,7 @@ GC_INCDIR = $(GC_PREFIX)/include ;
 
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=x86_64) ;
 
-CCFLAGS ?= -I$(GC_INCDIR) -fno-strict-aliasing -fPIC -g $(ARCHFLAG) ;
+CCFLAGS ?= -I$(GC_INCDIR) -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
 
 LINKFLAGS ?= $(ARCHFLAG) ;
 
