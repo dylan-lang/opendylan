@@ -6,9 +6,9 @@ The purpose of this project would be to write another syntax for Dylan based on 
 
 The project would include to write (or revive) a S-Expression lexer and parser for Dylan and translating this into the ``dfmc-definitions`` structure by using a macro-expander for Dylan macros.
 
-The change towards the infix syntax was done before the programming language was finalized, thus not all features are present in the prefix syntax. This has to be taken into consideration and adjusted appropriately (by redefining the infix syntax).
+The change towards the infix syntax was done before the programming language was finalized, thus not all features are present in the prefix syntax. This has to be taken into consideration and adjusted appropriately (by redefining the prefix syntax).
 
-Using this approach both surface syntaxes (apart from macros) can be completely exchanged. Also, the semantics (control/data flow, optimization, type inference, backends) does not have to be touched at all.
+Using this approach both surface syntaxes (apart from macros) can be completely exchanged. Also, the semantics (control/data flow, optimization, type inference, backends) does not have to be touched at all. Every dylan file already has rfc822 headers, one of these is ``Language:``, which values can be ``prefix-dylan`` and ``infix-dylan`` (where the latter is the default).
 
 Some references:
 
