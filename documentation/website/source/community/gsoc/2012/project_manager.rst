@@ -4,18 +4,17 @@ Rethinking the Project Manager
 Problem
 =======
 
-The current project manager as a variety of problems that we would
+The current project manager has a variety of problems that we would
 like to solve.  These include:
 
-* It combines install with build. Everything is built and installed
-  into the same location (``~/Open-Dylan``).
+* It combines install with build.
 * Similarly, it doesn't distinguish between a library that I'm using
   and one that I'm developing. Not all dependencies should be treated
   in the same manner.  While this is seen by some to be an advantage,
   I don't believe that it is in any larger scale setting with multiple
   endeavors happening at once.
 * It provides no versioning of libraries.
-* Everything is always built in the shared location. This is pretty
+* Everything is always built into a shared location. This is pretty
   confusing for new users.
 * It provides no way of locating, downloading or otherwise managing
   dependencies. You still have to download everything yourself, set
@@ -72,11 +71,10 @@ Workspaces
 ----------
 
 Workspaces are a new concept to Open Dylan and are a layer above the
-project.  A workspace is a collection of projects. In this document,
-workspace files will have the extension ``NAL`` for ``Not A LID``.
+project.  (A project corresponds to a single library or executable.)
 
 Taking Network Night Vision as an example, you would have a top level
-``nnv.nal`` file which contained (among other things) a list of the
+``nnv.project`` file which contained (among other things) a list of the
 projects that were part of the Network Night Vision application, using
 relative paths from the workspace file:
 
