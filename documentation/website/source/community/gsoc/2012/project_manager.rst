@@ -74,7 +74,7 @@ Workspaces are a new concept to Open Dylan and are a layer above the
 project.  (A project corresponds to a single library or executable.)
 
 Taking Network Night Vision as an example, you would have a top level
-``nnv.project`` file which contained (among other things) a list of the
+``nnv.workspace`` file which contained (among other things) a list of the
 projects that were part of the Network Night Vision application, using
 relative paths from the workspace file:
 
