@@ -367,7 +367,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(CC) -dynamiclib -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
+  $(CC) -dynamiclib -install_name @rpath/$(<:BS=$(SUFDLL)) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
 }
 
 rule LinkEXE {
@@ -376,7 +376,7 @@ rule LinkEXE {
 
 actions together LinkEXE bind NEEDLIBS {
    # Link GC here as well as in rtlibs because it might not be statically linked
-   $(CC) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
+   $(CC) -Wl,-rpath,@executable_path/../lib/ -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
 }
 
 #
