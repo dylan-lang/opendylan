@@ -11,9 +11,14 @@
 
 #include "posix-threads.h"
 
+#include "trace.h"
+
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <inttypes.h>
+
+#include <stdio.h>
 
 #include <pthread.h>
 #include <time.h>
@@ -38,14 +43,12 @@ extern OBJECT KPfalseVKi;
 pthread_mutex_t thread_join_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t thread_exit_event = PTHREAD_COND_INITIALIZER;
 
-pthread_key_t thread_key;
-pthread_key_t thread_handle_key;
-pthread_key_t tlv_vector_key;
+pthread_key_t teb_key;
 
 pthread_mutex_t  tlv_vector_lock = PTHREAD_MUTEX_INITIALIZER;
 TLV_VECTOR       default_tlv_vector = NULL;
 
-pthread_mutex_t  tlv_vector_list_lock;
+pthread_mutex_t  tlv_vector_list_lock = PTHREAD_MUTEX_INITIALIZER;
 TLV_VECTOR_LIST  tlv_vector_list;
 
 intptr_t  TLV_vector_offset = 2;
@@ -56,7 +59,7 @@ intptr_t  TLV_vector_offset = 2;
 /*****************************************************************************/
 
 void  initialize_threads_primitives();
-void *make_dylan_vector(int);
+void *make_tlv_vector(int);
 int   priority_map(int);
 
 void *get_tlv_vector();
@@ -66,56 +69,97 @@ TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize);
 void grow_all_tlv_vectors(int newsize);
 void  copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source);
 void update_tlv_vectors(int offset, D value);
-void add_tlv_vector(DTHREAD *thread, TLV_VECTOR tlv_vector);
+void add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector);
 int remove_tlv_vector(DTHREAD *thread);
 
-void initialize_threads_primitives()
+__attribute__((pure))
+TEB* get_teb()
 {
-  MSG0("Initializing threads primitives\n");
-  default_tlv_vector = make_dylan_vector(TLV_VECTOR_INITIAL_SIZE);
-  pthread_key_create(&thread_key, NULL);
-  pthread_key_create(&thread_handle_key, NULL);
-  pthread_key_create(&tlv_vector_key, NULL);
+  return (TEB*)pthread_getspecific(teb_key);
 }
 
-void *make_dylan_vector(int n)
+void set_teb(TEB* teb)
+{
+  pthread_setspecific(teb_key, (void*)teb);
+}
+
+TEB* make_teb()
+{
+  TEB* teb = (TEB*)GC_malloc_uncollectable(sizeof(TEB));
+
+  teb->uwp_frame = Ptop_unwind_protect_frame;
+
+  set_teb(teb);
+
+  return teb;
+}
+
+void free_teb()
+{
+  TEB* teb = get_teb();
+
+  set_teb(NULL);
+
+  GC_free(teb);
+}
+
+void *make_tlv_vector(int n)
 {
   D *vector;
+  size_t size;
 
-  vector = malloc((n + 2) * sizeof(D));
+  // compute actual (byte) size
+  size = (n + 2) * sizeof(D);
+
+  // fill int the vector
+  vector = GC_malloc_uncollectable(size);
   vector[0] = NULL;
   vector[1] = I(n);
+
+  // done
   return vector;
+}
+
+void free_tlv_vector()
+{
+  D *vector = get_tlv_vector();
+  size_t size;
+
+  // compute actual (byte) size
+  size = (R(vector[1]) + 2) * sizeof(D);
+
+  // free the memory
+  GC_free(vector);
 }
 
 void *get_tlv_vector()
 {
-  return pthread_getspecific(tlv_vector_key);
+  return get_teb()->tlv_vector;
 }
 
 void set_tlv_vector(void *vector)
 {
-  pthread_setspecific(tlv_vector_key, vector);
+  get_teb()->tlv_vector = vector;
 }
 
 void *get_current_thread()
 {
-  return pthread_getspecific(thread_key);
+  return get_teb()->thread;
 }
 
 void set_current_thread(void *thread)
 {
-  pthread_setspecific(thread_key, thread);
+  get_teb()->thread = thread;
 }
 
 void *get_current_thread_handle()
 {
-  return pthread_getspecific(thread_handle_key);
+  return get_teb()->thread_handle;
 }
 
 void set_current_thread_handle(void *handle)
 {
-  pthread_setspecific(thread_handle_key, handle);
+  get_teb()->thread_handle = handle;
 }
 
 
@@ -125,8 +169,10 @@ TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize)
 {
   TLV_VECTOR  new_vector;
 
+  trace_tlv("Growing vector %p", vector);
+
   // allocate a new vector and copy the values in the old across
-  new_vector = make_dylan_vector(newsize);
+  new_vector = make_tlv_vector(newsize);
   copy_tlv_vector(new_vector, vector);
 
   // return the new vector
@@ -139,8 +185,10 @@ void grow_all_tlv_vectors(newsize)
   TLV_VECTOR_LIST list;
   TLV_VECTOR new_default;
 
+  trace_tlv("Growing all vectors to size %d", newsize);
+
   // Grow the default vector
-  new_default = make_dylan_vector(newsize);
+  new_default = make_tlv_vector(newsize);
   copy_tlv_vector(new_default, default_tlv_vector);
   default_tlv_vector = new_default;
 
@@ -148,6 +196,7 @@ void grow_all_tlv_vectors(newsize)
   list = tlv_vector_list;
   while(list != NULL) {
     list->tlv_vector = grow_tlv_vector(list->tlv_vector, newsize);
+    list->teb->tlv_vector = list->tlv_vector;
     list = list->next;
   }
 }
@@ -176,6 +225,8 @@ update_tlv_vectors(int offset, D value)
   TLV_VECTOR_LIST list = tlv_vector_list;
   D *destination;
 
+  trace_tlv("Propagating default of offset %d with value %p", offset, value);
+
   while (list != NULL) {
     destination = (D *)(list->tlv_vector + offset);
     *destination = value;
@@ -188,15 +239,18 @@ update_tlv_vectors(int offset, D value)
  * Assumes the thread vector has already been initialised.
  */
 void
-add_tlv_vector(DTHREAD *thread, TLV_VECTOR tlv_vector)
+add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector)
 {
-  TLV_VECTOR_LIST new_element = malloc(sizeof(struct tlv_vector_list_element));
+  TLV_VECTOR_LIST new_element = GC_malloc_uncollectable(sizeof(struct tlv_vector_list_element));
 
   assert(new_element != NULL);
 
+  trace_tlv("Adding vector %p for thread %p", tlv_vector, thread);
+
   // initialise the new element and put it on the front of the list
   new_element->thread = thread;
-  new_element->tlv_vector = tlv_vector; 
+  new_element->teb = teb;
+  new_element->tlv_vector = tlv_vector;
   new_element->next = tlv_vector_list;
   tlv_vector_list = new_element;
 }
@@ -210,6 +264,8 @@ remove_tlv_vector(DTHREAD *thread)
 {
   TLV_VECTOR_LIST last, current;
 
+  trace_tlv("Removing vector for thread %p", thread);
+
   if (tlv_vector_list == NULL)  // empty list
     return(1);
 
@@ -217,8 +273,8 @@ remove_tlv_vector(DTHREAD *thread)
   if (tlv_vector_list->thread == thread) {
     // matches first entry in list
     tlv_vector_list = tlv_vector_list->next;
-    free(last->tlv_vector);
-    free(last);
+    free_tlv_vector(last->tlv_vector);
+    GC_free(last);
     return(0);
   }
 
@@ -227,8 +283,8 @@ remove_tlv_vector(DTHREAD *thread)
     if (current->thread == thread) {
       // found the right entry, so cut it out
       last->next = current->next;
-      free(current->tlv_vector);
-      free(current);
+      free_tlv_vector(current->tlv_vector);
+      GC_free(current);
       return(0);
     }
     else {
@@ -241,6 +297,62 @@ remove_tlv_vector(DTHREAD *thread)
   return(1);
 }
 
+/*
+ * Set up the TLV vector for the given thread.
+ *
+ * Note that THREAD may be NULL in case of the initial thread,
+ * which does not need this marker since its vectors will
+ * never be removed.
+ */
+void setup_tlv_vector(DTHREAD *thread)
+{
+  TEB         *teb;
+  TLV_VECTOR   tlv_vector;
+  uintptr_t    size;
+
+  trace_tlv("Setting up TLV vector for thread %p", thread);
+
+  teb = get_teb();
+
+  pthread_mutex_lock(&tlv_vector_list_lock);
+
+  tlv_vector = get_tlv_vector();
+
+  if(!tlv_vector) {
+    // Now set up a vector for the Dylan thread variables
+    size = (uintptr_t)(default_tlv_vector[1]) >> 2;
+    tlv_vector = make_tlv_vector(size);
+    set_tlv_vector(tlv_vector);
+
+    // Initialise the vector with the values from the default vector
+    copy_tlv_vector(tlv_vector, default_tlv_vector);
+
+    // Add thread to active thread list
+    add_tlv_vector(thread, teb, tlv_vector);
+  }
+
+  pthread_mutex_unlock(&tlv_vector_list_lock);
+}
+
+/*
+ * Called once from _Init_Run_Time() to initialize globally.
+ */
+void initialize_threads_primitives()
+{
+  trace_threads("Initializing thread primitives");
+
+  // Set up vector of default values for thread variables
+  default_tlv_vector = make_tlv_vector(TLV_VECTOR_INITIAL_SIZE);
+
+  // Allocate key for the TEB
+  pthread_key_create(&teb_key, NULL);
+
+  // Allocate the TEB for the initial thread
+  make_teb();
+
+  // Initialize the TLV vector for the initial thread
+  setup_tlv_vector(NULL);
+}
 
 
 /*****************************************************************************/
@@ -249,6 +361,7 @@ remove_tlv_vector(DTHREAD *thread)
 
 void *trampoline (void *arg)
 {
+  TEB*     teb = make_teb();
   D        result, f;
   DTHREAD *thread = (DTHREAD *)arg;
 
@@ -256,7 +369,13 @@ void *trampoline (void *arg)
 
   f = (D)(thread->handle2);
 
+  setup_tlv_vector(thread);
+
+  trace_threads("Thread %p starts function %p", thread, f);
+
   result = CALL0(f);
+
+  trace_threads("Thread %p returned %p", thread, result);
 
   remove_tlv_vector(thread);
 
@@ -264,6 +383,8 @@ void *trampoline (void *arg)
   thread->handle1 = (void *)((uintptr_t)thread->handle1 | COMPLETED);
   pthread_cond_broadcast(&thread_exit_event);
   pthread_mutex_unlock(&thread_join_lock);
+
+  free_teb();
 
   return result;
 }
@@ -305,7 +426,7 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 //    return CREATE_ERROR;
 //  }
 
-  if (pthread_create(&thread->tid, &attr, trampoline, thread)) {
+  if (GC_pthread_create(&thread->tid, &attr, trampoline, thread)) {
     MSG0("make-thread: error creating thread\n");
     return CREATE_ERROR;
   }
@@ -333,8 +454,8 @@ D primitive_destroy_thread(D t)
 /* 3 */
 D primitive_thread_join_single(D t)
 {
-  DTHREAD       *thread = t;
-  uintptr_t      state, completed;
+  volatile DTHREAD *thread = t;
+  uintptr_t         state, completed;
 
   assert(thread != NULL);
 
@@ -360,7 +481,6 @@ D primitive_thread_join_single(D t)
     completed = (uintptr_t)thread->handle1 & COMPLETED;
   }
 
-
   thread->handle1 = (void *)((uintptr_t)thread->handle1 ^ (JOINED | MARKED));
 
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
@@ -375,18 +495,21 @@ D primitive_thread_join_single(D t)
 /* 4 */
 D primitive_thread_join_multiple(D v)
 {
-  SOV           *thread_vector = v;
-  DTHREAD      **threads, *joined_thread = NULL;
-  int            i, result;
-  uintptr_t      size, state;
+  SOV               *thread_vector = v;
+  volatile DTHREAD **threads;
+  volatile DTHREAD  *joined_thread = NULL;
+  int                i, result;
+  uintptr_t          size, state;
 
   assert(thread_vector != NULL);
   assert(IS_ZINT(thread_vector->size));
 
   size  = ((uintptr_t)(thread_vector->size)) >> 2;
-  threads = (DTHREAD **)(thread_vector->data);
+  threads = (volatile DTHREAD **)(thread_vector->data);
 
   if (pthread_mutex_lock(&thread_join_lock)) {
+    MSG0("thread-join-multiple: error obtaining thread join lock\n");
+    return GENERAL_ERROR;
   }
 
   /* Make sure none of the threads is already
@@ -395,6 +518,7 @@ D primitive_thread_join_multiple(D v)
   for (i = 0; i < size; i++) {
     state = (uintptr_t)threads[i]->handle1;
     if (state & MARKED || state & JOINED) {
+      MSG0("thread-join-multiple: duplicate join error\n");
       return GENERAL_ERROR;
     }
   }
@@ -416,13 +540,13 @@ D primitive_thread_join_multiple(D v)
 
   while (joined_thread == NULL) {
     if (pthread_cond_wait(&thread_exit_event, &thread_join_lock)) {
-      MSG0("thread-join-single: error waiting for thread exit event\n");
+      MSG0("thread-join-multiple: error waiting for thread exit event\n");
       return GENERAL_ERROR;
     }
     for (i = 0; i < size; i++) {
       if ((uintptr_t)threads[i]->handle1 & COMPLETED) {
-	joined_thread = threads[i];
-	break;
+        joined_thread = threads[i];
+        break;
       }
     }
   }
@@ -436,11 +560,11 @@ D primitive_thread_join_multiple(D v)
   }
 
   if (pthread_mutex_unlock(&thread_join_lock) != 0) {
-    MSG0("thread-join-single: error releasing thread join lock\n");
+    MSG0("thread-join-multiple: error releasing thread join lock\n");
     return GENERAL_ERROR;
   }
 
-  return joined_thread;
+  return (DTHREAD*)joined_thread;
 }
 
 /* 4.5 */
@@ -449,7 +573,7 @@ void primitive_detach_thread(D t)
   DTHREAD* thread = t;
   assert(thread != NULL);
 
-  pthread_detach(thread->tid);
+  GC_pthread_detach(thread->tid);
 }
 
 /* 5 */
@@ -482,7 +606,7 @@ D primitive_wait_for_simple_lock(D l)
 
   if (slock->owner == thread) {
     MSG1("wait-for-simple-lock: Error, thread %d already owns the lock\n",
-	 thread);
+         thread);
     return ALREADY_LOCKED;
   }
 
@@ -736,8 +860,8 @@ D primitive_wait_for_semaphore_timed(D l, D m)
 
   while (!timeout && semaphore->count <= 0) {
     timeout = pthread_cond_timedwait(&semaphore->cond,
-				     &semaphore->mutex,
-				     &time_limit);
+                                     &semaphore->mutex,
+                                     &time_limit);
   }
 
   if (!timeout)
@@ -857,8 +981,8 @@ D primitive_release_recursive_lock(D l)
     // Give up the lock
     rlock->owner = 0;
     if (pthread_mutex_lock(&rlock->mutex)
-	|| pthread_cond_signal(&rlock->cond)
-	|| pthread_mutex_unlock(&rlock->mutex)) {
+        || pthread_cond_signal(&rlock->cond)
+        || pthread_mutex_unlock(&rlock->mutex)) {
       MSG0("release-recursive-lock: error signalling cond\n");
       return GENERAL_ERROR;
     }
@@ -1241,6 +1365,8 @@ D primitive_allocate_thread_variable(D v)
   // increment offset for the next new variable
   TLV_vector_offset++;
 
+  trace_tlv("Allocating variable at offset %"PRIxPTR, variable_offset);
+
   // First check if we need to grow the TLV vectors
   size = (uintptr_t)(default_tlv_vector[1]) >> 2;
   limit = size + 2;
@@ -1274,7 +1400,10 @@ D primitive_read_thread_variable(D h)
   // stored in the TLV.
   offset = (uintptr_t)h;
   tlv_vector = get_tlv_vector();
+
   value = tlv_vector[offset];
+
+  trace_tlv("Reading offset %"PRIxPTR" from vector %p: %p", offset, tlv_vector, value);
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
 
@@ -1286,7 +1415,6 @@ D primitive_read_thread_variable(D h)
 D primitive_write_thread_variable(D h, D nv)
 {
   TLV_VECTOR   tlv_vector;
-  D           *destination;
   uintptr_t    offset;
 
   pthread_mutex_lock(&tlv_vector_list_lock);
@@ -1295,7 +1423,10 @@ D primitive_write_thread_variable(D h, D nv)
   // stored in the TLV.
   offset = (uintptr_t)h;
   tlv_vector = get_tlv_vector();
-  destination = tlv_vector[offset] = nv;
+
+  trace_tlv("Writing offset %"PRIxPTR" in vector %p: %p", offset, tlv_vector, nv);
+
+  tlv_vector[offset] = nv;
 
   pthread_mutex_unlock(&tlv_vector_list_lock);
 
@@ -1307,31 +1438,17 @@ D primitive_write_thread_variable(D h, D nv)
 D primitive_initialize_current_thread(D t, DBOOL synchronize)
 {
   DTHREAD     *thread = (DTHREAD *)t;
-  TLV_VECTOR   tlv_vector;
-  uintptr_t    size;
 
   assert(thread != NULL);
 
-  MSG1("Initializing thread %p\n", t);
+  trace_threads("Initializing current thread %p", t);
 
   // Put the thread object and handle in the TEB for later use
   set_current_thread(thread);
   set_current_thread_handle((void *)thread->tid);
 
-  pthread_mutex_lock(&tlv_vector_list_lock);
-
-  // Now set up a vector for the Dylan thread variables
-  size = (uintptr_t)(default_tlv_vector[1]) >> 2;
-  tlv_vector = make_dylan_vector(size);
-  set_tlv_vector(tlv_vector);
-
-  // Initialise the vector with the values from the default vector
-  copy_tlv_vector(tlv_vector, default_tlv_vector);
-
-  // Add thread to active thread list
-  add_tlv_vector(thread, tlv_vector);
-
-  pthread_mutex_unlock(&tlv_vector_list_lock);
+  // Create and register the TLV vector
+  setup_tlv_vector(thread);
 
   // Clear the handle2 slot in the thread object
   // (which contained the address of the starting function)
@@ -1344,9 +1461,7 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
 /* 36a */
 D primitive_initialize_special_thread(D t)
 {
-  MSG1("Initializing special thread %p\n", t);
-  if (default_tlv_vector == NULL)
-    initialize_threads_primitives();
+  trace_threads("Initializing special thread %p", t);
   return primitive_initialize_current_thread(t, 0);
 }
 

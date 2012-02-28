@@ -33,6 +33,9 @@ end class;
 define sealed class <synchronous-thread> (<thread>)
 end class;
 
+define method debug-name (thread :: <thread>)
+  thread.thread-name;
+end method debug-name;
 
 define method finalize (thread :: <thread>) => ()
   unless (primitive-destroy-thread(thread) == $success)
