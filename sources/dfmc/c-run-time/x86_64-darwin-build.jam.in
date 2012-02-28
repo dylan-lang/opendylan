@@ -367,7 +367,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(CC) -dynamiclib -flat_namespace -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(CC) -dynamiclib -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc -lc
 }
 
 rule LinkEXE {
