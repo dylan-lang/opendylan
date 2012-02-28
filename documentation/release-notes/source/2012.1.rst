@@ -1,4 +1,35 @@
 Open Dylan 2012.1 Release Notes
 ===============================
 
-Let's fill this in ...
+In reverse chronological order
+
+* implement thread support for C run-time promovicz Feb 27, 2012 pull request #187
+* generate jam files with correct gc environment given by configure baragent Feb 17, 2012 4538278dda9e8767a620e345c1f7f8da2c801f19
+* fix control flow graph if unwind-protect without body is optimized hannes Feb 16, 2012 e946c88a18fcc20191f9b6b30a463c85617842ba issue #182
+* extend library-report to output rst documentation abeaumont, waywardmonkeys Feb 2012
+* fix split when remove-with-empty? is true abeaumont Feb 07, 2012 1c3512d571ba25fb7bfd101585db5afcf3315353
+* initial man pages for dylan-compiler and make-dylan-app waywardmonkeys Feb 04, 2012 9a9b2847f212bd866c9d623f603dfc2dd01a25a8
+* reimplement make-dylan-app in Dylan glidesurfer Feb 01, 2012 pull request #172
+
+* fix limited type handling hannes Jan 25, 2012 pull request #158 issue #177, issue #122, issue #82
+* implement C3 superclass linearization hannes Jan 24, 2012 pull request #168
+* unify documentation of core libraries into library-reference waywardmonkeys Jan, 2012
+* getting started now contains documentation of console environment and DIME cgay Jan 22, 2012 pull request #165
+* cleanup release-info library hannes Jan 18, 2012 pull request #162
+* expand pathnames in interactive console compiler hannes Jan 11, 2012 ba5e5c97fad5e1f2758e262d28441a2faa5ecc93 issue #149
+* added dependency report waywardmonkeys Jan 07, 2012 45e1267e014db3762e579e1fefca4f9850df3337
+
+* fix bug-report to support all current operating system values and work in HTML mode waywardmonkeys Dec 29, 2011 8adda595df1444e4d232a0b5cef859dae03c562b 0930789132f2af3954942eee8fa8bb681d371821
+* various fixes to project commands and properties waywardmonkeys Dec 28, 2011 394074426db442e2d859a5fce56b58da95fc297d
+* fix shared library initialization in C back-end waywardmonkeys Dec 28, 2011 b8591d14a4a24656599f1c0a8364d9de621a8f72
+* implement load-library via dlopen Dec waywardmonkeys 27, 2011 ff523f27d81189da1a07e379bd74f159dd0389a1
+* abort when applying too many arguments in C run-time housel Dec 20, 2011 e7ceda33f00e460a693c7ccd81f484ae40b13586
+* remove libtool, since it wasn't used waywardmonkeys Dec 20, 2011 4a983d5028b77b1c2c6698c2379759e08d2470b0
+* fix internal error when macroexpand is called with no open project hannes Dec 19, 2011 b4fd09dc6314d57b256dc76d3c06eef769e746f8 issue #77
+* remove unused functional-objects-extras module hannes Dec 18, 2011 2e7f2a4cb38f278495b48f7883360ddd349f2b9f issue #90
+* Fix a compilation crash with C backend when trying to emit an overflown integer abeaumont Dec 18, 2011 819b99bfe14656f5b5081bd70287d8d9f7fb7c7f
+* reduce debug output of compiler (by making it optional with debug-out) hannes Dec 15, 2011 d093ae6cdfd5f4b8dd8ff3ac6359e8f6d9a8f847 issue #92
+* cleanup documentation waywardmonkeys Dec 2011, multiple
+* extended floating-point support housel core-library Dec 14, 2011 b2762c85f554b0ad99efe800259c709e918ce460 bug 7122
+* remove MacOS locators hannes core-library Dec 13, 2011 beeb8635eac918685f3cfff08eb38c5428fb1ac4
+* unification of code in common-dylan on UNIX (command line argument parsing etc) hannes core-library Dec 11, 2011 060f69f44a990adeea0f1db34677f6091fd61dfa
