@@ -54,8 +54,9 @@ DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
 #
 
 RTOBJS ?= dummy-threads.o
-	  debug-print.o
-	  run-time.o ;
+          debug-print.o
+          run-time.o
+          trace.o ;
 
 # This variable is passed to the link rule by way of the dylan.lid file.
 rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -L$(GC_LIBDIR) -lgc -ldl -lm ;

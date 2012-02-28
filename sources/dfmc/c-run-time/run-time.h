@@ -1,3 +1,6 @@
+#ifndef OPENDYLAN_CRT_RUNTIME_H
+#define OPENDYLAN_CRT_RUNTIME_H
+
 #include <setjmp.h>
 
 #define OPTIONAL_ARGUMENT_CHECK(fn, req, count)
@@ -5,55 +8,79 @@
 
 /* CONCRETE RAW TYPES */
 
-typedef signed char		INT8;
-typedef unsigned char		UINT8;
-typedef signed short		INT16;
-typedef unsigned short		UINT16;
-typedef signed long		INT32;
-typedef unsigned long		UINT32;
+typedef signed char             INT8;
+typedef unsigned char           UINT8;
+typedef signed short            INT16;
+typedef unsigned short          UINT16;
+typedef signed long             INT32;
+typedef unsigned long           UINT32;
 #if defined(WIN32)
 typedef _int64                  INT64;
 typedef unsigned _int64         UINT64;
 #else
-typedef signed long long	INT64;
-typedef unsigned long long	UINT64;
+typedef signed long long        INT64;
+typedef unsigned long long      UINT64;
 #endif
-typedef float			FLT;
-typedef double			DFLT;
+typedef float                   FLT;
+typedef double                  DFLT;
 #ifdef WIN32
-typedef double			EFLT;
+typedef double                  EFLT;
 #else
-typedef long double		EFLT;
+typedef long double             EFLT;
 #endif
 
 /* C RAW TYPES */
 
-typedef INT64			long_long;
-typedef UINT64			unsigned_long_long;
-typedef EFLT		        long_double;
+typedef INT64                   long_long;
+typedef UINT64                  unsigned_long_long;
+typedef EFLT                    long_double;
 
 /* DYLAN RAW TYPES */
 
-typedef unsigned long		DBOOL;
-typedef unsigned char		DBCHR;
-typedef unsigned char		DBYTE;
-typedef UINT16			DDBYTE;
-typedef UINT16			DUCHR;
-typedef long			DSINT;
-typedef long			DMINT;
-typedef DMINT			DWORD;
-typedef unsigned long		DUMINT;
-typedef INT64			DLMINT;
-typedef DLMINT			DDWORD;
-typedef UINT64			DULMINT;
-typedef INT64			DBINT;
-typedef float			DSFLT;
-typedef double			DDFLT;
-typedef long double		DEFLT;
-typedef unsigned long		DADDR;
-typedef char*			DBSTR;
-typedef const char*		DCBSTR;
-typedef void* 			D;
+typedef unsigned long           DBOOL;
+typedef unsigned char           DBCHR;
+typedef unsigned char           DBYTE;
+typedef UINT16                  DDBYTE;
+typedef UINT16                  DUCHR;
+typedef long                    DSINT;
+typedef long                    DMINT;
+typedef DMINT                   DWORD;
+typedef unsigned long           DUMINT;
+typedef INT64                   DLMINT;
+typedef DLMINT                  DDWORD;
+typedef UINT64                  DULMINT;
+typedef INT64                   DBINT;
+typedef float                   DSFLT;
+typedef double                  DDFLT;
+typedef long double             DEFLT;
+typedef unsigned long           DADDR;
+typedef char*                   DBSTR;
+typedef const char*             DCBSTR;
+typedef void*                   D;
+
+/* COMPILER-SPECIFIC INTRINSICS */
+
+#ifdef _GNUC_
+#define PURE_FUNCTION __attribute__((pure))
+#else
+#define PURE_FUNCTION
+#endif
+
+#ifdef _GNUC_
+#define CONDITIONAL_UPDATE(var, new_val, old_val) \
+  (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
+#else
+#define CONDITIONAL_UPDATE(var, new_val, old_val) \
+  ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
+#endif
+
+#ifdef _GNUC_
+#define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
+#define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
+#else
+#define SYNCHRONIZE_SIDE_EFFECTS()
+#define SEQUENCE_POINT()
+#endif
 
 /* DYLAN TAGGING */
 
@@ -306,7 +333,7 @@ typedef struct _single_method_engine_node {
   DLFN entry_point;
   D    meth;
   D    data;
-  D    keywords;		/* Not in all. */
+  D    keywords;                /* Not in all. */
 } SINGLEMETHODENGINE;
 
 typedef struct _cache_header_engine_node {
@@ -348,21 +375,19 @@ extern D primitive_runtime_module_handle();
 
 /* MULTIPLE VALUES */
 
-#define VALUES_MAX 64		/* maximum number of multiple values */
+#define VALUES_MAX 64           /* maximum number of multiple values */
 
 typedef struct _mv {
   int count;
   D   value[VALUES_MAX];
 } MV;
 
-extern MV Preturn_values;	/* should be per-thread mv return area */
-
-#define	MV_GET_ELT(n) \
+#define MV_GET_ELT(n) \
   (Preturn_values.count > (n) ? Preturn_values.value[n] : DFALSE)
-#define	MV_GET_ELT_KNOWN(n)     (Preturn_values.value[n])
-#define	MV_SET_ELT(n, t)	(Preturn_values.value[n] = (t))
-#define MV_SET_COUNT(n)		(Preturn_values.count = (n))
-#define MV_GET_COUNT()		(Preturn_values.count)
+#define MV_GET_ELT_KNOWN(n)     (Preturn_values.value[n])
+#define MV_SET_ELT(n, t)        (Preturn_values.value[n] = (t))
+#define MV_SET_COUNT(n)         (Preturn_values.count = (n))
+#define MV_GET_COUNT()          (Preturn_values.count)
 
 extern void MV_ADJ (DSINT n);
 extern void MV_ADJ_REST (DSINT n);
@@ -389,17 +414,19 @@ extern DMINT* P_unused_arg;
 /* NON-LOCAL CONTROL FLOW FRAMES */
 
 typedef struct _bind_exit_frame {
-  jmp_buf		        destination;
-  MV			        return_values;
+  jmp_buf                       destination;
+  MV                            return_values;
   struct _unwind_protect_frame* present_unwind_protect_frame;
 } Bind_exit_frame;
 
 typedef struct _unwind_protect_frame {
   jmp_buf                       destination;
-  MV	                        return_values;
+  MV                            return_values;
   struct _bind_exit_frame*      ultimate_destination;
   struct _unwind_protect_frame* previous_unwind_protect_frame;
 } Unwind_protect_frame;
+
+extern Unwind_protect_frame* Ptop_unwind_protect_frame;
 
 extern D MAKE_EXIT_FRAME (); 
 extern D MAKE_UNWIND_FRAME (); 
@@ -408,19 +435,51 @@ extern D FRAME_RETVAL (D);
 extern D FALL_THROUGH_UNWIND (D); 
 extern D CONTINUE_UNWIND ();
 extern D NLX (Bind_exit_frame*, D);
-extern Unwind_protect_frame* Pcurrent_unwind_protect_frame;
 
-/* CALLING CONVENTION REGISTERS */
+/* PER-THREAD CONTEXT */
 
-extern FN* Pfunction_;
-extern int Pargument_count_;
-extern D   Pnext_methods_;
+#define MAX_ARGUMENTS 256
+
+typedef struct _teb {
+        /* dispatch context (used together, keep close) */
+        FN *function;
+        int argument_count;
+        D   next_methods;
+
+        /* return values (for multiple values) */
+        MV  return_values;
+
+        /* unwinding state */
+        Unwind_protect_frame* uwp_frame;
+
+        /* thread state */
+        void *thread;
+        void *thread_handle;
+        void *tlv_vector;
+
+        /* argument buffers (used in dispatch, primitives...) */
+        D arguments[MAX_ARGUMENTS];
+        D new_arguments[MAX_ARGUMENTS];
+        D a[MAX_ARGUMENTS];
+        D iep_a[MAX_ARGUMENTS];
+        D apply_buffer[MAX_ARGUMENTS];
+        D buffer[MAX_ARGUMENTS];
+} TEB;
+
+/* these are accessed directly by the compiler and this file */
+#define Pfunction_ get_teb()->function
+#define Pargument_count_ get_teb()->argument_count
+#define Pnext_methods_ get_teb()->next_methods
+#define Preturn_values get_teb()->return_values
+
+PURE_FUNCTION TEB* get_teb();
+TEB* make_teb();
+
+/* CALLING CONVENTION ENTRY POINTS */
 
 extern D XEP(FN*, int, ...);
 
 extern D topI();
-
-/* CALLING CONVENTION ENTRY POINTS */
 
 extern D xep_0 (FN*,int);
 extern D xep_1 (FN*,int,D);
@@ -630,14 +689,14 @@ extern D SET_KEYWORD_METHOD_SIG(D, D);
 
 /* COMPARISON PRIMITIVES */
 
-#define RAWASBOOL(x)			((D)((x) ? DTRUE : DFALSE))
-#define primitive_raw_as_boolean(x)	RAWASBOOL(x)
-#define primitive_as_boolean(x)	        (((D)(x)) == DFALSE ? DFALSE : DTRUE)
-#define BOOLASRAW(x)			(((D)(x)) != DFALSE)
-#define primitive_boolean_as_raw(x)	BOOLASRAW(x)
-#define primitive_not(x)		(((D)(x)) == DFALSE ? DTRUE : DFALSE)
-#define primitive_idQ(x, y)	        (RAWASBOOL((x) == (y)))
-#define primitive_not_idQ(x, y) 	(RAWASBOOL((x) != (y)))
+#define RAWASBOOL(x)                    ((D)((x) ? DTRUE : DFALSE))
+#define primitive_raw_as_boolean(x)     RAWASBOOL(x)
+#define primitive_as_boolean(x)         (((D)(x)) == DFALSE ? DFALSE : DTRUE)
+#define BOOLASRAW(x)                    (((D)(x)) != DFALSE)
+#define primitive_boolean_as_raw(x)     BOOLASRAW(x)
+#define primitive_not(x)                (((D)(x)) == DFALSE ? DTRUE : DFALSE)
+#define primitive_idQ(x, y)             (RAWASBOOL((x) == (y)))
+#define primitive_not_idQ(x, y)         (RAWASBOOL((x) != (y)))
 
 extern D primitive_compare_bytes(D base1, DSINT offset1,
                                  D base2, DSINT offset2, DSINT size);
@@ -647,8 +706,8 @@ extern D primitive_compare_words(D base1, DSINT offset1,
 
 /* COMPARISON PRIMITIVES */
 
-#define primitive_instanceQ(x, y) 	((((DYLANTYPE*)(y))->instancep_function)((x),(y)))
-#define primitive_range_check(x, l, h)	(RAWASBOOL(((x) >= (l)) & ((x) < (h))))
+#define primitive_instanceQ(x, y)       ((((DYLANTYPE*)(y))->instancep_function)((x),(y)))
+#define primitive_range_check(x, l, h)  (RAWASBOOL(((x) >= (l)) & ((x) < (h))))
 extern D primitive_type_check(D x, D t);
 
 
@@ -665,7 +724,7 @@ extern void primitive_debug_message (D format_string, D arguments);
 #define primitive_word_size() 4
 #endif
 
-#define primitive_header_size()	primitive_word_size ()
+#define primitive_header_size() primitive_word_size ()
 
 
 
@@ -688,10 +747,10 @@ extern D primitive_slot_value(D object, DSINT position);
   (R((((OBJECT*)object)->slots)[base_position - 1]))
 
 #define primitive_byte_element(object, position, index) \
-	(((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index])
 #define primitive_byte_element_setter(new_value, object, position, index) \
-	(((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
-	   (new_value))
+        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
+           (new_value))
 
 #define SLOT_VALUE_INITD(object, position) \
   ((((OBJECT*)object)->slots)[position])
@@ -706,28 +765,28 @@ extern D SLOT_VALUE(D object, DSINT position);
   ((((OBJECT*)object)->slots)[base_position + position] = (new_value))
 
 #define REPEATED_DBCHR_SLOT_VALUE(object, position, index) \
-	(((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index])
 #define REPEATED_DBCHR_SLOT_VALUE_SETTER(new_value, object, position, index) \
-	(((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
-	   (new_value))
+        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
+           (new_value))
 
 #define REPEATED_DUCHR_SLOT_VALUE(object, position, index) \
-	(((DUCHR*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DUCHR*)&((((OBJECT*)object)->slots)[position]))[index])
 #define REPEATED_DUCHR_SLOT_VALUE_SETTER(new_value, object, position, index) \
-	(((DUCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
-	   (new_value))
+        (((DUCHR*)&((((OBJECT*)object)->slots)[position]))[index] = \
+           (new_value))
 
 #define REPEATED_DBYTE_SLOT_VALUE(object, position, index) \
-	(((DBYTE*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DBYTE*)&((((OBJECT*)object)->slots)[position]))[index])
 #define REPEATED_DBYTE_SLOT_VALUE_SETTER(new_value, object, position, index) \
-	(((DBYTE*)&((((OBJECT*)object)->slots)[position]))[index] = \
-	   (new_value))
+        (((DBYTE*)&((((OBJECT*)object)->slots)[position]))[index] = \
+           (new_value))
 
 #define REPEATED_DDBYTE_SLOT_VALUE(object, position, index) \
-	(((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[index])
+        (((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[index])
 #define REPEATED_DDBYTE_SLOT_VALUE_SETTER(new_value, object, position, index) \
-	(((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[index] = \
-	   (new_value))
+        (((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[index] = \
+           (new_value))
 
 #define REPEATED_DDFLT_SLOT_VALUE(object, base_position, position) \
   (((DDFLT*)(((OBJECT*)object)->slots))[base_position + R(position)])
@@ -758,28 +817,28 @@ extern D SLOT_VALUE(D object, DSINT position);
 /* SHOULD REMOVE BELOW */
 
 #define REPEATED_DBCHR_SLOT_VALUE_TAGGED(object, position, index) \
-	(((DBCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)])
+        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)])
 #define REPEATED_DBCHR_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
-	(((DBCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
-	   (new_value))
+        (((DBCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
+           (new_value))
 
 #define REPEATED_DUCHR_SLOT_VALUE_TAGGED(object, position, index) \
-	(((DUCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)])
+        (((DUCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)])
 #define REPEATED_DUCHR_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
-	(((DUCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
-	   (new_value))
+        (((DUCHR*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
+           (new_value))
 
 #define REPEATED_DBYTE_SLOT_VALUE_TAGGED(object, position, index) \
-	(((DBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)])
+        (((DBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)])
 #define REPEATED_DBYTE_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
-	(((DBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
-	   (new_value))
+        (((DBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
+           (new_value))
 
 #define REPEATED_DDBYTE_SLOT_VALUE_TAGGED(object, position, index) \
-	(((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)])
+        (((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)])
 #define REPEATED_DDBYTE_SLOT_VALUE_TAGGED_SETTER(new_value, object, position, index) \
-	(((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
-	   (new_value))
+        (((DDBYTE*)&((((OBJECT*)object)->slots)[position]))[R(index)] = \
+           (new_value))
 
 #define REPEATED_DDFLT_SLOT_VALUE_TAGGED(object, base_position, position) \
   (((DDFLT*)(((OBJECT*)object)->slots))[base_position + R(position)])
@@ -805,64 +864,64 @@ extern void primitive_replaceX
 
 /* LOW-LEVEL ACCESSOR PRIMITIVES */
 
-#define AT(t,x,o,b)		(((t*)(((DADDR)(x))+(int)(b)))[(int)(o)])
-#define AT_SETTER(t,e,x,o,b)	(AT(t,x,o,b) = (e))
+#define AT(t,x,o,b)             (((t*)(((DADDR)(x))+(int)(b)))[(int)(o)])
+#define AT_SETTER(t,e,x,o,b)    (AT(t,x,o,b) = (e))
 
 #define primitive_c_pointer_at(x, o, b) AT(void *,x,o,b)
 #define primitive_c_pointer_at_setter(e, x, o, b)  AT_SETTER(void*,e,x,o,b)
 
 #define primitive_c_signed_int_at(x, o, b) \
-	AT(signed int,x,o,b)
+        AT(signed int,x,o,b)
 #define primitive_c_signed_int_at_setter(e, x, o, b) \
-	AT_SETTER(signed int,e,x,o,b)
+        AT_SETTER(signed int,e,x,o,b)
 #define primitive_c_unsigned_int_at(x, o, b) \
-	AT(unsigned int,x,o,b)
+        AT(unsigned int,x,o,b)
 #define primitive_c_unsigned_int_at_setter(e, x, o, b) \
-	AT_SETTER(unsigned int,e,x,o,b)
+        AT_SETTER(unsigned int,e,x,o,b)
 #define primitive_c_signed_char_at(x, o, b) \
-	AT(signed char,x,o,b)
+        AT(signed char,x,o,b)
 #define primitive_c_signed_char_at_setter(e, x, o, b) \
-	AT_SETTER(signed char,e,x,o,b)
+        AT_SETTER(signed char,e,x,o,b)
 #define primitive_c_unsigned_char_at(x, o, b) \
-	AT(unsigned char,x,o,b)
+        AT(unsigned char,x,o,b)
 #define primitive_c_unsigned_char_at_setter(e, x, o, b) \
-	AT_SETTER(unsigned char,e,x,o,b)
+        AT_SETTER(unsigned char,e,x,o,b)
 #define primitive_c_signed_short_at(x, o, b) \
-	AT(signed short,x,o,b)
+        AT(signed short,x,o,b)
 #define primitive_c_signed_short_at_setter(e, x, o, b) \
-	AT_SETTER(signed short,e,x,o,b)
+        AT_SETTER(signed short,e,x,o,b)
 #define primitive_c_unsigned_short_at(x, o, b) \
-	AT(unsigned short,x,o,b)
+        AT(unsigned short,x,o,b)
 #define primitive_c_unsigned_short_at_setter(e, x, o, b) \
-	AT_SETTER(unsigned short,e,x,o,b)
+        AT_SETTER(unsigned short,e,x,o,b)
 #define primitive_c_signed_long_at(x, o, b) \
-	AT(signed long,x,o,b)
+        AT(signed long,x,o,b)
 #define primitive_c_signed_long_at_setter(e, x, o, b) \
-	AT_SETTER(signed long,e,x,o,b)
+        AT_SETTER(signed long,e,x,o,b)
 #define primitive_c_unsigned_long_at(x, o, b) \
-	AT(unsigned long,x,o,b)
+        AT(unsigned long,x,o,b)
 #define primitive_c_unsigned_long_at_setter(e, x, o, b) \
-	AT_SETTER(unsigned long,e,x,o,b)
+        AT_SETTER(unsigned long,e,x,o,b)
 #define primitive_c_signed_long_long_at(x, o, b) \
- 	AT(signed_long_long,x,o,b)
+        AT(signed_long_long,x,o,b)
 #define primitive_c_signed_long_long_at_setter(e, x, o, b) \
- 	AT_SETTER(signed_long_long,e,x,o,b)
+        AT_SETTER(signed_long_long,e,x,o,b)
 #define primitive_c_unsigned_long_long_at(x, o, b) \
- 	AT(unsigned_long_long,x,o,b)
+        AT(unsigned_long_long,x,o,b)
 #define primitive_c_unsigned_long_long_at_setter(e, x, o, b) \
- 	AT_SETTER(unsigned_long_long,e,x,o,b)
+        AT_SETTER(unsigned_long_long,e,x,o,b)
 #define primitive_c_float_at(x, o, b) \
-	AT(float,x,o,b)
+        AT(float,x,o,b)
 #define primitive_c_float_at_setter(e, x, o, b) \
-	AT_SETTER(float,e,x,o,b)
+        AT_SETTER(float,e,x,o,b)
 #define primitive_c_double_at(x, o, b) \
-	AT(double,x,o,b)
+        AT(double,x,o,b)
 #define primitive_c_double_at_setter(e, x, o, b) \
-	AT_SETTER(double,e,x,o,b)
+        AT_SETTER(double,e,x,o,b)
 #define primitive_c_long_double_at(x, o, b) \
-	AT(long_double,x,o,b)
+        AT(long_double,x,o,b)
 #define primitive_c_long_double_at_setter(e, x, o, b) \
-	AT_SETTER(long_double,e,x,o,b)
+        AT_SETTER(long_double,e,x,o,b)
 
 /*
  * bit-size and bit-offset are Dylan constants so a good C compiler
@@ -871,7 +930,7 @@ extern void primitive_replaceX
 #define MAKE_MASK(t, bit_offset, bit_size) \
   ((~(((t)(-1l)) << (bit_size))) << (bit_offset))  
 
-	  
+          
 #define AT_FIELD(t, x, b, bit_offset, bit_size) \
   ((t)(((*((unsigned long *)(((DADDR)(x))+(b)))) >> (bit_offset)) \
        & MAKE_MASK(t, 0, bit_size)))
@@ -884,86 +943,86 @@ extern void primitive_replaceX
          & ((t)~MAKE_MASK(t, bit_offset, bit_size)))))
 
 #define primitive_c_unsigned_field(pointer, byte_offset, bit_offset, \
-				    bit_size) \
+                                    bit_size) \
   AT_FIELD(unsigned long, pointer, byte_offset, bit_offset, bit_size)
 
 #define primitive_c_signed_field(pointer, byte_offset, bit_offset, \
-				  bit_size) \
+                                  bit_size) \
   AT_FIELD(signed long, pointer, byte_offset, bit_offset, bit_size)
 
 #define primitive_c_int_field(pointer, byte_offset, bit_offset, \
-			       bit_size) \
+                               bit_size) \
   AT_FIELD(unsigned int, pointer, byte_offset, bit_offset, bit_size)
 
 #define primitive_c_unsigned_field_setter(new, pointer, byte_offset, \
-					   bit_offset, bit_size) \
+                                           bit_offset, bit_size) \
   AT_FIELD_SETTER(unsigned long, new, pointer, byte_offset, bit_offset, \
-		  bit_size)
+                  bit_size)
 
 #define primitive_c_signed_field_setter(new, pointer, byte_offset, \
-					   bit_offset, bit_size) \
+                                           bit_offset, bit_size) \
   AT_FIELD_SETTER(signed long, new, pointer, byte_offset, bit_offset, \
-		  bit_size)
+                  bit_size)
 
 #define primitive_c_int_field_setter(new, pointer, byte_offset, \
-					  bit_offset, bit_size) \
+                                          bit_offset, bit_size) \
   AT_FIELD_SETTER(unsigned int, new, pointer, byte_offset, bit_offset, \
-		  bit_size)
+                  bit_size)
 
 #define primitive_element(x, o, b) \
-	AT(D,x,o,b)
+        AT(D,x,o,b)
 #define primitive_element_setter(e, x, o, b) \
-	AT_SETTER(D,e,x,o,b)
-	
+        AT_SETTER(D,e,x,o,b)
+        
 /*
 #define primitive_boolean_at(x, o, b) \
-	AT(DBOOL,x,o,b)
+        AT(DBOOL,x,o,b)
 #define primitive_boolean_at_setter(e, x, o, b) \
-	AT_SETTER(DBOOL,e,x,o,b)
+        AT_SETTER(DBOOL,e,x,o,b)
 #define primitive_byte_character_at(x, o, b) \
-	AT(DBCHR,x,o,b)
+        AT(DBCHR,x,o,b)
 #define primitive_byte_character_at_setter(e, x, o, b) \
-	AT_SETTER(DBCHR,e,x,o,b)
+        AT_SETTER(DBCHR,e,x,o,b)
 #define primitive_small_integer_at(x, o, b) \
-	AT(DSINT,x,o,b)
+        AT(DSINT,x,o,b)
 #define primitive_small_integer_at_setter(e, x, o, b) \
-	AT_SETTER(DSINT,e,x,o,b)
+        AT_SETTER(DSINT,e,x,o,b)
 #define primitive_machine_integer_at(x, o, b) \
-	AT(DMINT,x,o,b)
+        AT(DMINT,x,o,b)
 #define primitive_machine_integer_at_setter(e, x, o, b) \
-	AT_SETTER(DMINT,e,x,o,b)
+        AT_SETTER(DMINT,e,x,o,b)
 #define primitive_unsigned_machine_integer_at(x, o, b) \
-	AT(DUMINT,x,o,b)
+        AT(DUMINT,x,o,b)
 #define primitive_unsigned_machine_integer_at_setter(e, x, o, b) \
-	AT_SETTER(DUMINT,e,x,o,b)
+        AT_SETTER(DUMINT,e,x,o,b)
 #define primitive_long_machine_integer_at(x, o, b) \
-	AT(DMINT,x,o,b)
+        AT(DMINT,x,o,b)
 #define primitive_long_machine_integer_at_setter(e, x, o, b) \
-	AT_SETTER(DMINT,e,x,o,b)
+        AT_SETTER(DMINT,e,x,o,b)
 #define primitive_unsigned_long_machine_integer_at(x, o, b) \
- 	AT(DUMINT,x,o,b)
+        AT(DUMINT,x,o,b)
 #define primitive_unsigned_long_machine_integer_at_setter(e, x, o, b) \
- 	AT_SETTER(DUMINT,e,x,o,b)
+        AT_SETTER(DUMINT,e,x,o,b)
 #define primitive_single_float_at(x, o, b) \
-	AT(float,x,o,b)
+        AT(float,x,o,b)
 #define primitive_single_float_at_setter(e, x, o, b) \
-	AT_SETTER(float,e,x,o,b)
+        AT_SETTER(float,e,x,o,b)
 #define primitive_double_float_at(x, o, b) \
-	AT(double,x,o,b)
+        AT(double,x,o,b)
 #define primitive_double_float_at_setter(e, x, o, b) \
-	AT_SETTER(double,e,x,o,b)
+        AT_SETTER(double,e,x,o,b)
 #define primitive_extended_float_at(x, o, b) \
-	AT(long_double,x,o,b)
+        AT(long_double,x,o,b)
 #define primitive_extended_float_at_setter(e, x, o, b) \
-	AT_SETTER(long_double,e,x,o,b)
+        AT_SETTER(long_double,e,x,o,b)
 #define primitive_pointer_at(x, o, b) \
-	AT(D,x,o,b)
+        AT(D,x,o,b)
 #define primitive_pointer_at_setter(e, x, o, b) \
-	AT_SETTER(D,e,x,o,b)
+        AT_SETTER(D,e,x,o,b)
 #define primitive_address_at(x, o, b) \
-	AT(DADDR,x,o,b)
+        AT(DADDR,x,o,b)
 #define primitive_address_at_setter(e, x, o, b) \
-	AT_SETTER(DADDR,e,x,o,b)
+        AT_SETTER(DADDR,e,x,o,b)
 */
 
 /* ALLOCATION PRIMITIVES */
@@ -1104,11 +1163,11 @@ extern DSINT primitive_mps_committed(void);
 /* POINTER PRIMITIVES */
 
 #define primitive_cast_pointer_as_raw(x)  ((DADDR)x)
-#define primitive_cast_raw_as_pointer(x)  ((D)x)	
+#define primitive_cast_raw_as_pointer(x)  ((D)x)        
 
 /* MACHINE-WORD PRIMITIVES */
 
-#define primitive_integerQ(x)                         	  RAWASBOOL(TAG_BITS(x) == 1)
+#define primitive_integerQ(x)                             RAWASBOOL(TAG_BITS(x) == 1)
 
 #define primitive_machine_word_equalQ(x, y)               RAWASBOOL((DMINT)(x) == (DMINT)(y))
 #define primitive_machine_word_not_equalQ(x, y)           RAWASBOOL((DMINT)(x) != (DMINT)(y))
@@ -1137,23 +1196,23 @@ extern D primitive_wrap_c_pointer(D, DMINT);
 extern D primitive_wrap_abstract_integer(DMINT);
 extern D primitive_wrap_unsigned_abstract_integer(DMINT);
 extern DMINT primitive_unwrap_abstract_integer(D);
-#define primitive_box_integer(x) 			  (I(x))
-#define primitive_unbox_integer(x) 			  (R(x))
+#define primitive_box_integer(x)                          (I(x))
+#define primitive_unbox_integer(x)                        (R(x))
 
 extern DMINT primitive_machine_word_boole(D, DMINT, DMINT);
 
-#define primitive_machine_word_logand(x, y)		  ((x) & (y))
-#define primitive_machine_word_logior(x, y)		  ((x) | (y))
-#define primitive_machine_word_logxor(x, y)		  ((x) ^ (y))
+#define primitive_machine_word_logand(x, y)               ((x) & (y))
+#define primitive_machine_word_logior(x, y)               ((x) | (y))
+#define primitive_machine_word_logxor(x, y)               ((x) ^ (y))
 
 #define primitive_machine_word_lognot(x)                  (~(x))
 
-#define primitive_machine_word_logbitQ(i, x) 		  RAWASBOOL((1UL << (i)) & ((DUMINT)(x)))
-#define primitive_machine_word_logbit_set(i, x)		  ((1UL << (i)) | ((DUMINT)(x)))
-#define primitive_machine_word_logbit_clear(i, x)	  (~(1UL << (i)) & ((DUMINT)(x)))
+#define primitive_machine_word_logbitQ(i, x)              RAWASBOOL((1UL << (i)) & ((DUMINT)(x)))
+#define primitive_machine_word_logbit_set(i, x)           ((1UL << (i)) | ((DUMINT)(x)))
+#define primitive_machine_word_logbit_clear(i, x)         (~(1UL << (i)) & ((DUMINT)(x)))
 
-#define primitive_machine_word_bit_field_deposit(f, o, s, x)	  (((x) & ~(((1 << (s)) - 1) << (o))) | ((f) << (o)))
-#define primitive_machine_word_bit_field_extract(o, s, x)	  (((x) & (((1 << (s)) - 1) << (o))) >> (o))
+#define primitive_machine_word_bit_field_deposit(f, o, s, x)      (((x) & ~(((1 << (s)) - 1) << (o))) | ((f) << (o)))
+#define primitive_machine_word_bit_field_extract(o, s, x)         (((x) & (((1 << (s)) - 1) << (o))) >> (o))
 
 extern DMINT primitive_machine_word_count_low_zeros(DMINT);
 extern DMINT primitive_machine_word_count_high_zeros(DMINT);
@@ -1174,7 +1233,7 @@ extern DMINT primitive_machine_word_multiply_low_with_overflow(DMINT, DMINT);
 extern DMINT primitive_machine_word_multiply_with_overflow(DMINT, DMINT);
 
 #define primitive_machine_word_negative(x)                (-(signed)(x))
-#define primitive_machine_word_abs(x) 			  ((x)<0?-(x):(x))
+#define primitive_machine_word_abs(x)                     ((x)<0?-(x):(x))
 
 extern DMINT primitive_machine_word_negative_with_overflow(DMINT);
 extern DMINT primitive_machine_word_abs_with_overflow(DMINT);
@@ -1398,10 +1457,10 @@ extern DDFLT primitive_cast_machine_words_as_double_float(DUMINT, DUMINT);
    
 /* VECTOR PRIMITIVES */
 
-#define primitive_vector_element(v, i)      	 ((((SOV*)v)->data)[R(i)])
+#define primitive_vector_element(v, i)           ((((SOV*)v)->data)[R(i)])
 #define primitive_vector_element_setter(e, v, i) ((((SOV*)v)->data)[R(i)] = (e))
-#define primitive_vector_size(v) 		 (((SOV*)v)->size)
-#define primitive_vector_as_raw(v)		 (((SOV*)v)->data)
+#define primitive_vector_size(v)                 (((SOV*)v)->size)
+#define primitive_vector_as_raw(v)               (((SOV*)v)->data)
 
 extern D primitive_vector(D dn, ...);
 extern D primitive_raw_as_vector(D a, D n);
@@ -1411,17 +1470,17 @@ extern D VECTOR_REF_OR_F(D v, int offset);
 
 /* STRING PRIMITIVES */
 
-#define primitive_strlen(s)      		(strlen((DBSTR)s))
-#define primitive_string_as_raw(v)		(((BS*)v)->data)
+#define primitive_strlen(s)                     (strlen((DBSTR)s))
+#define primitive_string_as_raw(v)              (((BS*)v)->data)
 extern D primitive_raw_as_string(DBSTR buffer);
 
 /* CALLING CONVENTION PRIMITIVES */
 
-#define primitive_current_function() 			((D)(Pfunction_))
-#define primitive_function_parameter()			((D)(Pfunction_))
-#define primitive_lambda_parameter()			((D)(Pfunction_))
-#define primitive_next_methods_parameter()		((D)(Pnext_methods_))
-#define primitive_next_methods_parameter_setter(x) 	((D)(Pnext_methods_ = (D)x))
+#define primitive_current_function()                    ((D)(Pfunction_))
+#define primitive_function_parameter()                  ((D)(Pfunction_))
+#define primitive_lambda_parameter()                    ((D)(Pfunction_))
+#define primitive_next_methods_parameter()              ((D)(Pnext_methods_))
+#define primitive_next_methods_parameter_setter(x)      ((D)(Pnext_methods_ = (D)x))
 
 /* APPLY PRIMITIVES */
 
@@ -1483,37 +1542,36 @@ extern void  primitive_exit_application (DSINT code);
 /* TEMPORARY PRIMITIVES FOR ASSIGNMENT */
 
 extern D MAKE_D_CELL(D);
-#define GET_D_CELL_VAL(c)	(*(D*)c)
-#define SET_D_CELL_VAL(c, v)	(*(D*)c = v)
+#define GET_D_CELL_VAL(c)       (*(D*)c)
+#define SET_D_CELL_VAL(c, v)    (*(D*)c = v)
 
 extern D MAKE_DBCHR_CELL(DBCHR);
-#define GET_DBCHR_CELL_VAL(c)		(*(DBCHR*)c)
-#define SET_DBCHR_CELL_VAL(c, v)	(*(DBCHR*)c = v)
+#define GET_DBCHR_CELL_VAL(c)           (*(DBCHR*)c)
+#define SET_DBCHR_CELL_VAL(c, v)        (*(DBCHR*)c = v)
 
 extern D MAKE_DDBYTE_CELL(DDBYTE);
-#define GET_DDBYTE_CELL_VAL(c)		(*(DDBYTE*)c)
-#define SET_DDBYTE_CELL_VAL(c, v)	(*(DDBYTE*)c = v)
+#define GET_DDBYTE_CELL_VAL(c)          (*(DDBYTE*)c)
+#define SET_DDBYTE_CELL_VAL(c, v)       (*(DDBYTE*)c = v)
 
 extern D MAKE_DWORD_CELL(DWORD);
-#define GET_DWORD_CELL_VAL(c)		(*(DWORD*)c)
-#define SET_DWORD_CELL_VAL(c, v)	(*(DWORD*)c = v)
+#define GET_DWORD_CELL_VAL(c)           (*(DWORD*)c)
+#define SET_DWORD_CELL_VAL(c, v)        (*(DWORD*)c = v)
 
 extern D MAKE_DDWORD_CELL(DDWORD);
-#define GET_DDWORD_CELL_VAL(c)		(*(DDWORD*)c)
-#define SET_DDWORD_CELL_VAL(c, v)	(*(DDWORD*)c = v)
+#define GET_DDWORD_CELL_VAL(c)          (*(DDWORD*)c)
+#define SET_DDWORD_CELL_VAL(c, v)       (*(DDWORD*)c = v)
 
 extern D MAKE_DSFLT_CELL(DSFLT);
-#define GET_DSFLT_CELL_VAL(c)		(*(DSFLT*)c)
-#define SET_DSFLT_CELL_VAL(c, v)	(*(DSFLT*)c = v)
+#define GET_DSFLT_CELL_VAL(c)           (*(DSFLT*)c)
+#define SET_DSFLT_CELL_VAL(c, v)        (*(DSFLT*)c = v)
 
 extern D MAKE_DDFLT_CELL(DDFLT);
-#define GET_DDFLT_CELL_VAL(c)		(*(DDFLT*)c)
-#define SET_DDFLT_CELL_VAL(c, v)	(*(DDFLT*)c = v)
+#define GET_DDFLT_CELL_VAL(c)           (*(DDFLT*)c)
+#define SET_DDFLT_CELL_VAL(c, v)        (*(DDFLT*)c = v)
 
 /* THREAD SUPPORT */
 
-#define CONDITIONAL_UPDATE(var, new_val, old_val) \
-  ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
+extern void initialize_threads_primitives();
 
 extern D primitive_release_simple_lock(D l);
 extern D primitive_release_semaphore(D s);
@@ -1552,8 +1610,8 @@ extern D primitive_read_thread_variable(D h);
 extern D primitive_write_thread_variable(D h, D nv);
 extern D primitive_unlock_simple_lock(D l);
 extern D primitive_unlock_recursive_lock(D l);
-#define primitive_sequence_point()
-#define primitive_synchronize_side_effects()
+#define primitive_sequence_point() SEQUENCE_POINT()
+#define primitive_synchronize_side_effects() SYNCHRONIZE_SIDE_EFFECTS()
 
 /* RUN-TIME CALLBACKS */
 
@@ -1742,5 +1800,6 @@ extern DMINT primitive_machine_word_unsigned_double_divide_byref(DMINT xl, DMINT
 extern DMINT primitive_machine_word_unsigned_double_shift_left_byref(DMINT xl, DMINT xh, DMINT y, DMINT* v2);
 extern DMINT primitive_machine_word_unsigned_double_shift_right_byref(DMINT xl, DMINT xh, DMINT y, DMINT* v2);
 
+#endif /* OPENDYLAN_CRT_RUNTIME_H */
 
 /* eof */

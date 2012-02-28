@@ -37,6 +37,10 @@ define method millisecs (secs :: <integer>) => (millisecs :: <integer>)
 end method;
 
 
+define method debug-name (synchronization :: <synchronization>)
+  synchronization.synchronization-name;
+end method debug-name;
+
 
 define function check-synchronization-creation 
    (sync :: <synchronization>, res :: <integer>) => ()
