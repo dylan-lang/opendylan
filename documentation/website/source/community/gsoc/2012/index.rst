@@ -28,3 +28,4 @@ via one of the above means.
    staticlink
    frontend-lisp
    project_manager
+   dispatch
