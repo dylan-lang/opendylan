@@ -13,17 +13,20 @@ VPATH		= $(srcdir)
 LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 BINDEST         = $(OPEN_DYLAN_USER_INSTALL)/bin
 
-MPS             = @with_mps@
+GC_CFLAGS       = @GC_CFLAGS@
+GC_LFLAGS       = @GC_LFLAGS@
+
+MPS_ROOT        = @GC_MPS_ROOT@
 MPS_PLATFORM    = fri4gc
 MPS_VARIANT     = hi
-MPS_LIB         = $(MPS)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
+MPS_LIB         = $(MPS_ROOT)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
 
 AS = as -L
 AR = ar -q
 
 CFLAGS		= -D_REENTRANT=1 \
 		  -O -g \
-		  -I$(MPS)/code -I$(srcdir) -I$(runtime_srcdir)
+		  $(GC_CFLAGS) -I$(srcdir) -I$(runtime_srcdir)
 
 OBJS		= x86-linux-collector.o \
 		  x86-linux-threads-primitives.o \

@@ -86,18 +86,29 @@ AC_SUBST(with_mps)
 AC_ARG_WITH(gc,
             AC_HELP_STRING([--with-gc=PATH],
                            [Path of Boehm GC installation.]))
+
+AS_IF([test x$with_mps != x],
+      [
+        GC_CFLAGS="-DGC_USE_MPS -I${with_mps}/code"
+        GC_LFLAGS="-lmmdw -lmpsplan"
+        GC_MPS_ROOT="${with_mps}"
+      ]
+)
 AS_IF([test x$with_gc != x],
       [
-        GC_CFLAGS="-I${with_gc}/include"
+        GC_CFLAGS="-DGC_USE_BOEHM -I${with_gc}/include"
         GC_LFLAGS="-L${with_gc}/lib -lgc"
-      ],
+      ]
+)
+AS_IF([test x${with_gc}x${with_mps} == xx],
       [
-        GC_CFLAGS=""
+        GC_CFLAGS="-DGC_USE_BOEHM"
         GC_LFLAGS="-lgc"
       ]
 )
 AC_SUBST(GC_CFLAGS)
 AC_SUBST(GC_LFLAGS)
+AC_SUBST(GC_MPS_ROOT)
 
 AC_ARG_WITH(library-source,
             AC_HELP_STRING([--with-library-source=PATH],

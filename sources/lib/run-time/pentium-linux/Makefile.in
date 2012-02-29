@@ -13,17 +13,20 @@ VPATH		= $(srcdir)
 LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 BINDEST         = $(OPEN_DYLAN_USER_INSTALL)/bin
 
-MPS             = @with_mps@
+GC_CFLAGS       = @GC_CFLAGS@
+GC_LFLAGS       = @GC_LFLAGS@
+
+MPS_ROOT        = @GC_MPS_ROOT@
 MPS_PLATFORM    = lii4gc
 MPS_VARIANT     = hi
-MPS_LIB         = $(MPS)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
+MPS_LIB         = $(MPS_ROOT)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
 
 AS = as -L
 AR = ar -q
 
 CFLAGS		= -DGC_LINUX_THREADS=1 -D_REENTRANT=1 \
 		  -O -g \
-		  -I$(MPS)/code -I$(srcdir) -I$(runtime_srcdir)
+		  $(GC_CFLAGS) -I$(srcdir) -I$(runtime_srcdir)
 
 OBJS		= x86-linux-collector.o \
 		  x86-linux-threads-primitives.o \
@@ -52,10 +55,10 @@ linux-support.o: $(runtime_srcdir)/linux-support.c
 #
 
 $(MPS_LIB)/mmdw.a:
-	(cd $(MPS)/code; make -f lii4gc.gmk mmdw.a)
+	(cd $(MPS_ROOT)/code; make -f lii4gc.gmk mmdw.a)
 
 $(MPS_LIB)/mpsplan.a:
-	(cd $(MPS)/code; make -f lii4gc.gmk mpsplan.a)
+	(cd $(MPS_ROOT)/code; make -f lii4gc.gmk mpsplan.a)
 
 $(LIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a
 	cp -fp $(MPS_LIB)/mpsplan.a $(LIBDEST)/libmpsplan.a
