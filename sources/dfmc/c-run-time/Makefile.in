@@ -20,7 +20,7 @@ INCDEST		= $(OPEN_DYLAN_USER_INSTALL)/include
 AS = as -L
 AR = ar -q
 
-CFLAGS		= -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -DGC_DEBUG=1 -fPIC \
+CFLAGS		= -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -fPIC \
 		  -fno-strict-aliasing \
 		  $(arch_flag) -O2 -g -I$(srcdir) -I$(runtime_srcdir) \
 		  $(GC_CFLAGS)

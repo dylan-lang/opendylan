@@ -24,7 +24,7 @@ CCFLAGS ?= $(GC_CFLAGS) -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
 
 LINKFLAGS ?= $(ARCHFLAG) ;
 
-DEFINES += _POSIX_C_SOURCE GC_DEBUG ;
+DEFINES += _POSIX_C_SOURCE ;
 
 #
 # Jambase
