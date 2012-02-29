@@ -3,7 +3,7 @@
 # Include the common jam library
 #
 
-include $(SYSTEM_ROOT)/common.jam ;
+include $(SYSTEM_ROOT)/lib/common.jam ;
 
 #
 # Configuration variables
