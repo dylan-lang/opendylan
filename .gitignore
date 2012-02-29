@@ -15,11 +15,7 @@ Makefile
 /sources/corba/services/naming/naming-protocol/
 /sources/corba/services/naming/naming-skeletons/
 /sources/corba/services/naming/naming-stubs/
-/sources/dfmc/c-run-time/c-freebsd-build.jam
-/sources/dfmc/c-run-time/c-linux-build.jam
-/sources/dfmc/c-run-time/ppc-darwin-build.jam
-/sources/dfmc/c-run-time/x86-darwin-build.jam
-/sources/dfmc/c-run-time/x86_64-darwin-build.jam
+/sources/dfmc/c-run-time/config.jam
 /sources/dfmc/c-run-time/*.o
 /sources/app/llvm-tablegen/tablegen-parser.dylan
 /sources/lib/llvm/llvm-asm-parser.dylan
