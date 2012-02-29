@@ -1,9 +1,78 @@
+*******************************
 Open Dylan 2012.1 Release Notes
-===============================
+*******************************
+
+
+Introduction
+============
+
+.. TODO: fix release date
+
+This document describes the 2012.1 release of Open Dylan, released
+March 7, 2012.
+
+    * `Download the release <http://opendylan.org/download/index.html>`_
+    * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
+    * `Source code <https://github.com/dylan-lang/opendylan/tree/v2012.1>`_
+
+What's New?
+===========
+
+Documentation Improvements
+--------------------------
+
+* All documentation has been converted to the Sphinx document
+  generator.  This is a huge improvement in our ability to keep the
+  documentation up-to-date, modernizes its look and feel, and allows
+  us to generate various output formats.
+
+* The core libraries documentation has been unified into one `Dylan
+  Library Reference
+  <http://opendylan.org/documentation/library-reference/index.html>`_
+  document.
+
+* The documentation on using the Open Dylan Console Environment has
+  been rewritten and expanded.  A new section on the Dylan Interaction
+  Mode for Emacs (DIME) has been added.  See both in `the Getting
+  Started Guide
+  <http://opendylan.org/documentation/getting-started/index.html>`_.
+
+
+C3 Superclass Linearization
+---------------------------
+
+Open Dylan now uses the C3 superclass linearization algorithm.  This
+algorithm was originally designed for Dylan but for historical reasons
+was never implemented in Dylan, until now.  In most cases this change
+should not change the semantics of existing programs, but if it does
+the compiler will issue a serious warning.  In a future release this
+will be changed to non-serious warning, and then eventually the
+warning will be removed completely.
+
+.. TODO: add example of the warning?
+
+See `DEP-0003 <http://opendylan.org/proposals/dep-0003.html>`_ for
+more details.
+
+
+Multi-threading for the C Back-end
+----------------------------------
+
+The C back-end now fully supports multi-threading.  Several bugs
+unrelated to threading were also fixed in this work, which should
+improve the stability of the C back-end in general.
+
+.. TODO: moar details
+
+
+
+Other Changes
+-------------
+
+.. TODO: elevate more of these to their own section.
 
 In reverse chronological order
 
-* implement thread support for C run-time promovicz Feb 27, 2012 pull request #187
 * generate jam files with correct gc environment given by configure baragent Feb 17, 2012 4538278dda9e8767a620e345c1f7f8da2c801f19
 * fix control flow graph if unwind-protect without body is optimized hannes Feb 16, 2012 e946c88a18fcc20191f9b6b30a463c85617842ba issue #182
 * extend library-report to output rst documentation abeaumont, waywardmonkeys Feb 2012
@@ -12,9 +81,6 @@ In reverse chronological order
 * reimplement make-dylan-app in Dylan glidesurfer Feb 01, 2012 pull request #172
 
 * fix limited type handling hannes Jan 25, 2012 pull request #158 issue #177, issue #122, issue #82
-* implement C3 superclass linearization hannes Jan 24, 2012 pull request #168
-* unify documentation of core libraries into library-reference waywardmonkeys Jan, 2012
-* getting started now contains documentation of console environment and DIME cgay Jan 22, 2012 pull request #165
 * cleanup release-info library hannes Jan 18, 2012 pull request #162
 * expand pathnames in interactive console compiler hannes Jan 11, 2012 ba5e5c97fad5e1f2758e262d28441a2faa5ecc93 issue #149
 * added dependency report waywardmonkeys Jan 07, 2012 45e1267e014db3762e579e1fefca4f9850df3337
@@ -29,7 +95,6 @@ In reverse chronological order
 * remove unused functional-objects-extras module hannes Dec 18, 2011 2e7f2a4cb38f278495b48f7883360ddd349f2b9f issue #90
 * Fix a compilation crash with C backend when trying to emit an overflown integer abeaumont Dec 18, 2011 819b99bfe14656f5b5081bd70287d8d9f7fb7c7f
 * reduce debug output of compiler (by making it optional with debug-out) hannes Dec 15, 2011 d093ae6cdfd5f4b8dd8ff3ac6359e8f6d9a8f847 issue #92
-* cleanup documentation waywardmonkeys Dec 2011, multiple
 * extended floating-point support housel core-library Dec 14, 2011 b2762c85f554b0ad99efe800259c709e918ce460 bug 7122
 * remove MacOS locators hannes core-library Dec 13, 2011 beeb8635eac918685f3cfff08eb38c5428fb1ac4
 * unification of code in common-dylan on UNIX (command line argument parsing etc) hannes core-library Dec 11, 2011 060f69f44a990adeea0f1db34677f6091fd61dfa
