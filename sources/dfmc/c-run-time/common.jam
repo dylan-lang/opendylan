@@ -33,13 +33,6 @@
 include $(SYSTEM_LIBDIR)/config.jam ;
 
 #
-# GC parameters
-#
-
-GC_LIBDIR ?= $(GC_PREFIX)/lib ;
-GC_INCDIR ?= $(GC_PREFIX)/include ;
-
-#
 #
 #
 
@@ -65,7 +58,7 @@ RTOBJS ?= debug-print.o
 
 # This variable is passed to the link rule by way of the dylan.lid file.
 rtlibs ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) ;
-rtclibs ?= -L$(GC_LIBDIR) -lgc -ldl -lm -lpthread ;
+rtclibs ?= $(GC_LFLAGS) -ldl -lm -lpthread ;
 
 guilflags ?= ;
 

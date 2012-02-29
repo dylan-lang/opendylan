@@ -9,7 +9,7 @@ include $(SYSTEM_ROOT)/lib/common.jam ;
 # Configuration variables
 #
 
-CC     ?= gcc -I$(GC_INCDIR) -fPIC -L/usr/local/lib -I/usr/local/include -O0 ;
+CC     ?= gcc $(GC_CFLAGS) -fPIC -L/usr/local/lib -I/usr/local/include -O0 ;
 
 SUFDLL ?= .so ;   # shared library suffix
 

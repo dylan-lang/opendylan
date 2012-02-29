@@ -20,7 +20,7 @@ SUFDLL	?= .dylib ;	# shared library suffix
 
 ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=i386) ;
 
-CCFLAGS ?= -I$(GC_INCDIR) -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
+CCFLAGS ?= $(GC_CFLAGS) -fno-strict-aliasing -fPIC -O2 -g $(ARCHFLAG) ;
 
 LINKFLAGS ?= $(ARCHFLAG) ;
 
@@ -331,7 +331,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(CC) -dynamiclib -install_name @rpath/$(<:BS=$(SUFDLL)) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc
+  $(CC) -dynamiclib -install_name @rpath/$(<:BS=$(SUFDLL)) -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) $(GC_LFLAGS)
 }
 
 rule LinkEXE {
@@ -340,7 +340,7 @@ rule LinkEXE {
 
 actions together LinkEXE bind NEEDLIBS {
    # Link GC here as well as in rtlibs because it might not be statically linked
-   $(CC) -Wl,-rpath,@executable_path/../lib/ -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -L$(GC_LIBDIR) -lgc
+   $(CC) -Wl,-rpath,@executable_path/../lib/ -o $(<)  $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) $(GC_LFLAGS)
 }
 
 #
