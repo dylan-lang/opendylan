@@ -55,7 +55,20 @@ define function make-dylan-app (app-name :: <string>) => ()
                            concatenate(app-name, ".dylan")));
   
   write-templates(main, lib, lid);
+
+  write-registry(project-dir, app-name);
 end function make-dylan-app;
+
+define function write-registry
+    (directory :: <directory-locator>, name :: <string>)
+  let registry = create-directory(directory, "registry");
+  let generic = create-directory(registry, "generic");
+  with-open-file (stream = merge-locators(as(<file-locator>, name), generic),
+                  direction: #"output",
+                  if-does-not-exist: #"create")
+    format(stream, "abstract://dylan/%s.lid", name)
+  end with-open-file;
+end;
 
 define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
   local method is-name? (c :: <character>) => (name? :: <boolean>)
