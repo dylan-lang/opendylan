@@ -68,6 +68,11 @@ that file.  In the next section you'll see that it can also pass the
 name of the project (without ".lid") and it will use "registries" to
 find the project sources.
 
+The compiler places its output in the ``_build`` directory in the
+current working directory. This includes the libraries and executables
+that it builds.  You can run the executable as noted above from this
+location.
+
 
 Using Source Registries
 =======================
