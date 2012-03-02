@@ -51,7 +51,7 @@ test "$PERL" = no && AC_MSG_ERROR([
 perl is required to build Open Dylan])
 AC_SUBST(PERL)
 
-PERL_MODULES="File::Spec Getopt::Long XML::Parser"
+PERL_MODULES="File::Spec Getopt::Long"
 for module in $PERL_MODULES; do
   AC_MSG_CHECKING(for Perl module $module)
   $PERL -M$module -e 'exit 0' || AC_MSG_ERROR([
@@ -114,23 +114,6 @@ AC_ARG_WITH(library-source,
             AC_HELP_STRING([--with-library-source=PATH],
                            [Path to Dylan contributed libraries source.]))
 AC_SUBST(with_library_source)
-
-AC_MSG_CHECKING(for Library Packs to include)
-LIBRARY_PACKS=Core
-AC_ARG_ENABLE(network,
-              AC_HELP_STRING([--disable-network],
-                             [Do not build the basic networking library]),
-              ,LIBRARY_PACKS="$LIBRARY_PACKS Network")
-AC_ARG_ENABLE(testworks,
-              AC_HELP_STRING([--enable-testworks],
-                             [Build the unit test framework library]),
-              LIBRARY_PACKS="$LIBRARY_PACKS TestWorks")
-AC_ARG_ENABLE(dood,
-              AC_HELP_STRING([--enable-dood],
-                             [Build the DOOD persistent storage library]),
-              LIBRARY_PACKS="$LIBRARY_PACKS DOOD")
-AC_MSG_RESULT($LIBRARY_PACKS)
-AC_SUBST(LIBRARY_PACKS)
 
 # for now, replace mps only in pentium-linux
 # gc is also replaced in sources/dfmc/c-run-time

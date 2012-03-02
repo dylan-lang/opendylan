@@ -3,7 +3,6 @@
 use strict;
 use File::Spec;
 use Getopt::Long;
-use XML::Parser;
 use Config;
 
 my $lidfile_line;
@@ -19,14 +18,9 @@ my $build_logs = $ENV{'OPEN_DYLAN_BUILD_LOGS'};
 my $verbose;
 my $debugger;
 my $compiler = 'dylan-compiler';
-my @library_packs;
 &GetOptions('verbose' => \$verbose,
             'debugger' => \$debugger,
-            'compiler=s' => \$compiler,
-            'library-pack=s' => \@library_packs,
-            'library-packs=s' => sub {
-                push @library_packs, split(/\W+/, $_[1]);
-            });
+            'compiler=s' => \$compiler);
 
 # Names of libraries we already built successfully.
 my %built;
@@ -37,9 +31,6 @@ foreach my $library (@ARGV) {
         print STDERR "fdmake: Unable to build library $library\n";
         exit 1;
     }
-}
-foreach my $pack (@library_packs) {
-    &build_library_pack($pack);
 }
 exit 0;
 
@@ -396,49 +387,6 @@ sub invoke_tool {
     else {
         print STDERR "\nfdmake: unknown tool: $origin\n";
         exit 1;
-    }
-}
-
-# build_library_pack($pack)
-#
-# Builds the libraries that constitute the given library pack
-#
-sub build_library_pack {
-    my ($lp) = @_;
-
-    my $lclp = lc($lp);
-
-    my $dlpfile
-	= File::Spec->catfile($user_sources, 'Library-Packs', $lp,
-			      "${lclp}.dlp");
-
-    if(!-f $dlpfile) {
-        print STDERR "fdmake: There is no library pack named $lp\n";
-        exit 1;
-    }
-
-    my $parser = new XML::Parser(Handlers => {Start => \&handle_dlp_start});
-    $parser->parsefile($dlpfile);
-}
-
-my $category = 'none';
-sub handle_dlp_start {
-    my ($parser, $element, %attributes) = @_;
-
-    if($element eq 'library-pack') {
-        print "Building $attributes{'title'} library-pack...\n";
-    } elsif($element eq 'libraries'
-            || $element eq 'examples'
-            || $element eq 'test-suites') {
-        $category = $element;
-    } elsif($element eq 'library') {
-        if($category eq 'libraries') {
-            if(!&build_library($attributes{'name'})) {
-                print STDERR
-                    "fdmake: Unable to build library $attributes{'name'}\n";
-                exit 1;
-            }
-        }
     }
 }
 
