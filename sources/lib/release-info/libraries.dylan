@@ -538,11 +538,6 @@ define method info-library-pack
   example.info-group.info-library-pack
 end method info-library-pack;
 
-define method info-available?
-    (example :: <example-info>) => (available? :: <boolean>)
-  info-available?(example.info-group)
-end method info-available?;
-
 define function example-location
     (info :: <example-info>) => (location :: false-or(<string>))
   let project = info-project(info);
@@ -606,14 +601,6 @@ define method initialize
     example.info-group := group
   end
 end method initialize;
-
-define method info-available?
-    (group :: <example-group-info>) => (available? :: <boolean>)
-  let edition      = group.info-edition;
-  let library-pack = group.info-library-pack;
-  release-contains-edition?(edition)
-    & (~library-pack | release-contains-library-pack?(library-pack))
-end method info-available?;
 
 define constant $root-example-group =
     make(<example-group-info>,

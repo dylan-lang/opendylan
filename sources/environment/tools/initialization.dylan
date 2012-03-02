@@ -444,31 +444,9 @@ define method note-example-selected
     (dialog :: <examples-dialog>, info :: false-or(<release-info>)) => ()
   gadget-text(dialog.%description-pane)
     := if (info)
-	 //---*** Should we add back info-available?
-	 let available? = #t; // info.info-available?;
-	 format-to-string
-	   ("%s\n%s",
-	    info.info-description,
-	    if (available?)
-	      ""
-	    else
-	      let (message, library-pack)
-		= select (info by instance?)
-		    <library-pack-info>, <library-category-info> =>
-		      values("these examples",  info);
-		    <example-info> =>
-		      values("this example",    info.info-library-pack);
-		    <test-suite-info> =>
-		      values("this test suite", info.info-library-pack);
-		  end;
-	      as-uppercase
-		(format-to-string
-		   ("\nWarning: %s can only be built %s\n",
-		    message,
-		    format-to-string("using the %s library pack", library-pack.info-title)))
-	    end)
+	 format-to-string("%s\n", info.info-description)
        else
-	 "" 
+	 ""
        end;
   dialog-exit-enabled?(dialog) := instance?(info, <library-info>)
 end method note-example-selected;
