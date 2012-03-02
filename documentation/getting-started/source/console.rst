@@ -23,21 +23,19 @@ You have just downloaded Open Dylan and installed it in
 World app?  This example assumes bash is being used.  You may need
 to adjust for your local shell.  ::
 
-  $ export PATH=$HOME/Open-Dylan/bin:/opt/opendylan-2011.1/bin:$PATH
+  $ export PATH=/opt/opendylan-2011.1/bin:$PATH
   $ make-dylan-app hello-world
   $ cd hello-world
   $ dylan-compiler -build hello-world.lid
   ...lots of output...
-  $ hello-world
+  $ _build/bin/hello-world
   Hello, world!
 
 Ta da!  Now a quick review of the steps with a little bit of
 explanation.
 
 First you must set PATH so that ``make-dylan-app`` and
-``dylan-compiler`` will be found.  You must add ``$HOME/Open-Dylan/bin``
-to the PATH as well because this is where ``dylan-compiler`` puts the
-executables it builds.
+``dylan-compiler`` will be found.
 
 ``make-dylan-app`` creates a directory with the same name as the
 application and three files:
@@ -58,6 +56,11 @@ pass a .lid file to the compiler it builds the library described by
 that file.  In the next section you'll see that it can also pass the
 name of the project (without ".lid") and it will use "registries" to
 find the project sources.
+
+The compiler places its output in the ``_build`` directory in the
+current working directory. This includes the libraries and executables
+that it builds.  You can run the executable as noted above from this
+location.
 
 
 Using Source Registries
