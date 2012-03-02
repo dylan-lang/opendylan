@@ -45,8 +45,7 @@ define module release-info
          release-bug-report-template-location;
 
   // Information accessors
-  export // info-available?,
-         info-author,
+  export info-author,
          info-binary,
          info-categories,
          info-company,
