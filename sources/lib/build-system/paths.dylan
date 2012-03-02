@@ -25,9 +25,7 @@ define function system-install-path()
  => (path :: false-or(<locator>));
   let path = read-environment-variable("OPEN_DYLAN_RELEASE_INSTALL");
   if (path)
-    let directory = as(<directory-locator>, path);
-    ensure-directories-exist(directory);
-    directory
+    as(<directory-locator>, path);
   end
 end;
 
@@ -124,7 +122,6 @@ define function read-environment-path
   else
     path := as(<directory-locator>, path)
   end;
-  ensure-directories-exist(path);
   path;
 end;
 
@@ -133,14 +130,16 @@ define function user-root-path()
   let path = read-environment-variable("OPEN_DYLAN_USER_ROOT");
   if (path)
     as(<directory-locator>, path)
-  else
+  elseif ($os-name == #"win32")
     let path =
-      if ($os-name == #"win32")
+      begin
         let appdata = read-environment-variable("APPDATA");
         if (appdata)
           as(<directory-locator>, appdata);
         end;
       end;
     subdirectory-locator(path | home-directory() | temp-directory(), "Open-Dylan")
+  else
+    subdirectory-locator(working-directory(), "_build")
   end
 end;

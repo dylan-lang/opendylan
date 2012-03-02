@@ -46,17 +46,17 @@ You're now set to use the compiler:
 
 This will build the hello-world application, provided with this
 distribution, together with all dependent libraries, from source.
-Build products will end up in ~/Open-Dylan/ in the following
-directories:
+Build products will end up in _build in the current working diretory.
+The _build directory will contain the following subdirectories:
 
   build            # intermediate build products
   lib              # libraries
   bin              # executables
   databases        # compiler databases
 
-Provided that ~/Open-Dylan/bin is in your path, you can try it out:
+You can try out running your new Dylan application:
 
-  $ hello-world
+  $ _build/bin/hello-world
   Hello, there!
 
 If you wish to change the place where files are kept, you can set an

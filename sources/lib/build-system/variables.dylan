@@ -21,19 +21,11 @@ define variable $system-bin          :: false-or(<directory-locator>) = #f;
 define variable $redistributable-bin :: false-or(<directory-locator>) = #f;
 
 define method configure-build-system () => ()
-  local method ensure-subdirectory-exists
-	    (locator :: <directory-locator>, #rest subpath) 
-	 => (subdirectory :: <directory-locator>)
-	  let subdirectory = apply(subdirectory-locator, locator, subpath);
-	  ensure-directories-exist(subdirectory);
-	  subdirectory
-        end method ensure-subdirectory-exists;
-
   $personal-install := user-install-path();
   $personal-lib :=
-    $personal-install & ensure-subdirectory-exists($personal-install, "lib");
+    $personal-install & subdirectory-locator($personal-install, "lib");
   $personal-bin :=
-    $personal-install & ensure-subdirectory-exists($personal-install, "bin");
+    $personal-install & subdirectory-locator($personal-install, "bin");
   $personal-build :=
     user-build-path()
     | ($personal-install & subdirectory-locator($personal-install, "build"));
