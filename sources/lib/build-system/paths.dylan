@@ -54,11 +54,17 @@ define function user-registry-path
     ()
  => (path :: false-or(<sequence>));
   let path = environment-variable("OPEN_DYLAN_USER_REGISTRIES");
-  path 
+  let registries = path
     & map(method (p :: <string>)
             as(<directory-locator>, p)
           end,
-          tokenize-environment-variable(path))
+          tokenize-environment-variable(path));
+  let cwd = working-directory();
+  if (cwd)
+    add!(registries | #(), subdirectory-locator(cwd, "registry"))
+  else
+    registries
+  end;
 end;
 
 define function user-install-path
