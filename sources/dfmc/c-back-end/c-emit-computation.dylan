@@ -83,7 +83,13 @@ define method emit-local-tmp-definition
   format-emit*(back-end, stream, "\t");
   if (volatile?) format-emit*(back-end, stream, "volatile ") end;
   let type = type-estimate(tmp); // lookup-type(tmp, current-css(), tmp.generator);
-  emit-parameter-type(back-end, stream, type);
+  // A bit nasty, but the right thing to do (see the emit-computation
+  // on <make-cell>, <get-cell-value>, <set-cell-value>)
+  if (tmp.cell? & closed-over?(tmp))
+    emit-parameter-type(back-end, stream, dylan-value(#"<object>"));
+  else
+    emit-parameter-type(back-end, stream, type);
+  end;
   // if (tmp.cell?)
   //   format-emit*
   //     (back-end, stream, "* % = %(@);\n", tmp, tmp, #f);
