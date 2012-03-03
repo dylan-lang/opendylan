@@ -65,6 +65,88 @@ improve the stability of the C back-end in general.
 .. TODO: moar details
 
 
+Limited Collections
+-------------------
+
+There were some bugs and some missed opportunities for optimization in
+the limited collections code.
+
+
+Consider the following constant:
+
+.. code-block:: dylan
+
+    define constant <float-vec> = limited(<vector>, of: <single-float>, size: 3);
+
+
+The subtype relation was broken when the ``size:`` keyword is present:
+
+.. code-block:: dylan
+
+    let v = make(<float-vec>, fill: 0.0);
+    instance?(v, <float-vec>);  // returns #f
+
+This required fixing of ``instance?`` both in dfmc/modeling/types and
+dylan/type.
+
+
+Another issue with the same code was that the ``size`` method was not constant-folded at compile-time:
+
+.. code-block:: dylan
+
+    foo[1] := sin(foo[0]);
+
+This line of code lead to the following intermediate (DFM) code, which
+includes range checks (for both index 0 and 1):
+
+.. code-block:: dylan
+
+    t32 := SLOT-VALUE-INITD({{ foo }}, size)
+    t39 := [PRIMOP cast-integer-as-raw(t32)]
+    t44 := [PRIMOP machine-word-unsigned-less-than?(^%1, t39)]
+    IF (t44)
+      t51 := REPEATED-SLOT-VALUE({{ foo }}, single-float-vector-element, ^%1)
+    ELSE
+      *t28(1) := [CALLi ^{<&method> element-range-error (<collection>, <object>)}({{ foo }}, ^0)]
+      t71 := *t28(1) [0]
+      t70 := [PRIMOP single-float-as-raw(t71)]
+    END IF
+    t74 := [IF-MERGE t51 t70]
+    t67 := [PRIMOP single-float-sin(t74)]
+    t68 := [PRIMOP raw-as-single-float(t67)]
+    t85 := [PRIMOP machine-word-unsigned-less-than?(^%5, t39)]
+    IF (t85)
+      REPEATED-SLOT-VALUE({{ foo }}, single-float-vector-element, ^%5) := t67
+    ELSE
+      [CALLi ^{<&method> element-range-error (<collection>, <object>)}({{ foo }}, ^1)]
+    END IF
+    [IF-MERGE #f #f]
+
+The same Dylan code is now translated into the following DFM code:
+
+.. code-block:: dylan
+
+    t19 := REPEATED-SLOT-VALUE({{ foo }}, single-float-vector-element, ^%1)
+    t20 := [PRIMOP single-float-sin(t19)]
+    t21 := [PRIMOP raw-as-single-float(t20)]
+    REPEATED-SLOT-VALUE({{ foo }}, single-float-vector-element, ^%5) := t20
+
+This required fixes in the modeling, typist and optimization parts of
+the compiler.
+
+
+A third issue was that the type inference always used the inferred
+type of the actual instance. This failed for primitive types,
+``<single-float>`` was used instead of ``<raw-single-float>``. This
+lead towards code which the C compiler could not compile
+(``incompatible code in assignment``):
+
+.. code-block:: dylan
+
+    a[0] := - a[0];
+
+This required a fix in the typist.
+
 
 Other Changes
 -------------
