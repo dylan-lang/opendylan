@@ -167,7 +167,20 @@ define test bug-7388-b ()
   check-equal("First argument of empty MV return", #f, foo);
   check-equal("Second argument of empty MV return", #f, bar);
 end;
-                   
+
+define test issue-189 ()
+  check-equal("heap-allocated cell compiles correctly",
+              begin
+                let x :: <double-float> = as(<double-float>, 0.0);
+                block ()
+                  x := 1.0d0;
+                exception (<error>)
+                  x := as(<double-float>, 0.0);
+                end block;
+                x;
+              end, 1.0d0)
+end;
+
 define suite dylan-regressions ()
   test bug-5800;
   test bug-5580;
@@ -184,5 +197,6 @@ define suite dylan-regressions ()
   test bug-7388;
   test bug-7388-a;
   test bug-7388-b;
+  test issue-189;
 end suite dylan-regressions;
 
