@@ -7,23 +7,9 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-// Read in Shell Environment Variables for Builds
-
-define method read-environment-variable
-    (variable :: <string>, #key required? = #f) 
- => (value :: false-or(<string>))
-  let value = environment-variable(variable);
-  if (value | ~required?)
-    value
-  else
-    error("Required Environment Variable %s is not set", variable);
-  end if;
-end method;
-
-
 define function system-install-path()
  => (path :: false-or(<locator>));
-  let path = read-environment-variable("OPEN_DYLAN_RELEASE_INSTALL");
+  let path = environment-variable("OPEN_DYLAN_RELEASE_INSTALL");
   if (path)
     as(<directory-locator>, path);
   end
@@ -31,8 +17,7 @@ end;
 
 define function system-registry-path()
  => (path :: false-or(<sequence>));
-  let path
-    = read-environment-variable("OPEN_DYLAN_RELEASE_REGISTRIES");
+  let path = environment-variable("OPEN_DYLAN_RELEASE_REGISTRIES");
   path &
     map(method(p) as(<directory-locator>, p) end,
         tokenize-environment-variable(path))
@@ -40,7 +25,7 @@ end;
 
 define function system-release-path()
  => (path :: false-or(<locator>))
-  let path = read-environment-variable("OPEN_DYLAN_RELEASE");
+  let path = environment-variable("OPEN_DYLAN_RELEASE");
   if (path)
     as(<directory-locator>, path)
   else
@@ -50,7 +35,7 @@ end;
 
 define function system-build-path()
  => (path :: false-or(<locator>))
-  let path = read-environment-variable("OPEN_DYLAN_RELEASE_BUILD");
+  let path = environment-variable("OPEN_DYLAN_RELEASE_BUILD");
   path & as(<directory-locator>, path)
 end;
 
@@ -68,7 +53,7 @@ end;
 define function user-registry-path
     ()
  => (path :: false-or(<sequence>));
-  let path = read-environment-variable("OPEN_DYLAN_USER_REGISTRIES");
+  let path = environment-variable("OPEN_DYLAN_USER_REGISTRIES");
   path 
     & map(method (p :: <string>)
             as(<directory-locator>, p)
@@ -111,7 +96,7 @@ end;
 define function read-environment-path
     (name :: <string>, #key default :: false-or(<string>))
  => (path :: <directory-locator>)
-  let path = read-environment-variable(name);
+  let path = environment-variable(name);
   if (~path)
     let root-path = user-root-path();
     if (default)
@@ -127,13 +112,13 @@ end;
 
 define function user-root-path()
  => (path :: <directory-locator>);
-  let path = read-environment-variable("OPEN_DYLAN_USER_ROOT");
+  let path = environment-variable("OPEN_DYLAN_USER_ROOT");
   if (path)
     as(<directory-locator>, path)
   elseif ($os-name == #"win32")
     let path =
       begin
-        let appdata = read-environment-variable("APPDATA");
+        let appdata = environment-variable("APPDATA");
         if (appdata)
           as(<directory-locator>, appdata);
         end;
