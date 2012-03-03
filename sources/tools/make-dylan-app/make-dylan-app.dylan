@@ -23,7 +23,7 @@ define method print-object
   format(stream, "%s", as(<string>, template));
 end method print-object;
 
-define function write-templates(#rest templates :: <template>) => ();
+define function write-templates (#rest templates :: <template>) => ();
   for (template in templates)
     with-open-file (stream = output-path(template), direction: #"output",
                     if-does-not-exist: #"create")
@@ -40,7 +40,7 @@ define function make-dylan-app (app-name :: <string>) => ()
           merge-locators(as(<file-locator>, apply(concatenate, args)),
                          project-dir);
         end method to-target-path;
-  
+
   let main :: <template>
     = make(<template>, output-path: to-target-path(app-name, ".dylan"),
            constant-string: $main-template-simple, arguments: list(app-name));
@@ -49,13 +49,26 @@ define function make-dylan-app (app-name :: <string>) => ()
            constant-string: $lib-template-simple,
            arguments: list(app-name, app-name));
   let lid :: <template>
-    = make(<template>, output-path: to-target-path(app-name, ".lid"), 
+    = make(<template>, output-path: to-target-path(app-name, ".lid"),
            constant-string: $lid-template-simple,
            arguments: list(app-name, app-name, "library.dylan",
                            concatenate(app-name, ".dylan")));
-  
+
   write-templates(main, lib, lid);
+
+  write-registry(project-dir, app-name);
 end function make-dylan-app;
+
+define function write-registry
+    (directory :: <directory-locator>, name :: <string>)
+  let registry = create-directory(directory, "registry");
+  let generic = create-directory(registry, "generic");
+  with-open-file (stream = merge-locators(as(<file-locator>, name), generic),
+                  direction: #"output",
+                  if-does-not-exist: #"create")
+    format(stream, "abstract://dylan/%s.lid", name)
+  end with-open-file;
+end;
 
 define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
   local method is-name? (c :: <character>) => (name? :: <boolean>)
@@ -78,7 +91,7 @@ define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
   end case;
 end function is-valid-dylan-name?;
 
-define function main(app-name :: <string>, arguments :: <vector>) => ()
+define function main (app-name :: <string>, arguments :: <vector>) => ()
   if (arguments.size < 1)
     format(*standard-error*, "usage: make-dylan-app project-name\n");
     exit-application(1);
