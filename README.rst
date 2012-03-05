@@ -49,7 +49,6 @@ to double its value)
 * Get MPS or boehm-gc, depending on your platform:
 * Linux x86 or FreeBSD x86 (HARP) -> MPS
 * Mac OS X and all 64 bit (C) -> boehm-gc
-* Get XML::Parser
 
 ::
 

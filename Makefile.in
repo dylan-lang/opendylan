@@ -22,8 +22,6 @@ DYLANCOMPILER	= @DYLANCOMPILER@
 
 library_srcdir	= @with_library_source@
 
-LIBRARY_PACKS	= @LIBRARY_PACKS@
-
 .PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
@@ -193,8 +191,6 @@ BOOTSTRAP_3_ENV = \
 
 BOOTSTRAP_3_LIBRARIES = dylan-compiler
 
-BOOTSTRAP_3_LIBRARY_PACKS = @LIBRARY_PACKS@
-
 BOOTSTRAP_3_COMPILER = \
 	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler $(arch_flag) -build
 
@@ -216,8 +212,7 @@ bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) -C $(rt_build) clean install
 	@$(BOOTSTRAP_3_ENV) \
-	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" \
-	  $(BOOTSTRAP_3_LIBRARIES) --library-packs="$(BOOTSTRAP_3_LIBRARY_PACKS)"
+	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
 
 ###
 # Install stage is like stage 3, but it builds libraries and compiler in their
@@ -240,8 +235,6 @@ INSTALL_ENV = \
 
 INSTALL_LIBRARIES = dylan-compiler dswank make-dylan-app
 
-INSTALL_LIBRARY_PACKS = @LIBRARY_PACKS@
-
 INSTALL_COMPILER = \
 	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build
 
@@ -260,8 +253,7 @@ install-stage: $(prefix)/sources
 	OPEN_DYLAN_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C $(rt_build) clean install
 	@$(INSTALL_ENV) \
-	  $(fdmake) --compiler="$(INSTALL_COMPILER)" \
-	  $(INSTALL_LIBRARIES) --library-packs="$(INSTALL_LIBRARY_PACKS)"
+	  $(fdmake) --compiler="$(INSTALL_COMPILER)" $(INSTALL_LIBRARIES)
 
 install: @bootstrap_target@ install-stage
 
