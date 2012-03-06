@@ -231,24 +231,89 @@ define method ^element-setter-method? (fn :: <&method>) => (well? :: <boolean>)
 	 | binding == dylan-binding(#"element-no-bounds-check-setter"))
 end method;
 
+
+// We'd much rather like to look at fn.parameters, but we don't
+// always have it.  So re-compute formal argument order (incomplete,
+// but sufficient for the only use case so far).
+define function find-parameter-value (wanted-name, sig-spec, arguments)
+ => (constant?, value);
+  let index = 0;
+  let arg-index =
+    block(return)
+      for (spec in sig-spec.spec-value-required-variable-specs)
+        if (spec.spec-variable-name.fragment-name = wanted-name)
+          return(index);
+        end;
+        index := index + 1;
+      end;
+      if (sig-spec.spec-argument-optionals?)
+        index := index + 1;
+      end;
+      for (spec in sig-spec.spec-argument-key-variable-specs)
+        if (spec.spec-variable-name.fragment-name = wanted-name)
+          return(index);
+        end;
+        index := index + 1;
+      end;
+      #f
+    end;
+  if (arg-index)
+    constant-value?(arguments[arg-index])
+  else
+    values(#f, #f)
+  end
+end;
+
 define method type-estimate-call-from-site(call :: <method-call>, 
                                            cache :: <type-cache>)
     => (te :: false-or(<type-estimate>))
   let (constant?, fn)  = constant-value?(call.function);
+  local method get-parameter (name)
+          let (c?, val) = find-parameter-value(name, signature-spec(fn), call.arguments);
+          val
+        end;
   if (instance?(fn, <&method>))
     if (^make-method?(fn))
       let sig-class      
 	= ^make-return-class-from-signature(fn);
       let (c?, arg-type)
 	= constant-value?(first(arguments(call)));
-      let type 
+      let type-estimate
 	= if (c? & ^subtype?(arg-type, sig-class))
-	    arg-type
+            if (^subtype?(arg-type, dylan-value(#"<collection>")))
+              // try to improve type prediction for collections, esp. limited collections
+              let (element-type, class) = lookup-any-limited-collection-element-type(arg-type);
+              let element-type-parm = get-parameter(#"element-type");
+              if (element-type-parm)
+                element-type := element-type-parm;
+              end;
+              unless (element-type)
+                element-type := dylan-value(#"<object>");
+              end;
+              let size = #f;
+              let dimensions = #f;
+              unless (^subtype?(arg-type, dylan-value(#"<stretchy-collection>")))
+                size := get-parameter(#"size");
+                dimensions := get-parameter(#"dimensions");
+              end;
+              if (element-type | size | dimensions)
+                make(<type-estimate-limited-collection>,
+                     class:          class | arg-type,
+                     concrete-class: arg-type,
+                     of:             as(<type-estimate>, element-type),
+                     size:           size,
+                     dimensions:     dimensions & as(limited(<vector>, of: <integer>), dimensions));
+              else
+                as(<type-estimate>, arg-type);
+              end if
+            else
+              as(<type-estimate>, arg-type);
+            end if
 	  else
-	    sig-class
+	    as(<type-estimate>, sig-class);
 	  end if;
       make(<type-estimate-values>, 
-	   fixed: vector(as(<type-estimate>, type)))  
+	   fixed: vector(type-estimate))  
     elseif (^element-method?(fn))
       let collection-te = type-estimate(first(arguments(call)));
       if (instance?(collection-te, <type-estimate-limited-collection>))
