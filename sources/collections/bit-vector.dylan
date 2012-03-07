@@ -6,17 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/*
-define function calculate-word-size-log
-    (word-size :: <integer>) => (log-word-size :: <integer>)
-  for (i from 0 below $machine-word-size, while: word-size ~= 0)
-    word-size := ash(word-size, -1);
-  finally
-    i
-  end for;
-end function
-*/
-
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -24,7 +13,7 @@ end function
 ///////////////////////////////////////////////////////////////////////////
 
 define constant $word-size :: <integer> = $machine-word-size;
-define constant $log-word-size :: <integer> = 5;
+define constant $log-word-size :: <integer> = integer-length($machine-word-size) - 1;
 
 define constant $machine-word-zero       = as(<machine-word>, 0);
 define constant $machine-word-one        = as(<machine-word>, 1);
