@@ -1,7 +1,4 @@
-prefix		= @prefix@
-ifneq ($(DESTDIR),)
-prefix := $(DESTDIR)$(prefix)
-endif
+prefix		= $(DESTDIR)@prefix@
 srcdir		= @abs_srcdir@
 abs_srcdir	= @abs_srcdir@
 abs_builddir	= @abs_builddir@
@@ -105,8 +102,6 @@ $(abs_builddir)/Bootstrap.1:
 	mkdir $(abs_builddir)/Bootstrap.1/lib/runtime
 	mkdir $(abs_builddir)/Bootstrap.1/build 
 	mkdir $(abs_builddir)/Bootstrap.1/build/logs
-	cp $(srcdir)/$(rt_build)/$(fd_build)-build.jam \
-	   Bootstrap.1/lib/$(fd_build)-build.jam
 
 $(BOOTSTRAP_1_REGISTRY):
 	mkdir $(BOOTSTRAP_1_REGISTRY)
@@ -119,6 +114,8 @@ $(BOOTSTRAP_1_REGISTRY):
 
 $(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
 	@echo Building Open Dylan bootstrap stage 1...
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
+	  $(MAKE) -C sources/jamfiles install
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
 	  $(MAKE) -C $(rt_build) clean install
 	@$(BOOTSTRAP_1_ENV) \
@@ -159,6 +156,8 @@ $(abs_builddir)/Bootstrap.2:
 
 $(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
 	@echo Building Open Dylan bootstrap stage 2...
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	  $(MAKE) -C sources/jamfiles install
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  $(MAKE) -C $(rt_build) clean install
@@ -210,6 +209,8 @@ $(abs_builddir)/Bootstrap.3:
 bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	@echo Building Open Dylan bootstrap stage 3...
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
+	  $(MAKE) -C sources/jamfiles install
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) -C $(rt_build) clean install
 	@$(BOOTSTRAP_3_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
@@ -250,7 +251,9 @@ $(prefix)/sources:
 install-stage: $(prefix)/sources
 	install -d $(prefix)/bin $(prefix)/lib $(prefix)/lib/runtime $(prefix)/build $(prefix)/build/logs
 	@echo Building Open Dylan installation...
-	OPEN_DYLAN_USER_INSTALL=$(prefix) \
+	@OPEN_DYLAN_USER_INSTALL=$(prefix) \
+	  $(MAKE) -C sources/jamfiles install
+	@OPEN_DYLAN_USER_INSTALL=$(prefix) \
 	  $(MAKE) -C $(rt_build) clean install
 	@$(INSTALL_ENV) \
 	  $(fdmake) --compiler="$(INSTALL_COMPILER)" $(INSTALL_LIBRARIES)

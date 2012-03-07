@@ -66,12 +66,6 @@ $(LIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a
 $(LIBDEST)/libmmdw.a: $(MPS_LIB)/mmdw.a
 	cp -fp $(MPS_LIB)/mmdw.a $(LIBDEST)/libmmdw.a
 
-$(LIBDEST)/x86-linux-build.jam: $(srcdir)/x86-linux-build.jam
-	cp -fp $(srcdir)/x86-linux-build.jam $(LIBDEST)
-
-$(LIBDEST)/mini-jambase.jam: $(runtime_srcdir)/mini-jambase.jam
-	cp -fp $(runtime_srcdir)/mini-jambase.jam $(LIBDEST)
-
 $(LIBDEST)/dylan-elf-dll.script: $(srcdir)/dylan-elf-dll.script
 	cp -fp $(srcdir)/dylan-elf-dll.script $(LIBDEST)
 
@@ -79,7 +73,6 @@ $(LIBDEST)/dylan-elf-exe.script: $(srcdir)/dylan-elf-exe.script
 	cp -fp $(srcdir)/dylan-elf-exe.script $(LIBDEST)
 
 install-build: $(LIBDEST)/libmmdw.a $(LIBDEST)/libmpsplan.a \
-	       $(LIBDEST)/x86-linux-build.jam $(LIBDEST)/mini-jambase.jam \
                $(LIBDEST)/dylan-elf-dll.script $(LIBDEST)/dylan-elf-exe.script
 
 install-runtime: $(OBJS) $(SRCOBJS)

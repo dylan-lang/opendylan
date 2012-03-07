@@ -3,6 +3,7 @@
 #
 
 CC	?= gcc ;
+LINK    ?= $(CC) ;
 
 MKF	?= dylanmakefile.mkf ;
 
@@ -12,35 +13,15 @@ SUFLIB	?= .a ;			# static library suffix
 SUFDLL	?= .so ;		# shared library suffix
 SUFMKF	?= .mkf ;               # build-system files
 
-{
-  local _lib = lib ;
-  local _bin = bin ;
-
-  # SYSTEM_ROOT is set by the build-system
-  SYSTEM_LIBDIR ?= $(_lib:P=$(SYSTEM_ROOT)) ;
-  SYSTEM_BINDIR ?= $(_bin:P=$(SYSTEM_ROOT)) ;
-
-  # PERSONAL_ROOT is set by the build-system
-  PERSONAL_LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT)) ;
-  PERSONAL_BINDIR ?= $(_bin:P=$(PERSONAL_ROOT)) ;
-
-  # . is set by the build system
-  LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT:E=$(.:P))) ;
-  BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
-}
-
-LINKSCRIPTDLL ?= $(SYSTEM_LIBDIR)/dylan-elf-dll.script ;
-LINKSCRIPTEXE ?= $(SYSTEM_LIBDIR)/dylan-elf-exe.script ;
+LINKFLAGSDLL ?= -T $(SYSTEM_LIBDIR)/dylan-elf-dll.script ;
+LINKFLAGSEXE ?= -T $(SYSTEM_LIBDIR)/dylan-elf-exe.script
+                -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/../lib/ ;
 
 #
 # Runtime
 #
 
-RTOBJS  ?= runtime.o
-	   x86-linux-collector.o
-	   x86-linux-threads-primitives.o
-	   linux-spy-interfaces.o
-	   linux-support.o ;
+RTOBJS ?= runtime.o ;
 
 SUPOBJS ?= $(SYSTEM_LIBDIR)/runtime/dylan-support.o ;
 
@@ -342,7 +323,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(CC) -shared -o $(<) -T $(LINKSCRIPTDLL) -Wl,-rpath,"$(LIBPATH:J=:)" $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(LINK) -shared -o $(<) $(LINKFLAGSDLL) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
 }
 
 rule LinkEXE {
@@ -350,7 +331,7 @@ rule LinkEXE {
 }
 
 actions LinkEXE bind NEEDLIBS {
-  $(CC) -o $(<) -T $(LINKSCRIPTEXE) -Wl,-rpath,"$(LIBPATH:J=:)" $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) -lpthread
+  $(LINK) -o $(<) $(LINKFLAGSEXE) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
 }
 
 #

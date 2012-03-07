@@ -118,6 +118,7 @@ AC_SUBST(with_library_source)
 # for now, replace mps only in pentium-linux
 # gc is also replaced in sources/dfmc/c-run-time
 AC_CONFIG_FILES(Makefile
+	        sources/jamfiles/Makefile
                 sources/lib/run-time/pentium-linux/Makefile
                 sources/lib/run-time/pentium-freebsd/Makefile
                 sources/dfmc/c-run-time/Makefile
