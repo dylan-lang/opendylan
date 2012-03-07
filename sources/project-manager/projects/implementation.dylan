@@ -659,6 +659,7 @@ define method project-remove-build-products(project :: <base-project>,
     makefile-exists?(project) &
     build-system(if (recursive?) #["clean-all"] else #["clean"] end,
 		 directory: project.project-build-location,
+                 compiler-back-end: project.project-compiler-back-end,
 		 progress-callback: ignore);
   end;
   // no-op for system projects

@@ -94,6 +94,7 @@ define method link-library(project :: <project>, #rest keys,
                directory: build-location,
                build-script: build-script,
                arch: arch,
+               compiler-back-end: project-compiler-back-end(project),
                progress-callback: progress-callback,
                project-build-info: project-build-info,
                force?: extent == #"all")

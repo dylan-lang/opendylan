@@ -81,7 +81,8 @@ define function make-jam-state
     (build-script :: <file-locator>,
      #key progress-callback :: <function> = ignore,
           build-directory :: <directory-locator>,
-          arch :: false-or(<symbol>))
+          arch :: false-or(<symbol>),
+          compiler-back-end)
  => (jam :: <jam-state>);
   // Ensure that the build-script hasn't been modified, and that the
   // working directory hasn't changed, and that SYSTEM_ROOT and
@@ -119,7 +120,12 @@ define function make-jam-state
     if (arch)
       jam-variable(state, "TARGET_OSPLAT") := vector(as(<string>, arch));
     end if;
-    
+
+    if (compiler-back-end)
+      jam-variable(state, "COMPILER_BACK_END") 
+        := vector(as(<string>, compiler-back-end));
+    end if;
+
     jam-variable(state, "JAMDATE")
       := vector(as-iso8601-string(current-date()));
     jam-variable(state, "JAMVERSION") := #["2.5"];
