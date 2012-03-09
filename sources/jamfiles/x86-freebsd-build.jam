@@ -19,11 +19,11 @@
 # Runtime
 #
 
-RTOBJS ?= runtime.o
-          x86-linux-collector.o
-          x86-linux-threads-primitives.o
-          linux-spy-interfaces.o
-          linux-support.o ;
+RTOBJS_harp ?= runtime.o
+               x86-linux-collector.o x86-linux-threads-primitives.o
+               linux-spy-interfaces.o linux-support.o ;
+
+RTOBJS_llvm ?= ;
 
 #
 # Common build script

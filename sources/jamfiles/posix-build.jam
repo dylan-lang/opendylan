@@ -2,9 +2,6 @@
 # Configuration variables
 #
 
-CC	?= gcc ;
-LINK    ?= $(CC) ;
-
 MKF	?= dylanmakefile.mkf ;
 
 SUFOBJ	?= .o ;			# object files suffix
@@ -12,6 +9,17 @@ SUFASM	?= .s ;			# assembly source files suffix
 SUFLIB	?= .a ;			# static library suffix
 SUFDLL	?= .so ;		# shared library suffix
 SUFMKF	?= .mkf ;               # build-system files
+
+if $(COMPILER_BACK_END) = llvm {
+  CC      ?= clang ;
+  SUFOUT  ?= .bc ;             # DFMC output suffix
+} else {
+  CC      ?= gcc ;
+  SUFOUT  ?= $(SUFOBJ) ;
+}
+CCFLAGS   ?= -g -O2 -fPIC ;
+LINK      ?= $(CC) ;
+LINKFLAGS ?= $(CCFLAGS)
 
 LINKFLAGSDLL ?= -T $(SYSTEM_LIBDIR)/dylan-elf-dll.script ;
 LINKFLAGSEXE ?= -T $(SYSTEM_LIBDIR)/dylan-elf-exe.script
@@ -21,11 +29,12 @@ LINKFLAGSEXE ?= -T $(SYSTEM_LIBDIR)/dylan-elf-exe.script
 # Runtime
 #
 
-RTOBJS ?= runtime.o ;
-
 SUPOBJS ?= $(SYSTEM_LIBDIR)/runtime/dylan-support.o ;
 
-rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS) -lmmdw -lmpsplan -lpthread ;
+# These are passed to the link rules by way of the dylan.lid file
+rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS_$(COMPILER_BACK_END))
+           -lmmdw -lmpsplan -lpthread ;
+rtclibs ?= ;
 
 guilflags ?= ;
 
@@ -96,7 +105,7 @@ rule DylanLibrary image : version {
   }
 
   # The executable depends only on _main.o and the DLL.
-  local _obj = [ FGristFiles _main$(SUFOBJ) ] ;
+  local _obj = [ FGristFiles _main$(SUFOUT) ] ;
   local _asm = [ FGristFiles _main$(SUFASM) ] ;
   SEARCH on $(_obj) $(_asm) = $(SEARCH_SOURCE) ;
 
@@ -129,7 +138,7 @@ rule DylanLibraryFiles image : files {
   if ! $(SYSTEM) {
     local _dll = [ FDLLName $(image) ] ;
     
-    local _obj = [ FGristFiles _glue$(SUFOBJ) $(files:S=$(SUFOBJ)) ] ;
+    local _obj = [ FGristFiles _glue$(SUFOUT) $(files:S=$(SUFOUT)) ] ;
     local _asm = [ FGristFiles _glue$(SUFASM) $(files:S=$(SUFASM)) ] ;
     local _el  = [ FGristFiles $(files:S=.el) ] ;
     SEARCH on $(_obj) $(_asm) $(_el) = $(SEARCH_SOURCE) ;
@@ -275,7 +284,7 @@ rule DylanLibraryUses image : library : dir {
       # Another personal library; read its mkf from its build directory.
 	
       local SEARCH_SOURCE LOCATE_SOURCE LOCATE_TARGET
-        = $(dir:R=$(LOCATE_TARGET:E=$(DOT))) ;
+        = $(dir:R=$(LOCATE_TARGET:E=$(.))) ;
       local SOURCE_GRIST ;
 
       local LIBDIR BINDIR ;
