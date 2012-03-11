@@ -107,7 +107,7 @@ implementation.
          [ *body* ]
        end [ function ] [ *name* ]
 
-   :parmaeter adjective: A Dylan unreserved-name *bnf*.
+   :parameter adjective: A Dylan unreserved-name *bnf*.
    :parameter name: A Dylan variable-name *bnf*.
    :parameter parameter-list: A Dylan parameter-list *bnf*.
    :parameter body: A Dylan body *bnf*.
