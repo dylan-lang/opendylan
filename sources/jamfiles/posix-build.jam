@@ -1,6 +1,27 @@
 #
+# Directory configuration
+#
+{
+  local _lib = lib ;
+  local _bin = bin ;
+
+  # SYSTEM_ROOT is set by the build-system
+  SYSTEM_LIBDIR ?= $(_lib:P=$(SYSTEM_ROOT)) ;
+  SYSTEM_BINDIR ?= $(_bin:P=$(SYSTEM_ROOT)) ;
+
+  # PERSONAL_ROOT is set by the build-system
+  PERSONAL_LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT)) ;
+  PERSONAL_BINDIR ?= $(_bin:P=$(PERSONAL_ROOT)) ;
+
+  # . is set by the build system
+  LIBDIR ?= $(_lib:P=$(PERSONAL_ROOT:E=$(.:P))) ;
+  BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
+}
+
+#
 # Configuration variables
 #
+SEPARATE ?= true ;		# Separate compilation of *.c/*.bc output
 
 MKF	?= dylanmakefile.mkf ;
 
@@ -11,29 +32,41 @@ SUFDLL	?= .so ;		# shared library suffix
 SUFMKF	?= .mkf ;               # build-system files
 
 if $(COMPILER_BACK_END) = llvm {
-  CC      ?= clang ;
+  CC      = clang ;
   SUFOUT  ?= .bc ;             # DFMC output suffix
+} else if $(COMPILER_BACK_END) = c {
+  SUFOUT  ?= .c ;
 } else {
-  CC      ?= gcc ;
   SUFOUT  ?= $(SUFOBJ) ;
+  LINKFLAGSDLL += -T $(SYSTEM_LIBDIR)/dylan-elf-dll.script ;
+  LINKFLAGSEXE += -T $(SYSTEM_LIBDIR)/dylan-elf-exe.script ;
 }
-CCFLAGS   ?= -g -O2 -fPIC ;
-LINK      ?= $(CC) ;
-LINKFLAGS ?= $(CCFLAGS)
 
-LINKFLAGSDLL ?= -T $(SYSTEM_LIBDIR)/dylan-elf-dll.script ;
-LINKFLAGSEXE ?= -T $(SYSTEM_LIBDIR)/dylan-elf-exe.script
-                -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/../lib/ ;
+CCFLAGS   += -fPIC $(GC_CFLAGS) ;
+
+LINK      ?= $(CC) ;
+LINKFLAGS ?= $(CCFLAGS) ;
 
 #
 # Runtime
 #
 
-SUPOBJS ?= $(SYSTEM_LIBDIR)/runtime/dylan-support.o ;
+SUPOBJS_harp ?= dylan-support.o ;
+
+SUPOBJS_llvm ?= ;
+
+SUPPORT = $(SYSTEM_LIBDIR)/runtime/$(SUPOBJS_$(COMPILER_BACK_END)) ;
+
+RTOBJS_llvm ?=  ;
+
+RTOBJS_c    ?= debug-print.o
+               run-time.o
+               trace.o
+               posix-threads.o ;
 
 # These are passed to the link rules by way of the dylan.lid file
 rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS_$(COMPILER_BACK_END))
-           -lmmdw -lmpsplan -lpthread ;
+           -lpthread -lm ;
 rtclibs ?= ;
 
 guilflags ?= ;
@@ -81,8 +114,8 @@ rule DylanLibrary image : version {
 
   # Initial library search path
   
-  LIBPATH on $(_dll) = $(PERSONAL_LIBDIR) $(SYSTEM_LIBDIR) ;
-  LIBPATH on $(_exe) = $(PERSONAL_LIBDIR:E=$(LIBDIR)) $(SYSTEM_LIBDIR) ;
+  LIBPATH on $(_dll) = $(PERSONAL_LIBDIR) ;
+  LIBPATH on $(_exe) = $(PERSONAL_LIBDIR:E=$(LIBDIR)) ;
 
   # We'll use the library name as the grist to identify referenced
   # source and object files.
@@ -101,8 +134,11 @@ rule DylanLibrary image : version {
 
   # The .so requires the runtime support object file
   if $(image[1]:L) != dylan {
-    LinkDLL $(_dll) : $(SUPOBJS) ;
+    LinkDLL $(_dll) : $(SUPPORT) ;
   }
+
+  # Link flags for the shared library
+  LINKFLAGS on $(_dll) = $(LINKFLAGS) $(LINKFLAGSDLL) ;
 
   # The executable depends only on _main.o and the DLL.
   local _obj = [ FGristFiles _main$(SUFOUT) ] ;
@@ -111,6 +147,7 @@ rule DylanLibrary image : version {
 
   Depends $(_exe) : $(_dll) ;
   LINKLIBS on $(_exe) += -l$(image[1]:L) ;
+  LINKFLAGS on $(_exe) = $(LINKFLAGS) $(LINKFLAGSEXE) ;
   LinkEXE $(_exe) : $(_obj) ;
 
   # If this is the top-level project, make the dll, exe, and clean
@@ -137,18 +174,28 @@ rule DylanLibraryFiles image : files {
   # Link Dylan-derived object files into the resulting shared library.
   if ! $(SYSTEM) {
     local _dll = [ FDLLName $(image) ] ;
-    
-    local _obj = [ FGristFiles _glue$(SUFOUT) $(files:S=$(SUFOUT)) ] ;
+
+    local _out = [ FGristFiles _glue$(SUFOUT) $(files:S=$(SUFOUT)) ] ;
     local _asm = [ FGristFiles _glue$(SUFASM) $(files:S=$(SUFASM)) ] ;
     local _el  = [ FGristFiles $(files:S=.el) ] ;
-    SEARCH on $(_obj) $(_asm) $(_el) = $(SEARCH_SOURCE) ;
+    SEARCH on $(_out) $(_asm) $(_el) = $(SEARCH_SOURCE) ;
 
     if ! $(PARENT) {
       Clean clean : $(_obj) $(_asm) $(_el) ;
     }
     Clean clean-all : $(_obj) $(_asm) $(_el) ;
 
-    LinkDLL $(_dll) : $(_obj) ;
+    if $(SEPARATE) {
+      local _i ;
+      for _i in $(_out) {
+	local _mobj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
+	MakeLocate $(_mobj) : $(LOCATE_TARGET) ;
+	Cc $(_mobj) : $(_i) ;
+	LinkDLL $(_dll) : $(_mobj) ;
+      }
+    } else {
+      LinkDLL $(_dll) : $(_out) ;
+    }
   }
 }
 
@@ -183,11 +230,14 @@ rule DylanLibraryCLibraries image : libraries {
   # Link C (or other externally-derived) libraries into the shared library.
   
   local _dll = [ FDLLName $(image) ] ;
+  local _exe = [ FEXEName $(image) ] ;
 
   for lib in $(libraries) {
     switch $(lib) {
-      case -L* : LINKLIBS on $(_dll) += $(lib) ;
-      case -l* : LINKLIBS on $(_dll) += $(lib) ;
+      case -L* : _clib_$(image[1]:L) += $(lib) ;
+	  	 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+      case -l* : _clib_$(image[1]:L) += $(lib) ;
+	  	 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case *.a : lib = [ FGristFiles $(lib) ] ;
 		 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
 		 Depends $(_dll) : $(lib) ;
@@ -314,8 +364,7 @@ rule DylanLibraryClosure image : libraries {
     if ! $(_i) in $(_use_$(image[1]:L)) {
       _use_$(image[1]:L) += $(_i) ;
       Depends $(_dll) $(_exe) : $(_dll_$(_i)) ;
-      LINKLIBS on $(_dll) $(_exe) += -l$(_i) ;
-
+      LINKLIBS on $(_dll) $(_exe) += -l$(_i) $(_clib_$(_i)) ;
       LIBPATH on $(_dll) $(_exe) += $(_dir_$(_i)) ;
 
       DylanLibraryClosure $(image) : $(_use_$(_i)) ;
@@ -332,15 +381,16 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(LINK) -shared -o $(<) $(LINKFLAGSDLL) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(LINK) -shared -o $(<) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) $(GC_LFLAGS)
 }
 
 rule LinkEXE {
+  Echo LinkEXE $(<) ":" $(>) ;
   Depends $(<) : $(>) ;
 }
 
 actions LinkEXE bind NEEDLIBS {
-  $(LINK) -o $(<) $(LINKFLAGSEXE) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(LINK) -o $(<) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) $(GC_LFLAGS)
 }
 
 #
@@ -348,9 +398,17 @@ actions LinkEXE bind NEEDLIBS {
 #
 
 rule FDLLName {
-  return lib$(<[1]:LS=$(SUFDLL)) ;
+  if $(<[2]) {
+    return lib$(<[2]:LS=$(SUFDLL)) ;
+  } else {
+    return lib$(<[1]:LS=$(SUFDLL)) ;
+  }
 }
 
 rule FEXEName {
-  return $(<[1]:L) ;
+  if $(<[2]) {
+    return $(<[2]) ;
+  } else {
+    return $(<[1]) ;
+  }
 }

@@ -11,7 +11,7 @@ LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 default:
 
 install:
-	cp $(srcdir)/*.jam $(LIBDEST)
+	cp $(srcdir)/*.jam *.jam $(LIBDEST)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile

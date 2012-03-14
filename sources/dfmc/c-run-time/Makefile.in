@@ -31,13 +31,7 @@ OBJS    = posix-threads.o \
           trace.o
 
 JAMFILES = \
-    $(top_srcdir)/sources/lib/run-time/mini-jambase.jam \
-    config.jam \
     $(runtime_srcdir)/common.jam \
-    $(runtime_srcdir)/c-freebsd-build.jam \
-    $(runtime_srcdir)/c-linux-build.jam \
-    $(runtime_srcdir)/x86-linux-build.jam \
-    $(runtime_srcdir)/x86_64-linux-build.jam \
     $(runtime_srcdir)/ppc-darwin-build.jam \
     $(runtime_srcdir)/x86-darwin-build.jam \
     $(runtime_srcdir)/x86_64-darwin-build.jam

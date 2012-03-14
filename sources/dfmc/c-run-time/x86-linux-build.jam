@@ -1,3 +1,0 @@
-
-# Include common linux definition
-include $(SYSTEM_ROOT)/lib/c-linux-build.jam ;

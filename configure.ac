@@ -71,6 +71,8 @@ AC_SUBST(DYLANCOMPILER)
 bootstrap_target=1-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
+AC_PROG_CC
+
 AC_ARG_WITH(arch,
             AC_HELP_STRING([--with-arch=ARCH],
                            [Runtime architecture, e.g., i386 or x86_64.]),
@@ -119,9 +121,9 @@ AC_SUBST(with_library_source)
 # gc is also replaced in sources/dfmc/c-run-time
 AC_CONFIG_FILES(Makefile
 	        sources/jamfiles/Makefile
+                sources/jamfiles/config.jam
                 sources/lib/run-time/pentium-linux/Makefile
                 sources/lib/run-time/pentium-freebsd/Makefile
-                sources/dfmc/c-run-time/Makefile
-                sources/dfmc/c-run-time/config.jam)
+                sources/dfmc/c-run-time/Makefile)
 
 AC_OUTPUT
