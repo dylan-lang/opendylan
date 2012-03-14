@@ -6,6 +6,9 @@
     :license: MIT.
 #}
 {% extends "basic/layout.html" %}
+{% block doctype %}
+<!DOCTYPE html>
+{% endblock %}
 {% set css_files = css_files + ['_static/bootstrap/2.0.2/css/bootstrap.min.css',
                                 '_static/bootstrap/2.0.2/css/bootstrap-responsive.min.css',
                                 '_static/opendylan.org/css/opendylan-docs.css'] -%}
