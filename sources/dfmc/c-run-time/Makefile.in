@@ -30,12 +30,6 @@ OBJS    = posix-threads.o \
 		  run-time.o \
           trace.o
 
-JAMFILES = \
-    $(runtime_srcdir)/common.jam \
-    $(runtime_srcdir)/ppc-darwin-build.jam \
-    $(runtime_srcdir)/x86-darwin-build.jam \
-    $(runtime_srcdir)/x86_64-darwin-build.jam
-
 RUNTIMELIBDEST	 = $(LIBDEST)/runtime/
 
 all:	$(OBJS)
@@ -57,11 +51,6 @@ $(INCDEST):
 $(RUNTIMELIBDEST):
 	mkdir -p $(RUNTIMELIBDEST)
 
-# mini-jambase.jam has to be present, but do not require all platform-specific
-# files to be present; only one will be used, so the others can be missing.
-install-build:
-	cp -fp $(JAMFILES) $(LIBDEST)
-
 install-header:	$(runtime_srcdir)/run-time.h $(INCDEST)
 	cp -fp $(runtime_srcdir)/trace.h $(INCDEST)
 	cp -fp $(runtime_srcdir)/run-time.h $(INCDEST)
@@ -69,7 +58,7 @@ install-header:	$(runtime_srcdir)/run-time.h $(INCDEST)
 install-runtime: $(OBJS) $(RUNTIMELIBDEST)
 	cp -fp $(OBJS) $(RUNTIMELIBDEST)
 
-install: install-runtime install-build install-header
+install: install-runtime install-header
 
 clean:
 	rm -f *.o
