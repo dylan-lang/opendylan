@@ -28,7 +28,7 @@ The Common Dylan library exports the following modules:
   values.
 
 .. toctree::
-   :maxdepth: 2
+   :hidden:
 
    common-dylan
    finalization
