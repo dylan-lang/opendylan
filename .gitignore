@@ -19,3 +19,11 @@ Makefile
 /sources/dfmc/c-run-time/*.o
 /sources/app/llvm-tablegen/tablegen-parser.dylan
 /sources/lib/llvm/llvm-asm-parser.dylan
+/sources/lib/run-time/pentium-win32/dylan-plinth.lib
+/sources/lib/run-time/pentium-win32/dylan-support.lib
+/sources/lib/run-time/pentium-win32/minvcrt.exp
+/sources/lib/run-time/pentium-win32/minvcrt.lib
+/sources/lib/run-time/pentium-win32/pentium-run-time.lib
+/sources/runtime-manager/debugger-nub/protocol/
+/sources/runtime-manager/debugger-nub/skeletons/
+/sources/runtime-manager/debugger-nub/stubs/
