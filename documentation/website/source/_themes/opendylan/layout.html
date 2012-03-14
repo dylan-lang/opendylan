@@ -49,9 +49,10 @@
              <li{% if page == active_page %} class="active"{% endif %}><a href="{{ pathto(page) }}">{{ caption|e }}</a>
            {% endfor -%}
            </ul>
-           <form class="navbar-search pull-right" method="get" action="http://search.yahoo.com/search">
-             <input class="search-query" type="text" name="va" size="16" maxlength="255" value="" placeholder="Search" />
-             <input type="hidden" name="vs" value="opendylan.org" />
+           <form class="navbar-search pull-right" method="get" action="http://www.google.com/cse" id="cse-search-box">
+             <input type="hidden" name="cx" value="014128053697352059339:xr84v5ohkyq" />
+             <input type="hidden" name="ie" value="UTF-8" />
+             <input class="search-query" type="text" name="q" size="16" maxlength="255" value="" />
            </form>
          </div>
        </div>
@@ -107,6 +108,8 @@
       } catch( err ) {}
       </script><noscript><p><img src="http://piwik.opendylan.org/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
       <!-- End Piwik Tracking Code -->
+
+      <script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
 
     </footer>
 {% endblock %}
