@@ -21,15 +21,15 @@
 #
 # Configuration variables
 #
-SEPARATE ?= true ;		# Separate compilation of *.c/*.bc output
+SEPARATE ?= true ;              # Separate compilation of *.c/*.bc output
 
-MKF	?= dylanmakefile.mkf ;
+MKF     ?= dylanmakefile.mkf ;
 
-SUFOBJ	?= .o ;			# object files suffix
-SUFASM	?= .s ;			# assembly source files suffix
-SUFLIB	?= .a ;			# static library suffix
-SUFDLL	?= .so ;		# shared library suffix
-SUFMKF	?= .mkf ;               # build-system files
+SUFOBJ  ?= .o ;                 # object files suffix
+SUFASM  ?= .s ;                 # assembly source files suffix
+SUFLIB  ?= .a ;                 # static library suffix
+SUFDLL  ?= .so ;                # shared library suffix
+SUFMKF  ?= .mkf ;               # build-system files
 
 if $(COMPILER_BACK_END) = llvm {
   CC      = clang ;
@@ -60,13 +60,13 @@ SUPPORT = $(SYSTEM_LIBDIR)/runtime/$(SUPOBJS_$(COMPILER_BACK_END)) ;
 RTOBJS_llvm ?=  ;
 
 RTOBJS_c    ?= debug-print.o
-               run-time.o
-               trace.o
-               posix-threads.o ;
+	       run-time.o
+	       trace.o
+	       posix-threads.o ;
 
 # These are passed to the link rules by way of the dylan.lid file
 rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS_$(COMPILER_BACK_END))
-           -lpthread -lm ;
+	   -lpthread -lm ;
 rtclibs ?= ;
 
 guilflags ?= ;
@@ -102,7 +102,7 @@ rule DylanLibrary image : version {
   local _exe = [ FEXEName $(image) ] ;
 
   # Here we save the name and search directory of the DLL for this library.
-  
+
   _dll_$(image[1]:L) = $(_dll) ;
   _lib_$(image[1]:L) = $(_lib) ;
   if ! $(SYSTEM) && ! $(PERSONAL_ROOT) {
@@ -115,13 +115,13 @@ rule DylanLibrary image : version {
   MakeLocate $(_exe) : $(BINDIR) ;
 
   # Initial library search path
-  
+
   LIBPATH on $(_dll) = $(PERSONAL_LIBDIR) ;
   LIBPATH on $(_exe) = $(PERSONAL_LIBDIR:E=$(LIBDIR)) ;
 
   # We'll use the library name as the grist to identify referenced
   # source and object files.
-  
+
   SOURCE_GRIST = $(image[1]:L) ;
 
   # Save the current dylanmakefile.mkf for reference by other libraries
@@ -154,7 +154,7 @@ rule DylanLibrary image : version {
 
   # If this is the top-level project, make the dll, exe, and clean
   # targets depend on its build products.
-  
+
   if ! $(PARENT) {
     Depends dll : $(_dll) ;
     Depends exe : $(_exe) ;
@@ -220,7 +220,7 @@ rule DylanLibraryBaseAddress image : address {
   #Echo DylanLibraryBaseAddress $(image) ":" $(address) ;
 
   # Set the base address of the shared library.
-  
+
   local _dll = [ FDLLName $(image) ] ;
   BASE on $(_dll) ?= $(address) ;
 }
@@ -230,16 +230,16 @@ rule DylanLibraryCLibraries image : libraries {
   #Echo DylanLibraryCLibraries $(image) ":" $(libraries) ;
 
   # Link C (or other externally-derived) libraries into the shared library.
-  
+
   local _dll = [ FDLLName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
   for lib in $(libraries) {
     switch $(lib) {
       case -L* : _clib_$(image[1]:L) += $(lib) ;
-	  	 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case -l* : _clib_$(image[1]:L) += $(lib) ;
-	  	 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case *.a : lib = [ FGristFiles $(lib) ] ;
 		 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
 		 Depends $(_dll) : $(lib) ;
@@ -275,9 +275,9 @@ rule DylanLibraryCSources image : sources {
       SEARCH on $(_i) = $(SEARCH_SOURCE) ;
       local _obj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
       MakeLocate $(_obj) : $(LOCATE_TARGET) ;
-      
+
       Cc $(_obj) : $(_i) ;
-      
+
       LinkDLL $(_dll) : $(_obj) ;
     }
   }
@@ -294,15 +294,15 @@ rule DylanLibraryCHeaders image : headers {
 rule DylanLibraryRCFiles image : rcfiles {
   # DylanLibraryRCFiles image : rcfiles ;
   #Echo DylanLibraryRCFiles $(image) ":" $(rcfiles) ;
-  
+
   # Link Win32 resource files into the shared library and executable.
-  
+
   Echo Ignoring RC file(s) $(rcfiles) ;
 }
 
 rule DylanLibraryJamIncludes image : includes {
   # DylanLibraryJamIncludes image : includes ;
-  
+
   local _i ;
   for _i in [ FGristFiles $(includes) ] {
     SEARCH on $(_i) = $(SEARCH_SOURCE) ;
@@ -325,18 +325,18 @@ rule DylanLibraryUses image : library : dir {
       local SYSTEM = true ;
       local LIBDIR = $(SYSTEM_LIBDIR) ;
       local BINDIR = $(SYSTEM_BINDIR) ;
-      
+
       local SEARCH_SOURCE LOCATE_SOURCE LOCATE_TARGET = $(SYSTEM_LIBDIR) ;
       local SOURCE_GRIST ;
-      
+
       local _mkf = $(library:LS=$(SUFMKF)) ;
       SEARCH on $(_mkf) ?= $(SYSTEM_LIBDIR) ;
       IncludeMKF $(_mkf) ;
     } else {
       # Another personal library; read its mkf from its build directory.
-	
+
       local SEARCH_SOURCE LOCATE_SOURCE LOCATE_TARGET
-        = $(dir:R=$(LOCATE_TARGET:E=$(.))) ;
+	= $(dir:R=$(LOCATE_TARGET:E=$(.))) ;
       local SOURCE_GRIST ;
 
       local LIBDIR BINDIR ;
