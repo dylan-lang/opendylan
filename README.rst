@@ -128,7 +128,8 @@ Linux::
   in both prmcli.h and pthrdext.c.  The comments in the above URL
   weren't explicit about that.
 
-  For MPS 1.108.0 I (cgay) encountered this problem on Ubuntu 11.04:
+  For MPS 1.106.2 and 1.108.0 I (cgay) encountered this problem on
+  Ubuntu 11.04:
 
     cc1: warnings being treated as errors
     protlii3.c: In function ‘sigHandle’:
