@@ -447,6 +447,15 @@ define instruction-set
             operands: operands,
             metadata: builder-metadata(builder, #()));
 
+  op landingpad (type :: <llvm-type>, personality, clauses :: <sequence>,
+                 #key metadata :: <list> = #(), cleanup?)
+    => make(<llvm-landingpad-instruction>,
+            type: type,
+            operands: concatenate(vector(llvm-builder-value(builder, personality)),
+                                  clauses),
+            cleanup?: cleanup?,
+            metadata: builder-metadata(builder, metadata));
+
   op call (fnptrval :: <llvm-value>, args :: <sequence>,
            #rest options, #key metadata :: <list> = #(), #all-keys)
     => let args = map(curry(llvm-builder-value, builder), args);
@@ -548,6 +557,11 @@ define instruction-set
 
   op unwind (#key metadata :: <list> = #())
     => make(<llvm-unwind-instruction>,
+            metadata: builder-metadata(builder, metadata));
+
+  op resume (value, #key metadata :: <list> = #())
+    => make(<llvm-resume-instruction>,
+            operands: vector(llvm-builder-value(builder, value)),
             metadata: builder-metadata(builder, metadata));
 
   op unreachable (#key metadata :: <list> = #())

@@ -1288,10 +1288,57 @@ define llvm-builder function-test ins--unwind ()
               builder-test-function-disassembly(builder));
 end function-test ins--unwind;
 
+define llvm-builder function-test ins--resume ()
+  let builder = make-builder-with-test-function();
+  let struct-type
+    = make(<llvm-struct-type>,
+           elements: vector($llvm-i8*-type, $llvm-i32-type));
+  ins--resume(builder, make(<llvm-undef-constant>, type: struct-type));
+  check-equal("ins--unwind disassembly",
+              #("entry:", "resume { i8*, i32 } undef"),
+              builder-test-function-disassembly(builder));
+end function-test ins--resume;
+
 define llvm-builder function-test ins--unreachable ()
   let builder = make-builder-with-test-function();
   ins--unreachable(builder);
-  check-equal("ins--unwind disassembly",
+  check-equal("ins--unreachable disassembly",
               #("entry:", "unreachable"),
               builder-test-function-disassembly(builder));
 end function-test ins--unreachable;
+
+define llvm-builder function-test ins--landingpad ()
+  let builder = make-builder-with-test-function();
+
+  let personality-function-type
+    = make(<llvm-function-type>,
+           return-type: $llvm-i32-type,
+           parameter-types: #(),
+           varargs?: #t);
+  let personality-function
+    = make(<llvm-function>,
+           name: "__gxx_personality_v0",
+           type: make(<llvm-pointer-type>, pointee: personality-function-type),
+           arguments: #(),
+           linkage: #"external");
+  llvm-builder-define-global(builder, personality-function.llvm-global-name,
+                             personality-function);
+
+  let next = make(<llvm-basic-block>);
+  ins--invoke(builder, next, next, builder.llvm-builder-function, #(),
+              type: $llvm-void-type);
+  ins--local(builder, "Next", ins--block(builder, next));
+  let struct-type
+    = make(<llvm-struct-type>,
+           elements: vector($llvm-i8*-type, $llvm-i32-type));
+  ins--landingpad(builder, struct-type, personality-function, #(),
+                  cleanup?: #t);
+  check-equal("ins--landingpad disassembly",
+              #("entry:",
+                "invoke void @test()",
+                "        to label %Next unwind label %Next",
+                "Next:",
+                "%0 = landingpad { i8*, i32 } personality i32 (...)* @__gxx_personality_v0",
+                "        cleanup"),
+              builder-test-function-disassembly(builder));
+end function-test ins--landingpad;

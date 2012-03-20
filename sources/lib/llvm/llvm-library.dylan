@@ -316,6 +316,7 @@ define module llvm-builder
     ins--shufflevector,
     
     ins--phi,
+    ins--landingpad,
     
     ins--call,
     ins--tail-call,
@@ -332,6 +333,7 @@ define module llvm-builder
     ins--switch,
     ins--invoke,
     ins--unwind,
+    ins--resume,
     ins--unreachable;
 end module;
 

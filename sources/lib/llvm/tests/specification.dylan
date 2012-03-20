@@ -248,6 +248,10 @@ define module-spec llvm-builder ()
       (<llvm-builder>, <llvm-value>, <llvm-value>, <llvm-value>)
    => (<llvm-instruction>);
   function ins--phi (<llvm-builder>, #"rest") => (<llvm-instruction>);
+  function ins--landingpad
+      (<llvm-builder>, <llvm-type>, <llvm-value>, <sequence>,
+       #"key", #"cleanup?", #"metadata")
+   => (<llvm-instruction>);
 
   function ins--call
       (<llvm-builder>, <llvm-value>, <sequence>, #"rest")
@@ -285,6 +289,11 @@ define module-spec llvm-builder ()
        #"rest")
    => (<llvm-instruction>);
 
-  function ins--unwind (<llvm-builder>) => (<llvm-instruction>);
-  function ins--unreachable (<llvm-builder>) => (<llvm-instruction>);
+  function ins--unwind (<llvm-builder>, #"key", #"metadata") => (<llvm-instruction>);
+  function ins--unreachable
+     (<llvm-builder>, #"key", #"metadata")
+  => (<llvm-instruction>);
+  function ins--resume
+      (<llvm-builder>, <llvm-value>, #"key" #"metadata")
+   => (<llvm-instruction>);
 end module-spec llvm-builder;
