@@ -46,13 +46,14 @@ To simplify the build process, two changes were made to
 
 (1) Build products are now stored in ``./_build`` on non-Windows
     platforms instead of in ``~/Open-Dylan``.  This may still be
-    overridden via the ``OPEN_DYLAN_USER_ROOT`` if you prefer to
-    re-use the same build products across multiple different projects,
-    but we don't recommend it.
+    overridden via the ``OPEN_DYLAN_USER_ROOT`` environment variable
+    if you prefer to re-use the same build products across multiple
+    different projects, but we don't recommend it.
 
 (2) If the directory ``./registry`` exists, the compiler will add it
-    to the beginning of ``OPEN_DYLAN_USER_REGISTRIES`` so that those
-    registry entries take precedence over others.
+    to the beginning of the ``OPEN_DYLAN_USER_REGISTRIES`` environment
+    variable so that those registry entries take precedence over
+    others.
 
 The intention is that for projects that use several other projects one
 can now use git submodules and a project "registry" directory to make
