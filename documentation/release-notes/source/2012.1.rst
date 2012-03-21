@@ -38,6 +38,37 @@ Documentation Improvements
   <http://opendylan.org/documentation/getting-started/index.html>`_.
 
 
+Build Process
+-------------
+
+To simplify the build process, two changes were made to
+``dylan-compiler``:
+
+(1) Build products are now stored in ``./_build`` on non-Windows
+    platforms instead of in ``~/Open-Dylan``.  This may still be
+    overridden via the ``OPEN_DYLAN_USER_ROOT`` if you prefer to
+    re-use the same build products across multiple different projects,
+    but we don't recommend it.
+
+(2) If the directory ``./registry`` exists, the compiler will add it
+    to the beginning of ``OPEN_DYLAN_USER_REGISTRIES`` so that those
+    registry entries take precedence over others.
+
+The intention is that for projects that use several other projects one
+can now use git submodules and a project "registry" directory to make
+the following work::
+
+   $ git clone --recursive <url>
+   $ cd <project-directory>
+   $ dylan-compiler -build <project-name>
+
+In the past it would be necessary to set various environment variables
+and clone the central "registry" repository.  A minor side-effect of
+this change is that if you work on several distinct projects you will
+initially have to build all dependencies, down to and including the
+``dylan`` library.
+
+
 C3 Superclass Linearization
 ---------------------------
 
