@@ -35,5 +35,4 @@ way to say this:
       format-out("foo");
     end;
 
-See also, {{Parameter Lists}} and {{Code Examples}}.
 
