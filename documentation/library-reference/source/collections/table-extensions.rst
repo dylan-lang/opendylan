@@ -1,6 +1,6 @@
-***********************
-The Collections library
-***********************
+***************************
+The TABLE-EXTENSIONS module
+***************************
 
 .. current-library:: collections
 .. current-module:: table-extensions

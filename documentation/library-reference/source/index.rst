@@ -8,7 +8,7 @@ Dylan Library Reference
    copyright
    dylan/index
    common-dylan/index
-   collections/table-extensions
+   collections/index
    io/index
    numbers
    network/index
