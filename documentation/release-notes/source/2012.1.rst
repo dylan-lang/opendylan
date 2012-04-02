@@ -11,9 +11,9 @@ Introduction
 This document describes the 2012.1 release of Open Dylan, released
 March 7, 2012.
 
-    * `Download the release <http://opendylan.org/download/index.html>`_
-    * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
-    * `Source code <https://github.com/dylan-lang/opendylan/tree/v2012.1>`_
+* `Download the release <http://opendylan.org/download/index.html>`_
+* `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
+* `Source code <https://github.com/dylan-lang/opendylan/tree/v2012.1>`_
 
 What's New?
 ===========
