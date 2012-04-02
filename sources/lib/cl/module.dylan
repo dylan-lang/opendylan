@@ -24,14 +24,6 @@ define module CL-sequences
          cl-merge;
 end module CL-sequences;
 
-define module CL-plists
-  create get-property,
-         \put-property!, do-put-property!,
-         \remove-property!, do-remove-property!,
-         remove-keywords,
-         \with-keywords-removed;
-end module CL-plists;
-
 define module CL-strings
   create char-equal?, char-not-equal?,
          char-less?, char-not-less?,
@@ -60,7 +52,6 @@ define module CL-internals
 
   use CL-macros, export: all;
   use CL-sequences, export: all;
-  use CL-plists, export: all;
   use CL-strings, export: all;
 
   export do-char-equal?,

@@ -96,6 +96,14 @@ improve the stability of the C back-end in general.
 
 .. TODO: moar details
 
+Library Changes
+---------------
+
+The ``CL-plists`` module in the ``cl`` library has been removed.
+Any usages of it can be replaced by using the ``plists`` module
+from the ``collections`` library.  Additionally, the ``plists``
+module has been `documented
+<http://opendylan.org/documentation/library-reference/collections/plists.html>`_.
 
 Limited Collections
 -------------------

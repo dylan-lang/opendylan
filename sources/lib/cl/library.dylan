@@ -11,7 +11,6 @@ define library CL
 
   export CL-macros;
   export CL-sequences;
-  export CL-plists;
   export CL-strings;
   export CL-internals;
 end library CL;
