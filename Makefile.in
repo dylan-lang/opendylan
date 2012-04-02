@@ -283,8 +283,9 @@ distclean: clean
 	-rm -f config.log
 	-rm -f config.status
 	-rm -f config.status.lineno
-	-rm -f Makefile sources/lib/run-time/pentium-linux/Makefile sources/lib/run-time/pentium-freebsd/Makefile sources/dfmc/c-run-time/Makefile
-	-rm -f sources/dfmc/c-run-time/config.jam
+	-rm -f Makefile sources/lib/run-time/pentium-linux/Makefile sources/lib/run-time/pentium-freebsd/Makefile
+	-rm -f sources/dfmc/c-run-time/Makefile
+	-rm -f sources/jamfiles/Makefile sources/jamfiles/config.jam
 	-rm -rf build-aux
 	-rm -rf autom4te.cache
 
