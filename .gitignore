@@ -15,9 +15,9 @@ Makefile
 /sources/corba/services/naming/naming-protocol/
 /sources/corba/services/naming/naming-skeletons/
 /sources/corba/services/naming/naming-stubs/
-/sources/dfmc/c-run-time/config.jam
 /sources/dfmc/c-run-time/*.o
 /sources/app/llvm-tablegen/tablegen-parser.dylan
+/sources/jamfiles/config.jam
 /sources/lib/llvm/llvm-asm-parser.dylan
 /sources/lib/run-time/pentium-win32/dylan-plinth.lib
 /sources/lib/run-time/pentium-win32/dylan-support.lib
