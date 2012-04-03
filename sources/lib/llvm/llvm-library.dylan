@@ -324,7 +324,20 @@ define module llvm-builder
     ins--alloca,
     ins--load,
     ins--store,
-    
+    ins--cmpxchg,
+    ins--atomicrmw-xchg,
+    ins--atomicrmw-add,
+    ins--atomicrmw-sub,
+    ins--atomicrmw-and,
+    ins--atomicrmw-nand,
+    ins--atomicrmw-or,
+    ins--atomicrmw-xor,
+    ins--atomicrmw-max,
+    ins--atomicrmw-min,
+    ins--atomicrmw-umax,
+    ins--atomicrmw-umin,
+    ins--fence,
+
     ins--insertvalue,
     ins--extractvalue,
     

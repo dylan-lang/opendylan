@@ -1185,6 +1185,175 @@ define llvm-builder function-test ins--store ()
               builder-test-function-disassembly(builder));
 end function-test ins--store;
 
+define llvm-builder function-test ins--cmpxchg ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--cmpxchg(builder, ptr, 1, 0, scope: #"single-thread", ordering: #"monotonic");
+  ins--cmpxchg(builder, ptr, 0, 1, volatile?: #t, ordering: #"acquire-release");
+  ins--ret(builder);
+  check-equal("ins--cmpxchg disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = cmpxchg i32* %0, i32 1, i32 0 singlethread monotonic",
+                "%2 = cmpxchg volatile i32* %0, i32 0, i32 1 acq_rel",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--cmpxchg;
+
+define llvm-builder function-test ins--atomicrmw-xchg ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-xchg(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-xchg disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile xchg i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-xchg;
+
+define llvm-builder function-test ins--atomicrmw-add ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-add(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-add disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile add i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-add;
+
+define llvm-builder function-test ins--atomicrmw-sub ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-sub(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-sub disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile sub i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-sub;
+
+define llvm-builder function-test ins--atomicrmw-and ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-and(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-and disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile and i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-and;
+
+define llvm-builder function-test ins--atomicrmw-nand ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-nand(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-nand disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile nand i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-nand;
+
+define llvm-builder function-test ins--atomicrmw-or ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-or(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-or disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile or i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-or;
+
+define llvm-builder function-test ins--atomicrmw-xor ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-xor(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-xor disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile xor i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-xor;
+
+define llvm-builder function-test ins--atomicrmw-max ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-max(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-max disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile max i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-max;
+
+define llvm-builder function-test ins--atomicrmw-min ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-min(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-min disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile min i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-min;
+
+define llvm-builder function-test ins--atomicrmw-umax ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-umax(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-umax disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile umax i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-umax;
+
+define llvm-builder function-test ins--atomicrmw-umin ()
+  let builder = make-builder-with-test-function();
+  let ptr = ins--alloca(builder, $llvm-i32-type, 1, alignment: 4);
+  ins--atomicrmw-umin(builder, ptr, 10, volatile?: #t, ordering: #"monotonic");
+  ins--ret(builder);
+  check-equal("ins--atomicrmw-umin disassembly",
+              #("entry:",
+                "%0 = alloca i32, align 4",
+                "%1 = atomicrmw volatile umin i32* %0, i32 10 monotonic",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--atomicrmw-umin;
+
+define llvm-builder function-test ins--fence ()
+  let builder = make-builder-with-test-function();
+  ins--fence(builder, scope: #"single-thread", ordering: #"release");
+  ins--ret(builder);
+  check-equal("ins--fence disassembly",
+              #("entry:",
+                "fence singlethread release",
+                "ret void"),
+              builder-test-function-disassembly(builder));
+end function-test ins--fence;
+
 define llvm-builder function-test ins--insertvalue ()
   let builder = make-builder-with-test-function();
   let struct-type

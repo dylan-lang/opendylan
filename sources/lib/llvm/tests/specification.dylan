@@ -272,6 +272,35 @@ define module-spec llvm-builder ()
       (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest")
    => (<llvm-instruction>);
 
+  function ins--cmpxchg
+      (<llvm-builder>, <llvm-value>, <llvm-value>, <llvm-value>, #"rest")
+   => (<llvm-instruction>);
+
+  function ins--atomicrmw-xchg
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-add
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-sub
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-and
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-nand
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-or
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-xor
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-max
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-min
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-umax
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+  function ins--atomicrmw-umin
+      (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest") => (<llvm-instruction>);
+
+  function ins--fence (<llvm-builder>, #"rest") => (<llvm-instruction>);
+
   function ins--insertvalue
       (<llvm-builder>, <llvm-value>, <llvm-value>, #"rest")
    => (<llvm-instruction>);

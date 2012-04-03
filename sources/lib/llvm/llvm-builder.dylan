@@ -320,6 +320,23 @@ clauses:
          end function;
          ... }
 
+  { atomicrmw ?:name; ... }
+    => { define inline function "ins--atomicrmw-" ## ?name
+             (builder :: <llvm-builder>, ptr, value, #rest options,
+              #key metadata :: <list> = #(), #all-keys)
+          => (instruction :: <llvm-atomicrmw-instruction>);
+           let ptr = llvm-builder-value(builder, ptr);
+           let value = llvm-builder-value(builder, value);
+           builder-insert(builder,
+                          apply(make, <llvm-atomicrmw-instruction>,
+                                operation: ?#"name",
+                                operands: vector(ptr, value),
+                                metadata: builder-metadata(builder, metadata),
+                                options))
+         end function;
+         ... }
+
+
   { op ?:name (?params:*) => ?:body ... }
     => { define inline function "ins--" ## ?name
              (?=builder :: <llvm-builder>, ?params)
@@ -515,6 +532,32 @@ define instruction-set
     => apply(make, <llvm-store-instruction>,
              operands: vector(llvm-builder-value(builder, value),
                               llvm-builder-value(builder, pointer)),
+             metadata: builder-metadata(builder, metadata),
+             options);
+
+  op cmpxchg (pointer, value1, value2, #rest options,
+            #key metadata :: <list> = #(), #all-keys)
+    => apply(make, <llvm-cmpxchg-instruction>,
+             operands: vector(llvm-builder-value(builder, pointer),
+                              llvm-builder-value(builder, value1),
+                              llvm-builder-value(builder, value2)),
+             metadata: builder-metadata(builder, metadata),
+             options);
+
+  atomicrmw xchg;
+  atomicrmw add;
+  atomicrmw sub;
+  atomicrmw and;
+  atomicrmw nand;
+  atomicrmw or;
+  atomicrmw xor;
+  atomicrmw max;
+  atomicrmw min;
+  atomicrmw umax;
+  atomicrmw umin;
+
+  op fence ( #rest options, #key metadata :: <list> = #(), #all-keys)
+    => apply(make, <llvm-fence-instruction>,
              metadata: builder-metadata(builder, metadata),
              options);
 
