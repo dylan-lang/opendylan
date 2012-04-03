@@ -155,6 +155,10 @@ rule DylanLibrary image : version {
   LINKFLAGS on $(_exe) = $(LINKFLAGS) $(LINKFLAGSEXE) ;
   LinkEXE $(_exe) : $(_obj) ;
 
+  if $(COMPILER_BACK_END) = c {
+    LINKFLAGS on $(_exe) += [ on $(_exe) FIncludes $(HDRS) ] ;
+  }
+
   # If this is the top-level project, make the dll, exe, and clean
   # targets depend on its build products.
 
@@ -200,6 +204,10 @@ rule DylanLibraryFiles image : files {
       }
     } else {
       LinkDLL $(_dll) : $(_out) ;
+
+      if $(COMPILER_BACK_END) = c {
+	LINKFLAGS on $(_dll) += [ on $(_dll) FIncludes $(HDRS) ] ;
+      }
     }
   }
 }
