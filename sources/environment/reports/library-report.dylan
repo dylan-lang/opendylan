@@ -838,7 +838,7 @@ define method write-function-parameter
             #"output-rest" => "value #rest";
           end
         end method kind-to-rst-field;
-  format(stream, "   :%s %s: An instance of %s.",
+  format(stream, "   :%s %s: An instance of ``%s``.",
              kind-to-rst-field(kind),
              if (instance?(parameter, <optional-parameter>))
                parameter.parameter-keyword
