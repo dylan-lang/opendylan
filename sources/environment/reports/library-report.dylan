@@ -766,6 +766,53 @@ define method write-function-name
          definition-name(report, function));
 end method write-function-name;
 
+define method write-function-arguments
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     function :: <function-object>)
+ => ()
+  let project = report.report-project;
+  let module = report.report-namespace;
+  let (required, rest, key, all-keys?, next, required-values, rest-value)
+    = function-parameters(project, function);
+  local method do-parameter
+            (parameter :: <parameter>, kind :: <argument-kind>) => ()
+          write-function-parameter(stream, report, parameter, kind: kind)
+        end method do-parameter;
+  local method do-parameters
+            (parameters :: <parameters>, kind :: <argument-kind>) => ()
+          do(rcurry(do-parameter, kind), parameters)
+        end method do-parameters;
+  write-function-parameters-header(stream, report, function);
+  do-parameters(required, #"input");
+  rest & do-parameter(rest, #"input-rest");
+  if (key & size(key) > 0)
+    do-parameters(key, #"input-keyword")
+  end;
+  write-function-parameters-footer(stream, report, function);
+end method write-function-arguments;
+
+define method write-function-values
+    (stream :: <rst-report-stream>, report :: <module-report>,
+     function :: <function-object>)
+ => ()
+  let project = report.report-project;
+  let module = report.report-namespace;
+  let (required, rest, key, all-keys?, next, required-values, rest-value)
+    = function-parameters(project, function);
+  local method do-parameter
+            (parameter :: <parameter>, kind :: <argument-kind>) => ();
+          write-function-parameter(stream, report, parameter, kind: kind);
+        end method do-parameter;
+  local method do-parameters
+            (parameters :: <parameters>, kind :: <argument-kind>) => ()
+          do(rcurry(do-parameter, kind), parameters)
+        end method do-parameters;
+  write-function-parameters-header(stream, report, function, kind: #"output");
+  do-parameters(required-values, #"output");
+  rest-value & do-parameter(rest-value, #"output-rest");
+  write-function-parameters-footer(stream, report, function, kind: #"output");
+end method write-function-values;
+
 define method write-function-parameters-header
     (stream :: <rst-report-stream>, report :: <module-report>,
      function :: <function-object>, #key kind :: <argument-kind> = #"input")
@@ -782,8 +829,17 @@ define method write-function-parameter
   let project = report.report-project;
   let module = report.report-namespace;
   let type = parameter.parameter-type;
+  local method kind-to-rst-field(kind :: <argument-kind>) => (field)
+          select (kind)
+            #"input" => "parameter";
+            #"input-rest" => "parameter #rest";
+            #"input-keyword" => "parameter #key";
+            #"output" => "value";
+            #"output-rest" => "value #rest";
+          end
+        end method kind-to-rst-field;
   format(stream, "   :%s %s: An instance of %s.",
-             if (kind = #"input") "parameter" else "value" end,
+             kind-to-rst-field(kind),
              if (instance?(parameter, <optional-parameter>))
                parameter.parameter-keyword
              end
