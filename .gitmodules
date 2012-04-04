@@ -19,3 +19,6 @@
 [submodule "sources/lib/command-line-parser"]
 	path = sources/lib/command-line-parser
 	url = git://github.com/dylan-lang/command-line-parser.git
+[submodule "sources/lib/regular-expressions"]
+	path = sources/lib/regular-expressions
+	url = git://github.com/dylan-lang/regular-expressions.git

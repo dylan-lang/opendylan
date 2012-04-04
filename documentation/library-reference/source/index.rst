@@ -12,6 +12,7 @@ Dylan Library Reference
    io/index
    numbers
    network/index
+   regular-expressions/index
    system/index
    c-ffi/index
    win32/index
