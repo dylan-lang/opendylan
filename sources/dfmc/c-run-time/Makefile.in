@@ -17,6 +17,7 @@ LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 BINDEST         = $(OPEN_DYLAN_USER_INSTALL)/bin
 INCDEST         = $(OPEN_DYLAN_USER_INSTALL)/include
 
+CC = @CC@
 AS = as -L
 AR = ar -q
 
