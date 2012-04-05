@@ -429,12 +429,14 @@ typedef struct _unwind_protect_frame {
 extern Unwind_protect_frame* Ptop_unwind_protect_frame;
 
 extern D MAKE_EXIT_FRAME (); 
-extern D MAKE_UNWIND_FRAME (); 
+extern D SETUP_UNWIND_FRAME (D);
 extern D FRAME_DEST (D);
 extern D FRAME_RETVAL (D);
 extern D FALL_THROUGH_UNWIND (D); 
 extern D CONTINUE_UNWIND ();
 extern D NLX (Bind_exit_frame*, D);
+
+#define MAKE_UNWIND_FRAME() SETUP_UNWIND_FRAME(alloca(sizeof(Unwind_protect_frame)))
 
 /* PER-THREAD CONTEXT */
 

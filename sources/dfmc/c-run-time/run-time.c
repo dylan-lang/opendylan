@@ -4207,20 +4207,20 @@ D MAKE_EXIT_FRAME () {
   return((D)frame);
 }
 
-D MAKE_UNWIND_FRAME () {
+D SETUP_UNWIND_FRAME (D frame) {
   TEB* teb = get_teb();
-  Unwind_protect_frame* frame 
-    = (Unwind_protect_frame*)allocate(sizeof(Unwind_protect_frame));
+  Unwind_protect_frame* uwp_frame
+    = (Unwind_protect_frame*)frame;
   trace_nlx("make unwind frame %p from uwp %p with previous %p",
-            frame, teb->uwp_frame,
+            uwp_frame, teb->uwp_frame,
             teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
-  frame->previous_unwind_protect_frame = teb->uwp_frame;
-  teb->uwp_frame = frame;
-  frame->ultimate_destination = (Bind_exit_frame*)0;
+  uwp_frame->previous_unwind_protect_frame = teb->uwp_frame;
+  teb->uwp_frame = uwp_frame;
+  uwp_frame->ultimate_destination = (Bind_exit_frame*)0;
 #ifdef DEBUG_NLX
   verify_nlx();
 #endif
-  return((D)frame);
+  return frame;
 }
 
 D FRAME_DEST (D frame)
