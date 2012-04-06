@@ -438,6 +438,9 @@ extern D NLX (Bind_exit_frame*, D);
 
 #define MAKE_UNWIND_FRAME() SETUP_UNWIND_FRAME(alloca(sizeof(Unwind_protect_frame)))
 
+extern void nlx_longjmp(jmp_buf env, int val);
+extern int nlx_setjmp(jmp_buf env);
+
 /* PER-THREAD CONTEXT */
 
 #define MAX_ARGUMENTS 256

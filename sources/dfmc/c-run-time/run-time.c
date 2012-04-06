@@ -4089,6 +4089,14 @@ void verify_nlx () {
 }
 #endif
 
+void nlx_longjmp(jmp_buf env, int val) {
+  _longjmp(env, val);
+}
+
+int nlx_setjmp(jmp_buf env) {
+  return _setjmp(env);
+}
+
 void nlx_step (Bind_exit_frame* ultimate_destination) {
   TEB* teb = get_teb();
   /* handled all unwind protect frames presently in force? */
@@ -4097,7 +4105,7 @@ void nlx_step (Bind_exit_frame* ultimate_destination) {
     trace_nlx("step: reached uwp %p", teb->uwp_frame);
     /* invalidate current frame */
     teb->uwp_frame->ultimate_destination = NULL;
-    longjmp(ultimate_destination->destination, 1);
+    nlx_longjmp(ultimate_destination->destination, 1);
   } else {
     Unwind_protect_frame* next_frame = teb->uwp_frame;
     trace_nlx("step: unwinding to %p", next_frame->previous_unwind_protect_frame);
@@ -4114,7 +4122,7 @@ void nlx_step (Bind_exit_frame* ultimate_destination) {
     verify_nlx();
 #endif
     /* do cleanup step in next unwind protect frame */
-    longjmp(next_frame->destination, 1);
+    nlx_longjmp(next_frame->destination, 1);
   }
 }
 
