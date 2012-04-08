@@ -59,7 +59,7 @@ The intention is that for projects that use several other projects one
 can now use git submodules and a project "registry" directory to make
 the following work::
 
-   $ git clone ==recursive <url>
+   $ git clone --recursive <url>
    $ cd <project-directory>
    $ dylan-compiler -build <project-name>
 
