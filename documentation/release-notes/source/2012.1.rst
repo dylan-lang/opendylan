@@ -35,8 +35,11 @@ Documentation Improvements
   <http://opendylan.org/documentation/getting-started/index.html>`_.
 
 
-Build Process
-=============
+dylan-compiler Improvements
+===========================
+
+Usability - Output and Locating Libraries
+-----------------------------------------
 
 To simplify the build process, two changes were made to
 ``dylan-compiler``:
@@ -66,6 +69,18 @@ this change is that if you work on several distinct projects you will
 initially have to build all dependencies, down to and including the
 ``dylan`` library.
 
+Documentation Generation
+------------------------
+
+In addition to the documentation updates, we've also enhanced the
+documentation generation feature within ``dylan-compiler`` to output
+the new format.  This can be used by, first loading and compiling
+a library and then::
+
+   > export -format rst interface-reference
+
+In a future release, the support currently present for the XML formatted
+documentation will be removed.
 
 C3 Superclass Linearization
 ===========================
@@ -209,7 +224,6 @@ In reverse chronological order
 
 * generate jam files with correct gc environment given by configure baragent Feb 17, 2012 4538278dda9e8767a620e345c1f7f8da2c801f19
 * fix control flow graph if unwind-protect without body is optimized hannes Feb 16, 2012 e946c88a18fcc20191f9b6b30a463c85617842ba issue #182
-* extend library-report to output rst documentation abeaumont, waywardmonkeys Feb 2012
 * fix split when remove-with-empty? is true abeaumont Feb 07, 2012 1c3512d571ba25fb7bfd101585db5afcf3315353
 * initial man pages for dylan-compiler and make-dylan-app waywardmonkeys Feb 04, 2012 9a9b2847f212bd866c9d623f603dfc2dd01a25a8
 * reimplement make-dylan-app in Dylan glidesurfer Feb 01, 2012 pull request #172
