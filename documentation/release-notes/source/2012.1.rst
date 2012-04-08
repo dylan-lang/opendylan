@@ -95,6 +95,19 @@ improve the stability of the C back-end in general.
 
 .. TODO: moar details
 
+Performance Improvements
+------------------------
+
+Previously, the C run-time was allocating unwind-protect control
+structures on the heap using the Garbage Collector. Additionally,
+unwind-protect was preserving signal state on some platforms, notably
+Mac OS X.  Together, this led to the C back-end being notably slower
+than the native HARP backend when unwind-protects were used.
+
+This has been fixed and the resulting code can run in 50-80% of the
+time that it previously took. This is particularly true for users
+of the I/O libraries which make heavy use of unwind-protect.
+
 Library Changes
 ===============
 
