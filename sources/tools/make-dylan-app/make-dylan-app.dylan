@@ -1,8 +1,8 @@
-module: make-dylan-app
-synopsis: make-dylan-app is a tool to create new Dylan projects.
-copyright: Original Code is Copyright (c) 2012 Dylan Hackers. All rights reserved.
-license: See License.txt in this distribution for details.
-warranty: Distributed WITHOUT WARRANTY OF ANY KIND
+Module: make-dylan-app
+Synopsis: make-dylan-app is a tool to create new Dylan projects.
+Copyright: Original Code is Copyright (c) 2012 Dylan Hackers. All rights reserved.
+License: See License.txt in this distribution for details.
+Warranty: Distributed WITHOUT WARRANTY OF ANY KIND
 
 // The <template> class is used to encapuslate constant format strings
 // ("templates") and its arguments.
@@ -42,14 +42,18 @@ define function make-dylan-app (app-name :: <string>) => ()
         end method to-target-path;
 
   let main :: <template>
-    = make(<template>, output-path: to-target-path(app-name, ".dylan"),
-           constant-string: $main-template-simple, arguments: list(app-name));
+    = make(<template>,
+           output-path: to-target-path(app-name, ".dylan"),
+           constant-string: $main-template-simple,
+           arguments: list(app-name));
   let lib :: <template>
-    = make(<template>, output-path: to-target-path("library.dylan"),
+    = make(<template>,
+           output-path: to-target-path("library.dylan"),
            constant-string: $lib-template-simple,
            arguments: list(app-name, app-name));
   let lid :: <template>
-    = make(<template>, output-path: to-target-path(app-name, ".lid"),
+    = make(<template>,
+           output-path: to-target-path(app-name, ".lid"),
            constant-string: $lid-template-simple,
            arguments: list(app-name, app-name, "library.dylan",
                            concatenate(app-name, ".dylan")));
@@ -71,15 +75,19 @@ define function write-registry
 end;
 
 define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
+  local method leading-graphic? (c)
+          member?(c, "!&*<>|^$%@_")
+        end;
+  local method special? (c)
+          member?(c, "-+~?/")
+        end;
   local method is-name? (c :: <character>) => (name? :: <boolean>)
-          alphanumeric?(c) | graphic?(c) |
-          any?(curry(\=, c), #('-', '+', '~', '?', '/'));
+          alphanumeric?(c) | leading-graphic?(c) | special?(c)
         end method is-name?;
 
   every?(is-name?, word) &
   case
     alphabetic?(word[0]) => #t;
-    graphic?(word[0]) => (word.size > 1) & any?(alphabetic?, word);
     digit?(word[0])
       => block (return)
            for (i from 1 below word.size - 1)
@@ -88,6 +96,7 @@ define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
              end if;
            end for;
          end block;
+    leading-graphic?(word[0]) => (word.size > 1) & any?(alphabetic?, word);
   end case;
 end function is-valid-dylan-name?;
 
