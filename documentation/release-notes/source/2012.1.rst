@@ -15,11 +15,8 @@ March 7, 2012.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2012.1>`_
 
-What's New?
-===========
-
 Documentation Improvements
---------------------------
+==========================
 
 * All documentation has been converted to the Sphinx document
   generator.  This is a huge improvement in our ability to keep the
@@ -39,7 +36,7 @@ Documentation Improvements
 
 
 Build Process
--------------
+=============
 
 To simplify the build process, two changes were made to
 ``dylan-compiler``:
@@ -59,7 +56,7 @@ The intention is that for projects that use several other projects one
 can now use git submodules and a project "registry" directory to make
 the following work::
 
-   $ git clone --recursive <url>
+   $ git clone ==recursive <url>
    $ cd <project-directory>
    $ dylan-compiler -build <project-name>
 
@@ -71,7 +68,7 @@ initially have to build all dependencies, down to and including the
 
 
 C3 Superclass Linearization
----------------------------
+===========================
 
 Open Dylan now uses the C3 superclass linearization algorithm.  This
 algorithm was originally designed for Dylan but for historical reasons
@@ -86,9 +83,11 @@ warning will be removed completely.
 See `DEP-0003 <http://opendylan.org/proposals/dep-0003.html>`_ for
 more details.
 
+C Back-end Changes
+==================
 
-Multi-threading for the C Back-end
-----------------------------------
+Multi-threading
+---------------
 
 The C back-end now fully supports multi-threading.  Several bugs
 unrelated to threading were also fixed in this work, which should
@@ -97,7 +96,7 @@ improve the stability of the C back-end in general.
 .. TODO: moar details
 
 Library Changes
----------------
+===============
 
 The ``CL-plists`` module in the ``cl`` library has been removed.
 Any usages of it can be replaced by using the ``plists`` module
@@ -106,7 +105,7 @@ module has been `documented
 <http://opendylan.org/documentation/library-reference/collections/plists.html>`_.
 
 Limited Collections
--------------------
+===================
 
 There were some bugs and some missed opportunities for optimization in
 the limited collections code.
@@ -189,7 +188,7 @@ This required a fix in the typist.
 
 
 Other Changes
--------------
+=============
 
 .. TODO: elevate more of these to their own section.
 
