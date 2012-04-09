@@ -1,0 +1,369 @@
+*******************
+New strings Library
+*******************
+
+==============  =============================================
+DEP #:          4
+Type:           Standards Track
+Author:         Carl Gay
+Status:         Draft
+Created:        08-Apr-2012
+Last-Modified:  08-Apr-2012
+Post-History:   None
+Dylan-Version:  2012.1
+==============  =============================================
+
+
+.. contents:: Contents
+   :local:
+
+
+Abstract
+========
+
+Open Dylan currently has a hodge-podge of string manipulation
+functionality.  This proposal is an attempt to provide a simpler, more
+consistent strings API that is available from a single library (and a
+single module) rather than being scattered across multiple libraries
+and modules.
+
+Goals
+=====
+
+#. Comprehensive string APIs available via the ``strings`` module
+   exported from the ``strings`` library.
+
+#. Consistent naming and parameter lists.
+
+#. Where possible, functions introduced here should be useful when
+   applied to standard Dylan mapping functions (map, every?, etc)
+   and collection functions (sort, reverse, etc).  In other words
+   they should not require currying in order to be used with the
+   mapping and collection functions for the most common cases.
+
+#. Replace existing string-extensions module, which will only be
+   retained (on GitHub) so as not to break Gwydion Dylan unnecessarily.
+   (It could be integrated into GD instead of being a submodule.)
+
+
+Non Goals
+=========
+
+#. Unicode
+
+#. Immutable strings
+
+#. Strings not implemented as subclasses of ``<sequence>``.
+
+#. Text formatting APIs, such as justification and wrapping.
+
+#. Anything that is only applicable to a specific human language,
+   such as ``pluralize``.
+
+
+Proposal
+========
+
+Open Dylan currently has a hodge-podge of string manipulation
+functionality.  A few functions (concatenate, subsequence-position,
+as-lowercase, ...) are built into the ``dylan`` library, some
+functions are exported from various oddly-named modules in the
+string-extensions library, and a few in common-dylan.  This proposal
+is an attempt to provide a richer strings API in a single "strings"
+module.  This is complicated by the fact that some string operations
+are also applicable to generalized sequences.
+
+The entire existing "strings" module (mainly used by the http library)
+will be replaced by this API.
+
+I first present the entire API and then later discuss it in detail.
+
+
+API Summary
+-----------
+
+Export the following functions from the "strings" module of the
+"strings" library.
+
+::
+
+    ascii-control?      (char-or-string, #key start, end) => (boolean)
+    ascii-printable?    (char-or-string, #key start, end) => (boolean)
+    ascii-graphic?      (char-or-string, #key start, end) => (boolean)
+    ascii-alphabetic?   (char-or-string, #key start, end) => (boolean)
+    ascii-alphanumeric? (char-or-string, #key start, end) => (boolean)
+
+    lowercase?  (char-or-string, #key start, end) => (boolean)
+    uppercase?  (char-or-string, #key start, end) => (boolean)
+    whitespace? (char-or-string, #key start, end) => (boolean)
+
+    decimal-digit?      (char-or-string, #key start, end) => (boolean)
+    octal-digit?        (char-or-string, #key start, end) => (boolean)
+    hexadecimal-digit?  (char-or-string, #key start, end) => (boolean)
+
+    char-equal-ignoring-case?    (char1, char2) => (boolean)
+    char-less-ignoring-case?     (char1, char2) => (boolean)
+    char-greater-ignoring-case?  (char1, char2) => (boolean)
+
+    string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+
+    string-equal-ignoring-case?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less-ignoring-case?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater-ignoring-case? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+
+    starts-with? (string, pattern-string, #key test) => (boolean)
+    ends-with?   (string, pattern-string, #key test) => (boolean)
+
+    lowercase  (char-or-string, #key start, end) => (char-or-string)
+    lowercase! (char-or-string, #key start, end) => (char-or-string)
+    uppercase  (char-or-string, #key start, end) => (char-or-string)
+    uppercase! (char-or-string, #key start, end) => (char-or-string)
+
+    strip       (string, #key test = whitespace?) => (new-string)
+    strip-left  (string, #key test = whitespace?) => (new-string)
+    strip-right (string, #key test = whitespace?) => (new-string)
+
+    align-center (string, width, #key fill = ' ')
+    align-left   (string, width, #key fill = ' ')
+    align-right  (string, width, #key fill = ' ')
+
+    find-substring     (string, pattern, #key start, end, test) => (index-or-#f)
+    replace-substrings (string, pattern, new, #key test, count)
+
+    join (parts, separator, #key start, end, key, conjunction) => (string)
+    split (string, separator, #key start, end, max, remove-if-empty?) => (strings)
+    split-lines (string, #rest split-keys) => (strings)
+
+    interpolate (string, #rest args) => (string)
+
+Some observations about this API:
+
+* Because this API provides ``start`` and ``end`` keywords where
+  appropriate, it is possible to do string operations within larger
+  strings without allocating.
+
+* Some functions, such as starts-with? and ends-with?, are provided
+  just for readability, despite being trivial to implement in terms of
+  other functions.
+
+* All start/end parameters accept negative values, which means to
+  index relative to the end of the string.  I've found this extremely
+  useful in Python but I understand it will probably be controvesial
+  and would be willing to remove that functionality.
+
+The remainder of this proposal will repeat the above API with
+discussion interspersed.
+
+
+Discussion
+----------
+
+::
+
+    ascii-control?      (char-or-string, #key start, end) => (boolean)
+    ascii-printable?    (char-or-string, #key start, end) => (boolean)
+    ascii-graphic?      (char-or-string, #key start, end) => (boolean)
+    ascii-alphabetic?   (char-or-string, #key start, end) => (boolean)
+    ascii-alphanumeric? (char-or-string, #key start, end) => (boolean)
+
+    lowercase?  (char-or-string, #key start, end) => (boolean)
+    uppercase?  (char-or-string, #key start, end) => (boolean)
+    whitespace? (char-or-string, #key start, end) => (boolean)
+
+    decimal-digit?      (char-or-string, #key start, end) => (boolean)
+    octal-digit?        (char-or-string, #key start, end) => (boolean)
+    hexadecimal-digit?  (char-or-string, #key start, end) => (boolean)
+
+The methods on ``<character>`` do not have ``start`` and ``end``
+parameters for obvious reasons.
+
+The methods on ``<string>`` return true if they would return true for
+each character in the string.  The ``<string>`` methods could be
+implemented as follows::
+
+    every?(f, copy-sequence(s, start: start, end: _end))
+
+Making these functions work on strings makes the resulting code more
+concise than using ``every?`` and ``copy-sequence`` together, and also
+more efficient, since no allocation is necessary.  The alternative is
+to write your own comparison function (which is the solution we have
+now, resulting in multiple implementations) or write a ``for`` loop
+inline.
+
+
+Comparisons
+~~~~~~~~~~~
+
+::
+
+    char-equal?    (char1, char2) => (boolean)
+    char-less?     (char1, char2) => (boolean)
+    char-greater?  (char1, char2) => (boolean)
+
+    char-equal-ignoring-case?    (char1, char2) => (boolean)
+    char-less-ignoring-case?     (char1, char2) => (boolean)
+    char-greater-ignoring-case?  (char1, char2) => (boolean)
+
+    string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+
+    string-equal-ignoring-case?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less-ignoring-case?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater-ignoring-case? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+
+String and character comparisons, both case-sensitive and
+case-insensitive.  These default to comparing the entire string but
+allow comparing substrings via keyword arguments.
+
+Some might object to the \*-ignoring-case? functions on the grounds
+that a "test" parameter could be added to the non-\*-ignoring-case?
+functions instead.  But consider this type of code, which is likely to
+be fairly common::
+
+    sort(seq, test: string-less-ignoring-case?)
+
+Instead one would have to write this::
+
+    sort(seq, test: rcurry(string-less?, test: char-equal-ignoring-case?))
+
+or worse, if char-equal-ignoring-case? is removed on the same grounds::
+
+    sort(seq, test: rcurry(string-less?, test: method (c1, c2)
+                                                 as-lowercase(c1) = as-lowercase(c2)
+                                               end))
+
+or, the less efficient but more concise::
+
+    sort(seq, test: method (s1, s2) as-lowercase(s1) < as-lowercase(s2) end)
+
+::
+
+    // Included here for completeness
+    =  (char-or-string, char-or-string) => (boolean)
+    <  (char-or-string, char-or-string) => (boolean)
+    >  (char-or-string, char-or-string) => (boolean)
+
+If one doesn't mind allocating memory, the above built-in functions
+can be used in place of explicit ``start`` and ``end`` parameters::
+
+    copy-sequence(s1, start: x, end: y) = copy-sequence(s2, start: w, end: z)
+
+::
+
+    lowercase  (char-or-string, #key start, end) => (new-char-or-string)
+    lowercase! (char-or-string, #key start, end) => (new-char-or-string)
+    uppercase  (char-or-string, #key start, end) => (new-char-or-string)
+    uppercase! (char-or-string, #key start, end) => (new-char-or-string)
+
+The above are provided despite the existence of ``as-uppercase`` and
+``as-lowercase`` in the dylan module because they provide ``start``
+and ``end`` parameters, which makes them consistent with the rest of
+the API.
+
+::
+
+    strip       (string, #key test = whitespace?) => (new-string)
+    strip-left  (string, #key test = whitespace?) => (new-string)
+    strip-right (string, #key test = whitespace?) => (new-string)
+
+Return a copy of ``string`` with characters matching ``test`` removed.
+Characters are removed from the left and/or right side of ``string``
+until the first character *not* matching ``test`` is found.
+
+::
+
+    align-center (string, width, #key fill = ' ')
+    align-left   (string, width, #key fill = ' ')
+    align-right  (string, width, #key fill = ' ')
+
+The above return a new string of the given ``width``.  If ``string``
+is shorter than ``width``, add the ``fill`` character to the left
+and/or right side of the string as appropriate.
+
+Examples::
+
+  align-center("x", 5) => "  x  "
+  align-center("x", 4) => "  x " or " x  "    (unspecified)
+  align-center("x", 7, fill: '.') => "...x..."
+
+::
+
+    starts-with? (string, pattern) => (boolean)
+    ends-with?   (string, pattern) => (boolean)
+
+These common operations are for convenience and readability.
+
+::
+
+    find-substring      (string, pattern-string, #key start, end, test) => (index-or-#f)
+    replace-substrings  (string, pattern-string, new, #key test, count)
+
+``find-substring`` is like ``subsequence-position`` except that it
+accepts start/end keyword arguments and it only applies to strings.
+
+``replace-substrings`` returns a new string with 
+
+::
+
+    join (sequence, separator, #key start, end, key, conjunction) => (string)
+    split (string, separator, #key start, end, max, remove-if-empty?) => (strings)
+
+The above apply to sequences in general, not just strings.  These are
+already in common-dylan but are included here for completeness.
+
+::
+
+    interpolate(string, table) => (new-string)
+
+I'm still working on this, but it will be more featureful than the
+current format and may look something like the Python3 formatting
+module.  It will not write to a stream; it will simply return a string
+and the caller can do what they want with it.  My intuition is that
+formatting directly to a stream with many tiny calls to
+``write-elements`` is slower than allocating a string and writing it
+in one shot, but I don't know.  Anyone?  Benchmark?
+
+It may cache compiled format strings, or provide a way to explicitly
+compile them, as an optimization.
+
+Example::
+
+    interpolate("foo {0}, bar {1}", 2, 8) => "foo 2, bar 8"
+    interpolate("foo {x}, bar {y}", table("x" => 3, "y" => 4)) => "foo 3, bar 4"
+
+
+Dropped string-extensions Names
+-------------------------------
+
+A few names exported from ``string-extensions`` have no equivalent in this
+library:
+
+* The ``%parse-string`` module.  This should be moved to
+  ``regular-expressions`` if it's needed at all.
+
+* The ``string-hacking`` module.  This includes character sets, and a
+  few character utilities.
+
+* The ``string-conversions`` module.  The only names this exports that
+  aren't available elsewhere are ``digit-to-integer`` and
+  ``integer-to-digit``.  I suggest we put basic conversions like this
+  into ``common-dylan`` alongside ``string-to-integer`` et al.
+
+* Two names from the ``substring-search`` module:
+  ``make-substring-positioner`` and ``make-substring-replacer``.
+
+
+Implementation Notes
+====================
+
+* Copy <character-set> and friends from string-extensions to
+  regular-expressions.  That's the only place that uses it, and it is
+  unlikely to be of much use elsewhere.  See conversation in #dylan on
+  2011.12.26.
+
+* Add a README to string-extensions that points out that it has been
+  superceded by "strings" and is a purely GD library.  Perhaps merge
+  it into the ``gwydion`` repository?
