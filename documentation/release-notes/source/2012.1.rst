@@ -15,6 +15,37 @@ March 7, 2012.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2012.1>`_
 
+Language Specification Changes
+==============================
+
+We try to keep changes to the language definition few and far between
+and limited to things that are either necessary or clear advantages.
+
+C3 Superclass Linearization
+---------------------------
+
+Open Dylan now uses the C3 superclass linearization algorithm.  This
+algorithm was originally designed for Dylan but for historical reasons
+was never implemented in Dylan, until now.  In most cases this change
+should not change the semantics of existing programs, but if it does
+the compiler will issue a serious warning.  In a future release this
+will be changed to non-serious warning, and then eventually the
+warning will be removed completely.
+
+.. TODO: add example of the warning?
+
+See `DEP-0003 <http://opendylan.org/proposals/dep-0003.html>`_ for
+more details.
+
+Library Changes
+===============
+
+The ``CL-plists`` module in the ``cl`` library has been removed.
+Any usages of it can be replaced by using the ``plists`` module
+from the ``collections`` library.  Additionally, the ``plists``
+module has been `documented
+<http://opendylan.org/documentation/library-reference/collections/plists.html>`_.
+
 Documentation Improvements
 ==========================
 
@@ -82,58 +113,11 @@ a library and then::
 In a future release, the support currently present for the XML formatted
 documentation will be removed.
 
-C3 Superclass Linearization
-===========================
-
-Open Dylan now uses the C3 superclass linearization algorithm.  This
-algorithm was originally designed for Dylan but for historical reasons
-was never implemented in Dylan, until now.  In most cases this change
-should not change the semantics of existing programs, but if it does
-the compiler will issue a serious warning.  In a future release this
-will be changed to non-serious warning, and then eventually the
-warning will be removed completely.
-
-.. TODO: add example of the warning?
-
-See `DEP-0003 <http://opendylan.org/proposals/dep-0003.html>`_ for
-more details.
-
-C Back-end Changes
-==================
-
-Multi-threading
----------------
-
-The C back-end now fully supports multi-threading.  Several bugs
-unrelated to threading were also fixed in this work, which should
-improve the stability of the C back-end in general.
-
-.. TODO: moar details
-
-Performance Improvements
-------------------------
-
-Previously, the C run-time was allocating unwind-protect control
-structures on the heap using the Garbage Collector. Additionally,
-unwind-protect was preserving signal state on some platforms, notably
-Mac OS X.  Together, this led to the C back-end being notably slower
-than the native HARP backend when unwind-protects were used.
-
-This has been fixed and the resulting code can run in 50-80% of the
-time that it previously took. This is particularly true for users
-of the I/O libraries which make heavy use of unwind-protect.
-
-Library Changes
-===============
-
-The ``CL-plists`` module in the ``cl`` library has been removed.
-Any usages of it can be replaced by using the ``plists`` module
-from the ``collections`` library.  Additionally, the ``plists``
-module has been `documented
-<http://opendylan.org/documentation/library-reference/collections/plists.html>`_.
+Code Generation Improvements
+============================
 
 Limited Collections
-===================
+-------------------
 
 There were some bugs and some missed opportunities for optimization in
 the limited collections code.
@@ -214,6 +198,31 @@ lead towards code which the C compiler could not compile
 
 This required a fix in the typist.
 
+
+C Back-end Changes
+==================
+
+Multi-threading
+---------------
+
+The C back-end now fully supports multi-threading.  Several bugs
+unrelated to threading were also fixed in this work, which should
+improve the stability of the C back-end in general.
+
+.. TODO: moar details
+
+Performance Improvements
+------------------------
+
+Previously, the C run-time was allocating unwind-protect control
+structures on the heap using the Garbage Collector. Additionally,
+unwind-protect was preserving signal state on some platforms, notably
+Mac OS X.  Together, this led to the C back-end being notably slower
+than the native HARP backend when unwind-protects were used.
+
+This has been fixed and the resulting code can run in 50-80% of the
+time that it previously took. This is particularly true for users
+of the I/O libraries which make heavy use of unwind-protect.
 
 Other Changes
 =============
