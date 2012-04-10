@@ -54,12 +54,12 @@ Non Goals
 
 #. Immutable strings
 
-#. Strings not implemented as subclasses of ``<sequence>``.
+#. Strings not implemented as subclasses of :drm:`<sequence>`.
 
 #. Text formatting APIs, such as justification and wrapping.
 
 #. Anything that is only applicable to a specific human language,
-   such as ``pluralize``.
+   such as *pluralize*.
 
 
 Proposal
@@ -154,7 +154,7 @@ Export the following functions from the "strings" module of the
 
 Some observations about this API:
 
-* Because this API provides ``start`` and ``end`` keywords where
+* Because this API provides *start* and *end* keywords where
   appropriate, it is possible to do string operations within larger
   strings without allocating.
 
@@ -190,21 +190,21 @@ Discussion
     octal-digit?        (char-or-string, #key start, end) => (boolean)
     hexadecimal-digit?  (char-or-string, #key start, end) => (boolean)
 
-The methods on ``<character>`` do not have ``start`` and ``end``
+The methods on :drm:`<character>` do not have *start* and *end*
 parameters for obvious reasons.
 
-The methods on ``<string>`` return true if they would return true for
-each character in the string.  The ``<string>`` methods could be
+The methods on :drm:`<string>` return true if they would return true for
+each character in the string.  The :drm:`<string>` methods could be
 implemented as follows::
 
     every?(f, copy-sequence(s, start: start, end: _end))
 
 Making these functions work on strings makes the resulting code more
-concise than using ``every?`` and ``copy-sequence`` together, and also
-more efficient, since no allocation is necessary.  The alternative is
-to write your own comparison function (which is the solution we have
-now, resulting in multiple implementations) or write a ``for`` loop
-inline.
+concise than using :drm:`every?` and :drm:`copy-sequence` together,
+and also more efficient, since no allocation is necessary.  The
+alternative is to write your own comparison function (which is the
+solution we have now, resulting in multiple implementations) or write
+a :drm:`for` loop inline.
 
 
 ::
@@ -264,21 +264,23 @@ or, the less efficient but more concise::
     >  (char-or-string, char-or-string) => (boolean)
 
 If one doesn't mind allocating memory, the above built-in functions
-can be used in place of explicit ``start`` and ``end`` parameters::
+can be used in place of explicit *start* and *end* parameters:
 
-    copy-sequence(s1, start: x, end: y) = copy-sequence(s2, start: w, end: z)
+    ::
+
+        copy-sequence(s1, start: x, end: y) = copy-sequence(s2, start: w, end: z)
 
 ::
 
     lowercase  (char-or-string, #key start, end) => (new-char-or-string)
-    lowercase! (char-or-string, #key start, end) => (new-char-or-string)
+    lowercase! (char-or-string, #key start, end) => (char-or-string)
     uppercase  (char-or-string, #key start, end) => (new-char-or-string)
-    uppercase! (char-or-string, #key start, end) => (new-char-or-string)
+    uppercase! (char-or-string, #key start, end) => (char-or-string)
 
-The above are provided despite the existence of ``as-uppercase`` and
-``as-lowercase`` in the dylan module because they provide ``start``
-and ``end`` parameters, which makes them consistent with the rest of
-the API.
+The above are provided despite the existence of :drm:`as-uppercase`
+and :drm:`as-lowercase` in the dylan module because they provide
+*start* and *end* parameters, which makes them consistent with the
+rest of the API.
 
 ::
 
@@ -286,9 +288,9 @@ the API.
     strip-left  (string, #key test = whitespace?) => (new-string)
     strip-right (string, #key test = whitespace?) => (new-string)
 
-Return a copy of ``string`` with characters matching ``test`` removed.
-Characters are removed from the left and/or right side of ``string``
-until the first character *not* matching ``test`` is found.
+Return a copy of *string* with characters matching *test* removed.
+Characters are removed from the left and/or right side of *string*
+until the first character *not* matching *test* is found.
 
 ::
 
@@ -296,15 +298,15 @@ until the first character *not* matching ``test`` is found.
     align-left   (string, width, #key fill = ' ')
     align-right  (string, width, #key fill = ' ')
 
-The above return a new string of the given ``width``.  If ``string``
-is shorter than ``width``, add the ``fill`` character to the left
+The above return a new string of the given *width*.  If *string*
+is shorter than *width*, add the *fill* character to the left
 and/or right side of the string as appropriate.
 
-Examples::
+    Examples::
 
-  align-center("x", 5) => "  x  "
-  align-center("x", 4) => "  x " or " x  "    (unspecified)
-  align-center("x", 7, fill: '.') => "...x..."
+      align-center("x", 5) => "  x  "
+      align-center("x", 4) => "  x " or " x  "    (unspecified)
+      align-center("x", 7, fill: '.') => "...x..."
 
 ::
 
@@ -316,12 +318,19 @@ These common operations are for convenience and readability.
 ::
 
     find-substring      (string, pattern-string, #key start, end, test) => (index-or-#f)
-    replace-substrings  (string, pattern-string, new, #key test, count)
 
-``find-substring`` is like ``subsequence-position`` except that it
-accepts start/end keyword arguments and it only applies to strings.
+``find-substring`` is like :drm:`subsequence-position` except that it
+accepts start/end keyword arguments instead of *count*, and it only
+applies to strings.
 
-``replace-substrings`` returns a new string with 
+::
+
+    replace-substrings  (string, pattern-string, new, #key start, end, test, count)
+
+``replace-substrings`` returns a new string with each occurrence of
+*pattern-string* replaced by *new*.  If *count* is supplied then
+only *count* occurrences (moving left to right through *string*)
+are replaced.  *test* defaults to *==*.
 
 ::
 
@@ -336,19 +345,19 @@ already in common-dylan but are included here for completeness.
 Dropped string-extensions Names
 -------------------------------
 
-A few names exported from ``string-extensions`` have no equivalent in this
+A few names exported from *string-extensions* have no equivalent in this
 library:
 
-* The ``%parse-string`` module.  This should be moved to
-  ``regular-expressions`` if it's needed at all.
+* The *%parse-string* module.  This should be moved to
+  *regular-expressions* if it's needed at all.
 
-* The ``string-hacking`` module.  This includes character sets, and a
+* The *string-hacking* module.  This includes character sets, and a
   few character utilities.
 
-* The ``string-conversions`` module.  The only names this exports that
-  aren't available elsewhere are ``digit-to-integer`` and
-  ``integer-to-digit``.  I suggest we put basic conversions like this
-  into ``common-dylan`` alongside ``string-to-integer`` et al.
+* The *string-conversions* module.  The only names this exports that
+  aren't available elsewhere are *digit-to-integer* and
+  *integer-to-digit*.  I suggest we put basic conversions like this
+  into *common-dylan* alongside *string-to-integer* et al.
 
-* Two names from the ``substring-search`` module:
-  ``make-substring-positioner`` and ``make-substring-replacer``.
+* Two names from the *substring-search* module:
+  *make-substring-positioner* and *make-substring-replacer*.
