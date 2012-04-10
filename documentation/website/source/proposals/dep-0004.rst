@@ -119,12 +119,14 @@ Export the following functions from the "strings" module of the
     string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
 
+    string-compare(string1, string2, #key, start1, end1, start2, end2) => (one-of(-1, 0, 1))
+
     starts-with? (string, pattern-string, #key test) => (boolean)
     ends-with?   (string, pattern-string, #key test) => (boolean)
 
-    lowercase  (char-or-string, #key start, end) => (char-or-string)
+    lowercase  (char-or-string, #key start, end) => (new-char-or-string)
     lowercase! (char-or-string, #key start, end) => (char-or-string)
-    uppercase  (char-or-string, #key start, end) => (char-or-string)
+    uppercase  (char-or-string, #key start, end) => (new-char-or-string)
     uppercase! (char-or-string, #key start, end) => (char-or-string)
 
     strip       (string, #key test = whitespace?) => (new-string)
@@ -228,6 +230,10 @@ inline.
 String and character comparisons, both case-sensitive and ignoring
 case (\*-ic?).  These default to comparing the entire string but allow
 comparing substrings via keyword arguments.
+
+``string-compare`` returns -1 if *string1* is less than *string2*, 0
+if the strings are equal, and 1 if *string1* is greater than
+*string2*.
 
 Some might object to the \*-ic? functions on the grounds that a "test"
 parameter could be added to the non-\*-ic?  functions
