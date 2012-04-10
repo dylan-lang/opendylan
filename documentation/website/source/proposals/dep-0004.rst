@@ -21,11 +21,9 @@ Dylan-Version:  2012.1
 Abstract
 ========
 
-Open Dylan currently has a hodge-podge of string manipulation
-functionality.  This proposal is an attempt to provide a simpler, more
-consistent strings API that is available from a single library (and a
-single module) rather than being scattered across multiple libraries
-and modules.
+This proposal is an attempt to provide a simpler, more consistent
+strings API than is currently available via string-extensions, that is
+available from a single library (and a single module).
 
 Goals
 =====
@@ -34,6 +32,9 @@ Goals
    exported from the ``strings`` library.
 
 #. Consistent naming and parameter lists.
+
+#. As simple as possible to use for common tasks.  Strive for the same
+   simplicity as Python, for example.
 
 #. Where possible, functions introduced here should be useful when
    applied to standard Dylan mapping functions (map, every?, etc)
@@ -67,11 +68,12 @@ Proposal
 Open Dylan currently has a hodge-podge of string manipulation
 functionality.  A few functions (concatenate, subsequence-position,
 as-lowercase, ...) are built into the ``dylan`` library, some
-functions are exported from various oddly-named modules in the
-string-extensions library, and a few in common-dylan.  This proposal
-is an attempt to provide a richer strings API in a single "strings"
-module.  This is complicated by the fact that some string operations
-are also applicable to generalized sequences.
+functions are exported from various modules in the string-extensions
+library, and a few in common-dylan.  Some Common Lisp-like strings
+functionality has been built into DUIM and Deuce.  This proposal is an
+attempt to provide a richer strings API in a single "strings" module.
+This is complicated by the fact that some string operations are also
+applicable to generalized sequences.
 
 The entire existing "strings" module (mainly used by the http library)
 will be replaced by this API.
@@ -101,17 +103,21 @@ Export the following functions from the "strings" module of the
     octal-digit?        (char-or-string, #key start, end) => (boolean)
     hexadecimal-digit?  (char-or-string, #key start, end) => (boolean)
 
-    char-equal-ignoring-case?    (char1, char2) => (boolean)
-    char-less-ignoring-case?     (char1, char2) => (boolean)
-    char-greater-ignoring-case?  (char1, char2) => (boolean)
+    char-equal?    (char1, char2) => (boolean)
+    char-less?     (char1, char2) => (boolean)
+    char-greater?  (char1, char2) => (boolean)
+
+    char-equal-ic?    (char1, char2) => (boolean)
+    char-less-ic?     (char1, char2) => (boolean)
+    char-greater-ic?  (char1, char2) => (boolean)
 
     string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater? (string1, string2, #key start1, end1, start2, end2) => (boolean)
 
-    string-equal-ignoring-case?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
-    string-less-ignoring-case?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
-    string-greater-ignoring-case? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-equal-ic?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
 
     starts-with? (string, pattern-string, #key test) => (boolean)
     ends-with?   (string, pattern-string, #key test) => (boolean)
@@ -132,11 +138,17 @@ Export the following functions from the "strings" module of the
     find-substring     (string, pattern, #key start, end, test) => (index-or-#f)
     replace-substrings (string, pattern, new, #key test, count)
 
-    join (parts, separator, #key start, end, key, conjunction) => (string)
-    split (string, separator, #key start, end, max, remove-if-empty?) => (strings)
     split-lines (string, #rest split-keys) => (strings)
 
-    interpolate (string, #rest args) => (string)
+    // For reference, the following functions are available via dylan
+    // or common-dylan and, although for general sequences, are
+    // generally useful for strings as well...
+
+    concatenate(sequence, #rest more-sequences) => (new-sequence)
+    replace-subsequence!(big, small, #key start, end) => (big)
+    join (parts, separator, #key start, end, key, conjunction) => (string)
+    split (string, separator, #key start, end, max, remove-if-empty?) => (strings)
+    replace-elements!(big, predicate, new-value-fn, #key count) => (big)
 
 Some observations about this API:
 
@@ -202,34 +214,34 @@ Comparisons
     char-less?     (char1, char2) => (boolean)
     char-greater?  (char1, char2) => (boolean)
 
-    char-equal-ignoring-case?    (char1, char2) => (boolean)
-    char-less-ignoring-case?     (char1, char2) => (boolean)
-    char-greater-ignoring-case?  (char1, char2) => (boolean)
+    char-equal-ic?    (char1, char2) => (boolean)
+    char-less-ic?     (char1, char2) => (boolean)
+    char-greater-ic?  (char1, char2) => (boolean)
 
     string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater? (string1, string2, #key start1, end1, start2, end2) => (boolean)
 
-    string-equal-ignoring-case?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
-    string-less-ignoring-case?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
-    string-greater-ignoring-case? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-equal-ic?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
+    string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
 
-String and character comparisons, both case-sensitive and
-case-insensitive.  These default to comparing the entire string but
-allow comparing substrings via keyword arguments.
+String and character comparisons, both case-sensitive and ignoring
+case (\*-ic?).  These default to comparing the entire string but allow
+comparing substrings via keyword arguments.
 
-Some might object to the \*-ignoring-case? functions on the grounds
-that a "test" parameter could be added to the non-\*-ignoring-case?
-functions instead.  But consider this type of code, which is likely to
-be fairly common::
+Some might object to the \*-ic? functions on the grounds that a "test"
+parameter could be added to the non-\*-ic?  functions
+instead.  But consider this type of code, which is likely to be fairly
+common::
 
-    sort(seq, test: string-less-ignoring-case?)
+    sort(seq, test: string-less-ic?)
 
 Instead one would have to write this::
 
-    sort(seq, test: rcurry(string-less?, test: char-equal-ignoring-case?))
+    sort(seq, test: rcurry(string-less?, test: char-equal-ic?))
 
-or worse, if char-equal-ignoring-case? is removed on the same grounds::
+or worse, if char-equal-ic? is removed on the same grounds::
 
     sort(seq, test: rcurry(string-less?, test: method (c1, c2)
                                                  as-lowercase(c1) = as-lowercase(c2)
@@ -314,25 +326,6 @@ accepts start/end keyword arguments and it only applies to strings.
 The above apply to sequences in general, not just strings.  These are
 already in common-dylan but are included here for completeness.
 
-::
-
-    interpolate(string, table) => (new-string)
-
-I'm still working on this, but it will be more featureful than the
-current format and may look something like the Python3 formatting
-module.  It will not write to a stream; it will simply return a string
-and the caller can do what they want with it.  My intuition is that
-formatting directly to a stream with many tiny calls to
-``write-elements`` is slower than allocating a string and writing it
-in one shot, but I don't know.  Anyone?  Benchmark?
-
-It may cache compiled format strings, or provide a way to explicitly
-compile them, as an optimization.
-
-Example::
-
-    interpolate("foo {0}, bar {1}", 2, 8) => "foo 2, bar 8"
-    interpolate("foo {x}, bar {y}", table("x" => 3, "y" => 4)) => "foo 3, bar 4"
 
 
 Dropped string-extensions Names
