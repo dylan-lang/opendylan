@@ -142,7 +142,7 @@ Export the following functions from the "strings" module of the
 
     // For reference, the following functions are available via dylan
     // or common-dylan and, although for general sequences, are
-    // generally useful for strings as well...
+    // often useful for strings as well...
 
     concatenate(sequence, #rest more-sequences) => (new-sequence)
     replace-subsequence!(big, small, #key start, end) => (big)
