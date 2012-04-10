@@ -89,11 +89,11 @@ Export the following functions from the "strings" module of the
 
 ::
 
-    ascii-control?      (char-or-string, #key start, end) => (boolean)
-    ascii-printable?    (char-or-string, #key start, end) => (boolean)
-    ascii-graphic?      (char-or-string, #key start, end) => (boolean)
-    ascii-alphabetic?   (char-or-string, #key start, end) => (boolean)
-    ascii-alphanumeric? (char-or-string, #key start, end) => (boolean)
+    control?      (char-or-string, #key start, end) => (boolean)
+    printable?    (char-or-string, #key start, end) => (boolean)
+    graphic?      (char-or-string, #key start, end) => (boolean)
+    alphabetic?   (char-or-string, #key start, end) => (boolean)
+    alphanumeric? (char-or-string, #key start, end) => (boolean)
 
     lowercase?  (char-or-string, #key start, end) => (boolean)
     uppercase?  (char-or-string, #key start, end) => (boolean)
@@ -174,11 +174,11 @@ Discussion
 
 ::
 
-    ascii-control?      (char-or-string, #key start, end) => (boolean)
-    ascii-printable?    (char-or-string, #key start, end) => (boolean)
-    ascii-graphic?      (char-or-string, #key start, end) => (boolean)
-    ascii-alphabetic?   (char-or-string, #key start, end) => (boolean)
-    ascii-alphanumeric? (char-or-string, #key start, end) => (boolean)
+    control?      (char-or-string, #key start, end) => (boolean)
+    printable?    (char-or-string, #key start, end) => (boolean)
+    graphic?      (char-or-string, #key start, end) => (boolean)
+    alphabetic?   (char-or-string, #key start, end) => (boolean)
+    alphanumeric? (char-or-string, #key start, end) => (boolean)
 
     lowercase?  (char-or-string, #key start, end) => (boolean)
     uppercase?  (char-or-string, #key start, end) => (boolean)
