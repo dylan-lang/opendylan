@@ -145,10 +145,10 @@ Export the following functions from the "strings" module of the
     // often useful for strings as well...
 
     concatenate(sequence, #rest more-sequences) => (new-sequence)
-    replace-subsequence!(big, small, #key start, end) => (big)
     join (parts, separator, #key start, end, key, conjunction) => (string)
-    split (string, separator, #key start, end, max, remove-if-empty?) => (strings)
     replace-elements!(big, predicate, new-value-fn, #key count) => (big)
+    replace-subsequence!(big, small, #key start, end) => (big)
+    split (string, separator, #key start, end, max, remove-if-empty?) => (strings)
 
 Some observations about this API:
 
@@ -205,9 +205,6 @@ now, resulting in multiple implementations) or write a ``for`` loop
 inline.
 
 
-Comparisons
-~~~~~~~~~~~
-
 ::
 
     char-equal?    (char1, char2) => (boolean)
@@ -225,6 +222,8 @@ Comparisons
     string-equal-ic?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
+
+    string-compare(string1, string2, #key, start1, end1, start2, end2) => (one-of(-1, 0, 1))
 
 String and character comparisons, both case-sensitive and ignoring
 case (\*-ic?).  These default to comparing the entire string but allow
@@ -347,16 +346,3 @@ library:
 
 * Two names from the ``substring-search`` module:
   ``make-substring-positioner`` and ``make-substring-replacer``.
-
-
-Implementation Notes
-====================
-
-* Copy <character-set> and friends from string-extensions to
-  regular-expressions.  That's the only place that uses it, and it is
-  unlikely to be of much use elsewhere.  See conversation in #dylan on
-  2011.12.26.
-
-* Add a README to string-extensions that points out that it has been
-  superceded by "strings" and is a purely GD library.  Perhaps merge
-  it into the ``gwydion`` repository?
