@@ -29,7 +29,7 @@ define constant <index> = limited(<integer>, min: 0, max: $max-item-index);
 
 define constant <state> = limited(<integer>, min: 0);
 
-define constant <item-set> = limited(<list>, of: <item>);
+define constant <item-set> = <list>; //limited(<list>, of: <item>);
 
 define abstract class <sealed-constructor> (<object>) end;
 define sealed domain make(subclass(<sealed-constructor>));
