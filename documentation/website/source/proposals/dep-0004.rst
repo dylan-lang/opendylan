@@ -103,13 +103,11 @@ Export the following functions from the "strings" module of the
     octal-digit?        (char-or-string, #key start, end) => (boolean)
     hexadecimal-digit?  (char-or-string, #key start, end) => (boolean)
 
-    char-equal?    (char1, char2) => (boolean)
-    char-less?     (char1, char2) => (boolean)
-    char-greater?  (char1, char2) => (boolean)
-
     char-equal-ic?    (char1, char2) => (boolean)
     char-less-ic?     (char1, char2) => (boolean)
     char-greater-ic?  (char1, char2) => (boolean)
+
+    string-compare(string1, string2, #key, start1, end1, start2, end2) => (one-of(-1, 0, 1))
 
     string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
@@ -119,10 +117,8 @@ Export the following functions from the "strings" module of the
     string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
 
-    string-compare(string1, string2, #key, start1, end1, start2, end2) => (one-of(-1, 0, 1))
-
-    starts-with? (string, pattern-string, #key test) => (boolean)
-    ends-with?   (string, pattern-string, #key test) => (boolean)
+    starts-with? (string, pattern-string, #key ignore-case?) => (boolean)
+    ends-with?   (string, pattern-string, #key ignore-case?) => (boolean)
 
     lowercase  (char-or-string, #key start, end) => (new-char-or-string)
     lowercase! (char-or-string, #key start, end) => (char-or-string)
@@ -137,20 +133,20 @@ Export the following functions from the "strings" module of the
     align-left   (string, width, #key fill = ' ')
     align-right  (string, width, #key fill = ' ')
 
-    find-substring     (string, pattern, #key start, end, test) => (index-or-#f)
-    replace-substrings (string, pattern, new, #key test, count)
+    find-substring      (string, pattern, #key start, end, ignore-case?) => (index-or-#f)
+    replace-substrings! (string, pattern, new, #key start, end, count, ignore-case?) => (new-string)
 
-    split-lines (string, #rest split-keys) => (strings)
+    split-lines (string, #key remove-if-empty?) => (strings)
 
     // For reference, the following functions are available via dylan
     // or common-dylan and, although for general sequences, are
     // often useful for strings as well...
 
-    concatenate(sequence, #rest more-sequences) => (new-sequence)
+    concatenate (sequence, #rest more-sequences) => (new-sequence)
     join (parts, separator, #key start, end, key, conjunction) => (string)
-    replace-elements!(big, predicate, new-value-fn, #key count) => (big)
-    replace-subsequence!(big, small, #key start, end) => (big)
-    split (string, separator, #key start, end, max, remove-if-empty?) => (strings)
+    replace-elements! (big, predicate, new-value-fn, #key count) => (big)
+    replace-subsequence! (big, small, #key start, end) => (big)
+    split (string, separator, #key start, end, max, remove-if-empty) => (strings)
 
 Some observations about this API:
 
@@ -173,6 +169,12 @@ discussion interspersed.
 
 Discussion
 ----------
+
+In all cases, ``ignore-case?`` parameters default to #f.
+
+In all cases, ``start`` (or start1 or start2) parameters default to 0.
+
+In all cases, ``end`` parameters default to #f, meaning the end of the string.
 
 ::
 
@@ -209,13 +211,11 @@ a :drm:`for` loop inline.
 
 ::
 
-    char-equal?    (char1, char2) => (boolean)
-    char-less?     (char1, char2) => (boolean)
-    char-greater?  (char1, char2) => (boolean)
-
     char-equal-ic?    (char1, char2) => (boolean)
     char-less-ic?     (char1, char2) => (boolean)
     char-greater-ic?  (char1, char2) => (boolean)
+
+    string-compare(string1, string2, #key, start1, end1, start2, end2) => (one-of(-1, 0, 1))
 
     string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
@@ -310,14 +310,14 @@ and/or right side of the string as appropriate.
 
 ::
 
-    starts-with? (string, pattern) => (boolean)
-    ends-with?   (string, pattern) => (boolean)
+    starts-with? (string, pattern, #key ignore-case?) => (boolean)
+    ends-with?   (string, pattern, #key ignore-case?) => (boolean)
 
 These common operations are for convenience and readability.
 
 ::
 
-    find-substring      (string, pattern-string, #key start, end, test) => (index-or-#f)
+    find-substring      (string, pattern-string, #key start, end, ignore-case?) => (index-or-#f)
 
 ``find-substring`` is like :drm:`subsequence-position` except that it
 accepts start/end keyword arguments instead of *count*, and it only
@@ -325,20 +325,12 @@ applies to strings.
 
 ::
 
-    replace-substrings  (string, pattern-string, new, #key start, end, test, count)
+    replace-substrings!  (string, pattern-string, new, #key start, end, test, count, ignore-case?) => (new-string)
 
-``replace-substrings`` returns a new string with each occurrence of
+``replace-substrings!`` returns a new string with each occurrence of
 *pattern-string* replaced by *new*.  If *count* is supplied then
 only *count* occurrences (moving left to right through *string*)
-are replaced.  *test* defaults to *==*.
-
-::
-
-    join (sequence, separator, #key start, end, key, conjunction) => (string)
-    split (string, separator, #key start, end, max, remove-if-empty?) => (strings)
-
-The above apply to sequences in general, not just strings.  These are
-already in common-dylan but are included here for completeness.
+are replaced.  *ignore-case?* defaults to #f.
 
 
 
