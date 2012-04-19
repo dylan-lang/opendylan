@@ -103,7 +103,16 @@ define inline-only function get-application-commandline
         add!(tokens, token);
       end;
     end while;
-    values(tokens[0], apply(vector, copy-sequence(tokens, start: 2, end: argc + 1)))
+    *application-filename* := tokens[0];
+    let name = make(<byte-string>);
+    for (x in tokens[1])
+      if (x == '/')
+        name := make(<byte-string>);
+      else
+        name := add(name, x);
+      end;
+    end;
+    values(name, apply(vector, copy-sequence(tokens, start: 2, end: argc + 1)))
   else
     values("", vector())
   end
