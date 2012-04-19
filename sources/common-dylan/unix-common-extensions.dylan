@@ -68,7 +68,9 @@ define inline-only function ensure-application-name-filename-and-arguments () =>
       end;
     *application-name* := name;
     *application-arguments* := arguments;
-    *application-filename* := get-application-filename();
+    unless (*application-filename*)
+      *application-filename* := get-application-filename();
+    end;
   end;
 end function ensure-application-name-filename-and-arguments;
 
