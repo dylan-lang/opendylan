@@ -67,7 +67,7 @@ define module-spec common-extensions ()
    => (false-or(<integer>));
   open generic-function split
       (<sequence>, <object>,
-       #"key", #"start", #"end", #"count", #"remove-if-empty")
+       #"key", #"start", #"end", #"count", #"remove-if-empty?")
    => (<sequence>);
   function join
     (<sequence>, <sequence>, #"key" #"key", #"conjunction") => (<sequence>);
