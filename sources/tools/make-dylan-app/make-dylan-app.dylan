@@ -55,7 +55,7 @@ define function make-dylan-app (app-name :: <string>) => ()
     = make(<template>,
            output-path: to-target-path(app-name, ".lid"),
            constant-string: $lid-template-simple,
-           arguments: list(app-name, app-name, "library", app-name));
+           arguments: list(app-name, "library", app-name));
 
   write-templates(main, lib, lid);
 

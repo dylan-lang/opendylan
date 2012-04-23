@@ -28,6 +28,5 @@ define constant $lib-template-simple :: <string>
 
 define constant $lid-template-simple :: <string>
   = ("library: %s\n"
-       "executable: %s\n"
        "files: %s\n"
        "  %s\n");
