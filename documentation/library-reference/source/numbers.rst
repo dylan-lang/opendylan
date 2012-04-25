@@ -160,6 +160,7 @@ The *=* function compares two objects and returns *#t* if the values of
 the two objects are equal to each other, that is of the same magnitude.
 
 =
+
 ~
 
 Generic function, Sealed domain, G.f. method
@@ -188,6 +189,7 @@ The Dylan library provides the following interfaces for testing the
 magnitude of two numbers:
 
 <
+
 ~
 
 Generic function, Sealed domain, G.f. method
@@ -334,57 +336,57 @@ Arithmetic operations
 
 The following arithmetic operations are available in the Dylan library:
 
-+
+\+
 
 Open generic function
 
-+ *object1* *object2* => #rest *object*
+\+ *object1* *object2* => #rest *object*
 
-+
+\+
 
 Sealed domain
 
-+ *complex1* *complex* 2
+\+ *complex1* *complex* 2
 
-+
-
-G.f. method
-
-+ *integer1* *integer* 2 => *integer*
-
-+
+\+
 
 G.f. method
 
-+ *machine-number1* *machine-number2* => *machine-number*
+\+ *integer1* *integer* 2 => *integer*
+
+\+
+
+G.f. method
+
+\+ *machine-number1* *machine-number2* => *machine-number*
 
 Returns the sum of the two supplied arguments. The actual type of the
 value is determined by the contagion rules when applied to the
 arguments.
 
--
+\-
 
 Open generic function
 
-- *object1* *object2* => #rest *object*
+\- *object1* *object2* => #rest *object*
 
--
+\-
 
 Sealed domain
 
-- *complex1* *complex2*
+\- *complex1* *complex2*
 
--
-
-G.f. method
-
-- *integer1 integer2* => *integer*
-
--
+\-
 
 G.f. method
 
-- *machine-number1* *machine-number2* => *machine-number*
+\- *integer1 integer2* => *integer*
+
+\-
+
+G.f. method
+
+\- *machine-number1* *machine-number2* => *machine-number*
 
 Returns the result of subtracting the second argument from the first.
 The actual type of the value is determined by the contagion rules when
@@ -854,8 +856,9 @@ Arithmetic operations
 
 The following functions all apply *function* *#Dylan* to the arguments
 and return the results, where *function* is the appropriate function
-name. See `Arithmetic operations`_ for descriptions of each function
-as implemented in the Dylan library.
+name. See `Arithmetic operations
+<http://opendylan.org/books/drm/Arithmetic_Operations#HEADING-100-49>`_
+for descriptions of each function as implemented in the Dylan library.
 
 + *object1* *object2* => #rest *object*
 
@@ -1282,6 +1285,8 @@ by the Big-Integers library as follows::
     positive? *abstract-integer* => *boolean*
     negative? *abstract-integer* => *boolean*
     integral? *abstract-integer* => *boolean*
+
+.. bigint_arithmetic_operations:
 
 Arithmetic operations
 ---------------------

@@ -1,6 +1,6 @@
-********************
-The Printing Modules
-********************
+****************************
+The print and pprint Modules
+****************************
 
 .. current-library:: io
 .. current-module:: print
@@ -72,7 +72,7 @@ The following interfaces are exported from the *pprint* module:
 - :func:`pprint-indent`
 - :func:`pprint-tab`
 
-The PRINT module
+The print module
 ----------------
 
 This section contains a reference entry for each item exported from the
@@ -255,7 +255,7 @@ IO library’s *print* module.
      request formed by the keyword arguments and returns the result as a
      string.
 
-The PPRINT module
+The pprint module
 -----------------
 
 .. current-module:: pprint

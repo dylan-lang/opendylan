@@ -1,4 +1,4 @@
-The REGULAR-EXPRESSIONS module
+The regular-expressions Module
 ------------------------------
 
 .. current-library:: regular-expressions

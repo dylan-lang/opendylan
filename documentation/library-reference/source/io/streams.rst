@@ -1,5 +1,5 @@
 ******************
-The Streams Module
+The streams Module
 ******************
 
 .. current-library:: io
@@ -26,9 +26,9 @@ using buffered streams; `Wrapper streams`_ describes wrapper streams;
 raised.For the most part, you do not have to worry about the information
 in these later sections when using streams.
 
-Finally, `The STREAMS module`_ gives complete details on all interfaces
-in the Streams module. Each entry in this section is arranged in
-alphabetical order.
+Finally, `The streams Module Reference`_ gives complete details on all
+interfaces in the Streams module. Each entry in this section is
+arranged in alphabetical order.
 
 Discussing error conditions
 ---------------------------
@@ -295,7 +295,7 @@ Stream classes
 --------------
 
 The exported streams class heterarchy includes the classes shown in
-`Streams module classes.`_. Classes shown in bold are all instantiable.
+`Streams module classes`_. Classes shown in bold are all instantiable.
 
 .. figure:: ../images/streams.png
    :align: center
@@ -305,7 +305,8 @@ The exported streams class heterarchy includes the classes shown in
 * c - concrete | a - abstract
 * u - uninstantiable | i - instantiable
 
-   Streams module classes.
+Streams module classes
+^^^^^^^^^^^^^^^^^^^^^^
 
 - :class:`<stream>`
 - :class:`<positionable-stream>`
@@ -880,8 +881,8 @@ For information on using wrapper streams, see `Wrapper streams`_.
 - :gf:`outer-stream`
 - :gf:`outer-stream-setter`
 
-The STREAMS module
-------------------
+The streams Module Reference
+----------------------------
 
 This section includes complete reference entries for all interfaces that
 are exported from the *streams* module.
