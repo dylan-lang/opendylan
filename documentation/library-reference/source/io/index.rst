@@ -1,6 +1,6 @@
-***************
-The I/O Library
-***************
+**************
+The io Library
+**************
 
 .. current-library:: io
 

@@ -1,5 +1,5 @@
 ******************
-The BIT-SET module
+The bit-set Module
 ******************
 
 .. current-library:: collections

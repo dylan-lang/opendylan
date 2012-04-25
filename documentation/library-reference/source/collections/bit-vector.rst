@@ -1,5 +1,5 @@
 *********************
-The BIT-VECTOR module
+The bit-vector Module
 *********************
 
 .. current-library:: collections

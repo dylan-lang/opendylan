@@ -1,6 +1,6 @@
-************************
-The System Library
-************************
+******************
+The system Library
+******************
 
 .. current-library:: system
 

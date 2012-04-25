@@ -1,5 +1,5 @@
 ***************
-The Date Module
+The date Module
 ***************
 
 .. current-library:: system
@@ -8,7 +8,7 @@ The Date Module
 Introduction
 ------------
 
-The Date module is part of the System library and provides a
+The ``date`` module is part of the System library and provides a
 machine-independent facility for representing and manipulating dates and
 date/time intervals.
 
@@ -18,7 +18,7 @@ module contains.
 Representing dates and times
 ----------------------------
 
-The Date module contains a single class, ``<date>``, an instance of which
+The ``date`` module contains a single class, ``<date>``, an instance of which
 can represent any date between 1 Jan 1800 00:00:00 and 31 Dec 2199
 23:59:59, Greenwich Mean Time. You can create a date object by calling
 the function *encode-date* or using the *make* method for ``<date>``.
@@ -44,7 +44,7 @@ and *time-zone-offset:*. If not supplied, the default value for each of
 these init-keywords is 0.
 
 The *time-zone-offset:* init-keyword is used to represent time zones in
-the Date module as ``<integer>`` values representing the offset in minutes
+the ``date`` module as ``<integer>`` values representing the offset in minutes
 from Greenwich Mean Time (GMT). Positive values are used for time zones
 East of Greenwich; negative values represent time zones to the west of
 Greenwich.
@@ -87,14 +87,14 @@ to the 5th of the following month, whether that is an interval of 28,
 Performing operations on dates and durations
 --------------------------------------------
 
-A number of interfaces are exported from the Date module that let you
+A number of interfaces are exported from the ``date`` module that let you
 perform other operations on dates and durations, and extract
 date-specific information from your local machine.
 
 Comparing dates
 ^^^^^^^^^^^^^^^
 
-The following operations are exported from the Date module.
+The following operations are exported from the ``date`` module.
 
 - :meth:`= <=(<date>)>`
 - :meth:`< <<(<date>)>`
@@ -105,7 +105,7 @@ test for equality, or to test whether one date occurred before another.
 Comparing durations
 ^^^^^^^^^^^^^^^^^^^
 
-The following operations are exported from the Date module.
+The following operations are exported from the ``date`` module.
 
 - :meth:`= <=(<duration>)>`
 - :meth:`< <<(<duration>)>`
@@ -225,7 +225,7 @@ the time-zone offset of a ``<date>`` explicitly.
 To return an ISO 8601 format date from a ``<date>`` object, use the
 function :func:`as-iso8601-string`.
 
-The DATE module
+The date module
 ---------------
 
 This section contains a reference entry for each item exported from the
@@ -320,7 +320,7 @@ Date module.
 
    - :meth:`= <=(<duration>)>`
 
-+
+\+
 ^^
 
 Sealed methods
@@ -389,15 +389,9 @@ Methods defined for addition of dates and durations
 
 #. ``<date>``
 
-   See also
+   See also: `-`_, `\*`_, `/`_
 
-`-`_
-
-`\*`_
-
-`/`_
-
--
+\-
 ^^
 
 Sealed methods
@@ -461,13 +455,7 @@ Methods defined for subtraction of dates and durations
 
 #. ``<day/time-duration>``
 
-   See also
-
-`+`_
-
-`\*`_
-
-`/`_
+   See also: `+`_ `\*`_ `/`_
 
 \*
 ^^
@@ -476,8 +464,8 @@ Sealed methods
 
    Multiplies a duration by a scale factor.
 
-   :signature: \* *duration* *scale* => *new-duration
-* \* *scale* *duration* => *new-duration*
+   :signature: \* *duration* *scale* => *new-duration*
+   :signature: \* *scale* *duration* => *new-duration*
 
 Arguments
 
@@ -498,16 +486,10 @@ the arguments can be expressed in any order: methods are defined such
 that the duration can be placed first or second in the list of
 arguments.
 
-   See also
-
-`+`_
-
-`-`_
-
-`/`_
+   See also: `+`_, `-`_, `/`_
 
 /
-^^
+^
 
 Sealed methods
 
@@ -535,13 +517,7 @@ you cannot sum two dates. The return value can be either a date or a
 duration, depending on the arguments supplied. The table below lists the
 methods that are defined on +.
 
-   See also
-
-`+`_
-
-`-`_
-
-`\*`_
+   See also: `+`_, `-`_, `\*`_
 
 .. function:: as-iso8601-string
 

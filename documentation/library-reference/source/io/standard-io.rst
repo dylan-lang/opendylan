@@ -1,5 +1,5 @@
 **********************
-The Standard-IO Module
+The standard-io Module
 **********************
 
 .. current-library:: io
@@ -46,7 +46,7 @@ machine running the application.
 
 For more information about streams, please refer to :doc:`streams`.
 
-The STANDARD-IO module
+The standard-io module
 ----------------------
 
 This section contains a complete reference of all the interfaces that

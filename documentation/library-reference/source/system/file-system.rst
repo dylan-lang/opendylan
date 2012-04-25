@@ -1,5 +1,5 @@
 **********************
-The File-System Module
+The file-system Module
 **********************
 
 .. current-library:: system
