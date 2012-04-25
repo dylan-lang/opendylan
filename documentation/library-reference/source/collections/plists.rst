@@ -1,5 +1,5 @@
 *****************
-The plists module
+The plists Module
 *****************
 
 .. current-library:: collections

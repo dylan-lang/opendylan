@@ -1,4 +1,4 @@
-The byte-vector module
+The byte-vector Module
 ----------------------
 
 .. current-library:: collections

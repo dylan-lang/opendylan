@@ -28,9 +28,9 @@ Users should never call :gf:`print-object` directly.
 
 The IO library exports two modules for use with printing, *print* and
 *pprint*. Reference entries for the interfaces exported from the *print*
-module can be found in `The PRINT module`_, and reference entries for
-interfaces exported from the *pprint* module are in `The PPRINT
-module`_.
+module can be found in `The print Module`_, and reference entries for
+interfaces exported from the *pprint* module are in `The pprint
+Module`_.
 
 These modules uses the Streams module. See :doc:`streams` for
 full details of the Streams module.
@@ -72,7 +72,7 @@ The following interfaces are exported from the *pprint* module:
 - :func:`pprint-indent`
 - :func:`pprint-tab`
 
-The print module
+The print Module
 ----------------
 
 This section contains a reference entry for each item exported from the
@@ -255,7 +255,7 @@ IO library’s *print* module.
      request formed by the keyword arguments and returns the result as a
      string.
 
-The pprint module
+The pprint Module
 -----------------
 
 .. current-module:: pprint

@@ -1,4 +1,4 @@
-The set module
+The set Module
 --------------
 
 .. current-library:: collections

@@ -69,7 +69,7 @@ The directives are:
   the stream passed to :gf:`format`.
 - ``%%`` Outputs a single ``%`` character.
 
-The format module
+The format Module
 =================
 
 This section contains a reference entry for each item exported from the

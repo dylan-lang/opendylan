@@ -1,5 +1,5 @@
 *********************
-The collectors module
+The collectors Module
 *********************
 
 .. current-library:: collections
