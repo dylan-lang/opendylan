@@ -1,5 +1,5 @@
 *******************************
-The Regular Expressions library
+The regular-expressions Library
 *******************************
 
 .. current-library:: regular-expressions

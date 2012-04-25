@@ -1,5 +1,5 @@
 ***************************
-The TABLE-EXTENSIONS module
+The table-extensions Module
 ***************************
 
 .. current-library:: collections

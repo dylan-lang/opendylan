@@ -1,5 +1,5 @@
 ***********************
-The Collections library
+The collections Library
 ***********************
 
 .. current-library:: collections

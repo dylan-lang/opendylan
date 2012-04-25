@@ -2509,12 +2509,12 @@ Describing Dylan functions for use by C
 
      If a parameter is both *input* and *output*, the parameter must be
      a pointer type, and the value accepted by the Dylan function is the
-     result. `The functions pointer-value and pointer-value-setter
+     result. The functions pointer-value and pointer-value-setter
      perform the primitive Dylan-to-C and C-to-Dylan conversions as
      documented with the designator class of the pointer’s contents type
      (see Table 1.1). The C-FFI signals an error if it cannot convert
      the object you attempt to store in the pointer to a compatible
-     type.`_ on that pointer. The Dylan function is expected to return
+     type on that pointer. The Dylan function is expected to return
      an extra value which is placed into the location specified by the
      pointer passed to the C function. If the pointer passed to the C
      function is ``NULL``, then the value passed to the Dylan function

@@ -1,5 +1,5 @@
 *******************
-The Network Library
+The network Library
 *******************
 
 .. current-library:: network
@@ -246,12 +246,12 @@ generic functions and constants.
      to be the loopback address rather than a real address for the local
      host.
 
-The <IPV6-ADDRESS> class
+The <ipv6-address> class
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 This name is reserved for future development.
 
-The <NUMERIC-ADDRESS> class
+The <numeric-address> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This section describes numeric Internet representation and associated
@@ -390,7 +390,7 @@ Sockets
 
 This section describes socket classes and protocols.
 
-The <ABSTRACT-SOCKET> class
+The <abstract-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. class:: <abstract-socket>
@@ -446,7 +446,7 @@ and for the following generic functions:
    :parameter socket: An instance of :class:`<abstract-socket>`.
    :value host-address: An instance of :class:`<internet-address>`.
 
-The <SERVER-SOCKET> class
+The <server-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. class:: <server-socket>
@@ -538,7 +538,7 @@ The <SERVER-SOCKET> class
      again producing a new binding for *socket-var*. The optional
      keywords are passed to the call to :gf:`accept`.
 
-The <TCP-SERVER-SOCKET> class
+The <tcp-server-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. class:: <tcp-server-socket>
@@ -576,7 +576,7 @@ The <TCP-SERVER-SOCKET> class
      The other keyword arguments are passed directly to the creation of
      the :class:`<tcp-socket>` instance.
 
-The <SOCKET> class
+The <socket> class
 ^^^^^^^^^^^^^^^^^^
 
 .. class:: <socket>
@@ -600,7 +600,7 @@ The <SOCKET> class
      documentation in the *System and I/O* library reference for a full
      description.
 
-The <BUFFERED-SOCKET> class
+The <buffered-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. class:: <buffered-socket>
@@ -631,7 +631,7 @@ The <BUFFERED-SOCKET> class
      :gf:`force-output` and suchlike methods from
      :class:`<double-buffered-stream>`.
 
-The <TCP-SOCKET> class
+The <tcp-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^
 
 The class of TCP client sockets.
@@ -683,7 +683,7 @@ The class of TCP client sockets.
    :parameter socket: An instance of :class:`<socket>`.
    :value remote-host-address: An instance of :class:`<internet-address>`.
 
-The <UDP-SOCKET> class
+The <udp-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^
 
 The class of UDP client sockets.
@@ -721,7 +721,7 @@ The class of UDP client sockets.
      Of the keywords, ``host:`` and one of either ``service:`` or
      ``port:`` are required.
 
-The <UDP-SERVER-SOCKET> class
+The <udp-server-socket> class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The class of UDP server sockets.

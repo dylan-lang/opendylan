@@ -1,5 +1,5 @@
 ************************
-The Common Dylan Library
+The common-dylan Library
 ************************
 
 .. current-library:: common-dylan

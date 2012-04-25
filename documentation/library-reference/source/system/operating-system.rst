@@ -1,5 +1,5 @@
 ***************************
-The Operating-System Module
+The operating-system Module
 ***************************
 
 .. current-library:: system
@@ -8,16 +8,16 @@ The Operating-System Module
 Introduction
 ------------
 
-The Operating-System module is part of the System library. It provides
+The operating-system module is part of the System library. It provides
 an interface to some features of the host machine’s operating system.
 
 This chapter describes the functions and constants that the
-Operating-System module contains.
+operating-system module contains.
 
 Manipulating environment information
 ------------------------------------
 
-The Operating-System module contains a number of interfaces for
+The operating-system module contains a number of interfaces for
 examining and specifying information about the operating system
 environment of the host machine. As well as providing constants that you
 can use in your code, you can examine and set the value of any
@@ -53,7 +53,7 @@ the current machine, where available.
 Manipulating application information
 ------------------------------------
 
-The Operating-System module contains a number of functions for
+The operating-system module contains a number of functions for
 manipulating information specific to a given application, rather than
 the environment as a whole. You can run or quit any application, and
 interrogate the running application for application-specific
@@ -66,11 +66,11 @@ information.
 - :func:`application-filename`
 - :func:`tokenize-command-string`
 
-The OPERATING-SYSTEM module
+The operating-system module
 ---------------------------
 
 This section contains a reference entry for each item exported from the
-Operating-System module’s Operating-System module.
+operating-system library's operating-system module.
 
 .. function:: application-arguments
 

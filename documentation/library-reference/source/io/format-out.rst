@@ -1,5 +1,5 @@
 *********************
-The Format-Out Module
+The format-out Module
 *********************
 
 .. current-library:: io
@@ -19,7 +19,7 @@ library and ``standard-io`` from the Standard-IO library.
 :doc:`format` and :doc:`standard-io` give full details of the Format and
 Standard-IO libraries.
 
-The FORMAT-OUT module
+The format-out module
 =====================
 
 This section contains a reference entry for each item exported from the
