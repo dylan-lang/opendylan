@@ -1,5 +1,5 @@
 ********************
-The Simple IO module
+The simple-io Module
 ********************
 
 .. current-library:: common-dylan
@@ -7,7 +7,7 @@ The Simple IO module
 
 Common Dylan provides several libraries relevant to formatting and
 printing strings, or otherwise using strings for output. These libraries
-include Format, Format-out, Print, and Standard-IO. The facilities
+include *format*, *format-out*, *print*, and *standard-io*. The facilities
 provided by these libraries will be excess to many users’ requirements,
 who may prefer to use the *simple-io* module that the
 *common-dylan* library exports.

@@ -1,5 +1,5 @@
 *******************
-The Threads Module
+The threads Module
 *******************
 
 Introduction
@@ -15,7 +15,7 @@ Introduction
    threads facilities provided by all common operating systems.
 
    All documented bindings are exported from the module *threads* in the
-   *dylan* library.
+   *dylan* and *common-dylan* libraries.
 
 Multi-thread semantics
 ======================

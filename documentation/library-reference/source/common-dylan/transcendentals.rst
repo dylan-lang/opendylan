@@ -1,11 +1,11 @@
 **************************
-The Transcendentals Module
+The transcendentals Module
 **************************
 
 Introduction
 ============
 
-The Transcendentals module, exported from the Common Extensions library,
+The *transcendentals* module, exported from the *common-dylan* library,
 provides a set of open generic functions for ANSI C-like behavior over
 real numbers. The restrictions and error cases described in this chapter
 are intended to be the same as they are in ANSI C.
@@ -30,7 +30,7 @@ The Transcendentals module
 ==========================
 
 This section contains a reference entry for each item exported from the
-Common Extensions library’s *transcendentals* module.
+*common-dylan* library’s *transcendentals* module.
 
 ^
 ~
