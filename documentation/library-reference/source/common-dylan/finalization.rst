@@ -1,5 +1,5 @@
 ***********************
-The Finalization module
+The finalization Module
 ***********************
 
 .. current-library:: common-dylan

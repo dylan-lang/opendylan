@@ -8,9 +8,9 @@ Dylan Language Extensions
 Introduction
 ============
 
-The Dylan language is described in *The Dylan Reference Manual* by
-Andrew Shalit (Addison-Wesley, 1996). We call this book “the DRM”
-hereafter.
+The Dylan language is described in `The Dylan Reference Manual
+<http://opendylan.org/books/drm/>`_ by Andrew Shalit (Addison-Wesley,
+1996). We call this book “the DRM” hereafter.
 
 Open Dylan provides an implementation of the Dylan language
 described by the DRM, with a few exceptions that are documented in
@@ -19,13 +19,9 @@ described by the DRM, with a few exceptions that are documented in
 Open Dylan provides the Dylan language in the *dylan* module of the
 *dylan* library.
 
-As of the 2.0 release, Harlequin Dylan has joined forces with the other
-major implementor of Dylan, the Gwydion Dylan Development Cooperative,
-to provide a set of common extensions to the Dylan language (as defined
-by the DRM). These extensions are portable across implementations and
-are either built in to the *dylan* library or are available in a
-separate library, *common-extensions*. This chapter is an introduction
-to the language extensions.
+This chapter is an introduction to Open Dylan's extensions to the
+Dylan language.  These extensions are either built in to the *dylan*
+library or are available in a separate library, *common-dylan*.
 
 Using Open Dylan’s language extensions
 ======================================
@@ -36,15 +32,16 @@ in your applications.
 A few extensions have become part of the *dylan* library. You can read
 about these extensions in `The core of the common extensions`_.
 
-The majority of the extensions are in the *common-extensions* module of
-the *common-extensions* library. That library also exports a number of
+The majority of the extensions are in the *common-extensions* module
+of the *common-dylan* library. That library also exports a number of
 smaller modules that contain other basic facilities such as simplified
-formatting (*simple-format*), pseudo-random integer generation
+formatting (*simple-io*), pseudo-random integer generation
 (*simple-random*), and object finalization (*finalization*).
 
 Open Dylan provides a convenience library, *common-dylan*, that
-combines the *dylan* and *common-extensions* libraries to provide a
-convenient “dialect” of Dylan, exported from the module *common-dylan*:
+combines the *dylan* and *common-extensions* modules to provide a
+convenient “dialect” of Dylan, exported from the module
+*common-dylan*:
 
 .. code-block:: dylan
 
@@ -237,7 +234,7 @@ compile-time evaluation (“constant folding”) or partial evaluation.
 
 The Open Dylan compiler can perform inlining on generic function
 methods, constants, class slots, and functions (created with ``define
-function`` —see `Function Definition`_). We have extended the Dylan
+function`` — see `Function Definition`_). We have extended the Dylan
 language specification of ``define method``, ``define constant``, and
 class slots with inlining definition adjectives and have included those
 same adjectives in our language extension ``define function``. The

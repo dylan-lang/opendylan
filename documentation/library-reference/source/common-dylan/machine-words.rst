@@ -1,5 +1,5 @@
 ************************
-The Machine Words Module
+The machine-words Module
 ************************
 
 Introduction
