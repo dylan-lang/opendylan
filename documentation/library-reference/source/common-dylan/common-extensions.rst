@@ -1,19 +1,21 @@
-***********************
-The Common Dylan Module
-***********************
+****************************
+The common-extensions Module
+****************************
 
 .. current-library:: common-dylan
-.. current-module:: common-dylan
+.. current-module:: common-extensions
 
-The *common-dylan* module contains a variety of useful basic
-extensions to the Dylan language.
+The *common-extensions* module contains a variety of useful basic
+extensions to the Dylan language and is exported from the
+*common-dylan* library.  As a convenience, the *common-dylan* module
+re-exports everything from the *common-extensions* and *dylan* modules.
 
-The Common Dylan extensions are:
+The extensions are:
 
 - Collection model extensions: :class:`<stretchy-sequence>`,
   :class:`<string-table>`, :gf:`difference`, :func:`fill-table!`,
-  :gf:`find-element`, :gf:`position`, :gf:`remove-all-keys!`, and
-  :macro:`define table`.
+  :gf:`find-element`, :gf:`position`, :gf:`remove-all-keys!`, 
+  :macro:`define table`, :gf:`split`, and :gf:`join`.
 - Condition system extensions: :class:`<format-string-condition>`,
   :class:`<simple-condition>`, and :gf:`condition-to-string`.
 - Program constructs: :macro:`iterate` and :macro:`when`.
@@ -1253,3 +1255,74 @@ The Common Dylan extensions are:
        when (x < 0)
          ~ x;
        end;
+
+.. function:: split
+
+   Split a sequence (e.g., a string) into subsequences deliniated by a
+   given separator.
+
+   :signature: split *sequence* *separator* #key *start* *end* *count* *remove-if-empty?* => *parts*
+
+   :parameter sequence: An instance of ``<sequence>``.
+   :parameter separator: An instance of ``<object>``.
+   :parameter #key start: An instance of ``<integer>``.  Default value: 0.
+   :parameter #key end: An instance of ``<integer>``.  Default value: ``sequence.size``.
+   :parameter #key count: An instance of ``<integer>``.  Default value: no limit.
+   :parameter #key remove-if-empty?: An instance of ``<boolean>``.  Default value: #f.
+   :value parts: An instance of ``<sequence>``.
+
+   :description:
+
+     Splits *sequence* into subsequences, splitting at each occurrance
+     of *separator*.  The *sequence* is searched from left to right,
+     starting at *start* and ending at ``end - 1``.
+
+     The resulting *parts* sequence is limited in size to *count* elements.
+
+     If *remove-if-empty?* is true, the result will not contain any
+     subsequences that are empty.
+
+     There are methods specialized on various types of *separator*.
+     The most basic *separator* type is ``<function>``, with which all
+     of the others may be implemented.
+
+     ``split(seq :: <sequence>, separator :: <function>, ...)``
+        This is the most basic method, since others can be implemented
+        in terms of it.  The 'separator' function must accept three
+        arguments: (1) the sequence in which to search for a
+        separator, (2) the start index in that sequence at which to
+        begin searching, and (3) the index at which to stop searching.
+        The function must return #f to indicate that no separator was
+        found, or two values: the start and end indices of the
+        separator in the given sequence.  The initial start and end
+        indices passed to the 'separator' function are the same as the
+        'start' and 'end' arguments passed to 'split'.  The
+        'separator' function should stay within the given bounds
+        whenever possible.  (In particular it may not always be
+        possible when the separator is a regex.)
+
+     ``split(seq :: <sequence>, separator :: <object>, #key test = \==, ...)``
+        Splits 'seq' around occurrances of 'separator' using 'test' to check
+        for equality.  This method handles the relatively common case where
+        'seq' is a string and 'separator' is a character.
+
+     ``split(seq :: <sequence>, separator :: <sequence>, #key test = \==, ...)``
+        Splits 'seq' around occurrances of the 'separator'
+        subsequence.  This handles the relatively common case where
+        'seq' and 'separator' are both strings.
+
+        Note that if you want to use 'split' to find a sequence which
+        is a single element of another sequence it won't work because
+        this method is more specific than the previous one.  That is
+        considered to be an uncommon case and can be handled by using
+        the method on ``<function>``.
+
+
+
+.. TODO(cgay): How do we document specific methods?
+
+   :example:
+
+     .. code-block:: dylan
+
+       split("a.b.c", '.') => #("a", "b", "c")

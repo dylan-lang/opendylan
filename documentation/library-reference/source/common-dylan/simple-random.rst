@@ -1,5 +1,5 @@
 ************************
-The Simple Random module
+The simple-random Module
 ************************
 
 .. current-library:: common-dylan
