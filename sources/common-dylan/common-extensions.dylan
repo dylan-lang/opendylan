@@ -429,10 +429,13 @@ end function fill-table!;
 
 define method default-last-handler (condition :: <serious-condition>, next-handler :: <function>)
   block()
-    format-out("%s\n", condition);
-  exception ( print-error :: <error> )
-    format-out("%=\nsignalled while trying to print an instance of %=\n",
-	       print-error, object-class(condition));
+    write-console(concatenate(condition-to-string(condition), "\n"),
+                  stream: #"standard-error");
+  exception (print-error :: <error>)
+    let string =
+      format-to-string("%=\nsignalled while trying to print an instance of %=\n",
+                       print-error, object-class(condition));
+    write-console(string, stream: #"standard-error");
   end block;
   next-handler();
 end method;
