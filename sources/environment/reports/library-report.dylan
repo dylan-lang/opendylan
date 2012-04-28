@@ -697,7 +697,7 @@ define method write-definition-name
   next-method();
   do(method (mod) format(stream, "   :%s:\n", as-lowercase(mod)) end,
      split(class-modifiers(report.report-project, class), " ",
-           remove-if-empty: #t))
+           remove-if-empty?: #t))
 end method write-definition-name;
 
 define method write-definition-name
@@ -707,7 +707,7 @@ define method write-definition-name
   next-method();
   do(method (mod) format(stream, "   :%s:\n", as-lowercase(mod)) end,
      split(generic-function-modifiers(report.report-project, function), " ",
-           remove-if-empty: #t))
+           remove-if-empty?: #t))
 end method write-definition-name;
 
 define method write-definition-name
