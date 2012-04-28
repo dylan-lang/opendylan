@@ -1317,12 +1317,12 @@ The extensions are:
         considered to be an uncommon case and can be handled by using
         the method on ``<function>``.
 
-
-
-.. TODO(cgay): How do we document specific methods?
-
    :example:
 
      .. code-block:: dylan
 
        split("a.b.c", '.') => #("a", "b", "c")
+
+
+.. TODO(cgay): How do we document specific methods?
+
