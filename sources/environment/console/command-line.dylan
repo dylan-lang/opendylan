@@ -53,8 +53,6 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: unify?:;
   constant slot %save? :: <boolean> = #t,
     init-keyword: save?:;
-  constant slot %arch :: false-or(<symbol>) = #f,
-    init-keyword: arch:;
   constant slot %harp?          :: <boolean> = #f,
     init-keyword: harp?:;
   constant slot %assemble?                   = #f,
@@ -111,7 +109,6 @@ define method execute-main-command
     run(<link-project-command>,
 	build-script: command.%build-script,
 	target:      target,
-	arch:        command.%arch,
 	force?:      command.%force? | command.%clean?,
 	subprojects: command.%subprojects?,
 	unify?:      command.%unify?)

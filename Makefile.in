@@ -11,8 +11,6 @@ rt_build	= @rt_build@
 rt_host		= @rt_host@
 rt_target	= @rt_target@
 
-arch_flag	= @arch_flag@
-
 fdmake		= @PERL@ $(srcdir)/admin/builds/fdmake.pl
 
 DYLANCOMPILER	= @DYLANCOMPILER@
@@ -36,7 +34,7 @@ all:	@bootstrap_target@
 
 3-stage-bootstrap:
 	$(MAKE) 3-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler $(arch_flag) -build"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build"
 3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
 
 ###
@@ -45,7 +43,7 @@ all:	@bootstrap_target@
 
 2-stage-bootstrap:
 	$(MAKE) 2-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler $(arch_flag) -build"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build"
 2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
 
 ###
@@ -191,7 +189,7 @@ BOOTSTRAP_3_ENV = \
 BOOTSTRAP_3_LIBRARIES = dylan-compiler dswank make-dylan-app
 
 BOOTSTRAP_3_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler $(arch_flag) -build
+	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build
 
 $(abs_builddir)/Bootstrap.3:
 	mkdir $(abs_builddir)/Bootstrap.3

@@ -8,8 +8,7 @@ include $(SYSTEM_ROOT)/lib/config.jam ;
 #
 SUFDLL  ?= .dylib ;             # shared library suffix
 
-ARCHFLAG ?= -arch $(TARGET_OSPLAT:E=ppc) ;
-CCFLAGS  += -fno-strict-aliasing $(ARCHFLAG) -D_POSIX_C_SOURCE ;
+CCFLAGS  += -fno-strict-aliasing -arch ppc -D_POSIX_C_SOURCE ;
 
 #
 # Runtime

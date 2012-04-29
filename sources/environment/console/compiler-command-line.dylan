@@ -18,7 +18,6 @@ define command-line main => <main-command>
 
   keyword build-script :: <file-locator> = "the (Jam) build script";
   keyword target :: <symbol> = "the type of executable";
-  keyword arch :: <symbol> = "the architecture (e.g. i386 or x86_64)";
 
   flag help             = "show this help summary";
   flag logo             = "displays the copyright banner";
