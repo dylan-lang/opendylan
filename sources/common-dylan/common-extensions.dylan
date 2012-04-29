@@ -200,7 +200,7 @@ define open generic split
      #key start :: <integer>,
           end: epos :: <integer>,
           count :: <integer>,
-          remove-if-empty :: <boolean>)
+          remove-if-empty? :: <boolean>)
  => (parts :: <sequence>);
 
 // This is in some sense the most basic method, since others can be
@@ -221,7 +221,7 @@ define method split
      #key start :: <integer> = 0,
           end: epos :: <integer> = seq.size,
           count :: <integer> = epos + 1,
-          remove-if-empty :: <boolean> = #f)
+          remove-if-empty? :: <boolean> = #f)
  => (parts :: <sequence>)
   reverse!(iterate loop (bpos :: <integer> = start,
                          parts :: <list> = #(),
@@ -229,7 +229,7 @@ define method split
              let (sep-start, sep-end) = find-separator(seq, bpos, epos);
              if (sep-start & sep-end & (sep-end <= epos))
                let part = copy-sequence(seq, start: bpos, end: sep-start);
-               if (remove-if-empty & empty?(part))
+               if (remove-if-empty? & empty?(part))
                  loop(sep-end, parts, nparts)
                elseif (nparts < count)
                  loop(sep-end, pair(part, parts), nparts + 1)
@@ -238,7 +238,7 @@ define method split
                end
              else
                let part = copy-sequence(seq, start: bpos, end: epos);
-               if (remove-if-empty & empty?(part))
+               if (remove-if-empty? & empty?(part))
                  parts
                else
                  pair(part, parts)
@@ -256,7 +256,7 @@ define method split
           end: epos :: <integer> = seq.size,
           count :: <integer> = epos + 1,
           test :: <function> = \==,
-          remove-if-empty :: <boolean> = #f)
+          remove-if-empty? :: <boolean> = #f)
  => (parts :: <sequence>)
   // Is there a function that does this already?
   local method looking-at? (pattern :: <sequence>, big :: <sequence>,
@@ -271,6 +271,7 @@ define method split
             #t
           end
         end method looking-at?;
+  // TODO(cgay): use boyer-moore/kmp for strings.
   local method find-subseq (seq :: <sequence>,
                             bpos :: <integer>,
                             epos :: false-or(<integer>))
@@ -288,7 +289,7 @@ define method split
           end
         end;
   split(seq, find-subseq, start: start, end: epos, count: count,
-        remove-if-empty: remove-if-empty)
+        remove-if-empty?: remove-if-empty?)
 end method split;
 
 // Split on a given object.
@@ -299,7 +300,7 @@ define method split
           end: epos :: <integer> = seq.size,
           count :: <integer> = epos + 1,
           test :: <function> = \==,
-          remove-if-empty :: <boolean> = #f)
+          remove-if-empty? :: <boolean> = #f)
  => (parts :: <sequence>)
   local method find-pos (seq :: <sequence>,
                          bpos :: <integer>,
@@ -316,7 +317,7 @@ define method split
           end block
         end method;
   split(seq, find-pos, start: start, end: epos, count: count,
-        remove-if-empty: remove-if-empty)
+        remove-if-empty?: remove-if-empty?)
 end method split;
 
 // Join several sequences together, including a separator between each
