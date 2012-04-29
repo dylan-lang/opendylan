@@ -360,7 +360,7 @@ define open generic link-project
      #key progress-callback,
           error-handler,
           process-subprojects?,
-          build-script, target, arch, force?, unify?, release?, messages)
+          build-script, target, force?, unify?, release?, messages)
  => ();
 
 define open generic default-build-script

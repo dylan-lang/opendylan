@@ -310,8 +310,6 @@ end method compiler-condition-handler;
 /// Link command
 
 define class <link-project-command> (<abstract-link-command>)
-  constant slot %arch :: false-or(<symbol>) = #f,
-    init-keyword: arch:;
 end class <link-project-command>;
 
 define command-line link => <link-project-command>
@@ -320,7 +318,6 @@ define command-line link => <link-project-command>
   optional project :: <project-object> = "the project to link";
   keyword build-script :: <file-locator> = "the (Jam) build script to use";
   keyword target :: <symbol> = "the target [dll or executable]";
-  keyword arch :: <symbol> = "the architecture to build (e.g. i386 or x86_64)";
   flag force       = "force relink the executable [off by default]";
   flag subprojects = "link subprojects as well if necessary [on by default]";
   flag unify       = "combine the libraries into a single executable [off by default]";
@@ -337,7 +334,6 @@ define method do-execute-command
   link-project(project,
                build-script:         build-script,
                target:               command.%target,
-               arch:                 command.%arch,
                force?:               command.%force?,
                process-subprojects?: command.%subprojects?,
                unify?:               command.%unify?,
