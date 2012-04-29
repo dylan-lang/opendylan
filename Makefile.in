@@ -23,7 +23,7 @@ library_srcdir	= @with_library_source@
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
 	bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3 \
-	all install install-stage uninstall clean check
+	all install install-stage release release-stage uninstall clean check
 
 all:	@bootstrap_target@
 
@@ -31,8 +31,8 @@ all:	@bootstrap_target@
 # 3-stage bootstrap includes stages 1 and 2 and 3: it rebuilds the compiler
 # and libraries, then rebuilds them again to take advantage of new
 # optimizations. The 3-stage bootstrap is useful to build Open Dylan locally
-# without installing it; if you want to install it, do a 2-stage bootstrap and
-# run make install (which effectively does the third stage).
+# without installing it; if you want to install it, do a 3-stage bootstrap and
+# run make install
 
 3-stage-bootstrap:
 	$(MAKE) 3-stage-bootstrap-reentry \
@@ -100,7 +100,7 @@ $(abs_builddir)/Bootstrap.1:
 	mkdir $(abs_builddir)/Bootstrap.1/bin
 	mkdir $(abs_builddir)/Bootstrap.1/lib
 	mkdir $(abs_builddir)/Bootstrap.1/lib/runtime
-	mkdir $(abs_builddir)/Bootstrap.1/build 
+	mkdir $(abs_builddir)/Bootstrap.1/build
 	mkdir $(abs_builddir)/Bootstrap.1/build/logs
 
 $(BOOTSTRAP_1_REGISTRY):
@@ -151,7 +151,7 @@ $(abs_builddir)/Bootstrap.2:
 	mkdir $(abs_builddir)/Bootstrap.2/bin
 	mkdir $(abs_builddir)/Bootstrap.2/lib
 	mkdir $(abs_builddir)/Bootstrap.2/lib/runtime
-	mkdir $(abs_builddir)/Bootstrap.2/build 
+	mkdir $(abs_builddir)/Bootstrap.2/build
 	mkdir $(abs_builddir)/Bootstrap.2/build/logs
 
 $(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
@@ -188,7 +188,7 @@ BOOTSTRAP_3_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
-BOOTSTRAP_3_LIBRARIES = dylan-compiler
+BOOTSTRAP_3_LIBRARIES = dylan-compiler dswank make-dylan-app
 
 BOOTSTRAP_3_COMPILER = \
 	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler $(arch_flag) -build
@@ -200,11 +200,6 @@ $(abs_builddir)/Bootstrap.3:
 	mkdir $(abs_builddir)/Bootstrap.3/lib/runtime
 	mkdir $(abs_builddir)/Bootstrap.3/build
 	mkdir $(abs_builddir)/Bootstrap.3/build/logs
-	@echo Copying sources...
-	cp -R $(abs_srcdir)/sources $(abs_builddir)/Bootstrap.3
-	@echo Removing unnecessary directories...
-	find $(abs_builddir)/Bootstrap.3/sources -depth -name '.*' -exec rm -rf {} \;
-	-rm -r $(abs_builddir)/Bootstrap.3/sources/bootstrap1-registry
 
 bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	@echo Building Open Dylan bootstrap stage 3...
@@ -216,30 +211,7 @@ bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
 
 ###
-# Install stage is like stage 3, but it builds libraries and compiler in their
-# installed locations.
-
-INSTALL_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
-	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
-	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.2/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
-	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
-	OPEN_DYLAN_BUILD_LOGS=$(prefix)/build/logs \
-	OPEN_DYLAN_USER=$(prefix) \
-	OPEN_DYLAN_USER_ROOT=$(prefix) \
-	OPEN_DYLAN_USER_INSTALL=$(prefix) \
-	OPEN_DYLAN_USER_BUILD=$(prefix)/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(prefix)/sources/registry:$(library_srcdir)/registry \
-	OPEN_DYLAN_USER_SOURCES=$(prefix)/sources
-
-INSTALL_LIBRARIES = dylan-compiler dswank make-dylan-app
-
-INSTALL_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build
-
-
+# Install stage installs stage 3 into prefix
 $(prefix)/sources:
 	install -d $(prefix)
 	@echo Copying sources...
@@ -249,16 +221,61 @@ $(prefix)/sources:
 	-rm -r $(prefix)/sources/bootstrap1-registry
 
 install-stage: $(prefix)/sources
-	install -d $(prefix)/bin $(prefix)/lib $(prefix)/lib/runtime $(prefix)/build $(prefix)/build/logs
-	@echo Building Open Dylan installation...
-	@OPEN_DYLAN_USER_INSTALL=$(prefix) \
-	  $(MAKE) -C sources/jamfiles install
-	@OPEN_DYLAN_USER_INSTALL=$(prefix) \
-	  $(MAKE) -C $(rt_build) clean install
-	@$(INSTALL_ENV) \
-	  $(fdmake) --compiler="$(INSTALL_COMPILER)" $(INSTALL_LIBRARIES)
+	install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime $(prefix)/build $(prefix)/build/logs
+	@echo Installing Open Dylan...
+	cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
+	cp -R $(abs_builddir)/Bootstrap.3/build $(prefix)
+	cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
+	cp -R $(abs_builddir)/Bootstrap.3/include $(prefix)
+	cp -R $(abs_builddir)/Bootstrap.3/lib $(prefix)
+	cp $(abs_srcdir)/License.txt $(prefix)
+	cp $(abs_srcdir)/packages/unix/README $(prefix)
+	@if test -f $(abs_srcdir)/packages/unix/README-$(fd_target).diff; then \
+	  cd $(prefix); \
+	    patch < $(abs_srcdir)/packages/unix/README-$(fd_target).diff; \
+	fi
+	chown -R root:root $(prefix)
 
-install: @bootstrap_target@ install-stage
+install: @bootstrap_target@ 3-stage-bootstrap install-stage
+
+version = $(shell $(abs_builddir)/Bootstrap.3/bin/dylan-compiler -shortversion)
+
+###
+# release packs a tarball
+release-stage:
+	-mkdir $(abs_builddir)/release
+	-mkdir $(abs_builddir)/release/opendylan-$(version)
+	-mkdir $(abs_builddir)/release/opendylan-$(version)/bin
+	-mkdir $(abs_builddir)/release/opendylan-$(version)/databases
+	-mkdir $(abs_builddir)/release/opendylan-$(version)/include
+	-mkdir $(abs_builddir)/release/opendylan-$(version)/lib
+	-mkdir $(abs_builddir)/release/opendylan-$(version)/sources
+	@echo Copying sources...
+	cp -R $(abs_srcdir)/sources $(abs_builddir)/release/opendylan-$(version)
+	@echo Removing unnecessary directories...
+	find $(abs_builddir)/release/opendylan-$(version)/sources -depth -name '.*' -exec rm -rf {} \;
+	-rm -r $(abs_builddir)/release/opendylan-$(version)/sources/bootstrap1-registry
+	cp -R $(abs_builddir)/Bootstrap.3/bin $(abs_builddir)/release/opendylan-$(version)
+	cp -R $(abs_builddir)/Bootstrap.3/databases $(abs_builddir)/release/opendylan-$(version)
+	cp -R $(abs_builddir)/Bootstrap.3/include $(abs_builddir)/release/opendylan-$(version)
+	cp -R $(abs_builddir)/Bootstrap.3/lib $(abs_builddir)/release/opendylan-$(version)
+	cp $(abs_srcdir)/License.txt $(abs_builddir)/release/opendylan-$(version)
+	cp $(abs_srcdir)/packages/unix/README $(abs_builddir)/release/opendylan-$(version)
+	@if test -f $(abs_srcdir)/packages/unix/README-$(fd_target).diff; then \
+	  cd $(abs_builddir)/release/opendylan-$(version); \
+	    patch < $(abs_srcdir)/packages/unix/README-$(fd_target).diff; \
+	fi
+#	chown -R root:0 $(abs_builddir)/release/opendylan-$(version)
+	cd $(abs_builddir)/release; \
+	  tar cjf $(abs_builddir)/opendylan-$(version)-$(fd_target).tar.bz2 opendylan-$(version)
+	-mkdir $(abs_builddir)/release/opendylan-$(version)/build
+	cp -R $(abs_builddir)/Bootstrap.3/build $(abs_builddir)/release/opendylan-$(version)
+#	chown -R root:0 $(abs_builddir)/release/opendylan-$(version)/build
+	cd $(abs_builddir)/release/; \
+	  tar cjf $(abs_builddir)/opendylan-$(version)-$(fd_target)-debug-info.tar.bz2 opendylan-$(version)/build
+
+
+release: @bootstrap_target@ 3-stage-bootstrap release-stage
 
 ###
 # Maintenance and test targets
@@ -274,6 +291,8 @@ clean:
 	rm -rf $(abs_builddir)/Bootstrap.1
 	rm -rf $(abs_builddir)/Bootstrap.2
 	rm -rf $(abs_builddir)/Bootstrap.3
+	rm -rf $(abs_builddir)/release
+	rm -rf $(abs_builddir)/opendylan-*.tar.bz2
 	rm -rf $(BOOTSTRAP_1_REGISTRY)
 	$(MAKE) -C $(rt_build) clean
 
