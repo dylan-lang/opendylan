@@ -54,7 +54,11 @@ define function format-out (format-string :: <string>, #rest format-arguments) =
   write-console(string);
 end function format-out;
 
-define inline function write-console (string :: <string>, #key end: _end) => ()
+define inline function write-console
+    (string :: <string>,
+     #key end: _end,
+          stream :: one-of(#"standard-output", #"standard-error") = #"standard-output")
+ => ()
   let string-end :: <integer> = _end | size(string);
   ensure-console();
   when (*console*)
