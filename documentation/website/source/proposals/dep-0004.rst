@@ -8,7 +8,7 @@ Type:           Standards Track
 Author:         Carl Gay
 Status:         Draft
 Created:        08-Apr-2012
-Last-Modified:  18-Apr-2012
+Last-Modified:  22-Apr-2012
 Post-History:   09-Apr-2012
 Dylan-Version:  2012.1
 ==============  =============================================
@@ -103,12 +103,11 @@ Export the following functions from the "strings" module of the
     octal-digit?        (char-or-string, #key start, end) => (boolean)
     hexadecimal-digit?  (char-or-string, #key start, end) => (boolean)
 
+    char-compare      (char1, char2) => (one-of(-1, 0, 1))
+    char-compare-ic   (char1, char2) => (one-of(-1, 0, 1))
     char-equal-ic?    (char1, char2) => (boolean)
-    char-less-ic?     (char1, char2) => (boolean)
-    char-greater-ic?  (char1, char2) => (boolean)
 
-    # TODO(cgay): Return second value, mismatch-index, in all of these below?
-    string-compare  (string1, string2, #key start1, end1, start2, end2) => (one-of(-1, 0, 1))
+    string-compare  (string1, string2, #key start1, end1, start2, end2, test) => (one-of(-1, 0, 1))
     string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater? (string1, string2, #key start1, end1, start2, end2) => (boolean)
@@ -116,27 +115,25 @@ Export the following functions from the "strings" module of the
     string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
 
-    # TODO(cgay): Add -ic? versions
-    starts-with? (string, pattern-string, #key ignore-case?) => (boolean)
-    ends-with?   (string, pattern-string, #key ignore-case?) => (boolean)
+    starts-with?    (string, pattern-string, #key test) => (boolean)
+    ends-with?      (string, pattern-string, #key test) => (boolean)
 
     lowercase  (char-or-string, #key start, end) => (new-char-or-string)
     lowercase! (char-or-string, #key start, end) => (char-or-string)
     uppercase  (char-or-string, #key start, end) => (new-char-or-string)
     uppercase! (char-or-string, #key start, end) => (char-or-string)
 
-    # TODO(cgay): add start/end parameters
     strip       (string, #key test = whitespace?, start, end) => (new-string)
     strip-left  (string, #key test = whitespace?, start, end) => (new-string)
     strip-right (string, #key test = whitespace?, start, end) => (new-string)
 
-    pad       (string, width, #key fill = ' ', start, end)
-    pad-left  (string, width, #key fill = ' ', start, end)
-    pad-right (string, width, #key fill = ' ', start, end)
+    pad       (string, width, #key fill = ' ')
+    pad-left  (string, width, #key fill = ' ')
+    pad-right (string, width, #key fill = ' ')
 
     # TODO(cgay): from-end?: #t, find-substring-from-end?  rfind-substring?
-    find-substring      (string, pattern, #key start, end, ignore-case?) => (index-or-#f)
-    replace-substrings! (string, pattern, new, #key start, end, count, ignore-case?) => (new-string)
+    find-substring     (string, pattern, #key start, end, ignore-case?) => (index-or-#f)
+    replace-substrings (string, pattern, new, #key start, end, count, ignore-case?) => (new-string)
 
     split-lines (string, #key remove-if-empty?) => (strings)
 
@@ -162,11 +159,6 @@ Some observations about this API:
 * Some functions, such as starts-with? and ends-with?, are provided
   just for readability, despite being trivial to implement in terms of
   other functions.
-
-* All start/end parameters accept negative values, which means to
-  index relative to the end of the string.  I've found this extremely
-  useful in Python but I understand it will probably be controvesial
-  and would be willing to remove that functionality.
 
 The remainder of this proposal will repeat the above API with
 discussion interspersed.
@@ -216,16 +208,14 @@ a :drm:`for` loop inline.
 
 ::
 
+    char-compare      (char1, char2) => (one-of(-1, 0, 1))
+    char-compare-ic   (char1, char2) => (one-of(-1, 0, 1))
     char-equal-ic?    (char1, char2) => (boolean)
-    char-less-ic?     (char1, char2) => (boolean)
-    char-greater-ic?  (char1, char2) => (boolean)
 
-    string-compare(string1, string2, #key, start1, end1, start2, end2) => (one-of(-1, 0, 1))
-
+    string-compare  (string1, string2, #key start1, end1, start2, end2, test) => (one-of(-1, 0, 1))
     string-equal?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater? (string1, string2, #key start1, end1, start2, end2) => (boolean)
-
     string-equal-ic?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
@@ -330,12 +320,12 @@ applies to strings.
 
 ::
 
-    replace-substrings!  (string, pattern-string, new, #key start, end, test, count, ignore-case?) => (new-string)
+    replace-substrings (string, pattern, new, #key start, end, count, ignore-case?) => (new-string)
 
-``replace-substrings!`` returns a new string with each occurrence of
-*pattern-string* replaced by *new*.  If *count* is supplied then
-only *count* occurrences (moving left to right through *string*)
-are replaced.  *ignore-case?* defaults to #f.
+``replace-substrings`` returns a new string with each occurrence of
+*pattern-string* replaced by *new*.  If *count* is supplied then only
+*count* occurrences (moving left to right through *string*) are
+replaced.  *ignore-case?* defaults to #f.
 
 
 
