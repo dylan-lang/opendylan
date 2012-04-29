@@ -81,7 +81,6 @@ define function make-jam-state
     (build-script :: <file-locator>,
      #key progress-callback :: <function> = ignore,
           build-directory :: <directory-locator>,
-          arch :: false-or(<symbol>),
           compiler-back-end)
  => (jam :: <jam-state>);
   // Ensure that the build-script hasn't been modified, and that the
@@ -116,10 +115,6 @@ define function make-jam-state
       #"linux", #"freebsd", #"darwin" =>
         jam-variable(state, "UNIX") := #["true"];
     end select;
-    
-    if (arch)
-      jam-variable(state, "TARGET_OSPLAT") := vector(as(<string>, arch));
-    end if;
 
     if (compiler-back-end)
       jam-variable(state, "COMPILER_BACK_END") 
