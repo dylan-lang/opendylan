@@ -525,8 +525,9 @@ void do_debug_message (BOOL forBreak, D string, D arguments) {
     OutputDebugStringA(error_output);
   }
 #else
-  puts(error_output);		/* Adds a terminating newline */
-  fflush(stdout);
+  fputs(error_output, stderr);
+  fputs("\n", stderr); /* Adds a terminating newline */
+  fflush(stderr);
 #endif
   return;
 }

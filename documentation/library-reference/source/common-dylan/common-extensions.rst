@@ -245,8 +245,8 @@ The extensions are:
 
 .. function:: default-last-handler
 
-   Formats and outputs a Dylan condition using *format-out* and passes
-   control on to the next handler.
+   Formats and outputs a Dylan condition using :gf:`condition-to-string`
+   and passes control on to the next handler.
 
    :signature: default-last-handler *serious-condition* *next-handler* => ()
 
@@ -261,11 +261,11 @@ The extensions are:
      via :macro:`define last-handler`.
 
      This function formats and outputs the Dylan condition
-     *serious-condition* using *format-out* from the Format-Out library,
+     *serious-condition* using :gf:`condition-to-string` from this library,
      and passes control on to the next handler.
 
      This function is automatically installed as the last handler if
-     your library uses the Common Dylan library.
+     your library uses the *common-dylan* library.
 
    :example:
 
