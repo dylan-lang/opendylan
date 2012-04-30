@@ -115,8 +115,8 @@ Export the following functions from the "strings" module of the
     string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
 
-    starts-with?    (string, pattern-string, #key test) => (boolean)
-    ends-with?      (string, pattern-string, #key test) => (boolean)
+    starts-with? (string, pattern-string, #key test) => (boolean)
+    ends-with?   (string, pattern-string, #key test) => (boolean)
 
     lowercase  (char-or-string, #key start, end) => (new-char-or-string)
     lowercase! (char-or-string, #key start, end) => (char-or-string)
@@ -167,11 +167,13 @@ discussion interspersed.
 Discussion
 ----------
 
-In all cases, ``ignore-case?`` parameters default to #f.
+All comparisons default to being case-sensitive unless the function
+name ends with "-ic" or "-ic?" (meaning ignore case).
 
 In all cases, ``start`` (or start1 or start2) parameters default to 0.
 
-In all cases, ``end`` parameters default to #f, meaning the end of the string.
+In all cases, ``end`` (or end1 or end2) parameters default to the size
+of the corresponding string.
 
 ::
 
@@ -205,6 +207,11 @@ alternative is to write your own comparison function (which is the
 solution we have now, resulting in multiple implementations) or write
 a :drm:`for` loop inline.
 
+Note that ``lowercase?`` and ``uppercase?`` return true for
+non-alphabetic characters, so (for example) to determine whether a
+string contains all uppercase alphabetic characters you would use::
+
+    alphabetic?(string) & uppercase?(string)
 
 ::
 
@@ -219,8 +226,6 @@ a :drm:`for` loop inline.
     string-equal-ic?   (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-less-ic?    (string1, string2, #key start1, end1, start2, end2) => (boolean)
     string-greater-ic? (string1, string2, #key start1, end1, start2, end2) => (boolean)
-
-    string-compare(string1, string2, #key, start1, end1, start2, end2) => (one-of(-1, 0, 1))
 
 String and character comparisons, both case-sensitive and ignoring
 case (\*-ic?).  These default to comparing the entire string but allow
@@ -239,12 +244,12 @@ common::
 
 Instead one would have to write this::
 
-    sort(seq, test: rcurry(string-less?, test: char-equal-ic?))
+    sort(seq, test: rcurry(string-less?, test: char-compare-ic))
 
-or worse, if char-equal-ic? is removed on the same grounds::
+or worse, if ``char-compare-ic`` is removed on the same grounds::
 
     sort(seq, test: rcurry(string-less?, test: method (c1, c2)
-                                                 as-lowercase(c1) = as-lowercase(c2)
+                                                 char-compare(as-lowercase(c1), as-lowercase(c2))
                                                end))
 
 or, the less efficient but more concise::
@@ -259,11 +264,9 @@ or, the less efficient but more concise::
     >  (char-or-string, char-or-string) => (boolean)
 
 If one doesn't mind allocating memory, the above built-in functions
-can be used in place of explicit *start* and *end* parameters:
+can be used in place of explicit *start* and *end* parameters::
 
-    ::
-
-        copy-sequence(s1, start: x, end: y) = copy-sequence(s2, start: w, end: z)
+    copy-sequence(s1, start: x, end: y) = copy-sequence(s2, start: w, end: z)
 
 ::
 
@@ -279,53 +282,60 @@ rest of the API.
 
 ::
 
-    strip       (string, #key test = whitespace?) => (new-string)
-    strip-left  (string, #key test = whitespace?) => (new-string)
-    strip-right (string, #key test = whitespace?) => (new-string)
+    strip       (string, #key test = whitespace?, start, end) => (new-string)
+    strip-left  (string, #key test = whitespace?, start, end) => (new-string)
+    strip-right (string, #key test = whitespace?, start, end) => (new-string)
 
-Return a copy of *string* with characters matching *test* removed.
-Characters are removed from the left and/or right side of *string*
-until the first character *not* matching *test* is found.
+Return a copy of *string* between *start* and *end* with characters
+matching *test* removed.  Characters are removed from the left and/or
+right side of *string* until the first character *not* matching *test*
+is found.
 
 ::
 
-    align-center (string, width, #key fill = ' ')
-    align-left   (string, width, #key fill = ' ')
-    align-right  (string, width, #key fill = ' ')
+    pad       (string, width, #key fill = ' ')
+    pad-left  (string, width, #key fill = ' ')
+    pad-right (string, width, #key fill = ' ')
 
 The above return a new string of the given *width*.  If *string*
-is shorter than *width*, add the *fill* character to the left
+is shorter than *width*, the *fill* character is added to the left
 and/or right side of the string as appropriate.
 
     Examples::
 
-      align-center("x", 5) => "  x  "
-      align-center("x", 4) => "  x " or " x  "    (unspecified)
-      align-center("x", 7, fill: '.') => "...x..."
+      pad("x", 5) => "  x  "
+      pad("x", 4) => "  x " or " x  "    (unspecified)
+      pad("x", 7, fill: '.') => "...x..."
 
 ::
 
-    starts-with? (string, pattern, #key ignore-case?) => (boolean)
-    ends-with?   (string, pattern, #key ignore-case?) => (boolean)
+    starts-with? (string, pattern-string, #key test) => (boolean)
+    ends-with?   (string, pattern-string, #key test) => (boolean)
 
-These common operations are for convenience and readability.
+These common operations are for convenience and readability.  The
+*test* parameter is the same as for ``string-compare``.
 
 ::
 
-    find-substring      (string, pattern-string, #key start, end, ignore-case?) => (index-or-#f)
+    find-substring     (string, pattern, #key start, end, ignore-case?) => (index-or-#f)
 
 ``find-substring`` is like :drm:`subsequence-position` except that it
-accepts start/end keyword arguments instead of *count*, and it only
-applies to strings.
+accepts *start* and *end* keyword arguments instead of *count*, and it
+only applies to strings so the *ignore-case?* argument has been added.
+
+Note that this (and replace-substrings) use *ignore-case?* instead of
+a *test* parameter.  This is because the implementation (Boyer
+Moore-ish search) needs to setup skip tables and the code for that
+needs to know explicitly whether case is being ignored.
 
 ::
 
     replace-substrings (string, pattern, new, #key start, end, count, ignore-case?) => (new-string)
 
-``replace-substrings`` returns a new string with each occurrence of
-*pattern-string* replaced by *new*.  If *count* is supplied then only
-*count* occurrences (moving left to right through *string*) are
-replaced.  *ignore-case?* defaults to #f.
+``replace-substrings`` returns a new string with occurrences of
+*pattern* replaced by *new*.  If *count* is supplied then only *count*
+occurrences (moving left to right through *string*) are replaced.
+*ignore-case?* defaults to #f.
 
 
 
