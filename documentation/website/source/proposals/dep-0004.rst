@@ -131,14 +131,10 @@ Export the following functions from the "strings" module of the
     pad-left  (string, width, #key fill = ' ')
     pad-right (string, width, #key fill = ' ')
 
-    # TODO(cgay): from-end?: #t, find-substring-from-end?  rfind-substring?
     find-substring     (string, pattern, #key start, end, ignore-case?) => (index-or-#f)
     replace-substrings (string, pattern, new, #key start, end, count, ignore-case?) => (new-string)
 
     split-lines (string, #key remove-if-empty?) => (strings)
-
-    # TODO(cgay): string-hash, string-hash-ci ?
-    # http://srfi.schemers.org/srfi-13/srfi-13.html#string-hash
 
     // For reference, the following functions are available via dylan
     // or common-dylan and, although for general sequences, are
