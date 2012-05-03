@@ -131,8 +131,8 @@ Export the following functions from the "strings" module of the
     pad-left  (string, width, #key fill = ' ')
     pad-right (string, width, #key fill = ' ')
 
-    find-substring     (string, pattern, #key start, end, ignore-case?) => (index-or-#f)
-    replace-substrings (string, pattern, new, #key start, end, count, ignore-case?) => (new-string)
+    find-substring     (string, pattern-string, #key start, end, ignore-case?) => (index-or-#f)
+    replace-substrings (string, pattern-string, new, #key start, end, count, ignore-case?) => (new-string)
 
     split-lines (string, #key remove-if-empty?) => (strings)
 
@@ -313,7 +313,7 @@ These common operations are for convenience and readability.  The
 
 ::
 
-    find-substring     (string, pattern, #key start, end, ignore-case?) => (index-or-#f)
+    find-substring     (string, pattern-string, #key start, end, ignore-case?) => (index-or-#f)
 
 ``find-substring`` is like :drm:`subsequence-position` except that it
 accepts *start* and *end* keyword arguments instead of *count*, and it
@@ -326,10 +326,10 @@ needs to know explicitly whether case is being ignored.
 
 ::
 
-    replace-substrings (string, pattern, new, #key start, end, count, ignore-case?) => (new-string)
+    replace-substrings (string, pattern-string, new, #key start, end, count, ignore-case?) => (new-string)
 
 ``replace-substrings`` returns a new string with occurrences of
-*pattern* replaced by *new*.  If *count* is supplied then only *count*
+*pattern-string* replaced by *new*.  If *count* is supplied then only *count*
 occurrences (moving left to right through *string*) are replaced.
 *ignore-case?* defaults to #f.
 
