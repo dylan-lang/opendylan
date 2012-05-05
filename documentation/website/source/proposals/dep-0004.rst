@@ -132,6 +132,7 @@ Export the following functions from the "strings" module of the
     pad-right (string, width, #key fill = ' ')
 
     find-substring     (string, pattern-string, #key start, end, ignore-case?) => (index-or-#f)
+    count-substrings   (string, pattern-string, #key start, end, ignore-case?) => (count)
     replace-substrings (string, pattern-string, new, #key start, end, count, ignore-case?) => (new-string)
 
     split-lines (string, #key remove-if-empty?) => (strings)
@@ -326,13 +327,19 @@ needs to know explicitly whether case is being ignored.
 
 ::
 
+    count-substrings   (string, pattern-string, #key start, end, ignore-case?) => (count)
+
+``count-substrings`` counts the number of non-overlapping occurrences
+of *pattern-string* within *big*.
+
+::
+
     replace-substrings (string, pattern-string, new, #key start, end, count, ignore-case?) => (new-string)
 
 ``replace-substrings`` returns a new string with occurrences of
 *pattern-string* replaced by *new*.  If *count* is supplied then only *count*
 occurrences (moving left to right through *string*) are replaced.
 *ignore-case?* defaults to #f.
-
 
 
 Dropped string-extensions Names
