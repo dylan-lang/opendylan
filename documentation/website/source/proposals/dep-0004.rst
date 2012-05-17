@@ -6,9 +6,9 @@ New strings Library
 DEP #:          4
 Type:           Standards Track
 Author:         Carl Gay
-Status:         Draft
+Status:         Accepted
 Created:        08-Apr-2012
-Last-Modified:  30-Apr-2012
+Last-Modified:  05-May-2012
 Post-History:   01-May-2012, 09-Apr-2012
 Dylan-Version:  2012.1
 ==============  =============================================
