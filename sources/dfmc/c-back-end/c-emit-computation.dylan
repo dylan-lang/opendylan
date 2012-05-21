@@ -1249,7 +1249,7 @@ define method emit-computation
     format-emit
       (b, s, d, "\t% = ~();\n", c.entry-state, $make-bind-exit-frame-string);
     format-emit
-      (b, s, d, "\tif (nlx_setjmp(~(%))) {\n",
+      (b, s, d, "\tif (setjmp(~(%))) {\n", 
        $frame-destination-string, c.entry-state);
     if (used?(c.temporary))
       format-emit
@@ -1300,7 +1300,7 @@ define method emit-computation
     (b, s, d, "\t% = ~();\n", 
      c.entry-state, $make-unwind-protect-frame-string);
   format-emit
-    (b, s, d, "\tif (!nlx_setjmp(~(@))) {\n",
+    (b, s, d, "\tif (!setjmp(~(@))) {\n", 
      $frame-destination-string, c.entry-state);
   let end-protected 
     = emit-computations(b, s, d + 1, c.body, c.next-computation);
