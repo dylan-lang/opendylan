@@ -158,6 +158,7 @@ sub build_library {
 	print "\n";
     }
     else {
+        my $start_time = time();
 	open(my $compfd, '-|', $command) or die "Couldn't execute $compiler";
 
 	my $logfd;
@@ -204,7 +205,8 @@ sub build_library {
             }
         }
 
-        print "${warnings} W, ${serious_warnings} SW, ${errors} E\n";
+        my $elapsed_time = time() - $start_time;
+        print "${warnings} W, ${serious_warnings} SW, ${errors} E (${elapsed_time} seconds)\n";
 
 	if (defined $logfd) {
 	    close($logfd);
