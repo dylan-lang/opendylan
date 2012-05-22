@@ -181,6 +181,16 @@ define test issue-189 ()
               end, 1.0d0)
 end;
 
+define test issue-203 ()
+  check-equal("float assignment is sane",
+              begin
+                let a = 0.0;
+                let b = 0.100000000001;
+                a := b;
+                a;
+              end, 0.100000000001)
+end;
+
 define suite dylan-regressions ()
   test bug-5800;
   test bug-5580;
@@ -198,5 +208,6 @@ define suite dylan-regressions ()
   test bug-7388-a;
   test bug-7388-b;
   test issue-189;
+  test issue-203;
 end suite dylan-regressions;
 
