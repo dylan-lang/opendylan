@@ -338,8 +338,9 @@ end function ash-right;
 
 define inline function ash-left (x :: <integer>, shift :: <integer>)
  => (result :: <integer>)
-  let shift = min(shift, $machine-word-size);
-  let mx = strip-integer-tag(interpret-integer-as-machine-word(x));
+  let shift :: <integer> = min(shift, $machine-word-size);
+  let mx :: <machine-word>
+    = strip-integer-tag(interpret-integer-as-machine-word(x));
   if (shift = $machine-word-size)
     // Primitives can't shift by the full size of a machine word so
     // we'll perform two half-word shifts instead.  (Note that this
