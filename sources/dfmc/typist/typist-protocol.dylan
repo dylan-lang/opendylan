@@ -383,7 +383,11 @@ end method;
 define method canonical-ref (ref :: <temporary>)
     => (ref :: type-union(<computation>, <temporary>));
   // Remember that <temporary>s aren't in the type cache any more.
-  generator(ref) | ref
+  if (empty?(ref.assignments))
+    generator(ref) | ref
+  else
+    ref
+  end
 end method;
 
 // Get around emulator bug in commented-out select dispatch above.
@@ -476,7 +480,7 @@ define method type-estimate-explain
          indent   :: <integer> = 0) => ()
   // Special case for temporaries is to punt to their generators.
   let g = generator(ref);
-  if (g)
+  if (g & empty?(ref.assignments))
     apply(next-method, g, cache, keys);
   else
     // Lambda variables have no generators, but are in the cache.
