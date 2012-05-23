@@ -81,7 +81,6 @@ define bitcode-block $FUNCTION_BLOCK = 12
   record INST_BR          = 11; // BR:         [bb#, bb#, cond] or [bb#]
   record INST_SWITCH      = 12; // SWITCH:     [opty, opval, n, n x ops]
   record INST_INVOKE      = 13; // INVOKE:     [attr, fnty, op0,op1, ...]
-  record INST_UNWIND      = 14; // UNWIND
   record INST_UNREACHABLE = 15; // UNREACHABLE
 
   record INST_PHI         = 16; // PHI:        [ty, val0,bb0, ...]
@@ -1651,17 +1650,6 @@ define method write-instruction-record
                attributes-index-table[attribute-list-encoding],
                value.llvm-invoke-instruction-calling-convention,
                operands);
-end method;
-
-define method write-instruction-record
-    (stream :: <bitcode-stream>,
-     instruction-index :: <integer>,
-     type-partition-table :: <object-table>,
-     value-partition-table :: <explicit-key-collection>,
-     attributes-index-table :: <encoding-sequence-table>,
-     value :: <llvm-unwind-instruction>)
- => ();
-  write-record(stream, #"INST_UNWIND");
 end method;
 
 define method write-instruction-record

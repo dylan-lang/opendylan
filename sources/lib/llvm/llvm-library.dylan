@@ -180,7 +180,6 @@ define module llvm
     <llvm-branch-instruction>,
     <llvm-switch-instruction>,
     <llvm-invoke-instruction>,
-    <llvm-unwind-instruction>,
     <llvm-unreachable-instruction>,
     <llvm-indirect-branch-instruction>,
     <llvm-phi-node>,
@@ -345,7 +344,6 @@ define module llvm-builder
     ins--br,
     ins--switch,
     ins--invoke,
-    ins--unwind,
     ins--resume,
     ins--unreachable;
 end module;

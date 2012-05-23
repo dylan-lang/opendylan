@@ -318,7 +318,6 @@ define module-spec llvm-builder ()
        #"rest")
    => (<llvm-instruction>);
 
-  function ins--unwind (<llvm-builder>, #"key", #"metadata") => (<llvm-instruction>);
   function ins--unreachable
      (<llvm-builder>, #"key", #"metadata")
   => (<llvm-instruction>);

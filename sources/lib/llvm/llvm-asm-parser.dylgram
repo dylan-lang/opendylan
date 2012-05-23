@@ -1304,8 +1304,6 @@ b-b-terminator-inst:
                                     map(param-value, param-list)),
               metadata: arg$16)
        end;;
-  %UNWIND opt-inst-metadata
-    => make(<llvm-unwind-instruction>, metadata: arg$2);;
   %UNREACHABLE opt-inst-metadata
     => make(<llvm-unreachable-instruction>, metadata: arg$2);;
   %RESUME resolved-val opt-inst-metadata
