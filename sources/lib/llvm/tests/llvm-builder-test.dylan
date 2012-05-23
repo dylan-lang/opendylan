@@ -1463,7 +1463,7 @@ define llvm-builder function-test ins--resume ()
     = make(<llvm-struct-type>,
            elements: vector($llvm-i8*-type, $llvm-i32-type));
   ins--resume(builder, make(<llvm-undef-constant>, type: struct-type));
-  check-equal("ins--unwind disassembly",
+  check-equal("ins--resume disassembly",
               #("entry:", "resume { i8*, i32 } undef"),
               builder-test-function-disassembly(builder));
 end function-test ins--resume;
