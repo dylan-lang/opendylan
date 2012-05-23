@@ -207,7 +207,7 @@ sources
                           for things like DDE via command shell.
     collection-extensions - Extensions from Gwydion Dylan.
     midi                - MIDI library.
-    string-extensions   - Add'l string methods.
+    strings             - Additional string methods.
     t-list              - A variation of a <deque>. Don't know its purpose.
   network               - Socket and protocol libraries.
   ole                   - COM and OLE libraries.
