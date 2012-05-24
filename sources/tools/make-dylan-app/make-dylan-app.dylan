@@ -69,7 +69,7 @@ define function write-registry
   with-open-file (stream = merge-locators(as(<file-locator>, name), generic),
                   direction: #"output",
                   if-does-not-exist: #"create")
-    format(stream, "abstract://dylan/%s.lid", name)
+    format(stream, "abstract://dylan/%s.lid\n", name)
   end with-open-file;
 end;
 
@@ -87,7 +87,7 @@ define function is-valid-dylan-name? (word :: <string>) => (name? :: <boolean>)
   every?(is-name?, word) &
   case
     alphabetic?(word[0]) => #t;
-    digit?(word[0])
+    decimal-digit?(word[0])
       => block (return)
            for (i from 1 below word.size - 1)
              if (alphabetic?(word[i]) & alphabetic?(word[i + 1]))
