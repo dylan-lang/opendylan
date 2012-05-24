@@ -22,3 +22,6 @@
 [submodule "sources/lib/regular-expressions"]
 	path = sources/lib/regular-expressions
 	url = git://github.com/dylan-lang/regular-expressions.git
+[submodule "sources/lib/strings"]
+	path = sources/lib/strings
+	url = git://github.com/dylan-lang/strings.git
