@@ -4678,7 +4678,7 @@ static BS9 bs_boole_xor_ = {
 
 void GC_set_max_heap_size(unsigned long);
 
-static __attribute__((destructor)) void call_application_exit_functions(void) {
+static void call_application_exit_functions(void) {
   extern D Kcall_application_exit_functionsVKeI();
   (void) Kcall_application_exit_functionsVKeI();
 }
@@ -4692,6 +4692,7 @@ void _Init_Run_Time ()
     initp = 1;
     trace_init();
     trace_runtime("Initializing runtime");
+    atexit(call_application_exit_functions);
     GC_init();
     initialize_threads_primitives();
     GC_set_max_heap_size(MAX_HEAP_SIZE);
