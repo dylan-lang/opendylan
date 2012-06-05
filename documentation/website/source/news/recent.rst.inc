@@ -1,3 +1,11 @@
+**New strings library**
+*2012-05-18*
+
+A new library of basic string operations is now available as a
+standard library.
+
+:doc:`Read more... </news/2012/05/18/strings>`
+
 
 **C3 superclass linearization**
 *2012-01-25*
@@ -8,6 +16,7 @@ further performance improvements.
 
 :doc:`Read more... </news/2012/01/25/c3>`
 
+
 **Dswank - emacs and DIME**
 *2011-12-12*
 
@@ -17,6 +26,7 @@ argument lists, locate definitions, compile, view warnings and
 more, all from within emacs!
 
 :doc:`Read more... </news/2011/12/12/dswank>`
+
 
 **New release: 2011.1**
 *2011-12-10*
