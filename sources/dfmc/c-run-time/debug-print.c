@@ -15,6 +15,9 @@
 
 #if defined(WIN32)
 #define INLINE __inline
+#elif defined(__clang__)
+//---*** Do something better.
+#define INLINE
 #else
 #define INLINE inline
 #endif
