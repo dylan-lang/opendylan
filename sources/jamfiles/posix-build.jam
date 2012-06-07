@@ -245,11 +245,16 @@ rule DylanLibraryCLibraries image : libraries {
   local _dll = [ FDLLName $(image) ] ;
   local _exe = [ FEXEName $(image) ] ;
 
+  # -F and -framework are OS X flags.
   for lib in $(libraries) {
     switch $(lib) {
       case -L* : _clib_$(image[1]:L) += $(lib) ;
 		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case -l* : _clib_$(image[1]:L) += $(lib) ;
+		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+      case -F* : _clib_$(image[1]:L) += $(lib) ;
+		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
+      case -framework* : _clib_$(image[1]:L) += $(lib) ;
 		 LINKLIBS on $(_dll) $(_exe) += $(lib) ;
       case *.a : lib = [ FGristFiles $(lib) ] ;
 		 SEARCH on $(lib) = $(SEARCH_SOURCE) ;
