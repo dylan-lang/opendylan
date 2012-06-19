@@ -61,29 +61,31 @@ more details.
 Library Changes
 ===============
 
-The ``CL-plists`` module in the ``cl`` library has been removed.
-Any usages of it can be replaced by using the ``plists`` module
-from the ``collections`` library.  Additionally, the ``plists``
-module has been `documented
-<http://opendylan.org/documentation/library-reference/collections/plists.html>`_.
+* The ``CL-plists`` module in the ``cl`` library has been removed.
+  Any usages of it can be replaced by using the ``plists`` module
+  from the ``collections`` library.  Additionally, the ``plists``
+  module has been `documented
+  <http://opendylan.org/documentation/library-reference/collections/plists.html>`_.
 
-Support for MacOS 9 locators has been removed. This is pre-OS X code
-and we don't support Mac OS 9 as a platform.
+* Support for MacOS 9 locators has been removed. This is pre-OS X code
+  and we don't support Mac OS 9 as a platform.
 
-The bit-vectors module in the collections library works correctly now
-on 64 bit platforms.
+* The ``bit-vectors`` module in the ``collections`` library works
+  correctly now on 64 bit platforms.
 
-The ``command-line-parser`` library has been relicensed and is now
-available for wider usage.  This replaces old command parsing code.
-This library has not yet been documented.
+* The ``command-line-parser`` library has been relicensed and is now
+  available for wider usage.  This replaces old command parsing code.
+  This library has not yet been documented.
 
-``load-library`` has now been implemented on Linux, Mac OS X and
-FreeBSD. Previously, this was only supported on Windows.
+* ``load-library`` has now been implemented on Linux, Mac OS X and
+  FreeBSD. Previously, this was only supported on Windows.
 
-A new ``strings`` library replaces the ``string-extensions`` library.
-The latter will be removed in an upcoming release.  The new library
-provides a simpler API with all names exported from a single
-``strings`` module.
+* A new ``strings`` library replaces the ``string-extensions``
+  library.  The latter will be removed in an upcoming release.  The
+  new library provides a simpler API with all names exported from a
+  single ``strings`` module.  `DEP-0004
+  <http://opendylan.org/proposals/dep-0004.html>`_ is currently the
+  best documentation for this library.
 
 
 Documentation Improvements
