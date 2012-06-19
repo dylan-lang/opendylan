@@ -2,6 +2,13 @@
 Open Dylan Console Environment
 ******************************
 
+.. 1  Hello World
+   2  Using Source Registries
+   3  A Few More Quick Tips
+   4  Using dylan-compiler interactively
+   5  An example of dylan-environment interactive functionality
+   6  Dylan Interactor Mode for Emacs (DIME)
+
 .. contents:: Contents
    :local:
 
@@ -12,7 +19,7 @@ Windows) or command-line tools.  The compiler executable is called
 ``dylan-compiler``.  There is a helper application called
 ``make-dylan-app``, which can be used to generate some boilerplate for
 a new project, and finally there's ``dswank`` which is a back-end for
-interactive development in Emacs.  This appendix describes these
+interactive development in Emacs.  This chapter describes these
 command-line tools.
 
 Hello World
@@ -23,21 +30,20 @@ You have just downloaded Open Dylan and installed it in
 World app?  This example assumes bash is being used.  You may need
 to adjust for your local shell.  ::
 
-  $ export PATH=$HOME/Open-Dylan/bin:/opt/opendylan-2011.1/bin:$PATH
+  $ export PATH=/opt/opendylan-2011.1/bin:$PATH
   $ make-dylan-app hello-world
   $ cd hello-world
   $ dylan-compiler -build hello-world.lid
   ...lots of output...
-  $ hello-world
+  $ _build/bin/hello-world
   Hello, world!
 
 Ta da!  Now a quick review of the steps with a little bit of
 explanation.
 
 First you must set PATH so that ``make-dylan-app`` and
-``dylan-compiler`` will be found.  You must add ``$HOME/Open-Dylan/bin``
-to the PATH as well because this is where ``dylan-compiler`` puts the
-executables it builds.
+``dylan-compiler`` will be found.  ``./_build/bin`` is where
+dylan-compiler puts the executables it builds.
 
 ``make-dylan-app`` creates a directory with the same name as the
 application and three files:
@@ -46,11 +52,14 @@ application and three files:
        project.  The order in which the files are listed here determines
        the order in which the code in them is loaded.
 
-    2. hello-world-exports.dylan contains simple library and module
-       definitions.  These can be extended as your project grows more
-       complex.
+    2. library.dylan contains simple library and module definitions.
+       These can be extended as your project grows more complex.
 
     3. hello-world.dylan contains the main program.
+
+The first time you build hello-world it builds all used libraries, all
+the way down to the dylan library itself.  Subsequent compiles will only
+need to recompile hello-world itself and will therefore be much faster.
 
 ``dylan-compiler`` has both a batch mode and an interactive mode.  The
 ``-build`` option says to build the project in batch mode.  When you
@@ -112,19 +121,21 @@ separating them with colons::
 
   $ export OPEN_DYLAN_USER_REGISTRIES=/my/registry:/their/registry
 
-A few more quick tips:
 
-  1. Add ``-clean`` to the command line to do a clean build::
+A Few More Quick Tips
+=====================
 
-       dylan-compiler -build -clean /my/project.lid
+1. Add ``-clean`` to the command line to do a clean build::
 
-  2. Use ``dylan-compiler -help`` to see all the options.  Options that
-     don't take an argument may be negated by adding "no".  e.g. -nologo
+     dylan-compiler -build -clean /my/project.lid
 
-  3. The ``-build`` option builds an executable unless you add this
-     line to your .lid file::
+2. Use ``dylan-compiler -help`` to see all the options.  Options that
+   don't take an argument may be negated by adding "no".  e.g. -nologo
 
-       target-type: dll
+3. The ``-build`` option builds an executable unless you add this
+   line to your .lid file::
+
+     target-type: dll
 
 You should now have enough information to start working on your Dylan
 project.  The next few sections go into more detail on using
@@ -225,8 +236,6 @@ group, type::
     For documentation on a command, use:  HELP command
     For a complete list of commands, use: SHOW COMMANDS
 
-For full documentation on a command, use: ``HELP /COMMAND command``.
-
 Then, to examine the ``OPEN`` command, type::
 
     > help open
@@ -238,7 +247,7 @@ Then, to examine the ``OPEN`` command, type::
 
       FILE - the filename of the project
 
-Properties can be display via the ``show`` command.  For example to
+Properties can be displayed via the ``show`` command.  For example to
 see the value of the "projects" property listed previously, use ``show
 projects``.
 
@@ -348,7 +357,7 @@ repository <https://github.com/dylan-lang/dylan-mode>`_.  If you don't
 have ready access to git there is a link on that page to download as a
 .zip file.
 
-Next set up your .emacs file as follows.  Adjust the pathnames to
+Next set up your .emacs file as follows.   Adjust the pathnames to
 match your Open Dylan installation location and the directory where
 you put dylan-mode.  ::
 
@@ -368,6 +377,7 @@ project, and also make sure you have a registry entry for it.  See
 
 **Start dime:**  ::
 
+    $ export PATH=/opt/opendylan/bin:$PATH
     $ cd ...dir containing registry...
     $ echo abstract://dylan/dime-test/dime-test.lid > registry/generic/dime-test
     $ make-dylan-app dime-test

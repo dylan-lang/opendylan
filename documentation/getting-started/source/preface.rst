@@ -2,62 +2,24 @@
 Preface
 *******
 
-This preface describes the *Getting Started with Open Dylan*
-manual. It discusses the purpose of the manual and the conventions it
-uses. It also gives a brief description of each chapter in the manual.
-
-About this guide
-================
-
 This guide explains how to use Open Dylan to develop and deliver Dylan
 applications.  There are three relatively independent sections
 covering command-line usage, Dylan Interaction Mode for Emacs (DIME),
 and then the IDE (Windows only) which makes up the bulk of this
 document.
 
-Conventions in this guide
-=========================
-
-This guide uses only a few special conventions.
-
-Menus and menu items are printed in bold type as follows:
-
-    **Save As**
-
-Instructions involving menu selection are given like this:
-
-    Choose **Build > Run**.
-
-This means “Choose **Run** from the **Build** menu”.
-
-Where submenus are involved, the convention is the same:
-
-    Choose **Start > Programs > Open Dylan**
-
-This means “Choose the Start menu, then the Programs submenu, and then
-choose Open Dylan.”
-
-Instructions involving buttons are given like this:
-
-    Click **Cancel**.
-
-Instructions involving radio buttons or check boxes are given like this:
-
-    Check the “Make a personal copy” box.
-
-    Select the “Maximize interactor” radio button.
-
 The Dylan Reference Manual
 ==========================
 
-The *Dylan Reference Manual* (Shalit, 1996) is published by Addison
-Wesley Developers’ Press, ISBN 0-201-44211-6. In this guide, we refer to
-the *Dylan Reference Manual* as “the DRM”.
+The `Dylan Reference Manual <http://opendylan.org/books/drm/>`_
+(Shalit, 1996) is published by Addison Wesley Developers’ Press, ISBN
+0-201-44211-6. In this guide, we refer to the *Dylan Reference Manual*
+as “the DRM”.
 
 Chapters in this guide
 ======================
 
-The first two chapters in this guide cover how to use Open Dylan from
+The first chapter in this guide covers how to use Open Dylan from
 the command-line and how to use DIME (Dylan Interaction Mode for
 Emacs).  The remainder of the guide is dedicated to doing development
 with the IDE (on Windows only).
@@ -100,3 +62,4 @@ source code to show the degree to which it has been optimized.
 :doc:`delivery`, shows how you can package an application with
 everything necessary to deliver it to customers as a stand-alone
 product.
+
