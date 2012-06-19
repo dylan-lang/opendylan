@@ -15,16 +15,16 @@ function:
 
     define generic inspect-vehicle (v :: <vehicle>, i :: <inspector>) => ();
 
-    define method inspect-vehicle (v :: <vehicle>, i :: <inspector>) => ();
+    define method inspect-vehicle (v :: <vehicle>, i :: <inspector>) => ()
       look-for-rust(v);
     end;
 
-    define method inspect-vehicle (car :: <car>, i :: <inspector>) => ();
+    define method inspect-vehicle (car :: <car>, i :: <inspector>) => ()
       next-method();  // perform vehicle inspection
       check-seat-belts(car);
     end;
 
-    define method inspect-vehicle (truck :: <truck>, i :: <inspector>) => ();
+    define method inspect-vehicle (truck :: <truck>, i :: <inspector>) => ()
       next-method();  // perform vehicle inspection
       check-cargo-attachments(truck);
     end;
@@ -36,7 +36,7 @@ another method to the generic function ``inspect-vehicle``:
 
 .. code-block:: dylan
 
-    define method inspect-vehicle (car :: <car>, i :: <state-inspector>) => ();
+    define method inspect-vehicle (car :: <car>, i :: <state-inspector>) => ()
       next-method();  // perform car inspection
       check-insurance(car);
     end;
@@ -69,9 +69,9 @@ though they were in a class of their own. For example:
     define constant $governors-car = make(<car>);
 
     define method inspect-vehicle
-     (car == $governors-car, i :: <state-inspector>) => ();
+        (car == $governors-car, i :: <state-inspector>) => ()
       wave-through(car);
     end;
 
 (In this example, none of the usual inspection methods will be
-invoked since the above code neglects to call ``next-method``.)
+invoked since the above code doesn't call ``next-method``.)

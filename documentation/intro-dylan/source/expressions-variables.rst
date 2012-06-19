@@ -3,27 +3,25 @@ Expressions & Variables
 ***********************
 
 Dylan identifiers may contain a greater variety of characters
-than those of C or Pascal. Specifically, variable names may contain all
+than those of C++ or Java. Specifically, variable names may contain all
 alphanumeric characters, plus the symbols ``! & * < = >
 | ^ $ % @ _ - + ~ ? /``. Identifiers may not begin with the
 symbols ``- + ~ ? /``, although identifiers may begin
 with numbers, provided they contain at least two alphabetic characters
-in a row. As in Pascal, variable names are not case sensitive.
+in a row. Variable names are not case sensitive.
 
 .. todo:: Need DRM footnote here.
 
-This means that ``(a - b)`` subtracts one variable
-from another, whereas ``(a-b)`` simply returns the value
-of the hyphenated variable named ``a-b``. Because of this,
-infix operators, such as addition, subtraction and equality, must be
-surrounded by whitespace.
+This means that ``(a - b)`` subtracts one variable from another,
+whereas ``(a-b)`` simply returns the value of the hyphenated variable
+named ``a-b``.  Because of this, infix operators, such as addition,
+subtraction and equality, must be surrounded by whitespace.
 
 As in C++, Dylan infix operators may also be referred to as
-functions. In C++, ``(a + b)`` could also be written
-as ``operator+(a, b)``. In Dylan, the same expression
-could be written ``\+(a, b)``. In both languages,
-programmers can use this flexibility to define operators for custom
-numeric classes.
+functions. In C++, ``(a + b)`` could also be written as ``operator+(a,
+b)``. In Dylan, the same expression could be written ``\+(a, b)``. In
+both languages, programmers can use this flexibility to define
+operators for custom numeric classes.
 
 Naming Conventions
 ==================
@@ -49,10 +47,10 @@ support a number of standard naming conventions, as shown in this table:
 True and False
 ==============
 
-Dylan represents true as ``#t`` and false as ``#f``. When evaluated in a
-Boolean context, all values other than ``#f`` return true. Thus, the number
-zero -- and other common "false" values -- evaluate as
-true in Dylan.
+Dylan represents true as ``#t`` and false as ``#f``. When evaluated in
+a Boolean context, all values other than ``#f`` are considered
+true. Thus, the number zero -- and other common "false" values --
+evaluate as true in Dylan.
 
 The Nature of Variables
 =======================
@@ -86,7 +84,7 @@ structure, the results may surprise C and Pascal programmers.
     car1.odometer := 10000;       // set odometer
     let car2 = car1;              // bind new name
     car2.odometer := 0;           // reset odometer
-    car1.odometer;                // evaluates to 0!
+    car1.odometer;                // evaluates to 0
 
 As long as one or more variables refer to an object, it
 continues to exist. However, as soon as the last reference either
@@ -104,23 +102,22 @@ Assignment, Equality and Identity
 =================================
 
 Dylan uses all three of the "equals" operators
-found in C and Pascal, albeit in a different fashion. The Pascal
+found in C and Pascal, albeit in a different fashion. The
 assignment operator, ``:=``, rebinds Dylan variable
-names to new values. The Pascal equality operator, ``=``,
+names to new values. The equality operator, ``=``,
 tests for equality in Dylan and also appears in some
 language constructs such as ``let``. (Two Dylan objects
 are equal, generally, if they belong to the same class and have equal
 substructure.)
 
-The C equality operator, ``==``, acts as the
+The C++ equality operator, ``==``, acts as the
 :term:`identity` operator in Dylan. Two variables are
 :term:`identical` if and only if they are bound to the
 exact same object. For example, the following three expressions mean
 roughly the same thing::
 
-    (a == b)   // in Dylan
+    (a == b)   // in Dylan or Java
     (&a == &b) // in C or C++
-    (@a = @b) // in Pascal
 
 The following piece of source code demonstrates all three
 operators in actual use.
@@ -143,13 +140,13 @@ operators in actual use.
     let y = 2;
 
     x = y;  // #t
-    x == y;  // #t (only one 2!)
+    x == y;  // #t (there is only one 2!)
 
-Two of the examples merit further explanation. First, we don't
-know whether ``car1 = car2``, because we don't know if
+Two of the examples merit further explanation. First, we don't know if
 make creates each car with the same serial number, driver and other
-information as previous cars. If and only if none of those values
-differ, then ``car1`` equals ``car2``.
+information as previous cars, or whether there is a method defined on
+``\=(<car>, <car>)`` that compares cars slot-by-slot.
+
 Second, ``x == y`` because every variable bound to a
 given number refers to the exact same instance of that number, at least
 from the programmer's perspective. (The compiler will normally do
@@ -167,7 +164,7 @@ For example, a single ``let`` statement could bind
 
 .. code-block:: dylan
 
-    let (x, y, z) = values (2, 3, 4);
+    let (x, y, z) = values(2, 3, 4);
 
 In Perl, the equivalent statement would assign a vector of
 values to a vector of variables. In Dylan, no actual vectors or lists
@@ -205,7 +202,7 @@ Dylan supports :term:`module-level` variables,
 which serve roughly the same purpose as C's global variables. Although
 the ``let`` function may only be used within :term:`methods`
 (Dylan-speak for regular functions), the forms ``define variable`` and
-``define constant`` may be used at the top level.
+``define constant`` may be used at module top level.
 
 .. code-block:: dylan
 

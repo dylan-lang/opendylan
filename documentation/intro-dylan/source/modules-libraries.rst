@@ -22,8 +22,8 @@ earlier chapters might resemble:
 
 .. code-block:: dylan
 
-    define module Vehicles
-      use Dylan;
+    define module vehicles
+      use dylan;
       export
         <vehicle>,
           serial-number,
@@ -34,9 +34,9 @@ earlier chapters might resemble:
           capacity;
     end module;
 
-Like all normal modules, this one uses the ``Dylan`` module, which
+Like all normal modules, this one uses the ``dylan`` module, which
 contains all of the standard built-in functions and classes. In turn,
-the ``Vehicles`` module exports all three of the vehicle classes, the
+the ``vehicles`` module exports all three of the vehicle classes, the
 generic function ``tax``, several getter functions and a single
 setter function.
 
@@ -59,12 +59,12 @@ Import Options
 Dylan allows very precise control over how symbols are imported
 from other modules. For example, individual symbols may be imported
 by name. They may be renamed, either one at a time, or by adding a
-prefix to all a module's symbols at once. Some or all of them may be
+prefix to all of a module's symbols at once. Some or all of them may be
 re-exported immediately. See the DRM for specific examples.
 
 Dylan's import system has a number of advantages. Name conflicts
 occur rarely. Programmers don't need to define or maintain function
-prototypes. There's no explicit need for header files. Modules may
+prototypes. There's no need for header files. Modules may
 also provide different interfaces to the same objects -- one module
 exports a complete interface, which another module imports, redefines
 and re-exports.
@@ -72,62 +72,62 @@ and re-exports.
 Libraries
 =========
 
-Libraries contain modules. For example, the ``Dylan``
-library contains the ``Dylan`` module
-described earlier, the ``Extensions`` module, and
+Libraries contain modules. For example, the ``dylan``
+library contains the ``dylan`` module
+described earlier, the ``extensions`` module, and
 possibly several other implementation-dependent modules. Note that
-a library and a module may share a given name. Modules with the
+a library and a module may share the same name. Modules with the
 same name may also appear in more than one library.
 
 By default, a Dylan environment provides a library called
-``Dylan-User`` for the convenience of the programmer.
+``dylan-user`` for the convenience of the programmer.
 This is typically used for short, single library programs which
 depend only on modules found in the Dylan library.
 
 Additionally, every library contains an implicit module, also
-known as ``Dylan-User``, which imports all of the
-modules found in the ``Dylan`` library. This may be
+known as ``dylan-user``, which imports all of the
+modules found in the ``dylan`` library. This may be
 used for single module programs. Many Dylan environments, however,
 use it to bootstrap new library definitions. The vehicle library,
-for example, might be defined as follows in a ``Dylan-User``
+for example, might be defined as follows in a ``dylan-user``
 module:
 
 .. code-block:: dylan
 
-    define library Vehicles
-      use Dylan;            // This is the library!
+    define library vehicles
+      use dylan;            // This is the library!
       export                // These are modules.
-        Vehicles,           // (Defined above.)
-        Traffic-Simulation,
-        Crash-Testing,
-        Inspection;         // (Hypothetical.)
-    end library Vehicles;
+        vehicles,           // (Defined above.)
+        traffic-simulation,
+        crash-testing,
+        inspection;         // (Hypothetical.)
+    end library vehicles;
 
 This library could in turn be imported by another library:
 
 .. code-block:: dylan
 
-    define library Vehicle-Application
-      use Dylan;
-      use My-GUI-Classes;
-      use Vehicles;
+    define library vehicle-application
+      use dylan;
+      use my-gui-classes;
+      use vehicles;
     end;
 
 Libraries import other libraries and export modules, whereas
 modules import other modules and export variables. In general, a
 module may import any module found in its own library or exported
 from a library imported by its own library. The following module, for
-example, could belong to the ``Vehicle-Application`` library.
+example, could belong to the ``vehicle-application`` library.
 
 .. code-block:: dylan
 
-    define module Sample-Module
+    define module sample-module
       // module name         source library
-      use Dylan;          // Dylan
-      use Extensions;     // Dylan
-      use Menus;          // My-GUI-Classes
-      use Vehicles;       // Vehicles
-      use Inspection;     // Vehicles
+      use dylan;          // dylan
+      use extensions;     // dylan
+      use menus;          // my-gui-classes
+      use vehicles;       // vehicles
+      use inspection;     // vehicles
     end module;
 
 Sealing
@@ -153,7 +153,7 @@ use a similar syntax:
 
     define open generic sample-function (o :: <object>) => ();
 
-A third form, ``define inert domain``, partially
+A third form, ``define sealed domain``, partially
 seals a generic function, disallowing only some additions from outside
 a library.
 

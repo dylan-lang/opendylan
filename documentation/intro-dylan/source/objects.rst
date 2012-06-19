@@ -5,21 +5,20 @@ Objects
 The features of Dylan's object system don't map directly onto the
 features found in C++. Dylan handles access control using
 :term:`modules`, not ``private`` declarations within
-individual objects. Standard Dylan has no destructors, but instead relies
-upon the garbage collector to recover memory and on exception handling
-blocks to recover other resources. Dylan objects don't even have real
+individual classes. Standard Dylan has no destructors, but instead relies
+upon the garbage collector to recover memory and on block/cleanup
+to recover lexically scoped resources. Dylan objects don't even have real
 member functions.
 
-Despite these oddities, Dylan's object system is at least as
-powerful as that of C++. Multiple inheritance works smoothly,
-constructors are rarely needed and there's no such thing as object
-slicing. Alternate constructs replace the missing C++ features. Quick
-and dirty classes can be turned into clean classes with little editing
-of existing code.
+Dylan's object system is at least as powerful as that of C++. Multiple
+inheritance works smoothly, constructors are rarely needed and there's
+no such thing as object slicing. Alternate constructs replace the
+missing C++ features. Quick and dirty classes can be turned into clean
+classes with little editing of existing code.
 
 Before starting, temporarily set aside any low-level expertise in
-C++ or Object Pascal. Dylan differs enough that such knowledge can
-actually interfere with the initial learning process.
+C++. Dylan differs enough that such knowledge can actually interfere
+with the initial learning process.
 
 Built-In Classes
 ================
@@ -40,20 +39,19 @@ shown here:
 The built-in collection classes include a number of common data
 structures. Arrays, tables, vectors, ranges and deques should be
 provided by all Dylan implementations. The language specification
-also standardizes strings and byte-strings, certainly a welcome
-convenience.
+also standardizes strings and byte-strings.
 
 Not all the built-in classes may be subclassed. This allows the
-compiler to heavily optimize code dealing with basic numeric types
-and certain common collections. The programmer may also mark classes
-as :term:`sealed`, restricting how and where they may be
-subclassed. See <xref linkend="modules-libraries"/> for details.
+compiler to heavily optimize code dealing with basic numeric types and
+certain common collections. The programmer may also mark classes as
+:term:`sealed`, restricting how and where they may be subclassed. See
+`Sealing <http://opendylan.org/books/drm/Sealing>`_ for details.
 
 Slots
 =====
 
 Objects have :term:`slots`, which resemble the data
-members found in most other object-oriented languages. Like
+members in C++ or fields in Java. Like
 variables, slots are bound to values; they don't actually contain
 their data. A simple Dylan class shows how slots are declared:
 
@@ -64,11 +62,10 @@ their data. A simple Dylan class shows how slots are declared:
       slot owner;
     end;
 
-The above code would quick and convenient to write while building
-a prototype, but it could be improved. The slots have no types, and
-worse, they have no initial values. (That's no easy achievement in
-Dylan, to create an uninitialized variable!) The following snippet
-fixes both problems:
+The above code would be quick and convenient to write while building a
+prototype, but it could be improved. The slots have no declared types
+so they default to ``<object>``, and they don't specify default values
+so they default to ``#f``.  The following snippet fixes both problems:
 
 .. code-block:: dylan
 
@@ -107,12 +104,12 @@ than one slot may be initialized by a given keyword.
 
 Dylan also provides for the equivalent of C++ ``static``
 members, plus several other useful allocation schemes. See
-the DRM for the full specifications.
+the DRM for the full details.
 
 Getters and Setters
 ===================
 
-An object's slots are accessed using to functions: a getter and
+An object's slots are accessed using two functions: a getter and
 a setter. By default, the getter function has the same name as the
 slot, and the setter function appends "``-setter``".
 These functions may be invoked as follows:
@@ -136,18 +133,16 @@ Generic functions and Objects
 =============================
 
 Generic functions, introduced in :doc:`Methods and Generic functions
-<methods-generic-functions>`, provide the equivalent of C++ and Object
-Pascal member functions. In the simplest case, just declare a generic
-function which dispatches on the first parameter.
+<methods-generic-functions>`, provide the equivalent of C++ member
+functions. In the simplest case, just declare a generic function which
+dispatches on the first parameter.
 
 .. code-block:: dylan
 
-    define generic tax (v :: <vehicle>)
-     => tax-in-dollars :: <float>;
+    define generic tax (v :: <vehicle>) => (tax-in-dollars :: <float>);
 
-    define method tax (v :: <vehicle>)
-     => tax-in-dollars :: <float>;
-      100.00;
+    define method tax (v :: <vehicle>) => (tax-in-dollars :: <float>)
+      100.00
     end;
 
     //=== Two new subclasses of vehicle
@@ -161,15 +156,13 @@ function which dispatches on the first parameter.
 
     //=== Two new "tax" methods
 
-    define method tax (c :: <car> )
-     => tax-in-dollars :: <float>;
-      50.00;
+    define method tax (c :: <car> ) => (tax-in-dollars :: <float>)
+      50.00
     end method;
 
-    define method tax (t :: <truck> )
-     => tax-in-dollars :: <float>;
+    define method tax (t :: <truck>) => (tax-in-dollars :: <float>)
       // standard vehicle tax plus $10/ton
-      next-method() + t.capacity * 10.00;
+      next-method() + t.capacity * 10.00
     end method;
 
 The function ``tax`` could be invoked as
@@ -190,15 +183,15 @@ may be passed explicitly using ``#next``.
 
 .. code-block:: dylan
 
-    define method tax (t :: <truck>, #next next-method)
-     => tax-in-dollars :: <float>;
+    define method tax
+        (t :: <truck>, #next next-method) => (tax-in-dollars :: <float>)
       // standard vehicle tax plus $10/ton
-      next-method() + t.capacity * 10.00;
+      next-method() + t.capacity * 10.00
     end method;
 
 Dylan's separation of classes and generic functions provides some
-interesting design ideas. Classes no longer need to "contain
-" their member functions; it's possible to write a new generic
+interesting design ideas. Classes no longer need to "contain"
+their member functions; it's possible to write a new generic
 function without touching the class definition. For example, a module
 handling traffic simulations and one handling municipal taxes could
 each have many generic functions involving vehicles, but both could
@@ -226,17 +219,17 @@ example, if vehicle serial numbers must be at least seven digits:
 
 .. code-block:: dylan
 
-    define method initialize (v :: <vehicle>, #all-keys) // accepts all keywords
+    define method initialize (v :: <vehicle>, #key)
       next-method();
       if (v.serial-number < 1000000)
         error("Bad serial number!");
       end if;
     end method;
 
-``Initialize`` methods get called after regular
+``initialize`` methods get called after regular
 slot initialization. They typically perform error checking or calculate
-values for unusual slots. Initialize methods must accept all keywords
-using ``#all-keys``.
+derived slot values. Initialize methods must specify ``#key`` in their
+parameter lists.
 
 It's possible to access the values of slot keywords from
 ``initialize`` methods, and even to specify additional
@@ -254,7 +247,7 @@ be defined as follows:
 
 .. code-block:: dylan
 
-    define abstract class <vehicle> (&object;)
+    define abstract class <vehicle> (<object>)
       // ...as before
     end;
 
@@ -268,23 +261,25 @@ intelligent creation of vehicles based on some criteria, thus making
 .. code-block:: dylan
 
     define method make
-     (class == <vehicle>, #rest keys, #key big? (#f), #all-keys)
-     => <vehicle>;
+        (class == <vehicle>, #rest keys, #key big?)
+     => (vehicle :: <vehicle>)
       if (big?)
-        make(<truck>, keys, tons: 2);
+        make(<truck>, keys, tons: 2)
       else
-        make(<car>, keys);
-      end;
-    end;
+        make(<car>, keys)
+      end
+    end method make;
 
 A number of new features appear in the parameter list. The expression
-"``class == <vehicle>``" specifies a :term:`singleton`, one particular
-object of a class which gets treated as a special case. Singletons are
-discussed in the chapter on :doc:`Multiple Dispatch <multiple-dispatch>`.
-The use of ``#rest``, ``#key`` and ``#all-keys`` in the same parameter
-list accepts any and all keywords, binds one of them to ``big?`` and
-places all of them into the variable ``keys``. The new make method
-could be invoked in any of the following fashions:
+"``class == <vehicle>``" specifies a :term:`singleton` dispatch,
+meaning this method will be called only if ``class`` is exactly
+``<vehicle>``, not a subclass such as ``<car>``.  Singleton dispatch
+is discussed in the chapter on :doc:`Multiple Dispatch
+<multiple-dispatch>`.  The use of ``#rest`` and ``#key`` in the same
+parameter list means all keyword arguments will be stored in the
+``keys`` parameter but if ``big?`` is passed it will be bound to the
+variable by the same name.  The new make method could be invoked in
+any of the following fashions:
 
 .. code-block:: dylan
 
@@ -295,5 +290,6 @@ could be invoked in any of the following fashions:
 
 Methods added to ``make`` don't actually need to create new objects. Dylan
 officially allows them to return existing objects. This can be used to
-manage lightweight shared objects, such as the "flyweights" described by
-Gamma, et al., in `Design Patterns <http://st-www.cs.uiuc.edu/users/patterns/DPBook/DPBook.html>`_.
+manage lightweight shared objects, such as the "flyweights" or "singletons"
+described by Gamma, et al., in
+`Design Patterns <http://st-www.cs.uiuc.edu/users/patterns/DPBook/DPBook.html>`_.

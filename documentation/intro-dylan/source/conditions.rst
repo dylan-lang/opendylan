@@ -35,7 +35,7 @@ an unknown name, you might see the following backtrace:
 8. ``element(*people*, "Toby")``
 9. ``find-person-or-pet("Toby")``
 
-Here you can see the each failure signals a new condition, but the program never
+Here you can see that each failure signals a new condition, but the program never
 backs out of a function call; it just keeps going, leaving the history of
 conditions for you to examine.
 
@@ -62,7 +62,7 @@ The code to establish the handlers may have looked like this:
 
    let handler <key-not-found-error> = handle-no-pet-found;
    
-A handler can be normal function, but it can also be an local method or bare
+A handler can be a normal function, but it can also be a local method or bare
 method, complete with access to local variables.
 
 Recovery
@@ -124,7 +124,7 @@ might appear as follows:
 .. code-block:: dylan
 
     block ()
-      1 + 1;
+      1 + 1
     end; // returns 2
 
 But in addition to returning a value normally, a block can use a :term:`nonlocal
@@ -172,8 +172,8 @@ Blocks and conditions
 ---------------------
 
 In addition to the ``afterwards`` and ``cleanup`` clauses, a block may also
-contain an ``exception`` clause. The exception clause establishes a handler for
-a condition much like the ``let handler`` statement, but before it runs the
+contain any number of ``exception`` clauses. The exception clauses establish handlers for
+a condition much like the ``let handler`` statement, but before they run the
 handler calls the block's exit procedure and takes a nonlocal exit. In other
 words, it takes a short cut out of the normal flow of control. The ``signal``
 function that signaled the condition never returns to its caller. Instead, the

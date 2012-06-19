@@ -17,31 +17,30 @@ inheritance and exceptions, implements :doc:`multiple dispatch
 Dynamic vs. Static Languages
 ============================
 
-:term:`Static` languages need to know the type
-of every variable at compile time. Examples of static languages include
-C, Pascal, and Eiffel. Code written in static languages typically
-compiles efficiently, and strong type-checking at compile-time reduces
-the risk of errors.
+:term:`Static` languages need to know the type of every variable at
+compile time. Examples of static languages include C++, Java, and Go.
+Code written in static languages typically compiles efficiently, and
+strong type-checking at compile-time reduces the risk of errors.
 
-:term:`Dynamic` languages allow the programmer to
-create variables without explicitly specifying the type of information
-they contain. This simplifies prototyping and cleans up certain kinds
-of object oriented code. Typical dynamic languages include LISP, Perl,
-and SmallTalk.
+:term:`Dynamic` languages allow the programmer to create variables
+without explicitly specifying the type of information they
+contain. This simplifies prototyping and cleans up certain kinds of
+object oriented code. Typical dynamic languages include Common Lisp,
+Javascript, and Python.
 
-Dylan provides a good balance between the advantages of static
-and dynamic languages. The programmer may choose to specify or omit
-type declarations as desired. Code using explicit variable types can
-be compiled very efficiently, and type mismatch errors can be caught
-at compile time. Code omitting those type declarations gains the
-flexibility of a dynamic language.
+Dylan provides a good balance between the advantages of static and
+dynamic languages. The programmer may choose to specify or omit type
+declarations as desired. Code using explicit variable types can be
+compiled to very efficient code, and type mismatch errors can be
+caught at compile time. Code omitting those type declarations gains
+the flexibility of a dynamic language.
 
 .. _functional-languages:
 
 Functional Languages
 ====================
 
-:term:`Functional` languages, such as LISP,
+:term:`Functional` languages, such as Common Lisp,
 Scheme and to a large extent TCL, view an entire program as one large
 function to be evaluated. Expressions, statements and even control
 structures all return values, which may in turn be used as arguments
@@ -60,21 +59,19 @@ functions like the following:
       end if
     end method;
 
-The function ``shoe-size`` has one argument,
-a string, and an untyped return value. (If this function didn't link
-against external code, the compiler could easily infer the return
-type.)  If ``person`` equals ``"Larry"``,
-then the ``if`` statement returns 14, otherwise
-it returns 11. Since no other statements follow the ``if``,
-its return value is used as the return value of the entire
-function.
+The function ``shoe-size`` has one argument, a string, and an untyped
+return value. (If this function didn't link against external code, the
+compiler could easily infer the return type.)  If ``person`` equals
+``"Larry"``, then the ``if`` statement returns 14, otherwise it
+returns 11. Since no other statements follow the ``if``, its return
+value is used as the return value of the entire function.
 
 The same function could also have been written as follows, in a
 more :term:`imperative` idiom:
 
 .. code-block:: dylan
 
-    define method shoe-size(person :: <string>)
+    define method shoe-size (person :: <string>)
       let the-size = 11;
       if (person = "Joe")
         the-size := 14;
@@ -86,9 +83,9 @@ Algebraic Infix Syntax
 ======================
 
 Languages based on LISP typically use a notation called
-:term:`fully-parenthesized prefix syntax`. This consists
-of nested parentheses, as seen in the following Scheme
-version of the ``shoe-size`` function:
+:term:`fully-parenthesized prefix syntax` (also known as
+s-expressions). This consists of nested parentheses, as seen in the
+following Scheme version of the ``shoe-size`` function:
 
 .. code-block:: scheme
 
@@ -112,7 +109,8 @@ Dylan's design makes this reasonably efficient. Compile-time analysis
 and explicit :ref:`type declarations <type-declarations>` allow the
 compiler to optimize away most of the overhead. Other language features
 permit the programmer to mark certain classes as :term:`sealed`, that is,
-ineligible for further subclassing.
+ineligible for further subclassing.  This allows for further compile-time
+optimizations.
 
 Dylan's object model, detailed in the following sections of this
 tutorial, differs from that of C++ in several important respects.
@@ -135,29 +133,6 @@ Languages with :term:`garbage collection` have no need of a ``free`` or
 by the language runtime. This reduces the complexity of source code,
 eliminates the need of keeping reference counts for shared objects,
 and prevents most memory allocation bugs and a major source of memory leaks.
-
-Over the years, garbage collection has gained a reputation for
-inefficiency. A large, object-oriented LISP program performed
-terribly compared to hand coded, micro-optimized assembly, and a good
-portion of the blame was placed on garbage collection.
-
-Times have changed, however. Garbage collection technology has
-improved. Processors speed has increased enormously. Most importantly,
-however, the standard practice of the industry has changed, and large
-commercial software is now built in C++.
-
-No good benchmarks exist for the relative performance of large
-C++ systems (greater than 15 thousand lines of code or so), and
-similar systems *designed from the ground up* to use
-garbage collection. The benchmarks which do exist typically test the
-performance of relatively small pieces of code -- small enough
-that one programmer can optimize the overall usage of memory -- or
-have compared a good system without garbage collection to a direct
-reimplementation of that system using a garbage collector. Overall,
-no one seems to know just how fast GC is, relative to a typical large
-C++ program. It *is* known, however, that good
-GC code uses different designs than non-GC code, and often spends less
-time needlessly copying data.
 
 Why Not Dylan?
 ==============
