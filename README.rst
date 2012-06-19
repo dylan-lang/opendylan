@@ -53,6 +53,7 @@ Get MPS or boehm-gc, depending on your platform:
 
 ::
 
+  export PATH=/path/to/opendylan/bin:$PATH
   ./autogen.sh
   ./configure \
      --with-mps=/path/to/mps-kit \  # if using the HARP back-end
