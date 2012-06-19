@@ -150,3 +150,22 @@ Example: ``format(stream, "%s:%d", host, port)``
 +-------------+------------------+-----------------------+
 | %%          | None             | literal %             |
 +-------------+------------------+-----------------------+
+
+
+Parameter Lists
+===============
+
+This table shows what is required/allowed in method parameter lists,
+depending on what is specified in the generic function's parameter
+list.
+
+=================================  =========  =============  =============  =========
+Generic function's parameter list  ``#key``   ``#key a, b``  ``#all-keys``  ``#rest``
+=================================  =========  =============  =============  =========
+``(x)``                            Forbidden  Forbidden      Forbidden      Forbidden
+``(x, #key)``                      Required   Allowed        Allowed        Allowed
+``(x, #key a, b)``                 Required   Required       Allowed        Allowed
+``(x, #key, #all-keys)``           Required   Allowed        Automatic      Allowed
+``(x, #key a, b, #all-keys)``      Required   Required       Automatic      Allowed
+``(x, #rest r)``                   Forbidden  Forbidden      Forbidden      Required
+=================================  =========  =============  =============  =========
