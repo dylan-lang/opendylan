@@ -3,6 +3,26 @@ Open Dylan 2012.1 Release Notes
 *******************************
 
 
+.. 1  Introduction
+   2  Language Specification Changes
+     2.1  C3 Superclass Linearization
+   3  Library Changes
+   4  Documentation Improvements
+   5  dylan-compiler Improvements
+     5.1  Relocatable Executables and Libraries
+     5.2  Usability - Output and Locating Libraries
+     5.3  Documentation Generation
+     5.4  Dependency Graph Generation
+   6  Code Generation Improvements
+     6.1  Limited Collections
+   7  C Back-end Changes
+     7.1  Multi-threading
+     7.2  Performance Improvements
+     7.3  Shared Library Initialization
+     7.4  Fixes
+   8  Other Changes
+
+
 Introduction
 ============
 
@@ -59,6 +79,11 @@ This library has not yet been documented.
 
 ``load-library`` has now been implemented on Linux, Mac OS X and
 FreeBSD. Previously, this was only supported on Windows.
+
+A new ``strings`` library replaces the ``string-extensions`` library.
+The latter will be removed in an upcoming release.  The new library
+provides a simpler API with all names exported from a single
+``strings`` module.
 
 
 Documentation Improvements
