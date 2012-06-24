@@ -81,11 +81,15 @@ Library Changes
   FreeBSD. Previously, this was only supported on Windows.
 
 * A new ``strings`` library replaces the ``string-extensions``
-  library.  The latter will be removed in an upcoming release.  The
-  new library provides a simpler API with all names exported from a
-  single ``strings`` module.  `DEP-0004
+  library.  The new library provides a simpler API with all names
+  exported from a single ``strings`` module.  `DEP-0004
   <http://opendylan.org/proposals/dep-0004.html>`_ is currently the
   best documentation for this library.
+
+* The ``string-extensions`` library has been removed.  Use the
+  ``strings`` library instead.  Some of the functionality in
+  ``string-extensions``, such as character sets, was moved to the
+  regular-expressions library, which was the only thing using it.
 
 
 Documentation Improvements
