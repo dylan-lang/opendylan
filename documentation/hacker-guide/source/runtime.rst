@@ -234,7 +234,7 @@ language.
 
 #. There must be a consistent convention for all functions at the
    *external entry point*, so that functions can be called without the
-   caller having any knowledge knowledge of what they are.
+   caller having any knowledge of what they are.
 #. The code which is executed at external entry points should be shared
    by all functions with similar properties / lambda-lists.
 #. The design should make the path from the external entry point to the
@@ -484,8 +484,8 @@ Multiple Values
 ---------------
 
 The current implementation of multiple values supports Common Lisp
-semantics. It is about to be replaced by a new version which which
-support the new Dylan semantics.
+semantics. It is about to be replaced by a new version which
+supports the new Dylan semantics.
 
 Harlequin’s current implementation uses a register to return a single
 Dylan value, as this is the only value that is used by almost all
@@ -513,7 +513,7 @@ fact.
 Functions which return a dynamically-sized number of values return their
 values as above, but also return a count of the number being returned in
 a register. If a function dynamically happens to return zero values,
-then the return count will be set to zero, but the value*#f* will be
+then the return count will be set to zero, but the value *#f* will be
 returned as if it were a the first return value.
 
 If the caller of a function can statically determine the number of
@@ -623,7 +623,7 @@ Compiler Support for Threads
 Dylan Portability Interface
 ===========================
 
-The Simple Threads Library is designed for implementation using
+The Threads Library is designed for implementation using
 different threads APIs from common operating systems, including Unix
 and Windows. Harlequin’s implementation of the library is designed
 to be directly portable onto these operating systems. This portability
@@ -640,7 +640,7 @@ threads.
 Portability and Runtime Layers
 ------------------------------
 
-The design assumes that each of the concrete classes of the Simple
+The design assumes that each of the concrete classes of the
 Threads Library (``<thread>``, ``<simple-lock>``, ``<recursive-lock>``,
 ``<semaphore>`` and ``<notification>``) corresponds with an equivalent
 lower-level feature provided directly by either the operating system or
@@ -663,11 +663,10 @@ relocation by the garbage collector. The contents of the container slots
 will be copied during such a relocation — but the values they contain
 will not be subject to garbage collection or relocation themselves.
 
-The portability layer provides no direct support for the *fluid-bind*
-operation. The library implements a *fluid-variable* as a thread-local
-variable, and uses the high-level Dylan construct *unwind-protect* [also
-called *cleanup* in Dylan’s infix syntax] to manage the creation and
-deletion of new bindings.
+The portability layer provides no direct support for the *dynamic-bind*
+operation. The library implements a *dynamic variable* as a thread-local
+variable via the high-level Dylan constructs *define thread variable* and
+*block ... cleanup* to manage the creation and deletion of new bindings.
 
 The portability layer includes support for conditional update of atomic
 variables, as well as assignment. The implementation mechanism for these
@@ -698,7 +697,7 @@ Implementations of Dylan Thread Interfaces
 +-------------------------+-----------------------+-----------------------+
 | ``<notification>``      | condition variable    | event                 |
 +-------------------------+-----------------------+-----------------------+
-| ``fluid-variable``      | thread-local variable | thread-local variable |
+| ``dynamic variable``    | thread-local variable | thread-local variable |
 +-------------------------+-----------------------+-----------------------+
 | ``conditional-update!`` | mutex                 | exchange instruction  |
 |                         |                       | (using a guard value  |
@@ -754,7 +753,7 @@ their C equivalents, which are used by runtime-specific implementations
 of the portability layer.
 
 In general, all Dylan types can be thought of as equivalent to the C
-type ``D``, which is in turn equivalent to the C type ``void\*``. Of
+type ``D``, which is in turn equivalent to the C type ``void*``. Of
 course, runtime-specific implementations of the portability layer must
 have access to relevant fields of the Dylan objects on which they
 operate. The type definitions in `Correspondence Between Dylan Types
@@ -772,7 +771,7 @@ Correspondence Between Dylan Types and C Types
 +============================+===============+======================================+
 | ``<object>``               | *D*           | *typedef void\* D;*                  |
 +----------------------------+---------------+--------------------------------------+
-| ``<small-integer>``        | *DINT*        | *platform specific (size of void\*)* |
+| ``<integer>``              | *DINT*        | *platform specific (size of void\*)* |
 +----------------------------+---------------+--------------------------------------+
 | ``<function>``             | *DFN*         | *typedef D(\*DFN)(D, int, …);*       |
 +----------------------------+---------------+--------------------------------------+
@@ -950,7 +949,7 @@ make it thread safe.
 
 If foreign code is designed for use with multiple threads, then it is
 valid for it to use the synchronization facilities of the Dylan library
-(by calling back into Dylan, to invoke the Simple Threads Library
+(by calling back into Dylan, to invoke the Threads Library
 synchronization functions). Alternatively, it may use its own methods
 for synchronization, provided that these are not incompatible with the
 methods provided by the operating system. This is valid whenever it has
@@ -991,7 +990,7 @@ the program. But the low-level structures are not Dylan objects and must
 be explicitly freed when the Dylan container is collected (primitive
 functions are provided for this purpose). However, the core language of
 Dylan provides no *finalization* mechanism to invoke cleanup code when
-objects are reclaimed. Harlequin’s implementation of the Simple Threads
+objects are reclaimed. Harlequin’s implementation of the Threads
 Library strictly requires this, but it is not yet implemented. It is
 intended to provide finalization support for Dylan with a new garbage
 collector which is currently under development.
@@ -1014,8 +1013,7 @@ primitive-make-thread
 
 Signature
 
-(thread :: <thread>, name :: <optional-name>, priority ::
-<small-integer>, function :: <function>) => ()
+(thread :: <thread>, name :: <optional-name>, priority :: <integer>, function :: <function>) => ()
 
 Arguments
 
@@ -1075,7 +1073,7 @@ primitive-thread-join-single
 
 Signature
 
-(thread :: <thread>) => (error-code :: <small-integer>)
+(thread :: <thread>) => (error-code :: <integer>)
 
 Arguments
 
@@ -1106,7 +1104,7 @@ Arguments
 Values
 
 *result* The ``<thread>`` that was joined, if the join was successful;
-otherwise, a ``<small-integer>`` indicating the error.
+otherwise, a ``<integer>`` indicating the error.
 
 Description
 
@@ -1193,7 +1191,7 @@ primitive-wait-for-simple-lock
 
 Signature
 
-(lock :: <portable-container>) => (error-code :: <small-integer>)
+(lock :: <portable-container>) => (error-code :: <integer>)
 
 Arguments
 
@@ -1215,8 +1213,8 @@ primitive-wait-for-simple-lock-timed
 
 Signature
 
-(lock :: <portable-container>, millisecs :: <small-integer>)
-=> (error-code :: <small-integer>)
+(lock :: <portable-container>, millisecs :: <integer>)
+=> (error-code :: <integer>)
 
 Arguments
 
@@ -1241,7 +1239,7 @@ primitive-release-simple-lock
 
 Signature
 
-(lock :: <portable-container>) => (error-code :: <small-integer>)
+(lock :: <portable-container>) => (error-code :: <integer>)
 
 Arguments
 
@@ -1262,7 +1260,7 @@ primitive-owned-simple-lock
 
 Signature
 
-(lock :: <portable-container>) => (owned :: <small-integer>)
+(lock :: <portable-container>) => (owned :: <integer>)
 
 Arguments
 
@@ -1320,7 +1318,7 @@ primitive-wait-for-recursive-lock
 
 Signature
 
-(lock :: <portable-container>) => (error-code :: <small-integer>)
+(lock :: <portable-container>) => (error-code :: <integer>)
 
 Arguments
 
@@ -1344,8 +1342,8 @@ primitive-wait-for-recursive-lock-timed
 
 Signature
 
-(lock :: <portable-container>, millisecs :: <small-integer>)
-=> (error-code :: <small-integer>)
+(lock :: <portable-container>, millisecs :: <integer>)
+=> (error-code :: <integer>)
 
 Arguments
 
@@ -1371,7 +1369,7 @@ primitive-release-recursive-lock
 
 Signature
 
-(lock :: <portable-container>) => (error-code :: <small-integer>)
+(lock :: <portable-container>) => (error-code :: <integer>)
 
 Arguments
 
@@ -1393,7 +1391,7 @@ primitive-owned-recursive-lock
 
 Signature
 
-(lock :: <portable-container>) => (owned :: <small-integer>)
+(lock :: <portable-container>) => (owned :: <integer>)
 
 Arguments
 
@@ -1418,8 +1416,7 @@ primitive-make-semaphore
 Signature
 
 (lock :: <portable-container>, name :: <optional-name>,
-
-initial :: <small-integer>, max :: <small-integer>) => ()
+ initial :: <integer>, max :: <integer>) => ()
 
 Arguments
 
@@ -1457,7 +1454,7 @@ primitive-wait-for-semaphore
 
 Signature
 
-(lock :: <portable-container>) => (error-code :: <small-integer>)
+(lock :: <portable-container>) => (error-code :: <integer>)
 
 Arguments
 
@@ -1479,9 +1476,8 @@ primitive-wait-for-semaphore-timed
 
 Signature
 
-(lock :: <portable-container>, millisecs :: <small-integer>)
-
-=> (error-code :: <small-integer>)
+(lock :: <portable-container>, millisecs :: <integer>)
+=> (error-code :: <integer>)
 
 Arguments
 
@@ -1506,7 +1502,7 @@ primitive-release-semaphore
 
 Signature
 
-(lock :: <portable-container>) => (error-code :: <small-integer>)
+(lock :: <portable-container>) => (error-code :: <integer>)
 
 Arguments
 
@@ -1568,8 +1564,7 @@ primitive-wait-for-notification
 Signature
 
 (notification :: <portable-container>, lock :: <portable-container>)
-
-=> (error-code :: <small-integer>)
+=> (error-code :: <integer>)
 
 Arguments
 
@@ -1597,8 +1592,7 @@ primitive-wait-for-notification-timed
 Signature
 
 (notification :: <portable-container>, lock :: <portable-container>,
-
-millisecs :: <small-integer>) => (error-code :: <small-integer>)
+ millisecs :: <integer>) => (error-code :: <integer>)
 
 Arguments
 
@@ -1629,8 +1623,7 @@ primitive-release-notification
 Signature
 
 (notification :: <portable-container>, lock :: <portable-container>)
-
-=> (error-code :: <small-integer>)
+=> (error-code :: <integer>)
 
 Arguments
 
@@ -1658,8 +1651,7 @@ primitive-release-all-notification
 Signature
 
 (notification :: <portable-container>, lock :: <portable-container>)
-
-=> (error-code :: <small-integer>)
+=> (error-code :: <integer>)
 
 Arguments
 
@@ -1688,7 +1680,7 @@ primitive-sleep
 
 Signature
 
-(millisecs :: <small-integer>) => ()
+(millisecs :: <integer>) => ()
 
 Arguments
 
