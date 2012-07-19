@@ -269,7 +269,7 @@ end method;
 
 define method condition-to-string
     (diag :: <diagnostic>)
- => (string :: false-or(<string>))
+ => (string :: <string>)
   let diag-string :: <string> = make(<string>);
   let test-diag = diag;
   while (test-diag ~= #f)

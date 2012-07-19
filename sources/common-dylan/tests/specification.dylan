@@ -83,7 +83,7 @@ define module-spec common-extensions ()
   // Conditions
   open abstract class <format-string-condition> (<condition>);
   open abstract primary class <simple-condition> (<condition>);
-  open generic-function condition-to-string (<condition>) => (false-or(<string>));
+  open generic-function condition-to-string (<condition>) => (<string>);
   open abstract class <arithmetic-error> (<error>);
   sealed instantiable class <division-by-zero-error> (<arithmetic-error>);
   sealed instantiable class <arithmetic-overflow-error> (<arithmetic-error>);

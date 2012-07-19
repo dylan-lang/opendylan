@@ -34,7 +34,7 @@ define function return-code-name(return-code :: <object>)
 end function;
 
 define method condition-to-string(diag-error :: <odbc-diagnostic-error>)
- => (string :: false-or(<string>))
+ => (string :: <string>)
   format-to-string("ODBC Diagnostic Error - Return-code: (%=) %=\n",
                    diag-error.diagnostic-return-code,
                    return-code-name(diag-error.diagnostic-return-code));
@@ -46,7 +46,7 @@ define sealed class <odbc-diagnostic-warning> (<odbc-diagnostic-problem>,
 end class;
 
 define method condition-to-string(diag-warning :: <odbc-diagnostic-warning>)
- => (string :: false-or(<string>))
+ => (string :: <string>)
   format-to-string("ODBC Diagnostic Warning - \n"
                    "  Return-code: (%=) %=\n",
                    diag-warning.diagnostic-return-code,
@@ -60,7 +60,7 @@ define sealed concrete class <odbc-unexpected-return-code> (<error>)
 end class;
 
 define method condition-to-string(cond :: <odbc-unexpected-return-code>)
- => (string :: false-or(<string>))
+ => (string :: <string>)
   format-to-string("ODBC Unexpected Return Code - \n"
                    "  Return-code: (%=) %=\n",
                    cond.unexpected-return-code,
