@@ -45,6 +45,6 @@ end class <unhandled-diagnostic>;
 
 define method condition-to-string
     (condition :: <unhandled-diagnostic>)
- => (string :: false-or(<string>))
+ => (string :: <string>)
   format-to-string("Database error: %s\n", condition.diagnostic.message-text)
 end method condition-to-string;
