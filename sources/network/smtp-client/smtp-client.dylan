@@ -27,7 +27,7 @@ end class;
 
 define method condition-to-string
     (cond :: <smtp-error>)
- => (string :: false-or(<string>))
+ => (string :: <string>)
   format-to-string("%=: %s", cond.object-class, cond.smtp-error-response)
 end;
 

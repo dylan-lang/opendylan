@@ -547,11 +547,11 @@ end function string-to-machine-word;
 /// Condition/string conversion
 
 define open generic condition-to-string
-    (condition :: <condition>) => (string :: false-or(<string>));
+    (condition :: <condition>) => (string :: <string>);
 
 define method condition-to-string
-    (condition :: <condition>) => (string :: false-or(<string>))
-  #f
+    (condition :: <condition>) => (string :: <string>)
+  concatenate("Condition of class ", condition.object-class-name, " occured")
 end method condition-to-string;
 
 define method condition-to-string
@@ -572,12 +572,7 @@ define method print-pretty-name
     (buffer :: <string-buffer>, condition :: <condition>)
  => ()
   let message = condition-to-string(condition);
-  if (message)
-    print-string(buffer, message)
-  else
-    print-format(buffer, "Condition of class %s occurred",
-		 object-class-name(condition))
-  end
+  print-string(buffer, message)
 end method print-pretty-name;
 
 
