@@ -4196,18 +4196,17 @@ D NLX (Bind_exit_frame* target, D argument) {
   return((D)0);                 /* Keeps some compilers happy -- Won't actually get here */
 }
 
-D MAKE_EXIT_FRAME () {
+D SETUP_EXIT_FRAME (D frame) {
   TEB* teb = get_teb();
-  Bind_exit_frame* frame 
-    = (Bind_exit_frame*)allocate(sizeof(Bind_exit_frame));
+  Bind_exit_frame* be_frame = (Bind_exit_frame*)frame;
   trace_nlx("make exit frame %p from uwp %p with previous %p",
-            frame, teb->uwp_frame,
+            be_frame, teb->uwp_frame,
             teb->uwp_frame ? teb->uwp_frame->previous_unwind_protect_frame : 0);
-  frame->present_unwind_protect_frame = teb->uwp_frame;
+  be_frame->present_unwind_protect_frame = teb->uwp_frame;
 #ifdef DEBUG_NLX
   verify_nlx();
 #endif
-  return((D)frame);
+  return frame;
 }
 
 D SETUP_UNWIND_FRAME (D frame) {
