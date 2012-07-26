@@ -120,9 +120,8 @@ void *make_tlv_vector(int n)
   return vector;
 }
 
-void free_tlv_vector()
+void free_tlv_vector(D *vector)
 {
-  D *vector = get_tlv_vector();
   size_t size;
 
   // compute actual (byte) size
