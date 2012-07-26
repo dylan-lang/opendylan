@@ -53,7 +53,7 @@ define sideways method emit-gluefile
     for (name in init-names)
       format(stream, "  extern void %s();\n", name);
     end for;
-    format(stream, "  static initp = 0;\n");
+    format(stream, "  static int initp = 0;\n");
     format(stream, "  if (!initp) {\n");
     format(stream, "    initp = 1;\n");
     for (name in init-names)

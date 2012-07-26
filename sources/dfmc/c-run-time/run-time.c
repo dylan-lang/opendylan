@@ -4689,7 +4689,7 @@ void _Init_Run_Time ()
 {
   TEB *teb;
   int stack_marker;
-  static initp = 0;
+  static int initp = 0;
   if (!initp) {
     initp = 1;
     trace_init();
