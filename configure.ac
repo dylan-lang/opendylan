@@ -71,7 +71,7 @@ AC_SUBST(DYLANCOMPILER)
 bootstrap_target=1-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
-AC_PROG_CC
+AC_PROG_CC([clang gcc cc])
 
 AC_ARG_WITH(arch,
             AC_HELP_STRING([--with-arch=ARCH],
