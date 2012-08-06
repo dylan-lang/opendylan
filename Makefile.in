@@ -228,10 +228,6 @@ install-stage: $(prefix)/sources
 	cp -R $(abs_builddir)/Bootstrap.3/lib $(prefix)
 	cp $(abs_srcdir)/License.txt $(prefix)
 	cp $(abs_srcdir)/packages/unix/README $(prefix)
-	@if test -f $(abs_srcdir)/packages/unix/README-$(fd_target).diff; then \
-	  cd $(prefix); \
-	    -patch < $(abs_srcdir)/packages/unix/README-$(fd_target).diff; \
-	fi
 
 install: @bootstrap_target@ 3-stage-bootstrap install-stage
 
@@ -258,10 +254,6 @@ release-stage:
 	cp -R $(abs_builddir)/Bootstrap.3/lib $(abs_builddir)/release/opendylan-$(version)
 	cp $(abs_srcdir)/License.txt $(abs_builddir)/release/opendylan-$(version)
 	cp $(abs_srcdir)/packages/unix/README $(abs_builddir)/release/opendylan-$(version)
-	@if test -f $(abs_srcdir)/packages/unix/README-$(fd_target).diff; then \
-	  cd $(abs_builddir)/release/opendylan-$(version); \
-	    -patch < $(abs_srcdir)/packages/unix/README-$(fd_target).diff; \
-	fi
 	cd $(abs_builddir)/release; \
 	  tar cjf $(abs_builddir)/opendylan-$(version)-$(fd_target).tar.bz2 opendylan-$(version)
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/build
