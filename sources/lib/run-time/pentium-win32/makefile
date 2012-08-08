@@ -52,9 +52,6 @@ PLINTHDEST	 = $(LIBDEST)\mpsplinth.lib
 MINCRTDEST	 = $(LIBDEST)\minvcrt.lib
 BOEHMGCDEST	 = $(BINDEST)\gc.dll
 
-NOWEAKOBJS	 = no-weakness-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
-NOWEAKLIBFILE	 = no-weakness-pentium-run-time.lib
-
 BOEHMOBJS	 = boehm-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 BOEHMLIBFILE	 = boehm-pentium-run-time.lib
 
@@ -72,9 +69,6 @@ DYLANPLINTH      = dylan-plinth.lib
 
 collector.obj: ..\collector.c
 	$(CC) $(CFLAGS) /c ..\collector.c
-
-no-weakness-collector.obj: ..\no-weakness-collector.c ..\collector.c
-	$(CC) $(CFLAGS) /c ..\no-weakness-collector.c
 
 boehm-collector.obj:	..\boehm-collector.c ..\collector.c
 	$(CC) $(CFLAGS) /c ..\boehm-collector.c
@@ -95,9 +89,6 @@ $(DYLANPLINTH): $(PLINTHOBJS)
 
 $(LIBFILE): $(OBJS)
 	$(LINKLIB)$(LIBFILE) $(OBJS)
-
-$(NOWEAKLIBFILE): $(NOWEAKOBJS)
-	$(LINKLIB)$(NOWEAKLIBFILE) $(NOWEAKOBJS)
 
 $(BOEHMLIBFILE): $(BOEHMOBJS)
 	$(LINKLIB)$(BOEHMLIBFILE) $(BOEHMOBJS) gc.lib
@@ -127,11 +118,6 @@ install-runtime: $(LIBFILE)
   echo Building pentium run time: install-runtime
 	pushd $(LIBDEST) & (del /q /f $(LIBFILE)) & popd
 	copy $(LIBFILE) $(LIBDEST)
-
-install-noweak-runtime: $(NOWEAKLIBFILE)
-  echo Building pentium run time: install-noweak-runtime
-	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
-	copy $(NOWEAKLIBFILE) $(RUNTIMELIBDEST)
 
 install-boehm-runtime: $(BOEHMLIBFILE)
   echo Building pentium run time: install-boehm-runtime
@@ -195,12 +181,6 @@ install-stripped: ensure-dirs install-mmdw install-runtime install-common-libs
 install-debug: ensure-dirs install-debug-mmdw install-runtime install-common-libs
 
 install-symbolic: ensure-dirs install-symbolic-mmdw install-runtime install-common-libs
-
-install-noweak: ensure-dirs install-mmdw install-noweak-runtime install-common-libs
-
-install-noweak-debug: ensure-dirs install-debug-mmdw install-noweak-runtime install-common-libs
-
-install-noweak-symbolic: ensure-dirs install-symbolic-mmdw install-noweak-runtime install-common-libs
 
 install-boehm: ensure-dirs install-mmdw install-boehm-runtime install-common-libs
 

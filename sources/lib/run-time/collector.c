@@ -121,21 +121,7 @@ void force_reference_to_spy_interface()
 #include "win32-types.h"
 #endif
 
-#ifdef NO_WEAKNESS
-/* Revert the definitions of anything to do with weakness */
-#define MPS_RANK_WEAK MPS_RANK_EXACT
-#define dylan_fmt_A_weak dylan_fmt_A
-#define mps_class_awl mps_class_amc
-/* Plus an extra extern */
-#ifndef BOEHM_GC
-extern mps_res_t mps_root_create_table_masked(mps_root_t *, mps_space_t,
-                                              mps_rank_t, mps_rm_t,
-                                              mps_addr_t *, size_t,
-                                              mps_word_t);
-#endif
-#else
 #include "mpscawl.h"    /* MPS pool class AWL */
-#endif /* NO_WEAKNESS */
 
 #ifdef NO_LEAF_OBJECT
 #define mps_class_amcz mps_class_amc
@@ -2606,11 +2592,9 @@ MMError dylan_init_memory_manager()
   res = mps_fmt_create_A(&format, arena, fmt_A);
   if(res) { init_error("create format"); return(res); }
 
-#ifndef NO_WEAKNESS
   fmt_A_weak = dylan_fmt_A_weak();    
   res = mps_fmt_create_A(&dylan_fmt_weak_s, arena, fmt_A_weak);
   if(res) { init_error("create weak format"); return(res); }
-#endif
 
   res = mps_pool_create(&main_pool, arena, mps_class_amc(), format, chain);
   if(res) { init_error("create main pool"); return(res); }
@@ -2623,14 +2607,10 @@ MMError dylan_init_memory_manager()
   if(res) { init_error("create leaf pool"); return(res); }
 #endif
 
-#ifdef NO_WEAKNESS
-  weak_table_pool = main_pool;
-#else
   /* Create the Automatic Weak Linked pool */
   res = mps_pool_create(&weak_table_pool, arena, mps_class_awl(),
 			dylan_fmt_weak_s, dylan_weak_dependent);
   if(res) { init_error("create weak pool"); return(res); }
-#endif
 
   /* Create the MV pool for miscellaneous objects. */
   /* This is also used for wrappers. */
@@ -2688,16 +2668,12 @@ void dylan_shut_down_memory_manager()
   while(primitive_mps_finalization_queue_first());
 #endif
   mps_pool_destroy(misc_pool);
-#ifndef NO_WEAKNESS
   mps_pool_destroy(weak_table_pool);
-#endif
 #ifndef NO_LEAF_OBJECT
   mps_pool_destroy(leaf_pool);
 #endif
   mps_pool_destroy(main_pool);
-#ifndef NO_WEAKNESS
   mps_fmt_destroy(dylan_fmt_weak_s);
-#endif
   mps_fmt_destroy(format);
   mps_chain_destroy(chain);
   mps_arena_destroy(arena);
