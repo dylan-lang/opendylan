@@ -2402,18 +2402,6 @@ BOOL WINAPI DylanBreakControlHandler(DWORD dwCtrlType)
     }
 }
 
-#if defined(X86_LINUX_PLATFORM)
-
-RUN_TIME_API
-void check_runtime_thread_library_uses_segment_register() {
-
-  // XXX track down caller and eliminate
-
-  return;
-}
-
-#endif
-
 #ifndef BOEHM_GC
 #include <stdlib.h>
 #include <limits.h>
