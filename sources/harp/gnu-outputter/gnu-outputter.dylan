@@ -97,9 +97,6 @@ end method;
 define constant $x86-linux-assemble-command-line =
   "as -L -o %s.o %s.s";
 
-define constant $ppc-linux-assemble-command-line =
-  "as -L -Z -o %s.o %s.s";
-
 define method assemble-harp-outputter
     (outputter :: <harp-linux-outputter>, filename) => ()
   if (outputter.finished-outputting?)
@@ -109,7 +106,6 @@ define method assemble-harp-outputter
       let command-line =
 	format-to-string(select ($machine-name)
 			   #"x86" => $x86-linux-assemble-command-line;
-			   #"ppc" => $ppc-linux-assemble-command-line;
 			 end,
 			 file-string, file-string);
       run-application(command-line);

@@ -1478,22 +1478,6 @@ __asm__(
       // clobbered machine registers
       : "ax", "cx"
   );
-#elif defined(PPC_LINUX_PLATFORM)
-__asm__(
-      "mr     11, %0\n\t"
-      "li     12, 1\n\t"
-      "lwarx  13, 0, 11\n\t"
-      "addc   14, 12, 13\n\t"
-      "stwcx. 14, 0, 11\n\t"
-      "bne-   -16\n\t"
-
-      // output operands
-      :
-      // input operands
-      : "g" (var)
-      // clobbered machine registers
-      : "r11", "r12", "r13", "r14"
-  );
 #endif
 }
 
@@ -1520,23 +1504,6 @@ __asm__(
     // clobbered machine registers
     : "ax", "cx"
   );
-#elif defined(PPC_LINUX_PLATFORM)
-__asm__(
-      "mr     11, %0\n\t"
-      "li     12, -1\n\t"
-      "lwarx  13, 0, 11\n\t"
-      "addc   14, 12, 13\n\t"
-      "stwcx. 14, 0, 11\n\t"
-      "bne-   -16\n\t"
-
-      // output operands
-      :
-      // input operands
-      : "g" (var)
-      // clobbered machine registers
-      : "r11", "r12", "r13", "r14"
-
-  );
 #endif
 }
 
@@ -1561,25 +1528,6 @@ __asm__(
     : "g" (destination), "g" (exchange), "g" (compare)
     // clobbered machine registers
     : "ax", "cx", "dx"
-  );
-#elif defined(PPC_LINUX_PLATFORM)
-__asm__(
-      "mr     6, %0\n\t"
-      "mr     7, %2\n\t"
-      "mr     8, %1\n\t"
-      "lwarx  9, 0, 6\n\t"
-      "cmpw   7, 9\n\t"
-      "bne-   7\n\t"
-      "stwcx. 8, 0, 6\n\t"
-      "bne-   -16\n\t"
-      "mr     3, 9\n\t"
-
-      // output operands
-      :
-      // input operands
-      : "g" (destination), "g" (exchange), "g" (compare)
-      // clobbered machine registers
-      : "r3", "r6", "r7", "r8", "r9"
   );
 #endif
 }
