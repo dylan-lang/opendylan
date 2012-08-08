@@ -573,20 +573,6 @@ __inline
 
   gc_teb = teb;
 
-#elif defined(PPC_LINUX_PLATFORM)
-  __asm__
-    (
-      "la     11, %1\n\t"
-      "lwz    12, 0x14(11)\n\t"  /* the TEB */
-      "mr     %0, 12\n"
-
-      // output operands
-      : "=g" (gc_teb)
-      // input operands
-      : "g" (Pthread_local_storage)
-      // clobbered machine registers
-      : "r12", "r11"
-    );
 #else
   __asm
     {
@@ -788,26 +774,6 @@ void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
       : "g" (fill), "g" (count), "g" (mem)
       // clobbered machine registers
       : "ax", "cx","di","si", "cc"
-    );
-#elif defined(PPC_LINUX_PLATFORM)
-  __asm__
-    (
-      "mr    11, %0\n\t"
-      "mr    12, %1\n\t"
-      "mr    13, %2\n\t"
-      "addic 12, 12, 1\n\t"
-      "mtctr 12\n\t"
-      "addic 13, 13, -4\n\t"
-      "b     8\n\t"
-      "stwu  11, 4(13)\n\t"
-      "bdnz  -4\n\t"
-
-      // output operands
-      :
-      // input operands
-      : "g" (fill), "g" (count), "g" (mem)
-      // clobbered machine registers
-      : "r11", "r12","r13"
     );
 #else
   __asm
