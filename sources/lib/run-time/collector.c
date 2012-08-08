@@ -1400,73 +1400,7 @@ void MMFreeMisc(void *old, size_t size)
     \
   \
   return object;  \
-} 
-
-
-#if 0
-
-/* Here's an attempt to implement general allocators using a function rather than */
-/* a macro. Unfortunately, the compiler can't be relied upon to inline the code.  */
-
-__inline
-static
-void *primitive_alloc_internal(size_t size,
-			       void *wrapper,
-			       
-			       mps_bool_t s1q,  /* init first 2 fixed slots */
-			       void *s1,
-			       mps_bool_t s2q,
-			       void *s2,
-			       
-			       mps_bool_t sq,   /* init any fixed slots */
-			       int no_to_fill,
-			       void *fill,
-			       
-			       mps_bool_t rq,   /* init repeated slot size */
-			       int rep_size,
-			       int rep_size_slot,
-			       
-			       mps_bool_t rfq,  /* init word repeated slot data */
-			       void *word_fill,
-			       
-			       mps_bool_t bfq,  /* init byte repeated slot data */
-			       mps_bool_t ztq,
-			       unsigned char byte_fill)
-{
-  void **object;
-
-  gc_teb_t gc_teb = current_gc_teb();
-
-  update_allocation_counter(gc_teb, size, wrapper);
-
-  do {
-    object = MMReserveObject(size, wrapper, gc_teb);
-    object[0] = wrapper;
-    if (sq) fill_mem(object + 1, fill, no_to_fill);
-    if (s1q) object[1] = s1;
-    if (s2q) object[2] = s2;
-    if (rq)
-      if (rep_size_slot)
-	object[rep_size_slot] = (void*)((rep_size << 2) + 1);
-    if (rfq) fill_mem(object + rep_size_slot + 1, word_fill, rep_size);
-  }
-  while(!MMCommitObject(object, size, gc_teb));
-
-  if (bfq && rq) {
-    unsigned char *d = (unsigned char*)(&(object[rep_size_slot + 1]));
-    int byte_fill_size = rep_size;
-    memset(d, byte_fill, byte_fill_size);
-    if (ztq) {
-      d[byte_fill_size] = 0;
-    }
-  }
-  
-
-  return object;
 }
-
-#endif
-
 
 RUN_TIME_API
 void *primitive_alloc(size_t size,
