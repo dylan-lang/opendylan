@@ -191,17 +191,8 @@ mps_bool_t dylan_check(mps_addr_t addr)
  * error stream then causes abnormal program termination.
  */
 
-#ifdef MPS_OS_SU
-extern int fprintf(FILE *, const char *, ...);
-#endif
-
 static void defaultHandler(MMError e, const char *opName, size_t size)
 {
-  /*
-  fprintf(stderr,
-          "**** %s:%d: request for %lu bytes failed -- aborting\n",
-          opName, (int)e, (unsigned long)size);
-  */
 #ifndef BOEHM_GC
   mps_lib_FILE *stream = mps_lib_get_stderr();  
   mps_lib_fputs("\nError: ", stream);
