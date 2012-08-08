@@ -52,10 +52,6 @@ PLINTHDEST	 = $(LIBDEST)\mpsplinth.lib
 MINCRTDEST	 = $(LIBDEST)\minvcrt.lib
 BOEHMGCDEST	 = $(BINDEST)\gc.dll
 
-BUFFOBJS	 = buffalo-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
-BUFFLIBFILE	 = buffalo-pentium-run-time.lib
-BUFFMMDW         = buffalo-mmdw.lib
-
 NOWEAKOBJS	 = no-weakness-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 NOWEAKLIBFILE	 = no-weakness-pentium-run-time.lib
 
@@ -100,9 +96,6 @@ $(DYLANPLINTH): $(PLINTHOBJS)
 $(LIBFILE): $(OBJS)
 	$(LINKLIB)$(LIBFILE) $(OBJS)
 
-$(BUFFLIBFILE): $(BUFFOBJS)
-	$(LINKLIB)$(BUFFLIBFILE) $(BUFFOBJS)
-
 $(NOWEAKLIBFILE): $(NOWEAKOBJS)
 	$(LINKLIB)$(NOWEAKLIBFILE) $(NOWEAKOBJS)
 
@@ -145,12 +138,6 @@ install-boehm-runtime: $(BOEHMLIBFILE)
 	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
 	copy $(BOEHMLIBFILE) $(RUNTIMELIBDEST)
 	copy gc.dll $(BOEHMGCDEST)
-
-install-buffalo-runtime: $(BUFFLIBFILE)
-  echo Building pentium run time: install-buffalo-runtime
-	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
-	copy $(BUFFLIBFILE) $(RUNTIMELIBDEST)
-
 
 install-dylan-plinth: $(DYLANPLINTH)
   echo Building pentium run time: install-dylan-plinth
@@ -199,11 +186,6 @@ install-debug-mmdw: $(DEBUGMMDW)
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	copy $(DEBUGMMDW) $(MMDWDEST)
 
-install-buffalo-mmdw: $(BUFFMMDW)
-  echo Building pentium run time: install-buffalo-mmdw
-	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
-	copy $(BUFFMMDW) $(MMDWDEST)
-
 
 install-common-libs: ensure-dirs install-plinth install-userlib install-mincrt
 
@@ -225,8 +207,6 @@ install-boehm: ensure-dirs install-mmdw install-boehm-runtime install-common-lib
 install-boehm-debug: ensure-dirs install-debug-mmdw install-boehm-runtime install-common-libs
 
 install-boehm-symbolic: ensure-dirs install-symbolic-mmdw install-boehm-runtime install-common-libs
-
-install-buffalo: ensure-dirs install-buffalo-mmdw install-buffalo-runtime install-userlib
 
 
 install: ensure-dirs install-stripped install-build
