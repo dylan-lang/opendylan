@@ -48,11 +48,8 @@ void force_reference_to_spy_interface()
 
 /* Controlling the use of the Leaf Object pool 
  *
- * The leaf pool can be turned off completely with
- *   #define NO_LEAF_OBJECT
- *
- * Alternatively, finer control may be used to determine whether
- * common allocation profiles use the leaf pool or the main pool.
+ * Fine control may be used to determine whether common allocation
+ * profiles use the leaf pool or the main pool.
 */
 
 #define USE_LEAF_FOR_SMALL_OBJECTS
@@ -122,12 +119,7 @@ void force_reference_to_spy_interface()
 #endif
 
 #include "mpscawl.h"    /* MPS pool class AWL */
-
-#ifdef NO_LEAF_OBJECT
-#define mps_class_amcz mps_class_amc
-#else
 #include "mpsclo.h"    /* MPS pool class LO */
-#endif
 
 /* Configuration
  *
@@ -2599,13 +2591,9 @@ MMError dylan_init_memory_manager()
   res = mps_pool_create(&main_pool, arena, mps_class_amc(), format, chain);
   if(res) { init_error("create main pool"); return(res); }
 
-#ifdef NO_LEAF_OBJECT
-  leaf_pool = main_pool;
-#else
   /* Create the Leaf Object pool */
   res = mps_pool_create(&leaf_pool, arena, mps_class_amcz(), format, chain);
   if(res) { init_error("create leaf pool"); return(res); }
-#endif
 
   /* Create the Automatic Weak Linked pool */
   res = mps_pool_create(&weak_table_pool, arena, mps_class_awl(),
@@ -2669,9 +2657,7 @@ void dylan_shut_down_memory_manager()
 #endif
   mps_pool_destroy(misc_pool);
   mps_pool_destroy(weak_table_pool);
-#ifndef NO_LEAF_OBJECT
   mps_pool_destroy(leaf_pool);
-#endif
   mps_pool_destroy(main_pool);
   mps_fmt_destroy(dylan_fmt_weak_s);
   mps_fmt_destroy(format);
