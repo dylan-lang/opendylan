@@ -46,14 +46,14 @@ void force_reference_to_spy_interface()
 }
 
 
-/* Controlling the use of the Leaf Object pool 
+/* Controlling the use of the Leaf Object pool
  *
  * Fine control may be used to determine whether common allocation
  * profiles use the leaf pool or the main pool.
 */
 
 #define USE_LEAF_FOR_SMALL_OBJECTS
-#define USE_LEAF_FOR_STRINGS      
+#define USE_LEAF_FOR_STRINGS
 #define USE_LEAF_FOR_REPEATED_OBJECTS
 
 
@@ -137,7 +137,7 @@ typedef unsigned short          half_word;
 typedef _int64                  double_word;
 typedef float                   single_float;
 typedef double                  double_float;
-typedef void* 	                dylan_object;
+typedef void*                         dylan_object;
 
 
 #define TARG_CHECK (MPS_RES_OK == MMSUCCESS && \
@@ -153,7 +153,7 @@ typedef void* 	                dylan_object;
 void report_runtime_error (char* header, char* message)
 {
 #ifndef BOEHM_GC
-  mps_lib_FILE *stream = mps_lib_get_stderr();  
+  mps_lib_FILE *stream = mps_lib_get_stderr();
   mps_lib_fputs(header, stream);
   mps_lib_fputs(message, stream);
   mps_lib_fputc('\n', stream);
@@ -194,7 +194,7 @@ mps_bool_t dylan_check(mps_addr_t addr)
 static void defaultHandler(MMError e, const char *opName, size_t size)
 {
 #ifndef BOEHM_GC
-  mps_lib_FILE *stream = mps_lib_get_stderr();  
+  mps_lib_FILE *stream = mps_lib_get_stderr();
   mps_lib_fputs("\nError: ", stream);
   mps_lib_fputs(opName, stream);
   mps_lib_fputs(" - Request to allocate failed -- aborting\n", stream);
@@ -254,7 +254,7 @@ typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
 /* This assumes that the gc_teb is contiguous with the main teb. the HARP    */
 /* runtime ensure this is always true.                                       */
 
-int teb_allocation_counter_offset = - ((int)sizeof(size_t)); 
+int teb_allocation_counter_offset = - ((int)sizeof(size_t));
 
 
 BOOL heap_statsQ = FALSE;
@@ -276,7 +276,7 @@ void primitive_begin_heap_alloc_stats()
   heap_statsQ = TRUE;
   heap_alloc_statsQ = TRUE;
   clear_wrapper_stats();
-#endif 
+#endif
 }
 
 RUN_TIME_API
@@ -291,7 +291,7 @@ int primitive_end_heap_alloc_stats(char *buffer)
   dylan_streamQ = FALSE;
   heap_alloc_statsQ = FALSE;
   return(dylan_buffer_pos);
-#endif 
+#endif
 }
 
 extern_CRITICAL_SECTION(class_breakpoint_lock);
@@ -367,7 +367,7 @@ void primitive_clear_class_breakpoint(void *class)
     // clear breakpoint on all dylan classes
     check_wrapper_breakpoint_for_objectQ = FALSE;
     break;
-  
+
   default:
     wrapper = class_wrapper(class);
     clear_wrapper_breakpoint(wrapper);
@@ -494,7 +494,7 @@ void remove_polling_thread (HANDLE hThread)
   if (index > -1) {
     enter_CRITICAL_SECTION(&polling_threads_lock);
       for (i = index; i < polling_threads_cursor + 1; i++)
-	polling_threads[i] = polling_threads[i+1];
+        polling_threads[i] = polling_threads[i+1];
 
       --polling_threads_cursor;
     leave_CRITICAL_SECTION(&polling_threads_lock);
@@ -524,7 +524,7 @@ void HandleDylanKeyboardInterrupt()
 {
   if (DylanKeyboardInterruptPollingQ
       || (polling_individual_threadsQ()
-	  && (polling_threadQ(get_current_thread_handle())))) {
+          && (polling_threadQ(get_current_thread_handle())))) {
     dylan_keyboard_interruptQ = FALSE;
     call_dylan_function(dylan_keyboard_break_handler, 0);
   }
@@ -538,7 +538,7 @@ extern void check_wrapper_breakpoint (void *wrapper, int size);
 extern BOOL Prunning_dylan_spy_functionQ;
 
 
-__inline 
+__inline
 void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 {
 #ifndef NO_ALLOCATION_COUNT_FOR_PROFILER
@@ -550,24 +550,24 @@ void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
   if (heap_statsQ) {
     if (!Prunning_dylan_spy_functionQ) {
       if (heap_alloc_statsQ)
-	add_stat_for_object(NULL, wrapper, count);
+        add_stat_for_object(NULL, wrapper, count);
       check_wrapper_breakpoint(wrapper, count);
     }
   }
-#endif 
+#endif
 }
 
 void zero_allocation_counter(gc_teb_t gc_teb)
 {
 #ifndef NO_ALLOCATION_COUNT_FOR_PROFILER
   gc_teb->gc_teb_allocation_counter = 0;
-#endif 
+#endif
 }
 
 
-__inline 
+__inline
  gc_teb_t current_gc_teb()
-{ 
+{
   gc_teb_t gc_teb;
 #if defined(X86_LINUX_PLATFORM)
 
@@ -670,7 +670,7 @@ MMError dylan_mm_register_thread(void *stackBot)
 
   /* Create a root object for ambiguously scanning the stack. */
   assert(stackBot != NULL);
-  res = mps_root_create_reg(&gc_teb->gc_teb_stack_root, arena, MPS_RANK_AMBIG, 
+  res = mps_root_create_reg(&gc_teb->gc_teb_stack_root, arena, MPS_RANK_AMBIG,
                            (mps_rm_t)0,
                             gc_teb->gc_teb_thread, mps_stack_scan_ambig, stackBot, 0);
   if(res) goto failStackRootCreate;
@@ -734,7 +734,7 @@ MMError dylan_init_thread(void **rReturn, void *(*f)(void *, size_t), void *p, s
   gc_teb_t gc_teb = current_gc_teb();
 
   gc_teb->gc_teb_inside_tramp = 1;
-  
+
   /* Go for it! */
   mps_tramp(rReturn, f, p, s);
 
@@ -756,7 +756,7 @@ void *dylan_callin_handler(void *arg_base, size_t s)
 
   mps_bool_t was_inside = gc_teb->gc_teb_inside_tramp;
   gc_teb->gc_teb_inside_tramp = 1;
-  
+
   /* Go for it! */
   mps_tramp(&res, dylan_callin_internal, arg_base, s);
 
@@ -769,7 +769,7 @@ void *dylan_callin_handler(void *arg_base, size_t s)
 
 
 
-__inline 
+__inline
 void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
 {
 #if defined(X86_LINUX_PLATFORM)
@@ -820,7 +820,7 @@ void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
     };
 #endif
 };
-  
+
 
 #define define_fill_mem(type) \
 __inline  \
@@ -840,7 +840,7 @@ define_fill_mem(single_float)
 define_fill_mem(double_float)
 
 
-__inline 
+__inline
 void untraced_fill_byte_char_mem(void **object, byte_char fill, int count, int count_slot, mps_bool_t ztq)
 {
   byte_char *d = (byte_char*)(&(object[count_slot + 1]));
@@ -936,7 +936,6 @@ void mps__free(size_t *old)
 void dylan__finish__malloc(void)
 {
 }
-  
 
 
 __inline
@@ -952,11 +951,11 @@ extern void *dylan_signal_low_memory;
 extern void *dylan_false;
 
 #define reserve_memory_for_object(size,  \
-				  wrapper,  \
-				  gc_teb,  \
-				  gc_teb_ap,  \
-				  handler,  \
-				  MMReserve)  \
+                                  wrapper,  \
+                                  gc_teb,  \
+                                  gc_teb_ap,  \
+                                  handler,  \
+                                  MMReserve)  \
 {  \
   mps_res_t res;  \
   mps_addr_t p;  \
@@ -987,8 +986,8 @@ extern void *dylan_false;
         /* No permission to use the reservoir.  */  \
         /* Check the reservoir is full before looping again */  \
         /* Do this inside a critical region with the limit setting function */  \
-	enter_CRITICAL_SECTION(&reservoir_limit_set_lock);  \
-	  { \
+        enter_CRITICAL_SECTION(&reservoir_limit_set_lock);  \
+          { \
           size_t limit = mps_reservoir_limit(arena);  \
           size_t avail = mps_reservoir_available(arena);  \
           if (avail < limit) {  \
@@ -1296,7 +1295,7 @@ void MMFreeMisc(void *old, size_t size)
   slot_opt:
     <default>    ()                    No initialization of fixed slots
     _s1          (data1)               Fill slot 1 with data1
-    _s2          (data1, data2)        Fill slot 1 with data1, slot 2 with data2 
+    _s2          (data1, data2)        Fill slot 1 with data1, slot 2 with data2
     _s           (fill_num, fill)      Fill fill_num slots with fill
 
 
@@ -1308,44 +1307,44 @@ void MMFreeMisc(void *old, size_t size)
     _ruf         (rep_size, off, fill) Set size slot and fill repeated untraced data
     _ruz         (rep_size, off)       Set rep slot size. Zero terminate untraced data
     _rufz        (rep_size, off, fill) Set size slot, fill & zero terminate  untraced data
-    
+
 
 
 */
 
 
 #define alloc_internal(size,  \
-		       wrapper,  \
-		         \
-		       s1q,  /* init first 2 fixed slots */  \
-		       s1,  \
-		       s2q,  \
-		       s2,  \
-		         \
-		       sq,   /* init any fixed slots */  \
-		       no_to_fill,  \
-		       fill,  \
-		         \
-		       rq,   /* init repeated slot size */  \
-		       rep_size,  \
-		       rep_size_slot,  \
-		         \
-		       rfq,  /* init repeated slot data for type */  \
-		       type, \
-		       word_fill,  \
-		         \
-		       ufq,  /* init untraced repeated slot data */  \
-		       ztq,  \
-		       type2, \
-		       untraced_fill,  \
-		         \
-		       reserve,  \
-		       commit)  \
+                       wrapper,  \
+                         \
+                       s1q,  /* init first 2 fixed slots */  \
+                       s1,  \
+                       s2q,  \
+                       s2,  \
+                         \
+                       sq,   /* init any fixed slots */  \
+                       no_to_fill,  \
+                       fill,  \
+                         \
+                       rq,   /* init repeated slot size */  \
+                       rep_size,  \
+                       rep_size_slot,  \
+                         \
+                       rfq,  /* init repeated slot data for type */  \
+                       type, \
+                       word_fill,  \
+                         \
+                       ufq,  /* init untraced repeated slot data */  \
+                       ztq,  \
+                       type2, \
+                       untraced_fill,  \
+                         \
+                       reserve,  \
+                       commit)  \
 {  \
   \
   size_t msize = (size);  \
   void *mwrapper = (wrapper);  \
-			         \
+                                 \
   mps_bool_t ms1q = (s1q);  /* init first 2 fixed slots */  \
   void *ms1 = (s1);  \
   mps_bool_t ms2q = (s2q);  \
@@ -1380,7 +1379,7 @@ void MMFreeMisc(void *old, size_t size)
     if (ms2q) object[2] = ms2;  \
     if (mrq)  \
       if (mrep_size_slot)  \
-	object[mrep_size_slot] = (void*)((mrep_size << 2) + 1);  \
+        object[mrep_size_slot] = (void*)((mrep_size << 2) + 1);  \
     if (mrfq) fill_ ## type ## _mem((type *)(object + mrep_size_slot + 1), mword_fill, mrep_size);  \
   }  \
   while(!commit(object, msize, gc_teb));  \
@@ -1395,131 +1394,131 @@ void MMFreeMisc(void *old, size_t size)
 
 RUN_TIME_API
 void *primitive_alloc(size_t size,
-		      void *wrapper)
+                      void *wrapper)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 0, 0, 0, 
-		 0, 0, 0,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 0, 0, 0,
+                 0, 0, 0,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_s1(size_t size,
-			  void *wrapper,
-			  void *data1)
+                          void *wrapper,
+                          void *data1)
 {
-  alloc_internal(size, wrapper, 
-		 1, data1, 0, 0,
-		 0, 0, 0, 
-		 0, 0, 0,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 1, data1, 0, 0,
+                 0, 0, 0,
+                 0, 0, 0,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveObject, MMCommitObject);
 }
 
 RUN_TIME_API
 void *primitive_alloc_s2(size_t size,
-			  void *wrapper,
-			  void *data1,
-			  void *data2)
+                          void *wrapper,
+                          void *data1,
+                          void *data2)
 {
-  alloc_internal(size, wrapper, 
-		 1, data1, 1, data2,
-		 0, 0, 0, 
-		 0, 0, 0,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 1, data1, 1, data2,
+                 0, 0, 0,
+                 0, 0, 0,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_s(size_t size,
-			void *wrapper,
-			int no_to_fill,
-			void *fill)
+                        void *wrapper,
+                        int no_to_fill,
+                        void *fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 0, 0, 0,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 0, 0, 0,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_r(size_t size,
-			void *wrapper,
-			int rep_size,
-			int rep_size_slot)
+                        void *wrapper,
+                        int rep_size,
+                        int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 0, 0, 0,
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 0, 0, 0,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveObject, MMCommitObject);
 }
 
 RUN_TIME_API
 void *primitive_alloc_rf(size_t size,
-			 void *wrapper,
-			 int rep_size,
-			 int rep_size_slot,
-			 dylan_object fill)
+                         void *wrapper,
+                         int rep_size,
+                         int rep_size_slot,
+                         dylan_object fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 0, 0, 0,
-		 1, rep_size, rep_size_slot,
-		 1, dylan_object, fill,
-		 0, 0, dylan_object, 0,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 0, 0, 0,
+                 1, rep_size, rep_size_slot,
+                 1, dylan_object, fill,
+                 0, 0, dylan_object, 0,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_s_r(size_t size,
-			  void *wrapper,
-			  int no_to_fill,
-			  void *fill,
-			  int rep_size,
-			  int rep_size_slot)
+                          void *wrapper,
+                          int no_to_fill,
+                          void *fill,
+                          int rep_size,
+                          int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 #define define_primitive_alloc_s_rf(type, suffix) \
 RUN_TIME_API \
 void *primitive_alloc_s_ ## suffix(size_t size, \
-				   void *wrapper, \
-				   int no_to_fill, \
-				   void *fill, \
-				   int rep_size, \
-				   int rep_size_slot, \
-				   type rep_fill) \
+                                   void *wrapper, \
+                                   int no_to_fill, \
+                                   void *fill, \
+                                   int rep_size, \
+                                   int rep_size_slot, \
+                                   type rep_fill) \
 { \
   alloc_internal(size, wrapper,  \
-		 0, 0, 0, 0, \
-		 1, no_to_fill, fill,  \
-		 1, rep_size, rep_size_slot, \
-		 1, type, rep_fill, \
-		 0, 0, dylan_object, 0, \
-		 MMReserveObject, MMCommitObject); \
+                 0, 0, 0, 0, \
+                 1, no_to_fill, fill,  \
+                 1, rep_size, rep_size_slot, \
+                 1, type, rep_fill, \
+                 0, 0, dylan_object, 0, \
+                 MMReserveObject, MMCommitObject); \
 }
 
 define_primitive_alloc_s_rf(dylan_object, rf)
@@ -1531,206 +1530,206 @@ define_primitive_alloc_s_rf(double_word, rdwf)
 
 RUN_TIME_API
 void *primitive_alloc_s_rbf(size_t size,
-			    void *wrapper,
-			    int no_to_fill,
-			    void *fill,
-			    int rep_size,
-			    int rep_size_slot,
-			    int byte_fill)
+                            void *wrapper,
+                            int no_to_fill,
+                            void *fill,
+                            int rep_size,
+                            int rep_size_slot,
+                            int byte_fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 1, 0, byte_char, byte_fill,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 1, 0, byte_char, byte_fill,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_s_rbfz(size_t size,
-			     void *wrapper,
-			     int no_to_fill,
-			     void *fill,
-			     int rep_size,
-			     int rep_size_slot,
-			     int byte_fill)
+                             void *wrapper,
+                             int no_to_fill,
+                             void *fill,
+                             int rep_size,
+                             int rep_size_slot,
+                             int byte_fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 1, 1, byte_char, byte_fill,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 1, 1, byte_char, byte_fill,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_rbfz(size_t size,
-			   void *wrapper,
-			   int rep_size,
-			   int rep_size_slot,
-			   int byte_fill)
+                           void *wrapper,
+                           int rep_size,
+                           int rep_size_slot,
+                           int byte_fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 0, 0, 0,
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 1, 1, byte_char, byte_fill,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 0, 0, 0,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 1, 1, byte_char, byte_fill,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_s_rb(size_t size,
-			   void *wrapper,
-			   int no_to_fill,
-			   void *fill,
-			   int rep_size,
-			   int rep_size_slot)
+                           void *wrapper,
+                           int no_to_fill,
+                           void *fill,
+                           int rep_size,
+                           int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveObject, MMCommitObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveObject, MMCommitObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_leaf(size_t size,
-			   void *wrapper)
+                           void *wrapper)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 0, 0, 0, 
-		 0, 0, 0,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveLeafObject, MMCommitLeafObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 0, 0, 0,
+                 0, 0, 0,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveLeafObject, MMCommitLeafObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_leaf_s_r(size_t size,
-			       void *wrapper,
-			       int no_to_fill,
-			       void *fill,
-			       int rep_size,
-			       int rep_size_slot)
+                               void *wrapper,
+                               int no_to_fill,
+                               void *fill,
+                               int rep_size,
+                               int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveLeafRepeated, MMCommitLeafRepeated);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveLeafRepeated, MMCommitLeafRepeated);
 }
 
 
 
 RUN_TIME_API
 void *primitive_alloc_leaf_s1(size_t size,
-			      void *wrapper,
-			      void *data1)
+                              void *wrapper,
+                              void *data1)
 {
-  alloc_internal(size, wrapper, 
-		 1, data1, 0, 0,
-		 0, 0, 0, 
-		 0, 0, 0,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveLeafObject, MMCommitLeafObject);
+  alloc_internal(size, wrapper,
+                 1, data1, 0, 0,
+                 0, 0, 0,
+                 0, 0, 0,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveLeafObject, MMCommitLeafObject);
 }
 
 RUN_TIME_API
 void *primitive_alloc_leaf_s2(size_t size,
-			      void *wrapper,
-			      void *data1,
-			      void *data2)
+                              void *wrapper,
+                              void *data1,
+                              void *data2)
 {
-  alloc_internal(size, wrapper, 
-		 1, data1, 1, data2,
-		 0, 0, 0, 
-		 0, 0, 0,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveLeafObject, MMCommitLeafObject);
+  alloc_internal(size, wrapper,
+                 1, data1, 1, data2,
+                 0, 0, 0,
+                 0, 0, 0,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveLeafObject, MMCommitLeafObject);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_leaf_s(size_t size,
-			     void *wrapper,
-			     int no_to_fill,
-			     void *fill)
+                             void *wrapper,
+                             int no_to_fill,
+                             void *fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 0, 0, 0,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveLeafObject, MMCommitLeafObject);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 0, 0, 0,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveLeafObject, MMCommitLeafObject);
 }
 
 
 
 RUN_TIME_API
 void *primitive_alloc_leaf_r(size_t size,
-			     void *wrapper,
-			     int rep_size,
-			     int rep_size_slot)
+                             void *wrapper,
+                             int rep_size,
+                             int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 0, 0, 0,
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveLeafRepeated, MMCommitLeafRepeated);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 0, 0, 0,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveLeafRepeated, MMCommitLeafRepeated);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_leaf_s_rbf(size_t size,
-				 void *wrapper,
-				 int no_to_fill,
-				 void *fill,
-				 int rep_size,
-				 int rep_size_slot,
-				 int byte_fill)
+                                 void *wrapper,
+                                 int no_to_fill,
+                                 void *fill,
+                                 int rep_size,
+                                 int rep_size_slot,
+                                 int byte_fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 1, 0, byte_char, byte_fill,
-		 MMReserveLeafRepeated, MMCommitLeafRepeated);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 1, 0, byte_char, byte_fill,
+                 MMReserveLeafRepeated, MMCommitLeafRepeated);
 }
 
 #define define_primitive_alloc_leaf_rf(type, suffix) \
 RUN_TIME_API \
 void *primitive_alloc_leaf_ ## suffix(size_t size, \
-				      void *wrapper, \
-				      int rep_size, \
-				      int rep_size_slot, \
-				      type rep_fill) \
+                                      void *wrapper, \
+                                      int rep_size, \
+                                      int rep_size_slot, \
+                                      type rep_fill) \
 { \
   alloc_internal(size, wrapper,  \
-		 0, 0, 0, 0, \
-		 1, 0, 0,  \
-		 1, rep_size, rep_size_slot, \
-		 0, dylan_object, 0, \
-		 1, 0, type, rep_fill, \
-		 MMReserveLeafRepeated, MMCommitLeafRepeated); \
+                 0, 0, 0, 0, \
+                 1, 0, 0,  \
+                 1, rep_size, rep_size_slot, \
+                 0, dylan_object, 0, \
+                 1, 0, type, rep_fill, \
+                 MMReserveLeafRepeated, MMCommitLeafRepeated); \
 }
 
 
@@ -1743,156 +1742,156 @@ define_primitive_alloc_leaf_rf(double_word, rdwf)
 
 RUN_TIME_API
 void *primitive_alloc_leaf_s_rbfz(size_t size,
-				  void *wrapper,
-				  int no_to_fill,
-				  void *fill,
-				  int rep_size,
-				  int rep_size_slot,
-				  int byte_fill)
+                                  void *wrapper,
+                                  int no_to_fill,
+                                  void *fill,
+                                  int rep_size,
+                                  int rep_size_slot,
+                                  int byte_fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 1, 1, byte_char, byte_fill,
-		 MMReserveLeafTerminated, MMCommitLeafTerminated);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 1, 1, byte_char, byte_fill,
+                 MMReserveLeafTerminated, MMCommitLeafTerminated);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_leaf_rbfz(size_t size,
-				void *wrapper,
-				int rep_size,
-				int rep_size_slot,
-				int byte_fill)
+                                void *wrapper,
+                                int rep_size,
+                                int rep_size_slot,
+                                int byte_fill)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 0, 0, 0,
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 1, 1, byte_char, byte_fill,
-		 MMReserveLeafTerminated, MMCommitLeafTerminated);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 0, 0, 0,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 1, 1, byte_char, byte_fill,
+                 MMReserveLeafTerminated, MMCommitLeafTerminated);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_leaf_s_rb(size_t size,
-				void *wrapper,
-				int no_to_fill,
-				void *fill,
-				int rep_size,
-				int rep_size_slot)
+                                void *wrapper,
+                                int no_to_fill,
+                                void *fill,
+                                int rep_size,
+                                int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveLeafRepeated, MMCommitLeafRepeated);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveLeafRepeated, MMCommitLeafRepeated);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_exact_awl_s_r(size_t size,
-				    void *wrapper,
-				    void *assoc,
-				    int no_to_fill,
-				    void *fill,
-				    int rep_size,
-				    int rep_size_slot)
+                                    void *wrapper,
+                                    void *assoc,
+                                    int no_to_fill,
+                                    void *fill,
+                                    int rep_size,
+                                    int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 1, assoc, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveExactAWL, MMCommitExactAWL);
+  alloc_internal(size, wrapper,
+                 1, assoc, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveExactAWL, MMCommitExactAWL);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_weak_awl_s_r(size_t size,
-				   void *wrapper,
-				   void *assoc,
-				   int no_to_fill,
-				   void *fill,
-				   int rep_size,
-				   int rep_size_slot)
+                                   void *wrapper,
+                                   void *assoc,
+                                   int no_to_fill,
+                                   void *fill,
+                                   int rep_size,
+                                   int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 1, assoc, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveWeakAWL, MMCommitWeakAWL);
+  alloc_internal(size, wrapper,
+                 1, assoc, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveWeakAWL, MMCommitWeakAWL);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_exact_awl_rf(size_t size,
-				   void *wrapper,
-				   void *assoc,
-				   int rep_size,
-				   int rep_size_slot,
-				   void *fill)
+                                   void *wrapper,
+                                   void *assoc,
+                                   int rep_size,
+                                   int rep_size_slot,
+                                   void *fill)
 {
-  alloc_internal(size, wrapper, 
-		 1, assoc, 0, 0,
-		 0, 0, 0,
-		 1, rep_size, rep_size_slot,
-		 1, dylan_object, fill,
-		 0, 0, dylan_object, 0,
-		 MMReserveExactAWL, MMCommitExactAWL);
+  alloc_internal(size, wrapper,
+                 1, assoc, 0, 0,
+                 0, 0, 0,
+                 1, rep_size, rep_size_slot,
+                 1, dylan_object, fill,
+                 0, 0, dylan_object, 0,
+                 MMReserveExactAWL, MMCommitExactAWL);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_weak_awl_rf(size_t size,
-				  void *wrapper,
-				  void *assoc,
-				  int rep_size,
-				  int rep_size_slot,
-				  void *fill)
+                                  void *wrapper,
+                                  void *assoc,
+                                  int rep_size,
+                                  int rep_size_slot,
+                                  void *fill)
 {
-  alloc_internal(size, wrapper, 
-		 1, assoc, 0, 0,
-		 0, 0, 0,
-		 1, rep_size, rep_size_slot,
-		 1, dylan_object, fill,
-		 0, 0, dylan_object, 0,
-		 MMReserveWeakAWL, MMCommitWeakAWL);
+  alloc_internal(size, wrapper,
+                 1, assoc, 0, 0,
+                 0, 0, 0,
+                 1, rep_size, rep_size_slot,
+                 1, dylan_object, fill,
+                 0, 0, dylan_object, 0,
+                 MMReserveWeakAWL, MMCommitWeakAWL);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_wrapper_s_r(size_t size,
-				  void *wrapper,
-				  int no_to_fill,
-				  void *fill,
-				  int rep_size,
-				  int rep_size_slot)
+                                  void *wrapper,
+                                  int no_to_fill,
+                                  void *fill,
+                                  int rep_size,
+                                  int rep_size_slot)
 {
-  alloc_internal(size, wrapper, 
-		 0, 0, 0, 0,
-		 1, no_to_fill, fill, 
-		 1, rep_size, rep_size_slot,
-		 0, dylan_object, 0,
-		 0, 0, dylan_object, 0,
-		 MMReserveWrapper, MMCommitWrapper);
+  alloc_internal(size, wrapper,
+                 0, 0, 0, 0,
+                 1, no_to_fill, fill,
+                 1, rep_size, rep_size_slot,
+                 0, dylan_object, 0,
+                 0, 0, dylan_object, 0,
+                 MMReserveWrapper, MMCommitWrapper);
 }
 
 
 RUN_TIME_API
 void *primitive_alloc_rt(size_t size,
-			 void *wrapper,
-			 int rep_size,
-			 int rep_size_slot,
-			 void *template)
+                         void *wrapper,
+                         int rep_size,
+                         int rep_size_slot,
+                         void *template)
 {
   void **object;
 
@@ -1908,14 +1907,14 @@ void *primitive_alloc_rt(size_t size,
     memcpy(object + rep_size_slot + 1, template, rep_size << 2);
   }
   while(!MMCommitObject(object, size, gc_teb));
-  
+
 
   return object;
 }
 
 RUN_TIME_API
 void *primitive_copy(size_t size,
-		     void *template)
+                     void *template)
 {
   void **object;
   void *wrapper = ((void**)template)[0];
@@ -1930,7 +1929,7 @@ void *primitive_copy(size_t size,
     memcpy(object, template, size);
   }
   while(!MMCommitObject(object, size, gc_teb));
-  
+
   return object;
 }
 
@@ -1939,9 +1938,9 @@ void *primitive_copy(size_t size,
 
 RUN_TIME_API
 void *primitive_copy_r(size_t size,
-		       int rep_size,
-		       int rep_size_slot,
-		       void *template)
+                       int rep_size,
+                       int rep_size_slot,
+                       void *template)
 {
   void **object;
   void *wrapper = ((void**)template)[0];
@@ -1957,10 +1956,10 @@ void *primitive_copy_r(size_t size,
     object[rep_size_slot] = (void*)((rep_size << 2) + 1);
     /* ### kludge to prevent committing uninitialized memory */
     fill_dylan_object_mem((void **)(object + rep_size_slot + 1),
-			  NULL, rep_size);
+                          NULL, rep_size);
   }
   while(!MMCommitObject(object, size, gc_teb));
-  
+
 
   return object;
 }
@@ -2026,7 +2025,7 @@ MMError MMRegisterRootExact(mps_root_t *rootp, void *base, void *limit)
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
   return mps_root_create_table_masked(rootp, arena, MPS_RANK_EXACT,
-				      MPS_RM_PROT, base, s, 3);
+                                      MPS_RM_PROT, base, s, 3);
 #else
   return 0;
 #endif
@@ -2052,7 +2051,7 @@ void *dylan__malloc__ambig(size_t size)
   return (void *)((char *)object + 4);
 }
 
-/* This doesn't work yet -- results in GC anomaly; to be debugged 
+/* This doesn't work yet -- results in GC anomaly; to be debugged
 
    Nosa  Mar 15, 1999  */
 
@@ -2116,7 +2115,7 @@ MMError MMRootExact(void *base, void *limit)
   mps_root_t root;
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   return mps_root_create_table_masked(&root, arena, MPS_RANK_EXACT,
-				      0, base, s, 3);
+                                      0, base, s, 3);
 #else
   return 0;
 #endif
@@ -2252,7 +2251,7 @@ BOOL primitive_mps_collection_stats(void** results)
     not_condemned = mps_message_gc_not_condemned_size(arena, message);
 
     mps_message_discard(arena, message);
-    
+
     results[0] =   (void*)((live << 2) + 1);
     results[1] = (void*)((condemned << 2) + 1);
     results[2] = (void*)((not_condemned << 2) + 1);
@@ -2383,11 +2382,11 @@ BOOL WINAPI DylanBreakControlHandler(DWORD dwCtrlType)
     case CTRL_BREAK_EVENT:
     case CTRL_C_EVENT:
       {
-	if (Prunning_under_dylan_debuggerQ == FALSE)
-	  dylan_keyboard_interruptQ = TRUE;
-	return TRUE;
+        if (Prunning_under_dylan_debuggerQ == FALSE)
+          dylan_keyboard_interruptQ = TRUE;
+        return TRUE;
       }
-    
+
     default:
       return FALSE;
     }
@@ -2399,13 +2398,13 @@ BOOL WINAPI DylanBreakControlHandler(DWORD dwCtrlType)
 
 static mps_gen_param_s *
 get_gen_params(const char *spec,
-	       size_t *gen_count_return,
-	       size_t *max_heap_size_return)
+               size_t *gen_count_return,
+               size_t *max_heap_size_return)
 {
   size_t gen_count = 0;
   size_t max_heap_size = 0;
   mps_gen_param_s *params = NULL;
-  
+
   while(*spec != '\0') {
     char *end;
     unsigned long capacity = strtoul(spec, &end, 0);
@@ -2441,7 +2440,7 @@ get_gen_params(const char *spec,
 
   *gen_count_return = gen_count;
   *max_heap_size_return = max_heap_size;
-  
+
   return params;
 }
 #endif
@@ -2468,7 +2467,7 @@ MMError dylan_init_memory_manager()
     char specbuf[2048];
     const char *spec = NULL;
     if(GetEnvironmentVariableA("OPEN_DYLAN_MPS_HEAP", specbuf,
-			       sizeof specbuf) != 0) {
+                               sizeof specbuf) != 0) {
       spec = specbuf;
     }
 #else
@@ -2481,7 +2480,7 @@ MMError dylan_init_memory_manager()
     if(spec) {
       params = get_gen_params(spec, &gen_count, &max_heap_size);
       if(!params)
-	init_error("parse OPEN_DYLAN_MPS_HEAP format");
+        init_error("parse OPEN_DYLAN_MPS_HEAP format");
     }
 
     if(params) {
@@ -2493,11 +2492,11 @@ MMError dylan_init_memory_manager()
     if(res) { init_error("create chain"); return(res); }
   }
 
-  fmt_A = dylan_fmt_A();    
+  fmt_A = dylan_fmt_A();
   res = mps_fmt_create_A(&format, arena, fmt_A);
   if(res) { init_error("create format"); return(res); }
 
-  fmt_A_weak = dylan_fmt_A_weak();    
+  fmt_A_weak = dylan_fmt_A_weak();
   res = mps_fmt_create_A(&dylan_fmt_weak_s, arena, fmt_A_weak);
   if(res) { init_error("create weak format"); return(res); }
 
@@ -2510,7 +2509,7 @@ MMError dylan_init_memory_manager()
 
   /* Create the Automatic Weak Linked pool */
   res = mps_pool_create(&weak_table_pool, arena, mps_class_awl(),
-			dylan_fmt_weak_s, dylan_weak_dependent);
+                        dylan_fmt_weak_s, dylan_weak_dependent);
   if(res) { init_error("create weak pool"); return(res); }
 
   /* Create the MV pool for miscellaneous objects. */
@@ -2530,7 +2529,7 @@ MMError dylan_init_memory_manager()
 
 #ifdef BOEHM_GC
   /* Not required for the dll version of Boehm. */
-  /* GC_init(); */ 
+  /* GC_init(); */
 
 #ifdef MAX_BOEHM_HEAP_SIZE
   /* Only makes sense for a 128Mb machine. */
@@ -2556,7 +2555,7 @@ MMError dylan_init_memory_manager()
   }
 
   return(0);
-  
+
 }
 
 
