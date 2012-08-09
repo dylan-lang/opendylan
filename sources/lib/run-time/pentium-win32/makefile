@@ -52,13 +52,6 @@ PLINTHDEST	 = $(LIBDEST)\mpsplinth.lib
 MINCRTDEST	 = $(LIBDEST)\minvcrt.lib
 BOEHMGCDEST	 = $(BINDEST)\gc.dll
 
-BUFFOBJS	 = buffalo-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
-BUFFLIBFILE	 = buffalo-pentium-run-time.lib
-BUFFMMDW         = buffalo-mmdw.lib
-
-NOWEAKOBJS	 = no-weakness-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
-NOWEAKLIBFILE	 = no-weakness-pentium-run-time.lib
-
 BOEHMOBJS	 = boehm-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 BOEHMLIBFILE	 = boehm-pentium-run-time.lib
 
@@ -76,9 +69,6 @@ DYLANPLINTH      = dylan-plinth.lib
 
 collector.obj: ..\collector.c
 	$(CC) $(CFLAGS) /c ..\collector.c
-
-no-weakness-collector.obj: ..\no-weakness-collector.c ..\collector.c
-	$(CC) $(CFLAGS) /c ..\no-weakness-collector.c
 
 boehm-collector.obj:	..\boehm-collector.c ..\collector.c
 	$(CC) $(CFLAGS) /c ..\boehm-collector.c
@@ -99,12 +89,6 @@ $(DYLANPLINTH): $(PLINTHOBJS)
 
 $(LIBFILE): $(OBJS)
 	$(LINKLIB)$(LIBFILE) $(OBJS)
-
-$(BUFFLIBFILE): $(BUFFOBJS)
-	$(LINKLIB)$(BUFFLIBFILE) $(BUFFOBJS)
-
-$(NOWEAKLIBFILE): $(NOWEAKOBJS)
-	$(LINKLIB)$(NOWEAKLIBFILE) $(NOWEAKOBJS)
 
 $(BOEHMLIBFILE): $(BOEHMOBJS)
 	$(LINKLIB)$(BOEHMLIBFILE) $(BOEHMOBJS) gc.lib
@@ -135,22 +119,11 @@ install-runtime: $(LIBFILE)
 	pushd $(LIBDEST) & (del /q /f $(LIBFILE)) & popd
 	copy $(LIBFILE) $(LIBDEST)
 
-install-noweak-runtime: $(NOWEAKLIBFILE)
-  echo Building pentium run time: install-noweak-runtime
-	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
-	copy $(NOWEAKLIBFILE) $(RUNTIMELIBDEST)
-
 install-boehm-runtime: $(BOEHMLIBFILE)
   echo Building pentium run time: install-boehm-runtime
 	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
 	copy $(BOEHMLIBFILE) $(RUNTIMELIBDEST)
 	copy gc.dll $(BOEHMGCDEST)
-
-install-buffalo-runtime: $(BUFFLIBFILE)
-  echo Building pentium run time: install-buffalo-runtime
-	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
-	copy $(BUFFLIBFILE) $(RUNTIMELIBDEST)
-
 
 install-dylan-plinth: $(DYLANPLINTH)
   echo Building pentium run time: install-dylan-plinth
@@ -199,11 +172,6 @@ install-debug-mmdw: $(DEBUGMMDW)
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	copy $(DEBUGMMDW) $(MMDWDEST)
 
-install-buffalo-mmdw: $(BUFFMMDW)
-  echo Building pentium run time: install-buffalo-mmdw
-	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
-	copy $(BUFFMMDW) $(MMDWDEST)
-
 
 install-common-libs: ensure-dirs install-plinth install-userlib install-mincrt
 
@@ -214,19 +182,11 @@ install-debug: ensure-dirs install-debug-mmdw install-runtime install-common-lib
 
 install-symbolic: ensure-dirs install-symbolic-mmdw install-runtime install-common-libs
 
-install-noweak: ensure-dirs install-mmdw install-noweak-runtime install-common-libs
-
-install-noweak-debug: ensure-dirs install-debug-mmdw install-noweak-runtime install-common-libs
-
-install-noweak-symbolic: ensure-dirs install-symbolic-mmdw install-noweak-runtime install-common-libs
-
 install-boehm: ensure-dirs install-mmdw install-boehm-runtime install-common-libs
 
 install-boehm-debug: ensure-dirs install-debug-mmdw install-boehm-runtime install-common-libs
 
 install-boehm-symbolic: ensure-dirs install-symbolic-mmdw install-boehm-runtime install-common-libs
-
-install-buffalo: ensure-dirs install-buffalo-mmdw install-buffalo-runtime install-userlib
 
 
 install: ensure-dirs install-stripped install-build
