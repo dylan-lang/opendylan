@@ -7,5 +7,5 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 create-dylan-runtime
   (back-end-class: <pentium-linux-back-end>,
-   type: #"linux-outputter");
+   type: #"elf-as-outputter");
 

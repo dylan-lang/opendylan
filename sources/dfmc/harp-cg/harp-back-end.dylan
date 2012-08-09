@@ -32,7 +32,7 @@ define method open-emit-output
       add!(outputters,
            make-harp-outputter(back-end, filename,
                                print-harp?: harp-output?,
-                               type: #"linux-outputter"));
+                               type: #"elf-as-outputter"));
     otherwise =>
       add!(outputters,
            make-harp-outputter(back-end, filename, print-harp?: harp-output?));

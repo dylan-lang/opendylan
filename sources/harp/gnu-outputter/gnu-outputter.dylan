@@ -13,7 +13,7 @@ define class <harp-gnu-as-outputter>(<harp-binary-builder>)
   slot finished-outputting? :: <boolean> = #f;
 end class;
 
-define class <harp-linux-outputter>(<harp-gnu-as-outputter>)
+define class <harp-elf-as-outputter>(<harp-gnu-as-outputter>)
 end class;
 
 
@@ -49,27 +49,27 @@ define sideways method make-harp-outputter-by-type
 end method;
 
 
-define constant $linux-outputter-type$ = #"linux-outputter";
+define constant $elf-as-outputter-type$ = #"elf-as-outputter";
 
 define sideways method file-extension-for-outputter-type
-       (backend :: <harp-back-end>, type == $linux-outputter-type$)
+       (backend :: <harp-back-end>, type == $elf-as-outputter-type$)
        => (extension :: <byte-string>)
   file-extension-for-outputter-type(backend, $gnu-as-outputter-type$);
 end method;
 
 define sideways method stream-type-for-outputter-type
-       (backend :: <harp-back-end>, type == $linux-outputter-type$)
+       (backend :: <harp-back-end>, type == $elf-as-outputter-type$)
        => (stream-type :: <class>)
   stream-type-for-outputter-type(backend, $gnu-as-outputter-type$);
 end method;
 
 define sideways method make-harp-outputter-by-type
-    (backend :: <harp-back-end>, filename, type == $linux-outputter-type$)
-    => (outputter :: <harp-linux-outputter>)
+    (backend :: <harp-back-end>, filename, type == $elf-as-outputter-type$)
+    => (outputter :: <harp-elf-as-outputter>)
   let file-string = as(<string>, filename);
   let stream = open-output-stream(backend, file-string, type);
   let outputter
-    = make-binary-builder(<harp-linux-outputter>,
+    = make-binary-builder(<harp-elf-as-outputter>,
                           destination: stream);
   outputter;
 end method;
@@ -98,7 +98,7 @@ define constant $x86-linux-assemble-command-line =
   "as -L -o %s.o %s.s";
 
 define method assemble-harp-outputter
-    (outputter :: <harp-linux-outputter>, filename) => ()
+    (outputter :: <harp-elf-as-outputter>, filename) => ()
   if (outputter.finished-outputting?)
     // Don't assemble when cross-compiling for Linux on Windows
     unless ($os-name == #"win32")
@@ -559,7 +559,7 @@ define method output-function-type
 end method;
 
 define method output-function-type
-    (outputter :: <harp-linux-outputter>, name :: <string>) => ()
+    (outputter :: <harp-elf-as-outputter>, name :: <string>) => ()
   // ELF Outputter requires this to create PLT relocation type
   let stream = outputter.destination;
   write(stream, "\n\t.type "); write(stream, name); write(stream, ",@function");
@@ -584,7 +584,7 @@ define method output-data-footer
 end method;
 
 define method output-data-footer
-    (be :: <harp-back-end>, outputter :: <harp-linux-outputter>,
+    (be :: <harp-back-end>, outputter :: <harp-elf-as-outputter>,
      name :: <byte-string>,
      #key model-object = unsupplied(),
      #all-keys) => ()
@@ -604,7 +604,7 @@ define method output-data-footer
 end method;
 
 define method do-export
-    (export?, builder :: <harp-linux-outputter>, name :: <byte-string>) => ()
+    (export?, builder :: <harp-elf-as-outputter>, name :: <byte-string>) => ()
 end method do-export;
 
 // Functions to update the current position within the line
@@ -664,7 +664,7 @@ define inline method imported-name
 end method;
 
 define inline method imported-name
-    (outputter :: <harp-linux-outputter>, name :: <byte-string>, import? :: <boolean>)
+    (outputter :: <harp-elf-as-outputter>, name :: <byte-string>, import? :: <boolean>)
   => (imported-name :: <byte-string>)
   name
 end method;
@@ -867,7 +867,7 @@ end method;
 // handle any fixups; nothing extra is required here
 
 define method add-imported-data
-    (outputter :: <harp-linux-outputter>,
+    (outputter :: <harp-elf-as-outputter>,
      item :: <byte-string>,
      model-object, offset) => ()
   add-data(outputter, item, model-object);
@@ -935,7 +935,7 @@ define inline method directives-flags(outputter :: <harp-gnu-as-outputter>)
   $directives-flags
 end method;
 
-define inline method directives-flags(outputter :: <harp-linux-outputter>)
+define inline method directives-flags(outputter :: <harp-elf-as-outputter>)
  => (flags)
   $null-flags
 end method;
@@ -950,7 +950,7 @@ define inline method dylan-data-flags(outputter :: <harp-gnu-as-outputter>)
   $data-flags
 end method;
 
-define inline method dylan-data-flags(outputter :: <harp-linux-outputter>)
+define inline method dylan-data-flags(outputter :: <harp-elf-as-outputter>)
  => (flags)
   $data-flags
 end method;
@@ -975,7 +975,7 @@ define inline method fixup-flags(outputter :: <harp-gnu-as-outputter>)
   $fixup-flags
 end method;
 
-define inline method fixup-flags(outputter :: <harp-linux-outputter>)
+define inline method fixup-flags(outputter :: <harp-elf-as-outputter>)
  => (flags)
   $null-flags
 end method;
