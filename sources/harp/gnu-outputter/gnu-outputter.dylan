@@ -24,7 +24,7 @@ end class;
 define constant $gnu-outputter-type$ = #"gnu-outputter";
 
 define sideways method file-extension-for-outputter-type
-       (backend :: <harp-back-end>, type == $gnu-outputter-type$) 
+       (backend :: <harp-back-end>, type == $gnu-outputter-type$)
        => (extension :: <byte-string>)
   "s";
 end method;
@@ -43,8 +43,8 @@ define sideways method make-harp-outputter-by-type
   let def-file = open-output-stream(backend, file-string, "def");
   let outputter
     = make-binary-builder(<harp-gnu-outputter>,
-			  destination: stream,
-			  def-file: def-file);
+                          destination: stream,
+                          def-file: def-file);
   outputter;
 end method;
 
@@ -52,7 +52,7 @@ end method;
 define constant $linux-outputter-type$ = #"linux-outputter";
 
 define sideways method file-extension-for-outputter-type
-       (backend :: <harp-back-end>, type == $linux-outputter-type$) 
+       (backend :: <harp-back-end>, type == $linux-outputter-type$)
        => (extension :: <byte-string>)
   file-extension-for-outputter-type(backend, $gnu-outputter-type$);
 end method;
@@ -70,7 +70,7 @@ define sideways method make-harp-outputter-by-type
   let stream = open-output-stream(backend, file-string, type);
   let outputter
     = make-binary-builder(<harp-linux-outputter>,
-			  destination: stream);
+                          destination: stream);
   outputter;
 end method;
 
@@ -104,10 +104,10 @@ define method assemble-harp-outputter
     unless ($os-name == #"win32")
       let file-string = as(<string>, filename);
       let command-line =
-	format-to-string(select ($machine-name)
-			   #"x86" => $x86-linux-assemble-command-line;
-			 end,
-			 file-string, file-string);
+        format-to-string(select ($machine-name)
+                           #"x86" => $x86-linux-assemble-command-line;
+                         end,
+                         file-string, file-string);
       run-application(command-line);
     end unless;
   end if;
@@ -158,22 +158,22 @@ define sideways method output-compiled-lambda
     let import? = instance?(ext, <imported-constant-reference>);
     write(stream, "\t.global ");
     write(stream, imported-name(outputter,
-				ext.cr-refers-to,
-				import?));
+                                ext.cr-refers-to,
+                                import?));
     write-element(stream, byte-for-newline);
   end for;
 
   if (lambda.lambda-is-public?)
     write(stream, "\n\t.global "); write(stream, name);
   end if;
-  
+
   output-function-type(outputter, name);
   write-element(stream, byte-for-newline);
 
   do-export(export?, outputter, name);
- 
+
   write(stream, "\t.size "); write(stream, name); write(stream, ", ");
-  write(stream, integer-to-string(total-len)); 
+  write(stream, integer-to-string(total-len));
   write-element(stream, byte-for-newline);
 
   write(stream, name); write(stream, ":\n");
@@ -208,7 +208,7 @@ define sideways method output-compiled-lambda
     if (label)
       output-code-label(outputter, label, be.labelled-constant-increment);
       code-index :=
-	label-pos + labelled-constant-code-increment(be, label);
+        label-pos + labelled-constant-code-increment(be, label);
     else
       code-index := label-pos;
     end if;
@@ -343,16 +343,16 @@ define method output-code-label-internal
      #key attr :: <byte-string> = "",
           adjust :: <integer> = 0,
           directive = select (increment)
-			4 => ".long";
-			2 => ".short";
-		      end,
+                        4 => ".long";
+                        2 => ".short";
+                      end,
           intervene = #f) => ()
 
   let stream = outputter.destination;
   let cr = item.labelled-constant-reference;
   let ref =
     imported-name(outputter, cr.cr-refers-to,
-		  instance?(cr, <imported-constant-reference>));
+                  instance?(cr, <imported-constant-reference>));
   let offset = cr.cr-const-offset - adjust;
 
   maybe-reset-asm-line-pos(outputter);
@@ -390,9 +390,9 @@ define method output-glue-symbols
           import-start = $import-start-symbol,
           import-end = $import-end-symbol) => ()
 
-  local method put-symbol-in-section 
+  local method put-symbol-in-section
             (section, symbol, #key flags, alignment = 4)
-	  let flags = flags | dylan-data-flags(outputter);
+          let flags = flags | dylan-data-flags(outputter);
           select-gnu-binary-section(outputter, section, flags: flags, alignment: alignment);
           add-binary-symbol-definition(outputter, symbol);
         end method;
@@ -484,8 +484,8 @@ define method output-public
 end method;
 
 define method output-public
-    (be :: <harp-back-end>, 
-     outputter :: <harp-gnu-outputter>, 
+    (be :: <harp-back-end>,
+     outputter :: <harp-gnu-outputter>,
      name :: <constant-reference>,
      #rest all-keys, #key, #all-keys) => ()
   apply(output-public, be, outputter, name.cr-refers-to, all-keys);
@@ -495,7 +495,7 @@ end method;
 define method add-symbol-definition
     (outputter :: <harp-gnu-outputter>,
      name :: <byte-string>, model-object,
-     #key section = outputter.current-section, 
+     #key section = outputter.current-section,
      #all-keys)
   // copy-to-section(section, "\n\n\t.align 4\n");
   copy-to-section(section, "\n\n");
@@ -690,8 +690,8 @@ define method add-word-to-section
   section.current-position := new-size;
   copy-to-section(section, "\n\t.long ");
   copy-to-section(section,
-		  machine-word-to-string(%double-integer-low(data),
-					 prefix: "0x"));
+                  machine-word-to-string(%double-integer-low(data),
+                                         prefix: "0x"));
 end method;
 
 define method add-word-to-section
@@ -703,7 +703,7 @@ define method add-word-to-section
   copy-to-section(section, data);
 end method;
 
-define method add-short-to-section 
+define method add-short-to-section
     (section :: <gnu-section>, data :: <integer>) => ()
   let pos = section.current-position;
   let new-size = pos + 2;
@@ -712,7 +712,7 @@ define method add-short-to-section
   copy-integer-to-section(section, data);
 end method;
 
-define method add-byte-to-section 
+define method add-byte-to-section
     (section :: <gnu-section>, data :: <integer>) => ()
   let pos = section.current-position;
   let new-size = pos + 1;
@@ -722,7 +722,7 @@ define method add-byte-to-section
 end method;
 
 
-define method add-string-to-section 
+define method add-string-to-section
     (section :: <gnu-section>, string :: <byte-string>) => ()
   let pos = section.current-position;
   let len = string.size;
@@ -747,7 +747,7 @@ define inline method find-key-from-start
     pos
   end;
 end method;
-		  
+
 // Propagate string positions to avoid consing substrings
 
 define method add-assembler-string-to-section
@@ -774,7 +774,7 @@ define method add-assembler-string-to-section
 end method;
 
 define method add-data-vector
-    (outputter :: <harp-gnu-outputter>, vector :: <byte-vector>, 
+    (outputter :: <harp-gnu-outputter>, vector :: <byte-vector>,
      #key section = outputter.current-section)
     => ()
   let stream = outputter.destination;
@@ -784,7 +784,7 @@ define method add-data-vector
 end method;
 
 define method add-data-vector
-    (outputter :: <harp-gnu-outputter>, vector :: <simple-integer-vector>, 
+    (outputter :: <harp-gnu-outputter>, vector :: <simple-integer-vector>,
      #key section = outputter.current-section)
     => ()
   let stream = outputter.destination;
@@ -793,7 +793,7 @@ define method add-data-vector
   end for;
 end method;
 
-define method copy-to-section 
+define method copy-to-section
     (section :: <gnu-section>, string :: <byte-string>,
      #key start :: <integer> = 0, end: _end :: <integer> = string.size) => ()
   let pos = section.raw-data-size;
@@ -804,7 +804,7 @@ define method copy-to-section
   copy-bytes(section.section-data, pos, string, start, len);
 end method;
 
-define method copy-integer-to-section 
+define method copy-integer-to-section
     (section :: <gnu-section>, integer :: <integer>) => ()
 
   let negative? = integer < 0;
@@ -813,19 +813,19 @@ define method copy-integer-to-section
 
   iterate process-integer (integer :: <integer> = integer, index :: <integer> = 1)
     let (quotient :: <integer>, remainder :: <integer>) = truncate/(integer, 10);
-    
+
     if (quotient = 0)
       let len =
-	if (negative?) index + 1 else index end;
+        if (negative?) index + 1 else index end;
       let new-pos = pos + len;
       ensure-size-of-section-data(section, new-pos);
       section.raw-data-size := new-pos;
       without-bounds-checks
-	if (negative?)
-	  section.section-data[pos] := byte-for-minus;
-	  pos := pos + 1;
-	end if;
-	section.section-data[pos] := byte-for-zero + remainder;
+        if (negative?)
+          section.section-data[pos] := byte-for-minus;
+          pos := pos + 1;
+        end if;
+        section.section-data[pos] := byte-for-zero + remainder;
         pos := pos + 1;
       end;
     else
@@ -841,11 +841,11 @@ define method copy-integer-to-section
 end method;
 
 
-define method add-data 
-    (outputter :: <harp-gnu-outputter>, 
+define method add-data
+    (outputter :: <harp-gnu-outputter>,
      name :: <byte-string>, model-object,
-     #key section = outputter.current-section, 
-          type = #"absolute", 
+     #key section = outputter.current-section,
+          type = #"absolute",
           relocation-class = #f, relocation-type = #f,
           position-relative? = #f, // when true, want offset relative to
                                    // current position, using name as base
@@ -855,19 +855,19 @@ define method add-data
   add-word-to-section(section, name);
 end method;
 
-define method add-fixup-data 
+define method add-fixup-data
     (outputter :: <harp-gnu-outputter>, name, model-object)
     => ()
   let name = canonical-data-object(name, model-object);
   add-word-to-section(outputter.current-section,
-		      imported-name(outputter, name, #t));
+                      imported-name(outputter, name, #t));
 end method;
 
 // For ELF, add real data for imports; the Linker will automatically
 // handle any fixups; nothing extra is required here
 
 define method add-imported-data
-    (outputter :: <harp-linux-outputter>, 
+    (outputter :: <harp-linux-outputter>,
      item :: <byte-string>,
      model-object, offset) => ()
   add-data(outputter, item, model-object);
@@ -905,8 +905,8 @@ define method write-binary-section-header
 end method;
 
 
-define method make-binary-section 
-    (builder :: <harp-gnu-outputter>, name :: <byte-string>, 
+define method make-binary-section
+    (builder :: <harp-gnu-outputter>, name :: <byte-string>,
      alignment :: <integer>, flags)
     => (new :: <gnu-section>)
   make(<gnu-section>,
@@ -993,7 +993,7 @@ define constant byte-for-zero = as(<integer>, '0');
 
 define method write-integer(stream :: <stream>, integer :: <integer>)
   let negative? = integer < 0;
-  let integer = 
+  let integer =
     if (negative?)
       write-element(stream, byte-for-minus);
       - integer
@@ -1002,7 +1002,7 @@ define method write-integer(stream :: <stream>, integer :: <integer>)
 
   iterate process-integer (integer :: <integer> = integer)
     let (quotient :: <integer>, remainder :: <integer>) = truncate/(integer, 10);
-    
+
     if (quotient = 0)
       write-element(stream, byte-for-zero + remainder);
     else
