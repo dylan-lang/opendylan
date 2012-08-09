@@ -8,12 +8,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-define class <harp-gnu-outputter>(<harp-binary-builder>)
+define class <harp-gnu-as-outputter>(<harp-binary-builder>)
   slot outputter-line-position :: <integer> = 0;
   slot finished-outputting? :: <boolean> = #f;
 end class;
 
-define class <harp-linux-outputter>(<harp-gnu-outputter>)
+define class <harp-linux-outputter>(<harp-gnu-as-outputter>)
 end class;
 
 
@@ -21,28 +21,28 @@ define class <gnu-section>(<binary-section>)
   slot current-position :: <integer> = 0;
 end class;
 
-define constant $gnu-outputter-type$ = #"gnu-outputter";
+define constant $gnu-as-outputter-type$ = #"gnu-as-outputter";
 
 define sideways method file-extension-for-outputter-type
-       (backend :: <harp-back-end>, type == $gnu-outputter-type$)
+       (backend :: <harp-back-end>, type == $gnu-as-outputter-type$)
        => (extension :: <byte-string>)
   "s";
 end method;
 
 define sideways method stream-type-for-outputter-type
-       (backend :: <harp-back-end>, type == $gnu-outputter-type$)
+       (backend :: <harp-back-end>, type == $gnu-as-outputter-type$)
        => (stream-type :: <class>)
   <byte-file-stream>
 end method;
 
 define sideways method make-harp-outputter-by-type
-    (backend :: <harp-back-end>, filename, type == $gnu-outputter-type$)
-    => (outputter :: <harp-gnu-outputter>)
+    (backend :: <harp-back-end>, filename, type == $gnu-as-outputter-type$)
+    => (outputter :: <harp-gnu-as-outputter>)
   let file-string = as(<string>, filename);
   let stream = open-output-stream(backend, file-string, type);
   let def-file = open-output-stream(backend, file-string, "def");
   let outputter
-    = make-binary-builder(<harp-gnu-outputter>,
+    = make-binary-builder(<harp-gnu-as-outputter>,
                           destination: stream,
                           def-file: def-file);
   outputter;
@@ -54,13 +54,13 @@ define constant $linux-outputter-type$ = #"linux-outputter";
 define sideways method file-extension-for-outputter-type
        (backend :: <harp-back-end>, type == $linux-outputter-type$)
        => (extension :: <byte-string>)
-  file-extension-for-outputter-type(backend, $gnu-outputter-type$);
+  file-extension-for-outputter-type(backend, $gnu-as-outputter-type$);
 end method;
 
 define sideways method stream-type-for-outputter-type
        (backend :: <harp-back-end>, type == $linux-outputter-type$)
        => (stream-type :: <class>)
-  stream-type-for-outputter-type(backend, $gnu-outputter-type$);
+  stream-type-for-outputter-type(backend, $gnu-as-outputter-type$);
 end method;
 
 define sideways method make-harp-outputter-by-type
@@ -82,7 +82,7 @@ define constant $assemble-command-line =
   "as -L -d -o %s.obj %s.s";
 
 define method assemble-harp-outputter
-    (outputter :: <harp-gnu-outputter>, filename) => ()
+    (outputter :: <harp-gnu-as-outputter>, filename) => ()
   if (outputter.finished-outputting?)
     let file-string = as(<string>, filename);
     let command-line =
@@ -118,7 +118,7 @@ end method;
 /// GNU Assembler outputter support
 
 define sideways method output-compiled-lambda
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>, lambda :: <fully-compiled-lambda>,
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>, lambda :: <fully-compiled-lambda>,
      #key section = #"code", #all-keys)
     => ()
 // This produces assembly output for one function.
@@ -220,7 +220,7 @@ end method;
 
 
 define method output-integer-code-item
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <integer>,
      increment :: <integer>) => ()
   let stream = outputter.destination;
@@ -238,7 +238,7 @@ end method;
 
 
 define method output-relative-address
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <relative-address-constant>,
      increment :: <integer>,
      #key attr :: <byte-string> = "") => ()
@@ -263,14 +263,14 @@ define method output-relative-address
 end method;
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <relative-address-constant>,
      increment :: <integer>) => ()
   output-relative-address(outputter, item, increment);
 end method;
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <relative-address-constant-high>,
      increment :: <integer>) => ()
   output-relative-address
@@ -278,7 +278,7 @@ define method output-code-label
 end method;
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <relative-address-constant-low>,
      increment :: <integer>) => ()
   output-relative-address
@@ -287,14 +287,14 @@ end method;
 
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <labelled-absolute-constant>,
      increment :: <integer>) => ()
   output-code-label-internal(outputter, item, increment);
 end method;
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <labelled-absolute-constant-high>,
      increment :: <integer>) => ()
   output-code-label-internal
@@ -302,7 +302,7 @@ define method output-code-label
 end method;
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <labelled-absolute-constant-low>,
      increment :: <integer>) => ()
   output-code-label-internal
@@ -310,7 +310,7 @@ define method output-code-label
 end method;
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <labelled-absolute-thread-constant>,
      increment :: <integer>) => ()
   output-code-label-internal(outputter, item, increment, attr: "@ntpoff");
@@ -318,7 +318,7 @@ end method;
 
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <labelled-relative-constant>,
      increment :: <integer>) => ()
   let adjust = 4; // allow for the 4 bytes of the constant itself
@@ -328,7 +328,7 @@ end method;
 
 
 define method output-code-label
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <labelled-constant-with-opcode>,
      increment :: <integer>)
   output-code-label-internal(outputter, item, increment,
@@ -337,7 +337,7 @@ end method;
 
 
 define method output-code-label-internal
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      item :: <labelled-constant>,
      increment :: <integer>,
      #key attr :: <byte-string> = "",
@@ -378,7 +378,7 @@ end method;
 
 
 define method output-glue-symbols
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>,
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>,
      #key data-start = $data-start-symbol,
           data-end = $data-end-symbol,
           variables-start = $vars-start-symbol,
@@ -415,12 +415,12 @@ end method;
 
 
 define method output-header
-      (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>) => ()
+      (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>) => ()
 end method;
 
 
 define method output-footer
-      (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>) => ()
+      (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>) => ()
   let stream = outputter.destination;
   // Output directives section last because this contains code entries
   let section = outputter.directives-section;
@@ -432,7 +432,7 @@ define method output-footer
 end method;
 
 define method output-code-start
-      (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>) => ()
+      (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>) => ()
   // Fixup data
   add-imported-data-fixups(outputter);
 
@@ -446,12 +446,12 @@ define method output-code-start
 end method;
 
 define method output-data-start
-      (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>) => ()
+      (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>) => ()
 end method;
 
 
 define method output-external
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>, name :: <byte-string>,
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>, name :: <byte-string>,
      #key import?,
           model-object = unsupplied(),
      #all-keys)
@@ -464,14 +464,14 @@ define method output-external
 end method;
 
 define method output-external
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>,
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>,
      name :: <constant-reference>, #rest all-keys, #key, #all-keys) => ()
   apply(output-external, be, outputter, name.cr-refers-to, all-keys);
 end method;
 
 
 define method output-public
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>, name :: <byte-string>,
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>, name :: <byte-string>,
      #key model-object = unsupplied(),
           export? = and-force-dll-exports?(#t),
      #all-keys)
@@ -485,7 +485,7 @@ end method;
 
 define method output-public
     (be :: <harp-back-end>,
-     outputter :: <harp-gnu-outputter>,
+     outputter :: <harp-gnu-as-outputter>,
      name :: <constant-reference>,
      #rest all-keys, #key, #all-keys) => ()
   apply(output-public, be, outputter, name.cr-refers-to, all-keys);
@@ -493,7 +493,7 @@ end method;
 
 
 define method add-symbol-definition
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      name :: <byte-string>, model-object,
      #key section = outputter.current-section,
      #all-keys)
@@ -506,7 +506,7 @@ end method;
 
 define method output-definition
     (be :: <harp-back-end>,
-     outputter :: <harp-gnu-outputter>,
+     outputter :: <harp-gnu-as-outputter>,
      name :: <byte-string>,
      #key section, public?,
           export? = public?.and-force-dll-exports?,
@@ -521,7 +521,7 @@ end method;
 
 define method output-definition
     (be :: <harp-back-end>,
-     outputter :: <harp-gnu-outputter>,
+     outputter :: <harp-gnu-as-outputter>,
      name :: <constant-reference>,
      #rest all-keys, #key, #all-keys) => ()
   apply(output-definition, be, outputter, name.cr-refers-to, all-keys);
@@ -529,14 +529,14 @@ end method;
 
 
 define method select-gnu-dylan-section
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>, section)
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>, section)
  => ()
   select-dylan-section(outputter, section | #"data", be.code-item-increment);
 end method;
 
 
 define method select-gnu-binary-section
-    (outputter :: <harp-gnu-outputter>, section,
+    (outputter :: <harp-gnu-as-outputter>, section,
      #rest keys)
  => ()
   apply(select-binary-section, outputter, section, keys);
@@ -544,18 +544,18 @@ end method;
 
 
 define method output-comment
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>, comment :: <string>)
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>, comment :: <string>)
      => ()
 end method;
 
 define method output-line-comment
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>, comment :: <string>)
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>, comment :: <string>)
      => ()
 end method;
 
 
 define method output-function-type
-    (outputter :: <harp-gnu-outputter>, name :: <string>) => ()
+    (outputter :: <harp-gnu-as-outputter>, name :: <string>) => ()
 end method;
 
 define method output-function-type
@@ -567,7 +567,7 @@ end method;
 
 
 define method output-data-footer
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>,
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>,
      name :: <constant-reference>,
      #rest keys,
      #key, #all-keys) => ()
@@ -575,7 +575,7 @@ define method output-data-footer
 end method;
 
 define method output-data-footer
-    (be :: <harp-back-end>, outputter :: <harp-gnu-outputter>,
+    (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>,
      name :: <byte-string>,
      #key model-object = unsupplied(),
      #all-keys) => ()
@@ -614,13 +614,13 @@ define constant max-ints-per-line = 15;
 
 
 define method at-asm-line-start?
-      (outputter :: <harp-gnu-outputter>) => (res :: <boolean>)
+      (outputter :: <harp-gnu-as-outputter>) => (res :: <boolean>)
   outputter.outputter-line-position == 0
 end method;
 
 
 define method maybe-reset-asm-line-pos
-      (outputter :: <harp-gnu-outputter>) => ()
+      (outputter :: <harp-gnu-as-outputter>) => ()
   if (outputter.outputter-line-position ~= 0)
     outputter.outputter-line-position := 0;
     format(outputter.destination, "\n");
@@ -628,13 +628,13 @@ define method maybe-reset-asm-line-pos
 end method;
 
 define method reset-asm-line-pos
-      (outputter :: <harp-gnu-outputter>) => ()
+      (outputter :: <harp-gnu-as-outputter>) => ()
   outputter.outputter-line-position := 0;
   format(outputter.destination, "\n");
 end method;
 
 define method increment-asm-line-pos
-      (outputter :: <harp-gnu-outputter>) => ()
+      (outputter :: <harp-gnu-as-outputter>) => ()
   let pos = outputter.outputter-line-position;
   if (pos >= max-ints-per-line)
     reset-asm-line-pos(outputter);
@@ -648,13 +648,13 @@ end method;
 // Functions to flag whether or not we are at the start of a line
 
 define method flag-asm-line-start
-      (outputter :: <harp-gnu-outputter>) => ()
+      (outputter :: <harp-gnu-as-outputter>) => ()
   outputter.outputter-line-position := 0;
 end method;
 
 
 define inline method imported-name
-    (outputter :: <harp-gnu-outputter>, name :: <byte-string>, import? :: <boolean>)
+    (outputter :: <harp-gnu-as-outputter>, name :: <byte-string>, import? :: <boolean>)
   => (imported-name :: <byte-string>)
   if (import?)
     $imported-name-mangler(name)
@@ -774,7 +774,7 @@ define method add-assembler-string-to-section
 end method;
 
 define method add-data-vector
-    (outputter :: <harp-gnu-outputter>, vector :: <byte-vector>,
+    (outputter :: <harp-gnu-as-outputter>, vector :: <byte-vector>,
      #key section = outputter.current-section)
     => ()
   let stream = outputter.destination;
@@ -784,7 +784,7 @@ define method add-data-vector
 end method;
 
 define method add-data-vector
-    (outputter :: <harp-gnu-outputter>, vector :: <simple-integer-vector>,
+    (outputter :: <harp-gnu-as-outputter>, vector :: <simple-integer-vector>,
      #key section = outputter.current-section)
     => ()
   let stream = outputter.destination;
@@ -842,7 +842,7 @@ end method;
 
 
 define method add-data
-    (outputter :: <harp-gnu-outputter>,
+    (outputter :: <harp-gnu-as-outputter>,
      name :: <byte-string>, model-object,
      #key section = outputter.current-section,
           type = #"absolute",
@@ -856,7 +856,7 @@ define method add-data
 end method;
 
 define method add-fixup-data
-    (outputter :: <harp-gnu-outputter>, name, model-object)
+    (outputter :: <harp-gnu-as-outputter>, name, model-object)
     => ()
   let name = canonical-data-object(name, model-object);
   add-word-to-section(outputter.current-section,
@@ -906,7 +906,7 @@ end method;
 
 
 define method make-binary-section
-    (builder :: <harp-gnu-outputter>, name :: <byte-string>,
+    (builder :: <harp-gnu-as-outputter>, name :: <byte-string>,
      alignment :: <integer>, flags)
     => (new :: <gnu-section>)
   make(<gnu-section>,
@@ -930,7 +930,7 @@ define constant $null-flags = "";
 // Standard GNU section flags are set by default, so only need specify
 // non-empty flags for non-standard sections
 
-define inline method directives-flags(outputter :: <harp-gnu-outputter>)
+define inline method directives-flags(outputter :: <harp-gnu-as-outputter>)
  => (flags)
   $directives-flags
 end method;
@@ -940,12 +940,12 @@ define inline method directives-flags(outputter :: <harp-linux-outputter>)
   $null-flags
 end method;
 
-define inline method data-flags(outputter :: <harp-gnu-outputter>)
+define inline method data-flags(outputter :: <harp-gnu-as-outputter>)
  => (flags)
   $null-flags
 end method;
 
-define inline method dylan-data-flags(outputter :: <harp-gnu-outputter>)
+define inline method dylan-data-flags(outputter :: <harp-gnu-as-outputter>)
  => (flags)
   $data-flags
 end method;
@@ -955,22 +955,22 @@ define inline method dylan-data-flags(outputter :: <harp-linux-outputter>)
   $data-flags
 end method;
 
-define inline method code-flags(outputter :: <harp-gnu-outputter>)
+define inline method code-flags(outputter :: <harp-gnu-as-outputter>)
  => (flags)
   $null-flags
 end method;
 
-define inline method init-code-flags(outputter :: <harp-gnu-outputter>)
+define inline method init-code-flags(outputter :: <harp-gnu-as-outputter>)
  => (flags)
   $code-flags
 end method;
 
-define inline method init-flags(outputter :: <harp-gnu-outputter>)
+define inline method init-flags(outputter :: <harp-gnu-as-outputter>)
  => (flags)
   $null-flags
 end method;
 
-define inline method fixup-flags(outputter :: <harp-gnu-outputter>)
+define inline method fixup-flags(outputter :: <harp-gnu-as-outputter>)
  => (flags)
   $fixup-flags
 end method;
