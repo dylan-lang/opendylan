@@ -106,40 +106,17 @@ end method;
 
 
 
-// Remotely invoke GAS, the GNU Assembler, to assemble object files
-
-define constant $assemble-command-line =
-  "as -L -d -o %s.obj %s.s";
-
-define method assemble-harp-outputter
-    (outputter :: <harp-gnu-as-outputter>, filename) => ()
-  if (outputter.finished-outputting?)
-    let file-string = as(<string>, filename);
-    let command-line =
-      format-to-string($assemble-command-line, file-string, file-string);
-    run-application(command-line);
-  end if;
-end method;
-
-// Use the GNU Assembler that has been modified to explicitly request
-// 32-bit displacements for intra-segment jump instructions
-
-define constant $x86-linux-assemble-command-line =
+define constant $elf-as-assemble-command-line =
   "as -L -o %s.o %s.s";
 
 define method assemble-harp-outputter
     (outputter :: <harp-elf-as-outputter>, filename) => ()
   if (outputter.finished-outputting?)
-    // Don't assemble when cross-compiling for Linux on Windows
-    unless ($os-name == #"win32")
-      let file-string = as(<string>, filename);
-      let command-line =
-        format-to-string(select ($machine-name)
-                           #"x86" => $x86-linux-assemble-command-line;
-                         end,
-                         file-string, file-string);
-      run-application(command-line);
-    end unless;
+    let file-string = as(<string>, filename);
+    let command-line =
+      format-to-string($elf-as-assemble-command-line,
+                       file-string, file-string);
+    run-application(command-line);
   end if;
 end method;
 
