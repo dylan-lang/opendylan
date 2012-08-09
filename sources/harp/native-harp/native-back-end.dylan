@@ -27,3 +27,6 @@ end;
 
 define abstract open class <native-freebsd-back-end> (<native-unix-back-end>)
 end;
+
+define abstract open class <native-darwin-back-end> (<native-unix-back-end>)
+end;

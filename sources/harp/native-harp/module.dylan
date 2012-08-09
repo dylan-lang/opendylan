@@ -24,7 +24,8 @@ define module native-back-end
     <native-windows-back-end>,
     <native-unix-back-end>,
     <native-linux-back-end>,
-    <native-freebsd-back-end>;
+    <native-freebsd-back-end>,
+    <native-darwin-back-end>;
 end module;
 
 
