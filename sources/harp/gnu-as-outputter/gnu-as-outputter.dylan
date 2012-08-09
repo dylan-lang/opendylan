@@ -16,6 +16,9 @@ end class;
 define class <harp-elf-as-outputter>(<harp-gnu-as-outputter>)
 end class;
 
+define class <harp-macho-as-outputter> (<harp-gnu-as-outputter>)
+end class;
+
 
 define class <gnu-section>(<binary-section>)
   slot current-position :: <integer> = 0;
@@ -76,6 +79,33 @@ end method;
 
 
 
+define constant $macho-as-outputter-type$ = #"macho-as-outputter";
+
+define sideways method file-extension-for-outputter-type
+       (backend :: <harp-back-end>, type == $macho-as-outputter-type$)
+       => (extension :: <byte-string>)
+  file-extension-for-outputter-type(backend, $gnu-as-outputter-type$);
+end method;
+
+define sideways method stream-type-for-outputter-type
+       (backend :: <harp-back-end>, type == $macho-as-outputter-type$)
+       => (stream-type :: <class>)
+  stream-type-for-outputter-type(backend, $gnu-as-outputter-type$);
+end method;
+
+define sideways method make-harp-outputter-by-type
+    (backend :: <harp-back-end>, filename, type == $macho-as-outputter-type$)
+    => (outputter :: <harp-macho-as-outputter>)
+  let file-string = as(<string>, filename);
+  let stream = open-output-stream(backend, file-string, type);
+  let outputter
+    = make-binary-builder(<harp-macho-as-outputter>,
+                          destination: stream);
+  outputter;
+end method;
+
+
+
 // Remotely invoke GAS, the GNU Assembler, to assemble object files
 
 define constant $assemble-command-line =
@@ -113,6 +143,19 @@ define method assemble-harp-outputter
   end if;
 end method;
 
+define constant $x86-darwin-assemble-command-line =
+  "as -L -arch i386 -o %s.o %s.s";
+
+define method assemble-harp-outputter
+    (outputter :: <harp-macho-as-outputter>, filename) => ()
+  if (outputter.finished-outputting?)
+    let file-string = as(<string>, filename);
+    let command-line =
+      format-to-string($x86-darwin-assemble-command-line,
+                       file-string, file-string);
+    run-application(command-line);
+  end if;
+end method;
 
 
 /// GNU Assembler outputter support
