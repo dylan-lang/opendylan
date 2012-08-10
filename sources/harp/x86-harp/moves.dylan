@@ -414,7 +414,7 @@ end method;
 
 
 define method op--store-thread-local
-    (be :: <x86-back-end>, data, offset :: <integer>) => ()
+    (be :: <x86-windows-back-end>, data, offset :: <integer>) => ()
   emit(be, fs.segment-prefix);
   harp-out(be)
     st(be, data, 0, offset);
@@ -422,7 +422,7 @@ define method op--store-thread-local
 end method;
 
 define method op--load-thread-local
-    (be :: <x86-back-end>, dest :: <real-register>, offset :: <integer>) => ()
+    (be :: <x86-windows-back-end>, dest :: <real-register>, offset :: <integer>) => ()
   emit(be, fs.segment-prefix);
   harp-out(be)
     ld(be, dest, 0, offset);
