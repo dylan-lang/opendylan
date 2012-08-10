@@ -251,7 +251,7 @@ sources
     harp-cg-linker
     macro-expander
     native-harp-cg
-    pentium-harp-cg
+    x86-harp-cg
   environment
     gtk
     project-wizard

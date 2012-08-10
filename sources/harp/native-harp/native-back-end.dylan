@@ -14,29 +14,6 @@ define abstract open primary class <harp-native-back-end> (<harp-back-end>)
 end;
 
 
-// The abstract class from which all CISC backends are derived.
-// CISC backends have some extended addressing mode instructions.
-
-define abstract open primary class <harp-cisc-back-end> (<harp-native-back-end>)
-end;
-
-
-// The abstract class from which all RISC backends are derived.
-
-define abstract open primary class <harp-risc-back-end> (<harp-native-back-end>)
-end;
-
-
-define sideways method big-endian?
-    (back-end :: <harp-cisc-back-end>) => (big-endian? :: <boolean>)
-  #f
-end;
-
-define sideways method big-endian?
-    (back-end :: <harp-risc-back-end>) => (big-endian? :: <boolean>)
-  #t
-end;
-
 define abstract open class <native-windows-back-end> (<harp-native-back-end>)
 end;
 
@@ -49,4 +26,7 @@ define abstract open class <native-linux-back-end> (<native-unix-back-end>)
 end;
 
 define abstract open class <native-freebsd-back-end> (<native-unix-back-end>)
+end;
+
+define abstract open class <native-darwin-back-end> (<native-unix-back-end>)
 end;

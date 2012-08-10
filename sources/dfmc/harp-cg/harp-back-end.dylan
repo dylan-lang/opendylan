@@ -32,7 +32,12 @@ define method open-emit-output
       add!(outputters,
            make-harp-outputter(back-end, filename,
                                print-harp?: harp-output?,
-                               type: #"linux-outputter"));
+                               type: #"elf-as-outputter"));
+    current-os-name() == #"darwin" =>
+      add!(outputters,
+           make-harp-outputter(back-end, filename,
+                               print-harp?: harp-output?,
+                               type: #"macho-as-outputter"));
     otherwise =>
       add!(outputters,
            make-harp-outputter(back-end, filename, print-harp?: harp-output?));

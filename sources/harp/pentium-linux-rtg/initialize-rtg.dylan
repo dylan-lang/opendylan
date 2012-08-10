@@ -11,4 +11,4 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // This will be necessary in order to permit generation of a client 
 // runtime without generating a base first.
 
-dummy-generate-runtime(make(<pentium-linux-back-end>));
+dummy-generate-runtime(make(<x86-linux-back-end>));

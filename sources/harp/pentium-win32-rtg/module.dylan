@@ -16,7 +16,7 @@ define module pentium-win32-rtg
   use locators;
   use dfmc-back-end-protocol;
   use harp;
-  use pentium-harp, export: { <pentium-windows-back-end> };
+  use x86-harp, export: { <x86-windows-back-end> };
   use pentium-rtg, export: all;
   use threads;
 end module;

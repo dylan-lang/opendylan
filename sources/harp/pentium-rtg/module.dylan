@@ -16,7 +16,7 @@ define module pentium-rtg
   use locators;
   use dfmc-back-end-protocol;
   use harp;
-  use pentium-harp;
+  use x86-harp;
   use native-rtg, export: all;
   use threads;
 end module;
