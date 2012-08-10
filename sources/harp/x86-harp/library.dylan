@@ -18,7 +18,7 @@ define library x86-harp
   use dfmc-back-end-protocol;
   use native-harp;
   use harp-coff;
-  use gnu-outputter;
+  use gnu-as-outputter;
   use source-records;
   export 
     x86-harp,

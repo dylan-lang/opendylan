@@ -126,7 +126,7 @@
 	  <merge>dfmc-harp-cg-linker</merge>
 	  <merge>x86-harp</merge>
 	  <merge>harp-coff</merge>
-	  <merge>gnu-outputter</merge>
+	  <merge>gnu-as-outputter</merge>
 	  <merge>binary-outputter</merge>
 	  <merge>dfmc-native-harp-cg</merge>
 	  <merge>pentium-linux-glue-rtg</merge>
@@ -157,9 +157,9 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="gnu-outputter">
-      <sources location="dfmc/gnu-outputter">
-	<project>gnu-outputter.lid</project>
+    <library name="gnu-as-outputter">
+      <sources location="dfmc/gnu-as-outputter">
+	<project>gnu-as-outputter.lid</project>
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>

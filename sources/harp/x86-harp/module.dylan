@@ -24,7 +24,7 @@ define module x86-harp
   use native-harp-for-extenders;
   use harp-coff, 
     exclude: { big-endian? };
-  use gnu-outputter;
+  use gnu-as-outputter;
 
   export
     <x86-back-end>,

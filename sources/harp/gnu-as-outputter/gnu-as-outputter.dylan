@@ -1,4 +1,4 @@
-module:    gnu-outputter
+module:    gnu-as-outputter
 Synopsis:  GNU assembler output from harp for i486
 Author:    Nosa Omo
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

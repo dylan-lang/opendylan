@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define library gnu-outputter
+define library gnu-as-outputter
   use dylan;
   use common-dylan;
   use collections;
@@ -19,10 +19,10 @@ define library gnu-outputter
   use binary-builder;
   use binary-outputter;
 
-  export gnu-outputter;
+  export gnu-as-outputter;
 end library;
 
-define module gnu-outputter
+define module gnu-as-outputter
   use common-dylan, exclude: { format-to-string };
   use dylan-extensions;
   use byte-vector;
