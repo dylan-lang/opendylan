@@ -18,7 +18,7 @@ define win-fun runtime-external win-GetModuleHandle        = "GetModuleHandleA",
 
 
 define sideways method op--create-TEB-tlv-index 
-    (be :: <pentium-windows-back-end>) => ()
+    (be :: <x86-windows-back-end>) => ()
   with-harp (be)
     tag done;
     c-result c-result;
@@ -34,7 +34,7 @@ define sideways method op--create-TEB-tlv-index
 end method;
 
 define sideways method op--get-teb-tlv
-    (be :: <pentium-windows-back-end>, dest :: <register>) => ()
+    (be :: <x86-windows-back-end>, dest :: <register>) => ()
   with-harp (be)
     c-result c-result;
     op--stdcall-c(be, win-TlsGetValue, TEB-tlv-index);
@@ -43,27 +43,27 @@ define sideways method op--get-teb-tlv
 end method;
 
 define sideways method op--set-teb-tlv
-    (be :: <pentium-windows-back-end>, val) => ()
+    (be :: <x86-windows-back-end>, val) => ()
   with-harp (be)
     op--stdcall-c(be, win-TlsSetValue, TEB-tlv-index, val);
   end with-harp;
 end method;
 
 define sideways method op--free-teb-tlv
-    (be :: <pentium-windows-back-end>) => ()
+    (be :: <x86-windows-back-end>) => ()
   with-harp (be)
     op--stdcall-c(be, win-TlsFree, TEB-tlv-index);
   end with-harp;
 end method;
 
 define sideways method op--get-stack-bottom
-    (be :: <pentium-windows-back-end>, dest :: <register>) => ()
+    (be :: <x86-windows-back-end>, dest :: <register>) => ()
   with-harp (be)
     ins--get-stack-bottom(be, dest);
   end with-harp;
 end method;
 
-define sideways method op--get-module-handle(be :: <pentium-windows-back-end>) => ()
+define sideways method op--get-module-handle(be :: <x86-windows-back-end>) => ()
   with-harp (be)
     c-result c-result;
     op--stdcall-c(be, win-GetModuleHandle, 0);
@@ -73,13 +73,13 @@ end method;
 
 
 define sideways method op--shut-down-dll-library
-    (be :: <pentium-windows-back-end>) => ()
+    (be :: <x86-windows-back-end>) => ()
   op--call-iep(be, primitive-deregister-traced-roots-ref, 
 	       %ambig-root, %static-root, %exact-root);
 end method;
 
 define sideways method op--shut-down-exe-library
-    (be :: <pentium-windows-back-end>) => ()
+    (be :: <x86-windows-back-end>) => ()
   op--call-iep(be, primitive-deregister-traced-roots-ref, 
 	       %ambig-root, %static-root, %exact-root);
 end method;
@@ -164,7 +164,7 @@ define shared init win32-API-runtime-primitive dylan-dll-entry ("DylanDllEntry",
 end win32-API-runtime-primitive;
 
 
-define sideways method op--init-dylan-data (be :: <pentium-windows-back-end>) => ()
+define sideways method op--init-dylan-data (be :: <x86-windows-back-end>) => ()
   with-harp (be)
     let data-start  = ins--constant-ref(be, $data-start-symbol);
     let data-end    = ins--constant-ref(be, $data-end-symbol);
@@ -292,7 +292,7 @@ define used-by-client init runtime-primitive fixup-unimported-dylan-data
 end runtime-primitive;
 
 define method op--process-fixups-for-file
-    (be :: <pentium-windows-back-end>,
+    (be :: <x86-windows-back-end>,
      fixup-start :: <register>, fixup-end :: <register>,
      dynamic-linking? :: <boolean>) => ()
   with-harp (be)
@@ -329,7 +329,7 @@ define method op--process-fixups-for-file
 end method;
 
 define method op--process-fixups-for-import
-    (be :: <pentium-windows-back-end>,
+    (be :: <x86-windows-back-end>,
      base :: <register>, cursor :: <register>, offset :: <register>,
      start :: <tag>, done :: <tag>, error :: <tag>,
      dynamic-linking? :: <boolean>) => ()
@@ -377,7 +377,7 @@ end method;
 
 
 define method op--process-fixups-for-object
-    (be :: <pentium-windows-back-end>, 
+    (be :: <x86-windows-back-end>, 
      base :: <register>, obj :: <register>,
      cursor :: <register>, num :: <register>) => ()
   with-harp (be)

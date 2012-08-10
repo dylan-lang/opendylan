@@ -117,14 +117,14 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="dfmc-pentium-harp-cg">
-      <sources location="dfmc/pentium-harp-cg">
-	<project>pentium-harp-cg.lid</project>
+    <library name="dfmc-x86-harp-cg">
+      <sources location="dfmc/x86-harp-cg">
+	<project>x86-harp-cg.lid</project>
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32">
-	<binary file="dfmc-pentium-harp-cg.dll">
+	<binary file="dfmc-x86-harp-cg.dll">
 	  <merge>dfmc-harp-cg-linker</merge>
-	  <merge>pentium-harp</merge>
+	  <merge>x86-harp</merge>
 	  <merge>harp-coff</merge>
 	  <merge>gnu-outputter</merge>
 	  <merge>binary-outputter</merge>
@@ -145,9 +145,9 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="pentium-harp">
-      <sources location="dfmc/pentium-harp">
-	<project>pentium-harp.lid</project>
+    <library name="x86-harp">
+      <sources location="dfmc/x86-harp">
+	<project>x86-harp.lid</project>
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>

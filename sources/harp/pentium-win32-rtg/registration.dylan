@@ -13,7 +13,7 @@ define macro win32-runtime-primitive-definer
     end }
     => {
          define sideways method "genop--" ## ?name
-           (?=be :: <pentium-windows-back-end>) => ()
+           (?=be :: <x86-windows-back-end>) => ()
            with-harp (?=be)
              ?body
            end with-harp;

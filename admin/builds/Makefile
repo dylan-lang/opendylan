@@ -522,7 +522,7 @@ COFF_MANAGER = $(INSTALL_BIN_DIRECTORY)\coff-manager.dll
 DFMC_BROWSER_SUPPORT = $(INSTALL_BIN_DIRECTORY)\dfmc-browser-support.dll
 DFMC_DEBUG_BACK_END = $(INSTALL_BIN_DIRECTORY)\dfmc-debug-back-end.dll
 DFMC_MANAGEMENT = $(INSTALL_BIN_DIRECTORY)\dfmc-management.dll
-DFMC_PENTIUM_HARP_CG = $(INSTALL_BIN_DIRECTORY)\dfmc-pentium-harp-cg.dll
+DFMC_X86_HARP_CG = $(INSTALL_BIN_DIRECTORY)\dfmc-x86-harp-cg.dll
 FILE_SOURCE_RECORDS = $(INSTALL_BIN_DIRECTORY)\file-source-records.dll
 ELF_LINKER = $(INSTALL_BIN_DIRECTORY)\elf-linker.dll
 METERING = $(INSTALL_BIN_DIRECTORY)\metering.dll
@@ -721,7 +721,7 @@ coff-manager: $(COFF_MANAGER)
 dfmc-browser-support: $(DFMC_BROWSER_SUPPORT)
 dfmc-debug-back-end: $(DFMC_DEBUG_BACK_END)
 dfmc-management: $(DFMC_MANAGEMENT)
-dfmc-pentium-harp-cg: $(DFMC_PENTIUM_HARP_CG)
+dfmc-x86-harp-cg: $(DFMC_X86_HARP_CG)
 dood: $(DOOD)
 file-source-records: $(FILE_SOURCE_RECORDS)
 elf-linker: $(ELF_LINKER)
@@ -761,7 +761,7 @@ testworks-report: $(TESTWORKS_REPORT)
 
 project-manager-libraries: tools-interface user-projects
 core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-debug-back-end
-pentium-compiler-libraries: core-compiler-libraries disasm dfmc-pentium-harp-cg
+pentium-compiler-libraries: core-compiler-libraries disasm dfmc-x86-harp-cg
 c-compiler-libraries: core-compiler-libraries
 pentium-dw-libraries: pentium-compiler-libraries dispatch-profiler
 console-scepter-libraries: console-scepter tool-scepter
@@ -1592,7 +1592,7 @@ $(DFMC_MANAGEMENT):
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
   $(BUILD_LIBRARY) dfmc-management
 
-$(DFMC_PENTIUM_HARP_CG):
+$(DFMC_X86_HARP_CG):
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
   $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
   $(ENSURE_RUNTIME_LIBRARY) $(BIG_INTEGERS_DLL) big-integers
@@ -1603,7 +1603,7 @@ $(DFMC_PENTIUM_HARP_CG):
   $(ENSURE_LIBRARY) disasm
   $(ENSURE_SOURCES) dfmc $(DFMC_SOURCE)
   $(ENSURE_SOURCES) harp $(HARP_SOURCE)
-  $(BUILD_LIBRARY) dfmc-pentium-harp-cg
+  $(BUILD_LIBRARY) dfmc-x86-harp-cg
 
 # NOTE: This is the first library that's built for the bootstrap (i.e., generation 1) compiler.
 #       Therefore, it needs to ensure that the Library-Packs hierarchy is present.
@@ -1719,7 +1719,7 @@ $(ENVIRONMENT_COMMANDS):
   $(ENSURE_LIBRARY) file-source-records
   $(ENSURE_LIBRARY) release-info
   $(ENSURE_LIBRARY) user-projects
-  $(ENSURE_LIBRARY) dfmc-pentium-harp-cg
+  $(ENSURE_LIBRARY) dfmc-x86-harp-cg
   $(ENSURE_LIBRARY) dfmc-debug-back-end
   $(ENSURE_SOURCES) environment $(ENVIRONMENT_SOURCE)
   $(BUILD_LIBRARY) environment-commands

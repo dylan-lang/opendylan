@@ -13,7 +13,7 @@ define library pentium-win32-rtg
   use system;
   use dfmc-back-end-protocol;
   use harp;
-  use pentium-harp;
+  use x86-harp;
   use pentium-rtg;
 
   export pentium-win32-rtg;

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define sideways method op--preserve-mlist-for-mep-apply
-    (be :: <pentium-back-end>, mlist :: <register>) => ()
+    (be :: <x86-back-end>, mlist :: <register>) => ()
   with-harp (be)
     stack stack;
 
@@ -26,7 +26,7 @@ define sideways method op--preserve-mlist-for-mep-apply
 end method;
 
 define sideways method op--restore-mlist-for-mep-apply
-    (be :: <pentium-back-end>, mlist :: <register>) => ()
+    (be :: <x86-back-end>, mlist :: <register>) => ()
   with-harp (be)
     stack stack;
 
@@ -47,7 +47,7 @@ end method;
 
 
 define sideways method op--push-registers-for-remove-optionals
-    (be :: <pentium-back-end>) => (bytes-pushed :: <integer>)
+    (be :: <x86-back-end>) => (bytes-pushed :: <integer>)
   with-harp (be)
     arg0 arg0;
     arg-count argc;
@@ -63,7 +63,7 @@ define sideways method op--push-registers-for-remove-optionals
 end method;
 
 define sideways method op--pop-registers-for-remove-optionals
-    (be :: <pentium-back-end>) => ()
+    (be :: <x86-back-end>) => ()
   with-harp (be)
     arg0 arg0;
     arg-count argc;
