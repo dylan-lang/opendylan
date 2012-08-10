@@ -21,8 +21,6 @@ define module native-back-end
   use harp-for-extenders;
   export
     <harp-native-back-end>,
-    <harp-risc-back-end>,
-    <harp-cisc-back-end>,
     <native-windows-back-end>,
     <native-unix-back-end>,
     <native-linux-back-end>,

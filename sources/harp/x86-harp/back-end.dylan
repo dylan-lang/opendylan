@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // The Pentium backend class. Nothing very interesting here.
 
-define class <x86-back-end> (<harp-cisc-back-end>)
+define class <x86-back-end> (<harp-native-back-end>)
 end;
 
 define method initialize
@@ -16,6 +16,11 @@ define method initialize
   next-method();
   obj.registers := pentium-registers;
   obj;
+end;
+
+define sideways method big-endian?
+    (back-end :: <x86-back-end>) => (big-endian? :: <boolean>)
+  #f
 end;
 
 define class <x86-windows-back-end> (<x86-back-end>,
