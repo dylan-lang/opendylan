@@ -19,6 +19,10 @@ Makefile
 /sources/app/llvm-tablegen/tablegen-parser.dylan
 /sources/jamfiles/config.jam
 /sources/lib/llvm/llvm-asm-parser.dylan
+/sources/lib/run-time/pentium-freebsd/linux-spy-interfaces.o
+/sources/lib/run-time/pentium-freebsd/linux-support.o
+/sources/lib/run-time/pentium-freebsd/x86-linux-collector.o
+/sources/lib/run-time/pentium-freebsd/x86-linux-threads-primitives.o
 /sources/lib/run-time/pentium-linux/linux-spy-interfaces.o
 /sources/lib/run-time/pentium-linux/linux-support.o
 /sources/lib/run-time/pentium-linux/x86-linux-collector.o
