@@ -13,7 +13,7 @@ define library pentium-core-rtg
   use system;
   use dfmc-back-end-protocol;
   use harp;
-  use pentium-harp;
+  use x86-harp;
   use native-core-rtg;
 
   export pentium-rtg;

@@ -6,6 +6,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 create-dylan-runtime
-  (back-end-class: <pentium-freebsd-back-end>,
-   type: #"linux-outputter");
+  (back-end-class: <x86-freebsd-back-end>,
+   type: #"elf-as-outputter");
 

@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library pentium-linux-glue-rtg
   use common-dylan;
-  use pentium-harp;
+  use x86-harp;
   use native-glue-rtg;
   use linux-glue-rtg;
   use pentium-glue-rtg;
