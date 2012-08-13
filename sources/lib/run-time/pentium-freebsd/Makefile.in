@@ -54,6 +54,13 @@ linux-support.o: $(runtime_srcdir)/linux-support.c
 #$(LIBDEST)/libgc.a: gc.a
 #	cp -fp gc.a $(LIBDEST)/libgc.a
 #
+
+$(MPS_LIB)/mmdw.a:
+	(cd $(MPS_ROOT)/code; gmake -f fri4gc.gmk mmdw.a)
+
+$(MPS_LIB)/mpsplan.a:
+	(cd $(MPS_ROOT)/code; gmake -f fri4gc.gmk mpsplan.a)
+
 $(LIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a
 	cp -fp $(MPS_LIB)/mpsplan.a $(LIBDEST)/libmpsplan.a
 
