@@ -14,7 +14,7 @@ RTOBJS_harp ?= runtime.o
 #
 # Library search path
 #
-LINKFLAGSEXE ?= -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/../lib/ ;
+LINKFLAGSEXE ?= -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/../lib/ -lpthread ;
 
 #
 # Common build script
