@@ -42,17 +42,3 @@ define used-by-client unix-runtime-primitive exit-application
   op--call-c(be, ExitProcess-ref, status);
   ins--rts-and-drop(be, 0);
 end unix-runtime-primitive;
-
-
-define c-fun runtime-external system-ref   = "system";
-
-define unix-runtime-primitive run-application
-  // On entry: c-string-command-line
-  //    
-  // On exit: raw-integer-status
-  arg0 command;
-
-  op--call-c(be, system-ref, command);
-  ins--rts-and-drop(be, 0);
-end unix-runtime-primitive;
-

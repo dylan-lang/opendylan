@@ -17,7 +17,6 @@ define win-fun runtime-external win-QueryFrequency = "QueryPerformanceFrequency"
 
 // define win-fun runtime-external win-CreateProcess  = "CreateProcess",             data:  "40";
 define win-fun runtime-external win-ExitProcess    = "ExitProcess",               data:  "4";
-define win-fun runtime-external win-Exec           = "WinExec",                   data:  "8";
 
 
 define runtime-variable counter-start-lo     = "%counter_start_lo";
@@ -87,23 +86,5 @@ define used-by-client win32-runtime-primitive exit-application
   // On exit: entire process is terminated
   arg0 status;
   op--stdcall-c(be, win-ExitProcess, status);
-  ins--rts-and-drop(be, 0);
-end win32-runtime-primitive;
-
-
-define win32-runtime-primitive run-application
-  // On entry: c-string-command-line
-  //    
-  // On exit: raw-integer-status
-
-  result result;
-  arg0 arg0;
-  nreg name;
-  tag done, ok;
-
-  ins--move(be, name, arg0);
-  // Call the Windows function
-  let sw_shownormal = 1;
-  op--stdcall-c(be, win-Exec, name, sw_shownormal);
   ins--rts-and-drop(be, 0);
 end win32-runtime-primitive;
