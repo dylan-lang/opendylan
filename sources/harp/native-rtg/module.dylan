@@ -24,7 +24,6 @@ define module native-rtg
     genop--start-timer,
     genop--stop-timer,
     genop--exit-application,
-    genop--run-application,
     genop--spy-fixup-imported-dylan-data,
     genop--spy-fixup-unimported-dylan-data,
     genop--spy-exit-application,

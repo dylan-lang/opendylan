@@ -2173,7 +2173,6 @@ define &primitive-descriptor primitive-preboot-symbols;
 // Terminal
 
 // Operating System
-define &primitive-descriptor primitive-run-application;
 define &primitive-descriptor primitive-exit-application;
 define &primitive-descriptor primitive-start-timer;
 define &primitive-descriptor primitive-stop-timer;

@@ -441,7 +441,6 @@ define &module dylan-primitives
 
   // Operating System
   create
-    primitive-run-application,
     primitive-exit-application,
     primitive-start-timer,
     primitive-stop-timer;
