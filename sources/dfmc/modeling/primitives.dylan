@@ -607,8 +607,6 @@ define raw-field-primitive c-int <raw-c-unsigned-int>;
 
 /// OPERATING SYSTEM
 
-define side-effecting stateless dynamic-extent &primitive primitive-run-application
-    (command :: <raw-byte-string>) => (code :: <raw-integer>);
 define side-effecting stateless dynamic-extent &primitive primitive-exit-application
     (code :: <raw-integer>) => ();
 define side-effecting stateless dynamic-extent &primitive primitive-start-timer () => ();

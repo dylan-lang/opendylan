@@ -327,7 +327,6 @@ define generic emit-primitive-call
 // // Terminal
 // 
 // // Operating System
-// define &primitive-descriptor primitive-run-application;
 // define &primitive-descriptor primitive-exit-application;
 // define &primitive-descriptor primitive-start-timer;
 // define &primitive-descriptor primitive-stop-timer;

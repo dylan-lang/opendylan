@@ -32,6 +32,3 @@ define generic-runtime-primitive stop-timer;
 
 define used-by-client generic-runtime-primitive exit-application;
 
-
-define generic-runtime-primitive run-application;
-
