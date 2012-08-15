@@ -19,8 +19,8 @@ end test member?-8;
 
 define test member?-9 (description: "with other tests")
   check-true("", member?(#[2], #[#[1], #[2], #[3]], test: \=));
-  check-true("", ~member?(0, range(from: 0, up-to: 6), test: \>));
-  check-true("", member?(1, range(from: 0, up-to: 6), test: \>));
+  check-true("", ~member?(0, range(from: 0, below: 6), test: \>));
+  check-true("", member?(1, range(from: 0, below: 6), test: \>));
   check-true("", member?(1, #[1, 2, 3], test: \<));
   check-true("", ~member?(#(#(1), #(2), #(3)), #(1)));
   check-true("", member?('a', #[3, 5, 'b', 7, 'a']));
@@ -55,10 +55,10 @@ define test find-key-1 (description: "empty-list")
 end test find-key-1;
 
 define test find-key-2 (description: "range")
-    let var = range(from: 1, up-to: 6, by: 3);
+    let var = range(from: 1, below: 6, by: 3);
     check-true("", even?(var[find-key(var, even?)]));
  
-  check-equal("", find-key(range(from: 1, up-to: 6, by: 2), even?), #f);
+  check-equal("", find-key(range(from: 1, below: 6, by: 2), even?), #f);
 end test find-key-2;
 
 define test find-key-3 (description: "deque")
@@ -343,7 +343,7 @@ define test element1-0 (description: "list")
 end test element1-0;
 
 define test element1-1 (description: "range")
-  let c = range(from: 1, up-to: 6);
+  let c = range(from: 1, below: 6);
   check-equal("", c[0], 1);
   check-equal("", element(c, 99, default: #t), #t);
 end test element1-1;

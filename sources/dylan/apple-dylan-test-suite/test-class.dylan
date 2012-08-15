@@ -92,13 +92,13 @@ define test as-sequence-permutations ()
                  list(stretchy-vector-instance('A', 'B', 'C'),
                       <unicode-string>,
                       <string>),
-                 list(range(from: 3, up-to: 10), <list>),
-                 list(range(from: 9, down-to: 3), <vector>),
-                 list(range(from: 9, down-to: 3), <stretchy-vector>, <vector>),
-                 list(range(from: 9, down-to: 3),
+                 list(range(from: 3, below: 10), <list>),
+                 list(range(from: 9, above: 3), <vector>),
+                 list(range(from: 9, above: 3), <stretchy-vector>, <vector>),
+                 list(range(from: 9, above: 3),
                       <simple-object-vector>,
                       <vector>),
-                 list(range(from: 9, down-to: 3), <deque>)),
+                 list(range(from: 9, above: 3), <deque>)),
        losers = #()
          then begin
                 let object = stuff.head;
@@ -157,7 +157,7 @@ define test as-table ()
                  deque-instance(#"a", #"b", #"c"),
                  deque-instance('x', 'y', 'z'),
                  stretchy-vector-instance('A', 'B', 'C'),
-                 range(from: 3, up-to: 10)),
+                 range(from: 3, below: 10)),
        losers = #()
          then if (begin
                     let objsize = collection.size;
@@ -179,7 +179,7 @@ define test as-table ()
                   end)
                 losers
               else
-                cons(collection, losers)
+                pair(collection, losers)
               end if)
   finally
     if (losers.empty?)
@@ -365,18 +365,18 @@ define test limited-collections ()
   let small-int = limited(<integer>, min: 0, max: 255);
   let small-int-vector
     = limited(<vector>, of: limited(<integer>, min: 0, max: 255));
-  let 3-small-int-vector
+  let small-int-vector-3
     = limited(<vector>, size: 3, of: limited(<integer>, min: 0, max: 255));
   check-false("", instance?(#t, small-int));
   check("", instance?, 3, small-int);
   check-false("", instance?(300, small-int));
   check("", instance?, #[3, 4, 5], small-int-vector);
   check-false("", instance?(vector(300, 4, 5), small-int-vector));
-  check("", instance?, vector(3, 4, 5), 3-small-int-vector);
-  check-false("", instance?(vector(300, 4, 5), 3-small-int-vector));
-  check-false("", instance?(vector(3, 4, 5, 6), 3-small-int-vector));
-  check-false("", instance?(vector(3, 4), 3-small-int-vector));
-  check-false("", instance?(vector(), 3-small-int-vector));
+  check("", instance?, vector(3, 4, 5), small-int-vector-3);
+  check-false("", instance?(vector(300, 4, 5), small-int-vector-3));
+  check-false("", instance?(vector(3, 4, 5, 6), small-int-vector-3));
+  check-false("", instance?(vector(3, 4), small-int-vector-3));
+  check-false("", instance?(vector(), small-int-vector-3));
 end test;
 
 // Design note #7 introduces a new method on the "union" generic function
@@ -397,18 +397,18 @@ define test union-on-limited-types ()
   let small-int = limited(<integer>, min: 0, max: 255);
   let small-int-vector
     = limited(<vector>, of: limited(<integer>, min: 0, max: 255));
-  let 3-small-int-vector
+  let small-int-vector-3
     = limited(<vector>, size: 3, of: limited(<integer>, min: 0, max: 255));
   check("", instance?, #t, type-union(singleton(#t), small-int));
   check("", instance?, 3, type-union(singleton(#t), small-int));
   check-false("", instance?(300, type-union(singleton(#t), small-int)));
   check("", instance?, #[3, 4, 5], type-union(singleton(#t), small-int-vector));
   check-false("", instance?(vector(300, 4, 5), type-union(singleton(#t), small-int-vector)));
-  check("", instance?, vector(3, 4, 5), type-union(singleton(#t), 3-small-int-vector));
-  check-false("", instance?(vector(300, 4, 5), type-union(singleton(#t), 3-small-int-vector)));
-  check-false("", instance?(vector(3, 4, 5, 6), type-union(singleton(#t), 3-small-int-vector)));
-  check-false("", instance?(vector(3, 4), type-union(singleton(#t), 3-small-int-vector)));
-  check-false("", instance?(vector(), type-union(singleton(#t), 3-small-int-vector)));
+  check("", instance?, vector(3, 4, 5), type-union(singleton(#t), small-int-vector-3));
+  check-false("", instance?(vector(300, 4, 5), type-union(singleton(#t), small-int-vector-3)));
+  check-false("", instance?(vector(3, 4, 5, 6), type-union(singleton(#t), small-int-vector-3)));
+  check-false("", instance?(vector(3, 4), type-union(singleton(#t), small-int-vector-3)));
+  check-false("", instance?(vector(), type-union(singleton(#t), small-int-vector-3)));
 end test;
 
 
