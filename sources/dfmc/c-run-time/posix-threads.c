@@ -1088,7 +1088,7 @@ D primitive_release_all_notification(D n, D l)
 }
 
 
-/* 20 */   
+/* 20 */
 D primitive_make_recursive_lock(D l, D n)
 {
   CONTAINER      *lock = (CONTAINER *)l;
@@ -1222,7 +1222,7 @@ D primitive_owned_recursive_lock(D l)
     return(I(0));     // not owned
 }
 
-  
+
 /* 26 */
 D primitive_make_semaphore(D l, D n, D i, D m)
 {

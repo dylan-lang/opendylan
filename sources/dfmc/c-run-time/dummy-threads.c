@@ -133,7 +133,7 @@ D primitive_current_thread() {
 D primitive_make_thread(D t, D n, D p, D f, DBOOL s) {
   ignore(t); ignore(n); ignore(p); ignore(f); ignore(s);
   /* threads_get_stuffed(); */
-  return(THREAD_SUCCESS);	/* Keeps some compilers happy -- Won't actually get here */
+  return(THREAD_SUCCESS);  /* Keeps some compilers happy -- Won't actually get here */
 }
 D primitive_destroy_thread(D t) {
   ignore(t);
