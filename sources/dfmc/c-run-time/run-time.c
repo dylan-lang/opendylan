@@ -4016,34 +4016,6 @@ D MV3_ (D x, D y, D z) {
   return x;
 }
 
-void MV_ADJ (DSINT n) {
-  TEB* teb = get_teb();
-  /* simply adjusting the count is sufficient, because MV_GET
-     checks the count and returns #f if index >= count */
-  teb->return_values.count = n;
-}
-
-/* ******************************
-void MV_ADJ (DSINT n) {
-  int i, count=teb->return_values.count;
-  if (count!=n) {
-    for (i=count; i<n; ++i)
-      teb->return_values.value[i] = DFALSE;
-    teb->return_values.count = n;
-  }
-}
-   ******************************
-*/
-
-void MV_ADJ_REST (DSINT n) {
-  TEB* teb = get_teb();
-  int i, count=teb->return_values.count;
-  if (count<n) {
-    for (i=count; i<n; ++i)
-      teb->return_values.value[i] = DFALSE;
-    teb->return_values.count = n;
-  }
-}
 
 /* NON-LOCAL EXITS */
 
