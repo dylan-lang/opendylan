@@ -101,7 +101,7 @@ define test any?-2 (description: "range")
            #f;
          end if;
        end method,
-       (range(from: -5, up-to: 7))),
+       (range(from: -5, below: 7))),
    6);
   check-equal("", any?(method (e)
            if (e > 5)
@@ -110,7 +110,7 @@ define test any?-2 (description: "range")
              #f;
            end if;
          end method,
-         (range(from: -5, up-to: 6))),
+         (range(from: -5, below: 6))),
      #f);
 end test any?-2;
 
@@ -310,7 +310,7 @@ define test every?-2 (description: "range")
          #f;
        end if;
      end method,
-     (range(from: -5, up-to: 7))),
+     (range(from: -5, below: 7))),
    #t);
   check-equal("", every?
       (method (e)
@@ -320,7 +320,7 @@ define test every?-2 (description: "range")
            #f;
          end if;
        end method,
-       (range(from: -5, up-to: 6))),
+       (range(from: -5, below: 6))),
      #f);
 end test every?-2;
 
@@ -492,7 +492,7 @@ define test reduce-1 (description: "empty-list")
 end test reduce-1;
 
 define test reduce-2 (description: "range")
-  check-equal("", reduce(\+, 0, range(from: -5, up-to: 5)), -5);
+  check-equal("", reduce(\+, 0, range(from: -5, below: 5)), -5);
 end test reduce-2;
 
 define test reduce-3 (description: "deque")
@@ -538,7 +538,7 @@ define test reduce1-1 (description: "list")
 end test reduce1-1;
 
 define test reduce1-2 (description: "range")
-  check-equal("", reduce1(\+, range(from: -5, up-to: 5)), -5);
+  check-equal("", reduce1(\+, range(from: -5, below: 5)), -5);
 end test reduce1-2;
 
 define test reduce1-3 (description: "deque")
@@ -587,8 +587,8 @@ define test member?-1 (description: "empty-list")
 end test member?-1;
 
 define test member?-2 (description: "range")
-  check-equal("", member?(5, range(from: -5, up-to: 6)), #t);
-  check-true("", ~member?(5, range(from: -5, up-to: 5)));
+  check-equal("", member?(5, range(from: -5, below: 6)), #t);
+  check-true("", ~member?(5, range(from: -5, below: 5)));
 end test member?-2;
 
 define test member?-3 (description: "deque")
