@@ -26,4 +26,4 @@ include $(SYSTEM_ROOT)/lib/posix-build.jam ;
 #
 # Overrides/redefinitions
 #
-rtlibs += -ldl ;
+rtlibs += -lpthread -ldl ;
