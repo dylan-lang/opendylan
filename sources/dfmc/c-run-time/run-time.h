@@ -1542,7 +1542,6 @@ extern D pseudo_primitive_command_name (void);
 extern D Tcommand_argumentsT;
 extern D pseudo_primitive_command_arguments (void);
 
-extern DSINT primitive_run_application (DBSTR command);
 extern void  primitive_exit_application (DSINT code);
 
 /* TEMPORARY PRIMITIVES FOR ASSIGNMENT */

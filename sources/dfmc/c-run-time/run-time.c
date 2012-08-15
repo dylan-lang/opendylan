@@ -4572,10 +4572,6 @@ D pseudo_primitive_command_arguments () {
   return(Tcommand_argumentsT);
 }
 
-DSINT primitive_run_application (DBSTR command) {
-  return(system(command));
-}
-
 void  primitive_exit_application (DSINT code) {
   exit(code);
 }

@@ -57,7 +57,6 @@ primitive_start_timer
 connect_to_named_server
 connect_to_numbered_server
 primitive_exit_application
-primitive_run_application
 pseudo_primitive_command_arguments
 pseudo_primitive_command_name
 primitive_file_existsQ
