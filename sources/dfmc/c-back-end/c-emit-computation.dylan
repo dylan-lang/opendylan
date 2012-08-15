@@ -7,15 +7,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $safe-vector-ref = "VECTOR_REF_OR_F";
 define constant $mv-get-element-string = "MV_GET_ELT";
-// define constant $mv-get-element-known-string = "MV_GET_ELT_KNOWN";
 define constant $mv-set-element-string = "MV_SET_ELT";
 define constant $mv-get-rest-at-string = "MV_GET_REST_AT";
 define constant $mv-set-rest-at-string = "MV_SET_REST_AT";
-// define constant $mv-get-count-string   = "MV_GET_COUNT";
 define constant $mv-set-count-string   = "MV_SET_COUNT";
-
-// define constant $adjust-multiple-values-string = "MV_ADJ";
-// define constant $adjust-multiple-values-rest-string = "MV_ADJ_REST";
 
 define constant $spill-multiple-values-string    = "MV_SPILL";
 define constant $unspill-multiple-values-string  = "MV_UNSPILL";
