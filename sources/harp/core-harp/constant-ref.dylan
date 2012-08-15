@@ -304,15 +304,6 @@ end class;
 define class <labelled-absolute-constant> (<explicit-labelled-constant>)
 end class;
 
-// Support generation of split high/low constant references for multi-instruction 
-// construction of constant references for back-ends like PowerPC.
-
-define class <labelled-absolute-constant-high> (<labelled-absolute-constant>)
-end class;
-
-define class <labelled-absolute-constant-low> (<labelled-absolute-constant>)
-end class;
-
 define class <labelled-absolute-thread-constant> (<labelled-absolute-constant>)
 end class;
 
@@ -350,13 +341,6 @@ end class;
 define class <relative-address-constant> (<code-address-constant>)
   slot relative-offset :: <integer>, required-init-keyword: offset:;
 end class;
-
-define class <relative-address-constant-high> (<relative-address-constant>)
-end class;
-
-define class <relative-address-constant-low> (<relative-address-constant>)
-end class;
-
 
 
 

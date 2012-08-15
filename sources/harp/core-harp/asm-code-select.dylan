@@ -167,15 +167,12 @@ end method;
 
 define method emit-constant-ref 
      (backend :: <harp-back-end>,
-      constant-ref :: <constant-reference>,
-      #key high?, low?)
+      constant-ref :: <constant-reference>)
   // Emit a reference to a constant. A constant-reference should be
   // supplied, and from that an absolute label-constant will be created.
   let ins-size = backend.labelled-constant-increment;
   let class =
     case
-      high? => <labelled-absolute-constant-high>;
-      low? => <labelled-absolute-constant-low>;
       instance?(constant-ref, <i-thread-constant-reference>) 
         => <labelled-absolute-thread-constant>;
       otherwise => <labelled-absolute-constant>;
