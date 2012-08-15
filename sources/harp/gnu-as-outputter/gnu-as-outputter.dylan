@@ -291,42 +291,9 @@ end method;
 
 define method output-code-label
     (outputter :: <harp-gnu-as-outputter>,
-     item :: <relative-address-constant-high>,
-     increment :: <integer>) => ()
-  output-relative-address
-  (outputter, item, increment, attr: "@ha");
-end method;
-
-define method output-code-label
-    (outputter :: <harp-gnu-as-outputter>,
-     item :: <relative-address-constant-low>,
-     increment :: <integer>) => ()
-  output-relative-address
-  (outputter, item, increment, attr: "@l");
-end method;
-
-
-define method output-code-label
-    (outputter :: <harp-gnu-as-outputter>,
      item :: <labelled-absolute-constant>,
      increment :: <integer>) => ()
   output-code-label-internal(outputter, item, increment);
-end method;
-
-define method output-code-label
-    (outputter :: <harp-gnu-as-outputter>,
-     item :: <labelled-absolute-constant-high>,
-     increment :: <integer>) => ()
-  output-code-label-internal
-  (outputter, item, increment, attr: "@ha");
-end method;
-
-define method output-code-label
-    (outputter :: <harp-gnu-as-outputter>,
-     item :: <labelled-absolute-constant-low>,
-     increment :: <integer>) => ()
-  output-code-label-internal
-  (outputter, item, increment, attr: "@l");
 end method;
 
 define method output-code-label
