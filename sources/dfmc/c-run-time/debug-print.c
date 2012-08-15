@@ -2,10 +2,10 @@
 #include <ctype.h>
 #include <stdio.h>
 
-#define BOOL	   int
+#define BOOL            int
 #ifndef TRUE
-#define TRUE	   1
-#define FALSE	   0
+#define TRUE            1
+#define FALSE           0
 #endif
 
 #define STREAM     char*
@@ -73,7 +73,7 @@ extern D Ldouble_floatGVKd;
 
 INLINE BOOL float_p (D instance) {
   return(object_class(instance) == Lsingle_floatGVKd
-	 || object_class(instance) == Ldouble_floatGVKd);
+         || object_class(instance) == Ldouble_floatGVKd);
 }
 
 INLINE BOOL single_float_p (D instance) {
@@ -87,7 +87,7 @@ single_float_data (D instance) {
 
 double
 double_float_data (D instance) {
-    return(((DDF)instance)->data);
+  return(((DDF)instance)->data);
 }
 
 /* SYMBOL */
@@ -225,7 +225,7 @@ void dylan_format (STREAM, D, D);
 
 enum dylan_type_enum
 dylan_type (D instance) {
-  if ((DUMINT)instance & 3) { 
+  if ((DUMINT)instance & 3) {
     if ((DUMINT)instance & 1)
       return(integer_type);
     else if ((DUMINT)instance & 2)
@@ -313,10 +313,10 @@ void print_vector (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   put_string("#[", stream);
   if (print_depth < dylan_print_depth) {
     for (; i < max_size; i++) {
-      if (first) 
-	first = FALSE;
+      if (first)
+        first = FALSE;
       else
-	put_string(", ", stream);
+        put_string(", ", stream);
       element = vector_ref(instance, i);
       print_object(stream, element, escape_p, print_depth + 1);
     }
@@ -338,23 +338,23 @@ void print_pair (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   put_string("#(", stream);
   if (print_depth < dylan_print_depth) {
     for (; i<dylan_print_length; i++) {
-      if (first) 
-	first = FALSE;
+      if (first)
+        first = FALSE;
       else
-	put_string(", ", stream);
+        put_string(", ", stream);
       print_object(stream, head, escape_p, print_depth + 1);
       type = dylan_type(tail);
       switch (type) {
-	case pair_type:       
-	  head = dylan_head(tail);
-	  tail = dylan_tail(tail);
-	  continue;
-	case empty_list_type: 
-	  goto done;
-	default:            
-	  put_string(" . ", stream);
-	  print_object(stream, tail, escape_p, print_depth + 1);
-	  goto done;
+        case pair_type:
+          head = dylan_head(tail);
+          tail = dylan_tail(tail);
+          continue;
+        case empty_list_type:
+          goto done;
+        default:
+          put_string(" . ", stream);
+          print_object(stream, tail, escape_p, print_depth + 1);
+          goto done;
       }
     }
   }
@@ -443,7 +443,7 @@ void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
     case dylan_boolean_type:
       print_boolean(stream, instance, escape_p, print_depth); break;
     case string_type:
-      print_string (stream, instance, escape_p, print_depth); break; 
+      print_string (stream, instance, escape_p, print_depth); break;
     case vector_type:
       print_vector(stream, instance, escape_p, print_depth); break;
     case pair_type:
@@ -470,7 +470,7 @@ void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
   char* string = string_data(dylan_string);
   D*    arguments = vector_data(dylan_arguments);
   int   argument_count = vector_size(dylan_arguments),
-        argument_index = 0, 
+        argument_index = 0,
         size = (int)strlen(string),
         i;
   for (i = 0; i < size; i++) {
@@ -480,31 +480,31 @@ void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
       switch (cc) {
         case 'S': case 'C':
           if (argument_index < argument_count)
-	    print_object(stream, arguments[argument_index++], FALSE, 0); 
-	  else
-	    put_string("**MISSING**", stream);
-	  break;
+            print_object(stream, arguments[argument_index++], FALSE, 0);
+          else
+            put_string("**MISSING**", stream);
+          break;
         case '=':
           if (argument_index < argument_count)
-	    print_object(stream, arguments[argument_index++], TRUE, 0);
-	  else
-	    put_string("**MISSING**", stream);
-	  break;
+            print_object(stream, arguments[argument_index++], TRUE, 0);
+          else
+            put_string("**MISSING**", stream);
+          break;
         case 'D': case 'X': case 'O': case 'B':
           if (argument_index < argument_count)
-	    print_object(stream, arguments[argument_index++], (BOOL)cc, 0);
-	  else
-	    put_string("**MISSING**", stream);
-	  break;
+            print_object(stream, arguments[argument_index++], (BOOL)cc, 0);
+          else
+            put_string("**MISSING**", stream);
+          break;
         case '%':
           put_char('%', stream); break;
-	default: ;
+        default: ;
       }
       percent_p = FALSE;
     } else if (c == '%')
       percent_p = TRUE;
     else
-      put_char(c, stream); 
+      put_char(c, stream);
   }
 }
 
