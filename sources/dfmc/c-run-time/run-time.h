@@ -384,13 +384,8 @@ typedef struct _mv {
 
 #define MV_GET_ELT(n) \
   (Preturn_values.count > (n) ? Preturn_values.value[n] : DFALSE)
-#define MV_GET_ELT_KNOWN(n)     (Preturn_values.value[n])
 #define MV_SET_ELT(n, t)        (Preturn_values.value[n] = (t))
 #define MV_SET_COUNT(n)         (Preturn_values.count = (n))
-#define MV_GET_COUNT()          (Preturn_values.count)
-
-extern void MV_ADJ (DSINT n);
-extern void MV_ADJ_REST (DSINT n);
 
 extern D MV_SPILL (D first_value);
 extern D MV_UNSPILL (D spill_t);
