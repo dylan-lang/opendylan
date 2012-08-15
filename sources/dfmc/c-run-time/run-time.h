@@ -152,7 +152,7 @@ typedef struct _Wrapper {
   DMINT    fixed_part;
   DMINT    variable_part;
   D        number_patterns;
-  DMINT    patterns[1]; /* REPEATED */        
+  DMINT    patterns[1]; /* REPEATED */
 } Wrapper;
 
 typedef struct _IClass {
@@ -432,7 +432,7 @@ extern D SETUP_EXIT_FRAME (D);
 extern D SETUP_UNWIND_FRAME (D);
 extern D FRAME_DEST (D);
 extern D FRAME_RETVAL (D);
-extern D FALL_THROUGH_UNWIND (D); 
+extern D FALL_THROUGH_UNWIND (D);
 extern D CONTINUE_UNWIND ();
 extern D NLX (Bind_exit_frame*, D);
 
@@ -689,7 +689,7 @@ extern D SET_KEYWORD_METHOD_SIG(D, D);
 /* LOOP SUPPORT */
 #define LOOP while(1)
 
-/* 
+/*
  * PRIMITIVES
  */
 
@@ -718,9 +718,9 @@ extern D primitive_type_check(D x, D t);
 
 
 /* OBJECT REPRESENTATION PRIMITIVES AND SUPPORT */
- 
+
 extern void primitive_break (void);
-extern void primitive_invoke_debugger (D format_string, D arguments); 
+extern void primitive_invoke_debugger (D format_string, D arguments);
 extern D primitive_inside_debuggerQ (void);
 extern void primitive_debug_message (D format_string, D arguments);
 
@@ -934,9 +934,9 @@ extern void primitive_replaceX
  * should be able to optimize these.
  */
 #define MAKE_MASK(t, bit_offset, bit_size) \
-  ((~(((t)(-1l)) << (bit_size))) << (bit_offset))  
+  ((~(((t)(-1l)) << (bit_size))) << (bit_offset))
 
-          
+
 #define AT_FIELD(t, x, b, bit_offset, bit_size) \
   ((t)(((*((unsigned long *)(((DADDR)(x))+(b)))) >> (bit_offset)) \
        & MAKE_MASK(t, 0, bit_size)))
@@ -979,7 +979,7 @@ extern void primitive_replaceX
         AT(D,x,o,b)
 #define primitive_element_setter(e, x, o, b) \
         AT_SETTER(D,e,x,o,b)
-        
+
 /*
 #define primitive_boolean_at(x, o, b) \
         AT(DBOOL,x,o,b)
@@ -1077,23 +1077,23 @@ extern D primitive_allocate_weak_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D
   initialize_byte_stack_allocate_filled((D*)primitive_byte_stack_allocate(size, repeated_size + 1), class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value)
 
 extern D initialize_byte_stack_allocate_filled
-    (D ptr, D class_wrapper, DSINT number_slots, 
+    (D ptr, D class_wrapper, DSINT number_slots,
      D fill_value, DSINT repeated_size, DSINT repeated_size_offset,
      DBYTE repeated_fill_value);
 
 
 #define primitive_object_stack_allocate_filled(size, class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value) \
-  initialize_object_stack_allocate_filled(primitive_byte_stack_allocate(size, repeated_size * sizeof(D)), class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value) 
+  initialize_object_stack_allocate_filled(primitive_byte_stack_allocate(size, repeated_size * sizeof(D)), class_wrapper, number_slots, fill_value, repeated_size, repeated_size_offset, repeated_fill_value)
 
-extern D initialize_object_stack_allocate_filled 
-      (D ptr, D class_wrapper, DSINT number_slots, D fill_value, 
-       DSINT repeated_size, DSINT repeated_size_offset, 
+extern D initialize_object_stack_allocate_filled
+      (D ptr, D class_wrapper, DSINT number_slots, D fill_value,
+       DSINT repeated_size, DSINT repeated_size_offset,
        D repeated_fill_value);
 
 
 /* allocation counting stubs     (gts,98sep10) */
 
-#define primitive_initialize_allocation_count() 
+#define primitive_initialize_allocation_count()
 #define primitive_allocation_count() 0
 
 #define primitive_begin_heap_alloc_stats()
@@ -1143,33 +1143,33 @@ extern DSINT primitive_mps_committed(void);
    (R(x))
 #define primitive_raw_as_byte_character(x) \
    (C(x))
-   
+
 /* UNICODE CHARACTER PRIMITIVES */
 
 #define primitive_unicode_character_as_raw(x) \
    (R(x))
 #define primitive_raw_as_unicode_character(x) \
    (C(x))
-   
+
 /* INTEGER PRIMITIVES */
-   
+
 /* SMALL-INTEGER PRIMITIVES */
 
 #define primitive_raw_as_integer(x) \
    (I(x))
 
 /* BIG-INTEGER PRIMITIVES */
-   
+
 /* MACHINE-INTEGER PRIMITIVES */
-   
+
 /* UNSIGNED-MACHINE-INTEGER PRIMITIVES */
-   
+
 /* ADDRESS PRIMITIVES */
 
 /* POINTER PRIMITIVES */
 
 #define primitive_cast_pointer_as_raw(x)  ((DADDR)x)
-#define primitive_cast_raw_as_pointer(x)  ((D)x)        
+#define primitive_cast_raw_as_pointer(x)  ((D)x)
 
 /* MACHINE-WORD PRIMITIVES */
 
@@ -1412,7 +1412,7 @@ extern DSFLT primitive_cast_machine_word_as_single_float(DUMINT);
     (acosf(x))
 #define primitive_single_float_atan(x) \
     (atanf(x))
-   
+
 /* DOUBLE-FLOAT PRIMITIVES */
 
 #define primitive_double_float_as_raw(x) \
@@ -1460,7 +1460,7 @@ extern DDFLT primitive_cast_machine_words_as_double_float(DUMINT, DUMINT);
     (acos(x))
 #define primitive_double_float_atan(x) \
     (atan(x))
-   
+
 /* VECTOR PRIMITIVES */
 
 #define primitive_vector_element(v, i)           ((((SOV*)v)->data)[R(i)])
@@ -1494,9 +1494,9 @@ extern D primitive_apply (D fn, D sov);
 extern D primitive_apply_spread (D fn, int n, ...);
 extern D primitive_mep_apply_spread (D fn, D nm, int n, ...);
 extern D primitive_xep_apply (FN* fn, int n, D a[]);
-extern D primitive_mep_apply_with_optionals 
+extern D primitive_mep_apply_with_optionals
   (FN* fn, D new_next_methods, D a);
-extern D primitive_mep_apply (FN* fn, D next_methods, D a[]);  
+extern D primitive_mep_apply (FN* fn, D next_methods, D a[]);
 extern D primitive_iep_apply (FN* fn, int n, D a[]);
 extern D primitive_engine_node_apply_with_optionals (D engD, D gfD, D args);
 
@@ -1713,7 +1713,7 @@ raw, and we can use the tag bits.
 Engine Node
 Entry-type is contained in low byte, shifted 2:  mask or shift out low 2 bits.
 
-_31_________________________________________________________8_7____________2_1___________0_  
+_31_________________________________________________________8_7____________2_1___________0_
 |                             other                          |  entry type  |  fixnum tag  |
 -------------------------------------------------------------------------------------------
 
@@ -1725,7 +1725,7 @@ there are any optionals.  The sum of that byte and the bit give the number of ME
 arguments, which may be of use to primitive-initialize-discriminator.
 
 
-_31_____25____24_____23___________16_15____________________8_7____________2_1___________0_  
+_31_____25____24_____23___________16_15____________________8_7____________2_1___________0_
 |  other  |  restp  |   nrequired   |  discriminator argnum  |  entry type  |  fixnum tag  |
 -------------------------------------------------------------------------------------------
 
