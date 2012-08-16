@@ -69,7 +69,7 @@ RTOBJS_c    ?= debug-print.o
 
 # These are passed to the link rules by way of the dylan.lid file
 rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS_$(COMPILER_BACK_END))
-	   -lm ;
+	   -lm $(GC_RTLIBS) ;
 rtclibs ?= ;
 
 guilflags ?= ;
