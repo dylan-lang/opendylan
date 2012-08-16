@@ -32,8 +32,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
 
  define test size-2 (description: "Size on range objects")
    check-true("", ~range(from: 3, by: 3).size);
-   check-equal("", range(from: 1, up-to: 11, by: 2).size, 5);
-   check-equal("", range(from: 1, through: 11, by: 2).size, 6);
+   check-equal("", range(from: 1, below: 11, by: 2).size, 5);
+   check-equal("", range(from: 1, to: 11, by: 2).size, 6);
  end test size-2;
 
  define test size-3 (description: "size on deque objects")
@@ -125,7 +125,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
  end test empty?-1;
 
  define test empty?-2 (description: "empy? on ranges")
-   check-true("", ~range(from: 1, through: 11, by: 2).empty?);
+   check-true("", ~range(from: 1, to: 11, by: 2).empty?);
  end test empty?-2;
 
  define test empty?-3 (description: "emtpy? on deques")
@@ -210,7 +210,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-equal("", map(method (x)
 	 x * -1;
        end method,
-       (range(from: 1, up-to: 5))),
+       (range(from: 1, below: 5))),
    #(-1, -2, -3, -4));
  end test map-2;
 
@@ -333,7 +333,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
       method (x)
 	x * -1;
       end method,
-      (range(from: 1, up-to: 5))),
+      (range(from: 1, below: 5))),
     #(-1, -2, -3, -4));
  end test map-as-2;
 
@@ -398,7 +398,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
  end test map-as-8;
 
  define test map-as-9 (description: "various coercions")
-     let l = map-as(<list>, curry(\+, 1), range(up-to: 5));
+     let l = map-as(<list>, curry(\+, 1), range(below: 5));
      check-true("", instance?(l, <list>)); 
      check-equal("", l, #(1, 2, 3, 4, 5)); 
      let v = map-as(<vector>, \+, #(100, 100, 200, 200), #(1, 2, 3, 4));
@@ -472,14 +472,14 @@ Copyright: (c) 1996 Functional Objects, Inc.
       method (x)
 	x * -1;
       end method,
-      (range(from: 1, up-to: 5))),
+      (range(from: 1, below: 5))),
      #(-1, -2, -3, -4, 5));
    check-equal("", map-into
        (var,
 	method (x)
 	  x * -1;
 	end method,
-	(range(from: 1, up-to: 5))),
+	(range(from: 1, below: 5))),
       var);
  end test map-into-3;
 
