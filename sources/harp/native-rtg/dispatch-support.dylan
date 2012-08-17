@@ -1,4 +1,4 @@
-Module:    native-rtg
+Module:    harp-native-rtg
 Synopsis:  Support for dispatch & engine node entry points for the RTG
 Author:    Tony Mann
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

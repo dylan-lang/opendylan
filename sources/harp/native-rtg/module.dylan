@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-define module native-rtg
+define module harp-native-rtg
   use common-dylan, exclude: { format-to-string };
   use streams;
   use format;
@@ -16,7 +16,7 @@ define module native-rtg
   use locators;
   use dfmc-back-end-protocol;
   use harp;
-  use native-harp;
+  use harp-native;
   use threads;
 
   export

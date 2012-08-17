@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // The following constants are derived from the layout descriptions of
 // bind-exit and unwind-protect frame given in:
 
-//      D-harp-pentium-rtg!nlx-primitives.dylan
+//      D-harp-native-rtg!nlx-primitives.dylan
 
 
 ///// ------------------------ BIND-EXIT FRAME ----------------------------

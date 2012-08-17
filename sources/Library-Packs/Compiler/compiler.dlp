@@ -117,21 +117,21 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="dfmc-x86-harp-cg">
-      <sources location="dfmc/x86-harp-cg">
-	<project>x86-harp-cg.lid</project>
+    <library name="dfmc-harp-x86-cg">
+      <sources location="dfmc/harp-x86-cg">
+	<project>harp-x86-cg.lid</project>
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32">
-	<binary file="dfmc-x86-harp-cg.dll">
+	<binary file="dfmc-harp-x86-cg.dll">
 	  <merge>dfmc-harp-cg-linker</merge>
-	  <merge>x86-harp</merge>
+	  <merge>harp-x86</merge>
 	  <merge>harp-coff</merge>
 	  <merge>gnu-as-outputter</merge>
 	  <merge>binary-outputter</merge>
-	  <merge>dfmc-native-harp-cg</merge>
+	  <merge>dfmc-harp-native-cg</merge>
 	  <merge>dfmc-harp-cg</merge>
 	  <merge>mnemonic-assembler</merge>
-	  <merge>native-harp</merge>
+	  <merge>harp-native</merge>
 	</binary>
       </release>
     </library>
@@ -141,9 +141,9 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="x86-harp">
-      <sources location="dfmc/x86-harp">
-	<project>x86-harp.lid</project>
+    <library name="harp-x86">
+      <sources location="dfmc/harp-x86">
+	<project>harp-x86.lid</project>
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
@@ -165,9 +165,9 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="dfmc-native-harp-cg">
-      <sources location="dfmc/dfmc-native-harp-cg">
-	<project>native-harp-cg.lid</project>
+    <library name="dfmc-harp-native-cg">
+      <sources location="dfmc/dfmc-harp-native-cg">
+	<project>harp-native-cg.lid</project>
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
@@ -183,9 +183,9 @@
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>
-    <library name="native-harp">
-      <sources location="dfmc/native-harp">
-	<project>native-harp.lid</project>
+    <library name="harp-native">
+      <sources location="dfmc/harp-native">
+	<project>harp-native.lid</project>
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32"/>
     </library>

@@ -7,13 +7,13 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define library native-rtg
+define library harp-native-rtg
   use common-dylan;
   use io;
   use system;
   use dfmc-back-end-protocol;
   use harp;
-  use native-harp;
+  use harp-native;
 
-  export native-rtg;
+  export harp-native-rtg;
 end library;
