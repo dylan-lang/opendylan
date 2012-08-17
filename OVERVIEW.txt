@@ -249,9 +249,9 @@ sources
     harp-browser-support
     harp-cg
     harp-cg-linker
+    harp-native-cg
+    harp-x86-cg
     macro-expander
-    native-harp-cg
-    x86-harp-cg
   environment
     gtk
     project-wizard

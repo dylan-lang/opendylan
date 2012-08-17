@@ -13,7 +13,7 @@ define library harp-native-rtg
   use system;
   use dfmc-back-end-protocol;
   use harp;
-  use native-harp;
+  use harp-native;
 
   export harp-native-rtg;
 end library;

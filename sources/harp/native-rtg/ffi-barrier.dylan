@@ -67,7 +67,7 @@ define constant $uninitialized-teb = 0;   // value of the TLV when we don't have
 
 
 // Allocation of TEBs: 
-// The TEB data structure is defined in native-harp/thread-environment-offsets.dylan
+// The TEB data structure is defined in native/thread-environment-offsets.dylan
 // However, the GC interface of the runtime system also uses slots in the TEB (unknown
 // to Dylan). TEB's are allocated by code in this file - and we always ensure that
 // there is also a GC-TEB immediately before the TEB. I.e. the GC-TEB is always at a 

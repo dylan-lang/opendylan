@@ -13,7 +13,7 @@ define library harp-x86-windows-rtg
   use system;
   use dfmc-back-end-protocol;
   use harp;
-  use x86-harp;
+  use harp-x86;
   use harp-x86-rtg;
 
   export harp-x86-windows-rtg;

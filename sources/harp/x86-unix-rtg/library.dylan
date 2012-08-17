@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library harp-x86-unix-rtg
   use common-dylan;
-  use x86-harp;
+  use harp-x86;
   use harp-native-rtg;
   use harp-unix-rtg;
   use harp-x86-rtg;

@@ -16,7 +16,7 @@ define module harp-native-rtg
   use locators;
   use dfmc-back-end-protocol;
   use harp;
-  use native-harp;
+  use harp-native;
   use threads;
 
   export

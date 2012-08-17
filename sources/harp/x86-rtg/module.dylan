@@ -16,7 +16,7 @@ define module harp-x86-rtg
   use locators;
   use dfmc-back-end-protocol;
   use harp;
-  use x86-harp;
+  use harp-x86;
   use harp-native-rtg, export: all;
   use threads;
 end module;
