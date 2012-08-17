@@ -1311,7 +1311,7 @@ D primitive_make_notification(D n, D s)
 /* 29 */
 D primitive_destroy_notification(D n)
 {
-  CONTAINER     *notif;
+  CONTAINER     *notif = (CONTAINER *)n;
   NOTIFICATION  *notification;
 
   assert(notif != NULL);
