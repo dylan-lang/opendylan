@@ -1,4 +1,4 @@
-library: native-rtg
+library: harp-native-rtg
 Target-Type: dll
 files:	 library
 	 module

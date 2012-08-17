@@ -1,4 +1,4 @@
-module:    native-rtg
+module:    harp-native-rtg
 Synopsis:  Support for primitive generation for the Dylan runtime
 Author:    Tony Mann
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

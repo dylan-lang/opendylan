@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-define module native-rtg
+define module harp-native-rtg
   use common-dylan, exclude: { format-to-string };
   use streams;
   use format;
