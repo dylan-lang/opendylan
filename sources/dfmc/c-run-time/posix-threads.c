@@ -501,7 +501,7 @@ D primitive_thread_join_multiple(D v)
   SOV               *thread_vector = v;
   volatile DTHREAD **threads;
   volatile DTHREAD  *joined_thread = NULL;
-  int                i;
+  unsigned int       i;
   uintptr_t          size, state;
 
   assert(thread_vector != NULL);
