@@ -19,7 +19,7 @@ define library dfmc-harp-cg
   use dfmc-management;
 
   use harp-cg-back-end;
-  use native-harp;
+  use harp-native;
   use mnemonic-assembler;
 
   export dfmc-harp-cg;
@@ -133,7 +133,7 @@ define module dfmc-harp-cg
   use dfmc-management, export: all;
 
   use harp-cg-back-end, export: all;
-  use native-harp, export: all;
+  use harp-native, export: all;
   use mnemonic-assembler;
 
   export
