@@ -107,14 +107,14 @@ end pentium-template;
 
 
 define method pentium-rotate
-    (be :: <x86-back-end>, op :: <integer>, place, amount :: <object>)
+    (be :: <harp-x86-back-end>, op :: <integer>, place, amount :: <object>)
   harp-out (be) move(be, ecx, amount) end;
   emit(be, #xd3);
   emit-m-spill-dest(be, place, op);
 end method;
 
 define method pentium-rotate
-    (be :: <x86-back-end>, op :: <integer>, place, amount :: <integer>)
+    (be :: <harp-x86-back-end>, op :: <integer>, place, amount :: <integer>)
   unless (zero?(amount))
      emit(be, #xc1);
      emit-m-spill-dest(be, place, op);
@@ -123,11 +123,11 @@ define method pentium-rotate
 end method;
 
 
-define method rol2m (be :: <x86-back-end>, place, amount) 
+define method rol2m (be :: <harp-x86-back-end>, place, amount) 
   pentium-rotate(be, #b000000, place, amount);
 end;
 
-define method ror2m (be :: <x86-back-end>, place, amount) 
+define method ror2m (be :: <harp-x86-back-end>, place, amount) 
   pentium-rotate(be, #b001000, place, amount);
 end;
 

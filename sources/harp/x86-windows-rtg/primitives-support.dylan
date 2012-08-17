@@ -23,7 +23,7 @@ define method int-to-string (num :: <integer>) => (<str :: <byte-string>)
 end method;
 
 define method op--stdcall-c 
-    (be :: <x86-windows-back-end>, name :: <byte-string>,
+    (be :: <harp-x86-windows-back-end>, name :: <byte-string>,
      #rest args)
   let arg-bytes = int-to-string(args.size * 4);
   let name-ref = ins--constant-ref(be, stdcall-mangle(be, name, arg-bytes));
@@ -32,7 +32,7 @@ end method;
 
 
 define method op--stdcall-c 
-    (be :: <x86-windows-back-end>, name-ref :: <constant-reference>,
+    (be :: <harp-x86-windows-back-end>, name-ref :: <constant-reference>,
      #rest args)
   // Push the args in reverse order
   for (arg in reverse(args))

@@ -15,7 +15,7 @@ define c-fun runtime-external tlv-set-value     = "tlv_set_value";
 define c-fun runtime-external get-page-size     = "getpagesize";
 
 define sideways method op--create-TEB-tlv-index 
-    (be :: <native-unix-back-end>) => ()
+    (be :: <harp-native-unix-back-end>) => ()
   with-harp (be)
     tag done;
     c-result c-result;
@@ -25,7 +25,7 @@ define sideways method op--create-TEB-tlv-index
 end method;
 
 define sideways method op--get-teb-tlv
-    (be :: <native-unix-back-end>, dest :: <register>) => ()
+    (be :: <harp-native-unix-back-end>, dest :: <register>) => ()
   with-harp (be)
     c-result c-result;
     op--call-c(be, tlv-get-value, TEB-tlv-index);
@@ -34,21 +34,21 @@ define sideways method op--get-teb-tlv
 end method;
 
 define sideways method op--set-teb-tlv
-    (be :: <native-unix-back-end>, val) => ()
+    (be :: <harp-native-unix-back-end>, val) => ()
   with-harp (be)
     op--call-c(be, tlv-set-value, TEB-tlv-index, val);
   end with-harp;
 end method;
 
 define sideways method op--free-teb-tlv
-    (be :: <native-unix-back-end>) => ()
+    (be :: <harp-native-unix-back-end>) => ()
   with-harp (be)
     op--call-c(be, tlv-destroy-key, TEB-tlv-index);
   end with-harp;
 end method;
 
 define sideways method op--get-stack-bottom
-    (be :: <native-unix-back-end>, dest :: <register>) => ()
+    (be :: <harp-native-unix-back-end>, dest :: <register>) => ()
   // To determine the bottom of stack, we mask the current stack
   // pointer to round up to the nearest page.  WARNING: This relies on
   // the stack not being popped by more than a page after invocation
@@ -74,17 +74,17 @@ define sideways method op--get-stack-bottom
   end with-harp;
 end method;
 
-define sideways method op--get-module-handle(be :: <native-unix-back-end>) => ()
+define sideways method op--get-module-handle(be :: <harp-native-unix-back-end>) => ()
 end method;
 
 define sideways method op--shut-down-dll-library
-    (be :: <native-unix-back-end>) => ()
+    (be :: <harp-native-unix-back-end>) => ()
   op--call-iep(be, primitive-deregister-traced-roots-ref, 
 	       %ambig-root, %static-root, %exact-root);
 end method;
 
 define sideways method op--shut-down-exe-library
-    (be :: <native-unix-back-end>) => ()
+    (be :: <harp-native-unix-back-end>) => ()
   // Do nothing
 end method;
 
@@ -124,9 +124,9 @@ define shared init unix-API-runtime-primitive dylan-shared-object-entry
 
 end unix-API-runtime-primitive;
 
-define open generic op--initialize-thread-instructions (be :: <native-unix-back-end>) => ();
+define open generic op--initialize-thread-instructions (be :: <harp-native-unix-back-end>) => ();
 
-define sideways method op--initialize-thread-instructions (be :: <native-unix-back-end>) => ()
+define sideways method op--initialize-thread-instructions (be :: <harp-native-unix-back-end>) => ()
 end method;
 
 define shared init unix-API-runtime-primitive dylan-shared-object-exit
@@ -148,7 +148,7 @@ define shared init unix-API-runtime-primitive dylan-shared-object-exit
 end unix-API-runtime-primitive;
 
 
-define sideways method op--init-dylan-data (be :: <native-unix-back-end>) => ()
+define sideways method op--init-dylan-data (be :: <harp-native-unix-back-end>) => ()
   with-harp (be)
     let data-start  = ins--constant-ref(be, $data-start-symbol);
     let data-end    = ins--constant-ref(be, $data-end-symbol);

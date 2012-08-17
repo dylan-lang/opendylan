@@ -30,7 +30,7 @@ define method one-byte (x :: <integer>) => (i :: <integer>)
   logand(x, #xff);
 end method;
 
-define method emit-one-byte (be :: <x86-back-end>, x :: <integer>) 
+define method emit-one-byte (be :: <harp-x86-back-end>, x :: <integer>) 
   emit(be, one-byte(x));
 end method;
 
@@ -51,7 +51,7 @@ end method;
 
 
 
-define method emit-four-bytes (backend :: <x86-back-end>, x :: <abstract-integer>)
+define method emit-four-bytes (backend :: <harp-x86-back-end>, x :: <abstract-integer>)
   emit(backend,
        generic-logand(x, #xff),
        logand(generic-ash(x, -8), #xff),
@@ -60,7 +60,7 @@ define method emit-four-bytes (backend :: <x86-back-end>, x :: <abstract-integer
 end method;
 
 
-define method emit-four-bytes (backend :: <x86-back-end>, x :: <integer>)
+define method emit-four-bytes (backend :: <harp-x86-back-end>, x :: <integer>)
   emit(backend,
        logand(x, #xff),
        logand(ash(x, -8), #xff),
@@ -86,7 +86,7 @@ define method four-bytes (x :: <integer>) => (l :: <list>)
 end method;
 
 
-define method emit-two-bytes (backend :: <x86-back-end>, x :: <integer>)
+define method emit-two-bytes (backend :: <harp-x86-back-end>, x :: <integer>)
   emit(backend,
        logand(x, #xff),
        logand(ash(x, -8), #xff));
@@ -134,7 +134,7 @@ end method;
 /// shifting is done.
 
 define method emit-reg-indir 
-    (backend :: <x86-back-end>, reg :: <real-register>, ex :: <integer>)
+    (backend :: <harp-x86-back-end>, reg :: <real-register>, ex :: <integer>)
   let rn :: <integer> = reg.real-register-number;
   select (rn)                                // Can you say 'Orthogonal'?
     4 => emit(backend, ex + 4, 36);          // [sp] with SIB and no index
@@ -144,7 +144,7 @@ define method emit-reg-indir
 end method;
 
 define method emit-constant-operand 
-    (backend :: <x86-back-end>, 
+    (backend :: <harp-x86-back-end>, 
      const-ref :: <constant-reference>, 
      ex :: <integer>)
 // PC specific: Emit an indirect constant reference
@@ -153,7 +153,7 @@ define method emit-constant-operand
 end method;
 	      
 define method emit-spill-operand 
-    (backend :: <x86-back-end>, spill :: <spill>, ex :: <integer>)
+    (backend :: <harp-x86-back-end>, spill :: <spill>, ex :: <integer>)
   let arg-spill :: <boolean> = arg-spill?(spill);
   let offset :: <integer> = 
     if (arg-spill)
@@ -178,13 +178,13 @@ end method;
 /// EMIT-REG-OFFSET supports address constants as offsets too now.
 
 define method emit-reg-offset
-   (backend :: <x86-back-end>, reg :: <real-register>,
+   (backend :: <harp-x86-back-end>, reg :: <real-register>,
     offset == 0, ex :: <integer>)
   emit-reg-indir(backend, reg, ex);
 end method;
 
 define method emit-reg-offset
-   (backend :: <x86-back-end>, reg :: <real-register>,
+   (backend :: <harp-x86-back-end>, reg :: <real-register>,
     offset :: <constant-reference>, ex :: <integer>)
   let rn :: <integer> = reg.real-register-number;
   if (rn == 4)
@@ -198,7 +198,7 @@ end method;
 
 
 define method emit-reg-offset
-   (backend :: <x86-back-end>, reg :: <real-register>,
+   (backend :: <harp-x86-back-end>, reg :: <real-register>,
     offset :: <abstract-integer>, ex :: <integer>)
   let rn :: <integer> = reg.real-register-number;
   if (signed-eight-bits?(offset))
@@ -220,7 +220,7 @@ end method;
 
 
 define method emit-reg-offset-scaled
-   (backend :: <x86-back-end>, 
+   (backend :: <harp-x86-back-end>, 
     reg :: <real-register>, scale :: <integer>,
     offset, ex :: <integer>)
   emit(backend, mod00 + ex + 4);
@@ -230,7 +230,7 @@ end method;
 
 
 define method emit-reg-constant-offset 
-    (backend :: <x86-back-end>, offset, ex :: <integer>)
+    (backend :: <harp-x86-back-end>, offset, ex :: <integer>)
   emit(backend, mod00 + ex + 5);
   emit-immediate-constant(backend, offset);
 end method;
@@ -240,7 +240,7 @@ end method;
 /// full 32 bit operation.
 
 define method emit-reg-direct
-    (backend :: <x86-back-end>, reg :: <real-register>, ex :: <integer>)
+    (backend :: <harp-x86-back-end>, reg :: <real-register>, ex :: <integer>)
   emit(backend, mod11 + ex + reg.real-register-number);
 end method;
 
@@ -250,7 +250,7 @@ end method;
 /// little extra chicanery.
 
 define method emit-reg-indexed
-    (backend :: <x86-back-end>, 
+    (backend :: <harp-x86-back-end>, 
      reg :: <real-register>, index :: <real-register>,
      ex :: <integer>)
   let r-n :: <integer> = reg.real-register-number;
@@ -268,7 +268,7 @@ end method;
 /// operands.  
         
 define method emit-double-indexed
-    (backend :: <x86-back-end>, 
+    (backend :: <harp-x86-back-end>, 
      reg1 :: <real-register>, reg2 :: <real-register>,
      offset :: <abstract-integer>, ex :: <integer>)
   let mod :: <integer> =
@@ -293,7 +293,7 @@ end method;
 /// This is for array operands.  
         
 define method emit-double-index-scaled
-    (backend :: <x86-back-end>, 
+    (backend :: <harp-x86-back-end>, 
      reg1 :: <real-register>, scale :: <integer>, 
      reg2 :: <real-register>, offset :: <abstract-integer>, 
      ex :: <integer>)
@@ -315,14 +315,14 @@ end method;
 
 
 define method emit-m-spill-dest 
-    (backend :: <x86-back-end>, 
+    (backend :: <harp-x86-back-end>, 
      x :: <real-register>, 
      extension :: <integer>)
   emit-reg-direct(backend, x, extension);
 end method;
 
 define method emit-m-spill-dest 
-    (backend :: <x86-back-end>, 
+    (backend :: <harp-x86-back-end>, 
      x :: <spill>, 
      extension :: <integer>)
   emit-spill-operand(backend, x, extension);
@@ -333,7 +333,7 @@ end method;
 /// references and PC indirect constant refs in terms of addressing
 /// modes. 
 define method emit-m-c-spill-dest 
-    (backend :: <x86-back-end>, x, extension :: <integer>)
+    (backend :: <harp-x86-back-end>, x, extension :: <integer>)
   if (indirect-constant-ref(x))
     emit-constant-operand(backend, x, extension);
   else
@@ -345,12 +345,12 @@ end method;
 /// The following function recognises the similarity between 32 bit
 /// constants and PC address constants.
 define method emit-immediate-constant
-    (backend :: <x86-back-end>, x :: <abstract-integer>)
+    (backend :: <harp-x86-back-end>, x :: <abstract-integer>)
   emit-four-bytes(backend, x);
 end method;
 
 define method emit-immediate-constant
-    (backend :: <x86-back-end>, x :: <constant-reference>)
+    (backend :: <harp-x86-back-end>, x :: <constant-reference>)
   emit-constant-ref(backend, x);
 end method;
 
@@ -362,17 +362,17 @@ end method;
 /// between registers.
 
 define method xcg
-    (backend :: <x86-back-end>, one == eax, two :: <real-register>)
+    (backend :: <harp-x86-back-end>, one == eax, two :: <real-register>)
   emit(backend, #x90 + two.real-register-number);
 end method;
 
 define method xcg
-    (backend :: <x86-back-end>, one :: <real-register>, two == eax)
+    (backend :: <harp-x86-back-end>, one :: <real-register>, two == eax)
   emit(backend, #x90 + one.real-register-number);
 end method;
 
 define method xcg
-    (backend :: <x86-back-end>, 
+    (backend :: <harp-x86-back-end>, 
      one :: <real-register>, two :: <real-register>)
   emit(backend, #x87);
   emit-reg-direct(backend, one, ex-reg(two));
@@ -381,7 +381,7 @@ end method;
 
 
 // define method dec-register 
-//     (backend :: <x86-back-end>, reg :: <real-register>)
+//     (backend :: <harp-x86-back-end>, reg :: <real-register>)
 //   emit(backend, #x48 + reg.real-register-number);
 // end method;
 
@@ -395,13 +395,13 @@ define method byte-addressable (r)
 end method;
 
 define method code-item-increment 
-     (backend :: <x86-back-end>) => (i :: <integer>)
+     (backend :: <harp-x86-back-end>) => (i :: <integer>)
   1;
 end method;
 
 
 define sideways method return-address-on-stack?
-    (be :: <x86-back-end>) => (on-stack? :: <boolean>)
+    (be :: <harp-x86-back-end>) => (on-stack? :: <boolean>)
   #t
 end method;
 
@@ -422,6 +422,6 @@ end method;
     
 
 define method output-implicit-externals
-    (backend :: <x86-unix-back-end>, outputter :: <harp-outputter>)
+    (backend :: <harp-x86-unix-back-end>, outputter :: <harp-outputter>)
   output-external(backend, outputter, remove-optionals-runtime);
 end method;

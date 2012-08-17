@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define sideways method op--load-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset :: <integer>,
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset :: <integer>,
      #key tagged?) => ()
 
   if (tagged?)
@@ -22,7 +22,7 @@ define sideways method op--load-index
 end method op--load-index;
 
 define sideways method op--load-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset,
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset,
      #key tagged?) => ()
 
   ins--ld-index-scaled(back-end, result, op--add(back-end, #f, base, offset), scaled-index, 0);
@@ -31,7 +31,7 @@ end method op--load-index;
 
 
 define sideways method op--store-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset :: <integer>,
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset :: <integer>,
      #key tagged?) => ()
 
   if (tagged?)
@@ -44,7 +44,7 @@ define sideways method op--store-index
 end method op--store-index;
 
 define sideways method op--store-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset,
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset,
      #key tagged?) => ()
 
   ins--st-index-scaled(back-end, value, op--add(back-end, #f, base, offset), scaled-index, 0);
@@ -54,14 +54,14 @@ end method op--store-index;
 
 
 define sideways method op--load-byte-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset :: <integer>) => ()
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset :: <integer>) => ()
 
   ins--ldb-index(back-end, result, base, scaled-index, offset);
 
 end method op--load-byte-index;
 
 define sideways method op--load-byte-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset) => ()
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset) => ()
 
   ins--ldb-index(back-end, result, op--add(back-end, #f, base, offset), scaled-index, 0);
 
@@ -69,7 +69,7 @@ end method op--load-byte-index;
 
 
 define sideways method op--store-byte-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset :: <integer>) => ()
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset :: <integer>) => ()
 
   ins--stb-index(back-end, value, base, scaled-index, offset);
   ins--move(back-end, result, value);
@@ -77,7 +77,7 @@ define sideways method op--store-byte-index
 end method op--store-byte-index;
 
 define sideways method op--store-byte-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset) => ()
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset) => ()
 
   ins--stb-index(back-end, value, op--add(back-end, #f, base, offset), scaled-index, 0);
   ins--move(back-end, result, value);
@@ -86,7 +86,7 @@ end method op--store-byte-index;
 
 
 define sideways method op--store-bit-index
-    (back-end :: <x86-back-end>, result, value, base, index, offset, bit) => ()
+    (back-end :: <harp-x86-back-end>, result, value, base, index, offset, bit) => ()
 
   select (value)
     0 => 
@@ -109,14 +109,14 @@ define sideways method op--store-bit-index
 end method op--store-bit-index;
 
 define sideways method op--load-signed-byte-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset :: <integer>) => ()
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset :: <integer>) => ()
 
   ins--ldb-index-signed(back-end, result, base, scaled-index, offset);
 
 end method op--load-signed-byte-index;
 
 define sideways method op--load-signed-byte-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset) => ()
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset) => ()
 
   ins--ldb-index-signed(back-end, result, op--add(back-end, #f, base, offset), scaled-index, 0);
 
@@ -124,7 +124,7 @@ end method op--load-signed-byte-index;
 
 
 define sideways method op--store-signed-byte-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset) => ()
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset) => ()
 
   op--store-byte-index(back-end, result, value, base, scaled-index, offset);
 
@@ -132,14 +132,14 @@ end method op--store-signed-byte-index;
 
 
 define sideways method op--load-half-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset :: <integer>) => ()
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset :: <integer>) => ()
 
   ins--ldh-index-scaled(back-end, result, base, scaled-index, offset);
 
 end method op--load-half-index;
 
 define sideways method op--load-half-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset) => ()
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset) => ()
 
   ins--ldh-index-scaled(back-end, result, op--add(back-end, #f, base, offset), scaled-index, 0);
 
@@ -147,7 +147,7 @@ end method op--load-half-index;
 
 
 define sideways method op--store-half-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset :: <integer>) => ()
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset :: <integer>) => ()
 
   ins--sth-index-scaled(back-end, value, base, scaled-index, offset);
   ins--move(back-end, result, value);
@@ -155,7 +155,7 @@ define sideways method op--store-half-index
 end method op--store-half-index;
 
 define sideways method op--store-half-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset) => ()
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset) => ()
 
   ins--sth-index-scaled(back-end, value, op--add(back-end, #f, base, offset), scaled-index, 0);
   ins--move(back-end, result, value);
@@ -163,14 +163,14 @@ define sideways method op--store-half-index
 end method op--store-half-index;
 
 define sideways method op--load-signed-half-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset :: <integer>) => ()
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset :: <integer>) => ()
 
   ins--ldh-index-scaled-signed(back-end, result, base, scaled-index, offset);
 
 end method op--load-signed-half-index;
 
 define sideways method op--load-signed-half-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset) => ()
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset) => ()
 
   ins--ldh-index-scaled-signed(back-end, result, op--add(back-end, #f, base, offset), scaled-index, 0);
 
@@ -178,7 +178,7 @@ end method op--load-signed-half-index;
 
 
 define sideways method op--store-signed-half-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset) => ()
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset) => ()
 
   op--store-half-index(back-end, result, value, base, scaled-index, offset);
 
@@ -186,7 +186,7 @@ end method op--store-signed-half-index;
 
 
 define sideways method op--load-float-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset :: <integer>,
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset :: <integer>,
      #key tagged?) => ()
 
   if (tagged?)
@@ -198,7 +198,7 @@ define sideways method op--load-float-index
 end method op--load-float-index;
 
 define sideways method op--load-float-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset,
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset,
      #key tagged?) => ()
 
   ins--fld-index-scaled(back-end, result, op--add(back-end, #f, base, offset), scaled-index, 0);
@@ -207,7 +207,7 @@ end method op--load-float-index;
 
 
 define sideways method op--store-float-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset :: <integer>,
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset :: <integer>,
      #key tagged?) => ()
 
   if (tagged?)
@@ -220,7 +220,7 @@ define sideways method op--store-float-index
 end method op--store-float-index;
 
 define sideways method op--store-float-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset,
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset,
      #key tagged?) => ()
 
   ins--fst-index-scaled(back-end, value, op--add(back-end, #f, base, offset), scaled-index, 0);
@@ -230,7 +230,7 @@ end method op--store-float-index;
 
 
 define sideways method op--load-dfloat-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset :: <integer>,
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset :: <integer>,
      #key tagged?) => ()
 
   if (tagged?)
@@ -242,7 +242,7 @@ define sideways method op--load-dfloat-index
 end method op--load-dfloat-index;
 
 define sideways method op--load-dfloat-index
-    (back-end :: <x86-back-end>, result, base, scaled-index, offset,
+    (back-end :: <harp-x86-back-end>, result, base, scaled-index, offset,
      #key tagged?) => ()
 
   ins--dld-index-scaled(back-end, result, op--add(back-end, #f, base, offset), scaled-index, 0);
@@ -251,7 +251,7 @@ end method op--load-dfloat-index;
 
 
 define sideways method op--store-dfloat-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset :: <integer>,
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset :: <integer>,
      #key tagged?) => ()
 
   if (tagged?)
@@ -264,7 +264,7 @@ define sideways method op--store-dfloat-index
 end method op--store-dfloat-index;
 
 define sideways method op--store-dfloat-index
-    (back-end :: <x86-back-end>, result, value, base, scaled-index, offset,
+    (back-end :: <harp-x86-back-end>, result, value, base, scaled-index, offset,
      #key tagged?) => ()
 
   ins--dst-index-scaled(back-end, value, op--add(back-end, #f, base, offset), scaled-index, 0);

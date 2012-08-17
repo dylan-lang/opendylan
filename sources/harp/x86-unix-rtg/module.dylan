@@ -10,9 +10,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module harp-x86-unix-rtg
   use common-dylan;
-  use x86-harp, export: { <x86-unix-back-end>,
-                          <x86-linux-back-end>,
-                          <x86-freebsd-back-end> };
+  use x86-harp, export: { <harp-x86-unix-back-end>,
+                          <harp-x86-linux-back-end>,
+                          <harp-x86-freebsd-back-end> };
   use harp-native-rtg, export: { create-dylan-runtime };
   use harp-unix-rtg;
   use harp-x86-rtg;

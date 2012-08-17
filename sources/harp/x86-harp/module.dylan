@@ -27,12 +27,12 @@ define module x86-harp
   use gnu-as-outputter;
 
   export
-    <x86-back-end>,
-    <x86-windows-back-end>,
-    <x86-unix-back-end>,
-    <x86-linux-back-end>,
-    <x86-freebsd-back-end>,
-    <x86-darwin-back-end>,
+    <harp-x86-back-end>,
+    <harp-x86-windows-back-end>,
+    <harp-x86-unix-back-end>,
+    <harp-x86-linux-back-end>,
+    <harp-x86-freebsd-back-end>,
+    <harp-x86-darwin-back-end>,
 
     // Pentium instructions
     ins--st-index, ins--stb-index, ins--sth-index,

@@ -8,44 +8,44 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // The Pentium backend class. Nothing very interesting here.
 
-define class <x86-back-end> (<harp-native-back-end>)
+define class <harp-x86-back-end> (<harp-native-back-end>)
 end;
 
 define method initialize
-   (obj :: <x86-back-end>, #key) => (new :: <x86-back-end>)
+   (obj :: <harp-x86-back-end>, #key) => (new :: <harp-x86-back-end>)
   next-method();
   obj.registers := pentium-registers;
   obj;
 end;
 
 define sideways method big-endian?
-    (back-end :: <x86-back-end>) => (big-endian? :: <boolean>)
+    (back-end :: <harp-x86-back-end>) => (big-endian? :: <boolean>)
   #f
 end;
 
-define class <x86-windows-back-end> (<x86-back-end>,
-                                     <native-windows-back-end>)
+define class <harp-x86-windows-back-end> (<harp-x86-back-end>,
+                                     <harp-native-windows-back-end>)
 end;
 
-register-back-end(<x86-windows-back-end>, #"harp", #"x86", #"win32");
+register-back-end(<harp-x86-windows-back-end>, #"harp", #"x86", #"win32");
 
-define class <x86-unix-back-end> (<x86-back-end>)
+define class <harp-x86-unix-back-end> (<harp-x86-back-end>)
 end;
 
-define class <x86-linux-back-end>
- (<x86-unix-back-end>, <native-linux-back-end>)
+define class <harp-x86-linux-back-end>
+ (<harp-x86-unix-back-end>, <harp-native-linux-back-end>)
 end;
 
-register-back-end(<x86-linux-back-end>, #"harp", #"x86", #"linux");
+register-back-end(<harp-x86-linux-back-end>, #"harp", #"x86", #"linux");
 
-define class <x86-freebsd-back-end>
- (<x86-unix-back-end>, <native-freebsd-back-end>)
+define class <harp-x86-freebsd-back-end>
+ (<harp-x86-unix-back-end>, <harp-native-freebsd-back-end>)
 end;
 
-register-back-end(<x86-freebsd-back-end>, #"harp", #"x86", #"freebsd");
+register-back-end(<harp-x86-freebsd-back-end>, #"harp", #"x86", #"freebsd");
 
-define class <x86-darwin-back-end>
- (<x86-unix-back-end>, <native-darwin-back-end>)
+define class <harp-x86-darwin-back-end>
+ (<harp-x86-unix-back-end>, <harp-native-darwin-back-end>)
 end;
 
-register-back-end(<x86-darwin-back-end>, #"harp", #"x86", #"darwin");
+register-back-end(<harp-x86-darwin-back-end>, #"harp", #"x86", #"darwin");

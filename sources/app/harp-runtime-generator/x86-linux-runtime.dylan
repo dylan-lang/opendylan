@@ -6,6 +6,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 create-dylan-runtime
-  (back-end-class: <x86-linux-back-end>,
+  (back-end-class: <harp-x86-linux-back-end>,
    type: #"elf-as-outputter");
 

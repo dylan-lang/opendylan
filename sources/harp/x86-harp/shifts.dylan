@@ -47,7 +47,7 @@ define method byte-shift-offset (x)
 end method;
 
 define method shift-indirection 
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      ind-const :: <constant-reference>, 
      offset :: <integer>) => (c :: <constant-reference>)
 
@@ -72,7 +72,7 @@ end pentium-template;
 
 // NB. DO-THE-SHIFT uses ecx (tmp2)
 define method do-the-shift 
-    (be :: <x86-back-end>, ins :: <integer>, dest, count :: <integer>)
+    (be :: <harp-x86-back-end>, ins :: <integer>, dest, count :: <integer>)
   unless (zero?(count))
     emit(be, #xc1);
     emit-m-spill-dest(be, dest, ins);
@@ -82,7 +82,7 @@ end method;
 
 
 define method do-the-shift 
-    (be :: <x86-back-end>, ins :: <integer>, dest, count :: <object>)
+    (be :: <harp-x86-back-end>, ins :: <integer>, dest, count :: <object>)
   harp-out (be) move(be, ecx, count) end;
   emit(be, #xd3);
   emit-m-spill-dest(be, dest, ins);
@@ -96,7 +96,7 @@ end method;
 // The low and high words to be shifted are in eax and edx respectively
 
 define method double-shift-left
-    (be :: <x86-back-end>, low, high, count :: <integer>)
+    (be :: <harp-x86-back-end>, low, high, count :: <integer>)
   // first, optionally shift the low bits into the high bits
   if (high)
     unless (zero?(count))
@@ -120,7 +120,7 @@ end method;
 
 
 define method double-shift-left
-    (be :: <x86-back-end>, low, high, count :: <object>)
+    (be :: <harp-x86-back-end>, low, high, count :: <object>)
   harp-out (be) move(be, ecx, count) end;
   // first, optionally shift the low bits into the high bits
   if (high)
@@ -143,7 +143,7 @@ end method;
 // The low and high words to be shifted are in eax and edx respectively
 
 define method double-shift-right
-    (be :: <x86-back-end>, low, high, count :: <integer>)
+    (be :: <harp-x86-back-end>, low, high, count :: <integer>)
   // first, optionally shift the high bits into the low bits
   if (low)
     unless (zero?(count))
@@ -167,7 +167,7 @@ end method;
 
 
 define method double-shift-right
-    (be :: <x86-back-end>, low, high, count :: <object>)
+    (be :: <harp-x86-back-end>, low, high, count :: <object>)
   harp-out (be) move(be, ecx, count) end;
   // first, optionally shift the high bits into the low bits
   if (low)

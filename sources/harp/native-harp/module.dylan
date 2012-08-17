@@ -21,11 +21,11 @@ define module native-back-end
   use harp-for-extenders;
   export
     <harp-native-back-end>,
-    <native-windows-back-end>,
-    <native-unix-back-end>,
-    <native-linux-back-end>,
-    <native-freebsd-back-end>,
-    <native-darwin-back-end>;
+    <harp-native-windows-back-end>,
+    <harp-native-unix-back-end>,
+    <harp-native-linux-back-end>,
+    <harp-native-freebsd-back-end>,
+    <harp-native-darwin-back-end>;
 end module;
 
 

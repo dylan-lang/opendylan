@@ -13,7 +13,7 @@ define macro unix-runtime-primitive-definer
     end }
     => {
          define sideways method "genop--" ## ?name
-           (?=be :: <native-unix-back-end>) => ()
+           (?=be :: <harp-native-unix-back-end>) => ()
            with-harp (?=be)
              ?body
            end with-harp;

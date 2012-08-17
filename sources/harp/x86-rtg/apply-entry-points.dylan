@@ -14,7 +14,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define sideways method op--extend-stack-for-apply
-    (be :: <x86-back-end>, vec, size, required, req-index)
+    (be :: <harp-x86-back-end>, vec, size, required, req-index)
   with-harp (be)
     stack stack;
     function function;
@@ -49,7 +49,7 @@ end method;
 
 
 define sideways method op--preserve-return-address-for-apply
-    (be :: <x86-back-end>, req-index)
+    (be :: <harp-x86-back-end>, req-index)
   with-harp (be)
     stack stack;
     tmp 1, tmp;
@@ -62,6 +62,6 @@ define sideways method op--preserve-return-address-for-apply
 end method;
 
 define sideways method op--restore-return-address-for-apply
-    (be :: <x86-back-end>)
+    (be :: <harp-x86-back-end>)
 end method;
 

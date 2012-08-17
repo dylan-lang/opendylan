@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define variable *debug-preserved-registers* = #f;
 
-define method show-preserved (be :: <x86-back-end>) => ()
+define method show-preserved (be :: <harp-x86-back-end>) => ()
   if (*debug-preserved-registers*)
     let state = be.variables.vreg-state;
     let preserved = state.allocated-preserved;

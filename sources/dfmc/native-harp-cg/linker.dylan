@@ -45,7 +45,7 @@ end method;
 
 
 define sideways method emit-library-initializer
-    (back-end :: <native-windows-back-end>, stream, ld,
+    (back-end :: <harp-native-windows-back-end>, stream, ld,
      emit-call-used :: <method>,
      emit-call-crs :: <method>,
      emit-branch-on-init :: <method>,
@@ -71,7 +71,7 @@ define sideways method emit-library-initializer
 end method;
 
 define sideways method emit-library-initializer
-    (back-end :: <native-unix-back-end>, stream, ld,
+    (back-end :: <harp-native-unix-back-end>, stream, ld,
      emit-call-used :: <method>,
      emit-call-crs :: <method>,
      emit-branch-on-init :: <method>,
@@ -120,7 +120,7 @@ define sideways method emit-library-initializer
 end method;
 
 define sideways method emit-executable-entry-points
-    (back-end :: <native-windows-back-end>, stream, ld,
+    (back-end :: <harp-native-windows-back-end>, stream, ld,
      #key harp-output?, debug-info?) => ()
   let constant-ref = curry(ins--constant-ref, back-end);
   let lib-name = as-lowercase(as(<string>, library-description-emit-name(ld)));
@@ -193,7 +193,7 @@ define sideways method emit-executable-entry-points
 end method;
 
 define sideways method emit-executable-entry-points
-    (back-end :: <native-unix-back-end>, stream, ld,
+    (back-end :: <harp-native-unix-back-end>, stream, ld,
      #key harp-output?, debug-info?) => ()
 
   let constant-ref = curry(ins--constant-ref, back-end);
@@ -227,12 +227,12 @@ define sideways method emit-executable-entry-points
 end method;
 
 define sideways method emit-shared-library-entry-points
-    (back-end :: <native-windows-back-end>, stream, ld,
+    (back-end :: <harp-native-windows-back-end>, stream, ld,
      #key harp-output?, debug-info?) => ()
 end method;
 
 define sideways method emit-shared-library-entry-points
-    (back-end :: <native-unix-back-end>, stream, ld,
+    (back-end :: <harp-native-unix-back-end>, stream, ld,
      #key harp-output?, debug-info?) => ()
   let constant-ref = curry(ins--constant-ref, back-end);
   let lib-name = as-lowercase(as(<string>, library-description-emit-name(ld)));
@@ -257,11 +257,11 @@ define sideways method emit-shared-library-entry-points
 end method;
 
 define sideways method main-unit?
-    (back-end :: <native-windows-back-end>) => (main? :: <boolean>)
+    (back-end :: <harp-native-windows-back-end>) => (main? :: <boolean>)
   #f
 end method;
 
 define sideways method main-unit?
-    (back-end :: <native-unix-back-end>) => (main? :: <boolean>)
+    (back-end :: <harp-native-unix-back-end>) => (main? :: <boolean>)
   #t
 end method;

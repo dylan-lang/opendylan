@@ -156,7 +156,7 @@ define constant ld-byte-signed = #xbe;
 define constant ld-half-signed = #xbf;
 
 define method emit-ld-operation 
-    (be :: <x86-back-end>, type :: <integer>)
+    (be :: <harp-x86-back-end>, type :: <integer>)
   unless (type == ld-word)
     emit(be, #x0f);
   end unless;
@@ -190,7 +190,7 @@ end pentium-template;
 
 
 define method coerce-constant-with-offset 
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      addr-const :: <constant-reference>, 
      offset :: <integer>) => (c :: <constant-reference>)
   if (offset = 0)
@@ -202,7 +202,7 @@ define method coerce-constant-with-offset
 end method;
 
 define method coerce-constant-with-offset 
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      offset1 :: <integer>, 
      offset2 :: <integer>) => (o :: <integer>)
   offset1 + offset2;
@@ -290,7 +290,7 @@ with-ops-in pentium-instructions (ldb-index-signed) info := ldb-index-signed end
 with-ops-in pentium-instructions (ldh-index-signed) info := ldh-index-signed end;
 
 define method simple-load-op
-    (be :: <x86-back-end>, index-op :: <integer>) => (op :: <op>)
+    (be :: <harp-x86-back-end>, index-op :: <integer>) => (op :: <op>)
   let instrs = be.instructions;
   select (index-op)
     ld-index  => op-element(instrs, ld);
@@ -414,7 +414,7 @@ end method;
 
 
 define method op--store-thread-local
-    (be :: <x86-windows-back-end>, data, offset :: <integer>) => ()
+    (be :: <harp-x86-windows-back-end>, data, offset :: <integer>) => ()
   emit(be, fs.segment-prefix);
   harp-out(be)
     st(be, data, 0, offset);
@@ -422,7 +422,7 @@ define method op--store-thread-local
 end method;
 
 define method op--load-thread-local
-    (be :: <x86-windows-back-end>, dest :: <real-register>, offset :: <integer>) => ()
+    (be :: <harp-x86-windows-back-end>, dest :: <real-register>, offset :: <integer>) => ()
   emit(be, fs.segment-prefix);
   harp-out(be)
     ld(be, dest, 0, offset);
@@ -430,7 +430,7 @@ define method op--load-thread-local
 end method;
 
 define method op--tlb-base-register 
-    (be :: <x86-windows-back-end>, dest :: <real-register>) => ()
+    (be :: <harp-x86-windows-back-end>, dest :: <real-register>) => ()
   op--load-thread-local(be, dest, #x14);
 end method;
 
@@ -439,7 +439,7 @@ end method;
 /// We use Linux' TLV support here.
 
 define method op--tlb-base-register 
-    (be :: <x86-unix-back-end>, dest :: <real-register>) => ()
+    (be :: <harp-x86-unix-back-end>, dest :: <real-register>) => ()
   op--load-thread-local(be, dest, /* dummy */ 0);
 end method;
 
@@ -447,7 +447,7 @@ define constant $teb =
     thread-local-runtime-reference("teb");
 
 define method op--store-thread-local
-    (be :: <x86-linux-back-end>, data, offset :: <integer>) => ()
+    (be :: <harp-x86-linux-back-end>, data, offset :: <integer>) => ()
   emit(be, gs.segment-prefix);
   harp-out(be)
     st(be, data, $teb, 0 /*ignore offset for Linux */);
@@ -455,7 +455,7 @@ define method op--store-thread-local
 end method;
 
 define method op--load-thread-local
-    (be :: <x86-linux-back-end>, dest :: <real-register>, offset :: <integer>) => ()
+    (be :: <harp-x86-linux-back-end>, dest :: <real-register>, offset :: <integer>) => ()
   emit(be, gs.segment-prefix);
   harp-out(be)
     ld(be, dest, $teb, 0 /*ignore offset for Linux */);
@@ -463,7 +463,7 @@ define method op--load-thread-local
 end method;
 
 define method op--store-thread-local
-    (be :: <x86-freebsd-back-end>, data, offset :: <integer>) => ()
+    (be :: <harp-x86-freebsd-back-end>, data, offset :: <integer>) => ()
   harp-out(be)
     push(be, reg--tmp2);
   end harp-out;
@@ -476,7 +476,7 @@ define method op--store-thread-local
 end method;
 
 define method op--load-thread-local
-    (be :: <x86-freebsd-back-end>, dest :: <real-register>, offset :: <integer>) => ()
+    (be :: <harp-x86-freebsd-back-end>, dest :: <real-register>, offset :: <integer>) => ()
   emit(be, gs.segment-prefix);
   harp-out(be)
     ld(be, dest, 0, 0);
@@ -595,7 +595,7 @@ define constant st-half = #x89;
 define constant st-word = #xc7;
 
 define method emit-st-operation 
-    (be :: <x86-back-end>, type :: <integer>, src)
+    (be :: <harp-x86-back-end>, type :: <integer>, src)
   if (ac/const-ref(src))
     if (type == st-half)
       emit(be, #x66, #xc7);
@@ -751,7 +751,7 @@ with-ops-in pentium-instructions (sth-index) info := sth-index end;
 
 
 define method simple-store-op
-    (be :: <x86-back-end>, index-op :: <integer>) => (op :: <op>)
+    (be :: <harp-x86-back-end>, index-op :: <integer>) => (op :: <op>)
   let instrs = be.instructions;
   select (index-op)
     st-index  => op-element(instrs, st);

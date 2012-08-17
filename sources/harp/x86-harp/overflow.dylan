@@ -211,12 +211,12 @@ with-ops-in pentium-instructions (asl-trap)
 end with-ops-in;
 
 
-define method trap-on-overflow (be :: <x86-back-end>) => ()
+define method trap-on-overflow (be :: <harp-x86-back-end>) => ()
   // INTO instruction, calls INT 4 on overflow
   emit(be, #xce);
 end method;
 
-define method trap-always (be :: <x86-back-end>) => ()
+define method trap-always (be :: <harp-x86-back-end>) => ()
   // just manually call INT 4
   emit(be, #xcd);
   emit(be, 4);

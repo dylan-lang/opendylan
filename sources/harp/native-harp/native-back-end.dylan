@@ -14,19 +14,19 @@ define abstract open primary class <harp-native-back-end> (<harp-back-end>)
 end;
 
 
-define abstract open class <native-windows-back-end> (<harp-native-back-end>)
+define abstract open class <harp-native-windows-back-end> (<harp-native-back-end>)
 end;
 
-define abstract open class <native-unix-back-end> (<harp-native-back-end>)
+define abstract open class <harp-native-unix-back-end> (<harp-native-back-end>)
 end;
 
 // All Linux back-ends should multiply inherit this class.
 
-define abstract open class <native-linux-back-end> (<native-unix-back-end>)
+define abstract open class <harp-native-linux-back-end> (<harp-native-unix-back-end>)
 end;
 
-define abstract open class <native-freebsd-back-end> (<native-unix-back-end>)
+define abstract open class <harp-native-freebsd-back-end> (<harp-native-unix-back-end>)
 end;
 
-define abstract open class <native-darwin-back-end> (<native-unix-back-end>)
+define abstract open class <harp-native-darwin-back-end> (<harp-native-unix-back-end>)
 end;

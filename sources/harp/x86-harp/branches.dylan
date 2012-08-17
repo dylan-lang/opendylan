@@ -65,7 +65,7 @@ define constant bls-x = #x76;
 /// General SDI emitter
 
 define method emit-general-sdi 
-    (be :: <x86-back-end>, tag :: <tag>, 
+    (be :: <harp-x86-back-end>, tag :: <tag>, 
      method-vector :: <simple-object-vector>, 
      cached-size :: <integer>,
      #key dest-offset = 0, code = #f)
@@ -82,7 +82,7 @@ end method;
 /// sdis for conditional branches
 
 define method emit-branch-sdi 
-    (be :: <x86-back-end>, opcode :: <integer>, tag :: <tag>)
+    (be :: <harp-x86-back-end>, opcode :: <integer>, tag :: <tag>)
   emit-general-sdi(be, tag, vector(branch-8, branch-32), 2, code: opcode);
 end method;
 
@@ -119,7 +119,7 @@ end method;
 /// unconditional branches about as similar as a bowl of petunias is to a sperm
 /// whale - different things --> different names)
 
-define method emit-jmp-sdi (be :: <x86-back-end>, tag :: <tag>)
+define method emit-jmp-sdi (be :: <harp-x86-back-end>, tag :: <tag>)
   emit-general-sdi(be, tag, vector(jmp-8, jmp-32), 2);
 end method;
 
@@ -179,7 +179,7 @@ end method;
 // (TonyM 15/10/91)
 
 define method handle-constant-comparison 
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      info :: <integer>, 
      dest :: <tag>,
      left :: <abstract-integer>, right :: <abstract-integer>)
@@ -342,7 +342,7 @@ define pentium-template (offset-to-tag)
 end pentium-template;
 
 
-define method emit-offset-sdi (be :: <x86-back-end>, tag :: <tag>)
+define method emit-offset-sdi (be :: <harp-x86-back-end>, tag :: <tag>)
   emit-general-sdi(be, tag, vector(offset-32), 4);
 end method;
 
@@ -376,7 +376,7 @@ with-ops-in pentium-instructions (beq-byte-mem, bne-byte-mem, bne-mem, beq-mem)
 end with-ops-in;
 
 define method cmp-byte-mem 
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      info :: <integer>, dest :: <tag>, 
      ad-reg :: <real-register>, 
      disp :: <integer>, cmp :: <integer>)
@@ -415,7 +415,7 @@ with-ops-in pentium-instructions (beq-mem) info := beq-x end;
 with-ops-in pentium-instructions (bne-mem) info := bne-x end;
 
 define method cmp-mem 
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      info :: <integer>, dest :: <tag>, 
      ad-reg :: <real-register>, 
      disp :: <integer>, cmp)
@@ -538,7 +538,7 @@ end pentium-template;
 
 
 define method full-test 
-      (be :: <x86-back-end>, info :: <integer>) => (op :: <op>)
+      (be :: <harp-x86-back-end>, info :: <integer>) => (op :: <op>)
   let instrs = be.instructions;
   select (info)
     beq-x => op-element(instrs, beq);
@@ -631,7 +631,7 @@ end;
 // (TonyM 15/10/91)
 
 define method catching-constant-bit
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      info :: <integer>, where :: <tag>,
      what :: <integer>, with :: <integer>, is :: <integer>)
   let take-the-branch? = logand(what, with) ~= is;
@@ -858,7 +858,7 @@ end pentium-template;
 /// constants. See LEA.
 
 define method emit-pea-sdi 
-    (be :: <x86-back-end>, tag :: <tag>, offset :: <integer>)
+    (be :: <harp-x86-back-end>, tag :: <tag>, offset :: <integer>)
   emit-general-sdi(be, tag, vector(pea-8, pea-32), 5, dest-offset: offset);
 end method;
 
@@ -927,7 +927,7 @@ define pentium load-nlx-address-template;
 
 
 define method emit-effective-address-sdi
-     (be :: <x86-back-end>, tag :: <tag>, offset :: <integer>)
+     (be :: <harp-x86-back-end>, tag :: <tag>, offset :: <integer>)
   emit-general-sdi(be, tag, vector(effective-address-32), 4, 
                    dest-offset: offset);
 end method;

@@ -28,10 +28,10 @@ define module dfmc-x86-harp-cg
  use streams-internals;
 
  use x86-harp,
-    export: { <x86-back-end>,
-              <x86-unix-back-end>,
-              <x86-linux-back-end>,
-              <x86-freebsd-back-end> };
+    export: { <harp-x86-back-end>,
+              <harp-x86-unix-back-end>,
+              <harp-x86-linux-back-end>,
+              <harp-x86-freebsd-back-end> };
  use dfmc-harp-cg, export: {*trace-harp?*};
  use dfmc-native-harp-cg,
     export: { current-native-back-end, current-native-back-end-setter };

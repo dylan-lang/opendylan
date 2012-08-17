@@ -23,7 +23,7 @@ define constant $default-harp-output-type$ = $coff-only-output$;
 
 
 define method default-harp-output-type
-    (backend :: <x86-back-end>) => (type)
+    (backend :: <harp-x86-back-end>) => (type)
    $default-harp-output-type$;
 end method;
 
@@ -34,48 +34,48 @@ end method;
 
 
 define method file-extension-for-outputter-type
-       (backend :: <x86-back-end>, type == $coff-type$)
+       (backend :: <harp-x86-back-end>, type == $coff-type$)
        => (extension :: <byte-string>)
   "obj";
 end method;
 
 define method stream-type-for-outputter-type
-       (backend :: <x86-back-end>, type == $coff-type$)
+       (backend :: <harp-x86-back-end>, type == $coff-type$)
        => (stream-type :: <class>)
   <byte-file-stream>
 end method;
 
 
 define method coff-machine-type
-    (backend :: <x86-back-end>)
+    (backend :: <harp-x86-back-end>)
     => (machine :: <integer>, big-endian? :: <boolean>)
   values(#x14c, #f);
 end method;
 
 
 define method output-code-start
-      (backend :: <x86-back-end>, outputter :: <harp-coff-builder>) => ()
+      (backend :: <harp-x86-back-end>, outputter :: <harp-coff-builder>) => ()
   next-method();
   output-implicit-externals(backend, outputter);
 end method;
 
 
 define method real-register-debug-info-enumeration
-    (backend :: <x86-back-end>, register :: <pentium-integer-register>)
+    (backend :: <harp-x86-back-end>, register :: <pentium-integer-register>)
     => (enumeration :: <integer>)
   register.real-register-number + 17; // see CodeView spec for this
 end method;
 
 
 define method real-register-debug-info-enumeration
-    (backend :: <x86-back-end>, register :: <pentium-float-register>)
+    (backend :: <harp-x86-back-end>, register :: <pentium-float-register>)
     => (enumeration :: <integer>)
   register.real-register-number + 128; // see CodeView spec for this
 end method;
 
 
 define method real-register-from-debug-info-enumeration
-    (backend :: <x86-back-end>, enumeration :: <integer>)
+    (backend :: <harp-x86-back-end>, enumeration :: <integer>)
     => (reg :: <pentium-register>)
 
   local method report-unknown ()
@@ -107,7 +107,7 @@ end method;
 
 
 define method output-compiled-lambda
-    (be :: <x86-back-end>, outputter :: <harp-binary-assembler-outputter>, lambda :: <fully-compiled-lambda>,
+    (be :: <harp-x86-back-end>, outputter :: <harp-binary-assembler-outputter>, lambda :: <fully-compiled-lambda>,
      #key)
     => ()
   let name = lambda.lambda-name;
@@ -259,7 +259,7 @@ end method;
 
 
 define method output-data-item
-    (be :: <x86-back-end>,
+    (be :: <harp-x86-back-end>,
      outputter :: <harp-assembler-outputter>,
      item :: <abstract-integer>,
      #key import?) => ()
@@ -270,7 +270,7 @@ end method;
 
 
 define method output-data-item
-    (be :: <x86-back-end>,
+    (be :: <harp-x86-back-end>,
      outputter :: <harp-assembler-outputter>,
      item :: <byte-string>,
      #key import?,
@@ -283,7 +283,7 @@ end method;
 
 
 define method output-data-item
-    (be :: <x86-back-end>,
+    (be :: <harp-x86-back-end>,
      outputter :: <harp-assembler-outputter>,
      item :: <constant-reference>,
      #key import?) => ()
@@ -325,7 +325,7 @@ end method;
 
 
 define method output-data-byte
-    (be :: <x86-back-end>,
+    (be :: <harp-x86-back-end>,
      outputter :: <harp-assembler-outputter>,
      item :: <byte-string>) => ()
   let asm-stream = outputter.outputter-stream;
@@ -336,7 +336,7 @@ end method;
 
 
 define method output-data-byte
-    (be :: <x86-back-end>,
+    (be :: <harp-x86-back-end>,
      outputter :: <harp-assembler-outputter>,
      byte :: <integer>) => ()
   let asm-stream = outputter.outputter-stream;
@@ -347,7 +347,7 @@ end method;
 
 
 define method output-header
-      (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>) => ()
+      (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>) => ()
   let asm-stream = outputter.outputter-stream;
   format(asm-stream, "\n.486\n");
   format(asm-stream, ".MODEL\tFLAT\n");
@@ -357,13 +357,13 @@ end method;
 
 
 define method output-footer
-      (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>) => ()
+      (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>) => ()
   let asm-stream = outputter.outputter-stream;
   format(asm-stream, "\nEND\n");
 end method;
 
 define method output-code-start
-      (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>) => ()
+      (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>) => ()
   let asm-stream = outputter.outputter-stream;
   format(asm-stream, "\n.CODE\n");
   flag-asm-line-start(outputter);
@@ -371,7 +371,7 @@ define method output-code-start
 end method;
 
 define method output-data-start
-      (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>) => ()
+      (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>) => ()
   let asm-stream = outputter.outputter-stream;
   format(asm-stream, "\n.DATA\n");
   flag-asm-line-start(outputter);
@@ -379,7 +379,7 @@ end method;
 
 
 define method output-glue-symbols
-     (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>,
+     (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>,
      #key data-start, data-end,
           variables-start, variables-end,
           objects-start, objects-end,
@@ -389,7 +389,7 @@ end method;
 
 
 define method output-external
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>, name :: <byte-string>,
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>, name :: <byte-string>,
      #key import?)
      => ()
   let asm-stream = outputter.outputter-stream;
@@ -398,14 +398,14 @@ define method output-external
 end method;
 
 define method output-external
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>,
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>,
      name :: <constant-reference>, #key import?) => ()
   output-external(be, outputter, name.cr-refers-to, import?: import?);
 end method;
 
 
 define method output-public
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>, name :: <byte-string>,
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>, name :: <byte-string>,
      #key)
      => ()
   let asm-stream = outputter.outputter-stream;
@@ -414,7 +414,7 @@ define method output-public
 end method;
 
 define method output-public
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>,
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>,
      name :: <constant-reference>,
      #key) => ()
   output-public(be, outputter, name.cr-refers-to);
@@ -422,20 +422,20 @@ end method;
 
 
 define method output-export
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>, name :: <byte-string>)
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>, name :: <byte-string>)
      => ()
   // Do nothing. This is not implemented for the assembler
 end method;
 
 define method output-export
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>,
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>,
      name :: <constant-reference>) => ()
   output-export(be, outputter, name.cr-refers-to);
 end method;
 
 
 define method output-definition
-    (be :: <x86-back-end>,
+    (be :: <harp-x86-back-end>,
      outputter :: <harp-assembler-outputter>,
      name :: <byte-string>,
      #key section, public?, export?,
@@ -450,7 +450,7 @@ define method output-definition
 end method;
 
 define method output-definition
-    (be :: <x86-back-end>,
+    (be :: <harp-x86-back-end>,
      outputter :: <harp-assembler-outputter>,
      name :: <constant-reference>,
      #rest all-keys, #key section, public?, export?) => ()
@@ -460,7 +460,7 @@ end method;
 
 
 define method output-variable
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>,
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>,
      name :: <byte-string>, initial-value,
      #key repeat, section, import-value?, public?, export?,
           model-object = unsupplied()) => ()
@@ -479,7 +479,7 @@ define method output-variable
 end method;
 
 define method output-variable
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>,
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>,
      name :: <constant-reference>, initial-value,
      #rest all-keys, #key repeat, section, import-value?, public?, export?) => ()
   apply(output-variable,
@@ -489,7 +489,7 @@ end method;
 
 
 define method output-comment
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>, comment :: <string>)
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>, comment :: <string>)
      => ()
   let asm-stream = outputter.outputter-stream;
   format(asm-stream, "\n;;;  %s   ;;;\n", comment);
@@ -497,7 +497,7 @@ define method output-comment
 end method;
 
 define method output-line-comment
-    (be :: <x86-back-end>, outputter :: <harp-assembler-outputter>, comment :: <string>)
+    (be :: <harp-x86-back-end>, outputter :: <harp-assembler-outputter>, comment :: <string>)
      => ()
   let asm-stream = outputter.outputter-stream;
   format(asm-stream, "\t;;;  %s   ;;;", comment);

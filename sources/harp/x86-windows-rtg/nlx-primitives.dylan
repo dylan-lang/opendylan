@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// there will only be a need for this if an NLX is made past a callback.
 
 define sideways method op--pop-any-SEH-handlers
-    (be :: <x86-windows-back-end>, new-stack-ptr :: <register>)
+    (be :: <harp-x86-windows-back-end>, new-stack-ptr :: <register>)
   with-harp (be)
     nreg seh-frame;
     tag ok, loop;

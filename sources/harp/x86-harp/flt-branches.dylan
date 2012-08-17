@@ -13,14 +13,14 @@ define constant mc-fcomp = #b011000;   // compare top with mem and pop
 
 /*
 
-define method compare-no-pop (be :: <x86-back-end>)
+define method compare-no-pop (be :: <harp-x86-back-end>)
   emit(be, #b11011000);
   emit(be, #b11010001);
   make-flags-avail(be);
 end method;
 
 
-define method compare-2-pop (be :: <x86-back-end>)
+define method compare-2-pop (be :: <harp-x86-back-end>)
   emit(be, #b11011110);
   emit(be, #b11011001);
   make-flags-avail(be);
@@ -51,7 +51,7 @@ with-ops-in pentium-instructions (fble, dble) info := bls-x end;
 /// that both equality and "orderedness" can be tested in one instruction
 
 define method make-flags-avail 
-    (be :: <x86-back-end>, #key frig)
+    (be :: <harp-x86-back-end>, #key frig)
   emit(be, flt-esc + #b111, #b11100000);	// fstsw ax
   if (frig)
     harp-out (be) eor(be, eax, eax, frig) end;

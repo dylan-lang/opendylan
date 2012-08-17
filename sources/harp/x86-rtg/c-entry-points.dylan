@@ -29,7 +29,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //    Preserved:       none                      esi, edi
 
 
-define entry-point c-xep (be :: <x86-back-end>, required)
+define entry-point c-xep (be :: <harp-x86-back-end>, required)
   let check-args-on-entry = (required ~= #"dynamic");
   op--general-xep-support (be, required, #f, op--c-xep-internal, 
                            check-specializers: #f,
@@ -39,14 +39,14 @@ end entry-point;
 
 
 define method op--c-xep-internal 
-    (be :: <x86-back-end>, required == 0)
+    (be :: <harp-x86-back-end>, required == 0)
   // Special case. If there are no arguments, the C and Dylan
   // conventions are compatible. Hence we can just tail call the IEP
 end method;
 
 
 define method op--c-xep-internal 
-    (be :: <x86-back-end>, required :: <integer>)
+    (be :: <harp-x86-back-end>, required :: <integer>)
   // Where we know the number of arguments:
   // 1. pop the return address into a C preserved register
   // 2. push the arg0 register
@@ -66,7 +66,7 @@ define method op--c-xep-internal
 end method;
 
 define method op--c-xep-internal 
-    (be :: <x86-back-end>, required)
+    (be :: <harp-x86-back-end>, required)
   // Where we don't know the number of arguments:
   // Test first to see if se got 0. If so, do tail call.
   // Otherwise, adjust stack and call, preserving the arg-count too.

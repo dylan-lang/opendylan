@@ -13,11 +13,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //  pentium-template defines the pentium backend pattern matchers.
 
 define template-definer-macro pentium-template
-  (<x86-back-end>, pentium-instructions)
+  (<harp-x86-back-end>, pentium-instructions)
 end;
 
 define local-template-definer-macro local-pentium-template
-  (<x86-back-end>)
+  (<harp-x86-back-end>)
 end;
 
 
@@ -27,14 +27,14 @@ end;
 
 define macro pentium-method 
   { pentium-method () ?:body end }
-    => { method (?=backend :: <x86-back-end>, ?=ins :: <integer>)
+    => { method (?=backend :: <harp-x86-back-end>, ?=ins :: <integer>)
            ignore(?=backend); 
            ignore(?=ins); 
            ?body
          end }
 
   { pentium-method (?type:name) ?:body end }
-    => { method (?=backend :: <x86-back-end>, ?=ins :: <integer>)
+    => { method (?=backend :: <harp-x86-back-end>, ?=ins :: <integer>)
            let ?=sv-ins = ?=backend.variables.sv-instructions;
            "with-" ## ?type (?=sv-ins at ?=ins)
              ?body

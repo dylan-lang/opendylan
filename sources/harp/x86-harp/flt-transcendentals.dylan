@@ -7,174 +7,174 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define method fpu-duplicate (be :: <x86-back-end>)
+define method fpu-duplicate (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11000000);
 end method;
 						       
-// define method fpu-push-0 (be :: <x86-back-end>)
+// define method fpu-push-0 (be :: <harp-x86-back-end>)
 //   emit(be, #b11011001, #b11101110);
 // end method;
 
-define method fpu-push-1 (be :: <x86-back-end>)
+define method fpu-push-1 (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11101000);
 end method;
 
-// define method fpu-push-pi (be :: <x86-back-end>)
+// define method fpu-push-pi (be :: <harp-x86-back-end>)
 //   emit(be, #b11011001, #b11101011);
 // end method;
 
-// define method fpu-push-log2-10 (be :: <x86-back-end>)
+// define method fpu-push-log2-10 (be :: <harp-x86-back-end>)
 //   emit(be, #b11011001, #b11101001);
 // end method;
 
-define method fpu-push-log2-e (be :: <x86-back-end>)
+define method fpu-push-log2-e (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11101010);
 end method;
 
-// define method fpu-push-loge-10 (be :: <x86-back-end>)
+// define method fpu-push-loge-10 (be :: <harp-x86-back-end>)
 //   emit(be, #b11011001, #b11101100);
 // end method;
 
-define method fpu-push-loge-2 (be :: <x86-back-end>)
+define method fpu-push-loge-2 (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11101101);
 end method;
 
-define method fpu-push-2 (be :: <x86-back-end>)
+define method fpu-push-2 (be :: <harp-x86-back-end>)
   fpu-push-1(be); fpu-duplicate(be); fpu-add(be);
 end method;
 					  
-define method fpu-add (be :: <x86-back-end>)
+define method fpu-add (be :: <harp-x86-back-end>)
   emit(be, #b11011110, #b11000001);
 end method;
 
-define method fpu-sub (be :: <x86-back-end>)
+define method fpu-sub (be :: <harp-x86-back-end>)
   emit(be, #b11011110, #b11101001);
 end method;
 
-define method fpu-subr (be :: <x86-back-end>)
+define method fpu-subr (be :: <harp-x86-back-end>)
   emit(be, #b11011110, #b11100001);
 end method;
 
-define method fpu-mul (be :: <x86-back-end>)
+define method fpu-mul (be :: <harp-x86-back-end>)
   emit(be, #b11011110, #b11001001);
 end method;
 
-define method fpu-div (be :: <x86-back-end>)
+define method fpu-div (be :: <harp-x86-back-end>)
   emit(be, #b11011110, #b11111001);
 end method;
 
-define method fpu-divr (be :: <x86-back-end>)
+define method fpu-divr (be :: <harp-x86-back-end>)
   emit(be, #b11011110, #b11110001);
 end method;
 
-define method fpu-halve (be :: <x86-back-end>)
+define method fpu-halve (be :: <harp-x86-back-end>)
   fpu-push-2(be); fpu-div(be);
 end method;
 					  
-define method fpu-sqrt (be :: <x86-back-end>)
+define method fpu-sqrt (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11111010);
 end method;
 
-define method fpu-discard (be :: <x86-back-end>)
+define method fpu-discard (be :: <harp-x86-back-end>)
   emit(be, #b11011101, #b11011000);
 end method;
 
-define method fpu-pop-down (be :: <x86-back-end>)
+define method fpu-pop-down (be :: <harp-x86-back-end>)
   emit(be, #b11011101, #b11011001);
 end method;
 
-define method fpu-exch (be :: <x86-back-end>)
+define method fpu-exch (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11001001);
 end method;
 
-define method fpu-exch2 (be :: <x86-back-end>)
+define method fpu-exch2 (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11001010);
 end method;
 
-define method fpu-round (be :: <x86-back-end>)
+define method fpu-round (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11111100);
 end method;
 
-define method fpu-extract (be :: <x86-back-end>)
+define method fpu-extract (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11110100);
 end method;
 
-define method fpu-scale (be :: <x86-back-end>)
+define method fpu-scale (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11111101);
 end method;
 
-define method fpu-raise-mant (be :: <x86-back-end>)
+define method fpu-raise-mant (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11110000);
 end method;
 
-define method fpu-logarithm (be :: <x86-back-end>)
+define method fpu-logarithm (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11110001);
 end method;
 
-define method fpu-raw-tan (be :: <x86-back-end>)
+define method fpu-raw-tan (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11110010);
 end method;
 
-define method fpu-raw-arctan (be :: <x86-back-end>)
+define method fpu-raw-arctan (be :: <harp-x86-back-end>)
   emit(be, #b11011001, #b11110011);
 end method;
 					  
-define method fpu-tan (be :: <x86-back-end>)
+define method fpu-tan (be :: <harp-x86-back-end>)
   fpu-raw-tan(be); fpu-discard(be);
 end method;
 
-define method fpu-atan (be :: <x86-back-end>)
+define method fpu-atan (be :: <harp-x86-back-end>)
   fpu-push-1(be);  fpu-raw-arctan(be);
 end method;
 					  
-define method fpu-raise (be :: <x86-back-end>)
+define method fpu-raise (be :: <harp-x86-back-end>)
   fpu-duplicate(be); fpu-round(be); fpu-duplicate(be);
   fpu-exch2(be); fpu-subr(be); fpu-raise-mant(be); 
   fpu-push-1(be); fpu-add(be); fpu-scale(be); 
   fpu-pop-down(be);
 end method;
 
-define method fpu-raise-e (be :: <x86-back-end>)
+define method fpu-raise-e (be :: <harp-x86-back-end>)
   fpu-push-log2-e(be); fpu-mul(be); fpu-raise(be);
 end method;
 
-define method fpu-log-e (be :: <x86-back-end>)
+define method fpu-log-e (be :: <harp-x86-back-end>)
   fpu-push-loge-2(be); fpu-exch(be); fpu-logarithm(be);
 end method;
 					  
-define method fpu-one-minus-sq (be :: <x86-back-end>)
+define method fpu-one-minus-sq (be :: <harp-x86-back-end>)
   fpu-duplicate(be); fpu-mul(be); fpu-push-1(be); 
   fpu-subr(be); fpu-sqrt(be);
 end method;
 					  
-define method fpu-sinh (be :: <x86-back-end>)
+define method fpu-sinh (be :: <harp-x86-back-end>)
   fpu-raise-e(be); fpu-duplicate(be); fpu-push-1(be); 
   fpu-divr(be); fpu-sub(be); fpu-halve(be);
 end method;
 
-define method fpu-cosh (be :: <x86-back-end>)
+define method fpu-cosh (be :: <harp-x86-back-end>)
   fpu-raise-e(be); fpu-duplicate(be); fpu-push-1(be); 
   fpu-divr(be); fpu-add(be); fpu-halve(be);
 end method;
 
-define method fpu-tanh (be :: <x86-back-end>)
+define method fpu-tanh (be :: <harp-x86-back-end>)
   fpu-duplicate(be); fpu-add(be); fpu-raise-e(be); 
   fpu-duplicate(be); fpu-push-1(be); fpu-sub(be);
   fpu-exch(be); fpu-push-1(be); fpu-add(be); fpu-div(be);
 end method;
 
-define method fpu-atanh (be :: <x86-back-end>)
+define method fpu-atanh (be :: <harp-x86-back-end>)
   fpu-duplicate(be); fpu-push-1(be); fpu-add(be); 
   fpu-exch(be); fpu-push-1(be); fpu-subr(be); fpu-div(be);
   fpu-log-e(be); fpu-halve(be);
 end method;
 
 
-define method push-float (be :: <x86-back-end>, d, s)
+define method push-float (be :: <harp-x86-back-end>, d, s)
   if (d) push-double(be, s) else push-single(be, s) end;
 end method;
 
-define method pop-float (be :: <x86-back-end>, d, s)
+define method pop-float (be :: <harp-x86-back-end>, d, s)
   if (d) pop-double(be, s) else pop-single(be, s) end;
 end method;
 
@@ -323,7 +323,7 @@ end pentium-template;
 
 
 /*
-define method pop-and-discard (be :: <x86-back-end>)
+define method pop-and-discard (be :: <harp-x86-back-end>)
   emit(be, flt-esc + 5, #b11011000); // store-pop to top, that is ST(1)
 end method;
 */
@@ -345,7 +345,7 @@ define pentium-template (dtan)
 end pentium-template;
 
 
-define method push-const (be :: <x86-back-end>, i387-bits :: <integer>)
+define method push-const (be :: <harp-x86-back-end>, i387-bits :: <integer>)
   emit(be, flt-esc + 1,  i387-bits);
 end method;
 
@@ -404,7 +404,7 @@ end pentium-template;
 
 
 /*
-define method emit-fpu-duplicate (be :: <x86-back-end>)
+define method emit-fpu-duplicate (be :: <harp-x86-back-end>)
   emit(be, flt-esc + #b001, #b11000000);
 end method;
 */

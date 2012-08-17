@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define instruction-set <pentium-instruction-set>
-     (<instruction-set>, <x86-back-end>)
+     (<instruction-set>, <harp-x86-back-end>)
   
   create pentium-instructions, inheriting: default-instructions;
 
@@ -44,7 +44,7 @@ define instruction-set <pentium-instruction-set>
 end;
 
 
-define sealed inline method instructions (be :: <x86-back-end>)
+define sealed inline method instructions (be :: <harp-x86-back-end>)
  => (instruction-set :: <pentium-instruction-set>)
   pentium-instructions
 end method;

@@ -370,13 +370,13 @@ end;
 /// allocator should avoid generating these.
 
 define method three-2 
-    (be :: <x86-back-end>, ins :: <function>, 
+    (be :: <harp-x86-back-end>, ins :: <function>, 
      d :: <real-register>, s1, s2)
   call-local(rdest, be, ins, d, s1, s2);
 end method;
 
 define method three-2 
-    (be :: <x86-back-end>, ins :: <function>, 
+    (be :: <harp-x86-back-end>, ins :: <function>, 
      d :: <object>, s1, s2)
   call-local(sdest, be, ins, d, s1, s2);
 end method;
@@ -466,7 +466,7 @@ end local-pentium-template;
 /// Lastly, canonicalisation patterns, used here for ld, st, multiplies.
 
 define method canon
-    (be :: <x86-back-end>, i :: <function>, d, s, m)
+    (be :: <harp-x86-back-end>, i :: <function>, d, s, m)
   if (const-ref(s)
       | (address-constant-ref(s) & ~ const-ref(m))
       | (ic/spill-ref(s) & m-ref(m))

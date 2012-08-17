@@ -14,7 +14,7 @@ define method quick-test
       #key type, 
            print-harp? = #t,
            data-function = output-first-literal) => ()
-  do-file-test(make(<x86-back-end>),
+  do-file-test(make(<harp-x86-back-end>),
                "test3",
                apply(vector, print-harp?: print-harp?, all-keys),
                data-function,
@@ -37,7 +37,7 @@ define variable first-lit = ins--constant-ref(pb, "first_lit");
 define variable second-lit = ins--constant-ref(pb, "second_lit");
 
 
-define method output-first-literal (be :: <x86-back-end>, outputter)
+define method output-first-literal (be :: <harp-x86-back-end>, outputter)
   output-definition(be, outputter, first-lit);
   output-data-byte(be, outputter, 1);
   output-data-byte(be, outputter, 2);
@@ -55,7 +55,7 @@ define method output-first-literal (be :: <x86-back-end>, outputter)
   output-data-byte(be, outputter, 14);
 end method;
 
-define method output-second-literal (be :: <x86-back-end>, outputter)
+define method output-second-literal (be :: <harp-x86-back-end>, outputter)
   output-definition(be, outputter, second-lit);
   output-data-byte(be, outputter, 1);
   output-data-byte(be, outputter, 2);
@@ -75,13 +75,13 @@ end method;
 
 
 
-define method output-two-literals (be :: <x86-back-end>, outputter)
+define method output-two-literals (be :: <harp-x86-back-end>, outputter)
   output-first-literal(be, outputter);
   output-second-literal(be, outputter);
 end method;
 
 
-define lambda-test call-internal-test (be :: <x86-back-end>)
+define lambda-test call-internal-test (be :: <harp-x86-back-end>)
   name "lit1_caller_iep"; 
   start-line 0;
   end-line 0;
@@ -90,7 +90,7 @@ define lambda-test call-internal-test (be :: <x86-back-end>)
   ins--rts(be);
 end;
 
-define lambda-test return-first-literal (be :: <x86-back-end>)
+define lambda-test return-first-literal (be :: <harp-x86-back-end>)
   name "first_lit_iep"; 
   start-line 5; 
   end-line 10;
@@ -107,7 +107,7 @@ end;
 
 
 
-define lambda-test qtest0 (be :: <x86-back-end>)
+define lambda-test qtest0 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -139,7 +139,7 @@ define lambda-test qtest0 (be :: <x86-back-end>)
 end;
 
 
-define lambda-test qtest1 (be :: <x86-back-end>)
+define lambda-test qtest1 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -203,7 +203,7 @@ end;
 
 
 
-define lambda-test qtest2 (be :: <x86-back-end>)
+define lambda-test qtest2 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -240,7 +240,7 @@ end;
 
 
 
-define lambda-test qtest3 (be :: <x86-back-end>)
+define lambda-test qtest3 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -296,7 +296,7 @@ end;
 
 
 
-define lambda-test qtest4 (be :: <x86-back-end>)
+define lambda-test qtest4 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -345,7 +345,7 @@ end;
 
 
 
-define lambda-test qtest5 (be :: <x86-back-end>)
+define lambda-test qtest5 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -391,7 +391,7 @@ end;
 
 
 
-define lambda-test qtest6 (be :: <x86-back-end>)
+define lambda-test qtest6 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -417,7 +417,7 @@ end;
 
 
 
-define lambda-test qtest7 (be :: <x86-back-end>)
+define lambda-test qtest7 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -465,7 +465,7 @@ define lambda-test qtest7 (be :: <x86-back-end>)
 end;
 
 
-define lambda-test qtest8 (be :: <x86-back-end>)
+define lambda-test qtest8 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 20;
@@ -502,7 +502,7 @@ define method run-qtest-9 ()
 end method;
 
 
-define lambda-test qtest9 (be :: <x86-back-end>)
+define lambda-test qtest9 (be :: <harp-x86-back-end>)
   name *test-name*;
   start-line 13;
   end-line 27;

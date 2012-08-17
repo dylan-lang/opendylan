@@ -93,7 +93,7 @@ define constant mf-double =   #b100;
 
 
 define method emit-fspill-operand 
-    (be :: <x86-back-end>, spill :: <fspill>, ex :: <integer>, 
+    (be :: <harp-x86-back-end>, spill :: <fspill>, ex :: <integer>, 
      #key hilo = 0)
   let offset :: <integer> = hilo + signed-frame-pointer-offset(be, spill);
   if (signed-eight-bits?(offset))
@@ -108,7 +108,7 @@ end method;
 
 
 define method emit-f-constant-operand 
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      const-ref :: <indirect-constant-reference>, 
      ex :: <integer>, 
      #key hilo = 0)
@@ -128,14 +128,14 @@ end method;
 
 
 define method emit-f-c-spill-operand 
-    (be :: <x86-back-end>, float :: <fspill>, ex :: <integer>, 
+    (be :: <harp-x86-back-end>, float :: <fspill>, ex :: <integer>, 
      #key hilo = 0)
   emit-fspill-operand(be, float, ex, hilo: hilo);
 end method;
 
 
 define method emit-f-c-spill-operand 
-    (be :: <x86-back-end>, float :: <indirect-constant-reference>, ex :: <integer>, 
+    (be :: <harp-x86-back-end>, float :: <indirect-constant-reference>, ex :: <integer>, 
      #key hilo = 0)
   emit-f-constant-operand(be, float, ex, hilo: hilo);
 end method;
@@ -164,31 +164,31 @@ define local-pentium-template (float-push-single, float-push-double)
 
 end local-pentium-template;
 
-define method push-single (be :: <x86-back-end>, val)
+define method push-single (be :: <harp-x86-back-end>, val)
   call-local(float-push-single, be, val)
 end method;
 
-define method push-double (be :: <x86-back-end>, val)
+define method push-double (be :: <harp-x86-back-end>, val)
   call-local(float-push-double, be, val)
 end method;
 
-define method push-integer (be :: <x86-back-end>, s :: <ispill>)
+define method push-integer (be :: <harp-x86-back-end>, s :: <ispill>)
   push-integer-internal(be, reg--frame, signed-frame-pointer-offset(be, s));
 end method;
 
-define method push-integer (be :: <x86-back-end>, s)
+define method push-integer (be :: <harp-x86-back-end>, s)
   harp-out (be) push(be, s) end;
   push-integer-internal(be, reg--stack, 0);
   harp-out (be) add(be, reg--stack, reg--stack, 4) end;
 end method;
 
 define method push-integer-internal
-    (be :: <x86-back-end>, base :: <register>, offset :: <integer>)
+    (be :: <harp-x86-back-end>, base :: <register>, offset :: <integer>)
   emit(be, flt-esc + mf-word + 1);
   emit-reg-offset(be, base, offset, mc-fld);
 end method;
 
-define method push-double-integer (be :: <x86-back-end>, low, high)
+define method push-double-integer (be :: <harp-x86-back-end>, low, high)
   harp-out (be) 
     push(be, high);
     push(be, low);
@@ -199,47 +199,47 @@ define method push-double-integer (be :: <x86-back-end>, low, high)
 end method;
 
 
-define method pop-single (be :: <x86-back-end>, spill-ref :: <sfspill>)
+define method pop-single (be :: <harp-x86-back-end>, spill-ref :: <sfspill>)
   emit(be, flt-esc + mf-single + 1);
   emit-fspill-operand(be, spill-ref, mc-fstp);
 end method;
 
 define method pop-single
-    (be :: <x86-back-end>, dest :: <pentium-float-register>)
+    (be :: <harp-x86-back-end>, dest :: <pentium-float-register>)
   emit(be, flt-esc + mf-single + 1);
   emit-reg-direct(be, dest, mc-fstp);
 end method;
 
-define method pop-double (be :: <x86-back-end>, spill-ref :: <dfspill>)
+define method pop-double (be :: <harp-x86-back-end>, spill-ref :: <dfspill>)
   emit(be, flt-esc + mf-double + 1);
   emit-fspill-operand(be, spill-ref, mc-fstp);
 end method;
 
 define method pop-double 
-    (be :: <x86-back-end>, dest :: <pentium-float-register>)
+    (be :: <harp-x86-back-end>, dest :: <pentium-float-register>)
   emit(be, flt-esc + mf-double + 1);
   emit-reg-direct(be, dest, mc-fstp);
 end method;
 
-define method pop-integer (be :: <x86-back-end>, d :: <ispill>)
+define method pop-integer (be :: <harp-x86-back-end>, d :: <ispill>)
   pop-integer-internal(be, reg--frame, signed-frame-pointer-offset(be, d));
 end method;
 
-define method pop-integer (be :: <x86-back-end>, d)
+define method pop-integer (be :: <harp-x86-back-end>, d)
   harp-out (be) sub(be, reg--stack, reg--stack, 4) end;
   pop-integer-internal(be, reg--stack, 0);
   harp-out (be) pop(be, d) end;
 end method;
 
 define method pop-integer-internal
-    (be :: <x86-back-end>, base :: <register>, offset :: <integer>)
+    (be :: <harp-x86-back-end>, base :: <register>, offset :: <integer>)
   emit(be, flt-esc + mf-word + 1);
   emit-reg-offset(be, base, offset, mc-fstp);
 end method;
 
 
 
-define method pop-double-integer (be :: <x86-back-end>, low, high)
+define method pop-double-integer (be :: <harp-x86-back-end>, low, high)
   harp-out (be) sub(be, reg--stack, reg--stack, 8) end;
   emit(be, flt-esc + mf-dbword + 1);
   emit-reg-offset(be, reg--stack, 0, mc-fstpd);
@@ -253,7 +253,7 @@ end method;
 
 define variable fpu-stack-cautious? = #t;
 
-define method emit-fpu-reset (be :: <x86-back-end>)
+define method emit-fpu-reset (be :: <harp-x86-back-end>)
   if (fpu-stack-cautious?)
     emit(be, flt-esc + #b011, #b11100011);
   end if;

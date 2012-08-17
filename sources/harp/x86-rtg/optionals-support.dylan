@@ -13,7 +13,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // that the Pentium must recalculate the size of the key space.
 
 define sideways method ensure-safe-key-space 
-    (be :: <x86-back-end>, key-space :: <register>) 
+    (be :: <harp-x86-back-end>, key-space :: <register>) 
     => (r :: <register>);
   let keys-size = make-n-register(be);
   op--keywords-size(be, keys-size);
@@ -24,7 +24,7 @@ end method;
 // OP--COPY-WORDS-WITH-UPDATE
 
 define sideways method op--copy-words-with-update
-    (be :: <x86-back-end>, dest, to, from, copy-count)
+    (be :: <harp-x86-back-end>, dest, to, from, copy-count)
   // Force the colourer to use EDI in the way we want
   let wanted-to = edi;
   let wanted-from = esi;

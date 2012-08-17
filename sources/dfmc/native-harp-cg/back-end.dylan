@@ -13,7 +13,7 @@ end method;
 // On Linux, C Compiler doesn't prepend C names with underscores
 
 define sideways method c-name
-    (back-end :: <native-unix-back-end>, name :: <string>) => (name :: <string>)
+    (back-end :: <harp-native-unix-back-end>, name :: <string>) => (name :: <string>)
  name
 end method c-name;
 
@@ -24,7 +24,7 @@ define sideways method shared-library-entry-point-name
 end method shared-library-entry-point-name;
 
 define sideways method shared-library-entry-point-name
-    (back-end :: <native-unix-back-end>, name :: <string>) => (name :: <string>)
+    (back-end :: <harp-native-unix-back-end>, name :: <string>) => (name :: <string>)
   c-name(back-end, concatenate(name, "SO"));
 end method shared-library-entry-point-name;
 
@@ -35,7 +35,7 @@ define sideways method shared-library-runtime-entry-point-name
 end method shared-library-runtime-entry-point-name;
 
 define sideways method shared-library-runtime-entry-point-name
-    (back-end :: <native-unix-back-end>) => (name :: <string>)
+    (back-end :: <harp-native-unix-back-end>) => (name :: <string>)
   c-name(back-end, "DylanSOEntry");
 end method shared-library-runtime-entry-point-name;
 
@@ -50,14 +50,14 @@ end method;
 // Imports aren't renamed on Linux
 
 define sideways method emit-imported-name
-    (back-end :: <native-unix-back-end>, stream, o) => (name :: <string>)
+    (back-end :: <harp-native-unix-back-end>, stream, o) => (name :: <string>)
   emit-name(back-end, stream, o);
 end method;
 
 // Imports don't require an extra indirection on Linux
 
 define sideways method make-imported-constant-reference
-    (back-end :: <native-unix-back-end>, o,
+    (back-end :: <harp-native-unix-back-end>, o,
      #key indirect?) => (name :: <constant-reference>)
   if (indirect?)
     ins--indirect-constant-ref(back-end, o, import?: #t);
@@ -69,7 +69,7 @@ end method;
 // No compiler issues with import generation on Linux
 
 define sideways method emit-import-adjustment?
-    (back-end :: <native-unix-back-end>) => (adjust? :: <boolean>)
+    (back-end :: <harp-native-unix-back-end>) => (adjust? :: <boolean>)
   #f
 end method emit-import-adjustment?;
 
@@ -78,7 +78,7 @@ end method emit-import-adjustment?;
 // Linker can create appropriate dynamic relocation records for them
 
 define sideways method emit-data-footer
-    (back-end :: <native-unix-back-end>, stream, name,
+    (back-end :: <harp-native-unix-back-end>, stream, name,
      #key model-object = unsupplied()) => ()
   output-data-footer
   (back-end, stream, name,
@@ -87,11 +87,11 @@ end method;
 
 
 define sideways method emit-imports
-    (back-end :: <native-unix-back-end>, cr, ld :: <library-description>) => ()
+    (back-end :: <harp-native-unix-back-end>, cr, ld :: <library-description>) => ()
 end method;
 
 define sideways method emit-library-imported-data
-    (back-end :: <native-unix-back-end>, stream, description :: <library-description>,
+    (back-end :: <harp-native-unix-back-end>, stream, description :: <library-description>,
      #key compilation-layer)
  => ()
 end method;

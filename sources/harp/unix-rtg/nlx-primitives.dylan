@@ -11,5 +11,5 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// OP--POP-ANY-SEH-HANDLERS
 
 define sideways method op--pop-any-SEH-handlers
-    (be :: <native-unix-back-end>, new-stack-ptr :: <register>)
+    (be :: <harp-native-unix-back-end>, new-stack-ptr :: <register>)
 end method;

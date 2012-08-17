@@ -88,7 +88,7 @@ end pentium-template;
 /// do-appropriate-thing generates the move code for up or down, depending
 /// on the symbol its given. The arguments are all lined up in their registers.
 
-define method do-appropriate-thing  (be :: <x86-back-end>, info :: <list>)
+define method do-appropriate-thing  (be :: <harp-x86-back-end>, info :: <list>)
 
   let up = is-copy-up?(info);
   let w  = is-copy-w?(info);
@@ -125,7 +125,7 @@ with-ops-in pentium-instructions (fill-words)   info := #t end;
 with-ops-in pentium-instructions (fill-words-w) info := #f end;
 
 
-define method fried-fillet-of-plaice (be :: <x86-back-end>, info)
+define method fried-fillet-of-plaice (be :: <harp-x86-back-end>, info)
   emit(be, cld);				// pointers move up
   if (info)  // i.e. this is a fill-words
     emit(be, #xc1, #xf9, 2)		// ecx := ecx >> 2

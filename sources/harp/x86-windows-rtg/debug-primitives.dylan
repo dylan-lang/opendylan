@@ -13,6 +13,6 @@ define win-fun runtime-external win-OutputDebugString = "OutputDebugStringA",
 
 
 define sideways method op--output-debug-string
-    (be :: <x86-windows-back-end>, string :: <register>) => ()
+    (be :: <harp-x86-windows-back-end>, string :: <register>) => ()
   op--stdcall-c(be, win-OutputDebugString, string);
 end method;

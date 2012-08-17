@@ -205,14 +205,14 @@ end;
 
 
 define method make-pref-vector
-    (backend :: <x86-back-end>) => (vec :: <simple-integer-vector>)
+    (backend :: <harp-x86-back-end>) => (vec :: <simple-integer-vector>)
  let pref-size = pentium-real-registers.size;
  make(<simple-integer-vector>, size: pref-size, fill: 0);
 end;
 
 
 define method the-real-dfreg 
-    (backend :: <x86-back-end>, x :: <real-register>) 
+    (backend :: <harp-x86-back-end>, x :: <real-register>) 
      => (reg :: <real-register>)
   x;
 end;
@@ -226,7 +226,7 @@ define constant pentium-allowable-colours =
 /// this is a bit simpler than for the other processors !
 
 define method allowable-colours
-   (backend :: <x86-back-end>, vr :: <virtual-register>) 
+   (backend :: <harp-x86-back-end>, vr :: <virtual-register>) 
     => (i :: <integer>)
   if (instance?(vr, <floating-virtual-register>))
     pentium-floating-registers;

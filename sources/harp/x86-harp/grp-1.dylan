@@ -49,7 +49,7 @@ define method locked-ins? (opcode :: <integer>) => (locked? :: <boolean>)
   logand(opcode, locked-ins) ~== 0;
 end method;
 
-define method emit-any-lock-prefix (be :: <x86-back-end>, opcode :: <integer>)
+define method emit-any-lock-prefix (be :: <harp-x86-back-end>, opcode :: <integer>)
   if (opcode.locked-ins?)
     emit(be, lock);
   end if;

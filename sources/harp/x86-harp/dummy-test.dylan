@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Define a backend itself;
 
 
-define variable pentium-backend = make(<x86-back-end>);
+define variable pentium-backend = make(<harp-x86-back-end>);
 
 define variable pb = pentium-backend;
 
@@ -29,7 +29,7 @@ define class <complex-test> (<object>)
 end class;
 
 define method do-file-test 
-    (be :: <x86-back-end>, 
+    (be :: <harp-x86-back-end>, 
      filename :: <string>,
      outputter-options :: <vector>,
      data-function :: <function>,
@@ -65,19 +65,19 @@ define method do-file-test
 end method;
 
 
-define method external1 (be :: <x86-back-end>, outputter)
+define method external1 (be :: <harp-x86-back-end>, outputter)
   output-external(be, outputter, ext1);
 end method;
 
-define method internal1 (be :: <x86-back-end>, outputter)
+define method internal1 (be :: <harp-x86-back-end>, outputter)
   output-variable(be, outputter, int1, 1, public?: #t);
 end method;
 
-define method literal1 (be :: <x86-back-end>, outputter)
+define method literal1 (be :: <harp-x86-back-end>, outputter)
   output-variable(be, outputter, lit1, 1, public?: #f);
 end method;
 
-define method null-data (be :: <x86-back-end>, outputter)
+define method null-data (be :: <harp-x86-back-end>, outputter)
 end method;
 
 
@@ -98,7 +98,7 @@ define macro lambda-test-definer
          end }
 end macro;
 
-define lambda-test return-external1 (be :: <x86-back-end>)
+define lambda-test return-external1 (be :: <harp-x86-back-end>)
   name "ext1_iep"; 
   start-line 0; 
   end-line 0;
@@ -110,7 +110,7 @@ end;
 
 
      
-define lambda-test return-internal1 (be :: <x86-back-end>)
+define lambda-test return-internal1 (be :: <harp-x86-back-end>)
   name "int1_iep"; 
   start-line 0; 
   end-line 0;
@@ -127,7 +127,7 @@ end;
 
 
 
-define lambda-test return-literal1 (be :: <x86-back-end>)
+define lambda-test return-literal1 (be :: <harp-x86-back-end>)
   name "lit1_iep"; 
   start-line 5; 
   end-line 10;
@@ -139,7 +139,7 @@ define lambda-test return-literal1 (be :: <x86-back-end>)
 end;
   
 
-define lambda-test call-literal1 (be :: <x86-back-end>)
+define lambda-test call-literal1 (be :: <harp-x86-back-end>)
   name "lit1_caller_iep"; 
   start-line 13;
   end-line 20;
@@ -160,7 +160,7 @@ define lambda-test call-literal1 (be :: <x86-back-end>)
 end;
 
    
-define lambda-test return-effective-address (be :: <x86-back-end>)
+define lambda-test return-effective-address (be :: <harp-x86-back-end>)
   name "lea_iep"; 
   start-line 0; 
   end-line 0;
@@ -179,7 +179,7 @@ define lambda-test return-effective-address (be :: <x86-back-end>)
   end with-harp;
 end;
     
-define lambda-test return-effective-address2 (be :: <x86-back-end>)
+define lambda-test return-effective-address2 (be :: <harp-x86-back-end>)
   name "lea_iep"; 
   start-line 0;
   end-line 0;
@@ -203,7 +203,7 @@ end;
 
 
 define method file-test-1 (#rest all-keys, #key type, print-harp? = #t) => ()
-  do-file-test(make(<x86-back-end>),
+  do-file-test(make(<harp-x86-back-end>),
                "test1",
                apply(vector, print-harp?: print-harp?, all-keys),
                external1,
@@ -211,7 +211,7 @@ define method file-test-1 (#rest all-keys, #key type, print-harp? = #t) => ()
 end method;
 
 define method file-test-2 (#rest all-keys, #key type, print-harp? = #t) => ()
-  do-file-test(make(<x86-back-end>),
+  do-file-test(make(<harp-x86-back-end>),
                "test2",
                apply(vector, print-harp?: print-harp?, all-keys),
                internal1,
@@ -219,7 +219,7 @@ define method file-test-2 (#rest all-keys, #key type, print-harp? = #t) => ()
 end method;
 
 define method file-test-3 (#rest all-keys, #key type, print-harp? = #t) => ()
-  do-file-test(make(<x86-back-end>),
+  do-file-test(make(<harp-x86-back-end>),
                "test3",
                apply(vector, print-harp?: print-harp?, all-keys),
                literal1,
@@ -228,7 +228,7 @@ define method file-test-3 (#rest all-keys, #key type, print-harp? = #t) => ()
 end method;
 
 define method file-test-4 (#rest all-keys, #key type, print-harp? = #t) => ()
-  do-file-test(make(<x86-back-end>),
+  do-file-test(make(<harp-x86-back-end>),
                "test4",
                apply(vector, print-harp?: print-harp?, all-keys),
                null-data,
@@ -236,7 +236,7 @@ define method file-test-4 (#rest all-keys, #key type, print-harp? = #t) => ()
 end method;
 
 define method file-test-5 (#rest all-keys, #key type, print-harp? = #t) => ()
-  do-file-test(make(<x86-back-end>),
+  do-file-test(make(<harp-x86-back-end>),
                "test5",
                apply(vector, print-harp?: print-harp?, all-keys),
                null-data,
@@ -246,7 +246,7 @@ end method;
 // second generation lambda tests .....
 
 define method set-function-name
-    (be :: <x86-back-end>, name :: <byte-string>) 
+    (be :: <harp-x86-back-end>, name :: <byte-string>) 
   be.variables.function-name  := name;
 end method;
 
@@ -266,7 +266,7 @@ define method run-test
               harp-debug: #t);
 end method;
 
-define method test0 (be :: <x86-back-end>)
+define method test0 (be :: <harp-x86-back-end>)
   let regs = be.registers;
   set-function-name(be, "_Tony0");
   ins--move(be, regs.reg-result, 99);
@@ -274,13 +274,13 @@ define method test0 (be :: <x86-back-end>)
 end;
      
 
-define method test1 (be :: <x86-back-end>)
+define method test1 (be :: <harp-x86-back-end>)
   set-function-name(be, "_Tony1");
   ins--jmp(be, ins--constant-ref(be, "Tony0"), 0);
 end;
      
 
-define method test2 (be :: <x86-back-end>)
+define method test2 (be :: <harp-x86-back-end>)
   set-function-name(be, "_Tony2");
   ins--adjust-stack(be, 4);
   ins--call(be, ins--constant-ref(be, "Funny"), 0);
@@ -288,7 +288,7 @@ define method test2 (be :: <x86-back-end>)
 end;
      
 
-define method test3 (be :: <x86-back-end>)
+define method test3 (be :: <harp-x86-back-end>)
   set-function-name(be, "_sdi_test");
   let argc = be.registers.reg-arg-count;
   let tag = make-tag(be);
@@ -302,7 +302,7 @@ define method test3 (be :: <x86-back-end>)
 end;
      
 
-define method test4 (be :: <x86-back-end>)
+define method test4 (be :: <harp-x86-back-end>)
   let addr-tag = make-tag(be);
   set-function-name(be, "_Tony2");
   ins--adjust-stack(be, 4);
@@ -313,7 +313,7 @@ define method test4 (be :: <x86-back-end>)
 end;
      
 
-define method test5 (be :: <x86-back-end>)
+define method test5 (be :: <harp-x86-back-end>)
   with-harp (be)
     tag addr-tag, finished-tag;
 
@@ -332,7 +332,7 @@ define method test5 (be :: <x86-back-end>)
   end with-harp;
 end;
 
-define method test6 (be :: <x86-back-end>)
+define method test6 (be :: <harp-x86-back-end>)
   let regs = be.registers;
   let df = make-df-register(be);
   set-function-name(be, "_CallAlien1");
@@ -344,7 +344,7 @@ define method test6 (be :: <x86-back-end>)
   ins--rts(be);
 end;
      
-define method test7 (be :: <x86-back-end>)
+define method test7 (be :: <harp-x86-back-end>)
   let regs = be.registers;
   with-harp (be)
     named dfreg df1;
@@ -370,7 +370,7 @@ end;
      
      
 
-define method test8 (be :: <x86-back-end>)
+define method test8 (be :: <harp-x86-back-end>)
   set-function-name(be, "_Tony8");
   ins--adjust-stack(be, 4);
   ins--scl(be, "Line 1", #[]);
@@ -380,7 +380,7 @@ define method test8 (be :: <x86-back-end>)
 end;
 
 
-define method defasm-test0 (be :: <x86-back-end>)
+define method defasm-test0 (be :: <harp-x86-back-end>)
   let regs = be.registers;
   let vars = be.variables;
   with-harp (be)

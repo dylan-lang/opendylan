@@ -131,7 +131,7 @@ with-ops-in pentium-instructions (divs, mods, divx, divxx, truncatex, truncatexx
 end with-ops-in;
 
 
-define method emit-div-preamble (be :: <x86-back-end>, i :: <integer>)
+define method emit-div-preamble (be :: <harp-x86-back-end>, i :: <integer>)
   select (i)
     divu => harp-out (be) move(be, edx, 0) end;
     divs => emit(be, cdq);
