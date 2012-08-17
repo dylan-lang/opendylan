@@ -85,12 +85,12 @@ define constant $c-function-options =
 
 define &macro C-function-definer
   { define ?mods:* C-function ?dylan-name:name ?spec:* end }
-    => 
+    =>
   begin
     let (arg-specs, result-spec, c-name, options)
       = parse-c-function-spec(dylan-name, spec);
     let (arg-fragments, result-fragment, parameter-list-fragment,
-	 return-values-fragment, define-gf?, parameter-names-fragment)
+         return-values-fragment, define-gf?, parameter-names-fragment)
       = parse-early-options(arg-specs, result-spec, options, dylan-name);
     let inline-policy = mods;
     let body = #{ begin
@@ -112,7 +112,7 @@ define &macro C-function-definer
                       apply(values, results)
                     else
                       c-function-body
-		        ?dylan-name
+                        ?dylan-name
                         (c-name ?c-name),
                         (options ??options, ...),
                         ?result-fragment,
@@ -123,9 +123,9 @@ define &macro C-function-definer
                 };
     if (define-gf?)
       #{ define ?inline-policy method ?dylan-name ?parameter-list-fragment
-	  => ?return-values-fragment;
+          => ?return-values-fragment;
            ?body
-	 end }
+         end }
     else
       #{ define ?inline-policy function ?dylan-name ?parameter-list-fragment
           => ?return-values-fragment;
@@ -171,22 +171,22 @@ define method parse-early-options
       & parse-boolean-fragment(indirect-expr, default: #"error");
     unless (instance?(indirect?, <boolean>))
       note(<invalid-c-function-indirect-value>,
-	   source-location: fragment-source-location(indirect-expr),
-	   definition-name: definition-name,
-	   indirect-expression: indirect-expr);
+           source-location: fragment-source-location(indirect-expr),
+           definition-name: definition-name,
+           indirect-expression: indirect-expr);
       indirect? := #f;
     end unless;
 
     if (indirect?)
       let indirect-parameter-name = gensym("functional-parameter");
       collect-into
-	(arg-fragments,
-	 #{ (parameter ?indirect-parameter-name :: <C-function-pointer>,
-	     call-discipline: input:,
-	     // Comma is needed to get through the c-function-body macro ...
-	     indirect:, #t) });
+        (arg-fragments,
+         #{ (parameter ?indirect-parameter-name :: <C-function-pointer>,
+             call-discipline: input:,
+             // Comma is needed to get through the c-function-body macro ...
+             indirect:, #t) });
       collect-into(parameters,
-		   #{ ?indirect-parameter-name :: <C-function-pointer> });
+                   #{ ?indirect-parameter-name :: <C-function-pointer> });
     end if;
 
     for (arg in arg-specs)
@@ -196,15 +196,15 @@ define method parse-early-options
       // let options = arg.other-options;
       // !@#$ may need to check for other parameter options here
       collect-into(arg-fragments, #{ (parameter ?nn :: ?type,
-				      call-discipline: ?discipline) }); 
+                                      call-discipline: ?discipline) });
       if (call-discipline(arg) ~= #"input")
-	// add a return value
-	collect-into(return-values,
-		     #{ ?nn :: import-type-for-reference(?type) });
+        // add a return value
+        collect-into(return-values,
+                     #{ ?nn :: import-type-for-reference(?type) });
         if (call-discipline(arg) = #"in-out")
-	  // parameter to the dylan function
+          // parameter to the dylan function
           collect-into(parameter-names, #{ ?nn });
-	  collect-into(parameters,
+          collect-into(parameters,
                        #{ ?nn :: export-type-for-reference(?type) })
         end;
       else
@@ -220,9 +220,9 @@ define method parse-early-options
       & parse-boolean-fragment(gf-method-expr, default: #"error");
     unless (instance?(gf-method?, <boolean>))
       note(<invalid-c-function-gf-method-value>,
-	   source-location: fragment-source-location(gf-method-expr),
-	   definition-name: definition-name,
-	   gf-method-expression: gf-method-expr);
+           source-location: fragment-source-location(gf-method-expr),
+           definition-name: definition-name,
+           gf-method-expression: gf-method-expr);
       gf-method? := #f;
     end unless;
 
@@ -230,10 +230,10 @@ define method parse-early-options
     let param-names = collected(parameter-names);
     let returns = collected(return-values);
     values(collected(arg-fragments),
-	   result-fragment,
-	   #{ (??params, ...) },
-	   #{ (??returns, ...) },
-	   gf-method?,
+           result-fragment,
+           #{ (??params, ...) },
+           #{ (??returns, ...) },
+           gf-method?,
            #{ ??param-names, ... });
   end collecting;
 end method;
@@ -251,22 +251,22 @@ define method c-function-parse-parameter-spec
      extra-return-value)
   let export-type = ^mapped-export-type(model);
   let raw-export-type = ^raw-type-name(model);
-  let nom = spec.name;  
+  let nom = spec.name;
   let unboxer = ^unboxer-function-name(model);
   let export-fn = ^export-function(model);
-  let export-form 
+  let export-form
     = if (export-fn)
         #{ ?export-fn(?nom) }
       else
         nom
       end;
-  values(#{ ?nom :: ?export-type },	 // dylan-function-parameter
-         #f,				 // dylan-function-extra-return
-         #f,				 // stack-allocation-head
-         #f,				 // in-out-arg-set-form
+  values(#{ ?nom :: ?export-type },         // dylan-function-parameter
+         #f,                                 // dylan-function-extra-return
+         #f,                                 // stack-allocation-head
+         #f,                                 // in-out-arg-set-form
          #{ ?nom :: ?raw-export-type },  // c-function-parameter
-         #{ ?unboxer(?export-form) },	 // c-function-argument
-         #f)				 // extra-return-value
+         #{ ?unboxer(?export-form) },         // c-function-argument
+         #f)                                 // extra-return-value
 end;
 
 define method c-function-parse-parameter-spec
@@ -283,25 +283,25 @@ define method c-function-parse-parameter-spec
   let ref-type-model = ^referenced-type(model);
   unless(designator-class?(ref-type-model))
     note(<output-parameter-not-a-pointer>,
-	 source-location: fragment-source-location(spec.designator-name),
-	 designator-name: spec.designator-name,
-	 parameter-name: spec.name);
+         source-location: fragment-source-location(spec.designator-name),
+         designator-name: spec.designator-name,
+         parameter-name: spec.name);
     ref-type-model := ^eval-designator(#{ <C-void*> });
   end unless;
   let import-type = ^mapped-import-type(ref-type-model);
   let raw-export-type = ^raw-type-name(model);
-  let nom = spec.name;  
+  let nom = spec.name;
   let unboxer = ^unboxer-function-name(model);
   let stack-size = #{ size-of(?ref-type-model) };
   let type-name = spec.designator-name;
-  values(#f,				 // dylan-function-parameter
-	 #{ ?nom :: ?import-type },	 // dylan-function-extra-return
-	 #{ (?nom :: ?type-name, size: ?stack-size) },
-	                                 // stack-allocation-head 
-	 #f,				 // in-out-arg-set-form
-	 #{ ?nom :: ?raw-export-type },  // c-function-parameter
-	 #{ ?unboxer(?nom) },	         // c-function-argument
-	 #{ pointer-value(?nom) })       // extra-return-value
+  values(#f,                                 // dylan-function-parameter
+         #{ ?nom :: ?import-type },         // dylan-function-extra-return
+         #{ (?nom :: ?type-name, size: ?stack-size) },
+                                         // stack-allocation-head
+         #f,                                 // in-out-arg-set-form
+         #{ ?nom :: ?raw-export-type },  // c-function-parameter
+         #{ ?unboxer(?nom) },                 // c-function-argument
+         #{ pointer-value(?nom) })       // extra-return-value
 end method;
 
 define method c-function-parse-parameter-spec
@@ -318,27 +318,27 @@ define method c-function-parse-parameter-spec
   let ref-type-model = ^referenced-type(model);
   unless (designator-class?(ref-type-model))
     note(<input-output-parameter-not-a-pointer>,
-	 source-location: fragment-source-location(spec.designator-name),
-	 designator-name: spec.designator-name,
-	 parameter-name: spec.name);
+         source-location: fragment-source-location(spec.designator-name),
+         designator-name: spec.designator-name,
+         parameter-name: spec.name);
     ref-type-model := ^eval-designator(#{ <C-void*> });
   end unless;
 
   let import-type = ^mapped-import-type(ref-type-model);
   let ref-export-type = ^mapped-export-type(ref-type-model);
-  let nom = spec.name;  
+  let nom = spec.name;
   let raw-export-type = ^raw-type-name(model);
   let unboxer = ^unboxer-function-name(model);
   let temp-name = gensym("exported-", nom);
   let type-name = spec.designator-name;
   let stack-size = #{ size-of(?ref-type-model) };
-  values(#{ ?nom :: ?ref-export-type},	 // dylan-function-parameter
-         #{ ?nom :: ?import-type },	 // dylan-function-extra-return
+  values(#{ ?nom :: ?ref-export-type},         // dylan-function-parameter
+         #{ ?nom :: ?import-type },         // dylan-function-extra-return
          #{ (?temp-name :: ?type-name, size: ?stack-size) },
-					 // stack-allocation-head 
+                                         // stack-allocation-head
          #{ pointer-value(?temp-name) := ?nom; }, // in-out-arg-set-form
          #{ ?nom :: ?raw-export-type },  // c-function-parameter
-         #{ ?unboxer(?temp-name) },	 // c-function-argument
+         #{ ?unboxer(?temp-name) },         // c-function-argument
          #{ pointer-value(?temp-name) }) // extra-return-value
 end;
 
@@ -371,11 +371,11 @@ define method c-function-parse-input-output-parameters
     unless (model)
       model := ^eval-designator(spec.designator-name);
       unless(designator-class?(model))
-	generate-unresolved-designator-error(spec.designator-name,
-	  name, #{ c-function-parameter }, #());
+        generate-unresolved-designator-error(spec.designator-name,
+          name, #{ c-function-parameter }, #());
         model := ^eval-designator(#{ <C-void*> });
-	spec.model-type := model;
-	spec.designator-name := #{ <C-void*> };
+        spec.model-type := model;
+        spec.designator-name := #{ <C-void*> };
       end unless;
     end unless;
     let (dylan-function-parameter,
@@ -396,12 +396,12 @@ define method c-function-parse-input-output-parameters
     maybe-add-form(extra-return-values, extra-return-value);
   end for;
   values (dylan-function-parameter-list,
-	  dylan-function-extra-returns-list,
-	  stack-allocation-heads,
-	  in-out-arg-set-forms,
-	  c-function-parameter-list,
-	  c-function-arguments,
-	  extra-return-values);
+          dylan-function-extra-returns-list,
+          stack-allocation-heads,
+          in-out-arg-set-forms,
+          c-function-parameter-list,
+          c-function-arguments,
+          extra-return-values);
 end method c-function-parse-input-output-parameters;
 
 
@@ -418,52 +418,52 @@ end method c-function-parse-input-output-parameters;
 ///   c-name: "my_name";
 /// end;
 /// =>
-/// define method my-name 
+/// define method my-name
 ///                        // dylan-function-parameter-list
-///			   (inout1 ::
-///			       //   export-type
-///			       <export-type-for-mapped-subtype-of-c-char**>, 
+///                           (inout1 ::
+///                               //   export-type
+///                               <export-type-for-mapped-subtype-of-c-char**>,
 ///                         inout2 :: <C-int*>,
-///		            in1    :: <some-c-struct*>,
-///		            in2    :: <integer>,
-///		            in3    :: <double-float>,
-///			    strct1 :: <my-struct-by-value*>)
-///		        => (r      :: <integer>, 
-///			    // dylan-function-extra-returns-list
-///		            out1   :: <integer>,    // import-type
-///	                    inout1 :: <C-char*>,    // import-type
-///		            inout2 :: <integer>)
+///                            in1    :: <some-c-struct*>,
+///                            in2    :: <integer>,
+///                            in3    :: <double-float>,
+///                            strct1 :: <my-struct-by-value*>)
+///                        => (r      :: <integer>,
+///                            // dylan-function-extra-returns-list
+///                            out1   :: <integer>,    // import-type
+///                            inout1 :: <C-char*>,    // import-type
+///                            inout2 :: <integer>)
 ///   // stack-allocation-heads
 ///   %with-stack-block(out1 :: <C-int*>, size-of(<C-int>))  // export-type
 ///     // in-out-arg-set-forms
 ///     let inout1-temp = export-fn(inout1);
 
 ///
-///	let r :: <integer> = box-integer(
+///        let r :: <integer> = box-integer(
 ///      %call-C-function("my_name"),
 ///          // c-function-parameter-list
-///	     ((out1   :: <raw-c-pointer>),        //    raw-export-type
-///	      (inout1 :: <raw-c-pointer>),        //    raw-export-type
-///	      (inout2 :: <raw-c-pointer>),
-///	      (in1    :: <raw-c-pointer>),
-///	      (in2    :: <raw-c-short>),
+///             ((out1   :: <raw-c-pointer>),        //    raw-export-type
+///              (inout1 :: <raw-c-pointer>),        //    raw-export-type
+///              (inout2 :: <raw-c-pointer>),
+///              (in1    :: <raw-c-pointer>),
+///              (in2    :: <raw-c-short>),
 ///           (in3    :: <raw-c-double>),
-///	      (strct1 :: <my-struct-by-value>))
-///	   =>(r :: <raw-c-int>)
-///	    // c-function-arguments
-///	    (unbox-pointer(out1),  // unbox to raw-export-type
-///	     unbox-pointer(inout1-temp),
+///              (strct1 :: <my-struct-by-value>))
+///           =>(r :: <raw-c-int>)
+///            // c-function-arguments
+///            (unbox-pointer(out1),  // unbox to raw-export-type
+///             unbox-pointer(inout1-temp),
 ///          unbox-pointer(inout2),
-///	     unbox-pointer(in1),
-///	     unbox-integer(in2),
-///	     unbox-double(in3),
-///	     unbox-pointer(strct1))
+///             unbox-pointer(in1),
+///             unbox-integer(in2),
+///             unbox-double(in3),
+///             unbox-pointer(strct1))
 ///       end;
-///     values(r, 
-///	       // extra-return-values
-///	       pointer-value(out1),
+///     values(r,
+///               // extra-return-values
+///               pointer-value(out1),
 ///            pointer-value(inout1-temp),
-///	       pointer-value(inout2))
+///               pointer-value(inout2))
 ///   end  // with-stack-block
 /// end method;
 /*
@@ -475,7 +475,7 @@ end method c-function-parse-input-output-parameters;
     =>(return-name :: <return-raw-type>)
    (raw-parameter1, raw-parameter2, ...)
   end;
-     
+
   %call-c-function-indirect ()
       ((name1 :: <parameter-raw-type-or-struct-type>),
        (name2 :: <a-raw-type>),
@@ -485,11 +485,11 @@ end method c-function-parse-input-output-parameters;
   end;
 
   functions that return a struct by value:
-      
-The macro expansion allocates enough stack space and passes a pointer as 
+
+The macro expansion allocates enough stack space and passes a pointer as
 the first argument to %call-c-named-function.
 When %call-c-named-function returns either the import function for the
-struct is run, or the default import function that allocates space for 
+struct is run, or the default import function that allocates space for
 it using something like malloc. and the data is copied to the newly
 allocated space, and the pointer is returned.
 
@@ -500,21 +500,21 @@ allocated space, and the pointer is returned.
  C callable:
 
 
-								       
+
 
 %define-C-callable-function(optional-string,
-			       optional-return-value-pointer,
-			       return-value-raw-type,
-			       [, raw-parameter :: raw-type]*)
+                               optional-return-value-pointer,
+                               return-value-raw-type,
+                               [, raw-parameter :: raw-type]*)
     begin
        body
-    end;						       
+    end;
 
 Each of the raw-parameters is bound inside body.  Body must return
 the appropriate value for return-value.
 
 The form returns the raw c pointer to the entry point.
-If optional-string is given a symbol is created that will allow C code 
+If optional-string is given a symbol is created that will allow C code
 thayt is linked with this code to access the entry point of that name.
 
 The macroexpansion for define c-callable-wrapper must arrange for the
@@ -533,11 +533,11 @@ end;
   =>
 
 %define-c-callable-function("do_something",
-			    #f,
-			    <raw-c-int>,
-			    out1 :: <raw-c-pointer>,
-			    inout1 :: <raw-c-pointer>,
-			    in1 :: <raw-c-int>)
+                            #f,
+                            <raw-c-int>,
+                            out1 :: <raw-c-pointer>,
+                            inout1 :: <raw-c-pointer>,
+                            in1 :: <raw-c-int>)
   begin
     let boxed-out1 = as(<C-int*>, box-pointer(out1));
     let boxed-inout1 = as(<C-char*>, box-pointer(inout1));
@@ -565,7 +565,7 @@ define &macro make-c-callable
         ?args:*
       end }
   => expand-make-c-callable(form, dylan-name, c-name, args, result-spec,
-			    dylan-function, key-options);
+                            dylan-function, key-options);
 args:
   { } => #();
   { ?arg:*, ...}
@@ -574,27 +574,27 @@ arg:
   { (parameter ?arg-name:name :: ?type:expression,
      call-discipline: ?discipline:expression,  ?key-options:*) }
   => apply(make,
-	   <c-ffi-argument-descriptor>,
-	   name: arg-name,
-	   designator-name: type,
-	   // !@#$ fragment-value bogosity
-	   //      should probably be able to to as(<symbol>, discipline)
-	   call-discipline: as(<symbol>, fragment-value(discipline)),
-	   key-options);
+           <c-ffi-argument-descriptor>,
+           name: arg-name,
+           designator-name: type,
+           // !@#$ fragment-value bogosity
+           //      should probably be able to to as(<symbol>, discipline)
+           call-discipline: as(<symbol>, fragment-value(discipline)),
+           key-options);
 result-spec:
   { (result void) }
   => make(<c-ffi-result-descriptor>,
-	  name: gensym(),
-	  void?: #t);
+          name: gensym(),
+          void?: #t);
   { (result ?result-name:name :: ?type:expression, ?key-options:*) }
   => apply(make,
-	   <c-ffi-result-descriptor>,
-	   name: result-name,
-	   designator-name: type,
-	   key-options);
+           <c-ffi-result-descriptor>,
+           name: result-name,
+           designator-name: type,
+           key-options);
 key-options:
    { } => #()
-   { ?key:expression, ?value:expression, ... } 
+   { ?key:expression, ?value:expression, ... }
     // !@#$ fragment-value bogosity
     //      should probably be able to to as(<symbol>, discipline)
     => pair(as(<symbol>, fragment-value(key)), pair(value, ...));
@@ -602,13 +602,13 @@ c-name:
   { #f } => #f
   { ?x:expression } => x;
 end;
-  
+
 
 
 define method generate-c-callable-body
     (dylan-name, c-name, arg-specs, result-spec, dylan-func, options)
  => (fragment);
-  
+
   let (arg-fragments, result-fragment)
     = parse-early-options(arg-specs, result-spec, options, dylan-name);
   #{ make-c-callable ?dylan-name
@@ -644,7 +644,7 @@ define &macro C-callable-wrapper-definer
       = parse-c-function-spec(dylan-name, spec);
     let make-c-callable-fragment =
       generate-c-callable-body(dylan-name, c-name, arg-specs, result-spec,
-			       dylan-func, options);
+                               dylan-func, options);
     #{ define constant ?dylan-name = ?make-c-callable-fragment }
   end;
   { define c-callable-wrapper of ?dylan-func:expression
@@ -658,7 +658,7 @@ define &macro C-callable-wrapper-definer
       = parse-c-function-spec(dylan-name, spec);
     let make-c-callable-fragment =
       generate-c-callable-body("C-callable-wrapper", c-name, arg-specs, result-spec,
-			       dylan-func, options);
+                               dylan-func, options);
     #{ define constant ?dylan-name = ?make-c-callable-fragment;
        ?dylan-name } // reference it to avoid warnings.
   end;
@@ -669,8 +669,8 @@ spec:
 { ?other:* }
   => begin
        note(<unrecognized-clause>,
-	    source-location: fragment-source-location(other),
-	    definition-name: "C-callable-wrapper");
+            source-location: fragment-source-location(other),
+            definition-name: "C-callable-wrapper");
        #()
      end;
 end &macro;
@@ -712,31 +712,31 @@ define method parse-c-function-spec (form-name, specs :: <sequence>)
     macro-case (spec)
       { ?mods parameter ?name:name :: ?designator:expression, ?poptions:* }
       => begin
-	   let keys = parse-options($c-parameter-options, poptions, form-name);
-	   add!(arg-specs,
-		apply(make,
-		      <c-ffi-argument-descriptor>,
-		      designator-name: designator,
-		      call-discipline: mods,
-		      name: name,
-		      keys))
-	 end
+           let keys = parse-options($c-parameter-options, poptions, form-name);
+           add!(arg-specs,
+                apply(make,
+                      <c-ffi-argument-descriptor>,
+                      designator-name: designator,
+                      call-discipline: mods,
+                      name: name,
+                      keys))
+         end
       { result ?name:name :: ?designator:expression }
       => if (result-spec)
-	   note(<multiple-return-clauses>,
-		source-location: fragment-source-location(spec),
-		definition-name: form-name);
-	 else
-	   result-spec := make(<C-ffi-result-descriptor>,
-			       designator-name: designator, name: name)
-	 end if;
+           note(<multiple-return-clauses>,
+                source-location: fragment-source-location(spec),
+                definition-name: form-name);
+         else
+           result-spec := make(<C-ffi-result-descriptor>,
+                               designator-name: designator, name: name)
+         end if;
       { ?function-options:* }
       => parse-options!(options, function-options)
       { ?key:symbol ?key-value:expression }
       => begin
-	   add!(options, as(<symbol>, key));
-	   add!(options, key-value);
-	 end;
+           add!(options, as(<symbol>, key));
+           add!(options, key-value);
+         end;
 
     mods:
     { ?adjectives:* }
@@ -747,35 +747,35 @@ define method parse-c-function-spec (form-name, specs :: <sequence>)
            if (output-adjective?)
              if (input-adjective?)
                #"in-out";
-	     else
+             else
                #"output";
-	     end if;
-	   else
+             end if;
+           else
              #"input";
-	   end if;
+           end if;
          end method;
          apply(process-parameter-adjectives,
-	       parse-property-adjectives($c-parameter-properties,
-					 adjectives, form-name));
+               parse-property-adjectives($c-parameter-properties,
+                                         adjectives, form-name));
        end;
 
     function-options:
       { } => #()
-      { ?key:symbol ?value:expression, ... } 
+      { ?key:symbol ?value:expression, ... }
       => pair(as(<symbol>, key), pair(value, ...));
       { ?other:* }
       => begin
-	   note(<unrecognized-clause>,
-		source-location: fragment-source-location(other),
-		definition-name: form-name);
-	   #();
-	 end;
+           note(<unrecognized-clause>,
+                source-location: fragment-source-location(other),
+                definition-name: form-name);
+           #();
+         end;
     end macro-case;
   end for;
   unless (result-spec)
     result-spec := make(<C-ffi-result-descriptor>,
-			void?: #t,
-			name: gensym());
+                        void?: #t,
+                        name: gensym());
   end unless;
   values(arg-specs, result-spec, get-property(options, #"c-name"), options)
 end method parse-c-function-spec;
@@ -792,7 +792,7 @@ define method parse-options! (options :: <stretchy-vector>, spec :: <sequence>)
   end for;
   values();
 end method parse-options!;
-    
+
 
 define method  expand-make-c-callable
     (form, dylan-name, c-name-expr, argument-specs, result-desc,
@@ -802,8 +802,8 @@ define method  expand-make-c-callable
       & ~void?(result-desc)
       & ^eval-designator(result-desc.designator-name);
   if (result-desc
-	& ~void?(result-desc)
-	& ~designator-class?(result-designator))
+        & ~void?(result-desc)
+        & ~designator-class?(result-designator))
     generate-unresolved-designator-error(result-desc.designator-name,
       dylan-name, #{ c-callable-result }, #());
     result-designator := #f;
@@ -812,9 +812,9 @@ define method  expand-make-c-callable
   do(method (desc)
        desc.model-type := ^eval-designator(desc.designator-name);
        unless (designator-class?(desc.model-type))
-	 generate-unresolved-designator-error(desc.designator-name,
-	   dylan-name, #{ c-callable-parameter }, #());
-	 desc.designator-name := #{ <C-raw-int*> };
+         generate-unresolved-designator-error(desc.designator-name,
+           dylan-name, #{ c-callable-parameter }, #());
+         desc.designator-name := #{ <C-raw-int*> };
          desc.model-type := ^eval-designator(#{ <C-raw-int*> });
        end unless;
      end,
@@ -827,19 +827,19 @@ define method  expand-make-c-callable
   let export-form = result-designator & ^export-function(result-designator);
   let raw-result-form
     = if (result-designator)
-	if (export-form)
-	  #{ ?result-unboxer(?export-form(?result-name)) };
-	else
-	  #{ ?result-unboxer(?result-name) };
-	end if // (result-desc)
+        if (export-form)
+          #{ ?result-unboxer(?export-form(?result-name)) };
+        else
+          #{ ?result-unboxer(?result-name) };
+        end if // (result-desc)
       else // no result-desc so return something harmless.
-	#{ integer-as-raw(0) }
+        #{ integer-as-raw(0) }
       end if;
   let result-raw-type
     = if (result-designator)
-	result-designator.^raw-type-name;
+        result-designator.^raw-type-name;
       else
-	#{ <raw-C-unsigned-long> }
+        #{ <raw-C-unsigned-long> }
       end if;
   let (output-binding-forms, output-value-locals,
        output-pointer-setting-forms)
@@ -862,55 +862,55 @@ define method  expand-make-c-callable
   let modifiers = modifiers-expr & ^top-level-eval(modifiers-expr);
   if (modifiers & ~instance?(modifiers, <string>))
     note(<invalid-c-modifiers-value>,
-	 source-location: fragment-source-location(modifiers-expr),
-	 definition-name: dylan-name,
-	 modifiers-expression: modifiers-expr);
+         source-location: fragment-source-location(modifiers-expr),
+         definition-name: dylan-name,
+         modifiers-expression: modifiers-expr);
     modifiers := #f;
   end if;
 
   let c-name = c-name-expr & ^top-level-eval(c-name-expr);
   if (c-name & ~instance?(c-name, <string>))
     note(<invalid-c-name-value>,
-	 source-location: fragment-source-location(c-name-expr),
-	 definition-name: dylan-name,
-	 c-name-expression: c-name-expr);
+         source-location: fragment-source-location(c-name-expr),
+         definition-name: dylan-name,
+         c-name-expression: c-name-expr);
     c-name := #f;
   end if;
 
   let options-form
     = if(modifiers)
         if (c-name)
-	  #{ ?c-name, c-modifiers: ?modifiers, export: ?export }
-	else
-	  #{ #f, c-modifiers: ?modifiers, other-name: ?dylan-name,
+          #{ ?c-name, c-modifiers: ?modifiers, export: ?export }
+        else
+          #{ #f, c-modifiers: ?modifiers, other-name: ?dylan-name,
              export: ?export }
-	end;
+        end;
       elseif (c-name)
-	#{ ?c-name, export: ?export }
+        #{ ?c-name, export: ?export }
       else
-	#{ #f, other-name: ?dylan-name, export: ?export }
+        #{ #f, other-name: ?dylan-name, export: ?export }
       end if;
   let binding-form = if (empty?(output-value-locals))
-		       #{ ?dylan-function(??parameter-boxing-forms, ...); }
-		     else
-		       #{ let (??output-value-locals, ...)
-			   = ?dylan-function(??parameter-boxing-forms, ...); }
-		     end;
+                       #{ ?dylan-function(??parameter-boxing-forms, ...); }
+                     else
+                       #{ let (??output-value-locals, ...)
+                           = ?dylan-function(??parameter-boxing-forms, ...); }
+                     end;
 
   #{ make-c-pointer(<C-function-pointer-instantiation>,
-		    primitive-cast-pointer-as-raw
+                    primitive-cast-pointer-as-raw
                      (%c-callable-function (?options-form)
-		        (??all-parameters, ...)
-		        => (raw :: ?result-raw-type)
-		        ?output-binding-forms;
-		      ?binding-form
-		        ?output-pointer-setting-forms;
-		      ?raw-result-form;
-		     end),
+                        (??all-parameters, ...)
+                        => (raw :: ?result-raw-type)
+                        ?output-binding-forms;
+                      ?binding-form
+                        ?output-pointer-setting-forms;
+                      ?raw-result-form;
+                     end),
                    #[])};
 end;
-	 
-	 
+        
+        
 define method callable-box-input-parameters
     (parameters :: <sequence>)
  => (box-forms :: <sequence>);
@@ -919,20 +919,20 @@ define method callable-box-input-parameters
     let nom = spec.name;
     let designator = spec.model-type;
     if (spec.call-discipline = #"in-out"
-	  & ~designator-class?(^referenced-type(designator)))
+          & ~designator-class?(^referenced-type(designator)))
       designator := ^eval-designator(#{ <C-raw-int*> });
     end if;
     let low-type = designator.^low-level-type;
     let boxer = designator.^boxer-function-name;
     let import = designator.^import-function;
     let form = if (import)
-		 #{ ?import(boxer-for-designator
-			      (?low-type,
-			       ?nom,
-			       ?boxer)) }
-	       else
-		 #{ boxer-for-designator(?low-type, ?nom, ?boxer) }
-	       end;
+                 #{ ?import(boxer-for-designator
+                              (?low-type,
+                               ?nom,
+                               ?boxer)) }
+               else
+                 #{ boxer-for-designator(?low-type, ?nom, ?boxer) }
+               end;
     if (spec.call-discipline = #"in-out")
       add!(box-forms,
         #{ begin
@@ -974,7 +974,7 @@ define method callable-output-parameter-handling
     let designator-name = spec.designator-name;
     let type = designator-name;
     unless (designator-class?(^referenced-type(designator)))
-      designator-name := #{ <C-raw-int*> }; 
+      designator-name := #{ <C-raw-int*> };
       designator := ^eval-designator(designator-name);
       type := designator-name;
     end;
@@ -983,25 +983,25 @@ define method callable-output-parameter-handling
     let return-value-local-bind =
          #{ ?return-value-local-name :: export-type-for-reference(?type) };
     add!(binding-forms,
-	 #{ let ?pointer-local-name
-	     = make-c-pointer
+         #{ let ?pointer-local-name
+             = make-c-pointer
                  (?designator-name, ?nom, #[]) });
 //                 (concrete-class(?designator-name), ?nom, #[]) });
     add!(pointer-setting-forms,
       #{ begin
            let null? = primitive-machine-word-equal?
-	                 (primitive-cast-pointer-as-raw
-			    (primitive-unwrap-c-pointer(?pointer-local-name)),
-			  integer-as-raw(0));
+                         (primitive-cast-pointer-as-raw
+                            (primitive-unwrap-c-pointer(?pointer-local-name)),
+                          integer-as-raw(0));
            if (~null?)
              pointer-value(?pointer-local-name) := ?return-value-local-name;
-	   end if;
+           end if;
          end });
     add!(return-value-binds, return-value-local-bind);
   end for;
   values(template-sequence-to-template(binding-forms),
-	 return-value-binds,
-	 template-sequence-to-template(pointer-setting-forms))
+         return-value-binds,
+         template-sequence-to-template(pointer-setting-forms))
 end method;
 
 define method template-sequence-to-template (seq :: <sequence>)
@@ -1027,25 +1027,25 @@ define method callable-parse-input-output-parameters
     unless (designator-class?(designator))
       designator := ^eval-designator(spec.designator-name);
       unless (designator-class?(designator))
-	generate-unresolved-designator-error(spec.designator-name,
-	  "C-callable-wrapper", #{ c-callable-parameter }, #());
-	designator := ^eval-designator(#{ <C-void*> });
+        generate-unresolved-designator-error(spec.designator-name,
+          "C-callable-wrapper", #{ c-callable-parameter }, #());
+        designator := ^eval-designator(#{ <C-void*> });
       end unless;
     end unless;
     let raw-type = designator.^raw-type-name;
     if (spec.call-discipline ~= #"input")
       unless (^referenced-type(designator))
-	if (spec.call-discipline = #"output")
-	  note(<output-parameter-not-a-pointer>,
-	       source-location: fragment-source-location(spec.designator-name),
-	       designator-name: spec.designator-name,
-	       parameter-name: spec.name);
-	else
-	  note(<input-output-parameter-not-a-pointer>,
-	       source-location: fragment-source-location(spec.designator-name),
-	       designator-name: spec.designator-name,
-	       parameter-name: spec.name);
-	end if;
+        if (spec.call-discipline = #"output")
+          note(<output-parameter-not-a-pointer>,
+               source-location: fragment-source-location(spec.designator-name),
+               designator-name: spec.designator-name,
+               parameter-name: spec.name);
+        else
+          note(<input-output-parameter-not-a-pointer>,
+               source-location: fragment-source-location(spec.designator-name),
+               designator-name: spec.designator-name,
+               parameter-name: spec.name);
+        end if;
       end unless;
       add!(output, spec)
     end;
@@ -1067,7 +1067,7 @@ define &macro c-function-body
      ?args:*
   end }
   => expand-c-function-body(form, function-name, result-spec, args,
-			    key-options);
+                            key-options);
 args:
   { } => #();
   { ?arg:*, ...} => pair(arg, ...);
@@ -1075,29 +1075,29 @@ arg:
   { (parameter ?arg-name:name :: ?type:expression,
      call-discipline: ?discipline:expression,  ?key-options:*) }
   => apply(make,
-	   <c-ffi-argument-descriptor>,
-	   name: arg-name,
-	   designator-name: type,
-	   // !@#$ fragment-value bogosity
-	   //      should probably be able to to as(<symbol>, discipline)
-	   call-discipline: as(<symbol>, fragment-value(discipline)),
-	   key-options);
+           <c-ffi-argument-descriptor>,
+           name: arg-name,
+           designator-name: type,
+           // !@#$ fragment-value bogosity
+           //      should probably be able to to as(<symbol>, discipline)
+           call-discipline: as(<symbol>, fragment-value(discipline)),
+           key-options);
 result-spec:
   { (result void) }
   => make(<c-ffi-result-descriptor>,
-	  name: gensym(),
-	  void?: #t);
+          name: gensym(),
+          void?: #t);
   { (result ?result-name:name :: ?type:expression, ?key-options:*) }
   => apply(make,
-	   <c-ffi-result-descriptor>,
-	   name: result-name,
-	   designator-name: type,
-	   key-options);
+           <c-ffi-result-descriptor>,
+           name: result-name,
+           designator-name: type,
+           key-options);
 key-options:
    { } => #()
-   { ?key:expression, ?value:expression, ... } 
-	   // !@#$ fragment-value bogosity
-	   //      should probably be able to to as(<symbol>, discipline)
+   { ?key:expression, ?value:expression, ... }
+           // !@#$ fragment-value bogosity
+           //      should probably be able to to as(<symbol>, discipline)
     => pair(as(<symbol>, fragment-value(key)), pair(value, ...));
 end;
 
@@ -1112,7 +1112,7 @@ define method expand-c-function-body
   let result-designator
     = ~void?(result-desc) & ^eval-designator(result-desc.designator-name);
   unless (void?(result-desc)
-	  | designator-class?(result-designator))
+          | designator-class?(result-designator))
     generate-unresolved-designator-error(result-desc.designator-name,
       dylan-name, #{ c-function-result }, #());
     result-designator := #f;
@@ -1121,9 +1121,9 @@ define method expand-c-function-body
   do(method (desc)
        desc.model-type := ^eval-designator(desc.designator-name);
        unless(designator-class?(desc.model-type))
-	 generate-unresolved-designator-error(desc.designator-name,
-	   dylan-name, #{ c-function-parameter }, #());
-	 desc.model-type := ^eval-designator(#{ <C-void*> });
+         generate-unresolved-designator-error(desc.designator-name,
+           dylan-name, #{ c-function-parameter }, #());
+         desc.model-type := ^eval-designator(#{ <C-void*> });
        end unless;
      end,
      arg-specs);
@@ -1143,9 +1143,9 @@ define method expand-c-function-body
     c-name := ^top-level-eval(c-name-expr);
     unless (instance?(c-name, <string>))
       note(<invalid-c-name-value>,
-	   source-location: fragment-source-location(c-name-expr),
-	   definition-name: dylan-name,
-	   c-name-expression: c-name-expr);
+           source-location: fragment-source-location(c-name-expr),
+           definition-name: dylan-name,
+           c-name-expression: c-name-expr);
       c-name := #f;
     end unless;
   end if;
@@ -1163,41 +1163,41 @@ define method expand-c-function-body
 
   if (c-name & indirect)
     note(<conflicting-c-name-and-indirect-options>,
-	 source-location: fragment-source-location(form),
-	 definition-name: dylan-name);
+         source-location: fragment-source-location(form),
+         definition-name: dylan-name);
     c-name := #f;
   end if;
 
   unless (c-name | indirect)
     note(<no-c-name-or-indirect-option>,
-	 source-location: fragment-source-location(form),
-	 definition-name: dylan-name);
+         source-location: fragment-source-location(form),
+         definition-name: dylan-name);
     c-name := "dummy_c_name";
   end unless;
 
   let result-boxer
     = result-designator & result-designator.^boxer-function-name;
   let result-name = if (result-designator)
-		      result-desc.name;
-		    else
-		      #{ tmp }
-		    end if;
+                      result-desc.name;
+                    else
+                      #{ tmp }
+                    end if;
   let result-dylan-type
     = result-designator & result-designator.^mapped-import-type;
   let result-raw-type = if (result-designator)
-			  result-designator.^raw-type-name;
-			else
-			  #{ <raw-c-void> }
-			end if;
+                          result-designator.^raw-type-name;
+                        else
+                          #{ <raw-c-void> }
+                        end if;
   let result-low-type = if (result-designator)
-			  result-designator.^low-level-type
-			else
-			  #f
-			end if;
+                          result-designator.^low-level-type
+                        else
+                          #f
+                        end if;
   let import-function
     = result-designator
       & (result-designator.^import-function
-	   | #{ identity });
+           | #{ identity });
   let return-values =
     if (result-designator)
       pair( #{ ?result-name }, as(<list>, extra-return-values));
@@ -1207,14 +1207,14 @@ define method expand-c-function-body
 
   let modifiers-expr = get-property(options, #"c-modifiers", default: #f);
   // this allows it to be a named constant or macro
-  let modifiers 
+  let modifiers
     = if (modifiers-expr)
         let val = ^top-level-eval(modifiers-expr);
         if (~instance?(val, <string>))
-	  note(<invalid-c-modifiers-value>,
-	       source-location: fragment-source-location(modifiers-expr),
-	       definition-name: dylan-name,
-	       modifiers-expression: modifiers-expr);
+          note(<invalid-c-modifiers-value>,
+               source-location: fragment-source-location(modifiers-expr),
+               definition-name: dylan-name,
+               modifiers-expression: modifiers-expr);
           "";
         else
          val;
@@ -1225,46 +1225,46 @@ define method expand-c-function-body
 
   let foreign-call
     = if (indirect)
-	#{ %call-C-function-indirect (c-modifiers: ?modifiers)
-	       (??c-function-parameter-list, ...)
+        #{ %call-C-function-indirect (c-modifiers: ?modifiers)
+               (??c-function-parameter-list, ...)
             => (?result-name :: ?result-raw-type)
              (??c-function-arguments, ...)
            end }
       else
         #{ %call-C-function (?c-name , c-modifiers: ?modifiers)
-	       (??c-function-parameter-list, ...)
-	    => (?result-name :: ?result-raw-type)
-	     (??c-function-arguments, ...)
-	   end }
+               (??c-function-parameter-list, ...)
+            => (?result-name :: ?result-raw-type)
+             (??c-function-arguments, ...)
+           end }
       end if;
   let result-binding
     = if (result-designator)
-	#{ let ?result-name :: ?result-dylan-type
-	    = ?import-function (boxer-for-designator
-				  (?result-low-type,
-				   ?foreign-call,
-				   ?result-boxer)) };
+        #{ let ?result-name :: ?result-dylan-type
+            = ?import-function (boxer-for-designator
+                                  (?result-low-type,
+                                   ?foreign-call,
+                                   ?result-boxer)) };
       else
-	#{ ?foreign-call }
+        #{ ?foreign-call }
       end if;
   let stack-allocation-size = size(stack-allocation-heads);
   local method build-with-stack-body (i ::<integer>, body)
-	  if (i >= stack-allocation-size)
-	    body
-	  else
-	    let stack-head = stack-allocation-heads[i];
-	    build-with-stack-body
-	      (i + 1,
-	       #{ with-stack-block ?stack-head
-		   ?body
-		  end })
-	  end if;
-	end method;
+          if (i >= stack-allocation-size)
+            body
+          else
+            let stack-head = stack-allocation-heads[i];
+            build-with-stack-body
+              (i + 1,
+               #{ with-stack-block ?stack-head
+                   ?body
+                  end })
+          end if;
+        end method;
   let inner-body
-    = build-with-stack-body(0, 
-			    #{ ??in-out-arg-set-forms  ...
-				?result-binding;
-			      values(??return-values, ...) });
+    = build-with-stack-body(0,
+                            #{ ??in-out-arg-set-forms  ...
+                                ?result-binding;
+                              values(??return-values, ...) });
   inner-body;
 end;
 
@@ -1275,23 +1275,23 @@ define &macro with-stack-block
      ?:body
     end }
     => begin
-         // TODO: CORRECTNESS: This pending procedural expansions 
+         // TODO: CORRECTNESS: This pending procedural expansions
          // retargetable to modules other than dylan internal.
-         let destroy 
+         let destroy
            = make-variable-name-like
                (var, name: #"destroy", record: #f, source-position: #f);
          #{ begin
               let temp = #f;
-	    block ()
-	      temp := make(?type, size: ?size);
-	      let ?var :: ?type = temp;
-	      ?body
-	    cleanup
-	      if (temp)
-	        ?destroy(temp);
-	      end if;
-	    end block;
-	   end  // body
-	  }
+            block ()
+              temp := make(?type, size: ?size);
+              let ?var :: ?type = temp;
+              ?body
+            cleanup
+              if (temp)
+                ?destroy(temp);
+              end if;
+            end block;
+           end  // body
+          }
        end;
 end &macro;

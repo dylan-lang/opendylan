@@ -33,7 +33,7 @@ define primary &class <designator-class> (<class>)
   lazy slot ^bitfield-dereferencer-name, // <name>
          init-keyword: bitfield-dereferencer-name:, init-value: #f;
   lazy slot ^boxer-function-name,// <name>? maybe unnecessary.
-         init-keyword: boxer-function-name:, init-value: #f; 
+         init-keyword: boxer-function-name:, init-value: #f;
   lazy slot ^import-function, init-value: #f; // false-or(<name>)
 
   lazy slot ^export-function, init-value: #f; // false-or(<name>)
@@ -55,7 +55,7 @@ end;
 define-compiler-metaclass(#"<designator-class>", <&designator-class>);
 
 define /* abstract */ &class <c-struct/union-designator-class> (<designator-class>)
-end;  
+end;
 
 define primary &class <c-struct-designator-class> (<c-struct/union-designator-class>)
 end;
@@ -64,23 +64,23 @@ define &class <c-union-designator-class> (<c-struct/union-designator-class>)
 end;
 
 define-compiler-metaclass(#"<c-struct-designator-class>",
-			  <&c-struct-designator-class>);
+                          <&c-struct-designator-class>);
 
 define-compiler-metaclass(#"<c-union-designator-class>",
-			  <&c-union-designator-class>);
+                          <&c-union-designator-class>);
 
 define &class <c-mapped-designator-class> (<designator-class>)
 end;
 
 define-compiler-metaclass(#"<c-mapped-designator-class>",
-			  <&c-mapped-designator-class>);
+                          <&c-mapped-designator-class>);
 
 
 define &class <c-automatic-pointer-designator-class> (<designator-class>)
 end;
 
 define-compiler-metaclass(#"<c-automatic-pointer-designator-class>",
-			   <&c-automatic-pointer-designator-class>);
+                           <&c-automatic-pointer-designator-class>);
 
 // A distinguished evaluator for designator class expressions.
 

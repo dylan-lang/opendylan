@@ -12,17 +12,17 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///   Model
 /// Model classes from the compiler. The descriptors for a class may turn
 /// out to be the same thing as the model for the class, but that
-/// shouldn't affect this. 
+/// shouldn't affect this.
 
 ///   Definition or Form
 /// A definition is the top level form object from the compiler.  It could
 /// represent a method definition, a class definition, A slot def
 
-/// TODO: We can't currently handle FFI definitions in loose-mode 
+/// TODO: We can't currently handle FFI definitions in loose-mode
 /// libraries. We check, warn, and skip in the problem cases.
 
 define serious-program-warning <dynamic-ffi-definition>
-  format-string 
+  format-string
     "This FFI definition cannot be processed in a loose mode library"
     " - skipping.";
 end serious-program-warning;
@@ -58,7 +58,7 @@ define function maybe-slot-pointer-type-name (slot-rep) => (name)
   // slot-rep.slot-pointer-type-name;
   // The dynamic punt version...
   let type = slot-rep.c-type;
-  #{ abstract-pointer-type(?type) } 
+  #{ abstract-pointer-type(?type) }
 end function;
 
 define class <c-struct/union-slot-descriptor>
@@ -74,7 +74,7 @@ define class <c-struct/union-bitfield-slot-descriptor>
     (<abstract-c-struct/union-slot-descriptor>)
   constant slot bitfield-width :: <fragment>, required-init-keyword: width:;
 end;
- 
+
 define class <c-struct/union-option-descriptor> (<object>)
   constant slot c-name, init-keyword: c-name:;
   constant slot pointer-type-name, init-keyword: pointer-type-name:;
@@ -99,8 +99,8 @@ define method ^initialize-class
       ^options(designator) := pair(#"pack", pair(pack, ^options(designator)));
     else
       note(<invalid-pack-value>,
-	   source-location: fragment-source-location(pack-expr),
-	   pack-expression: pack-expr);
+           source-location: fragment-source-location(pack-expr),
+           pack-expression: pack-expr);
     end if;
   end unless;
 
@@ -161,19 +161,19 @@ define method parse-syntax-c-struct-slots (parsed-slot-specs :: <sequence>)
       add!(slots, descriptor);
     else
       if (parse-name-or-false(descriptor.pointer-type-name) ~== #f)
-	pointer-name := descriptor.pointer-type-name;
+        pointer-name := descriptor.pointer-type-name;
       end if;
       if (parse-name-or-false(descriptor.c-name) ~== #f)
-	see-name := descriptor.c-name;
+        see-name := descriptor.c-name;
       end if;
       if (parse-name-or-false(descriptor.option-descriptor-pack) ~== #f)
-	pack := descriptor.option-descriptor-pack;
+        pack := descriptor.option-descriptor-pack;
       end if;
     end if;
   end for;
   values(slots, pointer-name, see-name, pack);
 end method;
-    
+
 define method cook-keys (raw-keys :: <list>) => (key-list :: <sequence>);
   let limit = size(raw-keys);
   let result = make(<vector>, size: limit);
@@ -183,58 +183,58 @@ define method cook-keys (raw-keys :: <list>) => (key-list :: <sequence>);
     raw-keys := tail(raw-keys);
     result[i + 1]
       := select (key)
-	   #"setter", #"address-getter"
-	     => parse-name-or-false(head(raw-keys));
-	   otherwise => head(raw-keys);
-	 end select;
+           #"setter", #"address-getter"
+             => parse-name-or-false(head(raw-keys));
+           otherwise => head(raw-keys);
+         end select;
     raw-keys := tail(raw-keys);
   end for;
   result
 end method;
-      
+
 define method parse-slot-descriptor (kind == #"struct-slot-spec",
-				     key-values :: <vector>)
+                                     key-values :: <vector>)
  => (slotd :: <c-struct/union-slot-descriptor>);
   apply(make, <c-struct/union-slot-descriptor>,
         as(<list>, key-values))
 end method;
-    
+
 define method parse-slot-descriptor (kind == #"array-slot-spec",
-				     key-values :: <vector>)
+                                     key-values :: <vector>)
  => (slotd :: <c-struct/union-array-slot-descriptor>);
   apply(make, <c-struct/union-array-slot-descriptor>,
-	key-values)
+        key-values)
 end method;
 
 define method parse-slot-descriptor (kind == #"bitfield-slot-spec",
-				     key-values :: <vector>)
+                                     key-values :: <vector>)
  => (slotd :: <c-struct/union-bitfield-slot-descriptor>);
   apply(make, <c-struct/union-bitfield-slot-descriptor>,
-	key-values)
+        key-values)
 end method;
 
 
 define method parse-slot-descriptor (kind == #"struct-options",
-				     key-values :: <vector>)
+                                     key-values :: <vector>)
  => (option :: <c-struct/union-option-descriptor>);
   apply(make, <c-struct/union-option-descriptor>,
-	key-values)
+        key-values)
 end method;
 
 define method expand-define-c-struct/union (struct-name, metaclass-spec,
-					    specs, form) 
+                                            specs, form)
 
   let cooked-specs
     = map(method (spec)
-	    macro-case (spec) 
-	      { ?expr:expression } => expr;
-	    end
-	 end, specs);
+            macro-case (spec)
+              { ?expr:expression } => expr;
+            end
+         end, specs);
   let (slots, pointer-type-name, c-name, pack)
     = parse-syntax-c-struct-slots(cooked-specs);
   unless-ffi-definition-dynamic (form)
     do-define-c-struct/union
-      (form, struct-name, metaclass-spec, cooked-specs, slots, 
+      (form, struct-name, metaclass-spec, cooked-specs, slots,
          pointer-type-name, c-name, pack);
   end;
 end;
@@ -242,7 +242,7 @@ end;
 
 define &macro c-struct-definer
   { define C-struct ?struct-name:name ?spec:* end }
-  => 
+  =>
   begin
     expand-define-c-struct/union
       (struct-name, #{ <c-struct-designator-class> },
@@ -255,29 +255,29 @@ spec:
 end;
 
 define function build-struct-slot-spec (struct-name,
-					modifiers, slot-kind, slot-name,
-					c-type, slot-options)
+                                        modifiers, slot-kind, slot-name,
+                                        c-type, slot-options)
   let slot-pointer-type-name
     = slot-name & gensym(slot-name, "-in-", struct-name, " type*");
   select (slot-kind)
     #f => #{ struct-slot-spec(getter-name: ?slot-name,
-			      modifiers: ?modifiers,
-			      c-type: ?c-type,
-			      slot-pointer-type-name:
-				?slot-pointer-type-name,
-			      ?slot-options ) };
+                              modifiers: ?modifiers,
+                              c-type: ?c-type,
+                              slot-pointer-type-name:
+                                ?slot-pointer-type-name,
+                              ?slot-options ) };
     #"array" => #{ array-slot-spec(getter-name: ?slot-name,
-				   modifiers: ?modifiers,
-				   c-type: ?c-type,
-				   slot-pointer-type-name:
-				     ?slot-pointer-type-name,
-				   ?slot-options) };
+                                   modifiers: ?modifiers,
+                                   c-type: ?c-type,
+                                   slot-pointer-type-name:
+                                     ?slot-pointer-type-name,
+                                   ?slot-options) };
     #"bitfield" => #{ bitfield-slot-spec(getter-name: ?slot-name,
-					 modifiers: ?modifiers,
-					 c-type: ?c-type,
-					 slot-pointer-type-name:
-					   ?slot-pointer-type-name,
-					 ?slot-options) }
+                                         modifiers: ?modifiers,
+                                         c-type: ?c-type,
+                                         slot-pointer-type-name:
+                                           ?slot-pointer-type-name,
+                                         ?slot-options) }
   end;
 end;
 
@@ -301,14 +301,14 @@ define method split-slot-spec (spec, #key struct? :: <boolean> = #f)
   block (return)
     for (mod in modifiers)
       select (as(<symbol>, mod))
-	#"array" =>
-	  return(remove!(modifiers, mod), #{ array ?spec });
-	#"bitfield" =>
-	  if (struct?) return(remove!(modifiers, mod), #{ bitfield ?spec });
-	  else #f
-	  end if;
-	otherwise =>
-	  #f;
+        #"array" =>
+          return(remove!(modifiers, mod), #{ array ?spec });
+        #"bitfield" =>
+          if (struct?) return(remove!(modifiers, mod), #{ bitfield ?spec });
+          else #f
+          end if;
+        otherwise =>
+          #f;
       end;
     end for;
     return(modifiers, spec);
@@ -333,13 +333,13 @@ end function;
 
 define function process-struct-options (name, clause,
     #key c-name = unsupplied(), pointer-type-name = unsupplied(),
-	 pack = unsupplied())
+         pack = unsupplied())
   if (supplied?(pointer-type-name))
     unless (fragment-name?(pointer-type-name))
       note(<invalid-pointer-type-name-value>,
-	   source-location: fragment-source-location(pointer-type-name),
-	   definition-name: name,
-	   pointer-type-name-expression: pointer-type-name);
+           source-location: fragment-source-location(pointer-type-name),
+           definition-name: name,
+           pointer-type-name-expression: pointer-type-name);
       pointer-type-name := unsupplied();
     end unless;
   end if;
@@ -355,34 +355,34 @@ define function process-struct-options (name, clause,
   end unless;
 
   #{ struct-options(c-name: ?c-name,
-		    pointer-type-name: ?pointer-type-name,
-		    pack: ?pack) };
+                    pointer-type-name: ?pointer-type-name,
+                    pack: ?pack) };
 end function;
 
 define function process-slot-options (name, clause,
     #key address-getter = #{ #f },
-	 setter = unsupplied(),
-	 getter = unsupplied(),
-	 c-name = #{ #f })
+         setter = unsupplied(),
+         getter = unsupplied(),
+         c-name = #{ #f })
   unless (fragment-false-or-name?(address-getter))
     note(<invalid-address-getter-value>,
-	 definition-name: name,
-	 address-getter-expression: address-getter,
-	 source-location: fragment-source-location(address-getter));
+         definition-name: name,
+         address-getter-expression: address-getter,
+         source-location: fragment-source-location(address-getter));
     address-getter := #{ #f };
   end unless;
   if (supplied?(setter) & ~fragment-false-or-name?(setter))
     note(<invalid-setter-value>,
-	 definition-name: name,
-	 setter-expression: setter,
-	 source-location: fragment-source-location(setter));
+         definition-name: name,
+         setter-expression: setter,
+         source-location: fragment-source-location(setter));
     setter := unsupplied();
   end if;
   if (supplied?(getter) & ~fragment-false-or-name?(getter))
     note(<invalid-getter-value>,
-	 definition-name: name,
-	 getter-expression: getter,
-	 source-location: fragment-source-location(getter));
+         definition-name: name,
+         getter-expression: getter,
+         source-location: fragment-source-location(getter));
     getter := unsupplied();
   end if;
 
@@ -401,35 +401,35 @@ end function;
 
 define function process-array-slot-options (name, clause,
     #key address-getter = #{ #f },
-	 setter = unsupplied(),
-	 getter = unsupplied(),
-	 c-name = #{ #f },
-	 length = #f)
+         setter = unsupplied(),
+         getter = unsupplied(),
+         c-name = #{ #f },
+         length = #f)
   unless (fragment-false-or-name?(address-getter))
     note(<invalid-address-getter-value>,
-	 definition-name: name,
-	 address-getter-expression: address-getter,
-	 source-location: fragment-source-location(address-getter));
+         definition-name: name,
+         address-getter-expression: address-getter,
+         source-location: fragment-source-location(address-getter));
     address-getter := #{ #f };
   end unless;
   if (supplied?(setter) & ~fragment-false-or-name?(setter))
     note(<invalid-setter-value>,
-	 definition-name: name,
-	 setter-expression: setter,
-	 source-location: fragment-source-location(setter));
+         definition-name: name,
+         setter-expression: setter,
+         source-location: fragment-source-location(setter));
     setter := unsupplied();
   end if;
   if (supplied?(getter) & ~fragment-false-or-name?(getter))
     note(<invalid-getter-value>,
-	 definition-name: name,
-	 getter-expression: getter,
-	 source-location: fragment-source-location(getter));
+         definition-name: name,
+         getter-expression: getter,
+         source-location: fragment-source-location(getter));
     getter := unsupplied();
   end if;
   unless (length)
     note(<missing-length-keyword-option>,
-	 source-location: fragment-source-location(clause),
-	 definition-name: name);
+         source-location: fragment-source-location(clause),
+         definition-name: name);
     length := #{ 1 };
   end unless;
 
@@ -449,27 +449,27 @@ end function;
 
 define function process-bitfield-slot-options (name, clause,
     #key setter = unsupplied(),
-	 getter = unsupplied(),
-	 c-name = #{ #f },
-	 width = #f)
+         getter = unsupplied(),
+         c-name = #{ #f },
+         width = #f)
   if (supplied?(setter) & ~fragment-false-or-name?(setter))
     note(<invalid-setter-value>,
-	 definition-name: name,
-	 setter-expression: setter,
-	 source-location: fragment-source-location(setter));
+         definition-name: name,
+         setter-expression: setter,
+         source-location: fragment-source-location(setter));
     setter := unsupplied();
   end if;
   if (supplied?(getter) & ~fragment-false-or-name?(getter))
     note(<invalid-getter-value>,
-	 definition-name: name,
-	 getter-expression: getter,
-	 source-location: fragment-source-location(getter));
+         definition-name: name,
+         getter-expression: getter,
+         source-location: fragment-source-location(getter));
     getter := unsupplied();
   end if;
   unless (width)
     note(<missing-width-keyword-option>,
-	 source-location: fragment-source-location(clause),
-	 definition-name: name);
+         source-location: fragment-source-location(clause),
+         definition-name: name);
     width := #{ 1 };
   end unless;
 
@@ -562,43 +562,43 @@ define method process-struct-spec (struct-name, clause)
     { member ?slot-name:name :: ?c-type:expression, ?slot-options:* }
     => build-struct-slot-spec
          (struct-name, modifiers, #f, slot-name,
-	  c-type, slot-options);
+          c-type, slot-options);
     { array member ?slot-name:name :: ?c-type:expression,
           ?array-slot-options:* }
     => build-struct-slot-spec
          (struct-name,
-	  modifiers, #"array", slot-name,
-	  c-type, array-slot-options);
+          modifiers, #"array", slot-name,
+          c-type, array-slot-options);
     { bitfield member ?slot-name:name :: ?c-type:expression,
           ?bitfield-slot-options:* }
     => build-struct-slot-spec
          (struct-name, modifiers, #"bitfield", slot-name,
-	  c-type, bitfield-slot-options);
+          c-type, bitfield-slot-options);
     { ?options:* }
     => apply(process-struct-options, struct-name, options,
-	 parse-options($c-struct-options, options, struct-name));
+         parse-options($c-struct-options, options, struct-name));
 
   slot-options:
     { ?options:* }
     => apply(process-slot-options, struct-name, clause,
-	 parse-options($c-struct-slot-options, options, struct-name));
+         parse-options($c-struct-slot-options, options, struct-name));
 
   array-slot-options:
     { ?options:* }
     => apply(process-array-slot-options, struct-name, clause,
-	 parse-options($c-struct-array-slot-options, options, struct-name));
+         parse-options($c-struct-array-slot-options, options, struct-name));
 
   bitfield-slot-options:
     { ?options:* }
     => apply(process-bitfield-slot-options, struct-name, clause,
-	 parse-options($c-struct-bitfield-slot-options, options, struct-name));
+         parse-options($c-struct-bitfield-slot-options, options, struct-name));
   end
 end method;
 
 
 define &macro c-union-definer
   { define C-union ?union-name:name ?spec:* end }
-  => 
+  =>
   begin
     expand-define-c-struct/union
       (union-name, #{ <c-union-designator-class> },
@@ -623,25 +623,25 @@ define method process-union-spec (union-name, clause)
     { member ?slot-name:name :: ?c-type:expression, ?slot-options:* }
     => build-struct-slot-spec
          (union-name, modifiers, #f, slot-name,
-	  c-type, slot-options);
+          c-type, slot-options);
     { array member ?slot-name:name :: ?c-type:expression,
           ?array-slot-options:* }
     => build-struct-slot-spec
          (union-name, modifiers, #"array", slot-name,
-	  c-type, array-slot-options);
+          c-type, array-slot-options);
     { ?options:* }
     => apply(process-struct-options, union-name, options,
-	     parse-options($c-union-options, options, union-name));
+             parse-options($c-union-options, options, union-name));
 
   slot-options:
     { ?options:* }
     => apply(process-slot-options, union-name, clause,
-	     parse-options($c-union-slot-options, options, union-name));
+             parse-options($c-union-slot-options, options, union-name));
 
   array-slot-options:
     { ?options:* }
     => apply(process-array-slot-options, union-name, clause,
-	     parse-options($c-union-array-slot-options, options, union-name));
+             parse-options($c-union-array-slot-options, options, union-name));
   end
 end method;
 
@@ -654,8 +654,8 @@ define &macro c-mapped-subtype-definer
       ?specs:*
   end }
   => #{ define class ?name (?supers)
-	 metaclass <designator-class>,
-	   ?specs;
+         metaclass <designator-class>,
+           ?specs;
        end }
 supers:
   { ?e:expression, ... } => #{ ?e, ... }
@@ -697,28 +697,28 @@ define method do-define-c-struct/union
     pointer-type-name := gensym("pointer-to-", struct-name);
   end if;
   let raw-struct-options = if (pack = #"not-given")
-			     #{ };
-			   else
-			     #{ #"pack", ?pack };
-			   end if;
+                             #{ };
+                           else
+                             #{ #"pack", ?pack };
+                           end if;
   let raw-struct-name = #{ "raw-struct-for-" ## ?struct-name };
   let class-definition-fragment
     = #{ define abstract class ?struct-name (<c-struct>)
-	   metaclass ?metaclass-fragment,
-	     struct-slots: struct-slots( ??spec, ...),
-	     pointer-type-name: ?pointer-type-name,
-	     raw-struct-name: ?raw-struct-name,
-	     boxer-function-name: #"primitive-wrap-c-pointer",
-	     unboxer-function-name: #"primitive-unwrap-c-pointer",
-	     low-level-type: ?pointer-type-name,
-	     self: ?struct-name;
-	 end };
+           metaclass ?metaclass-fragment,
+             struct-slots: struct-slots( ??spec, ...),
+             pointer-type-name: ?pointer-type-name,
+             raw-struct-name: ?raw-struct-name,
+             boxer-function-name: #"primitive-wrap-c-pointer",
+             unboxer-function-name: #"primitive-unwrap-c-pointer",
+             low-level-type: ?pointer-type-name,
+             self: ?struct-name;
+         end };
   let pointer-type-definition-fragment
     = create-automatic-c-pointer-definition-fragment
         (pointer-type-name, struct-name, // pointer-value-method: #f,
-	 pointer-to-pointer: #f);
+         pointer-to-pointer: #f);
   let sz = size(slots);
-  let kind 
+  let kind
     = macro-case (metaclass-fragment)
         { <c-union-designator-class> }
         => #{ union }
@@ -726,82 +726,82 @@ define method do-define-c-struct/union
         => #{ struct }
       end;
   let raw-slots = make(<stretchy-vector>);
-  local       
+  local
   method loopy (index, accum, error-checkers) => (accum, error-checkers)
       if (index >= sz)
-	values(accum, error-checkers);
+        values(accum, error-checkers);
       else
-	let slot = slots[index];
-	let type = c-type(slot);
-	// slot.struct-pointer-type-name := pointer-type-name;
-	let getter? = parse-name-or-false(slot.slot-getter);
-	let slot-name = slot.getter-name;
-	error-checkers
-	  := pair(#{ check-designator-defined(?type, ?struct-name, ?kind) },
-		  error-checkers);
-	raw-slots := add!(raw-slots, generate-raw-slot-spec(type, slot));
-	// add definition fragments for pointers to the slot types
-	// since they might be needed.
-	if (getter? | slot.setter-name | slot.address-getter-name)
-	  // define any methods for this slot at all?
-	  let getter = slot-name;
-	  let new-pointer-type = slot.slot-pointer-type-name;
-	  let modifiers = fragment-arguments(slot.slot-modifiers);
+        let slot = slots[index];
+        let type = c-type(slot);
+        // slot.struct-pointer-type-name := pointer-type-name;
+        let getter? = parse-name-or-false(slot.slot-getter);
+        let slot-name = slot.getter-name;
+        error-checkers
+          := pair(#{ check-designator-defined(?type, ?struct-name, ?kind) },
+                  error-checkers);
+        raw-slots := add!(raw-slots, generate-raw-slot-spec(type, slot));
+        // add definition fragments for pointers to the slot types
+        // since they might be needed.
+        if (getter? | slot.setter-name | slot.address-getter-name)
+          // define any methods for this slot at all?
+          let getter = slot-name;
+          let new-pointer-type = slot.slot-pointer-type-name;
+          let modifiers = fragment-arguments(slot.slot-modifiers);
           if (slot.address-getter-name)
-            accum 
+            accum
               := pair(#{ define c-pointer-type ?new-pointer-type => ?type },
                       accum);
           end;
-	  // add definitions for setter and address-getter if needed.
-	  if(slot.setter-name)
-	    let real-setter-name 
-	      // do defaulting for setter function name
-	      = if (slot.setter-name == #"not-given")
-		  // none given, use default
-		  macro-case (#{ ?getter ## "-setter" })
-		    { ?foo:name }
-		      => slot.setter-name := foo;
-		  end macro-case;
-	        else
-	          slot.setter-name	// given, but not #f so take it
-	        end if;
-	    // add setter definition
-	    accum := pair(generate-struct-setter
-			    (slot,
-			     modifiers,
-			     struct-name,
-			     real-setter-name,
-			     type,
-			     pointer-type-name,
-			     index),
-			  accum);
-	  end if;
-	  if (slot.address-getter-name)
-	    // add address-getter definition
-	    accum := pair(generate-struct-address-getter
-			    (slot,
-			     modifiers,
-			     struct-name,
-			     slot.address-getter-name,
-			     type,
-			     new-pointer-type,
-			     pointer-type-name,
-			     index),
-			  accum);
-	  end if;
-	  if (getter?)
-	    accum := pair(generate-struct-getter
-			    (slot,
-			     modifiers,
-			     struct-name,
-			     slot-name,
-			     type,
-			     pointer-type-name,
-			     index),
-			  accum);
-	  end;
+          // add definitions for setter and address-getter if needed.
+          if(slot.setter-name)
+            let real-setter-name
+              // do defaulting for setter function name
+              = if (slot.setter-name == #"not-given")
+                  // none given, use default
+                  macro-case (#{ ?getter ## "-setter" })
+                    { ?foo:name }
+                      => slot.setter-name := foo;
+                  end macro-case;
+                else
+                  slot.setter-name        // given, but not #f so take it
+                end if;
+            // add setter definition
+            accum := pair(generate-struct-setter
+                            (slot,
+                             modifiers,
+                             struct-name,
+                             real-setter-name,
+                             type,
+                             pointer-type-name,
+                             index),
+                          accum);
+          end if;
+          if (slot.address-getter-name)
+            // add address-getter definition
+            accum := pair(generate-struct-address-getter
+                            (slot,
+                             modifiers,
+                             struct-name,
+                             slot.address-getter-name,
+                             type,
+                             new-pointer-type,
+                             pointer-type-name,
+                             index),
+                          accum);
+          end if;
+          if (getter?)
+            accum := pair(generate-struct-getter
+                            (slot,
+                             modifiers,
+                             struct-name,
+                             slot-name,
+                             type,
+                             pointer-type-name,
+                             index),
+                          accum);
+          end;
       end if;  // define any methods for this slot at all?
-	loopy(index + 1, accum, error-checkers);
+        loopy(index + 1, accum, error-checkers);
       end if;  // loopy iteration termination test
     end method loopy;
   // return the code for the accessors, and the code that forces the
@@ -809,7 +809,7 @@ define method do-define-c-struct/union
   let (accessor-fragments, error-checking) = loopy(0, #(), #());
   let raw-struct-definition
     = generate-raw-struct-definition(raw-struct-name, struct-name, kind,
-				     raw-struct-options, raw-slots);
+                                     raw-struct-options, raw-slots);
   let implicit-exports
     = generate-implicit-exports(raw-struct-name, pointer-type-name);
   #{ // TODO: this is really a trick.
@@ -823,18 +823,18 @@ define method do-define-c-struct/union
      ?raw-struct-definition;
      /*
      define method pointer-value-address
-	 (p :: ?pointer-type-name, #key index = 0)
+         (p :: ?pointer-type-name, #key index = 0)
       => (pn :: ?pointer-type-name)
        if (index == 0)
-	 p
+         p
        else
-	 make-c-pointer(concrete-class(?pointer-type-name),
-			primitive-machine-word-add
-			  (primitive-cast-pointer-as-raw
-			     (primitive-unwrap-c-pointer(p)),
-			   integer-as-raw
-			     (index * size-of(?struct-name))),
-			#[])
+         make-c-pointer(concrete-class(?pointer-type-name),
+                        primitive-machine-word-add
+                          (primitive-cast-pointer-as-raw
+                             (primitive-unwrap-c-pointer(p)),
+                           integer-as-raw
+                             (index * size-of(?struct-name))),
+                        #[])
        end if;
      end method;
      */
@@ -870,14 +870,14 @@ define function generate-raw-struct-definition
     { union } =>
     #{ define raw-union-type ?raw-struct-name
          ?struct-name (?options)
-         ??raw-slots; 
-         ... 
+         ??raw-slots;
+         ...
        end };
     { struct } =>
     #{ define raw-struct-type ?raw-struct-name
          ?struct-name (?options)
-         ??raw-slots; 
-         ... 
+         ??raw-slots;
+         ...
        end };
   end;
 end;
@@ -907,13 +907,13 @@ define method generate-struct-setter
  => (f :: <template>);
   let policy = c-ffi-default-inline-policy();
   #{ define ??modifiers ... ?policy method ?real-setter-name
-	 (new-value :: export-type-for(?type),
-	  struct :: ?pointer-type-name)
+         (new-value :: export-type-for(?type),
+          struct :: ?pointer-type-name)
       => (new-value :: export-type-for(?type));
        slot-accessor-body setter (new-value, struct)
-	 ?type,
-	 ?struct-name,
-	 ?slot-number
+         ?type,
+         ?struct-name,
+         ?slot-number
        end
      end}
 end method generate-struct-setter;
@@ -930,14 +930,14 @@ define method generate-struct-setter
  => (f :: <template>);
   let policy = c-ffi-default-inline-policy();
   #{ define ??modifiers ... ?policy method ?real-setter-name
-	 (new-value :: export-type-for(?type),
-	  struct :: ?pointer-type-name,
-	  offset :: <integer>)
+         (new-value :: export-type-for(?type),
+          struct :: ?pointer-type-name,
+          offset :: <integer>)
       => (new-value :: export-type-for(?type));
        slot-accessor-body setter (new-value, struct, offset)
-	 ?type,
-	 ?struct-name,
-	 ?slot-number
+         ?type,
+         ?struct-name,
+         ?slot-number
        end
      end}
 end method generate-struct-setter;
@@ -966,12 +966,12 @@ define method generate-struct-getter
  => (f :: <template>);
   let policy = c-ffi-default-inline-policy();
   #{ define ??modifiers ... ?policy method ?getter-name
-	 (struct :: ?pointer-type-name)
+         (struct :: ?pointer-type-name)
       => (v :: import-type-for(?type));
        slot-accessor-body getter (struct)
-	 ?type,
-	 ?struct-name,
-	 ?slot-number
+         ?type,
+         ?struct-name,
+         ?slot-number
        end
      end}
 end method generate-struct-getter;
@@ -987,13 +987,13 @@ define method generate-struct-getter
  => (f :: <template>);
   let policy = c-ffi-default-inline-policy();
   #{ define ??modifiers ... ?policy method ?getter-name
-	 (struct :: ?pointer-type-name,
-	  offset :: <integer>)
+         (struct :: ?pointer-type-name,
+          offset :: <integer>)
       => (v :: import-type-for(?type));
        slot-accessor-body getter (struct, offset)
-	 ?type,
-	 ?struct-name,
-	 ?slot-number
+         ?type,
+         ?struct-name,
+         ?slot-number
        end
      end}
 end method generate-struct-getter;
@@ -1021,12 +1021,12 @@ define method generate-struct-address-getter
  => (f :: <template>);
   let policy = c-ffi-default-inline-policy();
   #{ define ??modifiers ... ?policy method ?getter-name
-	 (struct :: ?pointer-type-name)
+         (struct :: ?pointer-type-name)
       => (v :: ?slot-pointer-type);
        slot-accessor-body address-getter (struct)
-	 ?type,
-	 ?struct-name,
-	 ?slot-number
+         ?type,
+         ?struct-name,
+         ?slot-number
        end
      end}
 end method generate-struct-address-getter;
@@ -1046,12 +1046,12 @@ define method generate-struct-address-getter
  => (f :: <template>);
   let policy = c-ffi-default-inline-policy();
   #{ define ??modifiers ... ?policy method ?getter-name
-	 (struct :: ?pointer-type-name)
+         (struct :: ?pointer-type-name)
       => (v :: ?slot-pointer-type);
        slot-accessor-body address-getter (struct)
-	 ?type,
-	 ?struct-name,
-	 ?slot-number
+         ?type,
+         ?struct-name,
+         ?slot-number
        end
      end}
 end method generate-struct-address-getter;
@@ -1059,9 +1059,9 @@ end method generate-struct-address-getter;
 /*
 define method create-automatic-c-pointer-definition-fragment
        (pointer-type-name, struct-name,
-	#key // pointer-value-method :: <boolean>,
-	     pointer-to-pointer :: <object> = #f, // #"dunno",
-	     concrete-class-name)
+        #key // pointer-value-method :: <boolean>,
+             pointer-to-pointer :: <object> = #f, // #"dunno",
+             concrete-class-name)
  => (f :: <template>);
   unless (concrete-class-name)
     concrete-class-name := gensym("instantiation-of-", pointer-type-name);
@@ -1070,16 +1070,16 @@ define method create-automatic-c-pointer-definition-fragment
   let concrete-pointer-pointer-name = gensym(concrete-class-name, "-pointer");
   let superclass-name
     = if (pointer-to-pointer == #t)
-	#{ <C-pointer-to-pointer> }
+        #{ <C-pointer-to-pointer> }
       elseif (pointer-to-pointer)
-	#{ <object> }		// indicates "can't tell yet"
+        #{ <object> }                // indicates "can't tell yet"
       else
-	#{ <C-statically-typed-pointer> }
+        #{ <C-statically-typed-pointer> }
       end if;
 
-  let implicit-exports 
+  let implicit-exports
     = generate-implicit-exports
-        (concrete-class-name, 
+        (concrete-class-name,
          abstract-pointer-pointer-name,
          concrete-pointer-pointer-name);
 
@@ -1087,19 +1087,19 @@ define method create-automatic-c-pointer-definition-fragment
 
   #{ define abstract open class ?pointer-type-name (?superclass-name)
        metaclass <C-automatic-pointer-designator-class>,
-	 referenced-type: ?struct-name,
-	 low-level-type: ?pointer-type-name,
-	 self: ?pointer-type-name,
-	 concrete-class-name: ?concrete-class-name,
-	 pointer-type-name: ?abstract-pointer-pointer-name;
+         referenced-type: ?struct-name,
+         low-level-type: ?pointer-type-name,
+         self: ?pointer-type-name,
+         concrete-class-name: ?concrete-class-name,
+         pointer-type-name: ?abstract-pointer-pointer-name;
      end;
 //     define sealed domain make(singleton(?pointer-type-name));
 
      define sealed concrete class ?concrete-class-name (?pointer-type-name)
        metaclass <C-automatic-pointer-designator-class>,
-	 abstract-super: ?pointer-type-name,
-	 low-level-type: ?concrete-class-name,
-	 self: ?concrete-class-name;
+         abstract-super: ?pointer-type-name,
+         low-level-type: ?concrete-class-name,
+         self: ?concrete-class-name;
      end;
      define sealed domain make(singleton(?concrete-class-name));
      define sealed domain initialize(?concrete-class-name);
@@ -1107,21 +1107,21 @@ define method create-automatic-c-pointer-definition-fragment
      concrete-class(?pointer-type-name) := ?concrete-class-name;
 
      define abstract open class ?abstract-pointer-pointer-name
-	 (<C-pointer-to-pointer>)
+         (<C-pointer-to-pointer>)
        metaclass <C-automatic-pointer-designator-class>,
-	 referenced-type: ?pointer-type-name,
-	 low-level-type: ?abstract-pointer-pointer-name,
-	 self: ?abstract-pointer-pointer-name,
-	 concrete-class-name: ?concrete-pointer-pointer-name;
+         referenced-type: ?pointer-type-name,
+         low-level-type: ?abstract-pointer-pointer-name,
+         self: ?abstract-pointer-pointer-name,
+         concrete-class-name: ?concrete-pointer-pointer-name;
      end;
 //     define sealed domain make(singleton(?abstract-pointer-pointer-name));
 
      define sealed concrete class ?concrete-pointer-pointer-name
-	 (?abstract-pointer-pointer-name)
+         (?abstract-pointer-pointer-name)
        metaclass <C-automatic-pointer-designator-class>,
-	 abstract-super: ?abstract-pointer-pointer-name,
-	 low-level-type: ?concrete-pointer-pointer-name,
-	 self: ?concrete-pointer-pointer-name;
+         abstract-super: ?abstract-pointer-pointer-name,
+         low-level-type: ?concrete-pointer-pointer-name,
+         self: ?concrete-pointer-pointer-name;
      end;
      define sealed domain make(singleton(?concrete-pointer-pointer-name));
      define sealed domain initialize(?concrete-pointer-pointer-name);
@@ -1132,9 +1132,9 @@ end method create-automatic-c-pointer-definition-fragment;
 
 define method create-automatic-c-pointer-definition-fragment
        (pointer-type-name, struct-name,
-	#key // pointer-value-method :: <boolean>,
-	     pointer-to-pointer :: <object> = #f, // #"dunno",
-	     concrete-class-name)
+        #key // pointer-value-method :: <boolean>,
+             pointer-to-pointer :: <object> = #f, // #"dunno",
+             concrete-class-name)
  => (f :: <template>);
   unless (concrete-class-name)
     concrete-class-name := gensym("instantiation-of-", pointer-type-name);
@@ -1143,37 +1143,37 @@ define method create-automatic-c-pointer-definition-fragment
   let concrete-pointer-pointer-name = gensym(concrete-class-name, "-pointer");
   let superclass-name
     = if (pointer-to-pointer == #t)
-	#{ <C-pointer-to-pointer> }
+        #{ <C-pointer-to-pointer> }
       elseif (pointer-to-pointer)
-	#{ <object> }		// indicates "can't tell yet"
+        #{ <object> }                // indicates "can't tell yet"
       else
-	#{ <C-statically-typed-pointer> }
+        #{ <C-statically-typed-pointer> }
       end if;
 
-  let implicit-exports 
+  let implicit-exports
     = generate-implicit-exports
         (abstract-pointer-pointer-name);
 
   // TODO: anybody who knows why these are open, please document...
   #{ define dynamic primary class ?pointer-type-name (?superclass-name)
        metaclass <C-automatic-pointer-designator-class>,
-	 referenced-type: ?struct-name,
-	 low-level-type: ?pointer-type-name,
-	 self: ?pointer-type-name,
-	 concrete-class-name: ?pointer-type-name,
-	 pointer-type-name: ?abstract-pointer-pointer-name;
+         referenced-type: ?struct-name,
+         low-level-type: ?pointer-type-name,
+         self: ?pointer-type-name,
+         concrete-class-name: ?pointer-type-name,
+         pointer-type-name: ?abstract-pointer-pointer-name;
      end;
      define sealed domain make(singleton(?pointer-type-name));
 
      concrete-class(?pointer-type-name) := ?pointer-type-name;
 
      define dynamic primary class ?abstract-pointer-pointer-name
-	 (<C-pointer-to-pointer>)
+         (<C-pointer-to-pointer>)
        metaclass <C-automatic-pointer-designator-class>,
-	 referenced-type: ?pointer-type-name,
-	 low-level-type: ?abstract-pointer-pointer-name,
-	 self: ?abstract-pointer-pointer-name,
-	 concrete-class-name: ?abstract-pointer-pointer-name;
+         referenced-type: ?pointer-type-name,
+         low-level-type: ?abstract-pointer-pointer-name,
+         self: ?abstract-pointer-pointer-name,
+         concrete-class-name: ?abstract-pointer-pointer-name;
      end;
      define sealed domain make(singleton(?abstract-pointer-pointer-name));
 
@@ -1201,15 +1201,15 @@ define &macro slot-accessor-body
   =>
   begin
     expand-accessor-body(form,
-			 struct-type-name,
-			 slot-type-expr,
-			 slot-number,
-			 make(kind, arguments: arg-names))
+                         struct-type-name,
+                         slot-type-expr,
+                         slot-number,
+                         make(kind, arguments: arg-names))
   end;
 arg-names:
   { ?arg-name:name, ...} => pair(arg-name, ...);
   {  } => #();
-  
+
 kind:
   { getter } => <struct-getter>
   { setter } => <struct-setter>
@@ -1217,10 +1217,10 @@ kind:
 end;
 
 define method expand-accessor-body (form,
-				    struct-type-name,
-				    slot-type-expr,
-				    slot-number,
-				    method-kind)
+                                    struct-type-name,
+                                    slot-type-expr,
+                                    slot-number,
+                                    method-kind)
  => (body);
   let struct-type = ^eval-designator(struct-type-name);
   let slot-type = ^eval-designator(slot-type-expr);
@@ -1232,7 +1232,7 @@ define method expand-accessor-body (form,
     let slot-number = fragment-value(slot-number);
     let slotd = struct-type.struct-fields[slot-number];
     expand-slot-accessor(method-kind, slot-type, slotd, struct-type,
-			 slot-number);
+                         slot-number);
   else
     // Don't need to generate an error as that is done by the calls to
     // check-designator-defined in the generated code for C-struct/unions
@@ -1248,20 +1248,20 @@ define method expand-slot-accessor
      struct-descriptor :: <&c-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
+
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
   let slot-pointer-type-name = slot-rep.maybe-slot-pointer-type-name;
   let struct = method-argument-names(m)[0];
   #{begin
       make-c-pointer(?slot-pointer-type-name,
-		     primitive-machine-word-add
-		       (primitive-cast-pointer-as-raw
-			  (primitive-unwrap-c-pointer(?struct)),
-			integer-as-raw
-			  (%c-struct-slot-offset(?slot-number,
-						 ?struct-name))),
-		     #[])
+                     primitive-machine-word-add
+                       (primitive-cast-pointer-as-raw
+                          (primitive-unwrap-c-pointer(?struct)),
+                        integer-as-raw
+                          (%c-struct-slot-offset(?slot-number,
+                                                 ?struct-name))),
+                     #[])
     end}
 end method expand-slot-accessor;
 
@@ -1273,8 +1273,8 @@ define method expand-slot-accessor
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
-  let export = ^export-function(model-slot-type) | #{ identity };    
+
+  let export = ^export-function(model-slot-type) | #{ identity };
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
   let slot-size = ^size-of(model-slot-type);
@@ -1283,13 +1283,13 @@ define method expand-slot-accessor
   let (new-value, struct) = values(names[0], names[1]);
   #{ begin
        let exported-new-value :: ?slot-pointer-type-name
-	 = ?export(?new-value);
+         = ?export(?new-value);
        %pointer-replace-bytes
-	 (?struct, exported-new-value,
-	  byte-offset1: %c-struct-slot-offset(?slot-number,
-					      ?struct-name),
-	  byte-offset2: 0,
-	  size: ?slot-size);
+         (?struct, exported-new-value,
+          byte-offset1: %c-struct-slot-offset(?slot-number,
+                                              ?struct-name),
+          byte-offset2: 0,
+          size: ?slot-size);
        ?new-value
      end}
 end method expand-slot-accessor;
@@ -1301,22 +1301,22 @@ define method expand-slot-accessor
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
+
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
   let slot-pointer-type-name = slot-rep.maybe-slot-pointer-type-name;
   let struct = method-argument-names(m)[0];
   #{begin
       make-c-pointer(?slot-pointer-type-name,
-		     primitive-machine-word-add
-		       (primitive-cast-pointer-as-raw
-			  (primitive-unwrap-c-pointer(?struct)),
-			integer-as-raw
-			  (%c-struct-slot-offset(?slot-number,
-						 ?struct-name))),
-		     #[])
+                     primitive-machine-word-add
+                       (primitive-cast-pointer-as-raw
+                          (primitive-unwrap-c-pointer(?struct)),
+                        integer-as-raw
+                          (%c-struct-slot-offset(?slot-number,
+                                                 ?struct-name))),
+                     #[])
     end}
-/** could do this if only we really could 
+/** could do this if only we really could
   #{ define constant ?address-getter = ?getter-name; }
  **/
 end method expand-slot-accessor;
@@ -1327,7 +1327,7 @@ end method expand-slot-accessor;
 define method expand-slot-accessor
     (m :: <struct-getter>, // getter method
      model-slot-type :: <&C-struct/union-designator-class>, // slot is a struct
-     slot-rep :: <c-struct/union-array-slot-descriptor>, // array 
+     slot-rep :: <c-struct/union-array-slot-descriptor>, // array
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
@@ -1335,9 +1335,9 @@ define method expand-slot-accessor
   let len = ^top-level-eval(slot-rep.array-length);
   unless (instance?(len, <integer>) & len > 0)
     note(<invalid-array-slot-bounds>,
-	 source-location: fragment-source-location(slot-rep.array-length),
-	 definition-name: #{ *unkown* },
-	 length-expression: slot-rep.array-length);
+         source-location: fragment-source-location(slot-rep.array-length),
+         definition-name: #{ *unkown* },
+         length-expression: slot-rep.array-length);
     len := 1;
   end unless;
   let max-index = len - 1;
@@ -1350,14 +1350,14 @@ define method expand-slot-accessor
   // offset :: limited(<integer>, min: 0, max: ?max-index)
   #{ begin
        make-c-pointer(?slot-pointer-type-name,
-		      primitive-machine-word-add
-			(primitive-cast-pointer-as-raw
-			   (primitive-unwrap-c-pointer(?struct)),
-			 integer-as-raw
-			   (%c-struct-slot-offset(?slot-number,
-						  ?struct-name)
-			      + (?offset * ?slot-type-size))),
-		      #[])
+                      primitive-machine-word-add
+                        (primitive-cast-pointer-as-raw
+                           (primitive-unwrap-c-pointer(?struct)),
+                         integer-as-raw
+                           (%c-struct-slot-offset(?slot-number,
+                                                  ?struct-name)
+                              + (?offset * ?slot-type-size))),
+                      #[])
      end }
 end method expand-slot-accessor;
 
@@ -1370,14 +1370,14 @@ define method expand-slot-accessor
      slot-number :: <integer>)
  => (fragment);
 
-  let export = ^export-function(model-slot-type) | #{ identity };    
+  let export = ^export-function(model-slot-type) | #{ identity };
   let slot-type-size = ^size-of(model-slot-type);
   let len = ^top-level-eval(slot-rep.array-length);
   unless (instance?(len, <integer>) & len > 0)
     note(<invalid-array-slot-bounds>,
-	 source-location: fragment-source-location(slot-rep.array-length),
-	 definition-name: #{ *unkown* },
-	 length-expression: slot-rep.array-length);
+         source-location: fragment-source-location(slot-rep.array-length),
+         definition-name: #{ *unkown* },
+         length-expression: slot-rep.array-length);
     len := 1;
   end unless;
   let max-index = len - 1;
@@ -1389,15 +1389,15 @@ define method expand-slot-accessor
   // offset :: limited(<integer>, min: 0, max: ?max-index)
   #{ begin
        %pointer-replace-bytes
-	 (?struct, ?export(?new-value),
-	  byte-offset1:
-	    %c-struct-slot-offset(?slot-number,
-				  ?struct-name)
-	    + (?offset * ?slot-type-size),
-	  byte-offset2: 0,
-	  size: ?slot-type-size);
+         (?struct, ?export(?new-value),
+          byte-offset1:
+            %c-struct-slot-offset(?slot-number,
+                                  ?struct-name)
+            + (?offset * ?slot-type-size),
+          byte-offset2: 0,
+          size: ?slot-type-size);
        ?new-value
-	 end}
+         end}
 end method expand-slot-accessor;
 
 //// accessors for non-struct non-array, non-bitfield struct slots
@@ -1409,26 +1409,26 @@ define method expand-slot-accessor
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
+
   let low-type = ^low-level-type(model-slot-type);
   let boxer = ^boxer-function-name(model-slot-type);
   let dereferencer = ^raw-dereferencer-name(model-slot-type);
-  let import = ^import-function(model-slot-type) | #{ identity };    
+  let import = ^import-function(model-slot-type) | #{ identity };
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
   let names = method-argument-names(m);
   let (struct) = values(names[0]);
   #{ begin
        ?import
-	 (boxer-for-designator
-	    (?low-type,
-	     (?dereferencer
-	       (primitive-unwrap-c-pointer(?struct),
+         (boxer-for-designator
+            (?low-type,
+             (?dereferencer
+               (primitive-unwrap-c-pointer(?struct),
                 integer-as-raw(0),
-		integer-as-raw
-		  (%c-struct-slot-offset(?slot-number,
-					 ?struct-name)))),
-	     ?boxer))
+                integer-as-raw
+                  (%c-struct-slot-offset(?slot-number,
+                                         ?struct-name)))),
+             ?boxer))
      end}
 end method expand-slot-accessor;
 
@@ -1440,8 +1440,8 @@ define method expand-slot-accessor
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
-  let export = ^export-function(model-slot-type) | #{ identity };    
+
+  let export = ^export-function(model-slot-type) | #{ identity };
   let unboxer = ^unboxer-function-name(model-slot-type);
   let dereferencer = ^raw-dereferencer-name(model-slot-type);
   // TODO: bogus use of model-class-name
@@ -1450,11 +1450,11 @@ define method expand-slot-accessor
   let (new-value, struct) = values(names[0], names[1]);
   #{ begin
       ?dereferencer(primitive-unwrap-c-pointer(?struct),
-		    integer-as-raw(0),
-		    integer-as-raw
-		      (%c-struct-slot-offset(?slot-number,
-					     ?struct-name)))
-	:= ?unboxer(?export(?new-value));
+                    integer-as-raw(0),
+                    integer-as-raw
+                      (%c-struct-slot-offset(?slot-number,
+                                             ?struct-name)))
+        := ?unboxer(?export(?new-value));
        ?new-value
      end}
 end method expand-slot-accessor;
@@ -1472,13 +1472,13 @@ define method expand-slot-accessor
   let (struct) = values(names[0]);
   #{ begin
        make-c-pointer(?slot-pointer-type-name,
-		      primitive-machine-word-add
-			(primitive-cast-pointer-as-raw
-			   (primitive-unwrap-c-pointer(?struct)),
-			 integer-as-raw
-			   (%c-struct-slot-offset(?slot-number,
-						  ?struct-name))),
-		      #[])
+                      primitive-machine-word-add
+                        (primitive-cast-pointer-as-raw
+                           (primitive-unwrap-c-pointer(?struct)),
+                         integer-as-raw
+                           (%c-struct-slot-offset(?slot-number,
+                                                  ?struct-name))),
+                      #[])
      end}
 end method expand-slot-accessor;
 
@@ -1492,12 +1492,12 @@ define method expand-slot-accessor
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
+
   let low-type = ^low-level-type(model-slot-type);
   let boxer = ^boxer-function-name(model-slot-type);
   let dereferencer
     = ^bitfield-dereferencer-name(model-slot-type);
-  let import = ^import-function(model-slot-type) | #{ identity };    
+  let import = ^import-function(model-slot-type) | #{ identity };
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
   let names = method-argument-names(m);
@@ -1507,14 +1507,14 @@ define method expand-slot-accessor
   let (struct) = values(names[0]); // variable name
   #{ begin
        ?import
-	 (boxer-for-designator
-	    (?low-type,
-	     (?dereferencer
-	       (primitive-unwrap-c-pointer(?struct),
-		integer-as-raw(?byte-offset),
-		integer-as-raw(?bit-offset),
-		integer-as-raw(?bit-size))),
-	     ?boxer))
+         (boxer-for-designator
+            (?low-type,
+             (?dereferencer
+               (primitive-unwrap-c-pointer(?struct),
+                integer-as-raw(?byte-offset),
+                integer-as-raw(?bit-offset),
+                integer-as-raw(?bit-size))),
+             ?boxer))
      end }
 end method expand-slot-accessor;
 
@@ -1526,8 +1526,8 @@ define method expand-slot-accessor
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
-  let export = ^export-function(model-slot-type) | #{ identity };    
+
+  let export = ^export-function(model-slot-type) | #{ identity };
   let unboxer = ^unboxer-function-name(model-slot-type);
   let dereferencer
    = ^bitfield-dereferencer-name(model-slot-type);
@@ -1540,11 +1540,11 @@ define method expand-slot-accessor
   let (new-value, struct) = values(names[0], names[1]);
   #{ begin
        ?dereferencer
-	 (primitive-unwrap-c-pointer(?struct),
-	  integer-as-raw(?byte-offset),
-	  integer-as-raw(?bit-offset),
-	  integer-as-raw(?bit-size))
-	 := ?unboxer(?export(?new-value));
+         (primitive-unwrap-c-pointer(?struct),
+          integer-as-raw(?byte-offset),
+          integer-as-raw(?bit-offset),
+          integer-as-raw(?bit-size))
+         := ?unboxer(?export(?new-value));
        ?new-value
      end}
 end method expand-slot-accessor;
@@ -1559,19 +1559,19 @@ define method expand-slot-accessor
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
+
   let low-type = ^low-level-type(model-slot-type);
   let boxer = ^boxer-function-name(model-slot-type);
   let dereferencer = ^raw-dereferencer-name(model-slot-type);
-  let import = ^import-function(model-slot-type) | #{ identity };    
+  let import = ^import-function(model-slot-type) | #{ identity };
   // TODO: bogus use of model-class-name
   let struct-name = struct-descriptor.model-class-name;
   let len = ^top-level-eval(slot-rep.array-length);
   unless (instance?(len, <integer>) & len > 0)
     note(<invalid-array-slot-bounds>,
-	 source-location: fragment-source-location(slot-rep.array-length),
-	 definition-name: #{ *unkown* },
-	 length-expression: slot-rep.array-length);
+         source-location: fragment-source-location(slot-rep.array-length),
+         definition-name: #{ *unkown* },
+         length-expression: slot-rep.array-length);
     len := 1;
   end unless;
   let max-index = len - 1;
@@ -1581,15 +1581,15 @@ define method expand-slot-accessor
   // offset :: limited(<integer>, min: 0, max: ?max-index)
   #{ begin
        ?import
-	 (boxer-for-designator
-	    (?low-type,  
-	     (?dereferencer
-	       (primitive-unwrap-c-pointer(?struct),
-		integer-as-raw(?offset),
-		integer-as-raw
-		  (%c-struct-slot-offset(?slot-number,
-					 ?struct-name)))),
-	     ?boxer))
+         (boxer-for-designator
+            (?low-type,
+             (?dereferencer
+               (primitive-unwrap-c-pointer(?struct),
+                integer-as-raw(?offset),
+                integer-as-raw
+                  (%c-struct-slot-offset(?slot-number,
+                                         ?struct-name)))),
+             ?boxer))
      end }
 end method expand-slot-accessor;
 
@@ -1601,7 +1601,7 @@ define method expand-slot-accessor
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment);
-  
+
   let export = ^export-function(model-slot-type) | #{ identity };
   let unboxer = ^unboxer-function-name(model-slot-type);
   let dereferencer = ^raw-dereferencer-name(model-slot-type);
@@ -1611,9 +1611,9 @@ define method expand-slot-accessor
   let len = ^top-level-eval(array-length(slot-rep));
   unless (instance?(len, <integer>) & len > 0)
     note(<invalid-array-slot-bounds>,
-	 source-location: fragment-source-location(slot-rep.array-length),
-	 definition-name: #{ *unkown* },
-	 length-expression: slot-rep.array-length);
+         source-location: fragment-source-location(slot-rep.array-length),
+         definition-name: #{ *unkown* },
+         length-expression: slot-rep.array-length);
     len := 1;
   end unless;
   let max-index = len - 1;
@@ -1623,11 +1623,11 @@ define method expand-slot-accessor
   // offset :: limited(<integer>, min: 0, max: ?max-index)
   #{ begin
        ?dereferencer(primitive-unwrap-c-pointer(?struct),
-		     integer-as-raw(?offset),
-		     integer-as-raw
-		       (%c-struct-slot-offset(?slot-number,
-					      ?struct-name)))
-	 := ?unboxer(?export(?new-value));
+                     integer-as-raw(?offset),
+                     integer-as-raw
+                       (%c-struct-slot-offset(?slot-number,
+                                              ?struct-name)))
+         := ?unboxer(?export(?new-value));
        ?new-value
      end}
 end method expand-slot-accessor;
@@ -1636,7 +1636,7 @@ end method expand-slot-accessor;
 define method expand-slot-accessor
     (m :: <struct-address-getter>, // address getter
      model-slot-type :: <&designator-class>, // slot is not a struct
-     slot-rep :: <c-struct/union-array-slot-descriptor>, // array 
+     slot-rep :: <c-struct/union-array-slot-descriptor>, // array
      struct-descriptor :: <&C-struct/union-designator-class>,
      slot-number :: <integer>)
  => (fragment)
@@ -1646,13 +1646,13 @@ define method expand-slot-accessor
   let (struct) = values(names[0]);
   #{ begin
        make-c-pointer(?slot-pointer-type-name,
-		      primitive-machine-word-add
-			(primitive-cast-pointer-as-raw
-			   (primitive-unwrap-c-pointer(?struct)),
-			 integer-as-raw
-			   (%c-struct-slot-offset(?slot-number,
-						  ?struct-name))),
-		      #[])
+                      primitive-machine-word-add
+                        (primitive-cast-pointer-as-raw
+                           (primitive-unwrap-c-pointer(?struct)),
+                         integer-as-raw
+                           (%c-struct-slot-offset(?slot-number,
+                                                  ?struct-name))),
+                      #[])
      end}
 end method expand-slot-accessor;
 
@@ -1714,60 +1714,60 @@ end method &C-struct/union-slot-array-length;
 
 define &macro %pointer-replace-bytes
   { %pointer-replace-bytes
-	 (?destination:expression, ?source:expression,
-	  byte-offset1: ?byte-offset1:expression,
-	  byte-offset2: ?byte-offset2:expression,
-	  size: ?size-expr:expression) }
+         (?destination:expression, ?source:expression,
+          byte-offset1: ?byte-offset1:expression,
+          byte-offset2: ?byte-offset2:expression,
+          size: ?size-expr:expression) }
   => #{ primitive-replace-bytes!
-	(primitive-unwrap-c-pointer(?destination),
+        (primitive-unwrap-c-pointer(?destination),
          integer-as-raw(0),
-	 integer-as-raw(?byte-offset1),
-	 primitive-unwrap-c-pointer(?source),
+         integer-as-raw(?byte-offset1),
+         primitive-unwrap-c-pointer(?source),
          integer-as-raw(0),
-	 integer-as-raw(?byte-offset2),
-	 integer-as-raw(?size-expr)) }
+         integer-as-raw(?byte-offset2),
+         integer-as-raw(?size-expr)) }
 end;
-	   
+
 define &macro %c-dereference-bitfield
   { %c-dereference-bitfield(?raw-pointer:expression,
-			    ?struct-name:expression,
-			    ?slot-number:expression) }
+                            ?struct-name:expression,
+                            ?slot-number:expression) }
   => begin
        let struct-model = ^eval-designator(struct-name);
-       	unless (struct-model)
-	  generate-unresolved-designator-error
-	    (struct-model, struct-model, #{ unknown}, #());
-	end;
+               unless (struct-model)
+          generate-unresolved-designator-error
+            (struct-model, struct-model, #{ unknown}, #());
+        end;
 
        let raw-type = ^raw-type-info(struct-model);
        let slot-number = ^top-level-eval(slot-number);
        let (byte-offset, bit-offset, bit-size) =
-	 compute-aggregate-field-offset(raw-type, slot-number);
+         compute-aggregate-field-offset(raw-type, slot-number);
        #{ primitive-access-field
-	   (?raw-pointer, integer-as-raw(?byte-offset), integer-as-raw(?bit-offset),
-	    integer-as-raw(?bit-size)) };
+           (?raw-pointer, integer-as-raw(?byte-offset), integer-as-raw(?bit-offset),
+            integer-as-raw(?bit-size)) };
      end;
 end;
 
 
 define &macro %c-dereference-bitfield-setter
   { %c-dereference-bitfield-setter (?raw-new-value:expression,
-				    ?raw-pointer:expression,
-				    ?struct-name:expression,
-				    ?slot-number:expression) }
+                                    ?raw-pointer:expression,
+                                    ?struct-name:expression,
+                                    ?slot-number:expression) }
   => begin
        let struct-model = ^eval-designator(struct-name);
-       	unless (struct-name)
-	  generate-unresolved-designator-error
-	    (struct-name, struct-name, #{ unknown}, #());
-	end;
+               unless (struct-name)
+          generate-unresolved-designator-error
+            (struct-name, struct-name, #{ unknown}, #());
+        end;
        let raw-type = ^raw-type-info(struct-model);
        let slot-number = ^top-level-eval(slot-number);
        let (byte-offset, bit-offset, bit-size) =
-	 compute-aggregate-field-offset(raw-type, slot-number);
+         compute-aggregate-field-offset(raw-type, slot-number);
        #{ primitive-access-field-setter
-	   (?raw-new-value, ?raw-pointer, integer-as-raw(?byte-offset),
-	    integer-as-raw(?bit-offset), integer-as-raw(?bit-size)) };
+           (?raw-new-value, ?raw-pointer, integer-as-raw(?byte-offset),
+            integer-as-raw(?bit-offset), integer-as-raw(?bit-size)) };
      end;
 end;
 
@@ -1794,8 +1794,8 @@ define method gensym (#rest things) => (s :: <variable-name-fragment>);
     let base-name = #f;
     let symbol
       = as(<symbol>,
-	   apply(concatenate,
-                 map(method (x) 
+           apply(concatenate,
+                 map(method (x)
                        if (instance?(x, <variable-name-fragment>))
                          base-name := (base-name | x);
                        end;
@@ -1805,8 +1805,8 @@ define method gensym (#rest things) => (s :: <variable-name-fragment>);
     if (base-name)
       make-variable-name-like
         (base-name, name: symbol,
-	 record: fragment-record(base-name),
-	 source-position: fragment-source-position(base-name));
+         record: fragment-record(base-name),
+         source-position: fragment-source-position(base-name));
     else
       as(<variable-name-fragment>, symbol);
     end;
@@ -1816,21 +1816,21 @@ end method gensym;
 /* TODO: big hack */
 define method hex-string (i :: <integer>)
   local method hexit (i :: <integer>, l :: <list>) => (l :: <string>);
-	  let (quotient :: <integer>, remainder :: <integer>)
-	    = truncate/(i, #x10);
-	  if(zero?(quotient))
-	    as(<string>,
-	       map(method (i :: <integer>) "0123456789ABCDEF"[i] end,
-		   pair(remainder,l)))
-	    else
-	     hexit(quotient, pair(remainder, l))
-	  end if;
-	end method hexit;
+          let (quotient :: <integer>, remainder :: <integer>)
+            = truncate/(i, #x10);
+          if(zero?(quotient))
+            as(<string>,
+               map(method (i :: <integer>) "0123456789ABCDEF"[i] end,
+                   pair(remainder,l)))
+            else
+             hexit(quotient, pair(remainder, l))
+          end if;
+        end method hexit;
   hexit(i, #())
 end method hex-string;
 
 
-// TODO: temporary hack 
+// TODO: temporary hack
 
 // TODO: Rather than refer to it by name, just insert the model object
 // itself as a literal fragment? I think some of the optimizers do this
@@ -1850,14 +1850,14 @@ define &macro import-type-for
   => begin
        let class = ^eval-designator(class-expr);
        if (designator-class?(class))
-	 let import-type = ^import-type-for(class);
-	 if (import-type)
-	   #{ ?import-type };
-	 else
-	   #{ <object> };
-	 end if;
+         let import-type = ^import-type-for(class);
+         if (import-type)
+           #{ ?import-type };
+         else
+           #{ <object> };
+         end if;
        else
-	 #{ <object> };
+         #{ <object> };
        end if;
      end;
 end;
@@ -1867,14 +1867,14 @@ define &macro export-type-for
   => begin
        let class = ^eval-designator(class-expr);
        if (designator-class?(class))
-	 let export-type = ^export-type-for(class);
-	 if (export-type)
-	   #{ ?export-type };
-	 else
-	   #{ <object> };
-	 end if;
+         let export-type = ^export-type-for(class);
+         if (export-type)
+           #{ ?export-type };
+         else
+           #{ <object> };
+         end if;
        else
-	 #{ <object> };
+         #{ <object> };
        end if;
      end;
 end;
@@ -1910,18 +1910,18 @@ define &macro export-type-for-reference
   { export-type-for-reference(?class-expr:expression) }
   => begin
        let class = ^eval-designator(class-expr);
-       	if (designator-class?(class))
-	  ^ensure-pointer-types-initialized(class);
-	  let referenced-type = ^referenced-type(class);
-	  if (designator-class?(referenced-type))
-	    let export-type = ^export-type-for(referenced-type);
-	    #{ ?export-type };
-	  else
-	    #{ <object> };
-	  end if;
-	else
-	  #{ <object> };
-	end if;
+               if (designator-class?(class))
+          ^ensure-pointer-types-initialized(class);
+          let referenced-type = ^referenced-type(class);
+          if (designator-class?(referenced-type))
+            let export-type = ^export-type-for(referenced-type);
+            #{ ?export-type };
+          else
+            #{ <object> };
+          end if;
+        else
+          #{ <object> };
+        end if;
      end;
 end;
 
@@ -1929,31 +1929,31 @@ define &macro import-type-for-reference
   { import-type-for-reference(?class-expr:expression) }
   => begin
        let class = ^eval-designator(class-expr);
-       	if (designator-class?(class))
-	  ^ensure-pointer-types-initialized(class);
-	  let referenced-type = ^referenced-type(class);
-	  if (designator-class?(referenced-type))
-	    let import-type = ^import-type-for(referenced-type);
-	    #{ ?import-type };
-	  else
-	    #{ <object> };
-	  end if;
-	else
-	  #{ <object> };
-	end if;
+               if (designator-class?(class))
+          ^ensure-pointer-types-initialized(class);
+          let referenced-type = ^referenced-type(class);
+          if (designator-class?(referenced-type))
+            let import-type = ^import-type-for(referenced-type);
+            #{ ?import-type };
+          else
+            #{ <object> };
+          end if;
+        else
+          #{ <object> };
+        end if;
      end;
 end;
 
 define &macro low-level-type-for
   { low-level-type-for(?class-expr:expression) }
-  => begin 
+  => begin
        let class = ^eval-designator(class-expr);
        unless (designator-class?(class))
-	 // TODO: Generate error?
-//	 format-out("*** low-level-type-for: Error, cannot resolve designator %=\n", class-expr);
-//	  generate-unresolved-designator-error
-//	    (class-expr, class-expr, #{ unknown }, #());
-	 class := ^eval-designator(#{ <C-void*> });
+         // TODO: Generate error?
+//         format-out("*** low-level-type-for: Error, cannot resolve designator %=\n", class-expr);
+//          generate-unresolved-designator-error
+//            (class-expr, class-expr, #{ unknown }, #());
+         class := ^eval-designator(#{ <C-void*> });
        end unless;
 
        ^ensure-pointer-types-initialized(class);
@@ -1965,14 +1965,14 @@ end;
 
 define &macro check-designator-defined
   { check-designator-defined(?type:expression, ?object-name:expression,
-			     ?kind:name) }
+                             ?kind:name) }
     =>
     begin
       if (designator-class?(^eval-designator(type)))
-	#{ ?type };
+        #{ ?type };
       else
-	generate-unresolved-designator-error(type, object-name, kind, #());
-	#{ <object> };
+        generate-unresolved-designator-error(type, object-name, kind, #());
+        #{ <object> };
       end;
     end;
 end;
