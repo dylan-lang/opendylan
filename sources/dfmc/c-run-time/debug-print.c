@@ -25,7 +25,7 @@
 int dylan_print_length = 10;
 int dylan_print_depth  = 3;
 
-#define ignore(x) x
+#define ignore(x) (void)x
 
 /* INSTANCE */
 
@@ -511,6 +511,9 @@ void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
 void do_debug_message (BOOL forBreak, D string, D arguments) {
   char error_output[8192];
   error_output[0] = 0;
+
+  ignore(forBreak);
+
   dylan_format(error_output, string, arguments);
 #if defined(WIN32)
   {
