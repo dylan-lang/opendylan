@@ -19,12 +19,14 @@
 #include <inttypes.h>
 
 #include <stdio.h>
+#include <unistd.h>
 
 #include <pthread.h>
 #include <time.h>
 
 #include <gc/gc.h>
 
+#define ignore(x) (void)x
 
 
 /*****************************************************************************/
@@ -360,11 +362,12 @@ void initialize_threads_primitives()
 
 void *trampoline (void *arg)
 {
-  TEB*     teb = make_teb();
   D        result, f;
   DTHREAD *thread = (DTHREAD *)arg;
 
   assert(thread != NULL);
+
+  make_teb();
 
   f = (D)(thread->handle2);
 
@@ -393,13 +396,14 @@ void *trampoline (void *arg)
 D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 {
   DTHREAD *thread = (DTHREAD *)t;
-  D_NAME   name = (D_NAME)n;
   ZINT     zpriority = (ZINT)p;
-  DBOOL    synchronize = s;
 
   pthread_attr_t      attr;
   struct sched_param  param;
   int                 priority = (int)zpriority >> 2;
+
+  ignore(n);
+  ignore(s);
 
   assert(thread != NULL);
   assert(IS_ZINT(zpriority));
@@ -497,7 +501,7 @@ D primitive_thread_join_multiple(D v)
   SOV               *thread_vector = v;
   volatile DTHREAD **threads;
   volatile DTHREAD  *joined_thread = NULL;
-  int                i, result;
+  int                i;
   uintptr_t          size, state;
 
   assert(thread_vector != NULL);
@@ -884,7 +888,6 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
   ZINT           zmilsecs = (ZINT)m;
-  DWORD          start, current;
   NOTIFICATION  *notification;
   SIMPLELOCK    *slock;
   int            milsecs, secs, timeout;
@@ -1092,8 +1095,9 @@ D primitive_release_all_notification(D n, D l)
 D primitive_make_recursive_lock(D l, D n)
 {
   CONTAINER      *lock = (CONTAINER *)l;
-  D_NAME          name = (D_NAME)n;
   RECURSIVELOCK  *rlock;
+
+  ignore(n);
 
   assert(lock != NULL);
 
@@ -1140,8 +1144,9 @@ D primitive_destroy_recursive_lock(D l)
 D primitive_make_simple_lock(D l, D n)
 {
   CONTAINER  *lock = (CONTAINER *)l;
-  D_NAME      name = (D_NAME)n;
   SIMPLELOCK *slock;
+
+  ignore(n);
 
   assert(lock != NULL);
 
@@ -1227,12 +1232,13 @@ D primitive_owned_recursive_lock(D l)
 D primitive_make_semaphore(D l, D n, D i, D m)
 {
   CONTAINER  *lock = (CONTAINER *)l;
-  D_NAME      name = (D_NAME)n;
   ZINT        zinitial = (ZINT)i;
   ZINT        zmax = (ZINT)m;
   SEMAPHORE  *semaphore;
   int         initial = zinitial >> 2;
   int         max   = zmax >> 2;
+
+  ignore(n);
 
   assert(lock != NULL);
   assert(IS_ZINT(zinitial));
@@ -1281,9 +1287,9 @@ D primitive_destroy_semaphore(D l)
 D primitive_make_notification(D n, D s)
 {
   CONTAINER     *notif = (CONTAINER *)n;
-  D_NAME         name = (D_NAME)s;
   NOTIFICATION  *notification;
 
+  ignore(s);
   assert(notif != NULL);
 
   notification = (NOTIFICATION *)malloc(sizeof(NOTIFICATION));
@@ -1353,7 +1359,6 @@ primitive_conditional_update_memory(void * * location, Z newval, Z oldval)
 /* 33 */
 D primitive_allocate_thread_variable(D v)
 {
-  pthread_key_t  key;
   uintptr_t variable_offset, size, limit;
 
   pthread_mutex_lock(&tlv_vector_list_lock);
@@ -1438,6 +1443,7 @@ D primitive_initialize_current_thread(D t, DBOOL synchronize)
 {
   DTHREAD     *thread = (DTHREAD *)t;
 
+  ignore(synchronize);
   assert(thread != NULL);
 
   trace_threads("Initializing current thread %p", t);

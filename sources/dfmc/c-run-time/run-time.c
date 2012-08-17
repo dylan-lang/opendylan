@@ -22,7 +22,7 @@
 #define LONG_BIT 32
 #endif
 
-#define ignore(x) x
+#define ignore(x) (void)x
 
 #define MAX_HEAP_SIZE          (2047 * 1024 * 1024)
 
@@ -1369,7 +1369,7 @@ INLINE D primitive_type_check (D value, D type) {
 extern D Kstack_overflow_errorVKiI();
 
 INLINE void SIMPLE_CALL_CHECK(FN* function) {
-  int stack_marker;
+  /* int stack_marker; */
   ignore(function);
   /*
   if (STACK_OK(bottom_of_stack,(unsigned long)(&stack_marker))) {
@@ -1715,7 +1715,6 @@ D inline_invoke_engine_node (ENGINE* eng, int argcount, ...) {
 
 
 D primitive_engine_node_apply(ENGINE* eng, D parent, D a[]) {
-  TEB* teb = get_teb();
   GFN* gf = parent_gf(parent);
   SIG* sig = gf->signature;
   int  number_required = signature_number_required(sig);
@@ -1738,7 +1737,6 @@ D primitive_engine_node_apply(ENGINE* eng, D parent, D a[]) {
 
 
 D primitive_mep_apply (FN* fn, D next_methods, D a[]) {
-  TEB* teb = get_teb();
   int  number_required = function_number_required(fn);
   int  argument_count = vector_size((SOV*)a);
   if (function_optionals_p(fn)) {
@@ -3000,7 +2998,6 @@ D check_explicit_kwds (SOV* optionals, SOV* kwds, int kwdskip) {
 }
 
 D check_unrestricted_kwds (SOV* optionals) {
-  D* optdata = vector_data(optionals);
   int optsize = vector_size(optionals);
   if (optsize & 1 != 0) {
     return(DFALSE);
@@ -3527,7 +3524,6 @@ D monomorphic_discriminator_engine_n_n (SOV* args) {
   TEB* teb = get_teb();
   MONOMORPHICDISCRIMINATOR* e = (MONOMORPHICDISCRIMINATOR*)teb->function;
   D parent = teb->next_methods;
-  DLFN cb = e->callback;
   long props = (long)e->properties;
   long argnum = (props >> 8) & 0xFF;
   D* a = vector_data(args);
@@ -3597,7 +3593,6 @@ D if_type_discriminator_engine_n_n (SOV* args) {
   TEB* teb = get_teb();
   IFTYPEDISCRIMINATOR* e = (IFTYPEDISCRIMINATOR*)teb->function;
   D parent = teb->next_methods;
-  DLFN cb = e->callback;
   long props = (long)e->properties;
   long argnum = (props >> 8) & 0xFF;
   D* a = vector_data(args);
@@ -3666,7 +3661,6 @@ D typecheck_discriminator_engine_n_n (SOV* args) {
   TEB* teb = get_teb();
   TYPECHECKDISCRIMINATOR* e = (TYPECHECKDISCRIMINATOR*)teb->function;
   D parent = teb->next_methods;
-  DLFN cb = e->callback;
   long props = (long)e->properties;
   long argnum = (props >> 8) & 0xFF;
   D* a = vector_data(args);
@@ -4655,8 +4649,6 @@ static void call_application_exit_functions(void) {
 
 void _Init_Run_Time ()
 {
-  TEB *teb;
-  int stack_marker;
   static int initp = 0;
   if (!initp) {
     initp = 1;
