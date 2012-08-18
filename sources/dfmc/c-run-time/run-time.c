@@ -2979,7 +2979,7 @@ D check_explicit_kwds (SOV* optionals, SOV* kwds, int kwdskip) {
   int optsize = vector_size(optionals);
   D* kwddata = vector_data(kwds);
   int kwdsize = vector_size(kwds);
-  if (optsize & 1 != 0) {
+  if ((optsize & 1) != 0) { // Check if odd?
     return(DFALSE);
   } else {
     int i;
@@ -2999,7 +2999,7 @@ D check_explicit_kwds (SOV* optionals, SOV* kwds, int kwdskip) {
 
 D check_unrestricted_kwds (SOV* optionals) {
   int optsize = vector_size(optionals);
-  if (optsize & 1 != 0) {
+  if ((optsize & 1) != 0) { // Check if odd?
     return(DFALSE);
   } else {
     return(NULL);
