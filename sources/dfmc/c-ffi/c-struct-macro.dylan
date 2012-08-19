@@ -359,11 +359,8 @@ define function process-struct-options (name, clause,
                     pack: ?pack) };
 end function;
 
-define function process-slot-options (name, clause,
-    #key address-getter = #{ #f },
-         setter = unsupplied(),
-         getter = unsupplied(),
-         c-name = #{ #f })
+define function process-address-getter-slot-option (address-getter)
+ => (address-getter)
   unless (fragment-false-or-name?(address-getter))
     note(<invalid-address-getter-value>,
          definition-name: name,
@@ -371,20 +368,41 @@ define function process-slot-options (name, clause,
          source-location: fragment-source-location(address-getter));
     address-getter := #{ #f };
   end unless;
+  address-getter
+end function;
+
+define function process-setter-slot-option (setter) => (setter)
   if (supplied?(setter) & ~fragment-false-or-name?(setter))
     note(<invalid-setter-value>,
          definition-name: name,
          setter-expression: setter,
          source-location: fragment-source-location(setter));
-    setter := unsupplied();
+    unsupplied()
+  else
+    setter
   end if;
+end function;
+
+define function process-getter-slot-option (getter) => (getter)
   if (supplied?(getter) & ~fragment-false-or-name?(getter))
     note(<invalid-getter-value>,
          definition-name: name,
          getter-expression: getter,
          source-location: fragment-source-location(getter));
-    getter := unsupplied();
+    unsupplied()
+  else
+    getter
   end if;
+end function;
+
+define function process-slot-options (name, clause,
+    #key address-getter = #{ #f },
+         setter = unsupplied(),
+         getter = unsupplied(),
+         c-name = #{ #f })
+  address-getter := process-address-getter-slot-option(address-getter);
+  setter := process-setter-slot-option(setter);
+  getter := process-getter-slot-option(getter);
 
   unless (supplied?(setter))
     setter := #{ #"not-given" };
@@ -405,27 +423,9 @@ define function process-array-slot-options (name, clause,
          getter = unsupplied(),
          c-name = #{ #f },
          length = #f)
-  unless (fragment-false-or-name?(address-getter))
-    note(<invalid-address-getter-value>,
-         definition-name: name,
-         address-getter-expression: address-getter,
-         source-location: fragment-source-location(address-getter));
-    address-getter := #{ #f };
-  end unless;
-  if (supplied?(setter) & ~fragment-false-or-name?(setter))
-    note(<invalid-setter-value>,
-         definition-name: name,
-         setter-expression: setter,
-         source-location: fragment-source-location(setter));
-    setter := unsupplied();
-  end if;
-  if (supplied?(getter) & ~fragment-false-or-name?(getter))
-    note(<invalid-getter-value>,
-         definition-name: name,
-         getter-expression: getter,
-         source-location: fragment-source-location(getter));
-    getter := unsupplied();
-  end if;
+  address-getter := process-address-getter-slot-option(address-getter);
+  setter := process-setter-slot-option(setter);
+  getter := process-getter-slot-option(getter);
   unless (length)
     note(<missing-length-keyword-option>,
          source-location: fragment-source-location(clause),
@@ -452,20 +452,8 @@ define function process-bitfield-slot-options (name, clause,
          getter = unsupplied(),
          c-name = #{ #f },
          width = #f)
-  if (supplied?(setter) & ~fragment-false-or-name?(setter))
-    note(<invalid-setter-value>,
-         definition-name: name,
-         setter-expression: setter,
-         source-location: fragment-source-location(setter));
-    setter := unsupplied();
-  end if;
-  if (supplied?(getter) & ~fragment-false-or-name?(getter))
-    note(<invalid-getter-value>,
-         definition-name: name,
-         getter-expression: getter,
-         source-location: fragment-source-location(getter));
-    getter := unsupplied();
-  end if;
+  setter := process-setter-slot-option(setter);
+  getter := process-getter-slot-option(getter);
   unless (width)
     note(<missing-width-keyword-option>,
          source-location: fragment-source-location(clause),
