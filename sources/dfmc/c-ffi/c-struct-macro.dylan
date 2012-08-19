@@ -307,6 +307,8 @@ define method split-slot-spec (spec, #key struct? :: <boolean> = #f)
           if (struct?) return(remove!(modifiers, mod), #{ bitfield ?spec });
           else #f
           end if;
+        #"constant" =>
+          return(remove!(modifiers, mod), #{ ?spec, constant: #t });
         otherwise =>
           #f;
       end;
@@ -315,6 +317,20 @@ define method split-slot-spec (spec, #key struct? :: <boolean> = #f)
   end;
 end;
 
+
+define function fragment-true? (fragment) => (well? :: <boolean>)
+  macro-case (fragment)
+    { #t } => #t;
+    { ?other:* } => #f;
+  end;
+end function;
+
+define function fragment-false? (fragment) => (well? :: <boolean>)
+  macro-case (fragment)
+    { #f } => #t;
+    { ?other:* } => #f;
+  end;
+end function;
 
 define function fragment-false-or-name? (fragment) => (well? :: <boolean>)
   macro-case (fragment)
@@ -371,16 +387,31 @@ define function process-address-getter-slot-option (address-getter)
   address-getter
 end function;
 
-define function process-setter-slot-option (setter) => (setter)
+define function process-setter-slot-option (constant, setter) => (setter)
+  if (supplied?(constant))
+    if (fragment-true?(constant))
+      if (supplied?(setter) & ~fragment-false?(setter))
+        note(<constant-setter-value>,
+             definition-name: name,
+             setter-expression: setter,
+             source-location: fragment-source-location(setter));
+      end if;
+      setter := #{ #f };
+    else
+      note(<invalid-constant-value>,
+           definition-name: name,
+           constant-expression: constant,
+           source-location: fragment-source-location(constant));
+    end if;
+  end if;
   if (supplied?(setter) & ~fragment-false-or-name?(setter))
     note(<invalid-setter-value>,
          definition-name: name,
          setter-expression: setter,
          source-location: fragment-source-location(setter));
-    unsupplied()
-  else
-    setter
+    setter := unsupplied()
   end if;
+  setter
 end function;
 
 define function process-getter-slot-option (getter) => (getter)
@@ -397,11 +428,12 @@ end function;
 
 define function process-slot-options (name, clause,
     #key address-getter = #{ #f },
+         constant = unsupplied(),
          setter = unsupplied(),
          getter = unsupplied(),
          c-name = #{ #f })
   address-getter := process-address-getter-slot-option(address-getter);
-  setter := process-setter-slot-option(setter);
+  setter := process-setter-slot-option(constant, setter);
   getter := process-getter-slot-option(getter);
 
   unless (supplied?(setter))
@@ -419,12 +451,13 @@ end function;
 
 define function process-array-slot-options (name, clause,
     #key address-getter = #{ #f },
+         constant = unsupplied(),
          setter = unsupplied(),
          getter = unsupplied(),
          c-name = #{ #f },
          length = #f)
   address-getter := process-address-getter-slot-option(address-getter);
-  setter := process-setter-slot-option(setter);
+  setter := process-setter-slot-option(constant, setter);
   getter := process-getter-slot-option(getter);
   unless (length)
     note(<missing-length-keyword-option>,
@@ -449,10 +482,11 @@ end function;
 
 define function process-bitfield-slot-options (name, clause,
     #key setter = unsupplied(),
+         constant = unsupplied(),
          getter = unsupplied(),
          c-name = #{ #f },
          width = #f)
-  setter := process-setter-slot-option(setter);
+  setter := process-setter-slot-option(constant, setter);
   getter := process-getter-slot-option(getter);
   unless (width)
     note(<missing-width-keyword-option>,
@@ -503,6 +537,10 @@ define option <c-struct-c-name-slot-option>
   => c-name: :: expression
 end option;
 
+define option <c-struct-constant-slot-option>
+  => constant: :: expression
+end option;
+
 define option <c-struct-setter-slot-option>
   => setter: :: expression
 end option;
@@ -525,12 +563,14 @@ end option;
 
 define constant $c-struct-slot-options =
   list(<c-struct-address-getter-slot-option>,
+       <c-struct-constant-slot-option>,
        <c-struct-setter-slot-option>,
        <c-struct-getter-slot-option>,
        <c-struct-c-name-slot-option>);
 
 define constant $c-struct-array-slot-options =
   list(<c-struct-address-getter-slot-option>,
+       <c-struct-constant-slot-option>,
        <c-struct-setter-slot-option>,
        <c-struct-getter-slot-option>,
        <c-struct-c-name-slot-option>,
@@ -538,6 +578,7 @@ define constant $c-struct-array-slot-options =
 
 define constant $c-struct-bitfield-slot-options =
   list(<c-struct-setter-slot-option>,
+       <c-struct-constant-slot-option>,
        <c-struct-getter-slot-option>,
        <c-struct-c-name-slot-option>,
        <c-struct-width-bitfield-slot-option>);

@@ -195,6 +195,22 @@ define program-error <invalid-setter-value>
   format-arguments setter-expression, definition-name;
 end program-error;
 
+define program-error <invalid-constant-value>
+  slot condition-definition-name, required-init-keyword: definition-name:;
+  slot condition-constant-expression, required-init-keyword: constant-expression:;
+  format-string "Invalid constant expression %=, in the "
+                "definition of %= - ignoring.";
+  format-arguments constant-expression, definition-name;
+end program-error;
+
+define program-error <constant-setter-value>
+  slot condition-definition-name, required-init-keyword: definition-name:;
+  slot condition-setter-expression, required-init-keyword: setter-expression:;
+  format-string "Invalid setter expression %= on a constant slot, in the "
+                "definition of %= - ignoring.";
+  format-arguments setter-expression, definition-name;
+end program-error;
+
 define program-error <missing-length-keyword-option>
   slot condition-definition-name, required-init-keyword: definition-name:;
   format-string "Missing length keyword option in array slot in the "
