@@ -20,7 +20,8 @@ Open Dylan 2012.1 Release Notes
      7.2  Performance Improvements
      7.3  Shared Library Initialization
      7.4  Fixes
-   8  Other Changes
+   8  C-FFI Changes
+   9  Other Changes
 
 
 Introduction
@@ -311,6 +312,15 @@ Fixes
 
 Some other bugs that resulted in the generation of invalid C have
 been fixed.
+
+
+C-FFI Changes
+=============
+
+C-variable setters
+------------------
+
+Setters should work with C-variables now.
 
 
 Other Changes
