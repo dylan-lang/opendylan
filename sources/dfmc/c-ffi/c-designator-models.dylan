@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// definitions for the basic designator classes in the ffi
 
-// still need implementations of the <machine-word> versions, 
+// still need implementations of the <machine-word> versions,
 // <integer>, and <abstract-integer> versions.  I suspect we can just
 // have the <machine-word versions here, and the others defined by a
 // normal library.
@@ -69,7 +69,7 @@ define concrete &class <instantiation-of-c-void*> (<C-void*>)
     abstract-super: <C-void*>;
 end &class;
 
-define abstract open &class <C-statically-typed-pointer> 
+define abstract open &class <C-statically-typed-pointer>
     (<C-void*>, <mutable-object-with-elements>)
   metaclass <designator-class>,
     low-level-type: <C-statically-typed-pointer>,
@@ -119,30 +119,30 @@ end;
 
 define macro integer-designator-class-definer
   { define integer-designator-class "<C-raw-" ## ?designator-class-name:name ## ">"
-				    "<" ## ?super-class-name:name ## ">"
-				    ?bitfield-dereferencer:name
+                                    "<" ## ?super-class-name:name ## ">"
+                                    ?bitfield-dereferencer:name
                                     ?boxer-name:name
-				    end }
+                                    end }
   => { define integer-designator-class-aux "<C-raw-" ## ?designator-class-name ## ">"
-					   "<C-raw-" ## ?designator-class-name ## "*>"
-					   "<" ## ?super-class-name ## ">"
-					   "<raw-c-" ## ?designator-class-name ## ">"
-					   "primitive-c-" ## ?designator-class-name ## "-at"
-					   ?bitfield-dereferencer ?boxer-name
-					   end }
+                                           "<C-raw-" ## ?designator-class-name ## "*>"
+                                           "<" ## ?super-class-name ## ">"
+                                           "<raw-c-" ## ?designator-class-name ## ">"
+                                           "primitive-c-" ## ?designator-class-name ## "-at"
+                                           ?bitfield-dereferencer ?boxer-name
+                                           end }
   { define integer-designator-class "<C-raw-" ## ?designator-class-name:name ## ">"
-				    "<" ## ?super-class-name:name ## ">"
-				    ?bitfield-dereferencer:name
+                                    "<" ## ?super-class-name:name ## ">"
+                                    ?bitfield-dereferencer:name
                                     ?boxer-name:name
-				    ?raw-type:name
-				    end }
+                                    ?raw-type:name
+                                    end }
   => { define integer-designator-class-aux "<C-raw-" ## ?designator-class-name ## ">"
-					   "<C-raw-" ## ?designator-class-name ## "*>"
-					   "<" ## ?super-class-name ## ">"
-					   ?raw-type
-					   "primitive-c-" ## ?designator-class-name ## "-at"
-					   ?bitfield-dereferencer ?boxer-name
-					   end }
+                                           "<C-raw-" ## ?designator-class-name ## "*>"
+                                           "<" ## ?super-class-name ## ">"
+                                           ?raw-type
+                                           "primitive-c-" ## ?designator-class-name ## "-at"
+                                           ?bitfield-dereferencer ?boxer-name
+                                           end }
 options:
     { } => { }
  { #rest ?keys:* /* , #key, #all-keys */ }
@@ -156,15 +156,15 @@ end macro;
 
 define macro integer-designator-class-aux-definer
   { define integer-designator-class-aux ?model-class-name:name
-					"<" ## ?pointer-class-name:name ## ">"
-					?superclass-name:name
-					?raw-type:name
-					?raw-dereferencer:name
-					?bitfield-dereferencer:name
+                                        "<" ## ?pointer-class-name:name ## ">"
+                                        ?superclass-name:name
+                                        ?raw-type:name
+                                        ?raw-dereferencer:name
+                                        ?bitfield-dereferencer:name
                                         ?boxer-name:name
-					end }
-  => { define open abstract &class ?model-class-name (?superclass-name) 
-	 metaclass <designator-class>, raw-type-name: ?#"raw-type",
+                                        end }
+  => { define open abstract &class ?model-class-name (?superclass-name)
+         metaclass <designator-class>, raw-type-name: ?#"raw-type",
            raw-dereferencer: ?#"raw-dereferencer",
            bitfield-dereferencer: ?#"bitfield-dereferencer",
            boxer-function-name: ?#"boxer-name",
@@ -203,10 +203,10 @@ define macro integer-designator-class-aux-definer
            ("<" ## ?pointer-class-name ## "*>")
          metaclass <c-automatic-pointer-designator-class>,
            abstract-super: "<" ## ?pointer-class-name ## "*>",
-           low-level-type: 
+           low-level-type:
              "<instantiation-of-" ## ?pointer-class-name ## "*>",
            self: "<instantiation-of-" ## ?pointer-class-name ## "*>";
-       end 
+       end
      }
 end macro;
 
@@ -222,48 +222,48 @@ define integer-designator-class <C-raw-int> <C-integer> int primitive-wrap-machi
 
 define macro float-designator-class-definer
   { define float-designator-class "<C-" ## ?C-class:name ## ">"
-				  "<" ## ?dylan-class:name ## ">"
-				  end }
+                                  "<" ## ?dylan-class:name ## ">"
+                                  end }
   => { define float-designator-class-aux "<C-" ## ?C-class ## ">"
-					 "<C-" ## ?C-class ## "*>"
-					 "<instantiation-of-c-" ## ?C-class ## "*>"
-					 "<raw-c-" ## ?C-class ## ">"
-       					 "<" ## ?dylan-class ## ">"
-					 "primitive-c-" ## ?C-class ## "-at"
-					 "primitive-raw-as-" ## ?dylan-class
-       					 "primitive-" ## ?dylan-class ## "-as-raw"
+                                         "<C-" ## ?C-class ## "*>"
+                                         "<instantiation-of-c-" ## ?C-class ## "*>"
+                                         "<raw-c-" ## ?C-class ## ">"
+                                                "<" ## ?dylan-class ## ">"
+                                         "primitive-c-" ## ?C-class ## "-at"
+                                         "primitive-raw-as-" ## ?dylan-class
+                                                "primitive-" ## ?dylan-class ## "-as-raw"
        end }
 end macro float-designator-class-definer;
 
 define macro float-designator-class-aux-definer
   { define float-designator-class-aux ?C-class:name
-				      ?C-pointer-class:name
-				      ?C-pointer-instantiation-class:name
-				      ?raw-type:name
-				      ?dylan-class:name
-				      ?dereferencer:name
-				      ?boxer:name
-				      ?unboxer:name
-				      end }
+                                      ?C-pointer-class:name
+                                      ?C-pointer-instantiation-class:name
+                                      ?raw-type:name
+                                      ?dylan-class:name
+                                      ?dereferencer:name
+                                      ?boxer:name
+                                      ?unboxer:name
+                                      end }
   => { define open abstract &class ?C-class (<C-abstract-float>)
-	 metaclass <designator-class>,
-	   raw-type-name: ?#"raw-type",
-	   raw-dereferencer: ?#"dereferencer",
-	   boxer-function-name: ?#"boxer",
-	   unboxer-function-name: ?#"unboxer",
-	   low-level-type: ?dylan-class;
+         metaclass <designator-class>,
+           raw-type-name: ?#"raw-type",
+           raw-dereferencer: ?#"dereferencer",
+           boxer-function-name: ?#"boxer",
+           unboxer-function-name: ?#"unboxer",
+           low-level-type: ?dylan-class;
        end;
        define open abstract &class ?C-pointer-class (<C-statically-typed-pointer>)
-	 metaclass <c-automatic-pointer-designator-class>,
-	   referenced-type: ?C-class,
-	   low-level-type: ?C-pointer-class,
-	   self: ?C-pointer-class;
+         metaclass <c-automatic-pointer-designator-class>,
+           referenced-type: ?C-class,
+           low-level-type: ?C-pointer-class,
+           self: ?C-pointer-class;
        end;
        define sealed concrete &class ?C-pointer-instantiation-class (?C-pointer-class)
-	 metaclass <c-automatic-pointer-designator-class>,
-	   abstract-super: ?C-pointer-class,
-	   low-level-type: ?C-pointer-instantiation-class,
-	   self: ?C-pointer-instantiation-class;
+         metaclass <c-automatic-pointer-designator-class>,
+           abstract-super: ?C-pointer-class,
+           low-level-type: ?C-pointer-instantiation-class,
+           self: ?C-pointer-instantiation-class;
        end }
 end macro float-designator-class-aux-definer;
 

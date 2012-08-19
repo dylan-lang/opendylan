@@ -31,7 +31,7 @@ define module dfmc-c-ffi
     <&designator-class>,
       ^concrete-pointer-type, ^abstract-pointer-type,
       ^referenced-type, ^concrete-class,
-      ^mapped-import-type, ^mapped-export-type, 
+      ^mapped-import-type, ^mapped-export-type,
       ^boxer-function-name, ^unboxer-function-name,
       ^import-function, ^export-function;
 

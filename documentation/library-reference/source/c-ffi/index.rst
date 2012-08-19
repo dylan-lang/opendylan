@@ -1973,7 +1973,7 @@ Describing structure types
        [*slot-adjective* ] slot *getter-name* :: *c-type* #key *setter*
          *address-getter* *c-name length* *width*
 
-     The *slot-adjective* can be either *array* or *bitfield*. The
+     The *slot-adjective* can be *constant*,  *array* or *bitfield*. The
      *array* slot adjective indicates that the slot is repeated and the
      *dimensions* option is used to indicate how many repetitions are
      defined, and how it is accessed. The *bitfield* slot adjective
@@ -1982,7 +1982,9 @@ Describing structure types
      given for a *bitfield* slot must be an integer designator. The
      *c-type* for a *bitfield* slot indicates how the value is
      interpreted in Dylan by the slot accessor. A slot may not be
-     specified as both an *array* and a *bitfield*.
+     specified as both an *array* and a *bitfield*. If *constant*
+     is specified, then no setter is generated. The *constant*
+     adjective can be supplied for *array* and *bitfield* slots.
 
      The getter-name keyword specifies the name of the Dylan function to
      which the getter method for the structure slot will be added. The
@@ -1996,7 +1998,8 @@ Describing structure types
      The optional setter keyword specifies the generic function to which
      the setter method for the structure slot will be added. It defaults
      to getter-name*-setter*. No setter method is defined if the
-     *setter* option is ``#f``.
+     *setter* option is ``#f``. If the *constant* keyword is supplied, no
+     *setter* option should be supplied.
 
      The optional *address-getter* specifies the name of a function that
      can be used to return a pointer to the data in the member. It must
