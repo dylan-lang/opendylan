@@ -54,11 +54,13 @@ LINKFLAGS ?= $(CCFLAGS) ;
 # Runtime
 #
 
+RUNTIMEDIR ?= $(COMPILER_BACK_END)-$(OSPLAT)-$(OS) ;
+
 SUPOBJS_harp ?= dylan-support.o ;
 
 SUPOBJS_llvm ?= ;
 
-SUPPORT = $(SYSTEM_LIBDIR)/runtime/$(SUPOBJS_$(COMPILER_BACK_END)) ;
+SUPPORT = $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/$(SUPOBJS_$(COMPILER_BACK_END)) ;
 
 RTOBJS_llvm ?=  ;
 
@@ -67,8 +69,10 @@ RTOBJS_c    ?= debug-print.o
 	       trace.o
 	       posix-threads.o ;
 
+LINKFLAGS += -L$(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/ ;
+
 # These are passed to the link rules by way of the dylan.lid file
-rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RTOBJS_$(COMPILER_BACK_END))
+rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/$(RTOBJS_$(COMPILER_BACK_END))
 	   -lm $(GC_RTLIBS) ;
 rtclibs ?= ;
 
