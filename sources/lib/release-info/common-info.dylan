@@ -30,7 +30,7 @@ define constant $release-version          = "2012.1pre1";
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
     "Portions Copyright (c) 2004-2012, Dylan Hackers\n"
-    "Portions Copyright (c) 2001-2002, Ravenbrook Ltd.";
+    "Portions Copyright (c) 2001-2012, Ravenbrook Ltd.";
 
 
 /// Release info querying functions
