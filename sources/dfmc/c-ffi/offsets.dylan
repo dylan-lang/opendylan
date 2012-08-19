@@ -61,12 +61,12 @@ define sealed domain initialize(<struct-aggregate-raw-type>);
 define method c-ffi-type-size (designator :: <&designator-class>)
  => (size :: <integer>);
   raw-type-info-size(designator.^raw-type-info)
-end;  
+end;
 
 define method c-ffi-type-alignment (designator :: <&designator-class>)
  => (align :: <integer>);
   raw-type-info-alignment(designator.^raw-type-info)
-end;  
+end;
 
 */
 
@@ -79,7 +79,7 @@ define method initialize-raw-type (raw-type :: <basic-raw-type>) => ();
   raw-type.initialized? := #t;
 end;
 
-  
+
 define method assure-initialized (raw-type :: <abstract-raw-type>) => ();
   unless (raw-type.initialized? & raw-type.back-end == current-back-end())
     initialize-raw-type(raw-type);
@@ -113,7 +113,7 @@ end;
 
 define method compute-aggregate-alignment
     (raw-type :: <abstract-aggregate-raw-type>)
- => (i :: <integer>); 
+ => (i :: <integer>);
   let running-alignment = 1;
   let pack-option
     = get-property(raw-type.raw-options, #"pack",
@@ -163,8 +163,8 @@ define method compute-aggregate-size
       next-bitfield-offset := 0;
       force-new-field? := #t;
     elseif (force-new-field?
-	    | field-size ~= previous-field-size  // change in size of type
-	    | (next-bitfield-offset > field-size * address-unit-bit-size()))
+            | field-size ~= previous-field-size  // change in size of type
+            | (next-bitfield-offset > field-size * address-unit-bit-size()))
       running-size := round-up-to-mod(running-size, adjusted-alignment)
                         + field-size;
       running-bitfield-offset := 0;
@@ -240,8 +240,8 @@ define method compute-aggregate-field-offset
           next-bitfield-offset := 0;
           force-new-field? := #t;
         elseif (force-new-field?
-	        | field-size ~= previous-field-size  // change in size of type
-	        | (next-bitfield-offset > field-size * address-unit-bit-size()))
+                | field-size ~= previous-field-size  // change in size of type
+                | (next-bitfield-offset > field-size * address-unit-bit-size()))
           running-offset
             := round-up-to-mod(running-offset + previous-field-size,
                                adjusted-alignment);
@@ -252,9 +252,9 @@ define method compute-aggregate-field-offset
         if (i = field-index)
           return(running-offset, running-bitfield-offset, field-width);
         end if;
-	running-alignment := max(running-alignment, adjusted-alignment);
-	running-bitfield-offset := next-bitfield-offset;
-	previous-field-size := field-size;
+        running-alignment := max(running-alignment, adjusted-alignment);
+        running-bitfield-offset := next-bitfield-offset;
+        previous-field-size := field-size;
       end for;
     end block;
   end if;
@@ -262,7 +262,7 @@ end method;
 
 define &macro %c-struct-slot-offset
   { %c-struct-slot-offset(?slot-number:expression,
-			  ?struct-name:name) }
+                          ?struct-name:name) }
   =>
   begin
     let struct-class = ^eval-designator(struct-name);
@@ -280,7 +280,7 @@ define method compute-raw-type-info
  => (raw-type-info :: <struct-aggregate-raw-type>);
   make(<struct-aggregate-raw-type>,
        fields: map(curry(as, <abstract-aggregate-field-indicator>),
-		   slots),
+                   slots),
        options: designator.^options)
 end;
 
@@ -293,12 +293,12 @@ define method compute-raw-type-info
  => (raw-type-info :: <union-aggregate-raw-type>);
   make(<union-aggregate-raw-type>,
        fields: map(curry(as, <abstract-aggregate-field-indicator>),
-		   slots),
+                   slots),
        options: designator.^options)
 end;
 
 define method as (c == <abstract-aggregate-field-indicator>,
-		  slot :: <c-struct/union-slot-descriptor>)
+                  slot :: <c-struct/union-slot-descriptor>)
  => (res :: <simple-field-indicator>)
   let slot-type-model = ^eval-designator(slot.c-type);
   unless (designator-class?(slot-type-model))
@@ -310,7 +310,7 @@ define method as (c == <abstract-aggregate-field-indicator>,
 end;
 
 define method as (c == <abstract-aggregate-field-indicator>,
-		  slot :: <c-struct/union-array-slot-descriptor>)
+                  slot :: <c-struct/union-array-slot-descriptor>)
  => (res :: <repeated-field-indicator>)
   let slot-type-model = ^eval-designator(slot.c-type);
   unless (designator-class?(slot-type-model))
@@ -328,7 +328,7 @@ define method as (c == <abstract-aggregate-field-indicator>,
 end;
 
 define method as (c == <abstract-aggregate-field-indicator>,
-		  slot :: <c-struct/union-bitfield-slot-descriptor>)
+                  slot :: <c-struct/union-bitfield-slot-descriptor>)
  => (res :: <bitfield-field-indicator>)
   let slot-type-model = ^eval-designator(slot.c-type);
   unless (designator-class?(slot-type-model))
@@ -339,9 +339,9 @@ define method as (c == <abstract-aggregate-field-indicator>,
   let width = ^top-level-eval(slot.bitfield-width);
   unless(instance?(width, <integer>) & width > 0)
     note(<invalid-bitfield-slot-width>,
-	 source-location: fragment-source-location(slot.bitfield-width),
-	 definition-name: #{ *unkown* },
-	 width-expression: slot.bitfield-width);
+         source-location: fragment-source-location(slot.bitfield-width),
+         definition-name: #{ *unkown* },
+         width-expression: slot.bitfield-width);
     width := 1;
   end unless;
   make(<bitfield-field-indicator>,

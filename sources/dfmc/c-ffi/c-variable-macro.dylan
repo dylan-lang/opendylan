@@ -38,13 +38,13 @@ define &macro c-address-definer
       let import = c-address-import(options) | #{ #f };
       #{ define constant ?var-name
            = make(check-c-address-designator(?var-name, ?pointer-designator),
-	          address: primitive-wrap-machine-word
-		    (primitive-cast-pointer-as-raw
-		       (%c-variable-pointer(?c-name, ?import)))) };
+                  address: primitive-wrap-machine-word
+                    (primitive-cast-pointer-as-raw
+                       (%c-variable-pointer(?c-name, ?import)))) };
     else
       note(<missing-c-name>,
-	   source-location: fragment-source-location(form),
-	   definition-name: var-name);
+           source-location: fragment-source-location(form),
+           definition-name: var-name);
       #{ };
     end if;
   end;
@@ -56,17 +56,17 @@ define &macro check-c-address-designator
     begin
       let designator-model = ^eval-designator(designator);
       if (designator-class?(designator-model))
-	unless (^referenced-type(designator-model))
-	  note(<designator-not-a-pointer>,
-	       source-location: fragment-source-location(designator),
-	       definition-name: name,
-	       designator-name: designator);
-	  designator := #{ <C-void*> };
-	end unless;
+        unless (^referenced-type(designator-model))
+          note(<designator-not-a-pointer>,
+               source-location: fragment-source-location(designator),
+               definition-name: name,
+               designator-name: designator);
+          designator := #{ <C-void*> };
+        end unless;
       else
-	generate-unresolved-designator-error
-	  (designator, name, #{ C-address }, #());
-	designator := #{ <C-void*> };
+        generate-unresolved-designator-error
+          (designator, name, #{ C-address }, #());
+        designator := #{ <C-void*> };
       end if;
       #{ ?designator }
     end;
@@ -116,8 +116,8 @@ define &macro c-variable-definer
     let c-name = c-variable-c-name(options);
     if (c-name = #f)
       note(<missing-c-name>,
-	   source-location: fragment-source-location(form),
-	   definition-name: accessor);
+           source-location: fragment-source-location(form),
+           definition-name: accessor);
       #{ };
     else
       let pointer-type-name = #{ "pointer-type-defined-for-" ## ?accessor };
@@ -131,10 +131,10 @@ define &macro c-variable-definer
             { ?:name } => name;
             { ?anything-else:* }
               => begin
-		   note(<invalid-c-variable-setter>,
-			source-location: fragment-source-location(setter),
-			form-name: accessor,
-			setter-expr: setter);
+                   note(<invalid-c-variable-setter>,
+                        source-location: fragment-source-location(setter),
+                        form-name: accessor,
+                        setter-expr: setter);
                    #{ ?accessor ## "-setter" };
                  end;
           end;
@@ -142,14 +142,14 @@ define &macro c-variable-definer
       let setter-definition
         = if (setter-name)
             #{ define inline method ?setter-name
-	           (new :: export-type-for(?designator-type))
-	        => (new :: export-type-for(?designator-type));
-	         pointer-value(?pointer-name) := new;
+                   (new :: export-type-for(?designator-type))
+                => (new :: export-type-for(?designator-type));
+                 pointer-value(?pointer-name) := new;
                  new
-	       end method };
-	  else
-	    #{ }
-	  end if;
+               end method };
+          else
+            #{ }
+          end if;
 
       #{ define c-pointer-type ?pointer-type-name
            => check-c-variable-designator(?accessor, ?designator-type);
@@ -160,7 +160,7 @@ define &macro c-variable-definer
 
          define inline method ?accessor ()
           => (value :: import-type-for(?designator-type))
-	   pointer-value(?pointer-name)
+           pointer-value(?pointer-name)
          end;
 
          ?setter-definition };
@@ -174,16 +174,16 @@ define &macro check-c-variable-designator
     begin
       let designator-model = ^eval-designator(designator);
       if (designator-class?(designator-model))
-	if (instance?(designator-model, <&c-struct/union-designator-class>))
-	  note(<aggregate-designator-type>,
-	       source-location: fragment-source-location(designator),
-	       definition-name: name,
-	       designator-name: designator);
-	end if;
+        if (instance?(designator-model, <&c-struct/union-designator-class>))
+          note(<aggregate-designator-type>,
+               source-location: fragment-source-location(designator),
+               definition-name: name,
+               designator-name: designator);
+        end if;
       else
-	// Don't need to generate an undefined designator error here
-	// while C-variable expands into C-address.
-	designator := #{ <C-void*> };
+        // Don't need to generate an undefined designator error here
+        // while C-variable expands into C-address.
+        designator := #{ <C-void*> };
       end if;
       #{ ?designator };
     end;

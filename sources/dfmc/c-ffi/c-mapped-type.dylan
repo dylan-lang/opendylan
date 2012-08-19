@@ -6,7 +6,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Copyright 1996 Functional Objects, Inc.  All rights reserved.
 
-/* 
+/*
 
 define c-mapped-suptype <new-type> (<super-type>)
   import-map <some-type>, import-function: import-fun;
@@ -84,9 +84,9 @@ define &macro c-mapped-subtype-definer
     end }
   => begin
        unless-ffi-definition-dynamic (form)
-	 let keys = parse-c-mapped-subtype-specs(form, name, specs);
+         let keys = parse-c-mapped-subtype-specs(form, name, specs);
          apply(do-define-c-mapped-subtype, form, name, supers,
-	       modifiers: mods, keys)
+               modifiers: mods, keys)
        end;
      end;
 
@@ -141,9 +141,9 @@ define function process-map-options (map-type,
      #key import-function = #{ identity }, export-function = #{ identity })
  => (options :: <list>)
     list(partial-import-function: import-function,
-	 partial-export-function: export-function,
-	 import-type: map-type,
-	 export-type: map-type )
+         partial-export-function: export-function,
+         import-type: map-type,
+         export-type: map-type )
 end function;
 
 define function process-import-map-options (clause, name, map-type,
@@ -153,8 +153,8 @@ define function process-import-map-options (clause, name, map-type,
     list(import-type: map-type, partial-import-function: import-function);
   else
     note(<missing-import-function>,
-	 source-location: fragment-source-location(clause),
-	 definition-name: name);
+         source-location: fragment-source-location(clause),
+         definition-name: name);
     #();
   end if;
 end function;
@@ -166,8 +166,8 @@ define function process-export-map-options (clause, name, map-type,
     list(export-type: map-type, partial-export-function: export-function);
   else
     note(<missing-export-function>,
-	 source-location: fragment-source-location(clause),
-	 definition-name: name);
+         source-location: fragment-source-location(clause),
+         definition-name: name);
     #();
   end if;
 end function;
@@ -191,75 +191,75 @@ define method parse-c-mapped-subtype-specs (form, name, specs :: <sequence>)
       = macro-case (clause)
       { map ?map-type:expression, ?options:* }
       => begin
-	   if (import-mapping?)
-	     note(<multiple-import-mappings>,
-		  source-location: fragment-source-location(form),
-		  definition-name: name);
-	     #();
-	   elseif (export-mapping?)
-	     note(<multiple-export-mappings>,
-		  source-location: fragment-source-location(form),
-		  definition-name: name);
-	     #();
-	   else
-	     import-mapping? := #t;
-	     export-mapping? := #t;
-	     let keys = parse-options($c-mapped-subtype-map-options,
-				      options, name);
-	     apply(process-map-options, map-type, keys);
-	   end if;
-	 end;
+           if (import-mapping?)
+             note(<multiple-import-mappings>,
+                  source-location: fragment-source-location(form),
+                  definition-name: name);
+             #();
+           elseif (export-mapping?)
+             note(<multiple-export-mappings>,
+                  source-location: fragment-source-location(form),
+                  definition-name: name);
+             #();
+           else
+             import-mapping? := #t;
+             export-mapping? := #t;
+             let keys = parse-options($c-mapped-subtype-map-options,
+                                      options, name);
+             apply(process-map-options, map-type, keys);
+           end if;
+         end;
 
     { import-map ?import-type:expression, ?options:* }
       => begin
-	   if (import-mapping?)
-	     note(<multiple-import-mappings>,
-		  source-location: fragment-source-location(form),
-		  definition-name: name);
-	     #();
-	   else
-	     import-mapping? := #t;
-	     let keys = parse-options($c-mapped-subtype-import-map-options,
-				      options, name);
-	     apply(process-import-map-options, form, name, import-type, keys);
-	   end if;
-	 end;
+           if (import-mapping?)
+             note(<multiple-import-mappings>,
+                  source-location: fragment-source-location(form),
+                  definition-name: name);
+             #();
+           else
+             import-mapping? := #t;
+             let keys = parse-options($c-mapped-subtype-import-map-options,
+                                      options, name);
+             apply(process-import-map-options, form, name, import-type, keys);
+           end if;
+         end;
 
     { export-map ?export-type:expression, ?options:* }
       => begin
-	   if (export-mapping?)
-	     note(<multiple-export-mappings>,
-		  source-location: fragment-source-location(form),
-		  definition-name: name);
-	     #();
-	   else
-	     export-mapping? := #t;
-	     let keys = parse-options($c-mapped-subtype-export-map-options,
-				      options, name);
-	     apply(process-export-map-options, form, name, export-type, keys);
-	   end if;
-	 end;
+           if (export-mapping?)
+             note(<multiple-export-mappings>,
+                  source-location: fragment-source-location(form),
+                  definition-name: name);
+             #();
+           else
+             export-mapping? := #t;
+             let keys = parse-options($c-mapped-subtype-export-map-options,
+                                      options, name);
+             apply(process-export-map-options, form, name, export-type, keys);
+           end if;
+         end;
 
     { pointer-type ?pointer-type-name:name, ?options:* }
       => begin
-	   let keys = parse-options($c-mapped-subtype-pointer-type-options,
-				    options, name);
-	   apply(process-pointer-type-options, pointer-type-name, keys);
-	 end;
+           let keys = parse-options($c-mapped-subtype-pointer-type-options,
+                                    options, name);
+           apply(process-pointer-type-options, pointer-type-name, keys);
+         end;
 
     { ?options:* }
       => as(<list>,parse-options($c-mapped-subtype-options, options, name));
 /*
     { ?other:* }
       => begin
-	   note(<unrecognized-clause>,
-		source-location: fragment-source-location(other),
-		definition-name: name);
-	   #();
-	 end;
+           note(<unrecognized-clause>,
+                source-location: fragment-source-location(other),
+                definition-name: name);
+           #();
+         end;
 */
     end macro-case;
-    
+
     keys := concatenate(new-keys, keys);
   end for;
   keys;
@@ -277,19 +277,19 @@ define &macro simple-c-mapped-subtype-definer
   =>
   unless-ffi-definition-dynamic (form)
     apply(method
-	      (#key import-function, export-function,import-type,
-	       export-type, pointer-type-name) => (template);
-	    unless(pointer-type-name)
-	      pointer-type-name := gensym("mapped-pointer-to-", name);
-	    end;
-	    let concrete-pointer-type
-	      = gensym("instantiation-of-", pointer-type-name);
-	    do-simple-c-mapped-subtype
-	      (name, mods, supers, import-function,
-	       export-function, import-type, export-type,
-	       pointer-type-name, concrete-pointer-type, #{})
-	  end,
-	  specs);
+              (#key import-function, export-function,import-type,
+               export-type, pointer-type-name) => (template);
+            unless(pointer-type-name)
+              pointer-type-name := gensym("mapped-pointer-to-", name);
+            end;
+            let concrete-pointer-type
+              = gensym("instantiation-of-", pointer-type-name);
+            do-simple-c-mapped-subtype
+              (name, mods, supers, import-function,
+               export-function, import-type, export-type,
+               pointer-type-name, concrete-pointer-type, #{})
+          end,
+          specs);
   end;
 supers:
   { } => #()
@@ -301,20 +301,20 @@ spec:
   { map ?map-type:expression, #key ?import-function:expression = identity,
                                    ?export-function:expression = identity }
   => list(import-function: import-function,
-	  export-function: export-function,
-	  import-type: map-type,
-	  export-type: map-type )
+          export-function: export-function,
+          import-type: map-type,
+          export-type: map-type )
   { import-map ?import-type:expression,
                  import-function: ?import-function:expression }
   => list(import-function: import-function,
-	  import-type: import-type)
+          import-type: import-type)
   { export-map ?export-type:expression,
                  export-function: ?export-function:expression }
   => list(export-function: export-function,
-	  export-type: export-type)
+          export-type: export-type)
   { pointer-type ?pointer-type-name:name }
   => list(pointer-type-name: pointer-type-name)
-end &macro;  
+end &macro;
 
 
 define method do-simple-c-mapped-subtype
@@ -325,15 +325,15 @@ define method do-simple-c-mapped-subtype
   let pointer-type-defns
     = create-automatic-c-pointer-definition-fragment
         (abstract-pointer-type, name,
-	 concrete-class-name: concrete-pointer-type);
+         concrete-class-name: concrete-pointer-type);
   /*
-  let implicit-exports 
+  let implicit-exports
     = generate-implicit-exports(concrete-pointer-type);
   */
   let implicit-exports = #();
   let pointer-value-def
     = if (import-function-name | import-type)
-        #{ define method pointer-value 
+        #{ define method pointer-value
                (p :: ?abstract-pointer-type, #key index :: <integer> = 0)
             => (v :: import-type-for(?name));
              pointer-value-body(p, index, ?abstract-pointer-type);
@@ -343,25 +343,25 @@ define method do-simple-c-mapped-subtype
       end;
   let pointer-value-setter-def
     = if (export-function-name | export-type)
-        #{ define method pointer-value-setter 
+        #{ define method pointer-value-setter
                (new :: export-type-for(?name), p :: ?abstract-pointer-type,
-		  #key index :: <integer> = 0)
+                  #key index :: <integer> = 0)
             => (v :: export-type-for(?name));
-	      pointer-value-setter-body
+              pointer-value-setter-body
                 (new, p, index, ?abstract-pointer-type);
            end method pointer-value-setter }
       else
         #{ }
       end;
     #{ define ?modifiers class ?name ( ??supers, ... )
-	 metaclass <c-mapped-designator-class>,
-	   import-function: ?import-function-name,
-	   export-function: ?export-function-name,
-	   mapped-import-type: ?import-type,
-	   mapped-export-type: ?export-type,
-	   pointer-type-name: ?abstract-pointer-type,
-	   self: ?name;
-	 ?slots
+         metaclass <c-mapped-designator-class>,
+           import-function: ?import-function-name,
+           export-function: ?export-function-name,
+           mapped-import-type: ?import-type,
+           mapped-export-type: ?export-type,
+           pointer-type-name: ?abstract-pointer-type,
+           self: ?name;
+         ?slots
        end;
        ?pointer-type-defns;
        ?pointer-value-def;
@@ -388,33 +388,33 @@ define method do-define-c-mapped-subtype
  => (s :: <template>);
   // first do some syntactical consistency checking
   verify-mapped-subtype-options(form, name, supers,
-				partial-import-function,
-				partial-export-function,
-				import-type,
-				export-type,
-				pointer-type-name,
-				define-pointer-value-setter);
+                                partial-import-function,
+                                partial-export-function,
+                                import-type,
+                                export-type,
+                                pointer-type-name,
+                                define-pointer-value-setter);
   let abstract-pointer-type
     = pointer-type-name | gensym(name, " *");
   let concrete-pointer-type
     = gensym("concrete-pointer-type-for-", name);
   let import-function-name
     = if (partial-import-function)
-	gensym("import-function-for-", name);
+        gensym("import-function-for-", name);
       else
-	#f
+        #f
       end;
   let export-function-name
     = if (partial-export-function)
-	gensym("export-function-for-", name);
+        gensym("export-function-for-", name);
       else
-	#f
+        #f
       end;
   let definitions
     = list(do-simple-c-mapped-subtype
-	     (name, modifiers, supers, import-function-name,
-	      export-function-name, import-type, export-type,
-	      abstract-pointer-type, concrete-pointer-type, slots));
+             (name, modifiers, supers, import-function-name,
+              export-function-name, import-type, export-type,
+              abstract-pointer-type, concrete-pointer-type, slots));
 
   if (partial-import-function)
     definitions
@@ -423,10 +423,10 @@ define method do-define-c-mapped-subtype
 //                  => (value :: check-import-type-defined(?import-type, ?name))
                   => (value :: ?import-type)
                    import-function-body(arg,
-					?partial-import-function,
-					(??supers, ...))
+                                        ?partial-import-function,
+                                        (??supers, ...))
                  end },
-	      definitions);
+              definitions);
   end if;
   if (partial-export-function)
     definitions
@@ -435,10 +435,10 @@ define method do-define-c-mapped-subtype
                      (arg :: ?export-type)
                   => (value :: low-level-type-for(?name))
                    export-function-body(arg,
-					?partial-export-function,
-					(??supers, ...))
+                                        ?partial-export-function,
+                                        (??supers, ...))
                  end },
-	      definitions);
+              definitions);
 
   end if;
   #{ ??definitions; ...}
@@ -446,9 +446,9 @@ end method;
 
 define &macro pointer-value-setter-body
   { pointer-value-setter-body(?new-value-var:variable,
-			      ?pointer-var:variable,
-			      ?index-var:variable,
-			      ?pointer-type-expr:expression) }
+                              ?pointer-var:variable,
+                              ?index-var:variable,
+                              ?pointer-type-expr:expression) }
   =>
   begin
     let pointer-type = ^eval-designator(pointer-type-expr);
@@ -458,10 +458,10 @@ define &macro pointer-value-setter-body
     let dereferencer = ref-type.^raw-dereferencer-name;
     if (dereferencer)
       #{ ?dereferencer(primitive-unwrap-c-pointer(?pointer-var),
-		       integer-as-raw(?index-var),
+                       integer-as-raw(?index-var),
                        integer-as-raw(0))
-	  := ?unboxer(?export(?new-value-var));
-	?new-value-var }
+          := ?unboxer(?export(?new-value-var));
+        ?new-value-var }
     else
       // !@#$ ideally the pointer-value-setter won't even be defined
       #{ error("trying to call pointer-value-setter with a bad class") }
@@ -471,8 +471,8 @@ end &macro;
 
 define &macro pointer-value-body
   { pointer-value-body(?pointer-var:variable,
-			      ?index-var:variable,
-			      ?pointer-type-expr:expression) }
+                              ?index-var:variable,
+                              ?pointer-type-expr:expression) }
   =>
   begin
     let pointer-type = ^eval-designator(pointer-type-expr);
@@ -483,14 +483,14 @@ define &macro pointer-value-body
     let dereferencer = ref-type.^raw-dereferencer-name;
     if (dereferencer)
       #{ ?import
-	  (boxer-for-designator
-	     (?low-type,
-	      ?dereferencer
-		(primitive-unwrap-c-pointer(?pointer-var),
-		 integer-as-raw(?index-var),
+          (boxer-for-designator
+             (?low-type,
+              ?dereferencer
+                (primitive-unwrap-c-pointer(?pointer-var),
+                 integer-as-raw(?index-var),
                  integer-as-raw(0)),
-	      ?boxer))
-	  }
+              ?boxer))
+          }
     else
       // !@#$ this is controversial Maybe we shouldn't even
       // !@#$ define the method in this case?
@@ -503,24 +503,24 @@ end &macro;
 
 define &macro export-function-body
   { export-function-body(?arg-var:variable,
-			 ?partial-export-function:*,
-			 (?supers)) }
+                         ?partial-export-function:*,
+                         (?supers)) }
   =>
   begin
     let (designator-super, super-expr)
       = block (gotit)
-	  for(c-expr in supers)
-	    let c = ^eval-designator(c-expr);
-	    if (designator-class?(c))
-	      gotit(c, c-expr)
-	    end if;
-	  end for;
-	  values(#f, #f);
-	end block;
+          for(c-expr in supers)
+            let c = ^eval-designator(c-expr);
+            if (designator-class?(c))
+              gotit(c, c-expr)
+            end if;
+          end for;
+          values(#f, #f);
+        end block;
     // !@#$ need to error out if no designator super
     let superclass-export = designator-super.^export-function;
     if (superclass-export)
-      #{ ?superclass-export(?partial-export-function(?arg-var)) }      
+      #{ ?superclass-export(?partial-export-function(?arg-var)) }
     else
       #{ ?partial-export-function(?arg-var) }
     end if
@@ -528,29 +528,29 @@ define &macro export-function-body
 supers:
   { ?super:expression, ... } => pair(super, ...)
   { ?super:* } => list(super);
-end;      
+end;
 
 define &macro import-function-body
   { import-function-body(?arg-var:variable,
-			 ?partial-import-function:*,
-			 (?supers)) }
+                         ?partial-import-function:*,
+                         (?supers)) }
   =>
   begin
     let (designator-super, super-expr)
       = block (gotit)
-	  for(c-expr in supers)
-	    let c = ^eval-designator(c-expr);
-	    if (designator-class?(c))
-	      gotit(c, c-expr)
-	    end if;
-	  end for;
-	  values(#f, #f);
-	end block;
+          for(c-expr in supers)
+            let c = ^eval-designator(c-expr);
+            if (designator-class?(c))
+              gotit(c, c-expr)
+            end if;
+          end for;
+          values(#f, #f);
+        end block;
     // !@#$ need to error out if no designator-super
     let superclass-import = designator-super.^import-function;
     if (superclass-import)
       #{ ?partial-import-function
-	  (?superclass-import(?arg-var)) }
+          (?superclass-import(?arg-var)) }
     else
       #{ ?partial-import-function(?arg-var) }
     end if;
@@ -558,7 +558,7 @@ define &macro import-function-body
 supers:
   { ?super:expression, ... } => pair(super, ...)
   { ?super:* } => list(super);
-end;      
+end;
 
 define &macro check-import-type-defined
   { check-import-type-defined (?import-type:expression, ?:name) }
@@ -568,8 +568,8 @@ define &macro check-import-type-defined
       #{ ?import-type };
     else
       note(<unresolved-import-type>,
-	   source-location: fragment-source-location(import-type),
-	   definition-name: name);
+           source-location: fragment-source-location(import-type),
+           definition-name: name);
       #{ <object> };
     end if;
   end;
@@ -583,8 +583,8 @@ define &macro check-export-type-defined
       #{ ?export-type };
     else
       note(<unresolved-export-type>,
-	   source-location: fragment-source-location(export-type),
-	   definition-name: name);
+           source-location: fragment-source-location(export-type),
+           definition-name: name);
       #{ <object> };
     end if;
   end;
@@ -592,12 +592,12 @@ end &macro;
 
 
 define method verify-mapped-subtype-options (fragment, name, supers,
-					     partial-import-function,
-					     partial-export-function,
-					     import-type,
-					     export-type,
-					     pointer-type-name,
-					     define-pointer-value-setter)
+                                             partial-import-function,
+                                             partial-export-function,
+                                             import-type,
+                                             export-type,
+                                             pointer-type-name,
+                                             define-pointer-value-setter)
  => ();
   // !@#$ do this error checking
   values();
@@ -629,9 +629,9 @@ define function process-c-subtype-options (name, clause,
       list(pointer-type-name: pointer-type-name);
     else
       note(<invalid-pointer-type-name-value>,
-	   source-location: fragment-source-location(pointer-type-name),
-	   definition-name: name,
-	   pointer-type-name-expression: pointer-type-name);
+           source-location: fragment-source-location(pointer-type-name),
+           definition-name: name,
+           pointer-type-name-expression: pointer-type-name);
       #();
     end if;
   else
@@ -647,9 +647,9 @@ define &macro c-subtype-definer
   unless-ffi-definition-dynamic (form)
     let (keys, slots) = parse-subtype-keys-and-slots(name, keys-and-slots);
     apply(do-define-c-mapped-subtype, form, name, supers,
-	  modifiers: mods,
-	  slots: slots,
-	  keys);
+          modifiers: mods,
+          slots: slots,
+          keys);
   end;
 supers:
 { } => #();
@@ -657,26 +657,26 @@ supers:
 end;
 
 define method parse-subtype-keys-and-slots (name :: <fragment>,
-					    keys-and-slots :: <fragment>)
+                                            keys-and-slots :: <fragment>)
  => (keys :: <sequence>, slots :: <template>)
 
   local method parse-item (item) => (key :: <list>, value :: <list>)
-	  macro-case (item)
-	  { ?modifiers:* slot ?stuff:* }
-	  => values(#(), list(item))
-	  { ?options:* }
-	  => values(apply(process-c-subtype-options, name, options,
-			  parse-options($c-subtype-options, options, name)),
-		    #())
-	end macro-case;
+          macro-case (item)
+          { ?modifiers:* slot ?stuff:* }
+          => values(#(), list(item))
+          { ?options:* }
+          => values(apply(process-c-subtype-options, name, options,
+                          parse-options($c-subtype-options, options, name)),
+                    #())
+        end macro-case;
   end method parse-item;
 
   macro-case (keys-and-slots)
     { ?items:* }
     => begin
          let keys = head(items);
-	 let slots = tail(items);
-	 values(keys, #{ ??slots; ...});
+         let slots = tail(items);
+         values(keys, #{ ??slots; ...});
        end;
   items:
     { } => pair(#(), #());
@@ -697,7 +697,7 @@ end;
 
 define &macro boxer-for-designator
   { boxer-for-designator(?type-expr:expression, ?raw-value:expression,
-			 ?default-boxer:expression) }
+                         ?default-boxer:expression) }
   => begin
        let low-type = ^eval-designator(type-expr);
        boxer-expression(low-type, type-expr, raw-value, default-boxer)
@@ -710,10 +710,10 @@ define method boxer-expression
      raw-expr :: <fragment>, default-boxer :: <fragment>)
  => (exp);
   #{ make-c-pointer(?type-expr,
-		    primitive-cast-pointer-as-raw(?raw-expr),
-		    #[]); }
+                    primitive-cast-pointer-as-raw(?raw-expr),
+                    #[]); }
 end;
-  
+
 define method boxer-expression
     (type :: <object>, type-expr :: <fragment>,
      raw-expr :: <fragment>, default-boxer :: <fragment>)

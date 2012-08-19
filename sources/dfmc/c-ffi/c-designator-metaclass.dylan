@@ -10,26 +10,26 @@ define inline-only function designator-class? (class)
 end function;
 
 
-define method ^initialize-class 
+define method ^initialize-class
     (designator :: <&designator-class>,
      #rest keys,
      #key low-level-type,
           raw-type-name,
           raw-dereferencer,
           bitfield-dereferencer,
-	  //pointer-type-name,
-	  referenced-type,
-	  import-function,
-	  export-function,
-	  mapped-import-type,
-	  mapped-export-type,
-	  boxer-function-name,
-	  unboxer-function-name,
-	  temporary,
-	  self,
-	  // TODO: CORRECTNESS: debug-name is a string.
-	  // Was that expected?
-	  debug-name) 
+          //pointer-type-name,
+          referenced-type,
+          import-function,
+          export-function,
+          mapped-import-type,
+          mapped-export-type,
+          boxer-function-name,
+          unboxer-function-name,
+          temporary,
+          self,
+          // TODO: CORRECTNESS: debug-name is a string.
+          // Was that expected?
+          debug-name)
   // this fills in the normal class information
   next-method();
   // if a pointer-type-name was specified then we need to generate a
@@ -42,60 +42,59 @@ define method ^initialize-class
        make-automatic-pointer-definition-form(form));
     designator.^abstract-pointer-type := pointer-type-name;
   end if;
-  */ 
+  */
   let superclass-models = designator.^direct-superclasses;
   // !@#$ error if superclass-models is not a sequence of class models
   let designator-super = block (return)
-			   for (c in superclass-models)
-			     if (instance?(c, <&designator-class>))
-			       return(c);
-			       
-			     elseif
-			       // !@#$ should be a model.  This is a hack
-			       (instance?(c, <&static-values>)
-				  & instance?(head (&values-model-objects(c)),
-						<&designator-class>))
-			       return(head(&values-model-objects(c)))
-			     end if;
-			   end for;
-			 end block;
+                           for (c in superclass-models)
+                             if (instance?(c, <&designator-class>))
+                               return(c);
+                             elseif
+                               // !@#$ should be a model.  This is a hack
+                               (instance?(c, <&static-values>)
+                                  & instance?(head (&values-model-objects(c)),
+                                                <&designator-class>))
+                               return(head(&values-model-objects(c)))
+                             end if;
+                           end for;
+                         end block;
   // TODO: unless we are in the boot it is an error if there is no
   // designator superclass
 /*
   unless (designator-class?(designator-super))
     note(<no-designator-superclass>,
-	 designator-name: debug-name);
+         designator-name: debug-name);
     designator-super := ^eval-designator(#{ <C-void*>});
   end unless;
 */
   local
     method set-or-inherit(val, class-field, class-field-setter,
-			  #key fixup = identity,
-			       unresolved-condition = <program-error>,
-			       eval = #t)
-      // !@#$ should really pass a default value to use if there is no 
+                          #key fixup = identity,
+                               unresolved-condition = <program-error>,
+                               eval = #t)
+      // !@#$ should really pass a default value to use if there is no
       // designator-super, and it was not set by the form.
       if (val &
-	    ~(instance?(val, <literal-constant-fragment>) & fragment-value(val) == #f))
-	// !@#$ hack to deal with references to self ...
-	if ((object-class(val) == object-class(debug-name))
-	      & (as(<symbol>, val)
-		   == as(<symbol>, debug-name)))
-	  designator.class-field := fixup(designator);
-	  // !@#$ end hack to deal with references to self
-	else
-	  let true-value
-	    = if(eval) ^top-level-eval(val) else val end;
-	  unless (true-value)
-	    raise(unresolved-condition,
-		  source-location: model-source-location(designator));
-	  end unless;
-	  designator.class-field := fixup(true-value);
-	end if; 
-	// !@#$ if this field was not compile time evaluable then
-	// signal an error 
+            ~(instance?(val, <literal-constant-fragment>) & fragment-value(val) == #f))
+        // !@#$ hack to deal with references to self ...
+        if ((object-class(val) == object-class(debug-name))
+              & (as(<symbol>, val)
+                   == as(<symbol>, debug-name)))
+          designator.class-field := fixup(designator);
+          // !@#$ end hack to deal with references to self
+        else
+          let true-value
+            = if(eval) ^top-level-eval(val) else val end;
+          unless (true-value)
+            raise(unresolved-condition,
+                  source-location: model-source-location(designator));
+          end unless;
+          designator.class-field := fixup(true-value);
+        end if;
+        // !@#$ if this field was not compile time evaluable then
+        // signal an error
       elseif (designator-super)
-	designator.class-field := designator-super.class-field;
+        designator.class-field := designator-super.class-field;
       end if;
     end method,
     method as-variable (thing)
@@ -104,22 +103,22 @@ define method ^initialize-class
     method compute-raw-type-info(raw-type-name)
      => (t :: <abstract-raw-type>);
       let raw-info = make(<basic-raw-type>,
-			  raw-name: as-variable(raw-type-name));
+                          raw-name: as-variable(raw-type-name));
       initialize-raw-type(raw-info);
       raw-info
     end;
   set-or-inherit(low-level-type, ^low-level-type, ^low-level-type-setter,
-		 eval: #f);
+                 eval: #f);
   set-or-inherit(raw-type-name, ^raw-type-info, ^raw-type-info-setter,
-		 fixup: compute-raw-type-info);
+                 fixup: compute-raw-type-info);
   set-or-inherit(raw-dereferencer, ^raw-dereferencer-name,
-		 ^raw-dereferencer-name-setter, fixup: as-variable);
+                 ^raw-dereferencer-name-setter, fixup: as-variable);
   set-or-inherit(bitfield-dereferencer, ^bitfield-dereferencer-name,
-		 ^bitfield-dereferencer-name-setter, fixup: as-variable);
+                 ^bitfield-dereferencer-name-setter, fixup: as-variable);
   set-or-inherit(boxer-function-name, ^boxer-function-name,
-		 ^boxer-function-name-setter, fixup: as-variable);
+                 ^boxer-function-name-setter, fixup: as-variable);
   set-or-inherit(unboxer-function-name, ^unboxer-function-name,
-		 ^unboxer-function-name-setter, fixup: as-variable);
+                 ^unboxer-function-name-setter, fixup: as-variable);
   set-or-inherit
     (import-function, ^import-function, ^import-function-setter, eval: #f);
   set-or-inherit
@@ -148,42 +147,42 @@ define method ^initialize-class
     designator.^referenced-type := designator-super.^referenced-type
   end if;
   local method fragment-false? (f)
-	  macro-case (f)
-	    { #f } => #t;
-	    { } => #f;
-	    { ?any:* } => #f;
-	  end;
+          macro-case (f)
+            { #f } => #t;
+            { } => #f;
+            { ?any:* } => #f;
+          end;
         end;
   designator.^mapped-import-type
     := if (mapped-import-type & ~fragment-false?(mapped-import-type))
-	 mapped-import-type
+         mapped-import-type
        else
-	 (designator-super & designator-super.^mapped-import-type)
-	   | designator.^low-level-type;
+         (designator-super & designator-super.^mapped-import-type)
+           | designator.^low-level-type;
        end if;
 
   designator.^mapped-export-type
     := if (mapped-export-type & ~fragment-false?(mapped-export-type))
-	 mapped-export-type
+         mapped-export-type
        else
-	 (designator-super & designator-super.^mapped-export-type)
-	   | designator.^low-level-type;
+         (designator-super & designator-super.^mapped-export-type)
+           | designator.^low-level-type;
        end if;
   if (designator.^referenced-type)
     // any designator with a referenced-type is a pointer and has itself as
     // a low level type.
     designator.^low-level-type := self;
     if(~designator.^mapped-import-type
-	 | designator.^mapped-import-type == designator-super)
+         | designator.^mapped-import-type == designator-super)
       designator.^mapped-import-type := designator;
     end if;
     if(~designator.^mapped-export-type
-	 | designator.^mapped-export-type == designator-super)
+         | designator.^mapped-export-type == designator-super)
       designator.^mapped-export-type := designator;
     end if;
   end if;
   // !@#$ deal with size-of, alignment-of?
-end method ^initialize-class;	 
+end method ^initialize-class;        
 
 
 
@@ -233,24 +232,24 @@ end method;
 /// This is modeled on ^ensure-slots-initialized in define-class-mop.dylan
 define method ^ensure-pointer-types-initialized (class :: <&designator-class>)
  => ();
-  // Note that this has to fire if either abstract or concrete is 
+  // Note that this has to fire if either abstract or concrete is
   // missing since one can be computed without the other by other
   // means (typically, the abstract pointer type is referred to by
   // name somewhere).
   unless ((class.^abstract-pointer-type & class.^concrete-class)
-	    | (~class.pointer-type-name & ~class.concrete-class-name))
+            | (~class.pointer-type-name & ~class.concrete-class-name))
     let class-definition = model-definition(class);
     with-dependent-context ($compilation of class-definition)
       if (class.pointer-type-name)
-	// should set ^abstract-pointer-type
-	let pointer = ^eval-designator(class.pointer-type-name);
-	if (pointer.concrete-class-name)
-	  ^eval-designator(pointer.concrete-class-name);
-	end;
+        // should set ^abstract-pointer-type
+        let pointer = ^eval-designator(class.pointer-type-name);
+        if (pointer.concrete-class-name)
+          ^eval-designator(pointer.concrete-class-name);
+        end;
       end if;
       if (class.concrete-class-name)
-	// should set ^concrete-class
-	^eval-designator(class.concrete-class-name);
+        // should set ^concrete-class
+        ^eval-designator(class.concrete-class-name);
       end if;
     end; // with-dependent-context
   end unless;
@@ -303,30 +302,30 @@ define sideways method compute-raw-aggregate-member (member-list :: <sequence>)
     let raw-type-model = ^top-level-eval(raw-type-name);
     select (kind)
       #"member" =>
-	make(<raw-aggregate-ordinary-member>, raw-type: raw-type-model);
+        make(<raw-aggregate-ordinary-member>, raw-type: raw-type-model);
       #"array-member"=>
-	begin
-	  let length = ^top-level-eval(third(member-list));
-	  unless (instance?(length, <integer>))
-	    length := 1;
-	  end unless;
-	  make(<raw-aggregate-array-member>,
-	       raw-type: raw-type-model,
-	       array-length: length);
-	end;
+        begin
+          let length = ^top-level-eval(third(member-list));
+          unless (instance?(length, <integer>))
+            length := 1;
+          end unless;
+          make(<raw-aggregate-array-member>,
+               raw-type: raw-type-model,
+               array-length: length);
+        end;
       #"bitfield-member" =>
-	begin
-	  let width = ^top-level-eval(third(member-list));
-	  unless (instance?(width, <integer>))
-	    width := 1;
-	  end unless;
-	  make(<raw-struct-bitfield-member>,
-	       raw-type: raw-type-model,
-	       bitfield-width: width);
-	end;
+        begin
+          let width = ^top-level-eval(third(member-list));
+          unless (instance?(width, <integer>))
+            width := 1;
+          end unless;
+          make(<raw-struct-bitfield-member>,
+               raw-type: raw-type-model,
+               bitfield-width: width);
+        end;
     end;
   else
     make(<raw-aggregate-ordinary-member>,
-	 raw-type: ^top-level-eval(#{ <raw-c-pointer> }));
+         raw-type: ^top-level-eval(#{ <raw-c-pointer> }));
   end if;
 end;

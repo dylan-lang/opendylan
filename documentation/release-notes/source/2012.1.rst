@@ -313,7 +313,6 @@ Fixes
 Some other bugs that resulted in the generation of invalid C have
 been fixed.
 
-
 C-FFI Changes
 =============
 
@@ -321,6 +320,19 @@ C-variable setters
 ------------------
 
 Setters should work with C-variables now.
+
+Constant Slot Syntax
+--------------------
+
+You can now use ``constant slot`` when defining a ``C-struct`` rather than having to set ``setter: #f``.
+This makes the syntax closer to normal class definitions:
+
+.. code-block:: dylan
+
+    define C-struct <Point>
+      constant slot x-coord :: <C-unsigned-short>;
+      constant slot y-coord :: <C-unsigned-short>;
+    end;
 
 
 Other Changes
