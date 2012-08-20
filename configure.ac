@@ -111,11 +111,6 @@ AC_SUBST(GC_CFLAGS)
 AC_SUBST(GC_LFLAGS)
 AC_SUBST(GC_MPS_ROOT)
 
-AC_ARG_WITH(library-source,
-            AC_HELP_STRING([--with-library-source=PATH],
-                           [Path to Dylan contributed libraries source.]))
-AC_SUBST(with_library_source)
-
 # for now, replace mps only in pentium-linux
 # gc is also replaced in sources/dfmc/c-run-time
 AC_CONFIG_FILES(Makefile

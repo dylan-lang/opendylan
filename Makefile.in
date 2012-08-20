@@ -15,8 +15,6 @@ fdmake		= @PERL@ $(srcdir)/admin/builds/fdmake.pl
 
 DYLANCOMPILER	= @DYLANCOMPILER@
 
-library_srcdir	= @with_library_source@
-
 .PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
@@ -90,7 +88,7 @@ BOOTSTRAP_1_ENV = \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.1/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_1_REGISTRY):$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(BOOTSTRAP_1_REGISTRY) \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 $(abs_builddir)/Bootstrap.1:
@@ -134,7 +132,7 @@ BOOTSTRAP_2_ENV = \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.2/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 BOOTSTRAP_2_UNSET_ENV = \
@@ -177,13 +175,13 @@ BOOTSTRAP_3_ENV = \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.2/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry \
 	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.3/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.3/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 BOOTSTRAP_3_LIBRARIES = dylan-compiler dswank make-dylan-app
@@ -319,13 +317,13 @@ CHECK_ENV = \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
-	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry \
 	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
-	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
+	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
 check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
