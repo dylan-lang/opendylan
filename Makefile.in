@@ -1,14 +1,14 @@
-prefix		= $(DESTDIR)@prefix@
-srcdir		= @abs_srcdir@
-abs_srcdir	= @abs_srcdir@
-abs_builddir	= @abs_builddir@
+prefix          = $(DESTDIR)@prefix@
+srcdir          = @abs_srcdir@
+abs_srcdir      = @abs_srcdir@
+abs_builddir    = @abs_builddir@
 
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
 RUNTIME_SOURCES = @RUNTIME_SOURCES@
 
-fdmake		= @PERL@ $(srcdir)/admin/builds/fdmake.pl
+fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl
 
-DYLANCOMPILER	= @DYLANCOMPILER@
+DYLANCOMPILER   = @DYLANCOMPILER@
 
 .PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
@@ -16,7 +16,7 @@ DYLANCOMPILER	= @DYLANCOMPILER@
 	bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3 \
 	all install install-stage release release-stage uninstall clean check
 
-all:	@bootstrap_target@
+all: @bootstrap_target@
 
 ###
 # 3-stage bootstrap includes stages 1 and 2 and 3: it rebuilds the compiler
