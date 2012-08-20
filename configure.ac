@@ -86,7 +86,6 @@ AC_PROG_CC([clang gcc cc])
 AC_ARG_WITH(mps,
             AS_HELP_STRING([--with-mps=PATH],
                            [Path to MPS distribution and build.]))
-AC_SUBST(with_mps)
 
 AC_ARG_WITH(gc,
             AS_HELP_STRING([--with-gc=PATH],
