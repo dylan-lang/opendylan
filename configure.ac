@@ -83,13 +83,6 @@ AC_SUBST(bootstrap_target)
 
 AC_PROG_CC([clang gcc cc])
 
-AC_ARG_WITH(arch,
-            AC_HELP_STRING([--with-arch=ARCH],
-                           [Runtime architecture, e.g., i386 or x86_64.]),
-            [arch_flag="-arch $with_arch"],
-            [arch_flag=$arch_target])
-AC_SUBST(arch_flag)
-
 AC_ARG_WITH(mps,
             AC_HELP_STRING([--with-mps=PATH],
                            [Path to MPS distribution and build.]))
