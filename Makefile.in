@@ -4,7 +4,7 @@ abs_srcdir	= @abs_srcdir@
 abs_builddir	= @abs_builddir@
 
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
-rt_target	= @rt_target@
+RUNTIME_SOURCES = @RUNTIME_SOURCES@
 
 fdmake		= @PERL@ $(srcdir)/admin/builds/fdmake.pl
 
@@ -108,7 +108,7 @@ $(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
 	  $(MAKE) -C sources/jamfiles install
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
-	  $(MAKE) -C $(rt_target) clean install
+	  $(MAKE) -C $(RUNTIME_SOURCES) clean install
 	@$(BOOTSTRAP_1_ENV) \
 	  $(fdmake) --compiler="$(DYLANCOMPILER)" dylan-compiler
 
@@ -151,7 +151,7 @@ $(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
 	  $(MAKE) -C sources/jamfiles install
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) -C $(rt_target) clean install
+	  $(MAKE) -C $(RUNTIME_SOURCES) clean install
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(BOOTSTRAP_2_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" dylan-compiler
@@ -197,7 +197,7 @@ bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) -C sources/jamfiles install
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) -C $(rt_target) clean install
+	  $(MAKE) -C $(RUNTIME_SOURCES) clean install
 	@$(BOOTSTRAP_3_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
 
@@ -273,7 +273,7 @@ clean:
 	-rm -rf $(abs_builddir)/release
 	-rm -rf $(abs_builddir)/opendylan-*.tar.bz2
 	-rm -rf $(BOOTSTRAP_1_REGISTRY)
-	$(MAKE) -C $(rt_target) clean
+	$(MAKE) -C $(RUNTIME_SOURCES) clean
 
 distclean: clean
 	-rm -f aclocal.m4

@@ -14,41 +14,41 @@ AC_CANONICAL_TARGET
 case $target in
   i*86-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=x86-linux;
-      rt_target=sources/lib/run-time/pentium-linux
+      RUNTIME_SOURCES=sources/lib/run-time/pentium-linux
     ;;
   i*86-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=x86-freebsd;
-      rt_target=sources/lib/run-time/pentium-freebsd
+      RUNTIME_SOURCES=sources/lib/run-time/pentium-freebsd
     ;;
   i*86-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
-      rt_target=sources/dfmc/c-run-time;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time;
       arch_target="-arch i386"
     ;;
   x86_64-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
-      rt_target=sources/dfmc/c-run-time;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time;
       arch_target="-arch i386"
     ;;
   powerpc-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=ppc-darwin;
-      rt_target=sources/dfmc/c-run-time;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time;
       arch_target="-arch ppc"
     ;;
   amd64-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=amd64-freebsd;
-      rt_target=sources/dfmc/c-run-time
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   x86_64-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=x86_64-linux;
-      rt_target=sources/dfmc/c-run-time
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   *)
       AC_MSG_ERROR([The $target platform is not supported.])
     ;;
 esac
 AC_SUBST(OPEN_DYLAN_PLATFORM_NAME)
-AC_SUBST(rt_target)
+AC_SUBST(RUNTIME_SOURCES)
 AC_SUBST(arch_target)
 
 AM_INIT_AUTOMAKE
