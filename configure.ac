@@ -10,20 +10,43 @@ AC_CONFIG_AUX_DIR(build-aux)
 
 srcdir=`(cd $srcdir; pwd)`
 
-AC_DEFUN([FD_PLATFORM],[
-case $1 in
-i*86-*-linux*) $2=x86-linux; $3=sources/lib/run-time/pentium-linux ;;
-i*86-*-freebsd*) $2=x86-freebsd; $3=sources/lib/run-time/pentium-freebsd ;;
-i*86-*-darwin*) $2=x86-darwin; $3=sources/dfmc/c-run-time; $4="-arch i386" ;;
-x86_64-apple-darwin*) $2=x86-darwin; $3=sources/dfmc/c-run-time; $4="-arch i386" ;;
-powerpc-*-darwin*) $2=ppc-darwin; $3=sources/dfmc/c-run-time; $4="-arch ppc" ;;
-amd64-*-freebsd*) $2=amd64-freebsd; $3=sources/dfmc/c-run-time ;;
-x86_64-*-linux*) $2=x86_64-linux; $3=sources/dfmc/c-run-time ;;
-*) AC_MSG_ERROR([The $1 platform is not supported.]) ;;
-esac])
- 
 AC_CANONICAL_TARGET
-FD_PLATFORM($target,fd_target,rt_target,arch_target)
+case $target in
+  i*86-*-linux*)
+      fd_target=x86-linux;
+      rt_target=sources/lib/run-time/pentium-linux
+    ;;
+  i*86-*-freebsd*)
+      fd_target=x86-freebsd;
+      rt_target=sources/lib/run-time/pentium-freebsd
+    ;;
+  i*86-*-darwin*)
+      fd_target=x86-darwin;
+      rt_target=sources/dfmc/c-run-time;
+      arch_target="-arch i386"
+    ;;
+  x86_64-*-darwin*)
+      fd_target=x86-darwin;
+      rt_target=sources/dfmc/c-run-time;
+      arch_target="-arch i386"
+    ;;
+  powerpc-*-darwin*)
+      fd_target=ppc-darwin;
+      rt_target=sources/dfmc/c-run-time;
+      arch_target="-arch ppc"
+    ;;
+  amd64-*-freebsd*)
+      fd_target=amd64-freebsd;
+      rt_target=sources/dfmc/c-run-time
+    ;;
+  x86_64-*-linux*)
+      fd_target=x86_64-linux;
+      rt_target=sources/dfmc/c-run-time
+    ;;
+  *)
+      AC_MSG_ERROR([The $target platform is not supported.])
+    ;;
+esac
 AC_SUBST(fd_target)
 AC_SUBST(rt_target)
 AC_SUBST(arch_target)
