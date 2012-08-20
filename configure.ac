@@ -13,41 +13,41 @@ srcdir=`(cd $srcdir; pwd)`
 AC_CANONICAL_TARGET
 case $target in
   i*86-*-linux*)
-      fd_target=x86-linux;
+      OPEN_DYLAN_PLATFORM_NAME=x86-linux;
       rt_target=sources/lib/run-time/pentium-linux
     ;;
   i*86-*-freebsd*)
-      fd_target=x86-freebsd;
+      OPEN_DYLAN_PLATFORM_NAME=x86-freebsd;
       rt_target=sources/lib/run-time/pentium-freebsd
     ;;
   i*86-*-darwin*)
-      fd_target=x86-darwin;
+      OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
       rt_target=sources/dfmc/c-run-time;
       arch_target="-arch i386"
     ;;
   x86_64-*-darwin*)
-      fd_target=x86-darwin;
+      OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
       rt_target=sources/dfmc/c-run-time;
       arch_target="-arch i386"
     ;;
   powerpc-*-darwin*)
-      fd_target=ppc-darwin;
+      OPEN_DYLAN_PLATFORM_NAME=ppc-darwin;
       rt_target=sources/dfmc/c-run-time;
       arch_target="-arch ppc"
     ;;
   amd64-*-freebsd*)
-      fd_target=amd64-freebsd;
+      OPEN_DYLAN_PLATFORM_NAME=amd64-freebsd;
       rt_target=sources/dfmc/c-run-time
     ;;
   x86_64-*-linux*)
-      fd_target=x86_64-linux;
+      OPEN_DYLAN_PLATFORM_NAME=x86_64-linux;
       rt_target=sources/dfmc/c-run-time
     ;;
   *)
       AC_MSG_ERROR([The $target platform is not supported.])
     ;;
 esac
-AC_SUBST(fd_target)
+AC_SUBST(OPEN_DYLAN_PLATFORM_NAME)
 AC_SUBST(rt_target)
 AC_SUBST(arch_target)
 
