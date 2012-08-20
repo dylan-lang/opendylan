@@ -84,12 +84,12 @@ AC_SUBST(bootstrap_target)
 AC_PROG_CC([clang gcc cc])
 
 AC_ARG_WITH(mps,
-            AC_HELP_STRING([--with-mps=PATH],
+            AS_HELP_STRING([--with-mps=PATH],
                            [Path to MPS distribution and build.]))
 AC_SUBST(with_mps)
 
 AC_ARG_WITH(gc,
-            AC_HELP_STRING([--with-gc=PATH],
+            AS_HELP_STRING([--with-gc=PATH],
                            [Path of Boehm GC installation.]))
 
 AS_IF([test x$with_mps != x],
