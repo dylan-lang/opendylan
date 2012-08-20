@@ -22,18 +22,6 @@ x86_64-*-linux*) $2=x86_64-linux; $3=sources/dfmc/c-run-time ;;
 *) AC_MSG_ERROR([The $1 platform is not supported.]) ;;
 esac])
  
-AC_CANONICAL_BUILD
-FD_PLATFORM($build,fd_build,rt_build,arch_build)
-AC_SUBST(fd_build)
-AC_SUBST(rt_build)
-AC_SUBST(arch_build)
-
-AC_CANONICAL_HOST
-FD_PLATFORM($host,fd_host,rt_host,arch_host)
-AC_SUBST(fd_host)
-AC_SUBST(rt_host)
-AC_SUBST(arch_host)
-
 AC_CANONICAL_TARGET
 FD_PLATFORM($target,fd_target,rt_target,arch_target)
 AC_SUBST(fd_target)

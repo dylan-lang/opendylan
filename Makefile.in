@@ -3,12 +3,7 @@ srcdir		= @abs_srcdir@
 abs_srcdir	= @abs_srcdir@
 abs_builddir	= @abs_builddir@
 
-fd_build	= @fd_build@
-fd_host		= @fd_host@
 fd_target	= @fd_target@
-
-rt_build	= @rt_build@
-rt_host		= @rt_host@
 rt_target	= @rt_target@
 
 fdmake		= @PERL@ $(srcdir)/admin/builds/fdmake.pl
@@ -83,7 +78,7 @@ BOOTSTRAP_1_PRIMITIVE_LIBS = \
 BOOTSTRAP_1_REGISTRY = $(abs_srcdir)/sources/bootstrap1-registry
 
 BOOTSTRAP_1_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_target) \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.1/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
@@ -102,10 +97,10 @@ $(abs_builddir)/Bootstrap.1:
 $(BOOTSTRAP_1_REGISTRY):
 	mkdir $(BOOTSTRAP_1_REGISTRY)
 	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP_1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/$(fd_build) $(BOOTSTRAP_1_REGISTRY)
+	cp -r $(srcdir)/sources/registry/$(fd_target) $(BOOTSTRAP_1_REGISTRY)
 	for lib in $(BOOTSTRAP_1_PRIMITIVE_LIBS); do \
 	  rm -f $(BOOTSTRAP_1_REGISTRY)/generic/$$lib; \
-	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(fd_build)/$$lib; \
+	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(fd_target)/$$lib; \
 	done
 
 $(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
@@ -113,7 +108,7 @@ $(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
 	  $(MAKE) -C sources/jamfiles install
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
-	  $(MAKE) -C $(rt_build) clean install
+	  $(MAKE) -C $(rt_target) clean install
 	@$(BOOTSTRAP_1_ENV) \
 	  $(fdmake) --compiler="$(DYLANCOMPILER)" dylan-compiler
 
@@ -127,7 +122,7 @@ bootstrap-stage-1: \
 # any existing or stage 1 libraries.
 
 BOOTSTRAP_2_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_target) \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.2/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
@@ -156,7 +151,7 @@ $(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
 	  $(MAKE) -C sources/jamfiles install
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) -C $(rt_build) clean install
+	  $(MAKE) -C $(rt_target) clean install
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(BOOTSTRAP_2_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" dylan-compiler
@@ -171,7 +166,7 @@ bootstrap-stage-2: \
 # an installation without actually installing it.
 
 BOOTSTRAP_3_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_target) \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.2/build \
@@ -202,7 +197,7 @@ bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) -C sources/jamfiles install
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) -C $(rt_build) clean install
+	  $(MAKE) -C $(rt_target) clean install
 	@$(BOOTSTRAP_3_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
 
@@ -278,7 +273,7 @@ clean:
 	-rm -rf $(abs_builddir)/release
 	-rm -rf $(abs_builddir)/opendylan-*.tar.bz2
 	-rm -rf $(BOOTSTRAP_1_REGISTRY)
-	$(MAKE) -C $(rt_build) clean
+	$(MAKE) -C $(rt_target) clean
 
 distclean: clean
 	-rm -f aclocal.m4
@@ -313,7 +308,7 @@ CHECK_APPS = \
 	command-line-parser-test-suite-app
 
 CHECK_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_PLATFORM_NAME=$(fd_target) \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
