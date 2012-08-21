@@ -724,7 +724,6 @@ end method write-element;
 define method write
     (stream :: <buffered-stream>, elements :: <sequence>,
      #key start: _start :: <integer> = 0, end: _end = #f) => ()
-  with-stream-locked(stream)
   with-output-buffer (sb = stream)
     let e :: <integer> = _end | elements.size;
     iterate loop (i :: <integer> = _start, sb :: false-or(<buffer>) = sb)
@@ -748,7 +747,6 @@ define method write
 	end
       end
     end iterate
-  end
   end
 end method write;
 
