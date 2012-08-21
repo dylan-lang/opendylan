@@ -1342,8 +1342,6 @@ end method;
 
 define constant $multiple-value-check-type-prologue-string
   = "MV_CHECK_TYPE_PROLOGUE";
-// define constant $multiple-value-check-type-argument-string
-//   = "MV_CHECK_TYPE_ARGUMENT";
 define constant $multiple-value-check-type-epilogue-string
   = "MV_CHECK_TYPE_EPILOGUE";
 
