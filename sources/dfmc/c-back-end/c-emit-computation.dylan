@@ -1166,18 +1166,12 @@ end method;
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
      c :: <adjust-multiple-values>) 
-//  format-emit(b, s, d, "\t~(~);\n",
-//              $adjust-multiple-values-string,
-//              c.number-of-required-values);
   next-method();  // do transfer
 end method;
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, 
      c :: <adjust-multiple-values-rest>) 
-//  format-emit(b, s, d, "\t~(~);\n",
-//              $adjust-multiple-values-rest-string,
-//              c.number-of-required-values);
   next-method();  // do transfer
 end method;
 
