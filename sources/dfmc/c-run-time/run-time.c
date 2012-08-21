@@ -107,7 +107,7 @@ static void mps_finalization_proc(D obj, struct _mps_finalization_queue *cons) {
   cons->first = obj;
   do {
     cons->rest = mps_finalization_queue;
-  } while (!CONDITIONAL_UPDATE(mps_finalization_queue, cons, cons->rest));
+  } while (DFALSE == CONDITIONAL_UPDATE(mps_finalization_queue, cons, cons->rest));
 }
 
 void primitive_mps_finalize(D obj) {
@@ -122,7 +122,7 @@ D primitive_mps_finalization_queue_first() {
 
  RETRY:
   if ((queue = mps_finalization_queue)) {
-    if (!CONDITIONAL_UPDATE(mps_finalization_queue, queue->rest, queue))
+    if (DFALSE == CONDITIONAL_UPDATE(mps_finalization_queue, queue->rest, queue))
       goto RETRY;
 
     return(queue->first);
