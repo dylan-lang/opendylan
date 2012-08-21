@@ -397,9 +397,6 @@ extern D MV_CHECK_TYPE_REST (D first_value, D rest_type, int n, ...);
   MV *spill;                       \
   spill = (MV*)MV_SPILL(fv)
 
-#define MV_CHECK_TYPE_ARGUMENT(i)  \
-  spill->value[i]
-
 #define MV_CHECK_TYPE_EPILOGUE()   \
   MV_UNSPILL((D)spill)
 
