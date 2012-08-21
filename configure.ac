@@ -1,4 +1,4 @@
-AC_INIT([Open Dylan], [1.0 beta 5])
+AC_INIT([Open Dylan], [2012.1])
 AC_PREREQ(2.50)
 
 # Directory for config.guess etc.
@@ -10,34 +10,45 @@ AC_CONFIG_AUX_DIR(build-aux)
 
 srcdir=`(cd $srcdir; pwd)`
 
-AC_DEFUN([FD_PLATFORM],[
-case $1 in
-i*86-*-linux*) $2=x86-linux; $3=sources/lib/run-time/pentium-linux ;;
-i*86-*-freebsd*) $2=x86-freebsd; $3=sources/lib/run-time/pentium-freebsd ;;
-i*86-*-darwin*) $2=x86-darwin; $3=sources/dfmc/c-run-time; $4="-arch i386" ;;
-x86_64-apple-darwin*) $2=x86-darwin; $3=sources/dfmc/c-run-time; $4="-arch i386" ;;
-powerpc-*-darwin*) $2=ppc-darwin; $3=sources/dfmc/c-run-time; $4="-arch ppc" ;;
-amd64-*-freebsd*) $2=amd64-freebsd; $3=sources/dfmc/c-run-time ;;
-x86_64-*-linux*) $2=x86_64-linux; $3=sources/dfmc/c-run-time ;;
-*) AC_MSG_ERROR([The $1 platform is not supported.]) ;;
-esac])
- 
-AC_CANONICAL_BUILD
-FD_PLATFORM($build,fd_build,rt_build,arch_build)
-AC_SUBST(fd_build)
-AC_SUBST(rt_build)
-AC_SUBST(arch_build)
-
-AC_CANONICAL_HOST
-FD_PLATFORM($host,fd_host,rt_host,arch_host)
-AC_SUBST(fd_host)
-AC_SUBST(rt_host)
-AC_SUBST(arch_host)
-
 AC_CANONICAL_TARGET
-FD_PLATFORM($target,fd_target,rt_target,arch_target)
-AC_SUBST(fd_target)
-AC_SUBST(rt_target)
+case $target in
+  i*86-*-linux*)
+      OPEN_DYLAN_PLATFORM_NAME=x86-linux;
+      RUNTIME_SOURCES=sources/lib/run-time/pentium-linux
+    ;;
+  i*86-*-freebsd*)
+      OPEN_DYLAN_PLATFORM_NAME=x86-freebsd;
+      RUNTIME_SOURCES=sources/lib/run-time/pentium-freebsd
+    ;;
+  i*86-*-darwin*)
+      OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time;
+      arch_target="-arch i386"
+    ;;
+  x86_64-*-darwin*)
+      OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time;
+      arch_target="-arch i386"
+    ;;
+  powerpc-*-darwin*)
+      OPEN_DYLAN_PLATFORM_NAME=ppc-darwin;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time;
+      arch_target="-arch ppc"
+    ;;
+  amd64-*-freebsd*)
+      OPEN_DYLAN_PLATFORM_NAME=amd64-freebsd;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
+    ;;
+  x86_64-*-linux*)
+      OPEN_DYLAN_PLATFORM_NAME=x86_64-linux;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
+    ;;
+  *)
+      AC_MSG_ERROR([The $target platform is not supported.])
+    ;;
+esac
+AC_SUBST(OPEN_DYLAN_PLATFORM_NAME)
+AC_SUBST(RUNTIME_SOURCES)
 AC_SUBST(arch_target)
 
 AM_INIT_AUTOMAKE
@@ -72,20 +83,12 @@ AC_SUBST(bootstrap_target)
 
 AC_PROG_CC([clang gcc cc])
 
-AC_ARG_WITH(arch,
-            AC_HELP_STRING([--with-arch=ARCH],
-                           [Runtime architecture, e.g., i386 or x86_64.]),
-            [arch_flag="-arch $with_arch"],
-            [arch_flag=$arch_target])
-AC_SUBST(arch_flag)
-
 AC_ARG_WITH(mps,
-            AC_HELP_STRING([--with-mps=PATH],
+            AS_HELP_STRING([--with-mps=PATH],
                            [Path to MPS distribution and build.]))
-AC_SUBST(with_mps)
 
 AC_ARG_WITH(gc,
-            AC_HELP_STRING([--with-gc=PATH],
+            AS_HELP_STRING([--with-gc=PATH],
                            [Path of Boehm GC installation.]))
 
 AS_IF([test x$with_mps != x],
@@ -110,11 +113,6 @@ AS_IF([test x${with_gc}x${with_mps} == xx],
 AC_SUBST(GC_CFLAGS)
 AC_SUBST(GC_LFLAGS)
 AC_SUBST(GC_MPS_ROOT)
-
-AC_ARG_WITH(library-source,
-            AC_HELP_STRING([--with-library-source=PATH],
-                           [Path to Dylan contributed libraries source.]))
-AC_SUBST(with_library_source)
 
 # for now, replace mps only in pentium-linux
 # gc is also replaced in sources/dfmc/c-run-time
