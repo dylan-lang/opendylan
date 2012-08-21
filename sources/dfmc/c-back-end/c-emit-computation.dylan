@@ -1315,20 +1315,24 @@ end method;
 define constant $primitive-type-check-string
   = c-raw-mangle("primitive-type-check");
 
-define method emit-computation
-    (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <keyword-check-type>)
-  // MUST EMIT THESE CAUSE THEY CHECK FOR THINGS LIKE SIZE :: <INTEGER> FOR VECTOR
-  format-emit(b, s, d, "\t~(@, @);\n", 
-              $primitive-type-check-string,
-              c.computation-value, c.type);
-  next-method();
+define method emit-check-type?
+    (back-end :: <c-back-end>, c :: <check-type>)
+ => (well? :: <boolean>)
+  // Don't emit type checks for the Dylan library
+  ~compiling-dylan-library?()
+end method;
+
+define method emit-check-type?
+    (back-end :: <c-back-end>, c :: <keyword-check-type>)
+ => (well? :: <boolean>)
+  // We must emit these cause they check for things like size :: <integer>
+  // for vector()
+  #t
 end method;
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <check-type>)
-  if (compiling-dylan-library?())
-    // don't emit type checks for the Dylan library
-  else
+  if (emit-check-type?(b, c))
     format-emit(b, s, d, "\t~(@, @);\n", 
                 $primitive-type-check-string,
                 c.computation-value, c.type);
