@@ -431,6 +431,16 @@ define method print-computation
 end method print-computation;
 
 define method print-computation
+    (stream :: <stream>, c :: <keyword-check-type>)
+  format(stream, "keyword-check-type %s :: %s", c.computation-value, c.type)
+end method print-computation;
+
+define method print-computation
+    (stream :: <stream>, c :: <constrain-type>)
+  format(stream, "constrain-type %s :: %s", c.computation-value, c.type)
+end method print-computation;
+
+define method print-computation
     (stream :: <stream>, c :: <assignment-check-type>)
   format(stream, "assignment-check-type %s = %s :: %s", c.lhs-variable-name, c.computation-value, c.type)
 end method print-computation;
