@@ -92,6 +92,8 @@ Library Changes
   ``string-extensions``, such as character sets, was moved to the
   regular-expressions library, which was the only thing using it.
 
+* The ``*open-accessors*`` table has been removed from the I/O library.
+
 
 Documentation Improvements
 ==========================

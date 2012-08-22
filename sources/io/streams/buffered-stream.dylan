@@ -367,24 +367,24 @@ end method force-output-buffers;
 define method do-force-output-buffers
     (stream :: <double-buffered-stream>) => ()
   with-stream-locked(stream)
-  // This method ignores the buffer-dirty? flag.  This is backward
-  // compatible with the old streams library.
-  let sb :: <buffer> = stream-output-buffer(stream);
-  let start :: <buffer-index> = sb.buffer-start;
-  let count = sb.buffer-end - start;
-  if (count > 0)		// implies valid output buffer
-    let nwritten
-      = accessor-write-from(stream.accessor, stream, start, count);
-    if (nwritten ~= count)
-      error("Bad write count")
-    end
-  end;
-  accessor-force-output(stream.accessor, stream);
-  sb.buffer-dirty? := #f;
-  // Don't reset the buffer next and end pointers here.  That is out to the
-  // discretion of subclasses.  Aligned buffers for instance should not
-  // have their pointers reset.
-  values()
+    // This method ignores the buffer-dirty? flag.  This is backward
+    // compatible with the old streams library.
+    let sb :: <buffer> = stream-output-buffer(stream);
+    let start :: <buffer-index> = sb.buffer-start;
+    let count = sb.buffer-end - start;
+    if (count > 0)		// implies valid output buffer
+      let nwritten
+        = accessor-write-from(stream.accessor, stream, start, count);
+      if (nwritten ~= count)
+        error("Bad write count")
+      end
+    end;
+    accessor-force-output(stream.accessor, stream);
+    sb.buffer-dirty? := #f;
+    // Don't reset the buffer next and end pointers here.  That is out to the
+    // discretion of subclasses.  Aligned buffers for instance should not
+    // have their pointers reset.
+    values()
   end;
 end method do-force-output-buffers;
 
