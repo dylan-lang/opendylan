@@ -79,7 +79,7 @@ define method force-output
   do-force-output(stream);
   wait-for-io-completion(stream);
   if(synchronize?)
-    accessor-force-output(stream.accessor, stream);
+    accessor-synchronize(stream.accessor, stream);
   end if;
 end method force-output;
 

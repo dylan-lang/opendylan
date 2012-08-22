@@ -167,12 +167,12 @@ define method accessor-write-from
   values(count, buffer)
 end method accessor-write-from;
 
-define method accessor-force-output
+define method accessor-synchronize
     (accessor :: <native-file-accessor>,
      stream :: <file-stream>)
  => ()
   unix-fsync(accessor.file-descriptor);
-end method accessor-force-output;
+end method accessor-synchronize;
 
 define method accessor-newline-sequence
     (accessor :: <native-file-accessor>)
