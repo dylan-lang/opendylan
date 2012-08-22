@@ -1018,9 +1018,8 @@ end method;
 
 define method force-output
     (stream :: <circular-print-stream>, #key synchronize? :: <boolean>) => ()
-  ignore(synchronize?);
   if (~ (*print-circle?* & (stream.circular-first-pass?)))
-    force-output(stream.inner-stream);
+    force-output(stream.inner-stream, synchronize?: synchronize?);
   end;
 end method;
 

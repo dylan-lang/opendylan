@@ -301,7 +301,7 @@ define method set-buffer-size (stream :: <marshalling-stream>, start-of-giop :: 
   end if;
 end method;
 
-define method force-output (marshalling-stream :: <marshalling-stream>, #key)
+define method force-output (marshalling-stream :: <marshalling-stream>, #key synchronize? :: <boolean>)
  => ()
   let connection-stream = inner-stream(marshalling-stream);
   let buffer = marshalling-stream-buffer(marshalling-stream);
@@ -309,7 +309,7 @@ define method force-output (marshalling-stream :: <marshalling-stream>, #key)
     for (byte in buffer)
       write-element(connection-stream, byte);
     end for;
-    force-output(connection-stream); // This should be equivalent to next-method()
+    force-output(connection-stream, synchronize?: synchronize?); // This should be equivalent to next-method()
   end with-lock;
 end method;
 

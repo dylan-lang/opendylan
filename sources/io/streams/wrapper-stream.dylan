@@ -124,7 +124,7 @@ end method write;
 
 define method force-output
     (stream :: <wrapper-stream>, #key synchronize?) => ()
-  force-output(stream.inner-stream, synchronize?: #t);
+  force-output(stream.inner-stream, synchronize?: synchronize?);
 end method force-output;
 
 define method synchronize-output

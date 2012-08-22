@@ -184,7 +184,7 @@ define method write
 end method write;
 
 define open generic force-output 
-    (stream :: <stream>,  #key /* synchronize? :: <boolean> */) => ();
+    (stream :: <stream>,  #key synchronize? :: <boolean>) => ();
 
 define method force-output
     (stream :: <stream>, 
