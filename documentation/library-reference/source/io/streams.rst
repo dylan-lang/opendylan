@@ -369,15 +369,10 @@ Options when creating file streams
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When creating file streams, you can supply the following init-keywords
-to *make* in addition to those described in `File
-streams`_:
+to *make* in addition to those described in `File streams`_:
 
 -  *if-exists:* An action to take if the file already exists.
-
-*if-does-not-exist*:
-
-An action to take if the file does not already exist.
-
+-  *if-does-not-exist*: An action to take if the file does not already exist.
 -  *element-type:* How the elements of the underlying file are accessed.
 -  *asynchronous?:* Allows asynchronous writing of stream data to disk.
 -  *share-mode:* How the file can be accessed while the stream is
@@ -389,16 +384,11 @@ the file named by *filename* already exists. The options are:
 -  ``#f`` The file is opened with the stream position at the beginning.
    This is the default when the stream’s direction is *#"input"* or
    *#"input-output"*.
-
-*#"new-version"*
-
-If the underlying file system supports file versioning, a new version of
-the file is created. This is the default when the stream’s direction is
-*#"output"*.
-
-If the file system does not support file versioning, the default is
-*#"replace"* when the direction of the stream is *#"output"*.
-
+-  *#"new-version"* If the underlying file system supports file versioning,
+   a new version of the file is created. This is the default when the stream’s
+   direction is *#"output"*.
+   If the file system does not support file versioning, the default is
+   *#"replace"* when the direction of the stream is *#"output"*.
 -  *#"overwrite"* Set the stream’s position to the beginning of the
    file, but preserve the current contents of the file. This is useful
    when the direction is *#"input-output"* or *#"output"* and you want
@@ -468,11 +458,8 @@ streams while the stream has it open. The possible values are:
    reading but not for writing.
 -  *#”share-write”* Allow other streams to be opened for writing but not
    for reading.
-
-*#”share-read-write”*
-
-Allow other streams to be opened for writing or reading.
-
+-  *#”share-read-write”* Allow other streams to be opened for writing
+   or reading.
 -  *#”exclusive”* Do not allow other streams to be opened to this file.
 
 Sequence streams
