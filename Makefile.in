@@ -212,10 +212,9 @@ $(prefix)/sources:
 	-rm -r $(prefix)/sources/bootstrap1-registry
 
 install-stage: $(prefix)/sources
-	install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime $(prefix)/build $(prefix)/build/logs
+	install -d $(prefix)/bin $(prefix)/databases $(prefix)/lib $(prefix)/lib/runtime
 	@echo Installing Open Dylan...
 	cp -R $(abs_builddir)/Bootstrap.3/bin $(prefix)
-	cp -R $(abs_builddir)/Bootstrap.3/build $(prefix)
 	cp -R $(abs_builddir)/Bootstrap.3/databases $(prefix)
 	-cp -R $(abs_builddir)/Bootstrap.3/include $(prefix)
 	cp -R $(abs_builddir)/Bootstrap.3/lib $(prefix)
