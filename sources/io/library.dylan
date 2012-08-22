@@ -229,8 +229,7 @@ define module streams-internals
 	 accessor-fd,
 	 accessor-synchronize,
 	 accessor-read-into!,
-	 accessor-write-from,
-	 *open-accessors*;
+	 accessor-write-from;
 
   // "High performance"
   export \copy-down-stream-definer,

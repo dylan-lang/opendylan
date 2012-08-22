@@ -186,13 +186,13 @@ define function win32-write
                    integer-as-raw(0)))
 end function win32-write;
 
-define function win32-force-output (handle :: <machine-word>) => (success? :: <boolean>)
+define function win32-synchronize (handle :: <machine-word>) => (success? :: <boolean>)
   primitive-raw-as-boolean
     (%call-c-function ("FlushFileBuffers", c-modifiers: "__stdcall")
          (handle :: <raw-c-pointer>) => (success? :: <raw-c-signed-int>)
        (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(handle)))
       end)
-end function win32-force-output;
+end function win32-synchronize;
 
 //---*** andrewa: ideally we should merge the use of this with win32-last-error
 //---*** but until then I've renamed this as win32-raw-last-error.

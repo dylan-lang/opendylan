@@ -114,7 +114,6 @@ define function accessor-close-internal (accessor :: <native-file-accessor>)
       win32-file-error(accessor, "close", "handle %=", handle)
     else
       accessor.%file-handle := #f;
-      remove-key!(*open-accessors*, accessor);
     end
   end;
 end function accessor-close-internal;
@@ -305,16 +304,16 @@ define function accessor-write-from-internal
   number-of-bytes-written
 end function accessor-write-from-internal;
 
-define method accessor-force-output
+define method accessor-synchronize
     (accessor :: <native-file-accessor>,
      stream :: <file-stream>)
  => ()
   let handle = accessor.file-handle;
-  let success :: <boolean> = win32-force-output(handle);
+  let success :: <boolean> = win32-synchronize(handle);
   if (~success)
     win32-file-error(accessor, "force output", #f)
   end
-end method accessor-force-output;
+end method accessor-synchronize;
 
 define method accessor-newline-sequence
     (accessor :: <native-file-accessor>)
