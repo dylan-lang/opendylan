@@ -60,7 +60,6 @@ define method accessor-open
   if (positionable? & ~initial-file-position)
     accessor.file-position := unix-lseek(initial-file-descriptor, 0, $seek_cur);
   end if;
-  *open-accessors*[accessor] := #t;
 end method accessor-open;
 
 define method accessor-close
@@ -73,7 +72,6 @@ define method accessor-close
       unix-error("close")
     else
       accessor.file-descriptor := #f;
-      remove-key!(*open-accessors*, accessor)
     end
   end;
   #t

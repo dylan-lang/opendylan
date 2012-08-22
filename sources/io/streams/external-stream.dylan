@@ -243,14 +243,3 @@ define method accessor-synchronize
      stream :: <external-stream>) => ()
   #f
 end method accessor-synchronize;
-
-
-// Simple scheme for tracking open accessors for reclaiming file descriptors
-// whilst debugging.
-define variable *open-accessors* = make(<table>, size: 10);
-
-/*---*** andrewa: this isn't used...
-define method close-open-accessors () => ()
-  map(accessor-close, key-sequence(*open-accessors*))
-end method close-open-accessors;
-*/

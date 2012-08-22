@@ -114,7 +114,6 @@ define function accessor-close-internal (accessor :: <native-file-accessor>)
       win32-file-error(accessor, "close", "handle %=", handle)
     else
       accessor.%file-handle := #f;
-      remove-key!(*open-accessors*, accessor);
     end
   end;
 end function accessor-close-internal;
