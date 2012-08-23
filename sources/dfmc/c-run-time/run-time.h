@@ -678,9 +678,6 @@ extern D SET_KEYWORD_METHOD_SIG(D, D);
 #define CREF(n) (_fn->environment[(n)])
 #define MREF    (_fn)
 
-/* LOOP SUPPORT */
-#define LOOP while(1)
-
 /*
  * PRIMITIVES
  */

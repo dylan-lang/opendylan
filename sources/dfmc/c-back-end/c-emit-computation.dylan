@@ -1177,8 +1177,6 @@ end method;
 
 // loop
 
-// define constant $loop-string = "while(1)";
-
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <loop>)
   for (merge in loop-merges(c))
@@ -1190,9 +1188,7 @@ define method emit-computation
     end if;
   end for;
   emit-label(b, s, d - 1, c);  
-  // format-emit(b, s, d, "\t~ {\n", $loop-string);
   emit-computations(b, s, d + 1, loop-body(c), c.next-computation);
-  // format-emit(b, s, d, "\t}\n");
 end method;
 
 define method emit-computation
@@ -1208,12 +1204,10 @@ define method emit-computation
     end if;
   end for;
   emit-goto(b, s, d, c.loop-call-loop);
-  // format-emit(b, s, d, "\tcontinue;\n");
 end method;
  
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <end-loop>)
-  // format-emit(b, s, d, "\tbreak;\n");
 end method;
  
 // non-local control flow
