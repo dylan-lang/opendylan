@@ -36,12 +36,6 @@ define method emit-object
   // nothing to emit -- all in run-time
 end method;
 
-define method emit-object
-    (back-end :: <back-end>, stream :: <stream>, o :: <&engine-node>) => (object);
-  ^engine-node-callback(o);
-  next-method()
-end method;
-
 
 /// EMIT-NAME
 
