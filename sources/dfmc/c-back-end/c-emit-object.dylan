@@ -51,6 +51,17 @@ define method emit-reference
   emit-reference(back-end, stream, raw-type-marker())
 end method;
 
+// WORK AROUND TO PREVENT WARNINGS
+
+// Previously, this code was specialized on <back-end>, but
+// then we'd get ambiguous method warnings.
+
+define method emit-object
+    (back-end :: <c-back-end>, stream :: <stream>, o :: <&engine-node>) => (object);
+  ^engine-node-callback(o);
+  next-method();
+end method;
+
 // RAW VALUES
 
 define method emit-object
