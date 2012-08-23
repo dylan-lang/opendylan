@@ -94,6 +94,12 @@ Library Changes
 
 * The ``*open-accessors*`` table has been removed from the I/O library.
 
+* Previously, sometimes using ``force-output()`` would also result
+  in an ``fsync()`` without specifying ``synchronize?: #t``. This
+  has been corrected. If you want to make sure that something
+  makes it to the disk, either use ``sychronize-output()``
+  or pass ``synchronize?: #t`` to ``force-output()``.
+
 
 Documentation Improvements
 ==========================
