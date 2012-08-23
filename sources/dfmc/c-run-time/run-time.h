@@ -60,13 +60,13 @@ typedef void*                   D;
 
 /* COMPILER-SPECIFIC INTRINSICS */
 
-#ifdef _GNUC_
+#ifdef __GNUC__
 #define PURE_FUNCTION __attribute__((pure))
 #else
 #define PURE_FUNCTION
 #endif
 
-#ifdef _GNUC_
+#ifdef __GNUC__
 #define CONDITIONAL_UPDATE(var, new_val, old_val) \
   (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
 #else
@@ -74,7 +74,7 @@ typedef void*                   D;
   ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
 #endif
 
-#ifdef _GNUC_
+#ifdef __GNUC__
 #define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
 #define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
 #else
