@@ -94,6 +94,12 @@ Library Changes
 
 * The ``*open-accessors*`` table has been removed from the I/O library.
 
+* Previously, sometimes using ``force-output()`` would also result
+  in an ``fsync()`` without specifying ``synchronize?: #t``. This
+  has been corrected. If you want to make sure that something
+  makes it to the disk, either use ``sychronize-output()``
+  or pass ``synchronize?: #t`` to ``force-output()``.
+
 
 Documentation Improvements
 ==========================
@@ -286,6 +292,10 @@ Multi-threading
 The C back-end now fully supports multi-threading.  Several bugs
 unrelated to threading were also fixed in this work, which should
 improve the stability of the C back-end in general.
+
+This work is currently experimental and may have stability and
+performance issues. Koala (the Dylan HTTP server) is known to
+not function correctly. Further feedback is welcome.
 
 .. TODO: moar details
 
