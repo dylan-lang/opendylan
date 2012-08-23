@@ -28,6 +28,13 @@
 
 #define ignore(x) (void)x
 
+#ifndef _DEBUG      /* For Release builds */
+#define  MSG0(msg)                          ((void)0)
+#define  MSG1(msg, arg1)                    ((void)0)
+#else               /* For Debug builds */
+#define  MSG0(msg)                          printf(msg)
+#define  MSG1(msg, arg1)                    printf(msg, arg1)
+#endif
 
 /*****************************************************************************/
 /* GLOBAL VARIABLE DECLARATIONS                                              */

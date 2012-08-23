@@ -60,13 +60,13 @@ typedef void*                   D;
 
 /* COMPILER-SPECIFIC INTRINSICS */
 
-#ifdef _GNUC_
+#ifdef __GNUC__
 #define PURE_FUNCTION __attribute__((pure))
 #else
 #define PURE_FUNCTION
 #endif
 
-#ifdef _GNUC_
+#ifdef __GNUC__
 #define CONDITIONAL_UPDATE(var, new_val, old_val) \
   (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
 #else
@@ -74,7 +74,7 @@ typedef void*                   D;
   ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
 #endif
 
-#ifdef _GNUC_
+#ifdef __GNUC__
 #define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
 #define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
 #else
@@ -575,7 +575,13 @@ extern D primitive_set_accessor_method_xep (D am, D what);
 #define CALL9(fn,a1,a2,a3,a4,a5,a6,a7,a8,a9) CALLN(fn,9),(a1),(a2),(a3),(a4),(a5),(a6),(a7),(a8),(a9)))
 #define CALL10(fn,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) CALLN(fn,10),(a1),(a2),(a3),(a4),(a5),(a6),(a7),(a8),(a9),(a10)))
 
-#define MEP_CALL_PROLOG(fn,nm,ac) { Pfunction_ = (FN*)(fn); Pnext_methods_ = (nm); Pargument_count_ = (ac); }
+#define MEP_CALL_PROLOG(fn,nm,ac) \
+  {\
+    TEB* mcp_teb = get_teb(); \
+    mcp_teb->function = (FN*)(fn); \
+    mcp_teb->next_methods = (nm); \
+    mcp_teb->argument_count = (ac); \
+  }
 #define MEP_CALLN(fn) (D)((((FN*)fn)->mep)(
 #define MEP_CALL0(fn) MEP_CALLN(fn)))
 #define MEP_CALL1(fn,a1) MEP_CALLN(fn)(a1)))
@@ -592,9 +598,18 @@ extern D primitive_set_accessor_method_xep (D am, D what);
 #define MIEP_CALL_PROLOG(nm) { Pnext_methods_ = (nm); }
 
 #define ENGINE_NODE_CALL_PROLOG(fn,eng,ac) \
-   { Pnext_methods_ = (fn); Pfunction_ = (FN*)(eng);  Pargument_count_ =(ac);}
+  { \
+    TEB* encp_teb = get_teb(); \
+    encp_teb->next_methods = (fn); \
+    encp_teb->function = (FN*)(eng); \
+    encp_teb->argument_count =(ac); \
+  }
 #define ENGINE_NODE_CALL(fn,eng,ac) \
-   { Pnext_methods_ = (fn); Pfunction_ = (FN*)(eng); }
+  { \
+    TEB* enc_teb = get_teb(); \
+    enc_teb->next_methods = (fn); \
+    enc_teb->function = (FN*)(eng); \
+  }
 
 #define ENGINE_NODE_CALL0(eng) \
     ((((ENGINE*)eng)->entry_point)())
@@ -619,9 +634,18 @@ extern D inline_invoke_engine_node(ENGINE*, int, ...);
     (inline_invoke_engine_node((ENGINE*)(eng),(ac)
 
 #define CONGRUENT_CALL_PROLOG(fn,ac) \
-   { Pnext_methods_ = (fn); Pfunction_ = (FN*)(((GFN*)fn)->engine);  Pargument_count_ =(ac);}
+  { \
+    TEB *ccp_teb = get_teb(); \
+    ccp_teb->next_methods = (fn); \
+    ccp_teb->function = (FN*)(((GFN*)fn)->engine); \
+    ccp_teb->argument_count =(ac); \
+  }
 #define CONGRUENT_CALL(fn,ac) \
-   { Pnext_methods_ = (fn); Pfunction_ = (FN*)(((GFN*)fn)->engine); }
+  { \
+    TEB *cc_teb = get_teb(); \
+    cc_teb->next_methods = (fn); \
+    cc_teb->function = (FN*)(((GFN*)fn)->engine); \
+  }
 
 #define CONGRUENT_CALL0() \
     ((((ENGINE*)Pfunction_)->entry_point)())
@@ -678,9 +702,6 @@ extern D SET_KEYWORD_METHOD_SIG(D, D);
 #define CREF(n) (_fn->environment[(n)])
 #define MREF    (_fn)
 
-/* LOOP SUPPORT */
-#define LOOP while(1)
-
 /*
  * PRIMITIVES
  */

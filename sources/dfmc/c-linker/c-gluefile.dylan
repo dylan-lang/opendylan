@@ -13,7 +13,7 @@ define sideways method emit-mainfile
     write(stream, "#include <gc/gc.h>\n\n");
     write(stream, "#include \"run-time.h\"\n\n");
 
-    format(stream, "main (int argc, char *argv[]) {\n");
+    format(stream, "int main (int argc, char *argv[]) {\n");
     format(stream, "  extern void %s ();\n", glue-name(lib-name));
     format(stream, "  extern D %s;\n", command-arguments-name());
     format(stream, "  extern D %s;\n", command-name-name());

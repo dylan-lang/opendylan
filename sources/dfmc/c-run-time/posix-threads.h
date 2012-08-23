@@ -34,20 +34,6 @@
 #define TLV_GROW ((PVOID)(-2000000))
 
 
-#ifndef _DEBUG      /* For Release builds */
-#define  MSG0(msg)                          ((void)0)
-#define  MSG1(msg, arg1)                    ((void)0)
-#define  MSG2(msg, arg1, arg2)              ((void)0)
-#define  MSG3(msg, arg1, arg2, arg3)        ((void)0)
-#define  MSG4(msg, arg1, arg2, arg3, arg4)  ((void)0)
-#else               /* For Debug builds */
-#define  MSG0(msg)                          printf(msg)
-#define  MSG1(msg, arg1)                    printf(msg, arg1)
-#define  MSG2(msg, arg1, arg2)              printf(msg, arg1, arg2)
-#define  MSG3(msg, arg1, arg2, arg3)        printf(msg, arg1, arg2, arg3)
-#define  MSG4(msg, arg1, arg2, arg3, arg4)  printf(msg, arg1, arg2, arg3, arg4)
-#endif
-
 /* Error codes returned by the primitives. These correspond to the codes
    defined in D-lib-threads!return-codes.dylan */
 #define OK              (I(0))
