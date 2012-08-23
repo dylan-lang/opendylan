@@ -287,6 +287,10 @@ The C back-end now fully supports multi-threading.  Several bugs
 unrelated to threading were also fixed in this work, which should
 improve the stability of the C back-end in general.
 
+This work is currently experimental and may have stability and
+performance issues. Koala (the Dylan HTTP server) is known to
+not function correctly. Further feedback is welcome.
+
 .. TODO: moar details
 
 Performance Improvements
