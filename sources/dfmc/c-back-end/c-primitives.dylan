@@ -300,7 +300,6 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-function-parameter;
 // define &primitive-descriptor primitive-lambda-parameter;
 // define &primitive-descriptor primitive-next-methods-parameter;
-// define &primitive-descriptor primitive-next-methods-parameter-setter;
 // define &primitive-descriptor primitive-set-generic-function-entrypoints;
 // define &primitive-descriptor primitive-set-accessor-method-xep;
 // 

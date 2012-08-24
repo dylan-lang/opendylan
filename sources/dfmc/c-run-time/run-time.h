@@ -1522,7 +1522,6 @@ extern D primitive_raw_as_string(DBSTR buffer);
 #define primitive_function_parameter()                  ((D)(Pfunction_))
 #define primitive_lambda_parameter()                    ((D)(Pfunction_))
 #define primitive_next_methods_parameter()              ((D)(Pnext_methods_))
-#define primitive_next_methods_parameter_setter(x)      ((D)(Pnext_methods_ = (D)x))
 
 /* APPLY PRIMITIVES */
 
