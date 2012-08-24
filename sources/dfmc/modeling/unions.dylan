@@ -93,12 +93,6 @@ define method ^subtype?
   ^subtype?(u.^union-type1, t) & ^subtype?(u.^union-type2, t)
 end method;
 
-define method ^subtype? 
-    (subc :: <&subclass>, t :: <&union>) => (result :: <boolean>)
-  ^subtype?(subc, t.^union-type1) | ^subtype?(subc, t.^union-type2)
-end method;
-
-
 
 //// Disjointness relationships.
 
