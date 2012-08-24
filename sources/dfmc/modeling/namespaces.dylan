@@ -434,8 +434,7 @@ define &module dylan-primitives
   create
     primitive-function-parameter,
     primitive-lambda-parameter,
-    primitive-next-methods-parameter,
-    primitive-next-methods-parameter-setter;
+    primitive-next-methods-parameter;
 
   // Simple Streams and Streams
 
