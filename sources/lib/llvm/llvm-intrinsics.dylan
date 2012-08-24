@@ -1044,7 +1044,7 @@ begin
   $llvm-intrinsic-makers["llvm.memset"]
     := method (arguments)
          let type0 = llvm-value-type(arguments[0]);
-         let type1 = llvm-value-type(arguments[2]);
+         let type1 = llvm-value-type(arguments[1]);
          let name = format-to-string("llvm.memset.%s.%s", intrinsic-type-name(type0), intrinsic-type-name(type1));
 
          let function-type
