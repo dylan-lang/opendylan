@@ -471,7 +471,6 @@ typedef struct _teb {
 #define Preturn_values get_teb()->return_values
 
 PURE_FUNCTION TEB* get_teb();
-TEB* make_teb();
 
 /* CALLING CONVENTION ENTRY POINTS */
 
