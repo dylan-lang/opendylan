@@ -82,12 +82,6 @@ int remove_tlv_vector(DTHREAD *thread);
 #if USE_PTHREAD_TLS
 pthread_key_t teb_key;
 
-__attribute__((pure))
-TEB* get_teb()
-{
-  return (TEB*)pthread_getspecific(teb_key);
-}
-
 void set_teb(TEB* teb)
 {
   pthread_setspecific(teb_key, (void*)teb);
@@ -99,12 +93,6 @@ void initialize_teb_key(void)
 }
 #else
 __thread TEB *teb;
-
-__attribute__((pure))
-TEB* get_teb()
-{
-  return teb;
-}
 
 void set_teb(TEB* new_teb)
 {

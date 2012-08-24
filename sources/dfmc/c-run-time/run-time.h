@@ -3,6 +3,18 @@
 
 #include <setjmp.h>
 
+#ifdef __APPLE__
+#  if !defined(__clang__) || \
+      (__clang_major__ < 3) || \
+      (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
+#    define USE_PTHREAD_TLS 1
+#  endif
+#endif
+
+#if USE_PTHREAD_TLS
+#include <pthread.h>
+#endif
+
 #define OPTIONAL_ARGUMENT_CHECK(fn, req, count)
 #define REQUIRED_ARGUMENT_CHECK(fn, req, count)
 
@@ -464,13 +476,25 @@ typedef struct _teb {
         D buffer[MAX_ARGUMENTS];
 } TEB;
 
+#if USE_PTHREAD_TLS
+extern pthread_key_t teb_key;
+PURE_FUNCTION inline TEB* get_teb()
+{
+  return (TEB*)pthread_getspecific(teb_key);
+}
+#else
+extern __thread TEB* teb;
+PURE_FUNCTION inline TEB* get_teb()
+{
+  return teb;
+}
+#endif
+
 /* these are accessed directly by the compiler and this file */
 #define Pfunction_ get_teb()->function
 #define Pargument_count_ get_teb()->argument_count
 #define Pnext_methods_ get_teb()->next_methods
 #define Preturn_values get_teb()->return_values
-
-PURE_FUNCTION TEB* get_teb();
 
 /* CALLING CONVENTION ENTRY POINTS */
 
