@@ -474,6 +474,22 @@ begin
          method (arguments) function end
        end;
 
+  $llvm-intrinsic-makers["llvm.debugtrap"]
+    := begin
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: $llvm-void-type,
+                  parameter-types: vector(),
+                  varargs?: #f);
+         let function
+           = make(<llvm-function>,
+                  name: "llvm.debugtrap",
+                  type: make(<llvm-pointer-type>, pointee: function-type),
+                  attribute-list: $llvm-intrinsic-default-attribute-list,
+                  linkage: #"external");
+         method (arguments) function end
+       end;
+
   $llvm-intrinsic-makers["llvm.eh.dwarf.cfa"]
     := begin
          let function-type
