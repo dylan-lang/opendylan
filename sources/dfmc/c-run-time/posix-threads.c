@@ -52,8 +52,6 @@ extern OBJECT KPfalseVKi;
 pthread_mutex_t thread_join_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t thread_exit_event = PTHREAD_COND_INITIALIZER;
 
-pthread_key_t teb_key;
-
 pthread_mutex_t  tlv_vector_lock = PTHREAD_MUTEX_INITIALIZER;
 TLV_VECTOR       default_tlv_vector = NULL;
 
@@ -81,6 +79,9 @@ void update_tlv_vectors(int offset, D value);
 void add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector);
 int remove_tlv_vector(DTHREAD *thread);
 
+#if USE_PTHREAD_TLS
+pthread_key_t teb_key;
+
 __attribute__((pure))
 TEB* get_teb()
 {
@@ -91,6 +92,29 @@ void set_teb(TEB* teb)
 {
   pthread_setspecific(teb_key, (void*)teb);
 }
+
+void initialize_teb_key(void)
+{
+  pthread_key_create(&teb_key, NULL);
+}
+#else
+__thread TEB *teb;
+
+__attribute__((pure))
+TEB* get_teb()
+{
+  return teb;
+}
+
+void set_teb(TEB* new_teb)
+{
+  teb = new_teb;
+}
+
+void initialize_teb_key(void)
+{
+}
+#endif
 
 TEB* make_teb()
 {
@@ -352,8 +376,7 @@ void initialize_threads_primitives()
   // Set up vector of default values for thread variables
   default_tlv_vector = make_tlv_vector(TLV_VECTOR_INITIAL_SIZE);
 
-  // Allocate key for the TEB
-  pthread_key_create(&teb_key, NULL);
+  initialize_teb_key();
 
   // Allocate the TEB for the initial thread
   make_teb();
