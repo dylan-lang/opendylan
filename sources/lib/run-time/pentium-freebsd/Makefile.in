@@ -37,7 +37,7 @@ OBJS		= x86-linux-collector.o \
 SRCOBJS		= $(srcdir)/runtime.o \
 		  $(srcdir)/dylan-support.o \
 
-RUNTIMELIBDEST	 = $(LIBDEST)/runtime/
+RUNTIMELIBDEST	 = $(LIBDEST)/runtime/harp-x86-freebsd/
 
 all:	$(OBJS)
 
@@ -55,17 +55,22 @@ linux-support.o: $(runtime_srcdir)/linux-support.c
 #	cp -fp gc.a $(LIBDEST)/libgc.a
 #
 
+$(RUNTIMELIBDEST):
+	mkdir -p $(RUNTIMELIBDEST)
+
 $(MPS_LIB)/mmdw.a:
 	(cd $(MPS_ROOT)/code; gmake -f fri4gc.gmk mmdw.a)
 
 $(MPS_LIB)/mpsplan.a:
 	(cd $(MPS_ROOT)/code; gmake -f fri4gc.gmk mpsplan.a)
 
-$(LIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a
+$(RUNTIMELIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a $(RUNTIMELIBDEST)
 	cp -fp $(MPS_LIB)/mpsplan.a $(LIBDEST)/libmpsplan.a
+	cp -fp $(MPS_LIB)/mpsplan.a $(RUNTIMELIBDEST)/libmpsplan.a
 
-$(LIBDEST)/libmmdw.a: $(MPS_LIB)/mmdw.a
+$(RUNTIMELIBDEST)/libmmdw.a: $(MPS_LIB)/mmdw.a $(RUNTIMELIBDEST)
 	cp -fp $(MPS_LIB)/mmdw.a $(LIBDEST)/libmmdw.a
+	cp -fp $(MPS_LIB)/mmdw.a $(RUNTIMELIBDEST)/libmmdw.a
 
 $(LIBDEST)/dylan-elf-dll.script: $(srcdir)/dylan-elf-dll.script
 	cp -fp $(srcdir)/dylan-elf-dll.script $(LIBDEST)
@@ -73,10 +78,10 @@ $(LIBDEST)/dylan-elf-dll.script: $(srcdir)/dylan-elf-dll.script
 $(LIBDEST)/dylan-elf-exe.script: $(srcdir)/dylan-elf-exe.script
 	cp -fp $(srcdir)/dylan-elf-exe.script $(LIBDEST)
 
-install-build: $(LIBDEST)/libmmdw.a $(LIBDEST)/libmpsplan.a \
+install-build: $(RUNTIMELIBDEST)/libmmdw.a $(RUNTIMELIBDEST)/libmpsplan.a \
                $(LIBDEST)/dylan-elf-dll.script $(LIBDEST)/dylan-elf-exe.script
 
-install-runtime: $(OBJS) $(SRCOBJS)
+install-runtime: $(OBJS) $(SRCOBJS) $(RUNTIMELIBDEST)
 	cp -fp $(OBJS) $(SRCOBJS) $(RUNTIMELIBDEST)
 
 install: install-runtime install-build
