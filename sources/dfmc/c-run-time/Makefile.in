@@ -7,6 +7,7 @@ GC_CFLAGS       = @GC_CFLAGS@
 GC_LFLAGS       = @GC_LFLAGS@
 arch_target     = @arch_target@
 
+OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
 runtime_srcdir  = $(top_srcdir)/sources/dfmc/c-run-time
 
 subdir          = sources/dfmc/c-run-time
@@ -31,7 +32,7 @@ OBJS    = posix-threads.o \
           run-time.o \
           trace.o
 
-RUNTIMELIBDEST  = $(LIBDEST)/runtime/
+RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
 
 all: $(OBJS)
 
