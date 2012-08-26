@@ -62,7 +62,7 @@ define test object-class-type ()
   check("", instance?, object-class, <function>);
 end test;
 
-define test object-class ()
+define test object-class-0 ()
   check-equal("", make(<dtest-test-class>).object-class, <dtest-test-class>);
 end test;
 
@@ -189,6 +189,7 @@ define suite test-class-suite ()
   test subtype?-type;
   test subtype?-0;
   test object-class-type;
+  test object-class-0;
   test all-superclasses-type;
   test all-superclasses-0;
   test direct-subclasses-type; 
