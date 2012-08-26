@@ -582,7 +582,7 @@ define module-with-models dfmc-modeling
       ^discriminator-argnum,
       ^discriminator-optionals?,
       ^discriminator-nrequired,
-//    <&absent-engine-node>,
+    <&absent-engine-node>,
 //    <&inapplicable-engine-node>,
 //    <&ambiguous-methods-engine-node>,
 //    <&single-method-engine-node>,

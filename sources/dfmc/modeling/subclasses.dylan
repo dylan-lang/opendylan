@@ -74,7 +74,7 @@ end method;
 //  is also true.  
 
 define method ^subtype? 
-    (subc :: <&subclass>, t :: <&type>) => (result :: <boolean>)
+    (subc :: <&subclass>, t :: <&class>) => (result :: <boolean>)
   ^subtype?(dylan-value(#"<class>"), t)
 end method;
 
@@ -83,7 +83,7 @@ end method;
 //  <object> and X is a subclass of <class>.
 
 define method ^subtype? 
-    (t :: <&type>, subc :: <&subclass>) => (result :: <boolean>)
+    (t :: <&class>, subc :: <&subclass>) => (result :: <boolean>)
   ^subtype?(dylan-value(#"<object>"), subc.^subclass-class)
     & ^subtype?(t, dylan-value(#"<class>"))
 end method;
