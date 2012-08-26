@@ -37,22 +37,22 @@ define test id?-1 (description: "#rest args")
   check-true("", #f == even?(3) & ~(#(1, 2, 3) == #(1, 2, 3)));
 end test id?-1;
 
-define test =-type (description: "")
+define test equal-type (description: "")
   check-true("", instance?(\=, <function>));
   check-true("", instance?(\=, <generic-function>));
-end test =-type;
+end test equal-type;
 
-define test \=-0 (description: "Numeric cases")
+define test equal-0 (description: "Numeric cases")
   check-true("", 1 + 2 = 5 - 2);  
   check-true("", 1 + 2 = 3);
   check-true("", 3 = 3);
   check-true("", ~(3 = 4));
 //  check-true("<ratio> is undefined in emulator", {RATIO instance} = {RATIO instance});
-end test \=-0;
+end test equal-0;
 
-define test =-complex (description: "= on complex numbers")
+define test equal-complex (description: "= on complex numbers")
   check-true("", complex-instance() = complex-instance());
-end test =-complex;
+end test equal-complex;
 
 define test a=-1 (description: "collections")
   check-true("", "abc" = "abc" & "abc" = "abc");
@@ -165,9 +165,9 @@ define test =hash-1 (description: "collections")
   check-true("", \&.=hash = \&.=hash);
 end test =hash-1;
 
-define test <-type (description: "")
+define test less-than-type (description: "")
   check-true("", instance?(\<, <function>) & ~instance?(\<, <generic-function>));
-end test <-type;
+end test less-than-type;
 
 define test q (description: "Numeric cases")
   check-true("", 1 + 2 < 15 - 4);
@@ -177,18 +177,18 @@ define test q (description: "Numeric cases")
 //  check-true("<ratio> undefined", {RATIO instance} < {RATIO instance});
 end test q;
 
-define test <-1 (description: "strings, without knowing underlying char set")
+define test less-than-1 (description: "strings, without knowing underlying char set")
   check-true("", "prefix" < "prefix is less than");
   check-true("", if ('a' < 'c')
       "aaa" < "ccc"
     else
       "ccc" < "aaa"
     end if);
-end test <-1;
+end test less-than-1;
 
-define test >-type (description: "")
+define test greater-than-type (description: "")
   check-true("", instance?(\>, <function>) & ~instance?(\>, <generic-function>));
-end test >-type;
+end test greater-than-type;
 
 define test w> (description: "Numeric cases")
   check-true("", 15 - 4 > 1 + 2);
@@ -197,14 +197,14 @@ define test w> (description: "Numeric cases")
 //  check-true("<ratio> undefined", {RATIO instance} > {RATIO instance});
 end;
 
-define test >-1 (description: "strings, without knowing underlying char set")
+define test greater-than-1 (description: "strings, without knowing underlying char set")
   check-true("", "prefix is less than" > "prefix");
   check-true("", if ('a' > 'c')
       "aaa" > "ccc"
     else
       "ccc" > "aaa"
     end if);
-end test >-1;
+end test greater-than-1;
 
 define test binary<-type (description: "")
   check-true("", instance?(binary<, <generic-function>));
@@ -265,9 +265,9 @@ define suite test-comparison-suite ()
   test id?-type;
 //  test id?;
   test id?-1;
-  test =-type;
-  test \=-0;
-  test =-complex;
+  test equal-type;
+  test equal-0;
+  test equal-complex;
   test a=-1;
   test a=-type;
   test qw;
@@ -280,12 +280,12 @@ define suite test-comparison-suite ()
   test p=hash;
   test =hash-complex;
   test =hash-1;
-  test <-type;
-  test <-1;
+  test less-than-type;
+  test less-than-1;
   test q;
-  test >-type;
+  test greater-than-type;
   test w>;
-  test >-1; 
+  test greater-than-1;
   test binary<-type;
   test binary<;
 end suite;
