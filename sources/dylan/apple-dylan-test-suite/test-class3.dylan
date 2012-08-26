@@ -56,7 +56,7 @@ define test subtype?-0 (description: "indirectly")
   check-true("", subtype?(<sequence>, <collection>));
   check-true("", ~subtype?(<collection>, <sequence>));
   check-true("", subtype?(<integer>, <real>));
-end test subtype?;
+end test;
 
 define test object-class-type ()
   check("", instance?, object-class, <function>);

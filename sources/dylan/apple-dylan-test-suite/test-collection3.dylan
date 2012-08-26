@@ -258,7 +258,7 @@ define test element-0 (description: "simple cases")
   check-equal("", table-instance(#(1, #"a"), #(2, #"b"), #(3, #"c"))[2], #"b");
   check-equal("", "Now is the time"[5], 's');
   check-equal("", #(99, 98, 97, 96, 95)[4], 95);
-end test element;
+end test element-0;
 
 define test element-1 (description: "with default")
   check-true("", empty?(element(deque-instance(1, 2, 3, 4), 7, default: deque-instance())));

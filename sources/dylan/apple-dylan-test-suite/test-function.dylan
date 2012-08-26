@@ -151,7 +151,7 @@ end test make-read-only-type;
 
 define test generic-function-methods-0 (description: "")
   check-true("", ~deque-instance.generic-function-methods.empty?);
-end test generic-function-methods;
+end test generic-function-methods-0;
 
 define test generic-function-methods-type (description: "")
   check("", instance?, generic-function-methods, <generic-function>);

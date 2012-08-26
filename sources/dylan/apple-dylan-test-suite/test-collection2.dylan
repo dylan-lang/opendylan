@@ -79,7 +79,7 @@ define test any?-0 (description: "list")
          end method,
          (#(1, 2, 3, 4, 5))),
     #f);
-end test any?;
+end test any?-0;
 
 define test any?-1 (description: "empty-list")
   check-equal("", any?(method (e)
@@ -485,7 +485,7 @@ define test reduce-0 (description: "list")
   check-equal("", reduce(\+, 0, list(1, 2, 3, 4)), 10);
   check-equal("", reduce(max, high-score, #(3, 1, 4, 1, 5, 9)), 10);
   check-equal("", reduce(max, high-score, #(3, 12, 9, 8, 8, 6)), 12);
-end test reduce;
+end test reduce-0;
 
 define test reduce-1 (description: "empty-list")
   check-equal("", reduce(\+, 0, #()), 0);
@@ -529,7 +529,7 @@ end test reduce1-type;
 
 define test reduce1-0 (description: "simple cases")
   check-true("", #t);
-end test reduce1;
+end test reduce1-0;
 
 define test reduce1-1 (description: "list")
   let high-score = 10;
@@ -580,7 +580,7 @@ end test member?-type;
 define test member?-0 (description: "list")
   check-equal("", member?(5, list(1, 2, 3, 4, 5, 6)), #t);
   check-true("", ~member?(5, list(1, 2, 3, 4)));
-end test member?;
+end test member?-0;
 
 define test member?-1 (description: "empty-list")
   check-true("", ~member?(5, #()));
