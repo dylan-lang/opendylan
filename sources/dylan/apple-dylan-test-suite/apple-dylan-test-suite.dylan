@@ -8,21 +8,21 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define suite apple-dylan-suite ()
-  suite test-array;
-  suite test-assignment;
-  suite test-character;
-  suite test-class;
-  suite test-collection;
-  suite test-comparison;
-  suite test-condition;
-  suite test-control;
-  suite test-defines;
-  suite test-deque;
-  suite test-function;
-  suite test-functional;
-  suite test-intro-mop;
-  suite test-iteration;
-  suite test-keyword-symbol;
-  suite test-list;
-  suite test-range
+  suite test-array-suite;
+  suite test-assignment-suite;
+  suite test-character-suite;
+  suite test-class-suite;
+  suite test-collection-suite;
+  suite test-comparison-suite;
+  suite test-condition-suite;
+  suite test-control-suite;
+  suite test-defines-suite;
+  suite test-deque-suite;
+  suite test-function-suite;
+  suite test-functional-suite;
+  suite test-intro-mop-suite;
+  suite test-iteration-suite;
+  suite test-keyword-symbol-suite;
+  suite test-list-suite;
+  suite test-range-suite;
 end suite apple-dylan-suite;

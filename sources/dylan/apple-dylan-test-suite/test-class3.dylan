@@ -56,13 +56,13 @@ define test subtype?-0 (description: "indirectly")
   check-true("", subtype?(<sequence>, <collection>));
   check-true("", ~subtype?(<collection>, <sequence>));
   check-true("", subtype?(<integer>, <real>));
-end test subtype?;
+end test;
 
 define test object-class-type ()
   check("", instance?, object-class, <function>);
 end test;
 
-define test object-class ()
+define test object-class-0 ()
   check-equal("", make(<dtest-test-class>).object-class, <dtest-test-class>);
 end test;
 
@@ -145,11 +145,11 @@ define suite test-class-suite ()
   test as-table;
   test shallow-copy-type;
   test shallow-copy-0;
-  test class-for-copy-type;
-  test class-for-copy-0;
-  test class-for-copy-1;
-  test class-for-copy-2;
-  test class-for-copy-3;
+  test type-for-copy-type;
+  test type-for-copy-0;
+  test type-for-copy-1;
+  test type-for-copy-2;
+  test type-for-copy-3;
   test type-type;
   test limited-type;
   test limited-integers;
@@ -189,6 +189,7 @@ define suite test-class-suite ()
   test subtype?-type;
   test subtype?-0;
   test object-class-type;
+  test object-class-0;
   test all-superclasses-type;
   test all-superclasses-0;
   test direct-subclasses-type; 
