@@ -618,7 +618,7 @@ define method decode-opcode-without-prefixes(code-vector :: <byte-vector>, index
           select (byte)
 	    #x00 =>
 	      begin
-		let (int, arg, new-index) = decode-rm-arg-to-vector(index + 1, #f, $word-arg-size);
+		let (int, arg, new-index) = decode-rm-arg-to-integer(index + 1, #f, $word-arg-size);
 		let name = select(int)
 		  0 => "sldt";
 		  1 => "str";
@@ -632,7 +632,7 @@ define method decode-opcode-without-prefixes(code-vector :: <byte-vector>, index
 	      end;
 	    #x01 =>
 	      begin
-		let (int, arg, new-index) = decode-rm-arg-to-vector(index + 1, #f, $word-arg-size);
+		let (int, arg, new-index) = decode-rm-arg-to-integer(index + 1, #f, $word-arg-size);
 		let name = select(int)
 		  0 => "sgdt";
 		  1 => "sidt";
