@@ -1077,16 +1077,6 @@ define method op--next-methods-parameter(back-end :: <harp-back-end>, result) =>
 end method op--next-methods-parameter;
 
 
-define method op--next-methods-parameter-setter(back-end :: <harp-back-end>, result, object) => ()
-
-  let temp = make-g-register(back-end);
-
-  ins--move(back-end, temp, object);
-  ins--move(back-end, result, temp);
-  back-end.cg-variables.next-methods-vreg := temp;
-
-end method op--next-methods-parameter-setter;
-
 
 /* VALUES PRIMITIVES */
 
@@ -2143,7 +2133,6 @@ define &primitive-descriptor primitive-initialized-slot-value, emitter: op--init
 define &primitive-descriptor primitive-function-parameter, emitter: op--function-parameter;
 define &primitive-descriptor primitive-lambda-parameter, emitter: op--function-parameter;
 define &primitive-descriptor primitive-next-methods-parameter, emitter: op--next-methods-parameter;
-define &primitive-descriptor primitive-next-methods-parameter-setter, emitter: op--next-methods-parameter-setter;
 define &primitive-descriptor primitive-set-generic-function-entrypoints;
 define &primitive-descriptor primitive-set-accessor-method-xep;
 

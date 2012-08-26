@@ -24,13 +24,6 @@ define side-effect-free stateless dynamic-extent &unimplemented-primitive-descri
   //---*** Fill this in...
 end; 
 
-/*
-define side-effecting stateless indefinite-extent &primitive-descriptor primitive-next-methods-parameter-setter
-    (new-value :: <object>) => (nm :: <object>);
-  //---*** Fill this in...
-end;
-*/
-
 define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-set-generic-function-entrypoints // runtime
     (gf :: <generic-function>) => ();
   //---*** Fill this in...
