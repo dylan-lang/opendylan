@@ -2752,7 +2752,7 @@ end method;
 // Previously, this code was specialized on <back-end>, but
 // then we'd get ambiguous method warnings.
 
-define method emit-object
+define sideways method emit-object
     (back-end :: <harp-back-end>, stream :: <stream>, o :: <&engine-node>) => (object);
   ^engine-node-callback(o);
   next-method()

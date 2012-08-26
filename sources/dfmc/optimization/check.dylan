@@ -272,7 +272,7 @@ define class <inline-only-copier> (<dfm-copier>) end;
 
 define dont-copy-object <signature-spec> using <inline-only-copier>;
 // define dont-copy-object <&engine-node>   using <inline-only-copier>;
-// define dont-copy-object <&absent-engine-node>   using <inline-only-copier>;
+define dont-copy-object <&absent-engine-node>   using <inline-only-copier>;
 define dont-copy-object <unknown>        using <inline-only-copier>;
 define dont-copy-object <&engine-node-ep> using <inline-only-copier>;
 
