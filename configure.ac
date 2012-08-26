@@ -94,7 +94,7 @@ AC_ARG_WITH(gc,
 AS_IF([test x$with_mps != x],
       [
         GC_CFLAGS="-DGC_USE_MPS -I${with_mps}/code"
-        GC_LFLAGS="-lmmdw -lmpsplan"
+        GC_RTLIBS="-lmmdw -lmpsplan"
         GC_MPS_ROOT="${with_mps}"
       ]
 )
@@ -112,6 +112,7 @@ AS_IF([test x${with_gc}x${with_mps} == xx],
 )
 AC_SUBST(GC_CFLAGS)
 AC_SUBST(GC_LFLAGS)
+AC_SUBST(GC_RTLIBS)
 AC_SUBST(GC_MPS_ROOT)
 
 # for now, replace mps only in pentium-linux
