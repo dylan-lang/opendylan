@@ -80,7 +80,7 @@ define test dimensions-1 ()
   map(method (item) add!(t, item) end method, #(1, 0, 1, 0));
   check-equal("", t.size, 4);
   check-equal("", simple-object-vector-instance().dimensions, #(0));
-end test dimensions;
+end test;
 
 define suite test-array-suite ()
  test aref-type;

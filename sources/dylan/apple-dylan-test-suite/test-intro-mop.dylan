@@ -20,14 +20,13 @@ define class t-c (<object>)
   slot balance :: <integer>,
     init-value: 0,
     setter: set-balance,
-    getter: get-balance,
     init-keyword: balance:;
   slot interest-rate, init-value: 6, setter: set-interest-rate;
 end class t-c;
 
 define class t-subc1 (t-c)
   slot password :: <string>, setter: set-password, 
-		getter: get-password, init-keyword: password:;
+		init-keyword: password:;
 end class t-subc1;
 
 // KJP: Put set-initial-limit before its ref
@@ -40,7 +39,6 @@ define class t-subc2 (t-c)
   class slot limit :: <integer>,
     init-function: set-initial-limit,
     setter: set-limit,
-    getter: get-limit,
     init-keyword: limit:;
 end class t-subc2;
 
@@ -48,7 +46,7 @@ define class t-sub-sub (t-subc1, t-subc2)
 end class t-sub-sub;
 
 define method withdraw (acct :: t-subc1, amt, #key passwd)
-  if (passwd ~= acct.get-password)
+  if (passwd ~= acct.password)
     #"wrong-password"
   else
     next-method()
@@ -56,7 +54,7 @@ define method withdraw (acct :: t-subc1, amt, #key passwd)
 end method withdraw;
 
 define method withdraw (acct :: t-subc2, amt, #key passwd)
-  if (amt > acct.get-limit)
+  if (amt > acct.limit)
     #"over-limit"
   else
     next-method()
@@ -64,15 +62,15 @@ define method withdraw (acct :: t-subc2, amt, #key passwd)
 end method withdraw;
 
 define method withdraw (acct :: t-c, amt, #key passwd)
-  if (amt > acct.get-balance)
+  if (amt > acct.balance)
     #"insufficient-funds"
   else
-    set-balance((acct.get-balance - amt), acct);
+    set-balance((acct.balance - amt), acct);
   end if
 end method withdraw;
 
 define method deposit (acct :: t-c, amt)
-  set-balance((acct.get-balance + amt), acct);
+  set-balance((acct.balance + amt), acct);
 end method deposit;
 
 define constant cust1
@@ -95,12 +93,12 @@ define test slot-operations (description: "")
   check-true("", 1980 = withdraw(cust3, 20, passwd: "7654321"));
   check-true("", withdraw(cust1, 220, passwd: "wow") = #"wrong-password");
   check-true("", withdraw(cust1, 220, passwd: "Nickson") = #"insufficient-funds");
-  check-true("", cust1.get-balance = 180);
+  check-true("", cust1.balance = 180);
   check-true("", withdraw(cust2, 150) = 170);
-  check-true("", cust2.get-balance = 170);
+  check-true("", cust2.balance = 170);
   check-true("", withdraw(cust3, 200) = #"wrong-password");
   check-true("", withdraw(cust3, 900, passwd: "7654321") = #"over-limit");
-  check-true("", cust3.get-balance = 1980);
+  check-true("", cust3.balance = 1980);
 end test slot-operations;
 
 define test method-type (description: "")

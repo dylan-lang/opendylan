@@ -258,7 +258,7 @@ define test element-0 (description: "simple cases")
   check-equal("", table-instance(#(1, #"a"), #(2, #"b"), #(3, #"c"))[2], #"b");
   check-equal("", "Now is the time"[5], 's');
   check-equal("", #(99, 98, 97, 96, 95)[4], 95);
-end test element;
+end test element-0;
 
 define test element-1 (description: "with default")
   check-true("", empty?(element(deque-instance(1, 2, 3, 4), 7, default: deque-instance())));
@@ -427,10 +427,10 @@ define suite test-collection-suite ()
   test size-setter-type;
   test size-setter-1;
   test size-setter-2;
-  test class-for-copy-type;
-  test class-for-copy-0; 
-  test class-for-copy-1;
-  test class-for-copy-3; 
+  test type-for-copy-type;
+  test type-for-copy-0; 
+  test type-for-copy-1;
+  test type-for-copy-3; 
   test empty?-type;
   test empty?-0;
   test empty?-1;

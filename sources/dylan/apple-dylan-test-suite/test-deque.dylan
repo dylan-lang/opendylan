@@ -113,7 +113,7 @@ end test remove!-deque;
 
 define test previous-state-0 (description: "")
   check("", instance?, previous-state, <generic-function>);
-end test previous-state;
+end test previous-state-0;
 
 define test previous-state-deque (description: "")
   let d = make(<deque>);

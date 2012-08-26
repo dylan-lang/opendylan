@@ -85,13 +85,13 @@ define test make-<class>-indirect ()
            instance?(i, <object>)
            & instance?(i, <dtest-test-class>)
            & instance?(i, <dtest-test-subclass>)
-           & 99 == i.s2-getter;
+           & 99 == i.s2;
          end
        & begin
            let i = make(wclass);
            // Test setter
            i.s2 := 101;
-           101 == i.s2-getter;
+           101 == i.s2;
          end
      end method,
      list(wclass1, wclass2)));

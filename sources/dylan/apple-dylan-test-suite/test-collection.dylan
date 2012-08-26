@@ -23,7 +23,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
 
  define test size-0 (description: "Size on list objects")
    check-equal("", list(1, 2, 3, 4).size, 4);
- end test size;
+ end test size-0;
 
  define test size-1 (description: "Size on empty-lists")
    check-equal("", size(#()), 0);
@@ -84,33 +84,33 @@ Copyright: (c) 1996 Functional Objects, Inc.
      end;
  end test size-setter-2;
 
- // class-for-copy mutable-collection
+ // type-for-copy mutable-collection
 
- define test class-for-copy-type ()
-   check-true("", instance?(class-for-copy, <generic-function>));
- end test class-for-copy-type;
+ define test type-for-copy-type ()
+   check-true("", instance?(type-for-copy, <generic-function>));
+ end test type-for-copy-type;
 
- define test class-for-copy-0
+ define test type-for-copy-0
  (description: "of a sequence, should be a subclass of <sequence>")
    let r = range(from: 2, through: 4);
-   check-true("", instance?(r, <sequence>) & subtype?(r.class-for-copy, <sequence>));
- end test class-for-copy;
+   check-true("", instance?(r, <sequence>) & subtype?(r.type-for-copy, <sequence>));
+ end test type-for-copy-0;
 
- define test class-for-copy-1 
+ define test type-for-copy-1 
   (description: "of an explicit-key-collection, should be a subclass of <e-k-c>")
    let t = make(<table>);
    check-true("", instance?(t, <explicit-key-collection>));
-   check-true("", subtype?(t.class-for-copy, <explicit-key-collection>));
- end test class-for-copy-1;
+   check-true("", subtype?(t.type-for-copy, <explicit-key-collection>));
+ end test type-for-copy-1;
 
- define test class-for-copy-3 
+ define test type-for-copy-3 
    (description: "of bot <e-k-c> and <sequence>, be a subclass of <e-k-c> and <seq>")
    let v = make(<vector>);
    check-true("", instance?(v, <explicit-key-collection>));
    check-true("", instance?(v, <sequence>));
-   check-true("", subtype?(v.class-for-copy, <explicit-key-collection>));
-   check-true("", subtype?(v.class-for-copy, <sequence>));
- end test class-for-copy-3;
+   check-true("", subtype?(v.type-for-copy, <explicit-key-collection>));
+   check-true("", subtype?(v.type-for-copy, <sequence>));
+ end test type-for-copy-3;
 
  define test empty?-type ()
    check-true("", instance?(empty?, <generic-function>));
@@ -118,7 +118,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
 
  define test empty?-0  (description: "empty? on lists")
    check-true("", ~empty?(#(#"a", #"b", #"c", #"d")));
- end test empty?;
+ end test empty?-0;
 
  define test empty?-1 (description: "empty? on empty-lists")
    check-true("", empty?(#()));
@@ -161,7 +161,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
        end method,
        #(100, 100, 200, 200),
        #(1, 2, 3, 4)));
- end test do;
+ end test do-0;
 
  define test do-1 (description: "do doesn't run if empty list")
    check-equal("", begin
@@ -196,7 +196,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
                         end method,
                    #(1, 2, 3, 4)),
     		#(-1, -2, -3, -4));
- end test map;
+ end test map-0;
 
  define test map-1 (description: "Empty-List")
    check-equal("", map(method (x)
@@ -255,14 +255,14 @@ Copyright: (c) 1996 Functional Objects, Inc.
  end test map-7;
 
  define test map-8 
-   (description: "returns a collection whose value is an inst of class-for-copy val")
+   (description: "returns a collection whose value is an inst of type-for-copy val")
    let s = list(1, 2, 3, 4);
    check-true("", instance?
      (map(method (x)
 	    x * -1;
 	  end method,
 	  (s)),
-      s.class-for-copy));
+      s.type-for-copy));
  end test map-8;
 
  define test map-9 (description: "creates a new collection")
@@ -315,7 +315,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
       end method,
       #(1, 2, 3, 4)),
    #(-1, -2, -3, -4));
- end test map-as;
+ end test map-as-0;
 
  define test map-as-1 (description: "Empty-List")
    check-equal("", map-as
@@ -427,7 +427,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
      let col = #(1, 0, 3, 0);
      map-into (col, zero?, col);
      check-equal("", col, #(#f, #t, #f, #t));
- end test map-into;
+ end test map-into-0;
 
  define test map-into-1 (description: "List")
    let var = #(1, 2, 3, 4, 5);
