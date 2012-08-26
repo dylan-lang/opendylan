@@ -208,34 +208,34 @@ define test shallow-copy-0 ()
   check-equal("", s.third, ns.third);
 end test;
 
-// class-for-copy
+// type-for-copy
 
-define test class-for-copy-type ()
-  check("", instance?, class-for-copy, <generic-function>);
+define test type-for-copy-type ()
+  check("", instance?, type-for-copy, <generic-function>);
 end test;
 
-define test class-for-copy-0 ()
-  check-equal("", class-for-copy(3), object-class(3));
-  check-equal("", deque-instance().class-for-copy, deque-instance().object-class);
-  check-equal("", complex-instance().class-for-copy(), complex-instance().object-class());
-  check-equal("", stretchy-vector-instance().class-for-copy, 
+define test type-for-copy-0 ()
+  check-equal("", type-for-copy(3), object-class(3));
+  check-equal("", deque-instance().type-for-copy, deque-instance().object-class);
+  check-equal("", complex-instance().type-for-copy(), complex-instance().object-class());
+  check-equal("", stretchy-vector-instance().type-for-copy, 
         stretchy-vector-instance().object-class);
-    check-equal("", simple-object-vector-instance().class-for-copy,
+    check-equal("", simple-object-vector-instance().type-for-copy,
 	     simple-object-vector-instance().object-class);
 end test;
 
 // Class-for-copy of all sequences should be a subclass of <sequence>
 //
-// Note that the tests class-for-copy1, class-for-copy2, and class-for-copy3
+// Note that the tests type-for-copy1, type-for-copy2, and type-for-copy3
 // only test the standard Dylan collection classes.
-// class-for-copy1 should probably be extended to test all implementation-specific sequences.
-// class-for-copy2 should probably be extended to test all implementation-specific explicit-key-collections.
-// class-for-copy3 should probably be extended to test all implementation-specific collections.
+// type-for-copy1 should probably be extended to test all implementation-specific sequences.
+// type-for-copy2 should probably be extended to test all implementation-specific explicit-key-collections.
+// type-for-copy3 should probably be extended to test all implementation-specific collections.
 
-define test class-for-copy-1 ()
+define test type-for-copy-1 ()
   check-true("", every?
 	       (rcurry(subtype?, <sequence>),
-		map(compose(class-for-copy, make),
+		map(compose(type-for-copy, make),
 		    list(<vector>,
 			 <stretchy-vector>,
 			 <string>,
@@ -252,10 +252,10 @@ end test;
 // Class-for-copy of all explicit-key-collections should be a subclass
 // of <explicit-key-collection>
 
-define test class-for-copy-2 ()
+define test type-for-copy-2 ()
   check("", every?
 	  (rcurry(subtype?, <explicit-key-collection>),
-	   map(compose(class-for-copy, make),
+	   map(compose(type-for-copy, make),
 	       list(<table>,
 		    <array>,
               <vector>,
@@ -268,10 +268,10 @@ end test;
 // Class-for-copy of all collections should be mutable.
 //
 
-define test class-for-copy-3 ()
+define test type-for-copy-3 ()
   check("", every?
 	  (rcurry(subtype?, <mutable-collection>),
-	   map(compose(class-for-copy, make),
+	   map(compose(type-for-copy, make),
 	       list(<table>,
 		    <array>,
 		    <vector>,

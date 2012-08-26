@@ -145,11 +145,11 @@ define suite test-class-suite ()
   test as-table;
   test shallow-copy-type;
   test shallow-copy-0;
-  test class-for-copy-type;
-  test class-for-copy-0;
-  test class-for-copy-1;
-  test class-for-copy-2;
-  test class-for-copy-3;
+  test type-for-copy-type;
+  test type-for-copy-0;
+  test type-for-copy-1;
+  test type-for-copy-2;
+  test type-for-copy-3;
   test type-type;
   test limited-type;
   test limited-integers;

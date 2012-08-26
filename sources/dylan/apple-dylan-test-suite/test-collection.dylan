@@ -84,33 +84,33 @@ Copyright: (c) 1996 Functional Objects, Inc.
      end;
  end test size-setter-2;
 
- // class-for-copy mutable-collection
+ // type-for-copy mutable-collection
 
- define test class-for-copy-type ()
-   check-true("", instance?(class-for-copy, <generic-function>));
- end test class-for-copy-type;
+ define test type-for-copy-type ()
+   check-true("", instance?(type-for-copy, <generic-function>));
+ end test type-for-copy-type;
 
- define test class-for-copy-0
+ define test type-for-copy-0
  (description: "of a sequence, should be a subclass of <sequence>")
    let r = range(from: 2, through: 4);
-   check-true("", instance?(r, <sequence>) & subtype?(r.class-for-copy, <sequence>));
- end test class-for-copy-0;
+   check-true("", instance?(r, <sequence>) & subtype?(r.type-for-copy, <sequence>));
+ end test type-for-copy-0;
 
- define test class-for-copy-1 
+ define test type-for-copy-1 
   (description: "of an explicit-key-collection, should be a subclass of <e-k-c>")
    let t = make(<table>);
    check-true("", instance?(t, <explicit-key-collection>));
-   check-true("", subtype?(t.class-for-copy, <explicit-key-collection>));
- end test class-for-copy-1;
+   check-true("", subtype?(t.type-for-copy, <explicit-key-collection>));
+ end test type-for-copy-1;
 
- define test class-for-copy-3 
+ define test type-for-copy-3 
    (description: "of bot <e-k-c> and <sequence>, be a subclass of <e-k-c> and <seq>")
    let v = make(<vector>);
    check-true("", instance?(v, <explicit-key-collection>));
    check-true("", instance?(v, <sequence>));
-   check-true("", subtype?(v.class-for-copy, <explicit-key-collection>));
-   check-true("", subtype?(v.class-for-copy, <sequence>));
- end test class-for-copy-3;
+   check-true("", subtype?(v.type-for-copy, <explicit-key-collection>));
+   check-true("", subtype?(v.type-for-copy, <sequence>));
+ end test type-for-copy-3;
 
  define test empty?-type ()
    check-true("", instance?(empty?, <generic-function>));
@@ -255,14 +255,14 @@ Copyright: (c) 1996 Functional Objects, Inc.
  end test map-7;
 
  define test map-8 
-   (description: "returns a collection whose value is an inst of class-for-copy val")
+   (description: "returns a collection whose value is an inst of type-for-copy val")
    let s = list(1, 2, 3, 4);
    check-true("", instance?
      (map(method (x)
 	    x * -1;
 	  end method,
 	  (s)),
-      s.class-for-copy));
+      s.type-for-copy));
  end test map-8;
 
  define test map-9 (description: "creates a new collection")
