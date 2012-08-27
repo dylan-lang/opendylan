@@ -147,10 +147,6 @@ please document it here.
      + Reverse seems to have a problem in Suite test-function-suite
 	check #1, it refuses a sequence with no applicable method
 
-     + keyword? seems to be recognizing unique strings also as an
-       instance of <keyword> - probably a bug. Also note that
-       <keyword> is not mentioned in DRM
-
      + A couple of \+ operations in Suite test-intro-mop not only
        fail but also return an instance of <ratio> which is really
        bizzare cuz ratio is not defined. Do run this suite for

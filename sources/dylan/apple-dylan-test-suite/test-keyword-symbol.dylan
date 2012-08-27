@@ -26,10 +26,6 @@ define test as-symbol-keyword (description: "as <symbol>")
   check-true("",  #"foo" == as(<symbol>, byte-string-instance('f', 'O', 'O')));
   check-true("",  #"foo" == as(<symbol>, byte-string-instance('f', 'o', 'o')));
   check-true("",  #"foo" == as(<symbol>, byte-string-instance('F', 'O', 'O')));
-  check-true("", #"foo" == as(<keyword>, byte-string-instance('F', 'o', 'o')));
-  check-true("",  #"foo" == as(<keyword>, byte-string-instance('f', 'O', 'O')));
-  check-true("", #"foo" == as(<keyword>, byte-string-instance('f', 'o', 'o')));
-  check-true("", #"foo" == as(<keyword>, byte-string-instance('F', 'O', 'O')));
 end test as-symbol-keyword;
 
 define suite test-keyword-symbol-suite () 

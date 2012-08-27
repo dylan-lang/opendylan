@@ -217,16 +217,11 @@ define test method-5 (description: "#key and #rest")
     = #(1, #(#"a", 2, #"b", 3), 2, 3));
 end test method-5;
 
-define test keyword? (description: "")
-
-// This seems to be recognizing unique strings also as an
-// instance of <keyword> - probably a bug. Also note that
-// <keyword> is not mentioned in DRM
-//
-  check-false("", instance?(#"a", <keyword>));
-  check-true("", instance?(foo: <keyword>)); 
-  check-false("", instance?(3, <keyword>));
-end test keyword?;
+define test symbol? (description: "")
+  check-false("", instance?(#"a", <symbol>));
+  check-true("", instance?(foo: <symbol>)); 
+  check-false("", instance?(3, <symbol>));
+end test symbol?;
 
 // Design note #21 introduces result type declarations
 
@@ -487,7 +482,7 @@ define suite test-intro-mop-suite ()
   test method-3;
   test method-4;
   test method-5;
-  test keyword?;
+  test symbol?;
   test result-type-1;
   test result-type-1a;
   test result-type-1b;
