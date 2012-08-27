@@ -100,13 +100,6 @@ define class <ro-test-sub> (<ro-test>)
 end class <ro-test-sub>;
 
 /* commented out by amit - look in issues
-define test make-read-only ()
-  begin
-    let c = <ro-test-sub>.make-read-only;
-    check-equal("", c, <ro-test-sub>);
-  end
-end test;
-
 define test seal-type-0 ()
   check("", instance?, seal, <generic-function>);
 end test;
@@ -180,9 +173,8 @@ define suite test-class-suite ()
   test instance?-15;
   test instance?-16;
   test instance?-17;
-  test instance?-18;
+  // test instance?-18; - Uses <ratio>
   test instance?-20;
-  test instance?-21;
   test instance?-22;
   test instance?-23;
   test as-type;  
@@ -194,7 +186,6 @@ define suite test-class-suite ()
   test all-superclasses-0;
   test direct-subclasses-type; 
   test direct-subclasses-0;
-//  test make-read-only; - I could not find a function like this???
   test singleton-type;
   test singleton-0;
   test type-survive-assignment-1;

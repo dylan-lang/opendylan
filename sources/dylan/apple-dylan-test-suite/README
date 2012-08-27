@@ -147,10 +147,6 @@ please document it here.
      + Reverse seems to have a problem in Suite test-function-suite
 	check #1, it refuses a sequence with no applicable method
 
-     + keyword? seems to be recognizing unique strings also as an
-       instance of <keyword> - probably a bug. Also note that
-       <keyword> is not mentioned in DRM
-
      + A couple of \+ operations in Suite test-intro-mop not only
        fail but also return an instance of <ratio> which is really
        bizzare cuz ratio is not defined. Do run this suite for
@@ -186,11 +182,6 @@ please document it here.
 	   . Test INSTANCE?-9
 	. Suite TEST-ITERATION-SUITE
 	   . Test  INITIAL-STATE-EMPTY-COLLECTIONS , check #1
-
-     + make-read-only() could not find it in DRM but there was the
-       test for it which did not compile Suite TEST-CLASS-SUITE
-       Test MAKE-READ-ONLY
-	. Suite TEST-FUNCTION-SUITE, Check make-read-only type also.
 
      + seal : could not find any generic-function of this name,
        again there were tests in Suite TEST-CLASS-SUITE for this???
