@@ -109,7 +109,7 @@ define test method-type (description: "")
   check-false("", subtype?(<generic-function>, <method>));
 end test method-type;
 
-define test method-0 (description: "simple method syntax")
+define test method-syntax-0 (description: "simple method syntax")
   check-true("", method (a :: <number>, b :: <number>)
     list(a - b, a + b)
   end method
@@ -120,9 +120,9 @@ define test method-0 (description: "simple method syntax")
     end method
       (3, 9)
     = 42);
-end test method-0;
+end test method-syntax-0;
 
-define test method-1 (description: "with keys")
+define test method-syntax-1 (description: "with keys")
   check-true("",method (x, #key y = 3)
     x * (y + 5)
   end method
@@ -163,25 +163,25 @@ define test method-1 (description: "with keys")
     end method
       (a: 10, b: 20, c: 30)
     = #(10, 20, 30));
-end test method-1;
+end test method-syntax-1;
 
-define test method-2 (description: "default of keyword is #f")
+define test method-syntax-2 (description: "default of keyword is #f")
   check-true("",method (a, b, #key c, d)
     list(a, b, c, d)
   end method
     (10, 20)
   = #(10, 20, #f, #f));
-end test method-2;
+end test method-syntax-2;
 
-define test method-3 (description: "method should return a <method>")
+define test method-syntax-3 (description: "method should return a <method>")
   check-true("",instance?
     (method (x, y)
        x + y
      end method,
      <method>));
-end test method-3;
+end test method-syntax-3;
 
-define test method-4 (description: "with #rest")
+define test method-syntax-4 (description: "with #rest")
   check-true("",method (a, #rest b)
     list(a, b)
   end method
@@ -202,9 +202,9 @@ define test method-4 (description: "with #rest")
     end method
       (10, 20)
     = #(#(), 10, 20));
-end test method-4;
+end test method-syntax-4;
 
-define test method-5 (description: "#key and #rest")
+define test method-syntax-5 (description: "#key and #rest")
   check-true("",method (#rest all, #key fee, fi)
     list(all, fee, fi)
   end method
@@ -215,7 +215,7 @@ define test method-5 (description: "#key and #rest")
     end method
       (1, a: 2, b: 3)
     = #(1, #(#"a", 2, #"b", 3), 2, 3));
-end test method-5;
+end test method-syntax-5;
 
 define test symbol? (description: "")
   check-false("", instance?(#"a", <symbol>));
@@ -476,12 +476,12 @@ end test generic-fcn-values-2a;
 define suite test-intro-mop-suite () 
   test slot-operations;
   test method-type;
-  test method-0;
-  test method-1;
-  test method-2;
-  test method-3;
-  test method-4;
-  test method-5;
+  test method-syntax-0;
+  test method-syntax-1;
+  test method-syntax-2;
+  test method-syntax-3;
+  test method-syntax-4;
+  test method-syntax-5;
   test symbol?;
   test result-type-1;
   test result-type-1a;

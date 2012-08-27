@@ -24,37 +24,37 @@ define test range-0 (description: "simple case")
       do(method (x)
            c := pair(x, c)
          end method,
-         range(from: 10, up-to: 20));
+         range(from: 10, below: 20));
       c
     end
     = #(19, 18, 17, 16, 15, 14, 13, 12, 11, 10));
 end test;
 
 define test range-1 (description: "from: (inclusive) and up-t: (inclusive)")
-  check-true("", range(from: 0, up-to: 5) = #(0, 1, 2, 3, 4));
+  check-true("", range(from: 0, below: 5) = #(0, 1, 2, 3, 4));
 end test range-1;
 
 define test range-2 (description: "from: defaults to 0")
-  check-true("", range(up-to: 4) = #(0, 1, 2, 3));
+  check-true("", range(below: 4) = #(0, 1, 2, 3));
 end test range-2;
 
-define test range-3 (description: "through: (inclusive)")
-  check-true("", range(through: 4) = #(0, 1, 2, 3, 4));
+define test range-3 (description: "to: (inclusive)")
+  check-true("", range(to: 4) = #(0, 1, 2, 3, 4));
 end test range-3;
 
 define test range-4 (description: "BY:")
-  check-true("", range(through: 4, by: 2) = #(0, 2, 4));
+  check-true("", range(to: 4, by: 2) = #(0, 2, 4));
 end test range-4;
 
-// amit : I removed the up-to: in here because range does
+// amit : I removed the below: in here because range does
 // not except through and up-to in a single expression
 //
 define test range-5 (description: "Through:, by:, and size:")
-  check-true("", range(through: 6, by: 2, size: 3) = #(0, 2, 4));
-  check-true("", range(through: 6, by: 2, size: 5) = #(0, 2, 4, 6));
-  check-true("", range(through: 6, by: 2, size: 3) = #(0, 2, 4));
-  check-true("", range(through: 6, by: -2, size: 5) = #());
-  check-true("", range(through: -6, by: -2, size: 3) = #(0, -2, -4));
+  check-true("", range(to: 6, by: 2, size: 3) = #(0, 2, 4));
+  check-true("", range(to: 6, by: 2, size: 5) = #(0, 2, 4, 6));
+  check-true("", range(to: 6, by: 2, size: 3) = #(0, 2, 4));
+  check-true("", range(to: 6, by: -2, size: 5) = #());
+  check-true("", range(to: -6, by: -2, size: 3) = #(0, -2, -4));
 end test range-5;
 
 // member? range
@@ -72,22 +72,22 @@ end test size-range;
 
 // copy-sequence range
 
-define test copy-sequence-0
+define test copy-sequence-range-0
   (description: "copy-seq on range always returns <range>")
-  check-true("", instance?(range(through: 5).copy-sequence, <range>));
-end test copy-sequence-0;
+  check-true("", instance?(range(to: 5).copy-sequence, <range>));
+end test copy-sequence-range-0;
 
 // binary= range
 
 define test binary=-range (description: "always terminates")
-  check-false("", binary=(range(), range(from: -5, up-to: 6))); 
+  check-false("", binary=(range(), range(from: -5, below: 6))); 
   check-true("", binary=(range(), range()));
 end test binary=-range;
 
 // reverse range
 
 define test reverse-range (description: "always returns a range")
-  check-true("", instance?(range(from: 1, through: 10, by: 2).reverse, <range>));
+  check-true("", instance?(range(from: 1, to: 10, by: 2).reverse, <range>));
 end test reverse-range;
 
 define test reverse-range-1 (description: "non-destructive")
@@ -95,7 +95,7 @@ define test reverse-range-1 (description: "non-destructive")
 end test reverse-range-1;
 
 define test reverse!-range (description: "always returns a range")
-  check-true("", instance?(reverse!(range(from: 1, through: 10, by: 2)), <range>));
+  check-true("", instance?(reverse!(range(from: 1, to: 10, by: 2)), <range>));
 end test reverse!-range;
 
 // range-intersection
@@ -108,7 +108,7 @@ end test intersection-range;
 
 define test intersection-range-1 (description: "returns a range")
   check-true("", instance?
-    (intersection(range(from: 0, up-to: 5), range(from: 3, up-to: 9)), <range>));
+    (intersection(range(from: 0, below: 5), range(from: 3, below: 9)), <range>));
   check-true("",instance?(intersection(range(), range(from: -1)), <range>));
 end test intersection-range-1;
 
@@ -121,7 +121,7 @@ define suite test-range-suite ()
   test range-5;
   test member?-range;
   test size-range;
-  test copy-sequence-0;
+  test copy-sequence-range-0;
   test binary=-range;
   test reverse-range;
   test reverse-range-1;

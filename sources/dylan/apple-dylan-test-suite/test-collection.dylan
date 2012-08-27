@@ -92,7 +92,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
 
  define test type-for-copy-0
  (description: "of a sequence, should be a subclass of <sequence>")
-   let r = range(from: 2, through: 4);
+   let r = range(from: 2, to: 4);
    check-true("", instance?(r, <sequence>) & subtype?(r.type-for-copy, <sequence>));
  end test type-for-copy-0;
 
