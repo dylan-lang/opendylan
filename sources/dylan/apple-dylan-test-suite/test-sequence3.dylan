@@ -186,13 +186,13 @@ define test remove-duplicates!-type (description: "")
   check-true("", instance?(remove-duplicates!, <generic-function>));
 end test remove-duplicates!-type;
 
-define test remove-duplicates! (description: "list")
+define test remove-duplicates!-0 (description: "list")
   let platter
     = remove-duplicates!
         (#(#"spam", #"eggs", #"spam", #"sausage", #"spam", #"spam", #"spam"));
   check-true("", platter.size = 3);
   check-true("", every?(rcurry(member?, platter), #(#"eggs", #"sausage", #"spam")));
-end test remove-duplicates!;
+end test remove-duplicates!-0;
 
 define test remove-duplicates!-1 (description: "range")
   check-true("", remove-duplicates!(range(from: 0, below: 5)) = range(from: 0, below: 5));

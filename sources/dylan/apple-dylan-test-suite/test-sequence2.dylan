@@ -318,9 +318,9 @@ end test choose-by-8;
 
 // these test intersection
 
-define test intersection (description: "")
+define test intersection-type (description: "")
   check-true("", instance?(intersection, <generic-function>));
-end test intersection;
+end test intersection-type;
 
 define test intersection-0 (description: "list")
   begin

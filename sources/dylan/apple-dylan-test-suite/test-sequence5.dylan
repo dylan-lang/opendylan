@@ -118,7 +118,7 @@ define test first-setter-type (description: "")
   check-true("", instance?(first-setter, <generic-function>));
 end test first-setter-type;
 
-define test first-setter (description: "simple cases")
+define test first-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
     first-setter(t, #(1, 2));
@@ -130,7 +130,7 @@ define test first-setter (description: "simple cases")
       t
     end
     = #(0, 2, 3, 4, 5, 6, 7, 8, 9));
-end test first-setter;
+end test first-setter-0;
 
 // second-setter
 
@@ -138,7 +138,7 @@ define test second-setter-type (description: "")
   check-true("", instance?(second-setter, <generic-function>));
 end test second-setter-type;
 
-define test second-setter (description: "simple cases")
+define test second-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
     second-setter(t, #(1, 2));
@@ -150,7 +150,7 @@ define test second-setter (description: "simple cases")
       t
     end
     = #(1, 0, 3, 4, 5, 6, 7, 8, 9));
-end test second-setter;
+end test second-setter-0;
 
 // third-setter
 
@@ -158,7 +158,7 @@ define test third-setter-type (description: "")
   check-true("", instance?(third-setter, <generic-function>));
 end test third-setter-type;
 
-define test third-setter (description: "simple cases")
+define test third-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
     third-setter(t, #(1, 2));
@@ -170,7 +170,7 @@ define test third-setter (description: "simple cases")
       t
     end
     = #(1, 2, 0, 4, 5, 6, 7, 8, 9));
-end test third-setter;
+end test third-setter-0;
 
 define test last-type (description: "")
   check-true("", instance?(last, <generic-function>));
@@ -381,7 +381,7 @@ define suite test-sequence-suite ()
   test choose-by-6;
   test choose-by-7;
   test choose-by-8;
-  test intersection;
+  test intersection-type;
   test intersection-0;
   test intersection-1;
   test intersection-2;
@@ -416,7 +416,7 @@ define suite test-sequence-suite ()
   test remove-duplicates-7;
   test remove-duplicates-8;
   test remove-duplicates!-type;
-  test remove-duplicates!;
+  test remove-duplicates!-0;
   test remove-duplicates!-1;
   test remove-duplicates!-2;
   test remove-duplicates!-3;
@@ -520,11 +520,11 @@ define suite test-sequence-suite ()
   test third-5;
   test third-6;
   test first-setter-type;
-  test first-setter;
+  test first-setter-0;
   test second-setter-type;
-  test second-setter;
+  test second-setter-0;
   test third-setter-type;
-  test third-setter;
+  test third-setter-0;
   test last-setter-type;
   test last-setter-0;
   test last-type;
