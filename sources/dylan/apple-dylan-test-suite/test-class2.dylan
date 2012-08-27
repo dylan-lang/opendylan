@@ -134,7 +134,7 @@ define test instance?-3 ()
 end test;
 
 define test instance?-4 ()
-  let i = make(<array>);
+  let i = make(<array>, dimensions: #(2));
   check-true("", every?
     (method (c)
        instance?(i, c)
@@ -322,6 +322,7 @@ define test instance?-17 ()
      list(<number>, <real>, <rational>, <integer>)));
 end test;
 
+/*
 define test instance?-18 ()
   let i = make(<ratio>);
   check-true("", every?
@@ -330,6 +331,7 @@ define test instance?-18 ()
      end method,
      list(<number>, <complex>, <real>, <rational>, <ratio>)));
 end test;
+*/
 
 define test instance?-20 ()
   check-true("", every?
@@ -337,14 +339,6 @@ define test instance?-20 ()
        instance?(#"foo", c)
      end method,
      list(<object>, <symbol>)));
-end test;
-
-define test instance?-21 ()
-  check-true("", every?
-    (method (c)
-       instance?(foo: c)
-     end method,
-     list(<object>, <keyword>)));
 end test;
 
 define test instance?-22 ()
@@ -395,7 +389,6 @@ define test instance?-23 ()
 //		       <ratio>,
 		       <float>,
 		       <symbol>,
-		       <keyword>,
 		       <character>)));
    check-true("", every?
       (method (c)

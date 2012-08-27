@@ -25,4 +25,5 @@ define suite apple-dylan-suite ()
   suite test-keyword-symbol-suite;
   suite test-list-suite;
   suite test-range-suite;
+  suite test-sequence-suite;
 end suite apple-dylan-suite;
