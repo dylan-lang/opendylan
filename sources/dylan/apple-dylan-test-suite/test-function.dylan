@@ -167,7 +167,7 @@ define test function-arguments-0 (description: "")
   2);
 end test function-arguments-0;
 
-define test function-arguments-1 (disabled: #"description", "")
+define test function-arguments-1 (disabled: #t, #"description", "")
   begin
     let (req-no, rest-bool, kwd-seq) = withdraw.function-arguments;
     check-equal("", req-no, 2); 
