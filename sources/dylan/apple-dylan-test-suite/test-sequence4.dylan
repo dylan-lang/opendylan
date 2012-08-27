@@ -56,7 +56,7 @@ end test replace-subsequence!-7;
 
 define test replace-subsequence!-8 (description: "mixed cases")
   check-true("", replace-subsequence!(#(1, 2, 3), "now") = #('n', 'o', 'w'));
-  check-true("", replace-subsequence!(#(#"a", #"b", #"c", #"d"), range(from: 0, up-to: 4))
+  check-true("", replace-subsequence!(#(#"a", #"b", #"c", #"d"), range(from: 0, below: 4))
     = #(0, 1, 2, 3));
 end test replace-subsequence!-8;
 
@@ -94,7 +94,7 @@ define test reverse-1 (description: "empty list")
 end test reverse-1;
 
 define test reverse-2 (description: "range")
-  check-true("", range(from: 0, up-to: 6).reverse = range(from: 5, up-to: -1, by: -1));
+  check-true("", range(from: 0, below: 6).reverse = range(from: 5, below: -1, by: -1));
 end test reverse-2;
 
 define test reverse-3 (description: "deque")
@@ -134,7 +134,7 @@ define test reverse!-1 (description: "empty list")
 end test reverse!-1;
 
 define test reverse!-2 (description: "range")
-  check-true("", reverse!(range(from: 0, up-to: 6)) = range(from: 5, up-to: -1, by: -1));
+  check-true("", reverse!(range(from: 0, below: 6)) = range(from: 5, below: -1, by: -1));
 end test reverse!-2;
 
 define test reverse!-3 (description: "deque")
@@ -168,7 +168,7 @@ define test sort-1 (description: "empty-list")
 end test sort-1;
 
 define test sort-2 (description: "range")
-  check-true("", range(from: 9, up-to: 0, by: -1).sort = #(1, 2, 3, 4, 5, 6, 7, 8, 9));
+  check-true("", range(from: 9, below: 0, by: -1).sort = #(1, 2, 3, 4, 5, 6, 7, 8, 9));
 end test sort-2;
 
 define test sort-3 (description: "deque")
@@ -231,7 +231,7 @@ define test sort!-1 (description: "empty-list")
 end test sort!-1;
 
 define test sort!-2 (description: "range")
-  check-true("", sort!(range(from: 9, up-to: 0, by: -1)) = #(1, 2, 3, 4, 5, 6, 7, 8, 9));
+  check-true("", sort!(range(from: 9, below: 0, by: -1)) = #(1, 2, 3, 4, 5, 6, 7, 8, 9));
 end test sort!-2;
 
 define test sort!-3 (description: "deque")

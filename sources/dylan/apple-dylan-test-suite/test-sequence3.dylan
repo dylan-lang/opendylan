@@ -28,7 +28,7 @@ define test intersection-9
   (description: "with other test:, returns val from 1st seq")
   let result
     = intersection
-        (range(from: -1, up-to: -5, by: -1),
+        (range(from: -1, above: -5, by: -1),
          #(1, 2, 3, 4),
          test: method (a, b)
                  a.abs = b.abs
@@ -59,10 +59,10 @@ define test union-2 (description: "range")
     (method (e)
        member?
          (e,
-          union(range(from: 0, up-to: 9, by: 2),
-                range(from: 1, up-to: 9, by: 2)))
+          union(range(from: 0, below: 9, by: 2),
+                range(from: 1, below: 9, by: 2)))
      end method,
-     range(from: 0, up-to: 9)));
+     range(from: 0, below: 9)));
 end test union-2;
 
 define test union-3 (description: "deque")
@@ -132,7 +132,7 @@ define test remove-duplicates-0 (description: "list")
 end test remove-duplicates-0;
 
 define test remove-duplicates-1 (description: "range")
-  check-true("", range(from: 0, up-to: 5).remove-duplicates = range(from: 0, up-to: 5));
+  check-true("", range(from: 0, below: 5).remove-duplicates = range(from: 0, below: 5));
 end test remove-duplicates-1;
 
 define test remove-duplicates-2 (description: "deque")
@@ -186,16 +186,16 @@ define test remove-duplicates!-type (description: "")
   check-true("", instance?(remove-duplicates!, <generic-function>));
 end test remove-duplicates!-type;
 
-define test remove-duplicates! (description: "list")
+define test remove-duplicates!-0 (description: "list")
   let platter
     = remove-duplicates!
         (#(#"spam", #"eggs", #"spam", #"sausage", #"spam", #"spam", #"spam"));
   check-true("", platter.size = 3);
   check-true("", every?(rcurry(member?, platter), #(#"eggs", #"sausage", #"spam")));
-end test remove-duplicates!;
+end test remove-duplicates!-0;
 
 define test remove-duplicates!-1 (description: "range")
-  check-true("", remove-duplicates!(range(from: 0, up-to: 5)) = range(from: 0, up-to: 5));
+  check-true("", remove-duplicates!(range(from: 0, below: 5)) = range(from: 0, below: 5));
 end test remove-duplicates!-1;
 
 define test remove-duplicates!-2 (description: "deque")
@@ -248,7 +248,7 @@ define test copy-sequence-0 (description: "list")
 end test copy-sequence-0;
 
 define test copy-sequence-2 (description: "range")
-  let s = range(from: 0, up-to: 5);
+  let s = range(from: 0, below: 5);
   let new-s = s.copy-sequence;
   check-true("", new-s = s & ~(new-s == s));
 end test copy-sequence-2;
@@ -298,8 +298,8 @@ define test concatenate-as-0 (description: "list")
 end test concatenate-as-0;
 
 define test concatenate-as-1 (description: "range")
-  let in-1 = range(from: 1, up-to: 6);
-  let in-2 = range(from: 6, up-to: 11);
+  let in-1 = range(from: 1, below: 6);
+  let in-2 = range(from: 6, below: 11);
   let result = concatenate-as(<list>, in-1, in-2);
   check-true("", instance?(result, <list>) & result = #(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 end test concatenate-as-1;
@@ -354,7 +354,7 @@ end test concatenate-as-4;
 
 define test concatenate-as-5 (description: "more args")
   let in-1 = #(1, 2, 3, 4, 5);
-  let in-2 = range(from: 6, up-to: 11);
+  let in-2 = range(from: 6, below: 11);
   let in-3 = deque-instance(10, 9, 8, 7, 6);
   let in-4 = stretchy-vector-instance(5, 4);
   let in-5 = simple-object-vector-instance(3, 2, 1);
@@ -375,10 +375,10 @@ define test concatenate-0 (description: "list")
 end test concatenate-0;
 
 define test concatenate-1 (description: "range")
-  let in-1 = range(from: 1, up-to: 6);
-  let in-2 = range(from: 6, up-to: 11);
+  let in-1 = range(from: 1, below: 6);
+  let in-2 = range(from: 6, below: 11);
   let result = concatenate(in-1, in-2);
-  check-true("", result = range(from: 1, up-to: 11));
+  check-true("", result = range(from: 1, below: 11));
 end test concatenate-1;
 
 define test concatenate-2 (description: "deque")
@@ -404,7 +404,7 @@ end test concatenate-4;
 
 define test concatenate-5 (description: "more args")
   let in-1 = #(1, 2, 3, 4, 5);
-  let in-2 = range(from: 6, up-to: 11);
+  let in-2 = range(from: 6, below: 11);
   let in-3 = deque-instance(10, 9, 8, 7, 6);
   let in-4 = stretchy-vector-instance(5, 4);
   let in-5 = simple-object-vector-instance(3, 2, 1);

@@ -33,7 +33,7 @@ define test add-new!-4 (description: "add old element, using test: argument")
        check-true("", every?(rcurry(member?, new-collection), elements));
      end method,
      list(list(list(7, 8, 9), list(7, 8, 9), 64, #f, divides?),
-          list(range(from: 7, up-to: 10), list(7, 8, 9), 64, #f, divides?),
+          list(range(from: 7, below: 10), list(7, 8, 9), 64, #f, divides?),
           list(vector(7, 8, 9), list(7, 8, 9), 64, #f, divides?),
           list(deque-instance(7, 8, 9), list(7, 8, 9), 64, #t, divides?),
           list(stretchy-vector-instance(7, 8, 9),
@@ -73,7 +73,7 @@ define test remove-1 (description: "empty-list")
 end test remove-1;
 
 define test remove-2 (description: "range")
-  check-true("", remove(range(from: 1, up-to: 5), 4) = #(1, 2, 3));
+  check-true("", remove(range(from: 1, below: 5), 4) = #(1, 2, 3));
 end test remove-2;
 
 define test remove-3 (description: "deque")
@@ -135,7 +135,7 @@ define test remove!-1 (description: "empty-list")
 end test remove!-1;
 
 define test remove!-2 (description: "range")
-  check-true("", remove!(range(from: 1, up-to: 5), 4) = #(1, 2, 3));
+  check-true("", remove!(range(from: 1, below: 5), 4) = #(1, 2, 3));
 end test remove!-2;
 
 define test remove!-3 (description: "deque")
@@ -197,7 +197,7 @@ define test choose-1 (description: "empty list")
 end test choose-1;
 
 define test choose-2 (description: "range")
-  check-true("", choose(even?, range(from: 0, up-to: 8)) = #(0, 2, 4, 6));
+  check-true("", choose(even?, range(from: 0, below: 8)) = #(0, 2, 4, 6));
 end test choose-2;
 
 define test choose-3 (description: "deque")
@@ -223,7 +223,7 @@ define test choose-6 (description: "string")
      "Abandon Hope All Ye Who Enter Here!")
   = "bandonopellehonterere");
   check-true("", choose(even?, #[1, 2, 3, 4, 5, 6, 7, 8]) = #[2, 4, 6, 8]);
-  check-true("", choose(even?, range(from: 0, up-to: 8)) = #(0, 2, 4, 6));
+  check-true("", choose(even?, range(from: 0, below: 8)) = #(0, 2, 4, 6));
   check-true("", choose(even?, #()) = #());
   check-true("", choose(even?, #(1, 3, 5, 7)) = #());
 end test choose-6;
@@ -262,7 +262,7 @@ end test choose-by-2;
 
 define test choose-by-3 (description: "range")
   check-true("", choose-by
-    (even?, range(from: 0, up-to: 15), range(from: 0, down-to: -15, by: -1))
+    (even?, range(from: 0, below: 15), range(from: 0, above: -15, by: -1))
   = #(0, -2, -4, -6, -8, -10, -12, -14));
 end test choose-by-3;
 
@@ -318,9 +318,9 @@ end test choose-by-8;
 
 // these test intersection
 
-define test intersection (description: "")
+define test intersection-type (description: "")
   check-true("", instance?(intersection, <generic-function>));
-end test intersection;
+end test intersection-type;
 
 define test intersection-0 (description: "list")
   begin
@@ -377,10 +377,10 @@ define test intersection-2c (description: "range, test: =")
   = range(from: 6, by: 2, size: 2));
 end test intersection-2c;
 
-define test intersection-2c (description: "semi-infinite ranges, test: id?")
-  check-true("", intersection(range(from: 0, by: 2), range(by: 2, through: 10), test: \==)
+define test intersection-2d (description: "semi-infinite ranges, test: id?")
+  check-true("", intersection(range(from: 0, by: 2), range(by: 2, to: 10), test: \==)
   = range(from: 0, by: 2, size: 6));
-end test intersection-2c;
+end test intersection-2d;
 
 define test intersection-3 (description: "deque")
   check-true("", intersection(deque-instance(1, 2, 3, 4, 5), deque-instance(4, 6, 8, 10, 12))

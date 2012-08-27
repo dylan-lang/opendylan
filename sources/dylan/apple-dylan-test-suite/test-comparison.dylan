@@ -221,9 +221,9 @@ end test binary<;
 (define-test BINARY<-2 ()
   ""
   (bind
-    ((t 'true) (range1 (range from: 2 through: 50 by: 2))
-     (range2 (range from: 3 through: 60 by: 3))
-     (range3 (range from: 1 through: 40)))
+    ((t 'true) (range1 (range from: 2 to: 50 by: 2))
+     (range2 (range from: 3 to: 60 by: 3))
+     (range3 (range from: 1 to: 40)))
     (=
      (for
        ((item1 (initial-state range1) (next-state range1 item1))
@@ -242,8 +242,8 @@ end test binary<;
 (define-test FLOW-CONTROL ()
   ""
   (bind ((t 'true)
-         (range1 (range from: 2 through: 50 by: 3))
-         (range2 (range from: 10 through: 50 by: 2)))
+         (range1 (range from: 2 to: 50 by: 3))
+         (range2 (range from: 10 to: 50 by: 2)))
     (=
      (for
        ((item1 (initial-state range1) (next-state range1 item1))

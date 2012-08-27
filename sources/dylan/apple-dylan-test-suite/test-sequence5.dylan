@@ -13,12 +13,12 @@ Copyright: (c) 1996 Functional Objects, Inc.
 ----------------------------------------------*/
 
 define test first-1 (description: "dotted pair")
-  check-true("", pair(a, b).first = #"a");
+  check-true("", pair(#"a", #"b").first = #"a");
 end test first-1;
 
 define test first-2 (description: "range")
-  check-true("", range(from: 0, up-to: 9).first = 0);
-  check-true("", first(range(from: 0, up-to: 0), default: #"no") = #"no");
+  check-true("", range(from: 0, below: 9).first = 0);
+  check-true("", first(range(from: 0, below: 0), default: #"no") = #"no");
 end test first-2;
 
 define test first-3 (description: "deque")
@@ -49,12 +49,12 @@ define test second-0 (description: "simple cases")
 end test second-0;
 
 define test second-1 (description: "dotted pair")
-  check-true("", pair(a, pair(b, c)).second = #"b");
+  check-true("", pair(#"a", pair(#"b", #"c")).second = #"b");
 end test second-1;
 
 define test second-2 (description: "range")
-  check-true("", range(from: 0, up-to: 9).second = 1);
-  check-true("", second(range(from: 0, up-to: 0), default: #"no") = #"no");
+  check-true("", range(from: 0, below: 9).second = 1);
+  check-true("", second(range(from: 0, below: 0), default: #"no") = #"no");
 end test second-2;
 
 define test second-3 (description: "deque")
@@ -85,12 +85,12 @@ define test third-0 (description: "simple cases")
 end test third-0;
 
 define test third-1 (description: "dotted pair")
-  check-true("", pair(a, pair(b, pair(c, d))).third = #"c");
+  check-true("", pair(#"a", pair(#"b", pair(#"c", #"d"))).third = #"c");
 end test third-1;
 
 define test third-2 (description: "range")
-  check-true("", range(from: 0, up-to: 9).third = 2);
-  check-true("", third(range(from: 0, up-to: 0), default: #"no") = #"no");
+  check-true("", range(from: 0, below: 9).third = 2);
+  check-true("", third(range(from: 0, below: 0), default: #"no") = #"no");
 end test third-2;
 
 define test third-3 (description: "deque")
@@ -118,19 +118,19 @@ define test first-setter-type (description: "")
   check-true("", instance?(first-setter, <generic-function>));
 end test first-setter-type;
 
-define test first-setter (description: "simple cases")
+define test first-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
-    first-setter(t, #(1, 2));
+    first-setter(#(1, 2), t);
     t = #(#(1, 2), 4, 5)
   end);
   check-true("", begin
       let t = #(1, 2, 3, 4, 5, 6, 7, 8, 9);
-      first-setter(t, 0);
+      first-setter(0, t);
       t
     end
     = #(0, 2, 3, 4, 5, 6, 7, 8, 9));
-end test first-setter;
+end test first-setter-0;
 
 // second-setter
 
@@ -138,19 +138,19 @@ define test second-setter-type (description: "")
   check-true("", instance?(second-setter, <generic-function>));
 end test second-setter-type;
 
-define test second-setter (description: "simple cases")
+define test second-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
-    second-setter(t, #(1, 2));
+    second-setter(#(1, 2), t);
     t = #(3, #(1, 2), 5)
   end);
   check-true("", begin
       let t = #(1, 2, 3, 4, 5, 6, 7, 8, 9);
-      second-setter(t, 0);
+      second-setter(0, t);
       t
     end
     = #(1, 0, 3, 4, 5, 6, 7, 8, 9));
-end test second-setter;
+end test second-setter-0;
 
 // third-setter
 
@@ -158,19 +158,19 @@ define test third-setter-type (description: "")
   check-true("", instance?(third-setter, <generic-function>));
 end test third-setter-type;
 
-define test third-setter (description: "simple cases")
+define test third-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
-    third-setter(t, #(1, 2));
+    third-setter(#(1, 2), t);
     t = #(3, 4, #(1, 2))
   end);
   check-true("", begin
       let t = #(1, 2, 3, 4, 5, 6, 7, 8, 9);
-      third-setter(t, 0);
+      third-setter(0, t);
       t
     end
     = #(1, 2, 0, 4, 5, 6, 7, 8, 9));
-end test third-setter;
+end test third-setter-0;
 
 define test last-type (description: "")
   check-true("", instance?(last, <generic-function>));
@@ -181,12 +181,12 @@ define test last-0 (description: "list")
 end test last-0;
 
 define test last-1 (description: "dotted pair")
-  check-true("", pair(a, pair(b, pair(c, d))).last = #"c");
+  check-true("", pair(#"a", pair(#"b", pair(#"c", #"d"))).last = #"c");
 end test last-1;
 
 define test last-2 (description: "range")
-  check-true("", range(from: 0, up-to: 9).last = 8);
-  check-true("", last(range(from: 0, up-to: 0), default: #"no") = #"no");
+  check-true("", range(from: 0, below: 9).last = 8);
+  check-true("", last(range(from: 0, below: 0), default: #"no") = #"no");
 end test last-2;
 
 define test last-3 (description: "deque")
@@ -218,12 +218,12 @@ end test last-setter-type;
 define test last-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
-    last-setter(t, #(1, 2));
+    last-setter(#(1, 2), t);
     t = #(3, 4, #(1, 2))
   end);
   check-true("", begin
       let t = #(1, 2, 3, 4, 5, 6, 7, 8, 9);
-      last-setter(t, -1);
+      last-setter(-1, t);
       t
     end
     = #(1, 2, 3, 4, 5, 6, 7, 8, -1));
@@ -277,7 +277,7 @@ define test subsequence-position-1 (description: "empty list")
 end test subsequence-position-1;
 
 define test subsequence-position-2 (description: "range")
-  check-true("", subsequence-position(range(from: 0, up-to: 6), range(from: 2, up-to: 5)) = 2);
+  check-true("", subsequence-position(range(from: 0, below: 6), range(from: 2, below: 5)) = 2);
 end test subsequence-position-2;
 
 define test subsequence-position-3 (description: "deque")
@@ -381,13 +381,14 @@ define suite test-sequence-suite ()
   test choose-by-6;
   test choose-by-7;
   test choose-by-8;
-  test intersection;
+  test intersection-type;
   test intersection-0;
   test intersection-1;
   test intersection-2;
   test intersection-2a;
   test intersection-2b;
   test intersection-2c;
+  test intersection-2d;
   test intersection-3;
   test intersection-4;
   test intersection-5;
@@ -416,7 +417,7 @@ define suite test-sequence-suite ()
   test remove-duplicates-7;
   test remove-duplicates-8;
   test remove-duplicates!-type;
-  test remove-duplicates!;
+  test remove-duplicates!-0;
   test remove-duplicates!-1;
   test remove-duplicates!-2;
   test remove-duplicates!-3;
@@ -520,11 +521,11 @@ define suite test-sequence-suite ()
   test third-5;
   test third-6;
   test first-setter-type;
-  test first-setter;
+  test first-setter-0;
   test second-setter-type;
-  test second-setter;
+  test second-setter-0;
   test third-setter-type;
-  test third-setter;
+  test third-setter-0;
   test last-setter-type;
   test last-setter-0;
   test last-type;
