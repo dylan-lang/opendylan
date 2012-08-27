@@ -28,7 +28,7 @@ define test intersection-9
   (description: "with other test:, returns val from 1st seq")
   let result
     = intersection
-        (range(from: -1, below: -5, by: -1),
+        (range(from: -1, above: -5, by: -1),
          #(1, 2, 3, 4),
          test: method (a, b)
                  a.abs = b.abs
