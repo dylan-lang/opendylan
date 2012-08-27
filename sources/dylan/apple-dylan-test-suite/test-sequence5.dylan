@@ -13,7 +13,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
 ----------------------------------------------*/
 
 define test first-1 (description: "dotted pair")
-  check-true("", pair(a, b).first = #"a");
+  check-true("", pair(#"a", #"b").first = #"a");
 end test first-1;
 
 define test first-2 (description: "range")
@@ -49,7 +49,7 @@ define test second-0 (description: "simple cases")
 end test second-0;
 
 define test second-1 (description: "dotted pair")
-  check-true("", pair(a, pair(b, c)).second = #"b");
+  check-true("", pair(#"a", pair(#"b", #"c")).second = #"b");
 end test second-1;
 
 define test second-2 (description: "range")
@@ -85,7 +85,7 @@ define test third-0 (description: "simple cases")
 end test third-0;
 
 define test third-1 (description: "dotted pair")
-  check-true("", pair(a, pair(b, pair(c, d))).third = #"c");
+  check-true("", pair(#"a", pair(#"b", pair(#"c", #"d"))).third = #"c");
 end test third-1;
 
 define test third-2 (description: "range")
@@ -181,7 +181,7 @@ define test last-0 (description: "list")
 end test last-0;
 
 define test last-1 (description: "dotted pair")
-  check-true("", pair(a, pair(b, pair(c, d))).last = #"c");
+  check-true("", pair(#"a", pair(#"b", pair(#"c", #"d"))).last = #"c");
 end test last-1;
 
 define test last-2 (description: "range")
