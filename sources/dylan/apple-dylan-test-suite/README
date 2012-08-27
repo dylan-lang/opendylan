@@ -30,7 +30,7 @@ How to use these Suites:
 after loading, by the following command:
 	dylan> perform-suite(test-SUITENAME-suite);
 
-where, SUITNAME is the name of the suite. An example:
+where, SUITENAME is the name of the suite. An example:
 	dylan> perform-suite(test-array-suite);
 
 shall execute the array-suite. The output can be seen on
