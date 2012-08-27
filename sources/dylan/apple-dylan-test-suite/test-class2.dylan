@@ -322,6 +322,7 @@ define test instance?-17 ()
      list(<number>, <real>, <rational>, <integer>)));
 end test;
 
+/*
 define test instance?-18 ()
   let i = make(<ratio>);
   check-true("", every?
@@ -330,6 +331,7 @@ define test instance?-18 ()
      end method,
      list(<number>, <complex>, <real>, <rational>, <ratio>)));
 end test;
+*/
 
 define test instance?-20 ()
   check-true("", every?

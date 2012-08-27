@@ -180,7 +180,7 @@ define suite test-class-suite ()
   test instance?-15;
   test instance?-16;
   test instance?-17;
-  test instance?-18;
+  // test instance?-18; - Uses <ratio>
   test instance?-20;
   test instance?-21;
   test instance?-22;
