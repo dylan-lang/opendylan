@@ -216,14 +216,6 @@ please document it here.
         unimplemented: binary, unary, log, trig stuff etc etc.
 
  o Unclassified glitches:
-        + Unable to compile test-sequence-lib.dylan. The error is:
-        Error: Tried to call non-function {instance of <test>} (bound to
-        DYLAN+DYLAN/INTERNAL::INTERSECTION) with arguments (NIL NIL
-        :TEST #<Function DYLAN-EQ>)
-        As a result of this I have been unable to execute and test the
-        suite. It is really huge and would be very painful to try to do the
-        tests individually. Although, all the other files compile individually.
-
         + In test-class2.dylan , test make-<class> signals a bus error
         when executed. It compiles but just does not execute - dunno why?
 
