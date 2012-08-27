@@ -72,10 +72,10 @@ end test size-range;
 
 // copy-sequence range
 
-define test copy-sequence-0
+define test copy-sequence-range-0
   (description: "copy-seq on range always returns <range>")
   check-true("", instance?(range(to: 5).copy-sequence, <range>));
-end test copy-sequence-0;
+end test copy-sequence-range-0;
 
 // binary= range
 
@@ -121,7 +121,7 @@ define suite test-range-suite ()
   test range-5;
   test member?-range;
   test size-range;
-  test copy-sequence-0;
+  test copy-sequence-range-0;
   test binary=-range;
   test reverse-range;
   test reverse-range-1;

@@ -377,10 +377,10 @@ define test intersection-2c (description: "range, test: =")
   = range(from: 6, by: 2, size: 2));
 end test intersection-2c;
 
-define test intersection-2c (description: "semi-infinite ranges, test: id?")
+define test intersection-2d (description: "semi-infinite ranges, test: id?")
   check-true("", intersection(range(from: 0, by: 2), range(by: 2, to: 10), test: \==)
   = range(from: 0, by: 2, size: 6));
-end test intersection-2c;
+end test intersection-2d;
 
 define test intersection-3 (description: "deque")
   check-true("", intersection(deque-instance(1, 2, 3, 4, 5), deque-instance(4, 6, 8, 10, 12))

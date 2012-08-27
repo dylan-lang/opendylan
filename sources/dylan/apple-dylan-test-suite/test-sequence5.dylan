@@ -388,6 +388,7 @@ define suite test-sequence-suite ()
   test intersection-2a;
   test intersection-2b;
   test intersection-2c;
+  test intersection-2d;
   test intersection-3;
   test intersection-4;
   test intersection-5;
