@@ -25,7 +25,6 @@ Open Proposals (under consideration)
 
 ==== ============= ========== =============================================
 1    Process       Draft      `DEP Purpose and Guidelines <dep-0001.html>`_  (`source <../_sources/proposals/dep-0001.txt>`__)
-4    Standard      Final      `New strings library <dep-0004.html>`_  (`source <../_sources/proposals/dep-0004.txt>`__)
 ==== ============= ========== =============================================
 
 
