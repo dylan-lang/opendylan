@@ -17,8 +17,8 @@ define test first-1 (description: "dotted pair")
 end test first-1;
 
 define test first-2 (description: "range")
-  check-true("", range(from: 0, up-to: 9).first = 0);
-  check-true("", first(range(from: 0, up-to: 0), default: #"no") = #"no");
+  check-true("", range(from: 0, below: 9).first = 0);
+  check-true("", first(range(from: 0, below: 0), default: #"no") = #"no");
 end test first-2;
 
 define test first-3 (description: "deque")
@@ -53,8 +53,8 @@ define test second-1 (description: "dotted pair")
 end test second-1;
 
 define test second-2 (description: "range")
-  check-true("", range(from: 0, up-to: 9).second = 1);
-  check-true("", second(range(from: 0, up-to: 0), default: #"no") = #"no");
+  check-true("", range(from: 0, below: 9).second = 1);
+  check-true("", second(range(from: 0, below: 0), default: #"no") = #"no");
 end test second-2;
 
 define test second-3 (description: "deque")
@@ -89,8 +89,8 @@ define test third-1 (description: "dotted pair")
 end test third-1;
 
 define test third-2 (description: "range")
-  check-true("", range(from: 0, up-to: 9).third = 2);
-  check-true("", third(range(from: 0, up-to: 0), default: #"no") = #"no");
+  check-true("", range(from: 0, below: 9).third = 2);
+  check-true("", third(range(from: 0, below: 0), default: #"no") = #"no");
 end test third-2;
 
 define test third-3 (description: "deque")
@@ -185,8 +185,8 @@ define test last-1 (description: "dotted pair")
 end test last-1;
 
 define test last-2 (description: "range")
-  check-true("", range(from: 0, up-to: 9).last = 8);
-  check-true("", last(range(from: 0, up-to: 0), default: #"no") = #"no");
+  check-true("", range(from: 0, below: 9).last = 8);
+  check-true("", last(range(from: 0, below: 0), default: #"no") = #"no");
 end test last-2;
 
 define test last-3 (description: "deque")
@@ -277,7 +277,7 @@ define test subsequence-position-1 (description: "empty list")
 end test subsequence-position-1;
 
 define test subsequence-position-2 (description: "range")
-  check-true("", subsequence-position(range(from: 0, up-to: 6), range(from: 2, up-to: 5)) = 2);
+  check-true("", subsequence-position(range(from: 0, below: 6), range(from: 2, below: 5)) = 2);
 end test subsequence-position-2;
 
 define test subsequence-position-3 (description: "deque")
