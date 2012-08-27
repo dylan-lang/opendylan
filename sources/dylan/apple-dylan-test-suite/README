@@ -187,11 +187,6 @@ please document it here.
 	. Suite TEST-ITERATION-SUITE
 	   . Test  INITIAL-STATE-EMPTY-COLLECTIONS , check #1
 
-     + make-read-only() could not find it in DRM but there was the
-       test for it which did not compile Suite TEST-CLASS-SUITE
-       Test MAKE-READ-ONLY
-	. Suite TEST-FUNCTION-SUITE, Check make-read-only type also.
-
      + seal : could not find any generic-function of this name,
        again there were tests in Suite TEST-CLASS-SUITE for this???
 

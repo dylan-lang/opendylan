@@ -140,12 +140,6 @@ define test sorted-applicable-methods-type (description: "")
   check("", instance?, sorted-applicable-methods, <generic-function>);
 end test sorted-applicable-methods-type;
 
-// make-read-only
-
-define test make-read-only-type (description: "")
-  check("", instance?, make-read-only, <generic-function>);
-end test make-read-only-type;
-
 // freeze-methods
 // generic-function-methods
 
@@ -212,7 +206,6 @@ define suite test-function-suite ()
   test ambiguous-method-2;
   test add-method-type;
   test sorted-applicable-methods-type;
-  test make-read-only-type;
   test generic-function-methods-0;
   test generic-function-methods-type;
   test function-arguments-0;
