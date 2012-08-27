@@ -341,14 +341,6 @@ define test instance?-20 ()
      list(<object>, <symbol>)));
 end test;
 
-define test instance?-21 ()
-  check-true("", every?
-    (method (c)
-       instance?(foo: c)
-     end method,
-     list(<object>, <keyword>)));
-end test;
-
 define test instance?-22 ()
   check-true("", every?
     (method (c)
@@ -397,7 +389,6 @@ define test instance?-23 ()
 //		       <ratio>,
 		       <float>,
 		       <symbol>,
-		       <keyword>,
 		       <character>)));
    check-true("", every?
       (method (c)
