@@ -121,12 +121,12 @@ end test first-setter-type;
 define test first-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
-    first-setter(t, #(1, 2));
+    first-setter(#(1, 2), t);
     t = #(#(1, 2), 4, 5)
   end);
   check-true("", begin
       let t = #(1, 2, 3, 4, 5, 6, 7, 8, 9);
-      first-setter(t, 0);
+      first-setter(0, t);
       t
     end
     = #(0, 2, 3, 4, 5, 6, 7, 8, 9));
@@ -141,12 +141,12 @@ end test second-setter-type;
 define test second-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
-    second-setter(t, #(1, 2));
+    second-setter(#(1, 2), t);
     t = #(3, #(1, 2), 5)
   end);
   check-true("", begin
       let t = #(1, 2, 3, 4, 5, 6, 7, 8, 9);
-      second-setter(t, 0);
+      second-setter(0, t);
       t
     end
     = #(1, 0, 3, 4, 5, 6, 7, 8, 9));
@@ -161,12 +161,12 @@ end test third-setter-type;
 define test third-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
-    third-setter(t, #(1, 2));
+    third-setter(#(1, 2), t);
     t = #(3, 4, #(1, 2))
   end);
   check-true("", begin
       let t = #(1, 2, 3, 4, 5, 6, 7, 8, 9);
-      third-setter(t, 0);
+      third-setter(0, t);
       t
     end
     = #(1, 2, 0, 4, 5, 6, 7, 8, 9));
@@ -218,12 +218,12 @@ end test last-setter-type;
 define test last-setter-0 (description: "simple cases")
   check-true("", begin
     let t = #(3, 4, 5);
-    last-setter(t, #(1, 2));
+    last-setter(#(1, 2), t);
     t = #(3, 4, #(1, 2))
   end);
   check-true("", begin
       let t = #(1, 2, 3, 4, 5, 6, 7, 8, 9);
-      last-setter(t, -1);
+      last-setter(-1, t);
       t
     end
     = #(1, 2, 3, 4, 5, 6, 7, 8, -1));
