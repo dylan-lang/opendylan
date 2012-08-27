@@ -224,7 +224,7 @@ define test type-for-copy-class-0 ()
 	     simple-object-vector-instance().object-class);
 end test;
 
-// Class-for-copy of all sequences should be a subclass of <sequence>
+// type-for-copy of all sequences should be a subclass of <sequence>
 //
 // Note that the tests type-for-copy1, type-for-copy2, and type-for-copy3
 // only test the standard Dylan collection classes.
@@ -249,7 +249,7 @@ define test type-for-copy-class-1 ()
 			 <empty-list>))));
 end test;
 
-// Class-for-copy of all explicit-key-collections should be a subclass
+// type-for-copy of all explicit-key-collections should be a subclass
 // of <explicit-key-collection>
 
 define test type-for-copy-class-2 ()
@@ -265,7 +265,7 @@ define test type-for-copy-class-2 ()
 		    <byte-string>))));
 end test;
 
-// Class-for-copy of all collections should be mutable.
+// type-for-copy of all collections should be mutable.
 //
 
 define test type-for-copy-class-3 ()
