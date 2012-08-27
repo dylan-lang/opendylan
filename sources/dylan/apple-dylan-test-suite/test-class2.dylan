@@ -134,7 +134,7 @@ define test instance?-3 ()
 end test;
 
 define test instance?-4 ()
-  let i = make(<array>);
+  let i = make(<array>, dimensions: #(2));
   check-true("", every?
     (method (c)
        instance?(i, c)
