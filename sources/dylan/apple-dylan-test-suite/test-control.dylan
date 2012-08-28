@@ -21,7 +21,7 @@ end test truth;
 // not sure what this is supposed to be -it acts wierd
 
 define test not-type-0 (description: "")
-  check-true("", instance?(\&, <function>));
+  check-true("", instance?(\~, <function>));
 end test not-type-0;
 
 define test not-0 (description: "")
