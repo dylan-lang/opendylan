@@ -21,7 +21,7 @@ end test truth;
 // not sure what this is supposed to be -it acts wierd
 
 define test not-type-0 (description: "")
-  check-true("", instance?(\&, <function>));
+  check-true("", instance?(\~, <function>));
 end test not-type-0;
 
 define test not-0 (description: "")
@@ -1101,9 +1101,9 @@ define test unwind-protect-1
   = 99);
 end test unwind-protect-1;
 
-define test quote-0 (description: "Simple case")
+define test quote-control-0 (description: "Simple case")
   check-equal("", #(#"+", 1, 2), #(#"+", 1, 2));
-end test quote-0;
+end test quote-control-0;
 
 define test apply-0 (description: "Simple cases")
   check-equal("", apply(\+, 1, #(2, 3)), 6);
@@ -1173,6 +1173,6 @@ define suite test-control-suite ()
   test bind-exit-4;
   test unwind-protect-0;
   test unwind-protect-1;
-  test quote-0;
+  test quote-control-0;
   test apply-0;
 end suite;

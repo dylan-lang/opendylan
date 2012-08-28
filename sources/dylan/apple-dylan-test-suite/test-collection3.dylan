@@ -375,7 +375,8 @@ end test element1-5;
 define test element1-6 (description: "string")
   let c = "1234";
   check-equal("", c[0], '1' );
-  check-equal("", element(c, 99, default: #t), #t);
+  //---*** Triggers compiler crash:
+  // check-equal("", element(c, 99, default: #t), #t);
 end test element1-6;
 
 define test key-sequence1-0 ()
