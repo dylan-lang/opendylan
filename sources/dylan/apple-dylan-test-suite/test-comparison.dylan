@@ -17,16 +17,13 @@ define test id?-type (description: "")
   check("", method(a, b) ~instance?(a, b) end, \==, <generic-function>);
 end test id?-type;
 
-/*
-define test id? (description: "Simple cases")
+define test id?-0 (description: "Simple cases")
   check-equal("", #f, #f);
   check-equal("", 3, 3);
   check-equal("", #"foo", #"foo");
   check-equal("", #(), #());
   check-equal("", #"abc", #"abc"); 
-end test;
-
-*/
+end test id?-0;
 
 // It's not clear whether literal constants are id?
 //  (not (id? '(1 2 3) '(1 2 3)))
@@ -87,8 +84,9 @@ define test a=-1 (description: "collections")
   check-true("", ~(range = range & range = instance?));
   check-true("", \= = \= & \= = \=);
   check-false("", \= = \= & \= = \&=);
-  check-true("", \& = \& & \& = \&=);
-  check-false("", \& = \& & \& = =hash);
+  //---*** Triggers compiler crash:
+  // check-true("", \& = \& & \& = \&=);
+  // check-false("", \& = \& & \& = =hash);
 end test a=-1;
 
 define test a=-type (description: "")
@@ -118,7 +116,8 @@ define test p=-1 (description: "collections")
   check-true("", ' ' ~= '\n');
   check-true("", range ~= instance?);
   check-true("", \= ~= \&=);
-  check-true("", \& ~= =hash);
+  //---*** Triggers compiler crash:
+  // check-true("", \& ~= =hash);
 end test p=-1;
 
 define test p=-2 (description: "symbols - not case sensitive")
@@ -162,7 +161,8 @@ define test =hash-1 (description: "collections")
   check-true("", =hash(' ') = =hash(' '));
   check-true("", range.=hash = range.=hash);
   check-true("", \=.=hash = \=.=hash);
-  check-true("", \&.=hash = \&.=hash);
+  //---*** Triggers compiler crash:
+  // check-true("", \&.=hash = \&.=hash);
 end test =hash-1;
 
 define test less-than-type (description: "")
@@ -263,7 +263,7 @@ end test binary<;
 
 define suite test-comparison-suite ()
   test id?-type;
-//  test id?;
+  test id?-0;
   test id?-1;
   test equal-type;
   test equal-0;

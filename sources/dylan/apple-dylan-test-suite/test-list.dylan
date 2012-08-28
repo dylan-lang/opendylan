@@ -44,7 +44,7 @@ define test list-0 (description: "")
   check-true("", list(#(#"a", #"b"), #()) = #(#(#"a", #"b"), #()));
 end test list-0;
 
-define test quote-0 (description: "")
+define test list-quote-0 (description: "")
   check-true("", #"john" = #"john");
       let t
         = #(#"john", #(#"quote", #(#"mary", #(#"quote", #(#"joe", #"cindy")), #"bob")), #(#"quote", #(#"joy")));
@@ -53,7 +53,7 @@ define test quote-0 (description: "")
   check-true("", t.tail.tail.head = #(#"quote", #(#"joy")));
   check-true("", t.tail.tail.head.head = #"quote");
   
-end test quote-0;
+end test list-quote-0;
 
 define test list-ops-2 (description: "")
   begin
@@ -106,7 +106,7 @@ define suite test-list-suite ()
 //  test pair-0;
   test list-type;
   test list-0;
-  test quote-0;
+  test list-quote-0;
   test list-ops-2;
   test list-ops-3;
 end;
