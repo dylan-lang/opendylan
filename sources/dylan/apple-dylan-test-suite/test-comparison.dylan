@@ -87,8 +87,9 @@ define test a=-1 (description: "collections")
   check-true("", ~(range = range & range = instance?));
   check-true("", \= = \= & \= = \=);
   check-false("", \= = \= & \= = \&=);
-  check-true("", \& = \& & \& = \&=);
-  check-false("", \& = \& & \& = =hash);
+  //---*** Triggers compiler crash:
+  // check-true("", \& = \& & \& = \&=);
+  // check-false("", \& = \& & \& = =hash);
 end test a=-1;
 
 define test a=-type (description: "")
@@ -118,7 +119,8 @@ define test p=-1 (description: "collections")
   check-true("", ' ' ~= '\n');
   check-true("", range ~= instance?);
   check-true("", \= ~= \&=);
-  check-true("", \& ~= =hash);
+  //---*** Triggers compiler crash:
+  // check-true("", \& ~= =hash);
 end test p=-1;
 
 define test p=-2 (description: "symbols - not case sensitive")
@@ -162,7 +164,8 @@ define test =hash-1 (description: "collections")
   check-true("", =hash(' ') = =hash(' '));
   check-true("", range.=hash = range.=hash);
   check-true("", \=.=hash = \=.=hash);
-  check-true("", \&.=hash = \&.=hash);
+  //---*** Triggers compiler crash:
+  // check-true("", \&.=hash = \&.=hash);
 end test =hash-1;
 
 define test less-than-type (description: "")
