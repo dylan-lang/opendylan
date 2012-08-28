@@ -1,4 +1,4 @@
-This is an early version of the new Open Dylan website.
+This is the Open Dylan website.
 
 It is built using `Sphinx <http://sphinx.pocoo.org>`_.  All content is written using
 ReStructured Text with Sphinx extensions.
