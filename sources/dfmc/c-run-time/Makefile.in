@@ -17,6 +17,7 @@ VPATH           = $(srcdir)
 LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 BINDEST         = $(OPEN_DYLAN_USER_INSTALL)/bin
 INCDEST         = $(OPEN_DYLAN_USER_INSTALL)/include
+OBJDIR          = obj-$(OPEN_DYLAN_PLATFORM_NAME)
 
 CC = @CC@
 AS = as -L
@@ -27,16 +28,17 @@ CFLAGS          = -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -fPIC \
                   $(arch_target) -O2 -g -I$(srcdir) -I$(runtime_srcdir) \
                   $(GC_CFLAGS)
 
-OBJS    = posix-threads.o \
-          debug-print.o \
-          run-time.o \
-          trace.o
+OBJS    = $(OBJDIR)/posix-threads.o \
+          $(OBJDIR)/debug-print.o \
+          $(OBJDIR)/run-time.o \
+          $(OBJDIR)/trace.o
 
 RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
 
 all: $(OBJS)
 
-%.o: $(runtime_srcdir)/%.c
+$(OBJDIR)/%.o: $(runtime_srcdir)/%.c
+	mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -MMD -c -o $@ $<
 
 $(INCDEST):
@@ -55,7 +57,7 @@ install-runtime: $(OBJS) $(RUNTIMELIBDEST)
 install: install-runtime install-header
 
 clean:
-	rm -f *.o *.d
+	rm -rf $(OBJDIR)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile
