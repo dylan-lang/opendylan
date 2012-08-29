@@ -32,7 +32,7 @@ ifeq ($(OPEN_DYLAN_PLATFORM_NAME),ppc-darwin)
 	PLATFORM_CFLAGS = -arch ppc
 endif
 
-CFLAGS          = -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -fPIC \
+CFLAGS          = -W -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -fPIC \
                   -fno-strict-aliasing \
                   $(PLATFORM_CFLAGS) -O2 -g -I$(srcdir) -I$(runtime_srcdir) \
                   $(GC_CFLAGS)
