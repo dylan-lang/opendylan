@@ -200,7 +200,7 @@ TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize)
 }
 
 
-void grow_all_tlv_vectors(newsize)
+void grow_all_tlv_vectors(int newsize)
 {
   TLV_VECTOR_LIST list;
   TLV_VECTOR new_default;

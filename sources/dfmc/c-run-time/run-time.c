@@ -501,6 +501,7 @@ DUMINT primitive_cast_double_float_as_machine_words(DDFLT x) {
 DDFLT primitive_cast_machine_words_as_double_float(DUMINT low, DUMINT high) {
   INTDFLT intflt;
 #ifdef NO_LONGLONG
+  ignore(high);
   intflt.i = (DULMINT)low;
 #else
   intflt.i = ((DULMINT)high << LONG_BIT) | (DULMINT)low;
@@ -727,6 +728,7 @@ static void divide_double (DMINT xl, DMINT xh, DMINT y, DMINT* q, DMINT* r) {
   ---*** primitives aren't used yet, we can get away with it for now ... */
 static void unsigned_divide_double (DMINT xl, DMINT xh, DMINT y, DUMINT* q, DUMINT* r) {
 #ifdef NO_LONGLONG
+  ignore(xh);
   DUMINT dividend = (DUMINT)xl;
   DUMINT divisor = (DUMINT)y;
   *q = dividend / divisor;
