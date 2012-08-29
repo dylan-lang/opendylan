@@ -15,6 +15,7 @@ Makefile
 /sources/corba/services/naming/naming-protocol/
 /sources/corba/services/naming/naming-skeletons/
 /sources/corba/services/naming/naming-stubs/
+/sources/dfmc/c-run-time/*.d
 /sources/dfmc/c-run-time/*.o
 /sources/app/llvm-tablegen/tablegen-parser.dylan
 /sources/jamfiles/config.jam

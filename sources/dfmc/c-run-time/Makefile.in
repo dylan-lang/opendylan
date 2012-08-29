@@ -37,7 +37,7 @@ RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
 all: $(OBJS)
 
 %.o: $(runtime_srcdir)/%.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -MMD -c -o $@ $<
 
 $(INCDEST):
 	mkdir -p $(INCDEST)
@@ -55,7 +55,9 @@ install-runtime: $(OBJS) $(RUNTIMELIBDEST)
 install: install-runtime install-header
 
 clean:
-	rm -f *.o
+	rm -f *.o *.d
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile
+
+-include $(OBJS:%.o=%.d)
