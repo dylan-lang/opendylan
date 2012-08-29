@@ -36,15 +36,7 @@ RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
 
 all: $(OBJS)
 
-dummy-threads.o: $(runtime_srcdir)/dummy-threads.c
-
-posix-threads.o: $(runtime_srcdir)/posix-threads.c
-
-debug-print.o:  $(runtime_srcdir)/debug-print.c
-
-trace.o: $(runtime_srcdir)/trace.c
-
-run-time.o: $(runtime_srcdir)/run-time.c
+%.o: $(runtime_srcdir)/%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(INCDEST):
