@@ -28,9 +28,9 @@
 #include <gc/gc.h>
 #endif
 
-#include "linux-types.h"
+#include "unix-types.h"
 
-#include "linux-threads-primitives.h"
+#include "unix-threads-primitives.h"
 
 
 /*****************************************************************************/
