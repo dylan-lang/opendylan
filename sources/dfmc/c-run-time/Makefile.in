@@ -1,13 +1,11 @@
 # Build runtime library for C backend
 
 srcdir          = @srcdir@
-top_srcdir      = @top_srcdir@
 top_builddir    = @top_builddir@
 GC_CFLAGS       = @GC_CFLAGS@
 GC_LFLAGS       = @GC_LFLAGS@
 
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
-runtime_srcdir  = $(top_srcdir)/sources/dfmc/c-run-time
 
 subdir          = sources/dfmc/c-run-time
 
@@ -34,7 +32,7 @@ endif
 
 CFLAGS          = -W -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -fPIC \
                   -fno-strict-aliasing \
-                  $(PLATFORM_CFLAGS) -O2 -g -I$(srcdir) -I$(runtime_srcdir) \
+                  $(PLATFORM_CFLAGS) -O2 -g -I$(srcdir) \
                   $(GC_CFLAGS)
 
 OBJS    = $(OBJDIR)/posix-threads.o \
@@ -46,7 +44,7 @@ RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
 
 all: $(OBJS)
 
-$(OBJDIR)/%.o: $(runtime_srcdir)/%.c
+$(OBJDIR)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -MMD -c -o $@ $<
 
@@ -56,9 +54,9 @@ $(INCDEST):
 $(RUNTIMELIBDEST):
 	mkdir -p $(RUNTIMELIBDEST)
 
-install-header: $(runtime_srcdir)/run-time.h $(INCDEST)
-	cp -fp $(runtime_srcdir)/trace.h $(INCDEST)
-	cp -fp $(runtime_srcdir)/run-time.h $(INCDEST)
+install-header: $(srcdir)/run-time.h $(INCDEST)
+	cp -fp $(srcdir)/trace.h $(INCDEST)
+	cp -fp $(srcdir)/run-time.h $(INCDEST)
 
 install-runtime: $(OBJS) $(RUNTIMELIBDEST)
 	cp -fp $(OBJS) $(RUNTIMELIBDEST)
