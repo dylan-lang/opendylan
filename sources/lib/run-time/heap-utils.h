@@ -11,8 +11,8 @@
 #include "mps.h"        /* MPS Interface */
 #include "mpslib.h"     /* plinth interface */
 
-#ifdef LINUX_PLATFORM
-#include "linux-types.h"
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+#include "unix-types.h"
 #else
 #include "win32-types.h"
 #endif

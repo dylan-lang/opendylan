@@ -1,0 +1,107 @@
+srcdir		= @srcdir@
+top_srcdir	= @top_srcdir@
+top_builddir	= @top_builddir@
+
+subdir		= sources/lib/run-time
+
+VPATH		= $(srcdir)
+
+LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
+
+OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
+OBJDIR          = obj-$(OPEN_DYLAN_PLATFORM_NAME)
+
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86-linux)
+  MPS_PLATFORM=lii4gc
+  MPS_MAKE=make
+  PLATFORM_CFLAGS=-DGC_LINUX_THREADS=1 -D_REENTRANT=1 \
+    -DOPEN_DYLAN_PLATFORM_LINUX -DOPEN_DYLAN_PLATFORM_UNIX \
+    -DX86_LINUX_PLATFORM=1
+endif
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86-freebsd)
+  MPS_PLATFORM=fri4gc
+  MPS_MAKE=gmake
+  PLATFORM_CFLAGS=-D_REENTRANT=1 -DX86_LINUX_PLATFORM=1 \
+    -DOPEN_DYLAN_PLATFORM_FREEBSD -DOPEN_DYLAN_PLATFORM_UNIX
+endif
+
+GC_CFLAGS       = @GC_CFLAGS@
+GC_LFLAGS       = @GC_LFLAGS@
+
+MPS_ROOT        = @GC_MPS_ROOT@
+MPS_VARIANT     = hi
+MPS_LIB         = $(MPS_ROOT)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
+
+CC = @CC@
+AS = as -L
+AR = ar -q
+
+HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_PLATFORM_NAME)
+
+HARP_OBJS        = $(HARP_SUPPORT_DIR)/runtime.o \
+                   $(HARP_SUPPORT_DIR)/dylan-support.o
+
+CFLAGS		= $(PLATFORM_CFLAGS) -O -g $(GC_CFLAGS) -I$(srcdir)
+
+OBJS		= $(OBJDIR)/unix-collector.o \
+		  $(OBJDIR)/unix-threads-primitives.o \
+		  $(OBJDIR)/unix-spy-interfaces.o \
+		  $(OBJDIR)/unix-support.o
+
+RUNTIMELIBDEST   = $(LIBDEST)/runtime/harp-$(OPEN_DYLAN_PLATFORM_NAME)
+
+all: $(OBJS)
+
+$(RUNTIMELIBDEST):
+	mkdir -p $(RUNTIMELIBDEST)
+
+$(OBJDIR)/%.o: $(srcdir)/%.c
+	mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) -MMD -c -o $@ $<
+
+linux-support.o:
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+install-objs: $(OBJS) $(RUNTIMELIBDEST)
+	cp -fp $(OBJDIR)/unix-collector.o $(RUNTIMELIBDEST)/x86-linux-collector.o
+	cp -fp $(OBJDIR)/unix-threads-primitives.o $(RUNTIMELIBDEST)/x86-linux-threads-primitives.o
+	cp -fp $(OBJDIR)/unix-spy-interfaces.o $(RUNTIMELIBDEST)/linux-spy-interfaces.o
+	cp -fp $(OBJDIR)/unix-support.o $(RUNTIMELIBDEST)/linux-support.o
+
+$(MPS_LIB)/mmdw.a:
+	(cd $(MPS_ROOT)/code; $(MPS_MAKE) -f $(MPS_PLATFORM).gmk mmdw.a)
+
+$(MPS_LIB)/mpsplan.a:
+	(cd $(MPS_ROOT)/code; $(MPS_MAKE) -f $(MPS_PLATFORM) mpsplan.a)
+
+$(RUNTIMELIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a $(RUNTIMELIBDEST)
+	cp -fp $(MPS_LIB)/mpsplan.a $(LIBDEST)/libmpsplan.a
+	cp -fp $(MPS_LIB)/mpsplan.a $(RUNTIMELIBDEST)/libmpsplan.a
+
+$(RUNTIMELIBDEST)/libmmdw.a: $(MPS_LIB)/mmdw.a $(RUNTIMELIBDEST)
+	cp -fp $(MPS_LIB)/mmdw.a $(LIBDEST)/libmmdw.a
+	cp -fp $(MPS_LIB)/mmdw.a $(RUNTIMELIBDEST)/libmmdw.a
+
+install-mps: $(RUNTIMELIBDEST)/libmmdw.a $(RUNTIMELIBDEST)/libmpsplan.a
+
+$(LIBDEST)/dylan-elf-dll.script: $(HARP_SUPPORT_DIR)/dylan-elf-dll.script
+	cp -fp $(HARP_SUPPORT_DIR)/dylan-elf-dll.script $(LIBDEST)
+
+$(LIBDEST)/dylan-elf-exe.script: $(HARP_SUPPORT_DIR)/dylan-elf-exe.script
+	cp -fp $(HARP_SUPPORT_DIR)/dylan-elf-exe.script $(LIBDEST)
+
+install-runtime-support: $(HARP_OBJS) $(RUNTIMELIBDEST)
+	cp -fp $(HARP_OBJS) $(RUNTIMELIBDEST)
+
+install-linker-scripts: $(RUNTIMELIBDEST) $(LIBDEST)/dylan-elf-dll.script \
+	$(LIBDEST)/dylan-elf-exe.script
+
+install: install-runtime-support install-linker-scripts install-mps install-objs
+
+clean:
+	rm -rf $(OBJDIR)
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && ./config.status $(subdir)/Makefile
+
+-include $(OBJS:%.o=%.d)

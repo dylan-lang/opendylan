@@ -22,7 +22,7 @@
  *  the trampoline.
  */
 
-#ifdef LINUX_PLATFORM
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
 #define RUN_TIME_API
 #else
 #define RUN_TIME_API __declspec( dllexport )
@@ -98,7 +98,7 @@ void force_reference_to_spy_interface()
 #include "mpscamc.h"    /* MPS pool class AMC */
 #include "mpsavm.h"     /* MPS arena class */
 #ifndef BOEHM_GC
-#ifndef LINUX_PLATFORM
+#ifndef OPEN_DYLAN_PLATFORM_UNIX
 #include "mpsw3.h"
 #endif
 #else
@@ -112,8 +112,8 @@ void force_reference_to_spy_interface()
 #include <stdlib.h>
 #include <assert.h>
 
-#ifdef LINUX_PLATFORM
-#include "linux-types.h"
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+#include "unix-types.h"
 #else
 #include "win32-types.h"
 #endif
@@ -231,7 +231,7 @@ static MMAllocHandler misc_handler = defaultHandler;
 
 /* Thread Local Variables, accessed via the GC-TEB*/
 
-#ifdef X86_LINUX_PLATFORM
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
 // On Linux, use the thread-local storage provided by the system to
 // hold the TEB pointer
 __thread void* teb;
@@ -569,7 +569,7 @@ __inline
  gc_teb_t current_gc_teb()
 {
   gc_teb_t gc_teb;
-#if defined(X86_LINUX_PLATFORM)
+#if defined(OPEN_DYLAN_PLATFORM_UNIX)
 
   gc_teb = teb;
 
@@ -593,8 +593,10 @@ __inline
 #define thread        (*current_gc_teb()).gc_teb_thread
 #define stack_root    (*current_gc_teb()).gc_teb_stack_root
 
-#ifdef LINUX_PLATFORM
-#include "linux-exceptions.c"
+#if defined(OPEN_DYLAN_PLATFORM_LINUX)
+#include "x86-linux-exceptions.c"
+#elif defined(OPEN_DYLAN_PLATFORM_FREEBSD)
+#include "x86-freebsd-exceptions.c"
 #else
 #include "win32-exceptions.c"
 #endif
@@ -2546,7 +2548,7 @@ void dylan_shut_down_memory_manager()
 }
 
 
-#ifndef LINUX_PLATFORM
+#ifndef OPEN_DYLAN_PLATFORM_UNIX
 
 extern void dylan_main ();
 

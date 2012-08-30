@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 #include <dlfcn.h>
-#include "linux-types.h"
+#include "unix-types.h"
 #include "spy-interfaces.h"
 
 
