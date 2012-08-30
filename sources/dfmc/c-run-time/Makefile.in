@@ -1,14 +1,11 @@
 # Build runtime library for C backend
 
 srcdir          = @srcdir@
-top_srcdir      = @top_srcdir@
 top_builddir    = @top_builddir@
 GC_CFLAGS       = @GC_CFLAGS@
 GC_LFLAGS       = @GC_LFLAGS@
-arch_target     = @arch_target@
 
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
-runtime_srcdir  = $(top_srcdir)/sources/dfmc/c-run-time
 
 subdir          = sources/dfmc/c-run-time
 
@@ -17,35 +14,39 @@ VPATH           = $(srcdir)
 LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
 BINDEST         = $(OPEN_DYLAN_USER_INSTALL)/bin
 INCDEST         = $(OPEN_DYLAN_USER_INSTALL)/include
+OBJDIR          = obj-$(OPEN_DYLAN_PLATFORM_NAME)
 
 CC = @CC@
 AS = as -L
 AR = ar -q
 
-CFLAGS          = -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -fPIC \
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86-darwin)
+	PLATFORM_CFLAGS = -arch i386
+endif
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86_64-darwin)
+	PLATFORM_CFLAGS = -arch x86_64
+endif
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),ppc-darwin)
+	PLATFORM_CFLAGS = -arch ppc
+endif
+
+CFLAGS          = -W -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -fPIC \
                   -fno-strict-aliasing \
-                  $(arch_target) -O2 -g -I$(srcdir) -I$(runtime_srcdir) \
+                  $(PLATFORM_CFLAGS) -O2 -g -I$(srcdir) \
                   $(GC_CFLAGS)
 
-OBJS    = posix-threads.o \
-          debug-print.o \
-          run-time.o \
-          trace.o
+OBJS    = $(OBJDIR)/posix-threads.o \
+          $(OBJDIR)/debug-print.o \
+          $(OBJDIR)/run-time.o \
+          $(OBJDIR)/trace.o
 
 RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
 
 all: $(OBJS)
 
-dummy-threads.o: $(runtime_srcdir)/dummy-threads.c
-
-posix-threads.o: $(runtime_srcdir)/posix-threads.c
-
-debug-print.o:  $(runtime_srcdir)/debug-print.c
-
-trace.o: $(runtime_srcdir)/trace.c
-
-run-time.o: $(runtime_srcdir)/run-time.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+$(OBJDIR)/%.o: $(srcdir)/%.c
+	mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) -MMD -c -o $@ $<
 
 $(INCDEST):
 	mkdir -p $(INCDEST)
@@ -53,9 +54,9 @@ $(INCDEST):
 $(RUNTIMELIBDEST):
 	mkdir -p $(RUNTIMELIBDEST)
 
-install-header: $(runtime_srcdir)/run-time.h $(INCDEST)
-	cp -fp $(runtime_srcdir)/trace.h $(INCDEST)
-	cp -fp $(runtime_srcdir)/run-time.h $(INCDEST)
+install-header: $(srcdir)/run-time.h $(INCDEST)
+	cp -fp $(srcdir)/trace.h $(INCDEST)
+	cp -fp $(srcdir)/run-time.h $(INCDEST)
 
 install-runtime: $(OBJS) $(RUNTIMELIBDEST)
 	cp -fp $(OBJS) $(RUNTIMELIBDEST)
@@ -63,7 +64,9 @@ install-runtime: $(OBJS) $(RUNTIMELIBDEST)
 install: install-runtime install-header
 
 clean:
-	rm -f *.o
+	rm -rf $(OBJDIR)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile
+
+-include $(OBJS:%.o=%.d)

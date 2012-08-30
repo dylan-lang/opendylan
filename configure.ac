@@ -22,18 +22,15 @@ case $target in
     ;;
   i*86-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time;
-      arch_target="-arch i386"
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   x86_64-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time;
-      arch_target="-arch i386"
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   powerpc-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=ppc-darwin;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time;
-      arch_target="-arch ppc"
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   amd64-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=amd64-freebsd;
@@ -49,7 +46,6 @@ case $target in
 esac
 AC_SUBST(OPEN_DYLAN_PLATFORM_NAME)
 AC_SUBST(RUNTIME_SOURCES)
-AC_SUBST(arch_target)
 
 AM_INIT_AUTOMAKE
 
