@@ -14,11 +14,11 @@ AC_CANONICAL_TARGET
 case $target in
   i*86-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=x86-linux;
-      RUNTIME_SOURCES=sources/lib/run-time/pentium-linux
+      RUNTIME_SOURCES=sources/lib/run-time
     ;;
   i*86-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=x86-freebsd;
-      RUNTIME_SOURCES=sources/lib/run-time/pentium-freebsd
+      RUNTIME_SOURCES=sources/lib/run-time
     ;;
   i*86-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
@@ -120,8 +120,7 @@ AC_SUBST(GC_MPS_ROOT)
 AC_CONFIG_FILES(Makefile
 	        sources/jamfiles/Makefile
                 sources/jamfiles/config.jam
-                sources/lib/run-time/pentium-linux/Makefile
-                sources/lib/run-time/pentium-freebsd/Makefile
+                sources/lib/run-time/Makefile
                 sources/dfmc/c-run-time/Makefile)
 
 AC_OUTPUT
