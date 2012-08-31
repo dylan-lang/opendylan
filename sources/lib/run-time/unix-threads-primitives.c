@@ -9,11 +9,6 @@
 
 #define _GNU_SOURCE
 
-/*
-#define THREAD_AWARE_C_LIBS
-*/
-#define THREADS_RUN_TIME_LIB
-
 #include <assert.h>
 #include <stdlib.h>
 #include <stddef.h>
