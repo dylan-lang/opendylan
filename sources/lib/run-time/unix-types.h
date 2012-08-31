@@ -4,9 +4,6 @@
 #include <pthread.h>
 
 typedef void                *HANDLE;
-typedef void                *PVOID;
-typedef long                 LONG;
-typedef long                *LPLONG;
 typedef unsigned char        BYTE;
 typedef int                  BOOL;
 typedef unsigned long        DWORD;

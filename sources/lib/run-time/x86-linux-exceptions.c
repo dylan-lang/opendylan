@@ -15,7 +15,7 @@
 #include <dlfcn.h>
 
 extern int inside_dylan_ffi_barrier();
-extern void dylan_stack_overflow_handler(PVOID base_address, int size, DWORD protection);
+extern void dylan_stack_overflow_handler(void *base_address, int size, unsigned long protection);
 extern void dylan_integer_overflow_handler();
 extern void dylan_integer_divide_0_handler();
 extern void dylan_float_divide_0_handler();

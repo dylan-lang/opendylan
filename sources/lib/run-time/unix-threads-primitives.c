@@ -1343,7 +1343,6 @@ THREADS_RUN_TIME_API  ZINT
 primitive_unlock_simple_lock(CONTAINER *lock)
 {
   SIMPLELOCK *slock;
-  LONG    junk;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
@@ -1362,7 +1361,6 @@ THREADS_RUN_TIME_API  ZINT
 primitive_unlock_recursive_lock(CONTAINER *lock)
 {
   RECURSIVELOCK *rlock;
-  LONG           junk;
   ZINT res;
 
   assert(lock != NULL);
