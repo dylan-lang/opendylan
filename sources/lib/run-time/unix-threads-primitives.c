@@ -1133,7 +1133,7 @@ primitive_allocate_thread_variable(Z value)
 
 /* Grow all TLV vectors
  */
-void grow_all_tlv_vectors(newsize)
+void grow_all_tlv_vectors(int newsize)
 {
   TLV_VECTOR_LIST list;
   TLV_VECTOR new_default;
