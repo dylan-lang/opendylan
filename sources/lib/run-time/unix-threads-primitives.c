@@ -39,6 +39,10 @@
 /*                                                                           */
 /*****************************************************************************/
 
+/* A large negative number used to indicate that a thread is in the process
+   of growing the TLV vector */
+static const long TLV_GROW = -2000000;
+
 #ifdef C_TESTING
   DWORD TlsIndexThread;
   DWORD TlsIndexThreadHandle;
@@ -53,7 +57,7 @@
 
 int        TLV_vector_offset = 3*sizeof(Z);
 
-PVOID      tlv_writer_counter = 0;
+static long tlv_writer_counter = 0;
 
 define_CRITICAL_SECTION(tlv_vector_list_lock);
 TLV_VECTOR_LIST  tlv_vector_list;
@@ -85,7 +89,7 @@ static int   remove_tlv_vector(HANDLE thread);
  * Returns: the new incremented value
  */
 static inline
-LONG internal_InterlockedIncrement(LPLONG var)
+long internal_InterlockedIncrement(long *var)
 {
   return __sync_add_and_fetch(var, 1);
 }
@@ -95,7 +99,7 @@ LONG internal_InterlockedIncrement(LPLONG var)
  * Returns: the new decremented value
  */
 static inline
-LONG internal_InterlockedDecrement(LPLONG var)
+long internal_InterlockedDecrement(long *var)
 {
   return __sync_sub_and_fetch(var, 1);
 }
@@ -105,8 +109,8 @@ LONG internal_InterlockedDecrement(LPLONG var)
  * nothing). Returns the initial value of the destination.
  */
 static inline
-PVOID internal_InterlockedCompareExchange(PVOID *destination, PVOID exchange,
-                                          PVOID compare)
+long internal_InterlockedCompareExchange(long *destination, long exchange,
+                                          long compare)
 {
   return __sync_val_compare_and_swap(destination, compare, exchange);
 }
@@ -200,11 +204,11 @@ THREADS_RUN_TIME_API
 void primitive_write_thread_variable_internal()
 {
   do {
-    if (internal_InterlockedDecrement((LPLONG)(&tlv_writer_counter)) < 0) {
+    if (internal_InterlockedDecrement(&tlv_writer_counter) < 0) {
       pthread_mutex_lock(&tlv_vector_list_lock);
       pthread_mutex_unlock(&tlv_vector_list_lock);
     }
-  } while(internal_InterlockedIncrement((LPLONG)(&tlv_writer_counter)) < 0);
+  } while(internal_InterlockedIncrement(&tlv_writer_counter) < 0);
 }
 
 
@@ -1244,7 +1248,7 @@ primitive_write_thread_variable(void *variable_handle, Z new_value)
   int        offset;
 
   // If another thread is growing the TLV vectors, wait till it's finished
-  if (internal_InterlockedIncrement((LPLONG)(&tlv_writer_counter)) < 0)
+  if (internal_InterlockedIncrement(&tlv_writer_counter) < 0)
     primitive_write_thread_variable_internal();
 
   // The variable handle is the byte offset where the variable's value is
@@ -1255,7 +1259,7 @@ primitive_write_thread_variable(void *variable_handle, Z new_value)
   *destination = new_value;
 
   // Indicate that the write has finished
-  internal_InterlockedDecrement((LPLONG)(&tlv_writer_counter));
+  internal_InterlockedDecrement(&tlv_writer_counter);
 
   return(new_value);
 }

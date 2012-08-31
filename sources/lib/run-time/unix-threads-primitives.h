@@ -25,10 +25,6 @@
 /* Size of vector for storing thread variables. */
 #define TLV_VECTOR_INITIAL_SIZE 20
 
-/* A large negative number used to indicate that a thread is in the process
-   of growing the TLV vector */
-#define TLV_GROW ((PVOID)(-2000000))
-
 
 #ifndef _DEBUG      /* For Release builds */
 #define  MSG0(msg)                          ((void)0)
