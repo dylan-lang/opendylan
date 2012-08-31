@@ -1463,22 +1463,7 @@ remove_tlv_vector(HANDLE hThread)
  */
 LONG internal_InterlockedIncrement(LPLONG var)
 {
-#if defined(X86_LINUX_PLATFORM)
-__asm__(
-    "movl          %0,%%ecx\n\t"
-    "movl          $0x00000001,%%eax\n\t"
-    "lock          \n\t"
-    "xaddl         %%eax,0x0(%%ecx)\n\t"
-    "incl          %%eax\n"
-
-      // output operands
-      :
-      // input operands
-      : "g" (var)
-      // clobbered machine registers
-      : "ax", "cx"
-  );
-#endif
+  return __sync_add_and_fetch(var, 1);
 }
 
 /* Decrement the 32-bit value pointed to by var. Prevents other threads from
@@ -1489,22 +1474,7 @@ __asm__(
  */
 LONG internal_InterlockedDecrement(LPLONG var)
 {
-#if defined(X86_LINUX_PLATFORM)
-__asm__(
-    "movl          %0,%%ecx\n\t"
-    "movl          $0xffffffff,%%eax\n\t"
-    "lock          \n\t"
-    "xaddl         %%eax,0x0(%%ecx)\n\t"
-    "decl          %%eax\n"
-
-    // output operands
-    :
-    // input operands
-    : "g" (var)
-    // clobbered machine registers
-    : "ax", "cx"
-  );
-#endif
+  return __sync_sub_and_fetch(var, 1);
 }
 
 /* Atomically compares the destination and compare values, and stores the
@@ -1514,20 +1484,5 @@ __asm__(
 PVOID internal_InterlockedCompareExchange(PVOID *destination, PVOID exchange,
                                           PVOID compare)
 {
-#if defined(X86_LINUX_PLATFORM)
-__asm__(
-    "movl             %0,%%ecx\n\t"
-    "movl             %1,%%edx\n\t"
-    "movl             %2,%%eax\n\t"
-    "lock             \n\t"
-    "cmpxchgl         %%edx,0x0(%%ecx)\n"
-
-    // output operands
-    :
-    // input operands
-    : "g" (destination), "g" (exchange), "g" (compare)
-    // clobbered machine registers
-    : "ax", "cx", "dx"
-  );
-#endif
+  return __sync_val_compare_and_swap(destination, compare, exchange);
 }
