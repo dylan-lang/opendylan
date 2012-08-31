@@ -30,15 +30,9 @@ cdebug = /G5 /O2 /Ob2 /Oy- /Oi /Z7 /DNDEBUG
 cvarsmt = $(noansi) -D_MT -MT
 !endif
 
-!if defined(gen0freq)
-mmtuneflags = /DTUNE_GEN0_FREQ=$(gen0freq)
-!else
-mmtuneflags = 
-!endif
-
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
-CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM)\code $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags)
+CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM)\code $(OPEN_DYLAN_C_FLAGS)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
 OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 LIBFILE	 = pentium-run-time.lib
