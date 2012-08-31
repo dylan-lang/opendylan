@@ -80,14 +80,41 @@ static void  update_tlv_vectors(int newindex, Z value);
 static void  add_tlv_vector(HANDLE newthread, TLV_VECTOR tlv_vector);
 static int   remove_tlv_vector(HANDLE thread);
 
-static LONG  internal_InterlockedIncrement(LPLONG);
-static LONG  internal_InterlockedDecrement(LPLONG);
-static PVOID internal_InterlockedCompareExchange(PVOID *, PVOID, PVOID);
-
 
 /*****************************************************************************/
 /* EXTERNAL FUNCTIONS                                                        */
 /*****************************************************************************/
+
+/* Increment the 32-bit value pointed to by var. Prevents other threads from
+ * using the value simultaneously.
+ * Returns: the new incremented value
+ */
+static inline
+LONG internal_InterlockedIncrement(LPLONG var)
+{
+  return __sync_add_and_fetch(var, 1);
+}
+
+/* Decrement the 32-bit value pointed to by var. Prevents other threads from
+ * using the value simultaneously
+ * Returns: the new decremented value
+ */
+static inline
+LONG internal_InterlockedDecrement(LPLONG var)
+{
+  return __sync_sub_and_fetch(var, 1);
+}
+
+/* Atomically compares the destination and compare values, and stores the
+ * exchange value in the destination if they are equal (otherwise does
+ * nothing). Returns the initial value of the destination.
+ */
+static inline
+PVOID internal_InterlockedCompareExchange(PVOID *destination, PVOID exchange,
+                                          PVOID compare)
+{
+  return __sync_val_compare_and_swap(destination, compare, exchange);
+}
 
 #ifdef C_TESTING
 /*****************************************************************************/
@@ -1447,42 +1474,4 @@ remove_tlv_vector(HANDLE hThread)
   // Reached the end of the list without finding thread's entry
   pthread_mutex_unlock(&tlv_vector_list_lock);
   return(1);
-}
-
-
-/*  We implement our own versions of InterlockedIncrement, InterlockedDecrement
- *  and InterlockedCompareExchange for efficiency reasons, and also because
- *  InterlockedCompareExchange is not available in Windows 95.
- */
-
-/* Increment the 32-bit value pointed to by var. Prevents other threads from
- * using the value simultaneously.
- * Returns: zero if the result of the increment was 0
- *      a value less than zero if the result of the increment was < 0
- *      a value greater than zero if the result of the increment was > 0
- */
-LONG internal_InterlockedIncrement(LPLONG var)
-{
-  return __sync_add_and_fetch(var, 1);
-}
-
-/* Decrement the 32-bit value pointed to by var. Prevents other threads from
- * using the value simultaneously
- * Returns: zero if the result of the decrement was 0
- *      a value less than zero if the result was < 0
- *      a value greater than zero if the result was > 0
- */
-LONG internal_InterlockedDecrement(LPLONG var)
-{
-  return __sync_sub_and_fetch(var, 1);
-}
-
-/* Atomically compares the destination and compare values, and stores the
- * exchange value in the destination if they are equal (otherwise does
- * nothing). Returns the initial value of the destination.
- */
-PVOID internal_InterlockedCompareExchange(PVOID *destination, PVOID exchange,
-                                          PVOID compare)
-{
-  return __sync_val_compare_and_swap(destination, compare, exchange);
 }
