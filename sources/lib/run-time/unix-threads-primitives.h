@@ -97,12 +97,12 @@ typedef struct semaphore {
 
 typedef struct simple_lock {
 	pthread_mutex_t mutex;
-        HANDLE owner;
+        pthread_t owner;
 } SIMPLELOCK;
 
 typedef struct recursive_lock {
 	pthread_mutex_t mutex;
-        HANDLE owner;
+        pthread_t owner;
 	int    recursion_count;
 } RECURSIVELOCK;
 
@@ -114,7 +114,7 @@ typedef BYTE *TLV_VECTOR;
 
 typedef struct tlv_vector_list_element
 {
-  HANDLE hThread;
+  pthread_t hThread;
   TLV_VECTOR tlv_vector;
   struct tlv_vector_list_element *next;
 } *TLV_VECTOR_LIST;

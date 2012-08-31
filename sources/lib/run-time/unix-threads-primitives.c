@@ -76,8 +76,8 @@ static TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize);
 
 static void  copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source);
 static void  update_tlv_vectors(int newindex, Z value);
-static void  add_tlv_vector(HANDLE newthread, TLV_VECTOR tlv_vector);
-static int   remove_tlv_vector(HANDLE thread);
+static void  add_tlv_vector(pthread_t newthread, TLV_VECTOR tlv_vector);
+static int   remove_tlv_vector(pthread_t thread);
 
 
 /*****************************************************************************/
@@ -186,8 +186,8 @@ extern void *get_tlv_vector(void);
 extern void  set_tlv_vector(void *vector);
 extern void *get_current_thread();
 extern void  set_current_thread(void *thread);
-extern void *get_current_thread_handle();
-extern void  set_current_thread_handle(void *handle);
+extern pthread_t get_current_thread_handle();
+extern void  set_current_thread_handle(pthread_t handle);
 extern void *get_current_teb();
 extern int   dylan_init_thread(void **rReturn, void *(*f)(void *, size_t),
                                void *p, size_t s);
@@ -276,7 +276,7 @@ trampoline_body(void *arg, size_t ignore)
   call_first_dylan_function((void *)dylan_trampoline, 0);
 #endif
 
-  remove_tlv_vector(thread->handle1);
+  remove_tlv_vector((pthread_t)thread->handle1);
   return 0;
 }
 
@@ -366,7 +366,7 @@ THREADS_RUN_TIME_API  ZINT
 primitive_wait_for_simple_lock(CONTAINER *lock)
 {
   SIMPLELOCK  *slock;
-  HANDLE       hThread;
+  pthread_t    hThread;
   int status;
 
   assert(lock != NULL);
@@ -397,7 +397,7 @@ THREADS_RUN_TIME_API  ZINT
 primitive_wait_for_recursive_lock(CONTAINER *lock)
 {
   RECURSIVELOCK  *rlock;
-  HANDLE       hThread;
+  pthread_t       hThread;
   int status;
 
   assert(lock != NULL);
@@ -450,7 +450,7 @@ primitive_wait_for_notification(CONTAINER *notif, CONTAINER *lock)
 {
   NOTIFICATION  *notification;
   SIMPLELOCK  *slock;
-  HANDLE hThread;
+  pthread_t    hThread;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -490,7 +490,7 @@ primitive_wait_for_simple_lock_timed(CONTAINER *lock, ZINT zmilsecs)
   int sleeptime = 100;
   int status;
   SIMPLELOCK  *slock;
-  HANDLE       hThread;
+  pthread_t    hThread;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
@@ -536,7 +536,7 @@ primitive_wait_for_recursive_lock_timed(CONTAINER *lock, ZINT zmilsecs)
   int sleeptime = 100;
   int status;
   RECURSIVELOCK  *rlock;
-  HANDLE       hThread;
+  pthread_t       hThread;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
@@ -619,7 +619,7 @@ primitive_wait_for_notification_timed(CONTAINER *notif, CONTAINER *lock,
 {
   NOTIFICATION  *notification;
   SIMPLELOCK  *slock;
-  HANDLE hThread;
+  pthread_t hThread;
   struct timespec timespec;
   int status, milsecs, secs;
 
@@ -673,7 +673,7 @@ THREADS_RUN_TIME_API  ZINT
 primitive_release_simple_lock(CONTAINER *lock)
 {
   SIMPLELOCK  *slock;
-  HANDLE hThread;
+  pthread_t hThread;
   int status;
 
   assert(lock != NULL);
@@ -701,7 +701,7 @@ THREADS_RUN_TIME_API  ZINT
 primitive_release_recursive_lock(CONTAINER *lock)
 {
   RECURSIVELOCK  *rlock;
-  HANDLE hThread;
+  pthread_t hThread;
   int status;
 
   assert(lock != NULL);
@@ -753,7 +753,7 @@ primitive_release_notification(CONTAINER *notif, CONTAINER *lock)
 {
   NOTIFICATION * notification;
   SIMPLELOCK   * slock;
-  HANDLE hThread;
+  pthread_t hThread;
   int      owned;
 
   assert(notif != NULL);
@@ -786,7 +786,7 @@ primitive_release_all_notification(CONTAINER *notif, CONTAINER *lock)
 {
   NOTIFICATION * notification;
   SIMPLELOCK   * slock;
-  HANDLE hThread;
+  pthread_t hThread;
   int      owned;
 
   assert(notif != NULL);
@@ -929,7 +929,7 @@ primitive_destroy_simple_lock(CONTAINER *lock)
 THREADS_RUN_TIME_API  ZINT
 primitive_owned_simple_lock(CONTAINER *lock)
 {
-  HANDLE     hThread;
+  pthread_t    hThread;
   SIMPLELOCK  *slock;
 
   assert(lock != NULL);
@@ -949,7 +949,7 @@ primitive_owned_simple_lock(CONTAINER *lock)
 THREADS_RUN_TIME_API  ZINT
 primitive_owned_recursive_lock(CONTAINER *lock)
 {
-  HANDLE      hThread;
+  pthread_t       hThread;
   RECURSIVELOCK  *rlock;
 
   assert(lock != NULL);
@@ -1268,20 +1268,18 @@ primitive_write_thread_variable(void *variable_handle, Z new_value)
 THREADS_RUN_TIME_API  void
 primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
 {
-  HANDLE      hThread, hProcess;
-  HANDLE  *   events;
+  pthread_t   hThread;
   TLV_VECTOR  tlv_vector;
   Z          *destination;
   int         size;
 
+  /* @@@@#!"£$ no support for "synchronized" threads */
+  assert(thread != NULL);
+
   // race conditions mean handle may not be set up yet by father thread in pthread_create,
   // so do it here explicitly.
-  thread->handle1 = (HANDLE)pthread_self();
-
-  /* @@@@#!"£$ no support for "synchronized" threads */
-
-  assert(thread != NULL);
-  hThread = thread->handle1;
+  hThread = pthread_self();
+  thread->handle1 = (HANDLE)hThread;
 
   // Put the thread object and handle in the TEB for later use
   set_current_thread(thread);
@@ -1318,8 +1316,6 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
 THREADS_RUN_TIME_API  void
 primitive_initialize_special_thread(DTHREAD *thread)
 {
-  HANDLE  hProcess;
-
   assert(thread != NULL);
 
   // Do we need to initialise?
@@ -1403,7 +1399,7 @@ void initialize_threads_primitives()
  * Assumes the thread vector has already been initialised.
  */
 void
-add_tlv_vector(HANDLE hThread, TLV_VECTOR tlv_vector)
+add_tlv_vector(pthread_t hThread, TLV_VECTOR tlv_vector)
 {
   TLV_VECTOR_LIST new_element = MMAllocMisc(linksize);
 
@@ -1426,7 +1422,7 @@ add_tlv_vector(HANDLE hThread, TLV_VECTOR tlv_vector)
  * removes the thread from the list of active threads.
  */
 int
-remove_tlv_vector(HANDLE hThread)
+remove_tlv_vector(pthread_t hThread)
 {
   TLV_VECTOR_LIST last, current;
 
