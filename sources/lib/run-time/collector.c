@@ -232,7 +232,7 @@ static MMAllocHandler misc_handler = defaultHandler;
 /* Thread Local Variables, accessed via the GC-TEB*/
 
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
-// On Linux, use the thread-local storage provided by the system to
+// On Unix platforms, use the thread-local storage provided by the system to
 // hold the TEB pointer
 __thread void* teb;
 

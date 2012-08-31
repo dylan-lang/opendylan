@@ -1,11 +1,11 @@
 /*
- *  File:     linux-threads-primitives.h
+ *  File:     unix-threads-primitives.h
  *  Created:  4th September 1995
  *  Author:   Rod Moyse, Keith Dennison, Tony Mann
  *  Copyright 1995, 1996 The Harlequin Group Ltd. All rights reserved.
  *
  *  Purpose:
- *    Threads portability layer for Linux.
+ *    Threads portability layer for Unix.
  */
 
 #ifndef THREADS_RUN_TIME_H

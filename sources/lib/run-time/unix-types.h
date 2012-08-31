@@ -1,4 +1,4 @@
-/* Linux specific type declarations, etc ... */
+/* Unix specific type declarations, etc ... */
 
 #include <signal.h>
 #include <pthread.h>

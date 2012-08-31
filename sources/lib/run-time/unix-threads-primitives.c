@@ -1,5 +1,5 @@
 /*
- * File:    linux-threads-primitives.c
+ * File:    unix-threads-primitives.c
  * Author:  Tony Mann
  * Copyright: 1996 The Harlequin Group Limited. All rights reserved.
  *
