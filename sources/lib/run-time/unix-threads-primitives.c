@@ -834,11 +834,7 @@ primitive_make_recursive_lock(CONTAINER *lock, D_NAME name)
 
   res = pthread_mutexattr_init(&attr);
   if(res != 0) return GENERAL_ERROR;
-#ifdef PTHREAD_MUTEX_ERRORCHECK_NP
-  res = pthread_mutexattr_setkind_np(&attr, PTHREAD_MUTEX_ERRORCHECK_NP);
-#else
-  res = pthread_mutexattr_setkind_np(&attr, PTHREAD_MUTEX_ERRORCHECK);
-#endif
+  res = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_ERRORCHECK);
   if(res != 0) return GENERAL_ERROR;
   res = pthread_mutex_init(&rlock->mutex, &attr);
   if(res != 0) return GENERAL_ERROR;
@@ -890,11 +886,7 @@ primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
 
   res = pthread_mutexattr_init(&attr);
   if(res != 0) return GENERAL_ERROR;
-#ifdef PTHREAD_MUTEX_ERRORCHECK_NP
-  res = pthread_mutexattr_setkind_np(&attr, PTHREAD_MUTEX_ERRORCHECK_NP);
-#else
-  res = pthread_mutexattr_setkind_np(&attr, PTHREAD_MUTEX_ERRORCHECK);
-#endif
+  res = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_ERRORCHECK);
   if(res != 0) return GENERAL_ERROR;
   res = pthread_mutex_init(&slock->mutex, &attr);
   if(res != 0) return GENERAL_ERROR;
