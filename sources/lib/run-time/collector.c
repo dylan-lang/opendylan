@@ -760,7 +760,9 @@ void *dylan_callin_handler(void *arg_base, size_t s)
 __inline
 void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
 {
-#if defined(X86_LINUX_PLATFORM)
+  // This really should be controlled by a better define, but we don't have
+  // or really need one at the moment.
+#if defined(OPEN_DYLAN_PLATFORM_UNIX)
   __asm__
     (
       "cld    \n\t"
