@@ -104,9 +104,9 @@ end method mutable-sequence;
 define method sequences-element-id? (seq1, seq2)
   let len = seq1.size;
   if (len == seq2.size)
-    let (initial-state-1, a, next-state-1, b, c, current-element-1)
+    let (initial-state-1, _, next-state-1, _, _, current-element-1)
       = forward-iteration-protocol(seq1);
-    let (initial-state-2, d, next-state-2, e, g, current-element-2)
+    let (initial-state-2, _, next-state-2, _, _, current-element-2)
       = forward-iteration-protocol(seq2);
     local method f (i, s1, s2)
             if (i == len)
