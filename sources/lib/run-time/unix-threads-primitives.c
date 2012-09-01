@@ -55,14 +55,15 @@ static const long TLV_GROW = -2000000;
   extern TLV_VECTOR default_tlv_vector;
 #endif
 
-int        TLV_vector_offset = 3*sizeof(Z);
+static int TLV_vector_offset = 3*sizeof(Z);
 
-static long tlv_writer_counter = 0;
+/* This is referenced from Dylan code */
+long tlv_writer_counter = 0;
 
-define_CRITICAL_SECTION(tlv_vector_list_lock);
-TLV_VECTOR_LIST  tlv_vector_list;
+static define_CRITICAL_SECTION(tlv_vector_list_lock);
+static TLV_VECTOR_LIST  tlv_vector_list;
 
-size_t linksize = sizeof(struct tlv_vector_list_element);
+static const size_t linksize = sizeof(struct tlv_vector_list_element);
 
 
 /*****************************************************************************/

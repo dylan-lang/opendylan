@@ -67,7 +67,7 @@ static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 #endif
 }
 
-__inline
+static __inline
 void RestoreFPState ()
 {
   fpresetsticky(fpgetsticky());

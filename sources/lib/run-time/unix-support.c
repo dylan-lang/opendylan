@@ -25,7 +25,7 @@ typedef void* D;
 
 define_SOV(SOV, 1);
 
-__inline__ D*  vector_data(SOV* vector) { return(vector->data); }
+static __inline__ D*  vector_data(SOV* vector) { return(vector->data); }
 
 #define ITAG 1
 #define I(n) ((D)((((unsigned long)(n))<<2)|ITAG))

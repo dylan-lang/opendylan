@@ -405,7 +405,7 @@ extern void *call_dylan_function(void *function, size_t arg_count, ...);
 
 extern void *dylan_keyboard_break_handler;
 extern BOOL dylan_keyboard_interruptQ;
-BOOL DylanKeyboardInterruptPollingQ = TRUE;
+static BOOL DylanKeyboardInterruptPollingQ = TRUE;
 
 RUN_TIME_API
 BOOL primitive_keyboard_interrupt_signaled()
@@ -436,12 +436,11 @@ void primitive_keyboard_interrupt_polling_setter(BOOL pollingQ)
 
 HANDLE polling_threads[MAX_POLLING_THREADS];
 
-int polling_threads_cursor = -1;
+static int polling_threads_cursor = -1;
 
-define_CRITICAL_SECTION(polling_threads_lock);
+static define_CRITICAL_SECTION(polling_threads_lock);
 
-
-int polling_thread_index (HANDLE hThread)
+static int polling_thread_index (HANDLE hThread)
 {
   int i;
 
@@ -456,7 +455,7 @@ int polling_thread_index (HANDLE hThread)
   return(-1);
 }
 
-__inline
+static __inline
 BOOL polling_threadQ (HANDLE hThread)
 {
   int index = polling_thread_index(hThread);
@@ -465,7 +464,7 @@ BOOL polling_threadQ (HANDLE hThread)
   else return TRUE;
 }
 
-__inline
+static __inline
 BOOL polling_individual_threadsQ ()
 {
   if (polling_threads_cursor > -1) return TRUE;
@@ -473,7 +472,7 @@ BOOL polling_individual_threadsQ ()
 }
 
 
-void add_polling_thread (HANDLE hThread)
+static void add_polling_thread (HANDLE hThread)
 {
   if (polling_threadQ(hThread)) return;
 
@@ -486,7 +485,7 @@ void add_polling_thread (HANDLE hThread)
 }
 
 
-void remove_polling_thread (HANDLE hThread)
+static void remove_polling_thread (HANDLE hThread)
 {
   int index = polling_thread_index(hThread);
   int i;
@@ -520,7 +519,7 @@ void primitive_keyboard_interrupt_polling_thread_setter
 
 extern HANDLE get_current_thread_handle();
 
-void HandleDylanKeyboardInterrupt()
+static void HandleDylanKeyboardInterrupt()
 {
   if (DylanKeyboardInterruptPollingQ
       || (polling_individual_threadsQ()
@@ -538,7 +537,7 @@ extern void check_wrapper_breakpoint (void *wrapper, int size);
 extern BOOL Prunning_dylan_spy_functionQ;
 
 
-__inline
+static __inline
 void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 {
 #ifndef NO_ALLOCATION_COUNT_FOR_PROFILER
@@ -557,7 +556,7 @@ void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 #endif
 }
 
-void zero_allocation_counter(gc_teb_t gc_teb)
+static void zero_allocation_counter(gc_teb_t gc_teb)
 {
 #ifndef NO_ALLOCATION_COUNT_FOR_PROFILER
   gc_teb->gc_teb_allocation_counter = 0;
@@ -608,15 +607,15 @@ extern void *dylan_callin_internal(void *arg_base, size_t s);
 
 /* Thread creation & deletion code */
 
-int num_threads = 0;
+static int num_threads = 0;
 
 /* client estimate for handling requirements goes here */
-int low_memory_allocation_per_thread = 128 * 1024;
+static int low_memory_allocation_per_thread = 128 * 1024;
 
 
-define_CRITICAL_SECTION(reservoir_limit_set_lock);
+static define_CRITICAL_SECTION(reservoir_limit_set_lock);
 
-__inline
+static __inline
 void update_runtime_thread_count(int increment)
 {
 
