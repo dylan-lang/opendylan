@@ -293,33 +293,32 @@ define test subsequence-position-4 (description: "stretchy-vector")
 end test subsequence-position-4;
 
 define test subsequence-position-5 (description: "simple-object-vector")
-  check-true("", subsequence-position
-    (simple-object-vector-instance(0, 1, 2, 3, 4, 5),
-     simple-object-vector-instance(3, 4))
-  = 3);
+  check-equal("", 3, subsequence-position(simple-object-vector-instance(0, 1, 2, 3, 4, 5),
+                                          simple-object-vector-instance(3, 4)));
 end test subsequence-position-5;
 
 define test subsequence-position-6 (description: "string")
-  check-true("", subsequence-position("my cat", "cat") = 3);
+  check-equal("", 3, subsequence-position("my cat", "cat"));
 end test subsequence-position-6;
 
 define test subsequence-position-7 (description: "test:")
-  check-true("", subsequence-position
-    (#(2, 4, 6, 8),
-     #(2, 3),
-     test: method (a, b)
-             a / 2 = b
-           end method)
-  = 1);
-  check-true("", subsequence-position(#(5, 4, 3, 2, 1), #(3), test: \<) = 3);
+  check-equal("", 1, subsequence-position(#(2, 4, 6, 8),
+                                          #(2, 3),
+                                          test: method (a, b)
+                                                  floor/(a, 2) = b
+                                                end method));
+  // I doubt this is valid since the order of arguments to the test function
+  // is undefined, but it will at least show if implementations differ in
+  // this respect.  --cgay Aug 2012
+  check-equal("", 3, subsequence-position(#(5, 4, 3, 2, 1), #(3), test: \<));
 end test subsequence-position-7;
 
 define test subsequence-position-8 (description: "count:")
-  check-true("", subsequence-position("my cat concatenates", "cat", count: 2) = 10);
+  check-equal("", 10, subsequence-position("my cat concatenates", "cat", count: 2));
 end test subsequence-position-8;
 
 define test subsequence-position-9 (description: "count: and test:")
-  check-true("", subsequence-position(#(5, 4, 3, 2, 1, 0), #(4, 2), test: \<, count: 2) = 4);
+  check-equal("", 4, subsequence-position(#(5, 4, 3, 2, 1, 0), #(4, 2), test: \<, count: 2));
 end test subsequence-position-9;
 
 define suite test-sequence-suite ()
