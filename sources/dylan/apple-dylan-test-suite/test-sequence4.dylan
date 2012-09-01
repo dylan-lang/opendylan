@@ -35,9 +35,9 @@ end test replace-subsequence!-2;
 
 define test replace-subsequence!-4 (description: "simple-object-vector")
   check-true("", replace-subsequence!
-    (simple-object-vector-instance(1, 3, 5, 7, 9),
-     simple-object-vector-instance(2, 4, 6, 8))
-  = simple-object-vector-instance(2, 4, 6, 8, 9));
+    (vector(1, 3, 5, 7, 9),
+     vector(2, 4, 6, 8))
+  = vector(2, 4, 6, 8, 9));
 end test replace-subsequence!-4;
 
 define test replace-subsequence!-5 (description: "string")
@@ -107,8 +107,8 @@ define test reverse-4 (description: "stretchy-vector")
 end test reverse-4;
 
 define test reverse-5 (description: "simple-object-vector")
-  check-true("", simple-object-vector-instance(1, 2, 3, 4).reverse
-  = simple-object-vector-instance(4, 3, 2, 1));
+  check-true("", vector(1, 2, 3, 4).reverse
+  = vector(4, 3, 2, 1));
 end test reverse-5;
 
 define test reverse-6 (description: "string")
@@ -147,8 +147,8 @@ define test reverse!-4 (description: "stretchy-vector")
 end test reverse!-4;
 
 define test reverse!-5 (description: "simple-object-vector")
-  check-true("", reverse!(simple-object-vector-instance(1, 2, 3, 4))
-  = simple-object-vector-instance(4, 3, 2, 1));
+  check-true("", reverse!(vector(1, 2, 3, 4))
+  = vector(4, 3, 2, 1));
 end test reverse!-5;
 
 define test reverse!-6 (description: "string")
@@ -181,8 +181,8 @@ define test sort-4 (description: "stretchy-vector")
 end test sort-4;
 
 define test sort-5 (description: "simple-object-vector")
-  check-true("", simple-object-vector-instance(1, 9, 2, 8, 3, 7, 4, 6, 5).sort
-  = simple-object-vector-instance(1, 2, 3, 4, 5, 6, 7, 8, 9));
+  check-true("", vector(1, 9, 2, 8, 3, 7, 4, 6, 5).sort
+  = vector(1, 2, 3, 4, 5, 6, 7, 8, 9));
 end test sort-5;
 
 define test sort-6 (description: "test")
@@ -245,8 +245,8 @@ define test sort!-4 (description: "stretchy-vector")
 end test sort!-4;
 
 define test sort!-5 (description: "simple-object-vector")
-  check-true("", sort!(simple-object-vector-instance(1, 9, 2, 8, 3, 7, 4, 6, 5))
-  = simple-object-vector-instance(1, 2, 3, 4, 5, 6, 7, 8, 9));
+  check-true("", sort!(vector(1, 9, 2, 8, 3, 7, 4, 6, 5))
+  = vector(1, 2, 3, 4, 5, 6, 7, 8, 9));
 end test sort!-5;
 
 define test sort!-6 (description: "test")

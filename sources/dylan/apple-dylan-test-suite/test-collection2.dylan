@@ -14,20 +14,20 @@ Copyright: (c) 1996 Functional Objects, Inc.
 ----------------------------------------------*/
 
 define test map-into-7 (description: "Simple-object-vector")
-  let var = simple-object-vector-instance(1, 2, 3);
+  let var = vector(1, 2, 3);
   check-equal("", map-into
     (var,
      method (x)
        x * -1;
      end method,
-     (simple-object-vector-instance(1, 2, 3))),
-   simple-object-vector-instance(-1, -2, -3));
+     (vector(1, 2, 3))),
+   vector(-1, -2, -3));
   check-equal("", map-into
       (var,
        method (x)
          x * -1;
        end method,
-       (simple-object-vector-instance(1, 2, 3))),
+       (vector(1, 2, 3))),
      var);
 end test map-into-7;
 
@@ -185,7 +185,7 @@ define test any?-6 (description: "simple-object-vector")
            #f;
          end if;
        end method,
-       (simple-object-vector-instance(1, 2, 3, 4, 5, 6))),
+       (vector(1, 2, 3, 4, 5, 6))),
    6);
   check-equal("", any?(method (e)
            if (e > 5)
@@ -194,7 +194,7 @@ define test any?-6 (description: "simple-object-vector")
              #f;
            end if;
          end method,
-         (simple-object-vector-instance(1, 2, 3, 4, 5))),
+         (vector(1, 2, 3, 4, 5))),
      #f);
 end test any?-6;
 
@@ -402,7 +402,7 @@ define test every?-6 (description: "simple-object-vector")
          #f;
        end if;
      end method,
-     (simple-object-vector-instance(1, 2, 3, 4, 5, 6))),
+     (vector(1, 2, 3, 4, 5, 6))),
    #t);
   check-equal("", every?
       (method (e)
@@ -412,7 +412,7 @@ define test every?-6 (description: "simple-object-vector")
            #f;
          end if;
        end method,
-       (simple-object-vector-instance(1, 2, 3, 4, 5))),
+       (vector(1, 2, 3, 4, 5))),
      #f);
 end test every?-6;
 
@@ -508,7 +508,7 @@ define test reduce-5 (description: "stretchy-vector")
 end test reduce-5;
 
 define test reduce-6 (description: "simple-object-vector")
-  check-equal("", reduce(\+, 0, simple-object-vector-instance(1, 2, 3, 4, 5)), 15);
+  check-equal("", reduce(\+, 0, vector(1, 2, 3, 4, 5)), 15);
 end test reduce-6;
 
 define test reduce-7 (description: "string")
@@ -554,7 +554,7 @@ define test reduce1-5 (description: "stretchy-vector")
 end test reduce1-5;
 
 define test reduce1-6 (description: "simple-object-vector")
-  check-equal("", reduce1(\+, simple-object-vector-instance(1, 2, 3, 4, 5)), 15);
+  check-equal("", reduce1(\+, vector(1, 2, 3, 4, 5)), 15);
 end test reduce1-6;
 
 define test reduce1-7 (description: "string")
@@ -607,8 +607,8 @@ define test member?-5 (description: "stretchy-vector")
 end test member?-5;
 
 define test member?-6 (description: "simple-object-vector")
-  check-equal("", member?(6, simple-object-vector-instance(1, 2, 3, 4, 5, 6)), #t);
-  check-true("", ~member?(5, simple-object-vector-instance(1, 2, 3, 4)));
+  check-equal("", member?(6, vector(1, 2, 3, 4, 5, 6)), #t);
+  check-true("", ~member?(5, vector(1, 2, 3, 4)));
 end test member?-6;
 
 define test member?-7 (description: "string")

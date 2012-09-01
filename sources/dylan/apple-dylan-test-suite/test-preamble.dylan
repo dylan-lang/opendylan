@@ -46,15 +46,6 @@ define method byte-string-instance (#rest contents)
   s
 end method byte-string-instance;
 
-define method simple-object-vector-instance (#rest contents)
-  let v = make(<simple-object-vector>);
-  do(method (e)
-       v := add(v, e)
-     end method,
-     contents.reverse);
-  v
-end method simple-object-vector-instance;
-
 define method deque-instance (#rest contents)
   let v = make(<deque>);
   do(method (e)

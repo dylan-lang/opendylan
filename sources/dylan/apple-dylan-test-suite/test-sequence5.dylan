@@ -32,8 +32,8 @@ define test first-4 (description: "stretchy-vector")
 end test first-4;
 
 define test first-5 (description: "simple-object-vector")
-  check-true("", simple-object-vector-instance(0, 1, 2, 3, 4).first = 0);
-  check-true("", first(simple-object-vector-instance(), default: #"no") = #"no");
+  check-true("", vector(0, 1, 2, 3, 4).first = 0);
+  check-true("", first(vector(), default: #"no") = #"no");
 end test first-5;
 
 define test first-6 (description: "string")
@@ -68,8 +68,8 @@ define test second-4 (description: "stretchy-vector")
 end test second-4;
 
 define test second-5 (description: "simple-object-vector")
-  check-true("", simple-object-vector-instance(0, 1, 2, 3, 4).second = 1);
-  check-true("", second(simple-object-vector-instance(), default: #"no") = #"no");
+  check-true("", vector(0, 1, 2, 3, 4).second = 1);
+  check-true("", second(vector(), default: #"no") = #"no");
 end test second-5;
 
 define test second-6 (description: "string")
@@ -104,8 +104,8 @@ define test third-4 (description: "stretchy-vector")
 end test third-4;
 
 define test third-5 (description: "simple-object-vector")
-  check-true("", simple-object-vector-instance(0, 1, 2, 3, 4).third = 2);
-  check-true("", third(simple-object-vector-instance(), default: #"no") = #"no");
+  check-true("", vector(0, 1, 2, 3, 4).third = 2);
+  check-true("", third(vector(), default: #"no") = #"no");
 end test third-5;
 
 define test third-6 (description: "string")
@@ -200,8 +200,8 @@ define test last-4 (description: "stretchy-vector")
 end test last-4;
 
 define test last-5 (description: "simple-object-vector")
-  check-true("", simple-object-vector-instance(0, 1, 2, 3, 4).last = 4);
-  check-true("", last(simple-object-vector-instance(), default: #"no") = #"no");
+  check-true("", vector(0, 1, 2, 3, 4).last = 4);
+  check-true("", last(vector(), default: #"no") = #"no");
 end test last-5;
 
 define test last-6 (description: "string")
@@ -248,9 +248,9 @@ define test last-setter-stretchy-vector (description: "")
 end test last-setter-stretchy-vector;
 
 define test last-setter-simple-object-vector (description: "")
-  let v = simple-object-vector-instance(7, 8, 9);
+  let v = vector(7, 8, 9);
   v.last := -1;
-  check-true("", v = simple-object-vector-instance(7, 8, -1));
+  check-true("", v = vector(7, 8, -1));
 end test last-setter-simple-object-vector;
 
 define test last-setter-deque (description: "")
@@ -293,8 +293,8 @@ define test subsequence-position-4 (description: "stretchy-vector")
 end test subsequence-position-4;
 
 define test subsequence-position-5 (description: "simple-object-vector")
-  check-equal("", 3, subsequence-position(simple-object-vector-instance(0, 1, 2, 3, 4, 5),
-                                          simple-object-vector-instance(3, 4)));
+  check-equal("", 3, subsequence-position(vector(0, 1, 2, 3, 4, 5),
+                                          vector(3, 4)));
 end test subsequence-position-5;
 
 define test subsequence-position-6 (description: "string")

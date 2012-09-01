@@ -79,7 +79,7 @@ define test dimensions-1 ()
   let t = make(<stretchy-vector>);
   map(method (item) add!(t, item) end method, #(1, 0, 1, 0));
   check-equal("", t.size, 4);
-  check-equal("", simple-object-vector-instance().dimensions, #(0));
+  check-equal("", vector().dimensions, #(0));
 end test;
 
 define suite test-array-suite ()

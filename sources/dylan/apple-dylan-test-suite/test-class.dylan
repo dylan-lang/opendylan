@@ -202,7 +202,7 @@ define test shallow-copy-0 ()
   let ns = s.shallow-copy;
   check-equal("", s, ns);
   check-equal("", s.third, ns.third);
-  let s = simple-object-vector-instance(1, 2, deque-instance(3, 4));
+  let s = vector(1, 2, deque-instance(3, 4));
   let ns = s.shallow-copy;
   check-equal("", s, ns);
   check-equal("", s.third, ns.third);
@@ -220,8 +220,8 @@ define test type-for-copy-class-0 ()
   check-equal("", complex-instance().type-for-copy(), complex-instance().object-class());
   check-equal("", stretchy-vector-instance().type-for-copy, 
         stretchy-vector-instance().object-class);
-    check-equal("", simple-object-vector-instance().type-for-copy,
-	     simple-object-vector-instance().object-class);
+    check-equal("", vector().type-for-copy,
+	     vector().object-class);
 end test;
 
 // type-for-copy of all sequences should be a subclass of <sequence>

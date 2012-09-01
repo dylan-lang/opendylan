@@ -49,7 +49,7 @@ Copyright: (c) 1996 Functional Objects, Inc.
  end test size-5;
 
  define test size-6 (description: "Size on simple-object-vector objects")
-   check-equal("", simple-object-vector-instance(1, 2, 3).size, 3);
+   check-equal("", vector(1, 2, 3).size, 3);
  end test size-6;
 
  define test size-7 (description: "size on byte-string objects")
@@ -142,8 +142,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
  end test empty?-5;
 
  define test empty?-6 (description: "empty on vectors")
-   check-true("", simple-object-vector-instance().empty?);
-   check-equal("", simple-object-vector-instance(1, 2, 3).empty?, #f);
+   check-true("", vector().empty?);
+   check-equal("", vector(1, 2, 3).empty?, #f);
  end test empty?-6;
 
  define test empty?-7 (description: "empty? on strings")
@@ -242,8 +242,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
    check-equal("", map(method (x)
 	 x * -1;
        end method,
-       (simple-object-vector-instance(1, 2, 3))),
-    simple-object-vector-instance(-1, -2, -3));
+       (vector(1, 2, 3))),
+    vector(-1, -2, -3));
  end test map-6;
 
  define test map-7 (description: "String")
@@ -373,8 +373,8 @@ Copyright: (c) 1996 Functional Objects, Inc.
       method (x)
 	x * -1;
       end method,
-      (simple-object-vector-instance(1, 2, 3))),
-    simple-object-vector-instance(-1, -2, -3));
+      (vector(1, 2, 3))),
+    vector(-1, -2, -3));
  end test map-as-6;
 
  define test map-as-7 (description: "String")

@@ -13,49 +13,48 @@ Copyright: (c) 1996 Functional Objects, Inc.
 ----------------------------------------------*/
 
 define test add-new!-4 (description: "add old element, using test: argument")
-  every?
-                     (method (s)
-       let collection = s.first;
-       let elements = s.second;
-       let new-element = s.third;
-       let size1 = s.first.size;
-       let id-test? = s[3];
-       let test = s[4];
-       let new-collection = add-new!(collection, new-element);
-       check-true("", (size1 = new-collection.size & size1 = elements.size));
-       check-true("", collection = new-collection);
-       check-true("", if (id-test?)
-           collection == new-collection
-         else
-           #t
-         end if);
-       check-true("", every?(rcurry(member?, collection), elements));
-       check-true("", every?(rcurry(member?, new-collection), elements));
-     end method,
-     list(list(list(7, 8, 9), list(7, 8, 9), 64, #f, divides?),
-          list(range(from: 7, below: 10), list(7, 8, 9), 64, #f, divides?),
-          list(vector(7, 8, 9), list(7, 8, 9), 64, #f, divides?),
-          list(deque-instance(7, 8, 9), list(7, 8, 9), 64, #t, divides?),
-          list(stretchy-vector-instance(7, 8, 9),
-               list(7, 8, 9),
-               64,
-               #t,
-               divides?),
-          list(simple-object-vector-instance(7, 8, 9),
-               list(7, 8, 9),
-               64,
-               #f,
-               divides?),
-          list(byte-string-instance('Y', 'o', 'w'),
-               list('Y', 'o', 'w'),
-               'O',
-               #f,
-               caseless=?),
-          list(unicode-string-instance('Y', 'o', 'w'),
-               list('Y', 'o', 'w'),
-               'O',
-               #f,
-               caseless=?)))
+  every?(method (s)
+           let collection = s.first;
+           let elements = s.second;
+           let new-element = s.third;
+           let size1 = s.first.size;
+           let id-test? = s[3];
+           let test = s[4];
+           let new-collection = add-new!(collection, new-element);
+           check-true("", (size1 = new-collection.size & size1 = elements.size));
+           check-true("", collection = new-collection);
+           check-true("", if (id-test?)
+                            collection == new-collection
+                          else
+                            #t
+                          end if);
+           check-true("", every?(rcurry(member?, collection), elements));
+           check-true("", every?(rcurry(member?, new-collection), elements));
+         end method,
+         list(list(list(7, 8, 9), list(7, 8, 9), 64, #f, divides?),
+              list(range(from: 7, below: 10), list(7, 8, 9), 64, #f, divides?),
+              list(vector(7, 8, 9), list(7, 8, 9), 64, #f, divides?),
+              list(deque-instance(7, 8, 9), list(7, 8, 9), 64, #t, divides?),
+              list(stretchy-vector-instance(7, 8, 9),
+                   list(7, 8, 9),
+                   64,
+                   #t,
+                   divides?),
+              list(vector(7, 8, 9),
+                   list(7, 8, 9),
+                   64,
+                   #f,
+                   divides?),
+              list(byte-string-instance('Y', 'o', 'w'),
+                   list('Y', 'o', 'w'),
+                   'O',
+                   #f,
+                   caseless=?),
+              list(unicode-string-instance('Y', 'o', 'w'),
+                   list('Y', 'o', 'w'),
+                   'O',
+                   #f,
+                   caseless=?)));
 end test add-new!-4;
 
 // remove
@@ -86,8 +85,8 @@ define test remove-4 (description: "stretchy-vector")
 end test remove-4;
 
 define test remove-5 (description: "simple-object-vector")
-  check-true("", remove(simple-object-vector-instance(1, 2, 3, 4, 5), 4)
-  = simple-object-vector-instance(1, 2, 3, 5));
+  check-true("", remove(vector(1, 2, 3, 4, 5), 4)
+  = vector(1, 2, 3, 5));
 end test remove-5;
 
 define test remove-6 (description: "string")
@@ -148,8 +147,8 @@ define test remove!-4 (description: "stretchy-vector")
 end test remove!-4;
 
 define test remove!-5 (description: "simple-object-vector")
-  check-true("", remove!(simple-object-vector-instance(1, 2, 3, 4, 5), 4)
-  = simple-object-vector-instance(1, 2, 3, 5));
+  check-true("", remove!(vector(1, 2, 3, 4, 5), 4)
+  = vector(1, 2, 3, 5));
 end test remove!-5;
 
 define test remove!-6 (description: "string")
@@ -211,8 +210,8 @@ define test choose-4 (description: "stretchy-vector")
 end test choose-4;
 
 define test choose-5 (description: "simple-object-vector")
-  check-true("", choose(even?, simple-object-vector-instance(1, 2, 3, 4, 5, 6, 7, 8))
-  = simple-object-vector-instance(2, 4, 6, 8));
+  check-true("", choose(even?, vector(1, 2, 3, 4, 5, 6, 7, 8))
+  = vector(2, 4, 6, 8));
 end test choose-5;
 
 define test choose-6 (description: "string")
@@ -277,10 +276,10 @@ end test choose-by-4;
 define test choose-by-5 (description: "simple-object-vector-vector")
   check-true("", choose-by
     (even?,
-     simple-object-vector-instance(1, 2, 3, 4, 5, 6, 7, 8),
-     simple-object-vector-instance
+     vector(1, 2, 3, 4, 5, 6, 7, 8),
+     vector
        (#"a", #"b", #"c", #"d", #"e", #"f", #"g", #"h"))
-  = simple-object-vector-instance(#"b", #"d", #"f", #"h"));
+  = vector(#"b", #"d", #"f", #"h"));
 end test choose-by-5;
 
 define test choose-by-6 (description: "string")
@@ -396,9 +395,9 @@ end test intersection-4;
 
 define test intersection-5 (description: "simple-object-vector")
   check-true("", intersection
-    (simple-object-vector-instance(1, 2, 3, 4, 5),
-     simple-object-vector-instance(4, 6, 8, 10, 12))
-  = simple-object-vector-instance(4));
+    (vector(1, 2, 3, 4, 5),
+     vector(4, 6, 8, 10, 12))
+  = vector(4));
 end test intersection-5;
 
 define test intersection-6 (description: "string")

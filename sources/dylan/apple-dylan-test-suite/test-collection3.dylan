@@ -82,9 +82,9 @@ end test find-key-5;
 
 define test find-key-6 (description: "simple-object-vector")
  
-    let var = simple-object-vector-instance(1, 2, 3, 4, 5);
+    let var = vector(1, 2, 3, 4, 5);
   check-true("",  even?(var[find-key(var, even?)]));
-  check-equal("", find-key(simple-object-vector-instance(1, 3, 5), even?), #f);
+  check-equal("", find-key(vector(1, 3, 5), even?), #f);
 end test find-key-6;
 
 define test find-key-7 (description: "string")
@@ -164,12 +164,12 @@ end test replace-elements!-4;
 
 define test replace-elements!-5 (description: "simple-object-vector")
   check-equal("", replace-elements!
-    (simple-object-vector-instance(1, 2, 3, 4, 5),
+    (vector(1, 2, 3, 4, 5),
      even?,
      method (num)
        num + 1
      end method),
-   simple-object-vector-instance(1, 3, 3, 5, 5));
+   vector(1, 3, 3, 5, 5));
 end test replace-elements!-5;
 
 define test replace-elements!-6 (description: "string")
@@ -216,7 +216,7 @@ define test fill!-4 (description: "stretchy-vector")
 end test fill!-4;
 
 define test fill!-5 (description: "simple-object-vector")
-  check-equal("", fill!(simple-object-vector-instance(#"a", #"b", #"c", #"d"), 4), simple-object-vector-instance(4, 4, 4, 4));
+  check-equal("", fill!(vector(#"a", #"b", #"c", #"d"), 4), vector(4, 4, 4, 4));
 end test fill!-5;
 
 define test fill!-6 (description: "string")
@@ -254,7 +254,7 @@ end test element-type;
 define test element-0 (description: "simple cases")
   check-equal("", deque-instance(1, 2, 3, 4)[2], 3);
   check-equal("", stretchy-vector-instance(1, 2, 3, 4)[2], 3);
-  check-equal("", simple-object-vector-instance(1, 2, 3, 4)[2], 3);
+  check-equal("", vector(1, 2, 3, 4)[2], 3);
   check-equal("", table-instance(#(1, #"a"), #(2, #"b"), #(3, #"c"))[2], #"b");
   check-equal("", "Now is the time"[5], 's');
   check-equal("", #(99, 98, 97, 96, 95)[4], 95);
@@ -263,7 +263,7 @@ end test element-0;
 define test element-1 (description: "with default")
   check-true("", empty?(element(deque-instance(1, 2, 3, 4), 7, default: deque-instance())));
   check-equal("", element(stretchy-vector-instance(1, 2, 3, 4), 6, default: #()), #());
-  check-equal("", element(simple-object-vector-instance(1, 2, 3, 4), 8, default: #t), #t);
+  check-equal("", element(vector(1, 2, 3, 4), 8, default: #t), #t);
   check-equal("", element
       (table-instance(#(1, #"a"), #(2, #"b"), #(3, #"c")), 87, default: #"d"), #"d");
   check-equal("", element("Now is the time", 100, default: "no"), "no");
@@ -367,7 +367,7 @@ define test element1-4 (description: "stretchy-vector")
 end test element1-4;
 
 define test element1-5 (description: "simple-object-vector")
-  let c = simple-object-vector-instance(1, 2, 3, 4);
+  let c = vector(1, 2, 3, 4);
   check-equal("", c[0], 1);
   check-equal("", element(c, 99, default: #t), #t);
 end test element1-5;
@@ -411,7 +411,7 @@ define test current-key1-0 ()
      end method,
      list(vector(5, 6, 7, 8),
           "abcde",
-          simple-object-vector-instance(5, 6, 7, 8),
+          vector(5, 6, 7, 8),
           stretchy-vector-instance(5, 6, 7, 8))));
 end test current-key1-0;
 

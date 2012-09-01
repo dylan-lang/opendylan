@@ -178,7 +178,7 @@ define test instance?-6 ()
 end test;
 
 define test instance?-7 ()
-  let i = simple-object-vector-instance();
+  let i = vector();
   check-true("", every?
     (method (c)
        instance?(i, c)
@@ -227,18 +227,17 @@ end test;
 
 define test instance?-10 ()
   let i = byte-string-instance();
-  check-true("", every?
-    (method (c)
-       instance?(i, c)
-     end method,
-     list(<mutable-sequence>,
-          <mutable-collection>,
-          <sequence>,
-          <collection>,
-          <array>,
-          <vector>,
-          <string>,
-          <object>)));
+  check-true("", every?(method (c)
+                          instance?(i, c)
+                        end method,
+                        list(<mutable-sequence>,
+                             <mutable-collection>,
+                             <sequence>,
+                             <collection>,
+                             <array>,
+                             <vector>,
+                             <string>,
+                             <object>)));
 end test;
 
 define test instance?-11 ()

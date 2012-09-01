@@ -92,10 +92,10 @@ define test union-5 (description: "simple-object-vector")
     (method (e)
        member?
          (e,
-          union(simple-object-vector-instance(1, 2, 3, 4, 5),
-                simple-object-vector-instance(4, 6, 8, 10, 12)))
+          union(vector(1, 2, 3, 4, 5),
+                vector(4, 6, 8, 10, 12)))
      end method,
-     simple-object-vector-instance(1, 2, 3, 4, 5, 6, 8, 10, 12)));
+     vector(1, 2, 3, 4, 5, 6, 8, 10, 12)));
 end test union-5;
 
 define test union-6 (description: "string")
@@ -146,8 +146,8 @@ define test remove-duplicates-3 (description: "stretchy-vector")
 end test remove-duplicates-3;
 
 define test remove-duplicates-4 (description: "simple-object-vector")
-  check-true("", simple-object-vector-instance(1, 2, 3, 4, 5, 4, 3, 2, 1).remove-duplicates
-  = simple-object-vector-instance(1, 2, 3, 4, 5));
+  check-true("", vector(1, 2, 3, 4, 5, 4, 3, 2, 1).remove-duplicates
+  = vector(1, 2, 3, 4, 5));
 end test remove-duplicates-4;
 
 define test remove-duplicates-5 (description: "string")
@@ -209,8 +209,8 @@ define test remove-duplicates!-3 (description: "stretchy-vector")
 end test remove-duplicates!-3;
 
 define test remove-duplicates!-4 (description: "simple-object-vector")
-  check-true("", remove-duplicates!(simple-object-vector-instance(1, 2, 3, 4, 5, 4, 3, 2, 1))
-  = simple-object-vector-instance(1, 2, 3, 4, 5));
+  check-true("", remove-duplicates!(vector(1, 2, 3, 4, 5, 4, 3, 2, 1))
+  = vector(1, 2, 3, 4, 5));
 end test remove-duplicates!-4;
 
 define test remove-duplicates!-5 (description: "string")
@@ -267,7 +267,7 @@ end test copy-sequence-4;
 
 define test copy-sequence-5 (description: "simple-object-vector")
   check-true("", begin
-    let s = simple-object-vector-instance(1, 2, 3, 4, 5);
+    let s = vector(1, 2, 3, 4, 5);
     let new-s = s.copy-sequence;
     new-s = s & ~(new-s == s)
   end);
@@ -342,11 +342,11 @@ define test concatenate-as-4 (description: "simple-object-vector")
     let in-2 = list(6, 7, 8, 9, 10);
     let result = concatenate-as(<simple-object-vector>, in-1, in-2);
     check-true("", instance?(result, <simple-object-vector>));
-    check-true("", result = simple-object-vector-instance(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+    check-true("", result = vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
   end;
   begin
-      let in-1 = simple-object-vector-instance(1, 2, 3, 4, 5);
-      let in-2 = simple-object-vector-instance(6, 7, 8, 9, 10);
+      let in-1 = vector(1, 2, 3, 4, 5);
+      let in-2 = vector(6, 7, 8, 9, 10);
       let result = concatenate-as(<list>, in-1, in-2);
       check-true("", instance?(result, <list>) & result = #(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
     end;
@@ -357,7 +357,7 @@ define test concatenate-as-5 (description: "more args")
   let in-2 = range(from: 6, below: 11);
   let in-3 = deque-instance(10, 9, 8, 7, 6);
   let in-4 = stretchy-vector-instance(5, 4);
-  let in-5 = simple-object-vector-instance(3, 2, 1);
+  let in-5 = vector(3, 2, 1);
   let result = concatenate-as(<list>, in-1, in-2, in-3, in-4, in-5);
   check-true("", instance?(result, <list>));
   check-true("", result = #(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1));
@@ -396,10 +396,10 @@ define test concatenate-3 (description: "stretch-vector")
 end test concatenate-3;
 
 define test concatenate-4 (description: "simple-object-vector")
-  let in-1 = simple-object-vector-instance(1, 2, 3, 4, 5);
-  let in-2 = simple-object-vector-instance(6, 7, 8, 9, 10);
+  let in-1 = vector(1, 2, 3, 4, 5);
+  let in-2 = vector(6, 7, 8, 9, 10);
   let result = concatenate(in-1, in-2);
-  check-true("", result = simple-object-vector-instance(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+  check-true("", result = vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 end test concatenate-4;
 
 define test concatenate-5 (description: "more args")
@@ -407,7 +407,7 @@ define test concatenate-5 (description: "more args")
   let in-2 = range(from: 6, below: 11);
   let in-3 = deque-instance(10, 9, 8, 7, 6);
   let in-4 = stretchy-vector-instance(5, 4);
-  let in-5 = simple-object-vector-instance(3, 2, 1);
+  let in-5 = vector(3, 2, 1);
   let result = concatenate(in-1, in-2, in-3, in-4, in-5);
   check-true("", result = #(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1));
 end test concatenate-5;

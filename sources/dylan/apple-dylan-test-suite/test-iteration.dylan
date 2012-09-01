@@ -47,7 +47,7 @@ end test final-state-type;
 define test final-state (description: "vector, deque")
   check-false("", #f = deque-instance(1, 2, 3).final-state);
   check-false("", #f = vector(1, 2, 3).final-state);
-  check-false("", #f = simple-object-vector-instance(1, 2, 3).final-state);
+  check-false("", #f = vector(1, 2, 3).final-state);
   check-false("", #f = final-state("abc"));
 end test final-state;
 
@@ -61,7 +61,7 @@ define test final-state-1
      end method,
      list(list(9, vector(7, 8, 9)),
           list(9, deque-instance(7, 8, 9)),
-          list(9, simple-object-vector-instance(7, 8, 9)),
+          list(9, vector(7, 8, 9)),
           list('c', "abc"))));
 end test final-state-1;
 

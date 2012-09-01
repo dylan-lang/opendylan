@@ -62,14 +62,14 @@ define test a=-1 (description: "collections")
   check-true("", stretchy-vector-instance(1, 2, 3) = stretchy-vector-instance(1, 2, 3));
   check-true("", ~(stretchy-vector-instance(1, 2, 3) = stretchy-vector-instance(1, 999, 3)));  
   check-true("", stretchy-vector-instance(1, 2, 3) = stretchy-vector-instance(1, 2, 3));
-  check-true("", simple-object-vector-instance(1, 2, 3)
-     = simple-object-vector-instance(1, 2, 3));
-  check-true("", simple-object-vector-instance(1, 2, 3)
-       = simple-object-vector-instance(1, 2, 3));
-  check-true("", ~(simple-object-vector-instance(1, 2, 3)
-      = simple-object-vector-instance(1, 999, 3)));
-  check-true("", simple-object-vector-instance(1, 2, 3)
-        = simple-object-vector-instance(1, 2, 3));
+  check-true("", vector(1, 2, 3)
+     = vector(1, 2, 3));
+  check-true("", vector(1, 2, 3)
+       = vector(1, 2, 3));
+  check-true("", ~(vector(1, 2, 3)
+      = vector(1, 999, 3)));
+  check-true("", vector(1, 2, 3)
+        = vector(1, 2, 3));
   check-true("", (#() = list() & #() = #()));
   check-true("", ~(list() = #(1) & list() = #(1)));
 //  check-true("", (pair(1, 2) = #(1 . 2) & pair(1, 2) = #(1 . 2)));
@@ -108,8 +108,8 @@ define test p=-1 (description: "collections")
   check-true("", "abc" ~= "aBc");
   check-true("", list(#"a", #"z", #"c") ~= list(#"a", #"b", #"c"));
   check-true("", stretchy-vector-instance(1, 999, 3) ~= stretchy-vector-instance(1, 2, 3));
-  check-true("", simple-object-vector-instance(1, 999, 3)
-    ~= simple-object-vector-instance(1, 2, 3));
+  check-true("", vector(1, 999, 3)
+    ~= vector(1, 2, 3));
   check-true("", list() ~= #(1));
 //  check-true("pairs dont seem to work in the emulator", pair(1, 2) ~= #(1 . 0));
   check-true("", deque-instance(1, 999, 3) ~= deque-instance(1, 2, 3));
@@ -153,8 +153,8 @@ define test =hash-1 (description: "collections")
   check-true("", list(#"a", #"b", #"c").=hash = list(#"a", #"b", #"c").=hash);
   check-equal("", stretchy-vector-instance(1, 2, 3).=hash,
      stretchy-vector-instance(1, 2, 3).=hash);
-  check-equal("", simple-object-vector-instance(1, 2, 3).=hash,
-     simple-object-vector-instance(1, 2, 3).=hash);
+  check-equal("", vector(1, 2, 3).=hash,
+     vector(1, 2, 3).=hash);
   check-true("", =hash(#()) = list().=hash);
 //  check-true("pairs dont work in the emulator", pair(1, 2).=hash = =hash(#(1 . 2)));
   check-true("", deque-instance(1, 2, 3).=hash = deque-instance(1, 2, 3).=hash);
