@@ -597,7 +597,7 @@ __inline
 #elif defined(OPEN_DYLAN_PLATFORM_FREEBSD)
 #include "x86-freebsd-exceptions.c"
 #else
-#include "win32-exceptions.c"
+#include "x86-windows-exceptions.c"
 #endif
 
 
