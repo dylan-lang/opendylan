@@ -104,8 +104,7 @@ define test as-sequence-permutations ()
                 let object = stuff.head;
                 let classes = stuff.tail;
                 let new-class = classes.head;
-                let coercion = as(head(classes), object);
-                let objsize = object.size;
+                let coercion = as(new-class, object);
                 if (instance?(object, <sequence>)
                     & instance?(object, <collection>)
                     & every?(curry(instance?, coercion), classes)
@@ -116,10 +115,10 @@ define test as-sequence-permutations ()
                         & every?(\==, object, coercion)
                         & instance?(coercion, <sequence>)
                         & instance?(coercion, <collection>)
-                        //Do it using element.
+                        // Do it using element.
                         & begin
                             local method f (i)
-                                    if (i == objsize)
+                                    if (i == object.size)
                                       #t
                                     elseif (object[i] == coercion[i])
                                       f(i + 1)
@@ -129,7 +128,7 @@ define test as-sequence-permutations ()
                                   end method f;
                             f(0)
                           end
-                        //Do it using iteration states.
+                        // Do it using iteration states.
                         & sequences-element-id?(object, coercion)
                       end if)
                   losers

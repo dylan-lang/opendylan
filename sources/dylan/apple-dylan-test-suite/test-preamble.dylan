@@ -99,26 +99,29 @@ define method mutable-sequence ()
   list(<mutable-sequence>, <mutable-collection>, <sequence>, <collection>)
 end method mutable-sequence;
 
-define constant sequences-element-id?
-  = method (seq1, seq2)
-      let objsize = seq1.size;
-      objsize == seq2.size
-      & begin
-          local method f (i, s1, s2)
-                  if (i == objsize)
-                    s1 == #f & s2 == #f
-                  elseif (s1 == #f | s2 == #f)
-                    #f
-                  elseif (current-element(seq1, s1)
-                          == current-element(seq2, s2))
-                    f(i + 1, next-state(seq1, s1), next-state(seq2, s2))
-                  else
-                    #f
-                  end if
-                end method f;
-          f(0, seq1.initial-state, seq2.initial-state)
-        end
-    end method;
+// A caller in test-class.dylan explicitly wants to compare sequences
+// using the iteration protocol rather than via 'element'.  --cgay Aug 2012
+define method sequences-element-id? (seq1, seq2)
+  let len = seq1.size;
+  if (len == seq2.size)
+    let (initial-state-1, a, next-state-1, b, c, current-element-1)
+      = forward-iteration-protocol(seq1);
+    let (initial-state-2, d, next-state-2, e, g, current-element-2)
+      = forward-iteration-protocol(seq2);
+    local method f (i, s1, s2)
+            if (i == len)
+              ~s1 & ~s2
+            elseif (~s1 | ~s2)
+              #f
+            elseif (current-element-1(seq1, s1) == current-element-2(seq2, s2))
+              f(i + 1, next-state-1(seq1, s1), next-state-2(seq2, s2))
+            else
+              #f
+            end if
+          end method;
+    f(0, initial-state-1, initial-state-2)
+  end if
+end method sequences-element-id?;
 
 define variable *as-character* = curry(as, <character>);
 
