@@ -89,8 +89,6 @@ install-build:
 	xcopy /i/q ..\..\..\jamfiles\*.jam $(LIBDEST)
 	if not exist $(LIBDEST)\x86-win32-build.jam copy $(LIBDEST)\x86-win32-vc6-build.jam $(LIBDEST)\x86-win32-build.jam
 	if not exist $(LIBDEST)\dylan-support.obj copy dylan-support.obj $(LIBDEST)
-	if not exist $(LIBDEST)\dylanpe.script copy dylanpe.script $(LIBDEST)
-	if not exist $(BINDEST)\make-reloc.exe copy make-reloc.exe $(BINDEST)
 
 install-userlib: $(USERLIB)
   echo Building pentium run time: install-userlib
