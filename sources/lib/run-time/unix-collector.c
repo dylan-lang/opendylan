@@ -19,7 +19,7 @@
  * never be able to interoperate with Boehm.
  */
 
-#ifndef BOEHM_GC
+#ifdef GC_USE_MPS
 
 void *GC_malloc(size_t size)
 {

@@ -19,7 +19,7 @@
 #include <time.h>
 #include <sys/types.h>
 
-#ifdef BOEHM_GC
+#ifdef GC_USE_BOEHM
 #include <gc/gc.h>
 #endif
 
