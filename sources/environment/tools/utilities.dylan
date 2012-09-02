@@ -219,6 +219,7 @@ define lazy-table $file-type-filters
   = { #"common"        => /* The common file types for opening files. */
         vector("Common Files",
 	       make-filter(project-file-extension()),
+	       make-filter(lid-file-extension()),
 	       make-filter(dylan-file-extension()), "*.dyl",
 	       "*.spec",
 	       "*.rc",
@@ -228,6 +229,7 @@ define lazy-table $file-type-filters
       #"common-insert" => /* The common file types for inserting source files. */
         vector("Common Files",
 	       make-filter(project-file-extension()),
+	       make-filter(lid-file-extension()),
 	       make-filter(dylan-file-extension()), "*.dyl",
 	       "*.rc",
 	       "*.spec",
@@ -241,7 +243,8 @@ define lazy-table $file-type-filters
 	       make-filter(lid-file-extension())),
       #"project"       =>
         vector("Open Dylan Projects",
-               make-filter(project-file-extension())),
+               make-filter(project-file-extension()),
+	       make-filter(lid-file-extension())),
       #"lid"           => 
         vector("Dylan Library Interchange Descriptions",
                make-filter(lid-file-extension())),
