@@ -109,10 +109,18 @@ define constant $os-variant
 				  integer-as-raw(2), integer-as-raw(0)));
             if (majorversion < 5)
               #"winnt";
-            elseif (minorversion = 0)
+            elseif ((majorversion = 5) & (minorversion = 0))
               #"win2000"
-            else /* if (minorversion = 1) */
+            elseif ((majorversion = 5) & (minorversion = 1))
               #"winxp"
+            elseif ((majorversion = 6) & (minorversion = 0))
+              #"winvista"
+            elseif ((majorversion = 6) & (minorversion = 1))
+              #"win7"
+            elseif ((majorversion = 6) & (minorversion = 2))
+              #"win8"
+            else
+              #"winunknown"
             end
           end
       end
