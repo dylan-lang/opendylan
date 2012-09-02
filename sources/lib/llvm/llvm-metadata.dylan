@@ -26,7 +26,7 @@ end class;
 define method value-partition-key
     (value :: <llvm-metadata-string>)
  => (key :: <vector>);
-  apply(vector, object-class(value), value.llvm-metadata-string)
+  vector(object-class(value), value.llvm-metadata-string)
 end method;
 
 define class <llvm-metadata-node> (<llvm-metadata-value>)

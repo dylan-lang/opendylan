@@ -474,6 +474,22 @@ begin
          method (arguments) function end
        end;
 
+  $llvm-intrinsic-makers["llvm.debugtrap"]
+    := begin
+         let function-type
+           = make(<llvm-function-type>,
+                  return-type: $llvm-void-type,
+                  parameter-types: vector(),
+                  varargs?: #f);
+         let function
+           = make(<llvm-function>,
+                  name: "llvm.debugtrap",
+                  type: make(<llvm-pointer-type>, pointee: function-type),
+                  attribute-list: $llvm-intrinsic-default-attribute-list,
+                  linkage: #"external");
+         method (arguments) function end
+       end;
+
   $llvm-intrinsic-makers["llvm.eh.dwarf.cfa"]
     := begin
          let function-type
@@ -1044,7 +1060,7 @@ begin
   $llvm-intrinsic-makers["llvm.memset"]
     := method (arguments)
          let type0 = llvm-value-type(arguments[0]);
-         let type1 = llvm-value-type(arguments[2]);
+         let type1 = llvm-value-type(arguments[1]);
          let name = format-to-string("llvm.memset.%s.%s", intrinsic-type-name(type0), intrinsic-type-name(type1));
 
          let function-type

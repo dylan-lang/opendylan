@@ -27,10 +27,11 @@ define side-effecting stateful dynamic-extent &runtime-primitive-descriptor prim
 end;
 */
 
-define side-effecting stateful dynamic-extent &unimplemented-primitive-descriptor primitive-invoke-debugger // runtime
+define side-effecting stateful dynamic-extent &runtime-primitive-descriptor primitive-invoke-debugger
     (format-string :: <byte-string>, arguments :: <simple-object-vector>)
  => ();
-  //---*** Fill this in...
+  //---*** Fill this in to do something with the format-string and arguments.
+  ins--call-intrinsic(be, "llvm.debugtrap", vector())
 end;
 
 define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-debug-message // runtime
