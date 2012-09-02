@@ -1,12 +1,9 @@
-/* Linux specific type declarations, etc ... */
+/* Unix specific type declarations, etc ... */
 
 #include <signal.h>
 #include <pthread.h>
 
 typedef void                *HANDLE;
-typedef void                *PVOID;
-typedef long                 LONG;
-typedef long                *LPLONG;
 typedef unsigned char        BYTE;
 typedef int                  BOOL;
 typedef unsigned long        DWORD;
@@ -37,25 +34,14 @@ typedef long long            _int64;
 
 #define extern_CRITICAL_SECTION(lock) \
   extern pthread_mutex_t lock
-#ifdef PTHREAD_MUTEX_RECURSIVE_NP
 #define initialize_CRITICAL_SECTION(mutex) \
   do { \
     pthread_mutexattr_t _attr; \
     pthread_mutexattr_init(&_attr); \
-    pthread_mutexattr_setkind_np(&_attr, PTHREAD_MUTEX_RECURSIVE_NP); \
+    pthread_mutexattr_settype(&_attr, PTHREAD_MUTEX_RECURSIVE); \
     pthread_mutex_init((mutex), &_attr); \
     pthread_mutexattr_destroy(&_attr); \
   } while(0)
-#else
-#define initialize_CRITICAL_SECTION(mutex) \
-  do { \
-    pthread_mutexattr_t _attr; \
-    pthread_mutexattr_init(&_attr); \
-    pthread_mutexattr_setkind_np(&_attr, PTHREAD_MUTEX_RECURSIVE); \
-    pthread_mutex_init((mutex), &_attr); \
-    pthread_mutexattr_destroy(&_attr); \
-  } while(0)
-#endif
 
 #define enter_CRITICAL_SECTION(lock)      pthread_mutex_lock(lock)
 #define leave_CRITICAL_SECTION(lock)      pthread_mutex_unlock(lock)

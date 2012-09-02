@@ -15,7 +15,7 @@
 #include <dlfcn.h>
 
 extern int inside_dylan_ffi_barrier();
-extern void dylan_stack_overflow_handler(PVOID base_address, int size, DWORD protection);
+extern void dylan_stack_overflow_handler(void *base_address, int size, unsigned long protection);
 extern void dylan_integer_overflow_handler();
 extern void dylan_integer_divide_0_handler();
 extern void dylan_float_divide_0_handler();
@@ -50,8 +50,8 @@ extern void dylan_float_underflow_handler();
                           | _FPU_MASK_OM        \
                           | _FPU_MASK_UM))
 
-inline void chain_sigaction(const struct sigaction *act,
-                            int sig, siginfo_t *info, void *uap)
+static inline void chain_sigaction(const struct sigaction *act,
+                                   int sig, siginfo_t *info, void *uap)
 {
   if(act->sa_flags & SA_SIGINFO) {
     /* Inner handler uses the same (sa_sigaction) convention... call it */
@@ -111,9 +111,9 @@ inline void chain_sigaction(const struct sigaction *act,
 }
 
 static unsigned exception_handler_level = 0;
-struct sigaction outer_FPEHandler;
-struct sigaction outer_SEGVHandler;
-struct sigaction outer_TRAPHandler;
+static struct sigaction outer_FPEHandler;
+static struct sigaction outer_SEGVHandler;
+static struct sigaction outer_TRAPHandler;
 
 #define EXCEPTION_PREAMBLE() \
   {						    \
@@ -170,7 +170,7 @@ static void RemoveDylanExceptionHandlers (void)
   sigaction(SIGTRAP, &outer_TRAPHandler, NULL);
 }
 
-__inline
+static __inline
 void RestoreFPState (ucontext_t *uc)
 {
   unsigned long int cw = DYLAN_FPU_CW;
@@ -245,14 +245,14 @@ static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
   chain_sigaction(&outer_SEGVHandler, sig, info, uap);
 }
 
-int getebp () {
+static int getebp () {
     int ebp;
     asm("mov (%%ebp), %0"
         :"=r"(ebp));
     return ebp;
 };
 
-void walkstack() {
+static void walkstack() {
   int ebp = getebp();
   int eip;
   int rc;

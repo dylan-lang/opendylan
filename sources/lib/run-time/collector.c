@@ -85,7 +85,7 @@ void force_reference_to_spy_interface()
 #define MAXIMUM_HEAP_SIZE (512 * 1024 * 1024)
 #endif
 
-#ifdef BOEHM_GC
+#ifdef GC_USE_BOEHM
 #include <gc/gc.h>
 #define MAX_BOEHM_HEAP_SIZE (1024 * 1024 * 1024)
 /* #define INITIAL_BOEHM_HEAP_SIZE (50 * 1024 * 1024) */
@@ -97,7 +97,7 @@ void force_reference_to_spy_interface()
 #include "mpscmv.h"     /* MPS pool class MV */
 #include "mpscamc.h"    /* MPS pool class AMC */
 #include "mpsavm.h"     /* MPS arena class */
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 #ifndef OPEN_DYLAN_PLATFORM_UNIX
 #include "mpsw3.h"
 #endif
@@ -152,7 +152,7 @@ typedef void*                         dylan_object;
 
 void report_runtime_error (char* header, char* message)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_lib_FILE *stream = mps_lib_get_stderr();
   mps_lib_fputs(header, stream);
   mps_lib_fputs(message, stream);
@@ -166,7 +166,7 @@ void simple_error (char* message)
   report_runtime_error("\nDylan runtime error: ", message);
 }
 
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
 #define unused(param)   ((void)param)
 
@@ -193,7 +193,7 @@ mps_bool_t dylan_check(mps_addr_t addr)
 
 static void defaultHandler(MMError e, const char *opName, size_t size)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_lib_FILE *stream = mps_lib_get_stderr();
   mps_lib_fputs("\nError: ", stream);
   mps_lib_fputs(opName, stream);
@@ -232,7 +232,7 @@ static MMAllocHandler misc_handler = defaultHandler;
 /* Thread Local Variables, accessed via the GC-TEB*/
 
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
-// On Linux, use the thread-local storage provided by the system to
+// On Unix platforms, use the thread-local storage provided by the system to
 // hold the TEB pointer
 __thread void* teb;
 
@@ -405,7 +405,7 @@ extern void *call_dylan_function(void *function, size_t arg_count, ...);
 
 extern void *dylan_keyboard_break_handler;
 extern BOOL dylan_keyboard_interruptQ;
-BOOL DylanKeyboardInterruptPollingQ = TRUE;
+static BOOL DylanKeyboardInterruptPollingQ = TRUE;
 
 RUN_TIME_API
 BOOL primitive_keyboard_interrupt_signaled()
@@ -436,12 +436,11 @@ void primitive_keyboard_interrupt_polling_setter(BOOL pollingQ)
 
 HANDLE polling_threads[MAX_POLLING_THREADS];
 
-int polling_threads_cursor = -1;
+static int polling_threads_cursor = -1;
 
-define_CRITICAL_SECTION(polling_threads_lock);
+static define_CRITICAL_SECTION(polling_threads_lock);
 
-
-int polling_thread_index (HANDLE hThread)
+static int polling_thread_index (HANDLE hThread)
 {
   int i;
 
@@ -456,7 +455,7 @@ int polling_thread_index (HANDLE hThread)
   return(-1);
 }
 
-__inline
+static __inline
 BOOL polling_threadQ (HANDLE hThread)
 {
   int index = polling_thread_index(hThread);
@@ -465,7 +464,7 @@ BOOL polling_threadQ (HANDLE hThread)
   else return TRUE;
 }
 
-__inline
+static __inline
 BOOL polling_individual_threadsQ ()
 {
   if (polling_threads_cursor > -1) return TRUE;
@@ -473,7 +472,7 @@ BOOL polling_individual_threadsQ ()
 }
 
 
-void add_polling_thread (HANDLE hThread)
+static void add_polling_thread (HANDLE hThread)
 {
   if (polling_threadQ(hThread)) return;
 
@@ -486,7 +485,7 @@ void add_polling_thread (HANDLE hThread)
 }
 
 
-void remove_polling_thread (HANDLE hThread)
+static void remove_polling_thread (HANDLE hThread)
 {
   int index = polling_thread_index(hThread);
   int i;
@@ -520,7 +519,7 @@ void primitive_keyboard_interrupt_polling_thread_setter
 
 extern HANDLE get_current_thread_handle();
 
-void HandleDylanKeyboardInterrupt()
+static void HandleDylanKeyboardInterrupt()
 {
   if (DylanKeyboardInterruptPollingQ
       || (polling_individual_threadsQ()
@@ -538,7 +537,7 @@ extern void check_wrapper_breakpoint (void *wrapper, int size);
 extern BOOL Prunning_dylan_spy_functionQ;
 
 
-__inline
+static __inline
 void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 {
 #ifndef NO_ALLOCATION_COUNT_FOR_PROFILER
@@ -557,7 +556,7 @@ void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 #endif
 }
 
-void zero_allocation_counter(gc_teb_t gc_teb)
+static void zero_allocation_counter(gc_teb_t gc_teb)
 {
 #ifndef NO_ALLOCATION_COUNT_FOR_PROFILER
   gc_teb->gc_teb_allocation_counter = 0;
@@ -598,7 +597,7 @@ __inline
 #elif defined(OPEN_DYLAN_PLATFORM_FREEBSD)
 #include "x86-freebsd-exceptions.c"
 #else
-#include "win32-exceptions.c"
+#include "x86-windows-exceptions.c"
 #endif
 
 
@@ -608,21 +607,21 @@ extern void *dylan_callin_internal(void *arg_base, size_t s);
 
 /* Thread creation & deletion code */
 
-int num_threads = 0;
+static int num_threads = 0;
 
 /* client estimate for handling requirements goes here */
-int low_memory_allocation_per_thread = 128 * 1024;
+static int low_memory_allocation_per_thread = 128 * 1024;
 
 
-define_CRITICAL_SECTION(reservoir_limit_set_lock);
+static define_CRITICAL_SECTION(reservoir_limit_set_lock);
 
-__inline
+static __inline
 void update_runtime_thread_count(int increment)
 {
 
   enter_CRITICAL_SECTION(&reservoir_limit_set_lock);
     num_threads = num_threads + increment;
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
     mps_reservoir_limit_set(arena, num_threads * low_memory_allocation_per_thread);
 #endif
   leave_CRITICAL_SECTION(&reservoir_limit_set_lock);
@@ -639,7 +638,7 @@ MMError dylan_mm_register_thread(void *stackBot)
 
   zero_allocation_counter(gc_teb);
 
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   res = mps_ap_create(&gc_teb->gc_teb_main_ap, main_pool, MPS_RANK_EXACT);
   if(res) goto failApCreate;
@@ -692,7 +691,7 @@ MMError dylan_mm_deregister_thread_from_teb(gc_teb_t gc_teb)
 {
 
   update_runtime_thread_count(-1);
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_root_destroy(gc_teb->gc_teb_stack_root);
   mps_thread_dereg(gc_teb->gc_teb_thread);
   mps_ap_destroy(gc_teb->gc_teb_main_ap);
@@ -760,7 +759,9 @@ void *dylan_callin_handler(void *arg_base, size_t s)
 __inline
 void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
 {
-#if defined(X86_LINUX_PLATFORM)
+  // This really should be controlled by a better define, but we don't have
+  // or really need one at the moment.
+#if defined(OPEN_DYLAN_PLATFORM_UNIX)
   __asm__
     (
       "cld    \n\t"
@@ -978,7 +979,7 @@ extern void *dylan_false;
 __inline
 void *MMReserveObject(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_main_ap, main_handler, "MMReserveObject");
 
@@ -992,7 +993,7 @@ void *MMReserveObject(size_t size, void *wrapper, gc_teb_t gc_teb)
 __inline
 int MMCommitObject(void *p, size_t size, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   assert(gc_teb->gc_teb_inside_tramp);
   assert(dylan_check(p));
@@ -1009,7 +1010,7 @@ int MMCommitObject(void *p, size_t size, gc_teb_t gc_teb)
 __inline
 void *MMReserveLeaf(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_leaf_ap, leaf_handler, "MMReserveLeaf");
 
@@ -1023,7 +1024,7 @@ void *MMReserveLeaf(size_t size, void *wrapper, gc_teb_t gc_teb)
 __inline
 int MMCommitLeaf(void *p, size_t size, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   assert(gc_teb->gc_teb_inside_tramp);
   assert(dylan_check(p));
@@ -1046,7 +1047,7 @@ MMAllocHandler MMReserveLeafHandler(MMAllocHandler handler)
 __inline
 void *MMReserveExactAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_exact_awl_ap, exact_awl_handler, "MMReserveExactAWL");
 
@@ -1060,7 +1061,7 @@ void *MMReserveExactAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 __inline
 int MMCommitExactAWL(void *p, size_t size, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   assert(gc_teb->gc_teb_inside_tramp);
   assert(dylan_check(p));
@@ -1083,7 +1084,7 @@ MMAllocHandler MMReserveExactAWLHandler(MMAllocHandler handler)
 __inline
 void *MMReserveWeakAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_weak_awl_ap, weak_awl_handler, "MMReserveWeakAWL");
 
@@ -1097,7 +1098,7 @@ void *MMReserveWeakAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 __inline
 int MMCommitWeakAWL(void *p, size_t size, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   assert(gc_teb->gc_teb_inside_tramp);
   assert(dylan_check(p));
@@ -1128,7 +1129,7 @@ MMAllocHandler MMReserveObjectHandler(MMAllocHandler handler)
 __inline
 void *MMReserveWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   mps_res_t res;
   mps_addr_t p;
@@ -1157,7 +1158,7 @@ void *MMReserveWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
 __inline
 int MMCommitWrapper(void *p, size_t size, gc_teb_t gc_teb)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   mps_res_t res;
   mps_root_t root;
@@ -1189,7 +1190,7 @@ MMAllocHandler MMReserveWrapperHandler(MMAllocHandler handler)
 
 void *MMAllocMisc(size_t size)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   mps_res_t res;
   void *p;
@@ -1221,7 +1222,7 @@ MMAllocHandler MMAllocMiscHandler(MMAllocHandler handler)
 
 void MMFreeMisc(void *old, size_t size)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   /* gc_teb_t gc_teb = current_gc_teb(); */
 
@@ -1940,7 +1941,7 @@ unsigned MMCollectCount(void)
   gc_teb_t gc_teb = current_gc_teb();
 
   assert(gc_teb->gc_teb_inside_tramp);
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   return (unsigned)mps_collections(arena);
 #else
   return 0;
@@ -1949,7 +1950,7 @@ unsigned MMCollectCount(void)
 
 MMError MMRegisterRootStatic(mps_root_t *rootp, void *base, void *limit)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
   return mps_root_create_fmt(rootp, arena, MPS_RANK_EXACT,
                              MPS_RM_PROT, fmt_A->scan, base, limit);
@@ -1960,7 +1961,7 @@ MMError MMRegisterRootStatic(mps_root_t *rootp, void *base, void *limit)
 
 MMError MMRegisterRootImmut(mps_root_t *rootp, void *base, void *limit)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
   return mps_root_create_fmt(rootp, arena, MPS_RANK_EXACT,
                              MPS_RM_CONST, fmt_A->scan, base, limit);
@@ -1977,7 +1978,7 @@ MMError MMRegisterRootImmut(mps_root_t *rootp, void *base, void *limit)
 
 MMError MMRegisterRootAmbig(mps_root_t *rootp, void *base, void *limit)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
   return mps_root_create_table(rootp, arena, MPS_RANK_AMBIG,
@@ -1989,7 +1990,7 @@ MMError MMRegisterRootAmbig(mps_root_t *rootp, void *base, void *limit)
 
 MMError MMRegisterRootExact(mps_root_t *rootp, void *base, void *limit)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
   return mps_root_create_table_masked(rootp, arena, MPS_RANK_EXACT,
@@ -2001,7 +2002,7 @@ MMError MMRegisterRootExact(mps_root_t *rootp, void *base, void *limit)
 
 void MMDeregisterRoot(mps_root_t root)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   if (root) {
     mps_root_destroy(root);
   }
@@ -2050,7 +2051,7 @@ void dylan__free__root(void *object, size_t size)
 
 MMError MMRootStatic(void *base, void *limit)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_root_t root;
   return mps_root_create_fmt(&root, arena, MPS_RANK_EXACT,
                              0, fmt_A->scan, base, limit);
@@ -2067,7 +2068,7 @@ MMError MMRootImmut(void *base, void *limit)
 
 MMError MMRootAmbig(void *base, void *limit)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_root_t root;
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   return mps_root_create_table(&root, arena, MPS_RANK_AMBIG,
@@ -2079,7 +2080,7 @@ MMError MMRootAmbig(void *base, void *limit)
 
 MMError MMRootExact(void *base, void *limit)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_root_t root;
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   return mps_root_create_table_masked(&root, arena, MPS_RANK_EXACT,
@@ -2095,7 +2096,7 @@ MMError MMRootExact(void *base, void *limit)
 RUN_TIME_API
 void primitive_mps_clamp()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_arena_clamp(arena);
 #endif
 }
@@ -2103,7 +2104,7 @@ void primitive_mps_clamp()
 RUN_TIME_API
 void primitive_mps_park()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_arena_park(arena);
 #endif
 }
@@ -2111,7 +2112,7 @@ void primitive_mps_park()
 RUN_TIME_API
 void primitive_mps_release()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_arena_release(arena);
 #endif
 }
@@ -2121,7 +2122,7 @@ extern void display_stats_for_memory_usage ();
 RUN_TIME_API
 void primitive_mps_collect(BOOL display_stats)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_arena_collect(arena);
   if (display_stats)
     display_stats_for_memory_usage();
@@ -2131,7 +2132,7 @@ void primitive_mps_collect(BOOL display_stats)
 RUN_TIME_API
 size_t primitive_mps_committed()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   return mps_arena_committed(arena);
 #else
   return 0;
@@ -2141,7 +2142,7 @@ size_t primitive_mps_committed()
 RUN_TIME_API
 void primitive_mps_begin_ramp_alloc()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   gc_teb_t gc_teb = current_gc_teb();
   mps_alloc_pattern_t pattern = mps_alloc_pattern_ramp();
 
@@ -2155,7 +2156,7 @@ void primitive_mps_begin_ramp_alloc()
 RUN_TIME_API
 void primitive_mps_end_ramp_alloc()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   gc_teb_t gc_teb = current_gc_teb();
   mps_alloc_pattern_t pattern = mps_alloc_pattern_ramp();
 
@@ -2169,7 +2170,7 @@ void primitive_mps_end_ramp_alloc()
 RUN_TIME_API
 void primitive_mps_begin_ramp_alloc_all()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   gc_teb_t gc_teb = current_gc_teb();
   mps_alloc_pattern_t pattern = mps_alloc_pattern_ramp_collect_all();
 
@@ -2183,7 +2184,7 @@ void primitive_mps_begin_ramp_alloc_all()
 RUN_TIME_API
 void primitive_mps_end_ramp_alloc_all()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   gc_teb_t gc_teb = current_gc_teb();
   mps_alloc_pattern_t pattern = mps_alloc_pattern_ramp_collect_all();
 
@@ -2200,7 +2201,7 @@ mps_message_t message;
 RUN_TIME_API
 void primitive_mps_enable_gc_messages()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_message_type_enable(arena, mps_message_type_gc());
 #endif
 }
@@ -2209,7 +2210,7 @@ void primitive_mps_enable_gc_messages()
 RUN_TIME_API
 BOOL primitive_mps_collection_stats(void** results)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   size_t live, condemned, not_condemned;
 
   if (mps_message_get(&message, arena, mps_message_type_gc())) {
@@ -2275,7 +2276,7 @@ typedef struct d_hs_s         /* Dylan Hash State object */
 
 void primitive_mps_ld_reset(d_hs_t d_hs)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_ld_t mps_ld = &(d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
@@ -2285,7 +2286,7 @@ void primitive_mps_ld_reset(d_hs_t d_hs)
 
 void primitive_mps_ld_add(d_hs_t d_hs, mps_addr_t addr)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_ld_t mps_ld = &(d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
@@ -2295,7 +2296,7 @@ void primitive_mps_ld_add(d_hs_t d_hs, mps_addr_t addr)
 
 mps_bool_t primitive_mps_ld_isstale(d_hs_t d_hs)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
   mps_ld_t mps_ld = &(d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
@@ -2312,7 +2313,7 @@ mps_bool_t primitive_mps_ld_isstale(d_hs_t d_hs)
 
 void primitive_mps_ld_merge(d_hs_t d_into, d_hs_t d_obj)
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   mps_ld_t into = &(d_into->internal_state);
   mps_ld_t addr = &(d_obj->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
@@ -2360,7 +2361,7 @@ BOOL WINAPI DylanBreakControlHandler(DWORD dwCtrlType)
     }
 }
 
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 #include <stdlib.h>
 #include <limits.h>
 
@@ -2426,7 +2427,7 @@ MMError dylan_init_memory_manager()
   assert(!gc_teb->gc_teb_inside_tramp);
   assert(TARG_CHECK);
 
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
   {
     size_t gen_count = genCOUNT;
     mps_gen_param_s *params = NULL;
@@ -2495,7 +2496,7 @@ MMError dylan_init_memory_manager()
 
 #endif
 
-#ifdef BOEHM_GC
+#ifdef GC_USE_BOEHM
   /* Not required for the dll version of Boehm. */
   /* GC_init(); */
 
@@ -2530,7 +2531,7 @@ MMError dylan_init_memory_manager()
 
 void dylan_shut_down_memory_manager()
 {
-#ifndef BOEHM_GC
+#ifndef GC_USE_BOEHM
 
 #ifndef NO_FINALIZATION
   while(primitive_mps_finalization_queue_first());
