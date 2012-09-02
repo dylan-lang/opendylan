@@ -28,3 +28,5 @@ Makefile
 /sources/runtime-manager/debugger-nub/protocol/
 /sources/runtime-manager/debugger-nub/skeletons/
 /sources/runtime-manager/debugger-nub/stubs/
+/sources/runtime-manager/debugger-nub/x86-win32/devnub.lib
+/sources/runtime-manager/debugger-nub/x86-win32/*.obj
