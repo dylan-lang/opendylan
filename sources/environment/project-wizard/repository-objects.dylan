@@ -171,9 +171,6 @@ end method;
 /// repository
 
 /// Making <choice>s from the repository.
-// --- Note: "map(..., as(<vector>, ...))" is used 'cos map-as fails in
-// the emu.
-
 define sealed generic make-repository-choice
     (object :: <object>, #key included?)
  => (choice :: <choice>);
@@ -181,27 +178,7 @@ define sealed generic make-repository-choice
 define function make-repository-choices
     (objects :: <collection>)
  => (choices :: <vector>)
-  local method include-object? (o)
-    if (instance?(o, <list>)) o := o.head; end if;
-    // We include an object if
-    //   - it's not a <repository-object> (i.e., it's a module);
-    //   - it's to be available in the edition of this release; and
-    //     - either it's not a library;
-    //     - or (it *is* a library and) it's library pack is
-    //       installed in this release.
-    if (instance?(o, <repository-object>))
-      ~instance?(o, <project-library>)
-	| begin
-	    let packs = o.project-library-packs;
-	    ~packs | every?(release-contains-library-pack?, packs)
-	  end
-    else
-      #t
-    end
-  end method;
-  let objects-for-this-release
-    = choose(include-object?, as(<vector>, objects));
-  sort!(map(make-repository-choice, objects-for-this-release))
+  sort!(map(make-repository-choice, as(<vector>, objects)))
 end function;
 
 define method make-repository-choice
