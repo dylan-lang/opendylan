@@ -1,10 +1,8 @@
 /* Support for handling exceptions in Dylan (other than MM traps) */
 /* Currently, we just handle stack overflows arithmetic exceptions  */
 
-/* ---*** TODO: Find out how to trap stack overflows on Linux */
-
 extern int inside_dylan_ffi_barrier();
-extern void dylan_stack_overflow_handler(PVOID base_address, int size, DWORD protection);
+extern void dylan_stack_overflow_handler(void *base_address, int size, unsigned long protection);
 extern void dylan_integer_overflow_handler();
 extern void dylan_integer_divide_0_handler();
 extern void dylan_float_divide_0_handler();
@@ -12,15 +10,8 @@ extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
 
-/* Linux exception handling:  Setup a signal handler for SIGFPE (floating point exceptions).
-   We rely on the fact that Linux passes a second argument containing the error context. */
-
-/* ---*** NOTE: On x86 Linux, our use of the INT 4 and INTO instructions to raise an
-                integer overflow exception isn't properly converted into a SIGFPE signal.
-                Presumably, the hardware trap vector isn't setup properly and, as a result,
-                we get a SIGSEGV signal instead.  So, on x86 Linux only, we establish
-                a SIGSEGV handler which checks the trap number in the sigcontext structure
-                to see if we were invoked for an integer overflow. */
+/* FreeBSD exception handling:  Setup a signal handler for SIGFPE (floating point exceptions).
+   We rely on the fact that FreeBSD passes a second argument containing the error context. */
 
 /* ---*** TODO: Find out how to trap stack overflows and add an appropriate handler */
 
@@ -76,7 +67,7 @@ static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 #endif
 }
 
-__inline
+static __inline
 void RestoreFPState ()
 {
   fpresetsticky(fpgetsticky());

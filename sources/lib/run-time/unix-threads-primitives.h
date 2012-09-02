@@ -1,11 +1,11 @@
 /*
- *  File:     linux-threads-primitives.h
+ *  File:     unix-threads-primitives.h
  *  Created:  4th September 1995
  *  Author:   Rod Moyse, Keith Dennison, Tony Mann
  *  Copyright 1995, 1996 The Harlequin Group Ltd. All rights reserved.
  *
  *  Purpose:
- *    Threads portability layer for Linux.
+ *    Threads portability layer for Unix.
  */
 
 #ifndef THREADS_RUN_TIME_H
@@ -24,10 +24,6 @@
 
 /* Size of vector for storing thread variables. */
 #define TLV_VECTOR_INITIAL_SIZE 20
-
-/* A large negative number used to indicate that a thread is in the process
-   of growing the TLV vector */
-#define TLV_GROW ((PVOID)(-2000000))
 
 
 #ifndef _DEBUG      /* For Release builds */
@@ -101,12 +97,12 @@ typedef struct semaphore {
 
 typedef struct simple_lock {
 	pthread_mutex_t mutex;
-        HANDLE owner;
+        pthread_t owner;
 } SIMPLELOCK;
 
 typedef struct recursive_lock {
 	pthread_mutex_t mutex;
-        HANDLE owner;
+        pthread_t owner;
 	int    recursion_count;
 } RECURSIVELOCK;
 
@@ -118,7 +114,7 @@ typedef BYTE *TLV_VECTOR;
 
 typedef struct tlv_vector_list_element
 {
-  HANDLE hThread;
+  pthread_t hThread;
   TLV_VECTOR tlv_vector;
   struct tlv_vector_list_element *next;
 } *TLV_VECTOR_LIST;

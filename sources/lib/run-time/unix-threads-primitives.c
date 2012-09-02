@@ -1,5 +1,5 @@
 /*
- * File:    linux-threads-primitives.c
+ * File:    unix-threads-primitives.c
  * Author:  Tony Mann
  * Copyright: 1996 The Harlequin Group Limited. All rights reserved.
  *
@@ -8,11 +8,6 @@
  */
 
 #define _GNU_SOURCE
-
-/*
-#define THREAD_AWARE_C_LIBS
-*/
-#define THREADS_RUN_TIME_LIB
 
 #include <assert.h>
 #include <stdlib.h>
@@ -24,7 +19,7 @@
 #include <time.h>
 #include <sys/types.h>
 
-#ifdef BOEHM_GC
+#ifdef GC_USE_BOEHM
 #include <gc/gc.h>
 #endif
 
@@ -44,6 +39,10 @@
 /*                                                                           */
 /*****************************************************************************/
 
+/* A large negative number used to indicate that a thread is in the process
+   of growing the TLV vector */
+static const long TLV_GROW = -2000000;
+
 #ifdef C_TESTING
   DWORD TlsIndexThread;
   DWORD TlsIndexThreadHandle;
@@ -56,14 +55,15 @@
   extern TLV_VECTOR default_tlv_vector;
 #endif
 
-int        TLV_vector_offset = 3*sizeof(Z);
+static int TLV_vector_offset = 3*sizeof(Z);
 
-PVOID      tlv_writer_counter = 0;
+/* This is referenced from Dylan code */
+long tlv_writer_counter = 0;
 
-define_CRITICAL_SECTION(tlv_vector_list_lock);
-TLV_VECTOR_LIST  tlv_vector_list;
+static define_CRITICAL_SECTION(tlv_vector_list_lock);
+static TLV_VECTOR_LIST  tlv_vector_list;
 
-size_t linksize = sizeof(struct tlv_vector_list_element);
+static const size_t linksize = sizeof(struct tlv_vector_list_element);
 
 
 /*****************************************************************************/
@@ -77,17 +77,44 @@ static TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize);
 
 static void  copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source);
 static void  update_tlv_vectors(int newindex, Z value);
-static void  add_tlv_vector(HANDLE newthread, TLV_VECTOR tlv_vector);
-static int   remove_tlv_vector(HANDLE thread);
-
-static LONG  internal_InterlockedIncrement(LPLONG);
-static LONG  internal_InterlockedDecrement(LPLONG);
-static PVOID internal_InterlockedCompareExchange(PVOID *, PVOID, PVOID);
+static void  add_tlv_vector(pthread_t newthread, TLV_VECTOR tlv_vector);
+static int   remove_tlv_vector(pthread_t thread);
 
 
 /*****************************************************************************/
 /* EXTERNAL FUNCTIONS                                                        */
 /*****************************************************************************/
+
+/* Increment the 32-bit value pointed to by var. Prevents other threads from
+ * using the value simultaneously.
+ * Returns: the new incremented value
+ */
+static inline
+long internal_InterlockedIncrement(long *var)
+{
+  return __sync_add_and_fetch(var, 1);
+}
+
+/* Decrement the 32-bit value pointed to by var. Prevents other threads from
+ * using the value simultaneously
+ * Returns: the new decremented value
+ */
+static inline
+long internal_InterlockedDecrement(long *var)
+{
+  return __sync_sub_and_fetch(var, 1);
+}
+
+/* Atomically compares the destination and compare values, and stores the
+ * exchange value in the destination if they are equal (otherwise does
+ * nothing). Returns the initial value of the destination.
+ */
+static inline
+long internal_InterlockedCompareExchange(long *destination, long exchange,
+                                          long compare)
+{
+  return __sync_val_compare_and_swap(destination, compare, exchange);
+}
 
 #ifdef C_TESTING
 /*****************************************************************************/
@@ -160,8 +187,8 @@ extern void *get_tlv_vector(void);
 extern void  set_tlv_vector(void *vector);
 extern void *get_current_thread();
 extern void  set_current_thread(void *thread);
-extern void *get_current_thread_handle();
-extern void  set_current_thread_handle(void *handle);
+extern pthread_t get_current_thread_handle();
+extern void  set_current_thread_handle(pthread_t handle);
 extern void *get_current_teb();
 extern int   dylan_init_thread(void **rReturn, void *(*f)(void *, size_t),
                                void *p, size_t s);
@@ -178,11 +205,11 @@ THREADS_RUN_TIME_API
 void primitive_write_thread_variable_internal()
 {
   do {
-    if (internal_InterlockedDecrement((LPLONG)(&tlv_writer_counter)) < 0) {
+    if (internal_InterlockedDecrement(&tlv_writer_counter) < 0) {
       pthread_mutex_lock(&tlv_vector_list_lock);
       pthread_mutex_unlock(&tlv_vector_list_lock);
     }
-  } while(internal_InterlockedIncrement((LPLONG)(&tlv_writer_counter)) < 0);
+  } while(internal_InterlockedIncrement(&tlv_writer_counter) < 0);
 }
 
 
@@ -250,7 +277,7 @@ trampoline_body(void *arg, size_t ignore)
   call_first_dylan_function((void *)dylan_trampoline, 0);
 #endif
 
-  remove_tlv_vector(thread->handle1);
+  remove_tlv_vector((pthread_t)thread->handle1);
   return 0;
 }
 
@@ -340,7 +367,7 @@ THREADS_RUN_TIME_API  ZINT
 primitive_wait_for_simple_lock(CONTAINER *lock)
 {
   SIMPLELOCK  *slock;
-  HANDLE       hThread;
+  pthread_t    hThread;
   int status;
 
   assert(lock != NULL);
@@ -371,7 +398,7 @@ THREADS_RUN_TIME_API  ZINT
 primitive_wait_for_recursive_lock(CONTAINER *lock)
 {
   RECURSIVELOCK  *rlock;
-  HANDLE       hThread;
+  pthread_t       hThread;
   int status;
 
   assert(lock != NULL);
@@ -424,7 +451,7 @@ primitive_wait_for_notification(CONTAINER *notif, CONTAINER *lock)
 {
   NOTIFICATION  *notification;
   SIMPLELOCK  *slock;
-  HANDLE hThread;
+  pthread_t    hThread;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -464,7 +491,7 @@ primitive_wait_for_simple_lock_timed(CONTAINER *lock, ZINT zmilsecs)
   int sleeptime = 100;
   int status;
   SIMPLELOCK  *slock;
-  HANDLE       hThread;
+  pthread_t    hThread;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
@@ -510,7 +537,7 @@ primitive_wait_for_recursive_lock_timed(CONTAINER *lock, ZINT zmilsecs)
   int sleeptime = 100;
   int status;
   RECURSIVELOCK  *rlock;
-  HANDLE       hThread;
+  pthread_t       hThread;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
@@ -593,7 +620,7 @@ primitive_wait_for_notification_timed(CONTAINER *notif, CONTAINER *lock,
 {
   NOTIFICATION  *notification;
   SIMPLELOCK  *slock;
-  HANDLE hThread;
+  pthread_t hThread;
   struct timespec timespec;
   int status, milsecs, secs;
 
@@ -647,7 +674,7 @@ THREADS_RUN_TIME_API  ZINT
 primitive_release_simple_lock(CONTAINER *lock)
 {
   SIMPLELOCK  *slock;
-  HANDLE hThread;
+  pthread_t hThread;
   int status;
 
   assert(lock != NULL);
@@ -675,7 +702,7 @@ THREADS_RUN_TIME_API  ZINT
 primitive_release_recursive_lock(CONTAINER *lock)
 {
   RECURSIVELOCK  *rlock;
-  HANDLE hThread;
+  pthread_t hThread;
   int status;
 
   assert(lock != NULL);
@@ -727,7 +754,7 @@ primitive_release_notification(CONTAINER *notif, CONTAINER *lock)
 {
   NOTIFICATION * notification;
   SIMPLELOCK   * slock;
-  HANDLE hThread;
+  pthread_t hThread;
   int      owned;
 
   assert(notif != NULL);
@@ -760,7 +787,7 @@ primitive_release_all_notification(CONTAINER *notif, CONTAINER *lock)
 {
   NOTIFICATION * notification;
   SIMPLELOCK   * slock;
-  HANDLE hThread;
+  pthread_t hThread;
   int      owned;
 
   assert(notif != NULL);
@@ -808,11 +835,7 @@ primitive_make_recursive_lock(CONTAINER *lock, D_NAME name)
 
   res = pthread_mutexattr_init(&attr);
   if(res != 0) return GENERAL_ERROR;
-#ifdef PTHREAD_MUTEX_ERRORCHECK_NP
-  res = pthread_mutexattr_setkind_np(&attr, PTHREAD_MUTEX_ERRORCHECK_NP);
-#else
-  res = pthread_mutexattr_setkind_np(&attr, PTHREAD_MUTEX_ERRORCHECK);
-#endif
+  res = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_ERRORCHECK);
   if(res != 0) return GENERAL_ERROR;
   res = pthread_mutex_init(&rlock->mutex, &attr);
   if(res != 0) return GENERAL_ERROR;
@@ -864,11 +887,7 @@ primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
 
   res = pthread_mutexattr_init(&attr);
   if(res != 0) return GENERAL_ERROR;
-#ifdef PTHREAD_MUTEX_ERRORCHECK_NP
-  res = pthread_mutexattr_setkind_np(&attr, PTHREAD_MUTEX_ERRORCHECK_NP);
-#else
-  res = pthread_mutexattr_setkind_np(&attr, PTHREAD_MUTEX_ERRORCHECK);
-#endif
+  res = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_ERRORCHECK);
   if(res != 0) return GENERAL_ERROR;
   res = pthread_mutex_init(&slock->mutex, &attr);
   if(res != 0) return GENERAL_ERROR;
@@ -903,7 +922,7 @@ primitive_destroy_simple_lock(CONTAINER *lock)
 THREADS_RUN_TIME_API  ZINT
 primitive_owned_simple_lock(CONTAINER *lock)
 {
-  HANDLE     hThread;
+  pthread_t    hThread;
   SIMPLELOCK  *slock;
 
   assert(lock != NULL);
@@ -923,7 +942,7 @@ primitive_owned_simple_lock(CONTAINER *lock)
 THREADS_RUN_TIME_API  ZINT
 primitive_owned_recursive_lock(CONTAINER *lock)
 {
-  HANDLE      hThread;
+  pthread_t       hThread;
   RECURSIVELOCK  *rlock;
 
   assert(lock != NULL);
@@ -1107,7 +1126,7 @@ primitive_allocate_thread_variable(Z value)
 
 /* Grow all TLV vectors
  */
-void grow_all_tlv_vectors(newsize)
+void grow_all_tlv_vectors(int newsize)
 {
   TLV_VECTOR_LIST list;
   TLV_VECTOR new_default;
@@ -1222,7 +1241,7 @@ primitive_write_thread_variable(void *variable_handle, Z new_value)
   int        offset;
 
   // If another thread is growing the TLV vectors, wait till it's finished
-  if (internal_InterlockedIncrement((LPLONG)(&tlv_writer_counter)) < 0)
+  if (internal_InterlockedIncrement(&tlv_writer_counter) < 0)
     primitive_write_thread_variable_internal();
 
   // The variable handle is the byte offset where the variable's value is
@@ -1233,7 +1252,7 @@ primitive_write_thread_variable(void *variable_handle, Z new_value)
   *destination = new_value;
 
   // Indicate that the write has finished
-  internal_InterlockedDecrement((LPLONG)(&tlv_writer_counter));
+  internal_InterlockedDecrement(&tlv_writer_counter);
 
   return(new_value);
 }
@@ -1242,20 +1261,18 @@ primitive_write_thread_variable(void *variable_handle, Z new_value)
 THREADS_RUN_TIME_API  void
 primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
 {
-  HANDLE      hThread, hProcess;
-  HANDLE  *   events;
+  pthread_t   hThread;
   TLV_VECTOR  tlv_vector;
   Z          *destination;
   int         size;
 
+  /* @@@@#!"£$ no support for "synchronized" threads */
+  assert(thread != NULL);
+
   // race conditions mean handle may not be set up yet by father thread in pthread_create,
   // so do it here explicitly.
-  thread->handle1 = (HANDLE)pthread_self();
-
-  /* @@@@#!"£$ no support for "synchronized" threads */
-
-  assert(thread != NULL);
-  hThread = thread->handle1;
+  hThread = pthread_self();
+  thread->handle1 = (HANDLE)hThread;
 
   // Put the thread object and handle in the TEB for later use
   set_current_thread(thread);
@@ -1292,8 +1309,6 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
 THREADS_RUN_TIME_API  void
 primitive_initialize_special_thread(DTHREAD *thread)
 {
-  HANDLE  hProcess;
-
   assert(thread != NULL);
 
   // Do we need to initialise?
@@ -1317,7 +1332,6 @@ THREADS_RUN_TIME_API  ZINT
 primitive_unlock_simple_lock(CONTAINER *lock)
 {
   SIMPLELOCK *slock;
-  LONG    junk;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
@@ -1336,7 +1350,6 @@ THREADS_RUN_TIME_API  ZINT
 primitive_unlock_recursive_lock(CONTAINER *lock)
 {
   RECURSIVELOCK *rlock;
-  LONG           junk;
   ZINT res;
 
   assert(lock != NULL);
@@ -1379,7 +1392,7 @@ void initialize_threads_primitives()
  * Assumes the thread vector has already been initialised.
  */
 void
-add_tlv_vector(HANDLE hThread, TLV_VECTOR tlv_vector)
+add_tlv_vector(pthread_t hThread, TLV_VECTOR tlv_vector)
 {
   TLV_VECTOR_LIST new_element = MMAllocMisc(linksize);
 
@@ -1402,7 +1415,7 @@ add_tlv_vector(HANDLE hThread, TLV_VECTOR tlv_vector)
  * removes the thread from the list of active threads.
  */
 int
-remove_tlv_vector(HANDLE hThread)
+remove_tlv_vector(pthread_t hThread)
 {
   TLV_VECTOR_LIST last, current;
 
@@ -1447,87 +1460,4 @@ remove_tlv_vector(HANDLE hThread)
   // Reached the end of the list without finding thread's entry
   pthread_mutex_unlock(&tlv_vector_list_lock);
   return(1);
-}
-
-
-/*  We implement our own versions of InterlockedIncrement, InterlockedDecrement
- *  and InterlockedCompareExchange for efficiency reasons, and also because
- *  InterlockedCompareExchange is not available in Windows 95.
- */
-
-/* Increment the 32-bit value pointed to by var. Prevents other threads from
- * using the value simultaneously.
- * Returns: zero if the result of the increment was 0
- *      a value less than zero if the result of the increment was < 0
- *      a value greater than zero if the result of the increment was > 0
- */
-LONG internal_InterlockedIncrement(LPLONG var)
-{
-#if defined(X86_LINUX_PLATFORM)
-__asm__(
-    "movl          %0,%%ecx\n\t"
-    "movl          $0x00000001,%%eax\n\t"
-    "lock          \n\t"
-    "xaddl         %%eax,0x0(%%ecx)\n\t"
-    "incl          %%eax\n"
-
-      // output operands
-      :
-      // input operands
-      : "g" (var)
-      // clobbered machine registers
-      : "ax", "cx"
-  );
-#endif
-}
-
-/* Decrement the 32-bit value pointed to by var. Prevents other threads from
- * using the value simultaneously
- * Returns: zero if the result of the decrement was 0
- *      a value less than zero if the result was < 0
- *      a value greater than zero if the result was > 0
- */
-LONG internal_InterlockedDecrement(LPLONG var)
-{
-#if defined(X86_LINUX_PLATFORM)
-__asm__(
-    "movl          %0,%%ecx\n\t"
-    "movl          $0xffffffff,%%eax\n\t"
-    "lock          \n\t"
-    "xaddl         %%eax,0x0(%%ecx)\n\t"
-    "decl          %%eax\n"
-
-    // output operands
-    :
-    // input operands
-    : "g" (var)
-    // clobbered machine registers
-    : "ax", "cx"
-  );
-#endif
-}
-
-/* Atomically compares the destination and compare values, and stores the
- * exchange value in the destination if they are equal (otherwise does
- * nothing). Returns the initial value of the destination.
- */
-PVOID internal_InterlockedCompareExchange(PVOID *destination, PVOID exchange,
-                                          PVOID compare)
-{
-#if defined(X86_LINUX_PLATFORM)
-__asm__(
-    "movl             %0,%%ecx\n\t"
-    "movl             %1,%%edx\n\t"
-    "movl             %2,%%eax\n\t"
-    "lock             \n\t"
-    "cmpxchgl         %%edx,0x0(%%ecx)\n"
-
-    // output operands
-    :
-    // input operands
-    : "g" (destination), "g" (exchange), "g" (compare)
-    // clobbered machine registers
-    : "ax", "cx", "dx"
-  );
-#endif
 }

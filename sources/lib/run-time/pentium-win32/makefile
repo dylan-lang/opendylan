@@ -30,15 +30,9 @@ cdebug = /G5 /O2 /Ob2 /Oy- /Oi /Z7 /DNDEBUG
 cvarsmt = $(noansi) -D_MT -MT
 !endif
 
-!if defined(gen0freq)
-mmtuneflags = /DTUNE_GEN0_FREQ=$(gen0freq)
-!else
-mmtuneflags = 
-!endif
-
 CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
-CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM)\code $(OPEN_DYLAN_C_FLAGS) $(mmtuneflags)
+CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM)\code $(OPEN_DYLAN_C_FLAGS)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
 OBJS	 = collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
 LIBFILE	 = pentium-run-time.lib
@@ -50,10 +44,6 @@ RUNTIMELIBDEST	 = $(LIBDEST)\pentium-run-time.lib
 MMDWDEST	 = $(LIBDEST)\mmdw.lib
 PLINTHDEST	 = $(LIBDEST)\mpsplinth.lib
 MINCRTDEST	 = $(LIBDEST)\minvcrt.lib
-BOEHMGCDEST	 = $(BINDEST)\gc.dll
-
-BOEHMOBJS	 = boehm-collector.obj $(HEAPOBJS) runtime.obj win32-threads-primitives.obj spy-interfaces.obj
-BOEHMLIBFILE	 = boehm-pentium-run-time.lib
 
 RELEASEMMDW     = $(SDK4MEMORY_POOL_SYSTEM)\code\w3i3mv\hi\mmdw.lib
 RELEASEPLINTH	  = $(SDK4MEMORY_POOL_SYSTEM)\code\w3i3mv\hi\mpsplan.lib
@@ -69,9 +59,6 @@ DYLANPLINTH      = dylan-plinth.lib
 
 collector.obj: ..\collector.c
 	$(CC) $(CFLAGS) /c ..\collector.c
-
-boehm-collector.obj:	..\boehm-collector.c ..\collector.c
-	$(CC) $(CFLAGS) /c ..\boehm-collector.c
 
 !if defined(fullcrt)
 $(MINCRT):
@@ -90,9 +77,6 @@ $(DYLANPLINTH): $(PLINTHOBJS)
 $(LIBFILE): $(OBJS)
 	$(LINKLIB)$(LIBFILE) $(OBJS)
 
-$(BOEHMLIBFILE): $(BOEHMOBJS)
-	$(LINKLIB)$(BOEHMLIBFILE) $(BOEHMOBJS) gc.lib
-
 $(USERLIB): $(USEROBJ)
 	$(LINKLIB)$(USERLIB) $(USEROBJ)
 
@@ -105,8 +89,6 @@ install-build:
 	xcopy /i/q ..\..\..\jamfiles\*.jam $(LIBDEST)
 	if not exist $(LIBDEST)\x86-win32-build.jam copy $(LIBDEST)\x86-win32-vc6-build.jam $(LIBDEST)\x86-win32-build.jam
 	if not exist $(LIBDEST)\dylan-support.obj copy dylan-support.obj $(LIBDEST)
-	if not exist $(LIBDEST)\dylanpe.script copy dylanpe.script $(LIBDEST)
-	if not exist $(BINDEST)\make-reloc.exe copy make-reloc.exe $(BINDEST)
 
 install-userlib: $(USERLIB)
   echo Building pentium run time: install-userlib
@@ -118,12 +100,6 @@ install-runtime: $(LIBFILE)
   echo Building pentium run time: install-runtime
 	pushd $(LIBDEST) & (del /q /f $(LIBFILE)) & popd
 	copy $(LIBFILE) $(LIBDEST)
-
-install-boehm-runtime: $(BOEHMLIBFILE)
-  echo Building pentium run time: install-boehm-runtime
-	if exist $(RUNTIMELIBDEST) del /q /f $(RUNTIMELIBDEST)
-	copy $(BOEHMLIBFILE) $(RUNTIMELIBDEST)
-	copy gc.dll $(BOEHMGCDEST)
 
 install-dylan-plinth: $(DYLANPLINTH)
   echo Building pentium run time: install-dylan-plinth
@@ -181,12 +157,6 @@ install-stripped: ensure-dirs install-mmdw install-runtime install-common-libs
 install-debug: ensure-dirs install-debug-mmdw install-runtime install-common-libs
 
 install-symbolic: ensure-dirs install-symbolic-mmdw install-runtime install-common-libs
-
-install-boehm: ensure-dirs install-mmdw install-boehm-runtime install-common-libs
-
-install-boehm-debug: ensure-dirs install-debug-mmdw install-boehm-runtime install-common-libs
-
-install-boehm-symbolic: ensure-dirs install-symbolic-mmdw install-boehm-runtime install-common-libs
 
 
 install: ensure-dirs install-stripped install-build
