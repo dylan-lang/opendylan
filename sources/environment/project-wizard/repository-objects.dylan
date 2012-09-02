@@ -249,7 +249,7 @@ define function repository-as-choices
     ()
  => (choices :: <vector> /* of: <choice> */)
   let choices = make-repository-choices($project-library-groups);
-  // Include the Core group by default to get the (functional-)dylan library!
+  // Include the Core group by default to get the dylan library!
   let core-group = find-repository-choice(choices, #"core");
   core-group.choice-included? := #t;
   choices
