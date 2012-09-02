@@ -72,7 +72,7 @@ $(MPS_LIB)/mmdw.a:
 	(cd $(MPS_ROOT)/code; $(MPS_MAKE) -f $(MPS_PLATFORM).gmk mmdw.a)
 
 $(MPS_LIB)/mpsplan.a:
-	(cd $(MPS_ROOT)/code; $(MPS_MAKE) -f $(MPS_PLATFORM) mpsplan.a)
+	(cd $(MPS_ROOT)/code; $(MPS_MAKE) -f $(MPS_PLATFORM).gmk mpsplan.a)
 
 $(RUNTIMELIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a $(RUNTIMELIBDEST)
 	cp -fp $(MPS_LIB)/mpsplan.a $(LIBDEST)/libmpsplan.a
