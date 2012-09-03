@@ -37,7 +37,7 @@ end method dispatch-event;
 define pane <event-recording-pane> ()
   pane event-column (pane)
     make(<column-layout>);
-  layout (pane)
+  layout (frame)
     scrolling ()
       frame.event-column
     end;

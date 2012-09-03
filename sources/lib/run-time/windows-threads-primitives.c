@@ -1,5 +1,5 @@
 /*
- * File:    win32-threads-primitives.c
+ * File:    windows-threads-primitives.c
  * Author:  Keith Dennison
  * Copyright: 1996 Functional Objects, Inc. All rights reserved.
  *
@@ -24,7 +24,7 @@
 #include <sys/types.h>
 #include <windows.h>
 
-#include "win32-threads-primitives.h"
+#include "windows-threads-primitives.h"
 
 
 /*****************************************************************************/

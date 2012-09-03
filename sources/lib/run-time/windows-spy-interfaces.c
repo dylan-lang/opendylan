@@ -1,5 +1,5 @@
 /* ********************************************************************* */
-/* ** spy-interfaces.c                                                ** */
+/* ** windows-spy-interfaces.c                                        ** */
 /* ** Implementations of C Spy functions, callable by the debugger.   ** */
 /* ** --------------------------------------------------------------- ** */
 /* ** Author: Paul Howard                                             ** */
