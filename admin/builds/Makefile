@@ -224,7 +224,6 @@ PARSER_RUN_TIME_SOURCE = $(LIB_DIRECTORY)\parser-run-time
 PENTE_SOURCE = $(DUIM_EXAMPLES_SOURCE)\pente
 PENTE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\pente
 RUN_TIME_SOURCE = $(LIB_DIRECTORY)\run-time
-PENTIUM_RUN_TIME_SOURCE = $(LIB_DIRECTORY)\run-time\pentium-win32
 PLONKER_SOURCE = $(APP_DIRECTORY)\plonker
 PLONKER_INSTALL_DIRECTORY = $(MIDI_EXAMPLES_INSTALL_DIRECTORY)\plonker
 PPML_SOURCE = $(LIB_DIRECTORY)\ppml
@@ -1182,17 +1181,17 @@ duim-sources:
 #
 
 mm-pentium-run-time:
-  $(ENSURE_SOURCES) pentium-run-time $(PENTIUM_RUN_TIME_SOURCE)
+  $(ENSURE_SOURCES) pentium-run-time $(RUN_TIME_SOURCE)
   echo Building pentium run time [$(PENTIUM_RUNTIME_OPTIONS)]
-  pushd $(PENTIUM_RUN_TIME_SOURCE) \
-    & $(MAKE) $(PENTIUM_RUNTIME_OPTIONS) install /f makefile > $(BUILD_LOGS)\make-pentium-run-time.log \
+  pushd $(RUN_TIME_SOURCE) \
+    & $(MAKE) $(PENTIUM_RUNTIME_OPTIONS) install /f Makefile.win32 > $(BUILD_LOGS)\make-pentium-run-time.log \
     & popd
 
 boehm-pentium-run-time:
-  $(ENSURE_SOURCES) pentium-run-time $(PENTIUM_RUN_TIME_SOURCE)
+  $(ENSURE_SOURCES) pentium-run-time $(RUN_TIME_SOURCE)
   echo Building pentium run time (Boehm GC)
-  pushd $(PENTIUM_RUN_TIME_SOURCE) \
-    & $(MAKE) install-boehm /f makefile > $(BUILD_LOGS)\make-boehm-pentium-run-time.log \
+  pushd $(RUN_TIME_SOURCE) \
+    & $(MAKE) install-boehm /f Makefile.win32 > $(BUILD_LOGS)\make-boehm-pentium-run-time.log \
     & popd
 
 $(PENTIUM_RUN_TIME): mm-pentium-run-time
