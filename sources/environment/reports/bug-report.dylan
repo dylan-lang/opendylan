@@ -126,24 +126,12 @@ define method write-bug-report-section
             (title :: <string>, value :: <string>)
           add!(properties, pair(title, value))
         end method record-property;
-  let os-variant
-    = select ($os-variant)
-        #"darwin"  => "Mac OS X";
-        #"freebsd" => "FreeBSD";
-        #"linux"   => "Linux";
-        #"winxp"   => "Windows XP";
-        #"win2000" => "Windows 2000";
-        #"winnt"   => "Windows NT";
-        #"win95"   => "Windows 95";
-        #"win98"   => "Windows 98";
-        #"winme"   => "Windows ME";
-        #"win3.1"  => "Windows 3.1"
-      end;
+  let os-variant-name = os-variant-to-name($os-variant);
   record-property("Software edition", release-product-name());
   record-property("Software version", release-version());
   record-property("Operating system",
                   format-to-string("%s %s",
-                                   os-variant, $os-version));
+                                   os-variant-name, $os-version));
   write-bug-report-names-and-values
     (stream, report, map(head, properties), map(tail, properties),
      name-suffix: ": ")
@@ -429,24 +417,12 @@ define method write-html-bug-report-section
             (title :: <string>, value :: <string>)
           add!(properties, pair(title, value))
         end method record-property;
-  let os-variant
-    = select ($os-variant)
-        #"darwin"  => "Mac OS X";
-        #"freebsd" => "FreeBSD";
-        #"linux"   => "Linux";
-        #"winxp"   => "Windows XP";
-        #"win2000" => "Windows 2000";
-        #"winnt"   => "Windows NT";
-        #"win95"   => "Windows 95";
-        #"win98"   => "Windows 98";
-        #"winme"   => "Windows ME";
-        #"win3.1"  => "Windows 3.1"
-      end;
+  let os-variant-name = os-variant-to-name($os-variant);
   record-property("Software edition", release-product-name());
   record-property("Software version", release-version());
   record-property("Operating system",
                   format-to-string("%s %s",
-                                   os-variant, $os-version));
+                                   os-variant-name, $os-version));
   write-html-bug-report-names-and-values
     (stream, report, map(head, properties), map(tail, properties),
      name-suffix: ": ")
@@ -791,3 +767,22 @@ define method compute-bug-report-objects
     end
   end
 end method compute-bug-report-objects;
+
+define function os-variant-to-name (os-variant) => (name :: <string>)
+  select (os-variant)
+    #"darwin"     => "Mac OS X";
+    #"freebsd"    => "FreeBSD";
+    #"linux"      => "Linux";
+    #"winunknown" => "Windows (Unknown)";
+    #"win8"       => "Windows 8";
+    #"win7"       => "Windows 7";
+    #"winvista"   => "Windows Vista";
+    #"winxp"      => "Windows XP";
+    #"win2000"    => "Windows 2000";
+    #"winnt"      => "Windows NT";
+    #"win95"      => "Windows 95";
+    #"win98"      => "Windows 98";
+    #"winme"      => "Windows ME";
+    #"win3.1"     => "Windows 3.1"
+  end;
+end function os-variant-to-name;

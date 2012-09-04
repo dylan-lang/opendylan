@@ -115,7 +115,7 @@ void force_reference_to_spy_interface()
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
 #include "unix-types.h"
 #else
-#include "win32-types.h"
+#include "windows-types.h"
 #endif
 
 #include "mpscawl.h"    /* MPS pool class AWL */

@@ -14,7 +14,7 @@
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
 #include "unix-types.h"
 #else
-#include "win32-types.h"
+#include "windows-types.h"
 #endif
 
 

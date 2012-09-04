@@ -1,5 +1,5 @@
 /*
- *  File:     win32-threads-primitives.h
+ *  File:     windows-threads-primitives.h
  *  Created:  4th September 1995
  *  Author:   Rod Moyse, Keith Dennison
  *  Copyright 1995, 1996 Functional Objects, Inc. All rights reserved.

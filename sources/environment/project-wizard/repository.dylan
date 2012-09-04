@@ -38,8 +38,7 @@ begin
   make(<project-library-group>,
        id: #"core",
        libraries: #[#(#"dylan"),
-		    #(#"functional-extensions"),
-		    #"functional-dylan"],
+		    #"common-dylan"],
        documentation: "Basic Dylan language and extension libraries");
 
   make(<project-library-group>,
@@ -184,36 +183,18 @@ begin
   
   // Doc volume: "Core Features and Mathematics".
   make(<project-library>,
-       id: #"functional-extensions",
-       modules: #[#"functional-extensions",
+       id: #"common-dylan",
+       modules: #[#"common-dylan",
+		  #"dylan",
+		  #(#"common-extensions"),
 		  // from 'dylan'
 		  #(#"finalization"),
-		  // from 'functional-extensions'
-		  #"simple-format",
-		  #(#"simple-random"),
-		  // from respective libraries
-		  #(#"byte-vector"),
-		  #(#"machine-word"),
 		  #"threads",
-		  #(#"transcendentals")],
-       documentation: format-to-string("Dylan language and %s language extensions",
-                                       release-product-name()));
-
-  // Doc volume: "Core Features and Mathematics".
-  make(<project-library>,
-       id: #"functional-dylan",
-       modules: #[#"functional-dylan",
-		  #(#"dylan"),
-		  #(#"functional-extensions"),
-		  // from 'dylan'
-		  #(#"finalization"),
-		  // from 'functional-extensions'
-		  #"simple-format",
+		  // from 'common-extensions'
+		  #"simple-io",
 		  #(#"simple-random"),
-		  // from respective libraries
 		  #(#"byte-vector"),
-		  #(#"machine-word"),
-		  #"threads",
+		  #(#"machine-words"),
 		  #(#"transcendentals")],
        documentation: format-to-string("Dylan language and %s language extensions",
                                        release-product-name()));
@@ -315,6 +296,7 @@ begin
        modules: #[#"format",
 		  #"format-out",
 		  #(#"print"),
+		  #(#"pprint"),
 		  #"standard-io",
 		  #"streams"],
        documentation: "Input-output facilities");
