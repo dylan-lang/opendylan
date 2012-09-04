@@ -216,11 +216,11 @@ end test;
 define test type-for-copy-class-0 ()
   check-equal("", type-for-copy(3), object-class(3));
   check-equal("", deque-instance().type-for-copy, deque-instance().object-class);
-  check-equal("", complex-instance().type-for-copy(), complex-instance().object-class());
-  check-equal("", stretchy-vector-instance().type-for-copy, 
-        stretchy-vector-instance().object-class);
-    check-equal("", vector().type-for-copy,
-	     vector().object-class);
+  check-equal("", complex-instance().type-for-copy, complex-instance().object-class);
+  check-equal("",
+              stretchy-vector-instance().type-for-copy, 
+              stretchy-vector-instance().object-class);
+  check-equal("", vector().type-for-copy, vector().object-class);
 end test;
 
 // type-for-copy of all sequences should be a subclass of <sequence>
@@ -232,20 +232,19 @@ end test;
 // type-for-copy3 should probably be extended to test all implementation-specific collections.
 
 define test type-for-copy-class-1 ()
-  check-true("", every?
-	       (rcurry(subtype?, <sequence>),
-		map(compose(type-for-copy, make),
-		    list(<vector>,
-			 <stretchy-vector>,
-			 <string>,
-			 <deque>,
-			 <range>,
-			 <simple-object-vector>,
-			 <unicode-string>,
-			 <byte-string>,
-			 <list>,
-			 <pair>,
-			 <empty-list>))));
+  check-true("", every?(rcurry(subtype?, <sequence>),
+                        map(compose(type-for-copy, make),
+                            list(<vector>,
+                                 <stretchy-vector>,
+                                 <string>,
+                                 <deque>,
+                                 <range>,
+                                 <simple-object-vector>,
+                                 <unicode-string>,
+                                 <byte-string>,
+                                 <list>,
+                                 <pair>,
+                                 <empty-list>))));
 end test;
 
 // type-for-copy of all explicit-key-collections should be a subclass
@@ -325,39 +324,36 @@ define test limited-integers ()
 end test;
 
 define test limited-collections-1 ()
-  check-true("", every?
-    (method (cc)
-       instance?(cc.limited, <type>)
-     end method,
-     list(<table>,
-          <array>,
-          <vector>,
-          <stretchy-vector>,
-          <string>,
-          <deque>,
-          <range>)));
+  check-true("", every?(method (cc)
+                          instance?(cc.limited, <type>)
+                        end method,
+                        list(<table>,
+                             <array>,
+                             <vector>,
+                             <stretchy-vector>,
+                             <string>,
+                             <deque>,
+                             <range>)));
 end test;
 
 define test limited-collections-2 ()
-  check-true("", every?
-    (method (cc)
-       instance?(limited(cc, of: <integer>), <type>)
-     end method,
-     list(<table>,
-          <array>,
-          <vector>,
-          <stretchy-vector>,
-          <string>,
-          <deque>,
-          <range>)));
+  check-true("", every?(method (cc)
+                          instance?(limited(cc, of: <integer>), <type>)
+                        end method,
+                        list(<table>,
+                             <array>,
+                             <vector>,
+                             <stretchy-vector>,
+                             <string>,
+                             <deque>,
+                             <range>)));
 end test limited-collections-2;
 
 define test limited-collections-3 ()
-  check-true("", every?
-    (method (cc)
-       instance?(limited(cc, size: 10), <type>)
-     end method,
-     list(<array>, <vector>, <string>, <range>)));
+  check-true("", every?(method (cc)
+                          instance?(limited(cc, size: 10), <type>)
+                        end method,
+                        list(<array>, <vector>, <string>, <range>)));
 end test;
 
 define test limited-collections ()
