@@ -80,24 +80,11 @@ end method always-99;
 
 define class <dtest-test-class> (<object>)
   slot s;
-  slot s1, init-value: 99, init-keyword: s1:;
   slot s2, init-function: always-99;
 end class <dtest-test-class>;
 
 define class <dtest-test-subclass> (<dtest-test-class>)
-  slot s0;
 end class <dtest-test-subclass>;
-
-define method mutable-explicit-key-collection ()
-  list(<mutable-explicit-key-collection>,
-       <explicit-key-collection>,
-       <mutable-collection>,
-       <collection>)
-end method mutable-explicit-key-collection;
-
-define method mutable-sequence ()
-  list(<mutable-sequence>, <mutable-collection>, <sequence>, <collection>)
-end method mutable-sequence;
 
 // A caller in test-class.dylan explicitly wants to compare sequences
 // using the iteration protocol rather than via 'element'.  --cgay Aug 2012
