@@ -1,7 +1,24 @@
 #include "heap-utils.h"
 
 #include <math.h>
+#include <stdlib.h>
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+#include <signal.h>
+#endif
 
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+void *alloc_obj(size_t size)
+{
+  return malloc(size);
+}
+
+void free_obj(void *obj, size_t size)
+{
+  (void)size;
+
+  free(obj);
+}
+#else
 static HANDLE process_heap = 0;
 
 void *alloc_obj(size_t size)
@@ -18,9 +35,7 @@ void free_obj(void *obj, size_t size)
 {
   HeapFree(process_heap, 0, obj);
 }
-
-
-
+#endif
 
 void report_message (char* message)
 {
@@ -44,7 +59,11 @@ void report_break (char* message)
   mps_lib_fputs("Break to debugger:\n    ", stream);
   mps_lib_fputs(message, stream);
   mps_lib_fputc('\n', stream);
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+  raise(SIGTRAP);
+#else
   DebugBreak();
+#endif
 }
 
 
