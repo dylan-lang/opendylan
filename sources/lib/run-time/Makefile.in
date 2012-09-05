@@ -45,7 +45,13 @@ CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
 OBJS		= $(OBJDIR)/unix-collector.o \
 		  $(OBJDIR)/unix-threads-primitives.o \
 		  $(OBJDIR)/unix-spy-interfaces.o \
-		  $(OBJDIR)/unix-support.o
+		  $(OBJDIR)/unix-support.o \
+		  $(OBJDIR)/heap-display.o \
+		  $(OBJDIR)/heap-utils.o \
+		  $(OBJDIR)/heap-trail.o \
+		  $(OBJDIR)/heap-order1.o \
+		  $(OBJDIR)/heap-order2.o \
+		  $(OBJDIR)/heap-table.o
 
 HARP_RUNTIME_LIBRARY = $(OBJDIR)/libdylan-harp-runtime.a
 
