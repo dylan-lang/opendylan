@@ -1,15 +1,75 @@
 #define _GNU_SOURCE
 
+#include <assert.h>
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <pthread.h>
 
 void mps_lib_abort(void)
 { 
   fflush(stdout);
   abort();
+}
+
+/* HACK -- Implement GC_malloc and GC_free
+ *
+ * This should not be necessary as nobody should be
+ * calling them. But the date library (amongst others)
+ * currently does. Such libraries should be changed to call
+ * MMAllocMisc and MMFreeMisc instead - otherwise Dylan will
+ * never be able to interoperate with Boehm.
+ */
+
+#ifdef GC_USE_MPS
+extern void *mps__malloc(size_t size);
+extern void mps__free(size_t *old);
+
+void *GC_malloc(size_t size)
+{
+  return mps__malloc(size);
+}
+
+void GC_free(void *old)
+{
+  mps__free(old);
+}
+#endif
+
+/* Thread Local storage
+ *
+ * Implement this is C for invocatiuon by HARP, just in
+ * case the pthreads APIs are implemented as macros -
+ * (which they might be according to the doc).
+ */
+int tlv_create_key(void)
+{
+  pthread_key_t key;
+  int res = pthread_key_create(&key, NULL);
+  assert(res == 0);
+  return (int)key;
+}
+
+
+void tlv_destroy_key(int key)
+{
+  int res = pthread_key_delete((pthread_key_t)key);
+  assert(res == 0);
+}
+
+
+void *tlv_get_value(int key)
+{
+  return pthread_getspecific((pthread_key_t)key);
+}
+
+
+void tlv_set_value(int key, void *value)
+{
+  int res = pthread_setspecific((pthread_key_t)key, value);
+  assert(res == 0);
 }
 
 /* Support for Dylan timer primitives */
