@@ -147,7 +147,7 @@ int trace_object (mps_addr_t parent, object_tracer_t fn, void* env)
     } else if (fixform == 2) {  /* patterned */
       int patindex = 0;
       int seen = 0;
-      int pat;
+      int pat = 0;
       for (i = 1; i < fixlen; i++) {
         if (seen == 0) {
           pat = wrapper_pattern(wrapper, patindex);
