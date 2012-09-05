@@ -40,7 +40,7 @@ HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_PLATFORM_NAME)
 HARP_OBJS        = $(HARP_SUPPORT_DIR)/runtime.o \
                    $(HARP_SUPPORT_DIR)/dylan-support.o
 
-CFLAGS		= $(PLATFORM_CFLAGS) -O -g $(GC_CFLAGS) -I$(srcdir)
+CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
 
 OBJS		= $(OBJDIR)/unix-collector.o \
 		  $(OBJDIR)/unix-threads-primitives.o \
