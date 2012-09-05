@@ -1,5 +1,6 @@
 #include "heap-utils.h"
 
+#include <math.h>
 
 static HANDLE process_heap = 0;
 
