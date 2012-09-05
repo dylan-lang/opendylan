@@ -23,6 +23,7 @@
  */
 
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
+#define _GNU_SOURCE
 #define RUN_TIME_API
 #else
 #define RUN_TIME_API __declspec( dllexport )

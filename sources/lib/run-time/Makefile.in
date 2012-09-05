@@ -42,7 +42,7 @@ HARP_OBJS        = $(HARP_SUPPORT_DIR)/runtime.o \
 
 CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
 
-OBJS		= $(OBJDIR)/unix-collector.o \
+OBJS		= $(OBJDIR)/collector.o \
 		  $(OBJDIR)/unix-threads-primitives.o \
 		  $(OBJDIR)/unix-spy-interfaces.o \
 		  $(OBJDIR)/unix-support.o \
