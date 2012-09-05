@@ -17,9 +17,6 @@
 
 /* Controlling variables */
 
-/* if true then prompt for another  object/wrapper on each forced GC */
-static int prompt_before_checking_references = 0;  
-
 /* if true then prompt for another object/wrapper after following a trail */
 static int prompt_after_checking_references = 1; 
 
