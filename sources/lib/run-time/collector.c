@@ -149,6 +149,7 @@ typedef void*                         dylan_object;
                     MPS_RES_IO == MMIO)
 
 
+extern void mps_lib_abort(void);
 
 void report_runtime_error (char* header, char* message)
 {
