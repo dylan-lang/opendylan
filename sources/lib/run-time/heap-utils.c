@@ -219,11 +219,13 @@ void display_integer (int integer, mps_lib_FILE *stream)
       leading = 0;
       mps_lib_fputc('0' + digit, stream);
     };
-    if ((exponent == 6) || (exponent == 3))
+    if ((exponent == 6) || (exponent == 3)) {
       if (digit == 0) {
 	mps_lib_fputc(leading ? ' ' : ',', stream);
-      } else
+      } else {
 	mps_lib_fputc(',', stream);
+      }
+    }
   }
 }
 
