@@ -33,7 +33,7 @@ MPS_LIB         = $(MPS_ROOT)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
 
 CC = @CC@
 AS = as -L
-AR = ar -q
+AR = ar -rcs
 
 HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_PLATFORM_NAME)
 
@@ -47,9 +47,11 @@ OBJS		= $(OBJDIR)/unix-collector.o \
 		  $(OBJDIR)/unix-spy-interfaces.o \
 		  $(OBJDIR)/unix-support.o
 
+HARP_RUNTIME_LIBRARY = $(OBJDIR)/libdylan-harp-runtime.a
+
 RUNTIMELIBDEST   = $(LIBDEST)/runtime/harp-$(OPEN_DYLAN_PLATFORM_NAME)
 
-all: $(OBJS)
+all: $(OBJS) $(HARP_RUNTIME_LIBRARY)
 
 $(RUNTIMELIBDEST):
 	mkdir -p $(RUNTIMELIBDEST)
@@ -60,12 +62,6 @@ $(OBJDIR)/%.o: $(srcdir)/%.c
 
 linux-support.o:
 	$(CC) $(CFLAGS) -c -o $@ $<
-
-install-objs: $(OBJS) $(RUNTIMELIBDEST)
-	cp -fp $(OBJDIR)/unix-collector.o $(RUNTIMELIBDEST)/x86-linux-collector.o
-	cp -fp $(OBJDIR)/unix-threads-primitives.o $(RUNTIMELIBDEST)/x86-linux-threads-primitives.o
-	cp -fp $(OBJDIR)/unix-spy-interfaces.o $(RUNTIMELIBDEST)/linux-spy-interfaces.o
-	cp -fp $(OBJDIR)/unix-support.o $(RUNTIMELIBDEST)/linux-support.o
 
 $(MPS_LIB)/mmdw.a:
 	(cd $(MPS_ROOT)/code; $(MPS_MAKE) -f $(MPS_PLATFORM).gmk mmdw.a)
@@ -95,7 +91,13 @@ install-runtime-support: $(HARP_OBJS) $(RUNTIMELIBDEST)
 install-linker-scripts: $(RUNTIMELIBDEST) $(LIBDEST)/dylan-elf-dll.script \
 	$(LIBDEST)/dylan-elf-exe.script
 
-install: install-runtime-support install-linker-scripts install-mps install-objs
+$(HARP_RUNTIME_LIBRARY): $(OBJS) $(HARP_OBJS)
+	$(AR) $(HARP_RUNTIME_LIBRARY) $(OBJS) $(HARP_SUPPORT_DIR)/runtime.o
+
+install-archive-library: $(HARP_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
+	cp -fp $(HARP_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
+
+install: install-runtime-support install-linker-scripts install-mps install-archive-library
 
 clean:
 	rm -rf $(OBJDIR)
