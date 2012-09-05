@@ -140,13 +140,13 @@ typedef double                  double_float;
 typedef void*                         dylan_object;
 
 
-#define TARG_CHECK (MPS_RES_OK == MMSUCCESS && \
-                    MPS_RES_FAIL == MMFAILURE && \
-                    MPS_RES_RESOURCE == MMRESOURCE && \
-                    MPS_RES_MEMORY == MMRESMEM && \
-                    MPS_RES_LIMIT == MMLIMIT && \
-                    MPS_RES_UNIMPL == MMUNIMPLEMENTED && \
-                    MPS_RES_IO == MMIO)
+#define TARG_CHECK ((int)MPS_RES_OK == (int)MMSUCCESS && \
+                    (int)MPS_RES_FAIL == (int)MMFAILURE && \
+                    (int)MPS_RES_RESOURCE == (int)MMRESOURCE && \
+                    (int)MPS_RES_MEMORY == (int)MMRESMEM && \
+                    (int)MPS_RES_LIMIT == (int)MMLIMIT && \
+                    (int)MPS_RES_UNIMPL == (int)MMUNIMPLEMENTED && \
+                    (int)MPS_RES_IO == (int)MMIO)
 
 
 extern void mps_lib_abort(void);
