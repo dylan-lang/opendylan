@@ -27,6 +27,7 @@
 
 #include "unix-threads-primitives.h"
 
+#define ignore(x) (void)x
 
 /*****************************************************************************/
 /* GLOBAL VARIABLE DECLARATIONS                                              */
@@ -230,6 +231,8 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
   int    priority = (int)zpriority >> 2;
   int status;
   DTHREAD **newthread_ptr;
+
+  ignore(priority);
 
   newthread_ptr = (DTHREAD **)(dylan__malloc__ambig(4));
   newthread_ptr[0] = newthread;
@@ -755,7 +758,6 @@ primitive_release_notification(CONTAINER *notif, CONTAINER *lock)
   NOTIFICATION * notification;
   SIMPLELOCK   * slock;
   pthread_t hThread;
-  int      owned;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -788,7 +790,6 @@ primitive_release_all_notification(CONTAINER *notif, CONTAINER *lock)
   NOTIFICATION * notification;
   SIMPLELOCK   * slock;
   pthread_t hThread;
-  int      owned;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -966,6 +967,8 @@ primitive_make_semaphore(CONTAINER *lock, D_NAME name,
   SEMAPHORE  *semaphore;
   int   initial = zinitial >> 2;
   int   max   = zmax >> 2;
+
+  ignore(max);
 
   assert(lock != NULL);
   assert(IS_ZINT(zinitial));

@@ -19,8 +19,6 @@
   WaitForSingleObject(handle, milliseconds)
 #define set_EVENT(handle) \
   SetEvent(handle)
-#define reset_EVENT(handle) \
-  ResetEvent(handle)
 
 /* Console Interrupts */
 
