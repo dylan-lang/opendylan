@@ -11,9 +11,3 @@ DEB_CONFIGURE_PREFIX := /usr/lib/opendylan
 
 makebuilddir/opendylan::
 	./autogen.sh || true
-
-makebuilddir/mps::
-	make -C $(MPS_PATH)/code -f lii4gc.gmk mmdw.a mpsplan.a
-
-cleanbuilddir/mps::
-	make -C $(MPS_PATH)/code -f lii4gc.gmk clean

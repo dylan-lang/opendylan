@@ -90,26 +90,26 @@ AC_ARG_WITH(gc,
 AS_IF([test x$with_mps != x],
       [
         GC_CFLAGS="-DGC_USE_MPS -I${with_mps}/code"
-        GC_RTLIBS="-lmmdw -lmpsplan"
-        GC_MPS_ROOT="${with_mps}"
+        GC_CHOICE="mps"
       ]
 )
 AS_IF([test x$with_gc != x],
       [
         GC_CFLAGS="-DGC_USE_BOEHM -I${with_gc}/include"
         GC_LFLAGS="-L${with_gc}/lib -lgc"
+        GC_CHOICE="boehm"
       ]
 )
 AS_IF([test x${with_gc}x${with_mps} == xx],
       [
         GC_CFLAGS="-DGC_USE_BOEHM"
         GC_LFLAGS="-lgc"
+        GC_CHOICE="boehm"
       ]
 )
 AC_SUBST(GC_CFLAGS)
 AC_SUBST(GC_LFLAGS)
-AC_SUBST(GC_RTLIBS)
-AC_SUBST(GC_MPS_ROOT)
+AC_SUBST(GC_CHOICE)
 
 # for now, replace mps only in pentium-linux
 # gc is also replaced in sources/dfmc/c-run-time

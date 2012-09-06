@@ -12,24 +12,17 @@ OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
 OBJDIR          = obj-$(OPEN_DYLAN_PLATFORM_NAME)
 
 ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86-linux)
-  MPS_PLATFORM=lii4gc
-  MPS_MAKE=make
   PLATFORM_CFLAGS=-DGC_LINUX_THREADS=1 -D_REENTRANT=1 \
     -DOPEN_DYLAN_PLATFORM_LINUX -DOPEN_DYLAN_PLATFORM_UNIX
 endif
 ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86-freebsd)
-  MPS_PLATFORM=fri4gc
-  MPS_MAKE=gmake
   PLATFORM_CFLAGS=-D_REENTRANT=1 \
     -DOPEN_DYLAN_PLATFORM_FREEBSD -DOPEN_DYLAN_PLATFORM_UNIX
 endif
 
 GC_CFLAGS       = @GC_CFLAGS@
 GC_LFLAGS       = @GC_LFLAGS@
-
-MPS_ROOT        = @GC_MPS_ROOT@
-MPS_VARIANT     = hi
-MPS_LIB         = $(MPS_ROOT)/code/$(MPS_PLATFORM)/$(MPS_VARIANT)
+GC_CHOICE       = @GC_CHOICE@
 
 CC = @CC@
 AS = as -L
@@ -53,6 +46,10 @@ OBJS		= $(OBJDIR)/collector.o \
 		  $(OBJDIR)/heap-order2.o \
 		  $(OBJDIR)/heap-table.o
 
+ifeq ($(GC_CHOICE),mps)
+  OBJS += $(OBJDIR)/mps-dylan.o
+endif
+
 HARP_RUNTIME_LIBRARY = $(OBJDIR)/libdylan-harp-runtime.a
 
 RUNTIMELIBDEST   = $(LIBDEST)/runtime/harp-$(OPEN_DYLAN_PLATFORM_NAME)
@@ -68,22 +65,6 @@ $(OBJDIR)/%.o: $(srcdir)/%.c
 
 linux-support.o:
 	$(CC) $(CFLAGS) -c -o $@ $<
-
-$(MPS_LIB)/mmdw.a:
-	(cd $(MPS_ROOT)/code; $(MPS_MAKE) -f $(MPS_PLATFORM).gmk mmdw.a)
-
-$(MPS_LIB)/mpsplan.a:
-	(cd $(MPS_ROOT)/code; $(MPS_MAKE) -f $(MPS_PLATFORM).gmk mpsplan.a)
-
-$(RUNTIMELIBDEST)/libmpsplan.a: $(MPS_LIB)/mpsplan.a $(RUNTIMELIBDEST)
-	cp -fp $(MPS_LIB)/mpsplan.a $(LIBDEST)/libmpsplan.a
-	cp -fp $(MPS_LIB)/mpsplan.a $(RUNTIMELIBDEST)/libmpsplan.a
-
-$(RUNTIMELIBDEST)/libmmdw.a: $(MPS_LIB)/mmdw.a $(RUNTIMELIBDEST)
-	cp -fp $(MPS_LIB)/mmdw.a $(LIBDEST)/libmmdw.a
-	cp -fp $(MPS_LIB)/mmdw.a $(RUNTIMELIBDEST)/libmmdw.a
-
-install-mps: $(RUNTIMELIBDEST)/libmmdw.a $(RUNTIMELIBDEST)/libmpsplan.a
 
 $(LIBDEST)/dylan-elf-dll.script: $(HARP_SUPPORT_DIR)/dylan-elf-dll.script
 	cp -fp $(HARP_SUPPORT_DIR)/dylan-elf-dll.script $(LIBDEST)
@@ -103,7 +84,7 @@ $(HARP_RUNTIME_LIBRARY): $(OBJS) $(HARP_OBJS)
 install-archive-library: $(HARP_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
 	cp -fp $(HARP_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
 
-install: install-runtime-support install-linker-scripts install-mps install-archive-library
+install: install-runtime-support install-linker-scripts install-archive-library
 
 clean:
 	rm -rf $(OBJDIR)
