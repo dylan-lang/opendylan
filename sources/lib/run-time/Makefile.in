@@ -25,7 +25,6 @@ GC_LFLAGS       = @GC_LFLAGS@
 GC_CHOICE       = @GC_CHOICE@
 
 CC = @CC@
-AS = as -L
 AR = ar -rcs
 
 HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_PLATFORM_NAME)
@@ -62,9 +61,6 @@ $(RUNTIMELIBDEST):
 $(OBJDIR)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -MMD -c -o $@ $<
-
-linux-support.o:
-	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(LIBDEST)/dylan-elf-dll.script: $(HARP_SUPPORT_DIR)/dylan-elf-dll.script
 	cp -fp $(HARP_SUPPORT_DIR)/dylan-elf-dll.script $(LIBDEST)
