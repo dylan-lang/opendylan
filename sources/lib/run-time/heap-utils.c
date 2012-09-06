@@ -1,6 +1,24 @@
 #include "heap-utils.h"
 
+#include <math.h>
+#include <stdlib.h>
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+#include <signal.h>
+#endif
 
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+void *alloc_obj(size_t size)
+{
+  return malloc(size);
+}
+
+void free_obj(void *obj, size_t size)
+{
+  (void)size;
+
+  free(obj);
+}
+#else
 static HANDLE process_heap = 0;
 
 void *alloc_obj(size_t size)
@@ -17,9 +35,7 @@ void free_obj(void *obj, size_t size)
 {
   HeapFree(process_heap, 0, obj);
 }
-
-
-
+#endif
 
 void report_message (char* message)
 {
@@ -43,7 +59,11 @@ void report_break (char* message)
   mps_lib_fputs("Break to debugger:\n    ", stream);
   mps_lib_fputs(message, stream);
   mps_lib_fputc('\n', stream);
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+  raise(SIGTRAP);
+#else
   DebugBreak();
+#endif
 }
 
 
@@ -146,7 +166,7 @@ int trace_object (mps_addr_t parent, object_tracer_t fn, void* env)
     } else if (fixform == 2) {  /* patterned */
       int patindex = 0;
       int seen = 0;
-      int pat;
+      int pat = 0;
       for (i = 1; i < fixlen; i++) {
         if (seen == 0) {
           pat = wrapper_pattern(wrapper, patindex);
@@ -218,11 +238,13 @@ void display_integer (int integer, mps_lib_FILE *stream)
       leading = 0;
       mps_lib_fputc('0' + digit, stream);
     };
-    if ((exponent == 6) || (exponent == 3))
+    if ((exponent == 6) || (exponent == 3)) {
       if (digit == 0) {
 	mps_lib_fputc(leading ? ' ' : ',', stream);
-      } else
+      } else {
 	mps_lib_fputc(',', stream);
+      }
+    }
   }
 }
 

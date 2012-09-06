@@ -15,7 +15,9 @@ code) and a C back-end.
 The HARP back-end uses the Memory Pool System (MPS) from Ravenbrook,
 Limited to do its memory management.  The MPS is available from
 Ravenbrook at http://www.ravenbrook.com/project/mps/ and must be
-downloaded and built separately.
+downloaded and built separately. For now, you need to use the
+`mirror that we maintain on GitHub
+<https://github.com/datafueled/memory-pool-system/>`_.
 
 The C back-end uses Boehm-Demers-Weiser conservative C/C++ garbage
 collector, available at https://github.com/ivmai/bdwgc
@@ -104,58 +106,4 @@ Building the MPS
 ================
 
 This is not required anymore since it is part of building the runtime.
-
-Go to the 'code' subdirectory in the MPS sources and build the mmdw
-target:
-
-Windows::
-
-   nmake /k /f w3i3mv.nmk mmdw.lib
-
-Linux::
-
-  make -f lii4gc.gmk mmdw.a mpsplan.a
-
-  The actual makefile you use may differ depending on your platform.
-  See the readme.txt file in the MPS distribution for a list.
-
-  glibc >=2.3 and linux kernel >= 2.6 required
-
-  For MPS 1.106.2 I (cgay) encountered this problem on Ubuntu 7.10:
-  http://www.ravenbrook.com/project/mps/issue/job001637/ The solution
-  was to replace
-
-     #define _POSIX_C_SOURCE 1
-
-  with
-
-    #define _XOPEN_SOURCE 500
-
-  in both prmcli.h and pthrdext.c.  The comments in the above URL
-  weren't explicit about that.
-
-  For MPS 1.106.2 and 1.108.0 I (cgay) encountered this problem on
-  Ubuntu 11.04:
-
-    cc1: warnings being treated as errors
-    protlii3.c: In function ‘sigHandle’:
-    protlii3.c:115:3: error: case label is not an integer constant expression
-    protlii3.c:116:3: error: case label is not an integer constant expression
-    make[2]: *** [lii4gc/hi/protlii3.o] Error 1
-    make[1]: *** [target] Error 2
-    make: *** [mmdw.a] Error 2
-
-  To work around it edit gc.gmk to remove -Werror from CFLAGSCOMPILER.
-
-The main point to notice here is that you don't just build the default
-target, as described in the MPS documentation.  You must build
-mmdw.lib or mmdw.a instead.
-
-The above instructions use the ci, "cool internal" variant of the MPS
-on Windows. On Linux, MPS_VARIANT=hi is specified in
-opendylan/sources/lib/run-time/pentium-linux/Makefile.in.  The ci variant
-does quite a lot of sanity checks all over, which heavily impacts
-performance, up to a factor of three in total application runtime.  If
-you're looking for performance figures, use the hi, "hot internal", or
-even wi, "white-hot internal" releases.
 

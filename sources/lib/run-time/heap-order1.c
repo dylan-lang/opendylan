@@ -14,7 +14,6 @@ static int wrapper_preassignments;
 /*
 extern void *KLpairGYdylanVdylanW;
 extern void *KLsimple_object_vectorGYdylanVdylanW;
-*/
 
 static void preassign_wrapper (void* wrapper, int index)
 {
@@ -22,6 +21,7 @@ static void preassign_wrapper (void* wrapper, int index)
   wrapper_cursor++;
   wrapper_preassignments++;
 }
+*/
 
 void clear_wrapper_stats (void)
 {

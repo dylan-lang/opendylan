@@ -54,8 +54,7 @@ typedef long long            _int64;
 #endif
 #define create_EVENT(attributes, manualReset, initialState, Name) (HANDLE)100
 #define wait_for_EVENT(handle, milliseconds) EVENT_WAIT_SUCCESS
-#define set_EVENT(handle) TRUE
-#define reset_EVENT(handle) TRUE
+#define set_EVENT(handle) (void)TRUE
 
 /* Console Interrupts */
 

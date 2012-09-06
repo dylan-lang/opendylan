@@ -7,4 +7,3 @@ CC        ?= @CC@ ;
 CCFLAGS   ?= @CFLAGS@ ;
 GC_CFLAGS ?= @GC_CFLAGS@ ;
 GC_LFLAGS ?= @GC_LFLAGS@ ;
-GC_RTLIBS ?= @GC_RTLIBS@ ;

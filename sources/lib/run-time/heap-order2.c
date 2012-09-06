@@ -92,7 +92,7 @@ typedef struct ag_class_s {
 static ag_class_t wrapper_aggregation_class (void *wrapper)
 {
   ag_class_t agclass;
-  if (table_lookup(&agclass, wrapper_table, wrapper)) {
+  if (table_lookup((void**)&agclass, wrapper_table, wrapper)) {
     return agclass;
   } else {
     return (ag_class_t)wrapper;
@@ -354,7 +354,7 @@ static BOOL add_stats_for_object (mps_addr_t object, mps_addr_t parent,
 
         record_object_seen(object);
         
-        if (!table_lookup(&o2stats, stats_table, oclass)) {
+        if (!table_lookup((void**)&o2stats, stats_table, oclass)) {
           BOOL res;
           o2stats = order2_stats_create();
           res = table_define(stats_table, oclass, o2stats);
@@ -362,7 +362,7 @@ static BOOL add_stats_for_object (mps_addr_t object, mps_addr_t parent,
         }
         stats_update(o2stats, osize);
         
-        if (!table_lookup(&lstats, o2stats->table, pclass)) {
+        if (!table_lookup((void**)&lstats, o2stats->table, pclass)) {
           BOOL res;
           lstats = leaf_stats_create();
           res = table_define(o2stats->table, pclass, lstats);

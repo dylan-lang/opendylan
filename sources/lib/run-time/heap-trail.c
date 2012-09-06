@@ -17,9 +17,6 @@
 
 /* Controlling variables */
 
-/* if true then prompt for another  object/wrapper on each forced GC */
-static int prompt_before_checking_references = 0;  
-
 /* if true then prompt for another object/wrapper after following a trail */
 static int prompt_after_checking_references = 1; 
 
@@ -335,7 +332,7 @@ static void add_target_object (mps_addr_t obj)
 
 static void add_target_object_of_wrapper (mps_addr_t object, 
                                           mps_fmt_t format, mps_pool_t pool, 
-                                          void *wrapper, int p2)
+                                          void *wrapper, size_t p2)
 {
   void **found = (void**)object;
   void *found_wrapper = *found;
@@ -411,7 +408,7 @@ static BOOL trace_reference(mps_addr_t object, mps_addr_t parent,
 
 static void look_for_reference(mps_addr_t object, mps_fmt_t format, 
                                mps_pool_t pool, 
-                               void *p1, int p2)
+                               void *p1, size_t p2)
 {
   trace_object(object, trace_reference, NULL);
 }
