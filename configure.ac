@@ -91,6 +91,10 @@ AS_IF([test x$with_mps != x],
       [
         GC_CFLAGS="-DGC_USE_MPS -I${with_mps}/code"
         GC_CHOICE="mps"
+        old_CPPFLAGS=$CPPFLAGS
+        CPPFLAGS="-I${with_mps}/code"
+        AC_CHECK_HEADER([mps.h],[],[AC_MSG_ERROR([Incorrect path to MPS specified. Please make sure you specified an absolute path to the root MPS directory.])])
+        CPPFLAGS=$old_CPPFLAGS
       ]
 )
 AS_IF([test x$with_gc != x],
