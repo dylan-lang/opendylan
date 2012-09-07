@@ -1,6 +1,5 @@
 #include "heap-utils.h"
 
-#include <math.h>
 #include <stdlib.h>
 #ifdef OPEN_DYLAN_PLATFORM_UNIX
 #include <signal.h>
@@ -229,7 +228,6 @@ void display_integer (int integer, mps_lib_FILE *stream)
       return;
   }
   for (power = 10000000; power > 0; power = power / 10) {
-    int exponent = (int)(log10(power));
     int digit = remainder / power;
     remainder = remainder % power;
     if (digit == 0) {
@@ -238,7 +236,7 @@ void display_integer (int integer, mps_lib_FILE *stream)
       leading = 0;
       mps_lib_fputc('0' + digit, stream);
     };
-    if ((exponent == 6) || (exponent == 3)) {
+    if ((power == 1000000) || (exponent == 1000)) {
       if (digit == 0) {
 	mps_lib_fputc(leading ? ' ' : ',', stream);
       } else {
