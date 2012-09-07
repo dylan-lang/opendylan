@@ -95,6 +95,8 @@ AS_IF([test x$with_mps != x],
         CPPFLAGS="-I${with_mps}/code"
         AC_CHECK_HEADER([mps.h],[],[AC_MSG_ERROR([Incorrect path to MPS specified. Please make sure you specified an absolute path to the root MPS directory.])])
         CPPFLAGS=$old_CPPFLAGS
+        # This is to help catch people who haven't updated to the new MPS yet.
+        AC_CHECK_FILE([${with_mps}/code/lii4gc.gmk],[AC_MSG_ERROR([You have an old version of MPS and need to update.])],[])
       ]
 )
 AS_IF([test x$with_gc != x],
