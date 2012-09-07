@@ -236,7 +236,7 @@ void display_integer (int integer, mps_lib_FILE *stream)
       leading = 0;
       mps_lib_fputc('0' + digit, stream);
     };
-    if ((power == 1000000) || (exponent == 1000)) {
+    if ((power == 1000000) || (power == 1000)) {
       if (digit == 0) {
 	mps_lib_fputc(leading ? ' ' : ',', stream);
       } else {
