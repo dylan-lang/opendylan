@@ -10,15 +10,22 @@ AC_CONFIG_AUX_DIR(build-aux)
 
 srcdir=`(cd $srcdir; pwd)`
 
+SUPPORT_GC_MPS=no
+SUPPORT_GC_BOEHM=yes
+
 AC_CANONICAL_TARGET
 case $target in
   i*86-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=x86-linux;
-      RUNTIME_SOURCES=sources/lib/run-time
+      RUNTIME_SOURCES=sources/lib/run-time;
+      SUPPORT_GC_MPS=yes;
+      SUPPORT_GC_BOEHM=no
     ;;
   i*86-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=x86-freebsd;
-      RUNTIME_SOURCES=sources/lib/run-time
+      RUNTIME_SOURCES=sources/lib/run-time;
+      SUPPORT_GC_MPS=yes;
+      SUPPORT_GC_BOEHM=no
     ;;
   i*86-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
@@ -89,6 +96,11 @@ AC_ARG_WITH(gc,
 
 AS_IF([test x$with_mps != x],
       [
+        AS_IF([test x${SUPPORT_GC_MPS} == xno],
+          [
+            AC_MSG_ERROR([The platform that you are building for requires the Boehm GC.])
+          ]
+        )
         GC_CFLAGS="-DGC_USE_MPS -I${with_mps}/code"
         GC_CHOICE="mps"
         old_CPPFLAGS=$CPPFLAGS
@@ -101,6 +113,11 @@ AS_IF([test x$with_mps != x],
 )
 AS_IF([test x$with_gc != x],
       [
+        AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
+          [
+            AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
+          ]
+        )
         GC_CFLAGS="-DGC_USE_BOEHM -I${with_gc}/include"
         GC_LFLAGS="-L${with_gc}/lib -lgc"
         GC_CHOICE="boehm"
@@ -108,6 +125,11 @@ AS_IF([test x$with_gc != x],
 )
 AS_IF([test x${with_gc}x${with_mps} == xx],
       [
+        AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
+          [
+            AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
+          ]
+        )
         GC_CFLAGS="-DGC_USE_BOEHM"
         GC_LFLAGS="-lgc"
         GC_CHOICE="boehm"
