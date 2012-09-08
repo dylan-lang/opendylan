@@ -49,16 +49,16 @@ void clear_wrapper_breakpoint (void *wrapper)
     int index = index_for_wrapper_breaks(wrapper);
     if (index >= 0)
       {
-	int i;
-	for (i = index; i < wrapper_breaks_cursor; i++) {
-	  wrapper_stats_t wrapper_record1 = wrapper_breaks + i;
-	  wrapper_stats_t wrapper_record2 = wrapper_breaks + i + 1;
-	  
-	  wrapper_record1->wrapper_address = wrapper_record2->wrapper_address;
-	  wrapper_record1->usage_size = wrapper_record2->usage_size;
-	  wrapper_record1->usage_count = wrapper_record2->usage_count;
-	};
-	--wrapper_breaks_cursor;
+        int i;
+        for (i = index; i < wrapper_breaks_cursor; i++) {
+          wrapper_stats_t wrapper_record1 = wrapper_breaks + i;
+          wrapper_stats_t wrapper_record2 = wrapper_breaks + i + 1;
+
+          wrapper_record1->wrapper_address = wrapper_record2->wrapper_address;
+          wrapper_record1->usage_size = wrapper_record2->usage_size;
+          wrapper_record1->usage_count = wrapper_record2->usage_count;
+        };
+        --wrapper_breaks_cursor;
       }
   }
 }
@@ -79,7 +79,7 @@ extern void *class_allocation_break(char *string, void *class, int count, int si
 void signal_wrapper_breakpoint (void *wrapper, int count, int size)
 {
   class_allocation_break("Break on allocating instance of class",
-			 wrapper_to_class(wrapper), count, size);
+                         wrapper_to_class(wrapper), count, size);
 }
 
 BOOL check_wrapper_breakpoint_for_objectQ = FALSE;
@@ -101,17 +101,17 @@ void check_wrapper_breakpoint (void *wrapper, int size)
   else
     if (wrapper_breaks_cursor >= 0)
       {
-	int index = index_for_wrapper_breaks(wrapper);
-	if (index >= 0)
-	  {
-	    wrapper_stats_t wrapper_record = wrapper_breaks + index;
-	    
-	    wrapper_record->usage_count += 1;
-	    if (wrapper_record->usage_count >= wrapper_record->usage_size) {
-	      signal_wrapper_breakpoint(wrapper, wrapper_record->usage_count, size);
-	      wrapper_record->usage_count = 0;
-	    }
-	  }
+        int index = index_for_wrapper_breaks(wrapper);
+        if (index >= 0)
+          {
+            wrapper_stats_t wrapper_record = wrapper_breaks + index;
+
+            wrapper_record->usage_count += 1;
+            if (wrapper_record->usage_count >= wrapper_record->usage_size) {
+              signal_wrapper_breakpoint(wrapper, wrapper_record->usage_count, size);
+              wrapper_record->usage_count = 0;
+            }
+          }
       };
 
   leave_CRITICAL_SECTION(&class_breakpoint_lock);

@@ -16,7 +16,7 @@ PVOID current_stack_pointer ()
 {
   PVOID stack_ptr;
   __asm
-  {  
+  {
     mov  stack_ptr, esp
   };
   return(stack_ptr);
@@ -31,16 +31,16 @@ void call_dylan_stack_overflow_handler ()
   PVOID stack_ptr = current_stack_pointer();
   int res = VirtualQuery(stack_ptr, &memBuf, sizeof(memBuf));
 
-  PVOID baseAddress    = memBuf.BaseAddress;     // base address of region 
-  PVOID allocationBase = memBuf.AllocationBase;  // allocation base address 
-  DWORD protect        = memBuf.Protect;         // current access protection 
-  
+  PVOID baseAddress    = memBuf.BaseAddress;     // base address of region
+  PVOID allocationBase = memBuf.AllocationBase;  // allocation base address
+  DWORD protect        = memBuf.Protect;         // current access protection
+
   dylan_stack_overflow_handler(baseAddress, VPAGESIZE, PAGE_GUARD + protect);
 
 }
 
 
-/* Establish the stack overflow filter outside the MPS handler because 
+/* Establish the stack overflow filter outside the MPS handler because
    it has less requirement for efficiency */
 #define EXCEPTION_PREAMBLE() \
   __try {
@@ -59,7 +59,7 @@ LONG DylanExceptionFilter (LPEXCEPTION_POINTERS info)
   {  return(EXCEPTION_CONTINUE_SEARCH);
   }
 
-  switch (er->ExceptionCode) 
+  switch (er->ExceptionCode)
   {
   case EXCEPTION_STACK_OVERFLOW:
     {
@@ -67,18 +67,18 @@ LONG DylanExceptionFilter (LPEXCEPTION_POINTERS info)
       // an error, via dylan_signal_overflow_handler. The dylan
       // code will arrange to re-establish the guard protection on
       // the appropriate page of the stack (probably during the
-      // rewind when recovering from the error). Before calling the 
-      // handler, we do a check to ensure that there is sufficient 
-      // spare stack space after the guard to allow the handler itself 
+      // rewind when recovering from the error). Before calling the
+      // handler, we do a check to ensure that there is sufficient
+      // spare stack space after the guard to allow the handler itself
       // to run.
 
       MEMORY_BASIC_INFORMATION memBuf;
       PVOID stack_ptr = current_stack_pointer();
       int res = VirtualQuery(stack_ptr, &memBuf, sizeof(memBuf));
 
-      PVOID baseAddress    = memBuf.BaseAddress;    // base address of region 
+      PVOID baseAddress    = memBuf.BaseAddress;    // base address of region
       PVOID allocationBase = memBuf.AllocationBase; // allocation base addr
-  
+
       if ( ((int)baseAddress - (int)allocationBase) >= (2 * VPAGESIZE))
       {
         // There's enough space past the guard to invoke the Dylan handler.
@@ -120,8 +120,8 @@ LONG DylanExceptionFilter (LPEXCEPTION_POINTERS info)
       return(EXCEPTION_CONTINUE_EXECUTION);
     }
    */
-  
+
   default:
     return(EXCEPTION_CONTINUE_SEARCH);
-  }  
+  }
 }

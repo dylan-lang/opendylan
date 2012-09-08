@@ -70,7 +70,7 @@ static inline void chain_sigaction(const struct sigaction *act,
 
                  /* Reserve stack space for the sigcontext argument */
                  "subl\t%[mcontext_bytes],%%esp\n\t"
-                 
+
                  /* Copy the sigcontext onto the stack as the second
                   * argument
                   */
@@ -116,13 +116,13 @@ static struct sigaction outer_SEGVHandler;
 static struct sigaction outer_TRAPHandler;
 
 #define EXCEPTION_PREAMBLE() \
-  {						    \
-    if (exception_handler_level++ == 0)		    \
+  {                                                    \
+    if (exception_handler_level++ == 0)                    \
       EstablishDylanExceptionHandlers();
-  
+
 #define EXCEPTION_POSTAMBLE() \
-    if (--exception_handler_level == 0)	            \
-      RemoveDylanExceptionHandlers();		    \
+    if (--exception_handler_level == 0)                    \
+      RemoveDylanExceptionHandlers();                    \
   }
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *sc);
@@ -191,17 +191,17 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
       RestoreFPState(uc);
       uc->uc_mcontext.gregs[REG_EIP] = (greg_t) dylan_integer_divide_0_handler;
       break;
-      
+
     case FPE_INTOVF:
       RestoreFPState(uc);
       uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_integer_overflow_handler;
       break;
-      
+
     case FPE_FLTDIV:
       RestoreFPState(uc);
       uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_float_divide_0_handler;
       break;
-      
+
     case FPE_FLTOVF:
       RestoreFPState(uc);
       uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_float_overflow_handler;
@@ -211,7 +211,7 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
       RestoreFPState(uc);
       uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_float_underflow_handler;
       break;
-      
+
     default:
       break;
     }
@@ -234,9 +234,9 @@ static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
 
     default:
       if (eip[-1] == INTO_OPCODE
-	  || (eip[-2] == INT_OPCODE && eip[-1] == 0x04)) {
-	uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_integer_overflow_handler;
-	return;
+          || (eip[-2] == INT_OPCODE && eip[-1] == 0x04)) {
+        uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_integer_overflow_handler;
+        return;
       }
       break;
     }
@@ -269,8 +269,8 @@ static void walkstack() {
       } else {
         printf("%s+%i (%s)\n",
                info.dli_sname,
-	       eip - (int)info.dli_saddr,
-	       info.dli_fname);
+               eip - (int)info.dli_saddr,
+               info.dli_fname);
       }
     }
     ebp = *((int*)ebp);

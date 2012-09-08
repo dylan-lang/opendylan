@@ -201,8 +201,8 @@ ZINT primitive_wait_for_simple_lock_internal(SIMPLELOCK *slock, HANDLE hThread)
 
 THREADS_RUN_TIME_API
 ZINT primitive_wait_for_simple_lock_timed_internal(SIMPLELOCK *slock,
-						   HANDLE hThread,
-						   ZINT ztimeout)
+                                                   HANDLE hThread,
+                                                   ZINT ztimeout)
 {
   int  timeout = ztimeout >> 2;
 
@@ -219,12 +219,12 @@ ZINT primitive_wait_for_simple_lock_timed_internal(SIMPLELOCK *slock,
 
   case WAIT_TIMEOUT:
     MSG2("wait-for-simple-lock-timed(%p, %p): Timeout waiting for lock\n",
-	 hThread, timeout);
+         hThread, timeout);
     return TIMEOUT;
 
   default:
     MSG2("wait-for-simple-lock-timed(%p, %p): WaitForSingleObject error\n",
-	 hThread, timeout);
+         hThread, timeout);
     return GENERAL_ERROR;
   }
   return OK;
@@ -348,8 +348,8 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
   };
 
 
-  // dylan_thread_trampoline is the starting function for the new thread. 
-  // It calls the dylan trampoline fucntion which we rely on to initialise 
+  // dylan_thread_trampoline is the starting function for the new thread.
+  // It calls the dylan trampoline fucntion which we rely on to initialise
   // the thread
   {
     DWORD creationFlag;
@@ -359,10 +359,10 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
 
 #ifdef THREAD_AWARE_C_LIBS
   hThread = (HANDLE)_beginthreadex(NULL, 0, dylan_thread_trampoline, newthread_ptr,
-				   creationFlag, &idThread);
+                                   creationFlag, &idThread);
 #else
   hThread = CreateThread(NULL, 0, dylan_thread_trampoline, (LPVOID)newthread_ptr,
-			 creationFlag, &idThread);
+                         creationFlag, &idThread);
 #endif
 
   };
@@ -492,8 +492,8 @@ primitive_thread_join_multiple(SOV *thread_vector)
 
   result = WaitForMultipleObjects(size,       // number of threads */
                                   handles,    // their OS handles */
-	                          FALSE,      // wait for one thread to finish
-	                          INFINITE);  // no timeout
+                                  FALSE,      // wait for one thread to finish
+                                  INFINITE);  // no timeout
   MMFreeMisc(handles, sizeof(HANDLE) * size);
   result -= WAIT_OBJECT_0;
   if (result < 0 || result >= size) {
@@ -523,7 +523,7 @@ primitive_current_thread(void)
   assert(thread != NULL);
   return(thread);
 }
- 
+
 
 /* 7 */
 THREADS_RUN_TIME_API  ZINT
@@ -684,7 +684,7 @@ primitive_wait_for_recursive_lock_timed(CONTAINER *lock, ZINT zmilsecs)
   assert(lock != NULL);
   assert(lock->handle != NULL);
   assert(IS_ZINT(zmilsecs));
-	
+
   milsecs = zmilsecs >> 2;
   rlock = lock->handle;
   hThread = get_current_thread_handle();
@@ -697,7 +697,7 @@ primitive_wait_for_recursive_lock_timed(CONTAINER *lock, ZINT zmilsecs)
   }
   else
     return primitive_wait_for_recursive_lock_timed_internal(rlock, hThread,
-							    zmilsecs);
+                                                            zmilsecs);
   return OK;
 }
 
@@ -711,7 +711,7 @@ primitive_wait_for_semaphore_timed(CONTAINER *lock, ZINT zmilsecs)
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
-	assert(IS_ZINT(zmilsecs));
+        assert(IS_ZINT(zmilsecs));
 
   hSemaphore = lock->handle;
   milsecs = zmilsecs >> 2;
@@ -776,9 +776,9 @@ primitive_wait_for_notification_timed(CONTAINER *notif, CONTAINER *lock,
       MSG0("wait-for-notification-timed: Timeout waiting for notifier\n");
       tmp2 = internal_InterlockedDecrement(&notification->count);
       if (WaitForSingleObject(notification->notifier, 0) == WAIT_OBJECT_0 &&
-	  tmp2 <= 0) {
-	ResetEvent(notification->notifier);
-	SetEvent(notification->anti_notifier);
+          tmp2 <= 0) {
+        ResetEvent(notification->notifier);
+        SetEvent(notification->anti_notifier);
       }
       primitive_wait_for_simple_lock(lock);
       return TIMEOUT;
@@ -793,7 +793,7 @@ primitive_wait_for_notification_timed(CONTAINER *notif, CONTAINER *lock,
   if ((tmp1 != -1) || (tmp2 <= 0)) {
     // know it's not a release-all
     if (ResetEvent(notification->notifier) == FALSE ||
-	SetEvent(notification->anti_notifier) == FALSE) {
+        SetEvent(notification->anti_notifier) == FALSE) {
       MSG0("wait-for-notification-timed: error (re)setting (anti)notifier\n");
       return GENERAL_ERROR;
     }
@@ -913,7 +913,7 @@ primitive_release_notification(CONTAINER *notif, CONTAINER *lock)
   if (notification->count > 0) {
     notification->target = 0;  // release one thread only
     if (ResetEvent(notification->anti_notifier) == FALSE ||
-	  SetEvent(notification->notifier) == FALSE) {
+          SetEvent(notification->notifier) == FALSE) {
       MSG0("release-notification: error (re)setting (anti)notifier\n");
       return GENERAL_ERROR;
     }
@@ -962,7 +962,7 @@ primitive_release_all_notification(CONTAINER *notif, CONTAINER *lock)
 }
 
 
-/* 20 */   
+/* 20 */
 THREADS_RUN_TIME_API  ZINT
 primitive_make_recursive_lock(CONTAINER *lock, D_NAME name)
 {
@@ -1009,7 +1009,7 @@ primitive_destroy_recursive_lock(CONTAINER *lock)
 
 
 /* 22 */
-THREADS_RUN_TIME_API ZINT 
+THREADS_RUN_TIME_API ZINT
 primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
 {
   SIMPLELOCK *slock;
@@ -1026,14 +1026,14 @@ primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
   slock->semaphore = CreateSemaphore(NULL, 0, 1, NULL);
   if (slock->semaphore == NULL) {
     MSG0("make-simple-lock: error creating semaphore\n");
-		return GENERAL_ERROR;
-	}
+                return GENERAL_ERROR;
+        }
   slock->owner = 0;
   lock->handle = slock;
-	return OK;
+        return OK;
 }
 
-   
+
 /* 23 */
 THREADS_RUN_TIME_API  ZINT
 primitive_destroy_simple_lock(CONTAINER *lock)
@@ -1092,7 +1092,7 @@ primitive_owned_recursive_lock(CONTAINER *lock)
     return((ZINT)I(0)); // not owned
 }
 
-  
+
 /* 26 */
 THREADS_RUN_TIME_API  ZINT
 primitive_make_semaphore(CONTAINER *lock, D_NAME name,
@@ -1250,7 +1250,7 @@ void grow_all_tlv_vectors(newsize)
 
   // Wait for thread variable writes to finish
   while(internal_InterlockedCompareExchange(&tlv_writer_counter, TLV_GROW, 0)
-	!= 0);
+        != 0);
 
   // Grow the default vector
   new_default = make_dylan_vector(newsize);
@@ -1266,7 +1266,7 @@ void grow_all_tlv_vectors(newsize)
 
   // Let writes proceed again
   while(internal_InterlockedCompareExchange(&tlv_writer_counter, 0, TLV_GROW)
-	!= TLV_GROW);
+        != TLV_GROW);
 }
 
 
@@ -1393,14 +1393,14 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
     if (default_tlv_vector == NULL)
       initialize_threads_primitives();
 
-    /* Get a handle for the current thread: GetCurrentThread() returns a 
+    /* Get a handle for the current thread: GetCurrentThread() returns a
        special value which can only be used by a thread to refer to itself.
        We need a handle which other threads can use to refer to the current
        thread.
     */
     hProcess = GetCurrentProcess();
     DuplicateHandle(hProcess, GetCurrentThread(), hProcess, &hThread,
-		    0, FALSE, DUPLICATE_SAME_ACCESS);
+                    0, FALSE, DUPLICATE_SAME_ACCESS);
   }
   else
     hThread = thread->handle1;
@@ -1470,7 +1470,7 @@ primitive_initialize_special_thread(DTHREAD *thread)
   if (default_tlv_vector == NULL)
     initialize_threads_primitives();
 
-  // Get a handle for the current thread: GetCurrentThread() returns a 
+  // Get a handle for the current thread: GetCurrentThread() returns a
   // special value which can only be used by a thread to refer to itself.
   // We need a handle which other threads can use to refer to the current
   // thread.
@@ -1582,7 +1582,7 @@ add_tlv_vector(HANDLE hThread, TLV_VECTOR tlv_vector)
 
   // initialise the new element and put it on the front of the list
   new_element->hThread = hThread;
-  new_element->tlv_vector = tlv_vector; 
+  new_element->tlv_vector = tlv_vector;
   new_element->next = tlv_vector_list;
   tlv_vector_list = new_element;
 

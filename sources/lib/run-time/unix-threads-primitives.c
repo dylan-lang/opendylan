@@ -242,16 +242,16 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
   assert(func != NULL);
 
 
-  // dylan_thread_trampoline is the starting function for the new thread. 
-  // It calls the dylan trampoline fucntion which we rely on to initialise 
+  // dylan_thread_trampoline is the starting function for the new thread.
+  // It calls the dylan trampoline fucntion which we rely on to initialise
   // the thread
 
 
   newthread->handle2 = func;
-  status = pthread_create((pthread_t *)(&newthread->handle1), NULL, 
-			  dylan_thread_trampoline, 
-			  (void*)newthread_ptr);
-  
+  status = pthread_create((pthread_t *)(&newthread->handle1), NULL,
+                          dylan_thread_trampoline,
+                          (void*)newthread_ptr);
+
 
   if (status != 0) {
     MSG1("make-thread: pthread_create returned error %d\n", status);
@@ -296,11 +296,11 @@ primitive_destroy_thread(DTHREAD *thread)
 
   if (thread->handle1 != NULL) {
     pThread = (pthread_t)(thread->handle1);
-    
+
     status = pthread_detach(pThread);
     if (status != 0) {
       MSG2("pthread_detach %p failed with error %d\n",
-	   (void *) pThread, status);
+           (void *) pThread, status);
     }
   }
 
@@ -314,17 +314,17 @@ primitive_thread_join_single(DTHREAD *thread)
 {
   pthread_t pThread;
   int status;
-  
+
   assert(thread != NULL);
   pThread = (pthread_t)(thread->handle1);
 
   status = pthread_join(pThread, NULL);
   if (status != 0) {
     MSG2("thread-join-single: pthread_join %p returned error %d\n",
-	 (void *) pThread, status);
+         (void *) pThread, status);
     return GENERAL_ERROR;
   }
-  
+
   thread->handle1 = NULL;
   return OK;
 }
@@ -333,7 +333,7 @@ primitive_thread_join_single(DTHREAD *thread)
 /* 4 */
 THREADS_RUN_TIME_API  Z
 primitive_thread_join_multiple(SOV *thread_vector)
-{ 
+{
   // @@@@#!"£$ NOT PROPERLY IMPLEMENTED
   // Just join on the first thread
   DTHREAD ** threads = (DTHREAD **)(thread_vector->data);
@@ -363,7 +363,7 @@ primitive_current_thread(void)
   assert(thread != NULL);
   return(thread);
 }
- 
+
 
 /* 7 */
 THREADS_RUN_TIME_API  ZINT
@@ -512,13 +512,13 @@ primitive_wait_for_simple_lock_timed(CONTAINER *lock, ZINT zmilsecs)
     switch (status) {
     case EBUSY:
       if (timeleft <= 0) {
-	MSG1("wait-for-simple-lock-timed(%p): Timeout waiting for lock\n",
-	     timeout);
-	return TIMEOUT;
+        MSG1("wait-for-simple-lock-timed(%p): Timeout waiting for lock\n",
+             timeout);
+        return TIMEOUT;
       } else {
-	primitive_sleep(I(sleeptime));
-	timeleft -= sleeptime;
-	break;
+        primitive_sleep(I(sleeptime));
+        timeleft -= sleeptime;
+        break;
       }
     default:
       MSG0("wait-for-simple-lock-timed: Error returned by pthread_mutex_trylock.\n");
@@ -559,13 +559,13 @@ primitive_wait_for_recursive_lock_timed(CONTAINER *lock, ZINT zmilsecs)
     switch (status) {
     case EBUSY:
       if (timeleft <= 0) {
-	MSG1("wait-for-recursive-lock-timed(%p): Timeout waiting for lock\n",
-	     timeout);
-	return TIMEOUT;
+        MSG1("wait-for-recursive-lock-timed(%p): Timeout waiting for lock\n",
+             timeout);
+        return TIMEOUT;
       } else {
-	primitive_sleep(I(sleeptime));
-	timeleft -= sleeptime;
-	break;
+        primitive_sleep(I(sleeptime));
+        timeleft -= sleeptime;
+        break;
       }
     default:
       MSG0("wait-for-recursive-lock-timed: Error returned by pthread_mutex_trylock.\n");
@@ -599,13 +599,13 @@ primitive_wait_for_semaphore_timed(CONTAINER *lock, ZINT zmilsecs)
     case EAGAIN:
     case EINTR:
       if (timeleft <= 0) {
-	MSG1("wait-for-semaphore-timed(%p): Timeout waiting for lock\n",
-	     timeout);
-	return TIMEOUT;
+        MSG1("wait-for-semaphore-timed(%p): Timeout waiting for lock\n",
+             timeout);
+        return TIMEOUT;
       } else {
-	primitive_sleep(I(sleeptime));
-	timeleft -= sleeptime;
-	break;
+        primitive_sleep(I(sleeptime));
+        timeleft -= sleeptime;
+        break;
       }
     default:
       MSG0("wait-for-simple-lock-timed: Error returned by pthread_mutex_trylock.\n");
@@ -619,7 +619,7 @@ primitive_wait_for_semaphore_timed(CONTAINER *lock, ZINT zmilsecs)
 /* 14 */
 THREADS_RUN_TIME_API  ZINT
 primitive_wait_for_notification_timed(CONTAINER *notif, CONTAINER *lock,
-				      ZINT zmilsecs)
+                                      ZINT zmilsecs)
 {
   NOTIFICATION  *notification;
   SIMPLELOCK  *slock;
@@ -815,8 +815,8 @@ primitive_release_all_notification(CONTAINER *notif, CONTAINER *lock)
 }
 
 
-/* 20 */   
-THREADS_RUN_TIME_API ZINT 
+/* 20 */
+THREADS_RUN_TIME_API ZINT
 primitive_make_recursive_lock(CONTAINER *lock, D_NAME name)
 {
   RECURSIVELOCK *rlock;
@@ -869,7 +869,7 @@ primitive_destroy_recursive_lock(CONTAINER *lock)
 
 
 /* 22 */
-THREADS_RUN_TIME_API ZINT 
+THREADS_RUN_TIME_API ZINT
 primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
 {
   SIMPLELOCK *slock;
@@ -899,7 +899,7 @@ primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
   return OK;
 }
 
-   
+
 /* 23 */
 THREADS_RUN_TIME_API  ZINT
 primitive_destroy_simple_lock(CONTAINER *lock)
@@ -958,7 +958,7 @@ primitive_owned_recursive_lock(CONTAINER *lock)
     return((ZINT)I(0)); // not owned
 }
 
-  
+
 /* 26 */
 THREADS_RUN_TIME_API  ZINT
 primitive_make_semaphore(CONTAINER *lock, D_NAME name,
@@ -975,7 +975,7 @@ primitive_make_semaphore(CONTAINER *lock, D_NAME name,
   assert(IS_ZINT(zmax));
 
   semaphore = MMAllocMisc(sizeof(SEMAPHORE));
-  if (semaphore == NULL) 
+  if (semaphore == NULL)
     goto generalError;
 
   if(sem_init(&semaphore->sema, 0, initial) == -1)
@@ -1070,7 +1070,7 @@ primitive_sleep(ZINT zmilsecs)
       MSG0("sleep: error in nanosleep\n");
       return;
     }
-  }   
+  }
 }
 
 
@@ -1136,7 +1136,7 @@ void grow_all_tlv_vectors(int newsize)
 
   // Wait for thread variable writes to finish
   while(internal_InterlockedCompareExchange(&tlv_writer_counter, TLV_GROW, 0)
-	!= 0);
+        != 0);
 
   // Grow the default vector
   new_default = make_dylan_vector(newsize);
@@ -1152,7 +1152,7 @@ void grow_all_tlv_vectors(int newsize)
 
   // Let writes proceed again
   while(internal_InterlockedCompareExchange(&tlv_writer_counter, 0, TLV_GROW)
-	!= TLV_GROW);
+        != TLV_GROW);
 }
 
 
@@ -1406,7 +1406,7 @@ add_tlv_vector(pthread_t hThread, TLV_VECTOR tlv_vector)
 
   // initialise the new element and put it on the front of the list
   new_element->hThread = hThread;
-  new_element->tlv_vector = tlv_vector; 
+  new_element->tlv_vector = tlv_vector;
   new_element->next = tlv_vector_list;
   tlv_vector_list = new_element;
 

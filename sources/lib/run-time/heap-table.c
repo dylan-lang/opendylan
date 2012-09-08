@@ -9,7 +9,7 @@
 typedef unsigned long ulong;
 
 
-#define TABLE_UNUSED	((ulong)0x2AB7E040)
+#define TABLE_UNUSED        ((ulong)0x2AB7E040)
 #define TABLE_DELETED   ((ulong)0x2AB7EDE7)
 #define TABLE_ACTIVE    ((ulong)0x2AB7EAC2)
 
@@ -41,18 +41,18 @@ static table_entry_t table_find(table_t table, void *key, int skip_deleted)
 {
   ulong hash;
   size_t i;
-  
+
   hash = table_hash(key) & (table->length - 1);
   i = hash;
   do {
     switch (table->array[i].status) {
     case TABLE_ACTIVE:
       if (table->array[i].key == key)
-	return &table->array[i];
+        return &table->array[i];
       break;
     case TABLE_DELETED:
       if (!skip_deleted)
-	return &table->array[i];
+        return &table->array[i];
       break;
     case TABLE_UNUSED:
       return &table->array[i];
@@ -85,7 +85,7 @@ static BOOL table_grow(table_t table)
     newArray[i].value = NULL;
     newArray[i].status = TABLE_UNUSED;
   }
-  
+
   table->length = newLength;
   table->array = newArray;
 
@@ -123,7 +123,7 @@ extern BOOL table_create(table_t *tableReturn, size_t length)
     table->array[i].value = NULL;
     table->array[i].status = TABLE_UNUSED;
   }
-  
+
   *tableReturn = table;
   return TRUE;
 
@@ -190,7 +190,7 @@ extern BOOL table_define(table_t table, void *key, void *value)
 extern BOOL table_redefine(table_t table, void *key, void *value)
 {
   table_entry_t entry = table_find(table, key, 1 /* skip deletions */);
-  
+
   if (entry == NULL || entry->status != TABLE_ACTIVE)
     return FALSE;
   assert(entry->key == key);

@@ -38,13 +38,13 @@ void free_obj(void *obj, size_t size)
 
 void report_message (char* message)
 {
-  mps_lib_FILE *stream = mps_lib_get_stdout();  
+  mps_lib_FILE *stream = mps_lib_get_stdout();
   mps_lib_fputs(message, stream);
 }
 
 void report_error (char* message)
 {
-  mps_lib_FILE *stream = mps_lib_get_stderr();  
+  mps_lib_FILE *stream = mps_lib_get_stderr();
   mps_lib_fputs("\nError:\n", stream);
   mps_lib_fputs(message, stream);
   mps_lib_fputc('\n', stream);
@@ -54,7 +54,7 @@ void report_error (char* message)
 
 void report_break (char* message)
 {
-  mps_lib_FILE *stream = mps_lib_get_stdout();  
+  mps_lib_FILE *stream = mps_lib_get_stdout();
   mps_lib_fputs("Break to debugger:\n    ", stream);
   mps_lib_fputs(message, stream);
   mps_lib_fputc('\n', stream);
@@ -69,7 +69,7 @@ void report_break (char* message)
 static int wrapper_fixed_format(void* wrapper)
 {
   int wf = ((int*)wrapper)[3];
-  return wf & 3; 
+  return wf & 3;
 }
 
 static int wrapper_fixed_length_in_words(void* wrapper)
@@ -82,7 +82,7 @@ static int wrapper_fixed_length_in_words(void* wrapper)
 static int wrapper_vector_format(void* wrapper)
 {
   int wf = ((int*)wrapper)[4];
-  return wf & 7; 
+  return wf & 7;
 }
 
 static int wrapper_vector_scaling_in_bytes(void* wrapper)
@@ -90,12 +90,12 @@ static int wrapper_vector_scaling_in_bytes(void* wrapper)
   int wv = ((int*)wrapper)[4];
   int vf = wv & 7;
   switch (vf) {
-  case 7: 
+  case 7:
     return(0);
-  case 4: 
-  case 5: 
+  case 4:
+  case 5:
     return(1);  /* assume all non-word vectors are byte sized */
-  default: 
+  default:
     return(4);
   }
 }
@@ -238,16 +238,16 @@ void display_integer (int integer, mps_lib_FILE *stream)
     };
     if ((power == 1000000) || (power == 1000)) {
       if (digit == 0) {
-	mps_lib_fputc(leading ? ' ' : ',', stream);
+        mps_lib_fputc(leading ? ' ' : ',', stream);
       } else {
-	mps_lib_fputc(',', stream);
+        mps_lib_fputc(',', stream);
       }
     }
   }
 }
 
 void display_hex_address (void *address, mps_lib_FILE *stream)
-{  
+{
   unsigned int integer = (unsigned int)address;
   unsigned int remainder = integer;
   int leading = 1;

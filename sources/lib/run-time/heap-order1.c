@@ -1,5 +1,5 @@
 
-/* Support for finding the count and size for each class (wrapper) 
+/* Support for finding the count and size for each class (wrapper)
  * in the heap .
  */
 
@@ -76,7 +76,7 @@ void add_stat_for_object (void *object, void* wrapper, int size)
   wrapper_stats[index].usage_size += size;
 }
 
-static void record_order_1_object (mps_addr_t object, mps_fmt_t format, 
+static void record_order_1_object (mps_addr_t object, mps_fmt_t format,
                                    mps_pool_t pool, void *p1, size_t p2)
 {
   void *wrapper = *(void **)object;
@@ -104,7 +104,7 @@ static int biggest_below_value (int value)
 }
 
 
-static void display_stat_line(char *message, 
+static void display_stat_line(char *message,
                               int count, int size, mps_lib_FILE *stream)
 {
   mps_lib_fputs_(message, class_name_size, stream);
@@ -161,8 +161,8 @@ void display_wrapper_stats (void)
   mps_lib_fputs("\n\n", stream);
   display_totals(stream);
   mps_lib_fputc('\n', stream);
-  for (largest = biggest_below_value(very_big); 
-       largest >= 0; 
+  for (largest = biggest_below_value(very_big);
+       largest >= 0;
        largest = biggest_below_value(largest)) {
     display_wrappers_of_size(largest, stream);
   }
