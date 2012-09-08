@@ -32,6 +32,8 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 
   sigset_t set, oldset;
 
+  unused(oldSEGVHandler);
+
   sigfillset(&newFPEHandler.sa_mask);
   newFPEHandler.sa_sigaction = DylanFPEHandler;
   newFPEHandler.sa_flags = SA_SIGINFO;
@@ -45,11 +47,15 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
                                           struct sigaction * oldSEGVHandler)
 {
+  unused(oldSEGVHandler);
   sigaction(SIGFPE, oldFPEHandler, NULL);
 }
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 {
+  unused(sig);
+  unused(info);
+  unused(uap);
   if (inside_dylan_ffi_barrier() != 0) {
     // Fill this in ...
   }

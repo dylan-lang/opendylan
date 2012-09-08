@@ -5,6 +5,8 @@
 
 #include "heap-utils.h"
 
+#define unused(param)   ((void)param)
+
 wrapper_stats_s wrapper_stats[STAT_SIZE];
 
 static int wrapper_cursor;
@@ -72,6 +74,7 @@ static int index_for_wrapper (void *wrapper)
 void add_stat_for_object (void *object, void* wrapper, int size)
 {
   int index = index_for_wrapper(wrapper);
+  unused(object);
   wrapper_stats[index].usage_count += 1;
   wrapper_stats[index].usage_size += size;
 }
@@ -80,6 +83,10 @@ static void record_order_1_object (mps_addr_t object, mps_fmt_t format,
                                    mps_pool_t pool, void *p1, size_t p2)
 {
   void *wrapper = *(void **)object;
+  unused(format);
+  unused(pool);
+  unused(p1);
+  unused(p2);
   if (wrapper && ((int)wrapper & 3) == 0) {
     add_stat_for_object(object, wrapper, size_of_object(object, wrapper));
   }

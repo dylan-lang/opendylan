@@ -1,6 +1,7 @@
 #include "heap-utils.h"
 #include <assert.h>
 
+#define unused(param)   ((void)param)
 
 /****  support for filtering ****/
 
@@ -136,6 +137,7 @@ static void clear_aggregation_entry (void *key, void *value)
 {
   ag_class_t agclass = key;
   free_obj(agclass, sizeof(ag_class_s));
+  unused(value);
 }
 
 void clear_aggregation_classes (void)
@@ -306,6 +308,7 @@ static void clear_leaf_entry (void *key, void *value)
   stats_t lstats = value;
   assert(lstats->table == NULL);
   stats_destroy(lstats);
+  unused(key);
 }
 
 static void clear_order2_entry (void *key, void *value)
@@ -313,6 +316,7 @@ static void clear_order2_entry (void *key, void *value)
   stats_t o2stats = value;
   table_map(o2stats->table, clear_leaf_entry);
   stats_destroy(o2stats);
+  unused(key);
 }
 
 static void clear_order2_stats (void)
@@ -332,6 +336,8 @@ static BOOL add_stats_for_object (mps_addr_t object, mps_addr_t parent,
                                   int parent_size, void *pclass)
 {
   void *owrapper;
+  unused(parent);
+  unused(parent_size);
   if (object && ((int)object & 3) == 0) {
     /* this is probably a heap object, but check the wrapper */
     owrapper = *(void **)object;
@@ -380,12 +386,19 @@ static void record_order_2_root (mps_addr_t *objectref, mps_root_t root,
 {
   mps_addr_t object = *objectref;
   add_stats_for_object(object, NULL, 0, root_aggregation);
+  unused(root);
+  unused(p1);
+  unused(p2);
 }
 
 static void record_order_2_object (mps_addr_t object, mps_fmt_t format,
                                    mps_pool_t pool, void *p1, size_t p2)
 {
   void *wrapper = *(void **)object;
+  unused(format);
+  unused(pool);
+  unused(p1);
+  unused(p2);
   if (wrapper && ((int)wrapper & 3) == 0) {
     /* ignore filtered objects at this stage */
     if (!class_is_filtered(wrapper)) {
@@ -417,6 +430,7 @@ static void check_if_biggest_stat (void *key, void *value)
 {
   stats_t stats = value;
   int count = sort_criterion_for_index(stats);
+  unused(key);
   if ((count < limiting_value) && (count > largest_found)) {
       largest_found = count;
   }

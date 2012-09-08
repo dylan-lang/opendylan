@@ -1,5 +1,7 @@
 #include "heap-utils.h"
 
+#define unused(x) (void)x
+
 /* Following reference paths via a reverse trace */
 
 /* Strategy:
@@ -336,6 +338,9 @@ static void add_target_object_of_wrapper (mps_addr_t object,
 {
   void **found = (void**)object;
   void *found_wrapper = *found;
+  unused(format);
+  unused(pool);
+  unused(p2);
   if (found_wrapper == wrapper) {
     add_target_object(object);
   }
@@ -385,6 +390,8 @@ static BOOL trace_reference(mps_addr_t object, mps_addr_t parent,
                             int parent_size, void * env)
 {
   obj_rec_p refrec = object_in_current_set(object);
+  unused(parent_size);
+  unused(env);
   if (refrec != NULL) {
     /* Have found a ref to the current gen */
     if (object_in_processed_set(parent)
@@ -410,6 +417,10 @@ static void look_for_reference(mps_addr_t object, mps_fmt_t format,
                                mps_pool_t pool,
                                void *p1, size_t p2)
 {
+  unused(format);
+  unused(pool);
+  unused(p1);
+  unused(p2);
   trace_object(object, trace_reference, NULL);
 }
 
@@ -508,6 +519,9 @@ static void record_a_root (mps_addr_t *objectref, mps_root_t root,
 {
   void **object = (void **)(*objectref);
   void *wrapper = *object;
+  unused(root);
+  unused(p1);
+  unused(p2);
   if (wrapper && ((int)wrapper & 3) == 0) {
     obj_rec_p rootrec = object_in_roots(object);
     if (rootrec == NULL) {

@@ -232,6 +232,8 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
   int status;
   DTHREAD **newthread_ptr;
 
+  unused(name);
+  unused(synchronize);
   unused(priority);
 
   newthread_ptr = (DTHREAD **)(dylan__malloc__ambig(4));
@@ -267,6 +269,8 @@ trampoline_body(void *arg, size_t ignore)
 {
   DTHREAD *thread;
   ZFN    dylan_trampoline;
+
+  unused(ignore);
 
   assert(arg != NULL);
 
@@ -823,6 +827,8 @@ primitive_make_recursive_lock(CONTAINER *lock, D_NAME name)
   pthread_mutexattr_t attr;
   int res;
 
+  unused(name);
+
   assert(lock != NULL);
 
   rlock = MMAllocMisc(sizeof(RECURSIVELOCK));
@@ -875,6 +881,8 @@ primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
   SIMPLELOCK *slock;
   pthread_mutexattr_t attr;
   int res;
+
+  unused(name);
 
   assert(lock != NULL);
 
@@ -968,6 +976,7 @@ primitive_make_semaphore(CONTAINER *lock, D_NAME name,
   int   initial = zinitial >> 2;
   int   max   = zmax >> 2;
 
+  unused(name);
   unused(max);
 
   assert(lock != NULL);
@@ -1017,6 +1026,8 @@ primitive_make_notification(CONTAINER *notif, D_NAME name)
 {
   NOTIFICATION *notification;
   int res;
+
+  unused(name);
 
   assert(notif != NULL);
 
@@ -1268,6 +1279,8 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
   TLV_VECTOR  tlv_vector;
   Z          *destination;
   int         size;
+
+  unused(synchronize);
 
   /* @@@@#!"£$ no support for "synchronized" threads */
   assert(thread != NULL);
