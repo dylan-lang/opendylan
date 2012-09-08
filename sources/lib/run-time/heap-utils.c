@@ -285,7 +285,7 @@ void display_padding_for_string(char *string, char pad, int field, mps_lib_FILE 
   int i;
   int padding = padding_for_string(string, field);
   for (i = 0; i < padding; i++)
-    mps_lib_fputc(' ', stream);
+    mps_lib_fputc(pad, stream);
 }
 
 
