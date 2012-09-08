@@ -17,4 +17,4 @@ Dylan Library Reference
    c-ffi/index
    win32/index
    lid
-
+   command-line-parser/index
