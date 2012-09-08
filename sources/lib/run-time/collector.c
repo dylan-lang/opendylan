@@ -195,12 +195,16 @@ mps_bool_t dylan_check(mps_addr_t addr)
 
 static void defaultHandler(MMError e, const char *opName, size_t size)
 {
+  unused(e);
+  unused(size);
 #ifndef GC_USE_BOEHM
   mps_lib_FILE *stream = mps_lib_get_stderr();
   mps_lib_fputs("\nError: ", stream);
   mps_lib_fputs(opName, stream);
   mps_lib_fputs(" - Request to allocate failed -- aborting\n", stream);
   mps_lib_abort();
+#else
+  unused(opName);
 #endif
 }
 
@@ -598,6 +602,8 @@ __inline
 #include "x86-linux-exceptions.c"
 #elif defined(OPEN_DYLAN_PLATFORM_FREEBSD)
 #include "x86-freebsd-exceptions.c"
+#elif defined(OPEN_DYLAN_PLATFORM_DARWIN)
+#include "x86-darwin-exceptions.c"
 #else
 #include "x86-windows-exceptions.c"
 #endif
@@ -827,6 +833,7 @@ void untraced_fill_ ## type ## _mem(void **object, type fill, int count, int cou
 { \
   int index = 0; \
   type *mem = (type*)(object + count_slot + 1); \
+  unused(ztq); \
   object[count_slot] = (void*)((count << 2) + 1); \
  \
   while (index < count) \
@@ -883,6 +890,7 @@ void *mps__malloc(size_t size)
 
 void duplicated_deallocation_error(size_t *ptr)
 {
+  unused(ptr);
   simple_error("Duplicate attempt to free manually managed object");
 }
 
@@ -1136,6 +1144,8 @@ void *MMReserveWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
   mps_res_t res;
   mps_addr_t p;
 
+  unused(wrapper);
+
   assert(gc_teb->gc_teb_inside_tramp);
 
   res = mps_alloc(&p, wrapper_pool, size);
@@ -1147,6 +1157,9 @@ void *MMReserveWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
   return (void *)p;
 
 #else
+
+  unused(wrapper);
+  unused(gc_teb);
 
   return GC_malloc_atomic(size);
 

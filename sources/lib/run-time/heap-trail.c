@@ -1,5 +1,7 @@
 #include "heap-utils.h"
 
+#define unused(x) (void)x
+
 /* Following reference paths via a reverse trace */
 
 /* Strategy:
@@ -18,7 +20,7 @@
 /* Controlling variables */
 
 /* if true then prompt for another object/wrapper after following a trail */
-static int prompt_after_checking_references = 1; 
+static int prompt_after_checking_references = 1;
 
 /* set this from the debugger to permit roots to be found at depths
    greater than the depth of the first found roots .
@@ -145,7 +147,7 @@ static void merge_tables(obj_table dest, obj_table src)
         }
         schain->next = dchain;
       }
-    } 
+    }
   }
 }
 
@@ -217,18 +219,18 @@ static void display_reference_paths (obj_rec_p or, mps_lib_FILE *stream)
 static void display_cold_trail_intro (int gensize)
 {
   mps_lib_FILE *stream = mps_lib_get_stdout();
-  mps_lib_fputs("\nFailed to find any objects referenced from a root.\n", stream);  
-  mps_lib_fputs("Hence all detected objects are 'floating garbage'.\n", stream);  
-  mps_lib_fputs("There were ", stream);  
+  mps_lib_fputs("\nFailed to find any objects referenced from a root.\n", stream);
+  mps_lib_fputs("Hence all detected objects are 'floating garbage'.\n", stream);
+  mps_lib_fputs("There were ", stream);
   display_integer(gensize, stream);
-  mps_lib_fputs(" objects encountered while processing the last depth.\n", stream);  
-  mps_lib_fputs("Here are some cold trails:\n", stream);  
+  mps_lib_fputs(" objects encountered while processing the last depth.\n", stream);
+  mps_lib_fputs("Here are some cold trails:\n", stream);
 }
 
 static void display_cold_trail_details (obj_rec_p obj)
 {
   mps_lib_FILE *stream = mps_lib_get_stdout();
-  mps_lib_fputs("\nStart of a cold trail of object references\n", stream);  
+  mps_lib_fputs("\nStart of a cold trail of object references\n", stream);
   display_reference_paths(obj, stream);
   mps_lib_fputs("End of cold trail\n", stream);
 }
@@ -236,9 +238,9 @@ static void display_cold_trail_details (obj_rec_p obj)
 static void display_trail_details (obj_rec_p obj, obj_rec_p root)
 {
   mps_lib_FILE *stream = mps_lib_get_stdout();
-  mps_lib_fputs("\nStart of a trail of object references\n", stream);  
+  mps_lib_fputs("\nStart of a trail of object references\n", stream);
   display_reference_paths(obj, stream);
-  mps_lib_fputs("Referenced from a root at address                     ", stream);  
+  mps_lib_fputs("Referenced from a root at address                     ", stream);
   display_hex_address(root->parent->object, stream);
   mps_lib_fputc('\n', stream);
 
@@ -251,9 +253,9 @@ static void display_generation_details (int gennum, int gensize, obj_table table
   int count = 0;
   mps_lib_FILE *stream = mps_lib_get_stdout();
   mps_lib_fputs("Processing depth ", stream);
-  display_integer(gennum, stream);  
+  display_integer(gennum, stream);
   mps_lib_fputs(" containing ", stream);
-  display_integer(gensize, stream);  
+  display_integer(gensize, stream);
   mps_lib_fputs(" objects:\n", stream);
   for (i = 0; i < TABLE_SIZE; i++) {
     obj_rec_p current = table[i];
@@ -261,7 +263,7 @@ static void display_generation_details (int gennum, int gensize, obj_table table
       count++;
       if (count > object_report_limit) {
         mps_lib_fputs("    To display more objects, ", stream);
-        mps_lib_fputs("use the debugger to set the variable at address: ", stream);  
+        mps_lib_fputs("use the debugger to set the variable at address: ", stream);
         display_hex_address(&object_report_limit, stream);
         mps_lib_fputc('\n', stream);
         return;
@@ -277,11 +279,11 @@ static void display_reference_variables_addresses (void)
 {
   mps_lib_FILE *stream = mps_lib_get_stdout();
   mps_lib_fputs("\nTo find a trail of references to an object, \n", stream);
-  mps_lib_fputs("use the debugger to set one of the following variables:\n", stream);  
+  mps_lib_fputs("use the debugger to set one of the following variables:\n", stream);
   mps_lib_fputs("      object_to_follow  - set address ", stream);
   display_hex_address(&object_to_follow, stream);
   mps_lib_fputc('\n', stream);
-  mps_lib_fputs("      wrapper_to_follow - set address ", stream);  
+  mps_lib_fputs("      wrapper_to_follow - set address ", stream);
   display_hex_address(&wrapper_to_follow, stream);
   mps_lib_fputc('\n', stream);
 }
@@ -290,9 +292,9 @@ static void display_gen_limit_addresses (int gennum)
 {
   mps_lib_FILE *stream = mps_lib_get_stdout();
   mps_lib_fputs("\nTo find deeper trails of references to an object, \n", stream);
-  mps_lib_fputs("use the debugger to set the following variable\n", stream);  
-  mps_lib_fputs("to a depth limit greater than ", stream);  
-  display_integer(gennum, stream);  
+  mps_lib_fputs("use the debugger to set the following variable\n", stream);
+  mps_lib_fputs("to a depth limit greater than ", stream);
+  display_integer(gennum, stream);
   mps_lib_fputs(":\n", stream);
   mps_lib_fputs("      depth_limit  - set address ", stream);
   display_hex_address(&depth_limit, stream);
@@ -303,9 +305,9 @@ static void display_trail_limit_addresses (int rootnum)
 {
   mps_lib_FILE *stream = mps_lib_get_stdout();
   mps_lib_fputs("\nTo display more trails of references at this depth, \n", stream);
-  mps_lib_fputs("use the debugger to set the following variable\n", stream);  
-  mps_lib_fputs("to a trail limit greater than ", stream);  
-  display_integer(rootnum, stream);  
+  mps_lib_fputs("use the debugger to set the following variable\n", stream);
+  mps_lib_fputs("to a trail limit greater than ", stream);
+  display_integer(rootnum, stream);
   mps_lib_fputs(":\n", stream);
   mps_lib_fputs("      trail_limit  - set address ", stream);
   display_hex_address(&trail_limit, stream);
@@ -316,9 +318,9 @@ static void display_cold_trail_limit_addresses (int reported)
 {
   mps_lib_FILE *stream = mps_lib_get_stdout();
   mps_lib_fputs("\nTo display more cold trails, \n", stream);
-  mps_lib_fputs("use the debugger to set the following variable\n", stream);  
-  mps_lib_fputs("to a trail limit greater than ", stream);  
-  display_integer(reported, stream);  
+  mps_lib_fputs("use the debugger to set the following variable\n", stream);
+  mps_lib_fputs("to a trail limit greater than ", stream);
+  display_integer(reported, stream);
   mps_lib_fputs(":\n", stream);
   mps_lib_fputs("      cold_trail_limit  - set address ", stream);
   display_hex_address(&cold_trail_limit, stream);
@@ -330,12 +332,15 @@ static void add_target_object (mps_addr_t obj)
   new_obj_rec(obj);
 }
 
-static void add_target_object_of_wrapper (mps_addr_t object, 
-                                          mps_fmt_t format, mps_pool_t pool, 
+static void add_target_object_of_wrapper (mps_addr_t object,
+                                          mps_fmt_t format, mps_pool_t pool,
                                           void *wrapper, size_t p2)
 {
   void **found = (void**)object;
   void *found_wrapper = *found;
+  unused(format);
+  unused(pool);
+  unused(p2);
   if (found_wrapper == wrapper) {
     add_target_object(object);
   }
@@ -385,6 +390,8 @@ static BOOL trace_reference(mps_addr_t object, mps_addr_t parent,
                             int parent_size, void * env)
 {
   obj_rec_p refrec = object_in_current_set(object);
+  unused(parent_size);
+  unused(env);
   if (refrec != NULL) {
     /* Have found a ref to the current gen */
     if (object_in_processed_set(parent)
@@ -406,10 +413,14 @@ static BOOL trace_reference(mps_addr_t object, mps_addr_t parent,
 }
 
 
-static void look_for_reference(mps_addr_t object, mps_fmt_t format, 
-                               mps_pool_t pool, 
+static void look_for_reference(mps_addr_t object, mps_fmt_t format,
+                               mps_pool_t pool,
                                void *p1, size_t p2)
 {
+  unused(format);
+  unused(pool);
+  unused(p1);
+  unused(p2);
   trace_object(object, trace_reference, NULL);
 }
 
@@ -459,7 +470,7 @@ static void display_cold_trail()
       while (current != NULL) {
         if (cold_trail_limit == reported) {
           /* prompt to increase limit */
-          display_cold_trail_limit_addresses(reported); 
+          display_cold_trail_limit_addresses(reported);
           report_break("Set the cold trail limit to show more if required\n");
         }
         if (cold_trail_limit > reported) {
@@ -491,23 +502,26 @@ static void advance_through_generations (void)
     if (roots > 0) {
       /* check to see if we really want to continue */
       if (depth_limit <= gennum) {
-	display_gen_limit_addresses(gennum); /* prompt to increase limit */
-	report_break("Set the depth limit to trace further if required\n");
-	if (depth_limit <= gennum) {
-	  return;
-	}
+        display_gen_limit_addresses(gennum); /* prompt to increase limit */
+        report_break("Set the depth limit to trace further if required\n");
+        if (depth_limit <= gennum) {
+          return;
+        }
       }
     }
     process_generation(); /* find children for this generation */
     gennum++;
   }
 }
-    
+
 static void record_a_root (mps_addr_t *objectref, mps_root_t root,
                            void *p1, size_t p2)
 {
   void **object = (void **)(*objectref);
   void *wrapper = *object;
+  unused(root);
+  unused(p1);
+  unused(p2);
   if (wrapper && ((int)wrapper & 3) == 0) {
     obj_rec_p rootrec = object_in_roots(object);
     if (rootrec == NULL) {
@@ -518,13 +532,13 @@ static void record_a_root (mps_addr_t *objectref, mps_root_t root,
 }
 
 
-/* Avoid inlining function calls from now on. 
+/* Avoid inlining function calls from now on.
  * It might confuse the roots walk, by putting extra stuff on the stack.
  */
 #pragma inline_depth(0)
 
 /* The following function "cleans" below the stack pointer,
- * avoiding any palimpsest problem, whereby spurious "old" 
+ * avoiding any palimpsest problem, whereby spurious "old"
  * values turn up
  */
 
@@ -564,7 +578,7 @@ static int follow_reference_paths (void)
 
     object_to_follow = 0;
     wrapper_to_follow = 0;
-    if (prompt_after_checking_references) {  
+    if (prompt_after_checking_references) {
       display_reference_variables_addresses();
       clear_object_reference_paths();
       report_break("Set a new object or wrapper to trace if required\n");

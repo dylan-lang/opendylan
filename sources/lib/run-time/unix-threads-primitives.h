@@ -87,27 +87,27 @@ typedef void * D_NAME;
 /*
 typedef void *HANDLE;
 typedef long LONG;
-typedef char BYTE; 
-typedef unsigned int BOOL; 
+typedef char BYTE;
+typedef unsigned int BOOL;
 */
 
 typedef struct semaphore {
-	sem_t sema;
+  sem_t sema;
 } SEMAPHORE;
 
 typedef struct simple_lock {
-	pthread_mutex_t mutex;
-        pthread_t owner;
+  pthread_mutex_t mutex;
+  pthread_t owner;
 } SIMPLELOCK;
 
 typedef struct recursive_lock {
-	pthread_mutex_t mutex;
-        pthread_t owner;
-	int    recursion_count;
+  pthread_mutex_t mutex;
+  pthread_t owner;
+  int recursion_count;
 } RECURSIVELOCK;
 
 typedef struct notification {
-        pthread_cond_t cond;
+  pthread_cond_t cond;
 } NOTIFICATION;
 
 typedef BYTE *TLV_VECTOR;

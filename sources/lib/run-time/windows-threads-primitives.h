@@ -88,23 +88,23 @@ typedef void * D_NAME;
 
 
 typedef struct simple_lock {
-	HANDLE owner;
-	HANDLE semaphore;
-	int    lock_count;
+  HANDLE owner;
+  HANDLE semaphore;
+  int    lock_count;
 } SIMPLELOCK;
 
 typedef struct recursive_lock {
-	HANDLE owner;
-	HANDLE semaphore;
-	int    lock_count;
-	int    recursion_count;
+  HANDLE owner;
+  HANDLE semaphore;
+  int    lock_count;
+  int    recursion_count;
 } RECURSIVELOCK;
 
 typedef struct {
-    HANDLE notifier;
-    HANDLE anti_notifier;
-	LONG    target;
-	LONG    count;
+  HANDLE notifier;
+  HANDLE anti_notifier;
+  LONG    target;
+  LONG    count;
 } NOTIFICATION;
 
 typedef BYTE *TLV_VECTOR;

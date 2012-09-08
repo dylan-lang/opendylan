@@ -10,7 +10,7 @@ int check_heap_stats_order_1 = 1;
 int check_heap_stats_order_2 = 1;
 
 /* check_reference_trails  -- controls tracing reference trails */
-int check_reference_trails = 1; 
+int check_reference_trails = 1;
 
 
 #include "heap-utils.h"
@@ -43,13 +43,13 @@ void display_wrapper_breakpoints()
       mps_lib_fputs("Object allocation breakpoints\n\n", stream);
       mps_lib_fputs("   (class-name)                                    (count)\n\n", stream);
       for (i = 0; i < wrapper_breaks_cursor + 1; i++) {
-	wrapper_stats_t wrapper_record = wrapper_breaks + i;
-	char *class_name = class_name_from_wrapper(wrapper_record->wrapper_address);
+        wrapper_stats_t wrapper_record = wrapper_breaks + i;
+        char *class_name = class_name_from_wrapper(wrapper_record->wrapper_address);
 
-	mps_lib_fputs_(class_name, class_name_size, stream);
-	display_padding_for_string(class_name, ' ', class_name_size, stream);
-	display_integer(wrapper_record->usage_size, stream);
-	mps_lib_fputc('\n', stream);
+        mps_lib_fputs_(class_name, class_name_size, stream);
+        display_padding_for_string(class_name, ' ', class_name_size, stream);
+        display_integer(wrapper_record->usage_size, stream);
+        mps_lib_fputc('\n', stream);
       }
     }
   else

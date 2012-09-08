@@ -12,7 +12,8 @@ define module harp-x86-unix-rtg
   use common-dylan;
   use harp-x86, export: { <harp-x86-unix-back-end>,
                           <harp-x86-linux-back-end>,
-                          <harp-x86-freebsd-back-end> };
+                          <harp-x86-freebsd-back-end>,
+                          <harp-x86-darwin-back-end> };
   use harp-native-rtg, export: { create-dylan-runtime };
   use harp-unix-rtg;
   use harp-x86-rtg;

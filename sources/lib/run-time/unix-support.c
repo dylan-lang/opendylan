@@ -11,7 +11,7 @@
 #include "mpslib.h"
 
 void mps_lib_abort(void)
-{ 
+{
   fflush(stdout);
   abort();
 }
@@ -132,6 +132,6 @@ D c_primitive_stop_timer()
     D* data = (D*)vector_data(value);
     data[0] = I(stop.ru_utime.tv_sec);
     data[1] = I(stop.ru_utime.tv_usec);
-    return((D)value); 
+    return((D)value);
   }
 }
