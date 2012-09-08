@@ -27,7 +27,7 @@
 
 #include "unix-threads-primitives.h"
 
-#define ignore(x) (void)x
+#define unused(x) (void)x
 
 /*****************************************************************************/
 /* GLOBAL VARIABLE DECLARATIONS                                              */
@@ -232,7 +232,7 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
   int status;
   DTHREAD **newthread_ptr;
 
-  ignore(priority);
+  unused(priority);
 
   newthread_ptr = (DTHREAD **)(dylan__malloc__ambig(4));
   newthread_ptr[0] = newthread;
@@ -968,7 +968,7 @@ primitive_make_semaphore(CONTAINER *lock, D_NAME name,
   int   initial = zinitial >> 2;
   int   max   = zmax >> 2;
 
-  ignore(max);
+  unused(max);
 
   assert(lock != NULL);
   assert(IS_ZINT(zinitial));
