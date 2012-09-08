@@ -598,6 +598,8 @@ __inline
 #include "x86-linux-exceptions.c"
 #elif defined(OPEN_DYLAN_PLATFORM_FREEBSD)
 #include "x86-freebsd-exceptions.c"
+#elif defined(OPEN_DYLAN_PLATFORM_DARWIN)
+#include "x86-darwin-exceptions.c"
 #else
 #include "x86-windows-exceptions.c"
 #endif
