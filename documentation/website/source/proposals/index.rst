@@ -36,4 +36,5 @@ All Proposals by Number
 2    Standard      Final      `define function <dep-0002.html>`_ (`source <../_sources/proposals/dep-0002.txt>`__)
 3    Standard      Final      `C3 superclass linearization <dep-0003.html>`_  (`source <../_sources/proposals/dep-0003.txt>`__)
 4    Standard      Final      `New strings library <dep-0004.html>`_  (`source <../_sources/proposals/dep-0004.txt>`__)
+5    Standard      Final      `Subclass <dep-0005.html>`_  (`source <../_sources/proposals/dep-0005.txt>`__)
 ==== ============= ========== =============================================
