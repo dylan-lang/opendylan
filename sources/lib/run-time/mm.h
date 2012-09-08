@@ -113,7 +113,7 @@ extern MMError MMTramp(void **rReturn,
  * Similarly, weak tables may _NOT_ be allocated in this way.
  * MMReserveExactAWL, MMCommitExactAWL, MMReserveWeakAWL, MMCommitWeakAWL
  * should be used instead.
- * 
+ *
  * Wrappers may not be initialised to contain references to allocated
  * objects.  It may however be updated to contain such a reference, but
  * only after the call to MMCommitWrapper.
@@ -157,7 +157,7 @@ extern MMAllocHandler MMReserveExactAWLHandler(MMAllocHandler handler);
 
 /* Allocate Space for a weak object in the Auto Weak Linked pool
  *
- * MMReserveWeakAWL is like MMReserveExactAWL except that it allocates 
+ * MMReserveWeakAWL is like MMReserveExactAWL except that it allocates
  * an object with weak references. Etc.
  */
 
@@ -202,7 +202,7 @@ extern void MMFreeMisc(void *p, size_t size);
  * if their information is out of date, since a collection may move
  * objects.
  */
- 
+
 extern unsigned MMCollectCount(void);
 
 

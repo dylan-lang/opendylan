@@ -1,6 +1,7 @@
 #include "heap-utils.h"
 #include <assert.h>
 
+#define unused(param)   ((void)param)
 
 /****  support for filtering ****/
 
@@ -33,7 +34,7 @@ static BOOL class_is_filtered (void *wrapper)
 /* @@@@@ HACK TO TEST FILTERING */
 
 /* set these variables from a debugger to wrapper values to test filters */
-void *o2_default_filter_1 = NULL; 
+void *o2_default_filter_1 = NULL;
 void *o2_default_filter_2 = NULL;
 void *o2_default_filter_3 = NULL;
 
@@ -78,7 +79,7 @@ static table_t wrapper_table = NULL;  /* table of wrapper -> aggregations */
  * special aggregation class for references from GC roots.
  */
 
-static ag_class_t root_aggregation = NULL; 
+static ag_class_t root_aggregation = NULL;
 
 
 typedef struct ag_class_s {
@@ -136,6 +137,7 @@ static void clear_aggregation_entry (void *key, void *value)
 {
   ag_class_t agclass = key;
   free_obj(agclass, sizeof(ag_class_s));
+  unused(value);
 }
 
 void clear_aggregation_classes (void)
@@ -160,11 +162,11 @@ void clear_aggregation_classes (void)
 /* @@@@@ HACK TO TEST AGGREGATIONS */
 
 /* set these variables from a debugger to wrapper values to test aggregations */
-void *o2_default_aggregation_1 = NULL; 
+void *o2_default_aggregation_1 = NULL;
 void *o2_default_aggregation_2 = NULL;
 void *o2_default_aggregation_3 = NULL;
 
-static ag_class_t collection_aggregation = NULL; 
+static ag_class_t collection_aggregation = NULL;
 
 
 
@@ -306,6 +308,7 @@ static void clear_leaf_entry (void *key, void *value)
   stats_t lstats = value;
   assert(lstats->table == NULL);
   stats_destroy(lstats);
+  unused(key);
 }
 
 static void clear_order2_entry (void *key, void *value)
@@ -313,6 +316,7 @@ static void clear_order2_entry (void *key, void *value)
   stats_t o2stats = value;
   table_map(o2stats->table, clear_leaf_entry);
   stats_destroy(o2stats);
+  unused(key);
 }
 
 static void clear_order2_stats (void)
@@ -328,16 +332,18 @@ static void clear_order2_stats (void)
   maybe_initialize_aggregations();
 }
 
-static BOOL add_stats_for_object (mps_addr_t object, mps_addr_t parent, 
+static BOOL add_stats_for_object (mps_addr_t object, mps_addr_t parent,
                                   int parent_size, void *pclass)
 {
   void *owrapper;
+  unused(parent);
+  unused(parent_size);
   if (object && ((int)object & 3) == 0) {
     /* this is probably a heap object, but check the wrapper */
     owrapper = *(void **)object;
     if (owrapper && ((int)owrapper & 3) == 0) {
       void **wwrapper = *(void ***)owrapper; /* wrapper wrapper */
-      if (!wwrapper || (((int)wwrapper & 3) != 0) || 
+      if (!wwrapper || (((int)wwrapper & 3) != 0) ||
           (wwrapper != *wwrapper)) {
         /* not a valid wrapper wrapper. do nothing */
       } else if (object_is_seen(object)) {
@@ -353,7 +359,7 @@ static BOOL add_stats_for_object (mps_addr_t object, mps_addr_t parent,
         stats_t lstats;
 
         record_object_seen(object);
-        
+
         if (!table_lookup((void**)&o2stats, stats_table, oclass)) {
           BOOL res;
           o2stats = order2_stats_create();
@@ -361,7 +367,7 @@ static BOOL add_stats_for_object (mps_addr_t object, mps_addr_t parent,
           assert(res == TRUE);
         }
         stats_update(o2stats, osize);
-        
+
         if (!table_lookup((void**)&lstats, o2stats->table, pclass)) {
           BOOL res;
           lstats = leaf_stats_create();
@@ -374,18 +380,25 @@ static BOOL add_stats_for_object (mps_addr_t object, mps_addr_t parent,
   }
   return TRUE;
 }
-  
+
 static void record_order_2_root (mps_addr_t *objectref, mps_root_t root,
                                  void *p1, size_t p2)
 {
   mps_addr_t object = *objectref;
   add_stats_for_object(object, NULL, 0, root_aggregation);
+  unused(root);
+  unused(p1);
+  unused(p2);
 }
 
-static void record_order_2_object (mps_addr_t object, mps_fmt_t format, 
+static void record_order_2_object (mps_addr_t object, mps_fmt_t format,
                                    mps_pool_t pool, void *p1, size_t p2)
 {
   void *wrapper = *(void **)object;
+  unused(format);
+  unused(pool);
+  unused(p1);
+  unused(p2);
   if (wrapper && ((int)wrapper & 3) == 0) {
     /* ignore filtered objects at this stage */
     if (!class_is_filtered(wrapper)) {
@@ -417,6 +430,7 @@ static void check_if_biggest_stat (void *key, void *value)
 {
   stats_t stats = value;
   int count = sort_criterion_for_index(stats);
+  unused(key);
   if ((count < limiting_value) && (count > largest_found)) {
       largest_found = count;
   }
@@ -482,8 +496,8 @@ static void display_stats_in_table (table_t table, int indent)
   int old_margin_indent = margin_indent;
   int largest;
   margin_indent = indent;
-  for (largest = biggest_below_value(table, very_big); 
-       largest >= 0; 
+  for (largest = biggest_below_value(table, very_big);
+       largest >= 0;
        largest = biggest_below_value(table, largest)) {
     display_stats_of_size(table, largest);
   }

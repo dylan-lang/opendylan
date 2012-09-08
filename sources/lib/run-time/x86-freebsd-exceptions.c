@@ -34,7 +34,7 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *sc);
 static void DylanSEGVHandler (int sig, siginfo_t *info, void *sc);
 
 static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-					     struct sigaction * oldSEGVHandler)
+                                             struct sigaction * oldSEGVHandler)
 {
   struct sigaction newFPEHandler;
   struct sigaction newSEGVHandler;
@@ -59,7 +59,7 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 }
 
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-					  struct sigaction * oldSEGVHandler)
+                                          struct sigaction * oldSEGVHandler)
 {
   sigaction(SIGFPE, oldFPEHandler, NULL);
 #if 0
@@ -87,17 +87,17 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
       RestoreFPState();
       uc->uc_mcontext.mc_eip = (long) dylan_integer_divide_0_handler;
       break;
-      
+
     case FPE_INTOVF:
       RestoreFPState();
       uc->uc_mcontext.mc_eip = (long) dylan_integer_overflow_handler;
       break;
-      
+
     case FPE_FLTDIV:
       RestoreFPState();
       uc->uc_mcontext.mc_eip = (long) dylan_float_divide_0_handler;
       break;
-      
+
     case FPE_FLTOVF:
       RestoreFPState();
       uc->uc_mcontext.mc_eip = (long) dylan_float_overflow_handler;
@@ -107,7 +107,7 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
       RestoreFPState();
       uc->uc_mcontext.mc_eip = (long) dylan_float_underflow_handler;
       break;
-      
+
     default:
       break;
     }

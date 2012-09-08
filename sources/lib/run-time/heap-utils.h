@@ -99,7 +99,7 @@ extern void display_integer (int integer, mps_lib_FILE *stream);
 
 extern void display_hex_address (void *address, mps_lib_FILE *stream);
 
-extern void display_padding_for_string(char *string, char pad, 
+extern void display_padding_for_string(char *string, char pad,
                                        int field, mps_lib_FILE *stream);
 
 extern void *alloc_obj(size_t size);
@@ -115,8 +115,8 @@ extern int mps_lib_fputs_(const char *s, int end, mps_lib_FILE *stream);
 extern void mps_lib_abort(void);
 
 
-/* class_name_size 
- *   a reasonable constant width for displaying Dylan class names 
+/* class_name_size
+ *   a reasonable constant width for displaying Dylan class names
  */
 #define class_name_size 45
 

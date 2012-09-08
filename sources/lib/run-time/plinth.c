@@ -43,23 +43,23 @@ int buffer_add (message_buffer_t buf, char c)
   if (dylan_streamQ)
     {
       if (dylan_buffer_pos < dylan_buffer_size)
-	dylan_buffer[dylan_buffer_pos++] = c;
+        dylan_buffer[dylan_buffer_pos++] = c;
       else {
-	/* HACK -- delete last line in dylan buffer on overflow */
-	int pos = dylan_buffer_pos - 1;
+        /* HACK -- delete last line in dylan buffer on overflow */
+        int pos = dylan_buffer_pos - 1;
 
-	if (dylan_buffer[pos] != '\n') {
-	  while (dylan_buffer[--pos] != '\n');
-	  while (pos < dylan_buffer_pos)
-	    dylan_buffer[++pos] = ' ';
-	  dylan_buffer[pos - 1] = '\n'; }
+        if (dylan_buffer[pos] != '\n') {
+          while (dylan_buffer[--pos] != '\n');
+          while (pos < dylan_buffer_pos)
+            dylan_buffer[++pos] = ' ';
+          dylan_buffer[pos - 1] = '\n'; }
       }
     }
   else
     {
       buf->buf_data[buf->buf_index++] = c;
       if ((c == '\n') || (c == '\0') || (buf->buf_index >= BUFFER_SIZE))
-	res = buf->buf_index;
+        res = buf->buf_index;
     };
   return(res);
 }
@@ -83,13 +83,13 @@ HANDLE ensure_log_file (void)
 {
   if (current_log_file == 0)
     {
-      current_log_file = CreateFile("dylan-runtime.log", 
-				    GENERIC_WRITE, 
-				    FILE_SHARE_READ, 
-				    0, 
-				    OPEN_ALWAYS, 
-				    FILE_ATTRIBUTE_NORMAL,
-				    0);
+      current_log_file = CreateFile("dylan-runtime.log",
+                                    GENERIC_WRITE,
+                                    FILE_SHARE_READ,
+                                    0,
+                                    OPEN_ALWAYS,
+                                    FILE_ATTRIBUTE_NORMAL,
+                                    0);
     }
   return(current_log_file);
 }
@@ -99,9 +99,9 @@ void ensure_log_file_closed (void)
   if (current_log_file != 0)
     {
       if (CloseHandle(current_log_file))
-	current_log_file = 0;
+        current_log_file = 0;
     }
-}  
+}
 
 
 void plinth_flush_string_to_file (char *string, int length)
@@ -138,7 +138,7 @@ int plinth_putc (message_buffer_t buf, int c)
 
 
 void mps_lib_abort(void)
-{ 
+{
   ensure_log_file_closed();
   DebugBreak();
 }
