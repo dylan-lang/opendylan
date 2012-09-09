@@ -66,10 +66,7 @@ RTOBJS_harp ?= libdylan-harp-runtime.a ;
 
 RTOBJS_llvm ?= ;
 
-RTOBJS_c    ?= debug-print.o
-	       run-time.o
-	       trace.o
-	       posix-threads.o ;
+RTOBJS_c    ?= libdylan-c-runtime.a ;
 
 LINKFLAGS += -L$(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/ ;
 

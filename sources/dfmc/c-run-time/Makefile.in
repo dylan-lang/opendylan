@@ -17,8 +17,7 @@ INCDEST         = $(OPEN_DYLAN_USER_INSTALL)/include
 OBJDIR          = obj-$(OPEN_DYLAN_PLATFORM_NAME)
 
 CC = @CC@
-AS = as -L
-AR = ar -q
+AR = ar -rcs
 
 ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86-darwin)
 	PLATFORM_CFLAGS = -arch i386
@@ -40,6 +39,8 @@ OBJS    = $(OBJDIR)/posix-threads.o \
           $(OBJDIR)/run-time.o \
           $(OBJDIR)/trace.o
 
+C_RUNTIME_LIBRARY = $(OBJDIR)/libdylan-c-runtime.a
+
 RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
 
 all: $(OBJS)
@@ -47,6 +48,9 @@ all: $(OBJS)
 $(OBJDIR)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -MMD -c -o $@ $<
+
+$(C_RUNTIME_LIBRARY): $(OBJS)
+	$(AR) $(C_RUNTIME_LIBRARY) $(OBJS)
 
 $(INCDEST):
 	mkdir -p $(INCDEST)
@@ -58,8 +62,8 @@ install-header: $(srcdir)/run-time.h $(INCDEST)
 	cp -fp $(srcdir)/trace.h $(INCDEST)
 	cp -fp $(srcdir)/run-time.h $(INCDEST)
 
-install-runtime: $(OBJS) $(RUNTIMELIBDEST)
-	cp -fp $(OBJS) $(RUNTIMELIBDEST)
+install-runtime: $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
+	cp -fp $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
 
 install: install-runtime install-header
 
