@@ -648,16 +648,16 @@ MMError dylan_mm_register_thread(void *stackBot)
 
 #ifndef GC_USE_BOEHM
 
-  res = mps_ap_create(&gc_teb->gc_teb_main_ap, main_pool, MPS_RANK_EXACT);
+  res = mps_ap_create(&gc_teb->gc_teb_main_ap, main_pool, mps_rank_exact());
   if(res) goto failApCreate;
 
-  res = mps_ap_create(&gc_teb->gc_teb_leaf_ap, leaf_pool, MPS_RANK_EXACT);
+  res = mps_ap_create(&gc_teb->gc_teb_leaf_ap, leaf_pool, mps_rank_exact());
   if(res) goto failLeafApCreate;
 
-  res = mps_ap_create(&gc_teb->gc_teb_weak_awl_ap, weak_table_pool, MPS_RANK_WEAK);
+  res = mps_ap_create(&gc_teb->gc_teb_weak_awl_ap, weak_table_pool, mps_rank_weak());
   if(res) goto failWeakAWLApCreate;
 
-  res = mps_ap_create(&gc_teb->gc_teb_exact_awl_ap, weak_table_pool, MPS_RANK_EXACT);
+  res = mps_ap_create(&gc_teb->gc_teb_exact_awl_ap, weak_table_pool, mps_rank_exact());
   if(res) goto failExactAWLApCreate;
 
   res = mps_thread_reg(&gc_teb->gc_teb_thread, arena);
@@ -665,7 +665,7 @@ MMError dylan_mm_register_thread(void *stackBot)
 
   /* Create a root object for ambiguously scanning the stack. */
   assert(stackBot != NULL);
-  res = mps_root_create_reg(&gc_teb->gc_teb_stack_root, arena, MPS_RANK_AMBIG,
+  res = mps_root_create_reg(&gc_teb->gc_teb_stack_root, arena, mps_rank_ambig(),
                            (mps_rm_t)0,
                             gc_teb->gc_teb_thread, mps_stack_scan_ambig, stackBot, 0);
   if(res) goto failStackRootCreate;
@@ -1184,7 +1184,7 @@ int MMCommitWrapper(void *p, size_t size, gc_teb_t gc_teb)
   // the wrapper isn't properly initialized until after allocation.
   // So the check will always fail.
 
-  res = mps_root_create_fmt(&root, arena, MPS_RANK_EXACT,
+  res = mps_root_create_fmt(&root, arena, mps_rank_exact(),
                              (mps_rm_t)0, fmt_A->scan, p, (char *)p + size);
   if(res) return 0;
   return 1;
@@ -1964,7 +1964,7 @@ MMError MMRegisterRootStatic(mps_root_t *rootp, void *base, void *limit)
 {
 #ifndef GC_USE_BOEHM
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
-  return mps_root_create_fmt(rootp, arena, MPS_RANK_EXACT,
+  return mps_root_create_fmt(rootp, arena, mps_rank_exact(),
                              MPS_RM_PROT, fmt_A->scan, base, limit);
 #else
   return 0;
@@ -1975,7 +1975,7 @@ MMError MMRegisterRootImmut(mps_root_t *rootp, void *base, void *limit)
 {
 #ifndef GC_USE_BOEHM
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
-  return mps_root_create_fmt(rootp, arena, MPS_RANK_EXACT,
+  return mps_root_create_fmt(rootp, arena, mps_rank_exact(),
                              MPS_RM_CONST, fmt_A->scan, base, limit);
 #else
   return 0;
@@ -1993,7 +1993,7 @@ MMError MMRegisterRootAmbig(mps_root_t *rootp, void *base, void *limit)
 #ifndef GC_USE_BOEHM
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
-  return mps_root_create_table(rootp, arena, MPS_RANK_AMBIG,
+  return mps_root_create_table(rootp, arena, mps_rank_ambig(),
                                0, base, s);
 #else
   return 0;
@@ -2005,7 +2005,7 @@ MMError MMRegisterRootExact(mps_root_t *rootp, void *base, void *limit)
 #ifndef GC_USE_BOEHM
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */
-  return mps_root_create_table_masked(rootp, arena, MPS_RANK_EXACT,
+  return mps_root_create_table_masked(rootp, arena, mps_rank_exact(),
                                       MPS_RM_PROT, base, s, 3);
 #else
   return 0;
@@ -2065,7 +2065,7 @@ MMError MMRootStatic(void *base, void *limit)
 {
 #ifndef GC_USE_BOEHM
   mps_root_t root;
-  return mps_root_create_fmt(&root, arena, MPS_RANK_EXACT,
+  return mps_root_create_fmt(&root, arena, mps_rank_exact(),
                              0, fmt_A->scan, base, limit);
 #else
   return 0;
@@ -2083,7 +2083,7 @@ MMError MMRootAmbig(void *base, void *limit)
 #ifndef GC_USE_BOEHM
   mps_root_t root;
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
-  return mps_root_create_table(&root, arena, MPS_RANK_AMBIG,
+  return mps_root_create_table(&root, arena, mps_rank_ambig(),
                                0, base, s);
 #else
   return 0;
@@ -2095,7 +2095,7 @@ MMError MMRootExact(void *base, void *limit)
 #ifndef GC_USE_BOEHM
   mps_root_t root;
   size_t s = ((char *)limit - (char *)base) / sizeof(mps_addr_t);
-  return mps_root_create_table_masked(&root, arena, MPS_RANK_EXACT,
+  return mps_root_create_table_masked(&root, arena, mps_rank_exact(),
                                       0, base, s, 3);
 #else
   return 0;
