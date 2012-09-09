@@ -150,17 +150,15 @@ Rationale
    possible, methods on classes called with an instance should behave
    isomorphically to corresponding methods on corresponding subclass
    types called with the class of that instance. So, for example, given
-   the heterachy:
+   the heterachy::
 
-::
-
-   <object>
-       \
-       <A>
-       / \
-     <B> <C>
-       \ /
-       <D>
+     <object>
+         \
+         <A>
+         / \
+       <B> <C>
+         \ /
+         <D>
 
    and methods:
 
