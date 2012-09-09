@@ -9,6 +9,7 @@ extern void dylan_float_divide_0_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
+extern void walkstack();
 
 /* FreeBSD exception handling:  Setup a signal handler for SIGFPE (floating point exceptions).
    We rely on the fact that FreeBSD passes a second argument containing the error context. */
@@ -23,21 +24,25 @@ extern void dylan_float_underflow_handler();
 #define EXCEPTION_PREAMBLE() \
   struct sigaction oldFPEHandler; \
   struct sigaction oldSEGVHandler; \
-  EstablishDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler); \
+  struct sigaction oldTRAPHandler; \
+EstablishDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler, &oldTRAPHandler);      \
   {
 
 #define EXCEPTION_POSTAMBLE() \
   } \
-  RemoveDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler);
+  RemoveDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler, &oldTRAPHandler);
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *sc);
 static void DylanSEGVHandler (int sig, siginfo_t *info, void *sc);
+static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc);
 
 static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-                                             struct sigaction * oldSEGVHandler)
+                                             struct sigaction * oldSEGVHandler,
+                                             struct sigaction * oldTRAPHandler)
 {
   struct sigaction newFPEHandler;
   struct sigaction newSEGVHandler;
+  struct sigaction newTRAPHandler;
 
   sigset_t set, oldset;
 
@@ -53,18 +58,25 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
   sigaction(SIGFPE, &newSEGVHandler, oldSEGVHandler);
 #endif
 
+  sigfillset(&newTRAPHandler.sa_mask);
+  newTRAPHandler.sa_sigaction = DylanTRAPHandler;
+  newTRAPHandler.sa_flags = SA_SIGINFO;
+  sigaction(SIGTRAP, &newTRAPHandler, oldTRAPHandler);
+
   sigemptyset(&set);
   sigaddset(&set, SIGPIPE);
   sigprocmask(SIG_BLOCK, &set, &oldset);
 }
 
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-                                          struct sigaction * oldSEGVHandler)
+                                          struct sigaction * oldSEGVHandler,
+                                          struct sigaction * oldTRAPHandler)
 {
   sigaction(SIGFPE, oldFPEHandler, NULL);
 #if 0
   sigaction(SIGSEGV, oldSEGVHandler, NULL);
 #endif
+  sigaction(SIGTRAP, oldTRAPHandler, NULL);
 }
 
 static __inline
@@ -134,4 +146,9 @@ static void DylanSEGVHandler (int sig, siginfo_t *info, void *sc)
   //  (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
 
   return;
+}
+
+static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc)
+{
+  walkstack();
 }
