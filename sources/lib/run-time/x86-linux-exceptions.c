@@ -12,7 +12,6 @@
 #include <sys/ucontext.h>
 #include <ucontext.h>
 #include <fpu_control.h>
-#include <dlfcn.h>
 
 extern int inside_dylan_ffi_barrier();
 extern void dylan_stack_overflow_handler(void *base_address, int size, unsigned long protection);
@@ -21,6 +20,8 @@ extern void dylan_integer_divide_0_handler();
 extern void dylan_float_divide_0_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
+
+extern void walkstack();
 
 /* Linux exception handling: Setup signal handlers for SIGFPE
  * (floating point exceptions), SIGSEGV (segmentation violation), and
@@ -243,38 +244,6 @@ static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
   }
 
   chain_sigaction(&outer_SEGVHandler, sig, info, uap);
-}
-
-static int getebp () {
-    int ebp;
-    asm("mov (%%ebp), %0"
-        :"=r"(ebp));
-    return ebp;
-};
-
-static void walkstack() {
-  int ebp = getebp();
-  int eip;
-  int rc;
-  Dl_info info;
-
-  while(ebp) {
-    eip = *((int*)ebp + 1);
-    rc = dladdr((void*)eip, &info);
-    if (!rc||(!info.dli_sname && !info.dli_fname)) {
-      printf("0x%x (unknown)\n", eip);
-    } else {
-      if (!info.dli_sname) {
-        printf("0x%x (%s)\n", eip, info.dli_fname);
-      } else {
-        printf("%s+%i (%s)\n",
-               info.dli_sname,
-               eip - (int)info.dli_saddr,
-               info.dli_fname);
-      }
-    }
-    ebp = *((int*)ebp);
-  }
 }
 
 static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc)
