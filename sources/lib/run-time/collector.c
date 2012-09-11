@@ -195,16 +195,18 @@ mps_bool_t dylan_check(mps_addr_t addr)
 
 static void defaultHandler(MMError e, const char *opName, size_t size)
 {
-  unused(e);
-  unused(size);
 #ifndef GC_USE_BOEHM
   mps_lib_FILE *stream = mps_lib_get_stderr();
+  unused(e);
+  unused(size);
   mps_lib_fputs("\nError: ", stream);
   mps_lib_fputs(opName, stream);
   mps_lib_fputs(" - Request to allocate failed -- aborting\n", stream);
   mps_lib_abort();
 #else
+  unused(e);
   unused(opName);
+  unused(size);
 #endif
 }
 
