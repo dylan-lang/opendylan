@@ -395,9 +395,9 @@ typedef struct _mv {
 } MV;
 
 #define MV_GET_ELT(n) \
-  (Preturn_values.count > (n) ? Preturn_values.value[n] : DFALSE)
-#define MV_SET_ELT(n, t)        (Preturn_values.value[n] = (t))
-#define MV_SET_COUNT(n)         (Preturn_values.count = (n))
+  (get_teb()->return_values.count > (n) ? get_teb()->return_values.value[n] : DFALSE)
+#define MV_SET_ELT(n, t)        (get_teb()->return_values.value[n] = (t))
+#define MV_SET_COUNT(n)         (get_teb()->return_values.count = (n))
 
 extern D MV_SPILL (D first_value);
 extern D MV_UNSPILL (D spill_t);
@@ -489,12 +489,6 @@ PURE_FUNCTION inline TEB* get_teb()
   return teb;
 }
 #endif
-
-/* these are accessed directly by the compiler and this file */
-#define Pfunction_ get_teb()->function
-#define Pargument_count_ get_teb()->argument_count
-#define Pnext_methods_ get_teb()->next_methods
-#define Preturn_values get_teb()->return_values
 
 /* CALLING CONVENTION ENTRY POINTS */
 
@@ -618,7 +612,7 @@ extern D primitive_set_accessor_method_xep (D am, D what);
 #define MEP_CALL9(fn,a1,a2,a3,a4,a5,a6,a7,a8,a9) MEP_CALLN(fn)(a1),(a2),(a3),(a4),(a5),(a6),(a7),(a8),(a9)))
 #define MEP_CALL10(fn,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) MEP_CALLN(fn)(a1),(a2),(a3),(a4),(a5),(a6),(a7),(a8),(a9),(a10)))
 
-#define MIEP_CALL_PROLOG(nm) { Pnext_methods_ = (nm); }
+#define MIEP_CALL_PROLOG(nm) { get_teb()->next_methods = (nm); }
 
 #define ENGINE_NODE_CALL_PROLOG(fn,eng,ac) \
   { \
@@ -671,24 +665,24 @@ extern D inline_invoke_engine_node(ENGINE*, int, ...);
   }
 
 #define CONGRUENT_CALL0() \
-    ((((ENGINE*)Pfunction_)->entry_point)())
+    ((((ENGINE*)get_teb()->function)->entry_point)())
 #define CONGRUENT_CALL1(a1) \
-    ((((ENGINE*)Pfunction_)->entry_point)((a1)))
+    ((((ENGINE*)get_teb()->function)->entry_point)((a1)))
 #define CONGRUENT_CALL2(a1,a2) \
-    ((((ENGINE*)Pfunction_)->entry_point)((a1),(a2)))
+    ((((ENGINE*)get_teb()->function)->entry_point)((a1),(a2)))
 #define CONGRUENT_CALL3(a1,a2,a3) \
-    ((((ENGINE*)Pfunction_)->entry_point)((a1),(a2),(a3)))
+    ((((ENGINE*)get_teb()->function)->entry_point)((a1),(a2),(a3)))
 #define CONGRUENT_CALL4(a1,a2,a3,a4) \
-    ((((ENGINE*)Pfunction_)->entry_point)((a1),(a2),(a3),(a4)))
+    ((((ENGINE*)get_teb()->function)->entry_point)((a1),(a2),(a3),(a4)))
 #define CONGRUENT_CALL5(a1,a2,a3,a4,a5) \
-    ((((ENGINE*)Pfunction_)->entry_point)((a1),(a2),(a3),(a4),(a5)))
+    ((((ENGINE*)get_teb()->function)->entry_point)((a1),(a2),(a3),(a4),(a5)))
 #define CONGRUENT_CALL6(a1,a2,a3,a4,a5,a6) \
-    ((((ENGINE*)Pfunction_)->entry_point)((a1),(a2),(a3),(a4),(a5),(a6)))
+    ((((ENGINE*)get_teb()->function)->entry_point)((a1),(a2),(a3),(a4),(a5),(a6)))
 #define CONGRUENT_CALL7(a1,a2,a3,a4,a5,a6,a7) \
-    ((((ENGINE*)Pfunction_)->entry_point)((a1),(a2),(a3),(a4),(a5),(a6),(a7)))
+    ((((ENGINE*)get_teb()->function)->entry_point)((a1),(a2),(a3),(a4),(a5),(a6),(a7)))
 
 #define CONGRUENT_CALLN(ac) \
-    (inline_invoke_engine_node((ENGINE*)(Pfunction_),(ac)
+    (inline_invoke_engine_node((ENGINE*)(get_teb()->function),(ac)
 
 
 #define IEP_CALLN(fn) (D)((((FN*)fn)->iep)(
@@ -713,7 +707,7 @@ extern D MAKE_CLOSURE(D, int);
 extern D MAKE_CLOSURE_SIG(D, D, int);
 extern D MAKE_METHOD_SIG(D, D);
 extern D SET_METHOD_SIG(D, D);
-#define CAPTURE_ENVIRONMENT CFN* _fn = ((CFN*)Pfunction_);
+#define CAPTURE_ENVIRONMENT CFN* _fn = ((CFN*)get_teb()->function);
 extern void INIT_KEYWORD_CLOSURE(D, int, ...);
 extern D MAKE_KEYWORD_CLOSURE_INITD(D, int, ...);
 extern D MAKE_KEYWORD_CLOSURE_INITD_SIG(D, D, int, ...);
@@ -721,7 +715,7 @@ extern D MAKE_KEYWORD_CLOSURE(D, int);
 extern D MAKE_KEYWORD_CLOSURE_SIG(D, D, int);
 extern D MAKE_KEYWORD_METHOD_SIG(D, D);
 extern D SET_KEYWORD_METHOD_SIG(D, D);
-#define CAPTURE_KEYWORD_ENVIRONMENT KCFN* _fn = ((KCFN*)Pfunction_);
+#define CAPTURE_KEYWORD_ENVIRONMENT KCFN* _fn = ((KCFN*)get_teb()->function);
 #define CREF(n) (_fn->environment[(n)])
 #define MREF    (_fn)
 
@@ -1518,10 +1512,10 @@ extern D primitive_raw_as_string(DBSTR buffer);
 
 /* CALLING CONVENTION PRIMITIVES */
 
-#define primitive_current_function()                    ((D)(Pfunction_))
-#define primitive_function_parameter()                  ((D)(Pfunction_))
-#define primitive_lambda_parameter()                    ((D)(Pfunction_))
-#define primitive_next_methods_parameter()              ((D)(Pnext_methods_))
+#define primitive_current_function()                    ((D)(get_teb()->function))
+#define primitive_function_parameter()                  ((D)(get_teb()->function))
+#define primitive_lambda_parameter()                    ((D)(get_teb()->function))
+#define primitive_next_methods_parameter()              ((D)(get_teb()->next_methods))
 
 /* APPLY PRIMITIVES */
 
