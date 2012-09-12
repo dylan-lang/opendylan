@@ -72,9 +72,7 @@ define constant $closure-reference-string
 define constant $method-reference-string
   = "MREF";
 define constant $function-register-string
-  = c-local-mangle("%function");
-// define constant $next-methods-register-string
-//   = c-local-mangle("%next-methods");
+  = "get_teb()->function";
 define constant $capture-environment-string
   = "CAPTURE_ENVIRONMENT";
 define constant $capture-keyword-environment-string
