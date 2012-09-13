@@ -353,6 +353,17 @@ This makes the syntax closer to normal class definitions:
 Other Changes
 =============
 
+Running dylan-compiler under gdb with fdmake
+--------------------------------------------
+
+Sometimes, it is useful to be able to run ``dylan-compiler`` under ``gdb`` while doing a bootstrap build
+using fdmake. This is now easy to do::
+
+    make FDMAKE_OPTIONS=--gdb 3-stage-bootstrap
+
+Unfortunately, gdb doesn't return a correct exit status, so the build will fail after the first invocation
+of ``dylan-compiler``, but this is useful when looking into repeatable crashes.
+
 .. TODO: elevate more of these to their own section.
 
 In reverse chronological order

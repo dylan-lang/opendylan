@@ -17,9 +17,11 @@ my $build_logs = $ENV{'OPEN_DYLAN_BUILD_LOGS'};
 
 my $verbose;
 my $debugger;
+my $gdb;
 my $compiler = 'dylan-compiler';
 &GetOptions('verbose' => \$verbose,
             'debugger' => \$debugger,
+            'gdb' => \$gdb,
             'compiler=s' => \$compiler);
 
 # Names of libraries we already built successfully.
@@ -147,13 +149,15 @@ sub build_library {
     my $command = $compiler;
     if ($debugger) {
         $command .= " -debugger";
+    } elsif ($gdb) {
+        $command = "gdb --args " . $compiler;
     }
     if (exists $header->{'target-type'}) {
         $command .= " -target " . $header->{'target-type'};
     }
     $command .= " $library";
 
-    if ($debugger) {
+    if ($gdb || $debugger) {
         system($command) or die "Couldn't execute $command";
         print "\n";
     }
