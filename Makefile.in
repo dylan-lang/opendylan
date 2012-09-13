@@ -21,12 +21,16 @@ all: @bootstrap_target@
 
 # We have to alter the Internal Field Separator so that we can operate
 # line by line. Also, we need input that might just be a space.
+#
+# We use a newline as the IFS here rather than $$'\n' since the former
+# appears to work on dash and other shells, while the latter doesn't.
 check-submodules:
 	@ if [ "$$SKIP_SUBMODULE_CHECK" != "1" ]; then \
-	  saveIFS=$$IFS; IFS=$$'\n'; \
+	  saveIFS=$$IFS; IFS='\
+'; \
 	  for sms in `git submodule status | cut -c 1`; do \
 	    if [ "$$sms" != " " ]; then \
-        echo "**** ERROR ****"; \
+	      echo "**** ERROR ****"; \
 	      echo "One or more submodules is not up to date."; \
 	      echo "Please run 'git submodule update --init'."; \
 	      echo "If you want to skip this check, pass SKIP_SUBMODULE_CHECK=1 to make."; \
