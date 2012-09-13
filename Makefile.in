@@ -14,9 +14,27 @@ DYLANCOMPILER   = @DYLANCOMPILER@
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
 	bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3 \
-	all install install-stage release release-stage uninstall clean check
+	all install install-stage release release-stage uninstall clean check \
+	check-submodules
 
 all: @bootstrap_target@
+
+# We have to alter the Internal Field Separator so that we can operate
+# line by line. Also, we need input that might just be a space.
+check-submodules:
+	@ if [ "$$SKIP_SUBMODULE_CHECK" != "1" ]; then \
+	  saveIFS=$$IFS; IFS=$$'\n'; \
+	  for sms in `git submodule status | cut -c 1`; do \
+	    if [ "$$sms" != " " ]; then \
+        echo "**** ERROR ****"; \
+	      echo "One or more submodules is not up to date."; \
+	      echo "Please run 'git submodule update --init'."; \
+	      echo "If you want to skip this check, pass SKIP_SUBMODULE_CHECK=1 to make."; \
+	      exit 1; \
+	    fi; \
+	  done; \
+	  IFS=$$saveIFS; \
+	fi;
 
 ###
 # 3-stage bootstrap includes stages 1 and 2 and 3: it rebuilds the compiler
@@ -25,7 +43,7 @@ all: @bootstrap_target@
 # without installing it; if you want to install it, do a 3-stage bootstrap and
 # run make install
 
-3-stage-bootstrap:
+3-stage-bootstrap: check-submodules
 	$(MAKE) 3-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build"
 3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
@@ -34,7 +52,7 @@ all: @bootstrap_target@
 # 2-stage bootstrap includes both stages 1 and 2: it rebuilds the compiler to
 # support new primitives and rebuilds the libraries using that compiler.
 
-2-stage-bootstrap:
+2-stage-bootstrap: check-submodules
 	$(MAKE) 2-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build"
 2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
@@ -43,7 +61,7 @@ all: @bootstrap_target@
 # 1-stage bootstrap includes only stage 2: it rebuilds compiler and libraries
 # when the existing compiler and libraries will understand the primitives.
 
-1-stage-bootstrap:
+1-stage-bootstrap: check-submodules
 	$(MAKE) 1-stage-bootstrap-reentry \
 	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER)"
 1-stage-bootstrap-reentry: bootstrap-stage-2
