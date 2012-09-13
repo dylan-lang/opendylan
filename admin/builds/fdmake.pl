@@ -80,10 +80,10 @@ sub build_library {
     if (defined $other_files) {
         foreach my $spec (split /\s+/, $other_files) {
             if ($spec =~ /\.spec$/) {
-		my $absspec = File::Spec->catfile($dir, $spec);
-		my ($specvol, $specdir, undef)
-		    = File::Spec->splitpath($absspec);
-		my $sdir = File::Spec->catdir($specvol, $specdir);
+                my $absspec = File::Spec->catfile($dir, $spec);
+                my ($specvol, $specdir, undef)
+                    = File::Spec->splitpath($absspec);
+                my $sdir = File::Spec->catdir($specvol, $specdir);
                 &invoke_tool($library, $sdir, $absspec);
             }
         }
@@ -146,37 +146,37 @@ sub build_library {
 
     my $command = $compiler;
     if ($debugger) {
-	$command .= " -debugger";
+        $command .= " -debugger";
     }
     if (exists $header->{'target-type'}) {
-	$command .= " -target " . $header->{'target-type'};
+        $command .= " -target " . $header->{'target-type'};
     }
     $command .= " $library";
 
     if ($debugger) {
-	system($command) or die "Couldn't execute $command";
-	print "\n";
+        system($command) or die "Couldn't execute $command";
+        print "\n";
     }
     else {
         my $start_time = time();
-	open(my $compfd, '-|', $command) or die "Couldn't execute $compiler";
+        open(my $compfd, '-|', $command) or die "Couldn't execute $compiler";
 
-	my $logfd;
-	if (defined $build_logs) {
-	    my $log = File::Spec->catfile($build_logs, "compile-$library.txt");
-	    open($logfd, '>', $log) or die "Couldn't write to $log: $!";
-	}
+        my $logfd;
+        if (defined $build_logs) {
+            my $log = File::Spec->catfile($build_logs, "compile-$library.txt");
+            open($logfd, '>', $log) or die "Couldn't write to $log: $!";
+        }
 
         my $warnings = 0;
         my $serious_warnings = 0;
         my $errors = 0;
 
-	my $printed;
+        my $printed;
         my $prefix;
         while(<$compfd>) {
-	    if (defined $logfd) {
-		print $logfd $_;
-	    }
+            if (defined $logfd) {
+                print $logfd $_;
+            }
 
             if(m|There were (\d+) warnings, (\d+) serious warnings and (\d+) errors|) {
                 $warnings += $1;
@@ -184,23 +184,23 @@ sub build_library {
                 $errors += $3;
             }
             elsif (m|^Warning at (.+):(\d+(-\d+)?):|) {
-		my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
                 $prefix = "$source:$2: warning: ";
             }
             elsif (m|^Serious warning at (.+):(\d+(-\d+)?):|) {
-		my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
                 $prefix = "$source:$2: serious warning: ";
             }
             elsif (m|^Error at (.+):(\d+(-\d+)?):|) {
-		my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
                 $prefix = "$source:$2: error: ";
             }
             elsif (defined $prefix && !m|^$|) {
-		if (!$printed) {
-		    print "\n";
-		    $printed = 1;
-		}
-		print $prefix . $_;
+                if (!$printed) {
+                    print "\n";
+                    $printed = 1;
+                }
+                print $prefix . $_;
                 undef $prefix;
             }
         }
@@ -208,10 +208,10 @@ sub build_library {
         my $elapsed_time = time() - $start_time;
         print "${warnings} W, ${serious_warnings} SW, ${errors} E (${elapsed_time} seconds)\n";
 
-	if (defined $logfd) {
-	    close($logfd);
-	}
-	close($compfd);
+        if (defined $logfd) {
+            close($logfd);
+        }
+        close($compfd);
     }
     my $failed = $? != 0;
 
@@ -227,7 +227,7 @@ sub build_library {
         if(defined $build_logs && !$debugger) {
             print STDERR
                 "fdmake: compile failed ($?), see ",
-		File::Spec->catfile($build_logs, "compile-$library.txt"), "\n";
+                File::Spec->catfile($build_logs, "compile-$library.txt"), "\n";
         }
         else {
             print STDERR "fdmake: compile failed\n";
@@ -253,16 +253,16 @@ sub library_products {
     if ($platform_name =~ /-win32$/) {
         if (!defined $header->{'target-type'}
             || lc($header->{'target-type'}) eq 'dll') {
-	    push(@products,
-		 File::Spec->catfile($user_root, 'bin', "${executable}.dll"));
-	    push(@products,
-		 File::Spec->catfile($user_root, 'lib', "${executable}.lib"));
-	}
+            push(@products,
+                 File::Spec->catfile($user_root, 'bin', "${executable}.dll"));
+            push(@products,
+                 File::Spec->catfile($user_root, 'lib', "${executable}.lib"));
+        }
         if (!defined $header->{'target-type'}
             || lc($header->{'target-type'}) eq 'executable') {
             push(@products,
-		 File::Spec->catfile($user_root, 'bin', "${executable}.exe"));
-	}
+                 File::Spec->catfile($user_root, 'bin', "${executable}.exe"));
+        }
     }
     else {
         my $so = ($platform_name =~ /-darwin$/) ? 'dylib' : 'so';
@@ -295,96 +295,96 @@ sub invoke_tool {
         my $source = File::Spec->catfile($dir, $header->{'parser'});
         my $output = File::Spec->catfile($dir, $header->{'output'});
 
-	if (!-f $output || (stat $source)[9] > (stat $output)[9]) {
-	    &build_library('parser-compiler')
-		or die "Can't build parser-compiler";
-	    my $parser_compiler
-		= File::Spec->catfile($user_root, 'bin', 'parser-compiler');
+        if (!-f $output || (stat $source)[9] > (stat $output)[9]) {
+            &build_library('parser-compiler')
+                or die "Can't build parser-compiler";
+            my $parser_compiler
+                = File::Spec->catfile($user_root, 'bin', 'parser-compiler');
 
-	    print "Invoking the $origin tool for the $library library\n";
-	    system "$parser_compiler $source >$output";
-	    if($? !=0 || ! -f $output) {
-		print STDERR "\nfdmake: Unable to build parser file\n";
-		exit 1;
-	    }
-	}
+            print "Invoking the $origin tool for the $library library\n";
+            system "$parser_compiler $source >$output";
+            if($? !=0 || ! -f $output) {
+                print STDERR "\nfdmake: Unable to build parser file\n";
+                exit 1;
+            }
+        }
     }
     elsif ($origin =~ /\A\s*omg-idl\s*\Z/i) {
-	my $idlfile = File::Spec->catfile($dir, $header->{'idl-file'});
-	my ($idlvol, $idldir, undef) = File::Spec->splitpath($idlfile);
+        my $idlfile = File::Spec->catfile($dir, $header->{'idl-file'});
+        my ($idlvol, $idldir, undef) = File::Spec->splitpath($idlfile);
 
-	my $needs_rebuild = 0;
-	my @options;
-	my $prefix = '';
-	if (defined $header->{'prefix'}) {
-	    push @options, '-prefix:' . $header->{'prefix'};
-	    $prefix = $header->{'prefix'} . '-';
-	}
-	if (defined $header->{'main'}
-	    && $header->{'main'} =~ /\A\s*yes\s*\Z/i) {
-	    push @options, '-main';
-	}
+        my $needs_rebuild = 0;
+        my @options;
+        my $prefix = '';
+        if (defined $header->{'prefix'}) {
+            push @options, '-prefix:' . $header->{'prefix'};
+            $prefix = $header->{'prefix'} . '-';
+        }
+        if (defined $header->{'main'}
+            && $header->{'main'} =~ /\A\s*yes\s*\Z/i) {
+            push @options, '-main';
+        }
 
-	if (defined $header->{'protocol'}
-	    && $header->{'protocol'} =~ /\A\s*yes\s*\Z/i) {
-	    push @options, '-protocol';
+        if (defined $header->{'protocol'}
+            && $header->{'protocol'} =~ /\A\s*yes\s*\Z/i) {
+            push @options, '-protocol';
 
-	    my $name = $prefix . 'protocol';
-	    my $genfile
-		= File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
-	    if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
-		$needs_rebuild = 1;
-	    }
-	}
-	if (defined $header->{'skeletons'}
-	    && $header->{'skeletons'} =~ /\A\s*yes\s*\Z/i) {
-	    push @options, '-skeletons';
+            my $name = $prefix . 'protocol';
+            my $genfile
+                = File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
+            if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
+                $needs_rebuild = 1;
+            }
+        }
+        if (defined $header->{'skeletons'}
+            && $header->{'skeletons'} =~ /\A\s*yes\s*\Z/i) {
+            push @options, '-skeletons';
 
-	    my $name = $prefix . 'skeletons';
-	    my $genfile
-		= File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
-	    if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
-		$needs_rebuild = 1;
-	    }
-	}
-	if (defined $header->{'stubs'}
-	    && $header->{'stubs'} =~ /\A\s*yes\s*\Z/i) {
-	    push @options, '-stubs';
+            my $name = $prefix . 'skeletons';
+            my $genfile
+                = File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
+            if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
+                $needs_rebuild = 1;
+            }
+        }
+        if (defined $header->{'stubs'}
+            && $header->{'stubs'} =~ /\A\s*yes\s*\Z/i) {
+            push @options, '-stubs';
 
-	    my $name = $prefix . 'stubs';
-	    my $genfile
-		= File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
-	    if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
-		$needs_rebuild = 1;
-	    }
-	}
+            my $name = $prefix . 'stubs';
+            my $genfile
+                = File::Spec->catfile($idlvol, $idldir, $name, $name.'.dylan');
+            if (!-f $genfile || (stat $idlfile)[9] > (stat $genfile)[9]) {
+                $needs_rebuild = 1;
+            }
+        }
 
-	if (defined $header->{'include'}) {
-	    push @options, '-include';
-	    push @options, File::Spec->catdir($dir, $header->{'include'});
-	}
+        if (defined $header->{'include'}) {
+            push @options, '-include';
+            push @options, File::Spec->catdir($dir, $header->{'include'});
+        }
 
-	if (defined $header->{'libraries'}) {
-	    push @options, '-libraries', $header->{'libraries'};
-	}
-	if (defined $header->{'modules'}) {
-	    push @options, '-modules', $header->{'modules'};
-	}
+        if (defined $header->{'libraries'}) {
+            push @options, '-libraries', $header->{'libraries'};
+        }
+        if (defined $header->{'modules'}) {
+            push @options, '-modules', $header->{'modules'};
+        }
 
-	if ($needs_rebuild) {
-	    &build_library('minimal-console-scepter')
-		or die "Can't build scepter";
-	    my $scepter
-		= File::Spec->catfile($user_root,
-				      'bin', 'minimal-console-scepter');
+        if ($needs_rebuild) {
+            &build_library('minimal-console-scepter')
+                or die "Can't build scepter";
+            my $scepter
+                = File::Spec->catfile($user_root,
+                                      'bin', 'minimal-console-scepter');
 
-	    print "Invoking the $origin tool for the $library library\n";
-	    system($scepter, @options, $idlfile);
-	    if ($? != 0) {
-		print STDERR "\nfdmake: Unable to build $origin\n";
-		exit 1;
-	    }
-	}
+            print "Invoking the $origin tool for the $library library\n";
+            system($scepter, @options, $idlfile);
+            if ($? != 0) {
+                print STDERR "\nfdmake: Unable to build $origin\n";
+                exit 1;
+            }
+        }
     }
     else {
         print STDERR "\nfdmake: unknown tool: $origin\n";
@@ -558,7 +558,7 @@ sub dylan_token {
 
 # use_library($used, $dir, $library)
 #
-# Record the fact that library $used is imported by $library, which is 
+# Record the fact that library $used is imported by $library, which is
 # found in $dir.
 #
 sub use_library {
@@ -586,7 +586,7 @@ sub parse_lid_file {
     $lidfile_line = 1;
 
     my $contents = &parse_header(\*LIDFILE, $lidfile);
-    
+
 #   # Read filenames
 #     while (<LIDFILE>) {
 #         $lidfile_line = $lidfile_line + 1;
@@ -600,7 +600,7 @@ sub parse_lid_file {
     if(defined $contents->{'files'}) {
         # replace multiple spaces with single spaces
         $contents->{'files'} =~ s/\s+/ /g;
-        
+
         # strip leading whitespace, which tends to screw up other parts of
         # gen-makefile
         $contents->{'files'} =~ s/^\s+//;
@@ -638,7 +638,7 @@ sub parse_header {
     while (<$fh>) {
         $lidfile_line = $lidfile_line + 1;
         s/\r//g;                # Get rid of bogus carriage returns
-        
+
         if (/^\s*$/) {          # if blank line, break out of loop
             return \%contents;
         } elsif (m|^//.*$|) {
