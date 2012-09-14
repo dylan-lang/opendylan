@@ -6,7 +6,8 @@ abs_builddir    = @abs_builddir@
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
 RUNTIME_SOURCES = @RUNTIME_SOURCES@
 
-fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl
+FDMAKE_OPTIONS  =
+fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl $(FDMAKE_OPTIONS)
 
 DYLANCOMPILER   = @DYLANCOMPILER@
 
