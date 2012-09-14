@@ -15,9 +15,12 @@ code) and a C back-end.
 The HARP back-end uses the Memory Pool System (MPS) from Ravenbrook,
 Limited to do its memory management.  The MPS is available from
 Ravenbrook at http://www.ravenbrook.com/project/mps/ and must be
-downloaded and built separately. For now, you need to use the
-`mirror that we maintain on GitHub
-<https://github.com/datafueled/memory-pool-system/>`_.
+downloaded and built separately. If you are using Windows, you
+must download the `older 1.108 release
+<http://www.ravenbrook.com/project/mps/release/1.108.0/>`_. On
+other platforms, the `current 1.110 release
+<http://www.ravenbrook.com/project/mps/release/1.110.0/>`_ is
+required.
 
 The C back-end uses Boehm-Demers-Weiser conservative C/C++ garbage
 collector, available at https://github.com/ivmai/bdwgc
@@ -50,7 +53,7 @@ to double its value)
 
 Get MPS or boehm-gc, depending on your platform:
 
-* Linux x86 or FreeBSD x86 (HARP) -> MPS
+* Linux x86 or FreeBSD x86 (HARP) -> `MPS <http://www.ravenbrook.com/project/mps/release/1.110.0/>`_
 * Mac OS X and all 64 bit (C) -> boehm-gc
 
 ::
@@ -75,7 +78,9 @@ and a second generation will be in /opt/opendylan-current/bin/dylan-compiler
 Compilation on Windows
 =======================
 
-* Get MPS
+* Get `MPS <http://www.ravenbrook.com/project/mps/release/1.108.0/>`_. Be
+  sure that you have the older 1.108 release and NOT the newer 1.110
+  release.
 
 * Make sure to have required tools installed: namely Debugging tools for
   Windows, a C compiler (PellesC or VC6) and Microsoft Platform SDK.
