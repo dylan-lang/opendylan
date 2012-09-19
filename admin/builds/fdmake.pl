@@ -4,6 +4,7 @@ use strict;
 use File::Spec;
 use Getopt::Long;
 use Config;
+use Time::HiRes qw(time);
 
 my $lidfile_line;
 
@@ -209,7 +210,7 @@ sub build_library {
             }
         }
 
-        my $elapsed_time = time() - $start_time;
+        my $elapsed_time = sprintf '%.3f', time() - $start_time;
         print "${warnings} W, ${serious_warnings} SW, ${errors} E (${elapsed_time} seconds)\n";
 
         if (defined $logfd) {
