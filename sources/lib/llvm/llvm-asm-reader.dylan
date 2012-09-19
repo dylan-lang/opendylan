@@ -204,6 +204,7 @@ define table $llvm-keywords :: <string-table>
      "switch" => $%SWITCH-token,
      "invoke" => $%INVOKE-token,
      "indirectbr" => $%INDIRECTBR-token,
+     "unwind" => $%UNWIND-token,
      "unreachable" => $%UNREACHABLE-token,
 
      "alloca" => $%ALLOCA-token,
