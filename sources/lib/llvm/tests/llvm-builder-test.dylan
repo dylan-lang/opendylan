@@ -1449,14 +1449,6 @@ define llvm-builder function-test ins--invoke ()
   //---*** Fill this in...
 end function-test ins--invoke;
 
-define llvm-builder function-test ins--unwind ()
-  let builder = make-builder-with-test-function();
-  ins--unwind(builder);
-  check-equal("ins--unwind disassembly",
-              #("entry:", "unwind"),
-              builder-test-function-disassembly(builder));
-end function-test ins--unwind;
-
 define llvm-builder function-test ins--resume ()
   let builder = make-builder-with-test-function();
   let struct-type
