@@ -176,9 +176,6 @@ define class <llvm-invoke-instruction> (<llvm-terminator-instruction>)
     init-value: $llvm-calling-convention-c, init-keyword: calling-convention:;
 end class;
 
-define class <llvm-unwind-instruction> (<llvm-terminator-instruction>)
-end class;
-
 define class <llvm-unreachable-instruction> (<llvm-terminator-instruction>)
 end class;
 

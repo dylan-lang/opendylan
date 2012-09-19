@@ -598,10 +598,6 @@ define instruction-set
              metadata: builder-metadata(builder, metadata),
              options);
 
-  op unwind (#key metadata :: <list> = #())
-    => make(<llvm-unwind-instruction>,
-            metadata: builder-metadata(builder, metadata));
-
   op resume (value, #key metadata :: <list> = #())
     => make(<llvm-resume-instruction>,
             operands: vector(llvm-builder-value(builder, value)),
