@@ -26,7 +26,9 @@ end class;
 define method value-partition-key
     (value :: <llvm-metadata-string>)
  => (key :: <vector>);
-  vector(object-class(value), value.llvm-metadata-string)
+  let key = make(<simple-object-vector>, size: value.llvm-metadata-string.size + 1);
+  key[0] := object-class(value);
+  replace-subsequence!(key, value.llvm-metadata-string, start: 1)
 end method;
 
 define class <llvm-metadata-node> (<llvm-metadata-value>)
