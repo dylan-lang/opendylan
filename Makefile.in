@@ -22,7 +22,7 @@ all: @bootstrap_target@
 
 check-submodules:
 	@ if [ "$$SKIP_SUBMODULE_CHECK" != "1" ]; then \
-	  for sms in `git submodule status | grep -v "^ " | cut -c 1`; do \
+	  for sms in `cd $(srcdir) && git submodule status | grep -v "^ " | cut -c 1`; do \
 	    if [ "$$sms" != " " ]; then \
 	      echo "**** ERROR ****"; \
 	      echo "One or more submodules is not up to date."; \
