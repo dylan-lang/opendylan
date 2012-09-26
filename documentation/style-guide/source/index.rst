@@ -93,35 +93,98 @@ definitions forming a protocol:
 Naming
 ======
 
--  full names
--  lowercase
--  angle bracket notation for types
--  slot-names (keith)
+Naming is hard.  There is no single rule that works for everything.
+Here are some rules that should always be followed:
 
-There isn't a recommended Dylan style, although the majority of Dylan
-code I've seen from outside Harlequin just uses the unqualified name of
-the property as the slot name.
+* Follow the `naming conventions in the Dylan Reference Manual
+  <http://opendylan.org/books/drm/Naming_Conventions>`_.
 
-However, previous discussions here, apart from provoking complaints
-about the way Dylan works in this area, seem to have suggested that
-qualifying slot names is the right thing in most cases in order to avoid
-widespread problems with name clashes later on (at least for exported
-names). That's not to say it's caught on yet...
+* Use lowercase, not uppercase or mixed case.
 
-I do think the pure Lisp approach is very bad indeed though, and
-shouldn't be used. I disagree that it makes the uses of accessors more
-intelligible, particularly if you're calling accessors from different
-superclasses on the same object in a block of code. And, as you say, it
-rather breaks abstraction of implementation.
+  Example:  ``join-segments`` not ``JoinSegments`` or ``JOIN-SEGMENTS``
 
-One possible compromise is to choose a prefix for a whole group of
-classes beneath a given root. For example, the compiler's intermediate
-representation consists of a number of different graph nodes and we
-could choose a blanket prefix for slots of classes in that heterarchy
-such as "dfm-" (our IR is known as the DFM).
+* Use dash (hyphen, -) to separate words in a name, not underscore
+  (_).
 
-*Dylan book style:* We will discuss this issue in book, but use shorter
-names. They won't be exported, generally, so it won't be an issue.
+  Example: ``run-jobs`` not ``run_jobs``
+
+* Prefix a name with percent (e.g., ``%do-scary-stuff``) to indicate
+  an "internal" function.  This roughly signals to the caller "you'd
+  better know what you're doing".
+
+Here are some hints for naming things in Dylan.  These are guidelines
+only and need not be strictly followed:
+
+* Within each Dylan module there is a single namespace for all
+  bindings, whether they're variables, functions, constants, classes,
+  or macros, so full names are to be preferred.
+
+* Use verb-noun to name functions.  Slot names are a notable exception
+  to this rule.  See next item.
+
+* Naming slots poses some special challenges, perhaps best explained
+  with an example.  This might be the naive implementation of an
+  abstract ``<request>`` class for a high-level networking library::
+
+    define abstract class <request> (<object>)
+      slot client, init-keyword: client:;
+      slot time-received, init-keyword: time-received:;
+      ...
+    end;
+
+  The problem is that both "client" and "time-received" are fairly
+  reasonable names for local variables so they could easily be
+  shadowed accidentally.  Also, they're probably too short and general
+  to be exported.  Common practice would be to do something like this
+  instead::
+
+    define abstract class <request> (<object>)
+      slot request-client, init-keyword: client:;
+      slot request-time-received, init-keyword: time-received:;
+      ...
+    end;
+
+  This leads to code such as
+  ::
+
+    request.request-client := ...;
+    foo(request.request-time-received);
+
+  which may look odd at first due to the duplication of "request", but
+  this is an accepted pattern.
+
+  (Note that this pattern may not work for mixin classes, but there is
+  likely a better name anyway in such cases.)
+
+  There's an additional wrinkle when a subclass gets involved::
+
+    // Bad (breaks abstraction)
+    define class <http-request> (<request>)
+      slot http-request-headers, init-keyword: headers:;
+      ...
+    end;
+
+  Note that naming the slot ``http-request-headers`` would break
+  abstraction because the caller now has to know which slots are in
+  ``<request>`` and which are in ``<http-request>`` and prefix them
+  appropriately.  So instead it is better to use the same prefix for a
+  whole group of classes, in this case "request-"::
+
+    // Good (consistent prefix)
+    define class <http-request> (<request>)
+      slot request-headers, init-keyword: headers:;
+      ...
+    end;
+
+* Use a plural noun to name variables bound to collections.
+
+  Example: ``*cats*``
+
+* Do not include the type in the name.  This way it won't be necessary
+  to change the name if the implementation type changes.
+
+  Example: ``*frobnoids*`` not ``*frobnoid-list*``
+
 
 Dot notation
 ============
