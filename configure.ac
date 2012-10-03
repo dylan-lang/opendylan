@@ -86,6 +86,11 @@ AC_SUBST(bootstrap_target)
 
 AC_PROG_CC([clang gcc cc])
 
+AC_CHECK_PROGS([MAKE],[gnumake gmake make],[AC_MSG_ERROR([Unable to find a make program.])])
+if ! $MAKE --version | grep -q "GNU" 2> /dev/null; then
+  AC_MSG_ERROR([OpenDylan requires GNU make to build.])
+fi
+
 AC_ARG_WITH(mps,
             AS_HELP_STRING([--with-mps=PATH],
                            [Path to MPS distribution and build.]))
