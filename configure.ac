@@ -74,7 +74,7 @@ done
 
 AC_CHECK_PROGS(DYLANCOMPILER, dylan-compiler opendylan minimal-console-compiler, no)
 test "$DYLANCOMPILER" = no && AC_MSG_ERROR([
-dylan-compiler, opendylan or minimal-console-compiler is required to bootstrap Open Dylan])
+dylan-compiler, opendylan or minimal-console-compiler is required to bootstrap Open Dylan. Please download and install a build from http://opendylan.org/download/index.html])
 test "$DYLANCOMPILER" = dylan-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
 test "$DYLANCOMPILER" = opendylan && DYLANCOMPILER="$DYLANCOMPILER -build"
 test "$DYLANCOMPILER" = minimal-console-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
@@ -85,6 +85,11 @@ bootstrap_target=1-stage-bootstrap
 AC_SUBST(bootstrap_target)
 
 AC_PROG_CC([clang gcc cc])
+
+AC_CHECK_PROGS([MAKE],[gnumake gmake make],[AC_MSG_ERROR([Unable to find a make program.])])
+if ! $MAKE --version | grep -q "GNU" 2> /dev/null; then
+  AC_MSG_ERROR([OpenDylan requires GNU make to build.])
+fi
 
 AC_ARG_WITH(mps,
             AS_HELP_STRING([--with-mps=PATH],

@@ -30,8 +30,7 @@ bootstrap it. Binary releases are available from
 http://opendylan.org/download/
 
 Once installed, the following command-line will produce a binary in
-~/Open-Dylan/bin/hello-world
-::
+_build/bin/hello-world in the current working directory::
 
   dylan-compiler -build hello-world
 
@@ -51,12 +50,26 @@ Please note that on 64 bit Linux we need a big stack, the default
 stack is too small, please increase with ulimit -s before (safe is
 to double its value)
 
+Dependencies
+------------
+
 Get MPS or boehm-gc, depending on your platform:
 
 * Linux x86 or FreeBSD x86 (HARP) -> `MPS <http://www.ravenbrook.com/project/mps/release/1.110.0/>`_
 * Mac OS X and all 64 bit (C) -> boehm-gc
 
-::
+On Mac OS X, you may find it easiest to install Homebrew and install
+the following::
+
+    brew install autoconf automake bdw-gc --universal
+
+You will also need to install the command line build tools available from
+Apple.
+
+Building
+--------
+
+To go on and do the build::
 
   export PATH=/path/to/opendylan/bin:$PATH
   ./autogen.sh
