@@ -30,8 +30,7 @@ bootstrap it. Binary releases are available from
 http://opendylan.org/download/
 
 Once installed, the following command-line will produce a binary in
-~/Open-Dylan/bin/hello-world
-::
+_build/bin/hello-world in the current working directory::
 
   dylan-compiler -build hello-world
 
