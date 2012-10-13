@@ -2,6 +2,10 @@
 How to contribute to Open Dylan
 *******************************
 
+Please read our `public guidelines
+<https://github.com/dylan-lang/opendylan/blob/master/CONTRIBUTING.rst>`_
+for contributing.
+
 Getting the Sources
 ===================
 
@@ -19,22 +23,3 @@ To checkout the main "opendylan" repository::
 
 You will want to fork this repository so you can push changes to your
 fork and then submit pull requests.
-
-Before you commit
-=================
-
-- Please read the `Dylan style guide <../style-guide/index.html>`_
-
-- We use `Vincent Driessen's branching model
-  <http://nvie.com/posts/a-successful-git-branching-model/>`_ (see
-  `gitflow <https://github.com/nvie/gitflow/>`_ for tool integration)
-  but we don't separate master from develop branch. Instead we develop
-  in the master branch.
-
-- We also emphasize `this note about git commit messages
-  <http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_
-
-- Open Dylan is distributed under the MIT license.  We expect
-  contributions to be the same.
-
-- Open Dylan is of collective authorship of the "Dylan Hackers".

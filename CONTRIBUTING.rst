@@ -21,6 +21,8 @@ Guidelines
 * Update documentation as necessary. Also, if appropriate,
   update the release notes, samples and other supporting
   materials.
+* We suggest following `this note about git commit messages
+  <http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html>`_.
 
 Code Style
 ----------
@@ -51,3 +53,5 @@ expressed in the current ``License.txt`` file.
 We are not interested in incorporating any sourcecode using
 proprietary or copyleft-style licenses.
 
+Open Dylan is under the collective ownership of the Dylan
+Hackers.
