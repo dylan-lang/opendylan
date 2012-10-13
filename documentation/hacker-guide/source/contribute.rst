@@ -19,7 +19,7 @@ now is a good time to get them.
 
 To checkout the main "opendylan" repository::
 
-    git clone git@github.com:dylan-lang/opendylan.git
+    git clone --recursive git@github.com:dylan-lang/opendylan.git
 
 You will want to fork this repository so you can push changes to your
 fork and then submit pull requests.
