@@ -4,6 +4,9 @@ The command-line-parser Library
 
 .. TODO:
    * List init arguments for all classes.
+   * parse-command-line doesn't talk about <usage-error>
+   * Document error classes.
+   * Link <string-table>.
 
 .. current-library:: command-line-parser
 .. current-module:: command-line-parser
@@ -49,7 +52,7 @@ then any number of positional arguments (here "one", "two", and
                   variable: "RAD",  // shows up in --help output
                   help: "Free radicals"));
 
-There is also a ``<keyed-option>`` which is not shown here.
+There is also a :class:`<keyed-option>` which is not shown here.
 See the reference section for more info.
 
 Now parse the command line:
@@ -91,8 +94,8 @@ The COMMAND-LINE-PARSER module
 
      A boolean specifying whether the parser should automatically add
      the default help option.  By default, help may be requested via
-     ``--help`` or ``-h``.  If #f, no help option will be added to the
-     parser, and you must explicitly handle any request for help
+     ``--help`` or ``-h``.  If ``#f``, no help option will be added to
+     the parser, and you must explicitly handle any request for help
      yourself.
 
    :keyword help-option:
@@ -101,15 +104,15 @@ The COMMAND-LINE-PARSER module
      option that signals a request for help.  The main purpose of this
      init keyword is to make it possible to use something other than
      ``--help`` and ``-h`` to request help.  This keyword has no
-     effect if ``provide-help-option?`` is #f.
+     effect if ``provide-help-option?`` is ``#f``.
 
 .. function:: add-option
 
    Add an option to a command-line parser.
 
    :signature: add-option (parser option) => ()
-   :parameter parser: An instance of ``<command-line-parser>``.
-   :parameter option: An instance of ``<option>``.
+   :parameter parser: An instance of :class:`<command-line-parser>`.
+   :parameter option: An instance of :class:`<option>`.
    :description:
 
      If any of the option names specified are already used by other
@@ -121,7 +124,7 @@ The COMMAND-LINE-PARSER module
    accordingly.
 
    :signature: parse-command-line (parser argv) => (success?)
-   :parameter parser: An instance of ``<command-line-parser>``.
+   :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter argv: An instance of ``<sequence>``.  Normally the value
      returned by ``application-arguments()`` is passed here.
 
@@ -132,14 +135,12 @@ The COMMAND-LINE-PARSER module
    ``stream``.
 
    :signature: print-synopsis (parser stream) => ()
-   :parameter parser: An instance of ``<command-line-parser>``.
-   :parameter stream: An instance of ``<stream>``.
-
-   :keyword usage: An instance of ``<string>`` or #f.  If provided,
+   :parameter parser: An instance of :class:`<command-line-parser>`.
+   :parameter stream: An instance of :class:`<stream>`.
+   :parameter #key usage: An instance of ``<string>`` or ``#f``.  If provided,
      this is displayed before the command-line options.  This is
      intended to be a one-line summary of the command-line format.
-
-   :keyword description: An instance of ``<string>`` or #f.  If
+   :parameter #key description: An instance of ``<string>`` or ``#f``.  If
      provided, this is displayed after ``usage`` and before the
      command-line options.  This is intended to be a sentence or short
      paragraph.
@@ -155,16 +156,16 @@ The COMMAND-LINE-PARSER module
 
 .. function:: option-present?
 
-   Returns #t if this option was supplied on the command line.
+   Returns ``#t`` if this option was supplied on the command line.
 
    :signature: option-present? (parser name) => (present?)
-   :parameter parser: An instance of ``<command-line-parser>``.
+   :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter name: An instance of ``<string>``.
    :value present?: An instance of ``<boolean>``.
    :description:
 
-     If called before ``parse-command-line`` has been called on the
-     associated parser, this will always return #f.
+     If called before :func:`parse-command-line` has been called on the
+     associated parser, this will always return ``#f``.
 
 .. function:: get-option-value
 
@@ -173,7 +174,7 @@ The COMMAND-LINE-PARSER module
 
    :signature: get-option-value (parser long-name) => (value)
 
-   :parameter parser: An instance of ``<command-line-parser>``.
+   :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter long-name: An instance of ``<string>``.
    :value value: An instance of ``<object>``.
 
@@ -231,11 +232,13 @@ Option Classes
 
    Defines a flag option, i.e., one defines a boolean value.
 
-   :superclasses: <option>
+   :superclasses: :class:`<option>`
+
+   :keyword negative-names: As ``names``, but specifies the negative forms.
 
    :description:
 
-     They default to #f and exist in both positive and negative forms:
+     They default to ``#f`` and exist in both positive and negative forms:
      "--foo" and "--no-foo".  In the case of conflicting options, the
      rightmost takes precedence to allow for abuse of the shell's
      "alias" command.
@@ -245,22 +248,19 @@ Option Classes
 
          -q, -v, --quiet, --verbose
 
-   :keyword negative-long-options:
-   :keyword negative-short-options:
-
 
 .. class:: <parameter-option>
    :sealed:
 
    Defines an option that requires a value be specified.
 
-   :superclasses: <option>
+   :superclasses: :class:`<option>`
 
    :description:
 
      If the option appears more than once, the rightmost value takes
      precedence. If the option never appears, these will default to
-     #f.
+     ``#f``.
 
      Examples::
 
@@ -273,13 +273,13 @@ Option Classes
    Similar to :class:`<parameter-option>`, but the parameter is
    optional.
 
-   :superclasses: <option>
+   :superclasses: :class:`<option>`
 
    :description:
 
      The parameter must directly follow the option with no intervening
-     whitespace, or follow an "=" token. The value is #f if the option
-     never appears, #t if the option appears but the parameter does
+     whitespace, or follow an "=" token. The value is ``#f`` if the option
+     never appears, ``#t`` if the option appears but the parameter does
      not, and the value of the parameter otherwise.
 
      Examples::
@@ -296,7 +296,7 @@ Option Classes
    Similar to :class:`<parameter-option>`, but may appear more than
    once.
 
-   :superclasses: <option>
+   :superclasses: :class:`<option>`
 
    :description:
 
@@ -313,7 +313,7 @@ Option Classes
    Each occurrence of this type of option defines a key => value
    mapping.
 
-   :superclasses: <option>
+   :superclasses: :class:`<option>`
 
    :description:
 
@@ -321,10 +321,10 @@ Option Classes
      The final value is a ``<string-table>`` containing each specified
      key, with one of the following values:
 
-       * ``#t``: The user specified "-Dkey"
-       * a string: The user specified "-Dkey=value"
+     * ``#t``: The user specified "-Dkey"
+     * a string: The user specified "-Dkey=value"
 
-     You can read this with element(table, key, default: #f) to get a
+     You can read this with ``element(table, key, default: #f)`` to get a
      handy lookup table.
 
      Examples::
