@@ -4,7 +4,7 @@
 Improving Editor Support
 ========================
 
-I have recently fixed some bugs in the syntax highlighting
+We have recently fixed some bugs in the syntax highlighting
 support for Textmate and Sublime Text as well as for vim.
 
 Sublime Text and Textmate
@@ -24,7 +24,7 @@ be found on GitHub at https://github.com/dylan-lang/dylan.tmbundle.
   correctly now.
 * Keyword / header highlighting at the start of a file is improved.
 
-Also, I've submitted a request for this plugin to be made
+Also, we've submitted a request for this plugin to be made
 available via Package Control for Sublime Text and hope
 that this is ready in the near future.
 
@@ -40,7 +40,7 @@ Vim
 
    Syntax highlighting in vim
 
-As for vim, I have:
+We extended the Dylan support of vim:
 
 * Improved comment handling such that all comments should
   be highlighted correctly now.
