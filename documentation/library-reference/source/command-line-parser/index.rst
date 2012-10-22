@@ -212,6 +212,14 @@ Option Classes
    :keyword help:
 
      A string documenting the option.  Displayed in ``--help`` output.
+     Some automatic substitutions are performed:
+
+       1. "%default" => the string representation of the default value
+          for the option.
+
+       2. "%app" => the basename of the executable program.
+
+       3. "%%" => "%"
 
    :keyword variable:
 
