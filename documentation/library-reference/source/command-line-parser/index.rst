@@ -242,7 +242,9 @@ Option Classes
 
    :superclasses: :class:`<option>`
 
-   :keyword negative-names: As ``names``, but specifies the negative forms.
+   :keyword negative-names:
+
+     Same as ``names``, but specifies the negative forms.
 
    :description:
 
@@ -314,6 +316,39 @@ Option Classes
      Examples::
 
        -wall, -w=all, -w = all, --warnings all, --warnings=all
+
+
+.. class:: <choice-option>
+   :sealed:
+
+   Similar to :class:`<parameter-option>`, but provides a restricted
+   set of values to choose from.
+
+   :superclasses: :class:`<parameter-option>`
+
+   :keyword choices:
+
+     A sequence of objects.  If the value supplied on the command line
+     isn't one of these objects then :class:`<usage-error>` is
+     signaled.
+
+   :keyword test:
+
+     A function to test whether the value supplied on the command line
+     is the same as one of the choices.  The default is ``=``.  Another
+     commonly used value is ``string-equal-ic?``, to ignore case in the
+     comparison.
+
+   :description:
+
+     Example::
+
+       make(<choice-option>,
+            names: #("foo"),
+            choices: #("a", "b"),
+            test: string-equal-ic?)
+       
+
 
 .. class:: <keyed-option>
    :sealed:
