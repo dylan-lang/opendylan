@@ -328,9 +328,12 @@ Option Classes
 
    :keyword choices:
 
-     A sequence of objects.  If the value supplied on the command line
-     isn't one of these objects then :class:`<usage-error>` is
-     signaled.
+     A sequence of objects (usually strings).  If the value supplied
+     on the command line isn't one of these objects then
+     :class:`<usage-error>` is signaled.  If you supply a sequence of
+     non-string choices you will also need to supply the ``test:``
+     init keyword since all command-line arguments are strings and
+     won't compare equal with the default test, ``=``.
 
    :keyword test:
 
