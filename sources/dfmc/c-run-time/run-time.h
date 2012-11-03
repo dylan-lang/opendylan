@@ -478,13 +478,13 @@ typedef struct _teb {
 
 #if USE_PTHREAD_TLS
 extern pthread_key_t teb_key;
-PURE_FUNCTION inline TEB* get_teb()
+PURE_FUNCTION static inline TEB* get_teb()
 {
   return (TEB*)pthread_getspecific(teb_key);
 }
 #else
 extern __thread TEB* teb;
-PURE_FUNCTION inline TEB* get_teb()
+PURE_FUNCTION static inline TEB* get_teb()
 {
   return teb;
 }
