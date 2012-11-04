@@ -1,0 +1,178 @@
+
+# TEB - Thread environment block
+
+The TEB is the object holding per-thread runtime state.
+
+It contains:
+
+ - dylan thread state
+  - reference to thread object
+  - reference to native thread handle (pthread_t or whatever)
+  - reference to tlv vector
+ - unwinding state
+  - UWP_FRAME variable points at innermost UWP, chained by ->previous_unwind_protect
+ - dylan call state (these need precise documentation)
+  - FUNCTION
+  - ARGUMENT_COUNT
+  - NEXT_METHODS
+  - RETURN_VALUES
+ - six argument buffers from hell (these need cleaning up and documenting)
+  - ARGUMENTS
+  - NEW_ARGUMENTS
+  - A
+  - IEP_A
+  - APPLY_BUFFER
+  - BUFFER
+
+# TLV - Thread local values
+
+Each thread references its own TLV vector from its TEB.
+
+TLV vectors are grown eagerly when new variables get defined.
+
+A global vector of default values is kept and used to initialize
+new and grown vectors as needed.
+
+This machinery currently uses a global lock for all TLV access.
+
+It would be better to use no lock and grow vectors lazily whenever they exceed capacity.
+
+# NLX - Non-local exits
+
+## Concepts
+
+The runtime deals with NLX of two kinds, unwind-protect and bind-exit.
+
+The main difference between both is in argument handling: 
+
+- unwind-protect (called UWP)
+  Used for blocks with cleanup clauses to be called during unwind.
+  The block returns values given by its inner block.
+  Kept by the runtime on a stack.
+
+- bind-exit (called BE for Bind Exit)
+  Used for blocks that are unwind destinations.
+  Passes values passed to its (non-local) scoped exit function.
+  Allocated on-stack by the runtime and passed down within scope
+  by dylan-land, either as exception handlers or block exit functions.
+
+## Compiler interface
+
+The runtime provides a set of functions the compiler uses to implement Dylan NLX.
+These functions are not primitives, but like those have a very close relationship
+to corresponding compiler code.
+
+Relevant compiler code can be found in dfmc/c-back-end/c-emit-compution.dylan
+when searching for <bind-exit> and <unwind-protect>.
+
+The runtime exposes the following pseudo-primitives for NLX:
+
+ - common interface
+   - nlx_setjmp
+     Used by the compiler to initialize jump buffers in BEF and UWP frames.
+     The compiler uses this directly.
+
+   - nlx_longjmp
+     Used by the runtime to exit via jump buffers in BEF and UWP frames.
+     The compiler currently does not use this directly.
+
+   - FRAME_DEST()
+     Returns the location of the jump buffer for this BEF or UWP.
+     !!! This depends on the offset of the jump buffer being equal in both structures !!!
+
+ - BEF interface
+   - MAKE_EXIT_FRAME()
+     Stack-allocates and initializes a new BEF, which is returned.
+
+   - FRAME_RETVAL()
+     Used to retrieve arguments into teb->return_values after BEF returns.
+
+   - NLX(bef, arg)
+     Used to exit to a given BEF.
+     This will unwind UWPs until the UWP surrounding the given BEF is reached.
+     Once the BEFs UWP is reached, it will jump to the BEF exit point.
+     The argument protocol is kinda strage: first arg is passed, others are taken from teb->return_values.
+
+ - UWP interface
+   - MAKE_UNWIND_PROTECT()
+     Stack-allocates and initializes a new UWP, which is returned.
+
+   - FALL_THROUGH_UNWIND()
+     Called when the main body of an UWP is done.
+     Captures block return value into UWP object.
+
+   - CONTINUE_UNWIND()
+     Called when the cleanup body of an UWP is done.
+     Will continue unwinding if unwinding is in progress, else it returns.
+     Invalidates the UWP and pops it off the stack.
+     Returns captured block return value to teb->return_values when not unwinding.
+
+## Internal structures
+
+The TEB holds a reference to the topmost UWP frame.
+
+UWP frames are chained via ->previous_unwind_protect, allowing us to push and pop them.
+
+BE frames point to the UWP up until which we must unwind to get back into their context.
+
+While unwinding to a given BE, the topmost UWP frame is marked at each step
+by setting its ->ultimate_destination field in nlx_step() before jumping to its
+cleanup block. The cleanup block should end by calling CONTINUE_UNWIND, which
+can use the above mark to detect that an unwind is in progress and call back
+to nlx_step() accordingly.
+
+When the UWP requested by a BE is reached during unwinding, the BE will be jumped to.
+
+## BEF Example
+
+This is what a BEF looks like in C:
+
+<code>
+  // Stack-alloc and initialize a new BEF
+  D returnPexit_0_ = MAKE_EXIT_FRAME();
+
+  // Do the setjmp
+  if (nlx_setjmp(FRAME_DEST(returnPexit_0_))) {
+    // We have returned via NLX
+    // Restore return values given to exit function
+    TX = FRAME_RETVAL(returnPexit_0_);
+  } else {
+    // We are executing our body
+
+    /* contained body */
+    
+    // Body may or may not call something like this to return
+    // More return values can be given in teb->return_values
+    NLX(returnPexit_0_, firstReturnValue);
+  }
+
+  // We are out of the block
+  // We may have gotten here via NLX or directly.
+  // The compiler is responsible for maintaining the return value protocol.
+</code>
+
+## UWP Example
+
+This is what an UWP looks like in C:
+
+<code>
+  // Stack-alloc an UWP frame and push it on the UWP stack
+  D T0 = MAKE_UNWIND_FRAME();
+
+  // Do the setjmp
+  if (!nlx_setjmp(FRAME_DEST(T0))) {
+    // This branch is taken for normal execution
+
+    /* protected block */
+
+    // Capture block return values and invalidate frame
+    FALL_THROUGH_UNWIND(&KPfalseVKi);
+  }
+
+  /* cleanup block */
+
+  // Finish the UWP
+  // If we are unwinding, this never returns.
+  // If we are just returning, this will restore block return values.
+  CONTINUE_UNWIND();
+</code>
