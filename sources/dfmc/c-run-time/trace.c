@@ -100,7 +100,7 @@ void
 trace_prologue(unsigned category)
 {
   flockfile(trace_stream);
-  fprintf(trace_stream, "[%s] ", trace_names[category]);
+  fprintf(trace_stream, "[%p] [%s] ", get_teb(), trace_names[category]);
 }
 
 void
