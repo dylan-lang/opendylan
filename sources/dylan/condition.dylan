@@ -17,7 +17,8 @@ end class <handler>;
 define sealed domain make (singleton(<handler>));
 define sealed domain initialize (<handler>);
 
-define variable *current-handlers* :: <list> = #();
+define thread variable *current-handlers* :: <list> = #();
+
 define variable *last-handlers* :: <list> = #();
 
 define variable *last-handler* :: false-or(<handler>) = #f; // ---*** maintained for patching
