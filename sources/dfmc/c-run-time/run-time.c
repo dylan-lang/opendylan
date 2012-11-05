@@ -4015,10 +4015,6 @@ D MV3_ (D x, D y, D z) {
 
 /* NON-LOCAL EXITS */
 
-Unwind_protect_frame Ptop_unwind_protect_frame_data;
-Unwind_protect_frame* Ptop_unwind_protect_frame
-  = &Ptop_unwind_protect_frame_data;
-
 #ifdef VERIFY_NLX
 /**
  * Check the NLX stack of the given TEB for invariants
@@ -4034,7 +4030,7 @@ void verify_nlx_stack (TEB* teb) {
   /* iterate over uwp stack and verify it */
   for(ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
     /* top of uwp stack */
-    if(ptr == Ptop_unwind_protect_frame) {
+    if(ptr == &teb->top_uwp_frame) {
       break;
     }
     /* NULL current uwp */
@@ -4059,7 +4055,7 @@ void verify_nlx_stack (TEB* teb) {
     /* run over stack again */
     for(ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
       /* top of uwp stack */
-      if(ptr == Ptop_unwind_protect_frame) {
+      if(ptr == &teb->top_uwp_frame) {
         fprintf(stderr, "  reached top\n");
         break;
       }
@@ -4111,7 +4107,7 @@ void verify_nlx_bef(TEB* teb, Bind_exit_frame* bef) {
       break;
     }
     /* top of uwp stack */
-    if(ptr == Ptop_unwind_protect_frame) {
+    if(ptr == &teb->top_uwp_frame) {
       break;
     }
   }
@@ -4730,7 +4726,6 @@ void _Init_Run_Time ()
     GC_init();
     initialize_threads_primitives();
     GC_set_max_heap_size(MAX_HEAP_SIZE);
-    Ptop_unwind_protect_frame->ultimate_destination = (Bind_exit_frame*)0;
     IKJboole_xor_ = primitive_string_as_symbol(&bs_boole_xor_);
     IKJboole_ior_ = primitive_string_as_symbol(&bs_boole_ior_);
     pseudo_stdout = (D)stdout;

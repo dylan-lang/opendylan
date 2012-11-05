@@ -438,8 +438,6 @@ typedef struct _unwind_protect_frame {
 #endif
 } Unwind_protect_frame;
 
-extern Unwind_protect_frame* Ptop_unwind_protect_frame;
-
 extern D SETUP_EXIT_FRAME (D);
 extern D SETUP_UNWIND_FRAME (D);
 extern D FRAME_DEST (D);
@@ -469,6 +467,7 @@ typedef struct _teb {
 
         /* unwinding state */
         Unwind_protect_frame* uwp_frame;
+        Unwind_protect_frame  top_uwp_frame;
 
         /* thread state */
         void *thread;
