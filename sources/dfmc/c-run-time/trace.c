@@ -6,13 +6,34 @@
 
 #ifdef OPENDYLAN_CRT_TRACE
 
+/**
+ * STDIO stream for trace output
+ */
 FILE *trace_stream;
+
+/**
+ * True if the stream is owned by us and must be closed
+ */
 DBOOL trace_close;
+
+/**
+ * True if we should flush after each message
+ */
 DBOOL trace_flush;
+
+/**
+ * Per-category enable flags
+ */
 DBOOL trace_enable[_TRACE_MAX];
 
+/**
+ * Per-category name
+ */
 const char *trace_names[_TRACE_MAX] = TRACE_CATEGORY_NAMES;
 
+/**
+ * Close the trace stream, if appropriate
+ */
 static void
 maybe_close(void)
 {
@@ -23,6 +44,11 @@ maybe_close(void)
   trace_close = 0;
 }
 
+/**
+ * Set up tracing to the given stdio stream
+ *
+ * We assume the stream is not ours, so we do not close it.
+ */
 static void
 trace_to_stdio(FILE *stream)
 {
@@ -31,6 +57,9 @@ trace_to_stdio(FILE *stream)
   trace_close = 0;
 }
 
+/**
+ * Set up tracing to the given file
+ */
 static void
 trace_to_file(const char *fn)
 {
@@ -39,6 +68,9 @@ trace_to_file(const char *fn)
   trace_close = 1;
 }
 
+/**
+ * Process a single configuration directive
+ */
 static void
 trace_token(const char *token)
 {
@@ -66,6 +98,9 @@ trace_token(const char *token)
   }
 }
 
+/**
+ * Initialize the tracing system
+ */
 void
 trace_init(void)
 {
@@ -96,13 +131,23 @@ trace_init(void)
   }
 }
 
+/**
+ * Called before each trace message
+ *
+ * Prints the message header.
+ */
 void
 trace_prologue(unsigned category)
 {
   flockfile(trace_stream);
-  fprintf(trace_stream, "[%s] ", trace_names[category]);
+  fprintf(trace_stream, "[%p] [%s] ", get_teb(), trace_names[category]);
 }
 
+/**
+ * Called after each trace message
+ *
+ * Flushes the output stream, if configured.
+ */
 void
 trace_epilogue(void)
 {
