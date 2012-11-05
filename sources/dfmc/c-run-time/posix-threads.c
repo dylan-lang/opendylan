@@ -108,7 +108,7 @@ TEB* make_teb()
 {
   TEB* teb = (TEB*)GC_malloc_uncollectable(sizeof(TEB));
 
-  teb->uwp_frame = Ptop_unwind_protect_frame;
+  teb->uwp_frame = &teb->top_uwp_frame;
 
   set_teb(teb);
 

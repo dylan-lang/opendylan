@@ -417,10 +417,15 @@ extern DMINT* P_unused_arg;
 
 /* NON-LOCAL CONTROL FLOW FRAMES */
 
+//#define VERIFY_NLX
+
 typedef struct _bind_exit_frame {
   jmp_buf                       destination;
   MV                            return_values;
   struct _unwind_protect_frame* present_unwind_protect_frame;
+#ifdef VERIFY_NLX
+  struct _teb*                  verify_teb;
+#endif
 } Bind_exit_frame;
 
 typedef struct _unwind_protect_frame {
@@ -428,9 +433,10 @@ typedef struct _unwind_protect_frame {
   MV                            return_values;
   struct _bind_exit_frame*      ultimate_destination;
   struct _unwind_protect_frame* previous_unwind_protect_frame;
+#ifdef VERIFY_NLX
+  struct _teb*                  verify_teb;
+#endif
 } Unwind_protect_frame;
-
-extern Unwind_protect_frame* Ptop_unwind_protect_frame;
 
 extern D SETUP_EXIT_FRAME (D);
 extern D SETUP_UNWIND_FRAME (D);
@@ -461,6 +467,7 @@ typedef struct _teb {
 
         /* unwinding state */
         Unwind_protect_frame* uwp_frame;
+        Unwind_protect_frame  top_uwp_frame;
 
         /* thread state */
         void *thread;
