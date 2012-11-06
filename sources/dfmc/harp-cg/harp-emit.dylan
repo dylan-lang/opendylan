@@ -937,32 +937,30 @@ define method emit-extern
         model-library,
         really-import? = import?)
  => ();
-  unless (binding-of-*current-handlers*?(object))
-    let entry-point? = entry-point?(object);
+  let entry-point? = entry-point?(object);
 
-    if (really-import? | entry-point?)
-      let import-domain =
-        if (entry-point?)
-          #"runtime";
-        else
-          model-library | model-library-description(object);
-        end if;
-      let imports = imports-in-library(back-end, name, import-domain);
-      let already-imported? = element(imports, name, default: #f);
-      unless (already-imported?)
-	imports[name] := #t;
-	output-external(back-end, stream, name,
-                        model-object: apropo-model-object(object),
-			derived-model-object: derived-model-object,
-			import?: import?)
-      end unless;
-    else
+  if (really-import? | entry-point?)
+    let import-domain =
+      if (entry-point?)
+        #"runtime";
+      else
+        model-library | model-library-description(object);
+      end if;
+    let imports = imports-in-library(back-end, name, import-domain);
+    let already-imported? = element(imports, name, default: #f);
+    unless (already-imported?)
+      imports[name] := #t;
       output-external(back-end, stream, name,
-		      model-object: apropo-model-object(object),
-	              derived-model-object: derived-model-object,
-		      import?: import?);
-    end if;
-  end unless;
+                      model-object: apropo-model-object(object),
+                      derived-model-object: derived-model-object,
+                      import?: import?)
+    end unless;
+  else
+    output-external(back-end, stream, name,
+                    model-object: apropo-model-object(object),
+                    derived-model-object: derived-model-object,
+                    import?: import?);
+  end if;
 end method;
 
 define method emit-public

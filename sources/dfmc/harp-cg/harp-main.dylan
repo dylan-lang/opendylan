@@ -2405,14 +2405,6 @@ define sideways method emit-reference (back-end :: <harp-back-end>, stream, o ::
 end method;
 
 
-define function binding-of-*current-handlers*?
-    (binding) => (res :: <boolean>)
-  instance?(binding, <module-binding>)
-  & (binding-canonical-binding(dylan-binding(#"*current-handlers*"))
-       == binding-canonical-binding(binding))
-end function;
-
-
 define function constant-for-*current-handlers*?
     (const :: <constant-reference>) => (res :: <boolean>)
   const == $current-handlers
@@ -2448,9 +2440,7 @@ define sideways method emit-reference
   if (*emitting-data?*)
     cref;
   else
-    if (cref.constant-for-*current-handlers*?)
-      cref // hack for threads
-    elseif (emit-import-adjustment?(back-end) & imported-object?(back-end, o))
+    if (emit-import-adjustment?(back-end) & imported-object?(back-end, o))
       let new-register = make-g-register(back-end);
       ins--load(back-end, new-register, cref, 0); /// IS THIS SAFE?? What if it's a float?
       new-register;
@@ -3063,14 +3053,7 @@ end method name-of-temporary;
 define method emit-assignment
     (back-end :: <harp-back-end>, destination :: <register>, source, #rest ignored) => ()
   let op--move = op--move%(destination);
-
-  // hack for threads
-  if (instance?(source, <constant-reference>) 
-        & source.constant-for-*current-handlers*?) 
-    ins--ld-teb(back-end, destination, back-end.teb-current-handler-offset);
-  else
-    op--move(back-end, destination, source);
-  end if;
+  op--move(back-end, destination, source);
 end method emit-assignment;
 
 // On Windows, DLL imports require indirections, and code is compiled
@@ -3097,12 +3080,11 @@ end method emit-import-assignment;
 
 define method emit-assignment
 (back-end :: <harp-back-end>, destination :: <indirect-constant-reference>, source, #rest ignored) => ()
-  // hack for threads
+  // hack for threads - This mirrors the real value for the debugger.
   if (destination.constant-for-*current-handlers*?)
     ins--st-teb(back-end, source, back-end.teb-current-handler-offset);
-  else
-    emit-import-assignment(back-end, destination, source);
   end if;
+  emit-import-assignment(back-end, destination, source);
 end method emit-assignment;
 
 define method emit-assignment
