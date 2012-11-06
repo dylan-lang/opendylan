@@ -13,7 +13,7 @@
 #define put_string(string,stream) sprintf(stream, "%s%s", stream, string)
 #define put_char(char,stream)     sprintf(stream, "%s%c", stream, char)
 
-#if defined(WIN32)
+#if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
 #define INLINE __inline
 #elif defined(__clang__)
 //---*** Do something better.
@@ -515,7 +515,7 @@ void do_debug_message (BOOL forBreak, D string, D arguments) {
   ignore(forBreak);
 
   dylan_format(error_output, string, arguments);
-#if defined(WIN32)
+#ifdef OPEN_DYLAN_PLATFORM_WINDOWS
   {
     #define $STD_OUTPUT_HANDLE (unsigned long)-11
     #define $INVALID_HANDLE_VALUE (void*)-1
