@@ -26,6 +26,11 @@
 
 #include <gc/gc.h>
 
+#ifdef __linux__
+/* get prctl */
+#include <sys/prctl.h>
+#endif
+
 #define ignore(x) (void)x
 
 #ifndef _DEBUG      /* For Release builds */
@@ -378,16 +383,41 @@ void initialize_threads_primitives()
 /* THREAD PRIMITIVES                                                         */
 /*****************************************************************************/
 
+static void set_thread_name(THREAD *rthread, const char *name) {
+#if __linux__
+  /* gdb shows this, so set it too */
+  prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
+  pthread_setname_np(rthread->tid, name);
+#endif
+#if __FreeBSD__
+  pthread_set_name_np(rthread->tid, name);
+#endif
+#ifdef __APPLE__
+  pthread_setname_np(name);
+#endif
+}
+
 void *trampoline (void *arg)
 {
   D        result, f;
   DTHREAD *thread = (DTHREAD *)arg;
+  THREAD  *rthread;
 
   assert(thread != NULL);
 
   make_teb();
 
-  f = (D)(thread->handle2);
+  rthread = (THREAD*)(thread->handle2);
+
+  rthread->teb = teb;
+
+  f = rthread->function;
+
+  if(rthread->name) {
+    const char *raw = primitive_string_as_raw(rthread->name);
+    trace_threads("Thread %p has name \"%s\"", thread, raw);
+    set_thread_name(rthread, raw);
+  }
 
   setup_tlv_vector(thread);
 
@@ -416,19 +446,23 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
   DTHREAD *thread = (DTHREAD *)t;
   ZINT     zpriority = (ZINT)p;
 
+  THREAD*             rthread;
   pthread_attr_t      attr;
   struct sched_param  param;
   int                 priority = (int)zpriority >> 2;
 
-  ignore(n);
   ignore(s);
 
   assert(thread != NULL);
   assert(IS_ZINT(zpriority));
   assert(f != NULL);
 
-  thread->handle1 = 0;
-  thread->handle2 = f;
+  rthread = primitive_allocate(sizeof(THREAD));
+  rthread->name = n;
+  rthread->function = f;
+
+  thread->handle1 = 0;       // runtime thread flags
+  thread->handle2 = rthread; // runtime thread object
 
   param.sched_priority = priority_map(priority);
 
@@ -447,7 +481,7 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 //    return CREATE_ERROR;
 //  }
 
-  if (GC_pthread_create(&thread->tid, &attr, trampoline, thread)) {
+  if (GC_pthread_create(&rthread->tid, &attr, trampoline, thread)) {
     MSG0("make-thread: error creating thread\n");
     return CREATE_ERROR;
   }
@@ -592,9 +626,11 @@ D primitive_thread_join_multiple(D v)
 void primitive_detach_thread(D t)
 {
   DTHREAD* thread = t;
+  THREAD* rthread;
   assert(thread != NULL);
+  rthread = (THREAD*)(thread->handle2);
 
-  GC_pthread_detach(thread->tid);
+  GC_pthread_detach(rthread->tid);
 }
 
 /* 5 */
@@ -1460,23 +1496,22 @@ D primitive_write_thread_variable(D h, D nv)
 D primitive_initialize_current_thread(D t, DBOOL synchronize)
 {
   DTHREAD     *thread = (DTHREAD *)t;
+  THREAD      *rthread;
 
   ignore(synchronize);
   assert(thread != NULL);
+
+  rthread = (THREAD*)(thread->handle2);
 
   trace_threads("Initializing current thread %p", t);
 
   // Put the thread object and handle in the TEB for later use
   set_current_thread(thread);
-  set_current_thread_handle((void *)thread->tid);
+  set_current_thread_handle((void *)rthread->tid);
 
   // Create and register the TLV vector
   setup_tlv_vector(thread);
 
-  // Clear the handle2 slot in the thread object
-  // (which contained the address of the starting function)
-  thread->handle2 = DFALSE;
-//  thread->handle2 = NULL;
   return t;
 }
 
