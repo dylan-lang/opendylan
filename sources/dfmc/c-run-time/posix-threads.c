@@ -26,7 +26,7 @@
 
 #include <gc/gc.h>
 
-#ifdef __linux__
+#ifdef OPEN_DYLAN_PLATFORM_LINUX
 /* get prctl */
 #include <sys/prctl.h>
 #endif
@@ -384,15 +384,15 @@ void initialize_threads_primitives()
 /*****************************************************************************/
 
 static void set_thread_name(THREAD *rthread, const char *name) {
-#if __linux__
+#ifdef OPEN_DYLAN_PLATFORM_LINUX
   /* gdb shows this, so set it too */
   prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
   pthread_setname_np(rthread->tid, name);
 #endif
-#if __FreeBSD__
+#ifdef OPEN_DYLAN_PLATFORM_FREEBSD
   pthread_set_name_np(rthread->tid, name);
 #endif
-#ifdef __APPLE__
+#ifdef OPEN_DYLAN_PLATFORM_DARWIN
   pthread_setname_np(name);
 #endif
 }

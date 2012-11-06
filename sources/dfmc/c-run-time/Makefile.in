@@ -20,18 +20,28 @@ CC = @CC@
 AR = ar -rcs
 
 ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86-darwin)
-	PLATFORM_CFLAGS = -arch i386
+  PLATFORM_CFLAGS=-arch i386 -D_REENTRANT=1 \
+    -DOPEN_DYLAN_PLATFORM_DARWIN -DOPEN_DYLAN_PLATFORM_UNIX
 endif
 ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86_64-darwin)
-	PLATFORM_CFLAGS = -arch x86_64
+  PLATFORM_CFLAGS=-arch x86_64 -D_REENTRANT=1 \
+    -DOPEN_DYLAN_PLATFORM_DARWIN -DOPEN_DYLAN_PLATFORM_UNIX
 endif
 ifeq ($(OPEN_DYLAN_PLATFORM_NAME),ppc-darwin)
-	PLATFORM_CFLAGS = -arch ppc
+  PLATFORM_CFLAGS=-arch ppc -D_REENTRANT=1 \
+    -DOPEN_DYLAN_PLATFORM_DARWIN -DOPEN_DYLAN_PLATFORM_UNIX
+endif
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86_64-freebsd)
+  PLATFORM_CFLAGS=-D_REENTRANT=1 \
+    -DOPEN_DYLAN_PLATFORM_FREEBSD -DOPEN_DYLAN_PLATFORM_UNIX
+endif
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86_64-linux)
+  PLATFORM_CFLAGS=-DGC_LINUX_THREADS=1 -D_REENTRANT=1 \
+    -DOPEN_DYLAN_PLATFORM_LINUX -DOPEN_DYLAN_PLATFORM_UNIX
 endif
 
-CFLAGS          = -W -Wall -DGC_LINUX_THREADS=1 -D_REENTRANT=1 -fPIC \
-                  -fno-strict-aliasing \
-                  $(PLATFORM_CFLAGS) -O2 -g -I$(srcdir) \
+CFLAGS          = -W -Wall -O2 -g -fPIC -fno-strict-aliasing \
+                  $(PLATFORM_CFLAGS) -I$(srcdir) \
                   $(GC_CFLAGS)
 
 OBJS    = $(OBJDIR)/posix-threads.o \

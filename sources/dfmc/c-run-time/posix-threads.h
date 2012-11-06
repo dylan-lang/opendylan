@@ -8,7 +8,7 @@
  *    Threads portability layer for POSIX
  */
 
-#if __linux__
+#ifdef OPEN_DYLAN_PLATFORM_LINUX
 /* get pthread_setname_np */
 #define _GNU_SOURCE
 #endif

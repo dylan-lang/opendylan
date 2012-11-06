@@ -3,7 +3,7 @@
 
 #include <setjmp.h>
 
-#ifdef __APPLE__
+#ifdef OPEN_DYLAN_PLATFORM_DARWIN
 #  if !defined(__clang__) || \
       (__clang_major__ < 3) || \
       (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
@@ -26,7 +26,7 @@ typedef signed short            INT16;
 typedef unsigned short          UINT16;
 typedef signed long             INT32;
 typedef unsigned long           UINT32;
-#if defined(WIN32)
+#ifdef OPEN_DYLAN_PLATFORM_WINDOWS
 typedef _int64                  INT64;
 typedef unsigned _int64         UINT64;
 #else
@@ -35,7 +35,7 @@ typedef unsigned long long      UINT64;
 #endif
 typedef float                   FLT;
 typedef double                  DFLT;
-#ifdef WIN32
+#ifdef OPEN_DYLAN_PLATFORM_WINDOWS
 typedef double                  EFLT;
 #else
 typedef long double             EFLT;
@@ -1092,10 +1092,10 @@ extern D primitive_allocate_weak_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D
 
 /* stack allocation */
 
-#ifdef WIN32
+#ifdef OPEN_DYLAN_PLATFORM_WINDOWS
 #include <malloc.h>
 #else
-  #if __FreeBSD__
+  #ifdef OPEN_DYLAN_PLATFORM_FREEBSD
   #include <sys/types.h>
   extern void * alloca (size_t size);
   #else
@@ -1386,7 +1386,7 @@ extern DMINT primitive_machine_word_unsigned_double_shift_right(DMINT, DMINT, DM
 #include <math.h>
 
 /* Win32 only defines the single precision functions for C++ (Huh?) */
-#if defined(WIN32)
+#ifdef OPEN_DYLAN_PLATFORM_WINDOWS
 #define sqrtf(x)  (DSFLT)sqrt((DDFLT)x)
 #define logf(x)   (DSFLT)log((DDFLT)x)
 #define expf(x)   (DSFLT)exp((DDFLT)x)
