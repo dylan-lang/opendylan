@@ -60,25 +60,61 @@
 
 typedef signed long ZINT;
 
+/* This is a <portable-container>
+ *
+ * It is used to wrap the c-r-t representation of synchronization objects.
+ *
+ * It is associated with the following classes:
+ *
+ *   DYLAN class      | C-R-T struct in HANDLE
+ *   -----------------------------------------
+ *   <simple-lock>    | SIMPLELOCK
+ *   <recursive-lock> | RECURSIVELOCK
+ *   <semaphore>      | SEMAPHORE
+ *   <notification>   | NOTIFICATION
+ *
+ */
 typedef struct _ctr1
 {
   D class;
   void *handle;
 } CONTAINER;
 
+/* This is <portable-double-container> used in <thread>
+ *
+ * HANDLE1 contains internal flags
+ * HANDLE2 contains the runtime thread object
+ *
+ */
 typedef struct _ctr2
 {
   D class;
   void *handle1;
   void *handle2;
-  pthread_t tid;
 } DTHREAD;
 
 typedef void * D_NAME;
 typedef D *TLV_VECTOR;
 
 
+/*
+ * Thread structure
+ *
+ * Private to C-R-T.
+ *
+ * Allocated using the GC so it can reference dylan objects.
+ *
+ */
+typedef struct thread {
+  pthread_t tid;
+  TEB* teb;
+  D name;
+  D function;
+} THREAD;
+
 /* Synchronization structures
+ *
+ * Private to C-R-T.
  *
  * CAUTION! These are manually allocated and no GC roots.
  */
