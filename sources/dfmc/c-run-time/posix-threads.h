@@ -8,6 +8,11 @@
  *    Threads portability layer for POSIX
  */
 
+#if __linux__
+/* get pthread_setname_np */
+#define _GNU_SOURCE
+#endif
+
 #include "run-time.h"
 
 #include <stdint.h>

@@ -26,6 +26,11 @@
 
 #include <gc/gc.h>
 
+#ifdef __linux__
+/* get prctl */
+#include <sys/prctl.h>
+#endif
+
 #define ignore(x) (void)x
 
 #ifndef _DEBUG      /* For Release builds */
@@ -378,6 +383,20 @@ void initialize_threads_primitives()
 /* THREAD PRIMITIVES                                                         */
 /*****************************************************************************/
 
+static void set_thread_name(THREAD *rthread, const char *name) {
+#if __linux__
+  /* gdb shows this, so set it too */
+  prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
+  pthread_setname_np(rthread->tid, name);
+#endif
+#if __FreeBSD__
+  pthread_set_name_np(rthread->tid, name);
+#endif
+#ifdef __APPLE__
+  pthread_setname_np(name);
+#endif
+}
+
 void *trampoline (void *arg)
 {
   D        result, f;
@@ -393,6 +412,12 @@ void *trampoline (void *arg)
   rthread->teb = teb;
 
   f = rthread->function;
+
+  if(rthread->name) {
+    const char *raw = primitive_string_as_raw(rthread->name);
+    trace_threads("Thread %p has name \"%s\"", thread, raw);
+    set_thread_name(rthread, raw);
+  }
 
   setup_tlv_vector(thread);
 
