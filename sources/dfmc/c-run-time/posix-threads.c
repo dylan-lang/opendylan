@@ -393,6 +393,7 @@ static void set_thread_name(THREAD *rthread, const char *name) {
   pthread_set_name_np(rthread->tid, name);
 #endif
 #ifdef OPEN_DYLAN_PLATFORM_DARWIN
+  ignore(rthread);
   pthread_setname_np(name);
 #endif
 }
