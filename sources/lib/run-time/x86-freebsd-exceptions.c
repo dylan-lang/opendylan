@@ -63,9 +63,7 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
   newTRAPHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGTRAP, &newTRAPHandler, oldTRAPHandler);
 
-  sigemptyset(&set);
-  sigaddset(&set, SIGPIPE);
-  sigprocmask(SIG_BLOCK, &set, &oldset);
+  signal(SIGPIPE, SIG_IGN);
 }
 
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
