@@ -123,7 +123,7 @@ AS_IF([test x$with_gc != x],
             AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
           ]
         )
-        GC_CFLAGS="-DGC_USE_BOEHM -I${with_gc}/include"
+        GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc}/include"
         GC_LFLAGS="-L${with_gc}/lib -lgc"
         GC_CHOICE="boehm"
       ]
@@ -135,7 +135,7 @@ AS_IF([test x${with_gc}x${with_mps} == xx],
             AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
           ]
         )
-        GC_CFLAGS="-DGC_USE_BOEHM"
+        GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
         GC_LFLAGS="-lgc"
         GC_CHOICE="boehm"
       ]
