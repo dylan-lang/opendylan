@@ -1104,8 +1104,6 @@ extern D primitive_allocate_weak_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D
 #endif
 
 #define primitive_stack_allocate(sz) ((D)(alloca((int)(sz) * sizeof(D))))
-#define primitive_save_stack_pointer() ((D)(alloca(0)))  /* not used */
-#define primitive_restore_stack_pointer(old_sp) /* nop -- return will deallocate */
 
 #define primitive_byte_stack_allocate(numwords, numbytes) \
   ((D)alloca(numwords * sizeof(D)) + (numbytes))
