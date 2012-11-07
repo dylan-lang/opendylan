@@ -15,6 +15,7 @@ Files:     dfmc-boot
 	   dispatch-caches
 	   comparison
            functional
+           thread
            condition
 	   condition-extras
            object
@@ -78,7 +79,6 @@ Files:     dfmc-boot
            finalization
            threads-conditions
            low-level-sync
-           thread
            synchronization
            locks
            notification
