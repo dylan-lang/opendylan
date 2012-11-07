@@ -74,15 +74,15 @@ void  initialize_threads_primitives();
 void *make_tlv_vector(int);
 int   priority_map(int);
 
-void *get_tlv_vector();
-void  set_tlv_vector(void *);
-
 TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize);
 void grow_all_tlv_vectors(int newsize);
 void  copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source);
 void update_tlv_vectors(int offset, D value);
 void add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector);
 int remove_tlv_vector(DTHREAD *thread);
+
+
+/* TEB management */
 
 #if USE_PTHREAD_TLS
 pthread_key_t teb_key;
@@ -129,6 +129,42 @@ void free_teb()
   GC_free(teb);
 }
 
+
+/* TEB accessors */
+
+PURE_FUNCTION static inline void *get_tlv_vector()
+{
+  return get_teb()->tlv_vector;
+}
+
+static inline void set_tlv_vector(void *vector)
+{
+  get_teb()->tlv_vector = vector;
+}
+
+PURE_FUNCTION static inline void *get_current_thread()
+{
+  return get_teb()->thread;
+}
+
+static inline void set_current_thread(void *thread)
+{
+  get_teb()->thread = thread;
+}
+
+PURE_FUNCTION static inline void *get_current_thread_handle()
+{
+  return get_teb()->thread_handle;
+}
+
+static inline void set_current_thread_handle(void *handle)
+{
+  get_teb()->thread_handle = handle;
+}
+
+
+/* TLV management */
+
 void *make_tlv_vector(int n)
 {
   D *vector;
@@ -155,36 +191,6 @@ void free_tlv_vector(D *vector)
 
   // free the memory
   GC_free(vector);
-}
-
-void *get_tlv_vector()
-{
-  return get_teb()->tlv_vector;
-}
-
-void set_tlv_vector(void *vector)
-{
-  get_teb()->tlv_vector = vector;
-}
-
-void *get_current_thread()
-{
-  return get_teb()->thread;
-}
-
-void set_current_thread(void *thread)
-{
-  get_teb()->thread = thread;
-}
-
-void *get_current_thread_handle()
-{
-  return get_teb()->thread_handle;
-}
-
-void set_current_thread_handle(void *handle)
-{
-  get_teb()->thread_handle = handle;
 }
 
 
