@@ -155,9 +155,7 @@ static void EstablishDylanExceptionHandlers(void)
   newTRAPHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGTRAP, &newTRAPHandler, &outer_TRAPHandler);
 
-  sigemptyset(&set);
-  sigaddset(&set, SIGPIPE);
-  sigprocmask(SIG_BLOCK, &set, &oldset);
+  signal(SIGPIPE, SIG_IGN);
 
   /* Set the FPU control word */
   cw = DYLAN_FPU_CW;

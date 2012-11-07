@@ -4715,19 +4715,43 @@ static void call_application_exit_functions(void) {
   (void) Kcall_application_exit_functionsVKeI();
 }
 
+/**
+ * Initialize the dylan c-run-time
+ *
+ * This must be called by every library using c-r-t as part
+ * of its initialization before using anything else.
+ *
+ */
 void _Init_Run_Time ()
 {
   static int initp = 0;
   if (!initp) {
     initp = 1;
+
+    // initialize the tracing system
     trace_init();
     trace_runtime("Initializing runtime");
+
+    // register our dylan-level atexit mechanism
     atexit(call_application_exit_functions);
+
+    // set up signal handlers
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+#ifdef SIGPIPE
+    signal(SIGPIPE, SIG_IGN);
+#endif
+#endif
+
+    // initialize GC and thread subsystems
     GC_init();
     initialize_threads_primitives();
     GC_set_max_heap_size(MAX_HEAP_SIZE);
+
+    // get some symbols we need
     IKJboole_xor_ = primitive_string_as_symbol(&bs_boole_xor_);
     IKJboole_ior_ = primitive_string_as_symbol(&bs_boole_ior_);
+
+    // XXX: junk
     pseudo_stdout = (D)stdout;
   }
 }
