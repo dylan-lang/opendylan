@@ -39,9 +39,7 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
   newFPEHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGFPE, &newFPEHandler, oldFPEHandler);
 
-  sigemptyset(&set);
-  sigaddset(&set, SIGPIPE);
-  sigprocmask(SIG_BLOCK, &set, &oldset);
+  signal(SIGPIPE, SIG_IGN);
 }
 
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
