@@ -446,8 +446,13 @@ extern D FALL_THROUGH_UNWIND (D);
 extern D CONTINUE_UNWIND ();
 extern D NLX (Bind_exit_frame*, D);
 
-#define MAKE_EXIT_FRAME() SETUP_EXIT_FRAME(alloca(sizeof(Bind_exit_frame)))
-#define MAKE_UNWIND_FRAME() SETUP_UNWIND_FRAME(alloca(sizeof(Unwind_protect_frame)))
+#define ENTER_EXIT_FRAME(destvar) \
+  Bind_exit_frame bef_ ## destvar; \
+  destvar = SETUP_EXIT_FRAME(& bef_ ## destvar)
+
+#define ENTER_UNWIND_FRAME(destvar) \
+  Unwind_protect_frame uwp_ ## destvar; \
+  destvar = SETUP_UNWIND_FRAME(& uwp_ ## destvar)
 
 #define nlx_longjmp(env, val)_longjmp(env, val);
 #define nlx_setjmp(env) _setjmp(env)

@@ -1212,10 +1212,10 @@ end method;
  
 // non-local control flow
 
-define constant $make-bind-exit-frame-string = "MAKE_EXIT_FRAME";
-define constant $frame-destination-string    = "FRAME_DEST";
-define constant $frame-return-value-string   = "FRAME_RETVAL";
-define constant $exit-string                 = "NLX";
+define constant $enter-bind-exit-frame-string = "ENTER_EXIT_FRAME";
+define constant $frame-destination-string     = "FRAME_DEST";
+define constant $frame-return-value-string    = "FRAME_RETVAL";
+define constant $exit-string                  = "NLX";
 
 // define constant merge-exit-value = merge-left-value;
 define constant merge-body-value = merge-right-value;
@@ -1230,7 +1230,7 @@ define method emit-computation
   else
     let merge-tmp = temporary(merge);
     format-emit
-      (b, s, d, "\t% = ~();\n", c.entry-state, $make-bind-exit-frame-string);
+      (b, s, d, "\t~(%);\n", $enter-bind-exit-frame-string, c.entry-state);
     format-emit
       (b, s, d, "\tif (nlx_setjmp(~(%))) {\n",
        $frame-destination-string, c.entry-state);
@@ -1273,15 +1273,14 @@ define method emit-computation
   end if;
 end method;
 
-define constant $make-unwind-protect-frame-string = "MAKE_UNWIND_FRAME";
-define constant $continue-unwind-string           = "CONTINUE_UNWIND";
-define constant $fall-through-unwind-string       = "FALL_THROUGH_UNWIND";
+define constant $enter-unwind-protect-frame-string = "ENTER_UNWIND_FRAME";
+define constant $continue-unwind-string            = "CONTINUE_UNWIND";
+define constant $fall-through-unwind-string        = "FALL_THROUGH_UNWIND";
 
 define method emit-computation
     (b :: <c-back-end>, s :: <stream>, d :: <integer>, c :: <unwind-protect>)
   format-emit
-    (b, s, d, "\t% = ~();\n", 
-     c.entry-state, $make-unwind-protect-frame-string);
+    (b, s, d, "\t~(%);\n", $enter-unwind-protect-frame-string, c.entry-state);
   format-emit
     (b, s, d, "\tif (!nlx_setjmp(~(@))) {\n",
      $frame-destination-string, c.entry-state);
