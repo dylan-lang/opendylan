@@ -114,6 +114,39 @@ typedef void*                   D;
 #define TLS_INITIAL_EXEC
 #endif
 
+static inline long atomic_increment(long *var) {
+#if defined(__GNUC__) || defined(__clang__)
+  return __sync_add_and_fetch(var, 1);
+#else
+#warning missing primitive atomic_increment
+  *var = *var + 1;
+  return *var;
+#endif
+}
+
+static inline long atomic_decrement(long *var) {
+#if defined(__GNUC__) || defined(__clang__)
+  return __sync_sub_and_fetch(var, 1);
+#else
+#warning missing primitive atomic_increment
+  *var = *var - 1;
+  return *var;
+#endif
+}
+
+static inline long atomic_cas(long *destination, long exchange, long compare) {
+#if defined(__GNUC__) || defined(__clang__)
+  return __sync_val_compare_and_swap(destination, compare, exchange);
+#else
+#warning missing primitive atomic_cas
+  int old = *destination;
+  if (old == compare) {
+     *destination = exchange;
+  }
+  return old;
+#endif
+}
+
 /* DYLAN TAGGING */
 
 #define TAG_BITS(x) (((unsigned long) x)&3)
@@ -1674,6 +1707,9 @@ extern D primitive_read_thread_variable(D h);
 extern D primitive_write_thread_variable(D h, D nv);
 extern D primitive_unlock_simple_lock(D l);
 extern D primitive_unlock_recursive_lock(D l);
+
+/* ATOMIC PRIMITIVES */
+
 #define primitive_sequence_point() SEQUENCE_POINT()
 #define primitive_synchronize_side_effects() SYNCHRONIZE_SIDE_EFFECTS()
 

@@ -52,6 +52,10 @@
 /*                                                                           */
 /*****************************************************************************/
 
+/* A large negative number used to indicate that a thread is in the process
+   of growing the TLV vector */
+static const long TLV_GROW = -2000000;
+
 extern OBJECT KPfalseVKi;
 
 pthread_mutex_t thread_join_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -62,6 +66,8 @@ TLV_VECTOR       default_tlv_vector = NULL;
 
 pthread_mutex_t  tlv_vector_list_lock = PTHREAD_MUTEX_INITIALIZER;
 TLV_VECTOR_LIST  tlv_vector_list;
+
+long tlv_writer_counter = 0;
 
 intptr_t  TLV_vector_offset = 2;
 
@@ -218,6 +224,9 @@ void grow_all_tlv_vectors(int newsize)
 
   trace_tlv("Growing all vectors to size %d", newsize);
 
+  // Wait until we are the only writer
+  while(atomic_cas(&tlv_writer_counter, TLV_GROW, 0) != 0);
+
   // Grow the default vector
   new_default = make_tlv_vector(newsize);
   copy_tlv_vector(new_default, default_tlv_vector);
@@ -230,6 +239,9 @@ void grow_all_tlv_vectors(int newsize)
     list->teb->tlv_vector = list->tlv_vector;
     list = list->next;
   }
+
+  // Let writes proceed again
+  while(atomic_cas(&tlv_writer_counter, 0, TLV_GROW) != TLV_GROW);
 }
 
 
@@ -1459,8 +1471,6 @@ D primitive_read_thread_variable(D h)
   D            value;
   uintptr_t    offset;
 
-  pthread_mutex_lock(&tlv_vector_list_lock);
-
   // The variable handle is the byte offset where the variable's value is
   // stored in the TLV.
   offset = (uintptr_t)h;
@@ -1470,19 +1480,31 @@ D primitive_read_thread_variable(D h)
 
   trace_tlv("Reading offset %"PRIxPTR" from vector %p: %p", offset, tlv_vector, value);
 
-  pthread_mutex_unlock(&tlv_vector_list_lock);
-
   return value;
 }
 
 
 /* 35 */
+
+static void primitive_write_thread_variable_internal()
+{
+  do {
+    if (atomic_decrement(&tlv_writer_counter) < 0) {
+      pthread_mutex_lock(&tlv_vector_list_lock);
+      pthread_mutex_unlock(&tlv_vector_list_lock);
+    }
+  } while(atomic_increment(&tlv_writer_counter) < 0);
+}
+
 D primitive_write_thread_variable(D h, D nv)
 {
   TLV_VECTOR   tlv_vector;
   uintptr_t    offset;
 
-  pthread_mutex_lock(&tlv_vector_list_lock);
+  // Wait until there are no other writers
+  if (atomic_increment(&tlv_writer_counter) < 0) {
+    primitive_write_thread_variable_internal();
+  }
 
   // The variable handle is the byte offset where the variable's value is
   // stored in the TLV.
@@ -1491,9 +1513,11 @@ D primitive_write_thread_variable(D h, D nv)
 
   trace_tlv("Writing offset %"PRIxPTR" in vector %p: %p", offset, tlv_vector, nv);
 
+  // Store the actual value
   tlv_vector[offset] = nv;
 
-  pthread_mutex_unlock(&tlv_vector_list_lock);
+  // Indicate that the write has finished
+  atomic_decrement(&tlv_writer_counter);
 
   return(nv);
 }
