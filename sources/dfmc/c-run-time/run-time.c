@@ -8,7 +8,7 @@
 #include <math.h>
 #include <gc/gc.h>
 
-#ifndef WIN32
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
 #include <signal.h>
 #endif
 
@@ -42,7 +42,7 @@
 
 /* PLATFORM SPECIFIC HAX */
 
-#ifdef WIN32
+#ifdef OPEN_DYLAN_PLATFORM_WINDOWS
 #define rint(x) floor(x)
 #define strncasecmp _strnicmp
 #endif
@@ -56,7 +56,7 @@ extern OBJECT KPunboundVKi;
 #define UNBOUND_P(x) ((x) == &KPunboundVKi)
 
 
-#if defined(WIN32)
+#if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
 #define INLINE __inline
 #elif defined(__clang__)
 //---*** Do something better.
@@ -74,7 +74,7 @@ D primitive_runtime_module_handle()
 /* SUPPORT */
 
 void primitive_break() {
-#if defined(WIN32)
+#if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
   extern void __stdcall DebugBreak(void);
   DebugBreak();
 #else
@@ -4617,7 +4617,7 @@ void  primitive_exit_application (DSINT code) {
 
 /* Win32 (PC) */
 
-#if defined(WIN32)
+#if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
 
 // XXX PER_THREAD
 static _int64 start, stop, frequency;
