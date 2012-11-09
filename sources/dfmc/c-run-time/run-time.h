@@ -495,7 +495,7 @@ PURE_FUNCTION static inline TEB* get_teb()
   return (TEB*)pthread_getspecific(teb_key);
 }
 #else
-extern __thread TEB* teb;
+extern __thread __attribute__((tls_model("initial-exec"))) TEB* teb;
 PURE_FUNCTION static inline TEB* get_teb()
 {
   return teb;
