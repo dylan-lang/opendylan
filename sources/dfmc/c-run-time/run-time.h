@@ -94,6 +94,26 @@ typedef void*                   D;
 #define SEQUENCE_POINT()
 #endif
 
+#if defined(__GNUC__)
+#define TLS_VARIABLE __thread
+#else
+#define TLS_VARIABLE
+#endif
+
+#if defined(__GNUC__) && !defined(__clang__)
+#define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
+#endif
+
+#if defined(__clang__) && defined(__has_attribute)
+#if __has_attribute(tls_model)
+#define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
+#endif
+#endif
+
+#ifndef TLS_INITIAL_EXEC
+#define TLS_INITIAL_EXEC
+#endif
+
 /* DYLAN TAGGING */
 
 #define TAG_BITS(x) (((unsigned long) x)&3)
@@ -495,7 +515,7 @@ PURE_FUNCTION static inline TEB* get_teb()
   return (TEB*)pthread_getspecific(teb_key);
 }
 #else
-extern __thread TEB* teb;
+extern TLS_VARIABLE TLS_INITIAL_EXEC TEB* teb;
 PURE_FUNCTION static inline TEB* get_teb()
 {
   return teb;
