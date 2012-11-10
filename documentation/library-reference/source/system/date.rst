@@ -27,7 +27,7 @@ the function *encode-date* or using the *make* method for ``<date>``.
 - :meth:`make <make(<date>)>`
 - :func:`encode-date`
 - :func:`current-date`
-- :type:`<day-of-week>`
+- :class:`<day-of-week>`
 
 Each of the arguments to :func:`encode-date` and to the :meth:`make
 <make(<date>)>` method on :class:`<date>` is an instance of
