@@ -164,8 +164,8 @@ The COMMAND-LINE-PARSER module
    :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter argv: An instance of ``<sequence>``.  Normally the value
      returned by ``application-arguments()`` is passed here.
-   :parameter #key usage: As for :function:`print-synopsis`.
-   :parameter #key description: As for :function:`print-synopsis`.
+   :parameter #key usage: As for :func:`print-synopsis`.
+   :parameter #key description: As for :func:`print-synopsis`.
    :description:
 
      By default, the ``--help`` flag is handled automatically by
