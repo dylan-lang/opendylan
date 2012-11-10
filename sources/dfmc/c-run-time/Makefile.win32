@@ -18,7 +18,7 @@ cdebug = $(cdebug)
 
 CC	= $(cc)
 LINKLIB	= $(implib) /nologo /out:
-CFLAGS	= $(cflags) $(cvarsmt) $(cdebug) /I$(OPEN_DYLAN_RELEASE_INCLUDE) $(OPEN_DYLAN_C_FLAGS)
+CFLAGS	= $(cflags) $(cvarsmt) $(cdebug) /DOPEN_DYLAN_PLATFORM_WINDOWS /I$(OPEN_DYLAN_RELEASE_INCLUDE) $(OPEN_DYLAN_C_FLAGS)
 OBJS	= run-time.obj debug-print.obj
 LIBFILE	= run-time.lib
 
