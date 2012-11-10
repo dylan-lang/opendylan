@@ -37,7 +37,7 @@ then any number of positional arguments (here "one", "two", and
 
   let parser = make(<command-line-parser>);
   add-option(parser,
-             make(<optional-parameter-option>,
+             make(<parameter-option>,
                   names: #("name"),
                   help: "A name"));
   add-option(parser,
@@ -60,9 +60,11 @@ Now parse the command line:
 .. code-block:: dylan
 
   block ()
-    parse-command-line(parser, application-arguments());
+    parse-command-line(parser, application-arguments(),
+                       description: "The most excellent Frobber.");
+  exception (ex :: <help-requested>)
+    exit-application(0);
   exception (ex :: <usage-error>)
-    format-out("%s\n", condition-to-string(ex));
     exit-application(2);
   end;
 
@@ -106,6 +108,41 @@ The COMMAND-LINE-PARSER module
      ``--help`` and ``-h`` to request help.  This keyword has no
      effect if ``provide-help-option?`` is ``#f``.
 
+.. class:: <command-line-parser-error>
+   :open:
+
+   Superclass of all errors signaled by this library.
+
+   :superclasses: <format-string-condition>, <error>
+
+
+.. class:: <usage-error>
+   :open:
+
+   Signaled when a command-line cannot be parsed.
+
+   :superclasses: <command-line-parser-error>
+
+   :description:
+
+     This is commonly handled by calling ``exit-application(2)`` since
+     the error has already been displayed on ``*standard-error*``.
+
+.. class:: <help-requested>
+   :sealed:
+
+   Signaled when help was explicitly requested via the help option,
+   usually ``--help``.
+
+   :superclasses: <usage-error>
+
+   :description:
+
+     This is commonly handled by calling ``exit-application(0)`` since
+     the command-line synopsis has already been displayed on
+     ``*standard-output*``.
+
+
 .. function:: add-option
 
    Add an option to a command-line parser.
@@ -123,10 +160,25 @@ The COMMAND-LINE-PARSER module
    Parses the command line in ``argv`` and side-effects ``parser``
    accordingly.
 
-   :signature: parse-command-line (parser argv) => (success?)
+   :signature: parse-command-line (parser argv) => ()
    :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter argv: An instance of ``<sequence>``.  Normally the value
      returned by ``application-arguments()`` is passed here.
+   :parameter #key usage: As for :func:`print-synopsis`.
+   :parameter #key description: As for :func:`print-synopsis`.
+   :description:
+
+     By default, the ``--help`` flag is handled automatically by
+     displaying the usage string, the description, and calling
+     ``print-synopsis(parser, *standard-output*)``.  Then
+     :class:`<help-requested>` is signaled and the caller should
+     handle it, perhaps by calling ``exit-application(0)``.
+
+     If ``argv`` isn't a valid set of options as described by the
+     ``parser`` then :class:`<usage-error>` is signaled and the caller
+     should handle it, perhaps by calling ``exit-application(2)``.
+     
+     See `Quick Start`_ for an example.
 
 .. generic-function:: print-synopsis
    :open:
@@ -137,13 +189,16 @@ The COMMAND-LINE-PARSER module
    :signature: print-synopsis (parser stream) => ()
    :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter stream: An instance of :class:`<stream>`.
-   :parameter #key usage: An instance of ``<string>`` or ``#f``.  If provided,
-     this is displayed before the command-line options.  This is
-     intended to be a one-line summary of the command-line format.
-   :parameter #key description: An instance of ``<string>`` or ``#f``.  If
-     provided, this is displayed after ``usage`` and before the
-     command-line options.  This is intended to be a sentence or short
-     paragraph.
+
+   :parameter #key usage: An instance of ``<string>`` or ``#f``.  A
+     brief synopsis of the overall command-line syntax.  The default
+     is ``#f``, in which case "Usage: <application-name> [options]\n"
+     will be displayed, where <application-name> is the result of
+     calling ``locator-base(application-name())``.
+
+   :parameter #key description: An instance of ``<string>`` or ``#f``.
+     This is displayed after ``usage`` and before the detailed list of
+     options.  This is intended to be a sentence or short paragraph.
 
 .. generic-function:: positional-options
 
