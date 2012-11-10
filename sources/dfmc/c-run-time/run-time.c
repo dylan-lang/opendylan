@@ -4588,10 +4588,6 @@ DCBSTR primitive_errstr (DSINT no) {
 
 /* TERMINAL */
 
-/* RIH - Moved initialization to startup */
-
-D pseudo_stdout = 0;
-
 /* OPERATING SYSTEM */
 
 D Tcommand_nameT;
@@ -4750,9 +4746,6 @@ void _Init_Run_Time ()
     // get some symbols we need
     IKJboole_xor_ = primitive_string_as_symbol(&bs_boole_xor_);
     IKJboole_ior_ = primitive_string_as_symbol(&bs_boole_ior_);
-
-    // XXX: junk
-    pseudo_stdout = (D)stdout;
   }
 }
 
