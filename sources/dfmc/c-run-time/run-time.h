@@ -75,6 +75,7 @@ typedef void*                   D;
 #ifdef __GNUC__
 #define PURE_FUNCTION __attribute__((pure))
 #else
+#warning missing attribute PURE_FUNCTION - performance degraded
 #define PURE_FUNCTION
 #endif
 
@@ -82,15 +83,22 @@ typedef void*                   D;
 #define CONDITIONAL_UPDATE(var, new_val, old_val) \
   (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
 #else
+#warning missing primitive CONDITIONAL_UPDATE - thread safety compromised
 #define CONDITIONAL_UPDATE(var, new_val, old_val) \
   ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
 #endif
 
 #ifdef __GNUC__
 #define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
+#else
+#warning missing primitive SYNCHRONIZE_SIDE_EFFECTS - thread safety compromised
+#define SYNCHRONIZE_SIDE_EFFECTS()
+#endif
+
+#ifdef __GNUC__
 #define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
 #else
-#define SYNCHRONIZE_SIDE_EFFECTS()
+#warning missing primitive SEQUENCE_POINT - thread safety compromised
 #define SEQUENCE_POINT()
 #endif
 
@@ -115,30 +123,30 @@ typedef void*                   D;
 #endif
 
 static inline long atomic_increment(long *var) {
-#if defined(__GNUC__) || defined(__clang__)
+#ifdef __GNUC__
   return __sync_add_and_fetch(var, 1);
 #else
-#warning missing primitive atomic_increment
+#warning missing primitive atomic_increment - thread safety compromised
   *var = *var + 1;
   return *var;
 #endif
 }
 
 static inline long atomic_decrement(long *var) {
-#if defined(__GNUC__) || defined(__clang__)
+#ifdef __GNUC__
   return __sync_sub_and_fetch(var, 1);
 #else
-#warning missing primitive atomic_increment
+#warning missing primitive atomic_decrement - thread safety compromised
   *var = *var - 1;
   return *var;
 #endif
 }
 
 static inline long atomic_cas(long *destination, long exchange, long compare) {
-#if defined(__GNUC__) || defined(__clang__)
+#ifdef __GNUC__
   return __sync_val_compare_and_swap(destination, compare, exchange);
 #else
-#warning missing primitive atomic_cas
+#warning missing primitive atomic_cas - thread safety compromised
   int old = *destination;
   if (old == compare) {
      *destination = exchange;
