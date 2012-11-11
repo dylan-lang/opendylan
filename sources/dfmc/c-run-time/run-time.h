@@ -75,6 +75,7 @@ typedef void*                   D;
 #ifdef __GNUC__
 #define PURE_FUNCTION __attribute__((pure))
 #else
+#warning missing attribute PURE_FUNCTION - performance degraded
 #define PURE_FUNCTION
 #endif
 
@@ -82,17 +83,77 @@ typedef void*                   D;
 #define CONDITIONAL_UPDATE(var, new_val, old_val) \
   (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
 #else
+#warning missing primitive CONDITIONAL_UPDATE - thread safety compromised
 #define CONDITIONAL_UPDATE(var, new_val, old_val) \
   ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
 #endif
 
 #ifdef __GNUC__
 #define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
+#else
+#warning missing primitive SYNCHRONIZE_SIDE_EFFECTS - thread safety compromised
+#define SYNCHRONIZE_SIDE_EFFECTS()
+#endif
+
+#ifdef __GNUC__
 #define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
 #else
-#define SYNCHRONIZE_SIDE_EFFECTS()
+#warning missing primitive SEQUENCE_POINT - thread safety compromised
 #define SEQUENCE_POINT()
 #endif
+
+#if defined(__GNUC__)
+#define TLS_VARIABLE __thread
+#else
+#define TLS_VARIABLE
+#endif
+
+#if defined(__GNUC__) && !defined(__clang__)
+#define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
+#endif
+
+#if defined(__clang__) && defined(__has_attribute)
+#if __has_attribute(tls_model)
+#define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
+#endif
+#endif
+
+#ifndef TLS_INITIAL_EXEC
+#define TLS_INITIAL_EXEC
+#endif
+
+static inline long atomic_increment(long *var) {
+#ifdef __GNUC__
+  return __sync_add_and_fetch(var, 1);
+#else
+#warning missing primitive atomic_increment - thread safety compromised
+  *var = *var + 1;
+  return *var;
+#endif
+}
+
+static inline long atomic_decrement(long *var) {
+#ifdef __GNUC__
+  return __sync_sub_and_fetch(var, 1);
+#else
+#warning missing primitive atomic_decrement - thread safety compromised
+  *var = *var - 1;
+  return *var;
+#endif
+}
+
+static inline long atomic_cas(long *destination, long exchange, long compare) {
+#ifdef __GNUC__
+  return __sync_val_compare_and_swap(destination, compare, exchange);
+#else
+#warning missing primitive atomic_cas - thread safety compromised
+  int old = *destination;
+  if (old == compare) {
+     *destination = exchange;
+  }
+  return old;
+#endif
+}
 
 /* DYLAN TAGGING */
 
@@ -495,7 +556,7 @@ PURE_FUNCTION static inline TEB* get_teb()
   return (TEB*)pthread_getspecific(teb_key);
 }
 #else
-extern __thread TEB* teb;
+extern TLS_VARIABLE TLS_INITIAL_EXEC TEB* teb;
 PURE_FUNCTION static inline TEB* get_teb()
 {
   return teb;
@@ -1654,6 +1715,9 @@ extern D primitive_read_thread_variable(D h);
 extern D primitive_write_thread_variable(D h, D nv);
 extern D primitive_unlock_simple_lock(D l);
 extern D primitive_unlock_recursive_lock(D l);
+
+/* ATOMIC PRIMITIVES */
+
 #define primitive_sequence_point() SEQUENCE_POINT()
 #define primitive_synchronize_side_effects() SYNCHRONIZE_SIDE_EFFECTS()
 
