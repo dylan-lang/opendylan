@@ -15,7 +15,7 @@ define open abstract primary class
   slot local-port :: <integer>;
 end class;
 
-define method make 
+define method make
     (class == <server-socket>, #rest initargs,
      #key protocol :: type-union(<string>, <symbol>) = #"TCP")
  => (server :: <server-socket>)
@@ -35,17 +35,17 @@ define open generic accept (server-socket :: <server-socket>, #rest args, #key, 
 
 // Worry about time out for accept, retrying etc.
 
-define method accept 
+define method accept
     (server-socket :: <server-socket>, #rest args, #key element-type = #f, #all-keys)
  => (connected-socket :: <socket>);
   let manager = current-socket-manager();
   let descriptor = accessor-accept(server-socket);
   with-lock (socket-manager-lock(manager))
     apply(make,
-	  client-class-for-server(server-socket), 
-	  descriptor: descriptor,
-	  element-type: element-type | server-socket.default-element-type,
-	  args)
+          client-class-for-server(server-socket),
+          descriptor: descriptor,
+          element-type: element-type | server-socket.default-element-type,
+          args)
   end with-lock;
 end method;
 
@@ -69,7 +69,7 @@ end method;
 
 define macro with-server-socket
   { with-server-socket (?server:name,
-			#rest ?keys:expression)
+                        #rest ?keys:expression)
       ?body:body
     end }
   => { invoke-with-server-socket(<server-socket>,
@@ -77,7 +77,7 @@ define macro with-server-socket
                                  ?keys) }
 
   { with-server-socket (?server:name \:: ?class:expression,
-			#rest ?keys:expression)
+                        #rest ?keys:expression)
       ?body:body
     end }
   => { invoke-with-server-socket(?class,
@@ -104,14 +104,14 @@ end method;
 
 define macro start-server
   { start-server (?server-var:name = ?socket-server-instance:expression,
-		  ?socket-var:name, #rest ?keys:expression)
+                  ?socket-var:name, #rest ?keys:expression)
       ?body:body
     end }
   => { invoke-start-server(?socket-server-instance,
                            method (?socket-server-instance, ?socket-var) ?body end method,
                            ?keys) }
   { start-server (?socket-server-instance:expression,
-		  ?socket-var:name, #rest ?keys:expression)
+                  ?socket-var:name, #rest ?keys:expression)
       ?body:body
     end }
   => { invoke-start-server(?socket-server-instance,

@@ -37,7 +37,7 @@ define module unix-sockets
     $SOCK-STREAM, $SOCK-DGRAM, $SOCK-SEQPACKET, $SOCK-RAW;
   export
     $SHUT-RD, $SHUT-WR, $SHUT-RDWR;
-  export 
+  export
     $SOL-SOCKET;
   export
     $ETH-P-ALL;
@@ -78,7 +78,7 @@ define module unix-sockets
 
   // --
   export
-    unix-recv-buffer, unix-send-buffer, 
+    unix-recv-buffer, unix-send-buffer,
     unix-recv-buffer-from, unix-send-buffer-to;
 
   // --
@@ -153,7 +153,7 @@ define module unix-sockets
       $IFF-POINTOPOINT,
       $IFF-NOTRAILERS,
       $IFF-RUNNING,
-      $IFF-NOARP,   
+      $IFF-NOARP,
       $IFF-PROMISC,
       $IFF-ALLMULTI,
       $IFF-MASTER,
@@ -184,8 +184,8 @@ define module unix-sockets
     $EPROTO, $EMULTIHOP, $EDOTDOT, $EBADMSG, $EOVERFLOW, $ENOTUNIQ,
     $EBADFD, $EREMCHG, $ELIBACC, $ELIBBAD, $ELIBSCN, $ELIBMAX,
     $ELIBEXEC, $EILSEQ, $ERESTART, $ESTRPIPE, $EUSERS, $ENOTSOCK,
-    $EDESTADDRREQ, $EMSGSIZE, $EPROTOTYPE, $ENOPROTOOPT, 
-    $EPROTONOSUPPORT, $ESOCKTNOSUPPORT, $EOPNOTSUPP, $ENOTSUP, 
+    $EDESTADDRREQ, $EMSGSIZE, $EPROTOTYPE, $ENOPROTOOPT,
+    $EPROTONOSUPPORT, $ESOCKTNOSUPPORT, $EOPNOTSUPP, $ENOTSUP,
     $EPFNOSUPPORT, $EAFNOSUPPORT, $EADDRINUSE, $EADDRNOTAVAIL,
     $ENETDOWN, $ENETUNREACH, $ENETRESET, $ECONNABORTED, $ECONNRESET,
     $ENOBUFS, $EISCONN, $ENOTCONN, $ESHUTDOWN, $ETOOMANYREFS,
@@ -272,23 +272,23 @@ define module sockets-internals
   use unix-sockets,
     rename: {socket => unix-socket,
              connect => unix-connect,
-	     bind => unix-bind,
+             bind => unix-bind,
              listen => unix-listen,
-	     accept => unix-accept,
-	     htonl => unix-htonl, ntohl => unix-ntohl,
-	     htons => unix-htons, ntohs => unix-ntohs,
-	     gethostbyname => unix-gethostbyname,
-	     getservbyname => unix-getservbyname,
-	     gethostbyaddr => unix-gethostbyaddr,
-	     getsockname => unix-getsockname,
-	     getpeername => unix-getpeername,
-	     gethostname => unix-gethostname,
-	     <c-socket> => <unix-socket-descriptor>,
-	     close => unix-closesocket,
+             accept => unix-accept,
+             htonl => unix-htonl, ntohl => unix-ntohl,
+             htons => unix-htons, ntohs => unix-ntohs,
+             gethostbyname => unix-gethostbyname,
+             getservbyname => unix-getservbyname,
+             gethostbyaddr => unix-gethostbyaddr,
+             getsockname => unix-getsockname,
+             getpeername => unix-getpeername,
+             gethostname => unix-gethostname,
+             <c-socket> => <unix-socket-descriptor>,
+             close => unix-closesocket,
              errno => unix-errno },
     exclude: {<socket>, // use <accessor-socket-descriptor>
-	      send,  //  use unix-send-buffer instead
-	      recv};  //  use unix-recv-buffer instead
+              send,  //  use unix-send-buffer instead
+              recv};  //  use unix-recv-buffer instead
   use sockets, export: all;
   create
     <general-TCP-socket>, <byte-char-TCP-socket>, <byte-TCP-socket>;

@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define class <win32-UDP-accessor> (<win32-socket-accessor>) 
+define class <win32-UDP-accessor> (<win32-socket-accessor>)
   slot reply-socket? :: <boolean> = #f, init-keyword: reply?:;
 end class;
 
@@ -26,7 +26,7 @@ define inline method socket-code
   $SOCK-DGRAM
 end method;
 
-define method accessor-listen 
+define method accessor-listen
     (the-socket :: <UDP-server-socket>, #key backlog :: <integer> = 5)
  => ()
  // NB do nothing for UDP sockets
@@ -64,7 +64,7 @@ define method accessor-read-into!
     let the-buffer :: <buffer> = buffer | stream-input-buffer(stream);
     let the-descriptor = accessor.socket-descriptor;
     if (accessor.connection-closed? | (~ the-descriptor))
-      error(make(<socket-closed>, socket: stream)) 
+      error(make(<socket-closed>, socket: stream))
     else
       with-stack-structure (inaddr :: <LPSOCKADDR-IN>)
       // 0 out all the fields
@@ -80,14 +80,14 @@ define method accessor-read-into!
                                              0,
                                              addr,
                                              size-pointer);
-          if (nread == $SOCKET-ERROR) 
+          if (nread == $SOCKET-ERROR)
             win32-socket-error("win32-recv", host-address: stream.remote-host,
                                host-port: stream.remote-port);
           elseif ( nread == 0) // Check for EOF (nread == 0)
             accessor.connection-closed? := #t;
           end if;
           // NB store addr info into accessor object for user
-          accessor.remote-host := make(<ipv4-address>, 
+          accessor.remote-host := make(<ipv4-address>,
                                        address: make(<ipv4-network-order-address>,
                                                      address: inaddr.sin-addr-value));
           accessor.remote-port := accessor-ntohs(inaddr.sin-port-value);
@@ -124,7 +124,7 @@ define method accessor-write-from
         let remaining = count;
         let addr = pointer-cast(<LPSOCKADDR>, inaddr);
         while (remaining > 0)
-          let nwritten = 
+          let nwritten =
           win32-send-buffer-to(accessor.socket-descriptor,
                                buffer-offset(buffer, offset + count - remaining),
                                remaining,

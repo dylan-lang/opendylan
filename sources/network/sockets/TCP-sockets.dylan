@@ -14,49 +14,49 @@ end class;
 define open abstract primary class <TCP-socket> (<platform-socket>)
 end class;
 
-define method initialize 
+define method initialize
     (stream :: <platform-socket>, #rest initargs,
-     #key 
-       service :: false-or(type-union(<string>, <symbol>)), 
-     host: requested-host :: 
-       false-or(type-union(<internet-address>, <string>)) = #f, 
+     #key
+       service :: false-or(type-union(<string>, <symbol>)),
+     host: requested-host ::
+       false-or(type-union(<internet-address>, <string>)) = #f,
      port: requested-port :: false-or(<integer>) = #f,
      descriptor :: false-or(<accessor-socket-descriptor>) = #f,
      buffer-size: requested-buffer-size  :: false-or(<integer>) = #f,
      direction: requested-direction = #"input-output")
  => ()
   apply(next-method, stream, direction: requested-direction, initargs);
-  // Descriptor is really only for internal use, in order to create 
+  // Descriptor is really only for internal use, in order to create
   // sockets from socket descriptors returned by accept.
   unless(descriptor | service | requested-port)
     error("either port: or service: keyword to make <TCP-socket> is required");
   end unless;
-  // port/service  doesn't work 
+  // port/service  doesn't work
   let the-remote-port =
     if (requested-port)
       requested-port // ignore service if also specified
     elseif (service)
       accessor-get-port-for-service(as(<string>, service), "tcp")
-    else #f	
+    else #f
     end if;
   // host
   let remote-host =
     select (requested-host by instance?)
       <internet-address> => requested-host;
       <string> => make(<internet-address>, name: requested-host);
-      <boolean> => 
-	unless (descriptor)
-	  error("host: keyword to make <TCP-socket> is required");
-	end unless;
+      <boolean> =>
+        unless (descriptor)
+          error("host: keyword to make <TCP-socket> is required");
+        end unless;
     end select;
   unless (stream.accessor)
-    stream.accessor := 
+    stream.accessor :=
       apply(new-accessor,
-	    type-for-socket(stream),
-	    remote-host: remote-host,
-	    remote-port: the-remote-port,
-	    descriptor: descriptor, 
-	    initargs);
+            type-for-socket(stream),
+            remote-host: remote-host,
+            remote-port: the-remote-port,
+            descriptor: descriptor,
+            initargs);
   end unless;
   // Initializing the buffers has to be done here since we don't know
   // the accessor-preferred-buffer-size until we have an accessor.
@@ -66,13 +66,13 @@ define method initialize
   // elsewhere.  Might not work?  Investigate.
   let direction = stream.stream-direction;
   let size-for-buffers :: <integer> =
-    if (requested-buffer-size) 
+    if (requested-buffer-size)
       requested-buffer-size
     else
       accessor-preferred-buffer-size(stream.accessor)
     end if;
   if ((direction == #"input") | (direction == #"input-output"))
-    stream-input-buffer(stream) := make(<buffer>, size: size-for-buffers) 
+    stream-input-buffer(stream) := make(<buffer>, size: size-for-buffers)
   end;
   if ((direction == #"output") | (direction == #"input-output"))
     stream-output-buffer(stream) := make(<buffer>, size: size-for-buffers)
@@ -106,13 +106,13 @@ end;
 
 
 define method make (class == <TCP-socket>, #rest initargs,
-		    #key element-type = <byte-character>,
-		    direction: requested-direction = #"input-output",
-		    ssl?)
+                    #key element-type = <byte-character>,
+                    direction: requested-direction = #"input-output",
+                    ssl?)
  => (stream :: <TCP-socket>)
   let s = apply(make, client-class-for-element-type(class, element-type),
-		direction: requested-direction,
-		initargs);
+                direction: requested-direction,
+                initargs);
   if (ssl?)
     apply(make, ssl-socket-class(<TCP-socket>), element-type:, element-type, lower:, s, initargs)
   else
@@ -198,15 +198,15 @@ define method make
   end
 end;
 
-define method initialize 
+define method initialize
     (new-server-socket :: <platform-server-socket>, #rest initargs,
-     #key service :: false-or(type-union(<string>, <symbol>)), 
-     host: requested-host :: 
-       false-or(type-union(<internet-address>, <string>)) = #f, 
+     #key service :: false-or(type-union(<string>, <symbol>)),
+     host: requested-host ::
+       false-or(type-union(<internet-address>, <string>)) = #f,
      port: requested-port :: false-or(<integer>) = #f) => ()
   next-method();
   new-server-socket.socket-descriptor := accessor-new-socket-descriptor(socket-code(new-server-socket));
-  if (service) 
+  if (service)
     error("service keyword to make <server-socket> not supported yet");
   end if;
   // host
@@ -218,11 +218,11 @@ define method initialize
     end select;
   // port
   let port-to-bind =
-    if (requested-port) 
-      requested-port 
+    if (requested-port)
+      requested-port
     elseif (service)
       accessor-get-port-for-service(as(<string>, service), "tcp")
-    else #"wildcard" 
+    else #"wildcard"
     end if;
     //
   // LispWorks sockets sets these options before calling bind. Investigate
@@ -230,15 +230,15 @@ define method initialize
 //  Y 4Jun94 put this into work, solve some problems.
 //   if (*use_so_reuseaddr*)
 //     if (0 > setsockopt(fd, *sockopt_sol_socket*, *sockopt_so_reuseaddr*,
-// 		       pointer-cast(<c-char*>, on), size-of-on))
+//                        pointer-cast(<c-char*>, on), size-of-on))
 //       close-socket(fd);
 //       return-from-create-tcp-socket-for-service(#f, -3);
 //     end if;
 //   end if;
 //   if (*sockopt_so_dontlinger*)
 //     if (0 > setsockopt(fd, *sockopt_sol_socket*,
-// 		       *sockopt_so_dontlinger*,  
-// 		       pointer-cast(<c-char*>, on), size-of-on))
+//                        *sockopt_so_dontlinger*,
+//                        pointer-cast(<c-char*>, on), size-of-on))
 //       close-socket(fd);
 //       return-from-create-tcp-socket-for-service(#f, -4);
 //     end if;
@@ -246,7 +246,7 @@ define method initialize
 //     with-stack-structure(ls :: <LPLINGER>)
 //       ls.l-onoff-value := 0;
 //      if (0 > setsockopt(fd, *sockopt_sol_socket*, *sockopt_so_linger*,
-// 			 pointer-cast(<c-char*>, ls), size-of(<LINGER>)))
+//                          pointer-cast(<c-char*>, ls), size-of(<LINGER>)))
 //         close-socket(fd);
 //         return-from-create-tcp-socket-for-service(#f, -5);
 //       end if;
@@ -254,7 +254,7 @@ define method initialize
 //   end if;
   // bind
   accessor-bind(new-server-socket,
-		host-to-bind, port-to-bind);
+                host-to-bind, port-to-bind);
   let (bound-host :: false-or(<ipv4-address>), bound-port :: false-or(<integer>)) =
     if ((host-to-bind == #"wildcard") | (port-to-bind == #"wildcard"))
       accessor-local-address-and-port(new-server-socket.socket-descriptor);
@@ -265,8 +265,8 @@ define method initialize
     if (port-to-bind == #"wildcard") bound-port else port-to-bind end;
 //   if (*sockopt_tcp_nodelay*)
 //     with-stack-structure(mi :: <C-int*>)
-//       setsockopt(fd, *sockopt_ipproto_tcp*, *sockopt_tcp_nodelay*, 
-// 		 pointer-cast(<c-char*>, mi), size-of(<C-int>));
+//       setsockopt(fd, *sockopt_ipproto_tcp*, *sockopt_tcp_nodelay*,
+//                  pointer-cast(<c-char*>, mi), size-of(<C-int>));
 //     end with-stack-structure;
 //   end if;
 

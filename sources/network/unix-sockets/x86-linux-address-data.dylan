@@ -1,5 +1,5 @@
 Module:       unix-sockets
-Synopsis:     Baseline Unix 98 address resolution structs, types, and constants 
+Synopsis:     Baseline Unix 98 address resolution structs, types, and constants
               functions as defined in Linux
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
@@ -24,13 +24,13 @@ end C-struct;
 define constant <in-addr> = <in-addr-t>;
 define constant <in-addr*> = <in-addr-t*>;
 
-define method s-addr-value 
+define method s-addr-value
     (addr :: <in-addr*>) => (addr-val :: <machine-word>)
   pointer-value(addr)
 end method;
 
 define method s-addr-value-setter
-    (addr-val :: <machine-word>, addr :: <in-addr*>) 
+    (addr-val :: <machine-word>, addr :: <in-addr*>)
  => (addr-val :: <machine-word>)
   error("The type struct in_addr has been mapped to Dylan as an immutable "
         "machine word value and its field cannot be set.");
@@ -74,25 +74,25 @@ define constant $INADDR-NONE = as(<machine-word>, #xffffffff);
 define constant <uint16-t> = <C-unsigned-short>;
 define constant <uint32-t> = <C-raw-unsigned-long>;
 
-define inline-only C-function ntohl 
+define inline-only C-function ntohl
   parameter netlong :: <uint32-t>;
   result val :: <uint32-t>;
   c-name: "ntohl";
 end C-function;
 
-define inline-only C-function ntohs 
+define inline-only C-function ntohs
   parameter netshort :: <uint16-t>;
   result val :: <uint16-t>;
   c-name: "ntohs";
 end C-function;
 
-define inline-only C-function htonl 
+define inline-only C-function htonl
   parameter hostlong :: <uint32-t>;
   result val :: <uint32-t>;
   c-name: "htonl";
 end C-function;
 
-define inline-only C-function htons 
+define inline-only C-function htons
   parameter hostshort :: <uint16-t>;
   result val :: <uint16-t>;
   c-name: "htons";
@@ -166,7 +166,7 @@ define C-union <ifr-ifru>
   slot ifru-ivalue :: <C-int>;
 end C-union;
 
-define constant $IF-NAMESIZE = 16; 
+define constant $IF-NAMESIZE = 16;
 
 define C-struct <ifreq>
   array slot %ifr-name :: <C-char>, length: $IF-NAMESIZE;
