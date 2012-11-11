@@ -203,7 +203,8 @@ define method initialize
      #key service :: false-or(type-union(<string>, <symbol>)),
      host: requested-host ::
        false-or(type-union(<internet-address>, <string>)) = #f,
-     port: requested-port :: false-or(<integer>) = #f) => ()
+     port: requested-port :: false-or(<integer>) = #f,
+     backlog :: <integer> = 8) => ()
   next-method();
   new-server-socket.socket-descriptor := accessor-new-socket-descriptor(socket-code(new-server-socket));
   if (service)
@@ -270,8 +271,7 @@ define method initialize
 //     end with-stack-structure;
 //   end if;
 
-  // listen, sometime propagate backlog keyword to initialize method
-  accessor-listen(new-server-socket);
+  accessor-listen(new-server-socket, backlog);
   // make the socket non-blocking, I think this may be unnecessary
   // since the event-select call in wait-for-socket-io is a stronger
   // way to make it non-blocking.

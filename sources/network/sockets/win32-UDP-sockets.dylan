@@ -27,7 +27,7 @@ define inline method socket-code
 end method;
 
 define method accessor-listen
-    (the-socket :: <UDP-server-socket>, #key backlog :: <integer> = 5)
+    (the-socket :: <UDP-server-socket>, backlog :: <integer>)
  => ()
  // NB do nothing for UDP sockets
 end method;

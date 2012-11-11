@@ -683,13 +683,10 @@ end function;
 //   the listen operation.
 
 define method accessor-listen
-    (the-socket :: <TCP-server-socket>, #key backlog :: <integer> = 5)
+    (the-socket :: <TCP-server-socket>, backlog :: <integer>)
  => ()
-  // Backlog of five is the maximum value allowed by Windows sockets.
-  // Actually it's overkill since winsock silently reduces it to 2.
   // The backlog governs how many accept requests will be queued
-  // before requests are turned down.  Backlog of 2 seems pretty
-  // stingy.
+  // before requests are turned down.
   let listen-result = unix-listen(the-socket.socket-descriptor, backlog);
   if (listen-result = $SOCKET-ERROR)
     close-socket(the-socket);
