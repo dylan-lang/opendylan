@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // TODO: PERFORMANCE: We can almost certainly save a slot in many source
 // locations by having a special representation of a small, single-line
-// range - e.g. for a short name, or a bit of single-character puntuation.
+// range - e.g. for a short name, or a bit of single-character punctuation.
 //// Range location source offsets.
 
 // Small line/column numbers are encoded with shifts and masks into an

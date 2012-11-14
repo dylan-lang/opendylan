@@ -28,7 +28,7 @@ define class <state> (<object>)
   slot name :: <symbol>, required-init-keyword: name:;
   //
   // The acceptance result if this state is an accepting state, or #f
-  // if it is not.  Symbols are used for magic interal stuff that never
+  // if it is not.  Symbols are used for magic internal stuff that never
   // makes it out of the lexer (e.g. whitespace), classes for simple
   // tokens that don't need any extra parsing, and functions for more
   // complex tokens.
@@ -580,7 +580,7 @@ define method get-token (lexer :: <lexer>) => res :: <fragment>;
   end without-bounds-checks;
 end method get-token;
 
-// This indirection is only here for profiling perposes.
+// This indirection is only here for profiling purposes.
 
 define inline function do-process-token (f, lexer :: <lexer>, source-location)
   lexer.last-token := f(lexer, source-location);
@@ -779,7 +779,7 @@ define method make-history-name
 end method make-history-name;
 
 
-// make-constrainted-name -- internal.
+// make-constrained-name -- internal.
 //
 // Make a constrained name.
 //
@@ -1349,13 +1349,13 @@ define method atof (string :: <byte-string>,
   else
     let scaled-mantissa = generic/(generic*(sign, mantissa), scale);
     // NOTE: Floating point exponentiation loses precision for some
-    // suprisingly small exponents so we'll use successive multiplications.
+    // surprisingly small exponents so we'll use successive multiplications.
     //---*** NOTE: Revisit this as it may be costly w.r.t. consing and
     //---*** there must be a better way (rationals?).
     local method power-of-10 () => (power :: <float>)
             let iterate? = select (base by instance?)
                              <single-float> => exponent > 15;
-                             // Yes, <double-float> exponentation is never accurate!
+                             // Yes, <double-float> exponentiation is never accurate!
                              <double-float> => #t;
                              //---*** NOTE: We don't have <extended-float>s yet ...
                              <extended-float> => #t;

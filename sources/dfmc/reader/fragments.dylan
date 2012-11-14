@@ -509,7 +509,7 @@ define method fragment-kind (f ::  <hash-lbrace-fragment>) => kind;
 end method;
 
 
-// Macro system puntuation.
+// Macro system punctuation.
 
 define class <query-fragment> (<punctuation-fragment>) end;
 
@@ -651,7 +651,7 @@ define method fragment-name-string
   as(<string>, fragment-name(name));
 end method;
 
-// TODO: Turn all this into a sensible inheritance heirarchy again!
+// TODO: Turn all this into a sensible inheritance hierarchy again!
 
 define class <variable-name-fragment> (<name-fragment>, <variable-name>) end;
 
@@ -922,7 +922,7 @@ define class <binary-operator-call-fragment> (<function-call-fragment>) end;
 define class <unary-operator-call-fragment> (<function-call-fragment>) end;
 
 // TODO: CORRECTNESS: Need to reclassify the call as a macro if necessary.
-// Perhaps we should do this transformation elsewhere? Seel also how
+// Perhaps we should do this transformation elsewhere? See also how
 // element is handled.
 
 define inline method initialize (call :: <unary-operator-call-fragment>, #key)

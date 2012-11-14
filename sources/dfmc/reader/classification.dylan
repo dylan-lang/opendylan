@@ -75,7 +75,7 @@ define token-classes $core-syntax-table
   token ">=" => $binary-operator-only-token;
   token "&" => $binary-operator-only-token;
   token "|" => $binary-operator-only-token;
-end token-tokenes;
+end token-classes;
 */
 
 /*

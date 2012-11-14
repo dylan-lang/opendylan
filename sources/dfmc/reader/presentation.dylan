@@ -357,7 +357,7 @@ define method present-fragments (f* :: <list>, s :: <stream>);
     if (~empty?(sub-f*))
       for (f in sub-f*)
         if (instance?(f, <list>))
-          // A nested respresentation used in templates to avoid
+          // A nested representation used in templates to avoid
           // the copying required to flatten.
           walk(f);
         else
