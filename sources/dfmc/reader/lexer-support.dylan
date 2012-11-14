@@ -61,21 +61,13 @@ define inline function extract-string
   string
 end function;
 
-// For bootstrapping... Always #t once bootstrapped...
-// TODO: ** Remove after next release **
-define variable *raw-symbol-lookup?* = instance?(make-symbol, <generic-function>);
-
 define inline function extract-symbol
     (loc :: <lexer-source-location>,
        #key start: the-start :: <integer> = loc.start-posn,
             end:   the-end   :: <integer> = loc.end-posn)
  => (symbol :: <symbol>)
   let data = loc.source-location-record.contents;
-  if (*raw-symbol-lookup?*)
-    make-symbol(data, start: the-start, end: the-end)
-  else
-    as(<symbol>, extract-string(loc, start: the-start, end: the-end));
-  end;
+  make-symbol(data, start: the-start, end: the-end)
 end function;
 
 define function extract-token-text
