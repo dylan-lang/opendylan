@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// What you get out of a syntax table is actually an abstract 
+// What you get out of a syntax table is actually an abstract
 // property rather than just a name I guess.
 
 define class <name-properties> (<object>)
@@ -25,7 +25,7 @@ end class;
 
 define method install-syntax (table, #rest tokens) => ()
   for (i from 0 below tokens.size by 2)
-    table[as(<symbol>, tokens[i])] 
+    table[as(<symbol>, tokens[i])]
       := make(<name-properties>, class: tokens[i + 1]);
   end;
 end method;
@@ -81,13 +81,13 @@ end token-tokenes;
 /*
 // Hack global syntax table for the compiler.
 
-define constant $syntax-table :: <object-table> 
+define constant $syntax-table :: <object-table>
   = shallow-copy($core-syntax-table);
 */
 
 // TODO: CORRECTNESS: Not thread safe.
 
-define constant *classification-cache* :: <object-table> 
+define constant *classification-cache* :: <object-table>
   = make(<object-table>);
 
 define macro with-classification-cache
@@ -95,7 +95,7 @@ define macro with-classification-cache
     => { remove-all-keys!(*classification-cache*); ?body }
 end macro;
 
-define inline function syntax-for-name (table, name) 
+define inline function syntax-for-name (table, name)
   let cached-class = element(*classification-cache*, name, default: #f);
   cached-class
     | (element(*classification-cache*, name)
@@ -105,7 +105,7 @@ define inline function syntax-for-name (table, name)
                 let props :: <name-properties> = props;
                 props.class
               else
-                classify-word-in(*fragment-context*, name) 
+                classify-word-in(*fragment-context*, name)
                   | $unreserved-name-token;
               end
             end)
@@ -117,7 +117,7 @@ define function classify-dylan-name (name)
     let props :: <name-properties> = props;
     props.class
   else
-    classify-word-in(#f, name) 
+    classify-word-in(#f, name)
       | $unreserved-name-token;
   end;
 end function;
@@ -128,13 +128,13 @@ define function classify-expansion-word-in (module, name)
     let props :: <name-properties> = props;
     props.class
   else
-    classify-word-in(module, name) 
+    classify-word-in(module, name)
       | $unreserved-name-token;
   end;
 end function;
 
 define method definer-token-class? (class) => (well? :: <boolean>)
-  class == $define-body-word-only-token 
+  class == $define-body-word-only-token
     | class == $define-list-word-only-token
     | class == $define-macro-body-word-only-token
 end;
@@ -155,29 +155,29 @@ end;
 define macro merge-method-definer
   { define merge-method ?kind1:name, ?kind2:name => ?kind3:name; }
     => { define method merge-token-classes
-             (kind1 == "$" ## ?kind1 ## "-token", 
-              kind2 == "$" ## ?kind2 ## "-token", 
+             (kind1 == "$" ## ?kind1 ## "-token",
+              kind2 == "$" ## ?kind2 ## "-token",
               word) => (result)
            "$" ## ?kind3 ## "-token"
          end method;
          define method merge-token-classes
-             (kind2 == "$" ## ?kind2 ## "-token", 
+             (kind2 == "$" ## ?kind2 ## "-token",
               kind1 == "$" ## ?kind1 ## "-token",
               word) => (result)
            "$" ## ?kind3 ## "-token"
          end }
 end macro;
 
-define merge-method begin-word-only, define-body-word-only 
+define merge-method begin-word-only, define-body-word-only
   => begin-and-define-body-word;
 
-define merge-method begin-word-only, define-list-word-only 
+define merge-method begin-word-only, define-list-word-only
   => begin-and-define-list-word;
 
-define merge-method function-word-only, define-body-word-only 
+define merge-method function-word-only, define-body-word-only
   => function-and-define-body-word;
 
-define merge-method function-word-only, define-list-word-only 
+define merge-method function-word-only, define-list-word-only
   => function-and-define-list-word;
 
 define merge-method macro-case-begin-word-only, define-macro-body-word-only

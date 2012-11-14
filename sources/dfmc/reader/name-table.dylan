@@ -15,8 +15,8 @@ define method size (table :: <variable-name-table>) => (size :: <integer>)
   table.entries.size
 end method;
 
-define method element 
-    (table :: <variable-name-table>, name :: <name-fragment>, 
+define method element
+    (table :: <variable-name-table>, name :: <name-fragment>,
        #key default = unsupplied())
  => (element-or-default)
   let entries = entries(table);
@@ -33,7 +33,7 @@ define method element
     else
       let test-name = entries[index];
       if (same-name-when-local?(name, test-name))
-	entries[index + 1];
+        entries[index + 1];
       else
         walk(index + 2);
       end;
@@ -54,7 +54,7 @@ define method element-setter
     else
       let test-name = entries[index];
       if (same-name-when-local?(name, test-name))
-	entries[index + 1] := value;
+        entries[index + 1] := value;
       else
         walk(index + 2);
       end;
@@ -69,14 +69,14 @@ define inline function table-next-state
 end function;
 
 define inline function table-finished-state?
-    (collection :: <variable-name-table>, 
+    (collection :: <variable-name-table>,
      state :: <integer>, limit :: <integer>)
  => (result :: <boolean>)
   state = limit
 end function;
 
 define inline function table-current-key
-    (collection :: <variable-name-table>, state :: <integer>) 
+    (collection :: <variable-name-table>, state :: <integer>)
  => (result :: <variable-name-fragment>)
   collection[state]
 end function;
@@ -87,18 +87,18 @@ define inline function table-current-element
 end function;
 
 define inline function table-current-element-setter
-    (new-value, collection :: <variable-name-table>, state :: <integer>) 
+    (new-value, collection :: <variable-name-table>, state :: <integer>)
  => (result)
   collection[state + 1] := new-value;
 end function;
 
 define inline function table-copy-state
-    (collection :: <variable-name-table>, state :: <integer>) 
+    (collection :: <variable-name-table>, state :: <integer>)
  => (state :: <integer>)
   state
 end function;
 
-define sealed inline method forward-iteration-protocol 
+define sealed inline method forward-iteration-protocol
     (collection :: <variable-name-table>)
     => (initial-state :: <integer>, limit :: <integer>,
         next-state :: <function>, finished-state? :: <function>,
@@ -106,11 +106,11 @@ define sealed inline method forward-iteration-protocol
         current-element :: <function>, current-element-setter :: <function>,
         copy-state :: <function>);
   values(0,
-	 size(collection.entries),
-	 table-next-state,
-	 table-finished-state?,
-	 table-current-key,
-	 table-current-element,
-	 table-current-element-setter,
-	 table-copy-state)
+         size(collection.entries),
+         table-next-state,
+         table-finished-state?,
+         table-current-key,
+         table-current-element,
+         table-current-element-setter,
+         table-copy-state)
 end method forward-iteration-protocol;

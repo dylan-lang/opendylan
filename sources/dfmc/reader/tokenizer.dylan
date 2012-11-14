@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Derived from the orignal CMU code.
-// 
+//
 // Copyright (c) 1994  Carnegie Mellon University
 // All rights reserved.
 
@@ -22,7 +22,7 @@ end class <tokenizer>;
 
 /*
 define generic unget-token
-    (tokenizer :: <tokenizer>, token :: <fragment>, 
+    (tokenizer :: <tokenizer>, token :: <fragment>,
        srcloc :: <source-location>)
     => ();
 

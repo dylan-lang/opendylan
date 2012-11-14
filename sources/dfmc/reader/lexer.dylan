@@ -8,7 +8,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Derived from CMU code.
-// 
+//
 // Copyright (c) 1994  Carnegie Mellon University
 // All rights reserved.
 
@@ -20,7 +20,7 @@ define constant $max-lexer-code :: <integer> = 255;
 // <state> -- internal.
 //
 // A particular state in the state machine.
-// 
+//
 define class <state> (<object>)
   //
   // The name of this state, a symbol.  Not really used once the state
@@ -65,14 +65,14 @@ define method add-transition
   // We also check to see if this entry classes with any earlier
   // entries.  If so, it means someone messed up editing the
   // state machine.
-  // 
+  //
   select (on by instance?)
     <integer> =>
       if (table[on])
-	error("input %= transitions to both %= and %=",
-	      as(<character>, on), table[on], new-state);
+        error("input %= transitions to both %= and %=",
+              as(<character>, on), table[on], new-state);
       else
-	table[on] := new-state;
+        table[on] := new-state;
       end if;
     <character> =>
       add-transition(table, as(<integer>, on), new-state);
@@ -80,25 +80,25 @@ define method add-transition
       let last = #f;
       let range = #f;
       for (char :: <byte-character> in on)
-	if (range)
-	  if (last)
-	    for (i :: <integer> 
+        if (range)
+          if (last)
+            for (i :: <integer>
                    from as(<integer>, last) + 1 to as(<integer>, char))
-	      add-transition(table, i, new-state);
-	    end for;
-	    last := #f;
-	  else
-	    add-transition(table, as(<integer>, '-'), new-state);
-	    add-transition(table, as(<integer>, char), new-state);
-	    last := char;
-	  end if;
-	  range := #f;
-	elseif (char == '-')
-	  range := #t;
-	else 
-	  add-transition(table, as(<integer>, char), new-state);
-	  last := char;
-	end if;
+              add-transition(table, i, new-state);
+            end for;
+            last := #f;
+          else
+            add-transition(table, as(<integer>, '-'), new-state);
+            add-transition(table, as(<integer>, char), new-state);
+            last := char;
+          end if;
+          range := #f;
+        elseif (char == '-')
+          range := #t;
+        else
+          add-transition(table, as(<integer>, char), new-state);
+          last := char;
+        end if;
       end for;
   end select;
 end method add-transition;
@@ -127,7 +127,7 @@ define method compile-state-machine (#rest states)
     => start-state :: <state>;
   //
   // make a hash table mapping state names to states.
-  // 
+  //
   let state-table = make(<table>);
   for (state in states)
     if (element(state-table, state.name, default: #f))
@@ -140,15 +140,15 @@ define method compile-state-machine (#rest states)
   // Now that we have a table mapping state names to states, change the
   // entries in the transition tables to refer to the new state
   // object themselves instead of just to the new state name.
-  // 
+  //
   for (state in states)
     let table = state.transitions;
     if (table)
       for (i from 0 to $max-lexer-code)
-	let new-state = table[i];
-	if (new-state)
-	  table[i] := state-table[new-state];
-	end if;
+        let new-state = table[i];
+        if (new-state)
+          table[i] := state-table[new-state];
+        end if;
       end for;
     end if;
   end for;
@@ -176,7 +176,7 @@ define method feature-present? (feature :: <symbol>) => present? :: <boolean>;
   member?(feature, *features*);
 end method feature-present?;
 */
-						    
+
 
 // lexer
 
@@ -207,8 +207,8 @@ define class <lexer> (<tokenizer>)
   slot last-token :: <object> = #f;
   // Tame source location object.
   constant slot tame-source-location :: <lexer-source-location>
-    = make(<lexer-source-location>, 
-           source-record: #f, 
+    = make(<lexer-source-location>,
+           source-record: #f,
            start-posn: 0, end-posn: 0);
 end class <lexer>;
 
@@ -217,18 +217,18 @@ define sealed domain initialize (<lexer>);
 
 define method print-object (lexer :: <lexer>, stream :: <stream>) => ();
   pprint-fields(lexer, stream,
-		source: lexer.source.compilation-record-source-record,
-		posn: lexer.posn,
-		line: lexer.line,
-		column: lexer.posn - lexer.line-start + 1);
+                source: lexer.source.compilation-record-source-record,
+                posn: lexer.posn,
+                line: lexer.line,
+                column: lexer.posn - lexer.line-start + 1);
 end method print-object;
 
 // Used just the once.
 define inline function make-lexer-source-location
-    (lexer :: <lexer>, record :: <compilation-record>, 
-     start-char :: <integer>, 
+    (lexer :: <lexer>, record :: <compilation-record>,
+     start-char :: <integer>,
        start-line :: <integer>, start-col :: <integer>,
-     end-char :: <integer>, 
+     end-char :: <integer>,
        end-line :: <integer>, end-col :: <integer>)
  => (loc :: <lexer-source-location>)
   let loc :: <lexer-source-location> = tame-source-location(lexer);
@@ -238,7 +238,7 @@ define inline function make-lexer-source-location
   loc.source-location-source-position
     := make-range-position
          (make-source-offset(start-char, start-line, start-col),
-	  make-source-offset(end-char, end-line, end-col));
+          make-source-offset(end-char, end-line, end-col));
   loc
 end function;
 
@@ -250,7 +250,7 @@ end function;
 // methods.
 //
 define method skip-multi-line-comment (lexer :: <lexer>,
-				       start :: <integer>)
+                                       start :: <integer>)
     => result :: false-or(<integer>);
   let contents = lexer.source.contents;
   let length = contents.size;
@@ -261,26 +261,26 @@ define method skip-multi-line-comment (lexer :: <lexer>,
     //
     method next (func :: <function>, posn :: <integer>, depth :: <integer>)
       if (posn < length)
-	func(as(<character>, contents[posn]), posn + 1, depth);
+        func(as(<character>, contents[posn]), posn + 1, depth);
       else
-	#f;
+        #f;
       end if;
     end next,
     //
     // Seen nothing of interest.  Look for the start of any of /*, //, or */
     //
     method seen-nothing (char :: <character>, posn :: <integer>,
-			 depth :: <integer>)
+                         depth :: <integer>)
       if (char == '/')
-	next(seen-slash, posn, depth);
+        next(seen-slash, posn, depth);
       elseif (char == '*')
-	next(seen-star, posn, depth);
+        next(seen-star, posn, depth);
       elseif (char == '\n')
-	lexer.line := lexer.line + 1;
-	lexer.line-start := posn;
-	next(seen-nothing, posn, depth)
+        lexer.line := lexer.line + 1;
+        lexer.line-start := posn;
+        next(seen-nothing, posn, depth)
       else
-	next(seen-nothing, posn, depth);
+        next(seen-nothing, posn, depth);
       end if;
     end seen-nothing,
     //
@@ -288,17 +288,17 @@ define method skip-multi-line-comment (lexer :: <lexer>,
     // random slash in the source code.
     //
     method seen-slash (char :: <character>, posn :: <integer>,
-		       depth :: <integer>)
+                       depth :: <integer>)
       if (char == '/')
-	next(seen-slash-slash, posn, depth);
+        next(seen-slash-slash, posn, depth);
       elseif (char == '*')
-	next(seen-nothing, posn, depth + 1);
+        next(seen-nothing, posn, depth + 1);
       elseif (char == '\n')
-	lexer.line := lexer.line + 1;
-	lexer.line-start := posn;
-	next(seen-nothing, posn, depth)
+        lexer.line := lexer.line + 1;
+        lexer.line-start := posn;
+        next(seen-nothing, posn, depth)
       else
-	next(seen-nothing, posn, depth);
+        next(seen-nothing, posn, depth);
       end if;
     end seen-slash,
     //
@@ -307,34 +307,34 @@ define method skip-multi-line-comment (lexer :: <lexer>,
     // because if so, it might be the start of a */.
     //
     method seen-star (char :: <character>, posn :: <integer>,
-		      depth :: <integer>)
+                      depth :: <integer>)
       if (char == '/')
-	if (depth == 1)
-	  posn;
-	else
-	  next(seen-nothing, posn, depth - 1);
-	end if;
+        if (depth == 1)
+          posn;
+        else
+          next(seen-nothing, posn, depth - 1);
+        end if;
       elseif (char == '*')
-	next(seen-star, posn, depth);
+        next(seen-star, posn, depth);
       elseif (char == '\n')
-	lexer.line := lexer.line + 1;
-	lexer.line-start := posn;
-	next(seen-nothing, posn, depth)
+        lexer.line := lexer.line + 1;
+        lexer.line-start := posn;
+        next(seen-nothing, posn, depth)
       else
-	next(seen-nothing, posn, depth);
+        next(seen-nothing, posn, depth);
       end if;
     end seen-star,
     //
     // We've seen a //, so skip until the end of the line.
     //
     method seen-slash-slash (char :: <character>, posn :: <integer>,
-			     depth :: <integer>)
+                             depth :: <integer>)
       if (char == '\n')
-	lexer.line := lexer.line + 1;
-	lexer.line-start := posn;
-	next(seen-nothing, posn, depth);
+        lexer.line := lexer.line + 1;
+        lexer.line-start := posn;
+        next(seen-nothing, posn, depth);
       else
-	next(seen-slash-slash, posn, depth);
+        next(seen-slash-slash, posn, depth);
       end if;
     end seen-slash-slash;
   //
@@ -351,10 +351,10 @@ end method;
 define macro fragment-builder
   { fragment-builder(?:name) }
     => { method (lexer, source-location :: <lexer-source-location>)
-           make(?name, 
-                record: 
+           make(?name,
+                record:
                   source-location.source-location-record,
-                source-position: 
+                source-position:
                   source-location.source-location-source-position)
          end }
 end macro;
@@ -370,7 +370,7 @@ define method get-token (lexer :: <lexer>) => res :: <fragment>;
   // just note where the last accepting state we came across was,
   // and then when the state machine jams, we just use that latest
   // accepting state's result.
-  // 
+  //
   let contents :: <byte-vector> = lexer.source.contents;
   let length :: <integer> = contents.size;
   let unexpected-eof :: <boolean> = #f;
@@ -381,203 +381,203 @@ define method get-token (lexer :: <lexer>) => res :: <fragment>;
   let result-start = lexer.posn;
   let result-end = #f;
 
- without-bounds-checks
+  without-bounds-checks
 
-  local
-    method repeat
-        (state :: <state>, posn :: <integer>
-           /* , result-kind, result-start, result-end */)
-      if (state.result)
-	//
-	// It is an accepting state, so record the result and where
-	// it ended.
-	// 
-	result-kind := state.result;
-	result-end := posn;
-      end if;
-      //
-      // Try advancing the state machine once more if possible.
-      // 
-      if (posn < length)
-	let table = state.transitions;
-	let char :: <integer> = contents[posn];
-	let new-state 
-          = if (table /* & char < $max-lexer-code + 1 */)
-              let table :: <simple-object-vector> = table;
-              vector-element(table, char);
-            end;
-	if (new-state)
-          let new-state :: <state> = new-state;
-	  repeat
-            (new-state, posn + 1
-               /* , result-kind, result-start, result-end */);
-	else
+    local
+      method repeat
+          (state :: <state>, posn :: <integer>
+             /* , result-kind, result-start, result-end */)
+        if (state.result)
+          //
+          // It is an accepting state, so record the result and where
+          // it ended.
+          //
+          result-kind := state.result;
+          result-end := posn;
+        end if;
+        //
+        // Try advancing the state machine once more if possible.
+        //
+        if (posn < length)
+          let table = state.transitions;
+          let char :: <integer> = contents[posn];
+          let new-state
+            = if (table /* & char < $max-lexer-code + 1 */)
+                let table :: <simple-object-vector> = table;
+                vector-element(table, char);
+              end;
+          if (new-state)
+            let new-state :: <state> = new-state;
+            repeat
+              (new-state, posn + 1
+                 /* , result-kind, result-start, result-end */);
+          else
+            /*
+            maybe-done
+              (contents, length, result-kind, result-start, result-end);
+            */
+
+            //
+            // maybe-done is called when the state machine cannot be
+            // advanced any further.  It just checks to see if we really
+            // are done or not.
+            //
+            if (instance?(result-kind, <symbol>))
+            // if (object-class(result-kind) == <symbol>)
+              //
+              // The result-kind is a symbol if this is one of the magic
+              // accepting states.  Instead of returning some token, we do
+              // some special processing depending on exactly what symbol
+              // it is, and then start the state machine over at the
+              // initial state.
+              //
+              select (result-kind)
+                #"whitespace" =>
+                  #f;
+                #"newline" =>
+                  let result-end :: <integer> = result-end;
+                  lexer.line := lexer.line + 1;
+                  lexer.line-start := result-end;
+                #"end-of-line-comment" =>
+                  for (i :: <integer> from result-end below length,
+                       until: (contents[i] == as(<integer>, '\n')))
+                  finally
+                    result-end := i;
+                  end for;
+                #"multi-line-comment" =>
+                  saved-line := lexer.line;
+                  saved-line-start := lexer.line-start;
+                  result-end := skip-multi-line-comment(lexer, result-end);
+                  if (result-end)
+                    saved-line := #f;
+                    saved-line-start := #f;
+                  else
+                    unexpected-eof := #t;
+                  end;
+              end select;
+              result-kind := #f;
+              if (result-end)
+                // let result-start :: <integer> = result-end;
+                // let result-end = #f;
+                result-start := result-end;
+                result-end := #f;
+                let result-start :: <integer> = result-start;
+                repeat
+                  ($Initial-State, result-start
+                     /* , result-kind, result-start, result-end */);
+              else
+                values(posn, result-kind, result-start, result-end)
+              end if;
+            else
+              values(posn, result-kind, result-start, result-end)
+            end if;
+          end if;
+        else
           /*
-	  maybe-done
+          maybe-done
             (contents, length, result-kind, result-start, result-end);
           */
-
-      //
-      // maybe-done is called when the state machine cannot be
-      // advanced any further.  It just checks to see if we really
-      // are done or not.
-      //
-      if (instance?(result-kind, <symbol>))
-      // if (object-class(result-kind) == <symbol>)
-	//
-	// The result-kind is a symbol if this is one of the magic
-	// accepting states.  Instead of returning some token, we do
-	// some special processing depending on exactly what symbol
-	// it is, and then start the state machine over at the
-	// initial state.
-	//
-	select (result-kind)
-	  #"whitespace" =>
-	    #f;
-	  #"newline" =>
-            let result-end :: <integer> = result-end;
-	    lexer.line := lexer.line + 1;
-	    lexer.line-start := result-end;
-	  #"end-of-line-comment" =>
-	    for (i :: <integer> from result-end below length,
-		 until: (contents[i] == as(<integer>, '\n')))
-	    finally
-	      result-end := i;
-	    end for;
-	  #"multi-line-comment" =>
-	    saved-line := lexer.line;
-	    saved-line-start := lexer.line-start;
-	    result-end := skip-multi-line-comment(lexer, result-end);
-            if (result-end) 
-              saved-line := #f;
-              saved-line-start := #f;
+          //
+          // maybe-done is called when the state machine cannot be
+          // advanced any further.  It just checks to see if we really
+          // are done or not.
+          //
+          if (instance?(result-kind, <symbol>))
+          // if (object-class(result-kind) == <symbol>)
+            //
+            // The result-kind is a symbol if this is one of the magic
+            // accepting states.  Instead of returning some token, we do
+            // some special processing depending on exactly what symbol
+            // it is, and then start the state machine over at the
+            // initial state.
+            //
+            select (result-kind)
+              #"whitespace" =>
+                #f;
+              #"newline" =>
+                let result-end :: <integer> = result-end;
+                lexer.line := lexer.line + 1;
+                lexer.line-start := result-end;
+              #"end-of-line-comment" =>
+                for (i :: <integer> from result-end below length,
+                     until: (contents[i] == as(<integer>, '\n')))
+                finally
+                  result-end := i;
+                end for;
+              #"multi-line-comment" =>
+                result-end := skip-multi-line-comment(lexer, result-end);
+                if (~result-end) unexpected-eof := #t end;
+            end select;
+            result-kind := #f;
+            if (result-end)
+              // let result-start :: <integer> = result-end;
+              // let result-end = #f;
+              result-start := result-end;
+              result-end := #f;
+              let result-start :: <integer> = result-start;
+              repeat
+                ($Initial-State, result-start
+                   /* , result-kind, result-start, result-end */);
             else
-	      unexpected-eof := #t;
-            end;
-	end select;
-	result-kind := #f;
-	if (result-end)
-          // let result-start :: <integer> = result-end;
-          // let result-end = #f;
-          result-start := result-end;
-          result-end := #f;
-          let result-start :: <integer> = result-start;
-	  repeat
-            ($Initial-State, result-start 
-               /* , result-kind, result-start, result-end */);
-	else
-	  values(posn, result-kind, result-start, result-end)
-	end if;
-      else
-	values(posn, result-kind, result-start, result-end)
-      end if;
-	end if;
-      else
-        /*
-	maybe-done
-          (contents, length, result-kind, result-start, result-end);
-        */
+              values(posn, result-kind, result-start, result-end)
+            end if;
+          else
+            values(posn, result-kind, result-start, result-end)
+          end if;
+        end if;
+      end method repeat;
+    let (posn, result-kind, result-start, result-end)
+      = repeat
+          ($Initial-State, lexer.posn
+             /* , #f, lexer.posn, #f */);
+    if (~result-kind)
       //
-      // maybe-done is called when the state machine cannot be
-      // advanced any further.  It just checks to see if we really
-      // are done or not.
+      // If result-kind is #f, that means we didn't find an accepting
+      // state.  Check to see if that means we are at the end or hit
+      // an error.
       //
-      if (instance?(result-kind, <symbol>))
-      // if (object-class(result-kind) == <symbol>)
-	//
-	// The result-kind is a symbol if this is one of the magic
-	// accepting states.  Instead of returning some token, we do
-	// some special processing depending on exactly what symbol
-	// it is, and then start the state machine over at the
-	// initial state.
-	//
-	select (result-kind)
-	  #"whitespace" =>
-	    #f;
-	  #"newline" =>
-            let result-end :: <integer> = result-end;
-	    lexer.line := lexer.line + 1;
-	    lexer.line-start := result-end;
-	  #"end-of-line-comment" =>
-	    for (i :: <integer> from result-end below length,
-		 until: (contents[i] == as(<integer>, '\n')))
-	    finally
-	      result-end := i;
-	    end for;
-	  #"multi-line-comment" =>
-	    result-end := skip-multi-line-comment(lexer, result-end);
-            if (~result-end) unexpected-eof := #t end;
-	end select;
-	result-kind := #f;
-	if (result-end)
-          // let result-start :: <integer> = result-end;
-          // let result-end = #f;
-          result-start := result-end;
-          result-end := #f;
-          let result-start :: <integer> = result-start;
-	  repeat
-            ($Initial-State, result-start 
-               /* , result-kind, result-start, result-end */);
-	else
-	  values(posn, result-kind, result-start, result-end)
-	end if;
+      if (result-start == length)
+        result-kind := fragment-builder(<eof-marker>);
+        result-end := result-start;
+      elseif (unexpected-eof | posn == length)
+        result-kind := #f;
+        result-end := length;
+        unexpected-eof := #t;
       else
-	values(posn, result-kind, result-start, result-end)
+        result-kind := #f;
+        result-end := result-start + 1;
       end if;
-      end if;
-    end method repeat;
-  let (posn, result-kind, result-start, result-end)
-    = repeat
-        ($Initial-State, lexer.posn
-           /* , #f, lexer.posn, #f */);
-  if (~result-kind)
-    //
-    // If result-kind is #f, that means we didn't find an accepting
-    // state.  Check to see if that means we are at the end or hit
-    // an error.
-    // 
-    if (result-start == length)
-      result-kind := fragment-builder(<eof-marker>);
-      result-end := result-start;
-    elseif (unexpected-eof | posn == length)
-      result-kind := #f;
-      result-end := length;
-      unexpected-eof := #t;
-    else
-      result-kind := #f;
-      result-end := result-start + 1;
     end if;
-  end if;
-  //
-  // Save the current token's end position so that the next token
-  // starts here.
-  //
-  let result-end :: <integer> = result-end;
-  lexer.posn := result-end;
-  //
-  // Make a source location for the current token.
-  // 
-  let effective-line :: <integer> = saved-line | lexer.line;
-  let effective-line-start :: <integer> = saved-line-start | lexer.line-start;
-  let source-location
-    = make-lexer-source-location
-        (lexer, lexer.source,
-	 result-start, effective-line,
-	   result-start - effective-line-start,
-	 result-end, lexer.line, result-end - lexer.line-start);
-  //
-  // And finally, make and return the actual token.
-  // 
-  if (result-kind)
-    do-process-token(result-kind, lexer, source-location);
-  else
-    if (unexpected-eof)
-      invalid-end-of-input(source-location);
+    //
+    // Save the current token's end position so that the next token
+    // starts here.
+    //
+    let result-end :: <integer> = result-end;
+    lexer.posn := result-end;
+    //
+    // Make a source location for the current token.
+    //
+    let effective-line :: <integer> = saved-line | lexer.line;
+    let effective-line-start :: <integer> = saved-line-start | lexer.line-start;
+    let source-location
+      = make-lexer-source-location
+          (lexer, lexer.source,
+           result-start, effective-line,
+             result-start - effective-line-start,
+           result-end, lexer.line, result-end - lexer.line-start);
+    //
+    // And finally, make and return the actual token.
+    //
+    if (result-kind)
+      do-process-token(result-kind, lexer, source-location);
     else
-      invalid-token(source-location);
-    end;
-  end if;
- end;
+      if (unexpected-eof)
+        invalid-end-of-input(source-location);
+      else
+        invalid-token(source-location);
+      end;
+    end if;
+  end without-bounds-checks;
 end method get-token;
 
 // This indirection is only here for profiling perposes.
@@ -593,7 +593,7 @@ define function get-token (lexer :: <lexer>) => (token :: <fragment>)
       //
       // There are some unread tokens, so extract one of them instead of
       // consuming any more stuff from the source.
-      // 
+      //
     //  let result = lexer.pushed-tokens.head;
     //  lexer.pushed-tokens = lexer.pushed-tokens.tail;
     //  values(result, result.head, result.tail);
@@ -607,51 +607,51 @@ define function get-token (lexer :: <lexer>) => (token :: <fragment>)
     while (#t)
       let token = internal-get-token(lexer);
       select (token.token-kind)
-	$feature-if-token =>
-	  let cond = parse-conditional(lexer);
-	  lexer.conditional-state
-	    := if (lexer.conditional-state.active?)
-		 make(<conditional-state>, active: cond, do-else: ~cond,
-		      old-state: lexer.conditional-state);
-	       else
-		 make(<conditional-state>, active: #f, do-else: #f,
-		      old-state: lexer.conditional-state);
-	       end if;
-	  
-	$feature-elseif-token =>
-	  if (lexer.conditional-state == #f)
-	    compiler-fatal-error("#elseif with no matching #if");
-	  elseif (lexer.conditional-state.seen-else?)
-	    compiler-fatal-error("#elseif after #else in one #if");
-	  elseif (parse-conditional(lexer))
-	    lexer.conditional-state.active?
-	      := lexer.conditional-state.do-else?;
-	    lexer.conditional-state.do-else? := #f;
-	  else
-	    lexer.conditional-state.active? := #f;
-	  end if;
+        $feature-if-token =>
+          let cond = parse-conditional(lexer);
+          lexer.conditional-state
+            := if (lexer.conditional-state.active?)
+                 make(<conditional-state>, active: cond, do-else: ~cond,
+                      old-state: lexer.conditional-state);
+               else
+                 make(<conditional-state>, active: #f, do-else: #f,
+                      old-state: lexer.conditional-state);
+               end if;
 
-	$feature-else-token =>
-	  if (lexer.conditional-state == #f)
-	    compiler-fatal-error("#else with no matching #if");
-	  elseif (lexer.conditional-state.seen-else?)
-	    compiler-fatal-error("#else after #else in one #if");
-	  else
-	    lexer.conditional-state.seen-else? := #t;
-	    lexer.conditional-state.active?
-	      := lexer.conditional-state.do-else?;
-	  end if;
+        $feature-elseif-token =>
+          if (lexer.conditional-state == #f)
+            compiler-fatal-error("#elseif with no matching #if");
+          elseif (lexer.conditional-state.seen-else?)
+            compiler-fatal-error("#elseif after #else in one #if");
+          elseif (parse-conditional(lexer))
+            lexer.conditional-state.active?
+              := lexer.conditional-state.do-else?;
+            lexer.conditional-state.do-else? := #f;
+          else
+            lexer.conditional-state.active? := #f;
+          end if;
 
-	$feature-endif-token =>
-	  if (lexer.conditional-state == #f)
-	    compiler-fatal-error("#endif with no matching #if");
-	  else
-	    lexer.conditional-state := lexer.conditional-state.old-state;
-	  end if;
-	otherwise =>
-	  if (lexer.conditional-state.active?)
-	    return(token, token.source-location);
-	  end if;
+        $feature-else-token =>
+          if (lexer.conditional-state == #f)
+            compiler-fatal-error("#else with no matching #if");
+          elseif (lexer.conditional-state.seen-else?)
+            compiler-fatal-error("#else after #else in one #if");
+          else
+            lexer.conditional-state.seen-else? := #t;
+            lexer.conditional-state.active?
+              := lexer.conditional-state.do-else?;
+          end if;
+
+        $feature-endif-token =>
+          if (lexer.conditional-state == #f)
+            compiler-fatal-error("#endif with no matching #if");
+          else
+            lexer.conditional-state := lexer.conditional-state.old-state;
+          end if;
+        otherwise =>
+          if (lexer.conditional-state.active?)
+            return(token, token.source-location);
+          end if;
       end select;
       return(token, token.source-location);
     end while;
@@ -681,7 +681,7 @@ end method unget-token;
 //   -- internal.
 //
 // Make various kinds of operators.
-// 
+//
 define method make-binary-operator
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <binary-operator-fragment>;
@@ -737,7 +737,7 @@ end method make-double-equal;
 // make-quoted-name -- internal.
 //
 // Make a <quoted-name-token> for \-quoted operator.
-// 
+//
 define method make-quoted-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <variable-name-fragment>;
@@ -745,7 +745,7 @@ define method make-quoted-name
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        name: extract-symbol(source-location,
-			    start: source-location.start-posn + 1),
+                            start: source-location.start-posn + 1),
        module: *Current-Module*);
 end method make-quoted-name;
 
@@ -753,7 +753,7 @@ end method make-quoted-name;
 //
 // Extract the name from the source location, figure out what kind of word it
 // is, and make it.
-// 
+//
 define method make-identifier
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <variable-name-fragment>;
@@ -771,7 +771,7 @@ end method make-identifier;
 //
 // We allow extended $[0-9]+ syntax for getting at history bindings.
 // For now, these aren't distinguished syntactically from other names.
-// 
+//
 define method make-history-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <variable-name-fragment>;
@@ -782,20 +782,20 @@ end method make-history-name;
 // make-constrainted-name -- internal.
 //
 // Make a constrained name.
-// 
+//
 define method make-constrained-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
   let colon-posn
     = block (return)
         let contents = source-location.source-location-record.contents;
-	for (posn from source-location.start-posn
-	       below source-location.end-posn)
-	  if (contents[posn] == as(<integer>, ':'))
-	    return(posn);
-	  end if;
+        for (posn from source-location.start-posn
+               below source-location.end-posn)
+          if (contents[posn] == as(<integer>, ':'))
+            return(posn);
+          end if;
         end for;
-	error("No : in a constrained-name?");
-	#f;
+        error("No : in a constrained-name?");
+        #f;
       end block;
   let constraint
     = extract-symbol(source-location, start: colon-posn + 1);
@@ -825,45 +825,45 @@ end method;
 // make-qualified-name -- internal.
 //
 // Make a qualified name.
-// 
+//
 define method make-qualified-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
   let colon1-posn
     = block (return)
-	let contents = source-location.source-location-record.contents;
-	for (posn from source-location.start-posn
-	       below source-location.end-posn)
-	  if (contents[posn] == as(<integer>, ':'))
-	    return(posn);
-	  end if;
-	end for;
-	error("No : in a constrained-name?");
-	#f;
+        let contents = source-location.source-location-record.contents;
+        for (posn from source-location.start-posn
+               below source-location.end-posn)
+          if (contents[posn] == as(<integer>, ':'))
+            return(posn);
+          end if;
+        end for;
+        error("No : in a constrained-name?");
+        #f;
       end block;
   let colon2-posn
     = block (return)
-	let contents = source-location.source-location-record.contents;
-	for (posn from colon1-posn + 1
-	       below source-location.end-posn)
-	  if (contents[posn] == as(<integer>, ':'))
-	    return(posn);
-	  end if;
+        let contents = source-location.source-location-record.contents;
+        for (posn from colon1-posn + 1
+               below source-location.end-posn)
+          if (contents[posn] == as(<integer>, ':'))
+            return(posn);
+          end if;
         finally
           posn
-	end for;
+        end for;
       end block;
   let name
     = extract-symbol(source-location, end: colon1-posn);
   let module-name
     = extract-symbol(source-location,
-		     start: colon1-posn + 1, end: colon2-posn);
+                     start: colon1-posn + 1, end: colon2-posn);
   let library-name
     = colon2-posn ~= source-location.end-posn
         & extract-symbol(source-location, start: colon2-posn + 1);
   // Resolve to a normal variable name
-  let module 
+  let module
     = resolve-qualified-variable-name-module
-        (name, module-name, library-name, 
+        (name, module-name, library-name,
            lexer-location-source-location(source-location));
   make(<variable-name-fragment>,
        record: source-location.source-location-record,
@@ -898,15 +898,15 @@ end method escape-character;
 define method hex-escape-character
     (source-location :: <lexer-source-location>, start :: <integer>)
  => (char :: <character>)
-  let code 
+  let code
     = parse-integer
-        (source-location, 
+        (source-location,
            start:              start,
            stop-at-non-digit?: #t,
            radix:               16);
   if (code > $max-lexer-code)
     note(<character-code-too-large>,
-         source-location: 
+         source-location:
             record-position-as-location
               (source-location.source-location-record,
                source-location.source-location-source-position),
@@ -937,7 +937,7 @@ define method decode-string
       skip-hex-escape(contents, posn + 1)
     end;
   end method;
-  let length 
+  let length
     = begin
         local method repeat (posn, result)
           if (posn < finish)
@@ -954,12 +954,12 @@ define method decode-string
             result;
           end if;
         end method repeat;
-	repeat(start, 0);
+        repeat(start, 0);
       end;
   let result = make(<string>, size: length);
   local method repeat (src, dst)
-	  if (dst < length)
-	    if (contents[src] == as(<integer>, '\\'))
+          if (dst < length)
+            if (contents[src] == as(<integer>, '\\'))
               let next = contents[src + 1];
               if (next == as(<integer>, '<'))
                 result[dst] := hex-escape-character(source-location, src + 2);
@@ -968,16 +968,16 @@ define method decode-string
                 result[dst] := escape-character(as(<character>, next));
                 repeat(src + 2, dst + 1);
               end;
-	    else
-	      result[dst] := as(<character>, contents[src]);
-	      repeat(src + 1, dst + 1);
-	    end if;
-	  end if;
-	end method repeat;
+            else
+              result[dst] := as(<character>, contents[src]);
+              repeat(src + 1, dst + 1);
+            end if;
+          end if;
+        end method repeat;
   repeat(start, 0);
   result;
 end method decode-string;
-			 
+
 // make-quoted-symbol -- internal.
 //
 // Make a <literal-token> when confronted with the #"foo" syntax.
@@ -986,8 +986,8 @@ define method make-quoted-symbol
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <symbol-syntax-symbol-fragment>;
   let sym = as(<symbol>,
-	       decode-string(source-location,
-			     start: source-location.start-posn + 2));
+               decode-string(source-location,
+                             start: source-location.start-posn + 2));
   make(<symbol-syntax-symbol-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
@@ -997,23 +997,23 @@ end method make-quoted-symbol;
 // make-keyword-symbol -- internal.
 //
 // Make a <literal-token> when confronted with the foo: syntax.
-// 
+//
 define method make-keyword-symbol
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <keyword-syntax-symbol-fragment>;
   let sym = extract-symbol(source-location,
-			   end: source-location.end-posn - 1);
+                           end: source-location.end-posn - 1);
 
   make(<keyword-syntax-symbol-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        value: as-fragment-value(sym));
 end method make-keyword-symbol;
-		    
+
 // parse-integer -- internal.
 //
 // Parse and return an integer in the supplied radix.
-// 
+//
 
 define constant $zero-code    :: <integer> = as(<integer>, '0');
 define constant $nine-code    :: <integer> = as(<integer>, '9');
@@ -1031,34 +1031,34 @@ define method parse-integer
     => res :: <extended-integer>;
   let contents :: <byte-vector>
     = source-location.source-location-record.contents;
-  // We do our working in negative integers to avoid representation 
+  // We do our working in negative integers to avoid representation
   // overflow until absolutely necessary.
-  local method repeat 
+  local method repeat
                    (posn :: <integer>, result :: <abstract-integer>)
                 => (final-result :: <abstract-integer>)
-	  if (posn < finish)
-	    let digit :: <integer> = contents[posn];
-	    if ($zero-code <= digit & digit <= $nine-code)
-	      repeat(posn + 1, 
-                     generic-(generic*(result, radix), 
+          if (posn < finish)
+            let digit :: <integer> = contents[posn];
+            if ($zero-code <= digit & digit <= $nine-code)
+              repeat(posn + 1,
+                     generic-(generic*(result, radix),
                               digit - $zero-code));
-	    elseif ($upper-a-code <= digit & digit <= $upper-f-code)
-	      repeat(posn + 1, 
-                     generic-(generic*(result, radix), 
+            elseif ($upper-a-code <= digit & digit <= $upper-f-code)
+              repeat(posn + 1,
+                     generic-(generic*(result, radix),
                               10 + digit - $upper-a-code));
-	    elseif ($lower-a-code <= digit & digit <= $lower-f-code)
-	      repeat(posn + 1, 
-                     generic-(generic*(result, radix), 
+            elseif ($lower-a-code <= digit & digit <= $lower-f-code)
+              repeat(posn + 1,
+                     generic-(generic*(result, radix),
                               10 + digit - $lower-a-code));
-	    elseif (stop-at-non-digit?)
+            elseif (stop-at-non-digit?)
               result
             else
-	      error("Bogus digit in integer: %=", as(<character>, digit));
-	    end if;
-	  else
-	    result;
-	  end if;
-	end method repeat;
+              error("Bogus digit in integer: %=", as(<character>, digit));
+            end if;
+          else
+            result;
+          end if;
+        end method repeat;
   let first = as(<character>, contents[start]);
   block ()
     if (first == '-')
@@ -1070,7 +1070,7 @@ define method parse-integer
     end if;
   exception (overflow :: <error>)
     note(<integer-too-large>,
-         source-location: 
+         source-location:
             record-position-as-location
               (source-location.source-location-record,
                source-location.source-location-source-position),
@@ -1083,12 +1083,12 @@ end method parse-integer;
 // parse-integer-literal -- all internal.
 //
 // Parse an integer and return a <literal-token> holding it.
-// 
+//
 
 define program-warning <integer-literal-too-large>
   slot condition-integer-string,
     required-init-keyword: integer-string:;
-  format-string 
+  format-string
     "The integer literal %s is too large to be a small integer.";
   format-arguments integer-string;
 end program-warning;
@@ -1120,29 +1120,29 @@ define method parse-integer-literal
       radix := 16;
     end if;
   end if;
-  
+
   let int = parse-integer(source-location, radix: radix, start: posn);
 
   if (~extended &
-	(int < runtime-$minimum-integer
-	   | int > runtime-$maximum-integer))
+        (int < runtime-$minimum-integer
+           | int > runtime-$maximum-integer))
 //    note(<integer-literal-too-large>,
 //         source-location: record-position-as-location
-//	                   (source-location.source-location-record,
-//			    source-location.source-location-source-position),
+//                           (source-location.source-location-record,
+//                            source-location.source-location-source-position),
 //         integer-string:  extract-string(source-location));
     extended := #t;
   end if;
 
   if (extended)
     make(<big-integer-fragment>,
-	 record: source-location.source-location-record,
-	 source-position: source-location.source-location-source-position,
+         record: source-location.source-location-record,
+         source-position: source-location.source-location-source-position,
          value:           as-fragment-value(int));
   else
     make(<integer-fragment>,
-	 record: source-location.source-location-record,
-	 source-position: source-location.source-location-source-position,
+         record: source-location.source-location-record,
+         source-position: source-location.source-location-source-position,
          value:           as-fragment-value(int));
   end;
 end method parse-integer-literal;
@@ -1150,7 +1150,7 @@ end method parse-integer-literal;
 // make-character-literal -- internal.
 //
 // Return a <literal-token> holding the character token.
-// 
+//
 define method make-character-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <character-fragment>;
@@ -1162,7 +1162,7 @@ define method make-character-literal
        source-position: source-location.source-location-source-position,
        value:
          as-fragment-value
-	   (if (char == '\\')
+           (if (char == '\\')
               let next-char = as(<character>, contents[posn + 1]);
               if (next-char == '<')
                 hex-escape-character(source-location, posn + 2);
@@ -1189,12 +1189,12 @@ define method make-string-literal
 end method make-string-literal;
 
 // parse-ratio-literal -- internal.
-// 
+//
 define method parse-ratio-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     // => res :: <fragment>;
   note(<ratios-not-supported>,
-       source-location: 
+       source-location:
           record-position-as-location
             (source-location.source-location-record,
              source-location.source-location-source-position),
@@ -1207,15 +1207,15 @@ define method parse-ratio-literal
     => res :: <literal-token>;
   let slash
     = block (return)
-	let contents = source-location.source-location-record.contents;
-	for (posn from source-location.start-posn
-	       below source-location.end-posn)
-	  if (contents[posn] == as(<integer>, '/'))
-	    return(posn);
-	  end if;
-	end for;
-	error("No / in a ratio?");
-	#f;
+        let contents = source-location.source-location-record.contents;
+        for (posn from source-location.start-posn
+               below source-location.end-posn)
+          if (contents[posn] == as(<integer>, '/'))
+            return(posn);
+          end if;
+        end for;
+        error("No / in a ratio?");
+        #f;
       end block;
   let numerator = parse-integer(source-location, end: slash);
   let denominator = parse-integer(source-location, start: slash + 1);
@@ -1235,10 +1235,10 @@ define constant <default-float> = <single-float>;
 define constant $max-mantissa-digits = 18;
 
 define method atof (string :: <byte-string>,
-		    #key start :: <integer> = 0,
-		         end: finish :: <integer> = string.size)
+                    #key start :: <integer> = 0,
+                         end: finish :: <integer> = string.size)
     => (class :: one-of(#f, #"single", #"double", #"extended"),
-	value :: <float>);
+        value :: <float>);
   let class = #f;
   let posn = start;
   let sign = 1;
@@ -1264,9 +1264,9 @@ define method atof (string :: <byte-string>,
     block (parse-exponent)
       // Parse the mantissa.
       while (posn < finish)
-	let char = string[posn];
-	posn := posn + 1;
-	if (char >= '0' & char <= '9')
+        let char = string[posn];
+        posn := posn + 1;
+        if (char >= '0' & char <= '9')
           if (digits < $max-mantissa-digits)
             let digit = as(<integer>, char) - as(<integer>, '0');
             mantissa := generic+(generic*(mantissa, 10), digit);
@@ -1274,33 +1274,33 @@ define method atof (string :: <byte-string>,
               scale := generic*(scale, 10);
             end if;
           else
-            // If we're after the decimal point, we can just ignore 
+            // If we're after the decimal point, we can just ignore
             // the digit. If before, we have to remember that we've
             // been multiplied.
-            if (~scale) 
+            if (~scale)
               exponent-shift := generic+(exponent-shift, 1);
             end;
           end;
           digits := digits + 1;
-	elseif (char == '.')
-	  if (scale)
-	    error("bogus float.");
-	  end if;
-	  scale := 1;
-	elseif (char == 'e' | char == 'E')
-	  parse-exponent();
-	elseif (char == 'd' | char == 'D')
-	  class := #"double";
-	  parse-exponent();
-	elseif (char == 's' | char == 'S')
-	  class := #"single";
-	  parse-exponent();
-	elseif (char == 'x' | char == 'X')
-	  class := #"extended";
-	  parse-exponent();
-	else
-	  error("bogus float.");
-	end if;
+        elseif (char == '.')
+          if (scale)
+            error("bogus float.");
+          end if;
+          scale := 1;
+        elseif (char == 'e' | char == 'E')
+          parse-exponent();
+        elseif (char == 'd' | char == 'D')
+          class := #"double";
+          parse-exponent();
+        elseif (char == 's' | char == 'S')
+          class := #"single";
+          parse-exponent();
+        elseif (char == 'x' | char == 'X')
+          class := #"extended";
+          parse-exponent();
+        else
+          error("bogus float.");
+        end if;
       end while;
       return();
     end block;
@@ -1309,20 +1309,20 @@ define method atof (string :: <byte-string>,
     if (posn < finish)
       let char = string[posn];
       if (char == '-')
-	exponent-sign := -1;
-	posn := posn + 1;
+        exponent-sign := -1;
+        posn := posn + 1;
       elseif (char == '+')
-	posn := posn + 1;
+        posn := posn + 1;
       end if;
 
       while (posn < finish)
-	let char = string[posn];
-	if (char >= '0' & char <= '9')
-	  let digit = as(<integer>, char) - as(<integer>, '0');
-	  exponent := generic+(generic*(exponent, 10), digit);
-	else
-	  error("bogus float");
-	end if;
+        let char = string[posn];
+        if (char >= '0' & char <= '9')
+          let digit = as(<integer>, char) - as(<integer>, '0');
+          exponent := generic+(generic*(exponent, 10), digit);
+        else
+          error("bogus float");
+        end if;
         posn := posn + 1;
       end while;
     end if;
@@ -1337,15 +1337,15 @@ define method atof (string :: <byte-string>,
 
   let (mantissa, base, scale)
     = select (class)
-	#f          => values(as(<default-float>, mantissa), as(<single-float>, 10), as(<float>, scale | 1));
-	#"single"   => values(as(<single-float>, mantissa), as(<single-float>, 10), as(<single-float>, scale | 1));
-	#"double"   => values(as(<double-float>, mantissa), as(<double-float>, 10), as(<double-float>, scale | 1));
-	#"extended" => values(as(<extended-float>, mantissa), as(<extended-float>, 10), as(<extended-float>, scale | 1));
+        #f          => values(as(<default-float>, mantissa), as(<single-float>, 10), as(<float>, scale | 1));
+        #"single"   => values(as(<single-float>, mantissa), as(<single-float>, 10), as(<single-float>, scale | 1));
+        #"double"   => values(as(<double-float>, mantissa), as(<double-float>, 10), as(<double-float>, scale | 1));
+        #"extended" => values(as(<extended-float>, mantissa), as(<extended-float>, 10), as(<extended-float>, scale | 1));
       end;
 
   if (exponent = 0)
     values(class,
-	   generic/(generic*(sign, mantissa), scale))
+           generic/(generic*(sign, mantissa), scale))
   else
     let scaled-mantissa = generic/(generic*(sign, mantissa), scale);
     // NOTE: Floating point exponentiation loses precision for some
@@ -1353,34 +1353,34 @@ define method atof (string :: <byte-string>,
     //---*** NOTE: Revisit this as it may be costly w.r.t. consing and
     //---*** there must be a better way (rationals?).
     local method power-of-10 () => (power :: <float>)
-	    let iterate? = select (base by instance?)
-			     <single-float> => exponent > 15;
-			     // Yes, <double-float> exponentation is never accurate!
-			     <double-float> => #t;
-			     //---*** NOTE: We don't have <extended-float>s yet ...
-			     <extended-float> => #t;
-			   end;
-	    if (iterate?)
-	      for (i from 1 below exponent)
-		base := generic*(base, 10.0)
-	      end;
-	      base
-	    else
-	      generic^(base, exponent)
-	    end
-	  end method power-of-10;
+            let iterate? = select (base by instance?)
+                             <single-float> => exponent > 15;
+                             // Yes, <double-float> exponentation is never accurate!
+                             <double-float> => #t;
+                             //---*** NOTE: We don't have <extended-float>s yet ...
+                             <extended-float> => #t;
+                           end;
+            if (iterate?)
+              for (i from 1 below exponent)
+                base := generic*(base, 10.0)
+              end;
+              base
+            else
+              generic^(base, exponent)
+            end
+          end method power-of-10;
     if (exponent-sign = 1)
       values(class,
-	     generic*(scaled-mantissa, power-of-10()))
+             generic*(scaled-mantissa, power-of-10()))
     else
       values(class,
-	     generic/(scaled-mantissa, power-of-10()))
+             generic/(scaled-mantissa, power-of-10()))
     end
   end
 end method atof;
 
 // parse-fp-literal -- internal.
-// 
+//
 define method parse-fp-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <number-fragment>;
@@ -1401,7 +1401,7 @@ define method make-hash-word
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <fragment>;
   let name
-    = extract-symbol(source-location, 
+    = extract-symbol(source-location,
                      start: source-location.start-posn + 1);
   let core-class
     = select (name)
@@ -1431,7 +1431,7 @@ define method make-hash-literal
     => res :: <fragment>;
   let name-string
     = extract-string
-        (source-location, 
+        (source-location,
            start: source-location.start-posn + 1,
            end:   source-location.end-posn - 1);
   format-out("Hash literal: %s\n", name-string);
@@ -1440,25 +1440,25 @@ define method make-hash-literal
     let length :: <integer> = contents.size;
     let data-start :: <integer> = lexer.posn;
     let delimiter = contents[data-start];
-    let delimiter-index 
+    let delimiter-index
       = position($hash-data-start-delimiters, as(<character>, delimiter));
     let data :: <byte-string> = "";
     if (delimiter-index)
       // Read until the matching delimiter
       let start-delimiter = delimiter;
-      let end-delimiter 
+      let end-delimiter
         = as(<integer>, $hash-data-end-delimiters[delimiter-index]);
       let i :: <integer> = data-start + 1;
       let char :: <integer> = 0;
       while (((char := contents[i]) ~== end-delimiter)
                | (char == end-delimiter & contents[i - 1] == $escape-code))
         if (char == $newline-code)
-  	  lexer.line := lexer.line + 1;
-	  lexer.line-start := i;
+            lexer.line := lexer.line + 1;
+          lexer.line-start := i;
         end;
         i := i + 1;
       end;
-      data 
+      data
         := extract-string(source-location, start: data-start + 1, end: i);
       lexer.posn := i + 1;
     else
@@ -1468,13 +1468,13 @@ define method make-hash-literal
       while (~delimiter-code?((char := contents[i])))
         /*
         if (char == $newline-code)
-  	  lexer.line := lexer.line + 1;
-	  lexer.line-start := i;
+            lexer.line := lexer.line + 1;
+          lexer.line-start := i;
         end;
         */
         i := i + 1;
       end;
-      data 
+      data
         := extract-string(source-location, start: data-start, end: i);
       lexer.posn := i;
     end;
@@ -1493,10 +1493,10 @@ define method make-hash-literal
              source-position: source-location.source-location-source-position,
              value: as-fragment-value(data));
     let call
-      = make(<prefix-call-fragment>, 
+      = make(<prefix-call-fragment>,
              record: fragment-record(parser-name),
              source-position: position-between(parser-name, parser-name),
-             function: parser-name, 
+             function: parser-name,
              arguments: list(data-string));
     call
   end;
@@ -1511,7 +1511,7 @@ define constant $rbracket-code = as(<integer>, ']');
 define constant $lbrace-code = as(<integer>, '{');
 define constant $rbrace-code = as(<integer>, '}');
 
-define function delimiter-code? 
+define function delimiter-code?
     (code :: <integer>) => (whitespace? :: <boolean>)
   select (code)
     $space-code, $newline-code, $tab-code => #t;
@@ -1575,27 +1575,27 @@ define method parse-feature-expr (lexer :: <lexer>) => res :: <boolean>;
       let token = internal-get-token(lexer);
       let kind = token.token-kind;
       if (kind == $right-paren-token)
-	return(res);
+        return(res);
       elseif (kind == $other-binary-operator-token)
-	select (token.token-symbol)
-	  #"&" =>
-	    if (~parse-feature-term(lexer))
-	      res := #f;
-	    end if;
-	  #"|" =>
-	    if (parse-feature-term(lexer))
-	      res := #t;
-	    end if;
-	  otherwise =>
-	    parse-error(token);
-	end select;
+        select (token.token-symbol)
+          #"&" =>
+            if (~parse-feature-term(lexer))
+              res := #f;
+            end if;
+          #"|" =>
+            if (parse-feature-term(lexer))
+              res := #t;
+            end if;
+          otherwise =>
+            parse-error(token);
+        end select;
       else
-	parse-error(token);
+        parse-error(token);
       end if;
     end while;
   end block;
 end method parse-feature-expr;
-    
+
 define method parse-conditional (lexer :: <lexer>) => res :: <boolean>;
   let token = internal-get-token(lexer);
   unless (token.token-kind == $left-paren-token)
@@ -1621,7 +1621,7 @@ define constant $upper-n-code = as(<integer>, 'N');
 define constant $lower-d-code = as(<integer>, 'd');
 define constant $upper-d-code = as(<integer>, 'D');
 
-define inline function at-newline? 
+define inline function at-newline?
     (contents :: <byte-vector>, posn :: <integer>)
  => (newline? :: <boolean>, posn-after :: <integer>)
   if (contents[posn] == $newline-code)
@@ -1643,7 +1643,7 @@ end function;
 
 // TODO: CORRECTNESS: Allow for names prefixed end like "ending ... end".
 
-define inline function at-end-word? 
+define inline function at-end-word?
     (contents :: <byte-vector>, posn :: <integer>, length :: <integer>)
  => (end-word? :: <boolean>)
   posn + 3 <= length

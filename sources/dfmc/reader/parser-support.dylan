@@ -1,5 +1,5 @@
 Module:    dfmc-reader
-Synopsis:  Code in support of the parser - some collecting datastructures 
+Synopsis:  Code in support of the parser - some collecting datastructures
            and binary operand series handling.
 Author:    Keith Playford
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
@@ -26,7 +26,7 @@ define method append-sequence (value :: <list>) => (seq :: <pair>)
   pair(value, last-cell)
 end method;
 
-define method append-element! 
+define method append-element!
     (seq :: <pair>, value :: <list>) => (seq :: <pair>)
   let new-cells = value;
   let last-cell = seq.tail;
@@ -40,7 +40,7 @@ define function last-pair (l :: <list>) => (p :: <pair>)
 end function;
 
 /*
-define method append-2-elements! 
+define method append-2-elements!
     (seq :: <pair>, value1, value2) => (seq :: <pair>)
   let last-new-cell = list(value2);
   let first-new-cell = pair(value1, last-new-cell);
@@ -59,7 +59,7 @@ end method;
 
 // Basics:
 //
-// Existing binops are folded when possible as new binops are appended. 
+// Existing binops are folded when possible as new binops are appended.
 // You can only fold the top binop if the new binop has a lower
 // precedence (or if their precedence is the same and the ops
 // in question are right-associative) - e.g. in a * b + c, we know
@@ -83,7 +83,7 @@ end method;
 // we just return the fragment initially and only wrap it if we
 // actually see a binary operator.
 
-define class <binop-sequence> (<object>) 
+define class <binop-sequence> (<object>)
   constant slot binop-previous :: type-union(<fragment>, <binop-sequence>),
     required-init-keyword: previous:;
   constant slot binop-operator :: <operator-fragment>,
@@ -107,7 +107,7 @@ define method append-binop!
 end method;
 
 define method append-binop!
-    (seq :: <binop-sequence>, 
+    (seq :: <binop-sequence>,
        new-op :: <operator-fragment>, new-arg :: <fragment>)
  => (seq :: <binop-sequence>)
   let new-prec  = operator-precedence(new-op);
@@ -116,27 +116,27 @@ define method append-binop!
   let new-left? = left-associative?(new-op);
   if (lead-prec < new-prec | (lead-prec = new-prec & ~new-left?))
     // Have to shift.
-    make(<binop-sequence>, 
-         previous: seq, 
-         operator: new-op, 
+    make(<binop-sequence>,
+         previous: seq,
+         operator: new-op,
          argument: new-arg);
   else
     // We know we have at least one fold under our belts, so do that
     // one and then see how far we get.
-    let reduced 
+    let reduced
       = fold-tighter-binops(fold-one-binop!(seq), new-prec, new-left?);
     append-binop!(reduced, new-op, new-arg);
   end;
 end method;
 
 define method fold-tighter-binops
-    (f :: <fragment>, prec :: <integer>, left? :: <boolean>) 
+    (f :: <fragment>, prec :: <integer>, left? :: <boolean>)
  => (f :: <fragment>)
   f
 end method;
 
 define method fold-tighter-binops
-    (seq :: <binop-sequence>, prec :: <integer>, left? :: <boolean>) 
+    (seq :: <binop-sequence>, prec :: <integer>, left? :: <boolean>)
  => (seq-or-f :: type-union(<fragment>, <binop-sequence>))
   let lead-prec = operator-precedence(binop-operator(seq));
   if (lead-prec > prec | (lead-prec = prec & left?))
@@ -150,7 +150,7 @@ define method fold-one-binop! (seq :: <binop-sequence>) => (seq)
   fold-one-binop-aux!(binop-previous(seq), seq);
 end method;
 
-define method fold-one-binop-aux! 
+define method fold-one-binop-aux!
     (left-arg :: <fragment>, seq :: <binop-sequence>)
  => (folded :: <compound-fragment>)
   let op        = binop-operator(seq);
@@ -159,16 +159,16 @@ define method fold-one-binop-aux!
   let loc = position-between(left-arg, right-arg);
   if (macro-operator-fragment?(op))
     make(<function-macro-fragment>,
-	 record: rec,
+         record: rec,
          source-position: loc,
          macro: op,
-         body-fragment: 
-           list(left-arg, 
+         body-fragment:
+           list(left-arg,
                 make(<comma-fragment>, record: rec, source-position: loc),
                 right-arg));
   else
     make(<binary-operator-call-fragment>,
-	 record: rec,
+         record: rec,
          source-position: loc,
          function: op,
          arguments: list(left-arg, right-arg));
@@ -182,11 +182,11 @@ define method macro-operator-fragment? (op :: <operator-fragment>)
   end;
 end method;
 
-define method fold-one-binop-aux! 
+define method fold-one-binop-aux!
     (previous :: <binop-sequence>, last :: <binop-sequence>)
   let fragment = fold-one-binop-aux!(binop-argument(previous), last);
   binop-argument(previous) := fragment;
-  previous  
+  previous
 end method;
 
 //// Operator parameters.
@@ -232,14 +232,14 @@ end method;
 /*
 
 define function binops (#rest stuff)
-  let s = make(<integer-fragment>, 
-	       record: #f,
+  let s = make(<integer-fragment>,
+               record: #f,
                source-position: #f,
                value: stuff.head);
   for (cursor = stuff.tail then cursor.tail.tail, until: empty?(cursor))
-    s := append-binop!(s, cursor.first, 
-                       make(<integer-fragment>, 
-			    record: #f,
+    s := append-binop!(s, cursor.first,
+                       make(<integer-fragment>,
+                            record: #f,
                             source-position: #f,
                             value: cursor.second));
   end;

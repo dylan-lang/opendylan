@@ -149,7 +149,7 @@ define method present (f :: <binary-operator-call-fragment>, s :: <stream>)
   write-element(s, '(');
   present(fragment-arguments(f).first, s);
   write-element(s, ' ');
-  present(fragment-function(f), s);  
+  present(fragment-function(f), s);
   write-element(s, ' ');
   present(fragment-arguments(f).second, s);
   write-element(s, ')');
@@ -157,7 +157,7 @@ end method;
 
 define method present (f :: <unary-operator-call-fragment>, s :: <stream>)
   write-element(s, '(');
-  present(fragment-function(f), s);  
+  present(fragment-function(f), s);
   present(fragment-arguments(f).first, s);
   write-element(s, ')');
 end method;
@@ -236,7 +236,7 @@ end method;
 define method present (f :: <body-definition-fragment>, s :: <stream>)
   write(s, "define ");
   let mods = fragment-modifiers(f);
-  if (mods) 
+  if (mods)
     present-fragments(mods, s);
     write(s, " ");
   end;
@@ -249,7 +249,7 @@ end method;
 define method present (f :: <list-definition-fragment>, s :: <stream>)
   write(s, "define ");
   let mods = fragment-modifiers(f);
-  if (mods) 
+  if (mods)
     present-fragments(mods, s);
     write(s, " ");
   end;
@@ -259,10 +259,10 @@ define method present (f :: <list-definition-fragment>, s :: <stream>)
   present(fragment-list-fragment(f), s);
 end method;
 
-define method present 
+define method present
     (f :: <constrained-name-fragment>, s :: <stream>)
-  format(s, "%s:%s", 
-         as-lowercase(as(<string>, fragment-name(f))), 
+  format(s, "%s:%s",
+         as-lowercase(as(<string>, fragment-name(f))),
          as-lowercase(as(<string>, fragment-constraint(f))));
 end method;
 
@@ -278,7 +278,7 @@ define method present (f :: <query-equal-fragment>, s :: <stream>)
   write(s, "?=");
 end method;
 
-define method present 
+define method present
     (f :: <spliced-pattern-variable-fragment>, s :: <stream>)
   if (f.fragment-prefix)
     format(s, "%= ## ", f.fragment-prefix);
@@ -290,7 +290,7 @@ define method present
   end;
 end method;
 
-define method present 
+define method present
     (f :: <ellipsis-fragment>, s :: <stream>)
   write(s, "...");
 end method;
@@ -301,7 +301,7 @@ end method;
 
 define method present-list (l, s)
   for (first = #t then #f, f in l)
-    if (~first) 
+    if (~first)
       write(s, ", ");
       pprint-newline(#"linear", s)
     end;
@@ -311,8 +311,8 @@ end method;
 
 define method present-constituents (l, s)
   for (first = #t then #f, f in l)
-    if (~first) 
-      write(s, "; "); 
+    if (~first)
+      write(s, "; ");
       pprint-newline(#"linear", s)
     end;
     present(f, s);
@@ -391,34 +391,34 @@ define method present-with-preceding-space? (last, f)
   #t
 end method;
 
-define method present-with-preceding-space? 
-    (last :: <fragment>, f :: <separator-fragment>) 
+define method present-with-preceding-space?
+    (last :: <fragment>, f :: <separator-fragment>)
   #f
 end method;
 
 // Overrides the above...
-define method present-with-preceding-space? 
-    (last :: <fragment>, f :: <binary-operator-fragment>) 
+define method present-with-preceding-space?
+    (last :: <fragment>, f :: <binary-operator-fragment>)
   #t
 end method;
 
-define method present-with-preceding-space? 
-    (last :: <fragment>, f :: <close-paren-fragment>) 
+define method present-with-preceding-space?
+    (last :: <fragment>, f :: <close-paren-fragment>)
   #f
 end method;
 
-define method present-with-preceding-space? 
-    (last :: <open-paren-fragment>, f :: <fragment>) 
+define method present-with-preceding-space?
+    (last :: <open-paren-fragment>, f :: <fragment>)
   #f
 end method;
 
-define method present-with-preceding-space? 
-    (last :: <fragment>, f :: <dot-fragment>) 
+define method present-with-preceding-space?
+    (last :: <fragment>, f :: <dot-fragment>)
   #f
 end method;
 
-define method present-with-preceding-space? 
-    (last :: <dot-fragment>, f :: <fragment>) 
+define method present-with-preceding-space?
+    (last :: <dot-fragment>, f :: <fragment>)
   #f
 end method;
 
@@ -426,11 +426,11 @@ end method;
 
 define method print-object (f :: <compiler-range-source-location>, s :: <stream>) => ()
   printing-object (f, s)
-    format(s, "%= (%d, %d) - (%d, %d)", 
+    format(s, "%= (%d, %d) - (%d, %d)",
            f.source-location-source-record,
-           f.source-location-start-offset.source-offset-line, 
-           f.source-location-start-offset.source-offset-column, 
-           f.source-location-end-offset.source-offset-line, 
+           f.source-location-start-offset.source-offset-line,
+           f.source-location-start-offset.source-offset-column,
+           f.source-location-end-offset.source-offset-line,
            f.source-location-end-offset.source-offset-column);
   end;
 end method;
@@ -448,17 +448,17 @@ define method print-source-record-source-location
     format(stream, ": %s\n", upper-dec);
     if (lines.size < 5)
       for (line in lines, number from start-line)
-	print-source-line-location(sr, number, stream);
-	format(stream, ": %s\n", line);
+        print-source-line-location(sr, number, stream);
+        format(stream, ": %s\n", line);
       finally
-	print-source-line-location(sr, number - 1, stream);
-	format(stream, ": %s\n", lower-dec);
+        print-source-line-location(sr, number - 1, stream);
+        format(stream, ": %s\n", lower-dec);
       end;
     else
       print-source-line-location(sr, start-line, stream);
       format(stream, ": %s\n", lines[0]);
       print-source-line-location
-	(sr, start-line + 1, stream);
+        (sr, start-line + 1, stream);
       // format(stream, ": ...\n");
       format(stream, ": %s\n", lines[1]);
       print-source-line-location
@@ -466,10 +466,10 @@ define method print-source-record-source-location
       format(stream, ": [...]\n");
       // format(stream, "\n");
       print-source-line-location
-	(sr, start-line + lines.size - 1, stream);
+        (sr, start-line + lines.size - 1, stream);
       format(stream, ": %s\n", lines.last);
       print-source-line-location
-	(sr, start-line + lines.size, stream);
+        (sr, start-line + lines.size, stream);
       format(stream, ": %s\n", lower-dec);
     end;
   end;
