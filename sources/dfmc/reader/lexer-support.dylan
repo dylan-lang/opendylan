@@ -49,8 +49,8 @@ end method;
 
 define inline function extract-string
     (loc :: <lexer-source-location>,
-       #key start: the-start :: <integer> = loc.start-posn,
-            end:   the-end   :: <integer> = loc.end-posn)
+     #key start: the-start :: <integer> = loc.start-posn,
+          end:   the-end   :: <integer> = loc.end-posn)
  => (string :: <byte-string>)
   let bytes = the-end - the-start;
   let string :: <byte-string>
@@ -63,8 +63,8 @@ end function;
 
 define inline function extract-symbol
     (loc :: <lexer-source-location>,
-       #key start: the-start :: <integer> = loc.start-posn,
-            end:   the-end   :: <integer> = loc.end-posn)
+     #key start: the-start :: <integer> = loc.start-posn,
+          end:   the-end   :: <integer> = loc.end-posn)
  => (symbol :: <symbol>)
   let data = loc.source-location-record.contents;
   make-symbol(data, start: the-start, end: the-end)
@@ -72,10 +72,10 @@ end function;
 
 define function extract-token-text
     (loc :: <compiler-range-source-location>,
-       #key start: the-start :: <integer>
-              = loc.source-location-start-character,
-            end: the-end :: <integer>
-              = loc.source-location-end-character)
+     #key start: the-start :: <integer>
+            = loc.source-location-start-character,
+          end: the-end :: <integer>
+            = loc.source-location-end-character)
  => (string :: <byte-string>)
   let bytes = the-end - the-start;
   let string :: <byte-string> = make(<byte-string>, size: bytes);
