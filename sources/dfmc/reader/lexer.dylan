@@ -563,7 +563,7 @@ define method get-token (lexer :: <lexer>) => res :: <fragment>;
       = make-lexer-source-location
           (lexer, lexer.source,
            result-start, effective-line,
-             result-start - effective-line-start,
+           result-start - effective-line-start,
            result-end, lexer.line, result-end - lexer.line-start);
     //
     // And finally, make and return the actual token.
@@ -1419,8 +1419,8 @@ define method make-hash-literal
   let name-string
     = extract-string
         (source-location,
-           start: source-location.start-posn + 1,
-           end:   source-location.end-posn - 1);
+         start: source-location.start-posn + 1,
+         end:   source-location.end-posn - 1);
   format-out("Hash literal: %s\n", name-string);
   block ()
     let contents :: <byte-vector> = lexer.source.contents;
