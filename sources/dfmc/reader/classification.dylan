@@ -14,15 +14,6 @@ define class <name-properties> (<object>)
     required-init-keyword: class:;
 end class;
 
-/*
-define class <operator-properties> (<name-properties>)
-  constant slot precedence,
-    required-init-keyword: precedence:;
-  constant slot associativity,
-    required-init-keyword: associativity:;
-end class;
-*/
-
 define method install-syntax (table, #rest tokens) => ()
   for (i from 0 below tokens.size by 2)
     table[as(<symbol>, tokens[i])]
@@ -59,31 +50,6 @@ define token-classes $core-syntax-table
   token "=="        => $equal-equal-token;
   token "=>"        => $equal-greater-token;
 end token-classes;
-
-/*
-define token-classes $core-syntax-table
-  token "+" => $binary-operator-only-token;
-  token "-" => $minus-token;
-  token "~" => $unary-operator-only-token;
-  token ":=" => $colon-equal-token;
-  token "*" => $binary-operator-only-token;
-  token "/" => $binary-operator-only-token;
-  token "^" => $binary-operator-only-token;
-  token "<" => $binary-operator-only-token;
-  token "<=" => $binary-operator-only-token;
-  token ">" => $binary-operator-only-token;
-  token ">=" => $binary-operator-only-token;
-  token "&" => $binary-operator-only-token;
-  token "|" => $binary-operator-only-token;
-end token-classes;
-*/
-
-/*
-// Hack global syntax table for the compiler.
-
-define constant $syntax-table :: <object-table>
-  = shallow-copy($core-syntax-table);
-*/
 
 // TODO: CORRECTNESS: Not thread safe.
 

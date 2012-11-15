@@ -39,18 +39,6 @@ define function last-pair (l :: <list>) => (p :: <pair>)
   if (empty?(l.tail)) l else last-pair(l.tail) end;
 end function;
 
-/*
-define method append-2-elements!
-    (seq :: <pair>, value1, value2) => (seq :: <pair>)
-  let last-new-cell = list(value2);
-  let first-new-cell = pair(value1, last-new-cell);
-  let last-cell = seq.tail;
-  last-cell.tail := first-new-cell;
-  seq.tail := last-new-cell;
-  seq
-end method;
-*/
-
 define method elements (seq :: <pair>) => (contents :: <list>)
   seq.head
 end method;

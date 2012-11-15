@@ -51,26 +51,6 @@ define compiler-open class <fragment-copier> (<copier>) end;
 define dont-copy-object <compilation-record> using <fragment-copier>;
 define dont-copy-object <source-record>      using <fragment-copier>;
 
-// TODO: Remove unused protocol?
-
-/*
-define generic fragment-start-source-location
-    (f :: <fragment>) => (loc :: <source-location>);
-
-define generic fragment-end-source-location
-    (f :: <fragment>) => (loc :: <source-location>);
-
-define method fragment-start-source-location
-    (f :: <fragment>) => (loc :: <source-location>)
-  source-location-start-source-location(fragment-source-location(f))
-end method;
-
-define method fragment-end-source-location
-    (f :: <fragment>) => (loc :: <source-location>)
-  source-location-end-source-location(fragment-source-location(f))
-end method;
-*/
-
 define inline method compute-position-between* (p1, p2)
   let start-offset = p1.source-position-start-offset;
   let end-offset   = p2.source-position-end-offset;
@@ -214,23 +194,6 @@ end class;
 
 define sealed domain make (subclass(<hygienic-fragment-info>));
 define sealed domain initialize (<hygienic-fragment-info>);
-
-// TODO: PERFORMANCE: get rid of this method...
-/*
-define method make (class :: subclass(<hygienic-fragment>), #rest initargs,
-                    #key context = *fragment-context*,
-                         origin = *expansion-identifier*)
-                   => fragment :: <hygienic-fragment>;
-  apply(next-method, class,
-        info: if (origin)
-                make(<hygienic-fragment-info>,
-                     context: context, origin: origin)
-              else
-                context
-              end,
-        initargs)
-end method;
-*/
 
 define inline method initialize
     (f :: <hygienic-fragment>, #key context = *fragment-context*,

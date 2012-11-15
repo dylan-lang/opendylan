@@ -1085,14 +1085,6 @@ end method parse-integer;
 // Parse an integer and return a <literal-token> holding it.
 //
 
-define program-warning <integer-literal-too-large>
-  slot condition-integer-string,
-    required-init-keyword: integer-string:;
-  format-string
-    "The integer literal %s is too large to be a small integer.";
-  format-arguments integer-string;
-end program-warning;
-
 define method parse-integer-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
     => res :: <abstract-integer-fragment>;
@@ -1126,11 +1118,6 @@ define method parse-integer-literal
   if (~extended &
         (int < runtime-$minimum-integer
            | int > runtime-$maximum-integer))
-//    note(<integer-literal-too-large>,
-//         source-location: record-position-as-location
-//                           (source-location.source-location-record,
-//                            source-location.source-location-source-position),
-//         integer-string:  extract-string(source-location));
     extended := #t;
   end if;
 

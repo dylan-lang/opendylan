@@ -207,7 +207,6 @@ end macro;
 
 define variable *current-module* = #f;
 
-// define constant <self-organizing-list>   = <table>;
 define constant <false>                  = <boolean>;
 
 // TODO: CORRECTNESS: This should be <abstract-integer>

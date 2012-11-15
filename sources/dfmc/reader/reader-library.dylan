@@ -106,8 +106,6 @@ define module dfmc-reader
         fragment-source-position-setter, // HACK: FOR DOOD
       fragment-record,
         fragment-record-setter,          // HACK: FOR DOOD
-        // fragment-start-source-location,
-        // fragment-end-source-location,
       <elementary-fragment>,
         <punctuation-fragment>,
           <dot-fragment>,
