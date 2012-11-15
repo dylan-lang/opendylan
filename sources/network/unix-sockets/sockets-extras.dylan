@@ -20,7 +20,7 @@ define inline-only C-function unix-recv-buffer
   parameter buffer :: <C-buffer-offset>;
   parameter length :: <size-t>;
   parameter flags :: <C-int>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "recv";
 end C-function;
 
@@ -29,7 +29,7 @@ define inline-only C-function unix-send-buffer
   parameter buffer :: <C-buffer-offset>;
   parameter length :: <size-t>;
   parameter flags :: <C-int>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "send";
 end C-function;
 
@@ -40,7 +40,7 @@ define inline-only C-function unix-recv-buffer-from
   parameter flags :: <C-int>;
   parameter address :: <sockaddr*>;
   parameter address-len :: <socklen-t*>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "recvfrom";
 end C-function;
 
@@ -51,6 +51,6 @@ define inline-only C-function unix-send-buffer-to
   parameter flags :: <C-int>;
   parameter dest-addr :: <sockaddr*>;
   parameter dest-len :: <socklen-t>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "sendto";
 end C-function;

@@ -38,27 +38,27 @@ define method client-class-for-server (server-socket :: <UDP-server-socket>)
   <UDP-socket>
 end method;
 
-define method client-class-for-element-type 
+define method client-class-for-element-type
     (class == <UDP-socket>, element-type :: <type>)
   => (class == <general-UDP-socket>)
   <general-UDP-socket>
 end method;
 
-define method client-class-for-element-type 
+define method client-class-for-element-type
     (class == <UDP-socket>, element-type == <byte>)
   => (class == <byte-UDP-socket>)
   <byte-UDP-socket>
 end method;
 
-define method client-class-for-element-type 
+define method client-class-for-element-type
     (class == <UDP-socket>, element-type == <byte-character>)
   => (class == <byte-char-UDP-socket>)
   <byte-char-UDP-socket>
 end method;
 
 define method make (class == <UDP-socket>, #rest initargs,
-		    #key element-type = <byte-character>,
-		    direction: requested-direction = #"input-output")
+                    #key element-type = <byte-character>,
+                    direction: requested-direction = #"input-output")
  => (stream :: <UDP-socket>)
   apply(make, client-class-for-element-type(class, element-type),
         direction: requested-direction,
@@ -66,7 +66,7 @@ define method make (class == <UDP-socket>, #rest initargs,
 end method make;
 
 /// Setup serverside reply socket as wrapper around server socket descriptor
-define method accept 
+define method accept
     (server-socket :: <UDP-server-socket>, #rest args, #key element-type = #f, #all-keys)
  => (connected-socket :: <UDP-socket>);
   let socket = next-method();

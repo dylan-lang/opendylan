@@ -14,10 +14,10 @@ define sealed domain initialize (<sealed-object>);
 // Gotta be free -- because stream classes are primary.  Servers can be
 // primary because they aren't streams.
 
-define open abstract free class 
+define open abstract free class
     <abstract-socket> (<closable-object>) end class;
 
-define open generic local-host 
+define open generic local-host
     (the-socket :: type-union(<abstract-socket>, <socket-accessor>))
  => (host-address :: false-or(<internet-address>));
 
@@ -27,7 +27,7 @@ define open generic local-port
 
 // maybe to restrictive return type -- object instead?
 define open generic socket-descriptor
-    (the-socket :: type-union(<abstract-socket>, <socket-accessor>)) 
+    (the-socket :: type-union(<abstract-socket>, <socket-accessor>))
  => (handle-or-fd :: false-or(<accessor-socket-descriptor>));
 
 //  Should think about meanings for the keys used by streams close
@@ -39,6 +39,11 @@ define abstract class <socket-manager> (<object>)
   constant slot socket-manager-sockets :: <table> = make(<table>);
   constant slot socket-manager-threads :: <stretchy-vector> = make(<stretchy-vector>);
   constant slot socket-manager-server-threads :: <stretchy-vector> = make(<stretchy-vector>);
+  constant slot socket-manager-lock :: <recursive-lock> = make(<recursive-lock>);
+                                // lock to control opening and closing
+                                // of sockets so that corrupt and race
+                                // conditions are prevented during
+                                // socket manager shutdown
 end class;
 
 define variable *current-socket-manager* :: false-or(<socket-manager>) = #f;
@@ -64,7 +69,7 @@ define method close-sockets (manager :: <socket-manager>) => ()
   close-all-sockets(manager);
   wait-for-socket-threads(manager, server?: #t);
   // Shutdown sockets now after all open sockets are closed.
-  accessor-cleanup(manager);    
+  accessor-cleanup(manager);
 end method;
 
 define macro with-socket-thread
@@ -78,17 +83,16 @@ define method invoke-with-socket-thread (function :: <function>, #key server? ::
   let thread = current-thread();
   register-socket-manager-thread(manager, thread, server?: server?);
   function();
-  // don't unregister because otherwise join-thread can see corrupted
-  // sequence and gets confused (we'd have to lock the modification)
+  unregister-socket-manager-thread(manager, thread, server?: server?);
 end method;
 
 define method wait-for-socket-threads
     (manager :: <socket-manager>, #key server? :: <boolean> = #f) => ()
   let sockets = if (server?)
-		  socket-manager-server-threads(manager)
-		else
-		  socket-manager-threads(manager)
-		end if;
+                  socket-manager-server-threads(manager)
+                else
+                  socket-manager-threads(manager)
+                end if;
   do(join-thread, sockets);
 end method;
 
@@ -105,33 +109,37 @@ end method;
 define method register-socket-manager-thread
     (manager :: <socket-manager>, thread :: <thread>, #key server? :: <boolean> = #f)
  => ()
-  if (server?)
-    add-new!(socket-manager-server-threads(manager), thread);
-  else
-    add-new!(socket-manager-threads(manager), thread);
-  end if;
+  with-lock (socket-manager-lock(manager))
+    if (server?)
+      add-new!(socket-manager-server-threads(manager), thread);
+    else
+      add-new!(socket-manager-threads(manager), thread);
+    end if;
+  end with-lock;
 end method;
 
 define method unregister-socket-manager-thread
     (manager :: <socket-manager>, thread :: <thread>, #key server? :: <boolean> = #f)
  => ()
-  if (server?)
-    remove!(socket-manager-server-threads(manager), thread);
-  else
-    remove!(socket-manager-threads(manager), thread);
-  end if;
+  with-lock (socket-manager-lock(manager))
+    if (server?)
+      remove!(socket-manager-server-threads(manager), thread);
+    else
+      remove!(socket-manager-threads(manager), thread);
+    end if;
+  end with-lock;
 end method;
 
 define method close-all-sockets (manager :: <socket-manager>) => ()
   block (exit-loop)
     for (socket in socket-manager-sockets(manager))
       block (exit-step)
-	close(socket);
+        close(socket);
       exception (recoverable-condition :: <recoverable-socket-condition>)
-	close(socket, abort?: #t);
-	exit-step();
+        close(socket, abort?: #t);
+        exit-step();
       exception (unrecoverable-condition :: <socket-error>)
-	exit-loop();
+        exit-loop();
       end block;
     end for;
   end block;
@@ -141,11 +149,11 @@ define method shutdown-all-sockets (manager :: <socket-manager>) => ()
   block (exit-loop)
     for (socket in socket-manager-sockets(manager))
       block (exit-step)
-	shutdown-socket(socket);
+        shutdown-socket(socket);
       exception (recoverable-condition :: <recoverable-socket-condition>)
-	exit-step();
+        exit-step();
       exception (unrecoverable-condition :: <socket-error>)
-	exit-loop();
+        exit-loop();
       end block;
     end for;
   end block;
@@ -183,7 +191,7 @@ end method;
 
 define method close
     (the-socket :: <abstract-socket>,
-     #rest keys, 
+     #rest keys,
      #key abort? = #f, wait? = #t, synchronize? = #f,
      already-unregistered? = #f) => ()
   if (socket-open?(the-socket))
@@ -192,7 +200,7 @@ define method close
       remove-key!(socket-manager-sockets(manager), the-socket);
     end unless;
     apply(next-method, the-socket, already-unregistered?: #t, keys);
-  end if; 
+  end if;
 end method close;
 
 //  deprecrated
@@ -217,4 +225,4 @@ define method  socket-open?
     (the-socket :: <abstract-socket>) => (open? :: <boolean>);
   (the-socket.socket-descriptor ~= #f)
 end method;
- 
+

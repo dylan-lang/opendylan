@@ -23,7 +23,7 @@ define open abstract primary class <ipv4-numeric-address> (<numeric-address>)
   slot %address-value :: <machine-word>, required-init-keyword: address:;
 end class;
 
-define sealed primary class 
+define sealed primary class
     <ipv4-network-order-address> (<ipv4-numeric-address>)
 end class;
 
@@ -36,14 +36,14 @@ define method host-order (the-address :: <ipv4-network-order-address>)
  => (result :: <machine-word>)
   accessor-ntohl(the-address.%address-value)
 end method;
- 
-define method as 
+
+define method as
     (the-class == <string>, the-address :: <ipv4-numeric-address>)
  => (result :: <byte-string>)
   accessor-ipv4-address-to-presentation(the-address)
 end method;
 
-define sealed primary class 
+define sealed primary class
     <ipv4-host-order-address> (<ipv4-numeric-address>)
 end class;
 
@@ -68,11 +68,11 @@ define method make (class == <internet-address>, #rest initargs, #key)
   apply(make, <ipv4-address>, initargs)
 end method make;
 
-define open generic host-name 
+define open generic host-name
     (the-address :: type-union(<internet-address>, <socket-condition>))
  => (the-name :: <object>);
 
-define open generic host-address 
+define open generic host-address
     (address-object :: type-union(<internet-address>, <socket-condition>))
  => (the-address :: <object>);
 
@@ -94,9 +94,9 @@ define sealed class <ipv4-address> (<internet-address>)
 end class;
 
 define method initialize
-    (new-address :: <ipv4-address>, 
-     #key address: 
-       initialization-address :: 
+    (new-address :: <ipv4-address>,
+     #key address:
+       initialization-address ::
          false-or(type-union(<string>, <ipv4-numeric-address>)) = #f,
      name: initialization-name :: false-or(<string>) = #f,
      aliases: initialization-aliases :: false-or(<sequence>) = #f,
@@ -113,22 +113,22 @@ define method initialize
   // the information will come from the host_ent structure returned
   // from gethostbyname.
 
-  // If the address: keyword is defined 
+  // If the address: keyword is defined
   if (initialization-address)
 /* compiler doesn't like this code
     new-address.%host-address :=
       select (new-address by instance?)
-	<ipv4-numeric-address> => initialization-address;
-	<string> => 
-	  accessor-ipv4-presentation-to-address(initialization-address);
+        <ipv4-numeric-address> => initialization-address;
+        <string> =>
+          accessor-ipv4-presentation-to-address(initialization-address);
       end select;
 */
     select (initialization-address by instance?)
-      <ipv4-numeric-address> => 
-	new-address.%host-address := initialization-address;
-      <string> => 
-	new-address.%host-address :=
-	  accessor-ipv4-presentation-to-address(initialization-address);
+      <ipv4-numeric-address> =>
+        new-address.%host-address := initialization-address;
+      <string> =>
+        new-address.%host-address :=
+          accessor-ipv4-presentation-to-address(initialization-address);
     end select;
 
     //  Now just trust the rest. Maybe ought to check that the
@@ -148,7 +148,7 @@ define method initialize
     // Ignore all of the other initializers, if any, use the
     // information from the network.  Nyah-nyah.
     accessor-get-host-by-name(new-address, initialization-name);
-  else 
+  else
     error("make(<ipv4-address>: address: or name: keyword must be supplied.");
   end if;
 end method initialize;
@@ -162,7 +162,7 @@ define method host-name
   end unless;
   the-address.%host-name
 end method;
- 
+
 define sealed method host-address
     (the-address :: <ipv4-address>) => (result :: <string>)
   if (the-address.%host-address)
@@ -192,7 +192,7 @@ define sealed method all-addresses
   end unless;
   let numeric-addresses = the-address.%addresses;
   let vector-size = numeric-addresses.size;
-  let result = 
+  let result =
     make(<simple-object-vector>, size: vector-size);
   // This is arguably unsafe since the various copied values might
   // conceivably be modified by somebody (and the modifications would
@@ -200,10 +200,10 @@ define sealed method all-addresses
   // painful however.  No way to make the collections read only.
   for (index from 0 below vector-size)
     result[index] :=
-      make(<ipv4-address>, name: the-address.%host-name, 
-	   address: numeric-addresses[index],
-	   aliases: the-address.%aliases,
-	   addresses: the-address.%addresses);
+      make(<ipv4-address>, name: the-address.%host-name,
+           address: numeric-addresses[index],
+           aliases: the-address.%aliases,
+           addresses: the-address.%addresses);
   end for;
   result
 end method;

@@ -1,5 +1,5 @@
 Module:       dylan-user
-Synopsis:     UNIX version of the Functional Objects Network library
+Synopsis:     Linux version of the Functional Objects Network library
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -30,15 +30,17 @@ define module unix-sockets
 
   // From sys/socket.h
   export
-    $AF-UNSPEC, $AF-UNIX, $AF-INET;
+    $AF-UNSPEC, $AF-UNIX, $AF-INET, $AF-PACKET;
   export
-    $PF-UNSPEC, $PF-LOCAL, $PF-UNIX, $PF-INET;
+    $PF-UNSPEC, $PF-LOCAL, $PF-UNIX, $PF-INET, $PF-PACKET;
   export
     $SOCK-STREAM, $SOCK-DGRAM, $SOCK-SEQPACKET, $SOCK-RAW;
   export
     $SHUT-RD, $SHUT-WR, $SHUT-RDWR;
   export
     $SOL-SOCKET;
+  export
+    $ETH-P-ALL;
   export
     $SO-ACCEPTCONN, $SO-BROADCAST, $SO-DEBUG, $SO-DONTROUTE, $SO-ERROR,
     $SO-KEEPALIVE, $SO-LINGER, $SO-OOBINLINE, $SO-RCVBUF, $SO-RCVLOWAT,
@@ -94,6 +96,15 @@ define module unix-sockets
       sin-family-value, sin-family-value-setter,
       sin-port-value, sin-port-value-setter,
       sin-addr-value, sin-addr-value-setter;
+  export
+    <sockaddr-ll>, <sockaddr-ll*>,
+      sll-family, sll-family-setter,
+      sll-protocol, sll-protocol-setter,
+      sll-ifindex, sll-ifindex-setter,
+      sll-hatype, sll-hatype-setter,
+      sll-pkttype, sll-pkttype-setter,
+      sll-halen, sll-halen-setter,
+      sll-addr, sll-addr-setter;
 
   // From arpa/inet.h
   export
