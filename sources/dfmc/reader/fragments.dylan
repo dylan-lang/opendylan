@@ -12,7 +12,7 @@ define macro nowhere-or
   { nowhere-or(?:expression) } => { false-or(?expression) }
 end macro;
 
-define macro with-fragment-info 
+define macro with-fragment-info
   { with-fragment-info (?frag:expression) ?:body end }
     => { ?body }
 end macro;
@@ -21,14 +21,14 @@ end macro;
 
 define constant $literal-token = $number-token;
 
-define abstract class <fragment> (<object>) 
+define abstract class <fragment> (<object>)
   slot fragment-record :: false-or(<compilation-record>) = #f,
     init-keyword: record:;
   slot fragment-source-position = $nowhere,
     init-keyword: source-position:;
 end class;
 
-define generic fragment-source-location 
+define generic fragment-source-location
     (f :: <object>) => (loc :: nowhere-or(<source-location>));
 
 define method fragment-source-location
@@ -37,7 +37,7 @@ define method fragment-source-location
 end method;
 
 // TODO: Is this hack still used? If not, tighten the arg decl above.
-define method fragment-source-location 
+define method fragment-source-location
     (f :: <sequence>) => (loc :: nowhere-or(<source-location>))
   // between(f.first, f.last);
   fragment-source-location(f.first);
@@ -51,32 +51,12 @@ define compiler-open class <fragment-copier> (<copier>) end;
 define dont-copy-object <compilation-record> using <fragment-copier>;
 define dont-copy-object <source-record>      using <fragment-copier>;
 
-// TODO: Remove unused protocol?
-
-/*
-define generic fragment-start-source-location
-    (f :: <fragment>) => (loc :: <source-location>);
-
-define generic fragment-end-source-location
-    (f :: <fragment>) => (loc :: <source-location>);
-
-define method fragment-start-source-location
-    (f :: <fragment>) => (loc :: <source-location>)
-  source-location-start-source-location(fragment-source-location(f))
-end method;
-
-define method fragment-end-source-location
-    (f :: <fragment>) => (loc :: <source-location>)
-  source-location-end-source-location(fragment-source-location(f))
-end method;
-*/
-
 define inline method compute-position-between* (p1, p2)
   let start-offset = p1.source-position-start-offset;
   let end-offset   = p2.source-position-end-offset;
   if (range-source-offset-greater-than?(start-offset, end-offset))
     make-range-position(p2.source-position-start-offset,
-			p1.source-position-end-offset);
+                        p1.source-position-end-offset);
   else
     make-range-position(start-offset, end-offset);
   end if
@@ -115,7 +95,7 @@ end method;
 
 define method position-between (f1 :: <list>, f2 :: <list>)
   position-between(if (empty?(f1)) #f else f1.first end,
-		   if (empty?(f2)) #f else f2.last end)
+                   if (empty?(f2)) #f else f2.last end)
 end method;
 
 define method position-between (f2 :: <list>, f1 :: <fragment>)
@@ -127,7 +107,7 @@ define method position-between (f2 :: <list>, f1 :: <fragment>)
 end method;
 
 define method position-spanning (f*)
-  if (empty?(f*)) 
+  if (empty?(f*))
     $nowhere
   else
     // format-out("First loc: %=\n", fragment-source-location(f*.first));
@@ -153,12 +133,12 @@ define generic fragment-kind (fragment :: <fragment>) => kind;
 // Hygiene mixins.
 
 define thread variable *expansion-identifier* = #f;
-  
+
 define class <expansion-identifier> (<object>) end;
 
 define inline function do-with-new-hygiene-context (f, mac)
   ignore(mac);
-  dynamic-bind 
+  dynamic-bind
       (*expansion-identifier* = make(<expansion-identifier>))
     f();
   end;
@@ -172,7 +152,7 @@ end macro;
 
 define function make-unique-local-variable-name-fragment (name)
   with-new-hygiene-context (#"unknown")
-    make(<variable-name-fragment>, 
+    make(<variable-name-fragment>,
          name: as(<symbol>, concatenate("_unique-", as(<string>, name))),
          record: #f,
          source-position: #f);
@@ -215,29 +195,12 @@ end class;
 define sealed domain make (subclass(<hygienic-fragment-info>));
 define sealed domain initialize (<hygienic-fragment-info>);
 
-// TODO: PERFORMANCE: get rid of this method...
-/*
-define method make (class :: subclass(<hygienic-fragment>), #rest initargs,
-		    #key context = *fragment-context*,
-		         origin = *expansion-identifier*)
-                   => fragment :: <hygienic-fragment>;
-  apply(next-method, class,
-	info: if (origin) 
-		make(<hygienic-fragment-info>,
-		     context: context, origin: origin)
-	      else
-		context
-	      end,
-	initargs)
-end method;
-*/
-
-define inline method initialize 
+define inline method initialize
     (f :: <hygienic-fragment>, #key context = *fragment-context*,
                                     origin = *expansion-identifier*)
  => ()
   next-method();
-  if (origin) 
+  if (origin)
     hygienic-fragment-info(f)
       := make(<hygienic-fragment-info>,
               context: context, origin: origin);
@@ -247,7 +210,7 @@ define inline method initialize
   end;
 end method;
 
-define abstract class <literal-fragment> (<fragment>) 
+define abstract class <literal-fragment> (<fragment>)
   slot fragment-value,
     init-keyword: value:;
 end class;
@@ -258,7 +221,7 @@ define constant <literal-constant-fragment> = <literal-fragment>;
 // for use for "other values", rather than instantiating this one.
 
 define /* abstract */ class <elementary-literal-fragment>
-    (<literal-fragment>, <elementary-fragment>) 
+    (<literal-fragment>, <elementary-fragment>)
 end class;
 
 define method fragment-kind (f :: <elementary-literal-fragment>) => kind;
@@ -268,17 +231,17 @@ end method;
 define /* abstract */ class <boolean-fragment> (<elementary-literal-fragment>)
 end class;
 
-define class <true-fragment> (<boolean-fragment>) 
+define class <true-fragment> (<boolean-fragment>)
   inherited slot fragment-value = #t;
   // keyword value: = #t;
 end class;
 
-define class <false-fragment> (<boolean-fragment>) 
+define class <false-fragment> (<boolean-fragment>)
   inherited slot fragment-value = #f;
   // keyword value: = #f;
 end class;
 
-define /* abstract */ class <character-fragment> 
+define /* abstract */ class <character-fragment>
     (<elementary-literal-fragment>)
 end class;
 
@@ -302,7 +265,7 @@ define method fragment-kind (f :: <symbol-fragment>) => kind;
 end method;
 
 
-define method as 
+define method as
     (class == <symbol>, name :: <symbol-fragment>) => (symbol :: <symbol>)
   fragment-value(name);
 end method;
@@ -313,7 +276,7 @@ end method;
 define class <symbol-syntax-symbol-fragment> (<symbol-fragment>) end;
 define class <keyword-syntax-symbol-fragment> (<symbol-fragment>) end;
 
-define /* abstract */ class <number-fragment> 
+define /* abstract */ class <number-fragment>
     (<literal-fragment>, <elementary-fragment>)
 end class;
 
@@ -328,7 +291,7 @@ define /* abstract */ class <abstract-integer-fragment> (<number-fragment>) end;
 define class <integer-fragment> (<abstract-integer-fragment>) end;
 define class <big-integer-fragment> (<abstract-integer-fragment>) end;
 
-define abstract class <literal-sequence-fragment> 
+define abstract class <literal-sequence-fragment>
     (<literal-fragment>, <compound-fragment>)
   constant slot fragment-elements,
     required-init-keyword: elements:;
@@ -355,14 +318,14 @@ define inline method initialize (f :: <proper-list-fragment>, #key)
   end;
 end method;
 
-define class <improper-list-fragment> (<list-fragment>) 
+define class <improper-list-fragment> (<list-fragment>)
   constant slot fragment-improper-tail,
     required-init-keyword: improper-tail:;
 end class;
 
 define inline method initialize (f :: <improper-list-fragment>, #key)
   if (~fragment-value(f))
-    for (val = fragment-value(fragment-improper-tail(f)) 
+    for (val = fragment-value(fragment-improper-tail(f))
            then pair(fragment-value(next), val),
          next in reverse(fragment-elements(f)))
     finally
@@ -498,8 +461,8 @@ define method fragment-kind (f ::  <hash-lbracket-fragment>) => kind;
   $hash-lbracket-token
 end method;
 
-define class <hash-lbrace-fragment> 
-    (<open-paren-fragment>, <hygienic-fragment>) 
+define class <hash-lbrace-fragment>
+    (<open-paren-fragment>, <hygienic-fragment>)
   // constant slot hygienic-fragment-info, required-init-keyword: info:;
   slot hygienic-fragment-info = #f, init-keyword: info:;
 end class;
@@ -509,7 +472,7 @@ define method fragment-kind (f ::  <hash-lbrace-fragment>) => kind;
 end method;
 
 
-// Macro system puntuation.
+// Macro system punctuation.
 
 define class <query-fragment> (<punctuation-fragment>) end;
 
@@ -546,7 +509,7 @@ define method fragment-kind (f :: <ellipsis-fragment>) => kind;
 end method;
 
 
-define class <constrained-name-fragment> 
+define class <constrained-name-fragment>
     (<elementary-fragment>, <hygienic-fragment>)
   constant slot fragment-kind = $constrained-name-token,
     init-keyword: kind:;
@@ -629,29 +592,29 @@ define class <name-fragment> (<elementary-fragment>, <hygienic-fragment>)
     init-keyword: name:;
 end class;
 
-define method same-name-when-local? 
+define method same-name-when-local?
     (name1 :: <name-fragment>, name2 :: <name-fragment>)
  => (same? :: <boolean>)
   fragment-name(name1) == fragment-name(name2)
     & fragment-origin(name1) == fragment-origin(name2)
 end method;
 
-define method as 
+define method as
     (class == <symbol>, name :: <name-fragment>) => (symbol :: <symbol>)
   fragment-name(name);
 end method;
 
-define method as 
+define method as
     (class == <string>, name :: <name-fragment>) => (symbol :: <string>)
   as(<string>, fragment-name(name));
 end method;
 
-define method fragment-name-string 
+define method fragment-name-string
     (name :: <name-fragment>) => (name-string :: <string>)
   as(<string>, fragment-name(name));
 end method;
 
-// TODO: Turn all this into a sensible inheritance heirarchy again!
+// TODO: Turn all this into a sensible inheritance hierarchy again!
 
 define class <variable-name-fragment> (<name-fragment>, <variable-name>) end;
 
@@ -659,7 +622,7 @@ define method hygienic-fragment-info-setter
     (info, var :: <variable-name-fragment>) => (info)
   // Should assert.
   info
-end method; 
+end method;
 
 define constant fragment-identifier = fragment-name;
 
@@ -680,7 +643,7 @@ define made-inline class <dylan-variable-name-fragment>
     init-keyword: kind:;
 end;
 
-define method hygienic-fragment-info 
+define method hygienic-fragment-info
     (var :: <dylan-variable-name-fragment>) => (info);
   #f // indicates the Dylan module
 end method;
@@ -693,7 +656,7 @@ define method fragment-kind (var :: <simple-variable-name-fragment>) => kind;
   $unreserved-name-token
 end method;
 
-define method hygienic-fragment-info 
+define method hygienic-fragment-info
     (var :: <simple-variable-name-fragment>) => (info);
   let rec = fragment-record(var);
   rec & compilation-record-module(rec)
@@ -705,13 +668,13 @@ define made-inline class <simple-dylan-variable-name-fragment>
     (<simple-variable-name-fragment>)
 end class;
 
-define method hygienic-fragment-info 
+define method hygienic-fragment-info
     (var :: <simple-dylan-variable-name-fragment>) => (info);
   #f // indicates the Dylan module
 end method;
 
 // A fragment without a hygiene context and with a derivable module context.
-define made-inline class <simple-classified-variable-name-fragment> 
+define made-inline class <simple-classified-variable-name-fragment>
     (<variable-name-fragment>)
   constant slot fragment-kind = $unreserved-name-token,
     init-keyword: kind:;
@@ -726,11 +689,11 @@ end method;
 define inline method make
     (class == <variable-name-fragment>, #rest initargs,
        #key kind = $unreserved-name-token,
-	    context = *fragment-context*,
-	    origin = *expansion-identifier*,
-	    record,
-	    source-position,
-	    name,
+            context = *fragment-context*,
+            origin = *expansion-identifier*,
+            record,
+            source-position,
+            name,
        #all-keys) => (var :: <variable-name-fragment>);
   if (origin)
     // If we have a hygiene context, we just go the whole hog.
@@ -742,14 +705,14 @@ define inline method make
     if (kind == $unreserved-name-token)
       make(<simple-dylan-variable-name-fragment>,
            name: name,
-	   record: record,
-	   source-position: source-position);
+           record: record,
+           source-position: source-position);
     else
       make(<dylan-variable-name-fragment>,
            name: name,
            kind: kind,
-	   record: record,
-	   source-position: source-position);
+           record: record,
+           source-position: source-position);
     end;
   else
     // We're outside the Dylan library, but we can still have a more compact
@@ -760,15 +723,15 @@ define inline method make
     if (simple? & (m == context))
       if (kind == $unreserved-name-token)
         make(<simple-variable-name-fragment>,
-     	     name: name,
-	     record: cr,
-	     source-position: source-position);
+                  name: name,
+             record: cr,
+             source-position: source-position);
       else
         make(<simple-classified-variable-name-fragment>,
-     	     name: name,
+                  name: name,
              kind: kind,
-	     record: cr,
-	     source-position: source-position);
+             record: cr,
+             source-position: source-position);
       end;
     else
       // format-out("Special: %s, %=\n", name, context);
@@ -782,7 +745,7 @@ define compiler-open generic fragment-module
   (fragment :: <variable-name-fragment>) => (module);
 
 define function dylan-variable-name (name)
-  make(<simple-variable-name-fragment>, 
+  make(<simple-variable-name-fragment>,
        name: name,
        record: #f, source-position: #f);
 end function;
@@ -791,16 +754,16 @@ define sideways method make-variable-name-fragment (name) => (variable-name)
   dylan-variable-name(name)
 end method;
 
-define method make-variable-name-fragment-in-module 
+define method make-variable-name-fragment-in-module
     (name, module) => (new-name :: <name-fragment>)
-  make(<variable-name-fragment>, 
+  make(<variable-name-fragment>,
        name: name,
        context: module,
        record: #f,
        source-position: #f)
 end method;
 
-define method make-variable-name-like  
+define method make-variable-name-like
     (name :: <hygienic-fragment>, #rest keys)
  => (new-name :: <name-fragment>)
   apply(make, <variable-name-fragment>,
@@ -809,7 +772,7 @@ define method make-variable-name-like
         keys);
 end method;
 
-define method splice-name-hygienically 
+define method splice-name-hygienically
     (name :: <name-fragment>, prefix :: <string>, suffix :: <string>)
  => (new-name :: <name-fragment>)
   let spliced-name
@@ -821,22 +784,22 @@ define method splice-name-hygienically
        name: spliced-name);
 end method;
 
-define method suffix-name-hygienically 
+define method suffix-name-hygienically
     (name :: <name-fragment>, suffix :: <string>)
  => (new-name :: <name-fragment>)
   make-variable-name-like(name,
-			  record: fragment-record(name),
-			  source-position: fragment-source-position(name),
-			  name: as(<symbol>, 
-				   concatenate(fragment-name-string(name),
-					       suffix)));
+                          record: fragment-record(name),
+                          source-position: fragment-source-position(name),
+                          name: as(<symbol>,
+                                   concatenate(fragment-name-string(name),
+                                               suffix)));
 end method;
 
 define class <escaped-name-fragment> (<special-variable-name-fragment>) end;
 
 define class <operator-fragment> (<special-variable-name-fragment>) end;
 
-define class <binary-operator-fragment> 
+define class <binary-operator-fragment>
     (<operator-fragment>, <separator-fragment>)
   inherited slot fragment-kind = $binary-operator-only-token;
   // keyword kind: = $binary-operator-only-token;
@@ -853,7 +816,7 @@ define class <unary-and-binary-operator-fragment>
   // keyword kind: = $unary-and-binary-operator-token;
 end class;
 
-define class <equal-fragment> 
+define class <equal-fragment>
     (<operator-fragment>, <punctuation-fragment>)
   inherited slot fragment-kind = $equal-token;
   inherited slot fragment-name = #"=";
@@ -922,23 +885,23 @@ define class <binary-operator-call-fragment> (<function-call-fragment>) end;
 define class <unary-operator-call-fragment> (<function-call-fragment>) end;
 
 // TODO: CORRECTNESS: Need to reclassify the call as a macro if necessary.
-// Perhaps we should do this transformation elsewhere? Seel also how
+// Perhaps we should do this transformation elsewhere? See also how
 // element is handled.
 
 define inline method initialize (call :: <unary-operator-call-fragment>, #key)
   next-method();
   let func = fragment-function(call);
   if (fragment-name(func) == #"-")
-    fragment-function(call) 
+    fragment-function(call)
       := make-variable-name-like(func,
-				 record: fragment-record(func),
-				 source-position: fragment-source-position(func),
-				 name:    #"negative",
-				 kind:    $unreserved-name-token);
+                                 record: fragment-record(func),
+                                 source-position: fragment-source-position(func),
+                                 name:    #"negative",
+                                 kind:    $unreserved-name-token);
   end;
 end method;
 
-define class <body-fragment> (<compound-fragment>) 
+define class <body-fragment> (<compound-fragment>)
   constant slot fragment-constituents,
     required-init-keyword: constituents:;
 end class;
@@ -953,8 +916,8 @@ define function body-fragment (f*)
     iterate walk (cursor = f*)
       if (cursor == #())
         make(<body-fragment>,
-	     record: rec,
-	     source-position: position-spanning(f*),
+             record: rec,
+             source-position: position-spanning(f*),
              constituents: f*);
       else
         let lead = cursor.head;
@@ -962,15 +925,15 @@ define function body-fragment (f*)
           let sub-body = body-fragment(cursor.tail);
           collect-into
             (folded,
-             make(<local-declaration-call-fragment>, 
-		  record: rec,
+             make(<local-declaration-call-fragment>,
+                  record: rec,
                   source-position: position-between(f*.head, sub-body),
                   declaration-fragment: lead,
                   body-fragment: sub-body));
           let folded = collected(folded);
           make(<body-fragment>,
-	       record: rec,
-	       source-position: position-spanning(folded),
+               record: rec,
+               source-position: position-spanning(folded),
                constituents: folded);
         else
           collect-into(folded, lead);
@@ -978,7 +941,7 @@ define function body-fragment (f*)
         end;
       end;
     end;
-  end;  
+  end;
 end function;
 
 define function empty-body-fragment ()
@@ -1004,14 +967,14 @@ define abstract class <nested-fragment> (<compound-fragment>)
   // keyword source-position: = $nowhere;
 end class;
 
-define method nested-fragment? 
+define method nested-fragment?
     (f) => (well? :: <boolean>, left, right)
   values(#f, #f, #f);
 end method;
 
-define method nested-fragment? 
-    (f :: <nested-fragment>) 
- => (well? :: <boolean>, 
+define method nested-fragment?
+    (f :: <nested-fragment>)
+ => (well? :: <boolean>,
        left :: <punctuation-fragment>, right :: <punctuation-fragment>)
   values(#t, fragment-left-delimiter(f), fragment-right-delimiter(f))
 end method;
@@ -1036,7 +999,7 @@ define class <hash-endif-fragment> (<hash-directive-fragment>) end;
 
 //// Pseudo-fragments used to delimit the reparsing of macro constraints.
 
-define class <pseudo-fragment> (<elementary-fragment>) 
+define class <pseudo-fragment> (<elementary-fragment>)
   constant slot fragment-kind,
     required-init-keyword: kind:;
   inherited slot fragment-record = #f;
@@ -1096,9 +1059,9 @@ define method end-of-modifiers-marker? (fragment) => (well? :: <boolean>)
     */
 end method;
 
-// define constant $eof-marker = make(<eof-marker>, 
-// 				   record: #f,
-// 				   source-position: $nowhere);
+// define constant $eof-marker = make(<eof-marker>,
+//                                    record: #f,
+//                                    source-position: $nowhere);
 
 //// Create a fragment value from a Dylan value.
 
@@ -1172,15 +1135,15 @@ define program-warning <statement-tail-mismatch>
   format-arguments statement-name;
 end program-warning;
 
-define function verify-statement-tail 
+define function verify-statement-tail
     (macro-word :: <name-fragment>, tail :: false-or(<name-fragment>))
  => ()
   if (tail & fragment-name(tail) ~== #"end")
     if (fragment-name(tail) ~== fragment-name(macro-word))
       note(<statement-tail-mismatch>,
-           source-location: 
+           source-location:
              record-position-as-location
-               (fragment-record(macro-word), 
+               (fragment-record(macro-word),
                 position-between(macro-word, tail)),
            statement-name: macro-word);
     end;
@@ -1239,9 +1202,9 @@ end class;
 define /* abstract */ class <definition-tail-fragment> (<compound-fragment>)
   constant slot fragment-end,
     required-init-keyword: end:;
-  constant slot fragment-tail-name-1 = #f, 
+  constant slot fragment-tail-name-1 = #f,
     init-keyword: tail-name-1:;
-  constant slot fragment-tail-name-2 = #f, 
+  constant slot fragment-tail-name-2 = #f,
     init-keyword: tail-name-2:;
 end class;
 
@@ -1254,22 +1217,22 @@ define program-warning <definition-tail-mismatch>
   format-arguments definition-name;
 end program-warning;
 
-define function verify-definition-tail 
-    (lead-word :: <name-fragment>, macro-word :: <name-fragment>, 
-       maybe-name :: false-or(<name-fragment>), 
-       tail :: <definition-tail-fragment>) 
+define function verify-definition-tail
+    (lead-word :: <name-fragment>, macro-word :: <name-fragment>,
+       maybe-name :: false-or(<name-fragment>),
+       tail :: <definition-tail-fragment>)
  => ()
   let name-1 = fragment-tail-name-1(tail);
   let name-2 = fragment-tail-name-2(tail);
   if (name-2)
     // We know we have both a macro word and a name.
     if (fragment-name(name-1) ~== fragment-name(macro-word)
-          | (maybe-name 
+          | (maybe-name
                & fragment-name(name-2) ~== fragment-name(maybe-name)))
       note(<definition-tail-mismatch>,
-           source-location: 
+           source-location:
              record-position-as-location
-               (fragment-record(lead-word), 
+               (fragment-record(lead-word),
                 position-between(lead-word, tail)),
            definition-name: macro-word);
     end;
@@ -1278,19 +1241,19 @@ define function verify-definition-tail
     // the name of the thing being defined.
     if ((fragment-name(name-1) ~== fragment-name(macro-word)
             & (definer-or-merged-token-class?(fragment-kind(name-1))
-                | (maybe-name 
+                | (maybe-name
                      & fragment-name(name-1) ~== fragment-name(maybe-name)))))
       note(<definition-tail-mismatch>,
-           source-location: 
+           source-location:
              record-position-as-location
-               (fragment-record(lead-word), 
+               (fragment-record(lead-word),
                 position-between(lead-word, tail)),
            definition-name: macro-word);
     end;
   end;
 end function;
 
-define function maybe-defined-name 
+define function maybe-defined-name
     (fragments :: <list>) => (maybe-name :: false-or(<name-fragment>))
   let name = first(fragments, default: #f);
   if (name & instance?(name, <name-fragment>))
@@ -1328,13 +1291,13 @@ define method initialize (f :: <list-definition-fragment>, #key)
         return();
       end;
       select (fragment-kind(fragment))
-        $define-body-word-only-token, 
+        $define-body-word-only-token,
         $define-list-word-only-token,
         $begin-and-define-body-word-token,
         $begin-and-define-list-word-token,
         $function-and-define-body-word-token,
         $function-and-define-list-word-token
-          => signal("Ambiguous stuff - %s vs %s", 
+          => signal("Ambiguous stuff - %s vs %s",
                     fragment-define-word(f), fragment);
         otherwise
           => #t;
@@ -1350,7 +1313,7 @@ define class <list-definition-fragment> (<definition-fragment>)
 end class;
 
 // For reference macros.
-define method fragment-macro 
+define method fragment-macro
     (f :: <variable-name-fragment>) => (f :: <variable-name-fragment>)
   f
 end method;
@@ -1398,7 +1361,7 @@ define class <spliced-pattern-variable-fragment> (<compound-macro-fragment>)
   constant slot fragment-prefix,
     required-init-keyword: prefix:;
   constant slot fragment-pattern-variable,
-    required-init-keyword: pattern-variable:; 
+    required-init-keyword: pattern-variable:;
   constant slot fragment-suffix,
     required-init-keyword: suffix:;
 end class;
@@ -1409,7 +1372,7 @@ define class <pattern-expression-fragment> (<compound-macro-fragment>)
     required-init-keyword: name:;
 end class;
 
-define class <sequence-pattern-expression-fragment> 
+define class <sequence-pattern-expression-fragment>
     (<compound-macro-fragment>)
   slot fragment-expression :: <fragment>,
     required-init-keyword: name:;
@@ -1438,7 +1401,7 @@ define class <template> (<object>)
     required-init-keyword: fragments:;
 end class;
 
-define method nested-fragment? 
+define method nested-fragment?
     (f :: <template>) => (well? :: <boolean>, left, right)
   values(#t, #f, #f);
 end method;
@@ -1461,7 +1424,7 @@ define inline function parent-source-location () *parent-source-location* end;
 
 // HACK: THIS MUST BE INLINED SO ENSURE BY FUZZING OUT SPECIALIZER
 
-define inline function do-with-parent-source-location 
+define inline function do-with-parent-source-location
     (f :: <function>, location /* :: false-or(<source-location>) */ )
   dynamic-bind (*parent-source-location* = location)
     f()
@@ -1473,7 +1436,7 @@ define macro with-parent-source-location
     => { do-with-parent-source-location(method () ?body end, ?location) }
 end macro;
 
-define inline function do-with-parent-fragment 
+define inline function do-with-parent-fragment
     (f :: <function>, fragment :: <fragment>)
   dynamic-bind (*parent-source-location* = fragment-source-location(fragment))
     f()

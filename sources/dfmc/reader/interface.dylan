@@ -16,7 +16,7 @@ define compiler-open generic read-top-level-fragment
 define method read-top-level-fragment
     (s, record, lexer, #key on-end-of-stream) => (fragment, lexer)
   with-classification-cache
-    let lexer 
+    let lexer
       = lexer | make(<lexer>,
                      source: record,
                      start-posn: 0,
@@ -27,23 +27,23 @@ define method read-top-level-fragment
     end method;
     dynamic-bind (*fragment-context* = compilation-record-module(record))
       block ()
-        let f 
+        let f
           = run-parser(#f, dylan-parser, lex,
                        // make(<parser-lexer>, function: lex),
                        on-error: parser-error-handler);
-        values(f, lexer);  
+        values(f, lexer);
         // This only parses, discarding most forms:
-	/*
+        /*
         for (f = run-parser(#f, dylan-parser, lex, on-error: parser-error-handler)
              then run-parser(#f, dylan-parser, lex, on-error: parser-error-handler),
-             until: (~f 
+             until: (~f
                        | instance?(f, <macro-body-definition-fragment>)
                        | instance?(f, <function-call-fragment>)))
-                          
+                       
         finally
-          values(f, lexer);  
+          values(f, lexer);
         end;
-	*/
+        */
       exception (e :: <reader-error>)
         signal(e);
         skip-to-next-top-level-form(lexer);
@@ -60,7 +60,7 @@ end function;
 
 // Re-read using a given lexer function.
 
-define function re-read-fragments 
+define function re-read-fragments
     (lexer :: <function>, #key on-error = parser-error-handler) => (form)
   local method inner-lexer ()
     let frag = lexer();
@@ -75,7 +75,7 @@ end serious-program-warning;
 define serious-program-warning <invalid-token> (<reader-error>)
   slot condition-token-string,
     required-init-keyword: token-string:;
-  format-string 
+  format-string
     "Invalid token beginning %= encountered.";
   format-arguments token-string;
 end serious-program-warning;
@@ -109,7 +109,7 @@ define serious-program-warning <ratios-not-supported> (<invalid-token>)
 end serious-program-warning;
 
 define serious-program-warning <invalid-end-of-input> (<reader-error>)
-  format-string 
+  format-string
     "Unexpected end of input encountered while reading form.";
 end serious-program-warning;
 
@@ -134,7 +134,7 @@ end serious-program-warning;
 
 define method parser-error-handler (token-type, fragment, history)
   let location = fragment-source-location(fragment);
-  let string 
+  let string
     = if (location)
         extract-token-text(location)
       else
@@ -145,18 +145,18 @@ define method parser-error-handler (token-type, fragment, history)
        token-string: string);
 end method;
 
-define method parser-error-handler 
+define method parser-error-handler
     (token-type, fragment :: <eof-marker>, history)
   let position = position-between(last(history), fragment);
-  let location 
+  let location
     = record-position-as-location(fragment-record(fragment), position);
   note(<invalid-end-of-input>,
        source-location: location);
 end method;
 
-// The superclass of parse errors spotted "manually" during later 
+// The superclass of parse errors spotted "manually" during later
 // procedural processing.
 
-define open abstract serious-program-warning <manual-parser-error> 
+define open abstract serious-program-warning <manual-parser-error>
     (<reader-error>)
 end serious-program-warning;
