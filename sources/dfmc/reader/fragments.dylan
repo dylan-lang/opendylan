@@ -723,12 +723,12 @@ define inline method make
     if (simple? & (m == context))
       if (kind == $unreserved-name-token)
         make(<simple-variable-name-fragment>,
-                  name: name,
+             name: name,
              record: cr,
              source-position: source-position);
       else
         make(<simple-classified-variable-name-fragment>,
-                  name: name,
+             name: name,
              kind: kind,
              record: cr,
              source-position: source-position);
