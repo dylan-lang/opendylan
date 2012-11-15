@@ -101,14 +101,14 @@ end class;
 
 /*
 define method socket-warning(format-string :: <string>,
-                              #rest format-arguments) => ()
+                             #rest format-arguments) => ()
   signal(make(<socket-warning>,
          format-string: format-string,
          format-arguments: format-arguments))
 end method socket-warning;
 
 define method socket-error(format-string :: <string>,
-                            #rest format-arguments) => ()
+                           #rest format-arguments) => ()
   error(make(<socket-error>,
         format-string: format-string,
         format-arguments: format-arguments))
