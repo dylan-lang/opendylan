@@ -19,7 +19,7 @@ define module dfmc-reader
   use dylan;
   use dylan-extensions,
     import: { vector-element, vector-element-setter, \without-bounds-checks,
-	      make-symbol };
+              make-symbol };
   use pprint;
   use parser-run-time,
     rename: { <lexer> => <parser-lexer> };
@@ -48,7 +48,7 @@ define module dfmc-reader
   //// Source reading interface.
 
   export
-    read-top-level-fragment, 
+    read-top-level-fragment,
       source-lines-read,
     re-read-fragments,
       $start-token-constraint,
@@ -96,18 +96,16 @@ define module dfmc-reader
   //// Program fragment interface.
 
   export
-    \with-fragment-info, *fragment-context*, 
+    \with-fragment-info, *fragment-context*,
     classify-word-in, classify-expansion-word-in,
-    merge-token-classes, definer-token-class?, 
+    merge-token-classes, definer-token-class?,
     classify-dylan-name, dylan-variable-name,
-    <fragment>, 
-      fragment-source-location, 
+    <fragment>,
+      fragment-source-location,
       fragment-source-position,
         fragment-source-position-setter, // HACK: FOR DOOD
       fragment-record,
         fragment-record-setter,          // HACK: FOR DOOD
-        // fragment-start-source-location,
-        // fragment-end-source-location,
       <elementary-fragment>,
         <punctuation-fragment>,
           <dot-fragment>,
@@ -138,12 +136,12 @@ define module dfmc-reader
         same-name-when-local?,
       <escaped-name-fragment>,
       <operator-fragment>, fragment-name,
-        <binary-operator-fragment>, 
-        <unary-operator-fragment>, 
+        <binary-operator-fragment>,
+        <unary-operator-fragment>,
           <unary-and-binary-operator-fragment>,
         <equal-fragment>,
-      <expression-fragment>, 
-        <variable-name-fragment>, 
+      <expression-fragment>,
+        <variable-name-fragment>,
           fragment-identifier,
           fragment-module,
           fragment-context,
@@ -154,30 +152,30 @@ define module dfmc-reader
         <literal-fragment>,
         <literal-constant-fragment>, fragment-value,
           <elementary-literal-fragment>,
-            <number-fragment>, 
-              <abstract-integer-fragment>, 
+            <number-fragment>,
+              <abstract-integer-fragment>,
                 <integer-fragment>,
                 <big-integer-fragment>,
             <symbol-fragment>,
               <symbol-syntax-symbol-fragment>,
               <keyword-syntax-symbol-fragment>,
-            <string-fragment>, 
-            <boolean-fragment>, 
-              <true-fragment>, 
-              <false-fragment>, 
+            <string-fragment>,
+            <boolean-fragment>,
+              <true-fragment>,
+              <false-fragment>,
           <list-fragment>, fragment-elements,
           <vector-fragment>,
         <macro-call-fragment>, fragment-macro, fragment-argument,
           <definition-fragment>, fragment-modifiers, fragment-define-word,
-            <body-definition-fragment>, 
+            <body-definition-fragment>,
               fragment-body-fragment, fragment-end-word,
             <list-definition-fragment>,
               fragment-list-fragment,
-            <macro-body-definition-fragment>, 
+            <macro-body-definition-fragment>,
               fragment-macro-body-fragment, fragment-end-word,
           <statement-fragment>, fragment-body-fragment,
           <function-macro-fragment>, fragment-body-fragment,
-          <local-declaration-call-fragment>, 
+          <local-declaration-call-fragment>,
             fragment-declaration-fragment,
             fragment-body-fragment,
               <local-declaration-fragment>, fragment-list-fragment,
@@ -187,7 +185,7 @@ define module dfmc-reader
 
   export
     <end-of-modifiers-marker>, end-of-modifiers-marker?;
-  
+
   export
     <fragment-copier>;
 
@@ -201,13 +199,13 @@ define module dfmc-reader
     <query-query-fragment>,
     <query-equal-fragment>,
     <hash-lbrace-fragment>,
-    <escaped-substitution-fragment>, 
+    <escaped-substitution-fragment>,
       fragment-escaped-fragment,
     <constrained-name-fragment>, fragment-constraint,
     <pattern-variable-fragment>, fragment-name, fragment-constraint,
-    <spliced-pattern-variable-fragment>, 
+    <spliced-pattern-variable-fragment>,
       fragment-pattern-variable, fragment-prefix, fragment-suffix,
-    <sequence-pattern-variable-fragment>, 
+    <sequence-pattern-variable-fragment>,
       fragment-name, fragment-constraint, fragment-separator,
     <ellipsis-fragment>,
     <unhygienic-name-fragment>,
@@ -228,7 +226,7 @@ define module dfmc-reader
   export
     as-fragment, parsed-literal;
 
-  export 
+  export
     present-fragments;
 
 end module;
