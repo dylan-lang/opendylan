@@ -116,11 +116,6 @@ end function;
 define class <stub-manager> (<socket-manager>, <sealed-object>)
   slot socket-manager-started? :: <boolean> = #f;
   slot socket-manager-closing-thread :: false-or(<thread>) = #f; // thread that closed socket-manager
-  constant slot socket-manager-lock :: <recursive-lock> = make(<recursive-lock>);
-                                // lock to control opening and closing
-                                // of sockets so that corrupt and race
-                                // conditions are prevented during
-                                // socket manager shutdown
 end class;
 
 install-socket-manager(make(<stub-manager>));

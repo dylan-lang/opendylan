@@ -39,6 +39,11 @@ define abstract class <socket-manager> (<object>)
   constant slot socket-manager-sockets :: <table> = make(<table>);
   constant slot socket-manager-threads :: <stretchy-vector> = make(<stretchy-vector>);
   constant slot socket-manager-server-threads :: <stretchy-vector> = make(<stretchy-vector>);
+  constant slot socket-manager-lock :: <recursive-lock> = make(<recursive-lock>);
+                                // lock to control opening and closing
+                                // of sockets so that corrupt and race
+                                // conditions are prevented during
+                                // socket manager shutdown
 end class;
 
 define variable *current-socket-manager* :: false-or(<socket-manager>) = #f;
@@ -78,8 +83,7 @@ define method invoke-with-socket-thread (function :: <function>, #key server? ::
   let thread = current-thread();
   register-socket-manager-thread(manager, thread, server?: server?);
   function();
-  // don't unregister because otherwise join-thread can see corrupted
-  // sequence and gets confused (we'd have to lock the modification)
+  unregister-socket-manager-thread(manager, thread, server?: server?);
 end method;
 
 define method wait-for-socket-threads
@@ -105,21 +109,25 @@ end method;
 define method register-socket-manager-thread
     (manager :: <socket-manager>, thread :: <thread>, #key server? :: <boolean> = #f)
  => ()
-  if (server?)
-    add-new!(socket-manager-server-threads(manager), thread);
-  else
-    add-new!(socket-manager-threads(manager), thread);
-  end if;
+  with-lock (socket-manager-lock(manager))
+    if (server?)
+      add-new!(socket-manager-server-threads(manager), thread);
+    else
+      add-new!(socket-manager-threads(manager), thread);
+    end if;
+  end with-lock;
 end method;
 
 define method unregister-socket-manager-thread
     (manager :: <socket-manager>, thread :: <thread>, #key server? :: <boolean> = #f)
  => ()
-  if (server?)
-    remove!(socket-manager-server-threads(manager), thread);
-  else
-    remove!(socket-manager-threads(manager), thread);
-  end if;
+  with-lock (socket-manager-lock(manager))
+    if (server?)
+      remove!(socket-manager-server-threads(manager), thread);
+    else
+      remove!(socket-manager-threads(manager), thread);
+    end if;
+  end with-lock;
 end method;
 
 define method close-all-sockets (manager :: <socket-manager>) => ()
