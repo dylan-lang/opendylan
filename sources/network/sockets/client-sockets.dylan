@@ -10,20 +10,20 @@ ignorable(force-output-before-read?-setter);
 
 define constant <socket-designator> = type-union(<socket>, <socket-accessor>);
 
-define abstract class 
+define abstract class
     <socket-accessor> (<external-stream-accessor>)
 end class;
 
-define open abstract free class 
-    <socket> (<abstract-socket>, <external-stream>) 
+define open abstract free class
+    <socket> (<abstract-socket>, <external-stream>)
   inherited slot stream-direction = #"input-output"; // no one-way sockets
   slot accessor :: false-or(<socket-accessor>) = #f,
-    init-keyword: accessor:; 
-  slot force-output-before-read? :: <boolean>, 
+    init-keyword: accessor:;
+  slot force-output-before-read? :: <boolean>,
     init-keyword: force-output-before-read?:, init-value: #t;
 end class;
 
-define method make 
+define method make
     (class == <socket>, #rest initargs,
      #key protocol :: type-union(<string>, <symbol>) = #"TCP")
  => (stream :: <socket>)
@@ -78,11 +78,11 @@ end method;
 //  Is there a reason to allow unbuffered sends or receives?  Sends
 //  probably, think about fragmentation.
 
-define open abstract free class 
+define open abstract free class
     <buffered-socket> (<socket>, <double-buffered-stream>) end class;
 
 // This should really be in double buffered streams.  Just need to
-// bring console streams up to snuff 
+// bring console streams up to snuff
 define function output-buffer-dirty?
     (stream :: <buffered-socket>) => (dirty? :: <boolean>)
   // Shouldn't really need to test for existence of output buffer.
@@ -129,7 +129,7 @@ define method read
 end method read;
 
 define method read-into!
-    (stream :: <buffered-socket>, n :: <integer>, 
+    (stream :: <buffered-socket>, n :: <integer>,
      sequence :: <mutable-sequence>, #key start = 0, on-end-of-stream)
  => (count-or-eof :: <object>)
   if (stream.force-output-before-read? & output-buffer-dirty?(stream))
@@ -163,10 +163,10 @@ define method stream-at-end?
   // You can't try to fill the buffer however if the connection is
   // already closed so you must test that first.
   if ((~ stream.accessor.connection-closed?)
-	& ((stream-direction(stream) == #"input")
-	     | (stream-direction(stream) == #"input-output")))
+        & ((stream-direction(stream) == #"input")
+             | (stream-direction(stream) == #"input-output")))
     with-input-buffer (the-input-buffer = stream)
-	(the-input-buffer = #f)
+        (the-input-buffer = #f)
     end with-input-buffer
   else
     #f
@@ -202,28 +202,28 @@ define macro with-socket
       ?body:body
     end }
   => { begin
-	 let _socket = #f;
-	 block ()
-	   _socket := make(<socket>, ?keys);
-	   let ?socket-var :: <socket> = _socket;
-	   ?body
-	 cleanup
-	   if (_socket & socket-open?(_socket)) close(_socket) end;
-	 end
+         let _socket = #f;
+         block ()
+           _socket := make(<socket>, ?keys);
+           let ?socket-var :: <socket> = _socket;
+           ?body
+         cleanup
+           if (_socket & socket-open?(_socket)) close(_socket) end;
+         end
        end }
   { with-socket (?socket-var:name \:: ?socket-class:expression,
-			#rest ?keys:expression)
+                 #rest ?keys:expression)
       ?body:body
     end }
   => { begin
-	 let _socket = #f;
-	 block ()
-	   _socket := make(?socket-class, ?keys);
-	   let ?socket-var :: ?socket-class = _socket;
-	   ?body
-	 cleanup
-	   if (_socket & socket-open?(_socket)) close(_socket) end;
-	 end
+         let _socket = #f;
+         block ()
+           _socket := make(?socket-class, ?keys);
+           let ?socket-var :: ?socket-class = _socket;
+           ?body
+         cleanup
+           if (_socket & socket-open?(_socket)) close(_socket) end;
+         end
        end }
 end macro with-socket;
 

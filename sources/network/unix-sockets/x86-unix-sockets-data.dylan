@@ -47,9 +47,9 @@ define constant $PF-LOCAL = 1;
 define constant $PF-UNIX = $PF-LOCAL;
 define constant $PF-INET = 2;
 
-define constant $AF-UNIX =	$PF-UNIX;
-define constant $AF-INET =	$PF-INET;
-define constant $AF-UNSPEC =	$PF-UNSPEC;
+define constant $AF-UNIX = $PF-UNIX;
+define constant $AF-INET = $PF-INET;
+define constant $AF-UNSPEC = $PF-UNSPEC;
 
 define constant $SHUT-RD = 0;
 define constant $SHUT-WR = 1;

@@ -4,7 +4,7 @@ Synopsis:     Linux (x86) version of the Functional Objects Network library
 Target-Type:  dll
 Major-Version: 2
 Minor-Version: 1
-Files:  unix-network-library
+Files:  linux-network-library
         unix-sockets/x86-unix-sockets-data
         unix-sockets/x86-linux-sockets-data
         unix-sockets/sockets-interfaces

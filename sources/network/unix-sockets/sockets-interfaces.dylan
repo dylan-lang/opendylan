@@ -1,5 +1,5 @@
 Module:       unix-sockets
-Synopsis:     Baseline socket interface functions as per Unix 98 
+Synopsis:     Baseline socket interface functions as per Unix 98
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -93,7 +93,7 @@ define inline-only C-function recv
   parameter buffer :: <C-void*>;
   parameter length :: <size-t>;
   parameter flags :: <C-int>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "recv";
 end C-function;
 
@@ -104,7 +104,7 @@ define inline-only C-function recvfrom
   parameter flags :: <C-int>;
   parameter address :: <sockaddr*>;
   parameter address-len :: <socklen-t*>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "recvfrom";
 end C-function;
 
@@ -112,7 +112,7 @@ define inline-only C-function recvmsg
   parameter socket :: <C-int>;
   parameter message :: <msghdr*>;
   parameter flags :: <C-int>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "recvmsg";
 end C-function;
 
@@ -123,7 +123,7 @@ define inline-only C-function send
   parameter buffer :: <C-void*>;
   parameter length :: <size-t>;
   parameter flags :: <C-int>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "send";
 end C-function;
 
@@ -131,7 +131,7 @@ define inline-only C-function sendmsg
   parameter socket :: <C-int>;
   parameter message :: <msghdr*>;
   parameter flags :: <C-int>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "sendmsg";
 end C-function;
 
@@ -142,7 +142,7 @@ define inline-only C-function sendto
   parameter flags :: <C-int>;
   parameter dest-addr :: <sockaddr*>;
   parameter dest-len :: <socklen-t>;
-  result val :: <C-int>; // TODO: ssize_t 
+  result val :: <C-int>; // TODO: ssize_t
   c-name: "sendto";
 end C-function;
 

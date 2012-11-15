@@ -9,14 +9,14 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ignorable(socket-condition-details, host-address-setter, host-name-setter,
-	  host-port-setter, host-port, the-closed-socket,
-	  the-closed-socket-setter, accessor-started?-value, 
-	  accessor-started?-value-setter, thread-that-closed-accessor,
-	  thread-that-closed-accessor-setter, calling-thread,
-	  calling-thread-setter, calling-function-setter,
-	  <socket-accessor-condition>, explanation-setter,
-	  protocol-name, protocol-name-setter, service-name, 
-	  service-name-setter);
+          host-port-setter, host-port, the-closed-socket,
+          the-closed-socket-setter, accessor-started?-value,
+          accessor-started?-value-setter, thread-that-closed-accessor,
+          thread-that-closed-accessor-setter, calling-thread,
+          calling-thread-setter, calling-function-setter,
+          <socket-accessor-condition>, explanation-setter,
+          protocol-name, protocol-name-setter, service-name,
+          service-name-setter);
 
 define open /* abstract */ class <socket-condition> (<simple-condition>)
   slot socket-condition-details :: <object>, init-keyword: details:,
@@ -26,26 +26,26 @@ end class <socket-condition>;
 define open class <socket-warning> (<socket-condition>, <warning>)
 end class <socket-warning>;
 
-define open class <socket-error> (<socket-condition>, <error>) 
+define open class <socket-error> (<socket-condition>, <error>)
 end class <socket-error>;
 
-define open class <recoverable-socket-condition> 
-    (<socket-condition>, <serious-condition>)  
+define open class <recoverable-socket-condition>
+    (<socket-condition>, <serious-condition>)
 end class;
 
-define open class <internal-socket-error> (<socket-error>)  
+define open class <internal-socket-error> (<socket-error>)
 end class;
 
 define open class <sockets-not-initialized> (<socket-error>)
 end class;
 
-define open class <blocking-call-interrupted> (<recoverable-socket-condition>)  
+define open class <blocking-call-interrupted> (<recoverable-socket-condition>)
 end class;
 
-define open class <out-of-resources> (<recoverable-socket-condition>)  
+define open class <out-of-resources> (<recoverable-socket-condition>)
 end class;
 
-define open class <network-not-responding> (<recoverable-socket-condition>)  
+define open class <network-not-responding> (<recoverable-socket-condition>)
 end class;
 
 define open class <invalid-address> (<recoverable-socket-condition>)
@@ -95,27 +95,27 @@ define class <socket-accessor-closed-error> (<internal-socket-error>, <sealed-ob
   slot calling-function :: <string>, init-keyword: calling-function:;
   slot calling-thread :: <thread>, init-keyword: calling-thread:;
   slot accessor-started?-value, init-keyword: accessor-started?-value:;
-  slot thread-that-closed-accessor, 
+  slot thread-that-closed-accessor,
     init-keyword: thread-that-closed-accessor:;
 end class;
 
 /*
-define method socket-warning(format-string :: <string>, 
-			      #rest format-arguments) => ()
-  signal(make(<socket-warning>, 
-	 format-string: format-string,
-	 format-arguments: format-arguments))
+define method socket-warning(format-string :: <string>,
+                              #rest format-arguments) => ()
+  signal(make(<socket-warning>,
+         format-string: format-string,
+         format-arguments: format-arguments))
 end method socket-warning;
 
-define method socket-error(format-string :: <string>, 
-			    #rest format-arguments) => ()
-  error(make(<socket-error>, 
-	format-string: format-string,
-	format-arguments: format-arguments))
+define method socket-error(format-string :: <string>,
+                            #rest format-arguments) => ()
+  error(make(<socket-error>,
+        format-string: format-string,
+        format-arguments: format-arguments))
 end method socket-error;
 
-define method print-object(condition :: <socket-condition>, 
-			   stream :: <stream>)
+define method print-object(condition :: <socket-condition>,
+                           stream :: <stream>)
  => ()
   print(condition.object-class, stream);
   write(stream, "; ");
