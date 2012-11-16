@@ -84,14 +84,15 @@ define method accessor-read-into!
                                      size-pointer));
           if (nread == $SOCKET-ERROR)
             unix-socket-error("unix-recv", host-address: stream.remote-host,
-                               host-port: stream.remote-port);
-          elseif ( nread == 0) // Check for EOF (nread == 0)
+                              host-port: stream.remote-port);
+          elseif (nread == 0) // Check for EOF (nread == 0)
             accessor.connection-closed? := #t;
           end if;
           // NB store addr info into accessor object for user
-          accessor.remote-host := make(<ipv4-address>,
-                                       address: make(<ipv4-network-order-address>,
-                                                     address: inaddr.sin-addr-value));
+          accessor.remote-host :=
+            make(<ipv4-address>,
+                 address: make(<ipv4-network-order-address>,
+                               address: inaddr.sin-addr-value));
           accessor.remote-port := accessor-ntohs(inaddr.sin-port-value);
           // return nread
           nread
@@ -133,11 +134,11 @@ define method accessor-write-from
                                                  offset + count - remaining),
                                    remaining,
                                    0,
-                               addr,
-                               size-of(<SOCKADDR-IN>)));
+                                   addr,
+                                   size-of(<SOCKADDR-IN>)));
           if (nwritten == $SOCKET-ERROR)
             unix-socket-error("unix-send", host-address: stream.remote-host,
-                               host-port: stream.remote-port)
+                              host-port: stream.remote-port)
           end if;
           remaining := remaining - nwritten
         end while;

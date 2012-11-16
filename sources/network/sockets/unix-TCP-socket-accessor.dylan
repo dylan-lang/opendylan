@@ -168,8 +168,11 @@ define method accessor-open
            with-stack-structure(mi :: <C-int*>)
             pointer-value(mi) := 1;
             let setsockopt-result =
-              setsockopt(accessor.socket-descriptor, $IPPROTO-TCP, $TCP-NODELAY,
-                         pointer-cast(<c-char*>, mi), size-of(<C-int>));
+              setsockopt(accessor.socket-descriptor,
+                         $IPPROTO-TCP,
+                         $TCP-NODELAY,
+                         pointer-cast(<c-char*>, mi),
+                         size-of(<C-int>));
             if (setsockopt-result < 0)
               unix-socket-error("setsockopt");
             end;
@@ -179,7 +182,7 @@ define method accessor-open
         let addr = pointer-cast(<LPSOCKADDR>, inaddr);
         let connect-result =
           unix-connect(accessor.socket-descriptor,
-                        addr, size-of(<SOCKADDR-IN>));
+                       addr, size-of(<SOCKADDR-IN>));
         if (connect-result == $SOCKET-ERROR)
           let connect-error-code = unix-errno();
           let high-level-error =
@@ -192,9 +195,9 @@ define method accessor-open
             else #f
             end if;
           unix-socket-error("unix-connect", error-code: connect-error-code,
-                             high-level-error: high-level-error,
-                             host-address: input-remote-host,
-                             host-port: input-remote-port);
+                            high-level-error: high-level-error,
+                            host-address: input-remote-host,
+                            host-port: input-remote-port);
         end if;
         let (the-local-address :: false-or(<ipv4-address>),
              the-local-port :: false-or(<integer>)) =
@@ -240,8 +243,8 @@ define method accessor-read-into!
         (unix-recv(the-descriptor, the-buffer, offset, count));
     if (nread == $SOCKET-ERROR)
       unix-socket-error("unix-recv", host-address: stream.remote-host,
-                         host-port: stream.remote-port);
-    elseif ( nread == 0) // Check for EOF (nread == 0)
+                        host-port: stream.remote-port);
+    elseif (nread == 0) // Check for EOF (nread == 0)
       accessor.connection-closed? := #t;
     end if;
     nread
@@ -321,7 +324,7 @@ define function unix-recv
   //    0 when the peer is closed
   //   -1 ($SOCKET-ERROR) for error or no bytes available
   unix-recv-buffer(descriptor, buffer-offset(the-buffer, offset),
-                    count, 0)
+                   count, 0)
 end function;
 
 define method accessor-write-from
@@ -343,7 +346,7 @@ define method accessor-write-from
                      offset + count - remaining, remaining));
       if (nwritten == $SOCKET-ERROR)
         unix-socket-error("unix-send", host-address: stream.remote-host,
-                           host-port: stream.remote-port)
+                          host-port: stream.remote-port)
       end if;
       remaining := remaining - nwritten
     end while;
