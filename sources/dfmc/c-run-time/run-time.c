@@ -4157,6 +4157,8 @@ void verify_nlx_bef(TEB* teb, Bind_exit_frame* bef) {
 }
 #endif
 
+void nlx_step (Bind_exit_frame*) NORETURN_FUNCTION;
+
 void nlx_step (Bind_exit_frame* ultimate_destination) {
   TEB* teb = get_teb();
 
@@ -4639,7 +4641,7 @@ D pseudo_primitive_command_arguments () {
   return(Tcommand_argumentsT);
 }
 
-void  primitive_exit_application (DSINT code) {
+void primitive_exit_application (DSINT code) {
   exit(code);
 }
 

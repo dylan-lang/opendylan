@@ -84,6 +84,12 @@ typedef void*                   D;
 /* COMPILER-SPECIFIC INTRINSICS */
 
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
+#define NORETURN_FUNCTION __attribute__((noreturn))
+#else
+#define NORETURN_FUNCTION
+#endif
+
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
 #define PURE_FUNCTION __attribute__((pure))
 #else
 #warning missing attribute PURE_FUNCTION - performance degraded
@@ -1653,7 +1659,7 @@ extern D pseudo_primitive_command_name (void);
 extern D Tcommand_argumentsT;
 extern D pseudo_primitive_command_arguments (void);
 
-extern void  primitive_exit_application (DSINT code);
+extern void  primitive_exit_application (DSINT code) NORETURN_FUNCTION;
 
 /* TEMPORARY PRIMITIVES FOR ASSIGNMENT */
 
