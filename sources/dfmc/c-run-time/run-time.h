@@ -311,10 +311,7 @@ typedef DBI_*  DBI;
 
 define_SOV(SOV, 1);
 
-#define STACK_DATA_SIZE 16
-#define STACK_SOV_SIZE STACK_DATA_SIZE
-
-define_SOV(STACK_SOV, STACK_SOV_SIZE);
+#define STACK_SOV_SIZE 16
 
 #define define_byte_string(_name, _size) \
   typedef struct _bs##_name { \
