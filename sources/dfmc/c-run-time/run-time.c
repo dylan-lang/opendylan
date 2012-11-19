@@ -1654,7 +1654,7 @@ teb->a[56], teb->a[57], teb->a[58], teb->a[59], teb->a[60], teb->a[61], teb->a[6
   }
 }
 
-INLINE GFN* parent_gf (D cache_header_or_gf) {
+static INLINE GFN* parent_gf (D cache_header_or_gf) {
   while (!FUNCTIONP(cache_header_or_gf)) {
     cache_header_or_gf = ((CACHEHEADERENGINE*)cache_header_or_gf)->parent;
   }
@@ -4146,9 +4146,9 @@ void verify_nlx_bef(TEB* teb, Bind_exit_frame* bef) {
 }
 #endif
 
-void nlx_step (Bind_exit_frame*) NORETURN_FUNCTION;
+static void nlx_step (Bind_exit_frame*) NORETURN_FUNCTION;
 
-void nlx_step (Bind_exit_frame* ultimate_destination) {
+static void nlx_step (Bind_exit_frame* ultimate_destination) {
   TEB* teb = get_teb();
 
 #ifdef VERIFY_NLX
