@@ -1136,17 +1136,6 @@ D primitive_raw_as_vector (D size, D buffer) {
   return(make_vector_from_buffer((long)size, (D*)buffer));
 }
 
-#define DEF_STACK_DATA(_name, _size) \
-  D _stk_##_name[STACK_DATA_SIZE]; \
-  D _name = ((_size) > STACK_DATA_SIZE) ? (D)primitive_allocate(_size) : (D)_stk_##_name
-
-#define DEF_STACK_DATA_FROM_BUFFER_WITH_SIZE(_name, _data_size, _buffer, _buffer_size) \
-  DEF_STACK_DATA(_name, _data_size); \
-  COPY_WORDS(_name, _buffer, _buffer_size)
-
-#define DEF_STACK_DATA_FROM_BUFFER(_name, _size, _buffer) \
-  DEF_STACK_DATA_FROM_BUFFER_WITH_SIZE(_name, _size, _buffer, _size)
-
 #define DEF_STACK_VECTOR(_name, _size) \
   STACK_SOV _stk_##_name; \
   SOV* _name = ((_size) > STACK_SOV_SIZE) ? allocate_vector(_size) : (SOV*)(&_stk_##_name)
