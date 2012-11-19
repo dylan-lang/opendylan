@@ -1138,11 +1138,11 @@ D primitive_raw_as_vector (D size, D buffer) {
 
 #define DEF_STACK_VECTOR(_name, _size) \
   D _stk_##_name[_size + VECTOR_HEADER_SIZE]; \
-  SOV* _name = ((_size) > STACK_SOV_SIZE) ? allocate_vector(_size) : (SOV*)(&_stk_##_name)
+  SOV* _name = (SOV*)(&_stk_##_name)
 
 #define DEF_STACK_VECTOR_INITTED(_name, _size) \
   D _stk_##_name[_size + VECTOR_HEADER_SIZE]; \
-  SOV* _name = ((_size) > STACK_SOV_SIZE) ? allocate_vector(_size) : (init_stack_vector((SOV*)(&_stk_##_name), (_size)))
+  SOV* _name = (init_stack_vector((SOV*)(&_stk_##_name), (_size)))
 
 INLINE SOV* init_stack_vector(SOV* vector, int size) {
   instance_header_setter(&KLsimple_object_vectorGVKdW, (D*)vector);
