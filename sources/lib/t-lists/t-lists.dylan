@@ -151,30 +151,6 @@ define method concatenate! (the-t-list :: <t-list>, #rest more-sequences)
   result-t-list
 end method;
 
-/* OBSOLETE:
- * The function call find-element(test-function, the-t-list, default: foo)
- * should be replaced by find-element(the-t-list, test-function, failure: foo)
- * and find-element(test-function, the-t-list)
- * replaced by find-element(the-t-list, test-function)
-
-define method find-element
-    (test-function :: <function>, the-t-list :: <t-list>,
-     #key default = #f)
- => (result :: <object>);
-  let (initial-state, limit, next-state, finished?, current-key, 
-       current-element) 
-    = forward-iteration-protocol(the-t-list);
-  let found? = #f;
-  let result = default;
-  for (state = initial-state then next-state(the-t-list, state),
-       until: found? | finished?(the-t-list, state, limit))
-    found? := test-function(current-element(the-t-list, state));
-    if (found?) result := current-element(the-t-list, state) end if;
-  end for;
-  result
-end method;
-*/
-
 define method as (class == <t-list>, t-list :: <t-list>)
  => (result :: <t-list>);
   t-list

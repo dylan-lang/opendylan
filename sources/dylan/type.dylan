@@ -203,14 +203,6 @@ define method preceding-specializer?
 end method;
 */
 
-//// Primitive types
-
-// TODO: OBSOLETE?
-
-/*
-define abstract class <primitive-type> (<type>) end;
-*/
-
 //// Limited types
 
 // BOOTED: define ... class <limited-type> ... end;

@@ -57,16 +57,6 @@ end method as-lowercase;
 
 ///// EXTRAS FROM COMMON LISP
 
-// TODO: OBSOLETE?
-
-/*
-define function alpha? (character :: <character>) => (result :: <boolean>)
-  let code :: <integer> = as(<integer>, character);
-  (code >= as(<integer>, 'a') & code <= as(<integer>, 'z'))
-  | (code >= as(<integer>, 'A') & code <= as(<integer>, 'Z'))
-end function alpha?;
-*/
-
 define inline function lowercase? (character :: <character>) => (result :: <boolean>)
   let code :: <integer> = as(<integer>, character);
   code >= as(<integer>, 'a') & code <= as(<integer>, 'z')

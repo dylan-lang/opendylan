@@ -8,9 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// Switches.
 
-// TODO: OBSOLETE?
-// define variable *emit-spurious-temporary-transfers* = #f;
-
 //// Hacks and stubs.
 
 // Allow model objects to be inserted as "literals" into code.

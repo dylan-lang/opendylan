@@ -25,15 +25,6 @@ define method lookup-compiler-metaclass (tag :: <symbol>) => (metaclass)
     | error("Failed to resolve the compiler metaclass %=.", tag);
 end method;
 
-/* TODO: OBSOLETE?
-define macro compiler-metaclass-definer
-  { define ?mods:* compiler-metaclass "<&" ## ?:name ## ">" ?stuff:* end }
-    => { define ?mods class "<&" ## ?name ## ">" ?stuff end;
-         define-compiler-metaclass
-           ("<" ## ?#"name" ## ">", "<&" ## ?name ## ">"); }
-end macro;
-*/
-
 define-compiler-metaclass(#"<value-class>", <&value-class>);
 define-compiler-metaclass(#"<function-class>", <&function-class>);
 define-compiler-metaclass(#"<virtual-class>", <&virtual-class>);
