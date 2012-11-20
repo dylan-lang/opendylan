@@ -166,27 +166,6 @@ define method reduce-incomplete-classes (f :: <function>, t :: <subclass>, ans)
 end method;
 
 
-
-//// Preceding-specializer? relationships
-
-// TODO: OBSOLETE?
-
-/*
-define method preceding-specializer? 
-    (subc1 :: <subclass>, subc2 :: <subclass>, arg :: <class>)
- => (result :: <boolean>)
-  precedes?(subc1.subclass-class, subc2.subclass-class, all-superclasses(arg))
-end method;
-
-// We rule that all applicable subclass specializers precede applicable 
-// metaclass specializers.
-
-define method preceding-specializer? 
-    (subc :: <subclass>, class :: <class>, arg :: <class>) => (result == #t)
-  #t
-end method;
-*/
-
 ///// Potential instance relationships?
 
 define method has-instances? (class :: <class>, subc :: <subclass>,

@@ -167,35 +167,10 @@ define macro clex-hex-escape-category?
 end macro;
 
 
-/* UNUSED
-define macro clex-unsafe-hex-escape?
-  { clex-unsafe-hex-escape? ( ?char:expression ) }
-    => { clex-hex-escape-category?( clex-escape-category( ?char ) ) }
-end macro;
-
-define macro clex-hex-escape?
-  { clex-hex-escape? ( ?char:expression ) }
-    => { (( ~ clex-out-of-range-character?( ?char)) & clex-unsafe-hex-escape?( ?char)) }
-end macro;
-*/
-
 define macro clex-character-escape-category?
   { clex-character-escape-category? ( ?category:expression ) }
     => { logand( ?category, $character-escape ) ~= 0 }
 end macro;
-
-/* UNUSED
-define macro clex-unsafe-character-escape?
-  { clex-unsafe-character-escape? ( ?char:expression ) }
-    => { clex-character-escape-category?( clex-escape-category( ?char ) ) }
-end macro;
-
-define macro clex-character-escape?
-  { clex-character-escape? ( ?char:expression ) }
-    => { (( ~ clex-out-of-range-character?( ?char)) 
-	    & clex-unsafe-character-escape?( ?char)) }
-end macro;
-*/
 
 define macro clex-hex-escape-digit-category?
   { clex-hex-escape-digit-category? ( ?category:expression ) }
@@ -309,13 +284,6 @@ define macro clex-digit-to-character
   { clex-digit-to-character ( ?digit:expression ) }
     => { $digit-to-character-vector [ ?digit ] }
 end macro;
-
-/* UNUSED
-define macro clex-machine-word-digit-to-character
-  { clex-machine-word-digit-to-character ( ?digit:expression ) }
-    => { clex-digit-to-character( as(<integer>, ?digit) )}
-end macro;
-*/
 
 define macro digit-characters-definer
   { define digit-characters ?maps:* end }

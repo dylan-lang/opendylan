@@ -834,51 +834,6 @@ DWORD pull_lexicals_within_scope
   return (counter);
 }
 
-/*
-  THIS FUNCTION IS OBSOLETE
-
-CV_HEADER *lexical_sym_from_scope_start 
-  (LPDBGPROCESS process, LPDBGLIBRARY module,
-   CV_HEADER *scope_start, DWORD lex)
-{
-  PIMAGE_DEBUG_INFORMATION  info = module->DebugMap;
-  DWORD                     scope_start_base = (DWORD) scope_start;
-  DWORD                     map_pointer;
-  DWORD                     counter = 0;
-  CV_HEADER                 *this_header;
-  BOOL                      need_to_keep_looking = TRUE;
-  DWORD                     level = 0;
-
-  // Careful, we might not have lexical scope information anyway. Need to
-  // take an early exit if this symbol doesn't open a scope.
-
-  if (scope_start == NULL)
-    return (NULL);
-
-  if ((scope_start->Index != CV_S_GPROC32) &&
-      (scope_start->Index != CV_S_GPROC32_NEW) &&
-      // This opens an inner scope, so we have to jump right over
-      // it.
-
-      // Not coping with this case just yet - it never happens in
-      // C anyway. (Could it in dylan...?)
-
-      //printf("It's all gone pear-shaped now.\n");
-
-      break;
-
-    default:
-      // Not really sure what this is, but it might be an error.
-      // Anyway, just skip this symbol.
-      counter++;
-      map_pointer = (DWORD) this_header;
-      map_pointer += (this_header->Length) + sizeof(WORD);
-      this_header = (CV_HEADER*) map_pointer;
-    }
-  }
-  return (this_header);
-}
-*/
 
 LOOKUP_TABLE *static_symbols_from_debug_map 
   (LPDBGPROCESS process, LPDBGLIBRARY module, DWORD *first, DWORD *last)

@@ -20,12 +20,6 @@ define method label (c :: <computation>)
   label
 end method;
 
-/* TODO: OBSOLETE?
-define method clear-label! (c :: <computation>)
-  c.%label := #f
-end method;
-*/
-
 // labeling
 
 define class <labeling-state> (<object>)

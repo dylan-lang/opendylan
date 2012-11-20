@@ -88,24 +88,6 @@ define method ^subtype?
     & ^subtype?(t, dylan-value(#"<class>"))
 end method;
 
-//// Preceding-specializer? relationships
-
-/*
-define method preceding-specializer? 
-    (subc1 :: <&subclass>, subc2 :: <&subclass>, arg :: <&class>)
- => (result :: <boolean>)
-  precedes?(subc1.subclass-class, subc2.subclass-class, all-superclasses(arg))
-end method;
-
-// We rule that all applicable subclass specializers precede applicable 
-// metaclass specializers.
-
-define method preceding-specializer? 
-    (subc :: <&subclass>, class :: <&class>, arg :: <&class>) => (result == #t)
-  #t
-end method;
-*/
-
 //// Disjointness relationships.
 
 //  DISJOINTNESS+1. A subclass type subclass(X) and a type Y are

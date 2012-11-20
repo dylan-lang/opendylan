@@ -46,19 +46,6 @@ define method as-string (name :: <string-fragment>)
   as-string(name.fragment-value)
 end method;
 
-/* TODO: OBSOLETE??
-define constant as-object
-  = access(infix-reader, as-object); // !@#$ hack
-
-define method as-string (object :: <fragment>)
-  as-object(object)
-end method;
-
-define method as-symbol (name)
-  as(<symbol>, as-string(name))
-end method;
-*/
-
 define method convert-%c-variable-pointer 
     (env :: <environment>, context :: <value-context>, name-expr, import-expr)
   let (first, call, temp) 
