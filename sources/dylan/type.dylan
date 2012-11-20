@@ -184,25 +184,6 @@ define generic has-instances?
     (class :: <class>, type :: <type>, scu :: <subjunctive-class-universe>)
   => (some? :: <boolean>, all? :: <boolean>);
 
-// Called to determine whether the first type precedes the second with
-// respect to a particular argument during generic dispatch. Its 
-// default behaviour is to simply call subtype? on the types without 
-// considering the argument.
-
-// TODO: OBSOLETE?
-
-/*
-define generic preceding-specializer?
-    (type1 :: <type>, type2 :: <type>, argument :: <object>)
-  => (boolean);
-
-define method preceding-specializer?
-    (type1 :: <type>, type2 :: <type>, argument :: <object>)
- => (boolean)
-  subtype?(type1, type2)
-end method;
-*/
-
 //// Limited types
 
 // BOOTED: define ... class <limited-type> ... end;
