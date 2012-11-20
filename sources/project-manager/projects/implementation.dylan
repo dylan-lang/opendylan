@@ -931,14 +931,15 @@ define function project-dump-emacs-dispatch-colors (project :: <project>)
   let dir = project.project-build-location;
   when (dir)
     let context = project.project-current-compilation-context;
-    for (sr in compilation-context-sources(context))
-      let name = sr.source-record-name;
+    for (cr in context.library-description-compilation-records)
+      let name = cr.compilation-record-name;
       when (name)
         let file = make(<file-locator>,
                         directory: dir,
                         base:      name,
                         extension: $emacs-lisp-extension);
         with-open-file (stream = file, direction: #"output")
+          let sr = cr.compilation-record-source-record;
           dump-source-record-emacs-dispatch-colors(context, sr, stream);
         end with-open-file;
       end when;

@@ -180,7 +180,8 @@ define module projects-implementation
   // for template projects
   use dfmc-macro-expander;
   use dfmc-namespace,
-    import: { library-description-compiler-back-end-name-setter };
+    import: { library-description-compiler-back-end-name-setter,
+              library-description-compilation-records };
 
   use projects, export: all;
   export
