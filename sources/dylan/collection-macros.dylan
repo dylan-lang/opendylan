@@ -28,15 +28,6 @@ define macro with-fip-of
 end macro with-fip-of;
 
 
-// TODO: OBSOLETE?
-
-/*
-define macro with-pinned-objects
-  { with-pinned-objects(?objects:*) ?:body end }
-  => { ?body }
-end macro with-pinned-objects;
-*/
-
 define macro without-bounds-checks
   { without-bounds-checks ?:body end }
     => { begin

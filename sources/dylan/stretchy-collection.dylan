@@ -8,10 +8,3 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define open abstract class <stretchy-collection> (<collection>)
 end class <stretchy-collection>;
 
-// TODO: OBSOLETE?
-
-/*
-define open abstract class <stretchy-mutable-collection>  // Not in the DRM
-    (<stretchy-collection>, <mutable-collection>)
-end class <stretchy-mutable-collection>;
-*/

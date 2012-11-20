@@ -88,44 +88,6 @@ define macro with-stack-structure
     { ?expr:*, ...} => { ?expr, ... }
 end macro;
 
-/*
-define macro with-pinned-objects
-  { with-pinned-objects (?objects:*) ?:body end }
-    => { ?objects };
-
-  objects:
-    { } => { ?body };
-    { ?object:name, ... }
-      => { begin
-             let ?object = primitive-pin-object(?object);
-             with-pinned-objects(...)
-               ?body
-             end;
-             primitive-unpin-object(?object);
-           end };
-
-end macro;
-
-define macro with-c-string
-  { with-c-string (?var:name = ?string:expression)
-     ?:body
-     end }
-    => { begin
-	   let string = ?string;
-           with-pinned-objects(string)
-	     block ()
-               let raw-address = primitive-string-as-raw(pinned-string);
-               let str-address = primitive-wrap-machine-word(raw-address);
-               let ?var = make(<c-string>, address: str-address);
-	       ?body
-	     cleanup
-	     primitive-unpin-object(pinned-string);
-	     #f
-	   end;
-	 end }
-end macro;
-*/
-
 define macro with-c-string
   { with-c-string (?var:name = ?string:expression)
      ?:body

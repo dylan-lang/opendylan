@@ -68,22 +68,6 @@ define macro next-char
 	  }
 end macro;
 
-/* OBSOLETE
-// metering trampoline
-define method read-element-from-file-stream(stream)
-  read-element(stream.inner-stream, on-end-of-stream: #"eoi")
-end method;
-*/
-
-/* UNUSED
-define macro new-current-char
-  { new-current-char ( ?stream:name, ?character:expression ) } 
-    => { ?stream.current-character 
-	   := ?character
-	  }
-end macro;
-*/
-
 // <pre-lexer>s are wrapper streams.
 define class <pre-lexer> (<wrapper-stream>)
   slot source-name :: <string>, init-keyword: source-name:, 
@@ -203,19 +187,6 @@ define method stream-at-end? (s :: <pre-lexer>) => (at-end? :: <boolean>)
   (current-state(s) = $S0) & (current-char(s) = #"eoi")
 end method stream-at-end?;
 
-/* OBSOLETE
-define method read-to-end(s :: <pre-lexer>)
- =>(result :: <stretchy-vector>);
-  let result = make(<stretchy-vector>);
-  let the-character = read-element(s);
-  while(the-character ~= #"eoi")
-    add!(result, the-character);
-    the-character := read-element(s);
-  end while;
-  result
-end method;
-*/
-	
 define method lexer-warning (pre-lexer :: <pre-lexer>,
 			     format-string :: <string>,
 			     #rest format-arguments)

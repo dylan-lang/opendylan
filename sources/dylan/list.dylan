@@ -16,27 +16,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /////////////////
 
 
-/*
-define inline function head (list :: <list>) => (object)
-  head-slot(list)
-end;
-
-define inline function tail (list :: <list>) => (object)
-  tail-slot(list)
-end;
-
-define inline function head-setter (object :: <object>, pair :: <pair>)
- => (object)
-  head-slot(pair) := object
-end;
-
-define inline function tail-setter (object :: <object>, pair :: <pair>)
- => (object)
-  tail-slot(pair) := object
-end;
-*/
-
-
 //
 // PAIR
 // 
@@ -917,37 +896,6 @@ end method reduce;
 define domain fill! (<list>);
 define domain sort! (<list>);
 define domain sort  (<list>);
-
-
-// TODO: OBSOLETE?
-
-/*
-
-define sealed method list* (#rest args) => (result :: <list>)
-  %dynamic-extent(args);
-  /// NEEDED BY SYNTAX-CASE
-  select (args.size)
-    0 =>
-      as(<list>, args);
-    1 =>
-      args.first;
-    otherwise =>
-      let args = as(<list>, args);
-      let result = list(args.first);
-      iterate grovel (result = result,
-                      arg = args.second,
-                      args = tail(args.tail))
-        if (args.empty?)
-          result.tail := arg
-        else
-          grovel(result.tail := arg.list, args.head, args.tail)
-        end if
-      end iterate;
-      result
-  end select
-end method list*;
-
-*/
 
 
 // HACK: some copy-downs (if only copy downs worked for keyword methods
