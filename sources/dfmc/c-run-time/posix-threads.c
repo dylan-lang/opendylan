@@ -460,8 +460,8 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 
   THREAD*             rthread;
   pthread_attr_t      attr;
-  struct sched_param  param;
-  int                 priority = (int)zpriority >> 2;
+  // struct sched_param  param;
+  // int                 priority = (int)zpriority >> 2;
 
   ignore(s);
 
@@ -476,7 +476,7 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
   thread->handle1 = 0;       // runtime thread flags
   thread->handle2 = rthread; // runtime thread object
 
-  param.sched_priority = priority_map(priority);
+  // param.sched_priority = priority_map(priority);
 
   if (pthread_attr_init(&attr)) {
     MSG0("make-thread: error attr_init\n");
