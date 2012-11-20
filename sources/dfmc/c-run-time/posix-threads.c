@@ -424,11 +424,10 @@ void *trampoline (void *arg)
 
   assert(thread != NULL);
 
-  make_teb();
 
   rthread = (THREAD*)(thread->handle2);
 
-  rthread->teb = teb;
+  rthread->teb = make_teb();
 
   f = rthread->function;
 
