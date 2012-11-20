@@ -11,7 +11,7 @@ define library projects
   use memory-manager;
   use build-system;
   use release-info;
-  use dood;	//---*** andrewa: just for with-walk-progress
+  use dood;        //---*** andrewa: just for with-walk-progress
   // Probably don't need all this, sort it out later...
   use collections;
   use io;
@@ -132,10 +132,10 @@ define module projects
   // circularities, but we provide the implementation
   use dfmc-project-compilation,
     import: { used-library-context,
-	      project-record-id-source-record,
-	      library-progress-text,
-	      library-progress-report
-	    },
+              project-record-id-source-record,
+              library-progress-text,
+              library-progress-report
+            },
     export: all;
   use build-system,
     import: { default-build-script, default-build-script-setter },
@@ -169,13 +169,13 @@ define module projects-implementation
   use dfmc-project-compilation;
   use dfmc-derived-information,
     import: { project-library-definition,
-	      compilation-context-library-name };
+              compilation-context-library-name };
 
   // This is just for emacs dispatch coloring support
   use dfmc-derived-information,
     import: { source-record-dispatch-decisions,
-	      source-record-notes,
-	      program-note-location };
+              source-record-notes,
+              program-note-location };
 
   // for template projects
   use dfmc-macro-expander;
@@ -280,5 +280,5 @@ define module lid-projects
     project-lid-file-info,
     project-lid-file-info-setter,
     read-file-library-description;
-end module;    
+end module;
 
