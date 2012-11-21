@@ -66,6 +66,10 @@ the following::
 You will also need to install the command line build tools available from
 Apple.
 
+On Ubuntu, you can install the necessary dependencies with::
+
+    apt-get install autoconf automake gcc libgc-dev
+
 Building
 --------
 
