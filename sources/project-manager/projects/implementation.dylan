@@ -22,8 +22,8 @@ define constant $compiler-lock = make(<recursive-lock>, name: "compiler-lock");
 
 define constant $pm-lock = make(<recursive-lock>, name: "project-manager-lock");
 
-// The notion of owners is to enable in the future having different 
-// project namespaces 
+// The notion of owners is to enable in the future having different
+// project namespaces
 // At this time all project/libraries are shared though
 //
 define function project-owners(project :: <project>)
@@ -36,22 +36,22 @@ define function project-dylan-library?(project :: <project>)
   project-key?(project, #"dylan")
 end;
 
-define function project-add-owner(project :: <project>, 
-				  owner :: <project>)
+define function project-add-owner(project :: <project>,
+                                  owner :: <project>)
  => (owners :: <sequence>);
-  unless(project-dylan-library?(project))
+  unless (project-dylan-library?(project))
     add-new!(project.%project-owners, owner);
   end;
   project.%project-owners
 end;
 
-define function project-remove-owner(project :: <project>, 
-				     owner :: <project>)
+define function project-remove-owner(project :: <project>,
+                                     owner :: <project>)
  => (owners :: <sequence>);
-  unless(project-dylan-library?(project))
+  unless (project-dylan-library?(project))
     remove!(project.%project-owners, owner);
   debug-out(#"project-manager", "Removed owner %s from %s\n",
-	    owner.project-name, project.project-name);
+            owner.project-name, project.project-name);
   end;
   project.%project-owners
 end;
@@ -61,7 +61,7 @@ define function project-top-level?(project :: <project>) => (yes :: <boolean>);
 end;
 
 define function project-top-level?-setter
-    (value :: <boolean>, project :: <project>) 
+    (value :: <boolean>, project :: <project>)
  => (value :: <boolean>);
   project.%project-top-level? := #t
 end;
@@ -74,7 +74,7 @@ define function project-dynamic-environment(key :: <symbol>) => object;
 end;
 
 define function project-dynamic-environment-setter(value, key :: <symbol>) => value;
-  if(*project-dynamic-environment*)
+  if (*project-dynamic-environment*)
     *project-dynamic-environment*[key] := value
   else
     value
@@ -114,32 +114,32 @@ end function %with-compiler-lock;
 define macro
     with-compiler-transaction
       { with-compiler-transaction ?:body end }
-	=> 
-	{ %with-compiler-lock
-	    (method ()
-	       with-used-project-cache
-		 do-with-dynamic-environment
-		   (method () 
-		      project-dynamic-environment(#"compiler-transaction") := #t;
-		      ?body 
-		    end)
-	       end with-used-project-cache
-	     end)
-	   }
+        =>
+        { %with-compiler-lock
+            (method ()
+               with-used-project-cache
+                 do-with-dynamic-environment
+                   (method ()
+                      project-dynamic-environment(#"compiler-transaction") := #t;
+                      ?body
+                    end)
+               end with-used-project-cache
+             end)
+           }
 end macro;
 
 define macro with-project-manager-transaction
   { with-project-manager-transaction ?:body end }
     => {with-lock($pm-lock, timeout: 10.0)
-	  with-used-project-cache
-	    do-with-dynamic-environment
-	      (method () 
-		 project-dynamic-environment(#"project-manager-transaction") := #t;
-		 ?body 
-	       end) 
-	  end
-	end
-	  }
+          with-used-project-cache
+            do-with-dynamic-environment
+              (method ()
+                 project-dynamic-environment(#"project-manager-transaction") := #t;
+                 ?body
+               end)
+          end
+        end
+          }
 end macro;
 
 // Wrap this around anything which constitutes a single "compilation
@@ -160,38 +160,38 @@ end;
 */
 // this function checks  if the compiler notion of sources is in synch with
 // the project sources
-// 
+//
 define function verify-project-database(project :: <project>, #key verify-if-current = #t)
  => (in-memory? :: <boolean>, current? :: <boolean>, saved? :: <boolean>);
     if (project.project-personal-library?)
-      let compiler-sources = 
-	compilation-context-sources(project.project-current-compilation-context);
-      if(~empty?(compiler-sources))
-	project.%database-in-memory := #t;
-	project-namespace-loaded(project) := #t;
-	project.%database-saved := #t;
-	if(verify-if-current)
-	  let sr* = project-current-source-records(project);
+      let compiler-sources =
+        compilation-context-sources(project.project-current-compilation-context);
+      if (~empty?(compiler-sources))
+        project.%database-in-memory := #t;
+        project-namespace-loaded(project) := #t;
+        project.%database-saved := #t;
+        if (verify-if-current)
+          let sr* = project-current-source-records(project);
 
-	  if((size(compiler-sources) == size(sr*)) 
-	       & 
-	       every?(\==, compiler-sources, sr*))
-	    // TODO: Note that this ignores the case where database is
-	    // invalidated because some used-library version has changed.
-	    project.%database-in-memory-current := #t
-	  else
-	    project.%database-in-memory-current := #f;
-	    // it is still considered saved until compilation
-	    // note-database-unsaved(project)
-	  end if;
-	end;
+          if ((size(compiler-sources) == size(sr*))
+               &
+               every?(\==, compiler-sources, sr*))
+            // TODO: Note that this ignores the case where database is
+            // invalidated because some used-library version has changed.
+            project.%database-in-memory-current := #t
+          else
+            project.%database-in-memory-current := #f;
+            // it is still considered saved until compilation
+            // note-database-unsaved(project)
+          end if;
+        end;
       else
-	// new project without database
-	project.%database-in-memory := #f;
-	project.%database-in-memory-current := #f;
-	// make it #t so the env doesn't ask the user to save
-	// uncompiled project
-	project.%database-saved := #t;
+        // new project without database
+        project.%database-in-memory := #f;
+        project.%database-in-memory-current := #f;
+        // make it #t so the env doesn't ask the user to save
+        // uncompiled project
+        project.%database-saved := #t;
       end if;
     else
       // system project
@@ -201,8 +201,8 @@ define function verify-project-database(project :: <project>, #key verify-if-cur
       project.%database-saved := #t;
     end;
   values(project.%database-in-memory,
-	 project.%database-in-memory-current,
-	 project.%database-saved)
+         project.%database-in-memory-current,
+         project.%database-saved)
 end;
 
 // Useful information for users of projects
@@ -219,13 +219,13 @@ define method print-object (project :: <project>, stream :: <stream>)
  => ();
   let name = project.project-name;
   let location = project.project-location;
-  format(stream, "{%s %s", 
-	 if(project.project-personal-library?)
-	   "editable"
-	 else
-	   "read only"
-	 end,
-	 project.object-class);
+  format(stream, "{%s %s",
+         if (project.project-personal-library?)
+           "editable"
+         else
+           "read only"
+         end,
+         project.object-class);
   if (name | location)
     format(stream, ":");
     name & format(stream, " %s", name);
@@ -235,12 +235,12 @@ define method print-object (project :: <project>, stream :: <stream>)
 end method print-object;
 
 // this callback is called before compilation context is open
-define open generic note-project-made(project :: <project>, 
-				      #key parent :: false-or(<project>))
+define open generic note-project-made(project :: <project>,
+                                      #key parent :: false-or(<project>))
  =>();
 
-define method note-project-made(project :: <project>, 
-				#key parent)
+define method note-project-made(project :: <project>,
+                                #key parent)
  =>();
 end;
 
@@ -255,15 +255,15 @@ end;
 // make-project will be used for registering projects and for connecting to the compiler
 
 define open generic make-project (c :: subclass(<project>),
-			     #key key, source-record-class,
-			          // initial compiler settings
-			          processor, operating-system, mode,
-				  load-namespace?,
-				  #all-keys)
+                             #key key, source-record-class,
+                                  // initial compiler settings
+                                  processor, operating-system, mode,
+                                  load-namespace?,
+                                  #all-keys)
  => project :: <project>;
 
 define method make-project
-    (c :: subclass(<project>), #rest keys, 
+    (c :: subclass(<project>), #rest keys,
      #key key, parent = #f, load-namespace? = #t,
      source-record-class, processor = #f, operating-system = #f, mode)
  => (project :: <project>)
@@ -277,7 +277,7 @@ define method make-project
     end;
 
     // choose harp for platforms that have it, c for others
-    let back-end = 
+    let back-end =
       session-property(#"compiler-back-end")
     | select (processor)
         #"x86" =>
@@ -288,17 +288,17 @@ define method make-project
         otherwise => #"c";
       end;
 
-    debug-out(#"project-manager", "Make-project: %s parent: %s\n", key, 
-	      parent & parent.project-name);
-    let project = 
-      apply(make, c, 
-	    processor:, processor, operating-system:, operating-system,
-		compiler-back-end:, back-end,
-	    keys);
+    debug-out(#"project-manager", "Make-project: %s parent: %s\n", key,
+              parent & parent.project-name);
+    let project =
+      apply(make, c,
+            processor:, processor, operating-system:, operating-system,
+                compiler-back-end:, back-end,
+            keys);
 
     if (mode) project-compilation-mode(project) := mode end;
 
-    if(key == #"dylan")
+    if (key == #"dylan")
       project.%project-owners := #[];
     end;
 
@@ -306,7 +306,7 @@ define method make-project
     //
     // this opens the compilation context
     project-open-compilation-context(project, load-namespace?: load-namespace?);
-    if(compilation-definitions-inconsistent?(project.project-current-compilation-context))
+    if (compilation-definitions-inconsistent?(project.project-current-compilation-context))
       project-reset-database(project)
     end;
 
@@ -315,7 +315,7 @@ define method make-project
       verify-project-database(project);
     end;
 
-    if(~ parent)
+    if (~ parent)
       // if parent is #f this must be a top level project
       // note that a top level project can aquire owners later on
       project.project-top-level? := #t;
@@ -326,93 +326,93 @@ define method make-project
     // unless we are in a compiler transaction
     // TO DO: make sure %project-top-level? has meaningful value
 
-    if(project.%project-top-level?)
+    if (project.%project-top-level?)
      verify-project-database(project)
     else
       verify-project-database(project, verify-if-current: #f)
     end;
 
-    unless(load-namespace?)
-      if(project.%database-in-memory & 
-	   ~project-dynamic-environment(#"compiler-transaction"))
-	project-load-namespace(project,
-			       update-sources?: #f, update-used?: #f);
+    unless (load-namespace?)
+      if (project.%database-in-memory &
+           ~project-dynamic-environment(#"compiler-transaction"))
+        project-load-namespace(project,
+                               update-sources?: #f, update-used?: #f);
       end;
-    end;  
+    end;
 
     project-set-compilation-parameters(project);
     project.%database-saved & note-database-saved(project);
     project
   end with-used-project-cache
-  end 
+  end
 end method;
 
 define function project-open-compilation-context (project :: <project>,
-						  #key load-namespace? = #t)
+                                                  #key load-namespace? = #t)
  => (context)
   with-lock ($compiler-lock)
     debug-out(#"project-manager",
-	      "Open compilation context for project %s (load-namespace? %s)\n",
-	      project.project-name, load-namespace?);
-    let handler <library-pack-not-installed> = 
+              "Open compilation context for project %s (load-namespace? %s)\n",
+              project.project-name, load-namespace?);
+    let handler <library-pack-not-installed> =
       method (cond, next-handler)
-	let project-name = as(<string>, cond.condition-project.project-name);
-	let library-pack = cond.condition-library-pack;
-	let library-pack-name = library-pack-full-name(library-pack);
-	user-fatal-error("You must install %s in order to use the library %s",
-			 library-pack-name, project-name);
-	signal(make(<abort-compilation>, 
-		    warnings: 0,
-		    serious-warnings: 0,
-		    errors: 1))
+        let project-name = as(<string>, cond.condition-project.project-name);
+        let library-pack = cond.condition-library-pack;
+        let library-pack-name = library-pack-full-name(library-pack);
+        user-fatal-error("You must install %s in order to use the library %s",
+                         library-pack-name, project-name);
+        signal(make(<abort-compilation>,
+                    warnings: 0,
+                    serious-warnings: 0,
+                    errors: 1))
       end;
-    let handler <database-corruption-warning> = 
+    let handler <database-corruption-warning> =
       method (cond, next-handler)
-	debug-out(#"project-manager",
+        debug-out(#"project-manager",
                   cond.condition-format-string,
                   cond.condition-format-arguments);
-	user-warning("Discarding corrupted compiler database: %s", 
-		     as(<string>, condition-database-name(cond)))
+        user-warning("Discarding corrupted compiler database: %s",
+                     as(<string>, condition-database-name(cond)))
       end;
-    let handler <database-version-warning> = 
+    let handler <database-version-warning> =
       method (cond, next-handler)
-	debug-out(#"project-manager",
+        debug-out(#"project-manager",
                   cond.condition-format-string,
                   cond.condition-format-arguments);
-	user-warning("Discarding incompatible compiler database: %s", 
-		     as(<string>, condition-database-name(cond)))
+        user-warning("Discarding incompatible compiler database: %s",
+                     as(<string>, condition-database-name(cond)))
       end;
-    let handler <database-user-version-warning> = 
+    let handler <database-user-version-warning> =
       method (cond, next-handler)
-	debug-out(#"project-manager",
+        debug-out(#"project-manager",
                   cond.condition-format-string,
                   cond.condition-format-arguments);
-	user-warning("Discarding incompatible compiler database %s", 
-		     as(<string>, condition-database-name(cond)))
+        user-warning("Discarding incompatible compiler database %s",
+                     as(<string>, condition-database-name(cond)))
       end;
     let context = open-compilation-context(project,
-					   database-location: 
-					     project-database-location(project),
-					   profile-location: 
-					     project-profile-location(project),
-					   build-settings: 
-					     project-build-settings(project),
-					   read-only?:
-					     ~project-personal-library?(project),
-					   load-namespace?: load-namespace?);
+                                           database-location:
+                                             project-database-location(project),
+                                           profile-location:
+                                             project-profile-location(project),
+                                           build-settings:
+                                             project-build-settings(project),
+                                           read-only?:
+                                             ~project-personal-library?(project),
+                                           load-namespace?: load-namespace?);
     if (project.project-dylan-library?)
       debug-out(#"project-manager", "  Opened compilation context for the Dylan library")
     end;
-    // we have to set the context in either case, 
+    // we have to set the context in either case,
     // otherwise project closing code won't work
     project.project-current-compilation-context := context;
 
     let (mj, mn, ts) = compilation-context-version(context);
     debug-out(#"project-manager",
-	      "Opened compilation context for %s: %s %s %s\n", project.project-name,
-	      mj, mn, ts);
+              "Opened compilation context for %s: %s %s %s\n", project.project-name,
+              mj, mn, ts);
     if (project-personal-library?(project)
-	  | project-library-definition(context))
+          | project-library-definition(context))
       context
     else
       %close-project(project);
@@ -426,17 +426,17 @@ define function project-open-compilation-context (project :: <project>,
   end
 end;
 
-define function project-set-compilation-parameters(project :: <project>, 
-						   #key load-namespace? = #t)
+define function project-set-compilation-parameters(project :: <project>,
+                                                   #key load-namespace? = #t)
  => (context);
   let context = project.project-current-compilation-context
     |
     project-open-compilation-context(project, load-namespace?: load-namespace?);
   let compiler-settings = #();
   local method add-setting (key, value)
-	  compiler-settings := pair(key, pair(value, compiler-settings));
-	end;
-  if(project.project-personal-library?)
+          compiler-settings := pair(key, pair(value, compiler-settings));
+        end;
+  if (project.project-personal-library?)
     add-setting(mode: project-compilation-mode(project));
     add-setting(processor: project-processor(project));
     add-setting(operating-system: project-operating-system(project));
@@ -446,7 +446,7 @@ define function project-set-compilation-parameters(project :: <project>,
   add-setting(library-pack: project-library-pack(project));
   context.compilation-context-compiler-settings := compiler-settings;
   context
-end;  
+end;
 
 // callback from the compiler
 // it's different semantics then note-project-loaded
@@ -460,7 +460,7 @@ end;
 
 define method close-project (key, #key system? = #f)
  => (closed? :: <boolean>);
-  // a little hack: we don't want a closed project 
+  // a little hack: we don't want a closed project
   // made a top level project at this point
   // with-compiler-transaction will do that for us
   with-compiler-transaction
@@ -475,18 +475,18 @@ define variable *all-open-projects* = #();
 
 define function close-all-projects (#key system? = #f, personal? = #t)
   local method loop ()
-	  let project = any?(method (project)
-			       if (project-personal-library?(project))
-				 personal?
-			       else
-				 system?
-			       end & project
-			     end method, *all-open-projects*);
-	  if (project)
-	    %%close-project(project);
-	    loop()
-	  end;
-	end method;
+          let project = any?(method (project)
+                               if (project-personal-library?(project))
+                                 personal?
+                               else
+                                 system?
+                               end & project
+                             end method, *all-open-projects*);
+          if (project)
+            %%close-project(project);
+            loop()
+          end;
+        end method;
   loop()
 end function;
 
@@ -496,32 +496,32 @@ define function %project-closed?(project :: <project>)
 end;
 
 define function remove-all-personal-owners(project :: <project>) => ()
-  if(project.project-personal-library?)
+  if (project.project-personal-library?)
     let personal-subprojects = all-used-projects(project, system?: #f);
     do(remove-as-owner, personal-subprojects);
   end;
 end;
 
 define function remove-as-owner(project :: <project>, #key subprojects = #f) => ();
-  do(rcurry(project-remove-owner, project), 
+  do(rcurry(project-remove-owner, project),
      subprojects | project.directly-used-projects)
 end;
 
 define function close-unused-projects(#key system? = #t) => ()
   // initial set of unused projects
   let unused-projects = choose(method (p)
-				 empty?(p.project-owners) & ~project-dylan-library?(p)
-			       end,
-			       *all-open-projects*);
+                                 empty?(p.project-owners) & ~project-dylan-library?(p)
+                               end,
+                               *all-open-projects*);
   debug-out(#"project-manager", "Unused projects: %s\n", map(project-name, unused-projects));
-  for(s in unused-projects)
+  for (s in unused-projects)
     close-subproject(s, system?: system?)
   end;
 end;
 
 define function %%close-project
     (project :: <project>, #key subprojects = #f) => ()
-  unless(%project-closed?(project))
+  unless (%project-closed?(project))
     let subprojects = subprojects | directly-used-projects(project);
     remove-as-owner(project, subprojects: subprojects);
     project-close-compilation-contexts(project);
@@ -532,7 +532,7 @@ define function %%close-project
 end function;
 
 define method %close-project (project :: <project>, #key subprojects = #f)
-  unless(project-dylan-library?(project))
+  unless (project-dylan-library?(project))
     %%close-project(project, subprojects: subprojects);
   end;
   #t
@@ -540,18 +540,18 @@ end method;
 
 define function close-subproject(project :: <project>, #key system?)
  => (closed? :: <boolean>);
-  unless(project.%project-closed? 
-	   | project.%project-top-level? 
-	   | (~system? & ~project.project-personal-library?))
-    if(empty?(project.project-owners))
+  unless (project.%project-closed?
+           | project.%project-top-level?
+           | (~system? & ~project.project-personal-library?))
+    if (empty?(project.project-owners))
       let subprojects = directly-used-projects(project);
       %close-project(project, subprojects: subprojects);
       do(method(p) close-subproject(p, system?: system?) end, subprojects);
       #t
     else
-      debug-out(#"project-manager", "Project %s not closed, owners: %s\n", 
-		project.project-name,
-		map(project-name, project.project-owners));
+      debug-out(#"project-manager", "Project %s not closed, owners: %s\n",
+                project.project-name,
+                map(project-name, project.project-owners));
       #f
     end;
   end;
@@ -559,23 +559,23 @@ end;
 
 define method close-project (project :: <project>, #key system? = #f)
  => (closed? :: <boolean>);
-  debug-out(#"project-manager", "Closing %s - project owners: %= \n", 
-	    project.project-name,
-	    map(project-name, project.project-owners));
-  
-  if(%project-closed?(project))
+  debug-out(#"project-manager", "Closing %s - project owners: %= \n",
+            project.project-name,
+            map(project-name, project.project-owners));
+
+  if (%project-closed?(project))
     #t
-  elseif(project.%project-top-level?)
+  elseif (project.%project-top-level?)
     project.%project-top-level? := #f;
     let closed? = close-subproject(project, system?: system?);
     // this is needed to close subprojects even if they were not compiled against.
     // close-unused-projects(system?: system?);
     map(method(%project)
-	    debug-out(#"project-manager", 
-		      "Project: %s\n\towners: %s\n", %project.project-name,
-		      map(project-name, %project.%project-owners))
-	end,
-	*all-open-projects*);
+            debug-out(#"project-manager",
+                      "Project: %s\n\towners: %s\n", %project.project-name,
+                      map(project-name, %project.%project-owners))
+        end,
+        *all-open-projects*);
     closed?
   else
     debug-out(#"project-manager", "Closing non top level project %s", project.project-name);
@@ -601,7 +601,7 @@ define constant <source-record-vector> = limited(<vector>, of: <source-record>);
 
 // to force parse later if we are not in a compiler transaction
 define function project-reset-database(project :: <project>)
-  unless(project-dynamic-environment(#"compiler-transaction") | %project-closed?(project))
+  unless (project-dynamic-environment(#"compiler-transaction") | %project-closed?(project))
     let context = project-current-compilation-context(project);
     let (mj, mn) = compilation-context-version(context);
     install-project-sources(context, make(<source-record-vector>, size: 0), mj, mn);
@@ -611,33 +611,33 @@ define function project-reset-database(project :: <project>)
 end;
 
 define function %delete-file-if-exists(loc :: <physical-locator>)
-  block()
+  block ()
     delete-file(loc)
-  exception(<file-system-error>)
+  exception (<file-system-error>)
   end
 end;
 
 define function project-remove-database(project :: <project>) => ()
-  unless(project-dynamic-environment(#"compiler-transaction"))
+  unless (project-dynamic-environment(#"compiler-transaction"))
     let context = project-current-compilation-context(project);
     // close the context, remove the db file and open context
     // TO DO: what if we are conected
     // environment has to make sure we are not
     let (mj, mn, ts) = compilation-context-version(context);
     remove-as-owner(project);
-    debug-out(#"project-manager", "closing context for %s: %s %s %s\n", 
-	      project.project-name, mj, mn, ts);
+    debug-out(#"project-manager", "closing context for %s: %s %s %s\n",
+              project.project-name, mj, mn, ts);
     project-close-compilation-contexts(project);
     let db = project.project-database-location;
     %delete-file-if-exists(db);
     debug-out(#"project-manager", "Removed database for project %s", project.project-name);
     project-open-compilation-context(project, load-namespace?: #f);
     project-set-compilation-parameters(project);
-    
+
     project.project-namespace-loaded := #f;
     let (mj, mn, ts) = compilation-context-version(context);
-    debug-out(#"project-manager", "opened context for %s: %s %s %s\n", 
-	      project.project-name, mj, mn, ts);
+    debug-out(#"project-manager", "opened context for %s: %s %s %s\n",
+              project.project-name, mj, mn, ts);
     verify-project-database(project);
     note-database-invalidated(project)
   end;
@@ -645,22 +645,22 @@ end;
 
 define open generic generate-makefile(project :: <base-project>);
 
-define open generic makefile-exists?(project :: <base-project>) 
+define open generic makefile-exists?(project :: <base-project>)
  => (well? :: <boolean>);
 
 define method project-remove-build-products(project :: <base-project>,
-					    #key recursive? = #t);
-  if(project-personal-library?(project))
-    if(recursive?)
+                                            #key recursive? = #t);
+  if (project-personal-library?(project))
+    if (recursive?)
       do(project-remove-database, all-used-projects(project, system?: #f));
     end;
     project-remove-database(project);
     // remove compiler & link products
     makefile-exists?(project) &
     build-system(if (recursive?) #["clean-all"] else #["clean"] end,
-		 directory: project.project-build-location,
+                 directory: project.project-build-location,
                  compiler-back-end: project.project-compiler-back-end,
-		 progress-callback: ignore);
+                 progress-callback: ignore);
   end;
   // no-op for system projects
 end;
@@ -672,9 +672,9 @@ define open generic project-verify-source-records(project :: <project>)
 // maybe also check headers
 define method project-verify-source-records(project :: <project>)
  => (records :: <sequence>);
-  block()
+  block ()
     project-current-source-records(project);
-  exception(e :: <source-record-error>)
+  exception (e :: <source-record-error>)
     apply(user-error, e.condition-format-string, e.condition-format-arguments);
     #()
   end;
@@ -692,84 +692,84 @@ define function canonicalize-project-sources
           force-parse-used? = update-used? & force-parse?)
   if (project-personal-library?(project))
     debug-out(#"driver", "canonicalize-project-sources %s, force-parse? %s,"
-		" update-sources? %s, update-used? %s, force-parse-used? %s\n",
-	      project, force-parse?, update-sources?, update-used?,
-	      force-parse-used?);
+                " update-sources? %s, update-used? %s, force-parse-used? %s\n",
+              project, force-parse?, update-sources?, update-used?,
+              force-parse-used?);
     with-used-project-cache
       with-project-dynamic-environment
-	dynamic-bind (*canonicalize-force-parse?* = force-parse-used?,
-		      *canonicalize-update-sources?* = update-used?)
-	  let context = project-current-compilation-context(project);
-	  note-loading-namespace(project);
-	  let (sr*, major, minor)
-	    = if (update-sources?)
-		values(project-current-source-records(project),
-		       project-major-version(project),
-		       project-minor-version(project))
-	      else
-		// If don't want to update sources, just make sure what's
-		// there now is fully installed (e.g. previous processing
-		// might have been aborted).
-		let (mj, mn) = compilation-context-version(context);
-		let compiler-sources = compilation-context-sources(context);
-		if(empty?(compiler-sources))
-		  // fixup
-		  debug-out(#"project-manager",
+        dynamic-bind (*canonicalize-force-parse?* = force-parse-used?,
+                      *canonicalize-update-sources?* = update-used?)
+          let context = project-current-compilation-context(project);
+          note-loading-namespace(project);
+          let (sr*, major, minor)
+            = if (update-sources?)
+                values(project-current-source-records(project),
+                       project-major-version(project),
+                       project-minor-version(project))
+              else
+                // If don't want to update sources, just make sure what's
+                // there now is fully installed (e.g. previous processing
+                // might have been aborted).
+                let (mj, mn) = compilation-context-version(context);
+                let compiler-sources = compilation-context-sources(context);
+                if (empty?(compiler-sources))
+                  // fixup
+                  debug-out(#"project-manager",
                             "Fixing up sources for %s",
                             project.project-name);
-		  values(project-current-source-records(project),
-			 project-major-version(project),
-			 project-minor-version(project))
-		else
-		  values(compilation-context-sources(context), mj, mn)
-		end;
-	      end;
-	  if (force-parse?) // reset to having empty sources
-	    install-project-sources(context, make(<source-record-vector>, size: 0), major, minor);
-	  end;
-	  internal-message("Loading namespace for %s", project);
-	  install-project-sources(context, as(<source-record-vector>, sr*), major, minor);
-	  project-namespace-loaded(project) := #t;
+                  values(project-current-source-records(project),
+                         project-major-version(project),
+                         project-minor-version(project))
+                else
+                  values(compilation-context-sources(context), mj, mn)
+                end;
+              end;
+          if (force-parse?) // reset to having empty sources
+            install-project-sources(context, make(<source-record-vector>, size: 0), major, minor);
+          end;
+          internal-message("Loading namespace for %s", project);
+          install-project-sources(context, as(<source-record-vector>, sr*), major, minor);
+          project-namespace-loaded(project) := #t;
           project.%database-in-memory := #t;
-	  note-project-loaded(project);
-	end dynamic-bind;
+          note-project-loaded(project);
+        end dynamic-bind;
       end with-project-dynamic-environment;
     end with-used-project-cache;
   end if;
 end function;
 
-define sideways method used-library-context 
+define sideways method used-library-context
     (context, used-library-dylan-name :: <symbol>, #key canonicalize?)
  => (subcontext)
   let cache = *used-project-cache*;
   let project = compilation-context-project(context);
-  debug-out(#"driver", "used-library-context %s looking for %s, canonicalize? = %s\n", 
-	    project, used-library-dylan-name, canonicalize?);
-  let subcontext = 
+  debug-out(#"driver", "used-library-context %s looking for %s, canonicalize? = %s\n",
+            project, used-library-dylan-name, canonicalize?);
+  let subcontext =
     (cache & element(cache, used-library-dylan-name, default: #f))
     | with-used-project-cache
-	// KLUDGE: used by project-compiler-setting and who knows what else..
-	project.project-current-compilation-context := context;
-	let key = used-library-project-key(project, used-library-dylan-name);
-	let processor = project-compiler-setting(project, processor:);
-	let os = project-compiler-setting(project, operating-system:);
-	let subproject = find-platform-project(key, processor, os) |
-	                   make-used-project(project, key, processor, os);
-	let subcontext = project-current-compilation-context(subproject);
+        // KLUDGE: used by project-compiler-setting and who knows what else..
+        project.project-current-compilation-context := context;
+        let key = used-library-project-key(project, used-library-dylan-name);
+        let processor = project-compiler-setting(project, processor:);
+        let os = project-compiler-setting(project, operating-system:);
+        let subproject = find-platform-project(key, processor, os) |
+                           make-used-project(project, key, processor, os);
+        let subcontext = project-current-compilation-context(subproject);
         if (~subcontext)
-	  debug-out(#"project-manager",
-                    "Project %s: subproject %s with empty subcontext\n", 
+          debug-out(#"project-manager",
+                    "Project %s: subproject %s with empty subcontext\n",
                     project.project-name, subproject.project-name);
-	  subcontext := project-open-compilation-context(subproject);
-	end;
+          subcontext := project-open-compilation-context(subproject);
+        end;
         if (canonicalize?)
-	  canonicalize-project-sources(subproject);
-	  // Only cache canonicalized projects
-	  if (cache)
-	    cache[used-library-dylan-name] := subcontext;
-	  end;
-	end;
-	subcontext
+          canonicalize-project-sources(subproject);
+          // Only cache canonicalized projects
+          if (cache)
+            cache[used-library-dylan-name] := subcontext;
+          end;
+        end;
+        subcontext
       end with-used-project-cache;
   let used-project = compilation-context-project(subcontext);
   project-add-owner(used-project, project);
@@ -799,14 +799,14 @@ end method;
 define function %project-record-id-source-record (project :: <project>, id, #key create? = #t) => sr;
   let table = project.project-source-record-table;
   let str = as(<string>, id);
-  element(table, str, default: #f) 
+  element(table, str, default: #f)
     | if (create?)
-	let id
-	  = id-as-source-record(project-source-record-class(project), 
-				project,
-				project-compiler-source-location(project),
-				id);
-	table[str] := id
+        let id
+          = id-as-source-record(project-source-record-class(project),
+                                project,
+                                project-compiler-source-location(project),
+                                id);
+        table[str] := id
       end
 end function;
 
@@ -818,7 +818,7 @@ end method;
 // and unique within project.
 define method project-source-record-name (project :: <project>, sr)
  => (name :: false-or(<string>))
-  let name = 
+  let name =
   source-record-relative-name(sr, project-compiler-source-location(project));
   if (name & locator-directory(as(<file-locator>, name)))
     let base = source-record-name(sr);
@@ -831,12 +831,12 @@ define method project-source-record-name (project :: <project>, sr)
 end method;
 
 define function project-compiler-setting (project :: <project>,
-					  key :: <symbol>)
+                                          key :: <symbol>)
   let context = project.project-current-compilation-context;
   let settings = compilation-context-compiler-settings(context);
   block (return)
     for (key-or-val in settings, prev = #f then key-or-val,
-	 val? = #f then ~val?)
+         val? = #f then ~val?)
       if (val? & (prev == key)) return(key-or-val) end;
     end for;
     error("%= is not a compiler setting", key);
@@ -844,31 +844,31 @@ define function project-compiler-setting (project :: <project>,
 end function;
 
 define function project-compiler-setting-setter (value,
-						 project :: <project>,
-						 key :: <symbol>)
+                                                 project :: <project>,
+                                                 key :: <symbol>)
   let context = project.project-current-compilation-context;
-  context & 
+  context &
     (compilation-context-compiler-settings(context) := list(key, value));
 end function;
 
 define function choose-project (test :: <function>)
-  any?(method (project) 
-	 test(project) & project 
-       end, 
+  any?(method (project)
+         test(project) & project
+       end,
        *all-open-projects*);
 end function;
 
 define function find-platform-project (key, processor, os)
   //  debug-out(#"project-manager", "looking up project %s:%s:%s \n", key, processor, os);
-  let project = 
+  let project =
     choose-project(method(project)
-		       project-key?(project, key) &
-		       (processor == #"unknown" |
-			  project-compiler-setting(project, processor:) == processor) &
-		       (os == #"unknown" |
-			  project-compiler-setting(project, operating-system:) == os)
-		   end);
-  //  unless(project)
+                       project-key?(project, key) &
+                       (processor == #"unknown" |
+                          project-compiler-setting(project, processor:) == processor) &
+                       (os == #"unknown" |
+                          project-compiler-setting(project, operating-system:) == os)
+                   end);
+  //  unless (project)
   //    debug-out(#"project-manager", "Not found: creating new project\n");
   //  end;
   project
@@ -876,8 +876,8 @@ end function;
 
 define function platform-namestring (processor, os)
   concatenate(as-lowercase(as(<string>, processor)),
-	      "-",
-	      as-lowercase(as(<string>, os)))
+              "-",
+              as-lowercase(as(<string>, os)))
 end function;
 
 define function platform-namestring-info (platform) => (processor, os)
@@ -886,7 +886,7 @@ define function platform-namestring-info (platform) => (processor, os)
   let processor-name = copy-sequence(name, end: separator-position);
   let os-name = copy-sequence(name, start: separator-position + 1);
   values(as(<symbol>, processor-name),
-	 as(<symbol>, os-name))
+         as(<symbol>, os-name))
 end function;
 
 define function target-platform-name ()
@@ -931,16 +931,17 @@ define function project-dump-emacs-dispatch-colors (project :: <project>)
   let dir = project.project-build-location;
   when (dir)
     let context = project.project-current-compilation-context;
-    for (sr in compilation-context-sources(context))
-      let name = sr.source-record-name;
+    for (cr in context.library-description-compilation-records)
+      let name = cr.compilation-record-name;
       when (name)
-	let file = make(<file-locator>,
-			directory: dir,
-			base:      name,
-			extension: $emacs-lisp-extension);
-	with-open-file (stream = file, direction: #"output")
-	  dump-source-record-emacs-dispatch-colors(context, sr, stream);
-	end with-open-file;
+        let file = make(<file-locator>,
+                        directory: dir,
+                        base:      name,
+                        extension: $emacs-lisp-extension);
+        with-open-file (stream = file, direction: #"output")
+          let sr = cr.compilation-record-source-record;
+          dump-source-record-emacs-dispatch-colors(context, sr, stream);
+        end with-open-file;
       end when;
     end for;
   end when;
@@ -955,29 +956,29 @@ define function dump-source-record-emacs-dispatch-colors
   // Convert source record locations to file locations
   let start-in-file = source-record-start-line(sr);
   local method write-bounds (start-offset, end-offset)
-	  format(stream, "(%d %d %d %d)\n",
-		 start-in-file + source-offset-line(start-offset),
-		 source-offset-column(start-offset),
-		 start-in-file + source-offset-line(end-offset),
-		 source-offset-column(end-offset));
-	end;
+          format(stream, "(%d %d %d %d)\n",
+                 start-in-file + source-offset-line(start-offset),
+                 source-offset-column(start-offset),
+                 start-in-file + source-offset-line(end-offset),
+                 source-offset-column(end-offset));
+        end;
 
   // Foreground colors, for dispatch and others.
   let open-type = #f;
   local method close-group () => ();
-	  if (open-type) format(stream, "))\n") end;
-	end method;
+          if (open-type) format(stream, "))\n") end;
+        end method;
   local method open-group (type) => ();
-	  if (open-type ~== type)
-	    close-group();
-	    format(stream, "\n(color-foregrounds color-%s '(\n", type);
-	    open-type := type;
-	  end;
-	end;
+          if (open-type ~== type)
+            close-group();
+            format(stream, "\n(color-foregrounds color-%s '(\n", type);
+            open-type := type;
+          end;
+        end;
   local method write-loc (start-offset, end-offset, type) => ();
-	  open-group(type);
-	  write-bounds(start-offset, end-offset);
-	end method;
+          open-group(type);
+          write-bounds(start-offset, end-offset);
+        end method;
   let dds = source-record-dispatch-decisions(context, sr);
   for (i from 0 below dds.size by 3)
     write-loc(dds[i], dds[i + 1], dds[i + 2])
@@ -990,7 +991,7 @@ define function dump-source-record-emacs-dispatch-colors
     let loc = note.program-note-location;
     if (loc & loc.source-location-source-record == sr)
       write-bounds(loc.source-location-start-offset,
-		   loc.source-location-end-offset)
+                   loc.source-location-end-offset)
     end;
   end for;
   format(stream, "))\n");
