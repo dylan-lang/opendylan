@@ -3,8 +3,19 @@
 
 #include <setjmp.h>
 
+#ifdef __GNUC__
+#  define OPEN_DYLAN_COMPILER_GCC_LIKE
+#  if defined(__clang__)
+#    define OPEN_DYLAN_COMPILER_CLANG
+#  else
+#    define OPEN_DYLAN_COMPILER_GCC
+#  endif
+#else
+#  warning Unknown compiler
+#endif
+
 #ifdef OPEN_DYLAN_PLATFORM_DARWIN
-#  if !defined(__clang__) || \
+#  if !defined(OPEN_DYLAN_COMPILER_CLANG) || \
       (__clang_major__ < 3) || \
       (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
 #    define USE_PTHREAD_TLS 1
@@ -72,14 +83,20 @@ typedef void*                   D;
 
 /* COMPILER-SPECIFIC INTRINSICS */
 
-#ifdef __GNUC__
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
+#define NORETURN_FUNCTION __attribute__((noreturn))
+#else
+#define NORETURN_FUNCTION
+#endif
+
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
 #define PURE_FUNCTION __attribute__((pure))
 #else
 #warning missing attribute PURE_FUNCTION - performance degraded
 #define PURE_FUNCTION
 #endif
 
-#ifdef __GNUC__
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
 #define CONDITIONAL_UPDATE(var, new_val, old_val) \
   (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
 #else
@@ -88,31 +105,31 @@ typedef void*                   D;
   ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
 #endif
 
-#ifdef __GNUC__
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
 #define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
 #else
 #warning missing primitive SYNCHRONIZE_SIDE_EFFECTS - thread safety compromised
 #define SYNCHRONIZE_SIDE_EFFECTS()
 #endif
 
-#ifdef __GNUC__
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
 #define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
 #else
 #warning missing primitive SEQUENCE_POINT - thread safety compromised
 #define SEQUENCE_POINT()
 #endif
 
-#if defined(__GNUC__)
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
 #define TLS_VARIABLE __thread
 #else
 #define TLS_VARIABLE
 #endif
 
-#if defined(__GNUC__) && !defined(__clang__)
+#ifdef OPEN_DYLAN_COMPILER_GCC
 #define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
 #endif
 
-#if defined(__clang__) && defined(__has_attribute)
+#if defined(OPEN_DYLAN_COMPILER_CLANG) && defined(__has_attribute)
 #if __has_attribute(tls_model)
 #define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
 #endif
@@ -123,7 +140,7 @@ typedef void*                   D;
 #endif
 
 static inline long atomic_increment(long *var) {
-#ifdef __GNUC__
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
   return __sync_add_and_fetch(var, 1);
 #else
 #warning missing primitive atomic_increment - thread safety compromised
@@ -133,7 +150,7 @@ static inline long atomic_increment(long *var) {
 }
 
 static inline long atomic_decrement(long *var) {
-#ifdef __GNUC__
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
   return __sync_sub_and_fetch(var, 1);
 #else
 #warning missing primitive atomic_decrement - thread safety compromised
@@ -143,7 +160,7 @@ static inline long atomic_decrement(long *var) {
 }
 
 static inline long atomic_cas(long *destination, long exchange, long compare) {
-#ifdef __GNUC__
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
   return __sync_val_compare_and_swap(destination, compare, exchange);
 #else
 #warning missing primitive atomic_cas - thread safety compromised
@@ -293,11 +310,6 @@ typedef DBI_*  DBI;
   } _name
 
 define_SOV(SOV, 1);
-
-#define STACK_DATA_SIZE 16
-#define STACK_SOV_SIZE STACK_DATA_SIZE
-
-define_SOV(STACK_SOV, STACK_SOV_SIZE);
 
 #define define_byte_string(_name, _size) \
   typedef struct _bs##_name { \
@@ -1642,7 +1654,7 @@ extern D pseudo_primitive_command_name (void);
 extern D Tcommand_argumentsT;
 extern D pseudo_primitive_command_arguments (void);
 
-extern void  primitive_exit_application (DSINT code);
+extern void  primitive_exit_application (DSINT code) NORETURN_FUNCTION;
 
 /* TEMPORARY PRIMITIVES FOR ASSIGNMENT */
 

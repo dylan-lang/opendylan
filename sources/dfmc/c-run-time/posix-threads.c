@@ -190,12 +190,6 @@ void *make_tlv_vector(int n)
 
 void free_tlv_vector(D *vector)
 {
-  size_t size;
-
-  // compute actual (byte) size
-  size = (R(vector[1]) + 2) * sizeof(D);
-
-  // free the memory
   GC_free(vector);
 }
 
@@ -424,11 +418,10 @@ void *trampoline (void *arg)
 
   assert(thread != NULL);
 
-  make_teb();
 
   rthread = (THREAD*)(thread->handle2);
 
-  rthread->teb = teb;
+  rthread->teb = make_teb();
 
   f = rthread->function;
 
@@ -467,8 +460,8 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 
   THREAD*             rthread;
   pthread_attr_t      attr;
-  struct sched_param  param;
-  int                 priority = (int)zpriority >> 2;
+  // struct sched_param  param;
+  // int                 priority = (int)zpriority >> 2;
 
   ignore(s);
 
@@ -483,7 +476,7 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
   thread->handle1 = 0;       // runtime thread flags
   thread->handle2 = rthread; // runtime thread object
 
-  param.sched_priority = priority_map(priority);
+  // param.sched_priority = priority_map(priority);
 
   if (pthread_attr_init(&attr)) {
     MSG0("make-thread: error attr_init\n");
@@ -769,7 +762,6 @@ D primitive_wait_for_notification(D n, D l)
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
-  SIMPLELOCK    *slock;
   int            error;
   uintptr_t      owned;
 
@@ -779,7 +771,6 @@ D primitive_wait_for_notification(D n, D l)
   assert(lock->handle != NULL);
 
   notification = notif->handle;
-  slock = lock->handle;
 
   // make sure thread owns the simple lock
   owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
@@ -962,7 +953,6 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   CONTAINER     *lock = (CONTAINER *)l;
   ZINT           zmilsecs = (ZINT)m;
   NOTIFICATION  *notification;
-  SIMPLELOCK    *slock;
   int            milsecs, secs, timeout;
   uintptr_t      owned;
   struct timespec limit;
@@ -974,7 +964,6 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   assert(IS_ZINT(zmilsecs));
 
   notification = notif->handle;
-  slock = lock->handle;
   milsecs = zmilsecs >> 2;
 
   time(&limit.tv_sec);
@@ -1104,7 +1093,6 @@ D primitive_release_notification(D n, D l)
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
-  SIMPLELOCK    *slock;
   uintptr_t      owned;
 
   assert(notif != NULL);
@@ -1113,7 +1101,6 @@ D primitive_release_notification(D n, D l)
   assert(lock->handle != NULL);
 
   notification = notif->handle;
-  slock = lock->handle;
   owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
   if (owned == 0) {
     MSG0("release-notification: Don't own associated lock\n");
@@ -1137,7 +1124,6 @@ D primitive_release_all_notification(D n, D l)
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
-  SIMPLELOCK    *slock;
   uintptr_t      owned;
 
   assert(notif != NULL);
@@ -1146,7 +1132,6 @@ D primitive_release_all_notification(D n, D l)
   assert(lock->handle != NULL);
 
   notification = notif->handle;
-  slock = lock->handle;
   owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
   if (owned == 0) {
     MSG0("release-all-notification: Don't own associated lock\n");

@@ -15,7 +15,7 @@
 
 #if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
 #define INLINE __inline
-#elif defined(__clang__)
+#elif defined(OPEN_DYLAN_COMPILER_CLANG)
 //---*** Do something better.
 #define INLINE
 #else

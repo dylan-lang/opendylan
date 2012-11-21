@@ -58,7 +58,7 @@ extern OBJECT KPunboundVKi;
 
 #if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
 #define INLINE __inline
-#elif defined(__clang__)
+#elif defined(OPEN_DYLAN_COMPILER_CLANG)
 //---*** Do something better.
 #define INLINE
 #else
@@ -875,31 +875,36 @@ DMINT primitive_machine_word_double_divide(DMINT xl, DMINT xh, DMINT y) {
 
 DMINT primitive_machine_word_count_low_zeros(DMINT x) {
   if (x == 0) return(DMINT)(primitive_word_size() * 8);
-  { DMINT mask4 = (DMINT)0xF;
-    int index = (int)(mask4 & x);
-    int count = 0;
-    static int t[16] = { 4, 0, 1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 2, 0, 1, 0 };
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
+  return __builtin_ctz(x);
+#else
+  DMINT mask4 = (DMINT)0xF;
+  int index = (int)(mask4 & x);
+  int count = 0;
+  static int t[16] = { 4, 0, 1, 0, 2, 0, 1, 0, 3, 0, 1, 0, 2, 0, 1, 0 };
 
-    /* scan for a non-zero low nibble. */
-    for (; index == 0; count += 4, x >>= 4, index = (int)(mask4 & x)) {}
-    return(DMINT)(count + t[index]);
-  }
+  /* scan for a non-zero low nibble. */
+  for (; index == 0; count += 4, x >>= 4, index = (int)(mask4 & x)) {}
+  return(DMINT)(count + t[index]);
+#endif
 }
 
 DMINT primitive_machine_word_count_high_zeros(DMINT x) {
   if (x == 0) return(DMINT)(primitive_word_size() * 8);
-  { DUMINT ux = (DUMINT)x;
-    DUMINT mask4 = ((DUMINT)0xF) << (primitive_word_size() * 8 - 4);
-    DUMINT uindex = mask4 & ux;
-    int count = 0;
-    static int t[16] = { 4, 3, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
+  return __builtin_clz(x);
+#else
+  DUMINT ux = (DUMINT)x;
+  DUMINT mask4 = ((DUMINT)0xF) << (primitive_word_size() * 8 - 4);
+  DUMINT uindex = mask4 & ux;
+  int count = 0;
+  static int t[16] = { 4, 3, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    /* scan for non-zero high nibble. */
-    for (; uindex == (DUMINT)0; count += 4, ux <<= 4, uindex = mask4 & ux) {}
-    { int index = (int)(uindex >> (primitive_word_size() * 8 - 4));
-      return(DMINT)(count + t[index]);
-    }
-  }
+  /* scan for non-zero high nibble. */
+  for (; uindex == (DUMINT)0; count += 4, ux <<= 4, uindex = mask4 & ux) {}
+  int index = (int)(uindex >> (primitive_word_size() * 8 - 4));
+  return(DMINT)(count + t[index]);
+#endif
 }
 
 static void multiply_double (DMINT x, DMINT y, DUMINT* zl, DUMINT* zh) {
@@ -1131,24 +1136,13 @@ D primitive_raw_as_vector (D size, D buffer) {
   return(make_vector_from_buffer((long)size, (D*)buffer));
 }
 
-#define DEF_STACK_DATA(_name, _size) \
-  D _stk_##_name[STACK_DATA_SIZE]; \
-  D _name = ((_size) > STACK_DATA_SIZE) ? (D)primitive_allocate(_size) : (D)_stk_##_name
-
-#define DEF_STACK_DATA_FROM_BUFFER_WITH_SIZE(_name, _data_size, _buffer, _buffer_size) \
-  DEF_STACK_DATA(_name, _data_size); \
-  COPY_WORDS(_name, _buffer, _buffer_size)
-
-#define DEF_STACK_DATA_FROM_BUFFER(_name, _size, _buffer) \
-  DEF_STACK_DATA_FROM_BUFFER_WITH_SIZE(_name, _size, _buffer, _size)
-
 #define DEF_STACK_VECTOR(_name, _size) \
-  STACK_SOV _stk_##_name; \
-  SOV* _name = ((_size) > STACK_SOV_SIZE) ? allocate_vector(_size) : (SOV*)(&_stk_##_name)
+  D _stk_##_name[_size + VECTOR_HEADER_SIZE]; \
+  SOV* _name = (SOV*)(&_stk_##_name)
 
 #define DEF_STACK_VECTOR_INITTED(_name, _size) \
-  STACK_SOV _stk_##_name; \
-  SOV* _name = ((_size) > STACK_SOV_SIZE) ? allocate_vector(_size) : (init_stack_vector((SOV*)(&_stk_##_name), (_size)))
+  D _stk_##_name[_size + VECTOR_HEADER_SIZE]; \
+  SOV* _name = (init_stack_vector((SOV*)(&_stk_##_name), (_size)))
 
 INLINE SOV* init_stack_vector(SOV* vector, int size) {
   instance_header_setter(&KLsimple_object_vectorGVKdW, (D*)vector);
@@ -1660,7 +1654,7 @@ teb->a[56], teb->a[57], teb->a[58], teb->a[59], teb->a[60], teb->a[61], teb->a[6
   }
 }
 
-INLINE GFN* parent_gf (D cache_header_or_gf) {
+static INLINE GFN* parent_gf (D cache_header_or_gf) {
   while (!FUNCTIONP(cache_header_or_gf)) {
     cache_header_or_gf = ((CACHEHEADERENGINE*)cache_header_or_gf)->parent;
   }
@@ -1723,19 +1717,19 @@ D primitive_engine_node_apply(ENGINE* eng, D parent, D a[]) {
   int  argument_count = vector_size((SOV*)a);
   if (signature_optionals_p(sig)) {
     /* OPTIONAL_CALL_CHECK(gfn,number_required,argument_count); */
-    { D*   arguments = vector_data((SOV*)a);
-      DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
-        (new_arguments, number_required + 1, arguments, number_required);
-    { int  optionals_count = argument_count - number_required;
-      DEF_STACK_VECTOR_FROM_BUFFER
-        (rest_arguments, optionals_count, &arguments[number_required]);
-      vector_ref_setter(rest_arguments, new_arguments, number_required);
-      return(primitive_engine_node_apply_with_optionals((D)eng, parent, (D*)new_arguments));
-  }}} else {
+    D*   arguments = vector_data((SOV*)a);
+    DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
+      (new_arguments, number_required + 1, arguments, number_required);
+    int  optionals_count = argument_count - number_required;
+    DEF_STACK_VECTOR_FROM_BUFFER
+      (rest_arguments, optionals_count, &arguments[number_required]);
+    vector_ref_setter(rest_arguments, new_arguments, number_required);
+    return(primitive_engine_node_apply_with_optionals((D)eng, parent, (D*)new_arguments));
+  } else {
     /* REQUIRED_CALL_CHECK(gfn,number_required,argument_count); */
     return(primitive_engine_node_apply_with_optionals((D)eng, parent, a));
-  }}
-
+  }
+}
 
 
 D primitive_mep_apply (FN* fn, D next_methods, D a[]) {
@@ -1743,19 +1737,20 @@ D primitive_mep_apply (FN* fn, D next_methods, D a[]) {
   int  argument_count = vector_size((SOV*)a);
   if (function_optionals_p(fn)) {
     /* OPTIONAL_CALL_CHECK(fn,number_required,argument_count); */
-    { D*   arguments = vector_data((SOV*)a);
-      DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
-        (new_arguments, number_required + 1, arguments, number_required);
-    { int  optionals_count = argument_count - number_required;
-      DEF_STACK_VECTOR_FROM_BUFFER
-        (rest_arguments, optionals_count, &arguments[number_required]);
-      vector_ref_setter(rest_arguments, new_arguments, number_required);
-      return(primitive_mep_apply_with_optionals
-               (fn, next_methods, (D*)new_arguments));
-  }}} else {
+    D*   arguments = vector_data((SOV*)a);
+    DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
+      (new_arguments, number_required + 1, arguments, number_required);
+    int  optionals_count = argument_count - number_required;
+    DEF_STACK_VECTOR_FROM_BUFFER
+      (rest_arguments, optionals_count, &arguments[number_required]);
+    vector_ref_setter(rest_arguments, new_arguments, number_required);
+    return(primitive_mep_apply_with_optionals
+             (fn, next_methods, (D*)new_arguments));
+  } else {
     /* REQUIRED_CALL_CHECK(fn,number_required,argument_count); */
     return(primitive_mep_apply_with_optionals(fn, next_methods, a));
-  }}
+  }
+}
 
 D iep_apply (DLFN iep, int n, D a[]) {
   switch (n) {
@@ -1958,11 +1953,11 @@ D rest_xep (FN* fn, int n, ...) {
   BUFFER_VARARGS(n, n, teb->arguments);
   OPTIONAL_CALL_CHECK(fn, number_required, n, teb->arguments);
   COPY_WORDS(teb->new_arguments,teb->arguments,number_required);
-  {DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, optional_arguments);
+  DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, optional_arguments);
   teb->new_arguments[number_required] = rest_arguments;
   teb->function = fn; teb->next_methods = DFALSE;
   return(iep_apply(function_iep(fn), number_required + 1, teb->new_arguments));
-}}
+}
 
 
 /* ACCESSOR-METHOD XEP'S */
@@ -2054,7 +2049,9 @@ INLINE void process_keyword_parameters
       if (keyword == lambda_keyword) {
          new_arguments[k] = value;
          break;
-      } } }
+      }
+    }
+  }
 }
 
 extern D unknown_keyword_argument_errorVKi(D function, D keyword);
@@ -2081,7 +2078,11 @@ INLINE void process_keyword_parameters_into_with_checking
         if (keyword == lambda_keyword) {
           new_arguments[k] = value;
           break;
-} } } } }
+        }
+      }
+    }
+  }
+}
 
 INLINE int process_keyword_call_into
     (D* new_arguments, FN* function, int argument_count,
@@ -2149,108 +2150,116 @@ D rest_key_xep_1 (FN* fn, int n, ...) {
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0]));
-}}}
+}
+
 D rest_key_xep_2 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1]));
-}}}
+}
+
 D rest_key_xep_3 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2]));
-}}}
+}
+
 D rest_key_xep_4 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3]));
-}}}
+}
+
 D rest_key_xep_5 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4]));
-}}}
+}
+
 D rest_key_xep_6 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5]));
-}}}
+}
+
 D rest_key_xep_7 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
-}}}
+}
+
 D rest_key_xep_8 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
-}}}
+}
+
 D rest_key_xep_9 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int number_required = function_number_required(fn);
   int optionals_count = n - number_required;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
+  D* a = process_keyword_call(fn, n, teb->arguments, rest_arguments);
   teb->function = fn; teb->next_methods = DFALSE;
   return(keyword_function_iep(fn)(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
-}}}
+}
 
 D rest_key_xep (FN* fn, int n, ...) {
   TEB* teb = get_teb();
@@ -2259,12 +2268,13 @@ D rest_key_xep (FN* fn, int n, ...) {
   int new_n;
   BUFFER_VARARGS(n, n, teb->arguments);
   KEYWORD_CALL_CHECK(fn, number_required, n, teb->arguments);
-  {DEF_STACK_VECTOR_FROM_BUFFER
+  DEF_STACK_VECTOR_FROM_BUFFER
     (rest_arguments, optionals_count, &teb->arguments[number_required]);
-  { D* a = process_keyword_call_and_n(fn, n, teb->arguments, rest_arguments, &new_n);
+  D* a = process_keyword_call_and_n(fn, n, teb->arguments, rest_arguments, &new_n);
   teb->function = fn; teb->next_methods = DFALSE;
   return(iep_apply(keyword_function_iep(fn), new_n, a));
-}}}
+}
+
 
 /* METHOD ENTRY POINTS -- MEPs */
 /*   numbered by the total number of parameters in the IEP */
@@ -2273,105 +2283,113 @@ D key_mep_1 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0]));
-}}
+}
+
 D key_mep_2 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1]));
-}}
+}
+
 D key_mep_3 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2]));
-}}
+}
+
 D key_mep_4 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3]));
-}}
+}
+
 D key_mep_5 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4]));
-}}
+}
+
 D key_mep_6 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5]));
-}}
+}
+
 D key_mep_7 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6]));
-}}
+}
+
 D key_mep_8 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6],teb->iep_a[7]));
-}}
+}
+
 D key_mep_9 (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    process_keyword_call_into
-     (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
-      vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  process_keyword_call_into
+    (teb->iep_a, teb->function, teb->argument_count, number_required, teb->a,
+     vector_size(rest), vector_data(rest), rest);
   return(keyword_function_iep(teb->function)(teb->iep_a[0],teb->iep_a[1],teb->iep_a[2],teb->iep_a[3],teb->iep_a[4],teb->iep_a[5],teb->iep_a[6],teb->iep_a[7],teb->iep_a[8]));
-}}
+}
 
 D key_mep (D a1, ...) {
   TEB* teb = get_teb();
   int  number_required = function_number_required(teb->function);
   teb->a[0] = a1; BUFFER_VARARGS(teb->argument_count - 1, a1, &teb->a[1]);
-  { SOV* rest = teb->a[number_required];
-    int new_argument_count
-      = process_keyword_call_into
-         (teb->new_arguments, teb->function, teb->argument_count, number_required, teb->a,
-          vector_size(rest), vector_data(rest), rest);
+  SOV* rest = teb->a[number_required];
+  int new_argument_count
+    = process_keyword_call_into
+       (teb->new_arguments, teb->function, teb->argument_count, number_required, teb->a,
+        vector_size(rest), vector_data(rest), rest);
   return(iep_apply(keyword_function_iep(teb->function), new_argument_count, teb->new_arguments));
-}}
-
+}
+
 /* NEW GF SUPPORT */
 
 INLINE D gf_iep_0 () {
@@ -2513,10 +2531,10 @@ D gf_xep (FN* fn, int n, ...) {
   int number_required = function_number_required(fn);
   BUFFER_VARARGS(n, n, teb->arguments);
   teb->function = fn; BASIC_REQUIRED_CALL_CHECK(fn, number_required, n);
-  {DEF_STACK_VECTOR_FROM_BUFFER(new_arguments, number_required, teb->arguments);
+  DEF_STACK_VECTOR_FROM_BUFFER(new_arguments, number_required, teb->arguments);
   return(gf_iep(new_arguments));
-}}
-
+}
+
 /* OPTIONAL GF XEP's */
 /*   numbered by the number of required arguments */
 
@@ -2524,58 +2542,64 @@ D gf_optional_xep_0 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 0; BASIC_OPTIONAL_CALL_CHECK(fn, 0, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
-  {DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[0]);
+  DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[0]);
   teb->a[0] = rest_arguments;
   return(gf_iep_1(teb->a[0]));
-}}
+}
+
 D gf_optional_xep_1 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 1; BASIC_OPTIONAL_CALL_CHECK(fn, 1, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
-  {DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[1]);
+  DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[1]);
   teb->a[1] = rest_arguments;
   return(gf_iep_2(teb->a[0], teb->a[1]));
-}}
+}
+
 D gf_optional_xep_2 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 2; BASIC_OPTIONAL_CALL_CHECK(fn, 2, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
-  {DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[2]);
+  DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[2]);
   teb->a[2] = rest_arguments;
   return(gf_iep_3(teb->a[0],teb->a[1],teb->a[2]));
-}}
+}
+
 D gf_optional_xep_3 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 3; BASIC_OPTIONAL_CALL_CHECK(fn, 3, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
-  {DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[3]);
+  DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[3]);
   teb->a[3] = rest_arguments;
   return(gf_iep_4(teb->a[0],teb->a[1],teb->a[2],teb->a[3]));
-}}
+}
+
 D gf_optional_xep_4 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 4; BASIC_OPTIONAL_CALL_CHECK(fn, 4, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
-  {DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[4]);
+  DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[4]);
   teb->a[4] = rest_arguments;
   return(gf_iep_5(teb->a[0],teb->a[1],teb->a[2],teb->a[3],teb->a[4]));
-}}
+}
+
 D gf_optional_xep_5 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 5; BASIC_OPTIONAL_CALL_CHECK(fn, 5, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
-  {DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[5]);
+  DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[5]);
   teb->a[5] = rest_arguments;
   return(gf_iep_6(teb->a[0],teb->a[1],teb->a[2],teb->a[3],teb->a[4],teb->a[5]));
-}}
+}
+
 D gf_optional_xep_6 (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int optionals_count = n - 6; BASIC_OPTIONAL_CALL_CHECK(fn, 6, n);
   teb->function = fn; BUFFER_VARARGS(n, n, teb->a);
-  {DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[6]);
+  DEF_STACK_VECTOR_FROM_BUFFER(rest_arguments, optionals_count, &teb->a[6]);
   teb->a[6] = rest_arguments;
   return(gf_iep_7(teb->a[0],teb->a[1],teb->a[2],teb->a[3],teb->a[4],teb->a[5],teb->a[6]));
-}}
+}
 
 D gf_optional_xep (FN* fn, int n, ...) {
   TEB* teb = get_teb();
@@ -2583,15 +2607,15 @@ D gf_optional_xep (FN* fn, int n, ...) {
     int optionals_count = n - number_required;
     BUFFER_VARARGS(n, n, teb->arguments);
     BASIC_OPTIONAL_CALL_CHECK(fn, number_required, n);
-   {DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
+    DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
       (new_arguments, number_required + 1, teb->arguments, number_required);
-   {DEF_STACK_VECTOR_FROM_BUFFER
+    DEF_STACK_VECTOR_FROM_BUFFER
       (rest_arguments, optionals_count, &teb->arguments[number_required]);
     vector_ref_setter(rest_arguments, new_arguments, number_required);
     teb->function = fn;
     return(gf_iep(new_arguments));
-}}}
-
+}
+
 /* dynamic setting of gf's entrypoints */
 
 D primitive_set_generic_function_entrypoints(D fn) {
@@ -2705,16 +2729,16 @@ D general_engine_node_spread_engine (D a1, ...) {
       /* The arguments are spread, the last one is the optionals vector. */
       teb->arguments[0] = a1;
       BUFFER_VARARGS(nreq, a1, &teb->arguments[1]);
-      { SOV* optargvec = (SOV*)teb->arguments[nreq];
-        D* optargdata = vector_data(optargvec);
-        int nopts = vector_size(optargvec);
-        DEF_STACK_VECTOR_INITTED(svec, nreq + nopts);
-        D* svdata = vector_data(svec);
-        int i;
-        for(i=0; i<nreq; i++) svdata[i] = teb->arguments[i];
-        for(i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
-        return(cb(svec, e, parent));
-      } }
+      SOV* optargvec = (SOV*)teb->arguments[nreq];
+      D* optargdata = vector_data(optargvec);
+      int nopts = vector_size(optargvec);
+      DEF_STACK_VECTOR_INITTED(svec, nreq + nopts);
+      D* svdata = vector_data(svec);
+      int i;
+      for(i=0; i<nreq; i++) svdata[i] = teb->arguments[i];
+      for(i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
+      return(cb(svec, e, parent));
+      }
   } else if (impargs > 7) {
     /* We have a vector of MEP args, and no optionals, so just use that vector. */
     return(cb(a1, e, parent));
@@ -3921,7 +3945,8 @@ D primitive_initialize_discriminator(D discriminator) {
     default:
       handler = discriminate_engine_n_n;
       break;
-    }};
+    }
+  }
   d->entry_point = (DLFN) handler;
   return(discriminator);
 }
@@ -4121,7 +4146,9 @@ void verify_nlx_bef(TEB* teb, Bind_exit_frame* bef) {
 }
 #endif
 
-void nlx_step (Bind_exit_frame* ultimate_destination) {
+static void nlx_step (Bind_exit_frame*) NORETURN_FUNCTION;
+
+static void nlx_step (Bind_exit_frame* ultimate_destination) {
   TEB* teb = get_teb();
 
 #ifdef VERIFY_NLX
@@ -4259,20 +4286,21 @@ D SETUP_UNWIND_FRAME (D frame) {
   return frame;
 }
 
-D FRAME_DEST (D frame)
-  { return((D)(((Bind_exit_frame*)frame)->destination)); }
+D FRAME_DEST (D frame) {
+  return((D)(((Bind_exit_frame*)frame)->destination));
+}
 
-D FRAME_RETVAL (D frame)
-  { /* TODO: real multiple values */
-          TEB* teb = get_teb();
-    Bind_exit_frame *bef = ((Bind_exit_frame*) frame);
-    /* Copy the multiple values into the result values MV */
-    COPY_WORDS
+D FRAME_RETVAL (D frame) {
+  /* TODO: real multiple values */
+  TEB* teb = get_teb();
+  Bind_exit_frame *bef = ((Bind_exit_frame*) frame);
+  /* Copy the multiple values into the result values MV */
+  COPY_WORDS
       (&(teb->return_values.value[0]),
        &(bef->return_values.value[0]),
        bef->return_values.count);
-    teb->return_values.count = bef->return_values.count;
-    return((D)(bef->return_values.value[0]));
+  teb->return_values.count = bef->return_values.count;
+  return((D)(bef->return_values.value[0]));
 }
 
 /* CLOSURES */
@@ -4424,28 +4452,28 @@ D primitive_apply_spread (D fn, int n, ...) {
 D primitive_mep_apply_spread (D fn, D nm, int n, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n, n, teb->buffer);
-  {SOV* v = (SOV*)teb->buffer[n - 1];
+  SOV* v = (SOV*)teb->buffer[n - 1];
   int v_size = vector_size(v);
   int new_size = n + v_size - 1;
-  {DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
+  DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
     (new_arguments, new_size, teb->buffer, n - 1);
   COPY_WORDS
     (&(vector_data(new_arguments)[n - 1]), vector_data(v), v_size);
   return(primitive_mep_apply((FN*)fn, nm, (D *)new_arguments));
-}}}
+}
 
 D primitive_engine_node_apply_spread (ENGINE* e, D parent, int n, ...) {
   TEB* teb = get_teb();
   BUFFER_VARARGS(n, n, teb->buffer);
-  {SOV* v = (SOV*)teb->buffer[n - 1];
+  SOV* v = (SOV*)teb->buffer[n - 1];
   int v_size = vector_size(v);
   int new_size = n + v_size - 1;
-  {DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
+  DEF_STACK_VECTOR_FROM_BUFFER_WITH_SIZE
     (new_arguments, new_size, teb->buffer, n - 1);
   COPY_WORDS
     (&(vector_data(new_arguments)[n - 1]), vector_data(v), v_size);
   return(primitive_engine_node_apply(e, parent, (D *)new_arguments));
-}}}
+}
 
 /* temporary primitives for assignment */
 
@@ -4602,7 +4630,7 @@ D pseudo_primitive_command_arguments () {
   return(Tcommand_argumentsT);
 }
 
-void  primitive_exit_application (DSINT code) {
+void primitive_exit_application (DSINT code) {
   exit(code);
 }
 
@@ -4673,16 +4701,16 @@ D primitive_stop_timer()
     stop.ru_utime.tv_sec -= 1;
   }
 
-  { SOV* value = make_vector(2);
-    D* data = (D*)vector_data(value);
-    data[0] = I(stop.ru_utime.tv_sec);
-    data[1] = I(stop.ru_utime.tv_usec);
-    return((D)value);
+  SOV* value = make_vector(2);
+  D* data = (D*)vector_data(value);
+  data[0] = I(stop.ru_utime.tv_sec);
+  data[1] = I(stop.ru_utime.tv_usec);
+  return((D)value);
 
   /*
   printf("%d.%03d", stop.ru_utime.tv_sec, stop.ru_utime.tv_usec / 1000);
   */
-}}
+}
 
 #endif
 
