@@ -32,7 +32,7 @@ define method jam-read-mkf
         #["DylanLibraryBaseAddress", #"base-address", #f],
         #["DylanLibraryLinkerOptions", #"linker-options", #t],
         #["DylanLibraryCLibraries", #"c-libraries", #t],
-        #["DylanLibraryCObjects", #"c-objects", #f],
+        #["DylanLibraryCObjects", #"c-object-files", #f],
         #["DylanLibraryCSources", #"c-source-files", #f],
         #["DylanLibraryCHeaders", #"c-header-files", #f],
         #["DylanLibraryRCFiles", #"rc-files", #f]];
