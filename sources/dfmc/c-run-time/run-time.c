@@ -875,9 +875,6 @@ DMINT primitive_machine_word_double_divide(DMINT xl, DMINT xh, DMINT y) {
 
 DMINT primitive_machine_word_count_low_zeros(DMINT x) {
   if (x == 0) return(DMINT)(primitive_word_size() * 8);
-#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-  return __builtin_ctz(x);
-#else
   DMINT mask4 = (DMINT)0xF;
   int index = (int)(mask4 & x);
   int count = 0;
@@ -886,14 +883,10 @@ DMINT primitive_machine_word_count_low_zeros(DMINT x) {
   /* scan for a non-zero low nibble. */
   for (; index == 0; count += 4, x >>= 4, index = (int)(mask4 & x)) {}
   return(DMINT)(count + t[index]);
-#endif
 }
 
 DMINT primitive_machine_word_count_high_zeros(DMINT x) {
   if (x == 0) return(DMINT)(primitive_word_size() * 8);
-#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-  return __builtin_clz(x);
-#else
   DUMINT ux = (DUMINT)x;
   DUMINT mask4 = ((DUMINT)0xF) << (primitive_word_size() * 8 - 4);
   DUMINT uindex = mask4 & ux;
@@ -904,7 +897,6 @@ DMINT primitive_machine_word_count_high_zeros(DMINT x) {
   for (; uindex == (DUMINT)0; count += 4, ux <<= 4, uindex = mask4 & ux) {}
   int index = (int)(uindex >> (primitive_word_size() * 8 - 4));
   return(DMINT)(count + t[index]);
-#endif
 }
 
 static void multiply_double (DMINT x, DMINT y, DUMINT* zl, DUMINT* zh) {
