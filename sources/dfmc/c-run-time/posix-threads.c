@@ -13,6 +13,7 @@
 
 #include "trace.h"
 
+#include <errno.h>
 #include <assert.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -21,8 +22,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include <pthread.h>
-#include <time.h>
+#include <limits.h>
 
 #include <gc/gc.h>
 
@@ -665,34 +665,24 @@ D primitive_wait_for_simple_lock(D l)
 {
   CONTAINER   *lock = (CONTAINER *)l;
   SIMPLELOCK  *slock;
-  pthread_t    thread;
+  TEB         *teb;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
 
+  teb = get_teb();
   slock = lock->handle;
-  thread = pthread_self();
 
-  if (slock->owner == thread) {
-    MSG1("wait-for-simple-lock: Error, thread %d already owns the lock\n",
-         thread);
+  int res = pthread_mutex_lock(&slock->mutex);
+  if (res == EDEADLK) {
     return ALREADY_LOCKED;
   }
-
-  if (pthread_mutex_lock(&slock->mutex)) {
+  if (res) {
     MSG0("wait-for-simple-lock: Error locking mutex\n");
     return GENERAL_ERROR;
   }
 
-  while (slock->owner != 0)
-    pthread_cond_wait(&slock->cond, &slock->mutex);
-
-  slock->owner = thread;
-
-  if (pthread_mutex_unlock(&slock->mutex)) {
-    MSG0("wait-for-simple-lock: Error unlocking mutex\n");
-    return GENERAL_ERROR;
-  }
+  slock->owner = teb;
 
   return OK;
 }
@@ -703,25 +693,25 @@ D primitive_wait_for_recursive_lock(D l)
 {
   CONTAINER     *lock = (CONTAINER *)l;
   RECURSIVELOCK *rlock;
-  pthread_t      thread;
+  TEB           *teb;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
 
+  teb = get_teb();
   rlock = lock->handle;
-  thread = pthread_self();
 
-  if (rlock->owner == thread) {
-    rlock->count++;
+  int res = pthread_mutex_lock(&rlock->mutex);
+  if (res == EDEADLK) {
+    return ALREADY_LOCKED;
   }
-  else {
-    pthread_mutex_lock(&rlock->mutex);
-    while(rlock->owner != 0)
-      pthread_cond_wait(&rlock->cond, &rlock->mutex);
-    rlock->owner = thread;
-    rlock->count = 1;
-    pthread_mutex_unlock(&rlock->mutex);
+  if (res) {
+    MSG0("wait-for-recursive-lock: Error locking mutex\n");
+    return GENERAL_ERROR;
   }
+
+  rlock->owner = teb;
+
   return OK;
 }
 
@@ -736,19 +726,10 @@ D primitive_wait_for_semaphore(D l)
   assert(lock->handle != NULL);
 
   semaphore = lock->handle;
-  if (pthread_mutex_lock(&semaphore->mutex)) {
-    MSG0("wait-for-semaphore: pthread_mutex_lock returned error\n");
-    return GENERAL_ERROR;
-  }
 
-  while (semaphore->count <= 0) {
-    pthread_cond_wait(&semaphore->cond, &semaphore->mutex);
-  }
-
-  semaphore->count--;
-
-  if (pthread_mutex_unlock(&semaphore->mutex)) {
-    MSG0("wait-for-semaphore: pthread_mutex_unlock returned error\n");
+  int res = sem_wait(&semaphore->semaphore);
+  if (res) {
+    MSG0("wait-for-semaphore: sem_wait returned error\n");
     return GENERAL_ERROR;
   }
 
@@ -762,8 +743,8 @@ D primitive_wait_for_notification(D n, D l)
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
+  SIMPLELOCK    *slock;
   int            error;
-  uintptr_t      owned;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -771,28 +752,11 @@ D primitive_wait_for_notification(D n, D l)
   assert(lock->handle != NULL);
 
   notification = notif->handle;
+  slock = lock->handle;
 
-  // make sure thread owns the simple lock
-  owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
-  if (owned == 0) {
-    MSG0("wait-for-notification: Don't own associated lock\n");
-    return NOT_LOCKED;
-  }
-
-  if (pthread_mutex_lock(&notification->mutex)
-      || primitive_release_simple_lock(lock) != OK) {
-    MSG0("wait-for-notification: Error releasing associated lock");
-    return GENERAL_ERROR;
-  }
-  error = pthread_cond_wait(&notification->cond, &notification->mutex);
-  if (primitive_wait_for_simple_lock(lock) != OK
-      || pthread_mutex_unlock(&notification->mutex)) {
-    MSG0("wait-for-notification: Error claiming associated lock");
-    return GENERAL_ERROR;
-  }
-
+  error = pthread_cond_wait(&notification->cond, &slock->mutex);
   if (error) {
-    MSG0("wait-for-notification: error waiting for condition variable");
+    MSG0("wait-for-notification: Error claiming associated lock");
     return GENERAL_ERROR;
   }
 
@@ -806,8 +770,7 @@ D primitive_wait_for_simple_lock_timed(D l, D ms)
   CONTAINER   *lock = (CONTAINER *)l;
   ZINT         zmilsecs = (ZINT)ms;
   SIMPLELOCK  *slock;
-  pthread_t    thread;
-  int          timeout = 0;
+  TEB         *teb;
   long         milsecs, secs;
   struct timespec end;
 
@@ -815,13 +778,8 @@ D primitive_wait_for_simple_lock_timed(D l, D ms)
   assert(lock->handle != NULL);
   assert(IS_ZINT(zmilsecs));
 
+  teb = get_teb();
   slock = lock->handle;
-  thread = pthread_self();
-
-  if (slock->owner == thread) {
-    MSG0("wait-for-simple-lock-timed: Error. Already own the lock\n");
-    return ALREADY_LOCKED;
-  }
 
   time(&end.tv_sec);
   milsecs = zmilsecs >> 2;
@@ -830,23 +788,21 @@ D primitive_wait_for_simple_lock_timed(D l, D ms)
   milsecs = milsecs % 1000;
   end.tv_nsec = milsecs * 1000000L;
 
-  if (pthread_mutex_lock(&slock->mutex)) {
-    MSG0("wait-for-simple-lock-timed: Error locking mutex\n");
+  int res = pthread_mutex_timedlock(&slock->mutex, &end);
+  if (res == ETIMEDOUT) {
+    return TIMEOUT;
+  }
+  if (res == EDEADLK) {
+    return ALREADY_LOCKED;
+  }
+  if (res) {
+    MSG0("wait-for-simple-lock-timed: Error unlocking mutex\n");
     return GENERAL_ERROR;
   }
 
-  while (slock->owner != 0 && !timeout)
-    timeout = pthread_cond_timedwait(&slock->cond, &slock->mutex, &end);
+  slock->owner = teb;
 
-  if (!timeout)
-    slock->owner = thread;
-
-  if (pthread_mutex_unlock(&slock->mutex)) {
-    MSG0("wait-for-simple-lock: Error unlocking mutex\n");
-    return GENERAL_ERROR;
-  }
-
-  return (timeout ? TIMEOUT : OK);
+  return OK;
 }
 
 
@@ -856,8 +812,7 @@ D primitive_wait_for_recursive_lock_timed(D l, D ms)
   CONTAINER       *lock = (CONTAINER *)l;
   ZINT             zmilsecs = (ZINT)ms;
   RECURSIVELOCK   *rlock;
-  pthread_t        thread;
-  int              timeout = 0;
+  TEB             *teb;
   long             milsecs, secs;
   struct timespec  end;
 
@@ -865,13 +820,8 @@ D primitive_wait_for_recursive_lock_timed(D l, D ms)
   assert(lock->handle != NULL);
   assert(IS_ZINT(zmilsecs));
 
+  teb = get_teb();
   rlock = lock->handle;
-  thread = pthread_self();
-
-  if (rlock->owner == thread) {
-    rlock->count++;
-    return OK;
-  }
 
   time(&end.tv_sec);
   milsecs = zmilsecs >> 2;
@@ -879,22 +829,22 @@ D primitive_wait_for_recursive_lock_timed(D l, D ms)
   end.tv_sec += secs;
   milsecs = milsecs % 1000;
   end.tv_nsec = milsecs * 1000000L;
-  pthread_mutex_lock(&rlock->mutex);
 
-  while (rlock->owner != 0 && !timeout)
-    timeout = pthread_cond_timedwait(&rlock->cond, &rlock->mutex, &end);
-
-  if (!timeout) {
-    rlock->owner = thread;
-    rlock->count = 1;
+  int res = pthread_mutex_timedlock(&rlock->mutex, &end);
+  if (res == ETIMEDOUT) {
+    return TIMEOUT;
   }
-
-  if (pthread_mutex_unlock(&rlock->mutex)) {
+  if (res == EDEADLK) {
+    return ALREADY_LOCKED;
+  }
+  if (res) {
     MSG0("wait-for-recursive-lock-timed: Error unlocking mutex\n");
     return GENERAL_ERROR;
   }
 
-  return (timeout ? TIMEOUT : OK);
+  rlock->owner = teb;
+
+  return OK;
 }
 
 
@@ -904,7 +854,6 @@ D primitive_wait_for_semaphore_timed(D l, D m)
   CONTAINER  *lock = (CONTAINER *)l;
   ZINT        zmilsecs = (ZINT)m;
   SEMAPHORE  *semaphore;
-  int         timeout = 0;
   long        milsecs, secs;
   struct timespec time_limit;
 
@@ -920,29 +869,17 @@ D primitive_wait_for_semaphore_timed(D l, D m)
   time_limit.tv_nsec = milsecs * 10;
 
   semaphore = lock->handle;
-  if (pthread_mutex_lock(&semaphore->mutex)) {
-    MSG0("wait-for-semaphore: pthread_mutex_lock returned error\n");
-    return GENERAL_ERROR;
-  }
 
-  while (!timeout && semaphore->count <= 0) {
-    timeout = pthread_cond_timedwait(&semaphore->cond,
-                                     &semaphore->mutex,
-                                     &time_limit);
-  }
-
-  if (!timeout)
-    semaphore->count--;
-
-  if (pthread_mutex_unlock(&semaphore->mutex)) {
-    MSG0("wait-for-semaphore: pthread_mutex_unlock returned error\n");
-    return GENERAL_ERROR;
-  }
-
-  if (timeout)
+  int res = sem_timedwait(&semaphore->semaphore, &time_limit);
+  if (res == ETIMEDOUT) {
     return TIMEOUT;
-  else
-    return OK;
+  }
+  if (res) {
+    MSG0("wait-for-semaphore: sem_timedwait returned error\n");
+    return GENERAL_ERROR;
+  }
+
+  return OK;
 }
 
 
@@ -953,8 +890,8 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   CONTAINER     *lock = (CONTAINER *)l;
   ZINT           zmilsecs = (ZINT)m;
   NOTIFICATION  *notification;
-  int            milsecs, secs, timeout;
-  uintptr_t      owned;
+  SIMPLELOCK    *slock;
+  int            milsecs, secs;
   struct timespec limit;
 
   assert(notif != NULL);
@@ -964,6 +901,8 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   assert(IS_ZINT(zmilsecs));
 
   notification = notif->handle;
+  slock = lock->handle;
+
   milsecs = zmilsecs >> 2;
 
   time(&limit.tv_sec);
@@ -972,21 +911,13 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   milsecs = milsecs % 1000;
   limit.tv_nsec = milsecs * 1000000L;
 
-  owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
-  if (owned == 0) {
-    MSG0("wait-for-notification-timed: Don't own associated lock\n");
-    return NOT_LOCKED;
-  }
-
-  pthread_mutex_lock(&notification->mutex);
-  primitive_release_simple_lock(lock);
-  timeout = pthread_cond_timedwait(&notification->cond, &notification->mutex, &limit);
-  primitive_wait_for_simple_lock(lock);
-  pthread_mutex_unlock(&notification->mutex);
-
-  if (timeout) {
-    MSG0("wait-for-notification-timed: timeout\n");
+  int res = pthread_cond_timedwait(&notification->cond, &slock->mutex, &limit);
+  if (res == ETIMEDOUT) {
     return TIMEOUT;
+  }
+  if (res) {
+    MSG0("wait-for-notification-timed: error\n");
+    return GENERAL_ERROR;
   }
 
   return OK;
@@ -998,26 +929,23 @@ D primitive_release_simple_lock(D l)
 {
   CONTAINER   *lock = (CONTAINER *)l;
   SIMPLELOCK  *slock;
-  pthread_t    thread;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
 
   slock = lock->handle;
-  thread = pthread_self();
-
-  if (slock->owner != thread) {
-    MSG0("release-simple-lock: Error, don't own the lock\n");
-    return NOT_LOCKED;
-  }
 
   slock->owner = 0;
-  if (pthread_mutex_lock(&slock->mutex)
-      || pthread_cond_signal(&slock->cond)
-      || pthread_mutex_unlock(&slock->mutex)) {
+
+  int res = pthread_mutex_unlock(&slock->mutex);
+  if (res == EPERM) {
+    return NOT_LOCKED;
+  }
+  if (res) {
     MSG0("release-simple-lock: error signalling cond\n");
     return GENERAL_ERROR;
   }
+
   return OK;
 }
 
@@ -1027,29 +955,21 @@ D primitive_release_recursive_lock(D l)
 {
   CONTAINER      *lock = (CONTAINER *)l;
   RECURSIVELOCK  *rlock;
-  pthread_t       thread;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
 
   rlock = lock->handle;
-  thread = pthread_self();
 
-  if (rlock->owner != thread) {
-    MSG0("release-recursive-lock: Error, don't own the lock\n");
+  rlock->owner = 0;
+
+  int res = pthread_mutex_unlock(&rlock->mutex);
+  if (res == EPERM) {
     return NOT_LOCKED;
   }
-
-  rlock->count--;
-  if (rlock->count < 1) {
-    // Give up the lock
-    rlock->owner = 0;
-    if (pthread_mutex_lock(&rlock->mutex)
-        || pthread_cond_signal(&rlock->cond)
-        || pthread_mutex_unlock(&rlock->mutex)) {
-      MSG0("release-recursive-lock: error signalling cond\n");
-      return GENERAL_ERROR;
-    }
+  if (res) {
+    MSG0("release-simple-lock: error signalling cond\n");
+    return GENERAL_ERROR;
   }
 
   return OK;
@@ -1066,20 +986,10 @@ D primitive_release_semaphore(D l)
   assert(lock->handle != NULL);
 
   semaphore = lock->handle;
-  if (pthread_mutex_lock(&semaphore->mutex)) {
-    MSG0("release-semaphore: pthread_mutex_lock returned error\n");
-    return GENERAL_ERROR;
-  }
 
-  if (semaphore->count >= semaphore->max_count) {
-    MSG0("release-semaphore: count exceeded\n");
-    return COUNT_EXCEEDED;
-  }
-
-  semaphore->count++;
-  if (pthread_mutex_unlock(&semaphore->mutex)
-      || pthread_cond_signal(&semaphore->cond)) {
-    MSG0("release-semaphore: error releasing semaphore\n");
+  int res = sem_post(&semaphore->semaphore);
+  if (res) {
+    MSG0("release-semaphore: sem_post returned error\n");
     return GENERAL_ERROR;
   }
 
@@ -1093,7 +1003,6 @@ D primitive_release_notification(D n, D l)
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
-  uintptr_t      owned;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -1101,15 +1010,8 @@ D primitive_release_notification(D n, D l)
   assert(lock->handle != NULL);
 
   notification = notif->handle;
-  owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
-  if (owned == 0) {
-    MSG0("release-notification: Don't own associated lock\n");
-    return NOT_LOCKED;
-  }
 
-  if (pthread_mutex_lock(&notification->mutex)
-      || pthread_cond_signal(&notification->cond)
-      || pthread_mutex_unlock(&notification->mutex)) {
+  if (pthread_cond_signal(&notification->cond)) {
     MSG0("release-notification: error signalling condition variable\n");
     return GENERAL_ERROR;
   }
@@ -1124,7 +1026,6 @@ D primitive_release_all_notification(D n, D l)
   CONTAINER     *notif = (CONTAINER *)n;
   CONTAINER     *lock = (CONTAINER *)l;
   NOTIFICATION  *notification;
-  uintptr_t      owned;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -1132,15 +1033,8 @@ D primitive_release_all_notification(D n, D l)
   assert(lock->handle != NULL);
 
   notification = notif->handle;
-  owned = (uintptr_t)primitive_owned_simple_lock(lock) >> 2;
-  if (owned == 0) {
-    MSG0("release-all-notification: Don't own associated lock\n");
-    return NOT_LOCKED;
-  }
 
-  if (pthread_mutex_lock(&notification->mutex)
-      || pthread_cond_broadcast(&notification->cond)
-      || pthread_mutex_unlock(&notification->mutex)) {
+  if (pthread_cond_broadcast(&notification->cond)) {
     MSG0("release-all-notification: error broadcasting condition variable");
     return GENERAL_ERROR;
   }
@@ -1155,6 +1049,9 @@ D primitive_make_recursive_lock(D l, D n)
   CONTAINER      *lock = (CONTAINER *)l;
   RECURSIVELOCK  *rlock;
 
+  int                 res;
+  pthread_mutexattr_t attrs;
+
   ignore(n);
 
   assert(lock != NULL);
@@ -1165,16 +1062,32 @@ D primitive_make_recursive_lock(D l, D n)
     return GENERAL_ERROR;
   }
 
-  rlock->count = 0;
-  rlock->owner = 0;
-  if (pthread_mutex_init(&rlock->mutex, NULL)
-      || pthread_cond_init(&rlock->cond, NULL)) {
-    MSG0("make-recursive-lock: error creating mutex\n");
-    free(rlock);
-    return GENERAL_ERROR;
+  res = pthread_mutexattr_init(&attrs);
+  if (res) {
+    MSG0("make-recursive-lock: pthread_mutexattr_init returned error\n");
+    goto err;
   }
+  res = pthread_mutexattr_settype(&attrs, PTHREAD_MUTEX_RECURSIVE);
+  if (res) {
+    MSG0("make-recursive-lock: pthread_mutexattr_settype returned error\n");
+    goto err;
+  }
+  res = pthread_mutex_init(&rlock->mutex, &attrs);
+  if (res) {
+    MSG0("make-recursive-lock: pthread_mutex_init returned error\n");
+    goto err;
+  }
+
+  rlock->owner = 0;
+
   lock->handle = rlock;
+
   return OK;
+
+ err:
+  MSG0("make-recursive-lock: error creating mutex\n");
+  free(rlock);
+  return GENERAL_ERROR;
 }
 
 
@@ -1188,8 +1101,8 @@ D primitive_destroy_recursive_lock(D l)
   assert(lock->handle != NULL);
 
   rlock = lock->handle;
-  if (pthread_mutex_destroy(&rlock->mutex)
-      || pthread_cond_destroy(&rlock->cond)) {
+  int res = pthread_mutex_destroy(&rlock->mutex);
+  if (res) {
     MSG0("destroy-recursive-lock: error destroying mutex\n");
     return GENERAL_ERROR;
   }
@@ -1204,6 +1117,9 @@ D primitive_make_simple_lock(D l, D n)
   CONTAINER  *lock = (CONTAINER *)l;
   SIMPLELOCK *slock;
 
+  int                 res;
+  pthread_mutexattr_t attrs;
+
   ignore(n);
 
   assert(lock != NULL);
@@ -1214,15 +1130,32 @@ D primitive_make_simple_lock(D l, D n)
     return GENERAL_ERROR;
   }
 
-  if (pthread_mutex_init(&slock->mutex, NULL)
-      || pthread_cond_init(&slock->cond, NULL)) {
-    MSG0("make-simple-lock: error creating mutex/cond\n");
-    free(slock);
-    return GENERAL_ERROR;
+  res = pthread_mutexattr_init(&attrs);
+  if (res) {
+    MSG0("make-simple-lock: pthread_mutexattr_init returned error\n");
+    goto err;
   }
+  res = pthread_mutexattr_settype(&attrs, PTHREAD_MUTEX_ERRORCHECK);
+  if (res) {
+    MSG0("make-simple-lock: pthread_mutexattr_settype returned error\n");
+    goto err;
+  }
+  res = pthread_mutex_init(&slock->mutex, &attrs);
+  if (res) {
+    MSG0("make-simple-lock: pthread_mutex_init returned error\n");
+    goto err;
+  }
+
   slock->owner = 0;
+
   lock->handle = slock;
+
   return OK;
+
+ err:
+  MSG0("make-simple-lock: error creating mutex\n");
+  free(slock);
+  return GENERAL_ERROR;
 }
 
 
@@ -1236,8 +1169,7 @@ D primitive_destroy_simple_lock(D l)
   assert(lock->handle != NULL);
 
   slock = lock->handle;
-  if (pthread_mutex_destroy(&slock->mutex)
-      || pthread_cond_destroy(&slock->cond)) {
+  if (pthread_mutex_destroy(&slock->mutex)) {
     MSG0("destroy-simple-lock: pthread_mutex_destroy returned error\n");
     return GENERAL_ERROR;
   }
@@ -1252,14 +1184,15 @@ D primitive_owned_simple_lock(D l)
 {
   CONTAINER   *lock = (CONTAINER *)l;
   SIMPLELOCK  *slock;
-  pthread_t    thread;
+  TEB         *teb;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
 
+  teb = get_teb();
   slock = lock->handle;
-  thread = pthread_self();
-  if (slock->owner == thread)
+
+  if (slock->owner == teb)
     return(I(1));        // owned
   else
     return(I(0));        // not owned
@@ -1271,15 +1204,15 @@ D primitive_owned_recursive_lock(D l)
 {
   CONTAINER      *lock = (CONTAINER *)l;
   RECURSIVELOCK  *rlock;
-  pthread_t       thread;
+  TEB            *teb;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
 
+  teb = get_teb();
   rlock = lock->handle;
 
-  thread = pthread_self();
-  if (rlock->owner == thread)
+  if (rlock->owner == teb)
     return(I(1));     // owned
   else
     return(I(0));     // not owned
@@ -1295,6 +1228,7 @@ D primitive_make_semaphore(D l, D n, D i, D m)
   SEMAPHORE  *semaphore;
   int         initial = zinitial >> 2;
   int         max   = zmax >> 2;
+  int         res;
 
   ignore(n);
 
@@ -1302,19 +1236,24 @@ D primitive_make_semaphore(D l, D n, D i, D m)
   assert(IS_ZINT(zinitial));
   assert(IS_ZINT(zmax));
 
+  if (max > SEM_VALUE_MAX) {
+    MSG0("make-semaphore: max value exceeds system capabilities\n");
+    return GENERAL_ERROR;
+  }
+
   semaphore = (SEMAPHORE *)malloc(sizeof(SEMAPHORE));
   if (semaphore == NULL) {
     MSG0("make-semaphore: malloc failed\n");
     return GENERAL_ERROR;
   }
-  if (pthread_mutex_init(&semaphore->mutex, NULL)
-      || pthread_cond_init(&semaphore->cond, NULL)) {
-    MSG0("make-semaphore: error initializing OS objects\n");
+
+  res = sem_init(&semaphore->semaphore, 0, initial);
+  if(res) {
+    MSG0("make-semaphore: sem_init returned error\n");
     free(semaphore);
     return GENERAL_ERROR;
   }
-  semaphore->count = initial;
-  semaphore->max_count = max;
+
   lock->handle = semaphore;
 
   return OK;
@@ -1331,9 +1270,8 @@ D primitive_destroy_semaphore(D l)
   assert(lock->handle != NULL);
 
   semaphore = lock->handle;
-  if (pthread_mutex_destroy(&semaphore->mutex)
-      || pthread_cond_destroy(&semaphore->cond)) {
-    MSG0("destroy-semaphore: error destroying OS objects\n");
+  if (sem_destroy(&semaphore->semaphore)) {
+    MSG0("destroy-semaphore: sem_destroy returned errir\n");
     return GENERAL_ERROR;
   }
   free(semaphore);
@@ -1355,8 +1293,7 @@ D primitive_make_notification(D n, D s)
     MSG0("make-notification: malloc returned error\n");
     return GENERAL_ERROR;
   }
-  if (pthread_mutex_init(&notification->mutex, NULL)
-      || pthread_cond_init(&notification->cond, NULL)) {
+  if (pthread_cond_init(&notification->cond, NULL)) {
     MSG0("make-notification: error creating condition variable\n");
     free(notification);
     return GENERAL_ERROR;
@@ -1376,8 +1313,7 @@ D primitive_destroy_notification(D n)
   assert(notif->handle != NULL);
 
   notification = notif->handle;
-  if (pthread_mutex_destroy(&notification->mutex)
-      || pthread_cond_destroy(&notification->cond)) {
+  if (pthread_cond_destroy(&notification->cond)) {
     MSG0("destroy-notification: error destroying condition variable\n");
     return GENERAL_ERROR;
   }
@@ -1550,18 +1486,19 @@ D primitive_unlock_simple_lock(D l)
   assert(lock->handle != NULL);
 
   slock = lock->handle;
+
   if (slock->owner == 0) {
     /* nothing to do - lock already released */
     return OK;
   }
 
   slock->owner = 0;
-  if (pthread_mutex_lock(&slock->mutex)
-      || pthread_cond_signal(&slock->cond)
-      || pthread_mutex_unlock(&slock->mutex)) {
+
+  if (pthread_mutex_unlock(&slock->mutex)) {
     MSG0("unlock-simple-lock: error releasing mutex\n");
     return GENERAL_ERROR;
   }
+
   return OK;
 }
 
@@ -1576,17 +1513,15 @@ D primitive_unlock_recursive_lock(D l)
   assert(lock->handle != NULL);
 
   rlock = lock->handle;
+
   if (rlock->owner == 0) {
-    // nothing to do - lock already released
-    assert(rlock->count == 0);
+    /* nothing to do - lock already released */
     return OK;
   }
 
   rlock->owner = 0;
-  rlock->count = 0;
-  if (pthread_mutex_lock(&rlock->mutex)
-      || pthread_cond_signal(&rlock->cond)
-      || pthread_mutex_unlock(&rlock->mutex)) {
+
+  if (pthread_mutex_unlock(&rlock->mutex)) {
     MSG0("unlock-recursive-lock: error signalling cond\n");
     return GENERAL_ERROR;
   }

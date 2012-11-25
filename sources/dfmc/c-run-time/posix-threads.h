@@ -17,7 +17,9 @@
 
 #include <stdint.h>
 
+#include <time.h>
 #include <pthread.h>
+#include <semaphore.h>
 
 #ifndef THREADS_RUN_TIME_H
 #define THREADS_RUN_TIME_H
@@ -120,27 +122,20 @@ typedef struct thread {
  */
 
 typedef struct simple_lock {
-  pthread_t        owner;
+  TEB             *owner; // for owned?
   pthread_mutex_t  mutex;
-  pthread_cond_t   cond;
 } SIMPLELOCK;
 
 typedef struct recursive_lock {
-  pthread_t        owner;
-  int              count;
+  TEB             *owner; // for owned?
   pthread_mutex_t  mutex;
-  pthread_cond_t   cond;
 } RECURSIVELOCK;
 
 typedef struct semaphore {
-  pthread_mutex_t mutex;
-  pthread_cond_t  cond;
-  int             count;
-  int             max_count;
+  sem_t           semaphore;
 } SEMAPHORE;
 
 typedef struct {
-  pthread_mutex_t  mutex;
   pthread_cond_t   cond;
 } NOTIFICATION;
 
