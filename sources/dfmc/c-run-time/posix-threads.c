@@ -710,6 +710,8 @@ D primitive_wait_for_recursive_lock(D l)
     return GENERAL_ERROR;
   }
 
+  atomic_increment(&rlock->count);
+
   rlock->owner = teb;
 
   return OK;
@@ -842,6 +844,8 @@ D primitive_wait_for_recursive_lock_timed(D l, D ms)
     return GENERAL_ERROR;
   }
 
+  atomic_increment(&rlock->count);
+
   rlock->owner = teb;
 
   return OK;
@@ -961,8 +965,6 @@ D primitive_release_recursive_lock(D l)
 
   rlock = lock->handle;
 
-  rlock->owner = 0;
-
   int res = pthread_mutex_unlock(&rlock->mutex);
   if (res == EPERM) {
     return NOT_LOCKED;
@@ -971,6 +973,8 @@ D primitive_release_recursive_lock(D l)
     MSG0("release-simple-lock: error signalling cond\n");
     return GENERAL_ERROR;
   }
+
+  atomic_decrement(&rlock->count);
 
   return OK;
 }
@@ -1079,6 +1083,7 @@ D primitive_make_recursive_lock(D l, D n)
   }
 
   rlock->owner = 0;
+  rlock->count = 0;
 
   lock->handle = rlock;
 
@@ -1212,7 +1217,7 @@ D primitive_owned_recursive_lock(D l)
   teb = get_teb();
   rlock = lock->handle;
 
-  if (rlock->owner == teb)
+  if (rlock->owner == teb && rlock->count)
     return(I(1));     // owned
   else
     return(I(0));     // not owned
@@ -1514,12 +1519,13 @@ D primitive_unlock_recursive_lock(D l)
 
   rlock = lock->handle;
 
-  if (rlock->owner == 0) {
+  if (rlock->count == 0) {
     /* nothing to do - lock already released */
     return OK;
   }
 
   rlock->owner = 0;
+  rlock->count = 0;
 
   if (pthread_mutex_unlock(&rlock->mutex)) {
     MSG0("unlock-recursive-lock: error signalling cond\n");

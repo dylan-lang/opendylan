@@ -128,6 +128,7 @@ typedef struct simple_lock {
 
 typedef struct recursive_lock {
   TEB             *owner; // for owned?
+  long             count;
   pthread_mutex_t  mutex;
 } RECURSIVELOCK;
 
