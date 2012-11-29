@@ -59,7 +59,7 @@ define sideways method emit-library-record
                           harp-output?: harp-output?,
                           assembler-output?: assembler-output?)
         let name = cr.compilation-record-source-record.source-record-name;
-        progress-line("Linking %s.dylan", name);
+        progress-line("  Linking %s.dylan", name);
         apply(link-all, back-end, stream, cr, ld, flags);
       end with-harp-outputter;
     end method emitter;

@@ -25,7 +25,7 @@ define sideways method emit-library-record
       with-build-area-output
         (stream = ld, base: compilation-record-name(cr), type: "c")
         let name = cr.compilation-record-source-record.source-record-name;
-        progress-line("Linking %s.dylan", name);
+        progress-line("  Linking %s.dylan", name);
         link-all(back-end, stream, cr);
         c-file := stream-locator(stream);
       end;
