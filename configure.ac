@@ -144,6 +144,21 @@ AC_SUBST(GC_CFLAGS)
 AC_SUBST(GC_LFLAGS)
 AC_SUBST(GC_CHOICE)
 
+# We don't want to build generated code with warnings enabled usually.
+# The exception to this is if the person running configure has passed
+# in CFLAGS with -W options ...
+AC_MSG_CHECKING(if we should disable C compiler warnings for generated code)
+AS_IF([echo "$CFLAGS" | grep -q -- "-W" 2> /dev/null],
+      [
+        DISABLE_WARNINGS_CFLAGS=
+        AC_MSG_RESULT(no)
+      ],[
+        DISABLE_WARNINGS_CFLAGS=-w
+        AC_MSG_RESULT(yes)
+      ]
+)
+AC_SUBST(DISABLE_WARNINGS_CFLAGS)
+
 # for now, replace mps only in pentium-linux
 # gc is also replaced in sources/dfmc/c-run-time
 AC_CONFIG_FILES(Makefile

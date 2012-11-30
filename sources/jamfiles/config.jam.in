@@ -4,6 +4,6 @@
 #
 
 CC        ?= @CC@ ;
-CCFLAGS   ?= @CFLAGS@ ;
+CCFLAGS   ?= @DISABLE_WARNINGS_CFLAGS@ @CFLAGS@ ;
 GC_CFLAGS ?= @GC_CFLAGS@ ;
 GC_LFLAGS ?= @GC_LFLAGS@ ;
