@@ -80,8 +80,12 @@ define method emit-local-tmp-definition
   let type = type-estimate(tmp); // lookup-type(tmp, current-css(), tmp.generator);
   // A bit nasty, but the right thing to do (see the emit-computation
   // on <make-cell>, <get-cell-value>, <set-cell-value>)
-  if (tmp.cell? & closed-over?(tmp))
-    emit-parameter-type(back-end, stream, dylan-value(#"<object>"));
+  if (tmp.cell?)
+    if(closed-over?(tmp))
+      emit-parameter-type(back-end, stream, dylan-value(#"<object>"));
+    else
+      emit-parameter-type(back-end, stream, cell-representation-type(tmp));
+    end;
   else
     emit-parameter-type(back-end, stream, type);
   end;
