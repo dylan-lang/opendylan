@@ -797,11 +797,29 @@ D primitive_wait_for_semaphore(D l)
 
   semaphore = lock->handle;
 
+#ifdef HAVE_POSIX_SEMAPHORES
   int res = sem_wait(&semaphore->semaphore);
   if (res) {
     MSG0("wait-for-semaphore: sem_wait returned error\n");
     return GENERAL_ERROR;
   }
+#else
+  if (pthread_mutex_lock(&semaphore->mutex)) {
+    MSG0("wait-for-semaphore: pthread_mutex_lock returned error\n");
+    return GENERAL_ERROR;
+  }
+
+  while (semaphore->count <= 0) {
+    pthread_cond_wait(&semaphore->cond, &semaphore->mutex);
+  }
+
+  semaphore->count--;
+
+  if (pthread_mutex_unlock(&semaphore->mutex)) {
+    MSG0("wait-for-semaphore: pthread_mutex_unlock returned error\n");
+    return GENERAL_ERROR;
+  }
+#endif
 
   return OK;
 }
@@ -933,6 +951,7 @@ D primitive_wait_for_semaphore_timed(D l, D m)
 
   semaphore = lock->handle;
 
+#ifdef HAVE_POSIX_SEMAPHORES
   int res = sem_timedwait(&semaphore->semaphore, &end);
   if (res == ETIMEDOUT) {
     return TIMEOUT;
@@ -941,6 +960,26 @@ D primitive_wait_for_semaphore_timed(D l, D m)
     MSG0("wait-for-semaphore: sem_timedwait returned error\n");
     return GENERAL_ERROR;
   }
+#else
+  if(pthread_mutex_lock(&semaphore->mutex)) {
+    MSG0("wait-for-semaphore: pthread_mutex_lock returned error\n");
+    return GENERAL_ERROR;
+  }
+
+  while (semaphore->count <= 0) {
+    int res = pthread_cond_timedwait(&semaphore->cond, &semaphore->mutex, &end);
+    if(res == ETIMEDOUT) {
+      return TIMEOUT;
+    }
+  }
+
+  semaphore->count--;
+
+  if (pthread_mutex_unlock(&semaphore->mutex)) {
+    MSG0("wait-for-semaphore: pthread_mutex_unlock returned error\n");
+    return GENERAL_ERROR;
+  }
+#endif
 
   return OK;
 }
@@ -1046,11 +1085,31 @@ D primitive_release_semaphore(D l)
 
   semaphore = lock->handle;
 
+#ifdef HAVE_POSIX_SEMAPHORES
   int res = sem_post(&semaphore->semaphore);
   if (res) {
     MSG0("release-semaphore: sem_post returned error\n");
     return GENERAL_ERROR;
   }
+#else
+  if (pthread_mutex_lock(&semaphore->mutex)) {
+    MSG0("release-semaphore: pthread_mutex_lock returned error\n");
+    return GENERAL_ERROR;
+  }
+
+  if (semaphore->count >= semaphore->max_count) {
+    MSG0("release-semaphore: count exceeded\n");
+    return COUNT_EXCEEDED;
+  }
+
+  semaphore->count++;
+
+  if (pthread_mutex_unlock(&semaphore->mutex)
+      || pthread_cond_signal(&semaphore->cond)) {
+    MSG0("release-semaphore: error releasing semaphore\n");
+    return GENERAL_ERROR;
+  }
+#endif
 
   return OK;
 }
@@ -1288,7 +1347,6 @@ D primitive_make_semaphore(D l, D n, D i, D m)
   SEMAPHORE  *semaphore;
   int         initial = zinitial >> 2;
   int         max   = zmax >> 2;
-  int         res;
 
   ignore(n);
 
@@ -1296,10 +1354,12 @@ D primitive_make_semaphore(D l, D n, D i, D m)
   assert(IS_ZINT(zinitial));
   assert(IS_ZINT(zmax));
 
+#ifdef HAVE_POSIX_SEMAPHORES
   if (max > SEM_VALUE_MAX) {
     MSG0("make-semaphore: max value exceeds system capabilities\n");
     return GENERAL_ERROR;
   }
+#endif
 
   semaphore = (SEMAPHORE *)malloc(sizeof(SEMAPHORE));
   if (semaphore == NULL) {
@@ -1307,12 +1367,23 @@ D primitive_make_semaphore(D l, D n, D i, D m)
     return GENERAL_ERROR;
   }
 
-  res = sem_init(&semaphore->semaphore, 0, initial);
+#ifdef HAVE_POSIX_SEMAPHORES
+  int res = sem_init(&semaphore->semaphore, 0, initial);
   if(res) {
     MSG0("make-semaphore: sem_init returned error\n");
     free(semaphore);
     return GENERAL_ERROR;
   }
+#else
+  if (pthread_mutex_init(&semaphore->mutex, NULL)
+      || pthread_cond_init(&semaphore->cond, NULL)) {
+    MSG0("make-semaphore: error initializing OS objects\n");
+    return GENERAL_ERROR;
+  }
+
+  semaphore->count = initial;
+  semaphore->max_count = max;
+#endif
 
   lock->handle = semaphore;
 
@@ -1330,10 +1401,20 @@ D primitive_destroy_semaphore(D l)
   assert(lock->handle != NULL);
 
   semaphore = lock->handle;
+
+#ifdef HAVE_POSIX_SEMAPHORES
   if (sem_destroy(&semaphore->semaphore)) {
     MSG0("destroy-semaphore: sem_destroy returned errir\n");
     return GENERAL_ERROR;
   }
+#else
+  if (pthread_mutex_destroy(&semaphore->mutex)
+      || pthread_cond_destroy(&semaphore->cond)) {
+    MSG0("destroy-semaphore: error destroying OS objects\n");
+    return GENERAL_ERROR;
+  }
+#endif
+
   free(semaphore);
   return OK;
 }

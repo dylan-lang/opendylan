@@ -42,6 +42,15 @@
 #define HAVE_POSIX_TIMERS
 #endif
 
+#if defined(HAVE_POSIX_THREADS) \
+  && defined(HAVE_POSIX_TIMEOUTS) \
+  && !defined(OPEN_DYLAN_PLATFORM_DARWIN)
+/* POSIX Semaphores are supported */
+/* NOTE OS X does not properly implement semaphores */
+/* NOTE If we don't have TIMEOUTS then we also use emulation for now */
+#define HAVE_POSIX_SEMAPHORES
+#endif
+
 
 /*****************************************************************************/
 /* Macro Definitions                                                         */
@@ -151,7 +160,14 @@ typedef struct recursive_lock {
 } RECURSIVELOCK;
 
 typedef struct semaphore {
+#ifdef HAVE_POSIX_SEMAPHORES
   sem_t           semaphore;
+#else
+  pthread_mutex_t mutex;
+  pthread_cond_t  cond;
+  int             count;
+  int             max_count;
+#endif
 } SEMAPHORE;
 
 typedef struct {
