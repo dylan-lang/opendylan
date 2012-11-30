@@ -8,21 +8,39 @@
  *    Threads portability layer for POSIX
  */
 
-#ifdef OPEN_DYLAN_PLATFORM_LINUX
-/* get pthread_setname_np */
-#define _GNU_SOURCE
-#endif
+#define _POSIX_C_SOURCE 200809L
 
 #include "run-time.h"
 
 #include <stdint.h>
 
 #include <time.h>
+#include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
 
 #ifndef THREADS_RUN_TIME_H
 #define THREADS_RUN_TIME_H
+
+
+/*****************************************************************************/
+/* Platform Features                                                         */
+/*****************************************************************************/
+
+#if defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS) >= 0L
+/* POSIX Timeouts are supported - option group [TMO] */
+#define HAVE_POSIX_TIMEOUTS
+#endif
+
+#if defined(_POSIX_THREADS) && (_POSIX_THREADS) >= 0L
+/* POSIX Threads are supported - option group [THR] */
+#define HAVE_POSIX_THREADS
+#endif
+
+#if defined(_POSIX_TIMERS) && (_POSIX_TIMERS) >= 0L
+/* POSIX Timers are supported - option group [TMR] */
+#define HAVE_POSIX_TIMERS
+#endif
 
 
 /*****************************************************************************/

@@ -33,17 +33,38 @@
 #include <sys/prctl.h>
 #endif
 
-#if defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS - 200112L) >= 0L
-/* POSIX Timeouts are supported - option group [TMO] */
-#if defined(_POSIX_THREADS) && (_POSIX_THREADS - 200112L) >= 0L
-/* POSIX threads are supported - option group [THR] */
-#define our_pthread_mutex_timedlock pthread_mutex_timedlock
-#endif
+
+static void timespec_add_msecs(struct timespec *tp, int msecs) {
+  int secs = msecs / 1000;
+  msecs = msecs % 1000;
+  tp->tv_sec += secs;
+  tp->tv_nsec += msecs * 1000000L;
+  if(tp->tv_nsec >= 1000000000L) {
+    tp->tv_sec += tp->tv_nsec / 1000000000L;
+    tp->tv_nsec = tp->tv_nsec % 1000000000L;
+  }
+}
+
+#ifdef HAVE_POSIX_TIMERS
+static void timespec_current(struct timespec *tp) {
+  clock_gettime(CLOCK_REALTIME, tp);
+}
+#else
+static void timespec_current(struct timespec *tp) {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  tp->tv_sec = tv.tv_sec;
+  tp->tv_nsec = tv.tv_usec * 1000;
+}
 #endif
 
+
+#if defined(HAVE_POSIX_THREADS) && defined(HAVE_POSIX_TIMEOUTS)
+#define our_pthread_mutex_timedlock pthread_mutex_timedlock
+#else
 /* emulate pthread_mutex_timedlock when not provided */
-#ifndef our_pthread_mutex_timedlock
-int our_pthread_mutex_timedlock(pthread_mutex_t *mutex, struct timespec *end) {
+static int our_pthread_mutex_timedlock(pthread_mutex_t *mutex,
+                                       struct timespec *end) {
   int res;
   struct timespec cur;
   do {
@@ -74,36 +95,6 @@ int our_pthread_mutex_timedlock(pthread_mutex_t *mutex, struct timespec *end) {
       return 0;
     }
   } while(1);
-}
-#endif
-
-
-#if defined(_POSIX_TIMERS) && (_POSIX_TIMERS - 200112L) >= 0L
-/* POSIX Timers are supported - option group [TMR] */
-#define HAVE_POSIX_TIMERS
-#endif
-
-static void timespec_add_msecs(struct timespec *tp, int msecs) {
-  int secs = msecs / 1000;
-  msecs = msecs % 1000;
-  tp->tv_sec += secs;
-  tp->tv_nsec += msecs * 1000000L;
-  if(tp->tv_nsec >= 1000000000L) {
-    tp->tv_sec += tp->tv_nsec / 1000000000L;
-    tp->tv_nsec = tp->tv_nsec % 1000000000L;
-  }
-}
-
-#ifdef HAVE_POSIX_TIMERS
-static void timespec_current(struct timespec *tp) {
-  clock_gettime(CLOCK_REALTIME, tp);
-}
-#else
-static void timespec_current(struct timespec *tp) {
-  struct timeval tv;
-  gettimeofday(&tv, NULL);
-  tp->tv_sec = tv.tv_sec;
-  tp->tv_nsec = tv.tv_usec * 1000;
 }
 #endif
 
