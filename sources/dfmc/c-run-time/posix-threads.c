@@ -31,6 +31,51 @@
 #include <sys/prctl.h>
 #endif
 
+#if defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS - 200112L) >= 0L
+/* POSIX Timeouts are supported - option group [TMO] */
+#if defined(_POSIX_THREADS) && (_POSIX_THREADS - 200112L) >= 0L
+/* POSIX threads are supported - option group [THR] */
+#define our_pthread_mutex_timedlock pthread_mutex_timedlock
+#endif
+#endif
+
+/* emulate pthread_mutex_timedlock when not provided */
+#ifndef our_pthread_mutex_timedlock
+int our_pthread_mutex_timedlock(pthread_mutex_t *mutex, struct timespec *end) {
+  int res;
+  struct timespec cur;
+  do {
+    /* get current time */
+    time(&cur.tv_sec);
+    cur.tv_nsec = 0;
+    /* time out when appropriate */
+    if((cur.tv_sec > end->tv_sec)
+       || (cur.tv_sec == end->tv_sec
+           && cur.tv_nsec >= end->tv_nsec)) {
+      return ETIMEDOUT;
+    }
+    /* do a trylock */
+    res = pthread_mutex_trylock(mutex);
+    /* wait for 100 usec if busy */
+    if(res == EBUSY) {
+      struct timespec delay;
+      delay.tv_sec = 0;
+      delay.tv_nsec = 100 * 1000;
+      nanosleep(&delay, &delay);
+      continue;
+    }
+    /* else, there was an error or success */
+    if (res) {
+      /* pass other error codes */
+      return res;
+    } else {
+      /* lock acquired */
+      return 0;
+    }
+  } while(1);
+}
+#endif
+
 #define ignore(x) (void)x
 
 #ifndef _DEBUG      /* For Release builds */
@@ -790,7 +835,7 @@ D primitive_wait_for_simple_lock_timed(D l, D ms)
   milsecs = milsecs % 1000;
   end.tv_nsec = milsecs * 1000000L;
 
-  int res = pthread_mutex_timedlock(&slock->mutex, &end);
+  int res = our_pthread_mutex_timedlock(&slock->mutex, &end);
   if (res == ETIMEDOUT) {
     return TIMEOUT;
   }
@@ -832,7 +877,7 @@ D primitive_wait_for_recursive_lock_timed(D l, D ms)
   milsecs = milsecs % 1000;
   end.tv_nsec = milsecs * 1000000L;
 
-  int res = pthread_mutex_timedlock(&rlock->mutex, &end);
+  int res = our_pthread_mutex_timedlock(&rlock->mutex, &end);
   if (res == ETIMEDOUT) {
     return TIMEOUT;
   }
