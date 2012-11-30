@@ -26,6 +26,8 @@
 
 #include <gc/gc.h>
 
+#include <sys/time.h>
+
 #ifdef OPEN_DYLAN_PLATFORM_LINUX
 /* get prctl */
 #include <sys/prctl.h>
@@ -46,8 +48,7 @@ int our_pthread_mutex_timedlock(pthread_mutex_t *mutex, struct timespec *end) {
   struct timespec cur;
   do {
     /* get current time */
-    time(&cur.tv_sec);
-    cur.tv_nsec = 0;
+    timespec_current(&cur);
     /* time out when appropriate */
     if((cur.tv_sec > end->tv_sec)
        || (cur.tv_sec == end->tv_sec
@@ -75,6 +76,37 @@ int our_pthread_mutex_timedlock(pthread_mutex_t *mutex, struct timespec *end) {
   } while(1);
 }
 #endif
+
+
+#if defined(_POSIX_TIMERS) && (_POSIX_TIMERS - 200112L) >= 0L
+/* POSIX Timers are supported - option group [TMR] */
+#define HAVE_POSIX_TIMERS
+#endif
+
+static void timespec_add_msecs(struct timespec *tp, int msecs) {
+  int secs = msecs / 1000;
+  msecs = msecs % 1000;
+  tp->tv_sec += secs;
+  tp->tv_nsec += msecs * 1000000L;
+  if(tp->tv_nsec >= 1000000000L) {
+    tp->tv_sec += tp->tv_nsec / 1000000000L;
+    tp->tv_nsec = tp->tv_nsec % 1000000000L;
+  }
+}
+
+#ifdef HAVE_POSIX_TIMERS
+static void timespec_current(struct timespec *tp) {
+  clock_gettime(CLOCK_REALTIME, tp);
+}
+#else
+static void timespec_current(struct timespec *tp) {
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  tp->tv_sec = tv.tv_sec;
+  tp->tv_nsec = tv.tv_usec * 1000;
+}
+#endif
+
 
 #define ignore(x) (void)x
 
@@ -818,7 +850,7 @@ D primitive_wait_for_simple_lock_timed(D l, D ms)
   ZINT         zmilsecs = (ZINT)ms;
   SIMPLELOCK  *slock;
   TEB         *teb;
-  long         milsecs, secs;
+  long         milsecs;
   struct timespec end;
 
   assert(lock != NULL);
@@ -828,12 +860,9 @@ D primitive_wait_for_simple_lock_timed(D l, D ms)
   teb = get_teb();
   slock = lock->handle;
 
-  time(&end.tv_sec);
+  timespec_current(&end);
   milsecs = zmilsecs >> 2;
-  secs = milsecs / 1000;
-  end.tv_sec += secs;
-  milsecs = milsecs % 1000;
-  end.tv_nsec = milsecs * 1000000L;
+  timespec_add_msecs(&end, milsecs);
 
   int res = our_pthread_mutex_timedlock(&slock->mutex, &end);
   if (res == ETIMEDOUT) {
@@ -860,7 +889,7 @@ D primitive_wait_for_recursive_lock_timed(D l, D ms)
   ZINT             zmilsecs = (ZINT)ms;
   RECURSIVELOCK   *rlock;
   TEB             *teb;
-  long             milsecs, secs;
+  long             milsecs;
   struct timespec  end;
 
   assert(lock != NULL);
@@ -870,12 +899,9 @@ D primitive_wait_for_recursive_lock_timed(D l, D ms)
   teb = get_teb();
   rlock = lock->handle;
 
-  time(&end.tv_sec);
+  timespec_current(&end);
   milsecs = zmilsecs >> 2;
-  secs = milsecs / 1000;
-  end.tv_sec += secs;
-  milsecs = milsecs % 1000;
-  end.tv_nsec = milsecs * 1000000L;
+  timespec_add_msecs(&end, milsecs);
 
   int res = our_pthread_mutex_timedlock(&rlock->mutex, &end);
   if (res == ETIMEDOUT) {
@@ -903,23 +929,20 @@ D primitive_wait_for_semaphore_timed(D l, D m)
   CONTAINER  *lock = (CONTAINER *)l;
   ZINT        zmilsecs = (ZINT)m;
   SEMAPHORE  *semaphore;
-  long        milsecs, secs;
-  struct timespec time_limit;
+  long        milsecs;
+  struct timespec end;
 
   assert(lock != NULL);
   assert(lock->handle != NULL);
   assert(IS_ZINT(zmilsecs));
 
-  time(&time_limit.tv_sec);
+  timespec_current(&end);
   milsecs = zmilsecs >> 2;
-  secs = milsecs / 1000;
-  time_limit.tv_sec += secs;
-  milsecs = milsecs % 1000;
-  time_limit.tv_nsec = milsecs * 10;
+  timespec_add_msecs(&end, milsecs);
 
   semaphore = lock->handle;
 
-  int res = sem_timedwait(&semaphore->semaphore, &time_limit);
+  int res = sem_timedwait(&semaphore->semaphore, &end);
   if (res == ETIMEDOUT) {
     return TIMEOUT;
   }
@@ -940,8 +963,8 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   ZINT           zmilsecs = (ZINT)m;
   NOTIFICATION  *notification;
   SIMPLELOCK    *slock;
-  int            milsecs, secs;
-  struct timespec limit;
+  int            milsecs;
+  struct timespec end;
 
   assert(notif != NULL);
   assert(notif->handle != NULL);
@@ -952,15 +975,11 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   notification = notif->handle;
   slock = lock->handle;
 
+  timespec_current(&end);
   milsecs = zmilsecs >> 2;
+  timespec_add_msecs(&end, milsecs);
 
-  time(&limit.tv_sec);
-  secs = milsecs / 1000;
-  limit.tv_sec += secs;
-  milsecs = milsecs % 1000;
-  limit.tv_nsec = milsecs * 1000000L;
-
-  int res = pthread_cond_timedwait(&notification->cond, &slock->mutex, &limit);
+  int res = pthread_cond_timedwait(&notification->cond, &slock->mutex, &end);
   if (res == ETIMEDOUT) {
     return TIMEOUT;
   }
