@@ -147,7 +147,7 @@ AC_SUBST(GC_CHOICE)
 # for now, replace mps only in pentium-linux
 # gc is also replaced in sources/dfmc/c-run-time
 AC_CONFIG_FILES(Makefile
-	        sources/jamfiles/Makefile
+                sources/jamfiles/Makefile
                 sources/jamfiles/config.jam
                 sources/lib/run-time/Makefile
                 sources/dfmc/c-run-time/Makefile)
