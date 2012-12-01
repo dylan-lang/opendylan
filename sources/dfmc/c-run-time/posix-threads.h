@@ -8,19 +8,58 @@
  *    Threads portability layer for POSIX
  */
 
-#ifdef OPEN_DYLAN_PLATFORM_LINUX
-/* get pthread_setname_np */
+#define _POSIX_C_SOURCE 200809L
+
+#if defined(OPEN_DYLAN_PLATFORM_LINUX)
+/* want pthread_setname_np */
 #define _GNU_SOURCE
+#endif
+
+#if defined(OPEN_DYLAN_PLATFORM_DARWIN)
+/* want pthread_setname_np */
+#define _DARWIN_C_SOURCE
 #endif
 
 #include "run-time.h"
 
 #include <stdint.h>
 
+#include <time.h>
+#include <unistd.h>
 #include <pthread.h>
+#include <semaphore.h>
 
 #ifndef THREADS_RUN_TIME_H
 #define THREADS_RUN_TIME_H
+
+
+/*****************************************************************************/
+/* Platform Features                                                         */
+/*****************************************************************************/
+
+#if defined(_POSIX_TIMEOUTS) && (_POSIX_TIMEOUTS) >= 0L
+/* POSIX Timeouts are supported - option group [TMO] */
+#define HAVE_POSIX_TIMEOUTS
+#endif
+
+#if defined(_POSIX_THREADS) && (_POSIX_THREADS) >= 0L
+/* POSIX Threads are supported - option group [THR] */
+#define HAVE_POSIX_THREADS
+#endif
+
+#if defined(_POSIX_TIMERS) && (_POSIX_TIMERS) >= 0L
+/* POSIX Timers are supported - option group [TMR] */
+#define HAVE_POSIX_TIMERS
+#endif
+
+#if defined(HAVE_POSIX_THREADS) \
+  && defined(HAVE_POSIX_TIMEOUTS) \
+  && !defined(OPEN_DYLAN_PLATFORM_DARWIN)
+/* POSIX Semaphores are supported */
+/* NOTE OS X does not properly implement semaphores */
+/* NOTE If we don't have TIMEOUTS then we also use emulation for now */
+#define HAVE_POSIX_SEMAPHORES
+#endif
 
 
 /*****************************************************************************/
@@ -120,27 +159,28 @@ typedef struct thread {
  */
 
 typedef struct simple_lock {
-  pthread_t        owner;
+  TEB             *owner; // for owned?
   pthread_mutex_t  mutex;
-  pthread_cond_t   cond;
 } SIMPLELOCK;
 
 typedef struct recursive_lock {
-  pthread_t        owner;
-  int              count;
+  TEB             *owner; // for owned?
+  long             count;
   pthread_mutex_t  mutex;
-  pthread_cond_t   cond;
 } RECURSIVELOCK;
 
 typedef struct semaphore {
+#ifdef HAVE_POSIX_SEMAPHORES
+  sem_t           semaphore;
+#else
   pthread_mutex_t mutex;
   pthread_cond_t  cond;
   int             count;
   int             max_count;
+#endif
 } SEMAPHORE;
 
 typedef struct {
-  pthread_mutex_t  mutex;
   pthread_cond_t   cond;
 } NOTIFICATION;
 
