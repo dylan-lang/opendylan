@@ -74,7 +74,7 @@ define function compute-and-install-model-objects
     let name = cr.compilation-record-source-record.source-record-name;
     source-record-progress-text("Computing data models for %s.dylan", name);
     unless (cr.compilation-record-model-heap)
-      progress-line("Computing models for %s.dylan", name);
+      progress-line("  Computing models for %s.dylan", name);
       compiling-forms ($compilation of form in cr)
 	unless (form-ignored?(form))
 	  maybe-compute-and-install-form-model-objects(form);
@@ -542,7 +542,7 @@ define function do-for-library-method (doc, stage, f, ld)
       if (doc)
 	let sr = cr.compilation-record-source-record;
 	let name = sr.source-record-name;
-	progress-line("%s %s.dylan", doc, name);
+	progress-line("  %s %s.dylan", doc, name);
 	source-record-progress-text("%s %s.dylan", doc, name);
       end;
       // TODO: CORRECTNESS: What's the recommended way to disable this

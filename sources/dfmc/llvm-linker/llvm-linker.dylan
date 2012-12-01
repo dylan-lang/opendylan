@@ -38,7 +38,7 @@ define sideways method emit-library-record
         = build-area-output-locator(ld,
                                     base: compilation-record-name(cr),
                                     type: "bc");
-      progress-line("Linking %s.dylan",
+      progress-line("  Linking %s.dylan",
                     cr.compilation-record-source-record.source-record-name);
 
       // Retrieve the LLVM module instantiated during the code emission phase

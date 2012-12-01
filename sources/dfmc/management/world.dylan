@@ -225,7 +225,10 @@ define method compile-library-from-definitions
   let strip? = strip? & *strip-enabled?*;
   debug-assert(description.compiled-to-definitions?, "not compiled to definitions?");
   if (~compile-if-built? & description.library-description-built?)
-    progress-line("Library %s is up to date.", description);
+    let library-name =
+      as-lowercase(as(<string>,
+                      library-description-emit-name(description)));
+    progress-line("Library \"%s\" is up to date.", library-name);
     #f
   else
     with-program-conditions

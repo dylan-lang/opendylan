@@ -159,7 +159,10 @@ define function do-with-stage-progress
     block ()
       if(library)
         library-stage-text(library, stage);
-        progress-line("%s %=", stage, library.library-description-project);
+        let library-name =
+          as-lowercase(as(<string>,
+                       library-description-emit-name(library)));
+        progress-line("%s %s", stage, library-name);
         progress-debug-message("library stage increment: %=", 
                                library-stage-increment);
         progress-debug-message("source record increment: %=", 
