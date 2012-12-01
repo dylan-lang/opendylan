@@ -62,6 +62,7 @@ define module common-extensions
                 <stack-overflow-error>,
                 <arithmetic-error>,
                   <division-by-zero-error>,
+                  <arithmetic-domain-error>,
                   <arithmetic-overflow-error>,
                   <arithmetic-underflow-error>,
               <stretchy-object-vector>,
