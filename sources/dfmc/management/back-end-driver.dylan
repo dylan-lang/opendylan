@@ -124,7 +124,7 @@ define method tightly-link-library-heaps
     source-record-progress-text("Generating code for %s", name);
     unless (skip-emit?)
       timing-compilation-phase ("Emitting" of description, progress?: #f, accumulate?: #t)
-	progress-line("Emitting heap for %s.dylan", name);
+	progress-line("  Emitting heap for %s.dylan", name);
 	apply(emit-compilation-record-heap, cr, flags);
 	data-size := data-size + compilation-record-data-size(cr);
 	code-size := code-size + compilation-record-code-size(cr);

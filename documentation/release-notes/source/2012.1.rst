@@ -172,6 +172,17 @@ initially have to build all dependencies, down to and including the
 ``dylan`` library.
 
 
+Debug Back-end Improvements
+---------------------------
+
+The debug back-end is used for printing the internal compiler
+state (the DFM).
+
+* calls are printed with more detail.
+* keyword and constrain type checks are printed more accurately.
+* primitive invocations of C functions via FFI are printed correctly.
+
+
 Documentation Generation
 ------------------------
 
@@ -294,8 +305,7 @@ unrelated to threading were also fixed in this work, which should
 improve the stability of the C back-end in general.
 
 This work is currently experimental and may have stability and
-performance issues. Koala (the Dylan HTTP server) is known to
-not function correctly. Further feedback is welcome.
+performance issues.  Further feedback is welcome.
 
 .. TODO: moar details
 
@@ -306,7 +316,7 @@ Previously, the C run-time was allocating unwind-protect control
 structures on the heap using the Garbage Collector. Additionally,
 unwind-protect was preserving signal state on some platforms, notably
 Mac OS X.  Together, this led to the C back-end being notably slower
-than the native HARP backend when unwind-protects were used.
+than the native HARP back-end when unwind-protects were used.
 
 This has been fixed and the resulting code can run in 50-80% of the
 time that it previously took. This is particularly true for users
@@ -327,6 +337,10 @@ Fixes
 
 Some other bugs that resulted in the generation of invalid C have
 been fixed.
+
+Stack usage in method dispatch has been reduced. This fixes an issue
+where a default sized stack would be exhausted on 64 bit platforms,
+especially while building the compiler.
 
 C-FFI Changes
 =============
@@ -378,6 +392,6 @@ In reverse chronological order
 
 * abort when applying too many arguments in C run-time housel Dec 20, 2011 e7ceda33f00e460a693c7ccd81f484ae40b13586
 * remove unused functional-objects-extras module hannes Dec 18, 2011 2e7f2a4cb38f278495b48f7883360ddd349f2b9f issue #90
-* Fix a compilation crash with C backend when trying to emit an overflown integer abeaumont Dec 18, 2011 819b99bfe14656f5b5081bd70287d8d9f7fb7c7f
+* Fix a compilation crash with C back-end when trying to emit an overflown integer abeaumont Dec 18, 2011 819b99bfe14656f5b5081bd70287d8d9f7fb7c7f
 * reduce debug output of compiler (by making it optional with debug-out) hannes Dec 15, 2011 d093ae6cdfd5f4b8dd8ff3ac6359e8f6d9a8f847 issue #92
 * extended floating-point support housel core-library Dec 14, 2011 b2762c85f554b0ad99efe800259c709e918ce460 bug 7122
