@@ -10,6 +10,16 @@
 
 #define _POSIX_C_SOURCE 200809L
 
+#if defined(OPEN_DYLAN_PLATFORM_LINUX)
+/* want pthread_setname_np */
+#define _GNU_SOURCE
+#endif
+
+#if defined(OPEN_DYLAN_PLATFORM_DARWIN)
+/* want pthread_setname_np */
+#define _DARWIN_C_SOURCE
+#endif
+
 #include "run-time.h"
 
 #include <stdint.h>
