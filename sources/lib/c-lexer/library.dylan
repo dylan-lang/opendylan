@@ -26,7 +26,6 @@ define module c-lexer-test-interface
   create test-lexer;
   create test-ansi-cpp-evaluator;
   // create test-cpp-unlex;
-  create with-emulator, with-dfmc; // export them so the compiler will shut-up
 end module;
 
 define module c-lexer-utilities

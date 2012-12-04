@@ -47,26 +47,15 @@ end;
 
 define class <C-identifier-table> (<table>) end class;
 
-with-emulator
-  define method C-identifier-hash (string :: <string>)
-    values((string.size * $identifier-char-range-squared) +
-             ($identifier-char-range * as(<integer>, string.first)) +
-             ($identifier-char-range * as(<integer>, string.last)),
-           $permanent-hash-state);
-  end method C-identifier-hash;
-end;
-
-with-dfmc
-  define method C-identifier-hash (string :: <string>,
-                                     old-state :: <hash-state>)
-                                  => (id :: <integer>,
-                                      new-state :: <hash-state>);
-    values((string.size * $identifier-char-range-squared) +
-             ($identifier-char-range * as(<integer>, string.first)) +
-             ($identifier-char-range * as(<integer>, string.last)),
-           old-state);
-  end method C-identifier-hash;
-end;
+define method C-identifier-hash (string :: <string>,
+                                   old-state :: <hash-state>)
+                                => (id :: <integer>,
+                                    new-state :: <hash-state>);
+  values((string.size * $identifier-char-range-squared) +
+           ($identifier-char-range * as(<integer>, string.first)) +
+           ($identifier-char-range * as(<integer>, string.last)),
+         old-state);
+end method C-identifier-hash;
 
 define method table-protocol (table :: <C-identifier-table>)
  => (test-function :: <function>, hash-function :: <function>)
