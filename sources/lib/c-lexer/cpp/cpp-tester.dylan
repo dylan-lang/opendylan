@@ -22,9 +22,6 @@ define sideways method default-handler (condition :: <error>)
 end method;
 */
 
-/* HACK to work around Win32 console bug: */
-do-next-output-buffer(*standard-output*);
-
 block ()
   let ok = #t;
   for (arg in application-arguments())
