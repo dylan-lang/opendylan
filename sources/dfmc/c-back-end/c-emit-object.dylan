@@ -217,16 +217,9 @@ end macro;
 define method emit-reference 
     (back-end :: <c-back-end>, stream :: <stream>, o :: <module-binding>)
  => () 
-  // We check to see if the binding is defined here so that we don't
-  // end up with an error when using a symbol from another library
-  // that is exported but undefined. The compiler has already
-  // emitted warnings so we can just silently continue at this
-  // point to avoid a compiler crash.
-  if (o.emitted-name | o.binding-defined?)
-    emit-name-using-emitter
-      (back-end, stream, o, emitted-name, emitted-name-setter,
-       format-to-string("%s", global-mangle(back-end, o)))
-  end if;
+  emit-name-using-emitter
+    (back-end, stream, o, emitted-name, emitted-name-setter,
+     format-to-string("%s", global-mangle(back-end, o)))
 end method;
 
 define method same-name? (x, y) x == y end;
