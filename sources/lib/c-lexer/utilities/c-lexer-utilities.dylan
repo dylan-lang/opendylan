@@ -11,19 +11,19 @@ define method print-comma-separated-sequence
   print-separated-sequence(the-sequence, the-stream, ", ");
 end method;
 
-define method print-separated-sequence 
+define method print-separated-sequence
     (the-sequence :: <collection>, the-stream :: <stream>,
      the-separator :: <string>, #key map-function = identity)
  => ();
-  let (initial-state, limit, next-state, finished?, current-key, 
-       current-element) 
+  let (initial-state, limit, next-state, finished?, current-key,
+       current-element)
     = forward-iteration-protocol(the-sequence);
   if (~empty?(the-sequence))
-    print(map-function(current-element(the-sequence, initial-state)), 
-	  the-stream);
-    for (state = next-state(the-sequence, initial-state) 
-	   then next-state(the-sequence, state),
-	 until: finished?(the-sequence, state, limit))
+    print(map-function(current-element(the-sequence, initial-state)),
+          the-stream);
+    for (state = next-state(the-sequence, initial-state)
+           then next-state(the-sequence, state),
+         until: finished?(the-sequence, state, limit))
       format(the-stream, the-separator);
       print(map-function(current-element(the-sequence, state)), the-stream);
     end for;
@@ -31,6 +31,6 @@ define method print-separated-sequence
 end method;
 
 // slot shared by all parsing filters, cpp streams and below
-define generic source-name 
+define generic source-name
     (the-stream :: <wrapper-stream>) => (the-name :: <string>);
 

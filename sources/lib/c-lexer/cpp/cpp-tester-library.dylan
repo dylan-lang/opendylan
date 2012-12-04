@@ -12,7 +12,7 @@ define library cpp-tester
   use c-lexer;
 end library;
 
-  
+
 define module cpp-tester
   use common-dylan, exclude: { format-to-string };
   use standard-io;

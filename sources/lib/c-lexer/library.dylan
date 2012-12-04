@@ -19,7 +19,7 @@ define library c-lexer
   export c-lexer-test-interface;
 end library;
 
-  
+
 // Test Interface module -- exports internal stuff for unit testing
 define module c-lexer-test-interface
   create test-pre-lexer;
@@ -30,33 +30,33 @@ define module c-lexer-test-interface
 end module;
 
 define module c-lexer-utilities
-  create 
+  create
     print-separated-sequence, print-comma-separated-sequence;
   create source-name; // , current-token removed this
-		      // only needed for debugging I think
+                      // only needed for debugging I think
 end module;
 
 define module c-lexer-utilities-internal
   use common-dylan, exclude: { <union>, clex-digit?, format-to-string };
-  use streams;			
-  use standard-io;      
+  use streams;
+  use standard-io;
   use print;
-  use format;		
-  use format-out;		
+  use format;
+  use format-out;
   use t-lists;
   // re-export stuff from 'c-lexer-utilities' module
-  use c-lexer-utilities, export: all; 
+  use c-lexer-utilities, export: all;
 end module;
 
 // Lexer interface module
 define module C-lexer
-  use streams, 
+  use streams,
     export: {read-element, unread-element, inner-stream-setter, read-to-end};
   create
-    <C-lexer>, 
+    <C-lexer>,
       <ansi-C-lexer>, <Microsoft-C-lexer>, <C++-lexer>,
     <pre-lexer>, <numbered-string-stream>,
-    read-to-end-of-inner-stream, 
+    read-to-end-of-inner-stream,
     read-include-filename,
     current-line, lex-from-string,
     <associativity-type>;
@@ -88,27 +88,27 @@ define module C-lexer
       <reserved-word>, <identifier-or-typedef-name>,
         <__unaligned>,
         <linkage-specifier>,
-          <__cdecl>, <_cdecl>, <__stdcall>, <_inline>, <__inline>, 
+          <__cdecl>, <_cdecl>, <__stdcall>, <_inline>, <__inline>,
           <__fastcall>,
-        <Microsoft-attribute>, 
-          <__asm>,  <__based>, 
-        <storage-class>, 
-          <Microsoft-storage-class>, 
+        <Microsoft-attribute>,
+          <__asm>,  <__based>,
+        <storage-class>,
+          <Microsoft-storage-class>,
             <__declspec>,
             <ansi-storage-class>,
               <auto>, <register>, <static>, <extern>, <typedef>,
-        <type-specifier>, 
+        <type-specifier>,
           <Microsoft-type-specifier>,
             <__int8>, <__int16>, <__int32>, <__int64>,
             <ansi-type-specifier>,
               <void>, <char>, <short>, <int>, <long>, <C-float-type>,
-              <double>, <signed>, <unsigned>, 
+              <double>, <signed>, <unsigned>,
         <type-qualifier>,
           <Microsoft-type-qualifier>,
             <__unaligned>,
             <ansi-type-qualifier>,
-              <const>, <volatile>, 
-        <struct-or-union>, 
+              <const>, <volatile>,
+        <struct-or-union>,
           <struct>, <union>, <enum>,
         <break>, <case>, <continue>, <default>, <do>, <else>, <for>, <goto>,
         <if>, <return>, <sizeof>, <switch>, <while>, <typedef-name>;
@@ -123,43 +123,42 @@ end module;
 
 define module C-lexer-internal
   use common-dylan, exclude: { format-to-string }; //  exclude: {<union>, close, clex-digit?}
-  use streams, export: {read-element, unread-element};			
-  use standard-io; 
+  use streams, export: {read-element, unread-element};
+  use standard-io;
   use print;
-  use format;		
+  use format;
   use format-out;
   use t-lists;
   use generic-arithmetic, prefix: "stupid-";
   use c-lexer-utilities;
   use C-lexer, export: all;
-  use c-lexer-test-interface; 
+  use c-lexer-test-interface;
   use C-lexer;
 end module C-lexer-internal;
 
 // cpp interface
 define module cpp
-  use streams, 
+  use streams,
     export: {read-element, unread-element};
   create
     <C-identifier-table>, // probably should be in c-lexer-utilities module
-    <cpp-stream>, 
+    <cpp-stream>,
       macro-definitions, inner-stream-stack, skip-stack,
       *cpp-include-path*, add-cpp-include-path!, cpp-handle-pragma,
     cpp-handle-include-entry, cpp-handle-include-exit,
       <ANSI-cpp-stream>, <Microsoft-cpp-stream>, <C++-cpp-stream>,
       <pragma-token>, pragma-body, pragma-body-setter;
-  
 end module cpp;
 
 define module cpp-internal
   use common-dylan, exclude: { <union>, format-to-string };
   use table-extensions, exclude: { table };
-  use streams, export: {read-element, unread-element};			
-  use standard-io; 
+  use streams, export: {read-element, unread-element};
+  use standard-io;
   use locators;
   use file-system;
   use print;
-  use format;		
+  use format;
   use format-out;
   use t-lists;
   use c-lexer-utilities;

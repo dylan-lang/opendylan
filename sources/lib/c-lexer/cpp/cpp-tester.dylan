@@ -7,16 +7,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /*
 define sideways method default-handler (condition :: <error>)
-  let condition-string :: <string> = 
-    block()
+  let condition-string :: <string> =
+    block ()
       format-to-string("%s", condition);
     exception ( print-error :: <error> )
       format-to-string("%=\nsignalled while trying to print an instance of %=",
-		       print-error, object-class(condition));
+                       print-error, object-class(condition));
     end block;
   format-out("Unhandled Dylan error:\n"
-	     "%s\n"
-	     "Quitting.", condition-string);
+             "%s\n"
+             "Quitting.", condition-string);
 
   exit-application(0);
 end method;
@@ -25,21 +25,21 @@ end method;
 /* HACK to work around Win32 console bug: */
 do-next-output-buffer(*standard-output*);
 
-block()
+block ()
   let ok = #t;
   for (arg in application-arguments())
     case
       arg = "-s" =>
-	*return-white-space?* := #t;
+        *return-white-space?* := #t;
       arg[0] = '-' & arg[1] = 'I' =>
-	push-last(*cpp-include-path*, copy-sequence(arg, start: 2));
+        push-last(*cpp-include-path*, copy-sequence(arg, start: 2));
       otherwise =>
-	begin format-out("Unrecognized option: %s\n", arg); ok := #f; end;
+        begin format-out("Unrecognized option: %s\n", arg); ok := #f; end;
     end case;
   end for;
   unless (ok)
     format-out("Error.  Usage:\n"
-	       "\t%s [-s] [-I\\include\\dir ...]\n", application-name());
+               "\t%s [-s] [-I\\include\\dir ...]\n", application-name());
     exit-application(1);
   end unless;
   let in = *standard-input*; //make(<file-stream>, direction: #"input", locator: "in.cpp");
@@ -63,17 +63,17 @@ define function unlex-token-stream (in :: <stream>, out :: <stream>) => ()
   values()
 end;
 
-define function test-cpp-unlex (in-stream :: <stream>, 
-				out-stream :: <stream>) => ()
-  let cpp = make(<cpp-stream>, 
-  		 source-name: "input",
-		 inner-stream:
-		   make(<ansi-C-lexer>,
-			source-name: "input",
-			inner-stream:
-			  make(<pre-lexer>, 
-			       source-name: "input",
-			       inner-stream: in-stream)));
+define function test-cpp-unlex (in-stream :: <stream>,
+                                out-stream :: <stream>) => ()
+  let cpp = make(<cpp-stream>,
+                 source-name: "input",
+                 inner-stream:
+                   make(<ansi-C-lexer>,
+                        source-name: "input",
+                        inner-stream:
+                          make(<pre-lexer>,
+                               source-name: "input",
+                               inner-stream: in-stream)));
   unlex-token-stream(cpp, out-stream);
   values();
 end function test-cpp-unlex;

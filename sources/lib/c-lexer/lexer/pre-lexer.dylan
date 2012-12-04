@@ -13,14 +13,14 @@ ignorable(source-name-setter, lexer-warning);
 // escapes.  It also keeps the line counter so that line numbers reported
 // in error messages match the source before pre-lexing and macro
 // expansion.  To see that this is really a separate pass consider that:
-// 
+//
 //    "??/" => "\"
 //    "\<lf>"  => "" (escaped new-line)
-//    "??/<lf>" => "" (escaped new-line) 
+//    "??/<lf>" => "" (escaped new-line)
 //    "\??/" => "??/"
 //    "?\?/" => "??/"
 //    "??/??/" => "\\"
-// 
+//
 // In particular it is not the case that "??/??/" is interpreted as "\??/"
 // and then reduced to "??/".  Unlike what is done for escaping new lines
 // using "??/" as equivalent to "\".  This takes much more look ahead than
@@ -41,7 +41,7 @@ define constant  $S7 =  7;
 define constant  $SFINISHED = 8;
 
 define macro current-char
-  { current-char ( ?stream:name ) } 
+  { current-char ( ?stream:name ) }
     => { ?stream.current-character }
 end macro;
 
@@ -50,32 +50,32 @@ define macro current-state
 end macro;
 
 define macro next-line
-  { next-line ( ?stream:name ) } 
-    => { ?stream.line-number 
-	  := ?stream.line-number + 1 }
+  { next-line ( ?stream:name ) }
+    => { ?stream.line-number
+          := ?stream.line-number + 1 }
 end macro;
 
 define macro next-state
-  { next-state ( ?stream:name, ?state-number:name ) } 
+  { next-state ( ?stream:name, ?state-number:name ) }
     => { ?stream.state := ?state-number }
 end macro;
 
 define macro next-char
-  { next-char ( ?stream:name ) } 
-    => { ?stream.current-character 
-	   := read-element(?stream.inner-stream, on-end-of-stream: #"eoi") 
-	   // := read-element-from-file-stream(?stream)
-	  }
+  { next-char ( ?stream:name ) }
+    => { ?stream.current-character
+           := read-element(?stream.inner-stream, on-end-of-stream: #"eoi")
+           // := read-element-from-file-stream(?stream)
+          }
 end macro;
 
 // <pre-lexer>s are wrapper streams.
 define class <pre-lexer> (<wrapper-stream>)
-  slot source-name :: <string>, init-keyword: source-name:, 
+  slot source-name :: <string>, init-keyword: source-name:,
     init-value: "unknown stream";
   slot line-number :: <integer>,
     init-keyword: line-number:, init-value: 1;
-  slot current-character ::  type-union(<character>, one-of(#"eoi"), 
-					one-of(#f)),
+  slot current-character ::  type-union(<character>, one-of(#"eoi"),
+                                        one-of(#f)),
     init-keyword: current-character:, init-value: #f;
   slot state :: <pre-lexer-state>, init-keyword: state:, init-value: $S0;
 end class;
@@ -84,7 +84,7 @@ define method close (the-stream :: <pre-lexer>, #key) => ()
   close(the-stream.inner-stream);
 end method;
 
-define method print-object 
+define method print-object
     (the-described-stream :: <pre-lexer>, the-stream :: <stream>) => ();
 end method;
 
@@ -96,12 +96,12 @@ end method;
 // current-character is frequently already read when the streams are
 // switched so one further character on the old stream is read.  Also it
 // isn't clear what should happen when the stream is in a push-down state.
-define method inner-stream-setter 
-    (the-inner-stream :: <stream>, the-outer-stream :: <pre-lexer>) 
- => (result :: <stream>);	// SML 10/13/97: was: false-or(<stream>)
+define method inner-stream-setter
+    (the-inner-stream :: <stream>, the-outer-stream :: <pre-lexer>)
+ => (result :: <stream>);        // SML 10/13/97: was: false-or(<stream>)
   let result = next-method();
-  if ( ~ current-char(the-outer-stream) 
-	| (current-char(the-outer-stream) = #"eoi"))
+  if ( ~ current-char(the-outer-stream)
+        | (current-char(the-outer-stream) = #"eoi"))
     next-char(the-outer-stream);
   end if;
   result
@@ -123,61 +123,61 @@ define method read-element (s :: <pre-lexer>, #key on-end-of-stream = #"eoi")
   while ( ~ result )
     select (current-state(s))
       $S0 =>
-	select (current-char(s))
-	  '\\' => next-state(s, $S1); next-char(s);
-	  '?' => next-state(s, $S4); next-char(s);
-	  '\n' => result := '\n'; next-line(s); next-char(s); 
-	  '\r' => next-line(s); next-state(s, $S3); next-char(s);
-	  #"eoi" => result := on-end-of-stream;
-	  otherwise => result := current-char(s); next-char(s);
-	end select;
+        select (current-char(s))
+          '\\' => next-state(s, $S1); next-char(s);
+          '?' => next-state(s, $S4); next-char(s);
+          '\n' => result := '\n'; next-line(s); next-char(s);
+          '\r' => next-line(s); next-state(s, $S3); next-char(s);
+          #"eoi" => result := on-end-of-stream;
+          otherwise => result := current-char(s); next-char(s);
+        end select;
       $S1 => // "\\" seen -- look for escaped new lines or ?s
-	select (current-char(s))
-	  '\n' => next-line(s); next-state(s, $S0); next-char(s); 
-	  '\r' => next-line(s); next-state(s, $S2); next-char(s);
-	  '?'  => result := '?'; next-state(s, $S0); next-char(s);
-	  otherwise => result := '\\'; next-state(s,$S0);
-	end select;
+        select (current-char(s))
+          '\n' => next-line(s); next-state(s, $S0); next-char(s);
+          '\r' => next-line(s); next-state(s, $S2); next-char(s);
+          '?'  => result := '?'; next-state(s, $S0); next-char(s);
+          otherwise => result := '\\'; next-state(s,$S0);
+        end select;
       $S2 => // "\\\r"  seen -- escaped cr/lf?
-	select (current-char(s))
-	  '\n' => next-state(s, $S0); next-char(s);
-	  otherwise => next-state(s, $S0); 
-	end select;
+        select (current-char(s))
+          '\n' => next-state(s, $S0); next-char(s);
+          otherwise => next-state(s, $S0);
+        end select;
       $S3 => // "\r"  seen from $S0  --  cr/lf?
-	select (current-char(s))
-	  '\n' => next-char(s); result := '\n'; next-state(s, $S0);
-	  otherwise => result := '\n'; next-state(s, $S0); 
-	end select;
+        select (current-char(s))
+          '\n' => next-char(s); result := '\n'; next-state(s, $S0);
+          otherwise => result := '\n'; next-state(s, $S0);
+        end select;
       $S4 => // "?"  seen -- trigraph beginning from $S0?
-	select (current-char(s))
-	  '?' => next-state(s, $S5); next-char(s);
-	  otherwise => result := '?'; next-state(s,$S0); 
-	end select;
+        select (current-char(s))
+          '?' => next-state(s, $S5); next-char(s);
+          otherwise => result := '?'; next-state(s,$S0);
+        end select;
       $S5 => // "??"  seen -- trigraph beginning from $S0?
-	select (current-char(s))
-	  '(' => result := '['; next-state(s, $S0); next-char(s);
-	  '<' => result := '{'; next-state(s, $S0); next-char(s);
-	  '/' => next-state(s, $S7); next-char(s);
-	  '\'' => result := '^'; next-state(s, $S0); next-char(s);
-	  '=' => result := '#'; next-state(s, $S0); next-char(s);
-	  ')' => result := ']'; next-state(s, $S0); next-char(s);
-	  '>' => result := '}'; next-state(s, $S0); next-char(s);
-	  '!' => result := '|'; next-state(s, $S0); next-char(s);
-	  '-' => result := '~'; next-state(s, $S0); next-char(s);
-	  otherwise => result := '?'; next-state(s,$S6); 
-	end select;
+        select (current-char(s))
+          '(' => result := '['; next-state(s, $S0); next-char(s);
+          '<' => result := '{'; next-state(s, $S0); next-char(s);
+          '/' => next-state(s, $S7); next-char(s);
+          '\'' => result := '^'; next-state(s, $S0); next-char(s);
+          '=' => result := '#'; next-state(s, $S0); next-char(s);
+          ')' => result := ']'; next-state(s, $S0); next-char(s);
+          '>' => result := '}'; next-state(s, $S0); next-char(s);
+          '!' => result := '|'; next-state(s, $S0); next-char(s);
+          '-' => result := '~'; next-state(s, $S0); next-char(s);
+          otherwise => result := '?'; next-state(s,$S6);
+        end select;
       $S6 =>
-	result := '?'; next-state(s, $S0); 
+        result := '?'; next-state(s, $S0);
       $S7 => // "??/"  seen -- trigraph beginning from $S0? Don't accept
-	      // this as escaping a ? but do let it escape new-lines
-	select (current-char(s))
-	  '\n' => next-line(s); next-state(s, $S0); next-char(s); 
-	  '\r' => next-line(s); next-state(s, $S2); next-char(s);
-	  otherwise => result := '\\'; next-state(s, $S0);
-	end select;
-      otherwise => 
-	error("internal error: unrecognized pre-lexer state %= \n",
-	      current-state(s));
+              // this as escaping a ? but do let it escape new-lines
+        select (current-char(s))
+          '\n' => next-line(s); next-state(s, $S0); next-char(s);
+          '\r' => next-line(s); next-state(s, $S2); next-char(s);
+          otherwise => result := '\\'; next-state(s, $S0);
+        end select;
+      otherwise =>
+        error("internal error: unrecognized pre-lexer state %= \n",
+              current-state(s));
     end select;
   end while;
   result
@@ -188,19 +188,19 @@ define method stream-at-end? (s :: <pre-lexer>) => (at-end? :: <boolean>)
 end method stream-at-end?;
 
 define method lexer-warning (pre-lexer :: <pre-lexer>,
-			     format-string :: <string>,
-			     #rest format-arguments)
+                             format-string :: <string>,
+                             #rest format-arguments)
   format-out("\n\npre-lexer warning on line: %= of file: %s",
-	     pre-lexer.current-line,
-	     pre-lexer.source-name);
+             pre-lexer.current-line,
+             pre-lexer.source-name);
   apply(signal, format-string, format-arguments);
 end method;
 
 define method test-pre-lexer (string)
   let stream = make(<pre-lexer>,
-		    inner-stream:
-		      make(<string-stream>, direction: #"input",
-			   contents: string));
+                    inner-stream:
+                      make(<string-stream>, direction: #"input",
+                           contents: string));
   let result-list = #();
   let current-character = read-element(stream);
   while (current-character ~=  #"eoi")
@@ -210,6 +210,6 @@ define method test-pre-lexer (string)
   result-list := add!(result-list,  current-character);
   close(stream);
   values(reverse!(result-list),
-	 current-line(stream));
+         current-line(stream));
 end method test-pre-lexer;
- 
+

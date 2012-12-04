@@ -8,14 +8,14 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define macro with-emulator
   { with-emulator
       ?emulator:*
-    end } 
+    end }
   => { }
 end macro with-emulator;
 
 define macro with-dfmc
   { with-dfmc
       ?dfmc:*
-    end } 
+    end }
   => { ?dfmc }
 end macro with-dfmc;
 
