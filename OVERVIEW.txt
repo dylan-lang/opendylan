@@ -263,7 +263,6 @@ sources
   harp
   lib
     dispatch-profiler
-    metering
   qa
   runtime-manager
 tools
