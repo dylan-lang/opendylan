@@ -835,33 +835,3 @@ define method maybe-upgrade-keyword-call
     #f
   end;
 end method;
-
-//// SUPPORT
-
-/*
-language: prefix-dylan
-
-(define xep-0 (lambda (f n)
-  ((%iep f))))
-
-(define xep-1 (lambda (f n a1)
-  ((%iep f) a1)))
-
-(define xep-2 (lambda (f n a1 a2)
-  ((%iep f) a1 a2)))
-
-(define xep-3 (lambda (f n a1 a2 a3)
-  ((%iep f) a1 a2 a3)))
-
-(define rest-xep-0 (lambda (f n . args)
-  ((%iep f) args)))
-
-(define rest-xep-1 (lambda (f n a1 . args)
-  ((%iep f) a1 args)))
-
-(define rest-xep-2 (lambda (f n a1 a2 . args)
-  ((%iep f) a1 a2 args)))
-
-(define rest-xep-3 (lambda (f n a1 a2 a3 . args)
-  ((%iep f) a1 a2 a3 args)))
-*/
