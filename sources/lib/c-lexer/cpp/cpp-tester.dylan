@@ -62,7 +62,7 @@ end;
 
 define function test-cpp-unlex (in-stream :: <stream>,
                                 out-stream :: <stream>) => ()
-  let cpp = make(<cpp-stream>,
+  let cpp = make(<ansi-cpp-stream>,
                  source-name: "input",
                  inner-stream:
                    make(<ansi-C-lexer>,
