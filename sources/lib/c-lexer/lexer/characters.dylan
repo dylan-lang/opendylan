@@ -15,68 +15,68 @@ ignorable($character-categories, $decimal-digit);
 // THE END OF INPUT MARKER AND ORDINARY FUNCTIONS WHICH DON'T.  PREFACE THE
 // FUNCTIONS WITH "C-" TO DISTINGUISH THEM FROM OTHER POSSIBILITIES SINCE
 // THE CATEGORIES FOR C DIALECTS ARE DIFFERENT FROM OTHER LANGUAGES.
- 
-define constant clex-white-space? = 
+
+define constant clex-white-space? =
   method (c :: type-union(<character>, singleton(#"eoi")))
-    select(c)
+    select (c)
       ' ', '\t', as(<character>, 11), '\r', '\f', '\n' =>  #t;
       otherwise => #f;
     end select;
   end method;
 
-define constant clex-hex-digit? = 
+define constant clex-hex-digit? =
   method (c :: type-union(<character>, singleton(#"eoi")))
-    (c ~= #"eoi") 
+    (c ~= #"eoi")
       & (((c >= 'a') & (c <= 'f'))
-	   | ((c >= 'A') & (c <= 'F'))
-	   | ((c >= '0') & (c <= '9')))
+           | ((c >= 'A') & (c <= 'F'))
+           | ((c >= '0') & (c <= '9')))
   end method;
 
-define constant clex-octal-digit? = 
+define constant clex-octal-digit? =
   method (c :: type-union(<character>, singleton(#"eoi")))
-    (c ~= #"eoi") 
+    (c ~= #"eoi")
       & ((c >= '0') & (c <= '8'))
   end method;
 
-define constant clex-digit? = 
+define constant clex-digit? =
   method (c :: type-union(<character>, singleton(#"eoi")))
-    (c ~= #"eoi") 
+    (c ~= #"eoi")
       & ((c >= '0') & (c <= '9'))
   end method;
 
-define constant clex-alpha? = 
+define constant clex-alpha? =
   method (c :: type-union(<character>, singleton(#"eoi")))
-    (c ~= #"eoi") 
+    (c ~= #"eoi")
       & (((c >= 'a') & (c <= 'z'))
-	   | (c = '_')
-	   | ((c >= 'A') & (c <= 'Z')))
+           | (c = '_')
+           | ((c >= 'A') & (c <= 'Z')))
   end method;
 
-define constant clex-alpha-not-underscore? = 
+define constant clex-alpha-not-underscore? =
   method (c :: <character>)
     (((c >= 'a') & (c <= 'z'))
        | ((c >= 'A') & (c <= 'Z')))
   end method;
 
-define constant clex-alphanumeric? = 
+define constant clex-alphanumeric? =
   method (c :: type-union(<character>, singleton(#"eoi")))
-    (c ~= #"eoi") 
+    (c ~= #"eoi")
       & (((c >= 'a') & (c <= 'z'))
-	   | (c = '_')
-	   | ((c >= 'A') & (c <= 'Z'))
-	   | ((c >= '0') & (c <= '9')))
+           | (c = '_')
+           | ((c >= 'A') & (c <= 'Z'))
+           | ((c >= '0') & (c <= '9')))
   end method;
 
-define constant clex-alphanumeric-not-underscore? = 
+define constant clex-alphanumeric-not-underscore? =
   method (c :: <character>)
       (((c >= 'a') & (c <= 'z'))
-	   | ((c >= 'A') & (c <= 'Z'))
-	   | ((c >= '0') & (c <= '9')))
+           | ((c >= 'A') & (c <= 'Z'))
+           | ((c >= '0') & (c <= '9')))
   end method;
 
 // Character set independent way of figuring the size for array of bit
 // vectors for identifying character values and categories (well almost,
-// missing vertical tab \v (ASCII 11)).  
+// missing vertical tab \v (ASCII 11)).
 
 // Convenience - make a unit string of one character -  probably should be
 // elsewhere - needs to be here for now so it can be used in the constant
@@ -88,55 +88,55 @@ end;
 
 // Character set independent way of figuring the size for array of bit
 // vectors for identifying character values and categories (well almost,
-// missing vertical tab \v (ASCII 11)).  
+// missing vertical tab \v (ASCII 11)).
 
 // Also note the as-ing around is a work around for bug in max in the
 // emulator.
 
 define constant $largest-char =
-  begin 
+  begin
     let largest-char-code = 0;
     reduce(method(seed, char) max(seed, as(<integer>, char)) end method,
-	   largest-char-code,
-	   concatenate("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-		       "0123456789 \t\r\f\n\b!#%^&*()-_+=~[]\\|;'\"{},.<>/?_",
-		       clex-as-unit-string(as(<character>, 11))))
+           largest-char-code,
+           concatenate("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                       "0123456789 \t\r\f\n\b!#%^&*()-_+=~[]\\|;'\"{},.<>/?_",
+                       clex-as-unit-string(as(<character>, 11))))
   end;
 
 define constant $largest-identifier-char =
-  begin 
+  begin
     let largest-char-code = 0;
     reduce(method(seed, char) max(seed, as(<integer>, char)) end method,
-	   largest-char-code,
-	   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
+           largest-char-code,
+           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
   end;
 
 define constant $smallest-identifier-char =
-  begin 
+  begin
     let smallest-char-code = $largest-identifier-char;
     reduce(method(seed, char) min(seed, as(<integer>, char)) end method,
-	   smallest-char-code,
-	   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
+           smallest-char-code,
+           "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_")
   end;
 
-define constant $identifier-char-range = 
+define constant $identifier-char-range =
   $largest-identifier-char - $smallest-identifier-char;
 
 define constant $identifier-char-range-squared =
   $identifier-char-range * $identifier-char-range;
- 
-define constant $char-array-size = $largest-char + 1;    
-define constant $escape-values = 
-  make(<vector>, size: $char-array-size, fill: #f); 
-define constant $digit-values = 
-  make(<vector>, size: $char-array-size, fill: #f); 
+
+define constant $char-array-size = $largest-char + 1;
+define constant $escape-values =
+  make(<vector>, size: $char-array-size, fill: #f);
+define constant $digit-values =
+  make(<vector>, size: $char-array-size, fill: #f);
 
 // Use 0 as a fill because categories are bit vectors and testing them is
 // by comparisons with logand.
-define constant $escape-categories = 
-  make(<vector>, size: $char-array-size, fill: 0); 
-define constant $character-categories = 
-  make(<vector>, size: $char-array-size, fill: 0); 
+define constant $escape-categories =
+  make(<vector>, size: $char-array-size, fill: 0);
+define constant $character-categories =
+  make(<vector>, size: $char-array-size, fill: 0);
 
 // categories as bit vectors for both escape and general character tables
 define constant $character-escape   = #b00001;
@@ -147,7 +147,7 @@ define constant $hex-begin          = #b10000; // letter x
 
 // Or-ed combination categories for defining escape character tables
 define constant $octal-or-hex-digit = logior($octal-digit, $hex-digit);
-define constant $hex-digit-or-character-escape = 
+define constant $hex-digit-or-character-escape =
   logior($hex-digit, $character-escape);
 
 // predicates
@@ -184,8 +184,8 @@ end macro;
 
 define macro clex-hex-escape-digit?
   { clex-hex-escape-digit? ( ?char:expression ) }
-    => { (( ~ clex-out-of-range-character?( ?char)) 
-	    & clex-unsafe-hex-escape-digit?( ?char)) }
+    => { (( ~ clex-out-of-range-character?( ?char))
+            & clex-unsafe-hex-escape-digit?( ?char)) }
 end macro;
 
 define macro clex-octal-escape-digit-category?
@@ -200,8 +200,8 @@ end macro;
 
 define macro clex-octal-escape-digit?
   { clex-octal-escape-digit? ( ?char:expression ) }
-    => { (( ~ clex-out-of-range-character?( ?char)) 
-	    & clex-unsafe-octal-escape-digit?( ?char)) }
+    => { (( ~ clex-out-of-range-character?( ?char))
+            & clex-unsafe-octal-escape-digit?( ?char)) }
 end macro;
 
 define macro character-escape-value
@@ -228,7 +228,7 @@ define escape-values
   't'  => '\t';
   'v'  => as(<character>, 11); // vt -- hack
   '\'' => '\'';
-  '"'  => '"'; 
+  '"'  => '"';
   '?'  => '?';
   '\\' => '\\';
 end escape-values;
@@ -276,7 +276,7 @@ define digit-values
   'e'  => 14;
   'F'  => 15;
   'f'  => 15;
-end digit-values;     
+end digit-values;
 
 define constant $digit-to-character-vector = make(<vector>, size: 16);
 
@@ -312,9 +312,9 @@ define digit-characters
   13  => 'D';
   14  => 'E';
   15  => 'F';
-end digit-characters;     
+end digit-characters;
 
-define method clex-integer-to-string 
+define method clex-integer-to-string
     (the-integer :: <integer>,
      #key base :: limited(<integer>, min: 2, max: 16) = 10)
  => (the-string :: <string>);
@@ -325,7 +325,7 @@ define method clex-integer-to-string
       #t
     end if;
   while (the-integer > base)
-    let (the-new-integer, the-digit) = floor/(the-integer, base); 
+    let (the-new-integer, the-digit) = floor/(the-integer, base);
     push(the-list, clex-digit-to-character(the-digit));
     the-integer := the-new-integer;
   end while;
@@ -350,7 +350,7 @@ define escape-categories
   't'  => $character-escape;
   'v'  => $character-escape; // vt
   '\'' => $character-escape;
-  '"'  => $character-escape; 
+  '"'  => $character-escape;
   '?'  => $character-escape;
   '\\' => $character-escape;
   '0'  => $octal-or-hex-digit;
@@ -376,4 +376,4 @@ define escape-categories
   'F'  => $hex-digit;
   'f'  => $hex-digit-or-character-escape; // form feed
   'x'  => $hex-begin;
-end escape-categories;     
+end escape-categories;

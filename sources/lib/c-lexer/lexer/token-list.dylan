@@ -7,26 +7,26 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define class <token-list> (<t-list>) end;
 
-define method print-object 
+define method print-object
     (the-token-list :: <token-list>, the-stream :: <stream>) => ();
   if (empty?(the-token-list))
     format(the-stream, "(empty <token-list>)");
   else
     format(the-stream, "(<token-list> of (");
     print-separated-sequence(the-token-list, the-stream, ", ",
-			     map-function: lexer-string);
+                             map-function: lexer-string);
     format(the-stream, "))");
   end if;
 end method;
 
-define method copy-token-list 
-    (source-list :: <token-list>, 
+define method copy-token-list
+    (source-list :: <token-list>,
      #key source-line: the-source-line :: false-or(<integer>) = #f)
  => (copied-list :: <token-list>)
   let copied-list = make(<token-list>);
   for (source-token in source-list)
-    push-last(copied-list, copy-token(source-token, 
-				      source-line: the-source-line));
+    push-last(copied-list, copy-token(source-token,
+                                      source-line: the-source-line));
   end for;
   copied-list
 end method;
