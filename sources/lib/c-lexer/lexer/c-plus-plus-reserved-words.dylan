@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define abstract class <C++-reserved-word> (<token>) end;
 
-define method lexer-string 
+define method lexer-string
     (token :: <C++-reserved-word>) => (result :: <string>);
   as(<string>, token.parser-tag)
 end method;
