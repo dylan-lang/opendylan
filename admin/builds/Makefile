@@ -205,7 +205,6 @@ LIFE_SOURCE = $(DUIM_EXAMPLES_SOURCE)\life
 LIFE_INSTALL_DIRECTORY = $(DUIM_EXAMPLES_INSTALL_DIRECTORY)\life
 MAP_STATISTICS_SOURCE = $(TOOLS_DIRECTORY)\map-statistics
 MEMORY_MANAGER_SOURCE = $(LIB_DIRECTORY)\memory-manager
-METERING_SOURCE = $(LIB_DIRECTORY)\metering
 MIDI_SOURCE = $(LIB_DIRECTORY)\midi
 MOTLEY_SOURCE = $(LIB_DIRECTORY)\motley
 NAMING_SERVICE_SOURCE = $(CORBA_SERVICES_DIRECTORY)\naming
@@ -524,7 +523,6 @@ DFMC_MANAGEMENT = $(INSTALL_BIN_DIRECTORY)\dfmc-management.dll
 DFMC_HARP_X86_CG = $(INSTALL_BIN_DIRECTORY)\dfmc-harp-x86-cg.dll
 FILE_SOURCE_RECORDS = $(INSTALL_BIN_DIRECTORY)\file-source-records.dll
 ELF_LINKER = $(INSTALL_BIN_DIRECTORY)\elf-linker.dll
-METERING = $(INSTALL_BIN_DIRECTORY)\metering.dll
 MOTLEY = $(INSTALL_BIN_DIRECTORY)\motley.dll
 RELEASE_INFO = $(INSTALL_BIN_DIRECTORY)\release-info.dll
 TOOLS_INTERFACE = $(INSTALL_BIN_DIRECTORY)\tools-interface.dll
@@ -724,7 +722,6 @@ dfmc-harp-x86-cg: $(DFMC_HARP_X86_CG)
 dood: $(DOOD)
 file-source-records: $(FILE_SOURCE_RECORDS)
 elf-linker: $(ELF_LINKER)
-metering: $(METERING)
 motley: $(MOTLEY)
 release-info: $(RELEASE_INFO)
 tool-parser-generator: $(TOOL_PARSER_GENERATOR)
@@ -759,7 +756,7 @@ parser-compiler: $(PARSER_COMPILER)
 testworks-report: $(TESTWORKS_REPORT)
 
 project-manager-libraries: tools-interface user-projects
-core-compiler-libraries: file-source-records release-info dood metering binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-debug-back-end
+core-compiler-libraries: file-source-records release-info dood binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-debug-back-end
 pentium-compiler-libraries: core-compiler-libraries disasm dfmc-harp-x86-cg
 c-compiler-libraries: core-compiler-libraries
 pentium-dw-libraries: pentium-compiler-libraries dispatch-profiler
@@ -1614,11 +1611,6 @@ $(FILE_SOURCE_RECORDS):
   $(ENSURE_SOURCES) source-records $(SOURCE_RECORDS_SOURCE)
   $(BUILD_LIBRARY) file-source-records
 
-$(METERING):
-  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
-  $(ENSURE_SOURCES) metering $(METERING_SOURCE)
-  $(BUILD_LIBRARY) metering
-
 $(MOTLEY):
   $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
   $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
@@ -2237,7 +2229,6 @@ test-odbc:
 $(CONSOLE_SCEPTER_TESTS):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_APPLICATION) console-scepter
-  $(ENSURE_LIBRARY) metering
   $(ENSURE_SOURCES) scepter $(SCEPTER_SOURCE)
   $(BUILD_APPLICATION) /project $(CONSOLE_SCEPTER_TESTS_PROJECT) console-scepter-tests
 
