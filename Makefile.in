@@ -194,7 +194,7 @@ BOOTSTRAP_3_ENV = \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
-BOOTSTRAP_3_LIBRARIES = dylan-compiler dswank make-dylan-app
+BOOTSTRAP_3_LIBRARIES = dylan-compiler parser-compiler dswank make-dylan-app
 
 BOOTSTRAP_3_COMPILER = \
 	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build

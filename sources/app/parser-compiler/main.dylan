@@ -11,14 +11,14 @@ define function usage ()
 	 "Usage: %s [-t term-string] input-file [ output-file ]\n"
 	   "Finds and processes the 'define parser' form in the input file,\n"
 	   "creating an output file with that form replaced by the compiled\n"
-           "parser definition\n"
+           "parser definition.\n"
 	   "\n"
 	   "The -t flag specifies the format string used to format terminal\n"
 	   "definitions.  The first parameter is the token and the second is\n"
            "an integer code assigned to it by the parser compiler. The default\n"
 	   "is: -t \"%s\"\n"
 	   "\n"
-	   "If output file is not specified, writes to standard output\n",
+	   "If output file is not specified, writes to standard output.\n",
 	 application-name(), $default-terminal-string);
 end;
 
