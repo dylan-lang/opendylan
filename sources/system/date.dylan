@@ -327,21 +327,6 @@ define variable *month-names* =
 
 define constant $digits = #['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
-define generic append (string :: <string>, appendant :: <object>)
- => (result :: <string>);
-
-define method append (string :: <string>, appendant :: <string>)
- => (result :: <string>);
-  string := concatenate(string, appendant);
-  string;
-end;
-
-define method append (string :: <string>, appendant :: <character>)
- => (result :: <string>);
-  string := add!(string, appendant);
-  string;
-end;
-
 define method format-date (format :: <string>, date :: <date>)
  => (date-string :: <string>);
   let (year, month, day, hours, minutes, seconds,
@@ -359,7 +344,9 @@ define method format-date (format :: <string>, date :: <date>)
       end;
       string
     end;
-  let date-string :: <string> = "";
+  let date-stream = make(<string-stream>,
+                         contents: make(<string>, size: 64),
+                         direction: #"output");
   let format? :: <boolean> = #f;
   let use-dots? :: <boolean> = #f;
   for (char in format)
@@ -368,7 +355,7 @@ define method format-date (format :: <string>, date :: <date>)
     elseif (char = ':' & format?)
       use-dots? := #t;
     elseif (format?)
-      date-string := append(date-string, select (char)
+      write(date-stream, select (char)
         'Y' => integer-to-string(year);
         'y' => format-integer(year, 2);
         'H' => wrap("0", hours);
@@ -392,17 +379,17 @@ define method format-date (format :: <string>, date :: <date>)
                 end if, wrap("0", floor/(absolute-time-zone-offset, 60)),
                 if (use-dots?) ":" else "" end if,
                 wrap("0", modulo(absolute-time-zone-offset, 60)));
-        'n' => '\n';
-        '%' => '%';
-        otherwise => char;
+        'n' => "\n";
+        '%' => "%";
+        otherwise => list(char);
       end select);
       format? := #f;
       use-dots? := #f;
     else
-      date-string := append(date-string, char);
+      write-element(date-stream, char);
     end if;
   end for;
-  date-string;
+  date-stream.stream-contents
 end;
 
 define function as-rfc822-string (date :: <date>)
