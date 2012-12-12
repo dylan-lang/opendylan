@@ -161,6 +161,11 @@ int remove_tlv_vector(DTHREAD *thread);
 #ifdef USE_PTHREAD_TLS
 pthread_key_t teb_key;
 
+PURE_FUNCTION TEB* get_teb()
+{
+  return (TEB*)pthread_getspecific(teb_key);
+}
+
 void set_teb(TEB* teb)
 {
   pthread_setspecific(teb_key, (void*)teb);

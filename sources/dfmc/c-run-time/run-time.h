@@ -28,10 +28,6 @@
 #  endif
 #endif
 
-#if USE_PTHREAD_TLS
-#  include <pthread.h>
-#endif
-
 #define OPTIONAL_ARGUMENT_CHECK(fn, req, count)
 #define REQUIRED_ARGUMENT_CHECK(fn, req, count)
 
@@ -568,11 +564,7 @@ typedef struct _teb {
 } TEB;
 
 #ifdef USE_PTHREAD_TLS
-extern pthread_key_t teb_key;
-PURE_FUNCTION static inline TEB* get_teb()
-{
-  return (TEB*)pthread_getspecific(teb_key);
-}
+extern PURE_FUNCTION TEB* get_teb(void);
 #else
 extern TLS_VARIABLE TLS_INITIAL_EXEC TEB* teb;
 PURE_FUNCTION static inline TEB* get_teb()
