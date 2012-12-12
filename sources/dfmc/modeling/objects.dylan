@@ -1065,12 +1065,36 @@ define method make-compile-time-literal (object :: <single-float>)
   ^make(<&single-float>, data: make(<&raw-single-float>, value: object));
 end method;
 
+define method make-compile-time-literal (object :: <&single-float>)
+  if (model-compilation-record(object) ~== current-compilation-record())
+    make(<&single-float>, data: ^%single-float-data(object))
+  else
+    object
+  end if
+end method;
+
 define method make-compile-time-literal (object :: <double-float>)
   ^make(<&double-float>, data: make(<&raw-double-float>, value: object));
 end method;
 
+define method make-compile-time-literal (object :: <&double-float>)
+  if (model-compilation-record(object) ~== current-compilation-record())
+    make(<&double-float>, data: ^%double-float-data(object))
+  else
+    object
+  end if
+end method;
+
 define method make-compile-time-literal (object :: <machine-word>)
   ^make(<&machine-word>, data: make(<&raw-machine-word>, value: object));
+end method;
+
+define method make-compile-time-literal (object :: <&machine-word>)
+  if (model-compilation-record(object) ~== current-compilation-record())
+    make(<&machine-word>, data: ^%machine-word-data(object))
+  else
+    object
+  end if
 end method;
 
 /// HACK: MUST COME BEFORE NEXT METHOD (WHICH ISN'T EVEN NEC W/O EMULATOR
