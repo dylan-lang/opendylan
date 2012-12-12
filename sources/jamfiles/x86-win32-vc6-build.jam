@@ -3,7 +3,8 @@
 #
 
 CC      ?= cl /nologo ;
-CCFLAGS ?= -DWIN32 -D_WIN32 -D_MT -D_DLL -MD -Z7 -Od ;
+CCFLAGS ?= -DWIN32 -D_WIN32 -D_MT -D_DLL -MD -Z7 -Od
+           -DOPEN_DYLAN_PLATFORM_WINDOWS ;
 CP      ?= copy /y ;
 RC      ?= rc ;
 RM      ?= del/f/q ;
