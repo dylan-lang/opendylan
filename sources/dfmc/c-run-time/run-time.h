@@ -14,6 +14,11 @@
 #  warning Unknown compiler
 #endif
 
+/* This check is needed to bootstrap from the 2011.1 release. */
+#if !defined(OPEN_DYLAN_PLATFORM_DARWIN) && defined(__APPLE__)
+#  define OPEN_DYLAN_PLATFORM_DARWIN 1
+#endif
+
 #ifdef OPEN_DYLAN_PLATFORM_DARWIN
 #  include "AvailabilityMacros.h"
 #  if !defined(OPEN_DYLAN_COMPILER_CLANG) || \
