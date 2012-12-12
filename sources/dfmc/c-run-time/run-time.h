@@ -15,6 +15,7 @@
 #endif
 
 #ifdef OPEN_DYLAN_PLATFORM_DARWIN
+#  include "AvailabilityMacros.h"
 #  if !defined(OPEN_DYLAN_COMPILER_CLANG) || \
       (__clang_major__ < 3) || \
       (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
