@@ -567,7 +567,7 @@ typedef struct _teb {
         D buffer[MAX_ARGUMENTS];
 } TEB;
 
-#if USE_PTHREAD_TLS
+#ifdef USE_PTHREAD_TLS
 extern pthread_key_t teb_key;
 PURE_FUNCTION static inline TEB* get_teb()
 {
