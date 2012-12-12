@@ -14,16 +14,18 @@
 #  warning Unknown compiler
 #endif
 
+/* This check is needed to bootstrap from the 2011.1 release. */
+#if !defined(OPEN_DYLAN_PLATFORM_DARWIN) && defined(__APPLE__)
+#  define OPEN_DYLAN_PLATFORM_DARWIN 1
+#endif
+
 #ifdef OPEN_DYLAN_PLATFORM_DARWIN
+#  include "AvailabilityMacros.h"
 #  if !defined(OPEN_DYLAN_COMPILER_CLANG) || \
       (__clang_major__ < 3) || \
       (MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7)
 #    define USE_PTHREAD_TLS 1
 #  endif
-#endif
-
-#if USE_PTHREAD_TLS
-#include <pthread.h>
 #endif
 
 #define OPTIONAL_ARGUMENT_CHECK(fn, req, count)
@@ -84,59 +86,59 @@ typedef void*                   D;
 /* COMPILER-SPECIFIC INTRINSICS */
 
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-#define NORETURN_FUNCTION __attribute__((noreturn))
+#  define NORETURN_FUNCTION __attribute__((noreturn))
 #else
-#define NORETURN_FUNCTION
+#  define NORETURN_FUNCTION
 #endif
 
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-#define PURE_FUNCTION __attribute__((pure))
+#  define PURE_FUNCTION __attribute__((pure))
 #else
-#warning missing attribute PURE_FUNCTION - performance degraded
-#define PURE_FUNCTION
+#  warning missing attribute PURE_FUNCTION - performance degraded
+#  define PURE_FUNCTION
 #endif
 
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-#define CONDITIONAL_UPDATE(var, new_val, old_val) \
-  (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
+#  define CONDITIONAL_UPDATE(var, new_val, old_val) \
+     (__sync_bool_compare_and_swap(&var, old_val, new_val) ? DTRUE : DFALSE)
 #else
-#warning missing primitive CONDITIONAL_UPDATE - thread safety compromised
-#define CONDITIONAL_UPDATE(var, new_val, old_val) \
-  ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
+#  warning missing primitive CONDITIONAL_UPDATE - thread safety compromised
+#  define CONDITIONAL_UPDATE(var, new_val, old_val) \
+     ((old_val) == (var) ? (var = (new_val), DTRUE) : DFALSE)
 #endif
 
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-#define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
+#  define SYNCHRONIZE_SIDE_EFFECTS() __sync_synchronize()
 #else
-#warning missing primitive SYNCHRONIZE_SIDE_EFFECTS - thread safety compromised
-#define SYNCHRONIZE_SIDE_EFFECTS()
+#  warning missing primitive SYNCHRONIZE_SIDE_EFFECTS - thread safety compromised
+#  define SYNCHRONIZE_SIDE_EFFECTS()
 #endif
 
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-#define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
+#  define SEQUENCE_POINT() __asm__ __volatile__ ("" ::: "memory")
 #else
-#warning missing primitive SEQUENCE_POINT - thread safety compromised
-#define SEQUENCE_POINT()
+#  warning missing primitive SEQUENCE_POINT - thread safety compromised
+#  define SEQUENCE_POINT()
 #endif
 
 #ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
-#define TLS_VARIABLE __thread
+#  define TLS_VARIABLE __thread
 #else
-#define TLS_VARIABLE
+#  define TLS_VARIABLE
 #endif
 
 #ifdef OPEN_DYLAN_COMPILER_GCC
-#define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
+#  define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
 #endif
 
 #if defined(OPEN_DYLAN_COMPILER_CLANG) && defined(__has_attribute)
-#if __has_attribute(tls_model)
-#define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
-#endif
+#  if __has_attribute(tls_model)
+#    define TLS_INITIAL_EXEC __attribute__((tls_model("initial-exec")))
+#  endif
 #endif
 
 #ifndef TLS_INITIAL_EXEC
-#define TLS_INITIAL_EXEC
+#  define TLS_INITIAL_EXEC
 #endif
 
 static inline long atomic_increment(long *var) {
@@ -561,12 +563,8 @@ typedef struct _teb {
         D buffer[MAX_ARGUMENTS];
 } TEB;
 
-#if USE_PTHREAD_TLS
-extern pthread_key_t teb_key;
-PURE_FUNCTION static inline TEB* get_teb()
-{
-  return (TEB*)pthread_getspecific(teb_key);
-}
+#ifdef USE_PTHREAD_TLS
+extern PURE_FUNCTION TEB* get_teb(void);
 #else
 extern TLS_VARIABLE TLS_INITIAL_EXEC TEB* teb;
 PURE_FUNCTION static inline TEB* get_teb()
@@ -1171,14 +1169,14 @@ extern D primitive_allocate_weak_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D
 /* stack allocation */
 
 #ifdef OPEN_DYLAN_PLATFORM_WINDOWS
-#include <malloc.h>
+#  include <malloc.h>
 #else
-  #ifdef OPEN_DYLAN_PLATFORM_FREEBSD
-  #include <sys/types.h>
-  extern void * alloca (size_t size);
-  #else
-  #include <alloca.h>
-  #endif
+#  ifdef OPEN_DYLAN_PLATFORM_FREEBSD
+#     include <sys/types.h>
+      extern void * alloca (size_t size);
+#  else
+#    include <alloca.h>
+#  endif
 #endif
 
 #define primitive_stack_allocate(sz) ((D)(alloca((int)(sz) * sizeof(D))))
