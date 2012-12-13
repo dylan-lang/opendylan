@@ -25,7 +25,6 @@ ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86-darwin)
 endif
 
 GC_CFLAGS       = @GC_CFLAGS@
-GC_LFLAGS       = @GC_LFLAGS@
 GC_CHOICE       = @GC_CHOICE@
 
 CC = @CC@
