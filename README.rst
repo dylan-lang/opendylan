@@ -64,7 +64,9 @@ the following::
     brew install autoconf automake bdw-gc --universal
 
 You will also need to install the command line build tools available from
-Apple.
+Apple. If your installation of ``bdw-gc`` is not universal (doesn't contain
+both i386 and x86_64 code), you will need to uninstall it and install again
+with the ``--universal`` flag.
 
 On Ubuntu, you can install the necessary dependencies with::
 
@@ -79,14 +81,10 @@ To go on and do the build::
   ./autogen.sh
   ./configure \
      --with-mps=/path/to/mps-kit \  # if using the HARP back-end
-     --with-gc=/path/to/gc \ # if using the C back-end
+     --with-gc=/path/to/boehm-gc-installation \ # if using the C back-end
      --prefix=/opt/opendylan-current
   make
   sudo make install
-
-If you already have Open Dylan installed and are building with the C
-back-end you can use the GC that came with the installation.  For
-example, ``--with-gc=/opt/opendylan-2011.1/gc``.
 
 The first generation will be in Bootstrap.2/bin/dylan-compiler ,
 and a second generation will be in /opt/opendylan-current/bin/dylan-compiler
