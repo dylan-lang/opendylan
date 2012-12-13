@@ -3,7 +3,7 @@
 srcdir          = @srcdir@
 top_builddir    = @top_builddir@
 GC_CFLAGS       = @GC_CFLAGS@
-GC_LFLAGS       = @GC_LFLAGS@
+GC_LIBRARY      = @GC_LIBRARY@
 
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
 
@@ -74,6 +74,7 @@ install-header: $(srcdir)/run-time.h $(INCDEST)
 
 install-runtime: $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
 	cp -fp $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
+	cp -fp $(GC_LIBRARY) $(RUNTIMELIBDEST)
 
 install: install-runtime install-header
 

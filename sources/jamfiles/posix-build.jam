@@ -62,16 +62,17 @@ SUPOBJS_llvm ?= ;
 
 SUPPORT = $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/$(SUPOBJS_$(COMPILER_BACK_END)) ;
 
-RTOBJS_harp ?= libdylan-harp-runtime.a ;
+RTOBJS_harp ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-harp-runtime.a ;
 
 RTOBJS_llvm ?= ;
 
-RTOBJS_c    ?= libdylan-c-runtime.a ;
+RTOBJS_c    ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-c-runtime.a
+               $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libgc.a ;
 
 LINKFLAGS += -L$(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/ ;
 
 # These are passed to the link rules by way of the dylan.lid file
-rtlibs  ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/$(RTOBJS_$(COMPILER_BACK_END)) ;
+rtlibs  ?= $(RTOBJS_$(COMPILER_BACK_END)) ;
 rtclibs ?= -lm ;
 
 guilflags ?= ;
@@ -401,7 +402,7 @@ rule LinkDLL {
 }
 
 actions together LinkDLL bind NEEDLIBS {
-  $(LINK) -shared -o $(<) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) $(GC_LFLAGS)
+  $(LINK) -shared -o $(<) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
 }
 
 rule LinkEXE {
@@ -410,7 +411,7 @@ rule LinkEXE {
 }
 
 actions LinkEXE bind NEEDLIBS {
-  $(LINK) -o $(<) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS) $(GC_LFLAGS)
+  $(LINK) -o $(<) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
 }
 
 #
