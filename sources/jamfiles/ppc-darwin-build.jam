@@ -8,7 +8,8 @@ include $(SYSTEM_ROOT)/lib/config.jam ;
 #
 SUFDLL  ?= .dylib ;             # shared library suffix
 
-CCFLAGS  += -fno-strict-aliasing -arch ppc -D_POSIX_C_SOURCE ;
+CCFLAGS  += -fno-strict-aliasing -arch ppc -D_POSIX_C_SOURCE
+            -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_DARWIN ;
 
 #
 # Runtime

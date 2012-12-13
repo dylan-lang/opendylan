@@ -158,8 +158,13 @@ int remove_tlv_vector(DTHREAD *thread);
 
 /* TEB management */
 
-#if USE_PTHREAD_TLS
+#ifdef USE_PTHREAD_TLS
 pthread_key_t teb_key;
+
+PURE_FUNCTION TEB* get_teb()
+{
+  return (TEB*)pthread_getspecific(teb_key);
+}
 
 void set_teb(TEB* teb)
 {
