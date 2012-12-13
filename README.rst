@@ -83,11 +83,14 @@ To go on and do the build::
      --with-mps=/path/to/mps-kit \  # if using the HARP back-end
      --with-gc=/path/to/boehm-gc-installation \ # if using the C back-end
      --prefix=/opt/opendylan-current
-  make
+  make 3-stage-bootstrap
   sudo make install
 
-The first generation will be in Bootstrap.2/bin/dylan-compiler ,
-and a second generation will be in /opt/opendylan-current/bin/dylan-compiler
+This will build a fully bootstrapped compiler with the first generation
+in ``Bootstrap.1/bin/dylan-compiler``, the second generation in
+``Bootstrap.2/bin/dylan-compiler``, and the third in
+``Bootstrap.3/bin/dylan-compiler``. The third generation will then be
+installed as ``/opt/opendylan-current/bin/dylan-compiler``.
 
 
 Compilation on Windows
