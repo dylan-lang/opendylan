@@ -442,7 +442,7 @@ DSFLT primitive_double_integer_as_single_float(DMINT low, DMINT high) {
   DSFLT f = fl + fh * pow(2.0, (DDFLT)LONG_BIT);
   return((high < 0) ? 0.0 - f : f);
 #else
-  DLMINT i = ((DLMINT)high << LONG_BIT) | (DLMINT)low;
+  DLMINT i = ((DLMINT)high << LONG_BIT) | (DLMINT)(DUMINT)low;
   return((DSFLT)i);
 #endif
 }
@@ -483,7 +483,7 @@ DDFLT primitive_double_integer_as_double_float(DMINT low, DMINT high) {
   DDFLT f = fl + fh * pow(2.0, (DDFLT)LONG_BIT);
   return((high < 0) ? 0.0 - f : f);
 #else
-  DLMINT i = ((DLMINT)high << LONG_BIT) | (DLMINT)low;
+  DLMINT i = ((DLMINT)high << LONG_BIT) | (DLMINT)(DUMINT)low;
   return((DDFLT)i);
 #endif
 }
