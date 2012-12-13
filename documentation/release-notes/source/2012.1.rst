@@ -74,9 +74,13 @@ Library Changes
 * The ``bit-vectors`` module in the ``collections`` library works
   correctly now on 64 bit platforms.
 
+* The floating point support in the ``common-dylan`` library has
+  been enhanced.
+
 * The ``command-line-parser`` library has been relicensed and is now
   available for wider usage.  This replaces old command parsing code.
-  This library has not yet been documented.
+  This library has not yet been documented, but it has been cleaned
+  up substantially and the API is much more consistent.
 
 * ``load-library`` has now been implemented on Linux, Mac OS X and
   FreeBSD. Previously, this was only supported on Windows.
@@ -91,6 +95,9 @@ Library Changes
   ``strings`` library instead.  Some of the functionality in
   ``string-extensions``, such as character sets, was moved to the
   regular-expressions library, which was the only thing using it.
+
+* The ``functional-objects-extras`` module was not used and has been
+  removed.
 
 * The ``*open-accessors*`` table has been removed from the I/O library.
 
@@ -295,6 +302,14 @@ lead towards code which the C compiler could not compile
 
 This required a fix in the typist.
 
+Miscellaneous Fixes
+-------------------
+
+The control flow graph could be incorrect if an unwind-protect without
+a body is optimized.
+
+Some slot initializer constants (floats in particular) when inherited
+between classes in different files would result in compilation errors.
 
 C Back-end Changes
 ==================
@@ -340,9 +355,17 @@ Fixes
 Some other bugs that resulted in the generation of invalid C have
 been fixed.
 
+We now abort when applying too many arguments in C run-time.
+
+A compilation crash with C back-end when trying to emit an overflown
+integer has been fixed.
+
 Stack usage in method dispatch has been reduced. This fixes an issue
 where a default sized stack would be exhausted on 64 bit platforms,
 especially while building the compiler.
+
+Floating point constants could in some circumstances be corrupted
+when compiled.
 
 C-FFI Changes
 =============
@@ -379,21 +402,3 @@ using fdmake. This is now easy to do::
 
 Unfortunately, gdb doesn't return a correct exit status, so the build will fail after the first invocation
 of ``dylan-compiler``, but this is useful when looking into repeatable crashes.
-
-.. TODO: elevate more of these to their own section.
-
-In reverse chronological order
-
-* fix control flow graph if unwind-protect without body is optimized hannes Feb 16, 2012 e946c88a18fcc20191f9b6b30a463c85617842ba issue #182
-* fix split when remove-with-empty? is true abeaumont Feb 07, 2012 1c3512d571ba25fb7bfd101585db5afcf3315353
-* reimplement make-dylan-app in Dylan glidesurfer Feb 01, 2012 pull request #172
-
-* fix limited type handling hannes Jan 25, 2012 pull request #158 issue #177, issue #122, issue #82
-* cleanup release-info library hannes Jan 18, 2012 pull request #162
-* expand pathnames in interactive console compiler hannes Jan 11, 2012 ba5e5c97fad5e1f2758e262d28441a2faa5ecc93 issue #149
-
-* abort when applying too many arguments in C run-time housel Dec 20, 2011 e7ceda33f00e460a693c7ccd81f484ae40b13586
-* remove unused functional-objects-extras module hannes Dec 18, 2011 2e7f2a4cb38f278495b48f7883360ddd349f2b9f issue #90
-* Fix a compilation crash with C back-end when trying to emit an overflown integer abeaumont Dec 18, 2011 819b99bfe14656f5b5081bd70287d8d9f7fb7c7f
-* reduce debug output of compiler (by making it optional with debug-out) hannes Dec 15, 2011 d093ae6cdfd5f4b8dd8ff3ac6359e8f6d9a8f847 issue #92
-* extended floating-point support housel core-library Dec 14, 2011 b2762c85f554b0ad99efe800259c709e918ce460 bug 7122
