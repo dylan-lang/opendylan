@@ -250,7 +250,7 @@ define function find-parameter-value (wanted-name, sig-spec, arguments)
         index := index + 1;
       end;
       for (spec in sig-spec.spec-argument-key-variable-specs)
-        if (spec.spec-variable-name.fragment-name = wanted-name)
+        if (spec.spec-keyword-expression.fragment-value = wanted-name)
           return(index);
         end;
         index := index + 1;
