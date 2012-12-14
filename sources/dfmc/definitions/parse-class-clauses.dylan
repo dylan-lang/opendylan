@@ -40,10 +40,11 @@ define function parse-class-clauses
         => #f;
       { ?clause:*; ... }
         => macro-case (clause)
-             { inherited slot ?spec:* }
+             { ?pre-adjectives:* inherited ?post-adjectives:* slot ?spec:* }
                => collect-first-into
                   (inherited-slot-specs, 
-                   parse-inherited-slot-clause(clause, class-name, spec));
+                   parse-inherited-slot-clause(clause, class-name, pre-adjectives,
+                                               post-adjectives, spec));
              { ?adjectives:* slot ?spec:* }
                => collect-first-into
                    (slot-specs,
@@ -639,6 +640,10 @@ define constant $inherited-slot-options =
        <slot-init-keyword-option>,
        <slot-required-init-keyword-option>);
 
+define program-warning <invalid-inherited-slot-adjectives>
+  format-string "Inherited slot clause may not specify additional adjectives.";
+end program-warning;
+
 define program-warning <invalid-inherited-slot-type>
   slot condition-getter-name,
     required-init-keyword: getter-name:;
@@ -649,7 +654,21 @@ define program-warning <invalid-inherited-slot-type>
   format-arguments getter-name, type;
 end program-warning;
 
-define function parse-inherited-slot-clause (clause, name, spec)
+define function warn-on-adjectives(adjectives)
+  macro-case (adjectives)
+    { } => #t
+    { ?other:* }
+      => begin
+           note(<invalid-inherited-slot-adjectives>,
+                source-location: fragment-source-location(other));
+         end;
+  end macro-case;
+end;
+
+define function parse-inherited-slot-clause (clause, name, pre-adjectives,
+                                             post-adjectives, spec)
+  warn-on-adjectives(pre-adjectives);
+  warn-on-adjectives(post-adjectives);
   let (getter, option-initargs) =
     macro-case (spec)
     { ?getter:name = ?init:expression, ?options:* }
