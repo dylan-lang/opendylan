@@ -202,7 +202,9 @@ rule DylanLibraryFiles image : files {
       for _i in $(_out) {
 	local _mobj = [ FGristFiles $(_i:S=$(SUFOBJ)) ] ;
 	MakeLocate $(_mobj) : $(LOCATE_TARGET) ;
-	Cc $(_mobj) : $(_i) ;
+	if $(SUFOUT) != $(SUFOBJ) {
+	  Cc $(_mobj) : $(_i) ;
+	}
 	LinkDLL $(_dll) : $(_mobj) ;
       }
     } else {
