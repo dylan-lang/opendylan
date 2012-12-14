@@ -124,7 +124,11 @@ AS_IF([test x$with_gc != x],
           ]
         )
         GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc}/include"
-        GC_LFLAGS="-L${with_gc}/lib -lgc"
+        AC_CHECK_FILE([${with_gc}/lib/libgc.a],
+                      [
+                        GC_LIBRARY="${with_gc}/lib/libgc.a"
+                      ],
+                      [])
         GC_CHOICE="boehm"
       ]
 )
@@ -136,12 +140,27 @@ AS_IF([test x${with_gc}x${with_mps} == xx],
           ]
         )
         GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
-        GC_LFLAGS="-lgc"
         GC_CHOICE="boehm"
+        AC_CHECK_FILE([/usr/lib/libgc.a],
+                      [
+                        GC_LIBRARY="/usr/lib/libgc.a"
+                      ],
+                      [
+                        AC_CHECK_FILE([/usr/local/lib/libgc.a],
+                                      [
+                                        GC_LIBRARY="/usr/local/lib/libgc.a"
+                                      ],
+                                      [])
+                      ])
+      ]
+)
+AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} == xboehmx],
+      [
+        AC_MSG_ERROR([Could not find libgc.a. Please specify the path to the Boehm GC installation via --with-gc])
       ]
 )
 AC_SUBST(GC_CFLAGS)
-AC_SUBST(GC_LFLAGS)
+AC_SUBST(GC_LIBRARY)
 AC_SUBST(GC_CHOICE)
 
 # We don't want to build generated code with warnings enabled usually.
