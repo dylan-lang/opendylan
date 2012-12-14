@@ -293,8 +293,15 @@ define method type-estimate-call-from-site(call :: <method-call>,
               let size = #f;
               let dimensions = #f;
               unless (^subtype?(arg-type, dylan-value(#"<stretchy-collection>")))
-                size := get-parameter(#"size");
-                dimensions := get-parameter(#"dimensions");
+                let unsupplied = dylan-value(#"unsupplied-object");
+                let ts = get-parameter(#"size");
+                unless (ts == unsupplied)
+                  size := ts;
+                end;
+                let td = get-parameter(#"dimensions");
+                unless (td == unsupplied)
+                  dimensions := td;
+                end;
               end;
               if (element-type | size | dimensions)
                 make(<type-estimate-limited-collection>,

@@ -311,6 +311,9 @@ a body is optimized.
 Some slot initializer constants (floats in particular) when inherited
 between classes in different files would result in compilation errors.
 
+The compiler would crash when the ``dimensions:`` keyword was not given
+when constructing an ``<array>``.
+
 C Back-end Changes
 ==================
 
