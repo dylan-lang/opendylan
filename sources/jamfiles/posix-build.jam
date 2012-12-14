@@ -408,7 +408,7 @@ actions together LinkDLL bind NEEDLIBS {
 }
 
 rule LinkEXE {
-  Echo LinkEXE $(<) ":" $(>) ;
+  #Echo LinkEXE $(<) ":" $(>) ;
   Depends $(<) : $(>) ;
 }
 
