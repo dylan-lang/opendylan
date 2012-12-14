@@ -314,6 +314,9 @@ between classes in different files would result in compilation errors.
 The compiler would crash when the ``dimensions:`` keyword was not given
 when constructing an ``<array>``.
 
+The compiler now warns rather than crashes on invalid inherited slot
+specifications.
+
 C Back-end Changes
 ==================
 
