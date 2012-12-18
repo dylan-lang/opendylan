@@ -472,7 +472,10 @@ static void set_current_thread_name(const char *name) {
 #ifdef OPEN_DYLAN_PLATFORM_LINUX
   /* gdb shows this, so set it too */
   prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
-  pthread_setname_np(pthread_self(), name);
+  extern int pthread_setname_np(pthread_t, const char*) __attribute__((weak));
+  if (pthread_setname_np) {
+    pthread_setname_np(pthread_self(), name);
+  }
 #endif
 #ifdef OPEN_DYLAN_PLATFORM_FREEBSD
   pthread_set_name_np(pthread_self(), name);
