@@ -66,14 +66,21 @@ RTOBJS_harp ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-harp-runtime.a ;
 
 RTOBJS_llvm ?= ;
 
-RTOBJS_c    ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-c-runtime.a
-               $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libgc.a ;
+RTOBJS_c    ?= $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libdylan-c-runtime.a ;
+
+if $(GC_USE_STATIC_BOEHM) = true {
+  RTOBJS_c += $(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/libgc.a ;
+}
 
 LINKFLAGS += -L$(SYSTEM_LIBDIR)/runtime/$(RUNTIMEDIR)/ ;
 
 # These are passed to the link rules by way of the dylan.lid file
 rtlibs  ?= $(RTOBJS_$(COMPILER_BACK_END)) ;
 rtclibs ?= -lm ;
+
+if $(GC_USE_STATIC_BOEHM) = false {
+  rtclibs += $(GC_LFLAGS) ;
+}
 
 guilflags ?= ;
 
