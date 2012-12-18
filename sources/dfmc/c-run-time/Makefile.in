@@ -4,6 +4,7 @@ srcdir          = @srcdir@
 top_builddir    = @top_builddir@
 GC_CFLAGS       = @GC_CFLAGS@
 GC_LIBRARY      = @GC_LIBRARY@
+GC_USE_STATIC_BOEHM = @GC_USE_STATIC_BOEHM@
 
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
 
@@ -74,7 +75,9 @@ install-header: $(srcdir)/run-time.h $(INCDEST)
 
 install-runtime: $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
 	cp -fp $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
-	cp -fp $(GC_LIBRARY) $(RUNTIMELIBDEST)
+	@ if [ "$(GC_USE_STATIC_BOEHM)" == "true" ]; then \
+		cp -fp $(GC_LIBRARY) $(RUNTIMELIBDEST); \
+	fi
 
 install: install-runtime install-header
 
