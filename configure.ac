@@ -12,6 +12,7 @@ srcdir=`(cd $srcdir; pwd)`
 
 SUPPORT_GC_MPS=no
 SUPPORT_GC_BOEHM=yes
+GC_USE_STATIC_BOEHM=false
 
 AC_CANONICAL_TARGET
 case $target in
@@ -30,10 +31,12 @@ case $target in
   i*86-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
       RUNTIME_SOURCES=sources/dfmc/c-run-time
+      GC_USE_STATIC_BOEHM=true
     ;;
   x86_64-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
       RUNTIME_SOURCES=sources/dfmc/c-run-time
+      GC_USE_STATIC_BOEHM=true
     ;;
   powerpc-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=ppc-darwin;
@@ -124,6 +127,7 @@ AS_IF([test x$with_gc != x],
           ]
         )
         GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc}/include"
+        GC_LFLAGS="-L${with_gc}/lib -lgc"
         AC_CHECK_FILE([${with_gc}/lib/libgc.a],
                       [
                         GC_LIBRARY="${with_gc}/lib/libgc.a"
@@ -140,6 +144,7 @@ AS_IF([test x${with_gc}x${with_mps} == xx],
           ]
         )
         GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
+        GC_LFLAGS="-lgc"
         GC_CHOICE="boehm"
         AC_CHECK_FILE([/usr/lib/libgc.a],
                       [
@@ -160,8 +165,10 @@ AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} == xboehmx],
       ]
 )
 AC_SUBST(GC_CFLAGS)
+AC_SUBST(GC_LFLAGS)
 AC_SUBST(GC_LIBRARY)
 AC_SUBST(GC_CHOICE)
+AC_SUBST(GC_USE_STATIC_BOEHM)
 
 # We don't want to build generated code with warnings enabled usually.
 # The exception to this is if the person running configure has passed
