@@ -27,10 +27,8 @@ Open Dylan 2012.1 Release Notes
 Introduction
 ============
 
-.. TODO: fix release date
-
 This document describes the 2012.1 release of Open Dylan, released
-March 7, 2012.
+December 19, 2012.
 
 * `Download the release <http://opendylan.org/download/index.html>`_
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
@@ -52,8 +50,6 @@ should not change the semantics of existing programs, but if it does
 the compiler will issue a serious warning.  In a future release this
 will be changed to non-serious warning, and then eventually the
 warning will be removed completely.
-
-.. TODO: add example of the warning?
 
 See `DEP-0003 <http://opendylan.org/proposals/dep-0003.html>`_ for
 more details.
@@ -329,8 +325,6 @@ improve the stability of the C back-end in general.
 
 This work is currently experimental and may have stability and
 performance issues.  Further feedback is welcome.
-
-.. TODO: moar details
 
 Performance Improvements
 ------------------------
