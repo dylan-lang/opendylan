@@ -468,17 +468,19 @@ void initialize_threads_primitives()
 /* THREAD PRIMITIVES                                                         */
 /*****************************************************************************/
 
-static void set_thread_name(THREAD *rthread, const char *name) {
+static void set_current_thread_name(const char *name) {
 #ifdef OPEN_DYLAN_PLATFORM_LINUX
   /* gdb shows this, so set it too */
   prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
-  pthread_setname_np(rthread->tid, name);
+  extern int pthread_setname_np(pthread_t, const char*) __attribute__((weak));
+  if (pthread_setname_np) {
+    pthread_setname_np(pthread_self(), name);
+  }
 #endif
 #ifdef OPEN_DYLAN_PLATFORM_FREEBSD
-  pthread_set_name_np(rthread->tid, name);
+  pthread_set_name_np(pthread_self(), name);
 #endif
 #ifdef OPEN_DYLAN_PLATFORM_DARWIN
-  ignore(rthread);
   pthread_setname_np(name);
 #endif
 }
@@ -501,7 +503,7 @@ void *trampoline (void *arg)
   if(rthread->name) {
     const char *raw = primitive_string_as_raw(rthread->name);
     trace_threads("Thread %p has name \"%s\"", thread, raw);
-    set_thread_name(rthread, raw);
+    set_current_thread_name(raw);
   }
 
   setup_tlv_vector(thread);
