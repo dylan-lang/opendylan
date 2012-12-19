@@ -6,17 +6,17 @@ It was downloaded from <http://www.opendylan.org>
 Copyright: 
 
     Copyright (c) 1995-2004 Functional Objects, Inc.
-    Portions copyright (c) 2004-2011 Dylan Hackers.
-    Portions copyright (c) 2001-2002 Ravenbrook Limited.
+    Portions copyright (c) 2004-2012 Dylan Hackers.
+    Portions copyright (c) 2001-2012 Ravenbrook Limited.
 
 License:
 
     <Put the license of the package here indented by 4 spaces>
     Copyright (c) 1995-2004 Functional Objects, Inc.
 
-    Portions copyright (c) 2004-2011 Dylan Hackers.
+    Portions copyright (c) 2004-2012 Dylan Hackers.
 
-    Portions copyright (c) 2001-2002 Ravenbrook Limited.  See
+    Portions copyright (c) 2001-2012 Ravenbrook Limited.  See
     MPS-License.txt in this directory for the Memory Pool System license
     terms.
 
@@ -42,7 +42,7 @@ License:
     
                    MEMORY POOL SYSTEM OPEN SOURCE LICENSE
     
-    Copyright (C) 2001-2002 Ravenbrook Limited <http://www.ravenbrook.com/>.
+    Copyright (C) 2001-2012 Ravenbrook Limited <http://www.ravenbrook.com/>.
     All rights reserved.  This is an open source license.  Contact
     Ravenbrook for commercial licensing options.
     

@@ -26,11 +26,11 @@ Hello World
 ===========
 
 You have just downloaded Open Dylan and installed it in
-``/opt/opendylan-2011.1``.  So how do you write the canonical Hello
+``/opt/opendylan-2012.1``.  So how do you write the canonical Hello
 World app?  This example assumes bash is being used.  You may need
 to adjust for your local shell.  ::
 
-  $ export PATH=/opt/opendylan-2011.1/bin:$PATH
+  $ export PATH=/opt/opendylan-2012.1/bin:$PATH
   $ make-dylan-app hello-world
   $ cd hello-world
   $ dylan-compiler -build hello-world.lid
@@ -161,10 +161,10 @@ arguments at a shell. For example::
 
     $ dylan-compiler
     Hacker Edition
-    Version 2011.1
+    Version 2012.1
     Copyright (c) 1997-2004, Functional Objects, Inc.
-    Portions Copyright (c) 2004-2011, Dylan Hackers
-    Portions Copyright (c) 2001-2002, Ravenbrook Ltd.
+    Portions Copyright (c) 2004-2012, Dylan Hackers
+    Portions Copyright (c) 2001-2012, Ravenbrook Ltd.
     >
 
 If you've used the Open Dylan IDE on Windows, note that using
@@ -308,10 +308,10 @@ arithmetic, defines a method, and then traces it::
 
     # dylan-environment
     Hacker Edition
-    Version 2011.1
+    Version 2012.1
     Copyright (c) 1997-2004, Functional Objects, Inc.
-    Portions Copyright (c) 2004-2011, Dylan Hackers
-    Portions Copyright (c) 2001-2002, Ravenbrook Ltd.
+    Portions Copyright (c) 2004-2012, Dylan Hackers
+    Portions Copyright (c) 2001-2012, Ravenbrook Ltd.
 
     > play
     Opened project gui-dylan-playground
@@ -393,7 +393,7 @@ project, and also make sure you have a registry entry for it.  See
 You should now have a buffer called ``*dime-repl nil*`` that looks
 like this::
 
-    Welcome to dswank - the Hacker Edition Version 2011.1 SLIME interface
+    Welcome to dswank - the Hacker Edition Version 2012.1 SLIME interface
     opendylan> 
 
 This is the Open Dylan compiler interactive shell.  You can issue
