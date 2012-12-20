@@ -120,7 +120,7 @@ Toby Weinberg - Communications of the ACM May 1998
     to simplifying this programming problem. This article describes how
     three programming language implementations provide access to Microsoft's
     Component Object Model (COM), and how they attempt to reduce the
-    complexity of writing nad using COM objects.
+    complexity of writing and using COM objects.
 
     http://dl.acm.org/citation.cfm?id=274957
 
