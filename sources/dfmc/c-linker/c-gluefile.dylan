@@ -10,15 +10,12 @@ define sideways method emit-mainfile
   let c-file = #f;
   with-build-area-output (stream = ld, base: "_main", type: "c")
     write(stream, "#include <stdlib.h>\n");
-    write(stream, "#include <gc/gc.h>\n\n");
     write(stream, "#include \"run-time.h\"\n\n");
 
     format(stream, "int main (int argc, char *argv[]) {\n");
     format(stream, "  extern void %s ();\n", glue-name(lib-name));
     format(stream, "  extern D %s;\n", command-arguments-name());
     format(stream, "  extern D %s;\n", command-name-name());
-
-    format(stream, "  GC_INIT();\n");
 
     write (stream, "  D args = primitive_make_vector((argc > 0) ? argc - 1 : 0);\n");
     write (stream, "  int i;\n");
