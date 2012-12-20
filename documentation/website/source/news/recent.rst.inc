@@ -1,3 +1,11 @@
+**New release: 2012.1**
+*2012-12-20*
+
+We just released Open Dylan 2012.1. This release brings many
+bugfixes, inmproved platform support and new features.
+
+:doc:`Read more... </news/2012/12/20/new-release>`
+
 **Improved editor support**
 *2012-10-18*
 
@@ -23,14 +31,3 @@ A new library of basic string operations is now available as a
 standard library.
 
 :doc:`Read more... </news/2012/05/18/strings>`
-
-
-**C3 superclass linearization**
-*2012-01-25*
-
-We implemented the C3 superclass linearization algorithm and
-enabled it by default. This is more intuitive and will allow for
-further performance improvements.
-
-:doc:`Read more... </news/2012/01/25/c3>`
-
