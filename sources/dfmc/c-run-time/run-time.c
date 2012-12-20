@@ -4759,7 +4759,7 @@ void _Init_Run_Time ()
 #endif
 
     // initialize GC and thread subsystems
-    GC_init();
+    GC_INIT();
     initialize_threads_primitives();
     GC_set_max_heap_size(MAX_HEAP_SIZE);
 
