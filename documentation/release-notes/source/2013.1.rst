@@ -2,4 +2,18 @@
 Open Dylan 2013.1 Release Notes
 *******************************
 
-Nothing here yet.
+Introduction
+============
+
+This document describes the 2013.1 release of Open Dylan, released
+XXXXXXXXX, 2013.
+
+* `Download the release <http://opendylan.org/download/index.html>`_
+* `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
+* `Source code <https://github.com/dylan-lang/opendylan/tree/v2013.1>`_
+
+Documentation Improvements
+==========================
+
+LID file keywords are better documented in the Library Reference.
+
