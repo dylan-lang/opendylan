@@ -213,7 +213,13 @@ Identifies one or more C object files included as part of the library.
 Dylan environments copy these files to their build area and ensure that
 they are compiled by the appropriate batch file and included in the
 final output as ``.DLL`` or ``.EXE`` files. The file names given here must
-include the ``.obj`` suffix on Windows or ``.o`` on other platforms.
+include the ``.obj`` suffix on Windows or ``.o`` on other platforms, except
+when using this keyword in conjunction with a static library.
+
+In some situations, a static library needs to be copied into the build area
+and linked into the project. This is typically when writing a binding for
+an external library written in C. In this situation, the ``C-Object-Files``
+keyword may be useful.
 
 RC-Files:
 ^^^^^^^^^
@@ -241,8 +247,40 @@ LID file keyword
     C-Libraries: *c-lib-files*
 
 Identifies one or more C libraries to be included in the link phase when
-building the *.DLL* or *.EXE* for the library. You can use this keyword
-to specify arbitrary linker options as well as libraries.
+building the *.DLL* or *.EXE* for the library. Paths to search for
+libraries can also be added with this keyword. Arbitrary linker options
+can not be specified using this keyword.
+
+On Windows, this value for this keyword is passed directly to the linker.
+However, on Unix and Mac OS X, the requirements are a bit more stringent
+and the arguments should be passed one per line and be one of the following:
+
+``-L path``:
+  Add a path to the search path for shared libraries.
+
+``-llibrary``:
+  Link against the specified shared library. This should be either in the
+  regular linker search path or have a path specified via a ``-L`` flag.
+
+``library.a``:
+  Link against the specified static library.
+
+  .. note:: Note that this may cause a problem if you are using this to
+     link a static library that hasn't been built with ``-fPIC`` into a
+     shared library on the ``x86_64-linux`` platform.
+
+  .. note:: In general, you don't want to use this keyword to link a
+     static library into a shared library since this keyword propagates
+     to dependent libraries as discussed below.
+
+``-F path``:
+  Add a path to the search path for frameworks.
+  (Mac OS X only)
+
+``-framework framework``:
+  Link against the specified shared library. This should be either in the
+  regular linker search path or have a path specified via a ``-L`` flag.
+  (Mac OS X only)
 
 Unlike the other keywords described in this section, the *C-Libraries:*
 keyword propagates to dependent libraries. For example, suppose library
@@ -258,6 +296,42 @@ Specifying compilation details
 ------------------------------
 
 The following keywords control aspects of compilation for the library.
+
+LID:
+^^^^
+
+LID keyword
+
+.. code-block:: dylan
+
+    LID: *file-name.lid*
+
+Specifies the name of a LID file to process and includes the settings
+contained in that file into the current LID file.
+
+This is commonly used to share common definitions and settings between
+platform or OS specific LID files.
+
+Jam-Includes:
+^^^^^^^^^^^^^
+
+LID keyword
+
+.. code-block:: dylan
+
+    Jam-Includes: *file-name.jam*
+
+Specifies the name of a JAM file to process. This is typically used
+when integrating with a third party library and needing custom flags
+for the C compiler or linker.
+
+An example JAM file might look like::
+
+    LINKLIBS += `pkg-config --ldflags gtk+-2.0` ;
+    CCFLAGS += `pkg-config --cflags gtk+-2.0` ;
+
+The use of backticks ```...``` will execute the command enclosed
+within and return the output of that command.
 
 Executable:
 ^^^^^^^^^^^
@@ -305,6 +379,9 @@ cuts down on the amount of sharing, increases your application’s memory
 footprint, and slows down load time. In such circumstances, you may want
 to give one or more libraries an explicit base address using this
 keyword.
+
+.. note:: This keyword is only used on Windows and is ignored on other
+   platforms.
 
 Linker-Options:
 ^^^^^^^^^^^^^^^
