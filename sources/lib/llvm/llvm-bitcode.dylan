@@ -2252,11 +2252,7 @@ define function write-module
                        0
                      end,
                      visibility-encoding(global.llvm-global-visibility-kind),
-                     if (global.llvm-global-variable-thread-local?)
-                       1
-                     else
-                       0
-                     end,
+                     thread-local-encoding(global.llvm-global-variable-thread-local),
                      if (global.llvm-global-unnamed-address?)
                        1
                      else
@@ -2402,6 +2398,18 @@ define function alignment-encoding
   else
     0
   end if;
+end function;
+
+define function thread-local-encoding
+    (thread-local-kind :: <llvm-global-thread-local-kind>)
+ => (encoding :: <integer>);
+  select (thread-local-kind)
+    #f              => 0;
+    #t              => 1;
+    #"localdynamic" => 2;
+    #"initialexec"  => 3;
+    #"localexec"    => 4;
+  end select
 end function;
 
 define function llvm-write-bitcode

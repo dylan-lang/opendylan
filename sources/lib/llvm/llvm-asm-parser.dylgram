@@ -263,7 +263,7 @@ definition:
                    constant?: arg$7 == #"constant",
                    linkage: arg$2,
                    visibility: arg$3,
-                   thread-local?: arg$4,
+                   thread-local: arg$4,
 		   unnamed-address?: arg$6,
                    arg$9);
          add!(*llvm-parse-state*.parse-module.llvm-module-globals, global);
@@ -283,7 +283,7 @@ definition:
                    constant?: arg$4 == #"constant",
                    linkage: arg$1,
                    visibility: arg$2,
-                   thread-local?: arg$3,
+                   thread-local: arg$3,
                    arg$6);
          add!(*llvm-parse-state*.parse-module.llvm-module-globals, global);
          do-define-global-value(#f, global);
@@ -302,7 +302,7 @@ definition:
                    constant?: arg$7 == #"constant",
                    linkage: arg$2,
                    visibility: arg$3,
-                   thread-local?: arg$4,
+                   thread-local: arg$4,
 		   unnamed-address?: arg$5,
                    arg$9);
          add!(*llvm-parse-state*.parse-module.llvm-module-globals, global);
@@ -318,7 +318,7 @@ definition:
                    constant?: arg$4 == #"constant",
                    linkage: arg$1,
                    visibility: arg$2,
-                   thread-local?: arg$3,
+                   thread-local: arg$3,
                    arg$6);
          add!(*llvm-parse-state*.parse-module.llvm-module-globals, global);
          do-define-global-value(#f, global);
@@ -742,6 +742,16 @@ opt-thread-local:
     => #f;;
   %THREAD_LOCAL
     => #t;;
+  %THREAD_LOCAL %LPAREN tls-model %RPAREN
+    => arg$3;;
+
+tls-model:
+   %LOCALDYNAMIC
+    => #"localdynamic";;
+   %INITIALEXEC
+    => #"initialexec";;
+   %LOCALEXEC
+    => #"localexec";;
 
 opt-unnamed-addr:
   /* empty */

@@ -6,7 +6,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant <llvm-linkage-kind>
-
   = one-of(#"private", #"linker-private", #"linker-private-weak",
            #"linker-private-weak-def-auto", #"internal", #"weak", #"weak-odr",
            #"linkonce", #"linkonce-odr", #"available-externally", #"appending",
@@ -30,13 +29,16 @@ define abstract class <llvm-global-value> (<llvm-constant-value>)
     init-value: #f, init-keyword: section:;
 end class;
 
+define constant <llvm-global-thread-local-kind>
+  = one-of(#f, #t, #"localdynamic", #"initialexec", #"localexec");
+
 define class <llvm-global-variable> (<llvm-global-value>)
   constant slot llvm-global-variable-constant? :: <boolean>,
     required-init-keyword: constant?:;
   constant slot llvm-global-variable-initializer :: false-or(<llvm-constant-value>),
     init-value: #f, init-keyword: initializer:;
-  constant slot llvm-global-variable-thread-local? :: <boolean>,
-    init-value: #f, init-keyword: thread-local?:;
+  constant slot llvm-global-variable-thread-local :: <llvm-global-thread-local-kind>,
+    init-value: #f, init-keyword: thread-local:;
 end class;
 
 define class <llvm-global-alias> (<llvm-global-value>)
