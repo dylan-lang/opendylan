@@ -17,3 +17,10 @@ Documentation Improvements
 
 LID file keywords are better documented in the Library Reference.
 
+Portability Enhancements
+========================
+
+The configure script could fail on Gentoo Linux as there was not always
+a static ``libgc.a`` available. We now check for the file that we need
+on each platform.
+
