@@ -102,6 +102,21 @@ AC_ARG_WITH(gc,
             AS_HELP_STRING([--with-gc=PATH],
                            [Path of Boehm GC installation.]))
 
+AS_IF([test x${GC_USE_STATIC_BOEHM} == xtrue],
+      [
+        GC_LIB_NAME=libgc.a
+      ],
+      [
+        AS_IF([text x${OPEN_DYLAN_PLATFORM_NAME} == xx86-darwin],
+              [
+                GC_LIB_NAME=libgc.so
+              ],
+              [
+                GC_LIB_NAME=libgc.dylib
+              ])
+      ]
+)
+
 AS_IF([test x$with_mps != x],
       [
         AS_IF([test x${SUPPORT_GC_MPS} == xno],
@@ -128,9 +143,9 @@ AS_IF([test x$with_gc != x],
         )
         GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc}/include"
         GC_LFLAGS="-L${with_gc}/lib -lgc"
-        AC_CHECK_FILE([${with_gc}/lib/libgc.a],
+        AC_CHECK_FILE([${with_gc}/lib/${GC_LIB_NAME}],
                       [
-                        GC_LIBRARY="${with_gc}/lib/libgc.a"
+                        GC_LIBRARY="${with_gc}/lib/${GC_LIB_NAME}"
                       ],
                       [])
         GC_CHOICE="boehm"
@@ -146,14 +161,14 @@ AS_IF([test x${with_gc}x${with_mps} == xx],
         GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
         GC_LFLAGS="-lgc"
         GC_CHOICE="boehm"
-        AC_CHECK_FILE([/usr/lib/libgc.a],
+        AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
                       [
-                        GC_LIBRARY="/usr/lib/libgc.a"
+                        GC_LIBRARY="/usr/lib/${GC_LIB_NAME}"
                       ],
                       [
-                        AC_CHECK_FILE([/usr/local/lib/libgc.a],
+                        AC_CHECK_FILE([/usr/local/lib/${GC_LIB_NAME}],
                                       [
-                                        GC_LIBRARY="/usr/local/lib/libgc.a"
+                                        GC_LIBRARY="/usr/local/lib/${GC_LIB_NAME}"
                                       ],
                                       [])
                       ])
@@ -161,7 +176,7 @@ AS_IF([test x${with_gc}x${with_mps} == xx],
 )
 AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} == xboehmx],
       [
-        AC_MSG_ERROR([Could not find libgc.a. Please specify the path to the Boehm GC installation via --with-gc])
+        AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc])
       ]
 )
 AC_SUBST(GC_CFLAGS)
