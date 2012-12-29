@@ -1,6 +1,6 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2010 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2012 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -33,9 +33,11 @@ define method op--getslotptr
   let slot-descriptor :: <&slot-descriptor>
     = ^slot-descriptor(class, dylan-value(slot-name));
   let header-words = dylan-value(#"$number-header-words");
-  apply(ins--gep-inbounds, be, x, 0,
-        i32(header-words + ^slot-offset(slot-descriptor, class)),
-        indices)
+  let gep = apply(ins--gep-inbounds, be, x, 0,
+                  i32(header-words + ^slot-offset(slot-descriptor, class)),
+                  indices);
+  llvm-value-type(gep);
+  gep
 end method;
 
 // Same, but with the class name given as a symbol

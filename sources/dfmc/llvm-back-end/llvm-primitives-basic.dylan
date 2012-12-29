@@ -1,6 +1,6 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2010 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2012 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -505,7 +505,7 @@ define side-effect-free stateless dynamic-extent mapped &runtime-primitive-descr
   ins--phi(be, empty-vector, entry-block, copied-vector, return-copied-vector)
 end;
 
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-vector-element
+define side-effect-free stateless dynamic-extent mapped-parameter &primitive-descriptor primitive-vector-element
     (x :: <simple-object-vector>, index :: <raw-integer>)
  => (value :: <object>);
   let slot-ptr
@@ -518,11 +518,10 @@ define side-effecting stateless indefinite-extent &primitive-descriptor primitiv
     (new-value :: <object>,
      x :: <simple-object-vector>, index :: <raw-integer>)
  => (value :: <object>);
-  let slot-ptr
-    = op--getslotptr(be, x, #"<simple-object-vector>", #"vector-element",
-                     index);
-  let v = ins--bitcast(be, new-value, $llvm-object-pointer-type);
-  ins--store(be, v, slot-ptr, alignment: back-end-word-size(be));
+  let class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let x-sov = op--object-pointer-cast(be, x, class);
+  let slot-ptr = op--getslotptr(be, x-sov, class, #"vector-element", index);
+  ins--store(be, new-value, slot-ptr, alignment: back-end-word-size(be));
 end;
 
 define side-effect-free stateless dynamic-extent mapped &primitive-descriptor primitive-vector-size
