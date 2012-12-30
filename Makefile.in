@@ -232,20 +232,20 @@ rtg:
 	for target in $(BACKENDS); do \
 	  ./Bootstrap.3/bin/llvm-runtime-generator $(abs_srcdir)/sources/dylan/dylan.lid $$target && \
 	  llvm-dis $$target-runtime.bc && \
-	  llc -O3 $$target-runtime.bc; \
+	  clang -O3 -S $$target-runtime.bc; \
 	done
 
 BOOTSTRAP_4_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(fd_build) \
+	OPEN_DYLAN_PLATFORM_NAME=$(OPEN_DYLAN_PLATFORM_NAME) \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.3/build \
 	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
-	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.4.$(fd_build)/build/logs \
-	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.4.$(fd_build) \
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(fd_build) \
-	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.4.$(fd_build)/build \
+	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/logs \
+	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME) \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME) \
+	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
@@ -256,17 +256,17 @@ BOOTSTRAP_4_COMPILER = \
 
 
 
-$(abs_builddir)/Bootstrap.4.$(fd_build):
-	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)
-	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/bin
-	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/lib
-	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/lib/runtime
-	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/build
-	mkdir $(abs_builddir)/Bootstrap.4.$(fd_build)/build/logs
+$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME):
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/bin
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/lib
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/lib/runtime
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/logs
 
-bootstrap-stage-4: $(abs_builddir)/Bootstrap.4.$(fd_build)
+bootstrap-stage-4: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)
 	@echo Building Open Dylan bootstrap stage 4...
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(fd_build) \
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME) \
 	  $(MAKE) -C $(rt_build) install
 	@$(BOOTSTRAP_4_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_4_COMPILER)" \
@@ -279,15 +279,23 @@ testc:
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <A
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <B
 
-testl: $(abs_builddir)/Bootstrap.4.$(fd_build)
+testl: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <Al
-	@(cd Bootstrap.4.$(fd_build)/build/dylan; for i in *.bc; do echo $$i; llvm-dis $$i; opt -O3 -o - $$i | llc -O3 --filetype=asm -O3 -o `basename $$i .bc`.s && as -o `basename $$i .bc`.o `basename $$i .bc`.s; done)
+	@(cd Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/dylan; \
+          for i in *.bc; do \
+            echo $$i; \
+            llvm-dis $$i && clang -O3 -S $$i; \
+          done)
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <Bl
-	@(cd Bootstrap.4.$(fd_build)/build/common-dylan; for i in *.bc; do echo $$i; llvm-dis $$i; opt -O3 -o - $$i | llc -O3 --filetype=asm -O3 -o `basename $$i .bc`.s && as -o `basename $$i .bc`.o `basename $$i .bc`.s; done)
+	@(cd Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/common-dylan; \
+          for i in *.bc; do \
+            echo $$i; \
+            llvm-dis $$i && clang -O3 -S $$i; \
+          done)
 
 xtestl:
 	for target in $(BACKENDS); do \
-	  $(MAKE) testl fd_build=$$target; \
+	  $(MAKE) testl OPEN_DYLAN_PLATFORM_NAME=$$target; \
 	done
 
 ###
