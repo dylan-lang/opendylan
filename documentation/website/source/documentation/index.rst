@@ -96,6 +96,7 @@ Documentation
 
 * `Basics of Dylan Syntax <cheatsheet.html>`_
 * `Iteration <cheatsheets/iteration.html>`_
+* `Conditionals <cheatsheets/conditionals.html>`_
 
 .. raw:: html
 
