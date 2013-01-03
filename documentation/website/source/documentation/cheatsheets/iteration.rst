@@ -17,7 +17,7 @@ Simple iteration with ``while`` and ``until``
 .. code-block:: dylan
 
     while (condition?)
-      // do something until condition? is false
+      // do something while the test condition? is true
     end;
 
 .. raw:: html
@@ -27,8 +27,8 @@ Simple iteration with ``while`` and ``until``
 
 .. code-block:: dylan
 
-    until (~condition?)
-      // do something until condition? is true
+    until (condition?)
+      // do something until the test condition? is true
     end;
 
 .. raw:: html
