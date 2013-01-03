@@ -57,19 +57,6 @@ Documentation
 .. raw:: html
 
      <hr>
-     <h2>Cheat Sheets</h2>
-
-     <div class="alert alert-block alert-info">
-       <p>Quick one-page sheets for common tasks.</p>
-     </div>
-
-`Dylan Cheat Sheet <cheatsheet.html>`_
-
-    A cheat sheet to get you started with the basics of Dylan syntax.
-
-.. raw:: html
-
-     <hr>
      <h2>Articles</h2>
 
     <div class="alert alert-block alert-info">
@@ -101,6 +88,18 @@ Documentation
      </div>
      <div class="span6">
 
+     <h2>Cheat Sheets</h2>
+
+     <div class="alert alert-block alert-info">
+       <p>Quick one-page sheets for common tasks.</p>
+     </div>
+
+* `Basics of Dylan Syntax <cheatsheet.html>`_
+* `Iteration <cheatsheets/iteration.html>`_
+
+.. raw:: html
+
+     <hr>
      <h2>References</h2>
 
      <div class="alert alert-block alert-info">

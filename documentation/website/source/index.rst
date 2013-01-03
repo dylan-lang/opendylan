@@ -64,6 +64,7 @@ excellent :drm:`Introduction to the Dylan Reference Manual <drm_6>`.
 
    */*
    articles/*/*
+   documentation/cheatsheets/*
    news/*/*/*/*
    community/gsoc/*
 
