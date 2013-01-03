@@ -85,6 +85,13 @@ Documentation
 
 .. raw:: html
 
+     <hr>
+     <h2>Publications</h2>
+
+`See our publications page <publications.html>`_.
+
+.. raw:: html
+
      </div>
      <div class="span6">
 
@@ -164,13 +171,6 @@ Documentation
     A series of proposals for improvements to the Open Dylan
     implementation and related libraries.
 
-
-.. raw:: html
-
-     <hr>
-     <h2>Publications</h2>
-
-`See our publications page <publications.html>`_.
 
 .. raw:: html
 
