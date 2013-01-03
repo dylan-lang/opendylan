@@ -60,14 +60,19 @@ Iterating over a range
 
     for (count from 0 below num)
       // do work
+      // count ranges from 0 to the integer below num
     end;
 
     for (column from 1 to 3)
       // do work
+      // count ranges from 1 to 3, inclusive.
     end;
 
     // Changing the stepping and going in reverse
-    for (index :: <integer> from stop - 1 to start by -1)
+    for (index from stop - 1 to start by -1)
+      // index will start at 'stop - 1' and end at the
+      // value of 'start', decrementing by 1 with each
+      // iteration of the loop.
     end;
 
 Read more in the DRM: :drm:`for`.
