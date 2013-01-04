@@ -1,5 +1,5 @@
 *******************
-The STRINGS library
+The strings Library
 *******************
 
 .. current-library:: strings
