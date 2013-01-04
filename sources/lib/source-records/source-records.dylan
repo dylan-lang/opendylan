@@ -19,17 +19,17 @@ define open generic source-record-as-id (sr :: <source-record>, location)
 
 // Create a new source record with the specified id.
 define open generic id-as-source-record (class :: subclass(<source-record>),
-					 project :: <object>,
-					 location,
-					 id)
+                                         project :: <object>,
+                                         location,
+                                         id)
  => sr :: <source-record>;
 
 // A hack to avoid more pervasive source changes, but allow some calls to bypass
 // the timestamp check
 define thread variable *check-source-record-date?* = #t;
 
-define open generic call-with-source-record-input-stream 
-    (fn :: <function>, sr :: <source-record>, 
+define open generic call-with-source-record-input-stream
+    (fn :: <function>, sr :: <source-record>,
      #key, #all-keys)
  => (#rest fn-values);
 
@@ -49,7 +49,7 @@ define open generic source-record-contents (sr :: <source-record>)
 define open generic source-record-name (sr :: <source-record>)
  => name :: false-or(<string>);
 
-define method source-record-name (sr :: <source-record>) 
+define method source-record-name (sr :: <source-record>)
     => (name :: singleton(#f));
   #f
 end method;
@@ -73,12 +73,12 @@ define method print-source-line-location (sr :: <source-record>, line, stream)
  => ();
   format(stream, "%s:%s", source-record-name(sr), line);
 end method;
-  
+
 define method source-line-location (sr :: <source-record>, line)
     => (name, real-line-number);
   values(source-record-name(sr), line);
 end method;
-  
+
 define open generic source-char-offset (sr :: <source-record>) => (offset);
 
 define method source-char-offset (sr :: <source-record>) => (offset);
@@ -88,7 +88,7 @@ end method;
 // Support for source locations stored in object files.
 define open generic object-source-location-lines (sr :: <source-location>)
  => (start-line :: <integer>, end-line :: <integer>);
-    
+
 define method object-source-location-lines (loc :: <source-location>)
  => (start-line :: <integer>, end-line :: <integer>);
   let sr = loc.source-location-source-record;
@@ -98,7 +98,7 @@ define method object-source-location-lines (loc :: <source-location>)
   values(offset + start-line, offset + end-line)
 end;
 
-// this error can be detected when we have a source record already 
+// this error can be detected when we have a source record already
 // (but it was removed from storage)
 // or when we are trying to create the record for the first time
 define class <source-record-missing> (<source-record-error>)
@@ -116,8 +116,8 @@ define method condition-source-record (c :: <source-record-missing>)
 end method;
 
 define macro with-input-from-source-record
-  { with-input-from-source-record (?stream:variable = ?:expression) 
-      ?:body 
+  { with-input-from-source-record (?stream:variable = ?:expression)
+      ?:body
     end }
     => { call-with-source-record-input-stream
            (method (?stream) ?body end, ?expression) }
@@ -130,8 +130,8 @@ define open generic source-record-modified?(sr :: <source-record>)
  => (yes :: <boolean>);
 
 // Support for condition printing.
-define open generic source-record-location (sr :: <source-record>, 
-					    #key check-if-exists?)
+define open generic source-record-location (sr :: <source-record>,
+                                            #key check-if-exists?)
  => (location);
 
 define open generic source-record-start-line (sr :: <source-record>)

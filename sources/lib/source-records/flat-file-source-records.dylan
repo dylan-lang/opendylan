@@ -27,7 +27,7 @@ define class <flat-file-source-record-proxy> (<object>)
     required-init-keyword: module:;
   constant slot source-record-proxy-start-line :: false-or(<integer>),
     required-init-keyword: start-line:;
-end;  
+end;
 
 // There should be an adjective in define class that does this...
 define sealed domain make(singleton(<flat-file-source-record-proxy>));
@@ -53,8 +53,8 @@ define method source-record-removed?(sr :: <flat-file-source-record>)
     |
     begin
       let removed? = ~file-exists?(sr.source-record-location-slot);
-       if(removed?)
-	 sr.source-record-removed := #t
+       if (removed?)
+         sr.source-record-removed := #t
        end;
       removed?
     end;
@@ -65,50 +65,50 @@ define method source-record-modified?(sr :: <flat-file-source-record>)
  => (yes :: <boolean>);
   sr.source-record-modified
     |
-    block()
-      let modified? = 
-	(sr.source-record-unique-id ~= 
-	   unique-file-id(sr.source-record-location-slot));
-      if(modified?)
-	sr.source-record-modified := #t
+    block ()
+      let modified? =
+        (sr.source-record-unique-id ~=
+           unique-file-id(sr.source-record-location-slot));
+      if (modified?)
+        sr.source-record-modified := #t
       end;
       modified?
     exception (error :: <file-system-error>)
-      if(source-record-removed?(sr))
-	sr.source-record-modified := #t
+      if (source-record-removed?(sr))
+        sr.source-record-modified := #t
       else
-	signal(error)
+        signal(error)
       end;
     end;
 end;
 
 define method source-record-location(sr :: <flat-file-source-record>,
-				     #key check-if-exists? = #f)
+                                     #key check-if-exists? = #f)
  => (loc :: <locator>);
-  
+
   let location = sr.source-record-location-slot;
-  if(~check-if-exists? | ~source-record-removed?(sr))
+  if (~check-if-exists? | ~source-record-removed?(sr))
     location
   else
     signal(make(<source-record-missing>,
-		source-record: sr,
-		format-string: "File %s has been removed.",
-		format-arguments: list(location)))
+                source-record: sr,
+                format-string: "File %s has been removed.",
+                format-arguments: list(location)))
   end
 end;
 
 define method source-record-relative-name (sr :: <flat-file-source-record>,
-					   directory :: <locator>)
+                                           directory :: <locator>)
  => (name :: <string>)
   let location = relative-locator(sr.source-record-location-slot, directory);
   as(<string>, make(<file-locator>,
-		    directory: locator-directory(location),
-		    base: locator-base(location)))
+                    directory: locator-directory(location),
+                    base: locator-base(location)))
 end method;
 
 define function flat-file-id (location :: <locator>,
-			      directory :: <locator>,
-			      unique-id :: <string>) => id :: <string>;
+                              directory :: <locator>,
+                              unique-id :: <string>) => id :: <string>;
   let location = relative-locator(location, directory);
   // pair(location, date)
   // For now, the compiler wants the id to be a one-line string...
@@ -118,9 +118,9 @@ define function flat-file-id (location :: <locator>,
 end;
 
 define method id-as-source-record (c == <flat-file-source-record>,
-				   project :: <object>,
-				   directory :: <locator>,
-				   id :: <string>)
+                                   project :: <object>,
+                                   directory :: <locator>,
+                                   id :: <string>)
  => sr :: <flat-file-source-record>;
   let pos = position(id, '\t');
   debug-assert(pos, "Invalid sr id %=", id);
@@ -131,9 +131,9 @@ define method id-as-source-record (c == <flat-file-source-record>,
 end method;
 
 define method id-as-source-record (c == <flat-file-source-record>,
-				   project :: <object>,
-				   directory :: <locator>,
-				   id :: <flat-file-source-record-proxy>)
+                                   project :: <object>,
+                                   directory :: <locator>,
+                                   id :: <flat-file-source-record-proxy>)
  => sr :: <flat-file-source-record>;
   let sr
     = id-as-source-record(c, project, directory, id.source-record-proxy-id);
@@ -145,28 +145,28 @@ define method id-as-source-record (c == <flat-file-source-record>,
 end method;
 
 define method source-record-as-id (sr :: <flat-file-source-record>,
-				   directory :: <locator>)
+                                   directory :: <locator>)
  => (id :: <flat-file-source-record-proxy>)
   make(<flat-file-source-record-proxy>,
        // TODO: Don't need to cons this string, just store the date
        // and abbrev. locator in the proxy.
        id: flat-file-id(sr.source-record-location, directory,
-			sr.source-record-unique-id),
+                        sr.source-record-unique-id),
        module: sr.cached-source-record-module-name,
        start-line: sr.cached-source-record-start-line)
 end method;
 
 define method file-source-record-ids (c  == <flat-file-source-record>,
-				      directory :: <locator>,
-				      location :: <locator>)
+                                      directory :: <locator>,
+                                      location :: <locator>)
  => sr-id* :: <list>;
-  block()
+  block ()
     list(flat-file-id(location, directory, unique-file-id(location)))
   exception (error :: <file-system-error>)
     signal(make(<source-record-missing>,
-		source-record: location,
-		format-string: "File %s does not exist or cannot be opened.",
-		format-arguments: list(location)));
+                source-record: location,
+                format-string: "File %s does not exist or cannot be opened.",
+                format-arguments: list(location)));
   end;
 
 end method;
@@ -174,14 +174,14 @@ end method;
 define method call-with-source-record-input-stream
     (fn :: <function>, sr :: <flat-file-source-record>,
      #key check-date? = *check-source-record-date?*) => (#rest fn-values);
-  let location = 
+  let location =
     // if we are not checking the date we have to check if file exists
     source-record-location(sr, check-if-exists?: ~check-date?);
   unless (~check-date? | ~source-record-modified?(sr))
     signal(make(<source-record-missing>,
-		source-record: sr,
-		format-string: "%s was unexpectedly modified during compilation.",
-		format-arguments: list(sr)));
+                source-record: sr,
+                format-string: "%s was unexpectedly modified during compilation.",
+                format-arguments: list(sr)));
   end;
   with-open-source-file (stream = location)
     stream-skip-lines (stream, sr.source-record-start-line);
@@ -192,17 +192,17 @@ end method;
 define method source-record-module-name (sr :: <flat-file-source-record>)
  => module-name :: <symbol>;
   sr.cached-source-record-module-name | begin
-					  cache-file-header-data(sr);
-					  sr.cached-source-record-module-name
-					end
+                                          cache-file-header-data(sr);
+                                          sr.cached-source-record-module-name
+                                        end
 end method;
 
-define method source-record-start-line 
+define method source-record-start-line
     (sr :: <flat-file-source-record>) => (line :: <integer>)
   sr.cached-source-record-start-line | begin
-					 cache-file-header-data(sr);
-					 sr.cached-source-record-start-line
-				       end
+                                         cache-file-header-data(sr);
+                                         sr.cached-source-record-start-line
+                                       end
 end method;
 
 define function cache-file-header-data (sr :: <flat-file-source-record>)
@@ -210,20 +210,19 @@ define function cache-file-header-data (sr :: <flat-file-source-record>)
   let (headers, lines) = read-file-header(location);
   sr.cached-source-record-start-line := lines;
   let module-strings = element(headers, #"module", default: #f);
-  unless(module-strings)
+  unless (module-strings)
     signal(make(<badly-formed-file-header>,
-		format-string: "Source file %s does not contain "
-		  "the entry for module, which is mandatory",
-		format-arguments: vector(as(<string>, location))))
+                format-string: "Source file %s does not contain "
+                  "the entry for module, which is mandatory",
+                format-arguments: vector(as(<string>, location))))
   end;
   let module-name = first(module-strings);
-  if(empty?(module-name))
+  if (empty?(module-name))
     signal(make(<badly-formed-file-header>,
-		format-string: "Source file %s does not specify "
-		  "module name, which is mandatory",
-		format-arguments: vector(as(<string>, location))))
+                format-string: "Source file %s does not specify "
+                  "module name, which is mandatory",
+                format-arguments: vector(as(<string>, location))))
   end;
-    
   sr.cached-source-record-module-name := as(<symbol>, module-name);
 end function;
 
@@ -233,11 +232,11 @@ define method source-record-name (sr :: <flat-file-source-record>)
 end method;
 
 // TODO: PERFORMANCE: When do we uncache this? Perhaps keep it around
-// only while doing the initial read, and then just rescan the file 
+// only while doing the initial read, and then just rescan the file
 // for generating warnings, moving "extract-string" here from the
 // reader as an abstraction.
 
-define method source-record-contents 
+define method source-record-contents
    (sr :: <flat-file-source-record>) => (bytes :: <byte-vector>)
   cached-source-record-contents(sr)
     | (cached-source-record-contents(sr)
@@ -252,7 +251,7 @@ end method;
 
 define method source-char-offset (sr :: <file-source-record>) => (offset);
   // Don't bother caching for now.
-  let (headers, lines, chars) = 
+  let (headers, lines, chars) =
     read-file-header(source-record-location(sr, check-if-exists?: #t));
   chars;
 end method;

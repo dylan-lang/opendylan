@@ -39,7 +39,7 @@ define constant <small-source-offset> = <integer>;
 
 define open abstract class <big-source-offset> (<object>) end;
 
-define constant <source-offset> 
+define constant <source-offset>
   = type-union(<small-source-offset>, <big-source-offset>);
 
 define open generic make-source-offset
@@ -47,7 +47,7 @@ define open generic make-source-offset
       => (source-offset);
 
 define open generic source-offset-character-in
-    (record :: <source-record>, offset :: <source-offset>) 
+    (record :: <source-record>, offset :: <source-offset>)
  => (pos :: <integer>);
 
 define open generic source-offset-line
@@ -65,36 +65,36 @@ end method;
 
 //// Convenience functions.
 
-define function source-location-start-character 
+define function source-location-start-character
    (loc :: <source-location>) => (character :: <integer>)
   source-offset-character-in
     (loc.source-location-source-record,
      loc.source-location-start-offset)
 end function;
 
-define function source-location-start-line 
+define function source-location-start-line
    (loc :: <source-location>) => (line :: <integer>)
   loc.source-location-start-offset.source-offset-line
 end function;
 
-define function source-location-start-column 
+define function source-location-start-column
    (loc :: <source-location>) => (col :: <integer>)
   loc.source-location-start-offset.source-offset-column
 end function;
 
-define function source-location-end-character 
+define function source-location-end-character
    (loc :: <source-location>) => (character :: <integer>)
   source-offset-character-in
     (loc.source-location-source-record,
      loc.source-location-end-offset)
 end function;
 
-define function source-location-end-line 
+define function source-location-end-line
    (loc :: <source-location>) => (line :: <integer>)
   loc.source-location-end-offset.source-offset-line
 end function;
 
-define function source-location-end-column 
+define function source-location-end-column
    (loc :: <source-location>) => (col :: <integer>)
   loc.source-location-end-offset.source-offset-column
 end function;
@@ -124,14 +124,14 @@ define function copy-source-location-contents
     // TODO: Remove this hack when the environment/DUIM handle this
     // better.
     let contents = source-record-contents(record);
-    if(end-offset > size(contents))
+    if (end-offset > size(contents))
       signal(make(<source-record-missing>,
-		  source-record: record,
-		  format-string: "%s has been modified.",
-		  format-arguments: list(record)))
+                  source-record: record,
+                  format-string: "%s has been modified.",
+                  format-arguments: list(record)))
     else
       copy-sequence-removing-returns
-	(source-record-contents(record), start: start-offset, end: end-offset);
+        (source-record-contents(record), start: start-offset, end: end-offset);
     end;
    end;
 end;
@@ -140,7 +140,7 @@ define constant $return-code  = as(<integer>, '\r');
 define constant $newline-code = as(<integer>, '\n');
 
 define function copy-sequence-removing-returns
-    (seq :: <sequence>, 
+    (seq :: <sequence>,
        #key start: _start :: <integer> = 0, end: _end :: <integer> = size(seq))
  => (copy :: <sequence>)
   let original-size = _end - _start;

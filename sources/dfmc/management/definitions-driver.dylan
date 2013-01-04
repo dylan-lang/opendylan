@@ -50,8 +50,8 @@ define function do-timing-compilation-phase
   profiling(cpu-time-seconds, cpu-time-microseconds, allocation)
     if (*dfmc-profile-allocation?*)
       profiling(allocation-stats =
-		  list(description: format-to-string
-			 ("%s of %s", phase, library-description-emit-name(ld))))
+                  list(description: format-to-string
+                         ("%s of %s", phase, library-description-emit-name(ld))))
         body();
       results end;
     else
@@ -66,9 +66,9 @@ define function do-timing-compilation-phase
   let snap =
     accumulate? &
     compilation-timing-property?(ld,
-				 method(snap :: <profile-snap>)
-				     snap.snap-phase = phase;
-				 end method);
+                                 method(snap :: <profile-snap>)
+                                     snap.snap-phase = phase;
+                                 end method);
   if (snap)
     let elapsed-time = snap.snap-time + elapsed-time;
     let allocated-space = snap.snap-space + allocated-space;
@@ -79,12 +79,12 @@ define function do-timing-compilation-phase
   else
     snap :=
         make(<profile-snap>,
-	     time:  elapsed-time,
-	     time-string: integer-amount-to-string
-	       (elapsed-seconds, elapsed-microseconds),
-	     space: allocated-space,
-	     space-string: float-amount-to-string(allocated-space),
-	     phase:  phase);
+             time:  elapsed-time,
+             time-string: integer-amount-to-string
+               (elapsed-seconds, elapsed-microseconds),
+             space: allocated-space,
+             space-string: float-amount-to-string(allocated-space),
+             phase:  phase);
     record-compilation-timing-property(ld, snap);
   end if;
 
@@ -185,8 +185,8 @@ define function dump-timings-for (ld :: <compilation-context>) => ()
     end;
     progress-line("  --");
     table-line("Sum",
-	       100, float-amount-to-string(total-time),
-	       100, float-amount-to-string(total-space));
+               100, float-amount-to-string(total-time),
+               100, float-amount-to-string(total-space));
     let lines = compilation-source-line-count(ld);
     progress-line("  --");
     let lpm = (lines / total-time) * 60.0;
@@ -226,19 +226,19 @@ define function display-integer(number :: <integer>, field :: <integer>)
     if (quotient = 0)
       let index = field - (exponent + truncate/(exponent - 1, 3));
       if (index < 0)
-	error("field %d not big enough for integer %d", field, number);
+        error("field %d not big enough for integer %d", field, number);
       end;
       result[index] := digit;
       index + 1
     else
       let index = process-integer(quotient, exponent + 1);
       if (modulo(exponent, 3) = 0)
-	result[index] := ',';
-	result[index + 1] := digit;
-	index + 2
+        result[index] := ',';
+        result[index + 1] := digit;
+        index + 2
       else
-	result[index] := digit;
-	index + 1
+        result[index] := digit;
+        index + 1
       end;
     end if;
 
@@ -249,7 +249,7 @@ end function;
 define function print-gc-statistics (ld :: <compilation-context>) => ()
   progress-line("");
   progress-line("GC statistics for compilation of %s:",
-		library-description-emit-name(ld));
+                library-description-emit-name(ld));
   progress-line
   ("        Live                    Condemned                     Not Condemned");
   progress-line("");
@@ -257,9 +257,9 @@ define function print-gc-statistics (ld :: <compilation-context>) => ()
 
   for (i :: <integer> from 0 below stats.size by 3)
     progress-line("%s            %s                %s",
-		  display-integer(stats[i], 15),
-		  display-integer(stats[i + 1], 15),
-		  display-integer(stats[i + 2], 15));
+                  display-integer(stats[i], 15),
+                  display-integer(stats[i + 1], 15),
+                  display-integer(stats[i + 2], 15));
   end for;
 
 end function;
@@ -275,51 +275,51 @@ define constant $empty-compilation-record-vector
 define function compute-source-compilation-records
     (ld :: <library-description>, sr* :: <source-record-sequence>)
       => (new-cr* :: <sequence>,      // TODO: <compilation-record-vector>
-	  removed-cr* :: <sequence>)  // TODO: <compilation-record-vector>
+          removed-cr* :: <sequence>)  // TODO: <compilation-record-vector>
   let cr* = ld.library-description-compilation-records;
   if (empty?(sr*)) // force-parse case...
     values($empty-compilation-record-vector, cr*)
   elseif ((sr*.size == cr*.size) &
-	   every?(method(sr, cr) sr == cr.compilation-record-source-record end,
-		  sr*, cr*))
+           every?(method(sr, cr) sr == cr.compilation-record-source-record end,
+                  sr*, cr*))
     values(cr*, $empty-compilation-record-vector)
   else
     let table = ld.library-description-record-table;
     block ()
       // Temporarily use sequence numbers as "removed" flags.
       for (cr in table)
-	cr.compilation-record-sequence-number := #t;
+        cr.compilation-record-sequence-number := #t;
       end;
       local method find-or-make-cr (sr)
-	      let cr = element(table, sr, default: #f);
-	      if (cr)
-		if (cr.compilation-record-sequence-number == #f)
-		  error("Duplicate use of %s", sr);
-		end;
-		cr.compilation-record-sequence-number := #f;
-		cr
-	      else
-		table[sr] := make(<compilation-record>,
-				  library: ld, source-record: sr);
-	      end if;
-	    end method;
+              let cr = element(table, sr, default: #f);
+              if (cr)
+                if (cr.compilation-record-sequence-number == #f)
+                  error("Duplicate use of %s", sr);
+                end;
+                cr.compilation-record-sequence-number := #f;
+                cr
+              else
+                table[sr] := make(<compilation-record>,
+                                  library: ld, source-record: sr);
+              end if;
+            end method;
       let new-cr* = map-as(<compilation-record-vector>, find-or-make-cr, sr*);
       let removed-cr* = #();
       for (cr in table)
-	if (cr.compilation-record-sequence-number)
-	  removed-cr* := pair(cr, removed-cr*);
-	end;
+        if (cr.compilation-record-sequence-number)
+          removed-cr* := pair(cr, removed-cr*);
+        end;
       end for;
       values(// If nothing changed, reuse the original...
-	     if ((size(new-cr*) == size(cr*)) & every?(\==, new-cr*, cr*))
-	       cr*
-	     else
-	       new-cr*
-	     end,
-	     removed-cr*);
+             if ((size(new-cr*) == size(cr*)) & every?(\==, new-cr*, cr*))
+               cr*
+             else
+               new-cr*
+             end,
+             removed-cr*);
     cleanup
       for (index from 0 below size(cr*))
-	cr*[index].compilation-record-sequence-number := index;
+        cr*[index].compilation-record-sequence-number := index;
       end;
     end block;
   end if;
@@ -332,47 +332,47 @@ define sideways method install-library-description-sources
   debug-out(#"Driver", "Computing changes in %s", ld.library-description-project);
   let (new-cr*, removed-cr*) = compute-source-compilation-records(ld, sr*);
   debug-out(#"Driver",
-	    if (new-cr* == ld.compilation-context-records)
-	      " -> No changes!\n"
-	    else
-	      " -> New-cr*: %s, old-cr*: %s, Removed-cr*: %s\n"
-	    end,
-	    new-cr*, ld.compilation-context-records, removed-cr*);
+            if (new-cr* == ld.compilation-context-records)
+              " -> No changes!\n"
+            else
+              " -> New-cr*: %s, old-cr*: %s, Removed-cr*: %s\n"
+            end,
+            new-cr*, ld.compilation-context-records, removed-cr*);
   unless (new-cr* == ld.compilation-context-records)
     detach-interactive-namespaces(ld);
     block (continue)
       block (retract)
         if (ld.library-description-stripped?) retract() end;
         if (empty?(sr*)) retract() end;
-	// KLUDGE: if library doesn't have a definition, retract in order
-	// to force reparsing of previously ignored records in case we
-	// get a definition.  (This would happen automatically if we handled
-	// library redefinition, but we don't).
-	if (~ld.library-description-defined?) retract() end;
+        // KLUDGE: if library doesn't have a definition, retract in order
+        // to force reparsing of previously ignored records in case we
+        // get a definition.  (This would happen automatically if we handled
+        // library redefinition, but we don't).
+        if (~ld.library-description-defined?) retract() end;
         with-dependent-retraction
-	  dynamic-bind (*cross-module-access-abort* = retract)
-	    progress-line(" Retracting changed sources");
-	    // Retract records we'll be removing
-	    do(retract-compilation-record, removed-cr*);
-	    // Retract any dependencies on changed sequence positions
-	    let n = size(new-cr*);
-	    for (i from 0 below n)
-	      let cr1 = new-cr*[i];
-	      for (j from i + 1 below n,
-		   while: cr1.compilation-record-top-level-forms)
-		let cr2 = new-cr*[j];
-		if (cr2.compilation-record-top-level-forms &
-		      (cr2.compilation-record-sequence-number
-			 < cr1.compilation-record-sequence-number))
-		  retract-compilation-record-order(cr1, cr2);
-		end;
-	      end for;
-	    end for;
-	    // Might be adding new source records, so defs no longer complete.
-	    ld.compiled-to-definitions? := #f;
-	  end dynamic-bind;
+          dynamic-bind (*cross-module-access-abort* = retract)
+            progress-line(" Retracting changed sources");
+            // Retract records we'll be removing
+            do(retract-compilation-record, removed-cr*);
+            // Retract any dependencies on changed sequence positions
+            let n = size(new-cr*);
+            for (i from 0 below n)
+              let cr1 = new-cr*[i];
+              for (j from i + 1 below n,
+                   while: cr1.compilation-record-top-level-forms)
+                let cr2 = new-cr*[j];
+                if (cr2.compilation-record-top-level-forms &
+                      (cr2.compilation-record-sequence-number
+                         < cr1.compilation-record-sequence-number))
+                  retract-compilation-record-order(cr1, cr2);
+                end;
+              end for;
+            end for;
+            // Might be adding new source records, so defs no longer complete.
+            ld.compiled-to-definitions? := #f;
+          end dynamic-bind;
         end with-dependent-retraction;
-	continue();
+        continue();
       end block /* retract */;
       progress-line("Retracting library parsing");
       retract-library-parsing(ld);
@@ -395,31 +395,31 @@ end method;
 
 define function ensure-library-definitions-installed (ld :: <compilation-context>, #key library-only? = #f)
   debug-assert(~ld.compilation-definitions-inconsistent?,
-	       "Inconsistent definitions should have already been handled!");
+               "Inconsistent definitions should have already been handled!");
   unless (ld.compiled-to-definitions? |
-	    (library-only? & ld.library-description-defined?))
+            (library-only? & ld.library-description-defined?))
     debug-out(#"driver", if (library-only?)
-			   "Parsing library definition for %s\n"
-			 else
-			   "Parsing unparsed definitions in %s\n"
-			 end,
-	      ld.library-description-project);
+                           "Parsing library definition for %s\n"
+                         else
+                           "Parsing unparsed definitions in %s\n"
+                         end,
+              ld.library-description-project);
     debug-assert(~instance?(ld, <project-library-description>) |
-		   ld.interactive-namespaces-detached?,
-		 "Retracted defs with attached interactive namespaces!");
+                   ld.interactive-namespaces-detached?,
+                 "Retracted defs with attached interactive namespaces!");
     // TODO: This is using compiled-to-definitions? as a temp flag... Should
     // instead have a sequence  associated with with-dependent-retraction,
     // so that stuff that gets retracted gets directly remembered for
     // reprocessing...
     block ()
       until (ld.compiled-to-definitions? |
-	       (library-only? & ld.library-description-defined?))
-	ld.compiled-to-definitions? := #t;
-	for (cr in ld.compilation-context-records,
-	     until: library-only? & ld.library-description-defined?)
-	  update-compilation-record-definitions(cr,
-						library-only?: library-only?);
-	end;
+               (library-only? & ld.library-description-defined?))
+        ld.compiled-to-definitions? := #t;
+        for (cr in ld.compilation-context-records,
+             until: library-only? & ld.library-description-defined?)
+          update-compilation-record-definitions(cr,
+                                                library-only?: library-only?);
+        end;
       end until;
     cleanup
       ld.compiled-to-definitions? := #f;
@@ -435,7 +435,7 @@ define function ensure-library-definitions-installed (ld :: <compilation-context
       // directly, rather than via name lookup, now so that they get
       // claimed appropriately.
       if (compiling-dylan-library?() & ld.library-description-defined?)
-	install-dylan-boot-constants(ld)
+        install-dylan-boot-constants(ld)
       end if;
     end;
   end unless;
@@ -461,17 +461,17 @@ define function mark-project-definitions-installed
     unless (ld.library-description-interface-spec = new-spec)
       ld.library-description-interface-spec := new-spec;
       ld.library-description-interface-version
-	:= ld.library-description-change-count;
+        := ld.library-description-change-count;
     end;
   end;
   // Reset since this is always relative to change-count anyway, and this
   // way we lessen the chance of overflow.
   ld.library-description-models-change-count := 0;
   debug-assert(every?(compilation-record-definitions-installed?,
-		      ld.library-description-compilation-records),
-	       "cr %s not installed!",
-	       choose(complement(compilation-record-definitions-installed?),
-		      ld.library-description-compilation-records));
+                      ld.library-description-compilation-records),
+               "cr %s not installed!",
+               choose(complement(compilation-record-definitions-installed?),
+                      ld.library-description-compilation-records));
   ld.compiled-to-definitions? := #t;
 end function;
 
@@ -517,21 +517,21 @@ end method;
 define function update-library-version (ld :: <library-description>, mj, mn)
   debug-out(#"driver", "Checking major/minor version changes");
   if (ld.library-description-major-version ~== mj |
-	ld.library-description-minor-version ~== mn)
+        ld.library-description-minor-version ~== mn)
     // force database update with new version info.
     ld.compiled-to-definitions? := #f;
     ld.library-description-major-version := mj;
     ld.library-description-minor-version := mn;
   end;
   debug-out(#"driver", if (ld.library-description-major-version ~== mj |
-			     ld.library-description-minor-version ~== mn)
-			 " -> Changed, was: (%s, %s), is (%s, %s)\n"
-		       else
-			 " -> No change.\n"
-		       end,
-	    ld.library-description-major-version,
-	    ld.library-description-minor-version,
-	    mj, mn);
+                             ld.library-description-minor-version ~== mn)
+                         " -> Changed, was: (%s, %s), is (%s, %s)\n"
+                       else
+                         " -> No change.\n"
+                       end,
+            ld.library-description-major-version,
+            ld.library-description-minor-version,
+            mj, mn);
 end function;
 
 define method compute-library-definitions (ld :: <compilation-context>)
@@ -542,8 +542,8 @@ end;
 
 // External entry point
 define method install-project-sources (ld :: <project-library-description>,
-				       sr* :: <source-record-sequence>,
-				       major-version, minor-version)
+                                       sr* :: <source-record-sequence>,
+                                       major-version, minor-version)
   with-program-conditions
     debug-out(#"driver", "Install sources %s for %s\n", sr*, ld.library-description-project);
     with-library-context (ld)
@@ -553,9 +553,9 @@ define method install-project-sources (ld :: <project-library-description>,
         update-library-version(ld, major-version, minor-version);
         install-library-description-sources(ld, sr*);
         if (ld.library-description-defined?)
-	  // Retract library definition if invalidated.
-	  verify-library-definition(ld);
-	end;
+          // Retract library definition if invalidated.
+          verify-library-definition(ld);
+        end;
         ensure-library-defined(ld);
       end timing-compilation-phase;
      end with-stage-progress;
@@ -575,16 +575,16 @@ define method parse-project-sources (ld :: <project-library-description>)
       ensure-library-defined(ld);
       verify-used-libraries(ld);
       unless (ld.compiled-to-definitions?)
-	with-stage-progress ("Updating definitions for", $parsing-stage)
-	  timing-compilation-phase ("Updating definitions" of ld)
-	    parsed? := #t;
-	    compute-library-definitions(ld);
-	  end;
-	end;
+        with-stage-progress ("Updating definitions for", $parsing-stage)
+          timing-compilation-phase ("Updating definitions" of ld)
+            parsed? := #t;
+            compute-library-definitions(ld);
+          end;
+        end;
       end;
       if (library-references-retracted-models?(ld))
-	progress-line("Retracting obsoleted models");
-	retract-library-compilation(ld)
+        progress-line("Retracting obsoleted models");
+        retract-library-compilation(ld)
       end;
     end;
     debug-out(#"driver", "DONE parse-project-sources for %s\n", ld);
@@ -593,7 +593,7 @@ define method parse-project-sources (ld :: <project-library-description>)
 end method;
 
 define function ensure-definitions-consistent (ld :: <project-library-description>,
-					       #key verify? = #t)
+                                               #key verify? = #t)
   if (compilation-definitions-inconsistent?(ld))
     progress-line("Retracting aborted parse");
     retract-library-parsing(ld);
@@ -608,12 +608,12 @@ define function ensure-library-defined (ld :: <project-library-description>)
   unless (ld.library-description-defined?)
     with-dependent-retraction
       debug-out(#"driver", "No library-definition in %s, parsing for it\n",
-		ld.library-description-project);
+                ld.library-description-project);
       ensure-library-definitions-installed
         (ld, library-only?: *demand-load-library-only?*);
       debug-assert(ld.library-description-defined? |
-		     // maybe completely compiled, and still no def...
-		     ld.compiled-to-definitions?);
+                     // maybe completely compiled, and still no def...
+                     ld.compiled-to-definitions?);
       debug-out(#"driver", "Library definition %s parsed\n", ld);
     end;
   end;
@@ -627,10 +627,10 @@ define sideways method install-dylan-shared-symbols (ld :: <dylan-library-descri
     local method touch-symbol-properties (name)
             let defn    = dylan-definition(name);
             let symbols = form-shared-symbols(defn);
-	    symbols
-	  end method;
+            symbols
+          end method;
     list(touch-symbol-properties(#"%shared-dylan-symbols"),
-	 touch-symbol-properties(#"%shared-streams-symbols"));
+         touch-symbol-properties(#"%shared-streams-symbols"));
   end with-library-context;
 end method;
 
@@ -641,11 +641,11 @@ define sideways method record-all-booted-model-properties
       let binding = form-variable-binding(constant);
       debug-assert(binding, "NO BINDING FOR BOOTED FORM %s", constant);
       let (model-object, computed?) =
-	untracked-binding-model-object-if-computed(binding);
+        untracked-binding-model-object-if-computed(binding);
       when (computed?)
-	let properties
-	  = lookup-owned-model-properties-in(ld, model-object);
-	record-booted-model-properties(ld, model-object, properties);
+        let properties
+          = lookup-owned-model-properties-in(ld, model-object);
+        record-booted-model-properties(ld, model-object, properties);
       end when;
     end with-dependent;
   end for;
@@ -661,9 +661,9 @@ define sideways method install-dylan-boot-constants
         if (force?)
           form-models-installed?(constant) := #f;
         end if;
-	with-dependent ($compilation of constant)
-	  maybe-compute-and-install-form-model-objects(constant);
-	end;
+        with-dependent ($compilation of constant)
+          maybe-compute-and-install-form-model-objects(constant);
+        end;
       end;
       install-dylan-shared-symbols(ld);
       // By special dispensation, boot constants installation is not
@@ -682,60 +682,60 @@ define function update-compilation-record-definitions
   let name = cr.compilation-record-source-record.source-record-name;
   source-record-progress-text("Parsing %s.dylan", name);
   debug-assert(~instance?(cr, <interactive-compilation-record>) |
-		 (*interactive-compilation-layer* &
-		    ~cr.compilation-record-definitions-installed? &
-		    ~cr.compilation-record-top-level-forms),
-	       "Bad setup for interactive cr update");
+                 (*interactive-compilation-layer* &
+                    ~cr.compilation-record-definitions-installed? &
+                    ~cr.compilation-record-top-level-forms),
+               "Bad setup for interactive cr update");
   if (cr.compilation-record-definitions-installed?)
     debug-assert(if (cr.compilation-record-module)
-		   module-defined?(cr.compilation-record-module)
-		 else
-		   empty?(cr.compilation-record-top-level-forms)
-		 end,
-		 "Undefined module in installed cr?");
+                   module-defined?(cr.compilation-record-module)
+                 else
+                   empty?(cr.compilation-record-top-level-forms)
+                 end,
+                 "Undefined module in installed cr?");
     debug-out(#"internal", "  %s unchanged.\n", cr);
     source-record-progress-report();
   else
     if (cr.compilation-record-top-level-forms)
       let module = cr.compilation-record-module;
       unless (module & module-defined?(module))
-	// The module undefined case means module got deleted.
-	// The module = #f case means module was undefined last time parsed
-	// this record, so just keep trying - retracting it is practically
-	// a noop (just remove the warning from last time), and all we really
-	// do is lookup the module again.
-	retract-compilation-record(cr);
+        // The module undefined case means module got deleted.
+        // The module = #f case means module was undefined last time parsed
+        // this record, so just keep trying - retracting it is practically
+        // a noop (just remove the warning from last time), and all we really
+        // do is lookup the module again.
+        retract-compilation-record(cr);
       end;
     end;
     with-form-creation
       let sr = cr.compilation-record-source-record;
       if (cr.compilation-record-top-level-forms)
-	debug-out(#"driver", "  Reinstalling some forms in: %s.\n", sr);
+        debug-out(#"driver", "  Reinstalling some forms in: %s.\n", sr);
       else
-	let name = cr.compilation-record-source-record.source-record-name;
-	progress-line("  Reading and installing: %s.dylan", name);
-	compute-source-record-top-level-forms(cr);
-	source-record-progress-report();
+        let name = cr.compilation-record-source-record.source-record-name;
+        progress-line("  Reading and installing: %s.dylan", name);
+        compute-source-record-top-level-forms(cr);
+        source-record-progress-report();
       end;
       unless (library-only? & current-library-defined?())
-	let install-finished? = #f;
-	block ()
-	  // TODO: Set this first so form processing can clear it to request
-	  // reprocessing.  Find some other way to do this...
-	  cr.compilation-record-definitions-installed? := #t;
-	  // This may add derived forms.
-	  install-top-level-forms(cr.compilation-record-top-level-forms);
-	  install-finished? := #t;
-	cleanup
-	  unless (install-finished?)
-	    cr.compilation-record-definitions-installed? := #f;
-	  end;
-	end block;
-	// TODO: put derived forms in a separate slot so can retract them
-	// (when explicit def is found later) without copying the whole
-	// top-level-forms vector. See retract-form-top-level-processing.
-	cr.compilation-record-top-level-forms
-	  := as(<vector>, cr.compilation-record-top-level-forms);
+        let install-finished? = #f;
+        block ()
+          // TODO: Set this first so form processing can clear it to request
+          // reprocessing.  Find some other way to do this...
+          cr.compilation-record-definitions-installed? := #t;
+          // This may add derived forms.
+          install-top-level-forms(cr.compilation-record-top-level-forms);
+          install-finished? := #t;
+        cleanup
+          unless (install-finished?)
+            cr.compilation-record-definitions-installed? := #f;
+          end;
+        end block;
+        // TODO: put derived forms in a separate slot so can retract them
+        // (when explicit def is found later) without copying the whole
+        // top-level-forms vector. See retract-form-top-level-processing.
+        cr.compilation-record-top-level-forms
+          := as(<vector>, cr.compilation-record-top-level-forms);
       end;
     end with-form-creation;
   end;
@@ -750,14 +750,14 @@ define method compute-source-record-top-level-forms (cr :: <compilation-record>)
         // Default to dylan-user while we look for namespace definitions
         compilation-record-module(cr) := dylan-user-module();
       elseif (compiling-dylan-library?() &
-		instance?(module, <dylan-user-module>))
-	// Kludge: the dylan-user module in the dylan library is useless,
-	// since it doesn't use 'dylan'.  Normally, the dylan library has no
-	// files in the dylan-user module, so it doesn't matter.  This kludge
-	// is to support whole-program compilation wherein we artificially
-	// introduce random source records into the dylan library.
-	let internal = lookup-module(#"internal", default: #f);
-	when (internal) compilation-record-module(cr) := internal end;
+                instance?(module, <dylan-user-module>))
+        // Kludge: the dylan-user module in the dylan library is useless,
+        // since it doesn't use 'dylan'.  Normally, the dylan library has no
+        // files in the dylan-user module, so it doesn't matter.  This kludge
+        // is to support whole-program compilation wherein we artificially
+        // introduce random source records into the dylan library.
+        let internal = lookup-module(#"internal", default: #f);
+        when (internal) compilation-record-module(cr) := internal end;
       end;
       // Demand load everything if we may need the modules in order to parse
       // this file.
@@ -820,7 +820,7 @@ define method compute-source-record-top-level-forms (cr :: <compilation-record>)
             let (final-state, record-forms) = read(#f, #());
             compilation-record-top-level-forms(cr) := record-forms;
             compilation-record-source-line-count(cr)
-	      := (final-state & source-lines-read(final-state)) | 0;
+              := (final-state & source-lines-read(final-state)) | 0;
           end with-inconsistent-definitions;
         end with-input-from-source-record;
       end dynamic-bind;
@@ -833,7 +833,7 @@ define sideways method install-top-level-forms
     unless (form-top-level-installed?(form))
       // TODO: make this finer-grained.
       with-inconsistent-definitions (current-library-description())
-	install-top-level-form(form);
+        install-top-level-form(form);
       end with-inconsistent-definitions;
     end;
   end;

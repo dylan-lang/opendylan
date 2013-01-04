@@ -23,7 +23,7 @@ define method source-record-start-line
 end method;
 
 define method source-record-location
-    (record :: <interactive-source-record>, #key check-if-exists?) 
+    (record :: <interactive-source-record>, #key check-if-exists?)
  => (location :: singleton(#f))
   #f
 end method;
@@ -36,11 +36,11 @@ define method id-as-source-record
 end method;
 */
 
-define method call-with-source-record-input-stream 
+define method call-with-source-record-input-stream
     (fn :: <function>, sr :: <interactive-source-record>, #key)
  => (#rest fn-values)
-  let stream = make(<sequence-stream>, 
-		    contents: sr.source-record-contents);
+  let stream = make(<sequence-stream>,
+                    contents: sr.source-record-contents);
   fn(stream)
 end method;
 

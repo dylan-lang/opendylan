@@ -50,7 +50,7 @@ define module source-records
       copy-source-location-contents,
       object-source-location-lines,
     <source-offset>, make-source-offset,
-      source-offset-character-in, 
+      source-offset-character-in,
       source-offset-line,
       source-offset-column,
       <small-source-offset>,
@@ -60,7 +60,7 @@ define module source-records
     source-location-start-column,
     source-location-end-character,
     source-location-end-line,
-    source-location-end-column; 
+    source-location-end-column;
 
   create
     <source-location-table>,

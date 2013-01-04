@@ -16,17 +16,17 @@ define class <line-source-offset> (<big-source-offset>)
     required-init-keyword: line:;
 end class;
 
-define method source-location-end-offset 
+define method source-location-end-offset
     (loc :: <line-source-location>) => (offset :: <line-source-offset>)
   source-location-start-offset(loc)
 end method;
 
-define method source-offset-column 
+define method source-offset-column
     (offset :: <line-source-offset>) => (pos :: <integer>)
   0
 end method;
 
-define method make-line-location 
+define method make-line-location
     (sr, line) => (loc :: <line-source-location>)
   let offset = make(<line-source-offset>, line: line);
   make(<line-source-location>,

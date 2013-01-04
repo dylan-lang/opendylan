@@ -33,8 +33,8 @@ end method;
 define method source-location-equal? (loc1 :: <line-source-location>, loc2 :: <line-source-location>)
  => (equal? :: <boolean>)
   local method equal-wrt? (f, x, y)
-	  f(x) = f(y);
-	end method;
+          f(x) = f(y);
+        end method;
   equal-wrt?(source-location-source-record, loc1, loc2)
   & equal-wrt?(source-location-start-line, loc1, loc2)
 end method;
