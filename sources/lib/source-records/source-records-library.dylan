@@ -36,6 +36,7 @@ define module source-records
       condition-source-record,
       source-record-project,
       source-record-module-name,
+      source-record-language,
       source-record-contents;
 
   // Source location interface.
