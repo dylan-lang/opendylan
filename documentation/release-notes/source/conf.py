@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Open Dylan Release Notes'
-copyright = u'2012, Dylan Hackers'
+copyright = u'2012-2013, Dylan Hackers'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
