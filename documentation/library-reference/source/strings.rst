@@ -7,23 +7,21 @@ The STRINGS library
 
 The strings library exports definitions for basic string manipulation.
 
-Note:
+.. note::
 
-* This library does not address any higher-level operations such as
-  text formatting or anything that requires semantic knowledge of
-  words, such as *pluralize*.
+  * This library does not address any higher-level operations such as
+    text formatting or anything that requires semantic knowledge of
+    words, such as *pluralize*.
 
-* Where it makes sense, functions can be applied to either a single
-  character or a string of characters.  For example, ``lowercase('C')
-  => 'c'`` and ``lowercase("Foo") => "foo"``.
+  * Where it makes sense, functions can be applied to either a single
+    character or a string of characters.  For example, ``lowercase('C')
+    => 'c'`` and ``lowercase("Foo") => "foo"``.
 
-* Where 
+  * Functions are case-sensitive by default.  Versions that ignore
+    alphabetic case are named with a trailing "-ic" or "-ic?".
 
-* Functions are case-sensitive by default.  Versions that ignore
-  alphabetic case are named with a trailing "-ic" or "-ic?".
-
-* Open Dylan doesn't yet support Unicode.  When it does, this library
-  will be updated to support it also.
+  * Open Dylan doesn't yet support Unicode.  When it does, this library
+    will be updated to support it also.
 
 The strings library was originally defined in `DEP-0004
 <http://opendylan.org/proposals/dep-0004.html>`_.  Some additional
@@ -54,7 +52,7 @@ Character Class Predicates
    :sealed:
 
    Returns ``#t`` if the given character is a member of the set a-z or
-   A-Z.  Otherwise returns #f.
+   A-Z.  Otherwise returns ``#f``.
 
    :signature: alphabetic? (character) => (alphabetic?)
    :parameter character: An instance of ``<character>``.
@@ -71,7 +69,7 @@ Character Class Predicates
    :sealed:
 
    Returns ``#t`` if every character in the string is a member of the
-   set a-z or A-Z.  Otherwise returns #f.
+   set a-z or A-Z.  Otherwise returns ``#f``.
 
    :signature: alphabetic? (string, #key start, end) => (alphabetic?)
    :parameter string: An instance of ``<string>``.
@@ -93,7 +91,7 @@ Character Class Predicates
 .. generic-function:: alphanumeric?
    :sealed:
 
-   Returns ``#t`` if the argument alphabnumeric, otherwise ``#f``.
+   Returns ``#t`` if the argument is alphabnumeric, otherwise ``#f``.
 
    :signature: alphanumeric? (string-or-character, #key) => (alphanumeric?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
@@ -564,7 +562,7 @@ Substring Functions
    :parameter replacement: An instance of ``<string>``.  The string
      with which to replace ``pattern``.
    :parameter #key count: An instance of ``false-or(<integer>)``.  The
-     number of occurrences to replace.  The default is #f, meaning to
+     number of occurrences to replace.  The default is ``#f``, meaning to
      replace all.  Replacements are performed from left to right
      within ``big`` until ``count`` has been reached.
    :parameter #key start: An instance of ``<integer>``, default 0.  Where to
@@ -1268,7 +1266,7 @@ Miscellaneous Functions
    :parameter string: An instance of ``<string>``.  The string to strip.
    :parameter #key test: An instance of ``<function>``.  A function that
      accepts a character and returns #t if the character should be
-     removed and #f otherwise.
+     removed and ``#f`` otherwise.
    :parameter #key start: An instance of ``<integer>``, default 0.  The
      index in ``string`` at which to start stripping.
    :parameter #key end: An instance of ``<integer>``, default ``string.size``.
@@ -1290,7 +1288,7 @@ Miscellaneous Functions
    :parameter string: An instance of ``<string>``.  The string to strip.
    :parameter #key test: An instance of ``<function>``.  A function that
      accepts a character and returns #t if the character should be
-     removed and #f otherwise.
+     removed and ``#f`` otherwise.
    :parameter #key start: An instance of ``<integer>``, default 0.  The
      index in ``string`` at which to start stripping.
    :parameter #key end: An instance of ``<integer>``, default ``string.size``.
@@ -1312,7 +1310,7 @@ Miscellaneous Functions
    :parameter string: An instance of ``<string>``.  The string to strip.
    :parameter #key test: An instance of ``<function>``.  A function that
      accepts a character and returns #t if the character should be
-     removed and #f otherwise.
+     removed and ``#f`` otherwise.
    :parameter #key start: An instance of ``<integer>``, default 0.  The
      index in ``string`` at which to start stripping.
    :parameter #key end: An instance of ``<integer>``, default ``string.size``.
