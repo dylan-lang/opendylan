@@ -1250,7 +1250,9 @@ Miscellaneous Functions
      // Lines are separated by CR, CRLF, or LF, but not LFCR
      split-lines("aa\nbb\r\ncc\rdd\n\ree") => #["aa", "bb", "cc", "dd", "", "ee"]
 
-     split-lines("\nXYZ\n") => #["", "XYZ", ""]
+     // The end-of-line marker (CR, CRLF, or LF) is considered part
+     // of the line and is stripped.
+     split-lines("\nXYZ\n") => #["", "XYZ"]
 
      // Remove empty lines...
      split-lines("abc\r\rdef", remove-if-empty?: #t) => #["abc", "def"]
