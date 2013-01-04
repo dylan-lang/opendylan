@@ -32,7 +32,7 @@ background material can be found there.
    :local:
 
 
-The STRINGS module
+The strings Module
 ==================
 
 Character Class Predicates
