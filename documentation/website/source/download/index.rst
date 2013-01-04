@@ -8,10 +8,14 @@ Open Dylan Downloads
      <div class="span8">
        <h2>Binary Releases</h2>
 
-.. warning:: The 32 bit version of Open Dylan does NOT work on 64 bit Windows
+.. warning:: The 32 bit version of Open Dylan IDE does NOT work on 64 bit Windows
    prior to Windows 8. There is no workaround at this time, unfortunately. We
    hope to resolve this in an upcoming release.
    :class: alert alert-warning
+
+   However, the command line tools should work as the problem is with interaction
+   between threads, GC and WoW64.
+
 
 .. table::
    :class: table-striped
