@@ -17,6 +17,9 @@ Documentation Improvements
 
 LID file keywords are better documented in the Library Reference.
 
+The strings library has been documented in the Library Reference.
+
+
 Portability Enhancements
 ========================
 
