@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <dlfcn.h>
+#include <time.h>
 
 #ifdef __APPLE__
 #include <crt_externs.h>
@@ -13,6 +14,12 @@ extern char **environ;
 char **system_environ(void)
 {
   return environ;
+}
+
+struct tm *system_localtime(const time_t *timep)
+{
+  struct tm *res = GC_malloc(sizeof(struct tm));
+  return localtime_r(timep, res);
 }
 
 /* Adapted from the SBCL run-time system, which in turn is derived
