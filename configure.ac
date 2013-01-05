@@ -107,12 +107,12 @@ AS_IF([test x${GC_USE_STATIC_BOEHM} == xtrue],
         GC_LIB_NAME=libgc.a
       ],
       [
-        AS_IF([text x${OPEN_DYLAN_PLATFORM_NAME} == xx86-darwin],
-              [
-                GC_LIB_NAME=libgc.so
-              ],
+        AS_IF([test x${OPEN_DYLAN_PLATFORM_NAME} == xx86-darwin],
               [
                 GC_LIB_NAME=libgc.dylib
+              ],
+              [
+                GC_LIB_NAME=libgc.so
               ])
       ]
 )
