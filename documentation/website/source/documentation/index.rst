@@ -101,9 +101,12 @@ Documentation
        <p>Quick one-page sheets for common tasks.</p>
      </div>
 
-* `Basics of Dylan Syntax <cheatsheet.html>`_
-* `Iteration <cheatsheets/iteration.html>`_
-* `Conditionals <cheatsheets/conditionals.html>`_
+.. hlist::
+
+   * `Basics of Dylan Syntax <cheatsheet.html>`_
+   * `Iteration <cheatsheets/iteration.html>`_
+   * `Conditionals <cheatsheets/conditionals.html>`_
+   * `Collections <cheatsheets/collections.html>`_
 
 .. raw:: html
 
