@@ -45,7 +45,7 @@ Common Collection Types
 Mutable vs. Immutable
 =====================
 
-Many operations due to modify the collection passed in. The exception
+Many operations don't modify the collection passed in. The exception
 is when you use an operation ending in ``!`` on a *stretchy* collection.
 
 For this reason, if you want to modify a collection frequently, be sure
@@ -57,6 +57,10 @@ back to the source collection:
 .. code-block:: dylan
 
     threads := add(threads, thread);
+
+In cases where you are modifying a collection frequently, you may want
+to consider using a :drm:`<stretchy-vector>` rather than a `<vector>`
+or some other type of collection.
 
 Common Operations
 =================
