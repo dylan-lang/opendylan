@@ -719,6 +719,14 @@ The extensions are:
      wants to iterate another step. The form evaluates by calling the
      new function with the initial values specified.
 
+   :example:
+
+     .. code-block:: dylan
+
+        iterate recurse (x = 5)
+          if (x < 2) x else x * recurse(x - 1) end
+        end
+
 .. function:: one-of
 
    Returns a union type comprised of singletons formed from its arguments.
