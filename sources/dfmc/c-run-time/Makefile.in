@@ -32,7 +32,7 @@ ifeq ($(OPEN_DYLAN_PLATFORM_NAME),ppc-darwin)
   PLATFORM_CFLAGS=-arch ppc -D_REENTRANT=1 \
     -DOPEN_DYLAN_PLATFORM_DARWIN -DOPEN_DYLAN_PLATFORM_UNIX
 endif
-ifeq ($(OPEN_DYLAN_PLATFORM_NAME),x86_64-freebsd)
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),amd64-freebsd)
   PLATFORM_CFLAGS=-D_REENTRANT=1 \
     -DOPEN_DYLAN_PLATFORM_FREEBSD -DOPEN_DYLAN_PLATFORM_UNIX
 endif
@@ -49,7 +49,6 @@ OBJS    = $(OBJDIR)/posix-threads.o \
           $(OBJDIR)/debug-print.o \
           $(OBJDIR)/run-time.o \
           $(OBJDIR)/trace.o
-
 C_RUNTIME_LIBRARY = $(OBJDIR)/libdylan-c-runtime.a
 
 RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
@@ -72,6 +71,9 @@ $(RUNTIMELIBDEST):
 install-header: $(srcdir)/run-time.h $(INCDEST)
 	cp -fp $(srcdir)/trace.h $(INCDEST)
 	cp -fp $(srcdir)/run-time.h $(INCDEST)
+ifeq ($(OPEN_DYLAN_PLATFORM_NAME),amd64-freebsd)
+	cp -fp $(srcdir)/amd64-freebsd-hackstack.h $(INCDEST)
+endif
 
 install-runtime: $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
 	cp -fp $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)

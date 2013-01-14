@@ -45,6 +45,7 @@ case $target in
   amd64-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=amd64-freebsd;
       RUNTIME_SOURCES=sources/dfmc/c-run-time
+      GC_LIB="-lgc-threaded"
     ;;
   x86_64-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=x86_64-linux;
@@ -142,7 +143,7 @@ AS_IF([test x$with_gc != x],
           ]
         )
         GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc}/include"
-        GC_LFLAGS="-L${with_gc}/lib -lgc"
+        GC_LFLAGS="-L${with_gc}/lib ${GC_LIB:--lgc}"
         AC_CHECK_FILE([${with_gc}/lib/${GC_LIB_NAME}],
                       [
                         GC_LIBRARY="${with_gc}/lib/${GC_LIB_NAME}"
@@ -159,7 +160,7 @@ AS_IF([test x${with_gc}x${with_mps} == xx],
           ]
         )
         GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
-        GC_LFLAGS="-lgc"
+        GC_LFLAGS="${GC_LIB:--lgc}"
         GC_CHOICE="boehm"
         AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
                       [

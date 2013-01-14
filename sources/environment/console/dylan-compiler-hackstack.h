@@ -1,0 +1,4 @@
+
+freebsd_hack_stack(_Init_dylan_compiler__X_start_for_user, _Init_dylan_compiler__X_start_for_user__orig)
+
+#define _Init_dylan_compiler__X_start_for_user _Init_dylan_compiler__X_start_for_user__orig
