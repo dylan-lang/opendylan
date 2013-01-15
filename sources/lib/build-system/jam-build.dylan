@@ -28,7 +28,7 @@ define method jam-read-mkf
   // DylanLibraryJamIncludes image : includes ;
   let rule-specs
     = #[#["DylanLibraryJamIncludes", #"jam-includes", #f],
-	#["DylanLibraryFiles", #"files", #f],
+        #["DylanLibraryFiles", #"files", #f],
         #["DylanLibraryBaseAddress", #"base-address", #f],
         #["DylanLibraryLinkerOptions", #"linker-options", #t],
         #["DylanLibraryCLibraries", #"c-libraries", #t],
@@ -36,7 +36,7 @@ define method jam-read-mkf
         #["DylanLibraryCSources", #"c-source-files", #f],
         #["DylanLibraryCHeaders", #"c-header-files", #f],
         #["DylanLibraryRCFiles", #"rc-files", #f]];
-  for(spec in rule-specs)
+  for (spec in rule-specs)
     let value = element(variables, spec[1], default: #());
     let expanded = if (spec[2]) jam-expand-list(jam, value) else value end;
     unless (expanded.empty?)
@@ -100,7 +100,7 @@ define function make-jam-state
             let root-locator = ~root.empty? & as(<directory-locator>, root[0]);
             root-locator = $personal-install
           end)
-    
+
     jam-state-copy(*cached-jam-state*)
   else
     let state = make(<jam-state>);
@@ -108,8 +108,8 @@ define function make-jam-state
     // Useful built-in variables
     jam-variable(state, "OS") := vector(as(<string>, $os-name));
     jam-variable(state, "OSPLAT") := vector(as(<string>, $machine-name));
-    
-    select($os-name)
+
+    select ($os-name)
       #"win32" =>
         jam-variable(state, "NT") := #["true"];
       #"linux", #"freebsd", #"darwin" =>
@@ -117,7 +117,7 @@ define function make-jam-state
     end select;
 
     if (compiler-back-end)
-      jam-variable(state, "COMPILER_BACK_END") 
+      jam-variable(state, "COMPILER_BACK_END")
         := vector(as(<string>, compiler-back-end));
     end if;
 
@@ -143,7 +143,7 @@ define function make-jam-state
       := jam-rule(state, "Exit")
       := method (jam :: <jam-state>, #rest lol) => (result :: <sequence>);
            let message = "";
-           if( lol.size > 0)
+           if (lol.size > 0)
              for (arg in lol[0], first? = #t then #f)
                message
                  := if (first?) arg else concatenate(message, " ", arg) end;

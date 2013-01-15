@@ -46,13 +46,13 @@ define macro with-build-directory
   { with-build-directory (?directory:expression) ?:body end }
     => {
         let directory = ?directory;
-	let previous-directory = if (directory) working-directory(); end;
-	block()
-	  if (directory) change-directory(directory); end;
-	  ?body
-	cleanup
-	  if (previous-directory) change-directory(previous-directory) end if;
-	end block;
+        let previous-directory = if (directory) working-directory(); end;
+        block()
+          if (directory) change-directory(directory); end;
+          ?body
+        cleanup
+          if (previous-directory) change-directory(previous-directory) end if;
+        end block;
        }
 end macro;
 
@@ -64,11 +64,11 @@ define method build-system
     (build-targets :: <sequence>,
      #key directory :: <directory-locator> = working-directory(),
           progress-callback :: <function> = ignore,
-	  build-script = default-build-script(),
+          build-script = default-build-script(),
           compiler-back-end,
-	  project-build-info,
+          project-build-info,
           force?,
-	  configure? = #t)
+          configure? = #t)
  => (build-successful? :: <boolean>);
   if (configure?)
     configure-build-system();
@@ -96,13 +96,13 @@ define method build-system
                          build-directory: directory);
       with-build-directory (directory)
         jam-read-mkf(jam, as(<file-locator>, $dylanmakefile));
-        
+
         format(stream, "building targets:");
         for (target in build-targets)
           format(stream, " %s", target);
         end for;
         new-line(stream);
-        
+
         jam-target-build(jam, build-targets,
                          progress-callback: wrap-progress-callback,
                          force?: force?);
