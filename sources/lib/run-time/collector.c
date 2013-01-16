@@ -91,7 +91,6 @@ void force_reference_to_spy_interface()
 #include <gc/gc.h>
 #define MAX_BOEHM_HEAP_SIZE (1024 * 1024 * 1024)
 /* #define INITIAL_BOEHM_HEAP_SIZE (50 * 1024 * 1024) */
-#define NO_FINALIZATION
 #endif
 
 #include "mm.h"        /* Dylan Interface */
@@ -222,7 +221,7 @@ static mps_fmt_A_t fmt_A_weak;
 static mps_pool_t main_pool, weak_table_pool, wrapper_pool, misc_pool, leaf_pool;
 #endif
 
-#ifndef NO_FINALIZATION
+#ifndef GC_USE_BOEHM
 static mps_message_type_t finalization_type;
 #endif
 
@@ -2325,7 +2324,7 @@ BOOL primitive_mps_collection_stats(void** results)
 
 void primitive_mps_finalize(void *obj)
 {
-#ifndef NO_FINALIZATION
+#ifndef GC_USE_BOEHM
   mps_finalize(arena, &obj);
 #else
   unused(obj);
@@ -2334,7 +2333,7 @@ void primitive_mps_finalize(void *obj)
 
 void* primitive_mps_finalization_queue_first()
 {
-#ifdef NO_FINALIZATION
+#ifdef GC_USE_BOEHM
   return 0;
 #else
   mps_message_t finalization_message;
@@ -2587,10 +2586,8 @@ MMError dylan_init_memory_manager()
 
   wrapper_pool = misc_pool;
 
-#ifndef NO_FINALIZATION
   finalization_type = mps_message_type_finalization();
   mps_message_type_enable(arena, finalization_type);
-#endif
 
 #endif
 
@@ -2634,9 +2631,8 @@ void dylan_shut_down_memory_manager()
 {
 #ifndef GC_USE_BOEHM
 
-#ifndef NO_FINALIZATION
   while(primitive_mps_finalization_queue_first());
-#endif
+
   mps_pool_destroy(misc_pool);
   mps_pool_destroy(weak_table_pool);
   mps_pool_destroy(leaf_pool);
