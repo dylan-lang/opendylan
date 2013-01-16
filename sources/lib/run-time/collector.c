@@ -724,15 +724,6 @@ MMError dylan_mm_deregister_thread_from_teb(gc_teb_t gc_teb)
 }
 
 
-/* for backwards compatibility with old runtimes */
-MMError dylan_mm_deregister_thread()
-{
-  gc_teb_t gc_teb = current_gc_teb();
-
-  return dylan_mm_deregister_thread_from_teb(gc_teb);
-}
-
-
 MMError dylan_init_thread(void **rReturn, void *(*f)(void *, size_t), void *p, size_t s)
 {
   EXCEPTION_PREAMBLE()
