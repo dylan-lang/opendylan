@@ -29,6 +29,7 @@
 #define RUN_TIME_API __declspec( dllexport )
 #endif
 
+#define unused(param)   ((void)param)
 
 /* HACK Added by phoward 17-JUN-98
  * The file SPY-INTERFACES.C contains definitions that are not
@@ -160,6 +161,9 @@ void report_runtime_error (char* header, char* message)
   mps_lib_fputs(message, stream);
   mps_lib_fputc('\n', stream);
   mps_lib_abort();
+#else
+  unused(header);
+  unused(message);
 #endif
 }
 
@@ -169,8 +173,6 @@ void simple_error (char* message)
 }
 
 #ifndef GC_USE_BOEHM
-
-#define unused(param)   ((void)param)
 
 mps_bool_t dylan_check(mps_addr_t addr)
 {
@@ -210,6 +212,7 @@ static void defaultHandler(MMError e, const char *opName, size_t size)
 #endif
 }
 
+#ifndef GC_USE_BOEHM
 mps_arena_t arena;
 mps_chain_t chain;
 static mps_fmt_t format;
@@ -217,6 +220,7 @@ static mps_fmt_t dylan_fmt_weak_s;
 static mps_fmt_A_t fmt_A;
 static mps_fmt_A_t fmt_A_weak;
 static mps_pool_t main_pool, weak_table_pool, wrapper_pool, misc_pool, leaf_pool;
+#endif
 
 #ifndef NO_FINALIZATION
 static mps_message_type_t finalization_type;
@@ -224,10 +228,12 @@ static mps_message_type_t finalization_type;
 
 #define genCOUNT 2
 
+#ifndef GC_USE_BOEHM
 static mps_gen_param_s gc_default_gen_param[genCOUNT] = {
   { 8 * 1024, 0.45 },
   { MAXIMUM_HEAP_SIZE/1024 - 8 * 1024, 0.99 }
 };
+#endif
 
 static MMAllocHandler main_handler = defaultHandler;
 static MMAllocHandler weak_awl_handler = defaultHandler;
@@ -619,8 +625,10 @@ extern void *dylan_callin_internal(void *arg_base, size_t s);
 
 static int num_threads = 0;
 
+#ifndef GC_USE_BOEHM
 /* client estimate for handling requirements goes here */
 static int low_memory_allocation_per_thread = 128 * 1024;
+#endif
 
 
 static define_CRITICAL_SECTION(reservoir_limit_set_lock);
@@ -688,6 +696,8 @@ failApCreate:
   return res;
 
 #else
+  unused(stackBot);
+  unused(res);
 
   return 0;
 
@@ -699,7 +709,6 @@ failApCreate:
 
 MMError dylan_mm_deregister_thread_from_teb(gc_teb_t gc_teb)
 {
-
   update_runtime_thread_count(-1);
 #ifndef GC_USE_BOEHM
   mps_root_destroy(gc_teb->gc_teb_stack_root);
@@ -710,6 +719,7 @@ MMError dylan_mm_deregister_thread_from_teb(gc_teb_t gc_teb)
   mps_ap_destroy(gc_teb->gc_teb_exact_awl_ap);
   return MPS_RES_OK;
 #else
+  unused(gc_teb);
   return 0;
 #endif
 }
@@ -997,6 +1007,9 @@ void *MMReserveObject(size_t size, void *wrapper, gc_teb_t gc_teb)
 
 #else
 
+  unused(wrapper);
+  unused(gc_teb);
+
   return GC_malloc(size);
 
 #endif
@@ -1013,6 +1026,10 @@ int MMCommitObject(void *p, size_t size, gc_teb_t gc_teb)
 
 #else
 
+  unused(p);
+  unused(size);
+  unused(gc_teb);
+
   return 1;
 
 #endif
@@ -1027,6 +1044,9 @@ void *MMReserveLeaf(size_t size, void *wrapper, gc_teb_t gc_teb)
   reserve_memory_for_object(size, wrapper, gc_teb, gc_teb_leaf_ap, leaf_handler, "MMReserveLeaf");
 
 #else
+
+  unused(wrapper);
+  unused(gc_teb);
 
   return GC_malloc_atomic(size);
 
@@ -1043,6 +1063,10 @@ int MMCommitLeaf(void *p, size_t size, gc_teb_t gc_teb)
   return mps_commit(gc_teb->gc_teb_leaf_ap, p, size);
 
 #else
+
+  unused(p);
+  unused(size);
+  unused(gc_teb);
 
   return 1;
 
@@ -1065,6 +1089,9 @@ void *MMReserveExactAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 
 #else
 
+  unused(wrapper);
+  unused(gc_teb);
+
   return GC_malloc(size);
 
 #endif
@@ -1080,6 +1107,10 @@ int MMCommitExactAWL(void *p, size_t size, gc_teb_t gc_teb)
   return mps_commit(gc_teb->gc_teb_exact_awl_ap, p, size);
 
 #else
+
+  unused(p);
+  unused(size);
+  unused(gc_teb);
 
   return 1;
 
@@ -1102,6 +1133,9 @@ void *MMReserveWeakAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
 
 #else
 
+  unused(wrapper);
+  unused(gc_teb);
+
   return GC_malloc(size);
 
 #endif
@@ -1117,6 +1151,10 @@ int MMCommitWeakAWL(void *p, size_t size, gc_teb_t gc_teb)
   return mps_commit(gc_teb->gc_teb_weak_awl_ap, p, size);
 
 #else
+
+  unused(p);
+  unused(size);
+  unused(gc_teb);
 
   return 1;
 
@@ -1193,6 +1231,10 @@ int MMCommitWrapper(void *p, size_t size, gc_teb_t gc_teb)
 
 #else
 
+  unused(p);
+  unused(size);
+  unused(gc_teb);
+
   return 1;
 
 #endif
@@ -1247,6 +1289,7 @@ void MMFreeMisc(void *old, size_t size)
   mps_free(misc_pool, (mps_addr_t)old, size);
 
 #else
+  unused(size);
 
   GC_free(old);
 
@@ -1969,6 +2012,9 @@ MMError MMRegisterRootStatic(mps_root_t *rootp, void *base, void *limit)
   return mps_root_create_fmt(rootp, arena, mps_rank_exact(),
                              MPS_RM_PROT, fmt_A->scan, base, limit);
 #else
+  unused(rootp);
+  unused(base);
+  unused(limit);
   return 0;
 #endif
 }
@@ -1980,6 +2026,9 @@ MMError MMRegisterRootImmut(mps_root_t *rootp, void *base, void *limit)
   return mps_root_create_fmt(rootp, arena, mps_rank_exact(),
                              MPS_RM_CONST, fmt_A->scan, base, limit);
 #else
+  unused(rootp);
+  unused(base);
+  unused(limit);
   return 0;
 #endif
 }
@@ -1998,6 +2047,9 @@ MMError MMRegisterRootAmbig(mps_root_t *rootp, void *base, void *limit)
   return mps_root_create_table(rootp, arena, mps_rank_ambig(),
                                0, base, s);
 #else
+  unused(rootp);
+  unused(base);
+  unused(limit);
   return 0;
 #endif
 }
@@ -2010,6 +2062,9 @@ MMError MMRegisterRootExact(mps_root_t *rootp, void *base, void *limit)
   return mps_root_create_table_masked(rootp, arena, mps_rank_exact(),
                                       MPS_RM_PROT, base, s, 3);
 #else
+  unused(rootp);
+  unused(base);
+  unused(limit);
   return 0;
 #endif
 }
@@ -2020,6 +2075,8 @@ void MMDeregisterRoot(mps_root_t root)
   if (root) {
     mps_root_destroy(root);
   }
+#else
+  unused(root);
 #endif
 }
 
@@ -2070,14 +2127,22 @@ MMError MMRootStatic(void *base, void *limit)
   return mps_root_create_fmt(&root, arena, mps_rank_exact(),
                              0, fmt_A->scan, base, limit);
 #else
+  unused(base);
+  unused(limit);
   return 0;
 #endif
 }
 
 MMError MMRootImmut(void *base, void *limit)
 {
+#ifndef GC_USE_BOEHM
   mps_root_t root;
   return  MMRegisterRootImmut(&root, base, limit);
+#else
+  unused(base);
+  unused(limit);
+  return 0;
+#endif
 }
 
 MMError MMRootAmbig(void *base, void *limit)
@@ -2088,6 +2153,8 @@ MMError MMRootAmbig(void *base, void *limit)
   return mps_root_create_table(&root, arena, mps_rank_ambig(),
                                0, base, s);
 #else
+  unused(base);
+  unused(limit);
   return 0;
 #endif
 }
@@ -2100,6 +2167,8 @@ MMError MMRootExact(void *base, void *limit)
   return mps_root_create_table_masked(&root, arena, mps_rank_exact(),
                                       0, base, s, 3);
 #else
+  unused(base);
+  unused(limit);
   return 0;
 #endif
 }
@@ -2140,6 +2209,8 @@ void primitive_mps_collect(BOOL display_stats)
   mps_arena_collect(arena);
   if (display_stats)
     display_stats_for_memory_usage();
+#else
+  unused(display_stats);
 #endif
 }
 
@@ -2243,6 +2314,7 @@ BOOL primitive_mps_collection_stats(void** results)
   else
     return FALSE;
 #else
+  unused(results);
   return FALSE;
 #endif
 }
@@ -2255,6 +2327,8 @@ void primitive_mps_finalize(void *obj)
 {
 #ifndef NO_FINALIZATION
   mps_finalize(arena, &obj);
+#else
+  unused(obj);
 #endif
 }
 
@@ -2295,6 +2369,8 @@ void primitive_mps_ld_reset(d_hs_t d_hs)
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   mps_ld_reset(mps_ld, arena);
+#else
+  unused(d_hs);
 #endif
 }
 
@@ -2305,6 +2381,9 @@ void primitive_mps_ld_add(d_hs_t d_hs, mps_addr_t addr)
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   mps_ld_add(mps_ld, arena, addr);
+#else
+  unused(d_hs);
+  unused(addr);
 #endif
 }
 
@@ -2318,6 +2397,8 @@ mps_bool_t primitive_mps_ld_isstale(d_hs_t d_hs)
   return(mps_ld_isstale(mps_ld, arena, 0));
 
 #else
+
+  unused(d_hs);
 
   return 0; /* Never stale */
 
@@ -2333,6 +2414,9 @@ void primitive_mps_ld_merge(d_hs_t d_into, d_hs_t d_obj)
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   mps_ld_merge(into, arena, addr);
+#else
+  unused(d_into);
+  unused(d_obj);
 #endif
 }
 
@@ -2511,6 +2595,9 @@ MMError dylan_init_memory_manager()
 #endif
 
 #ifdef GC_USE_BOEHM
+  unused(res);
+  unused(max_heap_size);
+
   /* Not required for the dll version of Boehm. */
   /* GC_init(); */
 

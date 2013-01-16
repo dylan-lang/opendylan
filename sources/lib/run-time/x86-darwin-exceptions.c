@@ -30,8 +30,6 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 {
   struct sigaction newFPEHandler;
 
-  sigset_t set, oldset;
-
   unused(oldSEGVHandler);
 
   sigfillset(&newFPEHandler.sa_mask);
