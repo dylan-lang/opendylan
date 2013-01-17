@@ -49,19 +49,6 @@ void force_reference_to_spy_interface()
 
 
 #include "mm.h"        /* Dylan Interface */
-#include "mps.h"        /* MPS Interface */
-#include "mpscmv.h"     /* MPS pool class MV */
-#include "mpscamc.h"    /* MPS pool class AMC */
-#include "mpsavm.h"     /* MPS arena class */
-#ifndef GC_USE_BOEHM
-#ifndef OPEN_DYLAN_PLATFORM_UNIX
-#include "mpsw3.h"
-#endif
-#else
-#include "boehm.h"
-#endif
-#include "fmtdy.h"      /* Dylan object format */
-#include "mpslib.h"     /* plinth interface */
 #include <memory.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -74,9 +61,6 @@ void force_reference_to_spy_interface()
 #include "windows-types.h"
 #endif
 
-#include "mpscawl.h"    /* MPS pool class AWL */
-#include "mpsclo.h"    /* MPS pool class LO */
-
 /* Configuration
  *
  * MISC* configure the MV pool.
@@ -86,15 +70,109 @@ void force_reference_to_spy_interface()
 #define MISCAVGSIZE     ((size_t)32)
 #define MISCMAXSIZE     ((size_t)65536)
 
+void report_runtime_error (char* header, char* message);
 
-typedef mps_word_t              word;
+static void simple_error (char* message)
+{
+  report_runtime_error("\nDylan runtime error: ", message);
+}
+
+// typedef mps_word_t              word;
 typedef unsigned char           byte_char;
 typedef unsigned short          half_word;
 typedef _int64                  double_word;
 typedef float                   single_float;
 typedef double                  double_float;
-typedef void*                         dylan_object;
+typedef void*                   dylan_object;
 
+typedef int                     dylan_bool_t;
+
+__inline
+void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
+{
+  // This really should be controlled by a better define, but we don't have
+  // or really need one at the moment.
+#if defined(OPEN_DYLAN_PLATFORM_DARWIN)
+#warning Implement me
+#elif defined(OPEN_DYLAN_PLATFORM_UNIX)
+  __asm__
+    (
+      "cld    \n\t"
+      "movl   %0, %%eax\n\t"
+      "movl   %1, %%ecx\n\t"
+      "movl   %2, %%edi\n\t"
+      "rep    \n\t"
+      "stosl  %%eax,%%es:(%%edi)\n"
+
+      // output operands
+      :
+      // input operands
+      : "g" (fill), "g" (count), "g" (mem)
+      // clobbered machine registers
+      : "ax", "cx","di","si", "cc"
+    );
+#else
+  __asm
+    {
+      cld
+      mov eax, fill
+      mov ecx, count
+      mov edi, mem
+      rep stosd
+    };
+#endif
+};
+
+
+#define define_fill_mem(type) \
+__inline  \
+void fill_ ## type ## _mem(type *mem, type fill, int count) \
+{ \
+  int index = 0; \
+  while (index < count) \
+    {  \
+      mem[index] = fill; \
+      ++index; \
+    }; \
+}
+
+define_fill_mem(half_word)
+define_fill_mem(double_word)
+define_fill_mem(single_float)
+define_fill_mem(double_float)
+
+
+__inline
+void untraced_fill_byte_char_mem(void **object, byte_char fill, int count, int count_slot, dylan_bool_t ztq)
+{
+  byte_char *d = (byte_char*)(&(object[count_slot + 1]));
+  memset(d, fill, count);
+  if (ztq) {
+    d[count] = 0;
+  }
+}
+
+#define define_untraced_fill_mem(type) \
+__inline  \
+void untraced_fill_ ## type ## _mem(void **object, type fill, int count, int count_slot, dylan_bool_t ztq) \
+{ \
+  int index = 0; \
+  type *mem = (type*)(object + count_slot + 1); \
+  unused(ztq); \
+  object[count_slot] = (void*)((count << 2) + 1); \
+ \
+  while (index < count) \
+    {  \
+      mem[index] = fill; \
+      ++index; \
+    }; \
+}
+
+define_untraced_fill_mem(dylan_object)
+define_untraced_fill_mem(half_word)
+define_untraced_fill_mem(double_word)
+define_untraced_fill_mem(single_float)
+define_untraced_fill_mem(double_float)
 
 /* Thread Local Variables, accessed via the GC-TEB*/
 
@@ -102,27 +180,7 @@ typedef void*                         dylan_object;
 // On Unix platforms, use the thread-local storage provided by the system to
 // hold the TEB pointer
 __thread void* teb;
-
 #endif
-
-typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
-  mps_bool_t gc_teb_inside_tramp;  /* the HARP runtime assumes offset 0 for this */
-  mps_ap_t   gc_teb_main_ap;       /* the HARP runtime assumes offset 1 for this */
-  mps_ap_t   gc_teb_weak_awl_ap;
-  mps_ap_t   gc_teb_exact_awl_ap;
-  mps_ap_t   gc_teb_leaf_ap;
-  mps_thr_t  gc_teb_thread;
-  mps_root_t gc_teb_stack_root;
-  size_t     gc_teb_allocation_counter;   /* the profiler assumes this is at offset -1 from main TEB */
-} gc_teb_s;
-
-
-/* The profiler can use this as an offset of the allocation counter from TEB */
-/* This assumes that the gc_teb is contiguous with the main teb. the HARP    */
-/* runtime ensure this is always true.                                       */
-
-int teb_allocation_counter_offset = - ((int)sizeof(size_t));
-
 
 BOOL heap_statsQ = FALSE;
 BOOL heap_alloc_statsQ = FALSE;
@@ -134,13 +192,6 @@ char   *dylan_buffer = NULL;
 int    dylan_buffer_pos = 0;
 int    dylan_buffer_size = 8192;
 BOOL   dylan_streamQ = FALSE;
-
-void report_runtime_error (char* header, char* message);
-
-void simple_error (char* message)
-{
-  report_runtime_error("\nDylan runtime error: ", message);
-}
 
 RUN_TIME_API
 void primitive_begin_heap_alloc_stats()
@@ -409,6 +460,11 @@ extern void check_wrapper_breakpoint (void *wrapper, int size);
 
 extern BOOL Prunning_dylan_spy_functionQ;
 
+#ifdef GC_USE_BOEHM
+#include "boehm-collector.c"
+#else
+#include "mps-collector.c"
+#endif
 
 static __inline
 void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
@@ -495,7 +551,7 @@ MMError dylan_init_thread(void **rReturn, void *(*f)(void *, size_t), void *p, s
 
   EXCEPTION_POSTAMBLE()
 
-  return MPS_RES_OK;
+  return MMSUCCESS;
 }
 
 
@@ -520,103 +576,10 @@ void *dylan_callin_handler(void *arg_base, size_t s)
   return res;
 }
 
-
-
-__inline
-void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
-{
-  // This really should be controlled by a better define, but we don't have
-  // or really need one at the moment.
-#if defined(OPEN_DYLAN_PLATFORM_DARWIN)
-#warning Implement me
-#elif defined(OPEN_DYLAN_PLATFORM_UNIX)
-  __asm__
-    (
-      "cld    \n\t"
-      "movl   %0, %%eax\n\t"
-      "movl   %1, %%ecx\n\t"
-      "movl   %2, %%edi\n\t"
-      "rep    \n\t"
-      "stosl  %%eax,%%es:(%%edi)\n"
-
-      // output operands
-      :
-      // input operands
-      : "g" (fill), "g" (count), "g" (mem)
-      // clobbered machine registers
-      : "ax", "cx","di","si", "cc"
-    );
-#else
-  __asm
-    {
-      cld
-      mov eax, fill
-      mov ecx, count
-      mov edi, mem
-      rep stosd
-    };
-#endif
-};
-
-
-#define define_fill_mem(type) \
-__inline  \
-void fill_ ## type ## _mem(type *mem, type fill, int count) \
-{ \
-  int index = 0; \
-  while (index < count) \
-    {  \
-      mem[index] = fill; \
-      ++index; \
-    }; \
-}
-
-define_fill_mem(half_word)
-define_fill_mem(double_word)
-define_fill_mem(single_float)
-define_fill_mem(double_float)
-
-
-__inline
-void untraced_fill_byte_char_mem(void **object, byte_char fill, int count, int count_slot, mps_bool_t ztq)
-{
-  byte_char *d = (byte_char*)(&(object[count_slot + 1]));
-  memset(d, fill, count);
-  if (ztq) {
-    d[count] = 0;
-  }
-}
-
-#define define_untraced_fill_mem(type) \
-__inline  \
-void untraced_fill_ ## type ## _mem(void **object, type fill, int count, int count_slot, mps_bool_t ztq) \
-{ \
-  int index = 0; \
-  type *mem = (type*)(object + count_slot + 1); \
-  unused(ztq); \
-  object[count_slot] = (void*)((count << 2) + 1); \
- \
-  while (index < count) \
-    {  \
-      mem[index] = fill; \
-      ++index; \
-    }; \
-}
-
-define_untraced_fill_mem(dylan_object)
-define_untraced_fill_mem(half_word)
-define_untraced_fill_mem(double_word)
-define_untraced_fill_mem(single_float)
-define_untraced_fill_mem(double_float)
-
-
-
 void *dylan__malloc__misc(size_t size)
 {
   return MMAllocMisc(size);
 }
-
-
 
 #define BLOCK_CODE_MASK  0xff000000
 #define BLOCK_CODE_TOKEN 0xab000000
@@ -685,13 +648,6 @@ void *wrapper_class(void *wrapper)
 
   return class;
 }
-
-#ifdef GC_USE_BOEHM
-#include "boehm-collector.c"
-#else
-#include "mps-collector.c"
-#endif
-
 
 #ifndef OPEN_DYLAN_PLATFORM_UNIX
 

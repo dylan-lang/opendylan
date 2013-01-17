@@ -1,3 +1,34 @@
+#include "mps.h"        /* MPS Interface */
+#include "mpscmv.h"     /* MPS pool class MV */
+#include "mpscamc.h"    /* MPS pool class AMC */
+#include "mpsavm.h"     /* MPS arena class */
+#ifndef OPEN_DYLAN_PLATFORM_UNIX
+#include "mpsw3.h"
+#endif
+#include "fmtdy.h"      /* Dylan object format */
+#include "mpslib.h"     /* plinth interface */
+#include "mpscawl.h"    /* MPS pool class AWL */
+#include "mpsclo.h"    /* MPS pool class LO */
+
+typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
+  mps_bool_t gc_teb_inside_tramp;  /* the HARP runtime assumes offset 0 for this */
+  mps_ap_t   gc_teb_main_ap;       /* the HARP runtime assumes offset 1 for this */
+  mps_ap_t   gc_teb_weak_awl_ap;
+  mps_ap_t   gc_teb_exact_awl_ap;
+  mps_ap_t   gc_teb_leaf_ap;
+  mps_thr_t  gc_teb_thread;
+  mps_root_t gc_teb_stack_root;
+  size_t     gc_teb_allocation_counter;   /* the profiler assumes this is at offset -1 from main TEB */
+} gc_teb_s;
+
+/* The profiler can use this as an offset of the allocation counter from TEB */
+/* This assumes that the gc_teb is contiguous with the main teb. the HARP    */
+/* runtime ensure this is always true.                                       */
+int teb_allocation_counter_offset = - ((int)sizeof(size_t));
+
+static void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper);
+static void zero_allocation_counter(gc_teb_t gc_teb);
+
 /* Controlling the use of the Leaf Object pool
  *
  * Fine control may be used to determine whether common allocation

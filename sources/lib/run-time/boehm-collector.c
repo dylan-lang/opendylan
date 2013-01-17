@@ -1,6 +1,26 @@
 #include <gc/gc.h>
+#include "boehm.h"
+
+typedef size_t mps_word_t;
+typedef int mps_bool_t;
+typedef void* mps_root_t;
+typedef void *mps_addr_t;       /* managed address (void *) */
+
 #define MAX_BOEHM_HEAP_SIZE (1024 * 1024 * 1024)
 /* #define INITIAL_BOEHM_HEAP_SIZE (50 * 1024 * 1024) */
+
+typedef struct gc_teb_s {       /* GC Thread Environment block descriptor */
+  mps_bool_t gc_teb_inside_tramp;  /* the HARP runtime assumes offset 0 for this */
+  size_t     gc_teb_allocation_counter;   /* the profiler assumes this is at offset -1 from main TEB */
+} gc_teb_s;
+
+/* The profiler can use this as an offset of the allocation counter from TEB */
+/* This assumes that the gc_teb is contiguous with the main teb. the HARP    */
+/* runtime ensure this is always true.                                       */
+int teb_allocation_counter_offset = - ((int)sizeof(size_t));
+
+static void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper);
+static void zero_allocation_counter(gc_teb_t gc_teb);
 
 /* Controlling the use of the Leaf Object pool
  *
@@ -31,21 +51,15 @@
 #define MMAllocateLeafTerminated MMAllocateObject
 #endif
 
-
-/* Thread creation & deletion code */
-
-static int num_threads = 0;
-
-#ifndef GC_USE_BOEHM
-/* client estimate for handling requirements goes here */
-static int low_memory_allocation_per_thread = 128 * 1024;
-#endif
-
 void report_runtime_error (char* header, char* message)
 {
   unused(header);
   unused(message);
 }
+
+/* Thread creation & deletion code */
+
+static int num_threads = 0;
 
 static define_CRITICAL_SECTION(reservoir_limit_set_lock);
 
@@ -975,9 +989,6 @@ void primitive_mps_end_ramp_alloc_all()
 {
 }
 
-
-mps_message_t message;
-
 RUN_TIME_API
 void primitive_mps_enable_gc_messages()
 {
@@ -1006,13 +1017,7 @@ void* primitive_mps_finalization_queue_first()
 
 /* Support for Location Dependencies */
 
-typedef struct d_hs_s      *d_hs_t;     /* Dylan Hash State */
-
-typedef struct d_hs_s         /* Dylan Hash State object */
-{
-  void *dylan_wrapper;
-  mps_ld_s internal_state;
-} d_hs_s;
+typedef void* d_hs_t;     /* Dylan Hash State */
 
 void primitive_mps_ld_reset(d_hs_t d_hs)
 {
@@ -1031,7 +1036,6 @@ mps_bool_t primitive_mps_ld_isstale(d_hs_t d_hs)
 
   return 0; /* Never stale */
 }
-
 
 void primitive_mps_ld_merge(d_hs_t d_into, d_hs_t d_obj)
 {
