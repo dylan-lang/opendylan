@@ -240,8 +240,20 @@ define function cache-file-header-data (sr :: <flat-file-source-record>)
   sr.cached-source-record-module-name := as(<symbol>, module-name);
   let language-strings = element(headers, #"language", default: #f);
   let language-name =
-    if (language-strings & ~empty(first(language-strings)))
-      first(language-strings)
+    if (language-strings)
+      if (empty?(first(language-strings)))
+        signal(make(<badly-formed-file-header>,
+                    format-string: "Source file %s does not specify "
+                      "language name",
+                    format-arguments: vector(as(<string>, location))))
+      elseif (language-strings.size > 1)
+        signal(make(<badly-formed-file-header>,
+                    format-string: "Source file %s specifies multiple "
+                      "language names",
+                    format-arguments: vector(as(<string>, location))))
+      else
+        first(language-strings)
+      end if
     else
       "infix-dylan"
     end if;
