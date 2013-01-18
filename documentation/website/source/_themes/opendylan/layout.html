@@ -9,10 +9,7 @@
 {% block doctype %}
 <!DOCTYPE html>
 {% endblock %}
-{% set css_files = css_files + ['_static/bootstrap/2.0.2/css/bootstrap.min.css',
-                                '_static/bootstrap/2.0.2/css/bootstrap-responsive.min.css',
-                                '_static/opendylan.org/css/opendylan.css'] -%}
-{% set script_files = script_files + ['_static/bootstrap/2.0.2/js/bootstrap.min.js'] -%}
+{% set css_files = css_files + ['_static/opendylan.org/css/opendylan.css'] -%}
 {% set navigation_bar = [
     ('index', 'Home'),
     ('about/index', 'About'),
@@ -24,6 +21,9 @@
 {% set active_page = pagename|default('index') -%}
 
 {% block extrahead %}
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css" type="text/css" />
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/bootstrap.min.js"></script>
     <!--[if lt IE 9]>
       <script src="{{ pathto('_static/opendylan.org/js/html5shim/html5.js', 1) }}"></script>
     <![endif]-->

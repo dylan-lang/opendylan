@@ -34,7 +34,12 @@ that you run it with an argument::
 
     make.bat html
 
-The generated site will be in ``build/html``.
+The generated site will be in ``build/html``. For the stylesheets and
+JavaScript to load correctly, we suggest running a local webserver
+pointing to this directory::
+
+    cd build/html
+    python -m SimpleHTTPServer
 
 Link Validation
 ---------------
