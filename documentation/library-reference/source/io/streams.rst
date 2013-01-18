@@ -721,7 +721,7 @@ Unicode character stream wrapping an 8-bit character stream.
       c :: <character>)
      => ()
       let (first-char, second-char) =
-      convert-unicode-to-byte-pair(c);
+        convert-unicode-to-byte-pair(c);
       with-stream-locked (s)
         write-element(s.inner-stream, first-char);
         write-element(s.inner-stream, second-char)
