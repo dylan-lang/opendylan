@@ -39,6 +39,9 @@ define open generic source-record-project (sr :: <source-record>)
 define open generic source-record-module-name (sr :: <source-record>)
  => module-name :: <symbol>;
 
+define open generic source-record-language (sr :: <source-record>)
+ => module-name :: <symbol>;
+
 define open generic source-record-contents (sr :: <source-record>)
  => contents :: <sequence>;
 

@@ -13,6 +13,8 @@ define class <interactive-source-record> (<source-record>)
     required-init-keyword: project:;
   constant slot source-record-module-name :: <symbol>,
     required-init-keyword: module:;
+  constant slot source-record-language :: <symbol> = #"infix-dylan",
+    init-keyword: language:;
   constant slot source-record-contents :: <byte-vector>,
     required-init-keyword: source:;
 end class;

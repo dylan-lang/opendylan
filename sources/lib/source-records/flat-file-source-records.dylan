@@ -6,6 +6,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define class <flat-file-source-record> (<file-source-record>)
   slot cached-source-record-module-name :: false-or(<symbol>) = #f;
+  slot cached-source-record-language :: false-or(<symbol>) = #f;
   slot cached-source-record-start-line :: false-or(<integer>) = #f;
   slot cached-source-record-contents :: false-or(<byte-vector>) = #f;
   slot source-record-removed :: <boolean> = #f;
@@ -25,6 +26,8 @@ define class <flat-file-source-record-proxy> (<object>)
     required-init-keyword: id:;
   constant slot source-record-proxy-module-name :: false-or(<symbol>),
     required-init-keyword: module:;
+  constant slot source-record-proxy-language :: false-or(<symbol>),
+    required-init-keyword: language:;
   constant slot source-record-proxy-start-line :: false-or(<integer>),
     required-init-keyword: start-line:;
 end;
@@ -139,6 +142,8 @@ define method id-as-source-record (c == <flat-file-source-record>,
     = id-as-source-record(c, project, directory, id.source-record-proxy-id);
   sr.cached-source-record-module-name :=
     id.source-record-proxy-module-name;
+  sr.cached-source-record-language :=
+    id.source-record-proxy-language;
   sr.cached-source-record-start-line :=
     id.source-record-proxy-start-line;
   sr
@@ -153,6 +158,7 @@ define method source-record-as-id (sr :: <flat-file-source-record>,
        id: flat-file-id(sr.source-record-location, directory,
                         sr.source-record-unique-id),
        module: sr.cached-source-record-module-name,
+       language: sr.cached-source-record-language,
        start-line: sr.cached-source-record-start-line)
 end method;
 
@@ -197,6 +203,14 @@ define method source-record-module-name (sr :: <flat-file-source-record>)
                                         end
 end method;
 
+define method source-record-language (sr :: <flat-file-source-record>)
+ => language :: <symbol>;
+  sr.cached-source-record-language | begin
+                                       cache-file-header-data(sr);
+                                       sr.cached-source-record-language
+                                     end
+end method;
+
 define method source-record-start-line
     (sr :: <flat-file-source-record>) => (line :: <integer>)
   sr.cached-source-record-start-line | begin
@@ -224,6 +238,26 @@ define function cache-file-header-data (sr :: <flat-file-source-record>)
                 format-arguments: vector(as(<string>, location))))
   end;
   sr.cached-source-record-module-name := as(<symbol>, module-name);
+  let language-strings = element(headers, #"language", default: #f);
+  let language-name =
+    if (language-strings)
+      if (empty?(first(language-strings)))
+        signal(make(<badly-formed-file-header>,
+                    format-string: "Source file %s does not specify "
+                      "language name",
+                    format-arguments: vector(as(<string>, location))))
+      elseif (language-strings.size > 1)
+        signal(make(<badly-formed-file-header>,
+                    format-string: "Source file %s specifies multiple "
+                      "language names",
+                    format-arguments: vector(as(<string>, location))))
+      else
+        first(language-strings)
+      end if
+    else
+      "infix-dylan"
+    end if;
+  sr.cached-source-record-language := as(<symbol>, language-name);
 end function;
 
 define method source-record-name (sr :: <flat-file-source-record>)
