@@ -1,27 +1,19 @@
-Welcome to Open Dylan!
-======================
-
 .. raw:: html
 
-   <div class="hero-unit">
-     <p><em>Dylan is an advanced, object-oriented, dynamic language which
-     supports rapid program development.  When needed, programs can be
-     optimized for more efficient execution by supplying more type
-     information to the compiler.  Nearly all entities in Dylan
-     (including functions, classes, and basic data types such as
-     integers) are first class objects. Additionally Dylan supports
-     multiple inheritance, polymorphism, multiple dispatch, keyword
-     arguments, object introspection, macros, and many other advanced
-     features...  --Peter Hinely</em></p>
-     <div>
-       <div class="pull-left"><a href="documentation/index.html" class="btn btn-primary btn-large">Learn more &raquo;</a></div>
-       <div class="pull-right"><a href="download/index.html" class="btn btn-primary btn-large">Get it now &raquo;</a></div>
-     </div>
-   </div>
-
    <div class="row">
-     <div class="span6">
+     <div class="span8">
 
+     <div class="hero-unit">
+        <p><em>Dylan is an advanced, object-oriented, dynamic language which
+        supports rapid program development.  When needed, programs can be
+        optimized for more efficient execution by supplying more type
+        information to the compiler.  Nearly all entities in Dylan
+        (including functions, classes, and basic data types such as
+        integers) are first class objects. Additionally Dylan supports
+        multiple inheritance, polymorphism, multiple dispatch, keyword
+        arguments, object introspection, macros, and many other advanced
+        features...  --Peter Hinely</em></p>
+     </div>
      <h2>Recent News</h2>
 
      <div class="alert alert-block alert-info">
@@ -37,20 +29,30 @@ Welcome to Open Dylan!
 
        <div class="pull-right"><a href="news/index.html" class="btn btn-primary btn-large">All news &raquo;</a></div>
      </div>
-     <div class="span6">
+     <div class="span4">
 
      <h2>Get Started</h2>
 
-     <div class="alert alert-block alert-success">
-       <p>Just getting started with Open Dylan?  We recommend that
-       you read the <a href="documentation/intro-dylan/">Introduction to
-       Dylan</a> to get a feel for the language. After that, you can broaden
-       your knowledge with the <a href="books/dpg/">Dylan Programming</a>
-       book.</p>
-     </div>
+The `Dylan Foundry <http://dylanfoundry.org/>`_ has written about
+`getting started with the 2012.1 release <http://dylanfoundry.org/2012/12/20/getting-started-with-opendylan-20121/>`_ or just go ahead and `download </download/index.html>`_ it.
 
-For more on the background and goals of the Dylan language, see the
-excellent :drm:`Introduction to the Dylan Reference Manual <drm_6>`.
+.. raw:: html
+
+     <h2>Learn about Dylan</h2>
+
+Dylan has a large amount of documentation available:
+
+* `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`_:
+   A tutorial is written primarily for those with solid programming
+   experience in C++ or another object-oriented, static language. It
+   provides a gentler introduction to Dylan than does the Dylan
+   Reference Manual (DRM).
+* `Dylan Programming Guide <http://opendylan.org/books/dpg/>`_:
+   A good, book length Dylan tutorial by several Harlequin employees.
+* `Dylan Reference Manual <http://opendylan.org/books/drm/>`_:
+   The official definition of the Dylan language and standard library.
+* `OpenDylan Documentation <http://opendylan.org/documentation/>`_:
+   All of the OpenDylan documentation.
 
 .. raw:: html
 
