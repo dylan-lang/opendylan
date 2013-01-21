@@ -33,6 +33,8 @@ Documentation
     Manual (DRM).
 
 `Dylan Programming <http://opendylan.org/books/dpg/>`_
+[`pdf <http://opendylan.org/books/dpg/DylanProgramming.pdf>`__]
+[`epub <http://opendylan.org/books/dpg/DylanProgramming.epub>`__]
 
     A good, book length Dylan tutorial by several Harlequin employees.
 
