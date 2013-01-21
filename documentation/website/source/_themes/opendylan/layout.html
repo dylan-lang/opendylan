@@ -72,16 +72,15 @@
 {% endblock %}
 
 {% block footer %}
-    <footer class="container">
-      <hr>
-      <div class="pull-left">
+   <footer class="navbar navbar-static-bottom">
+     <div class="navbar-inner">
+       <div class="container">
         {%- if show_source and has_source and sourcename %}
+          <p class="pull-left navbar-text">
           <a href="{{ pathto('_sources/' + sourcename, true)|e }}"
-             rel="nofollow">{{ _('Show Source') }}</a>
+             rel="nofollow">{{ _('Show Source') }}</a></p>
         {%- endif %}
-      </div>
-
-      <div class="pull-right">
+        <p class="pull-right navbar-text">
         {%- if show_copyright %}
           {%- if hasdoc('copyright') %}
             {% trans path=pathto('copyright'), copyright=copyright|e %}&copy; <a href="{{ path }}">Copyright</a> {{ copyright }}.{% endtrans %}
@@ -95,9 +94,9 @@
         {%- if show_sphinx %}
           {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}
         {%- endif %}
-      </div>
-      <div class="clearer"></div>
-
+        </p>
+       </div>
+     </div>
       <script type="text/javascript" src="http://www.google.com/cse/brand?form=cse-search-box&amp;lang=en"></script>
 
       <!-- Piwik -->
@@ -112,8 +111,7 @@
       } catch( err ) {}
       </script><noscript><p><img src="http://piwik.opendylan.org/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
       <!-- End Piwik Tracking Code -->
-
-    </footer>
+   </footer>
 {% endblock %}
 
 {% block relbar1 %}{% endblock %}

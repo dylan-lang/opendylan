@@ -17,6 +17,10 @@ body {
   -moz-border-radius:3px;
   border-radius:3px;
 }
+footer.navbar {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
 /* Make the headerlink less obnoxiously visible */
 a.headerlink {
   color: silver;
