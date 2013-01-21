@@ -1,3 +1,12 @@
+**Updated Dylan Programming Guide**
+*2013-01-21*
+
+The Dylan Programming Guide has been updated to our
+new documentation format and is now available in
+PDF and ePub formats.
+
+:doc:`Read more... </news/2013/01/21/dylan-programming-guide>`
+
 **New release: 2012.1**
 *2012-12-20*
 
@@ -13,21 +22,3 @@ Bugs in the syntax highlighting support for Textmate
 and Sublime Text as well as for vim have been fixed.
 
 :doc:`Read more... </news/2012/10/18/editor-support>`
-
-**command-line-parser library**
-*2012-10-15*
-
-The `command-line-parser
-<https://github.com/dylan-lang/command-line-parser>`_ library has been
-completely rewritten.
-
-:doc:`Read more... </news/2012/10/15/command-line-parser>`
-
-
-**New strings library**
-*2012-05-18*
-
-A new library of basic string operations is now available as a
-standard library.
-
-:doc:`Read more... </news/2012/05/18/strings>`

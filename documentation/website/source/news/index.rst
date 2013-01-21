@@ -11,6 +11,24 @@ News & Articles
 
 .. include:: recent.rst.inc
 
+**command-line-parser library**
+*2012-10-15*
+
+The `command-line-parser
+<https://github.com/dylan-lang/command-line-parser>`_ library has been
+completely rewritten.
+
+:doc:`Read more... </news/2012/10/15/command-line-parser>`
+
+
+**New strings library**
+*2012-05-18*
+
+A new library of basic string operations is now available as a
+standard library.
+
+:doc:`Read more... </news/2012/05/18/strings>`
+
 **C3 superclass linearization**
 *2012-01-25*
 
