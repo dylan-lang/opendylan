@@ -19,7 +19,9 @@
     ('download/index', 'Download'),
 ] -%}
 {% set active_page = pagename|default('index') -%}
-
+{%- block htmltitle %}
+<title>{% if title == "&lt;no title&gt;" %}Open Dylan{% else %}{{ title|striptags|e }}{% endif %}{{ titlesuffix }}</title>
+{%- endblock %}
 {% block extrahead %}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.2/css/bootstrap-responsive.min.css" type="text/css" />
