@@ -2,7 +2,7 @@
 *2012-12-20*
 
 We just released Open Dylan 2012.1. This release brings many
-bugfixes, inmproved platform support and new features.
+bugfixes, improved platform support and new features.
 
 :doc:`Read more... </news/2012/12/20/new-release>`
 
