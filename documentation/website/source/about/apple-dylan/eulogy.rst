@@ -111,8 +111,7 @@ by Apple is SK8. SK8 has an even cooler environment than Apple Dylan and
 has been used in dozens of projects many years ago. The programming
 language of SK8 is a kind of object-oriented AppleScript (written in
 MCL). Here is a `picture of Sk8 running on a PowerMac
-<http://www.lemonodor.com/archives/images/mcl-porn/i8.jpg>`_. Sk8 has
-been released by Apple as source code.
+<../../_static/images/sk8.jpg>`_. Sk8 has been released by Apple as source code.
 
 Apple Dylan influences
 ======================
