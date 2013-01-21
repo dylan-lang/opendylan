@@ -262,7 +262,7 @@ define method print-source-location
   let name
     = select (record by instance?)
         <file-source-record> =>
-          locator-name(record.source-record-location);
+          locator-as-string(<string>, record.source-record-location);
         <source-record> =>
           record.source-record-name | $interactive-record;
       end;
@@ -598,15 +598,13 @@ define method print-environment-object-name
      #all-keys)
  => ()
   ignore(namespace);
+  let location = environment-object-source-location(server, warning);
   if (full-message?)
-    write(stream, environment-object-type-name(warning));
-    let owner = warning-owner(server, warning);
-    let location = environment-object-source-location(server, warning);
     if (location)
-      write(stream, " at ");
-      print-source-location(stream, location)
+      print-source-location(stream, location);
+      write(stream, ": ");
     end;
-    write(stream, ":\n\n")
+    format(stream, "%s - ", environment-object-type-name(warning));
   end;
   let message
     = case
@@ -614,23 +612,23 @@ define method print-environment-object-name
 	otherwise     => compiler-warning-short-message(server, warning);
       end;
   write(stream, message);
-  let location = environment-object-source-location(server, warning);
   if (full-message? & location)
     new-line(stream);
     let record       = location.source-location-source-record;
     let start-offset = location.source-location-start-offset;
-    let start-line   = start-offset.source-offset-line;
+    let first-line = record.source-record-start-line;
+    let start-line = first-line + start-offset.source-offset-line;
     let (lines, upper-dec, lower-dec) = extract-lines(location);
     if (~lines)
       print-source-location(stream, location)
     else
       local method output-line
-		(number :: <integer>, line :: false-or(<string>)) => ()
-	      print-source-location(stream, location, line-number: number);
-	      line & format(stream, ": %s\n", line)
+		(lineno :: <integer>, line :: false-or(<string>)) => ()
+              format(stream, "%4s  %s\n",
+                     if (lines & lines.size > 1) lineno else ' ' end,
+                     if (line) line else ' ' end);
 	    end method output-line;
-      format(stream, "\n");
-      output-line(start-line - 1, upper-dec);
+      format(stream, "%4s  %s\n", ' ', upper-dec);
       let no-of-lines = lines.size;
       if (no-of-lines <= $warning-max-lines)
 	for (line in lines, number from start-line)
@@ -641,12 +639,12 @@ define method print-environment-object-name
 	for (index from 0 below half-count)
 	  output-line(start-line + index, lines[index])
 	end;
-	output-line(start-line + no-of-lines - half-count, "[...]");
+        format(stream, "%4s  [...]\n", ' ');
 	for (index from (no-of-lines - half-count + 1) below no-of-lines)
 	  output-line(start-line + index, lines[index])
 	end
       end;
-      output-line(start-line + no-of-lines, lower-dec)
+      format(stream, "%4s  %s", ' ', lower-dec);
     end
   end
 end method print-environment-object-name;
