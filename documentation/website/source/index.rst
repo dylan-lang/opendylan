@@ -51,8 +51,8 @@ Dylan has a large amount of documentation available:
    A good, book length Dylan tutorial by several Harlequin employees.
 * `Dylan Reference Manual <http://opendylan.org/books/drm/>`_:
    The official definition of the Dylan language and standard library.
-* `OpenDylan Documentation <http://opendylan.org/documentation/>`_:
-   All of the OpenDylan documentation.
+* `Open Dylan Documentation <http://opendylan.org/documentation/>`_:
+   All of the Open Dylan documentation.
 
 .. raw:: html
 

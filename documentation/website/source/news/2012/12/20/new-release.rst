@@ -32,8 +32,8 @@ separately:
   ``strings`` and ``string-extensions`` libraries with a more consistent
   and straightforward API. ``string-extensions`` has been removed.
 * The ``command-line-parser`` library has been cleaned up and integrated
-  with the OpenDylan distribution.
-* We no longer provide PowerPC builds of OpenDylan on Mac OS X. Also,
+  with the Open Dylan distribution.
+* We no longer provide PowerPC builds of Open Dylan on Mac OS X. Also,
   our Intel builds are for Mac OS X Lion and later. If you desire Snow
   Leopard support, please get in touch with us.
 

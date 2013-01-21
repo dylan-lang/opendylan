@@ -18,7 +18,7 @@ Sublime Text and Textmate
 Textmate and Sublime Text used the same plugin which can
 be found on GitHub at https://github.com/dylan-lang/dylan.tmbundle.
 
-* Using OpenDylan specific modifiers (``dynamic``, ``sideways``, etc)
+* Using Open Dylan specific modifiers (``dynamic``, ``sideways``, etc)
   won't break the highlighting.
 * ``locked`` and ``thread`` variable definitions are highlighted
   correctly now.
