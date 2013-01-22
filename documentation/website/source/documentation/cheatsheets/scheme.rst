@@ -189,7 +189,7 @@ Note that, in Dylan, any words after an ``end`` (e.g.
 |     (test1 result1)              |      test1 => result1;                |
 |     (test2 result2)              |      test2 => result2;                |
 |     (else result)                |      otherwise => result;             |
-|    )                             |      end case                         |
+|    )                             |    end case                           |
 +----------------------------------+---------------------------------------+
 | .. code-block:: scheme           | .. code-block:: dylan                 |
 |                                  |                                       |
