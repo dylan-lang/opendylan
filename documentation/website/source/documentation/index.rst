@@ -109,6 +109,7 @@ Documentation
    * `Iteration <cheatsheets/iteration.html>`_
    * `Conditionals <cheatsheets/conditionals.html>`_
    * `Collections <cheatsheets/collections.html>`_
+   * `For Scheme programmers <cheatsheets/scheme.html>`_
 
 .. raw:: html
 
