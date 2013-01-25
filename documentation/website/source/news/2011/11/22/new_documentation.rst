@@ -27,7 +27,7 @@ There will still be a fair bit of work to update and improve the
 documentation, but this should prove much easier now that we have
 it in a modern format that we all can work with!
 
-.. _Sphinx: http://sphinx.pocoo.org/
+.. _Sphinx: http://sphinx-doc.org/
 .. _documentation: https://github.com/dylan-lang/opendylan/tree/master/documentation
 .. _sphinx-extensions: https://github.com/dylan-lang/sphinx-extensions
 

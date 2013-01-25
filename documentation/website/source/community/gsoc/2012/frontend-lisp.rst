@@ -14,4 +14,4 @@ Some references:
 
 - `Dylan Interim Reference Manual <http://jim.studt.net/dirm/interim-contents.html>`_
 - `Dylan Macros with S-Expressions <https://www.cs.cmu.edu/afs/cs/project/clisp/OldFiles/hackers/wlott/dylan/moon/Dylan-Macros.RTF>`_
-- `S-Expression Syntax <https://github.com/dylan-lang/temporary_complete_dylan_repo/tree/393e3fa2089bce8f02d950b561dee7bb3de7fe02/old/Sources/emulator/lib>`_
+- `S-Expression Syntax <https://github.com/dylan-hackers/temporary_complete_dylan_repo/tree/393e3fa2089bce8f02d950b561dee7bb3de7fe02/old/Sources/emulator/lib>`_

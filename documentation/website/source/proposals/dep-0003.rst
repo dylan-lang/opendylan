@@ -57,7 +57,7 @@ consistent superclass linearization algorithm is needed.
 After the C3 linearization was proposed in 1996, it was subsequently
 adapted in Python 2.3 (`article <http://www.python.org/download/releases/2.3/mro/>`__)
 and Perl 6 (`article
-<http://use.perl.org/~autrijus/journal/25768>`__).
+<http://use.perl.org/use.perl.org/_autrijus/journal/25768.html>`__).
 
 Rationale
 =========

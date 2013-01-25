@@ -18,4 +18,4 @@ Interesting prior art:
 - `LuaCocoa <http://playcontrol.net/opensource/LuaCocoa/>`_
 - `Clozure CL Objective C bridge <http://ccl.clozure.com/ccl-documentation.html#The-Objective-C-Bridge>`_
 - `LispWorks Objective C interface <http://www.lispworks.com/documentation/lw61/OBJC/html/objc.htm>`_
-- `A list of a lot of Cocoa Bridges <http://www.cocoadev.com/index.pl?CocoaBridges>`_
+- `A list of a lot of Cocoa Bridges <http://cocoadev.com/wiki/CocoaBridges>`_

@@ -10,5 +10,4 @@ This can draw inspiration from:
 
 - `PMD <http://pmd.sourceforge.net/>`_
 - `PyLint <http://pypi.python.org/pypi/pylint>`_
-- `AnalysisTool <http://www.karppinen.fi/analysistool/>`_
 - Clang plugins
