@@ -190,7 +190,7 @@ void initialize_teb_key(void)
 
 TEB* make_teb()
 {
-  TEB* teb = (TEB*)GC_malloc_uncollectable(sizeof(TEB));
+  TEB* teb = (TEB*)GC_MALLOC_UNCOLLECTABLE(sizeof(TEB));
 
   teb->uwp_frame = &teb->top_uwp_frame;
 
@@ -205,7 +205,7 @@ void free_teb()
 
   set_teb(NULL);
 
-  GC_free(teb);
+  GC_FREE(teb);
 }
 
 
@@ -253,7 +253,7 @@ void *make_tlv_vector(int n)
   size = (n + 2) * sizeof(D);
 
   // fill int the vector
-  vector = GC_malloc_uncollectable(size);
+  vector = GC_MALLOC_UNCOLLECTABLE(size);
   vector[0] = NULL;
   vector[1] = I(n);
 
@@ -263,7 +263,7 @@ void *make_tlv_vector(int n)
 
 void free_tlv_vector(D *vector)
 {
-  GC_free(vector);
+  GC_FREE(vector);
 }
 
 
@@ -351,7 +351,7 @@ update_tlv_vectors(int offset, D value)
 void
 add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector)
 {
-  TLV_VECTOR_LIST new_element = GC_malloc_uncollectable(sizeof(struct tlv_vector_list_element));
+  TLV_VECTOR_LIST new_element = GC_MALLOC_UNCOLLECTABLE(sizeof(struct tlv_vector_list_element));
 
   assert(new_element != NULL);
 
@@ -384,7 +384,7 @@ remove_tlv_vector(DTHREAD *thread)
     // matches first entry in list
     tlv_vector_list = tlv_vector_list->next;
     free_tlv_vector(last->tlv_vector);
-    GC_free(last);
+    GC_FREE(last);
     return(0);
   }
 
@@ -394,7 +394,7 @@ remove_tlv_vector(DTHREAD *thread)
       // found the right entry, so cut it out
       last->next = current->next;
       free_tlv_vector(current->tlv_vector);
-      GC_free(current);
+      GC_FREE(current);
       return(0);
     }
     else {

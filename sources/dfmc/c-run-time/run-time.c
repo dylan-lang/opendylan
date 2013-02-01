@@ -113,7 +113,7 @@ static void mps_finalization_proc(D obj, struct _mps_finalization_queue *cons) {
 void primitive_mps_finalize(D obj) {
   GC_register_finalizer(obj,
                         (GC_finalization_proc)mps_finalization_proc,
-                        GC_NEW(struct _mps_finalization_queue),
+                        GC_MALLOC(sizeof(struct _mps_finalization_queue)),
                         NULL, NULL);
 }
 
@@ -148,7 +148,7 @@ DSINT primitive_mps_committed (void) {
 D allocate (unsigned long size) {
   if (size > 100000000)
     primitive_break();
-  return((D)GC_malloc((size_t)size));
+  return((D)GC_MALLOC((size_t)size));
 }
 
 D primitive_allocate (DSINT size) {
@@ -165,12 +165,12 @@ D primitive_untraced_allocate (DSINT size) {
 
 D primitive_manual_allocate (D sizeObject) {
   size_t size = (size_t)R(sizeObject);
-  void* p = GC_malloc_uncollectable(size);
+  void* p = GC_MALLOC_UNCOLLECTABLE(size);
   return(primitive_wrap_machine_word((DMINT)p));
 }
 
 void primitive_manual_free (D object) {
-  GC_free((void*)primitive_unwrap_c_pointer(object));
+  GC_FREE((void*)primitive_unwrap_c_pointer(object));
 }
 
 void primitive_fillX(D dst, int base_offset, int offset, int size, D value) {
@@ -4544,7 +4544,7 @@ D primitive_string_as_symbol_using_symbol (D string, D symbol)
   }
   if (oblist_cursor >= oblist_size) {
     oblist_size += INITIAL_OBLIST_SIZE;
-    oblist = (D*)GC_realloc(oblist, oblist_size * sizeof(D));
+    oblist = (D*)GC_REALLOC(oblist, oblist_size * sizeof(D));
   }
   if (symbol == NULL) {
     symbol = primitive_make_symbol(string);
