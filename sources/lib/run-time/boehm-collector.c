@@ -99,7 +99,7 @@ void *MMAllocateObject(size_t size, void *wrapper, gc_teb_t gc_teb)
   unused(wrapper);
   unused(gc_teb);
 
-  return GC_malloc(size);
+  return GC_MALLOC(size);
 }
 
 __inline
@@ -108,7 +108,7 @@ void *MMAllocateLeaf(size_t size, void *wrapper, gc_teb_t gc_teb)
   unused(wrapper);
   unused(gc_teb);
 
-  return GC_malloc_atomic(size);
+  return GC_MALLOC_ATOMIC(size);
 }
 
 __inline
@@ -117,7 +117,7 @@ void *MMAllocateExactAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
   unused(wrapper);
   unused(gc_teb);
 
-  return GC_malloc(size);
+  return GC_MALLOC(size);
 }
 
 __inline
@@ -126,7 +126,7 @@ void *MMAllocateWeakAWL(size_t size, void *wrapper, gc_teb_t gc_teb)
   unused(wrapper);
   unused(gc_teb);
 
-  return GC_malloc(size);
+  return GC_MALLOC(size);
 }
 
 __inline
@@ -135,19 +135,19 @@ void *MMAllocateWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
   unused(wrapper);
   unused(gc_teb);
 
-  return GC_malloc_atomic(size);
+  return GC_MALLOC_ATOMIC(size);
 }
 
 void *MMAllocMisc(size_t size)
 {
-  return GC_malloc_atomic(size);
+  return GC_MALLOC_ATOMIC(size);
 }
 
 void MMFreeMisc(void *old, size_t size)
 {
   unused(size);
 
-  GC_free(old);
+  GC_FREE(old);
 }
 
 
