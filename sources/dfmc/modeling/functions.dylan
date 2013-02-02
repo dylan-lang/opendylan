@@ -130,7 +130,7 @@ define method ^initialize (gf :: <&generic-function>, #rest all-keys, #key)
 end method;
 
 
-// This is the smaller runtime represetnation for a generic function.  It is
+// This is the smaller runtime representation for a generic function.  It is
 // used when we don't need to keep track of domain and library information.
 // By special dispensation, a compiler-open generic function gets made into
 // one of these.  Don't check the type, use ^generic-function-sealed? in the

@@ -1677,7 +1677,7 @@ D primitive_engine_node_apply_with_optionals (D engD, D parent, D args) {
   case 7: return(ep(a[0],a[1],a[2],a[3],a[4],a[5],a[6]));
   };
   /* Over 7 implementation args, the engine-node calling sequence passes the
-     implementaiton args as a vector, but the engine-node *might* be a method,
+     implementation args as a vector, but the engine-node *might* be a method,
      in which case they have to be spread out again!
      */
   if (FUNCTIONP(eng))
