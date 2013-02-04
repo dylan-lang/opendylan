@@ -39,7 +39,7 @@ static void timespec_add_msecs(struct timespec *tp, int msecs) {
   msecs = msecs % 1000;
   tp->tv_sec += secs;
   tp->tv_nsec += msecs * 1000000L;
-  if(tp->tv_nsec >= 1000000000L) {
+  if (tp->tv_nsec >= 1000000000L) {
     tp->tv_sec += tp->tv_nsec / 1000000000L;
     tp->tv_nsec = tp->tv_nsec % 1000000000L;
   }
@@ -71,15 +71,15 @@ static int our_pthread_mutex_timedlock(pthread_mutex_t *mutex,
     /* get current time */
     timespec_current(&cur);
     /* time out when appropriate */
-    if((cur.tv_sec > end->tv_sec)
-       || (cur.tv_sec == end->tv_sec
-           && cur.tv_nsec >= end->tv_nsec)) {
+    if ((cur.tv_sec > end->tv_sec)
+        || (cur.tv_sec == end->tv_sec
+            && cur.tv_nsec >= end->tv_nsec)) {
       return ETIMEDOUT;
     }
     /* do a trylock */
     res = pthread_mutex_trylock(mutex);
     /* wait for 100 usec if busy */
-    if(res == EBUSY) {
+    if (res == EBUSY) {
       struct timespec delay;
       delay.tv_sec = 0;
       delay.tv_nsec = 100 * 1000;
@@ -94,7 +94,7 @@ static int our_pthread_mutex_timedlock(pthread_mutex_t *mutex,
       /* lock acquired */
       return 0;
     }
-  } while(1);
+  } while (1);
 }
 #endif
 
@@ -292,7 +292,7 @@ void grow_all_tlv_vectors(int newsize)
   trace_tlv("Growing all vectors to size %d", newsize);
 
   // Wait until we are the only writer
-  while(atomic_cas(&tlv_writer_counter, TLV_GROW, 0) != 0);
+  while (atomic_cas(&tlv_writer_counter, TLV_GROW, 0) != 0);
 
   // Grow the default vector
   new_default = make_tlv_vector(newsize);
@@ -301,14 +301,14 @@ void grow_all_tlv_vectors(int newsize)
 
   // Grow each vector in the active thread list
   list = tlv_vector_list;
-  while(list != NULL) {
+  while (list != NULL) {
     list->tlv_vector = grow_tlv_vector(list->tlv_vector, newsize);
     list->teb->tlv_vector = list->tlv_vector;
     list = list->next;
   }
 
   // Let writes proceed again
-  while(atomic_cas(&tlv_writer_counter, 0, TLV_GROW) != TLV_GROW);
+  while (atomic_cas(&tlv_writer_counter, 0, TLV_GROW) != TLV_GROW);
 }
 
 
@@ -428,7 +428,7 @@ void setup_tlv_vector(DTHREAD *thread)
 
   tlv_vector = get_tlv_vector();
 
-  if(!tlv_vector) {
+  if (!tlv_vector) {
     // Now set up a vector for the Dylan thread variables
     size = (uintptr_t)(default_tlv_vector[1]) >> 2;
     tlv_vector = make_tlv_vector(size);
@@ -500,7 +500,7 @@ void *trampoline (void *arg)
 
   f = rthread->function;
 
-  if(rthread->name) {
+  if (rthread->name) {
     const char *raw = primitive_string_as_raw(rthread->name);
     trace_threads("Thread %p has name \"%s\"", thread, raw);
     set_current_thread_name(raw);
@@ -968,14 +968,14 @@ D primitive_wait_for_semaphore_timed(D l, D m)
     return GENERAL_ERROR;
   }
 #else
-  if(pthread_mutex_lock(&semaphore->mutex)) {
+  if (pthread_mutex_lock(&semaphore->mutex)) {
     MSG0("wait-for-semaphore: pthread_mutex_lock returned error\n");
     return GENERAL_ERROR;
   }
 
   while (semaphore->count <= 0) {
     int res = pthread_cond_timedwait(&semaphore->cond, &semaphore->mutex, &end);
-    if(res == ETIMEDOUT) {
+    if (res == ETIMEDOUT) {
       return TIMEOUT;
     }
   }
@@ -1376,7 +1376,7 @@ D primitive_make_semaphore(D l, D n, D i, D m)
 
 #ifdef HAVE_POSIX_SEMAPHORES
   int res = sem_init(&semaphore->semaphore, 0, initial);
-  if(res) {
+  if (res) {
     MSG0("make-semaphore: sem_init returned error\n");
     free(semaphore);
     return GENERAL_ERROR;
@@ -1562,7 +1562,7 @@ static void primitive_write_thread_variable_internal()
       pthread_mutex_lock(&tlv_vector_list_lock);
       pthread_mutex_unlock(&tlv_vector_list_lock);
     }
-  } while(atomic_increment(&tlv_writer_counter) < 0);
+  } while (atomic_increment(&tlv_writer_counter) < 0);
 }
 
 D primitive_write_thread_variable(D h, D nv)

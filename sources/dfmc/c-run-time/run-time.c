@@ -122,8 +122,9 @@ D primitive_mps_finalization_queue_first() {
 
  RETRY:
   if ((queue = mps_finalization_queue)) {
-    if (DFALSE == CONDITIONAL_UPDATE(mps_finalization_queue, queue->rest, queue))
+    if (DFALSE == CONDITIONAL_UPDATE(mps_finalization_queue, queue->rest, queue)) {
       goto RETRY;
+    }
 
     return(queue->first);
   }
@@ -146,8 +147,9 @@ DSINT primitive_mps_committed (void) {
 }
 
 D allocate (unsigned long size) {
-  if (size > 100000000)
+  if (size > 100000000) {
     primitive_break();
+  }
   return((D)GC_MALLOC((size_t)size));
 }
 
@@ -176,14 +178,16 @@ void primitive_manual_free (D object) {
 void primitive_fillX(D dst, int base_offset, int offset, int size, D value) {
   register int i;
   D* target = ((D*)dst) + base_offset + offset;
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; i++) {
     target[i] = value;
+  }
 }
 
 void primitive_fill_bytesX
     (D dst, int base_offset, int offset, int size, DSINT value) {
-  if (size > 0)
+  if (size > 0) {
     memset(((unsigned char*)((D*)dst + base_offset)) + offset, value, (size_t)size);
+  }
 }
 
 DSINT primitive_repeated_slot_offset(D x) {
@@ -202,10 +206,11 @@ D primitive_repeated_slot_as_raw(D x, DSINT offset) {
 void primitive_replace_bytesX
     (D dst, DSINT dst_base_offset, DSINT dst_offset,
      D src, DSINT src_base_offset, DSINT src_offset, DSINT size) {
-  if (size > 0)
+  if (size > 0) {
     memcpy(&(((char*)(&(((D*)dst)[dst_base_offset])))[dst_offset]),
            &(((char*)(&(((D*)src)[src_base_offset])))[src_offset]),
            (size_t)size);
+  }
 }
 
 #define COPY_WORDS(dst, src, size) memcpy((dst), (src), (size) * sizeof(D))
@@ -214,10 +219,11 @@ void primitive_replaceX
     (D dst, DSINT dst_base_offset, DSINT dst_offset,
      D src, DSINT src_base_offset, DSINT src_offset, DSINT size) {
   ignore(src_base_offset);
-  if (size > 0)
+  if (size > 0) {
     COPY_WORDS(&(((D*)dst)[dst_base_offset + dst_offset]),
                &(((D*)src)[dst_base_offset + src_offset]),
                size);
+  }
 }
 
 
@@ -247,8 +253,9 @@ D primitive_byte_allocate_filled_terminated
     (object, repeated_size_offset + 1, 0, repeated_size,
      (unsigned char)R(fill_value));
   ((char*)(&object[repeated_size_offset + 1]))[repeated_size] = (char)0;
-  if (repeated_size_offset > 0)
+  if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
+  }
   return((D)object);
 }
 
@@ -265,8 +272,9 @@ D primitive_byte_allocate_filled
     (object, repeated_size_offset + 1, 0, repeated_size,
      (unsigned char)R(repeated_fill_value));
   ((char*)(&object[repeated_size_offset + 1]))[repeated_size] = (char)0;
-  if (repeated_size_offset > 0)
+  if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
+  }
   return((D)object);
 }
 
@@ -280,10 +288,12 @@ D primitive_byte_allocate_filled
     D* object = primitive_byte_allocate(size, (DSINT)(repeated_size * sizeof(type))); \
     instance_header_setter(class_wrapper, object); \
     primitive_fillX(object, 1, 0, number_slots, fill_value); \
-    for (i = 0; i < repeated_size; i++) \
+    for (i = 0; i < repeated_size; i++) {\
       ((type*)(&object[repeated_size_offset + 1]))[i] = (type)repeated_fill_value; \
-    if (repeated_size_offset > 0) \
+    } \
+    if (repeated_size_offset > 0) { \
       object[repeated_size_offset] = I(repeated_size); \
+    } \
     return((D)object); \
   }
 
@@ -302,8 +312,9 @@ D primitive_allocate_filled
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0)
+  if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
+  }
   return((D)object);
 }
 
@@ -315,8 +326,9 @@ D primitive_allocate_in_awl_pool
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0)
+  if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
+  }
   object[1] = assoc;
   return((D)object);
 }
@@ -329,8 +341,9 @@ D primitive_allocate_weak_in_awl_pool
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0)
+  if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
+  }
   object[1] = assoc;
   return((D)object);
 }
@@ -343,8 +356,9 @@ D primitive_allocate_wrapper
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
   primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0)
+  if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
+  }
   return((D)object);
 }
 
@@ -364,8 +378,9 @@ INLINE D initialize_byte_stack_allocate_filled
     (object, repeated_size_offset + 1, 0, repeated_size,
      (unsigned char)R(repeated_fill_value));
   ((char*)(&object[repeated_size_offset + 1]))[repeated_size] = (char)0;
-  if (repeated_size_offset > 0)
+  if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
+  }
   return((D)object);
 }
 
@@ -378,10 +393,12 @@ INLINE D initialize_object_stack_allocate_filled
   D* object = ptr;
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
-  for (i = 0; i < repeated_size; i++)
+  for (i = 0; i < repeated_size; i++) {
     ((D*)(&object[repeated_size_offset + 1]))[i] = (D)repeated_fill_value;
-  if (repeated_size_offset > 0)
+  }
+  if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
+  }
   return((D)object);
 }
 
@@ -518,26 +535,29 @@ D primitive_wrap_machine_word(DMINT x) {
 
 /*---*** NOTE: This is wrong!  It should make a <double-integer> */
 D primitive_wrap_abstract_integer(DMINT x) {
-  if (R(I(x)) != x)
+  if (R(I(x)) != x) {
     return(primitive_wrap_machine_word(x));
-  else
+  } else {
     return(primitive_box_integer(x));
+  }
 }
 
 /*---*** NOTE: This is wrong!  It should make a <double-integer> */
 D primitive_wrap_unsigned_abstract_integer(DMINT x) {
-  if (R(I(x)) != x)
+  if (R(I(x)) != x) {
     return(primitive_wrap_machine_word(x));
-  else
+  } else {
     return(primitive_box_integer(x));
+  }
 }
 
 /*---*** NOTE: This is wrong!  It should unwrap a <double-integer> */
 DMINT primitive_unwrap_abstract_integer(D x) {
-  if (BOOLASRAW(primitive_integerQ(x)))
+  if (BOOLASRAW(primitive_integerQ(x))) {
     return(primitive_unbox_integer(x));
-  else
+  } else {
     return(primitive_unwrap_machine_word(x));
+  }
 }
 
 /*---*** NOTE: Here's the correct implementation of the above three functions */
@@ -554,9 +574,9 @@ D primitive_wrap_abstract_integer(DMINT x) {
     /* Propogate the sign of x through the high word of the <double-integer> */
     (DBI)xd->high = (x < 0) ? -1 : 0;
     return(xd);
-  }
-  else
+  } else {
     return(I(x));
+  }
 }
 
 D primitive_wrap_unsigned_abstract_integer(DMINT x) {
@@ -567,18 +587,19 @@ D primitive_wrap_unsigned_abstract_integer(DMINT x) {
        resulting <double-integer> will always be 0 */
     (DBI)xd->low = (DUMINT)x;
     return(xd);
-  }
-  else
+  } else {
     return(I(x));
+  }
 }
 
 DMINT primitive_unwrap_abstract_integer(D x) {
-  if (BOOLASRAW(primitive_integerQ(x)))
+  if (BOOLASRAW(primitive_integerQ(x))) {
     return(R(x));
-  else
+  } else {
     /* Native runtime will signal overflow if (DBI)x->high != 0 | != 1
        (See page 3 of "Integer and Machine integer primitives") */
     return((DBI)x->low);
+  }
 }
 #endif
 
@@ -590,12 +611,13 @@ DMINT primitive_machine_word_divide(DMINT x, DMINT y) {
 D IKJboole_ior_, IKJboole_xor_;
 
 DMINT primitive_machine_word_boole(D s, DMINT x, DMINT y) {
-  if (s == IKJboole_ior_)
+  if (s == IKJboole_ior_) {
     return(x | y);
-  else if (s == IKJboole_xor_)
+  } else if (s == IKJboole_xor_) {
     return(x ^ y);
-  else /* if (s == IKJboole_and) */
+  } else { /* if (s == IKJboole_and) */
     return(x & y);
+  }
 }
 
 DMINT primitive_machine_word_floorS_quotient(DMINT x, DMINT y) {
@@ -1067,10 +1089,11 @@ INLINE D   vector_ref (SOV* vector, int offset) {
 
 /* gts,98apr08 */
 D  VECTOR_REF_OR_F(D vector, int offset) {
-  if (offset >= vector_size(vector))
+  if (offset >= vector_size(vector)) {
     return(DFALSE);
-  else
+  } else {
     return(vector_ref((SOV*)vector, offset));
+  }
 }
 
 INLINE D  vector_ref_setter (D new_value, SOV* vector, int offset) {
@@ -1080,18 +1103,18 @@ INLINE D  vector_ref_setter (D new_value, SOV* vector, int offset) {
 extern SOV* Pempty_vectorVKi;
 
 SOV* allocate_vector (int size) {
-  if (size == 0)
+  if (size == 0) {
     return(Pempty_vectorVKi);
-  else {
+  } else {
     SOV* vector = (SOV*)primitive_allocate(size + VECTOR_HEADER_SIZE);
     return(vector);
   }
 }
 
 SOV* make_vector (int size) {
-  if (size == 0)
+  if (size == 0) {
     return(Pempty_vectorVKi);
-  else {
+  } else {
     SOV* vector = allocate_vector(size);
     instance_header_setter(&KLsimple_object_vectorGVKdW, (D*)vector);
     vector_size_setter(size, vector);
@@ -1302,13 +1325,18 @@ INLINE int function_next_p(FN* function) {
 INLINE void transfer_varargs(va_list ap, int n, D* arguments) {
   int i;
 
-  for(i=0; i<n; i++)
+  for (i=0; i<n; i++) {
     arguments[i] = va_arg(ap, D);
+  }
 }
 
 #define BUFFER_VARARGS(n, last_parameter, buffer) \
-{ va_list ap; va_start(ap,(last_parameter)); \
-  transfer_varargs(ap, (n), (buffer)); va_end(ap); }
+  { \
+    va_list ap; \
+    va_start(ap, (last_parameter)); \
+    transfer_varargs(ap, (n), (buffer)); \
+    va_end(ap); \
+  }
 
 /* CALLING CONVENTION */
 
@@ -1349,8 +1377,9 @@ int FUNCTIONP(D x) {
      )
 
 INLINE D primitive_type_check (D value, D type) {
-  if (type != LobjectGVKd && !INSTANCEP(value, type))
+  if (type != LobjectGVKd && !INSTANCEP(value, type)) {
     Ktype_check_errorVKiI(value, type);
+  }
   return(value);
 }
 
@@ -1370,8 +1399,9 @@ extern D Kargument_count_overflow_errorVKiI(D function, D argc);
 
 INLINE void CALL_CHECK(FN* function, int argument_count) {
   SIMPLE_CALL_CHECK(function);
-  if (argument_count > MAX_ARGUMENTS)
+  if (argument_count > MAX_ARGUMENTS) {
     Kargument_count_overflow_errorVKiI(function, I(argument_count));
+  }
 }
 
 INLINE void TYPE_CHECK_ARG (D specializer, D argument) {
@@ -1381,73 +1411,74 @@ INLINE void TYPE_CHECK_ARG (D specializer, D argument) {
 INLINE void TYPE_CHECK_ARGS(D function, int argument_count, D* arguments) {
   SOV* specs = function_specializers((FN*)function);
   if (specs) {
-  D* specializers = vector_data(specs);
-  int i;
-  for (i = 0; i < argument_count; i++)
-    TYPE_CHECK_ARG(specializers[i], arguments[i]);
+    D* specializers = vector_data(specs);
+    int i;
+    for (i = 0; i < argument_count; i++) {
+      TYPE_CHECK_ARG(specializers[i], arguments[i]);
+    }
   }
 }
 
 INLINE void TYPE_CHECK_ARGS_1(D fn, D a1) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
   }
 }
 
 INLINE void TYPE_CHECK_ARGS_2(D fn, D a1, D a2) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
-  TYPE_CHECK_ARG(specializers[1], a2);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
+    TYPE_CHECK_ARG(specializers[1], a2);
   }
 }
 
 INLINE void TYPE_CHECK_ARGS_3(D fn, D a1, D a2, D a3) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
-  TYPE_CHECK_ARG(specializers[1], a2);
-  TYPE_CHECK_ARG(specializers[2], a3);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
+    TYPE_CHECK_ARG(specializers[1], a2);
+    TYPE_CHECK_ARG(specializers[2], a3);
   }
 }
 
 INLINE void TYPE_CHECK_ARGS_4(D fn, D a1, D a2, D a3, D a4) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
-  TYPE_CHECK_ARG(specializers[1], a2);
-  TYPE_CHECK_ARG(specializers[2], a3);
-  TYPE_CHECK_ARG(specializers[3], a4);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
+    TYPE_CHECK_ARG(specializers[1], a2);
+    TYPE_CHECK_ARG(specializers[2], a3);
+    TYPE_CHECK_ARG(specializers[3], a4);
   }
 }
 
 INLINE void TYPE_CHECK_ARGS_5(D fn, D a1, D a2, D a3, D a4, D a5) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
-  TYPE_CHECK_ARG(specializers[1], a2);
-  TYPE_CHECK_ARG(specializers[2], a3);
-  TYPE_CHECK_ARG(specializers[3], a4);
-  TYPE_CHECK_ARG(specializers[4], a5);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
+    TYPE_CHECK_ARG(specializers[1], a2);
+    TYPE_CHECK_ARG(specializers[2], a3);
+    TYPE_CHECK_ARG(specializers[3], a4);
+    TYPE_CHECK_ARG(specializers[4], a5);
   }
 }
 
 INLINE void TYPE_CHECK_ARGS_6 (D fn, D a1, D a2, D a3, D a4, D a5, D a6) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
-  TYPE_CHECK_ARG(specializers[1], a2);
-  TYPE_CHECK_ARG(specializers[2], a3);
-  TYPE_CHECK_ARG(specializers[3], a4);
-  TYPE_CHECK_ARG(specializers[4], a5);
-  TYPE_CHECK_ARG(specializers[5], a6);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
+    TYPE_CHECK_ARG(specializers[1], a2);
+    TYPE_CHECK_ARG(specializers[2], a3);
+    TYPE_CHECK_ARG(specializers[3], a4);
+    TYPE_CHECK_ARG(specializers[4], a5);
+    TYPE_CHECK_ARG(specializers[5], a6);
   }
 }
 
@@ -1455,14 +1486,14 @@ INLINE void TYPE_CHECK_ARGS_7
     (D fn, D a1, D a2, D a3, D a4, D a5, D a6, D a7) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
-  TYPE_CHECK_ARG(specializers[1], a2);
-  TYPE_CHECK_ARG(specializers[2], a3);
-  TYPE_CHECK_ARG(specializers[3], a4);
-  TYPE_CHECK_ARG(specializers[4], a5);
-  TYPE_CHECK_ARG(specializers[5], a6);
-  TYPE_CHECK_ARG(specializers[6], a7);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
+    TYPE_CHECK_ARG(specializers[1], a2);
+    TYPE_CHECK_ARG(specializers[2], a3);
+    TYPE_CHECK_ARG(specializers[3], a4);
+    TYPE_CHECK_ARG(specializers[4], a5);
+    TYPE_CHECK_ARG(specializers[5], a6);
+    TYPE_CHECK_ARG(specializers[6], a7);
   }
 }
 
@@ -1470,15 +1501,15 @@ INLINE void TYPE_CHECK_ARGS_8
     (D fn, D a1, D a2, D a3, D a4, D a5, D a6, D a7, D a8) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
-  TYPE_CHECK_ARG(specializers[1], a2);
-  TYPE_CHECK_ARG(specializers[2], a3);
-  TYPE_CHECK_ARG(specializers[3], a4);
-  TYPE_CHECK_ARG(specializers[4], a5);
-  TYPE_CHECK_ARG(specializers[5], a6);
-  TYPE_CHECK_ARG(specializers[6], a7);
-  TYPE_CHECK_ARG(specializers[7], a8);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
+    TYPE_CHECK_ARG(specializers[1], a2);
+    TYPE_CHECK_ARG(specializers[2], a3);
+    TYPE_CHECK_ARG(specializers[3], a4);
+    TYPE_CHECK_ARG(specializers[4], a5);
+    TYPE_CHECK_ARG(specializers[5], a6);
+    TYPE_CHECK_ARG(specializers[6], a7);
+    TYPE_CHECK_ARG(specializers[7], a8);
   }
 }
 
@@ -1486,16 +1517,16 @@ INLINE void TYPE_CHECK_ARGS_9
     (D fn, D a1, D a2, D a3, D a4, D a5, D a6, D a7, D a8, D a9) {
   SOV* specs = function_specializers((FN*)fn);
   if (specs) {
-  D* specializers = vector_data(specs);
-  TYPE_CHECK_ARG(specializers[0], a1);
-  TYPE_CHECK_ARG(specializers[1], a2);
-  TYPE_CHECK_ARG(specializers[2], a3);
-  TYPE_CHECK_ARG(specializers[3], a4);
-  TYPE_CHECK_ARG(specializers[4], a5);
-  TYPE_CHECK_ARG(specializers[5], a6);
-  TYPE_CHECK_ARG(specializers[6], a7);
-  TYPE_CHECK_ARG(specializers[7], a8);
-  TYPE_CHECK_ARG(specializers[8], a9);
+    D* specializers = vector_data(specs);
+    TYPE_CHECK_ARG(specializers[0], a1);
+    TYPE_CHECK_ARG(specializers[1], a2);
+    TYPE_CHECK_ARG(specializers[2], a3);
+    TYPE_CHECK_ARG(specializers[3], a4);
+    TYPE_CHECK_ARG(specializers[4], a5);
+    TYPE_CHECK_ARG(specializers[5], a6);
+    TYPE_CHECK_ARG(specializers[6], a7);
+    TYPE_CHECK_ARG(specializers[7], a8);
+    TYPE_CHECK_ARG(specializers[8], a9);
   }
 }
 
@@ -1504,8 +1535,9 @@ extern D Kargument_count_errorVKiI(D function, D argc);
 INLINE void BASIC_REQUIRED_CALL_CHECK
     (FN* function, int number_required, int argument_count) {
   CALL_CHECK(function, argument_count);
-  if (argument_count != number_required)
+  if (argument_count != number_required) {
     Kargument_count_errorVKiI(function, I(argument_count));
+  }
 }
 
 INLINE void REQUIRED_CALL_CHECK
@@ -1517,8 +1549,9 @@ INLINE void REQUIRED_CALL_CHECK
 INLINE void BASIC_OPTIONAL_CALL_CHECK
     (FN* function, int number_required, int argument_count) {
   CALL_CHECK(function, argument_count);
-  if (argument_count < number_required)
+  if (argument_count < number_required) {
     Kargument_count_errorVKiI(function, I(argument_count));
+  }
 }
 
 INLINE void OPTIONAL_CALL_CHECK
@@ -1532,8 +1565,9 @@ extern D Kodd_keyword_arguments_errorVKiI(D function, D argc);
 INLINE void KEYWORD_CALL_CHECK
     (FN* function, int number_required, int argument_count, D* arguments) {
   OPTIONAL_CALL_CHECK (function, number_required, argument_count, arguments);
-  if ((argument_count - number_required) & 1)
+  if ((argument_count - number_required) & 1) {
     Kodd_keyword_arguments_errorVKiI(function, I(argument_count));
+  }
 }
 
 /* CALLING CONVENTION */
@@ -1557,8 +1591,9 @@ D primitive_xep_apply (FN* fn, int n, D a[]) {
   case 8: return(xep(fn,n,a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
   case 9: return(xep(fn,n,a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
   default:
-  if (n > 64)
+  if (n > 64) {
     primitive_break();
+  }
   return(xep(fn,n,
              a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
              a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
@@ -1581,7 +1616,7 @@ D primitive_xep_call (FN* fn, int n, ...) {
   TEB* teb = get_teb();
   int i;
   va_list ap; va_start(ap,n);
-  for(i=0; i<n; i++) {
+  for (i=0; i<n; i++) {
     D argument = va_arg(ap, D);
     teb->arguments[i] = argument;
   }
@@ -1601,7 +1636,7 @@ D call_dylan_function_returning_all_values (FN* fn, int n, ...) {
   int i;
   D first_value;
   va_list ap; va_start(ap,n);
-  for(i=0; i<n; i++) {
+  for (i=0; i<n; i++) {
     D argument = va_arg(ap, D);
     teb->arguments[i] = argument;
   }
@@ -1630,8 +1665,9 @@ D primitive_mep_apply_with_optionals (FN* fn, D new_next_methods, D args) {
   case  8: return(mep(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7]));
   case  9: return(mep(v[0],v[1],v[2],v[3],v[4],v[5],v[6],v[7],v[8]));
   default:
-    if (teb->argument_count > 64)
+    if (teb->argument_count > 64) {
       primitive_break();
+    }
     COPY_WORDS(teb->a, v, teb->argument_count);
     return(mep(
 teb->a[ 0], teb->a[ 1], teb->a[ 2], teb->a[ 3], teb->a[ 4], teb->a[ 5], teb->a[ 6], teb->a[ 7],
@@ -1680,10 +1716,11 @@ D primitive_engine_node_apply_with_optionals (D engD, D parent, D args) {
      implementation args as a vector, but the engine-node *might* be a method,
      in which case they have to be spread out again!
      */
-  if (FUNCTIONP(eng))
+  if (FUNCTIONP(eng)) {
     return(primitive_mep_apply_with_optionals((FN*)eng, parent, args));
-  else
+  } else {
     return(ep(args));
+  }
 }
 
 D inline_invoke_engine_node (ENGINE* eng, int argcount, ...) {
@@ -1691,14 +1728,15 @@ D inline_invoke_engine_node (ENGINE* eng, int argcount, ...) {
   int i;
   DEF_STACK_VECTOR_INITTED(argvec, teb->argument_count);
   va_list ap; va_start(ap,argcount);
-  for(i=0; i<argcount; i++) {
+  for (i=0; i<argcount; i++) {
     D argument = va_arg(ap, D);
     vector_ref_setter(argument, argvec, i);
   }
-  if (FUNCTIONP(eng))
+  if (FUNCTIONP(eng)) {
     return(primitive_mep_apply_with_optionals((FN*)eng, teb->next_methods, argvec));
-  else
+  } else {
     return((eng->entry_point)((D)argvec));
+  }
 }
 
 
@@ -1757,8 +1795,9 @@ D iep_apply (DLFN iep, int n, D a[]) {
   case 8: return(iep(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7]));
   case 9: return(iep(a[0],a[1],a[2],a[3],a[4],a[5],a[6],a[7],a[8]));
   default:
-  if (n > 64)
+  if (n > 64) {
     primitive_break();
+  }
   return(iep(a[ 0],a[ 1],a[ 2],a[ 3],a[ 4],a[ 5],a[ 6],a[ 7],a[ 8],a[ 9],
              a[10],a[11],a[12],a[13],a[14],a[15],a[16],a[17],a[18],a[19],
              a[20],a[21],a[22],a[23],a[24],a[25],a[26],a[27],a[28],a[29],
@@ -2060,12 +2099,13 @@ INLINE void process_keyword_parameters_into_with_checking
     D value   = arguments[i--];
     D keyword = arguments[i--];
     for (j=0,k=number_required;;k++,j+=2) {
-      if (j == size_keyword_specifiers)
-        if (!allow_other_keys_p)
+      if (j == size_keyword_specifiers) {
+        if (!allow_other_keys_p) {
           unknown_keyword_argument_errorVKi(function, keyword);
-        else
+        } else {
           break;
-      else {
+        }
+      } else {
         D lambda_keyword = keyword_specifiers[j];
         if (keyword == lambda_keyword) {
           new_arguments[k] = value;
@@ -2613,7 +2653,7 @@ D gf_optional_xep (FN* fn, int n, ...) {
 D primitive_set_generic_function_entrypoints(D fn) {
   D the_xep;
   FN* function = (FN*)fn;
-  if (function_optionals_p(function))
+  if (function_optionals_p(function)) {
     switch (function_number_required(function)) {
     case 0:  the_xep = gf_optional_xep_0; break;
     case 1:  the_xep = gf_optional_xep_1; break;
@@ -2624,7 +2664,7 @@ D primitive_set_generic_function_entrypoints(D fn) {
     case 6:  the_xep = gf_optional_xep_6; break;
     default: the_xep = gf_optional_xep;   break;
     }
-  else
+  } else {
     switch (function_number_required(function)) {
     case 0:  the_xep = gf_xep_0; break;
     case 1:  the_xep = gf_xep_1; break;
@@ -2636,6 +2676,7 @@ D primitive_set_generic_function_entrypoints(D fn) {
     case 7:  the_xep = gf_xep_7; break;
     default: the_xep = gf_xep;   break;
     }
+  }
   function->xep    = (DFN)the_xep;
   return(function);
 }
@@ -2685,7 +2726,7 @@ D general_engine_node_n_engine (D a1, ...) {
       int i;
       svdata[0] = a1;
       va_start(ap, a1);
-      for(i=1; i<impargs; i++) {
+      for (i=1; i<impargs; i++) {
         D argument = va_arg(ap, D);
         svdata[i] = argument;
       }
@@ -2714,8 +2755,8 @@ D general_engine_node_spread_engine (D a1, ...) {
       DEF_STACK_VECTOR_INITTED(svec, nreq + nopts);
       D* svdata = vector_data(svec);
       int i;
-      for(i=0; i<nreq; i++) svdata[i] = mepargdata[i];
-      for(i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
+      for (i=0; i<nreq; i++) svdata[i] = mepargdata[i];
+      for (i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
       return(cb(svec, e, parent));
     } else {
       /* The arguments are spread, the last one is the optionals vector. */
@@ -2727,8 +2768,8 @@ D general_engine_node_spread_engine (D a1, ...) {
       DEF_STACK_VECTOR_INITTED(svec, nreq + nopts);
       D* svdata = vector_data(svec);
       int i;
-      for(i=0; i<nreq; i++) svdata[i] = teb->arguments[i];
-      for(i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
+      for (i=0; i<nreq; i++) svdata[i] = teb->arguments[i];
+      for (i=0; i<nopts; i++) svdata[i+nreq] = optargdata[i];
       return(cb(svec, e, parent));
       }
   } else if (impargs > 7) {
@@ -2743,7 +2784,7 @@ D general_engine_node_spread_engine (D a1, ...) {
       int i;
       svdata[0] = a1;
       va_start(ap, a1);
-      for(i=1; i<nreq; i++) {
+      for (i=1; i<nreq; i++) {
         D argument = va_arg(ap, D);
         svdata[i] = argument;
       }
@@ -3002,9 +3043,9 @@ D check_explicit_kwds (SOV* optionals, SOV* kwds, int kwdskip) {
   } else {
     int i;
     int j;
-    for(i=0; i<optsize; i+=2) {
+    for (i=0; i<optsize; i+=2) {
       D kwdarg = optdata[i];
-      for(j=0; j<kwdsize; j+=kwdskip) {
+      for (j=0; j<kwdsize; j+=kwdskip) {
         D kwd = kwddata[j];
         if (kwd == kwdarg) goto check_next;
       }
@@ -4045,51 +4086,51 @@ void verify_nlx_stack (TEB* teb) {
   int bug_found = 0;
   Unwind_protect_frame* ptr;
   /* iterate over uwp stack and verify it */
-  for(ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
+  for (ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
     /* top of uwp stack */
-    if(ptr == &teb->top_uwp_frame) {
+    if (ptr == &teb->top_uwp_frame) {
       break;
     }
     /* NULL current uwp */
-    if(ptr == NULL) {
+    if (ptr == NULL) {
       bug_found = 1;
       break;
     }
     /* frame belongs to wrong TEB */
-    if(ptr->verify_teb != teb) {
+    if (ptr->verify_teb != teb) {
       bug_found = 1;
       break;
     }
     /* NULL previous uwp */
-    if(ptr->previous_unwind_protect_frame == NULL) {
+    if (ptr->previous_unwind_protect_frame == NULL) {
       bug_found = 1;
       break;
     }
   }
   /* act on results from verification run */
-  if(bug_found) {
+  if (bug_found) {
     fprintf(stderr, "BUG: invalid uwp stack:\n");
     /* run over stack again */
-    for(ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
+    for (ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
       /* top of uwp stack */
-      if(ptr == &teb->top_uwp_frame) {
+      if (ptr == &teb->top_uwp_frame) {
         fprintf(stderr, "  reached top\n");
         break;
       }
       /* NULL current uwp */
-      if(ptr == NULL) {
+      if (ptr == NULL) {
         fprintf(stderr, "  current uwp is NULL\n");
         break;
       }
       fprintf(stderr, "  uwp<%p> previous uwp<%p>\n",
              ptr, ptr->previous_unwind_protect_frame);
       /* frame belongs to wrong TEB */
-      if(ptr->verify_teb != teb) {
+      if (ptr->verify_teb != teb) {
         fprintf(stderr, "  frame belongs to other thread teb<%p>\n",
                 ptr->verify_teb);
       }
       /* NULL previous uwp */
-      if(ptr->previous_unwind_protect_frame == NULL) {
+      if (ptr->previous_unwind_protect_frame == NULL) {
         fprintf(stderr, "  previous uwp is NULL\n");
         break;
       }
@@ -4110,26 +4151,26 @@ void verify_nlx_bef(TEB* teb, Bind_exit_frame* bef) {
   int dest_reachable = 0;
   Unwind_protect_frame* ptr;
   /* check if BEF is of this TEB */
-  if(bef->verify_teb != teb) {
+  if (bef->verify_teb != teb) {
     fprintf(stderr, "BUG: trying to nlx to bef<%p> of other thread teb<%p>\n",
                     bef, bef->verify_teb);
     fflush(stderr);
     abort();
   }
   /* verify that the associated UWP is reachable */
-  for(ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
+  for (ptr = teb->uwp_frame; 1; ptr = ptr->previous_unwind_protect_frame) {
     /*  uwp found */
-    if(ptr == dest_uwp) {
+    if (ptr == dest_uwp) {
       dest_reachable = 1;
       break;
     }
     /* top of uwp stack */
-    if(ptr == &teb->top_uwp_frame) {
+    if (ptr == &teb->top_uwp_frame) {
       break;
     }
   }
   /* act on errors from verification run */
-  if(!dest_reachable) {
+  if (!dest_reachable) {
     fprintf(stderr, "BUG: destination uwp<%p> of bef<%p> is unreachable\n",
            dest_uwp, bef);
     fflush(stderr);
@@ -4189,10 +4230,11 @@ D FALL_THROUGH_UNWIND (D argument) {
   /* return values */
   teb->uwp_frame->return_values.count = teb->return_values.count;
   teb->uwp_frame->return_values.value[0] = argument;
-  if (teb->return_values.count > 1)
+  if (teb->return_values.count > 1) {
     COPY_WORDS
       (&teb->uwp_frame->return_values.value[1],
        &teb->return_values.value[1], teb->return_values.count - 1);
+  }
 
   /* invalidate current frame */
   teb->uwp_frame->ultimate_destination = NULL;
@@ -4224,9 +4266,10 @@ D CONTINUE_UNWIND () {
     int i;
     int n = teb->uwp_frame->return_values.count;
     teb->return_values.count = n;
-    for (i = 0; i < n; i++)
+    for (i = 0; i < n; i++) {
       teb->return_values.value[i]
         = teb->uwp_frame->return_values.value[i];
+    }
 
     /* pop current unwind protect frame */
     teb->uwp_frame = teb->uwp_frame->previous_unwind_protect_frame;
@@ -4244,10 +4287,11 @@ D NLX (Bind_exit_frame* target, D argument) {
 #endif
   target->return_values.count = teb->return_values.count;
   target->return_values.value[0] = argument;
-  if (teb->return_values.count > 1)
+  if (teb->return_values.count > 1) {
     COPY_WORDS
       (&target->return_values.value[1],
        &teb->return_values.value[1], teb->return_values.count - 1);
+  }
   nlx_step(target);
   return((D)0);                 /* Keeps some compilers happy -- Won't actually get here */
 }
@@ -4313,8 +4357,9 @@ D MAKE_CLOSURE_SIG (D schema, D sig, int closure_size) {
 }
 
 INLINE void init_environment (CFN* fn, int size, D* buf) {
-  if (size > 0)
+  if (size > 0) {
     COPY_WORDS(&(fn->environment), buf, size);
+  }
   fn->size = I(size);
 }
 
@@ -4371,8 +4416,9 @@ D MAKE_KEYWORD_CLOSURE_SIG (D schema, D sig, int closure_size) {
 }
 
 INLINE void init_keyword_environment (KCFN* fn, int size, D* buf) {
-  if (size > 0)
+  if (size > 0) {
     COPY_WORDS(&(fn->environment), buf, size);
+  }
   fn->size = I(size);
 }
 
@@ -4423,10 +4469,12 @@ INLINE D primitive_apply_using_buffer (FN* fn, int n, D a[]) {
   SOV* optionals = (SOV*)a[n - 1];
   int optionals_size = vector_size(optionals);
   int new_size = n + optionals_size - 1;
-  for (i = 0; i < n - 1; i++)
+  for (i = 0; i < n - 1; i++) {
     teb->apply_buffer[i] = a[i];
-  for (i = n - 1, j = 0; j < optionals_size; i++, j++)
+  }
+  for (i = n - 1, j = 0; j < optionals_size; i++, j++) {
     teb->apply_buffer[i] = vector_ref(optionals, j);
+  }
   return(primitive_xep_apply(fn, new_size, teb->apply_buffer));
 }
 
@@ -4878,8 +4926,7 @@ DMINT primitive_machine_word_double_roundS_byref(DMINT xl, DMINT xh, DMINT y, DM
   if ((r > threshold) || ((r == threshold) && (q & 1))) {
     if (y < 0) { q--; r += y; }
     else { q++; r -= y; }
-  }
-  else if ((r < -threshold) || ((r == -threshold) && (q & 1))) {
+  } else if ((r < -threshold) || ((r == -threshold) && (q & 1))) {
     if (y < 0) { q++; r -= y; }
     else { q--; r += y; }
   }

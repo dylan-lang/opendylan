@@ -37,7 +37,7 @@ const char *trace_names[_TRACE_MAX] = TRACE_CATEGORY_NAMES;
 static void
 maybe_close(void)
 {
-  if(trace_stream && trace_close) {
+  if (trace_stream && trace_close) {
     fclose(trace_stream);
   }
   trace_stream = NULL;
@@ -75,8 +75,8 @@ static void
 trace_token(const char *token)
 {
   int i;
-  if(!strcmp(token, "all")) {
-    for(i = 0; i < _TRACE_MAX; i++) {
+  if (!strcmp(token, "all")) {
+    for (i = 0; i < _TRACE_MAX; i++) {
       trace_enable[i] = 1;
     }
   } else if (!strncmp(token, "file=", 5)) {
@@ -90,8 +90,8 @@ trace_token(const char *token)
   } else if (!strcmp(token, "noflush")) {
     trace_flush = 0;
   } else {
-    for(i = 0; i < _TRACE_MAX; i++) {
-      if(!strcmp(token, trace_names[i])) {
+    for (i = 0; i < _TRACE_MAX; i++) {
+      if (!strcmp(token, trace_names[i])) {
         trace_enable[i] = 1;
       }
     }
@@ -114,16 +114,16 @@ trace_init(void)
   trace_flush = 1;
 
   // disable all categories
-  for(i = 0; i < _TRACE_MAX; i++) {
+  for (i = 0; i < _TRACE_MAX; i++) {
     trace_enable[i] = 0;
   }
 
   // configure from environment
   config = getenv("OPEN_DYLAN_CRT_TRACE");
-  if(config) {
+  if (config) {
     config = strdup(config);
     token = strtok_r(config, ":", &save);
-    while(token) {
+    while (token) {
       trace_token(token);
       token = strtok_r(NULL, ":", &save);
     }
@@ -152,7 +152,7 @@ void
 trace_epilogue(void)
 {
   fprintf(trace_stream, "\n");
-  if(trace_flush) {
+  if (trace_flush) {
     fflush(trace_stream);
   }
   funlockfile(trace_stream);
