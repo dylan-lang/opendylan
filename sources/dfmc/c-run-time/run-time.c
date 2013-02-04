@@ -24,6 +24,14 @@
 
 #define ignore(x) (void)x
 
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
+#  define likely(x)       __builtin_expect((x),1)
+#  define unlikely(x)     __builtin_expect((x),0)
+#else
+#  define likely(x) x
+#  define unlikely(x) x
+#endif
+
 #define MAX_HEAP_SIZE          (2047 * 1024 * 1024)
 
 /*
@@ -1362,7 +1370,7 @@ int FUNCTIONP(D x) {
      )
 
 INLINE D perform_inline_type_check(D value, D type) {
-  if (type != LobjectGVKd && !INSTANCEP(value, type)) {
+  if (unlikely(type != LobjectGVKd && !INSTANCEP(value, type))) {
     Ktype_check_errorVKiI(value, type);
   }
   return(value);
@@ -1388,7 +1396,7 @@ extern D Kargument_count_overflow_errorVKiI(D function, D argc);
 
 INLINE void CALL_CHECK(FN* function, int argument_count) {
   SIMPLE_CALL_CHECK(function);
-  if (argument_count > MAX_ARGUMENTS) {
+  if (unlikely(argument_count > MAX_ARGUMENTS)) {
     Kargument_count_overflow_errorVKiI(function, I(argument_count));
   }
 }
@@ -1524,7 +1532,7 @@ extern D Kargument_count_errorVKiI(D function, D argc);
 INLINE void BASIC_REQUIRED_CALL_CHECK
     (FN* function, int number_required, int argument_count) {
   CALL_CHECK(function, argument_count);
-  if (argument_count != number_required) {
+  if (unlikely(argument_count != number_required)) {
     Kargument_count_errorVKiI(function, I(argument_count));
   }
 }
@@ -1538,7 +1546,7 @@ INLINE void REQUIRED_CALL_CHECK
 INLINE void BASIC_OPTIONAL_CALL_CHECK
     (FN* function, int number_required, int argument_count) {
   CALL_CHECK(function, argument_count);
-  if (argument_count < number_required) {
+  if (unlikely(argument_count < number_required)) {
     Kargument_count_errorVKiI(function, I(argument_count));
   }
 }
@@ -1554,7 +1562,7 @@ extern D Kodd_keyword_arguments_errorVKiI(D function, D argc);
 INLINE void KEYWORD_CALL_CHECK
     (FN* function, int number_required, int argument_count, D* arguments) {
   OPTIONAL_CALL_CHECK (function, number_required, argument_count, arguments);
-  if ((argument_count - number_required) & 1) {
+  if (unlikely((argument_count - number_required) & 1)) {
     Kodd_keyword_arguments_errorVKiI(function, I(argument_count));
   }
 }
