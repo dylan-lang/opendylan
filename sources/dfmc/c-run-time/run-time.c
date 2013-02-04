@@ -59,8 +59,7 @@ extern OBJECT KPunboundVKi;
 #if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
 #define INLINE __inline
 #elif defined(OPEN_DYLAN_COMPILER_CLANG)
-//---*** Do something better.
-#define INLINE
+#define INLINE static inline
 #else
 #define INLINE inline
 #endif
@@ -363,7 +362,7 @@ D primitive_allocate_wrapper
 
 
 /* This one still zero-terminates. TODO: turn that off */
-INLINE D initialize_byte_stack_allocate_filled
+D initialize_byte_stack_allocate_filled
     (D ptr, D class_wrapper, DSINT number_slots,
      D fill_value, DSINT repeated_size, DSINT repeated_size_offset,
      DBYTE repeated_fill_value)
@@ -381,7 +380,7 @@ INLINE D initialize_byte_stack_allocate_filled
   return((D)object);
 }
 
-INLINE D initialize_object_stack_allocate_filled
+D initialize_object_stack_allocate_filled
       (D ptr, D class_wrapper, DSINT number_slots, D fill_value,
        DSINT repeated_size, DSINT repeated_size_offset,
        D repeated_fill_value)
@@ -1073,17 +1072,6 @@ extern Wrapper KLsimple_object_vectorGVKdW;
 
 #define VECTOR_HEADER_SIZE (2)
 
-INLINE int vector_size (SOV* vector) { return(R(vector->size)); }
-INLINE int vector_size_setter (int new_size, SOV* vector) {
-  vector->size = I(new_size);
-  return(new_size);
-}
-
-INLINE D*  vector_data(SOV* vector) { return(vector->data); }
-INLINE D   vector_ref (SOV* vector, int offset) {
-  return(vector_data((SOV*)vector)[offset]);
-}
-
 /* gts,98apr08 */
 D  VECTOR_REF_OR_F(D vector, int offset) {
   if (offset >= vector_size(vector)) {
@@ -1373,11 +1361,15 @@ int FUNCTIONP(D x) {
      (R((((Wrapper*)OBJECT_WRAPPER(x)))->subtype_mask) & 64) \
      )
 
-INLINE D primitive_type_check (D value, D type) {
+INLINE D perform_inline_type_check(D value, D type) {
   if (type != LobjectGVKd && !INSTANCEP(value, type)) {
     Ktype_check_errorVKiI(value, type);
   }
   return(value);
+}
+
+D primitive_type_check (D value, D type) {
+  return perform_inline_type_check(value, type);
 }
 
 extern D Kstack_overflow_errorVKiI();
@@ -1402,7 +1394,7 @@ INLINE void CALL_CHECK(FN* function, int argument_count) {
 }
 
 INLINE void TYPE_CHECK_ARG (D specializer, D argument) {
-  primitive_type_check(argument, specializer);
+  perform_inline_type_check(argument, specializer);
 }
 
 INLINE void TYPE_CHECK_ARGS(D function, int argument_count, D* arguments) {
@@ -1679,7 +1671,7 @@ teb->a[56], teb->a[57], teb->a[58], teb->a[59], teb->a[60], teb->a[61], teb->a[6
   }
 }
 
-static INLINE GFN* parent_gf (D cache_header_or_gf) {
+INLINE GFN* parent_gf (D cache_header_or_gf) {
   while (!FUNCTIONP(cache_header_or_gf)) {
     cache_header_or_gf = ((CACHEHEADERENGINE*)cache_header_or_gf)->parent;
   }
@@ -2421,7 +2413,7 @@ D key_mep (D a1, ...) {
 
 /* NEW GF SUPPORT */
 
-INLINE D gf_iep_0 () {
+D gf_iep_0 () {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -2430,7 +2422,7 @@ INLINE D gf_iep_0 () {
   return((e->entry_point)());
 }
 
-INLINE D gf_iep_1 (D a1) {
+D gf_iep_1 (D a1) {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -2439,7 +2431,7 @@ INLINE D gf_iep_1 (D a1) {
   return((e->entry_point)(a1));
 }
 
-INLINE D gf_iep_2 (D a1, D a2) {
+D gf_iep_2 (D a1, D a2) {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -2448,7 +2440,7 @@ INLINE D gf_iep_2 (D a1, D a2) {
   return((e->entry_point)(a1, a2));
 }
 
-INLINE D gf_iep_3 (D a1, D a2, D a3) {
+D gf_iep_3 (D a1, D a2, D a3) {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -2457,7 +2449,7 @@ INLINE D gf_iep_3 (D a1, D a2, D a3) {
   return((e->entry_point)(a1, a2, a3));
 }
 
-INLINE D gf_iep_4 (D a1, D a2, D a3, D a4) {
+D gf_iep_4 (D a1, D a2, D a3, D a4) {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -2466,7 +2458,7 @@ INLINE D gf_iep_4 (D a1, D a2, D a3, D a4) {
   return((e->entry_point)(a1, a2, a3, a4));
 }
 
-INLINE D gf_iep_5 (D a1, D a2, D a3, D a4, D a5) {
+D gf_iep_5 (D a1, D a2, D a3, D a4, D a5) {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -2475,7 +2467,7 @@ INLINE D gf_iep_5 (D a1, D a2, D a3, D a4, D a5) {
   return((e->entry_point)(a1, a2, a3, a4, a5));
 }
 
-INLINE D gf_iep_6 (D a1, D a2, D a3, D a4, D a5, D a6) {
+D gf_iep_6 (D a1, D a2, D a3, D a4, D a5, D a6) {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -2484,7 +2476,7 @@ INLINE D gf_iep_6 (D a1, D a2, D a3, D a4, D a5, D a6) {
   return((e->entry_point)(a1, a2, a3, a4, a5, a6));
 }
 
-INLINE D gf_iep_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7) {
+D gf_iep_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7) {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -2493,7 +2485,7 @@ INLINE D gf_iep_7 (D a1, D a2, D a3, D a4, D a5, D a6, D a7) {
   return((e->entry_point)(a1, a2, a3, a4, a5, a6, a7));
 }
 
-INLINE D gf_iep (D new_arguments) {
+D gf_iep (D new_arguments) {
   TEB* teb = get_teb();
   GFN* gf = (GFN*)teb->function;
   ENGINE* e = gf->engine;
@@ -4024,10 +4016,10 @@ D MV_CHECK_TYPE_REST (D first_value, D rest_type, int n, ...) {
   MV_SPILL_into(first_value, &spill);
   for (i = 0; i < n; i++) {
     D type = va_arg(ap, D);
-    primitive_type_check(spill.value[i], type);
+    perform_inline_type_check(spill.value[i], type);
   }
   for (; i < mv_n; i++)
-    primitive_type_check(spill.value[i], rest_type);
+    perform_inline_type_check(spill.value[i], rest_type);
   MV_UNSPILL((D)&spill);
   return first_value;
 }
