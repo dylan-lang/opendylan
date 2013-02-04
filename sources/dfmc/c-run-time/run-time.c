@@ -4666,7 +4666,7 @@ D primitive_stop_timer()
 }
 
 
-/* UNIX curtosey of Ian Piumarta */
+/* UNIX courtesy of Ian Piumarta */
 
 #else
 

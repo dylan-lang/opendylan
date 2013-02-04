@@ -106,7 +106,7 @@ end method;
 ///// MANAGE-RUNNING-APPLICATION
 
 // This is it! The function that fires up the application via its access path
-// and goes into the callback-invokation loop.
+// and goes into the callback-invocation loop.
 
 // First, default callbacks to cover for unsupplied callback functions.
 
@@ -205,7 +205,7 @@ define method manage-running-application
   end method;
 
   // START-IT-ALL-OFF
-  // If we attatched to this debug target, it's access-path will already
+  // If we attached to this debug target, it's access-path will already
   // be signalling that the application is running. In this case, we
   // do not have to "jump-start" it with 'restart'. If instead, we have
   // generated this application ourselves, we must call 'restart'.

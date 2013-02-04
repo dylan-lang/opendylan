@@ -34,7 +34,7 @@ end class <execution-info>;
 /// This must be called while the target application is in a debugger
 /// transaction.  Essentially, it creates a source-record for code, passes
 /// the source record to the compiler to be sent to the target app, saves an
-/// <execution-info> object that can later be retrived via
+/// <execution-info> object that can later be retrieved via
 /// 'project-execution-info', and returns the execution info.  This function
 /// returns #f when the compiler could not process the code.
 ///

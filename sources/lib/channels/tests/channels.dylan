@@ -143,7 +143,7 @@ define test channels-test-9 (name: "Receiver overrides channel")
   tune-in(channel, #t, message?: #f, receiver?: #t, callback: method (x) receiver := x; count := count + 9 end method);
   broadcast(channel, 1);
   check-true("Count now 10", count = 10);
-  check-true("Reciever now #t", receiver = #t);
+  check-true("Receiver now #t", receiver = #t);
 end test;
 
 define test channels-test-10 (name: "Broadcaster passes extra arguments")

@@ -126,7 +126,7 @@ end method;
 
 
 ///// <PROCESS-ACCESS-PATH>
-//    An access path that was attatched to an already-running process.
+//    An access path that was attached to an already-running process.
 //    (This is currently not supported).
 
 define class <process-access-path> (<access-path>)
@@ -147,7 +147,7 @@ end method;
 
 
 ///// <CORE-FILE-ACCESS-PATH>
-//    An access path that was attatched to a dumped core file.
+//    An access path that was attached to a dumped core file.
 //    (This is currently not supported).
 
 define class <core-file-access-path> (<access-path>)
@@ -204,7 +204,7 @@ end method;
 
 
 ///// INITIALIZE
-//    Intializes an instance of <application-access-path>, which includes
+//    Initializes an instance of <application-access-path>, which includes
 //    firing up the remote process.
 
 define method initialize 

@@ -26,7 +26,7 @@ define function strings-size-info
 end function;
 
 // Given a pathname which may refer to a non-existent directory, try to
-// find some ancestor directory (includind the directory itself) which does
+// find some ancestor directory (including the directory itself) which does
 // exist.
 define function find-existing-ancestor
     (directory :: <directory-locator>)
@@ -272,7 +272,7 @@ define method text-field-option-enabled?-setter
   gadget-enabled?(pane.text-field-option-text-field) := enabled?;
   // Whenever we change, swap the current value and our empty
   // string, so that the disabled text field is blank and has
-  // an empty value when we retreive it to write the project.
+  // an empty value when we retrieve it to write the project.
   let temp = pane.text-field-option-text-field-value;
   pane.text-field-option-text-field-value
     := gadget-value(pane.text-field-option-text-field);

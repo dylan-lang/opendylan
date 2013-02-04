@@ -74,9 +74,9 @@ extern MMError MMTramp(void **rReturn,
  *
  * MMReserveObject allocates space on the main Dylan heap which is
  * managed by a garbage collection policy.  It returns a pointer
- * to an area of memory large anough to accommodate an object of
+ * to an area of memory large enough to accommodate an object of
  * the size requested.  This memory must be initialized with an
- * object in the DylanWorks Contaner Format (design.dylan.container),
+ * object in the DylanWorks Container Format (design.dylan.container),
  * and then MMCommitObject must be called.  MMCommitObject is passed
  * the pointer previously returned by Reserve, and the size previously
  * passed to Reserve.  If Commit returns a non-zero (true) result then
@@ -128,7 +128,7 @@ extern MMAllocHandler MMReserveObjectHandler(MMAllocHandler handler);
 /* Allocate Space for an object in the Leaf Object
  *
  * MMReserveLeaf is like MMReserveObject except that it allocates space
- * in the untrace Leaf Object pool.  MMCommitLeaf is like MMCommitObject.
+ * in the untraced Leaf Object pool.  MMCommitLeaf is like MMCommitObject.
  *
  * MMReserveLeafHandler is similar to MMReserveObjectHandler except
  * that it installs a handler for use by MMReserveLeaf.
@@ -197,7 +197,7 @@ extern void MMFreeMisc(void *p, size_t size);
 /* Return the Collection Count
  *
  * MMCollectCount returns the number of garbage collections which
- * have taken place since the MM subsystem was intialized.  Things
+ * have taken place since the MM subsystem was initialized.  Things
  * which rely on the address of an object must examine this to see
  * if their information is out of date, since a collection may move
  * objects.

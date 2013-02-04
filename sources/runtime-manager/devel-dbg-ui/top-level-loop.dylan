@@ -200,7 +200,7 @@ end method;
 
 
 ///// DO-THE-DEVEL-DEBUGGER
-//    Intializes, and goes into global mode.
+//    Initializes, and goes into global mode.
 
 define method do-the-devel-debugger () => ()
   setup-debugger();

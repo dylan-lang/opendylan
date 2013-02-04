@@ -16,7 +16,7 @@ message is normally handled in a event dispatch loop.
 Each command message contains its ID. When menus and other UI objects
 are created through resources, those objects get assigned the IDs
 which are later used to identify them when a COMMAND message is
-recieved (when controls are created "by hand" the "menuID" slot in the
+received (when controls are created "by hand" the "menuID" slot in the
 window structure is used for this purpose).
 
 Another important part of the architecture is that those COMMAND
@@ -63,7 +63,7 @@ not needed. Registering a handler is a way for the application to
 indicate an interest in the event. Note that Windows sends all events
 to the application unlike X.
 
-I don't know if duim expects to recieve all events though.
+I don't know if duim expects to receive all events though.
 
 There are two files you should look at: example.dylan is the example
 itself and example-support.dylan is the supporting framework. The UI

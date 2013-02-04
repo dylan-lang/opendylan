@@ -102,7 +102,7 @@ end method;
 
 
 ///// DO-THE-DEVEL-DEBUGGER
-//    Intializes, and goes into global mode.
+//    Initializes, and goes into global mode.
 //    (Also ignores a few bindings that currently aren't relevant to batch
 //    mode).
 

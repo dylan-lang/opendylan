@@ -915,7 +915,7 @@ define sealed method debugger-sheet-frame-selection-empty?
   // We duplicate this from framework/selection.dylan only because
   // we also need the cheaper case for the <deuce-gadget>s.
   let frame = sheet-frame(sheet);
-  // Need this test as this predicate can be called during initialzation,
+  // Need this test as this predicate can be called during initialization,
   // when the sheet has no sheet-frame.
   when (frame)
     let selection = frame-selection(frame);

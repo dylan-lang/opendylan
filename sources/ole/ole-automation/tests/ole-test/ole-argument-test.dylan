@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /* ole-argument-test tests passing ole-variables to and from the server. 
    <expected-values> contains all the variables that will be passed to the 
-   server. After a value is passed to the server, it is retreived and compared
+   server. After a value is passed to the server, it is retrieved and compared
    the original value passed. */
 
 define class <expected-values> (<object>)

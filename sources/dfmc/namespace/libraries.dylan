@@ -918,7 +918,7 @@ define method do-with-library-context (f, desc)
     with-library-description (desc)
       ensure-language-definition(desc);
       // Previous dependent can't be valid anymore so revert to
-      // unintialized state, unless without dependency tracking, then
+      // uninitialized state, unless without dependency tracking, then
       // stay that way.
       if (*current-dependent* == #"no-dependent")
 	f()

@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ==>  // if <foo> was not defined in the current compilation context
 
   // the superclass below may be a subclass of <C-pointer-to-pointer>
-  // depending on teh class of <foo>
+  // depending on the class of <foo>
   define abstract open class temp-class-for-<foo*>
       (<C-statically-typed-pointer>)
     metaclass <define-C-pointer-metaclass>, referenced-type: <foo>;
@@ -63,7 +63,7 @@ define method make (c :: subclass(<c-pointer>), #rest make-keys, #key address)
     // delegate abstract types
     apply(make, instantiation-class(c), make-keys)
   else
-    // allocate an ininitialized pointer
+    // allocate an initialized pointer
     let p = allocate-instance(c);
     if (address)
       p.%address := address;
@@ -144,7 +144,7 @@ If the compiler can prove the thing is already defined, or my predicate
 // it's available.  If not then if there is another weak definition we
 // arrange for the initialization code to use the other weak definition
 // if applicable, or (as in the case of methods), do nothing.  If there is
-// no definition then we must use initialzation code as illustrated above.
+// no definition then we must use initialization code as illustrated above.
 
 
 
@@ -304,7 +304,7 @@ end method;
 
 
 /* todo:
- * make install-pointer-type a top level intialization.
+ * make install-pointer-type a top level initialization.
  * If a proper pointer type already exists  then
  * install-pointer-type arranges that both of the names point to the same
  * bindings. (Can I do that??)
