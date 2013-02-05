@@ -1334,3 +1334,33 @@ The extensions are:
 
 .. TODO(cgay): How do we document specific methods?
 
+.. generic-function:: join
+   :open:
+
+   Join several sequences together, including a separator between each
+   sequence.
+
+   :signature: join (items, separator, #key key, conjunction) => (joined)
+   :parameter items: An instance of ``<sequence>``.
+   :parameter separator: An instance of ``<sequence>``.
+   :parameter #key key:
+   :parameter #key conjunction:
+   :value joined: An instance of ``<sequence>``.
+
+.. method:: join
+
+   Join several sequences together, including a separator between each
+   sequence.  If the first argument is empty, an empty sequence of type
+   type-for-copy(separator) is returned.
+
+   :specializer: 
+   :parameter items: An instance of ``<sequence>``.
+   :parameter separator: An instance of ``<sequence>``.
+   :parameter #key key: Transformation to apply to each item. An instance of ``<function>``
+   :parameter #key conjunction: Last separator. An instance of ``false-or(<sequence>)``
+   :value joined: An instance of ``<sequence>``.
+   :example:
+
+   .. code-block:: dylan
+
+     join(range(from: 1, to: 3), ", ", key: integer-to-string, conjunction: " and ") => "1, 2 and 3"
