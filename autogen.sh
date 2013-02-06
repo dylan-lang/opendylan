@@ -24,10 +24,9 @@ DIE=false
 
 $DIE && exit 1
 
-echo "processing (ignore errors and warnings from automake)..."
+echo "processing..."
 
 ( cd $srcdir
   mkdir -p build-aux
   aclocal
-  automake --foreign --add-missing
   autoconf )
