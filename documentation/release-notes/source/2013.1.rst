@@ -27,3 +27,9 @@ The configure script could fail on Gentoo Linux as there was not always
 a static ``libgc.a`` available. We now check for the file that we need
 on each platform.
 
+Runtime Improvements
+====================
+
+The C run-time no longer attempts to drop into a debugger if you allocate
+more than roughly 100M of memory in a single allocation.
+

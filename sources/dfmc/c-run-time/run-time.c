@@ -147,9 +147,6 @@ DSINT primitive_mps_committed (void) {
 }
 
 D allocate (unsigned long size) {
-  if (size > 100000000) {
-    primitive_break();
-  }
   return((D)GC_MALLOC((size_t)size));
 }
 
