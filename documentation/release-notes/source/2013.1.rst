@@ -33,3 +33,9 @@ Runtime Improvements
 The C run-time no longer attempts to drop into a debugger if you allocate
 more than roughly 100M of memory in a single allocation.
 
+Windows Support
+===============
+
+The 2012.1 release introduced a bug with where settings were
+stored in the Windows registry. This has been corrected.
+
