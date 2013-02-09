@@ -13,14 +13,34 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // the Open Dylan compiler.  Maybe they should be called something
 // like <dylan-hackers-settings>? --tc
 
-define settings <open-dylan-local-settings>
+define settings <general-open-dylan-local-settings>
     (<local-software-settings>)
+  key-name "Open Dylan";
+end settings <general-open-dylan-local-settings>;
+
+define settings <unversioned-open-dylan-local-settings>
+    (<general-open-dylan-local-settings>)
+  key-name "Open Dylan";
+end settings <unversioned-open-dylan-local-settings>;
+
+define settings <open-dylan-local-settings>
+    (<unversioned-open-dylan-local-settings>)
   key-name "1.0";
   slot library-packs :: <machine-word> = as(<machine-word>, 0);
 end settings <open-dylan-local-settings>;
 
-define settings <open-dylan-user-settings>
+define settings <general-open-dylan-user-settings>
     (<current-user-software-settings>)
+  key-name "Open Dylan";
+end settings <general-open-dylan-user-settings>;
+
+define settings <unversioned-open-dylan-user-settings>
+    (<general-open-dylan-user-settings>)
+  key-name "Open Dylan";
+end settings <unversioned-open-dylan-user-settings>;
+
+define settings <open-dylan-user-settings>
+    (<unversioned-open-dylan-user-settings>)
   key-name "1.0";
 end settings <open-dylan-user-settings>;
 
