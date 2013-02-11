@@ -313,6 +313,23 @@ typedef DBI_*  DBI;
 
 define_SOV(SOV, 1);
 
+inline int vector_size (SOV* vector) {
+  return(R(vector->size));
+}
+
+inline int vector_size_setter (int new_size, SOV* vector) {
+  vector->size = I(new_size);
+  return(new_size);
+}
+
+inline D* vector_data(SOV* vector) {
+  return(vector->data);
+}
+
+inline D vector_ref(SOV* vector, int offset) {
+  return(vector_data((SOV*)vector)[offset]);
+}
+
 #define define_byte_string(_name, _size) \
   typedef struct _bs##_name { \
     D class; \

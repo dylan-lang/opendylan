@@ -75,7 +75,7 @@ install-header: $(srcdir)/run-time.h $(INCDEST)
 
 install-runtime: $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
 	cp -fp $(C_RUNTIME_LIBRARY) $(RUNTIMELIBDEST)
-	@ if [ "$(GC_USE_STATIC_BOEHM)" == "true" ]; then \
+	@ if [ "$(GC_USE_STATIC_BOEHM)" = "true" ]; then \
 		cp -fp $(GC_LIBRARY) $(RUNTIMELIBDEST); \
 	fi
 
