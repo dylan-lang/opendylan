@@ -349,7 +349,7 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
 
 
   // dylan_thread_trampoline is the starting function for the new thread.
-  // It calls the dylan trampoline fucntion which we rely on to initialise
+  // It calls the dylan trampoline function which we rely on to initialise
   // the thread
   {
     DWORD creationFlag;

@@ -43,7 +43,7 @@ void GC_free(void *old)
 
 /* Thread Local storage
  *
- * Implement this is C for invocatiuon by HARP, just in
+ * Implement this in C for invocation by HARP, just in
  * case the pthreads APIs are implemented as macros -
  * (which they might be according to the doc).
  */
