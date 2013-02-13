@@ -1,0 +1,172 @@
+*********************
+Single File Libraries
+*********************
+
+==============  =============================================
+DEP #:          6
+Type:           Standards Track
+Author:         Carl Gay
+Status:         Draft
+Created:        12-Feb-2013 (Darwin's birthday)
+Last-Modified:  12-Feb-2013
+Post-History:   None
+Dylan-Version:  2012.1
+==============  =============================================
+
+.. contents:: Contents
+   :local:
+
+
+Abstract
+========
+
+Open Dylan currently requires users to create three source files to
+define a simple library like hello-world:
+
+#. A project file (i.e., .lid file) to describe source files to
+   include, link options, etc.
+
+#. A library definition source file, often named library.dylan.
+
+#. At least one source file for main program logic, in a module
+   defined by the library definition.
+
+This DEP proposes a standard way to define a Dylan library in a single
+source file.  This DEP targets implementations of Dylan but does not
+propose a change to the Dylan language itself.  In particular it is
+proposed as an enhancement for Open Dylan.
+
+Rationale
+=========
+
+The three files described above are a lot of overhead for new users
+who want to get a feel for the language, who are generally used to
+creating a single file and running it directly, perhaps after
+compiling it.  A simpler setup would provide a better initial
+experience for new users, and would help to make Dylan more attractive
+for "scripting" purposes.  The mantra has been that Dylan was designed
+for large projects, but there's no reason it can't also excel at
+scripting, with this change and the right set of support libraries.
+
+Note that even though the ``make-dylan-app`` program will generate a
+skeleton project with three files (and a registry), this does not
+remove the need to jump back and forth between the library definition
+file and the main source file as you figure out which modules you need
+to use.  There is also the issue of new users figuring out that
+``make-dylan-app`` exists in the first place.
+
+Goals
+=====
+
+* Make it possible to use the full power of the Dylan module system to
+  define the library and module for a single-file library.
+
+* Make all LID file options available in the single-file library
+  format.
+
+* Do not introduce any new syntax.
+
+Background
+==========
+
+A typical hello-world application written in Dylan might look like
+this:
+
+**hello-world.lid**
+
+.. code-block:: dylan
+
+    Library: hello-world
+    Files: library.dylan
+           hello-world.dylan
+
+**library.dylan**
+
+.. code-block:: dylan
+
+    Module: dylan-user
+
+    define libary hello-world
+      use common-dylan;
+      use io;
+    end;
+
+    define module hello-world
+      use common-dylan;
+      use format-out;
+    end;
+
+**hello-world.dylan**
+
+.. code-block:: dylan
+
+    Module: hello-world
+
+    format-out("Hello, world!\n");
+
+Therefore a way to encode their information into a regular dylan
+source file is needed.  After the implementation of this DEP, the
+above library can be defined in a single source file, as follows:
+
+**hello-world.dylan**
+
+.. code-block:: dylan
+
+    Module: hello-world
+
+    // ----module def----
+
+    define libary hello-world
+      use common-dylan;
+      use io;
+    end;
+
+    define module hello-world
+      use common-dylan;
+      use format-out;
+    end;
+
+    // ----main body----
+
+    format-out("Hello, world!\n");
+
+This continues to use the standard `Dylan Interchange Format
+<http://opendylan.org/books/drm/Dylan_Interchange_Format>`_ as defined
+in the DRM, with a set of headers, followed by a blank line, followed
+by a *code body*.  In the above example comments have been added for
+reference to show two logical sections: the module definition and the
+main body of the program.
+
+
+Specification
+=============
+
+LID files have the same format as the header section of a Dylan
+Interchange Format source file.  When defining a Dylan library in a
+single source file, all LID keywords may appear in the header section.
+The compiler or interpreter should handle them in the same way it
+would if they were in a separate .lid file.  There is no conflict
+between the keywords used in LID files and those used in Dylan source
+files. (Is this true? --cgay)
+
+When a compiler or interpreter is given a .dylan file to compile or
+execute it must read the headers and then scan the *code body* for the
+library and module definitions.
+
+If a "Library" header is found, then that is the name of the library
+to be generated.  Otherwise, the library name is the same as the
+module specified in the required "Module" header.
+
+If no "define library" source record is found having the same name as
+that specified in the "Library" (or "Module") header, it is an error.
+
+If no "define module" is found that has the same name as that
+specified in the "Module" header, it is an error.  The library and
+module definitions should precede any other Dylan code in the *code
+body*, but comments are allowed.  If there is not exactly one library
+definition and one module definition it is an error.
+
+A single-file library has the same semantics as a multi-file library.
+Indeed, one possible (if simplistic) implementation is to generate a
+multi-file library from the single file, and compile or execute it in
+the normal way.
