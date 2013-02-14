@@ -178,8 +178,9 @@ int trace_object (mps_addr_t parent, object_tracer_t fn, void* env)
         }
         pat >>= 1; /* shift down for next bit */
         seen++;    /* increment count of bits used */
-        if (seen == 32)
+        if (seen == 32) {
           seen = 0; /* pattern word exhausted. Use next one */
+        }
       }
     }
 
@@ -235,7 +236,7 @@ void display_integer (int integer, mps_lib_FILE *stream)
     } else {
       leading = 0;
       mps_lib_fputc('0' + digit, stream);
-    };
+    }
     if ((power == 1000000) || (power == 1000)) {
       if (digit == 0) {
         mps_lib_fputc(leading ? ' ' : ',', stream);

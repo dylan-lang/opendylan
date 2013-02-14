@@ -20,7 +20,7 @@ PVOID current_stack_pointer ()
     mov  stack_ptr, esp
   };
   return(stack_ptr);
-};
+}
 
 
 #define VPAGESIZE 0x1000
@@ -55,8 +55,8 @@ LONG DylanExceptionFilter (LPEXCEPTION_POINTERS info)
 
   LPEXCEPTION_RECORD er = info->ExceptionRecord;
 
-  if (inside_dylan_ffi_barrier() == 0)
-  {  return(EXCEPTION_CONTINUE_SEARCH);
+  if (inside_dylan_ffi_barrier() == 0) {
+    return(EXCEPTION_CONTINUE_SEARCH);
   }
 
   switch (er->ExceptionCode)
@@ -79,8 +79,7 @@ LONG DylanExceptionFilter (LPEXCEPTION_POINTERS info)
       PVOID baseAddress    = memBuf.BaseAddress;    // base address of region
       PVOID allocationBase = memBuf.AllocationBase; // allocation base addr
 
-      if ( ((int)baseAddress - (int)allocationBase) >= (2 * VPAGESIZE))
-      {
+      if (((int)baseAddress - (int)allocationBase) >= (2 * VPAGESIZE)) {
         // There's enough space past the guard to invoke the Dylan handler.
         // Rather than attempt a long-jump within the filter (by simply
         // calling the Dylan handler) we destructively modify the execution
@@ -90,9 +89,9 @@ LONG DylanExceptionFilter (LPEXCEPTION_POINTERS info)
 
         info->ContextRecord->Eip = (unsigned long) &call_dylan_stack_overflow_handler;
         return(EXCEPTION_CONTINUE_EXECUTION);
-      }
-      else
+      } else {
         return(EXCEPTION_CONTINUE_SEARCH);
+      }
     }
   case EXCEPTION_INT_OVERFLOW:
     { info->ContextRecord->Eip = (unsigned long) &dylan_integer_overflow_handler;

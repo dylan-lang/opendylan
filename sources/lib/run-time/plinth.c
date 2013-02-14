@@ -40,27 +40,27 @@ extern int  dylan_buffer_size;
 int buffer_add (message_buffer_t buf, char c)
 {
   int res = 0;
-  if (dylan_streamQ)
-    {
-      if (dylan_buffer_pos < dylan_buffer_size)
-        dylan_buffer[dylan_buffer_pos++] = c;
-      else {
-        /* HACK -- delete last line in dylan buffer on overflow */
-        int pos = dylan_buffer_pos - 1;
+  if (dylan_streamQ) {
+    if (dylan_buffer_pos < dylan_buffer_size) {
+      dylan_buffer[dylan_buffer_pos++] = c;
+    } else {
+      /* HACK -- delete last line in dylan buffer on overflow */
+      int pos = dylan_buffer_pos - 1;
 
-        if (dylan_buffer[pos] != '\n') {
-          while (dylan_buffer[--pos] != '\n');
-          while (pos < dylan_buffer_pos)
-            dylan_buffer[++pos] = ' ';
-          dylan_buffer[pos - 1] = '\n'; }
+      if (dylan_buffer[pos] != '\n') {
+        while (dylan_buffer[--pos] != '\n');
+        while (pos < dylan_buffer_pos) {
+          dylan_buffer[++pos] = ' ';
+        }
+        dylan_buffer[pos - 1] = '\n';
       }
     }
-  else
-    {
-      buf->buf_data[buf->buf_index++] = c;
-      if ((c == '\n') || (c == '\0') || (buf->buf_index >= BUFFER_SIZE))
-        res = buf->buf_index;
-    };
+  } else {
+    buf->buf_data[buf->buf_index++] = c;
+    if ((c == '\n') || (c == '\0') || (buf->buf_index >= BUFFER_SIZE)) {
+      res = buf->buf_index;
+    }
+  }
   return(res);
 }
 
@@ -81,26 +81,25 @@ static HANDLE current_log_file = 0;
 
 HANDLE ensure_log_file (void)
 {
-  if (current_log_file == 0)
-    {
-      current_log_file = CreateFile("dylan-runtime.log",
-                                    GENERIC_WRITE,
-                                    FILE_SHARE_READ,
-                                    0,
-                                    OPEN_ALWAYS,
-                                    FILE_ATTRIBUTE_NORMAL,
-                                    0);
-    }
+  if (current_log_file == 0) {
+    current_log_file = CreateFile("dylan-runtime.log",
+                                  GENERIC_WRITE,
+                                  FILE_SHARE_READ,
+                                  0,
+                                  OPEN_ALWAYS,
+                                  FILE_ATTRIBUTE_NORMAL,
+                                  0);
+  }
   return(current_log_file);
 }
 
 void ensure_log_file_closed (void)
 {
-  if (current_log_file != 0)
-    {
-      if (CloseHandle(current_log_file))
-        current_log_file = 0;
+  if (current_log_file != 0) {
+    if (CloseHandle(current_log_file)) {
+      current_log_file = 0;
     }
+  }
 }
 
 
@@ -108,8 +107,9 @@ void plinth_flush_string_to_file (char *string, int length)
 {
   int written;
   HANDLE log_file = ensure_log_file();
-  if (log_file != 0)
+  if (log_file != 0) {
     WriteFile(log_file, string, length, &written, 0);
+  }
 }
 
 void plinth_flush_string_to_debugger (char *string, int length)
@@ -126,11 +126,10 @@ void plinth_flush_string (char *string, int length)
 int plinth_putc (message_buffer_t buf, int c)
 {
   int num_to_flush = buffer_add(buf, (char)c);
-  if (num_to_flush > 0)
-    {
-      plinth_flush_string(buffer_contents(buf), num_to_flush);
-      buffer_reset(buf);
-    };
+  if (num_to_flush > 0) {
+    plinth_flush_string(buffer_contents(buf), num_to_flush);
+    buffer_reset(buf);
+  }
   return(c);
 }
 
@@ -167,10 +166,9 @@ int mps_lib_fputs(const char *s, mps_lib_FILE *stream)
 {
   int i = 0;
   char c;
-  while (c = s[i++])
-    {
-      plinth_putc((message_buffer_t)stream, c);
-    };
+  while (c = s[i++]) {
+    plinth_putc((message_buffer_t)stream, c);
+  }
   return 1;
 }
 
@@ -178,10 +176,9 @@ int mps_lib_fputs_(const char *s, int end, mps_lib_FILE *stream)
 {
   int i = 0;
   char c;
-  while ((i < end) && (c = s[i++]))
-    {
-      plinth_putc((message_buffer_t)stream, c);
-    };
+  while ((i < end) && (c = s[i++])) {
+    plinth_putc((message_buffer_t)stream, c);
+  }
   return 1;
 }
 

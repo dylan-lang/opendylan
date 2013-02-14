@@ -176,26 +176,26 @@ MMError dylan_mm_register_thread(void *stackBot)
   zero_allocation_counter(gc_teb);
 
   res = mps_ap_create(&gc_teb->gc_teb_main_ap, main_pool, mps_rank_exact());
-  if(res) goto failApCreate;
+  if (res) goto failApCreate;
 
   res = mps_ap_create(&gc_teb->gc_teb_leaf_ap, leaf_pool, mps_rank_exact());
-  if(res) goto failLeafApCreate;
+  if (res) goto failLeafApCreate;
 
   res = mps_ap_create(&gc_teb->gc_teb_weak_awl_ap, weak_table_pool, mps_rank_weak());
-  if(res) goto failWeakAWLApCreate;
+  if (res) goto failWeakAWLApCreate;
 
   res = mps_ap_create(&gc_teb->gc_teb_exact_awl_ap, weak_table_pool, mps_rank_exact());
-  if(res) goto failExactAWLApCreate;
+  if (res) goto failExactAWLApCreate;
 
   res = mps_thread_reg(&gc_teb->gc_teb_thread, arena);
-  if(res) goto failThreadReg;
+  if (res) goto failThreadReg;
 
   /* Create a root object for ambiguously scanning the stack. */
   assert(stackBot != NULL);
   res = mps_root_create_reg(&gc_teb->gc_teb_stack_root, arena, mps_rank_ambig(),
                            (mps_rm_t)0,
                             gc_teb->gc_teb_thread, mps_stack_scan_ambig, stackBot, 0);
-  if(res) goto failStackRootCreate;
+  if (res) goto failStackRootCreate;
   return res;
 
   mps_root_destroy(gc_teb->gc_teb_stack_root);
@@ -382,7 +382,7 @@ void *MMReserveWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
   assert(gc_teb->gc_teb_inside_tramp);
 
   res = mps_alloc(&p, wrapper_pool, size);
-  if(res) {
+  if (res) {
     (*wrapper_handler)((MMError)res, "MMReserveWrapper", size);
     return (void *)NULL;
   }
@@ -408,7 +408,7 @@ int MMCommitWrapper(void *p, size_t size, gc_teb_t gc_teb)
 
   res = mps_root_create_fmt(&root, arena, mps_rank_exact(),
                              (mps_rm_t)0, fmt_A->scan, p, (char *)p + size);
-  if(res) return 0;
+  if (res) return 0;
   return 1;
 }
 
@@ -428,7 +428,7 @@ void *MMAllocMisc(size_t size)
   /*  assert(gc_teb->gc_teb_inside_tramp);   not a necessary condition for misc mem  */
 
   res = mps_alloc((mps_addr_t *)&p, misc_pool, size);
-  if(res) {
+  if (res) {
     (*misc_handler)((MMError)res, "MMAllocMisc", size);
     return NULL;
   }
@@ -558,12 +558,14 @@ void MMFreeMisc(void *old, size_t size)
     if (msq) fill_dylan_object_mem(object + 1, mfill, mno_to_fill);  \
     if (ms1q) object[1] = ms1;  \
     if (ms2q) object[2] = ms2;  \
-    if (mrq)  \
-      if (mrep_size_slot)  \
+    if (mrq) {  \
+      if (mrep_size_slot) {  \
         object[mrep_size_slot] = (void*)((mrep_size << 2) + 1);  \
+      } \
+    } \
     if (mrfq) fill_ ## type ## _mem((type *)(object + mrep_size_slot + 1), mword_fill, mrep_size);  \
   }  \
-  while(!commit(object, msize, gc_teb));  \
+  while (!commit(object, msize, gc_teb));  \
   \
   if (mufq && mrq) {  \
     untraced_fill_ ## type2 ## _mem(object, muntraced_fill, mrep_size, mrep_size_slot, mztq); \
@@ -1086,7 +1088,7 @@ void *primitive_alloc_rt(size_t size,
     object[rep_size_slot] = (void*)((rep_size << 2) + 1);
     memcpy(object + rep_size_slot + 1, template, rep_size << 2);
   }
-  while(!MMCommitObject(object, size, gc_teb));
+  while (!MMCommitObject(object, size, gc_teb));
 
   return object;
 }
@@ -1106,7 +1108,7 @@ void *primitive_copy(size_t size,
     object = MMReserveObject(size, wrapper, gc_teb);
     memcpy(object, template, size);
   }
-  while(!MMCommitObject(object, size, gc_teb));
+  while (!MMCommitObject(object, size, gc_teb));
 
   return object;
 }
@@ -1135,7 +1137,7 @@ void *primitive_copy_r(size_t size,
     fill_dylan_object_mem((void **)(object + rep_size_slot + 1),
                           NULL, rep_size);
   }
-  while(!MMCommitObject(object, size, gc_teb));
+  while (!MMCommitObject(object, size, gc_teb));
 
 
   return object;
@@ -1372,9 +1374,9 @@ BOOL primitive_mps_collection_stats(void** results)
     results[1] = (void*)((condemned << 2) + 1);
     results[2] = (void*)((not_condemned << 2) + 1);
     return TRUE;
-  }
-  else
+  } else {
     return FALSE;
+  }
 }
 
 
@@ -1388,15 +1390,14 @@ void primitive_mps_finalize(void *obj)
 void* primitive_mps_finalization_queue_first()
 {
   mps_message_t finalization_message;
-  if (mps_message_get(&finalization_message, arena, finalization_type))
-    {
-      mps_addr_t object_ref;
-      mps_message_finalization_ref(&object_ref, arena, finalization_message);
-      mps_message_discard(arena, finalization_message);
-      return object_ref;
-    }
-  else
+  if (mps_message_get(&finalization_message, arena, finalization_type)) {
+    mps_addr_t object_ref;
+    mps_message_finalization_ref(&object_ref, arena, finalization_message);
+    mps_message_discard(arena, finalization_message);
+    return object_ref;
+  } else {
     return 0;
+  }
 }
 
 /* Support for Location Dependencies */
@@ -1494,12 +1495,12 @@ get_gen_params(const char *spec,
   size_t max_heap_size = 0;
   mps_gen_param_s *params = NULL;
 
-  while(*spec != '\0') {
+  while (*spec != '\0') {
     char *end;
     unsigned long capacity = strtoul(spec, &end, 0);
     double mortality;
 
-    if(capacity == 0 || capacity > 2048 * 1024 || *end != ',') {
+    if (capacity == 0 || capacity > 2048 * 1024 || *end != ',') {
       free(params);
       return NULL;
     }
@@ -1507,14 +1508,14 @@ get_gen_params(const char *spec,
 
     spec = end + 1;
     mortality = strtod(spec, &end);
-    if(mortality < 0.0 || mortality > 1.0) {
+    if (mortality < 0.0 || mortality > 1.0) {
       free(params);
       return NULL;
     }
 
-    if(*end == ';') {
+    if (*end == ';') {
       spec = end + 1;
-    } else if(*end == '\0') {
+    } else if (*end == '\0') {
       spec = end;
     } else {
       free(params);
@@ -1553,7 +1554,7 @@ MMError dylan_init_memory_manager()
 #ifdef _WIN32
     char specbuf[2048];
     const char *spec = NULL;
-    if(GetEnvironmentVariableA("OPEN_DYLAN_MPS_HEAP", specbuf,
+    if (GetEnvironmentVariableA("OPEN_DYLAN_MPS_HEAP", specbuf,
                                sizeof specbuf) != 0) {
       spec = specbuf;
     }
@@ -1562,48 +1563,48 @@ MMError dylan_init_memory_manager()
 #endif
 
     res = mps_arena_create(&arena, mps_arena_class_vm(), max_heap_size);
-    if(res) { init_error("create arena"); return(res); }
+    if (res) { init_error("create arena"); return(res); }
 
-    if(spec) {
+    if (spec) {
       params = get_gen_params(spec, &gen_count, &max_heap_size);
-      if(!params)
+      if (!params)
         init_error("parse OPEN_DYLAN_MPS_HEAP format");
     }
 
-    if(params) {
+    if (params) {
       res = mps_chain_create(&chain, arena, gen_count, params);
       free(params);
     } else {
       res = mps_chain_create(&chain, arena, genCOUNT, gc_default_gen_param);
     }
-    if(res) { init_error("create chain"); return(res); }
+    if (res) { init_error("create chain"); return(res); }
   }
 
   fmt_A = dylan_fmt_A();
   res = mps_fmt_create_A(&format, arena, fmt_A);
-  if(res) { init_error("create format"); return(res); }
+  if (res) { init_error("create format"); return(res); }
 
   fmt_A_weak = dylan_fmt_A_weak();
   res = mps_fmt_create_A(&dylan_fmt_weak_s, arena, fmt_A_weak);
-  if(res) { init_error("create weak format"); return(res); }
+  if (res) { init_error("create weak format"); return(res); }
 
   res = mps_pool_create(&main_pool, arena, mps_class_amc(), format, chain);
-  if(res) { init_error("create main pool"); return(res); }
+  if (res) { init_error("create main pool"); return(res); }
 
   /* Create the Leaf Object pool */
   res = mps_pool_create(&leaf_pool, arena, mps_class_amcz(), format, chain);
-  if(res) { init_error("create leaf pool"); return(res); }
+  if (res) { init_error("create leaf pool"); return(res); }
 
   /* Create the Automatic Weak Linked pool */
   res = mps_pool_create(&weak_table_pool, arena, mps_class_awl(),
                         dylan_fmt_weak_s, dylan_weak_dependent);
-  if(res) { init_error("create weak pool"); return(res); }
+  if (res) { init_error("create weak pool"); return(res); }
 
   /* Create the MV pool for miscellaneous objects. */
   /* This is also used for wrappers. */
   res = mps_pool_create(&misc_pool, arena, mps_class_mv(),
                         MISCEXTENDBY, MISCAVGSIZE, MISCMAXSIZE);
-  if(res) { init_error("create misc pool"); return(res); }
+  if (res) { init_error("create misc pool"); return(res); }
 
   wrapper_pool = misc_pool;
 
@@ -1626,7 +1627,7 @@ MMError dylan_init_memory_manager()
 
 void dylan_shut_down_memory_manager()
 {
-  while(primitive_mps_finalization_queue_first());
+  while (primitive_mps_finalization_queue_first());
 
   mps_pool_destroy(misc_pool);
   mps_pool_destroy(weak_table_pool);

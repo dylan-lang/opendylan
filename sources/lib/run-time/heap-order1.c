@@ -45,8 +45,9 @@ static int default_index_for_wrapper (void *wrapper)
 {
   int i;
   for (i = wrapper_preassignments; i < wrapper_cursor; i++) {
-    if (wrapper_stats[i].wrapper_address == wrapper)
+    if (wrapper_stats[i].wrapper_address == wrapper) {
       return(i);
+    }
   }
   if (wrapper_cursor < STAT_SIZE) {
     int cursor = wrapper_cursor;
@@ -62,13 +63,14 @@ static int default_index_for_wrapper (void *wrapper)
 static int index_for_wrapper (void *wrapper)
 {
   /*
-  if (wrapper == &KLpairGYdylanVdylanW)
+  if (wrapper == &KLpairGYdylanVdylanW) {
     return(0);
-  else if (wrapper == &KLsimple_object_vectorGYdylanVdylanW)
+  } else if (wrapper == &KLsimple_object_vectorGYdylanVdylanW) {
     return(1);
-  else
+  } else {
   */
     return default_index_for_wrapper(wrapper);
+  /*}*/
 }
 
 void add_stat_for_object (void *object, void* wrapper, int size)

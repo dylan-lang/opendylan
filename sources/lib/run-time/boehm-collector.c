@@ -258,9 +258,11 @@ void MMFreeMisc(void *old, size_t size)
   if (msq) fill_dylan_object_mem(object + 1, mfill, mno_to_fill);  \
   if (ms1q) object[1] = ms1;  \
   if (ms2q) object[2] = ms2;  \
-  if (mrq)  \
-    if (mrep_size_slot)  \
+  if (mrq) { \
+    if (mrep_size_slot) {  \
       object[mrep_size_slot] = (void*)((mrep_size << 2) + 1);  \
+    } \
+  } \
   if (mrfq) fill_ ## type ## _mem((type *)(object + mrep_size_slot + 1), mword_fill, mrep_size);  \
   \
   if (mufq && mrq) {  \
@@ -1071,8 +1073,9 @@ BOOL WINAPI DylanBreakControlHandler(DWORD dwCtrlType)
     case CTRL_BREAK_EVENT:
     case CTRL_C_EVENT:
       {
-        if (Prunning_under_dylan_debuggerQ == FALSE)
+        if (Prunning_under_dylan_debuggerQ == FALSE) {
           dylan_keyboard_interruptQ = TRUE;
+        }
         return TRUE;
       }
 
@@ -1085,8 +1088,9 @@ MMError dylan_init_memory_manager()
 {
   gc_teb_t gc_teb = current_gc_teb();
 
-  if (Prunning_under_dylan_debuggerQ == FALSE)
+  if (Prunning_under_dylan_debuggerQ == FALSE) {
     set_CONSOLE_CTRL_HANDLER(&DylanBreakControlHandler, TRUE);
+  }
 
   assert(!gc_teb->gc_teb_inside_tramp);
 

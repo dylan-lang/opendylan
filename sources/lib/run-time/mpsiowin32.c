@@ -14,12 +14,14 @@ mps_res_t mps_io_create(mps_io_t *mps_io_r)
 {
   HANDLE f;
 
-  if(ioFile != NULL) /* See impl.c.event.trans.log */
+  if (ioFile != NULL) { /* See impl.c.event.trans.log */
     return MPS_RES_LIMIT; /* Cannot currently open more than one log */
+  }
 
   f = CreateFile("mpsio.log", GENERIC_WRITE, 0, 0, OPEN_ALWAYS, 0, 0);
-  if(f == INVALID_HANDLE_VALUE)
+  if (f == INVALID_HANDLE_VALUE) {
     return MPS_RES_IO;
+  }
 
   *mps_io_r = (mps_io_t)f;
   ioFile = f;
@@ -39,8 +41,9 @@ mps_res_t mps_io_write(mps_io_t mps_io, void *mps_buf, size_t mps_size)
   size_t n;
 
   BOOL res = WriteFile(f, mps_buf, mps_size, &n, 0);
-  if(res == 0 || (n != mps_size))
+  if (res == 0 || (n != mps_size)) {
     return MPS_RES_IO;
+  }
 
   return MPS_RES_OK;
 }

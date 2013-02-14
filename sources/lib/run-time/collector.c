@@ -121,7 +121,7 @@ void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
       rep stosd
     };
 #endif
-};
+}
 
 
 #define define_fill_mem(type) \
@@ -133,7 +133,7 @@ void fill_ ## type ## _mem(type *mem, type fill, int count) \
     {  \
       mem[index] = fill; \
       ++index; \
-    }; \
+    } \
 }
 
 define_fill_mem(half_word)
@@ -165,7 +165,7 @@ void untraced_fill_ ## type ## _mem(void **object, type fill, int count, int cou
     {  \
       mem[index] = fill; \
       ++index; \
-    }; \
+    } \
 }
 
 define_untraced_fill_mem(dylan_object)
@@ -210,8 +210,9 @@ int primitive_end_heap_alloc_stats(char *buffer)
   dylan_streamQ = TRUE;
   dylan_buffer = buffer;
   dylan_buffer_pos = 0;
-  if (heap_alloc_statsQ)
+  if (heap_alloc_statsQ) {
     display_wrapper_stats();
+  }
   dylan_streamQ = FALSE;
   heap_alloc_statsQ = FALSE;
   return(dylan_buffer_pos);
@@ -256,12 +257,12 @@ void primitive_set_class_breakpoint(void *class, int count)
 {
   if (wait_for_EVENT(class_breakpoint_events[0], INFINITE) != EVENT_WAIT_SUCCESS) {
     // MSG0("primitive_set_class_breakpoint: error waiting for class breakpoint event\n");
-  };
+  }
 
-  if (class == (void *)1)
+  if (class == (void *)1) {
     // set breakpoint on all dylan classes
     check_wrapper_breakpoint_for_objectQ = TRUE;
-  else {
+  } else {
     void *wrapper = class_wrapper(class);
     set_wrapper_breakpoint(wrapper, count >> 2);
   }
@@ -277,7 +278,7 @@ void primitive_clear_class_breakpoint(void *class)
 
   if (wait_for_EVENT(class_breakpoint_events[0], INFINITE) != EVENT_WAIT_SUCCESS) {
     // MSG0("primitive_clear_class_breakpoint: error waiting for class breakpoint event\n");
-  };
+  }
 
   switch ((int)class) {
 
@@ -310,7 +311,7 @@ int primitive_display_class_breakpoints(char *buffer)
 {
   if (wait_for_EVENT(class_breakpoint_events[0], INFINITE) != EVENT_WAIT_SUCCESS) {
     // MSG0("primitive_display_class_breakpoints: error waiting for class breakpoint event\n");
-  };
+  }
 
   dylan_streamQ = TRUE; dylan_buffer = buffer; dylan_buffer_pos = 0;
   display_wrapper_breakpoints();
@@ -404,7 +405,7 @@ static void add_polling_thread (HANDLE hThread)
     if (polling_threads_cursor < MAX_POLLING_THREADS) {
       ++polling_threads_cursor;
       polling_threads[polling_threads_cursor] = hThread;
-    };
+    }
   leave_CRITICAL_SECTION(&polling_threads_lock);
 }
 
@@ -477,8 +478,9 @@ void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
 
   if (heap_statsQ) {
     if (!Prunning_dylan_spy_functionQ) {
-      if (heap_alloc_statsQ)
+      if (heap_alloc_statsQ) {
         add_stat_for_object(NULL, wrapper, count);
+      }
       check_wrapper_breakpoint(wrapper, count);
     }
   }
@@ -494,7 +496,7 @@ static void zero_allocation_counter(gc_teb_t gc_teb)
 
 
 __inline
- gc_teb_t current_gc_teb()
+gc_teb_t current_gc_teb()
 {
   gc_teb_t gc_teb;
 #if defined(OPEN_DYLAN_PLATFORM_UNIX)
@@ -510,7 +512,7 @@ __inline
 #endif
   gc_teb--; /* the GC-TEB is BEFORE the TEB */
   return(gc_teb);
-};
+}
 
 
 #define inside_tramp  (*current_gc_teb()).gc_teb_inside_tramp
