@@ -39,3 +39,8 @@ Windows Support
 The 2012.1 release introduced a bug with where settings were
 stored in the Windows registry. This has been corrected.
 
+The Windows installer for Open Dylan now defaults to suggesting the
+Pelles C tools rather than Visual C 6. This is the start of improving
+the new user experience on Windows and having it work out of the
+box.
+

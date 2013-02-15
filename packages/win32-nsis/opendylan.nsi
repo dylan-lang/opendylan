@@ -147,15 +147,15 @@ Section "${APPNAME} Core" SecOpendylanCore
 
   ;; Display a messagebox if check box was checked
   StrCmp $0 "1" "" +2
-    StrCpy $R0 "x86-win32-vc6-build.jam"
+    StrCpy $R0 "x86-win32-pellesc-build.jam"
   StrCmp $1 "1" "" +2
-    StrCpy $R0 "x86-win32-vc7-build.jam"
+    StrCpy $R0 "x86-win32-vc6-build.jam"
   StrCmp $2 "1" "" +2
     StrCpy $R0 "x86-win32-vc7-build.jam"
   StrCmp $3 "1" "" +2
-    StrCpy $R0 "x86-win32-vc8-build.jam"
+    StrCpy $R0 "x86-win32-vc7-build.jam"
   StrCmp $4 "1" "" +2
-    StrCpy $R0 "x86-win32-pellesc-build.jam"
+    StrCpy $R0 "x86-win32-vc8-build.jam"
 
   WriteRegStr HKCU "${REGISTRY_KEY}\1.0\Build-System" "build-script" \
               "$INSTDIR\lib\$R0"
