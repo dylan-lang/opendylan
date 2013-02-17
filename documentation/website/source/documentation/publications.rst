@@ -127,7 +127,7 @@ Toby Weinberg - Communications of the ACM May 1998
 **A Monotonic Superclass Linearization for Dylan**
 (by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and
 Keith Playford and P. Tucker Withington at OOPSLA 1996
-`html <http://192.220.96.201/dylan/linearization-oopsla96.html>`__
+`html <http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`__
 `bib <../_static/documentation/barrett1996.bib>`__)
 
     Object-oriented languages with multiple inheritance and automatic

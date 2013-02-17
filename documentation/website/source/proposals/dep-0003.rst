@@ -34,7 +34,7 @@ The C3 superclass linearization has been proposed in 1996 by Kim
 Barrett, Bob Cassels, Paul Haahr, David A. Moon, Keith Playford, and
 P. Tucker Withington in a `paper
 <http://dx.doi.org/10.1145/236337.236343>`_ (`html version
-<http://www.webcom.com/haahr/dylan/linearization-oopsla96.html>`_).
+<http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`_).
 
 A superclass linearization (also known as a class precedence list) is
 used for resolving conflicts among multiply-inherited superclasses
