@@ -1002,7 +1002,7 @@ define function ^compute-class-precedence-list (c :: <&class>)
   c3;
 end function ^compute-class-precedence-list;
 
-define serious-program-warning <cpl-differ>
+define program-warning <cpl-differ>
   slot class-name, init-keyword: class-name:;
   slot dylan-linearization, init-keyword: dylan-linearization:;
   slot cthree-linearization, init-keyword: cthree-linearization:;
