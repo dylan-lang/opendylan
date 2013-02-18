@@ -16,6 +16,11 @@ Dylan-Version:  2012.1
 .. contents:: Contents
    :local:
 
+Revision History
+================
+
+The revision history of this document is available here:
+https://github.com/cgay/website/commits/master/source/proposals/dep-0006.rst
 
 Abstract
 ========
@@ -246,7 +251,6 @@ exported from the library.  If the ``Export-Names`` header is
 missing then no modules are exported from the library.  If the
 ``Export-Names`` header is present then the module named in the
 ``Module`` header is the sole module exported from the library.
-
 
 Model Implementation
 ====================
