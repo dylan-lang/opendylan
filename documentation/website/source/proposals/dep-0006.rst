@@ -144,10 +144,8 @@ above library can be defined in a single source file, as follows:
 .. code-block:: dylan
 
     Module: hello-world
-    Use-Library: common-dylan
-    Use-Library: io
-    Use-Module: common-dylan
-    Use-Module: format-out
+    Use-Libraries: common-dylan; io
+    Use-Modules: common-dylan; format-out
 
     format-out("Hello, world!\n");
 
@@ -192,46 +190,55 @@ Replacing library.dylan
 When a compiler or interpreter is given a .dylan file to compile or
 execute, these new headers should be respected:
 
-Use-Library Header
+Use-Libraries Header
+~~~~~~~~~~~~~~~~~~~~
+
+The ``Use-Libraries`` header names libraries used by the library being
+defined.
+
+The format of this header is::
+
+  Use-Libraries: libspec1 ; libspec2 ; ...
+
+In brief, each *libspec* has the exact same syntax as a *use-clause*
+in `define library
+<http://opendylan.org/books/drm/Definition_Macros#define_library>`_,
+but with the leading token ``use`` removed.  Examples::
+
+  Use-Libraries: system; io { import: streams, format-out}; common-dylan
+  Use-Libraries:
+    system;
+    io { import: streams, format-out};
+    common-dylan
+
+Note that Dylan source code comments are allowed in this header, and
+must be ignored.
+
+Use-Modules Header
 ~~~~~~~~~~~~~~~~~~
 
-The ``Use-Library`` header names a library used by the library being
+The ``Use-Modules`` header names modules used by the library being
 defined.
 
 The format of this header is::
 
-  Use-Library: used-library-name [ , options... ]
+  Use-Modules: modspec1 ; modspec2 ; ...
 
-In brief, this is the exact same syntax as a *use-clause* in `define
-library
-<http://opendylan.org/books/drm/Definition_Macros#define_library>`_,
-but with the token ``use`` replaced by the ``Use-Library:`` header
-keyword.  Examples::
-
-  Use-Library: system
-  Use-Library: system, import: { operating-system }
-
-Use-Module Header
-~~~~~~~~~~~~~~~~~
-
-The ``Use-Module`` header names a module used by the library being
-defined.
-
-The format of this header is::
-
-  Use-Module: used-module-name [ , options... ]
-
-Again, this is the exact same syntax as a *use-clause* in `define
-module
+Again, each *modspec* has the exact same syntax as a *use-clause* in
+`define module
 <http://opendylan.org/books/drm/Definition_Macros#define_module>`_,
-but with the token ``use`` replaced by the ``Use-Module:`` header
-keyword.  Examples::
+but with the leading token ``use`` removed.  Examples::
 
-  Use-Module: operating-system
-  Use-Module: operating-system, import: { exit-application }
-  Use-Module: operating-system,
-    prefix: "os/",
-    export: all
+  Use-Modules: operating-system; common-dylan; format-out
+  Use-Modules:
+    operating-system,  // from system
+      prefix: "os/",
+      export: all;
+    common-dylan;
+    format-out         // from io
+
+Note that Dylan source code comments are allowed in this header, and
+must be ignored.
 
 Export-Names Header
 ~~~~~~~~~~~~~~~~~~~
@@ -267,15 +274,15 @@ new headers defined in this proposal have the same syntax as that of
      Module: dylan-user
 
      define library <Library-or-Module-header-value-here>
-       use <1st-Use-Library-header-value-here>;
-       use <2nd-Use-Library-header-value-here>;
+       use libspec1;
+       use libspec2;
        ...
        export  <Library-or-Module-header-value-here>;
      end;
 
      define module <Module-header-value-here>
-       use <1st-Use-Module-header-value-here>;
-       use <2nd-Use-Module-header-value-here>;
+       use modspec1
+       use modspec2
        ...
        export <Export-Names-header-value-here>;
      end;
