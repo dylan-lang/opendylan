@@ -8,7 +8,7 @@ Type:           Standards Track
 Author:         Carl Gay
 Status:         Draft
 Created:        12-Feb-2013 (Darwin's birthday)
-Last-Modified:  16-Feb-2013
+Last-Modified:  17-Feb-2013
 Post-History:   16-Feb-2013 hackers@lists.opendylan.org
 Dylan-Version:  2012.1
 ==============  =============================================
@@ -230,23 +230,23 @@ keyword.  Examples::
     prefix: "os/",
     export: all
 
-Module-Exports Header
-~~~~~~~~~~~~~~~~~~~~~
+Export-Names Header
+~~~~~~~~~~~~~~~~~~~
 
-The ``Module-Exports`` header specifies a list of names exported from
+The ``Export-Names`` header specifies a list of names exported from
 the module named in the ``Module`` header.  The syntax matches the
 syntax in the ``exports`` clause of `define module
 <http://opendylan.org/books/drm/Definition_Macros#define_module>`_,
-but with the token ``exports`` replaced by the ``Module-Exports:``
+but with the token ``exports`` replaced by the ``Export-Names:``
 header keyword.  Examples::
 
-  Module-Exports: foo, bar, baz
+  Export-Names: foo, bar, baz
 
 Because it is only possible to define one module in a single-file
 library there is no need for a way to specify which modules are
-exported from the library.  If the ``Module-Exports`` header is
+exported from the library.  If the ``Export-Names`` header is
 missing then no modules are exported from the library.  If the
-``Module-Exports`` header is present then the module named in the
+``Export-Names`` header is present then the module named in the
 ``Module`` header is the sole module exported from the library.
 
 
@@ -279,7 +279,7 @@ new headers defined in this proposal have the same syntax as that of
        use <1st-Use-Module-header-value-here>;
        use <2nd-Use-Module-header-value-here>;
        ...
-       export <Module-Exports-header-value-here>;
+       export <Export-Names-header-value-here>;
      end;
 
    Note the addition of semicolons where necessary.
