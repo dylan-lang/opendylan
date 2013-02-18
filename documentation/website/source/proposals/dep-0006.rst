@@ -155,8 +155,6 @@ by a *code body*.
 Specification
 =============
 
-None of the headers mentioned in this document are case sensitive.
-
 Replacing the LID File
 ----------------------
 
@@ -206,7 +204,7 @@ but with the token ``use`` replaced by the ``Use-Library:`` header
 keyword.  Examples::
 
   Use-Library: system
-  Use-library: system, import: { operating-system }
+  Use-Library: system, import: { operating-system }
 
 Use-Module Header
 ~~~~~~~~~~~~~~~~~
@@ -225,8 +223,8 @@ but with the token ``use`` replaced by the ``Use-Module:`` header
 keyword.  Examples::
 
   Use-Module: operating-system
-  use-module: operating-system, import: { exit-application }
-  use-module: operating-system,
+  Use-Module: operating-system, import: { exit-application }
+  Use-Module: operating-system,
     prefix: "os/",
     export: all
 
@@ -253,26 +251,22 @@ missing then no modules are exported from the library.  If the
 Model Implementation
 ====================
 
-A simple (but probably not practical) way to implement this proposal
+A simple (but not recommended) way to implement this proposal
 would be via the following source transformations.  This example is
 provided primarily to demonstrate that a single-file library has the
 same semantics as a multi-file library and to make it clear that the
 new headers defined in this proposal have the same syntax as that of
 ``define library`` and ``define module``.
 
-#. Generate a LID file that includes all the headers except for
-   ``Module`` and add a ``Files`` header listing ``library.dylan`` and
-   ``the-given-file.dylan``.
-
 #. Generate a ``library.dylan`` file::
 
      Module: dylan-user
 
-     define library <library-or-module-header-value-here>
+     define library <Library-or-Module-header-value-here>
        use <1st-Use-Library-header-value-here>;
        use <2nd-Use-Library-header-value-here>;
        ...
-       export  <library-or-module-header-value-here>;
+       export  <Library-or-Module-header-value-here>;
      end;
 
      define module <Module-header-value-here>
@@ -283,6 +277,10 @@ new headers defined in this proposal have the same syntax as that of
      end;
 
    Note the addition of semicolons where necessary.
+
+#. Generate a LID file that includes all the headers except for
+   ``Module`` and add a ``Files`` header listing ``library.dylan`` and
+   ``the-given-file.dylan``.
 
 #. Compile the generated LID file as usual.
 
