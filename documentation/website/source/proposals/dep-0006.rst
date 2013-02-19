@@ -20,7 +20,7 @@ Revision History
 ================
 
 The revision history of this document is available here:
-https://github.com/cgay/website/commits/master/source/proposals/dep-0006.rst
+https://github.com/dylan-lang/website/commits/master/source/proposals/dep-0006.rst
 
 Abstract
 ========
