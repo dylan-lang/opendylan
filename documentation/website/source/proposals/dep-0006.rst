@@ -167,7 +167,8 @@ single source file, all LID keywords may appear in the header section.
 The compiler or interpreter should handle them in the same way it
 would if they were in a separate .lid file.  There is no conflict
 between the keywords used in LID files and those used in Dylan source
-files. (TODO: Verify this. --cgay)
+files.  See http://opendylan.org/documentation/library-reference/lid.html
+for existing Open Dylan LID file keywords.
 
 Library Header
 ~~~~~~~~~~~~~~
