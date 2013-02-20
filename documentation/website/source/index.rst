@@ -43,12 +43,12 @@ The `Dylan Foundry <http://dylanfoundry.org/>`_ has written about
 Dylan has a large amount of documentation available:
 
 * `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`_:
-   A tutorial is written primarily for those with solid programming
+   A tutorial written for those with solid programming
    experience in C++ or another object-oriented, static language. It
    provides a gentler introduction to Dylan than does the Dylan
    Reference Manual (DRM).
 * `Dylan Programming Guide <http://opendylan.org/books/dpg/>`_:
-   A good, book length Dylan tutorial by several Harlequin employees.
+   A book length Dylan tutorial.
 * `Dylan Reference Manual <http://opendylan.org/books/drm/>`_:
    The official definition of the Dylan language and standard library.
 * `Open Dylan Documentation <http://opendylan.org/documentation/>`_:
