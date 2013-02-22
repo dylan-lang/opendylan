@@ -3,16 +3,83 @@
    <div class="row">
      <div class="span8">
 
-     <div class="hero-unit">
-        <p><em>Dylan is an advanced, object-oriented, dynamic language which
-        supports rapid program development.  When needed, programs can be
-        optimized for more efficient execution by supplying more type
-        information to the compiler.  Nearly all entities in Dylan
-        (including functions, classes, and basic data types such as
-        integers) are first class objects. Additionally Dylan supports
-        multiple inheritance, polymorphism, multiple dispatch, keyword
-        arguments, object introspection, macros, and many other advanced
-        features...  --Peter Hinely</em></p>
+     <div id="code-carousel" class="carousel slide">
+       <ol class="carousel-indicators">
+         <li data-target="#code-carousel" data-slide-to="0" class="active"></li>
+         <li data-target="#code-carousel" data-slide-to="1"></li>
+         <li data-target="#code-carousel" data-slide-to="2"></li>
+       </ol>
+       <div class="carousel-inner">
+         <div class="item active">
+.. code-block:: dylan
+
+  define class <vehicle> (<object>)
+    slot owner :: <string>,
+      init-keyword: owner:,
+      init-value: "Northern Motors";
+  end class <vehicle>;
+
+  define class <car> (<vehicle>)
+  end class <car>;
+
+  define class <truck> (<vehicle>)
+    slot capacity,
+      required-init-keyword: tons:;
+  end class <truck>;
+
+.. raw:: html
+
+         </div>
+         <div class="item">
+.. code-block:: dylan
+
+  define generic tax
+      (v :: <vehicle>) => (tax-in-dollars :: <float>);
+
+  define method tax
+      (v :: <vehicle>) => (tax-in-dollars :: <float>)
+    100.00
+  end;
+
+  define method tax
+      (c :: <car>) => (tax-in-dollars :: <float>)
+    50.0;
+  end method;
+
+  define method tax
+      (t :: <truck>) => (tax-in-dollars :: <float>)
+    // standard vehicle tax plus $10/ton
+    next-method() + t.capacity * 10.0;
+  end method;
+
+.. raw:: html
+
+         </div>
+         <div class="item">
+.. code-block:: dylan
+
+  define function make-fibonacci()
+    let n = 0;
+    let m = 1;
+    method ()
+      let result = n + m;
+      n := m;
+      m := result  // return value
+    end
+  end;
+
+  define constant fib = make-fibonacci();
+
+  for (i from 1 to 15)
+    format-out("%d ", fib())
+  end;
+
+.. raw:: html
+
+         </div>
+       </div>
+       <a class="carousel-control left" href="#code-carousel" data-slide="prev">&lsaquo;</a>
+       <a class="carousel-control right" href="#code-carousel" data-slide="next">&rsaquo;</a>
      </div>
      <h2>Recent News</h2>
 
