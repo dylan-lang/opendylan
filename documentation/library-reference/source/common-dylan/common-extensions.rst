@@ -1335,13 +1335,11 @@ The extensions are:
 
    - :gf:`join`
 
-.. TODO(cgay): How do we document specific methods?
-
 .. generic-function:: join
    :open:
 
-   Join several sequences (e.g. string) together, including a separator
-   between each sequence.
+   Join several sequences (e.g. strings) together, including a separator
+   between each pair of adjacent sequences.
 
    :signature: join *sequences* *separator* #key *key* *conjunction* => *joined*
    :parameter sequences: An instance of ``<sequence>``.
@@ -1381,8 +1379,8 @@ The extensions are:
 .. method:: join
    :specializer: <sequence>, <sequence>
 
-   Join several sequences together, including a separator between each
-   sequence.
+   Join several sequences together, including a separator between each pair of
+   adjacent sequences.
 
    :signature: join *sequences* *separator* #key *key* *conjunction* => *joined*
    :parameter items: An instance of ``<sequence>``.
