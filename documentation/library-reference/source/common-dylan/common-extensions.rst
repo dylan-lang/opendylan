@@ -1331,36 +1331,67 @@ The extensions are:
 
        split("a.b.c", '.') => #("a", "b", "c")
 
+   See also
+
+   - :gf:`join`
 
 .. TODO(cgay): How do we document specific methods?
 
 .. generic-function:: join
    :open:
 
-   Join several sequences together, including a separator between each
-   sequence.
+   Join several sequences (e.g. string) together, including a separator
+   between each sequence.
 
-   :signature: join (items, separator, #key key, conjunction) => (joined)
-   :parameter items: An instance of ``<sequence>``.
+   :signature: join *sequences* *separator* #key *key* *conjunction* => *joined*
+   :parameter sequences: An instance of ``<sequence>``.
    :parameter separator: An instance of ``<sequence>``.
-   :parameter #key key:
-   :parameter #key conjunction:
+   :parameter #key key: Transformation to apply to each item. Default value: ``identity``.
+   :parameter #key conjunction: Last separator. Default value: #f
    :value joined: An instance of ``<sequence>``.
 
-.. method:: join
+   :description:
 
-   Join several sequences together, including a separator between each
-   sequence.  If the first argument is empty, an empty sequence of type
-   type-for-copy(separator) is returned.
+     Join *sequences* together, including *separator* between each sequence.
 
-   :specializer: 
-   :parameter items: An instance of ``<sequence>``.
-   :parameter separator: An instance of ``<sequence>``.
-   :parameter #key key: Transformation to apply to each item. An instance of ``<function>``
-   :parameter #key conjunction: Last separator. An instance of ``false-or(<sequence>)``
-   :value joined: An instance of ``<sequence>``.
+     If the first argument is empty, an empty sequence of type
+     ``type-for-copy(separator)`` is returned. If *sequences* is of size one,
+     the first element is returned. Otherwise, the resulting *joined* sequence
+     will be of the same type as *sequences*.
+
+     Every element in *sequences* is transformed by *key*, which is a function
+     that must accept one argument.
+
+     If *conjunction* is not false, it is used instead of *separator* to join
+     the last pair of elements in *sequences*.
+
    :example:
 
    .. code-block:: dylan
 
-     join(range(from: 1, to: 3), ", ", key: integer-to-string, conjunction: " and ") => "1, 2 and 3"
+     join(range(from: 1, to: 3), ", ",
+          key: integer-to-string, conjunction: " and ")
+     => "1, 2 and 3"
+
+   See also
+
+   - :meth:`join <join(<sequence>, <sequence>)>`
+   - :func:`split`
+
+.. method:: join
+   :specializer: <sequence>, <sequence>
+
+   Join several sequences together, including a separator between each
+   sequence.
+
+   :signature: join *sequences* *separator* #key *key* *conjunction* => *joined*
+   :parameter items: An instance of ``<sequence>``.
+   :parameter separator: An instance of ``<sequence>``.
+   :parameter #key key: Transformation to apply to each item. An instance of ``<function>``.
+   :parameter #key conjunction: Last separator. An instance of ``false-or(<sequence>)``.
+   :value joined: An instance of ``<sequence>``.
+
+   See also
+
+   - :gf:`join`
+   - :func:`split`
