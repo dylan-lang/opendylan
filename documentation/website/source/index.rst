@@ -94,7 +94,7 @@
 
 .. raw:: html
 
-       <div class="pull-right"><a href="news/index.html" class="btn btn-primary btn-large">All news &raquo;</a></div>
+       <div class="pull-right"><a href="news/index.html">All news &raquo;</a></div>
      </div>
      <div class="span4">
 
