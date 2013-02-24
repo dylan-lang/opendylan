@@ -343,7 +343,7 @@ define primitive-coercion-inverses
 define primitive-coercion-inverses
   primitive-cast-pointer-as-raw and primitive-cast-raw-as-pointer;
 
-// TODO: generalize the coercion macro to accomodate wrap-c-pointer
+// TODO: generalize the coercion macro to accommodate wrap-c-pointer
 // 
 // define primitive-coercion-inverses
 //   primitive-unwrap-c-pointer of primitive-wrap-c-pointer at 1;
