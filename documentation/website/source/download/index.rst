@@ -69,6 +69,14 @@ and no IDE.
 64 bit Linux requires that the Boehm GC is installed
 (For example, ``apt-get install libgc`` on Ubuntu).
 
+Installation from source
+------------------------
+
+You can read more about installing Open Dylan from the source files
+in the `README <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`_.  
+This file contains the instructions on how to obtain the source code, the required
+dependencies and how to build it.
+
 .. _Windows (32 bit): http://opendylan.org/downloads/opendylan/2012.1/opendylan-2012.1-win32.exe
 .. _Mac OS X Lion+ (Intel): http://opendylan.org/downloads/opendylan/2012.1/opendylan-2012.1-x86-darwin.tar.bz2
 .. _Linux (x86): http://opendylan.org/downloads/opendylan/2012.1/opendylan-2012.1-x86-linux.tar.bz2
