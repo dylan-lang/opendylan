@@ -61,7 +61,8 @@ define function user-registry-path
           tokenize-environment-variable(path));
   let cwd = working-directory();
   if (cwd)
-    add!(registries | #(), subdirectory-locator(cwd, "registry"))
+    concatenate(registries | #(),
+                list(subdirectory-locator(cwd, "registry")))
   else
     registries
   end;
