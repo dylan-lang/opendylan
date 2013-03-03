@@ -19,7 +19,7 @@ define sideways method op--preserve-mlist-for-mep-apply
     // We rely on the code in the IEP to remove it afterwards, because we
     // frig the count to allow for it being on the stack.
 
-    ins--add(be, stack, stack, 4); // remove 1 of the the 2 stack args
+    ins--add(be, stack, stack, 4); // remove 1 of the 2 stack args
     ins--st(be, mlist, stack, 0);  // store the MList on the stack.
   end with-harp;
 

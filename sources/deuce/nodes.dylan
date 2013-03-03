@@ -371,7 +371,7 @@ define open abstract primary class <basic-node> (<basic-interval>, <node>)
   sealed slot node-previous :: false-or(<basic-node>) = #f,
     init-keyword: previous:;
   // Some buffers have their nodes in a tree structure
-  //--- Finish implementing the the parent/children stuff (e.g., 'do-lines')
+  //--- Finish implementing the parent/children stuff (e.g., 'do-lines')
   sealed slot node-parent :: false-or(<basic-node>) = #f,
     init-keyword: parent:;
   sealed slot node-children :: <list> = #(),

@@ -112,7 +112,7 @@ end runtime-primitive;
 
 /// op--buffer-up-remaining-values is a DDU op which ignores MVs up to
 /// offset, sets the buffer register to point to an appropriately
-/// fillled part of the MV area containing the remaining values, and
+/// filled part of the MV area containing the remaining values, and
 /// sets the size register to point to the size of valid data.
 /// This is carefully implemented so that buffer may be a temporary
 /// register.

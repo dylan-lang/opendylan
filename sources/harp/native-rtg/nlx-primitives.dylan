@@ -20,7 +20,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 1. Introduction
 
 Bind-exit and unwind-protect are represented on the stack as frames which
-contain information about how to invoke the revelevant continuation. 
+contain information about how to invoke the relevant continuation.
 Unwind-protect frames are also chained together, and the current environment 
 of existing unwind-protects is available in the dynamic-environment slot
 of the Thread Environment Block.

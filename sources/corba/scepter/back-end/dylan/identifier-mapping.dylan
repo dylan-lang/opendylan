@@ -7,8 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // This method isn't used at the moment. It takes a Dylan name and
 // returns a possibly new name which is guaranteed not to clash with
-// any Dylan name which could be dervied from an IDL file according
-// to the the Dylan IDL binding.
+// any Dylan name which could be derived from an IDL file according
+// to the Dylan IDL binding.
 /*
 define method ensure-non-corba-name (name :: <string>)
  => (name :: <string>)
