@@ -12,40 +12,46 @@ XXXXXXXXX, 2013.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2013.1>`_
 
-Documentation Improvements
-==========================
+Improvements
+============
+
+Documentation
+-------------
 
 LID file keywords are better documented in the Library Reference.
 
 The strings library has been documented in the Library Reference.
 
 
-Portability Enhancements
-========================
+Portability
+-----------
 
 The configure script could fail on Gentoo Linux as there was not always
 a static ``libgc.a`` available. We now check for the file that we need
 on each platform.
 
-Runtime Improvements
-====================
+Runtime
+-------
 
 The C run-time no longer attempts to drop into a debugger if you allocate
 more than roughly 100M of memory in a single allocation.
 
-Library Improvements
-====================
+Library
+-------
 
 collections
------------
+^^^^^^^^^^^
 
 The ``collections`` library now exports a ``collections`` convenience
 module that re-exports the ``set``, ``bit-set``, ``bit-vector`` and
 ``byte-vector`` modules. This simplifies using the additional collection
 types from within other libraries and applications.
 
+Bugfixes
+========
+
 Windows Support
-===============
+---------------
 
 The 2012.1 release introduced a bug with where settings were
 stored in the Windows registry. This has been corrected.
