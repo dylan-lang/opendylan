@@ -33,6 +33,17 @@ Runtime Improvements
 The C run-time no longer attempts to drop into a debugger if you allocate
 more than roughly 100M of memory in a single allocation.
 
+Library Improvements
+====================
+
+collections
+-----------
+
+The ``collections`` library now exports a ``collections`` convenience
+module that re-exports the ``set``, ``bit-set``, ``bit-vector`` and
+``byte-vector`` modules. This simplifies using the additional collection
+types from within other libraries and applications.
+
 Windows Support
 ===============
 

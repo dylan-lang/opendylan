@@ -15,6 +15,7 @@ define library collections
     import: { machine-words, common-extensions };
 
   export
+    collections,
     bit-vector,
     bit-set,
     collectors,
@@ -103,3 +104,10 @@ define module collections-internals
   use set;
   use table-extensions;
 end module collections-internals;
+
+define module collections
+  use byte-vector, export: all;
+  use bit-vector, export: all;
+  use bit-set, export: all;
+  use set, export: all;
+end;
