@@ -84,7 +84,7 @@ end method;
 
 // Define the master TEB as a static block. 
 // NB: this must appear in the set of ambiguously traced roots of the GC.
-// It must be immediately preceeded by the gc-teb.
+// It must be immediately preceded by the gc-teb.
 
 define direct runtime-variable master-gc-teb = "%master-gc-teb", data: 0, 
   repeat: method(be) ash(gc-teb-total-size(be), -2) end,
@@ -319,7 +319,7 @@ define method op--allocate-dynamic-teb (be :: <harp-back-end>, teb :: <register>
 
     ins--add(be, teb, gc-teb, be.gc-teb-total-size);
 
-    // Initalize the TEB & GC-TEB to show we are still outside Dylan
+    // Initialize the TEB & GC-TEB to show we are still outside Dylan
     op--initialize-GC-TEB(be, gc-teb);
     op--initialize-TEB(be, teb, $outside-dylan);
   
@@ -744,7 +744,7 @@ define method op--initialize-master-thread (be :: <harp-back-end>) => ()
   // Create the state variable
   op--create-TEB-tlv-index(be);
 
-  // Initalize the TEB & GC-TEB
+  // Initialize the TEB & GC-TEB
   op--initialize-GC-TEB(be, master-gc-teb);
   op--initialize-TEB(be, master-teb, $outside-dylan);
 
@@ -774,7 +774,7 @@ define method op--init-thread-and-TEB (be :: <harp-back-end>) => (gc-teb)
       ins--move(be, gc-teb, stack);
       ins--move(be, gc-teb-result, stack);
       
-      // Initalize the TEB & GC-TEB to show we are inside Dylan
+      // Initialize the TEB & GC-TEB to show we are inside Dylan
       op--initialize-GC-TEB(be, gc-teb);
       op--initialize-TEB(be, teb, $inside-dylan);
     else
@@ -1066,7 +1066,7 @@ define shared init no-public c-runtime-primitive dylan-initialize
 
   // Find the TEB. For the base runtime, we know it's in the fast-access
   // location, because the cold-start put it there. For client DLLs, 
-  // we might even have to craete a new one.
+  // we might even have to create a new one.
   when-client op--ensure-valid-teb(be, teb) end;
   when-base ins--get-teb(be, teb) end;
 

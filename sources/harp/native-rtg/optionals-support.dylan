@@ -104,7 +104,7 @@ end method;
 /// OP--SHUFFLE-SIZE-FOR-REQUIREDS
 /// This returns either an integer or a register containing the number
 /// of words of data at the top of stack which must be shuffled to make
-/// room for the keywords and vector header. The result is based on the
+/// room for the keywords and vector header. The result is based on
 /// the number of required arguments.
 
 define method op--shuffle-size-for-requireds
@@ -182,7 +182,7 @@ define method op--initialize-vector-header
       rest-val;
     end with-harp;
   else
-    // store the the #rest pointer itself
+    // store the #rest pointer itself
     let rest-val = op--put-rest-variable-on-stack(be, data, gap-space);
     rest-val;
   end if;

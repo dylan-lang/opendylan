@@ -618,7 +618,7 @@ define method output-table
     (be :: <harp-back-end>, outputter, 
      name :: <byte-string>, entries :: <list>,
      table-size :: <integer>) => (ref :: <constant-reference>)
-  // entries is a list of pairs, where each pair is of the the form 
+  // entries is a list of pairs, where each pair is of the form
   // returned by output-table-entry. I.e. (constant-ref . cases)
 
   let ref = constant-mangled-ref(be, name.as-lowercase);

@@ -18,7 +18,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // glad of this.
 
 // Each property has a set of possible-value specifications, a default
-// value, and an init-keyword used to specify the the value of the 
+// value, and an init-keyword used to specify the value of the
 // property in a call to make (or elsewhere).
 
 define dood-class <property> (<object>)

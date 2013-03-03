@@ -329,7 +329,7 @@ end method;
 /// This returns either an integer or a register containing the number
 /// of words of data at the top of stack which must be shuffled to make
 /// room for the keywords for an MEP. The result is based on the
-/// the number of (required arguments plus #rest value) on the stack.
+/// number of (required arguments plus #rest value) on the stack.
 /// For an MEP, the rest value must be shuffled along too.
 
 define method op--shuffle-size-for-mep
@@ -483,7 +483,7 @@ define method op--gf-optional-xep-internal
     op--number-required(be, argc);
     ins--add(be, argc, argc, 1);
   
-    // Now vector up these pesudo arguments (using the doctored arg count);
+    // Now vector up these pseudo arguments (using the doctored arg count);
     // All argument registers are pushed unto the stack, and #rest becomes
     // the only argument register
     op--vector-up-rest-args(be, 0, 0);

@@ -165,7 +165,7 @@ end method search;
 
 /// Faster Boyer-Moore searching functions
 
-// Note the the default test function is _not_ case-sensitive!
+// Note the default test function is _not_ case-sensitive!
 define method boyer-search 
     (pattern :: <byte-string>, source :: <byte-string>,
      #key test = char-equal?,
@@ -341,7 +341,7 @@ end method fill-reoccurrence-table!;
 
 /// Slow searching functions
 
-// Note the the default test function is _not_ case-sensitive!
+// Note the default test function is _not_ case-sensitive!
 define sealed method string-search
     (pattern :: <byte-string>, source :: <byte-string>,
      #key test = char-equal?,
@@ -381,7 +381,7 @@ define sealed method string-search
   end
 end method string-search;
 
-// Note the the default test function is _not_ case-sensitive!
+// Note the default test function is _not_ case-sensitive!
 define sealed method string-reverse-search
     (pattern :: <byte-string>, source :: <byte-string>,
      #key test = char-equal?,

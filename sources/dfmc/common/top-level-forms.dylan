@@ -144,7 +144,7 @@ define compiler-open dood-class <top-level-form> /* abstract */
     init-keyword: parent-form:;
   // sequence number used to establish the ordering of forms - given two
   // forms with the same parent, the one with the smaller sequence number
-  // comes first.  Note that the the numbers are not guaranteed to be
+  // comes first.  Note that the numbers are not guaranteed to be
   // sequential or start with 0.  In addition, derived forms created after
   // the initial top-level conversion are given sequence number of -1,
   // since they are assumed to be basically order independent wrt other

@@ -323,7 +323,7 @@ end method;
 /// OP--SHUFFLE-SIZE-FOR-APPLY
 /// This returns either an integer or a register containing the number
 /// of words of data at the top of stack which must be shuffled to make
-/// room for spreading the vector for an apply. The result is based on the
+/// room for spreading the vector for an apply. The result is based on
 /// the number of arguments passed. Here "requireds" refers to the arguments
 /// passed _apart_ from the last vector arg.
 

@@ -601,7 +601,7 @@ end method editor-files-dialog;
 /// Edit menu
 
 define command-table *editor-edit-command-table* (*global-command-table*)
-  //--- Instead the the next four, could we just use *edit-command-table*?
+  //--- Instead the next four, could we just use *edit-command-table*?
   include *undo-command-table*;
   include *clipboard-command-table*;
   include *selection-command-table*;
