@@ -55,3 +55,9 @@ Pelles C tools rather than Visual C 6. This is the start of improving
 the new user experience on Windows and having it work out of the
 box.
 
+Bug Fixes
+=========
+
+* Directories listed in the shell environment variable
+  OPEN_DYLAN_USER_REGISTRIES now take precedence over the the
+  ./registry directory, if any.
