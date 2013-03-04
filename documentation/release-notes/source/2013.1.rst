@@ -36,8 +36,8 @@ Runtime
 The C run-time no longer attempts to drop into a debugger if you allocate
 more than roughly 100M of memory in a single allocation.
 
-Library
--------
+Libraries
+---------
 
 collections
 ^^^^^^^^^^^
@@ -47,8 +47,8 @@ module that re-exports the ``set``, ``bit-set``, ``bit-vector`` and
 ``byte-vector`` modules. This simplifies using the additional collection
 types from within other libraries and applications.
 
-Bugfixes
-========
+Bug Fixes
+=========
 
 Windows Support
 ---------------
@@ -61,3 +61,9 @@ Pelles C tools rather than Visual C 6. This is the start of improving
 the new user experience on Windows and having it work out of the
 box.
 
+Build Tools
+-----------
+
+Directories listed in the shell environment variable
+OPEN_DYLAN_USER_REGISTRIES now take precedence over the ./registry
+directory, if any.
