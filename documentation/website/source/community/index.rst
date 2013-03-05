@@ -1,9 +1,25 @@
+.. raw:: html
+
+  <div class="row">
+    <div class="span3 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
+        <li><a href="#development"><i class="icon-chevron-right"></i> Development</a></li>
+        <li><a href="#the-dylan-irc-channel"><i class="icon-chevron-right"></i> IRC Channel</a></li>
+        <li><a href="#newsgroup-comp-lang-dylan"><i class="icon-chevron-right"></i> Newsgroup</a></li>
+        <li><a href="#mailing-lists"><i class="icon-chevron-right"></i> Mailing Lists</a></li>
+        <li><a href="#other-sites"><i class="icon-chevron-right"></i> Other sites</a></li>
+      </ul>
+    </div>
+    <div class="span9">
+
 *********
 Community
 *********
 
 Here are some resources for keeping up with what's going on in the Dylan hacker
 community...
+
+.. _development::
 
 Development
 ===========
@@ -14,6 +30,8 @@ Development
 - `Open bugs for Open Dylan <https://github.com/dylan-lang/opendylan/issues>`_
 - `How to contribute </documentation/hacker-guide/contribute.html>`_
 - `Ideas for Google Summer of Code - 2012 <gsoc/2012/index.html>`_
+
+.. _irc::
 
 The #dylan IRC channel
 ======================
@@ -28,6 +46,8 @@ question and then check the logs for answers later.
 To discuss coding issues you can paste your code to the #dylan channel via
 http://paste.lisp.org/new/dylan or any other pastebin site.  See previous
 pastes here: http://paste.lisp.org/list/dylan
+
+.. _newsgroup::
 
 Newsgroup comp.lang.dylan
 =========================
@@ -77,3 +97,7 @@ Other sites:
 - `Google Plus <https://plus.google.com/109036375650377247852>`_
 - `Stack Overflow <http://stackoverflow.com/questions/tagged/dylan>`_
 
+.. raw:: html
+
+    </div>
+  </div>

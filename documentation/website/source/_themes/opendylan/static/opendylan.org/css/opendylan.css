@@ -21,6 +21,10 @@ footer.navbar {
   margin-top: 20px;
   margin-bottom: 0;
 }
+.section h2 {
+  padding-top: 50px;
+  margin-top: 0px;
+}
 /* Make the headerlink less obnoxiously visible */
 a.headerlink {
   color: silver;
