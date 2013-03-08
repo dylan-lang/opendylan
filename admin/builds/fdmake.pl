@@ -177,36 +177,21 @@ sub build_library {
         my $errors = 0;
 
         my $printed;
-        my $prefix;
         while(<$compfd>) {
             if (defined $logfd) {
                 print $logfd $_;
             }
-
             if(m|There were (\d+) warnings, (\d+) serious warnings and (\d+) errors|) {
                 $warnings += $1;
                 $serious_warnings += $2;
                 $errors += $3;
             }
-            elsif (m|^Warning at (.+):(\d+(-\d+)?):|) {
-                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
-                $prefix = "$source:$2: warning: ";
-            }
-            elsif (m|^Serious warning at (.+):(\d+(-\d+)?):|) {
-                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
-                $prefix = "$source:$2: serious warning: ";
-            }
-            elsif (m|^Error at (.+):(\d+(-\d+)?):|) {
-                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
-                $prefix = "$source:$2: error: ";
-            }
-            elsif (defined $prefix && !m|^$|) {
+            elsif (m/^(.+):(\d+(-\d+)?): (Serious warning|Warning|Error) - (.+)/) {
                 if (!$printed) {
                     print "\n";
                     $printed = 1;
                 }
-                print $prefix . $_;
-                undef $prefix;
+                print $_;
             }
         }
 
