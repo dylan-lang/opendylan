@@ -22,6 +22,9 @@ LID file keywords are better documented in the Library Reference.
 
 The strings library has been documented in the Library Reference.
 
+The join method in common-extensions library has been documented in the
+Library Reference.
+
 
 Portability
 -----------
