@@ -1,3 +1,19 @@
+.. raw:: html
+
+  <div class="row">
+    <div class="span3 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
+        <li><a href="#learning-dylan"><i class="icon-chevron-right"></i> Learning Dylan</a></li>
+        <li><a href="#articles"><i class="icon-chevron-right"></i> Articles</a></li>
+        <li><a href="#publications"><i class="icon-chevron-right"></i> Publications</a></li>
+        <li><a href="#cheat-sheets"><i class="icon-chevron-right"></i> Cheat Sheets</a></li>
+        <li><a href="#references"><i class="icon-chevron-right"></i> References</a></li>
+        <li><a href="#for-open-dylan-developers"><i class="icon-chevron-right"></i> For Open Dylan Developers</a></li>
+        <li><a href="#archived-documentation"><i class="icon-chevron-right"></i> Archived Documentation</a></li>
+      </ul>
+    </div>
+    <div class="span9">
+
 *************
 Documentation
 *************
@@ -8,12 +24,10 @@ Documentation
    in the near future.
    :class: alert alert-block alert-warning
 
+Learning Dylan
+==============
+
 .. raw:: html
-
-   <div class="row">
-     <div class="span6">
-
-     <h2>Learning Dylan</h2>
 
      <div class="alert alert-block alert-success">
        <p>Just getting started with Open Dylan?  We recommend that
@@ -56,10 +70,10 @@ Documentation
     the portable window programming toolkit. This is only useful
     if you are using Open Dylan on Windows.
 
-.. raw:: html
+Articles
+========
 
-     <hr>
-     <h2>Articles</h2>
+.. raw:: html
 
     <div class="alert alert-block alert-info">
       <p>Featured articles and blog postings.</p>
@@ -85,19 +99,15 @@ Documentation
 
     An exciting look at using DIME and emacs for Dylan development.
 
-.. raw:: html
-
-     <hr>
-     <h2>Publications</h2>
+Publications
+============
 
 `See our publications page <publications.html>`_.
 
+Cheat Sheets
+============
+
 .. raw:: html
-
-     </div>
-     <div class="span6">
-
-     <h2>Cheat Sheets</h2>
 
      <div class="alert alert-block alert-info">
        <p>Quick one-page sheets for common tasks.</p>
@@ -111,10 +121,10 @@ Documentation
    * `Collections <cheatsheets/collections.html>`_
    * `For Scheme programmers <cheatsheets/scheme.html>`_
 
-.. raw:: html
+References
+==========
 
-     <hr>
-     <h2>References</h2>
+.. raw:: html
 
      <div class="alert alert-block alert-info">
        <p>These are some lengthier reference materials. While they
@@ -148,10 +158,10 @@ Documentation
     the portable window programming toolkit. It complements
     Building Applications Using DUIM.
 
-.. raw:: html
+For Open Dylan Developers
+=========================
 
-     <hr>
-     <h2>For Open Dylan Developers</h2>
+.. raw:: html
 
      <div class="alert alert-block alert-info">
        <p>Notes and materials useful to those working on
@@ -178,10 +188,10 @@ Documentation
     implementation and related libraries.
 
 
-.. raw:: html
+Archived Documentation
+======================
 
-      <hr>
-      <h2>Archived Documentation</h2>
+.. raw:: html
 
       <div class="alert alert-block alert-warning">
         <p>This is old documentation that we don't plan to
