@@ -136,8 +136,6 @@ static void EstablishDylanExceptionHandlers(void)
   struct sigaction newSEGVHandler;
   struct sigaction newTRAPHandler;
 
-  sigset_t set, oldset;
-
   unsigned short cw;
 
   sigfillset(&newFPEHandler.sa_mask);
