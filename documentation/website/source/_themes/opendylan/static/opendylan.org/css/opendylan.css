@@ -64,6 +64,9 @@ a.headerlink {
   body {
     padding-top: 0;
   }
+  .bs-docs-sidebar .affix {
+    position: relative;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 980px) {
