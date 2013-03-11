@@ -177,6 +177,7 @@ sub build_library {
         my $errors = 0;
 
         my $printed;
+        my $prefix;
         while(<$compfd>) {
             if (defined $logfd) {
                 print $logfd $_;
@@ -193,7 +194,33 @@ sub build_library {
                 }
                 print $_;
             }
-        }
+
+            # Warning format changed for the 2013.1 release.  The next
+            # four clauses are for compatibility with older releases
+            # since we use them for bootstrapping.
+
+            elsif (m|^Warning at (.+):(\d+(-\d+)?):|) {
+                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                $prefix = "$source:$2: warning: ";
+            }
+            elsif (m|^Serious warning at (.+):(\d+(-\d+)?):|) {
+                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                $prefix = "$source:$2: serious warning: ";
+            }
+            elsif (m|^Error at (.+):(\d+(-\d+)?):|) {
+                my $source = (exists $fullpath{$1}) ? $fullpath{$1} : $1;
+                $prefix = "$source:$2: error: ";
+            }
+            elsif (defined $prefix && !m|^$|) {
+                if (!$printed) {
+                    print "\n";
+                    $printed = 1;
+                }
+                print $prefix . $_;
+                undef $prefix;
+                print $_;
+            }
+       }
 
         my $elapsed_time = sprintf '%.3f', time() - $start_time;
         print "${warnings} W, ${serious_warnings} SW, ${errors} E (${elapsed_time} seconds)\n";
