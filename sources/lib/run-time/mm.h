@@ -90,7 +90,7 @@ extern MMError MMTramp(void **rReturn,
  *   do {
  *     object = MMReserveObject(size, teb);
  *     initialize(object, ...);
- *   } while(!MMCommitObject(object, size, teb));
+ *   } while (!MMCommitObject(object, size, teb));
  *
  * MMReserveObjectHandler installs an error handler for use by
  * MMReserveObject in case of error.  (See the description of error
@@ -103,9 +103,9 @@ extern MMError MMTramp(void **rReturn,
  *
  *   do {
  *     object = MMReserveObject(size, teb);
- *     if(object == NULL) break;
+ *     if (object == NULL) break;
  *     initialize(object, ...);
- *   } while(!MMCommitObject(object, size, teb));
+ *   } while (!MMCommitObject(object, size, teb));
  *
  * Dylan object wrappers may _NOT_ be allocated using this method.
  * Use MMReserveWrapper and MMCommitWrapper instead.

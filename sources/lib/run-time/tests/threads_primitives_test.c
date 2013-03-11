@@ -299,13 +299,13 @@ Z test_rl3()
 	printf("\n3 - Claiming when already owned by us\n");
 	CHECK("make lock",
 		primitive_make_recursive_lock(&recursive_lock, name) == OK);
-	for(i=0; i<5; i++) {
+	for (i=0; i<5; i++) {
 		CHECK("wait-for lock",
 			primitive_wait_for_recursive_lock(&recursive_lock) == OK);
 		CHECK("lock owned",
 			primitive_owned_recursive_lock(&recursive_lock) == (ZINT)I(1));
 	}
-	for(i=0; i<4; i++) {
+	for (i=0; i<4; i++) {
 		CHECK("release lock",
 			primitive_release_recursive_lock(&recursive_lock) == OK);
 		CHECK("lock owned",
@@ -680,7 +680,7 @@ Z test_n4()
 	printf("\n4 - Several threads waiting for a notification\n");
 	primitive_make_notification(&notification, NULL);
 	primitive_make_simple_lock(&simple_lock, NULL);
-	for(i=0; i<10; i++)
+	for (i=0; i<10; i++)
 		primitive_make_thread(&thread[i], NULL, (ZINT)I(0), test_n4a);
 
 	Sleep(1000);
@@ -691,7 +691,7 @@ Z test_n4()
 	CHECK("release lock",
 		primitive_release_simple_lock(&simple_lock) == OK);
 
-	for(i=0; i<10; i++) {
+	for (i=0; i<10; i++) {
 		primitive_thread_join_single(&thread[i]);
 		primitive_destroy_thread(&thread[i]);
 	}
@@ -709,7 +709,7 @@ Z test_n5a()
 	ZINT  zresult;
 	int i, timeout;
 
-	for(i=0; i<5; i++) {
+	for (i=0; i<5; i++) {
 		primitive_wait_for_simple_lock(&simple_lock);
 		timeout = rand() % 500;
 		start = GetTickCount();
@@ -740,7 +740,7 @@ Z test_n5()
 	primitive_make_thread(&thread, NULL, (ZINT)I(0), test_n5a);
 
 	printf("\n5 - Timed waits for notification\n");
-	for(i=0; i<15; i++) {
+	for (i=0; i<15; i++) {
 		Sleep(rand() % 1000);
 		CHECK("wait-for lock",
 			primitive_wait_for_simple_lock(&simple_lock) == OK);
@@ -818,18 +818,20 @@ Z test_t2()
 	assert(sov != NULL);
 	sov->class = NULL;
 	sov->size = I(N_THREADS);
-	for(i=0; i<N_THREADS; i++)
+	for (i=0; i<N_THREADS; i++) {
 		sov->data[i] = &thread[i];
+  }
 
 	// Now wait for all the other threads to finish
-	for(i=0; i<N_THREADS; i++) {
+	for (i=0; i<N_THREADS; i++) {
 		threadt = primitive_thread_join_multiple(sov);
 		CHECK("thread joined", !IS_ZINT(threadt));
-		for(j=0; j < ((int)sov->size >> 2); j++) {
+		for (j=0; j < ((int)sov->size >> 2); j++) {
 			if (sov->data[j] == threadt) {
 				count++;
-				for(k=j; k < ((int)sov->size >> 2)-1; k++)
+				for (k=j; k < ((int)sov->size >> 2)-1; k++) {
 					sov->data[k] = sov->data[k+1];
+        }
 				sov->size = I(((int)sov->size >> 2) - 1);
 				j = N_THREADS;
 			}

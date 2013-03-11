@@ -43,7 +43,7 @@ void GC_free(void *old)
 
 /* Thread Local storage
  *
- * Implement this is C for invocatiuon by HARP, just in
+ * Implement this in C for invocation by HARP, just in
  * case the pthreads APIs are implemented as macros -
  * (which they might be according to the doc).
  */
@@ -81,10 +81,9 @@ int mps_lib_fputs_(const char *s, int end, mps_lib_FILE *stream)
 {
   int i = 0;
   char c;
-  while ((i < end) && (c = s[i++]))
-    {
-      mps_lib_fputc(c, (mps_lib_FILE *)stream);
-    };
+  while ((i < end) && (c = s[i++])) {
+    mps_lib_fputc(c, (mps_lib_FILE *)stream);
+  }
   return 1;
 }
 
@@ -151,7 +150,7 @@ void walkstack() {
   int rc;
   Dl_info info;
 
-  while(ebp) {
+  while (ebp) {
     eip = *((int*)ebp + 1);
     rc = dladdr((void*)eip, &info);
     if (!rc||(!info.dli_sname && !info.dli_fname)) {

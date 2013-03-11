@@ -13,8 +13,9 @@
 SPY_INTERFACE int spy_load_extension_component (char *name)
 {
   HANDLE  extension = LoadLibrary(name);
-  if (extension == NULL)
+  if (extension == NULL) {
     return(SPY_LOAD_EXTENSION_COMPONENT_FAILED);
-  else
+  } else {
     return(SPY_LOAD_EXTENSION_COMPONENT_SUCCEEDED);
+  }
 }

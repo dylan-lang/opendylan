@@ -9,6 +9,8 @@
 
 #undef mps_tramp /* Override generic version */
 
+typedef void *(*mps_tramp_t)(void *, size_t);
+
 #define mps_tramp(r_o, f, p, s) \
     { \
     void **_r_o = (r_o); \

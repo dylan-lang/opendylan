@@ -85,9 +85,8 @@ void RestoreFPState ()
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 {
-  if (inside_dylan_ffi_barrier() == 0) { }
-
-  else {
+  if (inside_dylan_ffi_barrier() == 0) {
+  } else {
     ucontext_t *uc = (ucontext_t *) uap;
 
     switch (info->si_code) {
