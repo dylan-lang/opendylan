@@ -69,9 +69,9 @@ void q_push(QUEUE *queue, void *value)
 	assert(element != NULL);
 	element->next = NULL;
 	element->value = value;
-	if (queue->first == NULL)
+	if (queue->first == NULL) {
 		queue->first = queue->last = element;
-	else {
+	} else {
 		queue->last->next = element;
 		Sleep(0);
 		queue->last = element;
@@ -89,10 +89,11 @@ void *q_pop(QUEUE *queue)
 
 	element = queue->first;
 	value = element->value;
-	if (element == queue->last)
+	if (element == queue->last) {
 		queue->first = queue->last = NULL;
-	else
+	} else {
 		queue->first = element->next;
+  }
 	free(element);
 	return(value);
 }
@@ -129,7 +130,7 @@ void *get_from_queue(QUEUE *queue, DWORD *time)
 	primitive_wait_for_simple_lock(&queue->lock);
 #endif
 
-	while(q_empty(queue)) {
+	while (q_empty(queue)) {
 #ifdef SYNCHRONISE
 		primitive_wait_for_notification(&queue->notification,
 			&queue->lock);
@@ -158,7 +159,7 @@ Z feeder1(Z o, int n, ...)
 {
 	char c;
 
-	for(c = 'a'; c <= 'z'; c++) {
+	for (c = 'a'; c <= 'z'; c++) {
 		put_on_queue(&q, (void *)c);
 		Sleep(rand() % 50);
 	}
@@ -170,7 +171,7 @@ Z feeder2(Z o, int n, ...)
 {
 	char c;
 
-	for(c='0'; c <= '9'; c++) {
+	for (c='0'; c <= '9'; c++) {
 		put_on_queue(&q, (void *)c);
 		Sleep(rand() % 100);
 	}
@@ -191,10 +192,11 @@ Z reader1(Z o, int n, ...)
 
 	do {
 		ch = (char)get_from_queue(&q, &time);
-		if (ch == '\0')
+		if (ch == '\0') {
 			InterlockedIncrement(&counter);
-		else
+		} else {
 			printf("%010d:%c\n", time-start, ch);
+    }
 		Sleep(rand() % 100);
 	} while (counter < 1);
 	return(NULL);
@@ -208,10 +210,11 @@ Z reader2(Z o, int n, ...)
 
 	do {
 		ch = (char)get_from_queue(&q, &time);
-		if (ch == '\0')
+		if (ch == '\0') {
 			InterlockedIncrement(&counter);
-		else
+		} else {
 			printf("%010d:%c\n", time-start, ch);
+    }
 		Sleep(rand() % 50);
 	} while (counter < 1);
 	return(NULL);

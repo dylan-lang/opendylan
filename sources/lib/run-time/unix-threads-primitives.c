@@ -210,7 +210,7 @@ void primitive_write_thread_variable_internal()
       pthread_mutex_lock(&tlv_vector_list_lock);
       pthread_mutex_unlock(&tlv_vector_list_lock);
     }
-  } while(internal_InterlockedIncrement(&tlv_writer_counter) < 0);
+  } while (internal_InterlockedIncrement(&tlv_writer_counter) < 0);
 }
 
 
@@ -245,7 +245,7 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
 
 
   // dylan_thread_trampoline is the starting function for the new thread.
-  // It calls the dylan trampoline fucntion which we rely on to initialise
+  // It calls the dylan trampoline function which we rely on to initialise
   // the thread
 
 
@@ -841,13 +841,13 @@ primitive_make_recursive_lock(CONTAINER *lock, D_NAME name)
   rlock->recursion_count = 0;
 
   res = pthread_mutexattr_init(&attr);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
   res = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_ERRORCHECK);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
   res = pthread_mutex_init(&rlock->mutex, &attr);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
   res = pthread_mutexattr_destroy(&attr);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
 
   lock->handle = rlock;
   return OK;
@@ -895,13 +895,13 @@ primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
   slock->owner = 0;
 
   res = pthread_mutexattr_init(&attr);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
   res = pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_ERRORCHECK);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
   res = pthread_mutex_init(&slock->mutex, &attr);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
   res = pthread_mutexattr_destroy(&attr);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
 
   lock->handle = slock;
   return OK;
@@ -940,10 +940,11 @@ primitive_owned_simple_lock(CONTAINER *lock)
   slock = lock->handle;
 
   hThread = get_current_thread_handle();
-  if (slock->owner == hThread)
+  if (slock->owner == hThread) {
     return((ZINT)I(1)); // owned
-  else
+  } else {
     return((ZINT)I(0)); // not owned
+  }
 }
 
 
@@ -960,10 +961,11 @@ primitive_owned_recursive_lock(CONTAINER *lock)
   rlock = lock->handle;
 
   hThread = get_current_thread_handle();
-  if (rlock->owner == hThread)
+  if (rlock->owner == hThread) {
     return((ZINT)I(1)); // owned
-  else
+  } else {
     return((ZINT)I(0)); // not owned
+  }
 }
 
 
@@ -984,11 +986,13 @@ primitive_make_semaphore(CONTAINER *lock, D_NAME name,
   assert(IS_ZINT(zmax));
 
   semaphore = MMAllocMisc(sizeof(SEMAPHORE));
-  if (semaphore == NULL)
+  if (semaphore == NULL) {
     goto generalError;
+  }
 
-  if(sem_init(&semaphore->sema, 0, initial) == -1)
+  if (sem_init(&semaphore->sema, 0, initial) == -1) {
     goto generalError;
+  }
 
   lock->handle = semaphore;
   return OK;
@@ -1038,7 +1042,7 @@ primitive_make_notification(CONTAINER *notif, D_NAME name)
   }
 
   res = pthread_cond_init(&notification->cond, NULL);
-  if(res != 0) return GENERAL_ERROR;
+  if (res != 0) return GENERAL_ERROR;
 
   notif->handle = notification;
   return OK;
@@ -1074,7 +1078,7 @@ primitive_sleep(ZINT zmilsecs)
   assert(IS_ZINT(zmilsecs));
   req.tv_sec = milsecs / 1000;
   req.tv_nsec = (milsecs % 1000) * 1000000;
-  while(nanosleep(&req, &rem)) {
+  while (nanosleep(&req, &rem)) {
     if (errno == EINTR) {
       req = rem;
     } else {
@@ -1120,8 +1124,9 @@ primitive_allocate_thread_variable(Z value)
   // First check if we need to grow the TLV vectors
   size = (int)(*((Z *)(default_tlv_vector + sizeof(Z)))) >> 2;
   limit = (size+2) * sizeof(Z);
-  if (variable_offset >= limit)
-    grow_all_tlv_vectors(size+size);  // double the size each time we grow
+  if (variable_offset >= limit) {
+    grow_all_tlv_vectors(size + size);  // double the size each time we grow
+  }
 
   // Put the variable's default value in the default TLV vector
   destination = (Z *)(default_tlv_vector + variable_offset);
@@ -1146,7 +1151,7 @@ void grow_all_tlv_vectors(int newsize)
   TLV_VECTOR new_default;
 
   // Wait for thread variable writes to finish
-  while(internal_InterlockedCompareExchange(&tlv_writer_counter, TLV_GROW, 0)
+  while (internal_InterlockedCompareExchange(&tlv_writer_counter, TLV_GROW, 0)
         != 0);
 
   // Grow the default vector
@@ -1156,13 +1161,13 @@ void grow_all_tlv_vectors(int newsize)
 
   // Grow each vector in the active thread list
   list = tlv_vector_list;
-  while(list != NULL) {
+  while (list != NULL) {
     list->tlv_vector = grow_tlv_vector(list->tlv_vector, newsize);
     list = list->next;
   }
 
   // Let writes proceed again
-  while(internal_InterlockedCompareExchange(&tlv_writer_counter, 0, TLV_GROW)
+  while (internal_InterlockedCompareExchange(&tlv_writer_counter, 0, TLV_GROW)
         != TLV_GROW);
 }
 
@@ -1255,8 +1260,9 @@ primitive_write_thread_variable(void *variable_handle, Z new_value)
   int        offset;
 
   // If another thread is growing the TLV vectors, wait till it's finished
-  if (internal_InterlockedIncrement(&tlv_writer_counter) < 0)
+  if (internal_InterlockedIncrement(&tlv_writer_counter) < 0) {
     primitive_write_thread_variable_internal();
+  }
 
   // The variable handle is the byte offset where the variable's value is
   // stored in the TLV.
@@ -1328,8 +1334,9 @@ primitive_initialize_special_thread(DTHREAD *thread)
   assert(thread != NULL);
 
   // Do we need to initialise?
-  if (default_tlv_vector == NULL)
+  if (default_tlv_vector == NULL) {
     initialize_threads_primitives();
+  }
 
   primitive_initialize_current_thread(thread, FALSE);
 }
@@ -1378,10 +1385,11 @@ primitive_unlock_recursive_lock(CONTAINER *lock)
     return OK;
   }
 
-  while(rlock->recursion_count > 0) {
+  while (rlock->recursion_count > 0) {
     res = primitive_release_recursive_lock(lock);
-    if (res != OK)
+    if (res != OK) {
       return res;
+    }
   }
   return OK;
 }
@@ -1435,8 +1443,9 @@ remove_tlv_vector(pthread_t hThread)
 {
   TLV_VECTOR_LIST last, current;
 
-  if (tlv_vector_list == NULL)  // empty list
+  if (tlv_vector_list == NULL) { // empty list
     return(1);
+  }
 
   // protect list updates so they don't interfere with each other
   pthread_mutex_lock(&tlv_vector_list_lock);
@@ -1466,8 +1475,7 @@ remove_tlv_vector(pthread_t hThread)
       // Finished
       pthread_mutex_unlock(&tlv_vector_list_lock);
       return(0);
-    }
-    else {
+    } else {
       last = current;
       current = current->next;
     }

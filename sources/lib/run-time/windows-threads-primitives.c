@@ -289,9 +289,9 @@ ZINT primitive_release_recursive_lock_internal(RECURSIVELOCK *rlock)
   LONG junk;
 
   if (ReleaseSemaphore(rlock->semaphore, 1, &junk) == FALSE) {
-      MSG0("release-recursive-lock: error releasing semaphore\n");
-      return GENERAL_ERROR;
-    }
+    MSG0("release-recursive-lock: error releasing semaphore\n");
+    return GENERAL_ERROR;
+  }
   return OK;
 }
 
@@ -304,7 +304,7 @@ void primitive_write_thread_variable_internal()
       EnterCriticalSection(&tlv_vector_list_lock);
       LeaveCriticalSection(&tlv_vector_list_lock);
     }
-  } while(internal_InterlockedIncrement((LPLONG)(&tlv_writer_counter)) < 0);
+  } while (internal_InterlockedIncrement((LPLONG)(&tlv_writer_counter)) < 0);
 }
 
 
@@ -345,11 +345,11 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
     events[1] = CreateEvent(NULL, FALSE, FALSE, NULL);
     newthread->handle1 = events;
     newthread->handle2 = func;
-  };
+  }
 
 
   // dylan_thread_trampoline is the starting function for the new thread.
-  // It calls the dylan trampoline fucntion which we rely on to initialise
+  // It calls the dylan trampoline function which we rely on to initialise
   // the thread
   {
     DWORD creationFlag;
@@ -365,7 +365,7 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
                          creationFlag, &idThread);
 #endif
 
-  };
+  }
 
   if (hThread == NULL) {
     MSG0("make-thread: CreateThread returned error\n");
@@ -377,19 +377,17 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
     if (WaitForSingleObject(events[0], INFINITE) != WAIT_OBJECT_0) {
       MSG0("make-thread: error waiting for thread initialize event\n");
       return GENERAL_ERROR;
-    };
+    }
 
     // Don't need the event any more
     if (CloseHandle(events[0]) == FALSE) {
       MSG0("make-thread: error closing event handle\n");
       return GENERAL_ERROR;
-    };
-
-  }
-  else {
+    }
+  } else {
    newthread->handle1 = hThread;
    newthread->handle2 = func;
-   };
+  }
 
   // Map priority level to win32 equivalent and set the thread's priority
   priority = priority_map(priority);
@@ -403,13 +401,14 @@ primitive_make_thread(DTHREAD *newthread, D_NAME name,
     if (CloseHandle(hThread) == FALSE) {
       MSG0("make-thread: error closing thread handle\n");
       return GENERAL_ERROR;
-    }; }
-  else {
+    }
+  } else {
     // Now resume the new thread
     if (ResumeThread(hThread) == 0xFFFFFFFF) {
       MSG0("make-thread: ResumeThread returned error\n");
       return GENERAL_ERROR;
-    }; };
+    }
+  }
 
   return OK;
 }
@@ -559,14 +558,14 @@ primitive_wait_for_recursive_lock(CONTAINER *lock)
   rlock = lock->handle;
   hThread = get_current_thread_handle();
 
-  if (rlock->owner == hThread)
+  if (rlock->owner == hThread) {
     rlock->recursion_count++;
-  else if (internal_InterlockedIncrement(&rlock->lock_count) == 0) {
+  } else if (internal_InterlockedIncrement(&rlock->lock_count) == 0) {
     rlock->owner = hThread;
     rlock->recursion_count = 1;
-  }
-  else
+  } else {
     return primitive_wait_for_recursive_lock_internal(rlock, hThread);
+  }
   return OK;
 }
 
@@ -630,7 +629,7 @@ primitive_wait_for_notification(CONTAINER *notif, CONTAINER *lock)
     }
     tmp1 = (int)internal_InterlockedCompareExchange
                   ((PVOID *)(&notification->target), (PVOID)1, (PVOID)0);
-  } while(tmp1 == 1);
+  } while (tmp1 == 1);
   tmp2 = internal_InterlockedDecrement(&notification->count);
   if ((tmp1 != -1) || (tmp2 <= 0)) {
     // know it's not a release-all with more threads to be woken up
@@ -689,15 +688,15 @@ primitive_wait_for_recursive_lock_timed(CONTAINER *lock, ZINT zmilsecs)
   rlock = lock->handle;
   hThread = get_current_thread_handle();
 
-  if (rlock->owner == hThread)
+  if (rlock->owner == hThread) {
     rlock->recursion_count++;
-  else if (internal_InterlockedIncrement(&rlock->lock_count) == 0) {
+  } else if (internal_InterlockedIncrement(&rlock->lock_count) == 0) {
     rlock->owner = hThread;
     rlock->recursion_count = 1;
-  }
-  else
+  } else {
     return primitive_wait_for_recursive_lock_timed_internal(rlock, hThread,
                                                             zmilsecs);
+  }
   return OK;
 }
 
@@ -788,7 +787,7 @@ primitive_wait_for_notification_timed(CONTAINER *notif, CONTAINER *lock,
     }
     tmp1 = (int)internal_InterlockedCompareExchange
                   ((PVOID *)(&notification->target), (PVOID)1, (PVOID)0);
-  } while(tmp1 == 1);
+  } while (tmp1 == 1);
   tmp2 = internal_InterlockedDecrement(&notification->count);
   if ((tmp1 != -1) || (tmp2 <= 0)) {
     // know it's not a release-all
@@ -827,8 +826,9 @@ primitive_release_simple_lock(CONTAINER *lock)
 
   slock->owner = 0;
   decRes = internal_InterlockedDecrement(&slock->lock_count);
-  if (decRes >= 0)
+  if (decRes >= 0) {
     return primitive_release_simple_lock_internal(slock);
+  }
   return OK;
 }
 
@@ -856,8 +856,9 @@ primitive_release_recursive_lock(CONTAINER *lock)
     // Give up the lock
     rlock->owner = 0;
     decRes = internal_InterlockedDecrement(&rlock->lock_count);
-    if (decRes >= 0)
+    if (decRes >= 0) {
       return primitive_release_recursive_lock_internal(rlock);
+    }
   }
 
   return OK;
@@ -1026,11 +1027,11 @@ primitive_make_simple_lock(CONTAINER *lock, D_NAME name)
   slock->semaphore = CreateSemaphore(NULL, 0, 1, NULL);
   if (slock->semaphore == NULL) {
     MSG0("make-simple-lock: error creating semaphore\n");
-                return GENERAL_ERROR;
-        }
+    return GENERAL_ERROR;
+  }
   slock->owner = 0;
   lock->handle = slock;
-        return OK;
+  return OK;
 }
 
 
@@ -1066,10 +1067,11 @@ primitive_owned_simple_lock(CONTAINER *lock)
   slock = lock->handle;
 
   hThread = get_current_thread_handle();
-  if (slock->owner == hThread)
+  if (slock->owner == hThread) {
     return((ZINT)I(1)); // owned
-  else
+  } else {
     return((ZINT)I(0)); // not owned
+  }
 }
 
 
@@ -1086,10 +1088,11 @@ primitive_owned_recursive_lock(CONTAINER *lock)
   rlock = lock->handle;
 
   hThread = get_current_thread_handle();
-  if (rlock->owner == hThread)
+  if (rlock->owner == hThread) {
     return((ZINT)I(1)); // owned
-  else
+  } else {
     return((ZINT)I(0)); // not owned
+  }
 }
 
 
@@ -1223,8 +1226,9 @@ primitive_allocate_thread_variable(Z value)
   // First check if we need to grow the TLV vectors
   size = (int)(*((Z *)(default_tlv_vector + sizeof(Z)))) >> 2;
   limit = (size+2) * sizeof(Z);
-  if (variable_offset >= limit)
+  if (variable_offset >= limit) {
     grow_all_tlv_vectors(size+size);  // double the size each time we grow
+  }
 
   // Put the variable's default value in the default TLV vector
   destination = (Z *)(default_tlv_vector + variable_offset);
@@ -1249,8 +1253,8 @@ void grow_all_tlv_vectors(newsize)
   TLV_VECTOR new_default;
 
   // Wait for thread variable writes to finish
-  while(internal_InterlockedCompareExchange(&tlv_writer_counter, TLV_GROW, 0)
-        != 0);
+  while (internal_InterlockedCompareExchange(&tlv_writer_counter, TLV_GROW, 0)
+         != 0);
 
   // Grow the default vector
   new_default = make_dylan_vector(newsize);
@@ -1259,14 +1263,14 @@ void grow_all_tlv_vectors(newsize)
 
   // Grow each vector in the active thread list
   list = tlv_vector_list;
-  while(list != NULL) {
+  while (list != NULL) {
     list->tlv_vector = grow_tlv_vector(list->tlv_vector, newsize);
     list = list->next;
   }
 
   // Let writes proceed again
-  while(internal_InterlockedCompareExchange(&tlv_writer_counter, 0, TLV_GROW)
-        != TLV_GROW);
+  while (internal_InterlockedCompareExchange(&tlv_writer_counter, 0, TLV_GROW)
+         != TLV_GROW);
 }
 
 
@@ -1358,8 +1362,9 @@ primitive_write_thread_variable(void *variable_handle, Z new_value)
   int        offset;
 
   // If another thread is growing the TLV vectors, wait till it's finished
-  if (internal_InterlockedIncrement((LPLONG)(&tlv_writer_counter)) < 0)
+  if (internal_InterlockedIncrement((LPLONG)(&tlv_writer_counter)) < 0) {
     primitive_write_thread_variable_internal();
+  }
 
   // The variable handle is the byte offset where the variable's value is
   // stored in the TLV.
@@ -1390,8 +1395,9 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
   if (synchronize) {
     events = thread->handle1;
     // Do we need to initialise?
-    if (default_tlv_vector == NULL)
+    if (default_tlv_vector == NULL) {
       initialize_threads_primitives();
+    }
 
     /* Get a handle for the current thread: GetCurrentThread() returns a
        special value which can only be used by a thread to refer to itself.
@@ -1401,9 +1407,9 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
     hProcess = GetCurrentProcess();
     DuplicateHandle(hProcess, GetCurrentThread(), hProcess, &hThread,
                     0, FALSE, DUPLICATE_SAME_ACCESS);
-  }
-  else
+  } else {
     hThread = thread->handle1;
+  }
 
   // Put the thread object and handle in the TEB for later use
   set_current_thread(thread);
@@ -1444,17 +1450,17 @@ primitive_initialize_current_thread(DTHREAD *thread, BOOL synchronize)
     if (WaitForSingleObject(events[1], INFINITE) != WAIT_OBJECT_0) {
       MSG0("initialize-thread: error waiting for debugger event\n");
       // return GENERAL_ERROR;
-    };
+    }
     // Don't need the event any more
     if (CloseHandle(events[1]) == FALSE) {
       MSG0("initialize-thread: error closing event handle\n");
       // return GENERAL_ERROR;
-    };
+    }
 
     thread->handle1 = hThread;
 
     MMFreeMisc(events, sizeof(HANDLE) * 2);
-  };
+  }
 }
 
 
@@ -1467,8 +1473,9 @@ primitive_initialize_special_thread(DTHREAD *thread)
   assert(thread != NULL);
 
   // Do we need to initialise?
-  if (default_tlv_vector == NULL)
+  if (default_tlv_vector == NULL) {
     initialize_threads_primitives();
+  }
 
   // Get a handle for the current thread: GetCurrentThread() returns a
   // special value which can only be used by a thread to refer to itself.
@@ -1598,8 +1605,9 @@ remove_tlv_vector(HANDLE hThread)
 {
   TLV_VECTOR_LIST last, current;
 
-  if (tlv_vector_list == NULL)  // empty list
+  if (tlv_vector_list == NULL) { // empty list
     return(1);
+  }
 
   // protect list updates so they don't interfere with each other
   EnterCriticalSection(&tlv_vector_list_lock);
@@ -1629,8 +1637,7 @@ remove_tlv_vector(HANDLE hThread)
       // Finished
       LeaveCriticalSection(&tlv_vector_list_lock);
       return(0);
-    }
-    else {
+    } else {
       last = current;
       current = current->next;
     }
@@ -1658,16 +1665,19 @@ int priority_map(int dylan_priority)
 {
   int priority;
 
-  if (dylan_priority < 0)
-    if (dylan_priority < -1249)
+  if (dylan_priority < 0) {
+    if (dylan_priority < -1249) {
       priority = THREAD_PRIORITY_IDLE;
-    else
+    } else {
       priority = (dylan_priority - 250) / 500;
-  else
-    if (dylan_priority > 1249)
+    }
+  } else {
+    if (dylan_priority > 1249) {
       priority = THREAD_PRIORITY_TIME_CRITICAL;
-    else
+    } else {
       priority = (dylan_priority + 250) / 500;
+    }
+  }
 
   return (priority);
 }

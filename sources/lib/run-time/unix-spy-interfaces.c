@@ -18,9 +18,10 @@
 SPY_INTERFACE int spy_load_extension_component (char *name)
 {
   void * extension = dlopen(name, RTLD_NOW | RTLD_GLOBAL);
-  if (extension == NULL)
+  if (extension == NULL) {
     return(SPY_LOAD_EXTENSION_COMPONENT_FAILED);
-  else
+  } else {
     return(SPY_LOAD_EXTENSION_COMPONENT_SUCCEEDED);
+  }
 }
 

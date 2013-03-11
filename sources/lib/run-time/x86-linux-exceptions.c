@@ -54,11 +54,10 @@ extern void walkstack();
 static inline void chain_sigaction(const struct sigaction *act,
                                    int sig, siginfo_t *info, void *uap)
 {
-  if(act->sa_flags & SA_SIGINFO) {
+  if (act->sa_flags & SA_SIGINFO) {
     /* Inner handler uses the same (sa_sigaction) convention... call it */
     (*act->sa_sigaction)(sig, info, uap);
-  }
-  else {
+  } else {
     /* Inner handler uses the old (sa_handler) convention, with a
      * struct sigcontext passed as a structure argument. The content
      * of struct sigcontext is identical to the content of the
@@ -116,14 +115,16 @@ static struct sigaction outer_FPEHandler;
 static struct sigaction outer_SEGVHandler;
 static struct sigaction outer_TRAPHandler;
 
-#define EXCEPTION_PREAMBLE() \
+#define EXCEPTION_PREAMBLE()                           \
   {                                                    \
-    if (exception_handler_level++ == 0)                    \
-      EstablishDylanExceptionHandlers();
+    if (exception_handler_level++ == 0) {              \
+      EstablishDylanExceptionHandlers();               \
+    }
 
-#define EXCEPTION_POSTAMBLE() \
-    if (--exception_handler_level == 0)                    \
-      RemoveDylanExceptionHandlers();                    \
+#define EXCEPTION_POSTAMBLE()                          \
+    if (--exception_handler_level == 0) {              \
+      RemoveDylanExceptionHandlers();                  \
+    }                                                  \
   }
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *sc);
@@ -171,16 +172,16 @@ static __inline
 void RestoreFPState (ucontext_t *uc)
 {
   unsigned long int cw = DYLAN_FPU_CW;
-  if (uc->uc_mcontext.fpregs)
+  if (uc->uc_mcontext.fpregs) {
     uc->uc_mcontext.fpregs->cw = cw;
+  }
   _FPU_SETCW(cw);
 }
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 {
   if (inside_dylan_ffi_barrier() == 0) {
-  }
-  else {
+  } else {
     ucontext_t *uc = (ucontext_t *) uap;
 
     switch (info->si_code) {
@@ -218,8 +219,7 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
 static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
 {
   if (inside_dylan_ffi_barrier() == 0) {
-  }
-  else {
+  } else {
     ucontext_t *uc = (ucontext_t *) uap;
     const unsigned char *eip
       = (const unsigned char *)uc->uc_mcontext.gregs[REG_EIP];

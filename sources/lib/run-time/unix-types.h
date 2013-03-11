@@ -41,7 +41,7 @@ typedef long long            _int64;
     pthread_mutexattr_settype(&_attr, PTHREAD_MUTEX_RECURSIVE); \
     pthread_mutex_init((mutex), &_attr); \
     pthread_mutexattr_destroy(&_attr); \
-  } while(0)
+  } while (0)
 
 #define enter_CRITICAL_SECTION(lock)      pthread_mutex_lock(lock)
 #define leave_CRITICAL_SECTION(lock)      pthread_mutex_unlock(lock)
