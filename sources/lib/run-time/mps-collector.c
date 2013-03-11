@@ -86,11 +86,6 @@ void report_runtime_error (char* header, char* message)
   mps_lib_fputs(message, stream);
   mps_lib_fputc('\n', stream);
   mps_lib_abort();
-
-
-void simple_error (char* message)
-{
-  report_runtime_error("\nDylan runtime error: ", message);
 }
 
 mps_bool_t dylan_check(mps_addr_t addr)
@@ -227,6 +222,8 @@ MMError dylan_mm_deregister_thread_from_teb(gc_teb_t gc_teb)
 }
 
 extern void *dylan_signal_low_memory;
+extern void *dylan_false;
+void *wrapper_class(void *wrapper);
 
 #define reserve_memory_for_object(size,  \
                                   wrapper,  \
