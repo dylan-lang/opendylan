@@ -9,5 +9,7 @@ define library dfmc-back-end-implementations
   use dfmc-c-linker;             // C linker
   use dfmc-llvm-back-end;        // LLVM backend
   use dfmc-llvm-linker;          // LLVM linker
+  use dfmc-java-back-end;        // JVM backend
+  use dfmc-java-linker;          // JVM linker
 end library dfmc-back-end-implementations;
 
