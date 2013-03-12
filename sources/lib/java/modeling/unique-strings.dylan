@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-format-out ("initing unique-strings.dylan\n") ;
+format-out ("initing unique-strings.dylan\n");
 
 // uniquefying of strings, this is done on a per library basic,
 // the *unique-strings-table* being flushed during link phase,
@@ -22,8 +22,8 @@ format-out ("initing unique-strings.dylan\n") ;
 // currently using two-tier approach to the constants in the code
 
 define sealed class <unique-string> (<object>)
-  constant slot the-string :: <byte-string>, required-init-keyword: the-string: ;
-  constant slot unique-tag :: <integer>,     required-init-keyword: unique-tag: ;
+  constant slot the-string :: <byte-string>, required-init-keyword: the-string:;
+  constant slot unique-tag :: <integer>,     required-init-keyword: unique-tag:;
 end;
 
 define method print-object (uniq :: <unique-string>, stream :: <stream>) => ()
@@ -35,14 +35,14 @@ define method print-object (uniq :: <unique-string>, stream :: <stream>) => ()
 end;
 
 // this picks up all the constant strings in the code
-define variable *global-unique-strings-table* :: <object-table> = make (<object-table>) ;
+define variable *global-unique-strings-table* :: <object-table> = make (<object-table>);
 
 // this is the working copy, at init time points to global one
-define variable *unique-strings-table* :: <object-table> = *global-unique-strings-table* ;
-define variable *unique-strings-count* :: <integer> = 0 ;
+define variable *unique-strings-table* :: <object-table> = *global-unique-strings-table*;
+define variable *unique-strings-count* :: <integer> = 0;
 
 define function start-with-unique-strings ()
- format-out ("START UNIQUE STRINGS\n") ;
+ format-out ("START UNIQUE STRINGS\n");
 //  if (*unique-strings-table* ~== *global-unique-strings-table*)
 //    finish-with-unique-strings ()
 //  end;
@@ -50,12 +50,12 @@ define function start-with-unique-strings ()
 end;
 
 define function finish-with-unique-strings () => ()
- format-out ("FINISH UNIQUE STRINGS\n") ;
-  let  glob = *global-unique-strings-table* ;
+ format-out ("FINISH UNIQUE STRINGS\n");
+  let  glob = *global-unique-strings-table*;
   if (*unique-strings-table* ~== glob)
 //// this is broken, because not nested scope - never throw away now
-//    clobber-scoped-strings (*unique-strings-table*) ;
-//    *unique-strings-table* := glob ;
+//    clobber-scoped-strings (*unique-strings-table*);
+//    *unique-strings-table* := glob;
 //    *unique-strings-count* := glob.size
   end;
 end;
@@ -64,7 +64,7 @@ end;
 /*
 define function clobber-scoped-strings (table)
   for (key in table.key-sequence)
-    let  list = table [key] ;
+    let  list = table [key];
     for (uniq :: <unique-string> in list)
       uniq.unique-tag := -1
     end
@@ -78,23 +78,23 @@ end;
 define function uniq (str :: <byte-string>) => (uniq :: <unique-string>)
   // first stab at hash function
   // probably don't need to look at every byte
-  let  hash = 39827 ;
+  let  hash = 39827;
   for (char in str)
-    let  code :: <integer> = as (<integer>, char) ;
-    hash := hash * 37 + code ;
-    hash := logxor (logand (hash, #xfffff), ash (hash, -20)) ;
+    let  code :: <integer> = as (<integer>, char);
+    hash := hash * 37 + code;
+    hash := logxor (logand (hash, #xfffff), ash (hash, -20));
   end;
   // look up in table for a match
   block (return)
-    let  tab = *unique-strings-table* ;
-    let  strings :: <list> = element (tab, hash, default: #()) ;
+    let  tab = *unique-strings-table*;
+    let  strings :: <list> = element (tab, hash, default: #());
     for (uniq :: <unique-string> in strings)
       if (str = uniq.the-string) return (uniq) end
     end;
     // no match, check the global table too
-    let globtab = *global-unique-strings-table* ;
+    let globtab = *global-unique-strings-table*;
     if (tab ~== globtab)
-      let glob-strings :: <list> = element (globtab, hash, default: #()) ;
+      let glob-strings :: <list> = element (globtab, hash, default: #());
       for (uniq :: <unique-string> in glob-strings)
         if (str = uniq.the-string) return (uniq) end
       end
@@ -102,17 +102,17 @@ define function uniq (str :: <byte-string>) => (uniq :: <unique-string>)
 
     // no match, create one - note we assume <byte-string> args are immutable
     // and hence shareable
-    let  count = *unique-strings-count* ;
-    let  new-uniq = make (<unique-string>, 
-			  the-string: str,
-			  unique-tag: count);
-    tab [hash] := pair (new-uniq, strings) ;
-    *unique-strings-count* := count + 1 ;
+    let  count = *unique-strings-count*;
+    let  new-uniq = make (<unique-string>,
+                          the-string: str,
+                          unique-tag: count);
+    tab [hash] := pair (new-uniq, strings);
+    *unique-strings-count* := count + 1;
     new-uniq
   end
 end;
 
-define sealed generic ensure-uniq (thing) => (uniq :: <unique-string>) ;
+define sealed generic ensure-uniq (thing) => (uniq :: <unique-string>);
 
 define method ensure-uniq (thing :: <byte-string>) => (uniq :: <unique-string>)
   thing.uniq
@@ -124,23 +124,23 @@ end;
 
 
 define function valid-unique? (uniq :: <unique-string>) => (unique? :: <boolean>)
-  let  str = uniq.the-string ;
-  let  hash = 39827 ;
+  let  str = uniq.the-string;
+  let  hash = 39827;
   for (char in str)
-    let  code :: <integer> = as (<integer>, char) ;
-    hash := hash * 37 + code ;
-    hash := logxor (logand (hash, #xfffff), ash (hash, -20)) ;
+    let  code :: <integer> = as (<integer>, char);
+    hash := hash * 37 + code;
+    hash := logxor (logand (hash, #xfffff), ash (hash, -20));
   end;
   block (return)
-    let  tab = *unique-strings-table* ;
-    let  strings :: <list> = element (tab, hash, default: #()) ;
+    let  tab = *unique-strings-table*;
+    let  strings :: <list> = element (tab, hash, default: #());
     for (uniq :: <unique-string> in strings)
       if (str = uniq.the-string) return (#t) end
     end;
     // no match, check the global table too
-    let globtab = *global-unique-strings-table* ;
+    let globtab = *global-unique-strings-table*;
     if (tab ~== globtab)
-      let glob-strings :: <list> = element (globtab, hash, default: #()) ;
+      let glob-strings :: <list> = element (globtab, hash, default: #());
       for (uniq :: <unique-string> in glob-strings)
         if (str = uniq.the-string) return (#t) end
       end
@@ -152,15 +152,15 @@ end;
 // not used?!
 define function print-unique-strings ()
   for (el in *unique-strings-table*.key-sequence)
-    let  strs = *unique-strings-table*[el] ;
+    let  strs = *unique-strings-table*[el];
     for (str in strs)
       format-out ("%s\n", str)
     end
   end;
   if (*unique-strings-table* ~== *global-unique-strings-table*)
-    format-out ("\n") ;
+    format-out ("\n");
     for (el in *global-unique-strings-table*.key-sequence)
-      let  strs = *global-unique-strings-table*[el] ;
+      let  strs = *global-unique-strings-table*[el];
       for (str in strs)
         format-out ("%s\n", str)
       end
@@ -168,4 +168,4 @@ define function print-unique-strings ()
   end
 end;
 
-format-out ("inited unique-strings.dylan\n") ;
+format-out ("inited unique-strings.dylan\n");

@@ -116,7 +116,7 @@ define class <unicode-string-literal> (<string-literal>)
   constant slot literal-value :: <unicode-string>,
     required-init-keyword: value:;
 end;
-  
+
 
 //
 define class <identifier> (<token>, <name>)
@@ -183,15 +183,15 @@ define method make-java-lexer (contents :: <byte-vector>) => (fn :: <function>)
   let ls = make(<lexer-state>);
   let posn :: <integer> = 0;
   local method next-token () => (next-token-class, next-token-value)
-	  let (token, new-pos) =
-	    get-token-from-contents($java-tokenizer, contents, posn, ls);
-	  posn := new-pos;
+          let (token, new-pos) =
+            get-token-from-contents($java-tokenizer, contents, posn, ls);
+          posn := new-pos;
           if (token == #f)
             values($eof-token, #f)
           else
-	    values(token.token-parse-class, token)
+            values(token.token-parse-class, token)
           end;
-	end method;
+        end method;
   next-token
 end method make-java-lexer;
 
@@ -205,7 +205,7 @@ end method make-java-lexer;
 define method make-java-lexer (file :: <locator>) => (fn :: <function>)
   let contents :: <byte-vector>
     =  with-open-file (stream = file, element-type: <byte>)
-	 read-to-end(stream)
+         read-to-end(stream)
        end with-open-file;
   make-java-lexer(contents)
 end method make-java-lexer;
@@ -232,7 +232,7 @@ begin
   // reserved but not used
   def-reserved("const", <special-token>, class: -1);
   def-reserved("goto", <special-token>, class: -1);
-  
+
 
   def-reserved("abstract", <special-token>, class: $%abstract-token);
   def-reserved("boolean", <primitive-type>);
@@ -281,7 +281,7 @@ begin
   def-reserved("while", <special-token>, class: $%while-token);
 
   def-reserved("(", <special-token>, class: $%lparen-token);
-  def-reserved(")", <special-token>, class: $%rparen-token);  
+  def-reserved(")", <special-token>, class: $%rparen-token);
   def-reserved("{", <special-token>, class: $%lbrace-token);
   def-reserved("}", <special-token>, class: $%rbrace-token);
   def-reserved("[", <special-token>, class: $%lbracket-token);
@@ -315,31 +315,31 @@ begin
   def-reserved("<<", <operator>, class: $%<<-token);
   def-reserved(">>>", <operator>, class: $%>>>-token);
   def-reserved("++", <assignment-operator>, class: $%++-token,
-	       op: $predefined-tokens["+"]);
+               op: $predefined-tokens["+"]);
   def-reserved("--", <assignment-operator>, class: $%---token,
-	       op: $predefined-tokens["-"]);
+               op: $predefined-tokens["-"]);
   def-reserved("+=", <assignment-operator>, class: $%+=-token,
-	       op: $predefined-tokens["+"]);
+               op: $predefined-tokens["+"]);
   def-reserved("-=", <assignment-operator>, class: $%-=-token,
-	       op: $predefined-tokens["-"]);
+               op: $predefined-tokens["-"]);
   def-reserved("*=", <assignment-operator>, class: $%*=-token,
-	       op: $predefined-tokens["*"]);
+               op: $predefined-tokens["*"]);
   def-reserved("/=", <assignment-operator>, class: $%/=-token,
-	       op: $predefined-tokens["/"]);
+               op: $predefined-tokens["/"]);
   def-reserved("&=", <assignment-operator>, class: $%&=-token,
-	       op: $predefined-tokens["&"]);
+               op: $predefined-tokens["&"]);
   def-reserved("|=", <assignment-operator>, class: $%|=-token,
-	       op: $predefined-tokens["|"]);
+               op: $predefined-tokens["|"]);
   def-reserved("^=", <assignment-operator>, class: $%^=-token,
-	       op: $predefined-tokens["^"]);
+               op: $predefined-tokens["^"]);
   def-reserved("%=", <assignment-operator>, class: $%%=-token,
-	       op: $predefined-tokens["%"]);
+               op: $predefined-tokens["%"]);
   def-reserved("<<=", <assignment-operator>, class: $%<<=-token,
-	       op: $predefined-tokens["<<"]);
+               op: $predefined-tokens["<<"]);
   def-reserved(">>=", <assignment-operator>, class: $%>>=-token,
-	       op: $predefined-tokens[">>"]);
+               op: $predefined-tokens[">>"]);
   def-reserved(">>>=", <assignment-operator>, class: $%>>>=-token,
-	       op: $predefined-tokens[">>>"]);
+               op: $predefined-tokens[">>>"]);
 end;
 
 define function make-identifier (ls :: <lexer-state>, string :: <byte-string>)
@@ -356,9 +356,9 @@ define function parse-decimal-literal (ls :: <lexer-state>, string :: <byte-stri
     if (posn < length)
       let digit :: <integer> = as(<integer>, string[posn]);
       if (digit == as(<integer>, 'l') | digit == as(<integer>, 'L'))
-	make(<decimal-long-literal>, value: res)
+        make(<decimal-long-literal>, value: res)
       else
-	loop(posn + 1, generic-+(generic-*(res, 10), digit - 48))
+        loop(posn + 1, generic-+(generic-*(res, 10), digit - 48))
       end
     else
       make(<decimal-int-literal>, value: res)
@@ -373,9 +373,9 @@ define function parse-octal-literal (ls :: <lexer-state>, string :: <byte-string
     if (posn < length)
       let digit :: <integer> = as(<integer>, string[posn]);
       if (digit == as(<integer>, 'l') | digit == as(<integer>, 'L'))
-	make(<octal-long-literal>, value: res)
+        make(<octal-long-literal>, value: res)
       else
-	loop(posn + 1, generic-+(generic-*(res, 8), digit - 48))
+        loop(posn + 1, generic-+(generic-*(res, 8), digit - 48))
       end
     else
       make(<octal-int-literal>, value: res)
@@ -390,10 +390,10 @@ define function parse-hex-literal (ls :: <lexer-state>, string :: <byte-string>)
     if (posn < length)
       let digit :: <integer> = logior(32, as(<integer>, string[posn]));
       if (digit == as(<integer>, 'l'))
-	make(<hex-long-literal>, value: res)
+        make(<hex-long-literal>, value: res)
       else
-	let value = if (digit >= 97) digit - 87 else digit - 48 end;
-	loop(posn + 1, generic-+(generic-*(res, 16), value))
+        let value = if (digit >= 97) digit - 87 else digit - 48 end;
+        loop(posn + 1, generic-+(generic-*(res, 16), value))
       end
     else
       make(<hex-int-literal>, value: res)
@@ -405,51 +405,51 @@ define function parse-float-literal (ls :: <lexer-state>, string :: <byte-string
  => (token :: <float-literal>)
   let length = string.size;
   local method edigits (m :: <abstract-integer>, s :: <integer>,
-			sign :: one-of(1, -1),
-			posn :: <integer>, res :: <abstract-integer>)
-	  if (posn < length)
-	    let digit = as(<integer>, string[posn]);
-	    if (digit == as(<integer>, 'f') | digit == as(<integer>, 'F'))
-	      make(<single-float-literal>, mantissa: m, scale: s,
-		   expt: generic-*(res, sign));
-	    elseif (digit == as(<integer>, 'D') | digit == as(<integer>, 'D'))
-	      make(<double-float-literal>, mantissa: m, scale: s,
-		   expt: generic-*(res, sign));
-	    else
-	      edigits(m, s, sign, posn + 1, generic-+(generic-*(res, 10), digit))
-	    end
-	  else
-	    make(<double-float-literal>, mantissa: m, scale: s,
-		 expt: generic-*(res, sign));
-	  end;
-	end method;
+                        sign :: one-of(1, -1),
+                        posn :: <integer>, res :: <abstract-integer>)
+          if (posn < length)
+            let digit = as(<integer>, string[posn]);
+            if (digit == as(<integer>, 'f') | digit == as(<integer>, 'F'))
+              make(<single-float-literal>, mantissa: m, scale: s,
+                   expt: generic-*(res, sign));
+            elseif (digit == as(<integer>, 'D') | digit == as(<integer>, 'D'))
+              make(<double-float-literal>, mantissa: m, scale: s,
+                   expt: generic-*(res, sign));
+            else
+              edigits(m, s, sign, posn + 1, generic-+(generic-*(res, 10), digit))
+            end
+          else
+            make(<double-float-literal>, mantissa: m, scale: s,
+                 expt: generic-*(res, sign));
+          end;
+        end method;
   local method fexpt (m :: <abstract-integer>, s :: <integer>, posn :: <integer>)
-	  let sign = string[posn];
-	  if (sign == '+')
-	    edigits(m, s, 1, posn + 1, 0)
-	  elseif (sign == '-')
-	    edigits(m, s, -1, posn + 1, 0)
-	  else
-	    edigits(m, s, 1, posn, 0)
-	  end;
-	end method;
+          let sign = string[posn];
+          if (sign == '+')
+            edigits(m, s, 1, posn + 1, 0)
+          elseif (sign == '-')
+            edigits(m, s, -1, posn + 1, 0)
+          else
+            edigits(m, s, 1, posn, 0)
+          end;
+        end method;
   local method fdigits (posn :: <integer>,
-			m :: <abstract-integer>, s :: <integer>)
-	  if (posn < length)
-	    let digit :: <integer> = as(<integer>, string[posn]);
-	    if (digit == as(<integer>, 'e') | digit == as(<integer>, 'E'))
-	      fexpt(m, s, posn + 1);
-	    elseif (digit == as(<integer>, 'f') | digit == as(<integer>, 'F'))
-	      make(<single-float-literal>, mantissa: m, scale: s, expt: 0);
-	    elseif (digit == as(<integer>, 'D') | digit == as(<integer>, 'D'))
-	      make(<double-float-literal>, mantissa: m, scale: s, expt: 0);
-	    else
-	      fdigits(posn + 1, generic-+(generic-*(m, 10), digit), s + 1);
-	    end
-	  else
-	    make(<double-float-literal>, mantissa: m, scale: s, expt: 0);
-	  end;
-	end method;
+                        m :: <abstract-integer>, s :: <integer>)
+          if (posn < length)
+            let digit :: <integer> = as(<integer>, string[posn]);
+            if (digit == as(<integer>, 'e') | digit == as(<integer>, 'E'))
+              fexpt(m, s, posn + 1);
+            elseif (digit == as(<integer>, 'f') | digit == as(<integer>, 'F'))
+              make(<single-float-literal>, mantissa: m, scale: s, expt: 0);
+            elseif (digit == as(<integer>, 'D') | digit == as(<integer>, 'D'))
+              make(<double-float-literal>, mantissa: m, scale: s, expt: 0);
+            else
+              fdigits(posn + 1, generic-+(generic-*(m, 10), digit), s + 1);
+            end
+          else
+            make(<double-float-literal>, mantissa: m, scale: s, expt: 0);
+          end;
+        end method;
   iterate idigits (posn :: <integer> = 0, res :: <abstract-integer> = 0)
     let digit :: <integer> = as(<integer>, string[posn]);
     if (digit == as(<integer>, '.'))
@@ -480,15 +480,15 @@ define function parse-escape (string, posn)
     '\'' => values(as(<integer>, '\''), nposn);
     '\\' => values(as(<integer>, '\\'), nposn);
     otherwise => iterate loop (nposn :: <integer> = posn, res :: <integer> = 0)
-		   let digit = as(<integer>, string[nposn]);
-		   if (nposn < posn + 3 & 48 <= digit & digit <= 55)
-		     loop(nposn + 1, res * 8 + digit - 48)
-		   else
-		     values(res, nposn)
-		   end
-		 end iterate;
+                   let digit = as(<integer>, string[nposn]);
+                   if (nposn < posn + 3 & 48 <= digit & digit <= 55)
+                     loop(nposn + 1, res * 8 + digit - 48)
+                   else
+                     values(res, nposn)
+                   end
+                 end iterate;
   end;
-end;  
+end;
 
 
 define function parse-character-literal (ls :: <lexer-state>, string :: <byte-string>)
@@ -510,10 +510,10 @@ define function parse-string-literal (ls :: <lexer-state>, string :: <byte-strin
     else
       let (nch, npos) = parse-escape(string, inpos + 1);
       if (nch >= 255) // oops
-	parse-unicode-string-literal(ls, string)
+        parse-unicode-string-literal(ls, string)
       else
-	string[opos] := as(<character>, nch);
-	loop(npos, opos + 1);
+        string[opos] := as(<character>, nch);
+        loop(npos, opos + 1);
       end;
     end;
   end iterate;
@@ -522,13 +522,13 @@ end;
 define function parse-unicode-string-literal (ls :: <lexer-state>, string :: <byte-string>)
  => (token :: <string-literal>)
   let v :: <unicode-string> = make(<unicode-string>,
-				   size: string.size - 2,
-				   fill: as(<unicode-character>, 0));
+                                   size: string.size - 2,
+                                   fill: as(<unicode-character>, 0));
   iterate loop (inpos :: <integer> = 1, opos :: <integer> = 0)
     let ch = string[inpos];
     if (ch == '\"')
       make(<unicode-string-literal>,
-	   value: if (opos == v.size) v else copy-sequence(v, end: opos) end);
+           value: if (opos == v.size) v else copy-sequence(v, end: opos) end);
     elseif (ch ~== '\\')
       v[opos] := as(<unicode-character>, ch);
       loop(inpos + 1, opos + 1);
@@ -557,7 +557,7 @@ define state-machine $java-tokenizer
     plus: '+',
     minus: '-',
     greater: '>', // > >= >> >>> >>= >>>=
-    lesser: '<';  // < <= << <<= 
+    lesser: '<';  // < <= << <<=
 
   state slash: make-identifier,
     single-line-comment: '/',
@@ -675,7 +675,7 @@ define state-machine $java-tokenizer
     operator: '=',
     operator-pre-equal: '>';
 
-  state lesser: make-identifier,   // < <= << <<= 
+  state lesser: make-identifier,   // < <= << <<=
     operator: '=',
     operator-pre-equal: '<';
 

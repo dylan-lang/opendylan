@@ -13,15 +13,15 @@ define macro grammar-sequence-definer
   { define grammar-sequence "<" ## ?:name ## ">" (?of:expression) }
   => { define constant "<" ## ?name ## ">" = limited(<vector>, of: ?of);
        define inline function "rev-" ## ?name (rev-decls :: <list>)
-	=> (seq :: "<" ## ?name ## ">")
-	 let n = size(rev-decls);
+        => (seq :: "<" ## ?name ## ">")
+         let n = size(rev-decls);
          if (n == 0)
            make("<" ## ?name ## ">", size: 0)
          else
            let v :: "<" ## ?name ## ">"
              = make("<" ## ?name ## ">", size: n, fill: rev-decls[0]);
-	   for (i from n - 1 by -1, decl :: ?of in rev-decls) v[i] := decl end;
-	   v
+           for (i from n - 1 by -1, decl :: ?of in rev-decls) v[i] := decl end;
+           v
          end;
        end }
 end macro;

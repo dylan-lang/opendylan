@@ -23,13 +23,13 @@ define constant $empty-statement = make(<empty-statement>);
 
 define class <for-statement> (<statement>)
   constant slot for-statement-init :: type-union(singleton(#f),
-						 <statement-expressions>,
-						 <statement-expression>,
-						 <local-variable-declaration>),
+                                                 <statement-expressions>,
+                                                 <statement-expression>,
+                                                 <local-variable-declaration>),
     required-init-keyword: init:;
   constant slot for-statement-update :: type-union(singleton(#f),
-						   <statement-expressions>,
-						   <statement-expression>),
+                                                   <statement-expressions>,
+                                                   <statement-expression>),
     required-init-keyword: update:;
   constant slot for-statement-condition :: false-or(<expression>),
     required-init-keyword: condition:;
@@ -105,7 +105,7 @@ define class <try-statement> (<statement>)
     required-init-keyword: catches:;
   constant slot try-statement-finally :: false-or(<block>),
     required-init-keyword: finally:;
-end;  
+end;
 
 // False means 'default' case.
 //define constant <switch-label> = false-or(<expression>);

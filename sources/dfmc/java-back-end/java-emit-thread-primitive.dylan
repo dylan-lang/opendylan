@@ -28,7 +28,7 @@ end;
 define method gen-primitive
     (prim-name == #"primitive-wait-for-simple-lock-timed",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // lose the time
+  emit-pop (jbb); // lose the time
 end;
 // DUMMY
 define method gen-primitive
@@ -39,7 +39,7 @@ end;
 define method gen-primitive
     (prim-name == #"primitive-wait-for-recursive-lock-timed",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // lose the time
+  emit-pop (jbb); // lose the time
 end;
 // DUMMY
 define method gen-primitive
@@ -50,15 +50,15 @@ end;
 define method gen-primitive
     (prim-name == #"primitive-synchronize-side-effects",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-raw-expression-leaf (jbb, 0) ;  // not sure if this is meant to push anything
+  emit-raw-expression-leaf (jbb, 0);  // not sure if this is meant to push anything
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-make-simple-lock",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the lock
-  emit-pop (jbb) ; // pop the name
-  emit-raw-expression-leaf (jbb, 0) ;
+  emit-pop (jbb); // pop the lock
+  emit-pop (jbb); // pop the name
+  emit-raw-expression-leaf (jbb, 0);
 end;
 // DUMMY
 define method gen-primitive
@@ -74,49 +74,49 @@ end;
 define method gen-primitive
     (prim-name == #"primitive-release-notification",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the lock
-//  emit-pop (jbb) ; // pop the notification, push it again
+  emit-pop (jbb); // pop the lock
+//  emit-pop (jbb); // pop the notification, push it again
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-release-all-notification",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the lock
-//  emit-pop (jbb) ; // pop the notification, push it again
+  emit-pop (jbb); // pop the lock
+//  emit-pop (jbb); // pop the notification, push it again
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-wait-for-notification",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the lock
-//  emit-pop (jbb) ; // pop the notification, push it again
+  emit-pop (jbb); // pop the lock
+//  emit-pop (jbb); // pop the notification, push it again
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-wait-for-semaphore",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-//  emit-pop (jbb) ; // pop the sema, push it again
+//  emit-pop (jbb); // pop the sema, push it again
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-wait-for-notification-timed",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the number of ms
-  emit-pop (jbb) ; // pop the lock
-//  emit-pop (jbb) ; // pop the notification, push it again
+  emit-pop (jbb); // pop the number of ms
+  emit-pop (jbb); // pop the lock
+//  emit-pop (jbb); // pop the notification, push it again
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-wait-for-semaphore-timed",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the number of ms
-//  emit-pop (jbb) ; // pop the sema, push it again
+  emit-pop (jbb); // pop the number of ms
+//  emit-pop (jbb); // pop the sema, push it again
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-destroy-thread",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-//  emit-pop (jbb) ; // pop the thread
+//  emit-pop (jbb); // pop the thread
 end;
 // DUMMY
 define method gen-primitive
@@ -128,21 +128,21 @@ end;
 define method gen-primitive
     (prim-name == #"primitive-sleep",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the ms
+  emit-pop (jbb); // pop the ms
   emit-expression-leaf (jbb, #f)
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-thread-join-single",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the other thread
+  emit-pop (jbb); // pop the other thread
   emit-expression-leaf (jbb, #f)
 end;
 // DUMMY
 define method gen-primitive
     (prim-name == #"primitive-thread-join-multiple",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ; // pop the vector
+  emit-pop (jbb); // pop the vector
   emit-expression-leaf (jbb, #f)
 end;
 // DUMMY
@@ -159,7 +159,7 @@ end;
 define method gen-primitive
     (prim-name == #"primitive-make-notification",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ;
+  emit-pop (jbb);
 end;
 
 /*
@@ -219,19 +219,19 @@ end;
 define method gen-primitive
     (prim-name == #"primitive-mps-ld-add",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ;
+  emit-pop (jbb);
 end;
 
 define method gen-primitive
     (prim-name == #"primitive-mps-ld-merge",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ;
+  emit-pop (jbb);
 end;
 
 define method gen-primitive
     (prim-name == #"primitive-mps-ld-isstale",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
-  emit-pop (jbb) ;
+  emit-pop (jbb);
   emit-raw-expression-leaf (jbb, 0)
 end;
 
@@ -239,7 +239,7 @@ define method gen-primitive
     (prim-name == #"primitive-mps-finalize",
      node :: <primitive-call>, args :: <integer>, jbb :: <java-basic-block>) => ()
   // can call Java for finalization??  Only per class though!
-//  emit-pop (jbb) ;
+//  emit-pop (jbb);
 end;
 
 define method gen-primitive
@@ -260,9 +260,9 @@ define method gen-primitive
 end;
 
 define constant $garbage-collect-method$ =
-  meth-spec ($java/lang/System$, "gc", 
+  meth-spec ($java/lang/System$, "gc",
              meth-type ($java-void-type$),
-             j-invokestatic) ;
+             j-invokestatic);
 
 
 define method gen-primitive

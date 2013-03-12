@@ -6,16 +6,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module java-vm-code-generation
   use functional-dylan;
-  use threads ;
-  use streams ;
-  use streams-internals ;
-  use print ;
-  use format ;
-  use format-out ;
-  use standard-io ;
-  use date ;
-  use byte-vector ;
-  use big-integers ;
+  use threads;
+  use streams;
+  use streams-internals;
+  use print;
+  use format;
+  use format-out;
+  use standard-io;
+  use date;
+  use byte-vector;
+  use big-integers;
 
   use java-modeling, export: all;
 
@@ -77,7 +77,7 @@ define module java-vm-code-generation
     j-lcmp,
     j-fcmpl,  j-fcmpg,
     j-dcmpl,  j-dcmpg,
-    j-ifeq,  j-ifne,  j-iflt,  j-ifge,  j-ifgt,  j-ifle,  
+    j-ifeq,  j-ifne,  j-iflt,  j-ifge,  j-ifgt,  j-ifle,
     j-ifnull,  j-ifnonnull,
     j-if-icmpeq,  j-if-icmpne,  j-if-icmplt,  j-if-icmpge,  j-if-icmpgt,  j-if-icmple,
     j-if-acmpeq,  j-if-acmpne,
@@ -329,6 +329,6 @@ define module java-vm-code-generation
     emit-java-ldc,
     emit-java-int,
     emit-java-string,
-    emit-java-constant-load ;
+    emit-java-constant-load;
 
 end module;

@@ -5,12 +5,12 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module java-modeling
-  use functional-dylan ;
-  use streams ;
-  use streams-internals ;
-  use print ;
-  use format ;
-  use format-out ;
+  use functional-dylan;
+  use streams;
+  use streams-internals;
+  use print;
+  use format;
+  use format-out;
 
   export
 
@@ -31,7 +31,7 @@ define module java-modeling
     $java-default-package$,
     package-concatenate-with-name,
     java-package,
-    
+
     // java-types
 
     <java-type>,
@@ -65,7 +65,7 @@ define module java-modeling
     j-code-for,
     <java-primitive-type>,  java-prim-reflected-class,
     <java-primitive-fragment-type>,
-    <java-class-or-interface>, class-name, class-package, represents, represents-setter, 
+    <java-class-or-interface>, class-name, class-package, represents, represents-setter,
     concrete-implementation, concrete-implementation-setter,
     <java-class>,              super, super-setter, interfaces, interfaces-setter, rcpl, rcpl-setter,
     <java-interface>,          super-interfaces, super-interfaces-setter,
@@ -110,6 +110,6 @@ define module java-modeling
     java-type-equivalent?,
     java-type-merge,
     java-type-intersect,
-    assignment-compatible? ;
+    assignment-compatible?;
 
 end module;

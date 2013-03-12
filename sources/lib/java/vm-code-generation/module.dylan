@@ -5,24 +5,24 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module java-vm-code-generation
-  use functional-dylan ;
-  use threads ;
-  use streams ;
-  use streams-internals ;
-  use print ;
-  use format ;
-  use format-out ;
-  use standard-io ;
-  use date ;
+  use functional-dylan;
+  use threads;
+  use streams;
+  use streams-internals;
+  use print;
+  use format;
+  use format-out;
+  use standard-io;
+  use date;
   use byte-vector;
   use machine-words;
   use machine-word-lowlevel,
     import: {machine-word-logior,
-	     machine-word-logxor,
-	     machine-word-logand,
-	     machine-word-lognot,
-	     machine-word-unsigned-shift-left,
-	     machine-word-unsigned-shift-right};
+             machine-word-logxor,
+             machine-word-logand,
+             machine-word-lognot,
+             machine-word-unsigned-shift-left,
+             machine-word-unsigned-shift-right};
 
 
   use java-modeling, export: all;
@@ -85,7 +85,7 @@ define module java-vm-code-generation
     j-lcmp,
     j-fcmpl,  j-fcmpg,
     j-dcmpl,  j-dcmpg,
-    j-ifeq,  j-ifne,  j-iflt,  j-ifge,  j-ifgt,  j-ifle,  
+    j-ifeq,  j-ifne,  j-iflt,  j-ifge,  j-ifgt,  j-ifle,
     j-ifnull,  j-ifnonnull,
     j-if-icmpeq,  j-if-icmpne,  j-if-icmplt,  j-if-icmpge,  j-if-icmpgt,  j-if-icmple,
     j-if-acmpeq,  j-if-acmpne,
@@ -270,7 +270,7 @@ define module java-vm-code-generation
     ensure-class-concrete,
     <java-concrete-class-info>,
     <java-concrete-interface-info>,
-    
+
 
     // java-emit-code
 
@@ -342,6 +342,6 @@ define module java-vm-code-generation
     emit-java-ldc,
     emit-java-int,
     emit-java-string,
-    emit-java-constant-load ;
+    emit-java-constant-load;
 
 end module;

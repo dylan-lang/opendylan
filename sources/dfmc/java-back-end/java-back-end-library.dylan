@@ -6,8 +6,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-java-back-end
   use functional-dylan;
-  use streams ;
-  use date ;
+  use streams;
+  use date;
 
   use java-vm-code-generation;
 
@@ -30,20 +30,20 @@ end library;
 define module dfmc-java-back-end
   use functional-dylan;
   use threads;
-  use streams-internals ;
-  use streams ;
-  use date ;
+  use streams-internals;
+  use streams;
+  use date;
   use byte-vector;
 //  use machine-word-lowlevel,
 //    import: {machine-word-logior,
-//	     machine-word-logxor,
-//	     machine-word-logand,
-//	     machine-word-lognot,
-//	     machine-word-unsigned-shift-left,
-//	     machine-word-unsigned-shift-right};
+//             machine-word-logxor,
+//             machine-word-logand,
+//             machine-word-lognot,
+//             machine-word-unsigned-shift-left,
+//             machine-word-unsigned-shift-right};
 
-  use java-vm-code-generation ;
-	     
+  use java-vm-code-generation;
+
   use dfmc-mangling;
   use dfmc-core;
   use dfmc-imports;
@@ -66,7 +66,7 @@ define module dfmc-java-back-end
     emit-java-class-for-library,
     finalize-java-linking,
     *current-module-java-class*,
-    *current-library-jar* ;
+    *current-library-jar*;
 end module;
 
 

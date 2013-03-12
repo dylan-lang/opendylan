@@ -7,11 +7,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 // this stuff obsolete
-define sealed generic emit-primitive-call 
+define sealed generic emit-primitive-call
   (walker, c :: <primitive-call>, f :: <&primitive>);
 define method emit-primitive-call (walker, c :: <primitive-call>, f :: <&primitive>)
-  format-out ("*** unexpected call to emit-primitive-call for a <java-emitter>\n") ;
-  break () ;
+  format-out ("*** unexpected call to emit-primitive-call for a <java-emitter>\n");
+  break ();
 end;
 
 
@@ -25,7 +25,7 @@ define constant $default-primitive-descriptor = make(<primitive-descriptor>, emi
 
 /* not needed?
 define macro &primitive-descriptor-definer
-  { define &primitive-descriptor ?:name, 
+  { define &primitive-descriptor ?:name,
       #key ?emitter:expression = emit-primitive-call }
     => { define method ?name ## "-descriptor-getter" (back-end :: <java-back-end>)
            $default-primitive-descriptor
@@ -44,7 +44,7 @@ define &primitive-descriptor primitive-break;
 // Machine
 define &primitive-descriptor primitive-word-size;
 define &primitive-descriptor primitive-header-size;
-    
+
 // Allocation.
 define &primitive-descriptor primitive-allocate;
 define &primitive-descriptor primitive-byte-allocate;
@@ -64,7 +64,7 @@ define &primitive-descriptor primitive-unsigned-machine-integer-at-setter;
 
 // GC
 define &primitive-descriptor primitive-gc-state;
-  
+
 // Byte Character.
 define &primitive-descriptor primitive-byte-character-as-raw;
 define &primitive-descriptor primitive-raw-as-byte-character;
@@ -97,7 +97,7 @@ define &primitive-descriptor primitive-small-integer-less-than?;
 define &primitive-descriptor primitive-small-integer-as-machine-integer;
 define &primitive-descriptor primitive-small-integer-as-pointer;
 define &primitive-descriptor primitive-small-integer-as-single-float;
-    
+
 // Big Integer.
 define &primitive-descriptor primitive-big-integer-as-raw;
 define &primitive-descriptor primitive-raw-as-big-integer;
@@ -309,11 +309,11 @@ define &primitive-descriptor primitive-close;
 
 // Boot.
 define &primitive-descriptor p=;
-define &primitive-descriptor i+; 
-define &primitive-descriptor i-; 
-define &primitive-descriptor i*; 
-define &primitive-descriptor i=; 
-define &primitive-descriptor i<; 
+define &primitive-descriptor i+;
+define &primitive-descriptor i-;
+define &primitive-descriptor i*;
+define &primitive-descriptor i=;
+define &primitive-descriptor i<;
 define &primitive-descriptor i>;
 
 

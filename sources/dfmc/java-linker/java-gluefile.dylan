@@ -14,7 +14,7 @@ break(); //MT
   format(stream, "  return(0);\n");
   format(stream, "}\n");
 
-  finalize-java-linking () ;
+  finalize-java-linking ();
 end method;
 
 define method emit-gluefile (stream, library, cr-names)

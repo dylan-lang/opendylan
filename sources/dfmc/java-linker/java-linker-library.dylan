@@ -8,7 +8,7 @@ define library dfmc-java-linker
   use functional-dylan;
   use system;
 
-  use java-vm-code-generation ;
+  use java-vm-code-generation;
 
   use dfmc-core;
   use dfmc-conversion;

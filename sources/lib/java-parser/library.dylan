@@ -246,9 +246,5 @@ define module java-parser
       $transient-modifier,
       $volatile-modifier;
 
-end module;    
+end module;
 
-
-
-
-  

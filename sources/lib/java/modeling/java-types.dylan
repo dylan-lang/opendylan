@@ -11,7 +11,7 @@ format-out ("initing java-types.dylan\n");
 // represent types without having to build sig-strings
 
 define abstract class <java-type> (<object>)
-  slot  cached-sig :: false-or (<unique-string>) = #f ;
+  slot  cached-sig :: false-or (<unique-string>) = #f;
 end;
 
 // most general non-function type (not really in Java the language,
@@ -22,7 +22,7 @@ define abstract class <java-any> (<java-type>) end;
 // special one for return addresses in stack modeling
 define class <java-return-address-type> (<java-type>) end;
 
-define constant $java-return-address$ :: <java-return-address-type> = make (<java-return-address-type>) ;
+define constant $java-return-address$ :: <java-return-address-type> = make (<java-return-address-type>);
 
 
 define class <java-any-type> (<java-any>) end;
@@ -42,14 +42,14 @@ define method compute-signature-string (ft :: <java-null-type>) => (sig :: <byte
   "N"
 end;
 
-define constant $java-any-type$ :: <java-any-type> = make (<java-any-type>) ;
-define constant $java-null-type$ :: <java-null-type> = make (<java-null-type>) ;
+define constant $java-any-type$ :: <java-any-type> = make (<java-any-type>);
+define constant $java-null-type$ :: <java-null-type> = make (<java-null-type>);
 
 define method java-type-words (type :: <java-type>) => (size :: <integer>)
   1  // default for classes, arrays
 end;
 
-define sealed generic compute-signature-string (jt :: <java-type>) => (sig :: <byte-string>) ;
+define sealed generic compute-signature-string (jt :: <java-type>) => (sig :: <byte-string>);
 
 define function signature-string (jt :: <java-type>) => (uniq :: <unique-string>)
   jt.cached-sig | (jt.cached-sig := uniq (jt.compute-signature-string))
@@ -60,29 +60,29 @@ define function signature-string-string (jt :: <java-type>) => (str :: <byte-str
 end;
 
 define class <java-function-type> (<java-type>)
-  sealed slot java-function-result-type :: <java-type>, required-init-keyword: result-type: ;
-  sealed slot java-function-arg-types :: <list>,        required-init-keyword: arg-types: ;
+  sealed slot java-function-result-type :: <java-type>, required-init-keyword: result-type:;
+  sealed slot java-function-arg-types :: <list>,        required-init-keyword: arg-types:;
 end;
 
 define method print-object (ft :: <java-function-type>, s :: <stream>) => ()
-  let  beginning? :: <boolean> = #t ;
+  let  beginning? :: <boolean> = #t;
   for (a in ft.java-function-arg-types)
-    format (s, "%s%s", if (beginning?) "(" else " " end, a) ;
-    beginning? := #f ;
+    format (s, "%s%s", if (beginning?) "(" else " " end, a);
+    beginning? := #f;
   end;
   if (beginning?)
     format (s, "(")
   end;
-  format (s, ") => %s", ft.java-function-result-type) ;
+  format (s, ") => %s", ft.java-function-result-type);
 end;
 
 define method compute-signature-string (ft :: <java-function-type>) => (sig :: <byte-string>)
-  let  res = apply (concatenate, "(", map (signature-string-string, ft.java-function-arg-types)) ;
+  let  res = apply (concatenate, "(", map (signature-string-string, ft.java-function-arg-types));
   concatenate (res, ")", signature-string-string (ft.java-function-result-type))
 end;
 
 define class <java-array-type> (<java-reference-type>)
-  sealed slot java-array-element-type :: <java-any>, required-init-keyword: element-type: ;
+  sealed slot java-array-element-type :: <java-any>, required-init-keyword: element-type:;
 end;
 
 define method print-object (at :: <java-array-type>, s :: <stream>) => ()
@@ -90,7 +90,7 @@ define method print-object (at :: <java-array-type>, s :: <stream>) => ()
 end;
 
 // most general array type (not really in Java the language)
-define constant $java-array-type$ :: <java-array-type> = make (<java-array-type>, element-type: $java-any-type$) ;
+define constant $java-array-type$ :: <java-array-type> = make (<java-array-type>, element-type: $java-any-type$);
 
 define method compute-signature-string (at :: <java-array-type>) => (sig :: <byte-string>)
   concatenate ("[", at.java-array-element-type.signature-string-string)
@@ -99,23 +99,23 @@ end;
 
 
 
-define constant  j-int-code    :: <integer> = 0 ;
-define constant  j-long-code   :: <integer> = 1 ;
-define constant  j-float-code  :: <integer> = 2 ;
-define constant  j-double-code :: <integer> = 3 ;
-define constant  j-ref-code    :: <integer> = 4 ;
-define constant  j-byte-code   :: <integer> = 5 ;
-define constant  j-char-code   :: <integer> = 6 ;
-define constant  j-short-code  :: <integer> = 7 ;
-define constant  j-void-code   :: <integer> = 5 ;  // hacky - shouldn't really be used in data moves
+define constant  j-int-code    :: <integer> = 0;
+define constant  j-long-code   :: <integer> = 1;
+define constant  j-float-code  :: <integer> = 2;
+define constant  j-double-code :: <integer> = 3;
+define constant  j-ref-code    :: <integer> = 4;
+define constant  j-byte-code   :: <integer> = 5;
+define constant  j-char-code   :: <integer> = 6;
+define constant  j-short-code  :: <integer> = 7;
+define constant  j-void-code   :: <integer> = 5;  // hacky - shouldn't really be used in data moves
 
-define sealed generic j-code-for (tipe :: <java-type>) => (j-code :: <integer>) ;
+define sealed generic j-code-for (tipe :: <java-type>) => (j-code :: <integer>);
 
 define class <java-primitive-type> (<java-any>)
-  sealed constant slot java-prim-sig :: <string>, required-init-keyword: sig: ;
-  sealed constant slot java-type-words :: <integer> = 1, init-keyword: words: ;
-  sealed constant slot java-prim-reflected-class :: <java-stub-class>, required-init-keyword: reflected-class: ;
-  sealed constant slot j-code-for :: <integer>, required-init-keyword: j-code-for: ;
+  sealed constant slot java-prim-sig :: <string>, required-init-keyword: sig:;
+  sealed constant slot java-type-words :: <integer> = 1, init-keyword: words:;
+  sealed constant slot java-prim-reflected-class :: <java-stub-class>, required-init-keyword: reflected-class:;
+  sealed constant slot j-code-for :: <integer>, required-init-keyword: j-code-for:;
 end;
 
 
@@ -127,7 +127,7 @@ define method j-code-for (tipe :: <java-null-type>) => (j-code :: <integer>)
 end;
 
 define class <java-primitive-fragment-type> (<java-primitive-type>)
-  sealed slot which-fragment :: <integer>, required-init-keyword: which-fragment: ;
+  sealed slot which-fragment :: <integer>, required-init-keyword: which-fragment:;
 end;
 
 define method compute-signature-string (jpt :: <java-primitive-type>) => (sig :: <byte-string>)
@@ -140,30 +140,30 @@ end;
 
 
 define open abstract class <java-concrete> (<object>)
-  constant slot class-or-interface :: <java-class-or-interface>, required-init-keyword: class-or-interface: ;
+  constant slot class-or-interface :: <java-class-or-interface>, required-init-keyword: class-or-interface:;
 end;
 
 
 // just the naming stuff, not even superclasses - ie the symbolic link info
 define abstract open class <java-class-or-interface> (<java-reference-type>)
-  constant slot class-name   :: <byte-string>, required-init-keyword: class-name: ;
-  constant slot class-package  :: <java-package>, required-init-keyword: package: ;
-  slot fullname :: false-or (<unique-string>) = #f ;
-  sealed slot represents = #f, init-keyword: represents: ;
+  constant slot class-name   :: <byte-string>, required-init-keyword: class-name:;
+  constant slot class-package  :: <java-package>, required-init-keyword: package:;
+  slot fullname :: false-or (<unique-string>) = #f;
+  sealed slot represents = #f, init-keyword: represents:;
 
-  slot concrete-implementation :: false-or (<java-concrete>) = #f ;
-  slot rcpl  :: false-or (<simple-object-vector>) = #f ;
+  slot concrete-implementation :: false-or (<java-concrete>) = #f;
+  slot rcpl  :: false-or (<simple-object-vector>) = #f;
 end;
 
 format-out ("java-types.dylan point 1\n");
 
-define open generic interfaces (thing) => (ifs :: <sequence>) ;
-define open generic interfaces-setter (ifs :: <sequence>, thing) => (ifs :: <sequence>) ;
+define open generic interfaces (thing) => (ifs :: <sequence>);
+define open generic interfaces-setter (ifs :: <sequence>, thing) => (ifs :: <sequence>);
 
 define abstract open class <java-class> (<java-class-or-interface>)
-  slot super :: false-or(<java-class>), required-init-keyword: super: ;
-  slot interfaces :: <simple-object-vector> = #[], init-keyword: interfaces: ;
-//  slot rcpl  :: <simple-object-vector> ;
+  slot super :: false-or(<java-class>), required-init-keyword: super:;
+  slot interfaces :: <simple-object-vector> = #[], init-keyword: interfaces:;
+//  slot rcpl  :: <simple-object-vector>;
 end;
 
 define method initialize (claz :: <java-class>, #key super) => ()
@@ -172,7 +172,7 @@ define method initialize (claz :: <java-class>, #key super) => ()
 end;
 
 define abstract open class <java-interface> (<java-class-or-interface>)
-  slot super-interfaces :: <sequence>, required-init-keyword: supers: ;
+  slot super-interfaces :: <sequence>, required-init-keyword: supers:;
 end;
 
 // FAKE for now for interfaces
@@ -181,7 +181,7 @@ define function calc-rcpl (claz :: <java-interface>, supers :: <sequence>) => (r
 end;
 
 define method initialize (claz :: <java-interface>, #key supers :: <sequence>) => ()
-  claz.rcpl := calc-rcpl (claz, supers) ;
+  claz.rcpl := calc-rcpl (claz, supers);
 end;
 
 define method print-object (cls :: <java-class>, stream :: <stream>) => ()
@@ -216,70 +216,70 @@ end;
 
 format-out ("java-types.dylan point 1.2\n");
 
-define constant $java-pack$ = java-package ("java", super: $java-default-package$) ;
-define constant $java-lang-pack$ = java-package ("lang", super: $java-pack$) ;
-define constant $java-io-pack$   = java-package ("io", super: $java-pack$) ;
-define constant $java-util-pack$ = java-package ("util", super: $java-pack$) ;
+define constant $java-pack$ = java-package ("java", super: $java-default-package$);
+define constant $java-lang-pack$ = java-package ("lang", super: $java-pack$);
+define constant $java-io-pack$   = java-package ("io", super: $java-pack$);
+define constant $java-util-pack$ = java-package ("util", super: $java-pack$);
 format-out ("java-types.dylan point 1.24\n");
 
-define function java-lang-class (classname :: <byte-string>, 
-				 super :: false-or (<java-stub-class>),
+define function java-lang-class (classname :: <byte-string>,
+                                 super :: false-or (<java-stub-class>),
                                  #key interfaces = #[]) =>
     (cls :: <java-stub-class>)
-  make (<java-stub-class>, 
-        class-name:   classname, 
+  make (<java-stub-class>,
+        class-name:   classname,
         package:      $java-lang-pack$,
         super:        super,
         interfaces:   interfaces)
 end;
 
-define constant $java/lang/Object$ = java-lang-class ("Object", #f) ;
+define constant $java/lang/Object$ = java-lang-class ("Object", #f);
 
-define constant $java/lang/Void$    = java-lang-class ("Void",    $java/lang/Object$) ;
-define constant $java/lang/Integer$ = java-lang-class ("Integer", $java/lang/Object$) ;
-define constant $java/lang/Character$ = java-lang-class ("Character", $java/lang/Object$) ;
-define constant $java/lang/Byte$    = java-lang-class ("Byte",    $java/lang/Object$) ;
-define constant $java/lang/Boolean$ = java-lang-class ("Boolean",    $java/lang/Object$) ;
-define constant $java/lang/Short$    = java-lang-class ("Short",    $java/lang/Object$) ;
-define constant $java/lang/Long$    = java-lang-class ("Long",    $java/lang/Object$) ;
-define constant $java/lang/Float$   = java-lang-class ("Float",   $java/lang/Object$) ;
-define constant $java/lang/Double$  = java-lang-class ("Double",  $java/lang/Object$) ;
+define constant $java/lang/Void$    = java-lang-class ("Void",    $java/lang/Object$);
+define constant $java/lang/Integer$ = java-lang-class ("Integer", $java/lang/Object$);
+define constant $java/lang/Character$ = java-lang-class ("Character", $java/lang/Object$);
+define constant $java/lang/Byte$    = java-lang-class ("Byte",    $java/lang/Object$);
+define constant $java/lang/Boolean$ = java-lang-class ("Boolean",    $java/lang/Object$);
+define constant $java/lang/Short$    = java-lang-class ("Short",    $java/lang/Object$);
+define constant $java/lang/Long$    = java-lang-class ("Long",    $java/lang/Object$);
+define constant $java/lang/Float$   = java-lang-class ("Float",   $java/lang/Object$);
+define constant $java/lang/Double$  = java-lang-class ("Double",  $java/lang/Object$);
 
 // these are a problem, because we have to ensure new cached-sigs
 // are created after the end of one library
-define constant $java-void-type$ :: <java-primitive-type>  = 
+define constant $java-void-type$ :: <java-primitive-type>  =
   make (<java-primitive-type>, sig: "V", reflected-class: $java/lang/Void$, words: 0, j-code-for: j-void-code);
-define constant $java-int-type$  :: <java-primitive-type>  = 
+define constant $java-int-type$  :: <java-primitive-type>  =
   make (<java-primitive-type>, sig: "I", reflected-class: $java/lang/Integer$,        j-code-for: j-int-code);
-define constant $java-char-type$ :: <java-primitive-type>  = 
+define constant $java-char-type$ :: <java-primitive-type>  =
   make (<java-primitive-type>, sig: "C", reflected-class: $java/lang/Character$,      j-code-for: j-int-code);
-define constant $java-byte-type$ :: <java-primitive-type>  = 
+define constant $java-byte-type$ :: <java-primitive-type>  =
   make (<java-primitive-type>, sig: "B", reflected-class: $java/lang/Byte$,           j-code-for: j-int-code);
-define constant $java-bool-type$ :: <java-primitive-type>  = 
+define constant $java-bool-type$ :: <java-primitive-type>  =
   make (<java-primitive-type>, sig: "Z", reflected-class: $java/lang/Boolean$,        j-code-for: j-int-code);
-define constant $java-short-type$ :: <java-primitive-type>  = 
+define constant $java-short-type$ :: <java-primitive-type>  =
   make (<java-primitive-type>, sig: "S", reflected-class: $java/lang/Short$,          j-code-for: j-int-code);
-define constant $java-long-type$ :: <java-primitive-type>  = 
+define constant $java-long-type$ :: <java-primitive-type>  =
   make (<java-primitive-type>, sig: "J", reflected-class: $java/lang/Long$, words: 2, j-code-for: j-long-code);
-define constant $java-float-type$ :: <java-primitive-type> = 
+define constant $java-float-type$ :: <java-primitive-type> =
   make (<java-primitive-type>, sig: "F", reflected-class: $java/lang/Float$,          j-code-for: j-float-code);
-define constant $java-double-type$ :: <java-primitive-type> =  
+define constant $java-double-type$ :: <java-primitive-type> =
   make (<java-primitive-type>, sig: "D", reflected-class: $java/lang/Double$, words: 2, j-code-for: j-double-code);
 
 // these are used for stack modeling only
 define constant $java-long-low-fragment$ :: <java-primitive-fragment-type> =
-  make (<java-primitive-fragment-type>, sig: "J", reflected-class: $java/lang/Long$, j-code-for: j-long-code, which-fragment: 0) ;
+  make (<java-primitive-fragment-type>, sig: "J", reflected-class: $java/lang/Long$, j-code-for: j-long-code, which-fragment: 0);
 define constant $java-long-high-fragment$ :: <java-primitive-fragment-type> =
-  make (<java-primitive-fragment-type>, sig: "J", reflected-class: $java/lang/Long$, j-code-for: j-long-code, which-fragment: 1) ;
+  make (<java-primitive-fragment-type>, sig: "J", reflected-class: $java/lang/Long$, j-code-for: j-long-code, which-fragment: 1);
 define constant $java-double-low-fragment$ :: <java-primitive-fragment-type> =
-  make (<java-primitive-fragment-type>, sig: "D", reflected-class: $java/lang/Double$, j-code-for: j-double-code, which-fragment: 0) ;
+  make (<java-primitive-fragment-type>, sig: "D", reflected-class: $java/lang/Double$, j-code-for: j-double-code, which-fragment: 0);
 define constant $java-double-high-fragment$ :: <java-primitive-fragment-type> =
-  make (<java-primitive-fragment-type>, sig: "D", reflected-class: $java/lang/Double$, j-code-for: j-double-code, which-fragment: 1) ;
+  make (<java-primitive-fragment-type>, sig: "D", reflected-class: $java/lang/Double$, j-code-for: j-double-code, which-fragment: 1);
 
 
-define generic double-type-halves (jtype :: <java-primitive-type>) => 
+define generic double-type-halves (jtype :: <java-primitive-type>) =>
     (low :: <java-primitive-fragment-type>,
-     high :: <java-primitive-fragment-type>) ;
+     high :: <java-primitive-fragment-type>);
 
 define method double-type-halves (jtype == $java-long-type$) =>
     (low :: <java-primitive-fragment-type>,
@@ -316,9 +316,9 @@ define function java-type-equivalent? (type1 :: <java-type>, type2 :: <java-type
   end
 end;
 
-define sealed generic java-type-equivalent-2? (type1 :: <java-type>, type2 :: <java-type>) => (equivalent? :: <boolean>) ;
+define sealed generic java-type-equivalent-2? (type1 :: <java-type>, type2 :: <java-type>) => (equivalent? :: <boolean>);
 
-// default case - different  
+// default case - different
 define method java-type-equivalent-2? (type1 :: <java-type>, type2 :: <java-type>) => (equivalent? :: <boolean>)
   #f
 end;
@@ -336,13 +336,13 @@ end;
 
 
 define method java-type-equivalent-2? (type1 :: <java-class-or-interface>, type2 :: <java-class-or-interface>) => (equivalent? :: <boolean>)
-  format-out ("classes %s and %s deemed distinct!\n", type1, type2) ;
+  format-out ("classes %s and %s deemed distinct!\n", type1, type2);
   #f
 end;
 
 define method java-type-equivalent-2? (type1 :: <java-function-type>, type2 :: <java-function-type>) => (equivalent? :: <boolean>)
-  let  args1 = type1.java-function-arg-types ;
-  let  args2 = type2.java-function-arg-types ;
+  let  args1 = type1.java-function-arg-types;
+  let  args2 = type2.java-function-arg-types;
   args1.size = args2.size &
     java-type-equivalent? (type1.java-function-result-type, type2.java-function-result-type) &
     (args1 == args2 | every? (java-type-equivalent?, args1, args2))
@@ -350,7 +350,7 @@ end;
 
 
 
-// try to resolve two java types together, for the confluence of BBs - 
+// try to resolve two java types together, for the confluence of BBs -
 // ie find best common superclass (superinterface)
 
 // this wrapper bottoms us out
@@ -362,13 +362,13 @@ define function java-type-merge (type1 :: <java-type>, type2 :: <java-type>) => 
   end
 end;
 
-define sealed generic java-type-merge-2 (type1 :: <java-type>, type2 :: <java-type>) => (type :: <java-type>) ;
+define sealed generic java-type-merge-2 (type1 :: <java-type>, type2 :: <java-type>) => (type :: <java-type>);
 
-define variable *debug-java-types* :: <boolean> = #t ;
+define variable *debug-java-types* :: <boolean> = #t;
 
 define method java-type-merge-2 (type1 :: <java-type>, type2 :: <java-type>) => (type :: <java-type>)
   if (*debug-java-types*)
-    format-out ("@@@ failed to merge incompatible java-types, backing out to Object\n") ;
+    format-out ("@@@ failed to merge incompatible java-types, backing out to Object\n");
     $java/lang/Object$
   else
     error ("failed to merge java-types, internal Java backend problem?")
@@ -426,8 +426,8 @@ end;
 format-out ("java-types.dylan point 3\n");
 
 define method java-type-merge-2 (type1 :: <java-array-type>, type2 :: <java-array-type>) => (type :: <java-array-type>)
-  let  el1 = type1.java-array-element-type ;
-  let  el2 = type2.java-array-element-type ;
+  let  el1 = type1.java-array-element-type;
+  let  el2 = type2.java-array-element-type;
   if (java-type-equivalent? (el1, el2))
     type1
   else
@@ -437,8 +437,8 @@ end;
 
 
 define method java-type-merge-2 (type1 :: <java-function-type>, type2 :: <java-function-type>, #next next-method) => (type :: <java-function-type>)
-  let  args1 = type1.java-function-arg-types ;
-  let  args2 = type2.java-function-arg-types ;
+  let  args1 = type1.java-function-arg-types;
+  let  args2 = type2.java-function-arg-types;
   if (java-type-equivalent? (type1, type2))
     type1
   elseif (args1.size ~= args2.size)
@@ -450,7 +450,7 @@ define method java-type-merge-2 (type1 :: <java-function-type>, type2 :: <java-f
   end
 end;
 
-define sealed generic java-type-intersect (type1 :: <java-type>, type2 :: <java-type>) => (type :: <java-type>) ;
+define sealed generic java-type-intersect (type1 :: <java-type>, type2 :: <java-type>) => (type :: <java-type>);
 
 define method java-type-intersect (type1 :: <java-type>, type2 :: <java-type>) => (type :: <java-type>)
   error ("cannot intersect arb. java types")
@@ -489,8 +489,8 @@ define method java-type-intersect (type1 :: <java-any-type>, type2 :: <java-refe
 end;
 
 define method java-type-intersect (type1 :: <java-array-type>, type2 :: <java-array-type>) => (type :: <java-array-type>)
-  let  el1 = type1.java-array-element-type ;
-  let  el2 = type2.java-array-element-type ;
+  let  el1 = type1.java-array-element-type;
+  let  el2 = type2.java-array-element-type;
   if (java-type-equivalent? (el1, el2))
     type1
   else
@@ -508,8 +508,8 @@ define method java-type-intersect (type1 :: <java-class-or-interface>, type2 :: 
 end;
 
 define method java-type-intersect (type1 :: <java-function-type>, type2 :: <java-function-type>, #next next-method) => (type :: <java-function-type>)
-  let  args1 = type1.java-function-arg-types ;
-  let  args2 = type2.java-function-arg-types ;
+  let  args1 = type1.java-function-arg-types;
+  let  args2 = type2.java-function-arg-types;
   if (java-type-equivalent? (type1, type2))
     type1
   elseif (args1.size ~= args2.size)
@@ -521,21 +521,21 @@ define method java-type-intersect (type1 :: <java-function-type>, type2 :: <java
   end
 end;
 
-                  
+
 
 
 // use the RCPL thing to find best point in the hierarchy
 define method java-type-merge-2 (type1 :: <java-class>, type2 :: <java-class>) => (type :: <java-class>)
-  let  class1-rcpl = type1.rcpl ;
-  let  class2-rcpl = type2.rcpl ;
-  let  n = 1 ;
-  let rcpl-min-size :: <integer> = min (class1-rcpl.size, class2-rcpl.size) ;
+  let  class1-rcpl = type1.rcpl;
+  let  class2-rcpl = type2.rcpl;
+  let  n = 1;
+  let rcpl-min-size :: <integer> = min (class1-rcpl.size, class2-rcpl.size);
   while (n < rcpl-min-size & class1-rcpl [n] == class2-rcpl [n])
     n := n + 1
   end;
 //  if (n < rcpl-min-size)
 //    if (*debug-jvm-instrs* == #t)
-//      format-out ("@@@ rcpl mismatch  %s, %s\n", class1-rcpl [n], class2-rcpl [n]) 
+//      format-out ("@@@ rcpl mismatch  %s, %s\n", class1-rcpl [n], class2-rcpl [n])
 //    end
 //  end;
   class2-rcpl [n - 1]
@@ -567,7 +567,7 @@ end;
 define method java-type-merge-2 (type1 :: <java-class-or-interface>, type2 :: <java-array-type>) => (type :: <java-class>)
   $java/lang/Object$
 end;
- 
+
 define method java-type-merge-2 (type1 :: <java-array-type>, type2 :: <java-class-or-interface>) => (type :: <java-class>)
   $java/lang/Object$
 end;
@@ -578,10 +578,10 @@ end;
 // general than dest.
 
 define function assignment-compatible? (src :: <java-type>, dest :: <java-type>) => (compatible? :: <boolean>)
-  let  merge = java-type-merge (src, dest) ;
-  let  result = java-type-equivalent? (dest, merge) ;
+  let  merge = java-type-merge (src, dest);
+  let  result = java-type-equivalent? (dest, merge);
   unless (result)
-    format-out ("@@@ failed assignment typecheck from %s to %s (merge = %s) - ", src, dest, merge) ;
+    format-out ("@@@ failed assignment typecheck from %s to %s (merge = %s) - ", src, dest, merge);
   end;
   result
 end;

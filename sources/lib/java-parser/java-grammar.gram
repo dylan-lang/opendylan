@@ -8,9 +8,9 @@ start:
 compilation-unit:
   package-declaration-opt rev-import-declarations-opt rev-type-declarations-opt EOF
   => make(<compilation-unit>,
-	  package: arg$1,
-	  imports: rev-imports(arg$2),
-	  types: rev-type-declarations(arg$3));;
+          package: arg$1,
+          imports: rev-imports(arg$2),
+          types: rev-type-declarations(arg$3));;
 
 
 package-declaration-opt: => #f;;
@@ -37,9 +37,9 @@ type-declaration:
 class-declaration:
   modifiers-opt %class identifier super-opt interfaces-opt class-body
    => make(<class-declaration>,
-	   modifiers: arg$1,
-	   name: arg$3,
-	   super: arg$4,
+           modifiers: arg$1,
+           name: arg$3,
+           super: arg$4,
            interfaces: arg$5,
            body: arg$6);;
 
@@ -67,144 +67,144 @@ class-body-declaration:
 static-initializer:
   %static %lbrace %rbrace
    => make(<static-initializer>,
-	 body: make(<block>, statements: rev-block-statements(#())));;
+           body: make(<block>, statements: rev-block-statements(#())));;
   %static %lbrace rev-block-statements %rbrace
    => make(<static-initializer>,
-	 body: make(<block>, statements: rev-block-statements(arg$3)));;
+           body: make(<block>, statements: rev-block-statements(arg$3)));;
 
 field-declaration:
   type rev-variable-declarators %semi-colon
    => make(<field-declaration>,
-	   modifiers: 0,
-	   type: arg$1,
-	   declarators: rev-variable-declarators(arg$2));;
+           modifiers: 0,
+           type: arg$1,
+           declarators: rev-variable-declarators(arg$2));;
   modifiers type rev-variable-declarators %semi-colon
    => make(<field-declaration>,
-	   modifiers: arg$1,
-	   type: arg$2,
-	   declarators: rev-variable-declarators(arg$3));;
+           modifiers: arg$1,
+           type: arg$2,
+           declarators: rev-variable-declarators(arg$3));;
 
 constructor-declaration:
   identifier %lparen rev-formal-parameter-list-opt %rparen
     throws-opt
     %lbrace %rbrace
    => make(<constructor-declaration>,
-	   modifiers: 0,
-	   name: #f,
-	   parameters: rev-formal-parameters(arg$3),
-	   throws: arg$5,
-	   type: make(<reference-type>, name: arg$1, numdims: 0),
-	   body: make(<block>, statements: rev-block-statements(#())));;
+           modifiers: 0,
+           name: #f,
+           parameters: rev-formal-parameters(arg$3),
+           throws: arg$5,
+           type: make(<reference-type>, name: arg$1, numdims: 0),
+           body: make(<block>, statements: rev-block-statements(#())));;
   identifier %lparen rev-formal-parameter-list-opt %rparen
     throws-opt
     %lbrace rev-block-statements %rbrace
    => make(<constructor-declaration>,
-	   modifiers: 0,
-	   name: #f,
-	   parameters: rev-formal-parameters(arg$3),
-	   throws: arg$5,
-	   type: make(<reference-type>, name: arg$1, numdims: 0),
-	   body: make(<block>, statements: rev-block-statements(arg$7)));;
+           modifiers: 0,
+           name: #f,
+           parameters: rev-formal-parameters(arg$3),
+           throws: arg$5,
+           type: make(<reference-type>, name: arg$1, numdims: 0),
+           body: make(<block>, statements: rev-block-statements(arg$7)));;
   identifier %lparen rev-formal-parameter-list-opt %rparen
     throws-opt
     %lbrace explicit-constructor-invocation %rbrace
    => make(<constructor-declaration>,
-	   modifiers: 0,
-	   name: #f,
-	   parameters: rev-formal-parameters(arg$3),
-	   throws: arg$5,
-	   type: make(<reference-type>, name: arg$1, numdims: 0),
-	   body: make(<block>, statements: rev-block-statements(list(arg$7))));;
+           modifiers: 0,
+           name: #f,
+           parameters: rev-formal-parameters(arg$3),
+           throws: arg$5,
+           type: make(<reference-type>, name: arg$1, numdims: 0),
+           body: make(<block>, statements: rev-block-statements(list(arg$7))));;
   identifier %lparen rev-formal-parameter-list-opt %rparen
     throws-opt
     %lbrace explicit-constructor-invocation rev-block-statements %rbrace
    => make(<constructor-declaration>,
-	   modifiers: 0,
-	   name: #f,
-	   parameters: rev-formal-parameters(arg$3),
-	   throws: arg$5,
-	   type: make(<reference-type>, name: arg$1, numdims: 0),
-	   body: make(<block>, statements: rev-block-statements(concatenate(arg$8, list(arg$7)))));;
+           modifiers: 0,
+           name: #f,
+           parameters: rev-formal-parameters(arg$3),
+           throws: arg$5,
+           type: make(<reference-type>, name: arg$1, numdims: 0),
+           body: make(<block>, statements: rev-block-statements(concatenate(arg$8, list(arg$7)))));;
   modifiers identifier %lparen rev-formal-parameter-list-opt %rparen
     throws-opt
     %lbrace %rbrace
    => make(<constructor-declaration>,
-	   modifiers: arg$1,
-	   name: #f,
-	   parameters: rev-formal-parameters(arg$4),
-	   throws: arg$6,
-	   type: make(<reference-type>, name: arg$2, numdims: 0),
-	   body: make(<block>, statements: rev-block-statements(#())));;
+           modifiers: arg$1,
+           name: #f,
+           parameters: rev-formal-parameters(arg$4),
+           throws: arg$6,
+           type: make(<reference-type>, name: arg$2, numdims: 0),
+           body: make(<block>, statements: rev-block-statements(#())));;
   modifiers identifier %lparen rev-formal-parameter-list-opt %rparen
     throws-opt
     %lbrace rev-block-statements %rbrace
    => make(<constructor-declaration>,
-	   modifiers: arg$1,
-	   name: #f,
-	   parameters: rev-formal-parameters(arg$4),
-	   throws: arg$6,
-	   type: make(<reference-type>, name: arg$2, numdims: 0),
-	   body: make(<block>, statements: rev-block-statements(arg$8)));;
+           modifiers: arg$1,
+           name: #f,
+           parameters: rev-formal-parameters(arg$4),
+           throws: arg$6,
+           type: make(<reference-type>, name: arg$2, numdims: 0),
+           body: make(<block>, statements: rev-block-statements(arg$8)));;
   modifiers identifier %lparen rev-formal-parameter-list-opt %rparen
     throws-opt
     %lbrace explicit-constructor-invocation %rbrace
    => make(<constructor-declaration>,
-	   modifiers: arg$1,
-	   name: #f,
-	   parameters: rev-formal-parameters(arg$4),
-	   throws: arg$6,
-	   type: make(<reference-type>, name: arg$2, numdims: 0),
-	   body: make(<block>, statements: rev-block-statements(list(arg$8))));;
+           modifiers: arg$1,
+           name: #f,
+           parameters: rev-formal-parameters(arg$4),
+           throws: arg$6,
+           type: make(<reference-type>, name: arg$2, numdims: 0),
+           body: make(<block>, statements: rev-block-statements(list(arg$8))));;
   modifiers identifier %lparen rev-formal-parameter-list-opt %rparen
     throws-opt
     %lbrace explicit-constructor-invocation rev-block-statements %rbrace
    => make(<constructor-declaration>,
-	   modifiers: arg$1,
-	   name: #f,
-	   parameters: rev-formal-parameters(arg$4),
-	   throws: arg$6,
-	   type: make(<reference-type>, name: arg$2, numdims: 0),
-	   body: make(<block>, statements: rev-block-statements(concatenate(arg$9, list(arg$8)))));;
+           modifiers: arg$1,
+           name: #f,
+           parameters: rev-formal-parameters(arg$4),
+           throws: arg$6,
+           type: make(<reference-type>, name: arg$2, numdims: 0),
+           body: make(<block>, statements: rev-block-statements(concatenate(arg$9, list(arg$8)))));;
 
 method-declaration:
   method-header-vec block
    => let (mods, name, params, throws, type, numdims) = apply(values, arg$1);
       make(<method-declaration>,
-	   modifiers: mods,
-	   name: name,
-	   parameters: rev-formal-parameters(params),
-	   throws: throws,
-	   type: if (numdims == 0) type
-	         else
-		   // Supposedly this is obsolete, so shouldn't happen too much
-	           let (n, d) = if (instance?(type, <reference-type>))
-			          values(type.type-name, type.type-numdims)
-			        else
-				  values(type, 0)
-				end;
-		   make(<reference-type>, name: n, numdims: numdims + d)
-		 end,
-	   body: arg$2);;
+           modifiers: mods,
+           name: name,
+           parameters: rev-formal-parameters(params),
+           throws: throws,
+           type: if (numdims == 0) type
+                 else
+                   // Supposedly this is obsolete, so shouldn't happen too much
+                   let (n, d) = if (instance?(type, <reference-type>))
+                                  values(type.type-name, type.type-numdims)
+                                else
+                                  values(type, 0)
+                                end;
+                   make(<reference-type>, name: n, numdims: numdims + d)
+                 end,
+           body: arg$2);;
   abstract-method-declaration => arg$1;;
 
 abstract-method-declaration:
   method-header-vec %semi-colon
    => let (mods, name, params, throws, type, numdims) = apply(values, arg$1);
       make(<abstract-method-declaration>,
-	   modifiers: mods,
-	   name: name,
-	   parameters: rev-formal-parameters(params),
-	   throws: throws,
-	   type: if (numdims == 0) type
-	         else
-		   // Supposedly this is obsolete, so shouldn't happen too much
-	           let (n, d) = if (instance?(type, <reference-type>))
-			          values(type.type-name, type.type-numdims)
-			        else
-				  values(type, 0)
-				end;
-		   make(<reference-type>, name: n, numdims: numdims + d)
-		 end);;
+           modifiers: mods,
+           name: name,
+           parameters: rev-formal-parameters(params),
+           throws: throws,
+           type: if (numdims == 0) type
+                 else
+                   // Supposedly this is obsolete, so shouldn't happen too much
+                   let (n, d) = if (instance?(type, <reference-type>))
+                                  values(type.type-name, type.type-numdims)
+                                else
+                                  values(type, 0)
+                                end;
+                   make(<reference-type>, name: n, numdims: numdims + d)
+                 end);;
 
 // Note: don't merge type and %void, due to ambiguity with field declaration.
 method-header-vec:
@@ -219,7 +219,7 @@ method-header-vec:
    => vector(0, arg$2, arg$4, arg$6, #f, 0);;
   modifiers
    %void identifier %lparen rev-formal-parameter-list-opt %rparen throws-opt
-   => vector(arg$1, arg$3, arg$5, arg$7, #f, 0)	;;
+   => vector(arg$1, arg$3, arg$5, arg$7, #f, 0)        ;;
 
 rev-variable-declarators:
   variable-declarator => list(arg$1);;
@@ -232,10 +232,10 @@ variable-declarator:
    => make(<variable-declarator>, name: arg$1, numdims: arg$2, init: #f);;
   identifier %= variable-initializer
    => make(<variable-declarator>,
-	   name: arg$1, numdims: 0, init: arg$3);;
+           name: arg$1, numdims: 0, init: arg$3);;
   identifier dims %= variable-initializer
    => make(<variable-declarator>,
-	   name: arg$1, numdims: arg$2, init: arg$4);;
+           name: arg$1, numdims: arg$2, init: arg$4);;
 
 variable-initializer:
   expression => arg$1;;
@@ -269,15 +269,15 @@ formal-parameter:
     => make(<formal-parameter>, type: arg$1, name: arg$2);;
   type identifier dims
     => make(<formal-parameter>,
-	    type: begin
-		    let (n, d) = if (instance?(arg$1, <reference-type>))
-				   values(arg$1.type-name, arg$1.type-numdims)
-				 else
-				   values(arg$1, 0)
-				 end;
-		    make(<reference-type>, name: n, numdims: arg$3 + d)
-		  end,
-	    name: arg$2);;
+            type: begin
+                    let (n, d) = if (instance?(arg$1, <reference-type>))
+                                   values(arg$1.type-name, arg$1.type-numdims)
+                                 else
+                                   values(arg$1, 0)
+                                 end;
+                    make(<reference-type>, name: n, numdims: arg$3 + d)
+                  end,
+            name: arg$2);;
 
 throws-opt: => rev-names(#());;
   %throws rev-name-list => rev-names(arg$2);;
@@ -286,10 +286,10 @@ throws-opt: => rev-names(#());;
 
 interface-declaration:
   modifiers-opt %interface identifier extends-interfaces-opt
-	     %lbrace rev-interface-member-declarations-opt %rbrace
+             %lbrace rev-interface-member-declarations-opt %rbrace
    => make(<interface-declaration>,
-	   modifiers: arg$1,
-	   name: arg$3,
+           modifiers: arg$1,
+           name: arg$3,
            extends: arg$4,
            body: rev-body-declarations(arg$6));;
 
@@ -360,8 +360,8 @@ block-statement:
 local-variable-declaration:
   type rev-variable-declarators
     => make(<local-variable-declaration>,
-	    type: arg$1,
-	    declarators: rev-variable-declarators(arg$2));;
+            type: arg$1,
+            declarators: rev-variable-declarators(arg$2));;
 
 statement:
   statement-without-trailing-substatement => arg$1;;
@@ -389,13 +389,13 @@ empty-statement:
 
 labeled-statement:
   identifier %colon statement => make(<labeled-statement>,
-				     label: arg$1,
-				     statement: arg$3);;
+                                     label: arg$1,
+                                     statement: arg$3);;
 
 labeled-statement-no-short-if:
   identifier %colon statement-no-short-if => make(<labeled-statement>,
-						 label: arg$1,
-						 statement: arg$3);;
+                                                 label: arg$1,
+                                                 statement: arg$3);;
 
 expression-statement:
   statement-expression %semi-colon => arg$1;;
@@ -437,14 +437,14 @@ for-statement:
               expression-opt %semi-colon
               for-update-opt %rparen statement
    => make(<for-statement>, init: arg$3, condition: arg$5, update: arg$7,
-	   body: as-block(arg$9));;
+           body: as-block(arg$9));;
 
 for-statement-no-short-if:
   %for %lparen for-init-opt %semi-colon
               expression-opt %semi-colon
               for-update-opt %RPAREN statement-no-short-if
    => make(<for-statement>, init: arg$3, condition: arg$5, update: arg$7,
-	   body: as-block(arg$9));;
+           body: as-block(arg$9));;
 
 for-init-opt: => #f;;
   statement-expression-list => arg$1;;
@@ -479,14 +479,14 @@ synchronized-statement:
 
 try-statement:
   %try block rev-catches => make(<try-statement>, body: arg$2,
-				 catches: rev-catches(arg$3),
-				 finally: #f);;
+                                 catches: rev-catches(arg$3),
+                                 finally: #f);;
   %try block rev-catches %finally block => make(<try-statement>, body: arg$2,
-					        catches: rev-catches(arg$3),
-					        finally: arg$5);;
+                                                catches: rev-catches(arg$3),
+                                                finally: arg$5);;
   %try block %finally block =>  make(<try-statement>, body: arg$2,
-				     catches: #f,
-				     finally: arg$4);;
+                                     catches: #f,
+                                     finally: arg$4);;
 
 rev-catches:
   catch-clause => list(arg$1);;
@@ -501,9 +501,9 @@ switch-statement:
   %switch %lparen expression %rparen
     %lbrace rev-switch-cases-opt switch-labels-opt %rbrace
    => make(<switch-statement>,
-	   value: arg$3,
-	   cases: rev-switch-cases(if (arg$7) pair(arg$7, arg$6)
-				   else arg$6 end));;
+           value: arg$3,
+           cases: rev-switch-cases(if (arg$7) pair(arg$7, arg$6)
+                                   else arg$6 end));;
 
 rev-switch-cases-opt: => #();;
   rev-switch-cases-opt switch-case => pair(arg$2, arg$1);;
@@ -511,9 +511,9 @@ rev-switch-cases-opt: => #();;
 switch-case:
   rev-switch-labels rev-block-statements
     => make(<switch-case>,
-	    labels: rev-switch-labels(arg$1),
-	    body: make(<block>,
-		       statements: rev-block-statements(arg$2)));;
+            labels: rev-switch-labels(arg$1),
+            body: make(<block>,
+                       statements: rev-block-statements(arg$2)));;
 
 
 rev-switch-labels:
@@ -522,8 +522,8 @@ rev-switch-labels:
 
 switch-labels-opt: => #f;;
   rev-switch-labels => make(<switch-case>,
-			    labels: rev-switch-labels(arg$1),
-			    body: #f);;
+                            labels: rev-switch-labels(arg$1),
+                            body: #f);;
 
 switch-label: // false-or(<expression>);
   %case expression %colon => arg$2;;
@@ -663,14 +663,14 @@ cast-expression:
    => make(<cast-expression>, type: arg$2, value: arg$4);;
   %lparen primitive-type dims %rparen unary-expression
    => make(<cast-expression>,
-	   type: make(<reference-type>, name: arg$2, numdims: arg$3), value: arg$5);;
+           type: make(<reference-type>, name: arg$2, numdims: arg$3), value: arg$5);;
   %lparen rev-name dims %rparen unary-expression-not-plus-minus
    => make(<cast-expression>,
-	   type: make(<reference-type>, name: qualified-name(arg$2), numdims: arg$3),
-	    value: arg$5);;
+           type: make(<reference-type>, name: qualified-name(arg$2), numdims: arg$3),
+            value: arg$5);;
   %lparen expression %rparen unary-expression-not-plus-minus
    => make(<cast-expression>,
-	   type: make(<reference-type>, name: arg$2, numdims: 0), value: arg$4);;
+           type: make(<reference-type>, name: arg$2, numdims: 0), value: arg$4);;
 
 post-increment-expression:
  postfix-expression %++
@@ -690,10 +690,10 @@ method-invocation:
   rev-name argument-list
    => let id = arg$1.head;
       if (arg$1.tail == #())
-	make(<named-method-call>, name: id, class: #f, args: arg$2);
+        make(<named-method-call>, name: id, class: #f, args: arg$2);
       else
-	make(<named-method-call>,
-	     name: id, class: qualified-name(arg$1.tail), args: arg$2);
+        make(<named-method-call>,
+             name: id, class: qualified-name(arg$1.tail), args: arg$2);
       end;;
   primary %dot identifier argument-list
     => make(<named-method-call>, name: arg$3, class: arg$1, args: arg$4);;
@@ -730,13 +730,13 @@ class-instance-creation-expression:
 array-creation-expression:
   %new type-name rev-dim-exprs %lbracket %rbracket dims-opt
    => make(<new-array-expression>,
-	   type: make(<reference-type>,
-		      name: arg$2, numdims: arg$6 + 1 + arg$3.size),
-	   dims: rev-expressions(arg$3));;
+           type: make(<reference-type>,
+                      name: arg$2, numdims: arg$6 + 1 + arg$3.size),
+           dims: rev-expressions(arg$3));;
   %new type-name rev-dim-exprs
    => make(<new-array-expression>,
-	   type: make(<reference-type>, name: arg$2, numdims: arg$3.size),
-	   dims: rev-expressions(arg$3));;
+           type: make(<reference-type>, name: arg$2, numdims: arg$3.size),
+           dims: rev-expressions(arg$3));;
 
 type-name:
   primitive-type => arg$1;;
@@ -758,7 +758,7 @@ rev-argument-list:
 
 dims-opt: => 0;; dims => arg$1;;
 
-dims: 
+dims:
   %lbracket %rbracket => 1;;
   dims %lbracket %rbracket => arg$1 + 1;;
 

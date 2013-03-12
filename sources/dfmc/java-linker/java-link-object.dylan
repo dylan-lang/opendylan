@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// OBJECT EMISSION PROTOCOL
 /*
 define generic emit-forward    // binding declaration
-  (back-end, stream, object) => (); 
+  (back-end, stream, object) => ();
 define generic emit-definition // binding
-  (back-end, stream, object) => (); 
+  (back-end, stream, object) => ();
 
 /// VARIABLES
 
@@ -20,7 +20,7 @@ break(); //MT
   format-emit*(back-end, stream, "extern ~ @;\n", $dylan-type-string, o);
 end method;
 
-define method emit-definition 
+define method emit-definition
     (back-end :: <java-back-end>, stream :: <stream>, o :: <module-binding>) => ()
 break(); //MT
   format-emit*(back-end, stream, "~ %;\n", $dylan-type-string, o);
@@ -62,7 +62,7 @@ break(); //MT
   // Direct objects are always emitted in full at point of reference and
   // are never referred to by name, hence no need for a forward declaration.
   unless (o.direct-object?)
-    unless (o.model-definition) 
+    unless (o.model-definition)
       write(stream, "static ");
     end;
     emit-type-name(back-end, stream, o);
@@ -76,19 +76,19 @@ define method emit-indirection-definition
     (back-end :: <java-back-end>, stream :: <stream>, o :: <object>) => ()
 break(); //MT
   format-emit*
-    (back-end, stream, "static ~ ~^ = @;\n", 
+    (back-end, stream, "static ~ ~^ = @;\n",
      $dylan-type-string, $indirection-prefix, o, o);
 end method;
 
 // STRUCTURE
 
-// Indirect objects are just dumped slot-by-slot directed my MOP 
+// Indirect objects are just dumped slot-by-slot directed my MOP
 // information. Packed representations like characters in strings
-// obviously cause wrinkles. 
+// obviously cause wrinkles.
 
-// Issue: Although this is sweet, it may also be slow if we use the 
+// Issue: Although this is sweet, it may also be slow if we use the
 // generic code for common objects like methods and slot descriptors.
-// We will have to profile, but there may be a case for the model 
+// We will have to profile, but there may be a case for the model
 // class macros generating custom emitters for common classes.
 
 define generic emit-object-slot
@@ -113,7 +113,7 @@ end method;
 
 
 define method emit-object-slot
-    (back-end :: <java-back-end>, stream :: <stream>, 
+    (back-end :: <java-back-end>, stream :: <stream>,
      class, slotd :: <&any-instance-slot-descriptor>, o) => ()
 break(); //MT
   format(stream, ",\n  ");
@@ -125,7 +125,7 @@ end method;
 
 
 define method emit-object-slot
-    (back-end :: <java-back-end>, stream :: <stream>, 
+    (back-end :: <java-back-end>, stream :: <stream>,
      class, slotd :: <&repeated-slot-descriptor>, o) => ()
 break(); //MT
   let size = ^slot-value(o, ^size-slot-descriptor(slotd));
@@ -159,7 +159,7 @@ end method;
 --- on non-instance slots.
 
 define method emit-object-slot
-    (back-end :: <java-back-end>, stream :: <stream>, 
+    (back-end :: <java-back-end>, stream :: <stream>,
      class, slotd :: <&slot-descriptor>, o) => ()
 break(); //MT
 end method;
@@ -168,13 +168,13 @@ end method;
 
 // CLASSES
 
-// If the class has a repeated slot, rather than dumping the struct 
-// itself we dump a struct constructor macro. 
+// If the class has a repeated slot, rather than dumping the struct
+// itself we dump a struct constructor macro.
 /*
-define method emit-slot-definition-using-type-name 
+define method emit-slot-definition-using-type-name
     (stream :: <stream>, prefix-string :: <string>, suffix-string :: <string>,
-     type-name :: <string>, 
-     o :: <&class>, slotd :: <&slot-descriptor>, offset :: <integer>) 
+     type-name :: <string>,
+     o :: <&class>, slotd :: <&slot-descriptor>, offset :: <integer>)
  => ()
 break(); //MT
 //  write(stream, prefix-string);
@@ -186,21 +186,21 @@ end method;
 
 define method emit-slot-definition
     (stream :: <stream>, prefix-string :: <string>, suffix-string :: <string>,
-     o :: <&class>, slotd :: <&repeated-slot-descriptor>, offset :: <integer>) 
+     o :: <&class>, slotd :: <&repeated-slot-descriptor>, offset :: <integer>)
  => ()
 break(); //MT
   emit-slot-definition-using-type-name
-    (stream, prefix-string, suffix-string, 
+    (stream, prefix-string, suffix-string,
      slotd.^slot-type.java-repeated-type-name, o, slotd, offset);
 end method;
 
 define method emit-slot-definition
     (stream :: <stream>, prefix-string :: <string>, suffix-string :: <string>,
-     o :: <&class>, slotd :: <&slot-descriptor>, offset :: <integer>) 
+     o :: <&class>, slotd :: <&slot-descriptor>, offset :: <integer>)
  => ()
 break(); //MT
   emit-slot-definition-using-type-name
-    (stream, prefix-string, suffix-string, 
+    (stream, prefix-string, suffix-string,
      slotd.^slot-type.java-type-name, o, slotd, offset);
 end method;
 
@@ -208,7 +208,7 @@ define method emit-typedef
     (back-end :: <java-back-end>, stream :: <stream>, o :: <&class>) => ()
 break(); //MT
   ^ensure-slots-initialized(o);
-  let rslotd = o.^repeated-slot-descriptor; 
+  let rslotd = o.^repeated-slot-descriptor;
   let islots = o.^instance-slot-descriptors;
   if (~rslotd)
     format(stream, "typedef struct {\n");
@@ -220,7 +220,7 @@ break(); //MT
     emit-struct-name(back-end, stream, o);
     write(stream, ";\n");
   else
-    write(stream, "#define  "); 
+    write(stream, "#define  ");
     emit-struct-definer-name(back-end, stream, o);
     write(stream, "(nrepeated) \\\n");
     format(stream, "  typedef struct { \\\n");
@@ -242,7 +242,7 @@ end;
 
 // VARIABLES
 
-define method emit-object 
+define method emit-object
     (back-end :: <java-back-end>, stream :: <stream>, o :: <module-binding>) => ()
 break(); //MT
   format-emit*(back-end, stream, "@", o);
