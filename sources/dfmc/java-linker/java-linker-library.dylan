@@ -15,7 +15,6 @@ define library dfmc-java-linker
   use dfmc-back-end;
   use dfmc-java-back-end;
   use dfmc-linker;
-  use dfmc-execution;
   use dfmc-management;
   use dfmc-namespace;
   export dfmc-java-linker;
@@ -32,7 +31,6 @@ define module dfmc-java-linker
   use dfmc-back-end;
   use dfmc-java-back-end;
   use dfmc-linker;
-  use dfmc-execution;
   use dfmc-management;
   use dfmc-namespace;
 end module;

@@ -14,7 +14,6 @@ define library dfmc-java-back-end
   use dfmc-mangling;
   use dfmc-core;
   use dfmc-back-end;
-  use dfmc-execution;
   use dfmc-reader;
   use dfmc-conversion;
   use dfmc-typist;
@@ -48,7 +47,6 @@ define module dfmc-java-back-end
   use dfmc-core;
   use dfmc-imports;
   use dfmc-back-end;
-  use dfmc-execution;
   use dfmc-reader;
   use dfmc-conversion;
   use dfmc-typist;
