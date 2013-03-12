@@ -1296,18 +1296,18 @@ define method filesize-setter (size :: <integer>, e :: <class-string-jar-entry>)
   size  // dummy method
 end;
 
-define method file-crc (e :: <class-file-jar-entry>) => (crc :: <maschine-word>)
+define method file-crc (e :: <class-file-jar-entry>) => (crc :: <machine-word>)
   e.cached-crc |
     error ("cannot get file-crc for <class-file-jar-entry>, perhaps not written? %s", e)
 end;
-define method file-crc (e :: <class-string-jar-entry>) => (crc :: <maschine-word>)
+define method file-crc (e :: <class-string-jar-entry>) => (crc :: <machine-word>)
   e.zstream.get-crc
 end;
 
-define method file-crc-setter (crc :: <maschine-word>, e :: <class-file-jar-entry>) => (crc :: <maschine-word>)
+define method file-crc-setter (crc :: <machine-word>, e :: <class-file-jar-entry>) => (crc :: <machine-word>)
   e.cached-crc := crc
 end;
-define method file-crc-setter (crc :: <maschine-word>, e :: <class-string-jar-entry>) => (crc :: <maschine-word>)
+define method file-crc-setter (crc :: <machine-word>, e :: <class-string-jar-entry>) => (crc :: <machine-word>)
   crc // dummy method
 end;
 

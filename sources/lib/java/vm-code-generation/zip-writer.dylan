@@ -8,12 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 format-out ("initing zip-writer.dylan\n");
 
-/// NOTE Emulator version uses <integer> for 32 bit ints - non-emulator
-/// version uses <machine-word>
-
 /* .zip/.jar file writer, takes a sequence of <zip-entry>'s and writes them to a file */
-
-define constant <maschine-word> = <machine-word>;
 
 //////// Firstly a wrapper stream to accumulate file contents, offsets and the CRC
 
@@ -31,7 +26,7 @@ end;
 
 define class <zip-crc-stream> (<stream>)
   sealed slot  the-stream :: <stream>, required-init-keyword: stream:;
-  sealed slot  the-crc    :: <maschine-word> = $crc-notzero;
+  sealed slot  the-crc    :: <machine-word> = $crc-notzero;
   sealed slot  the-offset :: <integer> = 0;
   sealed slot  is-closed? :: <boolean> = #f;
 end;
@@ -136,7 +131,7 @@ end;
 //  zstream.the-stream.current-position := pos;
 //end;
 
-define sealed method get-crc (z :: <zip-crc-stream>) => (crc :: <maschine-word>)
+define sealed method get-crc (z :: <zip-crc-stream>) => (crc :: <machine-word>)
   machine-word-lognot (z.the-crc)
 end;
 
@@ -190,9 +185,9 @@ end;
 
 define abstract class <zip-entry> (<object>)
   slot filename :: <string>, required-init-keyword: filename:;
-  slot filetime :: <maschine-word> = as (<maschine-word>, 0), init-keyword: filetime:;
+  slot filetime :: <machine-word> = as (<machine-word>, 0), init-keyword: filetime:;
   virtual slot filesize :: <integer>;
-  virtual slot file-crc :: <maschine-word>;
+  virtual slot file-crc :: <machine-word>;
   virtual constant slot zip-details-upfront? :: <boolean>;
 end;
 
@@ -221,7 +216,7 @@ define method filesize (e :: <zip-dir-entry>) => (len :: <integer>)
   0
 end;
 
-define method file-crc (e :: <zip-dir-entry>) => (crc :: <maschine-word>)
+define method file-crc (e :: <zip-dir-entry>) => (crc :: <machine-word>)
   $mw-zero
 end;
 
@@ -236,7 +231,7 @@ end;
 
 define class <zip-string-entry> (<zip-entry>)
   inherited slot filename = "aaa.java";
-  inherited slot filetime = as (<maschine-word>, #x00ff1234);
+  inherited slot filetime = as (<machine-word>, #x00ff1234);
   slot str :: <string>, required-init-keyword: str:;
 end;
 
@@ -248,7 +243,7 @@ define method filesize (e :: <zip-string-entry>) => (len :: <integer>)
   e.str.size
 end;
 
-define method file-crc (e :: <zip-string-entry>) => (crc :: <maschine-word>)
+define method file-crc (e :: <zip-string-entry>) => (crc :: <machine-word>)
   compute-crc32 (e.str)
 end;
 
@@ -270,7 +265,7 @@ define function zip-timestamp (year ::  <integer>,
                                date ::  <integer>,
                                hours :: <integer>,
                                mins ::  <integer>,
-                               secs ::  <integer>) => (zip-date :: <maschine-word>)
+                               secs ::  <integer>) => (zip-date :: <machine-word>)
   let  top-half =
     logior (ash (year - 1980, 9),
             logior (ash (month + 1, 5),
@@ -281,11 +276,11 @@ define function zip-timestamp (year ::  <integer>,
                     ash (secs, -1)));
 
   machine-word-logior (
-    machine-word-unsigned-shift-left /*-with-overflow*/ (as (<maschine-word>, top-half), 16),
-    as (<maschine-word>, bot-half))
+    machine-word-unsigned-shift-left /*-with-overflow*/ (as (<machine-word>, top-half), 16),
+    as (<machine-word>, bot-half))
 end;
 
-define function as-zip-date (d :: <date>) => (zip-date :: <maschine-word>)
+define function as-zip-date (d :: <date>) => (zip-date :: <machine-word>)
   zip-timestamp (d.date-year,
                  d.date-month - 1,
                  d.date-day,
@@ -355,20 +350,20 @@ end;
 // Again this should be turned into tight machine-word code,
 // with appropriate limited (<vector>)
 
-define constant $crc-magic-value :: <maschine-word> =
-  machine-word-logior (machine-word-unsigned-shift-left /*-with-overflow*/ (as (<maschine-word>, #xedb8), 16),
-                       as (<maschine-word>, #x8320));
+define constant $crc-magic-value :: <machine-word> =
+  machine-word-logior (machine-word-unsigned-shift-left /*-with-overflow*/ (as (<machine-word>, #xedb8), 16),
+                       as (<machine-word>, #x8320));
 //  #xedb88320
 
 
 define constant $crc-table = make (<simple-object-vector>, size: #x100);
 
-define constant $mw-zero :: <maschine-word> = as (<maschine-word>, 0);
-define constant $mw-one  :: <maschine-word> = as (<maschine-word>, 1);
+define constant $mw-zero :: <machine-word> = as (<machine-word>, 0);
+define constant $mw-one  :: <machine-word> = as (<machine-word>, 1);
 
 define function init-crc-table () => ()
   for (n :: <integer> from 0 below #x100)
-    let c :: <maschine-word> = as (<maschine-word>, n);
+    let c :: <machine-word> = as (<machine-word>, n);
     for (k :: <integer> from 0 below 8)
       if (machine-word-logand (c, $mw-one) = $mw-one)  // should be machine-word-logand?
         c := machine-word-logxor ($crc-magic-value, machine-word-unsigned-shift-right (c, 1))
@@ -383,21 +378,21 @@ end;
 init-crc-table ();
 
 
-define constant $crc-notzero :: <maschine-word> = machine-word-lognot ($mw-zero);
+define constant $crc-notzero :: <machine-word> = machine-word-lognot ($mw-zero);
 
-define function compute-crc32 (str :: <byte-string>) => (crc :: <maschine-word>)
+define function compute-crc32 (str :: <byte-string>) => (crc :: <machine-word>)
   machine-word-lognot (update-crc32 ($crc-notzero, str))
 end;
 
 
-define inline function update1-crc32 (crc :: <maschine-word>, char :: <byte-character>) => (new-crc :: <maschine-word>)
+define inline function update1-crc32 (crc :: <machine-word>, char :: <byte-character>) => (new-crc :: <machine-word>)
   // use primitives?
   let  code :: <integer> = logand (#xff, as (<integer>, char));
-  let  low :: <integer> = logxor (as (<integer>, machine-word-logand (as (<maschine-word>, #xff), crc)), code);
+  let  low :: <integer> = logxor (as (<integer>, machine-word-logand (as (<machine-word>, #xff), crc)), code);
   machine-word-logxor ($crc-table [low], machine-word-unsigned-shift-right (crc, 8))
 end;
 
-define function update-crc32 (crc :: <maschine-word>, str :: <byte-string>) => (new-crc :: <maschine-word>)
+define function update-crc32 (crc :: <machine-word>, str :: <byte-string>) => (new-crc :: <machine-word>)
   for (ch :: <byte-character> in str)
     crc := update1-crc32 (crc, ch)
   end;
@@ -435,10 +430,10 @@ define function write-zip-entry (s      :: <zip-crc-stream>,
   let  name = entry.filename;
   let  extra-string = "";   // no extra string
   let  comment = "";   // no comment
-  let  timestamp :: <maschine-word>   = entry.filetime;
+  let  timestamp :: <machine-word>   = entry.filetime;
   let  defer-file-info = ~ entry.zip-details-upfront?;
   let  filesiz :: <integer> = -1;
-  let  crc :: <maschine-word> = $crc-notzero;
+  let  crc :: <machine-word> = $crc-notzero;
 
   write-int (s, if (writer)
                 #x04034b50  // local header
@@ -527,14 +522,14 @@ define function write16 (s :: <stream>, short :: <integer>) => ()
   write-element (s, as (<byte-character>, logand (#xff, ash (short, -8))));
 end;
 
-define function write32 (s :: <stream>, long :: <maschine-word>) => ()
-  let  mask :: <maschine-word> = as (<maschine-word>, #xffff);
+define function write32 (s :: <stream>, long :: <machine-word>) => ()
+  let  mask :: <machine-word> = as (<machine-word>, #xffff);
   write16 (s, as (<integer>, machine-word-logand (mask, long)));
   write16 (s, as (<integer>, machine-word-logand (mask, machine-word-unsigned-shift-right (long, 16))));
 end;
 
 define function write-int (s :: <stream>, int :: <integer>) => ()
-  write32 (s, as (<maschine-word>, int))
+  write32 (s, as (<machine-word>, int))
 end;
 
 define function write-ascii (s :: <stream>, string :: <byte-string>) => ()
