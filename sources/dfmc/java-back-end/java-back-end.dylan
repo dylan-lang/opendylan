@@ -21,17 +21,14 @@ define sealed class <java-back-end> (<back-end>)
   slot current-module  = #f;
 end;
 
+register-back-end(<java-back-end>, #"java", #f, #f);
+
 define method initialize (back-end :: <java-back-end>, #key, #all-keys) => ()
   next-method ();
   stream-contents (back-end.lambda-stream, clear-contents?: #t);
 end method;
 
 define variable *java-back-end* = make (<java-back-end>);
-
-default-back-end() := *java-back-end*; // !@#$ hack
-
-// eof
-
 
 define function pprint-dfms (dfm :: <computation>, last :: false-or (<computation>), depth :: <integer>)
   while (dfm & (dfm ~== last))
