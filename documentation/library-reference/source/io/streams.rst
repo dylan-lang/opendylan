@@ -2993,7 +2993,7 @@ Operations
      *end* is exclusive.
 
      If the stream is positionable, and it is not positioned at its end,
-     ``write`` overwrites elements in the stream and then advance the
+     ``write`` overwrites elements in the stream and then advances the
      stream’s position to be beyond the last element written.
 
      *Implementation Note:* Buffered streams are intended to provide a
