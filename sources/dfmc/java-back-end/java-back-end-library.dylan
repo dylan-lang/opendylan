@@ -5,9 +5,9 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library dfmc-java-back-end
-  use functional-dylan;
-  use streams;
-  use date;
+  use common-dylan;
+  use io;
+  use system;
 
   use java-vm-code-generation;
 
@@ -28,7 +28,7 @@ define library dfmc-java-back-end
 end library;
 
 define module dfmc-java-back-end
-  use functional-dylan;
+  use common-dylan;
   use threads;
   use streams-internals;
   use streams;

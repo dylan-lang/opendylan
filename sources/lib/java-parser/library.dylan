@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library java-parser
-  use functional-dylan;
+  use common-dylan;
   use system;
   use io;
   use parser-run-time;
@@ -15,7 +15,7 @@ define library java-parser
 end library java-parser;
 
 define module java-parser
-  use functional-dylan;
+  use common-dylan;
   use byte-vector;
   use transcendentals;
   use locators;

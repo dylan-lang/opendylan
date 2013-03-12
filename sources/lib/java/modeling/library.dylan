@@ -5,8 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library java-modeling
-  use    functional-dylan;
-  use    streams;
+  use    common-dylan;
   use    io;
 
   export java-modeling;
