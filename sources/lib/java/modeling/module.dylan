@@ -27,9 +27,8 @@ define module java-modeling
     print-unique-strings,
 
     // java-packages
-    <java-package>,  name-component, super-package,
+    <java-package>,
     $java-default-package$,
-    package-concatenate-with-name,
     java-package,
 
     // java-types
