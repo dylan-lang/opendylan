@@ -47,7 +47,7 @@ end;
 // was function, but appears not to typecheck
 /*  COMMENT OUT FOR NOW
 define method java-lib-name (n :: <library-binding>) => (<byte-string>)
-  let  library = n.home.home-library;
+  let  library = n.library-binding-home;
   let  name  = java-name-mangle (library.debug-name);
   let  result = "dylan";
   if (name ~= "dylan")
@@ -58,15 +58,8 @@ define method java-lib-name (n :: <library-binding>) => (<byte-string>)
 end;
 */
 
-define function home (thing) => (thing)
-  error ("home needs to be exported");
-end;
-
-// HOME is undefined !!!!  ARSE
 define method java-lib-name (n :: <module-binding> /*<canonical-module-binding>*/ ) => (str :: <string>)
-format-out ("java-lib-name problem!!!  what is home?\n");
-my-break (n);
-  let  library = n.home.home-library;
+  let  library = n.binding-home.home-library;
   let  name  = java-name-mangle (library.debug-name);
   let  result = "dylan";
   if (name ~= "dylan")
