@@ -27,7 +27,7 @@ define library dfmc-java-back-end
 end library;
 
 define module dfmc-java-back-end
-  use common-dylan;
+  use common-dylan, exclude: { format-to-string };
   use threads;
   use streams-internals;
   use streams;
