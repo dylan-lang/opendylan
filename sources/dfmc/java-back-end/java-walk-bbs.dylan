@@ -9,31 +9,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define variable *print-insns* = #f;
 define variable *break-methods* = #f;
 
-// not normally used
-define function show-bb-progress (node :: <computation>, uenv :: <list>) => ()
-  if (instance? (node, <bind>))
-    if (*break-methods*)
-      my-break (node)
-    end;
-    format-out ("\n");
-    pprint-dfms (node.next-computation, #f, 1);
-    format-out ("\n");
-    desc-dfm (node);
-    format-out ("\n\n")
-  end;
-
-  if (*print-insns*)
-    let  depth = uenv.size;
-    format-out ("BB-pass  ");
-    for (i :: <integer> from 0 below depth)
-      format-out ("     ")
-    end;
-    format-out ("%s %s\n", node.object-class, node)
-  end;
-  #f
-end;
-
-
 // in order to accumulate a more BB-oriented view of the code,
 // we need a notion of a merge with a sense
 define sealed abstract class <faked-transfer> (<object>)

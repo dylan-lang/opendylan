@@ -563,9 +563,6 @@ define method emit-type-check (jbb, spec :: <&singleton>, handlur, pop? :: <bool
 end;
 
 
-define variable *print-dfm* = #f;
-
-
 // iep probably doesn't need a trampoline?  to support GF dispatch??
 define function emit-iep-trampoline (jc :: <java-concrete-class>,
                                      meth :: <java-method>,
@@ -616,9 +613,6 @@ define method emit-iep-code-for-method (methodd :: <&method>,
                                         lib-jc :: <java-concrete-class>,
                                         entry-meth-spec :: <java-method-spec>,
                                         body, arguments) => (spec :: <java-method-spec>)
-  if (*print-dfm*)
-    pprint-dfms (body.next-computation, #f, 1)
-  end;
   let  lib-concrete = lib-jc.concrete-implementation;
   let  implem-name = format-to-string ("iep%d", lib-concrete.ep-seqnum);
   lib-concrete.ep-seqnum := lib-concrete.ep-seqnum + 1;
