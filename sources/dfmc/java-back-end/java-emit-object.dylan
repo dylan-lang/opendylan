@@ -1657,7 +1657,7 @@ define function write-zip-file (file-name, entries :: <sequence>) => (size :: <i
   let  local-offsets = make (<simple-object-vector>, size: entries.size);
   let  zip-stream = #f;
   block ()
-    let out-stream = open-output-stream (*java-back-end*, concatenate (file-name, ".jar"));
+    let out-stream = open-output-stream (current-back-end(), concatenate (file-name, ".jar"));
     zip-stream := make (<zip-crc-stream>, stream: out-stream);
 
     for (entry in entries, n :: <integer> from 0)

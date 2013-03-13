@@ -23,7 +23,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define function java-name-mangle (thing)
-  let result = local-mangle (*java-back-end*, as (<string>, thing).as-lowercase);
+  let result = local-mangle (current-back-end() | $dummy-java-back-end, as (<string>, thing).as-lowercase);
 //  format-out ("java-mangled to %s\n", result);
   result
 end;

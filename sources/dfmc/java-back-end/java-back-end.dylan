@@ -28,8 +28,6 @@ define method initialize (back-end :: <java-back-end>, #key, #all-keys) => ()
   stream-contents (back-end.lambda-stream, clear-contents?: #t);
 end method;
 
-define variable *java-back-end* = make (<java-back-end>);
-
 define function pprint-dfms (dfm :: <computation>, last :: false-or (<computation>), depth :: <integer>)
   while (dfm & (dfm ~== last))
     pprint-dfm (dfm, depth);

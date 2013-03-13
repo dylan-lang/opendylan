@@ -120,7 +120,7 @@ define method emit-all (back-end :: <java-back-end>, cr :: <compilation-record>,
           make (<jar-file-rep>,
                 jar-library: *current-be-library*,
                 jar-name: name,
-                jar-stream:  open-output-stream (*java-back-end*, concatenate (name, ".jar")),
+                jar-stream:  open-output-stream (back-end, concatenate (name, ".jar")),
                 jar-comment: concatenate ("Functional Developer generated JAR file for ", name)
                 );
       end;

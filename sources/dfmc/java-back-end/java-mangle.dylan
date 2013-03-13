@@ -7,6 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $classfile-package-separator$ :: <byte-string> = "/";
 
+define constant $dummy-java-back-end = make(<java-back-end>);
+
 define method global-mangle-with-module
     (back-end :: <java-back-end>, name :: <byte-string>, module :: <module>)
   let mang = mangler-reset (back-end.mangler);
@@ -84,7 +86,7 @@ end;
 
 
 define function java-mangler (name :: <string>, module :: <module>.false-or)
-  let  back-end  =  *java-back-end*;
+  let  back-end  =  current-back-end() | $dummy-java-back-end;
   if (~ module)
     module := back-end.current-module
   end;
@@ -98,15 +100,15 @@ define function java-mangler (name :: <string>, module :: <module>.false-or)
 end;
 
 define function java-global-mangle (name)
-  global-mangle (*java-back-end*, name)
+  global-mangle (current-back-end() | $dummy-java-back-end, name)
 end;
 
 define function java-local-mangle (name)
-  local-mangle (*java-back-end*, name)
+  local-mangle (current-back-end() | $dummy-java-back-end, name)
 end;
 
 define function java-raw-mangle (name)
-  jraw-mangle (*java-back-end*, name)
+  jraw-mangle (current-back-end() | $dummy-java-back-end, name)
 end;
 
 /*

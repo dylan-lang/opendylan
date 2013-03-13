@@ -57,7 +57,6 @@ define module dfmc-java-back-end
 
   export
     <java-back-end>,
-    *java-back-end*,
     java-local-mangle, java-global-mangle, java-raw-mangle,
     *current-be-library*,
     flush-java-classes,
