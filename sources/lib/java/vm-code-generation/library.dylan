@@ -5,6 +5,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library java-vm-code-generation
+  use    dylan;
   use    common-dylan;
   use    io;
   use    system;
