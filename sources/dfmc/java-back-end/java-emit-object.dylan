@@ -452,12 +452,6 @@ define method find-lambda-env (environment :: <lambda-lexical-environment>) => (
   environment
 end;
 
-/*
-define method find-lambda-env (environment :: <top-level-environment>) => (res :: false-or (<lambda-lexical-environment>))
-  environment
-end;
-*/
-
 define method find-lambda-env (environment :: <local-lexical-environment>) => (res :: false-or (<lambda-lexical-environment>))
   find-lambda-env (environment.outer)
 end;
@@ -722,7 +716,7 @@ define method emit-iep-code-for-method (methodd :: <&method>,
     end dynamic-bind
   end dynamic-bind;
 
-  let  env-top-level? =  instance? (methodd.environment.outer, <top-level-environment>);
+  let  env-top-level? =  top-level-environment? (methodd.environment.outer);
   if (env-top-level? | ~methodd.users.empty?)
     emit-iep-random-stuff (jc, arguments, format-to-string ("%s", methodd), #t, #f)
   else

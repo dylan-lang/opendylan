@@ -160,23 +160,18 @@ end;
 
 // dummies - uncomment to bodge past native
 
-//define class <top-level-environment> (<object>)
-//end;
-
 //define class <closure-lexical-environment> (<object>)
 //end;
-
 
 
 // ensures the whole nest of closures that this is a part of
 // is modeled - goes up the tree until at the top,
 // then calls java-model-environment.
-// ARSE <top-level-environment> is not exported!!
 define function java-model-env (meth :: <&method>)
   let  env = meth.environment;
   if (element (*closure-env-lookup*, env, default: #f) == #f)
     let next-outer = find-lambda-env (env.outer);
-    until (instance? (next-outer, <top-level-environment>))
+    until (top-level-environment? (next-outer))
       env := next-outer;
       next-outer := find-lambda-env (env.outer)
     end;
