@@ -10,14 +10,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $initial-string-stream-contents-size = 10000;
 
 define sealed class <java-back-end> (<back-end>)
-  slot %platform-name  = #f,     init-keyword: platform-name:;
-  slot %operating-system-name = #f;
-  slot %processor-name = #f;
   slot lambda-stream   = make(<string-stream>,
                               direction: #"output",
                               contents:  make(<byte-string>,
                               size:      $initial-string-stream-contents-size));
-  slot mangle-buffer   = make(<stretchy-vector>);
   slot current-module  = #f;
 end;
 

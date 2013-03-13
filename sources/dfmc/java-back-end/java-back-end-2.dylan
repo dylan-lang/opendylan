@@ -40,18 +40,6 @@ end;
 define variable *current-library-java-class* = #f;
 define variable *current-library-jar* = #f;
 
-/*
-define method compute-operating-system-name
-    (back-end :: <java-back-end>) => (name :: <symbol>)
-  #"Java"
-end method;
-
-define method compute-processor-name
-    (back-end :: <java-back-end>) => (name :: <symbol>)
-  #"JVM"
-end method;
-*/
-
 define method back-end-word-size (be :: <java-back-end>) => (ws :: <integer>)
   4   // rather arbitrary really, but related to Java's int size (and hence array index)
 end;
