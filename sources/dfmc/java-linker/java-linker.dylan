@@ -10,12 +10,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define variable *ld-hash* = make (<object-table>);
 
-define method emit-mainfile
+define sideways method emit-mainfile
   (back-end :: <java-back-end>, library, #rest flags, #key)
   format-out ("// emit-mainfile for %s, doing nothing...\n", library)
 end;
 
-define method emit-gluefile
+define sideways method emit-gluefile
   (back-end :: <java-back-end>, library, cr-names, #rest flags, #key)
   *ld-hash* := make (<object-table>);
   format-out ("// emit-gluefile for %s, clearing *ld-hash*...\n", library)
@@ -38,7 +38,7 @@ end;
 */
 
 // DRIVER PROTOCOL FUNCTIONS
-define method emit-library-records
+define sideways method emit-library-records
     (back-end :: <java-back-end>, ld :: <library-description>, #key)
 format-out ("### entering emit-library-records\n");
   with-simple-abort-retry-restart ("Abort the emission phase", "Restart the emission phase")
@@ -73,7 +73,7 @@ end;
 
 
 // DRIVER PROTOCOL FUNCTIONS
-define method emit-library-record
+define sideways method emit-library-record
     (back-end :: <java-back-end>, cr :: <compilation-record>, ld :: <library-description>,  #rest flags, #key)
   if (element (*ld-hash*, ld, default: #f) == #f)
     *ld-hash* [ld] := ld;
