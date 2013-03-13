@@ -644,7 +644,7 @@ define constant $dylan-self-slot-name$ = "Jself";
 // (this lazily forces instantiation too, via <clinit>)
 // Note this method is _not_ used for dylan classes, because they
 // want the (dylan) class, not an instance
-define method emit-java-constant-load (jbb :: <java-basic-block>, const :: <java-class>) => ()
+define sideways method emit-java-constant-load (jbb :: <java-basic-block>, const :: <java-class>) => ()
   java-read (jbb, slot-spec (const, $dylan-self-slot-name$, const, #t))
 end;
 

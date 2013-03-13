@@ -49,7 +49,7 @@ end;
 
 
 
-define thread variable *current-be-library* :: false-or (<full-library>) = #f;
+define thread variable *current-be-library* :: false-or (<library>) = #f;
 define thread variable *environment-bindings* :: false-or (<object-table>) = #f;
 define thread variable *java-class-cache*   :: false-or (<object-table>) = #f;
 define thread variable *gensym*             :: false-or (<integer>)      = #f;
@@ -78,7 +78,8 @@ end;
 
 define variable *debug-comp-record* = #f;
 
-define method emit-all (back-end :: <java-back-end>, cr :: <compilation-record>, #rest flags)
+define method emit-all (back-end :: <java-back-end>, cr :: <compilation-record>,
+                        #rest flags, #key dfm-output? = #f, #all-keys)
   unless (*recorded-generalized*)
     *recorded-generalized* := make (<object-table>)
   end;
