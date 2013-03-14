@@ -111,13 +111,13 @@ end;
 
 
 define constant $dylan/dylanthread$ =
-  make (<java-stub-class>, class-name: "dylanthread", package-name: "dylan", super: $java/lang/Thread$);
+  make (<java-stub-class>, class-name: "dylanthread", package: java-package ("dylan"), super: $java/lang/Thread$);
 
 
 define function predefined-multi-class (classname :: <byte-string>, packname :: <byte-string>, primary-super :: <java-stub-class>, #rest other-supers :: <java-stub-class>) => (cls :: <java-stub-class>)
   make (<java-stub-class>,
         class-name:   java-name-mangle (classname),
-        package-name: packname,
+        package:      java-package (packname),
         super:        primary-super)
 end;
 
@@ -224,7 +224,7 @@ define constant $dylan-class-<pair>$ =
 
 
 define constant $dylan/dylancondition$ =
-  make (<java-stub-class>, class-name: "dylancondition", package-name: "dylan", super: $java/lang/RuntimeException$);
+  make (<java-stub-class>, class-name: "dylancondition", package: java-package ("dylan"), super: $java/lang/RuntimeException$);
 
 
 define constant $dylan-class-<object>-array$ =  $dylan-class-<object>$.array-type;

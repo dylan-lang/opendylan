@@ -196,13 +196,13 @@ end;
 define function new-named-java-class-of-category (thing, lib, prefix, name, category)
   let libclass  = java-class-for-thing (lib);
   let libname = libclass.java-class-name.the-string;
-  let libpackname = copy-sequence (libname, end: (libname.size - "-library".size));
+  let libpackname = java-package (copy-sequence (libname, end: (libname.size - "-library".size)));
   let class = if (lib == *current-be-library*)
                 let iname = new-invented-name (prefix, name);
                 format-out ("*** making concrete class for %s\n", thing);
                   make (<java-concrete-class>,
                       class-name:   iname,
-                      package-name: libpackname,
+                      package:      libpackname,
                       super:        category,
                       represents:   thing,
                       library:      lib);
@@ -210,7 +210,7 @@ define function new-named-java-class-of-category (thing, lib, prefix, name, cate
                 let gname = new-guessed-name (prefix, name);
                 format-out ("*** making stub class for %s\n", thing);
 //                format-out ("*** accessing %s %s from another library %s\n", category, thing, libname);
-                make (<java-stub-class>, class-name: gname, package-name: libpackname, super: category)
+                make (<java-stub-class>, class-name: gname, package: libpackname, super: category)
               end;
   class
 end;
@@ -233,8 +233,8 @@ end;
 
 
 
-define constant $dylan-java-hierarchy-package-base$ = "";
-define constant $dylan-java-hierarchy-package-base2$ = "dylan";
+define constant $dylan-java-hierarchy-package-base$ = $java-default-package$;
+define constant $dylan-java-hierarchy-package-base2$ = java-package ("dylan");
 
 
 //define variable *foo* = #();
@@ -252,7 +252,7 @@ define method find-java-class-for-thing (thing :: <library>)
     format-out ("*** MAKING concrete class for <library> %s\n", thing);
     make (<java-concrete-class>,
           class-name:   name,
-          package-name: packagename,
+          package:      packagename,
           super:        $dylan-class-<library>$,
           represents:  thing,
           library:     thing)
@@ -274,16 +274,16 @@ define method find-java-class-for-thing (thing :: <&library>)
     my-break (thing)
   end;
   let  name =  java-name-mangle (concatenate (as (<string>, dname), "-library"));
-  let  packagename = if (dname == #"dylan")
-                       $dylan-java-hierarchy-package-base$
-                     else
-                       $dylan-java-hierarchy-package-base2$
-                     end;
+  let  package = if (dname == #"dylan")
+                   $dylan-java-hierarchy-package-base$
+                 else
+                   $dylan-java-hierarchy-package-base2$
+                 end;
   if (thing.model-creator == *current-be-library*.namespace-definition)
     format-out ("*** MAKING concrete class for <&library> %s\n", thing);
     make (<java-concrete-class>,
           class-name:   name,
-          package-name: packagename,
+          package:      package,
           super:        $dylan-class-<library>$,
           represents:   thing,
           library:      thing)
@@ -291,25 +291,25 @@ define method find-java-class-for-thing (thing :: <&library>)
     format-out ("*** reference from %s to other library %s\n", *current-be-library*, thing);
     my-break (pair (thing, *current-be-library*));
     format-out ("*** MAKING stub class for <&library> %s\n", thing);
-    make (<java-stub-class>, class-name: name, package-name: packagename, super: $dylan-class-<library>$)
+    make (<java-stub-class>, class-name: name, package: package, super: $dylan-class-<library>$)
   end
 end;
 
 define method find-java-class-for-thing (thing :: <&module>)
   let  dname = thing.^namespace-name;
   let  name =  java-name-mangle (concatenate (as (<string>, dname), "-module"));
-  let  packagename = if (dname == #"dylan")
-                       $dylan-java-hierarchy-package-base$
-                     else
-                       $dylan-java-hierarchy-package-base2$
-                     end;
+  let  package = if (dname == #"dylan")
+                   $dylan-java-hierarchy-package-base$
+                 else
+                   $dylan-java-hierarchy-package-base2$
+                 end;
   if (thing.^home-library == *current-be-library*. /*private-*/ namespace-model)
     format-out ("*** Finding stub class for <&module> %s\n", thing);
     java-class-for-thing (*current-be-library*)
   else
     format-out ("*** reference from %s to other library %s\n", *current-be-library*, thing);
     format-out ("*** Making stub class for <&module> %s\n", thing);
-    make (<java-stub-class>, class-name: name, package-name: packagename, super: $dylan-class-<module>$)
+    make (<java-stub-class>, class-name: name, package: package, super: $dylan-class-<module>$)
   end
 end;
 
