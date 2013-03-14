@@ -62,18 +62,18 @@ define function find-slot-java-interface (jc :: <java-class>)
         let  model-library = cls.model-library.language-definition;
         let  clsname = jc.java-class-name.the-string;
         let  libname = model-library.java-class-for-thing.java-class-name.the-string;
-        let  libpackname = copy-sequence (libname, end: (libname.size - "-library".size));
+        let  libpackage = java-package (copy-sequence (libname, end: (libname.size - "-library".size)));
         let  cls =
           if (instance? (jc, <java-concrete-class>))
             make (<java-concrete-interface>,
-                  library:  model-library,
-                  class-name:     new-invented-name ("JifJ", clsname),
-                  package-name: libpackname)
+                  library:     model-library,
+                  class-name:  new-invented-name ("JifJ", clsname),
+                  package:     libpackage)
           else
             make (<java-stub-interface>,
-                  library:  model-library,
-                  class-name:     new-invented-name ("JifJ", clsname),
-                  package-name: libpackname)
+                  library:    model-library,
+                  class-name: new-invented-name ("JifJ", clsname),
+                  package:    libpackage)
           end;
         *slot-interface-map* [jc] := cls;
         java-emit-class (cls);

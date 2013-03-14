@@ -1220,7 +1220,7 @@ end;
 
 
 define constant $dylan/applymethod$ =
-  make (<java-stub-class>, class-name: "applymethod", package-name: "dylan", super: $dylan-class-<method>$);
+  make (<java-stub-class>, class-name: "applymethod", package: java-package ("dylan"), super: $dylan-class-<method>$);
 
 define constant $the-apply-method$ =
   slot-spec ($dylan/applymethod$, $dylan-self-slot-name$, $dylan/applymethod$, #t);
