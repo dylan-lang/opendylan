@@ -307,10 +307,11 @@ are called by dfmc-modeling. Namely, primitives (which names and
 signatures are installed), macros, modules, libraries, classes.
 
 Be aware that the actual implementation of the primitives is in the
-runtime (either c-run-time.c or the runtime-generator generates a
-runtime.o containing those definitions), but some crucial bits, like
-the adjectives (side-effect-free, dynamic-extent, stateless and
-opposited) are in dfmc-modeling and used in the optimization!
+runtime (either ``sources/lib/c-run-time/run-time.c`` or the
+runtime-generator generates a runtime.o containing those definitions),
+but some crucial bits, like the adjectives (``side-effect-free``,
+``dynamic-extent``, ``stateless`` and ``opposited``) are in
+dfmc-modeling and used in the optimization!
 
 The core classes are emitted from modeling with actual constructors
 (be aware that the runtime layout is also recorded in run-time.h).
@@ -336,104 +337,107 @@ The deep magic happens here.
 dfmc-convert
 ============
 
-   Converts definition objects to model objects. In order to fulfill
-   this task, it looks up bindings to objects from other
-   libraries. Also converts the bodies of definitions to a flow
-   graph. Does some initial evaluation, for example ``limited(<vector>,
-   of: <string>)`` gets converted to a ``<&limited-vector-type>``
-   instance. Thus, it contains a poor-mans eval.
+Converts definition objects to model objects. In order to fulfill
+this task, it looks up bindings to objects from other
+libraries. Also converts the bodies of definitions to a flow
+graph. Does some initial evaluation, for example ``limited(<vector>,
+of: <string>)`` gets converted to a ``<&limited-vector-type>``
+instance. Thus, it contains a poor-mans eval.
 
-   Also, creates init-expressions, which may be needed for the
-   runtime, since everything can be dynamic, each top-level-form may
-   need initializing which are called when the library is loaded.
+Also, creates init-expressions, which may be needed for the
+runtime, since everything can be dynamic, each top-level-form may
+need initializing which are called when the library is loaded.
 
-   Also sets up a lexical environment for the definitions, and checks
-   bindings.
+Also sets up a lexical environment for the definitions, and checks
+bindings.
 
-   Here, type variables are now recorded into the lexical environment,
-   the type variables are passed around while the signature is
-   checked.
+Here, type variables are now recorded into the lexical environment,
+the type variables are passed around while the signature is
+checked.
 
-   After Dylan code is converted, it is in a representation which can
-   be passed to a backend to generate code. Modeling objects have
-   corresponding compile and run time objects, and are prefixed with
-   an ampersand (``<&object>``).
+After Dylan code is converted, it is in a representation which can
+be passed to a backend to generate code. Modeling objects have
+corresponding compile and run time objects, and are prefixed with
+an ampersand (``<&object>``).
 
 dfmc-modeling
 =============
 
-   Contains modeling of runtime and compile time objects. Since some
-   calls are tried to be done at compile time rather than at runtime,
-   it provides these compile time methods with a mechanism to override
-   the runtime methods (``define &override-function``). An example for
-   this is ``^instance?``, compile time methods are prefixed with a ``^``,
-   while compile and runtime class definitions are prefixed with ``&``,
-   like ``define &class <type>``.
+Contains modeling of runtime and compile time objects. Since some
+calls are tried to be done at compile time rather than at runtime,
+it provides these compile time methods with a mechanism to override
+the runtime methods (``define &override-function``). An example for
+this is ``^instance?``, compile time methods are prefixed with a ``^``,
+while compile and runtime class definitions are prefixed with ``&``,
+like ``define &class <type>``.
 
-   Also, DOOD (a persistent object store) models and proxies for
-   compile time definitions are available in this library, in order to
-   load definitions of dependent libraries.
+Also, DOOD (a persistent object store) models and proxies for
+compile time definitions are available in this library, in order to
+load definitions of dependent libraries.
 
 dfmc-flow-graph
 ===============
 
-   The flow graph consists of instances of the ``<computation>`` class,
-   like ``<if>``, ``<loop-call>``, ``<assignment>``, ``<merge>``. The flow
-   graph is in a (pseudo) single state assignment form. Every time any
-   algorithm alters the flow graph, it disconnects the deprecated
-   computation and inserts new computations. New temporaries are
-   introduced if a binding is assigned to a new value. Subclasses of
-   ``<computation>`` model control flow, ``<temporary>`` (as well as
-   ``<referenced-object>``) data flow.
+The flow graph consists of instances of the ``<computation>`` class,
+like ``<if>``, ``<loop-call>``, ``<assignment>``, ``<merge>``. The flow
+graph is in a (pseudo) single state assignment form. Every time any
+algorithm alters the flow graph, it disconnects the deprecated
+computation and inserts new computations. New temporaries are
+introduced if a binding is assigned to a new value. Subclasses of
+``<computation>`` model control flow, ``<temporary>`` (as well as
+``<referenced-object>``) data flow.
 
-   Computations are a doubly-linked list, with special cases for merge
-   nodes, loops, if, bind-exit and unwind-protect. Every computation
-   may have computation-type field, which is bound to a
-   ``<type-variable>``. It also may have a temporary slot, which is its
-   return value. Several cases, single and multiple return values, are
-   supported. The temporary has a link to its generator, a list of
-   users and a reference to its value.
+Computations are a doubly-linked list, with special cases for merge
+nodes, loops, if, bind-exit and unwind-protect. Every computation
+may have computation-type field, which is bound to a
+``<type-variable>``. It also may have a temporary slot, which is its
+return value. Several cases, single and multiple return values, are
+supported. The temporary has a link to its generator, a list of
+users and a reference to its value.
 
-   Additional (data flow) information is kept in special slots, test
-   in ``<if>``, arguments of a ``<call>``, etc. These are all
-   ``<referenced-object>``, or more specially ``<value-reference>``,
-   ``<object-reference>``, etc. ``<object-reference>`` contains a binding
-   to its actual value.
+Additional (data flow) information is kept in special slots, test
+in ``<if>``, arguments of a ``<call>``, etc. These are all
+``<referenced-object>``, or more specially ``<value-reference>``,
+``<object-reference>``, etc. ``<object-reference>`` contains a binding
+to its actual value.
 
-   ``<temporary>`` and ``<environment>`` classes are defined in this
-   library.
+``<temporary>`` and ``<environment>`` classes are defined in this
+library.
 
-   ``join-2x1`` etc. are the operations on the flow graph.
+``join-2x1`` etc. are the operations on the flow graph.
 
 dfmc-typist
 ===========
 
-   This library contains runtime type algebra as well as a type
-   inference algorithm.
+This library contains runtime type algebra as well as a type
+inference algorithm.
 
-   Main entry point is ``type-estimate``, which calls
-   ``type-estimate-in-cache``. Each library contains a type-cache, mapping
-   from method definitions, etc. to type-variables.
+Main entry point is ``type-estimate``, which calls
+``type-estimate-in-cache``. Each library contains a type-cache, mapping
+from method definitions, etc. to type-variables.
 
-   Type variables contain an actual type estimate as well as
-   justifications (supporters and supportees), used for propagation of
-   types.
+Type variables contain an actual type estimate as well as
+justifications (supporters and supportees), used for propagation of
+types.
 
-   converts types to ``<type-estimate>`` objects
+converts types to ``<type-estimate>`` objects
 
-   ``type-estimate-function-from-signature`` calls ``type-estimate-body``
-   if available (instead of using types of the signature), call chain is
-   ``type-estimate-call-from-site`` -> ``type-estimate-call-stupidly-from-fn``
-   -> ``function-valtype``
+``type-estimate-function-from-signature`` calls ``type-estimate-body``
+if available (instead of using types of the signature), call chain is
+``type-estimate-call-from-site`` -> ``type-estimate-call-stupidly-from-fn``
+-> ``function-valtype``
 
 
-   contains hard-coded hacks for ``make``, ``element``, ``element-setter``
-   (in ``type-estimate-call-from-site``)
+contains hard-coded hacks for ``make``, ``element``, ``element-setter``
+(in ``type-estimate-call-from-site``)
 
-   typist/typist-inference.dylan:poor-mans-check-type-intersection 
-     if #f (the temp), optimizer has determined that type check is superfluous
+typist/typist-inference.dylan:poor-mans-check-type-intersection
+if #f (the temp), optimizer has determined that type check is superfluous
 
-   dfmc/typist-protocol.dylan:151 - does not look sane!
+dfmc/typist-protocol.dylan:151 - does not look sane!
+
+.. code-block:: dylan
+
      define function type-estimate=?(te1 :: <type-estimate>, te2 :: <type-estimate>)
       => (e? :: <boolean>, known? :: <boolean>)
        // Dylan Torah, p. 48: te1 = te2 iff te1 <= te2 & te2 <= te1
@@ -443,25 +447,28 @@ dfmc-typist
 dfmc-optimization
 =================
 
-   This library contains several optimizations: dead code removal,
-   constant folding, common subexpression elimination, inlining,
-   dispatch upgrading and tail call analyzation.
+This library contains several optimizations: dead code removal,
+constant folding, common subexpression elimination, inlining,
+dispatch upgrading and tail call analyzation.
 
-   Main entry point from management is ``really-run-compilation-passes``.
-   This loops over all lambdas in the given code fragment, converts
-   assigned variables to a ``<cell>`` representation, renames temporaries
-   in conditionals, then runs the "optimizer". This builds an
-   optimization queue, initially containing all computations. It calls
-   do-optimize on each element of the optimization-queue, as long as
-   it returns ``#f`` (protocol is, that, if an optimization was successful,
-   it returns ``#t``, if it was not successful, ``#f``). For different types
-   of computations different optimizations are run. Default
-   optimizations are deletion of useless computations and constant
-   folding. ``<bind>`` is skipped, for ``<function-call>`` additionally
-   upgrade (analyzes the call, tries to get rid of gf dispatch) and
-   inlining is done. ``<primitive-call>`` are optimized by ``analyze-calls``.
+Main entry point from management is ``really-run-compilation-passes``.
+This loops over all lambdas in the given code fragment, converts
+assigned variables to a ``<cell>`` representation, renames temporaries
+in conditionals, then runs the "optimizer". This builds an
+optimization queue, initially containing all computations. It calls
+do-optimize on each element of the optimization-queue, as long as
+it returns ``#f`` (protocol is, that, if an optimization was successful,
+it returns ``#t``, if it was not successful, ``#f``). For different types
+of computations different optimizations are run. Default
+optimizations are deletion of useless computations and constant
+folding. ``<bind>`` is skipped, for ``<function-call>`` additionally
+upgrade (analyzes the call, tries to get rid of gf dispatch) and
+inlining is done. ``<primitive-call>`` are optimized by ``analyze-calls``.
 
-   constant folds (constant-folding.dylan):
+constant folds (constant-folding.dylan):
+
+.. code-block:: dylan
+
     // The following is because we seem to have a bogus class hierarchy
     // here 8(
     // We mustn't propagate a constraint type above its station, since
@@ -469,9 +476,9 @@ dfmc-optimization
     // branch, say).
     & ~instance?(c, <constrain-type>)
 
-   optimization/dispatch.dylan: gf dispatch optimization
+ optimization/dispatch.dylan: gf dispatch optimization
 
-   optimization/assignment: here happens the "occurence typing"
-   (type inference for instance?)...
-   <constrain-type> is only for the instance? and conditionals hack
+optimization/assignment: here happens the "occurence typing"
+(type inference for instance?)...
+``<constrain-type>`` is only for the instance? and conditionals hack
 

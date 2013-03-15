@@ -15,9 +15,9 @@ What you have to do to add a new node class to the DFM:
 
 * Make sure all the back ends handle it.  This includes, at least:
 
-   * c-back-end
-   * debug-back-end -- the printer
-   * all native back ends
+  * c-back-end
+  * debug-back-end -- the printer
+  * all native back ends
 
 * In addition, it would be good to add any invariant checks to
   ``flow-graph/checker.dylan.``
@@ -197,12 +197,12 @@ statement.
       return(T2);
     }
 
-The dNprimitive_continue_unwind just returns in this case.  If the
+The ``dNprimitive_continue_unwind`` just returns in this case.  If the
 cleanup clause were invoked by an exit procedure, it would have set a
 flag in the frame indicating that it continues non-local-exiting.  The
 important thing to see is that the decision about whether to fall
 through from the cleanup clause into the code outside the block is
-made by dNprimitive_continue_unwind, based on dynamic information.
+made by ``dNprimitive_continue_unwind``, based on dynamic information.
 
 Final notes
 -----------
@@ -216,20 +216,21 @@ Optimizations
 
 Lots of optimizations can be done.  Off the top of my head:
 
-  - Code following an <exit> is dead;  it should be dead-code
-    eliminated in the DFM.
+- Code following an ``<exit>`` is dead;  it should be dead-code
+  eliminated in the DFM.
 
-  - If an <exit> is inlined and there are no <unwind-protect>s between
-    it and the <bind-exit>, it can be turned into a control transfer.
+- If an ``<exit>`` is inlined and there are no ``<unwind-protect>`` nodes
+  between it and the ``<bind-exit>``, it can be turned into a control
+  transfer.
 
-  - If there are no <exit>s for a given <entry-state>, the <bind-exit>
-    node can be removed.
+- If there are no ``<exit>`` nodes for a given ``<entry-state>``, the
+  ``<bind-exit>`` node can be removed.
 
 An invalid optimization that had been suggested was to merge nested
-<unwind-protect>s without intervening <bind-exit>s with a test in the
-merged cleanup to determine whether the inner cleanup is still active.
-This isn't valid because then the inner cleanup is no longer protected
-by the outer cleanup.
+``<unwind-protect>``  nodes without intervening ``<bind-exit>`` nodes
+with a test in the merged cleanup to determine whether the inner cleanup
+is still active. This isn't valid because then the inner cleanup is no
+longer protected by the outer cleanup.
 
 DFM local assignment
 ====================
@@ -243,7 +244,7 @@ of SSA papers for details;  I can dig up references.
 On the other hand, Dylan has assignment to locals, and we model locals
 with temporaries.  Since the DFM doesn't have cycles (loops), we could
 replace assignments *to variables which aren't closed over* with
-new temporaries, in the same was as SSA code is usually generated.
+new temporaries, in the same way as SSA code is usually generated.
 But all the interesting cases in Dylan are when assigned variables are
 closed over, especially because they're assigned to in loop bodies.
 
@@ -624,7 +625,7 @@ Convenience functions:
 
 Global state:
 
-The fluid-variable *optimization-level* is meant to be a gross control
+The thread-variable ``*optimization-level*`` is meant to be a gross control
 of how much optimization is done.  The constants
 
 .. code-block:: dylan
@@ -636,12 +637,12 @@ of how much optimization is done.  The constants
   
   define constant $optimization-default   = $optimization-medium;
 
-are defined and correspond to the optimization: option in the define
+are defined and correspond to the ``optimization:`` option in the define
 compilation-pass macro.
 
-The fluid-variable *back-end* is used with the options back-end: and
+The thread-variable ``*back-end*`` is used with the options back-end: and
 exclude-back-end:.
 
-The fluid-variable *trace-compilation-passes* will print a message
+The thread-variable ``*trace-compilation-passes*`` will print a message
 about each pass as it runs, and report when one pass triggers another.
 
