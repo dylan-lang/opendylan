@@ -8,7 +8,7 @@ Files:	      library
               collectors-macros
               collectors
               plists
-              table-macros
+              table-extensions
 Major-Version: 2
 Minor-Version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
