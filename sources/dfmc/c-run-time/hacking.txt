@@ -91,7 +91,7 @@ The runtime exposes the following pseudo-primitives for NLX:
      Used to exit to a given BEF.
      This will unwind UWPs until the UWP surrounding the given BEF is reached.
      Once the BEFs UWP is reached, it will jump to the BEF exit point.
-     The argument protocol is kinda strage: first arg is passed, others are taken from teb->return_values.
+     The argument protocol is kinda strange: first arg is passed, others are taken from teb->return_values.
 
  - UWP interface
    - MAKE_UNWIND_PROTECT()
