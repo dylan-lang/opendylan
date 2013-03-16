@@ -92,6 +92,9 @@ in ``Bootstrap.1/bin/dylan-compiler``, the second generation in
 ``Bootstrap.3/bin/dylan-compiler``. The third generation will then be
 installed as ``/opt/opendylan-current/bin/dylan-compiler``.
 
+Make sure that the target installation directory has been deleted. If you try
+to install into a directory that already has an older version of Open Dylan in
+it, the build will fail.
 
 Compilation on Windows
 =======================
