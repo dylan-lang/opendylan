@@ -2,12 +2,7 @@
 Publications about Dylan
 ************************
 
-**Extending Dylan's type system for better type inference and error
-detection**
-(by Hannes Mehnert at ILC 2010
-`pdf <http://www.itu.dk/~hame/ilc2010.pdf>`__
-`bib <../_static/documentation/mehnert2010.bib>`__)
-
+**Extending Dylan's type system for better type inference and error detection** (by Hannes Mehnert at ILC 2010 `pdf <http://www.itu.dk/~hame/ilc2010.pdf>`__ `bib <../_static/documentation/mehnert2010.bib>`__)
     Whereas dynamic typing enables rapid prototyping and easy
     experimentation, static typing provides early error detection and
     better compile time optimization. Gradual typing provides the best
@@ -27,11 +22,7 @@ detection**
 
     https://dl.acm.org/citation.cfm?id=1869643.1869645
 
-**Automatically generated type-safe GTK+ binding for Dylan**
-(by Hannes Mehnert at ILC 2009
-`pdf <http://www.itu.dk/~hame/ilc09.pdf>`__
-`bib <../_static/documentation/mehnert2009.bib>`__)
-
+**Automatically generated type-safe GTK+ binding for Dylan** (by Hannes Mehnert at ILC 2009 `pdf <http://www.itu.dk/~hame/ilc09.pdf>`__ `bib <../_static/documentation/mehnert2009.bib>`__)
     We present an automated way to get language bindings for GTK+ for
     Dylan, an object-oriented functional programming language related
     to Lisp. Dylan supports multiple inheritance, polymorphism,
@@ -40,11 +31,7 @@ detection**
     is type-safe, no up- and downcasts are needed.
 
 
-**A domain-specific language for manipulation of binary data in Dylan**
-(by Hannes Mehnert and Andreas Bogk at ILC 2007
-`pdf <http://www.itu.dk/~hame/ilc07-final.pdf>`__
-`bib <../_static/documentation/mehnert2007.bib>`__)
-
+**A domain-specific language for manipulation of binary data in Dylan** (by Hannes Mehnert and Andreas Bogk at ILC 2007 `pdf <http://www.itu.dk/~hame/ilc07-final.pdf>`__ `bib <../_static/documentation/mehnert2007.bib>`__)
     We present a domain specific language for manipulation of binary
     data, or structured byte sequences, as they appear in everyday
     applications such as networking or graphics file manipulation. Our
@@ -56,11 +43,7 @@ detection**
 
     https://dl.acm.org/citation.cfm?id=1622123.1622148
 
-**Efficient Compression of Generic Function Dispatch Tables**
-(by Eric Kidd  - Technical Report Dartmouth College 2001
-`pdf <http://www.cs.dartmouth.edu/reports/TR2001-404.pdf>`__
-`bib <../_static/documentation/kidd2001.bib>`__)
-
+**Efficient Compression of Generic Function Dispatch Tables** (by Eric Kidd  - Technical Report Dartmouth College 2001 `pdf <http://www.cs.dartmouth.edu/reports/TR2001-404.pdf>`__ `bib <../_static/documentation/kidd2001.bib>`__)
     A generic function is similar to an overloaded operator, but
     provides a way to select an appropriate behavior at run-time
     instead of compile-time. Dujardin and colleagues have proposed an
@@ -75,11 +58,7 @@ detection**
 
     https://dl.acm.org/citation.cfm?id=867862
 
-**Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback**
-(by Jonathan Bachrach and Glenn Burke - Technical Report 2000
-`pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__
-`bib <../_static/documentation/bachrach2000.bib>`__)
-
+**Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** (by Jonathan Bachrach and Glenn Burke - Technical Report 2000 `pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__ `bib <../_static/documentation/bachrach2000.bib>`__)
     We presented an approach to gaining back complete class hierarchy
     information by delaying the construction of dispatch caches until
     the whole class hierarchy is available at run- time. Run-time
@@ -95,11 +74,7 @@ detection**
     components, multi-threaded runtime, incremental development, “pay
     as you go philosophy”, and interoperability with standard tools.
 
-**D-Expressions: Lisp Power, Dylan Style**
-(by Jonathan Bachrach and Keith Playford - Technical Report 1999
-`pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__
-`bib <../_static/documentation/bachrach1999.bib>`__)
-
+**D-Expressions: Lisp Power, Dylan Style** (by Jonathan Bachrach and Keith Playford - Technical Report 1999 `pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__ `bib <../_static/documentation/bachrach1999.bib>`__)
     This paper aims to demonstrate that it is possible for a language
     with a rich, conventional syntax to provide Lisp-style macro power
     and simplicity. We describe a macro system and syntax manipulation
@@ -109,11 +84,7 @@ detection**
     syntax, the approach taken to describe and represent that syntax
     is distinctly Lisp-like in philosophy.
 
-**Modern languages and Microsoft's component object model**
-(by David N. Gray, John Hotchkiss, Seth Laforge, Andrew Shalit and
-Toby Weinberg - Communications of the ACM May 1998
-`bib <../_static/documentation/gray1998.bib>`__)
-
+**Modern languages and Microsoft's component object model** (by David N. Gray, John Hotchkiss, Seth Laforge, Andrew Shalit and Toby Weinberg - Communications of the ACM May 1998 `bib <../_static/documentation/gray1998.bib>`__)
     As the computer industry's reliance on component software increases,
     it becomes increasingly difficult to integrate complex component
     systems. Modern development environments take a variety of approaches
@@ -124,12 +95,7 @@ Toby Weinberg - Communications of the ACM May 1998
 
     http://dl.acm.org/citation.cfm?id=274957
 
-**A Monotonic Superclass Linearization for Dylan**
-(by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and
-Keith Playford and P. Tucker Withington at OOPSLA 1996
-`html <http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`__
-`bib <../_static/documentation/barrett1996.bib>`__)
-
+**A Monotonic Superclass Linearization for Dylan** (by Kim Barrett and Bob Cassels and Paul Haahr and David A. Moon and Keith Playford and P. Tucker Withington at OOPSLA 1996 `html <http://haahr.tempdomainname.com/dylan/linearization-oopsla96.html>`__ `bib <../_static/documentation/barrett1996.bib>`__)
     Object-oriented languages with multiple inheritance and automatic
     conflict resolution typically use a linearization of superclasses
     to determine which version of a property to inherit when several
@@ -148,11 +114,7 @@ Keith Playford and P. Tucker Withington at OOPSLA 1996
 
     https://dl.acm.org/citation.cfm?id=236337.236343
 
-**Discovering the way programmers think about new programming environments**
-(by Joseph Dumas and Paige Parsons - Communications of the ACM June
-1995
-`bib <../_static/documentation/dumas1995.bib>`__)
-
+**Discovering the way programmers think about new programming environments** (by Joseph Dumas and Paige Parsons - Communications of the ACM June 1995 `bib <../_static/documentation/dumas1995.bib>`__)
     An interesting usability study of a prototype development
     environment for the Dylan programming language is presented
     here. This study's purpose is to determine just how close the
