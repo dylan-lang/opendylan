@@ -19,15 +19,16 @@ the *table-extensions* module.
 Basics
 ------
 
-The *table-extensions* module exports the class :class:`<string-table>`; the
-type :class:`<hash-state>` ; the constructor macro :macro:`table`; the generic
-function :gf:`remove-all-keys!` and two methods thereon; and the functions
-:func:`collection-hash`, :func:`sequence-hash`, :func:`string-hash`,
-:func:`values-hash`, :func:`case-insensitive-string-hash`, and
-:func:`case-insensitive-equal`.
+The *table-extensions* module exports the classes :class:`<string-table>` and
+:class:`<case-insensitive-string-table>`; the type :class:`<hash-state>`; the
+constructor macro :macro:`table`; the generic function :gf:`remove-all-keys!`
+and two methods thereon; and the functions :func:`collection-hash`,
+:func:`sequence-hash`, :func:`string-hash`, :func:`values-hash`,
+:func:`case-insensitive-string-hash`, and :func:`case-insensitive-equal`.
 
 The :class:`<string-table>` class is a class of tables that use strings
-for keys.
+for keys. :class:`<case-insensitive-string-table>` is similar, but the keys
+are considered to be case insensitive.
 
 The :class:`<hash-state>` type implements *hash states*. A hash state is
 defined by the DRM, page 123, as “an implementation-dependent type that
@@ -102,9 +103,29 @@ from the module *table-extensions*.
 
      The elements of the table are instances of ``<object>``.
 
-     It is an error to modify a key once it has been used to add an
-     element to a ``<string-table>``. The effects of modification are
-     not defined.
+     Modifying the key once it has been used to add an element to a
+     ``<string-table>`` results in undefined behavior.
+
+.. class:: <case-insensitive-string-table>
+   :sealed:
+   
+   A table class that uses case-insensitive strings for keys.
+   
+   :superclasses: <table>
+   
+   :description:
+   
+     The ``<string-table>`` class is the class of tables that use
+     instances of ``<string>`` for their keys. It is an error to use a
+     key that is not an instance of ``<string>``.
+
+     Keys are compared with the equivalence predicate
+     :func:`case-insensitive-equal`.
+
+     The elements of the table are instances of ``<object>``.
+
+     Modifying the key once it has been used to add an element to a
+     ``<case-insensitive-string-table>`` results in undefined behavior.
 
 .. class:: <hash-state>
 
