@@ -3,11 +3,11 @@
   <div class="row">
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
+        <li><a href="#cheat-sheets"><i class="icon-chevron-right"></i> Cheat Sheets</a></li>
         <li><a href="#learning-dylan"><i class="icon-chevron-right"></i> Learning Dylan</a></li>
+        <li><a href="#references"><i class="icon-chevron-right"></i> References</a></li>
         <li><a href="#articles"><i class="icon-chevron-right"></i> Articles</a></li>
         <li><a href="#publications"><i class="icon-chevron-right"></i> Publications</a></li>
-        <li><a href="#cheat-sheets"><i class="icon-chevron-right"></i> Cheat Sheets</a></li>
-        <li><a href="#references"><i class="icon-chevron-right"></i> References</a></li>
         <li><a href="#for-open-dylan-developers"><i class="icon-chevron-right"></i> For Open Dylan Developers</a></li>
         <li><a href="#archived-documentation"><i class="icon-chevron-right"></i> Archived Documentation</a></li>
       </ul>
@@ -23,6 +23,23 @@ Documentation
    retained links to the 'Old HTML' where relevant. These will be going away
    in the near future.
    :class: alert alert-block alert-warning
+
+Cheat Sheets
+============
+
+.. raw:: html
+
+     <div class="alert alert-block alert-info">
+       <p>Quick one-page sheets for common tasks.</p>
+     </div>
+
+.. hlist::
+
+   * `Basics of Dylan Syntax <cheatsheet.html>`_
+   * `Iteration <cheatsheets/iteration.html>`_
+   * `Conditionals <cheatsheets/conditionals.html>`_
+   * `Collections <cheatsheets/collections.html>`_
+   * `For Scheme programmers <cheatsheets/scheme.html>`_
 
 Learning Dylan
 ==============
@@ -55,6 +72,35 @@ Learning Dylan
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. This is only useful
     if you are using Open Dylan on Windows.
+
+References
+==========
+
+.. raw:: html
+
+     <div class="alert alert-block alert-info">
+       <p>These are some lengthier reference materials. While they
+       make for dry reading, they're full of invaluable information!</p>
+     </div>
+
+`Dylan Reference Manual <http://opendylan.org/books/drm/>`_ (`Errata <http://opendylan.org/books/drm/drm_errata.html>`_)
+    The official definition of the Dylan language and standard library.
+
+`Dylan Library Reference <library-reference/index.html>`_ [`pdf <library-reference/DylanLibraryReference.pdf>`__] [`epub <library-reference/DylanLibraryReference.epub>`__]
+    Describes the Open Dylan implementation of the Dylan language, a
+    core set of Dylan libraries, and a library interchange mechanism.
+    The core libraries provide many language extensions, a threads
+    interface, and object finalization, printing and output formatting modules,
+    a streams module, a sockets module, and modules providing an
+    interface to operating system features such as the file system,
+    time and date information, the host machine environment, as well
+    as a foreign function interface and some low-level access to the
+    Microsoft Win32 API.
+
+`DUIM library reference <http://opendylan.org/documentation/opendylan/dref/index.htm>`_
+    Describes the libraries forming DUIM (Dylan User Interface Manager),
+    the portable window programming toolkit. It complements
+    Building Applications Using DUIM.
 
 Articles
 ========
@@ -132,52 +178,6 @@ Publications
     is distinctly Lisp-like in philosophy.
 
 `See our publications page to find more <publications.html>`_.
-
-Cheat Sheets
-============
-
-.. raw:: html
-
-     <div class="alert alert-block alert-info">
-       <p>Quick one-page sheets for common tasks.</p>
-     </div>
-
-.. hlist::
-
-   * `Basics of Dylan Syntax <cheatsheet.html>`_
-   * `Iteration <cheatsheets/iteration.html>`_
-   * `Conditionals <cheatsheets/conditionals.html>`_
-   * `Collections <cheatsheets/collections.html>`_
-   * `For Scheme programmers <cheatsheets/scheme.html>`_
-
-References
-==========
-
-.. raw:: html
-
-     <div class="alert alert-block alert-info">
-       <p>These are some lengthier reference materials. While they
-       make for dry reading, they're full of invaluable information!</p>
-     </div>
-
-`Dylan Reference Manual <http://opendylan.org/books/drm/>`_ (`Errata <http://opendylan.org/books/drm/drm_errata.html>`_)
-    The official definition of the Dylan language and standard library.
-
-`Dylan Library Reference <library-reference/index.html>`_ [`pdf <library-reference/DylanLibraryReference.pdf>`__] [`epub <library-reference/DylanLibraryReference.epub>`__]
-    Describes the Open Dylan implementation of the Dylan language, a
-    core set of Dylan libraries, and a library interchange mechanism.
-    The core libraries provide many language extensions, a threads
-    interface, and object finalization, printing and output formatting modules,
-    a streams module, a sockets module, and modules providing an
-    interface to operating system features such as the file system,
-    time and date information, the host machine environment, as well
-    as a foreign function interface and some low-level access to the
-    Microsoft Win32 API.
-
-`DUIM library reference <http://opendylan.org/documentation/opendylan/dref/index.htm>`_
-    Describes the libraries forming DUIM (Dylan User Interface Manager),
-    the portable window programming toolkit. It complements
-    Building Applications Using DUIM.
 
 For Open Dylan Developers
 =========================
