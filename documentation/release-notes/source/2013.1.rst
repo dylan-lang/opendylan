@@ -53,6 +53,9 @@ module that re-exports the ``set``, ``bit-set``, ``bit-vector`` and
 ``byte-vector`` modules. This simplifies using the additional collection
 types from within other libraries and applications.
 
+The ``table-extensions`` module now exports ``<case-insensitive-string-table>``,
+which is a table whose keys are strings and checked without case sensitivity.
+
 Bug Fixes
 =========
 
