@@ -37,35 +37,21 @@ Learning Dylan
        book.</p>
      </div>
 
-`An Introduction to Dylan <intro-dylan/index.html>`_
-[`pdf <intro-dylan/IntroductiontoDylan.pdf>`__]
-[`epub <intro-dylan/AnIntroductiontoDylan.epub>`__]
-
+`An Introduction to Dylan <intro-dylan/index.html>`_ [`pdf <intro-dylan/IntroductiontoDylan.pdf>`__] [`epub <intro-dylan/AnIntroductiontoDylan.epub>`__]
     This tutorial is written primarily for those with solid programming
     experience in C++ or another object-oriented, static language. It
     provides a gentler introduction to Dylan than does the Dylan Reference
     Manual (DRM).
 
-`Dylan Programming <http://opendylan.org/books/dpg/>`_
-[`pdf <http://opendylan.org/books/dpg/DylanProgramming.pdf>`__]
-[`epub <http://opendylan.org/books/dpg/DylanProgramming.epub>`__]
-
+`Dylan Programming <http://opendylan.org/books/dpg/>`_ [`pdf <http://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <http://opendylan.org/books/dpg/DylanProgramming.epub>`__]
     A good, book length Dylan tutorial by several Harlequin employees.
 
-`Getting Started with Open Dylan <getting-started/index.html>`_
-[`pdf <getting-started/GettingStartedWithOpenDylan.pdf>`__]
-[`epub <getting-started/GettingStartedWithOpenDylan.epub>`__]
-[`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
-
+`Getting Started with Open Dylan <getting-started/index.html>`_ [`pdf <getting-started/GettingStartedWithOpenDylan.pdf>`__] [`epub <getting-started/GettingStartedWithOpenDylan.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
     Describes Open Dylan's development environment. The first two
     chapters are useful on any platform, whereas the remaining
     chapters document the Open Dylan IDE on Windows.
 
-`Building Applications Using DUIM <building-with-duim/index.html>`_
-[`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__]
-[`epub <building-with-duim/BuildingApplicationsWithDUIM.epub>`__]
-[`old HTML <http://opendylan.org/documentation/opendylan/dguide/index.htm>`__]
-
+`Building Applications Using DUIM <building-with-duim/index.html>`_ [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__] [`epub <building-with-duim/BuildingApplicationsWithDUIM.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/dguide/index.htm>`__]
     Describes how to use DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. This is only useful
     if you are using Open Dylan on Windows.
@@ -82,12 +68,10 @@ Articles
     <h3>Learning Dylan</h3>
 
 `Dylan Macro System <../articles/macro-system/index.html>`_ by Dustin Voss.
-
     This article holds hard-won knowledge about how the Dylan macro system works
     and how to work around some of the gotchas that may catch a macro writer.
 
 `Procedural Dylan <../articles/procedural-dylan/index.html>`_ by Paul Haahr.
-
     This essay explores Dylan from the perspective of a programmer used to
     traditional procedural languages, such as Pascal or C.
 
@@ -96,7 +80,6 @@ Articles
     <h3>Tools</h3>
 
 `Development inside emacs using DIME <../news/2011/12/12/dswank.html>`_
-
     An exciting look at using DIME and emacs for Dylan development.
 
 Publications
@@ -131,16 +114,10 @@ References
        make for dry reading, they're full of invaluable information!</p>
      </div>
 
-`Dylan Reference Manual
-<http://opendylan.org/books/drm/>`_ (`Errata
-<http://opendylan.org/books/drm/drm_errata.html>`_)
-
+`Dylan Reference Manual <http://opendylan.org/books/drm/>`_ (`Errata <http://opendylan.org/books/drm/drm_errata.html>`_)
     The official definition of the Dylan language and standard library.
 
-`Dylan Library Reference <library-reference/index.html>`_
-[`pdf <library-reference/DylanLibraryReference.pdf>`__]
-[`epub <library-reference/DylanLibraryReference.epub>`__]
-
+`Dylan Library Reference <library-reference/index.html>`_ [`pdf <library-reference/DylanLibraryReference.pdf>`__] [`epub <library-reference/DylanLibraryReference.epub>`__]
     Describes the Open Dylan implementation of the Dylan language, a
     core set of Dylan libraries, and a library interchange mechanism.
     The core libraries provide many language extensions, a threads
@@ -151,9 +128,7 @@ References
     as a foreign function interface and some low-level access to the
     Microsoft Win32 API.
 
-`DUIM library reference
-<http://opendylan.org/documentation/opendylan/dref/index.htm>`_
-
+`DUIM library reference <http://opendylan.org/documentation/opendylan/dref/index.htm>`_
     Describes the libraries forming DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. It complements
     Building Applications Using DUIM.
@@ -169,21 +144,14 @@ For Open Dylan Developers
        level details.</p>
      </div>
 
-`Open Dylan Hacker's Guide <hacker-guide/index.html>`_
-[`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__]
-[`epub <hacker-guide/OpenDylanHackersGuide.epub>`__]
-
+`Open Dylan Hacker's Guide <hacker-guide/index.html>`_ [`pdf <hacker-guide/OpenDylanHackersGuide.pdf>`__] [`epub <hacker-guide/OpenDylanHackersGuide.epub>`__]
     A work in progress to help out people who are hacking on Open Dylan itself.
 
-`Dylan Style Guide <style-guide/index.html>`_
-[`pdf <style-guide/StyleGuide.pdf>`__]
-[`epub <style-guide/StyleGuide.epub>`__]
-
+`Dylan Style Guide <style-guide/index.html>`_ [`pdf <style-guide/StyleGuide.pdf>`__] [`epub <style-guide/StyleGuide.epub>`__]
     Notes and thoughts on how to format your Dylan code. This is the style
     guide that we aspire to adhere to in the Open Dylan sources.
 
 `Dylan Enhancement Proposals <../proposals/index.html>`_
-
     A series of proposals for improvements to the Open Dylan
     implementation and related libraries.
 
@@ -199,14 +167,10 @@ Archived Documentation
         material.</p>
       </div>
 
-`Developing Component Software with CORBA
-<http://opendylan.org/documentation/opendylan/corba/index.htm>`_
-
+`Developing Component Software with CORBA <http://opendylan.org/documentation/opendylan/corba/index.htm>`_
     A tutorial and reference for CORBA interoperability using the Open Dylan ORB.
 
-`OLE, COM, ActiveX and DBMS library reference
-<http://opendylan.org/documentation/opendylan/interop2/index.htm>`_
-
+`OLE, COM, ActiveX and DBMS library reference <http://opendylan.org/documentation/opendylan/interop2/index.htm>`_
     Describes high and low level interfaces to COM, OLE, and
     ActiveX component technology, and generic DBMS support, through
     SQL with an ODBC backend.
