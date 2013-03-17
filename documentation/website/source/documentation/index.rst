@@ -85,7 +85,53 @@ Articles
 Publications
 ============
 
-`See our publications page <publications.html>`_.
+**Extending Dylan's type system for better type inference and error detection** [`pdf <http://www.itu.dk/~hame/ilc2010.pdf>`__] [`bib <../_static/documentation/mehnert2010.bib>`__]
+    Whereas dynamic typing enables rapid prototyping and easy
+    experimentation, static typing provides early error detection and
+    better compile time optimization. Gradual typing provides the best
+    of both worlds. This paper shows how to define and implement
+    gradual typing in Dylan, traditionally a dynamically typed
+    language. Dylan poses several special challenges for gradual
+    typing, such as multiple return values, variable-arity methods and
+    generic functions (multiple dispatch).
+
+    In this paper Dylan is extended with function types and parametric
+    polymorphism. We implemented the type system and a
+    unification-based type inference algorithm in the mainstream Dylan
+    compiler. As case study we use the Dylan standard library (roughly
+    32000 lines of code), which witnesses that the implementation
+    generates faster code with fewer errors. Some previously
+    undiscovered errors in the Dylan library were revealed.
+
+    https://dl.acm.org/citation.cfm?id=1869643.1869645
+
+**Partial Dispatch: Optimizing Dynamically-Dispatched Multimethod Calls with Compile-Time Types and Runtime Feedback** [`pdf <http://people.csail.mit.edu/jrb/Projects/pd.pdf>`__] [`bib <../_static/documentation/bachrach2000.bib>`__]
+    We presented an approach to gaining back complete class hierarchy
+    information by delaying the construction of dispatch caches until
+    the whole class hierarchy is available at run- time. Run-time
+    call-site caches can then be constructed as specialized decision
+    trees built from disjointness and concrete- subtype operations on
+    actual arguments combined with compile-time inferred types
+    injected into the run-time. Unnecessary decision steps can be
+    avoided and often run-time dispatch can be completely
+    eliminated. We consider this to be a nice half-way house between
+    full static compilation and dynamic compilation which mitigates
+    the runtime expense of separately compiled components while
+    satisfying our implementation constraints of code shareable
+    components, multi-threaded runtime, incremental development, “pay
+    as you go philosophy”, and interoperability with standard tools.
+
+**D-Expressions: Lisp Power, Dylan Style** [`pdf <http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`__] [`bib <../_static/documentation/bachrach1999.bib>`__]
+    This paper aims to demonstrate that it is possible for a language
+    with a rich, conventional syntax to provide Lisp-style macro power
+    and simplicity. We describe a macro system and syntax manipulation
+    toolkit designed for the Dylan programming language that meets,
+    and in some areas exceeds, this standard. The debt to Lisp is
+    great, however, since although Dylan has a conventional algebraic
+    syntax, the approach taken to describe and represent that syntax
+    is distinctly Lisp-like in philosophy.
+
+`See our publications page to find more <publications.html>`_.
 
 Cheat Sheets
 ============
