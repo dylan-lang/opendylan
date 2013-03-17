@@ -103,9 +103,8 @@ from the module *table-extensions*.
 
      The elements of the table are instances of ``<object>``.
 
-     It is an error to modify a key once it has been used to add an
-     element to a ``<string-table>``. The effects of modification are
-     not defined.
+     Modifying the key once it has been used to add an element to a
+     ``<string-table>`` results in undefined behavior.
 
 .. class:: <case-insensitive-string-table>
    :sealed:
@@ -125,9 +124,8 @@ from the module *table-extensions*.
 
      The elements of the table are instances of ``<object>``.
 
-     It is an error to modify a key once it has been used to add an element to
-     a ``<case-insensitive-string-table>``. The effects of modification are not
-     defined.
+     Modifying the key once it has been used to add an element to a
+     ``<case-insensitive-string-table>`` results in undefined behavior.
 
 .. class:: <hash-state>
 
