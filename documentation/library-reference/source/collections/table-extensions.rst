@@ -19,9 +19,9 @@ the *table-extensions* module.
 Basics
 ------
 
-The *table-extensions* module exports the class :class:`<string-table>`;
-the type :class:`<hash-state>` ; the generic function
-:gf:`remove-all-keys!` and two methods thereon; and the functions
+The *table-extensions* module exports the class :class:`<string-table>`; the
+type :class:`<hash-state>` ; the constructor macro :macro:`table`; the generic
+function :gf:`remove-all-keys!` and two methods thereon; and the functions
 :func:`collection-hash`, :func:`sequence-hash`, :func:`string-hash`,
 :func:`values-hash`, :func:`case-insensitive-string-hash`, and
 :func:`case-insensitive-equal`.
@@ -329,3 +329,29 @@ from the module *table-extensions*.
 
      .. note:: To empty collections that are not instances of
         ``<mutable-explicit-key-collection>``, use *size-setter*.
+
+.. macro:: table
+   :macro-type: Function
+   
+   Creates a table and populates it with keys and values.
+   
+   :macrocall:
+     .. parsed-literal::
+        table( { `class`, } `key` => `value`, ...)
+           
+   :parameter class:  An instance of ``<class>``. Optional.
+   :parameter key:    An expression.
+   :parameter value:  An expression.
+   :value table:      A new instance of *class*.
+   
+   :description:
+   
+     Creates a table of type *class* and populates it with *key*/*value*
+     pairs. If *class* is omitted, creates a table of type :drm:`<table>`.
+
+   :example:
+   
+     .. code-block:: dylan
+
+       let my-table = table("red"=>"stop", "green"=>"go");
+       let my-table = table(<string-table>, "red"=>"stop", "green"=>"go");
