@@ -304,8 +304,8 @@ define function mark-as-implementing (cls :: <java-class>, inter :: <java-interf
   add! (cls.interfaces, make (<java-class-constant>, java-class: inter))
 end;
 
-define class <java-concrete-class> (<java-class>) end;
-define class <java-concrete-interface> (<java-interface>) end;
+define class <java-concrete-class> (<java-class>, <java-concrete-class-or-interface>) end;
+define class <java-concrete-interface> (<java-interface>, <java-concrete-class-or-interface>) end;
 
 //define class <java-concrete-class> (<java-class>, <java-concrete-class-or-interface>)
 //  sealed slot interfaces = make (<stretchy-vector>); // see mark-as-implementing
