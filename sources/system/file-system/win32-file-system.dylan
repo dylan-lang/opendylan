@@ -348,7 +348,7 @@ define method %file-property
   elseif (begin
 	    //---*** NOTE: SHGetFileInfoA doesn't reset GetLastError to $NO_ERROR
 	    //---*** if the file exists but isn't an executable.  Consequently, we
-	    //---*** can't check to see if an error actually occured and signal it
+	    //---*** can't check to see if an error actually occurred and signal it
 	    //---*** appropriately; instead, we'll just always claim the file isn't
 	    //---*** executable.  (Sigh)
 	    // let status = win32-raw-last-error();

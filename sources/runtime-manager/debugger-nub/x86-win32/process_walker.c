@@ -245,7 +245,7 @@ PROCESSD *canonicalize_process_list_windows_nt (PROCESSD *head, DWORD *count)
   num_processes = size_needed / sizeof(DWORD);
 
   // There will probably have been ample room in the allocated array,
-  // but if it turns out that an overflow occured, then we must re-allocate
+  // but if it turns out that an overflow occurred, then we must re-allocate
   // the array, and call the enumerator again.
 
   if (num_processes > num_processes_guess) {

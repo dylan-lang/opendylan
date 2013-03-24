@@ -46,7 +46,7 @@ define open abstract class <program-condition> (<format-string-condition>)
   // TODO: Make this class primary.
 
   // The source-location is used for indicating to the user where the
-  // error occured.  It might be sensible for this information to be
+  // error occurred.  It might be sensible for this information to be
   // obtained from a combination of the source-record and this slot,
   // if that could condense the size of source locations.
   constant slot condition-source-location = #f,

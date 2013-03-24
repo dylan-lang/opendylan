@@ -59,7 +59,7 @@ define method mode-name
 end method mode-name;
 
 
-/// Auxilliary functions
+/// Auxiliary functions
 
 define generic interval->location-info
     (interval :: type-union(<interval>, <string>))

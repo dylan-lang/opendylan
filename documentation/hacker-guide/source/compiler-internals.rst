@@ -478,7 +478,7 @@ constant folds (constant-folding.dylan):
 
  optimization/dispatch.dylan: gf dispatch optimization
 
-optimization/assignment: here happens the "occurence typing"
+optimization/assignment: here happens the "occurrence typing"
 (type inference for instance?)...
 ``<constrain-type>`` is only for the instance? and conditionals hack
 

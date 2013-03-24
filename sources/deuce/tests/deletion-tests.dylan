@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// -=- Auxilliary definitions -=-
+// -=- Auxiliary definitions -=-
 
 define constant $interval-descriptions :: <simple-object-vector>
   = vector("empty", "end-of-line", "single-line", "part-lines",

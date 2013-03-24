@@ -557,7 +557,7 @@ end method;
 
 ///// GET-EXCEPTION-VIOLATION-OP
 //    Returns a code for the operation that the application was trying
-//    to perform when an access violation occured.
+//    to perform when an access violation occurred.
 
 define open generic get-exception-violation-op (conn :: <access-connection>)
     => (op :: <integer>);

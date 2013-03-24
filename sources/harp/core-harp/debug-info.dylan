@@ -1200,7 +1200,7 @@ define method difference-vars
   end;
 end method;
 
-// This is just remove first occurence, since there are no duplicates;
+// This is just remove first occurrence, since there are no duplicates;
 // Usually, the element to be removed is at the head of the list
 
 define inline method remove-var

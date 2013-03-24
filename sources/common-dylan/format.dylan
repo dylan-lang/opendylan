@@ -551,7 +551,7 @@ define open generic condition-to-string
 
 define method condition-to-string
     (condition :: <condition>) => (string :: <string>)
-  concatenate("Condition of class ", condition.object-class-name, " occured")
+  concatenate("Condition of class ", condition.object-class-name, " occurred")
 end method condition-to-string;
 
 define method condition-to-string

@@ -53,7 +53,7 @@ define pentium-template (copy-words-down, copy-words-up,
                          copy-words-down-w, copy-words-up-w)
   options (self);
 
-  // Rely on the clash function to stop registers occuring in the
+  // Rely on the clash function to stop registers occurring in the
   // wrong place.
   pattern (be, i :: <list> by op-info, to, from, how-many)
     harp-out (be)

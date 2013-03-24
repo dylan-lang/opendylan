@@ -195,7 +195,7 @@ define module sql-odbc
     import: { *trace-odbc-functions* },
     export: { *trace-odbc-functions* };
 
-  // Debugging functions used to determine if finalization is occuring.
+  // Debugging functions used to determine if finalization is occurring.
   // Once the gc limitation on weak tables is fixed, these functions
   // will no longer be needed.
   create  

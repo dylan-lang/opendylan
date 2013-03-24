@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// -=- AUXILLIARY DEFINITIONS -=-
+/// -=- AUXILIARY DEFINITIONS -=-
 
 define class <file-library-not-found-warning> (<simple-warning>)
   keyword format-string: 

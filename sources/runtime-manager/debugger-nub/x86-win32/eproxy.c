@@ -1575,7 +1575,7 @@ NUBINT server_get_hostname_length (SERVER server, NUBINT *success)
   RpcExcept(1) {
     result = (NUBINT) 0;
     debugger_nub_rpc_error
-      ("server_get_hostname_length", "RPC Exception occured.");
+      ("server_get_hostname_length", "RPC Exception occurred.");
     (*success) = 0;
   }
   RpcEndExcept;
@@ -1592,7 +1592,7 @@ void server_get_hostname
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-      ("server_get_hostname", "Rpc Exception occured.");
+      ("server_get_hostname", "Rpc Exception occurred.");
     buf[0] = '\0';
   }
   RpcEndExcept;
@@ -1610,7 +1610,7 @@ NUBINT server_verify_password
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-      ("server_verify_password", "Rpc exception occured.");
+      ("server_verify_password", "Rpc exception occurred.");
     verified = 0;
   }
   RpcEndExcept;
@@ -1627,7 +1627,7 @@ NUBINT update_server_process_list
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-      ("server_update_process_list", "Rpc Exception occured.");
+      ("server_update_process_list", "Rpc Exception occurred.");
     count = 0;
   }
   RpcEndExcept;
@@ -1654,7 +1654,7 @@ NUBPROCESS server_process_nub_descriptor
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-      ("server_process_nub_descriptor", "Rpc Exception occured.");
+      ("server_process_nub_descriptor", "Rpc Exception occurred.");
   }
   RpcEndExcept;
   return(LOCALIZE_RNUBPROCESS( remote_process ));
@@ -1671,7 +1671,7 @@ NUBINT server_process_name_length
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-      ("server_process_name_length", "Rpc Exception occured.");
+      ("server_process_name_length", "Rpc Exception occurred.");
     length = 0;
   }
   RpcEndExcept;
@@ -1688,7 +1688,7 @@ void server_process_name
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-       ("server_process_name", "Rpc Exception occured.");
+       ("server_process_name", "Rpc Exception occurred.");
     buf[0] = '\0';
   }
   RpcEndExcept;
@@ -1705,7 +1705,7 @@ NUBINT server_process_system_identifier_length
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-      ("server_process_system_identifier_length", "Rpc Exception occured.");
+      ("server_process_system_identifier_length", "Rpc Exception occurred.");
     length = 0;
   }
   RpcEndExcept;
@@ -1722,7 +1722,7 @@ void server_process_system_identifier
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-       ("server_process_system_identifier", "Rpc Exception occured.");
+       ("server_process_system_identifier", "Rpc Exception occurred.");
     buf[0] = '\0';
   }
   RpcEndExcept;
@@ -1737,7 +1737,7 @@ NUBINT server_shutdown
   }
   RpcExcept(1) {
     debugger_nub_rpc_error
-      ("server_shutdown", "Rpc Exception occured.");
+      ("server_shutdown", "Rpc Exception occurred.");
     return(0);
   }
   RpcEndExcept;

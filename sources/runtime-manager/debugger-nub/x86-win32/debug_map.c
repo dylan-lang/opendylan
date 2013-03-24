@@ -899,7 +899,7 @@ BOOL should_be_in_all_symbols_scan (CV_HEADER *sym)
 {
   // This function decides whether a symbolic record in Codeview actually
   // is a symbol (ie, some sort of program identifier) as opposed to
-  // some auxilliary definition, such as a compiler flag.
+  // some auxiliary definition, such as a compiler flag.
 
   switch (sym->Index) {
 

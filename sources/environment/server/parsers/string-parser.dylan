@@ -185,10 +185,10 @@ end method;
 
 
 
-/// -=- Auxilliary functions for the parser -=-
+/// -=- Auxiliary functions for the parser -=-
 
 // A function like find-key which lets you search a particular
-// subsequence, instead of allowing you to skip N occurences.
+// subsequence, instead of allowing you to skip N occurrences.
 // ---*** Need proper tests for this function.
 define function string-parser-find-key
     (sequence :: <sequence>, pred :: <function>,

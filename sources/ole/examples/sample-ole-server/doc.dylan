@@ -391,7 +391,7 @@ define method CloseObject (this :: <CSimpSvrDoc>) => ();
 
    // Disconnect the object.  NOTE: This call should not do anything
    // unless the container has cause a GP Fault or some other problem
-   // has occured...
+   // has occurred...
    OutputDebugString("*** Before CoDisconnectObject *** \r\n");
    CoDisconnectObject( svrObj, 0);
    OutputDebugString("*** After CoDisconnectObject *** \r\n");

@@ -489,7 +489,7 @@ end;
 // 
 define abstract class <queued-op> (<object>)
   //
-  // The position this op occured at.
+  // The position this op occurred at.
   slot op-posn :: <position> = 0;
 end;
 

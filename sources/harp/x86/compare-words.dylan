@@ -44,7 +44,7 @@ end with-ops-in;
 
 define pentium-template (bne-words)
 
-  // Rely on the clash function to stop registers occuring in the
+  // Rely on the clash function to stop registers occurring in the
   // wrong place.
   pattern (be, tag, mem1, mem2, how-many)
     harp-out (be)
