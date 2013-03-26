@@ -272,9 +272,8 @@ D primitive_byte_allocate_filled
   D* object = primitive_byte_allocate(size, repeated_size + 1);
   instance_header_setter(class_wrapper, object);
   primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fill_bytesX
-    (object, repeated_size_offset + 1, 0, repeated_size,
-     (unsigned char)R(repeated_fill_value));
+  primitive_fill_bytesX(object, repeated_size_offset + 1, 0, repeated_size,
+                        repeated_fill_value);
   ((char*)(&object[repeated_size_offset + 1]))[repeated_size] = (char)0;
   if (repeated_size_offset > 0) {
     object[repeated_size_offset] = I(repeated_size);
