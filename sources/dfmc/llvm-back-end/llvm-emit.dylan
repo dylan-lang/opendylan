@@ -83,18 +83,3 @@ define method retract-local-methods-in-heap(heap :: <model-heap>) => ()
     end if;
   end for;
 end method;
-
-
-/// DFM output
-
-define method emit-dfm
-    (back-end :: <llvm-back-end>, stream :: <stream>, o :: <&iep>, 
-     #rest flags, #key form?, force-emit?, #all-keys)
- => ();
-  print-method(stream, o.function);
-  format(stream, "\n");
-end method emit-dfm;
-
-define method emit-dfm (back-end :: <llvm-back-end>, stream :: <stream>, o,
-                         #rest flags, #key, #all-keys) => ()
-end method emit-dfm;
