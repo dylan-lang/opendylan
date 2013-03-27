@@ -10,6 +10,19 @@ define variable *retract-dfm?* = #t;
 define compiler-open generic emit-all 
     (back-end :: <back-end>, record, #rest flags, #key, #all-keys);
 
+define compiler-open generic emit-dfm
+  (back-end :: <back-end>, stream, object, #rest flags, #key, #all-keys) => ();
+
+define method emit-dfm (back-end :: <back-end>, stream :: <stream>, o :: <&iep>,
+                        #rest flags, #key form?, force-emit?, #all-keys) => ()
+  print-method(stream, o.function);
+  format(stream, "\n");
+end method emit-dfm;
+
+define method emit-dfm (back-end :: <back-end>, stream :: <stream>, o,
+                        #rest flags, #key, #all-keys) => ()
+end method emit-dfm;
+
 // TODO: I guess emit-code should be exported too, but each back-end
 // currently just defines a local emit-code generic.
 // define compiler-open generic emit-code
