@@ -93,3 +93,13 @@ Construction of byte vector instances
 When using the C backend ``fill:`` keyword parameter in ``<byte-vector>``
 instance construction was not working properly and caused the byte vector to
 be initialized with a wrong value. This has been corrected.
+
+Libraries
+---------
+
+common-dylan
+^^^^^^^^^^^^
+
+On Mac OS X, some code run at startup to get the application name and
+arguments would write past the end of a buffer, resulting in memory
+corruption and likely crashes.
