@@ -14,8 +14,8 @@ define constant $KERN_PROCARGS2 = 49;
 // This allocates an appropriately sized data buffer for you
 define function darwin-sysctl
   (mib :: <vector>) => (ret :: false-or(<byte-string>))
-  let rmib = make(<byte-string>, size: size(mib), fill: '\0');
   let wsize = raw-as-integer(primitive-word-size());
+  let rmib = make(<byte-string>, size: size(mib) * wsize, fill: '\0');
   let rosize = make(<byte-string>, size: wsize, fill: '\0');
 
   // create the real mib vector
