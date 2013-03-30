@@ -87,6 +87,13 @@ Emacs can parse them, for example to jump to the source of the next
 error.
 
 
+Compiler
+--------
+
+The compiler no longer asserts when compiling code that performs an
+``rcurry`` on an ``element-setter`` method.
+
+
 Construction of byte vector instances
 -------------------------------------
 
