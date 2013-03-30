@@ -176,10 +176,15 @@ define method type-estimate-call-from-site(call :: <function-call>,
           type-estimate-call-stupidly-from-fn(call, function(call), cache)
         end if;
       dylan-value(#"element-setter"), dylan-value(#"element-no-bounds-check-setter") =>
-        let collection-te = type-estimate(second(arguments(call)));
-        if (instance?(collection-te, <type-estimate-limited-collection>))
-          make(<type-estimate-values>,
-               fixed: vector(as(<type-estimate>, type-estimate-of(collection-te))))
+        // This might have fewer arguments than expected, like when rcurry() is involved.
+        if (size(arguments(call)) > 1)
+          let collection-te = type-estimate(second(arguments(call)));
+          if (instance?(collection-te, <type-estimate-limited-collection>))
+            make(<type-estimate-values>,
+                 fixed: vector(as(<type-estimate>, type-estimate-of(collection-te))))
+          else
+            type-estimate-call-stupidly-from-fn(call, function(call), cache)
+          end if;
         else
           type-estimate-call-stupidly-from-fn(call, function(call), cache)
         end if;
@@ -330,10 +335,15 @@ define method type-estimate-call-from-site(call :: <method-call>,
         next-method()
       end if
     elseif (^element-setter-method?(fn))
-      let collection-te = type-estimate(second(arguments(call)));
-      if (instance?(collection-te, <type-estimate-limited-collection>))
-        make(<type-estimate-values>,
-             fixed: vector(as(<type-estimate>, type-estimate-of(collection-te))))
+      // This might have fewer arguments than expected, like when rcurry() is involved.
+      if (size(arguments(call)) > 1)
+        let collection-te = type-estimate(second(arguments(call)));
+        if (instance?(collection-te, <type-estimate-limited-collection>))
+          make(<type-estimate-values>,
+               fixed: vector(as(<type-estimate>, type-estimate-of(collection-te))))
+        else
+          next-method()
+        end if
       else
         next-method()
       end if
