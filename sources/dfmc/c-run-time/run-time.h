@@ -206,67 +206,88 @@ static inline long atomic_cas(long *destination, long exchange, long compare) {
 typedef D (*DFN)(D,int,...);
 typedef D (*DLFN)();
 
+struct _IClass;
+struct _dylantype;
+struct _DylanClass;
+
+/* This corresponds to <mm-wrapper> defined in
+ * dfmc/modeling/objects.dylan.
+ */
+typedef struct _Wrapper {
+  struct _Wrapper * wrapper_wrapper;
+  struct _IClass  * iclass;
+  D                 subtype_mask;
+  DMINT             fixed_part;
+  DMINT             variable_part;
+  D                 number_patterns;
+  DMINT             patterns[1]; /* REPEATED */
+} Wrapper;
+
 typedef struct _obj {
-  D mm_wrapper;
-  D slots[1];
+  Wrapper * mm_wrapper;
+  D         slots[1];
 } OBJECT;
 
 typedef struct _dsf_ {
-  D     mm_wrapper;
-  DSFLT data;
+  Wrapper * mm_wrapper;
+  DSFLT     data;
 } DSF_;
 
 typedef struct _ddf_ {
-  D     mm_wrapper;
-  DDFLT data;
+  Wrapper * mm_wrapper;
+  DDFLT     data;
 } DDF_;
 
 typedef struct _dmi_ {
-  D     mm_wrapper;
-  DMINT data;
+  Wrapper * mm_wrapper;
+  DMINT     data;
 } DMI_;
 
 typedef struct _dumi_ {
-  D      mm_wrapper;
-  DUMINT data;
+  Wrapper * mm_wrapper;
+  DUMINT    data;
 } DUMI_;
 
 typedef struct _dbi_ {
-  D      mm_wrapper;
-  DUMINT low;
-  DMINT  high;
+  Wrapper * mm_wrapper;
+  DUMINT    low;
+  DMINT     high;
 } DBI_;
 
-typedef struct _Wrapper {
-  D        wrapper_wrapper;
-  D        iclass;
-  D        subtype_mask;
-  DMINT    fixed_part;
-  DMINT    variable_part;
-  D        number_patterns;
-  DMINT    patterns[1]; /* REPEATED */
-} Wrapper;
-
+/* This is the implementation class and corresponds
+ * to the <implementation-class> defined in
+ * dfmc/modeling/objects.dylan. Note that this
+ * struct declaration is not the full struct.
+ *
+ * For a breakdown of the class properties, see
+ * the packed-slots definition for ^class-properties
+ * in dfmc/modeling/objects.dylan or the copy of it
+ * in dylan/class.dylan.
+ */
 typedef struct _IClass {
-  D        my_wrapper;
-  D        the_class_properties;
-  D        the_class;
-  D        the_wrapper;
+  Wrapper *             my_wrapper;
+  D                     the_class_properties;
+  struct _DylanClass  * the_class;
+  D                     the_wrapper;
 } ICLASS;
 
-
+/* This corresponds to <type> defined in
+ * dfmc/modeling/objects.dylan.
+ */
 typedef struct _dylantype {
-  D    mm_wrapper;
-  DLFN instancep_function;
+  Wrapper * mm_wrapper;
+  DLFN      instancep_function;
 } DYLANTYPE;
 
-
+/* This corresponds to <class> defined in
+ * dfmc/modeling/objects.dylan.
+ */
 typedef struct _DylanClass {
-  D        my_wrapper;
-  D        instancep_function;
-  D        debug_name;
-  D        the_iclass;
-  D        subtype_bit;
+  Wrapper * my_wrapper;
+  DLFN      instancep_function;
+  D         debug_name;
+  ICLASS  * the_iclass;
+  D         subtype_bit;
 } DYLANCLASS;
 
 #define OBJECT_WRAPPER(x) \
