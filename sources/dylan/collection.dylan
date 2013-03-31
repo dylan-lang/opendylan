@@ -245,7 +245,7 @@ define method map-as-one
     (type :: <mutable-collection-type>,
      function :: <function>, collection ::  <explicit-key-collection>)
         => new-collection :: <mutable-collection>; // actually :: type
-  let acc = make(<keyed-accumulator>);
+  let acc = make(<keyed-accumulator>, key-test: collection.key-test);
   for (e keyed-by k in collection) acc[k] := function(e) end for;
   convert-accumulator-as(type, acc)
 end method map-as-one;
@@ -254,7 +254,7 @@ define method map-as-one
     (type :: <mutable-collection-type>,
      function :: <function>, collection ::  <sequence>)
         => new-collection :: <mutable-collection>; // actually :: type
-  let acc = make(<sequence-accumulator>);
+  let acc = make(<sequence-accumulator>, key-test: collection.key-test);
   for (e in collection) add!(acc, function(e)) end for;
   convert-accumulator-as(type, acc)
 end method map-as-one;
