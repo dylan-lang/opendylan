@@ -210,6 +210,9 @@ struct _IClass;
 struct _dylantype;
 struct _DylanClass;
 
+/* This corresponds to <mm-wrapper> defined in
+ * dfmc/modeling/objects.dylan.
+ */
 typedef struct _Wrapper {
   struct _Wrapper * wrapper_wrapper;
   struct _IClass  * iclass;
@@ -251,6 +254,16 @@ typedef struct _dbi_ {
   DMINT     high;
 } DBI_;
 
+/* This is the implementation class and corresponds
+ * to the <implementation-class> defined in
+ * dfmc/modeling/objects.dylan. Note that this
+ * struct declaration is not the full struct.
+ *
+ * For a breakdown of the class properties, see
+ * the packed-slots definition for ^class-properties
+ * in dfmc/modeling/objects.dylan or the copy of it
+ * in dylan/class.dylan.
+ */
 typedef struct _IClass {
   Wrapper *             my_wrapper;
   D                     the_class_properties;
@@ -258,11 +271,17 @@ typedef struct _IClass {
   D                     the_wrapper;
 } ICLASS;
 
+/* This corresponds to <type> defined in
+ * dfmc/modeling/objects.dylan.
+ */
 typedef struct _dylantype {
   Wrapper * mm_wrapper;
   DLFN      instancep_function;
 } DYLANTYPE;
 
+/* This corresponds to <class> defined in
+ * dfmc/modeling/objects.dylan.
+ */
 typedef struct _DylanClass {
   Wrapper * my_wrapper;
   DLFN      instancep_function;
