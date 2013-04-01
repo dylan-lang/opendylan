@@ -63,7 +63,6 @@ please document it here.
 
  o The following checks/tests are potential bugs
      + instance? problems:
-        . aref-setter does not return #t for <generic-function>
         . Limited integers do not test true to their limitations
            . Suite TEST-CLASS-SUITE
                . Test LIMITED-INTEGERS
