@@ -22,18 +22,18 @@ Copyright: (c) 1996 Functional Objects, Inc.
 define test as-character-stuff ()
   let example = concatenate(*uppercase-alphabet*, *lowercase-alphabet*,
                             *digit-characters*, *misc-characters*);
-  check("", sequences-element-id?, example,
+  check("as(<character>)", sequences-element-id?, example,
         map(compose(*as-character*, *as-integer*), as(<vector>, example)));
-  check("", sequences-element-id?, map(as-uppercase, example),
+  check("as-uppercase", sequences-element-id?, map(as-uppercase, example),
         concatenate(*uppercase-alphabet*, *uppercase-alphabet*,
                     *digit-characters*, *misc-characters*));
-  check("", sequences-element-id?, map(as-lowercase, example),
+  check("as-lowercase", sequences-element-id?, map(as-lowercase, example),
         concatenate(*lowercase-alphabet*, *lowercase-alphabet*,
                     *digit-characters*, *misc-characters*));
 
-  check("", every?, \==.complement,
+  check("as-uppercase(lowercase) ~= lowercase", every?, \==.complement,
         map(as-uppercase, *lowercase-alphabet*), *lowercase-alphabet*);
-  check("", every?, \==.complement,
+  check("as-lowercase(uppercase) ~= uppercase", every?, \==.complement,
         map(as-lowercase, *uppercase-alphabet*), *uppercase-alphabet*);
 end test;
 
