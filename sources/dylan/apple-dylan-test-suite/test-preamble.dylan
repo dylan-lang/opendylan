@@ -91,22 +91,26 @@ end class <dtest-test-subclass>;
 define method sequences-element-id? (seq1, seq2)
   let len = seq1.size;
   if (len == seq2.size)
-    let (initial-state-1, _, next-state-1, _, _, current-element-1)
-      = forward-iteration-protocol(seq1);
-    let (initial-state-2, _, next-state-2, _, _, current-element-2)
-      = forward-iteration-protocol(seq2);
-    local method f (i, s1, s2)
+    let (seq1-initial-state, seq1-limit, seq1-next-state, seq1-finished-state?,
+         _, seq1-current-element) = forward-iteration-protocol(seq1);
+    let (seq2-initial-state, seq2-limit, seq2-next-state, seq2-finished-state?,
+         _, seq2-current-element) = forward-iteration-protocol(seq2);
+    local method f (i, seq1-state, seq2-state)
             if (i == len)
-              ~s1 & ~s2
-            elseif (~s1 | ~s2)
+              seq1-finished-state?(seq1, seq1-state, seq1-limit)
+                & seq2-finished-state?(seq2, seq2-state, seq2-limit)
+            elseif (~seq1-state | ~seq2-state)
               #f
-            elseif (current-element-1(seq1, s1) == current-element-2(seq2, s2))
-              f(i + 1, next-state-1(seq1, s1), next-state-2(seq2, s2))
+            elseif (seq1-current-element(seq1, seq1-state)
+                      == seq2-current-element(seq2, seq2-state))
+              f(i + 1,
+                seq1-next-state(seq1, seq1-state),
+                seq2-next-state(seq2, seq2-state))
             else
               #f
             end if
           end method;
-    f(0, initial-state-1, initial-state-2)
+    f(0, seq1-initial-state, seq2-initial-state)
   end if
 end method sequences-element-id?;
 
