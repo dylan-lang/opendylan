@@ -31,9 +31,9 @@ define test as-character-stuff ()
         concatenate(*lowercase-alphabet*, *lowercase-alphabet*,
                     *digit-characters*, *misc-characters*));
 
-  check("as-uppercase(lowercase) ~= lowercase", every?, \==.complement,
+  check("as-uppercase(lowercase) ~= lowercase", every?, \~==,
         map(as-uppercase, *lowercase-alphabet*), *lowercase-alphabet*);
-  check("as-lowercase(uppercase) ~= uppercase", every?, \==.complement,
+  check("as-lowercase(uppercase) ~= uppercase", every?, \~==,
         map(as-lowercase, *uppercase-alphabet*), *uppercase-alphabet*);
 end test;
 
