@@ -15,6 +15,14 @@ XXXXXXXXX, 2013.
 Improvements
 ============
 
+Copyrights and Licensing
+------------------------
+
+The copyright notices have been updated to include the relevant
+copyright notice from Carnegie Mellon University as parts of this
+software are derived from the Gwydion Dylan project at Carnegie
+Mellon University.
+
 Documentation
 -------------
 
