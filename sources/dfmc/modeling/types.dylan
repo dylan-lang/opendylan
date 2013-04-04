@@ -215,7 +215,7 @@ define method ^instance? (object :: <model-value>, t :: <&limited-collection-typ
   let lc-dimensions = ^limited-collection-dimensions(t);
   //---*** this is unfortunate and needs a redesign of limited (collection)
   //       types! it'd be much nicer to have the inheritance hierarchy fixed
-  //       and thus <simple-vector> should subclas <limited-collection>, but
+  //       and thus <simple-vector> should subclass <limited-collection>, but
   //       currently not doable
   (^instance?(object, dylan-value(#"<limited-collection>")) |
      ^instance?(object, dylan-value(#"<simple-vector>")) |

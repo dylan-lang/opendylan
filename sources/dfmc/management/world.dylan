@@ -200,7 +200,7 @@ define method ensure-library-compiled (description :: <project-library-descripti
   values(warning-count, serious-warning-count, error-count, data-size, code-size);
 end method;
 
-// This method can be overriden for testing by specializing on
+// This method can be overridden for testing by specializing on
 // <library-description>.
 define method verify-library-before-compile (description :: <object>)
 end method;

@@ -603,7 +603,7 @@ define method form-defined-bindings (form :: <top-level-form>)
   #()
 end;
 
-// needs to be overriden by multi-variable forms
+// needs to be overridden by multi-variable forms
 define method form-defined-bindings (form :: <variable-defining-form>)
  => (seq :: <list>)
   if (form-ignored?(form))

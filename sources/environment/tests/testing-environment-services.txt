@@ -47,7 +47,7 @@ service (e.g., some menu item is missing).
 
 * Test Descriptions
 
-** Lookup servics
+** Lookup services
 
 The services Describe, Find Definitions, Browse, Complete and Find
 Uses require that string, to which they are applied, appear as the
@@ -172,7 +172,7 @@ compilation window, depending on what we've decided to implement.)
 
 ---*** Issue: In the unlikely but possible circumstance that the
 source file occurs in more than one open project, it seems to be
-curently undefined, what the environment will do.  Please check this.
+currently undefined, what the environment will do.  Please check this.
 
 
 * Clients
