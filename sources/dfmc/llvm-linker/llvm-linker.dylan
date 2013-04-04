@@ -228,7 +228,7 @@ define method emit-init-code-definition
 end method;
 
 
-/// Externs referenced from <computation> expansions (and not explictly in DFM)
+/// Externs referenced from <computation> expansions (and not explicitly in DFM)
 
 define constant $code-extern-names
   = #[#"%resolve-symbol",

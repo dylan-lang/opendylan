@@ -17,7 +17,7 @@ define constant <detail-level> = one-of(#"terse", #"normal", #"verbose");
 define thread variable *detail-level* :: <detail-level> = #"normal";
 
 
-// format-condition is just a litte gloss over format, but handled
+// format-condition is just a little gloss over format, but handled
 // independent of the format printers, mainly to protect us from that
 // interface changing.  It also incorporates the detail level as a
 // specializable parameter.

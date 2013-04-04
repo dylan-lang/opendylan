@@ -317,7 +317,7 @@ end;
 
 /// The number returned determines the default packing for structs.
 /// No struct element is required to be aligned on a boundary larger
-/// than this.  Each raw type has its own alignement requirements,
+/// than this.  Each raw type has its own alignment requirements,
 /// but this overrides that when packing struct members.
 /// this might better be done as a method on the current back end.
 define function get-default-pack-option () => (x :: <integer>)

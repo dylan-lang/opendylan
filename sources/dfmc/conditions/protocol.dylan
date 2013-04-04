@@ -13,7 +13,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // be used for any program condition, but is mainly oriented towards
 // <program-note>s.
 //
-// Raise is analagous to the Dylan module's error function and is guaranteed
+// Raise is analogous to the Dylan module's error function and is guaranteed
 // not to return.
 
 define open generic note

@@ -21,7 +21,7 @@ define method ^limited-integer
           max :: false-or(<integer>) = #f)
   if (min | max)
     // Could check for min > max and return a dignified empty type but
-    // I'm not sure that's worthwile.
+    // I'm not sure that's worthwhile.
     immutable-model(make(<&limited-integer>, min: min, max: max))
   else
     dylan-value(#"<integer>")

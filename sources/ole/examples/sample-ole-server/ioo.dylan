@@ -845,7 +845,7 @@ end method IOleObject/GetUserType;
 //
 // Return Value:
 //
-//      E_NOTIMPL   - This function is not curently implemented.
+//      E_NOTIMPL   - This function is not currently implemented.
 //
 // Function Calls:
 //      Function                    Location

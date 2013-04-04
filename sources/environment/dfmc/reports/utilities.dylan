@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Coerce a symbol to a string
 //---*** cpage: Currently, this is necessary because the default format for "%s"
-//              produces all-caps; this may be an anomally of the emulator.
+//              produces all-caps; this may be an anomaly of the emulator.
 define macro as-string
   { as-string (?:expression) } => { as-lowercase(as(<string>, ?expression))  };
 end macro as-string;

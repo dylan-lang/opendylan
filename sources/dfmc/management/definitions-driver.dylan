@@ -564,7 +564,7 @@ define method install-project-sources (ld :: <project-library-description>,
 end method;
 
 // External entry point
-// It is the responsiblity of the caller to make sure all used libraries
+// It is the responsibility of the caller to make sure all used libraries
 // have been parsed.
 define method parse-project-sources (ld :: <project-library-description>)
   let parsed? = #f;

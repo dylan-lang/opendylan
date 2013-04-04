@@ -526,9 +526,9 @@ define method directly-used-projects(project :: <user-project>, #key system?)
 end;
 
 // TO DO: save and lookup in the cache %user-project-used-projects
-// this cache is curently filled by the compiler calls
+// this cache is currently filled by the compiler calls
 // NO -  we have to use %subproject-files since we know they were added
-// explictly by the user
+// explicitly by the user
 define function project-user-projects(project :: <project>)
  => (projects :: <sequence>);
   

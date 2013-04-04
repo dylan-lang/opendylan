@@ -15,7 +15,7 @@ define method limited
  => (result :: <type>)
   if (min | max)
     // Could check for min > max and return a dignified empty type but
-    // I'm not sure that's worthwile.
+    // I'm not sure that's worthwhile.
     let type :: <limited-integer> = make(<limited-integer>, min: min, max: max);
     unless (instance?-iep(type))
       instance?-iep(type) := simple-method-iep(limited-integer-instance?-function);
