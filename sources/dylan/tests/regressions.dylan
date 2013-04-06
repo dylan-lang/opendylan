@@ -1,6 +1,6 @@
 Module:       dylan-test-suite
 Synopsis:     dylan library test suite - regressions tests
-Author:	      Carl Gay
+Author:       Carl Gay
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -17,7 +17,7 @@ end test bug-5800;
 
 define test bug-5580 ()
   check-no-errors("iteration over a floating point range",
-		  for (i in range(from: 0.0, to: 1.0, by: 0.1)) end);
+      for (i in range(from: 0.0, to: 1.0, by: 0.1)) end);
 end test bug-5580;
 
 define test bug-5325 ()
@@ -31,12 +31,12 @@ define test bug-5281 ()
   // Dimensions differ so call to make should err.
   check-condition("make limited array with incorrect dimensions",
                   <error>,
-	          make(limited(<array>, of: <integer>, dimensions: #[2, 2]),
+                  make(limited(<array>, of: <integer>, dimensions: #[2, 2]),
                        dimensions: #[5, 5], fill: 1));
   check-false("limited array dimensions are part of typeness",
-	      begin
-		let t1 = limited(<array>, of: <integer>, dimensions: #[2, 2]);
-		let t2 = limited(<array>, of: <integer>, dimensions: #[3, 3]);
+              begin
+                let t1 = limited(<array>, of: <integer>, dimensions: #[2, 2]);
+                let t2 = limited(<array>, of: <integer>, dimensions: #[3, 3]);
                 instance?(make(t1, dimensions: #[2, 2], fill: 1), t2);
               end);
 end test bug-5281;
@@ -191,6 +191,55 @@ define test issue-203 ()
               end, 0.100000000001)
 end;
 
+// Class for issue 440 test below.
+
+define class <case-insensitive-set> (<mutable-explicit-key-collection>)
+   constant slot elements = make(<stretchy-vector>) /* of <string> */;
+   constant slot key-test :: <function> = case-insensitive-equal;
+end class;
+
+define method element (cis :: <case-insensitive-set>, key :: <object>, #key default)
+=> (val :: <object>)
+   if (member?(key, cis.elements, test: cis.key-test))
+      key
+   else
+      default
+   end if
+end method;
+
+define method element-setter (new-str :: <object>, cis :: <case-insensitive-set>, key :: <object>)
+=> (val :: <object>)
+  add-new!(cis.elements, new-str, test: cis.key-test);
+  new-str
+end method;
+
+define method forward-iteration-protocol (cis :: <case-insensitive-set>)
+=> (initial-state :: <object>, limit :: <object>, next-state :: <function>,
+    finished-state? :: <function>, current-key :: <function>,
+    current-element :: <function>, current-element-setter :: <function>,
+    copy-state :: <function>)
+  let initial-state = 0;
+  let limit = cis.elements.size;
+  let next-state = method (cis, state) state + 1 end;
+  let finished-state? = method (cis, state, limit) state >= limit end;
+  let current-key = method (cis, state) cis.elements[state] end;
+  let current-element = current-key;
+  let current-element-setter =
+      method (new-str, cis, state) cis.elements[state] := new-str end;
+  let copy-state = method (cis, state) state end;
+  values(initial-state, limit, next-state, finished-state?,
+      current-key, current-element, current-element-setter, copy-state)
+end method;
+
+define test issue-440 ()
+  let cis = make(<case-insensitive-set>);
+  cis["red"] := "red";
+  cis["green"] := "green";
+  cis["blue"] := "blue";
+  check-equal("supports <explicit-key-collection> subclass",
+              map(identity, cis), cis);
+end;
+
 define suite dylan-regressions ()
   test bug-5800;
   test bug-5580;
@@ -209,5 +258,6 @@ define suite dylan-regressions ()
   test bug-7388-b;
   test issue-189;
   test issue-203;
+  test issue-440;
 end suite dylan-regressions;
 
