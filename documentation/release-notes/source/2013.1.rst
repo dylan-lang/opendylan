@@ -104,6 +104,12 @@ be initialized with a wrong value. This has been corrected.
 Libraries
 ---------
 
+dylan
+^^^^^
+
+The Dylan library now allows ``map``, etc., on ``<explicit-key-collection>``
+subclasses that have a ``key-test`` other than ``==``.
+
 common-dylan
 ^^^^^^^^^^^^
 
