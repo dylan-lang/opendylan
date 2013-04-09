@@ -702,24 +702,6 @@ define method retract-library-models (ld :: <dylan-project-library-description>)
   remove-all-keys!(library-description-dylan-value-cache(ld));
 end method;
 
-//// Batch-mode condition handling.
-
-/* TODO: OBSOLETE?
-define generic handle-batch-condition (condition :: <condition>) => ();
-
-define method handle-batch-condition (condition :: <error>) => ()
-  // Unexpected error.
-end method;
-
-define method handle-batch-condition (condition :: <program-error>) => ()
-  // Try a skip and continue.
-end method;
-
-define method handle-batch-condition (condition :: <program-restart>) => ()
-  // If we've got this, there is no sensible restart.
-end method;
-*/
-
 // Incremental condition handling
 
 define sideways method remove-dependent-program-conditions
