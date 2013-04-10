@@ -13,8 +13,8 @@
 #define put_string(string,stream) sprintf(stream, "%s%s", stream, string)
 #define put_char(char,stream)     sprintf(stream, "%s%c", stream, char)
 
-int dylan_print_length = 10;
-int dylan_print_depth  = 3;
+static int dylan_print_length = 10;
+static int dylan_print_depth  = 3;
 
 #define ignore(x) (void)x
 
@@ -211,10 +211,10 @@ enum dylan_type_enum {
   unknown_type
 };
 
-void print_object (STREAM, D, BOOL, int);
-void dylan_format (STREAM, D, D);
+static void print_object (STREAM, D, BOOL, int);
+static void dylan_format (STREAM, D, D);
 
-enum dylan_type_enum
+static enum dylan_type_enum
 dylan_type (D instance) {
   if ((DUMINT)instance & 3) {
     if ((DUMINT)instance & 1)
@@ -249,7 +249,7 @@ dylan_type (D instance) {
   }
 }
 
-void print_integer (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_integer (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
   switch (escape_p) {
     case 'D':
@@ -263,7 +263,7 @@ void print_integer (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   }
 }
 
-void print_character (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_character (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
   if (escape_p)
     format(stream, "'%c'", R(instance))
@@ -271,7 +271,7 @@ void print_character (STREAM stream, D instance, BOOL escape_p, int print_depth)
     format(stream, "%c", R(instance));
 }
 
-void print_float (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_float (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
   if (single_float_p(instance))
     format(stream, "%f", single_float_data(instance))
@@ -279,7 +279,7 @@ void print_float (STREAM stream, D instance, BOOL escape_p, int print_depth) {
     format(stream, "%.15f", double_float_data(instance));
 }
 
-void print_string (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_string (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
   if (escape_p)
     format(stream, "\"%s\"", string_data(instance))
@@ -287,7 +287,7 @@ void print_string (STREAM stream, D instance, BOOL escape_p, int print_depth) {
     format(stream, "%s", string_data(instance));
 }
 
-void print_string_data (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_string_data (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
   format(stream, "%s", string_data(instance));
 }
@@ -295,7 +295,7 @@ void print_string_data (STREAM stream, D instance, BOOL escape_p, int print_dept
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
-void print_vector (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_vector (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   int size = vector_size(instance);
   int first = TRUE, i = 0;
   D element;
@@ -320,7 +320,7 @@ void print_vector (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   put_string("]", stream);
 }
 
-void print_pair (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_pair (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   D head = dylan_head(instance);
   D tail = dylan_tail(instance);
   enum dylan_type_enum type;
@@ -356,23 +356,23 @@ done:
   put_string(")", stream);
 }
 
-void print_empty_list (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_empty_list (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(instance); ignore(escape_p); ignore(print_depth);
   put_string("#()", stream);
 }
 
-void print_symbol_name (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_symbol_name (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p);
   print_object(stream, dylan_symbol_name(instance), TRUE, print_depth);
 }
 
-void print_symbol (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_symbol (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p);
   put_string("#", stream);
   print_symbol_name(stream, instance, TRUE, print_depth);
 }
 
-void print_boolean (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_boolean (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
   if (true_p(instance))
     put_string("#t", stream);
@@ -380,7 +380,7 @@ void print_boolean (STREAM stream, D instance, BOOL escape_p, int print_depth) {
     put_string("#f", stream);
 }
 
-void print_simple_condition (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_simple_condition (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   D format_string = dylan_simple_condition_format_string(instance);
   D format_args = dylan_simple_condition_format_args(instance);
   ignore(print_depth);
@@ -389,20 +389,20 @@ void print_simple_condition (STREAM stream, D instance, BOOL escape_p, int print
   if (escape_p) put_char('"', stream);
 }
 
-void print_class_debug_name (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_class_debug_name (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   D name = dylan_class_debug_name(instance);
   ignore(escape_p);
   print_string_data(stream, name, TRUE, print_depth);
 }
 
-void print_class (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_class (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p);
   put_string("{class ", stream);
   print_class_debug_name(stream, instance, TRUE, print_depth);
   format(stream, " 0x%lx}", instance);
 }
 
-void print_function (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_function (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
   /*
   D name = dylan_function_debug_name(instance);
@@ -414,7 +414,7 @@ void print_function (STREAM stream, D instance, BOOL escape_p, int print_depth) 
   format(stream, " 0x%lx}", instance);
 }
 
-void print_user_defined (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_user_defined (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   D class = object_class(instance);
   ignore(escape_p);
   put_string("{", stream);
@@ -422,7 +422,7 @@ void print_user_defined (STREAM stream, D instance, BOOL escape_p, int print_dep
   format(stream, " 0x%lx}", instance);
 }
 
-void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   enum dylan_type_enum type = dylan_type(instance);
   switch (type) {
     case integer_type:
@@ -456,7 +456,7 @@ void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   }
 }
 
-void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
+static void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
   BOOL  percent_p = FALSE;
   char* string = string_data(dylan_string);
   D*    arguments = vector_data(dylan_arguments);
@@ -499,7 +499,7 @@ void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
   }
 }
 
-void do_debug_message (D string, D arguments) {
+static void do_debug_message (D string, D arguments) {
   char error_output[8192];
   error_output[0] = 0;
 
