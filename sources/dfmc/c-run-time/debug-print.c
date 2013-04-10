@@ -499,11 +499,9 @@ void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
   }
 }
 
-void do_debug_message (BOOL forBreak, D string, D arguments) {
+void do_debug_message (D string, D arguments) {
   char error_output[8192];
   error_output[0] = 0;
-
-  ignore(forBreak);
 
   dylan_format(error_output, string, arguments);
 #ifdef OPEN_DYLAN_PLATFORM_WINDOWS
@@ -530,7 +528,7 @@ void do_debug_message (BOOL forBreak, D string, D arguments) {
 }
 
 void primitive_invoke_debugger (D string, D arguments) {
-  do_debug_message(TRUE, string, arguments);
+  do_debug_message(string, arguments);
   primitive_break();
   return;
 }
@@ -540,6 +538,6 @@ D primitive_inside_debuggerQ (void) {
 }
 
 void primitive_debug_message (D string, D arguments) {
-  do_debug_message(FALSE, string, arguments);
+  do_debug_message(string, arguments);
   return;
 }
