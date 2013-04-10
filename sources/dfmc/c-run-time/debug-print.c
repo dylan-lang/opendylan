@@ -61,6 +61,10 @@ dylan_single_float_data (D instance) {
   return ((DSF)instance)->data;
 }
 
+BOOL dylan_double_float_p (D instance) {
+  return dylan_object_class(instance) == Ldouble_floatGVKd;
+}
+
 double
 dylan_double_float_data (D instance) {
   return ((DDF)instance)->data;
@@ -263,8 +267,10 @@ static void print_float (STREAM stream, D instance, BOOL escape_p, int print_dep
   ignore(escape_p); ignore(print_depth);
   if (dylan_single_float_p(instance)) {
     format(stream, "%f", dylan_single_float_data(instance))
-  } else { /* if (double_float_p(instance)) */
+  } else if (dylan_double_float_p(instance)) {
     format(stream, "%.15f", dylan_double_float_data(instance));
+  } else {
+    put_string("{unknown float type}", stream);
   }
 }
 
