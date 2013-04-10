@@ -1,7 +1,11 @@
 #include "run-time.h"
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 
+// XXX: This BOOL definition is kept around for escape_p since there's
+//      a usage of it as an int to pass a flag other than true/false
+//      with print_integer. This should be fixed one day.
 #define BOOL            int
 #ifndef TRUE
 #define TRUE            1
@@ -13,39 +17,19 @@
 #define put_string(string,stream) sprintf(stream, "%s%s", stream, string)
 #define put_char(char,stream)     sprintf(stream, "%s%c", stream, char)
 
-#if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
-#define INLINE __inline
-#elif defined(OPEN_DYLAN_COMPILER_CLANG)
-#define INLINE static inline
-#else
-#define INLINE inline
-#endif
-
-int dylan_print_length = 10;
-int dylan_print_depth  = 3;
+static int dylan_print_length = 10;
+static int dylan_print_depth  = 3;
 
 #define ignore(x) (void)x
 
 /* INSTANCE */
 
-/*
-INLINE D instance_header (D* instance) {
-  return(instance[0]);
-}
-*/
-
-INLINE D dylan_slot_element (D* instance, int offset) {
-  return(instance[offset + 1]);
+D dylan_slot_element (D* instance, int offset) {
+  return instance[offset + 1];
 }
 
-/*
-INLINE D mm_wrapper_class (D* instance) {
-  return(dylan_slot_element(instance, 0));
-}
-*/
-
-INLINE D object_class (D* instance) {
-  return(OBJECT_CLASS(instance));
+D dylan_object_class (D* instance) {
+  return OBJECT_CLASS(instance);
 }
 
 /* BOOLEAN */
@@ -54,15 +38,12 @@ extern D LbooleanGVKd;
 extern OBJECT KPfalseVKi;
 extern OBJECT KPtrueVKi;
 
-INLINE BOOL boolean_p (D instance) {
-  return(object_class(instance) == LbooleanGVKd);
-  /* TAGGED BOOLEANS
-   return(TAG_BITS(instance) == BTAG);
-  */
+bool dylan_boolean_p (D instance) {
+  return dylan_object_class(instance) == LbooleanGVKd;
 }
 
-INLINE BOOL true_p (D instance) {
-  return(instance == DTRUE);
+bool dylan_true_p (D instance) {
+  return instance == DTRUE;
 }
 
 /* FLOAT */
@@ -70,35 +51,39 @@ INLINE BOOL true_p (D instance) {
 extern D Lsingle_floatGVKd;
 extern D Ldouble_floatGVKd;
 
-INLINE BOOL float_p (D instance) {
-  return(object_class(instance) == Lsingle_floatGVKd
-         || object_class(instance) == Ldouble_floatGVKd);
+bool dylan_float_p (D instance) {
+  return dylan_object_class(instance) == Lsingle_floatGVKd ||
+         dylan_object_class(instance) == Ldouble_floatGVKd;
 }
 
-INLINE BOOL single_float_p (D instance) {
-  return(object_class(instance) == Lsingle_floatGVKd);
+bool dylan_single_float_p (D instance) {
+  return dylan_object_class(instance) == Lsingle_floatGVKd;
 }
 
 float
-single_float_data (D instance) {
-  return(((DSF)instance)->data);
+dylan_single_float_data (D instance) {
+  return ((DSF)instance)->data;
+}
+
+bool dylan_double_float_p (D instance) {
+  return dylan_object_class(instance) == Ldouble_floatGVKd;
 }
 
 double
-double_float_data (D instance) {
-  return(((DDF)instance)->data);
+dylan_double_float_data (D instance) {
+  return ((DDF)instance)->data;
 }
 
 /* SYMBOL */
 
 extern D LsymbolGVKd;
 
-INLINE BOOL symbol_p (D instance) {
-  return(object_class(instance) == LsymbolGVKd);
+bool dylan_symbol_p (D instance) {
+  return dylan_object_class(instance) == LsymbolGVKd;
 }
 
-INLINE D dylan_symbol_name (D instance) {
-  return(dylan_slot_element(instance, 0));
+D dylan_symbol_name (D instance) {
+  return dylan_slot_element(instance, 0);
 }
 
 /* PAIR */
@@ -106,20 +91,20 @@ INLINE D dylan_symbol_name (D instance) {
 extern D LpairGVKd;
 extern D Lempty_listGVKd;
 
-INLINE BOOL pair_p (D instance) {
-  return(object_class(instance) == LpairGVKd);
+bool dylan_pair_p (D instance) {
+  return dylan_object_class(instance) == LpairGVKd;
 }
 
-INLINE BOOL empty_list_p (D instance) {
-  return(object_class(instance) == Lempty_listGVKd);
+bool dylan_empty_list_p (D instance) {
+  return dylan_object_class(instance) == Lempty_listGVKd;
 }
 
-INLINE D dylan_head (D instance) {
-  return(dylan_slot_element(instance, 0));
+D dylan_head (D instance) {
+  return dylan_slot_element(instance, 0);
 }
 
-INLINE D dylan_tail (D instance) {
-  return(dylan_slot_element(instance, 1));
+D dylan_tail (D instance) {
+  return dylan_slot_element(instance, 1);
 }
 
 /* VECTOR */
@@ -129,8 +114,8 @@ extern D  vector_ref (SOV* vector, int offset);
 extern D* vector_data (SOV* vector);
 extern int vector_size (SOV* vector);
 
-INLINE BOOL vector_p (D instance) {
-  return(object_class(instance) == Lsimple_object_vectorGVKd);
+bool dylan_vector_p (D instance) {
+  return dylan_object_class(instance) == Lsimple_object_vectorGVKd;
 }
 
 /* STRING */
@@ -139,12 +124,12 @@ INLINE BOOL vector_p (D instance) {
 
 extern D Lbyte_stringGVKd;
 
-INLINE BOOL string_p (D instance) {
-  return(object_class(instance) == Lbyte_stringGVKd);
+bool dylan_string_p (D instance) {
+  return dylan_object_class(instance) == Lbyte_stringGVKd;
 }
 
-INLINE char* string_data (D instance) {
-  return(((BS*)instance)->data);
+char* dylan_string_data (D instance) {
+  return ((BS*)instance)->data;
 }
 
 /* SIMPLE-CONDITION */
@@ -154,47 +139,47 @@ extern FN KinstanceQVKd;
 extern FN Kcondition_format_stringVKd;
 extern FN Kcondition_format_argumentsVKd;
 
-INLINE BOOL simple_condition_p (D instance) {
-  return(DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe));
+bool dylan_simple_condition_p (D instance) {
+  return DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe);
 }
 
-INLINE D dylan_simple_condition_format_string (D instance) {
-  return(CALL1(&Kcondition_format_stringVKd, instance));
+D dylan_simple_condition_format_string (D instance) {
+  return CALL1(&Kcondition_format_stringVKd, instance);
 }
 
-INLINE D dylan_simple_condition_format_args (D instance) {
-  return(CALL1(&Kcondition_format_argumentsVKd, instance));
+D dylan_simple_condition_format_args (D instance) {
+  return CALL1(&Kcondition_format_argumentsVKd, instance);
 }
 
 /* CLASS */
 
 extern D LclassGVKd;
 
-INLINE BOOL class_p (D instance) {
-  D class = object_class(instance);
-  return(class == LclassGVKd);
+bool dylan_class_p (D instance) {
+  D class = dylan_object_class(instance);
+  return class == LclassGVKd;
 }
 
-INLINE D dylan_class_debug_name (D instance) {
-  return(dylan_slot_element(instance, 1));
+D dylan_class_debug_name (D instance) {
+  return dylan_slot_element(instance, 1);
 }
 
 /* FUNCTION */
 
 extern D Lfunction_classGVKi;
 
-INLINE BOOL function_p (D instance) {
-  D class = object_class(instance);
-  D class_class = object_class(class);
-  return(class_class == Lfunction_classGVKi);
+bool dylan_function_p (D instance) {
+  D class = dylan_object_class(instance);
+  D class_class = dylan_object_class(class);
+  return class_class == Lfunction_classGVKi;
 }
 
-INLINE D dylan_function_debug_name (D instance) {
+D dylan_function_debug_name (D instance) {
   /*
-  return(dylan_slot_element(instance, 0));
+  return dylan_slot_element(instance, 0));
   */
   ignore(instance);
-  return(DFALSE);
+  return DFALSE;
 }
 
 /*
@@ -219,45 +204,47 @@ enum dylan_type_enum {
   unknown_type
 };
 
-void print_object (STREAM, D, BOOL, int);
-void dylan_format (STREAM, D, D);
+static void print_object (STREAM, D, BOOL, int);
+static void dylan_format (STREAM, D, D);
 
-enum dylan_type_enum
+static enum dylan_type_enum
 dylan_type (D instance) {
   if ((DUMINT)instance & 3) {
-    if ((DUMINT)instance & 1)
-      return(integer_type);
-    else if ((DUMINT)instance & 2)
-      return(character_type);
-    else
-      return(unknown_type);
+    if ((DUMINT)instance & 1) {
+      return integer_type;
+    } else if ((DUMINT)instance & 2) {
+      return character_type;
+    } else {
+      return unknown_type;
+    }
   } else { /* dylan pointer */
-    if (float_p(instance))
-      return(float_type);
-    else if (boolean_p(instance))
-      return(dylan_boolean_type);
-    else if (string_p(instance))
-      return(string_type);
-    else if (vector_p(instance))
-      return(vector_type);
-    else if (pair_p(instance))
-      return(pair_type);
-    else if (empty_list_p(instance))
-      return(empty_list_type);
-    else if (symbol_p(instance))
-      return(symbol_type);
-    else if (simple_condition_p(instance))
-      return(simple_condition_type);
-    else if (class_p(instance))
-      return(class_type);
-    else if (function_p(instance))
-      return(function_type);
-    else
-      return(user_defined_type);
+    if (dylan_float_p(instance)) {
+      return float_type;
+    } else if (dylan_boolean_p(instance)) {
+      return dylan_boolean_type;
+    } else if (dylan_string_p(instance)) {
+      return string_type;
+    } else if (dylan_vector_p(instance)) {
+      return vector_type;
+    } else if (dylan_pair_p(instance)) {
+      return pair_type;
+    } else if (dylan_empty_list_p(instance)) {
+      return empty_list_type;
+    } else if (dylan_symbol_p(instance)) {
+      return symbol_type;
+    } else if (dylan_simple_condition_p(instance)) {
+      return simple_condition_type;
+    } else if (dylan_class_p(instance)) {
+      return class_type;
+    } else if (dylan_function_p(instance)) {
+      return function_type;
+    } else {
+      return user_defined_type;
+    }
   }
 }
 
-void print_integer (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_integer (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
   switch (escape_p) {
     case 'D':
@@ -271,76 +258,85 @@ void print_integer (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   }
 }
 
-void print_character (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_character (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
-  if (escape_p)
+  if (escape_p) {
     format(stream, "'%c'", R(instance))
-  else
+  } else {
     format(stream, "%c", R(instance));
+  }
 }
 
-void print_float (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_float (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
-  if (single_float_p(instance))
-    format(stream, "%f", single_float_data(instance))
-  else /* if (double_float_p(instance)) */
-    format(stream, "%.15f", double_float_data(instance));
+  if (dylan_single_float_p(instance)) {
+    format(stream, "%f", dylan_single_float_data(instance))
+  } else if (dylan_double_float_p(instance)) {
+    format(stream, "%.15f", dylan_double_float_data(instance));
+  } else {
+    put_string("{unknown float type}", stream);
+  }
 }
 
-void print_string (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_string (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
-  if (escape_p)
-    format(stream, "\"%s\"", string_data(instance))
-  else
-    format(stream, "%s", string_data(instance));
+  if (escape_p) {
+    format(stream, "\"%s\"", dylan_string_data(instance))
+  } else {
+    format(stream, "%s", dylan_string_data(instance));
+  }
 }
 
-void print_string_data (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_string_data (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
-  format(stream, "%s", string_data(instance));
+  format(stream, "%s", dylan_string_data(instance));
 }
 
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
-void print_vector (STREAM stream, D instance, BOOL escape_p, int print_depth) {
-  int size = vector_size(instance);
-  int first = TRUE, i = 0;
+static void print_vector (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+  int size = vector_size(instance), i = 0;
+  bool first = true;
   D element;
   int max_size = MIN(size, dylan_print_length);
 
   put_string("#[", stream);
   if (print_depth < dylan_print_depth) {
     for (; i < max_size; i++) {
-      if (first)
-        first = FALSE;
-      else
+      if (first) {
+        first = false;
+      } else {
         put_string(", ", stream);
+      }
       element = vector_ref(instance, i);
       print_object(stream, element, escape_p, print_depth + 1);
     }
   }
   if (size > max_size || print_depth >= dylan_print_depth) {
-    if (i > 0)
+    if (i > 0) {
       put_string(", ", stream);
+    }
     format(stream, "... 0x%lx", instance);
   }
   put_string("]", stream);
 }
 
-void print_pair (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_pair (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   D head = dylan_head(instance);
   D tail = dylan_tail(instance);
   enum dylan_type_enum type;
-  int first = TRUE, i = 0;
+  int i = 0;
+  bool first = true;
 
   put_string("#(", stream);
   if (print_depth < dylan_print_depth) {
     for (; i<dylan_print_length; i++) {
-      if (first)
-        first = FALSE;
-      else
+      if (first) {
+        first = false;
+      } else {
         put_string(", ", stream);
+      }
       print_object(stream, head, escape_p, print_depth + 1);
       type = dylan_type(tail);
       switch (type) {
@@ -357,38 +353,40 @@ void print_pair (STREAM stream, D instance, BOOL escape_p, int print_depth) {
       }
     }
   }
-  if (i > 0)
+  if (i > 0) {
     put_string(", ", stream);
+  }
   format(stream, "... 0x%lx", instance);
 done:
   put_string(")", stream);
 }
 
-void print_empty_list (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_empty_list (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(instance); ignore(escape_p); ignore(print_depth);
   put_string("#()", stream);
 }
 
-void print_symbol_name (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_symbol_name (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p);
   print_object(stream, dylan_symbol_name(instance), TRUE, print_depth);
 }
 
-void print_symbol (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_symbol (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p);
   put_string("#", stream);
   print_symbol_name(stream, instance, TRUE, print_depth);
 }
 
-void print_boolean (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_boolean (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
-  if (true_p(instance))
+  if (dylan_true_p(instance)) {
     put_string("#t", stream);
-  else
+  } else {
     put_string("#f", stream);
+  }
 }
 
-void print_simple_condition (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_simple_condition (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   D format_string = dylan_simple_condition_format_string(instance);
   D format_args = dylan_simple_condition_format_args(instance);
   ignore(print_depth);
@@ -397,20 +395,20 @@ void print_simple_condition (STREAM stream, D instance, BOOL escape_p, int print
   if (escape_p) put_char('"', stream);
 }
 
-void print_class_debug_name (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_class_debug_name (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   D name = dylan_class_debug_name(instance);
   ignore(escape_p);
   print_string_data(stream, name, TRUE, print_depth);
 }
 
-void print_class (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_class (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p);
   put_string("{class ", stream);
   print_class_debug_name(stream, instance, TRUE, print_depth);
   format(stream, " 0x%lx}", instance);
 }
 
-void print_function (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_function (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
   /*
   D name = dylan_function_debug_name(instance);
@@ -422,18 +420,17 @@ void print_function (STREAM stream, D instance, BOOL escape_p, int print_depth) 
   format(stream, " 0x%lx}", instance);
 }
 
-void print_user_defined (STREAM stream, D instance, BOOL escape_p, int print_depth) {
-  D class = object_class(instance);
+static void print_user_defined (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+  D class = dylan_object_class(instance);
   ignore(escape_p);
   put_string("{", stream);
   print_class_debug_name(stream, class, TRUE, print_depth);
   format(stream, " 0x%lx}", instance);
 }
 
-void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+static void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   enum dylan_type_enum type = dylan_type(instance);
   switch (type) {
-    case integer_type:
       print_integer(stream, instance, escape_p, print_depth); break;
     case character_type:
       print_character(stream, instance, escape_p, print_depth); break;
@@ -464,9 +461,9 @@ void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   }
 }
 
-void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
-  BOOL  percent_p = FALSE;
-  char* string = string_data(dylan_string);
+static void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
+  BOOL  percent_p = false;
+  char* string = dylan_string_data(dylan_string);
   D*    arguments = vector_data(dylan_arguments);
   int   argument_count = vector_size(dylan_arguments),
         argument_index = 0,
@@ -478,40 +475,42 @@ void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
       char cc = (char)toupper(c);
       switch (cc) {
         case 'S': case 'C':
-          if (argument_index < argument_count)
+          if (argument_index < argument_count) {
             print_object(stream, arguments[argument_index++], FALSE, 0);
-          else
+          } else {
             put_string("**MISSING**", stream);
+          }
           break;
         case '=':
-          if (argument_index < argument_count)
+          if (argument_index < argument_count) {
             print_object(stream, arguments[argument_index++], TRUE, 0);
-          else
+          } else {
             put_string("**MISSING**", stream);
+          }
           break;
         case 'D': case 'X': case 'O': case 'B':
-          if (argument_index < argument_count)
+          if (argument_index < argument_count) {
             print_object(stream, arguments[argument_index++], (BOOL)cc, 0);
-          else
+          } else {
             put_string("**MISSING**", stream);
+          }
           break;
         case '%':
           put_char('%', stream); break;
         default: ;
       }
-      percent_p = FALSE;
-    } else if (c == '%')
-      percent_p = TRUE;
-    else
+      percent_p = false;
+    } else if (c == '%') {
+      percent_p = true;
+    } else {
       put_char(c, stream);
+    }
   }
 }
 
-void do_debug_message (BOOL forBreak, D string, D arguments) {
+static void do_debug_message (D string, D arguments) {
   char error_output[8192];
   error_output[0] = 0;
-
-  ignore(forBreak);
 
   dylan_format(error_output, string, arguments);
 #ifdef OPEN_DYLAN_PLATFORM_WINDOWS
@@ -534,20 +533,28 @@ void do_debug_message (BOOL forBreak, D string, D arguments) {
   fputs("\n", stderr); /* Adds a terminating newline */
   fflush(stderr);
 #endif
-  return;
+}
+
+void dylan_print_object (D object) {
+  char output[8192];
+  output[0] = 0;
+
+  print_object(output, object, TRUE, 0);
+
+  fputs(output, stdout);
+  fputs("\n", stdout);
+  fflush(stdout);
 }
 
 void primitive_invoke_debugger (D string, D arguments) {
-  do_debug_message(TRUE, string, arguments);
+  do_debug_message(string, arguments);
   primitive_break();
-  return;
 }
 
 D primitive_inside_debuggerQ (void) {
-  return(DFALSE);
+  return DFALSE;
 }
 
 void primitive_debug_message (D string, D arguments) {
-  do_debug_message(FALSE, string, arguments);
-  return;
+  do_debug_message(string, arguments);
 }
