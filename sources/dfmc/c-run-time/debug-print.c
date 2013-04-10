@@ -217,35 +217,37 @@ static void dylan_format (STREAM, D, D);
 static enum dylan_type_enum
 dylan_type (D instance) {
   if ((DUMINT)instance & 3) {
-    if ((DUMINT)instance & 1)
+    if ((DUMINT)instance & 1) {
       return integer_type;
-    else if ((DUMINT)instance & 2)
+    } else if ((DUMINT)instance & 2) {
       return character_type;
-    else
+    } else {
       return unknown_type;
+    }
   } else { /* dylan pointer */
-    if (float_p(instance))
+    if (float_p(instance)) {
       return float_type;
-    else if (boolean_p(instance))
+    } else if (boolean_p(instance)) {
       return dylan_boolean_type;
-    else if (string_p(instance))
+    } else if (string_p(instance)) {
       return string_type;
-    else if (vector_p(instance))
+    } else if (vector_p(instance)) {
       return vector_type;
-    else if (pair_p(instance))
+    } else if (pair_p(instance)) {
       return pair_type;
-    else if (empty_list_p(instance))
+    } else if (empty_list_p(instance)) {
       return empty_list_type;
-    else if (symbol_p(instance))
+    } else if (symbol_p(instance)) {
       return symbol_type;
-    else if (simple_condition_p(instance))
+    } else if (simple_condition_p(instance)) {
       return simple_condition_type;
-    else if (class_p(instance))
+    } else if (class_p(instance)) {
       return class_type;
-    else if (function_p(instance))
+    } else if (function_p(instance)) {
       return function_type;
-    else
+    } else {
       return user_defined_type;
+    }
   }
 }
 
@@ -265,26 +267,29 @@ static void print_integer (STREAM stream, D instance, BOOL escape_p, int print_d
 
 static void print_character (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
-  if (escape_p)
+  if (escape_p) {
     format(stream, "'%c'", R(instance))
-  else
+  } else {
     format(stream, "%c", R(instance));
+  }
 }
 
 static void print_float (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
-  if (single_float_p(instance))
+  if (single_float_p(instance)) {
     format(stream, "%f", single_float_data(instance))
-  else /* if (double_float_p(instance)) */
+  } else { /* if (double_float_p(instance)) */
     format(stream, "%.15f", double_float_data(instance));
+  }
 }
 
 static void print_string (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
-  if (escape_p)
+  if (escape_p) {
     format(stream, "\"%s\"", string_data(instance))
-  else
+  } else {
     format(stream, "%s", string_data(instance));
+  }
 }
 
 static void print_string_data (STREAM stream, D instance, BOOL escape_p, int print_depth) {
@@ -304,17 +309,19 @@ static void print_vector (STREAM stream, D instance, BOOL escape_p, int print_de
   put_string("#[", stream);
   if (print_depth < dylan_print_depth) {
     for (; i < max_size; i++) {
-      if (first)
+      if (first) {
         first = FALSE;
-      else
+      } else {
         put_string(", ", stream);
+      }
       element = vector_ref(instance, i);
       print_object(stream, element, escape_p, print_depth + 1);
     }
   }
   if (size > max_size || print_depth >= dylan_print_depth) {
-    if (i > 0)
+    if (i > 0) {
       put_string(", ", stream);
+    }
     format(stream, "... 0x%lx", instance);
   }
   put_string("]", stream);
@@ -329,10 +336,11 @@ static void print_pair (STREAM stream, D instance, BOOL escape_p, int print_dept
   put_string("#(", stream);
   if (print_depth < dylan_print_depth) {
     for (; i<dylan_print_length; i++) {
-      if (first)
+      if (first) {
         first = FALSE;
-      else
+      } else {
         put_string(", ", stream);
+      }
       print_object(stream, head, escape_p, print_depth + 1);
       type = dylan_type(tail);
       switch (type) {
@@ -349,8 +357,9 @@ static void print_pair (STREAM stream, D instance, BOOL escape_p, int print_dept
       }
     }
   }
-  if (i > 0)
+  if (i > 0) {
     put_string(", ", stream);
+  }
   format(stream, "... 0x%lx", instance);
 done:
   put_string(")", stream);
@@ -374,10 +383,11 @@ static void print_symbol (STREAM stream, D instance, BOOL escape_p, int print_de
 
 static void print_boolean (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
-  if (true_p(instance))
+  if (true_p(instance)) {
     put_string("#t", stream);
-  else
+  } else {
     put_string("#f", stream);
+  }
 }
 
 static void print_simple_condition (STREAM stream, D instance, BOOL escape_p, int print_depth) {
@@ -425,7 +435,6 @@ static void print_user_defined (STREAM stream, D instance, BOOL escape_p, int pr
 static void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   enum dylan_type_enum type = dylan_type(instance);
   switch (type) {
-    case integer_type:
       print_integer(stream, instance, escape_p, print_depth); break;
     case character_type:
       print_character(stream, instance, escape_p, print_depth); break;
@@ -470,32 +479,36 @@ static void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
       char cc = (char)toupper(c);
       switch (cc) {
         case 'S': case 'C':
-          if (argument_index < argument_count)
+          if (argument_index < argument_count) {
             print_object(stream, arguments[argument_index++], FALSE, 0);
-          else
+          } else {
             put_string("**MISSING**", stream);
+          }
           break;
         case '=':
-          if (argument_index < argument_count)
+          if (argument_index < argument_count) {
             print_object(stream, arguments[argument_index++], TRUE, 0);
-          else
+          } else {
             put_string("**MISSING**", stream);
+          }
           break;
         case 'D': case 'X': case 'O': case 'B':
-          if (argument_index < argument_count)
+          if (argument_index < argument_count) {
             print_object(stream, arguments[argument_index++], (BOOL)cc, 0);
-          else
+          } else {
             put_string("**MISSING**", stream);
+          }
           break;
         case '%':
           put_char('%', stream); break;
         default: ;
       }
       percent_p = FALSE;
-    } else if (c == '%')
+    } else if (c == '%') {
       percent_p = TRUE;
-    else
+    } else {
       put_char(c, stream);
+    }
   }
 }
 
