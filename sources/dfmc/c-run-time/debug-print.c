@@ -530,6 +530,17 @@ static void do_debug_message (D string, D arguments) {
 #endif
 }
 
+void dylan_print_object (D object) {
+  char output[8192];
+  output[0] = 0;
+
+  print_object(output, object, TRUE, 0);
+
+  fputs(output, stdout);
+  fputs("\n", stdout);
+  fflush(stdout);
+}
+
 void primitive_invoke_debugger (D string, D arguments) {
   do_debug_message(string, arguments);
   primitive_break();
