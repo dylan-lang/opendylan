@@ -1,7 +1,11 @@
 #include "run-time.h"
 #include <ctype.h>
+#include <stdbool.h>
 #include <stdio.h>
 
+// XXX: This BOOL definition is kept around for escape_p since there's
+//      a usage of it as an int to pass a flag other than true/false
+//      with print_integer. This should be fixed one day.
 #define BOOL            int
 #ifndef TRUE
 #define TRUE            1
@@ -34,11 +38,11 @@ extern D LbooleanGVKd;
 extern OBJECT KPfalseVKi;
 extern OBJECT KPtrueVKi;
 
-BOOL dylan_boolean_p (D instance) {
+bool dylan_boolean_p (D instance) {
   return dylan_object_class(instance) == LbooleanGVKd;
 }
 
-BOOL dylan_true_p (D instance) {
+bool dylan_true_p (D instance) {
   return instance == DTRUE;
 }
 
@@ -47,12 +51,12 @@ BOOL dylan_true_p (D instance) {
 extern D Lsingle_floatGVKd;
 extern D Ldouble_floatGVKd;
 
-BOOL dylan_float_p (D instance) {
+bool dylan_float_p (D instance) {
   return dylan_object_class(instance) == Lsingle_floatGVKd ||
          dylan_object_class(instance) == Ldouble_floatGVKd;
 }
 
-BOOL dylan_single_float_p (D instance) {
+bool dylan_single_float_p (D instance) {
   return dylan_object_class(instance) == Lsingle_floatGVKd;
 }
 
@@ -61,7 +65,7 @@ dylan_single_float_data (D instance) {
   return ((DSF)instance)->data;
 }
 
-BOOL dylan_double_float_p (D instance) {
+bool dylan_double_float_p (D instance) {
   return dylan_object_class(instance) == Ldouble_floatGVKd;
 }
 
@@ -74,7 +78,7 @@ dylan_double_float_data (D instance) {
 
 extern D LsymbolGVKd;
 
-BOOL dylan_symbol_p (D instance) {
+bool dylan_symbol_p (D instance) {
   return dylan_object_class(instance) == LsymbolGVKd;
 }
 
@@ -87,11 +91,11 @@ D dylan_symbol_name (D instance) {
 extern D LpairGVKd;
 extern D Lempty_listGVKd;
 
-BOOL dylan_pair_p (D instance) {
+bool dylan_pair_p (D instance) {
   return dylan_object_class(instance) == LpairGVKd;
 }
 
-BOOL dylan_empty_list_p (D instance) {
+bool dylan_empty_list_p (D instance) {
   return dylan_object_class(instance) == Lempty_listGVKd;
 }
 
@@ -110,7 +114,7 @@ extern D  vector_ref (SOV* vector, int offset);
 extern D* vector_data (SOV* vector);
 extern int vector_size (SOV* vector);
 
-BOOL dylan_vector_p (D instance) {
+bool dylan_vector_p (D instance) {
   return dylan_object_class(instance) == Lsimple_object_vectorGVKd;
 }
 
@@ -120,7 +124,7 @@ BOOL dylan_vector_p (D instance) {
 
 extern D Lbyte_stringGVKd;
 
-BOOL dylan_string_p (D instance) {
+bool dylan_string_p (D instance) {
   return dylan_object_class(instance) == Lbyte_stringGVKd;
 }
 
@@ -135,7 +139,7 @@ extern FN KinstanceQVKd;
 extern FN Kcondition_format_stringVKd;
 extern FN Kcondition_format_argumentsVKd;
 
-BOOL dylan_simple_condition_p (D instance) {
+bool dylan_simple_condition_p (D instance) {
   return DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe);
 }
 
@@ -151,7 +155,7 @@ D dylan_simple_condition_format_args (D instance) {
 
 extern D LclassGVKd;
 
-BOOL dylan_class_p (D instance) {
+bool dylan_class_p (D instance) {
   D class = dylan_object_class(instance);
   return class == LclassGVKd;
 }
@@ -164,7 +168,7 @@ D dylan_class_debug_name (D instance) {
 
 extern D Lfunction_classGVKi;
 
-BOOL dylan_function_p (D instance) {
+bool dylan_function_p (D instance) {
   D class = dylan_object_class(instance);
   D class_class = dylan_object_class(class);
   return class_class == Lfunction_classGVKi;
@@ -292,8 +296,8 @@ static void print_string_data (STREAM stream, D instance, BOOL escape_p, int pri
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 
 static void print_vector (STREAM stream, D instance, BOOL escape_p, int print_depth) {
-  int size = vector_size(instance);
-  int first = TRUE, i = 0;
+  int size = vector_size(instance), i = 0;
+  bool first = true;
   D element;
   int max_size = MIN(size, dylan_print_length);
 
@@ -301,7 +305,7 @@ static void print_vector (STREAM stream, D instance, BOOL escape_p, int print_de
   if (print_depth < dylan_print_depth) {
     for (; i < max_size; i++) {
       if (first) {
-        first = FALSE;
+        first = false;
       } else {
         put_string(", ", stream);
       }
@@ -322,13 +326,14 @@ static void print_pair (STREAM stream, D instance, BOOL escape_p, int print_dept
   D head = dylan_head(instance);
   D tail = dylan_tail(instance);
   enum dylan_type_enum type;
-  int first = TRUE, i = 0;
+  int i = 0;
+  bool first = true;
 
   put_string("#(", stream);
   if (print_depth < dylan_print_depth) {
     for (; i<dylan_print_length; i++) {
       if (first) {
-        first = FALSE;
+        first = false;
       } else {
         put_string(", ", stream);
       }
@@ -457,7 +462,7 @@ static void print_object (STREAM stream, D instance, BOOL escape_p, int print_de
 }
 
 static void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
-  BOOL  percent_p = FALSE;
+  BOOL  percent_p = false;
   char* string = dylan_string_data(dylan_string);
   D*    arguments = vector_data(dylan_arguments);
   int   argument_count = vector_size(dylan_arguments),
@@ -494,9 +499,9 @@ static void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
           put_char('%', stream); break;
         default: ;
       }
-      percent_p = FALSE;
+      percent_p = false;
     } else if (c == '%') {
-      percent_p = TRUE;
+      percent_p = true;
     } else {
       put_char(c, stream);
     }
