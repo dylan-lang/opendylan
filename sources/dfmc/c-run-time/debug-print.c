@@ -22,22 +22,22 @@ static int dylan_print_depth  = 3;
 
 /*
 D instance_header (D* instance) {
-  return(instance[0]);
+  return instance[0];
 }
 */
 
 D dylan_slot_element (D* instance, int offset) {
-  return(instance[offset + 1]);
+  return instance[offset + 1];
 }
 
 /*
 D mm_wrapper_class (D* instance) {
-  return(dylan_slot_element(instance, 0));
+  return dylan_slot_element(instance, 0);
 }
 */
 
 D object_class (D* instance) {
-  return(OBJECT_CLASS(instance));
+  return OBJECT_CLASS(instance);
 }
 
 /* BOOLEAN */
@@ -47,14 +47,14 @@ extern OBJECT KPfalseVKi;
 extern OBJECT KPtrueVKi;
 
 BOOL boolean_p (D instance) {
-  return(object_class(instance) == LbooleanGVKd);
+  return object_class(instance) == LbooleanGVKd;
   /* TAGGED BOOLEANS
-   return(TAG_BITS(instance) == BTAG);
+   return TAG_BITS(instance) == BTAG);
   */
 }
 
 BOOL true_p (D instance) {
-  return(instance == DTRUE);
+  return instance == DTRUE;
 }
 
 /* FLOAT */
@@ -63,22 +63,22 @@ extern D Lsingle_floatGVKd;
 extern D Ldouble_floatGVKd;
 
 BOOL float_p (D instance) {
-  return(object_class(instance) == Lsingle_floatGVKd
-         || object_class(instance) == Ldouble_floatGVKd);
+  return object_class(instance) == Lsingle_floatGVKd ||
+         object_class(instance) == Ldouble_floatGVKd;
 }
 
 BOOL single_float_p (D instance) {
-  return(object_class(instance) == Lsingle_floatGVKd);
+  return object_class(instance) == Lsingle_floatGVKd;
 }
 
 float
 single_float_data (D instance) {
-  return(((DSF)instance)->data);
+  return ((DSF)instance)->data;
 }
 
 double
 double_float_data (D instance) {
-  return(((DDF)instance)->data);
+  return ((DDF)instance)->data;
 }
 
 /* SYMBOL */
@@ -86,11 +86,11 @@ double_float_data (D instance) {
 extern D LsymbolGVKd;
 
 BOOL symbol_p (D instance) {
-  return(object_class(instance) == LsymbolGVKd);
+  return object_class(instance) == LsymbolGVKd;
 }
 
 D dylan_symbol_name (D instance) {
-  return(dylan_slot_element(instance, 0));
+  return dylan_slot_element(instance, 0);
 }
 
 /* PAIR */
@@ -99,19 +99,19 @@ extern D LpairGVKd;
 extern D Lempty_listGVKd;
 
 BOOL pair_p (D instance) {
-  return(object_class(instance) == LpairGVKd);
+  return object_class(instance) == LpairGVKd;
 }
 
 BOOL empty_list_p (D instance) {
-  return(object_class(instance) == Lempty_listGVKd);
+  return object_class(instance) == Lempty_listGVKd;
 }
 
 D dylan_head (D instance) {
-  return(dylan_slot_element(instance, 0));
+  return dylan_slot_element(instance, 0);
 }
 
 D dylan_tail (D instance) {
-  return(dylan_slot_element(instance, 1));
+  return dylan_slot_element(instance, 1);
 }
 
 /* VECTOR */
@@ -122,7 +122,7 @@ extern D* vector_data (SOV* vector);
 extern int vector_size (SOV* vector);
 
 BOOL vector_p (D instance) {
-  return(object_class(instance) == Lsimple_object_vectorGVKd);
+  return object_class(instance) == Lsimple_object_vectorGVKd;
 }
 
 /* STRING */
@@ -132,11 +132,11 @@ BOOL vector_p (D instance) {
 extern D Lbyte_stringGVKd;
 
 BOOL string_p (D instance) {
-  return(object_class(instance) == Lbyte_stringGVKd);
+  return object_class(instance) == Lbyte_stringGVKd;
 }
 
 char* string_data (D instance) {
-  return(((BS*)instance)->data);
+  return ((BS*)instance)->data;
 }
 
 /* SIMPLE-CONDITION */
@@ -147,15 +147,15 @@ extern FN Kcondition_format_stringVKd;
 extern FN Kcondition_format_argumentsVKd;
 
 BOOL simple_condition_p (D instance) {
-  return(DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe));
+  return DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe);
 }
 
 D dylan_simple_condition_format_string (D instance) {
-  return(CALL1(&Kcondition_format_stringVKd, instance));
+  return CALL1(&Kcondition_format_stringVKd, instance);
 }
 
 D dylan_simple_condition_format_args (D instance) {
-  return(CALL1(&Kcondition_format_argumentsVKd, instance));
+  return CALL1(&Kcondition_format_argumentsVKd, instance);
 }
 
 /* CLASS */
@@ -164,11 +164,11 @@ extern D LclassGVKd;
 
 BOOL class_p (D instance) {
   D class = object_class(instance);
-  return(class == LclassGVKd);
+  return class == LclassGVKd;
 }
 
 D dylan_class_debug_name (D instance) {
-  return(dylan_slot_element(instance, 1));
+  return dylan_slot_element(instance, 1);
 }
 
 /* FUNCTION */
@@ -178,15 +178,15 @@ extern D Lfunction_classGVKi;
 BOOL function_p (D instance) {
   D class = object_class(instance);
   D class_class = object_class(class);
-  return(class_class == Lfunction_classGVKi);
+  return class_class == Lfunction_classGVKi;
 }
 
 D dylan_function_debug_name (D instance) {
   /*
-  return(dylan_slot_element(instance, 0));
+  return dylan_slot_element(instance, 0));
   */
   ignore(instance);
-  return(DFALSE);
+  return DFALSE;
 }
 
 /*
@@ -218,34 +218,34 @@ static enum dylan_type_enum
 dylan_type (D instance) {
   if ((DUMINT)instance & 3) {
     if ((DUMINT)instance & 1)
-      return(integer_type);
+      return integer_type;
     else if ((DUMINT)instance & 2)
-      return(character_type);
+      return character_type;
     else
-      return(unknown_type);
+      return unknown_type;
   } else { /* dylan pointer */
     if (float_p(instance))
-      return(float_type);
+      return float_type;
     else if (boolean_p(instance))
-      return(dylan_boolean_type);
+      return dylan_boolean_type;
     else if (string_p(instance))
-      return(string_type);
+      return string_type;
     else if (vector_p(instance))
-      return(vector_type);
+      return vector_type;
     else if (pair_p(instance))
-      return(pair_type);
+      return pair_type;
     else if (empty_list_p(instance))
-      return(empty_list_type);
+      return empty_list_type;
     else if (symbol_p(instance))
-      return(symbol_type);
+      return symbol_type;
     else if (simple_condition_p(instance))
-      return(simple_condition_type);
+      return simple_condition_type;
     else if (class_p(instance))
-      return(class_type);
+      return class_type;
     else if (function_p(instance))
-      return(function_type);
+      return function_type;
     else
-      return(user_defined_type);
+      return user_defined_type;
   }
 }
 
@@ -524,20 +524,17 @@ static void do_debug_message (D string, D arguments) {
   fputs("\n", stderr); /* Adds a terminating newline */
   fflush(stderr);
 #endif
-  return;
 }
 
 void primitive_invoke_debugger (D string, D arguments) {
   do_debug_message(string, arguments);
   primitive_break();
-  return;
 }
 
 D primitive_inside_debuggerQ (void) {
-  return(DFALSE);
+  return DFALSE;
 }
 
 void primitive_debug_message (D string, D arguments) {
   do_debug_message(string, arguments);
-  return;
 }
