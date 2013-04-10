@@ -13,14 +13,6 @@
 #define put_string(string,stream) sprintf(stream, "%s%s", stream, string)
 #define put_char(char,stream)     sprintf(stream, "%s%c", stream, char)
 
-#if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
-#define INLINE __inline
-#elif defined(OPEN_DYLAN_COMPILER_CLANG)
-#define INLINE static inline
-#else
-#define INLINE inline
-#endif
-
 int dylan_print_length = 10;
 int dylan_print_depth  = 3;
 
@@ -29,22 +21,22 @@ int dylan_print_depth  = 3;
 /* INSTANCE */
 
 /*
-INLINE D instance_header (D* instance) {
+D instance_header (D* instance) {
   return(instance[0]);
 }
 */
 
-INLINE D dylan_slot_element (D* instance, int offset) {
+D dylan_slot_element (D* instance, int offset) {
   return(instance[offset + 1]);
 }
 
 /*
-INLINE D mm_wrapper_class (D* instance) {
+D mm_wrapper_class (D* instance) {
   return(dylan_slot_element(instance, 0));
 }
 */
 
-INLINE D object_class (D* instance) {
+D object_class (D* instance) {
   return(OBJECT_CLASS(instance));
 }
 
@@ -54,14 +46,14 @@ extern D LbooleanGVKd;
 extern OBJECT KPfalseVKi;
 extern OBJECT KPtrueVKi;
 
-INLINE BOOL boolean_p (D instance) {
+BOOL boolean_p (D instance) {
   return(object_class(instance) == LbooleanGVKd);
   /* TAGGED BOOLEANS
    return(TAG_BITS(instance) == BTAG);
   */
 }
 
-INLINE BOOL true_p (D instance) {
+BOOL true_p (D instance) {
   return(instance == DTRUE);
 }
 
@@ -70,12 +62,12 @@ INLINE BOOL true_p (D instance) {
 extern D Lsingle_floatGVKd;
 extern D Ldouble_floatGVKd;
 
-INLINE BOOL float_p (D instance) {
+BOOL float_p (D instance) {
   return(object_class(instance) == Lsingle_floatGVKd
          || object_class(instance) == Ldouble_floatGVKd);
 }
 
-INLINE BOOL single_float_p (D instance) {
+BOOL single_float_p (D instance) {
   return(object_class(instance) == Lsingle_floatGVKd);
 }
 
@@ -93,11 +85,11 @@ double_float_data (D instance) {
 
 extern D LsymbolGVKd;
 
-INLINE BOOL symbol_p (D instance) {
+BOOL symbol_p (D instance) {
   return(object_class(instance) == LsymbolGVKd);
 }
 
-INLINE D dylan_symbol_name (D instance) {
+D dylan_symbol_name (D instance) {
   return(dylan_slot_element(instance, 0));
 }
 
@@ -106,19 +98,19 @@ INLINE D dylan_symbol_name (D instance) {
 extern D LpairGVKd;
 extern D Lempty_listGVKd;
 
-INLINE BOOL pair_p (D instance) {
+BOOL pair_p (D instance) {
   return(object_class(instance) == LpairGVKd);
 }
 
-INLINE BOOL empty_list_p (D instance) {
+BOOL empty_list_p (D instance) {
   return(object_class(instance) == Lempty_listGVKd);
 }
 
-INLINE D dylan_head (D instance) {
+D dylan_head (D instance) {
   return(dylan_slot_element(instance, 0));
 }
 
-INLINE D dylan_tail (D instance) {
+D dylan_tail (D instance) {
   return(dylan_slot_element(instance, 1));
 }
 
@@ -129,7 +121,7 @@ extern D  vector_ref (SOV* vector, int offset);
 extern D* vector_data (SOV* vector);
 extern int vector_size (SOV* vector);
 
-INLINE BOOL vector_p (D instance) {
+BOOL vector_p (D instance) {
   return(object_class(instance) == Lsimple_object_vectorGVKd);
 }
 
@@ -139,11 +131,11 @@ INLINE BOOL vector_p (D instance) {
 
 extern D Lbyte_stringGVKd;
 
-INLINE BOOL string_p (D instance) {
+BOOL string_p (D instance) {
   return(object_class(instance) == Lbyte_stringGVKd);
 }
 
-INLINE char* string_data (D instance) {
+char* string_data (D instance) {
   return(((BS*)instance)->data);
 }
 
@@ -154,15 +146,15 @@ extern FN KinstanceQVKd;
 extern FN Kcondition_format_stringVKd;
 extern FN Kcondition_format_argumentsVKd;
 
-INLINE BOOL simple_condition_p (D instance) {
+BOOL simple_condition_p (D instance) {
   return(DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe));
 }
 
-INLINE D dylan_simple_condition_format_string (D instance) {
+D dylan_simple_condition_format_string (D instance) {
   return(CALL1(&Kcondition_format_stringVKd, instance));
 }
 
-INLINE D dylan_simple_condition_format_args (D instance) {
+D dylan_simple_condition_format_args (D instance) {
   return(CALL1(&Kcondition_format_argumentsVKd, instance));
 }
 
@@ -170,12 +162,12 @@ INLINE D dylan_simple_condition_format_args (D instance) {
 
 extern D LclassGVKd;
 
-INLINE BOOL class_p (D instance) {
+BOOL class_p (D instance) {
   D class = object_class(instance);
   return(class == LclassGVKd);
 }
 
-INLINE D dylan_class_debug_name (D instance) {
+D dylan_class_debug_name (D instance) {
   return(dylan_slot_element(instance, 1));
 }
 
@@ -183,13 +175,13 @@ INLINE D dylan_class_debug_name (D instance) {
 
 extern D Lfunction_classGVKi;
 
-INLINE BOOL function_p (D instance) {
+BOOL function_p (D instance) {
   D class = object_class(instance);
   D class_class = object_class(class);
   return(class_class == Lfunction_classGVKi);
 }
 
-INLINE D dylan_function_debug_name (D instance) {
+D dylan_function_debug_name (D instance) {
   /*
   return(dylan_slot_element(instance, 0));
   */
