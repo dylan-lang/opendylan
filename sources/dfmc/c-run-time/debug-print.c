@@ -36,7 +36,7 @@ D mm_wrapper_class (D* instance) {
 }
 */
 
-D object_class (D* instance) {
+D dylan_object_class (D* instance) {
   return OBJECT_CLASS(instance);
 }
 
@@ -46,14 +46,14 @@ extern D LbooleanGVKd;
 extern OBJECT KPfalseVKi;
 extern OBJECT KPtrueVKi;
 
-BOOL boolean_p (D instance) {
-  return object_class(instance) == LbooleanGVKd;
+BOOL dylan_boolean_p (D instance) {
+  return dylan_object_class(instance) == LbooleanGVKd;
   /* TAGGED BOOLEANS
    return TAG_BITS(instance) == BTAG);
   */
 }
 
-BOOL true_p (D instance) {
+BOOL dylan_true_p (D instance) {
   return instance == DTRUE;
 }
 
@@ -62,22 +62,22 @@ BOOL true_p (D instance) {
 extern D Lsingle_floatGVKd;
 extern D Ldouble_floatGVKd;
 
-BOOL float_p (D instance) {
-  return object_class(instance) == Lsingle_floatGVKd ||
-         object_class(instance) == Ldouble_floatGVKd;
+BOOL dylan_float_p (D instance) {
+  return dylan_object_class(instance) == Lsingle_floatGVKd ||
+         dylan_object_class(instance) == Ldouble_floatGVKd;
 }
 
-BOOL single_float_p (D instance) {
-  return object_class(instance) == Lsingle_floatGVKd;
+BOOL dylan_single_float_p (D instance) {
+  return dylan_object_class(instance) == Lsingle_floatGVKd;
 }
 
 float
-single_float_data (D instance) {
+dylan_single_float_data (D instance) {
   return ((DSF)instance)->data;
 }
 
 double
-double_float_data (D instance) {
+dylan_double_float_data (D instance) {
   return ((DDF)instance)->data;
 }
 
@@ -85,8 +85,8 @@ double_float_data (D instance) {
 
 extern D LsymbolGVKd;
 
-BOOL symbol_p (D instance) {
-  return object_class(instance) == LsymbolGVKd;
+BOOL dylan_symbol_p (D instance) {
+  return dylan_object_class(instance) == LsymbolGVKd;
 }
 
 D dylan_symbol_name (D instance) {
@@ -98,12 +98,12 @@ D dylan_symbol_name (D instance) {
 extern D LpairGVKd;
 extern D Lempty_listGVKd;
 
-BOOL pair_p (D instance) {
-  return object_class(instance) == LpairGVKd;
+BOOL dylan_pair_p (D instance) {
+  return dylan_object_class(instance) == LpairGVKd;
 }
 
-BOOL empty_list_p (D instance) {
-  return object_class(instance) == Lempty_listGVKd;
+BOOL dylan_empty_list_p (D instance) {
+  return dylan_object_class(instance) == Lempty_listGVKd;
 }
 
 D dylan_head (D instance) {
@@ -121,8 +121,8 @@ extern D  vector_ref (SOV* vector, int offset);
 extern D* vector_data (SOV* vector);
 extern int vector_size (SOV* vector);
 
-BOOL vector_p (D instance) {
-  return object_class(instance) == Lsimple_object_vectorGVKd;
+BOOL dylan_vector_p (D instance) {
+  return dylan_object_class(instance) == Lsimple_object_vectorGVKd;
 }
 
 /* STRING */
@@ -131,11 +131,11 @@ BOOL vector_p (D instance) {
 
 extern D Lbyte_stringGVKd;
 
-BOOL string_p (D instance) {
-  return object_class(instance) == Lbyte_stringGVKd;
+BOOL dylan_string_p (D instance) {
+  return dylan_object_class(instance) == Lbyte_stringGVKd;
 }
 
-char* string_data (D instance) {
+char* dylan_string_data (D instance) {
   return ((BS*)instance)->data;
 }
 
@@ -146,7 +146,7 @@ extern FN KinstanceQVKd;
 extern FN Kcondition_format_stringVKd;
 extern FN Kcondition_format_argumentsVKd;
 
-BOOL simple_condition_p (D instance) {
+BOOL dylan_simple_condition_p (D instance) {
   return DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe);
 }
 
@@ -162,8 +162,8 @@ D dylan_simple_condition_format_args (D instance) {
 
 extern D LclassGVKd;
 
-BOOL class_p (D instance) {
-  D class = object_class(instance);
+BOOL dylan_class_p (D instance) {
+  D class = dylan_object_class(instance);
   return class == LclassGVKd;
 }
 
@@ -175,9 +175,9 @@ D dylan_class_debug_name (D instance) {
 
 extern D Lfunction_classGVKi;
 
-BOOL function_p (D instance) {
-  D class = object_class(instance);
-  D class_class = object_class(class);
+BOOL dylan_function_p (D instance) {
+  D class = dylan_object_class(instance);
+  D class_class = dylan_object_class(class);
   return class_class == Lfunction_classGVKi;
 }
 
@@ -225,25 +225,25 @@ dylan_type (D instance) {
       return unknown_type;
     }
   } else { /* dylan pointer */
-    if (float_p(instance)) {
+    if (dylan_float_p(instance)) {
       return float_type;
-    } else if (boolean_p(instance)) {
+    } else if (dylan_boolean_p(instance)) {
       return dylan_boolean_type;
-    } else if (string_p(instance)) {
+    } else if (dylan_string_p(instance)) {
       return string_type;
-    } else if (vector_p(instance)) {
+    } else if (dylan_vector_p(instance)) {
       return vector_type;
-    } else if (pair_p(instance)) {
+    } else if (dylan_pair_p(instance)) {
       return pair_type;
-    } else if (empty_list_p(instance)) {
+    } else if (dylan_empty_list_p(instance)) {
       return empty_list_type;
-    } else if (symbol_p(instance)) {
+    } else if (dylan_symbol_p(instance)) {
       return symbol_type;
-    } else if (simple_condition_p(instance)) {
+    } else if (dylan_simple_condition_p(instance)) {
       return simple_condition_type;
-    } else if (class_p(instance)) {
+    } else if (dylan_class_p(instance)) {
       return class_type;
-    } else if (function_p(instance)) {
+    } else if (dylan_function_p(instance)) {
       return function_type;
     } else {
       return user_defined_type;
@@ -276,25 +276,25 @@ static void print_character (STREAM stream, D instance, BOOL escape_p, int print
 
 static void print_float (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
-  if (single_float_p(instance)) {
-    format(stream, "%f", single_float_data(instance))
+  if (dylan_single_float_p(instance)) {
+    format(stream, "%f", dylan_single_float_data(instance))
   } else { /* if (double_float_p(instance)) */
-    format(stream, "%.15f", double_float_data(instance));
+    format(stream, "%.15f", dylan_double_float_data(instance));
   }
 }
 
 static void print_string (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(print_depth);
   if (escape_p) {
-    format(stream, "\"%s\"", string_data(instance))
+    format(stream, "\"%s\"", dylan_string_data(instance))
   } else {
-    format(stream, "%s", string_data(instance));
+    format(stream, "%s", dylan_string_data(instance));
   }
 }
 
 static void print_string_data (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
-  format(stream, "%s", string_data(instance));
+  format(stream, "%s", dylan_string_data(instance));
 }
 
 #define MAX(x, y) ((x) > (y) ? (x) : (y))
@@ -383,7 +383,7 @@ static void print_symbol (STREAM stream, D instance, BOOL escape_p, int print_de
 
 static void print_boolean (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   ignore(escape_p); ignore(print_depth);
-  if (true_p(instance)) {
+  if (dylan_true_p(instance)) {
     put_string("#t", stream);
   } else {
     put_string("#f", stream);
@@ -425,7 +425,7 @@ static void print_function (STREAM stream, D instance, BOOL escape_p, int print_
 }
 
 static void print_user_defined (STREAM stream, D instance, BOOL escape_p, int print_depth) {
-  D class = object_class(instance);
+  D class = dylan_object_class(instance);
   ignore(escape_p);
   put_string("{", stream);
   print_class_debug_name(stream, class, TRUE, print_depth);
@@ -467,7 +467,7 @@ static void print_object (STREAM stream, D instance, BOOL escape_p, int print_de
 
 static void dylan_format (STREAM stream, D dylan_string, D dylan_arguments) {
   BOOL  percent_p = FALSE;
-  char* string = string_data(dylan_string);
+  char* string = dylan_string_data(dylan_string);
   D*    arguments = vector_data(dylan_arguments);
   int   argument_count = vector_size(dylan_arguments),
         argument_index = 0,
