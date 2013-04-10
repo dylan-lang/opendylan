@@ -20,21 +20,9 @@ static int dylan_print_depth  = 3;
 
 /* INSTANCE */
 
-/*
-D instance_header (D* instance) {
-  return instance[0];
-}
-*/
-
 D dylan_slot_element (D* instance, int offset) {
   return instance[offset + 1];
 }
-
-/*
-D mm_wrapper_class (D* instance) {
-  return dylan_slot_element(instance, 0);
-}
-*/
 
 D dylan_object_class (D* instance) {
   return OBJECT_CLASS(instance);
@@ -48,9 +36,6 @@ extern OBJECT KPtrueVKi;
 
 BOOL dylan_boolean_p (D instance) {
   return dylan_object_class(instance) == LbooleanGVKd;
-  /* TAGGED BOOLEANS
-   return TAG_BITS(instance) == BTAG);
-  */
 }
 
 BOOL dylan_true_p (D instance) {
