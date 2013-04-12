@@ -63,7 +63,7 @@ Learning Dylan
 `Dylan Programming <http://opendylan.org/books/dpg/>`_ [`pdf <http://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <http://opendylan.org/books/dpg/DylanProgramming.epub>`__]
     A good, book length Dylan tutorial by several Harlequin employees.
 
-`Getting Started with Open Dylan <getting-started/index.html>`_ [`pdf <getting-started/GettingStartedWithOpenDylan.pdf>`__] [`epub <getting-started/GettingStartedWithOpenDylan.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
+`Getting Started with the Open Dylan IDE <getting-started-ide/index.html>`_ [`pdf <getting-started-ide/GettingStartedWithTheOpenDylanIDE.pdf>`__] [`epub <getting-started-ide/GettingStartedWithTheOpenDylanIDE.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
     Describes Open Dylan's development environment. The first two
     chapters are useful on any platform, whereas the remaining
     chapters document the Open Dylan IDE on Windows.
