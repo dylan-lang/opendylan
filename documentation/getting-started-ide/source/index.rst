@@ -9,7 +9,6 @@ Contents:
 
    copyright
    preface
-   console
    quick-start
    expanding
    model

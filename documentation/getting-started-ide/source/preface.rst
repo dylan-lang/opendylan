@@ -2,11 +2,12 @@
 Preface
 *******
 
-This guide explains how to use Open Dylan to develop and deliver Dylan
-applications.  There are three relatively independent sections
-covering command-line usage, Dylan Interaction Mode for Emacs (DIME),
-and then the IDE (Windows only) which makes up the bulk of this
-document.
+This guide explains how to use the Open Dylan IDE (Windows only) to develop
+and deliver Dylan applications.
+
+For help getting started with the command-line
+tools, see the `Getting Started with the Open Dylan Command Line Tools
+<http://opendylan.org/documentation/getting-started-cli>`_ guide.
 
 The Dylan Reference Manual
 ==========================
@@ -19,19 +20,12 @@ as “the DRM”.
 Chapters in this guide
 ======================
 
-The first chapter in this guide covers how to use Open Dylan from
-the command-line and how to use DIME (Dylan Interaction Mode for
-Emacs).  The remainder of the guide is dedicated to doing development
-with the IDE (on Windows only).
-
 The early chapters on the IDE give you a quick tour of the
 application development cycle under Open Dylan, using the Reversi
 example for illustration. In these early chapters we come across most of
 the Open Dylan development tools. Later chapters examine those
 tools more directly, and provide a broader view of the development
 process in Open Dylan.
-
-:doc:`console`, shows how to use Open Dylan from the command-line.
 
 :doc:`quick-start`, shows how to build a
 standalone executable application in Open Dylan. It discusses the
