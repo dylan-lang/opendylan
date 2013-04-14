@@ -2,7 +2,7 @@
 Copyright
 *********
 
-Copyright © 2011 Dylan Hackers.
+Copyright © 2011-2013 Dylan Hackers.
 
 Companies, names and data used in examples herein are fictitious unless
 otherwise noted.
