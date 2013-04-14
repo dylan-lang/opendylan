@@ -63,10 +63,14 @@ Learning Dylan
 `Dylan Programming <http://opendylan.org/books/dpg/>`_ [`pdf <http://opendylan.org/books/dpg/DylanProgramming.pdf>`__] [`epub <http://opendylan.org/books/dpg/DylanProgramming.epub>`__]
     A good, book length Dylan tutorial by several Harlequin employees.
 
+`Getting Started with the Open Dylan Command Line Tools <getting-started-cli/index.html>`_ [`pdf <getting-started-cli/GettingStartedWithTheOpenDylanCLI.pdf>`__] [`epub <getting-started-cli/GettingStartedWithTheOpenDylanCLI.epub>`__]
+    Describes development using the Open Dylan command line tools
+    and editor integration (like emacs). This is mainly useful for
+    people using Open Dylan on Linux, FreeBSD and Mac OS X.
+
 `Getting Started with the Open Dylan IDE <getting-started-ide/index.html>`_ [`pdf <getting-started-ide/GettingStartedWithTheOpenDylanIDE.pdf>`__] [`epub <getting-started-ide/GettingStartedWithTheOpenDylanIDE.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/env/index.htm>`__]
-    Describes Open Dylan's development environment. The first two
-    chapters are useful on any platform, whereas the remaining
-    chapters document the Open Dylan IDE on Windows.
+    Describes Open Dylan's integrated development environment which
+    is available for Windows.
 
 `Building Applications Using DUIM <building-with-duim/index.html>`_ [`pdf <building-with-duim/BuildingApplicationsWithDUIM.pdf>`__] [`epub <building-with-duim/BuildingApplicationsWithDUIM.epub>`__] [`old HTML <http://opendylan.org/documentation/opendylan/dguide/index.htm>`__]
     Describes how to use DUIM (Dylan User Interface Manager),
