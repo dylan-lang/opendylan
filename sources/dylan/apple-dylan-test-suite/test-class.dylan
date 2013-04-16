@@ -251,16 +251,7 @@ end test;
 // of <explicit-key-collection>
 
 define test type-for-copy-class-2 ()
-  check("", every?
-	  (rcurry(subtype?, <explicit-key-collection>),
-	   map(compose(type-for-copy, make),
-	       list(<table>,
-		    <array>,
-              <vector>,
-		    <stretchy-vector>,
-		    <simple-object-vector>,
-		    <unicode-string>,
-		    <byte-string>))));
+  check-true("", subtype?(type-for-copy(make(<table>)), <explicit-key-collection>));
 end test;
 
 // type-for-copy of all collections should be mutable.
