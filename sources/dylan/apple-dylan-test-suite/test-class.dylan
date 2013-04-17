@@ -251,29 +251,31 @@ end test;
 // of <explicit-key-collection>
 
 define test type-for-copy-class-2 ()
-  check-true("", subtype?(type-for-copy(make(<table>)), <explicit-key-collection>));
+  check-true("", every?(rcurry(subtype?, <explicit-key-collection>),
+                        map(compose(type-for-copy, make),
+                            list(<table>,
+                                 <object-table>))));
 end test;
 
 // type-for-copy of all collections should be mutable.
 //
 
 define test type-for-copy-class-3 ()
-  check("", every?
-	  (rcurry(subtype?, <mutable-collection>),
-	   map(compose(type-for-copy, make),
-	       list(<table>,
-		    <array>,
-		    <vector>,
-		    <stretchy-vector>,
-		    <string>,
-		    <deque>,
-		    <range>,
-		    <simple-object-vector>,
-		    <unicode-string>,
-		    <byte-string>,
-		    <list>,
-		    <pair>,
-		    <empty-list>))));
+  check("", every?(rcurry(subtype?, <mutable-collection>),
+                   map(compose(type-for-copy, make),
+                       list(<table>,
+                            <array>,
+                            <vector>,
+                            <stretchy-vector>,
+                            <string>,
+                            <deque>,
+                            <range>,
+                            <simple-object-vector>,
+                            <unicode-string>,
+                            <byte-string>,
+                            <list>,
+                            <pair>,
+                            <empty-list>))));
 end test;
 
 // Design note #5 introduces a new abstract class <type>
