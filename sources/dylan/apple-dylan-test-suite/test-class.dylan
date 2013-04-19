@@ -261,21 +261,25 @@ end test;
 //
 
 define test type-for-copy-class-3 ()
-  check("", every?(rcurry(subtype?, <mutable-collection>),
-                   map(compose(type-for-copy, make),
-                       list(<table>,
-                            <array>,
-                            <vector>,
-                            <stretchy-vector>,
-                            <string>,
-                            <deque>,
-                            <range>,
-                            <simple-object-vector>,
-                            <unicode-string>,
-                            <byte-string>,
-                            <list>,
-                            <pair>,
-                            <empty-list>))));
+  check-true("",
+             every?(rcurry(subtype?, <mutable-collection>),
+                    map(compose(type-for-copy, make),
+                        list(<table>,
+                             <object-table>,
+                             <vector>,
+                             <stretchy-vector>,
+                             <simple-vector>,
+                             <simple-object-vector>,
+                             <list>,
+                             <pair>,
+                             <empty-list>,
+                             <deque>,
+                             <string>,
+                             <byte-string>,
+                             <unicode-string>,
+                             <range>))));
+  check-true("", subtype?(type-for-copy(make(<array>, dimensions: #(0))),
+                          <mutable-collection>));
 end test;
 
 // Design note #5 introduces a new abstract class <type>
