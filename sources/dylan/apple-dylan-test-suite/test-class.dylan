@@ -306,7 +306,7 @@ define test limited-integers ()
   check("", instance?, small-integer, <type>);
   check("", instance?, signed-byte, <type>);
   check("", instance?, 0, positive);
-  check("", instance?, -1, positive);
+  check-false("", instance?(-1, positive));
   check("", instance?, 1, strictly-positive);
   check-false ("", instance?(0, strictly-positive));
   check("", instance?, 0, small-integer);
