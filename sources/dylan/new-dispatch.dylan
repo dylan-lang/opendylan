@@ -1522,10 +1522,3 @@ define constant handle-missed-dispatch-1 = method (d :: <engine-node>,
     %invoke-generic-function-mepized(gf, args)
   end if
 end method;
-
-
-
-define open generic todays-dispatch-report (x);
-
-define method todays-dispatch-report (x)
-end method;

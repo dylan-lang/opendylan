@@ -1954,8 +1954,6 @@ end &module;
 
 define &module dispatch-engine
   create			// @@@@ Temporary... 
-      todays-dispatch-report,
-//    *cached-gfs*,
     dbg;
   // HACK: TEMPORARY
   create
