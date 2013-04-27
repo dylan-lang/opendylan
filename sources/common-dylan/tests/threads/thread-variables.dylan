@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //////////////
 // Testing dynamic-binding
 //
-// Creates a number of threads which do dynamic-bindings on the same 
+// Creates a number of threads which do dynamic-bindings on the same
 // variable. The functions return #t or #f to indicate a good or
 // bad result respectively.
 //
@@ -39,7 +39,7 @@ define method free-resource ()
   end with-lock;
 end method;
 
-/* 
+/*
 // Original version which the compiler barfs on
 
 define method free-resource ()
@@ -52,8 +52,8 @@ end method;
 
 define method wait-for-resources ()
   with-lock (*lock*)
-    while (*counter* ~= 0) 
-      wait-for(*is-zero*) 
+    while (*counter* ~= 0)
+      wait-for(*is-zero*)
     end;
   end with-lock;
 end method;
@@ -71,8 +71,8 @@ define test dynamic-binds-test (description: "Test dynamic bindings")
            concatenate(concatenate("local", integer-to-string(varnum)),
                                  integer-to-string(threadnum)));
       end method;
-  
-  let thread-function 
+
+  let thread-function
     = method (val1, val2)
         method ()
           let result1 = #t;

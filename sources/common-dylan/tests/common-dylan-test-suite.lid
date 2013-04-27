@@ -1,7 +1,7 @@
 Library:      common-dylan-test-suite
 Synopsis:     Common Dylan library test suite
-Author:	      Andy Armstrong
-Target-Type:	dll
+Author:       Andy Armstrong
+Target-Type:  dll
 Files: library
        specification
        variables

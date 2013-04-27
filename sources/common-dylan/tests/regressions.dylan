@@ -8,25 +8,25 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define test bug-5805 ()
   check-no-errors("string-to-integer of minimum integer",
-		  string-to-integer(integer-to-string($minimum-integer)));
+                  string-to-integer(integer-to-string($minimum-integer)));
 end test bug-5805;
 
 define test bug-5954 ()
   check-equal("string-to-integer(\"$\", default: -17)",
-	      string-to-integer("$", default: -17),
-	      -17);
+              string-to-integer("$", default: -17),
+              -17);
   check-equal("string-to-integer(\"-$\", default: -17)",
-	      string-to-integer("-$", default: -17),
-	      -17);
+              string-to-integer("-$", default: -17),
+              -17);
   check-equal("string-to-integer(\"\", default: -17)",
-	      string-to-integer("", default: -17),
-	      -17);
+              string-to-integer("", default: -17),
+              -17);
   check-equal("string-to-integer(\" \", default: -17)",
-	      string-to-integer(" ", default: -17),
-	      -17);
+              string-to-integer(" ", default: -17),
+              -17);
   check-equal("string-to-integer(\"-\", default: -17)",
-	      string-to-integer("-", default: -17),
-	      -17);
+              string-to-integer("-", default: -17),
+              -17);
 end test bug-5954;
 
 define test bug-4351 ()

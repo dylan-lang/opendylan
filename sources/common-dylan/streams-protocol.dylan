@@ -15,19 +15,19 @@ end;
 // know about the new class too, it is simpler to rely on subclassing
 // <format-string-condition>.
 define method make
-    (class :: subclass(<stream-error>), 
-     #rest args, 
-     #key stream :: <stream>, 
-          format-string, 
+    (class :: subclass(<stream-error>),
+     #rest args,
+     #key stream :: <stream>,
+          format-string,
           format-arguments = format-string & #[],
      #all-keys)
  => (error :: <stream-error>)
   apply(next-method,
-	class,
-	stream: stream,
-	format-string:    format-string    | "Condition %s for stream %s",
-	format-arguments: format-arguments | vector(class, stream),
-	args)
+        class,
+        stream: stream,
+        format-string:    format-string    | "Condition %s for stream %s",
+        format-arguments: format-arguments | vector(class, stream),
+        args)
 end method make;
 
 
@@ -38,42 +38,42 @@ define method make
     (class == <end-of-stream-error>, #key stream :: <stream>)
  => (error :: <end-of-stream-error>)
   next-method(class,
-	      stream: stream,
-	      format-string:    "End of stream %s",
-	      format-arguments: vector(stream))
+              stream: stream,
+              format-string:    "End of stream %s",
+              format-arguments: vector(stream))
 end method make;
 
 define class <incomplete-read-error> (<end-of-stream-error>)
-  constant slot stream-error-sequence, 
+  constant slot stream-error-sequence,
     required-init-keyword: sequence:;
   constant slot stream-error-count,
     required-init-keyword: count:;
 end class <incomplete-read-error>;
 
 define class <incomplete-write-error> (<end-of-stream-error>)
-  constant slot stream-error-count, 
+  constant slot stream-error-count,
     required-init-keyword: count:;
 end class <incomplete-write-error>;
 
 
 
-define open generic stream-element-type 
+define open generic stream-element-type
     (stream :: <stream>) => (type :: <type>);
 
 define open generic open-file-stream
     (filename :: <object>, #key, #all-keys) => (stream :: <stream>);
 
-define open generic stream-open? 
+define open generic stream-open?
     (stream :: <stream>) => (open? :: <boolean>);
 
 define method stream-open? (stream :: <stream>) => (open? :: <boolean>);
   #t
 end method stream-open?;
 
-define open generic stream-at-end? 
+define open generic stream-at-end?
     (stream :: <stream>) => (at-end? :: <boolean>);
 
-define open generic stream-size 
+define open generic stream-size
     (stream :: <stream>) => (size :: false-or(<abstract-integer>));
 
 define method stream-size (stream :: <stream>) => (size :: singleton(#f))
@@ -83,17 +83,17 @@ end method stream-size;
 
 define open abstract class <positionable-stream> (<stream>) end;
 
-define open generic stream-position 
+define open generic stream-position
     (stream :: <stream>) => (position);
 
-define open generic stream-position-setter 
+define open generic stream-position-setter
     (position, stream :: <stream>) => (position :: <object>);
 
-define open generic adjust-stream-position 
+define open generic adjust-stream-position
     (stream :: <stream>, delta, #key from) => (position);
 
 
-define open generic read-element 
+define open generic read-element
     (stream :: <stream>, #key on-end-of-stream) => (element);
 
 define open generic unread-element
@@ -107,7 +107,7 @@ define open generic read
  => (sequence-or-eof);
 
 define method read (stream :: <stream>, n :: <integer>,
-		    #key on-end-of-stream = unsupplied())
+                    #key on-end-of-stream = unsupplied())
  => (elements)
   let elements = make(<vector>, size: n);
   if (supplied?(on-end-of-stream))
@@ -119,7 +119,7 @@ define method read (stream :: <stream>, n :: <integer>,
 end method read;
 
 
-define open generic read-into! 
+define open generic read-into!
     (stream :: <stream>, n :: <integer>, sequence :: <mutable-sequence>,
      #key start, on-end-of-stream)
  => (count);
@@ -134,15 +134,15 @@ define method read-into!
     if (i < limit)
       let elt = read-element(stream, on-end-of-stream: unfound());
       if (found?(elt))
-	sequence[i] := elt;
-	loop(i + 1);
+        sequence[i] := elt;
+        loop(i + 1);
       elseif (supplied?(on-end-of-stream))
-	i - start
+        i - start
       else
-	signal(make(<incomplete-read-error>,
-		    stream: stream,
-		    count: i - start, // seems kinda redundant...
-		    sequence: copy-sequence(sequence, start: start, end: i)))
+        signal(make(<incomplete-read-error>,
+                    stream: stream,
+                    count: i - start, // seems kinda redundant...
+                    sequence: copy-sequence(sequence, start: start, end: i)))
       end
     else
       i - start
@@ -157,21 +157,21 @@ define method discard-input (stream :: <stream>) => ()
   #f
 end method discard-input;
 
-define open generic stream-input-available? 
+define open generic stream-input-available?
     (stream :: <stream>) => (available? :: <boolean>);
 
-define open generic stream-contents 
+define open generic stream-contents
     (stream :: <stream>, #key clear-contents?) => (sequence :: <sequence>);
 
-define open generic stream-contents-as 
+define open generic stream-contents-as
     (type :: <type>, stream :: <stream>, #key clear-contents?)
  => (sequence :: <sequence>);
 
 
-define open generic write-element 
+define open generic write-element
     (stream :: <stream>, element) => ();
 
-define open generic write 
+define open generic write
     (stream :: <stream>, elements :: <sequence>, #key start, \end) => ();
 
 define method write
@@ -183,11 +183,11 @@ define method write
   #f
 end method write;
 
-define open generic force-output 
+define open generic force-output
     (stream :: <stream>,  #key synchronize? :: <boolean>) => ();
 
 define method force-output
-    (stream :: <stream>, 
+    (stream :: <stream>,
      #key synchronize? :: <boolean>) => ()
   ignore(stream, synchronize?);
 end method force-output;
@@ -206,5 +206,4 @@ define open generic discard-output (stream :: <stream>) => ();
 define method discard-output (stream :: <stream>) => ()
   #f
 end method discard-output;
-
 

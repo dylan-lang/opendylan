@@ -23,7 +23,7 @@ end class <locator>;
 define open abstract class <server-locator> (<locator>)
 end class <server-locator>;
 
-define open abstract class <physical-locator> (<locator>) 
+define open abstract class <physical-locator> (<locator>)
 end class <physical-locator>;
 
 

@@ -18,18 +18,18 @@ end method;
 
 define method debug-locked-counter ()
   let count = *locked-counter*;
-  format-l("%d - new value from %s\n", 
+  format-l("%d - new value from %s\n",
            count, current-thread().thread-name);
   count;
 end method;
 
-define method increment-value 
+define method increment-value
    (x :: <integer>) => (res :: <integer>)
   thread-yield(); // make this more interesting
   x + 1;
 end method;
 
-define method decrement-value 
+define method decrement-value
    (x :: <integer>) => (res :: <integer>)
   thread-yield(); // make this more interesting
   x - 1;

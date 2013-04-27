@@ -9,10 +9,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library common-dylan
   use dylan,
-    export: { dylan, 
-	      finalization,
-	      threads };
-  export 
+    export: { dylan,
+              finalization,
+              threads };
+  export
     common-dylan,
     common-extensions,
     streams-protocol,
@@ -36,13 +36,13 @@ define module simple-profiling
 end module simple-profiling;
 
 define module byte-vector
-  use dylan-extensions, 
+  use dylan-extensions,
     export: { <byte> };
   create <byte-vector>,
          byte-vector-fill,
          byte-vector-ref,
          byte-vector-ref-setter,
-         copy-bytes; 
+         copy-bytes;
 end module byte-vector;
 
 define module common-extensions
@@ -50,7 +50,7 @@ define module common-extensions
     export: { <bottom>,
               <format-string-condition>,
                 <stack-overflow-error>,
-	        <arithmetic-error>,
+                <arithmetic-error>,
                   <division-by-zero-error>,
                   <arithmetic-overflow-error>,
                   <arithmetic-underflow-error>,
@@ -67,15 +67,15 @@ define module common-extensions
               remove-all-keys!,
               rest,
               subclass,
-	      \when,
+              \when,
               register-application-exit-function };
   use simple-debugging,
     export: { \assert,
-	      \debug-assert,
-	      debug-message };
+              \debug-assert,
+              debug-message };
   use simple-profiling,
-    export: { \profiling, 
-	      profiling-type-result };
+    export: { \profiling,
+              profiling-type-result };
   use byte-vector,
     export: { <byte-vector> };
   create <closable-object>,
@@ -96,23 +96,23 @@ define module common-extensions
          $unsupplied, unsupplied, unsupplied?, supplied?,
          $unfound,    unfound,    unfound?,    found?,
          true?, false?,
-	 concatenate!,
-	 condition-to-string,
-	 difference,
-	 position,
-	 split,
+         concatenate!,
+         condition-to-string,
+         difference,
+         position,
+         split,
          join,
-	 fill-table!,
-	 find-element,
-	 find-value,
+         fill-table!,
+         find-element,
+         find-value,
          format-to-string,
-	 float-to-string,
-	 integer-to-string,
-	 number-to-string,
-	 string-to-integer,
-	 machine-word-to-string,
-	 string-to-machine-word,
-	 \table-definer,
+         float-to-string,
+         integer-to-string,
+         number-to-string,
+         string-to-integer,
+         machine-word-to-string,
+         string-to-machine-word,
+         \table-definer,
          application-name,
          application-filename,
          application-arguments,
@@ -142,7 +142,7 @@ define module locators-protocol
          list-locator;
 
   create <server-locator>,
-	 <physical-locator>;
+         <physical-locator>;
 end module locators-protocol;
 
 define module streams-protocol
@@ -194,7 +194,7 @@ define module transcendentals
   use dylan-primitives;
   export $single-pi, $double-pi, // $extended-pi,
          $single-e,  $double-e,  // $extended-e,
-	 sqrt,
+         sqrt,
          isqrt,
          log,
          exp,
@@ -206,23 +206,23 @@ define module transcendentals
          acos,
          atan,
          atan2,
-	 sinh,
-	 cosh,
-	 tanh,
-	 asinh,
-	 acosh,
-	 atanh;
+         sinh,
+         cosh,
+         tanh,
+         asinh,
+         acosh,
+         atanh;
 end module transcendentals;
 
 define module machine-words
   use dylan-extensions,
     export: {<machine-word>,
-	     $machine-word-size,
-	     $maximum-signed-machine-word,
-	     $minimum-signed-machine-word,
-	     $maximum-unsigned-machine-word,
-	     $minimum-unsigned-machine-word,
-	     as-unsigned };
+             $machine-word-size,
+             $maximum-signed-machine-word,
+             $minimum-signed-machine-word,
+             $maximum-unsigned-machine-word,
+             $minimum-unsigned-machine-word,
+             as-unsigned };
   create %logior,
          %logxor,
          %logand,

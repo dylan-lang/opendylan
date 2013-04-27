@@ -39,7 +39,7 @@ end constant-test $double-e;
 // tests found at http://netlib.org/elefunt and described in detail in:
 //
 //   Cody, William J. and William Waite. Software Manual for the Elementary
-//   Functions. 
+//   Functions.
 
 define transcendentals function-test sin ()
   // ---*** Fill this in.
@@ -146,8 +146,8 @@ define transcendentals function-test isqrt ()
                   isqrt(-1));
 
   // Compare isqrt to floor(sqrt)
-  for(arg = 2 then arg * 3 + 5,
-      while: (arg < floor/($maximum-integer, 3) ) )
+  for (arg = 2 then arg * 3 + 5,
+       while: (arg < floor/($maximum-integer, 3)))
     check-equal(format-to-string("isqrt(%=) = floor(sqrt(%=))", arg, arg),
                 isqrt(arg),
                 floor(sqrt(arg)));

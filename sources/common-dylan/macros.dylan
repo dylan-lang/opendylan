@@ -28,14 +28,14 @@ define macro timing
       ?body:body
     end }
     => { primitive-start-timer();
-	 ?body;
-	 let elapsed-time = primitive-stop-timer();
-	 values(elapsed-time[0], elapsed-time[1]) }
+         ?body;
+         let elapsed-time = primitive-stop-timer();
+         values(elapsed-time[0], elapsed-time[1]) }
 end macro timing;
 
 /// Generic profiling macro
 
-// Syntax: 
+// Syntax:
 // profiling
 //    (cpu-time-seconds,
 //     cpu-time-microseconds,
@@ -78,7 +78,7 @@ end macro profiling-keywords;
 define macro profiling-results
   { profiling-results (?options:*)
       ?body:body
-    end } 
+    end }
  => { method (state)
         ?options;
         ?body
@@ -132,7 +132,7 @@ end function do-with-profiling;
 
 /// CPU time profiling
 
-define constant <cpu-profiling-type> 
+define constant <cpu-profiling-type>
   = one-of(#"cpu-time-seconds", #"cpu-time-microseconds");
 
 define method profiling-type-result

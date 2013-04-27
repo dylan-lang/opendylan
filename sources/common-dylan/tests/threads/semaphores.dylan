@@ -57,7 +57,7 @@ define test semaphore-multiple-claim-release
                wait-for(semaphore));
   end for;
 
-  check-false("Timeout waiting for semaphore", 
+  check-false("Timeout waiting for semaphore",
               wait-for(semaphore, timeout: 1));
 
   for (i from 1 to 10)

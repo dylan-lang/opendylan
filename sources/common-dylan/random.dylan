@@ -20,8 +20,8 @@ define function lcg-rand (prev :: <integer>) => (r :: <integer>)
   modulo(prev * 171 + 11213, 53125)
 end function lcg-rand;
 
-define method initialize (r :: <random>, #key seed = default-random-seed()) 
-		      => ()
+define method initialize (r :: <random>, #key seed = default-random-seed())
+                      => ()
   let a = r.recent;
   // Ensure that there's at least one 1 in each LFSR:
   a[0] := $maximum-integer;
@@ -41,22 +41,22 @@ define method initialize (r :: <random>, #key seed = default-random-seed())
 end method initialize;
 
 define function random-29 (r :: <random>) => (v :: <integer>)
-  let ri :: <integer> = r.recent-index := 
-  	modulo(r.recent-index + 1, $recent-size);
+  let ri :: <integer> = r.recent-index :=
+          modulo(r.recent-index + 1, $recent-size);
   let a = r.recent;
   local method tap (bit :: <integer>) => (value :: <integer>)
     a[modulo(ri + ($recent-size - bit), $recent-size)]
   end method tap;
   // We're using primitive polynomial x^54 + x^8 + x^6 + x^3 + x^0, so we tap
-  // bits 54, 8, 6, and 3.  Bits in recent are stored in reverse order, so 
+  // bits 54, 8, 6, and 3.  Bits in recent are stored in reverse order, so
   // the index of bit n is (ri - n) % 54 = (ri + (54 - n)) % 54.
   a[ri] := logxor(tap(54), tap(8), tap(6), tap(3))
-end function random-29; 
+end function random-29;
 
 define constant $default-random = make(<random>);
 
 define method random
-	  (range :: <integer>, #key random: r :: <random> = $default-random)
+          (range :: <integer>, #key random: r :: <random> = $default-random)
        => (new :: <integer>)
   let M = $maximum-integer;
   let limit = M - modulo(M - range + 1, range);

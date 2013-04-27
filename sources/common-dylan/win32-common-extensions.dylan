@@ -18,11 +18,11 @@ define thread variable *actual-count-buffer* :: <byte-string>
 define function ensure-console () => ()
   local method call-succeeded? (result :: <machine-word>) => (success :: <boolean>)
           primitive-machine-word-not-equal?
-	    (primitive-unwrap-machine-word(result),
-	     integer-as-raw(-1))
+            (primitive-unwrap-machine-word(result),
+             integer-as-raw(-1))
           & primitive-machine-word-not-equal?
-	      (primitive-unwrap-machine-word(result),
-	       integer-as-raw(0))
+              (primitive-unwrap-machine-word(result),
+               integer-as-raw(0))
         end method;
   local method get-handle () => (handle :: <machine-word>)
           primitive-wrap-machine-word
@@ -64,8 +64,8 @@ define inline function write-console
   when (*console*)
     %call-c-function ("WriteFile", c-modifiers: "__stdcall")
         (handle :: <raw-c-pointer>, buffer-ptr :: <raw-c-pointer>,
-	 count :: <raw-c-unsigned-long>, actual-count :: <raw-c-pointer>,
-	 lpOverlapped :: <raw-c-pointer>)
+         count :: <raw-c-unsigned-long>, actual-count :: <raw-c-pointer>,
+         lpOverlapped :: <raw-c-pointer>)
      => (success? :: <raw-c-signed-int>)
       (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(*console*)),
        primitive-string-as-raw(string),
@@ -89,13 +89,13 @@ define function default-random-seed () => (seed :: <integer>)
     (primitive-string-as-raw(*filetime-buffer*))
   end;
   logior(as(<integer>, *filetime-buffer*[0]),
-	 ash(as(<integer>, *filetime-buffer*[1]), 8),
-	 ash(as(<integer>, *filetime-buffer*[2]), 16))
+         ash(as(<integer>, *filetime-buffer*[1]), 8),
+         ash(as(<integer>, *filetime-buffer*[2]), 16))
   + logior(as(<integer>, *filetime-buffer*[3]),
-	   ash(as(<integer>, *filetime-buffer*[4]), 8),
-	   ash(as(<integer>, *filetime-buffer*[5]), 16))
+           ash(as(<integer>, *filetime-buffer*[4]), 8),
+           ash(as(<integer>, *filetime-buffer*[5]), 16))
   + logior(as(<integer>, *filetime-buffer*[6]),
-	   ash(as(<integer>, *filetime-buffer*[7]), 8))
+           ash(as(<integer>, *filetime-buffer*[7]), 8))
 end function default-random-seed;
 
 
@@ -109,10 +109,10 @@ define inline-only function ensure-application-name-filename-and-arguments () =>
   unless (*application-name*)
     // The documentation for GetCommandLine claims it never fails ...
     let command-line = primitive-raw-as-string
-			 (%call-c-function ("GetCommandLineA", c-modifiers: "__stdcall")
-			      () => (line :: <raw-byte-string>)
-			    ()
-			  end);
+                         (%call-c-function ("GetCommandLineA", c-modifiers: "__stdcall")
+                              () => (line :: <raw-byte-string>)
+                            ()
+                          end);
     let (name, #rest arguments) = tokenize-command-line(command-line);
     *application-name* := name;
     *application-arguments* := apply(vector, arguments);
@@ -122,29 +122,29 @@ define inline-only function ensure-application-name-filename-and-arguments () =>
       = make(<byte-string>, size: path-buffer-size, fill: '\0');
     let path-size :: <integer>
       = raw-as-integer(%call-c-function ("GetModuleFileNameA", c-modifiers: "__stdcall")
-			   (hModule :: <raw-c-pointer>,
-			    lpFilename :: <raw-byte-string>,
-			    nSize :: <raw-c-unsigned-long>)
-			=> (value-size :: <raw-c-unsigned-long>)
-			 (primitive-cast-raw-as-pointer(integer-as-raw(0)),
-			  primitive-string-as-raw(path-buffer),
-			  integer-as-raw(path-buffer-size))
-		       end);
+                           (hModule :: <raw-c-pointer>,
+                            lpFilename :: <raw-byte-string>,
+                            nSize :: <raw-c-unsigned-long>)
+                        => (value-size :: <raw-c-unsigned-long>)
+                         (primitive-cast-raw-as-pointer(integer-as-raw(0)),
+                          primitive-string-as-raw(path-buffer),
+                          integer-as-raw(path-buffer-size))
+                       end);
     if (path-size > path-buffer-size)
       // The documentation for GetModuleFileName doesn't state whether it returns
       // the actual size even if it won't fit in the buffer.  Let's hope it does ...
       let path-buffer-size :: <integer> = path-size + 1;
       path-buffer := make(<byte-string>, size: path-buffer-size, fill: '\0');
       path-size :=
-	raw-as-integer(%call-c-function ("GetModuleFileNameA", c-modifiers: "__stdcall")
-			   (hModule :: <raw-c-pointer>,
-			    lpFilename :: <raw-byte-string>,
-			    nSize :: <raw-c-unsigned-long>)
-			=> (value-size :: <raw-c-unsigned-long>)
-			 (primitive-cast-raw-as-pointer(integer-as-raw(0)),
-			  primitive-string-as-raw(path-buffer),
-			  integer-as-raw(path-buffer-size))
-		       end)
+        raw-as-integer(%call-c-function ("GetModuleFileNameA", c-modifiers: "__stdcall")
+                           (hModule :: <raw-c-pointer>,
+                            lpFilename :: <raw-byte-string>,
+                            nSize :: <raw-c-unsigned-long>)
+                        => (value-size :: <raw-c-unsigned-long>)
+                         (primitive-cast-raw-as-pointer(integer-as-raw(0)),
+                          primitive-string-as-raw(path-buffer),
+                          integer-as-raw(path-buffer-size))
+                       end)
     end;
     if (path-size > 0)
       *application-filename* := copy-sequence(path-buffer, end: path-size)
@@ -204,58 +204,58 @@ define function tokenize-command-line (line :: <byte-string>)
   let _end :: <integer> = size(line);
   let token :: <stretchy-vector> = make(<stretchy-vector>);
   local method next-token () => (token :: false-or(<byte-string>))
-	  _start := skip-whitespace(line, _start, _end);
-	  if (_start < _end)
-	    let escaped? :: false-or(<integer>) = #f;
-	    let quoted? :: <boolean> = #f;
-	    let done? :: <boolean> = #f;
-	    token.size := 0;
-	    while (_start < _end & ~done?)
-	      let c :: <character> = line[_start];
-	      case
-		escaped? & c = '\\' =>
-		  escaped? := escaped? + 1;
-		escaped? & c = '"' =>
-		  if (even?(escaped?))
-		    add-escapes(token, ash(escaped?, -1));
-		    escaped? := #f;
-		    _start := _start - 1;
-		  else
-		    add-escapes(token, ash(escaped? - 1, -1));
-		    escaped? := #f;
-		    add!(token, c);
-		  end;
-		escaped? =>
-		  let n-escapes :: <integer> = escaped?;
-		  add-escapes(token, n-escapes);
-		  if (whitespace?(c) & ~quoted?)
+          _start := skip-whitespace(line, _start, _end);
+          if (_start < _end)
+            let escaped? :: false-or(<integer>) = #f;
+            let quoted? :: <boolean> = #f;
+            let done? :: <boolean> = #f;
+            token.size := 0;
+            while (_start < _end & ~done?)
+              let c :: <character> = line[_start];
+              case
+                escaped? & c = '\\' =>
+                  escaped? := escaped? + 1;
+                escaped? & c = '"' =>
+                  if (even?(escaped?))
+                    add-escapes(token, ash(escaped?, -1));
+                    escaped? := #f;
+                    _start := _start - 1;
+                  else
+                    add-escapes(token, ash(escaped? - 1, -1));
+                    escaped? := #f;
+                    add!(token, c);
+                  end;
+                escaped? =>
+                  let n-escapes :: <integer> = escaped?;
+                  add-escapes(token, n-escapes);
+                  if (whitespace?(c) & ~quoted?)
                     done? := #t
-		  else
-		    add!(token, c)
-		  end;
-		  escaped? := #f;
-		quoted? & whitespace?(c) =>
-		  add!(token, c);
-		c = '\\' =>
-		  escaped? := 1;
-		c = '"' =>
-		  quoted? := ~quoted?;
-		whitespace?(c) =>
-		  done? := #t;
-		otherwise =>
-		  add!(token, c);
-	      end;
-	      _start := _start + 1
-	    end;
+                  else
+                    add!(token, c)
+                  end;
+                  escaped? := #f;
+                quoted? & whitespace?(c) =>
+                  add!(token, c);
+                c = '\\' =>
+                  escaped? := 1;
+                c = '"' =>
+                  quoted? := ~quoted?;
+                whitespace?(c) =>
+                  done? := #t;
+                otherwise =>
+                  add!(token, c);
+              end;
+              _start := _start + 1
+            end;
             if (escaped?)
               let n-escapes :: <integer> = escaped?;
               add-escapes(token, n-escapes)
             end;
-	    concatenate-as(<byte-string>, token)
-	  else
-	    #f
-	  end
-	end method next-token;
+            concatenate-as(<byte-string>, token)
+          else
+            #f
+          end
+        end method next-token;
   while (_start < _end)
     let token = next-token();
     if (token)

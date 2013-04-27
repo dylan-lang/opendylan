@@ -22,9 +22,9 @@ end macro-test debug-assert-test;
 
 define common-extensions macro-test iterate-test ()
   check-equal("iterate macro computes factorial 5",
-	      iterate recurse (x = 5)
-		if (x < 2) x else x * recurse(x - 1) end
-	      end,
+              iterate recurse (x = 5)
+                if (x < 2) x else x * recurse(x - 1) end
+              end,
               120)
 end macro-test iterate-test;
 
@@ -35,37 +35,37 @@ define table $test-table :: <object-table>
 
 define common-extensions macro-test table-definer-test ()
   check-true("define table produces correct table",
-	     size($test-table) = 3
-	       & $test-table[0] == #"zero"
-	       & $test-table[1] == #"one"
-	       & $test-table[2] == #"two")
+             size($test-table) = 3
+               & $test-table[0] == #"zero"
+               & $test-table[1] == #"one"
+               & $test-table[2] == #"two")
 end macro-test table-definer-test;
 
 define simple-profiling macro-test timing-test ()
   check-true("timing macro returns two integer values",
-	     begin
-	       let (seconds, microseconds)
-		 = timing ()
-		     for (i from 0 to 200) end
-	           end;
-	       instance?(seconds, <integer>)
-	         & instance?(microseconds, <integer>)
-	     end)
+             begin
+               let (seconds, microseconds)
+                 = timing ()
+                     for (i from 0 to 200) end
+                   end;
+               instance?(seconds, <integer>)
+                 & instance?(microseconds, <integer>)
+             end)
 end macro-test timing-test;
 
 define simple-profiling macro-test profiling-test ()
   check-true("profiling macro returns two integer values",
-	     begin
-	       let true? = #f;
-	       profiling (cpu-time-seconds, cpu-time-microseconds)
-		 for (i from 0 to 200) end
-	       results
-		 true?
-		   := instance?(cpu-time-seconds, <integer>)
-		        & instance?(cpu-time-microseconds, <integer>)
-	       end;
-	       true?
-	     end)
+             begin
+               let true? = #f;
+               profiling (cpu-time-seconds, cpu-time-microseconds)
+                 for (i from 0 to 200) end
+               results
+                 true?
+                   := instance?(cpu-time-seconds, <integer>)
+                        & instance?(cpu-time-microseconds, <integer>)
+               end;
+               true?
+             end)
 end macro-test profiling-test;
 
 define common-extensions macro-test when-test ()

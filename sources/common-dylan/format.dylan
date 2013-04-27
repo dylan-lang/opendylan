@@ -32,7 +32,7 @@ define macro user-assert
  { user-assert(?value:expression, ?format-string:expression, ?format-arguments:*) }
     => { unless (?value)
            user-assertion-error(?format-string, ?format-arguments)
-	 end }
+         end }
 end macro user-assert;
 
 define class <user-assertion-error> (<simple-error>)
@@ -41,8 +41,8 @@ end class <user-assertion-error>;
 define function user-assertion-error
     (format-string :: <string>, #rest format-arguments)
   error(make(<user-assertion-error>,
-	     format-string: format-string,
-	     format-arguments: format-arguments))
+             format-string: format-string,
+             format-arguments: format-arguments))
 end function user-assertion-error;
 
 
@@ -55,51 +55,51 @@ define function print-format
   let found-percent? = #f;
   let argument-index :: <integer> = 0;
   let no-of-arguments = size(format-arguments);
-  local method argument 
-	    (char :: <character>, class :: <class>) => (argument)
+  local method argument
+            (char :: <character>, class :: <class>) => (argument)
           let current-index = argument-index;
           argument-index := argument-index + 1;
           user-assert(current-index < no-of-arguments,
-		      "Too few arguments for format string %=: %=",
-		      format-string, format-arguments);
+                      "Too few arguments for format string %=: %=",
+                      format-string, format-arguments);
           let argument = format-arguments[current-index];
           user-assert(class == <object> | instance?(argument, class),
-		      "Format argument for directive '%%%c' not of class %s: %=",
-		      char, object-name(class) | class, argument);
+                      "Format argument for directive '%%%c' not of class %s: %=",
+                      char, object-name(class) | class, argument);
           argument
         end;
   local method collect (string :: <string>) => ()
-	  print-string(buffer, string)
+          print-string(buffer, string)
         end method collect;
   local method collect-character (character :: <character>) => ()
-	  add!(buffer, character)
-	end method collect-character;
+          add!(buffer, character)
+        end method collect-character;
   for (char :: <character> in format-string)
     if (found-percent?)
       select (as-uppercase(char))
-	'D' => collect(number-to-string(argument(char, <number>)));
-	'B' => collect(integer-to-string(argument(char, <integer>), base: 2));
-	'O' => collect(integer-to-string(argument(char, <integer>), base: 8));
-	'X' => collect(integer-to-string(argument(char, <integer>), base: 16));
-	'C' => collect-character(argument(char, <character>));
-	'S' => print-pretty-name(buffer, argument(char, <object>));
-	'=' => print-unique-name(buffer, argument(char, <object>));
-	'%' => collect-character('%');
-	otherwise =>
-	  error("Invalid format directive '%s' in \"%s\"",
-		char, format-string);
+        'D' => collect(number-to-string(argument(char, <number>)));
+        'B' => collect(integer-to-string(argument(char, <integer>), base: 2));
+        'O' => collect(integer-to-string(argument(char, <integer>), base: 8));
+        'X' => collect(integer-to-string(argument(char, <integer>), base: 16));
+        'C' => collect-character(argument(char, <character>));
+        'S' => print-pretty-name(buffer, argument(char, <object>));
+        '=' => print-unique-name(buffer, argument(char, <object>));
+        '%' => collect-character('%');
+        otherwise =>
+          error("Invalid format directive '%s' in \"%s\"",
+                char, format-string);
       end;
       found-percent? := #f;
     else
       if (char == '%')
         found-percent? := #t;
       else
-	collect-character(char)
+        collect-character(char)
       end
     end
   end;
   user-assert(~found-percent?,
-	      "Incomplete format directive in \"%s\"", format-string);
+              "Incomplete format directive in \"%s\"", format-string);
 end function print-format;
 
 define function format-to-string
@@ -157,8 +157,8 @@ end function print-basic-name;
 define method print-unique-name
     (buffer :: <string-buffer>, object :: <object>) => ()
   local method symbol-name (symbol :: <symbol>) => (name :: <string>)
-	  as-lowercase(as(<string>, symbol))
-	end method symbol-name;
+          as-lowercase(as(<string>, symbol))
+        end method symbol-name;
   select (object by instance?)
     <byte-string>  => print-format(buffer, "\"%s\"", object);
     <symbol>       => print-format(buffer, "#\"%s\"", symbol-name(object));
@@ -198,15 +198,15 @@ end function primitive-name;
 
 define method print-unique-name
     (buffer :: <string-buffer>, union :: <union>) => ()
-  local method print-union-type 
-	    (buffer :: <string-buffer>, type :: <type>)
-	 => (object :: <object>)
-	  select (type by instance?)
-	    <singleton> => print-unique-name(buffer, singleton-object(type));
-	    <class>     => print-pretty-name(buffer, type);
-	    otherwise   => print-unique-name(buffer, type);
-	  end
-	end method print-union-type;
+  local method print-union-type
+            (buffer :: <string-buffer>, type :: <type>)
+         => (object :: <object>)
+          select (type by instance?)
+            <singleton> => print-unique-name(buffer, singleton-object(type));
+            <class>     => print-pretty-name(buffer, type);
+            otherwise   => print-unique-name(buffer, type);
+          end
+        end method print-union-type;
   print-format(buffer, "{%s: ", object-class-name(union));
   print-union-type(buffer, union-type1(union));
   print-string(buffer, ", ");
@@ -239,19 +239,19 @@ end function character-to-integer;
 
 define function integer-to-string
     (integer :: <integer>,
-     #key base :: <integer> = 10, 
+     #key base :: <integer> = 10,
           size: string-size :: <integer> = 0,
           fill :: <byte-character> = '0')
  => (string :: <byte-string>)
   user-assert(2 <= base & base <= 36,
-	      "Base %d is not between 2 and 36",
-	      base);
+              "Base %d is not between 2 and 36",
+              base);
   let negative-integer? = negative?(integer);
   let buffer = make(<string-buffer>);
   if (zero?(integer))
     buffer := add!(buffer, '0');
   end;
-  if (negative-integer?) 
+  if (negative-integer?)
     // Do the first digit by hand to avoid overflows when printing
     // $minimum-integer, since -$minimum-integer > $maximum-integer.
     let (quotient, remainder :: <integer>) = truncate/(integer, base);
@@ -278,49 +278,49 @@ end function integer-to-string;
 
 // Given a string, parse an integer from it.  Skips left whitespace.
 define function string-to-integer
-    (string :: <string>, 
+    (string :: <string>,
      #key base          :: <integer> = 10,
           start         :: <integer> = 0,
-          end: stop     :: false-or(<integer>), 
+          end: stop     :: false-or(<integer>),
           default = $unsupplied)
  => (n :: <integer>, next-key :: <integer>)
   let actual-start :: <integer> = start;
   let string-length :: <integer> = size(string);
   user-assert(start == 0 | (start > 0 & start < string-length),
-	      "start: %d is out of range [0, %d] for string %=",
-	      start, string-length, string);
+              "start: %d is out of range [0, %d] for string %=",
+              start, string-length, string);
   if (stop)
     user-assert(stop >= start & stop <= string-length,
-		"end: %d is out of range [0, %d] for string %=",
-		stop, string-length, string);
+                "end: %d is out of range [0, %d] for string %=",
+                stop, string-length, string);
   else
     stop := string-length
   end;
   user-assert(2 <= base & base <= 36,
-	      "Base %d is not between 2 and 36",
-	      base);
+              "Base %d is not between 2 and 36",
+              base);
   while (start < stop & member?(string[start], #(' ', '\n', '\r', '\f', '\t')))
     start := start + 1
   end;
   let sign :: <integer>
     = select (start < stop & string[start])
-	'+'       => start := start + 1; 1;
-	'-'       => start := start + 1; -1;
-	otherwise => 1;
+        '+'       => start := start + 1; 1;
+        '-'       => start := start + 1; -1;
+        otherwise => 1;
       end;
   let value :: <integer> = 0;      // Shifting digits into here
   let valid? :: <boolean> = #f;
   let next-key :: <integer>
     = block (return)
-	for (i :: <integer> from start below stop)
-	  let ch :: <byte-character> = as-uppercase(string[i]);
+        for (i :: <integer> from start below stop)
+          let ch :: <byte-character> = as-uppercase(string[i]);
           let digit = character-to-integer(ch);
-	  when (~digit | digit >= base)
-	    return(i)
-	  end;
-	  valid? := #t;
-	  value := value * base + digit * sign
-	end;
+          when (~digit | digit >= base)
+            return(i)
+          end;
+          valid? := #t;
+          value := value * base + digit * sign
+        end;
         stop
       end;
   if (valid?)
@@ -349,7 +349,7 @@ define inline-only function infinity? (float :: <float>) => (infinity? :: <boole
   ~zero?(float) & (float / 2.0) = float
 end function infinity?;
 
-define function float-to-string 
+define function float-to-string
     (float :: <float>,
      #key decimal-points :: false-or(<integer>) = #f)
  => (string :: <string>)
@@ -361,88 +361,88 @@ define function float-to-string
     //---*** keep the number of digits down to 7 for all types of float.
     let (max-digits, marker, force-marker?)
       = select (float by instance?)
-	  <single-float>   => values(7, 's', #f);
-	  <double-float>   => values(7, 'd', #t); // values(15, 'd', #t);
-	  <extended-float> => values(7, 'x', #t); // values(34, 'x', #t);
-	end;
+          <single-float>   => values(7, 's', #f);
+          <double-float>   => values(7, 'd', #t); // values(15, 'd', #t);
+          <extended-float> => values(7, 'x', #t); // values(34, 'x', #t);
+        end;
     let digits = min(decimal-points | max-digits, max-digits);
     case
       nan?(float) =>
-	// The sign of a NaN is meaningless ...
-	if (class == <single-float>)
-	  "{NaN}"
-	else
-	  format-to-string("{NaN}%c0", marker)
-	end;
+        // The sign of a NaN is meaningless ...
+        if (class == <single-float>)
+          "{NaN}"
+        else
+          format-to-string("{NaN}%c0", marker)
+        end;
       infinity?(float) =>
-	let sign :: <byte-character> = if (negative?(float)) '-' else '+' end;
-	if (class == <single-float>)
-	  format-to-string("%c{infinity}", sign)
-	else
-	  format-to-string("%c{infinity}%c0", sign, marker)
-	end;
+        let sign :: <byte-character> = if (negative?(float)) '-' else '+' end;
+        if (class == <single-float>)
+          format-to-string("%c{infinity}", sign)
+        else
+          format-to-string("%c{infinity}%c0", sign, marker)
+        end;
       zero?(float) =>
-	if (class == <single-float>)
-	  "0.0"
-	else
-	  format-to-string("0.0%c0", marker)
-	end;
+        if (class == <single-float>)
+          "0.0"
+        else
+          format-to-string("0.0%c0", marker)
+        end;
       negative?(float) =>
-	let positive-string = float-to-string(negative(float));
-	format-to-string("-%s", positive-string);
+        let positive-string = float-to-string(negative(float));
+        format-to-string("-%s", positive-string);
       otherwise =>
-	let buffer :: <string-buffer> = make(<string-buffer>);
-	let ten = as(class, 10.0);
-	let dec-point :: <integer> = digits - 1;
-	local method sub-print (mantissa :: <integer>, count :: <integer>)
-		let (quotient :: <integer>, remainder :: <integer>)
-		  = truncate/(mantissa, 10);
-		unless (count = digits)
-		  // Recurse until you have all the digits pushed on stack
-		  sub-print(quotient, count + 1)
-		end unless;
-		// Then as each recursive call unwinds, turn the digit (in
-		// remainder) into a character and output the character.
-		if (count = dec-point)
-		  add!(buffer, '.')
-		end if;
-		add!(buffer, as(<character>, as(<integer>, '0') + remainder))
-	      end method;
-	let scale :: <integer> = truncate/(log(float), log(ten));
-	if (scale > 0 & scale <= dec-point)
-	  dec-point := dec-point - scale;
-	end;
-	let sub-float :: <float> = float;
-	// let tens :: <integer> = 1;
-	let tens :: <float> = ten / ten;
-	for (i :: <integer> from 1 to abs(digits - scale))
-	  if (tens < 100000000)
-	    tens := ten * tens;
-	  else
-	    // make sure tens dont go bignum:
-	    sub-float
-	      := if (digits < scale) sub-float / tens else sub-float * tens end;
-	    tens := ten;
-	  end if;
-	end for;
-	if (digits < scale)
-	  sub-print(round/(sub-float, tens), 0);
-	else
-	  sub-print(round(sub-float * tens), 0);
-	end;
-	if (force-marker? | (scale ~= 0 & dec-point = digits - 1))
-	  add!(buffer, marker);
-	  if (dec-point = digits - 1)
-	    for (character in integer-to-string(scale))
-	      add!(buffer, character)
-	    end
-	  else
-	    // If the scale was small enough, we moved the decimal point
-	    // instead so don't print a bogus exponent ...
-	    add!(buffer, '0')
-	  end
-	end;
-	buffer-contents(buffer);
+        let buffer :: <string-buffer> = make(<string-buffer>);
+        let ten = as(class, 10.0);
+        let dec-point :: <integer> = digits - 1;
+        local method sub-print (mantissa :: <integer>, count :: <integer>)
+                let (quotient :: <integer>, remainder :: <integer>)
+                  = truncate/(mantissa, 10);
+                unless (count = digits)
+                  // Recurse until you have all the digits pushed on stack
+                  sub-print(quotient, count + 1)
+                end unless;
+                // Then as each recursive call unwinds, turn the digit (in
+                // remainder) into a character and output the character.
+                if (count = dec-point)
+                  add!(buffer, '.')
+                end if;
+                add!(buffer, as(<character>, as(<integer>, '0') + remainder))
+              end method;
+        let scale :: <integer> = truncate/(log(float), log(ten));
+        if (scale > 0 & scale <= dec-point)
+          dec-point := dec-point - scale;
+        end;
+        let sub-float :: <float> = float;
+        // let tens :: <integer> = 1;
+        let tens :: <float> = ten / ten;
+        for (i :: <integer> from 1 to abs(digits - scale))
+          if (tens < 100000000)
+            tens := ten * tens;
+          else
+            // make sure tens dont go bignum:
+            sub-float
+              := if (digits < scale) sub-float / tens else sub-float * tens end;
+            tens := ten;
+          end if;
+        end for;
+        if (digits < scale)
+          sub-print(round/(sub-float, tens), 0);
+        else
+          sub-print(round(sub-float * tens), 0);
+        end;
+        if (force-marker? | (scale ~= 0 & dec-point = digits - 1))
+          add!(buffer, marker);
+          if (dec-point = digits - 1)
+            for (character in integer-to-string(scale))
+              add!(buffer, character)
+            end
+          else
+            // If the scale was small enough, we moved the decimal point
+            // instead so don't print a bogus exponent ...
+            add!(buffer, '0')
+          end
+        end;
+        buffer-contents(buffer);
     end
   end
 end function float-to-string;
@@ -473,34 +473,34 @@ define function machine-word-to-string
  => (string :: <string>)
   let halfword-size = ash($machine-word-size, -1);
   let digits-per-halfword = ash(halfword-size, -2);
-  let high 
+  let high
     = coerce-machine-word-to-integer
         (machine-word-unsigned-shift-right(mw, halfword-size));
-  let low 
+  let low
     = coerce-machine-word-to-integer
         (machine-word-unsigned-shift-right
-	   (machine-word-unsigned-shift-left(mw, halfword-size),
-	    halfword-size));
+           (machine-word-unsigned-shift-left(mw, halfword-size),
+            halfword-size));
   concatenate-as(<string>,
-		 prefix | "",
-		 integer-to-string(high, base: 16, size: digits-per-halfword),
-		 integer-to-string(low, base: 16, size: digits-per-halfword))
+                 prefix | "",
+                 integer-to-string(high, base: 16, size: digits-per-halfword),
+                 integer-to-string(low, base: 16, size: digits-per-halfword))
 end function machine-word-to-string;
 
 define function string-to-machine-word
-    (str :: <string>, 
-     #key start         :: <integer> = 0, 
+    (str :: <string>,
+     #key start         :: <integer> = 0,
           default = $unsupplied,
           end: stop     :: false-or(<integer>))
  => (n :: <machine-word>, next-key :: <integer>)
   let string-length :: <integer> = size(str);
   user-assert(start >= 0 & start < string-length,
-	      "Start: %d is out of range [0, %d] for string %s",
-	      start, string-length, str);
+              "Start: %d is out of range [0, %d] for string %s",
+              start, string-length, str);
   if (stop)
     user-assert(stop >= start & stop <= string-length,
-		"Stop: %d is out of range [0, %d] for string %s.", 
-		stop, string-length, str);
+                "Stop: %d is out of range [0, %d] for string %s.",
+                stop, string-length, str);
   else
     stop := size(str)
   end;
@@ -509,28 +509,28 @@ define function string-to-machine-word
   end;
   // Remove common prefixes (#x, 0x) ...
   if ((start < stop - 2)
-	&((str[start] = '#' & str[start + 1] = 'x')
-	    | (str[start] = '0' & str[start + 1] = 'x')))
+        &((str[start] = '#' & str[start + 1] = 'x')
+            | (str[start] = '0' & str[start + 1] = 'x')))
     start := start + 2
   end;
   let value :: <machine-word> = as(<machine-word>, 0);
   let next-key
     = block (return)
-	for (i from start below stop)
-	  let ch :: <byte-character> = as-uppercase(str[i]);
+        for (i from start below stop)
+          let ch :: <byte-character> = as-uppercase(str[i]);
           let digit = character-to-integer(ch);
-	  when (~digit | digit >= 16)
-	    return(i > start & i)
-	  end;
-	  //--- andrewa: trick the typist into knowing that this is
-	  //--- an integer, so inlining works. Hopefully the new
-	  //--- typist will be able to work this out for itself.
-	  let integer-digit :: <integer> = digit;
-	  value
-	    := machine-word-logior
-	         (machine-word-unsigned-shift-left(value, 4),
-		  coerce-integer-to-machine-word(integer-digit));
-	end;
+          when (~digit | digit >= 16)
+            return(i > start & i)
+          end;
+          //--- andrewa: trick the typist into knowing that this is
+          //--- an integer, so inlining works. Hopefully the new
+          //--- typist will be able to work this out for itself.
+          let integer-digit :: <integer> = digit;
+          value
+            := machine-word-logior
+                 (machine-word-unsigned-shift-left(value, 4),
+                  coerce-integer-to-machine-word(integer-digit));
+        end;
         stop
       end;
   unless (next-key)
@@ -557,15 +557,15 @@ end method condition-to-string;
 define method condition-to-string
     (condition :: <format-string-condition>) => (string :: <string>)
   apply(format-to-string,
-        condition-format-string(condition), 
+        condition-format-string(condition),
         condition-format-arguments(condition))
 end method condition-to-string;
 
 define method condition-to-string
     (error :: <type-error>) => (string :: <string>)
   format-to-string("%= is not of type %=",
-		   type-error-value(error),
-		   type-error-expected-type(error))
+                   type-error-value(error),
+                   type-error-expected-type(error))
 end method condition-to-string;
 
 define method print-pretty-name
@@ -606,7 +606,7 @@ define method print-collection-contents
  => ()
   let dimensions = dimensions(array);
   print-elements(buffer, dimensions,
-		 print-length: print-length, separator: " x ")
+                 print-length: print-length, separator: " x ")
 end method print-collection-contents;
 
 define method print-collection-contents
@@ -615,14 +615,14 @@ define method print-collection-contents
  => ()
   ignore(print-length);
   local method print-range
-	    (buffer :: <string-buffer>, from :: <real>, to :: <real>,
-	     by :: <real>)
+            (buffer :: <string-buffer>, from :: <real>, to :: <real>,
+             by :: <real>)
          => ()
-	  select (by)
-	    1         => print-format(buffer, "%d to %d", from, to);
-	    otherwise => print-format(buffer, "%d to %d by %d", from, to, by);
-	  end
-	end method print-range;
+          select (by)
+            1         => print-format(buffer, "%d to %d", from, to);
+            otherwise => print-format(buffer, "%d to %d by %d", from, to, by);
+          end
+        end method print-range;
   let range-size = size(range);
   if (range-size = 0)
     print-string(buffer, $collection-empty-text)
@@ -669,7 +669,7 @@ define method print-collection-contents
     next-method()
   else
     print-format(buffer, "%=, %=", head(pair), tail-object)
-  end     
+  end
 end method print-collection-contents;
 
 define function print-elements

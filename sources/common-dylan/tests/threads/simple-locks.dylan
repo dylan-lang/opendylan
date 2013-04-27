@@ -69,7 +69,7 @@ define test simple-lock-claim
   sleep(1);
   let result = wait-for(lock);
   join-thread(thread);
-  check-true("Wait for lock owned by other thread", result);  
+  check-true("Wait for lock owned by other thread", result);
   check-true("Really did get lock", owned?(lock));
 
 end test;

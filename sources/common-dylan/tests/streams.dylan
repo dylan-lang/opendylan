@@ -39,11 +39,11 @@ define function register-stream-class-info
  => ()
   let info
     = make(<stream-class-info>,
-	   name: name,
-	   class: class,
-	   input-stream?: input-stream?,
-	   output-stream?: output-stream?,
-	   element-type: element-type);
+           name: name,
+           class: class,
+           input-stream?: input-stream?,
+           output-stream?: output-stream?,
+           element-type: element-type);
   $stream-classes[class] := info
 end function register-stream-class-info;
 
@@ -104,7 +104,7 @@ end method test-stream-of-size;
 define open generic make-stream-tests-of-size
     (class :: subclass(<stream>), stream-size :: <integer>)
  => (streams :: <sequence>);
-    
+
 define method make-stream-tests-of-size
     (class :: subclass(<stream>), stream-size :: <integer>)
  => (streams :: <sequence>)
@@ -152,11 +152,11 @@ define function register-stream-test
  => ()
   let tests :: <stretchy-object-vector>
     = element($stream-tests, class, default: make(<stretchy-object-vector>));
-  add!(tests, 
+  add!(tests,
        make(<stream-test-function-info>,
-	    class: class,
-	    test-function: test-function,
-	    direction: direction));
+            class: class,
+            test-function: test-function,
+            direction: direction));
   $stream-tests[class] := tests
 end function register-stream-test;
 
@@ -167,33 +167,33 @@ define method test-stream
     if (subtype?(class-info.info-class, class))
       let tests = $stream-tests[class];
       for (test-function-info :: <stream-test-function-info> in tests)
-	let test-function = test-function-info.info-test-function;
-	let test-function-direction = test-function-info.info-direction;
-	if (select (test-info.info-direction)
-	      #"input"  => 
-		class-info.info-input-stream?
-		  & (~test-function-direction | test-function-direction == #"input");
-	      #"output" => 
-		class-info.info-output-stream?
-		  & (~test-function-direction | test-function-direction == #"output");
-	    end)
-	  let stream = #f;
-	  block ()
-	    stream := test-info.info-make-function();
-	    unless (instance?(stream, class))
-	      error("Make function for stream class %s returns wrong class of object: %=",
-		    class-info.info-class-name,
-		    stream)
-	    end;
-	    if (~test-function-direction | test-function-direction == test-info.info-direction)
-	      test-function(test-info, stream);
-	    end
-	  cleanup
-	    if (stream)
-	      test-info.info-destroy-function(stream)
-	    end
-	  end
-	end
+        let test-function = test-function-info.info-test-function;
+        let test-function-direction = test-function-info.info-direction;
+        if (select (test-info.info-direction)
+              #"input"  =>
+                class-info.info-input-stream?
+                  & (~test-function-direction | test-function-direction == #"input");
+              #"output" =>
+                class-info.info-output-stream?
+                  & (~test-function-direction | test-function-direction == #"output");
+            end)
+          let stream = #f;
+          block ()
+            stream := test-info.info-make-function();
+            unless (instance?(stream, class))
+              error("Make function for stream class %s returns wrong class of object: %=",
+                    class-info.info-class-name,
+                    stream)
+            end;
+            if (~test-function-direction | test-function-direction == test-info.info-direction)
+              test-function(test-info, stream);
+            end
+          cleanup
+            if (stream)
+              test-info.info-destroy-function(stream)
+            end
+          end
+        end
       end
     end
   end
@@ -245,9 +245,9 @@ define method adjust-stream-position
  => (position :: <integer>)
   stream-position(stream)
     := select (from)
-	 #"current" => stream-position(stream) + delta;
-	 #"start"   => delta;
-	 #"end"     => stream-size(stream) + delta;
+         #"current" => stream-position(stream) + delta;
+         #"start"   => delta;
+         #"end"     => stream-size(stream) + delta;
        end
 end method adjust-stream-position;
 
@@ -260,9 +260,9 @@ define class <test-input-stream> (<test-stream>)
 end class <test-input-stream>;
 
 register-stream-class-info("<test-input-stream>", <test-input-stream>,
-			   input-stream?: #t,
-			   output-stream?: #f,
-			   element-type: <object>);
+                           input-stream?: #t,
+                           output-stream?: #f,
+                           element-type: <object>);
 
 define method make-test-instance
     (class == <test-input-stream>) => (stream :: <test-input-stream>)
@@ -279,11 +279,11 @@ define method stream-direction
 end method stream-direction;
 
 define method stream-contents
-    (stream :: <test-input-stream>, 
+    (stream :: <test-input-stream>,
      #key clear-contents? :: <boolean> = #t)
  => (contents :: <sequence>)
   let sequence = stream.stream-test-sequence;
-  if (clear-contents?) 
+  if (clear-contents?)
     // clear-contents(stream)
   end;
   sequence
@@ -379,9 +379,9 @@ define class <test-output-stream> (<test-stream>)
 end class <test-output-stream>;
 
 register-stream-class-info("<test-output-stream>", <test-output-stream>,
-			   input-stream?: #f,
-			   output-stream?: #t,
-			   element-type: <object>);
+                           input-stream?: #f,
+                           output-stream?: #t,
+                           element-type: <object>);
 
 define method stream-direction
     (stream :: <test-output-stream>) => (direction :: <symbol>)
@@ -400,7 +400,7 @@ end method write-element;
 
 define method write
     (stream :: <test-output-stream>, sequence :: <sequence>,
-     #key start :: <integer> = 0, 
+     #key start :: <integer> = 0,
           end: _end :: <integer> = sequence.size)
  => ()
   for (i :: <integer> from start below _end)
@@ -421,13 +421,13 @@ define method make-stream-tests-of-size
   let character-sequence = copy-sequence($default-string, end: stream-size);
   add!(tests,
        make(<stream-test-info>,
-	    test-name: format-to-string("<test-input-stream> size %d", stream-size),
-	    class-info: class-info,
-	    contents: character-sequence,
-	    direction: #"input",
-	    make-function: method () => (stream :: <test-input-stream>)
-			     make(<test-input-stream>, test-sequence: character-sequence)
-			   end));
+            test-name: format-to-string("<test-input-stream> size %d", stream-size),
+            class-info: class-info,
+            contents: character-sequence,
+            direction: #"input",
+            make-function: method () => (stream :: <test-input-stream>)
+                             make(<test-input-stream>, test-sequence: character-sequence)
+                           end));
   tests
 end method make-stream-tests-of-size;
 
@@ -439,13 +439,13 @@ define method make-stream-tests-of-size
   let character-sequence = copy-sequence($default-string, end: stream-size);
   add!(tests,
        make(<stream-test-info>,
-	    test-name: format-to-string("<test-output-stream> size %d", stream-size),
-	    class-info: class-info,
-	    contents: character-sequence,
-	    direction: #"output",
-	    make-function: method () => (stream :: <test-output-stream>)
-			     make(<test-output-stream>)
-			   end));
+            test-name: format-to-string("<test-output-stream> size %d", stream-size),
+            class-info: class-info,
+            contents: character-sequence,
+            direction: #"output",
+            make-function: method () => (stream :: <test-output-stream>)
+                             make(<test-output-stream>)
+                           end));
   tests
 end method make-stream-tests-of-size;
 
@@ -480,15 +480,15 @@ define method test-stream-open?
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
   check-true(format-to-string("%s: stream-open? initially", name),
-	     stream-open?(stream))
+             stream-open?(stream))
 end method test-stream-open?;
 
 define method test-stream-element-type
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
   check-true(format-to-string("%s: stream-element-type", name),
-	     subtype?(stream-element-type(stream),
-		      info.info-class-info.info-element-type))
+             subtype?(stream-element-type(stream),
+                      info.info-class-info.info-element-type))
 end method test-stream-element-type;
 
 
@@ -523,8 +523,8 @@ define method test-stream-size
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
   check-equal(format-to-string("%s: stream-size", name),
-	      info.info-contents.size,
-	      stream-size(stream))
+              info.info-contents.size,
+              stream-size(stream))
 end method test-stream-size;
 
 define method test-stream-at-end?
@@ -532,10 +532,10 @@ define method test-stream-at-end?
   let name = info.info-test-name;
   if (~empty?(info.info-contents))
     check-false(format-to-string("%s: stream-at-end? not true initially", name),
-		stream-at-end?(stream))
+                stream-at-end?(stream))
   else
     check-true(format-to-string("%s: stream-at-end? true initially", name),
-	       stream-at-end?(stream))
+               stream-at-end?(stream))
   end
 end method test-stream-at-end?;
 
@@ -545,12 +545,12 @@ define method test-read-element
   for (expected-element in info.info-contents,
        i from 0)
     check-equal(format-to-string("%s: read element %d", name, i),
-		expected-element,
-		read-element(stream))
+                expected-element,
+                read-element(stream))
   end;
   check-condition(format-to-string("%s: read-element off end signals <end-of-stream-error>", name),
-		  <end-of-stream-error>,
-		  read-element(stream));
+                  <end-of-stream-error>,
+                  read-element(stream));
   check-at-end-of-stream(name, "read-element", stream)
 end method test-read-element;
 
@@ -560,11 +560,11 @@ define method test-unread-element
   for (expected-element in info.info-contents,
        i from 0)
     check-true(format-to-string("%s: read element %d and then unread it", name, i),
-	       begin
-		 let element = read-element(stream);
-		 unread-element(stream, element);
-		 read-element(stream)
-	       end)
+               begin
+                 let element = read-element(stream);
+                 unread-element(stream, element);
+                 read-element(stream)
+               end)
   end;
   check-at-end-of-stream(name, "unread-element", stream)
 end method test-unread-element;
@@ -575,14 +575,14 @@ define method test-peek
   for (expected-element in info.info-contents,
        i from 0)
     check-true(format-to-string("%s: peek element %d", name, i),
-	       begin
-		 let element = peek(stream);
-		 read-element(stream)
-	       end)
+               begin
+                 let element = peek(stream);
+                 read-element(stream)
+               end)
   end;
   check-condition(format-to-string("%s: peek off end signals <end-of-stream-error>", name),
-		  <end-of-stream-error>,
-		  peek(stream));
+                  <end-of-stream-error>,
+                  peek(stream));
   check-at-end-of-stream(name, "peek", stream)
 end method test-peek;
 
@@ -590,11 +590,11 @@ define method test-read
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
   check-equal(format-to-string("%s: read whole stream", name),
-	      info.info-contents,
-	      read(stream, info.info-contents.size));
+              info.info-contents,
+              read(stream, info.info-contents.size));
   check-condition(format-to-string("%s: read off end signals <end-of-stream-error>", name),
-		  <end-of-stream-error>,
-		  read(stream, 1));
+                  <end-of-stream-error>,
+                  read(stream, 1));
   check-at-end-of-stream(name, "read", stream)
 end method test-read;
 
@@ -613,14 +613,14 @@ define method test-stream-input-available?
   let name = info.info-test-name;
   if (~info.info-contents.empty?)
     check-true(format-to-string("%s: stream-input-available? is true", name),
-	       stream-input-available?(stream));
+               stream-input-available?(stream));
     check-no-errors(format-to-string("%s: read to the end", name),
-		    while (~stream-at-end?(stream))
-		      read-element(stream)
-		    end)
+                    while (~stream-at-end?(stream))
+                      read-element(stream)
+                    end)
   end;
   check-false(format-to-string("%s: stream-input-available? at end is false", name),
-	      stream-input-available?(stream));
+              stream-input-available?(stream));
   check-at-end-of-stream(name, "stream-contents", stream)
 end method test-stream-input-available?;
 
@@ -628,8 +628,8 @@ define method test-stream-contents
     (info :: <stream-test-info>, stream :: <stream>) => ()
   let name = info.info-test-name;
   check-equal(format-to-string("%s: stream-contents correct", name),
-	      info.info-contents,
-	      stream-contents(stream));
+              info.info-contents,
+              stream-contents(stream));
   check-at-end-of-stream(name, "stream-contents", stream)
 end method test-stream-contents;
 
@@ -638,22 +638,22 @@ define method test-stream-contents-as
   let name = info.info-test-name;
   let contents = #f;
   check-equal(format-to-string("%s: stream-contents-as correct", name),
-	      info.info-contents,
-	      contents := stream-contents-as(<list>, stream));
+              info.info-contents,
+              contents := stream-contents-as(<list>, stream));
   check-instance?(format-to-string("%s: stream-contents-as returns sequence of specified type", name),
-		  <list>,
-		  contents);
+                  <list>,
+                  contents);
   check-at-end-of-stream(name, "stream-contents-as", stream)
 end method test-stream-contents-as;
 
 define function check-at-end-of-stream
     (name :: <string>, function-name :: <string>, stream :: <stream>) => ()
   check-true(format-to-string("%s: %s: reached end of stream", name, function-name),
-	     stream-at-end?(stream));
-  check-condition(format-to-string("%s: %s: <end-of-stream-error> signalled reading off end", 
-				   name, function-name),
-		  <end-of-stream-error>,
-		  read-element(stream))
+             stream-at-end?(stream));
+  check-condition(format-to-string("%s: %s: <end-of-stream-error> signalled reading off end",
+                                   name, function-name),
+                  <end-of-stream-error>,
+                  read-element(stream))
 end function check-at-end-of-stream;
 
 
@@ -750,7 +750,7 @@ end method make-test-instance;
 define sideways method make-test-instance
     (class :: subclass(<incomplete-read-error>))
  => (error :: <incomplete-read-error>)
-  make(class, 
+  make(class,
        stream: make(<test-output-stream>),
        count: 1,
        sequence: #[1, 2, 3]);
@@ -759,7 +759,7 @@ end method make-test-instance;
 define sideways method make-test-instance
     (class :: subclass(<incomplete-write-error>))
  => (error :: <incomplete-write-error>)
-  make(class, 
+  make(class,
        stream: make(<test-output-stream>),
        count: 1);
 end method make-test-instance;

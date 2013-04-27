@@ -55,7 +55,7 @@ define module-spec common-extensions ()
   function unfound () => (<object>);
   function unfound? (<object>) => (<boolean>);
   function found? (<object>) => (<boolean>);
-  
+
   // Collections
   sealed instantiable class <object-deque> (<deque>);
   open abstract class <stretchy-sequence> (<stretchy-collection>, <sequence>);
@@ -88,7 +88,7 @@ define module-spec common-extensions ()
   sealed instantiable class <division-by-zero-error> (<arithmetic-error>);
   sealed instantiable class <arithmetic-overflow-error> (<arithmetic-error>);
   sealed instantiable class <arithmetic-underflow-error> (<arithmetic-error>);
-  
+
   // Assertions & Debugging
   function debug-message (<string>, #"rest") => ();
   macro-test assert-test;
@@ -102,17 +102,17 @@ define module-spec common-extensions ()
   // Ignoring
   function ignorable (#"rest") => ();
   function ignore (#"rest") => ();
-  
+
   // Formatting
   function float-to-string (<float>) => (<string>);
   function integer-to-string (<integer>, #"key", #"base") => (<string>);
   open generic-function number-to-string (<number>) => (<string>);
-  function string-to-integer 
+  function string-to-integer
       (<string>, #"key", #"base", #"start", #"end", #"default")
    => (<integer>, <integer>);
 
   function format-to-string (<string>, #"rest") => (<string>);
-  
+
   // Control constructs
   macro-test iterate-test; // the macro iterate
   macro-test when-test;    // the macro when (which we're discussing)
@@ -150,7 +150,7 @@ define module-spec streams-protocol ()
   open generic-function read (<stream>, <integer>, #"key", #"on-end-of-stream")
     => (<object>);
   open generic-function read-into! (<stream>, <integer>, <mutable-sequence>,
-				    #"key", #"start", #"on-end-of-stream")
+                                    #"key", #"start", #"on-end-of-stream")
     => (<object>);
   open generic-function peek (<stream>, #"key", #"on-end-of-stream")
     => (<object>);
@@ -210,11 +210,11 @@ define module-spec finalization ()
   open generic-function finalize (<object>) => ();
   function finalize-when-unreachable (<object>) => (<object>);
 end module-spec finalization;
-  
+
 define module-spec simple-io ()
   function format-out (<string>, #"rest") => ();
 end module-spec simple-io;
-  
+
 define module-spec simple-random ()
   sealed instantiable class <random> (<object>);
   function random (<integer>, #"key", #"random") => (<integer>);
@@ -400,7 +400,7 @@ define module-spec transcendentals ()
 // of _b_.  The result will be a <single-float> if _b_ is an integer.
 
 
-//  open 
+//  open
 //    generic-function \^ (b :: <integer>, x :: <integer>) => (y :: <integer>);
 
 // Returns an integer result giving _b_ raised to the power _x_.  If _b_
@@ -466,7 +466,7 @@ define module-spec threads ()
 
   // Recursive locks
   open abstract instantiable primary class <recursive-lock> (<exclusive-lock>);
-  
+
   // Simple locks
   open abstract instantiable primary class <simple-lock> (<exclusive-lock>);
 
