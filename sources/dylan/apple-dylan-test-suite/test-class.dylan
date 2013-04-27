@@ -325,8 +325,10 @@ define test limited-collections-1 ()
                           instance?(cc.limited, <type>)
                         end method,
                         list(<table>,
+                             <object-table>,
                              <array>,
                              <vector>,
+                             <simple-vector>,
                              <stretchy-vector>,
                              <string>,
                              <deque>,
