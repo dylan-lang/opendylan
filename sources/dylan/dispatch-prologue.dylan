@@ -48,7 +48,7 @@ define constant engine-node$k-ambiguous-methods = 15;
 
 
 /* ************************************************************************
-		      Slot Accessor Assignments
+                      Slot Accessor Assignments
    ************************************************************************
 
 Slot accessors codes are allocated in a block, in getter/setter pairs;
@@ -155,7 +155,7 @@ define constant engine-node$k-reserved-discriminator-t = 62;
 define constant engine-node$k-reserved-discriminator-u = 63;
 
 
-/* 
+/*
 This little bit of cruft is factored out because it's not clear what
 extension to make to keep it general and generic-operation-free.  The
 basic problem is to keep a record of which arguments we have discriminated
@@ -165,7 +165,7 @@ to generate ones remaining to be done.
 What comes to mind is a bit mask, but the range limitations of that would
 be a problem (not much, considering, but well smaller than what we would be
 supporting as maximum number of specialized arguments).  So this will do
-for now, and it does have the benefit that its waste is proportional to 
+for now, and it does have the benefit that its waste is proportional to
 the number of specialized arguments.
 */
 
@@ -184,41 +184,41 @@ define constant make-argnum-set
 define function argnum-considered? (argnum :: <integer>, argnum-set :: <pair>) => (B :: <boolean>)
   let args :: <list> = tail(argnum-set);
   local method loop (l :: <list>)
-	  if (l == #())
-	    #f 
-	  else
-	    let oargnum :: <integer> = head(l);
-	    if (oargnum == argnum)
-	      #t
-	    elseif (oargnum > argnum)
-	      #f
-	    else 
-	      let l :: <list> = tail(l);
-	      loop(l)
-	    end if
-	  end if
-	end method;
+          if (l == #())
+            #f
+          else
+            let oargnum :: <integer> = head(l);
+            if (oargnum == argnum)
+              #t
+            elseif (oargnum > argnum)
+              #f
+            else
+              let l :: <list> = tail(l);
+              loop(l)
+            end if
+          end if
+        end method;
   loop(args)
 end function;
 
 
-define constant add-argnum 
+define constant add-argnum
   = method (argnum :: <integer>, argnum-set :: <pair>) => (argnum-set :: <pair>)
       local method loop (prev :: <pair>, l :: <list>)
               if (l == #())
                 tail(prev) := pair(argnum, #());
-		let oldcount :: <integer> = head(argnum-set);
+                let oldcount :: <integer> = head(argnum-set);
                 head(argnum-set) := oldcount + 1
               else
                 let oargnum :: <integer> = head(l);
                 unless (oargnum == argnum)
                   if (argnum < oargnum)
                     tail(prev) := pair(argnum, tail(prev));
-		    let oldcount :: <integer> = head(argnum-set);
-		    head(argnum-set) := oldcount + 1
+                    let oldcount :: <integer> = head(argnum-set);
+                    head(argnum-set) := oldcount + 1
                   else
-		    let nxt :: <list> = tail(l);
-		    loop(l, nxt)
+                    let nxt :: <list> = tail(l);
+                    loop(l, nxt)
                   end if
                 end unless
               end if
@@ -239,31 +239,31 @@ define constant add-argnum
 define constant next-free-argnum
   = method (previous :: <integer>, argnum-set :: <pair>) => (argnum :: <integer>)
       local method loop1 (l :: <list>)
-	      if (l == #())
+              if (l == #())
                 loop2(previous, l)
-	      else
-		let n :: <integer> = head(l);
-		if (previous < n)
-		  loop2(previous, l)
-		else
-		  let nextl :: <list> = tail(l);
-		  loop1(nextl)
-		end if
+              else
+                let n :: <integer> = head(l);
+                if (previous < n)
+                  loop2(previous, l)
+                else
+                  let nextl :: <list> = tail(l);
+                  loop1(nextl)
+                end if
               end if
             end method,
             method loop2 (prev :: <integer>, l :: <list>)
               let next :: <integer> = prev + 1;
               if (l == #() | head(l) ~== next)
                 next
-              else 
-		let nextl :: <list> = tail(l);
+              else
+                let nextl :: <list> = tail(l);
                 loop2(next, nextl)
               end if
             end method;
       let argnums :: <list> = tail(argnum-set);
       loop1(argnums)
     end method;
-              
+
 
 // Is the argnum-set a (possibly improper) subset of the set represented by the integer?
 // I.e., are there no args in the argnum-set that aren't in the integer set?
@@ -271,20 +271,20 @@ define constant next-free-argnum
 //define function argnum-set-subset? (argnum-set :: <pair>, set :: <integer>) => (v :: <boolean>)
 //  let cnt :: <integer> = head(argnum-set);
 //  local method loop (mtest :: <integer>, i :: <integer>, cnt :: <integer>)
-//	  if (cnt == 0) 
-//	    #t
-//	  elseif (mtest == 0)
-//	    #f
-//	  elseif (argnum-considered?(i, argnum-set))
-//	    if (logbit?(0, mtest))
-//	      loop(ash(mtest, -1), i + 1, cnt - 1)
-//	    else
-//	      #f
-//	    end if
-//	  else
-//	    loop(ash(mtest, -1), i + 1, cnt)
-//	  end if
-//	end method;
+//          if (cnt == 0)
+//            #t
+//          elseif (mtest == 0)
+//            #f
+//          elseif (argnum-considered?(i, argnum-set))
+//            if (logbit?(0, mtest))
+//              loop(ash(mtest, -1), i + 1, cnt - 1)
+//            else
+//              #f
+//            end if
+//          else
+//            loop(ash(mtest, -1), i + 1, cnt)
+//          end if
+//        end method;
 //  loop(set, 0, cnt)
 //end function;
 
@@ -292,14 +292,14 @@ define constant next-free-argnum
 // Currently not used, save...
 //define function argnum-set-to-mask (argnum-set :: <pair>) => (mask :: <integer>)
 //  local method loop (l :: <list>, m :: <integer>)
-//	  if (l == #())
-//	    m
-//	  else
-//	    let i :: <integer> = head(l);
-//	    let l :: <list> = tail(l);
-//	    loop(l, logior(m, ash(1, i)))
-//	  end if
-//	end method;
+//          if (l == #())
+//            m
+//          else
+//            let i :: <integer> = head(l);
+//            let l :: <list> = tail(l);
+//            loop(l, logior(m, ash(1, i)))
+//          end if
+//        end method;
 //  let bitlist :: <list> = tail(argnum-set);
 //  loop(bitlist, 0)
 //end function;
@@ -317,7 +317,7 @@ define constant next-free-argnum
 //                          collect-methods(tail(last-pair) := pair(meth, #()), tail(methods))
 //                        else
 //                          let argnum :: <integer> = head(l);
-//                          if (grounded-instance?(vector-element(args, argnum), 
+//                          if (grounded-instance?(vector-element(args, argnum),
 //                                                 %method-specializer(meth, argnum)))
 //                            loop(tail(l))
 //                          else
@@ -335,15 +335,15 @@ define constant next-free-argnum
 
 define inline constant dbg
     = method (str, #rest args) => ();
-	 // apply(format-out, str, args);
-	 // format-out("\n")
+         // apply(format-out, str, args);
+         // format-out("\n")
       end method;
 
 
 
 define constant %make-simple-vector
     = method (n :: <integer>, v) => (vec :: <simple-object-vector>);
-	make(<simple-object-vector>, size: n, fill: v)
+        make(<simple-object-vector>, size: n, fill: v)
       end method;
 
 
@@ -369,15 +369,15 @@ end method;
 //  primitive-cast-integer-as-raw
 //    (primitive-machine-word-logior
 //       (primitive-machine-word-logand
-//	  (primitive-machine-word-shift-right
-//	     (primitive-cast-integer-as-raw(n),
-//	      primitive-unwrap-machine-word(coerce-integer-to-machine-word(p))),
-//	   primitive-machine-word-subtract
-//	     (primitive-machine-word-shift-left-low
-//		(primitive-unwrap-machine-word($machine-word-integer-one-value),
-//		 primitive-unwrap-machine-word(coerce-integer-to-machine-word(s))),
-//	      primitive-unwrap-machine-word($machine-word-integer-one-value))),
-//	primitive-unwrap-machine-word($integer-tag-value)))
+//          (primitive-machine-word-shift-right
+//             (primitive-cast-integer-as-raw(n),
+//              primitive-unwrap-machine-word(coerce-integer-to-machine-word(p))),
+//           primitive-machine-word-subtract
+//             (primitive-machine-word-shift-left-low
+//                (primitive-unwrap-machine-word($machine-word-integer-one-value),
+//                 primitive-unwrap-machine-word(coerce-integer-to-machine-word(s))),
+//              primitive-unwrap-machine-word($machine-word-integer-one-value))),
+//        primitive-unwrap-machine-word($integer-tag-value)))
 //end method;
 
 
@@ -386,11 +386,11 @@ end method;
 //  primitive-cast-raw-as-integer
 //    (primitive-machine-word-logior
 //       (primitive-machine-word-subtract
-//	  (primitive-machine-word-shift-left-low
-//	     (primitive-unwrap-machine-word($machine-word-integer-one-value),
-//	      primitive-unwrap-machine-word(coerce-integer-to-machine-word(n))),
-//	   primitive-unwrap-machine-word($machine-word-integer-one-value)),
-//	primitive-unwrap-machine-word($integer-tag-value)))
+//          (primitive-machine-word-shift-left-low
+//             (primitive-unwrap-machine-word($machine-word-integer-one-value),
+//              primitive-unwrap-machine-word(coerce-integer-to-machine-word(n))),
+//           primitive-unwrap-machine-word($machine-word-integer-one-value)),
+//        primitive-unwrap-machine-word($integer-tag-value)))
 ////  ash(1, n) - 1
 //end method;
 
@@ -398,9 +398,9 @@ define inline constant %twopower = method (n :: <integer>) => (m :: <integer>);
 //  primitive-cast-raw-as-integer
 //    (primitive-machine-word-logior
 //       (primitive-machine-word-shift-left-low
-//	  (primitive-unwrap-machine-word($machine-word-integer-one-value),
-//	   primitive-unwrap-machine-word(coerce-integer-to-machine-word(n))),
-//	primitive-unwrap-machine-word($integer-tag-value)))
+//          (primitive-unwrap-machine-word($machine-word-integer-one-value),
+//           primitive-unwrap-machine-word(coerce-integer-to-machine-word(n))),
+//        primitive-unwrap-machine-word($integer-tag-value)))
   ash(1, n)
 end method;
 
@@ -409,11 +409,11 @@ define inline constant %scale-down = method (n :: <integer>, s :: <integer>) => 
 //  primitive-cast-raw-as-integer
 //    (primitive-machine-word-logior
 //       (primitive-machine-word-logand
-//	  (primitive-machine-word-shift-right
-//	     (primitive-cast-integer-as-raw(n),
-//	      primitive-unwrap-machine-word(coerce-integer-to-machine-word(s))),
-//	   primitive-unwrap-machine-word($integer-tag-mask)),
-//	primitive-unwrap-machine-word($integer-tag-value)))
+//          (primitive-machine-word-shift-right
+//             (primitive-cast-integer-as-raw(n),
+//              primitive-unwrap-machine-word(coerce-integer-to-machine-word(s))),
+//           primitive-unwrap-machine-word($integer-tag-mask)),
+//        primitive-unwrap-machine-word($integer-tag-value)))
   ash(n, - s)
 end method;
 
@@ -424,23 +424,23 @@ define constant %method-specializer = method (m :: <method>, i :: <integer>) => 
       let m :: <accessor-method> = m;
       let sd :: <slot-descriptor> = method-slot-descriptor(m);
       if (instance?(m, <single-accessor-method>))
-	if (instance?(m, <getter-accessor-method>))
-	  select (i) 0 => slot-owner(sd); end
-	else
-	  select (i) 0 => slot-type(sd); 1 => slot-owner(sd); end
-	end if
+        if (instance?(m, <getter-accessor-method>))
+          select (i) 0 => slot-owner(sd); end
+        else
+          select (i) 0 => slot-type(sd); 1 => slot-owner(sd); end
+        end if
       else
-	if (instance?(m, <getter-accessor-method>))
-	  select (i) 0 => slot-owner(sd); 1 => <integer>; end
-	else
-	  select (i) 0 => slot-type(sd); 1 => slot-owner(sd); 2 => <integer>; end
-	end if
+        if (instance?(m, <getter-accessor-method>))
+          select (i) 0 => slot-owner(sd); 1 => <integer>; end
+        else
+          select (i) 0 => slot-type(sd); 1 => slot-owner(sd); 2 => <integer>; end
+        end if
       end if;
     otherwise =>
       let m :: <lambda> = m;
       let sig :: <signature> = function-signature(m);
       let v :: <simple-object-vector> = signature-required(sig);
-      vector-element(v, i)	// v[i]
+      vector-element(v, i)        // v[i]
   end select
 end method;
 
@@ -449,11 +449,11 @@ define constant %method-number-required = method (m :: <method>) => (nreq :: <in
   select (m by instance?)
     <accessor-method> =>
       if (instance?(m, <repeated-accessor-method>))
-	if (instance?(m, <setter-accessor-method>)) 3 else 2 end;
+        if (instance?(m, <setter-accessor-method>)) 3 else 2 end;
       else
-	if (instance?(m, <setter-accessor-method>)) 2 else 1 end;
+        if (instance?(m, <setter-accessor-method>)) 2 else 1 end;
       end if;
-    otherwise => 
+    otherwise =>
       let m :: <lambda> = m;
       signature-number-required(function-signature(m))
   end select
@@ -578,21 +578,21 @@ define constant ensure-key-to-iclass-storage = method (ninc :: <integer>) => (v 
   let nkeyed :: <integer> = size(keyed);
   if (n-needed >= nkeyed)
     local method groan (new-nkeyed :: <integer>)
-	    if (n-needed >= new-nkeyed)
-	      groan(ash(new-nkeyed, 1))
-	    else
-	      let new-keyed :: <simple-object-vector>
-		= make(<simple-object-vector>, size: new-nkeyed, fill: #f);
-	      local method loop (i :: <integer>)
-		      if (i ~== nkeyed)
-			vector-element(new-keyed, i) := vector-element(keyed, i);
-			loop(i + 1)
-		      end
-		    end;
-	      loop(0);
-	      *implementation-classes-by-key* := new-keyed
-	    end if;
-	  end method;
+            if (n-needed >= new-nkeyed)
+              groan(ash(new-nkeyed, 1))
+            else
+              let new-keyed :: <simple-object-vector>
+                = make(<simple-object-vector>, size: new-nkeyed, fill: #f);
+              local method loop (i :: <integer>)
+                      if (i ~== nkeyed)
+                        vector-element(new-keyed, i) := vector-element(keyed, i);
+                        loop(i + 1)
+                      end
+                    end;
+              loop(0);
+              *implementation-classes-by-key* := new-keyed
+            end if;
+          end method;
     groan(ash(nkeyed, 1));
   else
     keyed
@@ -615,12 +615,12 @@ define constant initialize-class-dispatch-keys-vectored = method (v :: <simple-o
     *next-unique-dispatch-key* := next-key + ninc;
     for (c in v, k :: <integer> from next-key)
       let ic :: <implementation-class> = select (c by instance?)
-					   <class> =>
-					     let c :: <class> = c;
-					     class-implementation-class(c);
-					   <implementation-class> =>
-					     c;
-					 end select;
+                                           <class> =>
+                                             let c :: <class> = c;
+                                             class-implementation-class(c);
+                                           <implementation-class> =>
+                                             c;
+                                         end select;
       vector-element(classes, k) := ic;
       iclass-dispatch-key(ic) := iclass-number-to-key(k)
     end for;
@@ -639,10 +639,10 @@ end method;
     environment
 <method>
     mep
-    keyword-specifiers 
+    keyword-specifiers
   */
 
-//define sealed generic engine-node-callback(e :: <engine-node>) 
+//define sealed generic engine-node-callback(e :: <engine-node>)
 // => (v :: <raw-pointer>);
 //define sealed generic engine-node-callback-setter (v :: <raw-pointer>, e :: <engine-node>)
 // => (v :: <raw-pointer>);
@@ -668,7 +668,7 @@ end method;
 //define macro engine-node-slot-definer
 //  { define engine-node-slot ?name:name ?type:name ?rettype:name ?which:name ;}
 //    => {
-//	  define inline function ?name (e :: ?type) => (value :: ?rettype);
+//          define inline function ?name (e :: ?type) => (value :: ?rettype);
 //            ?which(e)
 //          end function;
 //          define inline function ?name ## "-setter" (value :: ?rettype, e :: ?type) => (value :: ?rettype);
@@ -689,13 +689,13 @@ raw, and we can use the tag bits.
 Engine Node
 Entry-type is contained in low byte, shifted 2:  mask or shift out low 2 bits.
 
-_31_________________________________________________________8_7____________2_1___________0_  
+_31_________________________________________________________8_7____________2_1___________0_
 |                             other                          |  entry type  |  fixnum tag  |
 -------------------------------------------------------------------------------------------
 
 Single-method engine node
 
-_31___________________17______16_____15_____________________8_7____________2_1___________0_  
+_31___________________17______16_____15_____________________8_7____________2_1___________0_
 |         other          |  restp   |      nrequired         |  entry type  |  fixnum tag  |
 -------------------------------------------------------------------------------------------
 
@@ -707,7 +707,7 @@ there are any optionals.  The sum of that byte and the bit give the number of ME
 arguments, which may be of use to primitive-initialize-discriminator.
 
 
-_31_____25____24_____23___________16_15____________________8_7____________2_1___________0_  
+_31_____25____24_____23___________16_15____________________8_7____________2_1___________0_
 |  other  |  restp  |   nrequired   |  discriminator argnum  |  entry type  |  fixnum tag  |
 -------------------------------------------------------------------------------------------
 
@@ -747,21 +747,21 @@ define constant pdisp$m-typemask = ash(ash(1, pdisp$s-typemask) - 1, pdisp$v-typ
 define function compress-mask (argmask :: <integer>, checkedmask :: <integer>)
  => (idx :: <integer>)
   local method loop (amask :: <integer>, cmask :: <integer>,
-		     ans :: <integer>, shiftbit :: <integer>)
-	  if (amask == 0) 
-	    ans
-	  else
-	    let anext :: <integer> = ash(amask, -1);
-	    let cnext :: <integer> = ash(cmask, -1);
-	    if (logbit?(0, cmask))
-	      loop(anext, cnext, ans + shiftbit, ash(shiftbit, 1))
-	    elseif (logbit?(0, amask))
-	      loop(anext, cnext, ans, ash(shiftbit, 1))
-	    else
-	      loop(anext, cnext, ans, shiftbit)
-	    end if
-	  end if
-	end method;
+                     ans :: <integer>, shiftbit :: <integer>)
+          if (amask == 0)
+            ans
+          else
+            let anext :: <integer> = ash(amask, -1);
+            let cnext :: <integer> = ash(cmask, -1);
+            if (logbit?(0, cmask))
+              loop(anext, cnext, ans + shiftbit, ash(shiftbit, 1))
+            elseif (logbit?(0, amask))
+              loop(anext, cnext, ans, ash(shiftbit, 1))
+            else
+              loop(anext, cnext, ans, shiftbit)
+            end if
+          end if
+        end method;
   loop(argmask, checkedmask, 0, 1)
 end function;
 
@@ -769,18 +769,18 @@ end function;
 define function expand-mask (argmask :: <integer>, idx :: <integer>)
  => (mask :: <integer>)
   local method loop (amask :: <integer>, idx :: <integer>, ans :: <integer>, shiftbit :: <integer>)
-	  if (amask == 0 | idx == 0)
-	    ans
-	  else
-	    let anext :: <integer> = ash(amask, -1);
-	    let snext :: <integer> = shiftbit + 1;
-	    if (logbit?(0, amask))
-	      loop(anext, ash(idx, -1), ans + ash(logand(idx, 1), shiftbit), snext)
-	    else
-	      loop(anext, idx, ans, snext)
-	    end if
-	  end if
-	end method;
+          if (amask == 0 | idx == 0)
+            ans
+          else
+            let anext :: <integer> = ash(amask, -1);
+            let snext :: <integer> = shiftbit + 1;
+            if (logbit?(0, amask))
+              loop(anext, ash(idx, -1), ans + ash(logand(idx, 1), shiftbit), snext)
+            else
+              loop(anext, idx, ans, snext)
+            end if
+          end if
+        end method;
   loop(argmask, idx, 0, 0)
 end function;
 
@@ -789,12 +789,12 @@ define constant discriminator$v-argnum = 6;
 
 define constant discriminator$s-argnum = 8;
 
-define constant discriminator$m-argnum 
+define constant discriminator$m-argnum
   = ash(ash(1, discriminator$s-argnum) - 1, discriminator$v-argnum);
 
 define constant discriminator$v-nrequired = 14;
 define constant discriminator$s-nrequired = 8;
-define constant discriminator$m-nrequired 
+define constant discriminator$m-nrequired
   = ash(ash(1, discriminator$s-nrequired) - 1, discriminator$v-nrequired);
 
 define constant discriminator$v-restp = 22;
@@ -810,7 +810,7 @@ define inline constant discriminator-argnum
 
 
 define variable *engine-node-callbacks* :: <simple-object-vector>
-  = make(<simple-object-vector>, 
+  = make(<simple-object-vector>,
          size: ash(1, properties$s-entry-type));
 
 
@@ -822,13 +822,13 @@ define inline constant engine-node-function-code
     end method;
 
 
-define inline constant <dispatch-starter> 
+define inline constant <dispatch-starter>
   = type-union(<generic-function>, <cache-header-engine-node>);
 
 
 define inline constant %invoke-engine-node  = method (d :: <object> /* <engine-node> */,
-					       gf :: <generic-function>,
-					       args :: <simple-object-vector>)
+                                               gf :: <generic-function>,
+                                               args :: <simple-object-vector>)
   primitive-engine-node-apply-with-optionals(d, gf, args)
 end method;
 
@@ -845,15 +845,15 @@ end method;
 
 
 define function %restart-dispatch (from :: <dispatch-starter>, mepized-args :: <simple-object-vector>)
-  
+
   %invoke-engine-node(if (instance?(from, <generic-function>))
-			let from :: <generic-function> = from;
-			discriminator(from)
-		      else
-			from
-		      end if,
-		      from,
-		      mepized-args)
+                        let from :: <generic-function> = from;
+                        discriminator(from)
+                      else
+                        from
+                      end if,
+                      from,
+                      mepized-args)
 end function;
 
 
@@ -862,95 +862,95 @@ begin
   let callbacks :: <simple-object-vector> = *engine-node-callbacks*;
   local method eassign(i :: <integer>, c :: <class>, f)
           classes[i] := c;
-	  callbacks[i] := f;
+          callbacks[i] := f;
         end;
   local method dassign(i :: <integer>, c :: <class>, f)
-	  eassign(i, c, f)
-	end;
+          eassign(i, c, f)
+        end;
   eassign(engine-node$k-absent,
-	  <absent-engine-node>,
-	  %gf-dispatch-absent);
-  eassign(engine-node$k-inapplicable, 
-	  <inapplicable-engine-node>,
-	  %gf-dispatch-inapplicable);
-  eassign(engine-node$k-unkeyed-single-method, 
-	  <unkeyed-single-method-engine-node>,
-	  #f);
-  eassign(engine-node$k-implicit-keyed-single-method, 
-	  <implicit-keyed-single-method-engine-node>,
-	  #f);
-  eassign(engine-node$k-explicit-keyed-single-method, 
-	  <explicit-keyed-single-method-engine-node>,
-	  #f);
+          <absent-engine-node>,
+          %gf-dispatch-absent);
+  eassign(engine-node$k-inapplicable,
+          <inapplicable-engine-node>,
+          %gf-dispatch-inapplicable);
+  eassign(engine-node$k-unkeyed-single-method,
+          <unkeyed-single-method-engine-node>,
+          #f);
+  eassign(engine-node$k-implicit-keyed-single-method,
+          <implicit-keyed-single-method-engine-node>,
+          #f);
+  eassign(engine-node$k-explicit-keyed-single-method,
+          <explicit-keyed-single-method-engine-node>,
+          #f);
   eassign(engine-node$k-unrestricted-keyed-single-method,
-	  <unrestricted-keyed-single-method-engine-node>,
-	  #f);
+          <unrestricted-keyed-single-method-engine-node>,
+          #f);
   eassign(engine-node$k-ambiguous-methods,
-	  <ambiguous-methods-engine-node>,
-	  %gf-dispatch-ambiguous-methods);
+          <ambiguous-methods-engine-node>,
+          %gf-dispatch-ambiguous-methods);
 
   eassign(engine-node$k-profiling-cache-header,
-	  <profiling-call-site-cache-header-engine-node>,
-	  #f);
+          <profiling-call-site-cache-header-engine-node>,
+          #f);
 
   eassign(engine-node$k-cache-header,
-	  <simple-typechecked-cache-header-engine-node>,
-	  #f);
+          <simple-typechecked-cache-header-engine-node>,
+          #f);
 
 
-  dassign(engine-node$k-linear-by-class, 
-	  <linear-by-class-discriminator>,
-	  %gf-dispatch-linear-by-class);
-  dassign(engine-node$k-hashed-by-class, 
-	  <hashed-by-class-discriminator>,
-	  %gf-dispatch-hashed-by-class);
-  dassign(engine-node$k-linear-by-singleton-class, 
-	  <linear-by-singleton-class-discriminator>,
-	  %gf-dispatch-linear-by-singleton-class);
-  dassign(engine-node$k-hashed-by-singleton-class, 
-	  <hashed-by-singleton-class-discriminator>,
-	  %gf-dispatch-hashed-by-singleton-class);
-  dassign(engine-node$k-typecheck, 
-	  <typecheck-discriminator>,
-	  %gf-dispatch-typecheck);
+  dassign(engine-node$k-linear-by-class,
+          <linear-by-class-discriminator>,
+          %gf-dispatch-linear-by-class);
+  dassign(engine-node$k-hashed-by-class,
+          <hashed-by-class-discriminator>,
+          %gf-dispatch-hashed-by-class);
+  dassign(engine-node$k-linear-by-singleton-class,
+          <linear-by-singleton-class-discriminator>,
+          %gf-dispatch-linear-by-singleton-class);
+  dassign(engine-node$k-hashed-by-singleton-class,
+          <hashed-by-singleton-class-discriminator>,
+          %gf-dispatch-hashed-by-singleton-class);
+  dassign(engine-node$k-typecheck,
+          <typecheck-discriminator>,
+          %gf-dispatch-typecheck);
   dassign(engine-node$k-if-type,
-	  <if-type-discriminator>,
-	  %gf-dispatch-if-type);
-  dassign(engine-node$k-immediate-linear-singleton, 
-	  <immediate-linear-singleton-discriminator>,
-	  %gf-dispatch-immediate-linear-singleton);
-  dassign(engine-node$k-value-object-linear-singleton, 
-	  <value-object-linear-singleton-discriminator>,
-	  %gf-dispatch-value-object-linear-singleton);
+          <if-type-discriminator>,
+          %gf-dispatch-if-type);
+  dassign(engine-node$k-immediate-linear-singleton,
+          <immediate-linear-singleton-discriminator>,
+          %gf-dispatch-immediate-linear-singleton);
+  dassign(engine-node$k-value-object-linear-singleton,
+          <value-object-linear-singleton-discriminator>,
+          %gf-dispatch-value-object-linear-singleton);
 
-  dassign(engine-node$k-monomorphic-by-class, 
-	  <monomorphic-by-class-discriminator>,
-	  #f);
+  dassign(engine-node$k-monomorphic-by-class,
+          <monomorphic-by-class-discriminator>,
+          #f);
 
-  eassign(engine-node$k-boxed-instance-slot-getter, 
-	  <boxed-instance-slot-getter-engine-node>,
-	  #f);
-  eassign(engine-node$k-boxed-instance-slot-setter, 
-	  <boxed-instance-slot-setter-engine-node>,
-	  #f);
-  eassign(engine-node$k-boxed-class-slot-getter, 
-	  <boxed-class-slot-getter-engine-node>,
-	  %gf-dispatch-boxed-class-slot-getter);
-  eassign(engine-node$k-boxed-class-slot-setter, 
-	  <boxed-class-slot-setter-engine-node>,
-	  %gf-dispatch-boxed-class-slot-setter);
+  eassign(engine-node$k-boxed-instance-slot-getter,
+          <boxed-instance-slot-getter-engine-node>,
+          #f);
+  eassign(engine-node$k-boxed-instance-slot-setter,
+          <boxed-instance-slot-setter-engine-node>,
+          #f);
+  eassign(engine-node$k-boxed-class-slot-getter,
+          <boxed-class-slot-getter-engine-node>,
+          %gf-dispatch-boxed-class-slot-getter);
+  eassign(engine-node$k-boxed-class-slot-setter,
+          <boxed-class-slot-setter-engine-node>,
+          %gf-dispatch-boxed-class-slot-setter);
   eassign(engine-node$k-boxed-repeated-instance-slot-getter,
-	  <boxed-repeated-instance-slot-getter-engine-node>,
-	  #f);
-  eassign(engine-node$k-boxed-repeated-instance-slot-setter, 
-	  <boxed-repeated-instance-slot-setter-engine-node>,
-	  #f);
+          <boxed-repeated-instance-slot-getter-engine-node>,
+          #f);
+  eassign(engine-node$k-boxed-repeated-instance-slot-setter,
+          <boxed-repeated-instance-slot-setter-engine-node>,
+          #f);
   eassign(engine-node$k-raw-byte-repeated-instance-slot-getter,
-	  <repeated-byte-slot-getter-engine-node>,
-	  #f);
-  eassign(engine-node$k-raw-byte-repeated-instance-slot-setter, 
-	  <repeated-byte-slot-setter-engine-node>,
-	  #f);
+          <repeated-byte-slot-getter-engine-node>,
+          #f);
+  eassign(engine-node$k-raw-byte-repeated-instance-slot-setter,
+          <repeated-byte-slot-setter-engine-node>,
+          #f);
 
 end;
 

@@ -26,7 +26,7 @@ end function;
 
 define function dispatch-start (dispatch-starter :: <dispatch-starter>) => (engine)
   select (dispatch-starter by instance?)
-    <generic-function> => 
+    <generic-function> =>
       let gf :: <generic-function> = dispatch-starter;
       discriminator(gf);
     <cache-header-engine-node> =>
@@ -38,7 +38,7 @@ end function;
 
 define function dispatch-start-setter (v, dispatch-starter :: <dispatch-starter>) => (engine)
   select (dispatch-starter by instance?)
-    <generic-function> => 
+    <generic-function> =>
       let gf :: <generic-function> = dispatch-starter;
       discriminator(gf) := v;
     <cache-header-engine-node> =>
@@ -55,9 +55,9 @@ define function bootstrap-allocate-engine-node (entry-type :: <integer>, root-bi
   bootstrap-typed-allocate-engine-node(c, entry-type, root-bits)
 end function;
 
-define function bootstrap-typed-allocate-engine-node (c :: <class>, 
-						      entry-type :: <integer>,
-						      root-bits :: <integer>)
+define function bootstrap-typed-allocate-engine-node (c :: <class>,
+                                                      entry-type :: <integer>,
+                                                      root-bits :: <integer>)
   let callbacks :: <simple-object-vector> = *engine-node-callbacks*;
   let e :: <engine-node> = system-allocate-simple-instance(c);
   let extra-bits :: <integer> = logand(root-bits, lognot(properties$m-entry-type));
@@ -83,13 +83,13 @@ define function standard-discriminator-bits
     (gf :: <generic-function>) => (bits :: <integer>);
   let sig :: <signature> = function-signature(gf);
   let props :: <integer> = ash(signature-number-required(sig),
-			       discriminator$v-nrequired);
+                               discriminator$v-nrequired);
   if (signature-optionals?(sig)) logior(props, discriminator$m-restp) else props end
 end function;
 
-define constant $standard-discriminator-bit-mask 
+define constant $standard-discriminator-bit-mask
   = logior(discriminator$m-nrequired, discriminator$m-restp);
-  
+
 
 
 define inline function bootstrap-shared-allocate-discriminator
@@ -100,10 +100,10 @@ define inline function bootstrap-shared-allocate-discriminator
     = logand(root-bits, lognot(logior(discriminator$m-argnum, properties$m-entry-type)));
   props := logior(props, entry-type);
   props := logior(props, fixnum-dammit(ash(argnum, discriminator$v-argnum)));
-  let nreq :: <integer> 
+  let nreq :: <integer>
     = ash(logand(root-bits, discriminator$m-nrequired),
-	  - discriminator$v-nrequired);
-  if (~(argnum < nreq))	// @@@@ (argnum >= nreq)
+          - discriminator$v-nrequired);
+  if (~(argnum < nreq))        // @@@@ (argnum >= nreq)
     error("Discriminator being created with conflicting nrequired %= and argnum %=.", nreq, argnum)
   end if;
   properties(d) := props;
@@ -175,7 +175,7 @@ end method;
 // being able to write-lock individual objects.
 
 
-define constant $object-lock-notification-lock :: <simple-lock> = 
+define constant $object-lock-notification-lock :: <simple-lock> =
   make-simple-lock();
 
 define constant $object-lock-notification :: <notification> =
@@ -200,10 +200,10 @@ end function;
 //     else
 //       let couple :: <pair> = head(l);
 //       if (pointer-id?(head(couple), obj))
-// 	couple
+//         couple
 //       else
-// 	let nxt :: <list> = tail(l);
-// 	loop(nxt)
+//         let nxt :: <list> = tail(l);
+//         loop(nxt)
 //       end if
 //     end if
 //   end iterate
@@ -215,31 +215,31 @@ define constant multiple-objects-locked-p = method (cells :: <list>, tokin) => (
     #f
   else
     local method peruse (cells :: <list>, recursive-losers :: <list>)
-	    if (cells == #())
-	      if (recursive-losers == #()) #f else recursive-losers end
-	    else
-	      let cell :: <pair> = head(cells);
-	      let obj = head(cell);
-	      let nxt :: <list> = tail(cells);
-	      local method checklock (l :: <list>)
-		      if (l == #())
-			peruse(nxt, recursive-losers)
-		      else
-			let this :: <pair> = head(l);
-			if (pointer-id?(obj, this))
-			  if (pointer-id?(tokin, tail(this)))
-			    peruse(nxt, pair(obj, recursive-losers))
-			  else
-			    #t
-			  end if
-			else
-			  checklock(tail(l))
-			end if
-		      end if
-		    end method;
-	      checklock(*object-lock-data*)
-	    end if
-	  end method;
+            if (cells == #())
+              if (recursive-losers == #()) #f else recursive-losers end
+            else
+              let cell :: <pair> = head(cells);
+              let obj = head(cell);
+              let nxt :: <list> = tail(cells);
+              local method checklock (l :: <list>)
+                      if (l == #())
+                        peruse(nxt, recursive-losers)
+                      else
+                        let this :: <pair> = head(l);
+                        if (pointer-id?(obj, this))
+                          if (pointer-id?(tokin, tail(this)))
+                            peruse(nxt, pair(obj, recursive-losers))
+                          else
+                            #t
+                          end if
+                        else
+                          checklock(tail(l))
+                        end if
+                      end if
+                    end method;
+              checklock(*object-lock-data*)
+            end if
+          end method;
     peruse(cells, #())
   end if
 end method;
@@ -256,7 +256,7 @@ end method;
 //      if (lockedp == #())
 //        tail(cell) := *object-lock-data*;
 //        *object-lock-data* := cell;
-//	tail(cell2) := token-for-current-thread();
+//        tail(cell2) := token-for-current-thread();
 //        release(notif);
 //        cell
 //      elseif (tail(lockedp) == token-for-current-thread())
@@ -277,9 +277,9 @@ define constant begin-locking-multiple-objects  = method (hd :: <pair>, tl :: <p
     iterate try-again ()
       let stuff = multiple-objects-locked-p(hd, tokin);
       if (stuff == #f)
-	for (x :: <pair> in hd) tail(x) := tokin end;
-	tail(tl) := *object-lock-data*;
-	*object-lock-data* := hd;
+        for (x :: <pair> in hd) tail(x) := tokin end;
+        tail(tl) := *object-lock-data*;
+        *object-lock-data* := hd;
         release(notif);
       elseif (stuff == #t)
         wait-for(notif);
@@ -300,13 +300,13 @@ define constant end-locking-object-cell = method (cell :: <pair>)
   else
     iterate sigh (prev :: <list> = data, l :: <list> = first-l)
       if (l == #())
-	#f                    // This means we aborted before getting the lock.
+        #f                    // This means we aborted before getting the lock.
       else
-	let nxt :: <list> = tail(l);
-	if (l == cell)
-	  tail(prev) := nxt;
-	else sigh(l, nxt)
-	end if
+        let nxt :: <list> = tail(l);
+        if (l == cell)
+          tail(prev) := nxt;
+        else sigh(l, nxt)
+        end if
       end if
     end iterate
   end if;
@@ -329,8 +329,8 @@ define constant end-locking-multiple-objects = method (hd :: <pair>, tl :: <pair
   with-lock (lock)
     block(done)
       for (x :: <pair> = hd then tail(x))
-	end-locking-object-cell(x);
-	if (x == tl) done() end;
+        end-locking-object-cell(x);
+        if (x == tl) done() end;
       end for;
     end;
     release(notif);
@@ -341,52 +341,52 @@ end method;
 
 define macro with-object-lock
 
-  { with-object-lock (?object:expression) 
-      ?body:body 
-    end 
+  { with-object-lock (?object:expression)
+      ?body:body
+    end
   }
-  => 
+  =>
 //  { begin
 //      let $cell$ = pair(pair(?object, #f), #());
 //      block ()
 //        begin-locking-object($cell$);
-//	?body;
+//        ?body;
 //      cleanup
-//	end-locking-object($cell$);
+//        end-locking-object($cell$);
 //      end block
 //    end
 //  }
 
     { begin
-	let _objlist = pair(pair(?object, #f), #());
-	block ()
-	  begin-locking-multiple-objects(_objlist, _objlist);
-	  ?body;
-	cleanup
-	  end-locking-multiple-objects(_objlist, _objlist);
-	end block
-      end 
+        let _objlist = pair(pair(?object, #f), #());
+        block ()
+          begin-locking-multiple-objects(_objlist, _objlist);
+          ?body;
+        cleanup
+          end-locking-multiple-objects(_objlist, _objlist);
+        end block
+      end
    }
 
-  { with-object-lock (?object:expression, ?punter:name) 
-      ?body:body 
-    end 
+  { with-object-lock (?object:expression, ?punter:name)
+      ?body:body
+    end
   }
-  => 
+  =>
     { begin
-	let _objlist = pair(pair(?object, #f), #());
-	block (?punter)
-	  begin-locking-multiple-objects(_objlist, _objlist);
-	  ?body;
-	cleanup
-	  end-locking-multiple-objects(_objlist, _objlist);
-	end block
-      end 
+        let _objlist = pair(pair(?object, #f), #());
+        block (?punter)
+          begin-locking-multiple-objects(_objlist, _objlist);
+          ?body;
+        cleanup
+          end-locking-multiple-objects(_objlist, _objlist);
+        end block
+      end
    }
 end macro;
 
 
-define inline-only function make-multiple-object-lock-cells (seq :: <sequence>) 
+define inline-only function make-multiple-object-lock-cells (seq :: <sequence>)
  => (h :: <pair>, t :: <pair>)
   let t = #();
   for (x in seq,
@@ -396,24 +396,24 @@ define inline-only function make-multiple-object-lock-cells (seq :: <sequence>)
   end for;
 end function;
 
-    
+
 define macro with-multiple-object-lock
 
-  { with-multiple-object-lock (?objectsequence:expression) 
-      ?body:body 
-    end 
+  { with-multiple-object-lock (?objectsequence:expression)
+      ?body:body
+    end
   }
-  => 
+  =>
   { begin
       let _objseq = ?objectsequence;
       if (~empty?(_objseq))
-	let (_head :: <pair>, _tail :: <pair>) = make-multiple-object-lock-cells(_objseq);
-	block ()
-	  begin-locking-multiple-objects(_head, _tail);
-	  ?body;
-	cleanup
-	  end-locking-multiple-objects(_head, _tail);
-	end block
+        let (_head :: <pair>, _tail :: <pair>) = make-multiple-object-lock-cells(_objseq);
+        block ()
+          begin-locking-multiple-objects(_head, _tail);
+          ?body;
+        cleanup
+          end-locking-multiple-objects(_head, _tail);
+        end block
       end if
     end
   }
@@ -428,13 +428,13 @@ end macro;
    ******************************* */
 
 define constant %gf-dispatch-absent = method (mepargs :: <simple-object-vector>,
-					      e :: <engine-node>,
+                                              e :: <engine-node>,
                                               parent :: <dispatch-starter>)
   handle-missed-dispatch(e, parent, mepargs)
 end method;
 
 define constant %gf-dispatch-inapplicable = method (spreadargs :: <simple-object-vector>,
-						    e :: <inapplicable-engine-node>,
+                                                    e :: <inapplicable-engine-node>,
                                                     parent :: <dispatch-starter>)
   e;
   no-applicable-method-error(parent-gf(parent), copy-sequence(spreadargs))
@@ -443,17 +443,17 @@ end method;
 
 
 define constant %gf-dispatch-ambiguous-methods = method (spreadargs :: <simple-object-vector>,
-							 e :: <ambiguous-methods-engine-node>,
-							 parent :: <dispatch-starter>)
-  ambiguous-method-error(parent-gf(parent), copy-sequence(spreadargs), 
-			 ambiguous-methods-engine-node-ordered(e), 
-			 ambiguous-methods-engine-node-ambig(e))
+                                                         e :: <ambiguous-methods-engine-node>,
+                                                         parent :: <dispatch-starter>)
+  ambiguous-method-error(parent-gf(parent), copy-sequence(spreadargs),
+                         ambiguous-methods-engine-node-ordered(e),
+                         ambiguous-methods-engine-node-ambig(e))
 end method;
 
 define constant make-ambiguous-methods-engine-node = method
     (ordered :: <sequence>, ambig :: <sequence>)
  => (e :: <ambiguous-methods-engine-node>);
-  let e :: <ambiguous-methods-engine-node> 
+  let e :: <ambiguous-methods-engine-node>
     = bootstrap-allocate-engine-node(engine-node$k-ambiguous-methods, 0);
   ambiguous-methods-engine-node-ordered(e) := ordered;
   ambiguous-methods-engine-node-ambig(e) := ambig;
@@ -483,42 +483,42 @@ define constant make-single-method-engine-node = method (meth :: <method>, #key 
   let bits :: <integer> = if (signature-optionals?(sig)) logior(smen$m-restp, bits) else bits end;
   let sme :: <single-method-engine-node>
     = if (keys == #f)
-	bootstrap-allocate-engine-node(engine-node$k-unkeyed-single-method, bits)
+        bootstrap-allocate-engine-node(engine-node$k-unkeyed-single-method, bits)
       elseif (keys == #t)
-	bootstrap-allocate-engine-node(engine-node$k-unrestricted-keyed-single-method, bits)
+        bootstrap-allocate-engine-node(engine-node$k-unrestricted-keyed-single-method, bits)
       else
-	let keys :: <simple-object-vector> = keys;
-	let mkeys :: <simple-object-vector> = keyword-specifiers(meth);
-	let nkeys :: <integer> = size(keys);
-	let nmkeys :: <integer> = size(mkeys);
-	if (nkeys = ash(nmkeys, -1)
-	      & begin
-		  local method outer (i :: <integer>)
-			  if (i = nkeys)
-			    #t
-			  else
-			    let k :: <symbol> = vector-element(keys, i);
-			    local method inner (j :: <integer>)
-				    if (j = nmkeys)
-				      #f
-				    elseif (pointer-id?(k, vector-element(mkeys, j)))
-				      outer(i + 1)
-				    else
-				      inner(j + 2)
-				    end if
-				  end method;
-			    inner(0)
-			  end if
-			end method;
-		  outer(0)
-		end)
-	  bootstrap-allocate-engine-node(engine-node$k-implicit-keyed-single-method, bits)
-	else
-	  let e :: <explicit-keyed-single-method-engine-node>
-	    = bootstrap-allocate-engine-node(engine-node$k-explicit-keyed-single-method, bits);
-	  single-method-engine-node-keys(e) := keys;
-	  e
-	end if
+        let keys :: <simple-object-vector> = keys;
+        let mkeys :: <simple-object-vector> = keyword-specifiers(meth);
+        let nkeys :: <integer> = size(keys);
+        let nmkeys :: <integer> = size(mkeys);
+        if (nkeys = ash(nmkeys, -1)
+              & begin
+                  local method outer (i :: <integer>)
+                          if (i = nkeys)
+                            #t
+                          else
+                            let k :: <symbol> = vector-element(keys, i);
+                            local method inner (j :: <integer>)
+                                    if (j = nmkeys)
+                                      #f
+                                    elseif (pointer-id?(k, vector-element(mkeys, j)))
+                                      outer(i + 1)
+                                    else
+                                      inner(j + 2)
+                                    end if
+                                  end method;
+                            inner(0)
+                          end if
+                        end method;
+                  outer(0)
+                end)
+          bootstrap-allocate-engine-node(engine-node$k-implicit-keyed-single-method, bits)
+        else
+          let e :: <explicit-keyed-single-method-engine-node>
+            = bootstrap-allocate-engine-node(engine-node$k-explicit-keyed-single-method, bits);
+          single-method-engine-node-keys(e) := keys;
+          e
+        end if
       end if;
   single-method-engine-node-method(sme) := meth;
   single-method-engine-node-data(sme) := data;
@@ -527,7 +527,7 @@ define constant make-single-method-engine-node = method (meth :: <method>, #key 
 end method;
 
 
-    
+
 /* *****************
    Dispatch by Class
    ***************** */
@@ -536,55 +536,55 @@ define constant ckd$v-log2size = discriminator$v-data-start;
 
 define constant ckd$s-log2size = 5;
 
-define macro with-lckd-dispatch 
+define macro with-lckd-dispatch
   { with-lckd-dispatch (?d:name)
       ?:body
     end }
     => { if (instance?(?d, <linear-by-singleton-class-discriminator>))
            let ?d :: <linear-by-singleton-class-discriminator> = ?d;
            ?body
-	 else 
-	   let ?d :: <linear-by-class-discriminator> = ?d;
+         else
+           let ?d :: <linear-by-class-discriminator> = ?d;
            ?body
-	 end if }
+         end if }
 end macro;
 
-define macro with-hckd-dispatch 
+define macro with-hckd-dispatch
   { with-hckd-dispatch (?d:name)
       ?:body
     end }
     => { if (instance?(?d, <hashed-by-singleton-class-discriminator>))
            let ?d :: <hashed-by-singleton-class-discriminator> = ?d;
            ?body
-	 else 
-	   let ?d :: <hashed-by-class-discriminator> = ?d;
+         else
+           let ?d :: <hashed-by-class-discriminator> = ?d;
            ?body
-	 end if }
+         end if }
 end macro;
 
-define macro with-ckd-dispatch 
+define macro with-ckd-dispatch
   { with-ckd-dispatch (?d:name)
       ?:body
     end }
     => { if (instance?(?d, <linear-class-keyed-discriminator>))
            let ?d :: <linear-class-keyed-discriminator> = ?d;
-	   with-lckd-dispatch (?d)
-	     ?body
-	   end 
-	 else 
-	   let ?d :: <hashed-class-keyed-discriminator> = ?d;
-	   with-hckd-dispatch (?d)
-	     ?body
-	   end 
-	 end if }
+           with-lckd-dispatch (?d)
+             ?body
+           end
+         else
+           let ?d :: <hashed-class-keyed-discriminator> = ?d;
+           with-hckd-dispatch (?d)
+             ?body
+           end
+         end if }
 end macro;
 
-define inline function %ckd-ref 
+define inline function %ckd-ref
     (ckd :: <class-keyed-discriminator>, idx :: <integer>)
   class-keyed-discriminator-table-element(ckd, idx)
 end function;
 
-define inline function %ckd-ref-setter 
+define inline function %ckd-ref-setter
     (value, ckd :: <class-keyed-discriminator>, idx :: <integer>)
   class-keyed-discriminator-table-element(ckd, idx) := value
 end function;
@@ -613,11 +613,11 @@ define constant $linear-discriminator-table-growth-increment :: <integer> = 2 * 
 define function hashed-class-keyed-discriminator-log2size
     (storage-size :: <integer>) => (table-size :: <integer>)
   local method f (i :: <integer>)
-	  let nxt :: <integer> = i + 1;
-	  let siz :: <integer> = %twopower(i);
-	  // @@@@ if (siz > storage-size) nxt else f(nxt) end
-	  if (storage-size < siz) nxt else f(nxt) end
-	end method;
+          let nxt :: <integer> = i + 1;
+          let siz :: <integer> = %twopower(i);
+          // @@@@ if (siz > storage-size) nxt else f(nxt) end
+          if (storage-size < siz) nxt else f(nxt) end
+        end method;
   f(4)
 end function;
 
@@ -631,22 +631,22 @@ define inline function grow-linear-class-keyed-discriminator
       d, stgsiz, nstgsiz);
   let nd :: <class-keyed-discriminator>
     = if (~(nstgsiz < $linear-discriminator-table-limit))  // @@@@ (nstgsiz >= $linear-discriminator-table-limit)
-	make-hashed-class-keyed-discriminator(logior(engine-node-function-code(d), 1),
-					      discriminator-argnum(d),
-					      hashed-class-keyed-discriminator-log2size(nstgsiz),
-					      initbits)
+        make-hashed-class-keyed-discriminator(logior(engine-node-function-code(d), 1),
+                                              discriminator-argnum(d),
+                                              hashed-class-keyed-discriminator-log2size(nstgsiz),
+                                              initbits)
       else
-	make-linear-class-keyed-discriminator(logand(engine-node-function-code(d), -2), 
-					      discriminator-argnum(d), nstgsiz, initbits)
+        make-linear-class-keyed-discriminator(logand(engine-node-function-code(d), -2),
+                                              discriminator-argnum(d), nstgsiz, initbits)
       end if;
   copy-class-keyed-discriminator-attributes(d, nd);
   local method loop (i :: <integer>, nd :: <class-keyed-discriminator>)
-	  if (i = stgsiz)
-	    nd
-	  else
-	    loop(i + 2, ckd-add!(nd, %ckd-ref(d, i), %ckd-ref(d, i + 1)))
-	  end if
-	end method;
+          if (i = stgsiz)
+            nd
+          else
+            loop(i + 2, ckd-add!(nd, %ckd-ref(d, i), %ckd-ref(d, i + 1)))
+          end if
+        end method;
   loop(0, nd);
 end function;
 
@@ -659,22 +659,22 @@ define inline function grow-hashed-class-keyed-discriminator
   let initbits :: <integer> = logand(properties(d), $standard-discriminator-bit-mask);
   dbg("grow-hashedclass-keyed-discriminator %= - stgsiz=%=, log2=%=, nstgsiz=%=",
       d, stgsiz, log2stgsize, nstgsiz);
-  let nd :: <hashed-class-keyed-discriminator> 
-       = make-hashed-class-keyed-discriminator(engine-node-function-code(d), discriminator-argnum(d), 
-					       log2stgsize + 1, initbits);
+  let nd :: <hashed-class-keyed-discriminator>
+       = make-hashed-class-keyed-discriminator(engine-node-function-code(d), discriminator-argnum(d),
+                                               log2stgsize + 1, initbits);
   copy-class-keyed-discriminator-attributes(d, nd);
   local method loop (i :: <integer>, nd :: <class-keyed-discriminator>)
-	  if (i = stgsiz)
-	    nd
-	  else 
-	    let k = %ckd-ref(d, i);
-	    if (pointer-id?(k, $ckd-empty))
-	      loop (i + 2, nd)
-	    else
-	      loop(i + 2, ckd-add!(nd, k, %ckd-ref(d, i + 1)))
-	    end if
-	  end if
-	end method;
+          if (i = stgsiz)
+            nd
+          else
+            let k = %ckd-ref(d, i);
+            if (pointer-id?(k, $ckd-empty))
+              loop (i + 2, nd)
+            else
+              loop(i + 2, ckd-add!(nd, k, %ckd-ref(d, i + 1)))
+            end if
+          end if
+        end method;
   loop (0, nd)
 end function;
 
@@ -688,13 +688,13 @@ define constant copy-class-keyed-discriminator-attributes
 define constant grounded-class-keyed-discriminator-default
   = method (d :: <class-keyed-discriminator>) => (nd :: <object>)
       select (d by instance?)
-	<monomorphic-by-class-discriminator>, <linear-by-class-discriminator>, <hashed-by-class-discriminator> =>
+        <monomorphic-by-class-discriminator>, <linear-by-class-discriminator>, <hashed-by-class-discriminator> =>
           $absent-engine-node;
         <linear-by-singleton-class-discriminator> =>
-          let d :: <linear-by-singleton-class-discriminator> = d; 
+          let d :: <linear-by-singleton-class-discriminator> = d;
           class-keyed-discriminator-default(d);
         <hashed-by-singleton-class-discriminator> =>
-          let d :: <hashed-by-singleton-class-discriminator> = d; 
+          let d :: <hashed-by-singleton-class-discriminator> = d;
           class-keyed-discriminator-default(d);
       end select
     end method;
@@ -703,20 +703,20 @@ define constant grounded-class-keyed-discriminator-default-setter
   = method (value :: <object>, d :: <class-keyed-discriminator>) => (nd :: <object>)
       select (d by instance?)
         <linear-by-singleton-class-discriminator> =>
-          let d :: <linear-by-singleton-class-discriminator> = d; 
+          let d :: <linear-by-singleton-class-discriminator> = d;
           class-keyed-discriminator-default(d) := value;
         <hashed-by-singleton-class-discriminator> =>
-          let d :: <hashed-by-singleton-class-discriminator> = d; 
+          let d :: <hashed-by-singleton-class-discriminator> = d;
           class-keyed-discriminator-default(d) := value;
       end select
     end method;
 
 define function make-linear-class-keyed-discriminator
-    (code :: <integer>, argnum :: <integer>, 
+    (code :: <integer>, argnum :: <integer>,
      table-size :: <integer>, extra-bits :: <integer>)
  => (discriminator :: <linear-class-keyed-discriminator>)
   dbg("make-linear-class-keyed-discriminator %= %= %=", code, argnum, table-size);
-  let d :: <linear-class-keyed-discriminator> 
+  let d :: <linear-class-keyed-discriminator>
     = bootstrap-allocate-repeated-discriminator(code, argnum, extra-bits, table-size, $ckd-empty);
   lckd-index(d) := 0;
   primitive-initialize-discriminator(d);
@@ -730,7 +730,7 @@ define function make-hashed-class-keyed-discriminator
   dbg("make-hashed-class-keyed-discriminator %= %= %=", code, argnum, log2size);
   let bitz :: <integer> = logior(extra-bits, ash(log2size, ckd$v-log2size));
   let table-size :: <integer> = %twopower(log2size);
-  let d :: <hashed-class-keyed-discriminator> 
+  let d :: <hashed-class-keyed-discriminator>
     = bootstrap-allocate-repeated-discriminator(code, argnum, bitz, table-size, $ckd-empty);
   primitive-initialize-discriminator(d);
   d
@@ -743,12 +743,12 @@ define function make-initial-class-keyed-discriminator
   let stgsiz :: <integer> = ash(number-of-keys, 1);
   let bitz :: <integer> = standard-discriminator-bits(gf);
   if (~(stgsiz < $linear-discriminator-table-limit)) // @@@@ (stgsiz >= $linear-discriminator-table-limit)
-    make-hashed-class-keyed-discriminator(logior(code, 1), argnum, 
-					  hashed-class-keyed-discriminator-log2size(stgsiz),
-					  bitz)
+    make-hashed-class-keyed-discriminator(logior(code, 1), argnum,
+                                          hashed-class-keyed-discriminator-log2size(stgsiz),
+                                          bitz)
   else
     make-linear-class-keyed-discriminator(logand(code, -2), argnum, logand(stgsiz + 3, -8),
-					  bitz)
+                                          bitz)
   end if
 end function;
 
@@ -757,7 +757,7 @@ define function make-by-class-discriminator
  => (d :: <by-class-discriminator>);
   if (number-of-keys == 1)
     make-monomorphic-by-class-discriminator(argnum, gf)
-  else 
+  else
     make-initial-class-keyed-discriminator(engine-node$k-linear-by-class, argnum, gf, number-of-keys)
   end if
 end function;
@@ -771,28 +771,28 @@ define function make-by-singleton-class-discriminator
   d
 end function;
 
-define inline function linear-class-key-lookup 
+define inline function linear-class-key-lookup
     (key :: <integer>, d :: <linear-class-keyed-discriminator>, default)
   let n :: <integer> = %ckd-size(d);
   local method loop (i :: <integer>)
-	  if (i = n)
-	    default
-	  else 
-	    let otherkey = %ckd-ref(d, i);
-	    if (pointer-id?(otherkey, key))
-	      %ckd-ref(d, i + 1)
-	    // elseif (pointer-id?(otherkey, $ckd-empty))
-	    //   default
-	    else
-	      loop(i + 2)
-	    end if
-	  end if
-	end method;
+          if (i = n)
+            default
+          else
+            let otherkey = %ckd-ref(d, i);
+            if (pointer-id?(otherkey, key))
+              %ckd-ref(d, i + 1)
+            // elseif (pointer-id?(otherkey, $ckd-empty))
+            //   default
+            else
+              loop(i + 2)
+            end if
+          end if
+        end method;
   loop(0)
 end function;
 
 /*
-define inline function linear-class-key-lookup 
+define inline function linear-class-key-lookup
     (key :: <integer>, d :: <linear-class-keyed-discriminator>, default)
  => (ans)
 
@@ -804,26 +804,26 @@ define inline function linear-class-key-lookup
   else
     let n :: <integer> = %ckd-size(d);
     local method loop (i :: <integer>)
-	    let i :: <integer> = i + 2;
-	    let i :: <integer> = if (i == n) 0 else i end;
-	    if (i == firsti)
-	      default
-	    else 
-	      let otherkey = %ckd-ref(d, i);
-	      if (pointer-id?(otherkey, key))
-		lckd-index(d) := i;
-		%ckd-ref(d, i + 1)
-	      else
-		loop(i)
-	      end if
-	    end if
-	  end method;
+            let i :: <integer> = i + 2;
+            let i :: <integer> = if (i == n) 0 else i end;
+            if (i == firsti)
+              default
+            else
+              let otherkey = %ckd-ref(d, i);
+              if (pointer-id?(otherkey, key))
+                lckd-index(d) := i;
+                %ckd-ref(d, i + 1)
+              else
+                loop(i)
+              end if
+            end if
+          end method;
     loop(firsti)
   end if
 end function;
 */
 
-define function grounded-linear-class-key-lookup 
+define function grounded-linear-class-key-lookup
     (key :: <integer>, d :: <linear-class-keyed-discriminator>, default)
   with-lckd-dispatch (d)
     linear-class-key-lookup(key, d, default);
@@ -864,7 +864,7 @@ end function;
       which generate them.
 */
 
-define inline function %hckd-first-index 
+define inline function %hckd-first-index
     (key :: <integer>, d :: <hashed-class-keyed-discriminator>)
  => (index :: <integer>)
   logand(key, %ckd-mask(d))
@@ -888,7 +888,7 @@ define inline constant %second-hash-values = method () => (v :: <simple-object-v
       86,                               // index = 13, step = 43
       94,                               // index = 14, step = 47
       106                               // index = 15, step = 53
-	]
+        ]
 end method;
 
 // Mask to compute index mod the size of $second-hash-values.
@@ -898,8 +898,8 @@ define inline function %hckd-hash-step
     (key :: <integer>, d :: <hashed-class-keyed-discriminator>) => (step :: <integer>, mask :: <integer>)
   let log2size :: <integer> = %load-byte(ckd$v-log2size, ckd$s-log2size, properties(d));
   values(vector-element(%second-hash-values(),
-			logand(%scale-down(key, log2size), $second-hash-mask)), 
-	 %twopower(log2size) - 2)
+                        logand(%scale-down(key, log2size), $second-hash-mask)),
+         %twopower(log2size) - 2)
 end function;
 
 
@@ -920,37 +920,37 @@ define inline function hashed-class-key-lookup
   elseif (pointer-id?(otherkey, $ckd-empty))
     default
   else
-    let (step :: <integer>, mask :: <integer>) 
+    let (step :: <integer>, mask :: <integer>)
       = %hckd-hash-step(key, d);
     local method loop (i :: <integer>)
-	    let i :: <integer> = %hckd-next-index(i, step, mask);
-	    let otherkey = %ckd-ref(d, i);
-	    if (pointer-id?(otherkey, key))
-	      %ckd-ref(d, i + 1)
-	    elseif (pointer-id?(otherkey, $ckd-empty))
-	      default
-	    else
-	      loop(i)
-	    end if
-	  end method;
+            let i :: <integer> = %hckd-next-index(i, step, mask);
+            let otherkey = %ckd-ref(d, i);
+            if (pointer-id?(otherkey, key))
+              %ckd-ref(d, i + 1)
+            elseif (pointer-id?(otherkey, $ckd-empty))
+              default
+            else
+              loop(i)
+            end if
+          end method;
     loop(i)
   end if
 end function;
 
-define function grounded-hashed-class-key-lookup 
+define function grounded-hashed-class-key-lookup
     (key :: <integer>, d :: <hashed-class-keyed-discriminator>, default)
   with-hckd-dispatch (d)
     hashed-class-key-lookup(key, d, default);
   end with-hckd-dispatch;
 end function;
 
-define function %gf-dispatch-hashed-by-class 
+define function %gf-dispatch-hashed-by-class
     (arg, parent :: <dispatch-starter>, d :: <hashed-by-class-discriminator>)
   parent;
   hashed-class-key-lookup(object-class-unique-key(arg), d, $absent-engine-node)
 end function;
 
-define function %gf-dispatch-hashed-by-singleton-class 
+define function %gf-dispatch-hashed-by-singleton-class
     (arg :: <class>, parent :: <dispatch-starter>, d :: <hashed-by-singleton-class-discriminator>)
   parent;
   hashed-class-key-lookup(class-unique-key(arg), d, class-keyed-discriminator-default(d))
@@ -963,14 +963,14 @@ define function ckd-lookup
     let d :: <monomorphic-by-class-discriminator> = d;
     if (monomorphic-by-class-discriminator-key(d) == key)
       monomorphic-by-class-discriminator-next(d)
-    else 
+    else
       default
     end if
   else
     if (instance?(d, <linear-class-keyed-discriminator>))
       let d :: <linear-class-keyed-discriminator> = d;
       grounded-linear-class-key-lookup(key, d, default)
-    else 
+    else
       let d :: <hashed-class-keyed-discriminator> = d;
       grounded-hashed-class-key-lookup(key, d, default)
     end if
@@ -998,20 +998,20 @@ define function ckd-size
   end with-ckd-dispatch;
 end function;
 
-define function ckd-add! 
+define function ckd-add!
     (d :: <class-keyed-discriminator>, key, value)
  => (discriminator :: <class-keyed-discriminator>);
   dbg("ckd-add(%=, %=, %=)", d, key, value);
   let ans :: <class-keyed-discriminator>
     = if (instance?(d, <linear-class-keyed-discriminator>))
-	let d :: <linear-class-keyed-discriminator> = d;
-	grounded-lckd-add!(d, key, value)
+        let d :: <linear-class-keyed-discriminator> = d;
+        grounded-lckd-add!(d, key, value)
       elseif (instance?(d, <monomorphic-by-class-discriminator>))
-	let d :: <monomorphic-by-class-discriminator> = d;
-	grounded-mckd-add!(d, key, value);
+        let d :: <monomorphic-by-class-discriminator> = d;
+        grounded-mckd-add!(d, key, value);
       else
-	let d :: <hashed-class-keyed-discriminator> = d;
-	grounded-hckd-add!(d, key, value)
+        let d :: <hashed-class-keyed-discriminator> = d;
+        grounded-hckd-add!(d, key, value)
       end if;
   dbg(if(ans == d) "ckd-add! same discriminator" else "ckd-add! new discriminator" end);
   ans
@@ -1033,11 +1033,11 @@ define function mckd-add!
   else
     let new-d :: <linear-by-class-discriminator>
       = make-linear-class-keyed-discriminator
-	  (engine-node$k-linear-by-class, discriminator-argnum(d), 2,
-	   logand(properties(d), $standard-discriminator-bit-mask));
+          (engine-node$k-linear-by-class, discriminator-argnum(d), 2,
+           logand(properties(d), $standard-discriminator-bit-mask));
     ckd-add!(lckd-add!(new-d, monomorphic-by-class-discriminator-key(d),
-		       monomorphic-by-class-discriminator-next(d)),
-	     key, value)
+                       monomorphic-by-class-discriminator-next(d)),
+             key, value)
   end if;
 end function;
 
@@ -1049,48 +1049,48 @@ define inline function hckd-add!
   let (step :: <integer>, mask :: <integer>) = %hckd-hash-step(key, d);
   let enlarge?
        = method (d :: <hashed-class-keyed-discriminator>, nprobes :: <integer>)
-	   let siz :: <integer> = %ckd-size(d);         // Note siz is number of entries * 2.
-	   local method count (i :: <integer>, cnt :: <integer>)
-		   if (i == siz)
-		     let quarterfull :: <integer> = ash(siz, -3);
-		     if (~(quarterfull < cnt))  // @@@@ (cnt <= quarterfull)
-		       #f           // The table is less than 1/4 full.
-		     else 
-		       let halffull :: <integer> = ash(siz, -2);
-		       if (cnt <= halffull)
-			 // Table less than 1/2 full, tolerate 7 collisions.
-			 nprobes > 7
-		       else
-			 // Table is more than 1/2 full.  Grow if the hash chain will be
-			 // more than 4 long, or if the table gets 3/4 full.
-			 let threequarters :: <integer> = quarterfull + halffull;
-			 (cnt >= threequarters) | (nprobes > 4)
-		       end if
-		     end if
-		   else 
-		     count(i + 2, if (%ckd-ref(d, i) == $ckd-empty) cnt else cnt + 1 end if)
-		   end if
-		 end method;
-	   count(0, 0)
-	 end method;
+           let siz :: <integer> = %ckd-size(d);         // Note siz is number of entries * 2.
+           local method count (i :: <integer>, cnt :: <integer>)
+                   if (i == siz)
+                     let quarterfull :: <integer> = ash(siz, -3);
+                     if (~(quarterfull < cnt))  // @@@@ (cnt <= quarterfull)
+                       #f           // The table is less than 1/4 full.
+                     else
+                       let halffull :: <integer> = ash(siz, -2);
+                       if (cnt <= halffull)
+                         // Table less than 1/2 full, tolerate 7 collisions.
+                         nprobes > 7
+                       else
+                         // Table is more than 1/2 full.  Grow if the hash chain will be
+                         // more than 4 long, or if the table gets 3/4 full.
+                         let threequarters :: <integer> = quarterfull + halffull;
+                         (cnt >= threequarters) | (nprobes > 4)
+                       end if
+                     end if
+                   else
+                     count(i + 2, if (%ckd-ref(d, i) == $ckd-empty) cnt else cnt + 1 end if)
+                   end if
+                 end method;
+           count(0, 0)
+         end method;
   local method loop (i :: <integer>, nprobes :: <integer>)
-	  let otherkey = %ckd-ref(d, i);
-	  if (pointer-id?(otherkey, key))
-	    %ckd-ref(d, i + 1) := value;
-	    d
-	  elseif (~pointer-id?(otherkey, $ckd-empty))
-	    loop(%hckd-next-index(i, step, mask), nprobes + 1)
-	  elseif (enlarge?(d, nprobes))
-	    let nd :: <hashed-class-keyed-discriminator> 
-	      = grow-hashed-class-keyed-discriminator(d);
-	    grounded-hckd-add!(nd, key, value)
-	  else 
-	    %ckd-ref(d, i + 1) := value;
-	    sequence-point();
-	    %ckd-ref(d, i) := key;
-	    d
-	  end if
-	end method;
+          let otherkey = %ckd-ref(d, i);
+          if (pointer-id?(otherkey, key))
+            %ckd-ref(d, i + 1) := value;
+            d
+          elseif (~pointer-id?(otherkey, $ckd-empty))
+            loop(%hckd-next-index(i, step, mask), nprobes + 1)
+          elseif (enlarge?(d, nprobes))
+            let nd :: <hashed-class-keyed-discriminator>
+              = grow-hashed-class-keyed-discriminator(d);
+            grounded-hckd-add!(nd, key, value)
+          else
+            %ckd-ref(d, i + 1) := value;
+            sequence-point();
+            %ckd-ref(d, i) := key;
+            d
+          end if
+        end method;
   loop(%hckd-first-index(key, d), 0)
 end function;
 
@@ -1105,25 +1105,25 @@ end function;
 define inline function lckd-add!
     (d :: <linear-class-keyed-discriminator>, key, value)
  => (possibly-new-discriminator :: <class-keyed-discriminator>);
-  // *** The g.f. is assumed to be locked; no one else is permitted 
+  // *** The g.f. is assumed to be locked; no one else is permitted
   // *** to be mucking around with the table.
   let n :: <integer> = %ckd-size(d);
   local method loop (i :: <integer>)
-	  if (i = n)
-	    let nd :: <class-keyed-discriminator> = grow-linear-class-keyed-discriminator(d);
-	    ckd-add!(nd, key, value)
-	  elseif (pointer-id?(%ckd-ref(d, i), $ckd-empty))
-	    %ckd-ref(d, i + 1) := value;
-	    sequence-point();
-	    %ckd-ref(d, i) := key;
-	    d
-	  elseif (pointer-id?(%ckd-ref(d, i), key))
-	    %ckd-ref(d, i + 1) := value;
-	    d
-	  else
-	    loop (i + 2)
-	  end if
-	end method;
+          if (i = n)
+            let nd :: <class-keyed-discriminator> = grow-linear-class-keyed-discriminator(d);
+            ckd-add!(nd, key, value)
+          elseif (pointer-id?(%ckd-ref(d, i), $ckd-empty))
+            %ckd-ref(d, i + 1) := value;
+            sequence-point();
+            %ckd-ref(d, i) := key;
+            d
+          elseif (pointer-id?(%ckd-ref(d, i), key))
+            %ckd-ref(d, i + 1) := value;
+            d
+          else
+            loop (i + 2)
+          end if
+        end method;
   loop(0)
 end function;
 
@@ -1139,7 +1139,7 @@ end function;
 // define engine-node-slot typecheck-discriminator-next <typecheck-discriminator> <object> engine-node-data-2;
 
 
-define constant %gf-dispatch-typecheck 
+define constant %gf-dispatch-typecheck
   = method (arg, parent :: <dispatch-starter>, d :: <typecheck-discriminator>)
       parent;
       if (primitive-instance?(arg, typecheck-discriminator-type(d)))
@@ -1154,7 +1154,7 @@ define constant make-typecheck-discriminator = method
  => (d :: <discriminator>)
 //  let d :: <typecheck-discriminator>
 //    = bootstrap-allocate-discriminator(engine-node$k-typecheck, argnum,
-//				       standard-discriminator-bits(gf));
+//                                       standard-discriminator-bits(gf));
 //  typecheck-discriminator-type(d) := type;
 //  typecheck-discriminator-next(d) := next;
 //  primitive-initialize-discriminator(d);
@@ -1167,7 +1167,7 @@ define constant make-monomorphic-by-class-discriminator = method
  => (d :: <discriminator>)
   let d :: <monomorphic-by-class-discriminator>
     = bootstrap-allocate-discriminator(engine-node$k-monomorphic-by-class, argnum,
-				       standard-discriminator-bits(gf));
+                                       standard-discriminator-bits(gf));
   monomorphic-by-class-discriminator-key(d)  := $ckd-empty;
   // let key = iclass-unique-key(ic);
   // monomorphic-by-class-discriminator-key(d)  := key;
@@ -1181,7 +1181,7 @@ end method;
 // define engine-node-slot if-type-discriminator-then <if-type-discriminator> <object> engine-node-data-2;
 // define engine-node-slot if-type-discriminator-else <if-type-discriminator> <object> engine-node-data-3;
 
-define constant %gf-dispatch-if-type 
+define constant %gf-dispatch-if-type
   = method (arg, parent :: <dispatch-starter>, disp :: <if-type-discriminator>)
       parent;
       if (primitive-instance?(arg, if-type-discriminator-type(disp)))
@@ -1191,11 +1191,11 @@ define constant %gf-dispatch-if-type
       end if
     end method;
 
-define constant make-if-type-discriminator 
+define constant make-if-type-discriminator
   = method (argnum :: <integer>, gf :: <generic-function>, type :: <type>, thend :: <object>, elsed :: <object>)
       let d :: <if-type-discriminator>
-           = bootstrap-allocate-discriminator(engine-node$k-if-type, argnum, 
-					      standard-discriminator-bits(gf));
+           = bootstrap-allocate-discriminator(engine-node$k-if-type, argnum,
+                                              standard-discriminator-bits(gf));
       if-type-discriminator-type(d) := type;
       if-type-discriminator-then(d) := thend;
       if-type-discriminator-else(d) := elsed;
@@ -1205,8 +1205,8 @@ define constant make-if-type-discriminator
 
 /* Singleton Dispatch */
 
-//define engine-node-slot singleton-discriminator-table <singleton-discriminator> 
-//  <simple-object-vector> 
+//define engine-node-slot singleton-discriminator-table <singleton-discriminator>
+//  <simple-object-vector>
 //  engine-node-data-1;
 //define engine-node-slot singleton-discriminator-default <singleton-discriminator>
 //  <object>
@@ -1217,7 +1217,7 @@ define constant make-linear-singleton-discriminator
   = method (entry-type :: <integer>, argnum :: <integer>, gf :: <generic-function>, keys :: <list>, nkeys :: <integer>)
       => (d :: <linear-singleton-discriminator>)
       let len :: <integer> = ash(nkeys, 1);
-      let v :: <simple-object-vector> 
+      let v :: <simple-object-vector>
            = make(<simple-object-vector>, size: len, fill: $absent-engine-node);
       let d :: <linear-singleton-discriminator>
            = bootstrap-allocate-discriminator(entry-type, argnum, standard-discriminator-bits(gf));
@@ -1230,7 +1230,7 @@ define constant make-linear-singleton-discriminator
                   error("fmh")
                 else
                   vector-element(v, i) := head(l);
-		  let nxt :: <list> = tail(l);
+                  let nxt :: <list> = tail(l);
                   loop(i + 2, nxt)
                 end if
               end unless
@@ -1247,17 +1247,17 @@ define inline function immediate-linear-singleton-discriminator-element
   let table :: <simple-object-vector> = singleton-discriminator-table(d);
   let n :: <integer> = size(table);
   local method loop (i :: <integer>)
-	  if (i = n)
-	    default
-	  else 
-	    let k = vector-element(table, i);
-	    if (pointer-id?(k, key))
-	      vector-element(table, i + 1);
-	    else
-	      loop(i + 2)
-	    end if
-	  end if
-	end method;
+          if (i = n)
+            default
+          else
+            let k = vector-element(table, i);
+            if (pointer-id?(k, key))
+              vector-element(table, i + 1);
+            else
+              loop(i + 2)
+            end if
+          end if
+        end method;
   loop(0)
 end function;
 */
@@ -1272,20 +1272,20 @@ define inline function immediate-linear-singleton-discriminator-element
     vector-element(table, firsti + 1)
   else
     local method loop (i :: <integer>)
-	    let i :: <integer> = i + 2;
-	    let i :: <integer> = if (i == n) 0 else i end;
-	    if (i == firsti)
-	      default
-	    else
-	      let k = vector-element(table, i);
-	      if (pointer-id?(k, key))
-		lsd-index(d) := i;
-		vector-element(table, i + 1)
-	      else
-		loop(i)
-	      end if
-	    end if
-	  end method;
+            let i :: <integer> = i + 2;
+            let i :: <integer> = if (i == n) 0 else i end;
+            if (i == firsti)
+              default
+            else
+              let k = vector-element(table, i);
+              if (pointer-id?(k, key))
+                lsd-index(d) := i;
+                vector-element(table, i + 1)
+              else
+                loop(i)
+              end if
+            end if
+          end method;
     loop(firsti)
   end if
 end function;
@@ -1297,17 +1297,17 @@ define inline function value-object-linear-singleton-discriminator-element
   let table :: <simple-object-vector> = singleton-discriminator-table(d);
   let n :: <integer> = size(table);
   local method loop (i :: <integer>)
-	  if (i = n)
-	    default
-	  else 
-	    let k = vector-element(table, i);
-	    if (k ~== $absent-engine-node & k = key)
-	      vector-element(table, i + 1);
-	    else
-	      loop(i + 2)
-	    end if
-	  end if
-	end method;
+          if (i = n)
+            default
+          else
+            let k = vector-element(table, i);
+            if (k ~== $absent-engine-node & k = key)
+              vector-element(table, i + 1);
+            else
+              loop(i + 2)
+            end if
+          end if
+        end method;
   loop(0)
 end function;
 */
@@ -1322,20 +1322,20 @@ define inline function value-object-linear-singleton-discriminator-element
     vector-element(table, firsti + 1)
   else
     local method loop (i :: <integer>)
-	    let i :: <integer> = i + 2;
-	    let i :: <integer> = if (i == n) 0 else i end;
-	    if (i == firsti)
-	      default
-	    else
-	      let k = vector-element(table, i);
-	      if (k ~== $absent-engine-node & k = key)
-		lsd-index(d) := i;
-		vector-element(table, i + 1)
-	      else
-		loop(i)
-	      end if
-	    end if
-	  end method;
+            let i :: <integer> = i + 2;
+            let i :: <integer> = if (i == n) 0 else i end;
+            if (i == firsti)
+              default
+            else
+              let k = vector-element(table, i);
+              if (k ~== $absent-engine-node & k = key)
+                lsd-index(d) := i;
+                vector-element(table, i + 1)
+              else
+                loop(i)
+              end if
+            end if
+          end method;
     loop(firsti)
   end if
 end function;
@@ -1352,7 +1352,7 @@ define constant linear-singleton-discriminator-element-setter
                 let k = vector-element(table, i);
                 if (k == key)
                   lsd-index(d) := i;
-		  vector-element(table, i + 1) := value
+                  vector-element(table, i + 1) := value
                 else
                   loop(i + 2)
                 end if
@@ -1361,16 +1361,16 @@ define constant linear-singleton-discriminator-element-setter
       loop(0)
     end method;
 
-define constant %gf-dispatch-immediate-linear-singleton 
+define constant %gf-dispatch-immediate-linear-singleton
   = method (arg, parent :: <dispatch-starter>, d :: <immediate-linear-singleton-discriminator>)
-      parent; 
+      parent;
       immediate-linear-singleton-discriminator-element(d, arg, singleton-discriminator-default(d))
     end method;
 
 
 define constant %gf-dispatch-value-object-linear-singleton
   = method (arg, parent :: <dispatch-starter>, d :: <immediate-linear-singleton-discriminator>)
-      parent; 
+      parent;
       value-object-linear-singleton-discriminator-element(d, arg, singleton-discriminator-default(d))
     end method;
 
@@ -1378,10 +1378,10 @@ define constant %gf-dispatch-value-object-linear-singleton
 define constant singleton-discriminator-element
     = method (d :: <singleton-discriminator>, key, default) => (val :: <object>)
       select (d by instance?)
-	<immediate-linear-singleton-discriminator> =>
-	  immediate-linear-singleton-discriminator-element(d, key, default);
-	<value-object-linear-singleton-discriminator> =>
-	  value-object-linear-singleton-discriminator-element(d, key, default);
+        <immediate-linear-singleton-discriminator> =>
+          immediate-linear-singleton-discriminator-element(d, key, default);
+        <value-object-linear-singleton-discriminator> =>
+          value-object-linear-singleton-discriminator-element(d, key, default);
       end select
     end method;
 
@@ -1394,7 +1394,7 @@ define constant singleton-discriminator-element-setter
     end method;
 
 
-define constant make-single-class-singleton-discriminator = method 
+define constant make-single-class-singleton-discriminator = method
     (keys :: <list>, argnum :: <integer>, gf :: <generic-function>)
  => (d :: <singleton-discriminator>);
   let n :: <integer> = size(keys);
@@ -1456,7 +1456,7 @@ end function;
 
 
 define constant handle-missed-dispatch = method (d :: <engine-node>,
-						 parent :: <dispatch-starter>,
+                                                 parent :: <dispatch-starter>,
                                                  args :: <simple-object-vector>)
   /*
   iterate redefinition-check (i :: <integer> = size(args) - 1,
@@ -1484,9 +1484,9 @@ define variable *dispatch-miss-count* = 0;
 define variable *dispatch-computation-count* = 0;
 
 define constant handle-missed-dispatch-1 = method (d :: <engine-node>,
-						   parent :: <dispatch-starter>,
+                                                   parent :: <dispatch-starter>,
                                                    args :: <simple-object-vector>)
-  
+
   let ds :: <dispatch-state> = system-allocate-simple-instance(<dispatch-state>);
   let parent :: <dispatch-starter> = if (d == $absent-engine-node) parent else d end;
   let gf :: <generic-function> = parent-gf(parent);
@@ -1501,12 +1501,12 @@ define constant handle-missed-dispatch-1 = method (d :: <engine-node>,
 
 //  *dispatch-miss-count* := wrapped-incr(*dispatch-miss-count*);
   let new-start-engine = (with-object-lock (gf)
-			    let cache = %gf-cache(gf);
-			    %ds-cache(ds) := cache | #f;
-			    (~type-complete?(gf) & call-to-type-incomplete-generic(gf, args))
-			     |
-			     compute-dispatch-engine(ds)
-			  end with-object-lock);
+                            let cache = %gf-cache(gf);
+                            %ds-cache(ds) := cache | #f;
+                            (~type-complete?(gf) & call-to-type-incomplete-generic(gf, args))
+                             |
+                             compute-dispatch-engine(ds)
+                          end with-object-lock);
 
   bletch-stack(%ds-conditions(ds));
   let what = %ds-result(ds) | new-start-engine;

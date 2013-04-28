@@ -35,7 +35,7 @@ define method concatenate-2
       vector-element(new-vector, index) := vector-element(v1, index);
     end for;
     for (index-2 :: <integer> from 0 below size-2,
-	 index :: <integer> from size-1)
+         index :: <integer> from size-1)
       vector-element(new-vector, index) := vector-element(v2, index-2);
     end for;
     new-vector
@@ -58,7 +58,7 @@ end method concatenate-2;
 
 // bubble sort -- yuck!
 
-// define method bubble-sort! (items :: <list>, #key test = \<, stable) 
+// define method bubble-sort! (items :: <list>, #key test = \<, stable)
 //  => (result :: <list>)
 //   let tmp = #f;
 //   until (tmp == items.head)
@@ -66,7 +66,7 @@ end method concatenate-2;
 //     for (prev :: <list> = items then prev.tail,
 //          next :: <list> = items.tail then next.tail,
 //          until: next.empty?)
-//       //	(unless (test (head prev) (head next))
+//       //        (unless (test (head prev) (head next))
 //       //      Only rearrange on a definite positive outcome;
 //       if (test(next.head, prev.head))
 //         tmp := prev.head;
@@ -137,7 +137,7 @@ end function;
 
 // concrete-subtype?(<back-end>, <c-back-end>) => #t
 //
-// For classes C1 and C2, 
+// For classes C1 and C2,
 // C1 is a concrete subtype of C2 if all concrete subclasses of C1 are
 // subclasses of C2.  So if <c-back-end> is the only subclass <back-end>,
 // and <back-end> is abstract and <c-back-end> concrete, <back-end>
@@ -156,30 +156,30 @@ define function concrete-subtype? (type1 :: <type>, type2 :: <type>, dep :: fals
  => (well? :: <boolean>)
   grounded-subtype?(type1, type2)
     | (type1 ~== <object>
-	 & class?(type1) 
-	 & class?(type2)
-	 & (begin
-	      let c1 :: <class> = type1;
-	      let c2 :: <class> = type2;
-	      let ic1 :: <implementation-class> = class-implementation-class(c1);
-	      let ic2 :: <implementation-class> = class-implementation-class(c2);
-	      // Only do this if the classes are joint.  Otherwise, we get frequent
-	      // quasi-false positives where unrelated classes with no concrete subclasses
-	      // are noted - correctly - as being subtypes.
-	      (subiclass?(ic2, c2, ic1, c1) 
-		| member?(c1, class-known-joint(ic2))
-		| member?(c2, class-known-joint(ic1)))
-		&
-		(~*conservative-concrete-subtype? | (iclass-subclasses-fixed?(ic1) & iclass-subclasses-fixed?(ic2)))
-		& 
-		begin
-		  let st? = concrete-subtype?-internal(c1, c2);
-		  when (st? & dep)
-		    %register-subclass-dependent-generic(dep, c1)
-		  end when;
-		  st?
-		end 
-	    end))
+         & class?(type1)
+         & class?(type2)
+         & (begin
+              let c1 :: <class> = type1;
+              let c2 :: <class> = type2;
+              let ic1 :: <implementation-class> = class-implementation-class(c1);
+              let ic2 :: <implementation-class> = class-implementation-class(c2);
+              // Only do this if the classes are joint.  Otherwise, we get frequent
+              // quasi-false positives where unrelated classes with no concrete subclasses
+              // are noted - correctly - as being subtypes.
+              (subiclass?(ic2, c2, ic1, c1)
+                | member?(c1, class-known-joint(ic2))
+                | member?(c2, class-known-joint(ic1)))
+                &
+                (~*conservative-concrete-subtype? | (iclass-subclasses-fixed?(ic1) & iclass-subclasses-fixed?(ic2)))
+                &
+                begin
+                  let st? = concrete-subtype?-internal(c1, c2);
+                  when (st? & dep)
+                    %register-subclass-dependent-generic(dep, c1)
+                  end when;
+                  st?
+                end
+            end))
 end function;
 
 
@@ -202,9 +202,9 @@ define function grounded-has-instances? (class :: <class>, type :: <type>)
     <class> =>
       let type :: <class> = type;
       if (subclass?(class, type))
-	values(#t, #t)
+        values(#t, #t)
       else
-	values(#f, #f)
+        values(#f, #f)
       end if;
     <singleton> =>
       let type :: <singleton> = type;
@@ -240,9 +240,9 @@ define function every-2?
   let size-2 :: <integer> = argument-2.size;
   let min-size :: <integer>
     = if (size-1 < size-2)
-	size-1
+        size-1
       else
-	size-2
+        size-2
       end if;
   // MIN
   iterate search (index :: <integer> = 0)
@@ -250,7 +250,7 @@ define function every-2?
       #t
     else
       function(vector-element(argument-1, index),
-	       vector-element(argument-2, index))
+               vector-element(argument-2, index))
       & search(index + 1)
     end if
   end iterate
@@ -280,9 +280,9 @@ define function unbound-instance-slot (object, offset :: <integer>)
  => (will-never-return :: <bottom>)
   let sd :: <slot-descriptor>
     = vector-element(instance-slot-descriptors(object-class(object)), offset);
-  
+
   error(make(<simple-slot-error>,
-             format-string: "The %s slot is unbound in %s.", 
+             format-string: "The %s slot is unbound in %s.",
              format-arguments: list(slot-getter(sd) | sd, object)))
 end function;
 
@@ -291,7 +291,7 @@ define function unbound-repeated-slot (object, idx :: <integer>)
  => (will-never-return :: <bottom>)
   let sd :: <slot-descriptor> = repeated-slot-descriptor(object-class(object));
   error(make(<simple-slot-error>,
-             format-string: "%s at index %s is unbound in %s.", 
+             format-string: "%s at index %s is unbound in %s.",
              format-arguments: list(slot-getter(sd) | sd, idx, object)))
 end function;
 
@@ -299,14 +299,14 @@ end function;
 define function unbound-class-slot (inst, offset :: <integer>)
  => (will-never-return :: <bottom>)
   let cls :: <class> = if (instance?(inst, <class>))
-			 inst
-		       else
-			 object-class(inst)
-		       end if;
+                         inst
+                       else
+                         object-class(inst)
+                       end if;
   let sd :: <slot-descriptor>
     = vector-element(class-slot-descriptors(cls), offset);
-  error(make(<simple-slot-error>, 
-             format-string: "The %s slot is unbound in %s.", 
+  error(make(<simple-slot-error>,
+             format-string: "The %s slot is unbound in %s.",
              format-arguments: list(slot-getter(sd) | sd, inst)))
 end function;
 
