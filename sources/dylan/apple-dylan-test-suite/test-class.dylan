@@ -340,8 +340,10 @@ define test limited-collections-2 ()
                           instance?(limited(cc, of: <integer>), <type>)
                         end method,
                         list(<table>,
+                             <object-table>,
                              <array>,
                              <vector>,
+                             <simple-vector>,
                              <stretchy-vector>,
                              <string>,
                              <deque>,
@@ -352,7 +354,12 @@ define test limited-collections-3 ()
   check-true("", every?(method (cc)
                           instance?(limited(cc, size: 10), <type>)
                         end method,
-                        list(<array>, <vector>, <string>, <range>)));
+                        list(<table>,
+                             <object-table>,
+                             <array>,
+                             <vector>,
+                             <simple-vector>,
+                             <string>)));
 end test;
 
 define test limited-collections ()
