@@ -5,27 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define macro patchable-constant-definer
-  { define patchable-constant ?name:name (?paramlist:*) (?arglist:*) ?body:body end}
-    =>
-    { define patchable-constant ?name (?paramlist) => (val :: <object>);
-          (?arglist)
-          ?body
-      end}
-  { define patchable-constant ?name:name (?paramlist:*) => (?vtypes:*); (?arglist:*) ?body:body end}
-    =>
-//    { define variable "*" ## ?name ## "*" = #f;
-//      define constant ?name = method (?paramlist) => (?vtypes);
-//        if ("*" ## ?name ## "*")
-//          "*" ## ?name ## "*" (?arglist)
-//        else
-//          ?body
-//        end if
-//      end method;
-//     }
-    { define constant ?name = method (?paramlist) => (?vtypes); ?body end method; }
-end macro;
-
 
 define function compute-headed-methods (ds :: <dispatch-state>)
  => ()
@@ -40,10 +19,9 @@ end function;
 
 
 
-define patchable-constant prune-methods-by-known-class
+define function prune-methods-by-known-class
     (argnum :: <integer>, cls :: <class>, ds :: <dispatch-state>)
  => (all-accounted-for? :: <boolean>);
-  (argnum, cls, ds)
   let headed-methods :: <pair> = %ds-headed-methods(ds);
   local method loop (prev :: <pair>, subl :: <list>, allall?)
           if (subl == #())
@@ -62,7 +40,7 @@ define patchable-constant prune-methods-by-known-class
         end method;
   let the-methods :: <list> = tail(headed-methods);
   loop(headed-methods, the-methods, #t)
-end patchable-constant;
+end function;
 
 
 
@@ -269,41 +247,38 @@ end function;
 //end function;
 
 
-define patchable-constant select-next-arg-for-discrimination (ds :: <dispatch-state>)
+define function select-next-arg-for-discrimination (ds :: <dispatch-state>)
   => (arg);
-  (ds)
-  begin
-    let argnum-set :: <argnum-set> = %ds-argnum-set(ds);
-    local method loop ()
-            let a :: <list> = %ds-args-to-check-first(ds);
-            if (a == #())
-              let nrequired :: <integer> = %gf-number-required(%ds-gf(ds));
-              let next-unchecked-arg :: <integer> = next-free-argnum(-1, argnum-set);
-              if (next-unchecked-arg < nrequired)
-                next-unchecked-arg
-              else
-                #f
-              end if
+  let argnum-set :: <argnum-set> = %ds-argnum-set(ds);
+  local method loop ()
+          let a :: <list> = %ds-args-to-check-first(ds);
+          if (a == #())
+            let nrequired :: <integer> = %gf-number-required(%ds-gf(ds));
+            let next-unchecked-arg :: <integer> = next-free-argnum(-1, argnum-set);
+            if (next-unchecked-arg < nrequired)
+              next-unchecked-arg
             else
-              let m :: <integer> = head(a);
-              local method moop (m :: <integer>, i :: <integer>)
-                      if (m == 0)
-                        let nxt :: <list> = tail(a);
-                        %ds-args-to-check-first(ds) := nxt;
-                        loop()
-                      elseif (logbit?(0, m) & ~argnum-considered?(i, argnum-set))
-                        head(a) := ash(m, i);
-                        i
-                      else
-                        moop(ash(m, -1), i + 1)
-                      end if
-                    end method;
-              moop(m, 0)
+              #f
             end if
-          end method;
-    loop()
-  end;
-end patchable-constant;
+          else
+            let m :: <integer> = head(a);
+            local method moop (m :: <integer>, i :: <integer>)
+                    if (m == 0)
+                      let nxt :: <list> = tail(a);
+                      %ds-args-to-check-first(ds) := nxt;
+                      loop()
+                    elseif (logbit?(0, m) & ~argnum-considered?(i, argnum-set))
+                      head(a) := ash(m, i);
+                      i
+                    else
+                      moop(ash(m, -1), i + 1)
+                    end if
+                  end method;
+            moop(m, 0)
+          end if
+        end method;
+  loop()
+end function;
 
 
 define function walk-existing-dispatch-engine (ds :: <dispatch-state>, e, recurse :: <function>)
@@ -434,75 +409,68 @@ define function walk-existing-dispatch-engine (ds :: <dispatch-state>, e, recurs
 end function;
 
 
-define patchable-constant compute-more-dispatch-engine
+define function compute-more-dispatch-engine
     (ds :: <dispatch-state>)
  => (engine :: <object> /* union(<method>, <engine-node>) */ );
-    (ds)
-    begin
-      let argnum? = select-next-arg-for-discrimination(ds);
-      if (~ argnum?)
-        compute-terminal-engine-node(ds)
-      else
-        let argnum :: <integer> = argnum?;
-        compute-discriminator-for-arg(argnum, ds)
-      end if
-    end
-end patchable-constant;
+  let argnum? = select-next-arg-for-discrimination(ds);
+  if (~ argnum?)
+    compute-terminal-engine-node(ds)
+  else
+    let argnum :: <integer> = argnum?;
+    compute-discriminator-for-arg(argnum, ds)
+  end if
+end function;
 
 
 // This is the interesting part, where we figure out how we must do
 // discrimination on the next argument.
-define patchable-constant compute-subdiscriminator-for-arg
+define function compute-subdiscriminator-for-arg
   (ds :: <dispatch-state>, argnum :: <integer>,
    thisarg, thisargclass :: <class>)
-  (ds, argnum, thisarg, thisargclass)
-  begin
-    dbg("compute-subdiscriminator-for-arg %=", argnum);
-    local method ponder-this-arg (methods :: <list>, subclass-p, singletons :: <list>, others :: <list>)
-            if (methods == #())
-              consider-arg-discriminated(ds, argnum, thisarg);
-              let nextd = compute-more-dispatch-engine(ds);
-              let gf :: <generic-function> = %ds-gf(ds);
-              if (subclass-p | (singletons ~== #() & subtype?(thisargclass, <class>)))
-                ckd-add!(make-by-singleton-class-discriminator(argnum, gf, 4, $absent-engine-node),
-                         class-unique-key(thisarg), nextd)
-              elseif (singletons ~== #())
-                let d = make-single-class-singleton-discriminator(singletons, argnum, gf);
-                local method poo (l :: <list>)
-                        if (l == #())
-                          dbg("... arg %=:  singletons (default)", argnum);
-                          singleton-discriminator-default(d)
-                            := compute-default-subdiscriminator(argnum, gf, thisarg, others, nextd)
-                        elseif (thisarg == head(l))
-                          dbg("... arg %=:  singletons, key = %=", argnum, thisarg);
-                          singleton-discriminator-element(d, thisarg) := nextd
-                        else
-                          poo(tail(l))
-                        end if
-                      end method;
-                poo(singletons);
-                d
-              else
-                compute-default-subdiscriminator(argnum, gf, thisarg, others, nextd)
-              end if
-            else
-              let meth :: <method> = head(methods);
-              let spec :: <type> = %method-specializer(meth, argnum);
-              let (subclass-p, singletons :: <list>, others :: <list>)
-                = ponder-a-specializer(spec, thisargclass, subclass-p, singletons, others);
-              ponder-this-arg(tail(methods), subclass-p, singletons, others)
-            end if
-          end method;
-    let methlist :: <list> = tail(%ds-headed-methods(ds));
-    ponder-this-arg(methlist, #f, #(), #())
-  end
-end patchable-constant;
+  dbg("compute-subdiscriminator-for-arg %=", argnum);
+  local method ponder-this-arg (methods :: <list>, subclass-p, singletons :: <list>, others :: <list>)
+        if (methods == #())
+          consider-arg-discriminated(ds, argnum, thisarg);
+          let nextd = compute-more-dispatch-engine(ds);
+          let gf :: <generic-function> = %ds-gf(ds);
+          if (subclass-p | (singletons ~== #() & subtype?(thisargclass, <class>)))
+            ckd-add!(make-by-singleton-class-discriminator(argnum, gf, 4, $absent-engine-node),
+                     class-unique-key(thisarg), nextd)
+          elseif (singletons ~== #())
+            let d = make-single-class-singleton-discriminator(singletons, argnum, gf);
+            local method poo (l :: <list>)
+                    if (l == #())
+                      dbg("... arg %=:  singletons (default)", argnum);
+                      singleton-discriminator-default(d)
+                        := compute-default-subdiscriminator(argnum, gf, thisarg, others, nextd)
+                    elseif (thisarg == head(l))
+                      dbg("... arg %=:  singletons, key = %=", argnum, thisarg);
+                      singleton-discriminator-element(d, thisarg) := nextd
+                    else
+                      poo(tail(l))
+                    end if
+                  end method;
+            poo(singletons);
+            d
+          else
+            compute-default-subdiscriminator(argnum, gf, thisarg, others, nextd)
+          end if
+        else
+          let meth :: <method> = head(methods);
+          let spec :: <type> = %method-specializer(meth, argnum);
+          let (subclass-p, singletons :: <list>, others :: <list>)
+            = ponder-a-specializer(spec, thisargclass, subclass-p, singletons, others);
+          ponder-this-arg(tail(methods), subclass-p, singletons, others)
+        end if
+      end method;
+  let methlist :: <list> = tail(%ds-headed-methods(ds));
+  ponder-this-arg(methlist, #f, #(), #())
+end function;
 
 
-define patchable-constant ponder-a-specializer
+define function ponder-a-specializer
     (spec :: <type>, thisargclass :: <class>, subclass-p, singletons :: <list>, others :: <list>)
  => (subclass-p, singletons :: <list>, others :: <list>);
-  (spec, thisargclass, subclass-p, singletons, others)
   select (spec by instance?)
     <class> =>
       values(subclass-p, singletons, others);
@@ -528,12 +496,11 @@ define patchable-constant ponder-a-specializer
       values(subclass-p, singletons,
              if(grounded-has-instances?(thisargclass, spec)) pair(spec, others) else others end);
   end select
-end patchable-constant;
+end function;
 
 
-define patchable-constant compute-default-subdiscriminator
+define function compute-default-subdiscriminator
     (argnum :: <integer>, gf :: <generic-function>, thisarg, specs :: <list>, nextd)
-  (argnum, gf, thisarg, specs, nextd)
   local method subsumed?(t :: <type>, l :: <list>)
           if (l == #())
             #f
@@ -568,7 +535,7 @@ define patchable-constant compute-default-subdiscriminator
           end if
         end method;
   foo(specs, #(), #(), nextd)
-end patchable-constant;
+end function;
 
 
 
@@ -682,8 +649,7 @@ end function;
 
 
 
-define patchable-constant determine-call-keywords (gf :: <generic-function>, methods :: <list>)
-  (gf, methods)
+define function determine-call-keywords (gf :: <generic-function>, methods :: <list>)
   let sig :: <signature> = function-signature(gf);
   if (signature-all-keys?(sig))
     #t
@@ -720,7 +686,7 @@ define patchable-constant determine-call-keywords (gf :: <generic-function>, met
   else
     #f
   end if
-end patchable-constant;
+end function;
 
 define function compute-terminal-engine-node (ds :: <dispatch-state>)
   => (terminal-thing :: <object> /* union(<method>, <engine-node>) */);
@@ -760,129 +726,123 @@ end function;
 
 
 // Produce an engine-node for a method.
-define patchable-constant transmogrify-method-list-grounded
-  (ds :: <dispatch-state>, ordered :: <list>, ambig :: <list>, keyspec, kludge?)
-  => (frob :: <object> /* union(<engine-node>, <method>) */);
-  (ds, ordered, ambig, keyspec, kludge?)
-  begin
-    let gf :: <generic-function> = %ds-gf(ds);
-    let args :: <simple-object-vector> = %ds-args(ds);
-    if (ordered == #())
-      if (ambig == #())
-        dbg("No applicable methods, punting...");
-        dispinapplicable(ds)
-      elseif (kludge?)
-        dbg("Trying to salvage ambiguous methods");
-        let (nordered :: <list>, nambig :: <list>)
-          = sort-applicable-methods-desperately(ambig, args);
-        unless (nordered == #() | member?(%ds-gf(ds), *permissibly-ambiguous-generics*))
-          let args = reconstruct-args-from-mepargs(gf, args);
-          dispwarn(make(<ambiguous-methods-warning>,
-                        generic: gf, arguments: args, ambiguous: ambig,
-                        format-string:
-                          "Method specificity of unorderable methods %= applying %= to %= "
-                          "was determined with arbitrary and capricious rules.",
-                        format-arguments: vector(ambig, gf, args)),
-                   ds)
-        end unless;
-        transmogrify-method-list-grounded(ds, nordered, nambig, keyspec, #f)
-      else
-        dbg("No orderable methods, making ambiguous-method engine node.");
-        make-ambiguous-methods-engine-node(ordered, ambig)
-      end if
+define function transmogrify-method-list-grounded
+    (ds :: <dispatch-state>, ordered :: <list>, ambig :: <list>, keyspec, kludge?)
+ => (frob :: <object> /* union(<engine-node>, <method>) */);
+  let gf :: <generic-function> = %ds-gf(ds);
+  let args :: <simple-object-vector> = %ds-args(ds);
+  if (ordered == #())
+    if (ambig == #())
+      dbg("No applicable methods, punting...");
+      dispinapplicable(ds)
+    elseif (kludge?)
+      dbg("Trying to salvage ambiguous methods");
+      let (nordered :: <list>, nambig :: <list>)
+        = sort-applicable-methods-desperately(ambig, args);
+      unless (nordered == #() | member?(%ds-gf(ds), *permissibly-ambiguous-generics*))
+        let args = reconstruct-args-from-mepargs(gf, args);
+        dispwarn(make(<ambiguous-methods-warning>,
+                      generic: gf, arguments: args, ambiguous: ambig,
+                      format-string:
+                        "Method specificity of unorderable methods %= applying %= to %= "
+                        "was determined with arbitrary and capricious rules.",
+                      format-arguments: vector(ambig, gf, args)),
+                 ds)
+      end unless;
+      transmogrify-method-list-grounded(ds, nordered, nambig, keyspec, #f)
     else
-      let m :: <method> = head(ordered);
-      select (m by instance?)
-        <accessor-method> =>
-          let m :: <accessor-method> = m;
-          make-slot-access-engine-node(m, ds);
-        otherwise =>
-          let nextp = function-next?(m);
-          let more
-            = if (nextp)
-                let moremeths :: <list> = tail(ordered);
-                transmogrify-method-list-tail-grounded(ds, ordered, moremeths, ambig, kludge?)
-              else #()
-              end if;
-          if (~more)
-            $absent-engine-node
-          elseif (~nextp & more == #() & (keyspec == #t | keyspec == #f))
-            m
-          else
-            make-single-method-engine-node(m, data: more, keys: keyspec)
-          end if
-      end select
+      dbg("No orderable methods, making ambiguous-method engine node.");
+      make-ambiguous-methods-engine-node(ordered, ambig)
     end if
-  end
-end patchable-constant;
+  else
+    let m :: <method> = head(ordered);
+    select (m by instance?)
+      <accessor-method> =>
+        let m :: <accessor-method> = m;
+        make-slot-access-engine-node(m, ds);
+      otherwise =>
+        let nextp = function-next?(m);
+        let more
+          = if (nextp)
+              let moremeths :: <list> = tail(ordered);
+              transmogrify-method-list-tail-grounded(ds, ordered, moremeths, ambig, kludge?)
+            else #()
+            end if;
+        if (~more)
+          $absent-engine-node
+        elseif (~nextp & more == #() & (keyspec == #t | keyspec == #f))
+          m
+        else
+          make-single-method-engine-node(m, data: more, keys: keyspec)
+        end if
+    end select
+  end if
+end function;
 
 // Recursively generate the next-method chain.
-define patchable-constant transmogrify-method-list-tail-grounded
-  (ds :: <dispatch-state>, ordered :: <list>, subordered :: <list>,
-   ambig :: <list>, kludge? :: <boolean>)
-  => (frob :: <list>);
-  (ds, ordered, subordered, ambig)
-  begin
-    if (subordered == #())
-      if (ambig == #())
-        #()
-      elseif (kludge?)
-        dbg("Trying to salvage ambiguous method list tail");
-        let args :: <simple-object-vector> = %ds-args(ds);
-        let (nordered :: <list>, nambig :: <list>)
-          = sort-applicable-methods-desperately(ambig, args);
-        unless (nordered == #())
-          let gf = %ds-gf(ds);
-          let args = reconstruct-args-from-mepargs(gf, args);
-          dispwarn(make(<ambiguous-methods-warning>,
-                        generic: gf, arguments: args,
-                        ordered: ordered, ambiguous: ambig,
-                        format-string:
-                          "Applying %= to %=, ambiguous method ordering of group %= after "
-                          "successfully ordered methods %= "
-                          "was determined with arbitrary and capricious rules.",
-                        format-arguments: vector(gf, args, ambig, ordered)),
-                   ds)
-        end unless;
-        transmogrify-method-list-tail-grounded(ds, ordered, nordered, nambig, #f)
-      else
-        make-ambiguous-methods-next-method(ordered, ambig, %ds-gf(ds))
-      end if
+define function transmogrify-method-list-tail-grounded
+    (ds :: <dispatch-state>, ordered :: <list>, subordered :: <list>,
+     ambig :: <list>, kludge? :: <boolean>)
+ => (frob :: <list>);
+  if (subordered == #())
+    if (ambig == #())
+      #()
+    elseif (kludge?)
+      dbg("Trying to salvage ambiguous method list tail");
+      let args :: <simple-object-vector> = %ds-args(ds);
+      let (nordered :: <list>, nambig :: <list>)
+        = sort-applicable-methods-desperately(ambig, args);
+      unless (nordered == #())
+        let gf = %ds-gf(ds);
+        let args = reconstruct-args-from-mepargs(gf, args);
+        dispwarn(make(<ambiguous-methods-warning>,
+                      generic: gf, arguments: args,
+                      ordered: ordered, ambiguous: ambig,
+                      format-string:
+                        "Applying %= to %=, ambiguous method ordering of group %= after "
+                        "successfully ordered methods %= "
+                        "was determined with arbitrary and capricious rules.",
+                      format-arguments: vector(gf, args, ambig, ordered)),
+                 ds)
+      end unless;
+      transmogrify-method-list-tail-grounded(ds, ordered, nordered, nambig, #f)
     else
-      let m :: <method> = head(subordered);
-      let more
-        = if (function-next?(m))
-            let othermeths :: <list> = tail(subordered);
-            transmogrify-method-list-tail-grounded(ds, ordered, othermeths,
-                                                   ambig,  kludge?);
-          else
-            #()
-          end if;
-      more & select (m by instance?)
-               <accessor-method> =>
-                 let m :: <accessor-method> = m;
-                 make-slot-accessing-next-method-chain(ds, m);
-               <method>      => pair(m, more);
-             end select
+      make-ambiguous-methods-next-method(ordered, ambig, %ds-gf(ds))
     end if
-  end
-end patchable-constant;
+  else
+    let m :: <method> = head(subordered);
+    let more
+      = if (function-next?(m))
+          let othermeths :: <list> = tail(subordered);
+          transmogrify-method-list-tail-grounded(ds, ordered, othermeths,
+                                                 ambig,  kludge?);
+        else
+          #()
+        end if;
+    more & select (m by instance?)
+             <accessor-method> =>
+               let m :: <accessor-method> = m;
+               make-slot-accessing-next-method-chain(ds, m);
+             <method>      => pair(m, more);
+           end select
+  end if
+end function;
 
-define patchable-constant %method-applicable?
-  (meth :: <method>, args :: <simple-object-vector>) => (answer :: <boolean>);
-      (meth, args)
-      let n :: <integer> = size(args);
-      local method loop (i :: <integer>)
-              if (i == n)
-                #t
-              elseif (primitive-instance?(vector-element(args, i), %method-specializer(meth, i)))
-                loop(i + 1)
-              else
-                #f
-              end if
-            end method;
-      loop(0)
-end patchable-constant;
+define function %method-applicable?
+    (meth :: <method>, args :: <simple-object-vector>)
+ => (answer :: <boolean>);
+  let n :: <integer> = size(args);
+  local method loop (i :: <integer>)
+          if (i == n)
+            #t
+          elseif (primitive-instance?(vector-element(args, i), %method-specializer(meth, i)))
+            loop(i + 1)
+          else
+            #f
+          end if
+        end method;
+  loop(0)
+end function;
 
 define inline-only function sort-applicable-methods
   (methlist :: <list>, args :: <simple-object-vector>)
@@ -899,83 +859,81 @@ end function;
 
 
 
-define patchable-constant compute-sorted-applicable-methods
-  (gf :: <generic-function>, args :: <simple-object-vector>)
-  => (ordered :: <list>, ambig :: <list>);
-  (gf, args)
+define function compute-sorted-applicable-methods
+    (gf :: <generic-function>, args :: <simple-object-vector>)
+ => (ordered :: <list>, ambig :: <list>);
   let headed-methods :: <pair> = pair(#f, #());
   compute-sorted-applicable-methods-1(for (ans = #() then if (%method-applicable?(m, args)) pair(m, ans) else ans end,
                                            m in generic-function-methods(gf))
                                       finally ans
                                       end for,
                                       args, %order-methods)
-end patchable-constant;
+end function;
 
 
-define patchable-constant compute-sorted-applicable-methods-1
-  (methlist :: <list>, args :: <simple-object-vector>, order-the-methods :: <method>)
-      => (ordered :: <list>, ambig :: <list>);
-      (methlist, args, order-the-methods)
-      let ohead :: <pair> = pair(#f, #());
-      let ahead :: <pair> = pair(#f, #());
-      local method loop (methlist :: <list>) => ()
-              unless (methlist == #())
-                let meth :: <method> = head(methlist);
-                local method make-ambiguous (headed-list :: <pair>) => ();
-                        local method loop (l :: <list>)
-                                unless (l == #())
-                                  let t1 :: <list> = tail(l);
-                                  tail(l) := tail(ahead);
-                                  tail(ahead) := l;
-                                  loop(t1)
-                                end unless
-                              end method;
-                        loop(tail(headed-list));
-                        tail(headed-list) := #();
-                        tail(ahead) := pair(meth, tail(ahead))
-                      end method;
-                local method precedes-all? (l :: <list>)
-                        local method loop (l :: <list>)
-                                if (l == #())
-                                  #t
-                                elseif (order-the-methods(meth, head(l), args) ~== #"<")
-                                  #f
-                                else
-                                  loop(tail(l))
-                                end if
-                              end method;
-                        loop(l)
-                      end method;
-                local method check-subsequent-ambiguities (oprev :: <pair>) => ();
-                        if (~precedes-all?(tail(oprev)) | ~precedes-all?(tail(ahead)))
-                          make-ambiguous(oprev)
-                        else
-                          tail(oprev) := pair(meth, tail(oprev))
-                        end if;
-                      end method;
-                local method insert (oprev :: <pair>, osub :: <list>) => ()
-                        if (empty?(osub))
-                          check-subsequent-ambiguities(oprev)
-                        else
-                          let indic = order-the-methods(meth, head(osub), args);
-                          if (indic == #"<")          // Comes before current one.
-                            check-subsequent-ambiguities(oprev)
-                          elseif (indic == #">")      // Comes after, check further.
-                            insert(osub, tail(osub))
-                          else        // Ambiguous.  All following ordered methods are too.
-                            unless (indic == #"=" & *gracefully-ignore-duplicate-methods*)
-                              make-ambiguous(oprev)
+define function compute-sorted-applicable-methods-1
+    (methlist :: <list>, args :: <simple-object-vector>, order-the-methods :: <method>)
+ => (ordered :: <list>, ambig :: <list>);
+  let ohead :: <pair> = pair(#f, #());
+  let ahead :: <pair> = pair(#f, #());
+  local method loop (methlist :: <list>) => ()
+          unless (methlist == #())
+            let meth :: <method> = head(methlist);
+            local method make-ambiguous (headed-list :: <pair>) => ();
+                    local method loop (l :: <list>)
+                            unless (l == #())
+                              let t1 :: <list> = tail(l);
+                              tail(l) := tail(ahead);
+                              tail(ahead) := l;
+                              loop(t1)
                             end unless
-                          end if
-                        end if
-                      end method;
-                insert(ohead, tail(ohead));
-                loop(tail(methlist))
-              end unless
-            end method;
-      loop(methlist);
-      values(tail(ohead), tail(ahead))
-end patchable-constant;
+                          end method;
+                    loop(tail(headed-list));
+                    tail(headed-list) := #();
+                    tail(ahead) := pair(meth, tail(ahead))
+                  end method;
+            local method precedes-all? (l :: <list>)
+                    local method loop (l :: <list>)
+                            if (l == #())
+                              #t
+                            elseif (order-the-methods(meth, head(l), args) ~== #"<")
+                              #f
+                            else
+                              loop(tail(l))
+                            end if
+                          end method;
+                    loop(l)
+                  end method;
+            local method check-subsequent-ambiguities (oprev :: <pair>) => ();
+                    if (~precedes-all?(tail(oprev)) | ~precedes-all?(tail(ahead)))
+                      make-ambiguous(oprev)
+                    else
+                      tail(oprev) := pair(meth, tail(oprev))
+                    end if;
+                  end method;
+            local method insert (oprev :: <pair>, osub :: <list>) => ()
+                    if (empty?(osub))
+                      check-subsequent-ambiguities(oprev)
+                    else
+                      let indic = order-the-methods(meth, head(osub), args);
+                      if (indic == #"<")          // Comes before current one.
+                        check-subsequent-ambiguities(oprev)
+                      elseif (indic == #">")      // Comes after, check further.
+                        insert(osub, tail(osub))
+                      else        // Ambiguous.  All following ordered methods are too.
+                        unless (indic == #"=" & *gracefully-ignore-duplicate-methods*)
+                          make-ambiguous(oprev)
+                        end unless
+                      end if
+                    end if
+                  end method;
+            insert(ohead, tail(ohead));
+            loop(tail(methlist))
+          end unless
+        end method;
+  loop(methlist);
+  values(tail(ohead), tail(ahead))
+end function;
 
 
 
@@ -1008,10 +966,9 @@ define class <ambiguous-methods-error> (<ambiguous-methods>, <error>)
 end class;
 
 
-define patchable-constant %order-methods-desperately (m1 :: <method>, m2 :: <method>,
-                                                      args :: <simple-object-vector>)
+define function %order-methods-desperately (m1 :: <method>, m2 :: <method>,
+                                            args :: <simple-object-vector>)
  => (v :: <symbol>);
-    (m1, m2, args)
   let nreq :: <integer> = %method-number-required(m1);
   local method loop (idx :: <integer>, ambigp)
           if (idx == nreq)
@@ -1030,74 +987,72 @@ define patchable-constant %order-methods-desperately (m1 :: <method>, m2 :: <met
           end if
         end method;
   loop(0, #f)
-end patchable-constant;
+end function;
 
 
-define patchable-constant %order-methods
-  (meth1 :: <method>, meth2 :: <method>, args :: <simple-object-vector>)
-      => (order :: <symbol>);
-      (meth1, meth2, args)
-      let nreq :: <integer> = %method-number-required(meth1);
-      local method loop (state :: <symbol>, idx :: <integer>)
-              if (idx == nreq)
-                state
-              else
-                let meth1spec :: <type> = %method-specializer(meth1, idx);
-                let meth2spec :: <type> = %method-specializer(meth2, idx);
-                let cmp :: <symbol> = %order-specializers(meth1spec, meth2spec,
-                                                          vector-element(args, idx));
-                let idx :: <integer> = idx + 1;
-                if (cmp == #"=")
-                  loop(state, idx)
-                elseif (cmp ~== #"<>" & (state == #"=" | cmp == state))
-                  loop(cmp, idx)
-                else
-                  #"<>"
-                end if
-              end if
-            end method;
-      loop (#"=", 0)
-end patchable-constant;
-
-define patchable-constant %class<
-  (c1 :: <class>, c2 :: <class>, wrt :: <class>) => (o :: <boolean>);
-      (c1, c2, wrt)
-      /*
-      local method fubar (l :: <list>)
-              if (empty?(l))
-                error("Can't order specializers - arg/reference class %= is neither %= nor %=", wrt, c1, c2)
-              else
-                let c :: <class> = head(l);
-                let nxt :: <list> = tail(l);
-                if (c == c1)
-                  #t
-                elseif (c == c2)
-                  #f
-                else fubar(nxt)
-                end if
-              end if
-            end method;
-      fubar(all-superclasses(wrt))
-      */
-      block (return)
-        for-each-superclass (c :: <class> of wrt)
-          if (c == c1)
-            return(#t);
-          elseif (c == c2)
-            return(#f);
+define function %order-methods
+    (meth1 :: <method>, meth2 :: <method>, args :: <simple-object-vector>)
+ => (order :: <symbol>);
+  let nreq :: <integer> = %method-number-required(meth1);
+  local method loop (state :: <symbol>, idx :: <integer>)
+          if (idx == nreq)
+            state
           else
-            // look at the next one
-          end if;
-        end for-each-superclass;
-        error("Can't order specializers - arg/reference class %= is "
-              "neither %= nor %=", wrt, c1, c2)
-      end block;
-end patchable-constant;
+            let meth1spec :: <type> = %method-specializer(meth1, idx);
+            let meth2spec :: <type> = %method-specializer(meth2, idx);
+            let cmp :: <symbol> = %order-specializers(meth1spec, meth2spec,
+                                                      vector-element(args, idx));
+            let idx :: <integer> = idx + 1;
+            if (cmp == #"=")
+              loop(state, idx)
+            elseif (cmp ~== #"<>" & (state == #"=" | cmp == state))
+              loop(cmp, idx)
+            else
+              #"<>"
+            end if
+          end if
+        end method;
+  loop (#"=", 0)
+end function;
+
+define function %class<
+    (c1 :: <class>, c2 :: <class>, wrt :: <class>)
+ => (o :: <boolean>);
+  /*
+  local method fubar (l :: <list>)
+          if (empty?(l))
+            error("Can't order specializers - arg/reference class %= is neither %= nor %=", wrt, c1, c2)
+          else
+            let c :: <class> = head(l);
+            let nxt :: <list> = tail(l);
+            if (c == c1)
+              #t
+            elseif (c == c2)
+              #f
+            else fubar(nxt)
+            end if
+          end if
+        end method;
+  fubar(all-superclasses(wrt))
+  */
+  block (return)
+    for-each-superclass (c :: <class> of wrt)
+      if (c == c1)
+        return(#t);
+      elseif (c == c2)
+        return(#f);
+      else
+        // look at the next one
+      end if;
+    end for-each-superclass;
+    error("Can't order specializers - arg/reference class %= is "
+          "neither %= nor %=", wrt, c1, c2)
+  end block;
+end function;
 
 
-define patchable-constant %order-specializers-default (t1 :: <type>, t2 :: <type>)
+define function %order-specializers-default (t1 :: <type>, t2 :: <type>)
  => (order :: <symbol>, canonical-type :: <type>);
-  (t1, t2)
   if (grounded-subtype?(t1, t2))
     values(if (grounded-subtype?(t2, t1)) #"=" else #"<" end, t1)
   elseif (grounded-subtype?(t2, t1))
@@ -1105,12 +1060,11 @@ define patchable-constant %order-specializers-default (t1 :: <type>, t2 :: <type
   else
     values(#"<>", <object>)
   end if
-end patchable-constant;
+end function;
 
 
-define patchable-constant %order-specializers-desperately (t1 :: <type>, t2 :: <type>, arg)
+define function %order-specializers-desperately (t1 :: <type>, t2 :: <type>, arg)
  => (order :: <symbol>, canonical-type :: <type>);
-  (t1, t2, arg)
   if (t1 == t2)
     values(#"=", t1)
   elseif (instance?(t1, <union>))
@@ -1203,12 +1157,11 @@ define patchable-constant %order-specializers-desperately (t1 :: <type>, t2 :: <
   else
     %order-specializers-default(t1, t2)
   end if
-end patchable-constant;
+end function;
 
 
-define patchable-constant %order-specializers (t1 :: <type>, t2 :: <type>, arg)
+define function %order-specializers (t1 :: <type>, t2 :: <type>, arg)
  => (order :: <symbol>, canonical-type :: <type>);
-  (t1, t2, arg)
   if (t1 == t2)
     values(#"=", t1)
   elseif (instance?(t1, <singleton>))
@@ -1261,34 +1214,33 @@ define patchable-constant %order-specializers (t1 :: <type>, t2 :: <type>, arg)
   else
     %order-specializers-default(t1, t2)
   end if
-end patchable-constant;
+end function;
 
 
-define patchable-constant same-specializer? (s1 :: <type>, s2 :: <type>) => (answer :: <boolean>);
-    (s1, s2)
-    select (s1 by instance?)
-      <class> =>
-        s1 == s2;
-      <singleton> =>
-        let s1 :: <singleton> = s1;
-        if (instance?(s2, <singleton>))
-          let s2 :: <singleton> = s2;
-          singleton-object(s1) == singleton-object(s2)
-        else
-          #f
-        end if;
-      <subclass> =>
-        let s1 :: <subclass> = s1;
-        if (instance?(s2, <subclass>))
-          let s2 :: <subclass> = s2;
-          s1.subclass-class == s2.subclass-class
-        else
-          #f
-        end if;
-      otherwise =>
-        (s1 == s2) | (grounded-subtype?(s1, s2) & grounded-subtype?(s2, s1));
-    end select
-end patchable-constant;
+define function same-specializer? (s1 :: <type>, s2 :: <type>) => (answer :: <boolean>);
+  select (s1 by instance?)
+    <class> =>
+      s1 == s2;
+    <singleton> =>
+      let s1 :: <singleton> = s1;
+      if (instance?(s2, <singleton>))
+        let s2 :: <singleton> = s2;
+        singleton-object(s1) == singleton-object(s2)
+      else
+        #f
+      end if;
+    <subclass> =>
+      let s1 :: <subclass> = s1;
+      if (instance?(s2, <subclass>))
+        let s2 :: <subclass> = s2;
+        s1.subclass-class == s2.subclass-class
+      else
+        #f
+      end if;
+    otherwise =>
+      (s1 == s2) | (grounded-subtype?(s1, s2) & grounded-subtype?(s2, s1));
+  end select
+end function;
 
 
 define inline function same-specializers-spread?
@@ -1313,11 +1265,10 @@ define inline function same-specializers-spread?
           end))
 end function;
 
-define patchable-constant same-specializers? (sig1 :: <signature>, sig2 :: <signature>)
+define function same-specializers? (sig1 :: <signature>, sig2 :: <signature>)
   => (answer :: <boolean>);
-   (sig1, sig2)
   same-specializers-spread?
     (signature-required(sig1), signature-number-required(sig1),
      signature-required(sig2), signature-number-required(sig2))
-end patchable-constant;
+end function;
 

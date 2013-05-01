@@ -410,18 +410,15 @@ end function;
 
 //// Unknown handler
 
-define patchable-constant handle-unknown-cache-head
+define function handle-unknown-cache-head
   (ds :: <dispatch-state>, cache, old :: <cache-header-engine-node>)
   => ();
-  (ds, cache, old)
-  begin
-    dispwarn(make(<simple-warning>,
-                  format-string: "Unhandled g.f. cache for %= - %=",
-                  format-arguments: vector(%ds-gf(ds), old)),
-             ds);
-    cache-header-punt(ds, cache, old)
-  end
-end patchable-constant;
+  dispwarn(make(<simple-warning>,
+                format-string: "Unhandled g.f. cache for %= - %=",
+                format-arguments: vector(%ds-gf(ds), old)),
+           ds);
+  cache-header-punt(ds, cache, old)
+end function;
 
 
 define function find-or-create-common-cache-header
