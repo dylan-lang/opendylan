@@ -57,10 +57,10 @@ define inline constant initialize-singleton-instance?-function = method (s :: <s
   instance?-iep(s)
     := simple-method-iep
          (if (indirect-object?(s.singleton-object))
-	    singleton-value-object-instance?
-	  else
-	    singleton-pointer-id?-instance?
-	  end if);
+            singleton-value-object-instance?
+          else
+            singleton-pointer-id?-instance?
+          end if);
 end method;
 
 
@@ -104,33 +104,33 @@ end method subtype?;
 
 
 define method subjunctive-subtype? (s1 :: <singleton>, s2 :: <singleton>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (subtype? :: <boolean>)
   s1.singleton-object == s2.singleton-object
 end method subjunctive-subtype?;
 
 define method subjunctive-subtype? (s :: <singleton>, t :: <type>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (subtype? :: <boolean>);
   // It's a subjunctive subtype if the object is an instance of the type
   // and the class of the object is not being redefined.
   instance?(s.singleton-object, t)
-    & ( (scu == $empty-subjunctive-class-universe)
-	 |
-	 ~scu-entry?(s.singleton-object.object-class, scu))
+    & ((scu == $empty-subjunctive-class-universe)
+        |
+        ~scu-entry?(s.singleton-object.object-class, scu))
 end method subjunctive-subtype?;
 
 
 define method subjunctive-subtype? (t :: <type>, s :: <singleton>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (subtype? :: <boolean>)
   #f
 end method subjunctive-subtype?;
 
 
 define method disjoint-types-1? (t1 :: <singleton>, t2 :: <singleton>,
-				 scu :: <subjunctive-class-universe>,
-				 dep :: <false-or-dependent-generic-function>)
+                                 scu :: <subjunctive-class-universe>,
+                                 dep :: <false-or-dependent-generic-function>)
  => (well? :: <boolean>)
   t1.singleton-object ~== t2.singleton-object
 end method;
@@ -149,7 +149,7 @@ end method;
 //// Potential instance relationships
 
 define method has-instances? (class :: <class>, s :: <singleton>,
-			      scu :: <subjunctive-class-universe>)
+                              scu :: <subjunctive-class-universe>)
  => (some? :: <boolean>, all? :: <boolean>);
   // values(class == s.singleton-object.object-class, #f)
   // values(scu-entry(class, scu) == s.singleton-object.object-implementation-class, #f)

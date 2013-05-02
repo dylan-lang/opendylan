@@ -7,20 +7,20 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define function %define-method 
+define function %define-method
     (gf :: <generic-function>, md :: <method>, lib :: <library>)
  => ()
   %add-a-method(gf, md, lib, #t, #t, #f)
 end function;
 
-define function %define-sealed-method 
+define function %define-sealed-method
     (gf :: <generic-function>, md :: <method>, lib :: <library>)
  => ()
   %add-a-method(gf, md, lib, #t, #t, #t)
 end function;
 
 
-define variable *incomplete-generic-function-methods* :: <table> 
+define variable *incomplete-generic-function-methods* :: <table>
   = make(<table>);
 
 
@@ -36,11 +36,11 @@ define function note-incomplete-method-handler
     := pair(list(m, lib), element(*incomplete-generic-function-methods*, g, default: #()));
   with-lock ($class-bashing-lock)
     map-congruency-classes(method (c :: <class>) => ()
-			     let ic :: <implementation-class> = class-implementation-class(c);
-			     iclass-dependent-generics(ic)
-			       := add-new!(iclass-dependent-generics(ic), g)
-			   end method,
-			   m);
+                             let ic :: <implementation-class> = class-implementation-class(c);
+                             iclass-dependent-generics(ic)
+                               := add-new!(iclass-dependent-generics(ic), g)
+                           end method,
+                           m);
   end with-lock;
 end function;
 
@@ -52,12 +52,12 @@ define function remove-incomplete-method-handler
   unless (empty?(old))
     block (return)
       for (e :: <list> in old)
-	let m :: <method> = first(e);
-	let l :: <library> = second(e);
-	if (test(m, frob))
-	  *incomplete-generic-function-methods*[g] := remove!(old, e);
-	  return(m)
-	end if
+        let m :: <method> = first(e);
+        let l :: <library> = second(e);
+        if (test(m, frob))
+          *incomplete-generic-function-methods*[g] := remove!(old, e);
+          return(m)
+        end if
       end for
     end block
   end unless;
@@ -78,11 +78,11 @@ define function note-incomplete-domain-handler
     := pair(d, element(*incomplete-generic-function-domains*, g, default: #()));
   with-lock ($class-bashing-lock)
     map-congruency-classes(method (c :: <class>) => ()
-			     let ic :: <implementation-class> = class-implementation-class(c);
-			     iclass-dependent-generics(ic)
-			       := add-new!(iclass-dependent-generics(ic), g)
-			   end method,
-			   d);
+                             let ic :: <implementation-class> = class-implementation-class(c);
+                             iclass-dependent-generics(ic)
+                               := add-new!(iclass-dependent-generics(ic), g)
+                           end method,
+                           d);
   end with-lock
 end function;
 
@@ -101,10 +101,10 @@ define function remove-incomplete-domain-handler
   unless (empty?(old))
     block (return)
       for (d :: <domain> in old)
-	if (domain-match?(d, frob))
-	  *incomplete-generic-function-methods*[g] := remove!(old, d);
-	  return(d)
-	end if
+        if (domain-match?(d, frob))
+          *incomplete-generic-function-methods*[g] := remove!(old, d);
+          return(d)
+        end if
       end for
     end block
   end unless;
@@ -117,32 +117,32 @@ define inline-only function do-incomplete-frobs (f :: <function>, g :: <generic-
  => ();
   let lossage :: <list>
     = (with-object-lock (g)
-	 let subl :: <list> = element(t, g, default: #());
-	 local method inner-loop (subl :: <list>, lossage :: <list>,
-				  hdr :: false-or(<pair>), prev :: <list>)
-		 if (subl == #())
-		   if (hdr) t[g] := hdr else remove-key!(t, g) end;
-		   lossage
-		 else
-		   let elt = head(subl);
-		   let nxt :: <list> = tail(subl);
-		   let (win?, nlossage) = f(elt);
-		   let (hdr :: false-or(<pair>), prev :: <list>)
-		     = if (~win?)
-			 let cell :: <pair> = list(elt);
-			 values((if (hdr) tail(prev) := cell; hdr else cell end), cell)
-		       else
-			 values(hdr, prev)
-		       end if;
-		   let lossage = if (nlossage & nlossage ~== #()) 
-				   concatenate(lossage, nlossage)
-				 else
-				   lossage
-				 end;
-		   inner-loop(nxt, lossage, hdr, prev)
-		 end if
-	       end method;
-	 inner-loop(subl, #(), #f, subl)
+         let subl :: <list> = element(t, g, default: #());
+         local method inner-loop (subl :: <list>, lossage :: <list>,
+                                  hdr :: false-or(<pair>), prev :: <list>)
+                 if (subl == #())
+                   if (hdr) t[g] := hdr else remove-key!(t, g) end;
+                   lossage
+                 else
+                   let elt = head(subl);
+                   let nxt :: <list> = tail(subl);
+                   let (win?, nlossage) = f(elt);
+                   let (hdr :: false-or(<pair>), prev :: <list>)
+                     = if (~win?)
+                         let cell :: <pair> = list(elt);
+                         values((if (hdr) tail(prev) := cell; hdr else cell end), cell)
+                       else
+                         values(hdr, prev)
+                       end if;
+                   let lossage = if (nlossage & nlossage ~== #())
+                                   concatenate(lossage, nlossage)
+                                 else
+                                   lossage
+                                 end;
+                   inner-loop(nxt, lossage, hdr, prev)
+                 end if
+               end method;
+         inner-loop(subl, #(), #f, subl)
        end with-object-lock);
   bletch-stack(lossage);
 end function;
@@ -171,17 +171,17 @@ define thread variable *generics-being-finished* = #f;
 //   { with-batch-deferred-generic-handling () ?body:body end }
 //     =>
 //     { (begin
-// 	 let %old-value% = *generics-being-finished*;
-// 	 block ()
-// 	   unless (%old-value%) *generics-being-finished* := #t end;
-// 	   ?body
-// 	 cleanup
-// 	   unless (%old-value%)
-// 	     let z = *generics-being-finished*;
-// 	     *generics-being-finished* := #f;
-// 	     finish-the-generics(z)
-// 	   end
-// 	 end
+//          let %old-value% = *generics-being-finished*;
+//          block ()
+//            unless (%old-value%) *generics-being-finished* := #t end;
+//            ?body
+//          cleanup
+//            unless (%old-value%)
+//              let z = *generics-being-finished*;
+//              *generics-being-finished* := #f;
+//              finish-the-generics(z)
+//            end
+//          end
 //        end)
 //        }
 // end macro;
@@ -221,29 +221,29 @@ define method handle-generic-completeness-change (g :: <generic-function>)
     if (t)
       let t :: <table> = t;
       do-incomplete-frobs
-	(method (d :: <domain>)
-	   if (recompute-type-complete!(d))
-	     values(#t, %add-domains-internal(g, vector(d)))
-	   else
-	     values(#f, #())
-	   end if
-	 end method,
-	 g, t)
+        (method (d :: <domain>)
+           if (recompute-type-complete!(d))
+             values(#t, %add-domains-internal(g, vector(d)))
+           else
+             values(#f, #())
+           end if
+         end method,
+         g, t)
     end if;
     let t = *incomplete-generic-function-methods*;
     if (t)
       let t :: <table> = t;
       do-incomplete-frobs
-	(method (e :: <list>)
-	   let m :: <method> = first(e);
-	   if (recompute-type-complete!(m))
-	     let lib :: <library> = second(e);
-	     values(#t, add-method-internal(g, m, lib, #t, #t))
-	   else
-	     values(#f, #())
-	   end if
-	 end method,
-	 g, t)
+        (method (e :: <list>)
+           let m :: <method> = first(e);
+           if (recompute-type-complete!(m))
+             let lib :: <library> = second(e);
+             values(#t, add-method-internal(g, m, lib, #t, #t))
+           else
+             values(#f, #())
+           end if
+         end method,
+         g, t)
     end if
   end if
 end method;
@@ -251,41 +251,41 @@ end method;
 
 
 define method complete-dependent-generic-function (g :: <incremental-generic-function>,
-						   c :: <class>,
-						   u :: <subjunctive-class-universe>)
+                                                   c :: <class>,
+                                                   u :: <subjunctive-class-universe>)
  => ()
   /*
   if (type-complete?(g) & ~incremental-gf-method-complete?(g))
     (with-object-lock (g)
        block ()
-	 for (d :: <domain> in generic-function-incomplete-domains(g))
-	   if (type-complete?(d))
-	     generic-function-incomplete-domains(g)
-	       := remove(generic-function-incomplete-domains(g), d);
-	     block
-		 let urk = %add-domain-internal(g, d, #t);
-		 if (urk) bletch(urk) end;
-	     exception(<abort>,
-			 init-arguments: vector(format-string: "Skip adding domain %= to %=.",
-						  format-arguments: vector(d, g)))
-	     end block
-	   end if
-	 end for;
-	 for (e :: <list> in generic-function-incomplete-methods(g))
-	   let m :: <method> = first(e);
-	   let lib :: <library> = second(e);
-	   if (type-complete?(m))
-	     generic-function-incomplete-methods(g)
-	       := remove(generic-function-incomplete-methods(g), e);
-	     block
-		 let urk = add-method-internal(g, m, lib, #t, #t);
-		 if (urk) bletch(urk) end;
-	     exception(<abort>,
-			 init-arguments: vector(format-string: "Skip adding method %= to %=.",
-						  format-arguments: vector(m, g)))
-	     end block
-	   end if
-	 end for
+         for (d :: <domain> in generic-function-incomplete-domains(g))
+           if (type-complete?(d))
+             generic-function-incomplete-domains(g)
+               := remove(generic-function-incomplete-domains(g), d);
+             block
+                 let urk = %add-domain-internal(g, d, #t);
+                 if (urk) bletch(urk) end;
+             exception(<abort>,
+                         init-arguments: vector(format-string: "Skip adding domain %= to %=.",
+                                                  format-arguments: vector(d, g)))
+             end block
+           end if
+         end for;
+         for (e :: <list> in generic-function-incomplete-methods(g))
+           let m :: <method> = first(e);
+           let lib :: <library> = second(e);
+           if (type-complete?(m))
+             generic-function-incomplete-methods(g)
+               := remove(generic-function-incomplete-methods(g), e);
+             block
+                 let urk = add-method-internal(g, m, lib, #t, #t);
+                 if (urk) bletch(urk) end;
+             exception(<abort>,
+                         init-arguments: vector(format-string: "Skip adding method %= to %=.",
+                                                  format-arguments: vector(m, g)))
+             end block
+           end if
+         end for
        end block
     end with-object-lock)
   end if
@@ -297,38 +297,38 @@ end method;
 //// Generic function definition/redefinition
 
 define inline function %%define-generic
-    (gf :: <generic-function>, 
+    (gf :: <generic-function>,
      debug-name, module, sealed?, complain-about-congruency?, signature)
  => (gf :: <generic-function>);
   let lossage :: <list> = #();
   (with-object-lock (gf)
      (begin
-	let methods = generic-function-methods(gf);
-	let (mlibs :: <simple-object-vector>, glib :: <library>)
-	  = if (instance?(gf, <incremental-generic-function>)) 
-	      let gf :: <incremental-generic-function> = gf;
-	      values(incremental-gf-method-libraries(gf), incremental-gf-library(gf))
-	    else
-	      values(#[], $runtime-library)
-	    end if;
-	let nlibs :: <integer> = size(mlibs);
-	reinitialize(gf, debug-name: debug-name, signature: signature, 
-		     sealed?: sealed?, module: module);
-	for (m :: <method> in methods, i :: <integer> from 0)
-	  let (well?, reason) = congruent?(gf, m);
-	  if (well?)
-	    let (ans, barfo) = add-method-internal(gf, m, if (i < nlibs) mlibs[i] else glib end, #f, #f);
-	    if (barfo) bletch(barfo) end;
-	  elseif (complain-about-congruency?)
-	    lossage := pair(list(m, reason), lossage)
-	  end if
-	end for
+        let methods = generic-function-methods(gf);
+        let (mlibs :: <simple-object-vector>, glib :: <library>)
+          = if (instance?(gf, <incremental-generic-function>))
+              let gf :: <incremental-generic-function> = gf;
+              values(incremental-gf-method-libraries(gf), incremental-gf-library(gf))
+            else
+              values(#[], $runtime-library)
+            end if;
+        let nlibs :: <integer> = size(mlibs);
+        reinitialize(gf, debug-name: debug-name, signature: signature,
+                     sealed?: sealed?, module: module);
+        for (m :: <method> in methods, i :: <integer> from 0)
+          let (well?, reason) = congruent?(gf, m);
+          if (well?)
+            let (ans, barfo) = add-method-internal(gf, m, if (i < nlibs) mlibs[i] else glib end, #f, #f);
+            if (barfo) bletch(barfo) end;
+          elseif (complain-about-congruency?)
+            lossage := pair(list(m, reason), lossage)
+          end if
+        end for
       end)
   end with-object-lock);
   if (lossage ~== #())
     error(make(<argument-error>,
-	       format-string: "Generic function definition for %= was not congruent with some existing methods %=.",
-	       format-arguments: list(gf, lossage)))
+               format-string: "Generic function definition for %= was not congruent with some existing methods %=.",
+               format-arguments: list(gf, lossage)))
   end if;
   handle-generic-completeness-change(gf);
   gf
@@ -338,7 +338,7 @@ define function %define-generic
     (gf :: <incremental-generic-function>, signature)
  => (gf :: <generic-function>);
   %%define-generic
-    (gf, debug-name(gf), incremental-gf-module(gf), 
+    (gf, debug-name(gf), incremental-gf-module(gf),
      incremental-gf-sealed?(gf), #t, signature)
 end function;
 
@@ -357,7 +357,7 @@ define function %define-class
     (class :: <class>, superclasses, slots)
  => (class :: <class>);
   reinitialize
-    (class, 
+    (class,
      debug-name:      debug-name(class),
      module:          class-module(class),
      superclasses:    superclasses,
@@ -373,10 +373,10 @@ define function %define-class
 end function;
 
 define function %define-complex-class
-    (class :: <class>, superclasses, slots, inherited-slots, keywords) 
+    (class :: <class>, superclasses, slots, inherited-slots, keywords)
  => (class :: <class>);
   reinitialize
-    (class, 
+    (class,
      debug-name:      debug-name(class),
      module:          class-module(class),
      superclasses:    superclasses,
@@ -400,56 +400,56 @@ define function dependent-subclasses (classes :: <list>, ans :: <list>) => (ans 
       let the-head :: <class> = head(classes);
       let the-tail :: <list> = tail(classes);
       if (the-head == <object>)
-	ans
+        ans
       elseif (member?(the-head, ans))
-	// If a class has already been done, then its subclasses have been or
-	// are in the process of being done.
-	loop(the-tail, ans)
+        // If a class has already been done, then its subclasses have been or
+        // are in the process of being done.
+        loop(the-tail, ans)
       else
-	loop(the-tail, dependent-subclasses(direct-subclasses(the-head), 
-					    pair(the-head, ans)))
+        loop(the-tail, dependent-subclasses(direct-subclasses(the-head),
+                                            pair(the-head, ans)))
       end if
     end if
   end iterate
 end function;
 
 
-define function %%redefine-complex-class 
-    (class :: <class>, 
+define function %%redefine-complex-class
+    (class :: <class>,
      debug-name, module, abstract?, primary?, sealed?,
-     superclasses, slots, inherited-slots, keywords) 
+     superclasses, slots, inherited-slots, keywords)
  => (class :: <class>);
   let superclasses :: <sequence> = if (instance?(superclasses, <sequence>))
-				     superclasses
-				   else
-				     vector(superclasses)
-				   end if;
+                                     superclasses
+                                   else
+                                     vector(superclasses)
+                                   end if;
   let slots :: <simple-object-vector>
     = map-as(<simple-object-vector>,
-	     method (stuff) apply(create-slot-descriptor, class, stuff) end,
-	     slots);
-  let ans = 
+             method (stuff) apply(create-slot-descriptor, class, stuff) end,
+             slots);
+  let ans =
     with-lock ($class-bashing-lock)
       let dependents :: <list> = dependent-subclasses(direct-subclasses(class), list(class));
       if (nonstructural-redefinition?(class, superclasses, slots))
-	%redefine-class-attributes-only
-	  (class, dependents,
-	   superclasses:    superclasses,
-	   slots:           slots,
-	   inherited-slots: inherited-slots,
-	   keywords:        keywords);
+        %redefine-class-attributes-only
+          (class, dependents,
+           superclasses:    superclasses,
+           slots:           slots,
+           inherited-slots: inherited-slots,
+           keywords:        keywords);
       else
-	%redefine-class-of-new-structure
-	  (class, dependents, 
-	   debug-name:      debug-name,
-	   superclasses:    superclasses,
-	   abstract?:       abstract?,
-	   primary?:        primary?,
-	   sealed?:         sealed?,
-	   module:          module,
-	   slots:           slots,
-	   inherited-slots: inherited-slots,
-	   keywords:        keywords);
+        %redefine-class-of-new-structure
+          (class, dependents,
+           debug-name:      debug-name,
+           superclasses:    superclasses,
+           abstract?:       abstract?,
+           primary?:        primary?,
+           sealed?:         sealed?,
+           module:          module,
+           slots:           slots,
+           inherited-slots: inherited-slots,
+           keywords:        keywords);
       end if
     end with-lock;
   if (instance?(ans, <condition>))
@@ -458,48 +458,48 @@ define function %%redefine-complex-class
   class
 end function;
 
-define function %redefine-class 
-    (class :: <class>, 
+define function %redefine-class
+    (class :: <class>,
      debug-name, module, abstract?, primary?, sealed?,
      superclasses, slots)
  => (class :: <class>);
   %%redefine-complex-class
     (class, debug-name, module, abstract?, primary?, sealed?,
-     superclasses, slots, #[], #[]) 
+     superclasses, slots, #[], #[])
 end function;
 
-define function %redefine-complex-class 
-    (class :: <class>, 
+define function %redefine-complex-class
+    (class :: <class>,
      debug-name, module, abstract?, primary?, sealed?,
-     superclasses, slots, inherited-slots, keywords) 
+     superclasses, slots, inherited-slots, keywords)
  => (class :: <class>);
   %%redefine-complex-class
     (class, debug-name, module, abstract?, primary?, sealed?,
-     superclasses, slots, inherited-slots, keywords) 
+     superclasses, slots, inherited-slots, keywords)
 end function;
 
 
-define method nonstructural-redefinition? (class :: <class>, 
-					   superclasses :: <sequence>, 
-					   slots :: <simple-object-vector>
-					     )
+define method nonstructural-redefinition? (class :: <class>,
+                                           superclasses :: <sequence>,
+                                           slots :: <simple-object-vector>
+                                             )
   superclasses = direct-superclasses(class)
     // @@@@@@ and they are the same metaclasses - done at compiletime?
     & (begin
-	 let oslots :: <simple-object-vector> = direct-slot-descriptors(class);
-	 let noslots :: <integer> = size(oslots);
-	 let nslots :: <integer> = size(slots);
-	 nslots == noslots
-	   & (every?(method (sd :: <slot-descriptor>)
-		       let old = find-old-slot(sd, oslots);
-		       old & (begin
-				let old :: <slot-descriptor> = old;
-				slot-allocation(old) == slot-allocation(sd)
-				  & same-specializer?(slot-type(old), slot-type(sd))
-				  & slot-setter(old) == slot-setter(sd)
-			      end)
-		     end method,
-		     slots))
+         let oslots :: <simple-object-vector> = direct-slot-descriptors(class);
+         let noslots :: <integer> = size(oslots);
+         let nslots :: <integer> = size(slots);
+         nslots == noslots
+           & (every?(method (sd :: <slot-descriptor>)
+                       let old = find-old-slot(sd, oslots);
+                       old & (begin
+                                let old :: <slot-descriptor> = old;
+                                slot-allocation(old) == slot-allocation(sd)
+                                  & same-specializer?(slot-type(old), slot-type(sd))
+                                  & slot-setter(old) == slot-setter(sd)
+                              end)
+                     end method,
+                     slots))
        end)
 end method;
 
@@ -515,28 +515,28 @@ end method;
 
 
 define method %redefine-class-of-new-structure (class :: <class>, dependents :: <list>,
-						#rest initargs)
+                                                #rest initargs)
  => (v :: false-or(<condition>))
   let u :: <subjunctive-class-universe> = make-empty-subjunctive-class-universe();
-  let thisiclass :: <implementation-class> 
-    = apply(make, <implementation-class>, 
-	    class: class,
-	    defer-cross-class-computations?: #t,
-	    subjunctive-class-universe: u,
-	    initargs);
+  let thisiclass :: <implementation-class>
+    = apply(make, <implementation-class>,
+            class: class,
+            defer-cross-class-computations?: #t,
+            subjunctive-class-universe: u,
+            initargs);
   // This is the redefining-one-class optimization.  Just go straight through the
   // dependents making new implementation classes, although we do defer cross class
   // computations until we have our full SCU built up.
   for (c :: <class> in dependents)
     if (c ~== class)
       make(<implementation-class>,
-	   class: c,
-	   subjunctive-class-universe: u,
-	   defer-cross-class-computations?: #t,
-	   superclasses: direct-superclasses(c),
-	   slots: direct-slot-descriptors(c),
-	   inherited-slots: direct-inherited-slot-descriptors(c),
-	   keywords: direct-initialization-argument-descriptors(c))
+           class: c,
+           subjunctive-class-universe: u,
+           defer-cross-class-computations?: #t,
+           superclasses: direct-superclasses(c),
+           slots: direct-slot-descriptors(c),
+           inherited-slots: direct-inherited-slot-descriptors(c),
+           keywords: direct-initialization-argument-descriptors(c))
     end if;
   end for;
   // Now, we've computed all new implementation classes;  do dependency-directed (by
@@ -567,44 +567,44 @@ define method %redefine-class-of-new-structure (class :: <class>, dependents :: 
 end method;
 
 define function compute-known-joint (iclass :: <implementation-class>,
-				     dependents :: <list>, 
-				     u :: <subjunctive-class-universe>)
+                                     dependents :: <list>,
+                                     u :: <subjunctive-class-universe>)
  => (t :: <table>)
   let t :: <table> = make(<table>);
-  let ndependents :: <list> 
+  let ndependents :: <list>
     = dependent-subclasses(tail(all-superclasses(iclass)),
-			   dependent-subclasses
-			     (tail(all-superclasses(class-implementation-class
-						      (iclass-class(iclass)))),
-			      dependents));
+                           dependent-subclasses
+                             (tail(all-superclasses(class-implementation-class
+                                                      (iclass-class(iclass)))),
+                              dependents));
   for (c :: <class> in ndependents)
     for (subl :: <list> = tail(all-superclasses(c)) then tail(subl),
-	 until: empty?(subl) | head(subl) == <object>)
+         until: empty?(subl) | head(subl) == <object>)
       let c1 :: <class> = head(subl);
       let ic1 :: <implementation-class> = scu-entry(c1, u);
       let j0 :: <list> = element(t, c1, default: #());
       local method loop (subl2 :: <list>, j1 :: <list>)
-	      if (empty?(subl2) | head(subl2) == <object>)
-		unless (j0 == j1) element(t, c1) := j1 end
-	      else
-		let c2 :: <class> = head(subl2);
-		let ic2 :: <implementation-class> = scu-entry(c2, u);
-		if (subiclass?(ic1, c1, ic2, c2) | member?(c2, j1))
-		  loop(tail(subl2), j1)
-		else
-		  loop(tail(subl2), pair(c2, j1))
-		end if
-	      end if
-	    end method;
+              if (empty?(subl2) | head(subl2) == <object>)
+                unless (j0 == j1) element(t, c1) := j1 end
+              else
+                let c2 :: <class> = head(subl2);
+                let ic2 :: <implementation-class> = scu-entry(c2, u);
+                if (subiclass?(ic1, c1, ic2, c2) | member?(c2, j1))
+                  loop(tail(subl2), j1)
+                else
+                  loop(tail(subl2), pair(c2, j1))
+                end if
+              end if
+            end method;
       loop(tail(subl), j0)
     end for
   end for;
   t
 end function;
 
-      
+
 define function invalidate-previous-implementation-class (ic :: <implementation-class>,
-							  scu :: <subjunctive-class-universe>)
+                                                          scu :: <subjunctive-class-universe>)
  => ()
   let old = class-implementation-class(iclass-class(ic));
   debug-assert(old ~== ic, "attempting to invalidate %= without a new one", ic);
@@ -632,7 +632,7 @@ define method invalidate-implementation-class (ic :: <implementation-class>) => 
   class-known-joint(ic) := #[];
   direct-superclasses(ic) := direct-superclasses(mic);
   // class-subtype-bit(iclass-class(ic)) := class-subtype-bit(iclass-class(mic));
-  mm-wrapper-subtype-mask(class-mm-wrapper(ic)) 
+  mm-wrapper-subtype-mask(class-mm-wrapper(ic))
     := mm-wrapper-subtype-mask(class-mm-wrapper(mic));
   class-rcpl-vector(ic) := class-rcpl-vector(mic);
   class-rcpl-position(ic) := class-rcpl-position(mic);
@@ -644,41 +644,41 @@ end method;
 
 define method remove-implementation-class-slot-methods (ic :: <implementation-class>) => ()
   local method find-and-remove-getter-method (g :: <generic-function>, sd :: <slot-descriptor>) => ()
-	  let spec :: <class> = slot-owner(sd);
-	  block (done)
-	    for (m :: <method> in generic-function-methods(g))
-	      if (spec == %method-specializer(m, 0))
-		%remove-method(g, m);
-		done()
-	      end if
-	    end for
-	  end
-	end method;
+          let spec :: <class> = slot-owner(sd);
+          block (done)
+            for (m :: <method> in generic-function-methods(g))
+              if (spec == %method-specializer(m, 0))
+                %remove-method(g, m);
+                done()
+              end if
+            end for
+          end
+        end method;
   local method find-and-remove-setter-method (g :: <generic-function>, sd :: <slot-descriptor>) => ()
-	  let spec0 :: <type> = slot-type(sd);
-	  let spec1 :: <class> = slot-owner(sd);
-	  block (done)
-	    for (m :: <method> in generic-function-methods(g))
-	      if (same-specializer?(spec0, %method-specializer(m, 0))
-		    & spec1 == %method-specializer(m, 1))
-		%remove-method(g, m);
-		done()
-	      end if
-	    end for
-	  end
-	end method;
+          let spec0 :: <type> = slot-type(sd);
+          let spec1 :: <class> = slot-owner(sd);
+          block (done)
+            for (m :: <method> in generic-function-methods(g))
+              if (same-specializer?(spec0, %method-specializer(m, 0))
+                    & spec1 == %method-specializer(m, 1))
+                %remove-method(g, m);
+                done()
+              end if
+            end for
+          end
+        end method;
   for (sd :: <slot-descriptor> in direct-slot-descriptors(ic))
     // @@@@@ ????? What to do with virtual slots?
     if (~instance?(sd, <virtual-slot-descriptor>))
       let g = slot-getter(sd);
       let s = slot-setter(sd);
       if (g)
-	let g :: <generic-function> = g;
-	find-and-remove-getter-method(g, sd);
+        let g :: <generic-function> = g;
+        find-and-remove-getter-method(g, sd);
       end if;
       if (s)
-	let s :: <generic-function> = s;
-	find-and-remove-setter-method(s, sd);
+        let s :: <generic-function> = s;
+        find-and-remove-setter-method(s, sd);
       end if;
     end if;
   end for;
@@ -692,7 +692,7 @@ define method overwrite-slot-descriptor (osd :: <slot-descriptor>, nsd :: <slot-
      begin
        init-data-slot(osd) := init-data-slot(nsd);
        init-keyword(osd) := init-keyword(nsd);
-       
+
        // These should be properties slots copied as a block.
        init-supplied?(osd) := init-supplied?(nsd);
        init-evaluated?(osd) := init-evaluated?(nsd);
@@ -705,21 +705,21 @@ end method;
 
 
 define method %redefine-class-attributes-only (class :: <class>, dependents :: <list>,
-					       #key slots :: <simple-object-vector> = #[],
-					       inherited-slots :: <simple-object-vector> = #[],
-					       keywords :: <simple-object-vector> = #[],
-					       superclasses :: <simple-object-vector> = #[])
+                                               #key slots :: <simple-object-vector> = #[],
+                                               inherited-slots :: <simple-object-vector> = #[],
+                                               keywords :: <simple-object-vector> = #[],
+                                               superclasses :: <simple-object-vector> = #[])
  => (v :: false-or(<condition>))
   for (osd :: <slot-descriptor> in direct-slot-descriptors(class))
-    let nsd :: <slot-descriptor> 
+    let nsd :: <slot-descriptor>
       = find-old-slot(osd, slots) | error("Bug! Class %= is a structural redefinition?", class);
     overwrite-slot-descriptor(osd, nsd)
   end for;
   for (dep :: <class> in dependents)
     compute-defaulted-initialization-arguments(class-implementation-class(dep),
-					       map-as(<list>, method(x) class-implementation-class(x) end,
-						      all-superclasses(dep)),
-					       $empty-subjunctive-class-universe)
+                                               map-as(<list>, method(x) class-implementation-class(x) end,
+                                                      all-superclasses(dep)),
+                                               $empty-subjunctive-class-universe)
   end for;
   #f
 end method;

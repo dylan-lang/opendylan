@@ -411,7 +411,7 @@ end function;
 
 define function compute-more-dispatch-engine
     (ds :: <dispatch-state>)
- => (engine :: <object> /* union(<method>, <engine-node>) */ );
+ => (engine :: <object> /* union(<method>, <engine-node>) */);
   let argnum? = select-next-arg-for-discrimination(ds);
   if (~ argnum?)
     compute-terminal-engine-node(ds)
@@ -494,7 +494,7 @@ define function ponder-a-specializer
       ponder-a-specializer(union-type2(spec), thisargclass, subclass-p, singletons, others);
     <limited-type> =>
       values(subclass-p, singletons,
-             if(grounded-has-instances?(thisargclass, spec)) pair(spec, others) else others end);
+             if (grounded-has-instances?(thisargclass, spec)) pair(spec, others) else others end);
   end select
 end function;
 

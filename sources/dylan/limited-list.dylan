@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define open abstract class <limited-list> (<mutable-sequence>) end;
 
-define open generic limited-list 
+define open generic limited-list
     (of :: <type>) => (type :: subclass(<limited-list>));
 
 define open generic limited-list-first
@@ -23,12 +23,12 @@ define open generic limited-list-rest-setter
     (list :: <limited-list>, list :: <limited-list>)
  => (list :: <limited-list>);
 
-define open generic prepend 
+define open generic prepend
     (object, list :: <limited-list>) => (new-list :: <limited-list>);
 
 //// Convenient access.
 
-define inline sealed method list-first 
+define inline sealed method list-first
     (list :: <limited-list>, #key default) => (first)
   // We just don't support default...
   limited-list-first(list)
@@ -39,12 +39,12 @@ define inline sealed method list-first-setter
   limited-list-first(list) := value
 end method;
 
-define inline sealed method list-rest 
+define inline sealed method list-rest
     (list :: <limited-list>) => (rest :: <limited-list>)
   limited-list-rest(list)
 end method;
 
-define inline sealed method list-rest-setter 
+define inline sealed method list-rest-setter
     (new-rest :: <limited-list>, list :: <limited-list>) => (rest :: <limited-list>)
   limited-list-rest(list) := new-rest
 end method;
@@ -61,10 +61,10 @@ end class;
 
 //
 // AS
-// 
- 
-define method as 
-    (class :: subclass(<limited-list>), collection :: <collection>) 
+//
+
+define method as
+    (class :: subclass(<limited-list>), collection :: <collection>)
  => (l :: <limited-list>)
   let result :: <limited-list> = empty(class);
   for (item in collection)
@@ -73,8 +73,8 @@ define method as
   reverse!(result)
 end method as;
 
-define sealed method as 
-    (class :: subclass(<limited-list>), v :: <simple-object-vector>) 
+define sealed method as
+    (class :: subclass(<limited-list>), v :: <simple-object-vector>)
  => (l :: <limited-list>)
   for (result = empty(class) then prepend(vector-element(v, index), result),
        index :: <integer> from v.size - 1 to 0 by -1)
@@ -83,11 +83,11 @@ define sealed method as
   end
 end;
 
-define sealed method as 
-    (class :: subclass(<limited-list>), v :: <object-deque>) 
+define sealed method as
+    (class :: subclass(<limited-list>), v :: <object-deque>)
  => (l :: <limited-list>)
   let rep = v.representation;
-  for (result = empty(class) 
+  for (result = empty(class)
          then prepend(island-deque-element(rep, index), result),
        index :: <integer> from rep.last-index to rep.first-index by -1)
   finally
@@ -97,17 +97,17 @@ end;
 
 //
 // SIZE
-// 
+//
 
-define sealed method size 
+define sealed method size
     (list :: <limited-list>) => (s :: false-or(<integer>))
   let nil = empty(object-class(list));
-  if (list == nil) 
+  if (list == nil)
     0
   else
     let list :: <non-empty-limited-list> = list;
-    iterate sum (count :: <integer> = 0, 
-                 fast :: <non-empty-limited-list> = list, 
+    iterate sum (count :: <integer> = 0,
+                 fast :: <non-empty-limited-list> = list,
                  slow :: <non-empty-limited-list> = list)
       let fast-tail = fast.%limited-list-rest;
       if (fast-tail == nil)
@@ -116,16 +116,16 @@ define sealed method size
         #f
       else
         let fast-tail :: <non-empty-limited-list> = fast-tail;
-	let fast-tail-tail = fast-tail.%limited-list-rest;
-        case	
-	  fast-tail-tail == nil 
+        let fast-tail-tail = fast-tail.%limited-list-rest;
+        case
+          fast-tail-tail == nil
             => count + 2;
-	  otherwise
-            => let fast-tail-tail :: <non-empty-limited-list> 
+          otherwise
+            => let fast-tail-tail :: <non-empty-limited-list>
                  = fast-tail-tail;
-	       let slowtail :: <non-empty-limited-list>
+               let slowtail :: <non-empty-limited-list>
                  = %limited-list-rest(slow);
-  	       sum(count + 2, fast-tail-tail, slowtail);
+                 sum(count + 2, fast-tail-tail, slowtail);
         end
       end if
     end iterate
@@ -134,48 +134,48 @@ end method size;
 
 //
 // ELEMENT
-// 
+//
 
 define sealed method element
     (lst :: <limited-list>, key :: <integer>, #key default = unsupplied())
-        => (o :: <object>)
+ => (o :: <object>)
   if (key < 0)
     if (unsupplied?(default)) element-range-error(lst, key) else default end
   else
     iterate loop (l :: <limited-list> = lst, i :: <integer> = 0)
       if (~empty?(l))
-	let l :: <non-empty-limited-list> = l;
-	if (i == key) 
-          limited-list-first(l) 
-        else 
-          loop(%limited-list-rest(l), i + 1) 
+        let l :: <non-empty-limited-list> = l;
+        if (i == key)
+          limited-list-first(l)
+        else
+          loop(%limited-list-rest(l), i + 1)
         end;
       elseif (unsupplied?(default))
-	element-range-error(lst, key)
+        element-range-error(lst, key)
       else
-	default
+        default
       end if
     end iterate
   end if
-end method element;      
+end method element;
 
 //
 // ELEMENT-NO-BOUNDS-CHECK
-// 
+//
 
 define sealed method element-no-bounds-check
     (lst :: <limited-list>, key :: <integer>, #key default)
  => (result :: <object>)
   for (k :: <integer> from 0 below key,
        remain :: <limited-list> = lst then remain.%limited-list-rest)
-  finally 
+  finally
     remain.limited-list-first
   end for
-end method element-no-bounds-check;      
+end method element-no-bounds-check;
 
 //
 // ELEMENT-SETTER
-// 
+//
 
 define sealed method element-setter
     (new-value, lst :: <limited-list>, key :: <integer>)
@@ -186,18 +186,18 @@ define sealed method element-setter
       if (i == key)
         limited-list-first(l) := new-value
       else
-        loop(%limited-list-rest(l), i + 1) 
+        loop(%limited-list-rest(l), i + 1)
       end;
     else
       element-range-error(lst, key)
     end if
   end iterate
-end method element-setter;      
+end method element-setter;
 
 //
 // ELEMENT-NO-BOUNDS-CHECK-SETTER
-// 
- 
+//
+
 define sealed method element-no-bounds-check-setter
     (new-value, lst :: <limited-list>, key :: <integer>) => new-value;
   for (k :: <integer> from 0 below key,
@@ -205,7 +205,7 @@ define sealed method element-no-bounds-check-setter
   finally
     remain.limited-list-first := new-value
   end for
-end method element-no-bounds-check-setter;      
+end method element-no-bounds-check-setter;
 
 define inline sealed method first
     (list :: <limited-list>, #key default) => (first)
@@ -251,7 +251,7 @@ define inline function limited-list-copy-state
 end function;
 
 define inline function limited-list-current-key
-    (collection :: <limited-list>, state :: <limited-list>) 
+    (collection :: <limited-list>, state :: <limited-list>)
  => (result :: <integer>)
   iterate search (l :: <limited-list> = collection, k :: <integer> = 0)
     if (l == state)
@@ -274,20 +274,20 @@ define inline function limited-list-current-element-setter
 end function;
 
 define inline method forward-iteration-protocol
-    (list :: <limited-list>) 
+    (list :: <limited-list>)
  => (initial-state :: <limited-list>, limit :: <limited-list>,
      next-state :: <function>, finished-state? :: <function>,
      current-key :: <function>,
      current-element :: <function>, current-element-setter :: <function>,
      copy-state :: <function>)
   values(list,
-	 empty(object-class(list)),
-	 limited-list-next-state,
-	 limited-list-finished-state?,
-	 limited-list-current-key,
-	 limited-list-current-element,
-	 limited-list-current-element-setter,
-	 limited-list-copy-state)
+         empty(object-class(list)),
+         limited-list-next-state,
+         limited-list-finished-state?,
+         limited-list-current-key,
+         limited-list-current-element,
+         limited-list-current-element-setter,
+         limited-list-copy-state)
 end method;
 
 define macro limited-list-definer
@@ -302,14 +302,14 @@ define macro limited-list-definer
            ?class
          end method;
 
-         define sealed method type-for-copy 
+         define sealed method type-for-copy
              (list :: ?class) => (class :: singleton(?class))
            ?class
          end;
 
-         define sealed method make 
-             (class == ?class, 
-                #key size :: <integer> = 0, fill :: ?element = ?opt-fill) 
+         define sealed method make
+             (class == ?class,
+                #key size :: <integer> = 0, fill :: ?element = ?opt-fill)
           => (list :: ?class)
            for (i :: <integer> from 0 below size,
                 result :: ?class = empty(?class) then prepend(fill, result))
@@ -346,8 +346,8 @@ define macro limited-list-definer
          define constant "$empty-" ## ?class :: "empty-" ## ?class
            = make("empty-" ## ?class);
 
-         define inline sealed method prepend 
-             (object :: ?element, list :: ?class) 
+         define inline sealed method prepend
+             (object :: ?element, list :: ?class)
           => (list :: "non-empty-" ## ?class)
            make("non-empty-" ## ?class, first: object, rest: list);
          end method;
@@ -357,17 +357,17 @@ define macro limited-list-definer
          define inline sealed method empty
              (class :: subclass(?class)) => (empty :: "empty-" ## ?class)
            "$empty-" ## ?class;
-         end method; 
+         end method;
 
          define inline sealed method empty?
              (list :: ?class) => (well? :: <boolean>)
            list == "$empty-" ## ?class;
-         end method; 
+         end method;
 
          define inline function ?class ## "-next-state"
              (collection :: ?class, state :: ?class)
           => (l :: ?class)
-           let state :: "non-empty-" ## ?class 
+           let state :: "non-empty-" ## ?class
              = %guarantee-type(state, "non-empty-" ## ?class);
            limited-list-rest(state)
          end function;
@@ -375,7 +375,7 @@ define macro limited-list-definer
          define inline function ?class ## "-current-element"
              (collection :: ?class, state :: ?class)
           => (e :: ?element)
-           let state :: "non-empty-" ## ?class 
+           let state :: "non-empty-" ## ?class
              = %guarantee-type(state, "non-empty-" ## ?class);
            limited-list-first(state)
          end function;
@@ -383,33 +383,33 @@ define macro limited-list-definer
          define inline function ?class ## "-current-element-setter"
              (e :: ?element, collection :: ?class, state :: ?class)
           => (e :: ?element)
-           let state :: "non-empty-" ## ?class 
+           let state :: "non-empty-" ## ?class
              = %guarantee-type(state, "non-empty-" ## ?class);
            limited-list-first(state) := e
          end function;
 
          define inline sealed method forward-iteration-protocol
-             (list :: ?class) 
+             (list :: ?class)
           => (initial-state :: ?class, limit :: ?class,
               next-state :: <function>, finished-state? :: <function>,
               current-key :: <function>,
-              current-element :: <function>, 
-	      current-element-setter :: <function>,
-	      copy-state :: <function>)
+              current-element :: <function>,
+              current-element-setter :: <function>,
+              copy-state :: <function>)
            values(list,
-		  empty(?class),
+                  empty(?class),
                   ?class ## "-next-state",
-		  limited-list-finished-state?,
-		  limited-list-current-key,
-		  ?class ## "-current-element",
-		  ?class ## "-current-element-setter",
-		  limited-list-copy-state)
+                  limited-list-finished-state?,
+                  limited-list-current-key,
+                  ?class ## "-current-element",
+                  ?class ## "-current-element-setter",
+                  limited-list-copy-state)
          end method; }
   { define limited-list "<" ## ?element:name ## ">" ?opt-fill }
-    => { define limited-list "<simple-" ## ?element ## "-list>" 
+    => { define limited-list "<simple-" ## ?element ## "-list>"
            of "<" ## ?element ## ">" = ?opt-fill }
 opt-fill:
-  { } 
+  { }
     => { #f }
   { = ?fill:expression }
     => { ?fill }
@@ -421,7 +421,7 @@ define limited-list <object>;
 define limited-list <class>;
 define limited-list <method>;
 
-define inline method limited-list 
+define inline method limited-list
     (type :: <type>) => (list-type :: subclass(<limited-list>))
   <simple-object-list>
 end method;

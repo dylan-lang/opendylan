@@ -49,22 +49,22 @@ define macro integer-double-comparison-methods-definer
  // is the argument to the predicate.
  { define integer-double-comparison-methods ?:name ?integer:name ?double:name }
   => { define sealed inline method ?name (x :: <integer>, y :: <double-integer>)
-	=> (result :: <boolean>)
-	 ?integer(y)
+        => (result :: <boolean>)
+         ?integer(y)
        end method ?name;
        define sealed inline method ?name (x :: <double-integer>, y :: <integer>)
-	=> (result :: <boolean>)
-	 ?double(x)
+        => (result :: <boolean>)
+         ?double(x)
        end method ?name }
  // With no predicate arguments, define the methods to return #f
  { define integer-double-comparison-methods ?:name }
   => { define sealed inline method ?name (x :: <integer>, y :: <double-integer>)
-	=> (result :: <boolean>)
-	 #f
+        => (result :: <boolean>)
+         #f
        end method ?name;
        define sealed inline method ?name (x :: <double-integer>, y :: <integer>)
-	=> (result :: <boolean>)
-	 #f
+        => (result :: <boolean>)
+         #f
        end method ?name }
 end macro integer-double-comparison-methods-definer;
 
@@ -74,12 +74,12 @@ end macro integer-double-comparison-methods-definer;
 define macro float-double-comparison-methods-definer
  { define float-double-comparison-methods ?:name }
   => { define sealed inline method ?name (x :: <float>, y :: <double-integer>)
-	=> (result :: <boolean>)
-	 ?name(x, as(<float>, y))
+        => (result :: <boolean>)
+         ?name(x, as(<float>, y))
        end method ?name;
        define sealed inline method ?name (x :: <double-integer>, y :: <float>)
-	=> (result :: <boolean>)
-	 ?name(as(<float>, x), y)
+        => (result :: <boolean>)
+         ?name(as(<float>, x), y)
        end method ?name }
 end macro float-double-comparison-methods-definer;
 

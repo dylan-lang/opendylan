@@ -23,14 +23,14 @@ end function;
 
 define inline method type-complete? (g :: <generic-function>) => (well? :: <boolean>)
   (~instance?(g, <incremental-generic-function>) | incremental-gf-signatured?(g))
-  & 
+  &
   type-complete?(function-signature(g))
 end method;
 
 
 define method recompute-type-complete! (g :: <generic-function>) => (well? :: <boolean>)
   (~instance?(g, <incremental-generic-function>) | incremental-gf-signatured?(g))
-  & 
+  &
   recompute-type-complete!(function-signature(g))
 end method;
 
@@ -79,7 +79,7 @@ end method generic-function-mandatory-keywords;
 
 
 define method make (c == <generic-function>, #rest args,
-		    #key required, key, key-types, rest?, values, rest-value)
+                    #key required, key, key-types, rest?, values, rest-value)
  => (i :: <incremental-generic-function>)
   apply(make, <incremental-generic-function>, module: $runtime-module, args)
 end method;
@@ -87,28 +87,28 @@ end method;
 
 
 define method initialize
-    (generic-function :: <generic-function>, 
-     #rest all-keys, 
+    (generic-function :: <generic-function>,
+     #rest all-keys,
      #key signature, required, key, key-types, rest?, values: vals = #[], rest-value = <object>)
  => ()
   let e = if (key)
-	    if (rest?)
-	      "attempt to create a generic function with both optionals and keyword parameters: %=."
-	    elseif (key-types)
-	      if (~instance?(key-types, <sequence>) | any?(method(x) ~instance?(x, <type>) end, key-types))
-		"generic function key-types must be a sequence of types: %=."
-	      elseif (~instance?(key, <sequence>) | any?(method (x) ~instance?(x, <symbol>) end, key))
-		"generic function key: must be a sequence of symbols: %=."
-	      elseif (size(key) ~== size(key-types))
-		"generic function key-types: and key: must be the same size: %=."
-	      else #f
-	      end if
-	    else #f
-	    end if
-	  elseif (key-types)
-	    "attempt to create an unkeyed generic function with key-types: %=."
-	  else #f
-	  end if;
+            if (rest?)
+              "attempt to create a generic function with both optionals and keyword parameters: %=."
+            elseif (key-types)
+              if (~instance?(key-types, <sequence>) | any?(method(x) ~instance?(x, <type>) end, key-types))
+                "generic function key-types must be a sequence of types: %=."
+              elseif (~instance?(key, <sequence>) | any?(method (x) ~instance?(x, <symbol>) end, key))
+                "generic function key: must be a sequence of symbols: %=."
+              elseif (size(key) ~== size(key-types))
+                "generic function key-types: and key: must be the same size: %=."
+              else #f
+              end if
+            else #f
+            end if
+          elseif (key-types)
+            "attempt to create an unkeyed generic function with key-types: %=."
+          else #f
+          end if;
   if (e)
     error(make(<argument-error>, format-string: e, format-arguments: vector(all-keys)))
   end if;
@@ -116,23 +116,23 @@ define method initialize
   next-method();
 
   if (~signature)
-    function-signature(generic-function) 
+    function-signature(generic-function)
       := if (key)
-	   apply(make, <signature>, 
-		 required: required,
-		 values: vals,
-		 rest-value: rest-value, rest?: rest?, 
-		 keys: as(<simple-object-vector>, key),
-		 key?: #t,
-		 key-types: if (key-types) as(<simple-object-vector>, key-types) else #[] end,
-		 all-keys)
-	 else
-	   apply(make, <signature>, 
-		 required: required,
-		 values: vals, 
-		 rest?: rest?, rest-value: rest-value,
-		 all-keys)
-	 end if
+           apply(make, <signature>,
+                 required: required,
+                 values: vals,
+                 rest-value: rest-value, rest?: rest?,
+                 keys: as(<simple-object-vector>, key),
+                 key?: #t,
+                 key-types: if (key-types) as(<simple-object-vector>, key-types) else #[] end,
+                 all-keys)
+         else
+           apply(make, <signature>,
+                 required: required,
+                 values: vals,
+                 rest?: rest?, rest-value: rest-value,
+                 all-keys)
+         end if
   end if;
   finalize-generic-function(generic-function);
 end method initialize;
@@ -143,12 +143,12 @@ define method initialize (gf :: <incremental-generic-function>, #rest all-keys, 
   next-method();
   apply(initialize-packed-slots, gf, all-keys);
   map-congruency-classes(method (c)
-			   let ic :: <implementation-class> = class-implementation-class(c);
-			   if (class-incremental?(ic) | ~class-complete?(ic))
-			     iclass-dependent-generics(ic) := add-new!(iclass-dependent-generics(ic), gf)
-			   end if
-			 end method,
-			 gf);
+                           let ic :: <implementation-class> = class-implementation-class(c);
+                           if (class-incremental?(ic) | ~class-complete?(ic))
+                             iclass-dependent-generics(ic) := add-new!(iclass-dependent-generics(ic), gf)
+                           end if
+                         end method,
+                         gf);
   // gf.incremental-gf-type-complete? := type-complete?(function-signature(gf));
 end method;
 
@@ -167,9 +167,9 @@ define method decache-gf (g :: <generic-function>) => ()
     let cache :: <gf-cache-info> = cache;
     for (x in gf-cache-info-users(cache))
       if (x)
-	let x :: <cache-header-engine-node> = x;
-	cache-header-engine-node-next(x) := $absent-engine-node;
-      end 
+        let x :: <cache-header-engine-node> = x;
+        cache-header-engine-node-next(x) := $absent-engine-node;
+      end
     end for
   end if
 end method;
@@ -198,21 +198,21 @@ define function call-to-type-incomplete-generic (g :: <generic-function>, meparg
        object: g,
        types: incomplete-classes(function-signature(g)),
        format-string: "Call to type-incomplete generic %= on args %=.\n"
-	 "The generic cannot be used yet because the types %= have not been fully computed.",
+         "The generic cannot be used yet because the types %= have not been fully computed.",
        format-arguments: vector(g, args, incomplete))
 end function;
 
 
 define function report-generic-incomplete (g :: <generic-function>, name, meth)
   bletch(make(<function-type-incomplete-error>,
-	      object: g,
-	      types: incomplete-classes(function-signature(g)),
-	      format-string: "attempt to %s on type-incomplete generic: %=\n  (method: %=)",
-	      format-arguments: vector(name, g, meth)))
+              object: g,
+              types: incomplete-classes(function-signature(g)),
+              format-string: "attempt to %s on type-incomplete generic: %=\n  (method: %=)",
+              format-arguments: vector(name, g, meth)))
 end function;
 
 
-define inline function check-generic-incomplete 
+define inline function check-generic-incomplete
     (gf :: <generic-function>, name :: <string>, meth :: false-or (<method>)) => ()
   unless (gf.type-complete?)
     report-generic-incomplete(gf, name, meth)
@@ -220,21 +220,21 @@ define inline function check-generic-incomplete
 end;
 
 
-define function locate-method 
+define function locate-method
     (generic-function :: <generic-function>, the-specializers :: <simple-object-vector>)
  => (m :: false-or(<method>), idx :: <integer>)
   block (return)
     let nspecs :: <integer> = size(the-specializers);
-    for (a-method :: <method> in generic-function.generic-function-methods, 
-	 i :: <integer> from 0)
+    for (a-method :: <method> in generic-function.generic-function-methods,
+         i :: <integer> from 0)
       local method loop (specnum :: <integer>)
-	      if (specnum == nspecs) 
-		return(a-method, i)
-	      elseif (same-specializer?(%method-specializer(a-method, specnum),
-					  vector-element(the-specializers, specnum)))
-		loop(specnum + 1)
-	      end if
-	    end method;
+              if (specnum == nspecs)
+                return(a-method, i)
+              elseif (same-specializer?(%method-specializer(a-method, specnum),
+                                          vector-element(the-specializers, specnum)))
+                loop(specnum + 1)
+              end if
+            end method;
       loop(0);
     end for;
     values(#f, -1)
@@ -247,10 +247,10 @@ define method find-method
  => (m :: false-or(<method>))
   check-generic-incomplete (generic-function, "find-method", #f) ;
   values(if (instance?(the-specializers, <simple-object-vector>))
-	   locate-method(generic-function, the-specializers)
-	 else
-	   apply(method(#rest v) locate-method(generic-function, v) end, the-specializers)
-	 end if)
+           locate-method(generic-function, the-specializers)
+         else
+           apply(method(#rest v) locate-method(generic-function, v) end, the-specializers)
+         end if)
 end method find-method;
 
 
@@ -291,12 +291,12 @@ define method copy-over-without (seq :: <list>, idx :: <integer>)
     tail(seq)
   else
     local method loop (prev :: <pair>, l :: <list>, i :: <integer>)
-	    if (i == idx) 
-	      tail(prev) := tail(l)
-	    else
-	      loop(tail(prev) := pair(head(l), #()), tail(l), i + 1)
-	    end if
-	  end method;
+            if (i == idx)
+              tail(prev) := tail(l)
+            else
+              loop(tail(prev) := pair(head(l), #()), tail(l), i + 1)
+            end if
+          end method;
     let top = pair(head(seq), #());
     loop (top, tail(seq), 1);
     top
@@ -312,7 +312,7 @@ define class <sealed-generic-function-error> (<sealed-object-error>, <simple-con
 end class;
 
 define function add-method-internal (g :: <generic-function>, m :: <method>, lib :: <library>,
-				     check-congruency? :: <boolean>, check-sealing? :: <boolean>)
+                                     check-congruency? :: <boolean>, check-sealing? :: <boolean>)
   => (new-value, condition);
   let reason1 = check-sealing? & method-not-frobbable?(g, m, lib, "add-method");
   if (instance?(reason1, <sealed-generic-function-error>))
@@ -330,9 +330,9 @@ define function add-method-internal (g :: <generic-function>, m :: <method>, lib
     let (well?, reason2) = if (check-congruency?) congruent?(g, m) else values(#t, #f) end;
     if (~well?)
       values(#f, make(<argument-error>,
-		      format-string: "the method %= is not congruent with generic function %= - %s.",
-		      format-arguments: list(m, g, reason2)))
-    else 
+                      format-string: "the method %= is not congruent with generic function %= - %s.",
+                      format-arguments: list(m, g, reason2)))
+    else
       let old-meth = add-method-internal-internal(g, m, lib);
       values(old-meth, reason1)
     end if
@@ -349,9 +349,9 @@ define function method-not-frobbable? (g :: <generic-function>, frob, lib :: <li
       #f
     else
       make(<sealed-generic-function-error>,
-	   generic-function: g,
-	   format-string: "Cannot %s %= in %= to sealed generic %=.",
-	   format-arguments: vector(opstring, frob, lib, g))
+           generic-function: g,
+           format-string: "Cannot %s %= in %= to sealed generic %=.",
+           format-arguments: vector(opstring, frob, lib, g))
     end if
   else
     domain-conflict?(g, frob, lib, #t, opstring)
@@ -360,16 +360,16 @@ end function;
 
 define constant *register-subclass-dependent-generics-during-add-method?* = #f;
 
-define function add-method-internal-internal  (g :: <generic-function>, 
-					       m :: <method>, lib :: <library>)
+define function add-method-internal-internal  (g :: <generic-function>,
+                                               m :: <method>, lib :: <library>)
   let specs :: <simple-object-vector> = function-specializers(m);
   let (old-meth, idx :: <integer>) = locate-method(g, specs);
   when (*register-subclass-dependent-generics-during-add-method?*)
     map-congruency-classes-sov
       (method (class :: <class>)
-	 unless (iclass-subclasses-fixed?(class-implementation-class(class)))
-	   %register-subclass-dependent-generic(g, class);
-	 end unless;
+         unless (iclass-subclasses-fixed?(class-implementation-class(class)))
+           %register-subclass-dependent-generic(g, class);
+         end unless;
        end method,
        specs,
        size(specs));
@@ -382,26 +382,26 @@ define function add-method-internal-internal  (g :: <generic-function>,
       let libs :: <simple-object-vector> = incremental-gf-method-libraries(g);
       let nlibs :: <integer> = size(libs);
       if (idx < nlibs)
-	if (lib ~== glib)
-	  // prev and new methods have library explicitly stored.
-	  libs[idx] := lib;
-	  meths[idx] := m;
-	else
-	  // prev meth had library explicitly stored, new doesn't.
-	  for (i :: <integer> from idx below nlibs - 1) meths[i] := meths[i + 1] end;
-	  meths[nlibs - 1] := m;
-	  incremental-gf-method-libraries(g) := copy-over-without(libs, idx);
-	end if
+        if (lib ~== glib)
+          // prev and new methods have library explicitly stored.
+          libs[idx] := lib;
+          meths[idx] := m;
+        else
+          // prev meth had library explicitly stored, new doesn't.
+          for (i :: <integer> from idx below nlibs - 1) meths[i] := meths[i + 1] end;
+          meths[nlibs - 1] := m;
+          incremental-gf-method-libraries(g) := copy-over-without(libs, idx);
+        end if
       elseif (lib ~== glib)
-	// new meth has library explicit, prev did not.
-	incremental-gf-method-libraries(g) := concatenate(libs, vector(lib));
-	if (idx ~== nlibs)
-	  meths[idx] := meths[nlibs];
-	  meths[nlibs] := m;
-	end if;
+        // new meth has library explicit, prev did not.
+        incremental-gf-method-libraries(g) := concatenate(libs, vector(lib));
+        if (idx ~== nlibs)
+          meths[idx] := meths[nlibs];
+          meths[nlibs] := m;
+        end if;
       else
-	// both prev and new methods have same library as gf.
-	meths[idx] := m;
+        // both prev and new methods have same library as gf.
+        meths[idx] := m;
       end if;
     else
       meths[idx] := m;
@@ -412,7 +412,7 @@ define function add-method-internal-internal  (g :: <generic-function>,
       %add-method-and-library(g, m, lib)
     else
       generic-function-methods(g)
-	:= concatenate(generic-function-methods(g), vector(m));
+        := concatenate(generic-function-methods(g), vector(m));
     end if;
   end if;
   g.finalize-generic-function;
@@ -436,9 +436,9 @@ end method add-method;
 
 
 define function %add-method-and-library (g :: <incremental-generic-function>,
-					 m :: <method>, lib :: <library>)
+                                         m :: <method>, lib :: <library>)
  => ()
-  incremental-gf-method-libraries(g) 
+  incremental-gf-method-libraries(g)
     := concatenate(vector(lib), incremental-gf-method-libraries(g));
   let meths = generic-function-methods(g);
   if (instance?(meths, <list>))
@@ -451,35 +451,35 @@ define function %add-method-and-library (g :: <incremental-generic-function>,
 end function;
 
 
-define function %add-a-method (g :: <generic-function>, m :: <method>, lib :: <library>, 
-			       check-congruency? :: <boolean>, check-sealing? :: <boolean>,
-			       add-method-domain? :: <boolean>)
+define function %add-a-method (g :: <generic-function>, m :: <method>, lib :: <library>,
+                               check-congruency? :: <boolean>, check-sealing? :: <boolean>,
+                               add-method-domain? :: <boolean>)
  => ()
   let lossage = (with-object-lock (g)
-		   let (ans, condition) 
-		   = add-method-internal(g, m, lib, check-congruency?, check-sealing?);
-		 let more-lossage =
-		   if (add-method-domain?
-			 & ~instance?(condition, <error>)
-			 & instance?(g, <incremental-generic-function>))
-		     let g :: <incremental-generic-function> = g;
-		     %add-method-domain(g, m, lib, check-sealing?)
-		   else
-		     #()
-		   end if;
-		 if (condition) pair(condition, more-lossage) else more-lossage end;
-		end with-object-lock);
+                   let (ans, condition)
+                   = add-method-internal(g, m, lib, check-congruency?, check-sealing?);
+                 let more-lossage =
+                   if (add-method-domain?
+                         & ~instance?(condition, <error>)
+                         & instance?(g, <incremental-generic-function>))
+                     let g :: <incremental-generic-function> = g;
+                     %add-method-domain(g, m, lib, check-sealing?)
+                   else
+                     #()
+                   end if;
+                 if (condition) pair(condition, more-lossage) else more-lossage end;
+                end with-object-lock);
   if (lossage ~== #())
     if (instance?(g, <incremental-generic-function>)
-          & (incremental-gf-library(g) == lib 
+          & (incremental-gf-library(g) == lib
                | incremental-gf-module(g) == $runtime-module))
       block ()
         bletch-stack(lossage);
       exception (<simple-restart>,
-                 init-arguments: 
-                   vector(format-string: 
+                 init-arguments:
+                   vector(format-string:
                             "Redefine %=, discarding non-congruent methods.",
-                          format-arguments: 
+                          format-arguments:
                             vector(g)))
         %redefine-generic-using-method(g, m, lib, add-method-domain?);
       end;
@@ -490,7 +490,7 @@ define function %add-a-method (g :: <generic-function>, m :: <method>, lib :: <l
 end function;
 
 define function %redefine-generic-using-method
-    (g :: <generic-function>, m :: <method>, lib :: <library>, 
+    (g :: <generic-function>, m :: <method>, lib :: <library>,
        add-method-domain? :: <boolean>)
  => ()
   let implicit-sig = implicit-generic-signature(function-signature(m));
@@ -500,7 +500,7 @@ define function %redefine-generic-using-method
     (g, m, lib, #f, #f, add-method-domain?);
 end function;
 
-define function implicit-generic-signature 
+define function implicit-generic-signature
     (sig :: <signature>) => (implict-sig :: <signature>)
   let nrequired = signature-number-required(sig);
   case
@@ -521,7 +521,7 @@ define function implicit-generic-signature
 end function;
 
 // Add a dynamically computed method to a sealed generic function.
-define function %add-dynamic-method (g :: <sealed-generic-function>, m :: <method>) 
+define function %add-dynamic-method (g :: <sealed-generic-function>, m :: <method>)
  => ()
   %add-a-method(g, m, $runtime-library, #t, #f, #f)
 end function;
@@ -536,31 +536,31 @@ end function;
 // This is %add-method when we know there can't be any preexisting method on the
 // same specializers.  This could be used when some specializer of the method
 // is defined in the library, guaranteeing this situation.
-define function %add-nonsiblinged-method (g :: <generic-function>, 
-					  m :: <method>, lib :: <library>)
+define function %add-nonsiblinged-method (g :: <generic-function>,
+                                          m :: <method>, lib :: <library>)
  => ()
   let lossage :: <list>
     = with-object-lock (g)
         if (instance?(g, <incremental-generic-function>))
-	  let g :: <incremental-generic-function> = g;
-	  %add-method-and-library(g, m, lib);
-	  g.finalize-generic-function;
-	  #()
-	else
-	  // A <sealed-generic-function> here means that this is a sideways
-	  // definition on a compiler-open generic.  So we just add it and
-	  // look the other way.
-	  let g :: <sealed-generic-function> = g;
-	  let meths = generic-function-methods(g);
-	  if (instance?(meths, <list>))
-	    generic-function-methods(g) := pair(m, meths)
-	  else
-	    let methds :: <simple-object-vector> = meths;
-	    generic-function-methods(g) := concatenate(vector(m), meths)
-	  end if;
-	  finalize-generic-function(g);
-	  #()
-	end if
+          let g :: <incremental-generic-function> = g;
+          %add-method-and-library(g, m, lib);
+          g.finalize-generic-function;
+          #()
+        else
+          // A <sealed-generic-function> here means that this is a sideways
+          // definition on a compiler-open generic.  So we just add it and
+          // look the other way.
+          let g :: <sealed-generic-function> = g;
+          let meths = generic-function-methods(g);
+          if (instance?(meths, <list>))
+            generic-function-methods(g) := pair(m, meths)
+          else
+            let methds :: <simple-object-vector> = meths;
+            generic-function-methods(g) := concatenate(vector(m), meths)
+          end if;
+          finalize-generic-function(g);
+          #()
+        end if
       end with-object-lock;
   bletch-stack(lossage);
 end function %add-nonsiblinged-method;
@@ -591,19 +591,19 @@ end function;
 
 // this is the function definition that causes the "live on entry to lambda"
 // serious warning.
-define function %remove-method-from-library (g :: <generic-function>, frob, lib, 
-					     check-sealing?, test :: <function>)
+define function %remove-method-from-library (g :: <generic-function>, frob, lib,
+                                             check-sealing?, test :: <function>)
  => (removed? :: false-or(<method>));
   let (removed?, lossage)
     = (with-object-lock (g)
-	 let (ans :: false-or(<method>), condition)
-	   = remove-method-internal(g, frob, lib, check-sealing?, test);
-	 unless (~ans | instance?(condition, <error>))
-	   let g :: <incremental-generic-function> = g;
-	   let ans :: <method> = ans;
-	   %remove-method-domain(g, ans, lib)
-	 end unless;
-	 values(ans, condition)
+         let (ans :: false-or(<method>), condition)
+           = remove-method-internal(g, frob, lib, check-sealing?, test);
+         unless (~ans | instance?(condition, <error>))
+           let g :: <incremental-generic-function> = g;
+           let ans :: <method> = ans;
+           %remove-method-domain(g, ans, lib)
+         end unless;
+         values(ans, condition)
        end with-object-lock);
   if (lossage) bletch(lossage) end;
   removed?
@@ -622,18 +622,18 @@ define function remove-method-internal (g :: <generic-function>, frob, lib, chec
   else
     block (return)
       for (m :: <method> in generic-function-methods(g), i :: <integer> from 0)
-	if (test(m, frob))
-	  generic-function-methods(g) := copy-over-without(generic-function-methods(g), i);
-	  if (instance?(g, <incremental-generic-function>))
-	    let g :: <incremental-generic-function> = g;
-	    let libs :: <simple-object-vector> = incremental-gf-method-libraries(g);
-	    if (i < size(libs))
-	      incremental-gf-method-libraries(g) 
-		:= copy-over-without(incremental-gf-method-libraries(g), i);
-	    end if;
-	    return(m, reason1)
-	  end if
-	end if
+        if (test(m, frob))
+          generic-function-methods(g) := copy-over-without(generic-function-methods(g), i);
+          if (instance?(g, <incremental-generic-function>))
+            let g :: <incremental-generic-function> = g;
+            let libs :: <simple-object-vector> = incremental-gf-method-libraries(g);
+            if (i < size(libs))
+              incremental-gf-method-libraries(g)
+                := copy-over-without(incremental-gf-method-libraries(g), i);
+            end if;
+            return(m, reason1)
+          end if
+        end if
       end for;
       values(remove-generic-function-incomplete-method(g, frob, lib, test), reason1);
     end
@@ -645,7 +645,7 @@ end function;
 define generic applicable-method? (function :: <function>, #rest sample-arguments);
 
 
-define method applicable-method? 
+define method applicable-method?
     (function :: <method>, #rest sample-arguments) => (result :: <boolean>)
   let sig :: <signature> = function-signature(function);
   let size-given :: <integer> = sample-arguments.size;
@@ -671,12 +671,12 @@ define method applicable-method?
     size-given == num-req
   end if
     & block (return)
-	for (m :: <method> in generic-function-methods(gf))
-	  if (applicable-method-assuming-number-required?(m, sample-arguments))
-	    return(#t)
-	  end if
-	end for;
-	#f
+        for (m :: <method> in generic-function-methods(gf))
+          if (applicable-method-assuming-number-required?(m, sample-arguments))
+            return(#t)
+          end if
+        end for;
+        #f
       end
 end method;
 
@@ -689,7 +689,7 @@ define generic sorted-applicable-methods (generic-function, #rest arguments)
  => (ordered-unambiguous :: <sequence>, unordered-ambiguous :: <sequence>);
 
 define method sorted-applicable-methods
-    (generic-function :: <generic-function>, #rest arguments) 
+    (generic-function :: <generic-function>, #rest arguments)
  => (ordered-unambiguous :: <list>, unordered-ambiguous :: <list>);
   check-generic-incomplete (generic-function, "sorted-applicable-methods", #f) ;
   compute-sorted-applicable-methods(generic-function, arguments)

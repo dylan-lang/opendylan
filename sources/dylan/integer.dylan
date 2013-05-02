@@ -48,11 +48,11 @@ end method as;
 define macro generic-binary-logical-function-definer
   { define generic-binary-logical-function ?:name ?initial:expression ?domain:name }
   => { define function "generic-" ## ?name (#rest integers) => (value :: <abstract-integer>)
-	 reduce("generic-binary-" ## ?name, ?initial, integers)
+         reduce("generic-binary-" ## ?name, ?initial, integers)
        end function "generic-" ## ?name;
        define open generic "generic-binary-" ## ?name
-	   (integer-1 :: <abstract-integer>, integer-2 :: <abstract-integer>)
-	=> (value :: <abstract-integer>) }
+           (integer-1 :: <abstract-integer>, integer-2 :: <abstract-integer>)
+        => (value :: <abstract-integer>) }
   { define generic-binary-logical-function ?:name ?initial:expression }
   => { define generic-binary-logical-function ?name ?initial <complex> }
 end macro generic-binary-logical-function-definer;
@@ -76,7 +76,7 @@ define constant $minimum-integer
 define constant $maximum-integer
   = interpret-machine-word-as-integer(force-integer-tag($maximum-signed-machine-word));
 
-define inline method contagious-type 
+define inline method contagious-type
     (x :: <integer>, y :: <integer>) => (result :: <type>)
   <integer>
 end method contagious-type;
@@ -103,22 +103,22 @@ define sealed inline method odd?
   logbit?(0, integer);
 end method odd?;
 
-define sealed inline method even? 
+define sealed inline method even?
     (integer :: <integer>) => (result :: <boolean>)
   ~logbit?(0, integer);
 end method even?;
 
-define sealed inline method zero? 
+define sealed inline method zero?
     (integer :: <integer>) => (result :: <boolean>)
   integer = 0;
 end method zero?;
 
-define sealed inline method positive? 
+define sealed inline method positive?
     (integer :: <integer>) => (result :: <boolean>)
   integer > 0;
 end method positive?;
 
-define sealed inline method negative? 
+define sealed inline method negative?
     (integer :: <integer>) => (result :: <boolean>)
   integer < 0;
 end method negative?;
@@ -156,9 +156,9 @@ end method \*;
 define macro unary-integer-division-definer
   { define unary-integer-division ?:name }
     => { define sealed inline method ?name (x :: <integer>)
-	  => (quotient :: <integer>, remainder :: <integer>)
-	   values(x, 0)
-	 end method ?name }
+          => (quotient :: <integer>, remainder :: <integer>)
+           values(x, 0)
+         end method ?name }
 end macro unary-integer-division-definer;
 
 define unary-integer-division floor;
@@ -170,13 +170,13 @@ define macro integer-division-definer
   { define integer-division ?:name }
     => { define sealed inline method ?name
              (dividend :: <integer>, divisor :: <integer>)
-	  => (quotient :: <integer>, remainder :: <integer>)
-	   let mdividend = coerce-integer-to-machine-word(dividend);
-	   let mdivisor = coerce-integer-to-machine-word(divisor);
-	   let (mquot, mrem) = "machine-word-" ## ?name(mdividend, mdivisor);
-	   values(coerce-machine-word-to-integer(mquot),
-		  coerce-machine-word-to-integer(mrem))
-	 end method ?name
+          => (quotient :: <integer>, remainder :: <integer>)
+           let mdividend = coerce-integer-to-machine-word(dividend);
+           let mdivisor = coerce-integer-to-machine-word(divisor);
+           let (mquot, mrem) = "machine-word-" ## ?name(mdividend, mdivisor);
+           values(coerce-machine-word-to-integer(mquot),
+                  coerce-machine-word-to-integer(mrem))
+         end method ?name
        }
 end macro integer-division-definer;
 
@@ -189,13 +189,13 @@ define integer-division truncate/;
 define macro integer-division-remainder-definer
   { define integer-division-remainder ?:name ?function:name }
     => { define sealed inline method ?name
-	     (dividend :: <integer>, divisor :: <integer>) => (remainder :: <integer>)
-	   let rmdividend :: <raw-machine-word> = integer-as-raw(dividend);
-	   let rmdivisor :: <raw-machine-word> = integer-as-raw(divisor);
-	   let rmremainder :: <raw-machine-word>
-	     = "primitive-machine-word-" ## ?function ## "-remainder"(rmdividend, rmdivisor);
-	   raw-as-integer(rmremainder)
-	 end method ?name }
+             (dividend :: <integer>, divisor :: <integer>) => (remainder :: <integer>)
+           let rmdividend :: <raw-machine-word> = integer-as-raw(dividend);
+           let rmdivisor :: <raw-machine-word> = integer-as-raw(divisor);
+           let rmremainder :: <raw-machine-word>
+             = "primitive-machine-word-" ## ?function ## "-remainder"(rmdividend, rmdivisor);
+           raw-as-integer(rmremainder)
+         end method ?name }
 end macro integer-division-remainder-definer;
 
 define integer-division-remainder modulo floor/;
@@ -205,17 +205,17 @@ define macro integer-sign-adjust-definer
   { define integer-sign-adjust ?:name }
     => { define sealed inline method ?name (x :: <integer>)
           => (result :: <integer>)
-	   let mx = strip-integer-tag(interpret-integer-as-machine-word(x));
-	   let mresult = "machine-word-" ## ?name ## "-signal-overflow"(mx);
-	   interpret-machine-word-as-integer(insert-integer-tag(mresult))
-	 end method ?name
+           let mx = strip-integer-tag(interpret-integer-as-machine-word(x));
+           let mresult = "machine-word-" ## ?name ## "-signal-overflow"(mx);
+           interpret-machine-word-as-integer(insert-integer-tag(mresult))
+         end method ?name
        }
 end macro;
 
 define integer-sign-adjust negative;
 define integer-sign-adjust abs;
 
-define method \^ 
+define method \^
     (base :: <integer>, power :: <integer>) => (res :: <rational>)
   if (negative?(power))
     //---*** THIS IS WRONG AS / ISN'T DEFINED FOR <integer>!
@@ -228,14 +228,14 @@ define method \^
   else
     // Avoids squaring on last iteration to prevent premature overflow ...
     iterate loop (base :: <integer> = if (power > 1) base * base else base end,
-		  p :: <integer> = ash(power, -1),
-		  x  :: <integer> = if (odd?(power)) base else 1 end)
+                  p :: <integer> = ash(power, -1),
+                  x  :: <integer> = if (odd?(power)) base else 1 end)
       if (zero?(p))
-	x
+        x
       else
-	loop(if (p > 1) base * base else base end, 
-	     ash(p, -1),
-	     if (odd?(p)) base * x else x end)
+        loop(if (p > 1) base * base else base end,
+             ash(p, -1),
+             if (odd?(p)) base * x else x end)
       end if
     end iterate
   end if
@@ -260,11 +260,11 @@ define macro integer-binary-logical-definer
     => { define inline /* -only */ function ?name
              (x :: <integer>, y :: <integer>)
           => (result :: <integer>)
-	   let mx = interpret-integer-as-machine-word(x);
-	   let my = interpret-integer-as-machine-word(y);
-	   let mresult = ?lowlevel(mx, my);
-	   interpret-machine-word-as-integer(?tagger(mresult))
-	 end function ?name
+           let mx = interpret-integer-as-machine-word(x);
+           let my = interpret-integer-as-machine-word(y);
+           let mresult = ?lowlevel(mx, my);
+           interpret-machine-word-as-integer(?tagger(mresult))
+         end function ?name
        }
 end macro;
 
@@ -287,8 +287,8 @@ define inline function logbit-deposit
     (z :: <boolean>, index :: <integer>, integer :: <integer>) => (res :: <integer>)
   interpret-machine-word-as-integer
     (machine-word-logbit-deposit
-       (z, as-offset-for-tagged-integer(index), 
-	interpret-integer-as-machine-word(integer)))
+       (z, as-offset-for-tagged-integer(index),
+        interpret-integer-as-machine-word(integer)))
 end function logbit-deposit;
 
 define inline function bit-field-extract
@@ -298,21 +298,21 @@ define inline function bit-field-extract
   interpret-machine-word-as-integer
     (force-integer-tag
        (machine-word-bit-field-extract
-	  (offset, as-field-size-for-tagged-integer(size), 
-	   interpret-integer-as-machine-word(x))))
+          (offset, as-field-size-for-tagged-integer(size),
+           interpret-integer-as-machine-word(x))))
 end function bit-field-extract;
 
 define inline function bit-field-deposit
-    (field :: <integer>, 
-     offset :: <integer>, size :: <integer>, x :: <integer>) 
+    (field :: <integer>,
+     offset :: <integer>, size :: <integer>, x :: <integer>)
  => (res :: <integer>)
   // logior(logand(x, lognot(ash-left(ash-left(1, size) - 1, offset))),
-  // 	    ash-left(field, offset)) 
+  //             ash-left(field, offset))
   interpret-machine-word-as-integer
     (machine-word-bit-field-deposit
-       (coerce-integer-to-machine-word(field), 
-	as-offset-for-tagged-integer(offset), size, 
-	interpret-integer-as-machine-word(x)))
+       (coerce-integer-to-machine-word(field),
+        as-offset-for-tagged-integer(offset), size,
+        interpret-integer-as-machine-word(x)))
 end function bit-field-deposit;
 
 define may-inline function ash (x :: <integer>, shift :: <integer>) => (result :: <integer>)

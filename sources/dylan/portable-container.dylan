@@ -8,13 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-define generic handle1 
+define generic handle1
     (obj :: <object>) => (h :: <raw-pointer>);
 
 define generic handle1-setter
     (newval :: <raw-pointer>, obj :: <object>) => (h :: <raw-pointer>);
 
-define generic handle2 
+define generic handle2
     (obj :: <object>) => (h :: <object>);
 
 define generic handle2-setter

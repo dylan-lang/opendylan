@@ -14,7 +14,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // the target is stopped can only be considered valid while the target
 // _remains_ stopped. In the presence of a relocating garbage collector,
 // there is every chance that a pointer will fall out of date while the
-// application runs. 
+// application runs.
 
 // The debugger may occasionally require a persistent handle on an object,
 // via which the object's current value can always be obtained. In
@@ -77,8 +77,8 @@ end method;
 //    Adds an object into the table of weakly tracked objects. Returns
 //    the integer key.
 
-define method spy-register-weak-remote-object (x :: <object>) 
-        => (i :: <integer>)
+define method spy-register-weak-remote-object (x :: <object>)
+ => (i :: <integer>)
   let cookie :: <integer> = *spy-global-registration-cookie*;
   *spy-global-registration-cookie* :=
      *spy-global-registration-cookie* + 1;
@@ -144,7 +144,7 @@ define method spy-invoke-numbered-restart (index :: <integer>) => ()
     (method (type, test, handling-function, init-arguments)
        if (subtype?(type, <restart>))
          if (this-index == index)
-           let restart-instance = 
+           let restart-instance =
              if (subtype?(type, <abort>))
                make(type)
              else
@@ -180,17 +180,17 @@ define thread variable *current-interactor-level* :: <integer> = 0;
 //    the function call. The debugger will be able to invoke this
 //    restart if the function execution errors.
 //    The restart's description will be of the form "Return to level X",
-//    where X is an integer. This integer might be supplied from the 
-//    debugger by passing a non-negative value for INTERACTOR-LEVEL. 
+//    where X is an integer. This integer might be supplied from the
+//    debugger by passing a non-negative value for INTERACTOR-LEVEL.
 //    If a negative value is passed, the current level is simply
 //    incremented.
 
 define method spy-invoke-dylan-under-coded-restart
    (interactor-level :: <integer>, func :: <function>, #rest arguments)
        => (#rest r)
-  let new-level 
+  let new-level
     = if (interactor-level < 0)
-	*current-interactor-level* + 1;
+        *current-interactor-level* + 1;
       else interactor-level;
       end if;
   dynamic-bind (*current-interactor-level* = new-level)
@@ -201,13 +201,13 @@ define method spy-invoke-dylan-under-coded-restart
       // debugger can describe the abort in a meaningful way. When
       // invoking an <abort>, we ensure that no init-arguments are passed.
       let handler (<abort>,
-                   init-arguments: 
-		   vector(format-string: "Abort interactive level %d",
-			  format-arguments: vector(new-level)))
+                   init-arguments:
+                   vector(format-string: "Abort interactive level %d",
+                          format-arguments: vector(new-level)))
          = method (condition, nxt)
              exit()
            end method;
-  
+
       apply(func, arguments);
     end block;
   end dynamic-bind;
@@ -244,7 +244,7 @@ end method;
 ///// SPY-CREATE-APPLICATION-THREAD
 //    This is used to generate a new dylan thread in the application.
 //    The thread will start up in the normal way, and then arrange to
-//    stop at a breakpoint. 
+//    stop at a breakpoint.
 //    Once the breakpoint is reached, the thread is at an interactive
 //    location, and any amount of interactive dylan code can be run on it.
 //    When the user chooses the appropriate restart, it will terminate.
@@ -252,23 +252,23 @@ end method;
 //    The thread object itself will be returned by this function.
 
 define method spy-create-application-thread
-    (name :: <byte-string>) 
+    (name :: <byte-string>)
   => (new-thread :: <thread>)
   make(<synchronous-thread>,
        name: name,
        function: method ()
-		   block ()
-		     let message :: <byte-string> = "Beginning %=";
-		     while (#t)
-		       %break(message, name);
-		       message := 
-			 "Unexpected continuation on special thread %=";
-		     end;
-		   exception (<simple-restart>,
-			      init-arguments:
-				vector(format-string: "Terminate %=", 
-				       format-arguments: list(name)))
-		   end block;
+                   block ()
+                     let message :: <byte-string> = "Beginning %=";
+                     while (#t)
+                       %break(message, name);
+                       message :=
+                         "Unexpected continuation on special thread %=";
+                     end;
+                   exception (<simple-restart>,
+                              init-arguments:
+                                vector(format-string: "Terminate %=",
+                                       format-arguments: list(name)))
+                   end block;
                  end method)
 end method;
 

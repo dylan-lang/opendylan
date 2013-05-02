@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // INTERFACE
 ////////////
 
-// Functions on <mutable-sequence> 
+// Functions on <mutable-sequence>
 
 define sealed generic first-setter
   (new-value, sequence :: <mutable-sequence>) => (new-value);
@@ -41,7 +41,7 @@ define open generic last-setter
 ///////////////
 
 define sealed inline method first-setter (new-value, sequence :: <mutable-sequence>)
-    => (new-value);
+ => (new-value);
   sequence[0] := new-value
 end method;
 
@@ -51,7 +51,7 @@ end method;
 ////////////////
 
 define sealed inline method second-setter (new-value, sequence :: <mutable-sequence>)
-    => (new-value);
+ => (new-value);
   sequence[1] := new-value
 end method;
 
@@ -61,7 +61,7 @@ end method;
 ///////////////
 
 define sealed inline method third-setter (new-value, sequence :: <mutable-sequence>)
-    => (new-value);
+ => (new-value);
   sequence[2] := new-value
 end method;
 
@@ -71,7 +71,7 @@ end method;
 //////////////
 
 define method last-setter (new-value, sequence :: <mutable-sequence>)
-    => (new-value);
+ => (new-value);
   sequence[sequence.size - 1] := new-value
 end method last-setter;
 
@@ -83,12 +83,12 @@ end method last-setter;
 
 //
 // REPLACE-SUBSEQUENCE!
-// 
+//
 
 define method replace-subsequence!
-    (target :: <mutable-sequence>, insert :: <sequence>, 
-     #key start :: <integer> = 0, end: last = unsupplied()) 
-        => (result-sequence :: <sequence>);
+    (target :: <mutable-sequence>, insert :: <sequence>,
+     #key start :: <integer> = 0, end: last = unsupplied())
+ => (result-sequence :: <sequence>);
   let target-size :: <integer> = target.size;
   let insert-size :: <integer> = insert.size;
   let last :: <integer> = check-start-compute-end(target, start, last);
@@ -99,7 +99,7 @@ define method replace-subsequence!
     with-fip-of target
       for (state = initial-state then next-state(target, state),
            index from 0 below start)
-      finally 
+      finally
         for (state = state then next-state(target, state),
              e in insert)
           current-element(target, state) := e;
@@ -124,7 +124,7 @@ define method replace-subsequence!
           for (state = initial-state then next-state(new-target, state),
                o-state = o-initial-state then o-next-state(target, o-state),
                index from 0 below start)
-            current-element(new-target, state) := 
+            current-element(new-target, state) :=
               o-current-element(target, o-state);
           finally // Copy insert to new target
             for (state = state then next-state(new-target, state),
@@ -138,32 +138,32 @@ define method replace-subsequence!
                      index from start below last) // Skip replaced segment
                 finally
                   for (state = state then next-state(new-target, state),
-                       o-state = o-state 
+                       o-state = o-state
                          then o-next-state(target, o-state),
                        index from last below target-size)
-                    current-element(new-target, state) := 
+                    current-element(new-target, state) :=
                       o-current-element(target, o-state);
                   end for
                 end for
               end if
             end for
-          end for                
+          end for
         end with-fip-of
       end if
     end with-fip-of;
     new-target
   end if
-end method replace-subsequence!;               
-                
+end method replace-subsequence!;
+
 
 //
 // FILL!
-// 
+//
 
 define method fill!
     (target :: <mutable-sequence>, value,
      #key start :: <integer> = 0, end: last = unsupplied())
-        => (target :: <mutable-sequence>)
+ => (target :: <mutable-sequence>)
   if (start = 0 & last.unsupplied?) next-method()
   else
     with-fip-of target
@@ -171,7 +171,7 @@ define method fill!
            index from 0,
            until: start == index | finished-state?(target, state, limit))
       finally
-        case 
+        case
           index ~== start => invalid-sequence-start-error(target, start);
           unsupplied?(last) =>
             // Modify elements to the end of the sequence
@@ -187,7 +187,7 @@ define method fill!
                  index from index,
                  until: index == last | finished-state?(target, state, limit))
               current-element(target, state) := value
-            finally 
+            finally
               unless (index == last)
                 invalid-sequence-end-error(target, last)
               end
@@ -198,47 +198,42 @@ define method fill!
     end;
     target
   end if
-end method fill!; 
+end method fill!;
 
 
 //
 // ITERATION PROTOCOL
-// 
+//
 
 define inline method forward-iteration-protocol (sequence :: <mutable-sequence>)
-    => (initial-state :: <integer>, limit :: <integer>,
-        next-state :: <function>, finished-state? :: <function>,
-        current-key :: <function>,
-        current-element :: <function>, current-element-setter :: <function>,
-        copy-state :: <function>);
+ => (initial-state :: <integer>, limit :: <integer>,
+     next-state :: <function>, finished-state? :: <function>,
+     current-key :: <function>,
+     current-element :: <function>, current-element-setter :: <function>,
+     copy-state :: <function>);
   values(0,
-	 sequence.size,
-	 sequence-next-state,
-	 sequence-finished-state?,
-	 sequence-current-key,
-	 element,
-	 element-setter,
-	 identity-copy-state)
+         sequence.size,
+         sequence-next-state,
+         sequence-finished-state?,
+         sequence-current-key,
+         element,
+         element-setter,
+         identity-copy-state)
 end method forward-iteration-protocol;
 
 
 define inline method backward-iteration-protocol (sequence :: <mutable-sequence>)
-    => (final-state :: <integer>, limit :: <integer>,
-        previous-state :: <function>,   finished-state? :: <function>,
-        current-key :: <function>,
-        current-element :: <function>,  current-element-setter :: <function>,
-        copy-state :: <function>);
+ => (final-state :: <integer>, limit :: <integer>,
+     previous-state :: <function>,   finished-state? :: <function>,
+     current-key :: <function>,
+     current-element :: <function>,  current-element-setter :: <function>,
+     copy-state :: <function>);
   values(sequence.size - 1,
-	 -1,
-	 sequence-previous-state,
-	 sequence-finished-state?,
-	 sequence-current-key,
-	 element,
-	 element-setter,
-	 identity-copy-state)
+         -1,
+         sequence-previous-state,
+         sequence-finished-state?,
+         sequence-current-key,
+         element,
+         element-setter,
+         identity-copy-state)
 end method backward-iteration-protocol;
-
- 
-
-
-

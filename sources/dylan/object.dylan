@@ -41,13 +41,13 @@ end method type-for-copy;
 /*
 (define-method repeated-storage-size (instance)
   (bind ((class (object-class instance))
-	 (repeated-slot-descriptor (repeated-slot-descriptor class)))
+         (repeated-slot-descriptor (repeated-slot-descriptor class)))
     (if repeated-slot-descriptor
-	(bind ((size ((getter (size-slot-descriptor repeated-slot-descriptor))
-		      instance)))
-	  (if (repeated-byte-slot? repeated-slot-descriptor) size (* size 4)))
-	0)))
-	
+        (bind ((size ((getter (size-slot-descriptor repeated-slot-descriptor))
+                      instance)))
+          (if (repeated-byte-slot? repeated-slot-descriptor) size (* size 4)))
+        0)))
+
 (define-method slot-storage-size (instance)
   (bind ((class (object-class instance)))
     (+ (instance-storage-size class) (repeated-storage-size instance))))
@@ -96,7 +96,7 @@ define open generic debug-name (object :: <object>);
 define open generic debug-name-setter (name :: <object>, object :: <object>);
 
 define method debug-name (object)
-  #f				// !@#$ SHOULD FILL THIS IN PROPERLY
+  #f                                // !@#$ SHOULD FILL THIS IN PROPERLY
 end method debug-name;
 
 define open generic size
@@ -108,8 +108,8 @@ define open generic size-setter
 define open generic empty?
   (object :: <object>) => (result :: <boolean>);
 
-define open generic as-lowercase! 
+define open generic as-lowercase!
     (object :: <object>) => (result :: <object>);
 
-define open generic as-uppercase! 
+define open generic as-uppercase!
     (object :: <object>) => (result :: <object>);

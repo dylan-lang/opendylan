@@ -17,13 +17,13 @@ end function;
 
 
 
-// call-application-exit-functions is called by the low-level runtime 
+// call-application-exit-functions is called by the low-level runtime
 // at shutdown
 //
 define function call-application-exit-functions () => ()
   local method call-exit-function (thunk :: <function>) => ()
           thunk();
-	end method;
+        end method;
   do(call-exit-function, *registered-exit-functions*);
 end function;
 

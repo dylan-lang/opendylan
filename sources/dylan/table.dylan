@@ -34,7 +34,7 @@ define constant $default-table-size = 10;
 define constant $minimum-entries = 31;
 
 
-define constant $entry-counts = 
+define constant $entry-counts =
   #[      2,       3,       5,       7,      11,      13,      17,      19,
          23,      29,      31,      37,      41,      47,      53,      59,
          67,      71,      79,      83,      89,      97,     103,     109,
@@ -77,7 +77,7 @@ define function search-for-entry-count
             vector-element($entry-counts, lower);
           else
             let index = ash(lower + upper, -1);
-	    let elt :: <integer> = vector-element($entry-counts, index);
+            let elt :: <integer> = vector-element($entry-counts, index);
             if (elt < needed)
               loop(index + 1, upper);
             else
@@ -144,11 +144,11 @@ define generic rehash-token-setter (t :: <rehash-token>, tv :: <table-vector>)
 
 
 // Returns the number of entries that have been added to the vector.
-define generic additions 
+define generic additions
   (tv :: <table-vector>) => adds :: <integer>;
-define generic additions-setter 
-  (adds :: <integer>, tv :: <table-vector>)
-    => adds :: <integer>;
+define generic additions-setter
+    (adds :: <integer>, tv :: <table-vector>)
+ => (adds :: <integer>);
 
 
 // Returns the maximum number of entries that can be added to the vector
@@ -296,7 +296,7 @@ define constant $empty-rehashed-bits = make(<rehashed-bits>, size: 0);
 define function rehashed-bit? (vector :: <rehashed-bits>, index :: <integer>)
  => (rehashed? :: <boolean>)
   primitive-machine-word-logbit?(integer-as-raw(logand(index, ($rehashed-bits-word-size - 1))),
-				 rehashed-bits-word(vector, ash(index, -$rehashed-bits-log-word-size)));
+                                 rehashed-bits-word(vector, ash(index, -$rehashed-bits-log-word-size)));
 end function;
 
 
@@ -311,13 +311,13 @@ define function rehashed-bit?-setter
   let new-word :: <machine-word>
     = if (~rehashed?)
         machine-word-logand
-	  (word, machine-word-lognot
-	     (machine-word-shift-left-with-overflow
-		($rehashed-bits-machine-word-one, bit-offset)));
+          (word, machine-word-lognot
+             (machine-word-shift-left-with-overflow
+                ($rehashed-bits-machine-word-one, bit-offset)));
       else
         machine-word-logior
-	  (word, machine-word-shift-left-with-overflow
-	     ($rehashed-bits-machine-word-one, bit-offset));
+          (word, machine-word-shift-left-with-overflow
+             ($rehashed-bits-machine-word-one, bit-offset));
       end if;
   rehashed-bits-word(vector, word-offset)
     := primitive-unwrap-machine-word(new-word);
@@ -368,11 +368,11 @@ end method entry-count;
 
 // These methods for key and value access don't need to do bounds checking.
 
-// Ideally the MM should use $table-entry-deleted for zapped entries, rather 
+// Ideally the MM should use $table-entry-deleted for zapped entries, rather
 // than 0.  If this turns out to be impossible then we should rearrange the
 // code to avoid multiple checks for deleted entries.
 
-define constant $raw-table-entry-deleted = 
+define constant $raw-table-entry-deleted =
   coerce-abstract-integer-to-machine-word(0);
 
 define inline method entry-key
@@ -380,8 +380,8 @@ define inline method entry-key
   => key :: <object>;
   let key = entry-element(keys, index);
   if (primitive-machine-word-equal?
-	(primitive-cast-pointer-as-raw(key),
-	 primitive-unwrap-machine-word($raw-table-entry-deleted)))
+        (primitive-cast-pointer-as-raw(key),
+         primitive-unwrap-machine-word($raw-table-entry-deleted)))
     $table-entry-deleted
   else
     key
@@ -399,8 +399,8 @@ define inline method entry-value
   => value :: <object>;
   let val = entry-element(vals, index);
   if (primitive-machine-word-equal?
-	(primitive-cast-pointer-as-raw(val),
-	 primitive-unwrap-machine-word($raw-table-entry-deleted)))
+        (primitive-cast-pointer-as-raw(val),
+         primitive-unwrap-machine-word($raw-table-entry-deleted)))
     $table-entry-deleted
   else
     val
@@ -491,18 +491,18 @@ end;
 
 define inline function hash (tv :: <table-vector>, key)
  => (id :: <integer>, hash-state :: <hash-state>)
- 
+
   // I suppose we had better play safe and assume that user-defined
-  // hashing functions can recursively call tables (yuk).  So we indicate the 
+  // hashing functions can recursively call tables (yuk).  So we indicate the
   // thread-local hash-state is in use by setting it to #f during the call to
-  // the hashing function.  If a recursive use is detected then we just 
+  // the hashing function.  If a recursive use is detected then we just
   // allocate a new hash state.
 
   if ($default-hash-state)
     let thread-hash-state = $default-hash-state;
     $default-hash-state := #f;
     primitive-mps-ld-reset(thread-hash-state);
-    let (id :: <integer>, hash-state :: <hash-state>) = 
+    let (id :: <integer>, hash-state :: <hash-state>) =
       (hash-function(tv))(key, thread-hash-state);
     $default-hash-state := thread-hash-state;
     values(id, hash-state)
@@ -516,33 +516,33 @@ define constant $dummy-hash-state = make(<hash-state>);
 
 define inline function hash-for-lookup (tv :: <table-vector>, key)
  => (id :: <integer>)
- 
+
   (hash-function(tv))(key, $dummy-hash-state)
 end;
 
 // --------------------- creating table vectors --------------------
 
 define inline function make-table-entries
-  (count :: <integer>, values? :: <boolean>, weak?) 
-    => (keys :: <entry-keys>, vals :: <entry-values>)
+    (count :: <integer>, values? :: <boolean>, weak?)
+ => (keys :: <entry-keys>, vals :: <entry-values>)
   if (values?)
     select (weak?)
       key: =>
-	let vals :: <entry-values> = system-allocate-strong-repeated-instance
-	  (<entry-values>, count, $table-entry-empty);
-	let keys :: <entry-keys> = system-allocate-weak-repeated-instance
-	  (<entry-keys>, count, $table-entry-empty, vals);
-	vals.partner := keys;
-	values(keys, vals);
+        let vals :: <entry-values> = system-allocate-strong-repeated-instance
+          (<entry-values>, count, $table-entry-empty);
+        let keys :: <entry-keys> = system-allocate-weak-repeated-instance
+          (<entry-keys>, count, $table-entry-empty, vals);
+        vals.partner := keys;
+        values(keys, vals);
       value: =>
-	let keys :: <entry-values> = system-allocate-strong-repeated-instance
-	  (<entry-keys>, count, $table-entry-empty);
-	let vals :: <entry-values> = system-allocate-weak-repeated-instance
-	  (<entry-values>, count, $table-entry-empty, keys);
-	keys.partner := vals;
-	values(keys, vals);
+        let keys :: <entry-values> = system-allocate-strong-repeated-instance
+          (<entry-keys>, count, $table-entry-empty);
+        let vals :: <entry-values> = system-allocate-weak-repeated-instance
+          (<entry-values>, count, $table-entry-empty, keys);
+        keys.partner := vals;
+        values(keys, vals);
       otherwise =>
-        values(make(<entry-keys>,   size: count), 
+        values(make(<entry-keys>,   size: count),
                make(<entry-values>, size: count));
     end
   else
@@ -557,7 +557,7 @@ define function make-table-vector
       test-function :: <function>,
       hash-function :: <function>,
       lock :: <simple-lock>,
-      values? :: <boolean>, 
+      values? :: <boolean>,
       weak?)
   => tv :: <table-vector>;
   let count :: <integer> = compute-entry-count(desired-entries);
@@ -580,7 +580,7 @@ end;
 
 define constant $table-lock-pool-size = 20;
 
-define constant $table-lock-pool :: <simple-object-vector> = 
+define constant $table-lock-pool :: <simple-object-vector> =
   make(<vector>, size: $table-lock-pool-size);
 
 define variable *table-lock-pool-index* :: <integer> = 0;
@@ -588,13 +588,13 @@ define variable *table-lock-pool-index* :: <integer> = 0;
 $table-lock-pool[0] := make-simple-lock();
 
 define function make-table-lock() => (lock :: <simple-lock>)
-  *table-lock-pool-index* := 
+  *table-lock-pool-index* :=
     modulo(*table-lock-pool-index* + 1, $table-lock-pool-size);
   let lock = $table-lock-pool[*table-lock-pool-index*];
-  if (lock) 
-    lock 
-  else 
-    $table-lock-pool[*table-lock-pool-index*] := make-simple-lock() 
+  if (lock)
+    lock
+  else
+    $table-lock-pool[*table-lock-pool-index*] := make-simple-lock()
   end;
 end;
 
@@ -619,7 +619,7 @@ define function uninitialized-table-hash (key)
 end;
 
 define constant *initial-table-vector* =
-  make-table-vector(0, uninitialized-table-test, uninitialized-table-hash, 
+  make-table-vector(0, uninitialized-table-test, uninitialized-table-hash,
                     $table-lock-pool[0], #t, #f);
 
 define function initial-table-vector ()
@@ -643,7 +643,7 @@ define constant $secondary-strides-mask :: <integer> = 7;
 // locality in the search.  However, the period for collision chain pairs
 // (same primary index, different secondary strides) is the product of the
 // secondary strides, which makes small secondary strides less desirable.
-define constant $secondary-strides :: <simple-object-vector> 
+define constant $secondary-strides :: <simple-object-vector>
   = #[5, 7, 11, 13, 17, 19, 23, 29];
 
 // Returns the key index for the first probe.
@@ -688,38 +688,38 @@ define macro do-search
   { do-search (?table-key:name in (?tv:name, ?id:name)) ?test:body end }
     =>
     { begin
-	let index = primary-index(?id, entry-count(?tv));
-	let keys = entry-keys(?tv);
-	let ?table-key = entry-key(keys, index);
-	if (pointer-id?(?table-key, $table-entry-empty)
-	      // Check if the keys match, with deleted entries never matching
-	      | (~table-entry-deleted?(?table-key)
-		   & begin ?test end))
-	  values(index, ?table-key);
-	else
-	  let stride = secondary-stride(?id);
-	  let adjust = entry-count(?tv);
-	  local method next-index (index :: <integer>)
-		 => next :: <integer>;
-		  let next :: <integer> = index - stride;
-		  if (next < 0) next + adjust;
-		  else next;
-		  end if;
-		end method next-index,
-	    method loop 
-		(previous-index :: <integer>) => (index :: <integer>, table-key)
-	      let index = next-index(previous-index);
-	      let ?table-key = entry-key(keys, index);
-	      if ((pointer-id?(?table-key, $table-entry-empty)
-		     | ( ~table-entry-deleted?(?table-key)
-			  & begin ?test end)))
-		values(index, ?table-key);
-	      else
-		loop(index);
-	      end if;
-	    end method;
-	  loop(index);
-	end if;
+        let index = primary-index(?id, entry-count(?tv));
+        let keys = entry-keys(?tv);
+        let ?table-key = entry-key(keys, index);
+        if (pointer-id?(?table-key, $table-entry-empty)
+              // Check if the keys match, with deleted entries never matching
+              | (~table-entry-deleted?(?table-key)
+                   & begin ?test end))
+          values(index, ?table-key);
+        else
+          let stride = secondary-stride(?id);
+          let adjust = entry-count(?tv);
+          local method next-index (index :: <integer>)
+                 => next :: <integer>;
+                  let next :: <integer> = index - stride;
+                  if (next < 0) next + adjust;
+                  else next;
+                  end if;
+                end method next-index,
+            method loop
+                (previous-index :: <integer>) => (index :: <integer>, table-key)
+              let index = next-index(previous-index);
+              let ?table-key = entry-key(keys, index);
+              if ((pointer-id?(?table-key, $table-entry-empty)
+                     | (~table-entry-deleted?(?table-key)
+                         & begin ?test end)))
+                values(index, ?table-key);
+              else
+                loop(index);
+              end if;
+            end method;
+          loop(index);
+        end if;
       end }
 end macro;
 
@@ -737,34 +737,34 @@ define inline function search
 end;
 
 define inline function find-rehash-insertion-point
-    (tv :: <table-vector>, key, id :: <integer>, bits :: <rehashed-bits>) 
+    (tv :: <table-vector>, key, id :: <integer>, bits :: <rehashed-bits>)
  => (index :: <integer>, table-key);
   let index = primary-index(id, entry-count(tv));
   let keys = entry-keys(tv);
   let table-key = entry-key(keys, index);
-  if (pointer-id?(table-key, $table-entry-empty) 
-	| table-entry-deleted?(table-key)
-	| ~rehashed-bit?(bits, index))
+  if (pointer-id?(table-key, $table-entry-empty)
+        | table-entry-deleted?(table-key)
+        | ~rehashed-bit?(bits, index))
     values(index, table-key)
   else
     let stride = secondary-stride(id);
     let adjust = entry-count(tv);
     local method next-index (index :: <integer>)
-	   => next :: <integer>;
-	    let next :: <integer> = index - stride;
-	    if (next < 0) next + adjust else next
-	    end if
-	  end method next-index,
+           => next :: <integer>;
+            let next :: <integer> = index - stride;
+            if (next < 0) next + adjust else next
+            end if
+          end method next-index,
       method loop (previous-index :: <integer>) => (index :: <integer>, table-key)
-	let index = next-index(previous-index);
-	let table-key = entry-key(keys, index);
-	if (pointer-id?(table-key, $table-entry-empty) 
-	      | table-entry-deleted?(table-key)
-	      | ~rehashed-bit?(bits, index))
-	  values(index, table-key)
-	else
-	  loop(index)
-	end if
+        let index = next-index(previous-index);
+        let table-key = entry-key(keys, index);
+        if (pointer-id?(table-key, $table-entry-empty)
+              | table-entry-deleted?(table-key)
+              | ~rehashed-bit?(bits, index))
+          values(index, table-key)
+        else
+          loop(index)
+        end if
       end method;
     loop(index)
   end if
@@ -823,15 +823,15 @@ define function rehash-table
       mark-rehashing(tv);
       let values? = ~pointer-id?(tv.entry-values, tv.entry-keys);
       if (~grow? & in-place-rehashable?(tv))
-	rehash-in-place(table, tv, values?)
+        rehash-in-place(table, tv, values?)
       else
-	let rehash-tv
-	  = make-table-vector(rehash-entry-count(table, tv, grow?),
-			      test-function(tv),
-			      hash-function(tv),
-			      table-vector-lock(tv),
-			      values?, weak?(table));
-	rehash-into-copy(table, tv, rehash-tv);
+        let rehash-tv
+          = make-table-vector(rehash-entry-count(table, tv, grow?),
+                              test-function(tv),
+                              hash-function(tv),
+                              table-vector-lock(tv),
+                              values?, weak?(table));
+        rehash-into-copy(table, tv, rehash-tv);
       end if;
     end if;
   end with-table-vector-locked;
@@ -851,7 +851,7 @@ define function rehash-into-copy
   let src-values = entry-values(src);
   let dst-keys = entry-keys(dst);
   let dst-values = entry-values(dst);
-  local method loop (index :: <integer>, 
+  local method loop (index :: <integer>,
                      state :: <hash-state>, count :: <integer>)
           if (negative?(index))
             additions(dst) := count;
@@ -886,71 +886,71 @@ end;
 
 define function rehash-in-place (table :: <table>, tv :: <table-vector>, values? :: <boolean>) => ()
   let lim :: <integer> = entry-index-limit(tv);
-  let bits :: <rehashed-bits> 
+  let bits :: <rehashed-bits>
     = if (rehashed-bits(tv) == $empty-rehashed-bits)
-	rehashed-bits(tv) := make(<rehashed-bits>, 
-				  size-in-words: ash(logior(lim, 7), -3))
+        rehashed-bits(tv) := make(<rehashed-bits>,
+                                  size-in-words: ash(logior(lim, 7), -3))
       else
-	rehashed-bits(tv)
+        rehashed-bits(tv)
       end if;
   clear-rehashed-bits(bits);
   let keys = entry-keys(tv);
   let (count :: <integer>, state :: <hash-state>)
     = if (values?)
-	let vals = entry-values(tv);
-	local method loop (i :: <integer>, state :: <hash-state>, count :: <integer>)
-		if (i < 0)
-		  values(count, state)
-		elseif (rehashed-bit?(bits, i))
-		  loop (i - $entry-index-delta, state, count)
-		else
-		  let nxti :: <integer> = i - $entry-index-delta; 
-		  let k = entry-key(keys, i);
-		  let v = entry-value(vals, i);
-		  entry-key(keys, i) :=  $table-entry-empty;
-		  entry-value(vals, i) := $table-entry-empty;
-		  local method storenext (k, v, count :: <integer>, state :: <hash-state>)
-			  if (pointer-id?(k, $table-entry-empty) | table-entry-deleted?(k))
-			    loop(nxti, state, count)
-			  else
-			    let (id, hstate) = hash(tv, k);
-			    let (j :: <integer>, nxtk) = find-rehash-insertion-point(tv, k, id, bits);
-			    let nxtv = entry-value(vals, j);
-			    entry-key(keys, j) := k;
-			    entry-value(vals, j) := v;
-			    rehashed-bit?(bits, j) := #t;
-			    storenext(nxtk, nxtv, count + 1, merge-hash-state!(state, hstate));
-			  end if
-			end method;
-		  storenext(k, v, count, state)
-		end if
-	      end method;
-	loop(entry-index-limit(tv) - $entry-index-delta, make(<hash-state>), 0);
+        let vals = entry-values(tv);
+        local method loop (i :: <integer>, state :: <hash-state>, count :: <integer>)
+                if (i < 0)
+                  values(count, state)
+                elseif (rehashed-bit?(bits, i))
+                  loop (i - $entry-index-delta, state, count)
+                else
+                  let nxti :: <integer> = i - $entry-index-delta;
+                  let k = entry-key(keys, i);
+                  let v = entry-value(vals, i);
+                  entry-key(keys, i) :=  $table-entry-empty;
+                  entry-value(vals, i) := $table-entry-empty;
+                  local method storenext (k, v, count :: <integer>, state :: <hash-state>)
+                          if (pointer-id?(k, $table-entry-empty) | table-entry-deleted?(k))
+                            loop(nxti, state, count)
+                          else
+                            let (id, hstate) = hash(tv, k);
+                            let (j :: <integer>, nxtk) = find-rehash-insertion-point(tv, k, id, bits);
+                            let nxtv = entry-value(vals, j);
+                            entry-key(keys, j) := k;
+                            entry-value(vals, j) := v;
+                            rehashed-bit?(bits, j) := #t;
+                            storenext(nxtk, nxtv, count + 1, merge-hash-state!(state, hstate));
+                          end if
+                        end method;
+                  storenext(k, v, count, state)
+                end if
+              end method;
+        loop(entry-index-limit(tv) - $entry-index-delta, make(<hash-state>), 0);
       else
-	local method loop (i :: <integer>, state :: <hash-state>, count :: <integer>)
-		if (i < 0)
-		  values(count, state)
-		elseif (rehashed-bit?(bits, i))
-		  loop(i - $entry-index-delta, state, count)
-		else
-		  let nxti :: <integer> = i - $entry-index-delta; 
-		  let k = entry-key(keys, i);
-		  entry-key(keys, i) :=  $table-entry-empty;
-		  local method storenext (k, count :: <integer>, state :: <hash-state>)
-			  if (pointer-id?(k, $table-entry-empty) | table-entry-deleted?(k))
-			    loop(nxti, state, count)
-			  else
-			    let (id, hstate) = hash(tv, k);
-			    let (j :: <integer>, nxtk) = find-rehash-insertion-point(tv, k, id, bits);
-			    entry-key(keys, j) := k;
-			    rehashed-bit?(bits, j) := #t;
-			    storenext(nxtk, count + 1, merge-hash-state!(state, hstate));
-			  end if
-			end method;
-		  storenext(k, count, state)
-		end if
-	      end method;
-	loop(entry-index-limit(tv) - $entry-index-delta, make(<hash-state>), 0);
+        local method loop (i :: <integer>, state :: <hash-state>, count :: <integer>)
+                if (i < 0)
+                  values(count, state)
+                elseif (rehashed-bit?(bits, i))
+                  loop(i - $entry-index-delta, state, count)
+                else
+                  let nxti :: <integer> = i - $entry-index-delta;
+                  let k = entry-key(keys, i);
+                  entry-key(keys, i) :=  $table-entry-empty;
+                  local method storenext (k, count :: <integer>, state :: <hash-state>)
+                          if (pointer-id?(k, $table-entry-empty) | table-entry-deleted?(k))
+                            loop(nxti, state, count)
+                          else
+                            let (id, hstate) = hash(tv, k);
+                            let (j :: <integer>, nxtk) = find-rehash-insertion-point(tv, k, id, bits);
+                            entry-key(keys, j) := k;
+                            rehashed-bit?(bits, j) := #t;
+                            storenext(nxtk, count + 1, merge-hash-state!(state, hstate));
+                          end if
+                        end method;
+                  storenext(k, count, state)
+                end if
+              end method;
+        loop(entry-index-limit(tv) - $entry-index-delta, make(<hash-state>), 0);
       end if;
   additions(tv) := count;
   deletions(tv) := 0;
@@ -971,12 +971,12 @@ define function calculate-real-size(tv :: <table-vector>) => (size :: <integer>)
             count
           else
             let key = entry-key(keys, index);
-            loop(index - $entry-index-delta, 
+            loop(index - $entry-index-delta,
               if (pointer-id?(key, $table-entry-empty) | table-entry-deleted?(key))
                 count
               else
                 count + 1
-	      end);
+              end);
           end if;
         end method loop;
   loop(entry-index-limit(tv) - $entry-index-delta, 0);
@@ -985,10 +985,10 @@ end;
 define function rehash-entry-count
      (table :: <table>, tv :: <table-vector>, grow? :: <boolean>)
   => entries :: <integer>;
-  let present = 
+  let present =
     if (table.weak?)
       calculate-real-size(tv);
-    else 
+    else
       present-entry-count(tv);
     end;
   if (~grow? | additions-limit(tv) > present)
@@ -1080,13 +1080,13 @@ define sealed domain initialize (<object-table>);
 // define sealed domain initialize (<standard-object-table>);
 
 
-define sealed inline method make 
+define sealed inline method make
     (c == <table>, #rest initargs, #key, #all-keys) => (object)
   // ignore(c);
   apply(make, <object-table>, initargs);
 end method make;
 
-// define sealed inline method make 
+// define sealed inline method make
 //     (c == <object-table>, #rest initargs, #key, #all-keys) => (object)
 //   // ignore(c);
 //   apply(make, <standard-object-table>, initargs);
@@ -1130,7 +1130,7 @@ end method size;
 
 // ----------------------- element() ----------------------------------
 
-define function gethash 
+define function gethash
   (table :: <table>, key, default, first-attempt? :: <boolean>)
   => value;
   let tv = table-vector(table);
@@ -1156,13 +1156,13 @@ define function gethash
       // Rehash has been initiated.
 //      rehash-table(table, tv, #f);      // Why do this?
       with-table-vector-locked (tv) end;  // Just wait on lock instead.
-      gethash(table, key, default, #f);	  // try again
+      gethash(table, key, default, #f);          // try again
     end if;
   elseif (needs-rehash?(tv, token))
-    // TODO: If this is not the first attempt at rehashing then perhaps we 
+    // TODO: If this is not the first attempt at rehashing then perhaps we
     // should look for the key during the rehash.
     rehash-table(table, tv, #f);
-    gethash(table, key, default, #f);	// try again
+    gethash(table, key, default, #f);        // try again
   elseif (pointer-id?(default, $table-entry-empty))
     // --- Signal some more specific class of error?
     key-missing-error(table, key, default);
@@ -1186,12 +1186,12 @@ define sealed inline method element (table :: <standard-object-table>, key,
 end method element;
 */
 
-define method key-missing-error (table :: <table>, key, default) 
+define method key-missing-error (table :: <table>, key, default)
   => value;
   block ()
     error("%= is not present as a key for %=.", key, table);
   exception (<simple-restart>,
-             init-arguments: 
+             init-arguments:
                 vector(format-string:    "Try looking up %= in %= again.",
                        format-arguments: vector(key, table)))
     gethash(table, key, default, #t);
@@ -1217,9 +1217,9 @@ define function try-to-puthash-old
     let vals = entry-values(tv);
     if (rehash-token-valid?(tv, token))
       entry-value(vals, index) := new-value;
-      #t;				// return success flag
+      #t;                                // return success flag
     else
-      #f;				// return failure flag
+      #f;                                // return failure flag
     end if;
   end with-table-vector-locked;
 end;
@@ -1270,9 +1270,9 @@ define function try-to-puthash-new
       // on that order and avoid the need to lock.
       synchronize-side-effects();
       entry-key(keys, index) := key;
-      #t;				// success flag
+      #t;                                // success flag
     else
-      #f;				// failure flag
+      #f;                                // failure flag
     end if;
   end with-table-vector-locked;
 end;
@@ -1315,7 +1315,7 @@ define function puthash (new-value, table :: <table>, key)
         // Otherwise, adding a new entry.
         try-to-puthash-new(tv, token, hstate, index, key, new-value);
       end if)
-    new-value;			// store successful, return the new value
+    new-value;                        // store successful, return the new value
   else
     // Store failed for some reason.  Rehash if needed and retry.
     if (needs-rehash?(tv, token))
@@ -1323,18 +1323,18 @@ define function puthash (new-value, table :: <table>, key)
     elseif (full?(tv))
       rehash-table(table, tv, #t);
     end;
-    puthash(new-value, table, key);	// try again
+    puthash(new-value, table, key);        // try again
   end if;
 end;
 
 define sealed inline method element-setter (new-value, table :: <table>, key)
-    => new-value;
+ => new-value;
   check-type(new-value, element-type(table));
   puthash(new-value, table, key);
 end method element-setter;
 
 /*
-define sealed inline method element-setter 
+define sealed inline method element-setter
     (new-value, table :: <standard-object-table>, key) => new-value;
   check-type(new-value, element-type(table));
   puthash(new-value, table, key);
@@ -1373,9 +1373,9 @@ define function try-to-remhash
       let vals = entry-values(tv);
       entry-value(vals, index) := $table-entry-deleted;
       deletions(tv) := deletions(tv) + 1;
-      #t;				// success flag
+      #t;                                // success flag
     else
-      #f;				// failure flag
+      #f;                                // failure flag
     end if;
   end with-table-vector-locked;
 end;
@@ -1414,27 +1414,27 @@ define sealed method remove-all-keys! (table :: <table>)
   let tv = table-vector(table);
   unless (tv.additions = 0)
     unless (with-table-vector-locked (tv)
-	      if (in-place-rehashable?(tv))
-		clear-table-vector!(tv);
-		#t
-	      end if
-	    end with-table-vector-locked)
+              if (in-place-rehashable?(tv))
+                clear-table-vector!(tv);
+                #t
+              end if
+            end with-table-vector-locked)
       let new = make-table-vector(initial-entries(table),
-				  test-function(tv),
-				  hash-function(tv),
-				  table-vector-lock(tv),
-				  tv.entry-values ~== tv.entry-keys,
-				  weak?(table));
+                                  test-function(tv),
+                                  hash-function(tv),
+                                  table-vector-lock(tv),
+                                  tv.entry-values ~== tv.entry-keys,
+                                  weak?(table));
       local method clear ()
-	      let tv = table-vector(table);
-	      with-table-vector-locked (tv)
-		if (pointer-id?(tv, table-vector(table)))
-		  mark-rehashing(tv);
-		  table-vector(table) := new;
-		  #t;
-		else #f;
-		end if;
-	      end with-table-vector-locked;
+              let tv = table-vector(table);
+              with-table-vector-locked (tv)
+                if (pointer-id?(tv, table-vector(table)))
+                  mark-rehashing(tv);
+                  table-vector(table) := new;
+                  #t;
+                else #f;
+                end if;
+              end with-table-vector-locked;
             end method clear;
       for (until: clear()) end;
     end unless;
@@ -1556,22 +1556,22 @@ define function table-next-state (table, state :: <iteration-state>)
   let init :: <integer> = state-index(state);
   if (~finished-state-index?(init))
     local method loop (index :: <integer>)
-	    if (index < 0)
-	      // If we've run off the end, set the state's index to negative
-	      // value, which is how we recognize a finished state.
-	      state-index(state) := index;
-	      decrement-iteration-state-references(source(state));
-	    else
-	      let key = entry-key(keys, index);
-	      if ((pointer-id?(key, $table-entry-empty)) | (table-entry-deleted?(key)))
-		loop(index - $entry-index-delta);
-	      else
-		state-index(state) := index;
-		state-key(state) := key;
-		state-count(state) := state-count(state) + 1;
-	      end if;
-	    end if;
-	  end method loop;
+            if (index < 0)
+              // If we've run off the end, set the state's index to negative
+              // value, which is how we recognize a finished state.
+              state-index(state) := index;
+              decrement-iteration-state-references(source(state));
+            else
+              let key = entry-key(keys, index);
+              if ((pointer-id?(key, $table-entry-empty)) | (table-entry-deleted?(key)))
+                loop(index - $entry-index-delta);
+              else
+                state-index(state) := index;
+                state-key(state) := key;
+                state-count(state) := state-count(state) + 1;
+              end if;
+            end if;
+          end method loop;
     loop(init - $entry-index-delta);
   end if;
   state
@@ -1594,7 +1594,7 @@ define inline function table-finished-state?
            end
          end;
          #t
-       end )
+       end)
 end;
 
 define inline function table-current-key
@@ -1638,9 +1638,9 @@ define function table-current-element (table :: <table>, state :: <iteration-sta
       // other than signaling an error, and that would cause problems
       // for weak entry removal.
       if (table-entry-deleted?(value))
-	error("Current element not found in table %=\n", table);
-      else 
-	gethash(table, state-key(state), value, #t);
+        error("Current element not found in table %=\n", table);
+      else
+        gethash(table, state-key(state), value, #t);
       end if
     end if;
   end if;
@@ -1678,7 +1678,7 @@ define function table-current-element-setter
          | ~rehash-token-valid?(tv, token(state)))
       puthash(value, table, state-key(state));
     end if;
-    value;			// return the new value
+    value;                        // return the new value
   end if;
 end;
 
@@ -1692,8 +1692,8 @@ define function table-copy-state (table, state :: <iteration-state>)
        token: token(state),
        index: state-index(state),
        key: state-key(state),
-       count: state-count(state), 
-       additions: state-initial-additions(state), 
+       count: state-count(state),
+       additions: state-initial-additions(state),
        deletions: state-initial-deletions(state));
 end;
 
@@ -1725,14 +1725,14 @@ define function make-initial-state (table :: <table>)
 end;
 
 define sealed inline method forward-iteration-protocol (table :: <table>)
-  => (initial-state		:: <iteration-state>,
-      limit			:: <object>,
-      next-state		:: <function>,
-      finished-state?		:: <function>,
-      current-key		:: <function>,
-      current-element		:: <function>,
-      current-element-setter	:: <function>,
-      copy-state		:: <function>);
+  => (initial-state                :: <iteration-state>,
+      limit                        :: <object>,
+      next-state                :: <function>,
+      finished-state?                :: <function>,
+      current-key                :: <function>,
+      current-element                :: <function>,
+      current-element-setter        :: <function>,
+      copy-state                :: <function>);
   values(make-initial-state(table),
          #f,                            // limit (ignored)
          table-next-state,
@@ -1759,7 +1759,7 @@ end method table-protocol;
 
 ///
 /// LIMITED TABLES
-/// 
+///
 
 define method limited-table
      (of :: <type>, size :: false-or(<integer>)) => (type :: <limited-table-type>)
@@ -1772,12 +1772,12 @@ end method;
 
 /// TODO: COULD BE EXPENSIVE UNLESS TYPES ARE CACHED
 
-define inline method type-for-copy (x :: <table>) 
-    => (type :: <type>)
+define inline method type-for-copy (x :: <table>)
+ => (type :: <type>)
   let elt-type = element-type(x);
   if (elt-type == <object>)
     object-class(x)
-  else 
+  else
     limited-table(element-type(x), #f)
   end if
 end method type-for-copy;

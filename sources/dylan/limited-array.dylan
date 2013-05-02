@@ -10,13 +10,13 @@ define limited-array <integer>       (fill: 0);
 define limited-array-minus-selector <byte>          (<simple-array>) (fill: 0);
 define limited-array-minus-selector <double-byte>   (<simple-array>) (fill: 0);
 
-define limited-array-minus-constructor <element-type> (<simple-array>, <limited-collection>) 
+define limited-array-minus-constructor <element-type> (<simple-array>, <limited-collection>)
   (fill: #f);
 
 define sealed domain element-type (<simple-element-type-array>);
 
 define sealed method make
-    (class == <simple-element-type-array>, 
+    (class == <simple-element-type-array>,
      #key dimensions = unsupplied(), element-type, fill = #f)
  => (array :: <simple-element-type-array>)
   let (dimensions, size) = compute-array-dimensions-and-size(dimensions);
@@ -24,10 +24,10 @@ define sealed method make
     check-type(fill, element-type);
   end unless;
   next-method(class,
-	      element-type: element-type,
-	      dimensions:   dimensions,
-	      size:         size,
-	      fill:         fill)
+              element-type: element-type,
+              dimensions:   dimensions,
+              size:         size,
+              fill:         fill)
 end method;
 
 define method concrete-limited-array-class
@@ -46,7 +46,7 @@ define sealed inline method element-setter
   end if
 end method element-setter;
 
-define sealed inline method type-for-copy 
+define sealed inline method type-for-copy
     (array :: <simple-element-type-array>) => (type :: <limited-mutable-sequence-type>)
   limited-array(element-type(array), #f)
 end method type-for-copy;

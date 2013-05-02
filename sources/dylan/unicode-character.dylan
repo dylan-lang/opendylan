@@ -10,13 +10,13 @@ define character <unicode-character>;
 
 //// CONVERSIONS BETWEEN
 
-define sealed inline method as 
+define sealed inline method as
     (class == <unicode-character>, character :: <byte-character>)
  => (code :: <unicode-character>)
   as(<unicode-character>, as(<integer>, character))
 end method as;
 
-define sealed inline method as 
+define sealed inline method as
     (class == <byte-character>, character :: <unicode-character>)
  => (code :: <byte-character>)
   as(<byte-character>, as(<integer>, character))

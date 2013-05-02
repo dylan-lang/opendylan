@@ -12,11 +12,11 @@ define open abstract class <synchronization> (<object>)
 
   constant slot synchronization-name :: <optional-name>,
     init-value: #f, init-keyword: name:;
-  
+
 end class;
 
 
-define open generic synchronization-name 
+define open generic synchronization-name
    (object :: <synchronization>) => (name :: <optional-name>);
 
 define open generic wait-for
@@ -42,7 +42,7 @@ define method debug-name (synchronization :: <synchronization>)
 end method debug-name;
 
 
-define function check-synchronization-creation 
+define function check-synchronization-creation
    (sync :: <synchronization>, res :: <integer>) => ()
   unless (res == $success)
     error(make(<synchronization-creation-error>, synchronization: sync));

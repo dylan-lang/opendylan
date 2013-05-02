@@ -14,10 +14,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $accumulator-size = 25; // Must be odd.
 
-define sealed abstract class <accumulator>(<mutable-collection>)
+define sealed abstract class <accumulator> (<mutable-collection>)
   constant slot key-test :: <function> = \==,
     init-keyword: key-test:;
-  slot acc-buffer :: <simple-object-vector> = 
+  slot acc-buffer :: <simple-object-vector> =
     make(<simple-object-vector>, size: $accumulator-size, fill: #f);
     // acc-buffer[0] is used to chain the buffers
   slot acc-index :: <integer> = $accumulator-size - 1;
@@ -28,7 +28,7 @@ end class <accumulator>;
 // The following method can be used to extend an accumulator when it becomes
 // full.
 
-define function extend-accumulator(accumulator :: <accumulator>)
+define function extend-accumulator (accumulator :: <accumulator>)
   let buff = make(<simple-object-vector>, size: $accumulator-size, fill: #f);
   buff[0] := accumulator.acc-buffer;
   accumulator.acc-buffer := buff;
@@ -41,10 +41,10 @@ end function extend-accumulator;
 // other one for explicitly keyed collections.  In the explicit key case we
 // hold keys and values in adjacent locations in the buffer.
 
-define class <keyed-accumulator>(<accumulator>, <explicit-key-collection>)
+define class <keyed-accumulator> (<accumulator>, <explicit-key-collection>)
 end class <keyed-accumulator>;
 
-define class <sequence-accumulator>(<accumulator>, <sequence>)
+define class <sequence-accumulator> (<accumulator>, <sequence>)
 end class <sequence-accumulator>;
 
 
@@ -52,8 +52,7 @@ end class <sequence-accumulator>;
 
 define method element-setter
     (value :: <object>, accumulator :: <keyed-accumulator>,  key :: <object>)
-        => value :: <object>;
-
+ => (value :: <object>);
   unless (accumulator.acc-index > 0) extend-accumulator(accumulator) end unless;
 
   let index = accumulator.acc-index;
@@ -67,7 +66,7 @@ end method element-setter;
 
 define method add!
     (accumulator :: <sequence-accumulator>, new-element :: <object>)
-        => accumulator :: <sequence-accumulator>;
+ => (accumulator :: <sequence-accumulator>);
   unless (accumulator.acc-index > 0) extend-accumulator(accumulator) end unless;
 
   let index = accumulator.acc-index;
@@ -75,63 +74,64 @@ define method add!
   accumulator.acc-index := index - 1;
   accumulator;
 end method add!;
-  
 
-// We only need to iterate over an accumulator once so we just define a 
-// cutdown version of the iteration protocol for speed.  
+
+// We only need to iterate over an accumulator once so we just define a
+// cutdown version of the iteration protocol for speed.
 // First some auxiliary functions for use by the protocol.
 
 define inline function next-state-key-acc
     (accumulator :: <keyed-accumulator>, state :: <integer>)
-        => new-state :: <integer>;
+ => (new-state :: <integer>);
   accumulator.acc-index := accumulator.acc-index - 2;
   if (accumulator.acc-index = 0)
     accumulator.acc-index := $accumulator-size - 1;
     let next-buf = accumulator.acc-buffer[0];
     if (next-buf) accumulator.acc-buffer := next-buf end if;
   end if;
-  state + 1 
+  state + 1
 end function next-state-key-acc;
 
 define inline function next-state-seq-acc
     (accumulator :: <sequence-accumulator>, state :: <integer>)
-        => new-state :: <integer>;
+ => (new-state :: <integer>);
   accumulator.acc-index := accumulator.acc-index - 1;
   if (accumulator.acc-index = 0)
     accumulator.acc-index := $accumulator-size - 1;
     let next-buf = accumulator.acc-buffer[0];
     if (next-buf) accumulator.acc-buffer := next-buf end if;
   end if;
-  state + 1 
+  state + 1
 end function next-state-seq-acc;
 
 define inline function finished-state?-acc
-    (acc :: <accumulator>, state :: <integer>, 
-     limit :: <integer>)  => finished? :: <boolean>;
-  state = limit 
+    (acc :: <accumulator>, state :: <integer>,
+     limit :: <integer>)
+ => (finished? :: <boolean>);
+  state = limit
 end function finished-state?-acc;
 
 define inline function current-key-key-acc
-    (accumulator :: <keyed-accumulator>, state :: <integer>) 
-        => key :: <object>;
-  accumulator.acc-buffer[accumulator.acc-index - 1] 
+    (accumulator :: <keyed-accumulator>, state :: <integer>)
+ => (key :: <object>);
+  accumulator.acc-buffer[accumulator.acc-index - 1]
 end function current-key-key-acc;
 
 define inline function current-key-seq-acc
-    (accumulator :: <sequence-accumulator>, state :: <integer>) 
-        => key :: <object>;
+    (accumulator :: <sequence-accumulator>, state :: <integer>)
+ => (key :: <object>);
   state
 end function current-key-seq-acc;
 
 define inline function current-element-acc
     (accumulator :: <accumulator>, state :: <integer>)
-        => element :: <object>;
-  accumulator.acc-buffer[accumulator.acc-index] 
+ => (element :: <object>);
+  accumulator.acc-buffer[accumulator.acc-index]
 end function current-element-acc;
 
 define inline function current-element-setter-acc
     (value :: <object>, accumulator :: <accumulator>, state :: <integer>)
-  error(make(<immutable-error>, 
+  error(make(<immutable-error>,
               format-string: "Accumulator is immutable during iteration"))
 end function current-element-setter-acc;
 
@@ -146,13 +146,13 @@ end function copy-state-acc;
 // computes the size of the accumulator during the traversal.
 
 define function invert-accumulator(accumulator :: <accumulator>)
-    => size :: <integer>;
+ => (size :: <integer>);
   let buff = accumulator.acc-buffer;
   let size = $accumulator-size - accumulator.acc-index - 1;
   let prev = #f;
   let next = buff[0];
   buff[0] := prev;
-   
+
   while (next)
     size := size + $accumulator-size - 1;
     prev := buff;
@@ -166,43 +166,43 @@ define function invert-accumulator(accumulator :: <accumulator>)
   accumulator.acc-size := size
 end function invert-accumulator;
 
-define method size(accumulator :: <keyed-accumulator>) 
-    => (sz :: <integer>);
+define method size(accumulator :: <keyed-accumulator>)
+ => (sz :: <integer>);
   ash(accumulator.acc-size | invert-accumulator(accumulator), -1)
 end method size;
-  
-define method size(accumulator :: <sequence-accumulator>) 
-    => (sz :: <integer>);
+
+define method size(accumulator :: <sequence-accumulator>)
+ => (sz :: <integer>);
   accumulator.acc-size | invert-accumulator(accumulator)
 end method size;
-  
+
 
 // The iteration protocol for the accumulator classes is non-standard because
-// it destructively alters the buffer during the iteration, i.e. it can only 
-// be used once.  The accumulator classes are private so this should not be a 
+// it destructively alters the buffer during the iteration, i.e. it can only
+// be used once.  The accumulator classes are private so this should not be a
 // problem.  It's not really clear whether it is worth defining a fip on these
 // classes but it makes uses of the accumulator neater.
 
 define inline method forward-iteration-protocol
     (accumulator :: <keyed-accumulator>)
-        => (init :: <object>, limit :: <object>, next :: <function>, 
-            finished? :: <function>, key :: <function>, elem :: <function>, 
-            elem-setter :: <function>, copy :: <function>);
+ => (init :: <object>, limit :: <object>, next :: <function>,
+     finished? :: <function>, key :: <function>, elem :: <function>,
+     elem-setter :: <function>, copy :: <function>);
   let sz = accumulator.size;
   values (
-    0, sz, next-state-key-acc, finished-state?-acc, current-key-key-acc, 
+    0, sz, next-state-key-acc, finished-state?-acc, current-key-key-acc,
     current-element-acc, current-element-setter-acc, copy-state-acc)
 end method forward-iteration-protocol;
 
 
 define inline method forward-iteration-protocol
     (accumulator :: <sequence-accumulator>)
-        => (init :: <object>, limit :: <object>, next :: <function>, 
-            finished? :: <function>, key :: <function>, elem :: <function>, 
-            elem-setter :: <function>, copy :: <function>);
+ => (init :: <object>, limit :: <object>, next :: <function>,
+     finished? :: <function>, key :: <function>, elem :: <function>,
+     elem-setter :: <function>, copy :: <function>);
   let sz = accumulator.size;
   values (
-    0, sz, next-state-seq-acc, finished-state?-acc, current-key-seq-acc, 
+    0, sz, next-state-seq-acc, finished-state?-acc, current-key-seq-acc,
     current-element-acc, current-element-setter-acc, copy-state-acc)
 end method forward-iteration-protocol;
 
@@ -223,20 +223,20 @@ end;
 
 
 define generic convert-accumulator-as
-    (type :: <mutable-collection-type>, 
-     acc :: <accumulator>) 
-        => result :: <mutable-collection>;  // actually :: type;
+    (type :: <mutable-collection-type>,
+     acc :: <accumulator>)
+ => (result :: <mutable-collection>);  // actually :: type;
 
 
 define method convert-accumulator-as
-    (type :: <mutable-sequence-type>, acc :: <sequence-accumulator>) 
-        => result :: <mutable-sequence>;  // actually :: type;
+    (type :: <mutable-sequence-type>, acc :: <sequence-accumulator>)
+ => (result :: <mutable-sequence>);  // actually :: type;
   if (size(acc) = 0)
     let target = make(type, size: 0);
     check-key-test-eq(target, acc);
     target
   else
-    let target = 
+    let target =
       make(type, size: acc.acc-size, fill: acc.acc-buffer[acc.acc-index]);
     check-key-test-eq(target, acc);
     with-fip-of target /* with-setter? */
@@ -248,19 +248,18 @@ define method convert-accumulator-as
     target
   end if
 end method convert-accumulator-as;
-    
 
 
 define method convert-accumulator-as
-    (type :: <mutable-explicit-key-collection-type>, 
-     acc :: <sequence-accumulator>) 
-        => result :: <mutable-explicit-key-collection>;  // actually :: type;
-  if (size(acc) = 0) 
+    (type :: <mutable-explicit-key-collection-type>,
+     acc :: <sequence-accumulator>)
+ => (result :: <mutable-explicit-key-collection>);  // actually :: type;
+  if (size(acc) = 0)
     let target = make(type, size: 0);
     check-key-test-eq(target, acc);
     target
   else
-    let target = 
+    let target =
       make(type, size: acc.acc-size, fill: acc.acc-buffer[acc.acc-index]);
     check-key-test-eq(target, acc);
     for (e in acc, i from 0) target[i] := e end;
@@ -270,11 +269,11 @@ end method convert-accumulator-as;
 
 
 define method convert-accumulator-as
-    (type :: <mutable-sequence-type>, acc :: <keyed-accumulator>) 
-        => result :: <mutable-sequence>;  // actually :: type;
+    (type :: <mutable-sequence-type>, acc :: <keyed-accumulator>)
+ => (result :: <mutable-sequence>);  // actually :: type;
   let sz = size(acc);
 
-  if (sz = 0) 
+  if (sz = 0)
     let target = make(type, size: 0);
     check-key-test-eq(target, acc);
     target
@@ -295,27 +294,16 @@ define method convert-accumulator-as
     let target = as(type, temp);
     check-key-test-eq(target, acc);
     target
-  end 
+  end
 end method convert-accumulator-as;
 
 
 define method convert-accumulator-as
-    (type :: <mutable-explicit-key-collection-type>, 
-     acc :: <keyed-accumulator>) 
-        => result :: <mutable-explicit-key-collection>;  // actually :: type;
+    (type :: <mutable-explicit-key-collection-type>,
+     acc :: <keyed-accumulator>)
+ => (result :: <mutable-explicit-key-collection>);  // actually :: type;
   let result = make(type, size: size(acc));
   check-key-test-eq(result, acc);
   for (e keyed-by k in acc) result[k] := e end;
   result
 end method convert-accumulator-as;
-
-
-
-
-
-
-
-
-
-
-

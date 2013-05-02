@@ -23,12 +23,12 @@ ignore(%%double-integer-high);
 define constant $direct-object-classes :: <raw-pointer>
   = primitive-untraced-allocate
       (primitive-machine-word-multiply-low
-	 (primitive-word-size(), integer-as-raw(4)));
+         (primitive-word-size(), integer-as-raw(4)));
 
 define constant $direct-object-mm-wrappers :: <raw-pointer>
   = primitive-untraced-allocate
       (primitive-machine-word-multiply-low
-	 (primitive-word-size(), integer-as-raw(4)));
+         (primitive-word-size(), integer-as-raw(4)));
 
 define macro tag-bits
   { tag-bits(?x:expression) }
@@ -56,17 +56,17 @@ end macro;
 //// LOW-LEVEL COMPARISONS
 ////
 
-define macro pointer-id? 
+define macro pointer-id?
   { pointer-id?(?x:expression, ?y:expression) }
     => { primitive-id?(?x, ?y) }
 end macro;
 
 define macro value-object?
   { value-object?(?x:expression) }
-    => /* { indirect-object?(?x) 
-	   & pointer-id?(indirect-object-class(indirect-object-class(?x)), <value-class>) } */
-      { indirect-object?(?x) & logbit?(0 /* <value-class> subtype bit number */, 
-				       mm-wrapper-subtype-mask(indirect-object-mm-wrapper(?x))) }
+    => /* { indirect-object?(?x)
+           & pointer-id?(indirect-object-class(indirect-object-class(?x)), <value-class>) } */
+      { indirect-object?(?x) & logbit?(0 /* <value-class> subtype bit number */,
+                                       mm-wrapper-subtype-mask(indirect-object-mm-wrapper(?x))) }
 end macro;
 
 ////
@@ -126,8 +126,8 @@ ignore(mm-wrapper-variable-part);
 ignore(mm-wrapper-pattern-element);
 
 define function make-mm-wrapper
-    (implementation-class :: <implementation-class>, 
-     fixed-part-header :: <integer>, 
+    (implementation-class :: <implementation-class>,
+     fixed-part-header :: <integer>,
      variable-part-header :: <integer>)
   let wrapper :: <mm-wrapper> = system-allocate-wrapper();
   wrapper.mm-wrapper-implementation-class := implementation-class;
@@ -150,19 +150,19 @@ end macro;
 define macro %mm-wrapper-implementation-class-setter
   { %mm-wrapper-implementation-class-setter (?value:expression, ?instance:expression) }
     => { primitive-element(?instance, integer-as-raw(0), primitive-header-size())
-	   := ?value }
+           := ?value }
 end macro;
 
 define constant $number-header-words = 1;
 
 /*
-define inline-only function instance-header (instance) 
-    => (value :: <mm-wrapper>)
+define inline-only function instance-header (instance)
+ => (value :: <mm-wrapper>)
   primitive-element(instance, integer-as-raw(0), integer-as-raw(0))
 end function;
 */
 
-define macro instance-header 
+define macro instance-header
   { instance-header (?instance:expression) }
     => { primitive-element(?instance, integer-as-raw(0), integer-as-raw(0)) }
 end macro;
@@ -188,8 +188,8 @@ end function;
 ////
 
 /*
-define inline-only function indirect-object-class (instance) 
-    => (value :: <class>)
+define inline-only function indirect-object-class (instance)
+ => (value :: <class>)
   instance.instance-header.%mm-wrapper-implementation-class.%implementation-class-class
 end function;
 */
@@ -199,14 +199,14 @@ end function;
 //define macro indirect-object-implementation-class
 //  { indirect-object-implementation-class (?instance:expression) }
 //    => { %mm-wrapper-implementation-class
-//	  (indirect-object-mm-wrapper(?instance)) }
+//          (indirect-object-mm-wrapper(?instance)) }
 //end macro;
 
 //define macro indirect-object-class
 //  { indirect-object-class (?instance:expression) }
 //    => { %implementation-class-class
-//	  (%mm-wrapper-implementation-class
-//	     (indirect-object-mm-wrapper(?instance))) }
+//          (%mm-wrapper-implementation-class
+//             (indirect-object-mm-wrapper(?instance))) }
 //end macro;
 
 define inline-only function indirect-object-implementation-class (x) => (ic :: <implementation-class>)
@@ -225,8 +225,8 @@ define macro direct-object-class-with-tag-bits
 end macro;
 
 
-define inline-only function direct-object-class (instance) 
-    => (value :: <class>)
+define inline-only function direct-object-class (instance)
+ => (value :: <class>)
   direct-object-class-with-tag-bits(tag-bits(instance))
 end function;
 
@@ -250,7 +250,7 @@ end function;
 
 define inline-only function direct-object-mm-wrapper-with-tag-bits
     (bits :: <machine-word>) => (res :: <mm-wrapper>)
-  let mm-wrapper :: <mm-wrapper> 
+  let mm-wrapper :: <mm-wrapper>
     = primitive-element($direct-object-mm-wrappers, primitive-unwrap-machine-word(bits), integer-as-raw(0));
   mm-wrapper
 end function;
@@ -287,7 +287,7 @@ define inline function object-implementation-class
   if (indirect-object-tag-bits?(bits))
     indirect-object-implementation-class(instance)
   else
-    let wrapper :: <mm-wrapper> 
+    let wrapper :: <mm-wrapper>
       = direct-object-mm-wrapper-with-tag-bits(primitive-wrap-machine-word(bits));
     mm-wrapper-implementation-class(wrapper)
   end if
@@ -332,7 +332,7 @@ define inline-only function byte-slot-element
 end function;
 
 define inline-only function byte-slot-element-setter
-    (new-value :: <byte-character>, instance, 
+    (new-value :: <byte-character>, instance,
      base-offset :: <integer>, byte-offset :: <integer>)
  => (value :: <byte-character>)
   primitive-byte-element
@@ -385,14 +385,14 @@ end function;
 
 
 define generic system-allocate-repeated-instance
-    (class :: <class>, type :: <type>, fill, 
+    (class :: <class>, type :: <type>, fill,
      repeated-size :: <integer>, repeated-fill)
  => (instance);
 
 /// REPEATED OBJECT INSTANCE ALLOCATION -- DEFAULT
 
 define inline method system-allocate-repeated-instance
-    (class :: <class>, type :: <type>, fill, 
+    (class :: <class>, type :: <type>, fill,
      repeated-size :: <integer>, repeated-fill)
  => (instance)
   system-allocate-repeated-object-instance(class, fill, repeated-size, repeated-fill)
@@ -402,34 +402,34 @@ define macro repeated-instance-allocator-definer
   { define ?adj:* repeated-instance-allocator (?:name, ?alloc:name, ?type:name, ?unboxer:name) }
     => { define ?adj repeated-instance-allocator-aux (?name, ?alloc, ?type, ?unboxer);
 
-	 define inline-only function "system-allocate-repeated-" ## ?name ## "-instance"
-	     (class :: <class>, fill, repeated-size :: <integer>, repeated-fill :: ?type)
-	   "system-allocate-repeated-" ## ?name ## "-instance-i"
-	     (class-implementation-class(class), fill, repeated-size, repeated-fill)
-	 end function;
+         define inline-only function "system-allocate-repeated-" ## ?name ## "-instance"
+             (class :: <class>, fill, repeated-size :: <integer>, repeated-fill :: ?type)
+           "system-allocate-repeated-" ## ?name ## "-instance-i"
+             (class-implementation-class(class), fill, repeated-size, repeated-fill)
+         end function;
 
-	 define inline method system-allocate-repeated-instance
-	     (class :: <class>, type == ?type, fill, 
-	      repeated-size :: <integer>, repeated-fill :: ?type)
+         define inline method system-allocate-repeated-instance
+             (class :: <class>, type == ?type, fill,
+              repeated-size :: <integer>, repeated-fill :: ?type)
           => (instance)
-	   "system-allocate-repeated-" ## ?name ## "-instance"
-	     (class, fill, repeated-size, repeated-fill)
-	 end method; }
+           "system-allocate-repeated-" ## ?name ## "-instance"
+             (class, fill, repeated-size, repeated-fill)
+         end method; }
 end macro;
 
 /*
 /// TODO: USE THIS OF ICLASS PROPERTY FOR LEAF OBJECTS
 
-define function mm-wrapper-raw-fixed-part? 
+define function mm-wrapper-raw-fixed-part?
     (mm-wrapper :: <mm-wrapper>) => (well? :: <boolean>)
   let fixed-part = raw-as-integer(mm-wrapper.mm-wrapper-fixed-part);
   logbit?(1, fixed-part) &
     block (return)
       for (i :: <integer> from 0 below mm-wrapper-number-patterns(mm-wrapper))
-	let pattern = mm-wrapper-pattern-element(mm-wrapper, i);
-	unless (primitive-machine-word-equal?(pattern, integer-as-raw(0)))
-	  return(#f)
-	end unless;
+        let pattern = mm-wrapper-pattern-element(mm-wrapper, i);
+        unless (primitive-machine-word-equal?(pattern, integer-as-raw(0)))
+          return(#f)
+        end unless;
       end for;
       #t
     end block;
@@ -439,45 +439,45 @@ end function;
 define macro repeated-instance-allocator-aux-definer
   { define repeated-instance-allocator-aux (?:name, ?alloc:name, ?type:name, ?unboxer:name) }
     => { define inline-only function "system-allocate-repeated-" ## ?name ## "-instance-i"
-	     (iclass :: <implementation-class>, fill, 
-	      repeated-size :: <integer>, repeated-fill :: ?type)
-	   let size-offset       = iclass.instance-storage-size;
-	   let raw-size-offset   = iclass.instance-storage-size;
-	   let raw-number-words  = integer-as-raw($number-header-words + size-offset);
-	   let mm-wrapper        = iclass.iclass-instance-header;
-	   let raw-number-slots  = integer-as-raw(size-offset - 1);
-	   let raw-repeated-size = integer-as-raw(repeated-size);
-	   let raw-size-offset   = integer-as-raw(size-offset);
-	   let raw-repeated-fill = ?unboxer(repeated-fill);
-	   "primitive-" ## ?alloc ## "-allocate-filled"
-	     (raw-number-words, mm-wrapper, raw-number-slots, fill,
-	      raw-repeated-size, raw-size-offset, raw-repeated-fill);
-	 end function; }
+             (iclass :: <implementation-class>, fill,
+              repeated-size :: <integer>, repeated-fill :: ?type)
+           let size-offset       = iclass.instance-storage-size;
+           let raw-size-offset   = iclass.instance-storage-size;
+           let raw-number-words  = integer-as-raw($number-header-words + size-offset);
+           let mm-wrapper        = iclass.iclass-instance-header;
+           let raw-number-slots  = integer-as-raw(size-offset - 1);
+           let raw-repeated-size = integer-as-raw(repeated-size);
+           let raw-size-offset   = integer-as-raw(size-offset);
+           let raw-repeated-fill = ?unboxer(repeated-fill);
+           "primitive-" ## ?alloc ## "-allocate-filled"
+             (raw-number-words, mm-wrapper, raw-number-slots, fill,
+              raw-repeated-size, raw-size-offset, raw-repeated-fill);
+         end function; }
   { define leaf repeated-instance-allocator-aux (?:name, ?alloc:name, ?type:name, ?unboxer:name) }
     => { define inline-only function "system-allocate-repeated-" ## ?name ## "-instance-i"
-	     (iclass :: <implementation-class>, fill, 
-	      repeated-size :: <integer>, repeated-fill :: ?type)
-	   let size-offset       = iclass.instance-storage-size;
-	   let raw-size-offset   = iclass.instance-storage-size;
-	   let raw-number-words  = integer-as-raw($number-header-words + size-offset);
-	   let mm-wrapper        = iclass.iclass-instance-header;
-	   let raw-number-slots  = integer-as-raw(size-offset - 1);
-	   let raw-repeated-size = integer-as-raw(repeated-size);
-	   let raw-size-offset   = integer-as-raw(size-offset);
-	   let raw-repeated-fill = ?unboxer(repeated-fill);
-	   // if (mm-wrapper-raw-fixed-part?(mm-wrapper))
-	   // HACK: FOR NOW UNTIL WE CAN IDENTIFY THESE CLASSES 
-	   //       EITHER BY MM-WRAPPER OR ICLASS PROPERTY BIT
-	   if (~subclass?(iclass-class(iclass), <simple-array>))
- 	     "primitive-" ## ?alloc ## "-allocate-leaf-filled"
-	       (raw-number-words, mm-wrapper, raw-number-slots, fill,
-	        raw-repeated-size, raw-size-offset, raw-repeated-fill);
-	   else 
-	     "primitive-" ## ?alloc ## "-allocate-filled"
-	       (raw-number-words, mm-wrapper, raw-number-slots, fill,
-	        raw-repeated-size, raw-size-offset, raw-repeated-fill);
-	   end if
-	 end function; }
+             (iclass :: <implementation-class>, fill,
+              repeated-size :: <integer>, repeated-fill :: ?type)
+           let size-offset       = iclass.instance-storage-size;
+           let raw-size-offset   = iclass.instance-storage-size;
+           let raw-number-words  = integer-as-raw($number-header-words + size-offset);
+           let mm-wrapper        = iclass.iclass-instance-header;
+           let raw-number-slots  = integer-as-raw(size-offset - 1);
+           let raw-repeated-size = integer-as-raw(repeated-size);
+           let raw-size-offset   = integer-as-raw(size-offset);
+           let raw-repeated-fill = ?unboxer(repeated-fill);
+           // if (mm-wrapper-raw-fixed-part?(mm-wrapper))
+           // HACK: FOR NOW UNTIL WE CAN IDENTIFY THESE CLASSES
+           //       EITHER BY MM-WRAPPER OR ICLASS PROPERTY BIT
+           if (~subclass?(iclass-class(iclass), <simple-array>))
+              "primitive-" ## ?alloc ## "-allocate-leaf-filled"
+               (raw-number-words, mm-wrapper, raw-number-slots, fill,
+                raw-repeated-size, raw-size-offset, raw-repeated-fill);
+           else
+             "primitive-" ## ?alloc ## "-allocate-filled"
+               (raw-number-words, mm-wrapper, raw-number-slots, fill,
+                raw-repeated-size, raw-size-offset, raw-repeated-fill);
+           end if
+         end function; }
 end macro;
 
 define repeated-instance-allocator
@@ -524,8 +524,8 @@ end function;
 
 define inline-only function system-allocate-weak-repeated-instance
     (class :: <class>, repeated-size :: <integer>, fill, assoc-link)
-  system-allocate-weak-repeated-instance-i(class-implementation-class(class), 
-					   repeated-size, fill, assoc-link)
+  system-allocate-weak-repeated-instance-i(class-implementation-class(class),
+                                           repeated-size, fill, assoc-link)
 end function;
 
 define inline-only function system-allocate-weak-repeated-instance-i
@@ -721,7 +721,7 @@ end function;
 //// SPECIAL STUFF
 ////
 
-define constant %bs-empty = ""; 
+define constant %bs-empty = "";
 
 %bs-empty;
 
@@ -792,7 +792,7 @@ define class <odd-keyword-arguments-error> (<keyword-error>) end;
 define not-inline function odd-keyword-arguments-error (function :: <function>)
  => (will-never-return :: <bottom>)
   error(make(<odd-keyword-arguments-error>,
-             format-string: "Attempted to call %= with an odd number of keywords", 
+             format-string: "Attempted to call %= with an odd number of keywords",
              format-arguments: list(function)))
 end function;
 
@@ -822,11 +822,11 @@ end function;
 define class <argument-count-overflow-error> (<argument-error>) end;
 
 define not-inline function argument-count-overflow-error
-    (function :: <function>, 
+    (function :: <function>,
      argument-count :: <integer>, argument-count-max :: <integer>)
  => (will-never-return :: <bottom>)
   error(make(<argument-count-overflow-error>,
-             format-string: "Function %= called with %d > %d arguments", 
+             format-string: "Function %= called with %d > %d arguments",
              format-arguments: list(function, argument-count, argument-count-max)))
 end function;
 
@@ -848,7 +848,7 @@ define class <stack-overflow-error> (<simple-error>) end;
 define not-inline function stack-overflow-error ()
  => (will-never-return :: <bottom>)
   let name = thread-name(current-thread());
-  let condition 
+  let condition
     = if (name)
         make(<stack-overflow-error>,
              format-string: "Stack overflow on current thread, %=.",
@@ -869,16 +869,16 @@ end function;
 
 define class <dispatch-error> (<simple-error>) end;
 
-define open generic ambiguous-method-error (gf :: <generic-function>, args :: <sequence>, 
-					    ordered :: <sequence>, ambig :: <collection>);
+define open generic ambiguous-method-error (gf :: <generic-function>, args :: <sequence>,
+                                            ordered :: <sequence>, ambig :: <collection>);
 
 
 
 define method ambiguous-method-error (gf :: <generic-function>, args :: <sequence>,
-				      ordered :: <sequence>, ambig :: <collection>)
+                                      ordered :: <sequence>, ambig :: <collection>)
   error(make(<dispatch-error>,
              format-string:
-               "Method selection is ambiguous applying %= to %= - got %= ordered methods, %= unorderable", 
+               "Method selection is ambiguous applying %= to %= - got %= ordered methods, %= unorderable",
              format-arguments: list(gf, args, ordered, ambig)))
 end method;
 
@@ -888,13 +888,13 @@ define not-inline function no-applicable-method-error
     (gf :: <generic-function>, args :: <simple-object-vector>)
   block ()
     error(make(<dispatch-error>,
-  	       format-string: "No applicable method, applying %= to %=.", 
-	       format-arguments: list(gf, args)))
+                 format-string: "No applicable method, applying %= to %=.",
+               format-arguments: list(gf, args)))
   exception (<simple-restart>,
-             init-arguments: 
-                vector(format-string: 
+             init-arguments:
+                vector(format-string:
                          "Try calling %= again with arguments: %=.",
-                       format-arguments: 
+                       format-arguments:
                          vector(gf, args)))
     apply(gf, args);
   end;
@@ -906,7 +906,7 @@ define constant repeated-slot-getter-index-out-of-range-trap = method
   let sd :: <repeated-slot-descriptor> = repeated-slot-descriptor(object-class(inst));
   error(make(<invalid-index-error>,
              format-string: "Out of range attempting to fetch %= of %= at index %=.",
-	     format-arguments: list(slot-getter(sd) | sd, inst, idx)))
+             format-arguments: list(slot-getter(sd) | sd, inst, idx)))
 end method;
 
 define constant repeated-slot-setter-index-out-of-range-trap = method
@@ -916,24 +916,24 @@ define constant repeated-slot-setter-index-out-of-range-trap = method
              format-string: "Out of range attempting to store %= into %= of %= at index %=.",
              format-arguments: list(value, slot-getter(sd) | sd, inst, idx)))
 end method;
-	
+
 
 // Re-spread arguments from mepargs format.
 // We always return a heap-consed vector for the sake of storing the args in conditions.
-define constant reconstruct-args-from-mepargs = method (gf :: <generic-function>, 
-							mepargs :: <simple-object-vector>)
+define constant reconstruct-args-from-mepargs = method (gf :: <generic-function>,
+                                                        mepargs :: <simple-object-vector>)
   let signature :: <signature> = function-signature(gf);
   let n :: <integer> = size(mepargs);
   let (nreq :: <integer>, nopt :: <integer>, optvec :: <simple-object-vector>)
     = if (signature-optionals?(signature))
-	let optvec :: <simple-object-vector> = vector-element(mepargs, n - 1);
-	values(n - 1, size(optvec), optvec)
+        let optvec :: <simple-object-vector> = vector-element(mepargs, n - 1);
+        values(n - 1, size(optvec), optvec)
       else
-	values(n, 0, #[])
+        values(n, 0, #[])
       end if;
   let args :: <simple-object-vector> = make(<simple-object-vector>, size: nopt + nreq);
   for (i :: <integer> from 0 below nreq)
-    vector-element(args, i) := vector-element(mepargs, i) 
+    vector-element(args, i) := vector-element(mepargs, i)
   end for;
   for (i :: <integer> from nreq, j :: <integer> from 0 below nopt)
     vector-element(args, i) := vector-element(optvec, j)
@@ -942,8 +942,8 @@ define constant reconstruct-args-from-mepargs = method (gf :: <generic-function>
 end method;
 
 
-define constant reconstruct-keywords = method (keyvec :: <simple-object-vector>, 
-					       method-keyword-table-format?)
+define constant reconstruct-keywords = method (keyvec :: <simple-object-vector>,
+                                               method-keyword-table-format?)
   if (method-keyword-table-format?)
     let ndata :: <integer> = size(keyvec);
     let nkeys :: <integer> = ash(ndata, -1);
@@ -958,17 +958,17 @@ define constant reconstruct-keywords = method (keyvec :: <simple-object-vector>,
   end if
 end method;
 
-     
+
 define constant odd-number-of-keyword-args-trap = method
     (mepargs :: <simple-object-vector>, disphdr :: <dispatch-starter>, engine-node)
-  engine-node;			// Maybe someday.
+  engine-node;                        // Maybe someday.
   let gf :: <generic-function> = parent-gf(disphdr);
   error(make(<odd-keyword-arguments-error>,
-             format-string: 
+             format-string:
                "The function %= was called with an odd number of keyworded arguments in args %=",
              format-arguments: list(gf, reconstruct-args-from-mepargs(gf, mepargs))))
 end method;
-  
+
 
 
 define variable *gf-invalid-keyword-error-is-warning* = #t;
@@ -976,27 +976,27 @@ define variable *gf-invalid-keyword-error-is-warning* = #t;
 
 
 define constant invalid-keyword-trap = method
-    ( mepargs :: <simple-object-vector>, disphdr :: <dispatch-starter>,
+    (mepargs :: <simple-object-vector>, disphdr :: <dispatch-starter>,
      engine-node :: <single-method-engine-node>, key,
      keyvec :: <simple-object-vector>, implicit? :: <boolean>)
-  engine-node;			// Maybe someday.
+  engine-node;                        // Maybe someday.
   let gf :: <generic-function> = parent-gf(disphdr);
   let args = reconstruct-args-from-mepargs(gf, mepargs);
   if (~instance?(key, <symbol>))
     error(make(<missing-keyword-error>,
-               format-string: 
+               format-string:
                  "The function %= was given %= where a keyword was expected in the call with arguments %=",
                format-arguments: list(gf, key, args)))
   elseif (*gf-invalid-keyword-error-is-warning*)
     signal("The function %= was given the unrecognized keyword %= in the call with arguments %=.\n"
-	     "The keywords recognized for this call are %=.",
-	   gf, key, args, reconstruct-keywords(keyvec, implicit?));
+             "The keywords recognized for this call are %=.",
+           gf, key, args, reconstruct-keywords(keyvec, implicit?));
     %method-apply-with-optionals(single-method-engine-node-method(engine-node),
-				 single-method-engine-node-data(engine-node),
-				 mepargs)
+                                 single-method-engine-node-data(engine-node),
+                                 mepargs)
   else
     error(make(<unknown-keyword-argument-error>,
-	       format-string: 
+               format-string:
                  "The function %= was given the unrecognized keyword %= in the call with arguments %=.\n"
                  "The keywords recognized for this call are %=.",
                format-arguments: list(gf, key, args, reconstruct-keywords(keyvec, implicit?))))
@@ -1039,7 +1039,7 @@ end method invoke-debugger;
 
 define method invoke-debugger (condition :: <simple-condition>)
   primitive-invoke-debugger
-    (condition-format-string(condition), 
+    (condition-format-string(condition),
      as(<simple-object-vector>, condition-format-arguments(condition)));
   #f
 end method invoke-debugger;
@@ -1066,16 +1066,16 @@ define generic library-version-error (library :: <library>, used-library :: <use
 define method library-version-error (lib :: <library>, used-lib :: <used-library>)
   let used-lib-lib = used-library(used-lib);
   error(make(<library-version-error>,
-	     format-string:
-	       "Version mismatch: Library %= expected version %=.%= of library %=, "
-	       "but got version %=.%= instead",
-	     format-arguments:
-	       list(namespace-name(lib),
-		    library-major-version(used-lib),
-		    library-minor-version(used-lib),
-		    namespace-name(used-lib-lib),
-		    library-major-version(used-lib-lib),
-		    library-minor-version(used-lib-lib))))
+             format-string:
+               "Version mismatch: Library %= expected version %=.%= of library %=, "
+               "but got version %=.%= instead",
+             format-arguments:
+               list(namespace-name(lib),
+                    library-major-version(used-lib),
+                    library-minor-version(used-lib),
+                    namespace-name(used-lib-lib),
+                    library-major-version(used-lib-lib),
+                    library-minor-version(used-lib-lib))))
 end method;
 
 // define class <library-incompatibility-error> (<library-version-error>) end;
@@ -1087,16 +1087,16 @@ define method library-incompatibility-error
     (lib :: <library>, used-lib :: <used-library>)
   let used-lib-lib = used-library(used-lib);
   error(make(<library-version-error>,
-	     format-string:
-	       "Library incompatibility: library %= was compiled in production mode "
-	       "against an older version of used library %=, and is not compatible "
-	       "with the newer version.  Library %= must be recompiled to use this "
-	       "version of library %=",
-	     format-arguments:
-	       list(namespace-name(lib),
-		    namespace-name(used-lib-lib),
-		    namespace-name(lib),
-		    namespace-name(used-lib-lib))))
+             format-string:
+               "Library incompatibility: library %= was compiled in production mode "
+               "against an older version of used library %=, and is not compatible "
+               "with the newer version.  Library %= must be recompiled to use this "
+               "version of library %=",
+             format-arguments:
+               list(namespace-name(lib),
+                    namespace-name(used-lib-lib),
+                    namespace-name(lib),
+                    namespace-name(used-lib-lib))))
 end method;
 
 define constant $library-build-count-wildcard = -1;
@@ -1124,15 +1124,15 @@ define function %used-library-version-check
     (lib :: <library>, used-lib :: <used-library>)
   let used-lib-lib = used-library(used-lib);
   unless (~version-checks?()
-	    | system-developer-library?(used-lib-lib)
-	    | system-developer-library?(lib))
+            | system-developer-library?(used-lib-lib)
+            | system-developer-library?(lib))
     if (library-major-version(used-lib-lib) ~== library-major-version(used-lib)
-	  | library-minor-version(used-lib-lib) < library-minor-version(used-lib))
+          | library-minor-version(used-lib-lib) < library-minor-version(used-lib))
       library-version-error(lib, used-lib)
     elseif (used-library-binding(used-lib) == #"tight"
-	      & ~major-minor-only-library?(lib)
-	      & ~major-minor-only-library?(used-lib-lib)
-	      & library-build-count(used-lib-lib) ~== library-build-count(used-lib))
+              & ~major-minor-only-library?(lib)
+              & ~major-minor-only-library?(used-lib-lib)
+              & library-build-count(used-lib-lib) ~== library-build-count(used-lib))
       library-incompatibility-error(lib, used-lib)
     end if
   end unless
@@ -1160,7 +1160,7 @@ define function dylan-runtime-module-handle(library :: <symbol>) => (module)
       *dylan-runtime-module*
     else
       unless (*dylan-runtime-modules*)
-	*dylan-runtime-modules* := make(<table>);
+        *dylan-runtime-modules* := make(<table>);
       end unless;
       element(*dylan-runtime-modules*, library, default: #f);
     end if;
@@ -1176,7 +1176,7 @@ define function dylan-runtime-module-handle-setter(module, library :: <string>)
       *dylan-runtime-module* := module
     else
       unless (*dylan-runtime-modules*)
-	*dylan-runtime-modules* := make(<table>);
+        *dylan-runtime-modules* := make(<table>);
       end unless;
       *dylan-runtime-modules*[as(<symbol>, library)] := module
     end if;
@@ -1193,119 +1193,119 @@ end function;
 /// SHARED SYMBOLS
 
 define shared-symbols %shared-dylan-symbols
-  #"above", 
-  #"abstract?", 
-  #"all-keys?", 
-  #"allocation", 
-  #"allow-other-keys", 
-  #"arguments", 
-  #"below", 
-  #"by", 
-  #"capacity", 
-  #"class", 
-  #"code", 
-  #"collections", 
-  #"constant", 
-  #"count", 
-  #"debug-name", 
-  #"default", 
-  #"dimensions", 
-  #"domain-types", 
-  #"each-subclass", 
-  #"element-type", 
-  #"end", 
-  #"failure", 
-  #"fill", 
-  #"fixed-part", 
-  #"format-argument", 
-  #"format-arguments", 
-  #"format-string", 
-  #"from", 
-  #"function", 
-  #"generic-function", 
-  #"getter", 
-  #"grow-size-function", 
-  #"hash-function", 
-  #"high", 
-  #"implementation-class", 
-  #"inherited-slots", 
-  #"init-arguments", 
-  #"init-data", 
-  #"init-evaluated?", 
-  #"init-function", 
-  #"init-keyword", 
-  #"init-keyword-required?", 
-  #"init-supplied?", 
-  #"init-value", 
-  #"init-value?", 
-  #"initial-count", 
-  #"instance-storage-size", 
-  #"key", 
-  #"key-test", 
-  #"key-types", 
-  #"key?", 
-  #"keys", 
-  #"keyword-specifiers", 
-  #"keywords", 
-  #"lock", 
-  #"low", 
-  #"max", 
-  #"maximum-count", 
-  #"min", 
-  #"mode", 
-  #"name", 
-  #"next", 
-  #"next?", 
-  #"number-patterns", 
-  #"number-required", 
-  #"number-values", 
-  #"object", 
-  #"operation", 
-  #"ordered", 
-  #"owner", 
-  #"password", 
-  #"primary?", 
-  #"priority", 
-  #"processing", 
-  #"properties", 
-  #"read", 
-  #"rehash-limit", 
-  #"repeated", 
-  #"required", 
-  #"required-init-keyword", 
-  #"rest-value", 
-  #"rest-value?", 
-  #"rest?", 
-  #"sealed?", 
-  #"sequences", 
-  #"setter", 
-  #"signature", 
-  #"size", 
-  #"skip", 
-  #"slot-descriptor", 
-  #"slots", 
-  #"stable", 
-  #"start", 
-  #"storage-size", 
-  #"superclasses", 
-  #"synchronization", 
-  #"test", 
-  #"test-function", 
-  #"thread", 
-  #"timeout", 
-  #"to", 
-  #"token", 
-  #"type", 
-  #"type1", 
-  #"type2", 
-  #"unknown", 
-  #"users", 
-  #"value", 
-  #"values", 
-  #"values?", 
-  #"vector", 
-  #"virtual", 
-  #"weak", 
+  #"above",
+  #"abstract?",
+  #"all-keys?",
+  #"allocation",
+  #"allow-other-keys",
+  #"arguments",
+  #"below",
+  #"by",
+  #"capacity",
+  #"class",
+  #"code",
+  #"collections",
+  #"constant",
+  #"count",
+  #"debug-name",
+  #"default",
+  #"dimensions",
+  #"domain-types",
+  #"each-subclass",
+  #"element-type",
+  #"end",
+  #"failure",
+  #"fill",
+  #"fixed-part",
+  #"format-argument",
+  #"format-arguments",
+  #"format-string",
+  #"from",
+  #"function",
+  #"generic-function",
+  #"getter",
+  #"grow-size-function",
+  #"hash-function",
+  #"high",
+  #"implementation-class",
+  #"inherited-slots",
+  #"init-arguments",
+  #"init-data",
+  #"init-evaluated?",
+  #"init-function",
+  #"init-keyword",
+  #"init-keyword-required?",
+  #"init-supplied?",
+  #"init-value",
+  #"init-value?",
+  #"initial-count",
+  #"instance-storage-size",
+  #"key",
+  #"key-test",
+  #"key-types",
+  #"key?",
+  #"keys",
+  #"keyword-specifiers",
+  #"keywords",
+  #"lock",
+  #"low",
+  #"max",
+  #"maximum-count",
+  #"min",
+  #"mode",
+  #"name",
+  #"next",
+  #"next?",
+  #"number-patterns",
+  #"number-required",
+  #"number-values",
+  #"object",
+  #"operation",
+  #"ordered",
+  #"owner",
+  #"password",
+  #"primary?",
+  #"priority",
+  #"processing",
+  #"properties",
+  #"read",
+  #"rehash-limit",
+  #"repeated",
+  #"required",
+  #"required-init-keyword",
+  #"rest-value",
+  #"rest-value?",
+  #"rest?",
+  #"sealed?",
+  #"sequences",
+  #"setter",
+  #"signature",
+  #"size",
+  #"skip",
+  #"slot-descriptor",
+  #"slots",
+  #"stable",
+  #"start",
+  #"storage-size",
+  #"superclasses",
+  #"synchronization",
+  #"test",
+  #"test-function",
+  #"thread",
+  #"timeout",
+  #"to",
+  #"token",
+  #"type",
+  #"type1",
+  #"type2",
+  #"unknown",
+  #"users",
+  #"value",
+  #"values",
+  #"values?",
+  #"vector",
+  #"virtual",
+  #"weak",
   #"write"
 end shared-symbols;
 
@@ -1332,10 +1332,10 @@ end shared-symbols;
 
 /// CPL ABSTRACTION
 
-define method all-superclasses 
+define method all-superclasses
     (iclass :: <implementation-class>) => (supers :: <list>)
   let supers :: <list> = #();
-  for (super :: <class> in class-rcpl-vector(iclass), 
+  for (super :: <class> in class-rcpl-vector(iclass),
        i :: <integer> from class-rcpl-position(iclass) to 0 by -1)
     supers := pair(super, supers);
   end;
@@ -1351,7 +1351,7 @@ define macro for-each-superclass
   { for-each-superclass (?:name :: ?:expression of ?class:expression, ?more:*)
       ?loopbody:*
     end }
-    => { let super-vector :: <simple-object-vector> 
+    => { let super-vector :: <simple-object-vector>
            = class-rcpl-vector(?class);
          for (super-i :: <integer> from class-rcpl-position(?class) to 0 by -1,
               ?more)

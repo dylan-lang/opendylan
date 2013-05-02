@@ -15,24 +15,24 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define constant <mutable-explicit-key-collection-type>
-  = type-union(subclass(<mutable-explicit-key-collection>), 
-	       <limited-mutable-explicit-key-collection-type>);
+  = type-union(subclass(<mutable-explicit-key-collection>),
+               <limited-mutable-explicit-key-collection-type>);
 
-// Functions on <mutable-collection> 
+// Functions on <mutable-collection>
 
 define open generic element-setter
   (new-value, collection :: <mutable-object-with-elements>, key) => new-value;
 
-define open generic replace-elements! 
+define open generic replace-elements!
   (collection :: <mutable-collection>,
-   predicate :: <function>, new-value-fn :: <function>, 
+   predicate :: <function>, new-value-fn :: <function>,
    #key count :: false-or(<integer>) = #f)
-    => (mutable-collection :: <mutable-collection>);
+ => (mutable-collection :: <mutable-collection>);
 
-define open generic fill! 
-  (collection :: <mutable-collection>, value, 
+define open generic fill!
+  (collection :: <mutable-collection>, value,
    #key start :: <integer> = 0, end: last :: <integer>)
-    => (mutable-collection :: <mutable-collection>);
+ => (mutable-collection :: <mutable-collection>);
 
 
 
@@ -43,13 +43,13 @@ define open generic fill!
 
 //
 // REPLACE-ELEMENTS!
-// 
- 
-define method replace-elements! 
+//
+
+define method replace-elements!
     (collection :: <mutable-collection>,
      predicate? :: <function>, new-value-function :: <function>,
      #key count :: false-or(<integer>) = #f)
-        => (collection :: <mutable-collection>)
+ => (collection :: <mutable-collection>)
   with-fip-of collection /* Use with-setter? */
     if (count)
       let count :: <integer> = count;
@@ -77,11 +77,11 @@ end method replace-elements!;
 
 //
 // FILL!
-// 
- 
+//
+
 define method fill!
     (collection :: <mutable-collection>, value, #key start, end: last)
-        => (collection :: <mutable-collection>)
+ => (collection :: <mutable-collection>)
   // Ignore start: and end: in the non-sequence case
   with-fip-of collection
     for (state = initial-state then next-state(collection, state),
@@ -101,14 +101,14 @@ end method fill!;
 
 //
 // TYPE-FOR-COPY
-// 
- 
+//
+
 define method type-for-copy (collection :: <mutable-collection>)
-    => (class :: subclass(<mutable-collection>))
+ => (class :: subclass(<mutable-collection>))
   collection.object-class
 end method type-for-copy;
 
- 
+
 
 //
 // ELEMENT-NO-BOUNDS-CHECK-SETTER

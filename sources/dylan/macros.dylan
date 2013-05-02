@@ -20,33 +20,33 @@ define macro unless
 end macro unless;
 
 define macro case
-  { case ?cases:case-body end }  
+  { case ?cases:case-body end }
     => { ?cases }
 cases:
-  { } 
+  { }
     => { #f }
-  { otherwise => ; } 
+  { otherwise => ; }
     => { #t }
-  { otherwise => ?:body } 
+  { otherwise => ?:body }
     => { ?body }
-  { ?test:expression => ; ... } 
+  { ?test:expression => ; ... }
     => { ?test | (...)  }
-  { ?test:expression => ?:body; ... } 
+  { ?test:expression => ?:body; ... }
     => { if (?test) ?body else ... end if }
 end macro case;
 
 define macro select
-  { select (?what) ?:case-body end } 
+  { select (?what) ?:case-body end }
     => { ?what; ?case-body }
 what:
   { ?object:expression by ?compare:expression }
     => { let _object = ?object;
          let _compare = ?compare }
-  { ?object:expression } 
+  { ?object:expression }
     => { let _object = ?object;
          let _compare = \== }
 case-body:
-  { otherwise => ?:body; }   
+  { otherwise => ?:body; }
     => { ?body }
   { ?keys => ?:body; ... }
     => { if (?keys) ?body else ... end if }
@@ -68,16 +68,16 @@ end macro select;
 /*
 define macro while
   { while (?test:expression) ?:body end }
-    => { local method _while-loop () 
-           if (?test) ?body; _while-loop() end; 
+    => { local method _while-loop ()
+           if (?test) ?body; _while-loop() end;
          end method _while-loop;
          _while-loop() }
 end macro while;
 
 define macro until
   { until (?test:expression) ?:body end }
-    => { local method _until-loop () 
-           if (~?test) ?body; _until-loop() end; 
+    => { local method _until-loop ()
+           if (~?test) ?body; _until-loop() end;
          end method _until-loop;
          _until-loop() }
 end macro until;
@@ -102,8 +102,8 @@ define macro block
 // Left-recursive so leftmost clause is innermost
 ebody:
 /*
-  {   ... 
-    exception (?excp, 
+  {   ...
+    exception (?excp,
                #rest ?options:expression,
                #key ?test:expression = always(#t),
                     ?init-arguments:expression = #())
@@ -115,7 +115,7 @@ ebody:
         end }
 */
   { ?abody cleanup ?cleanup:body}
-    => { %with-cleanup 
+    => { %with-cleanup
            ?abody
          cleanup
            ?cleanup
@@ -127,7 +127,7 @@ abody:
   { ?main:body afterwards ?after:body }
     => { %with-afterwards
            ?main
-         afterwards 
+         afterwards
            ?after
          end }
   { ?main:body }

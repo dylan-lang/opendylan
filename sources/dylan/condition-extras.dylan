@@ -17,7 +17,7 @@ define method break (#rest arguments)
       apply(%break, arguments)
     end if
   exception (<simple-restart>,
-             init-arguments: vector(format-string: "Return from break.")) 
+             init-arguments: vector(format-string: "Return from break."))
   end block;
   #f;
 end method break;
@@ -55,9 +55,9 @@ define method cerror (restart-descr, cond-or-string, #rest arguments)
   block ()
     apply(error, cond-or-string, arguments)
   exception (<simple-restart>,
-	     init-arguments: 
-	       vector(format-string:    restart-descr, 
-		      format-arguments: arguments))
+             init-arguments:
+               vector(format-string:    restart-descr,
+                      format-arguments: arguments))
     #f
   end block
 end method cerror;
@@ -98,9 +98,9 @@ define method make
     (class == <type-error>, #rest keys, #key value, type)
  => (error :: <type-error>)
   apply(next-method, class,
-	format-string: "%= is not of type %=",
-	format-arguments: vector(value, type),
-	keys)
+        format-string: "%= is not of type %=",
+        format-arguments: vector(value, type),
+        keys)
 end method make;
 
 define inline method check-type (value, type)
@@ -118,16 +118,16 @@ define class <sealed-object-error> (<error> /* <warning> */) end;
 
 define method do-handlers (function)
   local method always-true (x)
-	  #t
-	end method;
+          #t
+        end method;
   local method do-with-handlers (handlers :: <list>)
-	  for (_handler in handlers)
-	    function(_handler.handler-type,
-		     _handler.handler-test | always-true,
-		     _handler.handler-function,
-		     _handler.handler-init-arguments);
-	  end for;
-	end method;
+          for (_handler in handlers)
+            function(_handler.handler-type,
+                     _handler.handler-test | always-true,
+                     _handler.handler-function,
+                     _handler.handler-init-arguments);
+          end for;
+        end method;
   do-with-handlers(*current-handlers*);
   do-with-handlers(*last-handlers*);
 end method do-handlers;

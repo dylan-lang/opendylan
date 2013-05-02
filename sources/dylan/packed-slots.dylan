@@ -17,12 +17,12 @@ define method initialize-packed-slots
     (instance, #rest all-keys, #key, #all-keys)
 end method;
 
-define inline function pack-boolean 
+define inline function pack-boolean
     (x :: <boolean>) => (z :: <integer>)
   if (x) 1 else 0 end
 end function;
 
-define inline function unpack-boolean 
+define inline function unpack-boolean
     (x :: <integer>) => (z :: <boolean>)
   if (x = 1) #t else #f end
 end function;
@@ -55,14 +55,14 @@ end function;
 
 define macro packed-slots-definer
   { define ?adj:* packed-slots ?pslot:name (?class:name, ?superclass:name) ?slots:* end }
-    => { define ?adj packed-slots-aux ?pslot (?class, ?superclass) 
+    => { define ?adj packed-slots-aux ?pslot (?class, ?superclass)
            (?slots) (?slots) (?slots)
          end }
 end macro;
 
 define macro packed-slots-aux-definer
   { define ?adj:* packed-slots-aux ?pslot:name (?class:name, ?superclass:name)
-      (?slots:*) (?kslots) (?islots) 
+      (?slots:*) (?kslots) (?islots)
     end }
     => { define ?adj packed-accessors ?pslot (?class, "$end-count-" ## ?superclass)
             ?slots
@@ -70,18 +70,18 @@ define macro packed-slots-aux-definer
          define method initialize-packed-slots
              (x :: ?class, #rest all-keys, #key ?kslots)
            ?=next-method();
-	   ?islots
-	 end method }
+           ?islots
+         end method }
 islots:
   { }
     => { }
   { ?islot; ... }
     => { ?islot; ... }
-islot: 
+islot:
   { ?adjectives:* slot ?variable-name, ?ignore:* }
     => { if (supplied?(?variable-name))
-	   ?variable-name(x) := ?variable-name;
-	 end if }
+           ?variable-name(x) := ?variable-name;
+         end if }
 kslots:
   { }
     => { }
@@ -89,95 +89,95 @@ kslots:
     => { ?kslot, ... }
   { ?slot:*; ... }
     => { ... }
-kslot: 
-  { ?adjectives:* slot ?:name = ?default:expression, 
+kslot:
+  { ?adjectives:* slot ?:name = ?default:expression,
       ?before:* init-keyword: ?:symbol ?after:* }
     => { ?symbol ?name = ?default }
-  { ?adjectives:* slot ?:name = ?default:expression, 
+  { ?adjectives:* slot ?:name = ?default:expression,
       ?before:* required-init-keyword: ?:symbol ?after:* }
     => { ?symbol ?name = ?default }
-  { ?adjectives:* slot ?:name, 
+  { ?adjectives:* slot ?:name,
       ?before:* init-keyword: ?:symbol ?after:* }
     => { ?symbol ?name = unsupplied() }
-  { ?adjectives:* slot ?:name, 
+  { ?adjectives:* slot ?:name,
       ?before:* required-init-keyword: ?:symbol ?after:* }
     => { ?symbol ?name = unsupplied() }
   { ?adjectives:* slot ?:name = ?default:expression ?after:* }
     => { ?name = ?default }
   { ?adjectives:* slot ?:name ?after:* }
     => { ?name = unsupplied() }
-variable-name: 
+variable-name:
   { ?:name ?maybe-init-expression:* }
     => { ?name }
 end macro;
 
 define macro packed-accessors-definer
   { define packed-accessors ?pslot:name (?class:name, ?count:expression)
-    end } 
+    end }
     => { define constant "$end-count-" ## ?class = ?count }
   { define leaf packed-accessors ?pslot:name (?class:name, ?count:expression)
-    end } 
+    end }
     => { }
   { define ?adj:* packed-accessors ?pslot:name (?class:name, ?count:expression)
       boolean slot ?:name ?more:*; ?more-slots:*
-    end } 
+    end }
     => { define inline method ?name (x :: ?class) => (object :: <boolean>)
-	   logbit?(?count, ?pslot(x))
+           logbit?(?count, ?pslot(x))
          end method;
-         define method ?name ## "-setter" 
+         define method ?name ## "-setter"
              (z :: <boolean>, x :: ?class) => (z :: <boolean>)
            ?pslot(x) := logbit-deposit(z, ?count, ?pslot(x));
-	   z
-	 end method;
+           z
+         end method;
          define ?adj packed-accessors ?pslot (?class, ?count + 1)
            ?more-slots
          end }
   { define ?adj:* packed-accessors ?pslot:name (?class:name, ?count:expression)
       tristate slot ?:name ?more:*; ?more-slots:*
-    end } 
-    => { define ?adj packed-accessors ?pslot (?class, ?count) 
-           eval slot ?name, field-size: 2, 
-             pack-function: pack-tristate, unpack-function: unpack-tristate, 
-             ?more; 
+    end }
+    => { define ?adj packed-accessors ?pslot (?class, ?count)
+           eval slot ?name, field-size: 2,
+             pack-function: pack-tristate, unpack-function: unpack-tristate,
+             ?more;
            ?more-slots end }
   { define ?adj:* packed-accessors ?pslot:name (?class:name, ?count:expression)
       quadstate slot ?:name ?more:*; ?more-slots:*
-    end } 
-    => { define ?adj packed-accessors ?pslot (?class, ?count) 
-           eval slot ?name, field-size: 2, 
+    end }
+    => { define ?adj packed-accessors ?pslot (?class, ?count)
+           eval slot ?name, field-size: 2,
              pack-function: pack-quadstate, unpack-function: unpack-quadstate,
-             ?more; 
+             ?more;
            ?more-slots end }
   { define ?adj:* packed-accessors ?pslot:name (?class:name, ?count:expression)
-      eval slot ?:name ?maybe-init:*, 
-        field-size:      ?field-size:expression, 
+      eval slot ?:name ?maybe-init:*,
+        field-size:      ?field-size:expression,
         pack-function:   ?pack-function:expression,
         unpack-function: ?unpack-function:expression,
-        ?more:*; 
+        ?more:*;
       ?more-slots:*
-    end } 
+    end }
     => { define method ?name (x :: ?class) => (object)
-	   ?unpack-function(?name ## "-field"(x))
+           ?unpack-function(?name ## "-field"(x))
          end method;
          define method ?name ## "-setter" (z, x :: ?class) => (object)
-	   ?name ## "-field"(x) := ?pack-function(z)
-	 end method;
-         define ?adj packed-accessors ?pslot (?class, ?count) 
-           field slot ?name ## "-field" ?maybe-init, 
-             field-size: ?field-size, ?more; 
-           ?more-slots 
+           ?name ## "-field"(x) := ?pack-function(z)
+         end method;
+         define ?adj packed-accessors ?pslot (?class, ?count)
+           field slot ?name ## "-field" ?maybe-init,
+             field-size: ?field-size, ?more;
+           ?more-slots
          end }
   { define ?adj:* packed-accessors ?pslot:name (?class:name, ?count:expression)
-      field slot ?:name ?maybe-init:*, 
+      field slot ?:name ?maybe-init:*,
         field-size: ?field-size:expression, ?props:*; ?more-slots:*
-    end } 
+    end }
     => { define inline method ?name (x :: ?class) => (object :: <integer>)
-	   bit-field-extract(?count, ?field-size, ?pslot(x))
+           bit-field-extract(?count, ?field-size, ?pslot(x))
          end method;
-         define method ?name ## "-setter" 
+         define method ?name ## "-setter"
              (z :: <integer>, x :: ?class) => (object :: <integer>)
-	   ?pslot(x) := bit-field-deposit(z, ?count, ?field-size, ?pslot(x))
-	 end method;
+           ?pslot(x) := bit-field-deposit(z, ?count, ?field-size, ?pslot(x))
+         end method;
          define ?adj packed-accessors ?pslot (?class, ?count + ?field-size)
            ?more-slots
          end }

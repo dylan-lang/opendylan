@@ -12,7 +12,7 @@ define sealed inline method as (class == <symbol>, string :: <string>)
   make(<symbol>, name: as(<byte-string>, string))
 end method as;
 
-define sealed inline method as (class == <byte-string>, symbol :: <symbol>) 
+define sealed inline method as (class == <byte-string>, symbol :: <symbol>)
  => (result :: <byte-string>)
   symbol.symbol-name
 end method;
@@ -22,12 +22,12 @@ define sealed inline method as (class == <string>, symbol :: <symbol>)
   as(<byte-string>, symbol);
 end method as;
 
-define sealed inline method \= 
+define sealed inline method \=
     (symbol-1 :: <symbol>, symbol-2 :: <symbol>) => (well? :: <boolean>)
   as(<string>, symbol-1) = as(<string>, symbol-2)
 end method \=;
 
-define sealed inline method \< 
+define sealed inline method \<
     (symbol-1 :: <symbol>, symbol-2 :: <symbol>) => (well? :: <boolean>)
   as(<string>, symbol-1) < as(<string>, symbol-2)
 end method \<;

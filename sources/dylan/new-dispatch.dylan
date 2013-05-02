@@ -1013,7 +1013,7 @@ define function ckd-add!
         let d :: <hashed-class-keyed-discriminator> = d;
         grounded-hckd-add!(d, key, value)
       end if;
-  dbg(if(ans == d) "ckd-add! same discriminator" else "ckd-add! new discriminator" end);
+  dbg(if (ans == d) "ckd-add! same discriminator" else "ckd-add! new discriminator" end);
   ans
 end function;
 

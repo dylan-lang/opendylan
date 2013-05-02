@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method slot-allocation (descriptor :: <instance-slot-descriptor>)
-    => (result :: <symbol>);
+ => (result :: <symbol>);
   #"instance"
 end method slot-allocation;
 
@@ -45,7 +45,7 @@ define method initialize
   end if;
   if (init-keyword | required-init-keyword | setter-var)
     error(make(<simple-slot-error>,
-               format-string: "Illegal slot-definition for constant slot %=.", 
+               format-string: "Illegal slot-definition for constant slot %=.",
                format-arguments: list(all-keys)))
   end if;
   descriptor
@@ -60,7 +60,7 @@ define method as-slot-descriptor-class (symbol == #"each-subclass")
 end method as-slot-descriptor-class;
 
 define method slot-allocation (descriptor :: <virtual-slot-descriptor>)
-    => (result :: <symbol>);
+ => (result :: <symbol>);
   #"virtual"
 end method slot-allocation;
 
@@ -73,7 +73,7 @@ define method initialize
      #rest all-keys,
      #key  init-value = $not-found,
            init-function = $not-found,
-     #all-keys) 
+     #all-keys)
  => ()
   next-method();
   apply(initialize-packed-slots, descriptor, all-keys);
@@ -107,7 +107,7 @@ define method initialize
   next-method();
   if (init-keyword & ~instance?(init-keyword, <symbol>))
     error(make(<simple-slot-error>,
-               format-string: "Init-keyword: must be a <symbol>: %=", 
+               format-string: "Init-keyword: must be a <symbol>: %=",
                format-arguments: list(init-keyword)))
   end if;
   let init-value? = init-value ~== $not-found;
@@ -155,31 +155,31 @@ end method initialize;
 */
 
 define method initialize (m :: <getter-method>, #rest initargs,
-			  #key slot-descriptor :: <slot-descriptor>) => ()
+                          #key slot-descriptor :: <slot-descriptor>) => ()
   primitive-set-accessor-method-xep(m, if (instance?(slot-descriptor, <any-instance-slot-descriptor>))
-					 0
-				       else
-					 2
-				       end if);
+                                         0
+                                       else
+                                         2
+                                       end if);
   // The next-method() is deliberately after the above initializations;
   // the xep because I feel better with it being initialized as early as possible.
   next-method();
 end method;
 
 define method initialize (m :: <setter-method>, #rest initargs,
-			  #key slot-descriptor :: <slot-descriptor>) => ()
+                          #key slot-descriptor :: <slot-descriptor>) => ()
   primitive-set-accessor-method-xep(m, if (instance?(slot-descriptor, <any-instance-slot-descriptor>))
-					 1
-				       else
-					 3
-				       end if);
+                                         1
+                                       else
+                                         3
+                                       end if);
   // The next-method() is deliberately after the above initializations;
   // the xep because I feel better with it being initialized as early as possible.
   next-method();
 end method;
-  
+
 define method initialize (m :: <repeated-getter-method>, #rest initargs,
-			  #key slot-descriptor :: <slot-descriptor>) => ()
+                          #key slot-descriptor :: <slot-descriptor>) => ()
   primitive-set-accessor-method-xep(m, 4);
   // The next-method() is deliberately after the above initializations;
   // the xep because I feel better with it being initialized as early as possible.
@@ -187,7 +187,7 @@ define method initialize (m :: <repeated-getter-method>, #rest initargs,
 end method;
 
 define method initialize (m :: <repeated-setter-method>, #rest initargs,
-			  #key slot-descriptor :: <slot-descriptor>) => ()
+                          #key slot-descriptor :: <slot-descriptor>) => ()
   primitive-set-accessor-method-xep(m, 5);
   // The next-method() is deliberately after the above initializations;
   // the xep because I feel better with it being initialized as early as possible.
@@ -224,17 +224,17 @@ end method;
 //    <virtual-slot-descriptor> => #f;
 //    <repeated-slot-descriptor> =>
 //      if (setter?)
-//	method (value :: type, object :: owner, idx :: <integer>)
-//	  repeated-slot-value(object, sd, idx) := value
-//	end method
+//        method (value :: type, object :: owner, idx :: <integer>)
+//          repeated-slot-value(object, sd, idx) := value
+//        end method
 //      else
-//	method (object :: owner, idx :: <integer>) repeated-slot-value(object, sd, idx) end
+//        method (object :: owner, idx :: <integer>) repeated-slot-value(object, sd, idx) end
 //      end if;
-//    otherwise => 
+//    otherwise =>
 //      if (setter?)
-//	method (value :: type, object :: owner) slot-value(object, sd) := value end
+//        method (value :: type, object :: owner) slot-value(object, sd) := value end
 //      else
-//	method (object :: owner) slot-value(object, sd) end
+//        method (object :: owner) slot-value(object, sd) end
 //      end if;
 //  end select;
 //end function;
@@ -242,18 +242,18 @@ end method;
 
 define function make-a-slot-method (sd :: <slot-descriptor>, setter?)
   let (gtype, stype) = slot-accessor-method-classes(sd);
-  let thetype = if(setter?) stype else gtype end;
+  let thetype = if (setter?) stype else gtype end;
   thetype & make(thetype, slot-descriptor: sd)
 end function;
 
 
 // define function batch-create-slot-methods (slot-descriptors :: <sequence>)
 //   map(method (sd :: <slot-descriptor>)
-// 	let g = slot-getter(sd);
-// 	let s = slot-setter(sd);
-// 	let (gtype, stype) = slot-accessor-method-classes(sd);
-// 	vector(gtype & g & make(gtype, slot-descriptor: sd),
-// 	       stype & s & make(stype, slot-descriptor: sd))
+//         let g = slot-getter(sd);
+//         let s = slot-setter(sd);
+//         let (gtype, stype) = slot-accessor-method-classes(sd);
+//         vector(gtype & g & make(gtype, slot-descriptor: sd),
+//                stype & s & make(stype, slot-descriptor: sd))
 //       end method,
 //       slot-descriptors)
 // end function;
@@ -267,7 +267,7 @@ define method add-getter-method
      override-sealing? :: <boolean>)
   let new-method = make-a-slot-method(descriptor, #f);
   %add-a-method(slot-getter, new-method, home-library(class-module(class-NOT)),
-		#t, ~ override-sealing?, slot-method-sealed?(descriptor))
+                #t, ~ override-sealing?, slot-method-sealed?(descriptor))
 end method add-getter-method;
 
 
@@ -278,7 +278,7 @@ define method add-setter-method
      override-sealing? :: <boolean>)
   let new-method = make-a-slot-method(descriptor, #t);
   %add-a-method(slot-setter, new-method, home-library(class-module(class-NOT)),
-		#t, ~ override-sealing?, slot-method-sealed?(descriptor))
+                #t, ~ override-sealing?, slot-method-sealed?(descriptor))
 end method add-setter-method;
 
 
@@ -289,7 +289,7 @@ end method add-setter-method;
 //   let getter-method = find-method(slot-getter, class.list);
 //   if (instance?(getter-method, <getter-accessor-method>))
 //     let getter-method :: <getter-accessor-method> = getter-method;
-//     
+//
 //     remove-method(slot-getter, getter-method)
 //   end if
 // end method remove-getter-method;

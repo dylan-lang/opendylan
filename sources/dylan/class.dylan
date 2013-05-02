@@ -47,10 +47,10 @@ ignore(slots-have-fixed-offsets?-computed?);
 
 define open generic as (type :: <type>, object) => object;
 
-define open generic make 
+define open generic make
     (type :: <type>, #rest key-value-pairs, #key, #all-keys) => object;
 
-define open generic initialize 
+define open generic initialize
     (instance, #key, #all-keys);
 
 define generic subclass?
@@ -77,8 +77,8 @@ end class;
 
 define method initialize (scu :: <subjunctive-class-universe>, #key)
   scu-converter(scu) := method (c :: <class>) => (ic :: <implementation-class>)
-			  scu-entry(c, scu)
-			end method;
+                          scu-entry(c, scu)
+                        end method;
 end method;
 
 define sealed domain make (subclass(<subjunctive-class-universe>));
@@ -101,12 +101,12 @@ define function scu-entry? (c :: <class>, scu :: <subjunctive-class-universe>)
     end if
   end iterate
 end function;
-      
+
 
 define inline function scu-entry (c :: <class>, scu :: <subjunctive-class-universe>)
  => (ans :: <implementation-class>)
   (scu ~== $empty-subjunctive-class-universe & scu-entry?(c, scu))
-    | 
+    |
   class-implementation-class(c)
 end function;
 
@@ -115,15 +115,15 @@ define function scu-initialize-all (f :: <function>, scu :: <subjunctive-class-u
  => ()
   // Optimize this stuff..
   scu-do(method (ic :: <implementation-class>, scu :: <subjunctive-class-universe>)
-	   scu-force-initialization(iclass-class(ic), scu, f)
-	 end,
-	 scu);
+           scu-force-initialization(iclass-class(ic), scu, f)
+         end,
+         scu);
 end function;
 
 
-define function scu-force-initialization (c :: <class>, 
-					  scu :: <subjunctive-class-universe>,
-					  f :: <function>)
+define function scu-force-initialization (c :: <class>,
+                                          scu :: <subjunctive-class-universe>,
+                                          f :: <function>)
  => (iclass :: <implementation-class>);
   iterate loop (n :: <scu-node> = scu-alist(scu))
     if (n == $empty-scu-node)
@@ -131,11 +131,11 @@ define function scu-force-initialization (c :: <class>,
     elseif (scu-node-class(n) == c)
       let iclass :: <implementation-class> = scu-node-iclass(n);
       if (~(scu-node-initialized?(n)))
-	for (c :: <class> in direct-superclasses(iclass)) scu-force-initialization(c, scu, f) end;
-	if (~(scu-node-initialized?(n)))
-	  f(iclass, scu);
-	  scu-node-initialized?(n) := #t;
-	end if
+        for (c :: <class> in direct-superclasses(iclass)) scu-force-initialization(c, scu, f) end;
+        if (~(scu-node-initialized?(n)))
+          f(iclass, scu);
+          scu-node-initialized?(n) := #t;
+        end if
       end if;
       iclass
     else
@@ -145,9 +145,9 @@ define function scu-force-initialization (c :: <class>,
 end function;
 
 
-define function scu-entry-setter (ic :: <implementation-class>, 
-				  c :: <class>,
-				  scu :: <subjunctive-class-universe>)
+define function scu-entry-setter (ic :: <implementation-class>,
+                                  c :: <class>,
+                                  scu :: <subjunctive-class-universe>)
  => (ic :: <implementation-class>)
   if (scu == $empty-subjunctive-class-universe)
     error("Attempt to modify the canonical empty subjunctive class universe!")
@@ -190,22 +190,22 @@ define function effective-initialization-argument-descriptor
     (descriptor :: <slot-keyword-initialization-descriptor>)
   let owner = slot-owner(descriptor);
   if (owner == iclass-class(iclass))
-    descriptor				// optimize common case
+    descriptor                                // optimize common case
   else
     let keyword = init-keyword(descriptor);
     if (keyword)
       block (return)
-	for-each-superclass (c :: <class> of iclass)
+        for-each-superclass (c :: <class> of iclass)
           if (c == owner) return(descriptor) end;
-	  for (d :: <init-arg-descriptor> in
-		 direct-initialization-argument-descriptors(c))
-	    if (init-keyword(d) == keyword &
-		  (init-keyword-required?(d) | init-supplied?(d)))
-	      return(d)
-	    end;
-	  end;
-	end;
-	descriptor
+          for (d :: <init-arg-descriptor> in
+                 direct-initialization-argument-descriptors(c))
+            if (init-keyword(d) == keyword &
+                  (init-keyword-required?(d) | init-supplied?(d)))
+              return(d)
+            end;
+          end;
+        end;
+        descriptor
       end
     else
       descriptor
@@ -218,18 +218,18 @@ define function effective-initial-value-descriptor
     (descriptor :: <slot-initial-value-descriptor>)
   let owner = slot-owner(descriptor);
   if (owner == iclass-class(iclass))
-    descriptor				// optimize common case
+    descriptor                                // optimize common case
   else
     block (return)
       let getter = slot-getter(descriptor);
       for-each-superclass (c :: <class> of iclass)
         if (c == owner) return(descriptor) end;
-	for (d :: <inherited-slot-descriptor> in
-	       direct-inherited-slot-descriptors(c))
-	  if (inherited-slot-getter(d) == getter & init-supplied?(d))
-	    return(d)
-	  end;
-	end;
+        for (d :: <inherited-slot-descriptor> in
+               direct-inherited-slot-descriptors(c))
+          if (inherited-slot-getter(d) == getter & init-supplied?(d))
+            return(d)
+          end;
+        end;
       end;
       descriptor
     end
@@ -251,7 +251,7 @@ define method make
                                slot-descriptor.slot-owner,
                                value,
                                slot-descriptor.slot-type),
-	keys)
+        keys)
 end method make;
 
 define function keyword-value
@@ -259,23 +259,23 @@ define function keyword-value
      init-args :: <simple-object-vector>)
   local method keyword-element
             (v :: <simple-object-vector>, keyword :: <symbol>)
-	  let v-size = size(v);
-	  for (offset :: <integer> from 0 below v-size by 2,
-	       until: vector-element(v, offset) == keyword)
-	  finally if (offset < v-size)
-		    vector-element(v, offset + 1)
-		  else
-		    $not-found
-		  end if
-	  end for;
-	end method;
+          let v-size = size(v);
+          for (offset :: <integer> from 0 below v-size by 2,
+               until: vector-element(v, offset) == keyword)
+          finally if (offset < v-size)
+                    vector-element(v, offset + 1)
+                  else
+                    $not-found
+                  end if
+          end for;
+        end method;
   let keyword = descriptor.init-keyword;
   if (keyword)
     let keyword :: <symbol> = keyword;// *@@* TYPE ONLY
     let keyword-value = keyword-element(init-args, keyword);
     if (keyword-value == $not-found)
       if (init-keyword-required?
-	    (effective-initialization-argument-descriptor(descriptor, iclass)))
+            (effective-initialization-argument-descriptor(descriptor, iclass)))
         error(make(<missing-keyword-error>,
                    format-string: "Make %= required-init-keyword %= not supplied.",
                    format-arguments: list(iclass-class(iclass), descriptor.init-keyword)))
@@ -283,8 +283,8 @@ define function keyword-value
     elseif (~instance?(keyword-value, slot-type(descriptor)))
       error(make(<slot-type-error>,
                  value: keyword-value,
-		 type: slot-type(descriptor),
-		 slot-descriptor: descriptor))
+                 type: slot-type(descriptor),
+                 slot-descriptor: descriptor))
     end if;
     keyword-value
   else
@@ -294,7 +294,7 @@ end function keyword-value;
 
 
 // We need to be careful here.  If we just initialize $slot-initial-data-lock
-// to a simple lock then the associated call to make may end up calling 
+// to a simple lock then the associated call to make may end up calling
 // init-data before the lock has been initialized.  Hence the two-stage process
 // and the conditional code in init-data.  Is there a better way?
 
@@ -329,16 +329,16 @@ define function kludge-up-init-value (class :: <class>, getter :: <generic-funct
   block (return)
     for (sd :: <slot-descriptor> in slot-descriptors(class))
       if (getter == slot-getter(sd))
-	sd.init-data-slot := value;
-	sd.init-evaluated? := #t;
-	sd.init-value? := #t;
-	return()
+        sd.init-data-slot := value;
+        sd.init-evaluated? := #t;
+        sd.init-value? := #t;
+        return()
       end if
     end for;
     error("can't find %= in %=", getter, class);
   end
 end function;
-	
+
 
 define inline-only function init-falue
     (descriptor :: <slot-initial-value-descriptor>)
@@ -362,7 +362,7 @@ define function install-and-return-make-method-init-data
   descriptor.init-data
 end function;
 
-define inline-only function make-method-init-value 
+define inline-only function make-method-init-value
     (descriptor :: <slot-initial-value-descriptor>) => (value)
   if (descriptor.init-evaluated?)
     descriptor.init-data-slot
@@ -371,7 +371,7 @@ define inline-only function make-method-init-value
   end
 end function;
 
-define inline-only function make-method-init-function-value 
+define inline-only function make-method-init-function-value
     (descriptor :: <slot-initial-value-descriptor>) => (value)
   if (descriptor.init-evaluated?)
     descriptor.init-data-slot()
@@ -393,7 +393,7 @@ end;
 
 define method allocation-attributes
     (iclass :: <implementation-class>, init-args :: <simple-object-vector>)
- => (instance-size :: <integer>, 
+ => (instance-size :: <integer>,
      repeated-slot? :: <boolean>, repeated-slot-type :: <type>,
      repeated-size :: <integer>, fill-value)
   let instance-size = iclass.instance-storage-size;
@@ -403,11 +403,11 @@ define method allocation-attributes
       = repeated-slot-descriptor; // *@@* TYPE
     values(instance-size, #t, repeated-slot-descriptor.slot-type,
            instance-new-value
-	     (repeated-slot-descriptor.size-slot-descriptor, iclass, init-args),
+             (repeated-slot-descriptor.size-slot-descriptor, iclass, init-args),
            instance-new-value(repeated-slot-descriptor, iclass, init-args))
   else
     values(instance-size, #f, <object>, 0, #f)
-  end if 
+  end if
 end method allocation-attributes;
 
 
@@ -431,7 +431,7 @@ define function class-not-instantiable (ic :: <implementation-class>) => ()
   end if
 end function;
 
-    
+
 define function allocate-instance-i
     (iclass :: <implementation-class>, init-args :: <simple-object-vector>) => (instance)
   let class :: <class> = iclass-class(iclass);
@@ -467,9 +467,9 @@ define function report-class-incomplete (class, format-string :: <string>)
  => (will-never-return :: <bottom>)
   let  class-rep = class.debug-name ; // incomplete class is a dangerous out-of-language thing
   error (make (<class-incomplete-error>,
-	 object:           class-rep,
-	 format-string:    format-string, 
-	 format-arguments: list (class-rep)))
+         object:           class-rep,
+         format-string:    format-string,
+         format-arguments: list (class-rep)))
 end;
 
 define function default-class-constructor
@@ -478,7 +478,7 @@ define function default-class-constructor
     report-class-incomplete (class, "attempt to make an instance of an incompletely initialized class: %=")
   end;
 
-  let init-args 
+  let init-args
     = concatenate-2(init-args, class.defaulted-initialization-arguments);
   let instance = allocate-instance(class, init-args);
 
@@ -498,7 +498,7 @@ define function default-initialize
   let descriptors :: <simple-object-vector>
     = iclass.instance-slot-descriptors;
   for (slot-offset :: <integer> from 0 below descriptors.size)
-    let descriptor :: <slot-descriptor> 
+    let descriptor :: <slot-descriptor>
       = vector-element(descriptors, slot-offset);
     primitive-slot-value(instance, integer-as-raw(slot-offset))
       := instance-new-value(descriptor, iclass, init-args);
@@ -530,7 +530,7 @@ define function default-initialize
   instance
 end function default-initialize;
 
-define function defaulted-initialization-arguments 
+define function defaulted-initialization-arguments
     (class :: <class>) => (defaulted :: <simple-object-vector>)
   let slot = defaulted-initialization-arguments-slot(class);
   if (instance?(slot, <simple-object-vector>))
@@ -541,24 +541,24 @@ define function defaulted-initialization-arguments
     let index :: <integer> = 0;
     let required-keywords = #();
     for-each-superclass (c :: <class> of class)
-      for (descriptor :: <init-arg-descriptor> in 
-	     direct-initialization-argument-descriptors(c))
-	let keyword = descriptor.init-keyword;
-	if (member?(keyword, required-keywords))
-	  // don't look at it
-	elseif (descriptor.init-keyword-required?)
-	  required-keywords := pair(keyword, required-keywords);
-	elseif (descriptor.init-supplied? &
-		  ~(for (i :: <integer> from 0 below index by 2,
-			 until: keyword == result[i])
-		      // if we quit early, then we found the keyword
-		    finally let idx :: <integer> = index; i < idx
-		    end))
-	  let idx :: <integer> = index;
-	  result[idx] := keyword;
-	  result[idx + 1] := init-falue(descriptor);
-	  index := idx + 2;
-	end;
+      for (descriptor :: <init-arg-descriptor> in
+             direct-initialization-argument-descriptors(c))
+        let keyword = descriptor.init-keyword;
+        if (member?(keyword, required-keywords))
+          // don't look at it
+        elseif (descriptor.init-keyword-required?)
+          required-keywords := pair(keyword, required-keywords);
+        elseif (descriptor.init-supplied? &
+                  ~(for (i :: <integer> from 0 below index by 2,
+                         until: keyword == result[i])
+                      // if we quit early, then we found the keyword
+                    finally let idx :: <integer> = index; i < idx
+                    end))
+          let idx :: <integer> = index;
+          result[idx] := keyword;
+          result[idx + 1] := init-falue(descriptor);
+          index := idx + 2;
+        end;
       end;
     end;
     if (negative?(slot))
@@ -571,14 +571,14 @@ end;
 
 define method reinitialize (instance, #rest init-args)
   let class = object-class(instance);
-  let init-args 
+  let init-args
     = concatenate-2(init-args, class.defaulted-initialization-arguments);
   apply(default-initialize, class, instance, init-args);
   apply(initialize, instance, init-args);
 end method reinitialize;
 
 // This is a hook for the compiler that allows it to optimize the
-// step class -> constructor without leaving a bare implementation 
+// step class -> constructor without leaving a bare implementation
 // class object in the code at any time.
 
 define function class-constructor-atomically
@@ -600,20 +600,20 @@ end method make;
 define function initialize-class-instance?-iep (c :: <class>) => ();
   let m :: <simple-method>
     = if (class-subtype-bit(c) ~== 0)
-	masked-class-instance?
+        masked-class-instance?
       else
-	let pos :: <integer> = class-rcpl-position(c);
-	let v :: <simple-object-vector> = class-rcpl-other-positions(c);
-	let nothers :: <integer> = size(v);
-	if (nothers > 0)
-	  general-rcpl-class-instance?
-	elseif (pos < 0)
-	  class-instance?-initial
-	elseif (pos < $min-rcpl-size)
-	  class-instance?-rcpl-single-small
-	else
-	  class-instance?-rcpl-single-large
-	end if
+        let pos :: <integer> = class-rcpl-position(c);
+        let v :: <simple-object-vector> = class-rcpl-other-positions(c);
+        let nothers :: <integer> = size(v);
+        if (nothers > 0)
+          general-rcpl-class-instance?
+        elseif (pos < 0)
+          class-instance?-initial
+        elseif (pos < $min-rcpl-size)
+          class-instance?-rcpl-single-small
+        else
+          class-instance?-rcpl-single-large
+        end if
       end if;
   c.instance?-iep := m.simple-method-iep;
 end function;
@@ -646,71 +646,71 @@ define function augment-iclass-rcpl-position-data (iclass :: <implementation-cla
     | with-lock(lk)
         iclass-rcpl-position-known?(pos, iclass)
           | begin
-	      let first-pos :: <integer> = iclass.class-rcpl-position;
-	      if (first-pos == -1)
-		iclass.class-rcpl-position := pos;
-	      else
-		assert(pos >= first-pos);
-		let add-me :: <integer> = pos;
-		let others :: <simple-object-vector> = iclass.class-rcpl-other-positions;
-		let nothers :: <integer> = size(others);
-		let new :: <simple-object-vector> = make(<simple-object-vector>, size: nothers + 1);
-		local method foo (i :: <integer>)
-			if (i == nothers)
-			  new[i] := add-me;
-			else
-			  let elt :: <integer> = others[i];
-			  if (elt < add-me)
-			    new[i] := elt;
-			    foo(i + 1)
-			  else
-			    new[i] := add-me;
-			    local method bar (i :: <integer>, j :: <integer>)
-				    if (i ~== nothers)
-				      new[j] := others[i];
-				      bar(j, j + 1)
-				    end if
-				  end method;
-			    bar(i, i + 1)
-			  end if
-			end if
-		      end method;
-		foo(0);
-		synchronize-side-effects();
-		iclass.class-rcpl-other-positions := new;
-		// It is implicit that, in simple additions to the positions, the instance? code
-		// is upwards-compatible (although the newly added type might not be recognized
-		// until the new instance? function is added).  If this gets changed we will need
-		// a more complicated mechanism.
-	      end if;
-	      synchronize-side-effects();
-	      let the-class :: <class> = iclass-class(iclass);
-	      if (class-implementation-class(the-class) == iclass)
-		initialize-class-instance?-iep(the-class)
-	      end if;
-	    end
+              let first-pos :: <integer> = iclass.class-rcpl-position;
+              if (first-pos == -1)
+                iclass.class-rcpl-position := pos;
+              else
+                assert(pos >= first-pos);
+                let add-me :: <integer> = pos;
+                let others :: <simple-object-vector> = iclass.class-rcpl-other-positions;
+                let nothers :: <integer> = size(others);
+                let new :: <simple-object-vector> = make(<simple-object-vector>, size: nothers + 1);
+                local method foo (i :: <integer>)
+                        if (i == nothers)
+                          new[i] := add-me;
+                        else
+                          let elt :: <integer> = others[i];
+                          if (elt < add-me)
+                            new[i] := elt;
+                            foo(i + 1)
+                          else
+                            new[i] := add-me;
+                            local method bar (i :: <integer>, j :: <integer>)
+                                    if (i ~== nothers)
+                                      new[j] := others[i];
+                                      bar(j, j + 1)
+                                    end if
+                                  end method;
+                            bar(i, i + 1)
+                          end if
+                        end if
+                      end method;
+                foo(0);
+                synchronize-side-effects();
+                iclass.class-rcpl-other-positions := new;
+                // It is implicit that, in simple additions to the positions, the instance? code
+                // is upwards-compatible (although the newly added type might not be recognized
+                // until the new instance? function is added).  If this gets changed we will need
+                // a more complicated mechanism.
+              end if;
+              synchronize-side-effects();
+              let the-class :: <class> = iclass-class(iclass);
+              if (class-implementation-class(the-class) == iclass)
+                initialize-class-instance?-iep(the-class)
+              end if;
+            end
     end with-lock
 end function;
 
 
-define function augment-rcpl-position-data-multiple (cls :: <class>, positions :: <simple-object-vector>) 
+define function augment-rcpl-position-data-multiple (cls :: <class>, positions :: <simple-object-vector>)
  => ()
   let lk :: <simple-lock> = $class-bashing-lock;
   with-lock (lk)
     let ninc :: <integer> = 0;
   let npos :: <integer> = size(positions);
   let ninc :: <integer> = begin
-			    local method loop (i :: <integer>, n :: <integer>)
-				    if (i == 0)
-				      n
-				    else
-				      let i :: <integer> = i - 1;
-				      let p :: <integer> = vector-element(positions, i);
-				      loop(i, if (rcpl-position-known?(p, cls)) n else n + 1 end)
-				    end if
-				  end method;
-			    loop(size(positions), 0)
-			  end;
+                            local method loop (i :: <integer>, n :: <integer>)
+                                    if (i == 0)
+                                      n
+                                    else
+                                      let i :: <integer> = i - 1;
+                                      let p :: <integer> = vector-element(positions, i);
+                                      loop(i, if (rcpl-position-known?(p, cls)) n else n + 1 end)
+                                    end if
+                                  end method;
+                            loop(size(positions), 0)
+                          end;
   // for (p :: <integer> in positions) if (~rcpl-position-known?(p, cls)) ninc := ninc + 1 end if end for;
   if (ninc > 0)
     let old :: <simple-object-vector> = cls.class-rcpl-other-positions;
@@ -719,35 +719,35 @@ define function augment-rcpl-position-data-multiple (cls :: <class>, positions :
     let new :: <simple-object-vector> = make(<simple-object-vector>, size: nnew);
     let base-pos :: <integer> = class-rcpl-position(cls);
     local method loop (pidx :: <integer>, nidx :: <integer>, oidx :: <integer>)
-	    if (oidx == nold)
-	      if (pidx ~== npos)
-		new[nidx] := positions[pidx];
-		loop(pidx + 1, nidx + 1, oidx)
-	      else
-		synchronize-side-effects();
-		cls.class-rcpl-other-positions := new;
-		synchronize-side-effects();
-		initialize-class-instance?-iep(cls)
-	      end if
-	    elseif (pidx == npos)
-	      new[nidx] := old[oidx];
-	      loop(pidx, nidx + 1, oidx + 1)
-	    else
-	      let olde :: <integer> = old[oidx];
-	      let newe :: <integer> = positions[pidx];
-	      if (newe < olde)
-		if (newe == base-pos)
-		  loop(pidx + 1, nidx, oidx)
-		else
-		  new[nidx] := newe;
-		  loop(pidx + 1, nidx + 1, oidx)
-		end if
-	      else
-		new[nidx] := olde;
-		loop(if (olde == newe) pidx + 1 else pidx end, nidx + 1, oidx + 1)
-	      end if
-	    end if
-	  end method;
+            if (oidx == nold)
+              if (pidx ~== npos)
+                new[nidx] := positions[pidx];
+                loop(pidx + 1, nidx + 1, oidx)
+              else
+                synchronize-side-effects();
+                cls.class-rcpl-other-positions := new;
+                synchronize-side-effects();
+                initialize-class-instance?-iep(cls)
+              end if
+            elseif (pidx == npos)
+              new[nidx] := old[oidx];
+              loop(pidx, nidx + 1, oidx + 1)
+            else
+              let olde :: <integer> = old[oidx];
+              let newe :: <integer> = positions[pidx];
+              if (newe < olde)
+                if (newe == base-pos)
+                  loop(pidx + 1, nidx, oidx)
+                else
+                  new[nidx] := newe;
+                  loop(pidx + 1, nidx + 1, oidx)
+                end if
+              else
+                new[nidx] := olde;
+                loop(if (olde == newe) pidx + 1 else pidx end, nidx + 1, oidx + 1)
+              end if
+            end if
+          end method;
     loop(0, 0, 0)
   end if
 end with-lock
@@ -757,13 +757,13 @@ end function;
 define function augment-rcpl-position-data-kludgey (data :: <simple-object-vector>) => ()
   let n :: <integer> = size(data);
   local method loop(i :: <integer>)
-	  if (i < n)
-	    let c :: <class> = data[i];
-	    let p :: <integer> = data[i + 1];
-	    augment-iclass-rcpl-position-data(class-implementation-class(c), p);
-	    loop(i + 2)
-	  end if
-	end method;
+          if (i < n)
+            let c :: <class> = data[i];
+            let p :: <integer> = data[i + 1];
+            augment-iclass-rcpl-position-data(class-implementation-class(c), p);
+            loop(i + 2)
+          end if
+        end method;
   loop(0)
 end function;
 
@@ -777,7 +777,7 @@ define inline constant $min-rcpl-size = 6;
 
 
 define inline function rcpl-isubclass? (isub :: <implementation-class>, sub :: <class>,
-					isup :: <implementation-class>, sup :: <class>)
+                                        isup :: <implementation-class>, sup :: <class>)
   if (pointer-id? (sub, sup))
     #t
   else
@@ -792,27 +792,27 @@ define inline function rcpl-isubclass? (isub :: <implementation-class>, sub :: <
       let  positions = isup.class-rcpl-other-positions ;
       let  len :: <integer> = positions.size ;
       local method loop (i :: <integer>)
-	      if (i == len)
-		#f
-	      else
-		let rpos :: <integer> = vector-element(positions, i);
-		if (rpos < rcpllen)
-		  if (pointer-id?(vector-element(rcpl, rpos), sup))
-		    #t
-		  else
-		    loop(i + 1)
-		  end if
-		else
-		  #f
-		end if
-	      end if
-	    end method;
+              if (i == len)
+                #f
+              else
+                let rpos :: <integer> = vector-element(positions, i);
+                if (rpos < rcpllen)
+                  if (pointer-id?(vector-element(rcpl, rpos), sup))
+                    #t
+                  else
+                    loop(i + 1)
+                  end if
+                else
+                  #f
+                end if
+              end if
+            end method;
       loop(0)
     end if
   end if
 end;
 
- 
+
 define constant general-rcpl-class-instance? = method
     (obj :: <object>, cls :: <class>) => (v :: <boolean>)
   let icls :: <implementation-class> = cls.class-implementation-class;
@@ -827,7 +827,7 @@ define constant class-instance?-initial = method
   // let icls :: <implementation-class> = cls.class-implementation-class;
   // let n :: <integer> = class-instance?-count(icls) + 1;
   // class-instance?-count(icls) := n;
-  indirect-object?(obj) 
+  indirect-object?(obj)
     &
     pointer-id?(iclass-class(indirect-object-implementation-class(obj)), cls)
 end method;
@@ -881,7 +881,7 @@ define constant masked-class-instance? = method (x, c :: <class>) => (v :: <bool
 end method;
 
 
-define constant get-class-instance?-counts 
+define constant get-class-instance?-counts
   = method (classes :: <sequence>) => (v :: <sequence>);
       map(class-instance?-count, classes)
     end method;
@@ -891,7 +891,7 @@ define constant get-class-instance?-counts
 // Comment out these stubs and reinstate the slot in class objects in order
 // to re-enable instance check counting.
 
-define inline-only method class-instance?-count 
+define inline-only method class-instance?-count
     (c :: <class>) => (count :: <integer>)
   0
 end method;
@@ -901,7 +901,7 @@ define inline-only method class-instance?-count-setter
   0
 end method;
 
-  
+
 ////
 //// BASIC OPERATIONS
 ////
@@ -919,7 +919,7 @@ define inline method subclass? (x :: <class>, y :: <class>) => (result :: <boole
 end method;
 
 define function subiclass? (xiclass :: <implementation-class>, x :: <class>,
-			    yiclass :: <implementation-class>, y :: <class>)
+                            yiclass :: <implementation-class>, y :: <class>)
  => (well? :: <boolean>)
   if (xiclass.iclass-type-complete?)
     if (yiclass.iclass-type-complete?)
@@ -939,7 +939,7 @@ define method subtype? (class-1 :: <class>, class-2 :: <class>)
 end method subtype?;
 
 define inline method subjunctive-subtype? (class-1 :: <class>, class-2 :: <class>,
-					   scu :: <subjunctive-class-universe>)
+                                           scu :: <subjunctive-class-universe>)
  => (result :: <boolean>)
   subiclass?(scu-entry(class-1, scu), class-1, scu-entry(class-2, scu), class-2)
 end method;
@@ -948,7 +948,7 @@ end method;
 // !@#$ SHOULD BE SHARED WITH DISPATCH CODE
 
 define method has-instances? (class-1 :: <class>, class-2 :: <class>,
-			      scu :: <subjunctive-class-universe>)
+                              scu :: <subjunctive-class-universe>)
   => (some? :: <boolean>, all? :: <boolean>);
   let ic1 :: <implementation-class> = scu-entry(class-1, scu);
   let ic2 :: <implementation-class> = scu-entry(class-2, scu);
@@ -968,7 +968,7 @@ define method augment-class-known-joint (c1 :: <class>, vec :: <simple-object-ve
     for (c2 :: <class> in vec)
       let ic2 :: <implementation-class> = class-implementation-class(c2);
       if (~member?(c1, class-known-joint(ic2)) & ~member?(c2, known))
-	new := pair(c2, new)
+        new := pair(c2, new)
       end if
     end for;
     if (~empty?(new))
@@ -981,34 +981,34 @@ end method;
 
 define function grounded-member?
     (value, collection :: <simple-object-vector>)
-	=> (boolean :: <boolean>)
+ => (boolean :: <boolean>)
   without-bounds-checks
     let n :: <integer> = collection.size;
     iterate grovel (index :: <integer> = 0)
       if (index = n)
-	#f
+        #f
       elseif (pointer-id?(collection[index], value))
-	#t 
+        #t
       else
-	grovel(index + 1)
+        grovel(index + 1)
       end
     end iterate
   end without-bounds-checks;
 end function;
 
 define method disjoint-types-1? (t1 :: <class>, t2 :: <class>,
-				 scu :: <subjunctive-class-universe>,
-				 dep :: <false-or-dependent-generic-function>)
+                                 scu :: <subjunctive-class-universe>,
+                                 dep :: <false-or-dependent-generic-function>)
  => (well? :: <boolean>)
   let ic1 :: <implementation-class> = scu-entry(t1, scu);
   let ic2 :: <implementation-class> = scu-entry(t2, scu);
   let dis?
     = (~subiclass?(ic1, t1, ic2, t2)
-	 & ~subiclass?(ic2, t2, ic1, t1)
-	 & ( (class-primary?(ic1) & class-primary?(ic2))
-	      |
-	      (~grounded-member?(t1, ic2.class-known-joint)
-		 & ~grounded-member?(t2, ic1.class-known-joint))));
+         & ~subiclass?(ic2, t2, ic1, t1)
+         & ((class-primary?(ic1) & class-primary?(ic2))
+              |
+              (~grounded-member?(t1, ic2.class-known-joint)
+                 & ~grounded-member?(t2, ic1.class-known-joint))));
   when (dis? & dep)
     %register-disjoint-dependent-generic(t1, t2, dep);
   end when;

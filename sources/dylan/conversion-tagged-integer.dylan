@@ -32,12 +32,12 @@ define inline-only function interpret-integer-as-machine-word
   primitive-wrap-machine-word(primitive-cast-integer-as-raw(x))
 end function interpret-integer-as-machine-word;
 
-define inline-only function strip-integer-tag 
+define inline-only function strip-integer-tag
     (x :: <machine-word>) => (result :: <machine-word>)
   machine-word-logxor(x, $integer-tag-value)
 end function strip-integer-tag;
 
-define inline-only function insert-integer-tag 
+define inline-only function insert-integer-tag
     (x :: <machine-word>) => (result :: <machine-word>)
   machine-word-logior(x, $integer-tag-value)
 end function insert-integer-tag;
@@ -82,7 +82,7 @@ end function coerce-machine-word-to-abstract-integer;
 define inline-only function machine-word-is-integer? (x :: <machine-word>)
  => (integer? :: <boolean>)
   let x-shifted :: <machine-word>
-	= machine-word-shift-right(x, word-size() - $integer-tag-width - 1);
+        = machine-word-shift-right(x, word-size() - $integer-tag-width - 1);
   machine-word-equal?(x-shifted, coerce-integer-to-machine-word(0))
   | machine-word-equal?(x-shifted, coerce-integer-to-machine-word(-1))
 end function machine-word-is-integer?;
@@ -91,7 +91,7 @@ end function machine-word-is-integer?;
 define inline-only function double-integer-is-integer?
     (low :: <machine-word>, high :: <machine-word>) => (integer? :: <boolean>)
   machine-word-equal?(high,
-		      machine-word-shift-right(low, word-size() - $integer-tag-width - 1))
+                      machine-word-shift-right(low, word-size() - $integer-tag-width - 1))
   & (machine-word-equal?(high, coerce-integer-to-machine-word(0))
      | machine-word-equal?(high, coerce-integer-to-machine-word(-1)))
 end function double-integer-is-integer?;

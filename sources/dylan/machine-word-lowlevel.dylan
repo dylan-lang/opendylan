@@ -78,7 +78,7 @@ define inline-only function machine-word-as-hash-index (x :: <machine-word>)
 end function machine-word-as-hash-index;
 
 /// TODO: SHOULD BE OPTIMIZER THAT MAKES THIS IRRELEVANT
-define sealed inline method as 
+define sealed inline method as
     (class == <machine-word>, x :: <machine-word>) => (res :: <machine-word>)
   x
 end method;
@@ -87,7 +87,7 @@ end method;
 // Machine word size
 
 define inline-only function word-size () => (result :: <integer>)
-  // !@#$ this may not ultimately be the correct primitive for this, 
+  // !@#$ this may not ultimately be the correct primitive for this,
   // In kab's spec for machine words there never was a primitive for
   // turning a raw machine word directly into an integer.  A primitive
   // is needed here to prevent infinite recursion, and this value is
@@ -103,11 +103,11 @@ end function word-size;
 define macro comparison-definer
   { define comparison ?:name }
     => { define inline-only function ?name (x :: <machine-word>, y :: <machine-word>)
-	  => (result :: <boolean>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
-	   "primitive-" ## ?name(raw-x, raw-y)
-	 end function ?name
+          => (result :: <boolean>)
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
+           "primitive-" ## ?name(raw-x, raw-y)
+         end function ?name
        }
 end macro;
 
@@ -156,9 +156,9 @@ define macro logical-definer
     => { define inline-only function ?name
              (x :: <machine-word>, y :: <machine-word>)
           => (result :: <machine-word>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
-	   primitive-wrap-machine-word("primitive-" ## ?name(raw-x, raw-y))
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
+           primitive-wrap-machine-word("primitive-" ## ?name(raw-x, raw-y))
          end function ?name
        }
 end macro;
@@ -221,10 +221,10 @@ end function machine-word-bit-field-deposit;
 define macro counter-definer
   { define counter ?:name }
     => { define inline-only function ?name (x :: <machine-word>)
-	  => (result :: <integer>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   raw-as-integer("primitive-" ## ?name(raw-x))
-	 end function ?name
+          => (result :: <integer>)
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           raw-as-integer("primitive-" ## ?name(raw-x))
+         end function ?name
        }
 end macro;
 
@@ -239,12 +239,12 @@ define macro simple-arithmetic-definer
     => { define inline-only function ?name
              (x :: <machine-word>, y :: <machine-word>)
           => (result :: <machine-word>, overflow? :: <boolean>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
-	   let (result :: <raw-machine-word>, overflow? :: <boolean>)
-		 = "primitive-" ## ?name(raw-x, raw-y);
-	   values(primitive-wrap-machine-word(result), overflow?)
-	 end function ?name
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
+           let (result :: <raw-machine-word>, overflow? :: <boolean>)
+                 = "primitive-" ## ?name(raw-x, raw-y);
+           values(primitive-wrap-machine-word(result), overflow?)
+         end function ?name
        }
 end macro;
 
@@ -268,12 +268,12 @@ end function machine-word-multiply-with-overflow;
 define macro sign-adjust-definer
   { define sign-adjust ?:name }
     => { define inline-only function ?name (x :: <machine-word>)
-	  => (result :: <machine-word>, overflow? :: <boolean>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   let (result :: <raw-machine-word>, overflow? :: <boolean>)
-		 = "primitive-" ## ?name(raw-x);
-	   values(primitive-wrap-machine-word(result), overflow?)
-	 end function ?name
+          => (result :: <machine-word>, overflow? :: <boolean>)
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           let (result :: <raw-machine-word>, overflow? :: <boolean>)
+                 = "primitive-" ## ?name(raw-x);
+           values(primitive-wrap-machine-word(result), overflow?)
+         end function ?name
        }
 end macro;
 
@@ -288,15 +288,15 @@ define macro signed-division-definer
     => { define inline-only function ?name
              (dividend :: <machine-word>, divisor :: <machine-word>)
           => (quotient :: <machine-word>, remainder :: <machine-word>)
-	   let raw-dividend :: <raw-machine-word>
-		 = primitive-unwrap-machine-word(dividend);
-	   let raw-divisor :: <raw-machine-word>
-		 = primitive-unwrap-machine-word(divisor);
-	   let (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>)
-		 = "primitive-" ## ?name(raw-dividend, raw-divisor);
-	   values(primitive-wrap-machine-word(quotient),
-		  primitive-wrap-machine-word(remainder))
-	 end function ?name
+           let raw-dividend :: <raw-machine-word>
+                 = primitive-unwrap-machine-word(dividend);
+           let raw-divisor :: <raw-machine-word>
+                 = primitive-unwrap-machine-word(divisor);
+           let (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>)
+                 = "primitive-" ## ?name(raw-dividend, raw-divisor);
+           values(primitive-wrap-machine-word(quotient),
+                  primitive-wrap-machine-word(remainder))
+         end function ?name
        }
 end macro;
 
@@ -327,7 +327,7 @@ define inline-only function machine-word-shift-right
     (x :: <machine-word>, count :: <integer>)
  => (result :: <machine-word>)
   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-  // !@#$ this may not ultimately be the correct primitive for this, 
+  // !@#$ this may not ultimately be the correct primitive for this,
   // In kab's spec for machine words there never was a primitive for
   // turning an integer directly into a raw machine word.  A primitive
   // is needed here to prevent infinite recursion, and this value is
@@ -345,13 +345,13 @@ define macro unsigned-arithmetic-definer
     => { define inline-only function ?name
              (x :: <machine-word>, y :: <machine-word>)
           => (v1 :: <machine-word>, v2 :: <machine-word>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
-	   let (v1 :: <raw-machine-word>, v2 :: <raw-machine-word>)
-		 = "primitive-" ## ?name(raw-x, raw-y);
-	   values(primitive-wrap-machine-word(v1),
-		  primitive-wrap-machine-word(v2))
-	 end function ?name
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
+           let (v1 :: <raw-machine-word>, v2 :: <raw-machine-word>)
+                 = "primitive-" ## ?name(raw-x, raw-y);
+           values(primitive-wrap-machine-word(v1),
+                  primitive-wrap-machine-word(v2))
+         end function ?name
        }
 end macro;
 
@@ -365,11 +365,11 @@ define macro unsigned-shift-definer
     => { define inline-only function ?name
              (x :: <machine-word>, count :: <integer>)
           => (result :: <machine-word>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   let raw-count :: <raw-bit-number> = integer-as-raw(count);
-	   primitive-wrap-machine-word
-	     ("primitive-" ## ?name(raw-x, raw-count))
-	 end function ?name
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           let raw-count :: <raw-bit-number> = integer-as-raw(count);
+           primitive-wrap-machine-word
+             ("primitive-" ## ?name(raw-x, raw-count))
+         end function ?name
        }
 end macro;
 
@@ -403,19 +403,19 @@ end function machine-word-unsigned-less-than?;
 /// This function is also invoked by the low-level runtime in response to a hardware exception
 define function machine-word-overflow ()
   error(make(<arithmetic-overflow-error>,
-	     format-string: "Integer overflow: The result of the last operation is "
-	                      "too large for this integer representation."))
+             format-string: "Integer overflow: The result of the last operation is "
+                              "too large for this integer representation."))
 end function machine-word-overflow;
 
 define macro signal-overflow-definer
   { define signal-overflow ?:name }
     => { define inline-only function ?name
-	     (x :: <machine-word>, y :: <machine-word>)
-	  => (result :: <machine-word>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
-	   primitive-wrap-machine-word("primitive-" ## ?name(raw-x, raw-y))
-	 end function ?name
+             (x :: <machine-word>, y :: <machine-word>)
+          => (result :: <machine-word>)
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           let raw-y :: <raw-machine-word> = primitive-unwrap-machine-word(y);
+           primitive-wrap-machine-word("primitive-" ## ?name(raw-x, raw-y))
+         end function ?name
        }
 end macro;
 
@@ -426,10 +426,10 @@ define signal-overflow machine-word-multiply-signal-overflow;
 define macro signal-overflow-sign-adjust-definer
   { define signal-overflow-sign-adjust ?:name }
     => { define inline-only function ?name (x :: <machine-word>)
-	  => (result :: <machine-word>)
-	   let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
-	   primitive-wrap-machine-word("primitive-" ## ?name(raw-x))
-	 end function ?name
+          => (result :: <machine-word>)
+           let raw-x :: <raw-machine-word> = primitive-unwrap-machine-word(x);
+           primitive-wrap-machine-word("primitive-" ## ?name(raw-x))
+         end function ?name
        }
 end macro;
 
@@ -453,19 +453,19 @@ define macro double-division-definer
     => { define inline-only function ?name
              (dividend-low :: <machine-word>,
               dividend-high :: <machine-word>,
-	      divisor :: <machine-word>)
-	  => (quotient :: <machine-word>, remainder :: <machine-word>)
-	   let raw-low :: <raw-machine-word>
-		 = primitive-unwrap-machine-word(dividend-low);
-	   let raw-high :: <raw-machine-word>
-		 = primitive-unwrap-machine-word(dividend-high);
-	   let raw-div :: <raw-machine-word>
-		 = primitive-unwrap-machine-word(divisor);
-	   let (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>)
-		 = "primitive-" ## ?name(raw-low, raw-high, raw-div);
-	   values(primitive-wrap-machine-word(quotient),
-		  primitive-wrap-machine-word(remainder))
-	 end function ?name
+              divisor :: <machine-word>)
+          => (quotient :: <machine-word>, remainder :: <machine-word>)
+           let raw-low :: <raw-machine-word>
+                 = primitive-unwrap-machine-word(dividend-low);
+           let raw-high :: <raw-machine-word>
+                 = primitive-unwrap-machine-word(dividend-high);
+           let raw-div :: <raw-machine-word>
+                 = primitive-unwrap-machine-word(divisor);
+           let (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>)
+                 = "primitive-" ## ?name(raw-low, raw-high, raw-div);
+           values(primitive-wrap-machine-word(quotient),
+                  primitive-wrap-machine-word(remainder))
+         end function ?name
        }
 end macro;
 
@@ -499,15 +499,15 @@ define macro unsigned-double-shift-definer
   { define unsigned-double-shift ?:name }
     => { define inline-only function ?name
              (low :: <machine-word>, high :: <machine-word>, count :: <integer>)
-	  => (low :: <machine-word>, high :: <machine-word>)
-	   let raw-low :: <raw-machine-word> = primitive-unwrap-machine-word(low);
-	   let raw-high :: <raw-machine-word> = primitive-unwrap-machine-word(high);
-	   let raw-count :: <raw-bit-number> = integer-as-raw(count);
-	   let (low :: <raw-machine-word>, high :: <raw-machine-word>)
-		 = "primitive-" ## ?name(raw-low, raw-high, raw-count);
-	   values(primitive-wrap-machine-word(low),
-		  primitive-wrap-machine-word(high))
-	 end function ?name
+          => (low :: <machine-word>, high :: <machine-word>)
+           let raw-low :: <raw-machine-word> = primitive-unwrap-machine-word(low);
+           let raw-high :: <raw-machine-word> = primitive-unwrap-machine-word(high);
+           let raw-count :: <raw-bit-number> = integer-as-raw(count);
+           let (low :: <raw-machine-word>, high :: <raw-machine-word>)
+                 = "primitive-" ## ?name(raw-low, raw-high, raw-count);
+           values(primitive-wrap-machine-word(low),
+                  primitive-wrap-machine-word(high))
+         end function ?name
        }
 end macro;
 

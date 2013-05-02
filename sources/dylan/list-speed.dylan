@@ -12,7 +12,7 @@ define sealed copy-down-method choose
 
 define sealed copy-down-method find-key
   (coll :: <list>, test :: <function>, #key skip, failure) => (key :: <object>);
-define sealed copy-down-method replace-elements! 
+define sealed copy-down-method replace-elements!
   (coll :: <list>, predicate :: <function>, new-val-fn :: <function>, #key count) => (coll :: <list>);
 
 define sealed copy-down-method shallow-copy (coll :: <list>) => (copy :: <list>) ;

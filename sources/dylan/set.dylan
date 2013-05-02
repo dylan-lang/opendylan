@@ -7,8 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define open abstract class <set> (<mutable-explicit-key-collection>)
 end class <set>;
 
-define sealed inline method make (class == <set>, #rest all-keys, #key) 
-    => (object)
+define sealed inline method make (class == <set>, #rest all-keys, #key)
+ => (object)
   apply(make, <object-set>, all-keys)
 end method make;
 
@@ -27,10 +27,10 @@ define sealed domain make (singleton(<object-set>));
 
 define sealed method initialize (set :: <object-set>, #key size = unsupplied())
   next-method();
-  set.set-elements := 
-    if (size.supplied?) 
+  set.set-elements :=
+    if (size.supplied?)
       make(<object-table>, size: size, values?: #f)
-    else 
+    else
       make(<object-table>, values?: #f)
     end;
 end method initialize;
@@ -38,7 +38,7 @@ end method initialize;
 
 //
 // SIZE
-// 
+//
 
 define sealed inline method size (set :: <object-set>) => (size :: <integer>)
   set.set-elements.size
@@ -48,8 +48,8 @@ end method size;
 // This is a simplified version of gethash.  Read the comments in table.dylan
 // for further explanation of how this works.
 
-define sealed method member? (object, set :: <object-set>, #key test) 
-    => (bool :: <boolean>)
+define sealed method member? (object, set :: <object-set>, #key test)
+ => (bool :: <boolean>)
   let table :: <object-table> = set.set-elements;
   let tv = table-vector(table);
   let token = rehash-token(tv);
@@ -66,11 +66,11 @@ define sealed method member? (object, set :: <object-set>, #key test)
       // Rehash has been initiated.
 //      rehash-table(table, tv, #f);      // Why do this?
       with-table-vector-locked (tv) end;  // Just wait on lock instead.
-      member?(object, set);	// try again
+      member?(object, set);        // try again
     end if;
   elseif (needs-rehash?(tv, token))
     rehash-table(table, tv, #f);
-    member?(object, set);	// try again
+    member?(object, set);        // try again
   else
     #f
   end if;
@@ -101,9 +101,9 @@ define sealed method add! (set :: <object-set>, key) => (set :: <object-set>)
              & ~is-stale?(tv.hash-state))
           additions(tv) := additions(tv) + 1;
           entry-key(keys, index) := key;
-          #t;				// success flag
+          #t;                                // success flag
         else
-          #f;				// failure flag
+          #f;                                // failure flag
         end if;
       end with-table-vector-locked;
     end if;
@@ -117,12 +117,12 @@ define sealed method add! (set :: <object-set>, key) => (set :: <object-set>)
     elseif (full?(tv))
       rehash-table(table, tv, #t);
     end;
-    add!(set, key);	// try again
+    add!(set, key);        // try again
   end if;
 end method add!;
 
-define sealed method remove! (set :: <object-set>, object, #key test, count) 
-    => (set :: <object-set>)
+define sealed method remove! (set :: <object-set>, object, #key test, count)
+ => (set :: <object-set>)
   remove-key!(set.set-elements, object);
   set
 end method remove!;
@@ -132,14 +132,14 @@ define sealed method remove-all-keys! (set :: <object-set>)
 end method;
 
 define sealed method element (set :: <object-set>, key, #key default = unsupplied())
-    => (key-or-default-or-error :: <object>)
-  if (member?(key, set)) 
+ => (key-or-default-or-error :: <object>)
+  if (member?(key, set))
     key
-  elseif (supplied?(default)) 
+  elseif (supplied?(default))
     default
-  else 
-    error(make(<not-found-error>, 
-          format-string: "No such element %= in %=", 
+  else
+    error(make(<not-found-error>,
+          format-string: "No such element %= in %=",
           format-arguments: list(key, set)))
   end
 end method element;
@@ -181,16 +181,16 @@ end;
 
 
 define sealed inline method forward-iteration-protocol (set :: <object-set>)
-  => (initial-state		:: <iteration-state>,
-      limit			:: <object>,
-      next-state		:: <function>,
-      finished-state?		:: <function>,
-      current-key		:: <function>,
-      current-element		:: <function>,
-      current-element-setter	:: <function>,
-      copy-state		:: <function>);
+  => (initial-state                :: <iteration-state>,
+      limit                        :: <object>,
+      next-state                :: <function>,
+      finished-state?                :: <function>,
+      current-key                :: <function>,
+      current-element                :: <function>,
+      current-element-setter        :: <function>,
+      copy-state                :: <function>);
   let (initial, limit, next, finished, current-key, current-element,
-       current-element-setter, copy-state) = 
+       current-element-setter, copy-state) =
     set.set-elements.forward-iteration-protocol;
 
   values(initial, #f, next, set-finished-state?, current-key, current-key,
@@ -203,7 +203,7 @@ end method forward-iteration-protocol;
 
 ///
 /// LIMITED TABLES
-/// 
+///
 
 define method limited-set
      (of :: <type>, size :: false-or(<integer>)) => (type :: <limited-set-type>)
@@ -216,12 +216,12 @@ end method;
 
 /// TODO: COULD BE EXPENSIVE UNLESS TYPES ARE CACHED
 
-define inline method type-for-copy (x :: <set>) 
-    => (type :: <type>)
+define inline method type-for-copy (x :: <set>)
+ => (type :: <type>)
   let elt-type = element-type(x);
   if (elt-type == <object>)
     object-class(x)
-  else 
+  else
     limited-set(element-type(x), #f)
   end if
 end method type-for-copy;

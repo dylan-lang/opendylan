@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // BOOTED: define ... class <limited-integer> ... end;
 
-define method limited 
+define method limited
     (class == <integer>, #key min :: <integer> = #f, max :: <integer> = #f)
  => (result :: <type>)
   if (min | max)
@@ -38,7 +38,7 @@ define constant limited-integer-instance?-function = method
     let i :: <integer> = i;
     let min = limint.limited-integer-min;
     let max = limint.limited-integer-max;
-    (if (min) let min :: <integer> = min; min <= i else #t end) 
+    (if (min) let min :: <integer> = min; min <= i else #t end)
        & (if (max) let max :: <integer> = max; i <= max else #t end)
   else
     #f
@@ -54,10 +54,10 @@ end method;
 
 // With other limited integer types
 
-define method subtype? 
-    (limint1 :: <limited-integer>, limint2 :: <limited-integer>) 
+define method subtype?
+    (limint1 :: <limited-integer>, limint2 :: <limited-integer>)
  => (result :: <boolean>)
-  local method satisifies-bound 
+  local method satisifies-bound
       (value :: false-or(<integer>), bound :: false-or(<integer>), satisfied?)
     if (~bound)
       #t
@@ -70,33 +70,33 @@ define method subtype?
 end method;
 
 define method subjunctive-subtype? (limint1 :: <limited-integer>, limint2 :: <limited-integer>,
-				    scu :: <subjunctive-class-universe>) 
+                                    scu :: <subjunctive-class-universe>)
  => (result :: <boolean>)
   subtype?(limint1, limint2)
 end method;
 
 
-// With other integer types - should consider different integer class 
-// precisions.  
+// With other integer types - should consider different integer class
+// precisions.
 
-define method subtype? 
+define method subtype?
     (class :: <class>, limint :: <limited-integer>) => (result == #f)
   #f
 end method;
 
-define method subtype? 
+define method subtype?
     (limint :: <limited-integer>, class :: <class>) => (result :: <boolean>)
   subclass?(limits(limint), class)
 end method;
 
 define method subjunctive-subtype? (class :: <class>, limint :: <limited-integer>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (result == #f)
   #f
 end method;
 
 define method subjunctive-subtype? (limint :: <limited-integer>, class :: <class>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (result :: <boolean>)
   subjunctive-subtype?(limits(limint), class, scu)
 end method;
@@ -104,20 +104,20 @@ end method;
 //// Disjointness
 
 define method disjoint-types-1? (t1 :: <limited-integer>, t2 :: <limited-integer>,
-				 scu :: <subjunctive-class-universe>,
-				 dep :: <false-or-dependent-generic-function>)
+                                 scu :: <subjunctive-class-universe>,
+                                 dep :: <false-or-dependent-generic-function>)
  => (well? :: <boolean>)
   let min1 = t1.limited-integer-min;
   let max1 = t1.limited-integer-max;
   let min2 = t2.limited-integer-min;
   let max2 = t2.limited-integer-max;
-  ( ( // t1 lies entirely below t2:
+  ((// t1 lies entirely below t2:
       max1 & min2 & max1 < min2
        )
      |
-     ( // t1 lies entirely above t2:
+     (// t1 lies entirely above t2:
       min1 & max2 & max2 < min1
-	)
+        )
      )
 end method;
 
@@ -125,13 +125,13 @@ end method;
 ///// Potential instance relationships
 
 define method has-instances? (class :: <class>, limint :: <limited-integer>,
-			      scu :: <subjunctive-class-universe>)
+                              scu :: <subjunctive-class-universe>)
  => (some? :: <boolean>, all? == #f)
   values(subjunctive-subtype?(<integer>, class, scu) | subjunctive-subtype?(class, <integer>, scu), #f)
 end method;
- 
+
 // define method disjointness-has-instances? (class :: <class>, limint :: <limited-integer>,
-// 					   scu :: <subjunctive-class-universe>)
+//                                            scu :: <subjunctive-class-universe>)
 //  => (some? :: <boolean>, all? == #f)
 //   values(subjunctive-subtype?(<integer>, class, scu) | subjunctive-subtype?(class, <integer>, scu), #f)
 // end method;

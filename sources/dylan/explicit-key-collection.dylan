@@ -19,13 +19,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //
 // KEY-SEQUENCE
-// 
+//
 
 define method key-sequence (collection :: <explicit-key-collection>)
-    => (keys :: <sequence>)
+ => (keys :: <sequence>)
   for (keys = #() then pair(k, keys),
        c keyed-by k in collection)
-  finally 
+  finally
     reverse!(keys)
   end
 end method key-sequence;
@@ -35,12 +35,12 @@ end method key-sequence;
 // MAXIMUM-SEQUENCE-KEY
 //
 
-define method maximum-sequence-key(collection :: <explicit-key-collection>) 
-    => key :: <integer>;
+define method maximum-sequence-key(collection :: <explicit-key-collection>)
+ => key :: <integer>;
   let max-key = -1;
   for (e keyed-by k in collection)
     if (instance?(k, <integer>)) max-key := max(k, max-key) end if;
   end for;
   max-key
 end method maximum-sequence-key;
- 
+

@@ -12,10 +12,10 @@ define limited-stretchy-vector-minus-selector <byte> (<limited-stretchy-vector>)
 define limited-stretchy-vector-minus-constructor <element-type>
   (<limited-stretchy-vector>, <limited-collection>) (fill: #f);
 
-define method initialize 
+define method initialize
     (vector :: <stretchy-element-type-vector>,
-     #key size :: <integer> = 0, capacity :: <integer> = size, 
-          element-type :: <type>, fill =  #f) 
+     #key size :: <integer> = 0, capacity :: <integer> = size,
+          element-type :: <type>, fill =  #f)
  => ()
   next-method();
   unless (size = 0)
@@ -48,14 +48,14 @@ define sealed inline method element-setter
   check-type(new-value, element-type(collection));
   if (index < 0) element-range-error(collection, index) end if;
   let collection-size = collection.size;
-  if (index >= collection-size) 
+  if (index >= collection-size)
     if (index = collection-size)
-      collection.trusted-size := index + 1 
+      collection.trusted-size := index + 1
     else
-      collection.size := index + 1 
+      collection.size := index + 1
     end if
   end if;
-  // We assume here that the underlying vector only grows.  
+  // We assume here that the underlying vector only grows.
   // If this ceases to be true the following code will need to be changed.
   stretchy-element-type-vector-element
     (collection.stretchy-representation, index) := new-value

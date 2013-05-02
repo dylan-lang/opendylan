@@ -9,7 +9,7 @@ define generic mps-w0
 define generic mps-w1
   (o :: <hash-state>) => (w1 :: <raw-machine-word>);
 
-define sealed class <hash-state> (<object>) 
+define sealed class <hash-state> (<object>)
   constant slot mps-w0 :: <raw-machine-word>;
   constant slot mps-w1 :: <raw-machine-word>;
 end class <hash-state>;
@@ -29,7 +29,7 @@ define sealed domain initialize (<hash-state>);
 
 define inline method merge-hash-state!
     (into :: <hash-state>, hs :: <hash-state>) => (into :: <hash-state>)
-  primitive-mps-ld-merge(into, hs); 
+  primitive-mps-ld-merge(into, hs);
   into
 end method merge-hash-state!;
 
@@ -42,57 +42,57 @@ end method is-stale?;
 define function merge-hash-ids (id1 :: <integer>, id2 :: <integer>, #key ordered)
  => (id :: <integer>)
   let id3 = if (ordered)
-	      // Left rotate id1 5 bits while being
-	      // carefule to avoid <integer> overflow.
-	      machine-word-as-hash-index
-		(machine-word-unsigned-rotate-left
-		   (coerce-integer-to-machine-word(id1), 5))
-	    else 
-	      id1
-	    end if;
+              // Left rotate id1 5 bits while being
+              // carefule to avoid <integer> overflow.
+              machine-word-as-hash-index
+                (machine-word-unsigned-rotate-left
+                   (coerce-integer-to-machine-word(id1), 5))
+            else
+              id1
+            end if;
   logxor(id2, id3)
 end function merge-hash-ids;
 
 // define function merge-hash-states (state1 :: <hash-state>, state2 :: <hash-state>)
 //  => (state :: <hash-state>)
 //   let hs :: <hash-state> = make(<hash-state>);
-//   merge-hash-state!(hs, state1); merge-hash-state!(hs, state2);     
+//   merge-hash-state!(hs, state1); merge-hash-state!(hs, state2);
 //   hs
 // end function merge-hash-states;
 
 // define function merge-hash-codes (id1 :: <integer>, state1 :: <hash-state>,
-// 				  id2 :: <integer>, state2 :: <hash-state>,
-// 				  #key ordered = #f)
+//                                   id2 :: <integer>, state2 :: <hash-state>,
+//                                   #key ordered = #f)
 //  => (id :: <integer>, state :: <hash-state>)
-//   values(merge-hash-ids(id1, id2, ordered: ordered), 
-// 	 merge-hash-states(state1, state2))
+//   values(merge-hash-ids(id1, id2, ordered: ordered),
+//          merge-hash-states(state1, state2))
 // end function merge-hash-codes;
 
 //
 // OBJECT-HASH
 //
 
-define generic object-hash 
-    (object :: <object>, hash-state :: <hash-state>) 
+define generic object-hash
+    (object :: <object>, hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>);
 
 //define constant $default-hash = 21011959;
 
-define method object-hash 
-    (object :: <object>, hash-state :: <hash-state>) 
+define method object-hash
+    (object :: <object>, hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   primitive-mps-ld-add(hash-state, object);
   values(machine-word-as-hash-index(address-of(object)), hash-state)
 end method object-hash;
 
-define method object-hash (object :: <integer>, 
-			   hash-state :: <hash-state>) 
+define method object-hash (object :: <integer>,
+                           hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   values(object, hash-state)
 end method object-hash;
 
 define method object-hash (object :: <boolean>,
-			   hash-state :: <hash-state>) 
+                           hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   values
     (if (object)
@@ -104,7 +104,7 @@ define method object-hash (object :: <boolean>,
 end method object-hash;
 
 define method object-hash (object :: <character>,
-			   hash-state :: <hash-state>) 
+                           hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   values(as(<integer>, object) + 232333, hash-state)
 end method object-hash;
@@ -122,13 +122,13 @@ define method object-hash (object :: <double-integer>, hash-state :: <hash-state
 end method object-hash;
 
 ///---*** Is this still just an approximation of the hash state or is it correct???!!!
-define method object-hash (object :: <single-float>, hash-state :: <hash-state>) 
+define method object-hash (object :: <single-float>, hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   object-hash(machine-word-as-hash-index(decode-single-float(object)), hash-state)
 end method object-hash;
 
 define function string-hash
-    (collection :: <string>, hash-state :: <hash-state>) 
+    (collection :: <string>, hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   let len = collection.size;
   if (len <= 30)
@@ -136,32 +136,32 @@ define function string-hash
       // copy-down for efficiency.
       let collection :: <byte-string> = collection;
       for (c :: <byte-character> in collection,
-	   hash :: <integer> = len
-	     then modulo(ash(hash, 6) + as(<integer>, c), 970747))
+           hash :: <integer> = len
+             then modulo(ash(hash, 6) + as(<integer>, c), 970747))
       finally
-	values(hash, hash-state)
+        values(hash, hash-state)
       end
     else
       for (c :: <character> in collection,
-	   hash :: <integer> = len
-	     then modulo(ash(hash, 6) + as(<integer>, c), 970747))
+           hash :: <integer> = len
+             then modulo(ash(hash, 6) + as(<integer>, c), 970747))
       finally
-	values(hash, hash-state)
+        values(hash, hash-state)
       end
     end;
   else
     local method next-hash (hash, index)
-	    let c :: <character> = collection[index];
-	    merge-hash-ids(hash, as(<integer>, c) + 232333, ordered: #t)
-	  end method next-hash;
+            let c :: <character> = collection[index];
+            merge-hash-ids(hash, as(<integer>, c) + 232333, ordered: #t)
+          end method next-hash;
     values(next-hash(next-hash(next-hash(len, 0), ash(len, -1)), len - 1),
-	   hash-state)
+           hash-state)
   end
 end function;
 
 /*
 define function byte-string-hash
-    (collection :: <byte-string>, hash-state :: <hash-state>) 
+    (collection :: <byte-string>, hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   let h :: <integer> = 0;
   for (c :: <byte-character> in collection,
@@ -173,10 +173,10 @@ end;
 */
 /*
 define function case-insensitive-string-hash
-    (collection :: <byte-string>, hash-state :: <hash-state>) 
+    (collection :: <byte-string>, hash-state :: <hash-state>)
  => (hi :: <integer>, hash-state :: <hash-state>)
   local method next-hash (hash, index)
-    merge-hash-ids(hash, object-hash(as-lowercase(collection[index]), hash-state), 
+    merge-hash-ids(hash, object-hash(as-lowercase(collection[index]), hash-state),
                    ordered: #t)
   end method next-hash;
   common-string-hash(collection, next-hash, hash-state)
@@ -184,10 +184,10 @@ end function;
 */
 
 define function case-insensitive-string-hash
-    (str :: <byte-string>, hash-state :: <hash-state>) 
+    (str :: <byte-string>, hash-state :: <hash-state>)
  => (hash :: <integer>, hash-state :: <hash-state>)
   values(case-insensitive-string-hash-2(str, 0, str.size),
-	 hash-state);
+         hash-state);
 end;
 
 define inline method case-insensitive-string-hash-2
@@ -204,14 +204,14 @@ define method case-insensitive-string-hash-2
     (str :: <simple-byte-vector>, s :: <integer>, e :: <integer>) => (h :: <integer>)
   for (i :: <integer> from s below e,
        hash :: <integer> = 0 then
-	 modulo(ash(hash, 6) + logand(str[i], #x9F), 970747))
+         modulo(ash(hash, 6) + logand(str[i], #x9F), 970747))
   finally
     hash
   end;
 end case-insensitive-string-hash-2;
 
-// You can't write a more specific method on collections because 
-// any two collections with identical key/element pairs are equal. 
+// You can't write a more specific method on collections because
+// any two collections with identical key/element pairs are equal.
 // Because of this, you can't merge-hash-codes with ordered: #t, or
 // really anything else interesting. In partial compensation, this
 // method hashes the keys as well as the elements. (As long as you
@@ -219,7 +219,7 @@ end case-insensitive-string-hash-2;
 // you *can* use ordered: #t for merging them)
 
 define function collection-hash
-    (key-hash :: <function>, element-hash :: <function>, col :: <collection>, 
+    (key-hash :: <function>, element-hash :: <function>, col :: <collection>,
      hash-state :: <hash-state>, #key ordered :: <boolean> = #f)
  => (id :: <integer>, state :: <hash-state>)
   let current-id = 0;
@@ -240,7 +240,7 @@ end function collection-hash;
 // even though the two collections are =.
 
 define function sequence-hash
-    (element-hash :: <function>, seq :: <sequence>, 
+    (element-hash :: <function>, seq :: <sequence>,
      hash-state :: <hash-state>)
  => (id :: <integer>, state :: <hash-state>)
   let current-id = 0;

@@ -74,11 +74,11 @@ define function automatic-finalization-enabled?-setter (newval :: <boolean>)
       *automatic-finalization?* := newval;
     else
       if (newval)
-        unless(*draining-thread-active?*)
+        unless (*draining-thread-active?*)
           make(<thread>, name: "Automatic Finalization Thread",
                          function: automatic-finalization-function);
           *draining-thread-active?* := #t;
-	end unless;
+        end unless;
         *automatic-finalization?* := #t;
       end if;
     end if;
@@ -117,8 +117,8 @@ define inline-only function mm-finalization-queue-first ()
  => (object :: <object>)
   let obj = primitive-mps-finalization-queue-first();
   if (primitive-machine-word-equal?
-	(primitive-cast-pointer-as-raw(obj),
-	 integer-as-raw(0)))
+        (primitive-cast-pointer-as-raw(obj),
+         integer-as-raw(0)))
     #f;
   else
     obj;

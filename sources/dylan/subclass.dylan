@@ -32,7 +32,7 @@ end method;
 
 define constant subclass-instance? = method (x, sc :: <subclass>) => (v :: <boolean>);
   if (instance?(x, <class>))
-    let x :: <class> = x;	// This should be automatic...
+    let x :: <class> = x;        // This should be automatic...
     subclass?(x, sc.subclass-class)
   else
     #f
@@ -44,14 +44,14 @@ end method;
 
 // With other subclass types
 
-define method subtype? 
+define method subtype?
     (subc1 :: <subclass>, subc2 :: <subclass>) => (result :: <boolean>)
   subtype?(subc1.subclass-class, subc2.subclass-class)
 end method;
 
 
 define method subjunctive-subtype? (subc1 :: <subclass>, subc2 :: <subclass>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (result :: <boolean>)
   subjunctive-subtype?(subc1.subclass-class, subc2.subclass-class, scu)
 end method;
@@ -59,12 +59,12 @@ end method;
 
 // With singletons
 
-define method subtype? 
+define method subtype?
     (subc1 :: <subclass>, s :: <singleton>) => (result == #f)
   #f
 end method;
 
-define method subtype? 
+define method subtype?
     (s :: <singleton>, subc :: <subclass>) => (result :: <boolean>)
   let obj = s.singleton-object;
   if (instance?(obj, <class>))
@@ -76,13 +76,13 @@ define method subtype?
 end method;
 
 define method subjunctive-subtype? (subc1 :: <subclass>, s :: <singleton>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (result == #f)
   #f
 end method;
 
 define method subjunctive-subtype? (s :: <singleton>, subc :: <subclass>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (result :: <boolean>)
   let obj = s.singleton-object;
   if (instance?(obj, <class>))
@@ -96,27 +96,27 @@ end method;
 
 // With classes
 
-define method subtype? 
+define method subtype?
     (subc :: <subclass>, c :: <class>) => (result :: <boolean>)
   // c == <class>
     subtype?(<class>, c)
 end method;
 
-define method subtype? 
+define method subtype?
     (c :: <class>, subc :: <subclass>) => (result :: <boolean>)
   c == <class> & subc.subclass-class == <class>
 end method;
 
 
 define method subjunctive-subtype? (subc :: <subclass>, c :: <class>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (result :: <boolean>)
   // c == <class>
   subtype?(<class>, c)
 end method;
 
 define method subjunctive-subtype? (c :: <class>, subc :: <subclass>,
-				    scu :: <subjunctive-class-universe>)
+                                    scu :: <subjunctive-class-universe>)
  => (result :: <boolean>)
   c == <class> & subc.subclass-class == <class>
 end method;
@@ -126,24 +126,24 @@ end method;
 
 
 define method disjoint-types-1? (t1 :: <subclass>, t2 :: <subclass>,
-				 scu :: <subjunctive-class-universe>,
-				 dep :: <false-or-dependent-generic-function>)
+                                 scu :: <subjunctive-class-universe>,
+                                 dep :: <false-or-dependent-generic-function>)
  => (well? :: <boolean>)
   disjoint-types-1?(t1.subclass-class, t2.subclass-class, scu, dep)
 end method;
 
 
 define method disjoint-types-1? (t1 :: <subclass>, t2 :: <class>,
-				 scu :: <subjunctive-class-universe>,
-				 dep :: <false-or-dependent-generic-function>)
+                                 scu :: <subjunctive-class-universe>,
+                                 dep :: <false-or-dependent-generic-function>)
  => (well? :: <boolean>)
   disjoint-types-1?(<class>, t2, scu, dep)
 end method;
 
 
 define method disjoint-types-1? (t1 :: <class>, t2 :: <subclass>,
-				 scu :: <subjunctive-class-universe>,
-				 dep :: <false-or-dependent-generic-function>)
+                                 scu :: <subjunctive-class-universe>,
+                                 dep :: <false-or-dependent-generic-function>)
  => (well? :: <boolean>)
   disjoint-types-1?(<class>, t1, scu, dep)
 end method;
@@ -160,7 +160,7 @@ define method map-congruency-classes (f :: <function>, t :: <subclass>) => ()
 end method;
 
 
-define method reduce-incomplete-classes (f :: <function>, t :: <subclass>, ans) 
+define method reduce-incomplete-classes (f :: <function>, t :: <subclass>, ans)
  => (ans)
   reduce-incomplete-classes(f, subclass-class(t), ans)
 end method;
@@ -169,7 +169,7 @@ end method;
 ///// Potential instance relationships?
 
 define method has-instances? (class :: <class>, subc :: <subclass>,
-			      scu :: <subjunctive-class-universe>)
+                              scu :: <subjunctive-class-universe>)
  => (some? :: <boolean>, all? :: <boolean>)
   let class? :: <boolean> = subjunctive-subtype?(class, <class>, scu);
   values(class?, class? & subclass-class(subc) == <object>)

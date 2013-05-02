@@ -15,16 +15,16 @@ end class <deque>;
 // INTERFACE
 ////////////
 
-define open generic pop 
+define open generic pop
   (deque :: <deque>) => object;
 
-define open generic pop-last 
+define open generic pop-last
   (deque :: <deque>) => object;
-  
-define open generic push 
+
+define open generic push
   (deque :: <deque>, new-value) => (new-value :: <object>);
 
-define open generic push-last 
+define open generic push-last
   (deque :: <deque>, new-value) => (new-value :: <object>);
 
 
@@ -39,7 +39,7 @@ define open generic push-last
 //
 
 define sealed inline method make
-    (class == <deque>, #rest all-keys, #key size, fill) 
+    (class == <deque>, #rest all-keys, #key size, fill)
  => (deque :: <object-deque>)
   apply(make, <object-deque>, all-keys)
 end method make;
@@ -49,12 +49,12 @@ end method make;
 // AS
 //
 
-define method as 
+define method as
     (class == <deque>, object :: <collection>) => (deque :: <deque>)
   as(<object-deque>, object)
 end method as;
 
-define sealed inline method as 
+define sealed inline method as
     (class == <deque>, deque :: <deque>) => (deque :: <deque>)
   deque
 end method as;
@@ -85,7 +85,7 @@ end method add;
 // REMOVE
 //
 
-define method remove 
+define method remove
     (deque :: <deque>, value, #key test = \==, count = deque.size)
          => (new :: <deque>)
   remove!(deque.copy-sequence, value, test: test, count: count)
@@ -108,7 +108,7 @@ end method reverse;
 //
 
 define class <object-deque> (<deque>, <limited-collection>)
-  slot representation :: <island-deque>, 
+  slot representation :: <island-deque>,
     init-value: make(<island-deque>);
 end class <object-deque>;
 
@@ -117,7 +117,7 @@ define sealed domain element-type (<object-deque>);
 
 ///
 /// LIMITED DEQUES
-/// 
+///
 
 define method limited-deque
      (of :: <type>) => (type :: <limited-deque-type>)
@@ -127,19 +127,19 @@ define method limited-deque
        concrete-class: <object-deque>);
 end method;
 
-define method limited 
+define method limited
     (class == <deque>, #key of, #all-keys) => (type :: <type>)
   limited-deque(of)
 end method;
 
 /// TODO: COULD BE EXPENSIVE UNLESS TYPES ARE CACHED
 
-define sealed inline method type-for-copy (x :: <object-deque>) 
-    => (type :: <type>)
+define sealed inline method type-for-copy (x :: <object-deque>)
+ => (type :: <type>)
   let elt-type = element-type(x);
   if (elt-type == <object>)
     object-class(x)
-  else 
+  else
     limited-deque(elt-type)
   end if
 end method type-for-copy;
@@ -172,7 +172,7 @@ define method initialize (deque :: <object-deque>, #key size = 0, fill)
   let rep-last-index = rep-first-index + size - 1;
   if (fill)
     for (i :: <integer> from rep-first-index to rep-last-index)
-      island-deque-element(rep, i) := fill 
+      island-deque-element(rep, i) := fill
     end;
   end;
   rep.first-index := rep-first-index;
@@ -185,7 +185,7 @@ end method initialize;
 // AS
 //
 
-define sealed method as 
+define sealed method as
     (class == <object-deque>, object :: <collection>) => (d :: <object-deque>)
   let new-deque :: <object-deque> = make(<object-deque>);
   for (element in object)
@@ -194,7 +194,7 @@ define sealed method as
   new-deque
 end method as;
 
-define sealed method as 
+define sealed method as
     (class == <object-deque>, object :: <array>) => (d :: <object-deque>)
   let new-deque :: <object-deque> = make(<object-deque>, size: object.size);
   let rep = new-deque.representation;
@@ -204,7 +204,7 @@ define sealed method as
   new-deque
 end method as;
 
-define sealed method as 
+define sealed method as
     (class == <object-deque>, object :: <object-deque>) => (d :: <object-deque>)
   object
 end method as;
@@ -212,7 +212,7 @@ end method as;
 
 //
 // SIZE
-// 
+//
 
 define sealed inline method size (collection :: <object-deque>) => (size :: <integer>)
   let rep = collection.representation;
@@ -222,27 +222,27 @@ end method size;
 
 //
 // SIZE-SETTER
-// 
+//
 
 define sealed inline method trusted-size-setter
-    (new-size :: <integer>, collection :: <object-deque>) 
+    (new-size :: <integer>, collection :: <object-deque>)
  => (new-size :: <integer>)
   // TODO: write a faster version of this method.
   let difference = new-size - collection.size;
   case
-    difference < 0 => 
-      for (i :: <integer> from 0 below - difference) 
-        pop-last(collection) 
+    difference < 0 =>
+      for (i :: <integer> from 0 below - difference)
+        pop-last(collection)
       end;
-    difference > 0 => 
-      for (i :: <integer> from 0 below difference) 
-        trusted-push-last(collection, #f) 
+    difference > 0 =>
+      for (i :: <integer> from 0 below difference)
+        trusted-push-last(collection, #f)
       end;
   end case;
   new-size
 end method trusted-size-setter;
 
-define sealed method size-setter (new-size :: <integer>, collection :: <object-deque>) 
+define sealed method size-setter (new-size :: <integer>, collection :: <object-deque>)
  => (new-size :: <integer>)
   // TODO: write a faster version of this method.
   check-nat(new-size);
@@ -257,7 +257,7 @@ end method size-setter;
 
 //
 // EMPTY?
-// 
+//
 
 define sealed method empty? (collection :: <object-deque>) => (result :: <boolean>)
   let rep = collection.representation;
@@ -267,10 +267,10 @@ end method empty?;
 
 //
 // ELEMENT
-// 
+//
 
 define sealed method element
-    (collection :: <object-deque>, index :: <integer>, 
+    (collection :: <object-deque>, index :: <integer>,
      #key default = unsupplied()) => (object)
   let rep = collection.representation;
   let rep-first-index = rep.first-index;
@@ -294,13 +294,13 @@ end method element;
 
 //
 // ELEMENT-NO-BOUNDS-CHECK
-// 
+//
 
 // We can't trust skipping the bounds check because the deque might move under
 // our feet.
 
 define sealed inline method element-no-bounds-check
-    (collection :: <object-deque>, index :: <integer>, 
+    (collection :: <object-deque>, index :: <integer>,
      #key default = unsupplied()) => (object)
   element(collection, index, default: default)
 end method element-no-bounds-check;
@@ -308,7 +308,7 @@ end method element-no-bounds-check;
 
 //
 // ELEMENT-SETTER
-// 
+//
 
 define sealed method element-setter
     (new-value, collection :: <object-deque>, index :: <integer>)
@@ -319,10 +319,10 @@ define sealed method element-setter
   let rep-last-index = rep.last-index;
   let rep-size-minus-1 = rep-last-index - rep-first-index;
   if (index < 0) element-range-error(collection, index) end;
-  if (index > rep-size-minus-1) 
+  if (index > rep-size-minus-1)
     if (collection.size = index)
       trusted-size(collection) := index + 1;
-    else 
+    else
       collection.size := index + 1;
     end if;
     collection[index] := new-value // Let's try again
@@ -337,21 +337,21 @@ end method element-setter;
 
 //
 // ELEMENT-NO-BOUNDS-CHECK-SETTER
-// 
+//
 
 // We can't trust skipping the bounds check because the deque might move under
 // our feet.
 
 define inline sealed method element-no-bounds-check-setter
     (new-value, collection :: <object-deque>, index :: <integer>)
-        => (object)
+ => (object)
   element-setter(new-value, collection, index)
 end method element-no-bounds-check-setter;
 
 
 //
 // REMOVE!
-// 
+//
 
 define sealed method remove!
     (deque :: <object-deque>, target,
@@ -360,21 +360,21 @@ define sealed method remove!
   let rep-first-index = rep.first-index;
   let rep-last-index = rep.last-index;
   iterate grovel (count :: <integer> = count,
-		  src-index :: <integer> = rep-first-index,
-		  dst-index :: <integer> = rep-first-index)
+                  src-index :: <integer> = rep-first-index,
+                  dst-index :: <integer> = rep-first-index)
     if (src-index > rep-last-index)
-      for (i :: <integer> from dst-index below src-index) 
-        island-deque-element(rep, i) := #f 
+      for (i :: <integer> from dst-index below src-index)
+        island-deque-element(rep, i) := #f
       end;
       rep.last-index := dst-index - 1
     else
       let item = island-deque-element(rep, src-index);
       case
-	count > 0 & test(item, target) =>
-	  grovel(count - 1, src-index + 1, dst-index);
-	otherwise =>
-	  island-deque-element(rep, dst-index) := item;
-	  grovel(count, src-index + 1, dst-index + 1)
+        count > 0 & test(item, target) =>
+          grovel(count - 1, src-index + 1, dst-index);
+        otherwise =>
+          island-deque-element(rep, dst-index) := item;
+          grovel(count, src-index + 1, dst-index + 1)
       end case
     end if
   end iterate;
@@ -384,7 +384,7 @@ end method remove!;
 
 //
 // REVERSE!
-// 
+//
 
 define sealed method reverse! (deque :: <object-deque>) => (result :: <deque>)
   let rep = deque.representation;
@@ -410,10 +410,10 @@ define method grow! (deque :: <object-deque>)
   let old-rep-size = (old-rep-last-index - old-rep-first-index) + 1;
   let new-rep = make(<island-deque>, size: old-rep-size * 2, fill: #f);
   new-rep.first-index := truncate/(old-rep-size, 2);
-  for (src-index :: <integer> 
+  for (src-index :: <integer>
          from old-rep-first-index to old-rep-last-index,
        dst-index :: <integer> from new-rep.first-index)
-    island-deque-element(new-rep, dst-index) := 
+    island-deque-element(new-rep, dst-index) :=
       island-deque-element(old-rep, src-index);
   finally
     new-rep.last-index := dst-index - 1;
@@ -432,9 +432,9 @@ define method make-room-at-first! (deque :: <object-deque>)
   let rep-first-index = rep.first-index;
   let rep-last-index = rep.last-index;
   let rep-size-minus-1 = rep.size - 1;
-  let delta :: <integer> = 
+  let delta :: <integer> =
     rep-size-minus-1 - (rep-last-index - rep-first-index);
-  unless ( rep-last-index = rep-size-minus-1 
+  unless (rep-last-index = rep-size-minus-1
          | delta < 0 /* i.e. thread problem */)
     // unlucky?
     for (dst-index :: <integer> from rep-size-minus-1 to delta by -1,
@@ -461,7 +461,7 @@ define method make-room-at-last! (deque :: <object-deque>)
   unless (rep-first-index = 0 | new-last < -1 /* i.e. thread problem */)
     // unlucky?
     for (dst-index :: <integer> from 0 to new-last,
-	 src-index :: <integer> from rep-first-index)
+         src-index :: <integer> from rep-first-index)
       island-deque-element(rep, dst-index) := island-deque-element(rep, src-index);
     end for;
     rep.first-index := 0;
@@ -473,9 +473,9 @@ end method make-room-at-last!;
 
 //
 // PUSH
-// 
+//
 
-define sealed method push 
+define sealed method push
     (deque :: <object-deque>, new-element) => (new-element :: <object>)
   check-type(new-element, element-type(deque));
   let rep = deque.representation;
@@ -493,7 +493,7 @@ end method push;
 
 //
 // POP
-// 
+//
 
 define sealed method pop (deque :: <object-deque>) => (object)
   let rep = deque.representation;
@@ -501,7 +501,7 @@ define sealed method pop (deque :: <object-deque>) => (object)
   let rep-last-index = rep.last-index;
   if (rep-last-index < rep-first-index)
     error(make(<empty-collection-error>,
-               format-string: "POP empty deque %=", 
+               format-string: "POP empty deque %=",
                format-arguments: list(deque)))
   else
     let value = island-deque-element(rep, rep-first-index);
@@ -514,9 +514,9 @@ end method pop;
 
 //
 // PUSH-LAST
-// 
+//
 
-define sealed inline method trusted-push-last 
+define sealed inline method trusted-push-last
     (deque :: <object-deque>, new-element) => (result :: <deque>)
   let rep = deque.representation;
   let rep-last-index = rep.last-index;
@@ -532,7 +532,7 @@ define sealed inline method trusted-push-last
   deque
 end method trusted-push-last;
 
-define sealed method push-last 
+define sealed method push-last
     (deque :: <object-deque>, new-element) => (result :: <deque>)
   check-type(new-element, element-type(deque));
   trusted-push-last(deque, new-element);
@@ -541,7 +541,7 @@ end method push-last;
 
 //
 // POP-LAST
-// 
+//
 
 define sealed method pop-last (deque :: <object-deque>) => (object)
   let rep = deque.representation;
@@ -549,7 +549,7 @@ define sealed method pop-last (deque :: <object-deque>) => (object)
   let rep-last-index = rep.last-index;
   if (rep-last-index < rep-first-index)
     error(make(<empty-collection-error>,
-               format-string: "POP empty deque %=", 
+               format-string: "POP empty deque %=",
                format-arguments: list(deque)))
   else
     let value = island-deque-element(rep, rep-last-index);
@@ -562,7 +562,7 @@ end method pop-last;
 
 //
 // ITERATION PROTOCOL
-// 
+//
 
 // We assume that the underlying vector can only ever get bigger.  If this
 // ceases to hold then the iteration code needs to be rethought.
@@ -585,46 +585,46 @@ end function;
 
 
 define inline method forward-iteration-protocol (deque :: <object-deque>)
-    => (initial-state, limit,
+ => (initial-state, limit,
         next-state :: <function>, finished-state? :: <function>,
         current-key :: <function>,
         current-element :: <function>, current-element-setter :: <function>,
         copy-state :: <function>)
   values(deque.representation.first-index,
-	 deque.representation.last-index + 1,
-	 sequence-next-state,
-	 sequence-finished-state?,
-	 object-deque-current-key,
-	 object-deque-current-element,
-	 object-deque-current-element-setter,
-	 identity-copy-state)
+         deque.representation.last-index + 1,
+         sequence-next-state,
+         sequence-finished-state?,
+         object-deque-current-key,
+         object-deque-current-element,
+         object-deque-current-element-setter,
+         identity-copy-state)
 end method forward-iteration-protocol;
 
 define inline method backward-iteration-protocol (deque :: <object-deque>)
-    => (final-state, limit,
-        next-state :: <function>, finished-state? :: <function>,
-        current-key :: <function>,
-        current-element :: <function>, current-element-setter :: <function>,
-        copy-state :: <function>)
+ => (final-state, limit,
+     next-state :: <function>, finished-state? :: <function>,
+     current-key :: <function>,
+     current-element :: <function>, current-element-setter :: <function>,
+     copy-state :: <function>)
   values(deque.representation.last-index + 1,
-	 deque.representation.first-index,
-	 sequence-previous-state,
-	 sequence-finished-state?,
-	 sequence-current-key,
-	 object-deque-current-element,
-	 object-deque-current-element-setter,
-	 identity-copy-state)
+         deque.representation.first-index,
+         sequence-previous-state,
+         sequence-finished-state?,
+         sequence-current-key,
+         object-deque-current-element,
+         object-deque-current-element-setter,
+         identity-copy-state)
 end method backward-iteration-protocol;
 
- 
+
 //
 // COPY-SEQUENCE
-// 
+//
 
 define sealed method copy-sequence
-    (source :: <object-deque>, 
-     #key start: first :: <integer> = 0, end: last = unsupplied()) 
-        => (result-sequence :: <deque>);
+    (source :: <object-deque>,
+     #key start: first :: <integer> = 0, end: last = unsupplied())
+ => (result-sequence :: <deque>);
   if (first ~= 0 | supplied?(last)) next-method()
   else
     let rep = source.representation;
@@ -645,12 +645,12 @@ end copy-sequence;
 
 //
 // CONCATENATE-AS-TWO
-// 
+//
 
 define method concatenate-as-two
     (type == <deque>, first-seq :: <sequence>, second-seq :: <sequence>)
-        => result-seq :: <deque>; 
-  case 
+ => (result-seq :: <deque>);
+  case
     empty?(first-seq)
       => as(<deque>, second-seq);
     empty?(second-seq)
@@ -666,8 +666,8 @@ end;
 define sealed domain make (singleton(<object-deque>));
 define sealed domain element-type (<object-deque>);
 
-define sealed method as (class == <list>, v :: <object-deque>) 
-    => (l :: <list>)
+define sealed method as (class == <list>, v :: <object-deque>)
+ => (l :: <list>)
   let rep = v.representation;
   for (result = #() then pair(island-deque-element(rep, index), result),
        index :: <integer> from rep.last-index to rep.first-index by -1)
@@ -678,29 +678,29 @@ end;
 
 /* ambiguity resolvers */
 define copy-down-method map-as-one (type == <deque>,
-				    function :: <function>,
-				    collection ::  <infinite-range>) => 
+                                    function :: <function>,
+                                    collection ::  <infinite-range>) =>
   (new-collection :: <vector>); // actually :: type
 define copy-down-method map-as-one (type == <object-deque>,
-				    function :: <function>,
-				    collection ::  <infinite-range>) => 
+                                    function :: <function>,
+                                    collection ::  <infinite-range>) =>
   (new-collection :: <vector>); // actually :: type
 
 define copy-down-method map-as-one (type == <deque>,
-				    function :: <function>, 
-				    collection ::  <explicit-key-collection>) =>
+                                    function :: <function>,
+                                    collection ::  <explicit-key-collection>) =>
   (new-collection :: <vector>);
 
 define copy-down-method map-as-one (type == <object-deque>,
-				    function :: <function>, 
-				    collection ::  <explicit-key-collection>) =>
+                                    function :: <function>,
+                                    collection ::  <explicit-key-collection>) =>
   (new-collection :: <vector>);
 
 /*
 define method map-as-one
     (type == <deque>,
      function :: <function>, collection ::  <explicit-key-collection>)
-        => new-collection :: <deque>; // actually :: type
+ => (new-collection :: <deque>); // actually :: type
   let acc = make(<keyed-accumulator>);
   for (e keyed-by k in collection) acc[k] := function(e) end for;
   convert-accumulator-as(type, acc)
@@ -709,7 +709,7 @@ end method map-as-one;
 define method map-as-one
     (type == <object-deque>,
      function :: <function>, collection ::  <explicit-key-collection>)
-        => new-collection :: <object-deque>; 
+ => (new-collection :: <object-deque>);
   let acc = make(<keyed-accumulator>);
   for (e keyed-by k in collection) acc[k] := function(e) end for;
   convert-accumulator-as(type, acc)
@@ -718,7 +718,7 @@ end method map-as-one;
 
 define inline method map-as-one
     (type == <deque>, function :: <function>, collection ::  <sequence>)
-        => new-collection :: <deque>;
+ => (new-collection :: <deque>);
   let result = make(<deque>);
   for (e in collection) push-last(result, function(e)) end for;
   result
@@ -727,7 +727,7 @@ end method map-as-one;
 // markt, not quite a copy-down, because of == specializer above
 define inline method map-as-one
     (type == <object-deque>, function :: <function>, collection ::  <sequence>)
-        => new-collection :: <deque>;
+ => (new-collection :: <deque>);
   let result = make(<deque>);
   for (e in collection) push-last(result, function(e)) end for;
   result

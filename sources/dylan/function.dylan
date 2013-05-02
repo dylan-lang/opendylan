@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // BOOTED: define ... class <function> ... end;
 
-define inline function maybe-copy-sig-types 
+define inline function maybe-copy-sig-types
   (v :: <simple-object-vector>, n :: <integer>) => (res :: <simple-object-vector>)
   if (n = size(v)) v else copy-sequence(v, end: n) end if
 end function;
@@ -38,13 +38,13 @@ end method;
 define method function-arguments (function :: <function>)
  => (required :: <integer>, rest? :: <boolean>, key?)
   let sig = function-signature(function);
-  values(signature-number-required(sig), 
-	 signature-rest?(sig), 
-	 if (signature-all-keys?(sig)) 
-	   #"all" 
-	 else 
-	   signature-key?(sig) & signature-keys(sig)
-	 end if)
+  values(signature-number-required(sig),
+         signature-rest?(sig),
+         if (signature-all-keys?(sig))
+           #"all"
+         else
+           signature-key?(sig) & signature-keys(sig)
+         end if)
 end method;
 
 define method function-arguments (function :: <accessor-method>)
@@ -55,8 +55,8 @@ end method;
 define method function-return-values (function :: <function>)
  => (return-value-types :: <sequence>, rest-return-value :: false-or(<type>))
   let sig = function.function-signature;
-  values(maybe-copy-sig-types(sig.signature-values, sig.signature-number-values), 
-	 sig.signature-rest-value)
+  values(maybe-copy-sig-types(sig.signature-values, sig.signature-number-values),
+         sig.signature-rest-value)
 end method;
 
 define method function-return-values (function :: <accessor-method>)

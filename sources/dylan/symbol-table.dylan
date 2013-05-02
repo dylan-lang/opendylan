@@ -17,9 +17,9 @@ end method table-protocol;
 define function case-insensitive-string-equal
     (string1 :: <byte-string>, string2 :: <byte-string>)
   case-insensitive-string-equal-2(string1,
-				  string2,
-				  0,
-				  string2.size)
+                                  string2,
+                                  0,
+                                  string2.size)
 end case-insensitive-string-equal;
 
 define inline method case-insensitive-string-equal-2
@@ -28,11 +28,11 @@ define inline method case-insensitive-string-equal-2
   when (string1.size == e2 - s2)
     iterate loop (i :: <integer> = s2)
       (i == e2) | begin
-		    let c1 :: <byte-character> = string1[i - s2];
-		    let c2 :: <byte-character> = string2[i];
-		    (c1 == c2 | as-lowercase(c1) == as-lowercase(c2))
-		      & loop(i + 1)
-		  end
+                    let c1 :: <byte-character> = string1[i - s2];
+                    let c2 :: <byte-character> = string2[i];
+                    (c1 == c2 | as-lowercase(c1) == as-lowercase(c2))
+                      & loop(i + 1)
+                  end
     end;
   end;
 end case-insensitive-string-equal-2;
@@ -43,11 +43,11 @@ define method case-insensitive-string-equal-2
   when (string1.size == e2 - s2)
     iterate loop (i :: <integer> = s2)
       (i == e2) | begin
-		    let c1 :: <byte-character> = string1[i - s2];
-		    let c2 :: <byte-character> = as(<byte-character>, string2[i]);
-		    (c1 == c2 | as-lowercase(c1) == as-lowercase(c2))
-		      & loop(i + 1)
-		  end
+                    let c1 :: <byte-character> = string1[i - s2];
+                    let c2 :: <byte-character> = as(<byte-character>, string2[i]);
+                    (c1 == c2 | as-lowercase(c1) == as-lowercase(c2))
+                      & loop(i + 1)
+                  end
     end;
   end;
 end case-insensitive-string-equal-2;
@@ -56,13 +56,13 @@ define variable *initial-symbol-table-size* = 5 * 1024;
 
 define variable *symbols-booted?* :: <boolean> = #f;
 
-define constant *symbols* :: <symbol-table> 
+define constant *symbols* :: <symbol-table>
   = make(<symbol-table>, weak: #"value", size: *initial-symbol-table-size*);
 
 // TODO: Belongs with tables when more general purpose.
 
 define sealed method gethash-or-set (table :: <symbol-table>, key :: <byte-string>, new-value)
-    => new-or-old-value;
+ => new-or-old-value;
   let len :: <integer> = key.size;
   let tv = table-vector(table);
   let token = rehash-token(tv);
@@ -72,7 +72,7 @@ define sealed method gethash-or-set (table :: <symbol-table>, key :: <byte-strin
   // string-tables, even when we may be adding entries.
   let id = case-insensitive-string-hash-2(key, 0, len);
   let (index, fkey) = do-search(fkey in (tv, id))
-	               let fkey :: <byte-string> = fkey;
+                       let fkey :: <byte-string> = fkey;
                        case-insensitive-string-equal-2(fkey, key, 0, len)
                       end;
   let vals = entry-values(tv);
@@ -92,7 +92,7 @@ define sealed method gethash-or-set (table :: <symbol-table>, key :: <byte-strin
              new-value)
     end;
 
-  if (success?)    
+  if (success?)
     value
   else
     // Store failed for some reason.  Rehash if needed and retry.
@@ -132,8 +132,8 @@ end method;
 
 // Alternate interface, doesn't cons unless needed.
 define method make-symbol (str :: <sequence>,
-			     #key start: s :: <integer> = 0,
-			          end: e :: <integer> = str.size)
+                             #key start: s :: <integer> = 0,
+                                  end: e :: <integer> = str.size)
  => (sym :: <symbol>)
   let table = *symbols*;
   iterate gethash (first-attempt? = #t)
@@ -145,7 +145,7 @@ define method make-symbol (str :: <sequence>,
     let id = case-insensitive-string-hash-2(str, s, e);
     let (index, fkey)
       = do-search(fkey in (tv, id))
-	  let fkey :: <byte-string> = fkey;
+          let fkey :: <byte-string> = fkey;
           case-insensitive-string-equal-2(fkey, str, s, e);
         end;
     // Fetch value vector early to allow better scheduling of the loads.
@@ -159,25 +159,25 @@ define method make-symbol (str :: <sequence>,
       // rehash, because a rehash could then clobber the value.
       sequence-point();
       if (rehash-token-valid?(tv, token) & ~table-entry-deleted?(value))
-	value;
+        value;
       else
-	// Rehash has been initiated.
-	//      rehash-table(table, tv, #f);      // Why do this?
-	with-table-vector-locked (tv) end;  // Just wait on lock instead.
-	gethash(#f); // try again
+        // Rehash has been initiated.
+        //      rehash-table(table, tv, #f);      // Why do this?
+        with-table-vector-locked (tv) end;  // Just wait on lock instead.
+        gethash(#f); // try again
       end if;
     elseif (needs-rehash?(tv, token))
-      // TODO: If this is not the first attempt at rehashing then perhaps we 
+      // TODO: If this is not the first attempt at rehashing then perhaps we
       // should look for the key during the rehash.
       rehash-table(table, tv, #f);
-      gethash(#f);	// try again
+      gethash(#f);        // try again
     else
       let name = copy-byte-string(str, s, e);
       let value = system-allocate-simple-instance(<symbol>, fill: name);
       if (try-to-puthash-new(tv, token, hash-state(tv), index, name, value))
-	value
+        value
       else // failed for some reason, punt.
-	gethash-or-set (table, name, value)
+        gethash-or-set (table, name, value)
       end;
     end if;
   end iterate;
@@ -189,7 +189,7 @@ define sealed copy-down-method make-symbol
 
 define sealed copy-down-method make-symbol
     (str :: <simple-byte-vector>, #key start: s :: <integer> = 0,
-	                               end: e :: <integer> = str.size)
+                                       end: e :: <integer> = str.size)
  => (sym :: <symbol>);
 
 

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 
-// Any initializations for threads other than the main thread should 
+// Any initializations for threads other than the main thread should
 // happen here
 
 
@@ -16,7 +16,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //
 define variable *dylan-library-initialized?* = #f;
 
-define inline  function internal-initialize-thread ()
+define inline function internal-initialize-thread ()
   initialize-default-hash-state();
 end function;
 

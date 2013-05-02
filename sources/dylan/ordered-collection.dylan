@@ -62,25 +62,25 @@ define sealed inline method forward-iteration-protocol
      elt-setter :: <function>,
      copy :: <function>)
   local method next (tab, index :: <integer>)
-	  index + 1
-	end;
+          index + 1
+        end;
   local method finished? (tab, index :: <integer>, size :: <integer>)
-	  index == size
-	end;
+          index == size
+        end;
   local method key (tab :: <ordered-key-collection>, index :: <integer>)
-	  tab.key-sequence[index]
-	end;
+          tab.key-sequence[index]
+        end;
   local method elt (tab :: <ordered-key-collection>, index :: <integer>)
-	  element(tab.ordered-mapping, tab.key-sequence[index])
-	end;
+          element(tab.ordered-mapping, tab.key-sequence[index])
+        end;
   local method elt-setter (value, tab :: <ordered-key-collection>, index :: <integer>)
-	  tab.ordered-mapping[tab.key-sequence[index]] := value
-	end;
+          tab.ordered-mapping[tab.key-sequence[index]] := value
+        end;
   local method copy (tab, index :: <integer>)
-	  index
-	end;
+          index
+        end;
   values(0, tab.key-sequence.size,
-	 next, finished?, key, elt, elt-setter, copy)
+         next, finished?, key, elt, elt-setter, copy)
 end;
 
 
@@ -100,7 +100,7 @@ define class <ordered-object-set> (<ordered-key-collection>)
     init-keyword: set:;
 end;
 
-define sealed inline method member? 
+define sealed inline method member?
     (object, tab :: <ordered-object-set>, #key test)
   => (bool :: <boolean>)
   member?(object, tab.ordered-mapping)

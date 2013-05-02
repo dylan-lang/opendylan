@@ -16,13 +16,13 @@ define open abstract class <lock> (<synchronization>)
 end class;
 
 
-define sealed inline method make (class == <lock>, #rest keys, #key, #all-keys) 
-    => (lock :: <simple-lock>)
+define sealed inline method make (class == <lock>, #rest keys, #key, #all-keys)
+ => (lock :: <simple-lock>)
   apply(make, <simple-lock>, keys);
 end method;
 
 
-define inline function lock-wait-result 
+define inline function lock-wait-result
     (lock :: <lock>, prim-res :: <integer>) => (res :: <boolean>)
   select (prim-res)
     $success => #t;
@@ -38,13 +38,13 @@ define method lock-wait-result-error
     $success => #t;
     $timeout => #f;
     $pre-locked => error(make(<already-owned-error>, lock: lock));
-    otherwise => error(make(<unexpected-synchronization-error>, 
+    otherwise => error(make(<unexpected-synchronization-error>,
                             synchronization: lock));
   end select;
 end method;
 
 
-define inline function lock-release-result 
+define inline function lock-release-result
     (lock :: <lock>, prim-res :: <integer>) => ()
   unless (prim-res == $success)
     lock-release-result-error(lock, prim-res);
@@ -57,7 +57,7 @@ define method lock-release-result-error
   select (prim-res)
     $unlocked => error(make(<not-owned-error>, lock: lock));
     $count-exceeded => error(make(<count-exceeded-error>, lock: lock));
-    otherwise => error(make(<unexpected-synchronization-error>, 
+    otherwise => error(make(<unexpected-synchronization-error>,
                             synchronization: lock));
   end select;
 end method;
@@ -69,7 +69,7 @@ end method;
 define constant $semaphore-maximum-count-limit = 1000000;
 
 
-define open abstract primary class <semaphore> 
+define open abstract primary class <semaphore>
   (<portable-container>, <lock>)
 
   constant slot initial-count :: <integer>,
@@ -88,7 +88,7 @@ define sealed domain make (singleton(<semaphore-i>));
 define sealed domain initialize (<semaphore-i>);
 
 
-define sealed inline method make 
+define sealed inline method make
     (class == <semaphore>, #rest keys, #key, #all-keys)
  => (lock :: <semaphore-i>)
   apply(make, <semaphore-i>, keys);
@@ -98,8 +98,8 @@ end method;
 define method initialize (lock :: <semaphore>, #key) => ()
   drain-finalization-queue();
   next-method();
-  let res = primitive-make-semaphore(lock, 
-                                     lock.synchronization-name, 
+  let res = primitive-make-semaphore(lock,
+                                     lock.synchronization-name,
                                      lock.initial-count,
                                      lock.maximum-count);
   check-synchronization-creation(lock, res);
@@ -108,7 +108,7 @@ end method;
 
 
 define inline sealed method release (lock :: <semaphore>, #key) => ()
-  debug-out(#"lock", "Releasing lock %= in thread %=\n", 
+  debug-out(#"lock", "Releasing lock %= in thread %=\n",
             lock, current-thread-id());
   let res = primitive-release-semaphore(lock);
   lock-release-result(lock, res);
@@ -116,14 +116,14 @@ end method;
 
 
 define inline sealed method wait-for (lock :: <semaphore>, #key timeout) => (success?)
-  debug-out(#"lock", "Waiting for lock %= in thread %=\n", 
+  debug-out(#"lock", "Waiting for lock %= in thread %=\n",
             lock, current-thread-id());
   let res = if (timeout)
                primitive-wait-for-semaphore-timed(lock, timeout.millisecs)
              else
                primitive-wait-for-semaphore(lock)
              end if;
-  debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n", 
+  debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n",
             lock, current-thread-id(), res);
   lock-wait-result(lock, res);
 end method;
@@ -144,7 +144,7 @@ define open abstract class <exclusive-lock> (<lock>)
 end class;
 
 
-define sealed inline method make 
+define sealed inline method make
     (class == <exclusive-lock>, #rest keys, #key, #all-keys)
  => (lock :: <simple-lock>)
   apply(make, <simple-lock>, keys);
@@ -160,7 +160,7 @@ define open generic owned? (lock :: <exclusive-lock>) => (owned? :: <boolean>);
 //// <recursive-lock>
 
 
-define open abstract primary class <recursive-lock> 
+define open abstract primary class <recursive-lock>
   (<portable-container>, <exclusive-lock>)
 end class;
 
@@ -172,7 +172,7 @@ define sealed domain make (singleton(<recursive-lock-i>));
 define sealed domain initialize (<recursive-lock-i>);
 
 
-define sealed inline method make 
+define sealed inline method make
     (class == <recursive-lock>, #rest keys, #key, #all-keys)
  => (lock :: <recursive-lock-i>)
   apply(make, <recursive-lock-i>, keys);
@@ -189,7 +189,7 @@ end method;
 
 
 define inline sealed method release (lock :: <recursive-lock>, #key) => ()
-  debug-out(#"lock", "Releasing lock %= in thread %=\n", 
+  debug-out(#"lock", "Releasing lock %= in thread %=\n",
             lock, current-thread-id());
   let res = primitive-release-recursive-lock(lock);
   lock-release-result(lock, res);
@@ -198,14 +198,14 @@ end method;
 
 define inline sealed method wait-for
       (lock :: <recursive-lock>, #key timeout) => (success?)
-  debug-out(#"lock", "Waiting for lock %= in thread %=\n", 
+  debug-out(#"lock", "Waiting for lock %= in thread %=\n",
             lock, current-thread-id());
   let res = if (timeout)
                primitive-wait-for-recursive-lock-timed(lock, timeout.millisecs)
              else
                primitive-wait-for-recursive-lock(lock)
              end if;
-  debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n", 
+  debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n",
             lock, current-thread-id(), res);
   lock-wait-result(lock, res);
 end method;
@@ -228,7 +228,7 @@ end method;
 //// <simple-lock>
 
 
-define open abstract primary class <simple-lock> 
+define open abstract primary class <simple-lock>
   (<portable-container>, <exclusive-lock>)
 end class;
 
@@ -259,7 +259,7 @@ end;
 
 
 
-define sealed inline method make 
+define sealed inline method make
     (class == <simple-lock>, #rest keys, #key, #all-keys)
  => (lock :: <simple-lock-i>)
   apply(make, <simple-lock-i>, keys);
@@ -273,7 +273,7 @@ end method;
 
 
 define inline sealed method release (lock :: <simple-lock>, #key) => ()
-  debug-out(#"lock", "Releasing lock %= in thread %=\n", 
+  debug-out(#"lock", "Releasing lock %= in thread %=\n",
             lock, current-thread-id());
   let res = primitive-release-simple-lock(lock);
   lock-release-result(lock, res);
@@ -282,14 +282,14 @@ end method;
 
 define inline sealed method wait-for
       (lock :: <simple-lock>, #key timeout) => (success?)
-  debug-out(#"lock", "Waiting for lock %= in thread %=\n", 
+  debug-out(#"lock", "Waiting for lock %= in thread %=\n",
             lock, current-thread-id());
   let res = if (timeout)
                primitive-wait-for-simple-lock-timed(lock, timeout.millisecs)
              else
                primitive-wait-for-simple-lock(lock)
              end if;
-  debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n", 
+  debug-out(#"lock", "Waiting for lock %= in thread %= returned %=\n",
             lock, current-thread-id(), res);
   lock-wait-result(lock, res);
 end method;
@@ -318,7 +318,7 @@ end method;
 //   in read mode.
 // When unlocked, the state will be 0
 //
-// The lock class is implemented as a monitored data structure. 
+// The lock class is implemented as a monitored data structure.
 // A <notification> is released whenever there is a possibility
 // of a state transition from read mode to write mode (i.e.
 // whenever the lock moves into the unlocked state)
@@ -340,7 +340,7 @@ define sealed domain make (singleton(<read-write-lock-i>));
 define sealed domain initialize (<read-write-lock-i>);
 
 
-define sealed inline method make 
+define sealed inline method make
     (class == <read-write-lock>, #rest keys, #key, #all-keys)
  => (lock :: <read-write-lock-i>)
   apply(make, <read-write-lock-i>, keys);
@@ -348,19 +348,19 @@ end method;
 
 
 define sealed method release (lock :: <read-write-lock>, #key) => ()
-  debug-out(#"lock", "Releasing lock %= in thread %=\n", 
+  debug-out(#"lock", "Releasing lock %= in thread %=\n",
             lock, current-thread-id());
   let monitor = lock.internal-monitor;
   let inner-lock = monitor.associated-lock;
   let res =
     with-lock (inner-lock)
       let state = lock.rw-lock-state;
-  
+
       if (state.locked-for-writing?)
         lock.rw-lock-state := 0;
         release-all(monitor);
         #t
-  
+
       elseif (state.locked-for-reading?)
         let new-state = state - 1;
         lock.rw-lock-state := new-state;
@@ -382,27 +382,27 @@ end method;
 define sealed method wait-for
       (lock :: <read-write-lock>, #key timeout, mode = #"read") => (success?)
   if (mode == #"read" | mode == #"write")
-    debug-out(#"lock", "Waiting for lock %= in thread %=\n", 
+    debug-out(#"lock", "Waiting for lock %= in thread %=\n",
               lock, current-thread-id());
     let monitor = lock.internal-monitor;
     let inner-lock = monitor.associated-lock;
     block (exit)
       with-lock (inner-lock)
-    
+
         if (mode == #"write")
           until (lock.lock-is-free?)
             unless (wait-for(monitor, timeout: timeout))
-              debug-out(#"lock", "Acquired lock %= in thread %=\n", 
+              debug-out(#"lock", "Acquired lock %= in thread %=\n",
                         lock, current-thread-id());
               exit(#f);
             end unless;
           end until;
           lock.rw-lock-state := current-thread();
-    
+
         else // mode == #"read"
           until (lock.lock-is-free-for-reading?)
             unless (wait-for(monitor, timeout: timeout))
-              debug-out(#"lock", "Acquired lock %= in thread %=\n", 
+              debug-out(#"lock", "Acquired lock %= in thread %=\n",
                         lock, current-thread-id());
               exit(#f);
             end unless;
@@ -430,22 +430,22 @@ end method;
 
 
 
-define inline method locked-for-writing? 
+define inline method locked-for-writing?
     (state :: <lock-state>) => (locked? :: <boolean>)
   state == current-thread();
 end method;
 
-define inline method locked-for-reading? 
+define inline method locked-for-reading?
     (state :: <lock-state>) => (locked? :: <boolean>)
   instance?(state, <integer>) & (state > 0);
 end method;
 
-define inline method lock-is-free? 
+define inline method lock-is-free?
     (rw-lock :: <read-write-lock>) => (free? :: <boolean>)
   rw-lock.rw-lock-state == 0;
 end method;
 
-define inline method lock-is-free-for-reading? 
+define inline method lock-is-free-for-reading?
     (rw-lock :: <read-write-lock>) => (free? :: <boolean>)
   instance?(rw-lock.rw-lock-state, <integer>)
 end method;

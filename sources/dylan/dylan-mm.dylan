@@ -25,9 +25,9 @@ end class;
 define method default-handler (cond :: <out-of-memory-condition>) => (val)
   // Leave it to dynamic client top-of-stack condition handler (if there is one)
   cerror("Retry allocation of object",
-	 "Out of Memory: failed allocation of object; class: %=  size: %=",
-	 cond.failing-allocation-class,
-	 cond.failing-allocation-size);
+         "Out of Memory: failed allocation of object; class: %=  size: %=",
+         cond.failing-allocation-class,
+         cond.failing-allocation-size);
   #f;
 end method;
 
@@ -47,8 +47,8 @@ define function signal-low-memory
       #t
     else
       dynamic-bind (*handling-low-memory?* = #t)
-	// Must ensure no allocation happens before this point
-	signal(make(<out-of-memory-condition>, class: class, size: obj-size))
+        // Must ensure no allocation happens before this point
+        signal(make(<out-of-memory-condition>, class: class, size: obj-size))
       end dynamic-bind;
       #f
     end if;

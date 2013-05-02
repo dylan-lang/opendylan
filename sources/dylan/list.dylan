@@ -18,8 +18,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //
 // PAIR
-// 
- 
+//
+
 define inline function pair(head, tail) => (result :: <pair>)
   make(<pair>, head: head, tail: tail)
   // let instance :: <pair> = system-allocate-simple-instance(<pair>, fill: head);
@@ -30,8 +30,8 @@ end function;
 
 //
 // LIST
-// 
- 
+//
+
 define function list (#rest objects) => (result :: <list>)
   %dynamic-extent(objects);
   iterate build (index :: <integer> = objects.size - 1,
@@ -52,8 +52,8 @@ end function;
 
 //
 // TYPE-FOR-COPY
-// 
- 
+//
+
 define inline sealed method type-for-copy (object :: <list>) => (type :: <type>)
   <list>
 end method type-for-copy;
@@ -61,8 +61,8 @@ end method type-for-copy;
 
 //
 // EMPTY?
-// 
- 
+//
+
 define inline sealed method empty? (list :: <list>) => (result :: <boolean>)
   list == #()
 end method empty?;
@@ -70,14 +70,14 @@ end method empty?;
 
 //
 // AS
-// 
- 
+//
+
 define inline sealed method as (class == <list>, list :: <list>) => (list :: <list>)
   list
 end method as;
 
-define method as (class == <list>, collection :: <collection>) 
-    => (l :: <list>)
+define method as (class == <list>, collection :: <collection>)
+ => (l :: <list>)
   let result :: <list> = #();
   for (item in collection)
     result := pair(item, result);
@@ -85,8 +85,8 @@ define method as (class == <list>, collection :: <collection>)
   reverse!(result)
 end method as;
 
-define sealed method as (class == <list>, v :: <simple-object-vector>) 
-    => (l :: <list>)
+define sealed method as (class == <list>, v :: <simple-object-vector>)
+ => (l :: <list>)
   for (result = #() then pair(vector-element(v, index), result),
        index :: <integer> from v.size - 1 to 0 by -1)
   finally
@@ -101,10 +101,10 @@ end method as;
 
 //
 // MAKE
-// 
- 
-define sealed method make (class == <list>, #key size = 0, fill) 
-    => (l :: <list>)
+//
+
+define sealed method make (class == <list>, #key size = 0, fill)
+ => (l :: <list>)
   for (i :: <integer> from 0 below size,
        result :: <list> = #() then pair(fill, result))
   finally
@@ -113,23 +113,23 @@ define sealed method make (class == <list>, #key size = 0, fill)
 end method make;
 
 define inline sealed method make (class == <empty-list>, #key)
-    => (l :: <empty-list>)
+ => (l :: <empty-list>)
   #()
 end method make;
 
 define sealed method first-setter
-    (value :: <object>, sequence :: <empty-list>) => (value :: <object>) 
-  element-range-error(sequence, 0)    
+    (value :: <object>, sequence :: <empty-list>) => (value :: <object>)
+  element-range-error(sequence, 0)
 end method;
 
 define sealed method second-setter
-    (value :: <object>, sequence :: <empty-list>) => (value :: <object>) 
-  element-range-error(sequence, 1)    
+    (value :: <object>, sequence :: <empty-list>) => (value :: <object>)
+  element-range-error(sequence, 1)
 end method;
 
 define sealed method third-setter
-    (value :: <object>, sequence :: <empty-list>) => (value :: <object>) 
-  element-range-error(sequence, 2)    
+    (value :: <object>, sequence :: <empty-list>) => (value :: <object>)
+  element-range-error(sequence, 2)
 end method;
 
 define sealed domain make (subclass(<list>));
@@ -137,13 +137,13 @@ define sealed domain initialize (<list>);
 
 //
 // SIZE
-// 
- 
+//
+
 //define sealed method size (list :: <list>) => (s :: false-or(<integer>))
-//  if (list == #()) 
+//  if (list == #())
 //    0
 //  else
-//    iterate sum (count :: <integer> = 0, 
+//    iterate sum (count :: <integer> = 0,
 //                 fast :: <pair> = list, slow :: <pair> = list)
 //      let fast-tail = fast.tail;
 //      if (fast-tail == #())
@@ -164,11 +164,11 @@ define sealed domain initialize (<list>);
 //  end
 //end method size;
 define sealed method size (list :: <list>) => (s :: false-or(<integer>))
-  if (list == #()) 
+  if (list == #())
     0
   else
     let list :: <pair> = list;
-    iterate sum (count :: <integer> = 0, 
+    iterate sum (count :: <integer> = 0,
                  fast :: <pair> = list, slow :: <pair> = list)
       let fast-tail = fast.tail;
       if (fast-tail == #())
@@ -177,13 +177,13 @@ define sealed method size (list :: <list>) => (s :: false-or(<integer>))
         #f
       elseif (instance?(fast-tail, <pair>))   // fast-tail.object-class == <pair>
         let fast-tail :: <pair> = fast-tail;
-	let fast-tail-tail = fast-tail.tail;
-        case					// select (fast-tail-tail.object-class) ...
-	  fast-tail-tail == #() => count + 2;
-	  instance?(fast-tail-tail,<pair>) => 
-	    let fast-tail-tail :: <pair> = fast-tail-tail;
-	    let slowtail :: <pair> = tail(slow);
-	    sum(count + 2, fast-tail-tail, slowtail);
+        let fast-tail-tail = fast-tail.tail;
+        case                                        // select (fast-tail-tail.object-class) ...
+          fast-tail-tail == #() => count + 2;
+          instance?(fast-tail-tail,<pair>) =>
+            let fast-tail-tail :: <pair> = fast-tail-tail;
+            let slowtail :: <pair> = tail(slow);
+            sum(count + 2, fast-tail-tail, slowtail);
           otherwise => error(make(<improper-list-error>, format-string: "Taking size of an improper list"));
         end
       else
@@ -196,8 +196,8 @@ end method size;
 
 //
 // ELEMENT
-// 
- 
+//
+
 //define sealed method element
 //    (lst :: <list>, key :: <integer>, #key default = unsupplied())
 //        => (o :: <object>)
@@ -220,45 +220,45 @@ end method size;
 //    otherwise =>
 //      default
 //  end case
-//end method element;      
+//end method element;
 define sealed method element
     (lst :: <list>, key :: <integer>, #key default = unsupplied())
-        => (o :: <object>)
+ => (o :: <object>)
   if (key < 0)
     if (unsupplied?(default)) element-range-error(lst, key) else default end
   else
     iterate loop (l = lst, i :: <integer> = 0)
-      if (instance?(l, <pair>))			// object-class(l) == <pair>
-	let l :: <pair> = l;
-	if (i == key) head(l) else loop(tail(l), i + 1) end;
+      if (instance?(l, <pair>))                        // object-class(l) == <pair>
+        let l :: <pair> = l;
+        if (i == key) head(l) else loop(tail(l), i + 1) end;
       elseif (unsupplied?(default))
-	element-range-error(lst, key)
+        element-range-error(lst, key)
       else
-	default
+        default
       end if
     end iterate
   end if
-end method element;      
+end method element;
 
 
 //
 // ELEMENT-NO-BOUNDS-CHECK
-// 
- 
+//
+
 define sealed method element-no-bounds-check
     (lst :: <list>, key :: <integer>, #key default) => (result :: <object>)
   for (k :: <integer> from 0 below key,
        remain :: <list> = lst then remain.tail)
-  finally 
+  finally
     remain.head
   end for
-end method element-no-bounds-check;      
+end method element-no-bounds-check;
 
 
 //
 // ELEMENT-SETTER
-// 
- 
+//
+
 //define sealed method element-setter
 //    (new-value, lst :: <list>, key :: <integer>) => (new-value :: <object>)
 //  let remain = lst;
@@ -276,24 +276,24 @@ end method element-no-bounds-check;
 //  else
 //    element-range-error(lst, key)
 //  end if
-//end method element-setter;      
+//end method element-setter;
 define sealed method element-setter
     (new-value, lst :: <list>, key :: <integer>) => (new-value :: <object>)
   iterate loop (l = lst, i :: <integer> = 0)
-    if (instance?(l, <pair>))			// object-class(l) == <pair>
+    if (instance?(l, <pair>))                        // object-class(l) == <pair>
       let l :: <pair> = l;
       if (i == key) head(l) := new-value else loop(tail(l), i + 1) end;
     else
       element-range-error(lst, key)
     end if
   end iterate
-end method element-setter;      
+end method element-setter;
 
 
 //
 // ELEMENT-NO-BOUNDS-CHECK-SETTER
-// 
- 
+//
+
 define sealed method element-no-bounds-check-setter
     (new-value, lst :: <list>, key :: <integer>) => new-value;
   for (k :: <integer> from 0 below key,
@@ -301,13 +301,13 @@ define sealed method element-no-bounds-check-setter
   finally
     remain.head := new-value
   end for
-end method element-no-bounds-check-setter;      
+end method element-no-bounds-check-setter;
 
 
 //
 // MEMBER?
-// 
- 
+//
+
 define sealed method member? (value, list :: <list>, #key test = \==)
  => (result :: <boolean>)
   ~list.empty?
@@ -316,11 +316,11 @@ define sealed method member? (value, list :: <list>, #key test = \==)
     else
       let test :: <function> = test;
       (iterate there? (first = list.head, remaining :: <list> = list.tail)
-	 if (test(value, first))
-	   #t
-	 elseif (~remaining.empty?)
-	   there?(remaining.head, remaining.tail)
-	 end if
+         if (test(value, first))
+           #t
+         elseif (~remaining.empty?)
+           there?(remaining.head, remaining.tail)
+         end if
       end iterate)
     end if
 end method member?;
@@ -331,21 +331,21 @@ define function member-eql? (value, list :: <list>) => (result :: <boolean>)
   & if (value-object?(value))
       let ic :: <implementation-class> = indirect-object-implementation-class(value);
       block (return)
-	for (itm in list)
-	  if (indirect-object?(itm) 
-		& indirect-object-implementation-class(itm) == ic
-		& value = itm)
-	    return(#t)
-	  end if
-	end for
+        for (itm in list)
+          if (indirect-object?(itm)
+                & indirect-object-implementation-class(itm) == ic
+                & value = itm)
+            return(#t)
+          end if
+        end for
       end block
     else
       block (return)
-	for (itm in list)
-	  if (pointer-id?(value, itm))
-	    return(#t)
-	  end if
-	end for
+        for (itm in list)
+          if (pointer-id?(value, itm))
+            return(#t)
+          end if
+        end for
       end block
     end if
 end function member-eql?;
@@ -355,16 +355,16 @@ define function xmember? (list :: <list>, value, test :: <function>) => (result 
   ~list.empty?
   & with-factored-equality (value, test, testit)
       local method loop (x)
-	      instance?(x, <pair>) & if (testit(head(x))) #t else loop(tail(x)) end
-	    end method;
+              instance?(x, <pair>) & if (testit(head(x))) #t else loop(tail(x)) end
+            end method;
       loop(list)
     end with-factored-equality
 end function xmember?;
 
 //
 // ADD
-// 
- 
+//
+
 define inline sealed method add (list :: <list>, value) => (result :: <pair>)
   pair(value, list)
 end method add;
@@ -372,8 +372,8 @@ end method add;
 
 //
 // ADD!
-// 
- 
+//
+
 define inline sealed method add! (list :: <list>, value) => (result :: <pair>)
   pair(value, list)
 end method add!;
@@ -381,11 +381,11 @@ end method add!;
 
 //
 // ADD-NEW
-// 
- 
+//
+
 define sealed method add-new
-    (list :: <list>, new-element, #key test :: <function> = \==) 
-        => (new-list :: <list>);
+    (list :: <list>, new-element, #key test :: <function> = \==)
+ => (new-list :: <list>);
   if (xmember?(list, new-element, test))
     list
   else
@@ -396,11 +396,11 @@ end method add-new;
 
 //
 // ADD-NEW!
-// 
+//
 
 define sealed method add-new!
-    (list :: <list>, new-element, #key test :: <function> = \==) 
-        => (new-list :: <list>);
+    (list :: <list>, new-element, #key test :: <function> = \==)
+ => (new-list :: <list>);
   if (xmember?(list, new-element, test))
     list
   else
@@ -411,12 +411,13 @@ end method add-new!;
 
 //
 // REMOVE
-// 
- 
+//
+
 define class <improper-list-error> (<simple-error>) end;
 
-define sealed method remove (l :: <list>, value, #key test: test = \==,
-			     count: count) => new-l :: <list>;
+define sealed method remove
+    (l :: <list>, value, #key test: test = \==, count: count)
+ => (new-l :: <list>);
   let rev-accumulator = #();
   let remaining = l;
   let result = #();
@@ -424,27 +425,27 @@ define sealed method remove (l :: <list>, value, #key test: test = \==,
 
   if (count == 0) l
   else
-    while ( instance?(remaining, <pair>) )	// remaining.object-class == <pair>
-      if ( test (head (remaining), value) )
+    while (instance?(remaining, <pair>))        // remaining.object-class == <pair>
+      if (test (head (remaining), value))
         remaining := tail (remaining);
         count     := count - 1;
         if (count = 0)
           result := remaining;
           remaining := #()
-        end;                               
+        end;
       else
-        rev-accumulator    := pair (head (remaining), rev-accumulator);
+        rev-accumulator := pair (head (remaining), rev-accumulator);
         remaining := tail (remaining);
       end if;
     end while;
 
-    unless (remaining == #()) 
+    unless (remaining == #())
       error(make(<improper-list-error>,
                  format-string: "Improper list %= in call to remove",
                  format-arguments: list(l)))
     end;
- 
-    until ( rev-accumulator == #() )
+
+    until (rev-accumulator == #())
       let t = tail (rev-accumulator);
       tail (rev-accumulator) := result;
       result := rev-accumulator;
@@ -457,57 +458,57 @@ end method remove;
 
 
 //define sealed method remove (l :: <list>, value, #key test: test = \==, count: count)
-// => new-l :: <list>;
- 
+// => (new-l :: <list>);
+
 //  let count :: <integer> = if (count) check-nat(count) else -1 end;
 
-//  if (count == 0) 
+//  if (count == 0)
 //    l
 //  else
 //    with-factored-equality (value, test, testit)
 //      local method loop (l, cnt :: <integer>) => new-l :: <list>;
-//	      if (cnt == 0 | ~instance?(l, <pair>))
-//		l
-//	      elseif (testit(head(l)))
-//		loop(tail(l), cnt - 1)
-//	      else
-//		let ans :: <pair> = pair(head(l), #());
-//		local method loop2 (l, prev :: <pair>, cnt :: <integer>)
-//			if (cnt == 0 | ~instance?(l, <pair>)) 
-//			  tail(prev) := l;
-//			  ans
-//			elseif (testit(head(l)))
-//			  loop2(tail(l), prev, cnt - 1)
-//			else
-//			  let npair :: <pair> = pair(head(l), #());
-//			  tail(prev) := npair;
-//			  loop2(tail(l), npair, cnt)
-//			end if
-//		      end method;
-//		loop2(tail(l), ans, cnt)
-//	      end if
-//	    end method;
+//              if (cnt == 0 | ~instance?(l, <pair>))
+//                l
+//              elseif (testit(head(l)))
+//                loop(tail(l), cnt - 1)
+//              else
+//                let ans :: <pair> = pair(head(l), #());
+//                local method loop2 (l, prev :: <pair>, cnt :: <integer>)
+//                        if (cnt == 0 | ~instance?(l, <pair>))
+//                          tail(prev) := l;
+//                          ans
+//                        elseif (testit(head(l)))
+//                          loop2(tail(l), prev, cnt - 1)
+//                        else
+//                          let npair :: <pair> = pair(head(l), #());
+//                          tail(prev) := npair;
+//                          loop2(tail(l), npair, cnt)
+//                        end if
+//                      end method;
+//                loop2(tail(l), ans, cnt)
+//              end if
+//            end method;
 //      loop(l, cnt)
 //    end with-factored-equality
 //  end if
 //end method;
-      
+
 
 //
 // REMOVE!
-// 
- 
-define sealed method remove! 
-    (l :: <list>, value, #key test: test :: <function> = \==, count: count) 
-        => new-l :: <list>;
+//
+
+define sealed method remove!
+    (l :: <list>, value, #key test: test :: <function> = \==, count: count)
+ => (new-l :: <list>);
   let result    = l;
   let prev      = #f;
   let remaining = l;
   let count :: <integer> = if (count) check-nat(count) else -1 end;
 
   unless (count == 0)
-    while ( instance?(remaining, <pair>) )	// remaining.object-class == <pair>
-      if (~ (test (head (remaining), value)))
+    while (instance?(remaining, <pair>))        // remaining.object-class == <pair>
+      if (~(test (head (remaining), value)))
         prev := remaining;
       else
         if (prev)
@@ -521,7 +522,7 @@ define sealed method remove!
       remaining := tail (remaining);
     end while;
 
-    unless (remaining == #()) 
+    unless (remaining == #())
       error(make(<improper-list-error>,
                  format-string: "Improper list %= in call to remove!",
                  format-arguments: list(l)))
@@ -534,15 +535,15 @@ end method remove!;
 
 //
 // REMOVE-DUPLICATES
-// 
+//
 
-define sealed method remove-duplicates (l :: <list>, #key test: test = \== )
- => new-l :: <list>;
+define sealed method remove-duplicates (l :: <list>, #key test: test = \==)
+ => (new-l :: <list>);
   let result    = #();
   let prev      = #f;
   let remaining = l;
 
-  while ( instance?(remaining, <pair>) )	// remaining.object-class == <pair>
+  while (instance?(remaining, <pair>))        // remaining.object-class == <pair>
     if (member? (head (remaining), tail (remaining), test: test))
       remaining   := tail (remaining);
     elseif (prev)
@@ -558,7 +559,7 @@ define sealed method remove-duplicates (l :: <list>, #key test: test = \== )
     end if;
   end while;
 
-  unless (remaining == #()) 
+  unless (remaining == #())
     error(make(<improper-list-error>,
                format-string: "Improper list %= in call to remove-duplicates",
                format-arguments: list(l)))
@@ -570,16 +571,16 @@ end method remove-duplicates;
 
 //
 // REMOVE-DUPLICATES!
-// 
+//
 
-define sealed method remove-duplicates! ( l :: <list>, #key test: test = \== )
-    => new-l :: <list>;
+define sealed method remove-duplicates! (l :: <list>, #key test: test = \==)
+ => (new-l :: <list>);
   let result    = l;
   let prev      = #f;
   let remaining = l;
-  
-  while ( instance?(remaining, <pair>) )	// remaining.object-class == <pair>
-    if ( ~ member? (head (remaining), tail (remaining), test: test))
+
+  while (instance?(remaining, <pair>))        // remaining.object-class == <pair>
+    if (~ member? (head (remaining), tail (remaining), test: test))
       prev        := remaining;
       remaining   := tail (remaining);
     elseif (prev)
@@ -591,7 +592,7 @@ define sealed method remove-duplicates! ( l :: <list>, #key test: test = \== )
     end if;
   end while;
 
-  unless (remaining == #()) 
+  unless (remaining == #())
     error(make(<improper-list-error>,
                format-string: "Improper list %= in call to remove-duplicates!",
                format-arguments: list(l)))
@@ -603,10 +604,10 @@ end method remove-duplicates!;
 
 //
 // LAST
-// 
+//
 
 define sealed method last (lst :: <list>, #key default = unsupplied())
-    => (object)
+ => (object)
   if (lst.empty?)
     if (unsupplied?(default))
       element-range-error(lst, 0)
@@ -625,7 +626,7 @@ end method last;
 
 //
 // LAST-SETTER
-// 
+//
 
 define sealed method last-setter (new-value, lst :: <list>) => (object)
   if (lst.empty?)
@@ -642,7 +643,7 @@ end method last-setter;
 
 //
 // ITERATION PROTOCOL
-// 
+//
 
 define inline function list-next-state
     (collection :: <list>, state :: <list>) => (l :: <list>)
@@ -676,36 +677,36 @@ define inline function list-current-element-setter
 end function;
 
 define sealed inline method forward-iteration-protocol (collection :: <list>)
-    => (initial-state :: <list>, limit :: <list>,
-        next-state :: <function>, finished-state? :: <function>,
-        current-key :: <function>,
-        current-element :: <function>, current-element-setter :: <function>,
-        copy-state :: <function>);
+ => (initial-state :: <list>, limit :: <list>,
+     next-state :: <function>, finished-state? :: <function>,
+     current-key :: <function>,
+     current-element :: <function>, current-element-setter :: <function>,
+     copy-state :: <function>);
   values(collection,
-	 #(),
-	 list-next-state,
-	 list-finished-state?,
-	 list-current-key,
-	 list-current-element,
-	 list-current-element-setter,
-	 identity-copy-state)
+         #(),
+         list-next-state,
+         list-finished-state?,
+         list-current-key,
+         list-current-element,
+         list-current-element-setter,
+         identity-copy-state)
 end method forward-iteration-protocol;
 
 
 //
 // COPY-SEQUENCE
-// 
+//
 
 define sealed method copy-sequence
-    (source :: <list>, 
-     #key start: first :: <integer> = 0, end: last = unsupplied()) 
-        => (result-sequence :: <list>);
+    (source :: <list>,
+     #key start: first :: <integer> = 0, end: last = unsupplied())
+ => (result-sequence :: <list>);
   if (first = 0 & unsupplied?(last))
     for (v in source,  result = #() then pair(v, result))
     finally
       reverse!(result)
     end for
-  else 
+  else
     if (first < 0) invalid-sequence-start-error(source, first) end;
     for (l = source then l.tail,
          i from 0,
@@ -713,7 +714,7 @@ define sealed method copy-sequence
     finally
       if (i < first) invalid-sequence-start-error(source, first) end;
       if (supplied?(last))
-        if (last < first) 
+        if (last < first)
           invalid-sequence-bounds-error(source, first, last) end;
         for (l = l then l.tail,
              i from i,
@@ -732,16 +733,16 @@ define sealed method copy-sequence
     end for
   end if
 end method copy-sequence;
-    
+
 
 //
 // REPLACE-SUBSEQUENCE!
-// 
+//
 
 define sealed method replace-subsequence!
-    (target :: <list>, insert :: <sequence>, 
-     #key start :: <integer> = 0, end: last) 
-        => (result-sequence :: <sequence>);
+    (target :: <list>, insert :: <sequence>,
+     #key start :: <integer> = 0, end: last)
+ => (result-sequence :: <sequence>);
   let result = pair (#f, target);
   let prev   = result;
 
@@ -753,11 +754,11 @@ define sealed method replace-subsequence!
     last := start + size (insert);
   end if;
 
-  let after-hole = 
+  let after-hole =
     for (after-hole = tail (prev) then tail (after-hole),
          index = start then index + 1,
          until: index = last)
-    finally 
+    finally
       after-hole;
     end for;
 
@@ -766,7 +767,7 @@ define sealed method replace-subsequence!
     tail (prev) := next;
     prev        := next;
   end for;
-  
+
   tail (prev) := after-hole;
   tail (result);
 end method replace-subsequence!;
@@ -774,13 +775,13 @@ end method replace-subsequence!;
 
 //
 // REVERSE
-// 
+//
 
 //define sealed method reverse  (l :: <list>) => l :: <list>;
 //  let result = #();
 //  let remaining = l;
 
-//  until ( remaining == #() )
+//  until (remaining == #())
 //    result := pair (head (remaining), result);
 //    remaining := tail (remaining);
 //  end until;
@@ -802,13 +803,13 @@ end method reverse;
 
 //
 // REVERSE!
-// 
+//
 
 //define sealed method reverse! (l :: <list>) => l :: <list>;
 //  let result    = #();
 //  let remaining = l;
 
-//  until ( remaining == #() )
+//  until (remaining == #())
 //    let t = tail (remaining);
 //    tail (remaining) := result;
 //    result           := remaining;
@@ -820,7 +821,7 @@ end method reverse;
 
 define sealed method reverse! (l :: <list>) => l :: <list>;
   iterate loop (l = l, result = #())
-    if (instance?(l, <pair>))			// object-class(l) == <pair>
+    if (instance?(l, <pair>))                        // object-class(l) == <pair>
       let l :: <pair> = l;
       let nxt = tail(l);
       tail(l) := result;
@@ -838,10 +839,10 @@ end method reverse!;
 
 define sealed method concatenate-as-two
     (type :: subclass(<list>), first-seq :: <sequence>, second-seq :: <sequence>)
-        => result-seq :: <list>; 
+ => (result-seq :: <list>);
   if (empty?(second-seq))
     as(<list>, first-seq)
-  else 
+  else
     let l = as(<list>, second-seq);
     if (empty?(first-seq))
       l
@@ -850,7 +851,7 @@ define sealed method concatenate-as-two
       for (e in first-seq, revcpy = #() then pair(e, revcpy))
       finally
         let result = l;
-        while (revcpy ~== #()) 
+        while (revcpy ~== #())
           let p = revcpy; revcpy := p.tail; p.tail := result;
           result := p;
         end;
@@ -862,12 +863,12 @@ end;
 
 
 //
-// CONCATENATE-AS 
+// CONCATENATE-AS
 //
 
 define sealed method concatenate-as
     (type == <list>, first-seq :: <sequence>, #rest rest-seqs :: <sequence>)
-        => result-seq :: <list>; 
+ => (result-seq :: <list>);
   let acc = #();
   for (s in rest-seqs using backward-iteration-protocol)
     acc := concatenate-as-two(<list>, s, acc)
@@ -878,11 +879,11 @@ end;
 
 //
 // REDUCE
-// 
- 
-define sealed method reduce 
+//
+
+define sealed method reduce
     (fn :: <function>, init-value, collection :: <list>)
-        => (object)
+ => (object)
   for (result = init-value then fn(result, item),
        item in collection)
   finally
@@ -903,26 +904,26 @@ define domain sort  (<list>);
 //   passed in).
 
 define sealed method first-setter
-    (value :: <object>, sequence :: <pair>) => (value :: <object>) 
+    (value :: <object>, sequence :: <pair>) => (value :: <object>)
   head (sequence) := value
 end;
 
-define inline function tail-or-range-error 
+define inline function tail-or-range-error
     (sequence :: <list>, key :: <integer>) => (res :: <pair>)
   let tail = tail(sequence);
   if (instance?(tail, <pair>))
     tail
   else
-    element-range-error(tail, key)    
+    element-range-error(tail, key)
   end if
 end function;
 
 define sealed method second-setter
-    (value :: <object>, sequence :: <pair>) => (value :: <object>) 
+    (value :: <object>, sequence :: <pair>) => (value :: <object>)
   head(tail-or-range-error(sequence, 1)) := value
 end;
 
-define sealed method third-setter 
+define sealed method third-setter
     (value :: <object>, sequence :: <pair>) => (value :: <object>)
   head(tail-or-range-error(tail(sequence), 2)) := value
 end;

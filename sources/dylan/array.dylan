@@ -16,25 +16,25 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Open generics on <array>
 
-define open generic rank 
+define open generic rank
   (array :: <array>) => (rank :: <integer>);
 
-define open generic row-major-index 
+define open generic row-major-index
   (array :: <array>, #rest subscripts) => (index :: <integer>);
 
-define open generic aref 
+define open generic aref
   (array :: <array>, #rest indices) => object;
 
-define open generic aref-setter 
+define open generic aref-setter
   (new-value, array :: <array>, #rest indices) => object;
 
-define open generic dimensions 
+define open generic dimensions
   (array :: <array>) => (dims :: <sequence>);
 
-define open generic dimension 
+define open generic dimension
   (array :: <array>, axis :: <integer>) => (dim :: <integer>);
 
-define open generic limited-array 
+define open generic limited-array
     (of :: <type>, dimensions :: false-or(<sequence>))
  => (type :: <type>);
 
@@ -46,7 +46,7 @@ define open generic limited-array
 
 //
 // RANK
-// 
+//
 
 define inline method rank (array :: <array>) => (rank :: <integer>)
   size(array.dimensions)
@@ -55,7 +55,7 @@ end method rank;
 
 //
 // ROW-MAJOR-INDEX
-// 
+//
 
 define function aref-rank-error
     (array :: <array>, subscripts)
@@ -64,13 +64,13 @@ define function aref-rank-error
   // collection having dynamic extent.  A debugger should be able to display
   // the collection.
   error(make(<subscript-out-of-bounds-error>,
-	     format-string: "Number of subscripts not equal to "
-	       "rank of array %=",
-	     format-arguments: list(array)))
+             format-string: "Number of subscripts not equal to "
+               "rank of array %=",
+             format-arguments: list(array)))
 end function aref-rank-error;
 
 define method general-row-major-index (array :: <array>, #rest subscripts :: <integer>)
-    => (index :: <integer>)
+ => (index :: <integer>)
   %dynamic-extent(subscripts);
   let sum :: <integer> = 0;
   for (dimension :: <integer> in array.dimensions,
@@ -84,7 +84,7 @@ define method general-row-major-index (array :: <array>, #rest subscripts :: <in
 end method general-row-major-index;
 
 define inline method two-row-major-index (array :: <array>, #rest subscripts :: <integer>)
-    => (index :: <integer>)
+ => (index :: <integer>)
   %dynamic-extent(subscripts);
   let dimensions = dimensions(array);
   without-bounds-checks
@@ -100,7 +100,7 @@ define inline method two-row-major-index (array :: <array>, #rest subscripts :: 
 end method two-row-major-index;
 
 define inline method row-major-index (array :: <array>, #rest subscripts :: <integer>)
-    => (index :: <integer>)
+ => (index :: <integer>)
   %dynamic-extent(subscripts);
   let n-subscripts = size(subscripts);
   unless (array.rank = n-subscripts)
@@ -108,17 +108,17 @@ define inline method row-major-index (array :: <array>, #rest subscripts :: <int
   end unless;
   if (n-subscripts = 2)
     apply(two-row-major-index, array, subscripts);
-  else 
+  else
     apply(general-row-major-index, array, subscripts);
   end if;
 end method row-major-index;
 
 //
 // AREF
-// 
+//
 
-define inline method aref (array :: <array>, #rest indices :: <integer>) 
-    => (object)
+define inline method aref (array :: <array>, #rest indices :: <integer>)
+ => (object)
   without-bounds-checks
     array[apply(row-major-index, array, indices)]
   end without-bounds-checks;
@@ -127,23 +127,23 @@ end method aref;
 
 //
 // AREF-SETTER
-// 
+//
 
-define inline method aref-setter 
+define inline method aref-setter
     (new-value, array :: <array>, #rest indices :: <integer>)
-        => (object)
+ => (object)
   without-bounds-checks
     array[apply(row-major-index, array, indices)] := new-value
   end without-bounds-checks;
 end method aref-setter;
 
- 
+
 //
 // DIMENSION
-// 
+//
 
 define inline method dimension (array :: <array>, axis :: <integer>)
-    => (dimension :: <integer>)
+ => (dimension :: <integer>)
   array.dimensions[axis]
 end method dimension;
 
@@ -158,15 +158,15 @@ end method dimension;
 // MAKE
 //
 
-define sealed method make 
+define sealed method make
     (class == <array>, #rest args, #key dimensions = unsupplied(),
-                                        size: sz = unsupplied()) 
-    => (result :: <array>)
+                                        size: sz = unsupplied())
+ => (result :: <array>)
   case
     supplied?(sz) =>
       if (supplied?(dimensions) & (size(dimensions) ~= 1 | dimensions[0] ~= sz))
-	error("Dimensions %= incompatible to size %= in call to make(<array>)",
-	      dimensions, sz);
+        error("Dimensions %= incompatible to size %= in call to make(<array>)",
+              dimensions, sz);
       end if;
       apply(make, <simple-object-vector>, args);
     unsupplied?(dimensions) => // TODO: use proper error class
@@ -180,18 +180,18 @@ end method make;
 
 //
 // SHALLOW-COPY
-// 
+//
 
 define method shallow-copy (array :: <array>) => (array :: <array>)
   let size = size(array);
   if (size = 0)
     make(array.type-for-copy, dimensions: dimensions);
-  else 
+  else
     let dimensions :: <sequence> = array.dimensions;
-    let new-array :: <array> = 
+    let new-array :: <array> =
       make(array.type-for-copy, dimensions: dimensions, fill: array[0]);
 
-    for (key :: <integer> from 0 below size) 
+    for (key :: <integer> from 0 below size)
       new-array[key] := array[key];
     end for;
     new-array
@@ -201,7 +201,7 @@ end method shallow-copy;
 
 //
 // TYPE-FOR-COPY
-// 
+//
 
 define method type-for-copy (array :: <array>) => (class :: <class>)
   <array>
@@ -210,26 +210,26 @@ end method type-for-copy;
 
 //
 // AS
-// 
+//
 
 define method as (class == <array>, array :: <array>) => (array :: <array>)
   array
 end method as;
 
 define method as (class == <array>, collection :: <collection>)
-    => (array :: <array>)
+ => (array :: <array>)
   as(<simple-object-vector>, collection)
 end method as;
 
 
 //
 // FILL!
-// 
+//
 
 define method fill!
-    (target :: <array>, value, 
+    (target :: <array>, value,
      #key start :: <integer> = 0, end: last = unsupplied())
-        => (target :: <array>)
+ => (target :: <array>)
   let last :: <integer> = check-start-compute-end(target, start, last);
   for (index :: <integer> from start below last)
     target[index] := value
@@ -240,7 +240,7 @@ end;
 
 //
 // SIZE
-// 
+//
 
 define method size (x :: <array>) => (res :: <integer>)
   reduce(\*, 1, dimensions(x))

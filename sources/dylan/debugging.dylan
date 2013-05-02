@@ -53,7 +53,7 @@ define variable *debug-out-function* :: <function> = default-debug-out;
 define macro debug-out
   { debug-out (?key:expression, ?args:*) }
     => { if (debugging-part?(?key))
-	   debug-out-function()(method () vector(?args) end)
+           debug-out-function()(method () vector(?args) end)
          end }
 end macro debug-out;
 
@@ -79,22 +79,22 @@ define macro assert
  { assert(?value:expression) }
     => { unless (?value)
            assertion-failure("no reason supplied")
-	 end }
+         end }
  { assert(?value:expression, ?format-string:expression, ?format-arguments:*) }
     => { unless (?value)
            assertion-failure(?format-string, ?format-arguments)
-	 end }
+         end }
 end macro assert;
 
 define macro debug-assert
  { debug-assert(?value:expression) }
     => { if (debugging?() & ~?value)
-	   debug-assertion-failure("no reason supplied")
-	 end }
+           debug-assertion-failure("no reason supplied")
+         end }
  { debug-assert(?value:expression, ?format-string:expression, ?format-arguments:*) }
     => { if (debugging?() & ~?value)
-	   debug-assertion-failure(?format-string, ?format-arguments)
-	 end }
+           debug-assertion-failure(?format-string, ?format-arguments)
+         end }
 end macro debug-assert;
 
 /// ASSERTION CONDITIONS
@@ -107,8 +107,8 @@ define function assertion-failure
   let format-string
     = concatenate-as(<string>, "Assertion failed: ", format-string);
   error(make(<assert-error>,
-	     format-string: format-string,
-	     format-arguments: format-arguments))
+             format-string: format-string,
+             format-arguments: format-arguments))
 end function assertion-failure;
 
 define function debug-assertion-failure
@@ -116,8 +116,8 @@ define function debug-assertion-failure
   let format-string
     = concatenate-as(<string>, "Debug assertion failed: ", format-string);
   cerror("Carry on regardless",
-	 make(<assert-error>,
-	      format-string: format-string,
-	      format-arguments: format-arguments))
+         make(<assert-error>,
+              format-string: format-string,
+              format-arguments: format-arguments))
 end function debug-assertion-failure;
 

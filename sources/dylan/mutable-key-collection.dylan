@@ -17,11 +17,5 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Open generics on <mutable-explicit-key-collection>
 
 define open generic remove-key!
-  (collection :: <mutable-explicit-key-collection>, key :: <object>) 
-    => (present? :: <boolean>);
-
-
-
-
-
-
+    (collection :: <mutable-explicit-key-collection>, key :: <object>)
+ => (present? :: <boolean>);

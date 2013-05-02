@@ -1,4 +1,4 @@
-module:	internal
+module:        internal
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -8,22 +8,22 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //
 // Copyright (c) 1994  Carnegie Mellon University
 // All rights reserved.
-// 
+//
 // Use and copying of this software and preparation of derivative
 // works based on this software are permitted, including commercial
 // use, provided that the following conditions are observed:
-// 
+//
 // 1. This copyright notice must be retained in full on any copies
 //    and on appropriate parts of any derivative works.
 // 2. Documentation (paper or online) accompanying any system that
 //    incorporates this software, or any part of it, must acknowledge
 //    the contribution of the Gwydion Project at Carnegie Mellon
 //    University.
-// 
+//
 // This software is made available "as is".  Neither the authors nor
 // Carnegie Mellon University make any warranty about the software,
 // its performance, or its conformity to any specification.
-// 
+//
 // Bug reports, questions, comments, and suggestions should be sent by
 // E-mail to the Internet address "gwydion-bugs@cs.cmu.edu".
 //
@@ -107,18 +107,18 @@ end method swap-elements!;
 //
 define inline-only function primitive-insertion-sort!
     (vector :: <vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
-	  end:   _end   :: <integer> = size(vector))
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
+          end:   _end   :: <integer> = size(vector))
   sort-range-check(vector, size(vector), _start, _end);
   without-bounds-checks
     for (current-key :: <integer> from _start + 1 below _end)
       let current-element = vector[current-key];
       for (insert-key :: <integer> from current-key - 1 to _start by -1,
-	   while: test(current-element, vector[insert-key]))
-	vector[insert-key + 1] := vector[insert-key];
+           while: test(current-element, vector[insert-key]))
+        vector[insert-key + 1] := vector[insert-key];
       finally
-	vector[insert-key + 1] := current-element;
+        vector[insert-key + 1] := current-element;
       end
     end
   end;
@@ -127,22 +127,22 @@ end function primitive-insertion-sort!;
 
 define method insertion-sort!
     (vector :: <vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
-	  end:   _end   :: <integer> = size(vector))
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
+          end:   _end   :: <integer> = size(vector))
   primitive-insertion-sort!(vector,
-			    test: test,
-			    start: _start, end: _end)
+                            test: test,
+                            start: _start, end: _end)
 end method insertion-sort!;
 
 define sealed method insertion-sort!
     (vector :: <simple-object-vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
-	  end:   _end   :: <integer> = size(vector))
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
+          end:   _end   :: <integer> = size(vector))
   primitive-insertion-sort!(vector,
-			    test: test,
-			    start: _start, end: _end)
+                            test: test,
+                            start: _start, end: _end)
 end method insertion-sort!;
 
 
@@ -197,22 +197,22 @@ define inline-only function primitive-merge!
   without-bounds-checks
     for (merge-key :: <integer> from 0 below merge-size)
       case
-	start-key >= middle =>
-	  merge-vector[merge-key] := vector[middle-key];
-	  middle-key := middle-key + 1;
-	middle-key >= _end =>
-	  merge-vector[merge-key] := vector[start-key];
-	  start-key := start-key + 1;
-	test(vector[middle-key], vector[start-key]) =>
-	  merge-vector[merge-key] := vector[middle-key];
-	  middle-key := middle-key + 1;
-	otherwise =>
-	  merge-vector[merge-key] := vector[start-key];
-	  start-key := start-key + 1;
+        start-key >= middle =>
+          merge-vector[merge-key] := vector[middle-key];
+          middle-key := middle-key + 1;
+        middle-key >= _end =>
+          merge-vector[merge-key] := vector[start-key];
+          start-key := start-key + 1;
+        test(vector[middle-key], vector[start-key]) =>
+          merge-vector[merge-key] := vector[middle-key];
+          middle-key := middle-key + 1;
+        otherwise =>
+          merge-vector[merge-key] := vector[start-key];
+          start-key := start-key + 1;
       end
     end;
     for (merge-key :: <integer> from 0 below merge-size,
-	 copy-key :: <integer> from _start)
+         copy-key :: <integer> from _start)
       vector[copy-key] := merge-vector[merge-key]
     end
   end
@@ -220,19 +220,19 @@ end function primitive-merge!;
 
 define method merge!
     (vector :: <vector>,
-     #key test :: <function> = \<, 
-          start:  _start :: <integer>, 
-          middle: middle :: <integer>, 
-	  end:    _end   :: <integer>)
+     #key test :: <function> = \<,
+          start:  _start :: <integer>,
+          middle: middle :: <integer>,
+          end:    _end   :: <integer>)
   primitive-merge!(vector, _start, middle, _end, test: test)
 end method merge!;
 
 define sealed method merge!
     (vector :: <simple-object-vector>,
-     #key test :: <function> = \<, 
-          start:  _start :: <integer>, 
-          middle: middle :: <integer>, 
-	  end:    _end   :: <integer>)
+     #key test :: <function> = \<,
+          start:  _start :: <integer>,
+          middle: middle :: <integer>,
+          end:    _end   :: <integer>)
   primitive-merge!(vector, _start, middle, _end, test: test)
 end method merge!;
 
@@ -252,21 +252,21 @@ end method merge!;
 //
 define inline-only function primitive-merge-sort!
     (vector :: <vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
-	  end:   _end   :: <integer> = size(vector))
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
+          end:   _end   :: <integer> = size(vector))
   sort-range-check(vector, size(vector), _start, _end);
   without-bounds-checks
     let length :: <integer> = _end - _start;
     case
       length < $small-sort-size =>
-	insertion-sort!(vector, test: test, start: _start, end: _end);
+        insertion-sort!(vector, test: test, start: _start, end: _end);
       length > 1 =>
-	let (div, mod) = floor/(length, 2);
-	let middle :: <integer> = _start + div;
-	merge-sort!(vector, test: test, start: _start, end: middle);
-	merge-sort!(vector, test: test, start: middle, end: _end);
-	merge!(vector, start: _start, middle: middle, end: _end, test: test);
+        let (div, mod) = floor/(length, 2);
+        let middle :: <integer> = _start + div;
+        merge-sort!(vector, test: test, start: _start, end: middle);
+        merge-sort!(vector, test: test, start: middle, end: _end);
+        merge!(vector, start: _start, middle: middle, end: _end, test: test);
       otherwise => #f;
     end
   end;
@@ -275,22 +275,22 @@ end function primitive-merge-sort!;
 
 define method merge-sort!
     (vector :: <vector>,
-     #key test :: <function> = \<, 
-	  start: _start :: <integer> = 0, 
-	  end:   _end   :: <integer> = size(vector))
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
+          end:   _end   :: <integer> = size(vector))
   primitive-merge-sort!(vector,
-			test: test,
-			start: _start, end: _end)
+                        test: test,
+                        start: _start, end: _end)
 end method merge-sort!;
 
 define sealed method merge-sort!
     (vector :: <simple-object-vector>,
-     #key test :: <function> = \<, 
-	  start: _start :: <integer> = 0, 
-	  end:   _end   :: <integer> = size(vector))
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
+          end:   _end   :: <integer> = size(vector))
   primitive-merge-sort!(vector,
-			test: test,
-			start: _start, end: _end)
+                        test: test,
+                        start: _start, end: _end)
 end method merge-sort!;
 
 
@@ -322,15 +322,15 @@ define inline-only function primitive-median-of-three
     let middle-elt = vector[middle];
     if (less-than(start-elt, end-elt))
       if (less-than(middle-elt, end-elt))
-	middle
-      else 
-	_end
-      end
-    else	// end-elt <= start-elt
-      if (less-than(middle-elt, start-elt))
-	middle
+        middle
       else
-	_start
+        _end
+      end
+    else        // end-elt <= start-elt
+      if (less-than(middle-elt, start-elt))
+        middle
+      else
+        _start
       end
     end
   end
@@ -375,18 +375,18 @@ define inline-only function primitive-partition!
     let pivot-element = vector[pivot-key];
     block (break)
       while (#t)
-	while (test(vector[small-key], pivot-element))
-	  small-key := small-key + 1;
-	end;
-	while (test(pivot-element, vector[large-key]))
-	  large-key := large-key - 1;
-	end;
-	unless (small-key < large-key)
-	  break();
-	end;
-	swap-elements!(vector, small-key, large-key);
-	small-key := small-key + 1;
-	large-key := large-key - 1;
+        while (test(vector[small-key], pivot-element))
+          small-key := small-key + 1;
+        end;
+        while (test(pivot-element, vector[large-key]))
+          large-key := large-key - 1;
+        end;
+        unless (small-key < large-key)
+          break();
+        end;
+        swap-elements!(vector, small-key, large-key);
+        small-key := small-key + 1;
+        large-key := large-key - 1;
       end
     end;
     small-key
@@ -395,16 +395,16 @@ end function primitive-partition!;
 
 define method partition!
     (vector :: <vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
           end: _end :: <integer> = size(vector))
   primitive-partition!(vector, _start, _end, test: test)
 end method partition!;
 
 define sealed method partition!
     (vector :: <simple-object-vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
           end: _end :: <integer> = size(vector))
   primitive-partition!(vector, _start, _end, test: test)
 end method partition!;
@@ -423,8 +423,8 @@ end method partition!;
 //
 define inline-only function primitive-quick-sort!
     (vector :: <vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
           end: _end :: <integer> = size(vector))
   sort-range-check(vector, size(vector), _start, _end);
   let length :: <integer> = _end - _start;
@@ -442,29 +442,29 @@ end function primitive-quick-sort!;
 
 define method quick-sort!
     (vector :: <vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
           end: _end :: <integer> = size(vector))
   primitive-quick-sort!(vector,
-			test: test,
-			start: _start, end: _end)
+                        test: test,
+                        start: _start, end: _end)
 end method quick-sort!;
 
 define sealed method quick-sort!
     (vector :: <simple-object-vector>,
-     #key test :: <function> = \<, 
-          start: _start :: <integer> = 0, 
+     #key test :: <function> = \<,
+          start: _start :: <integer> = 0,
           end: _end :: <integer> = size(vector))
   primitive-quick-sort!(vector,
-			test: test,
-			start: _start, end: _end)
+                        test: test,
+                        start: _start, end: _end)
 end method quick-sort!;
 
 define method sort!(vector :: <vector>, #key test = \<, stable: stable)
-    => sequence :: <sequence>;
-  if (stable) 
+ => (sequence :: <sequence>);
+  if (stable)
     merge-sort!(vector, test: test);
-  else 
+  else
     quick-sort!(vector, test: test);
   end if;
   vector
@@ -472,10 +472,10 @@ end method sort!;
 
 
 define method sort!(sequence :: <sequence>, #key test = \<, stable: stable)
-    => sequence :: <sequence>;
+ => (sequence :: <sequence>);
   let vector = as(<vector>, sequence);
   let result = if (stable) merge-sort!(vector, test: test);
-	       else quick-sort!(vector, test: test);
-	       end if;
+               else quick-sort!(vector, test: test);
+               end if;
   as(type-for-copy(sequence), result);
 end method sort!;

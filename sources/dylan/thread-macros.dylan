@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define macro dynamic-bind
- 
+
   { dynamic-bind () ?:body end }
     => { ?body }
 
@@ -21,11 +21,11 @@ define macro dynamic-bind
 
   { dynamic-bind (?name:name (?arguments:*) = ?init:expression, ?others:*) ?:body end }
     => { ?name ## "-dynamic-binder"
-	   (?init, method () dynamic-bind (?others) ?body end end, ?arguments) }
+           (?init, method () dynamic-bind (?others) ?body end end, ?arguments) }
 
   { dynamic-bind (?complex-place = ?init:expression, ?others:*) ?:body end }
     => { dynamic-bind (?complex-place = ?init, ?others) ?body end }
- 
+
 complex-place:
   { ?prefix:* \. ?:name }            // Support for dot notation
     => { ?name(?prefix) }
@@ -76,8 +76,8 @@ end macro;
 
 define macro with-lock
 
-  { with-lock (?lock:expression, ?options:*) 
-      ?body:body 
+  { with-lock (?lock:expression, ?options:*)
+      ?body:body
       ?failure
     end }
     => { begin
@@ -149,7 +149,7 @@ end macro;
 define macro conditional-update!
 
   // Case for variables
-  { conditional-update! (?lvar:name :: ?type:expression = ?place:*) 
+  { conditional-update! (?lvar:name :: ?type:expression = ?place:*)
       ?:body
       ?result-options:*
     end }
@@ -168,9 +168,9 @@ result-options:
     => { success $result$ ?fail }
 
 fail:
-  { failure ?:body } 
+  { failure ?:body }
     => { failure ?body }
-  {} 
+  {}
     => { failure signal(make(<conditional-update-error>)) }
 
 end macro;
@@ -180,13 +180,13 @@ end macro;
 
 define macro conditional-set-variable!
   // Case for variables
-  { conditional-set-variable! 
+  { conditional-set-variable!
       (?lvar:name, ?newval:expression, ?comparison:expression) }
     => { %conditional-update-variable (?lvar, ?newval, ?comparison) }
 end macro;
 
 
-define macro atomic-increment! 
+define macro atomic-increment!
 
   { atomic-increment! (?place:*, ?by:expression) }
     => { begin
@@ -208,7 +208,7 @@ end macro;
 
 
 
-define macro atomic-decrement! 
+define macro atomic-decrement!
 
   { atomic-decrement! (?place:*, ?by:expression) }
     => { atomic-increment!(?place, - (?by)) }

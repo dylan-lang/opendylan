@@ -17,7 +17,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // since pairs aren't inlineable, we use a thunk which is.
 
-define generic not-found-object (); 
+define generic not-found-object ();
 define inline constant not-found = method () not-found-object end;
 define inline constant not-found? = method (x) x == not-found-object; end;
 // define inline constant found? = method (x) ~(x == not-found-object); end;
@@ -28,8 +28,8 @@ define inline constant unsupplied? = method (x) x == unsupplied-object; end;
 define inline constant supplied? = method (x) ~(x == unsupplied-object); end;
 
 
-// Methods with only one collection argument are specialized in the 
-// appropriate file.  If a method has more than one collection argument 
+// Methods with only one collection argument are specialized in the
+// appropriate file.  If a method has more than one collection argument
 // then all the specializations are presented together.
 
 
@@ -37,18 +37,18 @@ define inline constant supplied? = method (x) ~(x == unsupplied-object); end;
 // INTERFACE
 ////////////
 
-// Functions on <collection>.  
+// Functions on <collection>.
 // Make these sealed generics so we can specialize if necessary.
-// We need to ensure that the dispatching of any uses of these functions 
+// We need to ensure that the dispatching of any uses of these functions
 // in the dispatch code is resolved at compile time.
 
 define sealed generic do
-  (fn :: <function>, coll :: <collection>, #rest more-colls :: <collection>) 
-    => false :: singleton(#f);
+    (fn :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
+ => (false :: singleton(#f));
 
-define sealed generic map 
-  (fn :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
-    => new-collection :: <collection>;
+define sealed generic map
+    (fn :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
+ => (new-collection :: <collection>);
 
 define constant <collection-type>
   = type-union(subclass(<collection>), <limited-collection-type>);
@@ -57,46 +57,46 @@ define constant <mutable-collection-type>
   = type-union(subclass(<mutable-collection>), <limited-mutable-collection-type>);
 
 define sealed generic map-as
-  (type :: <mutable-collection-type>, fn :: <function>, 
-   collection :: <collection>, #rest more-collections :: <collection>)
-    => new-collection :: <mutable-collection>;
+    (type :: <mutable-collection-type>, fn :: <function>,
+     collection :: <collection>, #rest more-collections :: <collection>)
+ => (new-collection :: <mutable-collection>);
 
 define sealed generic map-into
-  (mutable-collection :: <mutable-collection>, function :: <function>,
-   collection :: <collection>, #rest more-collections :: <collection>)
-    => mutable-collection :: <mutable-collection>;
+    (mutable-collection :: <mutable-collection>, function :: <function>,
+     collection :: <collection>, #rest more-collections :: <collection>)
+ => (mutable-collection :: <mutable-collection>);
 
 define sealed generic any?
-  (test :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
-    => value;
+    (test :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
+ => value;
 
 define sealed generic every?
-  (test :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
-    => value :: <boolean>;
+    (test :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
+ => (value :: <boolean>);
 
 
 // Open generics on <collection>
 
-define open generic element 
+define open generic element
   (collection :: <object-with-elements>, key, #key default) => object;
 
-define open generic key-sequence 
+define open generic key-sequence
   (collection :: <collection>) => (keys :: <sequence>);
 
-define open generic reduce 
+define open generic reduce
   (fn :: <function>, initial-value, collection :: <collection>) => object;
 
-define open generic reduce1 
+define open generic reduce1
   (fn :: <function>, collection :: <collection>) => object;
 
-define open generic member? 
+define open generic member?
   (value, collection :: <collection>, #key test) => boolean :: <boolean>;
 
-define open generic find-key 
-  (collection :: <collection>, predicate :: <function>, #key skip, failure) 
-    => key;
+define open generic find-key
+    (collection :: <collection>, predicate :: <function>, #key skip, failure)
+ => key;
 
-define open generic key-test 
+define open generic key-test
   (collection :: <collection>) => (test :: <function>);
 
 define open generic forward-iteration-protocol (collection :: <collection>)
@@ -114,12 +114,12 @@ define open generic backward-iteration-protocol (collection :: <collection>)
       copy-state :: <function>);
 
 
-define open generic add! 
+define open generic add!
   (coll :: <collection>, new-element) => (possibly-new-coll :: <collection>);
 
-define open generic remove! 
-  (coll :: <collection>, value, #key test, count) 
-    => (possibly-new-coll :: <collection>);
+define open generic remove!
+    (coll :: <collection>, value, #key test, count)
+ => (possibly-new-coll :: <collection>);
 
 
 // Access conditions
@@ -163,11 +163,11 @@ end function;
 
 //
 // DO
-// 
+//
 
 define sealed method do
-    (fn :: <function>, coll :: <collection>, #rest more-colls :: <collection>) 
-        => false :: singleton(#f);
+    (fn :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
+ => (false :: singleton(#f));
   if (more-colls.empty?)
     for (e in coll) fn(e) end
   else
@@ -181,34 +181,34 @@ end method do;
 
 define generic do-one
     (function :: <function>, collection ::  <collection>)
-        => false :: singleton(#f);
+ => (false :: singleton(#f));
 
 define inline method do-one
-  (function :: <function>, collection :: <collection>) 
-    => (false :: singleton(#f))
+    (function :: <function>, collection :: <collection>)
+ => (false :: singleton(#f))
   for (e in collection) function(e) end
 end method do-one;
-  
+
 do-one;  // Silence "unused" warning.
 
 
 //
 // MAP
-// 
+//
 
 define generic map-as-one
     (type :: <mutable-collection-type>,
      function :: <function>, collection ::  <collection>)
-        => new-collection :: <mutable-collection>; // actually :: type
+ => (new-collection :: <mutable-collection>); // actually :: type
 
-define sealed method map 
-  (fn :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
-    => new-collection :: <collection>;
+define sealed method map
+    (fn :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
+ => (new-collection :: <collection>);
   let tfc :: <mutable-collection-type> = type-for-copy(coll);
   if (empty?(more-colls))
     map-as-one(tfc, fn, coll)
   else
-    map-as-one(tfc, method (v) apply(fn, v) end, 
+    map-as-one(tfc, method (v) apply(fn, v) end,
                apply(multiple-collection, coll, more-colls))
   end if
 end method map;
@@ -219,17 +219,17 @@ end method map;
 
 //
 // MAP-AS
-// 
+//
 
 define method map-as
     (type :: <mutable-collection-type>,
      function :: <function>,
      collection :: <collection>, #rest more-collections :: <collection>)
-        => (result :: <mutable-collection>);  // actually :: type;
+ => (result :: <mutable-collection>);  // actually :: type;
   if (empty?(more-collections))
     map-as-one(type, function, collection)
   else // Might be worth splitting out the singleton case eventually?
-    map-as-one(type, method (v) apply(function, v) end, 
+    map-as-one(type, method (v) apply(function, v) end,
       apply(multiple-collection, collection, more-collections))
   end if
 end method map-as;
@@ -244,7 +244,7 @@ end method map-as;
 define method map-as-one
     (type :: <mutable-collection-type>,
      function :: <function>, collection ::  <explicit-key-collection>)
-        => new-collection :: <mutable-collection>; // actually :: type
+ => (new-collection :: <mutable-collection>); // actually :: type
   let acc = make(<keyed-accumulator>, key-test: collection.key-test);
   for (e keyed-by k in collection) acc[k] := function(e) end for;
   convert-accumulator-as(type, acc)
@@ -253,18 +253,18 @@ end method map-as-one;
 define method map-as-one
     (type :: <mutable-collection-type>,
      function :: <function>, collection ::  <sequence>)
-        => new-collection :: <mutable-collection>; // actually :: type
+ => (new-collection :: <mutable-collection>); // actually :: type
   let acc = make(<sequence-accumulator>, key-test: collection.key-test);
   for (e in collection) add!(acc, function(e)) end for;
   convert-accumulator-as(type, acc)
 end method map-as-one;
 
-// In the list and deque case we don't need to know the size in advance, 
+// In the list and deque case we don't need to know the size in advance,
 // so no need for accumulators.
 
 define inline method map-as-one
     (type == <list>, function :: <function>, collection ::  <sequence>)
-        => new-collection :: <list>;
+ => (new-collection :: <list>);
   for (result = #() then pair(function(e), result),
        e in collection)
   finally
@@ -272,19 +272,19 @@ define inline method map-as-one
   end for;
 end method map-as-one;
 
-// If we have an <array> or <vector> then we assume we can find the size 
+// If we have an <array> or <vector> then we assume we can find the size
 // efficiently.
 
 define method map-as-one
     (type :: subclass(<array>),
      function :: <function>, collection ::  <array>)
-        => new-collection :: <array>; // actually :: type
+ => (new-collection :: <array>); // actually :: type
   let collection-size = collection.size;
-  if (collection-size = 0) 
+  if (collection-size = 0)
     make(type, size: 0)
   else
-    let result = 
-      make(type, dimensions: collection.dimensions, 
+    let result =
+      make(type, dimensions: collection.dimensions,
            fill: function(collection.first));
     without-bounds-checks
       for (i :: <integer> from 1 below collection-size)
@@ -298,13 +298,13 @@ end method map-as-one;
 define method map-as-one
     (type :: subclass(<vector>),
      function :: <function>, collection ::  <array>)
-        => new-collection :: <vector>; // actually :: type
+ => (new-collection :: <vector>); // actually :: type
   let collection-size = collection.size;
-  if (collection-size = 0) 
+  if (collection-size = 0)
     make(type, size: 0)
   else
-    let result = 
-      make(type, size: collection.size, 
+    let result =
+      make(type, size: collection.size,
            fill: function(collection.first));
     without-bounds-checks
       for (i :: <integer> from 1 below collection-size)
@@ -325,7 +325,7 @@ define inline copy-down-method map-as-one
 define inline method map-as-one
     (type == <simple-object-vector>,
      function :: <function>, collection :: <simple-object-vector>)
-        => new-collection :: <vector>; // actually :: type
+ => (new-collection :: <vector>); // actually :: type
   let result = make(<simple-object-vector>, size: collection.size);
   without-bounds-checks
     for (i :: <integer> from 0 below collection.size)
@@ -339,20 +339,20 @@ end method map-as-one;
 // And now some tie-breakers...
 
 define copy-down-method map-as-one (type :: subclass(<vector>),
-				    function :: <function>, 
-				    collection ::  <explicit-key-collection>) =>
+                                    function :: <function>,
+                                    collection ::  <explicit-key-collection>) =>
   (new-collection :: <vector>);
 
 define copy-down-method map-as-one (type == <list>,
-				    function :: <function>, 
-				    collection ::  <explicit-key-collection>) =>
+                                    function :: <function>,
+                                    collection ::  <explicit-key-collection>) =>
   (new-collection :: <vector>);
 
 /*
 define method map-as-one
     (type :: subclass(<vector>),
      function :: <function>, collection ::  <explicit-key-collection>)
-        => new-collection :: <vector>; // actually :: type
+ => (new-collection :: <vector>); // actually :: type
   let acc = make(<keyed-accumulator>);
   for (e keyed-by k in collection) acc[k] := function(e) end for;
   convert-accumulator-as(type, acc)
@@ -361,7 +361,7 @@ end method map-as-one;
 define method map-as-one
     (type == <list>,
      function :: <function>, collection ::  <explicit-key-collection>)
-        => new-collection :: <list>; // actually :: type
+ => (new-collection :: <list>); // actually :: type
   let acc = make(<keyed-accumulator>);
   for (e keyed-by k in collection) acc[k] := function(e) end for;
   convert-accumulator-as(type, acc)
@@ -371,16 +371,16 @@ end method map-as-one;
 
 //
 // MAP-INTO
-// 
+//
 
 define method map-into
     (target :: <mutable-collection>,
      function :: <function>,
      collection :: <collection>, #rest more-collections :: <collection>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   if (empty?(more-collections))
     unless (target.key-test == collection.key-test)
-      error(make(<key-test-error>, 
+      error(make(<key-test-error>,
               format-string: "Collections %= and %= have different key tests",
               format-arguments: list(target, collection)))
     end;
@@ -401,25 +401,25 @@ end method map-into;
 
 // QUESTION:
 //   The target collection should not be involved in the alignment in the
-//   stretchy case, but what if the target is a sequence and the source 
+//   stretchy case, but what if the target is a sequence and the source
 //   contains keys that aren't natural numbers?  For now we just ignore
 //   such keys, so that the target has a "stretchy" effect on alignment.
 
 define method map-into-stretchy-one
     (fun :: <function>, target :: <mutable-collection>, coll :: <collection>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   for (val keyed-by key in coll) target[key] := fun(val) end for;
   target
 end;
 
 define copy-down-method map-into-stretchy-one
     (fun :: <function>, target :: <mutable-collection>, coll :: <sequence>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
 
 /*
 define method map-into-stretchy-one
     (fun :: <function>, target :: <mutable-collection>, coll :: <sequence>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   for (val in coll, key from 0) target[key] := fun(val) end;
   target
 end;
@@ -427,7 +427,7 @@ end;
 
 define method map-into-stretchy-one
     (fun :: <function>, target :: <mutable-sequence>, coll :: <collection>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   let max-key = maximum-sequence-key(coll);
 
   with-fip-of target
@@ -439,7 +439,7 @@ define method map-into-stretchy-one
         current-element-setter(fun(val), target, state)
       end;
 
-    finally 
+    finally
       if (key > max-key)
         target
       else // We are in trouble as the target isn't big enough.
@@ -459,7 +459,7 @@ define method map-into-stretchy-one
               end
             end for
           end for
-        end with-fip-of 
+        end with-fip-of
       end if
     end for
   end with-fip-of;
@@ -468,7 +468,7 @@ end method map-into-stretchy-one;
 
 define method map-into-stretchy-one
     (fun :: <function>, target :: <mutable-sequence>, coll :: <sequence>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
 
   with-fip-of coll with prefix c-
     with-fip-of target with prefix t-
@@ -477,9 +477,9 @@ define method map-into-stretchy-one
            key from 0,
            until: c-finished-state?(coll, c-state, c-limit))
         if (t-finished-state?(target, t-state, t-limit))
-          // Arghh.  Now things are really grim.  
+          // Arghh.  Now things are really grim.
           target.size := coll.size;
-          
+
           // We can't continue the iteration on target as we have resized, so
           // start again, skipping the keys we have already processed.
           with-fip-of target with prefix t-
@@ -506,13 +506,13 @@ end method map-into-stretchy-one;
 
 // Subclasses of array should have sublinear implementations of element,
 // so let's exploit this.
-// Perhaps it would be better to find the maximum key to avoid repeated 
+// Perhaps it would be better to find the maximum key to avoid repeated
 // expansions in the worst case?  Or will implementations of things like
 // <stretchy-vector> be smart about this?
 
 define method map-into-stretchy-one
     (fun :: <function>, target :: <array>, coll :: <collection>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   for (val keyed-by key in coll)
     unless (~instance?(key, <integer>) | key < 0) target[key] := fun(val) end;
   end for;
@@ -523,7 +523,7 @@ end;
 
 define method map-into-stretchy-one
     (fun :: <function>, target :: <array>, coll :: <sequence>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   for (val in coll, key from 0) target[key] := fun(val) end;
   target
 end;
@@ -544,7 +544,7 @@ define inline copy-down-method map-into-stretchy-one
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <mutable-collection>, coll :: <collection>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   for (val keyed-by key in coll)
     unless (not-found?(element(target, key, default: not-found())))
       target[key] := fun(val)
@@ -552,13 +552,13 @@ define method map-into-rigid-one
   end for;
   target
 end;
-       
+
 
 // When the source or target is a sequence then iterate over that.
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <mutable-sequence>, coll :: <collection>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   let max-key = maximum-sequence-key(coll);
   with-fip-of target  /* Use with-setter? */
     for (key from 0 to max-key,
@@ -575,7 +575,7 @@ end method map-into-rigid-one;
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <mutable-collection>, coll :: <sequence>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   for (key from 0,  val in coll)
     unless (not-found?(element(target, key, default: not-found())))
       target[key] := fun(val)
@@ -586,18 +586,18 @@ end method map-into-rigid-one;
 
 // markt, some more useful copy-downs
 define inline copy-down-method map-into-rigid-one
-  (fun :: <function>, target :: <mutable-collection>, coll :: <list>) => 
-  (target :: <mutable-collection>);  
+  (fun :: <function>, target :: <mutable-collection>, coll :: <list>) =>
+  (target :: <mutable-collection>);
 define inline copy-down-method map-into-rigid-one
-  (fun :: <function>, target :: <mutable-collection>, coll :: <simple-object-vector>) => 
-  (target :: <mutable-collection>);  
+  (fun :: <function>, target :: <mutable-collection>, coll :: <simple-object-vector>) =>
+  (target :: <mutable-collection>);
 
 // Subclasses of array should have sublinear implementations of element,
 // so let's exploit this.
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <array>, coll :: <collection>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   let end-key = target.size;
   for (val keyed-by key in coll)
     unless (~instance?(key, <integer>) | key < 0 | key >= end-key)
@@ -605,20 +605,20 @@ define method map-into-rigid-one
     end
   end;
   target
-end method map-into-rigid-one;  
+end method map-into-rigid-one;
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <array>, coll :: <sequence>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   for (val in coll, key from 0 below target.size)
     target[key] := fun(val)
   end;
   target
-end method map-into-rigid-one;  
+end method map-into-rigid-one;
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <mutable-collection>, coll :: <array>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   with-fip-of coll /* Use with-setter? */
     let end-key = coll.size;
     for (state = initial-state then next-state(target, state),
@@ -630,11 +630,11 @@ define method map-into-rigid-one
     end
   end;
   target
-end method map-into-rigid-one;  
+end method map-into-rigid-one;
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <mutable-sequence>, coll :: <array>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   with-fip-of coll /* Use with-setter? */
     for (state = initial-state then next-state(target, state),
          key from 0 below coll.size,
@@ -643,13 +643,13 @@ define method map-into-rigid-one
     end
   end;
   target
-end method map-into-rigid-one;  
+end method map-into-rigid-one;
 
 // Now the case where both source and target are sequences.
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <mutable-sequence>, coll :: <sequence>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   with-fip-of target /* Use with-setter? */
     for (state = initial-state then next-state(target, state),
          val in coll,
@@ -673,7 +673,7 @@ define inline copy-down-method map-into-rigid-one
 
 define method map-into-rigid-one
     (fun :: <function>, target :: <array>, coll :: <array>)
-        => (target :: <mutable-collection>);  
+ => (target :: <mutable-collection>);
   let sz = min(target.size, coll.size);
   without-bounds-checks
     for (i from 0 below min(target.size, coll.size))
@@ -686,11 +686,11 @@ end method map-into-rigid-one;
 
 //
 // ANY?
-// 
+//
 
 define sealed method any?
-  (test :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
-    => value;
+    (test :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
+ => value;
   select (size(more-colls))
     0 =>
       any?-one(test, coll);
@@ -708,7 +708,7 @@ define sealed generic any?-one
 define inline sealed method any?-one
     (test :: <function>, coll :: <collection>) => value;
   for (item in coll, result = #f then test(item), until: result)
-  finally 
+  finally
     result
   end for
 end method any?-one;
@@ -721,7 +721,7 @@ define sealed generic any?-two
 define inline sealed method any?-two
     (test :: <function>, c1 :: <sequence>, c2 :: <sequence>) => value;
   for (e1 in c1, e2 in c2, result = #f then test(e1, e2), until: result)
-  finally 
+  finally
     result
   end for
 end method any?-two;
@@ -735,17 +735,17 @@ any?-two;  // Silence "unused" warning.
 
 //
 // EVERY?
-// 
- 
+//
+
 define sealed method every?
-  (test :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
-    => value :: <boolean>;
+    (test :: <function>, coll :: <collection>, #rest more-colls :: <collection>)
+ => (value :: <boolean>);
   select (size(more-colls))
-    0 =>         
+    0 =>
       every?-one(test, coll);
-    1 =>         
+    1 =>
       every?-two(test, coll, vector-element(more-colls, 0));
-    otherwise => 
+    otherwise =>
       every?-one(curry(apply, test), apply(multiple-collection, coll, more-colls));
   end select
 end method every?;
@@ -757,7 +757,7 @@ define sealed generic every?-one
 define sealed inline method every?-one
     (test :: <function>, coll :: <collection>) => value :: <boolean>;
   for (item in coll, result = #t then test(item), while: result)
-  finally 
+  finally
     result ~== #f
   end for
 end method every?-one;
@@ -770,7 +770,7 @@ define sealed generic every?-two
 define inline sealed method every?-two
     (test :: <function>, c1 :: <sequence>, c2 :: <sequence>) => value;
   for (e1 in c1, e2 in c2, result = #t then test(e1, e2), while: result)
-  finally 
+  finally
     result ~== #f
   end for
 end method every?-two;
@@ -784,10 +784,10 @@ every?-two;  // Silence "unused" warning.
 
 //
 // REDUCE
-// 
- 
+//
+
 define inline method reduce (fn :: <function>, init-value, collection :: <collection>)
-    => (object)
+ => (object)
   for (result = init-value then fn(result, item),
        item in collection)
   finally
@@ -798,10 +798,10 @@ end method reduce;
 
 //
 // REDUCE1
-// 
- 
+//
+
 define inline method reduce1 (fn :: <function>, collection :: <collection>)
-    => (object)
+ => (object)
   with-fip-of collection
     if (finished-state?(collection, initial-state, limit))
       // Is there a more informative error class that's appropriate here?
@@ -809,7 +809,7 @@ define inline method reduce1 (fn :: <function>, collection :: <collection>)
                  format-string: "Reduce1 undefined for empty collections"))
     else
       let result = current-element(collection, initial-state);
-      for (state = next-state(collection, initial-state) 
+      for (state = next-state(collection, initial-state)
                    then next-state(collection, state),
            until: finished-state?(collection, state, limit))
         result := fn(result, current-element(collection, state));
@@ -824,14 +824,14 @@ end method reduce1;
 
 //
 // MEMBER?
-// 
+//
 
 define method member? (value, collection :: <collection>, #key test = \==)
-    => (boolean :: <boolean>)
+ => (boolean :: <boolean>)
   for (item in collection,
        result = #f then test(value, item),
        until: result)
-  finally 
+  finally
     result & #t
   end for
 end method member?;
@@ -840,9 +840,9 @@ end method member?;
 //
 // FIND-KEY
 //
- 
+
 define inline method find-key
-    (collection :: <collection>, fn :: <function>, 
+    (collection :: <collection>, fn :: <function>,
      #key skip :: <integer> = 0, failure = #f) => (key)
   for (e keyed-by k in collection,
        found = #f then fn(e) & ((skip := skip - 1) < 0),
@@ -863,17 +863,17 @@ end method;
 // AS
 //
 
-define method as 
-    (type :: <collection-type>, coll :: <collection>) 
-        => (new-coll :: <collection>)
+define method as
+    (type :: <collection-type>, coll :: <collection>)
+ => (new-coll :: <collection>)
   if (instance?(coll, type)) coll else map-as(type, identity, coll) end
 end method as;
-        
+
 
 //
 // SHALLOW-COPY
-// 
- 
+//
+
 define method shallow-copy (coll :: <collection>) => (new-coll :: <collection>)
   map(identity, coll)
 end method shallow-copy;
@@ -881,8 +881,8 @@ end method shallow-copy;
 
 //
 // SIZE
-// 
- 
+//
+
 define method size (collection :: <collection>) => (result :: <integer>)
   for (item in collection, size :: <integer> from 0)
   finally
@@ -894,8 +894,8 @@ end method size;
 
 //
 // EMPTY?
-// 
- 
+//
+
 define method empty? (collection :: <collection>) => (result :: <boolean>)
   with-fip-of collection
     finished-state?(collection, initial-state, limit)
@@ -905,20 +905,20 @@ end method empty?;
 
 //
 // =
-// 
- 
+//
+
 // Let's start with the simple (i.e. inefficient) version, that won't work
 // on circular lists.
 
 define method \= (c1 :: <collection>, c2 :: <collection>) => (eq :: <boolean>)
   unless (c1.key-test ~== c2.key-test | c1.size ~= c2.size)
     for (e1 keyed-by k in c1,
-         eq = #t then begin 
+         eq = #t then begin
                         let e2 = element(c2, k, default: not-found());
                         unless (not-found?(e2)) e1 = e2 end
                       end,
          while: eq)
-    finally 
+    finally
       eq
     end
   end
@@ -926,19 +926,19 @@ end;
 
 
 // We now consider the two cases where one of the collections is a sequence
-// and the other one isn't.  We assume that it will be faster to do the 
+// and the other one isn't.  We assume that it will be faster to do the
 // random accesses on the non-sequence.
 
 define method \= (c1 :: <sequence>, c2 :: <collection>) => (eq :: <boolean>)
   unless (c2.key-test ~== \==)
     let eq = #t;
-    for (e1 in c1, key from 0, 
-         eq = #t then begin 
+    for (e1 in c1, key from 0,
+         eq = #t then begin
                         let e2 = element(c2, key, default: not-found());
                         unless (not-found?(e2)) e1 = e2 end
                       end,
          while: eq)
-    finally 
+    finally
       eq & key = c2.size
     end for
   end unless
@@ -955,15 +955,15 @@ define method \= (c1 :: <sequence>, c2 :: <sequence>) => (eq :: <boolean>)
   with-fip-of c1 with prefix one-
     with-fip-of c2 with prefix two-
       iterate compare (s1 = one-initial-state, s2 = two-initial-state)
-	case 
-	  one-finished-state?(c1, s1, one-limit) => 
-	    two-finished-state?(c2, s2, two-limit);
-	  two-finished-state?(c2, s2, two-limit) => 
-	    #f; 
-	  otherwise                              =>
-	    one-current-element(c1, s1) = two-current-element(c2, s2) &
-	      compare(one-next-state(c1, s1), two-next-state(c2, s2))
-	end case
+        case
+          one-finished-state?(c1, s1, one-limit) =>
+            two-finished-state?(c2, s2, two-limit);
+          two-finished-state?(c2, s2, two-limit) =>
+            #f;
+          otherwise                              =>
+            one-current-element(c1, s1) = two-current-element(c2, s2) &
+              compare(one-next-state(c1, s1), two-next-state(c2, s2))
+        end case
       end iterate
     end
   end
@@ -975,23 +975,23 @@ define method \= (c1 :: <array>, c2 :: <array>) => (eq :: <boolean>)
     for (e1 in c1, e2 in c2,
          eq = #t then e1 = e2,
          while: eq)
-    finally 
+    finally
       eq
     end
   end
 end;
 
 
-// Lists are a pain because we have to deal with the dotted case.  
+// Lists are a pain because we have to deal with the dotted case.
 // We are allowed to diverge if the list has a cycle.
 
 define method \= (c1 :: <list>, c2 :: <collection>) => (eq :: <boolean>)
   block (return)
     for (l = c1 then l.tail, key from 0)
-      case 
+      case
         l == #() => return (key = c2.size);
         ~(instance?(l, <pair>)) => return(#f);
-        otherwise => 
+        otherwise =>
           let e = element(c2, key, default: not-found());
           if (not-found?(e) | e ~= l.head) return(#f) end;
       end case
@@ -1007,14 +1007,14 @@ end method \=;
 define method \= (c1 :: <list>, c2 :: <sequence>) => (eq :: <boolean>)
   with-fip-of c2
     block (return)
-      for (l = c1 then l.tail, 
+      for (l = c1 then l.tail,
            state = initial-state then next-state(c2, state))
-        case 
-          l == #() 
+        case
+          l == #()
             => return(finished-state?(c2, state, limit));
-          ( finished-state?(c2, state, limit)
-          | ~instance?(l, <pair>) 
-          | current-element(c2, state) ~= l.head ) 
+          (finished-state?(c2, state, limit)
+          | ~instance?(l, <pair>)
+          | current-element(c2, state) ~= l.head)
             => return(#f);
         end case
       end for
@@ -1031,11 +1031,11 @@ end method \=;
 // Now for the case of two lists.
 
 define sealed method \= (c1 :: <pair>, c2 :: <pair>) => (eq :: <boolean>)
-  c1 == c2 | (( c1.head = c2.head ) & ( c1.tail = c2.tail ))
+  c1 == c2 | ((c1.head = c2.head) & (c1.tail = c2.tail))
 end method \=;
 
-define sealed method \= (c1 :: <empty-list>, c2 :: <empty-list>) 
-    => (eq :: <boolean>)
+define sealed method \= (c1 :: <empty-list>, c2 :: <empty-list>)
+ => (eq :: <boolean>)
   #t
 end method \=;
 
@@ -1055,7 +1055,7 @@ define open generic element-no-bounds-check
 define inline method element-no-bounds-check
     (collection :: <collection>, key, #key default = unsupplied()) => object;
   element(collection, key, default: default)
-end method element-no-bounds-check;  
+end method element-no-bounds-check;
 
 
 define function element-range-error
@@ -1107,9 +1107,9 @@ end method;
 // This function helps compute an upper bound on the maximum
 // integer key in a collection.
 
-define generic maximum-sequence-key(collection :: <collection>) 
+define generic maximum-sequence-key(collection :: <collection>)
   => key :: <integer>;
 
- 
+
 
 

@@ -25,12 +25,12 @@ define sealed inline method \=
   as(<integer>, character-1) = as(<integer>, character-2)
 end method \=;
 
-define sealed inline method \< 
+define sealed inline method \<
     (character-1 :: <character>, character-2 :: <character>) => (well? :: <boolean>)
   as(<integer>, character-1) < as(<integer>, character-2)
 end method \<;
 
-define sealed method as-uppercase (character :: <character>) 
+define sealed method as-uppercase (character :: <character>)
  => (uppercase-character :: <character>)
   if (character.lowercase?)
     as(<character>,
@@ -78,42 +78,42 @@ end function uppercase?;
 define macro character-definer
   { define character "<" ## ?:name ## "-character>" }
     => { define sealed inline method make
-	     (class == "<" ## ?name ## "-character>", 
+             (class == "<" ## ?name ## "-character>",
               #key code :: "<" ## ?name ## "-integer>")
-	  => (character :: "<" ## ?name ## "-character>")
-	   as("<" ## ?name ## "-character>", code)
-	 end method make;
+          => (character :: "<" ## ?name ## "-character>")
+           as("<" ## ?name ## "-character>", code)
+         end method make;
 
-	 define sealed inline method as 
-	     (class == <abstract-integer>, character :: "<" ## ?name ## "-character>")
-	  => (code :: "<" ## ?name ## "-integer>");
-	   as(<integer>, character)
-	 end method as;
+         define sealed inline method as
+             (class == <abstract-integer>, character :: "<" ## ?name ## "-character>")
+          => (code :: "<" ## ?name ## "-integer>");
+           as(<integer>, character)
+         end method as;
 
-	 define sealed inline method as 
-	     (type :: <limited-integer>, character :: "<" ## ?name ## "-character>")
-	  => (code :: "<" ## ?name ## "-integer>");
-	   as(<integer>, character)
-	 end method as;
+         define sealed inline method as
+             (type :: <limited-integer>, character :: "<" ## ?name ## "-character>")
+          => (code :: "<" ## ?name ## "-integer>");
+           as(<integer>, character)
+         end method as;
 
-	 define sealed inline method as
-	     (class == <integer>, character :: "<" ## ?name ## "-character>")
-	  // => (code :: "<" ## ?name ## "-integer>");
-	  //  let code :: "<" ## ?name ## "-integer>"
+         define sealed inline method as
+             (class == <integer>, character :: "<" ## ?name ## "-character>")
+          // => (code :: "<" ## ?name ## "-integer>");
+          //  let code :: "<" ## ?name ## "-integer>"
           //    = raw-as-integer("primitive-" ## ?name ## "-character-as-raw"(character));
           //  code
-	  => (code :: <integer>)
-	   raw-as-integer("primitive-" ## ?name ## "-character-as-raw"(character))
-	 end method as;
+          => (code :: <integer>)
+           raw-as-integer("primitive-" ## ?name ## "-character-as-raw"(character))
+         end method as;
 
-	 define sealed inline method as
-	     (class == "<" ## ?name ## "-character>", 
+         define sealed inline method as
+             (class == "<" ## ?name ## "-character>",
               // integer :: "<" ## ?name ## "-integer>")
               integer :: <integer>)
-	  => (result :: "<" ## ?name ## "-character>")
-	   // (element *byte-characters* integer)
-	   "primitive-raw-as-" ## ?name ## "-character"(integer-as-raw(integer))
-	 end method as;
+          => (result :: "<" ## ?name ## "-character>")
+           // (element *byte-characters* integer)
+           "primitive-raw-as-" ## ?name ## "-character"(integer-as-raw(integer))
+         end method as;
          }
 end macro;
 

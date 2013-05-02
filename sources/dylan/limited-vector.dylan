@@ -38,8 +38,8 @@ end method element-setter;
 
 /// TODO: COULD BE EXPENSIVE UNLESS TYPES ARE CACHED
 
-define inline method type-for-copy (vector :: <simple-element-type-vector>) 
-    => (type :: <type>)
+define inline method type-for-copy (vector :: <simple-element-type-vector>)
+ => (type :: <type>)
   limited-vector(element-type(vector), #f)
 end method type-for-copy;
 
@@ -76,7 +76,7 @@ define method as (bsc == <byte-string>, bv :: <simple-byte-vector>)
   bs
 end method;
 
-define method as 
+define method as
     (bvc == <simple-byte-vector>, bs :: <byte-string>) => (bv :: <simple-byte-vector>)
   let bv :: <simple-byte-vector> = make(<simple-byte-vector>, size: bs.size);
   without-bounds-checks
@@ -87,13 +87,13 @@ define method as
   bv
 end method;
 
-define method as 
+define method as
     (class == <string>, x :: <simple-byte-vector>) => (string :: <byte-string>)
   as(<byte-string>, x)
 end method;
 
 // already is a vector.  Maybe want method for simple object vector?
-define method as 
+define method as
     (class == <vector>, x :: <simple-byte-vector>) => (vector :: <vector>)
   x
 end method;
