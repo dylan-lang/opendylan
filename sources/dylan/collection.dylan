@@ -189,7 +189,7 @@ define inline method do-one
   for (e in collection) function(e) end
 end method do-one;
 
-do-one;  // Silence "unused" warning.
+ignore(do-one);  // Silence "unused" warning.
 
 
 //
@@ -713,7 +713,7 @@ define inline sealed method any?-one
   end for
 end method any?-one;
 
-any?-one;  // Silence "unused" warning.
+ignore(any?-one);  // Silence "unused" warning.
 
 define sealed generic any?-two
   (test :: <function>, c1 :: <collection>, c2 :: <collection>) => value;
@@ -731,7 +731,7 @@ define inline sealed method any?-two
   any?-one(curry(apply, test), multiple-collection(c1, c2))
 end method any?-two;
 
-any?-two;  // Silence "unused" warning.
+ignore(any?-two);  // Silence "unused" warning.
 
 //
 // EVERY?
@@ -762,7 +762,7 @@ define sealed inline method every?-one
   end for
 end method every?-one;
 
-every?-one;  // Silence "unused" warning.
+ignore(every?-one);  // Silence "unused" warning.
 
 define sealed generic every?-two
   (test :: <function>, c1 :: <collection>, c2 :: <collection>) => value;
@@ -780,7 +780,7 @@ define inline sealed method every?-two
   every?-one(curry(apply, test), multiple-collection(c1, c2))
 end method every?-two;
 
-every?-two;  // Silence "unused" warning.
+ignore(every?-two);  // Silence "unused" warning.
 
 //
 // REDUCE

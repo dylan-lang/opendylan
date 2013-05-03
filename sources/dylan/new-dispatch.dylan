@@ -436,7 +436,7 @@ end function;
 define function %gf-dispatch-inapplicable (spreadargs :: <simple-object-vector>,
                                            e :: <inapplicable-engine-node>,
                                            parent :: <dispatch-starter>)
-  e;
+  ignore(e);
   no-applicable-method-error(parent-gf(parent), copy-sequence(spreadargs))
 end function;
 
@@ -471,7 +471,7 @@ end function;
 
 define sealed inline method make (c == <single-method-engine-node>, #key meth :: <method>, data, keys)
  => (e :: <single-method-engine-node>);
-  c;
+  ignore(c);
   make-single-method-engine-node(meth, data: data, keys: keys)
 end method;
 
@@ -835,13 +835,13 @@ end function;
 
 define function %gf-dispatch-linear-by-class
     (arg, parent :: <dispatch-starter>, d :: <linear-by-class-discriminator>)
-  parent;
+  ignore(parent);
   linear-class-key-lookup(object-class-unique-key(arg), d, $absent-engine-node)
 end function;
 
 define function %gf-dispatch-linear-by-singleton-class
     (arg :: <class>, parent :: <dispatch-starter>, d :: <linear-by-singleton-class-discriminator>)
-  parent;
+  ignore(parent);
   linear-class-key-lookup(class-unique-key(arg), d, class-keyed-discriminator-default(d))
 end function;
 
@@ -949,13 +949,13 @@ end function;
 
 define function %gf-dispatch-hashed-by-class
     (arg, parent :: <dispatch-starter>, d :: <hashed-by-class-discriminator>)
-  parent;
+  ignore(parent);
   hashed-class-key-lookup(object-class-unique-key(arg), d, $absent-engine-node)
 end function;
 
 define function %gf-dispatch-hashed-by-singleton-class
     (arg :: <class>, parent :: <dispatch-starter>, d :: <hashed-by-singleton-class-discriminator>)
-  parent;
+  ignore(parent);
   hashed-class-key-lookup(class-unique-key(arg), d, class-keyed-discriminator-default(d))
 end function;
 
@@ -1144,7 +1144,7 @@ end function;
 
 define function %gf-dispatch-typecheck
     (arg, parent :: <dispatch-starter>, d :: <typecheck-discriminator>)
-  parent;
+  ignore(parent);
   if (primitive-instance?(arg, typecheck-discriminator-type(d)))
     typecheck-discriminator-next(d)
   else
@@ -1186,7 +1186,7 @@ end function;
 
 define function %gf-dispatch-if-type
     (arg, parent :: <dispatch-starter>, disp :: <if-type-discriminator>)
-  parent;
+  ignore(parent);
   if (primitive-instance?(arg, if-type-discriminator-type(disp)))
     if-type-discriminator-then(disp)
   else
@@ -1366,14 +1366,14 @@ end function;
 
 define function %gf-dispatch-immediate-linear-singleton
     (arg, parent :: <dispatch-starter>, d :: <immediate-linear-singleton-discriminator>)
-  parent;
+  ignore(parent);
   immediate-linear-singleton-discriminator-element(d, arg, singleton-discriminator-default(d))
 end function;
 
 
 define function %gf-dispatch-value-object-linear-singleton
     (arg, parent :: <dispatch-starter>, d :: <immediate-linear-singleton-discriminator>)
-  parent;
+  ignore(parent);
   value-object-linear-singleton-discriminator-element(d, arg, singleton-discriminator-default(d))
 end function;
 

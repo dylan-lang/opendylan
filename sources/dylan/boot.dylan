@@ -961,7 +961,7 @@ end function;
 
 define function odd-number-of-keyword-args-trap
     (mepargs :: <simple-object-vector>, disphdr :: <dispatch-starter>, engine-node)
-  engine-node;                        // Maybe someday.
+  ignore(engine-node);                        // Maybe someday.
   let gf :: <generic-function> = parent-gf(disphdr);
   error(make(<odd-keyword-arguments-error>,
              format-string:
@@ -979,7 +979,7 @@ define function invalid-keyword-trap
     (mepargs :: <simple-object-vector>, disphdr :: <dispatch-starter>,
      engine-node :: <single-method-engine-node>, key,
      keyvec :: <simple-object-vector>, implicit? :: <boolean>)
-  engine-node;                        // Maybe someday.
+  ignore(engine-node);                        // Maybe someday.
   let gf :: <generic-function> = parent-gf(disphdr);
   let args = reconstruct-args-from-mepargs(gf, mepargs);
   if (~instance?(key, <symbol>))
