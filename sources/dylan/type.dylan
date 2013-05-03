@@ -166,11 +166,11 @@ define generic instance?-function (type :: <type>) => (m :: <method>);
 
 // The IEP of this goes in the instance?-iep slot of types which the compiler
 // doesn't know how to set up at compile time.
-define constant uninitialized-instance?-function = method (obj, type :: <type>) => (v :: <boolean>);
+define function uninitialized-instance?-function (obj, type :: <type>) => (v :: <boolean>);
   let m :: <simple-method> = instance?-function(type);
   instance?-iep(type) := simple-method-iep(m);
   primitive-instance?(obj, type)
-end method;
+end function;
 
 
 // Dispatch protocol

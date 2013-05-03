@@ -314,33 +314,33 @@ end method slot-allocation;
 
 
 
-define constant find-or-create-class-slot-storage
-  = method (icls :: <implementation-class>, offset :: <integer>, initialize-now? :: <boolean>)
-     => (cell :: <pair>)
-      let storage :: <simple-object-vector> = class-slot-storage(icls);
-      (vector-element(storage, offset)
-        | begin
-            let slots :: <simple-object-vector> = class-slot-descriptors(icls);
-            let sd :: <any-class-slot-descriptor> = vector-element(slots, offset);
-            let own :: <class> = slot-owner(sd);
-            if (own == iclass-class(icls) | instance?(sd, <each-subclass-slot-descriptor>))
-              let initv =
-                if (initialize-now?)
-                  // init-falue(sd)
-                  init-falue(effective-initial-value-descriptor(sd, icls))
-                else
-                  %unbound
-                end;
-              let cell :: <pair> = pair(initv, sd);
-              vector-element(storage, offset) := cell
+define function find-or-create-class-slot-storage
+    (icls :: <implementation-class>, offset :: <integer>, initialize-now? :: <boolean>)
+ => (cell :: <pair>)
+  let storage :: <simple-object-vector> = class-slot-storage(icls);
+  (vector-element(storage, offset)
+    | begin
+        let slots :: <simple-object-vector> = class-slot-descriptors(icls);
+        let sd :: <any-class-slot-descriptor> = vector-element(slots, offset);
+        let own :: <class> = slot-owner(sd);
+        if (own == iclass-class(icls) | instance?(sd, <each-subclass-slot-descriptor>))
+          let initv =
+            if (initialize-now?)
+              // init-falue(sd)
+              init-falue(effective-initial-value-descriptor(sd, icls))
             else
-              // Class allocation, inherited storage.  Get the owner's cell and save it.
-              let get-from :: <implementation-class> = class-implementation-class(own);
-              vector-element(storage, offset)
-                := find-or-create-class-slot-storage(get-from, slot-offset-i(sd, get-from), initialize-now?)
-            end if
-          end)
-    end method;
+              %unbound
+            end;
+          let cell :: <pair> = pair(initv, sd);
+          vector-element(storage, offset) := cell
+        else
+          // Class allocation, inherited storage.  Get the owner's cell and save it.
+          let get-from :: <implementation-class> = class-implementation-class(own);
+          vector-element(storage, offset)
+            := find-or-create-class-slot-storage(get-from, slot-offset-i(sd, get-from), initialize-now?)
+        end if
+      end)
+end function;
 
 ////
 //// <VIRTUAL-SLOT-DESCRIPTOR>
@@ -465,52 +465,52 @@ end method repeated-slot-value-setter;
 ////
 
 
-define constant slot-offset-i
-  = method (slot-descriptor :: <slot-descriptor>, in-iclass :: <implementation-class>)
-      => (offset :: <object> /* union(singleton(#f), <integer>) */,
-          suboffset :: <object> /* union(singleton(#f), <integer>) */);
-      case
-        instance?(slot-descriptor, <repeated-slot-descriptor>) =>
-          values(size(instance-slot-descriptors(in-iclass)), #f);
-        instance?(slot-descriptor, <any-instance-slot-descriptor>) =>
-           let v :: <simple-object-vector> = instance-slot-descriptors(in-iclass);
-           let n :: <integer> = size(v);
-           // Yeah, this looks just like the code for class slots, but they will
-           // diverge when I handle packing and the like.  Class slots probably won't.
-           local method loop1 (i :: <integer>)
-                   if (i == n)
-                     values(#f, #f)
-                   else
-                     let e :: <slot-descriptor> = vector-element(v, i);
-                     if (getter=(e, slot-descriptor))
-                       values(i, #f)
-                     else
-                       loop1(i + 1)
-                     end if
-                   end if
-                 end method;
-          loop1(0);
-        instance?(slot-descriptor, <any-class-slot-descriptor>) =>
-          let v :: <simple-object-vector> = class-slot-descriptors(in-iclass);
-          let n :: <integer> = size(v);
-          local method loop (i :: <integer>)
-                   if (i == n)
-                     values(#f, #f)
-                   else
-                     let e :: <slot-descriptor> = vector-element(v, i);
-                     if (getter=(e, slot-descriptor))
-                       values(i, #f)
-                     else
-                       loop(i + 1)
-                     end if
-                   end if
-                 end method;
-          loop(0);
-        otherwise => error(make(<simple-slot-error>,
-                                format-string: "Unanticipated type of slot descriptor %=",
-                                format-arguments: list(slot-descriptor)));
-      end case
-end method;
+define function slot-offset-i
+    (slot-descriptor :: <slot-descriptor>, in-iclass :: <implementation-class>)
+ => (offset :: <object> /* union(singleton(#f), <integer>) */,
+     suboffset :: <object> /* union(singleton(#f), <integer>) */);
+  case
+    instance?(slot-descriptor, <repeated-slot-descriptor>) =>
+      values(size(instance-slot-descriptors(in-iclass)), #f);
+    instance?(slot-descriptor, <any-instance-slot-descriptor>) =>
+       let v :: <simple-object-vector> = instance-slot-descriptors(in-iclass);
+       let n :: <integer> = size(v);
+       // Yeah, this looks just like the code for class slots, but they will
+       // diverge when I handle packing and the like.  Class slots probably won't.
+       local method loop1 (i :: <integer>)
+               if (i == n)
+                 values(#f, #f)
+               else
+                 let e :: <slot-descriptor> = vector-element(v, i);
+                 if (getter=(e, slot-descriptor))
+                   values(i, #f)
+                 else
+                   loop1(i + 1)
+                 end if
+               end if
+             end method;
+      loop1(0);
+    instance?(slot-descriptor, <any-class-slot-descriptor>) =>
+      let v :: <simple-object-vector> = class-slot-descriptors(in-iclass);
+      let n :: <integer> = size(v);
+      local method loop (i :: <integer>)
+               if (i == n)
+                 values(#f, #f)
+               else
+                 let e :: <slot-descriptor> = vector-element(v, i);
+                 if (getter=(e, slot-descriptor))
+                   values(i, #f)
+                 else
+                   loop(i + 1)
+                 end if
+               end if
+             end method;
+      loop(0);
+    otherwise => error(make(<simple-slot-error>,
+                            format-string: "Unanticipated type of slot descriptor %=",
+                            format-arguments: list(slot-descriptor)));
+  end case
+end function;
 
 define inline function slot-offset (sd :: <slot-descriptor>, c :: <class>)
   slot-offset-i(sd, class-implementation-class(c))
@@ -535,7 +535,7 @@ end function;
 // called via XEP.
 
 
-define constant %slotacc-single-Q-instance-getter = method
+define function %slotacc-single-Q-instance-getter
     (a :: <getter-method>, inst) => (value)
   let slotd :: <instance-slot-descriptor> = method-slot-descriptor(a);
   let owner :: <class> = slot-owner(slotd);
@@ -544,10 +544,10 @@ define constant %slotacc-single-Q-instance-getter = method
   else
     type-check-error(inst, owner)
   end if
-end method;
+end function;
 
 
-define constant %slotacc-single-Q-instance-setter = method
+define function %slotacc-single-Q-instance-setter
     (value, a :: <setter-method>, inst) => (value)
   let slotd :: <instance-slot-descriptor> = method-slot-descriptor(a);
   let owner :: <type> = slot-owner(slotd);
@@ -557,10 +557,10 @@ define constant %slotacc-single-Q-instance-setter = method
   else
     type-check-error(inst, owner)
   end if
-end method;
+end function;
 
 
-define constant %slotacc-single-Q-class-getter = method
+define function %slotacc-single-Q-class-getter
     (a :: <getter-method>, inst) => (value)
   let slotd :: <any-class-slot-descriptor> = method-slot-descriptor(a);
   let owner :: <class> = slot-owner(slotd);
@@ -569,9 +569,9 @@ define constant %slotacc-single-Q-class-getter = method
   else
     type-check-error(inst, owner)
   end if
-end method;
+end function;
 
-define constant %slotacc-single-Q-class-setter  = method
+define function %slotacc-single-Q-class-setter
     (value, a :: <setter-method>, inst) => (value)
   let slotd :: <any-class-slot-descriptor> = method-slot-descriptor(a);
   let owner :: <type> = slot-owner(slotd);
@@ -581,10 +581,10 @@ define constant %slotacc-single-Q-class-setter  = method
   else
     type-check-error(inst, owner)
   end if
-end method;
+end function;
 
 
-define constant %slotacc-repeated-instance-getter = method
+define function %slotacc-repeated-instance-getter
     (a :: <repeated-getter-method>, inst, idx) => (value)
   if (instance?(idx, <integer>))
     let slotd :: <repeated-slot-descriptor> = method-slot-descriptor(a);
@@ -597,9 +597,9 @@ define constant %slotacc-repeated-instance-getter = method
   else
     type-check-error(idx, <integer>)
   end if
-end method;
+end function;
 
-define constant %slotacc-repeated-instance-setter = method
+define function %slotacc-repeated-instance-setter
     (value, a :: <repeated-setter-method>, inst, idx) => (value)
   if (instance?(idx, <integer>))
     let slotd :: <repeated-slot-descriptor> = method-slot-descriptor(a);
@@ -613,7 +613,7 @@ define constant %slotacc-repeated-instance-setter = method
   else
     type-check-error(idx, <integer>)
   end if
-end method;
+end function;
 
 
 define method function-number-required

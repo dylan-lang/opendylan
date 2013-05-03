@@ -89,9 +89,9 @@ install-direct-object-class(0, <unbound>);
 
 install-direct-object-class(1, <integer>);
 
-define constant <integer>-instance? = method (x, c == <integer>) => (well? :: <boolean>);
+define function <integer>-instance? (x, c == <integer>) => (well? :: <boolean>);
   primitive-machine-word-equal?(tag-bits(x), integer-as-raw(1))
-end method;
+end function;
 
 ignore(<integer>-instance?);
 
@@ -101,9 +101,9 @@ ignore(<integer>-instance?);
 
 install-direct-object-class(2, <byte-character>);
 
-define constant <byte-character>-instance? = method (x, c == <byte-character>) => (well? :: <boolean>);
+define function <byte-character>-instance? (x, c == <byte-character>) => (well? :: <boolean>);
   primitive-machine-word-equal?(tag-bits(x), integer-as-raw(2))
-end method;
+end function;
 
 ignore(<byte-character>-instance?);
 
@@ -113,9 +113,9 @@ ignore(<byte-character>-instance?);
 
 install-direct-object-class(3, <unicode-character>);
 
-define constant <unicode-character>-instance? = method (x, c == <unicode-character>) => (well? :: <boolean>);
+define function <unicode-character>-instance? (x, c == <unicode-character>) => (well? :: <boolean>);
   primitive-machine-word-equal?(tag-bits(x), integer-as-raw(3))
-end method;
+end function;
 
 ignore(<unicode-character>-instance?);
 
@@ -901,27 +901,27 @@ define not-inline function no-applicable-method-error
 end function;
 
 
-define constant repeated-slot-getter-index-out-of-range-trap = method
+define function repeated-slot-getter-index-out-of-range-trap
     (inst, idx :: <integer>)
   let sd :: <repeated-slot-descriptor> = repeated-slot-descriptor(object-class(inst));
   error(make(<invalid-index-error>,
              format-string: "Out of range attempting to fetch %= of %= at index %=.",
              format-arguments: list(slot-getter(sd) | sd, inst, idx)))
-end method;
+end function;
 
-define constant repeated-slot-setter-index-out-of-range-trap = method
+define function repeated-slot-setter-index-out-of-range-trap
     (value, inst, idx :: <integer>)
   let sd :: <repeated-slot-descriptor> = repeated-slot-descriptor(object-class(inst));
   error(make(<invalid-index-error>,
              format-string: "Out of range attempting to store %= into %= of %= at index %=.",
              format-arguments: list(value, slot-getter(sd) | sd, inst, idx)))
-end method;
+end function;
 
 
 // Re-spread arguments from mepargs format.
 // We always return a heap-consed vector for the sake of storing the args in conditions.
-define constant reconstruct-args-from-mepargs = method (gf :: <generic-function>,
-                                                        mepargs :: <simple-object-vector>)
+define function reconstruct-args-from-mepargs (gf :: <generic-function>,
+                                               mepargs :: <simple-object-vector>)
   let signature :: <signature> = function-signature(gf);
   let n :: <integer> = size(mepargs);
   let (nreq :: <integer>, nopt :: <integer>, optvec :: <simple-object-vector>)
@@ -939,11 +939,11 @@ define constant reconstruct-args-from-mepargs = method (gf :: <generic-function>
     vector-element(args, i) := vector-element(optvec, j)
   end for;
   args
-end method;
+end function;
 
 
-define constant reconstruct-keywords = method (keyvec :: <simple-object-vector>,
-                                               method-keyword-table-format?)
+define function reconstruct-keywords (keyvec :: <simple-object-vector>,
+                                      method-keyword-table-format?)
   if (method-keyword-table-format?)
     let ndata :: <integer> = size(keyvec);
     let nkeys :: <integer> = ash(ndata, -1);
@@ -956,10 +956,10 @@ define constant reconstruct-keywords = method (keyvec :: <simple-object-vector>,
     // generic functions use just a vector of the keywords currently.
     keyvec
   end if
-end method;
+end function;
 
 
-define constant odd-number-of-keyword-args-trap = method
+define function odd-number-of-keyword-args-trap
     (mepargs :: <simple-object-vector>, disphdr :: <dispatch-starter>, engine-node)
   engine-node;                        // Maybe someday.
   let gf :: <generic-function> = parent-gf(disphdr);
@@ -967,7 +967,7 @@ define constant odd-number-of-keyword-args-trap = method
              format-string:
                "The function %= was called with an odd number of keyworded arguments in args %=",
              format-arguments: list(gf, reconstruct-args-from-mepargs(gf, mepargs))))
-end method;
+end function;
 
 
 
@@ -975,7 +975,7 @@ define variable *gf-invalid-keyword-error-is-warning* = #t;
 
 
 
-define constant invalid-keyword-trap = method
+define function invalid-keyword-trap
     (mepargs :: <simple-object-vector>, disphdr :: <dispatch-starter>,
      engine-node :: <single-method-engine-node>, key,
      keyvec :: <simple-object-vector>, implicit? :: <boolean>)
@@ -1001,7 +1001,7 @@ define constant invalid-keyword-trap = method
                  "The keywords recognized for this call are %=.",
                format-arguments: list(gf, key, args, reconstruct-keywords(keyvec, implicit?))))
   end if
-end method;
+end function;
 
 
 

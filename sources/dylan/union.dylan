@@ -58,9 +58,9 @@ define method instance?-function (t :: <union>) => (m :: <method>)
 end method;
 
 
-define constant union-instance? = method (x, u :: <union>) => (v :: <boolean>);
+define function union-instance? (x, u :: <union>) => (v :: <boolean>);
   primitive-instance?(x, union-type1(u)) | primitive-instance?(x, union-type2(u))
-end method;
+end function;
 
 
 //// Subtype? relationships

@@ -53,7 +53,7 @@ end method;
 
 //// Instance? relationships
 
-define inline constant initialize-singleton-instance?-function = method (s :: <singleton>) => ()
+define inline function initialize-singleton-instance?-function (s :: <singleton>) => ()
   instance?-iep(s)
     := simple-method-iep
          (if (indirect-object?(s.singleton-object))
@@ -61,28 +61,28 @@ define inline constant initialize-singleton-instance?-function = method (s :: <s
           else
             singleton-pointer-id?-instance?
           end if);
-end method;
+end function;
 
 
 // This is the default instance?-function for singletons.  It's just a non-generic version
 // of uninitialized-instance?-function.
-define constant singleton-instance? = method (x, s :: <singleton>) => (v :: <boolean>);
+define function singleton-instance? (x, s :: <singleton>) => (v :: <boolean>);
   initialize-singleton-instance?-function(x);
   primitive-instance?(x, s)
-end method;
+end function;
 
 
-define constant singleton-pointer-id?-instance? = method (x, s :: <singleton>) => (v :: <boolean>);
+define function singleton-pointer-id?-instance? (x, s :: <singleton>) => (v :: <boolean>);
   pointer-id?(x, s.singleton-object)
-end method;
+end function;
 
 
-define constant singleton-value-object-instance? = method (x, s :: <singleton>) => (v :: <boolean>);
+define function singleton-value-object-instance? (x, s :: <singleton>) => (v :: <boolean>);
   let o = singleton-object(s);
   indirect-object?(x)
     & pointer-id?(indirect-object-class(x), indirect-object-class(o))
     & (x = o)
-end method;
+end function;
 
 
 //// Subtype? relationships

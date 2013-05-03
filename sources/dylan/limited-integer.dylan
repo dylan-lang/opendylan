@@ -32,7 +32,7 @@ end method;
 
 //// Instance? relationships
 
-define constant limited-integer-instance?-function = method
+define function limited-integer-instance?-function
     (i, limint :: <limited-integer>) => (result :: <boolean>)
   if (instance?(i, <integer>))
     let i :: <integer> = i;
@@ -43,7 +43,7 @@ define constant limited-integer-instance?-function = method
   else
     #f
   end if
-end method;
+end function;
 
 define method instance?-function (t :: <limited-integer>) => (m :: <method>)
   limited-integer-instance?-function

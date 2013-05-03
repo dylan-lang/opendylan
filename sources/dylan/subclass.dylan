@@ -30,14 +30,14 @@ define method instance?-function (t :: <subclass>) => (m :: <method>)
 end method;
 
 
-define constant subclass-instance? = method (x, sc :: <subclass>) => (v :: <boolean>);
+define function subclass-instance? (x, sc :: <subclass>) => (v :: <boolean>);
   if (instance?(x, <class>))
     let x :: <class> = x;        // This should be automatic...
     subclass?(x, sc.subclass-class)
   else
     #f
   end if
-end method;
+end function;
 
 
 //// Subtype? relationships

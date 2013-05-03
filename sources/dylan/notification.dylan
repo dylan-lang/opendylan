@@ -20,21 +20,20 @@ define sealed domain synchronization-name (<notification>);
 
 
 // A little grounding goes a long way.
-define constant make-notification = method (lock :: <simple-lock>)
+define function make-notification (lock :: <simple-lock>)
  => (notification :: <notification>);
   let instance :: <notification> = system-allocate-simple-instance(<notification>, fill: #f);
   associated-lock(instance) := lock;
   initialize-notification(instance);
   instance
-end method;
+end function;
 
-define constant initialize-notification =
-  method (notif :: <notification>) => ()
-    drain-finalization-queue();
-    let res = primitive-make-notification(notif, notif.synchronization-name);
-    check-synchronization-creation(notif, res);
-    finalize-when-unreachable(notif);
-  end method;
+define function initialize-notification (notif :: <notification>) => ()
+  drain-finalization-queue();
+  let res = primitive-make-notification(notif, notif.synchronization-name);
+  check-synchronization-creation(notif, res);
+  finalize-when-unreachable(notif);
+end function;
 
 define sealed method initialize (notif :: <notification>, #key) => ()
   next-method();

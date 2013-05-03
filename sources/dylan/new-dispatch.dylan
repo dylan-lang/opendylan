@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define inline constant fixnum-dammit = method (x :: <integer>) => (x :: <integer>) x end;
+define inline function fixnum-dammit (x :: <integer>) => (x :: <integer>) x end;
 
 
 define constant <callback>   = <simple-method>;
@@ -148,14 +148,14 @@ define open method bletch (x :: <error>) => ()
 end method;
 
 
-define constant bletch-stack = method (l :: <list>)
+define function bletch-stack (l :: <list>)
   if (l == #())
     #f
   else
     bletch-stack(tail(l));
     bletch(head(l));
   end if
-end method;
+end function;
 
 
 /* *******************************************************
@@ -193,7 +193,7 @@ define inline-only function token-for-current-thread () => (a-token)
 end function;
 
 
-// define constant object-locked-p = method (obj) => (ans :: <list>);
+// define function object-locked-p (obj) => (ans :: <list>);
 //   iterate loop (l :: <list> = *object-lock-data*)
 //     if (l == #())
 //       #()
@@ -207,10 +207,10 @@ end function;
 //       end if
 //     end if
 //   end iterate
-// end method;
+// end function;
 
 
-define constant multiple-objects-locked-p = method (cells :: <list>, tokin) => (ans);
+define function multiple-objects-locked-p (cells :: <list>, tokin) => (ans);
   if (*object-lock-data* == #())
     #f
   else
@@ -242,10 +242,10 @@ define constant multiple-objects-locked-p = method (cells :: <list>, tokin) => (
           end method;
     peruse(cells, #())
   end if
-end method;
+end function;
 
 
-//define constant begin-locking-object  = method (cell :: <pair>)
+//define function begin-locking-object (cell :: <pair>)
 //  let cell2 :: <pair> = head(cell);
 //  let obj = head(cell2);
 //  let lock :: <simple-lock> = $object-lock-notification-lock;
@@ -267,9 +267,9 @@ end method;
 //      end if
 //    end iterate
 //  end with-lock
-//end method;
+//end function;
 
-define constant begin-locking-multiple-objects  = method (hd :: <pair>, tl :: <pair>)
+define function begin-locking-multiple-objects (hd :: <pair>, tl :: <pair>)
   let lock :: <simple-lock> = $object-lock-notification-lock;
   let notif :: <notification> = $object-lock-notification;
   let tokin = token-for-current-thread();
@@ -289,10 +289,10 @@ define constant begin-locking-multiple-objects  = method (hd :: <pair>, tl :: <p
       end if
     end iterate
   end with-lock
-end method;
+end function;
 
 
-define constant end-locking-object-cell = method (cell :: <pair>)
+define function end-locking-object-cell (cell :: <pair>)
   let data :: <list> = *object-lock-data*;
   let first-l :: <list> = tail(data);
   if (cell == data)
@@ -310,9 +310,9 @@ define constant end-locking-object-cell = method (cell :: <pair>)
       end if
     end iterate
   end if;
-end method;
+end function;
 
-//define constant end-locking-object = method (cell :: <pair>)
+//define function end-locking-object (cell :: <pair>)
 //  let lock :: <simple-lock> = $object-lock-notification-lock;
 //  let notif :: <notification> = $object-lock-notification;
 //  with-lock (lock)
@@ -320,10 +320,10 @@ end method;
 //    release(notif);
 //  end with-lock;
 //  values()
-//end method;
+//end function;
 
 
-define constant end-locking-multiple-objects = method (hd :: <pair>, tl :: <pair>) => ()
+define function end-locking-multiple-objects (hd :: <pair>, tl :: <pair>) => ()
   let lock :: <simple-lock> = $object-lock-notification-lock;
   let notif :: <notification> = $object-lock-notification;
   with-lock (lock)
@@ -336,7 +336,7 @@ define constant end-locking-multiple-objects = method (hd :: <pair>, tl :: <pair
     release(notif);
   end with-lock;
   values()
-end method;
+end function;
 
 
 define macro with-object-lock
@@ -427,30 +427,30 @@ end macro;
    Simple, terminal discriminators
    ******************************* */
 
-define constant %gf-dispatch-absent = method (mepargs :: <simple-object-vector>,
-                                              e :: <engine-node>,
-                                              parent :: <dispatch-starter>)
+define function %gf-dispatch-absent (mepargs :: <simple-object-vector>,
+                                     e :: <engine-node>,
+                                     parent :: <dispatch-starter>)
   handle-missed-dispatch(e, parent, mepargs)
-end method;
+end function;
 
-define constant %gf-dispatch-inapplicable = method (spreadargs :: <simple-object-vector>,
-                                                    e :: <inapplicable-engine-node>,
-                                                    parent :: <dispatch-starter>)
+define function %gf-dispatch-inapplicable (spreadargs :: <simple-object-vector>,
+                                           e :: <inapplicable-engine-node>,
+                                           parent :: <dispatch-starter>)
   e;
   no-applicable-method-error(parent-gf(parent), copy-sequence(spreadargs))
-end method;
+end function;
 
 
 
-define constant %gf-dispatch-ambiguous-methods = method (spreadargs :: <simple-object-vector>,
-                                                         e :: <ambiguous-methods-engine-node>,
-                                                         parent :: <dispatch-starter>)
+define function %gf-dispatch-ambiguous-methods (spreadargs :: <simple-object-vector>,
+                                                e :: <ambiguous-methods-engine-node>,
+                                                parent :: <dispatch-starter>)
   ambiguous-method-error(parent-gf(parent), copy-sequence(spreadargs),
                          ambiguous-methods-engine-node-ordered(e),
                          ambiguous-methods-engine-node-ambig(e))
-end method;
+end function;
 
-define constant make-ambiguous-methods-engine-node = method
+define function make-ambiguous-methods-engine-node
     (ordered :: <sequence>, ambig :: <sequence>)
  => (e :: <ambiguous-methods-engine-node>);
   let e :: <ambiguous-methods-engine-node>
@@ -459,14 +459,14 @@ define constant make-ambiguous-methods-engine-node = method
   ambiguous-methods-engine-node-ambig(e) := ambig;
   primitive-initialize-engine-node(e);
   e
-end method;
+end function;
 
 
-define inline constant make-ambiguous-methods-next-method = method
+define inline function make-ambiguous-methods-next-method
     (ordered :: <sequence>, ambig :: <sequence>, gf :: <generic-function>)
  => (p :: <pair>);
   pair(make-ambiguous-methods-engine-node(ordered, ambig), gf)
-end method;
+end function;
 
 
 define sealed inline method make (c == <single-method-engine-node>, #key meth :: <method>, data, keys)
@@ -475,7 +475,7 @@ define sealed inline method make (c == <single-method-engine-node>, #key meth ::
   make-single-method-engine-node(meth, data: data, keys: keys)
 end method;
 
-define constant make-single-method-engine-node = method (meth :: <method>, #key data, keys)
+define function make-single-method-engine-node (meth :: <method>, #key data, keys)
   // @@@@@ The method here is known to not be an <accessor-method>, so can
   // use a more specialized version of function-signature when one is available.
   let sig :: <signature> = function-signature(meth);
@@ -524,7 +524,7 @@ define constant make-single-method-engine-node = method (meth :: <method>, #key 
   single-method-engine-node-data(sme) := data;
   primitive-initialize-engine-node(sme);
   sme
-end method;
+end function;
 
 
 
@@ -678,38 +678,41 @@ define inline function grow-hashed-class-keyed-discriminator
   loop (0, nd)
 end function;
 
-define constant copy-class-keyed-discriminator-attributes
-  = method (d :: <class-keyed-discriminator>, nd :: <class-keyed-discriminator>) => ();
-      if (instance?(d, <by-singleton-class-discriminator>))
-        grounded-class-keyed-discriminator-default(nd) := grounded-class-keyed-discriminator-default(d);
-      end if;
-    end method;
+define function copy-class-keyed-discriminator-attributes
+    (d :: <class-keyed-discriminator>, nd :: <class-keyed-discriminator>)
+ => ()
+  if (instance?(d, <by-singleton-class-discriminator>))
+    grounded-class-keyed-discriminator-default(nd) := grounded-class-keyed-discriminator-default(d);
+  end if;
+end function;
 
-define constant grounded-class-keyed-discriminator-default
-  = method (d :: <class-keyed-discriminator>) => (nd :: <object>)
-      select (d by instance?)
-        <monomorphic-by-class-discriminator>, <linear-by-class-discriminator>, <hashed-by-class-discriminator> =>
-          $absent-engine-node;
-        <linear-by-singleton-class-discriminator> =>
-          let d :: <linear-by-singleton-class-discriminator> = d;
-          class-keyed-discriminator-default(d);
-        <hashed-by-singleton-class-discriminator> =>
-          let d :: <hashed-by-singleton-class-discriminator> = d;
-          class-keyed-discriminator-default(d);
-      end select
-    end method;
+define function grounded-class-keyed-discriminator-default
+    (d :: <class-keyed-discriminator>)
+ => (nd :: <object>)
+  select (d by instance?)
+    <monomorphic-by-class-discriminator>, <linear-by-class-discriminator>, <hashed-by-class-discriminator> =>
+      $absent-engine-node;
+    <linear-by-singleton-class-discriminator> =>
+      let d :: <linear-by-singleton-class-discriminator> = d;
+      class-keyed-discriminator-default(d);
+    <hashed-by-singleton-class-discriminator> =>
+      let d :: <hashed-by-singleton-class-discriminator> = d;
+      class-keyed-discriminator-default(d);
+  end select
+end function;
 
-define constant grounded-class-keyed-discriminator-default-setter
-  = method (value :: <object>, d :: <class-keyed-discriminator>) => (nd :: <object>)
-      select (d by instance?)
-        <linear-by-singleton-class-discriminator> =>
-          let d :: <linear-by-singleton-class-discriminator> = d;
-          class-keyed-discriminator-default(d) := value;
-        <hashed-by-singleton-class-discriminator> =>
-          let d :: <hashed-by-singleton-class-discriminator> = d;
-          class-keyed-discriminator-default(d) := value;
-      end select
-    end method;
+define function grounded-class-keyed-discriminator-default-setter
+    (value :: <object>, d :: <class-keyed-discriminator>)
+ => (nd :: <object>)
+  select (d by instance?)
+    <linear-by-singleton-class-discriminator> =>
+      let d :: <linear-by-singleton-class-discriminator> = d;
+      class-keyed-discriminator-default(d) := value;
+    <hashed-by-singleton-class-discriminator> =>
+      let d :: <hashed-by-singleton-class-discriminator> = d;
+      class-keyed-discriminator-default(d) := value;
+  end select
+end function;
 
 define function make-linear-class-keyed-discriminator
     (code :: <integer>, argnum :: <integer>,
@@ -871,25 +874,25 @@ define inline function %hckd-first-index
 end function;
 
 // See %hckd-hash-step.
-define inline constant %second-hash-values = method () => (v :: <simple-object-vector>)
-    #[2,                                // index = 0,  step = 1
-      6,                                // index = 1,  Step = 3
-      10,                               // index = 2,  Step = 5
-      14,                               // index = 3,  Step = 7
-      22,                               // index = 4,  step = 11
-      26,                               // index = 5,  step = 13
-      34,                               // index = 6,  step = 17
-      38,                               // index = 7,  step = 19
-      46,                               // index = 8,  step = 23
-      58,                               // index = 9,  step = 29
-      62,                               // index = 10, step = 31
-      74,                               // index = 11, step = 37
-      82,                               // index = 12, step = 41
-      86,                               // index = 13, step = 43
-      94,                               // index = 14, step = 47
-      106                               // index = 15, step = 53
-        ]
-end method;
+define function %second-hash-values () => (v :: <simple-object-vector>)
+  #[2,                                // index = 0,  step = 1
+    6,                                // index = 1,  Step = 3
+    10,                               // index = 2,  Step = 5
+    14,                               // index = 3,  Step = 7
+    22,                               // index = 4,  step = 11
+    26,                               // index = 5,  step = 13
+    34,                               // index = 6,  step = 17
+    38,                               // index = 7,  step = 19
+    46,                               // index = 8,  step = 23
+    58,                               // index = 9,  step = 29
+    62,                               // index = 10, step = 31
+    74,                               // index = 11, step = 37
+    82,                               // index = 12, step = 41
+    86,                               // index = 13, step = 43
+    94,                               // index = 14, step = 47
+    106                               // index = 15, step = 53
+      ]
+end function;
 
 // Mask to compute index mod the size of $second-hash-values.
 define constant $second-hash-mask :: <integer> = 15;
@@ -1139,17 +1142,17 @@ end function;
 // define engine-node-slot typecheck-discriminator-next <typecheck-discriminator> <object> engine-node-data-2;
 
 
-define constant %gf-dispatch-typecheck
-  = method (arg, parent :: <dispatch-starter>, d :: <typecheck-discriminator>)
-      parent;
-      if (primitive-instance?(arg, typecheck-discriminator-type(d)))
-        typecheck-discriminator-next(d)
-      else
-        $inapplicable-engine-node
-      end if
-    end method;
+define function %gf-dispatch-typecheck
+    (arg, parent :: <dispatch-starter>, d :: <typecheck-discriminator>)
+  parent;
+  if (primitive-instance?(arg, typecheck-discriminator-type(d)))
+    typecheck-discriminator-next(d)
+  else
+    $inapplicable-engine-node
+  end if
+end function;
 
-define constant make-typecheck-discriminator = method
+define function make-typecheck-discriminator
     (argnum :: <integer>, gf :: <generic-function>, t :: <type>, next :: <object>)
  => (d :: <discriminator>)
 //  let d :: <typecheck-discriminator>
@@ -1160,9 +1163,9 @@ define constant make-typecheck-discriminator = method
 //  primitive-initialize-discriminator(d);
 //  d
   make-if-type-discriminator(argnum, gf, t, next, $inapplicable-engine-node)
-end method;
+end function;
 
-define constant make-monomorphic-by-class-discriminator = method
+define function make-monomorphic-by-class-discriminator
     (argnum :: <integer>, gf :: <generic-function> /* , ic :: <implementation-class>, next :: <object> */)
  => (d :: <discriminator>)
   let d :: <monomorphic-by-class-discriminator>
@@ -1174,34 +1177,34 @@ define constant make-monomorphic-by-class-discriminator = method
   // monomorphic-by-class-discriminator-next(d) := next;
   primitive-initialize-discriminator(d);
   d
-end method;
+end function;
 
 
 // define engine-node-slot if-type-discriminator-type <if-type-discriminator> <type> engine-node-data-1;
 // define engine-node-slot if-type-discriminator-then <if-type-discriminator> <object> engine-node-data-2;
 // define engine-node-slot if-type-discriminator-else <if-type-discriminator> <object> engine-node-data-3;
 
-define constant %gf-dispatch-if-type
-  = method (arg, parent :: <dispatch-starter>, disp :: <if-type-discriminator>)
-      parent;
-      if (primitive-instance?(arg, if-type-discriminator-type(disp)))
-        if-type-discriminator-then(disp)
-      else
-        if-type-discriminator-else(disp)
-      end if
-    end method;
+define function %gf-dispatch-if-type
+    (arg, parent :: <dispatch-starter>, disp :: <if-type-discriminator>)
+  parent;
+  if (primitive-instance?(arg, if-type-discriminator-type(disp)))
+    if-type-discriminator-then(disp)
+  else
+    if-type-discriminator-else(disp)
+  end if
+end function;
 
-define constant make-if-type-discriminator
-  = method (argnum :: <integer>, gf :: <generic-function>, type :: <type>, thend :: <object>, elsed :: <object>)
-      let d :: <if-type-discriminator>
-           = bootstrap-allocate-discriminator(engine-node$k-if-type, argnum,
-                                              standard-discriminator-bits(gf));
-      if-type-discriminator-type(d) := type;
-      if-type-discriminator-then(d) := thend;
-      if-type-discriminator-else(d) := elsed;
-      primitive-initialize-discriminator(d);
-      d
-    end method;
+define function make-if-type-discriminator
+    (argnum :: <integer>, gf :: <generic-function>, type :: <type>, thend :: <object>, elsed :: <object>)
+  let d :: <if-type-discriminator>
+       = bootstrap-allocate-discriminator(engine-node$k-if-type, argnum,
+                                          standard-discriminator-bits(gf));
+  if-type-discriminator-type(d) := type;
+  if-type-discriminator-then(d) := thend;
+  if-type-discriminator-else(d) := elsed;
+  primitive-initialize-discriminator(d);
+  d
+end function;
 
 /* Singleton Dispatch */
 
@@ -1213,32 +1216,32 @@ define constant make-if-type-discriminator
 //  engine-node-data-2;
 
 
-define constant make-linear-singleton-discriminator
-  = method (entry-type :: <integer>, argnum :: <integer>, gf :: <generic-function>, keys :: <list>, nkeys :: <integer>)
-      => (d :: <linear-singleton-discriminator>)
-      let len :: <integer> = ash(nkeys, 1);
-      let v :: <simple-object-vector>
-           = make(<simple-object-vector>, size: len, fill: $absent-engine-node);
-      let d :: <linear-singleton-discriminator>
-           = bootstrap-allocate-discriminator(entry-type, argnum, standard-discriminator-bits(gf));
-      singleton-discriminator-table(d) := v;
-      singleton-discriminator-default(d) := $absent-engine-node;
-      lsd-index(d)    := 0;
-      local method loop(i :: <integer>, l :: <list>)
-              unless (l == #())
-                if (~(i < len)) // @@@@ (i >= len)
-                  error("fmh")
-                else
-                  vector-element(v, i) := head(l);
-                  let nxt :: <list> = tail(l);
-                  loop(i + 2, nxt)
-                end if
-              end unless
-            end method;
-      loop(0, keys);
-      primitive-initialize-discriminator(d);
-      d
-    end method;
+define function make-linear-singleton-discriminator
+    (entry-type :: <integer>, argnum :: <integer>, gf :: <generic-function>, keys :: <list>, nkeys :: <integer>)
+ => (d :: <linear-singleton-discriminator>)
+  let len :: <integer> = ash(nkeys, 1);
+  let v :: <simple-object-vector>
+       = make(<simple-object-vector>, size: len, fill: $absent-engine-node);
+  let d :: <linear-singleton-discriminator>
+       = bootstrap-allocate-discriminator(entry-type, argnum, standard-discriminator-bits(gf));
+  singleton-discriminator-table(d) := v;
+  singleton-discriminator-default(d) := $absent-engine-node;
+  lsd-index(d)    := 0;
+  local method loop(i :: <integer>, l :: <list>)
+          unless (l == #())
+            if (~(i < len)) // @@@@ (i >= len)
+              error("fmh")
+            else
+              vector-element(v, i) := head(l);
+              let nxt :: <list> = tail(l);
+              loop(i + 2, nxt)
+            end if
+          end unless
+        end method;
+  loop(0, keys);
+  primitive-initialize-discriminator(d);
+  d
+end function;
 
 
 /*
@@ -1341,60 +1344,60 @@ define inline function value-object-linear-singleton-discriminator-element
 end function;
 
 
-define constant linear-singleton-discriminator-element-setter
-  = method (value, d :: <linear-singleton-discriminator>, key)
-      let table :: <simple-object-vector> = singleton-discriminator-table(d);
-      let n :: <integer> = size(table);
-      local method loop (i :: <integer>)
-              if (i == n)
-                error("key not found")
-              else
-                let k = vector-element(table, i);
-                if (k == key)
-                  lsd-index(d) := i;
-                  vector-element(table, i + 1) := value
-                else
-                  loop(i + 2)
-                end if
-              end if
-            end method;
-      loop(0)
-    end method;
+define function linear-singleton-discriminator-element-setter
+    (value, d :: <linear-singleton-discriminator>, key)
+  let table :: <simple-object-vector> = singleton-discriminator-table(d);
+  let n :: <integer> = size(table);
+  local method loop (i :: <integer>)
+          if (i == n)
+            error("key not found")
+          else
+            let k = vector-element(table, i);
+            if (k == key)
+              lsd-index(d) := i;
+              vector-element(table, i + 1) := value
+            else
+              loop(i + 2)
+            end if
+          end if
+        end method;
+  loop(0)
+end function;
 
-define constant %gf-dispatch-immediate-linear-singleton
-  = method (arg, parent :: <dispatch-starter>, d :: <immediate-linear-singleton-discriminator>)
-      parent;
-      immediate-linear-singleton-discriminator-element(d, arg, singleton-discriminator-default(d))
-    end method;
-
-
-define constant %gf-dispatch-value-object-linear-singleton
-  = method (arg, parent :: <dispatch-starter>, d :: <immediate-linear-singleton-discriminator>)
-      parent;
-      value-object-linear-singleton-discriminator-element(d, arg, singleton-discriminator-default(d))
-    end method;
+define function %gf-dispatch-immediate-linear-singleton
+    (arg, parent :: <dispatch-starter>, d :: <immediate-linear-singleton-discriminator>)
+  parent;
+  immediate-linear-singleton-discriminator-element(d, arg, singleton-discriminator-default(d))
+end function;
 
 
-define constant singleton-discriminator-element
-    = method (d :: <singleton-discriminator>, key, default) => (val :: <object>)
-      select (d by instance?)
-        <immediate-linear-singleton-discriminator> =>
-          immediate-linear-singleton-discriminator-element(d, key, default);
-        <value-object-linear-singleton-discriminator> =>
-          value-object-linear-singleton-discriminator-element(d, key, default);
-      end select
-    end method;
-
-define constant singleton-discriminator-element-setter
-  = method (value, d :: <singleton-discriminator>, key)
-      select (d by instance?)
-        <linear-singleton-discriminator> =>
-          linear-singleton-discriminator-element-setter(value, d, key);
-      end select
-    end method;
+define function %gf-dispatch-value-object-linear-singleton
+    (arg, parent :: <dispatch-starter>, d :: <immediate-linear-singleton-discriminator>)
+  parent;
+  value-object-linear-singleton-discriminator-element(d, arg, singleton-discriminator-default(d))
+end function;
 
 
-define constant make-single-class-singleton-discriminator = method
+define function singleton-discriminator-element
+    (d :: <singleton-discriminator>, key, default) => (val :: <object>)
+  select (d by instance?)
+    <immediate-linear-singleton-discriminator> =>
+      immediate-linear-singleton-discriminator-element(d, key, default);
+    <value-object-linear-singleton-discriminator> =>
+      value-object-linear-singleton-discriminator-element(d, key, default);
+  end select
+end function;
+
+define function singleton-discriminator-element-setter
+    (value, d :: <singleton-discriminator>, key)
+  select (d by instance?)
+    <linear-singleton-discriminator> =>
+      linear-singleton-discriminator-element-setter(value, d, key);
+  end select
+end function;
+
+
+define function make-single-class-singleton-discriminator
     (keys :: <list>, argnum :: <integer>, gf :: <generic-function>)
  => (d :: <singleton-discriminator>);
   let n :: <integer> = size(keys);
@@ -1405,7 +1408,7 @@ define constant make-single-class-singleton-discriminator = method
        engine-node$k-immediate-linear-singleton
      end if,
      argnum, gf, keys, n)
-end method;
+end function;
 
 
 //// Handle-missed-dispatch
@@ -1455,9 +1458,9 @@ end function;
 
 
 
-define constant handle-missed-dispatch = method (d :: <engine-node>,
-                                                 parent :: <dispatch-starter>,
-                                                 args :: <simple-object-vector>)
+define function handle-missed-dispatch (d :: <engine-node>,
+                                        parent :: <dispatch-starter>,
+                                        args :: <simple-object-vector>)
   /*
   iterate redefinition-check (i :: <integer> = size(args) - 1,
                               updated-p :: <boolean> = #f)
@@ -1477,16 +1480,15 @@ define constant handle-missed-dispatch = method (d :: <engine-node>,
   end iterate
    */
   handle-missed-dispatch-1(d, parent, args)
-end method;
+end function;
 
 
 define variable *dispatch-miss-count* = 0;
 define variable *dispatch-computation-count* = 0;
 
-define constant handle-missed-dispatch-1 = method (d :: <engine-node>,
-                                                   parent :: <dispatch-starter>,
-                                                   args :: <simple-object-vector>)
-
+define function handle-missed-dispatch-1 (d :: <engine-node>,
+                                          parent :: <dispatch-starter>,
+                                          args :: <simple-object-vector>)
   let ds :: <dispatch-state> = system-allocate-simple-instance(<dispatch-state>);
   let parent :: <dispatch-starter> = if (d == $absent-engine-node) parent else d end;
   let gf :: <generic-function> = parent-gf(parent);
@@ -1521,4 +1523,4 @@ define constant handle-missed-dispatch-1 = method (d :: <engine-node>,
     // show(gf);
     %invoke-generic-function-mepized(gf, args)
   end if
-end method;
+end function;

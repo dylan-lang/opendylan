@@ -96,10 +96,10 @@ define method make
   end if;
 end method make;
 
-define constant range
-  = method (#rest keys, #key from, by, to, below, above, size) => (range :: <range>)
-      apply(make, <range>, keys)
-    end method;
+define function range
+    (#rest keys, #key from, by, to, below, above, size) => (range :: <range>)
+  apply(make, <range>, keys)
+end function;
 
 
 /// collection and sequence operations
@@ -481,14 +481,14 @@ define method id?-intersection (r1 :: <constant-range>, r2 :: <constant-range>)
   end if;
 end method id?-intersection;
 
-define constant id?-intersection-with-constant
-  = method (value :: <number>, range :: <range>)
-      if (member?(value, range))
-        make(<range>, from: value, size: 1)
-      else
-        $empty-range
-      end if
-    end method;
+define function id?-intersection-with-constant
+    (value :: <number>, range :: <range>)
+  if (member?(value, range))
+    make(<range>, from: value, size: 1)
+  else
+    $empty-range
+  end if
+end function;
 
 define method id?-intersection (r1 :: <constant-range>, r2 :: <finite-range>)
   id?-intersection-with-constant(r1.range-from, r2)
@@ -506,86 +506,86 @@ define method id?-intersection (r1 :: <infinite-range>, r2 :: <constant-range>)
   id?-intersection-with-constant(r2.range-from, r1)
 end method id?-intersection;
 
-define constant same-sign? // assumes x ~= 0 & y ~= 0
-  = method (x, y)
-      (if (positive?(x)) positive? else negative? end)(y)
-    end method;
+define function same-sign? // assumes x ~= 0 & y ~= 0
+    (x, y)
+  (if (positive?(x)) positive? else negative? end)(y)
+end function;
 
-define constant first-intersection
-  = method (from1, by1, from2, by2)
-      if (by1 < 0)
-        let neg = first-intersection(-from1, -by1, -from2, -by2);
-        if (neg)
-          -neg
-        else
-          #f
+define function first-intersection
+    (from1, by1, from2, by2)
+  if (by1 < 0)
+    let neg = first-intersection(-from1, -by1, -from2, -by2);
+    if (neg)
+      -neg
+    else
+      #f
+    end if;
+  elseif (from1 < from2)
+    first-intersection(from2, by2, from1, by1)
+  else
+    // assert(from1 >= from2 & by1 > 0 &  by2 > 0)
+    block (return)
+      for (i from 0 below by2,
+           n from from1 by by1)
+        if (remainder(n - from2, by2) = 0)
+          return(n)
         end if;
-      elseif (from1 < from2)
-        first-intersection(from2, by2, from1, by1)
-      else
-        // assert(from1 >= from2 & by1 > 0 &  by2 > 0)
-        block (return)
-          for (i from 0 below by2,
-               n from from1 by by1)
-            if (remainder(n - from2, by2) = 0)
-              return(n)
-            end if;
-          finally
-            #f
-          end for
-        end block
-      end if
-    end method;
+      finally
+        #f
+      end for
+    end block
+  end if
+end function;
 
-define constant ordered-finite-intersection
+define function ordered-finite-intersection
+    (lo1, by1, hi1, lo2, by2, hi2)
   // assumes by1 > 0 & by2 > 0
-  = method (lo1, by1, hi1, lo2, by2, hi2)
-      if (hi1 < lo2 | hi2 < lo1)
+  if (hi1 < lo2 | hi2 < lo1)
+    $empty-range
+  else
+    let from = first-intersection(lo1, by1, lo2, by2);
+    if (from & from >= lo1 & from >= lo2)
+      let to = first-intersection(hi1, -by1, hi2, -by2);
+      if (to & to <= hi1 & to <= hi2)
+        make(<range>, from: from, to: to, by: lcm(by1, by2))
+      else
         $empty-range
-      else
-        let from = first-intersection(lo1, by1, lo2, by2);
-        if (from & from >= lo1 & from >= lo2)
-          let to = first-intersection(hi1, -by1, hi2, -by2);
-          if (to & to <= hi1 & to <= hi2)
-            make(<range>, from: from, to: to, by: lcm(by1, by2))
-          else
-            $empty-range
-          end if
-        else
-          $empty-range
-        end if
       end if
-    end method;
+    else
+      $empty-range
+    end if
+  end if
+end function;
 
-define constant finite-intersection
-  = method (from1, by1, to1, from2, by2, to2)
-      if (by1.negative?)
-        if (by2.negative?)
-          ordered-finite-intersection(to1, -by1, from1, to2, -by2, from2)
-        else
-          ordered-finite-intersection(to1, -by1, from1, from2, by2, to2)
-        end if
-      else
-        if (by2.negative?)
-          ordered-finite-intersection(from1, by1, to1, to2, -by2, from2)
-        else
-          ordered-finite-intersection(from1, by1, to1, from2, by2, to2)
-        end if
-      end if
-    end method;
+define function finite-intersection
+    (from1, by1, to1, from2, by2, to2)
+  if (by1.negative?)
+    if (by2.negative?)
+      ordered-finite-intersection(to1, -by1, from1, to2, -by2, from2)
+    else
+      ordered-finite-intersection(to1, -by1, from1, from2, by2, to2)
+    end if
+  else
+    if (by2.negative?)
+      ordered-finite-intersection(from1, by1, to1, to2, -by2, from2)
+    else
+      ordered-finite-intersection(from1, by1, to1, from2, by2, to2)
+    end if
+  end if
+end function;
 
-define constant last-of-in
-  = method (of :: <infinite-range>, in :: <range>)
-      // |in| is either a finite range or an infinite range growing in
-      // the opposite direction from |of|
-      let bound = if (same-sign?(in.range-by, of.range-by))
-                    in.last
-                  else
-                    in.range-from
-                  end if;
-      let n = truncate/(bound - of.range-from, of.range-by);
-      n * of.range-by + of.range-from
-    end method;
+define function last-of-in
+    (of :: <infinite-range>, in :: <range>)
+  // |in| is either a finite range or an infinite range growing in
+  // the opposite direction from |of|
+  let bound = if (same-sign?(in.range-by, of.range-by))
+                in.last
+              else
+                in.range-from
+              end if;
+  let n = truncate/(bound - of.range-from, of.range-by);
+  n * of.range-by + of.range-from
+end function;
 
 define method id?-intersection (r1 :: <finite-range>, r2 :: <finite-range>)
   finite-intersection(r1.range-from, r1.range-by, r1.last,
@@ -666,66 +666,66 @@ end method reverse!;
 
 //// ITERATION PROTOCOL
 
-define constant range-next-state
-  = method (range :: <range>, state :: <number>)
-     => (result :: <integer>)
-      state + range.range-by
-    end method;
+define function range-next-state
+    (range :: <range>, state :: <number>)
+ => (result :: <integer>)
+  state + range.range-by
+end function;
 
-define constant range-previous-state
-  = method (range :: <range>, state :: <number>)
-     => (result :: <integer>)
-      state - range.range-by
-    end method;
+define function range-previous-state
+    (range :: <range>, state :: <number>)
+ => (result :: <integer>)
+  state - range.range-by
+end function;
 
-define constant empty-range-finished-state?
-  = method (range :: <range>, state, limit) => (result :: <boolean>);
-      #t
-    end method;
+define function empty-range-finished-state?
+    (range :: <range>, state, limit) => (result :: <boolean>);
+  #t
+end function;
 
-define constant infinite-range-finished-state?
-  = method (range :: <range>, state, limit) => (result :: <boolean>);
-      #f
-    end method;
+define function infinite-range-finished-state?
+    (range :: <range>, state, limit) => (result :: <boolean>);
+  #f
+end function;
 
-define constant increasing-range-finished-state?
-  = method (range :: <range>, state, limit) => (result :: <boolean>);
-      state > limit
-    end method;
+define function increasing-range-finished-state?
+    (range :: <range>, state, limit) => (result :: <boolean>);
+  state > limit
+end function;
 
-define constant decreasing-range-finished-state?
-  = method (range :: <range>, state, limit) => (result :: <boolean>);
-      state < limit
-    end method;
+define function decreasing-range-finished-state?
+    (range :: <range>, state, limit) => (result :: <boolean>);
+  state < limit
+end function;
 
-define constant range-current-key
-  = method (range :: <range>, state :: <number>)
-      floor/(state - range.range-from, range.range-by)
-    end method;
+define function range-current-key
+    (range :: <range>, state :: <number>)
+  floor/(state - range.range-from, range.range-by)
+end function;
 
-define constant range-current-element
-  = method (range :: <range>, state :: <number>)
-      state
-    end method;
+define function range-current-element
+    (range :: <range>, state :: <number>)
+  state
+end function;
 
-define constant range-current-element-setter
-  = method (new-value, range :: <range>, state)
-     => (will-never-return :: <bottom>)
-      error(make(<immutable-error>,
-                 format-string: "range %= is immutable",
-                 format-arguments: list(range)))
-    end method;
+define function range-current-element-setter
+    (new-value, range :: <range>, state)
+ => (will-never-return :: <bottom>)
+  error(make(<immutable-error>,
+             format-string: "range %= is immutable",
+             format-arguments: list(range)))
+end function;
 
-define constant constant-range-current-element
-  = method (range :: <range>, state :: <number>)
-      range.range-from
-    end method;
+define function constant-range-current-element
+    (range :: <range>, state :: <number>)
+  range.range-from
+end function;
 
-define constant range-error
-  = method (#rest ignored)
-     => (will-never-return :: <bottom>)
-      error("RANGE iteration protocol -- illegal operation")
-    end method;
+define function range-error
+    (#rest ignored)
+ => (will-never-return :: <bottom>)
+  error("RANGE iteration protocol -- illegal operation")
+end function;
 
 define method forward-iteration-protocol (range :: <empty-range>)
  => (initial-state, limit,

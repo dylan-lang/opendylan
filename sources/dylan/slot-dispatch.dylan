@@ -6,33 +6,33 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-define inline constant slot-method-requiring-class-discrimination?
-  = method (m :: <method>, argnum :: <integer>)
-      if (case
-            argnum == 0 => instance?(m, <getter-accessor-method>);
-            argnum == 1 => instance?(m, <setter-accessor-method>);
-            otherwise => #f;
-          end case)
-        let m :: <accessor-method> = m;
-        let sd :: <slot-descriptor> = method-slot-descriptor(m);  // who is missing type info?
-        let c :: <class> = slot-owner(sd);
-        ~class-primary?(c)
-      else
-        #f
-      end if
-    end method;
+define inline function slot-method-requiring-class-discrimination?
+    (m :: <method>, argnum :: <integer>)
+  if (case
+        argnum == 0 => instance?(m, <getter-accessor-method>);
+        argnum == 1 => instance?(m, <setter-accessor-method>);
+        otherwise => #f;
+      end case)
+    let m :: <accessor-method> = m;
+    let sd :: <slot-descriptor> = method-slot-descriptor(m);  // who is missing type info?
+    let c :: <class> = slot-owner(sd);
+    ~class-primary?(c)
+  else
+    #f
+  end if
+end function;
 
 
 define constant slotdiscrim$v-offset
   = engine-node$v-data-start;
 
-// define inline constant builtin-slot-engine-node-offset = method
+// define inline function builtin-slot-engine-node-offset
 //     (e :: <slot-access-engine-node>) => (offset :: <integer>);
 //   engine-node-raw-integer(e)
-// end method;
+// end function;
 
 
-define inline constant set-slot-engine-node-offset = method
+define inline function set-slot-engine-node-offset
     (e :: <slot-access-engine-node>, offset :: <integer>) => (offset :: <integer>);
   let mask :: <integer> = ash(1, slotdiscrim$v-offset) - 1;
   let props :: <integer> = properties(e);
@@ -43,23 +43,23 @@ define inline constant set-slot-engine-node-offset = method
     engine-node-raw-integer(e) := offset
   end if;
   offset
-end method;
+end function;
 
-define inline constant callback-slot-engine-node-offset = method
+define inline function callback-slot-engine-node-offset
     (e :: <slot-access-engine-node>) => (offset :: <integer>);
   ash(properties(e), - slotdiscrim$v-offset)
-end method;
+end function;
 
 
-//define inline constant slot-engine-node-size-offset = method
+//define inline function slot-engine-node-size-offset
 //    (e :: <repeated-slot-access-engine-node>) => (offset :: <integer>);
 //  engine-node-data-1(e)
-//end method;
+//end function;
 
-//define inline constant slot-engine-node-size-offset-setter = method
+//define inline function slot-engine-node-size-offset-setter
 //    (offset :: <integer>, e :: <repeated-slot-access-engine-node>) => (offset :: <integer>);
 //  engine-node-data-1(e) := offset
-//end method;
+//end function;
 
 // define engine-node-slot slot-engine-node-size-offset
 //    <repeated-slot-access-engine-node> <integer> engine-node-data-1;
@@ -68,7 +68,7 @@ end method;
 
 // Basic instance slots have built-in engine nodes, and don't need a callback.
 // Here's the emulated engine node with obsolete argument order.
-//define constant instance-slot-getter-engine-node = method
+//define function instance-slot-getter-engine-node
 //    (e :: <boxed-instance-slot-getter-engine-node>,
 //     gf :: <generic-function>,
 //     args :: <simple-object-vector>)
@@ -80,12 +80,12 @@ end method;
 //  else
 //    value
 //  end if
-//end method;
+//end function;
 
 
 // Basic instance slots have built-in engine nodes, and don't need a callback.
 // Here's the emulated engine node with obsolete argument order.
-//define constant instance-slot-setter-engine-node = method
+//define function instance-slot-setter-engine-node
 //    (e :: <boxed-instance-slot-setter-engine-node>,
 //     gf :: <generic-function>,
 //     args :: <simple-object-vector>)
@@ -93,12 +93,12 @@ end method;
 //  let inst = vector-element(args, 1);
 //  let value = vector-element(args, 0);
 //  slot-element(inst, builtin-slot-engine-node-offset(e)) := value
-//end method;
+//end function;
 
 
 // Basic instance slots have built-in engine nodes, and don't need a callback.
 // Here's the emulated engine node with obsolete argument order.
-//define constant repeated-instance-slot-getter-engine-node = method
+//define function repeated-instance-slot-getter-engine-node
 //    (e :: <boxed-repeated-instance-slot-getter-engine-node>,
 //     gf :: <generic-function>,
 //     args :: <simple-object-vector>)
@@ -118,12 +118,12 @@ end method;
 //      value
 //    end if
 //  end if
-//end method;
+//end function;
 
 
 // Basic instance slots have built-in engine nodes, and don't need a callback.
 // Here's the emulated engine node with obsolete argument order.
-//define constant repeated-instance-slot-setter-engine-node = method
+//define function repeated-instance-slot-setter-engine-node
 //    (e :: <boxed-repeated-instance-slot-setter-engine-node>,
 //     gf :: <generic-function>,
 //     args :: <simple-object-vector>)
@@ -139,23 +139,23 @@ end method;
 //    // repeated-slot-element(inst, offset, idx) := value
 //    slot-element(inst, idx + offset) := value
 //  end if
-//end method;
+//end function;
 
 // Basic byte slots have built-in engine nodes, and don't need a callback.
 // Here's the emulated engine node with obsolete argument order.
-//define constant byte-slot-getter-engine-node = method
+//define function byte-slot-getter-engine-node
 //    (e :: <byte-slot-getter-engine-node>,
 //     gf :: <generic-function>,
 //     args :: <simple-object-vector>)
 //  let inst = vector-element(args, 0);
 //  let offset :: <integer> = builtin-slot-engine-node-offset(e);
 //  byte-slot-element(inst, offset, 0)
-//end method;
+//end function;
 
 
 // Basic byte slots have built-in engine nodes, and don't need a callback.
 // Here's the emulated engine node with obsolete argument order.
-//define constant byte-slot-setter-engine-node = method
+//define function byte-slot-setter-engine-node
 //    (e :: <byte-slot-setter-engine-node>,
 //     gf :: <generic-function>,
 //     args :: <simple-object-vector>)
@@ -163,12 +163,12 @@ end method;
 //  let inst = vector-element(args, 1);
 //  let offset :: <integer> = builtin-slot-engine-node-offset(e);
 //  byte-slot-element(inst, offset, 0) := value
-//end method;
+//end function;
 
 
 // Basic byte slots have built-in engine nodes, and don't need a callback.
 // Here's the emulated engine node with obsolete argument order.
-//define constant repeated-byte-slot-getter-engine-node = method
+//define function repeated-byte-slot-getter-engine-node
 //    (e :: <repeated-byte-slot-getter-engine-node>,
 //     gf :: <generic-function>,
 //     args :: <simple-object-vector>)
@@ -182,12 +182,12 @@ end method;
 //    let offset :: <integer> = builtin-slot-engine-node-offset(e);
 //    byte-slot-element(inst, offset, idx)
 //  end if
-//end method;
+//end function;
 
 
 // Basic byte slots have built-in engine nodes, and don't need a callback.
 // Here's the emulated engine node with obsolete argument order.
-//define constant repeated-byte-slot-setter-engine-node = method
+//define function repeated-byte-slot-setter-engine-node
 //    (e :: <repeated-byte-slot-setter-engine-node>,
 //     gf :: <generic-function>,
 //     args :: <simple-object-vector>)
@@ -202,34 +202,34 @@ end method;
 //    let offset :: <integer> = builtin-slot-engine-node-offset(e);
 //    byte-slot-element(inst, offset, idx) := value
 //  end if
-//end method;
+//end function;
 
 
 // Class slots are currently implemented by callback.
-define constant %gf-dispatch-boxed-class-slot-getter
-  = method (inst, e :: <boxed-class-slot-getter-engine-node>, parent :: <dispatch-starter>)
-      let offset :: <integer> = callback-slot-engine-node-offset(e);
-      let cls :: <class> = object-class(inst);
-      let storage :: <simple-object-vector> = class-slot-storage(cls);
-      let e :: <pair> = vector-element(storage, offset);
-      let val = head(e);
-      if (unbound?(val))
-        unbound-class-slot(inst, offset)
-      else
-        val
-      end if
-    end method;
+define function %gf-dispatch-boxed-class-slot-getter
+    (inst, e :: <boxed-class-slot-getter-engine-node>, parent :: <dispatch-starter>)
+  let offset :: <integer> = callback-slot-engine-node-offset(e);
+  let cls :: <class> = object-class(inst);
+  let storage :: <simple-object-vector> = class-slot-storage(cls);
+  let e :: <pair> = vector-element(storage, offset);
+  let val = head(e);
+  if (unbound?(val))
+    unbound-class-slot(inst, offset)
+  else
+    val
+  end if
+end function;
 
 
 // Class slots are currently implemented by callback.
-define constant %gf-dispatch-boxed-class-slot-setter
-  = method (val, inst, e :: <boxed-class-slot-setter-engine-node>, parent :: <dispatch-starter>)
-      let offset :: <integer> = callback-slot-engine-node-offset(e);
-      let cls :: <class> = object-class(inst);
-      let storage :: <simple-object-vector> = class-slot-storage(cls);
-      let e :: <pair> = vector-element(storage, offset);
-      head(e) := val
-    end method;
+define function %gf-dispatch-boxed-class-slot-setter
+    (val, inst, e :: <boxed-class-slot-setter-engine-node>, parent :: <dispatch-starter>)
+  let offset :: <integer> = callback-slot-engine-node-offset(e);
+  let cls :: <class> = object-class(inst);
+  let storage :: <simple-object-vector> = class-slot-storage(cls);
+  let e :: <pair> = vector-element(storage, offset);
+  head(e) := val
+end function;
 
 
 define function slot-location (sd :: <slot-descriptor>,
@@ -303,7 +303,7 @@ define inline sealed method make (c == <slot-access-engine-repository>, #key cod
   c; make-slot-access-engine-repository(code)
 end method;
 
-define constant make-slot-access-engine-repository = method (code)
+define function make-slot-access-engine-repository (code)
   let t :: <slot-access-engine-repository>
     = system-allocate-simple-instance(<slot-access-engine-repository>);
   // if (code)
@@ -312,7 +312,7 @@ define constant make-slot-access-engine-repository = method (code)
   // end;
   engine-node-table(t) := #[];
   t
-end method;
+end function;
 
 
 define variable *slot-access-engine-repositories* :: <simple-object-vector>
@@ -348,7 +348,7 @@ define macro with-slot-access-engine-repository-locked
 end macro;
 
 
-define constant get-slot-access-engine-node = method
+define function get-slot-access-engine-node
     (code :: <integer>, setter?,
      index :: <integer>, integer-data :: <integer>)
   let code :: <integer> = if (setter?) code + 1 else code end;
@@ -363,9 +363,9 @@ define constant get-slot-access-engine-node = method
                         primitive-initialize-engine-node(e);
                         e
                       end)
-end method;
+end function;
 
-define constant get-repeated-slot-access-engine-node = method
+define function get-repeated-slot-access-engine-node
     (code :: <integer>, setter?,
      index :: <integer>, integer-data :: <integer>,
      size-index :: <integer>, size-offset :: <integer>)
@@ -389,10 +389,10 @@ define constant get-repeated-slot-access-engine-node = method
                         primitive-initialize-engine-node(e);
                         e
                       end method)
-end method;
+end function;
 
 
-define constant get-from-repository = method
+define function get-from-repository
     (repository :: <slot-access-engine-repository>, index :: <integer>, create-new-one :: <function>)
   let table :: <simple-object-vector> = engine-node-table(repository);
   let len :: <integer> = size(table);
@@ -425,7 +425,7 @@ define constant get-from-repository = method
          (vector-element(table, index) := create-new-one()))
      end)
      )
-end method;
+end function;
 
 
 

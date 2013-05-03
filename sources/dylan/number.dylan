@@ -81,21 +81,21 @@ define generic truncate
     (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
 
 define generic floor/
-    (real1 :: <machine-number>, real2 :: <machine-number>) 
+    (real1 :: <machine-number>, real2 :: <machine-number>)
  => (result :: <integer>, remainder :: <machine-number>);
 define generic ceiling/
     (real1 :: <machine-number>, real2 :: <machine-number>)
  => (result :: <integer>, remainder :: <machine-number>);
-define generic round/ 
+define generic round/
     (real1 :: <machine-number>, real2 :: <machine-number>)
  => (result :: <integer>, remainder :: <machine-number>);
 define generic truncate/
     (real1 :: <machine-number>, real2 :: <machine-number>)
  => (result :: <integer>, remainder :: <machine-number>);
 
-define generic modulo 
+define generic modulo
     (real1 :: <machine-number>, real2 :: <machine-number>) => (result :: <machine-number>);
-define generic remainder 
+define generic remainder
     (real1 :: <machine-number>, real2 :: <machine-number>) => (result :: <machine-number>);
 
 //// CONDITIONS
@@ -136,7 +136,7 @@ define sealed domain initialize (<arithmetic-underflow-error>);
 ///---*** I don't have time to fix them right now, so just noting it for later.
 define macro binary-comparison-method-definer
   { define binary-comparison-method ?:name }
-  => { define method ?name 
+  => { define method ?name
            (x :: <machine-number>, y :: <machine-number>) => (result :: <boolean>)
          contagious-call(?name, x, y)
        end method ?name;
@@ -174,22 +174,22 @@ define method \/ (x :: <float>, y :: <float>) => (result :: <float>)
   contagious-call(\/, x, y)
 end method \/;
 
-define inline method floor (real :: <machine-number>) 
+define inline method floor (real :: <machine-number>)
  => (result :: <integer>, remainder :: <machine-number>)
   contagious-call(floor/, real, 1);
 end method floor;
 
-define inline method ceiling (real :: <machine-number>) 
+define inline method ceiling (real :: <machine-number>)
  => (result :: <integer>, remainder :: <machine-number>)
   contagious-call(ceiling/, real, 1);
 end method ceiling;
 
-define inline method round (real :: <machine-number>) 
+define inline method round (real :: <machine-number>)
  => (result :: <integer>, remainder :: <machine-number>)
   contagious-call(round/, real, 1);
 end method round;
 
-define inline method truncate (real :: <machine-number>) 
+define inline method truncate (real :: <machine-number>)
  => (result :: <integer>, remainder :: <machine-number>)
   contagious-call(truncate/, real, 1);
 end method truncate;

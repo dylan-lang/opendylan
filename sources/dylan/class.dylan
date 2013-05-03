@@ -7,10 +7,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // BOOTED: define ... class <class> ... end;
 
-define constant class-instance-header
-  = method (class :: <class>) => (header :: <mm-wrapper>)
-      class.class-mm-wrapper
-    end method;
+define function class-instance-header (class :: <class>) => (header :: <mm-wrapper>)
+  class.class-mm-wrapper
+end function;
 
 define inline function iclass-instance-header (iclass :: <implementation-class>)
  => (header :: <mm-wrapper>)
@@ -622,9 +621,9 @@ define function invalidate-class-instance?-iep (c :: <class>) => ();
   c.instance?-iep := never-instance?-function.simple-method-iep;
 end function;
 
-define constant never-instance?-function = method (x, t)
+define function never-instance?-function (x, t)
   #f
-end method;
+end function;
 
 
 define constant $class-bashing-lock :: <simple-lock>
@@ -813,16 +812,16 @@ define inline function rcpl-isubclass? (isub :: <implementation-class>, sub :: <
 end;
 
 
-define constant general-rcpl-class-instance? = method
+define function general-rcpl-class-instance?
     (obj :: <object>, cls :: <class>) => (v :: <boolean>)
   let icls :: <implementation-class> = cls.class-implementation-class;
   // let n :: <integer> = class-instance?-count(icls) + 1;
   // class-instance?-count(icls) := n;
   let objicls :: <implementation-class> = obj.object-implementation-class;
   rcpl-isubclass?(objicls, objicls.iclass-class, icls, cls)
-end method;
+end function;
 
-define constant class-instance?-initial = method
+define function class-instance?-initial
     (obj :: <object>, cls :: <class>) => (v :: <boolean>)
   // let icls :: <implementation-class> = cls.class-implementation-class;
   // let n :: <integer> = class-instance?-count(icls) + 1;
@@ -830,9 +829,9 @@ define constant class-instance?-initial = method
   indirect-object?(obj)
     &
     pointer-id?(iclass-class(indirect-object-implementation-class(obj)), cls)
-end method;
+end function;
 
-define constant class-instance?-rcpl-single-large = method
+define function class-instance?-rcpl-single-large
     (obj :: <object>, cls :: <class>) => (v :: <boolean>)
   let icls :: <implementation-class> = cls.class-implementation-class;
   // let n :: <integer> = class-instance?-count(icls) + 1;
@@ -849,9 +848,9 @@ define constant class-instance?-rcpl-single-large = method
       &
       pointer-id?(vector-element(rcpl, position), cls)
   end if
-end method;
+end function;
 
-define constant class-instance?-rcpl-single-small = method
+define function class-instance?-rcpl-single-small
     (obj :: <object>, cls :: <class>) => (v :: <boolean>)
   let icls :: <implementation-class> = cls.class-implementation-class;
   // let n :: <integer> = class-instance?-count(icls) + 1;
@@ -865,26 +864,26 @@ define constant class-instance?-rcpl-single-small = method
     let  rcpl      = isubc.class-rcpl-vector ;
     pointer-id?(vector-element(rcpl, position), cls)
   end if
-end method;
+end function;
 
 // Used by compiler.
-define constant <object>-class-instance? = method
+define function <object>-class-instance?
     (obj :: <object>, cls == <object>) => (v == #t)
   #t
-end method;
+end function;
 
 
-define constant masked-class-instance? = method (x, c :: <class>) => (v :: <boolean>);
+define function masked-class-instance? (x, c :: <class>) => (v :: <boolean>);
   // let cnt :: <integer> = class-instance?-count(icls) + 1;
   // class-instance?-count(icls) := cnt;
   logand(mm-wrapper-subtype-mask(object-mm-wrapper(x)), class-subtype-bit(c)) ~== 0
-end method;
+end function;
 
 
-define constant get-class-instance?-counts
-  = method (classes :: <sequence>) => (v :: <sequence>);
-      map(class-instance?-count, classes)
-    end method;
+define function get-class-instance?-counts
+    (classes :: <sequence>) => (v :: <sequence>);
+  map(class-instance?-count, classes)
+end function;
 
 //// Class instance counting.
 

@@ -171,10 +171,9 @@ the number of specialized arguments.
 
 define constant <argnum-set> = <pair>;
 
-define constant make-argnum-set
-  = method () => (argnum-set :: <pair>)
-      pair(0, #())
-    end method;
+define function make-argnum-set () => (argnum-set :: <pair>)
+  pair(0, #())
+end function;
 
 // define inline function argnum-set-empty? (argnum-set :: <pair>) => (well? :: <boolean>)
 //   tail(argnum-set) == #()
@@ -202,67 +201,67 @@ define function argnum-considered? (argnum :: <integer>, argnum-set :: <pair>) =
 end function;
 
 
-define constant add-argnum
-  = method (argnum :: <integer>, argnum-set :: <pair>) => (argnum-set :: <pair>)
-      local method loop (prev :: <pair>, l :: <list>)
-              if (l == #())
-                tail(prev) := pair(argnum, #());
+define function add-argnum
+    (argnum :: <integer>, argnum-set :: <pair>) => (argnum-set :: <pair>)
+  local method loop (prev :: <pair>, l :: <list>)
+          if (l == #())
+            tail(prev) := pair(argnum, #());
+            let oldcount :: <integer> = head(argnum-set);
+            head(argnum-set) := oldcount + 1
+          else
+            let oargnum :: <integer> = head(l);
+            unless (oargnum == argnum)
+              if (argnum < oargnum)
+                tail(prev) := pair(argnum, tail(prev));
                 let oldcount :: <integer> = head(argnum-set);
                 head(argnum-set) := oldcount + 1
               else
-                let oargnum :: <integer> = head(l);
-                unless (oargnum == argnum)
-                  if (argnum < oargnum)
-                    tail(prev) := pair(argnum, tail(prev));
-                    let oldcount :: <integer> = head(argnum-set);
-                    head(argnum-set) := oldcount + 1
-                  else
-                    let nxt :: <list> = tail(l);
-                    loop(l, nxt)
-                  end if
-                end unless
+                let nxt :: <list> = tail(l);
+                loop(l, nxt)
               end if
-            end method;
-      let firstone :: <list> = tail(argnum-set);
-      loop(argnum-set, firstone);
-      argnum-set
-    end method;
+            end unless
+          end if
+        end method;
+  let firstone :: <list> = tail(argnum-set);
+  loop(argnum-set, firstone);
+  argnum-set
+end function;
 
-//define constant argnum-set-full?
-//  = method (argnum-set :: <pair>, n-elements :: <integer>) => (B :: <boolean>)
-//      n-elements == head(argnum-set)
-//    end method;
+//define function argnum-set-full?
+//    (argnum-set :: <pair>, n-elements :: <integer>) => (B :: <boolean>)
+//  n-elements == head(argnum-set)
+//end function;
 
 // Returns the next free argument number from the set, after previous, which should be -1 if there
 // is no previous one.  You can iterate over the free argument numbers by calling next-free-argnum
 // with the previous result.  Don't go off the end.
-define constant next-free-argnum
-  = method (previous :: <integer>, argnum-set :: <pair>) => (argnum :: <integer>)
-      local method loop1 (l :: <list>)
-              if (l == #())
-                loop2(previous, l)
-              else
-                let n :: <integer> = head(l);
-                if (previous < n)
-                  loop2(previous, l)
-                else
-                  let nextl :: <list> = tail(l);
-                  loop1(nextl)
-                end if
-              end if
-            end method,
-            method loop2 (prev :: <integer>, l :: <list>)
-              let next :: <integer> = prev + 1;
-              if (l == #() | head(l) ~== next)
-                next
-              else
-                let nextl :: <list> = tail(l);
-                loop2(next, nextl)
-              end if
-            end method;
-      let argnums :: <list> = tail(argnum-set);
-      loop1(argnums)
-    end method;
+define function next-free-argnum
+    (previous :: <integer>, argnum-set :: <pair>) => (argnum :: <integer>)
+  local method loop1 (l :: <list>)
+          if (l == #())
+            loop2(previous, l)
+          else
+            let n :: <integer> = head(l);
+            if (previous < n)
+              loop2(previous, l)
+            else
+              let nextl :: <list> = tail(l);
+              loop1(nextl)
+            end if
+          end if
+        end method,
+        method loop2 (prev :: <integer>, l :: <list>)
+          let next :: <integer> = prev + 1;
+          if (l == #() | head(l) ~== next)
+            next
+          else
+            let nextl :: <list> = tail(l);
+            loop2(next, nextl)
+          end if
+        end method;
+  let argnums :: <list> = tail(argnum-set);
+  loop1(argnums)
+end function;
 
 
 // Is the argnum-set a (possibly improper) subset of the set represented by the integer?
@@ -306,38 +305,37 @@ define constant next-free-argnum
 
 
 
-//define constant collect-methods-to-consider
-//  = method (methods :: <list>, args :: <simple-object-vector>, argnum-set :: <argnum-set>)
-//      let headed-methods :: <pair> = pair(#f, #());
-//      local method collect-methods (last-pair :: <pair>, methods :: <list>)
-//              unless (methods == #())
-//                let meth :: <method> = head(methods);
-//                local method loop (l :: <list>)
-//                        if (l == #())
-//                          collect-methods(tail(last-pair) := pair(meth, #()), tail(methods))
-//                        else
-//                          let argnum :: <integer> = head(l);
-//                          if (grounded-instance?(vector-element(args, argnum),
-//                                                 %method-specializer(meth, argnum)))
-//                            loop(tail(l))
-//                          else
-//                            collect-methods(last-pair, tail(methods))
-//                          end if
-//                        end if
-//                      end method;
-//                loop(tail(argnum-set))
-//              end unless
-//            end method;
-//      collect-methods(headed-methods, methods);
-//      headed-methods
-//    end method;
+//define function collect-methods-to-consider
+//    (methods :: <list>, args :: <simple-object-vector>, argnum-set :: <argnum-set>)
+//  let headed-methods :: <pair> = pair(#f, #());
+//  local method collect-methods (last-pair :: <pair>, methods :: <list>)
+//          unless (methods == #())
+//            let meth :: <method> = head(methods);
+//            local method loop (l :: <list>)
+//                    if (l == #())
+//                      collect-methods(tail(last-pair) := pair(meth, #()), tail(methods))
+//                    else
+//                      let argnum :: <integer> = head(l);
+//                      if (grounded-instance?(vector-element(args, argnum),
+//                                             %method-specializer(meth, argnum)))
+//                        loop(tail(l))
+//                      else
+//                        collect-methods(last-pair, tail(methods))
+//                      end if
+//                    end if
+//                  end method;
+//            loop(tail(argnum-set))
+//          end unless
+//        end method;
+//  collect-methods(headed-methods, methods);
+//  headed-methods
+//end function;
 
 
-define inline constant dbg
-    = method (str, #rest args) => ();
-         // apply(format-out, str, args);
-         // format-out("\n")
-      end method;
+define inline function dbg (str, #rest args) => ();
+  // apply(format-out, str, args);
+  // format-out("\n")
+end function;
 
 
 
@@ -354,16 +352,16 @@ define constant %make-simple-vector
 // define inline-only constant $machine-word-integer-one-value = as(<machine-word>, 4);
 
 
-define inline constant %load-byte = method (p :: <integer>, s :: <integer>, n :: <integer>)
+define inline function %load-byte (p :: <integer>, s :: <integer>, n :: <integer>)
  => (b :: <integer>);
   let ps :: <integer> = - p;
   let n2 :: <integer> = ash(n, ps);
   let p :: <integer> = ash(1, s);
   let m :: <integer> = p - 1;
   logand(n2, m)
-end method;
+end function;
 
-//define constant %load-byte1 = method (p :: <integer>, s :: <integer>, n :: <integer>)
+//define function %load-byte1 (p :: <integer>, s :: <integer>, n :: <integer>)
 // => (b :: <integer>);
 //  let shift = primitive-unwrap-machine-word(coerce-integer-to-machine-word(p));
 //  primitive-cast-integer-as-raw
@@ -378,11 +376,11 @@ end method;
 //                 primitive-unwrap-machine-word(coerce-integer-to-machine-word(s))),
 //              primitive-unwrap-machine-word($machine-word-integer-one-value))),
 //        primitive-unwrap-machine-word($integer-tag-value)))
-//end method;
+//end function;
 
 
 // -- unused after all.
-//define inline constant %maskify = method (n :: <integer>) => (m :: <integer>);
+//define inline function %maskify (n :: <integer>) => (m :: <integer>);
 //  primitive-cast-raw-as-integer
 //    (primitive-machine-word-logior
 //       (primitive-machine-word-subtract
@@ -392,9 +390,9 @@ end method;
 //           primitive-unwrap-machine-word($machine-word-integer-one-value)),
 //        primitive-unwrap-machine-word($integer-tag-value)))
 ////  ash(1, n) - 1
-//end method;
+//end function;
 
-define inline constant %twopower = method (n :: <integer>) => (m :: <integer>);
+define inline function %twopower (n :: <integer>) => (m :: <integer>);
 //  primitive-cast-raw-as-integer
 //    (primitive-machine-word-logior
 //       (primitive-machine-word-shift-left-low
@@ -402,10 +400,10 @@ define inline constant %twopower = method (n :: <integer>) => (m :: <integer>);
 //           primitive-unwrap-machine-word(coerce-integer-to-machine-word(n))),
 //        primitive-unwrap-machine-word($integer-tag-value)))
   ash(1, n)
-end method;
+end function;
 
 
-define inline constant %scale-down = method (n :: <integer>, s :: <integer>) => (m :: <integer>);
+define inline function %scale-down (n :: <integer>, s :: <integer>) => (m :: <integer>);
 //  primitive-cast-raw-as-integer
 //    (primitive-machine-word-logior
 //       (primitive-machine-word-logand
@@ -415,10 +413,10 @@ define inline constant %scale-down = method (n :: <integer>, s :: <integer>) => 
 //           primitive-unwrap-machine-word($integer-tag-mask)),
 //        primitive-unwrap-machine-word($integer-tag-value)))
   ash(n, - s)
-end method;
+end function;
 
 
-define constant %method-specializer = method (m :: <method>, i :: <integer>) => (spec :: <type>);
+define function %method-specializer (m :: <method>, i :: <integer>) => (spec :: <type>);
   select (m by instance?)
     <accessor-method> =>
       let m :: <accessor-method> = m;
@@ -442,10 +440,10 @@ define constant %method-specializer = method (m :: <method>, i :: <integer>) => 
       let v :: <simple-object-vector> = signature-required(sig);
       vector-element(v, i)        // v[i]
   end select
-end method;
+end function;
 
 
-define constant %method-number-required = method (m :: <method>) => (nreq :: <integer>)
+define function %method-number-required (m :: <method>) => (nreq :: <integer>)
   select (m by instance?)
     <accessor-method> =>
       if (instance?(m, <repeated-accessor-method>))
@@ -457,7 +455,7 @@ define constant %method-number-required = method (m :: <method>) => (nreq :: <in
       let m :: <lambda> = m;
       signature-number-required(function-signature(m))
   end select
-end method;
+end function;
 
 
 define inline function %gf-number-required (g :: <generic-function>) => (nreq :: <integer>)
@@ -537,41 +535,41 @@ end function;
 
 
 /*
-define inline constant iclass-unique-key = method (ic :: <implementation-class>) => (key :: <integer>);
+define inline function iclass-unique-key (ic :: <implementation-class>) => (key :: <integer>);
   iclass-dispatch-key(ic)
-end method;
+end function;
 
-define inline constant class-unique-key = method (c :: <class>) => (key :: <integer>);
+define inline function class-unique-key (c :: <class>) => (key :: <integer>);
   iclass-unique-key(class-implementation-class(c))
-end method;
+end function;
 
-define inline constant object-class-unique-key = method (x)
+define inline function object-class-unique-key (x)
  => (key :: <integer>);
   iclass-unique-key(object-implementation-class(x))
-end method;
+end function;
 
 // ---- Unsure whether this should be more error resistant or what.  See
 // how it really gets used outside of debugging.
-define constant implementation-class-from-key = method (n :: <integer>)
+define function implementation-class-from-key (n :: <integer>)
  => (v :: false-or(<implementation-class>))
   let classes :: <simple-object-vector> = *implementation-classes-by-key*;
   vector-element(classes, iclass-key-to-number(n))
-end method;
+end function;
 */
 
 
-define inline constant iclass-number-to-key = method (n :: <integer>) => (k :: <integer>)
+define inline function iclass-number-to-key (n :: <integer>) => (k :: <integer>)
   let scaled :: <integer> = ash(n, 1);
   scaled + 1000
-end method;
+end function;
 
-define inline constant iclass-key-to-number = method (k :: <integer>) => (n :: <integer>)
+define inline function iclass-key-to-number (k :: <integer>) => (n :: <integer>)
   let scaled :: <integer> = k - 1000;
   ash(scaled, -1)
-end method;
+end function;
 
 
-define constant ensure-key-to-iclass-storage = method (ninc :: <integer>) => (v :: <simple-object-vector>)
+define function ensure-key-to-iclass-storage (ninc :: <integer>) => (v :: <simple-object-vector>)
   let next-key :: <integer> = *next-unique-dispatch-key*;
   let n-needed :: <integer> = next-key + ninc;
   let keyed :: <simple-object-vector> = *implementation-classes-by-key*;
@@ -597,15 +595,15 @@ define constant ensure-key-to-iclass-storage = method (ninc :: <integer>) => (v 
   else
     keyed
   end;
-end method;
+end function;
 
 
-define constant initialize-class-dispatch-keys = method (#rest v) => ()
+define function initialize-class-dispatch-keys (#rest v) => ()
   initialize-class-dispatch-keys-vectored(v)
-end method;
+end function;
 
 
-define constant initialize-class-dispatch-keys-vectored = method (v :: <simple-object-vector>) => ()
+define function initialize-class-dispatch-keys-vectored (v :: <simple-object-vector>) => ()
   let lk :: <simple-lock> = $dispatch-key-lock;
   with-lock(lk)
     let ninc :: <integer> = size(v);
@@ -625,7 +623,7 @@ define constant initialize-class-dispatch-keys-vectored = method (v :: <simple-o
       iclass-dispatch-key(ic) := iclass-number-to-key(k)
     end for;
   end with-lock;
-end method;
+end function;
 
 
 
@@ -651,18 +649,18 @@ end method;
 //define sealed generic engine-node-entry-point-setter (v :: <raw-pointer>, e :: <engine-node>)
 // => (v :: <raw-pointer>);
 
-define inline constant engine-node-raw-integer = method (e :: <engine-node>)
+define inline function engine-node-raw-integer (e :: <engine-node>)
  => (n :: <integer>);
   // primitive-pointer-as-small-integer(engine-node-callback(e))
   engine-node-callback(e)
-end method;
+end function;
 
-define inline constant engine-node-raw-integer-setter = method (v :: <integer>, e :: <engine-node>)
+define inline function engine-node-raw-integer-setter (v :: <integer>, e :: <engine-node>)
  => (n :: <integer>);
   // engine-node-callback(e) := primitive-small-integer-as-pointer(v);
   engine-node-callback(e) := v;
   v
-end method;
+end function;
 
 
 //define macro engine-node-slot-definer
@@ -803,10 +801,9 @@ define constant discriminator$m-restp = ash(1, discriminator$v-restp);
 define constant discriminator$v-data-start = 23;
 
 
-define inline constant discriminator-argnum
-  = method (d :: <discriminator>) => (argnum :: <integer>);
-      %load-byte(discriminator$v-argnum, discriminator$s-argnum, properties(d))
-    end method;
+define inline function discriminator-argnum (d :: <discriminator>) => (argnum :: <integer>);
+  %load-byte(discriminator$v-argnum, discriminator$s-argnum, properties(d))
+end function;
 
 
 define variable *engine-node-callbacks* :: <simple-object-vector>
@@ -814,34 +811,33 @@ define variable *engine-node-callbacks* :: <simple-object-vector>
          size: ash(1, properties$s-entry-type));
 
 
-define inline constant engine-node-function-code
-  = method (d :: <engine-node>)
-      %load-byte(properties$v-entry-type,
-                 properties$s-entry-type,
-                 properties(d))
-    end method;
+define inline function engine-node-function-code (d :: <engine-node>)
+  %load-byte(properties$v-entry-type,
+             properties$s-entry-type,
+             properties(d))
+end function;
 
 
 define inline constant <dispatch-starter>
   = type-union(<generic-function>, <cache-header-engine-node>);
 
 
-define inline constant %invoke-engine-node  = method (d :: <object> /* <engine-node> */,
-                                               gf :: <generic-function>,
-                                               args :: <simple-object-vector>)
+define inline function %invoke-engine-node (d :: <object> /* <engine-node> */,
+                                            gf :: <generic-function>,
+                                            args :: <simple-object-vector>)
   primitive-engine-node-apply-with-optionals(d, gf, args)
-end method;
+end function;
 
 
-define inline constant %invoke-generic-function-mepized = method
+define inline function %invoke-generic-function-mepized
     (gf :: <generic-function>, args :: <simple-object-vector>)
   %invoke-engine-node(discriminator(gf), gf, args)
-end method;
+end function;
 
 
-define inline constant %invoke-generic-function = method (gf :: <generic-function>, args :: <simple-object-vector>)
+define inline function %invoke-generic-function (gf :: <generic-function>, args :: <simple-object-vector>)
   apply(gf, args)
-end method;
+end function;
 
 
 define function %restart-dispatch (from :: <dispatch-starter>, mepized-args :: <simple-object-vector>)
