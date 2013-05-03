@@ -766,7 +766,7 @@ define shift-methods ash (x, shift) (x-low, x-high)
 	  let result-low :: <machine-word> = machine-word-shift-right(x-high, shift);
 	  interpret-result-as-abstract-integer(result-low, result-high)
 	else
-	  // Shifting right by 2 words (or more) just propogates the sign bit ...
+	  // Shifting right by 2 words (or more) just propagates the sign bit ...
 	  if (negative?(x)) -1 else 0 end
 	end
       end

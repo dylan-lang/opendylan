@@ -85,7 +85,7 @@ define method find-red-blocks
 end method;
 
 
-/// now we need to do some dataflow to propogate this information
+/// now we need to do some dataflow to propagate this information
 
 
 define method find-real-preds (bb :: <basic-block>) => (l :: <list>)
@@ -116,7 +116,7 @@ define method should-be-red? (bb :: <basic-block>) => (b :: <boolean>)
 end method;
 
 
-define method propogate-red-blocks (pgm :: <stretchy-basic-block-vector>)
+define method propagate-red-blocks (pgm :: <stretchy-basic-block-vector>)
   let count :: <integer> = 1;
   let changed :: <boolean> = #t;
   while (changed)
@@ -428,14 +428,14 @@ end method;
 
 
 
-// this function propogates the above "with-stack" information so that for
+// this function propagates the above "with-stack" information so that for
 // every block we can tell whether it has a stack built or not
 
 // In the next function the various checks for changing a bb's stack state are
 // done one after the other. This is possible because any change of a bb's
 // stack state must adhere to the ordering nil -> #"before" -> #"after" -> #"with"
 // It may have been more efficient to work out the bb's new state from it's
-// successors and preds all in "one go" (as in propogate-red-blocks) and indeed
+// successors and preds all in "one go" (as in propagate-red-blocks) and indeed
 // at one point the code was written this way. This was ok when only #"with" and
 // nil existed, but after the addition of #"before" and #"self" (which admittedly
 // is more or less independent) the code was getting out of hand and any
@@ -443,7 +443,7 @@ end method;
 // the addition of #"constants" I decided to simplify things slightly (ie rewrite
 // the function + half of the rest of the file) _cim
 
-define method propogate-stack-state 
+define method propagate-stack-state 
     (backend :: <harp-back-end>, pgm :: <stretchy-basic-block-vector>)
   let vars = backend.variables;
   let count :: <integer> = 1;
@@ -770,7 +770,7 @@ define method optimize-leaf-case-1
     state.green-vr-vect
       := make(<simple-virtual-register-vector>, size: vr-len, fill: invalid-virtual-register());
     find-red-blocks(backend, pgm);
-    propogate-red-blocks(pgm);
+    propagate-red-blocks(pgm);
     if (split-red-green(backend, pgm))
       rename-green-vrs(backend, pgm);
       // and now we redo the dataflow stuff all over again - probably
@@ -801,7 +801,7 @@ define method optimize-leaf-case-2
     end for;
 
     find-with-stack(backend, pgm);
-    propogate-stack-state(backend, pgm);
+    propagate-stack-state(backend, pgm);
     maybe-duplicate-bbs(backend, pgm);
     insert-stack-code-etc(backend, pgm);
   end unless;

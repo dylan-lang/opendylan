@@ -331,7 +331,7 @@ define inline function ash-right (x :: <integer>, shift :: <integer>)
     let tagged-result = force-integer-tag(shift-result);
     interpret-machine-word-as-integer(tagged-result)
   else
-    // Shifting by the word size (or more) propogates the sign bit ...
+    // Shifting by the word size (or more) propagates the sign bit ...
     if (negative?(x)) -1 else 0 end
   end
 end function ash-right;
