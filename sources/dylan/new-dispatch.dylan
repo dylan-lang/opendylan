@@ -1458,37 +1458,12 @@ end function;
 
 
 
-define function handle-missed-dispatch (d :: <engine-node>,
-                                        parent :: <dispatch-starter>,
-                                        args :: <simple-object-vector>)
-  /*
-  iterate redefinition-check (i :: <integer> = size(args) - 1,
-                              updated-p :: <boolean> = #f)
-    if (i < 0)
-      if (updated-p)
-        apply(gf, args)
-      else handle-missed-dispatch-1(d, gf, args)
-      end if
-    else redefinition-check(i - 1,
-                            if (obsolete-instance?(element(args, i)))
-                              element(args, i)
-                                := update-obsolete-instance(element(args, i));
-                              #t
-                            else updated-p
-                            end if)
-    end if
-  end iterate
-   */
-  handle-missed-dispatch-1(d, parent, args)
-end function;
-
-
 define variable *dispatch-miss-count* = 0;
 define variable *dispatch-computation-count* = 0;
 
-define function handle-missed-dispatch-1 (d :: <engine-node>,
-                                          parent :: <dispatch-starter>,
-                                          args :: <simple-object-vector>)
+define function handle-missed-dispatch (d :: <engine-node>,
+                                        parent :: <dispatch-starter>,
+                                        args :: <simple-object-vector>)
   let ds :: <dispatch-state> = system-allocate-simple-instance(<dispatch-state>);
   let parent :: <dispatch-starter> = if (d == $absent-engine-node) parent else d end;
   let gf :: <generic-function> = parent-gf(parent);

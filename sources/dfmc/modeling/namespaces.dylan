@@ -2103,7 +2103,7 @@ define &module dispatch-engine
     bootstrap-allocate-discriminator,
     make-single-class-singleton-discriminator,
     *dispatch-miss-count*, *dispatch-computation-count*,
-    handle-missed-dispatch, handle-missed-dispatch-1;
+    handle-missed-dispatch;
   create
     <terminal-engine-node>,
     <discriminator>,
