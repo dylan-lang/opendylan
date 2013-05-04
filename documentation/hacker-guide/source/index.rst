@@ -12,6 +12,7 @@ Contents:
    build-system
    compiler-internals
    compiler-design
+   method-dispatch
    runtime/index
    documentation
    glossary
