@@ -15,8 +15,8 @@ define function as-hit-count (x :: <profiling-call-site-cache-header-engine-node
     as(<integer>, %profile-count-low(x))
   else
     make(<double-integer>,
-	 low:  %profile-count-low(x),
-	 high: %profile-count-high(x))
+         low:  %profile-count-low(x),
+         high: %profile-count-high(x))
   end if
 end function;
 
@@ -55,14 +55,14 @@ define function walk-all-libraries
     (top-lib :: <library>, walk-library :: <function>)
   let walked = make(<table>);
   local method walk-all-libraries*(lib :: <library>, walked :: <object-table>)
-	  unless (element(walked, lib, default: #f))
-	    walk-library(lib);
-	    element(walked, lib) := #t;
-	    for (used-library* in used-libraries(lib))
-	      walk-all-libraries*(used-library(used-library*), walked)
-	    end for;
-	  end unless;
-	end method;
+          unless (element(walked, lib, default: #f))
+            walk-library(lib);
+            element(walked, lib) := #t;
+            for (used-library* in used-libraries(lib))
+              walk-all-libraries*(used-library(used-library*), walked)
+            end for;
+          end unless;
+        end method;
   walk-all-libraries*(top-lib, make(<table>))
 end function;
 
@@ -82,8 +82,8 @@ define function dispatch-walk-library-generics
   end for;
 end function;
 
-// define function dispatch-walk-all-generic-trees 
-//     (top-lib :: <library>, f :: <function>, 
+// define function dispatch-walk-all-generic-trees
+//     (top-lib :: <library>, f :: <function>,
 //      generics-walked :: <object-table>, caches-walked :: <object-table>)
 //   dispatch-walk-all-generics
 //     (top-lib, rcurry(dispatch-walk-generic-tree, f, caches-walked), generics-walked)
@@ -93,7 +93,7 @@ define function make-type-vector (size :: <integer>) => (res :: <simple-object-v
   make(<simple-object-vector>, size: size, fill: <object>);
 end function;
 
-// define function dispatch-walk-generic-tree 
+// define function dispatch-walk-generic-tree
 //     (g :: <generic-function>, f :: <function>, caches-walked :: <object-table>)
 //   let dws :: <dispatch-walker-state> = make(<dispatch-walker-state>);
 //   dws-arg-types(dws)     := make-type-vector(function-number-required(g));
@@ -109,14 +109,14 @@ end function;
 // end function;
 
 define function dispatch-walk-all-call-sites
-    (top-lib :: <library>, f :: <function>, 
+    (top-lib :: <library>, f :: <function>,
      generics-walked :: <object-table>, caches-walked :: <object-table>)
   walk-all-libraries
     (top-lib, rcurry(dispatch-walk-library-call-sites, f, generics-walked, caches-walked));
 end function;
 
 define function dispatch-walk-library-call-sites
-    (lib :: <library>, f :: <function>, 
+    (lib :: <library>, f :: <function>,
      generics-walked :: <object-table>, caches-walked :: <object-table>)
   let dws :: <dispatch-walker-state> = make(<dispatch-walker-state>);
   for (g :: <generic-function> in library-defined-generics(lib))
@@ -138,31 +138,31 @@ define function dispatch-walk-library-call-sites
 
       let cache = %gf-cache(g);
       when (instance?(cache, <gf-cache-info>))
-	for (user in gf-cache-info-users(cache))
-	  when (user & ~element(caches-walked, cache-header-engine-node-next(user), default: #f))
-	    element(caches-walked, user) := #t;
-	    remove-all-keys!(dws-method-weights(dws));
-	    let parent = cache-header-engine-node-parent(user);
-            let profiling-parent? 
-	      = instance?(parent, <profiling-call-site-cache-header-engine-node>);
-	    when (profile-all-terminal-engine-nodes?() | profiling-parent?)
-	      let (id, library)
-		= if (profiling-parent?)
-		    values(profiling-call-site-cache-header-engine-node-id(parent),
-			   profiling-call-site-cache-header-engine-node-library(parent))
-		  else 
-		    values(-1, #f) // shared
-		  end if;
-	      dws-id(dws)             := id;
-	      dws-library(dws)        := library;
-	      dws-size(dws)           := 0;
-	      dws-cache-attempts(dws) := 0;
-	      dws-cache-hits(dws)     := 0;
-	      dispatch-walker(dws, user, identity, 0, 0);
-	      f(dws);
-	    end when;
-	  end when;
-	end for;
+        for (user in gf-cache-info-users(cache))
+          when (user & ~element(caches-walked, cache-header-engine-node-next(user), default: #f))
+            element(caches-walked, user) := #t;
+            remove-all-keys!(dws-method-weights(dws));
+            let parent = cache-header-engine-node-parent(user);
+            let profiling-parent?
+              = instance?(parent, <profiling-call-site-cache-header-engine-node>);
+            when (profile-all-terminal-engine-nodes?() | profiling-parent?)
+              let (id, library)
+                = if (profiling-parent?)
+                    values(profiling-call-site-cache-header-engine-node-id(parent),
+                           profiling-call-site-cache-header-engine-node-library(parent))
+                  else
+                    values(-1, #f) // shared
+                  end if;
+              dws-id(dws)             := id;
+              dws-library(dws)        := library;
+              dws-size(dws)           := 0;
+              dws-cache-attempts(dws) := 0;
+              dws-cache-hits(dws)     := 0;
+              dispatch-walker(dws, user, identity, 0, 0);
+              f(dws);
+            end when;
+          end when;
+        end for;
       end when;
     end unless;
   end for
@@ -170,7 +170,7 @@ end function;
 
 
 define function dispatch-walk-all-engine-nodes
-    (top-lib :: <library>, f :: <function>, 
+    (top-lib :: <library>, f :: <function>,
      generics-walked :: <object-table>, caches-walked :: <object-table>)
   walk-all-libraries
     (top-lib, rcurry(dispatch-walk-library-engine-nodes, f, generics-walked, caches-walked));
@@ -196,7 +196,7 @@ end method;
 
 
 define function dispatch-walk-library-engine-nodes
-    (lib :: <library>, f :: <function>, 
+    (lib :: <library>, f :: <function>,
      generics-walked :: <object-table>, caches-walked :: <object-table>)
   let dws :: <dispatch-walker-state> = make(<dispatch-walker-state>);
   for (g :: <generic-function> in library-defined-generics(lib))
@@ -207,24 +207,24 @@ define function dispatch-walk-library-engine-nodes
       dispatch-walker(dws, tree, f, 0, 0);
       let cache = %gf-cache(g);
       when (instance?(cache, <gf-cache-info>))
-	for (user in gf-cache-info-users(cache))
-	  when (user)
-	    remove-all-keys!(dws-method-weights(dws));
-	    let cached-root = cache-header-engine-node-next(user);
-	    unless (element(caches-walked, cached-root, default: #f))
-	      caches-walked[cached-root] := #t;
-	      dispatch-walker(dws, user, f, 0, 0);
-	    end unless;		
-	  end when;
-	end for;
+        for (user in gf-cache-info-users(cache))
+          when (user)
+            remove-all-keys!(dws-method-weights(dws));
+            let cached-root = cache-header-engine-node-next(user);
+            unless (element(caches-walked, cached-root, default: #f))
+              caches-walked[cached-root] := #t;
+              dispatch-walker(dws, user, f, 0, 0);
+            end unless;
+          end when;
+        end for;
       end when;
     end unless;
   end for;
 end function;
 
 
-define generic dispatch-walker 
-    (dws :: <dispatch-walker-state>, object, 
+define generic dispatch-walker
+    (dws :: <dispatch-walker-state>, object,
      f :: <function>, cost :: <integer>, hits :: <hit-count>)
  => (hits :: <abstract-integer>);
 
@@ -233,16 +233,16 @@ define macro with-dispatch-walking-type
 
     { with-dispatch-walking-type (?dws:expression, ?type:expression, ?argnum:expression)
         ?:body
-      end } 
+      end }
  => { let _dws_ = ?dws;
       let _type_ = ?type;
       let _argnum_ = ?argnum;
       let _otype_ = dws-arg-types(_dws_)[_argnum_];
       block ()
-	dws-arg-types(_dws_)[_argnum_] := _type_;
-	?body;
+        dws-arg-types(_dws_)[_argnum_] := _type_;
+        ?body;
       afterwards
-	dws-arg-types(_dws_)[_argnum_] := _otype_;
+        dws-arg-types(_dws_)[_argnum_] := _otype_;
       end block }
 
 end macro;
@@ -256,10 +256,10 @@ define macro with-preserved-dispatch-walking-types
       let _otypes_ = dws-arg-types(_dws_);
       let _ntypes_ = copy-sequence(_otypes_);
       block ()
-	dws-arg-types(_dws_) := _ntypes_;
-	?body;
+        dws-arg-types(_dws_) := _ntypes_;
+        ?body;
       afterwards
-	dws-arg-types(_dws_) := _otypes_;
+        dws-arg-types(_dws_) := _otypes_;
       end block }
 
 end macro;
@@ -267,7 +267,7 @@ end macro;
 
 
 define method dispatch-walker
-    (dws :: <dispatch-walker-state>, e :: <engine-node>, 
+    (dws :: <dispatch-walker-state>, e :: <engine-node>,
      f :: <function>, cost :: <integer>, hits :: <hit-count>)
  => (hits :: <abstract-integer>)
   f(e);
@@ -275,19 +275,19 @@ define method dispatch-walker
 end method;
 
 
-define method dispatch-walker 
-    (dws :: <dispatch-walker-state>, m :: <method>, 
+define method dispatch-walker
+    (dws :: <dispatch-walker-state>, m :: <method>,
      f :: <function>, cost :: <integer>, hits :: <hit-count>)
  => (hits :: <abstract-integer>)
   let mwt :: <table> = dws-method-weights(dws);
-  let mw :: <dws-method-weight> 
+  let mw :: <dws-method-weight>
     = element(mwt, m, default: #f) | (mwt[m] := make(<dws-method-weight>));
   if (hits)
     let hits :: <abstract-integer> = hits;
     dmw-hits(mw) := generic/+(dmw-hits(mw), hits);
     dmw-weighted-hits(mw) := generic/+(dmw-weighted-hits(mw), generic/*(hits, cost));
     hits
-  else 
+  else
     0
   end if;
 end method;
@@ -300,13 +300,13 @@ define function instance-size (e) => (res :: <integer>)
   if (rep-slotd)
     let size-slotd = size-slot-descriptor(rep-slotd);
     let get-size   = slot-getter(size-slotd);
-    req-size + get-size(e) 
-  else 
+    req-size + get-size(e)
+  else
     req-size
   end if
 end function;
 
-define method dispatch-walker 
+define method dispatch-walker
     (dws :: <dispatch-walker-state>, e :: <slot-access-engine-node>,
      f :: <function>, cost :: <integer>, hits :: <hit-count>)
  => (hits :: <abstract-integer>)
@@ -314,53 +314,53 @@ define method dispatch-walker
   let type = dws-arg-types(dws)[if (instance?(e, <slot-getter-engine-node>)) 0 else 1 end];
   let ic :: <implementation-class>
     = select (type by instance?)
-	<singleton>            => object-implementation-class(singleton-object(type));
-	<class>                => class-implementation-class(type);
-	<implementation-class> => type;
+        <singleton>            => object-implementation-class(singleton-object(type));
+        <class>                => class-implementation-class(type);
+        <implementation-class> => type;
       end select;
   // dws-size(dws) := dws-size(dws) + instance-size(e); // SHARED
   let cic :: <implementation-class>
     = iterate find-any-concrete-subclass (ic :: <implementation-class> = ic)
          if (class-abstract?(ic))
-	   block (return)
-	     for (sc in direct-subclasses(ic))
-	       let csc = find-any-concrete-subclass(class-implementation-class(sc));
-	       csc & return(csc);
-	     end for;
-	     #f
-	   end block;
-         else	     
-	   ic
-	 end if
+           block (return)
+             for (sc in direct-subclasses(ic))
+               let csc = find-any-concrete-subclass(class-implementation-class(sc));
+               csc & return(csc);
+             end for;
+             #f
+           end block;
+         else
+           ic
+         end if
       end iterate;
-  let offset :: <integer> = callback-slot-engine-node-offset(e); 
+  let offset :: <integer> = callback-slot-engine-node-offset(e);
   let sd :: false-or(<slot-descriptor>)
     = select (e by instance?)
-	<repeated-slot-access-engine-node> =>
-	  repeated-slot-descriptor(cic);
-	<instance-slot-engine-node> =>
-	  instance-slot-descriptors(cic)[offset];
-	<class-slot-engine-node> =>
-	  tail(class-slot-storage(cic)[offset]);
+        <repeated-slot-access-engine-node> =>
+          repeated-slot-descriptor(cic);
+        <instance-slot-engine-node> =>
+          instance-slot-descriptors(cic)[offset];
+        <class-slot-engine-node> =>
+          tail(class-slot-storage(cic)[offset]);
       end select;
   let methods
     = generic-function-methods(dws-generic(dws));
   let methood-index
     = find-key(methods,
-	       method (m :: <method>)
-		 instance?(m, <accessor-method>)
-		   & sd == method-slot-descriptor(m)
-	       end method);
+               method (m :: <method>)
+                 instance?(m, <accessor-method>)
+                   & sd == method-slot-descriptor(m)
+               end method);
   if (methood-index)
     dispatch-walker(dws, methods[methood-index], f, cost, hits)
-  else 
+  else
     0
   end if
 end method;
 
 
 define method dispatch-walker
-    (dws :: <dispatch-walker-state>, e :: <single-method-engine-node>, 
+    (dws :: <dispatch-walker-state>, e :: <single-method-engine-node>,
      f :: <function>, cost :: <integer>, hits :: <hit-count>)
  => (hits :: <abstract-integer>)
   f(e);
@@ -405,7 +405,7 @@ define method dispatch-walker
      f :: <function>, cost :: <integer>, hits :: <hit-count>)
  => (hits :: <abstract-integer>)
   f(e);
-  dws-size(dws) := dws-size(dws) + instance-size(e); 
+  dws-size(dws) := dws-size(dws) + instance-size(e);
   if (instance?(e, <monomorphic-by-class-discriminator>))
     let k = monomorphic-by-class-discriminator-key(e);
     with-dispatch-walking-type (dws, implementation-class-from-key(k), discriminator-argnum(e))
@@ -415,28 +415,28 @@ define method dispatch-walker
       incf(dws-cache-hits(dws), my-hits);
       my-hits
     end
-  else    
+  else
     let ncost :: <integer> = cost + 1;
     let my-hits :: <abstract-integer> = 0;
     dws-size(dws) := dws-size(dws) + ckd-size(e) + 1; // inlined vector
     for (i from 0 below ckd-size(e) by 2)
       let k = ckd-ref(e, i);
       if (k ~== $ckd-empty)
-	with-dispatch-walking-type (dws, implementation-class-from-key(k), discriminator-argnum(e))
-	  let x = ckd-ref(e, i + 1);
-	  incf(my-hits, dispatch-walker(dws, x, f, ncost, #f))
-	end
+        with-dispatch-walking-type (dws, implementation-class-from-key(k), discriminator-argnum(e))
+          let x = ckd-ref(e, i + 1);
+          incf(my-hits, dispatch-walker(dws, x, f, ncost, #f))
+        end
       end if
     end for;
     incf(dws-cache-attempts(dws), my-hits);
-    incf(dws-cache-hits(dws), 
-	 if (instance?(e, <linear-class-keyed-discriminator>)) lckd-hits(e) else 0 end if);      
+    incf(dws-cache-hits(dws),
+         if (instance?(e, <linear-class-keyed-discriminator>)) lckd-hits(e) else 0 end if);
     my-hits
   end if
 end method;
 
 // define method dispatch-walker (dws :: <dispatch-walker-state>, e :: <monomorphic-by-class-discriminator>,
-// 			       cost :: <integer>, hits :: <hit-count>)
+//                                cost :: <integer>, hits :: <hit-count>)
 //  => ()
 //   dws-size(dws) := dws-size(dws) + 1;
 //   let k = monomorphic-by-class-discriminator-key(e);
@@ -454,22 +454,22 @@ define method dispatch-walker
      f :: <function>, cost :: <integer>, hits :: <hit-count>)
  => (hits :: <abstract-integer>)
   f(e);
-  dws-size(dws) := dws-size(dws) + instance-size(e) + ckd-size(e) + 1; 
+  dws-size(dws) := dws-size(dws) + instance-size(e) + ckd-size(e) + 1;
   let ncost :: <integer> = cost + 1;
   let my-hits :: <abstract-integer> = 0;
   for (i from 0 below ckd-size(e) by 2)
     let k = ckd-ref(e, i);
     if (k ~== $ckd-empty)
       with-dispatch-walking-type (dws, object-implementation-class(implementation-class-from-key(k)),
-				  discriminator-argnum(e))
-	incf(my-hits, dispatch-walker(dws, ckd-ref(e, i + 1), f, ncost, #f))
+                                  discriminator-argnum(e))
+        incf(my-hits, dispatch-walker(dws, ckd-ref(e, i + 1), f, ncost, #f))
       end
     end if
   end for;
   incf(my-hits, dispatch-walker(dws, class-keyed-discriminator-default(e), f, cost + 1, #f));
   incf(dws-cache-attempts(dws), my-hits);
-  incf(dws-cache-hits(dws), 
-       if (instance?(e, <linear-class-keyed-discriminator>)) lckd-hits(e) else 0 end if);      
+  incf(dws-cache-hits(dws),
+       if (instance?(e, <linear-class-keyed-discriminator>)) lckd-hits(e) else 0 end if);
   my-hits
 end method;
 
@@ -483,7 +483,7 @@ define method dispatch-walker
   let v :: <simple-object-vector> = singleton-discriminator-table(e);
   let ncost :: <integer> = cost + 1;
   let my-hits :: <abstract-integer> = 0;
-  dws-size(dws) := dws-size(dws) + instance-size(e) + size(v) + 1; 
+  dws-size(dws) := dws-size(dws) + instance-size(e) + size(v) + 1;
   for (i from 0 below size(v) by 2)
     let k = v[i];
     unless (k == $absent-engine-node) // yeah, that's what goes in the key slot (bad idea though).
@@ -491,8 +491,8 @@ define method dispatch-walker
     end unless
   end for;
   incf(dws-cache-attempts(dws), my-hits);
-  incf(dws-cache-hits(dws), 
-       if (instance?(e, <linear-singleton-discriminator>)) lsd-hits(e) else 0 end if);      
+  incf(dws-cache-hits(dws),
+       if (instance?(e, <linear-singleton-discriminator>)) lsd-hits(e) else 0 end if);
   my-hits
 end method;
 
@@ -513,10 +513,10 @@ define method cache-info-size (g :: <generic-function>) => (res :: <integer>)
     let cache-info = %gf-cache(g);
     if (instance?(cache-info, <gf-cache-info>))
       instance-size(cache-info) + instance-size(gf-cache-info-users(cache-info))
-    else 
+    else
       0
     end if
-  else 
+  else
     0
   end if
 end method;
@@ -531,7 +531,7 @@ define method dispatch-walker
  => (hits :: <abstract-integer>)
   f(e);
   unless (debug-name(object-class(e)) == #"<common-root-cache-header-engine-node>")
-    dws-size(dws) := dws-size(dws) + cache-header-size(e); 
+    dws-size(dws) := dws-size(dws) + cache-header-size(e);
   end unless;
   dispatch-walker(dws, cache-header-engine-node-next(e), f, cost, hits)
 end method;

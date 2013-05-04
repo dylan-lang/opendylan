@@ -45,7 +45,7 @@ define class <application-profile-results> (<profile-weight-and-size-and-cache-a
   constant slot profile-generic-results :: <object-table> = make(<table>);
   constant slot profile-walked-generics :: <object-table> = make(<table>);
   constant slot profile-walked-caches :: <object-table>   = make(<table>);
-  constant slot profile-shared-generic-caches? :: <boolean>, 
+  constant slot profile-shared-generic-caches? :: <boolean>,
     required-init-keyword: shared-generic-caches?:;
 end class;
 
@@ -80,9 +80,9 @@ end method;
 
 define class <library-profile-results> (<profile-weight-and-size-and-cache-and-poly>)
   constant slot profile-generic-results :: <object-table> = make(<table>);
-  constant slot profile-number-static-calls :: <integer>, 
+  constant slot profile-number-static-calls :: <integer>,
     required-init-keyword: number-static-calls:;
-  constant slot profile-number-dynamic-calls :: <integer>, 
+  constant slot profile-number-dynamic-calls :: <integer>,
     required-init-keyword: number-dynamic-calls:;
 end class;
 
@@ -129,7 +129,7 @@ define method call-site-library-name (profile :: <call-site-profile-result>) => 
   let lib = call-site-library(profile);
   if (lib)
     namespace-name(lib)
-  else 
+  else
     "shared"
   end if
 end method;
@@ -152,14 +152,14 @@ end method;
 
 define method record-profile-result (app-result :: <application-profile-results>, dws :: <dispatch-walker-state>)
   let all-shared? = #f;
-  let library 
+  let library
     = dws-library(dws);
   let library-result
     = element(profile-library-results(app-result), library, default: #f)
-        | (element(profile-library-results(app-result), dws-library(dws)) 
-	     := make(<library-profile-results>, 
-		     number-static-calls:  if (library) library-number-static-dispatches(library)  else 0 end,
-		     number-dynamic-calls: if (library) library-number-dynamic-dispatches(library) else 0 end));
+        | (element(profile-library-results(app-result), dws-library(dws))
+             := make(<library-profile-results>,
+                     number-static-calls:  if (library) library-number-static-dispatches(library)  else 0 end,
+                     number-dynamic-calls: if (library) library-number-dynamic-dispatches(library) else 0 end));
   let generic-result
     = element(profile-generic-results(library-result), dws-generic(dws), default: #f)
         | (element(profile-generic-results(library-result), dws-generic(dws)) := make(<generic-profile-result>));
@@ -191,8 +191,8 @@ define method record-profile-result (app-result :: <application-profile-results>
   profile-poly(generic-result) := profile-poly(generic-result) + 1;
   for (method-weight keyed-by function in dws-method-weights(dws))
     method-results[function]
-      := make(<profile-weight>, 
-	      hits: dmw-hits(method-weight), weighted-hits: dmw-weighted-hits(method-weight));
+      := make(<profile-weight>,
+              hits: dmw-hits(method-weight), weighted-hits: dmw-weighted-hits(method-weight));
     hit? := hit? | dmw-hits(method-weight) > 0;
     add-method-weight!(call-site-result, method-weight);
     add-method-weight!(generic-result, method-weight);
@@ -233,17 +233,17 @@ define method decache-generic (g :: <generic-function>) => ()
     let cache :: <gf-cache-info> = cache;
     for (user in gf-cache-info-users(cache))
       if (user)
-	// let parent = cache-header-engine-node-parent(user);
-	// let profiling-parent? 
-	//   = instance?(parent, <profiling-call-site-cache-header-engine-node>);
-	// when (profiling-parent?)
-	//   format-out("  %= %=\n",
-	// 	     profiling-call-site-cache-header-engine-node-id(parent),
-	// 	     namespace-name(profiling-call-site-cache-header-engine-node-library(parent)));
-	// end when;
-	let user :: <cache-header-engine-node> = user;
-	cache-header-engine-node-next(user) := $absent-engine-node;
-      end 
+        // let parent = cache-header-engine-node-parent(user);
+        // let profiling-parent?
+        //   = instance?(parent, <profiling-call-site-cache-header-engine-node>);
+        // when (profiling-parent?)
+        //   format-out("  %= %=\n",
+        //              profiling-call-site-cache-header-engine-node-id(parent),
+        //              namespace-name(profiling-call-site-cache-header-engine-node-library(parent)));
+        // end when;
+        let user :: <cache-header-engine-node> = user;
+        cache-header-engine-node-next(user) := $absent-engine-node;
+      end
     end for
   end if
 end method;
@@ -328,7 +328,7 @@ define method walk-classes (f :: <function>)
       seen?[c] := #t;
       f(c);
       for (sc :: <class> in direct-subclasses(c))
-	search(sc);
+        search(sc);
       end for;
     end unless;
   end iterate;
@@ -343,9 +343,9 @@ end method;
 define method number-subclass-dependent-generics () => (res :: <integer>)
   let n :: <integer> = 0;
   local method number-dependent-generics (c :: <class>) => (res :: <integer>)
-	  let ic = class-implementation-class(c);
-	  size(iclass-subclass-dependent-generics(ic))
-	end method;
+          let ic = class-implementation-class(c);
+          size(iclass-subclass-dependent-generics(ic))
+        end method;
   walk-classes(method (c :: <class>) n := n + number-dependent-generics(c) end);
   n
 end method;
@@ -438,22 +438,22 @@ define method print-dispatch-statistics
                    save-float-divide(profile-poly(weight), profile-number-call-sites(weight)))
           end method,
           method print-number-calls (weight :: <profile-weight-and-size-and-cache-and-poly>)
-	    let ct-s-calls = profile-number-static-calls(weight);
-	    let ct-d-calls = profile-number-dynamic-calls(weight);
+            let ct-s-calls = profile-number-static-calls(weight);
+            let ct-d-calls = profile-number-dynamic-calls(weight);
             format(stream, "CT-S-CALLS %= CT-D-CALLS %= S/D %=", ct-s-calls, ct-d-calls,
                    save-float-divide(ct-s-calls, ct-d-calls + ct-s-calls));
-	    local method rt-s-call (weight :: <profile-weight>) => (res :: <integer>)
-		    if (profile-hits(weight) > 0 & profile-weighted-hits(weight) = 0)
-		      1
-		    else 
-		      0
-		    end if
-		  end method;
-	    let rt-s-calls = map-profile-call-sites(rt-s-call, weight);
-	    let rt-d-calls = map-profile-call-sites(method (x) 1 end, weight);
-            format(stream, " RT-S-CALLS %= (%=) E-RT-S/D %=", 
-		   rt-s-calls, rt-d-calls,
-		   save-float-divide(ct-s-calls + rt-s-calls, ct-d-calls + ct-s-calls));
+            local method rt-s-call (weight :: <profile-weight>) => (res :: <integer>)
+                    if (profile-hits(weight) > 0 & profile-weighted-hits(weight) = 0)
+                      1
+                    else
+                      0
+                    end if
+                  end method;
+            let rt-s-calls = map-profile-call-sites(rt-s-call, weight);
+            let rt-d-calls = map-profile-call-sites(method (x) 1 end, weight);
+            format(stream, " RT-S-CALLS %= (%=) E-RT-S/D %=",
+                   rt-s-calls, rt-d-calls,
+                   save-float-divide(ct-s-calls + rt-s-calls, ct-d-calls + ct-s-calls));
           end method,
           method print-weighted-result (weight :: <profile-weight>, full?)
             format(stream, "%s%= %s%=",
@@ -467,11 +467,11 @@ define method print-dispatch-statistics
             end when;
           end method,
           method print-weighted-and-cache-result (weight :: <profile-weight-and-size-and-cache>, full?)
-	    print-weighted-result(weight, full?);
-	    when (full?)
-	      format(stream, " C-HITS %= C-TRIES %=",
-		     profile-cache-hits(weight),
-		     profile-cache-attempts(weight));
+            print-weighted-result(weight, full?);
+            when (full?)
+              format(stream, " C-HITS %= C-TRIES %=",
+                     profile-cache-hits(weight),
+                     profile-cache-attempts(weight));
               format(stream, " HIT-RATE %=",
                      save-float-divide(profile-cache-hits(weight), profile-cache-attempts(weight)));
             end when;
@@ -498,92 +498,92 @@ define method print-dispatch-statistics
               (generic :: <generic-function>, call-site-results :: <stretchy-object-vector>,
                seen-methods :: <object-table>)
             for (call-site-result in sort(call-site-results, test: compare-weights))
-	      when (~hits-only? | (hits-only? & profile-hit?(call-site-result)))
-		format(stream, "  ");
-		when (full?)
-		  format(stream, "CALL-SITE %s ",
-			 call-site-library-name(call-site-result));
-		end when;
-		unless (call-site-id(call-site-result) == -1)
-		  format(stream, "%= ", call-site-id(call-site-result));
-		end unless;
-		when (full?)
-		  format(stream, "(");
-		  print-types(call-site-types(call-site-result), ~full?);
-		  format(stream, ") ");
-		  print-size(call-site-result);
-		  format(stream, " POLY %d ", size(call-site-method-profile-results(call-site-result)));
-		end when;
-		print-weighted-and-cache-result(call-site-result, full?);
-		format(stream, "\n");
-		let method-results = call-site-method-profile-results(call-site-result);
-		for (methood in sorted-weight-keys(method-results))
-		  seen-methods[methood] := #t;
-		  let method-result = method-results[methood];
-		  when (~hits-only? | (hits-only? & profile-hit?(method-result)))
-		    if (full?)
-		      format(stream, "    (");
-		      print-types(function-specializers(methood), ~full?);
-		      format(stream, ") ");
-		    else
-		      format(stream, "    %d ", find-key(generic-function-methods(generic), curry(\==, methood)));
-		    end if;
-		    print-weighted-result(method-result, full?);
-		    format(stream, "\n");
-		  end when;
-		end for;
-	      end when;
-	    end for;
+              when (~hits-only? | (hits-only? & profile-hit?(call-site-result)))
+                format(stream, "  ");
+                when (full?)
+                  format(stream, "CALL-SITE %s ",
+                         call-site-library-name(call-site-result));
+                end when;
+                unless (call-site-id(call-site-result) == -1)
+                  format(stream, "%= ", call-site-id(call-site-result));
+                end unless;
+                when (full?)
+                  format(stream, "(");
+                  print-types(call-site-types(call-site-result), ~full?);
+                  format(stream, ") ");
+                  print-size(call-site-result);
+                  format(stream, " POLY %d ", size(call-site-method-profile-results(call-site-result)));
+                end when;
+                print-weighted-and-cache-result(call-site-result, full?);
+                format(stream, "\n");
+                let method-results = call-site-method-profile-results(call-site-result);
+                for (methood in sorted-weight-keys(method-results))
+                  seen-methods[methood] := #t;
+                  let method-result = method-results[methood];
+                  when (~hits-only? | (hits-only? & profile-hit?(method-result)))
+                    if (full?)
+                      format(stream, "    (");
+                      print-types(function-specializers(methood), ~full?);
+                      format(stream, ") ");
+                    else
+                      format(stream, "    %d ", find-key(generic-function-methods(generic), curry(\==, methood)));
+                    end if;
+                    print-weighted-result(method-result, full?);
+                    format(stream, "\n");
+                  end when;
+                end for;
+              end when;
+            end for;
           end method,
           method print-generic-results (generic-results :: <table>)
             let seen-methods = make(<table>);
             for (generic in sorted-weight-keys(generic-results))
               let generic-results = generic-results[generic];
-	      when (~hits-only? | (hits-only? & profile-hit?(generic-results)))
-		format(stream, "\n");
-		when (full?)
-		  format(stream, "%sGENERIC ",
-			 if (generic-function-sealed?(generic)) "SEALED " else "OPEN " end);
-		end when;
-		format(stream, "%s", debug-name(generic));
-		when (full?)
-		 format(stream, " ");
-		  print-size(generic-results);
-		  format(stream, " ");
-		  print-poly(generic-results);
-		end when;
-		format(stream, " ");
-		print-weighted-and-cache-result(generic-results, full?);
-		format(stream, "\n");
-		print-call-site-results(generic, generic-call-site-profile-results(generic-results), seen-methods);
-		if (full?)
-		  unless (hits-only? | ~uncalled-methods?)
-		    let uncalled? = #t;
-		    for (methood in generic-function-methods(generic))
-		      unless (element(seen-methods, methood, default: #f))
-			when (uncalled?)
-			  format(stream, "  UNCALLED METHODS\n");
-			  uncalled? := #f;
-			end when;
-			format(stream, "    (");
-			print-types(function-specializers(methood), ~full?);
-			format(stream, ")\n");
-		      end unless;
-		    end for;
-		  end unless;
-		else
-		  format(stream, "  -\n");
-		  for (methood in generic-function-methods(generic), i :: <integer> from 0)
-		    when (element(seen-methods, methood, default: #f))
-		      format(stream, "  %d (", i);
-		      print-types(function-specializers(methood), ~full?);
-		      format(stream, ")\n");
-		    end when;
-		  end for;
-		end if;
-		remove-all-keys!(seen-methods);
-	      end when;
-	    end for;
+              when (~hits-only? | (hits-only? & profile-hit?(generic-results)))
+                format(stream, "\n");
+                when (full?)
+                  format(stream, "%sGENERIC ",
+                         if (generic-function-sealed?(generic)) "SEALED " else "OPEN " end);
+                end when;
+                format(stream, "%s", debug-name(generic));
+                when (full?)
+                 format(stream, " ");
+                  print-size(generic-results);
+                  format(stream, " ");
+                  print-poly(generic-results);
+                end when;
+                format(stream, " ");
+                print-weighted-and-cache-result(generic-results, full?);
+                format(stream, "\n");
+                print-call-site-results(generic, generic-call-site-profile-results(generic-results), seen-methods);
+                if (full?)
+                  unless (hits-only? | ~uncalled-methods?)
+                    let uncalled? = #t;
+                    for (methood in generic-function-methods(generic))
+                      unless (element(seen-methods, methood, default: #f))
+                        when (uncalled?)
+                          format(stream, "  UNCALLED METHODS\n");
+                          uncalled? := #f;
+                        end when;
+                        format(stream, "    (");
+                        print-types(function-specializers(methood), ~full?);
+                        format(stream, ")\n");
+                      end unless;
+                    end for;
+                  end unless;
+                else
+                  format(stream, "  -\n");
+                  for (methood in generic-function-methods(generic), i :: <integer> from 0)
+                    when (element(seen-methods, methood, default: #f))
+                      format(stream, "  %d (", i);
+                      print-types(function-specializers(methood), ~full?);
+                      format(stream, ")\n");
+                    end when;
+                  end for;
+                end if;
+                remove-all-keys!(seen-methods);
+              end when;
+            end for;
           end method,
           method print-library-results (library, library-results)
             let app-stream = stream;
@@ -591,13 +591,13 @@ define method print-dispatch-statistics
             block ()
               stream := current-stream(app-stream, namespace-name(library));
               format(stream, "LIBRARY %s ", namespace-name(library));
-	      when (app-details?)
-		format(stream, "GENERICS %= ", number-of-generics(library-results));
-		print-number-calls(library-results);
-		format(stream, " ");
-	      end when;
-	      print-poly(library-results);
-	      format(stream, " ");
+              when (app-details?)
+                format(stream, "GENERICS %= ", number-of-generics(library-results));
+                print-number-calls(library-results);
+                format(stream, " ");
+              end when;
+              print-poly(library-results);
+              format(stream, " ");
               print-size(library-results);
               format(stream, " ");
               print-weighted-and-cache-result(library-results, #t);
@@ -619,11 +619,11 @@ define method print-dispatch-statistics
       end unless;
       format(stream, "APPLICATION ");
       when (app-details?)
-	format(stream, "GENERICS %= ", number-of-generics(app-results));
-	format(stream, "CLASSES %= DEP-GFS %= ",
-	       number-of-classes(), number-subclass-dependent-generics());
-	print-number-calls(app-results);
-	format(stream, " ");
+        format(stream, "GENERICS %= ", number-of-generics(app-results));
+        format(stream, "CLASSES %= DEP-GFS %= ",
+               number-of-classes(), number-subclass-dependent-generics());
+        print-number-calls(app-results);
+        format(stream, " ");
       end when;
       print-poly(app-results);
       format(stream, " ");
@@ -635,13 +635,13 @@ define method print-dispatch-statistics
     unless (app-results-only?)
       format(stream, "\n");
       if (library | by-library?)
-	for (library in sorted-library-keys(library, library-results))
-	  when (library)
-	    print-library-results(library, library-results[library]);
-	  end when;
-	end for;
+        for (library in sorted-library-keys(library, library-results))
+          when (library)
+            print-library-results(library, library-results[library]);
+          end when;
+        end for;
       else
-	print-generic-results(profile-generic-results(app-results));
+        print-generic-results(profile-generic-results(app-results));
       end if;
     end unless;
   cleanup
