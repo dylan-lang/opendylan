@@ -8,12 +8,6 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-///// Definitions of the canonical immediates #f and #t.
-//    These must agree with runtime.c etc...
-
-define constant $runtime-canonical-TRUE =  as-remote-value(7);
-define constant $runtime-canonical-FALSE = as-remote-value(3);
-
 ///// <STATIC-OBJECT-DIRECTORY>
 //    A class used to encapsulate information about statically-heaped
 //    objects created by the dylan library, and used by the debugger
@@ -45,7 +39,6 @@ define class <static-object-directory> (<object>)
   slot canonical-false-object :: <remote-value> = as-remote-value(0);
   slot canonical-empty-list-object :: <remote-value> = as-remote-value(0);
   slot canonical-unbound-object :: <remote-value> = as-remote-value(0);
-  slot booleans-tagged? :: <boolean> = #f;
 end class;
 
 
@@ -431,15 +424,6 @@ define method initialize-static-objects
     lookup-static-object(application, "%empty-list", "internal");
   sod.canonical-unbound-object := 
     lookup-static-object(application, "%unbound", "internal");
-
-  // If the #t and #f objects were not overwritten by %true and %false
-  // symbolic addresses, then we must be living in a tagged boolean
-  // world.
-
-  if ((sod.canonical-true-object = $runtime-canonical-TRUE) &
-      (sod.canonical-false-object = $runtime-canonical-FALSE))
-    sod.booleans-tagged? := #t
-  end if;
 end method;
 
 

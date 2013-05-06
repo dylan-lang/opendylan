@@ -1115,7 +1115,6 @@ define method dylan-object-size
   select (tag)
     $dylan-tag-integer => values(4, 0, 0);
     $dylan-tag-character => values(4, 0, 0);
-    $dylan-tag-boolean => values(4, 0, 0);
     $dylan-tag-pointer =>
       let (wrapper, valid?) = read-instance-header(application, instance);
       if (valid?)

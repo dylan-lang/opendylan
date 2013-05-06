@@ -156,7 +156,6 @@ end method;
 define constant $dylan-tag-pointer = 0;
 define constant $dylan-tag-integer = 1;
 define constant $dylan-tag-character = 2;
-define constant $dylan-tag-boolean = 3;
 
 define method inspect-instance-tag
     (application :: <debug-target>, instance :: <remote-value>)
@@ -1145,10 +1144,6 @@ define method dylan-object?
  => (val :: <boolean>)
   let tag = inspect-instance-tag(ap, instance);
   select (tag)
-    $dylan-tag-boolean =>
-      if (ap.static-object-directory.booleans-tagged?)
-        ~address?
-      end;
     $dylan-tag-integer =>
       ~address?;
     $dylan-tag-character =>

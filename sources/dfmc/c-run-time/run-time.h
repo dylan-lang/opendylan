@@ -180,23 +180,15 @@ static inline long atomic_cas(long *destination, long exchange, long compare) {
 
 #define ITAG 1
 #define CTAG 2
-#define BTAG 3
 
 #define I(n) ((D)((((unsigned long)(n))<<2)|ITAG))
 #define C(n) ((D)((((unsigned long)(n))<<2)|CTAG))
-#define B(n) ((D)((((unsigned long)(n))<<2)|BTAG))
 #define R(n) ((long)(n)>>2)
 
 #define FI(n) ((D)(((unsigned long)(n))|ITAG))
 #define FC(n) ((D)(((unsigned long)(n))|CTAG))
-#define FB(n) ((D)(((unsigned long)(n))|BTAG))
 
 #define TAGGEDQ(n) (TAG_BITS(n) != 0)
-
-/*
-#define DTRUE  B(1)
-#define DFALSE B(0)
-*/
 
 #define DTRUE  &KPtrueVKi
 #define DFALSE &KPfalseVKi

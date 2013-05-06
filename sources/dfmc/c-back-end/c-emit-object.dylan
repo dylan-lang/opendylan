@@ -80,16 +80,6 @@ define method emit-object
   print-object(if (o.^raw-object-value) 1 else 0 end, stream);
 end method;
 
-// BOOLEANS
-
-/* TODO: TAGGED BOOLEANS
-define method emit-object
-    (back-end :: <c-back-end>, stream :: <stream>, o :: <boolean>)
- => ()
-  write(stream, if (o) $true-string else $false-string end); 
-end method;
-*/
-
 // FLOATS
 
 define method emit-reference
