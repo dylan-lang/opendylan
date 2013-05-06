@@ -73,13 +73,13 @@ Normally you can simply use the build script supplied with Open Dylan
 that corresponds to the external linker you will be using. The
 supplied build scripts include the following:
 
- ``x86-win32-vc6-build.jam``
+``x86-win32-vc6-build.jam``
     Build script for Microsoft Visual C++ 6.0.
- ``x86-win32-vc7-build.jam``
+``x86-win32-vc7-build.jam``
     Build script for Microsoft Visual C++ .NET.
- ``x86-win32-mingw-build.jam``
+``x86-win32-mingw-build.jam``
     Build script for `MinGW <http://www.mingw.org/>`_ gcc.
- ``x86-linux-build.jam``
+``x86-linux-build.jam``
     Build script for x86 Linux systems using gcc.
 
 The default build script is ``platform-name-build.jam``. You can select
@@ -163,22 +163,22 @@ file and builds the targets accordingly.
 The Open Dylan compiler's project manager expects the build
 script to define the following pseudo (``NotFile``) targets:
 
- ``exports``
+``exports``
     Describe exports.
- ``unify-dll``
+``unify-dll``
     Describe unify-dll.
- ``dll``
+``dll``
     Link the project as a dynamically-linked library.
- ``unify-exe``
+``unify-exe``
     Describe unify-exe.
- ``exe``
+``exe``
     Link the project as an executable program.
- ``release``
+``release``
     Describe release.
- ``clean-all``
+``clean-all``
     Remove build products in the top-level project, and in all of the
     non-system libraries that it uses.
- ``clean``
+``clean``
     Remove build products in the top-level project.
 
 Automatically-invoked Jam Rules
