@@ -239,7 +239,10 @@ component is the base name of the executable or shared library (from the
     Link Win32 resource files into the shared library and executable.
 
 ``DylanLibraryJamIncludes *image* : *includes* ;``
-    Not yet implemented.
+    Include other Jam files into the build definition. This is typically
+    used via the ``jam-includes:`` keyword in the HDP/LID file. It is
+    useful for setting up extensions to library or include search
+    paths.
 
 ``DylanLibraryUses *image* : *library* : *dir* ;``
     Link other Dylan libraries into the shared library. The *library*
