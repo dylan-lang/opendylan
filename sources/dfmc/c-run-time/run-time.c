@@ -3238,7 +3238,7 @@ D profiling_cache_header_engine_##_nparams (PARAMTEMPLATE##_nparams) { \
     teb->function = (FN*)nxt; \
     teb->next_methods = (D)e; \
     e->count1 += 4; \
-    if ((D)(e->count1) == I(0)) e->count2 += 4; \
+    if (unlikely((D)(e->count1) == I(0))) e->count2 += 4; \
     return(entrypt(ARGTEMPLATE##_nparams)); \
    }
 
