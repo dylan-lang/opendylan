@@ -290,4 +290,4 @@ Editing Jam Files
 =================
 
 An Emacs major mode for Jam files can be found
-`here <http://www.tenfoot.dsl.pipex.com/emacs/jam-mode.el>`_.
+`here <https://github.com/emacsmirror/jam-mode>`_.
