@@ -195,96 +195,72 @@ this is a list whose first element is the library name (from the
 component is the base name of the executable or shared library (from the
 ``Executable:`` keyword of the ``.mkf`` file).
 
-DylanLibrary *image* : *version* ;
-----------------------------------
+``DylanLibrary *image* : *version* ;``
+    Link a Dylan library as a shared library or executable image. This is
+    always the first rule invoked for a given library, and it is usually
+    charged with establishing the library target and setting global and
+    target-specific variables.
 
-Link a Dylan library as a shared library or executable image. This is
-always the first rule invoked for a given library, and it is usually
-charged with establishing the library target and setting global and
-target-specific variables.
+    The *version* argument normally contains two components, the first
+    obtained from the ``Major-version:`` keyword of the ``.mkf`` file, and
+    the second from the ``Minor-version:`` keyword.
 
-The *version* argument normally contains two components, the first
-obtained from the ``Major-version:`` keyword of the ``.mkf`` file, and
-the second from the ``Minor-version:`` keyword.
+``DylanLibraryLinkerOptions *image* : *options* ;``
+    Add the given options to the link command line of the shared library and
+    executable images. The link options provided in the ``Linker-options:``
+    keyword of the ``.mkf`` file are expanded using the usual Jam variable
+    expansion rules before being passed to this rule. (This allows
+    ``Linker-options:`` keywords in LID and HDP files to refer to
+    platform-specific variables such as ``$(guilflags)``).
 
-DylanLibraryLinkerOptions *image* : *options* ;
------------------------------------------------
+``DylanLibraryBaseAddress *image* : *address* ;``
+    Set the base address of the shared library. The compiler-computed base
+    addresses are probably only usable on the Win32 platform.
 
-Add the given options to the link command line of the shared library and
-executable images. The link options provided in the ``Linker-options:``
-keyword of the ``.mkf`` file are expanded using the usual Jam variable
-expansion rules before being passed to this rule. (This allows
-``Linker-options:`` keywords in LID and HDP files to refer to
-platform-specific variables such as ``$(guilflags)``).
+``DylanLibraryCLibraries *image* : *libraries* ;``
+    Link C (or other externally-derived) libraries into the shared library.
+    The link options provided in the ``C-libraries:`` keyword of the
+    ``.mkf`` file are expanded using the usual Jam variable expansion rules
+    before being passed to this rule.
 
-DylanLibraryBaseAddress *image* : *address* ;
----------------------------------------------
+``DylanLibraryCObjects *image* : *objects* ;``
+    Link C (or other externally-derived) object files into the shared
+    library.
 
-Set the base address of the shared library. The compiler-computed base
-addresses are probably only usable on the Win32 platform.
+``DylanLibraryCSources *image* : *sources* ;``
+    Link C source files into the shared library.
 
-DylanLibraryCLibraries *image* : *libraries* ;
-----------------------------------------------
+``DylanLibraryCHeaders *image* : *headers* ;``
+    This rule normally does nothing. The ``C-header-files:`` HDP/LID file is
+    normally used to ensure that files of various sorts (not just C header
+    files) are copied into the build directory.
 
-Link C (or other externally-derived) libraries into the shared library.
-The link options provided in the ``C-libraries:`` keyword of the
-``.mkf`` file are expanded using the usual Jam variable expansion rules
-before being passed to this rule.
+``DylanLibraryRCFiles *image* : *rcfiles* ;``
+    Link Win32 resource files into the shared library and executable.
 
-DylanLibraryCObjects *image* : *objects* ;
-------------------------------------------
+``DylanLibraryJamIncludes *image* : *includes* ;``
+    Not yet implemented.
 
-Link C (or other externally-derived) object files into the shared
-library.
-
-DylanLibraryCSources *image* : *sources* ;
-------------------------------------------
-
-Link C source files into the shared library.
-
-DylanLibraryCHeaders *image* : *headers* ;
-------------------------------------------
-
-This rule normally does nothing. The ``C-header-files:`` HDP/LID file is
-normally used to ensure that files of various sorts (not just C header
-files) are copied into the build directory.
-
-DylanLibraryRCFiles *image* : *rcfiles* ;
------------------------------------------
-
-Link Win32 resource files into the shared library and executable.
-
-DylanLibraryJamIncludes *image* : *includes* ;
-----------------------------------------------
-
-Not yet implemented.
-
-DylanLibraryUses *image* : *library* : *dir* ;
-----------------------------------------------
-
-Link other Dylan libraries into the shared library. The *library*
-argument gives the name of the other library, and the *dir* argument
-gives the name of the other library's build directory. If *dir* is
-``system``, then the library is an installed system library.
+``DylanLibraryUses *image* : *library* : *dir* ;``
+    Link other Dylan libraries into the shared library. The *library*
+    argument gives the name of the other library, and the *dir* argument
+    gives the name of the other library's build directory. If *dir* is
+    ``system``, then the library is an installed system library.
 
 Additional Built-In Jam Rules
 =============================
 
 The build system defines the following additional built-in rules.
 
-IncludeMKF *includes* ;
------------------------
+``IncludeMKF *includes* ;``
+    Read each of the given ``.mkf`` files and invoke Jam rules as described
+    in `Automatically-invoked Jam Rules`_.
 
-Read each of the given ``.mkf`` files and invoke Jam rules as described
-in `Automatically-invoked Jam Rules`_.
-
-DFMCMangle *name* ;
--------------------
-
-Mangle the given *name* according to the Open Dylan compiler's
-mangling rules. If *name* has a single component, it is considered to be
-a raw name; if there are three components they correspond to the
-variable-name, module-name, and library-name respectively.
+``DFMCMangle *name* ;``
+    Mangle the given *name* according to the Open Dylan compiler's
+    mangling rules. If *name* has a single component, it is considered to be
+    a raw name; if there are three components they correspond to the
+    variable-name, module-name, and library-name respectively.
 
 Editing Jam Files
 =================
