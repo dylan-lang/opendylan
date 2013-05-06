@@ -80,11 +80,6 @@ define constant $capture-keyword-environment-string
 // define constant $closure-string
 //   = "CLOSURE";
 
-// define constant $true-string
-//   = "DTRUE";
-// define constant $false-string
-//   = "DFALSE";
-
 define class <multiple-value-temporary-reference> (<object>)
   constant slot ref-temp :: <multiple-value-temporary>, required-init-keyword: ref-temp:;
   constant slot ref-index :: <integer> = 0, init-keyword: ref-index:;

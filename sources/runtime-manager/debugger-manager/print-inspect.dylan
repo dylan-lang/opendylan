@@ -153,20 +153,6 @@ define method classify-dylan-object
 	      $integer-type;
 	    $dylan-tag-character =>
 	      $character-type;
-	    $dylan-tag-boolean =>
-	      let sod = application.static-object-directory;
-	      if (sod.booleans-tagged?)
-		select (instance by \=)
-		  sod.canonical-false-object =>
-		    $boolean-false;
-		  sod.canonical-true-object =>
-		    $boolean-true;
-		  otherwise =>
-		    $unknown-type;
-		end select
-	      else
-		$unknown-type;
-	      end if;
 	    $dylan-tag-pointer =>
 	      let sod = application.static-object-directory;
 	      if (instance = sod.canonical-false-object)
@@ -2457,16 +2443,6 @@ define method dylan-object-class
       end unless;
       immediate? := #t;
 
-    $dylan-tag-boolean =>
-      let sod = application.static-object-directory;
-      if (sod.booleans-tagged?)
-        unless (browsable-only?)
-          class-instance :=
-            lookup-static-object(application, "<boolean>", "dylan");
-        end unless;
-        immediate? := #t;
-      end if;
-      
     $dylan-tag-pointer =>
       let (wrapper-instance, ok?) = 
         read-instance-header(application, instance);
