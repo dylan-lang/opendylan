@@ -714,7 +714,7 @@ define type-inference-rules type-infer-merges
   // Rules about <merge> & <if> instructions.
   // <if> is pure control, so it gets bottom via the punt rule.
   // "It's the <merge>, stupid." (With apologies to James Carville.)
-  // Unary merges all do some sort of inference, so they have heir own rules.
+  // Unary merges all do some sort of inference, so they have their own rules.
   merge :: <binary-merge> <- merge-left-value(merge), merge-right-value(merge)
 end;
 
@@ -758,7 +758,7 @@ define type-inference-rules type-infer-blocks
   //   the <end-exit-block>, so it'll get typed on demand.  Used to type the
   //   body here, but there were problems with type-estimate-body using the
   //   <end-exit-block> as a guard -- couldn't take previous-computation of it.
-  // * An <unwind-protect>'s <temporary> is there, but ununsed.  Use a
+  // * An <unwind-protect>'s <temporary> is there, but unused.  Use a
   //   side-effect to fill the cache with the body & cleanups.
   b-x :: <bind-exit>      <-* exits(entry-state(b-x)); // *** Escaped?
   u-p :: <unwind-protect> ==  type-estimate-body(body(u-p), cache); // ***
