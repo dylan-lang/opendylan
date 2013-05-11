@@ -3,7 +3,7 @@ How to Contribute
 
 If you are looking for ideas on how you can contribute
 to Open Dylan or what others might find useful, please
-see our `list of projects in the Ope Dylan wiki
+see our `list of projects in the Open Dylan wiki
 <https://github.com/dylan-lang/opendylan/wiki>`_. If you
 have something in mind that isn't there, feel free
 to `talk with us <http://opendylan.org/community/>`_.
