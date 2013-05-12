@@ -42,7 +42,7 @@ case $target in
       OPEN_DYLAN_PLATFORM_NAME=ppc-darwin;
       RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
-  amd64-*-freebsd*)
+  amd64-*-freebsd* | x86_64-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=x86_64-freebsd;
       RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
