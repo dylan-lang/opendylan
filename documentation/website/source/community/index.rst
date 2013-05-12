@@ -29,7 +29,7 @@ Development
 - `TODO lists tracked on Trello <https://trello.com/opendylan>`_
 - `Open bugs for Open Dylan <https://github.com/dylan-lang/opendylan/issues>`_
 - `How to contribute </documentation/hacker-guide/contribute.html>`_
-- `Ideas for Google Summer of Code - 2012 <gsoc/2012/index.html>`_
+- `Open projects, looking for contributors and help <https://github.com/dylan-lang/opendylan/wiki>`_
 
 .. _irc::
 
