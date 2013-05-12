@@ -420,7 +420,7 @@ define method project-personal-library?(project :: <user-project>)
 end;
 
 // this method checks if the project of that name is already open
-// if not it calls next-method which will go trough the process of creating it
+// if not it calls next-method which will go through the process of creating it
 // from scratch
 // this method assumes that project files are named the same as libraries
 //

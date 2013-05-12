@@ -14,7 +14,7 @@ add-idl-file!(
   "grid-grid",
 "// grid.idl\n"
 "\n"
-"// IDL defintion of a 2-D grid (in row major order):\n"
+"// IDL definition of a 2-D grid (in row major order):\n"
 "\n"
 "interface grid {\n"
 "\treadonly attribute short height;  // height of the grid\n"

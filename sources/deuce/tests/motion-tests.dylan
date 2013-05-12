@@ -591,7 +591,7 @@ move-over-lines
   Check behaviour when {only, none of} the chars occur in the text
     (respectively for {over,until}).
 
-[relevant-]defintion-interval
+[relevant-]definition-interval
   Has to be tested separately for each major mode.  Nothing general to
     test.
 

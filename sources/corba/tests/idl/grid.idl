@@ -1,6 +1,6 @@
 // grid.idl
 
-// IDL defintion of a 2-D grid (in row major order):
+// IDL definition of a 2-D grid (in row major order):
 
 interface grid {
 	attribute short height;  // height of the grid
