@@ -92,17 +92,6 @@ define property <generic-sideways-property> => sideways?: = #f
   value sideways = #t;
 end property;
 
-//define property <generic-sealed-property-default-open> => sealing: = $form-sealing/open
-//  value sealed        = $form-sealing/sealed;
-//  value open          = $form-sealing/open;
-//  value compiler-open = $form-sealing/compiler-open;
-//  value dynamic       = $form-sealing/dynamic;
-//end property;
-
-//define property <generic-sideways-property-default-open> => sideways?: = #t
-//  value sideways = #t;
-//end property;
-
 define property <generic-dynamic-extent-property> => dynamic-extent: = #f
   value dynamic-extent = #t;
 end property;
@@ -118,16 +107,7 @@ define constant generic-adjectives-default-sealed
          <generic-dynamic-extent-property>,
          <generic-inline-property>);
 
-//define constant generic-adjectives-default-open
-//  = list(<generic-sealed-property-default-open>, 
-//         <generic-sideways-property-default-open>,
-//         <generic-dynamic-extent-property>,
-//         <generic-inline-property>); 
-
 define function generic-adjectives ()
-//  let mode = current-compilation-mode();
-//  if (mode  == #"default-open") generic-adjectives-default-open
-//  else generic-adjectives-default-sealed end
   generic-adjectives-default-sealed
 end function;
 

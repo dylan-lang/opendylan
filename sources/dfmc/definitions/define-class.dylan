@@ -259,13 +259,6 @@ define property <class-sealed-property> => sealing: = $form-sealing/sealed
   value dynamic       = $form-sealing/dynamic;
 end property;
 
-//define property <class-sealed-property-default-open> => sealing: = $form-sealing/open
-//  value sealed        = $form-sealing/sealed;
-//  value open          = $form-sealing/open;
-//  value compiler-open = $form-sealing/compiler-open;
-//  value dynamic       = $form-sealing/dynamic;
-//end property;
-
 define property <class-abstract-property> => abstract?: = #f
   value abstract = #t;
   value concrete = #f;
@@ -286,16 +279,7 @@ define constant class-adjectives-default-sealed
 	   <class-primary-property>,
            <class-made-inline-property>);
 
-//define constant class-adjectives-default-open
-//    = list(<class-sealed-property-default-open>,
-//	   <class-abstract-property>,
-//	   <class-primary-property>,
-//           <class-made-inline-property>);
-
 define function class-adjectives ()
-//  let mode = current-compilation-mode();
-//  if (mode == #"default-open") class-adjectives-default-open
-//  else class-adjectives-default-sealed end
   class-adjectives-default-sealed
 end function;
 

@@ -153,7 +153,6 @@ define module dfmc-common
     current-library-in-context?,
     current-back-end,
     current-back-end-name,
-    current-compilation-mode,
     current-processor-name, current-os-name,
     compiling-dylan-library?,
 

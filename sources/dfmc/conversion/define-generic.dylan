@@ -61,6 +61,8 @@ define method form-equivalent-method-definition
   // TODO: CORRECTNESS: Do this analysis in the method computation, and
   // compute a different class of method that looks like a generic
   // function too so that the difference can't be determined at run-time.
+  //---*** The default-open hack is long gone, is there something to
+  //       clean up here?
   if (form-sealable?(form) & form-implicitly-defined?(form)
         & ~form-compile-stage-only?(form))
     form-single-modifying-simple-method-definition(form);

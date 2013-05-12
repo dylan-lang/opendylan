@@ -730,10 +730,6 @@ define sideways method current-back-end-name () => (name :: false-or(<symbol>))
   end;
 end method;
 
-define sideways method current-compilation-mode () => (mode :: <symbol>)
-  library-description-compilation-mode(current-library-description())
-end method;
-
 define sideways method current-processor-name () => (name :: <symbol>)
   library-description-processor-name(current-library-description())
 end method;

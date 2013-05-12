@@ -567,11 +567,6 @@ define function library-description-compilation-mode-setter
     // don't need to retract anything.
     unless (mode == #"loose" & ld.library-forms-dynamic?)
       retract-library-compilation(ld);
-      if (mode == #"default-open" |
-	    ld.library-description-compilation-mode == #"default-open")
-	// HACK: clear out parsing info, since default-open used during parsing
-	retract-library-parsing(ld);
-      end;
     end;
     ld.library-description-compilation-mode-slot := mode;
     ld.library-forms-dynamic? := (mode == #"loose");
