@@ -43,7 +43,7 @@ case $target in
       RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   amd64-*-freebsd*)
-      OPEN_DYLAN_PLATFORM_NAME=amd64-freebsd;
+      OPEN_DYLAN_PLATFORM_NAME=x86_64-freebsd;
       RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   x86_64-*-linux*)

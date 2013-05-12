@@ -36,6 +36,9 @@ The configure script could fail on Gentoo Linux as there was not always
 a static ``libgc.a`` available. We now check for the file that we need
 on each platform.
 
+The (incomplete) ``amd64-freebsd`` port has been renamed to ``x86_64-freebsd``
+to be more consistent with our other platforms.
+
 Runtime
 -------
 
