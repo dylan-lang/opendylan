@@ -65,7 +65,7 @@ define method emit-lambda-interface-using-function
      fun :: <&c-callable-function>)
  => ();
   emit-c-callable-lambda-interface
-    (back-end, stream, o, fun, current-os-name());
+    (back-end, stream, o, fun, target-os-name());
 end;
 
 define method emit-c-callable-lambda-interface

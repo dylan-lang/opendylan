@@ -63,8 +63,8 @@ define compiler-open generic current-top-level-library-description?
 define compiler-open generic current-library-in-context? (ld) => (well? :: <boolean>);
 define compiler-open generic current-back-end () => (back-end);
 define compiler-open generic current-back-end-name () => (name :: false-or(<symbol>));
-define compiler-open generic current-processor-name () => (name :: <symbol>);
-define compiler-open generic current-os-name () => (name :: <symbol>);
+define compiler-open generic target-architecture-name () => (name :: <symbol>);
+define compiler-open generic target-os-name () => (name :: <symbol>);
 define compiler-open generic compiling-dylan-library? () => (well? :: <boolean>);
 
 define compiler-open generic word-size () => (number-bytes :: <integer>);

@@ -379,7 +379,7 @@ define function update-target-compiler-settings
        else
 	 list(#"build-location",   target.target-build-directory,
 	      #"mode",             target.target-compilation-mode,
-	      #"processor",        target.target-processor,
+	      #"architecture",     target.target-architecture,
 	      #"operating-system", target.target-operating-system)
        end
 end function update-target-compiler-settings;

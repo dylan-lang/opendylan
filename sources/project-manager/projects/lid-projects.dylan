@@ -97,9 +97,9 @@ define open abstract class <lid-project> (<project>)
   slot project-compiler-back-end :: <symbol>,
     init-keyword: compiler-back-end:,
     setter: project-compiler-back-end-slot-setter;
-  slot project-processor,
-    init-keyword: processor:,
-    setter: project-processor-slot-setter;
+  slot project-architecture,
+    init-keyword: architecture:,
+    setter: project-architecture-slot-setter;
   slot project-operating-system,
     init-keyword: operating-system:,
     setter: project-operating-system-slot-setter;
@@ -301,9 +301,9 @@ define method project-compiler-back-end-setter(back-end, project :: <lid-project
   project-compiler-setting(project, back-end:) := back-end;
 end;
 
-define method project-processor-setter(processor, project :: <lid-project>)
-  project-processor-slot(project) := processor;
-  project-compiler-setting(project, processor:) := processor;
+define method project-architecture-setter(architecture, project :: <lid-project>)
+  project-architecture-slot(project) := architecture;
+  project-compiler-setting(project, architecture:) := architecture;
 end;
 
 define method project-operating-system-setter(os, project :: <lid-project>)
@@ -371,7 +371,7 @@ define method initialize (project :: <lid-project>, #rest keys,
                           library-name = #f,
                           lid-file-info = #f,
                           source-record-class = #f,
-                          processor, operating-system, mode, #all-keys)
+                          architecture, operating-system, mode, #all-keys)
   next-method();
   assert(source-record-class, "<lid-project>: source-record-class not supplied");
   project-source-record-class(project) := source-record-class;
@@ -391,7 +391,7 @@ define method initialize (project :: <lid-project>, #rest keys,
 end method;
 
 define method reinitialize-lid-project(project :: <lid-project>,
-                                       #key processor, operating-system, mode,
+                                       #key architecture, operating-system, mode,
                                        #all-keys) => ();
   let properties = project-lid-file-info(project);
 

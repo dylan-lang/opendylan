@@ -35,8 +35,8 @@ define open abstract primary class <basic-build-target> (<build-target>)
   slot target-subtargets :: <simple-object-vector>,
     required-init-keyword: subtargets:;
   slot %files :: false-or(<sequence>) = #f;
-  slot target-processor :: <processor>,
-    required-init-keyword: processor:;
+  slot target-architecture :: <architecture>,
+    required-init-keyword: architecture:;
   slot target-operating-system :: <operating-system>, 
     required-init-keyword: operating-system:;
   slot target-compilation-mode :: <compilation-mode> = *default-compilation-mode*,

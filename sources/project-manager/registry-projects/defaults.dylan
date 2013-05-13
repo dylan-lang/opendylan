@@ -31,21 +31,21 @@ define function make-registry-from-path
 	      personal?: personal?))
 end;
 
-define function find-registries(processor, os)
+define function find-registries(architecture, os)
   let registries = project-dynamic-environment(#"registries");
   if (registries)
     registries
   else
     project-dynamic-environment(#"registries") 
-      := find-registries-internal(processor, os)
+      := find-registries-internal(architecture, os)
   end
 end;
 
 define function find-registries-internal
-    (processor, os)
+    (architecture, os)
  => (registries :: <sequence>);
   debug-out(#"project-manager", "Finding registries");
-  let platform = platform-namestring(processor, os);
+  let platform = platform-namestring(architecture, os);
   let generic-personal-registries = #();
   let platform-personal-registries = #();
   let personal-path = lookup-personal-registries();
@@ -91,9 +91,9 @@ end;
 define class <registry-entry-not-found-error> (<simple-error>)
 end class <registry-entry-not-found-error>;
 
-define function compute-library-location (key, processor, os)
-  let platform = platform-namestring(processor, os);
-  let registries = find-registries(processor, os);
+define function compute-library-location (key, architecture, os)
+  let platform = platform-namestring(architecture, os);
+  let registries = find-registries(architecture, os);
 
   let (lid-location, registry)
     = find-library-locator(key, registries);

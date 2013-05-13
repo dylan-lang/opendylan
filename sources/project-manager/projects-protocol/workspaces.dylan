@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Useful constants
 
 //---*** What should these really be?
-define constant <processor>           = <symbol>;
+define constant <architecture>           = <symbol>;
 define constant <operating-system>    = <symbol>;
 define constant <linker> = <symbol>;
 
@@ -32,8 +32,8 @@ define open generic make-workspace-build-target
     (workspace :: <project-workspace>, #key, #all-keys)
  => (build-target :: <build-target>);
 
-define open generic workspace-processor
-    (workspace :: <project-workspace>) => (processor :: <processor>);
+define open generic workspace-architecture
+    (workspace :: <project-workspace>) => (architecture :: <architecture>);
 
 define open generic workspace-operating-system
     (workspace :: <project-workspace>) => (os :: <operating-system>);

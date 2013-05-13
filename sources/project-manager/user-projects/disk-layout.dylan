@@ -19,7 +19,7 @@ end;
 
 define method initialize (project :: <user-disk-project-layout>, #rest keys,
                           #key project-file :: <file-locator>,
-                          source-record-class, processor, operating-system,
+                          source-record-class, architecture, operating-system,
                           build-dir, database-dir, profile-dir,
                           read-only? = #f,
                           #all-keys)
@@ -34,7 +34,7 @@ define method initialize (project :: <user-disk-project-layout>, #rest keys,
                         database-dir: database-dir,
                         profile-dir: profile-dir,
                         read-only?: read-only?,
-                        processor: processor,
+                        architecture: architecture,
                         operating-system: operating-system);
   apply(next-method, project,
         source-record-class:, source-class,
@@ -68,7 +68,7 @@ define method verify-project-layout(project :: <user-disk-project-layout>,
                                     #key project-file :: <file-locator>,
                                     create? = #t,
                                     read-only? = #f,
-                                    processor, operating-system,
+                                    architecture, operating-system,
                                     build-dir :: false-or(<directory-locator>),
                                     profile-dir :: false-or(<directory-locator>),
                                     database-dir :: false-or(<directory-locator>));

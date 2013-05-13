@@ -257,7 +257,7 @@ end;
 define open generic make-project (c :: subclass(<project>),
                              #key key, source-record-class,
                                   // initial compiler settings
-                                  processor, operating-system, mode,
+                                  architecture, operating-system, mode,
                                   load-namespace?,
                                   #all-keys)
  => project :: <project>;
@@ -265,21 +265,21 @@ define open generic make-project (c :: subclass(<project>),
 define method make-project
     (c :: subclass(<project>), #rest keys,
      #key key, parent = #f, load-namespace? = #t,
-     source-record-class, processor = #f, operating-system = #f, mode)
+     source-record-class, architecture = #f, operating-system = #f, mode)
  => (project :: <project>)
 //  with-project-manager-transaction
   with-lock($pm-lock)
   with-used-project-cache
-    unless (processor & operating-system)
-      let (default-processor, default-os) = default-platform-info();
-      unless (processor) processor := default-processor end;
+    unless (architecture & operating-system)
+      let (default-architecture, default-os) = default-platform-info();
+      unless (architecture) architecture := default-architecture end;
       unless (operating-system) operating-system := default-os end;
     end;
 
     // choose harp for platforms that have it, c for others
     let back-end =
       session-property(#"compiler-back-end")
-    | select (processor)
+    | select (architecture)
         #"x86" =>
           select(operating-system)
             #"darwin" => #"c";
@@ -292,7 +292,7 @@ define method make-project
               parent & parent.project-name);
     let project =
       apply(make, c,
-            processor:, processor, operating-system:, operating-system,
+            architecture:, architecture, operating-system:, operating-system,
                 compiler-back-end:, back-end,
             keys);
 
@@ -438,7 +438,7 @@ define function project-set-compilation-parameters(project :: <project>,
         end;
   if (project.project-personal-library?)
     add-setting(mode: project-compilation-mode(project));
-    add-setting(processor: project-processor(project));
+    add-setting(architecture: project-architecture(project));
     add-setting(operating-system: project-operating-system(project));
     add-setting(back-end: project-compiler-back-end(project));
   end;
@@ -751,10 +751,10 @@ define sideways method used-library-context
         // KLUDGE: used by project-compiler-setting and who knows what else..
         project.project-current-compilation-context := context;
         let key = used-library-project-key(project, used-library-dylan-name);
-        let processor = project-compiler-setting(project, processor:);
+        let architecture = project-compiler-setting(project, architecture:);
         let os = project-compiler-setting(project, operating-system:);
-        let subproject = find-platform-project(key, processor, os) |
-                           make-used-project(project, key, processor, os);
+        let subproject = find-platform-project(key, architecture, os) |
+                           make-used-project(project, key, architecture, os);
         let subcontext = project-current-compilation-context(subproject);
         if (~subcontext)
           debug-out(#"project-manager",
@@ -858,13 +858,13 @@ define function choose-project (test :: <function>)
        *all-open-projects*);
 end function;
 
-define function find-platform-project (key, processor, os)
-  //  debug-out(#"project-manager", "looking up project %s:%s:%s \n", key, processor, os);
+define function find-platform-project (key, architecture, os)
+  //  debug-out(#"project-manager", "looking up project %s:%s:%s \n", key, architecture, os);
   let project =
     choose-project(method(project)
                        project-key?(project, key) &
-                       (processor == #"unknown" |
-                          project-compiler-setting(project, processor:) == processor) &
+                       (architecture == #"unknown" |
+                          project-compiler-setting(project, architecture:) == architecture) &
                        (os == #"unknown" |
                           project-compiler-setting(project, operating-system:) == os)
                    end);
@@ -874,34 +874,34 @@ define function find-platform-project (key, processor, os)
   project
 end function;
 
-define function platform-namestring (processor, os)
-  concatenate(as-lowercase(as(<string>, processor)),
+define function platform-namestring (architecture, os)
+  concatenate(as-lowercase(as(<string>, architecture)),
               "-",
               as-lowercase(as(<string>, os)))
 end function;
 
-define function platform-namestring-info (platform) => (processor, os)
+define function platform-namestring-info (platform) => (architecture, os)
   let name = as-lowercase(as(<string>, platform));
   let separator-position = position(name, '-');
-  let processor-name = copy-sequence(name, end: separator-position);
+  let architecture-name = copy-sequence(name, end: separator-position);
   let os-name = copy-sequence(name, start: separator-position + 1);
-  values(as(<symbol>, processor-name),
+  values(as(<symbol>, architecture-name),
          as(<symbol>, os-name))
 end function;
 
 define function target-platform-name ()
-  let (processor, os) = default-platform-info();
-  platform-namestring(processor, os);
+  let (architecture, os) = default-platform-info();
+  platform-namestring(architecture, os);
 end function;
 
 define function target-platform-name-setter (platform)
-  let (old-processor, old-os) = default-platform-info();
-  let (new-processor, new-os) = platform-namestring-info(platform);
-  unless (new-processor == old-processor & new-os == old-os)
+  let (old-architecture, old-os) = default-platform-info();
+  let (new-architecture, new-os) = platform-namestring-info(platform);
+  unless (new-architecture == old-architecture & new-os == old-os)
     for (project in *all-open-projects*)
-      note-platform-change(project, new-processor, new-os);
+      note-platform-change(project, new-architecture, new-os);
     end;
-    set-default-platform-info(new-processor, new-os);
+    set-default-platform-info(new-architecture, new-os);
   end;
 end function;
 
