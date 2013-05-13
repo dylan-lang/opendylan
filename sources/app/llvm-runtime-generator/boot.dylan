@@ -43,7 +43,7 @@ define function do-with-booted-dylan-context
     (body :: <function>,
      #key lid-locator,
           operating-system = unsupplied(),
-          processor = unsupplied(),
+          architecture = unsupplied(),
           back-end = unsupplied())
   // Dummy object representing the dylan library
   let dylan-project
@@ -84,8 +84,8 @@ define function do-with-booted-dylan-context
   if (supplied?(operating-system))
     dylan-ld.library-description-os-name := operating-system;
   end;
-  if (supplied?(processor))
-    dylan-ld.library-description-processor-name := processor;
+  if (supplied?(architecture))
+    dylan-ld.library-description-processor-name := architecture;
   end;
   if (supplied?(back-end))
     dylan-ld.library-description-compiler-back-end-name := back-end;

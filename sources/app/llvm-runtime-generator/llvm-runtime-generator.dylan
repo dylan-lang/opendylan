@@ -144,12 +144,12 @@ end function;
 
 define function generate-runtime
     (lid-locator :: <file-locator>,
-     processor :: <symbol>,
+     architecture :: <symbol>,
      operating-system :: <symbol>)
  => ();
   with-booted-dylan-context (lid-locator: lid-locator,
                              back-end: #"llvm",
-                             processor: processor,
+                             architecture: architecture,
                              operating-system: operating-system)
     without-dependency-tracking
       let back-end :: <llvm-back-end> = current-back-end();
@@ -168,7 +168,7 @@ define function generate-runtime
         generate-runtime-primitives(back-end, m);
 
         let output-basename
-          = format-to-string("%s-%s-runtime", processor, operating-system);
+          = format-to-string("%s-%s-runtime", architecture, operating-system);
         let output-locator
           = make(<file-locator>, base: output-basename, extension: "bc");
         llvm-save-bitcode-file(m, output-locator);
@@ -183,18 +183,18 @@ begin
     let lid-locator = as(<file-locator>, arguments[0]);
     let name = arguments[1];
 
-    // Split name into processor/architecture and os portions
+    // Split name into architecture and os portions
     let separator-position = position(name, '-');
-    let processor-name = copy-sequence(name, end: separator-position);
+    let architecture-name = copy-sequence(name, end: separator-position);
     let os-name = copy-sequence(name, start: separator-position + 1);
 
     // Generate runtime support for the requested platform
     generate-runtime(lid-locator,
-                     as(<symbol>, processor-name),
+                     as(<symbol>, architecture-name),
                      as(<symbol>, os-name));
   else
     format(*standard-error*,
-           "Usage: llvm-runtime-generator dylan.lid processor-os\n");
+           "Usage: llvm-runtime-generator dylan.lid architecture-os\n");
     exit-application(1);
   end if;
 end;
