@@ -72,8 +72,8 @@ end;
 define sideways method current-back-end () => (back-end)
   if (current-library-description())
     let name = current-back-end-name();
-    let arch = current-processor-name();
-    let os = current-os-name();
+    let arch = target-architecture-name();
+    let os = target-os-name();
     find-back-end-object(name, arch, os)
   end;
 end;

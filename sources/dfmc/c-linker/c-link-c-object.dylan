@@ -27,7 +27,7 @@ end method;
 
 define method emit-forward
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ();
-  emit-c-function-forward(back-end, stream, o, current-os-name());
+  emit-c-function-forward(back-end, stream, o, target-os-name());
 end;
 
 ///--- Emitting extern declarations for these functions will produce parameter
