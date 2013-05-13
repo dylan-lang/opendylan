@@ -10,7 +10,7 @@ define module projects-protocol
   // Constants
   create <library-name>,
          <project-name>,
-         <processor>,
+         <architecture>,
          <operating-system>,
          <project-target-type>;
 
@@ -18,7 +18,7 @@ define module projects-protocol
   create <project-workspace>,
          <project-user-settings>,
          default-workspace, default-workspace-setter,
-         workspace-processor,
+         workspace-architecture,
          workspace-operating-system,
          workspace-projects,
          workspace-build-request,
@@ -65,7 +65,7 @@ define module projects-protocol
          target-workspace;
 
   // Target settings
-  create target-processor, target-processor-setter,
+  create target-architecture, target-architecture-setter,
 	 target-operating-system, target-operating-system-setter,
 	 target-compilation-mode, target-compilation-mode-setter,
 	 target-copy-sources?, target-copy-sources?-setter,

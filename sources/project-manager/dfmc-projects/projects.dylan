@@ -141,14 +141,14 @@ end;
 define sealed domain make(singleton(<user-project>));
 define sealed domain initialize(<user-project>);
 
-define function %set-target-values(c, processor, operating-system)
- => (processor, operating-system);
-  unless (processor & operating-system)
-    let (default-processor, default-os) = default-platform-info(c);
-    unless (processor) processor := default-processor end;
+define function %set-target-values(c, architecture, operating-system)
+ => (architecture, operating-system);
+  unless (architecture & operating-system)
+    let (default-architecture, default-os) = default-platform-info(c);
+    unless (architecture) architecture := default-architecture end;
     unless (operating-system) operating-system := default-os end;
   end;
-  values(processor, operating-system)
+  values(architecture, operating-system)
 end;
 
 define generic project-browsing-context(project :: <project>)
@@ -469,7 +469,7 @@ define function open-hdp-project(project-file-location :: <file-locator>)
 //  debug-assert(locator-extension(project-file-location) = $user-project-suffix,
 //	       "%s is not a project file", project-file-location);
 
-  let (processor, operating-system) = values(#f, #f);
+  let (architecture, operating-system) = values(#f, #f);
   let project-location = project-file-location;
 
   let project

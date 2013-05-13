@@ -731,7 +731,7 @@ define sideways method current-back-end-name () => (name :: false-or(<symbol>))
 end method;
 
 define sideways method target-architecture-name () => (name :: <symbol>)
-  library-description-processor-name(current-library-description())
+  library-description-architecture-name(current-library-description())
 end method;
 
 define sideways method target-os-name () => (name :: <symbol>)

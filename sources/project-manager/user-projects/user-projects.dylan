@@ -127,14 +127,14 @@ end;
 define sealed domain make(singleton(<user-project>));
 define sealed domain initialize(<user-project>);
 
-define function %set-target-values(c, processor, operating-system)
- => (processor, operating-system);
-  unless (processor & operating-system)
-    let (default-processor, default-os) = default-platform-info();
-    unless (processor) processor := default-processor end;
+define function %set-target-values(c, architecture, operating-system)
+ => (architecture, operating-system);
+  unless (architecture & operating-system)
+    let (default-architecture, default-os) = default-platform-info();
+    unless (architecture) architecture := default-architecture end;
     unless (operating-system) operating-system := default-os end;
   end;
-  values(processor, operating-system)
+  values(architecture, operating-system)
 end;
 
 define generic project-browsing-context(project :: <project>)
@@ -316,15 +316,15 @@ define generic replace-project-with?(c :: subclass(<project>),
 
 define method replace-project-with?(c :: subclass(<project>),
                                     #rest keys,
-                                    #key processor, operating-system,
+                                    #key architecture, operating-system,
                                     project-file, force? = #f, dont-replace? = #f,
                                     key, #all-keys)
  => (yes-or-no :: <boolean>, project :: false-or(<project>), key);
   debug-assert(project-file | key);
-  let (processor, operating-system) =
-    %set-target-values(c, processor, operating-system);
+  let (architecture, operating-system) =
+    %set-target-values(c, architecture, operating-system);
   let key = if(key) key else library-name-from-file(project-file) end;
-  let project = key & find-platform-project(key, processor, operating-system);
+  let project = key & find-platform-project(key, architecture, operating-system);
   // TO DO: when replacing project the new one will not have an owner
   // until next compilation - is this a problem ?
   if(project)
@@ -402,13 +402,13 @@ end;
 //
 *default-project-class* := <project>;
 
-define sideways method set-default-platform-info (processor, operating-system)
-  let platform = platform-namestring(processor, operating-system);
+define sideways method set-default-platform-info (architecture, operating-system)
+  let platform = platform-namestring(architecture, operating-system);
   environment-variable("OPEN_DYLAN_PLATFORM_NAME") := platform
 end method;
 
 define sideways method default-platform-info
-    () => (processor-name, os-name)
+    () => (architecture-name, os-name)
   let platform = environment-variable("OPEN_DYLAN_PLATFORM_NAME");
   unless (platform) platform := $platform-name end;
   platform-namestring-info(platform)
@@ -430,10 +430,10 @@ define method make-project (c == <user-project>,
                             source-record-class = <file-source-record>,
                             project-file, parent = #f,
                             load-namespace? = #f,
-                            processor = #f, operating-system = #f, mode)
+                            architecture = #f, operating-system = #f, mode)
  => (project :: <project>);
-  let (processor, operating-system) =
-    %set-target-values(c, processor, operating-system);
+  let (architecture, operating-system) =
+    %set-target-values(c, architecture, operating-system);
 
   unless(key)
     key := library-name-from-file(project-file);
@@ -441,7 +441,7 @@ define method make-project (c == <user-project>,
 
 
   debug-assert(key, "Non existing project file");
-  debug-assert(~find-platform-project(key, processor, operating-system),
+  debug-assert(~find-platform-project(key, architecture, operating-system),
                "cannot replace project");
   let project = next-method(c,
                             key: key,
@@ -449,7 +449,7 @@ define method make-project (c == <user-project>,
                             project-file: project-file,
                             parent: parent,
                             load-namespace?: load-namespace?,
-                            processor: processor,
+                            architecture: architecture,
                             operating-system: operating-system,
                             mode: mode);
 
@@ -466,7 +466,7 @@ end method;
 define sideways method make (class == <project>,
                     #rest keys, #key key,
                     parent = #f,
-                    processor = #f, operating-system = #f, #all-keys)
+                    architecture = #f, operating-system = #f, #all-keys)
  => (project :: <project>)
   block()
     // We get here through the following paths:
@@ -508,7 +508,7 @@ define sideways method make (class == <project>,
     project
   exception(<registry-entry-not-found-error>)
     // this is the last resort for automatic finding of a project
-    let binary-project = find-binary-project(key, processor: processor,
+    let binary-project = find-binary-project(key, architecture: architecture,
                                              operating-system: operating-system);
     binary-project | signal(make(<project-not-found>, project-name: key));
   exception(restart :: <find-project-location-restart>)
@@ -699,7 +699,7 @@ define function open-hdp-project
 //  debug-assert(locator-extension(project-file-location) = $user-project-suffix,
 //             "%s is not a project file", project-file-location);
 
-  let (processor, operating-system) = values(#f, #f);
+  let (architecture, operating-system) = values(#f, #f);
   let project-location = project-file-location;
 
   let project

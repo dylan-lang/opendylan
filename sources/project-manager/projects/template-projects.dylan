@@ -107,13 +107,13 @@ end method;
 define function compile-template 
     (template,
      #key compiler :: <function> = compile-library,
-          processor, operating-system, mode)
+          architecture, operating-system, mode)
     => (context, sr)
   // Compile a template in a scratch library & module: compile-template(#{1});.
   // Give compiler: compile-library-until-optimized to get optimized DFM only.
   let project = make(<string-template-project>,
 		     template: template,
-		     processor: processor,
+		     architecture: architecture,
 		     operating-system: operating-system,
 		     mode: mode);
   project.project-current-compilation-context

@@ -85,7 +85,7 @@ define function do-with-booted-dylan-context
     dylan-ld.library-description-os-name := operating-system;
   end;
   if (supplied?(architecture))
-    dylan-ld.library-description-processor-name := architecture;
+    dylan-ld.library-description-architecture-name := architecture;
   end;
   if (supplied?(back-end))
     dylan-ld.library-description-compiler-back-end-name := back-end;
