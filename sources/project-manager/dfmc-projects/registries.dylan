@@ -15,10 +15,10 @@ define method find-project-in-registry
     (workspace :: <dfmc-project-workspace>, name :: <library-name>)
  => (project :: false-or(<dfmc-project>))
   if ($use-registries)
-    let processor = workspace.workspace-processor;
+    let architecture = workspace.workspace-architecture;
     let os = workspace.workspace-operating-system;
     let (location, read-only?) 
-      = find-library-project-file(name, processor, os);
+      = find-library-project-file(name, architecture, os);
     location & open-project(workspace, location, read-only?: read-only?)
   end
 end method find-project-in-registry;
@@ -93,13 +93,13 @@ define function find-registry-entry
 end function find-registry-entry;
 
 define function platform-registries
-    (processor :: <processor>, os :: <operating-system>)
+    (architecture :: <architecture>, os :: <operating-system>)
  => (registries :: <simple-object-vector>)
   let platform-registries :: <stretchy-object-vector> 
     = make(<stretchy-object-vector>);
   let generic-registries :: <stretchy-object-vector> 
     = make(<stretchy-object-vector>);
-  let platform-name = platform-name(processor, os);
+  let platform-name = platform-name(architecture, os);
   local method add-registries
 	    (paths :: <sequence>, #key personal? :: <boolean> = #f)
 	  for (path :: <directory-locator> in paths)
@@ -133,9 +133,9 @@ define function make-registry-from-path
 end function make-registry-from-path;
 
 define function platform-name
-    (processor :: <processor>, os :: <operating-system>)
+    (architecture :: <architecture>, os :: <operating-system>)
  => (name :: <string>)
-  concatenate(as-lowercase(as(<string>, processor)),
+  concatenate(as-lowercase(as(<string>, architecture)),
 	      "-",
 	      as-lowercase(as(<string>, os)))
 end function platform-name;

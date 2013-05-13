@@ -14,7 +14,7 @@ define function context-back-end
     => (back-end)
   let name = dfmc-library-description-compiler-back-end-name(context);
   let os = dfmc-library-description-os-name(context);
-  let arch = dfmc-library-description-processor-name(context);
+  let arch = dfmc-library-description-architecture-name(context);
   find-back-end-object(name, arch, os)
 end function;
 

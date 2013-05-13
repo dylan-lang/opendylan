@@ -302,7 +302,7 @@ define function make-lid-build-target
      name:             project.project-name,
      filename:         filename,
      compilation-mode: compilation-mode,
-     processor:        workspace.workspace-processor,
+     architecture:     workspace.workspace-architecture,
      operating-system: workspace.workspace-operating-system,
      type:             target-type,
      loose-bindings:   loose-bindings,

@@ -61,7 +61,7 @@ define open generic target-file-canonical-source-record
  => (record :: false-or(<source-record>), modified? :: <boolean>);
 
 define target-protocols ()
-  setting processor :: <processor>;
+  setting architecture :: <architecture>;
   setting operating-system :: <operating-system>;
   setting compilation-mode :: <compilation-mode>;
   setting copy-sources? :: <boolean>;

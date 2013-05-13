@@ -41,10 +41,10 @@ define open generic project-read-only?-setter(flag, project :: <project>);
 define open generic project-location(project :: <project>)
  => (location :: false-or(<file-locator>));
 
-define open generic project-processor(project :: <project>) 
- => processor;
+define open generic project-architecture(project :: <project>) 
+ => architecture;
 
-define open generic project-processor-setter(processor, project :: <project>);
+define open generic project-architecture-setter(architecture, project :: <project>);
 
 define open generic project-operating-system(project :: <project>) 
  => os;
@@ -305,7 +305,7 @@ define open generic project-key? (project :: <project>, key) => key?;
 // library of the project) and platform info.  Only called if subproject
 // identified by key isn't already open.
 define open generic make-used-project (project :: <project>,
-				       key, processor, os) => project :: <project>;
+				       key, architecture, os) => project :: <project>;
 
 // Class of projects to create from the listener interface.
 define variable *default-project-class* = #f;
@@ -373,17 +373,17 @@ define method project-build-property-setter(property,
   #f
 end;
 
-// Return the default target processor and os.
+// Return the default target architecture and os.
 define open generic default-platform-info ()
- => (processor, operating-system);
+ => (architecture, operating-system);
 
-// Change the default target processor and os.
-define open generic set-default-platform-info (processor,
+// Change the default target architecture and os.
+define open generic set-default-platform-info (architecture,
 					       operating-system);
 
 // Called when the default target platform gets changed.
 define open generic note-platform-change (project :: <project>,
-					  processor,
+					  architecture,
 					  operating-system);
 
 // Called when a used project is opened

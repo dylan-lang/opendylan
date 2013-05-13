@@ -41,8 +41,8 @@ define class <interactive-library-description> (<library-description>)
     required-init-keyword: back-end:;
   constant slot interactive-library-os-name :: <symbol>,
     required-init-keyword: os:;
-  constant slot interactive-library-processor-name :: <symbol>,
-    required-init-keyword: processor:;
+  constant slot interactive-library-architecture-name :: <symbol>,
+    required-init-keyword: architecture:;
   constant slot interactive-library-major-version :: <integer>,
     required-init-keyword: major-version:;
   constant slot interactive-library-minor-version :: <integer>,
@@ -80,9 +80,9 @@ define method library-description-os-name
   ild.interactive-library-os-name
 end method;
 
-define method library-description-processor-name 
+define method library-description-architecture-name 
     (ild :: <interactive-library-description>) => (name :: <symbol>)
-  ild.interactive-library-processor-name
+  ild.interactive-library-architecture-name
 end method;
 
 define method library-description-major-version
@@ -704,7 +704,7 @@ define method make-interactive-context (ld :: <project-library-description>,
 		 // TODO: these should come from the target, or at least match it
 		 back-end: ld.library-description-compiler-back-end-name, 
 		 os: ld.library-description-os-name,
-		 processor: ld.library-description-processor-name,
+		 architecture: ld.library-description-architecture-name,
 		 major-version: ld.library-description-major-version,
 		 minor-version: ld.library-description-minor-version,
 		 back-end-data: ld.library-combined-back-end-data);

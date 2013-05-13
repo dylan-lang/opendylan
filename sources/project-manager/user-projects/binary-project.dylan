@@ -20,7 +20,7 @@ define sealed domain make(singleton(<binary-project>));
 define sealed domain initialize(<binary-project>);
 
 define function find-binary-project
-    (key, #key processor, operating-system)
+    (key, #key architecture, operating-system)
  => (project :: false-or(<binary-project>));
 
   local method %db-location (install-locator :: <directory-locator>)
@@ -117,10 +117,10 @@ end;
 */
 
 define method make-used-project (project :: <binary-project>,
-				 key :: <symbol>, processor, os)
+				 key :: <symbol>, architecture, os)
  => project :: <project>;
   make-project(<project>, parent: project,
-	       key: key, processor: processor, operating-system: os);
+	       key: key, architecture: architecture, operating-system: os);
 end;
 
 define method project-browsing-context(project :: <binary-project>)

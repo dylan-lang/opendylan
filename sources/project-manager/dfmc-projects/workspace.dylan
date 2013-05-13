@@ -43,8 +43,8 @@ end method clear-build-canonicalized-projects;
 /// DFMC project workspace
 
 define class <dfmc-project-workspace> (<project-workspace>)
-  constant slot workspace-processor :: <processor>,
-    required-init-keyword: processor:;
+  constant slot workspace-architecture :: <architecture>,
+    required-init-keyword: architecture:;
   constant slot workspace-operating-system :: <operating-system>,
     required-init-keyword: operating-system:;
   constant slot workspace-projects :: <stretchy-object-vector>
@@ -56,9 +56,9 @@ end class <dfmc-project-workspace>;
 
 define method make-default-workspace
     () => (workspace :: <dfmc-project-workspace>)
-  let (processor, os) = default-platform-info();
+  let (architecture, os) = default-platform-info();
   make(<dfmc-project-workspace>,
-       processor:        processor,
+       architecture:     architecture,
        operating-system: os)
 end method make-default-workspace;
 
@@ -69,9 +69,9 @@ define method workspace-registries
  => (registries :: <simple-object-vector>)
   workspace.%registries
     | begin
-	let processor  = workspace.workspace-processor;
-	let os         = workspace.workspace-operating-system;
-	workspace.%registries := platform-registries(processor, os)
+	let architecture  = workspace.workspace-architecture;
+	let os            = workspace.workspace-operating-system;
+	workspace.%registries := platform-registries(architecture, os)
       end
 end method workspace-registries;
 
@@ -194,14 +194,14 @@ end method target-browsing-context;
 /// Platform information
 
 define sideways method default-platform-info 
-    () => (processor :: <processor>, os :: <operating-system>)
+    () => (architecture :: <architecture>, os :: <operating-system>)
   let platform 
     = environment-variable($platform-variable)
         | $default-platform;
   let name = as-lowercase(as(<string>, platform));
   let separator-position = position(name, '-');
-  let processor-name = copy-sequence(name, end: separator-position);
+  let architecture-name = copy-sequence(name, end: separator-position);
   let os-name = copy-sequence(name, start: separator-position + 1);
-  values(as(<symbol>, processor-name),
+  values(as(<symbol>, architecture-name),
 	 as(<symbol>, os-name))
 end method default-platform-info;

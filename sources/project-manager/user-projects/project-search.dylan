@@ -289,11 +289,11 @@ define function project-initialize-caches(project :: <user-project>)
 end;
 
 define method make-used-project (project :: <user-project>,
-				 key :: <symbol>, processor, os)
+				 key :: <symbol>, architecture, os)
  => project :: <project>;
   project-initialize-caches(project);
   // search in the cache
-  let subproject-location = search-for-subproject(project, key, processor, os);
+  let subproject-location = search-for-subproject(project, key, architecture, os);
   let subproject = subproject-location & 
     block()
       let build-entry = second(element(project.%used-projects-cache, key));
@@ -312,7 +312,7 @@ define method make-used-project (project :: <user-project>,
 			       parent: project,
 			       key: key,
 			       read-only?: read-only?,
-			       processor: processor, operating-system: os);
+			       architecture: architecture, operating-system: os);
       used-project
     exception(<file-does-not-exist-error>)
       // this is extraneous, since it's been checked in search-for-subproject
@@ -329,16 +329,16 @@ define method make-used-project (project :: <user-project>,
 */
   subproject | 
     make-project(<project>, parent: project,
-		 key: key, processor: processor, operating-system: os);
+		 key: key, architecture: architecture, operating-system: os);
 
 end method;
 
 define method make-used-project (project :: <system-project>,
-				 key :: <symbol>, processor, os)
+				 key :: <symbol>, architecture, os)
                                => project :: <project>;
   // TO DO:
   // this may be an incorrect assumption
   // i.e. that <system-project>s cannot use <user-project>s
   // debug-out(#"project-manager", "Project: %s making used project: %s", project, key);
-  make-project(<project>, parent: project, key: key, processor: processor, operating-system: os)
+  make-project(<project>, parent: project, key: key, architecture: architecture, operating-system: os)
 end method;
