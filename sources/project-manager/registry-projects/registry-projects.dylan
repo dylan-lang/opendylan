@@ -156,7 +156,7 @@ define method project-current-source-records (project :: <registry-project>)
       compute-compiler-source-records(project)
     exception (<file-does-not-exist-error>)
       update-project-location(project);
-      project.project-lid-date := #t; // Force mismatch (probabaly unnecessary)
+      project.project-lid-date := #t; // Force mismatch (probably unnecessary)
       compute-compiler-source-records(project);
     end;
   else
