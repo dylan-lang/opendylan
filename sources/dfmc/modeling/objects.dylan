@@ -1058,7 +1058,7 @@ end method;
 
 // TODO: PERFORMANCE: Floats aren't currently mapped. We might choose to
 // map their raw form, or it might simply not be worth it. Note that
-// their are techincal obstacles to mapping anything which isn't
+// their are technical obstacles to mapping anything which isn't
 // either interned or immediate.
 
 define method make-compile-time-literal (object :: <single-float>)
