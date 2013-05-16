@@ -47,14 +47,114 @@ entire Dylan application runs and exits prior to ``main`` being invoked.
 A reasonable alternative is to determine the C name of your entry point
 function and set a breakpoint on that instead.
 
-Displaying Data
----------------
+Inspecting Dylan objects
+------------------------
 
 The C runtime contains a number of helper functions specifically for
 improving the debugging process. These can be invoked from gdb or lldb
 and will assist you in analyzing values.
 
-*Fill this in!*
+.. c:function:: D dylan_object_class(D* instance)
+
+   Returns the class instance for the given instance object.
+
+.. c:function:: bool dylan_boolean_p (D instance)
+
+   Tests whether instance is a ``<boolean>``.
+
+.. c:function:: bool dylan_true_p (D instance)
+
+   Tests whether instance is ``#t``.
+
+.. c:function:: bool dylan_float_p (D instance)
+
+   Tests whether instance is a ``<float>``.
+
+.. c:function:: bool dylan_single_float_p (D instance)
+
+   Tests whether instance is a ``<single-float>``.
+
+.. c:function:: float dylan_single_float_data (D instance)
+
+   Returns the ``float`` data stored in the instance.
+
+.. c:function:: bool dylan_double_float_p (D instance)
+
+   Tests whether instance is a ``<double-float>``.
+
+.. c:function:: double dylan_double_float_data (D instance)
+
+   Returns the ``double`` data stored in the instance.
+
+.. c:function:: bool dylan_symbol_p (D instance)
+
+   Tests whether instance is a ``<symbol>``.
+
+.. c:function:: D dylan_symbol_name (D instance)
+
+   Returns the string form of the given symbol.
+
+.. c:function:: bool dylan_pair_p (D instance)
+
+   Tests whether instance is a ``<pair>``.
+
+.. c:function:: bool dylan_empty_list_p (D instance)
+
+   Tests whether instance is an empty list.
+
+.. c:function:: D dylan_head (D instance)
+
+   Returns the head of the given ``<pair>`` instance.
+
+.. c:function:: D dylan_tail (D instance)
+
+   Returns the tail of the given ``<pair>`` instance.
+
+.. c:function:: bool dylan_vector_p (D instance)
+
+   Tests whether instance is a ``<vector>``.
+
+.. c:function:: bool dylan_string_p (D instance)
+
+   Tests whether instance is a ``<string>``.
+
+.. c:function:: char* dylan_string_data (D instance)
+
+   Returns the C string data stored in the given instance.
+
+.. c:function:: bool dylan_simple_condition_p (D instance)
+
+   Tests whether instance is a ``<simple-condition>``.
+
+.. c:function:: D dylan_simple_condition_format_string (D instance)
+
+   Returns the format string stored in the given ``<simple-condition>``.
+
+.. c:function:: D dylan_simple_condition_format_args (D instance)
+
+   Returns the format string arguments stored in the given
+   ``<simple-condition>``.
+
+.. c:function:: bool dylan_class_p (D instance)
+
+   Tests whether instance is a ``<class>``.
+
+.. c:function:: D dylan_class_debug_name (D instance)
+
+   Returns the ``<string>`` object containing the class's name.
+
+.. c:function:: bool dylan_function_p (D instance)
+
+   Tests whether instance is a ``<function>``.
+
+.. c:function:: D dylan_function_debug_name (D instance)
+
+   Returns the ``<string>`` object containing the function's name.
+   Note that we do not store the name for all function objects.
+
+.. c:function:: void dylan_print_object (D object)
+
+   Print some information about the given object to ``stdout``.
 
 Debugging with the HARP backend
 ===============================
