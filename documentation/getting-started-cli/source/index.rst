@@ -26,3 +26,4 @@ guide.
    dylan-compiler
    dylan-environment
    dylan-mode-for-emacs
+   debugging-with-gdb-lldb
