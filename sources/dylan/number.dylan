@@ -27,9 +27,9 @@ define macro numeric-properties-predicate-definer
   { define numeric-properties-predicate ?:name (?domain:name) }
   => { define open generic ?name (x :: <object>) => (result :: <boolean>);
        define sealed domain ?name (?domain) }
-  // Default sealed domain to <complex>
+  // Default sealed domain to <machine-number>
   { define numeric-properties-predicate ?:name }
-  => { define numeric-properties-predicate ?name (<complex>) }
+  => { define numeric-properties-predicate ?name (<machine-number>) }
 end macro numeric-properties-predicate-definer;
 
 define numeric-properties-predicate zero?;
@@ -47,25 +47,25 @@ define macro binary-arithmetic-function-definer
   => { define open generic ?name (x :: <object>, y :: <object>)
          => (#rest values :: <object>);
        define sealed domain ?name (?domain1, ?domain2) }
-  // Default sealed domain to (<complex>, <complex>)
+  // Default sealed domain to (<machine-number>, <machine-number>)
   { define binary-arithmetic-function ?:name }
-  => { define binary-arithmetic-function ?name (<complex>, <complex>) }
+  => { define binary-arithmetic-function ?name (<machine-number>, <machine-number>) }
 end macro binary-arithmetic-function-definer;
 
 define binary-arithmetic-function \+;
 define binary-arithmetic-function \-;
 define binary-arithmetic-function \*;
 define binary-arithmetic-function \/;
-define binary-arithmetic-function \^ (<complex>, <integer>);
+define binary-arithmetic-function \^ (<machine-number>, <integer>);
 
 define macro unary-arithmetic-function-definer
   { define unary-arithmetic-function ?:name (?domain:name) }
   => { define open generic ?name (x :: <object>)
          => (#rest values :: <object>);
        define sealed domain ?name (?domain) }
-  // Default sealed domain to <complex>
+  // Default sealed domain to <machine-number>
   { define unary-arithmetic-function ?:name }
-  => { define unary-arithmetic-function ?name (<complex>) }
+  => { define unary-arithmetic-function ?name (<machine-number>) }
 end macro unary-arithmetic-function-definer;
 
 define unary-arithmetic-function negative;
