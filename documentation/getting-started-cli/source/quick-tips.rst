@@ -13,6 +13,9 @@ A Few More Quick Tips
 
      target-type: dll
 
+4. If you miss having rich command line history and similar features,
+   use ``rlwrap`` with ``dylan-compiler``.
+
 You should now have enough information to start working on your Dylan
 project.  The next few sections go into more detail on using
 ``dylan-compiler``, which also has an interactive mode that can make
