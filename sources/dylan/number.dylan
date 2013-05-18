@@ -71,32 +71,37 @@ end macro unary-arithmetic-function-definer;
 define unary-arithmetic-function negative;
 define unary-arithmetic-function abs;
 
-define generic floor
-    (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
-define generic ceiling
-    (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
-define generic round
-    (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
-define generic truncate
-    (real :: <machine-number>) => (result :: <integer>, remainder :: <machine-number>);
+define macro unary-division-function-definer
+  { define unary-division-function ?:name (?domain:name) }
+  => { define open generic ?name (real :: <real>)
+         => (result :: <integer>, remainder :: <real>);
+       define sealed domain ?name (?domain) }
+  // Default sealed domain to <machine-number>
+  { define unary-division-function ?:name }
+  => { define unary-division-function ?name (<machine-number>) }
+end macro unary-division-function-definer;
 
-define generic floor/
-    (real1 :: <machine-number>, real2 :: <machine-number>)
- => (result :: <integer>, remainder :: <machine-number>);
-define generic ceiling/
-    (real1 :: <machine-number>, real2 :: <machine-number>)
- => (result :: <integer>, remainder :: <machine-number>);
-define generic round/
-    (real1 :: <machine-number>, real2 :: <machine-number>)
- => (result :: <integer>, remainder :: <machine-number>);
-define generic truncate/
-    (real1 :: <machine-number>, real2 :: <machine-number>)
- => (result :: <integer>, remainder :: <machine-number>);
+define unary-division-function floor;
+define unary-division-function ceiling;
+define unary-division-function round;
+define unary-division-function truncate;
 
-define generic modulo
-    (real1 :: <machine-number>, real2 :: <machine-number>) => (result :: <machine-number>);
-define generic remainder
-    (real1 :: <machine-number>, real2 :: <machine-number>) => (result :: <machine-number>);
+define macro binary-division-function-definer
+  { define binary-division-function ?:name (?domain1:name, ?domain2:name) }
+  => { define open generic ?name (real1 :: <real>, real2 :: <real>)
+         => (#rest values :: <object>);
+       define sealed domain ?name (?domain1, ?domain2) }
+  // Default sealed domain to (<machine-number>, <machine-number>)
+  { define binary-division-function ?:name }
+  => { define binary-division-function ?name (<machine-number>, <machine-number>) }
+end macro binary-division-function-definer;
+
+define binary-division-function floor/;
+define binary-division-function ceiling/;
+define binary-division-function round/;
+define binary-division-function truncate/;
+define binary-division-function modulo;
+define binary-division-function remainder;
 
 //// CONDITIONS
 
