@@ -2131,7 +2131,6 @@ define &primitive-descriptor primitive-initialized-slot-value, emitter: op--init
 
 // Calling Convention.
 define &primitive-descriptor primitive-function-parameter, emitter: op--function-parameter;
-define &primitive-descriptor primitive-lambda-parameter, emitter: op--function-parameter;
 define &primitive-descriptor primitive-next-methods-parameter, emitter: op--next-methods-parameter;
 define &primitive-descriptor primitive-set-generic-function-entrypoints;
 define &primitive-descriptor primitive-set-accessor-method-xep;

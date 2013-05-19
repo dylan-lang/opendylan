@@ -1625,7 +1625,6 @@ extern D primitive_raw_as_string(DBSTR buffer);
 
 #define primitive_current_function()                    ((D)(get_teb()->function))
 #define primitive_function_parameter()                  ((D)(get_teb()->function))
-#define primitive_lambda_parameter()                    ((D)(get_teb()->function))
 #define primitive_next_methods_parameter()              ((D)(get_teb()->next_methods))
 
 /* APPLY PRIMITIVES */
