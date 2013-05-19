@@ -1,6 +1,10 @@
 Debugging with GDB or LLDB
 **************************
 
+.. warning:: Some of the facilities described here are only
+   available in builds from April 11, 2013 or later.
+   :class: alert alert-block alert-warning
+
 Which compiler backend are you using?
 =====================================
 
