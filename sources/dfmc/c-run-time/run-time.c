@@ -726,13 +726,9 @@ DMINT primitive_machine_word_truncateS(DMINT x, DMINT y) {
   MV2((DMINT)z.quot, (DMINT)z.rem);
 }
 
-/*---*** NOTE: This code is wrong for Alpha (NO_LONGLONG) but, as the
-  ---*** only users of these primitives never pass a high value that's
-  ---*** other than the sign of the low value, this implementation
-  ---*** will work for now ... */
 static void divide_double (DMINT xl, DMINT xh, DMINT y, DMINT* q, DMINT* r) {
 #ifdef NO_LONGLONG
-  DMINT dividend = (xh < 0 && xl > 0) ? xl : xl;
+  DMINT dividend = ((DMINT)LOHALF(xh) << WORD_BIT) + (DMINT)LOHALF(xl);
   DMINT divisor = y;
   *q = dividend / divisor;
   *r = dividend % divisor;
@@ -749,12 +745,10 @@ static void divide_double (DMINT xl, DMINT xh, DMINT y, DMINT* q, DMINT* r) {
   return;
 }
 
-/*---*** NOTE: This code is wrong for Alpha (NO_LONGLONG) but, as these
-  ---*** primitives aren't used yet, we can get away with it for now ... */
 static void unsigned_divide_double (DMINT xl, DMINT xh, DMINT y, DUMINT* q, DUMINT* r) {
 #ifdef NO_LONGLONG
   ignore(xh);
-  DUMINT dividend = (DUMINT)xl;
+  DUMINT dividend = ((DUMINT)LOHALF(xh) << WORD_BIT) + (DUMINT)LOHALF(xl);
   DUMINT divisor = (DUMINT)y;
   *q = dividend / divisor;
   *r = dividend % divisor;
