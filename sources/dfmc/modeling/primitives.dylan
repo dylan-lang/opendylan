@@ -502,8 +502,6 @@ define side-effecting stateless indefinite-extent &primitive primitive-repeated-
 
 define side-effect-free stateless dynamic-extent &primitive primitive-function-parameter
     () => (fn :: <function>);
-define side-effect-free stateless dynamic-extent &primitive primitive-lambda-parameter
-    () => (fn :: <lambda>);
 
 // !@#$ where used? - in conversion/convert.dylan and also optimizer!
 define side-effect-free stateless dynamic-extent &primitive primitive-next-methods-parameter // ??

@@ -16,13 +16,6 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   llvm-builder-local(be, $function-parameter-name)
 end;
 
-/*
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-lambda-parameter
-    () => (fn :: <lambda>);
-  //---*** Fill this in...
-end;
-*/
-
 define constant $next-methods-parameter-name :: <string> = ".next";
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-next-methods-parameter
