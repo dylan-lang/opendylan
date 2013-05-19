@@ -433,7 +433,6 @@ define &module dylan-primitives
   // Calling Convention.
   create
     primitive-function-parameter,
-    primitive-lambda-parameter,
     primitive-next-methods-parameter;
 
   // Simple Streams and Streams
