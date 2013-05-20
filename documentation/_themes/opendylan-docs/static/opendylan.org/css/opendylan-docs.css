@@ -145,5 +145,5 @@ div.doc-sidebar li.toctree-l1.current li.toctree-l2 a {
 }
 
 div.doc-sidebar .pinned { height: 100%; overflow-y: hidden; }
-div.doc-sidebar .pinned.pin-set { position: fixed; width: 220px; height: 100%; top: 50px; z-index: 99; }
+div.doc-sidebar .pinned.pin-set { position: fixed; height: 100%; top: 50px; z-index: 99; }
 div.doc-sidebar .pinned:hover { overflow-y: auto !important; }
