@@ -127,9 +127,8 @@ define function get-application-filename
           (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
           (integer-as-raw(4))
        end));
-  let err = -1;
   block (return)
-    while (err == -1)
+    while (#t)
       let buffer = make(<byte-string>, size: bufsiz, fill: '\0');
       primitive-c-unsigned-int-at-setter(integer-as-raw(bufsiz), size,
                                          integer-as-raw(0), integer-as-raw(0));
@@ -145,6 +144,7 @@ define function get-application-filename
                                           integer-as-raw(0)));
         return(copy-sequence(buffer, end: real-size))
       else
+        // Buffer too small, try again with the right size.
         bufsiz := raw-as-integer(primitive-c-unsigned-int-at
                                    (size, integer-as-raw(0), integer-as-raw(0)));
       end
