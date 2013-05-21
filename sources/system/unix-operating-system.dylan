@@ -14,7 +14,7 @@ define macro with-storage
          block ()
            ?name := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw
-                         (%call-c-function ("GC_malloc")
+                         (%call-c-function ("MMAllocMisc")
                             (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
                             (integer-as-raw(?size))
                           end));
@@ -26,8 +26,10 @@ define macro with-storage
          cleanup
            if (primitive-machine-word-not-equal?
                  (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
-             %call-c-function ("GC_free") (p :: <raw-c-pointer>) => (void :: <raw-c-void>)
-               (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)))
+             %call-c-function ("MMFreeMisc")
+               (p :: <raw-c-pointer>, nbytes :: <raw-c-unsigned-long>) => (void :: <raw-c-void>)
+                 (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)),
+                  integer-as-raw(?size))
              end;
              #f
            end
