@@ -54,7 +54,7 @@ C_RUNTIME_LIBRARY = $(OBJDIR)/libdylan-c-runtime.a
 
 RUNTIMELIBDEST  = $(LIBDEST)/runtime/c-$(OPEN_DYLAN_PLATFORM_NAME)
 
-all: $(OBJS)
+all: $(C_RUNTIME_LIBRARY)
 
 $(OBJDIR)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR)
