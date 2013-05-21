@@ -252,7 +252,7 @@ BOOTSTRAP_4_ENV = \
 BOOTSTRAP_4_LIBRARIES = dylan-compiler
 
 BOOTSTRAP_4_COMPILER = \
-	$(abs_builddir)/Bootstrap.3/bin/dylan-compiler $(arch_flag) -build -dfm
+	$(abs_builddir)/Bootstrap.3/bin/dylan-compiler -build -dfm
 
 
 
