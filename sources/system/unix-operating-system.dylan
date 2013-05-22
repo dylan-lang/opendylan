@@ -110,32 +110,22 @@ end function environment-variable;
 define function environment-variable-setter
     (new-value :: false-or(<byte-string>), name :: <byte-string>)
  => (new-value :: false-or(<byte-string>))
-  let thing = concatenate-as(<byte-string>, name, "=", new-value | "");
-  //--- NOTE: The string passed to putenv must be statically allocated
-  //--- as it will remain in use after this function returns to its caller.
-  let static-thing = primitive-wrap-machine-word
-                       (primitive-cast-pointer-as-raw
-                          (%call-c-function ("GC_malloc")
-                               (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
-                             (integer-as-raw(size(thing) + 1))
-                           end));
-  if (primitive-machine-word-not-equal?(primitive-unwrap-machine-word(static-thing),
-                                        integer-as-raw(0)))
-    //--- NOTE: We can't use primitive-replace-bytes! as our
-    //--- first argument isn't a Dylan object.  (Sigh)
-    %call-c-function ("strcpy")
-        (dst :: <raw-c-pointer>, src :: <raw-c-pointer>)
-     => (dst :: <raw-c-pointer>)
-      (primitive-cast-raw-as-pointer
-         (primitive-unwrap-machine-word(static-thing)),
-       primitive-string-as-raw(thing))
-    end;
+  if (new-value)
     //---*** Should we signal something if this call fails?
-    %call-c-function ("putenv")
-      (new-value :: <raw-byte-string>) => (result :: <raw-c-signed-int>)
-      (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(static-thing)))
-    end
-  end;
+    %call-c-function ("setenv")
+        (name :: <raw-byte-string>, new-value :: <raw-byte-string>,
+         overwrite :: <raw-c-signed-int>)
+     => (result :: <raw-c-signed-int>)
+      (primitive-string-as-raw(name), primitive-string-as-raw(new-value),
+       integer-as-raw(1))
+    end;
+  else
+    %call-c-function ("unsetenv")
+        (name :: <raw-byte-string>)
+     => (result :: <raw-c-signed-int>)
+      (primitive-string-as-raw(name))
+    end;
+  end if;
   new-value
 end function environment-variable-setter;
 
