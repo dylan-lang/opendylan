@@ -423,7 +423,7 @@ define method process-pending-init-form (heap :: <model-heap>,
   // the storage, not just sets it...  However, if the binding is
   // never actually referenced, we should be able to remove it.
   // And if the binding is ever referenced, it should get claimed.
-  // so how come dylan-string-buffer seems unclaimed (init gets zappd)
+  // so how come dylan-string-buffer seems unclaimed (init gets zapped)
   // but the functions referencing it seem to be around???
   // (display-class-breakpoints).
   when (~*assume-side-effect-free-init-forms?* |
