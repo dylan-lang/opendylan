@@ -37,7 +37,7 @@ end class-test <byte-vector>;
 define method test-byte-vector-size-and-fill
     (vector-size :: <integer>, fill :: <byte>)
  => ()
-    let v = make(<byte-vector>, size: size, fill: fill);
+    let v = make(<byte-vector>, size: vector-size, fill: fill);
     let name = format-to-string("vector-size-%d-fill-%d", vector-size, fill);
     check-equal(format-to-string("%s empty?", name), v.empty?, vector-size == 0);
     check-equal(format-to-string("%s.size = %d", name, vector-size), v.size, vector-size);
