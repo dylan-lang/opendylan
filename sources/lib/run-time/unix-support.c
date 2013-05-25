@@ -17,30 +17,6 @@ void mps_lib_abort(void)
   abort();
 }
 
-/* HACK -- Implement GC_malloc and GC_free
- *
- * This should not be necessary as nobody should be
- * calling them. But the date library (amongst others)
- * currently does. Such libraries should be changed to call
- * MMAllocMisc and MMFreeMisc instead - otherwise Dylan will
- * never be able to interoperate with Boehm.
- */
-
-#ifdef GC_USE_MPS
-extern void *mps__malloc(size_t size);
-extern void mps__free(size_t *old);
-
-void *GC_malloc(size_t size)
-{
-  return mps__malloc(size);
-}
-
-void GC_free(void *old)
-{
-  mps__free(old);
-}
-#endif
-
 /* Thread Local storage
  *
  * Implement this in C for invocation by HARP, just in

@@ -105,6 +105,18 @@ INLINE D instance_header_setter (D header, D* instance) {
   return(header);
 }
 
+void *MMAllocMisc(size_t size)
+{
+  return GC_MALLOC_ATOMIC(size);
+}
+
+void MMFreeMisc(void *old, size_t size)
+{
+  ignore(size);
+
+  GC_FREE(old);
+}
+
 static struct _mps_finalization_queue {
   D first;
   struct _mps_finalization_queue *rest;

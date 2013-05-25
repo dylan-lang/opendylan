@@ -1,6 +1,7 @@
 #ifndef OPENDYLAN_CRT_RUNTIME_H
 #define OPENDYLAN_CRT_RUNTIME_H
 
+#include <stddef.h>
 #include <setjmp.h>
 
 #ifdef __GNUC__
@@ -1173,6 +1174,17 @@ extern void primitive_replaceX
 #define primitive_address_at_setter(e, x, o, b) \
         AT_SETTER(DADDR,e,x,o,b)
 */
+
+/* Allocate General Purpose Space
+ *
+ * MMAllocMisc and MMFreeMisc provide general-purpose memory for
+ * internal use by the Dylan run-time system in a manner similar
+ * to ANSI malloc and free.  The memory will not be relocated, and must
+ * be freed explicitly.
+ */
+
+extern void *MMAllocMisc(size_t size);
+extern void MMFreeMisc(void *p, size_t size);
 
 /* ALLOCATION PRIMITIVES */
 
