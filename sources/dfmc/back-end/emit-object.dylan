@@ -211,7 +211,7 @@ define method emit-name-internal
 		  raw-mangle(back-end, library-description-emit-name(form-library(defn))));
   else
     // This can happen e.g. when we copy a sealed inline-only method due to
-    // a non-inlinable access -- corresponding domain gets copied along with
+    // a non-inlineable access -- corresponding domain gets copied along with
     // the method, resulting in an anonymous domain.
     emit-anonymous-name(back-end, stream, o)
   end;
