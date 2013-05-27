@@ -57,7 +57,7 @@ define method try-inlining-call (c :: <function-call>, function)
   // <apply> nodes must be inlined, but the rules are different
 
   // Calls where the function is something other than an IEP
-  // probably shouldn't ever be inlinined.
+  // probably shouldn't ever be inlined.
 
   #f
 end method try-inlining-call;
