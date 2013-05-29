@@ -296,7 +296,7 @@ end function-test jam-target-variable;
 
 define jam function-test jam-target-bind ()
   //---*** Fill this in...
-end function-test jam-target-build;
+end function-test jam-target-bind;
 
 define jam function-test jam-target-build ()
   //---*** Fill this in...
