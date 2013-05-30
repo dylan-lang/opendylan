@@ -75,7 +75,7 @@ end macro;
 
 define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <virtual-object>) => (name)
-  break("Illegal to reference a virtual object %=\n", o);
+  break("Illegal to emit the name of a virtual object %=\n", o);
 end method;
 
 /// NAMES
