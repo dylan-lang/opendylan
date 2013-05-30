@@ -255,7 +255,7 @@ define test c-struct-test (description: "C-Struct Tests")
 end;
 
 
-/// Try some C functions in some diffetent ways.
+/// Try some C functions in some different ways.
 /// this could always use more tests.
 define test c-function-test (description: "C Function Tests")
   format-out("Running c-function tests\n");
