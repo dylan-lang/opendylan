@@ -234,7 +234,7 @@ These are organized based on the "Standard Procedures" section of R4RS.
 |                                |                                               |
 |    (boolean? obj)              |    instance?(obj, <boolean>)                  |
 +--------------------------------+-----------------------------------------------+
-| **Equivalance predicates**                                                     |
+| **Equivalence predicates**                                                     |
 +--------------------------------+-----------------------------------------------+
 | .. code-block:: scheme         | .. code-block:: dylan                         |
 |                                |                                               |
