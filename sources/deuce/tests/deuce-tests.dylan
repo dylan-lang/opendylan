@@ -17,6 +17,3 @@ define suite deuce-test-suite ()
   suite motion-suite;
   suite search-suite;
 end suite deuce-test-suite;
-
-perform-suite(deuce-test-suite);
-
