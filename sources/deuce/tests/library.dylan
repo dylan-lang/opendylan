@@ -24,7 +24,8 @@ define module deuce-test-suite
   use deuce-internals;
 
   use streams,
-    rename: { <buffer> => streams/<buffer> };
+    rename: { <buffer> => streams/<buffer>,
+              read-character => streams/read-character };
   use testworks;
 
   export deuce-test-suite;
