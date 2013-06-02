@@ -123,7 +123,7 @@ define function get-application-filename
   let bufsiz :: <integer> = 128;
   let size = primitive-wrap-machine-word
     (primitive-cast-pointer-as-raw
-       (%call-c-function ("MMAllocMisc")
+       (%call-c-function ("malloc")
           (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
           (integer-as-raw(4))
        end));
@@ -151,9 +151,9 @@ define function get-application-filename
     end;
     #f
   cleanup
-    %call-c-function ("MMFreeMisc")
-      (p :: <raw-c-pointer>, nbytes :: <raw-c-unsigned-long>) => (void :: <raw-c-void>)
-        (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(size)), integer-as-raw(4))
+    %call-c-function ("free")
+      (p :: <raw-c-pointer>) => (void :: <raw-c-void>)
+        (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(size)))
     end
   end
 end function;
