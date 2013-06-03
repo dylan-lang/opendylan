@@ -67,7 +67,7 @@ linking. Note that these versions only have a command-line compiler
 and no IDE.
 
 64 bit Linux requires that the Boehm GC is installed
-(For example, ``apt-get install libgc`` on Ubuntu).
+(For example, ``apt-get install libgc-dev`` on Ubuntu).
 
 Installation from source
 ------------------------
