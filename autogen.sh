@@ -24,7 +24,9 @@ DIE=false
 
 $DIE && exit 1
 
-echo "processing (ignore errors and warnings from automake)..."
+echo "*** Hello, there! ***"
+echo "*** Please ignore errors and warnings from automake. ***"
+echo "*** Thanks! ***"
 
 ( cd $srcdir
   mkdir -p build-aux
