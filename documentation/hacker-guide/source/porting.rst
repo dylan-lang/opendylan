@@ -97,11 +97,33 @@ You will also need to do a couple of edits to the C run-time:
 .. warning:: We should improve this code within the C run-time.
    :class: alert alert-block alert-info
 
+Additionally, there are some mappings involving ``OPEN_DYLAN_PLATFORM_NAME``
+in ``sources/dfmc/c-run-time/Makefile.in`` that will need to be updated.
+
 LLVM Back-End
 =============
 
 The per-platform configurations for the LLVM back-end can be found
 within ``sources/dfmc/llvm-back-end/llvm-targets.dylan``.
+
+When adding a new CPU type, add a new abstract back-end for the CPU with
+the appropriate data layout and word size.
+
+When adding a new OS type, add a new abstract back-end for the OS.
+
+After that, you can create the new target back-end that inherits from the
+appropriate CPU and OS specific abstract back-ends.  You may need to
+override the data layout if a different ABI is required.
+
+.. warning:: Someone should document how to correctly determine the
+   appropriate data layout to use.
+   :class: alert alert-block alert-info
+
+Be sure to invoke ``register-back-end`` correctly with your new back-end
+class.
+
+Additionally, there are some mappings involving ``OPEN_DYLAN_PLATFORM_NAME``
+in ``sources/lib/run-time/Makefile.in`` that will need to be updated.
 
 *This isn't completely written yet.*
 
@@ -122,6 +144,10 @@ The ``configure.ac`` script handles detecting a target platform and
 setting some appropriate variables within the build system. There
 is a large block that deals with checking the ``$target`` (set up
 by ``AC_CANONICAL_TARGET``) and configuring things appropriately.
+
+After updating ``configure.ac``, be sure to re-run ``autogen.sh``
+to create an updated ``configure`` script before re-running
+``configure``.
 
 Performing a Cross-Build
 ========================
