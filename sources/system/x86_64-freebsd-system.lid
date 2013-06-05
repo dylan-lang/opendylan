@@ -6,8 +6,8 @@ Minor-Version: 1
 Target-Type:   dll
 Files: library
        operating-system
-       amd64-freebsd-magic-numbers
-       amd64-freebsd-operating-system
+       x86_64-freebsd-magic-numbers
+       x86_64-freebsd-operating-system
        unix-operating-system
        tokenize-variable
        date
