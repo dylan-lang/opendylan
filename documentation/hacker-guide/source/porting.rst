@@ -33,10 +33,8 @@ OS names are typically:
 * ``#"freebsd"``
 * ``#"win32"``
 
-.. warning:: Some existing targets are poorly named. The CPU type
-   ``#"amd64"`` should not be used, instead favoring ``#"x86_64"``.
-   Similarly, we may attempt to rename ``#"win32"`` to ``#"windows"``
-   in the future.
+.. warning:: Some existing targets are poorly named.  We may attempt to
+   rename ``#"win32"`` to ``#"windows"`` in the future.
    :class: alert alert-block alert-warning
 
 .. warning:: We do not yet have a strategy in place for targets which
