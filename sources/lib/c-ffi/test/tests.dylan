@@ -793,10 +793,8 @@ end;
 define test bug-17 ()
     check-true("bug 17 make regular pointer",
                instance?(make(<bar-p>), <bar-p>)); // this works fine
-    /* This crashes the compiler with the C back-end. Disable until
-       we fix that. */
-    // check-true("bug 17 make pointer subtype",
-    //            instance?(make(<bar-bar>), <bar-bar>)); // fails
+    check-true("bug 17 make pointer subtype",
+               instance?(make(<bar-bar>), <bar-bar>)); // fails
 end;
 
 // 
@@ -1083,14 +1081,15 @@ end;
 // -------------
 // tests for passing c structs by value
 
+// ***--- We've disabled this for now as it is broken in the C back-end.
 
+/*
 define c-function OMGW-width
   parameter struct :: <OLEMENUGROUPWIDTHS>;
   parameter index :: <C-int>;
   result r :: <c-long>;
   c-name: "OMGW_width"
 end;
-
 
 define c-function Vack-return-slot
   parameter dde :: <DDEACK>;
@@ -1146,7 +1145,6 @@ define c-function Vack-ack-slot-setter
 end;
 
 
-
 define test struct-by-value ()
   let dde :: <LPDDEACK> = make(<LPDDEACK>);
   // use c-struct setters and getters
@@ -1190,6 +1188,7 @@ define test struct-by-value ()
 		OMGW-width(widths, i), i + 47);
   end;
 end;
+*/
 
 
 
@@ -1216,7 +1215,7 @@ define suite c-ffi-suite ()
   test c-dylan-object-test;
   test bug-393;
   test bug-414;
-  test struct-by-value
+  // test struct-by-value
 end suite c-ffi-suite;
 
 /// The dylan top level for the tests
