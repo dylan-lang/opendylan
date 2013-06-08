@@ -107,7 +107,7 @@ end method;
 
 
 define constant $elf-as-assemble-command-line =
-  "as -L -o %s.o %s.s";
+  "as -L --32 -o %s.o %s.s";
 
 define method assemble-harp-outputter
     (outputter :: <harp-elf-as-outputter>, filename) => ()

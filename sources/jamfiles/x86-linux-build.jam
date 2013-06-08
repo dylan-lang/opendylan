@@ -7,7 +7,7 @@ include $(SYSTEM_ROOT)/lib/config.jam ;
 # Configuration variables
 #
 
-CCFLAGS  += -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_LINUX ;
+CCFLAGS  += -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_LINUX -m32 ;
 
 #
 # Library search path
