@@ -159,7 +159,7 @@ end function-test make-rgb-color;
 
 define test default-text-styles-test ()
   let text-style = $default-text-style;
-  let button-text-style = make-text-style("courier", #f, #f, #f);
+  let button-text-style = make-text-style("courier", #f, #f, #f, #f);
   let button = make-test-pane(<push-button>, text-style: button-text-style);
   // check-equal("pane text style",
   //             pane-text-style(button), button-text-style);
