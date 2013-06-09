@@ -14,9 +14,9 @@ define macro with-storage
          block ()
            ?name := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw
-                         (%call-c-function ("calloc")
-                            (cnt :: <raw-c-unsigned-long>, nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
-                            (integer-as-raw(1), integer-as-raw(?size))
+                         (%call-c-function ("malloc")
+                            (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
+                            (integer-as-raw(?size))
                           end));
            if (primitive-machine-word-equal?
                  (primitive-unwrap-machine-word(?name), integer-as-raw(0)))

@@ -71,23 +71,23 @@ end function st-size;
 
 define inline-only function st-atime (st :: <machine-word>) => (atime :: <abstract-integer>)
   raw-as-abstract-integer
-  (primitive-c-signed-int-at(primitive-unwrap-machine-word(st),
-		         integer-as-raw(0),
-			     integer-as-raw($st-atime-offset)))
+  (primitive-c-signed-long-at(primitive-unwrap-machine-word(st),
+                              integer-as-raw(0),
+	                      integer-as-raw($st-atime-offset)))
 end function st-atime;
 
 define inline-only function st-mtime (st :: <machine-word>) => (mtime :: <abstract-integer>)
   raw-as-abstract-integer
-  (primitive-c-signed-int-at(primitive-unwrap-machine-word(st),
-			     integer-as-raw(0),
-			     integer-as-raw($st-mtime-offset)))
+  (primitive-c-signed-long-at(primitive-unwrap-machine-word(st),
+	                      integer-as-raw(0),
+	                      integer-as-raw($st-mtime-offset)))
 end function st-mtime;
 
 define inline-only function st-ctime (st :: <machine-word>) => (ctime :: <abstract-integer>)
   raw-as-abstract-integer
-  (primitive-c-signed-int-at(primitive-unwrap-machine-word(st),
-			     integer-as-raw(0),
-			     integer-as-raw($st-ctime-offset)))
+  (primitive-c-signed-long-at(primitive-unwrap-machine-word(st),
+	                      integer-as-raw(0),
+	                      integer-as-raw($st-ctime-offset)))
 end function st-ctime;
 
 

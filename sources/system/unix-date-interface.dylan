@@ -103,9 +103,9 @@ end method native-clock-to-tm;
 /// block of storage, store the time therein, and then pass the block's address.  (Sigh)
 define method native-clock-to-tm (time :: <machine-word>) => (tm :: <machine-word>)
   with-storage (timeloc, raw-as-integer(primitive-word-size()))
-    primitive-c-signed-int-at(primitive-unwrap-machine-word(timeloc),
-			      integer-as-raw(0),
-			      integer-as-raw(0))
+    primitive-c-signed-long-at(primitive-unwrap-machine-word(timeloc),
+			       integer-as-raw(0),
+			       integer-as-raw(0))
       := primitive-unwrap-machine-word(time);
     let tm = primitive-wrap-machine-word
                (primitive-cast-pointer-as-raw
