@@ -4,12 +4,6 @@
 include $(SYSTEM_ROOT)/lib/config.jam ;
 
 #
-# Runtime
-#
-
-RTOBJS_llvm ?= ;
-
-#
 # Configuration variables
 #
 
