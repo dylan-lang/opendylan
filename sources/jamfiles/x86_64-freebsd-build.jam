@@ -1,0 +1,20 @@
+#
+# Generated config
+#
+include $(SYSTEM_ROOT)/lib/config.jam ;
+
+#
+# Configuration variables
+#
+
+CCFLAGS  += -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_FREEBSD ;
+
+#
+# Library search path
+#
+LINKFLAGSEXE ?= -Wl,-z,origin -Wl,-rpath,\\$ORIGIN/../lib/ -pthread ;
+
+#
+# Common build script
+#
+include $(SYSTEM_ROOT)/lib/posix-build.jam ;
