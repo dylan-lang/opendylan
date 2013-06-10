@@ -1,0 +1,8 @@
+actions Cc
+{  
+   if [ $(<) = start.o ] ; then
+      $(CC) -c -o "$(<)" '-DFREEBSD_HACKSTACK="dylan-compiler-hackstack.h"' -I. $(CCFLAGS) $(CCDEFS) $(CCHDRS) "$(>)"
+   else
+      $(CC) -c -o "$(<)" $(CCFLAGS) $(CCDEFS) $(CCHDRS) "$(>)"
+   fi
+}

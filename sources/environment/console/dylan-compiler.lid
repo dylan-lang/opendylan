@@ -9,6 +9,8 @@ Files: compiler-library
        start
 RC-Files:       console.rc
 C-Header-Files: console.ico
+C-Header-Files: dylan-compiler-hackstack.h
+Jam-Includes: hack-stack.jam
 Major-Version: 2
 Minor-Version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
