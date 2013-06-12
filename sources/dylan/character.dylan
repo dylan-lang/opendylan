@@ -138,11 +138,3 @@ define sealed inline method as-lowercase (character :: <byte-character>)
   element-no-bounds-check($lowercase-ascii, as(<integer>, character))
   // end without-bounds-checks;
 end method as-lowercase;
-
-// ALREADY BOOTED
-// (define *byte-characters* (make <vector> size: 256))
-
-/// INITIALIZE *BYTE-CHARACTERS*
-
-// (for ((index from 0 below 256))
-//  (set! (element *byte-characters* index) (as <byte-character> index)))
