@@ -1053,7 +1053,7 @@ define &module dylan-extensions
   // You might think that these should be part of dylan-incremental...  But they're needed
   // for those "dumb" functions that only come in an scu version, such as has-instances?.
   // In practice they're rarely used on anything but the $empty-subjunctive-class-universe,
-  // so much of the code is optimzed with that in mind.
+  // so much of the code is optimized with that in mind.
   create 
     <subjunctive-class-universe>,
     $empty-subjunctive-class-universe,
