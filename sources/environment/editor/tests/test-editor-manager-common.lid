@@ -1,5 +1,5 @@
 library: test-editor-manager-common
-files:	 library_module
+files:	 library
 	 setup-tests
 	 test-commands
 	 test-substitution

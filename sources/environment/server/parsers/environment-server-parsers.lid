@@ -1,5 +1,5 @@
 Library: environment-server-parsers
-Files:	 library_module
+Files:	 library
 	 parser-interface
 	 string-parser
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

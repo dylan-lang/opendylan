@@ -1,6 +1,6 @@
 Library: environment-server
 Target-Type:	dll
-Files:	 library_module
+Files:	 library
 	 environment-server
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

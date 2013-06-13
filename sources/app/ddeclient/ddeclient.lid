@@ -1,7 +1,7 @@
 Library:   ddeclient
 Synopsis:  A simple program to send a single synchronous DDE client request.
 Author:    Hugh Greene
-Files:	library_module
+Files:	library
 	ddeclient
 c-libraries:	$(guilibsmt)
 		Shell32.lib
