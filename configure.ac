@@ -52,6 +52,10 @@ case $host in
       OPEN_DYLAN_PLATFORM_NAME=x86_64-linux;
       RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
+  arm-*-linux*)
+      OPEN_DYLAN_PLATFORM_NAME=arm-linux;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
+    ;;
   *)
       AC_MSG_ERROR([The $host platform is not supported.])
     ;;
