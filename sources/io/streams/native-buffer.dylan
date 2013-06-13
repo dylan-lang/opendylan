@@ -215,14 +215,6 @@ define inline function buffer-ref-setter
 end function buffer-ref-setter;
 
 
-/*---*** andrewa: not currently used
-define open generic breakpoint (amount) => (res);
-
-define method breakpoint (amount :: <integer>) => (res)
-  amount * 4;
-end;
-*/
-
 /*  **** Temporarily commented out *****
 
 // This is the "real" version - but it's currently broken
