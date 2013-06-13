@@ -215,47 +215,12 @@ define inline function buffer-ref-setter
 end function buffer-ref-setter;
 
 
-/*  **** Temporarily commented out *****
-
-// This is the "real" version - but it's currently broken
-// because the native back end doesn't implement primitive-fill-bytes!
-// properly
-
 define inline-only function fill-bytes!
     (target :: <buffer>, value :: <byte-value>,
      start :: <integer>, last :: <integer>) => ()
   primitive-fill-bytes!
     (target, primitive-repeated-slot-offset(target), integer-as-raw(start),
      integer-as-raw(last - start), integer-as-raw(value))
-end;
-
-*/
-
-
-
-/* Here's the temporary work-around */
-
-define /* inline-only */ function fill-bytes!
-    (target :: <buffer>, value :: <byte-value>,
-     start :: <integer>, last :: <integer>) => ()
-  let amount = last - start;
-  // First check to see if the conditions are correct for the
-  // primitive to be compiled correctly. Must be an multiple of 4
-  // bytes, and a word which has each byte the same (i.e. 0)
-  if ((value == 0) & (logand(amount, 3) == 0))
-    primitive-fill-bytes!
-      (target, primitive-repeated-slot-offset(target), integer-as-raw(start),
-       integer-as-raw(amount), integer-as-raw(value))
-  else
-    // If the primitive will fail, do it the slow way 
-    let fill :: <byte-representation>
-      = as(<byte-representation>, logand(value, #xff));
-    without-bounds-checks
-      for (i :: <integer> from start below last)
-	element(target, i) := fill;
-      end for;
-    end without-bounds-checks;
-  end if;
 end;
 
 define sealed method buffer-fill
