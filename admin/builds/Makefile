@@ -694,7 +694,7 @@ duim-deuce: $(DUIM_DEUCE)
 
 testworks: $(TESTWORKS)
 testworks-specs: $(TESTWORKS_SPECS)
-gui-testworks: $(TESTWORKS_GUI)
+testworks-gui: $(TESTWORKS_GUI)
 
 com: $(COM)
 ole-automation: $(OLE_AUTOMATION)
@@ -767,7 +767,7 @@ debugger: debugger-manager binary-manager coff-manager coff-debug devel-dbg-ui b
 duim-ole: duim-ole-container duim-ole-server duim-ole-control
 environment: deuce duim-deuce environment-commands environment-application-commands environment-internal-commands environment-server environment-tools environment-property-pages environment-deuce environment-project-wizard environment-profiler debugger-manager target-application binary-manager coff-manager interactive-downloader environment-debugger win32-environment with-splash-screen
 ole-libraries: com ole-server ole-automation ole-control-framework ole-container ole-dialogs
-testworks-libraries: testworks testworks-specs gui-testworks
+testworks-libraries: testworks testworks-specs testworks-gui
 user-libraries: dylan common-dylan c-ffi system collections io commands
 win32-libraries: win32-common win32-kernel win32-gdi win32-user win32-dde win32-dialog win32-controls win32-gl win32-glu win32-html-help win32-multimedia win32-registry win32-resources win32-rich-edit win32-version win32-shell
 remote-debugger: remote-nub debugger-server
@@ -836,7 +836,7 @@ channels-tests: $(CHANNELS_TESTS)
 dfmc-environment-test-suite: $(DFMC_ENVIRONMENT_TEST_SUITE)
 dfmc-environment-test-suite-app: $(DFMC_ENVIRONMENT_TEST_SUITE_APP)
 
-testworks-libraries: testworks testworks-specs gui-testworks
+testworks-libraries: testworks testworks-specs testworks-gui
 duim-test-suites: duim-test-suite-app duim-gui-test-suite win32-duim-gui-test-suite win32-duim-regression-test-suite
 test-suites: libraries-test-suite-app duim-test-suites
 pentium-test-suites: pentium-test-suite-app
@@ -1510,8 +1510,8 @@ $(TESTWORKS_SPECS):
 $(TESTWORKS_GUI):
   $(ENSURE_RUNTIME_LIBRARY) $(DUIM_DLL) duim
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
-  $(ENSURE_SOURCES) gui-testworks $(TESTWORKS_GUI_SOURCE)
-  $(BUILD_RUNTIME_LIBRARY) gui-testworks $(TESTWORKS_GUI_DLL)
+  $(ENSURE_SOURCES) testworks-gui $(TESTWORKS_GUI_SOURCE)
+  $(BUILD_RUNTIME_LIBRARY) testworks-gui $(TESTWORKS_GUI_DLL)
 
 #
 # Compiler

@@ -24,11 +24,11 @@
 	<lib file="DxTSTSPC.lib"/>
       </release>
     </library>
-    <library name="gui-testworks" title="GUI Testworks">
+    <library name="testworks-gui" title="Testworks GUI">
       <requires>duim</requires>
       <sources location="qa/testworks/gui">
-	<project platform="x86-win32">gui-testworks.lid</project>
-	<project>gui-testworks.lid</project>
+	<project platform="x86-win32">testworks-gui.lid</project>
+	<project>testworks-gui.lid</project>
       </sources>
       <release product="Functional Developer" version="2.1" platform="x86-win32">
 	<binary file="DxGUITST.dll"/>

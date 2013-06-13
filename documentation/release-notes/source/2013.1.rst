@@ -53,6 +53,15 @@ Runtime
 The C run-time no longer attempts to drop into a debugger if you allocate
 more than roughly 100M of memory in a single allocation.
 
+TestWorks
+---------
+
+TestWorks has been re-arranged some to have a single git submodule which
+has resulted in a couple of directories moving around.
+
+The ``gui-testworks`` library is now named ``testworks-gui`` to be consistent
+with the other TestWorks components.
+
 Libraries
 ---------
 

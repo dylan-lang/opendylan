@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library test-editor-manager-common
   use common-dylan;
   use io;
-  use gui-testworks; //-plus;
+  use testworks-gui;
 
   use editor-common;
   use editor-exe-backend;
@@ -20,7 +20,7 @@ end library test-editor-manager-common;
 
 define module test-editor-manager-common
   use common-dylan;
-  use gui-testworks; //-plus;
+  use testworks-gui;
 
   use environment-to-editor-hacker;
   use editor-exe-backend;
