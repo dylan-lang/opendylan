@@ -3,6 +3,7 @@
   <div class="row">
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
+        <li><a href="#contribute"><i class="icon-chevron-right"></i> How to Contribute</a></li>
         <li><a href="#development"><i class="icon-chevron-right"></i> Development</a></li>
         <li><a href="#irc"><i class="icon-chevron-right"></i> IRC Channel</a></li>
         <li><a href="#newsgroup"><i class="icon-chevron-right"></i> Newsgroup</a></li>
@@ -19,17 +20,34 @@ Community
 Here are some resources for keeping up with what's going on in the Dylan hacker
 community...
 
+.. _contribute:
+
+How to Contribute
+=================
+
+We have a `list of open projects`_ that are looking for contributors and
+help. These projects range in difficulty and some don't even require
+knowledge of Dylan.
+
+We also have some `guidelines and recommendations`_ for people who are
+interested in contributing to Open Dylan.
+
+.. _list of open projects: https://github.com/dylan-lang/opendylan/wiki
+.. _guidelines and recommendations: https://github.com/dylan-lang/opendylan/blob/master/CONTRIBUTING.rst
+
 .. _development:
 
 Development
 ===========
 
-- `All of our repositories on GitHub <https://github.com/dylan-lang/>`_
+All of our repositories are available on `GitHub`_.
+Some repositories have been `archived`_ as they are historical in nature.
+
 - `Continuous build server <https://jenkins.opendylan.org/>`_.
-- `TODO lists tracked on Trello <https://trello.com/opendylan>`_
 - `Open bugs for Open Dylan <https://github.com/dylan-lang/opendylan/issues>`_
-- `How to contribute </documentation/hacker-guide/contribute.html>`_
-- `Open projects, looking for contributors and help <https://github.com/dylan-lang/opendylan/wiki>`_
+
+.. _GitHub: https://github.com/dylan-lang/
+.. _archived: https://github.com/dylan-hackers/
 
 .. _irc:
 
