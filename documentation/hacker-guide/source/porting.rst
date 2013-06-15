@@ -135,6 +135,9 @@ You will want to copy an existing one and make whatever changes are
 required. When targeting a Unix-like platform, much of the logic is
 already shared within ``sources/jamfiles/posix-build.jam``.
 
+You should also add your new build script to ``soures/jamfiles/Makefile.in``
+so that it gets installed.
+
 Autoconf
 ========
 
