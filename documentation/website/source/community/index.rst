@@ -4,8 +4,8 @@
     <div class="span3 bs-docs-sidebar">
       <ul class="nav nav-list bs-docs-sidenav" data-spy="affix">
         <li><a href="#development"><i class="icon-chevron-right"></i> Development</a></li>
-        <li><a href="#the-dylan-irc-channel"><i class="icon-chevron-right"></i> IRC Channel</a></li>
-        <li><a href="#newsgroup-comp-lang-dylan"><i class="icon-chevron-right"></i> Newsgroup</a></li>
+        <li><a href="#irc"><i class="icon-chevron-right"></i> IRC Channel</a></li>
+        <li><a href="#newsgroup"><i class="icon-chevron-right"></i> Newsgroup</a></li>
         <li><a href="#mailing-lists"><i class="icon-chevron-right"></i> Mailing Lists</a></li>
         <li><a href="#other-sites"><i class="icon-chevron-right"></i> Other sites</a></li>
       </ul>
@@ -19,7 +19,7 @@ Community
 Here are some resources for keeping up with what's going on in the Dylan hacker
 community...
 
-.. _development::
+.. _development:
 
 Development
 ===========
@@ -31,7 +31,7 @@ Development
 - `How to contribute </documentation/hacker-guide/contribute.html>`_
 - `Open projects, looking for contributors and help <https://github.com/dylan-lang/opendylan/wiki>`_
 
-.. _irc::
+.. _irc:
 
 The #dylan IRC channel
 ======================
@@ -47,7 +47,7 @@ To discuss coding issues you can paste your code to the #dylan channel via
 http://paste.lisp.org/new/dylan or any other pastebin site.  See previous
 pastes here: http://paste.lisp.org/list/dylan
 
-.. _newsgroup::
+.. _newsgroup:
 
 Newsgroup comp.lang.dylan
 =========================
