@@ -13,9 +13,9 @@
     </div>
     <div class="span9">
 
-*********
-Community
-*********
+***********
+Participate
+***********
 
 Here are some resources for keeping up with what's going on in the Dylan hacker
 community...
