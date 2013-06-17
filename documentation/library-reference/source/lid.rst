@@ -275,12 +275,12 @@ and the arguments should be passed one per line and be one of the following:
 
 ``-F path``:
   Add a path to the search path for frameworks.
-  (Mac OS X only)
+  **(Mac OS X only)**
 
 ``-framework framework``:
   Link against the specified shared library. This should be either in the
-  regular linker search path or have a path specified via a ``-L`` flag.
-  (Mac OS X only)
+  regular linker search path or have a path specified via a ``-F`` flag.
+  **(Mac OS X only)**
 
 Unlike the other keywords described in this section, the *C-Libraries:*
 keyword propagates to dependent libraries. For example, suppose library
