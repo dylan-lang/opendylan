@@ -4635,27 +4635,6 @@ D SLOT_VALUE(D object, DSINT position)
   }
 }
 
-/* LIBC ERROR PRIMITIVES */
-
-/*---*** NOTE: These aren't really primitives but are called
-  ---*** by various Dylan libraries by the direct C-FFI.  They
-  ---*** should be renamed psuedo_primitive_... */
-
-#include <errno.h>
-
-DSINT primitive_errno () {
-  return(errno);
-}
-
-DSINT primitive_set_errno (DSINT code) {
-  errno = code;
-  return(errno);
-}
-
-DCBSTR primitive_errstr (DSINT no) {
-  return(sys_errlist[no]);
-}
-
 /* TERMINAL */
 
 /* OPERATING SYSTEM */
