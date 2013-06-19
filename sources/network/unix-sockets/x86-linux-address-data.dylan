@@ -10,8 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant <in-port-t> = <C-unsigned-short>;
 define constant <in-port-t*> = <C-unsigned-short*>;
-define constant <in-addr-t> = <C-raw-unsigned-long>;
-define constant <in-addr-t*> = <C-raw-unsigned-long*>;
+define constant <in-addr-t> = <C-raw-unsigned-int>;
+define constant <in-addr-t*> = <C-raw-unsigned-int*>;
 
 // TODO: Abide by the letter of the law?
 /*
