@@ -597,10 +597,10 @@ typedef struct _teb {
 #ifdef USE_PTHREAD_TLS
 extern PURE_FUNCTION TEB* get_teb(void);
 #else
-extern TLS_VARIABLE TLS_INITIAL_EXEC TEB* teb;
+extern TLS_VARIABLE TLS_INITIAL_EXEC TEB* dylan_teb;
 PURE_FUNCTION static inline TEB* get_teb()
 {
-  return teb;
+  return dylan_teb;
 }
 #endif
 
