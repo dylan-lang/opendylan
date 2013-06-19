@@ -137,7 +137,7 @@ TLV_VECTOR_LIST  tlv_vector_list;
 
 long tlv_writer_counter = 0;
 
-intptr_t  TLV_vector_offset = 2;
+size_t  TLV_vector_offset = 2;
 
 
 /*****************************************************************************/
@@ -145,13 +145,13 @@ intptr_t  TLV_vector_offset = 2;
 /*****************************************************************************/
 
 void  initialize_threads_primitives();
-void *make_tlv_vector(int);
+void *make_tlv_vector(size_t);
 int   priority_map(int);
 
-TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize);
-void grow_all_tlv_vectors(int newsize);
+TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, size_t newsize);
+void grow_all_tlv_vectors(size_t newsize);
 void  copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source);
-void update_tlv_vectors(int offset, D value);
+void update_tlv_vectors(size_t offset, D value);
 void add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector);
 int remove_tlv_vector(DTHREAD *thread);
 
@@ -244,7 +244,7 @@ static inline void set_current_thread_handle(void *handle)
 
 /* TLV management */
 
-void *make_tlv_vector(int n)
+void *make_tlv_vector(size_t n)
 {
   D *vector;
   size_t size;
@@ -269,7 +269,7 @@ void free_tlv_vector(D *vector)
 
 /* Grow a single TLV vector
  */
-TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize)
+TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, size_t newsize)
 {
   TLV_VECTOR  new_vector;
 
@@ -284,12 +284,12 @@ TLV_VECTOR grow_tlv_vector(TLV_VECTOR vector, int newsize)
 }
 
 
-void grow_all_tlv_vectors(int newsize)
+void grow_all_tlv_vectors(size_t newsize)
 {
   TLV_VECTOR_LIST list;
   TLV_VECTOR new_default;
 
-  trace_tlv("Growing all vectors to size %d", newsize);
+  trace_tlv("Growing all vectors to size %ld", newsize);
 
   // Wait until we are the only writer
   while (atomic_cas(&tlv_writer_counter, TLV_GROW, 0) != 0);
@@ -330,12 +330,12 @@ void copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source)
  * must be in the tlv_vector_list_lock Critical Section.
  */
 void
-update_tlv_vectors(int offset, D value)
+update_tlv_vectors(size_t offset, D value)
 {
   TLV_VECTOR_LIST list = tlv_vector_list;
   D *destination;
 
-  trace_tlv("Propagating default of offset %d with value %p", offset, value);
+  trace_tlv("Propagating default of offset %ld with value %p", offset, value);
 
   while (list != NULL) {
     destination = (D *)(list->tlv_vector + offset);
@@ -418,7 +418,7 @@ void setup_tlv_vector(DTHREAD *thread)
 {
   TEB         *teb;
   TLV_VECTOR   tlv_vector;
-  uintptr_t    size;
+  size_t    size;
 
   trace_tlv("Setting up TLV vector for thread %p", thread);
 
@@ -430,7 +430,7 @@ void setup_tlv_vector(DTHREAD *thread)
 
   if (!tlv_vector) {
     // Now set up a vector for the Dylan thread variables
-    size = (uintptr_t)(default_tlv_vector[1]) >> 2;
+    size = (size_t)(default_tlv_vector[1]) >> 2;
     tlv_vector = make_tlv_vector(size);
     set_tlv_vector(tlv_vector);
 
@@ -1501,7 +1501,7 @@ primitive_conditional_update_memory(void * * location, Z newval, Z oldval)
 /* 33 */
 D primitive_allocate_thread_variable(D v)
 {
-  uintptr_t variable_offset, size, limit;
+  size_t variable_offset, size, limit;
 
   pthread_mutex_lock(&tlv_vector_list_lock);
 
@@ -1514,7 +1514,7 @@ D primitive_allocate_thread_variable(D v)
   trace_tlv("Allocating variable at offset %"PRIxPTR, variable_offset);
 
   // First check if we need to grow the TLV vectors
-  size = (uintptr_t)(default_tlv_vector[1]) >> 2;
+  size = (size_t)(default_tlv_vector[1]) >> 2;
   limit = size + 2;
   if (variable_offset >= limit)
     grow_all_tlv_vectors(size+size);  // double the size each time we grow
