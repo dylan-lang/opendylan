@@ -32,8 +32,8 @@
 #endif
 
 
-static void timespec_add_msecs(struct timespec *tp, int msecs) {
-  int secs = msecs / 1000;
+static void timespec_add_msecs(struct timespec *tp, long msecs) {
+  long secs = msecs / 1000;
   msecs = msecs % 1000;
   tp->tv_sec += secs;
   tp->tv_nsec += msecs * 1000000L;
@@ -314,9 +314,9 @@ static void grow_all_tlv_vectors(size_t newsize)
  */
 void copy_tlv_vector(TLV_VECTOR destination, TLV_VECTOR source)
 {
-  int  i, limit;
+  size_t i, limit;
 
-  limit = ((intptr_t)(source[1]) >> 2) + 2;
+  limit = ((size_t)(source[1]) >> 2) + 2;
   for (i = 2; i<limit; i++)
     destination[i] = source[i];
 }
@@ -997,7 +997,7 @@ D primitive_wait_for_notification_timed(D n, D l, D m)
   ZINT           zmilsecs = (ZINT)m;
   NOTIFICATION  *notification;
   SIMPLELOCK    *slock;
-  int            milsecs;
+  ZINT           milsecs;
   struct timespec end;
 
   assert(notif != NULL);
@@ -1349,8 +1349,8 @@ D primitive_make_semaphore(D l, D n, D i, D m)
   ZINT        zinitial = (ZINT)i;
   ZINT        zmax = (ZINT)m;
   SEMAPHORE  *semaphore;
-  int         initial = zinitial >> 2;
-  int         max   = zmax >> 2;
+  ZINT        initial = zinitial >> 2;
+  ZINT        max   = zmax >> 2;
 
   ignore(n);
 
