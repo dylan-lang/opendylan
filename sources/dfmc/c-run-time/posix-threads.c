@@ -176,11 +176,11 @@ void initialize_teb_key(void)
   pthread_key_create(&teb_key, NULL);
 }
 #else
-__thread TEB *teb;
+__thread TEB *dylan_teb;
 
 void set_teb(TEB* new_teb)
 {
-  teb = new_teb;
+  dylan_teb = new_teb;
 }
 
 void initialize_teb_key(void)
