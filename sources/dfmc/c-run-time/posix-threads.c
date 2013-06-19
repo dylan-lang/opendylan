@@ -127,7 +127,6 @@ extern OBJECT KPfalseVKi;
 static pthread_mutex_t thread_join_lock = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t thread_exit_event = PTHREAD_COND_INITIALIZER;
 
-static pthread_mutex_t  tlv_vector_lock = PTHREAD_MUTEX_INITIALIZER;
 static TLV_VECTOR       default_tlv_vector = NULL;
 
 static pthread_mutex_t  tlv_vector_list_lock = PTHREAD_MUTEX_INITIALIZER;
