@@ -7,8 +7,6 @@
  * found in D-doc-design-runtime!win32-thread-portability.text
  */
 
-#define THREADS_RUN_TIME_LIB
-
 #include "posix-threads.h"
 
 #include "trace.h"
