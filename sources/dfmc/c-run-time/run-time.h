@@ -1726,7 +1726,7 @@ extern D MAKE_DDFLT_CELL(DDFLT);
 
 /* THREAD SUPPORT */
 
-extern void initialize_threads_primitives();
+extern void initialize_threads_primitives(void);
 
 extern D primitive_release_simple_lock(D l);
 extern D primitive_release_semaphore(D s);
@@ -1748,7 +1748,7 @@ extern D primitive_thread_join_multiple(D v);
 extern D primitive_thread_join_single(D t);
 extern D primitive_initialize_current_thread(D t, DBOOL s);
 extern D primitive_initialize_special_thread(D t);
-extern D primitive_current_thread();
+extern D primitive_current_thread(void);
 extern D primitive_make_thread(D t, D n, D p, D f, DBOOL s);
 extern D primitive_destroy_thread(D t);
 extern D primitive_destroy_notification(D n);
@@ -1757,7 +1757,8 @@ extern D primitive_make_notification(D l, D n);
 extern D primitive_wait_for_notification_timed(D n, D l, D ms);
 extern D primitive_wait_for_notification(D n, D l);
 extern D primitive_release_notification(D n, D l);
-extern void primitive_thread_yield();
+extern void primitive_detach_thread(D t);
+extern void primitive_thread_yield(void);
 extern void primitive_sleep(D ms);
 extern D primitive_make_simple_lock(D l, D n);
 extern D primitive_allocate_thread_variable(D i);
