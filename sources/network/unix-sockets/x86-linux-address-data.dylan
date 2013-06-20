@@ -72,7 +72,7 @@ define constant $INADDR-BROADCAST = as(<machine-word>, #xffffffff);
 define constant $INADDR-NONE = as(<machine-word>, #xffffffff);
 
 define constant <uint16-t> = <C-unsigned-short>;
-define constant <uint32-t> = <C-raw-unsigned-long>;
+define constant <uint32-t> = <C-raw-unsigned-int>;
 
 define inline-only C-function ntohl
   parameter netlong :: <uint32-t>;
@@ -115,7 +115,7 @@ define C-struct <netent>
   slot n-name-value :: <C-char*>;
   slot n-aliases-value :: <C-char**>;
   slot n-addrtype-value :: <C-int>;
-  slot n-net-value :: <C-raw-unsigned-long>;
+  slot n-net-value :: <C-raw-unsigned-int>;
   pointer-type-name: <netent*>;
 end C-struct;
 

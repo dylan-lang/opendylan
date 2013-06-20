@@ -136,3 +136,10 @@ common-dylan
 On Mac OS X, some code run at startup to get the application name and
 arguments would write past the end of a buffer, resulting in memory
 corruption and likely crashes.
+
+network
+^^^^^^^
+
+Various errors on 64 bit platforms were fixed, including attempting
+to establish a new connection. These errors were the result of using
+a 64 bit value where a 32 bit value was required.
