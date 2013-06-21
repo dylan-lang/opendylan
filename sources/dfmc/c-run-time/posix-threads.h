@@ -175,8 +175,8 @@ typedef struct semaphore {
 #else
   pthread_mutex_t mutex;
   pthread_cond_t  cond;
-  int             count;
-  int             max_count;
+  ZINT            count;
+  ZINT            max_count;
 #endif
 } SEMAPHORE;
 
