@@ -143,7 +143,7 @@ Autoconf
 
 The ``configure.ac`` script handles detecting a target platform and
 setting some appropriate variables within the build system. There
-is a large block that deals with checking the ``$target`` (set up
+is a large block that deals with checking the ``$host`` (set up
 by ``AC_CANONICAL_TARGET``) and configuring things appropriately.
 
 After updating ``configure.ac``, be sure to re-run ``autogen.sh``
