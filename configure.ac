@@ -16,7 +16,7 @@ GC_USE_STATIC_BOEHM=false
 GC_LIB=-lgc
 
 AC_CANONICAL_TARGET
-case $target in
+case $host in
   i*86-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=x86-linux;
       RUNTIME_SOURCES=sources/lib/run-time;
@@ -52,8 +52,12 @@ case $target in
       OPEN_DYLAN_PLATFORM_NAME=x86_64-linux;
       RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
+  arm-*-linux*)
+      OPEN_DYLAN_PLATFORM_NAME=arm-linux;
+      RUNTIME_SOURCES=sources/dfmc/c-run-time
+    ;;
   *)
-      AC_MSG_ERROR([The $target platform is not supported.])
+      AC_MSG_ERROR([The $host platform is not supported.])
     ;;
 esac
 AC_SUBST(OPEN_DYLAN_PLATFORM_NAME)
@@ -104,78 +108,81 @@ AC_ARG_WITH(gc,
             AS_HELP_STRING([--with-gc=PATH],
                            [Path of Boehm GC installation.]))
 
-AS_IF([test x${GC_USE_STATIC_BOEHM} == xtrue],
-      [
-        GC_LIB_NAME=libgc.a
-      ],
-      [
-        AS_IF([test x${OPEN_DYLAN_PLATFORM_NAME} == xx86-darwin],
-              [
-                GC_LIB_NAME=libgc.dylib
-              ],
-              [
-                GC_LIB_NAME=libgc.so
-              ])
-      ]
-)
+if test "$cross_compiling" != "yes"; then
+    AS_IF([test x${GC_USE_STATIC_BOEHM} == xtrue],
+          [
+            GC_LIB_NAME=libgc.a
+          ],
+          [
+            AS_IF([test x${OPEN_DYLAN_PLATFORM_NAME} == xx86-darwin],
+                  [
+                    GC_LIB_NAME=libgc.dylib
+                  ],
+                  [
+                    GC_LIB_NAME=libgc.so
+                  ])
+          ]
+    )
 
-AS_IF([test x$with_mps != x],
-      [
-        AS_IF([test x${SUPPORT_GC_MPS} == xno],
+    AS_IF([test x$with_mps != x],
           [
-            AC_MSG_ERROR([The platform that you are building for requires the Boehm GC.])
+            AS_IF([test x${SUPPORT_GC_MPS} == xno],
+              [
+                AC_MSG_ERROR([The platform that you are building for requires the Boehm GC.])
+              ]
+            )
+            GC_CFLAGS="-DGC_USE_MPS -I${with_mps}/code"
+            GC_CHOICE="mps"
+            old_CPPFLAGS=$CPPFLAGS
+            CPPFLAGS="-I${with_mps}/code"
+            AC_CHECK_HEADER([mps.h],[],[AC_MSG_ERROR([Incorrect path to MPS specified. Please make sure you specified an absolute path to the root MPS directory.])])
+            CPPFLAGS=$old_CPPFLAGS
+            # This is to help catch people who haven't updated to the new MPS yet.
+            AC_CHECK_FILE([${with_mps}/code/lii4gc.gmk],[AC_MSG_ERROR([You have an old version of MPS and need to update.])],[])
           ]
-        )
-        GC_CFLAGS="-DGC_USE_MPS -I${with_mps}/code"
-        GC_CHOICE="mps"
-        old_CPPFLAGS=$CPPFLAGS
-        CPPFLAGS="-I${with_mps}/code"
-        AC_CHECK_HEADER([mps.h],[],[AC_MSG_ERROR([Incorrect path to MPS specified. Please make sure you specified an absolute path to the root MPS directory.])])
-        CPPFLAGS=$old_CPPFLAGS
-        # This is to help catch people who haven't updated to the new MPS yet.
-        AC_CHECK_FILE([${with_mps}/code/lii4gc.gmk],[AC_MSG_ERROR([You have an old version of MPS and need to update.])],[])
-      ]
-)
-AS_IF([test x$with_gc != x],
-      [
-        AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
+    )
+    AS_IF([test x$with_gc != x],
           [
-            AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
+            AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
+              [
+                AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
+              ]
+            )
+            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc}/include"
+            GC_LFLAGS="-L${with_gc}/lib ${GC_LIB}"
+            AC_CHECK_FILE([${with_gc}/lib/${GC_LIB_NAME}],
+                          [
+                            GC_LIBRARY="${with_gc}/lib/${GC_LIB_NAME}"
+                          ],
+                          [])
+            GC_CHOICE="boehm"
           ]
-        )
-        GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc}/include"
-        GC_LFLAGS="-L${with_gc}/lib ${GC_LIB}"
-        AC_CHECK_FILE([${with_gc}/lib/${GC_LIB_NAME}],
-                      [
-                        GC_LIBRARY="${with_gc}/lib/${GC_LIB_NAME}"
-                      ],
-                      [])
-        GC_CHOICE="boehm"
-      ]
-)
-AS_IF([test x${with_gc}x${with_mps} == xx],
-      [
-        AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
+    )
+    AS_IF([test x${with_gc}x${with_mps} == xx],
           [
-            AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
+            AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
+              [
+                AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
+              ]
+            )
+            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
+            GC_LFLAGS="${GC_LIB}"
+            GC_CHOICE="boehm"
+            AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
+                          [
+                            GC_LIBRARY="/usr/lib/${GC_LIB_NAME}"
+                          ],
+                          [
+                            AC_CHECK_FILE([/usr/local/lib/${GC_LIB_NAME}],
+                                          [
+                                            GC_LIBRARY="/usr/local/lib/${GC_LIB_NAME}"
+                                          ],
+                                          [])
+                          ])
           ]
-        )
-        GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
-        GC_LFLAGS="${GC_LIB}"
-        GC_CHOICE="boehm"
-        AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
-                      [
-                        GC_LIBRARY="/usr/lib/${GC_LIB_NAME}"
-                      ],
-                      [
-                        AC_CHECK_FILE([/usr/local/lib/${GC_LIB_NAME}],
-                                      [
-                                        GC_LIBRARY="/usr/local/lib/${GC_LIB_NAME}"
-                                      ],
-                                      [])
-                      ])
-      ]
-)
+    )
+fi
+
 AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} == xboehmx],
       [
         AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc])
