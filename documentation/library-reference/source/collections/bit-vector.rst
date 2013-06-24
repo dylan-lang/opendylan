@@ -12,9 +12,22 @@ The bit-vector Module
 
    :superclasses: <vector>
 
-   :keyword size:
+   :keyword size: Specifies the number of bits in the bit-vector. The
+                  default is 0.
+
+   :description:
+
+     A compact representation of a vector of bits. The elements of the
+     vector have the type ``<bit>`` and may be the values 0 and 1. The
+     elements are indexed from ``0`` up to ``(size - 1)``.
 
 .. constant:: <bit>
+
+   :description:
+
+     A subtype of ``<integer>``, this is the type of elements of
+     :class:`<bit-vector>`. Objects of this type may have the value
+     ``0`` or ``1``.
 
 .. function:: bit-count
 
@@ -23,6 +36,11 @@ The bit-vector Module
    :parameter vector: An instance of :class:`<bit-vector>`.
    :parameter #key bit-value: An instance of :class:`<bit>`.
    :value count: An instance of ``<integer>``.
+
+   :description:
+
+     Returns the number of bits in ``vector`` which are equal to
+     ``bit-value``. This may be a relatively slow operation.
 
 .. function:: bit-vector-and
 
@@ -35,6 +53,18 @@ The bit-vector Module
    :value result: An instance of :class:`<bit-vector>`.
    :value pad: An instance of :class:`<bit>`.
 
+   :description:
+
+     Returns a new vector which is the bitwise and of the two argument
+     vectors. Each vector has an associated pad value. If the vectors are of
+     different lengths, the shorter is considered extended with its pad
+     value. The size of the result vector may be extended or shortened
+     provided the bits added or dropped are the same as the result-pad value.
+     The size of the result will be no smaller than the minimum of the
+     argument sizes, and no greater than the maximum of the argument sizes.
+     The result-pad value is calculated by taking the logical and of the two
+     input pad values.
+
 .. function:: bit-vector-and!
 
    :signature: bit-vector-and! *vector1* *vector2* #key *pad1* *pad2* => *result* *pad*
@@ -45,6 +75,18 @@ The bit-vector Module
    :parameter #key pad2: An instance of :class:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
    :value pad: An instance of :class:`<bit>`.
+
+   :description:
+
+     Returns a vector which is the bitwise and of the two argument vectors.
+     ``vector1`` may or may not be modified by this operation. Each vector
+     has an associated pad value. If the vectors are of different lengths,
+     the shorter is considered extended with its pad value. The size of the
+     result vector may be extended or shortened provided the bits added or
+     dropped are the same as the result-pad value. The size of the result
+     will be no smaller than the minimum of the argument sizes, and no
+     greater than the maximum of the argument sizes. The result-pad value is
+     calculated by taking the logical and of the two input pad values.
 
 .. function:: bit-vector-andc2
 
@@ -57,6 +99,18 @@ The bit-vector Module
    :value result: An instance of :class:`<bit-vector>`.
    :value pad: An instance of :class:`<bit>`.
 
+   :description:
+
+     Returns a new vector which is the result of taking the bitwise and of
+     ``vector1`` and the bitwise not of ``vector2``. Each vector has an
+     associated pad value. If the vectors are of different lengths, the shorter
+     is considered extended with its pad value. The size of the result vector
+     may be extended or shortened provided the bits added or dropped are the
+     same as the result-pad value. The size of the result will be no smaller
+     than the minimum of the argument sizes, and no greater than the maximum
+     of the argument sizes. The result-pad value is calculated by taking the
+     logical and of ``pad1`` with the complement of ``pad2``.
+
 .. function:: bit-vector-andc2!
 
    :signature: bit-vector-andc2! *vector1* *vector2* #key *pad1* *pad2* => *result* *pad*
@@ -68,6 +122,19 @@ The bit-vector Module
    :value result: An instance of :class:`<bit-vector>`.
    :value pad: An instance of :class:`<bit>`.
 
+   :description:
+
+     Returns a vector which is the result of taking the bitwise and of
+     ``vector1`` and the bitwise not of ``vector2``. ``vector1`` may or
+     may not be modified by this operation. Each vector has an associated
+     pad value. If the vectors are of different lengths, the shorter is
+     considered extended with its pad value. The size of the result vector
+     may be extended or shortened provided the bits added or dropped are
+     the same as the result-pad value. The size of the result will be no
+     smaller than the minimum of the argument sizes, and no greater than
+     the maximum of the argument sizes. The result-pad value is calculated
+     by taking the logical and of ``pad1`` with the complement of ``pad2``.
+
 .. function:: bit-vector-not
 
    :signature: bit-vector-not *vector* #key *pad* => *result* *result-pad*
@@ -77,6 +144,10 @@ The bit-vector Module
    :value result: An instance of :class:`<bit-vector>`.
    :value result-pad: An instance of :class:`<bit>`.
 
+   :description:
+
+     Returns a new vector which is the bitwise not of its argument.
+
 .. function:: bit-vector-not!
 
    :signature: bit-vector-not! *vector* #key *pad* => *result* *result-pad*
@@ -85,6 +156,11 @@ The bit-vector Module
    :parameter #key pad: An instance of :class:`<bit>`.
    :value result: An instance of :class:`<bit-vector>`.
    :value result-pad: An instance of :class:`<bit>`.
+
+   :description:
+
+     Modifies ``vector`` so that it becomes the bitwise not of its original
+     contents. ``result == vector``.
 
 .. function:: bit-vector-or
 
@@ -97,6 +173,18 @@ The bit-vector Module
    :value result: An instance of :class:`<bit-vector>`.
    :value pad: An instance of :class:`<bit>`.
 
+   :description:
+
+     Returns a new vector which is the bitwise or of the two argument
+     vectors. Each vector has an associated pad value. If the vectors
+     are of different lengths, the shorter is considered extended with
+     its pad value. The size of the result vector may be extended or
+     shortened provided the bits added or dropped are the same as the
+     result-pad value. The size of the result will be no smaller
+     than the minimum of the argument sizes, and no greater than the
+     maximum of the argument sizes. The result-pad value is calculated
+     by taking the logical or of the two input pad values.
+
 .. function:: bit-vector-or!
 
    :signature: bit-vector-or! *vector1* *vector2* #key *pad1* *pad2* => *result* *pad*
@@ -108,13 +196,17 @@ The bit-vector Module
    :value result: An instance of :class:`<bit-vector>`.
    :value pad: An instance of :class:`<bit>`.
 
-.. generic-function:: bit-vector-word
+   :description:
 
-   :signature: bit-vector-word *v* *i* => *r*
-
-   :parameter v: An instance of :class:`<bit-vector>`.
-   :parameter i: An instance of ``<integer>``.
-   :value r: An instance of {unknown object}.
+     Returns a vector which is the bitwise or of the two argument vectors.
+     ``vector1`` may or may not be modified by this operation. Each vector
+     has an associated pad value. If the vectors are of different lengths,
+     the shorter is considered extended with its pad value. The size of the
+     result vector may be extended or shortened provided the bits added or
+     dropped are the same as the result-pad value. The size of the result
+     will be no smaller than the minimum of the argument sizes and no greater
+     than the maximum of the argument sizes. The result-pad value is
+     calculated by taking the logical or of the two input pad values.
 
 .. function:: bit-vector-xor
 
@@ -127,6 +219,18 @@ The bit-vector Module
    :value result: An instance of :class:`<bit-vector>`.
    :value pad: An instance of :class:`<bit>`.
 
+   :description:
+
+     Returns a new vector which is the bitwise exclusive or of the two
+     argument vectors. Each vector has an associated pad value. If the
+     vectors are of different lengths, the shorter is considered extended
+     with its pad value. The size of the result will be no smaller than
+     the minimum of the argument sizes, and no greater than the maximum
+     of the argument sizes. The size of the result vector may be extended
+     or shortened provided the bits added or dropped are the same as the
+     result-pad value. The result-pad value is calculated by taking the
+     logical xor of the two input pad values.
+
 .. function:: bit-vector-xor!
 
    :signature: bit-vector-xor! *vector1* *vector2* #key *pad1* *pad2* => *result* *pad*
@@ -138,9 +242,15 @@ The bit-vector Module
    :value result: An instance of :class:`<bit-vector>`.
    :value pad: An instance of :class:`<bit>`.
 
-.. generic-function:: word-size
+   :description:
 
-   :signature: word-size *object* => #rest *results*
-
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+     Returns a vector which is the bitwise exclusive or of the two
+     argument vectors. ``vector1`` may or may not be modified by this
+     operation. Each vector has an associated pad value. If the vectors
+     are of different lengths, the shorter is considered extended with
+     its pad value. The size of the result vector may be extended or
+     shortened provided the bits added or dropped are the same as the
+     result-pad value. The size of the result will be no smaller than the
+     minimum of the argument sizes, and no greater than the maximum of
+     the argument sizes. The result-pad value is calculated by taking the
+     logical xor of the two input pad values.
