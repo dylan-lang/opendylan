@@ -517,7 +517,7 @@ define function default-initialize
                end if;
     // This ensures that the storage has been created.  (Should really be
     // done by some finalize action...)  We let find-or-create... do the
-    // init value compuation if we don't have a keyword initializer here.
+    // init value computation if we don't have a keyword initializer here.
     let cell :: <pair>
       = find-or-create-class-slot-storage(iclass, offset, init == $not-found);
     if (init ~== $not-found)
