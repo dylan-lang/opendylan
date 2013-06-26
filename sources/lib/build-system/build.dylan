@@ -8,13 +8,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $dylanmakefile  = "dylanmakefile.mkf";
 define constant $build-log-file = "build.log";
+define constant $platform-variable = "OPEN_DYLAN_PLATFORM_NAME";
+define constant $default-platform = $platform-name;
 
 define settings <build-system-settings> (<open-dylan-user-settings>)
   key-name "Build-System";
   slot build-script :: <string>
     = as(<string>,
          merge-locators(as(<file-locator>,
-                           concatenate(as(<string>, $platform-name),
+                           concatenate(environment-variable($platform-variable)
+                                         | as(<string>, $default-platform),
                                        "-build.jam")),
                         $system-lib));
 end settings <build-system-settings>;
