@@ -11,6 +11,10 @@ News & Articles
 
 .. include:: recent.rst.inc
 
+:doc:`Improved editor support </news/2012/10/18/editor-support>` *— 2012-10-18*
+  Bugs in the syntax highlighting support for Textmate
+  and Sublime Text as well as for vim have been fixed.
+
 :doc:`command-line-parser library </news/2012/10/15/command-line-parser>` *— 2012-10-15*
   The `command-line-parser
   <https://github.com/dylan-lang/command-line-parser>`_ library has been
