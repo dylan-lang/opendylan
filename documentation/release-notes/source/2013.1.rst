@@ -84,7 +84,7 @@ The ``table-extensions`` module now exports ``<case-insensitive-string-table>``,
 which is a table whose keys are strings and checked without case sensitivity.
 
 I/O
----
+^^^
 
 Locking on streams has been reduced and eliminated in some cases. Previously,
 formatting to a string or formatting a date would engage in stream locking
