@@ -61,9 +61,14 @@ online at all times of day.  The channel is logged at
 http://colabti.org/irclogger/irclogger_logs/dylan so you can always ask a
 question and then check the logs for answers later.
 
+Freenode also offers `web-based chat`_ if you don't have an IRC client or
+just want easy and quick access.
+
 To discuss coding issues you can paste your code to the #dylan channel via
 http://paste.lisp.org/new/dylan or any other pastebin site.  See previous
 pastes here: http://paste.lisp.org/list/dylan
+
+.. _web-based chat: https://webchat.freenode.net/
 
 .. _newsgroup:
 
