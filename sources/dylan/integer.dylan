@@ -241,23 +241,23 @@ define method \^
   end if
 end method \^;
 
-define function logior (#rest integers) => (logior :: <integer>)
+define sealed method logior (#rest integers) => (logior :: <integer>)
   reduce(binary-logior, 0, integers)
-end function logior;
+end method logior;
 
-define function logxor (#rest integers) => (logxor :: <integer>)
+define sealed method logxor (#rest integers) => (logxor :: <integer>)
   reduce(binary-logxor, 0, integers)
-end function logxor;
+end method logxor;
 
-define function logand (#rest integers) => (logand :: <integer>)
+define sealed method logand (#rest integers) => (logand :: <integer>)
   reduce(binary-logand, -1, integers)
-end function logand;
+end method logand;
 
 // TODO: These can't be inline-only until reduce is inlined.
 
 define macro integer-binary-logical-definer
   { define integer-binary-logical ?:name ?lowlevel:name ?tagger:name }
-    => { define inline /* -only */ function ?name
+    => { define sealed inline /* -only */ method ?name
              (x :: <integer>, y :: <integer>)
           => (result :: <integer>)
            let mx = interpret-integer-as-machine-word(x);
@@ -272,16 +272,16 @@ define integer-binary-logical binary-logior machine-word-logior identity;
 define integer-binary-logical binary-logand machine-word-logand identity;
 define integer-binary-logical binary-logxor machine-word-logxor force-integer-tag;
 
-define inline function lognot (x :: <integer>) => (result :: <integer>)
+define sealed inline method lognot (x :: <integer>) => (result :: <integer>)
   let mw = interpret-integer-as-machine-word(x);
   interpret-machine-word-as-integer(force-integer-tag(machine-word-lognot(mw)))
-end function lognot;
+end method lognot;
 
-define inline function logbit? (index :: <integer>, integer :: <integer>)
+define sealed inline method logbit? (index :: <integer>, integer :: <integer>)
  => (set? :: <boolean>)
   machine-word-logbit?
     (as-offset-for-tagged-integer(index), interpret-integer-as-machine-word(integer))
-end function logbit?;
+end method logbit?;
 
 define inline function logbit-deposit
     (z :: <boolean>, index :: <integer>, integer :: <integer>) => (res :: <integer>)
@@ -315,13 +315,13 @@ define inline function bit-field-deposit
         interpret-integer-as-machine-word(x)))
 end function bit-field-deposit;
 
-define may-inline function ash (x :: <integer>, shift :: <integer>) => (result :: <integer>)
+define sealed may-inline method ash (x :: <integer>, shift :: <integer>) => (result :: <integer>)
   if (negative?(shift))
     ash-right(x, -shift)
   else
     ash-left(x, shift)
   end
-end function ash;
+end method ash;
 
 define inline function ash-right (x :: <integer>, shift :: <integer>)
  => (result :: <integer>)
@@ -353,13 +353,13 @@ define inline function ash-left (x :: <integer>, shift :: <integer>)
   interpret-machine-word-as-integer(tagged-result)
 end function ash-left;
 
-define may-inline function lsh (x :: <integer>, shift :: <integer>) => (result :: <integer>)
+define sealed may-inline method lsh (x :: <integer>, shift :: <integer>) => (result :: <integer>)
   if (negative?(shift))
     lsh-right(x, -shift)
   else
     lsh-left(x, shift)
   end
-end function lsh;
+end method lsh;
 
 define inline function lsh-right (x :: <integer>, shift :: <integer>)
  => (result :: <integer>)

@@ -103,6 +103,36 @@ define binary-division-function truncate/;
 define binary-division-function modulo;
 define binary-division-function remainder;
 
+define open generic ash (integer1 :: <abstract-integer>, count :: <integer>)
+ => (#rest values :: <object>);
+define sealed domain ash (<machine-number>);
+
+define open generic lsh (integer1 :: <abstract-integer>, count :: <integer>)
+ => (#rest values :: <object>);
+define sealed domain lsh (<machine-number>);
+
+define macro n-ary-logical-function-definer
+  { define n-ary-logical-function ?:name (?domain:name) }
+  => { define open generic ?name (#rest integers :: <abstract-integer>)
+         => (#rest values :: <object>);
+       define sealed domain ?name (?domain) }
+  // Default sealed domain to (<machine-number>)
+  { define n-ary-logical-function ?:name }
+  => { define n-ary-logical-function ?name (<machine-number>) }
+end macro n-ary-logical-function-definer;
+
+define n-ary-logical-function logior;
+define n-ary-logical-function logxor;
+define n-ary-logical-function logand;
+
+define open generic lognot (integer1 :: <abstract-integer>)
+ => (#rest values :: <object>);
+define sealed domain lognot (<machine-number>);
+
+define open generic logbit? (index :: <integer>, integer :: <abstract-integer>)
+ => (#rest values :: <object>);
+define sealed domain logbit? (<integer>, <machine-number>);
+
 //// CONDITIONS
 
 define open abstract class <arithmetic-error> (<error>, <format-string-condition>)
