@@ -139,17 +139,17 @@ static void EstablishDylanExceptionHandlers(void)
 
   unsigned short cw;
 
-  sigfillset(&newFPEHandler.sa_mask);
+  sigemptyset(&newFPEHandler.sa_mask);
   newFPEHandler.sa_sigaction = DylanFPEHandler;
   newFPEHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGFPE, &newFPEHandler, &outer_FPEHandler);
 
-  sigfillset(&newSEGVHandler.sa_mask);
+  sigemptyset(&newSEGVHandler.sa_mask);
   newSEGVHandler.sa_sigaction = DylanSEGVHandler;
   newSEGVHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGSEGV, &newSEGVHandler, &outer_SEGVHandler);
 
-  sigfillset(&newTRAPHandler.sa_mask);
+  sigemptyset(&newTRAPHandler.sa_mask);
   newTRAPHandler.sa_sigaction = DylanTRAPHandler;
   newTRAPHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGTRAP, &newTRAPHandler, &outer_TRAPHandler);

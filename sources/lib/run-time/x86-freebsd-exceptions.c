@@ -44,19 +44,19 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
   struct sigaction newSEGVHandler;
   struct sigaction newTRAPHandler;
 
-  sigfillset(&newFPEHandler.sa_mask);
+  sigemptyset(&newFPEHandler.sa_mask);
   newFPEHandler.sa_sigaction = DylanFPEHandler;
   newFPEHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGFPE, &newFPEHandler, oldFPEHandler);
 
 #if 0
-  sigfillset(&newFPEHandler.sa_mask);
+  sigemptyset(&newFPEHandler.sa_mask);
   newSEGVHandler.sa_sigaction = DylanFSEGVandler;
   newSEGVHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGFPE, &newSEGVHandler, oldSEGVHandler);
 #endif
 
-  sigfillset(&newTRAPHandler.sa_mask);
+  sigemptyset(&newTRAPHandler.sa_mask);
   newTRAPHandler.sa_sigaction = DylanTRAPHandler;
   newTRAPHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGTRAP, &newTRAPHandler, oldTRAPHandler);
