@@ -29,6 +29,10 @@
 #define RUN_TIME_API __declspec( dllexport )
 #endif
 
+#ifndef GC_USE_MPS
+#  define NO_ALLOCATION_COUNT_FOR_PROFILER 1
+#endif
+
 #define unused(param)   ((void)param)
 
 /* HACK Added by phoward 17-JUN-98
@@ -214,6 +218,8 @@ int primitive_end_heap_alloc_stats(char *buffer)
   dylan_streamQ = FALSE;
   heap_alloc_statsQ = FALSE;
   return(dylan_buffer_pos);
+#else
+  return 0;
 #endif
 }
 
@@ -312,7 +318,9 @@ int primitive_display_class_breakpoints(char *buffer)
   }
 
   dylan_streamQ = TRUE; dylan_buffer = buffer; dylan_buffer_pos = 0;
+#ifdef GC_USE_MPS
   display_wrapper_breakpoints();
+#endif
   dylan_streamQ = FALSE;
 
   --class_breakpoints_pending;
