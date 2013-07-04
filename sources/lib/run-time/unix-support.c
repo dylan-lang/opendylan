@@ -9,8 +9,6 @@
 #include <pthread.h>
 #include <dlfcn.h>
 
-#include "mpslib.h"
-
 void mps_lib_abort(void)
 {
   fflush(stdout);
@@ -53,12 +51,13 @@ void tlv_set_value(int key, void *value)
 
 /* Plinth additions */
 
-int mps_lib_fputs_(const char *s, int end, mps_lib_FILE *stream)
+int mps_lib_fputs_(const char *s, int end, FILE *stream)
 {
+  // We know that on Unix, stream is just a FILE*.
   int i = 0;
   char c;
   while ((i < end) && (c = s[i++])) {
-    mps_lib_fputc(c, (mps_lib_FILE *)stream);
+    fputc(c, (FILE *)stream);
   }
   return 1;
 }
