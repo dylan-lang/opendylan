@@ -289,7 +289,7 @@ static void grow_all_tlv_vectors(size_t newsize)
   TLV_VECTOR_LIST list;
   TLV_VECTOR new_default;
 
-  trace_tlv("Growing all vectors to size %ld", newsize);
+  trace_tlv("Growing all vectors to size %zd", newsize);
 
   // Wait until we are the only writer
   while (atomic_cas(&tlv_writer_counter, TLV_GROW, 0) != 0);
@@ -335,7 +335,7 @@ update_tlv_vectors(size_t offset, D value)
   TLV_VECTOR_LIST list = tlv_vector_list;
   D *destination;
 
-  trace_tlv("Propagating default of offset %ld with value %p", offset, value);
+  trace_tlv("Propagating default of offset %zd with value %p", offset, value);
 
   while (list != NULL) {
     destination = (D *)(list->tlv_vector + offset);
