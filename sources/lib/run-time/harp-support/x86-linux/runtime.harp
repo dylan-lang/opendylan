@@ -293,7 +293,6 @@
 	DATA "Kdenormal_float"+++ external: "c_primitive_start_timer" +++
 +++ external: "c_primitive_stop_timer" +++
 +++ external: "exit" +++
-+++ external: "system" +++
 +++ external: "tlv_create_key" +++
 +++ external: "tlv_destroy_key" +++
 +++ external: "tlv_get_value" +++
@@ -4711,46 +4710,6 @@ Start scope at 3 with frame for no variables
 End scope at 12
 
 +++ No Source Code Locators for primitive_exit_application +++
-
-
-+++ Exported function definition primitive_run_application +++
-
-+++ starting code for primitive_run_application +++
-
-#() [0->5] (level:0) is red with stack state before
-#({basic-block #({tag 2:30}) 30 45})
-  rem	"This is a dummy first basic block."
-
-#({tag 2:30}) [30->45] (level:0) is #f with stack state #f
-#({basic-block #() 5 15})
-  preserve-registers-entry	
-  allocate-local-area	
-  allocate-raw-area	
-
-#() [5->15] (level:0) is red with stack state with
-#({basic-block #() 15 20})
-  push	eax
-  call-alien	{constant "system"}, 0
-
-#() [15->20] (level:0) is red with stack state with
-#({basic-block #({tag 1:25}) 25 30})
-  add	esp, esp, 4
-
-#({tag 1:25}) [25->30] (level:0) is #f with stack state #f
-#({basic-block #() 20 25})
-  preserve-registers-exit	
-
-#() [20->25] (level:0) is red with stack state #f
-#()
-  rts-and-drop	0
-
-+++ ending code for primitive_run_application +++
-
-+++ Live variable scopes for primitive_run_application +++
-Start scope at 3 with frame for no variables
-End scope at 12
-
-+++ No Source Code Locators for primitive_run_application +++
 
 
 +++ Exported function definition make_foreign_thread_internal +++
