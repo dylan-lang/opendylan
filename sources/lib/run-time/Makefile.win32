@@ -34,7 +34,7 @@ CC	 = $(cc)
 LINKLIB	 = $(implib) /nologo /out:
 CFLAGS	 = $(cflags) $(cvarsmt) $(cdebug) /I$(INCLUDEDEST) /I. /I.. /I$(SDK4MEMORY_POOL_SYSTEM)\code $(OPEN_DYLAN_C_FLAGS)
 HEAPOBJS = heap-display.obj heap-utils.obj heap-trail.obj heap-order1.obj heap-order2.obj heap-table.obj
-OBJS	 = collector.obj $(HEAPOBJS) harp-support\x86-windows\runtime.obj windows-threads-primitives.obj windows-spy-interfaces.obj
+OBJS	 = collector.obj break.obj $(HEAPOBJS) harp-support\x86-windows\runtime.obj windows-threads-primitives.obj windows-spy-interfaces.obj
 LIBFILE	 = pentium-run-time.lib
 USEROBJ	 = harp-support\x86-windows\dylan-support.obj
 USERLIB	 = dylan-support.lib
@@ -161,7 +161,7 @@ install: ensure-dirs install-stripped install-build
 # Only delete the products that should be built by this makefile.
 # (The files runtime.obj & dylan-support.obj are checked out from HOPE)
 clean:
-	pushd . & (del /f /q *collector.obj $(HEAPOBJS) windows-threads-primitives.obj windows-spy-interfaces.obj) & popd
+	pushd . & (del /f /q *collector.obj break.obj $(HEAPOBJS) windows-threads-primitives.obj windows-spy-interfaces.obj) & popd
         pushd . & (del /f /q *pentium-run-time.lib $(USERLIB)) & popd
         pushd . & (del /f /q $(MINCRT) mincrt.def) & popd
         pushd . & (del /f /q $(DYLANPLINTH) $(PLINTHOBJS)) & popd

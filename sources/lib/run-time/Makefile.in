@@ -57,7 +57,8 @@ AR = ar -rcs
 
 CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
 
-OBJS		= $(OBJDIR)/collector.o \
+OBJS		= $(OBJDIR)/break.o \
+		  $(OBJDIR)/collector.o \
 		  $(OBJDIR)/unix-threads-primitives.o \
 		  $(OBJDIR)/unix-spy-interfaces.o \
 		  $(OBJDIR)/unix-support.o \

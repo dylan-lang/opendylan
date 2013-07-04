@@ -29,10 +29,7 @@ void display_stats_for_memory_usage ()
   }
 }
 
-
-
-#include "break.c"
-
+extern wrapper_stats_s * wrapper_breaks;
 
 void display_wrapper_breakpoints()
 {

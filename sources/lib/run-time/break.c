@@ -1,5 +1,12 @@
 
 /* Support Breakpoints on class allocation */
+#include "wrapper-stats.h"
+
+#ifdef OPEN_DYLAN_PLATFORM_UNIX
+#include "unix-types.h"
+#else
+#include "windows-types.h"
+#endif
 
 
 #define MAX_BREAKS 100
