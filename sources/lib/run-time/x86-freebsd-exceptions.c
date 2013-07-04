@@ -23,38 +23,27 @@ extern void walkstack();
 
 #define EXCEPTION_PREAMBLE() \
   struct sigaction oldFPEHandler; \
-  struct sigaction oldSEGVHandler; \
   struct sigaction oldTRAPHandler; \
-EstablishDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler, &oldTRAPHandler);      \
+EstablishDylanExceptionHandlers(&oldFPEHandler, &oldTRAPHandler);      \
   {
 
 #define EXCEPTION_POSTAMBLE() \
   } \
-  RemoveDylanExceptionHandlers(&oldFPEHandler, &oldSEGVHandler, &oldTRAPHandler);
+  RemoveDylanExceptionHandlers(&oldFPEHandler, &oldTRAPHandler);
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *sc);
-static void DylanSEGVHandler (int sig, siginfo_t *info, void *sc);
 static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc);
 
 static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-                                             struct sigaction * oldSEGVHandler,
                                              struct sigaction * oldTRAPHandler)
 {
   struct sigaction newFPEHandler;
-  struct sigaction newSEGVHandler;
   struct sigaction newTRAPHandler;
 
   sigemptyset(&newFPEHandler.sa_mask);
   newFPEHandler.sa_sigaction = DylanFPEHandler;
   newFPEHandler.sa_flags = SA_SIGINFO;
   sigaction(SIGFPE, &newFPEHandler, oldFPEHandler);
-
-#if 0
-  sigemptyset(&newFPEHandler.sa_mask);
-  newSEGVHandler.sa_sigaction = DylanFSEGVandler;
-  newSEGVHandler.sa_flags = SA_SIGINFO;
-  sigaction(SIGFPE, &newSEGVHandler, oldSEGVHandler);
-#endif
 
   sigemptyset(&newTRAPHandler.sa_mask);
   newTRAPHandler.sa_sigaction = DylanTRAPHandler;
@@ -65,13 +54,9 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
 }
 
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
-                                          struct sigaction * oldSEGVHandler,
                                           struct sigaction * oldTRAPHandler)
 {
   sigaction(SIGFPE, oldFPEHandler, NULL);
-#if 0
-  sigaction(SIGSEGV, oldSEGVHandler, NULL);
-#endif
   sigaction(SIGTRAP, oldTRAPHandler, NULL);
 }
 
@@ -119,28 +104,6 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
       break;
     }
   }
-}
-
-
-static void DylanSEGVHandler (int sig, siginfo_t *info, void *sc)
-{
-  if (inside_dylan_ffi_barrier() == 0) { }
-
-  // else if (sc.trapno == TRAP_INTEGER_OVERFLOW) {
-  //  RestoreFPState(sc.fpstate);
-  //  dylan_integer_overflow_handler();           /* Should never return ... */
-  //}
-
-  // Here iff we should invoke the previous handler ...
-  //if (oldHandler == SIG_DFL) {
-  //  signal(signum, SIG_DFL);
-  //  raise(signum);
-  //}
-  //else
-    // ---*** NOTE: What if the old handler isn't expecting this calling sequence?
-  //  (*(SIG_SIGCONTEXT)oldHandler)(signum, sc);
-
-  return;
 }
 
 static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc)
