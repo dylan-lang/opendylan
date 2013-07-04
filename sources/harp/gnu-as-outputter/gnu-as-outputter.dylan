@@ -418,6 +418,15 @@ define method output-footer
   outputter.finished-outputting? := #t;
 end method;
 
+
+define method output-footer
+      (be :: <harp-back-end>, outputter :: <harp-elf-as-outputter>) => ()
+  let stream = outputter.destination;
+  format(stream, ".section .note.GNU-stack,\"\",@progbits\n");
+  next-method();
+end method;
+
+
 define method output-code-start
       (be :: <harp-back-end>, outputter :: <harp-gnu-as-outputter>) => ()
   // Fixup data
