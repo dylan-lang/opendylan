@@ -22,7 +22,10 @@
 
 #include <limits.h>
 
-#include <gc/gc.h>
+#ifdef GC_USE_BOEHM
+#  include <gc/gc.h>
+#  include <gc/gc_pthread_redirects.h>
+#endif
 
 #include <sys/time.h>
 
@@ -565,7 +568,7 @@ D primitive_make_thread(D t, D n, D p, D f, DBOOL s)
 //    return CREATE_ERROR;
 //  }
 
-  if (GC_pthread_create(&rthread->tid, &attr, trampoline, thread)) {
+  if (pthread_create(&rthread->tid, &attr, trampoline, thread)) {
     MSG0("make-thread: error creating thread\n");
     return CREATE_ERROR;
   }
@@ -714,7 +717,7 @@ void primitive_detach_thread(D t)
   assert(thread != NULL);
   rthread = (THREAD*)(thread->handle2);
 
-  GC_pthread_detach(rthread->tid);
+  pthread_detach(rthread->tid);
 }
 
 /* 5 */
