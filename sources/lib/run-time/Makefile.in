@@ -61,13 +61,7 @@ OBJS		= $(OBJDIR)/break.o \
 		  $(OBJDIR)/collector.o \
 		  $(OBJDIR)/unix-threads-primitives.o \
 		  $(OBJDIR)/unix-spy-interfaces.o \
-		  $(OBJDIR)/unix-support.o \
-		  $(OBJDIR)/heap-display.o \
-		  $(OBJDIR)/heap-utils.o \
-		  $(OBJDIR)/heap-trail.o \
-		  $(OBJDIR)/heap-order1.o \
-		  $(OBJDIR)/heap-order2.o \
-		  $(OBJDIR)/heap-table.o
+		  $(OBJDIR)/unix-support.o
 
 HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_PLATFORM_NAME)
 HARP_OBJS        = $(HARP_SUPPORT_DIR)/runtime.o \
@@ -78,7 +72,13 @@ LLVM_RUNTIME_OBJS =
 C_RUNTIME_OBJS    =
 
 ifeq ($(GC_CHOICE),mps)
-  OBJS += $(OBJDIR)/mps-dylan.o
+  OBJS += $(OBJDIR)/mps-dylan.o \
+	  $(OBJDIR)/heap-display.o \
+	  $(OBJDIR)/heap-utils.o \
+	  $(OBJDIR)/heap-trail.o \
+	  $(OBJDIR)/heap-order1.o \
+	  $(OBJDIR)/heap-order2.o \
+	  $(OBJDIR)/heap-table.o
 endif
 
 HARP_RUNTIME_LIBDEST  = $(LIBDEST)/runtime/harp-$(OPEN_DYLAN_PLATFORM_NAME)
