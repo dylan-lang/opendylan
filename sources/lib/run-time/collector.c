@@ -92,9 +92,7 @@ void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
 {
   // This really should be controlled by a better define, but we don't have
   // or really need one at the moment.
-#if defined(OPEN_DYLAN_PLATFORM_DARWIN)
-#warning Implement me
-#elif defined(OPEN_DYLAN_PLATFORM_UNIX)
+#if defined(OPEN_DYLAN_PLATFORM_UNIX)
   __asm__
     (
       "cld    \n\t"
