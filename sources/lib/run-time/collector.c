@@ -219,6 +219,7 @@ int primitive_end_heap_alloc_stats(char *buffer)
   heap_alloc_statsQ = FALSE;
   return(dylan_buffer_pos);
 #else
+  unused(buffer);
   return 0;
 #endif
 }
@@ -490,6 +491,13 @@ void update_allocation_counter(gc_teb_t gc_teb, size_t count, void* wrapper)
       check_wrapper_breakpoint(wrapper, count);
     }
   }
+#else
+  unused(gc_teb);
+  unused(count);
+  unused(wrapper);
+
+  // Periodic polling of keyboard-interrupt flag
+  if (dylan_keyboard_interruptQ) HandleDylanKeyboardInterrupt();
 #endif
 }
 
@@ -497,6 +505,8 @@ static void zero_allocation_counter(gc_teb_t gc_teb)
 {
 #ifndef NO_ALLOCATION_COUNT_FOR_PROFILER
   gc_teb->gc_teb_allocation_counter = 0;
+#else
+  unused(gc_teb);
 #endif
 }
 
