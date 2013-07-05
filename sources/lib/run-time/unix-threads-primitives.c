@@ -7,8 +7,6 @@
  * found in D-doc-design-runtime!win32-thread-portability.text
  */
 
-#define _GNU_SOURCE
-
 #include <assert.h>
 #include <stdlib.h>
 #include <stddef.h>

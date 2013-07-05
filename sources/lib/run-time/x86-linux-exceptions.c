@@ -3,7 +3,6 @@
 
 /* ---*** TODO: Find out how to trap stack overflows on Linux */
 
-#define _GNU_SOURCE
 #include <stdlib.h>
 #include <unistd.h>
 #include <stddef.h>

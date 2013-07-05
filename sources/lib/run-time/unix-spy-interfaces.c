@@ -7,8 +7,6 @@
 /* **            All Rights Reserved                                  ** */
 /* ********************************************************************* */
 
-#define _GNU_SOURCE
-
 #include <stdlib.h>
 #include <dlfcn.h>
 #include "unix-types.h"
