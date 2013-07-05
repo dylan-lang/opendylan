@@ -29,8 +29,7 @@ define method llvm-source-record-dbg-file
     | begin
         let location = source-record-location(sr);
         back-end.%source-record-dbg-file-table[sr]
-          := llvm-make-dbg-file(#f,
-                                location.locator-name,
+          := llvm-make-dbg-file(location.locator-name,
                                 location.locator-directory)
       end
 end method;

@@ -233,7 +233,7 @@ define llvm-builder function-test ins--dbg ()
   let dbg-compile-unit
     = llvm-make-dbg-compile-unit($DW-LANG-C99, "test.c", ".", "test");
   let dbg-file
-    = llvm-make-dbg-file(dbg-compile-unit, "test.c", ".");
+    = llvm-make-dbg-file("test.c", ".");
   let dbg-function-type
     = llvm-make-dbg-function-type(dbg-file, #f, #[]);
   let dbg-function
