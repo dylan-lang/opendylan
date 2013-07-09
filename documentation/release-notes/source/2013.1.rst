@@ -6,7 +6,7 @@ Introduction
 ============
 
 This document describes the 2013.1 release of Open Dylan, released
-XXXXXXXXX, 2013.
+July 11, 2013.
 
 * `Download the release <http://opendylan.org/download/index.html>`_
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
@@ -36,6 +36,9 @@ Library Reference.
 
 The table macro in the collections library has been documented in the Library
 Reference.
+
+The machine-number and transcendentals documentation sections have been
+updated to current documentation format.
 
 Portability
 -----------
