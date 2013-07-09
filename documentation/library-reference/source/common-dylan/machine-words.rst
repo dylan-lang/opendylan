@@ -37,150 +37,148 @@ also refer to the *Dylan Reference Manual*.
 Note that the Common Dylan library also has these extensions because it
 uses the Dylan library.
 
-odd?
-----
+.. function:: odd?
 
-Sealed Method
+   :signature: odd? m => r
 
-.. code-block:: dylan
+   :parameter m: An instance of :class:`<machine-word>`
+   :value r: An instance of :class:`<boolean>`
 
-    odd? (m :: <machine-word>) => _ :: <boolean>
+.. function:: even?
 
-even?
------
+   :signature: even? m => r
 
-Sealed Method
+   :parameter m: An instance of :class:`<machine-word>`
+   :value r: An instance of :class:`<boolean>`
 
-.. code-block:: dylan
+.. function:: zero?
 
-    even? (m :: <machine-word>) => _ :: <boolean>
+   :signature: zero? m => r
 
-zero?
------
+   :parameter m: An instance of :class:`<machine-word>`
+   :value r: An instance of :class:`<boolean>`
 
-Sealed Method
+.. note:: Cannot be used as the name of a result. It is not a valid Dylan name.
 
-.. code-block:: dylan
+.. function:: positive?
 
-    zero? (m :: <machine-word>) => _ :: <boolean>
+   :signature: positive? m => r
 
-Cannot be used as the name of a result. It is not a valid Dylan name.
+   :parameter m: An instance of :class:`<machine-word>`
+   :value r: An instance of :class:`<boolean>`
 
-positive?
----------
+.. function:: negative?
 
-Sealed Method
+   :signature: negative? m => r
 
-.. code-block:: dylan
-
-    positive? (m :: <machine-word>) => _ :: <boolean>
-
-negative?
----------
-
-Sealed Method
-
-.. code-block:: dylan
+   :parameter m: An instance of :class:`<machine-word>`
+   :value r: An instance of :class:`<boolean>`
 
     negative? (m :: <machine-word>) => _ :: <boolean>
 
-These functions return a result based on interpreting *m* as a signed
+These functions return a result based on interpreting ``m`` as a signed
 integer value.
 
-\=
---
+.. function:: \=
 
-Sealed Method
+   :signature: = m1 m2 => r
+   :signature: = i1 m2 => r
+   :signature: = m1 i2 => r
 
-.. code-block:: dylan
+   :parameter m1: An instance of :class:`<machine-word>`
+   :parameter m2: An instance of :class:`<machine-word>`
+   :parameter i1: An instance of :class:`<abstract-integer>`
+   :parameter i2: An instance of :class:`<abstract-integer>`
+   :value r: An instance of :class:`<boolean>`
 
-    = (m1 :: <machine-word>, m2 :: <machine-word>) => _ :: <boolean>
-    = (i1 :: <abstract-integer>, m2 :: <machine-word>) => _ :: <boolean>
-    = (m1 :: <machine-word>, i2 :: <abstract-integer>) => _ :: <boolean>
+   :description:
 
-The comparison is performed with the ``<machine-word>`` arguments
-interpreted as signed integer values.
+     The comparison is performed with the :class:`<machine-word>` arguments
+     interpreted as signed integer values.
 
-<
--
+.. function:: <
 
-Sealed Method
+   :signature: < m1 m2 => r
+   :signature: < i1 m2 => r
+   :signature: < m1 i2 => r
 
-.. code-block:: dylan
+   :parameter m1: An instance of :class:`<machine-word>`
+   :parameter m2: An instance of :class:`<machine-word>`
+   :parameter i1: An instance of :class:`<abstract-integer>`
+   :parameter i2: An instance of :class:`<abstract-integer>`
+   :value r: An instance of :class:`<boolean>`
 
-    < (m1 :: <machine-word>, m2 :: <machine-word>) => _ :: <boolean>
-    < (i1 :: <abstract-integer>, m2 :: <machine-word>) => _ :: <boolean>
-    < (m1 :: <machine-word>, i2 :: <abstract-integer>) => _ :: <boolean>
+   :description:
 
-The comparison is performed with the ``<machine-word>`` arguments
-interpreted as signed integer values.
+     The comparison is performed with the :class:`<machine-word>` arguments
+     interpreted as signed integer values.
 
-as
---
+.. function:: as
 
-Sealed Method
+   :signature: as t == <integer> m => r
 
-.. code-block:: dylan
+   :parameter m: An instance of :class:`<machine-word>`
+   :value r: An instance of :class:`<integer>`
 
-    as(t == <integer>, m :: <machine-word>) => _ :: <integer>
+   :description:
 
-The result is an ``<integer>`` with the same value as ``m`` when interpreted
-as a signed integer value. An error is signaled if the value of ``m``
-cannot be represented as an instance of ``<integer>``.
+     The result is an :class:`<integer>` with the same value as ``m`` when
+     interpreted as a signed integer value. An error is signaled if the value
+     of ``m`` cannot be represented as an instance of :class:`<integer>`.
 
-as
---
+.. function:: as
 
-Sealed Method
+   :signature: as t == <abstract-integer> m => r
 
-.. code-block:: dylan
+   :parameter m: An instance of :class:`<machine-word>`
+   :value r: An instance of :class:`<abstract-integer>`
 
-    as(t == <abstract-integer>, m :: <machine-word>) => _ :: <abstract-integer>
+   :description:
 
-The result is an ``<abstract-integer>`` with the same value as ``m`` when
-interpreted as a signed integer value.
+     The result is an :class:`<abstract-integer>` with the same value as ``m``
+     when interpreted as a signed integer value.
 
-(The uses for an instance of ``<abstract-integer>`` that is not also an
-instance of ``<integer>`` are rather limited without the Generic-Arithmetic
-library.)
+     (The uses for an instance of :class:`<abstract-integer>` that is not also
+     an instance of :class:`<integer>` are rather limited without the
+     Generic-Arithmetic library.)
 
-as
---
+.. function:: as
 
-Sealed Method
+   :signature: as t == <machine-word> i => r
 
-.. code-block:: dylan
+   :parameter i: An instance of :class:`<abstract-integer>`
+   :value r: An instance of :class:`<machine-word>`
 
-    as(t == <machine-word>, i :: <abstract-integer>) => _ :: <machine-word>
+   :description:
 
-If the value of *i* is outside the machine word range, then the result
-consists of the low ``$machine-word-size`` bits of the twos-complement
-representation of *i*. If any of the discarded bits differ from the
-sign of *i*, then an error is signaled.
+     If the value of ``i`` is outside the machine word range, then the result
+     consists of the low :const:`$machine-word-size` bits of the twos-complement
+     representation of ``i``. If any of the discarded bits differ from the
+     sign of ``i``, then an error is signaled.
 
-limited
--------
+.. function:: limited
 
-Sealed Method
+   :signature: limited t == <machine-word> #key signed? min max => r
 
-.. code-block:: dylan
+   :parameter #key signed?: An instance of :class:`<boolean>`. Defaults to
+                            ``#t``
+   :parameter #key min: An instance of :class:`<machine-word>`
+   :parameter #key max: An instance of :class:`<machine-word>`
+   :value r: An instance of :class:`<type>`
 
-    limited(t == <machine-word>,
-            #key signed? :: boolean,
-            min :: <machine-word>, max :: <machine-word>)
-      => _ :: <type>
+   :description:
 
-If the *signed?* argument is true (the default) then the *min* and *max*
-arguments are interpreted as signed values. When *signed?* is false, the
-*min* and *max* arguments are interpreted as unsigned values. The
-default value for each of min and max depends on the value of *signed?*.
-The defaults are taken from the corresponding minimum and maximum
-machine word values (see :const:`$maximum-signed-machine-word` and related
-constants below).
+     If the ``signed?`` argument is true (the default) then the ``min`` and
+     ``max`` arguments are interpreted as signed values. When ``signed?`` is
+     false, the ``min`` and ``max`` arguments are interpreted as unsigned
+     values. The default value for each of min and max depends on the value of
+     ``signed?``.  The defaults are taken from the corresponding minimum and
+     maximum machine word values (see :const:`$maximum-signed-machine-word` and
+     related constants below).
 
-For convenience, the values of *min* and/or *max* may also be instances
-of ``<abstract-integer>``, in which case they are coerced to instances of
-``<machine-word>`` as if by using *as*.
+     For convenience, the values of ``min`` and/or ``max`` may also be
+     instances of ``<abstract-integer>``, in which case they are coerced to
+     instances of ``<machine-word>`` as if by using *as*.
 
 The MACHINE-WORDS module
 ========================
