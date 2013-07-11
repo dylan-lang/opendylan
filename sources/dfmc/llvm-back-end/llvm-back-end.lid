@@ -18,6 +18,7 @@ files:   llvm-back-end-library
 	 llvm-primitives-ffi
 	 llvm-primitives-thread
 	 llvm-primitives-os
+         llvm-entry-points
 	 llvm-emit
 	 llvm-emit-object
 	 llvm-emit-code
