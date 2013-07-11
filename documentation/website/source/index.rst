@@ -1,12 +1,12 @@
-Dylan is a multi-paradigm functional and object-oriented programming language.
-It is dynamic while providing a programming model designed to support efficient
-machine code generation, including fine-grained control over dynamic and static
-behaviors.
-
 .. raw:: html
 
    <div class="row">
      <div class="span8">
+
+     <p>Dylan is a multi-paradigm functional and object-oriented programming language.
+     It is dynamic while providing a programming model designed to support efficient
+     machine code generation, including fine-grained control over dynamic and static
+     behaviors.</p>
 
      <div id="code-carousel" class="carousel slide">
        <ol class="carousel-indicators">
