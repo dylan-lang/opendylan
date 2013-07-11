@@ -23,15 +23,15 @@ Open Dylan Downloads
    +---------------------------+--------------------+--------------------+---------------+
    | Platform                  | Version            | Date Released      | Revision ID   |
    +===========================+====================+====================+===============+
-   | `Windows (32 bit)`_       | 2012.1             | December 20, 2012  | `0ff69dce5d`_ |
+   | `Windows (32 bit)`_       | 2013.1             | July 11, 2013      | `211c9f8752`_ |
    +---------------------------+--------------------+--------------------+---------------+
-   | `Mac OS X Lion+ (Intel)`_ | 2012.1             | December 20, 2012  | `0ff69dce5d`_ |
+   | `Mac OS X Lion+ (Intel)`_ | 2013.1             | July 11, 2013      | `211c9f8752`_ |
    +---------------------------+--------------------+--------------------+---------------+
-   | `Linux (x86)`_            | 2012.1             | December 20, 2012  | `0ff69dce5d`_ |
+   | `Linux (x86)`_            | 2013.1             | July 11, 2013      | `211c9f8752`_ |
    +---------------------------+--------------------+--------------------+---------------+
-   | `Linux (x86-64)`_         | 2012.1             | December 20, 2012  | `0ff69dce5d`_ |
+   | `Linux (x86-64)`_         | 2013.1             | July 11, 2013      | `211c9f8752`_ |
    +---------------------------+--------------------+--------------------+---------------+
-   | `FreeBSD (x86)`_          | 2012.1             | December 20, 2012  | `0ff69dce5d`_ |
+   | `FreeBSD (x86)`_          | 2013.1             | July 11, 2013      | `211c9f8752`_ |
    +---------------------------+--------------------+--------------------+---------------+
 
 Old builds (including PowerPC Mac OS X and 64 bit FreeBSD) can be found by
@@ -77,10 +77,10 @@ in the `README <https://github.com/dylan-lang/opendylan/blob/master/README.rst>`
 This file contains the instructions on how to obtain the source code, the required
 dependencies and how to build it.
 
-.. _Windows (32 bit): http://opendylan.org/downloads/opendylan/2012.1/opendylan-2012.1-win32.exe
-.. _Mac OS X Lion+ (Intel): http://opendylan.org/downloads/opendylan/2012.1/opendylan-2012.1-x86-darwin.tar.bz2
-.. _Linux (x86): http://opendylan.org/downloads/opendylan/2012.1/opendylan-2012.1-x86-linux.tar.bz2
-.. _Linux (x86-64): http://opendylan.org/downloads/opendylan/2012.1/opendylan-2012.1-x86_64-linux.tar.bz2
-.. _FreeBSD (x86): http://opendylan.org/downloads/opendylan/2012.1/opendylan-2012.1-x86-freebsd.tar.bz2
+.. _Windows (32 bit): http://opendylan.org/downloads/opendylan/2013.1/opendylan-2013.1-win32.exe
+.. _Mac OS X Lion+ (Intel): http://opendylan.org/downloads/opendylan/2013.1/opendylan-2013.1-x86-darwin.tar.bz2
+.. _Linux (x86): http://opendylan.org/downloads/opendylan/2013.1/opendylan-2013.1-x86-linux.tar.bz2
+.. _Linux (x86-64): http://opendylan.org/downloads/opendylan/2013.1/opendylan-2013.1-x86_64-linux.tar.bz2
+.. _FreeBSD (x86): http://opendylan.org/downloads/opendylan/2013.1/opendylan-2013.1-x86-freebsd.tar.bz2
 .. _download directories: http://opendylan.org/downloads/opendylan/
-.. _0ff69dce5d: https://github.com/dylan-lang/opendylan/tree/v2012.1
+.. _211c9f8752: https://github.com/dylan-lang/opendylan/tree/v2013.1
