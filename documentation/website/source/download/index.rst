@@ -57,6 +57,21 @@ For installation, double-click on the installer, and follow instructions.
 You need to have either the PellesC linker or the linker of VC++ 6.0, 7.0
 or the current .NET platform SDK installed. PellesC is the best option.
 
+Your environment variables must be set such that the external build
+system (linker, resource compiler, etc.) can be found.  For example,
+for Pelles C you should set these environment variables in the System
+control panel (assuming installation in ``C:\Program
+Files\PellesC``)::
+
+  INCLUDE=C:\Program Files\PellesC\include;C:\Program Files\PellesC\include\win
+  LIB=C:\Program Files\PellesC\lib;C:\Program Files\PellesC\lib\win
+  PATH=C:\Program Files\PellesC\bin;...more...
+
+You may instead start a Pelles C interactive shell and run
+``C:\Program Files\Open Dylan\bin\win32-environment.exe``, but this
+won't help if you want to run Open Dylan via the Start menu.
+
+
 Installation on Mac OS X, FreeBSD, Linux
 ----------------------------------------
 
