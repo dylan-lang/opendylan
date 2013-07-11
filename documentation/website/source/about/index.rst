@@ -32,12 +32,6 @@ From `Wikipedia <http://en.wikipedia.org/wiki/Dylan_(programming_language)>`_:
     Lisp systems—Dylan has an ALGOL-like syntax rather than a
     Scheme-like prefix syntax.
 
-.. toctree::
-   :maxdepth: 1
-
-   apple-dylan/index
-
-
 Examples:
 
 .. toctree::
@@ -53,3 +47,9 @@ Examples:
     examples/macros
     examples/multiple_return_values
 
+Historical Materials:
+
+.. toctree::
+   :maxdepth: 1
+
+   apple-dylan/index
