@@ -68,8 +68,8 @@ Files\PellesC``)::
   PATH=C:\Program Files\PellesC\bin;...more...
 
 You may instead start a Pelles C interactive shell and run
-``C:\Program Files\Open Dylan\win32-environment.exe``, but this won't
-help if you want to run Open Dylan via the Start menu.
+``C:\Program Files\Open Dylan\bin\win32-environment.exe``, but this
+won't help if you want to run Open Dylan via the Start menu.
 
 
 Installation on Mac OS X, FreeBSD, Linux
