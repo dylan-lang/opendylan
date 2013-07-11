@@ -3,11 +3,6 @@
    <div class="row">
      <div class="span8">
 
-     <p>Dylan is a multi-paradigm functional and object-oriented programming language.
-     It is dynamic while providing a programming model designed to support efficient
-     machine code generation, including fine-grained control over dynamic and static
-     behaviors.</p>
-
      <div id="code-carousel" class="carousel slide">
        <ol class="carousel-indicators">
          <li data-target="#code-carousel" data-slide-to="0" class="active"></li>
@@ -102,6 +97,13 @@
        <div class="pull-right"><a href="news/index.html">All news &raquo;</a></div>
      </div>
      <div class="span4">
+
+     <div class="well">
+     <p>Dylan is a multi-paradigm functional and object-oriented programming language.
+     It is dynamic while providing a programming model designed to support efficient
+     machine code generation, including fine-grained control over dynamic and static
+     behaviors.</p>
+     </div>
 
      <h2>Get Started</h2>
 
