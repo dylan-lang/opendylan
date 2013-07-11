@@ -1,3 +1,9 @@
+Dylan is a multi-paradigm programming language that includes support for
+functional and object-oriented programming, and is dynamic while providing
+a programming model designed to support efficient machine code generation,
+including fine-grained control over dynamic and static behaviors. It was
+created in the early 1990s by a group led by Apple Computer.
+
 .. raw:: html
 
    <div class="row">
