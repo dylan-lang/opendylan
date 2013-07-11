@@ -5,7 +5,7 @@ Introduction
 Overview of the DUIM libraries
 ------------------------------
 
-The Dylan User Interface Manager (DUIM—pronounced “dwim”) is a
+The Dylan User Interface Manager (DUIM—pronounced "dwim") is a
 Dylan-based programming interface that provides a layered set of
 portable facilities for constructing user interfaces.
 

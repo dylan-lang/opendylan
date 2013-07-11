@@ -255,7 +255,7 @@ Values
 Description
 
 Unlocks the specified lock. The lock must be owned by the calling
-thread, otherwise the result indicates “not locked”.
+thread, otherwise the result indicates "not locked".
 
 primitive-owned-simple-lock
 

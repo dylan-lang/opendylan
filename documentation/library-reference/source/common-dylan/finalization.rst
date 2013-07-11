@@ -21,7 +21,7 @@ finalization as follows:
     can be recycled. These actions are known as finalization or termination.
 
     A common use of finalization is to release a resource when the
-    corresponding “proxy” object dies. For example, an open file might be
+    corresponding "proxy" object dies. For example, an open file might be
     represented by a stream object. When the stream object has no references
     and can be collected, it is certain that the file is no longer in use by
     the [application] and can be closed.

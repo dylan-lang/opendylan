@@ -10,7 +10,7 @@ functions, especially integer arithmetic. It describes a number of
 extensions to the Dylan language, which are available from the Dylan
 library. It also describes a generic arithmetic facility that, through
 the use of other libraries, allows you to extend arithmetic to special
-number types, such as “big” (64-bit) integers.
+number types, such as "big" (64-bit) integers.
 
 Throughout this chapter, arguments are instances of the class specified
 by the argument name (ignoring any numeric suffixes), unless otherwise

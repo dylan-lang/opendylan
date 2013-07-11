@@ -224,11 +224,11 @@ In Open Dylan, we can choose to go ahead and link in this
 situation. The choice is controlled from the main window, under the
 Build page of the **Options > Environment Options** dialog.
 
-The option “Always link, even if there are serious warnings” forces the
+The option "Always link, even if there are serious warnings" forces the
 compiler to link an executable file or DLL for a project regardless of
-any serious warnings. We can also choose “Ask whether to link if there
-are serious warnings“, and “Don’t link if there are serious warnings”.
-“Ask whether to link if there are serious warnings” is the default
+any serious warnings. We can also choose "Ask whether to link if there
+are serious warnings", and "Don’t link if there are serious warnings".
+"Ask whether to link if there are serious warnings" is the default
 setting.
 
 .. _problems-at-run-time:
@@ -303,7 +303,7 @@ system creates. Because these are not frames that the running
 application creates directly, most of the time they are of no interest,
 and so it is convenient to hide them. You can change the filtering with
 the drop-down list available directly above the thread pane in the
-debugger. The default filter setting is “Filtered visible frames”.
+debugger. The default filter setting is "Filtered visible frames".
 
 .. figure:: images/errstack2-0.png
    :align: center
@@ -365,8 +365,8 @@ before the unhandled exception.
    To work out what has happened, we can examine the stack pane filtering
    with the filtering drop-down list.
 
-#. Choose “Filtered frames” from the stack pane filtering drop-down list
-   (which by default is set to “Filtered visible frames”).  
+#. Choose "Filtered frames" from the stack pane filtering drop-down list
+   (which by default is set to "Filtered visible frames").  
    The stack pane updates itself.
 
 The six settings available from the stack pane filtering drop-down list
@@ -394,8 +394,8 @@ Filtered visible frames
 Filtered local frames
     Shows a filtered list of function calls from the current module only.
 
-The “Filtered…” settings do not, by default, show foreign function
-calls, cleanup frames, and frames of unknown type, whereas the “All…”
+The "Filtered…" settings do not, by default, show foreign function
+calls, cleanup frames, and frames of unknown type, whereas the "All…"
 settings show everything. You can set the filtering rules using **View >
 Debugger Options…**, see :ref:`stack-options` for details.
 
@@ -546,7 +546,7 @@ Choose the General page.
 
 The fields on the General page for our ``<reversi-board>`` value tell us
 that it is an instance of type ``<reversi-board>`` and that it has two
-slots. The third field, Source, is labeled “n/a” for “not applicable“.
+slots. The third field, Source, is labeled "n/a" for "not applicable".
 The Source field shows a source file name for anything the compiler saw
 during compilation, such as a definition. We are browsing an instance,
 not a compiler record, so it is not relevant to associate the instance

@@ -177,7 +177,7 @@ specifying which arguments to generic functions are specialized:
 
 -  If the generic function is a ``-setter`` function, the second argument
    is the one that is intended to be specialized.
--  If the generic function is a “mapping” function (such as ``do-sheets``),
+-  If the generic function is a "mapping" function (such as ``do-sheets``),
    the second argument (the object that specifies what is being
    mapped over) is the one that is specialized. The first argument (the
    functional argument) is not intended to be specialized.
@@ -187,7 +187,7 @@ specifying which arguments to generic functions are specialized:
 Macros that expand into calls to advertised functions
 =====================================================
 
-Many macros that take a “body” argument expand into a call to an
+Many macros that take a "body" argument expand into a call to an
 advertised function that takes a functional argument. This functional
 argument will execute the supplied body. For a macro named
 ``with-environment``, the function is generally named
@@ -216,19 +216,19 @@ be defined as follows:
 Terminology pertaining to error conditions
 ==========================================
 
-When this documentation specifies that it “is an error” for some
+When this documentation specifies that it "is an error" for some
 situation to occur, this means that:
 
 -  No valid DUIM program should cause this situation to occur.
 -  If this situation does occur, the effects and results are undefined.
 -  DUIM often tries to detect such an error, but it might not.
 
-When this manual specifies that some argument “must be a *type* ” or
+When this manual specifies that some argument "must be a *type* " or
 uses the phrase "the *type* argument", this means that it is an
 error if the argument is not of the specified *type*. DUIM tries to
 detect such type errors, but it might not always be successful.
 
-When this documentation says that “an error is signalled” in some
+When this documentation says that "an error is signalled" in some
 situation, this means that:
 
 -  If the situation occurs, DUIM will signal an error using ``error`` or
@@ -236,7 +236,7 @@ situation, this means that:
 -  Valid DUIM programs may rely on the fact that an error will be
    signalled.
 
-When this manual states that “a condition is signalled” in a given
-situation, this is the same as saying that “an error is signalled”, with
+When this manual states that "a condition is signalled" in a given
+situation, this is the same as saying that "an error is signalled", with
 the exception that the condition will be signalled using ``signal``
 instead of ``error``.

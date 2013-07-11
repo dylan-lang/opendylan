@@ -458,7 +458,7 @@ The <server-socket> class
    :superclasses: :class:`<abstract-socket>`
 
    :keyword service: An instance of ``<string>`` containing an abstract
-     name for a service with a “well-known” port, such as ``"ftp"`` or
+     name for a service with a "well-known" port, such as ``"ftp"`` or
      ``"daytime"``. Valid names depend on the configuration of the DNS.
      Required unless ``port:`` is supplied.
    :keyword port: An instance of ``<integer>`` identifying the port on
@@ -646,7 +646,7 @@ The class of TCP client sockets.
      ``<string>``. The remote host to connect to. The ``<string>`` may be
      either a host name or a presentation-form Internet address. Required.
    :keyword service: An instance of ``<string>``. A ``<string>``
-     containing an abstract name for a service with a “well-known“ port,
+     containing an abstract name for a service with a "well-known" port,
      such as ``"ftp"`` or ``"daytime"``. Valid names depend on the
      configuration of the DNS. Required unless ``port:`` is supplied.
    :keyword protocol: An instance of ``<string>`` naming the protocol.
@@ -699,7 +699,7 @@ The class of UDP client sockets.
      either a host name or a *presentation-form* Internet address.
      Required.
    :keyword service: An instance of ``<string>``. A ``<string>``
-     containing an abstract name for a service with a “well-known port”,
+     containing an abstract name for a service with a "well-known port",
      such as ``"ftp"`` or ``"daytime"``. Valid names depend on the
      configuration of the DNS. Required unless ``port:`` is supplied.
    :keyword protocol: An instance of ``<string>`` naming the protocol.

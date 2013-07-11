@@ -55,13 +55,13 @@ Some of the more important types of gadget are as follows:
                     
 
 -  Collection gadgets are those gadgets that can contain a number of
-   “child” gadgets, the specification of which can be described in terms
+   "child" gadgets, the specification of which can be described in terms
    of a Dylan collection, and includes gadgets such as list controls and
-   groups of buttons. Usually, the behavior of each of the “child”
+   groups of buttons. Usually, the behavior of each of the "child"
    gadgets is interdependent in some way; for example, only one button
    in a group of radio buttons may be selected at any time. With
-   collection gadgets, you can specify the “child” gadgets very simply,
-   without having to worry about defining each “child” explicitly.
+   collection gadgets, you can specify the "child" gadgets very simply,
+   without having to worry about defining each "child" explicitly.
 
 Each of these types of gadget is described in more detail in subsequent
 sections, and full reference entries for every interface exposed in the
@@ -371,7 +371,7 @@ Subclasses of <page>
 ^^^^^^^^^^^^^^^^^^^^
 
 The *<page>* class is the base class of gadgets that are used to display
-a whole page of information within a “parent” element, with the page
+a whole page of information within a "parent" element, with the page
 itself optionally containing other layouts or gadgets. Pages are used in
 situations where different sets of information (the pages themselves)
 need to be displayed in a common parent.
@@ -770,7 +770,7 @@ Tab controls
 ^^^^^^^^^^^^
 
 An instance of the class *<tab-control>* lets you define a sheet that
-contains several “pages” of information. Each page of information is
+contains several "pages" of information. Each page of information is
 displayed by clicking on the appropriate tab along the top of the sheet.
 
 A tab control
@@ -1073,7 +1073,7 @@ init-keyword, and is given in pixels.
 The *type:* init-keyword represents the kind of border to be created.
 Borders may appear raised from the area they surround, or lowered with
 respect to it. Alternatively, a border may be displayed as a thin ridge
-or groove. Input and output borders represent “logical” borders.
+or groove. Input and output borders represent "logical" borders.
 
 Different types of border
                          
@@ -1162,7 +1162,7 @@ menu, the menu itself is displayed on screen, as if the command had been
 chosen using the mouse. This does not happen if the keyboard accelerator
 is used.
 
-Buttons are intrinsically “non-stretchy” gadgets. That is, the width and
+Buttons are intrinsically "non-stretchy" gadgets. That is, the width and
 height of a button is generally calculated on the basis of the button’s
 label, and the button will be sized so that it fits the label
 accordingly. Sometimes, however, you want a button to occupy all the
@@ -1308,11 +1308,11 @@ this layout.
 
 You can use the *child:* init-keyword to specify a sheet hierarchy to be
 used in place of a list of items. Under normal circumstances, the items
-defined for any button box are realized in terms of their “natural”
+defined for any button box are realized in terms of their "natural"
 gadget class. For example, if you create a radio button box, DUIM
 creates a radio button for each item that you specify. By using the
 *child:* init-keyword, you can define sheet hierarchies that override
-these “natural” gadget classes, letting you specify more complex
+these "natural" gadget classes, letting you specify more complex
 arrangements of gadgets: in this way, you could create a check button
 box where each check button is itself surrounded by a group box. For an
 example of the use of the *child:* init-keyword, look at the initial
@@ -1671,13 +1671,13 @@ The *label-key:* and *value-key:* init-keywords are functions that are
 used to calculate the labels and the value of the gadget respectively.
 
 The value of a collection gadget is determined by calling the value key
-of the gadget on each selected item in the gadget. The “printed
-representation” of a collection gadget is determined by calling the
+of the gadget on each selected item in the gadget. The "printed
+representation" of a collection gadget is determined by calling the
 label key of the gadget on each item.
 
 By default, the label key returns the numeric label of the gadget items
 (for example, the buttons in a button box would be labeled 1, 2, 3, and
-so on). In general, the label key can be trusted to “do the right thing”
+so on). In general, the label key can be trusted to "do the right thing"
 by default.
 
 By default, the value key returns the collection gadget itself.
@@ -4344,7 +4344,7 @@ Description
 Returns the gadget value of the specified gadget.
 
 The interpretation of the value varies from gadget to gadget. Most
-gadgets conceptually have “raw” values that can be determined directly
+gadgets conceptually have "raw" values that can be determined directly
 using the generic function appropriate to the gadget class concerned
 (`gadget-text`_ for an instance of `See
 <text-gadget>`_, `See
@@ -5859,7 +5859,7 @@ The *label-key* and *value-key* can be functions used to compute the
 label and value for each item in the menu, respectively. For more
 information, see *`gadget-label-key`_*, or
 *`gadget-value-key`_*. In general, the label
-key can be trusted to “do the right thing” by default.
+key can be trusted to "do the right thing" by default.
 
 The *text-style* argument specified a text style for the menu. The
 *foreground* and *background* arguments specify foreground and
@@ -6711,7 +6711,7 @@ Operations
 Example
        
 
-The following code creates an “empty” progress bar:
+The following code creates an "empty" progress bar:
 
 \*prog\* := contain
                    
@@ -6835,7 +6835,7 @@ can be used to test which button in the push box has been pressed.
 
 The *default?:* init-keyword sets the default property for the push
 button gadget. When true, the push button is drawn with a heavy border,
-indicating that it is the “default operation” for that frame. Usually,
+indicating that it is the "default operation" for that frame. Usually,
 this means that pressing the Return key invokes the activate callback.
 
 Internally, this class maps into the push button Windows control.
@@ -9538,7 +9538,7 @@ string to an integer for *value-type: <integer>*.
 
 The `gadget-text`_ generic function always
 returns the exact text typed into a text gadget. However, `See
-gadget-value`_ always returns a “parsed” value of
+gadget-value`_ always returns a "parsed" value of
 the appropriate type, depending on the value of `See
 gadget-value-type`_. If the string contains any
 characters that are not appropriate to the `See
@@ -9547,12 +9547,12 @@ contains any non-integers, and the `See
 gadget-value-type`_ is *<integer>*), then `See
 gadget-value`_ returns *#f*.
 
-Setting the gadget value “prints” the value and inserts the appropriate
+Setting the gadget value "prints" the value and inserts the appropriate
 text into the text field.
 
 The *value-changing-callback:* init-keyword allows you to specify a
 callback that is invoked as the value of the text gadget is changing
-during the course of “casual” typing. Generally, this means when the
+during the course of "casual" typing. Generally, this means when the
 user is typing text, but before the text is committed (usually by
 pressing the RETURN key).
 
@@ -9560,7 +9560,7 @@ Conversely, the value-changed callback of a text gadget is invoked when
 the change to the gadget value is committed (again, usually by pressing
 the RETURN key).
 
-The action required to “commit” a text change is defined by the back-end
+The action required to "commit" a text change is defined by the back-end
 for the platform that you are writing for, and is not configurable.
 
 Operations
@@ -9637,7 +9637,7 @@ A tool bar
    :alt: 
 A tool bar is often placed underneath the menu bar of an application,
 although its position is very often configurable, and a tool bar may
-often be “docked” against any edge of the application’s frame. In
+often be "docked" against any edge of the application’s frame. In
 addition, a tool bar can sometimes be displayed as a free-floating
 window inside the application.
 
@@ -10508,7 +10508,7 @@ An instance of type *false-or(`<scroll-bar>`_)*
 Description
            
 
-The class of viewports. A viewport is a sheet “through” which other
+The class of viewports. A viewport is a sheet "through" which other
 sheets are visible; they are used to implement a clipping region for
 scrolling.
 

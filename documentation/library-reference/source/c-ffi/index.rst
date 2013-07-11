@@ -62,14 +62,14 @@ fundamental types like ``int`` and ``double``. The names of these
 predefined Dylan classes are formed from the C name of the fundamental
 type being designated. The designator class name for a particular C type
 formed using Dylan’s standard class-naming convention; it is prefixed
-with “C-”, hyphenated if it contains more than one word, and enclosed in
+with "C-", hyphenated if it contains more than one word, and enclosed in
 angle brackets. For example, the C-FFI library provides the class
 ``<C-int>`` to designate the C type ``int`` ; it designates ``double``
 by the class ``<C-double>``, and ``unsigned long`` by the class
 ``<C-unsigned-long>``.
 
 .. note:: Since Dylan variable names are compared without sensitivity to
-   case, the capitalization of the “C” in the names above, and in other
+   case, the capitalization of the "C" in the names above, and in other
    Dylan names appearing in this document, is not binding and can safely be
    ignored.
 
@@ -128,8 +128,8 @@ like this:
 As well as acting as a static information carrier for use in other FFI
 definitions, a designator class can also be instantiable, in which case
 Dylan uses an instance of the designator class to represent an object of
-the C type it designates when that object is passed from the “C world”
-to the “Dylan world”.
+the C type it designates when that object is passed from the "C world"
+to the "Dylan world".
 
 *Note:* Only classes that designate C pointer types can be instantiated
 in this way. Instances of C’s fundamental numeric value types like ``int``,
@@ -376,7 +376,7 @@ Dylan function:
     1.5
 
 By default, the C-FFI also defines a setter function for the variable.
-The setter name uses Dylan’s convention of appending “-setter” to the
+The setter name uses Dylan’s convention of appending "-setter" to the
 getter name.
 
 ::
@@ -1720,7 +1720,7 @@ Defining specialized versions of designator classes
          parameter m :: <Matrix>;
          parameter n :: <Matrix>;
          result value :: <Matrix>;
-         c-name: “MatrixAdd”;
+         c-name: "MatrixAdd";
        end C-function;
 
        define method \+ (m1 :: <Matrix>, m2 :: <Matrix>) =>

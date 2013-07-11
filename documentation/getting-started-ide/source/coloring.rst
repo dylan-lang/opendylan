@@ -160,7 +160,7 @@ possible.
 Open the Reversi project.
 
 #. Choose **Project > Settings** and, on the Compile page, set the
-   compilation mode to “Production mode”.
+   compilation mode to "Production mode".
 #. Choose **Project > Clean Build**.
 #. When the build is complete, go to the Sources page and open the file
    *game.dylan*.
@@ -175,7 +175,7 @@ or were not carried out during the last build.
 
 #. Go to the definition of the method ``<reversi-game>``.
 
-You can use **Edit > Find** or the “binoculars” toolbar button to do this.
+You can use **Edit > Find** or the "binoculars" toolbar button to do this.
 
 This is the definition of ``<reversi-game>`` :
 

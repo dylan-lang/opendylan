@@ -6,7 +6,7 @@ At this point, the task list manager still does very little. If you try
 running the code (as described in `Starting the
 application <improve.htm#17910>`_), and interacting with any of the
 elements in the GUI (clicking on a button, choosing a menu command, and
-so on), then only the “not yet implemented” message is displayed. This
+so on), then only the "not yet implemented" message is displayed. This
 section shows you how to remedy this situation, by adding callback
 functions to the task list manager.
 
@@ -1545,7 +1545,7 @@ functionality you might like to add. A few ideas are listed below:
    task list manager as a table control, so that the priority of each
    task is displayed next to the text for the task.
 -  Implement the facility to define categories, so that tasks could be
-   assigned categories such as “Home” and “Business”. Categories could
+   assigned categories such as "Home" and "Business". Categories could
    be listed in the table control alongside priorities.
 -  Allow sorting the list of tasks according to a key. Tasks could then
    be sorted by priority or category.

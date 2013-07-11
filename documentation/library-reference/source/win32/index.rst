@@ -71,7 +71,7 @@ Win32-Common
 
 Win32-Controls
 
--  “Common controls”, including list view, tree view, property sheets,
+-  "Common controls", including list view, tree view, property sheets,
    and so on (*COMMCTRL.H* and *COMCTL32.DLL*).
 
 Win32-Registry
@@ -80,7 +80,7 @@ Win32-Registry
 
 Win32-Rich-Edit
 
--  “Rich edit” controls (*RICHEDIT.H* and *RICHED32.DLL*).
+-  "Rich edit" controls (*RICHEDIT.H* and *RICHED32.DLL*).
 -  Win32-DDE Dynamic Data Exchange (*DDE.H* and *DDEML.H*).
 -  Win32-Shell API for querying and extending the Windows Shell.
    Corresponds to *SHELLAPI.H* and *SHELL32.DLL*.
@@ -192,7 +192,7 @@ since that is how it is actually used.
 
 Most of the pointer types in the Windows API have several names; for
 example: *PRECT*, *NPRECT*, and *LPRECT*. In 16-bit code, these
-distinguished between “near” and “far” pointers, but in 32-bit code
+distinguished between "near" and "far" pointers, but in 32-bit code
 there is no difference. Rather than carry the duplicate names over into
 Dylan, it would be simpler to use only the basic *P...* prefix names.
 However, the *LP...* names seem to be used much more often, and hence
@@ -522,9 +522,9 @@ occur are:
    , *GetLocaleInfo*, and possibly others, or *dwFlags* parameter of
    *GetTimeFormat*, *GetNumberFormat*, *GetCurrencyFormat*, or
    *GetDateFormat*.
--  Mask and effects values in *CHARFORMAT* structure for “rich edit”
+-  Mask and effects values in *CHARFORMAT* structure for "rich edit"
    controls *($CFM-...* and *$CFE-...)*
--  Mask value in *PARAFORMAT* structure for “rich edit” controls
+-  Mask value in *PARAFORMAT* structure for "rich edit" controls
     *($PFM-...)*
 
 Other minor details

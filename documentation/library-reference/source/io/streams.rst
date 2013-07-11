@@ -129,7 +129,7 @@ string *"hello world"*:
     let stream = make(<string-stream>, contents: "hello world");
 
 The first invocation of :gf:`read-element` on *stream* returns the
-character “h”, the next invocation “e”, and so on. Once a stream has
+character "h", the next invocation "e", and so on. Once a stream has
 been used to consume all the elements of the data, the stream is said to
 be at its end. This condition can be tested with the function
 :gf:`stream-at-end?`. The following code fragment applies *my-function*
@@ -159,7 +159,7 @@ function :gf:`write-element` writes a single data element to an output
 stream.
 
 The following forms bind *stream* to an output stream over an empty
-string and create the string “I see!”, using the function
+string and create the string "I see!", using the function
 :gf:`stream-contents` to access all of the stream’s elements.
 
 .. code-block:: dylan
@@ -175,7 +175,7 @@ information about writing to streams, see `Writing to streams`_.
 Some streams are *positionable*; that is, any element of the stream can
 be accessed at any time. Positionable streams allow you to set the
 position at which the stream is accessed by the next operation. The
-following example uses positioning to return the character “w” from a
+following example uses positioning to return the character "w" from a
 stream over the string *"hello world"*:
 
 .. code-block:: dylan
@@ -186,7 +186,7 @@ stream over the string *"hello world"*:
 
 The following example returns a string. The first ten characters are the
 fill characters for the underlying sequence of the stream. The fill
-character for ``<string>`` is “ “ (the space character), so in the
+character for ``<string>`` is " " (the space character), so in the
 example below, the first ten characters are spaces.
 
 .. code-block:: dylan
@@ -454,13 +454,13 @@ may occur after *close* is called.
 The *share-mode:* keyword determines how a file can be accessed by other
 streams while the stream has it open. The possible values are:
 
--  *#”share-read”* Allow other streams to be opened to the file for
+-  *#"share-read"* Allow other streams to be opened to the file for
    reading but not for writing.
--  *#”share-write”* Allow other streams to be opened for writing but not
+-  *#"share-write"* Allow other streams to be opened for writing but not
    for reading.
--  *#”share-read-write”* Allow other streams to be opened for writing
+-  *#"share-read-write"* Allow other streams to be opened for writing
    or reading.
--  *#”exclusive”* Do not allow other streams to be opened to this file.
+-  *#"exclusive"* Do not allow other streams to be opened to this file.
 
 Sequence streams
 ^^^^^^^^^^^^^^^^
@@ -831,7 +831,7 @@ A stream position can be thought of as a natural number that indicates
 how many elements into the stream the stream’s current location is.
 However, it is not always the case that a single integer contains enough
 information to reposition a stream. Consider the case of an
-“uncompressing” file stream that requires additional state beyond simply
+"uncompressing" file stream that requires additional state beyond simply
 the file position to be able to get the next input character from the
 compressed file.
 
@@ -1159,7 +1159,7 @@ Operations
      Discards any pending input from *input-stream*, both buffered input
      and, if possible, any input that might be at the stream’s source.
 
-     This operation is principally useful for “interactive” streams,
+     This operation is principally useful for "interactive" streams,
      such as TTY streams, to discard unwanted input after an error
      condition arises. There is a default method on :class:`<stream>` so
      that applications can call this function on any kind of stream. The
@@ -2066,7 +2066,7 @@ See also
 
      The second return value is ``#t`` if the read terminated with
      *element*, or ``#f`` if the read terminated by reaching the end of
-     the stream’s source. The “boundary” element is consumed, that is,
+     the stream’s source. The "boundary" element is consumed, that is,
      the stream is left positioned after *element*.
 
      The ``read-to`` function determines whether the element occurred by
@@ -2319,7 +2319,7 @@ See also
    :example:
 
      The following forms bind *stream* to an output stream over an empty
-     string and create the string “I see!”, using the function
+     string and create the string "I see!", using the function
      ``stream-contents`` to access all of the stream’s elements.
 
      .. code-block:: dylan
@@ -2775,7 +2775,7 @@ Operations
 
    :description:
 
-     “Unreads” the last element from *positionable-stream*. That is, it
+     "Unreads" the last element from *positionable-stream*. That is, it
      returns *element* to the stream so that the next call to
      :gf:`read-element` will return *element*. The stream must be a
      :class:`<positionable-stream>`.
@@ -2887,7 +2887,7 @@ Operations
 
      The ``<wrapper-stream>`` class implements default methods for all
      of the stream protocol functions described in this document. Each
-     default method on ``<wrapper-stream>`` simply “trampolines” to its
+     default method on ``<wrapper-stream>`` simply "trampolines" to its
      inner stream.
 
    :operations:
@@ -3005,7 +3005,7 @@ Operations
    :example:
 
      The following forms bind *stream* to an output stream over an empty
-     string and create the string “I see!”, using the function
+     string and create the string "I see!", using the function
      :gf:`stream-contents` to access all of the stream’s
      elements.
 
@@ -3049,7 +3049,7 @@ Operations
    :example:
 
      The following forms bind *stream* to an output stream over an empty
-     string and create the string “I do”, using the function :gf:`stream-contents` to access all of the stream’s
+     string and create the string "I do", using the function :gf:`stream-contents` to access all of the stream’s
      elements.
 
      .. code-block:: dylan

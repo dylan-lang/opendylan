@@ -64,7 +64,7 @@ context pane are as follows.
 
 If you paused the application yourself, by choosing **Application >
 Pause**, or by clicking the pause toolbar button (|image0|), the
-message “User requested pause” appears in the context pane of all open
+message "User requested pause" appears in the context pane of all open
 debugger windows.
 
 If the application paused because of some other event,
@@ -72,7 +72,7 @@ If the application paused because of some other event,
 -  the context pane for the debugger on the thread that caused the pause
    shows a message explaining why that thread paused the application.
 -  the context pane in all other open debuggers shows the message
-   “Stopped in Thread *x*”, where *x* is the name of the thread that
+   "Stopped in Thread *x*", where *x* is the name of the thread that
    has stopped.
 
 Often the message describes an unhandled Dylan error or breakpoint. The
@@ -103,7 +103,7 @@ addition, the menu commands **View > Expand**, **View > Expand All**,
    become visible when you change the filtering settings. By default, only
    frames for Dylan functions defined in or imported into the thread’s
    current module appear in the stack pane. This default setting is
-   indicated by “Filtered visible frames”, which appears in the stack pane
+   indicated by "Filtered visible frames", which appears in the stack pane
    filtering drop-down list (see :ref:`searching-stack-backtrace-for-cause`
    for information about the drop-down list settings).
 
@@ -121,7 +121,7 @@ Thread titles
 The root node in the backtrace is the number and title of the thread.
 Threads are assigned titles using the following scheme:
 
--  Thread *x* : “*name* ”.
+-  Thread *x* : "*name* ".
 -  A Dylan thread that has a name. The name is a string.
 -  Thread *x* : Anonymous thread
 -  A Dylan thread that has no name.
@@ -129,7 +129,7 @@ Threads are assigned titles using the following scheme:
 -  Any non-Dylan thread.
 
 The initial thread in a Dylan application is always called Thread 1:
-“Master thread”. Each subsequently created thread is assigned an integer
+"Master thread". Each subsequently created thread is assigned an integer
 number by incrementing the value used for the previous thread, and a
 title derived according to the scheme above.
 
@@ -229,7 +229,7 @@ window, with the insertion point placed at the start of the definition.
 If the debugger cannot locate the source code for the method or function
 that created the selected call frame, or if you select a local variable
 or the backtrace’s root node, the debugger leaves the source pane empty,
-writes “No source available” in the field above the source pane, and
+writes "No source available" in the field above the source pane, and
 makes the Edit Source button unavailable.
 
 .. index::
@@ -286,7 +286,7 @@ It can be costly to keep all the panes of open debugger windows up to
 date. For this reason, Open Dylan only refreshes the information in
 debugger windows in certain circumstances.
 
-.. note:: In the following descriptions, a window being “refreshed” can
+.. note:: In the following descriptions, a window being "refreshed" can
    also mean the window being displayed for the first time, with up-to-date
    contents, if it has not yet been displayed.
 
@@ -310,7 +310,7 @@ be refreshed unless you choose **View > Refresh** in them. If you choose
 debugger window.
 
 The Misc page of the debugger’s **View > Debugger Options** dialog
-contains the option “Refresh all open debuggers when entering debugger“.
+contains the option "Refresh all open debuggers when entering debugger".
 By default, this option is not set. When turned on, the rules above are
 ignored and every open debugger window is refreshed whenever the
 application pauses.
@@ -551,7 +551,7 @@ To select a restart to be signalled, choose **Thread > Continue…**, which
 displays a dialog listing all available restarts.
 
 For convenience, there are two other menu items for signalling ``<abort>``
-restarts, which are defined to mean “terminate the current computation”.
+restarts, which are defined to mean "terminate the current computation".
 
 **Thread > Abort** signals the innermost available ``<abort>`` restart—that
 is, it aborts as little as possible—whereas **Thread > Abort All** signals
@@ -597,7 +597,7 @@ Open Dylan lays out the debugger window to suit the situation. If
 you choose **Application > Interact**, the debugger uses its interaction
 layout. In this layout, the interaction pane is maximized and the stack
 and source panes do not appear at all. This layout hosts interactive
-sessions and is sometimes casually referred to as “the interactor”.
+sessions and is sometimes casually referred to as "the interactor".
 
 If the debugger was invoked because of an error or because you chose
 **Application > Debug** or **Application > Pause**, the interaction pane
@@ -629,9 +629,9 @@ Dylan expressions and definitions for execution. The prompt is a
 question mark (*?* ).
 
 The interaction pane is similar to what some other languages call a
-*listener* tool, and it provides the “read-eval-print” model of
+*listener* tool, and it provides the "read-eval-print" model of
 interaction that is standard in those tools. However, in Open Dylan
-interactions, the “eval” phase is not really evaluation. It consists of
+interactions, the "eval" phase is not really evaluation. It consists of
 compiling your code and then sending the compiled code to the paused
 application thread itself, where it is executed, modifying the state of
 the thread accordingly. This means that you can interactively add
@@ -746,7 +746,7 @@ Enter *<my-class>;* at the interaction pane prompt::
     => $2 = {<class>: <my-class>}
     ?
 
-Return values in the interactor are “live”. You can use the shortcut
+Return values in the interactor are "live". You can use the shortcut
 (right-click) menu to perform a variety of useful operations on them.
 
 The **Show Contents** command allows you to browse the contents of values
@@ -971,8 +971,8 @@ A project can become the active project automatically as well as by
 being set explicitly in the main window’s drop-down list. The main
 window’s **Options > Environment Options…** dialog has two options on the
 General page controlling when projects become active automatically:
-“Project becomes active when opened” and “Project becomes active when
-application started“.
+"Project becomes active when opened" and "Project becomes active when
+application started".
 
 .. index:: breakpoints
    single: debugging; breakpoints
@@ -1117,7 +1117,7 @@ Underscores show lines where you could add a breakpoint.
 The commands available on the shortcut menu depend on the context. The
 complete list of commands follows.
 
-“Trace”
+"Trace"
     Sets a trace point for the selected function. When you set a trace
     point for a function and then run and pause the application, the
     nesting levels of recursive calls and their subsequent output are
@@ -1125,13 +1125,13 @@ complete list of commands follows.
     the values of the function’s arguments and the associated result
     values.
 
-“Untrace”
+"Untrace"
     Removes the trace point for the selected function.
 
-“Untrace All”
+"Untrace All"
     Removes all trace points for the current project.
 
-“Run to Cursor”
+"Run to Cursor"
     Only available in the debugger. Sets a temporary pausing breakpoint
     at the line the mouse pointer is on, then starts the application or
     resumes the application if it was paused. The application runs until
@@ -1140,11 +1140,11 @@ complete list of commands follows.
 
     Temporary breakpoints are denoted by a solid green circle.
 
-“Set Breakpoint”
+"Set Breakpoint"
     Sets an enabled pausing breakpoint at the line the mouse pointer is
     on.
 
-“Clear Breakpoint”
+"Clear Breakpoint"
     Removes any breakpoint at the line the mouse pointer is on.
 
 Edit Breakpoint Options…
@@ -1186,10 +1186,10 @@ Breakpoint options
 The **Edit Breakpoint Options…** dialog, available from the shortcut
 (right-click) menu, contains the following sections.
 
--  “Enabled” Check item for toggling whether a breakpoint is enabled or
+-  "Enabled" Check item for toggling whether a breakpoint is enabled or
    disabled. A disabled breakpoint does not affect the application’s
    execution. New breakpoints are enabled by default.
--  “Pause application”
+-  "Pause application"
 -  Check item for toggling whether the breakpoint pauses the application
    when it is encountered.
 -  New breakpoints pause the application by default.
@@ -1197,15 +1197,15 @@ The **Edit Breakpoint Options…** dialog, available from the shortcut
    message in the debugger interaction pane whenever it was reached.
    This kind of breakpoint is shown with a solid yellow triangle when
    enabled and a hollow yellow triangle when disabled.
--  “Print message”
+-  "Print message"
 -  Check box for toggling whether the breakpoint prints any message in
    the debugger’s interaction pane when it is encountered. By default a
    new breakpoint does print a message.
--  “Message text” Text field for entering some identifying message to be
+-  "Message text" Text field for entering some identifying message to be
    associated with the breakpoint (if any). The text is used in debugger
    messages referring to the breakpoint. This field is not available if
    *Print message* is not checked.
--  “One shot” Check box for toggling whether the breakpoint is temporary
+-  "One shot" Check box for toggling whether the breakpoint is temporary
    or permanent. Temporary breakpoints are removed after they have been
    encountered. By default, new breakpoints are permanent.
 -  The shortcut (right-click) menu’s *Run to Cursor* command creates
@@ -1220,7 +1220,7 @@ There are three stepping commands: Step Over, Step Out, and Step Into.
 
 Each command makes all application threads begin executing again. The
 application executes until the thread belonging to the debugger that
-issued the stepping command reaches the destination of the “step”. At
+issued the stepping command reaches the destination of the "step". At
 that point, all threads pause and control returns to the debugger.
 
 The steps relate to functions on the control stack for a particular
@@ -1239,7 +1239,7 @@ stepping commands do.
 Step over
 ---------
 
-Choosing **Thread > Step Over** in a debugger “steps over” the next
+Choosing **Thread > Step Over** in a debugger "steps over" the next
 function call that occurs in that debugger’s thread, executing the call
 in full and then returning control to the debugger. The command operates
 in the context of the currently selected call frame in the debugger’s
@@ -1274,7 +1274,7 @@ rather than continuing the application no longer under the debugger. See
 Step into
 ---------
 
-Choosing **Thread > Step Into** in a debugger “steps into” the next
+Choosing **Thread > Step Into** in a debugger "steps into" the next
 function call that occurs in that debugger’s thread, and then returns
 control to the debugger before the function begins to execute. This
 command is not sensitive to the debugger’s selected call frame.
@@ -1292,7 +1292,7 @@ details of **Thread > Step Out**.
 Step out
 --------
 
-Choosing **Thread > Step Out** in a debugger “steps out” of the current
+Choosing **Thread > Step Out** in a debugger "steps out" of the current
 function call, that is, it resumes execution of the application until a
 function returns, and then passes control back to the debugger.
 
@@ -1410,11 +1410,11 @@ debugger’s backtrace pane.
 
 Show stack frames of types
 
--  Check the boxes to show any of the following frame types: “Dylan
-   function calls”, “Foreign function calls”, “Cleanup frames”, and
-   “Unknown stack frame types”. By default, only “Dylan function calls”
+-  Check the boxes to show any of the following frame types: "Dylan
+   function calls", "Foreign function calls", "Cleanup frames", and
+   "Unknown stack frame types". By default, only "Dylan function calls"
    is selected.
--  The selections made here correspond to the “Filtered” rules used in
+-  The selections made here correspond to the "Filtered" rules used in
    the filtering drop-down list. If you change the types of stack frames
    to be shown after filtering, the new filtering rules are applied by
    the filtering drop-down list selections when you next invoke a
@@ -1422,19 +1422,19 @@ Show stack frames of types
 
 Show stack frames from modules
 
--  Choose one of “Current module” (show frames whose corresponding
-   definitions are defined in the current module only), “Current module
-   and imported from used modules” (show frames from the current module
-   and the modules it uses; the default), and “All modules” (show frames
+-  Choose one of "Current module" (show frames whose corresponding
+   definitions are defined in the current module only), "Current module
+   and imported from used modules" (show frames from the current module
+   and the modules it uses; the default), and "All modules" (show frames
    from all modules in the thread).
--  These three options correspond to the “local”, “visible” and “all”
+-  These three options correspond to the "local", "visible" and "all"
    statements in the filtering drop-down list.
 
 Show stack frames matching
 
--  Enter a string in the “Include” text box; only frame names including
+-  Enter a string in the "Include" text box; only frame names including
    this string will be shown in backtraces.
--  Enter a string in the “Exclude” text box; frame names including this
+-  Enter a string in the "Exclude" text box; frame names including this
    string will be excluded from backtraces.
 
 Exceptions options
@@ -1499,7 +1499,7 @@ Just-in-time debugging
 ======================
 
 The Windows operating system has the built-in capability to perform
-“just-in-time” debugging. Just-in-time, or JIT, debugging is where an
+"just-in-time" debugging. Just-in-time, or JIT, debugging is where an
 application crashes while not running under a debugger, and the
 operating system arranges to start up an available debugger and attach
 it to the crashed process in order to obtain a backtrace. The system
@@ -1509,7 +1509,7 @@ the installation process you have the opportunity to install Open Dylan
 as your machine’s default debugger.
 
 If you set Open Dylan up as your JIT debugger, it is simple to make
-a connection to the Open Dylan debugger “just in time“. When the
+a connection to the Open Dylan debugger "just in time". When the
 application signals an error, and that error is unhandled, the operating
 system displays a dialog giving you a chance to attach to a debugger. If
 you then click **Debug** in the dialog, the Open Dylan debugger can

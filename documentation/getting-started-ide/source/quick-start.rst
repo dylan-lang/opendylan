@@ -48,7 +48,7 @@ environment, and choose one of several supplied examples to work with.
 
    We want to browse the example projects.
 
-#. Select the “Example project” option and click **OK**.
+#. Select the "Example project" option and click **OK**.
 
    The Open Example Project dialog appears.
 
@@ -56,9 +56,9 @@ environment, and choose one of several supplied examples to work with.
    Dylan project. If you expand a category you can see the examples
    offered.
 
-   The “Getting Started” category contains two very simple projects to help
+   The "Getting Started" category contains two very simple projects to help
    you start programming in Dylan and using the libraries included with
-   Open Dylan. The “Documentation” category contains examples from the
+   Open Dylan. The "Documentation" category contains examples from the
    Open Dylan documentation set.
 
    The source files for the example projects are stored under the top-level
@@ -67,16 +67,16 @@ environment, and choose one of several supplied examples to work with.
    creates when building a project are also stored under this folder.
 
    We are going to look at the example called Reversi, which is in the
-   “Documentation” category.
+   "Documentation" category.
 
    .. figure:: images/examples-dlg.png
       :align: center
 
       The Open Dylan Examples dialog
 
-#. Expand the “Documentation” category by clicking the *+* next to it.
+#. Expand the "Documentation" category by clicking the *+* next to it.
 
-#. Select “Reversi”, then click **OK**.
+#. Select "Reversi", then click **OK**.
 
    A *project window* appears.
 
@@ -177,7 +177,7 @@ does that, however, a dialog appears.
 
 The dialog appears to let us know that the compiler issued *serious
 warnings* while compiling the project sources, and to let us choose
-whether to go ahead with the “link” phase of building. The “link” phase
+whether to go ahead with the "link" phase of building. The "link" phase
 creates the executable application for the project.
 
 Why are there serious warnings? Recall from `The Reversi project`_ that
@@ -244,7 +244,7 @@ built. The first is to choose **Application > Start** from the Reversi
 project window, as we have just seen. This menu command is also
 available in the Open Dylan debugger and editor.
 
-The second way to run the application is to click the “Start/Resume”
+The second way to run the application is to click the "Start/Resume"
 button (|image0|) on the project window’s toolbar. Again, we can do
 this in the Open Dylan debugger and editor too. And again like
 **Application > Start**, running an application this way connects it to

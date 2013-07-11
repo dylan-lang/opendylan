@@ -138,7 +138,7 @@ Adding a default callback
 Nothing is more frustrating than designing a user interface that does
 not respond to user input. Although, in the early stages at least, the
 user interface does nothing particularly useful, you can at least define
-a “not yet implemented” message that can be used until you define real
+a "not yet implemented" message that can be used until you define real
 behavior for the application.
 
 The definition of the function that gives you this default behavior is
@@ -186,7 +186,7 @@ define the new frame class, use the following structure:
 In this case, ``<task-frame>`` is the name of the new class of frame,
 and``<simple-frame>`` is its superclass. Like ordinary Dylan classes,
 frame classes can have any number of superclasses, with multiple
-superclasses separated by commas. The superclass of any “standard” frame
+superclasses separated by commas. The superclass of any "standard" frame
 is usually ``<simple-frame>``. If you were designing a dialog box, its
 superclass would be ``<dialog-frame>``. If you were designing a wizard,
 its superclass would be ``<wizard-frame>``.
@@ -279,7 +279,7 @@ define as a pane in the definition of a frame class. For example, the
 layout in the ``task-layout`` pane actually contains a number of
 sub-layouts. If you wanted, each one of these sub-layouts could be
 defined as a separate pane within the frame definition. Note, however,
-that you only have to “activate” the top-most layout; there should only
+that you only have to "activate" the top-most layout; there should only
 be one use of the ``layout`` option.
 
 Similarly, you are free to use whatever programming constructs you like
@@ -550,7 +550,7 @@ conjunction with the other improvements to the definition of
   Assigning ``first`` to the label key of ``priority-box`` ensures that the
   first element from each sub-list of ``$priority-items`` (the string) is
   used as the label for the appropriate item. Thus, the first button in
-  priority box is labeled “Low”.
+  priority box is labeled "Low".
 
 - The *value key* is a function which is passed an entry and returns the
   logical value of the entry.
@@ -561,7 +561,7 @@ conjunction with the other improvements to the definition of
   priority box has the value ``#"low"``.
 
 Lastly, ``priority-box`` is given a default value: ``#"medium"``. This
-ensures that the button labeled “Medium” is selected by default whenever
+ensures that the button labeled "Medium" is selected by default whenever
 ``priority-box`` is first created.
 
 The definitions for ``add-button``, ``remove-button``, and ``task-list``

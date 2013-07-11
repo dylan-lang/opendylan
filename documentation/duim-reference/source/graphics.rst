@@ -66,13 +66,13 @@ chapter.
    as displays, printers, and virtual devices such as bitmaps.
 -  *Sheets* Many sheets can be used for doing output, so the drawing
    functions can also take a sheet as the output argument. In this case,
-   drawing function “trampolines” to the sheet’s medium. So, while the
+   drawing function "trampolines" to the sheet’s medium. So, while the
    functions defined here are specified to be called on mediums, they
    can also be called on sheets.
 -  *Streams* A stream is a special kind of sheet that implements the
    stream protocol; streams include additional state such as the current
    text cursor (which is some point in the drawing plane).
--  By default, the “fundamental” coordinate system of a DUIM stream (not
+-  By default, the "fundamental" coordinate system of a DUIM stream (not
    a general sheet or medium, whose fundamental coordinate system is not
    defined) is a left handed system with x increasing to the right, and
    y increasing downward. (0,0) is at the upper left corner.
@@ -143,7 +143,7 @@ example:
    the drawing plane, both because of color and opacity approximation
    and because of anti-aliasing at the edges of drawn shapes.
 
-Drawing computations are always carried out “in color”, even if the
+Drawing computations are always carried out "in color", even if the
 viewport is only capable of displaying black and white. In other words,
 the DUIM drawing model is always the fully general model, even if an
 implementation’s color resolution is limited enough that full use of the
@@ -170,7 +170,7 @@ display device.
 Idealized geometric shapes are made up of a set of mathematical points
 which have no size. The rendering of these shapes on the display device
 is usually composed of pixels, which are roughly square, and are
-specified in “device coordinates”. Device coordinates are calculated by
+specified in "device coordinates". Device coordinates are calculated by
 transforming the user-supplied coordinates by each of the following:
 
 -  The user-supplied transformation
@@ -209,8 +209,8 @@ X11:
    considered to be inside the shape if the inside of the shape is
    immediately below the center point of the pixel (that is, an
    increasing y direction on the display device). This situation is
-   illustrated in `How pixels are defined to be “inside” and
-   “outside” shapes`_.
+   illustrated in `How pixels are defined to be "inside" and
+   "outside" shapes`_.
 -  An unfilled idealized geometric shape is drawn by calculating an
    artificial area for the shape, and then deciding which pixels are
    inside or outside that area, using the rules described above. The
@@ -307,8 +307,8 @@ transformations. Thus, to correctly and portably draw an outline of
 thickness 1 around a (rectilinear) rectangular area with integral
 coordinates, the outline path must have half-integral coordinates.
 Drawing rectilinear areas whose boundaries are not on pixel boundaries
-cannot be guaranteed to be portable. In other words, the “control
-points” for a rectangular area are at the corners, while the control
+cannot be guaranteed to be portable. In other words, the "control
+points" for a rectangular area are at the corners, while the control
 points for a rectilinear path are in the center of the path, not at the
 corners. Therefore, in order for a path and an area to abut seamlessly,
 the coordinates of the path must be offset from the coordinates of the
@@ -322,7 +322,7 @@ from lines that are thicker than that. The two rasterizations depicted
 in `Two examples of lines of thickness 1`_ are
 both perfectly reasonable rasterizations of tilted lines that are a
 single device unit wide. The right-hand line is drawn as a tilted
-rectangle, the left as the “thinnest visible” line.
+rectangle, the left as the "thinnest visible" line.
 
 Two examples of lines of thickness 1
                                     
@@ -2594,7 +2594,7 @@ Description
 
 The class of pixmap objects.
 
-A pixmap can be thought of as an “off-screen window”, that is, a medium
+A pixmap can be thought of as an "off-screen window", that is, a medium
 that can be used for graphical output, but is not visible on any display
 device. Pixmaps are provided to allow you to generate a piece of output
 associated with some display device that can then be rapidly drawn on a

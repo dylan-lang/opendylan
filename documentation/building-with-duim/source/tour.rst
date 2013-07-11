@@ -114,7 +114,7 @@ appropriately.
 Gadgets can also have a variety of associated callbacks. A callback is a
 function that is invoked when a particular event occurs that is
 associated with a given gadget, such as pressing a button. It is the
-primary technique you use to make your applications “do something”. Like
+primary technique you use to make your applications "do something". Like
 gadget properties, different classes of gadget can have different
 callback types available. For an introduction to callbacks, see
 `Assigning callbacks to gadgets`_.
@@ -220,7 +220,7 @@ or *Yes* button in a dialog box is the most acceptable default button,
 though for particularly destructive operations you should consider
 another choice.
 
-Buttons are intrinsically “non-stretchy” objects. That is, the width of
+Buttons are intrinsically "non-stretchy" objects. That is, the width of
 a button is computed from the length of its label, and the button will
 not automatically size itself according to the size of the sheet that it
 is a part of. You should use the ``max-width:`` init-keyword to make a
@@ -233,7 +233,7 @@ Thus, the button created by
 
     make(<button>, label: "Red");
 
-will only be as wide as the label it is given—“Red”, in this case—but
+will only be as wide as the label it is given—"Red", in this case—but
 the button created by
 
 .. code-block:: dylan
@@ -312,8 +312,8 @@ init-keyword, or set interactively via a slot value.
 ``gadget-label-key``
 
 -  The label key is a function that is used to compute the label of each
-   item in a collection gadget, and therefore defines the “printed
-   representation” of each item. If ``gadget-label-key`` is not explicitly
+   item in a collection gadget, and therefore defines the "printed
+   representation" of each item. If ``gadget-label-key`` is not explicitly
    defined for a collection gadget, its items are labeled numerically.
 
 ``gadget-value-key``
@@ -358,7 +358,7 @@ and ``<radio-box>`` (groups of radio buttons). In addition, ``<push-box>``
    A push box
 
 .. note:: You should be aware of the distinction between the use of the
-   term “box” in DUIM, and the use of the term “box” in some other
+   term "box" in DUIM, and the use of the term "box" in some other
    development documentation (such as Microsoft’s interface guidelines).
    *In the context of DUIM, a box always refers to a group containing
    several gadgets* (usually buttons). In other documentation, a box may
@@ -614,7 +614,7 @@ List controls
 |image9| The ``<list-control>`` class is used to display a collection of
 items, each item consisting of an icon and a label. In Microsoft
 documentation, this control corresponds to the List View control in its
-“icon”, “small icon”, and “list” views. Like other collection gadgets,
+"icon", "small icon", and "list" views. Like other collection gadgets,
 the contents of a list control is determined using the ``gadget-items``
 slot.
 
@@ -673,7 +673,7 @@ Table controls
 ~~~~~~~~~~~~~~
 
 |image10| The ``<table-control>`` class (which corresponds to the List
-View control in its “report” view in Microsoft documentation) allows you
+View control in its "report" view in Microsoft documentation) allows you
 to display items in a table, with information divided into a number of
 column headings. This type of control is used when you need to display
 several pieces of information about each object, such as the name, size,
@@ -769,7 +769,7 @@ typed into a text gadget is treated by ``gadget-value``. The default is
 The ``gadget-text`` slot *always* returns the exact text contents of a
 text gadget. However, ``gadget-value`` interprets the text and returns a
 value of the proper type, depending on the ``gadget-value-type``, or ``#f``
-if the text cannot be parsed. Setting the ``gadget-value`` “prints” the
+if the text cannot be parsed. Setting the ``gadget-value`` "prints" the
 value and inserts the appropriate text into the text field.
 
 For example, if you specify ``value-type: <integer>``, then ``gadget-text``
@@ -964,8 +964,8 @@ defined:
 The ``notify-user`` function is a useful function that lets you display a
 message in a dialog.
 
-Now when you click on the button, a notification pops up saying “Pressed
-button!”
+Now when you click on the button, a notification pops up saying "Pressed
+button!"
 
 .. figure:: images/notify.png
    :align: center
@@ -1249,7 +1249,7 @@ manipulation. However, if you design your own classes of sheet, you need
 to support these properties.
 
 -  ``sheet-region`` The sheet region is used to define the area of the
-   screen that “belongs to” a sheet. This is essential for deciding in
+   screen that "belongs to" a sheet. This is essential for deciding in
    which sheet a particular event occurs. For example, the
    ``sheet-region`` for a gadget defines the area of the screen in which
    its callbacks are invoked, should an event occur.

@@ -95,7 +95,7 @@ project consists of:
 
 A Dylan library
     Every project defines a single Dylan library. We call this library the
-    “library of the project” or, for clarity, the *main* library of the
+    "library of the project" or, for clarity, the *main* library of the
     project, to distinguish it from other libraries that the project uses.
 
 A project name
@@ -243,7 +243,7 @@ written in static languages like C and C++, for instance.
 .. figure:: images/model-2.png
    :align: center
 
-   “Static” development model.
+   "Static" development model.
 
 You can also develop applications in a more dynamic fashion, using
 features in the debugger and browser tools that allow you to interact
@@ -254,7 +254,7 @@ before committing to a rebuild.
 .. figure:: images/model-4.png
    :align: center
 
-   “Dynamic” development model.
+   "Dynamic" development model.
 
 Interactive and incremental development
 ---------------------------------------
@@ -567,7 +567,7 @@ representation of a project, while others can look at the run-time
 representation—the threads of a running application built from a
 project.
 
-It is useful to think of there being three “worlds” in which we can
+It is useful to think of there being three "worlds" in which we can
 simultaneously view projects: source, database, and run-time.
 
 Every project has a representation in source code. We view this source
@@ -588,7 +588,7 @@ and the object may be instantiated in a running program.
 Editor windows show projects in their source representation only.
 Browser windows show information from the compiler database, and, if a
 program is running, this database information is combined with
-information from the program, so you can see the “live” version of the
+information from the program, so you can see the "live" version of the
 object.
 
 The debugger and its interaction pane allows you to view the threads of

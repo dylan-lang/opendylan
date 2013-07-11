@@ -107,7 +107,7 @@ layout.
    examine any output messages from the environment. You can show or
    hide the status bar using **View > Status Bar**. This is where you
    will see messages displayed about your interactive development, such
-   as “Compiling definition…” when you compile a selection.
+   as "Compiling definition…" when you compile a selection.
 -  The standard Dylan toolbar can be viewed or hidden with **View >
    Toolbar**.
 -  The color dispatch optimizations feature, as described in 
@@ -263,8 +263,8 @@ Change the word *circle* to *square*, so that the line reads:
 
 Select the line of code and choose **Project > Compile Selection**.
 
-Notice that the status bar says “Compiling region…” and then
-“\*reversi-piece-shape\* successfully downloaded“.
+Notice that the status bar says "Compiling region…" and then
+"\*reversi-piece-shape\* successfully downloaded".
 
 Make a few moves on the board.
 
@@ -293,8 +293,8 @@ A source code control system provides one or more repositories
 (databases) where developers place source code and related files for a
 project. Files in the database can be accessed by several developers
 simultaneously by copying them from the database to their local machine.
-A developer can “check out” one or more files from the database in order
-to make changes and, when finished, “check in” the updated files for use
+A developer can "check out" one or more files from the database in order
+to make changes and, when finished, "check in" the updated files for use
 by other developers. The database maintains a history of the changes
 made to each file, making it possible to retrieve older versions if
 necessary. It also provides mechanisms to resolve conflicts when two or

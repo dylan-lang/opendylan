@@ -454,8 +454,8 @@ operating-system library's operating-system module.
 
      Parses the command specified in *line* into a command name and
      arguments. The rules used to tokenize the string are given in
-     Microsoft’s C/C++ reference in the section `“Parsing C Command-Line
-     Arguments” <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
+     Microsoft’s C/C++ reference in the section `"Parsing C Command-Line
+     Arguments" <http://msdn.microsoft.com/en-us/library/a1y7w461.aspx>`_.
 
    See also
    - :func:`application-arguments`

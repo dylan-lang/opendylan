@@ -31,9 +31,9 @@ for keys. :class:`<case-insensitive-string-table>` is similar, but the keys
 are considered to be case insensitive.
 
 The :class:`<hash-state>` type implements *hash states*. A hash state is
-defined by the DRM, page 123, as “an implementation-dependent type that
+defined by the DRM, page 123, as "an implementation-dependent type that
 is associated with a hash id and can be used by the implementation to
-determine whether the hash id has been invalidated.” See pages 122–123
+determine whether the hash id has been invalidated." See pages 122–123
 of the DRM for more details.
 
 The various hash functions and the :func:`case-insensitive-equal`

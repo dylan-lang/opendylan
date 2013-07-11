@@ -244,7 +244,7 @@ Overall class hierarchy for the DUIM-Sheets library
 *<frame-manager>*
                  
 
--  A frame manager represents the “look and feel” of a frame. This
+-  A frame manager represents the "look and feel" of a frame. This
    controls standard interface elements for the platform you are
    delivering on, such as the appearance and behavior of title bars,
    borders, menu commands and scroll bars. Unless you are developing for
@@ -7174,7 +7174,7 @@ The *exit-boxes* argument lets you specify the buttons that are
 available in the dialog. If not supplied, then a single *OK* button is
 used by default, unless the *style* of the dialog is set to
 *#"question"*, in which case, two buttons are created, to allow the
-user to respond “yes” or “no”.
+user to respond "yes" or "no".
 
 The *style* argument lets you specify the style of dialog that is
 produced. The different styles available reflect the Motif specification

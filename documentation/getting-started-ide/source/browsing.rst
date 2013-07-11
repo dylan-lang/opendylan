@@ -14,7 +14,7 @@ The Open Dylan browser is a tool for examining the contents and
 properties of the different kinds of objects we deal with in Open
 Dylan.
 
-In the browser, the term “object” has a broader sense than is usual in
+In the browser, the term "object" has a broader sense than is usual in
 Dylan. Not only can we examine objects in the sense of Dylan class
 instances, but we can also browse libraries, modules, and even running
 applications, their threads, and run-time values in those threads.
@@ -87,7 +87,7 @@ The Definitions page will be the starting point for our browsing work.
 We are going to browse definitions in Reversi, and examine the
 relationships between them.
 
-Expand “library reversi”, and then “module reversi”.
+Expand "library reversi", and then "module reversi".
 
 Double-click on ``<reversi-square>`` in the list of definitions.
 
@@ -293,7 +293,7 @@ The values are shown in a table. Thread variables (variables local to a
 particular application thread) are shown with an entry for each thread
 containing a variable of that name. Constants and global variables only
 ever have one value across all threads, so this is shown as a single
-table entry entitled “All threads”. You can update the value shown in
+table entry entitled "All threads". You can update the value shown in
 the browser with **View > Refresh**.
 
 We will browse Reversi’s *\*reversi-piece-shape\** variable to show how

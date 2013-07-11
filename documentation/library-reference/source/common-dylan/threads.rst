@@ -209,7 +209,7 @@ The thread-local nature of dynamically bindable variables may not be
 optimal for all problem domains. For instance a shared, global,
 outermost binding may be desirable, or alternatively, a thread may want
 to inherit current bindings from the parent thread at creation time,
-giving a “fork”-type model of state inheritance. These alternatives are
+giving a "fork"-type model of state inheritance. These alternatives are
 not pursued in this module, but they might be an interesting area for
 future research.
 
@@ -1552,8 +1552,8 @@ name-dynamic-binder(*init*, *body-method*, *arg1*, ... *argn*)
 
 where *init* is the initial value for the binding, and *body-method* is
 function with no parameters whose body is the *body of* the
-*dynamic-bind*. The extended form also permits the other “*.* ” and
-“*[]* ”syntaxes for function calls.
+*dynamic-bind*. The extended form also permits the other "*.* " and
+"*[]* "syntaxes for function calls.
 
 There are no features in the current version of the Threads module
 which make use of the extended form of *dynamic-bind*.

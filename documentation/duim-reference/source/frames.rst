@@ -454,7 +454,7 @@ called with two arguments:
 
 -  The gesture used to select the item (either a keyboard or button
    press event).
--  A “numeric argument”.
+-  A "numeric argument".
 
 When *type* is *#"menu"*, this indicates that a sub-menu is required,
 and *value* must be another command table or the name of another command
@@ -1372,7 +1372,7 @@ called with two arguments:
 
 -  The gesture used to select the item (either a keyboard or button
    press event).
--  A “numeric argument”.
+-  A "numeric argument".
 
 When *type:* is *#"menu"*, this indicates that a sub-menu is required,
 and *value* must be another command table or the name of another command
@@ -7176,7 +7176,7 @@ Description
            
 
 Returns the top level loop function for *frame*. The top level loop
-function for a frame is the “command loop” for the frame.
+function for a frame is the "command loop" for the frame.
 
 The default method for *frame-top-level* calls *read-event* and then
 *`handle-event <silica.htm#94892>`_*.

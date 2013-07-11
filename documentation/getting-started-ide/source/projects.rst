@@ -13,7 +13,7 @@ of the project window.
 Creating a new project
 ======================
 
-We now create a new project for a simple “Hello World” application that
+We now create a new project for a simple "Hello World" application that
 will run in an MS-DOS console window.
 
 We create the project by clicking the New Project (|image0|) button in
@@ -78,11 +78,11 @@ Specifying the type of the project
 The first page in the New Project wizard asks us to specify the kind of
 target we want to build from the project.
 
-In the Project type box, the default option is “GUI Application (EXE)”.
-Our “Hello World” application is going to be an MS-DOS console
+In the Project type box, the default option is "GUI Application (EXE)".
+Our "Hello World" application is going to be an MS-DOS console
 application, so we need to change this option setting from the default.
 
-Select “Console Application (EXE)” in the Project type box.
+Select "Console Application (EXE)" in the Project type box.
 
 Click **Next**.
 
@@ -110,7 +110,7 @@ and module that the project defines, so unless you change those names
 (with the *Advanced…* dialog; see `Advanced project settings`_), the
 project name must also be a valid Dylan name.
 
-Here we can also specify, using the “Include any available templates”
+Here we can also specify, using the "Include any available templates"
 check box, that the wizard should generate skeleton code for our project
 if a template for the project type is available.
 
@@ -120,7 +120,7 @@ our needs. The content of the skeleton code not only reflects the type
 of project selected on the first page, but also our answers to
 subsequent questions that the wizard asks.
 
-Since we want to develop a simple “Hello World” application, we are
+Since we want to develop a simple "Hello World" application, we are
 going to call the project Hello.
 
 Type **Hello** in the Name box.
@@ -146,8 +146,8 @@ different ways to do this. Each of the three options is described below.
    library only.
 -  Functional-Dylan is a convenience library that combines the standard
    Dylan library with a language extensions library called
-   Functional-Extensions. Thus Functional-Dylan provides a “Harlequin
-   dialect” of Dylan. (The standard Dylan library, without Harlequin’s
+   Functional-Extensions. Thus Functional-Dylan provides a "Harlequin
+   dialect" of Dylan. (The standard Dylan library, without Harlequin’s
    extensions, is also included in the set of Open Dylan
    libraries.)
 -  Simple If we choose this the wizard presents a series of choices we
@@ -157,8 +157,8 @@ different ways to do this. Each of the three options is described below.
    libraries and modules available, and allows us to select the ones we
    want our project to use.
 
-All our Hello project needs to do is print a text message saying “Hello
-World” to the standard output in an MS-DOS console window. The
+All our Hello project needs to do is print a text message saying "Hello
+World" to the standard output in an MS-DOS console window. The
 Functional-Dylan library contains a function to do this, so for our
 project we can select the Minimal button and move on to the next page in
 the wizard.
@@ -226,8 +226,8 @@ code for our project. It contains a default start function called *main*,
 and the last lines of the file call this *main* function. For more on
 the purpose of this function, see `The project start function`_.
 
-We can add further files to the project as we see fit. But our “Hello
-World” application is trivial: we can write the code into *Hello.dylan*
+We can add further files to the project as we see fit. But our "Hello
+World" application is trivial: we can write the code into *Hello.dylan*
 now, and our work will be done. The application will simply call the
 function *format-out* on the string *"Hello World\\n"*. The
 *format-out* function (exported from the *simple-format* module) formats
@@ -243,13 +243,13 @@ Add the following code in the definition of *main*:
 
 Choose **File > Save** to save the change to *Hello.dylan*.
 
-Now we can build our “Hello World” application.
+Now we can build our "Hello World" application.
 
 Choose **Project > Build** in the project window.
 
 Test the application by choosing **Project > Start**.
 
-An MS-DOS console window appears, into which “Hello World” is written.
+An MS-DOS console window appears, into which "Hello World" is written.
 Then a notifier dialog appears to confirm that the console application
 has terminated.
 
@@ -275,7 +275,7 @@ Click the New Project (|image1|) button in the main window.
 
 On the first page, we want to specify the project type.
 
-Select “GUI Application (EXE)” in the Project type box.
+Select "GUI Application (EXE)" in the Project type box.
 
 Click **Next**.
 
@@ -290,9 +290,9 @@ project, according to the project’s characteristics as we specify them.
 Template code is not relevant for all kinds of projects—for instance,
 our Hello project would not have benefited from any more initial program
 structure than it had—but the wizard will include any that is relevant
-if we check the “Include any available templates” box.
+if we check the "Include any available templates" box.
 
-Make sure the “Include any available templates” box is checked.
+Make sure the "Include any available templates" box is checked.
 
 We ignore the **Advanced…** button again.
 
@@ -304,7 +304,7 @@ When we created the Hello project, we chose the Minimal option here, to
 use only the Functional-Dylan library. Our GUI application also needs to
 use other libraries for access to the native window system.
 
-Select “Simple” in the Use Libraries box.
+Select "Simple" in the Use Libraries box.
 
 Click **Next**.
 
@@ -330,7 +330,7 @@ using DUIM, Open Dylan’s high-level GUI toolkit, or by using the
 Win32 API libraries described in the *C FFI and Win32* library
 reference. We want to use DUIM in this project.
 
-Select “Dylan User Interface Manager (DUIM)”.
+Select "Dylan User Interface Manager (DUIM)".
 
 Click **Next**.
 
@@ -363,8 +363,8 @@ is a *library.dylan* file, a *module.dylan* file, and a *GUI-App.dylan*
 file. In addition, there is a *GUI-App-info.dylan* file and a
 *frame.dylan* file.
 
-The *GUI-App-info.dylan* file appears whenever you choose “GUI
-Application (EXE)” as the target type on the first page of the wizard.
+The *GUI-App-info.dylan* file appears whenever you choose "GUI
+Application (EXE)" as the target type on the first page of the wizard.
 It contains some simple code that you might want to use for identifying
 your application and its version number.
 
@@ -392,7 +392,7 @@ functionality attached to the basic application. If we choose **File >
 New**, an editor pane is initialized, into which we can type. The other
 **File** and **Edit** menu commands have their standard effects. The **Help >
 About** command uses some of the constants from *GUI-App-info.dylan* to
-identify the application as “GUI-App Version 1.0”.
+identify the application as "GUI-App Version 1.0".
 
 Creating a project using the Custom library option
 ==================================================
@@ -415,18 +415,18 @@ displays the library list in the second pane.
 Libraries are grouped by functionality in a fairly broad fashion, so
 some libraries appear in more than one group because they fit more than
 one description. For instance, the C-FFI library appears in both the
-“Interoperability” group and the “Win32” group.
+"Interoperability" group and the "Win32" group.
 
-Notice the check next to “Core”, indicating that “Core” is the only
+Notice the check next to "Core", indicating that "Core" is the only
 group from which a library or libraries will be used by default. Note
 that when using Custom library selection to create a project with any
 GUI or OLE features, you must explicitly specify the GUI and OLE
 libraries you wish to use.
 
-If we select “Core”, we can see which libraries from that group would be
+If we select "Core", we can see which libraries from that group would be
 used in a default project.
 
-Select “Core” in the Library Group list.
+Select "Core" in the Library Group list.
 
 .. figure:: images/p2frag2-0.png
    :align: center
@@ -441,7 +441,7 @@ If we now select Functional-Dylan in the Library list, we can see which
 modules from the Functional-Dylan library a default project would
 include.
 
-Select “Functional-Dylan” in the Library list.
+Select "Functional-Dylan" in the Library list.
 
 .. figure:: images/p2frag2_2-0.png
    :align: center
@@ -474,7 +474,7 @@ create several projects in sibling folders.
 -  In the *Advanced…* dialog (see `Advanced project settings`_),
    the contents of the Start Function box and the setting of
    Compilation Mode.
--  The setting of the “Include any available templates” check-box.
+-  The setting of the "Include any available templates" check-box.
 
 On the last wizard page:
 
@@ -710,14 +710,14 @@ Windows Subsystem section of the Link page
 
 The **Project > Settings…** dialog’s Link page has a Win32 Subsystem
 section that allows you to specify that the target should run in the
-“Windows GUI” (WINDOWS) subsystem or the “Windows Console” (CONSOLE)
+"Windows GUI" (WINDOWS) subsystem or the "Windows Console" (CONSOLE)
 subsystem. You may wish to change this value if you change the code of a
 console-mode project to make it create its own windows, or vice versa.
 
 The default for a project created in the New Project wizard as a
-“Console Application (EXE)” is to run in the Windows Console subsystem,
-while the default for a project created as a “GUI Application (EXE)” is
-to run in the “Windows GUI” (WINDOWS) subsystem.
+"Console Application (EXE)" is to run in the Windows Console subsystem,
+while the default for a project created as a "GUI Application (EXE)" is
+to run in the "Windows GUI" (WINDOWS) subsystem.
 
 Debug page
 ----------
@@ -764,15 +764,15 @@ into a project file and opened in a project window. (This process does
 not modify the original LID file on disk.)
 
 In order to open a LID file as a text file in an editor, open the LID
-file using **File > Open** and select the file type filter “Dylan Library
-Interchange Descriptions (as text)” before clicking **Open**.
+file using **File > Open** and select the file type filter "Dylan Library
+Interchange Descriptions (as text)" before clicking **Open**.
 
 Exporting a project into a LID file
 -----------------------------------
 
 To export a project as a LID file for use in other Dylan
-implementations, use **File > Save As** and choose the file type “Dylan
-Library Interchange Descriptions”.
+implementations, use **File > Save As** and choose the file type "Dylan
+Library Interchange Descriptions".
 
 Note that a LID file created by export will list source files by name
 only, and without paths. In addition it will not contain any of the

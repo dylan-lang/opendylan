@@ -498,7 +498,7 @@ The value returned by *compose-space* is an instance of `See
 *pane* requires.
 
 The *width* and *height* arguments are real numbers that the
-*compose-space* method for a pane may use as “recommended” values for
+*compose-space* method for a pane may use as "recommended" values for
 the width and height of the pane. These are used to drive top-down
 layout.
 
@@ -588,7 +588,7 @@ The *slots-and-panes* argument represents the slot information for the
 new class, together with any init-keywords and default values that the
 slots should take.
 
-Panes are sheets which represent a “useful unit” in a GUI. There is no
+Panes are sheets which represent a "useful unit" in a GUI. There is no
 protocol class called *<pane>*.
 
 -  In most cases (such as when defining a frame using *define frame*),
@@ -1470,7 +1470,7 @@ Description
            
 
 The class of null panes. This class acts as a filler: use it when you
-need to “fill space” somewhere in a complex layout.
+need to "fill space" somewhere in a complex layout.
 
 Operations
           
@@ -1997,10 +1997,10 @@ min-height: <= height: <= max-height:
 min-width: <= width: <= max-width:
                                   
 
-If either *min-width:* or *min-height:* is 0, the object is “infinitely
-shrinkable” in that direction. If either *max-width:* or *max-height:*
-is `$fill`_, the object is “infinitely
-stretchable” in that direction. The latter is a particularly useful way
+If either *min-width:* or *min-height:* is 0, the object is "infinitely
+shrinkable" in that direction. If either *max-width:* or *max-height:*
+is `$fill`_, the object is "infinitely
+stretchable" in that direction. The latter is a particularly useful way
 of ensuring that objects fill the available width, and can be used, say,
 to ensure that a series of buttons fill the entire width of the layout
 that they occupy.

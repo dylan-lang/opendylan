@@ -10,7 +10,7 @@ Introduction
 
 The Dylan language is described in `The Dylan Reference Manual
 <http://opendylan.org/books/drm/>`_ by Andrew Shalit (Addison-Wesley,
-1996). We call this book “the DRM” hereafter.
+1996). We call this book "the DRM" hereafter.
 
 Open Dylan provides an implementation of the Dylan language
 described by the DRM, with a few exceptions that are documented in
@@ -40,7 +40,7 @@ formatting (*simple-io*), pseudo-random integer generation
 
 Open Dylan provides a convenience library, *common-dylan*, that
 combines the *dylan* and *common-extensions* modules to provide a
-convenient “dialect” of Dylan, exported from the module
+convenient "dialect" of Dylan, exported from the module
 *common-dylan*:
 
 .. code-block:: dylan
@@ -230,7 +230,7 @@ Inlining adjectives for methods, constants, functions, and slots
 
 To *inline* a value is to replace, at compile time, a reference to a
 variable with the value of that variable. Such inlining often allows
-compile-time evaluation (“constant folding”) or partial evaluation.
+compile-time evaluation ("constant folding") or partial evaluation.
 
 The Open Dylan compiler can perform inlining on generic function
 methods, constants, class slots, and functions (created with ``define

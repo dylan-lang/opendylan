@@ -50,7 +50,7 @@ Choose **File > New…** from the main window.
 
 The New Project wizard appears.
 
-#. In the Project Type section, select “Interface to COM Type Library”
+#. In the Project Type section, select "Interface to COM Type Library"
    and click **Next**.
 
 The next page allows you to name a type library to be translated. Most
@@ -98,7 +98,7 @@ Dispatch server skeletons
 Because we are writing the server side of the application, we want to
 generate dispatch server skeleton code.
 
-#. Select “Dispatch server skeletons”.
+#. Select "Dispatch server skeletons".
 #. Click **Next** to continue to the next page of the wizard.
 
 .. figure:: images/motinters.png
@@ -108,15 +108,15 @@ generate dispatch server skeleton code.
 
 The next page presents a list of COM classes and interfaces contained in
 the selected type library. You can select which to translate by choosing
-“Translate selected” and then clicking to select individual items,
+"Translate selected" and then clicking to select individual items,
 dragging or using the Shift key to select ranges, and using the Ctrl key
-to select additional items. Choose “Translate all” and all classes and
+to select additional items. Choose "Translate all" and all classes and
 interfaces in the type library will be translated. This is different
-from selecting all items under “Translate selected” because if classes
+from selecting all items under "Translate selected" because if classes
 or interfaces are added to the type library later, they will only be
-translated if you selected “Translate all”.
+translated if you selected "Translate all".
 
-#. Choose “Translate all”, so that both the RotNExample COM class and
+#. Choose "Translate all", so that both the RotNExample COM class and
    the IRotNExample interface are translated.
 #. Click **Next**.
 
@@ -127,16 +127,16 @@ the server stubs project.
 
 #. Change the name of the project to *RotNExample-server-stubs*.
 #. Choose a suitable Location for the project.
-#. Make sure that the “Dynamic Link Library (DLL)” option is chosen in
+#. Make sure that the "Dynamic Link Library (DLL)" option is chosen in
    the Project Settings and Templates section.
-#. Make sure that the “Include any available templates” option is *not*
+#. Make sure that the "Include any available templates" option is *not*
    checked.
 #. Click **Next** to continue.
 
 We are now at the Use Libraries page. We are only defining the stubs for
 the server, so we do not need any unusual libraries.
 
-#. Choose the “Minimal” option.
+#. Choose the "Minimal" option.
 #. Click **Next** to continue.
 
 We are now at the final page of the New Project wizard.
@@ -260,25 +260,25 @@ Choose **File > New…** from the main window.
 
 The New Project wizard appears.
 
-#. In the Project Type section, select “GUI Application (EXE)” and click
+#. In the Project Type section, select "GUI Application (EXE)" and click
    **Next**.
 #. Name the project *RotNExample-server*.
-#. Make sure that the “Include any available templates” option is *not*
+#. Make sure that the "Include any available templates" option is *not*
    checked.
-#. Make sure that “Production mode” is selected in the Compilation Mode
+#. Make sure that "Production mode" is selected in the Compilation Mode
    section of the Advanced Project Settings dialog.
 
 This option will be set already if you have been following all steps
 from the start of this chapter.
 
 #. Click **Next** to continue.
-#. Choose the “Simple” libraries option and click **Next** to continue.
-#. Choose the “Standard IO streams and string formatting” option from
-   “IO and system support”, and click **Next**.
-#. Choose the “Win32 API” option from “GUI support”, and click **Next**.
-#. Choose the “OLE Automation” option from “OLE Automation support” and
+#. Choose the "Simple" libraries option and click **Next** to continue.
+#. Choose the "Standard IO streams and string formatting" option from
+   "IO and system support", and click **Next**.
+#. Choose the "Win32 API" option from "GUI support", and click **Next**.
+#. Choose the "OLE Automation" option from "OLE Automation support" and
    click **Next**.
-#. Choose the “NoneY” option from “Database support” and click **Next**.
+#. Choose the "NoneY" option from "Database support" and click **Next**.
 #. Click **Finish**.
 
 The RotNExample-server project window appears.
@@ -390,7 +390,7 @@ add.
     end;
 
 This function rotates alphabetic characters forward *n* positions,
-wrapping around if the character passes “Z”. When *n* is 13, this
+wrapping around if the character passes "Z". When *n* is 13, this
 implements the classic Rot13 cipher often used to hide offensive
 material on USENET.
 
@@ -474,7 +474,7 @@ Choose **File > New…** from the main window.
 
 The New Project wizard appears.
 
-#. In the Project Type section, select “Interface to COM Type Library”
+#. In the Project Type section, select "Interface to COM Type Library"
    and click **Next**.
 #. Click **Browse…** and navigate to the Open Dylan examples folder.
 
@@ -486,31 +486,31 @@ It is usually *C:\\Program Files\\Open Dylan\\Examples*.
 #. Go to the *Documentation\\RotNExample* subfolder and choose the
    *RotNExample.tlb* file.
 #. Click **Next** to continue to the next page of the wizard.
-#. Select “Dispatch client interfaces” and click **Next** to continue to
+#. Select "Dispatch client interfaces" and click **Next** to continue to
    the next page of the wizard.
-#. Choose “Translate all” on the next page, so that both the RotNExample
+#. Choose "Translate all" on the next page, so that both the RotNExample
    COM class and the IRotNExample interface are translated. Click **Next**.
 #. Change the name of the project to *RotNExample-client-stubs*.
 #. Choose a suitable Location for the project.
-#. Make sure that the “Dynamic Link Library (DLL)” option is chosen in
+#. Make sure that the "Dynamic Link Library (DLL)" option is chosen in
    the Project Settings and Templates section.
-#. Make sure that the “Include any available templates” option is *not*
+#. Make sure that the "Include any available templates" option is *not*
    chosen.
 #. Click **Next** to continue.
 
 We are now at the Use Libraries page. We are only defining the stubs for
 the client, so we do not need any unusual libraries.
 
-#. Choose the “Simple” option and click **Next**.
-#. Choose the “Standard IO streams and string formatting” option from
-   “IO and system support”, and click **Next**.
-#. Choose the “Win32 API” option from “GUI support”, and click **Next**.
+#. Choose the "Simple" option and click **Next**.
+#. Choose the "Standard IO streams and string formatting" option from
+   "IO and system support", and click **Next**.
+#. Choose the "Win32 API" option from "GUI support", and click **Next**.
 
-Note that the “OLE Automation” option on the “OLE Automation support”
+Note that the "OLE Automation" option on the "OLE Automation support"
 page is automatically selected. That is what we want.
 
 #. Click **Next**.
-#. Choose the “NoneÝ” option from “Database support” and click **Next**.
+#. Choose the "NoneÝ" option from "Database support" and click **Next**.
 
 We are now at the final page of the New Project wizard.
 
@@ -584,15 +584,15 @@ Choose **File > New…** from the main window.
 
 The New Project wizard appears.
 
-#. In the Project Type section, select “Console Application (EXE)” and
+#. In the Project Type section, select "Console Application (EXE)" and
    click **Next** to continue to the next wizard page.
 #. Name the project *RotNExample-client*.
 #. Choose a suitable Location for the project.
-#. Make sure the “Include any available templates” option is *not*
+#. Make sure the "Include any available templates" option is *not*
    chosen.
 #. Click **Next**.
-#. Choose the Simple libraries option, and choose the “Standard IO
-   streams and string formatting” and “OLE Automation” options.
+#. Choose the Simple libraries option, and choose the "Standard IO
+   streams and string formatting" and "OLE Automation" options.
 #. Proceed to the last page of the wizard and click **Finish**.
 #. In the new project, edit *library.dylan*, and add to the ``define
    library`` declaration the following line:
@@ -714,8 +714,8 @@ Creating vtable and dual interfaces
 
 The New Project wizard can generate custom (vtable) and dual (vtable and
 dispatch) COM interfaces. They are available on the wizard’s
-stub-selection page, from the options “Custom (vtable) interfaces” and
-“Dual interfaces”.
+stub-selection page, from the options "Custom (vtable) interfaces" and
+"Dual interfaces".
 
 Because custom and dual interfaces generate both server and client
 interfaces, it is necessary to ensure that the names of the server and
@@ -734,8 +734,8 @@ suffix is *-server* then the server class for an interface *IBar* is
 named ``<IBar-server>``.
 
 The supplied client class suffix is appended to the name of the
-interface to generate the client class name. If the “Generate client
-classes with suffix” box is not checked, no client classes are
+interface to generate the client class name. If the "Generate client
+classes with suffix" box is not checked, no client classes are
 generated, and client methods specialize on ``<C-Interface>`` instead.
 
 .. index:: .SPEC files

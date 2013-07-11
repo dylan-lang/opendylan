@@ -6,7 +6,7 @@ Running a Dylan application on a remote machine
 ===============================================
 
 Open Dylan offers a facility for running, debugging, and interacting
-with a Dylan application, DLL, or OLE control (“program” hereafter)
+with a Dylan application, DLL, or OLE control ("program" hereafter)
 running on a remote machine—that is, a networked machine other than
 the one running the Open Dylan IDE.
 
@@ -30,13 +30,13 @@ perform these steps on the target machine:
 
 #. Install the Open Dylan runtime system.
 
-   The runtime installer executable, the name of which begins “*hdrun* …”,
+   The runtime installer executable, the name of which begins "*hdrun* …",
    resides in the *Extras* folder at the top-level of your Dylan CD-ROM.
 
 #. Install the debugging server application.
 
    The debugging server installer executable, the name of which begins with
-   “*hddbg* …”, also resides in the *Extras* folder.
+   "*hddbg* …", also resides in the *Extras* folder.
 
 #. Copy the *bin* folder for your project onto the remote machine.
 
@@ -90,7 +90,7 @@ machine in the project’s debug settings.
 
 #. Select **Project > Settings…** and select the Debug page.
 
-   In the “Remote machine” section, an option box displays the name of the
+   In the "Remote machine" section, an option box displays the name of the
    machine on which the project’s application is to be run. By default, the
    selection will be the local machine. Before you can select a remote
    machine, you must first establish a debugging connection.
@@ -109,7 +109,7 @@ machine in the project’s debug settings.
    debugging server (see `Starting the debugging server`_).
 
    If the connection is successful, the newly connected machine is added to
-   those listed in the “Remote machine” option box. You can now select this
+   those listed in the "Remote machine" option box. You can now select this
    machine.
 
    If the connection does not succeed, you should ensure that you have
@@ -122,7 +122,7 @@ machine in the project’s debug settings.
    Dylan can locate the program (EXE or DLL) on the filesystem of the
    remote machine.
 
-#. Specify the path to the program in the “Command line” section of the
+#. Specify the path to the program in the "Command line" section of the
    Debug page.
 
    The path should be fully qualified, including the name of the remote
@@ -154,7 +154,7 @@ before you started up the Open Dylan environment, the environment
 does not know about the process and therefore it has no visible presence
 in the environment.
 
-Open Dylan allows you to “attach” to such a running process, thereby
+Open Dylan allows you to "attach" to such a running process, thereby
 bringing it under Open Dylan’s control just as if it had been started
 by the environment. It is very simple to do this:
 

@@ -52,7 +52,7 @@ The extensions are:
 
      Signals an error if *expression* evaluates to ``#f``.
 
-     An assertion or “assert” is a simple tool for testing that
+     An assertion or "assert" is a simple tool for testing that
      conditions hold in program code.
 
      The *format-string* is a format string as defined on page 112 of
@@ -158,14 +158,14 @@ The extensions are:
      Signals an error if *expression* evaluates to false — but only when
      the code is compiled in debugging mode.
 
-     An assertion or “assert” is a simple and popular development tool
+     An assertion or "assert" is a simple and popular development tool
      for testing conditions in program code.
 
      This macro is identical to *assert*, except that the assert is
      defined to take place only while debugging.
 
      The Open Dylan compiler removes debug-assertions when it compiles
-     code in “production” mode as opposed to “debugging” mode.
+     code in "production" mode as opposed to "debugging" mode.
 
      The *format-string* is a format string as defined on page 112 of
      the DRM.
@@ -291,7 +291,7 @@ The extensions are:
 .. macro:: define last-handler
    :defining:
 
-   Defines a “last-handler” to be used after any dynamic handlers and
+   Defines a "last-handler" to be used after any dynamic handlers and
    before calling :drm:`default-handler`.
 
    :macrocall:
@@ -1059,7 +1059,7 @@ The extensions are:
 
 .. function:: supplied?
 
-   Returns true if its argument is not equal to the unique “unsupplied”
+   Returns true if its argument is not equal to the unique "unsupplied"
    value, :const:`$unsupplied`, and false if it is.
 
    :signature: supplied? *object* => *supplied?*
@@ -1069,7 +1069,7 @@ The extensions are:
 
    :description:
 
-     Returns true if *object* is not equal to the unique “unsupplied”
+     Returns true if *object* is not equal to the unique "unsupplied"
      value, :const:`$unsupplied`, and false if it is. It uses ``\=`` as
      the equivalence predicate.
 
@@ -1135,7 +1135,7 @@ The extensions are:
 
 .. function:: unfound
 
-   Returns the unique “unfound” value, :const:`$unfound`.
+   Returns the unique "unfound" value, :const:`$unfound`.
 
    :signature: unfound () => *unfound-marker*
 
@@ -1143,7 +1143,7 @@ The extensions are:
 
    :description:
 
-   Returns the unique “unfound” value, :const:`$unfound`.
+   Returns the unique "unfound" value, :const:`$unfound`.
 
    See also
 
@@ -1153,7 +1153,7 @@ The extensions are:
 
 .. function:: unfound?
 
-   Returns true if its argument is equal to the unique “unfound” value,
+   Returns true if its argument is equal to the unique "unfound" value,
    :const:`$unfound`, and false if it is not.
 
    :signature: unfound? *object* => *unfound?*
@@ -1163,7 +1163,7 @@ The extensions are:
 
    :description:
 
-     Returns true if *object* is equal to the unique “unfound” value,
+     Returns true if *object* is equal to the unique "unfound" value,
      :const:`$unfound`, and false if it is not. It uses ``\=``
      as the equivalence predicate.
 
@@ -1194,7 +1194,7 @@ The extensions are:
 
 .. function:: unsupplied
 
-   Returns the unique “unsupplied” value, :const:`$unsupplied`.
+   Returns the unique "unsupplied" value, :const:`$unsupplied`.
 
    :signature: unsupplied () => *unsupplied-marker*
 
@@ -1202,7 +1202,7 @@ The extensions are:
 
    :description:
 
-     Returns the unique “unsupplied” value, :const:`$unsupplied`.
+     Returns the unique "unsupplied" value, :const:`$unsupplied`.
 
    See also
 
@@ -1212,7 +1212,7 @@ The extensions are:
 
 .. function:: unsupplied?
 
-   Returns true if its argument is equal to the unique “unsupplied”
+   Returns true if its argument is equal to the unique "unsupplied"
    value, :const:`$unsupplied`, and false if it is not.
 
    :signature: unsupplied? *value* => *boolean*
@@ -1222,7 +1222,7 @@ The extensions are:
 
    :description:
 
-     Returns true if its argument is equal to the unique “unsupplied”
+     Returns true if its argument is equal to the unique "unsupplied"
      value, :const:`$unsupplied`, and false if it is not. It uses ``\=``
      as the equivalence predicate.
 

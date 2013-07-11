@@ -43,8 +43,8 @@ HARP
 
 interactive execution
    a mechanism for exploratory programming by which the user can
-   execute Dylan forms in an existing process. May allow “out of
-   language” operations such as addition of new variables to existing
+   execute Dylan forms in an existing process. May allow "out of
+   language" operations such as addition of new variables to existing
    modules, redefinition of classes, constants, overriding sealing
    restrictions, etc. Forms to be executed can come from a project or
    from an interactor.
@@ -82,7 +82,7 @@ source record
 
 tether
    a runtime manager object representing a debuggable process on the
-   runtime. Sometimes referred to as an “access-path”, but I’m staying
+   runtime. Sometimes referred to as an "access-path", but I’m staying
    away from that term because it seems to be used differently in
    different documents.
 
