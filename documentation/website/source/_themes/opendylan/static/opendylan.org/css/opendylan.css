@@ -50,6 +50,12 @@ a.headerlink {
   padding-top: 20px;
 }
 
+blockquote div p {
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0 0 10px;
+}
+
 /* Responsive Docs
 -------------------------------------------------- */
 @media (max-width: 480px) {
