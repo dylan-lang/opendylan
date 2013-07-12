@@ -140,6 +140,6 @@ Why Not Dylan?
 Dylan's greatest weaknesses are its lack of a battle-hardened compiler
 and IDE, and a large user base (and hence a large set of libraries).
 However, the compiler and IDE themselves are written in Dylan so there
-*is* somewhere around one million lines of Dylan code.  You probably
+*are* several hundred thousand lines of Dylan code.  You probably
 want to consider very carefully before using Open Dylan for mission
 critical code.
