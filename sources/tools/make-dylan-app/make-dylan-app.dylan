@@ -33,8 +33,7 @@ define function write-templates (#rest templates :: <template>) => ();
 end function write-templates;
 
 define function make-dylan-app (app-name :: <string>) => ()
-  let project-dir
-    = create-directory(working-directory(), app-name);
+  let project-dir = create-directory(working-directory(), app-name);
 
   local method to-target-path (#rest args) => (target)
           merge-locators(as(<file-locator>, apply(concatenate, args)),
@@ -49,7 +48,7 @@ define function make-dylan-app (app-name :: <string>) => ()
   let lib :: <template>
     = make(<template>,
            output-path: to-target-path("library.dylan"),
-           constant-string: $lib-template-simple,
+           constant-string: $library-template-simple,
            arguments: list(app-name, app-name));
   let lid :: <template>
     = make(<template>,
