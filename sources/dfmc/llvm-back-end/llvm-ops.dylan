@@ -115,6 +115,37 @@ define method op--round-up-to-word
   ins--and(be, add, -word-size)
 end method;
 
+// Stack allocate a vector
+define method op--stack-allocate-vector
+    (back-end :: <llvm-back-end>, count)
+ => (new-vector :: <llvm-value>);
+  let module = back-end.llvm-builder-module;
+  let header-words = dylan-value(#"$number-header-words");
+
+  let class :: <&class> = dylan-value(#"<simple-object-vector>");
+
+  let instance-bytes = instance-storage-bytes(back-end, class);
+  let repeated-bytes
+    = ins--mul(back-end, count,
+               slot-storage-bytes(back-end, dylan-value(#"<object>")));
+  let byte-size = ins--add(back-end, instance-bytes, repeated-bytes);
+  let new-vector = ins--alloca(back-end, $llvm-i8-type, byte-size,
+                               alignment: back-end-word-size(back-end));
+
+  // Initialize the wrapper and size slots
+  let vector-cast = op--object-pointer-cast(back-end, new-vector, class);
+  let wrapper-slot-ptr = ins--gep-inbounds(back-end, vector-cast, 0, i32(0));
+  let wrapper-name = emit-name(back-end, module, ^class-mm-wrapper(class));
+  let wrapper = llvm-builder-global(back-end, wrapper-name);
+  ins--store(back-end, wrapper, wrapper-slot-ptr);
+
+  let size-slot-ptr = op--getslotptr(back-end, vector-cast, class, #"size");
+  let size-ref = op--tag-integer(back-end, count);
+  ins--store(back-end, size-ref, size-slot-ptr);
+
+  new-vector
+end method;
+
 
 /// Overflow trap
 
