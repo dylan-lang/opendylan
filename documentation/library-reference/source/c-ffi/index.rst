@@ -2694,7 +2694,7 @@ This section covers describing and accessing C variables.
      ``#f`` as the definition and variable will be linked into the same
      *.dll*. If the definition is in a different project from the C
      source files then they will be in separate *.dll* s and *import:*
-     needs to be ``#t``. The default value is``#f``.
+     needs to be ``#t``. The default value is ``#f``.
 
      For integer, float, or pointer-typed C variables the representation
      is clear and unambiguous. For C struct or union typed variables the
@@ -2770,7 +2770,7 @@ This section covers describing and accessing C variables.
      as the definition and variable will be linked into the same *.dll*.
      If the definition is in a different project from the C source files
      then they will be in separate *.dll* s and *import:* needs to be
-     ``#t``. The default value is``#f``.
+     ``#t``. The default value is ``#f``.
 
 Allocating and deallocating C storage
 =====================================
