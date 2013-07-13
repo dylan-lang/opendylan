@@ -2,4 +2,25 @@
 Open Dylan 2013.2 Release Notes
 *******************************
 
-Nothing here yet.
+Introduction
+============
+
+This document describes the 2013.2 release of Open Dylan, released
+XXX XX, 2013.
+
+* `Download the release <http://opendylan.org/download/index.html>`_
+* `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
+* `Source code <https://github.com/dylan-lang/opendylan/tree/v2013.2>`_
+
+Improvements
+============
+
+Documentation
+-------------
+
+The `regular-expressions <http://opendylan.org/documentation/library-reference/regular-expressions/index.html>`_ library documentation has been greatly improved.
+
+
+Bug Fixes
+=========
+
