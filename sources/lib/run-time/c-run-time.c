@@ -258,44 +258,49 @@ dylan_value primitive_byte_allocate_leaf_filled
                                         repeated_fill_value);
 }
 
-#define define_repeated_allocator(name, type) \
+#define define_repeated_allocator(name, type, alloc_rf, alloc_s_rf) \
   dylan_value primitive_ ## name ## _allocate_filled \
       (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value, \
        DSINT repeated_size, DSINT repeated_size_offset, \
        type repeated_fill_value) \
   { \
-    int i; \
-    dylan_value* object = primitive_byte_allocate(size, (DSINT)(repeated_size * sizeof(type))); \
-    instance_header_setter(class_wrapper, object); \
-    primitive_fillX(object, 1, 0, number_slots, fill_value); \
-    for (i = 0; i < repeated_size; i++) {\
-      ((type*)(&object[repeated_size_offset + 1]))[i] = (type)repeated_fill_value; \
+    size = (size * sizeof(dylan_value)) + (repeated_size * sizeof(type)); \
+    if (number_slots == 0) { \
+      return alloc_rf(size, class_wrapper, repeated_size, \
+                      repeated_size_offset, repeated_fill_value); \
+    } else { \
+      return alloc_s_rf(size, class_wrapper, number_slots, fill_value, \
+                        repeated_size, repeated_size_offset, \
+                        repeated_fill_value); \
     } \
-    if (repeated_size_offset > 0) { \
-      object[repeated_size_offset] = I(repeated_size); \
-    } \
-    return((dylan_value)object); \
   }
 
-define_repeated_allocator(object, dylan_value)
-define_repeated_allocator(double_byte, DDBYTE)
-define_repeated_allocator(word, DWORD)
-define_repeated_allocator(double_word, DDWORD)
-define_repeated_allocator(single_float, DSFLT)
-define_repeated_allocator(double_float, DDFLT)
+define_repeated_allocator(object, dylan_value, primitive_alloc_rf, primitive_alloc_s_rf)
+define_repeated_allocator(double_byte, DDBYTE, primitive_alloc_leaf_rhf, primitive_alloc_s_rhf)
+define_repeated_allocator(word, DWORD, primitive_alloc_leaf_rf, primitive_alloc_s_rf)
+define_repeated_allocator(double_word, DDWORD, primitive_alloc_leaf_rdwf, primitive_alloc_s_rdwf)
+define_repeated_allocator(single_float, DSFLT, primitive_alloc_leaf_rsff, primitive_alloc_s_rsff)
+define_repeated_allocator(double_float, DDFLT, primitive_alloc_leaf_rdff, primitive_alloc_s_rdff)
 
 dylan_value primitive_allocate_filled
     (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
      DSINT repeated_size, DSINT repeated_size_offset)
 {
-  dylan_value* object = primitive_allocate(size);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
-  }
-  return((dylan_value)object);
+    size = size * sizeof(dylan_value);
+    if (repeated_size_offset == 0) {
+      if (number_slots == 0) {
+        return primitive_alloc(size, class_wrapper);
+      } else if (number_slots == 1) {
+        return primitive_alloc_s1(size, class_wrapper, fill_value);
+      } else if (number_slots == 2) {
+        return primitive_alloc_s2(size, class_wrapper, fill_value, fill_value);
+      } else {
+        return primitive_alloc_s(size, class_wrapper, repeated_size, fill_value);
+      }
+      abort();
+    } else {
+      abort();
+    }
 }
 
 dylan_value primitive_allocate_in_awl_pool
