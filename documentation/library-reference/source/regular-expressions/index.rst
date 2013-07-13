@@ -1,6 +1,6 @@
-******************************
-The regular-expressions Module
-******************************
+*******************************
+The regular-expressions Library
+*******************************
 
 .. current-library:: regular-expressions
 .. current-module:: regular-expressions
