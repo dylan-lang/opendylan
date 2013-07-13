@@ -1195,7 +1195,7 @@ extern D primitive_manual_allocate(D);
 extern void primitive_manual_free(D);
 extern D primitive_allocate_wrapper(DSINT, D, DSINT, D, DSINT, DSINT);
 extern D primitive_byte_allocate_filled_terminated(DSINT, DSINT, D, DSINT, D, DSINT, DSINT);
-#define primitive_byte_allocate_leaf_filled_terminated primitive_byte_allocate_filled_terminated
+extern D primitive_byte_allocate_leaf_filled_terminated(DSINT, DSINT, D, DSINT, D, DSINT, DSINT);
 extern D primitive_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT);
 extern D primitive_object_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, D);
 extern D primitive_byte_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DBYTE);
@@ -1204,7 +1204,7 @@ extern D primitive_word_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DWORD)
 extern D primitive_double_word_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DDWORD);
 extern D primitive_single_float_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DSFLT);
 extern D primitive_double_float_allocate_filled(DSINT, D, DSINT, D, DSINT, DSINT, DDFLT);
-#define primitive_byte_allocate_leaf_filled primitive_byte_allocate_filled
+extern D primitive_byte_allocate_leaf_filled(DSINT, D, DSINT, D, DSINT, DSINT, DBYTE);
 extern D primitive_allocate_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D);
 extern D primitive_allocate_weak_in_awl_pool(DSINT, D, DSINT, D, DSINT, DSINT, D);
 

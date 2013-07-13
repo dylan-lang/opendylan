@@ -293,6 +293,28 @@ D primitive_byte_allocate_filled
   return((D)object);
 }
 
+D primitive_byte_allocate_leaf_filled_terminated
+    (DSINT size, DSINT number_bytes, D class_wrapper, DSINT number_slots,
+     D fill_value, DSINT repeated_size, DSINT repeated_size_offset)
+{
+  return primitive_byte_allocate_filled_terminated(size, number_bytes,
+                                                   class_wrapper, number_slots,
+                                                   fill_value, repeated_size,
+                                                   repeated_size_offset);
+}
+
+D primitive_byte_allocate_leaf_filled
+    (DSINT size, D class_wrapper, DSINT number_slots,
+     D fill_value, DSINT repeated_size, DSINT repeated_size_offset,
+     DBYTE repeated_fill_value)
+{
+  return primitive_byte_allocate_filled(size, class_wrapper,
+                                        number_slots, fill_value,
+                                        repeated_size,
+                                        repeated_size_offset,
+                                        repeated_fill_value);
+}
+
 #define define_repeated_allocator(name, type) \
   D primitive_ ## name ## _allocate_filled \
       (DSINT size, D class_wrapper, DSINT number_slots, D fill_value, \
