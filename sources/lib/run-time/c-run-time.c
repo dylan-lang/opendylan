@@ -201,7 +201,6 @@ dylan_value primitive_compare_words(dylan_value base1, DSINT offset1,
                            size * sizeof(dylan_value))));
 }
 
-
 dylan_value primitive_byte_allocate_filled_terminated
     (DSINT size, DSINT number_bytes, dylan_value class_wrapper, DSINT number_slots,
      dylan_value fill_value, DSINT repeated_size, DSINT repeated_size_offset)
@@ -303,44 +302,59 @@ dylan_value primitive_allocate_in_awl_pool
     (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
      DSINT repeated_size, DSINT repeated_size_offset, dylan_value assoc)
 {
-  dylan_value* object = primitive_allocate(size);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
+  size = size * sizeof(dylan_value);
+  if (number_slots == 1) {
+    return primitive_alloc_exact_awl_rf(size,
+                                        class_wrapper,
+                                        assoc,
+                                        repeated_size,
+                                        repeated_size_offset,
+                                        fill_value);
+  } else {
+    return primitive_alloc_exact_awl_s_r(size,
+                                         class_wrapper,
+                                         assoc,
+                                         number_slots,
+                                         fill_value,
+                                         repeated_size,
+                                         repeated_size_offset);
   }
-  object[1] = assoc;
-  return((dylan_value)object);
 }
 
 dylan_value primitive_allocate_weak_in_awl_pool
     (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
      DSINT repeated_size, DSINT repeated_size_offset, dylan_value assoc)
 {
-  dylan_value* object = primitive_allocate(size);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
+  size = size * sizeof(dylan_value);
+  if (number_slots == 0) {
+    return primitive_alloc_weak_awl_rf(size,
+                                       class_wrapper,
+                                       assoc,
+                                       repeated_size,
+                                       repeated_size_offset,
+                                       fill_value);
+  } else {
+    return primitive_alloc_weak_awl_s_r(size,
+                                        class_wrapper,
+                                        assoc,
+                                        number_slots,
+                                        fill_value,
+                                        repeated_size,
+                                        repeated_size_offset);
   }
-  object[1] = assoc;
-  return((dylan_value)object);
 }
 
 dylan_value primitive_allocate_wrapper
     (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
      DSINT repeated_size, DSINT repeated_size_offset)
 {
-  dylan_value* object = primitive_allocate(size);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fillX(object, repeated_size_offset + 1, 0, repeated_size, fill_value);
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
-  }
-  return((dylan_value)object);
+  size = size * sizeof(dylan_value);
+  return primitive_alloc_wrapper_s_r(size,
+                                     class_wrapper,
+                                     number_slots,
+                                     fill_value,
+                                     repeated_size,
+                                     repeated_size_offset);
 }
 
 /* STACK ALLOCATION */
