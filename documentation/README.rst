@@ -29,7 +29,11 @@ If you are on Windows, there is a ``make.bat`` as well::
 
     make.bat html
 
-The generated documentation will be in ``build/html``.
+The generated documentation will be in ``build/html``.  Just viewing
+the HTML locally may not correctly load the CSS files.  A workaround
+is to cd into ``build/html`` and run a web server.  For example::
+
+  python -m SimpleHTTPServer
 
 You can build other formats as well. Run ``make`` or ``make.bat`` without
 arguments to see which formats are available.
