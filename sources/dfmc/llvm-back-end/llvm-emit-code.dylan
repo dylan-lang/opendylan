@@ -178,6 +178,6 @@ end method;
 define method llvm-calling-convention
     (back-end :: <llvm-back-end>, o :: <&shared-entry-point>)
  => (calling-convention :: <integer>);
-  $llvm-calling-convention-fast
+  $llvm-calling-convention-c
 end method;
 

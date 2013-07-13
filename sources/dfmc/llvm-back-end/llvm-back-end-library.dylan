@@ -64,6 +64,14 @@ define module dfmc-llvm-back-end
     runtime-variable-global-setter,
     $llvm-runtime-variable-descriptors,
 
+    <llvm-entry-point-descriptor>,
+    entry-point-attributes,
+    entry-point-generator,
+    entry-point-function-declarator,
+    $llvm-entry-point-descriptors,
+    llvm-entry-point-function,
+    llvm-entry-point-rest?,
+
     llvm-calling-convention,
 
     llvm-raw-byte-character;

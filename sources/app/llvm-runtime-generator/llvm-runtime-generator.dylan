@@ -26,6 +26,10 @@ define constant $runtime-referenced-objects
       #"%empty-vector",         // #[]
       #"%empty-string"];        // ""
 
+define constant $runtime-referenced-functions
+  = #[#"type-check-error",
+      #"argument-count-error"];
+
 define function generate-runtime-variable
     (be :: <llvm-back-end>, m :: <llvm-module>,
      name :: <symbol>, descriptor :: <llvm-runtime-variable-descriptor>)
@@ -57,6 +61,11 @@ define function generate-runtime-heap
   // Emit external declarations for well-known objects
   for (name in $runtime-referenced-objects)
     emit-extern(be, m, dylan-value(name));
+  end;
+
+  // Emit external declarations for referenced Dylan entry points
+  for (name in $runtime-referenced-functions)
+    emit-extern(be, m, dylan-value(name).^iep);
   end;
 
   // Emit runtime variable definitions
@@ -142,6 +151,65 @@ define function generate-runtime-primitives
   end for;
 end function;
 
+define function generate-runtime-entry-point
+    (be :: <llvm-back-end>, m :: <llvm-module>,
+     name :: <symbol>, descriptor :: <llvm-entry-point-descriptor>,
+     count :: <integer>)
+ => ();
+  // Generate the function definition and add it to the runtime module
+  let function = llvm-entry-point-function(be, descriptor, count);
+  llvm-builder-declare-global(be, function.llvm-global-name, function);
+
+  let function-type = function.llvm-value-type.llvm-pointer-type-pointee;
+
+  // Add function arguments to the function's value table
+  let arguments = function.llvm-function-arguments;
+  let value-table = function.llvm-function-value-table;
+  for (argument in arguments)
+    value-table[argument.llvm-argument-name] := argument;
+  end for;
+
+  block ()
+    be.llvm-builder-function := function;
+
+    // Generate the entry basic block
+    ins--block(be, make(<llvm-basic-block>, name: "bb.entry"));
+
+    // Generate the function body
+    let (result)
+      = apply(descriptor.entry-point-generator, be, count, arguments);
+
+    // Generate the function return
+    ins--ret(be, result);
+  exception (e :: <error>)
+    format(*standard-error*, "Generation of %s failed: %s\n", name, e);
+    force-output(*standard-error*);
+
+    // Terminate the final basic block
+    let instructions
+      = be.llvm-builder-basic-block.llvm-basic-block-instructions;
+    unless (~empty?(instructions)
+              & instance?(instructions.last, <llvm-terminator-instruction>))
+      ins--unreachable(be);
+    end unless;
+  end block;
+
+  be.llvm-builder-basic-block := #f;
+  be.llvm-builder-function := #f;
+end function;
+
+define function generate-runtime-entry-points
+    (be :: <llvm-back-end>, m :: <llvm-module>) => ();
+  // Generate functions for each defined runtime entry point
+  for (descriptor :: <llvm-entry-point-descriptor>
+         keyed-by name :: <symbol>
+         in $llvm-entry-point-descriptors)
+    for (count from 0 to 9)
+      generate-runtime-entry-point(be, m, name, descriptor, count);
+    end for;
+  end for;
+end function;
+
 define function generate-runtime
     (lid-locator :: <file-locator>,
      architecture :: <symbol>,
@@ -166,6 +234,9 @@ define function generate-runtime
 
         // Write primitives definitions to the module
         generate-runtime-primitives(back-end, m);
+
+        // Write entry point definitions to the module
+        generate-runtime-entry-points(back-end, m);
 
         let output-basename
           = format-to-string("%s-%s-runtime", architecture, operating-system);
