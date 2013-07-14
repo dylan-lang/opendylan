@@ -348,15 +348,15 @@ define &override-function ^size end;
 define &override-function ^element end;
 
 define method ^empty? (object :: <object>) => (result :: <boolean>);
-  error("NO APPLICABLE AS METHOD");
+  error("NO APPLICABLE EMPTY? METHOD");
 end method;
 
 define method ^size (object :: <object>) => (result :: <integer>);
-  error("NO APPLICABLE AS METHOD");
+  error("NO APPLICABLE SIZE METHOD");
 end method;
 
 define method ^element (collection, key, #key default) => (object)
-  error("NO APPLICABLE AS METHOD");
+  error("NO APPLICABLE ELEMENT METHOD");
 end method;
 
 
