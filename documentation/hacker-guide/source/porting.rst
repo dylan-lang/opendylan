@@ -89,14 +89,14 @@ want to update the C back-end appropriately:
 
 You will also need to do a couple of edits to the C run-time:
 
-* Edit ``sources/dfmc/c-run-time/run-time.*``, looking for
+* Edit ``sources/lib/run-time/run-time.*``, looking for
   usages of ``__x86_64__``
 
 .. warning:: We should improve this code within the C run-time.
    :class: alert alert-block alert-info
 
 Additionally, there are some mappings involving ``OPEN_DYLAN_PLATFORM_NAME``
-in ``sources/dfmc/c-run-time/Makefile.in`` that will need to be updated.
+in ``sources/lib/run-time/Makefile.in`` that will need to be updated.
 
 LLVM Back-End
 =============
