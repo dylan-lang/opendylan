@@ -187,7 +187,7 @@ define constant $circular-id-poststring :: <byte-string> = "#";
 /// Print -- Exported.
 ///
 define generic print (object, stream :: <stream>,
-		      #key level, length, circle?, pretty?, escape?) => ();
+                      #key level, length, circle?, pretty?, escape?) => ();
 
 
 define constant <boolean-or-unsupplied> = <object>;  // !@#$ HACK can't deal
@@ -201,11 +201,11 @@ define constant <integer-or-false-or-unsupplied> = <object>; // !@#$ HACK ditto
 /// <print-stream> to hold the values for the requested print operation.
 ///
 define method print (object, stream :: <stream>,
-		     #key level :: <integer-or-false-or-unsupplied> = $unsupplied,
-		          length :: <integer-or-false-or-unsupplied> = $unsupplied,
-		          circle? :: <boolean-or-unsupplied> = $unsupplied,
-		          pretty? :: <boolean-or-unsupplied> = $unsupplied,
-		          escape? :: <boolean-or-unsupplied> = $unsupplied) => ()
+                     #key level :: <integer-or-false-or-unsupplied> = $unsupplied,
+                          length :: <integer-or-false-or-unsupplied> = $unsupplied,
+                          circle? :: <boolean-or-unsupplied> = $unsupplied,
+                          pretty? :: <boolean-or-unsupplied> = $unsupplied,
+                          escape? :: <boolean-or-unsupplied> = $unsupplied) => ()
   block ()
     //
     // Lock the stream so that all the calls to print-object build output
@@ -215,25 +215,25 @@ define method print (object, stream :: <stream>,
     //
     // Set slots with those values supplied by the user.
     dynamic-bind (*print-length*  = if (supplied?(length))  length  else *print-length* end,
-		  *print-level*   = if (supplied?(level))   level   else *print-level* end,
-		  *print-circle?* = if (supplied?(circle?)) circle? else *print-circle?* end,
-		  *print-pretty?* = if (supplied?(pretty?)) pretty? else *print-pretty?* end,
-		  *print-escape?* = if (supplied?(escape?)) escape? else *print-escape?* end)
+                  *print-level*   = if (supplied?(level))   level   else *print-level* end,
+                  *print-circle?* = if (supplied?(circle?)) circle? else *print-circle?* end,
+                  *print-pretty?* = if (supplied?(pretty?)) pretty? else *print-pretty?* end,
+                  *print-escape?* = if (supplied?(escape?)) escape? else *print-escape?* end)
       //
       // Make the stream defaulting the slots to the global default values for
       // the keyword arguments.  No need to lock this stream because only this
       // thread should have any references to it ... barring extreme user
       // silliness.
       let p-stream = if (*print-circle?*)
-		       make(<circular-print-stream>, inner-stream: stream)
-		     else
-		       stream
-		     end;
+                       make(<circular-print-stream>, inner-stream: stream)
+                     else
+                       stream
+                     end;
       //
       // When printing circularly, we first print to a "null stream" so that we
       // can find the circular references.
       if (*print-circle?*)
-	start-circle-printing(object, p-stream);
+        start-circle-printing(object, p-stream);
       end;
       //
       // Determine whether, and how, to print object.
@@ -245,15 +245,15 @@ define method print (object, stream :: <stream>,
 end method;
 
 define method print (object, stream :: <circular-print-stream>,
-		     #key level :: <integer-or-false-or-unsupplied> = $unsupplied,
-		          length :: <integer-or-false-or-unsupplied> = $unsupplied,
-		          circle? :: <boolean-or-unsupplied> = $unsupplied,
-		          pretty? :: <boolean-or-unsupplied> = $unsupplied,
-		          escape? :: <boolean-or-unsupplied> = $unsupplied) => ()
+                     #key level :: <integer-or-false-or-unsupplied> = $unsupplied,
+                          length :: <integer-or-false-or-unsupplied> = $unsupplied,
+                          circle? :: <boolean-or-unsupplied> = $unsupplied,
+                          pretty? :: <boolean-or-unsupplied> = $unsupplied,
+                          escape? :: <boolean-or-unsupplied> = $unsupplied) => ()
   dynamic-bind (*print-length*  = if (supplied?(length))  length  else *print-length* end,
-		*print-level*   = if (supplied?(level))   level   else *print-level* end,
-		*print-pretty?* = if (supplied?(pretty?)) pretty? else *print-pretty?* end,
-		*print-escape?* = if (supplied?(escape?)) escape? else *print-escape?* end)
+                *print-level*   = if (supplied?(level))   level   else *print-level* end,
+                *print-pretty?* = if (supplied?(pretty?)) pretty? else *print-pretty?* end,
+                *print-escape?* = if (supplied?(escape?)) escape? else *print-escape?* end)
     maybe-print-object(object, stream);
   end
 end method;
@@ -310,22 +310,22 @@ define method maybe-print-object (object, stream :: <stream>)
     let requested-level :: false-or(<integer>) = *print-level*;
     case
       (requested-level & (depth > requested-level)) =>
-	write(stream, $print-level-exceeded-string);
+        write(stream, $print-level-exceeded-string);
       (~ *print-circle?*) =>
-	print-object(object, stream);
+        print-object(object, stream);
       (stream.circular-first-pass?) =>
-	// When printing circularly, we first print to a "null stream" so
-	// that we can find the circular references.
-	let ref = print-reference(object, stream);
-	let ref-count = (ref.print-reference-count + 1);
-	ref.print-reference-count := ref-count;
-	if (ref-count = 1)
-	  // If ref-count is already greater than one, then there's
-	  // no reason to go further into the object gathering references.
-	  print-object(object, stream);
-	end;
+        // When printing circularly, we first print to a "null stream" so
+        // that we can find the circular references.
+        let ref = print-reference(object, stream);
+        let ref-count = (ref.print-reference-count + 1);
+        ref.print-reference-count := ref-count;
+        if (ref-count = 1)
+          // If ref-count is already greater than one, then there's
+          // no reason to go further into the object gathering references.
+          print-object(object, stream);
+        end;
       otherwise
-	output-print-reference(print-reference(object, stream), stream);
+        output-print-reference(print-reference(object, stream), stream);
     end case;
   end;
 end method;
@@ -399,33 +399,33 @@ define method print-object-slots
       pprint-newline(#"linear", stream);
       // Print slot names and values.
       printing-logical-block (stream, prefix: #f)
-	block (exit)
-	  let length :: false-or(<integer>) = *print-length*;
-	  for (desc in descriptors,
-	       // Count each slot name and value as two
-	       // for considerations of print-length.
-	       count = 0 then (count + 2))
-	    if (count ~= 0)
-	      write(stream, ", ");
-	      pprint-newline(#"linear", stream);
-	    end if;
-	    if (length & (count >= length))
-	      write(stream, "...");
-	      exit();
-	    end if;
-	    write(stream,
-		  as(<byte-string>, desc.debug-name));
-	    write(stream, ": ");
-	    // pprint-tab(#"section-relative", 0, 0, stream);
-	    pprint-newline(#"fill", stream);
-	    let (value, win?) = slot-value(desc, object);
-	    if (win?)
-	      print(value, stream);
-	    else
-	      write(stream, "{UNINITIALIZED}");
-	    end if;
-	  end for;
-	end block;
+        block (exit)
+          let length :: false-or(<integer>) = *print-length*;
+          for (desc in descriptors,
+               // Count each slot name and value as two
+               // for considerations of print-length.
+               count = 0 then (count + 2))
+            if (count ~= 0)
+              write(stream, ", ");
+              pprint-newline(#"linear", stream);
+            end if;
+            if (length & (count >= length))
+              write(stream, "...");
+              exit();
+            end if;
+            write(stream,
+                  as(<byte-string>, desc.debug-name));
+            write(stream, ": ");
+            // pprint-tab(#"section-relative", 0, 0, stream);
+            pprint-newline(#"fill", stream);
+            let (value, win?) = slot-value(desc, object);
+            if (win?)
+              print(value, stream);
+            else
+              write(stream, "{UNINITIALIZED}");
+            end if;
+          end for;
+        end block;
       end;
     end if;
   end
@@ -458,18 +458,18 @@ define method write-char-maybe-escape
   case
     char < ' ' =>
       select (char)
-	'\0' => write(stream, "\\0");
-	'\a' => write(stream, "\\a");
-	'\b' => write(stream, "\\b");
-	'\t' => write(stream, "\\t");
-	'\f' => write(stream, "\\f");
-	'\r' => write(stream, "\\r");
-	'\n' => write(stream, "\\n");
-	'\e' => write(stream, "\\e");
-	otherwise =>
-	  write(stream, "\\<");
-	  write(stream, integer-to-string(as(<integer>, char), base: 16));
-	  write-element(stream, '>');
+        '\0' => write(stream, "\\0");
+        '\a' => write(stream, "\\a");
+        '\b' => write(stream, "\\b");
+        '\t' => write(stream, "\\t");
+        '\f' => write(stream, "\\f");
+        '\r' => write(stream, "\\r");
+        '\n' => write(stream, "\\n");
+        '\e' => write(stream, "\\e");
+        otherwise =>
+          write(stream, "\\<");
+          write(stream, integer-to-string(as(<integer>, char), base: 16));
+          write-element(stream, '>');
       end select;
     char == _quote =>
       write-element(stream, '\\');
@@ -518,29 +518,29 @@ define method write-string-escaped
   local
 
     method find-next-break (index :: <integer>)
-	=> (next-break :: <integer>, char :: <byte-character>)
+        => (next-break :: <integer>, char :: <byte-character>)
       if (index == len)
-	// It doesn't matter what character we return, we just need to
-	// return some character so the type matches.
-	values(index, 'x');
+        // It doesn't matter what character we return, we just need to
+        // return some character so the type matches.
+        values(index, 'x');
       else
-	let char = object[index];
-	if (char < ' ' | char == '"' | char == '\\' | char > '~')
-	  values(index, char);
-	else
-	  find-next-break(index + 1);
-	end if;
+        let char = object[index];
+        if (char < ' ' | char == '"' | char == '\\' | char > '~')
+          values(index, char);
+        else
+          find-next-break(index + 1);
+        end if;
       end if;
     end method find-next-break,
 
     method write-guts (from :: <integer>) => ()
       let (next-break, char) = find-next-break(from);
       unless (from == next-break)
-	write(stream, object, start: from, end: next-break);
+        write(stream, object, start: from, end: next-break);
       end unless;
       unless (next-break == len)
-	write-char-maybe-escape(stream, char, '"');
-	write-guts(next-break + 1);
+        write-char-maybe-escape(stream, char, '"');
+        write-guts(next-break + 1);
       end unless;
     end method write-guts;
 
@@ -592,69 +592,69 @@ define method print-list (object :: <list>, stream :: <stream>) => ()
       let circle? = *print-circle?*;
       let first-pass? = stream.circular-first-pass?;
       for (remaining = object.tail then remaining.tail,
-	   count = 1 then (count + 1),
-	   until: (remaining == #()))
-	if (~ instance?(remaining, <list>))
-	    // Object was not a proper list, so print dot notation.
-	    write(stream, " . ");
-	    pprint-newline(#"fill", stream);
-	    print(remaining, stream);
-	    exit();
-	end if;
-	write(stream, ", ");
-	pprint-newline(#"fill", stream);
-	case
-	  (length & (count >= length)) =>
-	    // We've exceeded print-length for this print request.
-	    write(stream, "...");
-	    exit();
-	  (~ circle?) =>
-	    // No circular printing, so this is the simple and normal case.
-	    print(remaining.head, stream);
-	  (first-pass?) =>
-	    // Get or create the print-reference for the remaining pointer.
-	    let ref = print-reference(remaining, stream);
-	    let ref-count = (ref.print-reference-count + 1);
-	    ref.print-reference-count := ref-count;
-	    if (ref-count = 1)
-	      // First time through, so keep gathering references.
-	      print(remaining.head, stream);
-	    else
-	      // If ref-count is already greater than one, then we've seen
-	      // everything once.  Stop iterating.
-	      exit();
-	    end;
-	  otherwise =>
-	    // Circular printing on the second pass.
-	    let ref = print-reference(remaining, stream);
-	    let ref-id = ref.print-reference-id;
-	    case
-	      (ref.print-reference-count = 1) =>
-		// Only one reference to the rest of the list, so print the
-		// remaining elements normally.
-		print(remaining.head, stream);
-	      (~ ref-id) =>
-		// Print the tag and its value with dot notation so that
-		// the rest of the list does not appear to be a single
-		// element of the list (that is, a nested list).
-		write(stream, ". ");
-		pprint-newline(#"fill", stream);
-		write(stream, $circular-id-prestring);
-		write(stream, new-print-reference-id(stream, ref));
-		write(stream, $circular-id-poststring);
-		write(stream, "=");
-		print(remaining, stream);
-	      otherwise =>
-		// Print the tag with dot notation.  See previous cases's
-		// comment.
-		write(stream, ". ");
-		pprint-newline(#"fill", stream);
-		write(stream, $circular-id-prestring);
-		write(stream, ref-id);
-		write(stream, $circular-id-poststring);
-		exit();
-	    end case;
-	end case;
+           count = 1 then (count + 1),
+           until: (remaining == #()))
+        if (~ instance?(remaining, <list>))
+            // Object was not a proper list, so print dot notation.
+            write(stream, " . ");
+            pprint-newline(#"fill", stream);
+            print(remaining, stream);
+            exit();
+        end if;
+        write(stream, ", ");
+        pprint-newline(#"fill", stream);
+        case
+          (length & (count >= length)) =>
+            // We've exceeded print-length for this print request.
+            write(stream, "...");
+            exit();
+          (~ circle?) =>
+            // No circular printing, so this is the simple and normal case.
+            print(remaining.head, stream);
+          (first-pass?) =>
+            // Get or create the print-reference for the remaining pointer.
+            let ref = print-reference(remaining, stream);
+            let ref-count = (ref.print-reference-count + 1);
+            ref.print-reference-count := ref-count;
+            if (ref-count = 1)
+              // First time through, so keep gathering references.
+              print(remaining.head, stream);
+            else
+              // If ref-count is already greater than one, then we've seen
+              // everything once.  Stop iterating.
+              exit();
+            end;
+          otherwise =>
+            // Circular printing on the second pass.
+            let ref = print-reference(remaining, stream);
+            let ref-id = ref.print-reference-id;
+            case
+              (ref.print-reference-count = 1) =>
+                // Only one reference to the rest of the list, so print the
+                // remaining elements normally.
+                print(remaining.head, stream);
+              (~ ref-id) =>
+                // Print the tag and its value with dot notation so that
+                // the rest of the list does not appear to be a single
+                // element of the list (that is, a nested list).
+                write(stream, ". ");
+                pprint-newline(#"fill", stream);
+                write(stream, $circular-id-prestring);
+                write(stream, new-print-reference-id(stream, ref));
+                write(stream, $circular-id-poststring);
+                write(stream, "=");
+                print(remaining, stream);
+              otherwise =>
+                // Print the tag with dot notation.  See previous cases's
+                // comment.
+                write(stream, ". ");
+                pprint-newline(#"fill", stream);
+                write(stream, $circular-id-prestring);
+                write(stream, ref-id);
+                write(stream, $circular-id-poststring);
+                exit();
+            end case;
+        end case;
       end for;
     end if;
   end block;
@@ -738,14 +738,14 @@ define method print-items
   block (exit)
     let length :: false-or(<integer>) = *print-length*;
     for (x in items,
-	 count = 0 then (count + 1))
+         count = 0 then (count + 1))
       if (count ~= 0)
-	write(stream, ", ");
-	pprint-newline(#"fill", stream);
+        write(stream, ", ");
+        pprint-newline(#"fill", stream);
       end;
       if (length & (count = length))
-	write(stream, "...");
-	exit();
+        write(stream, "...");
+        exit();
       end;
       print-fun(x, stream);
     end for;
@@ -830,8 +830,8 @@ define sealed method print-object
     (stream,
      prefix: "{Type ",
      body: method (stream :: <stream>) => ()
-	     print-specializer(object, stream);
-	   end method,
+             print-specializer(object, stream);
+           end method,
      suffix: "}");
 end method print-object;
 
@@ -883,15 +883,15 @@ define method print-object
     let b = range-by(r);
     printing-logical-block (stream, prefix: "{range ", suffix: "}")
       if (s)
-	print-object(f, stream);
-	write(stream, " through ");
-	print-object(last(r), stream);
-	write(stream, " by ");
-	print-object(b, stream);
+        print-object(f, stream);
+        write(stream, " through ");
+        print-object(last(r), stream);
+        write(stream, " by ");
+        print-object(b, stream);
       else
-	print-object(f, stream);
-	write(stream, " by ");
-	print-object(b, stream);
+        print-object(f, stream);
+        write(stream, " by ");
+        print-object(b, stream);
       end
     end
   end
@@ -982,7 +982,7 @@ end method print-object;
 /// print-to-string -- Exported.
 ///
 define generic print-to-string (object, #rest args,
-				#key level, length, circle?, pretty?, escape?)
+                                #key level, length, circle?, pretty?, escape?)
     => (result :: <string>);
 
 define method print-to-string
@@ -1112,7 +1112,7 @@ define sealed method pprint-logical-block
     (stream :: <circular-print-stream>,
      #key column :: <integer> = 0, prefix :: false-or(<byte-string>),
           per-line-prefix :: false-or(<byte-string>),
-	  body :: <function>, suffix :: false-or(<byte-string>)) => ()
+          body :: <function>, suffix :: false-or(<byte-string>)) => ()
   if (prefix & per-line-prefix)
     error("Can't specify both a prefix: and a per-line-prefix:");
   end;
@@ -1121,23 +1121,23 @@ define sealed method pprint-logical-block
     (*print-pretty?*) =>
       let target = stream.inner-stream;
       pprint-logical-block(target,
-			   column: column,
-			   prefix: prefix,
-			   per-line-prefix: per-line-prefix,
-			   body: method (pretty-stream)
-				   if (pretty-stream == target)
-				     body(stream);
-				   else
-				     let orig-target = stream.inner-stream;
-				     stream.inner-stream := pretty-stream;
-				     body(stream);
-				     stream.inner-stream := orig-target;
-				   end;
-				 end,
-			   suffix: suffix);
+                           column: column,
+                           prefix: prefix,
+                           per-line-prefix: per-line-prefix,
+                           body: method (pretty-stream)
+                                   if (pretty-stream == target)
+                                     body(stream);
+                                   else
+                                     let orig-target = stream.inner-stream;
+                                     stream.inner-stream := pretty-stream;
+                                     body(stream);
+                                     stream.inner-stream := orig-target;
+                                   end;
+                                 end,
+                           suffix: suffix);
     otherwise =>
       if (prefix | per-line-prefix)
-	write(stream, (prefix | per-line-prefix));
+        write(stream, (prefix | per-line-prefix));
       end;
       body(stream);
       if (suffix) write(stream, suffix) end;
@@ -1162,7 +1162,7 @@ define sealed method pprint-indent
     (relative-to :: <indentation-kind>, n :: <integer>, stream :: <stream>)
  => ()
   if ((~ (*print-circle?* & (stream.circular-first-pass?)))
-	& *print-pretty?*)
+        & *print-pretty?*)
     pprint-indent(relative-to, n, stream.inner-stream);
   end;
 end;
@@ -1172,7 +1172,7 @@ define sealed method pprint-tab
      stream :: <stream>)
  => ()
   if ((~ (*print-circle?* & (stream.circular-first-pass?)))
-	& *print-pretty?*)
+        & *print-pretty?*)
     pprint-tab(kind, colnum, colinc, stream.inner-stream);
   end;
 end;
