@@ -19,49 +19,40 @@ AC_CANONICAL_TARGET
 case $host in
   i*86-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=x86-linux;
-      RUNTIME_SOURCES=sources/lib/run-time;
       SUPPORT_GC_MPS=yes;
       SUPPORT_GC_BOEHM=no
     ;;
   i*86-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=x86-freebsd;
-      RUNTIME_SOURCES=sources/lib/run-time;
       SUPPORT_GC_MPS=yes;
       SUPPORT_GC_BOEHM=no
     ;;
   i*86-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time
       GC_USE_STATIC_BOEHM=true
     ;;
   x86_64-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time
       GC_USE_STATIC_BOEHM=true
     ;;
   powerpc-*-darwin*)
       OPEN_DYLAN_PLATFORM_NAME=ppc-darwin;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   amd64-*-freebsd* | x86_64-*-freebsd*)
       OPEN_DYLAN_PLATFORM_NAME=x86_64-freebsd;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time
       GC_LIB=-lgc-threaded
     ;;
   x86_64-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=x86_64-linux;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   arm-*-linux*)
       OPEN_DYLAN_PLATFORM_NAME=arm-linux;
-      RUNTIME_SOURCES=sources/dfmc/c-run-time
     ;;
   *)
       AC_MSG_ERROR([The $host platform is not supported.])
     ;;
 esac
 AC_SUBST(OPEN_DYLAN_PLATFORM_NAME)
-AC_SUBST(RUNTIME_SOURCES)
 
 AM_INIT_AUTOMAKE
 
@@ -209,12 +200,9 @@ AS_IF([echo "$CFLAGS" | grep -q -- "-W" 2> /dev/null],
 )
 AC_SUBST(DISABLE_WARNINGS_CFLAGS)
 
-# for now, replace mps only in pentium-linux
-# gc is also replaced in sources/dfmc/c-run-time
 AC_CONFIG_FILES(Makefile
                 sources/jamfiles/Makefile
                 sources/jamfiles/config.jam
-                sources/lib/run-time/Makefile
-                sources/dfmc/c-run-time/Makefile)
+                sources/lib/run-time/Makefile)
 
 AC_OUTPUT

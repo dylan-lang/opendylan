@@ -307,7 +307,7 @@ are called by dfmc-modeling. Namely, primitives (which names and
 signatures are installed), macros, modules, libraries, classes.
 
 Be aware that the actual implementation of the primitives is in the
-runtime (either ``sources/lib/c-run-time/run-time.c`` or the
+runtime (either ``sources/lib/run-time/run-time.c`` or the
 runtime-generator generates a runtime.o containing those definitions),
 but some crucial bits, like the adjectives (``side-effect-free``,
 ``dynamic-extent``, ``stateless`` and ``opposited``) are in

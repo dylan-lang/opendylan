@@ -361,7 +361,6 @@ DOC_REVERSI_PROJECT = $(DOC_REVERSI_SOURCE)\reversi.hdp
 #
 
 PENTIUM_RUN_TIME = $(LIB_DIRECTORY)\pentium-run-time.lib
-C_RUN_TIME = $(LIB_DIRECTORY)\c-run-time.lib
 WIN32_SUPPORT = $(LIB_DIRECTORY)\Win32Support.lib
 HTMLHELP = $(INSTALL_LIB_DIRECTORY)\htmlhelp.lib
 
@@ -1192,13 +1191,6 @@ boehm-pentium-run-time:
     & popd
 
 $(PENTIUM_RUN_TIME): mm-pentium-run-time
-
-$(C_RUN_TIME):
-  $(ENSURE_SOURCES) c-run-time $(C_RUN_TIME_SOURCE)
-  echo Building C run time
-  pushd $(OPEN_DYLAN_USER_BUILD)\c-run-time \
-    & $(MAKE) install /f Makefile.win32 > $(BUILD_LOGS)\make-c-run-time.log \
-    & popd
 
 $(DEBUGGER_NUB):
   $(ENSURE_SOURCES) runtime-manager $(RUNTIME_MANAGER_SOURCE)

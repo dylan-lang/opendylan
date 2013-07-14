@@ -241,7 +241,6 @@ sources
     c-compiler
     c-ffi
     c-linker
-    c-run-time
     common
     conditions
     debug-back-end
