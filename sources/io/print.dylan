@@ -366,13 +366,7 @@ define open generic print-object (object, stream :: <stream>)
 ///
 define method print-object (object :: <object>, stream :: <stream>) => ()
   printing-logical-block (stream, prefix: "{", suffix: "}")
-    let obj-class = object.object-class;
-    let cname = obj-class.debug-name;
-    if (cname)
-      write(stream, as-lowercase(as(<byte-string>, cname)));
-    else
-      print(obj-class, stream);
-    end if;
+    write-class-name(object.object-class);
     let oname = object.debug-name;
     if (oname)
       write(stream, " ");
@@ -843,20 +837,29 @@ define sealed method print-object (object :: <class>, stream :: <stream>) => ();
   write(stream, "}");
 end method print-object;
 
-/// write-class-name -- Internal Interface.
+/// This function returns the name of the class as a string. This is a separate
+/// method from write-class-name so that it can be used with format-to-string.
 ///
-/// This function writes the name of the class or "<UNNAMED-CLASS>" to stream.
-/// It does not output any curly braces, the word "class", or anything else.
+define method class-name (obj-class :: <class>) => (name :: false-or(<string>))
+  let cname = obj-class.debug-name;
+  if (cname)
+    as-lowercase(as(<byte-string>, cname));
+  end if;
+end method;
 
-define method write-class-name (object :: <class>, stream :: <stream>)
+/// This function writes the name of the class to stream.
+/// It does not output any curly braces, the word "class", or anything else.
+///
+define method write-class-name (obj-class :: <class>, stream :: <stream>)
     => ();
-  let name = debug-name(object);
-  if (name)
-    write(stream, as-lowercase(as(<byte-string>, name)));
+  let cname = obj-class.class-name;
+  if (cname)
+    write(stream, cname);
   else
-    write(stream, "<unnamed-class>");
+    print(obj-class, stream);
   end if;
 end method write-class-name;
+
 
 
 /// Print-object miscellaneous methods.
@@ -901,6 +904,14 @@ define method print-object
     (object :: <stretchy-vector>, stream :: <stream>) => ()
   printing-logical-block (stream, prefix: "{stretchy vector ", suffix: "}")
     print-items(object, print, stream)
+  end
+end method;
+
+define method print-object
+    (object :: <sequence>, stream :: <stream>) => ()
+  let prefix = format-to-string("{%s sequence ", object.object-class.class-name | "some");
+  printing-logical-block (stream, prefix: prefix, suffix: "}")
+    print-items(object, print, stream);
   end
 end method;
 
