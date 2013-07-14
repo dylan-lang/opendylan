@@ -2,14 +2,17 @@
 #include <signal.h>
 #include "mm.h"
 
-#if defined(OPEN_DYLAN_PLATFORM_LINUX)
+#if defined(OPEN_DYLAN_PLATFORM_LINUX) && defined(OPEN_DYLAN_ARCH_x86)
 #include "x86-linux-exceptions.c"
-#elif defined(OPEN_DYLAN_PLATFORM_FREEBSD)
+#elif defined(OPEN_DYLAN_PLATFORM_FREEBSD) && defined(OPEN_DYLAN_ARCH_x86)
 #include "x86-freebsd-exceptions.c"
-#elif defined(OPEN_DYLAN_PLATFORM_DARWIN)
+#elif defined(OPEN_DYLAN_PLATFORM_DARWIN) && defined(OPEN_DYLAN_ARCH_x86)
 #include "x86-darwin-exceptions.c"
-#else
+#elif defined(OPEN_DYLAN_PLATFORM_WINDOWS) && defined(OPEN_DYLAN_ARCH_x86)
 #include "x86-windows-exceptions.c"
+#else
+#define EXCEPTION_PREAMBLE()
+#define EXCEPTION_POSTAMBLE()
 #endif
 
 /* Support for foreign call-ins */
