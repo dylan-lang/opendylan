@@ -802,18 +802,6 @@ define &module dylan-extensions
     empty;
 
   create
-    \limited-list-definer,
-    limited-list,
-    <limited-list>,
-      <non-empty-limited-list>,
-      <empty-limited-list>,
-    limited-list-first, limited-list-first-setter,
-    limited-list-rest, limited-list-rest-setter,
-    empty,
-    prepend,
-    rest;
-
-  create
     \with-fip-of,
     identity-copy-state,
     sequence-next-state,

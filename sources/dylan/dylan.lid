@@ -53,7 +53,6 @@ Files:     dfmc-boot
            unicode-string
            list
            list-speed
-           limited-list
            deque
            range
            miscellaneous
