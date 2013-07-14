@@ -81,8 +81,9 @@ OBJS		= $(OBJDIR)/break.o \
 
 HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_PLATFORM_NAME)
 HARP_OBJS        = $(HARP_SUPPORT_DIR)/runtime.o \
-                   $(OBJDIR)/unix-threads-primitives.o \
                    $(HARP_SUPPORT_DIR)/dylan-support.o
+
+HARP_RUNTIME_OBJS = $(OBJDIR)/unix-threads-primitives.o
 
 LLVM_RUNTIME_OBJS =
 
@@ -120,8 +121,8 @@ $(OBJDIR)/%.o: $(srcdir)/%.c
 	mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -MMD -c -o $@ $<
 
-$(HARP_RUNTIME_LIBRARY): $(OBJS) $(HARP_OBJS)
-	$(AR) $(HARP_RUNTIME_LIBRARY) $(OBJS) $(HARP_SUPPORT_DIR)/runtime.o
+$(HARP_RUNTIME_LIBRARY): $(OBJS) $(HARP_RUNTIME_OBJS) $(HARP_OBJS)
+	$(AR) $(HARP_RUNTIME_LIBRARY) $(OBJS) $(HARP_RUNTIME_OBJS) $(HARP_SUPPORT_DIR)/runtime.o
 
 install-harp-runtime: $(HARP_RUNTIME_LIBRARY) $(HARP_RUNTIME_LIBDEST) $(HARP_OBJS)
 	cp -fp $(HARP_RUNTIME_LIBRARY) $(HARP_RUNTIME_LIBDEST)
