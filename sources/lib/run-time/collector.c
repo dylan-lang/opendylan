@@ -122,7 +122,8 @@ void fill_dylan_object_mem(dylan_object *mem, dylan_object fill, int count)
       rep stosd
     };
 #else
-  for (int i = 0; i < count; i++) {
+  int i;
+  for (i = 0; i < count; i++) {
     mem[i] = fill;
   }
 #endif
