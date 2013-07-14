@@ -13,7 +13,7 @@ define constant $test-input :: <string> =
 
 define method tcp-echo-client () => ()
   start-sockets();
-  with-socket (client-socket, host: $loopback-address, port: 7)
+  with-socket (client-socket, host: "127.0.0.1", port: 7)
     test-echo(client-socket)
   end with-socket;
 end method;

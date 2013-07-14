@@ -28,7 +28,7 @@ define method daytime-server () => ();
   end block;
 end method;
 
-define constant $months-of-the-year = 
+define constant $months-of-the-year =
   #[ "Thermidor", // month returned by date library is never 0
      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
@@ -36,11 +36,11 @@ define constant $months-of-the-year =
 // Convert the date into a string which looks like the usual result
 // from other daytime servers.
 
-define method  human-readable-date-string 
+define method  human-readable-date-string
     (date :: <date>) => (result :: <string>)
   let (year, month, day, hours, minutes, seconds, day-of-week) =
     decode-date(date);
-  let day-as-string = 
+  let day-as-string =
     copy-sequence(as(<string>, day-of-week), start: 0, end: 3);
   day-as-string[ 0 ] := as-uppercase(day-as-string[ 0 ]);
   format-to-string("%s %s %d %d.%d.%d %d",

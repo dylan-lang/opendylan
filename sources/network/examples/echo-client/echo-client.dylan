@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method echo-client () => ();
   start-sockets();
-  let client-socket = make(<TCP-socket>, host: $loopback-address, port: 7);
+  let client-socket = make(<TCP-socket>, host: "127.0.0.1", port: 7);
   block()
     format-out("Connected to echo server at %s port: %d\n",
 	       client-socket.remote-host.host-name, 
