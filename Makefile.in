@@ -4,7 +4,7 @@ abs_srcdir      = @abs_srcdir@
 abs_builddir    = @abs_builddir@
 
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
-RUNTIME_SOURCES = @RUNTIME_SOURCES@
+RUNTIME_SOURCES = sources/lib/run-time
 
 FDMAKE_OPTIONS  =
 fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl $(FDMAKE_OPTIONS)
@@ -377,8 +377,8 @@ distclean: clean
 	-rm -f config.log
 	-rm -f config.status
 	-rm -f config.status.lineno
-	-rm -f Makefile sources/lib/run-time/pentium-linux/Makefile sources/lib/run-time/pentium-freebsd/Makefile
-	-rm -f sources/dfmc/c-run-time/Makefile
+	-rm -f Makefile
+	-rm -f sources/lib/run-time/Makefile
 	-rm -f sources/jamfiles/Makefile sources/jamfiles/config.jam
 	-rm -rf build-aux
 	-rm -rf autom4te.cache

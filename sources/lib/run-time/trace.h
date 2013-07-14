@@ -2,7 +2,7 @@
  * CRT tracing facility
  *
  * This is a simple printf-based tracing facality for use
- * in debugging c-run-time. It can be compiled out completely.
+ * in debugging the run-time. It can be compiled out completely.
  *
  * Tracing is organized in categories, each of which can
  * be enabled or disabled individually.

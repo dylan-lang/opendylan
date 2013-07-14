@@ -4761,10 +4761,10 @@ static void call_application_exit_functions(void) {
 }
 
 /**
- * Initialize the dylan c-run-time
+ * Initialize the dylan run-time
  *
- * This must be called by every library using c-r-t as part
- * of its initialization before using anything else.
+ * This must be called by every library using the C back-end
+ * as part of its initialization before using anything else.
  *
  */
 void _Init_Run_Time ()

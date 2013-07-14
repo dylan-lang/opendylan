@@ -7,6 +7,7 @@ subdir		= sources/lib/run-time
 VPATH		= $(srcdir)
 
 LIBDEST         = $(OPEN_DYLAN_USER_INSTALL)/lib
+INCDEST         = $(OPEN_DYLAN_USER_INSTALL)/include
 
 OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
 OBJDIR          = obj-$(OPEN_DYLAN_PLATFORM_NAME)
@@ -53,6 +54,9 @@ endif
 
 GC_CFLAGS       = @GC_CFLAGS@
 GC_CHOICE       = @GC_CHOICE@
+GC_LIBRARY      = @GC_LIBRARY@
+GC_USE_STATIC_BOEHM = @GC_USE_STATIC_BOEHM@
+
 
 CC = @CC@
 AR = ar -rcs
@@ -61,17 +65,20 @@ CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
 
 OBJS		= $(OBJDIR)/break.o \
 		  $(OBJDIR)/collector.o \
-		  $(OBJDIR)/unix-threads-primitives.o \
 		  $(OBJDIR)/unix-spy-interfaces.o \
 		  $(OBJDIR)/unix-support.o
 
 HARP_SUPPORT_DIR = $(srcdir)/harp-support/$(OPEN_DYLAN_PLATFORM_NAME)
 HARP_OBJS        = $(HARP_SUPPORT_DIR)/runtime.o \
+                   $(OBJDIR)/unix-threads-primitives.o \
                    $(HARP_SUPPORT_DIR)/dylan-support.o
 
 LLVM_RUNTIME_OBJS =
 
-C_RUNTIME_OBJS    =
+C_RUNTIME_OBJS    = $(OBJDIR)/run-time.o \
+                    $(OBJDIR)/trace.o \
+                    $(OBJDIR)/debug-print.o \
+                    $(OBJDIR)/posix-threads.o
 
 ifeq ($(GC_CHOICE),mps)
   OBJS += $(OBJDIR)/mps-dylan.o \
@@ -120,8 +127,17 @@ install-llvm-runtime: $(LLVM_RUNTIME_LIBRARY) $(LLVM_RUNTIME_LIBDEST)
 $(C_RUNTIME_LIBRARY): $(OBJS) $(C_RUNTIME_OBJS)
 	$(AR) $(C_RUNTIME_LIBRARY) $(OBJS) $(C_RUNTIME_OBJS)
 
-install-c-runtime: $(C_RUNTIME_LIBRARY) $(C_RUNTIME_LIBDEST)
+$(INCDEST):
+	mkdir -p $(INCDEST)
+
+install-c-runtime: $(C_RUNTIME_LIBRARY) $(C_RUNTIME_LIBDEST) $(INCDEST)
 	cp -fp $(C_RUNTIME_LIBRARY) $(C_RUNTIME_LIBDEST)
+	cp -fp $(srcdir)/trace.h $(INCDEST)
+	cp -fp $(srcdir)/run-time.h $(INCDEST)
+	@ if [ "$(GC_USE_STATIC_BOEHM)" = "true" ]; then \
+	    cp -fp $(GC_LIBRARY) $(C_RUNTIME_LIBDEST); \
+	fi
+
 
 install: $(PLATFORM_INSTALL_RUNTIMES)
 
