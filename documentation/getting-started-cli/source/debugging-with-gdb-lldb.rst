@@ -45,6 +45,60 @@ Understanding name mangling
 
 *Fill this in, particularly with a link to the Hacker's Guide!*
 
+Understanding stack traces
+--------------------------
+
+Let's look at part of a representative stack trace::
+
+    #0  0x92b41b06 in read$NOCANCEL$UNIX2003 ()
+    #1  0x0042c509 in Kunix_readYio_internalsVioI ()
+    #2  0x000bc8e7 in xep_4 ()
+    #3  0x0042ba99 in Kaccessor_read_intoXYstreams_internalsVioMM0I ()
+    #4  0x000c0805 in key_mep_6 ()
+    #5  0x000c43a4 in implicit_keyed_single_method_engine_4 ()
+    #6  0x000c1dd5 in gf_optional_xep_4 ()
+    #7  0x004139fb in Kload_bufferYstreams_internalsVioI ()
+    #8  0x0041334a in Kdo_next_input_bufferYstreamsVioMM1I ()
+    #9  0x000c04ab in key_mep_4 ()
+    #10 0x000c3eaf in implicit_keyed_single_method_engine_1 ()
+    #11 0x0040520f in Kread_lineYstreamsVioMM0I ()
+    #12 0x000c0321 in key_mep_3 ()
+    #13 0x000c3eaf in implicit_keyed_single_method_engine_1 ()
+    #14 0x0079dcf6 in Kcommand_line_loopYcommand_linesVenvironment_commandsMM0I ()
+    #15 0x000bf6b3 in rest_key_xep_5 ()
+    #16 0x00007abe in Kdo_execute_commandVcommandsMdylan_compilerM0I ()
+    #17 0x000bb9bb in primitive_engine_node_apply_with_optionals ()
+    #18 0x0002b9ba in Khandle_missed_dispatchVKgI ()
+    #19 0x0002aaef in KPgf_dispatch_absentVKgI ()
+    #20 0x000c25e8 in general_engine_node_n_engine ()
+    #21 0x004b19a8 in Kexecute_commandVcommandsMM0I ()
+    #22 0x000bb9bb in primitive_engine_node_apply_with_optionals ()
+    #23 0x0002b9ba in Khandle_missed_dispatchVKgI ()
+    #24 0x0002aaef in KPgf_dispatch_absentVKgI ()
+    #25 0x000c25e8 in general_engine_node_n_engine ()
+    #26 0x000c11ab in gf_xep_1 ()
+    #27 0x0000aa9e in KmainYconsole_environmentVdylan_compilerI ()
+    #28 0x0000abb3 in _Init_dylan_compiler__X_start_for_user ()
+
+Some things to notice:
+
+* Method dispatch takes up the bulk of the stack frames with function calls
+  like ``gf_xep_1``, ``general_engine_node_n_engine``, ``rest_key_xep_5``,
+  ``key_mep_4``, ``xep_4``, ``implicit_keyed_single_method_engine_1`` and
+  so on.
+* Methods representing Dylan code are mangled as discussed in a section
+  above.
+* It may seem alarming to see methods like ``KPgf_dispatch_absentVKgI``
+  or ``Khandle_missed_dispatchVKgI`` (where did dispatch go?!?). These
+  function calls indicate that the dispatch data for a method hadn't
+  been set up yet as this is the first invocation of that method.
+  The method dispatch data is set up lazily, so this is normal and
+  expected.
+* There isn't any information on arguments or what file and line
+  number contains the corresponding code. This means that you don't
+  have the debug data for the compiler around. An easy way to
+  address this is to build your own copy of the compiler.
+
 Breaking on main
 ----------------
 
