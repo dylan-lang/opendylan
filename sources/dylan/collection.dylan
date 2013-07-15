@@ -1081,6 +1081,8 @@ define inline function check-nat(object) => (nat :: <integer>)
   object
 end;
 
+// Another useful check method is check-key-test-eq, defined in accumulators.dylan.
+
 
 // define inline function current-element-setter
 //     (coll :: <collection>, state, setter :: <function>)
