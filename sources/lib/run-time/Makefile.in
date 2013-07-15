@@ -72,7 +72,7 @@ GC_USE_STATIC_BOEHM = @GC_USE_STATIC_BOEHM@
 CC = @CC@
 AR = ar -rcs
 
-CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
+CFLAGS		= $(PLATFORM_CFLAGS) -fPIC -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
 
 OBJS		= $(OBJDIR)/break.o \
 		  $(OBJDIR)/collector.o \
