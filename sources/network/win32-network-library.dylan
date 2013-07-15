@@ -496,8 +496,8 @@ define module sockets
   create
     <internet-address>,
       <ipv4-address>,
-        host-name, host-address, numeric-host-address, all-addresses,
-        aliases, $loopback-address, $local-host;
+        host-name, host-address, numeric-host-address, all-addresses, aliases;
+  create local-host-name;
   create
     <numeric-address>,
       network-order, host-order,

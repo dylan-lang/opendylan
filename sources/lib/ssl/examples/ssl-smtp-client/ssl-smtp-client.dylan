@@ -91,7 +91,7 @@ end macro;
 // Interface function.
 define method open-smtp-stream 
     (host, #key port = $default-smtp-port, ssl? = #t) => (stream :: <stream>)
-  let helo-name = host-name($local-host);
+  let helo-name = local-host-name();
   let stream = make(<tcp-socket>, host: host, port: port);
   check-smtp-response(stream);
   format-smtp-line(stream, "HELO %s", helo-name);
