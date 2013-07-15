@@ -16,6 +16,7 @@ Contents:
    runtime/index
    documentation
    porting
+   debugging
    glossary
 
 
