@@ -20,6 +20,14 @@ Documentation
 
 The `regular-expressions <http://opendylan.org/documentation/library-reference/regular-expressions/index.html>`_ library documentation has been greatly improved.
 
+Libraries
+---------
+
+network
+^^^^^^^
+
+The bindings ``$local-host`` and ``$loopback-address`` are removed. The function ``local-host-name`` is now provided which returns the host name.
+The main reason for this change was ongoing confusion by the way the network library initialized itself (calling ``gethostname`` and passing its result to ``gethostbyname``, which does not work on all computers).
 
 Bug Fixes
 =========

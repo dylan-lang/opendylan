@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method tcp-daytime-client () => ()
   start-sockets();
-  with-socket (client-socket, host: $local-host,  port: 13)
+  with-socket (client-socket, host: "127.0.0.1",  port: 13)
     test-daytime(client-socket)
   end with-socket;
 end method;

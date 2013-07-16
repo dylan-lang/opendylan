@@ -173,9 +173,6 @@ end function;
 
 define method open-sockets (manager :: <socket-manager>) => ()
   accessor-startup(manager);
-  $loopback-address := make(<ipv4-address>, address: "127.0.0.1");
-  $local-host-name := accessor-local-host-name();
-  $local-host := make(<ipv4-address>, name: $local-host-name);
 end method;
 
 define open method initialize

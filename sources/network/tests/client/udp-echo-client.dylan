@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define method UDP-echo-client () => ();
   start-sockets();
-  with-socket (client-socket, protocol: #"udp", host: $loopback-address, port: 7)
+  with-socket (client-socket, protocol: #"udp", host: "127.0.0.1", port: 7)
     test-echo(client-socket)
   end with-socket;
 end method;

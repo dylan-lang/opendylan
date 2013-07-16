@@ -208,21 +208,6 @@ define sealed method all-addresses
   result
 end method;
 
-/*
-define constant $loopback-address :: <ipv4-address> =
-  make(<ipv4-address>, address: "127.0.0.1");
-
-define constant $local-host-name :: <string> = accessor-local-host-name();
-
-define constant $local-host :: <ipv4-address> =
-  make(<ipv4-address>, name: $local-host-name);
-
-*/
-
-// Define these as variables instead of constants.  Put the
-// initialization in the start-trap function.  Boo. Hiss.
-define variable $loopback-address :: false-or(<ipv4-address>) = #f;
-
-define variable $local-host-name :: <string> = "";
-
-define variable $local-host :: false-or(<ipv4-address>) = #f;
+define function local-host-name () => (result :: <string>)
+  accessor-local-host-name()
+end;

@@ -7,18 +7,16 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
-//  Interesting values for host: 
+//  Interesting values for host:
 //   "gemini.tuc.noao.edu",
 //   "webhost.functionalobjects.com",
-//   $loopback-address (with daytime-server running) 
-//   $local-host (with daytime-server running) 
-// 
+//
 //  You can also use "service: daytime" instead of "port: 13".
-// 
+//
 
 define method daytime-client () => ();
   start-sockets();
-  let client-socket = make(<TCP-socket>, host: $local-host,  port: 13);
+  let client-socket = make(<TCP-socket>, host: "127.0.0.1",  port: 13);
   block()
     let date-result = read-line(client-socket);
     format-out("%s\n", date-result);

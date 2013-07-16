@@ -41,5 +41,5 @@ define method receive-connections
 end method;
 
 define method hostname ()
-  host-name($local-host)
+  local-host-name()
 end method;

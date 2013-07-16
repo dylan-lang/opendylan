@@ -63,7 +63,7 @@ define sideways method do-send-mail
     = from
       | begin
 	  let name = login-name();
-	  let host = host-name($local-host);
+	  let host = local-host-name();
 	  name & host & concatenate-as(<string>, name, "@", host)
 	end;
   let success? :: <boolean> = #t;

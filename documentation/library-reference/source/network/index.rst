@@ -216,35 +216,14 @@ generic functions and constants.
      Returns an instance of ``<sequence>`` whose elements are instances
      of ``<string>`` representing alternative names for the host.
 
-.. constant:: $loopback-address
+.. function:: local-host-name
 
-   :type: <internet-address>
-
-   :description:
-
-     An instance of :class:`<internet-address>` representing the
-     loopback address: "127.0.0.1".
-
-.. constant:: $local-host
-
-   :type: <internet-address>
+   :signature: local-host-name () => *name*
 
    :description:
 
-     An instance of :class:`<internet-address>` representing the host on
-     which the application using sockets is correctly running.
-
-     Note that this value is not necessarily the same as would be
-     created by the expression
-
-     .. code-block:: dylan
-
-       make (<internet-address>, name: "localhost")
-
-     The address assigned to the symbolic name *localhost* is dependent
-     on the configuration of DNS. In some cases this may be configured
-     to be the loopback address rather than a real address for the local
-     host.
+     Returns an instance of ``<string>`` containing a symbolic host
+     name.
 
 The <ipv6-address> class
 ^^^^^^^^^^^^^^^^^^^^^^^^
