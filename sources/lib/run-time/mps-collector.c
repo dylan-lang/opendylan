@@ -1400,7 +1400,7 @@ typedef struct d_hs_s         /* Dylan Hash State object */
 
 void primitive_mps_ld_reset(void *d_hs)
 {
-  mps_ld_t mps_ld = &((d_hs_t)d_hs->internal_state);
+  mps_ld_t mps_ld = &(((d_hs_t)d_hs)->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   mps_ld_reset(mps_ld, arena);
@@ -1408,7 +1408,7 @@ void primitive_mps_ld_reset(void *d_hs)
 
 void primitive_mps_ld_add(void *d_hs, void *addr)
 {
-  mps_ld_t mps_ld = &((d_hs_t)d_hs->internal_state);
+  mps_ld_t mps_ld = &(((d_hs_t)d_hs)->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   mps_ld_add(mps_ld, arena, (mps_addr_t)addr);
@@ -1416,7 +1416,7 @@ void primitive_mps_ld_add(void *d_hs, void *addr)
 
 int primitive_mps_ld_isstale(void *d_hs)
 {
-  mps_ld_t mps_ld = &((d_hs_t)d_hs->internal_state);
+  mps_ld_t mps_ld = &(((d_hs_t)d_hs)->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   return(mps_ld_isstale(mps_ld, arena, 0));
@@ -1425,8 +1425,8 @@ int primitive_mps_ld_isstale(void *d_hs)
 
 void primitive_mps_ld_merge(void *d_into, void *d_obj)
 {
-  mps_ld_t into = &((d_hs_t)d_into->internal_state);
-  mps_ld_t addr = &((d_hs_t)d_obj->internal_state);
+  mps_ld_t into = &(((d_hs_t)d_into)->internal_state);
+  mps_ld_t addr = &(((d_hs_t)d_obj)->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   mps_ld_merge(into, arena, addr);
