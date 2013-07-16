@@ -966,21 +966,21 @@ MMError MMRootExact(void *base, void *limit)
 /* Support for MM control */
 
 RUN_TIME_API
-void primitive_mps_clamp()
+void primitive_mps_clamp(void)
 {
 }
 
 RUN_TIME_API
-void primitive_mps_park()
+void primitive_mps_park(void)
 {
 }
 
 RUN_TIME_API
-void primitive_mps_release()
+void primitive_mps_release(void)
 {
 }
 
-extern void display_stats_for_memory_usage ();
+extern void display_stats_for_memory_usage (void);
 
 RUN_TIME_API
 void primitive_mps_collect(BOOL display_stats)
@@ -990,33 +990,33 @@ void primitive_mps_collect(BOOL display_stats)
 }
 
 RUN_TIME_API
-size_t primitive_mps_committed()
+size_t primitive_mps_committed(void)
 {
   return GC_get_heap_size();
 }
 
 RUN_TIME_API
-void primitive_mps_begin_ramp_alloc()
+void primitive_mps_begin_ramp_alloc(void)
 {
 }
 
 RUN_TIME_API
-void primitive_mps_end_ramp_alloc()
+void primitive_mps_end_ramp_alloc(void)
 {
 }
 
 RUN_TIME_API
-void primitive_mps_begin_ramp_alloc_all()
+void primitive_mps_begin_ramp_alloc_all(void)
 {
 }
 
 RUN_TIME_API
-void primitive_mps_end_ramp_alloc_all()
+void primitive_mps_end_ramp_alloc_all(void)
 {
 }
 
 RUN_TIME_API
-void primitive_mps_enable_gc_messages()
+void primitive_mps_enable_gc_messages(void)
 {
 }
 
@@ -1049,7 +1049,7 @@ void primitive_mps_finalize(void *obj) {
                         NULL, NULL);
 }
 
-void* primitive_mps_finalization_queue_first()
+void* primitive_mps_finalization_queue_first(void)
 {
   struct _mps_finalization_queue *queue;
 
@@ -1067,27 +1067,25 @@ void* primitive_mps_finalization_queue_first()
 
 /* Support for Location Dependencies */
 
-typedef void* d_hs_t;     /* Dylan Hash State */
-
-void primitive_mps_ld_reset(d_hs_t d_hs)
+void primitive_mps_ld_reset(void *d_hs)
 {
   unused(d_hs);
 }
 
-void primitive_mps_ld_add(d_hs_t d_hs, mps_addr_t addr)
+void primitive_mps_ld_add(void *d_hs, void *addr)
 {
   unused(d_hs);
   unused(addr);
 }
 
-mps_bool_t primitive_mps_ld_isstale(d_hs_t d_hs)
+int primitive_mps_ld_isstale(void *d_hs)
 {
   unused(d_hs);
 
   return 0; /* Never stale */
 }
 
-void primitive_mps_ld_merge(d_hs_t d_into, d_hs_t d_obj)
+void primitive_mps_ld_merge(void *d_into, void *d_obj)
 {
   unused(d_into);
   unused(d_obj);
@@ -1132,7 +1130,7 @@ BOOL WINAPI DylanBreakControlHandler(DWORD dwCtrlType)
     }
 }
 
-MMError dylan_init_memory_manager()
+MMError dylan_init_memory_manager(void)
 {
   gc_teb_t gc_teb = current_gc_teb();
 
@@ -1170,6 +1168,6 @@ MMError dylan_init_memory_manager()
   return(0);
 }
 
-void dylan_shut_down_memory_manager()
+void dylan_shut_down_memory_manager(void)
 {
 }

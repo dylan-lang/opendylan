@@ -1263,24 +1263,24 @@ MMError MMRootExact(void *base, void *limit)
 /* Support for MM control */
 
 RUN_TIME_API
-void primitive_mps_clamp()
+void primitive_mps_clamp(void)
 {
   mps_arena_clamp(arena);
 }
 
 RUN_TIME_API
-void primitive_mps_park()
+void primitive_mps_park(void)
 {
   mps_arena_park(arena);
 }
 
 RUN_TIME_API
-void primitive_mps_release()
+void primitive_mps_release(void)
 {
   mps_arena_release(arena);
 }
 
-extern void display_stats_for_memory_usage ();
+extern void display_stats_for_memory_usage (void);
 
 RUN_TIME_API
 void primitive_mps_collect(BOOL display_stats)
@@ -1291,13 +1291,13 @@ void primitive_mps_collect(BOOL display_stats)
 }
 
 RUN_TIME_API
-size_t primitive_mps_committed()
+size_t primitive_mps_committed(void)
 {
   return mps_arena_committed(arena);
 }
 
 RUN_TIME_API
-void primitive_mps_begin_ramp_alloc()
+void primitive_mps_begin_ramp_alloc(void)
 {
   gc_teb_t gc_teb = current_gc_teb();
   mps_alloc_pattern_t pattern = mps_alloc_pattern_ramp();
@@ -1309,7 +1309,7 @@ void primitive_mps_begin_ramp_alloc()
 }
 
 RUN_TIME_API
-void primitive_mps_end_ramp_alloc()
+void primitive_mps_end_ramp_alloc(void)
 {
   gc_teb_t gc_teb = current_gc_teb();
   mps_alloc_pattern_t pattern = mps_alloc_pattern_ramp();
@@ -1321,7 +1321,7 @@ void primitive_mps_end_ramp_alloc()
 }
 
 RUN_TIME_API
-void primitive_mps_begin_ramp_alloc_all()
+void primitive_mps_begin_ramp_alloc_all(void)
 {
   gc_teb_t gc_teb = current_gc_teb();
   mps_alloc_pattern_t pattern = mps_alloc_pattern_ramp_collect_all();
@@ -1333,7 +1333,7 @@ void primitive_mps_begin_ramp_alloc_all()
 }
 
 RUN_TIME_API
-void primitive_mps_end_ramp_alloc_all()
+void primitive_mps_end_ramp_alloc_all(void)
 {
   gc_teb_t gc_teb = current_gc_teb();
   mps_alloc_pattern_t pattern = mps_alloc_pattern_ramp_collect_all();
@@ -1348,7 +1348,7 @@ void primitive_mps_end_ramp_alloc_all()
 mps_message_t message;
 
 RUN_TIME_API
-void primitive_mps_enable_gc_messages()
+void primitive_mps_enable_gc_messages(void)
 {
   mps_message_type_enable(arena, mps_message_type_gc());
 }
@@ -1384,7 +1384,7 @@ void primitive_mps_finalize(void *obj)
   mps_finalize(arena, &obj);
 }
 
-void* primitive_mps_finalization_queue_first()
+void* primitive_mps_finalization_queue_first(void)
 {
   mps_message_t finalization_message;
   if (mps_message_get(&finalization_message, arena, finalization_type)) {
@@ -1407,35 +1407,35 @@ typedef struct d_hs_s         /* Dylan Hash State object */
   mps_ld_s internal_state;
 } d_hs_s;
 
-void primitive_mps_ld_reset(d_hs_t d_hs)
+void primitive_mps_ld_reset(void *d_hs)
 {
-  mps_ld_t mps_ld = &(d_hs->internal_state);
+  mps_ld_t mps_ld = &((d_hs_t)d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   mps_ld_reset(mps_ld, arena);
 }
 
-void primitive_mps_ld_add(d_hs_t d_hs, mps_addr_t addr)
+void primitive_mps_ld_add(void *d_hs, void *addr)
 {
-  mps_ld_t mps_ld = &(d_hs->internal_state);
+  mps_ld_t mps_ld = &((d_hs_t)d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
-  mps_ld_add(mps_ld, arena, addr);
+  mps_ld_add(mps_ld, arena, (mps_addr_t)addr);
 }
 
-mps_bool_t primitive_mps_ld_isstale(d_hs_t d_hs)
+int primitive_mps_ld_isstale(void *d_hs)
 {
-  mps_ld_t mps_ld = &(d_hs->internal_state);
+  mps_ld_t mps_ld = &((d_hs_t)d_hs->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   return(mps_ld_isstale(mps_ld, arena, 0));
 }
 
 
-void primitive_mps_ld_merge(d_hs_t d_into, d_hs_t d_obj)
+void primitive_mps_ld_merge(void *d_into, void *d_obj)
 {
-  mps_ld_t into = &(d_into->internal_state);
-  mps_ld_t addr = &(d_obj->internal_state);
+  mps_ld_t into = &((d_hs_t)d_into->internal_state);
+  mps_ld_t addr = &((d_hs_t)d_obj->internal_state);
   gc_teb_t gc_teb = current_gc_teb();
   assert(gc_teb->gc_teb_inside_tramp);
   mps_ld_merge(into, arena, addr);
@@ -1531,7 +1531,7 @@ get_gen_params(const char *spec,
   return params;
 }
 
-MMError dylan_init_memory_manager()
+MMError dylan_init_memory_manager(void)
 {
   mps_res_t res;
   size_t max_heap_size = MAXIMUM_HEAP_SIZE;
@@ -1622,7 +1622,7 @@ MMError dylan_init_memory_manager()
 
 
 
-void dylan_shut_down_memory_manager()
+void dylan_shut_down_memory_manager(void)
 {
   while (primitive_mps_finalization_queue_first());
 

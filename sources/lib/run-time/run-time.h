@@ -1264,22 +1264,22 @@ extern D initialize_object_stack_allocate_filled
 #define primitive_pin_object(x) (x)
 extern void primitive_unpin_object(D);
 extern void primitive_mps_finalize(D);
-extern D primitive_mps_finalization_queue_first();
-#define primitive_mps_park()
-#define primitive_mps_clamp()
-#define primitive_mps_release()
+extern D primitive_mps_finalization_queue_first(void);
+extern void primitive_mps_park(void);
+extern void primitive_mps_clamp(void);
+extern void primitive_mps_release(void);
 extern void primitive_mps_collect(DBOOL);
 extern DBOOL primitive_mps_collection_stats(D);
-#define primitive_mps_enable_gc_messages()
+extern void primitive_mps_enable_gc_messages(void);
 extern DSINT primitive_mps_committed(void);
-#define primitive_mps_begin_ramp_alloc()
-#define primitive_mps_end_ramp_alloc()
-#define primitive_mps_begin_ramp_alloc_all()
-#define primitive_mps_end_ramp_alloc_all()
-#define primitive_mps_ld_reset(hs)
-#define primitive_mps_ld_add(hs, o)
-#define primitive_mps_ld_merge(hs1, hs2)
-#define primitive_mps_ld_isstale(x) 0
+extern void primitive_mps_begin_ramp_alloc(void);
+extern void primitive_mps_end_ramp_alloc(void);
+extern void primitive_mps_begin_ramp_alloc_all(void);
+extern void primitive_mps_end_ramp_alloc_all(void);
+extern void primitive_mps_ld_reset(void *hs);
+extern void primitive_mps_ld_add(void *hs, void *o);
+extern void primitive_mps_ld_merge(void *hs1, void *hs2);
+extern int primitive_mps_ld_isstale(void *hs);
 
 /* KEYBOARD BREAK HANDLING */
 
