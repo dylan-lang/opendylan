@@ -88,6 +88,7 @@ HARP_RUNTIME_OBJS = $(OBJDIR)/unix-threads-primitives.o
 LLVM_RUNTIME_OBJS =
 
 C_RUNTIME_OBJS    = $(OBJDIR)/run-time.o \
+                    $(OBJDIR)/c-support.o \
                     $(OBJDIR)/trace.o \
                     $(OBJDIR)/debug-print.o \
                     $(OBJDIR)/posix-threads.o
