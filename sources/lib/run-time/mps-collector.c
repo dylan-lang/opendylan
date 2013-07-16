@@ -1141,15 +1141,6 @@ void *primitive_copy_r(size_t size,
 }
 
 
-unsigned MMCollectCount(void)
-{
-  gc_teb_t gc_teb = current_gc_teb();
-
-  assert(gc_teb->gc_teb_inside_tramp);
-
-  return (unsigned)mps_collections(arena);
-}
-
 MMError MMRegisterRootStatic(mps_root_t *rootp, void *base, void *limit)
 {
   /* assert(gc_teb->gc_teb_inside_tramp); tramp not needed for root registration */

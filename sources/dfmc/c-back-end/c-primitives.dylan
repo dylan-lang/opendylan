@@ -68,9 +68,6 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-replace!;
 // define &primitive-descriptor primitive-replace-bytes!;
 // 
-// // GC
-// define &primitive-descriptor primitive-gc-state;
-//   
 // // Byte Character.
 // define &primitive-descriptor primitive-byte-character-as-raw;
 // define &primitive-descriptor primitive-raw-as-byte-character;

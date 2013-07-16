@@ -1260,7 +1260,6 @@ extern D initialize_object_stack_allocate_filled
 
 /* GC PRIMITIVES */
 
-#define primitive_gc_state() (I(0)) /* !@#$ DUMMY DEFN */
 #define primitive_pin_object(x) (x)
 extern void primitive_unpin_object(D);
 extern void primitive_mps_finalize(D);

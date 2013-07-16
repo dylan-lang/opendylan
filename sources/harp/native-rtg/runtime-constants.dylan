@@ -48,7 +48,6 @@ define internal-iep runtime-external dylan-type-check-error  = "type-check-error
 define internal-iep runtime-external dylan-stack-overflow-error = "stack-overflow-error";
 define extensions-iep runtime-external dylan-grounded-instance = "grounded-instance?";
 
-define c-fun runtime-external mm-collect-count     = "MMCollectCount";
 define c-fun runtime-external raw-malloc           = "dylan__malloc__misc";
 define c-fun runtime-external raw-malloc-ambig     = "dylan__malloc__ambig";
 define c-fun runtime-external raw-malloc-exact     = "dylan__malloc__exact";

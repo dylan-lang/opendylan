@@ -234,20 +234,6 @@ end method;
 /// Allocation primitives ...
 
 
-define runtime-primitive gc-state
-  // On entry:
-  //   size  - No args
-  // On exit:
-  //   A tagged integer representing a magic cookie from the GC
-
-  result result;
-
-  op--call-c(be, mm-collect-count);
-  op--taggify(be, result, result);
-  ins--rts-and-drop(be, 0);
-end runtime-primitive;
-
-
 define runtime-primitive allocate
   // This one should not be being used any more
   op--unimplemented-primitive(be);

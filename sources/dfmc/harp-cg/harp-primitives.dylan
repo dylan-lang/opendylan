@@ -1829,7 +1829,6 @@ define &primitive-descriptor primitive-replace-bytes!, emitter: op--replace-byte
 // GC
 define &primitive-descriptor primitive-pin-object, emitter: ins--move;
 define &primitive-descriptor primitive-unpin-object, emitter: op--ignore-result(ins--force-u);
-// define &primitive-descriptor primitive-gc-state;
 
 define &primitive-descriptor primitive-allocation-count, emitter: op--allocation-count;
 define &primitive-descriptor primitive-initialize-allocation-count, emitter: op--initialize-allocation-count;

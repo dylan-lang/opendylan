@@ -194,18 +194,6 @@ extern MMAllocHandler MMAllocMiscHandler(MMAllocHandler handler);
 extern void MMFreeMisc(void *p, size_t size);
 
 
-/* Return the Collection Count
- *
- * MMCollectCount returns the number of garbage collections which
- * have taken place since the MM subsystem was initialized.  Things
- * which rely on the address of an object must examine this to see
- * if their information is out of date, since a collection may move
- * objects.
- */
-
-extern unsigned MMCollectCount(void);
-
-
 /* Declare Roots for Garbage Collection
  *
  * MMRootStatic declares that the region [base, limit) contains objects
