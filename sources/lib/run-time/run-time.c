@@ -105,66 +105,6 @@ INLINE D instance_header_setter (D header, D* instance) {
   return(header);
 }
 
-void *MMAllocMisc(size_t size)
-{
-  return GC_MALLOC_ATOMIC(size);
-}
-
-void MMFreeMisc(void *old, size_t size)
-{
-  ignore(size);
-
-  GC_FREE(old);
-}
-
-static struct _mps_finalization_queue {
-  D first;
-  struct _mps_finalization_queue *rest;
-} *mps_finalization_queue = NULL;
-
-static void mps_finalization_proc(D obj, struct _mps_finalization_queue *cons) {
-  cons->first = obj;
-  do {
-    cons->rest = mps_finalization_queue;
-  } while (DFALSE == CONDITIONAL_UPDATE(mps_finalization_queue, cons, cons->rest));
-}
-
-void primitive_mps_finalize(D obj) {
-  GC_register_finalizer(obj,
-                        (GC_finalization_proc)mps_finalization_proc,
-                        GC_MALLOC(sizeof(struct _mps_finalization_queue)),
-                        NULL, NULL);
-}
-
-D primitive_mps_finalization_queue_first() {
-  struct _mps_finalization_queue *queue;
-
- RETRY:
-  if ((queue = mps_finalization_queue)) {
-    if (DFALSE == CONDITIONAL_UPDATE(mps_finalization_queue, queue->rest, queue)) {
-      goto RETRY;
-    }
-
-    return(queue->first);
-  }
-
-  return(NULL);
-}
-
-void  primitive_mps_collect (DBOOL ignored) {
-  ignore(ignored);
-  GC_gcollect();
-}
-
-DBOOL primitive_mps_collection_stats (D x) {
-  ignore(x);
-  return(0);
-}
-
-DSINT primitive_mps_committed (void) {
-  return(GC_get_heap_size());
-}
-
 D allocate (unsigned long size) {
   return((D)GC_MALLOC((size_t)size));
 }

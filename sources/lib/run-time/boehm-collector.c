@@ -1,6 +1,29 @@
 #include <gc/gc.h>
 #include "boehm.h"
 
+/* Temporary copy from run-time.h */
+#ifdef __GNUC__
+#  define OPEN_DYLAN_COMPILER_GCC_LIKE
+#  if defined(__clang__)
+#    define OPEN_DYLAN_COMPILER_CLANG
+#  else
+#    define OPEN_DYLAN_COMPILER_GCC
+#  endif
+#else
+#  warning Unknown compiler
+#endif
+
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
+#  define CONDITIONAL_UPDATE(var, new_val, old_val) \
+     (__sync_bool_compare_and_swap(&var, old_val, new_val) ? TRUE : FALSE)
+#else
+#  warning missing primitive CONDITIONAL_UPDATE - thread safety compromised
+#  define CONDITIONAL_UPDATE(var, new_val, old_val) \
+     ((old_val) == (var) ? (var = (new_val), TRUE) : FALSE)
+#endif
+
+/* End temporary copy */
+
 typedef size_t mps_word_t;
 typedef int mps_bool_t;
 typedef void* mps_root_t;
@@ -963,12 +986,13 @@ RUN_TIME_API
 void primitive_mps_collect(BOOL display_stats)
 {
   unused(display_stats);
+  GC_gcollect();
 }
 
 RUN_TIME_API
 size_t primitive_mps_committed()
 {
-  return 0;
+  return GC_get_heap_size();
 }
 
 RUN_TIME_API
@@ -1004,17 +1028,41 @@ BOOL primitive_mps_collection_stats(void** results)
   return FALSE;
 }
 
-
 /* Support for Finalization */
 
-void primitive_mps_finalize(void *obj)
-{
-  unused(obj);
+static struct _mps_finalization_queue {
+  void *first;
+  struct _mps_finalization_queue *rest;
+} *mps_finalization_queue = NULL;
+
+static void mps_finalization_proc(void *obj, struct _mps_finalization_queue *cons) {
+  cons->first = obj;
+  do {
+    cons->rest = mps_finalization_queue;
+  } while (FALSE == CONDITIONAL_UPDATE(mps_finalization_queue, cons, cons->rest));
+}
+
+void primitive_mps_finalize(void *obj) {
+  GC_register_finalizer(obj,
+                        (GC_finalization_proc)mps_finalization_proc,
+                        GC_MALLOC(sizeof(struct _mps_finalization_queue)),
+                        NULL, NULL);
 }
 
 void* primitive_mps_finalization_queue_first()
 {
-  return 0;
+  struct _mps_finalization_queue *queue;
+
+ RETRY:
+  if ((queue = mps_finalization_queue)) {
+    if (FALSE == CONDITIONAL_UPDATE(mps_finalization_queue, queue->rest, queue)) {
+      goto RETRY;
+    }
+
+    return queue->first;
+  }
+
+  return NULL;
 }
 
 /* Support for Location Dependencies */
