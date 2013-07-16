@@ -151,7 +151,7 @@ define method classify-dylan-object
 	= select (tag)
 	    $dylan-tag-integer =>
 	      $integer-type;
-	    $dylan-tag-character =>
+	    $dylan-tag-character, $dylan-tag-unichar =>
 	      $character-type;
 	    $dylan-tag-pointer =>
 	      let sod = application.static-object-directory;
@@ -2436,7 +2436,7 @@ define method dylan-object-class
       end unless;
       immediate? := #t;
 
-    $dylan-tag-character =>
+    $dylan-tag-character, $dylan-tag-unichar =>
       unless (browsable-only?)
         class-instance :=
           lookup-static-object(application, "<character>", "dylan");
@@ -2488,7 +2488,7 @@ define method dylan-object-immediate-value
       success? := #t;
       replica := tagged-remote-value-as-integer(instance);
 
-    $dylan-tag-character =>
+    $dylan-tag-character, $dylan-tag-unichar =>
       success? := #t;
       replica := tagged-remote-value-as-character(instance);
 
