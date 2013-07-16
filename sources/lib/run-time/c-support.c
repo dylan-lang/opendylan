@@ -3,6 +3,7 @@
 
 void *call_dylan_function(void *function, size_t arg_count, ...)
 {
+  return NULL;
 }
 
 void *dylan_keyboard_break_handler = NULL;
