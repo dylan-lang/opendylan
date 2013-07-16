@@ -366,7 +366,7 @@ define open generic print-object (object, stream :: <stream>)
 ///
 define method print-object (object :: <object>, stream :: <stream>) => ()
   printing-logical-block (stream, prefix: "{", suffix: "}")
-    write-class-name(object.object-class);
+    write-class-name(object.object-class, stream);
     let oname = object.debug-name;
     if (oname)
       write(stream, " ");
