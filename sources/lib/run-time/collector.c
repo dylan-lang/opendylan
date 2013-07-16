@@ -160,7 +160,7 @@ void untraced_fill_byte_char_mem(void **object, byte_char fill, int count, int c
 
 #define define_untraced_fill_mem(type) \
 __inline  \
-void untraced_fill_ ## type ## _mem(void **object, type fill, int count, int count_slot, dylan_bool_t ztq) \
+void untraced_fill_ ## type ## _mem(void **object, type fill, size_t count, size_t count_slot, dylan_bool_t ztq) \
 { \
   int index = 0; \
   type *mem = (type*)(object + count_slot + 1); \
@@ -289,7 +289,7 @@ void primitive_clear_class_breakpoint(void *class)
     // MSG0("primitive_clear_class_breakpoint: error waiting for class breakpoint event\n");
   }
 
-  switch ((int)class) {
+  switch ((long)class) {
 
   case 0:
     // clear all breakpoints

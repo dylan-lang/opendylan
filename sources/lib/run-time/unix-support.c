@@ -110,34 +110,34 @@ D c_primitive_stop_timer()
 }
 
 // this is our stack walker, used in SIGTRAP
-static int getebp () {
-    int ebp;
+static long getebp () {
+    long ebp;
     asm("mov (%%ebp), %0"
         :"=r"(ebp));
     return ebp;
 }
 
 void walkstack() {
-  int ebp = getebp();
-  int eip;
+  long ebp = getebp();
+  long eip;
   int rc;
   Dl_info info;
 
   while (ebp) {
-    eip = *((int*)ebp + 1);
+    eip = *((long *)ebp + 1);
     rc = dladdr((void*)eip, &info);
     if (!rc||(!info.dli_sname && !info.dli_fname)) {
-      printf("0x%x (unknown)\n", eip);
+      printf("0x%lx (unknown)\n", eip);
     } else {
       if (!info.dli_sname) {
-        printf("0x%x (%s)\n", eip, info.dli_fname);
+        printf("0x%lx (%s)\n", eip, info.dli_fname);
       } else {
-        printf("%s+%i (%s)\n",
+        printf("%s+%ld (%s)\n",
                info.dli_sname,
-               eip - (int)info.dli_saddr,
+               eip - (long)info.dli_saddr,
                info.dli_fname);
       }
     }
-    ebp = *((int*)ebp);
+    ebp = *((long*)ebp);
   }
 }

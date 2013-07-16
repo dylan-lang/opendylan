@@ -260,8 +260,8 @@ void MMFreeMisc(void *old, size_t size)
   void *mfill = (fill);  \
     \
   mps_bool_t mrq = (rq);   /* init repeated slot size */  \
-  int mrep_size = (rep_size);  \
-  int mrep_size_slot = (rep_size_slot);  \
+  size_t mrep_size = (rep_size);  \
+  size_t mrep_size_slot = (rep_size_slot);  \
     \
   mps_bool_t mrfq = (rfq);  /* init word repeated slot data */  \
   type mword_fill = (type)(word_fill);  \
@@ -359,8 +359,8 @@ void *primitive_alloc_s(size_t size,
 RUN_TIME_API
 void *primitive_alloc_r(size_t size,
                         void *wrapper,
-                        int rep_size,
-                        int rep_size_slot)
+                        size_t rep_size,
+                        size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  0, 0, 0, 0,
@@ -374,8 +374,8 @@ void *primitive_alloc_r(size_t size,
 RUN_TIME_API
 void *primitive_alloc_rf(size_t size,
                          void *wrapper,
-                         int rep_size,
-                         int rep_size_slot,
+                         size_t rep_size,
+                         size_t rep_size_slot,
                          dylan_object fill)
 {
   alloc_internal(size, wrapper,
@@ -393,8 +393,8 @@ void *primitive_alloc_s_r(size_t size,
                           void *wrapper,
                           int no_to_fill,
                           void *fill,
-                          int rep_size,
-                          int rep_size_slot)
+                          size_t rep_size,
+                          size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  0, 0, 0, 0,
@@ -412,8 +412,8 @@ void *primitive_alloc_s_ ## suffix(size_t size, \
                                    void *wrapper, \
                                    int no_to_fill, \
                                    void *fill, \
-                                   int rep_size, \
-                                   int rep_size_slot, \
+                                   size_t rep_size, \
+                                   size_t rep_size_slot, \
                                    type rep_fill) \
 { \
   alloc_internal(size, wrapper,  \
@@ -437,8 +437,8 @@ void *primitive_alloc_s_rbf(size_t size,
                             void *wrapper,
                             int no_to_fill,
                             void *fill,
-                            int rep_size,
-                            int rep_size_slot,
+                            size_t rep_size,
+                            size_t rep_size_slot,
                             int byte_fill)
 {
   alloc_internal(size, wrapper,
@@ -456,8 +456,8 @@ void *primitive_alloc_s_rbfz(size_t size,
                              void *wrapper,
                              int no_to_fill,
                              void *fill,
-                             int rep_size,
-                             int rep_size_slot,
+                             size_t rep_size,
+                             size_t rep_size_slot,
                              int byte_fill)
 {
   alloc_internal(size, wrapper,
@@ -473,8 +473,8 @@ void *primitive_alloc_s_rbfz(size_t size,
 RUN_TIME_API
 void *primitive_alloc_rbfz(size_t size,
                            void *wrapper,
-                           int rep_size,
-                           int rep_size_slot,
+                           size_t rep_size,
+                           size_t rep_size_slot,
                            int byte_fill)
 {
   alloc_internal(size, wrapper,
@@ -492,8 +492,8 @@ void *primitive_alloc_s_rb(size_t size,
                            void *wrapper,
                            int no_to_fill,
                            void *fill,
-                           int rep_size,
-                           int rep_size_slot)
+                           size_t rep_size,
+                           size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  0, 0, 0, 0,
@@ -524,8 +524,8 @@ void *primitive_alloc_leaf_s_r(size_t size,
                                void *wrapper,
                                int no_to_fill,
                                void *fill,
-                               int rep_size,
-                               int rep_size_slot)
+                               size_t rep_size,
+                               size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  0, 0, 0, 0,
@@ -588,8 +588,8 @@ void *primitive_alloc_leaf_s(size_t size,
 RUN_TIME_API
 void *primitive_alloc_leaf_r(size_t size,
                              void *wrapper,
-                             int rep_size,
-                             int rep_size_slot)
+                             size_t rep_size,
+                             size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  0, 0, 0, 0,
@@ -606,8 +606,8 @@ void *primitive_alloc_leaf_s_rbf(size_t size,
                                  void *wrapper,
                                  int no_to_fill,
                                  void *fill,
-                                 int rep_size,
-                                 int rep_size_slot,
+                                 size_t rep_size,
+                                 size_t rep_size_slot,
                                  int byte_fill)
 {
   alloc_internal(size, wrapper,
@@ -623,8 +623,8 @@ void *primitive_alloc_leaf_s_rbf(size_t size,
 RUN_TIME_API \
 void *primitive_alloc_leaf_ ## suffix(size_t size, \
                                       void *wrapper, \
-                                      int rep_size, \
-                                      int rep_size_slot, \
+                                      size_t rep_size, \
+                                      size_t rep_size_slot, \
                                       type rep_fill) \
 { \
   alloc_internal(size, wrapper,  \
@@ -649,8 +649,8 @@ void *primitive_alloc_leaf_s_rbfz(size_t size,
                                   void *wrapper,
                                   int no_to_fill,
                                   void *fill,
-                                  int rep_size,
-                                  int rep_size_slot,
+                                  size_t rep_size,
+                                  size_t rep_size_slot,
                                   int byte_fill)
 {
   alloc_internal(size, wrapper,
@@ -666,8 +666,8 @@ void *primitive_alloc_leaf_s_rbfz(size_t size,
 RUN_TIME_API
 void *primitive_alloc_leaf_rbfz(size_t size,
                                 void *wrapper,
-                                int rep_size,
-                                int rep_size_slot,
+                                size_t rep_size,
+                                size_t rep_size_slot,
                                 int byte_fill)
 {
   alloc_internal(size, wrapper,
@@ -685,8 +685,8 @@ void *primitive_alloc_leaf_s_rb(size_t size,
                                 void *wrapper,
                                 int no_to_fill,
                                 void *fill,
-                                int rep_size,
-                                int rep_size_slot)
+                                size_t rep_size,
+                                size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  0, 0, 0, 0,
@@ -704,8 +704,8 @@ void *primitive_alloc_exact_awl_s_r(size_t size,
                                     void *assoc,
                                     int no_to_fill,
                                     void *fill,
-                                    int rep_size,
-                                    int rep_size_slot)
+                                    size_t rep_size,
+                                    size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  1, assoc, 0, 0,
@@ -723,8 +723,8 @@ void *primitive_alloc_weak_awl_s_r(size_t size,
                                    void *assoc,
                                    int no_to_fill,
                                    void *fill,
-                                   int rep_size,
-                                   int rep_size_slot)
+                                   size_t rep_size,
+                                   size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  1, assoc, 0, 0,
@@ -740,8 +740,8 @@ RUN_TIME_API
 void *primitive_alloc_exact_awl_rf(size_t size,
                                    void *wrapper,
                                    void *assoc,
-                                   int rep_size,
-                                   int rep_size_slot,
+                                   size_t rep_size,
+                                   size_t rep_size_slot,
                                    void *fill)
 {
   alloc_internal(size, wrapper,
@@ -758,8 +758,8 @@ RUN_TIME_API
 void *primitive_alloc_weak_awl_rf(size_t size,
                                   void *wrapper,
                                   void *assoc,
-                                  int rep_size,
-                                  int rep_size_slot,
+                                  size_t rep_size,
+                                  size_t rep_size_slot,
                                   void *fill)
 {
   alloc_internal(size, wrapper,
@@ -777,8 +777,8 @@ void *primitive_alloc_wrapper_s_r(size_t size,
                                   void *wrapper,
                                   int no_to_fill,
                                   void *fill,
-                                  int rep_size,
-                                  int rep_size_slot)
+                                  size_t rep_size,
+                                  size_t rep_size_slot)
 {
   alloc_internal(size, wrapper,
                  0, 0, 0, 0,
@@ -793,8 +793,8 @@ void *primitive_alloc_wrapper_s_r(size_t size,
 RUN_TIME_API
 void *primitive_alloc_rt(size_t size,
                          void *wrapper,
-                         int rep_size,
-                         int rep_size_slot,
+                         size_t rep_size,
+                         size_t rep_size_slot,
                          void *template)
 {
   void **object;
@@ -833,8 +833,8 @@ void *primitive_copy(size_t size,
 
 RUN_TIME_API
 void *primitive_copy_r(size_t size,
-                       int rep_size,
-                       int rep_size_slot,
+                       size_t rep_size,
+                       size_t rep_size_slot,
                        void *template)
 {
   void **object;
