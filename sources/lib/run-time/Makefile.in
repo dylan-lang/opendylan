@@ -161,3 +161,6 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) && ./config.status $(subdir)/Makefile
 
 -include $(OBJS:%.o=%.d)
+-include $(HARP_RUNTIME_OBJS:%.o=%.d)
+-include $(LLVM_RUNTIME_OBJS:%.o=%.d)
+-include $(C_RUNTIME_OBJS:%.o=%.d)
