@@ -150,6 +150,12 @@ end method type-for-file-stream;
 
 /// File stream implementation
 
+
+define method stream-is-tty?
+    (fd :: <file-stream>) => (result :: <boolean>)
+  accessor-is-tty?( fd.accessor);
+end method stream-is-tty?;
+
 define method stream-at-end?
     (stream :: <file-stream>) => (at-end? :: <boolean>)
   readable?(stream)
