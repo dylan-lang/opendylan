@@ -43,6 +43,14 @@ define method accessor-fd
   the-accessor.file-handle
 end method;
 
+define method accessor-console?
+    (fd :: <native-file-accessor>) 
+ => (result :: <boolean>)
+  let fd = the-accessor.file-handle;
+  fd & win32-isatty(fd)
+end method accessor-console?;
+
+
 // Should really signal a subclass of <file-error> ...
 define function win32-file-error
     (accessor :: <native-file-accessor>, operation :: <string>,

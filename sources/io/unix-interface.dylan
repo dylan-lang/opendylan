@@ -106,6 +106,17 @@ define function unix-fd-info
   values(logand(info, lognot(1)), odd?(info))
 end function unix-fd-info;
 
+define function unix-isatty
+    (fd :: <integer>) 
+ => (result :: <boolean>)
+  let res :: <integer>
+    = raw-as-integer(%call-c-function ("isatty") 
+                       (fd :: <raw-c-unsigned-int>) => (result :: <raw-c-signed-int>)
+                       (integer-as-raw(fd))
+                     end);
+  (res == 1)
+end function unix-isatty;
+
 define function get-unix-error (errno :: <integer>) => (message :: <string>)
   let message :: <byte-string>
     = primitive-raw-as-string

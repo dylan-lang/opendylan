@@ -610,6 +610,7 @@ Using file streams
 The following operations can be performed on file streams.
 
 - :meth:`close(<file-stream>)`
+- :gf:`stream-console?`
 - :gf:`wait-for-io-completion`
 - :macro:`with-open-file`
 
@@ -2375,6 +2376,33 @@ See also
 
    - :gf:`read-element`
    - :gf:`stream-at-end?`
+
+.. generic-function:: stream-console?
+   :open:
+
+   Tests whether a stream is directed to the console.
+
+   :signature: stream-console? *stream* => *console?*
+
+   :parameter stream: An instance of :class:`<file-stream>`.
+   :value console?: An instance of ``<boolean>``.
+
+   :description:
+
+     Returns ``#t`` if the stream is directed to the console and ``#f`` if it is not.
+
+   :example:
+
+     The following piece of code tests whether stdout has been directed to the
+     console (./example), or to a file (./example > file):
+
+     .. code-block:: dylan
+
+       if (stream-console?(*standard-output*))
+         format-out("Output is directed to the console\n")
+       else
+         format-out("Output is not directed to the console\n")
+       end if;
 
 .. generic-function:: stream-lock
    :open:
