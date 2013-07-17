@@ -43,6 +43,17 @@ define method accessor-fd
   the-accessor.file-handle
 end method;
 
+define method accessor-is-tty?
+    (fd :: <native-file-accessor>) => (result :: <boolean>)
+  let fd = the-accessor.file-handle;
+  if (fd)
+    win32-isatty(fd);
+  else
+    #f;
+  end;
+end method accessor-is-tty?;
+
+
 // Should really signal a subclass of <file-error> ...
 define function win32-file-error
     (accessor :: <native-file-accessor>, operation :: <string>,
