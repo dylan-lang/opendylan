@@ -599,7 +599,6 @@ stream.
 - :gf:`stream-open?`
 - :gf:`stream-element-type`
 - :gf:`stream-at-end?`
-- :gf:`stream-is-tty?`
 
 For output streams, note that you can determine if a stream is one place
 past the last written element by comparing :gf:`stream-position` to
@@ -611,6 +610,7 @@ Using file streams
 The following operations can be performed on file streams.
 
 - :meth:`close(<file-stream>)`
+- :gf:`stream-is-tty?`
 - :gf:`wait-for-io-completion`
 - :macro:`with-open-file`
 
@@ -2399,9 +2399,9 @@ See also
      .. code-block:: dylan
 
        if (stream-is-tty?(*standard-output*))
-    	 format-out("Output is directed to the console\n")
+         format-out("Output is directed to the console\n")
        else
-	 format-out("Output is not directed to the console\n")
+         format-out("Output is not directed to the console\n")
        end if;
 
 .. generic-function:: stream-lock

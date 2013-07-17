@@ -2,4 +2,26 @@
 Open Dylan 2013.2 Release Notes
 *******************************
 
-Nothing here yet.
+Introduction
+============
+
+This document describes the 2013.2 release of Open Dylan, released
+sometime this year.
+
+* `Download the release <http://opendylan.org/download/index.html>`_
+* `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
+* `Source code <https://github.com/dylan-lang/opendylan/tree/v2013.2>`_
+
+Improvements
+============
+
+Libraries
+---------
+
+I/O
+^^^
+
+A function ``stream-is-tty?`` has been added to the ``<file-stream>`` class,
+this can be used to determine whether console output has been directed to a
+file.
+

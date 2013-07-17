@@ -53,7 +53,9 @@ define function win32-std-handle
   call-succeeded?(handle) & handle
 end function win32-std-handle;
 
-define function win32-isatty(std-handle :: <machine-word>) => (result :: <boolean>)
+define function win32-isatty
+    (std-handle :: <machine-word>) 
+ => (result :: <boolean>)
   // http://blogs.msdn.com/b/michkap/archive/2010/05/07/10008232.aspx
 /*
     public static bool IsConsoleRedirected() {
@@ -80,11 +82,7 @@ define function win32-isatty(std-handle :: <machine-word>) => (result :: <boolea
     }
 */
   let type = win32-file-type(std-handle);
-  if (type == $FILE_TYPE_CHAR)
-    #t;
-  else
-    #f;
-  end if;
+  (type == $FILE_TYPE_CHAR)
 end function win32-isatty;
 
 define function win32-alloc-console () => (success? :: <boolean>)

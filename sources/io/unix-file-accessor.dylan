@@ -40,13 +40,10 @@ define method accessor-fd
 end method;
 
 define method accessor-is-tty?
-    (the-accessor :: <native-file-accessor>) => (result :: <boolean>)
+    (the-accessor :: <native-file-accessor>) 
+ => (result :: <boolean>)
   let fd = the-accessor.file-descriptor;
-  if (fd)
-    unix-isatty(fd);
-  else
-    #f;
-  end;
+  fd & unix-isatty(fd)
 end method accessor-is-tty?;
 
 // Legal values for direction are #"input", #"output", #"input-output"

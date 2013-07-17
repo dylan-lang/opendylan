@@ -44,13 +44,10 @@ define method accessor-fd
 end method;
 
 define method accessor-is-tty?
-    (fd :: <native-file-accessor>) => (result :: <boolean>)
+    (fd :: <native-file-accessor>) 
+ => (result :: <boolean>)
   let fd = the-accessor.file-handle;
-  if (fd)
-    win32-isatty(fd);
-  else
-    #f;
-  end;
+  fd & win32-isatty(fd)
 end method accessor-is-tty?;
 
 
