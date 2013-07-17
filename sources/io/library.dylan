@@ -143,7 +143,7 @@ define module streams-internals
 	 ensure-readable, ensure-writable;
 
   // Querying streams
-  export stream-direction;
+  export stream-direction, stream-console?;
 
   // Positionable streams
   export current-position, current-position-setter,
@@ -217,6 +217,7 @@ define module streams-internals
 	 accessor-close,
          accessor-at-end?,
          accessor-at-end?-setter,
+         accessor-console?,
          accessor-size,
          accessor-size-setter,
          accessor-positionable?,

@@ -39,6 +39,13 @@ define method accessor-fd
   end if
 end method;
 
+define method accessor-console?
+    (the-accessor :: <native-file-accessor>) 
+ => (result :: <boolean>)
+  let fd = the-accessor.file-descriptor;
+  fd & unix-isatty(fd)
+end method accessor-console?;
+
 // Legal values for direction are #"input", #"output", #"input-output"
 // Legal values for if-exists are #"new-version", #"overwrite", #"replace",
 //                                #"truncate", #"signal", #"append"
