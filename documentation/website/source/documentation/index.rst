@@ -6,6 +6,7 @@
         <li><a href="#cheat-sheets"><i class="icon-chevron-right"></i> Cheat Sheets</a></li>
         <li><a href="#learning-dylan"><i class="icon-chevron-right"></i> Learning Dylan</a></li>
         <li><a href="#references"><i class="icon-chevron-right"></i> References</a></li>
+        <li><a href="#external-libraries-and-tools"><i class="icon-chevron-right"></i> External Libraries and Tools</a></li>
         <li><a href="#articles"><i class="icon-chevron-right"></i> Articles</a></li>
         <li><a href="#publications"><i class="icon-chevron-right"></i> Publications</a></li>
         <li><a href="#for-open-dylan-developers"><i class="icon-chevron-right"></i> For Open Dylan Developers</a></li>
@@ -105,6 +106,19 @@ References
     Describes the libraries forming DUIM (Dylan User Interface Manager),
     the portable window programming toolkit. It complements
     Building Applications Using DUIM.
+
+
+External Libraries and Tools
+============================
+
+`Melange reference </documentation/melange/>`_ [`pdf </documentation/melange/MelangeUserGuide.pdf>`__] [`epub </documentation/melange/MelangeUserGuide.epub>`__]
+    Generates Dylan code to wrap C libraries.
+
+`Testworks User Guide </documentation/testworks/>`_ [`pdf </documentation/testworks/TestworksUserGuide.pdf>`__] [`epub </documentation/testworks/TestworksUserGuide.epub>`__]
+    Testworks is Dylan's unit testing framework.
+
+`HTTP reference </documentation/http/>`_ [`pdf </documentation/http/HTTPLibraries.pdf>`__] [`epub </documentation/http/HTTPLibraries.epub>`__]
+    Dylan provides libraries for writing HTTP clients and servers.
 
 Articles
 ========
