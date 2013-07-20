@@ -78,12 +78,12 @@ operating-system library's operating-system module.
 
    :signature: application-arguments => *arguments*
 
-   :value arguments: An instance of ``<simple-object-vector>``.
+   :value arguments: An instance of :drm:`<simple-object-vector>`.
 
    :description:
 
      Returns the arguments passed to the running application as a vector
-     of instances of ``<byte-string>``.
+     of instances of :drm:`<byte-string>`.
 
    See also
 
@@ -124,7 +124,7 @@ operating-system library's operating-system module.
 
    :signature: application-name => *name*
 
-   :value name: An instance of ``<byte-string>``.
+   :value name: An instance of :drm:`<byte-string>`.
 
    :description:
 
@@ -173,8 +173,8 @@ operating-system library's operating-system module.
 
    :signature: environment-variable *name* => *value*
 
-   :parameter name: An instance of ``<byte-string>``.
-   :value value: An instance of ``<byte-string>``, or ``#f``.
+   :parameter name: An instance of :drm:`<byte-string>`.
+   :value value: An instance of :drm:`<byte-string>`, or ``#f``.
 
    :description:
 
@@ -191,9 +191,9 @@ operating-system library's operating-system module.
 
    :signature: environment-variable-setter *new-value* *name* => *new-value*
 
-   :parameter new-value: An instance of ``<byte-string>``, or ``#f``.
-   :parameter name: An instance of ``<byte-string>``.
-   :value new-value: An instance of ``<byte-string>``, or ``#f``.
+   :parameter new-value: An instance of :drm:`<byte-string>`, or ``#f``.
+   :parameter name: An instance of :drm:`<byte-string>`.
+   :value new-value: An instance of :drm:`<byte-string>`, or ``#f``.
 
    :description:
 
@@ -219,7 +219,7 @@ operating-system library's operating-system module.
 
    :signature: exit-application *status* => ()
 
-   :parameter status: An instance of ``<integer>``.
+   :parameter status: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -233,7 +233,7 @@ operating-system library's operating-system module.
 
 .. function:: login-name
 
-   Returns as an instance of ``<string>`` the name of the user logged on
+   Returns as an instance of :drm:`<string>` the name of the user logged on
    to the current machine, or ``#f`` if unavailable.
 
    :signature: login-name () => *name-or-false*
@@ -242,7 +242,7 @@ operating-system library's operating-system module.
 
    :description:
 
-     Returns as an instance of ``<string>`` the name of the user logged
+     Returns as an instance of :drm:`<string>` the name of the user logged
      on to the current machine, or ``#f`` if unavailable.
 
    See also
@@ -257,7 +257,7 @@ operating-system library's operating-system module.
 
    :description:
 
-     Returns as an instance of ``<string>`` the group (for example NT
+     Returns as an instance of :drm:`<string>` the group (for example NT
      domain, or Windows Workgroup) of which the user logged on to the
      current machine is a member, or ``#f`` if the group is unavailable.
 
@@ -360,7 +360,7 @@ operating-system library's operating-system module.
 
    :description:
 
-     Returns as an instance of ``<string>`` the name of the user who
+     Returns as an instance of :drm:`<string>` the name of the user who
      owns the current machine (that is, the name entered when the
      machine was registered), or ``#f`` if the name is unavailable.
 
@@ -375,7 +375,7 @@ operating-system library's operating-system module.
 
    :description:
 
-     Returns as an instance of ``<string>`` the organization to which
+     Returns as an instance of :drm:`<string>` the organization to which
      the user who owns the current machine belongs, or ``#f`` if the
      name is unavailable.
 
@@ -408,12 +408,12 @@ operating-system library's operating-system module.
 
    :signature: run-application *command* #key *minimize?* *activate?* *under-shell?* *inherit-console?* => *status*
 
-   :parameter command: An instance of ``<string>``.
-   :parameter #key minimize?: An instance of ``<boolean>``.
-   :parameter #key activate?: An instance of ``<boolean>``.
-   :parameter #key under-shell?: An instance of ``<boolean>``.
-   :parameter #key inherit-console?: An instance of ``<boolean>``.
-   :value status: An instance of ``<integer>``.
+   :parameter command: An instance of :drm:`<string>`.
+   :parameter #key minimize?: An instance of :drm:`<boolean>`.
+   :parameter #key activate?: An instance of :drm:`<boolean>`.
+   :parameter #key under-shell?: An instance of :drm:`<boolean>`.
+   :parameter #key inherit-console?: An instance of :drm:`<boolean>`.
+   :value status: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -446,9 +446,9 @@ operating-system library's operating-system module.
 
    :signature: tokenize-command-string *line* => *command* #rest *arguments*
 
-   :parameter line: An instance of ``<byte-string>``.
-   :value command: An instance of ``<byte-string>``.
-   :value #rest arguments: Instances of ``<byte-string>``.
+   :parameter line: An instance of :drm:`<byte-string>`.
+   :value command: An instance of :drm:`<byte-string>`.
+   :value #rest arguments: Instances of :drm:`<byte-string>`.
 
    :description:
 

@@ -550,17 +550,17 @@ application has paused because you used **Application > Pause**. (Use
 To select a restart to be signalled, choose **Thread > Continue…**, which
 displays a dialog listing all available restarts.
 
-For convenience, there are two other menu items for signalling ``<abort>``
+For convenience, there are two other menu items for signalling :drm:`<abort>`
 restarts, which are defined to mean "terminate the current computation".
 
-**Thread > Abort** signals the innermost available ``<abort>`` restart—that
+**Thread > Abort** signals the innermost available :drm:`<abort>` restart—that
 is, it aborts as little as possible—whereas **Thread > Abort All** signals
-the outermost ``<abort>`` restart—that is, it aborts as much as possible.
+the outermost :drm:`<abort>` restart—that is, it aborts as much as possible.
 
-Although the meaning of ``<abort>`` restarts is part of the Dylan
+Although the meaning of :drm:`<abort>` restarts is part of the Dylan
 language, your application must provide handlers to implement them. If
 you are using DUIM for your application’s GUI, note that DUIM frames
-normally provide ``<abort>`` handlers in the event loop, so that aborting
+normally provide :drm:`<abort>` handlers in the event loop, so that aborting
 while processing an event will proceed to process the next event. See
 the DUIM documentation for *start-frame* and *start-dialog*.
 

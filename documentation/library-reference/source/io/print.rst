@@ -84,15 +84,15 @@ IO library’s *print* module.
 
    :signature: print *object* *stream* #key *level length circle? pretty?* => ()
 
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
    :parameter stream: An instance of :class:`<stream>`.
    :parameter #key level: ``#f`` or an instance of ``<fixed-integer>``.
      Default value: :var:`*print-level*`.
    :parameter #key length: ``#f`` or an instance of ``<fixed-integer>``.
      Default value: :var:`*print-length*`.
-   :parameter #key circle?: An instance of ``<boolean>``. Default value:
+   :parameter #key circle?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-circle?*`.
-   :parameter #key pretty?: An instance of ``<boolean>``. Default value:
+   :parameter #key pretty?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-pretty?*`.
 
    :description:
@@ -126,7 +126,7 @@ IO library’s *print* module.
      indicates that there is no limit. The *print-length* control can be
      interpreted loosely by some :gf:`print-object` methods to control
      how many *elements* of any kind of object to print; for example,
-     the default ``<object>`` method might regard *print-length* to
+     the default :drm:`<object>` method might regard *print-length* to
      determine how many slot-name/value pairs to print. The default,
      :var:`*print-length*`, has no effect on recursive calls to
      ``print``. Recursive calls to ``print`` may change the value of
@@ -209,7 +209,7 @@ IO library’s *print* module.
 
    :signature: print-object *object stream* => ()
 
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
    :parameter stream: An instance of :class:`<stream>`.
 
    :description:
@@ -238,16 +238,16 @@ IO library’s *print* module.
 
    :signature: print-to-string *object* #key *level length circle? pretty?* => *result*
 
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
    :parameter #key level: ``#f`` or an instance of ``<fixed-integer>``.
      Default value: :var:`*print-level*`.
    :parameter #key length: ``#f`` or an instance of ``<fixed-integer>``.
      Default value: :var:`*print-length*`.
-   :parameter #key circle?: An instance of ``<boolean>``. Default value:
+   :parameter #key circle?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-circle?*`.
-   :parameter #key pretty?: An instance of ``<boolean>``. Default value:
+   :parameter #key pretty?: An instance of :drm:`<boolean>`. Default value:
      :var:`*print-pretty?*`.
-   :value result: An instance of ``<byte-string>``.
+   :value result: An instance of :drm:`<byte-string>`.
 
    :description:
 
@@ -302,10 +302,10 @@ IO library’s *pprint* module.
    :signature: pprint-logical-block *stream* #key *prefix per-line-prefix body suffix column* => ()
 
    :parameter stream: An instance of :class:`<stream>`.
-   :parameter #key prefix: ``#f`` or an instance of ``<byte-string>``.
-   :parameter #key per-line-prefix: ``#f`` or an instance of ``<byte-string>``.
-   :parameter #key body: An instance of ``<function>``.
-   :parameter #key suffix: ``#f`` or an instance of ``<byte-string>``.
+   :parameter #key prefix: ``#f`` or an instance of :drm:`<byte-string>`.
+   :parameter #key per-line-prefix: ``#f`` or an instance of :drm:`<byte-string>`.
+   :parameter #key body: An instance of :drm:`<function>`.
+   :parameter #key suffix: ``#f`` or an instance of :drm:`<byte-string>`.
    :parameter #key column: A *limited* instance of ``<fixed-integer>``, minimum 0.
 
    :description:

@@ -162,7 +162,7 @@ The COMMAND-LINE-PARSER module
 
    :signature: parse-command-line (parser argv) => ()
    :parameter parser: An instance of :class:`<command-line-parser>`.
-   :parameter argv: An instance of ``<sequence>``.  Normally the value
+   :parameter argv: An instance of :drm:`<sequence>`.  Normally the value
      returned by ``application-arguments()`` is passed here.
    :parameter #key usage: As for :func:`print-synopsis`.
    :parameter #key description: As for :func:`print-synopsis`.
@@ -190,13 +190,13 @@ The COMMAND-LINE-PARSER module
    :parameter parser: An instance of :class:`<command-line-parser>`.
    :parameter stream: An instance of :class:`<stream>`.
 
-   :parameter #key usage: An instance of ``<string>`` or ``#f``.  A
+   :parameter #key usage: An instance of :drm:`<string>` or ``#f``.  A
      brief synopsis of the overall command-line syntax.  The default
      is ``#f``, in which case "Usage: <application-name> [options]\n"
      will be displayed, where <application-name> is the result of
      calling ``locator-base(application-name())``.
 
-   :parameter #key description: An instance of ``<string>`` or ``#f``.
+   :parameter #key description: An instance of :drm:`<string>` or ``#f``.
      This is displayed after ``usage`` and before the detailed list of
      options.  This is intended to be a sentence or short paragraph.
 
@@ -205,9 +205,9 @@ The COMMAND-LINE-PARSER module
    Returns the sequence of command line arguments that remain after
    all optional arguments have been consumed.
 
-   :signature: positional-options (parser) => (args :: ``<sequence>``)
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :signature: positional-options (parser) => (args :: :drm:`<sequence>`)
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. function:: option-present?
 
@@ -215,8 +215,8 @@ The COMMAND-LINE-PARSER module
 
    :signature: option-present? (parser name) => (present?)
    :parameter parser: An instance of :class:`<command-line-parser>`.
-   :parameter name: An instance of ``<string>``.
-   :value present?: An instance of ``<boolean>``.
+   :parameter name: An instance of :drm:`<string>`.
+   :value present?: An instance of :drm:`<boolean>`.
    :description:
 
      If called before :func:`parse-command-line` has been called on the
@@ -230,8 +230,8 @@ The COMMAND-LINE-PARSER module
    :signature: get-option-value (parser long-name) => (value)
 
    :parameter parser: An instance of :class:`<command-line-parser>`.
-   :parameter long-name: An instance of ``<string>``.
-   :value value: An instance of ``<object>``.
+   :parameter long-name: An instance of :drm:`<string>`.
+   :value value: An instance of :drm:`<object>`.
 
 
 
@@ -261,7 +261,7 @@ Option Classes
      via the ``parse-option-parameter`` generic function.  Clients may
      implement that function for their own types to extend the parser.
 
-     Predefined types include ``<integer>``, ``subclass(<float>)``,
+     Predefined types include :drm:`<integer>`, ``subclass(<float>)``,
      ``subclass(<sequence>)``.
 
    :keyword help:

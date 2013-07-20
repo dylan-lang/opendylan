@@ -10,7 +10,7 @@ representation which is more efficient than the canonical
 representation. For example, the canonical representation of a double
 float object in Dylan is as a pointer to heap-allocated storage which
 contains the IEEE bit pattern of the double float in addition to a
-reference to the Dylan class object ``<double-float>``. The compiler may
+reference to the Dylan class object :drm:`<double-float>`. The compiler may
 choose to represent the value as a direct bit pattern, wherever this
 does not violate the semantics of the program.
 
@@ -94,19 +94,19 @@ containing the size of the variably sized data represented as a tagged
 integer. The size slot is used at the Dylan language level to determine
 the size of the array. There is also a special encoding for it in the
 tracing data of the wrapper so that the memory manager knows how to
-trace the repeated data. For example, an instance of the ``<byte-string>``
+trace the repeated data. For example, an instance of the :drm:`<byte-string>`
 *"foo"* is represented as in:.
 
 .. figure:: ../images/runtime-3.png
    :align: center
 
-   An Instance of ``<byte-string>``
+   An Instance of :drm:`<byte-string>`
 
 Function Objects
 ----------------
 
-Dylan provides two built-in classes of functions: ``<generic-function>``
-and ``<method>``. These both obey the same general purpose calling
+Dylan provides two built-in classes of functions: :drm:`<generic-function>`
+and :drm:`<method>`. These both obey the same general purpose calling
 convention, but also support specialized calling conventions (described
 below) which the compiler may use depending on the detail of its
 knowledge about the function being called, and the circumstances. Slots

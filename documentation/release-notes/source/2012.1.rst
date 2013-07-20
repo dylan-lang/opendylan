@@ -288,7 +288,7 @@ the compiler.
 
 A third issue was that the type inference always used the inferred
 type of the actual instance. This failed for primitive types,
-``<single-float>`` was used instead of ``<raw-single-float>``. This
+:drm:`<single-float>` was used instead of ``<raw-single-float>``. This
 lead towards code which the C compiler could not compile
 (``incompatible code in assignment``):
 
@@ -308,7 +308,7 @@ Some slot initializer constants (floats in particular) when inherited
 between classes in different files would result in compilation errors.
 
 The compiler would crash when the ``dimensions:`` keyword was not given
-when constructing an ``<array>``.
+when constructing an :drm:`<array>`.
 
 The compiler now warns rather than crashes on invalid inherited slot
 specifications.

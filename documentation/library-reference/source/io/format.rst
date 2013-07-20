@@ -83,9 +83,9 @@ Format module.
 
    :parameter stream: An instance of :class:`<stream>`. The stream to
      which formatted output should be sent.
-   :parameter control-string: An instance of ``<string>``. A string
+   :parameter control-string: An instance of :drm:`<string>`. A string
      containing format directives.
-   :parameter #rest arguments: Instances of ``<object>``.
+   :parameter #rest arguments: Instances of :drm:`<object>`.
 
    :description:
 
@@ -104,13 +104,13 @@ Format module.
    Outputs a control string to a stream.
 
    :parameter stream: An instance of :class:`<stream>`.
-   :parameter control-string: An instance of ``<byte-string>``.
-   :parameter #rest arguments: Instances of ``<object>``.
+   :parameter control-string: An instance of :drm:`<byte-string>`.
+   :parameter #rest arguments: Instances of :drm:`<object>`.
 
    :description:
 
      There is one method for :gf:`format`, and it is specialized to
-     ``<byte-string>``.
+     :drm:`<byte-string>`.
 
 .. generic-function:: format-to-string
 
@@ -118,9 +118,9 @@ Format module.
 
    :signature: format-to-string *control-string* #rest *arguments* => *result*
 
-   :parameter control-string: An instance of ``<string>``.
-   :parameter #rest arguments: Instances of ``<object>``.
-   :value result: An instance of ``<string>``.
+   :parameter control-string: An instance of :drm:`<string>`.
+   :parameter #rest arguments: Instances of :drm:`<object>`.
+   :value result: An instance of :drm:`<string>`.
 
    :description:
 
@@ -132,20 +132,20 @@ Format module.
 
    Returns a formatted string based on a format control string.
 
-   :parameter control-string: An instance of ``<byte-string>``.
-   :parameter #rest arguments: Instances of ``<object>``.
-   :value result: An instance of ``<byte-string>``.
+   :parameter control-string: An instance of :drm:`<byte-string>`.
+   :parameter #rest arguments: Instances of :drm:`<object>`.
+   :value result: An instance of :drm:`<byte-string>`.
 
    :description:
 
      There is one method for :gf:`format-to-string`. The *control-string*
-     argument must be a ``<byte-string>``. Result is a ``<byte-string>``.
+     argument must be a :drm:`<byte-string>`. Result is a :drm:`<byte-string>`.
 
 .. generic-function:: print-message
 
    Prints an object to a stream.
 
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
    :parameter stream: An instance of :class:`<stream>`.
 
    :description:
@@ -175,14 +175,14 @@ Format module.
 
    Prints a condition to a stream as an error message.
 
-   :parameter condition: An instance of ``<condition>``.
+   :parameter condition: An instance of :drm:`<condition>`.
    :parameter stream: An instance of :class:`<stream>`.
 
    :description:
 
      Prints ``condition`` as an error message, as described for the
      Dylan ``%S`` format directive. You should not specialize the
-     :gf:`print-message` protocol for subclasses of ``<condition>``, but
+     :gf:`print-message` protocol for subclasses of :drm:`<condition>`, but
      instead extend the :gf:`print-message` protocol to new condition
      objects by specializing methods on :gf:`report-condition`.
 
@@ -196,7 +196,7 @@ Format module.
 
    :signature: print-message *symbol* *stream* => ()
 
-   :parameter symbol: An instance of ``<symbol>``.
+   :parameter symbol: An instance of :drm:`<symbol>`.
    :parameter stream: An instance of :class:`<stream>`.
 
    :description:

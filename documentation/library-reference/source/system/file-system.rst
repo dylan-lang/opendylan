@@ -142,7 +142,7 @@ File-System module.
    :signature: create-directory *parent* *name* => *directory*
 
    :parameter parent: An instance of :class:`<pathname>`.
-   :parameter name: An instance of ``<string>``.
+   :parameter name: An instance of :drm:`<string>`.
    :value directory: An instance of :class:`<pathname>`.
 
    :description:
@@ -194,7 +194,7 @@ File-System module.
 
    :signature: do-directory *function* *directory* => ()
 
-   :parameter function: An instance of ``<function>``.
+   :parameter function: An instance of :drm:`<function>`.
    :parameter directory: An instance of :class:`<pathname>`.
 
    :description:
@@ -206,7 +206,7 @@ File-System module.
        *function* *directory* *name* *type* => ()
 
      where *directory* is an instance of :class:`<pathname>`, *name* is
-     an instance of ``<byte-string>``, and *type* is an instance of
+     an instance of :drm:`<byte-string>`, and *type* is an instance of
      :class:`<file-type>`.
 
      Within *function*, the values of *directory* and *name* can be
@@ -237,7 +237,7 @@ File-System module.
    :signature: ensure-directories-exist *file* => *created?*
 
    :parameter file: An instance of :class:`<pathname>`.
-   :value created?: An instance of ``<boolean>``.
+   :value created?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -278,7 +278,7 @@ File-System module.
    :signature: file-exists? *file* => *exists?*
 
    :parameter file: An instance of :class:`<pathname>`.
-   :value exists?: An instance of ``<boolean>``.
+   :value exists?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -293,7 +293,7 @@ File-System module.
 
    :parameter file: An instance of :class:`<pathname>`.
    :value properties: An instance of a concrete subclass of
-     ``<explicit-key-collection>``.
+     :drm:`<explicit-key-collection>`.
 
    :description:
 
@@ -341,7 +341,7 @@ File-System module.
        +==========================+===============================+
        | ``#"author"``            | ``false-or(<string>)``        |
        +--------------------------+-------------------------------+
-       | ``#"size"``              | ``<integer>``                 |
+       | ``#"size"``              | :drm:`<integer>`              |
        +--------------------------+-------------------------------+
        | ``#"creation-date"``     | :class:`<date>`               |
        +--------------------------+-------------------------------+
@@ -351,11 +351,11 @@ File-System module.
        +--------------------------+-------------------------------+
        | ``#"write-date"``        | :class:`<date>`               |
        +--------------------------+-------------------------------+
-       | ``#"readable?"``         | ``<boolean>``                 |
+       | ``#"readable?"``         | :drm:`<boolean>`              |
        +--------------------------+-------------------------------+
-       | ``#"writeable?"``        | ``<boolean>``                 |
+       | ``#"writeable?"``        | :drm:`<boolean>`              |
        +--------------------------+-------------------------------+
-       | ``#"executable?"``       | ``<boolean>``                 |
+       | ``#"executable?"``       | :drm:`<boolean>`              |
        +--------------------------+-------------------------------+
 
      Not all platforms implement all of the above keys. Some platforms
@@ -404,7 +404,7 @@ File-System module.
        +==========================+===============================+
        | ``#"author"``            | ``false-or(<string>)``        |
        +--------------------------+-------------------------------+
-       | ``#"size"``              | ``<integer>``                 |
+       | ``#"size"``              | :drm:`<integer>`              |
        +--------------------------+-------------------------------+
        | ``#"creation-date"``     | :class:`<date>`               |
        +--------------------------+-------------------------------+
@@ -414,11 +414,11 @@ File-System module.
        +--------------------------+-------------------------------+
        | ``#"write-date"``        | :class:`<date>`               |
        +--------------------------+-------------------------------+
-       | ``#"readable?"``         | ``<boolean>``                 |
+       | ``#"readable?"``         | :drm:`<boolean>`              |
        +--------------------------+-------------------------------+
-       | ``#"writeable?"``        | ``<boolean>``                 |
+       | ``#"writeable?"``        | :drm:`<boolean>`              |
        +--------------------------+-------------------------------+
-       | ``#"executable?"``       | ``<boolean>``                 |
+       | ``#"executable?"``       | :drm:`<boolean>`              |
        +--------------------------+-------------------------------+
 
      Note that *file-property-setter* returns the value that was set, and so
@@ -554,7 +554,7 @@ File-System module.
 
    :signature: root-directories () => *roots*
 
-   :value roots: An instance of ``<sequence>``.
+   :value roots: An instance of :drm:`<sequence>`.
 
    :description:
 

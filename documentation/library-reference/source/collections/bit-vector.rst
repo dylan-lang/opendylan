@@ -25,7 +25,7 @@ The bit-vector Module
 
    :description:
 
-     A subtype of ``<integer>``, this is the type of elements of
+     A subtype of :drm:`<integer>`, this is the type of elements of
      :class:`<bit-vector>`. Objects of this type may have the value
      ``0`` or ``1``.
 
@@ -35,7 +35,7 @@ The bit-vector Module
 
    :parameter vector: An instance of :class:`<bit-vector>`.
    :parameter #key bit-value: An instance of :class:`<bit>`.
-   :value count: An instance of ``<integer>``.
+   :value count: An instance of :drm:`<integer>`.
 
    :description:
 

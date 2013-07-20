@@ -24,7 +24,7 @@ The most important DUIM classes are as follows:
 -  ``<layout>`` Sheets that control the arrangement of other sheets in the
    sheet hierarchy.
 
-All of these are subclasses of ``<object>``, except ``<layout>`` which is a
+All of these are subclasses of :drm:`<object>`, except ``<layout>`` which is a
 subclass of ``<sheet>``.
 
 As with any other Dylan class, use ``make`` to create an instance of a
@@ -573,7 +573,7 @@ appearance of that information.
 
 The ``tree-control-children-generator`` slot contains a function that is
 used to generate any children below the root of the tree control. It is
-called with one argument, which can be any instance of ``<object>``.
+called with one argument, which can be any instance of :drm:`<object>`.
 
 The ``icon-function:`` init-keyword specifies a function that returns an
 icon to display with each item in the tree control. The function is
@@ -761,10 +761,10 @@ text after the gadget has been created.
 
 The ``value-type:`` init-keyword (and the ``gadget-value-type`` slot) is
 used to denote that a given text gadget is of a particular type.
-Currently, three types are supported: ``<string>``, ``<integer>``, and
-``<symbol>``. The type of a text gadget defines the way that the text
+Currently, three types are supported: :drm:`<string>`, :drm:`<integer>`, and
+:drm:`<symbol>`. The type of a text gadget defines the way that the text
 typed into a text gadget is treated by ``gadget-value``. The default is
-``<string>``.
+:drm:`<string>`.
 
 The ``gadget-text`` slot *always* returns the exact text contents of a
 text gadget. However, ``gadget-value`` interprets the text and returns a
@@ -774,8 +774,8 @@ value and inserts the appropriate text into the text field.
 
 For example, if you specify ``value-type: <integer>``, then ``gadget-text``
 always returns the exact text typed into the text gadget, as an instance
-of ``<string>``, even if the text contains non-integer characters.
-However, ``gadget-value`` can only return an instance of ``<integer>``,
+of :drm:`<string>`, even if the text contains non-integer characters.
+However, ``gadget-value`` can only return an instance of :drm:`<integer>`,
 having interpreted the ``gadget-text``. If the ``gadget-text`` contains any
 non-integer characters, then interpretation fails, and ``gadget-value``
 returns ``#f``.
@@ -850,7 +850,7 @@ Useful properties of range gadgets
 
 When creating a range gadget, you must specify the range of values over
 which the ``gadget-value`` of the gadget can vary, using the
-``gadget-value-range`` slot. An instance of type ``<range>`` must be passed
+``gadget-value-range`` slot. An instance of type :drm:`<range>` must be passed
 to this slot. You can initialize this value when creating a value range
 gadget using the ``value-range:`` init-keyword. The default range for any
 value range gadget is the set of integers from 0 to 100.

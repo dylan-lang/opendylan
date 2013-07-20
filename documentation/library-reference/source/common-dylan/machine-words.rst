@@ -15,9 +15,9 @@ are available from the Dylan library.
 Throughout this chapter, arguments are instances of the class specified
 by the argument name, unless otherwise noted. Thus, the arguments
 *machine-word* and *integer* are instances of ``<machine-word>`` and
-``<integer>``, respectively.
+:drm:`<integer>`, respectively.
 
-The class ``<machine-word>`` is a sealed subclass of ``<object>``, defined
+The class ``<machine-word>`` is a sealed subclass of :drm:`<object>`, defined
 in the Dylan library. The class ``<machine-word>`` represents a limited
 range of integral values. The representation used has the natural size
 suggested by the implementation architecture. (On the PC, a
@@ -306,7 +306,7 @@ before performing the operation.
 
 These four functions have the same semantics as *logior*, *logxor*,
 *logand*, and *lognot* in the Dylan library, but they operate on
-``<machine-word>`` s instead of ``<integer>`` s.
+``<machine-word>`` s instead of :drm:`<integer>` s.
 
 .. function:: %logbit?
 

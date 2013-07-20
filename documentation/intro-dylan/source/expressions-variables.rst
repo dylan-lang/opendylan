@@ -30,7 +30,7 @@ Dylan uses the extra characters permitted in variable names to
 support a number of standard naming conventions, as shown in this table:
 
 +-----------------+-----------------------------------------------------+
-| ``<string>``    | a class                                             |
+| :drm:`<string>` | a class                                             |
 +-----------------+-----------------------------------------------------+
 | ``insert!``     | mutative function (modifies argument destructively) |
 +-----------------+-----------------------------------------------------+

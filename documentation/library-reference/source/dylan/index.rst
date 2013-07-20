@@ -191,7 +191,7 @@ by the garbage collector preserving entries (a key/value pair) solely
 because the table object itself has a reference to the entry’s key or
 value.
 
-Common Dylan provides weakness options for instances of ``<table>``. A
+Common Dylan provides weakness options for instances of :drm:`<table>`. A
 table can have *weak keys* or *weak values*:
 
 .. code-block:: dylan
@@ -285,14 +285,14 @@ a Table-extensions module, which you can read about in
 
    :signature: table-protocol *table* => *test-function* *hash-function*
 
-   :parameter table: An instance of ``<table>``.
-   :value test-function: An instance of ``<function>``.
-   :value hash-function: An instance of ``<function>``.
+   :parameter table: An instance of :drm:`<table>`.
+   :value test-function: An instance of :drm:`<function>`.
+   :value hash-function: An instance of :drm:`<function>`.
 
    :description:
 
      Returns the functions used to iterate over tables. These functions are
-     in turn used to implement the other collection operations on ``<table>``.
+     in turn used to implement the other collection operations on :drm:`<table>`.
 
      The *test-function* argument is for the table test function, which is
      used to compare table keys. It returns true if, according to the table’s
@@ -321,10 +321,10 @@ a Table-extensions module, which you can read about in
 
    :signature: merge-hash-ids *id1* *id2* #key *ordered* => *merged-id*
 
-   :parameter id1: An instance of ``<integer>``.
-   :parameter id2: An instance of ``<integer>``.
-   :parameter ordered: An instance of ``<boolean>``. Default value: ``#f``.
-   :value merged-id: An instance of ``<integer>``.
+   :parameter id1: An instance of :drm:`<integer>`.
+   :parameter id2: An instance of :drm:`<integer>`.
+   :parameter ordered: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :value merged-id: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -354,9 +354,9 @@ a Table-extensions module, which you can read about in
 
    :signature: object-hash *object* *initial-state* => *hash-id* *result-state*
 
-   :parameter object: An instance of ``<integer>``.
+   :parameter object: An instance of :drm:`<integer>`.
    :parameter initial-state: An instance of ``<hash-state>``.
-   :value hash-id: An instance of ``<integer>``.
+   :value hash-id: An instance of :drm:`<integer>`.
    :value result-state: An instance of ``<hash-state>``.
 
    :description:
