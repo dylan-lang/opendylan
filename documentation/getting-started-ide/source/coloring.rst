@@ -309,20 +309,20 @@ magenta colorings in *game.dylan*, where the compiler could not
 optimize a method call on the value returned from
 *reversi-board-squares* : calls to *element*, *element-setter*,
 *empty?*, and *size*. In all cases this is because the type of
-*reversi-board-squares* is ``<sequence>``, which is an open class.
+*reversi-board-squares* is :drm:`<sequence>`, which is an open class.
 
-We could seal domains on ``<sequence>`` to get optimizations here. But the
+We could seal domains on :drm:`<sequence>` to get optimizations here. But the
 DRM defines :drm:`<sequence>` as an open class, and it is not good practice
 to seal protocols that do not belong to your library or libraries.
 However, we can change the type of *reversi-board-squares* to be in a
 domain which is already sealed. Changing the slot type to
-``<simple-object-vector>`` gives us a sealed type as well as preserving
+:drm:`<simple-object-vector>` gives us a sealed type as well as preserving
 the protocol in use, so that we do not have to change any of the calls
 being made.
 
 #. Go to the definition of ``<reversi-board>``.
 #. Change the type of *reversi-board-squares* to be
-   ``<simple-object-vector>``.
+   :drm:`<simple-object-vector>`.
 #. Save *game.dylan* with **File > Save**.
 #. Rebuild the application, and refresh the color information for
    *game.dylan* with **View > Refresh**.
@@ -336,8 +336,8 @@ need for run-time method dispatch by replacing the call with code to
 access the location that would contain the slot value.
 
 This particular optimization was possible because *size* is a slot
-accessor for instances of ``<simple-object-vector>``, and, of course,
-because ``<simple-object-vector>`` is sealed.
+accessor for instances of :drm:`<simple-object-vector>`, and, of course,
+because :drm:`<simple-object-vector>` is sealed.
 
 You could examine the effects of this change on other calls that use the
 return value of *reversi-board-squares*. Some calls turn blue. Some

@@ -111,7 +111,7 @@ to ``finalize``, the finalization queue retains all the objects that had
 been added to it but which had not been passed to ``finalize``.
 
 There is a default method for :gf:`finalize` on
-``<object>``. The method does nothing. It is available so that it is safe
+:drm:`<object>`. The method does nothing. It is available so that it is safe
 for all finalizers to call :drm:`next-method`, a practice that we strongly
 encourage. See `Writing finalizers`_.
 
@@ -204,7 +204,7 @@ Writing finalizers
 ==================
 
 Because the default :gf:`finalize` method, on
-``<object>``, does nothing, you must define your own
+:drm:`<object>`, does nothing, you must define your own
 :gf:`finalize` methods to get results from the
 finalization interface. This section contains useful information about
 writing finalizers.
@@ -219,7 +219,7 @@ method.
 Parallels with INITIALIZE methods
 =================================
 
-The default method on ``<object>`` is provided to make it safe to call
+The default method on :drm:`<object>` is provided to make it safe to call
 :drm:`next-method` in all finalizers. This situation is parallel to that for
 class :drm:`initialize` methods, which call ``next-method`` before performing
 their own initializations. By doing so, ``initialize`` methods guarantee
@@ -302,7 +302,7 @@ finalization interface. These items are exported from the
 
    :signature: automatic-finalization-enabled? () => *enabled?*
 
-   :value enabled?: An instance of ``<boolean>``. Default value: ``#f``.
+   :value enabled?: An instance of :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -321,7 +321,7 @@ finalization interface. These items are exported from the
 
    :signature: automatic-finalization-enabled?-setter *newval* => ()
 
-   :parameter newval: An instance of ``<boolean>``.
+   :parameter newval: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -374,8 +374,8 @@ finalization interface. These items are exported from the
 
    :signature: finalize-when-unreachable *object* => *object*
 
-   :parameter object: An instance of ``<object>``.
-   :value object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -402,7 +402,7 @@ finalization interface. These items are exported from the
 
    :signature: finalize *object* => ()
 
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -412,7 +412,7 @@ finalization interface. These items are exported from the
      finalization procedures. These methods are called *finalizers*.
 
      A default :meth:`finalize <finalize(<object>)>` method on
-     ``<object>`` is provided.
+     :drm:`<object>` is provided.
 
      The main interface to finalization is the function
      :func:`drain-finalization-queue`, which calls ``finalize`` on each
@@ -449,7 +449,7 @@ finalization interface. These items are exported from the
 
    :signature: finalize *object* => ()
 
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
 
    :description:
 

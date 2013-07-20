@@ -15,7 +15,7 @@ number types, such as "big" (64-bit) integers.
 Throughout this chapter, arguments are instances of the class specified
 by the argument name (ignoring any numeric suffixes), unless otherwise
 noted. Thus, the arguments *integer*, *integer1*, and *integer2* would
-all be instances of the class ``<integer>``.
+all be instances of the class :drm:`<integer>`.
 
 The goals of the extensions to the Dylan language described in this
 chapter are as follows:
@@ -47,14 +47,14 @@ In particular, the extensions support the production of efficient code
 for programs written to be portable with respect to the DRM
 specification. Use of implementation-specific types or operations in
 order to get reasonable efficiency is not required. This precludes
-relegating the ``<integer>`` class and *limited-<integer>* types to
+relegating the :drm:`<integer>` class and *limited-<integer>* types to
 inefficient implementations.
 
 .. note:: When there are several distinct interfaces with the same name
    but in different modules, the notation *interface* *#* *module* is used
    in this chapter to remove ambiguity.
 
-Specify that the class ``<integer>`` has a finite,
+Specify that the class :drm:`<integer>` has a finite,
 implementation-dependent range, bounded by the constants
 *$minimum-integer* and *$maximum-integer*.
 
@@ -63,19 +63,19 @@ sign. That is, the minimum conforming value for *$maximum-integer* is
 2*27* -1 and the maximum conforming value for *$minimum-integer* is
 -2*27*.
 
-*Rationale:* Restricting ``<integer>`` in this way allows the programmer
+*Rationale:* Restricting :drm:`<integer>` in this way allows the programmer
 to stay in the efficient range without requiring exact knowledge of what
 that range might be. The full generality of extended precision integers
 is provided by the Big-Integers library, for programmers who actually
 need that functionality.
 
 Define the type ``<machine-number>`` to be the type union of ``<float>`` and
-``<integer>``.
+:drm:`<integer>`.
 
 The Dylan library provides implementations of the generic functions and
 functions described in this chapter. If the result of one of these
-operations is specified to be an instance of ``<integer>`` and the
-mathematically correct result cannot be represented as an ``<integer>``
+operations is specified to be an instance of :drm:`<integer>` and the
+mathematically correct result cannot be represented as an :drm:`<integer>`
 then an error is signaled. This removes fully generic arithmetic from
 the Dylan library. In particular, it removes extended integers, ratios,
 and rectangular complex numbers.
@@ -97,14 +97,14 @@ uses the Dylan library.
 Ranges
 ------
 
-The initialization arguments for ``<range>`` must all be instances of
-``<machine-number>`` rather than ``<real>``.
+The initialization arguments for :drm:`<range>` must all be instances of
+``<machine-number>`` rather than :drm:`<real>`.
 
 Specific constructors
 ---------------------
 
 The following specific constructors are available for use with the class
-``<integer>``.
+:drm:`<integer>`.
 
 limited
 -------
@@ -114,7 +114,7 @@ G.f. method
 
 Summary
 
-Defines a new type that represents a subset of the class ``<integer>``.
+Defines a new type that represents a subset of the class :drm:`<integer>`.
 
 Arguments
 
@@ -129,8 +129,8 @@ limited *integer-class* #key *min* *max* => *limited-type*
 
 Description
 
-The *integer-class* argument is the class ``<integer>``, and all other
-arguments are instances of ``<integer>``. The range of ``<integer>`` is
+The *integer-class* argument is the class :drm:`<integer>`, and all other
+arguments are instances of :drm:`<integer>`. The range of :drm:`<integer>` is
 bounded by default.
 
 range
@@ -178,7 +178,7 @@ Signature
 
 Value
 
-``<boolean>``
+:drm:`<boolean>`
 
 Other available methods are described in the *Dylan Reference Manual*.
 
@@ -699,7 +699,7 @@ Function
 logbit? *index* *integer* => *boolean*
 
 Tests the value of a particular bit in its integer argument. The *index*
-argument is an instance of ``<integer>``.
+argument is an instance of :drm:`<integer>`.
 
 ash
 
@@ -728,7 +728,7 @@ Returns the greatest common divisor of its two arguments.
 Collections
 -----------
 
-The keys for sequences are always instances of ``<integer>``. This means
+The keys for sequences are always instances of :drm:`<integer>`. This means
 that certain kinds of collections cannot be sequences; very large (or
 unbounded) sparse arrays are an example.
 
@@ -736,7 +736,7 @@ The table protocol
 ------------------
 
 The following functions in the Dylan library are extended. Note that the
-hash IDs for tables are always instances of ``<integer>``.
+hash IDs for tables are always instances of :drm:`<integer>`.
 
 merge-hash-codes
 
@@ -747,9 +747,9 @@ merge-hash-codes *id1* *state1* *id2* *state2* #key *ordered?*
 
 Returns a hash code created from the merging of two argument hash codes.
 The *id* arguments are hash IDs, and the *state* arguments are hash
-states (instances of ``<object>``). The *ordered?* argument is an
-instance of ``<boolean>``. The returned merged values are instances of
-``<integer>`` and ``<object>``, as determined by the name of each argument.
+states (instances of :drm:`<object>`). The *ordered?* argument is an
+instance of :drm:`<boolean>`. The returned merged values are instances of
+:drm:`<integer>` and :drm:`<object>`, as determined by the name of each argument.
 
 object-hash
 
@@ -783,7 +783,7 @@ be equivalent to those in the Dylan library. But when you use additional
 implementation libraries, the arithmetic operators are extended.
 
 The Big-Integers library is one such implementation library. It provides
-a 64-bit implementation of ``<integer>``.
+a 64-bit implementation of :drm:`<integer>`.
 
 The standard integer implementation in the Dylan library is actually
 part of the following class hierarchy:
@@ -800,9 +800,9 @@ part of the following class hierarchy:
 classes. You do not need to use them.)
 
 The modules in the Generic-Arithmetic library export
-``<abstract-integer>`` with the name ``<integer>``. They also export a full
+``<abstract-integer>`` with the name :drm:`<integer>`. They also export a full
 set of arithmetic operators that use instances of ``<abstract-integer>``
-rather than instances of ``<integer>`` (in the Dylan library naming
+rather than instances of :drm:`<integer>` (in the Dylan library naming
 scheme). However, those operators just fall back to the Dylan library
 operators until you include an implementation library, such as
 Big-Integers, in your application.
@@ -810,7 +810,7 @@ Big-Integers, in your application.
 When you use the Big-Integers library, the arithmetic operators exported
 by Generic-Arithmetic are enhanced to extend their results to 64-bit
 integers. If a result is small enough to fit in a Dylan library
-``<integer>``, it will be fitted into one.
+:drm:`<integer>`, it will be fitted into one.
 
 Note that the Generic-Arithmetic library uses the same naming
 conventions for arithmetic operators as used by the Dylan library. This
@@ -827,10 +827,10 @@ an implementation library with Generic-Arithmetic.
 Ranges
 ------
 
-The Generic-Arithmetic library defines the class ``<range>``, which is in
+The Generic-Arithmetic library defines the class :drm:`<range>`, which is in
 most respects functionally equivalent to *<range>#Dylan*, but uses
 generic arithmetic operations in its implementation so that the
-initialization arguments can be instances of ``<real>``, rather than
+initialization arguments can be instances of :drm:`<real>`, rather than
 being restricted to ``<machine-number>``.
 
 Classes
@@ -849,7 +849,7 @@ Function
 range #key *from* *to* *above* *below* *by* *size* => *range*
 
 This function is identical to the function *range#Dylan*, except that
-all of the supplied arguments must be instances of ``<real>``.
+all of the supplied arguments must be instances of :drm:`<real>`.
 
 Arithmetic operations
 ---------------------
@@ -1082,8 +1082,8 @@ ga/\*
 
 …
 
-The operations take either instances of ``<integer>`` or *ga/<integer>* (a
-subclass of ``<integer>``) and return instances of *ga/<integer>*.
+The operations take either instances of :drm:`<integer>` or *ga/<integer>* (a
+subclass of :drm:`<integer>`) and return instances of *ga/<integer>*.
 
 Note that having imported the big-integer operations under new names,
 you have to use prefix rather than infix syntax when calling them. For
@@ -1095,9 +1095,9 @@ not:
 
 5 ga/+ 4;
 
-The existing functions like *+* and *-* will only accept ``<integer>``
+The existing functions like *+* and *-* will only accept :drm:`<integer>`
 instances and *ga/<integer>* instances small enough to be represented as
-``<integer>`` instances.
+:drm:`<integer>` instances.
 
 Under this renaming scheme, reduced performance will be confined to the
 *ga/* operations. Other operations, such as loop index increments and
@@ -1141,8 +1141,8 @@ equivalent to ``<abstract-integer>``. The argument
 *abstract-integer-class* is the class ``<abstract-integer>``.
 
 If both *min* and *max* are supplied, and both are instances of
-``<integer>``, then the result type is equivalent to calling *limited* on
-``<integer>`` with those same bounds.
+:drm:`<integer>`, then the result type is equivalent to calling *limited* on
+:drm:`<integer>` with those same bounds.
 
 The Limited Integer Type Protocol is extended to account for limited
 ``<abstract-integer>`` types.
@@ -1223,7 +1223,7 @@ limited
  (<integer>,
  min: y, max: z)
 
-*y* and *z* are both instances of ``<integer>``.
+*y* and *z* are both instances of :drm:`<integer>`.
 
 limited
  (<abstract-integer>,
@@ -1233,7 +1233,7 @@ limited
 limited
  (<integer>, min: y)
 
-*y* is an instance of ``<integer>``.
+*y* is an instance of :drm:`<integer>`.
 
 limited
  (<abstract-integer>,
@@ -1243,14 +1243,14 @@ limited
 limited
  (<integer>, max: z)
 
-*z* is an instance of ``<integer>``.
+*z* is an instance of :drm:`<integer>`.
 
 Type disjointness is modified as follows to account for limited
 ``<abstract-integer>`` types.
 
 A limited integer type is disjoint from a class if their base types are
-disjoint or the class is ``<integer>`` and the range of the limited
-integer type is disjoint from the range of ``<integer>`` (that is, from
+disjoint or the class is :drm:`<integer>` and the range of the limited
+integer type is disjoint from the range of :drm:`<integer>` (that is, from
 *$minimum-integer* to *$maximum-integer*).
 
 Equality comparisons

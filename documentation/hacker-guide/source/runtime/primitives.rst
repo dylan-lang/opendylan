@@ -22,7 +22,7 @@ Arguments
 
 *thread* A Dylan thread object.
 
-*name* The name of the thread (as a ``<byte-string>``) or *#f*.
+*name* The name of the thread (as a :drm:`<byte-string>`) or *#f*.
 
 *priority* The priority at which the thread is to run.
 
@@ -102,12 +102,12 @@ Signature
 
 Arguments
 
-*thread-vector* A ``<simple-object-vector>`` containing ``<thread>`` objects
+*thread-vector* A :drm:`<simple-object-vector>` containing ``<thread>`` objects
 
 Values
 
 *result* The ``<thread>`` that was joined, if the join was successful;
-otherwise, a ``<integer>`` indicating the error.
+otherwise, a :drm:`<integer>` indicating the error.
 
 Description
 
@@ -165,7 +165,7 @@ Arguments
 
 *lock* A Dylan ``<simple-lock>`` object.
 
-*name* The name of the lock (as a ``<byte-string>``) or *#f*.
+*name* The name of the lock (as a :drm:`<byte-string>`) or *#f*.
 
 Description
 
@@ -292,7 +292,7 @@ Arguments
 
 *lock* A Dylan ``<recursive-lock>`` object.
 
-*name* The name of the lock (as a ``<byte-string>``) or *#f*.
+*name* The name of the lock (as a :drm:`<byte-string>`) or *#f*.
 
 Description
 
@@ -425,7 +425,7 @@ Arguments
 
 *lock* A Dylan ``<semaphore>`` object.
 
-*name* The name of the lock (as a ``<byte-string>``) or *#f*.
+*name* The name of the lock (as a :drm:`<byte-string>`) or *#f*.
 
 *initial* The initial value for the semaphore count
 
@@ -536,7 +536,7 @@ Arguments
 
 *notification* A Dylan <*notification>* object.
 
-*name* The name of the notification (as a ``<byte-string>``) or *#f*.
+*name* The name of the notification (as a :drm:`<byte-string>`) or *#f*.
 
 Description
 

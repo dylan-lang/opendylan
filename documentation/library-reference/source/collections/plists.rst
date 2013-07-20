@@ -55,10 +55,10 @@ Reference
 
    :signature: get-property *plist* *indicator* #key *default* => *property*
 
-   :parameter plist: An instance of ``<sequence>``.
-   :parameter indicator: An instance of ``<object>``.
-   :parameter #key default: An instance of ``<object>``.
-   :value property: An instance of ``<object>``.
+   :parameter plist: An instance of :drm:`<sequence>`.
+   :parameter indicator: An instance of :drm:`<object>`.
+   :parameter #key default: An instance of :drm:`<object>`.
+   :value property: An instance of :drm:`<object>`.
 
 .. generic-function:: keyword-sequence
 
@@ -66,8 +66,8 @@ Reference
 
    :signature: keyword-sequence *plist* => *keywords*
 
-   :parameter plist: An instance of ``<sequence>``.
-   :value keywords: An instance of ``<sequence>``.
+   :parameter plist: An instance of :drm:`<sequence>`.
+   :value keywords: An instance of :drm:`<sequence>`.
 
    See also:
 
@@ -83,9 +83,9 @@ Reference
 
        put-property!(*plist*, *indicator*, *value*)
 
-   :parameter plist: An instance of ``<sequence>``.
-   :parameter indicator: An instance of ``<object>``.
-   :parameter value: An instance of ``<object>``.
+   :parameter plist: An instance of :drm:`<sequence>`.
+   :parameter indicator: An instance of :drm:`<object>`.
+   :parameter value: An instance of :drm:`<object>`.
 
    :example:
 
@@ -104,9 +104,9 @@ Reference
 
    :signature: remove-keywords *plist* *keywords* => *plist*
 
-   :parameter plist: An instance of ``<sequence>``.
-   :parameter keywords: An instance of ``<sequence>``.
-   :value plist: An instance of ``<sequence>``.
+   :parameter plist: An instance of :drm:`<sequence>`.
+   :parameter keywords: An instance of :drm:`<sequence>`.
+   :value plist: An instance of :drm:`<sequence>`.
 
    See also:
 
@@ -124,9 +124,9 @@ Reference
 
        remove-property!(*plist*, *indicator*)
 
-   :parameter plist: An instance of ``<sequence>``.
-   :parameter indicator: An instance of ``<object>``.
-   :value value: An instance of ``<object>``.
+   :parameter plist: An instance of :drm:`<sequence>`.
+   :parameter indicator: An instance of :drm:`<object>`.
+   :value value: An instance of :drm:`<object>`.
 
    :example:
 
@@ -146,8 +146,8 @@ Reference
 
    :signature: value-sequence *plist* => *values*
 
-   :parameter plist: An instance of ``<sequence>``.
-   :value values: An instance of ``<sequence>``.
+   :parameter plist: An instance of :drm:`<sequence>`.
+   :value values: An instance of :drm:`<sequence>`.
 
    See also:
 
@@ -164,8 +164,8 @@ Reference
        end
 
    :parameter var: A Dylan name *bnf*.
-   :parameter plist: An instance of ``<sequence>``.
-   :parameter keywords: An instance of ``<sequence>``.
+   :parameter plist: An instance of :drm:`<sequence>`.
+   :parameter keywords: An instance of :drm:`<sequence>`.
    :parameter body: A Dylan body *bnf*.
 
    :description:

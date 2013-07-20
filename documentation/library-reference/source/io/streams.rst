@@ -186,7 +186,7 @@ stream over the string *"hello world"*:
 
 The following example returns a string. The first ten characters are the
 fill characters for the underlying sequence of the stream. The fill
-character for ``<string>`` is " " (the space character), so in the
+character for :drm:`<string>` is " " (the space character), so in the
 example below, the first ten characters are spaces.
 
 .. code-block:: dylan
@@ -243,7 +243,7 @@ this may not be what the user intended.
 To guarantee that other references to a sequence used in an output
 :class:`<sequence-stream>` will have access to any elements written to
 the sequence via the stream, supply a stretchy collection (such as a
-``<stretchy-vector>``) to :drm:`make`. A stream over a stretchy vector
+:drm:`<stretchy-vector>`) to :drm:`make`. A stream over a stretchy vector
 will use the same stretchy vector throughout the stream’s existence.
 
 For example:
@@ -653,14 +653,14 @@ The following types are used in operations that involve buffers.
 
 <byte-character>
    A type representing 8-bit characters that instances of
-   ``<byte-string>`` can contain.
+   :drm:`<byte-string>` can contain.
 
 <unicode-character>
    A type representing Unicode characters that instances of
-   ``<unicode-string>`` can contain.
+   :drm:`<unicode-string>` can contain.
 
 <byte-vector>
-   A subtype of ``<vector>`` whose element-type is `<byte>`_.
+   A subtype of :drm:`<vector>` whose element-type is `<byte>`_.
 
 Wrapper streams
 ---------------
@@ -883,7 +883,7 @@ are exported from the *streams* module.
    :signature: adjust-stream-position *positionable-stream* *delta* #key *from* => *new-position*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :parameter delta: An instance of ``<integer>``.
+   :parameter delta: An instance of :drm:`<integer>`.
    :parameter #key from: One of ``#"current"``, ``#"start"``, or
      ``#"end"``. Default value: ``#"current"``.
    :value new-position: An instance of :class:`<stream-position>`.
@@ -909,7 +909,7 @@ are exported from the *streams* module.
 
      The following example returns a string, the first ten characters of
      which are the space character, which is the fill character for the
-     sequence ``<string>``.
+     sequence :drm:`<string>`.
 
      .. code-block:: dylan
 
@@ -930,14 +930,14 @@ are exported from the *streams* module.
 
    :signature: as *integer-class* *stream-position* => *integer*
 
-   :parameter integer-class: The class ``<integer>``.
+   :parameter integer-class: The class :drm:`<integer>`.
    :parameter stream-position: An instance of :class:`<stream-position>`.
-   :value integer: An instance of ``<integer>``.
+   :value integer: An instance of :drm:`<integer>`.
 
    :description:
 
      Coerces a :class:`<stream-position>` to an integer. The *integer-class*
-     argument is the class ``<integer>``.
+     argument is the class :drm:`<integer>`.
 
    See also
 
@@ -947,23 +947,23 @@ are exported from the *streams* module.
    :sealed:
    :instantiable:
 
-   A subclass of ``<vector>`` whose *element-type* is `<byte>`_.
+   A subclass of :drm:`<vector>` whose *element-type* is `<byte>`_.
 
    :superclasses: <vector>
 
-   :keyword size: An instance of ``<integer>`` specifying the size of
+   :keyword size: An instance of :drm:`<integer>` specifying the size of
      the buffer. Default value: 0.
-   :keyword next: An instance of ``<integer>``. For an input buffer,
+   :keyword next: An instance of :drm:`<integer>`. For an input buffer,
      this is where the next input byte can be found. For an output buffer,
      this is where the next output byte should be written to. Default
      value: 0.
-   :keyword end: An instance of ``<integer>``. The value of this is one
+   :keyword end: An instance of :drm:`<integer>`. The value of this is one
      more than the last valid index in a buffer. For an input buffer, this
      represents the number of bytes read.
 
    :description:
 
-     A subclass of ``<vector>`` whose *element-type* is `<byte>`_.
+     A subclass of :drm:`<vector>` whose *element-type* is `<byte>`_.
 
      Instances of ``<buffer>`` contain a data vector and two indices:
      the inclusive start and the exclusive end of valid data in the
@@ -985,7 +985,7 @@ are exported from the *streams* module.
 
    :superclasses: :class:`<stream>`
 
-   :keyword buffer-size: An instance of ``<integer>``. This is the size
+   :keyword buffer-size: An instance of :drm:`<integer>`. This is the size
      of the buffer in bytes.
 
    :description:
@@ -1011,7 +1011,7 @@ are exported from the *streams* module.
 
 Supertypes
 
-``<integer>``
+:drm:`<integer>`
 
 Init-keywords
 
@@ -1028,11 +1028,11 @@ Operations
 <byte-character>
 ^^^^^^^^^^^^^^^^
 
-   :type:    A type representing 8-bit characters that instances of ``<byte-string>`` can contain.
+   :type:    A type representing 8-bit characters that instances of :drm:`<byte-string>` can contain.
 
 Supertypes
 
-``<character>``
+:drm:`<character>`
 
 Init-keywords
 
@@ -1040,7 +1040,7 @@ None.
 
    :description:
 
-A type representing 8-bit characters that instances of ``<byte-string>``
+A type representing 8-bit characters that instances of :drm:`<byte-string>`
 can contain.
 
 Operations
@@ -1055,14 +1055,14 @@ Operations
 
    :superclasses: :class:`<string-stream>`
 
-   :keyword contents: A general instance of ``<sequence>``.
+   :keyword contents: A general instance of :drm:`<sequence>`.
    :keyword direction: Specifies the direction of the stream. It must
      be one of ``#"input"``, ``#"output"``, or ``#"input-output"``.
      Default value: ``#"input"``.
-   :keyword start: An instance of ``<integer>``. This specifies the
+   :keyword start: An instance of :drm:`<integer>`. This specifies the
      start position of the sequence to be streamed over. Only valid when
      *direction:* is ``#"input"``. Default value: 0.
-   :keyword end: An instance of ``<integer>``. This specifies the
+   :keyword end: An instance of :drm:`<integer>`. This specifies the
      sequence position immediately after the portion of the sequence to
      stream over. Only valid when *direction:* is ``#"input"``. Default
      value: *contents.size*.
@@ -1095,7 +1095,7 @@ Operations
 .. class:: <byte-vector>
    :sealed:
 
-   A subtype of ``<vector>`` whose element-type is `<byte>`_.
+   A subtype of :drm:`<vector>` whose element-type is `<byte>`_.
 
    :superclasses: <vector>
 
@@ -1103,7 +1103,7 @@ Operations
 
    :description:
 
-     A subclass of ``<vector>`` whose element-type is `<byte>`_.
+     A subclass of :drm:`<vector>` whose element-type is `<byte>`_.
 
    See also
 
@@ -1130,8 +1130,8 @@ Operations
    :signature: close *file-stream* #key *abort?* *wait?* => ()
 
    :parameter file-stream: An instance of :class:`<file-stream>`.
-   :parameter #key abort?: An instance of ``<boolean>``. Default value: ``#f``.
-   :parameter #key wait?: An instance of ``<boolean>``.
+   :parameter #key abort?: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key wait?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1202,7 +1202,7 @@ Operations
    :description:
 
      Signalled when one of the read functions reaches the end of an
-     input stream. It is a subclass of ``<error>``.
+     input stream. It is a subclass of :drm:`<error>`.
 
      The *stream:* init-keyword has the value of the stream that caused
      the error to be signaled. Its accessor is
@@ -1249,7 +1249,7 @@ Operations
    :description:
 
      The base class for all errors related to file I/O. It is a subclass
-     of ``<error>``.
+     of :drm:`<error>`.
 
      The *locator:* init-keyword indicates the locator of the file that
      caused the error to be signalled. Its accessor is
@@ -1294,7 +1294,7 @@ Operations
 
    :superclasses: :class:`<buffered-stream>`, :class:`<positionable-stream>`
 
-   :keyword locator: An instance of ``<string>`` or ``<locator>``. This
+   :keyword locator: An instance of :drm:`<string>` or ``<locator>``. This
      specifies the file over which to stream.
    :keyword direction: Specifies the direction of the stream. It must be one of
      ``#"input"``, ``#"output"``, or ``#"input-output"``. Default value:
@@ -1337,7 +1337,7 @@ Operations
    :signature: force-output *output-stream* #key *synchronize?* => ()
 
    :parameter output-stream: An instance of :class:`<stream>`.
-   :parameter synchronize?: An instance of ``<boolean>``. Default value: ``#f``.
+   :parameter synchronize?: An instance of :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -1359,8 +1359,8 @@ Operations
 
    :superclasses: :class:`<end-of-stream-error>`
 
-   :keyword sequence: An instance of ``<sequence>``.
-   :keyword count: An instance of ``<integer>``.
+   :keyword sequence: An instance of :drm:`<sequence>`.
+   :keyword count: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -1461,11 +1461,11 @@ Operations
    :signature: make *byte-string-stream-class* #key *contents* *direction* *start* *end* => *byte-string-stream-instance*
 
    :parameter byte-string-stream-class: The class :class:`<byte-string-stream>`.
-   :parameter #key contents: An instance of ``<string>``.
+   :parameter #key contents: An instance of :drm:`<string>`.
    :parameter #key direction: One of ``#"input"``, ``#"output"``, or
      ``#"input-output"``. Default value: ``#"input"``.
-   :parameter #key start: An instance of ``<integer>``. Default value: 0.
-   :parameter #key end: An instance of ``<integer>``. Default value: *contents.size*.
+   :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`. Default value: *contents.size*.
    :value byte-string-stream-instance: An instance of :class:`<byte-string-stream>`.
 
    :description:
@@ -1498,7 +1498,7 @@ Operations
    :signature: make *file-stream-class* #key *filename* *direction* *if-exists* *if-does-not-exist* *buffer-size* *element-type* => *file-stream-instance*
 
    :parameter file-stream-class: The class :class:`<file-stream>`.
-   :parameter #key filename: An instance of ``<object>``.
+   :parameter #key filename: An instance of :drm:`<object>`.
    :parameter #key direction: One of ``#"input"``, ``#"output"``, or
      ``#"input-output"``. The default is ``#"input"``.
    :parameter #key if-exists: One of ``#f``, ``#"new-version"``,
@@ -1506,7 +1506,7 @@ Operations
      ``#"signal"``. Default value: ``#f``.
    :parameter #key if-does-not-exist: One of ``#f``, ``#"signal"``, or
      ``#"create"``. Default value: depends on the value of *direction*.
-   :parameter #key buffer-size: An instance of ``<integer>``.
+   :parameter #key buffer-size: An instance of :drm:`<integer>`.
    :parameter #key element-type: One of `<byte-character>`_,
      `<unicode-character>`_, or `<byte>`_, or ``#f``.
    :value file-stream-instance: An instance of :class:`<file-stream>`.
@@ -1556,11 +1556,11 @@ Operations
    :signature: make *sequence-stream-class* #key *contents* *direction* *start* *end* => *sequence-stream-instance*
 
    :parameter sequence-stream-class: The class :class:`<sequence-stream>`.
-   :parameter #key contents: An instance of ``<string>``.
+   :parameter #key contents: An instance of :drm:`<string>`.
    :parameter #key direction: One of ``#"input"``, ``#"output"``, or
      ``#"input-output"``. Default value: ``#"input"``.
-   :parameter #key start: An instance of ``<integer>``. Default value: 0.
-   :parameter #key end: An instance of ``<integer>``. Default value: *contents.size*.
+   :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`. Default value: *contents.size*.
    :value sequence-stream-instance: An instance of :class:`<sequence-stream>`.
 
    :description:
@@ -1572,7 +1572,7 @@ Operations
      be instantiated, this method calls the generic function
      :gf:`type-for-sequence-stream`.
 
-     The *contents* init-keyword is a general instance of ``<sequence>``
+     The *contents* init-keyword is a general instance of :drm:`<sequence>`
      which is used as the input for input streams, and as the initial
      storage for an output stream. If *contents* is a stretchy vector,
      then it is the only storage used by the stream.
@@ -1609,11 +1609,11 @@ Operations
    :signature: make *string-stream-class* #key *contents* *direction* *start* *end* => *string-stream-instance*
 
    :parameter string-stream-class: The class :class:`<string-stream>`.
-   :parameter #key contents: An instance of ``<string>``.
+   :parameter #key contents: An instance of :drm:`<string>`.
    :parameter #key direction: One of ``#"input"``, ``#"output"``, or
      ``#"input-output"``. Default value: ``#"input"``.
-   :parameter #key start: An instance of ``<integer>``. Default value: 0.
-   :parameter #key end: An instance of ``<integer>``. Default value: *contents.size*.
+   :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`. Default value: *contents.size*.
    :value string-stream-instance: An instance of :class:`<string-stream>`.
 
    :description:
@@ -1646,11 +1646,11 @@ Operations
    :signature: make *unicode-string-stream-class* #key *contents* *direction* *start* *end* => *unicode-string-stream-instance*
 
    :parameter unicode-string-stream-class: The class :class:`<unicode-string-stream>`.
-   :parameter #key contents: An instance of ``<unicode-string>``.
+   :parameter #key contents: An instance of :drm:`<unicode-string>`.
    :parameter #key direction: One of ``#"input"``, ``#"output"``, or
      ``#"input-output"``. Default value: ``#"input"``.
-   :parameter #key start: An instance of ``<integer>``. Default value: 0.
-   :parameter #key end: An instance of ``<integer>``. Default value: *contents.size*.
+   :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`. Default value: *contents.size*.
    :value unicode-string-stream-instance: An instance of :class:`<unicode-string-stream>`.
 
    :description:
@@ -1660,7 +1660,7 @@ Operations
      This method returns a new instance of
      :class:`<unicode-string-stream>`. If supplied, *contents* describes
      the contents of the stream, and must be an instance of
-     ``<unicode-string>``. The *direction*, *start*, and *end*
+     :drm:`<unicode-string>`. The *direction*, *start*, and *end*
      init-keywords are as for :meth:`make <make(<sequence-stream>)>` on
      :class:`<sequence-stream>`.
 
@@ -1738,8 +1738,8 @@ Operations
    :signature: peek *input-stream* #key *on-end-of-stream* => *element-or-eof*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter #key on-end-of-stream: An instance of ``<object>``.
-   :value element-or-eof: An instance of ``<object>``, or ``#f``.
+   :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
+   :value element-or-eof: An instance of :drm:`<object>`, or ``#f``.
 
    :description:
 
@@ -1793,7 +1793,7 @@ None.
    :description:
 
 A type used to represent a position in a stream. In practice, positions
-within a stream are defined as instances of ``<integer>``, but this type,
+within a stream are defined as instances of :drm:`<integer>`, but this type,
 together with the :class:`<stream-position>` class, allows for cases where
 this might not be possible.
 
@@ -1809,10 +1809,10 @@ See also
    :signature: read *input-stream* *n* #key *on-end-of-stream* => *sequence-or-eof*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter n: An instance of ``<integer>``.
-   :parameter #key on-end-of-stream: An instance of ``<object>``.
-   :value sequence-or-eof: An instance of ``<sequence>``, or an instance
-     of ``<object>`` if the end of stream is reached.
+   :parameter n: An instance of :drm:`<integer>`.
+   :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
+   :value sequence-or-eof: An instance of :drm:`<sequence>`, or an instance
+     of :drm:`<object>` if the end of stream is reached.
 
    :description:
 
@@ -1860,8 +1860,8 @@ See also
    :signature: read-element *input-stream* #key *on-end-of-stream* => *element-or-eof*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter #key on-end-of-stream: An instance of ``<object>``.
-   :value element-or-eof: An instance of ``<object>``.
+   :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
+   :value element-or-eof: An instance of :drm:`<object>`.
 
    :description:
 
@@ -1903,12 +1903,12 @@ See also
    :signature: read-into! *input-stream* *n* *sequence* #key *start* *on-end-of-stream* => *count-or-eof*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter n: An instance of ``<integer>``.
-   :parameter sequence: An instance of ``<mutable-sequence>``.
-   :parameter #key start: An instance of ``<integer>``.
-   :parameter #key on-end-of-stream: An instance of ``<object>``.
-   :value count-or-eof: An instance of ``<integer>``, or an instance of
-     ``<object>`` if the end of stream is reached..
+   :parameter n: An instance of :drm:`<integer>`.
+   :parameter sequence: An instance of :drm:`<mutable-sequence>`.
+   :parameter #key start: An instance of :drm:`<integer>`.
+   :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
+   :value count-or-eof: An instance of :drm:`<integer>`, or an instance of
+     :drm:`<object>` if the end of stream is reached..
 
    :description:
 
@@ -1938,10 +1938,10 @@ See also
    :signature: read-line *input-stream* #key *on-end-of-stream* => *string-or-eof* *newline?*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter #key on-end-of-stream: An instance of ``<object>``.
-   :value string-or-eof: An instance of ``<string>``, or an instance of
-     ``<object>`` if the end of the stream is reached.
-   :value newline?: An instance of ``<boolean>``.
+   :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
+   :value string-or-eof: An instance of :drm:`<string>`, or an instance of
+     :drm:`<object>` if the end of the stream is reached.
+   :value newline?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1956,7 +1956,7 @@ See also
      The type of the result string is chosen so that the string can
      contain characters of *input-stream* ’s element type. For example,
      if the element type is `<byte-character>`_, the string will be a
-     ``<byte-string>``.
+     :drm:`<byte-string>`.
 
      If *input-stream* is at its end immediately upon calling
      ``read-line`` (that is, the end of stream appears to be at the end
@@ -1975,19 +1975,19 @@ See also
    :signature: read-line-into! *input-stream* *string* #key *start* *on-end-of-stream* *grow?* => *string-or-eof* *newline?*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter string: An instance of ``<string>``.
-   :parameter #key start: An instance of ``<integer>``. Default value: 0.
-   :parameter #key on-end-of-stream: An instance of ``<object>``.
-   :parameter #key grow?: An instance of ``<boolean>``. Default value: ``#f``.
-   :value string-or-eof: An instance of ``<string>``, or an instance of
-     ``<object>`` if the end of the stream is reached.
-   :value newline?: An instance of ``<boolean>``.
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
+   :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
+   :parameter #key grow?: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :value string-or-eof: An instance of :drm:`<string>`, or an instance of
+     :drm:`<object>` if the end of the stream is reached.
+   :value newline?: An instance of :drm:`<boolean>`.
 
    :description:
 
      Fills *string* with all the input from *input-stream* up to the
      next newline sequence. The *string* must be a general instance of
-     ``<string>`` that can hold elements of the stream’s element type.
+     :drm:`<string>` that can hold elements of the stream’s element type.
 
      The input is written into *string* starting at the position
      *start*. By default, *start* is the start of the stream.
@@ -2025,12 +2025,12 @@ See also
    :signature: read-through *input-stream* *element* #key *on-end-of-stream* *test* => *sequence-or-eof* *found?*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter element: An instance of ``<object>``.
-   :parameter #key on-end-of-stream: An instance of ``<object>``.
-   :parameter #key test: An instance of ``<function>``. Default value: ``==``.
-   :value sequence-or-eof: An instance of ``<sequence>``, or an instance of
-     ``<object>`` if the end of the stream is reached.
-   :value found?: An instance of ``<boolean>``.
+   :parameter element: An instance of :drm:`<object>`.
+   :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: ``==``.
+   :value sequence-or-eof: An instance of :drm:`<sequence>`, or an instance of
+     :drm:`<object>` if the end of the stream is reached.
+   :value found?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -2052,12 +2052,12 @@ See also
    :signature: read-to *input-stream* *element* #key *on-end-of-stream* *test* => *sequence-or-eof* *found?*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter element: An instance of ``<object>``.
-   :parameter #key on-end-of-stream: An instance of ``<object>``.
-   :parameter #key test: An instance of ``<function>``. Default value: ``==``.
-   :value sequence-or-eof: An instance of ``<sequence>``, or an instance of
-     ``<object>`` if the end of the stream is reached.
-   :value found?: An instance of ``<boolean>``.
+   :parameter element: An instance of :drm:`<object>`.
+   :parameter #key on-end-of-stream: An instance of :drm:`<object>`.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: ``==``.
+   :value sequence-or-eof: An instance of :drm:`<sequence>`, or an instance of
+     :drm:`<object>` if the end of the stream is reached.
+   :value found?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -2091,7 +2091,7 @@ See also
    :signature: read-to-end *input-stream* => *sequence*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :value sequence: An instance of ``<sequence>``.
+   :value sequence: An instance of :drm:`<sequence>`.
 
    :description:
 
@@ -2123,16 +2123,16 @@ See also
 
    :superclasses: :class:`<positionable-stream>`
 
-   :keyword contents: A general instance of ``<sequence>`` which is used
+   :keyword contents: A general instance of :drm:`<sequence>` which is used
      as the input for an input stream, and as the initial storage for an
      output stream.
    :keyword direction: Specifies the direction of the stream. It must
      be one of ``#"input"``, ``#"output"``, or ``#"input-output"``.
      Default value: ``#"input"``.
-   :keyword start: An instance of ``<integer>``. This specifies the
+   :keyword start: An instance of :drm:`<integer>`. This specifies the
      start position of the sequence to be streamed over. Only valid when
      *direction:* is ``#"input"``. Default value: 0.
-   :keyword end: An instance of ``<integer>``. This specifies the
+   :keyword end: An instance of :drm:`<integer>`. This specifies the
      sequence position immediately after the portion of the sequence to
      stream over. Only valid when *direction:* is ``#"input"``. Default
      value: *contents.size*.
@@ -2174,9 +2174,9 @@ See also
    :signature: skip-through *input-stream* *element* #key *test* => *found?*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :parameter element: An instance of ``<object>``.
-   :parameter #key test: An instance of ``<function>``. Default value: ``==``.
-   :value found?: An instance of ``<boolean>``.
+   :parameter element: An instance of :drm:`<object>`.
+   :parameter #key test: An instance of :drm:`<function>`. Default value: ``==``.
+   :value found?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -2206,7 +2206,7 @@ See also
    :description:
 
      The superclass of all stream classes and a direct subclass of
-     ``<object>``. It is not instantiable.
+     :drm:`<object>`. It is not instantiable.
 
      The *outer-stream:* init-keyword should be used to delegate a task
      to its wrapper stream. See `Wrapper streams and delegation`_ for
@@ -2249,7 +2249,7 @@ See also
    :signature: stream-at-end? *stream* => *at-end?*
 
    :parameter stream: An instance of :class:`<stream>`.
-   :value at-end?: An instance of ``<boolean>``.
+   :value at-end?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -2293,8 +2293,8 @@ See also
    :signature: stream-contents *positionable-stream* #key *clear-contents?*  => *sequence*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :parameter clear-contents?: An instance of ``<boolean>``. Default value: ``#t``.
-   :value sequence: An instance of ``<sequence>``.
+   :parameter clear-contents?: An instance of :drm:`<boolean>`. Default value: ``#t``.
+   :value sequence: An instance of :drm:`<sequence>`.
 
    :description:
 
@@ -2345,11 +2345,11 @@ See also
    :signature: stream-element-type *stream* => *element-type*
 
    :parameter stream: An instance of :class:`<stream>`.
-   :value element-type: An instance of ``<type>``.
+   :value element-type: An instance of :drm:`<type>`.
 
    :description:
 
-     Returns the element type of *stream* as a Dylan ``<type>``.
+     Returns the element type of *stream* as a Dylan :drm:`<type>`.
 
 .. generic-function:: stream-input-available?
    :open:
@@ -2359,7 +2359,7 @@ See also
    :signature: stream-input-available? *input-stream* => *available?*
 
    :parameter input-stream: An instance of :class:`<stream>`.
-   :value available?: An instance of ``<boolean>``.
+   :value available?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -2385,7 +2385,7 @@ See also
    :signature: stream-console? *stream* => *console?*
 
    :parameter stream: An instance of :class:`<file-stream>`.
-   :value console?: An instance of ``<boolean>``.
+   :value console?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -2454,7 +2454,7 @@ See also
    :signature: stream-open? *stream* => *open?*
 
    :parameter stream: An instance of :class:`<stream>`.
-   :value open?: An instance of ``<boolean>``.
+   :value open?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -2510,14 +2510,14 @@ See also
 
    :description:
 
-     A direct subclass of ``<object>``. It is used in rare cases to
+     A direct subclass of :drm:`<object>`. It is used in rare cases to
      represent positions within streams that cannot be represented by
-     instances of ``<integer>``. For example, a stream that supports
+     instances of :drm:`<integer>`. For example, a stream that supports
      compression will have some state associated with each position in
      the stream that a single integer is not sufficient to represent.
 
      The ``<stream-position>`` class is disjoint from the class
-     ``<integer>``.
+     :drm:`<integer>`.
 
    :operations:
 
@@ -2539,7 +2539,7 @@ See also
    :parameter position: An instance of :class:`<position-type>`.
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
    :value new-position: An instance of :class:`<stream-position>`, or an
-     instance of ``<integer>``.
+     instance of :drm:`<integer>`.
 
    :description:
 
@@ -2548,7 +2548,7 @@ See also
      When it is an integer, if it is less than zero or greater than
      *positionable-stream.stream-size* this function signals an error. For
      file streams, a :class:`<stream-position-error>` is signalled. For other types
-     of stream, the error signalled is ``<simple-error>``.
+     of stream, the error signalled is :drm:`<simple-error>`.
 
      When *position* is a :class:`<stream-position>`, if it is invalid
      for some reason, this function signals an error. Streams are
@@ -2577,7 +2577,7 @@ See also
    :signature: stream-size *positionable-stream* => *size*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :value size: An instance of ``<integer>``, or ``#f``.
+   :value size: An instance of :drm:`<integer>`, or ``#f``.
 
    :description:
 
@@ -2610,13 +2610,13 @@ See also
 
    :superclasses: :class:`<sequence-stream>`
 
-   :keyword contents: A general instance of ``<sequence>``.
+   :keyword contents: A general instance of :drm:`<sequence>`.
    :keyword direction: Specifies the direction of the stream. It must
      be one of ``#"input"``, ``#"output"``, or ``#"input-output"``;
      Default value: ``#"input"``.
-   :keyword start: An instance of ``<integer>``. Only valid when
+   :keyword start: An instance of :drm:`<integer>`. Only valid when
      *direction:* is ``#"input"``. Default value: 0.
-   :keyword end: An instance of ``<integer>``. This specifies the string
+   :keyword end: An instance of :drm:`<integer>`. This specifies the string
      position immediately after the portion of the string to stream over.
      Only valid when *direction:* is ``#"input"``. Default value:
      *contents.size*.
@@ -2679,10 +2679,10 @@ See also
 
    :signature: type-for-file-stream *filename* *element-type* #rest #all-keys => *file-stream-type*
 
-   :parameter filename: An instance of ``<object>``.
+   :parameter filename: An instance of :drm:`<object>`.
    :parameter element-type: One of `<byte-character>`_,
      `<unicode-character>`_, or `<byte>`_, or ``#f``.
-   :value file-stream-type: An instance of ``<type>``.
+   :value file-stream-type: An instance of :drm:`<type>`.
 
    :description:
 
@@ -2703,8 +2703,8 @@ See also
 
    :signature: type-for-sequence-stream *sequence* => *sequence-stream-type*
 
-   :parameter sequence: An instance of ``<sequence>``.
-   :value sequence-stream-type: An instance of ``<type>``.
+   :parameter sequence: An instance of :drm:`<sequence>`.
+   :value sequence-stream-type: An instance of :drm:`<type>`.
 
    :description:
 
@@ -2729,7 +2729,7 @@ See also
 
 Supertypes
 
-``<character>``
+:drm:`<character>`
 
 Init-keywords
 
@@ -2738,7 +2738,7 @@ None.
    :description:
 
 A type representing Unicode characters that instances of
-``<unicode-string>`` can contain.
+:drm:`<unicode-string>` can contain.
 
 Operations
 
@@ -2752,14 +2752,14 @@ Operations
 
    :superclasses: :class:`<string-stream>`
 
-   :keyword contents: A general instance of ``<sequence>``.
+   :keyword contents: A general instance of :drm:`<sequence>`.
    :keyword direction: Specifies the direction of the stream. It must
      be one of ``#"input"``, ``#"output"``, or ``#"input-output"``.
      Default value: ``#"input"``.
-   :keyword start: An instance of ``<integer>``. This specifies the
+   :keyword start: An instance of :drm:`<integer>`. This specifies the
      start position of the sequence to be streamed over. Only valid when
      *direction:* is ``#"input"``. Default value: 0.
-   :keyword end: An instance of ``<integer>``. This specifies the
+   :keyword end: An instance of :drm:`<integer>`. This specifies the
      sequence position immediately after the portion of the sequence to
      stream over. Only valid when *direction:* is ``#"input"``. Default
      value: *contents.size*.
@@ -2798,8 +2798,8 @@ Operations
    :signature: unread-element *positionable-stream* *element* => *element*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :parameter element: An instance of ``<object>``.
-   :value element: An instance of ``<object>``.
+   :parameter element: An instance of :drm:`<object>`.
+   :value element: An instance of :drm:`<object>`.
 
    :description:
 
@@ -2846,10 +2846,10 @@ Operations
          *body* end => *values*
 
    :parameter stream-var: An Dylan variable-name *bnf*.
-   :parameter filename: An instance of ``<string>``.
-   :parameter keys: Instances of ``<object>``.
+   :parameter filename: An instance of :drm:`<string>`.
+   :parameter keys: Instances of :drm:`<object>`.
    :parameter body: A Dylan body *bnf*.
-   :value values: Instances of ``<object>``.
+   :value values: Instances of :drm:`<object>`.
 
    :description:
 
@@ -2997,9 +2997,9 @@ Operations
    :signature: write *output-stream* *sequence* #key *start* *end* => ()
 
    :parameter output-stream: An instance of :class:`<stream>`.
-   :parameter sequence: An instance of ``<sequence>``.
-   :parameter #key start: An instance of ``<integer>``. Default value: 0.
-   :parameter #key end: An instance of ``<integer>``. Default value: *sequence.size*.
+   :parameter sequence: An instance of :drm:`<sequence>`.
+   :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`. Default value: *sequence.size*.
 
    :description:
 
@@ -3007,7 +3007,7 @@ Operations
      the stream’s current position.
 
      The elements in *sequence* are accessed in the order defined by the
-     forward iteration protocol on ``<sequence>``. This is effectively
+     forward iteration protocol on :drm:`<sequence>`. This is effectively
      the same as the following:
 
      .. code-block:: dylan
@@ -3026,7 +3026,7 @@ Operations
 
      *Implementation Note:* Buffered streams are intended to provide a
      very efficient implementation of ``write``, particularly when
-     sequence is an instance of ``<byte-string>``, ``<unicode-string>``,
+     sequence is an instance of :drm:`<byte-string>`, :drm:`<unicode-string>`,
      :class:`<byte-vector>`, or :class:`<buffer>`, and the stream’s element type is
      the same as the element type of sequence.
 
@@ -3061,7 +3061,7 @@ Operations
    :signature: write-element *output-stream* *element* => ()
 
    :parameter output-stream: An instance of :class:`<stream>`.
-   :parameter element: An instance of ``<object>``.
+   :parameter element: An instance of :drm:`<object>`.
 
    :description:
 
@@ -3104,9 +3104,9 @@ Operations
    :signature: write-line *output-stream* *string* #key *start* *end* => ()
 
    :parameter output-stream: An instance of :class:`<stream>`.
-   :parameter string: An instance of ``<string>``.
-   :parameter #key start: An instance of ``<integer>``. Default value: 0.
-   :parameter #key end: An instance of ``<integer>``. Default value: *string.size*.
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key start: An instance of :drm:`<integer>`. Default value: 0.
+   :parameter #key end: An instance of :drm:`<integer>`. Default value: *string.size*.
 
    :description:
 

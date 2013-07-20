@@ -122,7 +122,7 @@ and will assist you in analyzing values.
 
 .. c:function:: bool dylan_boolean_p (D instance)
 
-   Tests whether instance is a ``<boolean>``.
+   Tests whether instance is a :drm:`<boolean>`.
 
 .. c:function:: bool dylan_true_p (D instance)
 
@@ -134,7 +134,7 @@ and will assist you in analyzing values.
 
 .. c:function:: bool dylan_single_float_p (D instance)
 
-   Tests whether instance is a ``<single-float>``.
+   Tests whether instance is a :drm:`<single-float>`.
 
 .. c:function:: float dylan_single_float_data (D instance)
 
@@ -142,7 +142,7 @@ and will assist you in analyzing values.
 
 .. c:function:: bool dylan_double_float_p (D instance)
 
-   Tests whether instance is a ``<double-float>``.
+   Tests whether instance is a :drm:`<double-float>`.
 
 .. c:function:: double dylan_double_float_data (D instance)
 
@@ -150,7 +150,7 @@ and will assist you in analyzing values.
 
 .. c:function:: bool dylan_symbol_p (D instance)
 
-   Tests whether instance is a ``<symbol>``.
+   Tests whether instance is a :drm:`<symbol>`.
 
 .. c:function:: D dylan_symbol_name (D instance)
 
@@ -158,7 +158,7 @@ and will assist you in analyzing values.
 
 .. c:function:: bool dylan_pair_p (D instance)
 
-   Tests whether instance is a ``<pair>``.
+   Tests whether instance is a :drm:`<pair>`.
 
 .. c:function:: bool dylan_empty_list_p (D instance)
 
@@ -166,19 +166,19 @@ and will assist you in analyzing values.
 
 .. c:function:: D dylan_head (D instance)
 
-   Returns the head of the given ``<pair>`` instance.
+   Returns the head of the given :drm:`<pair>` instance.
 
 .. c:function:: D dylan_tail (D instance)
 
-   Returns the tail of the given ``<pair>`` instance.
+   Returns the tail of the given :drm:`<pair>` instance.
 
 .. c:function:: bool dylan_vector_p (D instance)
 
-   Tests whether instance is a ``<vector>``.
+   Tests whether instance is a :drm:`<vector>`.
 
 .. c:function:: bool dylan_string_p (D instance)
 
-   Tests whether instance is a ``<string>``.
+   Tests whether instance is a :drm:`<string>`.
 
 .. c:function:: char* dylan_string_data (D instance)
 
@@ -199,19 +199,19 @@ and will assist you in analyzing values.
 
 .. c:function:: bool dylan_class_p (D instance)
 
-   Tests whether instance is a ``<class>``.
+   Tests whether instance is a :drm:`<class>`.
 
 .. c:function:: D dylan_class_debug_name (D instance)
 
-   Returns the ``<string>`` object containing the class's name.
+   Returns the :drm:`<string>` object containing the class's name.
 
 .. c:function:: bool dylan_function_p (D instance)
 
-   Tests whether instance is a ``<function>``.
+   Tests whether instance is a :drm:`<function>`.
 
 .. c:function:: D dylan_function_debug_name (D instance)
 
-   Returns the ``<string>`` object containing the function's name.
+   Returns the :drm:`<string>` object containing the function's name.
    Note that we do not store the name for all function objects.
 
 .. c:function:: void dylan_print_object (D object)

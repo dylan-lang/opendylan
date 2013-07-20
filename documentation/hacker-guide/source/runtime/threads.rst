@@ -123,7 +123,7 @@ additional slots.
 ------
 
 This is a union type which is used to represent names of synchronization
-objects. Values of the type are either strings (of class ``<byte-string>``)
+objects. Values of the type are either strings (of class :drm:`<byte-string>`)
 or false (``#f``).
 
 Various classes of Dylan objects are passed through the portability
@@ -147,40 +147,40 @@ layer, and subclasses may add additional fields of their own.
 Correspondence Between Dylan Types and C Types
 ----------------------------------------------
 
-+----------------------------+---------------+--------------------------------------+
-| Dylan Type                 | C Type        | C Type Definition                    |
-+============================+===============+======================================+
-| ``<object>``               | *D*           | *typedef void\* D;*                  |
-+----------------------------+---------------+--------------------------------------+
-| ``<integer>``              | *DINT*        | *platform specific (size of void\*)* |
-+----------------------------+---------------+--------------------------------------+
-| ``<function>``             | *DFN*         | *typedef D(\*DFN)(D, int, …);*       |
-+----------------------------+---------------+--------------------------------------+
-| ``<simple-object-vector>`` | *SOV\**       | *typedef struct \_sov {              |
-|                            |               | * *D class;                          |
-|                            |               | * *DINT size;*                       |
-|                            |               | *D data[ ];*                         |
-|                            |               | *} SOV;*                             |
-+----------------------------+---------------+--------------------------------------+
-| ``<byte-string>``          | *B\_STRING\** | *typedef struct \_bst {              |
-|                            |               | * *D class;                          |
-|                            |               | * *DINT size;*                       |
-|                            |               | *char data[ ];*                      |
-|                            |               | *} B\_STRING;*                       |
-+----------------------------+---------------+--------------------------------------+
-| ``<optional-name>``        | *D\_NAME*     | *typedef void\* D\_NAME;*            |
-+----------------------------+---------------+--------------------------------------+
-| ``<portable-container>``   | *CONTAINER\** | *typedef struct \_ctr {              |
-|                            |               | * *D class;                          |
-|                            |               | * *void\* handle;*                   |
-|                            |               | *} CONTAINER;*                       |
-+----------------------------+---------------+--------------------------------------+
-| ``<thread>``               | *D\_THREAD\** | *typedef struct \_dth {              |
-|                            |               | * *D class;                          |
-|                            |               | * *void\* handle1;*                  |
-|                            |               | *void\* handle2;*                    |
-|                            |               | *} D\_THREAD;*                       |
-+----------------------------+---------------+--------------------------------------+
++-------------------------------+---------------+--------------------------------------+
+| Dylan Type                    | C Type        | C Type Definition                    |
++===============================+===============+======================================+
+| :drm:`<object>`               | *D*           | *typedef void\* D;*                  |
++-------------------------------+---------------+--------------------------------------+
+| :drm:`<integer>`              | *DINT*        | *platform specific (size of void\*)* |
++-------------------------------+---------------+--------------------------------------+
+| :drm:`<function>`             | *DFN*         | *typedef D(\*DFN)(D, int, …);*       |
++-------------------------------+---------------+--------------------------------------+
+| :drm:`<simple-object-vector>` | *SOV\**       | *typedef struct \_sov {              |
+|                               |               | * *D class;                          |
+|                               |               | * *DINT size;*                       |
+|                               |               | *D data[ ];*                         |
+|                               |               | *} SOV;*                             |
++-------------------------------+---------------+--------------------------------------+
+| :drm:`<byte-string>`          | *B\_STRING\** | *typedef struct \_bst {              |
+|                               |               | * *D class;                          |
+|                               |               | * *DINT size;*                       |
+|                               |               | *char data[ ];*                      |
+|                               |               | *} B\_STRING;*                       |
++-------------------------------+---------------+--------------------------------------+
+| ``<optional-name>``           | *D\_NAME*     | *typedef void\* D\_NAME;*            |
++-------------------------------+---------------+--------------------------------------+
+| ``<portable-container>``      | *CONTAINER\** | *typedef struct \_ctr {              |
+|                               |               | * *D class;                          |
+|                               |               | * *void\* handle;*                   |
+|                               |               | *} CONTAINER;*                       |
++-------------------------------+---------------+--------------------------------------+
+| ``<thread>``                  | *D\_THREAD\** | *typedef struct \_dth {              |
+|                               |               | * *D class;                          |
+|                               |               | * *void\* handle1;*                  |
+|                               |               | *void\* handle2;*                    |
+|                               |               | *} D\_THREAD;*                       |
++-------------------------------+---------------+--------------------------------------+
 
 Compiler Support for the Portability Interface
 ==============================================

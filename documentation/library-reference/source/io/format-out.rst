@@ -31,8 +31,8 @@ This section contains a reference entry for each item exported from the
 
    :signature: format-out *control-string* #rest *arguments* => ()
 
-   :parameter control-string: An instance of ``<string>``.
-   :parameter #rest arguments: Instances of ``<object>``.
+   :parameter control-string: An instance of :drm:`<string>`.
+   :parameter #rest arguments: Instances of :drm:`<object>`.
 
    :description:
 
@@ -53,10 +53,10 @@ This section contains a reference entry for each item exported from the
 
    :signature: format-out *control-string* #rest *arguments* => ()
 
-   :parameter control-string: An instance of ``<byte-string>``.
-   :parameter #rest arguments: Instances of ``<object>``.
+   :parameter control-string: An instance of :drm:`<byte-string>`.
+   :parameter #rest arguments: Instances of :drm:`<object>`.
 
    :description:
 
    Formats its arguments on the standard output. There is one method for
-   :gf:`format-out`, and it is specialized to instances of ``<byte-string>``.
+   :gf:`format-out`, and it is specialized to instances of :drm:`<byte-string>`.

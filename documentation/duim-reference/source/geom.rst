@@ -16,7 +16,7 @@ The class hierarchy for DUIM-Geometry
 =====================================
 
 The base classes for classes in the DUIM-Geometry library are ``<region>``
-and ``<transform>``, both of which are subclasses of ``<object>``. While
+and ``<transform>``, both of which are subclasses of :drm:`<object>`. While
 the ``<region>`` class has a number of subclasses, ``<transform>`` has no
 direct subclasses.
 
@@ -28,7 +28,7 @@ direct subclasses.
    transformation classes provided by DUIM are immutable.
 
 In addition, there are a number of error classes which may be signalled.
-These are all subclasses of ``<error>``.
+These are all subclasses of :drm:`<error>`.
 
 The <region> class and its subclasses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

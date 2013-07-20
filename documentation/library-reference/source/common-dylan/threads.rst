@@ -41,7 +41,7 @@ state.
 In some circumstances, when a slot or a variable is specialized to be of
 a particularly constrained type, the Threads module does not guarantee
 atomicity of assignments. Such a type may include a subtype of
-``<double-float>`` or a subtype of ``<extended-float>``. It may not include
+:drm:`<double-float>` or a subtype of :drm:`<extended-float>`. It may not include
 any other type that is either defined in the current specification of
 the Dylan language, or that could be created from standard facilities
 provided by the current specification of the language. This restriction
@@ -263,11 +263,11 @@ Dylan language constructs.
 
 The library guarantees that *element* and *element-setter* will be
 atomic for all of Dylan’s non-stretchy built-in collection classes, and
-for ``<table>``, except for subclasses of ``<string>``, and limited
+for :drm:`<table>`, except for subclasses of :drm:`<string>`, and limited
 collections where the elements are constrained to be either of a type
 for which slots and variables do not guarantee atomicity (see
-`Atomicity`_) or a subtype of ``<character>``, or of a proper subtype of
-``<integer>``. This design is intended to permit implementations to use
+`Atomicity`_) or a subtype of :drm:`<character>`, or of a proper subtype of
+:drm:`<integer>`. This design is intended to permit implementations to use
 efficient representations for element values, which use either more or
 less space than a normal Dylan value. It is undefined whether any of
 the other standard Dylan functions are atomic. Where atomicity is not
@@ -418,9 +418,9 @@ Operations on threads
    The class of threads.
 
    :superclasses: <object>
-   :keyword function: An instance of ``<function>``. Required.
+   :keyword function: An instance of :drm:`<function>`. Required.
    :keyword priority: A signed integer.
-   :keyword name: An instance of ``<string>``.
+   :keyword name: An instance of :drm:`<string>`.
 
    :description:
 
@@ -570,7 +570,7 @@ Basic features
 
    :superclasses: <object>
 
-   :keyword name: An instance of ``<string>``.
+   :keyword name: An instance of :drm:`<string>`.
 
    :description:
 
@@ -606,9 +606,9 @@ Basic features
    :parameter object: An instance of :class:`<synchronization\>`.
    :parameter timeout: Time-out interval. If the value is ``#f``
       (the default), the time-out interval never elapses. Otherwise
-      the value should be a ``<real>``, corresponding to the desired
+      the value should be a :drm:`<real>`, corresponding to the desired
       interval in seconds.
-   :value success: An instance of ``<boolean>``.
+   :value success: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -710,12 +710,12 @@ Locks
    :param lock: An instance of :class:`<lock>`.
    :param keys: Zero or more of the keywords provided by :gf:`wait-for`.
    :param body: A body of Dylan code.
-   :value values: Zero or more instances of ``<object>``.
+   :value values: Zero or more instances of :drm:`<object>`.
 
    :conditions:
 
      *with-lock* may signal a condition of the following class (a
-     subclass of ``<serious-condition>``):
+     subclass of :drm:`<serious-condition>`):
 
      ``<timeout-expired>``
 
@@ -802,9 +802,9 @@ Semaphores
       semaphore object to wait for.
    :parameter #key timeout: Time-out interval. If the value is ``#f``
       (the default), the time-out interval never elapses.
-      Otherwise the value should be a ``<real>``, corresponding
+      Otherwise the value should be a :drm:`<real>`, corresponding
       to the desired interval in seconds.
-   :value success: An instance of ``<boolean>``.
+   :value success: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -828,7 +828,7 @@ Semaphores
 
      An implementation of this *release* method is permitted to signal a
      condition of the following class, which is a subclass of
-     ``<error>``:
+     :drm:`<error>`:
 
      ``<count-exceeded-error>``
 
@@ -895,7 +895,7 @@ Exclusive locks
 
      Implementations of *release* methods for subclasses of
      :class:`<exclusive-lock>` are permitted to signal a condition
-     of the following class, which is a subclass of ``<error>``:
+     of the following class, which is a subclass of :drm:`<error>`:
 
      ``<not-owned-error>``
 
@@ -921,7 +921,7 @@ Exclusive locks
    :signature: owned? *object* => *owned?*
 
    :parameter object: An instance of :class:`<exclusive-lock>`.
-   :value owned?: An instance of ``<boolean>``.
+   :value owned?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -957,9 +957,9 @@ Recursive locks
    :parameter object: An instance of :class:`<recursive-lock>`.
    :parameter #key timeout: Time-out interval. If the value is ``#f``
       (the default), the time-out interval never elapses. Otherwise
-      the value should be a ``<real>``, corresponding to the desired
+      the value should be a :drm:`<real>`, corresponding to the desired
       interval in seconds.
-   :value success: An instance of ``<boolean>``.
+   :value success: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -994,7 +994,7 @@ Recursive locks
    :signature: owned? *object* => *owned?*
 
    :parameter object: An instance of `<recursive-lock>`.
-   :value owned?: An instance of ``<boolean>``.
+   :value owned?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1031,9 +1031,9 @@ Simple locks
    :parameter object: An instance of :class:`<simple-lock>`.
    :parameter #key timeout: Time-out interval. If the value is ``#f``
      (the default), the time-out interval never elapses. Otherwise the
-     value should be a ``<real>``, corresponding to the desired interval
+     value should be a :drm:`<real>`, corresponding to the desired interval
      in seconds.
-   :value success: An instance of ``<boolean>``.
+   :value success: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1070,7 +1070,7 @@ Simple locks
    :signature: owned? *object* => *owned?*
 
    :parameter object: An instance of :class:`<simple-lock>`.
-   :value owned?: An instance of ``<boolean>``.
+   :value owned?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1128,12 +1128,12 @@ Multiple reader / single writer locks
    :parameter object: An instance of :class:`<read-write-lock>`.
    :parameter #key timeout: Time-out interval. If the value is ``#f``
      (the default), the time-out interval never elapses. Otherwise the
-     value should be a ``<real>``, corresponding to the desired interval
+     value should be a :drm:`<real>`, corresponding to the desired interval
      in seconds.
    :parameter #key mode: The mode of the lock to wait for. Valid values
      are ``#"read"`` (the default) and ``#"write"``, which wait for locks
      in read mode and write mode respectively.
-   :value success: An instance of ``<boolean>``.
+   :value success: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1180,7 +1180,7 @@ Multiple reader / single writer locks
    :signature: owned? *object* => *owned?*
 
    :parameter object: An instance of :class:`<read-write-lock>`.
-   :value owned?: An instance of ``<boolean>``.
+   :value owned?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1241,9 +1241,9 @@ Notifications
 
      This example shows how to use a notification and an associated lock to
      implement a queue. The variable *\*queue\** is the actual queue object
-     (a ``<deque>``). Queue access is performed by interlocking pushes and
-     pops on the ``<deque>``. The *\*queue\** variable can be a constant,
-     since it is the ``<deque>`` which is mutated and not the value of
+     (a :drm:`<deque>`). Queue access is performed by interlocking pushes and
+     pops on the :drm:`<deque>`. The *\*queue\** variable can be a constant,
+     since it is the :drm:`<deque>` which is mutated and not the value of
      *\*queue\**.
 
      .. code-block:: dylan
@@ -1320,9 +1320,9 @@ Notifications
    :parameter notification: An instance of :class:`<notification>`.
    :parameter #key timeout: Time-out interval. If the value is ``#f``
      (the default), the time-out interval never elapses. Otherwise the
-     value should be a ``<real>``, corresponding to the desired interval
+     value should be a :drm:`<real>`, corresponding to the desired interval
      in seconds.
-   :value success: An instance of ``<boolean>``.
+   :value success: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1345,7 +1345,7 @@ Notifications
    :conditions:
 
      Implementations of this *wait-for* method are permitted to signal a
-     condition of the following class, which is a subclass of ``<error>``:
+     condition of the following class, which is a subclass of :drm:`<error>`:
 
      ``<not-owned-error>``
 
@@ -1368,7 +1368,7 @@ Notifications
 
      Implementations of this *release* method are permitted to signal a
      condition of the following class, which is a subclass of
-     ``<error>``:
+     :drm:`<error>`:
 
      ``<not-owned-error>``
 
@@ -1396,7 +1396,7 @@ Notifications
    :conditions:
 
      Implementations of the *release-all* function are permitted to signal a
-     condition of the following class, which is a subclass of ``<error>``:
+     condition of the following class, which is a subclass of :drm:`<error>`:
 
      ``<not-owned-error>``
 
@@ -1420,7 +1420,7 @@ Timers
 
    :signature: sleep *interval* => ()
 
-   :parameter interval: An instance of ``<real>``.
+   :parameter interval: An instance of :drm:`<real>`.
 
    :description:
 
@@ -1676,7 +1676,7 @@ Conditional update
    :conditions:
 
      ``conditional-update!`` may signal a condition of the following class
-     (which is a subclass of ``<error>``), unless a *failure* clause is
+     (which is a subclass of :drm:`<error>`), unless a *failure* clause is
      supplied.
 
      ``<conditional-update-error>``
@@ -1710,8 +1710,8 @@ Conditional update
      If the implementation provides the extended form of
      :macro:`conditional-update!`, *place* can also be a
      function call.
-   :parameter by: An instance of ``<object>``. Default value: 1.
-   :value new-value: An instance of ``<object>``.
+   :parameter by: An instance of :drm:`<object>`. Default value: 1.
+   :value new-value: An instance of :drm:`<object>`.
 
    :description:
 
@@ -1759,8 +1759,8 @@ Conditional update
      If the implementation provides the extended form of
      :macro:`conditional-update!`, *place* can also be a
      function call.
-   :parameter by: An instance of ``<object>``. Default value: 1.
-   :value new-value: An instance of ``<object>``.
+   :parameter by: An instance of :drm:`<object>`. Default value: 1.
+   :value new-value: An instance of :drm:`<object>`.
 
    :description:
 

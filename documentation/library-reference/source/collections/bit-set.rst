@@ -63,7 +63,7 @@ The bit-set Module
    :signature: infinite? *set* => *result*
 
    :parameter set: An instance of :class:`<bit-set>`.
-   :value result: An instance of ``<boolean>``.
+   :value result: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -75,8 +75,8 @@ The bit-set Module
    :signature: member? *set* *element* => *result*
 
    :parameter set: An instance of :class:`<bit-set>`.
-   :parameter element: An instance of ``<integer>``.
-   :value result: An instance of ``<boolean>``.
+   :parameter element: An instance of :drm:`<integer>`.
+   :value result: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -103,7 +103,7 @@ The bit-set Module
    :signature: set-add! *set* *element* => *new-set*
 
    :parameter set: An instance of :class:`<bit-set>`.
-   :parameter element: An instance of ``<integer>``.
+   :parameter element: An instance of :drm:`<integer>`.
    :value new-set: An instance of :class:`<bit-set>`.
 
    :description:
@@ -200,7 +200,7 @@ The bit-set Module
    :signature: set-remove *set* *element* => *new-set*
 
    :parameter set: An instance of :class:`<bit-set>`.
-   :parameter element: An instance of ``<integer>``.
+   :parameter element: An instance of :drm:`<integer>`.
    :value new-set: An instance of :class:`<bit-set>`.
 
    :description:
@@ -215,7 +215,7 @@ The bit-set Module
    :signature: set-remove! *set* *element* => *new-set*
 
    :parameter set: An instance of :class:`<bit-set>`.
-   :parameter element: An instance of ``<integer>``.
+   :parameter element: An instance of :drm:`<integer>`.
    :value new-set: An instance of :class:`<bit-set>`.
 
    :description:
@@ -260,7 +260,7 @@ The bit-set Module
    :signature: size *set* => *false-or-integer*
 
    :parameter set: An instance of :class:`<bit-set>`.
-   :value size: Either ``#f`` or an instance of ``<integer>``.
+   :value size: Either ``#f`` or an instance of :drm:`<integer>`.
 
    :description:
 

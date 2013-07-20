@@ -592,7 +592,7 @@ default accessor on the ``<reversi-board>`` slot of the same name.
     end method reversi-board-write-data;
 
 Second, we can see that the *reversi-board-squares* slot holds a
-sequence, and that the sequence does not have an ``<integer>`` element
+sequence, and that the sequence does not have an :drm:`<integer>` element
 type.
 
 So we still do not know where the integer that caused the exception came
@@ -666,7 +666,7 @@ This is what we have learned about the error so far:
    ``reversi-square-write-data``.
 -  The ``reversi-square-write-data`` method uses the ``number-for-piece``
    method to translate board square representations (type ``<piece>`` )
-   into instances of ``<integer>``. The ``<piece>`` values are either ``#f``
+   into instances of :drm:`<integer>`. The ``<piece>`` values are either ``#f``
    (no piece on this square), ``#"white"`` (a white piece on this square),
    or ``#"black"`` (a black piece on this square); those values are
    translated into 0, 1, and 2 respectively. That is why *n* could have
@@ -689,7 +689,7 @@ So we know that Reversi is trying to write integer values to a file
 stream with a ``<byte-character>`` element type, and the exception occurs
 during the attempt to coerce an integer into a byte character.
 
-We could simply change the file stream’s element type to ``<integer>``.
+We could simply change the file stream’s element type to :drm:`<integer>`.
 
 In fact, we have not yet looked at the call that created the file
 stream. That call is ``reversi-game-save-game``.
@@ -712,7 +712,7 @@ An editor window opens on *saving.dylan*.
 
 We now have *saving.dylan* in the editor, and the insertion point is
 positioned at the start of the definition for ``reversi-game-save-game``.
-We can make the change to ``<integer>``, but should first check
+We can make the change to :drm:`<integer>`, but should first check
 ``reversi-game-load-game``, the method that loads games saved by
 ``reversi-game-save-game``, to see what sort of file-stream elements it
 expects to read back.
@@ -735,7 +735,7 @@ The class ``<byte>`` is actually a constant value, defined:
 
 So there is no harm in changing the ``element-type:`` argument in
 ``reversi-game-save-game``’s call to ``make`` from ``<byte-character>`` to
-``<integer>`` (because 0, 1, and 2 are all within the defined range for
+:drm:`<integer>` (because 0, 1, and 2 are all within the defined range for
 ``<byte>``), but for symmetry we may as well change it to ``<byte>``.
 
 Fix the definition of ``reversi-game-save-game``.

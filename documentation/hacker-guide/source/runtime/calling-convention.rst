@@ -30,7 +30,7 @@ registers to pass these parameters.
 +===========+================================================+
 | arg-count | number of args passed                          |
 +-----------+------------------------------------------------+
-| function  | the ``<function>`` object being called         |
+| function  | the :drm:`<function>` object being called      |
 +-----------+------------------------------------------------+
 | mlist     | the next-method list (``#f`` for direct-entry) |
 +-----------+------------------------------------------------+
@@ -186,7 +186,7 @@ that value.
 The Method Entry Point Convention
 ---------------------------------
 
-All ``<method>`` objects support the *method entry point* convention. Each
+All :drm:`<method>` objects support the *method entry point* convention. Each
 method object has an *MEP* slot containing the code to support this
 convention. When a method is called by a generic function (or via next
 method), the caller uses a dedicated entry point (available from the

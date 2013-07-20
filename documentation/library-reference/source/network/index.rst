@@ -121,9 +121,9 @@ generic functions and constants.
 
    :superclasses: <object>
 
-   :keyword name: An instance of ``<string>`` representing a symbolic
+   :keyword name: An instance of :drm:`<string>` representing a symbolic
      internet address.
-   :keyword address: An instance of ``<string>`` representing a
+   :keyword address: An instance of :drm:`<string>` representing a
      presentation (dotted) form Internet address or an instance of
      :class:`<numeric-address>` (see below).
 
@@ -155,7 +155,7 @@ generic functions and constants.
 
    :description:
 
-     Returns an instance of ``<string>`` containing a symbolic host
+     Returns an instance of :drm:`<string>` containing a symbolic host
      name. The *internet-address* argument must be an instance of
      :class:`<internet-address>`.
 
@@ -176,7 +176,7 @@ generic functions and constants.
 
    :description:
 
-     Returns an instance of ``<string>`` containing the presentation form of
+     Returns an instance of :drm:`<string>` containing the presentation form of
      the host address. In the case of multi-homed hosts this will usually be
      the same as:
 
@@ -202,7 +202,7 @@ generic functions and constants.
 
    :description:
 
-     Returns an instance of ``<sequence>`` whose elements are
+     Returns an instance of :drm:`<sequence>` whose elements are
      :class:`<internet-address>` objects containing all known addresses
      for the host.
 
@@ -213,8 +213,8 @@ generic functions and constants.
 
    :description:
 
-     Returns an instance of ``<sequence>`` whose elements are instances
-     of ``<string>`` representing alternative names for the host.
+     Returns an instance of :drm:`<sequence>` whose elements are instances
+     of :drm:`<string>` representing alternative names for the host.
 
 .. function:: local-host-name
 
@@ -222,7 +222,7 @@ generic functions and constants.
 
    :description:
 
-     Returns an instance of ``<string>`` containing a symbolic host
+     Returns an instance of :drm:`<string>` containing a symbolic host
      name.
 
 The <ipv6-address> class
@@ -403,7 +403,7 @@ and for the following generic functions:
 
    :parameter socket: An instance of :class:`<socket>`,
      :class:`<datagram-socket>` or :class:`<server-socket>`.
-   :value port-number: An instance of ``<integer>``.
+   :value port-number: An instance of :drm:`<integer>`.
 
 .. generic-function:: socket-descriptor
    :open:
@@ -436,14 +436,14 @@ The <server-socket> class
 
    :superclasses: :class:`<abstract-socket>`
 
-   :keyword service: An instance of ``<string>`` containing an abstract
+   :keyword service: An instance of :drm:`<string>` containing an abstract
      name for a service with a "well-known" port, such as ``"ftp"`` or
      ``"daytime"``. Valid names depend on the configuration of the DNS.
      Required unless ``port:`` is supplied.
-   :keyword port: An instance of ``<integer>`` identifying the port on
+   :keyword port: An instance of :drm:`<integer>` identifying the port on
      which the ``<server-socket>`` should listen for connection requests.
      Required unless ``service:`` is supplied.
-   :keyword protocol: An instance of ``<string>`` naming the protocol.
+   :keyword protocol: An instance of :drm:`<string>` naming the protocol.
      Currently ``"tcp"`` is the only supported protocol. You can create
      instances of protocol-specific subclasses as an alternative to using
      the ``protocol:`` keyword. For example, ``make(<server-socket>,
@@ -573,7 +573,7 @@ The <socket> class
      keyword is an inherited streams class keyword. See the Streams
      library documentation in the *System and I/O* library reference for a
      full description.
-   :keyword element-type: An instance of ``<class>``. Useful values are
+   :keyword element-type: An instance of :drm:`<class>`. Useful values are
      :class:`<byte-character>` and ``<byte>``. This keyword is an
      inherited streams class keyword. See the Streams library
      documentation in the *System and I/O* library reference for a full
@@ -587,7 +587,7 @@ The <buffered-socket> class
    :superclasses: :class:`<socket>`, :class:`<double-buffered-stream>`
 
 
-   :keyword force-output-before-read?: An instance of ``<boolean>``.
+   :keyword force-output-before-read?: An instance of :drm:`<boolean>`.
      Defaults value: ``#t``. The methods which implement the stream
      reading protocols (:gf:`read`, :gf:`read-line`, :gf:`read-element`
      and so on) for instances of :class:`<socket>` call :gf:`force-output`
@@ -622,22 +622,22 @@ The class of TCP client sockets.
    :superclasses: :class:`<buffered-socket>`
 
    :keyword host: An instance of :class:`<internet-address>` or
-     ``<string>``. The remote host to connect to. The ``<string>`` may be
+     :drm:`<string>`. The remote host to connect to. The :drm:`<string>` may be
      either a host name or a presentation-form Internet address. Required.
-   :keyword service: An instance of ``<string>``. A ``<string>``
+   :keyword service: An instance of :drm:`<string>`. A :drm:`<string>`
      containing an abstract name for a service with a "well-known" port,
      such as ``"ftp"`` or ``"daytime"``. Valid names depend on the
      configuration of the DNS. Required unless ``port:`` is supplied.
-   :keyword protocol: An instance of ``<string>`` naming the protocol.
+   :keyword protocol: An instance of :drm:`<string>` naming the protocol.
      Currently ``#"tcp"`` and ``#"udp"`` are the only supported protocols.
      You can create instances of protocol-specific subclasses as an
      alternative to using the ``protocol:`` keyword. For example
      ``make(<socket>, protocol: #"tcp", …)`` is equivalent to
      ``make(<TCP-socket>, …)``. :drm:`make` on :class:`<socket>` returns
      an instance of ``<tcp-socket>`` by default.
-   :keyword port: An instance of ``<integer>`` representing the remote
+   :keyword port: An instance of :drm:`<integer>` representing the remote
      port to connect to. Required unless ``service:`` is supplied.
-   :keyword element-type: An instance of ``<class>``. Useful values for
+   :keyword element-type: An instance of :drm:`<class>`. Useful values for
      :class:`<tcp-streams>` are :class:`<byte-character>`` and ``<byte>``.
      This keyword is an inherited streams class keyword. See
      :doc:`../io/streams` for a full description.
@@ -650,7 +650,7 @@ The class of TCP client sockets.
    :signature: remote-port *socket* => *port-number*
 
    :parameter socket: An instance of :class:`<socket>`.
-   :value port-number: An instance of ``<integer>``.
+   :value port-number: An instance of :drm:`<integer>`.
 
 .. generic-function:: remote-host
    :open:
@@ -674,23 +674,23 @@ The class of UDP client sockets.
    :superclasses: :class:`<buffered-socket>`
 
    :keyword host: An instance of :class:`<internet-address>` or
-     ``<string>``. The remote host to connect to. The ``<string>`` may be
+     :drm:`<string>`. The remote host to connect to. The :drm:`<string>` may be
      either a host name or a *presentation-form* Internet address.
      Required.
-   :keyword service: An instance of ``<string>``. A ``<string>``
+   :keyword service: An instance of :drm:`<string>`. A :drm:`<string>`
      containing an abstract name for a service with a "well-known port",
      such as ``"ftp"`` or ``"daytime"``. Valid names depend on the
      configuration of the DNS. Required unless ``port:`` is supplied.
-   :keyword protocol: An instance of ``<string>`` naming the protocol.
+   :keyword protocol: An instance of :drm:`<string>` naming the protocol.
      Currently ``#"tcp"`` and ``#"udp"`` are the only supported protocols.
      You can create instances of protocol-specific subclasses as an
      alternative to using the ``protocol:`` keyword. For example
      ``make(<socket>, protocol: "udp", …)`` is equivalent to
      ``make(<UDP-socket>, …)``. :drm:`make` on :class:`<socket>` returns
      an instance of :class:`<tcp-socket>` by default.
-   :keyword port: An instance of ``<integer>`` representing the remote
+   :keyword port: An instance of :drm:`<integer>` representing the remote
      port to connect to. Required unless ``service:`` is supplied.
-   :keyword element-type: An instance of ``<class>``. Useful values for
+   :keyword element-type: An instance of :drm:`<class>`. Useful values for
      ``<udp-socket>`` s are ``<byte-character>`` and ``<byte>``. This
      keyword is an inherited streams class keyword. See :doc:`../io/streams` for
      a full description.
@@ -921,16 +921,16 @@ This section lists the socket condition classes in the Network library.
 
      *WSA-numeric-error-code*
        Contains the numeric error code that was returned. An instance of
-       ``<integer>``.
+       :drm:`<integer>`.
 
      *WSA-symbolic-error-code*
-       Contains an instance of ``<string>`` giving the symbolic
+       Contains an instance of :drm:`<string>` giving the symbolic
        (human-readable) form of the error code. For example, the string
        might be *"wsanotsock"*.
 
      *explanation*
-       An explanation if any of the error. An instance of ``<string>``.
+       An explanation if any of the error. An instance of :drm:`<string>`.
 
      *calling-function*
        The name of Winsock2 FFI interface function which returned the
-       error code. An instance of ``<string>``.
+       error code. An instance of :drm:`<string>`.

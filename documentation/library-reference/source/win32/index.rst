@@ -164,7 +164,7 @@ Mapping C types onto Dylan classes
 
 The multitude of integer data types in C code (``int``, ``long``,
 ``unsigned``, ``ULONG``, ``DWORD``, ``LRESULT``, and so on) are all
-designated as ``<integer>`` (or some appropriate subrange thereof) in
+designated as :drm:`<integer>` (or some appropriate subrange thereof) in
 Dylan method argument types. However, a ``<machine-word>`` needs to be
 used to represent values that do not fit in the signed 30-bit
 representation of an integer.
@@ -173,7 +173,7 @@ Names such as ``<DWORD>`` should not be used in application code because
 they refer to the FFI designation of the C value representation, not to
 a Dylan data type.
 
-The C types ``BOOL`` and ``BOOLEAN`` are both mapped to ``<boolean>`` in
+The C types ``BOOL`` and ``BOOLEAN`` are both mapped to :drm:`<boolean>` in
 Dylan. Use ``#t`` and ``#f`` instead of ``TRUE`` and ``FALSE``.
 
 .. note:: Beware that some functions, such as *TranslateAccelerator*,
@@ -183,11 +183,11 @@ Dylan. Use ``#t`` and ``#f`` instead of ``TRUE`` and ``FALSE``.
 
    Similarly, watch out for cases where C code passes ``TRUE`` or ``FALSE`` as
    an integer argument. To handle one common case, the Dylan implementation
-   of *MAKELPARAM* accepts either an ``<integer>`` or ``<boolean>`` as the
+   of *MAKELPARAM* accepts either an :drm:`<integer>` or :drm:`<boolean>` as the
    first argument.
 
 The C types ``CHAR``, ``WCHAR``, and ``TCHAR`` are all mapped to
-``<character>`` in Dylan. However, ``UCHAR`` is mapped to ``<integer>``
+:drm:`<character>` in Dylan. However, ``UCHAR`` is mapped to :drm:`<integer>`
 since that is how it is actually used.
 
 Most of the pointer types in the Windows API have several names; for
@@ -203,9 +203,9 @@ The *NP...* names are not defined in Dylan since they are not as
 commonly used.
 
 Values of type ``char*`` in C are represented as instances of class
-``<C-string>`` in Dylan. This is a subclass of ``<string>``, so all of the
+``<C-string>`` in Dylan. This is a subclass of :drm:`<string>`, so all of the
 normal string operations can be used directly. C function parameters of
-type *char\** will also accept an instance of ``<byte-string>`` ; a C
+type *char\** will also accept an instance of :drm:`<byte-string>` ; a C
 pointer is created to point to the characters of the Dylan data, so the
 string does not need to be copied. (Dylan byte strings maintain a NUL
 character at the end in order to allow them to be used directly by C.)
@@ -230,8 +230,8 @@ Consider a Windows function called *Foo* which is an alias for either
 *FooA* (an 8-bit character version) or *FooW* (a 16-bit character
 version). In Dylan, only the name *Foo* will be defined, but it will be
 a generic function with separate methods for arguments of types
-``<C-string>``, ``<C-unicode-string>``, ``<byte-string>`` or
-``<unicode-string>``. (Only the 8-bit versions will be supported in the
+``<C-string>``, ``<C-unicode-string>``, :drm:`<byte-string>` or
+:drm:`<unicode-string>`. (Only the 8-bit versions will be supported in the
 initial implementation, both because the compiler is not ready to handle
 Unicode and because it will not work on Windows 95.)
 
@@ -316,7 +316,7 @@ is consistent with what ``<WNDPROC>`` requires. For example:
       ...
 
 Note that the *uParam* and *lParam* arguments might receive values of
-either type ``<integer>`` or ``<machine-word>``, so it may be best not to
+either type :drm:`<integer>` or ``<machine-word>``, so it may be best not to
 specialize them. Often these values are not used directly anyway, but
 are passed to other functions (such as *LOWORD* and *HIWORD*) which
 have methods for handling either representation.
@@ -324,7 +324,7 @@ have methods for handling either representation.
 The other types of function supported by ``define callback`` are dialog
 functions (``<DLGPROC>``) and dialog hooks (*<LP...HOOKPROC>*), both of
 which have the same argument types as a window function, but return a
-``<boolean>``. (The dialog hook functions are actually declared in
+:drm:`<boolean>`. (The dialog hook functions are actually declared in
 *COMMDLG.H* as returning a *UINT*, but the value is always supposed to
 be ``TRUE`` or ``FALSE``, so the Dylan callback interface has been
 implemented using ``BOOL`` instead.)
@@ -340,7 +340,7 @@ The Win32-Kernel library provides the following utility functions.
 
    :description:
 
-     The *error-code* is an instance of ``<integer>`` or ``<machine-word>`` (type
+     The *error-code* is an instance of :drm:`<integer>` or ``<machine-word>`` (type
      unioned).
 
      The *error-code* argument is either a Windows a Windows error code
@@ -402,7 +402,7 @@ Handling Dylan conditions in a Win32 application
 
 The Win32-User library exports from its Win32-Default-Handler module a
 handler utility function called :func:`win32-last-handler`, defined on
-objects of class ``<serious-condition>``.
+objects of class :drm:`<serious-condition>`.
 
 .. function:: win32-last-handler
    :library: win32-user
@@ -507,10 +507,10 @@ Combining bit mask constants
 Where C code would use the *\|* operator to combine bit mask constants,
 Dylan code usually uses the *logior* function. However, a few such
 constants have values of type ``<machine-word>`` when they will not fit in
-a small integer, and *logior* only works on instances of ``<integer>``.
+a small integer, and *logior* only works on instances of :drm:`<integer>`.
 Because of this, the *win32-common* library exports a *%logior* function
 which is used like *logior* except that it accepts values of either type
-``<integer>`` or ``<machine-word>`` and returns a ``<machine-word>`` result.
+:drm:`<integer>` or ``<machine-word>`` and returns a ``<machine-word>`` result.
 It can be used in most places that accept a bit mask (C types *DWORD*,
 *ULONG*, *LPARAM*, and so on), but must be used if any of the
 arguments are a ``<machine-word>``. The contexts where this is likely to
@@ -535,7 +535,7 @@ The types ``<FARPROC>`` and ``<PROC>`` are defined as equivalent to
 to a routine taking a ``<FARPROC>`` without needing to do any type
 conversion like that needed in C.
 
-Type casts between handles and integers (``<integer>`` or
+Type casts between handles and integers (:drm:`<integer>` or
 ``<machine-word>``) can be done by using *as*. For example:
 
 .. code-block:: dylan
