@@ -45,7 +45,7 @@ Character Class Predicates
 
    :signature: alphabetic? (string-or-character, #key) => (alphabetic?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value alphabetic?: An instance of ``<boolean>``.
+   :value alphabetic?: An instance of :drm:`<boolean>`.
 
 .. method:: alphabetic?
    :specializer: <character>
@@ -55,8 +55,8 @@ Character Class Predicates
    A-Z.  Otherwise returns ``#f``.
 
    :signature: alphabetic? (character) => (alphabetic?)
-   :parameter character: An instance of ``<character>``.
-   :value alphabetic?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value alphabetic?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -72,12 +72,12 @@ Character Class Predicates
    set a-z or A-Z.  Otherwise returns ``#f``.
 
    :signature: alphabetic? (string, #key start, end) => (alphabetic?)
-   :parameter string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: Index into ``string`` at which to start
-     the comparison.  An instance of ``<integer>``, default 0.
+     the comparison.  An instance of :drm:`<integer>`, default 0.
    :parameter #key end: Index into ``string`` at which to stop
-     the comparison.  An instance of ``<integer>``, default ``string.size``.
-   :value alphabetic?: An instance of ``<boolean>``.
+     the comparison.  An instance of :drm:`<integer>`, default ``string.size``.
+   :value alphabetic?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -95,7 +95,7 @@ Character Class Predicates
 
    :signature: alphanumeric? (string-or-character, #key) => (alphanumeric?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value alphanumeric?: An instance of ``<boolean>``.
+   :value alphanumeric?: An instance of :drm:`<boolean>`.
 
 .. method:: alphanumeric?
    :specializer: <character>
@@ -105,8 +105,8 @@ Character Class Predicates
    a-z, A-Z, or 0-9, otherwise ``#f``.
 
    :signature: alphanumeric? (character) => (alphanumeric?)
-   :parameter character: An instance of ``<character>``.
-   :value alphanumeric?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value alphanumeric?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -123,8 +123,8 @@ Character Class Predicates
    set a-z, A-Z, or 0-9, otherwise ``#f``.
 
    :signature: alphanumeric? (string) => (alphanumeric?)
-   :parameter string: An instance of ``<string>``.
-   :value alphanumeric?: An instance of ``<boolean>``.
+   :parameter string: An instance of :drm:`<string>`.
+   :value alphanumeric?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -143,7 +143,7 @@ Character Class Predicates
 
    :signature: control? (string-or-character, #key) => (control?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value control?: An instance of ``<boolean>``.
+   :value control?: An instance of :drm:`<boolean>`.
 
 .. method:: control?
    :specializer: <character>
@@ -153,8 +153,8 @@ Character Class Predicates
    character, otherwise ``#f``.
 
    :signature: control? (character) => (control?)
-   :parameter character: An instance of ``<character>``.
-   :value control?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value control?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -170,12 +170,12 @@ Character Class Predicates
    non-whitespace characters.
 
    :signature: control? (string) => (control?)
-   :parameter string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: Index into ``string`` at which to start
-     the comparison.  An instance of ``<integer>``, default 0.
+     the comparison.  An instance of :drm:`<integer>`, default 0.
    :parameter #key end: Index into ``string`` at which to stop
-     the comparison.  An instance of ``<integer>``, default ``string.size``.
-   :value control?: An instance of ``<boolean>``.
+     the comparison.  An instance of :drm:`<integer>`, default ``string.size``.
+   :value control?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -194,7 +194,7 @@ Character Class Predicates
 
    :signature: graphic? (string-or-character, #key) => (graphic?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value graphic?: An instance of ``<boolean>``.
+   :value graphic?: An instance of :drm:`<boolean>`.
 
 .. method:: graphic?
    :specializer: <character>
@@ -205,8 +205,8 @@ Character Class Predicates
    ASCII character set.
 
    :signature: graphic? (character, #key) => (graphic?)
-   :parameter character: An instance of ``<character>``.
-   :value graphic?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value graphic?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -223,12 +223,12 @@ Character Class Predicates
    (Space) and 126 (~).
 
    :signature: graphic? (string, #key) => (graphic?)
-   :parameter string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: Index into ``string`` at which to start
-     the comparison.  An instance of ``<integer>``, default 0.
+     the comparison.  An instance of :drm:`<integer>`, default 0.
    :parameter #key end: Index into ``string`` at which to stop
-     the comparison.  An instance of ``<integer>``, default ``string.size``.
-   :value graphic?: An instance of ``<boolean>``.
+     the comparison.  An instance of :drm:`<integer>`, default ``string.size``.
+   :value graphic?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -247,7 +247,7 @@ Character Class Predicates
 
    :signature: printable? (string-or-character, #key) => (printable?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value printable?: An instance of ``<boolean>``.
+   :value printable?: An instance of :drm:`<boolean>`.
 
 .. method:: printable?
    :specializer: <character>
@@ -258,8 +258,8 @@ Character Class Predicates
    returned.
 
    :signature: printable? (character, #key) => (printable?)
-   :parameter character: An instance of ``<character>``.
-   :value printable?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value printable?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -277,12 +277,12 @@ Character Class Predicates
    Otherwise ``#f`` is returned.
 
    :signature: printable? (string, #key) => (printable?)
-   :parameter string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: Index into ``string`` at which to start
-     the comparison.  An instance of ``<integer>``, default 0.
+     the comparison.  An instance of :drm:`<integer>`, default 0.
    :parameter #key end: Index into ``string`` at which to stop
-     the comparison.  An instance of ``<integer>``, default ``string.size``.
-   :value printable?: An instance of ``<boolean>``.
+     the comparison.  An instance of :drm:`<integer>`, default ``string.size``.
+   :value printable?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -301,7 +301,7 @@ Character Class Predicates
 
    :signature: whitespace? (string-or-character, #key) => (whitespace?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value whitespace?: An instance of ``<boolean>``.
+   :value whitespace?: An instance of :drm:`<boolean>`.
 
 .. method:: whitespace?
    :specializer: <character>
@@ -312,8 +312,8 @@ Character Class Predicates
    returned.
 
    :signature: whitespace? (character, #key) => (whitespace?)
-   :parameter character: An instance of ``<character>``.
-   :value whitespace?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value whitespace?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -331,12 +331,12 @@ Character Class Predicates
    '\\f' (Formfeed), or '\\r' (Return).  Otherwise ``#f`` is returned.
 
    :signature: whitespace? (string, #key) => (whitespace?)
-   :parameter string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: Index into ``string`` at which to start
-     the comparison.  An instance of ``<integer>``, default 0.
+     the comparison.  An instance of :drm:`<integer>`, default 0.
    :parameter #key end: Index into ``string`` at which to stop
-     the comparison.  An instance of ``<integer>``, default ``string.size``.
-   :value whitespace?: An instance of ``<boolean>``.
+     the comparison.  An instance of :drm:`<integer>`, default ``string.size``.
+   :value whitespace?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -353,7 +353,7 @@ Character Class Predicates
 
    :signature: decimal-digit? (string-or-character, #key) => (decimal-digit?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value decimal-digit?: An instance of ``<boolean>``.
+   :value decimal-digit?: An instance of :drm:`<boolean>`.
 
 .. method:: decimal-digit?
    :specializer: <character>
@@ -363,8 +363,8 @@ Character Class Predicates
    otherwise ``#f`` is returned.
 
    :signature: decimal-digit? (character, #key) => (decimal-digit?)
-   :parameter character: An instance of ``<character>``.
-   :value decimal-digit?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value decimal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -380,12 +380,12 @@ Character Class Predicates
    set [0-9], otherwise ``#f`` is returned.
 
    :signature: decimal-digit? (string, #key) => (decimal-digit?)
-   :parameter string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: Index into ``string`` at which to start
-     the comparison.  An instance of ``<integer>``, default 0.
+     the comparison.  An instance of :drm:`<integer>`, default 0.
    :parameter #key end: Index into ``string`` at which to stop
-     the comparison.  An instance of ``<integer>``, default ``string.size``.
-   :value decimal-digit?: An instance of ``<boolean>``.
+     the comparison.  An instance of :drm:`<integer>`, default ``string.size``.
+   :value decimal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -404,7 +404,7 @@ Character Class Predicates
 
    :signature: hexadecimal-digit? (string-or-character, #key) => (hexadecimal-digit?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value hexadecimal-digit?: An instance of ``<boolean>``.
+   :value hexadecimal-digit?: An instance of :drm:`<boolean>`.
 
 .. method:: hexadecimal-digit?
    :specializer: <character>
@@ -414,8 +414,8 @@ Character Class Predicates
    otherwise ``#f`` is returned.
 
    :signature: hexadecimal-digit? (character, #key) => (hexadecimal-digit?)
-   :parameter character: An instance of ``<character>``.
-   :value hexadecimal-digit?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value hexadecimal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -432,12 +432,12 @@ Character Class Predicates
    set [0-9a-fA-F], otherwise ``#f`` is returned.
 
    :signature: hexadecimal-digit? (string, #key) => (hexadecimal-digit?)
-   :parameter string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: Index into ``string`` at which to start
-     the comparison.  An instance of ``<integer>``, default 0.
+     the comparison.  An instance of :drm:`<integer>`, default 0.
    :parameter #key end: Index into ``string`` at which to stop
-     the comparison.  An instance of ``<integer>``, default ``string.size``.
-   :value hexadecimal-digit?: An instance of ``<boolean>``.
+     the comparison.  An instance of :drm:`<integer>`, default ``string.size``.
+   :value hexadecimal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -456,7 +456,7 @@ Character Class Predicates
 
    :signature: octal-digit? (string-or-character, #key) => (octal-digit?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value octal-digit?: An instance of ``<boolean>``.
+   :value octal-digit?: An instance of :drm:`<boolean>`.
 
 .. method:: octal-digit?
    :specializer: <character>
@@ -466,8 +466,8 @@ Character Class Predicates
    otherwise ``#f`` is returned.
 
    :signature: octal-digit? (character, #key) => (octal-digit?)
-   :parameter character: An instance of ``<character>``.
-   :value octal-digit?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value octal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -484,12 +484,12 @@ Character Class Predicates
    set [0-9a-fA-F], otherwise ``#f`` is returned.
 
    :signature: octal-digit? (string, #key) => (octal-digit?)
-   :parameter string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.
    :parameter #key start: Index into ``string`` at which to start
-     the comparison.  An instance of ``<integer>``, default 0.
+     the comparison.  An instance of :drm:`<integer>`, default 0.
    :parameter #key end: Index into ``string`` at which to stop
-     the comparison.  An instance of ``<integer>``, default ``string.size``.
-   :value octal-digit?: An instance of ``<boolean>``.
+     the comparison.  An instance of :drm:`<integer>`, default ``string.size``.
+   :value octal-digit?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -508,15 +508,15 @@ Substring Functions
    Count how many times a substring pattern occurs in a larger string.
 
    :signature: count-substrings (big pattern #key start end ignore-case?) => (count)
-   :parameter big: An instance of ``<string>``.  The string in which to search.
-   :parameter pattern: An instance of ``<string>``.  The substring to search for.
-   :parameter #key start: An instance of ``<integer>``, default 0.  Where to start searching.
-   :parameter #key end: An instance of ``<integer>``, default ``big.size``.
+   :parameter big: An instance of :drm:`<string>`.  The string in which to search.
+   :parameter pattern: An instance of :drm:`<string>`.  The substring to search for.
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  Where to start searching.
+   :parameter #key end: An instance of :drm:`<integer>`, default ``big.size``.
      Where to stop searching.  Note that if ``pattern``
      is not completely between the bounds of ``start`` (inclusive) and
      ``end`` (exclusive) it will not be counted.
-   :parameter #key ignore-case?: An instance of ``<boolean>``, default ``#f``.
-   :value count: An instance of ``<integer>``.
+   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default ``#f``.
+   :value count: An instance of :drm:`<integer>`.
    :example:
 
    .. code-block:: dylan
@@ -532,14 +532,14 @@ Substring Functions
    ``#f`` if not found.
 
    :signature: find-substring (big pattern #key start end ignore-case?) => (index)
-   :parameter big: An instance of ``<string>``.  The string in which to search.
-   :parameter pattern: An instance of ``<string>``.  The substring to search for.
-   :parameter #key start: An instance of ``<integer>``, default 0.  Where to start searching.
-   :parameter #key end: An instance of ``<integer>``, default ``big.size``.
+   :parameter big: An instance of :drm:`<string>`.  The string in which to search.
+   :parameter pattern: An instance of :drm:`<string>`.  The substring to search for.
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  Where to start searching.
+   :parameter #key end: An instance of :drm:`<integer>`, default ``big.size``.
      Where to stop searching.  Note that if ``pattern``
      is not completely between the bounds of ``start`` (inclusive) and
      ``end`` (exclusive) it will not match.
-   :parameter #key ignore-case?: An instance of ``<boolean>``, default ``#f``.
+   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default ``#f``.
    :value index: An instance of ``false-or(<integer>)``.
    :example:
 
@@ -555,24 +555,24 @@ Substring Functions
    are no replacements the implementation may return ``big`` unmodified.
 
    :signature: replace-substrings (big pattern replacement #key count start end ignore-case?) => (new-string)
-   :parameter big: An instance of ``<string>``.  The string in which
+   :parameter big: An instance of :drm:`<string>`.  The string in which
      to search.
-   :parameter pattern: An instance of ``<string>``.  The substring
+   :parameter pattern: An instance of :drm:`<string>`.  The substring
      pattern to search for.
-   :parameter replacement: An instance of ``<string>``.  The string
+   :parameter replacement: An instance of :drm:`<string>`.  The string
      with which to replace ``pattern``.
    :parameter #key count: An instance of ``false-or(<integer>)``.  The
      number of occurrences to replace.  The default is ``#f``, meaning to
      replace all.  Replacements are performed from left to right
      within ``big`` until ``count`` has been reached.
-   :parameter #key start: An instance of ``<integer>``, default 0.  Where to
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  Where to
      start searching.
-   :parameter #key end: An instance of ``<integer>``, default
+   :parameter #key end: An instance of :drm:`<integer>`, default
      ``big.size``.  Where to stop searching.  Note that if ``pattern``
      is not completely between the bounds of ``start`` (inclusive) and
      ``end`` (exclusive) it will not be replaced.
-   :parameter #key ignore-case?: An instance of ``<boolean>``, default ``#f``.
-   :value new-string: An instance of ``<string>``.
+   :parameter #key ignore-case?: An instance of :drm:`<boolean>`, default ``#f``.
+   :value new-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -600,8 +600,8 @@ Case Conversion Functions
    Otherwise the character itself is returned.
 
    :signature: lowercase (character) => (new-character)
-   :parameter character: An instance of ``<character>``.
-   :value lowercase-character: An instance of ``<character>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value lowercase-character: An instance of :drm:`<character>`.
    :example:
 
    .. code-block:: dylan
@@ -618,12 +618,12 @@ Case Conversion Functions
    string unchanged if it contains no uppercase characters.
 
    :signature: lowercase (string) => (lowercase-string)
-   :parameter string: An instance of ``<string>``.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The index
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The index
      at which to start lowercasing.
-   :parameter #key end: An instance of ``<integer>``, default
+   :parameter #key end: An instance of :drm:`<integer>`, default
      ``string.size``.  The index before which to stop lowercasing.
-   :value lowercase-string: An instance of ``<string>``.
+   :value lowercase-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -650,8 +650,8 @@ Case Conversion Functions
    with :meth:`lowercase(<character>)`.
 
    :signature: lowercase! (character) => (new-character)
-   :parameter character: An instance of ``<character>``.
-   :value lowercase-character: An instance of ``<character>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value lowercase-character: An instance of :drm:`<character>`.
    :example:
 
    .. code-block:: dylan
@@ -667,12 +667,12 @@ Case Conversion Functions
    converted to lowercase.
 
    :signature: lowercase! (string) => (string)
-   :parameter string: An instance of ``<string>``.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The index
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The index
      at which to start lowercasing.
-   :parameter #key end: An instance of ``<integer>``, default
+   :parameter #key end: An instance of :drm:`<integer>`, default
      ``string.size``.  The index before which to stop lowercasing.
-   :value lowercase-string: An instance of ``<string>``.
+   :value lowercase-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -695,7 +695,7 @@ Case Conversion Functions
 
    :signature: lowercase? (string-or-character) => (is-lowercase?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value is-lowercase?: An instance of ``<boolean>``.
+   :value is-lowercase?: An instance of :drm:`<boolean>`.
 
 .. method:: lowercase?
    :specializer: <character>
@@ -705,8 +705,8 @@ Case Conversion Functions
    Otherwise ``#f`` is returned.
 
    :signature: lowercase? (character) => (is-lowercase?)
-   :parameter character: An instance of ``<character>``.
-   :value is-lowercase?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value is-lowercase?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -723,12 +723,12 @@ Case Conversion Functions
    alphabetic characters.  Otherwise ``#f`` is returned.
 
    :signature: lowercase? (string) => (is-lowercase?)
-   :parameter string: An instance of ``<string>``.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The index
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The index
      at which to start checking.
-   :parameter #key end: An instance of ``<integer>``, default
+   :parameter #key end: An instance of :drm:`<integer>`, default
      ``string.size``.  The index before which to stop checking.
-   :value is-lowercase?: An instance of ``<boolean>``.
+   :value is-lowercase?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -756,8 +756,8 @@ Case Conversion Functions
    Otherwise the character itself is returned.
 
    :signature: uppercase (character) => (new-character)
-   :parameter character: An instance of ``<character>``.
-   :value uppercase-character: An instance of ``<character>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value uppercase-character: An instance of :drm:`<character>`.
    :example:
 
    .. code-block:: dylan
@@ -774,12 +774,12 @@ Case Conversion Functions
    the original string unchanged if it contains no lowercase characters.
 
    :signature: uppercase (string) => (uppercase-string)
-   :parameter string: An instance of ``<string>``.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The index
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The index
      at which to start uppercasing.
-   :parameter #key end: An instance of ``<integer>``, default
+   :parameter #key end: An instance of :drm:`<integer>`, default
      ``string.size``.  The index before which to stop uppercasing.
-   :value uppercase-string: An instance of ``<string>``.
+   :value uppercase-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -806,8 +806,8 @@ Case Conversion Functions
    with :meth:`uppercase(<character>)`.
 
    :signature: uppercase! (character) => (uppercase-character)
-   :parameter character: An instance of ``<character>``.
-   :value uppercase-character: An instance of ``<character>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value uppercase-character: An instance of :drm:`<character>`.
    :example:
 
    .. code-block:: dylan
@@ -822,12 +822,12 @@ Case Conversion Functions
    converted to uppercase.
 
    :signature: uppercase! (string) => (uppercase-string)
-   :parameter string: An instance of ``<string>``.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The index
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The index
      at which to start uppercasing.
-   :parameter #key end: An instance of ``<integer>``, default
+   :parameter #key end: An instance of :drm:`<integer>`, default
      ``string.size``.  The index before which to stop uppercasing.
-   :value uppercase-string: An instance of ``<string>``.
+   :value uppercase-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -850,7 +850,7 @@ Case Conversion Functions
 
    :signature: uppercase? (string-or-character) => (is-uppercase?)
    :parameter string-or-character: An instance of ``type-union(<string>, <character>)``.
-   :value is-uppercase?: An instance of ``<boolean>``.
+   :value is-uppercase?: An instance of :drm:`<boolean>`.
 
 .. method:: uppercase?
    :specializer: <character>
@@ -860,8 +860,8 @@ Case Conversion Functions
    Otherwise ``#f`` is returned.
 
    :signature: uppercase? (character) => (is-uppercase?)
-   :parameter character: An instance of ``<character>``.
-   :value is-uppercase?: An instance of ``<boolean>``.
+   :parameter character: An instance of :drm:`<character>`.
+   :value is-uppercase?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -878,12 +878,12 @@ Case Conversion Functions
    alphabetic characters.  Otherwise ``#f`` is returned.
 
    :signature: uppercase? (string) => (is-uppercase?)
-   :parameter string: An instance of ``<string>``.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The index
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The index
      at which to start checking.
-   :parameter #key end: An instance of ``<integer>``, default
+   :parameter #key end: An instance of :drm:`<integer>`, default
      ``string.size``.  The index before which to stop checking.
-   :value is-uppercase?: An instance of ``<boolean>``.
+   :value is-uppercase?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -904,8 +904,8 @@ convenience.  (See `DEP-0004
    char2, using *case sensitive* comparison.
 
    :signature: char-compare (char1 char2) => (result)
-   :parameter char1: An instance of ``<character>``.
-   :parameter char2: An instance of ``<character>``.
+   :parameter char1: An instance of :drm:`<character>`.
+   :parameter char2: An instance of :drm:`<character>`.
    :value result: An instance of ``one-of(-1, 0, 1)``.
    :example:
 
@@ -922,8 +922,8 @@ convenience.  (See `DEP-0004
    char2, using *case insensitive* comparison.
 
    :signature: char-compare-ic (char1 char2) => (result)
-   :parameter char1: An instance of ``<character>``.
-   :parameter char2: An instance of ``<character>``.
+   :parameter char1: An instance of :drm:`<character>`.
+   :parameter char2: An instance of :drm:`<character>`.
    :value result: An instance of ``one-of(-1, 0, 1)``.
    :example:
 
@@ -940,9 +940,9 @@ convenience.  (See `DEP-0004
    Otherwise ``#f`` is returned.
 
    :signature: char-equal-ic? (char1 char2) => (equal?)
-   :parameter char1: An instance of ``<character>``.
-   :parameter char2: An instance of ``<character>``.
-   :value equal?: An instance of ``<boolean>``.
+   :parameter char1: An instance of :drm:`<character>`.
+   :parameter char2: An instance of :drm:`<character>`.
+   :value equal?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -956,17 +956,17 @@ convenience.  (See `DEP-0004
    same, and 1 if string1 > string2, using *case sensitive* comparison.
 
    :signature: string-compare (string1 string2 #key start1 end1 start2 end2 test) => (result)
-   :parameter string1: An instance of ``<string>``.
-   :parameter string2: An instance of ``<string>``.
-   :parameter #key start1: An instance of ``<integer>``, default 0.  The index in
+   :parameter string1: An instance of :drm:`<string>`.
+   :parameter string2: An instance of :drm:`<string>`.
+   :parameter #key start1: An instance of :drm:`<integer>`, default 0.  The index in
      ``string1`` at which to start the comparison.
-   :parameter #key end1: An instance of ``<integer>``, default ``string1.size``.
+   :parameter #key end1: An instance of :drm:`<integer>`, default ``string1.size``.
      The index in ``string1`` before which to stop the comparison.
-   :parameter #key start2: An instance of ``<integer>``, default 0.  The index in
+   :parameter #key start2: An instance of :drm:`<integer>`, default 0.  The index in
      ``string2`` at which to start the comparison.
-   :parameter #key end2: An instance of ``<integer>``, default ``string2.size``.
+   :parameter #key end2: An instance of :drm:`<integer>`, default ``string2.size``.
      The index in ``string2`` before which to stop the comparison.
-   :parameter #key test: An instance of ``<function>``, default ``char-compare``.
+   :parameter #key test: An instance of :drm:`<function>`, default ``char-compare``.
    :value result: An instance of ``one-of(-1, 0, 1)``.
    :example:
 
@@ -983,18 +983,18 @@ convenience.  (See `DEP-0004
    contain the same sequence of characters.  Otherwise returns ``#f``.
 
    :signature: string-equal? (string1 string2 #key start1 end1 start2 end2 test) => (equal?)
-   :parameter string1: An instance of ``<string>``.
-   :parameter string2: An instance of ``<string>``.
-   :parameter #key start1: An instance of ``<integer>``, default 0.  The index in
+   :parameter string1: An instance of :drm:`<string>`.
+   :parameter string2: An instance of :drm:`<string>`.
+   :parameter #key start1: An instance of :drm:`<integer>`, default 0.  The index in
      ``string1`` at which to start the comparison.
-   :parameter #key end1: An instance of ``<integer>``, default ``string1.size``.
+   :parameter #key end1: An instance of :drm:`<integer>`, default ``string1.size``.
      The index in ``string1`` before which to stop the comparison.
-   :parameter #key start2: An instance of ``<integer>``, default 0.  The index in
+   :parameter #key start2: An instance of :drm:`<integer>`, default 0.  The index in
      ``string2`` at which to start the comparison.
-   :parameter #key end2: An instance of ``<integer>``, default ``string2.size``.
+   :parameter #key end2: An instance of :drm:`<integer>`, default ``string2.size``.
      The index in ``string2`` before which to stop the comparison.
-   :parameter #key test: An instance of ``<function>``, default ``char-compare``.
-   :value equal?: An instance of ``<boolean>``.
+   :parameter #key test: An instance of :drm:`<function>`, default ``char-compare``.
+   :value equal?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -1013,17 +1013,17 @@ convenience.  (See `DEP-0004
    returns ``#f``.
 
    :signature: string-equal-ic? (string1 string2 #key start1 end1 start2 end2) => (equal?)
-   :parameter string1: An instance of ``<string>``.
-   :parameter string2: An instance of ``<string>``.
-   :parameter #key start1: An instance of ``<integer>``, default 0.  The index in
+   :parameter string1: An instance of :drm:`<string>`.
+   :parameter string2: An instance of :drm:`<string>`.
+   :parameter #key start1: An instance of :drm:`<integer>`, default 0.  The index in
      ``string1`` at which to start the comparison.
-   :parameter #key end1: An instance of ``<integer>``, default ``string1.size``.
+   :parameter #key end1: An instance of :drm:`<integer>`, default ``string1.size``.
      The index in ``string1`` before which to stop the comparison.
-   :parameter #key start2: An instance of ``<integer>``, default 0.  The index in
+   :parameter #key start2: An instance of :drm:`<integer>`, default 0.  The index in
      ``string2`` at which to start the comparison.
-   :parameter #key end2: An instance of ``<integer>``, default ``string2.size``.
+   :parameter #key end2: An instance of :drm:`<integer>`, default ``string2.size``.
      The index in ``string2`` before which to stop the comparison.
-   :value equal?: An instance of ``<boolean>``.
+   :value equal?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -1039,18 +1039,18 @@ convenience.  (See `DEP-0004
    *case sensitive* comparison.
 
    :signature: string-greater? (string1 string2 #key start1 end1 start2 end2 test) => (greater?)
-   :parameter string1: An instance of ``<string>``.
-   :parameter string2: An instance of ``<string>``.
-   :parameter #key start1: An instance of ``<integer>``, default 0.  The index in
+   :parameter string1: An instance of :drm:`<string>`.
+   :parameter string2: An instance of :drm:`<string>`.
+   :parameter #key start1: An instance of :drm:`<integer>`, default 0.  The index in
      ``string1`` at which to start the comparison.
-   :parameter #key end1: An instance of ``<integer>``, default ``string1.size``.
+   :parameter #key end1: An instance of :drm:`<integer>`, default ``string1.size``.
      The index in ``string1`` before which to stop the comparison.
-   :parameter #key start2: An instance of ``<integer>``, default 0.  The index in
+   :parameter #key start2: An instance of :drm:`<integer>`, default 0.  The index in
      ``string2`` at which to start the comparison.
-   :parameter #key end2: An instance of ``<integer>``, default ``string2.size``.
+   :parameter #key end2: An instance of :drm:`<integer>`, default ``string2.size``.
      The index in ``string2`` before which to stop the comparison.
-   :parameter #key test: An instance of ``<function>``, default ``char-compare``.
-   :value greater?: An instance of ``<boolean>``.
+   :parameter #key test: An instance of :drm:`<function>`, default ``char-compare``.
+   :value greater?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -1066,17 +1066,17 @@ convenience.  (See `DEP-0004
    *case insensitive* comparison.
 
    :signature: string-greater-ic? (string1 string2 #key start1 end1 start2 end2) => (greater?)
-   :parameter string1: An instance of ``<string>``.
-   :parameter string2: An instance of ``<string>``.
-   :parameter #key start1: An instance of ``<integer>``, default 0.  The index in
+   :parameter string1: An instance of :drm:`<string>`.
+   :parameter string2: An instance of :drm:`<string>`.
+   :parameter #key start1: An instance of :drm:`<integer>`, default 0.  The index in
      ``string1`` at which to start the comparison.
-   :parameter #key end1: An instance of ``<integer>``, default ``string1.size``.
+   :parameter #key end1: An instance of :drm:`<integer>`, default ``string1.size``.
      The index in ``string1`` before which to stop the comparison.
-   :parameter #key start2: An instance of ``<integer>``, default 0.  The index in
+   :parameter #key start2: An instance of :drm:`<integer>`, default 0.  The index in
      ``string2`` at which to start the comparison.
-   :parameter #key end2: An instance of ``<integer>``, default ``string2.size``.
+   :parameter #key end2: An instance of :drm:`<integer>`, default ``string2.size``.
      The index in ``string2`` before which to stop the comparison.
-   :value greater?: An instance of ``<boolean>``.
+   :value greater?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -1092,18 +1092,18 @@ convenience.  (See `DEP-0004
    *case sensitive* comparison.
 
    :signature: string-less? (string1 string2 #key start1 end1 start2 end2 test) => (less?)
-   :parameter string1: An instance of ``<string>``.
-   :parameter string2: An instance of ``<string>``.
-   :parameter #key start1: An instance of ``<integer>``, default 0.  The index in
+   :parameter string1: An instance of :drm:`<string>`.
+   :parameter string2: An instance of :drm:`<string>`.
+   :parameter #key start1: An instance of :drm:`<integer>`, default 0.  The index in
      ``string1`` at which to start the comparison.
-   :parameter #key end1: An instance of ``<integer>``, default ``string1.size``.
+   :parameter #key end1: An instance of :drm:`<integer>`, default ``string1.size``.
      The index in ``string1`` before which to stop the comparison.
-   :parameter #key start2: An instance of ``<integer>``, default 0.  The index in
+   :parameter #key start2: An instance of :drm:`<integer>`, default 0.  The index in
      ``string2`` at which to start the comparison.
-   :parameter #key end2: An instance of ``<integer>``, default ``string2.size``.
+   :parameter #key end2: An instance of :drm:`<integer>`, default ``string2.size``.
      The index in ``string2`` before which to stop the comparison.
-   :parameter #key test: An instance of ``<function>``, default ``char-compare``.
-   :value less?: An instance of ``<boolean>``.
+   :parameter #key test: An instance of :drm:`<function>`, default ``char-compare``.
+   :value less?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -1119,17 +1119,17 @@ convenience.  (See `DEP-0004
    *case insensitive* comparison.
 
    :signature: string-less-ic? (string1 string2 #key start1 end1 start2 end2) => (less?)
-   :parameter string1: An instance of ``<string>``.
-   :parameter string2: An instance of ``<string>``.
-   :parameter #key start1: An instance of ``<integer>``, default 0.  The index in
+   :parameter string1: An instance of :drm:`<string>`.
+   :parameter string2: An instance of :drm:`<string>`.
+   :parameter #key start1: An instance of :drm:`<integer>`, default 0.  The index in
      ``string1`` at which to start the comparison.
-   :parameter #key end1: An instance of ``<integer>``, default ``string1.size``.
+   :parameter #key end1: An instance of :drm:`<integer>`, default ``string1.size``.
      The index in ``string1`` before which to stop the comparison.
-   :parameter #key start2: An instance of ``<integer>``, default 0.  The index in
+   :parameter #key start2: An instance of :drm:`<integer>`, default 0.  The index in
      ``string2`` at which to start the comparison.
-   :parameter #key end2: An instance of ``<integer>``, default ``string2.size``.
+   :parameter #key end2: An instance of :drm:`<integer>`, default ``string2.size``.
      The index in ``string2`` before which to stop the comparison.
-   :value less?: An instance of ``<boolean>``.
+   :value less?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -1145,11 +1145,11 @@ convenience.  (See `DEP-0004
    *case sensitive* comparison.
 
    :signature: starts-with? (string pattern #key test) => (starts-with?)
-   :parameter string: An instance of ``<string>``.
-   :parameter pattern: An instance of ``<string>``.
-   :parameter #key test: An instance of ``<function>``, default ``char-compare``.
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter pattern: An instance of :drm:`<string>`.
+   :parameter #key test: An instance of :drm:`<function>`, default ``char-compare``.
      For *case insensitive* comparison pass ``char-compare-ic`` here.
-   :value starts-with?: An instance of ``<boolean>``.
+   :value starts-with?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -1164,11 +1164,11 @@ convenience.  (See `DEP-0004
    sensitive* comparison.
 
    :signature: ends-with? (string pattern #key test) => (ends-with?)
-   :parameter string: An instance of ``<string>``.
-   :parameter pattern: An instance of ``<string>``.
-   :parameter #key test: An instance of ``<function>``, default ``char-compare``.
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter pattern: An instance of :drm:`<string>`.
+   :parameter #key test: An instance of :drm:`<function>`, default ``char-compare``.
      For *case insensitive* comparison pass ``char-compare-ic`` here.
-   :value ends-with?: An instance of ``<boolean>``.
+   :value ends-with?: An instance of :drm:`<boolean>`.
    :example:
 
    .. code-block:: dylan
@@ -1187,10 +1187,10 @@ Miscellaneous Functions
    given width.
 
    :signature: pad (string width #key fill) => (padded-string)
-   :parameter string: An instance of ``<string>``.  The string to pad.
-   :parameter width: An instance of ``<integer>``.  The final width of the result string.
-   :parameter #key fill: An instance of ``<character>``.  The character to pad with.
-   :value padded-string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.  The string to pad.
+   :parameter width: An instance of :drm:`<integer>`.  The final width of the result string.
+   :parameter #key fill: An instance of :drm:`<character>`.  The character to pad with.
+   :value padded-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -1205,10 +1205,10 @@ Miscellaneous Functions
    given width.
 
    :signature: pad-left (string width #key fill) => (padded-string)
-   :parameter string: An instance of ``<string>``.  The string to pad.
-   :parameter width: An instance of ``<integer>``.  The final width of the result string.
-   :parameter #key fill: An instance of ``<character>``.  The character to pad with.
-   :value padded-string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.  The string to pad.
+   :parameter width: An instance of :drm:`<integer>`.  The final width of the result string.
+   :parameter #key fill: An instance of :drm:`<character>`.  The character to pad with.
+   :value padded-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -1223,10 +1223,10 @@ Miscellaneous Functions
    given width.
 
    :signature: pad-right (string width #key fill) => (padded-string)
-   :parameter string: An instance of ``<string>``.  The string to pad.
-   :parameter width: An instance of ``<integer>``.  The final width of the result string.
-   :parameter #key fill: An instance of ``<character>``.  The character to pad with.
-   :value padded-string: An instance of ``<string>``.
+   :parameter string: An instance of :drm:`<string>`.  The string to pad.
+   :parameter width: An instance of :drm:`<integer>`.  The final width of the result string.
+   :parameter #key fill: An instance of :drm:`<character>`.  The character to pad with.
+   :value padded-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -1239,10 +1239,10 @@ Miscellaneous Functions
    Split a string on line boundaries, which may be CR alone, CRLF, or LF alone.
 
    :signature: split-lines (string #key remove-if-empty?) => (lines)
-   :parameter string: An instance of ``<string>``.
-   :parameter #key remove-if-empty?: An instance of ``<boolean>``.
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key remove-if-empty?: An instance of :drm:`<boolean>`.
      If true, the result will not contain any empty strings.
-   :value lines: An instance of ``<sequence>``.
+   :value lines: An instance of :drm:`<sequence>`.
    :example:
 
    .. code-block:: dylan
@@ -1265,15 +1265,15 @@ Miscellaneous Functions
    Remove characters (whitespace by default) from both sides of a string.
 
    :signature: strip (string #key test start end) => (new-string)
-   :parameter string: An instance of ``<string>``.  The string to strip.
-   :parameter #key test: An instance of ``<function>``.  A function that
+   :parameter string: An instance of :drm:`<string>`.  The string to strip.
+   :parameter #key test: An instance of :drm:`<function>`.  A function that
      accepts a character and returns #t if the character should be
      removed and ``#f`` otherwise.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The
      index in ``string`` at which to start stripping.
-   :parameter #key end: An instance of ``<integer>``, default ``string.size``.
+   :parameter #key end: An instance of :drm:`<integer>`, default ``string.size``.
      The index in ``string`` before which to stop stripping.
-   :value new-string: An instance of ``<string>``.
+   :value new-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -1287,15 +1287,15 @@ Miscellaneous Functions
    Remove characters (whitespace by default) from the beginning of a string.
 
    :signature: strip-left (string #key test start end) => (new-string)
-   :parameter string: An instance of ``<string>``.  The string to strip.
-   :parameter #key test: An instance of ``<function>``.  A function that
+   :parameter string: An instance of :drm:`<string>`.  The string to strip.
+   :parameter #key test: An instance of :drm:`<function>`.  A function that
      accepts a character and returns #t if the character should be
      removed and ``#f`` otherwise.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The
      index in ``string`` at which to start stripping.
-   :parameter #key end: An instance of ``<integer>``, default ``string.size``.
+   :parameter #key end: An instance of :drm:`<integer>`, default ``string.size``.
      The index in ``string`` before which to stop stripping.
-   :value new-string: An instance of ``<string>``.
+   :value new-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan
@@ -1309,15 +1309,15 @@ Miscellaneous Functions
    Remove characters (whitespace by default) from the end of a string.
 
    :signature: strip-right (string #key test start end) => (new-string)
-   :parameter string: An instance of ``<string>``.  The string to strip.
-   :parameter #key test: An instance of ``<function>``.  A function that
+   :parameter string: An instance of :drm:`<string>`.  The string to strip.
+   :parameter #key test: An instance of :drm:`<function>`.  A function that
      accepts a character and returns #t if the character should be
      removed and ``#f`` otherwise.
-   :parameter #key start: An instance of ``<integer>``, default 0.  The
+   :parameter #key start: An instance of :drm:`<integer>`, default 0.  The
      index in ``string`` at which to start stripping.
-   :parameter #key end: An instance of ``<integer>``, default ``string.size``.
+   :parameter #key end: An instance of :drm:`<integer>`, default ``string.size``.
      The index in ``string`` before which to stop stripping.
-   :value new-string: An instance of ``<string>``.
+   :value new-string: An instance of :drm:`<string>`.
    :example:
 
    .. code-block:: dylan

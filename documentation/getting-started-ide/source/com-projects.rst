@@ -321,7 +321,7 @@ call to *main*.
 We provide here an implementation for the *IRotNExample/key* slot, which
 was defined as a virtual slot in the superclass. This slot must accept
 the ``<machine-word>`` type, since any 32-bit integer which does not fit
-in the range of a Dylan ``<integer>`` will be passed as a
+in the range of a Dylan :drm:`<integer>` will be passed as a
 ``<machine-word>``.
 
 The next task is to define the *IRotNExample/encrypt* and

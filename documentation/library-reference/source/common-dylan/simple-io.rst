@@ -18,8 +18,8 @@ who may prefer to use the *simple-io* module that the
 
    :signature: format-out *format-string* #rest *format-arguments* => ()
 
-   :parameter format-string: An instance of ``<byte-string>``.
-   :parameter format-arguments: Instances of ``<object>``.
+   :parameter format-string: An instance of :drm:`<byte-string>`.
+   :parameter format-arguments: Instances of :drm:`<object>`.
 
    :description:
 

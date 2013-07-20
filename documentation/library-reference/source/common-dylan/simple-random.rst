@@ -20,7 +20,7 @@ integers. Given an instance of :class:`<random>`, the function
 
    :superclasses: <object>
 
-   :keyword seed: An instance of ``<integer>``. Default value: computed
+   :keyword seed: An instance of :drm:`<integer>`. Default value: computed
      to be random.
 
    :description:
@@ -37,9 +37,9 @@ integers. Given an instance of :class:`<random>`, the function
 
    :signature: random *upperbound* #key *random* => *random-integer*
 
-   :parameter range: An instance of ``<integer>``.
+   :parameter range: An instance of :drm:`<integer>`.
    :parameter #key random: An instance of :class:`<random>`.
-   :value random-integer: An instance of ``<integer>``.
+   :value random-integer: An instance of :drm:`<integer>`.
 
    :description:
 

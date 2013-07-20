@@ -31,10 +31,10 @@ the function *encode-date* or using the *make* method for ``<date>``.
 
 Each of the arguments to :func:`encode-date` and to the :meth:`make
 <make(<date>)>` method on :class:`<date>` is an instance of
-``<integer>`` (except for the *iso8601-string* keyword for the *make*
+:drm:`<integer>` (except for the *iso8601-string* keyword for the *make*
 method, which is a string) that is passed as an init-keyword value to
 the ``<date>`` object. Each init-keyword takes an instance of
-``<integer>``, limited to the natural range for that attribute. For
+:drm:`<integer>`, limited to the natural range for that attribute. For
 example, *month:* can only take values between 1 and 12.
 
 You must specify values, via :func:`encode-date`, for at least the
@@ -44,7 +44,7 @@ and *time-zone-offset:*. If not supplied, the default value for each of
 these init-keywords is 0.
 
 The *time-zone-offset:* init-keyword is used to represent time zones in
-the ``date`` module as ``<integer>`` values representing the offset in minutes
+the ``date`` module as :drm:`<integer>` values representing the offset in minutes
 from Greenwich Mean Time (GMT). Positive values are used for time zones
 East of Greenwich; negative values represent time zones to the west of
 Greenwich.
@@ -54,7 +54,7 @@ the value -240 (-4 hours) is U.S. Eastern Daylight Savings Time.
 
 If you wish, a ``<date>`` can be specified completely by using the
 *iso8601-string:* init-keyword. This init-keyword takes an instance of
-``<string>``, which should be a valid ISO8601 format date. If you use the
+:drm:`<string>`, which should be a valid ISO8601 format date. If you use the
 *iso8601-string:* init-keyword, there is no need to specify any other
 init-keywords to a call to *make* on ``<date>``.
 
@@ -162,11 +162,11 @@ Methods defined for arithmetic operations on dates and durations
 +-------+---------------------------+---------------------------+---------------------------+
 | ``-`` | ``<date>``                | ``<date>``                | ``<day/time-duration>``   |
 +-------+---------------------------+---------------------------+---------------------------+
-| ``*`` | ``<duration>``            | ``<real>``                | ``<duration>``            |
+| ``*`` | ``<duration>``            | :drm:`<real>`             | ``<duration>``            |
 +-------+---------------------------+---------------------------+---------------------------+
-| ``*`` | ``<real>``                | ``<duration>``            | ``<duration>``            |
+| ``*`` | :drm:`<real>`             | ``<duration>``            | ``<duration>``            |
 +-------+---------------------------+---------------------------+---------------------------+
-| ``/`` | ``<duration>``            | ``<real>``                | ``<duration>``            |
+| ``/`` | ``<duration>``            | :drm:`<real>`             | ``<duration>``            |
 +-------+---------------------------+---------------------------+---------------------------+
 
 Dealing with time-zones
@@ -216,7 +216,7 @@ month that the date refers to.
 - :func:`date-time-zone-offset`
 
 For each function except *date-day-of-week*, the value returned is an
-instance of ``<integer>``. The *date-day-of-week* function returns an
+instance of :drm:`<integer>`. The *date-day-of-week* function returns an
 object of type ``<day-of-week>``. For more information, please refer to
 the reference entries of each function. See also the function
 :func:`date-time-zone-offset-setter`, which allows you to set
@@ -240,7 +240,7 @@ Date module.
    :signature: *date1* = *date2* => *equal?*
    :parameter date1: An instance of :class:`<date>`.
    :parameter date2: An instance of :class:`<date>`.
-   :value equal?: An instance of ``<boolean>``.
+   :value equal?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -262,7 +262,7 @@ Date module.
 
    :parameter duration1: An instance of :class:`<duration>`.
    :parameter duration2: An instance of :class:`<duration>`.
-   :value equal?: An instance of ``<boolean>``.
+   :value equal?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -285,7 +285,7 @@ Date module.
 
    :parameter date1: An instance of :class:`<date>`.
    :parameter date2: An instance of :class:`<date>`.
-   :value before?: An instance of ``<boolean>``.
+   :value before?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -307,7 +307,7 @@ Date module.
 
    :parameter duration1: An instance of :class:`<duration>`.
    :parameter duration2: An instance of :class:`<duration>`.
-   :value less-than?: An instance of ``<boolean>``.
+   :value less-than?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -470,7 +470,7 @@ Sealed methods
 Arguments
 
 -  *duration* An instance of :class:`<duration>`.
--  *scale* An instance of ``<real>``.
+-  *scale* An instance of :drm:`<real>`.
 
 *Note:* These arguments can be expressed in any order.
 
@@ -500,7 +500,7 @@ Sealed methods
 Arguments
 
 -  *duration* An instance of :class:`<duration>`.
--  *scale* An instance of ``<real>``.
+-  *scale* An instance of :drm:`<real>`.
 
 Values
 
@@ -527,8 +527,8 @@ methods that are defined on +.
    :signature: as-iso8601-string *date* #key *precision* => *iso8601-string*
 
    :paramter date: An instance of :class:`<date>`.
-   :parameter precision: An instance of ``<integer>``. Default value: 0.
-   :value iso8601-string: An instance of ``<string>``.
+   :parameter precision: An instance of :drm:`<integer>`. Default value: 0.
+   :value iso8601-string: An instance of :drm:`<string>`.
 
    :description:
 
@@ -564,7 +564,7 @@ methods that are defined on +.
 
    The class of objects representing dates.
 
-   :superclasses: ``<number>``
+   :superclasses: :drm:`<number>`
 
    :keyword iso8601-string: An instance of ``false-or(<string>)``.
      Default value: ``#f``.
@@ -581,7 +581,7 @@ methods that are defined on +.
      59)``. Default value: 0.
    :keyword microseconds: An instance of ``limited(<integer>, min: 0,
      max: 999999)``. Default value: 0.
-   :keyword time-zone-offset: An instance of ``<integer>``. Default
+   :keyword time-zone-offset: An instance of :drm:`<integer>`. Default
      value: 0.
 
    :description:
@@ -603,7 +603,7 @@ methods that are defined on +.
      For the *time-zone-offset* init-keyword, a positive number
      represents an offset ahead of GMT, in minutes, and a negative
      number represents an offset behind GMT. The value returned is an
-     instance of ``<integer>`` (for example, -300 represents the offset
+     instance of :drm:`<integer>` (for example, -300 represents the offset
      for EST, which is 5 hours behind GMT).
 
    :operations:
@@ -638,7 +638,7 @@ methods that are defined on +.
    :signature: date-day *date* => *day*
 
    :parameter date: An instance of :class:`<date>`.
-   :value day: An instance of ``<integer>``.
+   :value day: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -691,7 +691,7 @@ methods that are defined on +.
    :signature: date-hours *date* => *hour*
 
    :parameter date: An instance of :class:`<date>`.
-   :value hour: An instance of ``<integer>``.
+   :value hour: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -717,7 +717,7 @@ methods that are defined on +.
    :signature: date-microseconds *date* => *microseconds*
 
    :parameter date: An instance of :class:`<date>`.
-   :value microseconds: An instance of ``<integer>``.
+   :value microseconds: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -746,7 +746,7 @@ methods that are defined on +.
    :signature: date-minutes *date* => *minutes*
 
    :parameter date: An instance of :class:`<date>`.
-   :value minutes: An instance of ``<integer>``.
+   :value minutes: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -771,7 +771,7 @@ methods that are defined on +.
    :signature: date-month *date* => *month*
 
    :parameter date: An instance of :class:`<date>`.
-   :value month: An instance of ``<integer>``.
+   :value month: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -796,7 +796,7 @@ methods that are defined on +.
    :signature: date-seconds *date* => *seconds*
 
    :parameter date: An instance of :class:`<date>`.
-   :value seconds: An instance of ``<integer>``.
+   :value seconds: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -824,7 +824,7 @@ methods that are defined on +.
    :signature: date-time-zone-offset *date* => *time-zone-offset*
 
    :parameter date: An instance of :class:`<date>`.
-   :value time-zone-offset: An instance of ``<integer>``.
+   :value time-zone-offset: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -833,7 +833,7 @@ methods that are defined on +.
 
      A positive number represents an offset ahead of GMT, in minutes,
      and a negative number represents an offset behind GMT. The value
-     returned is an instance of ``<integer>`` (for example, -300
+     returned is an instance of :drm:`<integer>` (for example, -300
      represents the offset for EST, which is 5 hours behind GMT).
 
    See also
@@ -856,9 +856,9 @@ methods that are defined on +.
 
    :signature: date-time-zone-offset-setter *new-time-zone-offset* *date*  => *new-time-zone-offset*
 
-   :parameter new-time-zone-offset: An instance of ``<integer>``.
+   :parameter new-time-zone-offset: An instance of :drm:`<integer>`.
    :parameter date: An instance of :class:`<date>`.
-   :value new-time-zone-offset: An instance of ``<integer>``.
+   :value new-time-zone-offset: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -882,7 +882,7 @@ methods that are defined on +.
    :signature: date-year *date* => *year*
 
    :parameter date: An instance of :class:`<date>`.
-   :value year: An instance of ``<integer>``.
+   :value year: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -940,11 +940,11 @@ Init-keywords
 
    :superclasses: :class:`<duration>`
 
-   :keyword days: An instance of ``<integer>``.
-   :keyword hours: An instance of ``<integer>``. Default value: 0.
-   :keyword minutes: An instance of ``<integer>``. Default value: 0.
-   :keyword seconds: An instance of ``<integer>``. Default value: 0.
-   :keyword microseconds: An instance of ``<integer>``. Default value: 0.
+   :keyword days: An instance of :drm:`<integer>`.
+   :keyword hours: An instance of :drm:`<integer>`. Default value: 0.
+   :keyword minutes: An instance of :drm:`<integer>`. Default value: 0.
+   :keyword seconds: An instance of :drm:`<integer>`. Default value: 0.
+   :keyword microseconds: An instance of :drm:`<integer>`. Default value: 0.
 
    :description:
 
@@ -976,14 +976,14 @@ Init-keywords
 
    :parameter date: An instance of :class:`<date>`.
 
-   :value year: An instance of ``<integer>``.
-   :value month: An instance of ``<integer>``.
-   :value day: An instance of ``<integer>``.
-   :value hours: An instance of ``<integer>``.
-   :value minutes: An instance of ``<integer>``.
-   :value seconds: An instance of ``<integer>``.
+   :value year: An instance of :drm:`<integer>`.
+   :value month: An instance of :drm:`<integer>`.
+   :value day: An instance of :drm:`<integer>`.
+   :value hours: An instance of :drm:`<integer>`.
+   :value minutes: An instance of :drm:`<integer>`.
+   :value seconds: An instance of :drm:`<integer>`.
    :value day-of-week: An instance of ``<day-of-week>``.
-   :value time-zone-offset: An instance of ``<integer>``.
+   :value time-zone-offset: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -1005,7 +1005,7 @@ Init-keywords
    :signature: decode-duration *duration* => #rest *components*
 
    :parameter duration: An instance of :class:`<duration>`.
-   :value #rest components: Instances of ``<integer>``.
+   :value #rest components: Instances of :drm:`<integer>`.
 
    :description:
 
@@ -1028,11 +1028,11 @@ Init-keywords
    :signature: decode-duration *duration* => *days* *hours* *minutes* *seconds* *microseconds*
 
    :parameter duration: An instance of :class:`<day/time-duration>`.
-   :value days: An instance of ``<integer>``.
-   :value hours: An instance of ``<integer>``.
-   :value minutes: An instance of ``<integer>``.
-   :value seconds: An instance of ``<integer>``.
-   :value microseconds: An instance of ``<integer>``.
+   :value days: An instance of :drm:`<integer>`.
+   :value hours: An instance of :drm:`<integer>`.
+   :value minutes: An instance of :drm:`<integer>`.
+   :value seconds: An instance of :drm:`<integer>`.
+   :value microseconds: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -1054,8 +1054,8 @@ Init-keywords
    :signature: decode-duration *duration* => *years* *months*
 
    :parameter duration: An instance of :class:`<year/month-duration>`.
-   :value years: An instance of ``<integer>``.
-   :value months: An instance of ``<integer>``.
+   :value years: An instance of :drm:`<integer>`.
+   :value months: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -1075,7 +1075,7 @@ Init-keywords
 
    The class of objects representing durations.
 
-   :superclasses: ``<number>``
+   :superclasses: :drm:`<number>`
 
    :keyword iso8601-string: An instance of ``false-or(<string>)``.
      Default value: ``#f``.
@@ -1092,13 +1092,13 @@ Init-keywords
      59)``. Default value: 0.
    :keyword microseconds: An instance of ``limited(<integer>, min: 0,
      max: 999999)``. Default value: 0.
-   :keyword time-zone-offset: An instance of ``<integer>``. Default
+   :keyword time-zone-offset: An instance of :drm:`<integer>`. Default
      value: 0.
 
    :description:
 
      This class is the used to represent durations. It is a subclass of
-     ``<number>``, and it has two subclasses.
+     :drm:`<number>`, and it has two subclasses.
 
    :operations:
 
@@ -1120,15 +1120,15 @@ Init-keywords
 
    :signature: encode-date *year month day hours minutes seconds* #key*microseconds time-zone-offset* => *date*
 
-   :parameter year: An instance of ``<integer>``.
-   :parameter month: An instance of ``<integer>``.
-   :parameter day: An instance of ``<integer>``.
-   :parameter hours: An instance of ``<integer>``.
-   :parameter minutes: An instance of ``<integer>``.
-   :parameter seconds: An instance of ``<integer>``.
-   :parameter microseconds: An instance of ``<integer>``. Default value:
+   :parameter year: An instance of :drm:`<integer>`.
+   :parameter month: An instance of :drm:`<integer>`.
+   :parameter day: An instance of :drm:`<integer>`.
+   :parameter hours: An instance of :drm:`<integer>`.
+   :parameter minutes: An instance of :drm:`<integer>`.
+   :parameter seconds: An instance of :drm:`<integer>`.
+   :parameter microseconds: An instance of :drm:`<integer>`. Default value:
      0.
-   :parameter time-zone-offset: An instance of ``<integer>``. Default
+   :parameter time-zone-offset: An instance of :drm:`<integer>`. Default
      value: :func:`local-time-zone-offset()`.
    :value date: An instance of :class:`<date>`.
 
@@ -1148,11 +1148,11 @@ Init-keywords
 
    :signature: encode-day/time-duration *days* *hours* *minutes* *seconds* *microseconds* => *duration*
 
-   :parameter days: An instance of ``<integer>``.
-   :parameter hours: An instance of ``<integer>``.
-   :parameter minutes: An instance of ``<integer>``.
-   :parameter seconds: An instance of ``<integer>``.
-   :parameter microseconds: An instance of ``<integer>``.
+   :parameter days: An instance of :drm:`<integer>`.
+   :parameter hours: An instance of :drm:`<integer>`.
+   :parameter minutes: An instance of :drm:`<integer>`.
+   :parameter seconds: An instance of :drm:`<integer>`.
+   :parameter microseconds: An instance of :drm:`<integer>`.
    :value duration: An instance of :class:`<day/time-duration>`.
 
    :description:
@@ -1170,8 +1170,8 @@ Init-keywords
 
    :signature: encode-year/month-duration *years* *months* => *duration*
 
-   :parameter years: An instance of ``<integer>``.
-   :parameter months: An instance of ``<integer>``.
+   :parameter years: An instance of :drm:`<integer>`.
+   :parameter months: An instance of :drm:`<integer>`.
    :value duration: An instance of :class:`<year/month-duration>`.
 
    :description:
@@ -1189,7 +1189,7 @@ Init-keywords
 
    :signature: local-daylight-savings-time? () => *dst?*
 
-   :value dst?: An instance of ``<boolean>``.
+   :value dst?: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1202,7 +1202,7 @@ Init-keywords
 
    :signature: local-time-zone-name () => *time-zone-name*
 
-   :value time-zone-name: An instance of ``<string>``.
+   :value time-zone-name: An instance of :drm:`<string>`.
 
    :description:
 
@@ -1217,14 +1217,14 @@ Init-keywords
 
    :signature: local-time-zone-offset () => *time-zone-offset*
 
-   :value time-zone-offset: An instance of ``<integer>``.
+   :value time-zone-offset: An instance of :drm:`<integer>`.
 
    :description:
 
      Returns the offset of the time-zone from Greenwich Mean Time,
      expressed as a number of minutes. A positive number represents an
      offset ahead of GMT, and a negative number represents an offset
-     behind GMT. The return value is an instance of ``<integer>`` (for
+     behind GMT. The return value is an instance of :drm:`<integer>` (for
      example, -300 represents the offset for EST, which is 5 hours
      behind GMT). The return value incorporates daylight savings time
      when necessary.
@@ -1253,7 +1253,7 @@ Init-keywords
      max: 59)``. Default value: 0.
    :parameter #key microseconds: An instance of ``limited(<integer>,
      min: 0, max: 999999)``. Default value: 0.
-   :parameter #key time-zone-offset: An instance of ``<integer>``.
+   :parameter #key time-zone-offset: An instance of :drm:`<integer>`.
      Default value: 0.
    :value date-instance: An instance of :class:`<date>`.
 
@@ -1286,8 +1286,8 @@ Init-keywords
 
    :superclasses: :class:`<duration>`
 
-   :keyword year: An instance of ``<integer>``.
-   :keyword month: An instance of ``<integer>``.
+   :keyword year: An instance of :drm:`<integer>`.
+   :keyword month: An instance of :drm:`<integer>`.
 
    :description:
 

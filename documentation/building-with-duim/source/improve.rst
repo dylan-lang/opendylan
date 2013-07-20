@@ -451,7 +451,7 @@ so let’s add two more buttons to open a file and save a file to disk.
 More commonly, an icon is used to label buttons in a tool bar, rather
 than a text label. You can do this by supplying an instance of ``<image>``
 to the ``label:`` init-keyword when you define the button, rather than an
-instance of ``<string>``.
+instance of :drm:`<string>`.
 
 So now the application has a tool bar. Somewhat oddly, it does not yet
 have a menu bar or a system of menus — most tool bars represent a subset

@@ -534,7 +534,7 @@ Designator class basics
    :description:
 
      The abstract superclass of all designator classes. It is a subclass
-     of ``<object>``. It has neither an *export-type* nor an
+     of :drm:`<object>`. It has neither an *export-type* nor an
      *import-type*, so you cannot use it when designating a transition
      between C and Dylan.
 
@@ -560,7 +560,7 @@ Designator class basics
    :signature: size-of *designator-class* => *size*
 
    :parameter designator-class: A subclass of :class:`<C-value>`.
-   :value size: An instance of ``<integer>``.
+   :value size: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -583,7 +583,7 @@ Designator class basics
    :signature: alignment-of *designator-class* => *alignment*
 
    :parameter designator-class: A subclass of :class:`<C-value>`.
-   :value alignment: An instance of ``<integer>``.
+   :value alignment: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -608,7 +608,7 @@ be used to translate Dylan representations to that C integer. The
 categories are *plain*, *unsafe*, and *raw* integers.
 
 *Plain* integer designators — of which the class ``<C-unsigned-short>`` is
-an example — translate C integer values to instances of ``<integer>``. If
+an example — translate C integer values to instances of :drm:`<integer>`. If
 the integer being translated is too big for the destination, the C-FFI
 signals an error. There are two ways this can happen.
 
@@ -623,10 +623,10 @@ determine that no Dylan value outside the safe range can reach there.
 This can be done using a limited integer type.
 
 -  On import into Dylan, the C-FFI signals an error if it cannot
-   represent the C value using a Dylan ``<integer>``.
+   represent the C value using a Dylan :drm:`<integer>`.
 
 This can happen with any C integer type that is more than 30 bits wide.
-The size of a Dylan ``<integer>`` depends on the particular platform, but
+The size of a Dylan :drm:`<integer>` depends on the particular platform, but
 it is guaranteed to be at least 30 bits in length.
 
 The C-FFI never signals an error for the *unsafe* designator classes —
@@ -656,63 +656,63 @@ and unsafe integer designator types exported from the C-FFI module.
    +-------------------------------+--------------------+--------------------+
    | Designator name               | C type             | Dylan type(s)      |
    +===============================+====================+====================+
-   | ``<C-int>``                   | ``int``            | ``<integer>``      |
+   | ``<C-int>``                   | ``int``            | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-int>``               | ``int``            | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-int>``            | ``int``            | ``<integer>``      |
+   | ``<C-unsafe-int>``            | ``int``            | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-signed-int>``        | ``signed int``     | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-signed int>``     | ``signed int``     | ``<integer>``      |
+   | ``<C-unsafe-signed int>``     | ``signed int``     | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-signed-int>``            | ``signed int``     | ``<integer>``      |
+   | ``<C-signed-int>``            | ``signed int``     | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-unsigned-int>``      | ``unsigned int``   | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-unsigned-int>``   | ``unsigned int``   | ``<integer>``      |
+   | ``<C-unsafe-unsigned-int>``   | ``unsigned int``   | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsigned-int>``          | ``unsigned int``   | ``<integer>``      |
+   | ``<C-unsigned-int>``          | ``unsigned int``   | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsigned-long>``         | ``unsigned long``  | ``<integer>``      |
+   | ``<C-unsigned-long>``         | ``unsigned long``  | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-signed-long>``           | ``signed long``    | ``<integer>``      |
+   | ``<C-signed-long>``           | ``signed long``    | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-unsigned-long>``  | ``unsigned long``  | ``<integer>``      |
+   | ``<C-unsafe-unsigned-long>``  | ``unsigned long``  | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-signed-long>``    | ``signed long``    | ``<integer>``      |
+   | ``<C-unsafe-signed-long>``    | ``signed long``    | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-unsigned-long>``     | ``unsigned long``  | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-signed-long>``       | ``signed long``    | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsigned-short>``        | ``unsigned short`` | ``<integer>``      |
+   | ``<C-unsigned-short>``        | ``unsigned short`` | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-signed-short>``          | ``signed short``   | ``<integer>``      |
+   | ``<C-signed-short>``          | ``signed short``   | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-unsigned-short>`` | ``unsigned short`` | ``<integer>``      |
+   | ``<C-unsafe-unsigned-short>`` | ``unsigned short`` | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-signed-short>``   | ``signed short``   | ``<integer>``      |
+   | ``<C-unsafe-signed-short>``   | ``signed short``   | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-unsigned-short>``    | ``unsigned short`` | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-signed-short>``      | ``signed short``   | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsigned-char>``         | ``unsigned char``  | ``<integer>``      |
+   | ``<C-unsigned-char>``         | ``unsigned char``  | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-signed-char>``           | ``signed char``    | ``<integer>``      |
+   | ``<C-signed-char>``           | ``signed char``    | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-unsigned-char>``  | ``unsigned char``  | ``<integer>``      |
+   | ``<C-unsafe-unsigned-char>``  | ``unsigned char``  | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-signed-char>``    | ``signed char``    | ``<integer>``      |
+   | ``<C-unsafe-signed-char>``    | ``signed char``    | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-unsigned-char>``     | ``unsigned char``  | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-signed-char>``       | ``signed char``    | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-char>``                  | ``char``           | ``<integer>``      |
+   | ``<C-char>``                  | ``char``           | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
-   | ``<C-unsafe-char>``           | ``char``           | ``<integer>``      |
+   | ``<C-unsafe-char>``           | ``char``           | :drm:`<integer>`   |
    +-------------------------------+--------------------+--------------------+
    | ``<C-raw-char>``              | ``char``           | ``<machine-word>`` |
    +-------------------------------+--------------------+--------------------+
@@ -779,7 +779,7 @@ these classes.
      type. Instances of concrete subclasses of :class:`<C-pointer>`
      encapsulate a raw C address. The make methods on subclasses of
      :class:`<C-pointer>` accept the keyword argument ``address:``,
-     which must be a Dylan ``<integer>`` or ``<machine-word>``
+     which must be a Dylan :drm:`<integer>` or ``<machine-word>``
      representation of the C address.
 
 .. function:: pointer-address
@@ -836,7 +836,7 @@ these classes.
    :signature: null-pointer? *C-pointer* => *boolean*
 
    :parameter c-pointer: An instance of :class:`<C-pointer>`.
-   :value boolean: An instance of ``<boolean>``.
+   :value boolean: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -911,8 +911,8 @@ these classes.
    :signature: c-type-cast *type* *value* => *value*
 
    :parameter type: See Description.
-   :parameter value: An instance of ``<object>``.
-   :value value: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :value value: An instance of :drm:`<object>`.
 
    :description:
 
@@ -923,11 +923,11 @@ these classes.
      C-function wrapper argument.
 
      The first argument can be either a C type designator or one of the Dylan
-     classes ``<boolean>``, ``<character>``, ``<machine-word>``, or any subclass
-     of ``<number>``. For a C type designator, the value is converted to the
+     classes :drm:`<boolean>`, :drm:`<character>`, ``<machine-word>``, or any subclass
+     of :drm:`<number>`. For a C type designator, the value is converted to the
      Dylan class which it maps to. *<C-* [*un* ]*signed-short>* and *<C-*
      [*un* ]*signed-char>* truncate the value as well as ensuring that it is
-     an ``<integer>``.
+     an :drm:`<integer>`.
 
    :example:
 
@@ -981,7 +981,7 @@ these classes.
    :signature: pointer-value *C-typed-pointer* #key *index* => *object*
 
    :parameter c-typed-pointer: An instance of :class:`<C-statically-typed-pointer>`.
-   :value object: An instance of ``<object>``.
+   :value object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -1005,10 +1005,10 @@ these classes.
 
    :signature: pointer-value-setter *new-value* *C-typed-pointer* #key *index* => *new-value*
 
-   :parameter new-value: An instance of ``<object>``.
+   :parameter new-value: An instance of :drm:`<object>`.
    :parameter c-typed-pointer: An instance of :class:`<C-statically-typed-pointer>`.
-   :parameter #key index: An instance of ``<integer>``.
-   :value new-value: An instance of ``<object>``.
+   :parameter #key index: An instance of :drm:`<integer>`.
+   :value new-value: An instance of :drm:`<object>`.
 
    :description:
 
@@ -1028,8 +1028,8 @@ these classes.
    :signature: pointer-value-address *C-typed-pointer* #key *index* => *object*
 
    :parameter c-typed-pointer: An instance of :class:`<C-statically-typed-pointer>`.
-   :parameter #key index: An instance of ``<integer>``.
-   :value object: An instance of ``<object>``.
+   :parameter #key index: An instance of :drm:`<integer>`.
+   :value object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -1052,7 +1052,7 @@ these classes.
    :signature: element *C-typed-pointer* *index* => *object*
 
    :parameter c-typed-pointer: An instance of :class:`<C-statically-typed-pointer>`.
-   :value object: An instance of ``<object>``.
+   :value object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -1072,8 +1072,8 @@ these classes.
    :signature: element-setter *new* *C-typed-pointer* *index* => *object*
 
    :parameter c-typed-pointer: An instance of :class:`<C-statically-typed-pointer>`.
-   :parameter index: An instance of ``<integer>``.
-   :value object: An instance of ``<object>``.
+   :parameter index: An instance of :drm:`<integer>`.
+   :value object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -1094,7 +1094,7 @@ these classes.
 
    :parameter c-pointer-1: An instance of :class:`<C-pointer>`.
    :parameter c-pointer-2: An instance of :class:`<C-pointer>`.
-   :value boolean: An instance of ``<boolean>``.
+   :value boolean: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1121,7 +1121,7 @@ these classes.
 
    :parameter c-pointer-1: An instance of :class:`<C-pointer>`.
    :parameter c-pointer-2: An instance of :class:`<C-pointer>`.
-   :value boolean: An instance of ``<boolean>``.
+   :value boolean: An instance of :drm:`<boolean>`.
 
    :description:
 
@@ -1752,9 +1752,9 @@ Defining specialized designator classes
    :parameter modifiers: The same as the modifiers allowed in :drm:`define-class <class>`.
    :parameter type-name: A Dylan variable name.
    :parameter superclasses: A list of Dylan names.
-   :parameter high-level-type: An instance of ``<function>``.
-   :parameter import-fun: An instance of ``<function>``.
-   :parameter export-fun: An instance of ``<function>``.
+   :parameter high-level-type: An instance of :drm:`<function>`.
+   :parameter import-fun: An instance of :drm:`<function>`.
+   :parameter export-fun: An instance of :drm:`<function>`.
    :parameter type-options: A property list.
 
    :description:
@@ -1829,7 +1829,7 @@ Defining specialized designator classes
          //end module
 
      Mapped string example: an alternate version of C-string which
-     automatically converts instances of ``<byte-string>`` to instances
+     automatically converts instances of :drm:`<byte-string>` to instances
      of ``<C-example-string>`` on export.
 
      string-header.h
@@ -1892,7 +1892,7 @@ Defining specialized designator classes
            end method;
        end;
 
-     The import signature is ``<byte-string>``. The export signature is
+     The import signature is :drm:`<byte-string>`. The export signature is
      inherited from ``<C-example-string>`` ``type-union(<byte-string>,
      <C-example-string>)``. For a example involving composition of
      mapped types consider the following (hypothetical) definitions of
@@ -1900,9 +1900,9 @@ Defining specialized designator classes
      ``<C-raw-int>`` class is a primitive which returns and accepts
      instances of ``<machine-word>``. The ``<C-mapped-int>`` class is a
      mapped subtype which converts the instances of ``<machine-word>``
-     to instances of ``<integer>``. The ``<bool>`` class is a mapped
+     to instances of :drm:`<integer>`. The ``<bool>`` class is a mapped
      subtype of ``<C-mapped-int>`` which converts to and from
-     ``<boolean>``.
+     :drm:`<boolean>`.
 
      .. code-block:: dylan
 
@@ -2448,7 +2448,7 @@ Describing Dylan functions for use by C
        end [C-callable-wrapper]
 
    :parameter dylan-rep-name: A Dylan variable name.
-   :parameter dylan-function: An instance of ``<function>``.
+   :parameter dylan-function: An instance of :drm:`<function>`.
    :parameter parameter-spec:
    :parameter result-spec:
    :parameter function-options: A property list.
@@ -2792,10 +2792,10 @@ function *destroy*.
    :signature: make *subclass(<c-pointer>)* #key *allocator* *element-count* *extra-bytes* *address* => *C-pointer*
 
    :parameter subclass: A subclass of :class:`<C-pointer>`.
-   :parameter #key allocator: An instance of ``<function>``.
-   :parameter #key element-count: An instance of ``<integer>``.
-   :parameter #key extra-bytes: An instance of ``<integer>``.
-   :parameter #key address: An instance of ``<integer>`` or ``<machine-word>``.
+   :parameter #key allocator: An instance of :drm:`<function>`.
+   :parameter #key element-count: An instance of :drm:`<integer>`.
+   :parameter #key extra-bytes: An instance of :drm:`<integer>`.
+   :parameter #key address: An instance of :drm:`<integer>` or ``<machine-word>``.
    :value c-pointer: An instance of type :class:`<c-pointer>` pointing to the object.
 
    :description:
@@ -2871,7 +2871,7 @@ function *destroy*.
    :signature: destroy *C-pointer* #key *de-allocator* => ()
 
    :parameter c-pointer: An instance of `<C-pointer>`.
-   :parameter #key de-allocator: An instance of ``<function>``.
+   :parameter #key de-allocator: An instance of :drm:`<function>`.
 
    :description:
 
@@ -2904,8 +2904,8 @@ function *destroy*.
 
    :parameter name: A Dylan variable name.
    :parameter wrapper-type: A Dylan name.
-   :parameter #key element-count: An instance of ``<integer>``.
-   :parameter #key extra-bytes: An instance of ``<integer>``.
+   :parameter #key element-count: An instance of :drm:`<integer>`.
+   :parameter #key extra-bytes: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -2953,8 +2953,8 @@ using :macro:`define c-mapped-subtype`.
    :description:
 
      A mapped subclass of ``<C-int>`` that provides an analogue to
-     Dylan’s ``<boolean>`` class. The Dylan type for both import and
-     export is ``<boolean>``, and the C type is ``int``. The C integer
+     Dylan’s :drm:`<boolean>` class. The Dylan type for both import and
+     export is :drm:`<boolean>`, and the C type is ``int``. The C integer
      ``0`` is mapped to ``#f`` in Dylan, and all other values are mapped
      to ``#t``.
 
@@ -2964,16 +2964,16 @@ using :macro:`define c-mapped-subtype`.
 
    :description:
 
-     A mapped subclass of ``<C-char*>`` and ``<string>``. On export the
-     Dylan types ``<C-string>``, or ``<byte-string>`` may be passed to
+     A mapped subclass of ``<C-char*>`` and :drm:`<string>`. On export the
+     Dylan types ``<C-string>``, or :drm:`<byte-string>` may be passed to
      C. On import all values are mapped to ``<C-string>``. A
-     ``<byte-string>`` may be passed to C directly and no copying takes
+     :drm:`<byte-string>` may be passed to C directly and no copying takes
      place. The value in C will be a pointer to the data of the
-     byte-string. The implementation of ``<byte-string>`` is such that,
+     byte-string. The implementation of :drm:`<byte-string>` is such that,
      unless there are ``NULL`` characters embedded in the string,
      ``strlen`` in C and ``size`` in Dylan will return the same value.
 
-     A ``<byte-string>`` may only be safely passed to a C function if
+     A :drm:`<byte-string>` may only be safely passed to a C function if
      its value is never stored and used after the call returns.
 
 .. class:: <C-character>
@@ -2982,14 +2982,14 @@ using :macro:`define c-mapped-subtype`.
 
    :description:
 
-     The Dylan type for import and export is ``<character>``. It is a
-     designator that allows instances of ``<character>`` to be passed to
+     The Dylan type for import and export is :drm:`<character>`. It is a
+     designator that allows instances of :drm:`<character>` to be passed to
      and from C.
 
 .. macro:: with-c-string
    :statement:
 
-   Passes a C pointer to the contents of a ``<byte-string>``.
+   Passes a C pointer to the contents of a :drm:`<byte-string>`.
 
    :macrocall:
      .. code-block:: dylan
@@ -2999,12 +2999,12 @@ using :macro:`define c-mapped-subtype`.
         end
 
    :parameter variable: A Dylan variable name.
-   :parameter string-valued-expression: An instance of ``<string>``.
+   :parameter string-valued-expression: An instance of :drm:`<string>`.
 
    :description:
 
      Use this macro when you need to pass C a pointer to the contents of
-     a ``<byte-string>``, but for some reason it cannot be passed
+     a :drm:`<byte-string>`, but for some reason it cannot be passed
      directly. Inside the *body*, *variable* is bound to a
      :class:`<C-string>` object that refers to the contents of the
      string returned by *string-valued-expression*.
@@ -3022,7 +3022,7 @@ using :macro:`define c-mapped-subtype`.
 
    :parameter pointer: An instance of type :class:`<C-pointer>` that
      points to the memory location at which to start writing zeros.
-   :parameter size: An instance of type ``<integer>``. The number of
+   :parameter size: An instance of type :drm:`<integer>`. The number of
      bytes to clear.
 
    :description:
@@ -3039,7 +3039,7 @@ using :macro:`define c-mapped-subtype`.
 
    :parameter destination-pointer* An instance of type :class:`<C-pointer>`.
    :parameter source-pointer* An instance of type :class:`<C-pointer>`.
-   :parameter size* An instance of ``<integer>``.
+   :parameter size* An instance of :drm:`<integer>`.
 
    :description:
 
@@ -3056,7 +3056,7 @@ using :macro:`define c-mapped-subtype`.
 
    :parameter destination-pointer* An instance of type :class:`<C-pointer>`.
    :parameter source-pointer* An instance of type :class:`<C-pointer>`.
-   :parameter size* An instance of ``<integer>``.
+   :parameter size* An instance of :drm:`<integer>`.
 
    :description:
 
@@ -3078,7 +3078,7 @@ using :macro:`define c-mapped-subtype`.
 
    :parameter ptr1: An instance of type :class:`<C-pointer>`.
    :parameter ptr2: An instance of type :class:`<C-pointer>`.
-   :parameter size: An instance of ``<integer>``.
+   :parameter size: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -3117,7 +3117,7 @@ using :macro:`define c-mapped-subtype`.
 
    :signature: register-C-Dylan-object *object*
 
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -3137,7 +3137,7 @@ using :macro:`define c-mapped-subtype`.
 
    :signature: unregister-C-Dylan-object *object*
 
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -3158,7 +3158,7 @@ using :macro:`define c-mapped-subtype`.
    :signature: export-C-Dylan-object *object* => *c-dylan-object*
 
    :parameter object: An instance of :class:`<C-Dylan-object>`.
-   :parameter object: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
 
    :description:
 
@@ -3171,7 +3171,7 @@ using :macro:`define c-mapped-subtype`.
    :signature: import-c-dylan-object *c-dylan-object* => *object*
 
    :parameter object: An instance of :class:`<C-Dylan-object>`.
-   :value object: An instance of ``<object>``.
+   :value object: An instance of :drm:`<object>`.
 
    :description:
 

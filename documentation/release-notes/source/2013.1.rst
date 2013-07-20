@@ -162,7 +162,7 @@ Libraries
 dylan
 ^^^^^
 
-The Dylan library now allows ``map``, etc., on ``<explicit-key-collection>``
+The Dylan library now allows ``map``, etc., on :drm:`<explicit-key-collection>`
 subclasses that have a ``key-test`` other than ``==``.
 
 common-dylan

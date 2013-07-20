@@ -66,7 +66,7 @@ In Dylan, a generic function looks like (from
       metaclass <function-class>;
     end &class <generic-function>;
 
-There are 2 subclasses of ``<generic-function>``: ``<sealed-generic-function>`` and
+There are 2 subclasses of :drm:`<generic-function>`: ``<sealed-generic-function>`` and
 ``<incremental-generic-function>``.  A sealed generic function adds no slots, while
 an incremental generic function maintains some extra data to support adding further
 methods.
