@@ -23,6 +23,13 @@ The `regular-expressions <http://opendylan.org/documentation/library-reference/r
 Libraries
 ---------
 
+I/O
+^^^
+
+A function ``stream-console?`` has been added to the ``<file-stream>`` class,
+this can be used to determine whether console output has been directed to a
+file.
+
 network
 ^^^^^^^
 
