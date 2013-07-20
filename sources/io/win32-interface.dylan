@@ -12,7 +12,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // GetFileType results
 define constant $FILE_TYPE_UNKNOWN = #x0000;
 define constant $FILE_TYPE_DISK    = #x0001;
-//define constant $FILE_TYPE_CHAR    = #x0002;
+define constant $FILE_TYPE_CHAR    = #x0002;
 //define constant $FILE_TYPE_PIPE    = #x0003;
 //define constant $FILE_TYPE_REMOTE  = #x8000;
 
@@ -52,6 +52,38 @@ define function win32-std-handle
            end));
   call-succeeded?(handle) & handle
 end function win32-std-handle;
+
+define function win32-isatty
+    (std-handle :: <machine-word>) 
+ => (result :: <boolean>)
+  // http://blogs.msdn.com/b/michkap/archive/2010/05/07/10008232.aspx
+/*
+    public static bool IsConsoleRedirected() {
+        IntPtr stdout = GetStdHandle(STD_OUTPUT_HANDLE);
+        if(stdout != INVALID_HANDLE_VALUE) {
+            uint filetype = GetFileType(stdout);
+            if(! ((filetype == FILE_TYPE_UNKNOWN) && (Marshal.GetLastWin32Error() != ERROR_SUCCESS))) {
+                uint mode;
+                filetype &= ~(FILE_TYPE_REMOTE);
+                if (filetype == FILE_TYPE_CHAR) {
+                    bool retval = GetConsoleMode(stdout, out mode);
+                    if ((retval == false) && (Marshal.GetLastWin32Error() == ERROR_INVALID_HANDLE)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return true;
+                }
+            }
+        }
+        // TODO: Not even a stdout so this is not even a console?
+        return false;
+    }
+*/
+  let type = win32-file-type(std-handle);
+  (type == $FILE_TYPE_CHAR)
+end function win32-isatty;
 
 define function win32-alloc-console () => (success? :: <boolean>)
   primitive-raw-as-boolean
