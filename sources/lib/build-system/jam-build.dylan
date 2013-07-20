@@ -108,6 +108,7 @@ define function make-jam-state
     // Useful built-in variables
     jam-variable(state, "OS") := vector(as(<string>, $os-name));
     jam-variable(state, "OSPLAT") := vector(as(<string>, $machine-name));
+    jam-variable(state, "TARGET_PLATFORM") := vector(target-platform-name());
 
     select ($os-name)
       #"win32" =>
