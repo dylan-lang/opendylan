@@ -44,9 +44,9 @@ define method accessor-fd
 end method;
 
 define method accessor-console?
-    (fd :: <native-file-accessor>) 
+    (accessor :: <native-file-accessor>) 
  => (result :: <boolean>)
-  let fd = the-accessor.file-handle;
+  let fd = accessor.file-handle;
   fd & win32-isatty(fd)
 end method accessor-console?;
 
