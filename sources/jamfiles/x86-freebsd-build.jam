@@ -7,7 +7,8 @@ include $(SYSTEM_ROOT)/lib/config.jam ;
 # Configuration variables
 #
 
-CCFLAGS  += -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_FREEBSD -m32 ;
+CCFLAGS  += -DOPEN_DYLAN_PLATFORM_UNIX -DOPEN_DYLAN_PLATFORM_FREEBSD -m32
+            -DOPEN_DYLAN_ARCH_X86 ;
 
 #
 # Library search path and turn off executable stacks
