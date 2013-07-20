@@ -150,6 +150,12 @@ end method type-for-file-stream;
 
 /// File stream implementation
 
+
+define method stream-console?
+    (fd :: <file-stream>) => (result :: <boolean>)
+  accessor-console?( fd.accessor);
+end method stream-console?;
+
 define method stream-at-end?
     (stream :: <file-stream>) => (at-end? :: <boolean>)
   readable?(stream)
