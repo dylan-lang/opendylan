@@ -409,8 +409,7 @@ end method;
 
 define sideways method default-platform-info
     () => (architecture-name, os-name)
-  let platform = environment-variable("OPEN_DYLAN_PLATFORM_NAME");
-  unless (platform) platform := $platform-name end;
+  let platform = target-platform-name();
   platform-namestring-info(platform)
 end method;
 

@@ -59,7 +59,6 @@ define module projects
     save-project-database,
     update-libraries,
     build-project,
-    target-platform-name,
     target-platform-name-setter,
     load-namespace,
     load-library,
