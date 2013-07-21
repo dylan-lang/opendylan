@@ -1,6 +1,6 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2010 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2013 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -14,8 +14,9 @@ define runtime-variable %running-under-dylan-debugger? :: <raw-integer>
   = make-raw-literal(0);
 
 define side-effecting stateless dynamic-extent &runtime-primitive-descriptor primitive-inside-debugger? () => (debugging? :: <boolean>);
+  let m = be.llvm-builder-module;
   let global
-    = %running-under-dylan-debugger?-descriptor.runtime-variable-global;
+    = llvm-runtime-variable(be, m, %running-under-dylan-debugger?-descriptor);
   let inside?-raw = ins--load(be, global, volatile?: #t);
   let inside? = ins--icmp-ne(be, inside?-raw, 0);
   op--boolean(be, inside?)

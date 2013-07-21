@@ -1,6 +1,6 @@
 Module:       dylan-user
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2010 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2013 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -57,12 +57,8 @@ define module dfmc-llvm-back-end
     llvm-primitive-function,
 
     <llvm-runtime-variable-descriptor>,
-    runtime-variable-type-name,
-    runtime-variable-init-function,
-    runtime-variable-section,
-    runtime-variable-global,
-    runtime-variable-global-setter,
     $llvm-runtime-variable-descriptors,
+    llvm-runtime-variable,
 
     <llvm-entry-point-descriptor>,
     entry-point-attributes,

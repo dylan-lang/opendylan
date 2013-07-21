@@ -1,6 +1,6 @@
 Module:       llvm-runtime-generator
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2010 Gwydion Dylan Maintainers
+              Additional code is Copyright 2010-2013 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -30,27 +30,6 @@ define constant $runtime-referenced-functions
   = #[#"type-check-error",
       #"argument-count-error"];
 
-define function generate-runtime-variable
-    (be :: <llvm-back-end>, m :: <llvm-module>,
-     name :: <symbol>, descriptor :: <llvm-runtime-variable-descriptor>)
- => ();
-  let mangled-name = raw-mangle(be, as(<string>, name));
-  let type = llvm-reference-type
-               (be, dylan-value(descriptor.runtime-variable-type-name));
-  let init-value = descriptor.runtime-variable-init-function();
-  let linkage = #"external";
-  let global
-    = make(<llvm-global-variable>,
-           name: mangled-name,
-           type: llvm-pointer-to(be, type),
-           initializer: emit-reference(be, m, init-value),
-           constant?: #f,
-           linkage: linkage,
-           section: llvm-section-name(be, descriptor.runtime-variable-section));
-  descriptor.runtime-variable-global := global;
-  llvm-builder-define-global(be, mangled-name, global);
-end function;
-
 define function generate-runtime-heap
     (be :: <llvm-back-end>, m :: <llvm-module>) => ();
   // Emit external declarations for class wrappers
@@ -70,9 +49,8 @@ define function generate-runtime-heap
 
   // Emit runtime variable definitions
   for (descriptor :: <llvm-runtime-variable-descriptor>
-         keyed-by name :: <symbol>
-         in $llvm-runtime-variable-descriptors)
-    generate-runtime-variable(be, m, name, descriptor);
+	 keyed-by name :: <symbol> in $llvm-runtime-variable-descriptors)
+    llvm-runtime-variable(be, m, descriptor, initialized?: #t);
   end for;
 end function;
 

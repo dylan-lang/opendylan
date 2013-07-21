@@ -1,6 +1,6 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2010 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2013 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -499,25 +499,34 @@ end function;
 /// Runtime support variables
 
 define class <llvm-runtime-variable-descriptor> (<object>)
+  constant slot runtime-variable-name :: <symbol>,
+    required-init-keyword: name:;
   constant slot runtime-variable-type-name :: <symbol>,
     required-init-keyword: type-name:;
   constant slot runtime-variable-init-function :: <function>,
     required-init-keyword: init-function:;
+  constant slot runtime-variable-attributes :: <sequence>,
+    required-init-keyword: attributes:;
   constant slot runtime-variable-section :: <symbol>,
     required-init-keyword: section:;
-  slot runtime-variable-global :: <llvm-global-variable>;
 end class;
 
 define macro runtime-variable-definer
-  { define runtime-variable ?:name :: ?type-name:name = ?init:expression,
-           #key ?section:expression = #"untraced-data"; }
+  { define ?adjectives:* runtime-variable ?:name :: ?type-name:name
+        = ?init:expression,
+        #key ?section:expression = #"untraced-data"; }
     => { define constant ?name ## "-descriptor"
            = make(<llvm-runtime-variable-descriptor>,
+		  name: ?#"name",
                   type-name: ?#"type-name",
                   init-function: method() ?init end,
+		  attributes: #[?adjectives],
                   section: ?section);
          do-define-llvm-runtime-variable-descriptor
            (?#"name", ?name ## "-descriptor") }
+adjectives:
+    { } => { }
+    { ?adjective:name ...} => { ?#"adjective", ... }
 end macro;
 
 define constant $llvm-runtime-variable-descriptors = make(<object-table>);
@@ -527,3 +536,40 @@ define function do-define-llvm-runtime-variable-descriptor
  => ();
   $llvm-runtime-variable-descriptors[name] := descriptor;
 end function;
+
+define method llvm-runtime-variable
+    (back-end :: <llvm-back-end>, module :: <llvm-module>,
+     descriptor :: <llvm-runtime-variable-descriptor>,
+     #key initialized? = #f)
+ => (reference :: <llvm-constant-value>)
+  let mangled-name
+    = raw-mangle(back-end, as(<string>, descriptor.runtime-variable-name));
+  let global = element(module.llvm-global-table, mangled-name, default: #f);
+  if (global)
+    global
+  else
+    let type-name = descriptor.runtime-variable-type-name;
+    let type
+      = select (type-name)
+	  otherwise =>
+	    llvm-reference-type(back-end, dylan-value(type-name));
+	end select;
+    let linkage = #"external";
+    let attributes = descriptor.runtime-variable-attributes;
+    let section
+      = llvm-section-name(back-end, descriptor.runtime-variable-section);
+    let global
+      = make(<llvm-global-variable>,
+	     name: mangled-name,
+	     type: llvm-pointer-to(back-end, type),
+	     initializer:
+	       if (initialized?)
+		 let init-value = descriptor.runtime-variable-init-function();
+		 emit-reference(back-end, module, init-value)
+	       end,
+	     constant?: #f,
+	     linkage: linkage,
+	     section: section);
+    llvm-builder-define-global(back-end, mangled-name, global)
+  end
+end method;
