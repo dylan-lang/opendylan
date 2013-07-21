@@ -20,8 +20,6 @@ define module environment-internal-commands
 	      open-project => env/open-project,
               save-project =>  env/save-project,
               save-project-database =>  env/save-project-database,
-	      default-build-script => env/default-build-script,
-	      default-build-script-setter => env/default-build-script-setter,
               project-compiler-back-end => env/project-compiler-back-end,
               project-compiler-back-end-setter => env/project-compiler-back-end-setter,
               project-compilation-mode => env/project-compilation-mode,

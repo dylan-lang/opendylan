@@ -483,7 +483,6 @@ define module environment-protocols
          parse-project-source,
          build-project,
          clean-project,
-         default-build-script, default-build-script-setter,
          link-project,
          note-user-project-opened;
 

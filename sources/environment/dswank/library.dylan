@@ -36,8 +36,6 @@ define module dswank
   use environment-protocols,
     exclude: { application-filename,
 	       application-arguments,
-	       default-build-script,
-	       default-build-script-setter,
 	       run-application };
   use build-system;
   use command-lines;
