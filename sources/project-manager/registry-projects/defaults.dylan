@@ -31,21 +31,20 @@ define function make-registry-from-path
 	      personal?: personal?))
 end;
 
-define function find-registries(architecture, os)
+define function find-registries(platform-name)
   let registries = project-dynamic-environment(#"registries");
   if (registries)
     registries
   else
     project-dynamic-environment(#"registries") 
-      := find-registries-internal(architecture, os)
+      := find-registries-internal(platform-name)
   end
 end;
 
 define function find-registries-internal
-    (architecture, os)
+    (platform-name)
  => (registries :: <sequence>);
   debug-out(#"project-manager", "Finding registries");
-  let platform = platform-namestring(architecture, os);
   let generic-personal-registries = #();
   let platform-personal-registries = #();
   let personal-path = lookup-personal-registries();
@@ -55,7 +54,7 @@ define function find-registries-internal
                     "Making personal registries for %s",
                     as(<string>, path));
 	  let (platform-registry, generic-registry)
-	    = make-registry-from-path(path, platform, personal?: #t);
+	    = make-registry-from-path(path, platform-name, personal?: #t);
 	  platform-personal-registries 
 	    := add!(platform-personal-registries, platform-registry);
 	  generic-personal-registries
@@ -70,7 +69,7 @@ define function find-registries-internal
                   "Making system registries for %s",
                   as(<string>, path));
 	let (platform-registry, generic-registry) 
-	  = make-registry-from-path(path, platform, personal?: #t);
+	  = make-registry-from-path(path, platform-name, personal?: #t);
         //XXX: set to #f here to prevent rebuilds all over the place
 	platform-system-registries
 	  := add!(platform-system-registries, platform-registry);
@@ -93,7 +92,7 @@ end class <registry-entry-not-found-error>;
 
 define function compute-library-location (key, architecture, os)
   let platform = platform-namestring(architecture, os);
-  let registries = find-registries(architecture, os);
+  let registries = find-registries(platform);
 
   let (lid-location, registry)
     = find-library-locator(key, registries);
