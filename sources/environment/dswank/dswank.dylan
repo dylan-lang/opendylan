@@ -82,7 +82,7 @@ define swank-function list-all-package-names (t)
             end;
           end;
         end;
-  let regs = find-registries($machine-name, $os-name);
+  let regs = find-registries(target-platform-name());
   let reg-paths = map(registry-location, regs);
   for (reg-path in reg-paths)
     if (file-exists?(reg-path))

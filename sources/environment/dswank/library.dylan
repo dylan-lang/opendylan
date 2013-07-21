@@ -12,6 +12,7 @@ define library dswank
   use lisp-reader;
   use environment-commands;
   use environment-protocols;
+  use build-system;
   use commands;
   use environment-internal-commands;
   use source-records;
@@ -35,7 +36,10 @@ define module dswank
   use environment-protocols,
     exclude: { application-filename,
 	       application-arguments,
+	       default-build-script,
+	       default-build-script-setter,
 	       run-application };
+  use build-system;
   use command-lines;
   use commands;
   use source-records;
