@@ -54,7 +54,7 @@ LINKFLAGS ?= $(CCFLAGS) ;
 # Runtime
 #
 
-RUNTIMEDIR ?= $(COMPILER_BACK_END)-$(OSPLAT)-$(OS) ;
+RUNTIMEDIR ?= $(COMPILER_BACK_END)-$(TARGET_PLATFORM) ;
 
 SUPOBJS_harp ?= dylan-support.o ;
 

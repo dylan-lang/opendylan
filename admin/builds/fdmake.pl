@@ -8,7 +8,7 @@ use Time::HiRes qw(time);
 
 my $lidfile_line;
 
-my $platform_name = $ENV{'OPEN_DYLAN_PLATFORM_NAME'};
+my $platform_name = $ENV{'OPEN_DYLAN_TARGET_PLATFORM'};
 
 my $user_root = $ENV{'OPEN_DYLAN_USER_ROOT'};
 my $user_registries = $ENV{'OPEN_DYLAN_USER_REGISTRIES'};

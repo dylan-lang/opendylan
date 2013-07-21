@@ -5,12 +5,21 @@ Copyright:    Original Code is Copyright 2004 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+define constant $platform-variable = "OPEN_DYLAN_TARGET_PLATFORM";
+define constant $default-platform = $platform-name;
+
+define function target-platform-name ()
+ => (platform-name :: <string>)
+  environment-variable($platform-variable) | as(<string>, $default-platform)
+end function target-platform-name;
+
 define function main(name, arguments)
   let state = make(<jam-state>);
 
   // Useful built-in variables
   jam-variable(state, "OS") := vector(as(<string>, $os-name));
   jam-variable(state, "OSPLAT") := vector(as(<string>, $machine-name));
+  jam-variable(state, "TARGET_PLATFORM") := vector(target-platform-name());
 
   select($os-name)
     #"win32" =>

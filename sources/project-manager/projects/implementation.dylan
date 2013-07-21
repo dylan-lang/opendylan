@@ -889,11 +889,6 @@ define function platform-namestring-info (platform) => (architecture, os)
          as(<symbol>, os-name))
 end function;
 
-define function target-platform-name ()
-  let (architecture, os) = default-platform-info();
-  platform-namestring(architecture, os);
-end function;
-
 define function target-platform-name-setter (platform)
   let (old-architecture, old-os) = default-platform-info();
   let (new-architecture, new-os) = platform-namestring-info(platform);

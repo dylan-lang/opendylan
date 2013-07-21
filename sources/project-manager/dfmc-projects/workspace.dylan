@@ -8,9 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Useful constants
 
-define constant $platform-variable = "OPEN_DYLAN_PLATFORM_NAME";
-define constant $default-platform  = $platform-name;
-
 define constant <debug-target>   = <object>;
 define constant <transaction-id> = <object>;
 
@@ -195,9 +192,7 @@ end method target-browsing-context;
 
 define sideways method default-platform-info 
     () => (architecture :: <architecture>, os :: <operating-system>)
-  let platform 
-    = environment-variable($platform-variable)
-        | $default-platform;
+  let platform = target-platform-name();
   let name = as-lowercase(as(<string>, platform));
   let separator-position = position(name, '-');
   let architecture-name = copy-sequence(name, end: separator-position);

@@ -20,6 +20,16 @@ Documentation
 
 The `regular-expressions <http://opendylan.org/documentation/library-reference/regular-expressions/index.html>`_ library documentation has been greatly improved.
 
+Build Tools
+-----------
+
+``OPEN_DYLAN_PLATFORM_NAME`` is now ``OPEN_DYLAN_TARGET_PLATFORM`` to make
+the intent more clear. Additionally, this value is available to Jam as
+``TARGET_NAME``.
+
+Cross-compilation by setting ``OPEN_DYLAN_TARGET_PLATFORM`` in the environment
+is also improved, so long as the proper run-time libraries have been built.
+
 Libraries
 ---------
 
