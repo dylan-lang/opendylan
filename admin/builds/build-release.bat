@@ -361,7 +361,7 @@ if "%VERBOSE%"=="yes" set MAKE=nmake /d /nologo
 if "%VERBOSE%"=="no"  set MAKE=nmake /s /nologo
 set OPEN_DYLAN_RELEASE_SOURCES=%OLD_RELEASE_ROOT%\Sources
 set OPEN_DYLAN_RELEASE_REGISTRIES=%OPEN_DYLAN_RELEASE_SOURCES%\registry
-set OPEN_DYLAN_PLATFORM_NAME=x86-win32
+set OPEN_DYLAN_TARGET_PLATFORM=x86-win32
 
 REM // Pentium runtime build options
 set PENTIUM_RUNTIME_OPTIONS=

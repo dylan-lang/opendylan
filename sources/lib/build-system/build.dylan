@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $dylanmakefile  = "dylanmakefile.mkf";
 define constant $build-log-file = "build.log";
-define constant $platform-variable = "OPEN_DYLAN_PLATFORM_NAME";
+define constant $platform-variable = "OPEN_DYLAN_TARGET_PLATFORM";
 define constant $default-platform = $platform-name;
 
 define function target-platform-name ()

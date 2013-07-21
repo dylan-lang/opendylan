@@ -18,41 +18,41 @@ GC_LIB=-lgc
 AC_CANONICAL_TARGET
 case $host in
   i*86-*-linux*)
-      OPEN_DYLAN_PLATFORM_NAME=x86-linux;
+      OPEN_DYLAN_TARGET_PLATFORM=x86-linux;
       SUPPORT_GC_MPS=yes;
       SUPPORT_GC_BOEHM=no
     ;;
   i*86-*-freebsd*)
-      OPEN_DYLAN_PLATFORM_NAME=x86-freebsd;
+      OPEN_DYLAN_TARGET_PLATFORM=x86-freebsd;
       SUPPORT_GC_MPS=yes;
       SUPPORT_GC_BOEHM=no
     ;;
   i*86-*-darwin*)
-      OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
+      OPEN_DYLAN_TARGET_PLATFORM=x86-darwin;
       GC_USE_STATIC_BOEHM=true
     ;;
   x86_64-*-darwin*)
-      OPEN_DYLAN_PLATFORM_NAME=x86-darwin;
+      OPEN_DYLAN_TARGET_PLATFORM=x86-darwin;
       GC_USE_STATIC_BOEHM=true
     ;;
   powerpc-*-darwin*)
-      OPEN_DYLAN_PLATFORM_NAME=ppc-darwin;
+      OPEN_DYLAN_TARGET_PLATFORM=ppc-darwin;
     ;;
   amd64-*-freebsd* | x86_64-*-freebsd*)
-      OPEN_DYLAN_PLATFORM_NAME=x86_64-freebsd;
+      OPEN_DYLAN_TARGET_PLATFORM=x86_64-freebsd;
       GC_LIB=-lgc-threaded
     ;;
   x86_64-*-linux*)
-      OPEN_DYLAN_PLATFORM_NAME=x86_64-linux;
+      OPEN_DYLAN_TARGET_PLATFORM=x86_64-linux;
     ;;
   arm-*-linux*)
-      OPEN_DYLAN_PLATFORM_NAME=arm-linux;
+      OPEN_DYLAN_TARGET_PLATFORM=arm-linux;
     ;;
   *)
       AC_MSG_ERROR([The $host platform is not supported.])
     ;;
 esac
-AC_SUBST(OPEN_DYLAN_PLATFORM_NAME)
+AC_SUBST(OPEN_DYLAN_TARGET_PLATFORM)
 
 AM_INIT_AUTOMAKE
 
@@ -105,7 +105,7 @@ if test "$cross_compiling" != "yes"; then
             GC_LIB_NAME=libgc.a
           ],
           [
-            AS_IF([test x${OPEN_DYLAN_PLATFORM_NAME} == xx86-darwin],
+            AS_IF([test x${OPEN_DYLAN_TARGET_PLATFORM} == xx86-darwin],
                   [
                     GC_LIB_NAME=libgc.dylib
                   ],

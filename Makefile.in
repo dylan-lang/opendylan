@@ -3,7 +3,7 @@ srcdir          = @abs_srcdir@
 abs_srcdir      = @abs_srcdir@
 abs_builddir    = @abs_builddir@
 
-OPEN_DYLAN_PLATFORM_NAME = @OPEN_DYLAN_PLATFORM_NAME@
+OPEN_DYLAN_TARGET_PLATFORM = @OPEN_DYLAN_TARGET_PLATFORM@
 RUNTIME_SOURCES = sources/lib/run-time
 
 FDMAKE_OPTIONS  =
@@ -93,7 +93,7 @@ BOOTSTRAP_1_PRIMITIVE_LIBS = \
 BOOTSTRAP_1_REGISTRY = $(abs_srcdir)/sources/bootstrap1-registry
 
 BOOTSTRAP_1_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(OPEN_DYLAN_PLATFORM_NAME) \
+	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.1/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.1 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
@@ -112,10 +112,10 @@ $(abs_builddir)/Bootstrap.1:
 $(BOOTSTRAP_1_REGISTRY):
 	mkdir $(BOOTSTRAP_1_REGISTRY)
 	cp -r $(srcdir)/sources/registry/generic $(BOOTSTRAP_1_REGISTRY)
-	cp -r $(srcdir)/sources/registry/$(OPEN_DYLAN_PLATFORM_NAME) $(BOOTSTRAP_1_REGISTRY)
+	cp -r $(srcdir)/sources/registry/$(OPEN_DYLAN_TARGET_PLATFORM) $(BOOTSTRAP_1_REGISTRY)
 	for lib in $(BOOTSTRAP_1_PRIMITIVE_LIBS); do \
 	  rm -f $(BOOTSTRAP_1_REGISTRY)/generic/$$lib; \
-	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(OPEN_DYLAN_PLATFORM_NAME)/$$lib; \
+	  rm -f $(BOOTSTRAP_1_REGISTRY)/$(OPEN_DYLAN_TARGET_PLATFORM)/$$lib; \
 	done
 
 $(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
@@ -137,7 +137,7 @@ bootstrap-stage-1: \
 # any existing or stage 1 libraries.
 
 BOOTSTRAP_2_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(OPEN_DYLAN_PLATFORM_NAME) \
+	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
 	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.2/build/logs \
 	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
@@ -181,7 +181,7 @@ bootstrap-stage-2: \
 # an installation without actually installing it.
 
 BOOTSTRAP_3_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(OPEN_DYLAN_PLATFORM_NAME) \
+	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.2/build \
@@ -236,16 +236,16 @@ rtg:
 	done
 
 BOOTSTRAP_4_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(OPEN_DYLAN_PLATFORM_NAME) \
+	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.3/build \
 	OPEN_DYLAN_RELEASE_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_RELEASE_SOURCES=$(abs_srcdir)/sources \
-	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/logs \
-	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME) \
-	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME) \
-	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build \
+	OPEN_DYLAN_BUILD_LOGS=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/logs \
+	OPEN_DYLAN_USER_ROOT=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
+	OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
+	OPEN_DYLAN_USER_BUILD=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build \
 	OPEN_DYLAN_USER_REGISTRIES=$(abs_srcdir)/sources/registry:$(library_srcdir)/registry \
 	OPEN_DYLAN_USER_SOURCES=$(abs_srcdir)/sources
 
@@ -256,17 +256,17 @@ BOOTSTRAP_4_COMPILER = \
 
 
 
-$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME):
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/bin
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/lib
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/lib/runtime
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build
-	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/logs
+$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM):
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/bin
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/lib
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/lib/runtime
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build
+	mkdir $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/logs
 
-bootstrap-stage-4: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)
+bootstrap-stage-4: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
 	@echo Building Open Dylan bootstrap stage 4...
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME) \
+	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM) \
 	  $(MAKE) -C $(rt_build) install
 	@$(BOOTSTRAP_4_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_4_COMPILER)" \
@@ -279,15 +279,15 @@ testc:
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <A
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <B
 
-testl: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)
+testl: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <Al
-	@(cd Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/dylan; \
+	@(cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/dylan; \
           for i in *.bc; do \
             echo $$i; \
             llvm-dis $$i && clang -O3 -S $$i; \
           done)
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <Bl
-	@(cd Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/common-dylan; \
+	@(cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/common-dylan; \
           for i in *.bc; do \
             echo $$i; \
             llvm-dis $$i && clang -O3 -S $$i; \
@@ -295,7 +295,7 @@ testl: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)
 
 xtestl:
 	for target in $(BACKENDS); do \
-	  $(MAKE) testl OPEN_DYLAN_PLATFORM_NAME=$$target; \
+	  $(MAKE) testl OPEN_DYLAN_TARGET_PLATFORM=$$target; \
 	done
 
 ###
@@ -344,11 +344,11 @@ release-stage:
 	cp $(abs_srcdir)/License.txt $(abs_builddir)/release/opendylan-$(version)
 	cp $(abs_srcdir)/packages/unix/README $(abs_builddir)/release/opendylan-$(version)
 	cd $(abs_builddir)/release; \
-	  tar cjf $(abs_builddir)/opendylan-$(version)-$(OPEN_DYLAN_PLATFORM_NAME).tar.bz2 opendylan-$(version)
+	  tar cjf $(abs_builddir)/opendylan-$(version)-$(OPEN_DYLAN_TARGET_PLATFORM).tar.bz2 opendylan-$(version)
 	-mkdir $(abs_builddir)/release/opendylan-$(version)/build
 	cp -R $(abs_builddir)/Bootstrap.3/build $(abs_builddir)/release/opendylan-$(version)
 	cd $(abs_builddir)/release/; \
-	  tar cjf $(abs_builddir)/opendylan-$(version)-$(OPEN_DYLAN_PLATFORM_NAME)-debug-info.tar.bz2 opendylan-$(version)/build
+	  tar cjf $(abs_builddir)/opendylan-$(version)-$(OPEN_DYLAN_TARGET_PLATFORM)-debug-info.tar.bz2 opendylan-$(version)/build
 
 release: @bootstrap_target@ 3-stage-bootstrap release-stage
 
@@ -404,7 +404,7 @@ CHECK_APPS = \
 	command-line-parser-test-suite-app
 
 CHECK_ENV = \
-	OPEN_DYLAN_PLATFORM_NAME=$(OPEN_DYLAN_PLATFORM_NAME) \
+	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
 	OPEN_DYLAN_RELEASE_ROOT=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_RELEASE_INSTALL=$(abs_builddir)/Bootstrap.$(CHECK_STAGE) \
 	OPEN_DYLAN_RELEASE_BUILD=$(abs_builddir)/Bootstrap.$(CHECK_STAGE)/build \
