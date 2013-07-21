@@ -95,7 +95,7 @@ You will also need to do a couple of edits to the C run-time:
 .. warning:: We should improve this code within the C run-time.
    :class: alert alert-block alert-info
 
-Additionally, there are some mappings involving ``OPEN_DYLAN_PLATFORM_NAME``
+Additionally, there are some mappings involving ``OPEN_DYLAN_TARGET_PLATFORM``
 in ``sources/lib/run-time/Makefile.in`` that will need to be updated.
 
 LLVM Back-End
@@ -120,7 +120,7 @@ override the data layout if a different ABI is required.
 Be sure to invoke ``register-back-end`` correctly with your new back-end
 class.
 
-Additionally, there are some mappings involving ``OPEN_DYLAN_PLATFORM_NAME``
+Additionally, there are some mappings involving ``OPEN_DYLAN_TARGET_PLATFORM``
 in ``sources/lib/run-time/Makefile.in`` that will need to be updated.
 
 *This isn't completely written yet.*
