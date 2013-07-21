@@ -100,8 +100,8 @@ end command-property registries;
 define method show-property
     (context :: <environment-context>, property :: <registries-property>)
  => ()
-  let (processor, os) = default-platform-info();
-  let registries = find-registries(processor, os);
+  let platform-name = target-platform-name();
+  let registries = find-registries(platform-name);
   for (registry in registries)
     message(context, "  %s", registry)
   end
