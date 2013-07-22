@@ -271,6 +271,15 @@ define method format-integer (arg :: <double-integer>,
   print(arg, stream)
 end method;
 
+///---*** KLUDGE: Temporary method until we have better numerics.
+define method format-integer
+    (arg :: <machine-word>,
+     radix :: limited(<integer>, min: 2, max: 36),
+     stream :: <stream>)
+ => ()
+  print(arg, stream)
+end method;
+
 define method format-integer (arg :: <integer>,
                               radix :: limited(<integer>, min: 2, max: 36),
                               stream :: <stream>) => ()
