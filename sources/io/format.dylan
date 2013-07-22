@@ -292,7 +292,7 @@ define method format-integer (arg :: <integer>,
   if (negative?(arg))
     write-element(stream, '-');
     // Pick off one digit before beginning the iteration to ensure that we
-    // don't need Generic-arithmetic.  If arg were the mininum signed
+    // don't need Generic-arithmetic.  If arg were the minimum signed
     // machine word, and we simply negated it and called repeat, then it
     // would turn into an integer that was one larger than the maximum
     // signed integer.
