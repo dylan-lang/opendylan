@@ -37,6 +37,9 @@ define module dfmc-llvm-back-end
     llvm-back-end-data-layout,
     llvm-section-name,
 
+    llvm-thread-local-support?,
+    llvm-teb-struct-type,
+
     *loose-mode?*,
     *interactive-mode?*,
     llvm-retract-cached,

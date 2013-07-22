@@ -551,6 +551,8 @@ define method llvm-runtime-variable
     let type-name = descriptor.runtime-variable-type-name;
     let type
       = select (type-name)
+	    #"<teb>" =>
+	    llvm-reference-type(back-end, back-end.llvm-teb-struct-type);
 	  otherwise =>
 	    llvm-reference-type(back-end, dylan-value(type-name));
 	end select;
@@ -565,10 +567,19 @@ define method llvm-runtime-variable
 	     initializer:
 	       if (initialized?)
 		 let init-value = descriptor.runtime-variable-init-function();
-		 emit-reference(back-end, module, init-value)
+		 if (init-value)
+		   emit-reference(back-end, module, init-value)
+		 else
+		   make(<llvm-null-constant>, type: type)
+		 end if
 	       end,
 	     constant?: #f,
 	     linkage: linkage,
+	     thread-local:
+	       if (member?(#"thread-local", attributes)
+		     & llvm-thread-local-support?(back-end))
+		     #t
+		  end if,
 	     section: section);
     llvm-builder-define-global(back-end, mangled-name, global)
   end

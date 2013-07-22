@@ -7,8 +7,65 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Thread environment
 
+define method initialize-teb-struct-type (back-end :: <llvm-back-end>) => ()
+  // Note that this layout is assumed by the debugger-manager library
+  back-end.llvm-teb-struct-type
+    := make(<&raw-struct-type>,
+	    debug-name: "TEB",
+	    options: #[],
+	    members:
+	      vector(// Offset 0: Current bind-exit frame on stack
+		     make(<raw-aggregate-ordinary-member>,
+			  name: #"teb-dynamic-environment",
+                          raw-type: dylan-value(#"<raw-pointer>")),
+		     // Offset 1: thread variables <simple-object-vector>
+		     make(<raw-aggregate-ordinary-member>,
+			  name: #"teb-thread-local-variables",
+                          raw-type: dylan-value(#"<raw-pointer>")),
+		     // Offset 2: <thread> object for this thread
+		     make(<raw-aggregate-ordinary-member>,
+			  name: #"teb-current-thread",
+                          raw-type: dylan-value(#"<raw-pointer>")),
+		     // Offset 3: OS handle for this thread
+		     make(<raw-aggregate-ordinary-member>,
+			  name: #"teb-current-thread-handle",
+                          raw-type: dylan-value(#"<raw-pointer>")),
+		     // Offset 4: <list> of current <handler> objects
+		     make(<raw-aggregate-ordinary-member>,
+			  name: #"teb-current-handler",
+                          raw-type: dylan-value(#"<raw-pointer>")),
+		     // Offset 5: FFI barrier (inside or outside Dylan)
+		     make(<raw-aggregate-ordinary-member>,
+		     	  name: #"teb-runtime-state",
+                          raw-type: dylan-value(#"<raw-pointer>")),
+		     // Padding
+		     make(<raw-aggregate-array-member>,
+			  name: #"teb-pad",
+			  array-length: 2,
+                          raw-type: dylan-value(#"<raw-pointer>")),
+		     // Offset 8: MV count
+		     make(<raw-aggregate-ordinary-member>,
+		     	  name: #"teb-mv-count",
+                          raw-type: dylan-value(#"<raw-pointer>")),
+		     // Offset 9: MV area
+		     make(<raw-aggregate-array-member>,
+			  name: #"teb-mv-area",
+			  array-length: 64,
+                          raw-type: dylan-value(#"<raw-pointer>"))));
+
+  // Record TEB structure field indicies
+  for (member in back-end.llvm-teb-struct-type.raw-aggregate-members,
+       index from 0)
+    back-end.%teb-struct-field-index[member.member-name] := i32(index);
+  end for;
+end method;
+
+// The current TEB (on platforms that support thread-local variables),
+// or the TEB of the initial thread (on platforms without TLV support).
+define thread-local runtime-variable %teb :: <teb> = #f;
+
 // %teb-tlv-index is the variable which contains the handle for the
-// Windows TLV/pthreads key which holds the TEB for each thread.
+// Windows TLV/pthreads key which holds the TEB for each thread on platforms
 //
 define runtime-variable %teb-tlv-index :: <raw-machine-word>
   = make-raw-literal(as(<machine-word>, -1));
@@ -17,6 +74,25 @@ define runtime-variable %teb-tlv-index :: <raw-machine-word>
 //
 define runtime-variable %teb-chain :: <raw-address>
   = make-raw-literal(0);
+
+define method op--teb
+    (be :: <llvm-back-end>) => (teb :: <llvm-value>);
+  let module = be.llvm-builder-module;
+  llvm-runtime-variable(be, module, %teb-descriptor)
+end method;
+
+define method op--teb
+    (be :: <llvm-windows-back-end>) => (teb :: <llvm-value>);
+  error("FIXME windows TEB");
+end method;
+
+define method op--teb-getelementptr
+    (be :: <llvm-back-end>, field :: <symbol>, #rest indices)
+ => (pointer :: <llvm-value>);
+  let teb = op--teb(be);
+  let index = be.%teb-struct-field-index[field];
+  apply(ins--gep-inbounds, be, teb, 0, index, indices)
+end method;
 
 
 /// Thread primitives

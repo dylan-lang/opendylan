@@ -198,3 +198,18 @@ define method llvm-back-end-target-triple
     (back-end :: <llvm-x86_64-freebsd-back-end>) => (triple :: <string>);
   "x86_64-unknown-freebsd"
 end method;
+
+
+/// LLVM Thread-local storage platform support
+
+define method llvm-thread-local-support?
+    (back-end :: <llvm-back-end>)
+ => (support? :: <boolean>)
+  #t
+end method;
+
+define method llvm-thread-local-support?
+    (back-end :: <llvm-windows-back-end>)
+ => (support? :: <boolean>)
+  #f
+end method;

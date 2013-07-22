@@ -60,7 +60,14 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
     = make(<object-table>);
 
   // Precomputed multiple value return structure type
-  slot %mv-struct-type;
+  slot %mv-struct-type :: <&raw-struct-type>;
+
+  // Precomputed Thread Environment Block structure type
+  slot llvm-teb-struct-type :: <&raw-struct-type>;
+
+  // gep indices for each field
+  constant slot %teb-struct-field-index :: <object-table>
+    = make(<object-table>);
 end;
 
 define generic llvm-back-end-target-triple
@@ -83,6 +90,9 @@ define sealed method initialize
                           raw-type: dylan-value(#"<raw-pointer>")),
                      make(<raw-aggregate-ordinary-member>,
                           raw-type: dylan-value(#"<raw-byte>"))));
+
+  // Initialize TEB structure
+  initialize-teb-struct-type(back-end);
 
   // Initialize predefined/raw LLVM types
   initialize-type-table(back-end);
