@@ -722,6 +722,7 @@ define module-with-models dfmc-modeling
     <raw-aggregate-ordinary-member>,
     <raw-aggregate-array-member>,
     <raw-struct-bitfield-member>,
+      member-name,
       member-raw-type,
       member-bitfield-width,
       member-array-length,

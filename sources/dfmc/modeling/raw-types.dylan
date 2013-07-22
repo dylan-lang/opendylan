@@ -203,6 +203,8 @@ define &raw-machine-word-subtypes
 end;
 
 define abstract class <raw-aggregate-member> (<object>)
+  constant slot member-name :: <object>,
+    init-keyword: name:, init-value: #f;
   constant slot member-raw-type, required-init-keyword: raw-type:;
 end;
 
