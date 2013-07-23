@@ -276,18 +276,22 @@ cli4:
 	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
 
 testc:
-	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <A
-	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <B
+	@printf "set compiler-back-end c\nopen dylan\nbuild -nolink -output dfm" \
+	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
+	@printf "set compiler-back-end c\nopen common-dylan\nbuild -nolink -output dfm" \
+	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
 
-testl: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)
-	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <Al
-	@(cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/dylan; \
+testl: $(abs_builddir)/Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)
+	@printf "set compiler-back-end llvm\nopen dylan\nbuild -nolink -output dfm" \
+	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
+	@(cd Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/dylan; \
           for i in *.bc; do \
             echo $$i; \
             llvm-dis $$i && clang -O3 -S $$i; \
           done)
-	@$(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER) <Bl
-	@(cd Bootstrap.4.$(OPEN_DYLAN_TARGET_PLATFORM)/build/common-dylan; \
+	@printf "set compiler-back-end llvm\nopen common-dylan\nbuild -nolink -output dfm" \
+	| $(BOOTSTRAP_4_ENV) $(BOOTSTRAP_4_COMPILER)
+	@(cd Bootstrap.4.$(OPEN_DYLAN_PLATFORM_NAME)/build/common-dylan; \
           for i in *.bc; do \
             echo $$i; \
             llvm-dis $$i && clang -O3 -S $$i; \
