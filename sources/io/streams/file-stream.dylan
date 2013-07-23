@@ -410,6 +410,7 @@ define function force-buffer
     (the-buffer :: <buffer>, the-stream :: <file-stream>,
      #key return-fresh-buffer? = #f)
  => (the-buffer :: <buffer>)
+  assert-locked(the-stream);
   if (the-buffer.buffer-dirty?)
     let start :: <buffer-index> = the-buffer.buffer-start;
     let count = the-buffer.buffer-end - start;
@@ -503,6 +504,7 @@ define method adjust-stream-position
     (stream :: <file-stream>, delta :: <integer>,
      #key from = #"current")
  => (position :: <integer>)
+  assert-locked(stream);
   let size-of-stream :: <integer> = stream-size(stream);
   let position-from-start
     = select (from)
