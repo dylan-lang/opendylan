@@ -383,8 +383,7 @@ define open generic set-default-platform-info (architecture,
 
 // Called when the default target platform gets changed.
 define open generic note-platform-change (project :: <project>,
-					  architecture,
-					  operating-system);
+                                          platform-name);
 
 // Called when a used project is opened
 define open generic note-used-project (project :: <project>, subproject :: <project>);

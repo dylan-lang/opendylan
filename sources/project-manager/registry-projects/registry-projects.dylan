@@ -88,9 +88,10 @@ end;
 *default-project-class* := <registry-project>;
 
 define method note-platform-change (project :: <registry-project>,
-				    new-architecture, new-os)
+                                    new-platform-name)
   let old-architecture = project-compiler-setting(project, architecture:);
   let old-os = project-compiler-setting(project, operating-system:);
+  let (new-architecture, new-os) = platform-namestring-info(new-platform-name);
   unless (old-architecture == new-architecture & old-os == new-os)
     let key = project.project-registered-name;
     let (lid-location, registry) = 

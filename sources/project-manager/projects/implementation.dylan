@@ -894,7 +894,7 @@ define function target-platform-name-setter (platform)
   let (new-architecture, new-os) = platform-namestring-info(platform);
   unless (new-architecture == old-architecture & new-os == old-os)
     for (project in *all-open-projects*)
-      note-platform-change(project, new-architecture, new-os);
+      note-platform-change(project, platform-name);
     end;
     set-default-platform-info(new-architecture, new-os);
   end;
