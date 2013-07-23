@@ -451,32 +451,34 @@ define function preempt-buffer
     // check first.
     if (the-buffer.buffer-owning-stream)
       let the-owning-stream =
-	$stream-id-to-stream-map[the-buffer.buffer-owning-stream];
-      let map-index
-	= ash(the-buffer.buffer-position,
-	      the-stream.buffer-vector.buffer-shift-amount);
-      let buffer-map = the-owning-stream.buffer-map;
-      buffer-map[map-index] 
-	:= buffer-map-entry-deposit-empty(#t, buffer-map[map-index]);
-      // Zero out the stream-shared-buffer in the stream which currently
-      // owns the buffer we are preempting if the stream-shared-buffer is
-      // the preempted buffer.  This can't happen unless the
-      // buffer-vector is being shared by more than one stream.
-      if (the-owning-stream.stream-shared-buffer == the-buffer)
-	// First save the position
-	the-owning-stream.current-position 
-	  := stream-position(the-owning-stream);
-	the-owning-stream.stream-shared-buffer := #f;
-      end if;
-      if (the-buffer.buffer-dirty? & read-only?(the-owning-stream))
-	error(make(<stream-not-writable>, stream: the-owning-stream,
-		   format-string: 
-		     "Internal error: buffer for read-only" 
-		     "<multi-buffered-stream> (dood stream) was"
-		     "modified, can't write the modified buffer."
-		     ));
-      end if;
-      force-buffer(the-buffer, the-owning-stream);
+        $stream-id-to-stream-map[the-buffer.buffer-owning-stream];
+      with-stream-locked (the-owning-stream)
+        let map-index
+          = ash(the-buffer.buffer-position,
+                the-stream.buffer-vector.buffer-shift-amount);
+        let buffer-map = the-owning-stream.buffer-map;
+        buffer-map[map-index] 
+          := buffer-map-entry-deposit-empty(#t, buffer-map[map-index]);
+        // Zero out the stream-shared-buffer in the stream which currently
+        // owns the buffer we are preempting if the stream-shared-buffer is
+        // the preempted buffer.  This can't happen unless the
+        // buffer-vector is being shared by more than one stream.
+        if (the-owning-stream.stream-shared-buffer == the-buffer)
+          // First save the position
+          the-owning-stream.current-position 
+            := stream-position(the-owning-stream);
+          the-owning-stream.stream-shared-buffer := #f;
+        end if;
+        if (the-buffer.buffer-dirty? & read-only?(the-owning-stream))
+          error(make(<stream-not-writable>, stream: the-owning-stream,
+                     format-string: 
+                       "Internal error: buffer for read-only" 
+                       "<multi-buffered-stream> (dood stream) was"
+                       "modified, can't write the modified buffer."
+                       ));
+        end if;
+        force-buffer(the-buffer, the-owning-stream);
+      end;
     end if;
     // Claim the buffer for the current stream.
     the-buffer.buffer-owning-stream := the-stream.stream-id;

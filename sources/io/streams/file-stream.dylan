@@ -159,7 +159,9 @@ end method stream-console?;
 define method stream-at-end?
     (stream :: <file-stream>) => (at-end? :: <boolean>)
   readable?(stream)
-  & ~get-input-buffer(stream);
+  & with-input-buffer (sb = stream)
+      ~sb;
+    end
 end method stream-at-end?;
 
 define method stream-input-available?
@@ -193,17 +195,19 @@ define method stream-size
 end method;
 
 define method close (stream :: <file-stream>, #key) => ();
-  if (stream-open?(stream))
-   next-method ();
-    // Now zero out the buffers so that any attempt to use the stream
-    // forces a call to do-get-x-buffer, where the appropriate call to
-    // ensure-readable or ensure-writable will diagnose the problem.
-    // and signal an appropriate error.
-    stream.stream-shared-buffer := #f;
-    stream.stream-input-buffer := #f;
-    stream.stream-output-buffer := #f;
-    stream.accessor := #f;
-  end if;
+  with-stream-locked (stream)
+    if (stream-open?(stream))
+      next-method ();
+      // Now zero out the buffers so that any attempt to use the stream
+      // forces a call to do-get-x-buffer, where the appropriate call to
+      // ensure-readable or ensure-writable will diagnose the problem.
+      // and signal an appropriate error.
+      stream.stream-shared-buffer := #f;
+      stream.stream-input-buffer := #f;
+      stream.stream-output-buffer := #f;
+      stream.accessor := #f;
+    end if;
+  end;
 end method;
 
 /// Aligned power of two buffer methods
@@ -383,9 +387,10 @@ end method do-next-output-buffer;
 // out any dirty buffer regardless of whether it is input or output.
 define method force-output-buffers
     (stream :: <file-stream>) => ()
-  let sb = stream-shared-buffer(stream);
-  if (sb)
-    do-force-output-buffers(stream)
+  with-output-buffer (sb = stream)
+    if (sb)
+      do-force-output-buffers(stream)
+    end;
   end;
   values()
 end method force-output-buffers;
@@ -434,43 +439,47 @@ end;
  
 define method stream-position
     (stream :: <file-stream>) => (position :: <integer>)
-  if (stream-input-buffer(stream) | stream-output-buffer(stream))
-    stream-shared-buffer(stream).buffer-position
-      + stream-shared-buffer(stream).buffer-next 
-  elseif (closed?(stream))
-    // It's pretty much arbitrary, but it's important that the position
-    // not be the end of the stream.  Which it is likely to be in many
-    // cases.  If it is the end of stream, certain operations like,
-    // read-to-end, won't signal an error when invoked on a closed
-    // stream.
-    0
-  else
-    // The stream has just been opened but nothing has been done yet.  If it
-    // was opened with append mode the position might not be 0.  Gotta check
-    // the accessor position instead.
-    stream.accessor.accessor-position
-  end if;
+  with-stream-locked (stream)
+    if (stream-input-buffer(stream) | stream-output-buffer(stream))
+      stream-shared-buffer(stream).buffer-position
+        + stream-shared-buffer(stream).buffer-next 
+    elseif (closed?(stream))
+      // It's pretty much arbitrary, but it's important that the position
+      // not be the end of the stream.  Which it is likely to be in many
+      // cases.  If it is the end of stream, certain operations like,
+      // read-to-end, won't signal an error when invoked on a closed
+      // stream.
+      0
+    else
+      // The stream has just been opened but nothing has been done yet.  If it
+      // was opened with append mode the position might not be 0.  Gotta check
+      // the accessor position instead.
+      stream.accessor.accessor-position
+    end if;
+  end;
 end method stream-position;
 
 define method stream-position-setter
     (position :: <integer>, stream :: <file-stream>)
  => (position :: <integer>)
-  let size-of-stream :: false-or(<integer>) = stream-size(stream);
-  if ((position >= 0) & (~size-of-stream | position <= size-of-stream))
-    // Don't call next-method() it just figures out the error cases again
-    stream.current-position := position;
-    adjust-stream-position-from-start(position, stream, size-of-stream);
-  else
-    if (closed?(stream))
-      error(make(<stream-closed-error>, stream: stream,
-		 format-string: 
-		   "Can't set position of closed stream"));
-    else       
-       error(make(<stream-position-error>, stream: stream, 
-                  size: stream.accessor.accessor-size, position: position));
-    end if;
+  with-stream-locked (stream)
+    let size-of-stream :: false-or(<integer>) = stream-size(stream);
+    if ((position >= 0) & (~size-of-stream | position <= size-of-stream))
+      // Don't call next-method() it just figures out the error cases again
+      stream.current-position := position;
+      adjust-stream-position-from-start(position, stream, size-of-stream);
+    else
+      if (closed?(stream))
+        error(make(<stream-closed-error>, stream: stream,
+                   format-string: 
+                     "Can't set position of closed stream"));
+      else       
+        error(make(<stream-position-error>, stream: stream, 
+                   size: stream.accessor.accessor-size, position: position));
+      end if;
+    end;
+    position
   end;
-  position
 end method;
 
 // Special for dood - avoids the overhead of adjust-stream-position, but
@@ -749,56 +758,62 @@ end method;
 define method unread-element
     (stream :: <file-stream>, elt :: <object>)
  => (element :: <object>)
-  adjust-stream-position(stream, -1);
-  elt
+  with-stream-locked (stream)
+    adjust-stream-position(stream, -1);
+    elt
+  end;
 end method unread-element;
 
 define method read-to-end
     (stream :: <file-stream>) => (seq :: <sequence>)
-  if (stream-open?(stream))
-    let the-size = stream-size(stream);
-    if (the-size)
-      let n = the-size - stream-position(stream);
-      read(stream, n)
+  with-stream-locked (stream)
+    if (stream-open?(stream))
+      let the-size = stream-size(stream);
+      if (the-size)
+        let n = the-size - stream-position(stream);
+        read(stream, n)
+      else
+        // The file length is unavailable, so fall back
+        next-method()
+      end if
     else
-      // The file length is unavailable, so fall back
-      next-method()
-    end if
-  else
-    error(make(<stream-closed-error>, stream: stream,
-	       format-string: 
-		 "Can't read from closed stream"));
-
-  end if
+      error(make(<stream-closed-error>, stream: stream,
+                 format-string: 
+                   "Can't read from closed stream"));
+      
+    end if;
+  end;
 end method read-to-end;
 
 define method stream-contents
     (stream :: <file-stream>, #key clear-contents? = #f)
  => (contents :: <sequence>)
-  if (~readable?(stream))
-    if (write-only?(stream))
-      error("Cannot use stream-contents on an output only file stream: %=",
-	    stream.stream-locator);
-    elseif (closed?(stream))
-      error(make(<stream-closed-error>, stream: stream,
-		 format-string: 
-		   "Can't set call stream-contents on a closed stream")); 
+  with-stream-locked (stream)
+    if (~readable?(stream))
+      if (write-only?(stream))
+        error("Cannot use stream-contents on an output only file stream: %=",
+              stream.stream-locator);
+      elseif (closed?(stream))
+        error(make(<stream-closed-error>, stream: stream,
+                   format-string: 
+                     "Can't set call stream-contents on a closed stream")); 
+      else
+        error("Cannot call stream-contents. Stream isn't readable: %=",
+              stream.stream-locator);
+      end if;
+    elseif (clear-contents?)
+      error ("Cannot use clear-contents? keyword argument to streams-contents"
+               " when the stream is a subclass of <file-stream>: %=",
+             stream.stream-locator);
     else
-      error("Cannot call stream-contents. Stream isn't readable: %=",
-	    stream.stream-locator);
-    end if;
-  elseif (clear-contents?)
-    error ("Cannot use clear-contents? keyword argument to streams-contents"
-           " when the stream is a subclass of <file-stream>: %=",
-	   stream.stream-locator);
-  else
-    let original-position = stream-position(stream);
-    force-output(stream);
-    stream-position(stream) := 0;
-    let contents = read(stream, stream-size(stream));
-    stream-position(stream) := original-position;
-    contents
-  end
+      let original-position = stream-position(stream);
+      force-output(stream);
+      stream-position(stream) := 0;
+      let contents = read(stream, stream-size(stream));
+      stream-position(stream) := original-position;
+      contents
+    end;
+  end;
 end method stream-contents;
 
 //---*** What about 'stream-contents-as'?
