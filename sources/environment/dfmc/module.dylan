@@ -18,8 +18,6 @@ define module dfmc-environment
               project-other-sources => env/project-other-sources,
 	      open-project => env/open-project,
               save-project =>  env/save-project,
-	      default-build-script => env/default-build-script,
-	      default-build-script-setter => env/default-build-script-setter,
               project-compilation-mode => env/project-compilation-mode,
               project-compilation-mode-setter => env/project-compilation-mode-setter,
               project-target-type => env/project-target-type,

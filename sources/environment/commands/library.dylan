@@ -13,6 +13,7 @@ define library environment-commands
   use io;
   use commands;
 
+  use build-system;
   use environment-protocols;
   use environment-manager;
   use environment-reports;
