@@ -116,6 +116,7 @@ define module command-lines
 end module command-lines;
 
 define module environment-commands
+  use build-system;
   use environment-imports;
   use environment-protocols,
     exclude: { <optional-parameter>,

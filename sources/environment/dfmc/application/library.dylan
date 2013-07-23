@@ -56,8 +56,6 @@ define module dfmc-application
 	      project-other-sources => env/project-other-sources,
 	      open-project => env/open-project,
               save-project => env/save-project,
-	      default-build-script => env/default-build-script,
-	      default-build-script-setter => env/default-build-script-setter,
               project-target-type => env/project-target-type,
               <project-target-type> => env/<project-target-type>,
               project-target-type-setter => env/project-target-type-setter,

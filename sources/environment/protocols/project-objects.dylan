@@ -363,11 +363,6 @@ define open generic link-project
           build-script, target, force?, unify?, release?, messages)
  => ();
 
-define open generic default-build-script
-    () => (build-script :: <file-locator>);
-define open generic default-build-script-setter
-    (build-script :: <file-locator>) => (build-script :: <file-locator>);
-
 
 /// Source records
 

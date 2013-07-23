@@ -564,16 +564,6 @@ define sealed method link-project
   end
 end method link-project;
 
-define sealed sideways method env/default-build-script
-    () => (build-script :: <file-locator>)
-  default-build-script()
-end method env/default-build-script;
-
-define sealed sideways method env/default-build-script-setter
-    (build-script :: <file-locator>) => (build-script :: <file-locator>);
-  default-build-script() := build-script
-end method env/default-build-script-setter;
-
 define sealed method env/close-project
     (project-object :: <dfmc-project-object>) => ()
   let project = project-object.project-proxy;

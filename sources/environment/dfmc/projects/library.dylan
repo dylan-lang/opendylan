@@ -34,8 +34,6 @@ define module dfmc-environment-projects
 	      open-project => env/open-project,
               save-project =>  env/save-project,
               save-project-database =>  env/save-project-database,
-	      default-build-script => env/default-build-script,
-	      default-build-script-setter => env/default-build-script-setter,
               project-compilation-mode => env/project-compilation-mode,
               project-compilation-mode-setter => env/project-compilation-mode-setter,
               project-compiler-back-end => env/project-compiler-back-end,
