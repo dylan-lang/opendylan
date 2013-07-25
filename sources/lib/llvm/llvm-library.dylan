@@ -241,6 +241,7 @@ define module llvm-builder
     llvm-builder-local,
     
     ins--block,
+    with-insert-before-terminator,
 
     ins--dbg,
 

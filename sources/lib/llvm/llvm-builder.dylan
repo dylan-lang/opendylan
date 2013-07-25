@@ -209,6 +209,30 @@ define inline method builder-insert
   instruction
 end method;
 
+define macro with-insert-before-terminator
+  { with-insert-before-terminator(?builder:expression, ?bb:expression)
+      ?:body
+    end }
+    => { // Temporarily switch to the given basic block
+	 let current-bb = ?builder.llvm-builder-basic-block;
+	 ?builder.llvm-builder-basic-block := ?bb;
+
+	 // Temporarily remove the block terminator
+	 let instructions = ?bb.llvm-basic-block-instructions;
+	 let terminator :: <llvm-terminator-instruction> = instructions.last;
+	 instructions.size := instructions.size - 1;
+
+	 // Execute the given body
+	 block ()
+	   ?body
+	 cleanup
+	   // Put the terminator back at the end and restore the previous
+	   // basic block
+	   add!(instructions, terminator);
+	   ?builder.llvm-builder-basic-block := current-bb;
+	 end block }
+end macro;
+
 
 /// Metadata attachments
 
