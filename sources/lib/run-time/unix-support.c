@@ -111,13 +111,18 @@ D c_primitive_stop_timer()
 
 // this is our stack walker, used in SIGTRAP
 static long getebp () {
+#ifdef OPEN_DYLAN_ARCH_X86
     long ebp;
     asm("mov (%%ebp), %0"
         :"=r"(ebp));
     return ebp;
+#else
+    return 0;
+#endif
 }
 
 void walkstack() {
+#ifdef OPEN_DYLAN_ARCH_X86
   long ebp = getebp();
   long eip;
   int rc;
@@ -140,4 +145,5 @@ void walkstack() {
     }
     ebp = *((long*)ebp);
   }
+#endif
 }
