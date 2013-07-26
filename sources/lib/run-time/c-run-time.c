@@ -4110,11 +4110,11 @@ void _Init_Run_Time ()
 #endif
 
 #ifdef GC_USE_BOEHM
-    // initialize GC and thread subsystems
     GC_INIT();
-    initialize_threads_primitives();
     GC_set_max_heap_size(MAX_HEAP_SIZE);
 #endif
+
+    initialize_threads_primitives();
 
     // get some symbols we need
     IKJboole_xor_ = primitive_string_as_symbol(&bs_boole_xor_);
