@@ -1,6 +1,6 @@
 Module: dfmc-llvm-back-end
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
-              Additional code is Copyright 2009-2011 Gwydion Dylan Maintainers
+              Additional code is Copyright 2009-2013 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
@@ -454,18 +454,19 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <variable-reference>) => ();
+  let name = emit-name(back-end, m, c.referenced-binding);
+  let global = llvm-builder-global(back-end, name);
+  llvm-constrain-type(global.llvm-value-type,
+		      llvm-pointer-to(back-end,
+				      $llvm-object-pointer-type));
+  let value = ins--load(back-end, global);
   let result
-    = if (c.referenced-binding.binding-thread?)
-        //call-primitive(back-end, primitive-read-thread-variable-descriptor,
-        //               emit-reference(back-end, m, c.referenced-binding))
-        error("FIXME thread variable-reference %=", c.referenced-binding);
+    = if (c.referenced-binding.binding-thread?
+	    & ~llvm-thread-local-support?(back-end))
+        call-primitive(back-end, primitive-read-thread-variable-descriptor,
+                       value)
       else
-        let name = emit-name(back-end, m, c.referenced-binding);
-        let global = llvm-builder-global(back-end, name);
-        llvm-constrain-type(global.llvm-value-type,
-                            llvm-pointer-to(back-end,
-                                            $llvm-object-pointer-type));
-        ins--load(back-end, global)
+	value
       end if;
   computation-result(back-end, c, result);
 end method;
@@ -713,30 +714,44 @@ end method;
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <assignment>) => ()
   let the-value = emit-reference(back-end, m, c.computation-value);
-  if (c.assigned-binding.binding-thread?)
-    /*
-    named-emitter(#"primitive-write-thread-variable")
-      (back-end,
-       emit-reference(back-end, m, c.temporary),
-       emit-reference(back-end, m, c.assigned-binding),
-       the-value);
-    */
-    error("FIXME thread variable-assignment %=", c.assigned-binding);
+  let name = emit-name(back-end, m, c.assigned-binding);
+  let global = llvm-builder-global(back-end, name);
+  if (c.assigned-binding.binding-thread?
+	& ~llvm-thread-local-support?(back-end))
+    llvm-constrain-type(global.llvm-value-type,
+			llvm-pointer-to(back-end, $llvm-object-pointer-type));
+    let handle = ins--load(back-end, global);
+    call-primitive(back-end, primitive-write-thread-variable-descriptor,
+		   handle,
+		   the-value);
   else
-    let name = emit-name(back-end, m, c.assigned-binding);
-    let global = llvm-builder-global(back-end, name);
     llvm-constrain-type(global.llvm-value-type,
                         llvm-pointer-to(back-end, the-value.llvm-value-type));
     ins--store(back-end, the-value, global);
+  end if;
+  computation-result(back-end, c, the-value);
+end method;
+
+define method emit-computation
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <definition>) => ()
+  let the-value = emit-reference(back-end, m, c.computation-value);
+  if (c.assigned-binding.binding-thread?
+	& ~llvm-thread-local-support?(back-end))
+    let handle
+      = call-primitive(back-end, primitive-allocate-thread-variable-descriptor,
+		       the-value);
+    let name = emit-name(back-end, m, c.assigned-binding);
+    let global = llvm-builder-global(back-end, name);
+    llvm-constrain-type(global.llvm-value-type,
+                        llvm-pointer-to(back-end, handle.llvm-value-type));
+    ins--store(back-end, handle, global);
     computation-result(back-end, c, the-value);
+  else
+    next-method();
   end if;
 end method;
 
 /*
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <definition>) => ()
-end method;
-
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <redefinition>) => ()
 end method;

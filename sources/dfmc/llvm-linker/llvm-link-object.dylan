@@ -25,6 +25,8 @@ define method emit-definition
       end;
   llvm-constrain-type(llvm-value-type(initializer), $llvm-object-pointer-type);
 
+  let thread-local = o.binding-thread? & llvm-thread-local-support?(back-end);
+
   let global
     = make(<llvm-global-variable>,
            name: name,
@@ -32,6 +34,7 @@ define method emit-definition
            initializer: initializer,
            constant?: #f,
            linkage: linkage,
+	   thread-local: thread-local,
            alignment: back-end-word-size(back-end),
            section: llvm-section-name(back-end, #"variables"));
   llvm-builder-define-global(back-end, name, global);
@@ -41,12 +44,14 @@ define method emit-extern
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <module-binding>)
  => ()
   let name = emit-name(back-end, m, o);
+  let thread-local = o.binding-thread? & llvm-thread-local-support?(back-end);
   let global
     = make(<llvm-global-variable>,
            name: name,
            type: llvm-pointer-to(back-end, $llvm-object-pointer-type),
            constant?: #f,
-           linkage: #"external");
+           linkage: #"external",
+	   thread-local: thread-local);
   llvm-builder-define-global(back-end, name, global);
 end method;
 
