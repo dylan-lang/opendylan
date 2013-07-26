@@ -112,6 +112,7 @@ define method note-platform-change (project :: <registry-project>,
 	library-database-locator(db-dir, key);
       project-profile-location(project) := 
 	library-profile-locator(profile-dir, key);
+      project-platform-name(project) := new-platform-name;
       project-architecture(project) := new-architecture;
       project-operating-system(project) := new-os;
     end;

@@ -97,6 +97,8 @@ define module projects
     project-compiler-back-end-setter,
     project-operating-system,
     project-operating-system-setter,
+    project-platform-name,
+    project-platform-name-setter,
     project-architecture,
     project-architecture-setter,
     project-library-loose-bindings,

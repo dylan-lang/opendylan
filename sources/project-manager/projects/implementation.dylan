@@ -438,6 +438,7 @@ define function project-set-compilation-parameters(project :: <project>,
         end;
   if (project.project-personal-library?)
     add-setting(mode: project-compilation-mode(project));
+    add-setting(platform-name: project-platform-name(project))
     add-setting(architecture: project-architecture(project));
     add-setting(operating-system: project-operating-system(project));
     add-setting(back-end: project-compiler-back-end(project));

@@ -41,6 +41,11 @@ define open generic project-read-only?-setter(flag, project :: <project>);
 define open generic project-location(project :: <project>)
  => (location :: false-or(<file-locator>));
 
+define open generic project-platform-name(project :: <project>)
+ => platform-name;
+
+define open generic project-platform-name-settter(platform-name, project :: <project>);
+
 define open generic project-architecture(project :: <project>) 
  => architecture;
 
