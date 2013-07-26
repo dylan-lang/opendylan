@@ -15,6 +15,21 @@
 #define EXCEPTION_POSTAMBLE()
 #endif
 
+#if defined(GC_USE_BOEHM) || defined(GC_USE_MALLOC)
+#undef mps_tramp /* Override generic version */
+
+typedef void *(*mps_tramp_t)(void *, size_t);
+
+#define mps_tramp(r_o, f, p, s) \
+    { \
+    void **_r_o = (r_o); \
+    mps_tramp_t _f = (f); \
+    void *_p = (p); \
+    size_t _s = (s); \
+    *_r_o = (*_f)(_p, _s); \
+    }
+#endif
+
 /* Support for foreign call-ins */
 extern void *dylan_callin_internal(void *arg_base, size_t s);
 

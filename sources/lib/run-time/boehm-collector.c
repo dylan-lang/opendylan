@@ -1,5 +1,4 @@
 #include <gc/gc.h>
-#include "boehm.h"
 
 /* Temporary copy from run-time.h */
 #ifdef __GNUC__
