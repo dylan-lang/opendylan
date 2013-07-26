@@ -472,8 +472,10 @@ extern void check_wrapper_breakpoint (void *wrapper, int size);
 
 extern BOOL Prunning_dylan_spy_functionQ;
 
-#ifdef GC_USE_BOEHM
+#if defined(GC_USE_BOEHM)
 #include "boehm-collector.c"
+#elif defined(GC_USE_MALLOC)
+#include "malloc-collector.c"
 #else
 #include "mps-collector.c"
 #endif
