@@ -95,7 +95,11 @@ INLINE D instance_header_setter (D header, D* instance) {
 }
 
 D allocate (unsigned long size) {
+#if defined(GC_USE_BOEHM)
   return((D)GC_MALLOC((size_t)size));
+#elif defined(GC_USE_MALLOC)
+  return((D)malloc((size_t)size));
+#endif
 }
 
 D primitive_allocate (DSINT size) {
@@ -112,12 +116,20 @@ D primitive_untraced_allocate (DSINT size) {
 
 D primitive_manual_allocate (D sizeObject) {
   size_t size = (size_t)R(sizeObject);
+#if defined(GC_USE_BOEHM)
   void* p = GC_MALLOC_UNCOLLECTABLE(size);
+#elif defined(GC_USE_MALLOC)
+  void* p = malloc(size);
+#endif
   return(primitive_wrap_machine_word((DMINT)p));
 }
 
 void primitive_manual_free (D object) {
+#if defined(GC_USE_BOEHM)
   GC_FREE((void*)primitive_unwrap_c_pointer(object));
+#elif defined(GC_USE_MALLOC)
+  free((void*)primitive_unwrap_c_pointer(object));
+#endif
 }
 
 void primitive_fillX(D dst, int base_offset, int offset, int size, D value) {
@@ -3898,7 +3910,11 @@ D primitive_string_as_symbol_using_symbol (D string, D symbol)
   }
   if (oblist_cursor >= oblist_size) {
     oblist_size += INITIAL_OBLIST_SIZE;
+#if defined(GC_USE_BOEHM)
     oblist = (D*)GC_REALLOC(oblist, oblist_size * sizeof(D));
+#elif defined(GC_USE_MALLOC)
+    oblist = (D*)realloc(oblist, oblist_size * sizeof(D));
+#endif
   }
   if (symbol == NULL) {
     symbol = primitive_make_symbol(string);
@@ -4093,10 +4109,12 @@ void _Init_Run_Time ()
 #endif
 #endif
 
+#ifdef GC_USE_BOEHM
     // initialize GC and thread subsystems
     GC_INIT();
     initialize_threads_primitives();
     GC_set_max_heap_size(MAX_HEAP_SIZE);
+#endif
 
     // get some symbols we need
     IKJboole_xor_ = primitive_string_as_symbol(&bs_boole_xor_);

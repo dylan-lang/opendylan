@@ -22,9 +22,13 @@
 
 #include <limits.h>
 
-#ifdef GC_USE_BOEHM
+#if defined(GC_USE_BOEHM)
 #  include <gc/gc.h>
 #  include <gc/gc_pthread_redirects.h>
+#elif defined(GC_USE_MALLOC)
+#  define GC_FREE free
+#  define GC_MALLOC malloc
+#  define GC_MALLOC_UNCOLLECTABLE malloc
 #endif
 
 #include <sys/time.h>
