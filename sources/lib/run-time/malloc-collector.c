@@ -996,11 +996,6 @@ BOOL primitive_mps_collection_stats(void** results)
 
 /* Support for Finalization */
 
-static struct _mps_finalization_queue {
-  void *first;
-  struct _mps_finalization_queue *rest;
-} *mps_finalization_queue = NULL;
-
 void primitive_mps_finalize(void *obj) {
   unused(obj);
 }
