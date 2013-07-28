@@ -184,10 +184,12 @@ define sealed method size (list :: <list>) => (s :: false-or(<integer>))
             let fast-tail-tail :: <pair> = fast-tail-tail;
             let slowtail :: <pair> = tail(slow);
             sum(count + 2, fast-tail-tail, slowtail);
-          otherwise => error(make(<improper-list-error>, format-string: "Taking size of an improper list"));
+          otherwise => error(make(<improper-list-error>,
+                                  format-string: "Taking size of an improper list"));
         end
       else
-        error(make(<improper-list-error>, format-string: "Taking size of an improper list"))
+        error(make(<improper-list-error>,
+                   format-string: "Taking size of an improper list"))
       end if
     end iterate
   end

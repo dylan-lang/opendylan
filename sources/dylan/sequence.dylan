@@ -471,24 +471,24 @@ define function invalid-sequence-bounds-error
     (s :: <sequence>, start :: <integer>, finish :: <integer>)
  => (will-never-return :: <bottom>)
   error(make(<subscript-out-of-bounds-error>,
-          format-string: "Invalid bounds for %=: start: %d, end: %d",
-          format-arguments: list(s, start, finish)))
+             format-string: "Invalid bounds for %=: start: %d, end: %d",
+             format-arguments: list(s, start, finish)))
 end function invalid-sequence-bounds-error;
 
 define function invalid-sequence-start-error
     (s :: <sequence>, start :: <integer>)
  => (will-never-return :: <bottom>)
   error(make(<subscript-out-of-bounds-error>,
-          format-string: "Invalid start: value of %= for %=",
-          format-arguments: list(start, s)))
+             format-string: "Invalid start: value of %= for %=",
+             format-arguments: list(start, s)))
 end function invalid-sequence-start-error;
 
 define function invalid-sequence-end-error
     (s :: <sequence>, finish :: <integer>)
  => (will-never-return :: <bottom>)
   error(make(<subscript-out-of-bounds-error>,
-          format-string: "Invalid end: value of %= for %=",
-          format-arguments: list(finish, s)))
+             format-string: "Invalid end: value of %= for %=",
+             format-arguments: list(finish, s)))
 end function invalid-sequence-end-error;
 
 define method check-start-compute-end
@@ -603,9 +603,9 @@ define method last (sequence :: <sequence>, #key default = unsupplied())
   if (sequence.empty?)
     if (unsupplied?(default))
       error(make(<subscript-out-of-bounds-error>,
-              format-string: "Attempting to retrieve last element "
-                             "of empty sequence",
-              format-arguments: #()))
+                 format-string: "Attempting to retrieve last element "
+                     "of empty sequence",
+                 format-arguments: #()))
     else
       default
     end if

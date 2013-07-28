@@ -56,7 +56,7 @@ define method cerror (restart-descr, cond-or-string, #rest arguments)
     apply(error, cond-or-string, arguments)
   exception (<simple-restart>,
              init-arguments:
-               vector(format-string:    restart-descr,
+               vector(format-string: restart-descr,
                       format-arguments: arguments))
     #f
   end block

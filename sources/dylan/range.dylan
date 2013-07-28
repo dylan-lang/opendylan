@@ -872,7 +872,8 @@ define method map-as-one
      function :: <function>, collection ::  <infinite-range>)
  => (new-collection :: <vector>); // actually :: type
   // TODO: make a proper error class
-  error(make(<infinite-range-error>, format-string: "Cannot map over an infinite range"))
+  error(make(<infinite-range-error>,
+             format-string: "Cannot map over an infinite range"))
 end method map-as-one;
 
 define inline copy-down-method map-as-one

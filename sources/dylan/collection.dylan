@@ -381,8 +381,8 @@ define method map-into
   if (empty?(more-collections))
     unless (target.key-test == collection.key-test)
       error(make(<key-test-error>,
-              format-string: "Collections %= and %= have different key tests",
-              format-arguments: list(target, collection)))
+                 format-string: "Collections %= and %= have different key tests",
+                 format-arguments: list(target, collection)))
     end;
     if (instance?(target, <stretchy-collection>))
       map-into-stretchy-one(function, target, collection)
@@ -391,7 +391,7 @@ define method map-into
     end if
   else // Don't bother doing anything too smart for now.
     map-into(target, method (v) apply(function, v) end,
-      apply(multiple-collection, collection, more-collections))
+             apply(multiple-collection, collection, more-collections))
   end if
 end method map-into;
 

@@ -189,9 +189,9 @@ define method row-major-index (vector :: <vector>, #rest indices)
  => (i :: <integer>)
   unless (indices.size = 1)
     error(make(<subscript-out-of-bounds-error>,
-            format-string: "Number of subscripts %= not equal to "
-                           "rank of array %=",
-            format-arguments: list(indices, vector)))
+               format-string: "Number of subscripts %= not equal to "
+                   "rank of array %=",
+               format-arguments: list(indices, vector)))
   end unless;
   indices.first
 end method row-major-index;
