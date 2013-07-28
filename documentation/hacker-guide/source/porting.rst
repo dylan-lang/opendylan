@@ -120,8 +120,9 @@ override the data layout if a different ABI is required.
 Be sure to invoke ``register-back-end`` correctly with your new back-end
 class.
 
-Additionally, there are some mappings involving ``OPEN_DYLAN_TARGET_PLATFORM``
-in ``sources/lib/run-time/Makefile.in`` that will need to be updated.
+Additionally, as with the C back-end, there are some mappings involving
+``OPEN_DYLAN_TARGET_PLATFORM`` in ``sources/lib/run-time/Makefile.in``
+that will need to be updated.
 
 *This isn't completely written yet.*
 
