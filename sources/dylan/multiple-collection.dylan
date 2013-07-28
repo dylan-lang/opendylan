@@ -1,5 +1,5 @@
 Module:    internal
-Culprit:   Kevin Mitchell (partially based on previous Apple code)
+Author:    Kevin Mitchell (partially based on previous Apple code)
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -77,8 +77,8 @@ define function multiple-collection
       all-the-same := all-the-same & instance?(c, coll-class);
       unless (c.key-test == kt)
         error(make(<key-test-error>,
-                format-string: "Collection %= and %= have different key tests",
-                format-arguments: list(coll, c)))
+                   format-string: "Collection %= and %= have different key tests",
+                   format-arguments: list(coll, c)))
       end
     end;
     let cv = apply(vector, coll, colls);

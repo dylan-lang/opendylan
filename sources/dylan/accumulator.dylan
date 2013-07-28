@@ -1,5 +1,5 @@
 Module:    internal
-Culprit:   Kevin Mitchell (based on code from Apple's dylan library)
+Author:   Kevin Mitchell (based on code from Apple's dylan library)
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -132,12 +132,13 @@ end function current-element-acc;
 define inline function current-element-setter-acc
     (value :: <object>, accumulator :: <accumulator>, state :: <integer>)
   error(make(<immutable-error>,
-              format-string: "Accumulator is immutable during iteration"))
+             format-string: "Accumulator is immutable during iteration"))
 end function current-element-setter-acc;
 
 define inline function copy-state-acc
     (accumulator :: <accumulator>, state :: <integer>)
-  error(make(<iteration-error>, format-string: "Accumulator state cannot be copied during iteration"))
+  error(make(<iteration-error>,
+             format-string: "Accumulator state cannot be copied during iteration"))
 end function copy-state-acc;
 
 
@@ -216,8 +217,8 @@ end method forward-iteration-protocol;
 define method check-key-test-eq(x, y)
   unless (x.key-test == y.key-test)
     error(make(<key-test-error>,
-            format-string: "Collection %= and %= have different key tests",
-            format-arguments: list(x,y)))
+               format-string: "Collection %= and %= have different key tests",
+               format-arguments: list(x,y)))
   end unless
 end;
 
@@ -285,9 +286,9 @@ define method convert-accumulator-as
         temp[k] := e
       else
         error(make(<invalid-index-error>,
-                format-string: "Cannot add an element with key %= "
-                               "to a sequence of type %=",
-                format-arguments: list(k, type)))
+                   format-string: "Cannot add an element with key %= "
+                       "to a sequence of type %=",
+                   format-arguments: list(k, type)))
       end if
     end for;
 
