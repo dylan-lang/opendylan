@@ -139,8 +139,8 @@ define sealed method element (set :: <object-set>, key, #key default = unsupplie
     default
   else
     error(make(<not-found-error>,
-          format-string: "No such element %= in %=",
-          format-arguments: list(key, set)))
+               format-string: "No such element %= in %=",
+               format-arguments: list(key, set)))
   end
 end method element;
 
@@ -181,14 +181,14 @@ end;
 
 
 define sealed inline method forward-iteration-protocol (set :: <object-set>)
-  => (initial-state                :: <iteration-state>,
-      limit                        :: <object>,
-      next-state                :: <function>,
-      finished-state?                :: <function>,
-      current-key                :: <function>,
-      current-element                :: <function>,
-      current-element-setter        :: <function>,
-      copy-state                :: <function>);
+  => (initial-state :: <iteration-state>,
+      limit :: <object>,
+      next-state :: <function>,
+      finished-state? :: <function>,
+      current-key :: <function>,
+      current-element :: <function>,
+      current-element-setter :: <function>,
+      copy-state :: <function>)
   let (initial, limit, next, finished, current-key, current-element,
        current-element-setter, copy-state) =
     set.set-elements.forward-iteration-protocol;
@@ -196,7 +196,8 @@ define sealed inline method forward-iteration-protocol (set :: <object-set>)
   values(initial, #f, next, set-finished-state?, current-key, current-key,
          method (value, table, state :: <iteration-state>)
            error(make(<immutable-error>,
-                      format-string: "Cannot update current element of a set during iteration."))
+                      format-string: "Cannot update current element of a set "
+                          "during iteration."))
          end,
          copy-state)
 end method forward-iteration-protocol;
