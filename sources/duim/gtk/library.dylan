@@ -16,6 +16,11 @@ define library gtk-duim
 
   use c-ffi;
 
+  use glib;
+  use gobject;
+  use gobject-glue;
+  use pango;
+  use gdk;
   use gtk;
 
   export gtk-duim;

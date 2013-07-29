@@ -1,0 +1,2 @@
+LINKLIBS += `pkg-config --libs x11` ;
+CCFLAGS += `pkg-config --cflags x11` ;
