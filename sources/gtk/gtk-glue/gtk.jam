@@ -1,2 +1,0 @@
-LINKLIBS += `pkg-config --ldflags gtk+-2.0` ;
-CCFLAGS += `pkg-config --cflags gtk+-2.0` ;

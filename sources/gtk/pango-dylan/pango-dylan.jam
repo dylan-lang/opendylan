@@ -1,0 +1,2 @@
+LINKLIBS += `pkg-config --libs pango` ;
+CCFLAGS += `pkg-config --cflags pango` ;
