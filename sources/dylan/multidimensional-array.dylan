@@ -103,7 +103,8 @@ define function compute-array-dimensions-and-size
     let canonical-dimensions = as(<dimensions>, dimensions);
     values(canonical-dimensions, compute-size-from-dimensions(canonical-dimensions));
   else
-    error(make(<missing-keyword-error>, format-string: "No dimensions in call to make(<array>)"));
+    error(make(<missing-keyword-error>,
+               format-string: "No dimensions in call to make(<array>)"));
   end if;
 end function;
 
