@@ -1,0 +1,2 @@
+LINKLIBS += `pkg-config --libs atk` ;
+CCFLAGS += `pkg-config --cflags atk` ;

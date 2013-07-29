@@ -1,0 +1,2 @@
+LINKLIBS += `pkg-config --libs cairo` ;
+CCFLAGS += `pkg-config --cflags cairo` ;
