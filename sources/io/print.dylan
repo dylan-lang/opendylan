@@ -856,7 +856,7 @@ define method write-class-name (obj-class :: <class>, stream :: <stream>)
   if (cname)
     write(stream, cname);
   else
-    print(obj-class, stream);
+    write(stream, "(no class name available)");
   end if;
 end method write-class-name;
 
