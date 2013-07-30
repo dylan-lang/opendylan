@@ -210,7 +210,7 @@ end function;
 // end function;
 
 
-define function multiple-objects-locked-p (cells :: <list>, tokin) => (ans);
+define function multiple-objects-locked-p (cells :: <list>, token) => (ans);
   if (*object-lock-data* == #())
     #f
   else
@@ -227,7 +227,7 @@ define function multiple-objects-locked-p (cells :: <list>, tokin) => (ans);
                       else
                         let this :: <pair> = head(l);
                         if (pointer-id?(obj, this))
-                          if (pointer-id?(tokin, tail(this)))
+                          if (pointer-id?(token, tail(this)))
                             peruse(nxt, pair(obj, recursive-losers))
                           else
                             #t
@@ -272,12 +272,12 @@ end function;
 define function begin-locking-multiple-objects (hd :: <pair>, tl :: <pair>)
   let lock :: <simple-lock> = $object-lock-notification-lock;
   let notif :: <notification> = $object-lock-notification;
-  let tokin = token-for-current-thread();
+  let token = token-for-current-thread();
   with-lock (lock)
     iterate try-again ()
-      let stuff = multiple-objects-locked-p(hd, tokin);
+      let stuff = multiple-objects-locked-p(hd, token);
       if (stuff == #f)
-        for (x :: <pair> in hd) tail(x) := tokin end;
+        for (x :: <pair> in hd) tail(x) := token end;
         tail(tl) := *object-lock-data*;
         *object-lock-data* := hd;
         release(notif);
