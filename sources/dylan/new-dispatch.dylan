@@ -210,7 +210,7 @@ end function;
 // end function;
 
 
-define function multiple-objects-locked-p (cells :: <list>, token) => (ans);
+define function multiple-objects-locked? (cells :: <list>, token) => (ans);
   if (*object-lock-data* == #())
     #f
   else
@@ -275,7 +275,7 @@ define function begin-locking-multiple-objects (hd :: <pair>, tl :: <pair>)
   let token = token-for-current-thread();
   with-lock (lock)
     iterate try-again ()
-      let stuff = multiple-objects-locked-p(hd, token);
+      let stuff = multiple-objects-locked?(hd, token);
       if (stuff == #f)
         for (x :: <pair> in hd) tail(x) := token end;
         tail(tl) := *object-lock-data*;
