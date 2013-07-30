@@ -114,25 +114,17 @@ D primitive_byte_allocate (DSINT number_words, DSINT number_bytes) {
 }
 
 D primitive_untraced_allocate (DSINT size) {
-  return(allocate(size * sizeof(D)));
+  return dylan__malloc__misc(size * sizeof(D));
 }
 
 D primitive_manual_allocate (D sizeObject) {
   size_t size = (size_t)R(sizeObject);
-#if defined(GC_USE_BOEHM)
-  void* p = GC_MALLOC_UNCOLLECTABLE(size);
-#elif defined(GC_USE_MALLOC)
-  void* p = malloc(size);
-#endif
-  return(primitive_wrap_machine_word((DMINT)p));
+  void* p = mps__malloc(size);
+  return primitive_wrap_machine_word((DMINT)p);
 }
 
 void primitive_manual_free (D object) {
-#if defined(GC_USE_BOEHM)
-  GC_FREE((void*)primitive_unwrap_c_pointer(object));
-#elif defined(GC_USE_MALLOC)
-  free((void*)primitive_unwrap_c_pointer(object));
-#endif
+  mps__free((void*)primitive_unwrap_c_pointer(object));
 }
 
 void primitive_fillX(D dst, int base_offset, int offset, int size, D value) {

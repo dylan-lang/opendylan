@@ -1185,6 +1185,10 @@ extern void primitive_replaceX
 
 extern void *MMAllocMisc(size_t size);
 extern void MMFreeMisc(void *p, size_t size);
+extern void *dylan__malloc__misc(size_t size);
+extern void *dylan__malloc__ambig(size_t size);
+extern void *mps__malloc(size_t size);
+extern void mps__free(size_t *old);
 
 /* ALLOCATION PRIMITIVES */
 
