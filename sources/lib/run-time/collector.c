@@ -73,7 +73,7 @@ void force_reference_to_spy_interface()
 #define MISCAVGSIZE     ((size_t)32)
 #define MISCMAXSIZE     ((size_t)65536)
 
-void report_runtime_error (char* header, char* message);
+static void report_runtime_error (char* header, char* message);
 
 static void simple_error (char* message)
 {
@@ -188,8 +188,10 @@ define_untraced_fill_mem(double_float)
 __thread void* teb;
 #endif
 
-BOOL heap_statsQ = FALSE;
-BOOL heap_alloc_statsQ = FALSE;
+static BOOL heap_statsQ = FALSE;
+#ifndef NO_ALLOCATION_COUNT_FOR_PROFILER
+static BOOL heap_alloc_statsQ = FALSE;
+#endif
 extern void add_stat_for_object (void *object, void* wrapper, int size);
 extern void clear_wrapper_stats ();
 extern void display_wrapper_stats ();
@@ -370,7 +372,7 @@ void primitive_keyboard_interrupt_polling_setter(BOOL pollingQ)
 
 #define MAX_POLLING_THREADS 50
 
-HANDLE polling_threads[MAX_POLLING_THREADS];
+static HANDLE polling_threads[MAX_POLLING_THREADS];
 
 static int polling_threads_cursor = -1;
 
@@ -554,7 +556,7 @@ void *dylan__malloc__misc(size_t size)
 #define BLOCK_CODE_TOKEN 0xab000000
 #define BLOCK_SIZE_MASK  0x00ffffff
 
-int encode_size_of_block(int size)
+static int encode_size_of_block(int size)
 {
   if ((size & BLOCK_CODE_MASK) != 0) {
     simple_error("Unexpected block size for manual allocation");
@@ -562,7 +564,7 @@ int encode_size_of_block(int size)
   return (size | BLOCK_CODE_TOKEN);
 }
 
-int decode_size_of_block(int size)
+static int decode_size_of_block(int size)
 {
   if ((size & BLOCK_CODE_MASK) != BLOCK_CODE_TOKEN) {
     simple_error("Attempt to free a corrupted manually managed object");
@@ -580,7 +582,7 @@ void *mps__malloc(size_t size)
 }
 
 
-void duplicated_deallocation_error(size_t *ptr)
+static void duplicated_deallocation_error(size_t *ptr)
 {
   unused(ptr);
   simple_error("Duplicate attempt to free manually managed object");
