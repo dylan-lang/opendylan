@@ -45,7 +45,6 @@ define generic emit-primitive-call
 //     
 // // Allocation.
 // define &primitive-descriptor primitive-allocate;
-// define &primitive-descriptor primitive-byte-allocate;
 // define &primitive-descriptor primitive-allocate-wrapper;
 // define &primitive-descriptor primitive-object-allocate-filled;
 // define &primitive-descriptor primitive-byte-allocate-filled;

@@ -77,7 +77,6 @@ define &module dylan-primitives
   create
     primitive-allocate,
     primitive-allocate-wrapper,
-    primitive-byte-allocate,
     primitive-object-allocate-filled,
     primitive-byte-allocate-filled,
     primitive-byte-allocate-filled-terminated,
