@@ -317,7 +317,7 @@ define method make-project
 
     if (~ parent)
       // if parent is #f this must be a top level project
-      // note that a top level project can aquire owners later on
+      // note that a top level project can acquire owners later on
       project.project-top-level? := #t;
     end;
     // we load the namespace only if a top level project has a database
