@@ -429,6 +429,7 @@ define method make-project (c == <user-project>,
                             source-record-class = <file-source-record>,
                             project-file, parent = #f,
                             load-namespace? = #f,
+                            platform-name = #f,
                             architecture = #f, operating-system = #f, mode)
  => (project :: <project>);
   let (architecture, operating-system) =
@@ -448,6 +449,7 @@ define method make-project (c == <user-project>,
                             project-file: project-file,
                             parent: parent,
                             load-namespace?: load-namespace?,
+                            platform-name: platform-name,
                             architecture: architecture,
                             operating-system: operating-system,
                             mode: mode);
@@ -465,6 +467,7 @@ end method;
 define sideways method make (class == <project>,
                     #rest keys, #key key,
                     parent = #f,
+                    platform-name = #f,
                     architecture = #f, operating-system = #f, #all-keys)
  => (project :: <project>)
   block()

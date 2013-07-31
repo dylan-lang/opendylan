@@ -289,7 +289,7 @@ define function project-initialize-caches(project :: <user-project>)
 end;
 
 define method make-used-project (project :: <user-project>,
-				 key :: <symbol>, architecture, os)
+				 key :: <symbol>, platform-name, architecture, os)
  => project :: <project>;
   project-initialize-caches(project);
   // search in the cache
@@ -312,6 +312,7 @@ define method make-used-project (project :: <user-project>,
 			       parent: project,
 			       key: key,
 			       read-only?: read-only?,
+			       platform-name: platform-name,
 			       architecture: architecture, operating-system: os);
       used-project
     exception(<file-does-not-exist-error>)
@@ -329,16 +330,16 @@ define method make-used-project (project :: <user-project>,
 */
   subproject | 
     make-project(<project>, parent: project,
-		 key: key, architecture: architecture, operating-system: os);
+		 key: key, platform-name: platform-name, architecture: architecture, operating-system: os);
 
 end method;
 
 define method make-used-project (project :: <system-project>,
-				 key :: <symbol>, architecture, os)
+				 key :: <symbol>, platform-name, architecture, os)
                                => project :: <project>;
   // TO DO:
   // this may be an incorrect assumption
   // i.e. that <system-project>s cannot use <user-project>s
   // debug-out(#"project-manager", "Project: %s making used project: %s", project, key);
-  make-project(<project>, parent: project, key: key, architecture: architecture, operating-system: os)
+  make-project(<project>, parent: project, key: key, platform-name: platform-name, architecture: architecture, operating-system: os)
 end method;

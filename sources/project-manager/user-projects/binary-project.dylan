@@ -117,10 +117,11 @@ end;
 */
 
 define method make-used-project (project :: <binary-project>,
-				 key :: <symbol>, architecture, os)
+                                 key :: <symbol>, platform-name, architecture, os)
  => project :: <project>;
   make-project(<project>, parent: project,
-	       key: key, architecture: architecture, operating-system: os);
+               key: key, platform-name: platform-name,
+               architecture: architecture, operating-system: os);
 end;
 
 define method project-browsing-context(project :: <binary-project>)

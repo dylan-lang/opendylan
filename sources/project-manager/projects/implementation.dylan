@@ -257,7 +257,7 @@ end;
 define open generic make-project (c :: subclass(<project>),
                              #key key, source-record-class,
                                   // initial compiler settings
-                                  architecture, operating-system, mode,
+                                  platform-name, architecture, operating-system, mode,
                                   load-namespace?,
                                   #all-keys)
  => project :: <project>;
@@ -265,11 +265,14 @@ define open generic make-project (c :: subclass(<project>),
 define method make-project
     (c :: subclass(<project>), #rest keys,
      #key key, parent = #f, load-namespace? = #t,
-     source-record-class, architecture = #f, operating-system = #f, mode)
+     source-record-class, platform-name = #f, architecture = #f, operating-system = #f, mode)
  => (project :: <project>)
 //  with-project-manager-transaction
   with-lock($pm-lock)
   with-used-project-cache
+    unless (platform-name)
+      platform-name := target-platform-name();
+    end;
     unless (architecture & operating-system)
       let (default-architecture, default-os) = default-platform-info();
       unless (architecture) architecture := default-architecture end;
@@ -292,7 +295,7 @@ define method make-project
               parent & parent.project-name);
     let project =
       apply(make, c,
-            architecture:, architecture, operating-system:, operating-system,
+            platform-name: platform-name, architecture:, architecture, operating-system:, operating-system,
                 compiler-back-end:, back-end,
             keys);
 
@@ -752,10 +755,11 @@ define sideways method used-library-context
         // KLUDGE: used by project-compiler-setting and who knows what else..
         project.project-current-compilation-context := context;
         let key = used-library-project-key(project, used-library-dylan-name);
+        let platform-name = project-compiler-setting(project, platform-name:);
         let architecture = project-compiler-setting(project, architecture:);
         let os = project-compiler-setting(project, operating-system:);
         let subproject = find-platform-project(key, architecture, os) |
-                           make-used-project(project, key, architecture, os);
+                           make-used-project(project, key, platform-name, architecture, os);
         let subcontext = project-current-compilation-context(subproject);
         if (~subcontext)
           debug-out(#"project-manager",

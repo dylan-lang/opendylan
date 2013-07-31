@@ -165,11 +165,12 @@ end method;
 
 
 define method make-used-project (project :: <registry-project>,
-				 key :: <symbol>, architecture, os)
+				 key :: <symbol>, platform-name, architecture, os)
                                => project :: <registry-project>;
   make-project(<registry-project>,
 	       key: key,
 	       source-record-class: project.project-source-record-class,
+	       platform-name: platform-name,
 	       architecture: architecture,
 	       operating-system: os)
 end method;

@@ -310,7 +310,7 @@ define open generic project-key? (project :: <project>, key) => key?;
 // library of the project) and platform info.  Only called if subproject
 // identified by key isn't already open.
 define open generic make-used-project (project :: <project>,
-				       key, architecture, os) => project :: <project>;
+				       key, platform-name, architecture, os) => project :: <project>;
 
 // Class of projects to create from the listener interface.
 define variable *default-project-class* = #f;
