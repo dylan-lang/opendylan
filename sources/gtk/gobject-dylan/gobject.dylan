@@ -1161,10 +1161,9 @@ define C-struct <_GTypeInfo>
   pointer-type-name: <GTypeInfo>;
 end C-struct;
 
-define C-struct <_GTypeInstance>
+define open C-subtype <GTypeInstance> (<C-void*>)
   constant slot gtypeinstance-g-class :: <GTypeClass>;
-  pointer-type-name: <GTypeInstance>;
-end C-struct;
+end C-subtype;
 
 define C-struct <_GTypeInterface>
   constant slot gtypeinterface-g-type :: <C-long>;
