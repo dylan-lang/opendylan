@@ -99,8 +99,8 @@ define method ^signatures-congruent?
 
   block (return)
     local method fail (reason)
-	    return(#f, reason)
-	  end method fail;
+            return(#f, reason)
+          end method fail;
 
     // --- required arguments ---
 
@@ -134,14 +134,14 @@ define method ^signatures-congruent?
     case
 
       gsig.^signature-key? =>
-	unless (msig.^signature-key?)
-	  fail($not-both-keyword);
-	end unless;
-	for (key in gsig.^signature-keys)
-	  unless (member?(key, msig.^signature-keys, test: ^id?))
-	    fail($mandatory-keyword);
-	  end unless;
-	end for;
+        unless (msig.^signature-key?)
+          fail($not-both-keyword);
+        end unless;
+        for (key in gsig.^signature-keys)
+          unless (member?(key, msig.^signature-keys, test: ^id?))
+            fail($mandatory-keyword);
+          end unless;
+        end for;
 
       msig.^signature-key? =>
         fail($not-both-keyword);
@@ -183,15 +183,15 @@ define method ^signatures-congruent?
       //   function's parameter list.
 
       if (msig.^signature-rest-value)
-	fail($generic-values-not-variable);
+        fail($generic-values-not-variable);
       end if;
       let gvals = gsig.^signature-values;
       let mvals = msig.^signature-values;
       if (gsig.^signature-number-values ~= msig.^signature-number-values)
-	fail($required-values-count);
+        fail($required-values-count);
       end if;
       unless (every?(^subtype?, mvals, gvals))
-	fail($required-values-type);
+        fail($required-values-type);
       end unless;
 
     else
@@ -224,14 +224,14 @@ define method ^signatures-congruent?
         end;
       end if;
       for (mval in mvals, index from 0 below msig.^signature-number-values)
-	let gval = element(gvals, index, default: grest);
-	unless (^subtype?(mval, gval))
-	  fail($required-values-type);
-	end unless;
+        let gval = element(gvals, index, default: grest);
+        unless (^subtype?(mval, gval))
+          fail($required-values-type);
+        end unless;
       end for;
       let mrest = msig.^signature-rest-value;
       if (mrest & ~^subtype?(mrest, grest))
-	fail($rest-values-type);
+        fail($rest-values-type);
       end if;
 
     end if;
