@@ -371,12 +371,6 @@ define runtime-primitive untraced-allocate
 end runtime-primitive;
 
 
-define runtime-primitive byte-allocate
-  // This one should not be being used any more
-  op--unimplemented-primitive(be);
-end runtime-primitive;
-
-
 /****** Real version which doesn't null terminate
 
 define runtime-primitive byte-allocate-filled

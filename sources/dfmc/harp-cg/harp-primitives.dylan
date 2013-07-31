@@ -1791,7 +1791,6 @@ define &primitive-descriptor primitive-header-size, emitter: op--word-size;
     
 // Allocation.
 define &primitive-descriptor primitive-allocate;
-define &primitive-descriptor primitive-byte-allocate;
 define &primitive-descriptor primitive-allocate-wrapper;
 define &primitive-descriptor primitive-byte-allocate-filled, emitter: op--byte-allocate-filled;
 define &primitive-descriptor primitive-byte-allocate-filled-terminated, emitter: op--byte-allocate-filled-terminated;

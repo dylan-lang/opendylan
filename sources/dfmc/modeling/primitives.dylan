@@ -111,9 +111,6 @@ define side-effect-free stateless dynamic-extent &primitive primitive-header-siz
 
 define side-effect-free stateful indefinite-extent &primitive primitive-allocate
     (number-words :: <raw-integer>) => (pointer :: <raw-pointer>);
-define side-effect-free stateful indefinite-extent &primitive primitive-byte-allocate
-    (number-words :: <raw-integer>, number-bytes :: <raw-integer>)
- => (pointer :: <raw-pointer>);
 define side-effect-free stateful indefinite-extent &primitive primitive-untraced-allocate
     (number-bytes :: <raw-integer>) => (pointer :: <raw-pointer>);
 define side-effect-free stateful indefinite-extent &primitive primitive-manual-allocate

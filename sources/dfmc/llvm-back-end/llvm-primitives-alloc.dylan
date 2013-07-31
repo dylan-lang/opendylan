@@ -231,12 +231,6 @@ define side-effect-free stateful indefinite-extent &runtime-primitive-descriptor
     (number-words :: <raw-integer>) => (pointer :: <raw-pointer>);
   //---*** Fill this in...
 end;
-
-define side-effect-free stateful indefinite-extent &runtime-primitive-descriptor primitive-byte-allocate
-    (number-words :: <raw-integer>, number-bytes :: <raw-integer>)
- => (pointer :: <raw-pointer>)
-  //---*** Fill this in...
-end;
 */
 
 // Allocate a block of memory untraced by the garbage collector
