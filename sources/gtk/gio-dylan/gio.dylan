@@ -6628,21 +6628,6 @@ define C-function g-io-module-new
   c-name: "g_io_module_new";
 end;
 
-define C-function g-io-module-query
-  result res :: <C-string*>;
-  c-name: "g_io_module_query";
-end;
-
-define C-function g-io-module-load
-  input parameter self :: <GIOModule>;
-  c-name: "g_io_module_load";
-end;
-
-define C-function g-io-module-unload
-  input parameter self :: <GIOModule>;
-  c-name: "g_io_module_unload";
-end;
-
 define C-struct <_GIOModuleClass>
   pointer-type-name: <GIOModuleClass>;
 end C-struct;

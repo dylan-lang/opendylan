@@ -1,2 +1,0 @@
-LINKLIBS += `pkg-config --libs gdkpixbuf-2.0` ;
-CCFLAGS += `pkg-config --cflags gdkpixbuf-2.0` ;
