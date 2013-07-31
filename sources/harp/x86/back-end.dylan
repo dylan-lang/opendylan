@@ -27,7 +27,7 @@ define class <harp-x86-windows-back-end> (<harp-x86-back-end>,
                                      <harp-native-windows-back-end>)
 end;
 
-register-back-end(<harp-x86-windows-back-end>, #"harp", #"x86", #"win32");
+register-back-end(<harp-x86-windows-back-end>, #"harp", #"x86-win32");
 
 define class <harp-x86-unix-back-end> (<harp-x86-back-end>)
 end;
@@ -36,16 +36,16 @@ define class <harp-x86-linux-back-end>
  (<harp-x86-unix-back-end>, <harp-native-linux-back-end>)
 end;
 
-register-back-end(<harp-x86-linux-back-end>, #"harp", #"x86", #"linux");
+register-back-end(<harp-x86-linux-back-end>, #"harp", #"x86-linux");
 
 define class <harp-x86-freebsd-back-end>
  (<harp-x86-unix-back-end>, <harp-native-freebsd-back-end>)
 end;
 
-register-back-end(<harp-x86-freebsd-back-end>, #"harp", #"x86", #"freebsd");
+register-back-end(<harp-x86-freebsd-back-end>, #"harp", #"x86-freebsd");
 
 define class <harp-x86-darwin-back-end>
  (<harp-x86-unix-back-end>, <harp-native-darwin-back-end>)
 end;
 
-register-back-end(<harp-x86-darwin-back-end>, #"harp", #"x86", #"darwin");
+register-back-end(<harp-x86-darwin-back-end>, #"harp", #"x86-darwin");
