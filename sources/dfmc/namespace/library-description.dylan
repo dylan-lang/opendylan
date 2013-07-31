@@ -113,6 +113,7 @@ define dood-class <project-library-description>
     required-init-keyword: location:,
     reinit-expression: #f;
   lazy slot library-description-compiler-back-end-slot :: false-or(<symbol>) = #f;
+  lazy slot library-description-platform-name-slot :: <symbol> = #"unknown";
   lazy slot library-description-os-name-slot :: <symbol> = #"unknown";
   lazy slot library-description-architecture-name-slot :: <symbol> = #"unknown";
   lazy slot library-description-compilation-mode-slot :: <symbol> = #"tight";
@@ -526,6 +527,19 @@ define method library-description-compiler-back-end-name-setter
     project.library-description-compiler-back-end-slot := back-end;
   end;
 end method;
+
+define method library-description-platform-name
+    (project :: <project-library-description>) => (platform-name :: <symbol>)
+  project.library-description-platform-name-slot
+end method library-description-platform-name;
+
+define function library-description-platform-name-setter
+    (platform-name :: <symbol>, ld :: <project-library-description>)
+  unless (platform-name == ld.library-description-platform-name)
+    retract-library-compilation(ld);
+    ld.library-description-platform-name-slot := platform-name;
+  end;
+end;
 
 define method library-description-os-name
     (project :: <project-library-description>) => (os-name :: <symbol>)
@@ -1055,6 +1069,7 @@ define function project-used-library-version (ld, uld)
 end;
 
 define sealed class <build-info> (<object>)
+  constant slot build-platform-name, required-init-keyword: platform-name:;
   constant slot build-os, required-init-keyword: os:;
   constant slot build-architecture, required-init-keyword: architecture:;
   constant slot build-source-records, required-init-keyword: source-records:;
@@ -1065,17 +1080,20 @@ end class;
 // the "compiled code database" (i.e. in the various backend output files)
 // is based.
 define method record-library-build (ld :: <library-description>)
+  let platform-name = ld.library-description-platform-name;
   let os = ld.library-description-os-name;
   let architecture = ld.library-description-architecture-name;
   let version = ld.library-description-change-count;
   let cr* = ld.library-description-compilation-records;
   let sr* = map-as(<vector>, compilation-record-source-record, cr*);
   ld.library-description-last-build-info := make(<build-info>,
+						 platform-name: platform-name,
 						 os: os,
 						 architecture: architecture,
 						 version: version,
 						 source-records: sr*);
   with-build-area-output(stream = ld, name: "_SRV")
+    format(stream, "%s\n", platform-name);
     format(stream, "%s\n", os);
     format(stream, "%s\n", architecture);
     format(stream, "%d\n", version);
@@ -1101,6 +1119,7 @@ define function read-build-srv-file (ld :: <library-description>)
 				      as(<directory-locator>, location));
     if (file-exists?(srv-location))
       with-open-file (stream = srv-location, stream-lock: #f)
+	let platform-name = as(<symbol>, read-line(stream));
 	let os = as(<symbol>, read-line(stream));
 	let architecture = as(<symbol>, read-line(stream));
 	let version = read-int-line(stream);
@@ -1111,6 +1130,7 @@ define function read-build-srv-file (ld :: <library-description>)
 	  sr*[index] := library-record-id-source-record(ld, id);
 	end;
         make(<build-info>,
+	     platform-name: platform-name,
 	     os: os,
 	     architecture: architecture,
 	     version: version,
@@ -1123,6 +1143,7 @@ end function;
 define function current-build-info (ld :: <library-description>)
   let build = ld.library-description-last-build-info;
   if (build &
+      build.build-platform-name == ld.library-description-platform-name &
       build.build-os == ld.library-description-os-name &
       build.build-architecture == ld.library-description-architecture-name)
     let sr* = build.build-source-records;

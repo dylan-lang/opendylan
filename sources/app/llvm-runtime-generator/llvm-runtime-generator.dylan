@@ -222,11 +222,13 @@ end function;
 
 define function generate-runtime
     (lid-locator :: <file-locator>,
+     platform-name :: <symbol>,
      architecture :: <symbol>,
      operating-system :: <symbol>)
  => ();
   with-booted-dylan-context (lid-locator: lid-locator,
                              back-end: #"llvm",
+                             platform-name: platform-name,
                              architecture: architecture,
                              operating-system: operating-system)
     without-dependency-tracking
@@ -274,15 +276,16 @@ begin
   let arguments = application-arguments();
   if (arguments.size = 2)
     let lid-locator = as(<file-locator>, arguments[0]);
-    let name = arguments[1];
+    let platform-name = arguments[1];
 
-    // Split name into architecture and os portions
-    let separator-position = position(name, '-');
-    let architecture-name = copy-sequence(name, end: separator-position);
-    let os-name = copy-sequence(name, start: separator-position + 1);
+    // Split platform-name into architecture and os portions
+    let separator-position = position(platform-name, '-');
+    let architecture-name = copy-sequence(platform-name, end: separator-position);
+    let os-name = copy-sequence(platform-name, start: separator-position + 1);
 
     // Generate runtime support for the requested platform
     generate-runtime(lid-locator,
+                     as(<symbol>, platform-name),
                      as(<symbol>, architecture-name),
                      as(<symbol>, os-name));
   else

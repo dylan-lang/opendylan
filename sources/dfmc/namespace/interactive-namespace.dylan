@@ -39,6 +39,8 @@ define class <interactive-library-description> (<library-description>)
     required-init-keyword: target:;
   constant slot interactive-library-compiler-back-end-name :: <symbol>,
     required-init-keyword: back-end:;
+  constant slot interactive-library-platform-name :: <symbol>,
+    required-init-keyword: platform-name:;
   constant slot interactive-library-os-name :: <symbol>,
     required-init-keyword: os:;
   constant slot interactive-library-architecture-name :: <symbol>,
@@ -73,6 +75,11 @@ end method;
 define method library-description-compiler-back-end-name
     (ild :: <interactive-library-description>) => (name :: <symbol>)
   ild.interactive-library-compiler-back-end-name
+end method;
+
+define method library-description-platform-name
+    (ild :: <interactive-library-description>) => (name :: <symbol>)
+  ild.interactive-library-platform-name
 end method;
 
 define method library-description-os-name
@@ -703,6 +710,7 @@ define method make-interactive-context (ld :: <project-library-description>,
 		 target: target,
 		 // TODO: these should come from the target, or at least match it
 		 back-end: ld.library-description-compiler-back-end-name, 
+		 platform-name: ld.library-description-platform-name,
 		 os: ld.library-description-os-name,
 		 architecture: ld.library-description-architecture-name,
 		 major-version: ld.library-description-major-version,
