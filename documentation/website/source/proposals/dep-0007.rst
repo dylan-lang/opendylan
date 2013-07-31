@@ -192,18 +192,19 @@ classes, but only adds it to the *type*. I had originally considered a more
 extensive change where each instance of a fillable collection class would track
 the ``fill:`` value that it was created with, but in thinking about it, I feel
 the designers made the right call in leaving that information out of each
-instance. In particular, the implementation of ``<list>`` would be a pain in
-the ass if each instance tracked its ``fill:`` value.
+instance. In particular, the implementation of ``<list>`` would be difficult if
+each instance tracked its ``fill:`` value.
 
-In an earlier draft, I had also specified that the ``default-fill`` method only
-be defined for *L*. But in rereading the [DRM]_ note reproduced above, I was
-reminded that ``map``, etc., would need to call ``default-fill`` to do its job
-properly. Since ``map`` is defined as *function* on ``<collection>`` rather
-than a generic method, ``default-fill`` would need to be applicable to all
-collections, and ``fill:`` would likewise need to be a valid init-argument to
-all collections, or else ``map``, etc., would need to distinguish between
-fillable and non-fillable collections internally. I opted for the simpler model
-of treating all collections as fillable for instantiation purposes.
+In an earlier unpublished draft, I had also specified that the ``default-fill``
+method only be defined for *L*. But in rereading the [DRM]_ note reproduced
+above, I was reminded that ``map``, etc., would need to call ``default-fill``
+to do its job properly. Since ``map`` is defined as *function* on
+``<collection>`` rather than a generic method, ``default-fill`` would need to
+be applicable to all collections, and ``fill:`` would likewise need to be a
+valid init-argument to all collections, or else ``map``, etc., would need to
+distinguish between fillable and non-fillable collections internally. I opted
+for the simpler model of treating all collections as fillable for instantiation
+purposes.
 
 
 Implementation Notes
@@ -264,7 +265,7 @@ I believe the only difficult part of implementing this DEP is updating the
 collection functions to instantiate new collections with the ``fill:
 c.default-fill`` argument. There are a lot of collection functions, but it
 should be easy to determine which calls to ``make`` instantiate new collections
-(as opposed to some other internal task
+(as opposed to some other internal task).
 
 
 .. [DRM] `Dylan Reference Manual`:title-reference:
