@@ -165,7 +165,7 @@ end;
 define function find-gtype-by-name(name :: <string>)
   block(return)
     let dylan-name = as-uppercase(concatenate("<", name, ">"));
-    for(i in $all-gtype-instances)
+    for(i in all-gtype-instances())
       if(as-uppercase(i.debug-name) = dylan-name)
         return(i)
       end if;
@@ -186,7 +186,14 @@ define function find-gtype(g-type)
   dylan-type
 end function find-gtype;
 
-define constant $all-gtype-instances = all-subclasses(<GTypeInstance>);
+define variable $all-gtype-instances = #[];
+
+define function all-gtype-instances () => (instances :: <collection>)
+  if (empty?($all-gtype-instances))
+    $all-gtype-instances := all-subclasses(<GTypeInstance>);
+  end if;
+  $all-gtype-instances
+end function all-gtype-instances;
 
 // map GTK type IDs to Dylan classes
 define table $gtype-table = {

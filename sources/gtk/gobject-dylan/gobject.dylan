@@ -417,7 +417,7 @@ define C-struct <_GInterfaceInfo>
   pointer-type-name: <GInterfaceInfo>;
 end C-struct;
 
-define open C-subtype <GObject> (<C-void*>)
+define open C-subtype <GObject> (<GTypeInstance>)
   constant slot gobject-g-type-instance :: <GTypeInstance>;
   constant slot gobject-ref-count :: <C-unsigned-int>;
   constant slot gobject-qdata :: <GData>;
