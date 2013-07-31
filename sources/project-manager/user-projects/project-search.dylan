@@ -12,7 +12,7 @@ define constant $user-projects-path = user-projects-path();
 // this method tries to find the subproject in the cache
 //
 define method search-for-subproject(project :: <user-project>, key :: <symbol>,
-				    architecture, os)
+                                    platform-name)
  => (location);
   let used-project-location = #f;
   let cached-location = element(project.%used-projects-cache, key, default: #f);
@@ -41,7 +41,7 @@ end;
 define method search-for-project(key :: <symbol>, 
 				 #key search-path = $user-projects-path, 
 				 depth = #f,
-				 architecture, os)
+				 platform-name)
   let project-file-name = concatenate(as(<string>, key), $user-project-suffix);
   local method lookup(projects-directory :: <directory-locator>, return :: <function>)
 	  search-debug("search-for-project in %s\n", projects-directory);
@@ -293,7 +293,7 @@ define method make-used-project (project :: <user-project>,
  => project :: <project>;
   project-initialize-caches(project);
   // search in the cache
-  let subproject-location = search-for-subproject(project, key, architecture, os);
+  let subproject-location = search-for-subproject(project, key, platform-name);
   let subproject = subproject-location & 
     block()
       let build-entry = second(element(project.%used-projects-cache, key));
