@@ -912,7 +912,7 @@ end function;
 //   - Any similar change to the program-notes colouring.
 // These would merit an update to the major version number:
 //   - Changing (the spelling of) existing "colornames".
-//   - Changing the "function names" ("color-forgrounds/-backgrounds").
+//   - Changing the "function names" ("color-foregrounds/-backgrounds").
 //   - Changing the format of the line/column information.
 //   - Any more dramatic changes (e.g., moving to a binary file format).
 //
