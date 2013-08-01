@@ -539,7 +539,7 @@ end;
 
 define C-function g-object-ref-sink
   input parameter self :: <GObject>;
-  result res :: <GObject>;
+  result res :: <C-void*>;
   c-name: "g_object_ref_sink";
 end;
 
