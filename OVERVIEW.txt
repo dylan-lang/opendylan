@@ -99,8 +99,6 @@ sources
     walker              - Build has-a tree.
   project-manager       - Takes care about dependencies of projects and actual
                           invocation of linker, etc.
-    dfmc-projects       - New code, not in use.
-    projects-protocol   - New code, not in use.
     projects            - Shared code between user and registry projects,
                           general API.
     registry-projects   - Code handling projects in the registry.
