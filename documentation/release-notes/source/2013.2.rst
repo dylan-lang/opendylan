@@ -23,6 +23,8 @@ The `regular-expressions <http://opendylan.org/documentation/library-reference/r
 Build Tools
 -----------
 
+Our configure script now supports the multiarch layout used on recent Debian systems.
+
 ``OPEN_DYLAN_PLATFORM_NAME`` is now ``OPEN_DYLAN_TARGET_PLATFORM`` to make
 the intent more clear. Additionally, this value is available to Jam as
 ``TARGET_NAME``.
@@ -40,6 +42,9 @@ A function ``stream-console?`` has been added to the ``<file-stream>`` class,
 this can be used to determine whether console output has been directed to a
 file.
 
+A new method ``force-out`` has been added to the ``format-out`` module.
+This method allows avoiding to import the ``streams`` and ``standard-io`` modules when all you want is to flush the stream corresponding to ``format-out``.
+
 network
 ^^^^^^^
 
@@ -48,4 +53,12 @@ The main reason for this change was ongoing confusion by the way the network lib
 
 Bug Fixes
 =========
+
+I/O
+---
+
+Several cases of missing locking where fixed in the ``io`` library.
+The added locking may cause changes in performance.
+If you encounter this you can mitigate by disabling locking on affected streams.
+We are considering a switch to an opt-in locking scheme to improve performance.
 
