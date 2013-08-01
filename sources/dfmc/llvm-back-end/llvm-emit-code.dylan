@@ -107,7 +107,8 @@ define method emit-code
       // Emit the entry block
       ins--block(back-end, make(<llvm-basic-block>, name: "bb.entry"));
 
-      dynamic-bind (*temporary-value-table* = make(<object-table>),
+      dynamic-bind (*current-environment* = o.environment,
+                    *temporary-value-table* = make(<object-table>),
                     *merge-operands-table* = make(<object-table>))
         // Add function arguments to the function's value table,
         // and to the temporary value mapping
@@ -131,6 +132,12 @@ define method emit-code
             emit-local-definition(back-end, tmp);
           end if;
         end for;
+
+        // Mark the function object as invariant if it is a closure
+        if (closure?(o))
+          let closure = llvm-builder-local(back-end, $function-parameter-name);
+          op--closure-invariant-start(back-end, o, closure);
+        end if;
 
         // Emit the body of the function
         emit-computations(back-end, module, o.body, #f);

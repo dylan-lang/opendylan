@@ -151,6 +151,11 @@ define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descri
 define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-copy
     (number-bytes :: <raw-integer>, template :: <raw-pointer>)
  => (pointer :: <raw-pointer>);
+define side-effect-free stateful indefinite-extent auxiliary &c-primitive-descriptor primitive-copy-r
+    (number-bytes :: <raw-integer>,
+     rep-size :: <raw-integer>, rep-size-slot :: <raw-integer>,
+     template :: <raw-pointer>)
+ => (pointer :: <raw-pointer>);
 
 
 /// Allocation operations

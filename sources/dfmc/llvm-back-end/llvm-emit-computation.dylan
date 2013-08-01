@@ -60,8 +60,40 @@ end method;
 define method emit-reference
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <temporary>)
  => (reference :: <llvm-value>);
-  temporary-value(o)
+  if (o.environment == *current-environment*)
+    temporary-value(o)
+  else
+    emit-closure-reference(back-end, m, o);
+  end if
 end method;
+
+define function emit-closure-reference
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <temporary>)
+ => (reference :: <llvm-value>);
+  let closure = llvm-builder-local(back-end, $function-parameter-name);
+  if (method-top-level?(*current-environment*.lambda))
+    closure
+  else
+    let fun = *current-environment*.lambda.function;
+    let class :: <&class> = fun.^object-class;
+
+    // Read the closure's environment slot
+    let offset = closure-offset(*current-environment*, o);
+    unless (offset)
+      error("Can't find %= in environment", o);
+    end unless;
+
+    let class-type
+      = llvm-class-type(back-end, class,
+                        repeated-size: closure-size(*current-environment*));
+    let closure-cast
+      = ins--bitcast(back-end, closure, llvm-pointer-to(back-end, class-type));
+    let ptr
+      = op--getslotptr(back-end, closure-cast, class,
+                       #"environment-element", offset);
+    ins--load(back-end, ptr);
+  end if;
+end function;
 
 define method emit-reference
     (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <stack-vector-temporary>)
@@ -295,7 +327,8 @@ define method closure? (o :: <&lambda-or-code>) => (closure? :: <boolean>)
 end method;
 
 define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <make-closure>) => ()
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <make-closure>)
+ => ();
   let o = function(c.computation-closure-method);
   let sigtmp = c.computation-signature-value;
   let key?   = instance?(o, <&keyword-method>);
@@ -303,152 +336,151 @@ define method emit-computation
     let init? = computation-init-closure?(c);
     let top-level? = computation-top-level-closure?(c);
     let env = o.environment;
-    let closure
+    let closure-inits
       = if (init? & ~top-level?) env.closure else #() end if;
-/*
-    if (c.closure-has-dynamic-extent?) 
-      let fn-size = if (key?) back-end.keyword-closure-size
-		    else back-end.simple-closure-size
-		    end if;
-      let fn-size-in-words = truncate/(fn-size, 4); // FIXME!
-      let closure-size = closure-size(env);
-      let closure-size-in-bytes = bytes%(back-end, closure-size);
-      let total-size = fn-size + closure-size-in-bytes;
-      let fn = emit-reference(back-end, #f, c.temporary) | make-g-register(back-end);
-      let template = emit-reference(back-end, #f, o);
-      let env = make-g-register(back-end);
-      let stack = back-end.registers.reg-stack;
+    if (c.closure-has-dynamic-extent?)
+      // Stack-allocated closure
+      let class
+        = if (key?)
+            dylan-value(#"<keyword-closure-method>")
+          else
+            dylan-value(#"<simple-closure-method>");
+          end if;
 
-      ins--sub(back-end, stack, stack, total-size);
-      ins--move(back-end, fn, stack);
-      ins--copy-words-down-w(back-end, fn, template, fn-size-in-words);
-      let env-offset = 
-	if (key?) back-end.keyword-closure-environment-offset
-	else back-end.closure-environment-offset
-	end if;
-      ins--store(back-end,
-		 op--integer(back-end, #f, closure-size),
-		 fn, env-offset);
-      let word-size = bytes%(back-end, 1);
-      for (reference in emit-references(back-end, closure),
-	   offset :: <integer> from env-offset + word-size by word-size)
-	ins--store(back-end, reference, fn, offset)
+      let template = emit-reference(back-end, m, o);
+      let closure-size = closure-size(env);
+      let closure
+        = op--stack-allocate-closure(back-end, class, template, closure-size);
+
+      for (index from 0, init in closure-inits)
+        let value = emit-reference(back-end, m, init);
+        let ptr
+          = op--getslotptr(back-end, closure, class, #"environment-element",
+                           index);
+        ins--store(back-end, value, ptr);
       end for;
 
       if (sigtmp)
-	ins--st(back-end, emit-reference(back-end, #f, sigtmp), fn, back-end.function-signature-offset);
+        // Dynamic signature
+        let signature = emit-reference(back-end, m, sigtmp);
+        let signature-ptr
+          = op--getslotptr(back-end, closure, class, #"function-signature");
+        ins--store(back-end, signature, signature-ptr);
       end if;
+
+      let result = ins--bitcast(back-end, closure, $llvm-object-pointer-type);
+      computation-result(back-end, c, result);
     else
       if (sigtmp)
-	if (top-level?)
-	  let o-ref = emit-reference(back-end, #f, o);
-	  ins--st(back-end,
-		  emit-reference(back-end, #f, sigtmp),
-		  o-ref,
-		  back-end.function-signature-offset);
-	  ins--move(back-end,
-		    emit-reference(back-end, #f, c.temporary),
-		    o-ref);
-	else
-	  call-protocol
-	    (call-primitive, back-end)
-	    (reference, identity, reference, reference, identity)
-	    (c.temporary,
-	     if (init?)
-	       if (key?)
-		 $primitive-make-keyword-closure-with-environment-signature
-	       else
-		 $primitive-make-closure-with-environment-signature
-	       end if
-	     else
-	       if (key?)
-		 $primitive-make-keyword-closure-with-signature
-	       else
-		 $primitive-make-closure-with-signature
-	       end if
-	     end if,
-	     o,
-	     sigtmp,
-	     closure-size(env),
-	     rest closure)
-	   end;
-	end if;
+        if (top-level?)
+          // Top-level method with a dynamic signature
+          let signature = emit-reference(back-end, m, sigtmp);
+          let name = emit-name(back-end, m, o);
+          let global = llvm-builder-global(back-end, name);
+          let class = o.^object-class;
+          llvm-constrain-type
+            (global.llvm-value-type,
+             llvm-pointer-to(back-end, llvm-reference-type(back-end, class)));
+          let signature-ptr
+            = op--getslotptr(back-end, global, class, #"function-signature");
+          ins--store(back-end, signature, signature-ptr);
+        else
+          let result
+            = if (init?)
+                // Initialized closure
+                let primitive
+                  = if (key?)
+                      primitive-make-keyword-closure-with-environment-signature-descriptor
+                    else
+                      primitive-make-closure-with-environment-signature-descriptor
+                    end if;
+                apply(call-primitive, back-end, primitive,
+                      emit-reference(back-end, m, o),
+                      emit-reference(back-end, m, sigtmp),
+                      closure-size(env),
+                      map(curry(emit-reference, back-end, m), closure-inits))
+              else
+                // Uninitialized closure
+                let primitive
+                  = if (key?)
+                      primitive-make-keyword-closure-signature-descriptor
+                    else
+                      primitive-make-closure-signature-descriptor
+                    end if;
+                call-primitive(back-end, primitive,
+                               emit-reference(back-end, m, o),
+                               emit-reference(back-end, m, sigtmp),
+                               closure-size(env));
+              end if;
+          computation-result(back-end, c, result);
+        end if;
       else
-        call-protocol
-	  (call-primitive, back-end)
-	  (reference, identity, reference, identity)
-	  (c.temporary,
-	   if (init?)
-	     if (key?)
-	       $primitive-make-keyword-closure-with-environment
-	     else
-	       $primitive-make-closure-with-environment
-	     end if
-	   else
-	     if (key?)
-	       $primitive-make-keyword-closure
-	     else
-	       $primitive-make-closure
-	     end if
-	   end if,
-	   o,
-	   closure-size(env),
-	   rest closure)
-         end;
+        let result
+          = if (init?)
+              // Initialized closure
+              let primitive
+                = if (key?)
+                    primitive-make-keyword-closure-with-environment-descriptor
+                  else
+                    primitive-make-closure-with-environment-descriptor
+                  end if;
+              apply(call-primitive, back-end, primitive,
+                    emit-reference(back-end, m, o),
+                    closure-size(env),
+                    map(curry(emit-reference, back-end, m), closure-inits))
+            else
+              // Uninitialized closure
+              let primitive
+                = if (key?)
+                    primitive-make-keyword-closure-descriptor
+                  else
+                    primitive-make-closure-descriptor
+                  end if;
+              call-primitive(back-end, primitive,
+                             emit-reference(back-end, m, o),
+                             closure-size(env));
+            end if;
+        computation-result(back-end, c, result);
       end if;
     end if;
-*/
   else
-    #f
-/*
+    // Not a closure
     if (sigtmp)
-      call-protocol
-	(call-primitive, back-end)
-	(reference, identity, reference, reference)
-	(c.temporary,
-	 if (key?)
-	   $primitive-make-keyword-method-with-signature
-	 else
-	   $primitive-make-method-with-signature
-	 end if,
-	 o,
-	 sigtmp)
-       end;
+      // Dynamic method signature
+      let primitive
+        = if (key?)
+            primitive-make-keyword-method-with-signature-descriptor
+          else
+            primitive-make-method-with-signature-descriptor
+          end if;
+      let result
+        = call-primitive(back-end, primitive,
+                         emit-reference(back-end, m, o),
+                         emit-reference(back-end, m, sigtmp));
+      computation-result(back-end, c, result);
     else
-      emit-assignment(back-end,
-		      c.temporary,
-		      emit-reference(back-end, #f, o));
+      // Ordinary compile-time method signature
+      computation-result(back-end, c, emit-reference(back-end, m, o));
     end if
-*/
   end if;
 end method;
 
 define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <initialize-closure>) => ()
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <initialize-closure>)
+ => ()
   let o = function(c.computation-closure-method);
   if (closure?(o))
     let env = o.environment;
-/*
-
-    let prim
+    let primitive
       = if (instance?(o, <&keyword-method>))
           primitive-initialize-keyword-closure-descriptor
         else
           primitive-initialize-closure-descriptor
        end if;
-    call-primitive(back-end, prim,
-    
-    call
-    call-protocol
-      (call-primitive, back-end)
-      (identity, identity, reference, identity)
-      (#f,
-       prim
-       c.computation-closure,
-       closure-size(env),
-       rest env.closure)
-     end;
-*/
+    apply(call-primitive, back-end, primitive,
+          emit-reference(back-end, m, c.computation-closure),
+          closure-size(env),
+          map(curry(emit-reference, back-end, m), env.closure))
   end if;
 end method;
 

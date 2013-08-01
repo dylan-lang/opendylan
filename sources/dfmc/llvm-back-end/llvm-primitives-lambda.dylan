@@ -158,3 +158,250 @@ define side-effecting stateless dynamic-extent &unimplemented-primitive-descript
     (discriminator :: <discriminator>) => (single-value :: <discriminator>);
   //---*** Fill this in...
 end;
+
+
+/// Dynamic method and closure creation
+
+define method op--init-signature
+    (be :: <llvm-back-end>, class :: <&class>,
+     meth :: <llvm-value>, signature :: <llvm-value>)
+ => ();
+  let meth-cast = op--object-pointer-cast(be, meth, class);
+  let signature-ptr
+    = op--getslotptr(be, meth-cast, class, #"function-signature");
+  ins--store(be, signature, signature-ptr);
+end method;
+
+define method op--make-method-with-signature
+    (be :: <llvm-back-end>, class :: <&class>,
+     template :: <llvm-value>, signature :: <llvm-value>)
+ => (closure :: <llvm-value>);
+  let meth
+    = call-primitive(be, primitive-copy-descriptor,
+                     instance-storage-bytes(be, class),
+                     template);
+  op--init-signature(be, class, meth, signature);
+  meth
+end method;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-keyword-method-with-signature
+    (template :: <keyword-method>, signature :: <signature>)
+ => (meth :: <keyword-method>);
+  op--make-method-with-signature(be, dylan-value(#"<keyword-method>"),
+                                 template, signature)
+end;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-method-with-signature
+    (template :: <simple-method>, signature :: <signature>)
+ => (meth :: <simple-method>);
+  op--make-method-with-signature(be, dylan-value(#"<simple-method>"),
+                                 template, signature)
+end;
+
+define method op--make-closure
+    (be :: <llvm-back-end>, class :: <&class>,
+     template :: <llvm-value>, closure-size :: <llvm-value>)
+ => (closure :: <llvm-value>);
+  let word-size = back-end-word-size(be);
+  let header-words = dylan-value(#"$number-header-words");
+
+  let rep-size-slot-descriptor
+    = ^slot-descriptor(class, dylan-value(#"environment-size"));
+  let rep-size-slot
+    = header-words + ^slot-offset(rep-size-slot-descriptor, class);
+
+  let fixed-size = header-words + ^instance-storage-size(class);
+  let total-size = ins--add(be, closure-size, fixed-size);
+  let byte-size = ins--mul(be, total-size, word-size);
+
+  let closure
+    = call-primitive(be, primitive-copy-r-descriptor,
+                     byte-size,
+                     closure-size,
+                     rep-size-slot,
+                     template);
+
+  closure
+end method;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-keyword-closure
+    (template :: <keyword-closure-method>, closure-size :: <raw-integer>)
+ => (closure :: <keyword-closure-method>);
+  op--make-closure(be, dylan-value(#"<keyword-closure-method>"),
+                   template, closure-size)
+end;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-closure
+    (template :: <simple-closure-method>, closure-size :: <raw-integer>)
+ => (closure :: <simple-closure-method>);
+  op--make-closure(be, dylan-value(#"<simple-closure-method>"),
+                   template, closure-size)
+end;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-keyword-closure-signature
+    (template :: <keyword-closure-method>, signature :: <signature>, closure-size :: <raw-integer>)
+ => (closure :: <keyword-closure-method>);
+  let class :: <&class> = dylan-value(#"<keyword-closure-method>");
+  let closure = op--make-closure(be, class, template, closure-size);
+  op--init-signature(be, class, closure, signature);
+  closure
+end;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-closure-signature
+    (template :: <simple-closure-method>, signature :: <signature>, closure-size :: <raw-integer>)
+ => (closure :: <simple-closure-method>);
+  let class :: <&class> = dylan-value(#"<simple-closure-method>");
+  let closure = op--make-closure(be, class, template, closure-size);
+  op--init-signature(be, class, closure, signature);
+  closure
+end;
+
+define method op--init-closure-environment
+    (be :: <llvm-back-end>, class :: <&class>,
+     closure :: <llvm-value>, closure-size :: <llvm-value>)
+ => ();
+  let va-list = op--va-decl-start(be);
+  let closure-cast = op--object-pointer-cast(be, closure, class);
+
+  // Basic blocks
+  let entry-bb = be.llvm-builder-basic-block;
+  let loop-head-bb = make(<llvm-basic-block>);
+  let loop-tail-bb = make(<llvm-basic-block>);
+  let return-bb    = make(<llvm-basic-block>);
+
+  ins--br(be, loop-head-bb);
+
+  // Loop head
+  ins--block(be, loop-head-bb);
+  let index-placeholder
+    = make(<llvm-symbolic-value>, type: be.%type-table["iWord"], name: "index");
+  let index
+    = ins--phi(be, 0, entry-bb, index-placeholder, loop-tail-bb);
+  let cmp = ins--icmp-ult(be, index, closure-size);
+  ins--br(be, cmp, loop-tail-bb, return-bb);
+
+  // Loop tail: retrieve a varargs item and store it in the closure
+  ins--block(be, loop-tail-bb);
+  let arg = op--va-arg(be, va-list, $llvm-object-pointer-type);
+  let ptr
+    = op--getslotptr(be, closure-cast, class, #"environment-element", index);
+  ins--store(be, arg, ptr);
+
+  let next-index = ins--add(be, index, 1);
+  index-placeholder.llvm-placeholder-value-forward := next-index;
+  ins--br(be, loop-head-bb);
+
+  ins--block(be, return-bb);
+  op--va-end(be, va-list);
+end method;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-keyword-closure-with-environment
+    (template :: <keyword-closure-method>, closure-size :: <raw-integer>,
+     #rest environment)
+ => (closure :: <keyword-closure-method>);
+  let class :: <&class> = dylan-value(#"<keyword-closure-method>");
+  let closure
+    = op--make-closure(be, class, template, closure-size);
+   op--init-closure-environment(be, class, closure, closure-size);
+  closure
+end;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-closure-with-environment
+    (template :: <simple-closure-method>, closure-size :: <raw-integer>,
+     #rest environment)
+ => (closure :: <simple-closure-method>);
+  let class :: <&class> = dylan-value(#"<simple-closure-method>");
+  let closure
+    = op--make-closure(be, class, template, closure-size);
+   op--init-closure-environment(be, class, closure, closure-size);
+  closure
+end;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-keyword-closure-with-environment-signature
+    (template :: <keyword-closure-method>, signature :: <signature>, closure-size :: <raw-integer>,
+     #rest environment)
+ => (closure :: <keyword-closure-method>);
+  let class :: <&class> = dylan-value(#"<keyword-closure-method>");
+  let closure
+    = op--make-closure(be, class, template, closure-size);
+   op--init-signature(be, class, closure, signature);
+   op--init-closure-environment(be, class, closure, closure-size);
+  closure
+end;
+
+define side-effect-free stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-make-closure-with-environment-signature
+    (template :: <simple-closure-method>, signature :: <signature>, closure-size :: <raw-integer>,
+     #rest environment)
+ => (closure :: <simple-closure-method>);
+  let class :: <&class> = dylan-value(#"<simple-closure-method>");
+  let closure
+    = op--make-closure(be, class, template, closure-size);
+   op--init-signature(be, class, closure, signature);
+   op--init-closure-environment(be, class, closure, closure-size);
+  closure
+end;
+
+define side-effecting stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-initialize-keyword-closure
+    (closure :: <simple-closure-method>, closure-size :: <raw-integer>,
+     #rest environment)
+ => ();
+  let class :: <&class> = dylan-value(#"<keyword-closure-method>");
+   op--init-closure-environment(be, class, closure, closure-size);
+end;
+
+define side-effecting stateful indefinite-extent auxiliary &runtime-primitive-descriptor primitive-initialize-closure
+    (closure :: <simple-closure-method>, closure-size :: <raw-integer>,
+     #rest environment)
+ => ();
+  let class :: <&class> = dylan-value(#"<simple-closure-method>");
+   op--init-closure-environment(be, class, closure, closure-size);
+end;
+
+// Mark the IEP's closure object as read-only to facilitate CSE
+define method op--closure-invariant-start
+    (back-end :: <llvm-back-end>, o :: <&iep>, closure :: <llvm-value>)
+ => ();
+  let word-size = back-end-word-size(back-end);
+  let header-words = dylan-value(#"$number-header-words");
+
+  let fun = o.function;
+  let class :: <&class> = fun.^object-class;
+
+  let fixed-size = header-words + ^instance-storage-size(class);
+  let byte-size = (fixed-size + closure-size(o.environment)) * word-size;
+  ins--call-intrinsic(back-end, "llvm.invariant.start",
+                      vector(i64(byte-size), closure));
+end method;
+
+// Stack allocate a closure
+define method op--stack-allocate-closure
+    (back-end :: <llvm-back-end>, class :: <&class>,
+     template :: <llvm-value>, closure-size :: <integer>)
+ => (new-vector :: <llvm-value>);
+  let module = back-end.llvm-builder-module;
+  let word-size = back-end-word-size(back-end);
+  let header-words = dylan-value(#"$number-header-words");
+
+  let class-type
+    = llvm-class-type(back-end, class, repeated-size: closure-size);
+  let closure
+    = ins--alloca(back-end, class-type, 1, alignment: word-size);
+
+  // Copy from the template
+  let fixed-size = header-words + ^instance-storage-size(class);
+  let byte-size = fixed-size * word-size;
+
+  let closure-raw = op--raw-pointer-cast(back-end, closure);
+  ins--call-intrinsic(back-end, "llvm.memcpy",
+                      vector(closure-raw, template, byte-size,
+                             i32(word-size), $llvm-false));
+
+  // Initialize the size slot
+  let size-slot-ptr
+    = op--getslotptr(back-end, closure, class, #"environment-size");
+  let size-ref = emit-reference(back-end, module, closure-size);
+  ins--store(back-end, size-ref, size-slot-ptr);
+
+  closure
+end method;
+
