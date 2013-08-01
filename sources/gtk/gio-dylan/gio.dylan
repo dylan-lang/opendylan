@@ -60,12 +60,12 @@ define C-function g-action-get-state-type
 end;
 
 define C-struct <_GActionEntry>
-  slot gactionentry-name :: <C-string>;
-  constant slot gactionentry-activate :: <C-function-pointer>;
-  slot gactionentry-parameter-type :: <C-string>;
-  slot gactionentry-state :: <C-string>;
-  constant slot gactionentry-change-state :: <C-function-pointer>;
-  constant slot gactionentry-padding :: <C-unsigned-long*>;
+  slot g-action-entry-name :: <C-string>;
+  constant slot g-action-entry-activate :: <C-function-pointer>;
+  slot g-action-entry-parameter-type :: <C-string>;
+  slot g-action-entry-state :: <C-string>;
+  constant slot g-action-entry-change-state :: <C-function-pointer>;
+  constant slot g-action-entry-padding :: <C-unsigned-long*>;
   pointer-type-name: <GActionEntry>;
 end C-struct;
 
@@ -176,34 +176,34 @@ define C-function g-action-group-query-action
 end;
 
 define C-struct <_GActionGroupInterface>
-  constant slot gactiongroupinterface-g-iface :: <GTypeInterface>;
-  constant slot gactiongroupinterface-has-action :: <C-function-pointer>;
-  constant slot gactiongroupinterface-list-actions :: <C-function-pointer>;
-  constant slot gactiongroupinterface-get-action-enabled :: <C-function-pointer>;
-  constant slot gactiongroupinterface-get-action-parameter-type :: <C-function-pointer>;
-  constant slot gactiongroupinterface-get-action-state-type :: <C-function-pointer>;
-  constant slot gactiongroupinterface-get-action-state-hint :: <C-function-pointer>;
-  constant slot gactiongroupinterface-get-action-state :: <C-function-pointer>;
-  constant slot gactiongroupinterface-change-action-state :: <C-function-pointer>;
-  constant slot gactiongroupinterface-activate-action :: <C-function-pointer>;
-  constant slot gactiongroupinterface-action-added :: <C-function-pointer>;
-  constant slot gactiongroupinterface-action-removed :: <C-function-pointer>;
-  constant slot gactiongroupinterface-action-enabled-changed :: <C-function-pointer>;
-  constant slot gactiongroupinterface-action-state-changed :: <C-function-pointer>;
-  constant slot gactiongroupinterface-query-action :: <C-function-pointer>;
+  constant slot g-action-group-interface-g-iface :: <GTypeInterface>;
+  constant slot g-action-group-interface-has-action :: <C-function-pointer>;
+  constant slot g-action-group-interface-list-actions :: <C-function-pointer>;
+  constant slot g-action-group-interface-get-action-enabled :: <C-function-pointer>;
+  constant slot g-action-group-interface-get-action-parameter-type :: <C-function-pointer>;
+  constant slot g-action-group-interface-get-action-state-type :: <C-function-pointer>;
+  constant slot g-action-group-interface-get-action-state-hint :: <C-function-pointer>;
+  constant slot g-action-group-interface-get-action-state :: <C-function-pointer>;
+  constant slot g-action-group-interface-change-action-state :: <C-function-pointer>;
+  constant slot g-action-group-interface-activate-action :: <C-function-pointer>;
+  constant slot g-action-group-interface-action-added :: <C-function-pointer>;
+  constant slot g-action-group-interface-action-removed :: <C-function-pointer>;
+  constant slot g-action-group-interface-action-enabled-changed :: <C-function-pointer>;
+  constant slot g-action-group-interface-action-state-changed :: <C-function-pointer>;
+  constant slot g-action-group-interface-query-action :: <C-function-pointer>;
   pointer-type-name: <GActionGroupInterface>;
 end C-struct;
 
 define C-struct <_GActionInterface>
-  constant slot gactioninterface-g-iface :: <GTypeInterface>;
-  constant slot gactioninterface-get-name :: <C-function-pointer>;
-  constant slot gactioninterface-get-parameter-type :: <C-function-pointer>;
-  constant slot gactioninterface-get-state-type :: <C-function-pointer>;
-  constant slot gactioninterface-get-state-hint :: <C-function-pointer>;
-  constant slot gactioninterface-get-enabled :: <C-function-pointer>;
-  constant slot gactioninterface-get-state :: <C-function-pointer>;
-  constant slot gactioninterface-change-state :: <C-function-pointer>;
-  constant slot gactioninterface-activate :: <C-function-pointer>;
+  constant slot g-action-interface-g-iface :: <GTypeInterface>;
+  constant slot g-action-interface-get-name :: <C-function-pointer>;
+  constant slot g-action-interface-get-parameter-type :: <C-function-pointer>;
+  constant slot g-action-interface-get-state-type :: <C-function-pointer>;
+  constant slot g-action-interface-get-state-hint :: <C-function-pointer>;
+  constant slot g-action-interface-get-enabled :: <C-function-pointer>;
+  constant slot g-action-interface-get-state :: <C-function-pointer>;
+  constant slot g-action-interface-change-state :: <C-function-pointer>;
+  constant slot g-action-interface-activate :: <C-function-pointer>;
   pointer-type-name: <GActionInterface>;
 end C-struct;
 
@@ -241,10 +241,10 @@ define C-function g-action-map-remove-action
 end;
 
 define C-struct <_GActionMapInterface>
-  constant slot gactionmapinterface-g-iface :: <GTypeInterface>;
-  constant slot gactionmapinterface-lookup-action :: <C-function-pointer>;
-  constant slot gactionmapinterface-add-action :: <C-function-pointer>;
-  constant slot gactionmapinterface-remove-action :: <C-function-pointer>;
+  constant slot g-action-map-interface-g-iface :: <GTypeInterface>;
+  constant slot g-action-map-interface-lookup-action :: <C-function-pointer>;
+  constant slot g-action-map-interface-add-action :: <C-function-pointer>;
+  constant slot g-action-map-interface-remove-action :: <C-function-pointer>;
   pointer-type-name: <GActionMapInterface>;
 end C-struct;
 
@@ -458,44 +458,44 @@ define C-function g-app-info-supports-uris
   c-name: "g_app_info_supports_uris";
 end;
 
-define constant $G-APP-INFO-CREATE-NONE = 0;
-define constant $G-APP-INFO-CREATE-NEEDS-TERMINAL = 1;
-define constant $G-APP-INFO-CREATE-SUPPORTS-URIS = 2;
-define constant $G-APP-INFO-CREATE-SUPPORTS-STARTUP-NOTIFICATION = 4;
+define constant $g-app-info-create-none = 0;
+define constant $g-app-info-create-needs-terminal = 1;
+define constant $g-app-info-create-supports-uris = 2;
+define constant $g-app-info-create-supports-startup-notification = 4;
 define constant <GAppInfoCreateFlags> = <C-int>;
 define C-pointer-type <GAppInfoCreateFlags*> => <GAppInfoCreateFlags>;
 
 define C-struct <_GAppInfoIface>
-  constant slot gappinfoiface-g-iface :: <GTypeInterface>;
-  constant slot gappinfoiface-dup :: <C-function-pointer>;
-  constant slot gappinfoiface-equal :: <C-function-pointer>;
-  constant slot gappinfoiface-get-id :: <C-function-pointer>;
-  constant slot gappinfoiface-get-name :: <C-function-pointer>;
-  constant slot gappinfoiface-get-description :: <C-function-pointer>;
-  constant slot gappinfoiface-get-executable :: <C-function-pointer>;
-  constant slot gappinfoiface-get-icon :: <C-function-pointer>;
-  constant slot gappinfoiface-launch :: <C-function-pointer>;
-  constant slot gappinfoiface-supports-uris :: <C-function-pointer>;
-  constant slot gappinfoiface-supports-files :: <C-function-pointer>;
-  constant slot gappinfoiface-launch-uris :: <C-function-pointer>;
-  constant slot gappinfoiface-should-show :: <C-function-pointer>;
-  constant slot gappinfoiface-set-as-default-for-type :: <C-function-pointer>;
-  constant slot gappinfoiface-set-as-default-for-extension :: <C-function-pointer>;
-  constant slot gappinfoiface-add-supports-type :: <C-function-pointer>;
-  constant slot gappinfoiface-can-remove-supports-type :: <C-function-pointer>;
-  constant slot gappinfoiface-remove-supports-type :: <C-function-pointer>;
-  constant slot gappinfoiface-can-delete :: <C-function-pointer>;
-  constant slot gappinfoiface-do-delete :: <C-function-pointer>;
-  constant slot gappinfoiface-get-commandline :: <C-function-pointer>;
-  constant slot gappinfoiface-get-display-name :: <C-function-pointer>;
-  constant slot gappinfoiface-set-as-last-used-for-type :: <C-function-pointer>;
-  constant slot gappinfoiface-get-supported-types :: <C-function-pointer>;
+  constant slot g-app-info-iface-g-iface :: <GTypeInterface>;
+  constant slot g-app-info-iface-dup :: <C-function-pointer>;
+  constant slot g-app-info-iface-equal :: <C-function-pointer>;
+  constant slot g-app-info-iface-get-id :: <C-function-pointer>;
+  constant slot g-app-info-iface-get-name :: <C-function-pointer>;
+  constant slot g-app-info-iface-get-description :: <C-function-pointer>;
+  constant slot g-app-info-iface-get-executable :: <C-function-pointer>;
+  constant slot g-app-info-iface-get-icon :: <C-function-pointer>;
+  constant slot g-app-info-iface-launch :: <C-function-pointer>;
+  constant slot g-app-info-iface-supports-uris :: <C-function-pointer>;
+  constant slot g-app-info-iface-supports-files :: <C-function-pointer>;
+  constant slot g-app-info-iface-launch-uris :: <C-function-pointer>;
+  constant slot g-app-info-iface-should-show :: <C-function-pointer>;
+  constant slot g-app-info-iface-set-as-default-for-type :: <C-function-pointer>;
+  constant slot g-app-info-iface-set-as-default-for-extension :: <C-function-pointer>;
+  constant slot g-app-info-iface-add-supports-type :: <C-function-pointer>;
+  constant slot g-app-info-iface-can-remove-supports-type :: <C-function-pointer>;
+  constant slot g-app-info-iface-remove-supports-type :: <C-function-pointer>;
+  constant slot g-app-info-iface-can-delete :: <C-function-pointer>;
+  constant slot g-app-info-iface-do-delete :: <C-function-pointer>;
+  constant slot g-app-info-iface-get-commandline :: <C-function-pointer>;
+  constant slot g-app-info-iface-get-display-name :: <C-function-pointer>;
+  constant slot g-app-info-iface-set-as-last-used-for-type :: <C-function-pointer>;
+  constant slot g-app-info-iface-get-supported-types :: <C-function-pointer>;
   pointer-type-name: <GAppInfoIface>;
 end C-struct;
 
 define open C-subtype <GAppLaunchContext> (<GObject>)
-  constant slot gapplaunchcontext-parent-instance :: <GObject>;
-  constant slot gapplaunchcontext-priv :: <GAppLaunchContextPrivate>;
+  constant slot g-app-launch-context-parent-instance :: <GObject>;
+  constant slot g-app-launch-context-priv :: <GAppLaunchContextPrivate>;
 end C-subtype;
 
 define C-pointer-type <GAppLaunchContext*> => <GAppLaunchContext>;
@@ -547,15 +547,15 @@ define C-function g-app-launch-context-unsetenv
 end;
 
 define C-struct <_GAppLaunchContextClass>
-  constant slot gapplaunchcontextclass-parent-class :: <GObjectClass>;
-  constant slot gapplaunchcontextclass-get-display :: <C-function-pointer>;
-  constant slot gapplaunchcontextclass-get-startup-notify-id :: <C-function-pointer>;
-  constant slot gapplaunchcontextclass-launch-failed :: <C-function-pointer>;
-  constant slot gapplaunchcontextclass-launched :: <C-function-pointer>;
-  constant slot gapplaunchcontextclass--g-reserved1 :: <C-void*>;
-  constant slot gapplaunchcontextclass--g-reserved2 :: <C-void*>;
-  constant slot gapplaunchcontextclass--g-reserved3 :: <C-void*>;
-  constant slot gapplaunchcontextclass--g-reserved4 :: <C-void*>;
+  constant slot g-app-launch-context-class-parent-class :: <GObjectClass>;
+  constant slot g-app-launch-context-class-get-display :: <C-function-pointer>;
+  constant slot g-app-launch-context-class-get-startup-notify-id :: <C-function-pointer>;
+  constant slot g-app-launch-context-class-launch-failed :: <C-function-pointer>;
+  constant slot g-app-launch-context-class-launched :: <C-function-pointer>;
+  constant slot g-app-launch-context-class-_g-reserved1 :: <C-void*>;
+  constant slot g-app-launch-context-class-_g-reserved2 :: <C-void*>;
+  constant slot g-app-launch-context-class-_g-reserved3 :: <C-void*>;
+  constant slot g-app-launch-context-class-_g-reserved4 :: <C-void*>;
   pointer-type-name: <GAppLaunchContextClass>;
 end C-struct;
 
@@ -564,21 +564,12 @@ define C-struct <_GAppLaunchContextPrivate>
 end C-struct;
 
 define open C-subtype <GApplication> (<GObject>)
-  constant slot gapplication-parent-instance :: <GObject>;
-  constant slot gapplication-priv :: <GApplicationPrivate>;
+  constant slot g-application-parent-instance :: <GObject>;
+  constant slot g-application-priv :: <GApplicationPrivate>;
 end C-subtype;
 
 define C-pointer-type <GApplication*> => <GApplication>;
 
-define property-setter application-action-group :: <GActionGroup> on <GApplication> end;
-define property-getter application-application-id :: <C-string> on <GApplication> end;
-define property-setter application-application-id :: <C-string> on <GApplication> end;
-define property-getter application-flags :: <GApplicationFlags> on <GApplication> end;
-define property-setter application-flags :: <GApplicationFlags> on <GApplication> end;
-define property-getter application-inactivity-timeout :: <C-unsigned-int> on <GApplication> end;
-define property-setter application-inactivity-timeout :: <C-unsigned-int> on <GApplication> end;
-define property-getter application-is-registered :: <C-boolean> on <GApplication> end;
-define property-getter application-is-remote :: <C-boolean> on <GApplication> end;
 define C-function g-application-new
   input parameter application_id_ :: <C-string>;
   input parameter flags_ :: <GApplicationFlags>;
@@ -712,34 +703,31 @@ define C-function g-application-set-inactivity-timeout
 end;
 
 define C-struct <_GApplicationClass>
-  constant slot gapplicationclass-parent-class :: <GObjectClass>;
-  constant slot gapplicationclass-startup :: <C-function-pointer>;
-  constant slot gapplicationclass-activate :: <C-function-pointer>;
-  constant slot gapplicationclass-open :: <C-function-pointer>;
-  constant slot gapplicationclass-command-line :: <C-function-pointer>;
-  constant slot gapplicationclass-local-command-line :: <C-function-pointer>;
-  constant slot gapplicationclass-before-emit :: <C-function-pointer>;
-  constant slot gapplicationclass-after-emit :: <C-function-pointer>;
-  constant slot gapplicationclass-add-platform-data :: <C-function-pointer>;
-  constant slot gapplicationclass-quit-mainloop :: <C-function-pointer>;
-  constant slot gapplicationclass-run-mainloop :: <C-function-pointer>;
-  constant slot gapplicationclass-shutdown :: <C-function-pointer>;
-  constant slot gapplicationclass-dbus-register :: <C-function-pointer>;
-  constant slot gapplicationclass-dbus-unregister :: <C-function-pointer>;
-  constant slot gapplicationclass-padding :: <C-void*>;
+  constant slot g-application-class-parent-class :: <GObjectClass>;
+  constant slot g-application-class-startup :: <C-function-pointer>;
+  constant slot g-application-class-activate :: <C-function-pointer>;
+  constant slot g-application-class-open :: <C-function-pointer>;
+  constant slot g-application-class-command-line :: <C-function-pointer>;
+  constant slot g-application-class-local-command-line :: <C-function-pointer>;
+  constant slot g-application-class-before-emit :: <C-function-pointer>;
+  constant slot g-application-class-after-emit :: <C-function-pointer>;
+  constant slot g-application-class-add-platform-data :: <C-function-pointer>;
+  constant slot g-application-class-quit-mainloop :: <C-function-pointer>;
+  constant slot g-application-class-run-mainloop :: <C-function-pointer>;
+  constant slot g-application-class-shutdown :: <C-function-pointer>;
+  constant slot g-application-class-dbus-register :: <C-function-pointer>;
+  constant slot g-application-class-dbus-unregister :: <C-function-pointer>;
+  constant slot g-application-class-padding :: <C-void*>;
   pointer-type-name: <GApplicationClass>;
 end C-struct;
 
 define open C-subtype <GApplicationCommandLine> (<GObject>)
-  constant slot gapplicationcommandline-parent-instance :: <GObject>;
-  constant slot gapplicationcommandline-priv :: <GApplicationCommandLinePrivate>;
+  constant slot g-application-command-line-parent-instance :: <GObject>;
+  constant slot g-application-command-line-priv :: <GApplicationCommandLinePrivate>;
 end C-subtype;
 
 define C-pointer-type <GApplicationCommandLine*> => <GApplicationCommandLine>;
 
-define property-setter applicationcommandline-arguments :: <GVariant> on <GApplicationCommandLine> end;
-define property-getter applicationcommandline-is-remote :: <C-boolean> on <GApplicationCommandLine> end;
-define property-setter applicationcommandline-platform-data :: <GVariant> on <GApplicationCommandLine> end;
 define C-function g-application-command-line-create-file-for-arg
   input parameter self :: <GApplicationCommandLine>;
   input parameter arg_ :: <C-string>;
@@ -804,11 +792,11 @@ define C-function g-application-command-line-set-exit-status
 end;
 
 define C-struct <_GApplicationCommandLineClass>
-  constant slot gapplicationcommandlineclass-parent-class :: <GObjectClass>;
-  constant slot gapplicationcommandlineclass-print-literal :: <C-function-pointer>;
-  constant slot gapplicationcommandlineclass-printerr-literal :: <C-function-pointer>;
-  constant slot gapplicationcommandlineclass-get-stdin :: <C-function-pointer>;
-  constant slot gapplicationcommandlineclass-padding :: <C-void*>;
+  constant slot g-application-command-line-class-parent-class :: <GObjectClass>;
+  constant slot g-application-command-line-class-print-literal :: <C-function-pointer>;
+  constant slot g-application-command-line-class-printerr-literal :: <C-function-pointer>;
+  constant slot g-application-command-line-class-get-stdin :: <C-function-pointer>;
+  constant slot g-application-command-line-class-padding :: <C-void*>;
   pointer-type-name: <GApplicationCommandLineClass>;
 end C-struct;
 
@@ -816,13 +804,13 @@ define C-struct <_GApplicationCommandLinePrivate>
   pointer-type-name: <GApplicationCommandLinePrivate>;
 end C-struct;
 
-define constant $G-APPLICATION-FLAGS-NONE = 0;
-define constant $G-APPLICATION-IS-SERVICE = 1;
-define constant $G-APPLICATION-IS-LAUNCHER = 2;
-define constant $G-APPLICATION-HANDLES-OPEN = 4;
-define constant $G-APPLICATION-HANDLES-COMMAND-LINE = 8;
-define constant $G-APPLICATION-SEND-ENVIRONMENT = 16;
-define constant $G-APPLICATION-NON-UNIQUE = 32;
+define constant $g-application-flags-none = 0;
+define constant $g-application-is-service = 1;
+define constant $g-application-is-launcher = 2;
+define constant $g-application-handles-open = 4;
+define constant $g-application-handles-command-line = 8;
+define constant $g-application-send-environment = 16;
+define constant $g-application-non-unique = 32;
 define constant <GApplicationFlags> = <C-int>;
 define C-pointer-type <GApplicationFlags*> => <GApplicationFlags>;
 
@@ -830,11 +818,11 @@ define C-struct <_GApplicationPrivate>
   pointer-type-name: <GApplicationPrivate>;
 end C-struct;
 
-define constant $G-ASK-PASSWORD-NEED-PASSWORD = 1;
-define constant $G-ASK-PASSWORD-NEED-USERNAME = 2;
-define constant $G-ASK-PASSWORD-NEED-DOMAIN = 4;
-define constant $G-ASK-PASSWORD-SAVING-SUPPORTED = 8;
-define constant $G-ASK-PASSWORD-ANONYMOUS-SUPPORTED = 16;
+define constant $g-ask-password-need-password = 1;
+define constant $g-ask-password-need-username = 2;
+define constant $g-ask-password-need-domain = 4;
+define constant $g-ask-password-saving-supported = 8;
+define constant $g-ask-password-anonymous-supported = 16;
 define constant <GAskPasswordFlags> = <C-int>;
 define C-pointer-type <GAskPasswordFlags*> => <GAskPasswordFlags>;
 
@@ -879,9 +867,9 @@ define C-function g-async-initable-new-finish
 end;
 
 define C-struct <_GAsyncInitableIface>
-  constant slot gasyncinitableiface-g-iface :: <GTypeInterface>;
-  constant slot gasyncinitableiface-init-async :: <C-function-pointer>;
-  constant slot gasyncinitableiface-init-finish :: <C-function-pointer>;
+  constant slot g-async-initable-iface-g-iface :: <GTypeInterface>;
+  constant slot g-async-initable-iface-init-async :: <C-function-pointer>;
+  constant slot g-async-initable-iface-init-finish :: <C-function-pointer>;
   pointer-type-name: <GAsyncInitableIface>;
 end C-struct;
 
@@ -917,22 +905,20 @@ define C-function g-async-result-legacy-propagate-error
 end;
 
 define C-struct <_GAsyncResultIface>
-  constant slot gasyncresultiface-g-iface :: <GTypeInterface>;
-  constant slot gasyncresultiface-get-user-data :: <C-function-pointer>;
-  constant slot gasyncresultiface-get-source-object :: <C-function-pointer>;
-  constant slot gasyncresultiface-is-tagged :: <C-function-pointer>;
+  constant slot g-async-result-iface-g-iface :: <GTypeInterface>;
+  constant slot g-async-result-iface-get-user-data :: <C-function-pointer>;
+  constant slot g-async-result-iface-get-source-object :: <C-function-pointer>;
+  constant slot g-async-result-iface-is-tagged :: <C-function-pointer>;
   pointer-type-name: <GAsyncResultIface>;
 end C-struct;
 
 define open C-subtype <GBufferedInputStream> (<GFilterInputStream>)
-  constant slot gbufferedinputstream-parent-instance :: <GFilterInputStream>;
-  constant slot gbufferedinputstream-priv :: <GBufferedInputStreamPrivate>;
+  constant slot g-buffered-input-stream-parent-instance :: <GFilterInputStream>;
+  constant slot g-buffered-input-stream-priv :: <GBufferedInputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GBufferedInputStream*> => <GBufferedInputStream>;
 
-define property-getter bufferedinputstream-buffer-size :: <C-unsigned-int> on <GBufferedInputStream> end;
-define property-setter bufferedinputstream-buffer-size :: <C-unsigned-int> on <GBufferedInputStream> end;
 define C-function g-buffered-input-stream-new
   input parameter base_stream_ :: <GInputStream>;
   result res :: <GInputStream>;
@@ -1013,15 +999,15 @@ define C-function g-buffered-input-stream-set-buffer-size
 end;
 
 define C-struct <_GBufferedInputStreamClass>
-  constant slot gbufferedinputstreamclass-parent-class :: <GFilterInputStreamClass>;
-  constant slot gbufferedinputstreamclass-fill :: <C-function-pointer>;
-  constant slot gbufferedinputstreamclass-fill-async :: <C-function-pointer>;
-  constant slot gbufferedinputstreamclass-fill-finish :: <C-function-pointer>;
-  constant slot gbufferedinputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gbufferedinputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gbufferedinputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gbufferedinputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gbufferedinputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-buffered-input-stream-class-parent-class :: <GFilterInputStreamClass>;
+  constant slot g-buffered-input-stream-class-fill :: <C-function-pointer>;
+  constant slot g-buffered-input-stream-class-fill-async :: <C-function-pointer>;
+  constant slot g-buffered-input-stream-class-fill-finish :: <C-function-pointer>;
+  constant slot g-buffered-input-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-buffered-input-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-buffered-input-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-buffered-input-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-buffered-input-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GBufferedInputStreamClass>;
 end C-struct;
 
@@ -1030,16 +1016,12 @@ define C-struct <_GBufferedInputStreamPrivate>
 end C-struct;
 
 define open C-subtype <GBufferedOutputStream> (<GFilterOutputStream>)
-  constant slot gbufferedoutputstream-parent-instance :: <GFilterOutputStream>;
-  constant slot gbufferedoutputstream-priv :: <GBufferedOutputStreamPrivate>;
+  constant slot g-buffered-output-stream-parent-instance :: <GFilterOutputStream>;
+  constant slot g-buffered-output-stream-priv :: <GBufferedOutputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GBufferedOutputStream*> => <GBufferedOutputStream>;
 
-define property-getter bufferedoutputstream-auto-grow :: <C-boolean> on <GBufferedOutputStream> end;
-define property-setter bufferedoutputstream-auto-grow :: <C-boolean> on <GBufferedOutputStream> end;
-define property-getter bufferedoutputstream-buffer-size :: <C-unsigned-int> on <GBufferedOutputStream> end;
-define property-setter bufferedoutputstream-buffer-size :: <C-unsigned-int> on <GBufferedOutputStream> end;
 define C-function g-buffered-output-stream-new
   input parameter base_stream_ :: <GOutputStream>;
   result res :: <GOutputStream>;
@@ -1078,9 +1060,9 @@ define C-function g-buffered-output-stream-set-buffer-size
 end;
 
 define C-struct <_GBufferedOutputStreamClass>
-  constant slot gbufferedoutputstreamclass-parent-class :: <GFilterOutputStreamClass>;
-  constant slot gbufferedoutputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gbufferedoutputstreamclass--g-reserved2 :: <C-void*>;
+  constant slot g-buffered-output-stream-class-parent-class :: <GFilterOutputStreamClass>;
+  constant slot g-buffered-output-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-buffered-output-stream-class-_g-reserved2 :: <C-void*>;
   pointer-type-name: <GBufferedOutputStreamClass>;
 end C-struct;
 
@@ -1088,27 +1070,27 @@ define C-struct <_GBufferedOutputStreamPrivate>
   pointer-type-name: <GBufferedOutputStreamPrivate>;
 end C-struct;
 
-define constant $G-BUS-NAME-OWNER-FLAGS-NONE = 0;
-define constant $G-BUS-NAME-OWNER-FLAGS-ALLOW-REPLACEMENT = 1;
-define constant $G-BUS-NAME-OWNER-FLAGS-REPLACE = 2;
+define constant $g-bus-name-owner-flags-none = 0;
+define constant $g-bus-name-owner-flags-allow-replacement = 1;
+define constant $g-bus-name-owner-flags-replace = 2;
 define constant <GBusNameOwnerFlags> = <C-int>;
 define C-pointer-type <GBusNameOwnerFlags*> => <GBusNameOwnerFlags>;
 
-define constant $G-BUS-NAME-WATCHER-FLAGS-NONE = 0;
-define constant $G-BUS-NAME-WATCHER-FLAGS-AUTO-START = 1;
+define constant $g-bus-name-watcher-flags-none = 0;
+define constant $g-bus-name-watcher-flags-auto-start = 1;
 define constant <GBusNameWatcherFlags> = <C-int>;
 define C-pointer-type <GBusNameWatcherFlags*> => <GBusNameWatcherFlags>;
 
-define constant $G-BUS-TYPE-STARTER = -1;
-define constant $G-BUS-TYPE-NONE = 0;
-define constant $G-BUS-TYPE-SYSTEM = 1;
-define constant $G-BUS-TYPE-SESSION = 2;
+define constant $g-bus-type-starter = -1;
+define constant $g-bus-type-none = 0;
+define constant $g-bus-type-system = 1;
+define constant $g-bus-type-session = 2;
 define constant <GBusType> = <C-int>;
 define C-pointer-type <GBusType*> => <GBusType>;
 
 define open C-subtype <GCancellable> (<GObject>)
-  constant slot gcancellable-parent-instance :: <GObject>;
-  constant slot gcancellable-priv :: <GCancellablePrivate>;
+  constant slot g-cancellable-parent-instance :: <GObject>;
+  constant slot g-cancellable-priv :: <GCancellablePrivate>;
 end C-subtype;
 
 define C-pointer-type <GCancellable*> => <GCancellable>;
@@ -1189,13 +1171,13 @@ define C-function g-cancellable-set-error-if-cancelled
 end;
 
 define C-struct <_GCancellableClass>
-  constant slot gcancellableclass-parent-class :: <GObjectClass>;
-  constant slot gcancellableclass-cancelled :: <C-function-pointer>;
-  constant slot gcancellableclass--g-reserved1 :: <C-void*>;
-  constant slot gcancellableclass--g-reserved2 :: <C-void*>;
-  constant slot gcancellableclass--g-reserved3 :: <C-void*>;
-  constant slot gcancellableclass--g-reserved4 :: <C-void*>;
-  constant slot gcancellableclass--g-reserved5 :: <C-void*>;
+  constant slot g-cancellable-class-parent-class :: <GObjectClass>;
+  constant slot g-cancellable-class-cancelled :: <C-function-pointer>;
+  constant slot g-cancellable-class-_g-reserved1 :: <C-void*>;
+  constant slot g-cancellable-class-_g-reserved2 :: <C-void*>;
+  constant slot g-cancellable-class-_g-reserved3 :: <C-void*>;
+  constant slot g-cancellable-class-_g-reserved4 :: <C-void*>;
+  constant slot g-cancellable-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GCancellableClass>;
 end C-struct;
 
@@ -1208,12 +1190,6 @@ end C-subtype;
 
 define C-pointer-type <GCharsetConverter*> => <GCharsetConverter>;
 
-define property-getter charsetconverter-from-charset :: <C-string> on <GCharsetConverter> end;
-define property-setter charsetconverter-from-charset :: <C-string> on <GCharsetConverter> end;
-define property-getter charsetconverter-to-charset :: <C-string> on <GCharsetConverter> end;
-define property-setter charsetconverter-to-charset :: <C-string> on <GCharsetConverter> end;
-define property-getter charsetconverter-use-fallback :: <C-boolean> on <GCharsetConverter> end;
-define property-setter charsetconverter-use-fallback :: <C-boolean> on <GCharsetConverter> end;
 define C-function g-charset-converter-new
   input parameter to_charset_ :: <C-string>;
   input parameter from_charset_ :: <C-string>;
@@ -1240,7 +1216,7 @@ define C-function g-charset-converter-set-use-fallback
 end;
 
 define C-struct <_GCharsetConverterClass>
-  constant slot gcharsetconverterclass-parent-class :: <GObjectClass>;
+  constant slot g-charset-converter-class-parent-class :: <GObjectClass>;
   pointer-type-name: <GCharsetConverterClass>;
 end C-struct;
 
@@ -1268,28 +1244,26 @@ define C-function g-converter-reset
   c-name: "g_converter_reset";
 end;
 
-define constant $G-CONVERTER-NO-FLAGS = 0;
-define constant $G-CONVERTER-INPUT-AT-END = 1;
-define constant $G-CONVERTER-FLUSH = 2;
+define constant $g-converter-no-flags = 0;
+define constant $g-converter-input-at-end = 1;
+define constant $g-converter-flush = 2;
 define constant <GConverterFlags> = <C-int>;
 define C-pointer-type <GConverterFlags*> => <GConverterFlags>;
 
 define C-struct <_GConverterIface>
-  constant slot gconverteriface-g-iface :: <GTypeInterface>;
-  constant slot gconverteriface-convert :: <C-function-pointer>;
-  constant slot gconverteriface-reset :: <C-function-pointer>;
+  constant slot g-converter-iface-g-iface :: <GTypeInterface>;
+  constant slot g-converter-iface-convert :: <C-function-pointer>;
+  constant slot g-converter-iface-reset :: <C-function-pointer>;
   pointer-type-name: <GConverterIface>;
 end C-struct;
 
 define open C-subtype <GConverterInputStream> (<GFilterInputStream>)
-  constant slot gconverterinputstream-parent-instance :: <GFilterInputStream>;
-  constant slot gconverterinputstream-priv :: <GConverterInputStreamPrivate>;
+  constant slot g-converter-input-stream-parent-instance :: <GFilterInputStream>;
+  constant slot g-converter-input-stream-priv :: <GConverterInputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GConverterInputStream*> => <GConverterInputStream>;
 
-define property-getter converterinputstream-converter :: <GConverter> on <GConverterInputStream> end;
-define property-setter converterinputstream-converter :: <GConverter> on <GConverterInputStream> end;
 define C-function g-converter-input-stream-new
   input parameter base_stream_ :: <GInputStream>;
   input parameter converter_ :: <GConverter>;
@@ -1304,12 +1278,12 @@ define C-function g-converter-input-stream-get-converter
 end;
 
 define C-struct <_GConverterInputStreamClass>
-  constant slot gconverterinputstreamclass-parent-class :: <GFilterInputStreamClass>;
-  constant slot gconverterinputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gconverterinputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gconverterinputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gconverterinputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gconverterinputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-converter-input-stream-class-parent-class :: <GFilterInputStreamClass>;
+  constant slot g-converter-input-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-converter-input-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-converter-input-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-converter-input-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-converter-input-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GConverterInputStreamClass>;
 end C-struct;
 
@@ -1318,14 +1292,12 @@ define C-struct <_GConverterInputStreamPrivate>
 end C-struct;
 
 define open C-subtype <GConverterOutputStream> (<GFilterOutputStream>)
-  constant slot gconverteroutputstream-parent-instance :: <GFilterOutputStream>;
-  constant slot gconverteroutputstream-priv :: <GConverterOutputStreamPrivate>;
+  constant slot g-converter-output-stream-parent-instance :: <GFilterOutputStream>;
+  constant slot g-converter-output-stream-priv :: <GConverterOutputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GConverterOutputStream*> => <GConverterOutputStream>;
 
-define property-getter converteroutputstream-converter :: <GConverter> on <GConverterOutputStream> end;
-define property-setter converteroutputstream-converter :: <GConverter> on <GConverterOutputStream> end;
 define C-function g-converter-output-stream-new
   input parameter base_stream_ :: <GOutputStream>;
   input parameter converter_ :: <GConverter>;
@@ -1340,12 +1312,12 @@ define C-function g-converter-output-stream-get-converter
 end;
 
 define C-struct <_GConverterOutputStreamClass>
-  constant slot gconverteroutputstreamclass-parent-class :: <GFilterOutputStreamClass>;
-  constant slot gconverteroutputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gconverteroutputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gconverteroutputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gconverteroutputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gconverteroutputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-converter-output-stream-class-parent-class :: <GFilterOutputStreamClass>;
+  constant slot g-converter-output-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-converter-output-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-converter-output-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-converter-output-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-converter-output-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GConverterOutputStreamClass>;
 end C-struct;
 
@@ -1353,10 +1325,10 @@ define C-struct <_GConverterOutputStreamPrivate>
   pointer-type-name: <GConverterOutputStreamPrivate>;
 end C-struct;
 
-define constant $G-CONVERTER-ERROR = 0;
-define constant $G-CONVERTER-CONVERTED = 1;
-define constant $G-CONVERTER-FINISHED = 2;
-define constant $G-CONVERTER-FLUSHED = 3;
+define constant $g-converter-error = 0;
+define constant $g-converter-converted = 1;
+define constant $g-converter-finished = 2;
+define constant $g-converter-flushed = 3;
 define constant <GConverterResult> = <C-int>;
 define C-pointer-type <GConverterResult*> => <GConverterResult>;
 
@@ -1413,10 +1385,10 @@ define C-struct <_GCredentialsClass>
   pointer-type-name: <GCredentialsClass>;
 end C-struct;
 
-define constant $G-CREDENTIALS-TYPE-INVALID = 0;
-define constant $G-CREDENTIALS-TYPE-LINUX-UCRED = 1;
-define constant $G-CREDENTIALS-TYPE-FREEBSD-CMSGCRED = 2;
-define constant $G-CREDENTIALS-TYPE-OPENBSD-SOCKPEERCRED = 3;
+define constant $g-credentials-type-invalid = 0;
+define constant $g-credentials-type-linux-ucred = 1;
+define constant $g-credentials-type-freebsd-cmsgcred = 2;
+define constant $g-credentials-type-openbsd-sockpeercred = 3;
 define constant <GCredentialsType> = <C-int>;
 define C-pointer-type <GCredentialsType*> => <GCredentialsType>;
 
@@ -1434,10 +1406,10 @@ define C-function g-dbus-action-group-get
 end;
 
 define C-struct <_GDBusAnnotationInfo>
-  slot gdbusannotationinfo-ref-count :: <C-signed-int>;
-  slot gdbusannotationinfo-key :: <C-string>;
-  slot gdbusannotationinfo-value :: <C-string>;
-  slot gdbusannotationinfo-annotations :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-annotation-info-ref-count :: <C-signed-int>;
+  slot g-d-bus-annotation-info-key :: <C-string>;
+  slot g-d-bus-annotation-info-value :: <C-string>;
+  slot g-d-bus-annotation-info-annotations :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GDBusAnnotationInfo>;
 end C-struct;
 
@@ -1460,10 +1432,10 @@ define C-function g-dbus-annotation-info-lookup
 end;
 
 define C-struct <_GDBusArgInfo>
-  slot gdbusarginfo-ref-count :: <C-signed-int>;
-  slot gdbusarginfo-name :: <C-string>;
-  slot gdbusarginfo-signature :: <C-string>;
-  slot gdbusarginfo-annotations :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-arg-info-ref-count :: <C-signed-int>;
+  slot g-d-bus-arg-info-name :: <C-string>;
+  slot g-d-bus-arg-info-signature :: <C-string>;
+  slot g-d-bus-arg-info-annotations :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GDBusArgInfo>;
 end C-struct;
 
@@ -1503,13 +1475,13 @@ define C-function g-dbus-auth-observer-authorize-authenticated-peer
   c-name: "g_dbus_auth_observer_authorize_authenticated_peer";
 end;
 
-define constant $G-DBUS-CALL-FLAGS-NONE = 0;
-define constant $G-DBUS-CALL-FLAGS-NO-AUTO-START = 1;
+define constant $g-dbus-call-flags-none = 0;
+define constant $g-dbus-call-flags-no-auto-start = 1;
 define constant <GDBusCallFlags> = <C-int>;
 define C-pointer-type <GDBusCallFlags*> => <GDBusCallFlags>;
 
-define constant $G-DBUS-CAPABILITY-FLAGS-NONE = 0;
-define constant $G-DBUS-CAPABILITY-FLAGS-UNIX-FD-PASSING = 1;
+define constant $g-dbus-capability-flags-none = 0;
+define constant $g-dbus-capability-flags-unix-fd-passing = 1;
 define constant <GDBusCapabilityFlags> = <C-int>;
 define C-pointer-type <GDBusCapabilityFlags*> => <GDBusCapabilityFlags>;
 
@@ -1518,18 +1490,6 @@ end C-subtype;
 
 define C-pointer-type <GDBusConnection*> => <GDBusConnection>;
 
-define property-setter dbusconnection-address :: <C-string> on <GDBusConnection> end;
-define property-setter dbusconnection-authentication-observer :: <GDBusAuthObserver> on <GDBusConnection> end;
-define property-getter dbusconnection-capabilities :: <GDBusCapabilityFlags> on <GDBusConnection> end;
-define property-getter dbusconnection-closed :: <C-boolean> on <GDBusConnection> end;
-define property-getter dbusconnection-exit-on-close :: <C-boolean> on <GDBusConnection> end;
-define property-setter dbusconnection-exit-on-close :: <C-boolean> on <GDBusConnection> end;
-define property-setter dbusconnection-flags :: <GDBusConnectionFlags> on <GDBusConnection> end;
-define property-getter dbusconnection-guid :: <C-string> on <GDBusConnection> end;
-define property-setter dbusconnection-guid :: <C-string> on <GDBusConnection> end;
-define property-getter dbusconnection-stream :: <GIOStream> on <GDBusConnection> end;
-define property-setter dbusconnection-stream :: <GIOStream> on <GDBusConnection> end;
-define property-getter dbusconnection-unique-name :: <C-string> on <GDBusConnection> end;
 define C-function g-dbus-connection-new-finish
   input parameter res_ :: <GAsyncResult>;
   result res :: <GDBusConnection>;
@@ -1915,62 +1875,62 @@ define C-function g-dbus-connection-unregister-subtree
   c-name: "g_dbus_connection_unregister_subtree";
 end;
 
-define constant $G-DBUS-CONNECTION-FLAGS-NONE = 0;
-define constant $G-DBUS-CONNECTION-FLAGS-AUTHENTICATION-CLIENT = 1;
-define constant $G-DBUS-CONNECTION-FLAGS-AUTHENTICATION-SERVER = 2;
-define constant $G-DBUS-CONNECTION-FLAGS-AUTHENTICATION-ALLOW-ANONYMOUS = 4;
-define constant $G-DBUS-CONNECTION-FLAGS-MESSAGE-BUS-CONNECTION = 8;
-define constant $G-DBUS-CONNECTION-FLAGS-DELAY-MESSAGE-PROCESSING = 16;
+define constant $g-dbus-connection-flags-none = 0;
+define constant $g-dbus-connection-flags-authentication-client = 1;
+define constant $g-dbus-connection-flags-authentication-server = 2;
+define constant $g-dbus-connection-flags-authentication-allow-anonymous = 4;
+define constant $g-dbus-connection-flags-message-bus-connection = 8;
+define constant $g-dbus-connection-flags-delay-message-processing = 16;
 define constant <GDBusConnectionFlags> = <C-int>;
 define C-pointer-type <GDBusConnectionFlags*> => <GDBusConnectionFlags>;
 
-define constant $G-DBUS-ERROR-FAILED = 0;
-define constant $G-DBUS-ERROR-NO-MEMORY = 1;
-define constant $G-DBUS-ERROR-SERVICE-UNKNOWN = 2;
-define constant $G-DBUS-ERROR-NAME-HAS-NO-OWNER = 3;
-define constant $G-DBUS-ERROR-NO-REPLY = 4;
-define constant $G-DBUS-ERROR-IO-ERROR = 5;
-define constant $G-DBUS-ERROR-BAD-ADDRESS = 6;
-define constant $G-DBUS-ERROR-NOT-SUPPORTED = 7;
-define constant $G-DBUS-ERROR-LIMITS-EXCEEDED = 8;
-define constant $G-DBUS-ERROR-ACCESS-DENIED = 9;
-define constant $G-DBUS-ERROR-AUTH-FAILED = 10;
-define constant $G-DBUS-ERROR-NO-SERVER = 11;
-define constant $G-DBUS-ERROR-TIMEOUT = 12;
-define constant $G-DBUS-ERROR-NO-NETWORK = 13;
-define constant $G-DBUS-ERROR-ADDRESS-IN-USE = 14;
-define constant $G-DBUS-ERROR-DISCONNECTED = 15;
-define constant $G-DBUS-ERROR-INVALID-ARGS = 16;
-define constant $G-DBUS-ERROR-FILE-NOT-FOUND = 17;
-define constant $G-DBUS-ERROR-FILE-EXISTS = 18;
-define constant $G-DBUS-ERROR-UNKNOWN-METHOD = 19;
-define constant $G-DBUS-ERROR-TIMED-OUT = 20;
-define constant $G-DBUS-ERROR-MATCH-RULE-NOT-FOUND = 21;
-define constant $G-DBUS-ERROR-MATCH-RULE-INVALID = 22;
-define constant $G-DBUS-ERROR-SPAWN-EXEC-FAILED = 23;
-define constant $G-DBUS-ERROR-SPAWN-FORK-FAILED = 24;
-define constant $G-DBUS-ERROR-SPAWN-CHILD-EXITED = 25;
-define constant $G-DBUS-ERROR-SPAWN-CHILD-SIGNALED = 26;
-define constant $G-DBUS-ERROR-SPAWN-FAILED = 27;
-define constant $G-DBUS-ERROR-SPAWN-SETUP-FAILED = 28;
-define constant $G-DBUS-ERROR-SPAWN-CONFIG-INVALID = 29;
-define constant $G-DBUS-ERROR-SPAWN-SERVICE-INVALID = 30;
-define constant $G-DBUS-ERROR-SPAWN-SERVICE-NOT-FOUND = 31;
-define constant $G-DBUS-ERROR-SPAWN-PERMISSIONS-INVALID = 32;
-define constant $G-DBUS-ERROR-SPAWN-FILE-INVALID = 33;
-define constant $G-DBUS-ERROR-SPAWN-NO-MEMORY = 34;
-define constant $G-DBUS-ERROR-UNIX-PROCESS-ID-UNKNOWN = 35;
-define constant $G-DBUS-ERROR-INVALID-SIGNATURE = 36;
-define constant $G-DBUS-ERROR-INVALID-FILE-CONTENT = 37;
-define constant $G-DBUS-ERROR-SELINUX-SECURITY-CONTEXT-UNKNOWN = 38;
-define constant $G-DBUS-ERROR-ADT-AUDIT-DATA-UNKNOWN = 39;
-define constant $G-DBUS-ERROR-OBJECT-PATH-IN-USE = 40;
+define constant $g-dbus-error-failed = 0;
+define constant $g-dbus-error-no-memory = 1;
+define constant $g-dbus-error-service-unknown = 2;
+define constant $g-dbus-error-name-has-no-owner = 3;
+define constant $g-dbus-error-no-reply = 4;
+define constant $g-dbus-error-io-error = 5;
+define constant $g-dbus-error-bad-address = 6;
+define constant $g-dbus-error-not-supported = 7;
+define constant $g-dbus-error-limits-exceeded = 8;
+define constant $g-dbus-error-access-denied = 9;
+define constant $g-dbus-error-auth-failed = 10;
+define constant $g-dbus-error-no-server = 11;
+define constant $g-dbus-error-timeout = 12;
+define constant $g-dbus-error-no-network = 13;
+define constant $g-dbus-error-address-in-use = 14;
+define constant $g-dbus-error-disconnected = 15;
+define constant $g-dbus-error-invalid-args = 16;
+define constant $g-dbus-error-file-not-found = 17;
+define constant $g-dbus-error-file-exists = 18;
+define constant $g-dbus-error-unknown-method = 19;
+define constant $g-dbus-error-timed-out = 20;
+define constant $g-dbus-error-match-rule-not-found = 21;
+define constant $g-dbus-error-match-rule-invalid = 22;
+define constant $g-dbus-error-spawn-exec-failed = 23;
+define constant $g-dbus-error-spawn-fork-failed = 24;
+define constant $g-dbus-error-spawn-child-exited = 25;
+define constant $g-dbus-error-spawn-child-signaled = 26;
+define constant $g-dbus-error-spawn-failed = 27;
+define constant $g-dbus-error-spawn-setup-failed = 28;
+define constant $g-dbus-error-spawn-config-invalid = 29;
+define constant $g-dbus-error-spawn-service-invalid = 30;
+define constant $g-dbus-error-spawn-service-not-found = 31;
+define constant $g-dbus-error-spawn-permissions-invalid = 32;
+define constant $g-dbus-error-spawn-file-invalid = 33;
+define constant $g-dbus-error-spawn-no-memory = 34;
+define constant $g-dbus-error-unix-process-id-unknown = 35;
+define constant $g-dbus-error-invalid-signature = 36;
+define constant $g-dbus-error-invalid-file-content = 37;
+define constant $g-dbus-error-selinux-security-context-unknown = 38;
+define constant $g-dbus-error-adt-audit-data-unknown = 39;
+define constant $g-dbus-error-object-path-in-use = 40;
 define constant <GDBusError> = <C-int>;
 define C-pointer-type <GDBusError*> => <GDBusError>;
 
 define C-struct <_GDBusErrorEntry>
-  slot gdbuserrorentry-error-code :: <C-signed-int>;
-  slot gdbuserrorentry-dbus-error-name :: <C-string>;
+  slot g-d-bus-error-entry-error-code :: <C-signed-int>;
+  slot g-d-bus-error-entry-dbus-error-name :: <C-string>;
   pointer-type-name: <GDBusErrorEntry>;
 end C-struct;
 
@@ -1999,21 +1959,21 @@ define C-function g-dbus-interface-set-object
 end;
 
 define C-struct <_GDBusInterfaceIface>
-  constant slot gdbusinterfaceiface-parent-iface :: <GTypeInterface>;
-  constant slot gdbusinterfaceiface-get-info :: <C-function-pointer>;
-  constant slot gdbusinterfaceiface-get-object :: <C-function-pointer>;
-  constant slot gdbusinterfaceiface-set-object :: <C-function-pointer>;
-  constant slot gdbusinterfaceiface-dup-object :: <C-function-pointer>;
+  constant slot g-d-bus-interface-iface-parent-iface :: <GTypeInterface>;
+  constant slot g-d-bus-interface-iface-get-info :: <C-function-pointer>;
+  constant slot g-d-bus-interface-iface-get-object :: <C-function-pointer>;
+  constant slot g-d-bus-interface-iface-set-object :: <C-function-pointer>;
+  constant slot g-d-bus-interface-iface-dup-object :: <C-function-pointer>;
   pointer-type-name: <GDBusInterfaceIface>;
 end C-struct;
 
 define C-struct <_GDBusInterfaceInfo>
-  slot gdbusinterfaceinfo-ref-count :: <C-signed-int>;
-  slot gdbusinterfaceinfo-name :: <C-string>;
-  slot gdbusinterfaceinfo-methods :: <C-unsigned-char*> /* Not supported */;
-  slot gdbusinterfaceinfo-signals :: <C-unsigned-char*> /* Not supported */;
-  slot gdbusinterfaceinfo-properties :: <C-unsigned-char*> /* Not supported */;
-  slot gdbusinterfaceinfo-annotations :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-interface-info-ref-count :: <C-signed-int>;
+  slot g-d-bus-interface-info-name :: <C-string>;
+  slot g-d-bus-interface-info-methods :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-interface-info-signals :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-interface-info-properties :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-interface-info-annotations :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GDBusInterfaceInfo>;
 end C-struct;
 
@@ -2067,14 +2027,12 @@ define C-function g-dbus-interface-info-unref
 end;
 
 define open C-subtype <GDBusInterfaceSkeleton> (<GObject>)
-  constant slot gdbusinterfaceskeleton-parent-instance :: <GObject>;
-  constant slot gdbusinterfaceskeleton-priv :: <GDBusInterfaceSkeletonPrivate>;
+  constant slot g-d-bus-interface-skeleton-parent-instance :: <GObject>;
+  constant slot g-d-bus-interface-skeleton-priv :: <GDBusInterfaceSkeletonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GDBusInterfaceSkeleton*> => <GDBusInterfaceSkeleton>;
 
-define property-getter dbusinterfaceskeleton-g-flags :: <GDBusInterfaceSkeletonFlags> on <GDBusInterfaceSkeleton> end;
-define property-setter dbusinterfaceskeleton-g-flags :: <GDBusInterfaceSkeletonFlags> on <GDBusInterfaceSkeleton> end;
 define C-function g-dbus-interface-skeleton-export
   input parameter self :: <GDBusInterfaceSkeleton>;
   input parameter connection_ :: <GDBusConnection>;
@@ -2149,19 +2107,19 @@ define C-function g-dbus-interface-skeleton-unexport-from-connection
 end;
 
 define C-struct <_GDBusInterfaceSkeletonClass>
-  constant slot gdbusinterfaceskeletonclass-parent-class :: <GObjectClass>;
-  constant slot gdbusinterfaceskeletonclass-get-info :: <C-function-pointer>;
-  constant slot gdbusinterfaceskeletonclass-get-vtable :: <C-void*>;
-  constant slot gdbusinterfaceskeletonclass-get-properties :: <C-function-pointer>;
-  constant slot gdbusinterfaceskeletonclass-flush :: <C-function-pointer>;
-  constant slot gdbusinterfaceskeletonclass-vfunc-padding :: <C-void*>;
-  constant slot gdbusinterfaceskeletonclass-g-authorize-method :: <C-function-pointer>;
-  constant slot gdbusinterfaceskeletonclass-signal-padding :: <C-void*>;
+  constant slot g-d-bus-interface-skeleton-class-parent-class :: <GObjectClass>;
+  constant slot g-d-bus-interface-skeleton-class-get-info :: <C-function-pointer>;
+  constant slot g-d-bus-interface-skeleton-class-get-vtable :: <C-void*>;
+  constant slot g-d-bus-interface-skeleton-class-get-properties :: <C-function-pointer>;
+  constant slot g-d-bus-interface-skeleton-class-flush :: <C-function-pointer>;
+  constant slot g-d-bus-interface-skeleton-class-vfunc-padding :: <C-void*>;
+  constant slot g-d-bus-interface-skeleton-class-g-authorize-method :: <C-function-pointer>;
+  constant slot g-d-bus-interface-skeleton-class-signal-padding :: <C-void*>;
   pointer-type-name: <GDBusInterfaceSkeletonClass>;
 end C-struct;
 
-define constant $G-DBUS-INTERFACE-SKELETON-FLAGS-NONE = 0;
-define constant $G-DBUS-INTERFACE-SKELETON-FLAGS-HANDLE-METHOD-INVOCATIONS-IN-THREAD = 1;
+define constant $g-dbus-interface-skeleton-flags-none = 0;
+define constant $g-dbus-interface-skeleton-flags-handle-method-invocations-in-thread = 1;
 define constant <GDBusInterfaceSkeletonFlags> = <C-int>;
 define C-pointer-type <GDBusInterfaceSkeletonFlags*> => <GDBusInterfaceSkeletonFlags>;
 
@@ -2170,10 +2128,10 @@ define C-struct <_GDBusInterfaceSkeletonPrivate>
 end C-struct;
 
 define C-struct <_GDBusInterfaceVTable>
-  slot gdbusinterfacevtable-method-call :: <C-function-pointer>;
-  slot gdbusinterfacevtable-get-property :: <C-function-pointer>;
-  slot gdbusinterfacevtable-set-property :: <C-function-pointer>;
-  constant slot gdbusinterfacevtable-padding :: <C-void*>;
+  slot g-d-bus-interface-v-table-method-call :: <C-function-pointer>;
+  slot g-d-bus-interface-v-table-get-property :: <C-function-pointer>;
+  slot g-d-bus-interface-v-table-set-property :: <C-function-pointer>;
+  constant slot g-d-bus-interface-v-table-padding :: <C-void*>;
   pointer-type-name: <GDBusInterfaceVTable>;
 end C-struct;
 
@@ -2195,7 +2153,6 @@ end C-subtype;
 
 define C-pointer-type <GDBusMessage*> => <GDBusMessage>;
 
-define property-getter dbusmessage-locked :: <C-boolean> on <GDBusMessage> end;
 define C-function g-dbus-message-new
   result res :: <GDBusMessage>;
   c-name: "g_dbus_message_new";
@@ -2491,44 +2448,44 @@ define C-function g-dbus-message-to-gerror
   c-name: "g_dbus_message_to_gerror";
 end;
 
-define constant $G-DBUS-MESSAGE-BYTE-ORDER-BIG-ENDIAN = 66;
-define constant $G-DBUS-MESSAGE-BYTE-ORDER-LITTLE-ENDIAN = 108;
+define constant $g-dbus-message-byte-order-big-endian = 66;
+define constant $g-dbus-message-byte-order-little-endian = 108;
 define constant <GDBusMessageByteOrder> = <C-int>;
 define C-pointer-type <GDBusMessageByteOrder*> => <GDBusMessageByteOrder>;
 
-define constant $G-DBUS-MESSAGE-FLAGS-NONE = 0;
-define constant $G-DBUS-MESSAGE-FLAGS-NO-REPLY-EXPECTED = 1;
-define constant $G-DBUS-MESSAGE-FLAGS-NO-AUTO-START = 2;
+define constant $g-dbus-message-flags-none = 0;
+define constant $g-dbus-message-flags-no-reply-expected = 1;
+define constant $g-dbus-message-flags-no-auto-start = 2;
 define constant <GDBusMessageFlags> = <C-int>;
 define C-pointer-type <GDBusMessageFlags*> => <GDBusMessageFlags>;
 
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-INVALID = 0;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-PATH = 1;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-INTERFACE = 2;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-MEMBER = 3;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-ERROR-NAME = 4;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-REPLY-SERIAL = 5;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-DESTINATION = 6;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-SENDER = 7;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-SIGNATURE = 8;
-define constant $G-DBUS-MESSAGE-HEADER-FIELD-NUM-UNIX-FDS = 9;
+define constant $g-dbus-message-header-field-invalid = 0;
+define constant $g-dbus-message-header-field-path = 1;
+define constant $g-dbus-message-header-field-interface = 2;
+define constant $g-dbus-message-header-field-member = 3;
+define constant $g-dbus-message-header-field-error-name = 4;
+define constant $g-dbus-message-header-field-reply-serial = 5;
+define constant $g-dbus-message-header-field-destination = 6;
+define constant $g-dbus-message-header-field-sender = 7;
+define constant $g-dbus-message-header-field-signature = 8;
+define constant $g-dbus-message-header-field-num-unix-fds = 9;
 define constant <GDBusMessageHeaderField> = <C-int>;
 define C-pointer-type <GDBusMessageHeaderField*> => <GDBusMessageHeaderField>;
 
-define constant $G-DBUS-MESSAGE-TYPE-INVALID = 0;
-define constant $G-DBUS-MESSAGE-TYPE-METHOD-CALL = 1;
-define constant $G-DBUS-MESSAGE-TYPE-METHOD-RETURN = 2;
-define constant $G-DBUS-MESSAGE-TYPE-ERROR = 3;
-define constant $G-DBUS-MESSAGE-TYPE-SIGNAL = 4;
+define constant $g-dbus-message-type-invalid = 0;
+define constant $g-dbus-message-type-method-call = 1;
+define constant $g-dbus-message-type-method-return = 2;
+define constant $g-dbus-message-type-error = 3;
+define constant $g-dbus-message-type-signal = 4;
 define constant <GDBusMessageType> = <C-int>;
 define C-pointer-type <GDBusMessageType*> => <GDBusMessageType>;
 
 define C-struct <_GDBusMethodInfo>
-  slot gdbusmethodinfo-ref-count :: <C-signed-int>;
-  slot gdbusmethodinfo-name :: <C-string>;
-  slot gdbusmethodinfo-in-args :: <C-unsigned-char*> /* Not supported */;
-  slot gdbusmethodinfo-out-args :: <C-unsigned-char*> /* Not supported */;
-  slot gdbusmethodinfo-annotations :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-method-info-ref-count :: <C-signed-int>;
+  slot g-d-bus-method-info-name :: <C-string>;
+  slot g-d-bus-method-info-in-args :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-method-info-out-args :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-method-info-annotations :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GDBusMethodInfo>;
 end C-struct;
 
@@ -2631,11 +2588,11 @@ define C-function g-dbus-method-invocation-return-value-with-unix-fd-list
 end;
 
 define C-struct <_GDBusNodeInfo>
-  slot gdbusnodeinfo-ref-count :: <C-signed-int>;
-  slot gdbusnodeinfo-path :: <C-string>;
-  slot gdbusnodeinfo-interfaces :: <C-unsigned-char*> /* Not supported */;
-  slot gdbusnodeinfo-nodes :: <C-unsigned-char*> /* Not supported */;
-  slot gdbusnodeinfo-annotations :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-node-info-ref-count :: <C-signed-int>;
+  slot g-d-bus-node-info-path :: <C-string>;
+  slot g-d-bus-node-info-interfaces :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-node-info-nodes :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-node-info-annotations :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GDBusNodeInfo>;
 end C-struct;
 
@@ -2696,12 +2653,12 @@ define C-function g-dbus-object-get-object-path
 end;
 
 define C-struct <_GDBusObjectIface>
-  constant slot gdbusobjectiface-parent-iface :: <GTypeInterface>;
-  constant slot gdbusobjectiface-get-object-path :: <C-function-pointer>;
-  constant slot gdbusobjectiface-get-interfaces :: <C-function-pointer>;
-  constant slot gdbusobjectiface-get-interface :: <C-function-pointer>;
-  constant slot gdbusobjectiface-interface-added :: <C-function-pointer>;
-  constant slot gdbusobjectiface-interface-removed :: <C-function-pointer>;
+  constant slot g-d-bus-object-iface-parent-iface :: <GTypeInterface>;
+  constant slot g-d-bus-object-iface-get-object-path :: <C-function-pointer>;
+  constant slot g-d-bus-object-iface-get-interfaces :: <C-function-pointer>;
+  constant slot g-d-bus-object-iface-get-interface :: <C-function-pointer>;
+  constant slot g-d-bus-object-iface-interface-added :: <C-function-pointer>;
+  constant slot g-d-bus-object-iface-interface-removed :: <C-function-pointer>;
   pointer-type-name: <GDBusObjectIface>;
 end C-struct;
 
@@ -2739,28 +2696,12 @@ define C-function g-dbus-object-manager-get-objects
 end;
 
 define open C-subtype <GDBusObjectManagerClient> (<GObject>)
-  constant slot gdbusobjectmanagerclient-parent-instance :: <GObject>;
-  constant slot gdbusobjectmanagerclient-priv :: <GDBusObjectManagerClientPrivate>;
+  constant slot g-d-bus-object-manager-client-parent-instance :: <GObject>;
+  constant slot g-d-bus-object-manager-client-priv :: <GDBusObjectManagerClientPrivate>;
 end C-subtype;
 
 define C-pointer-type <GDBusObjectManagerClient*> => <GDBusObjectManagerClient>;
 
-define property-setter dbusobjectmanagerclient-bus-type :: <GBusType> on <GDBusObjectManagerClient> end;
-define property-getter dbusobjectmanagerclient-connection :: <GDBusConnection> on <GDBusObjectManagerClient> end;
-define property-setter dbusobjectmanagerclient-connection :: <GDBusConnection> on <GDBusObjectManagerClient> end;
-define property-getter dbusobjectmanagerclient-flags :: <GDBusObjectManagerClientFlags> on <GDBusObjectManagerClient> end;
-define property-setter dbusobjectmanagerclient-flags :: <GDBusObjectManagerClientFlags> on <GDBusObjectManagerClient> end;
-define property-getter dbusobjectmanagerclient-get-proxy-type-destroy-notify :: <C-void*> on <GDBusObjectManagerClient> end;
-define property-setter dbusobjectmanagerclient-get-proxy-type-destroy-notify :: <C-void*> on <GDBusObjectManagerClient> end;
-define property-getter dbusobjectmanagerclient-get-proxy-type-func :: <C-void*> on <GDBusObjectManagerClient> end;
-define property-setter dbusobjectmanagerclient-get-proxy-type-func :: <C-void*> on <GDBusObjectManagerClient> end;
-define property-getter dbusobjectmanagerclient-get-proxy-type-user-data :: <C-void*> on <GDBusObjectManagerClient> end;
-define property-setter dbusobjectmanagerclient-get-proxy-type-user-data :: <C-void*> on <GDBusObjectManagerClient> end;
-define property-getter dbusobjectmanagerclient-name :: <C-string> on <GDBusObjectManagerClient> end;
-define property-setter dbusobjectmanagerclient-name :: <C-string> on <GDBusObjectManagerClient> end;
-define property-getter dbusobjectmanagerclient-name-owner :: <C-string> on <GDBusObjectManagerClient> end;
-define property-getter dbusobjectmanagerclient-object-path :: <C-string> on <GDBusObjectManagerClient> end;
-define property-setter dbusobjectmanagerclient-object-path :: <C-string> on <GDBusObjectManagerClient> end;
 define C-function g-dbus-object-manager-client-new-finish
   input parameter res_ :: <GAsyncResult>;
   result res :: <GDBusObjectManagerClient>;
@@ -2852,15 +2793,15 @@ define C-function g-dbus-object-manager-client-get-name-owner
 end;
 
 define C-struct <_GDBusObjectManagerClientClass>
-  constant slot gdbusobjectmanagerclientclass-parent-class :: <GObjectClass>;
-  constant slot gdbusobjectmanagerclientclass-interface-proxy-signal :: <C-function-pointer>;
-  constant slot gdbusobjectmanagerclientclass-interface-proxy-properties-changed :: <C-function-pointer>;
-  constant slot gdbusobjectmanagerclientclass-padding :: <C-void*>;
+  constant slot g-d-bus-object-manager-client-class-parent-class :: <GObjectClass>;
+  constant slot g-d-bus-object-manager-client-class-interface-proxy-signal :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-client-class-interface-proxy-properties-changed :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-client-class-padding :: <C-void*>;
   pointer-type-name: <GDBusObjectManagerClientClass>;
 end C-struct;
 
-define constant $G-DBUS-OBJECT-MANAGER-CLIENT-FLAGS-NONE = 0;
-define constant $G-DBUS-OBJECT-MANAGER-CLIENT-FLAGS-DO-NOT-AUTO-START = 1;
+define constant $g-dbus-object-manager-client-flags-none = 0;
+define constant $g-dbus-object-manager-client-flags-do-not-auto-start = 1;
 define constant <GDBusObjectManagerClientFlags> = <C-int>;
 define C-pointer-type <GDBusObjectManagerClientFlags*> => <GDBusObjectManagerClientFlags>;
 
@@ -2869,29 +2810,25 @@ define C-struct <_GDBusObjectManagerClientPrivate>
 end C-struct;
 
 define C-struct <_GDBusObjectManagerIface>
-  constant slot gdbusobjectmanageriface-parent-iface :: <GTypeInterface>;
-  constant slot gdbusobjectmanageriface-get-object-path :: <C-function-pointer>;
-  constant slot gdbusobjectmanageriface-get-objects :: <C-function-pointer>;
-  constant slot gdbusobjectmanageriface-get-object :: <C-function-pointer>;
-  constant slot gdbusobjectmanageriface-get-interface :: <C-function-pointer>;
-  constant slot gdbusobjectmanageriface-object-added :: <C-function-pointer>;
-  constant slot gdbusobjectmanageriface-object-removed :: <C-function-pointer>;
-  constant slot gdbusobjectmanageriface-interface-added :: <C-function-pointer>;
-  constant slot gdbusobjectmanageriface-interface-removed :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-iface-parent-iface :: <GTypeInterface>;
+  constant slot g-d-bus-object-manager-iface-get-object-path :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-iface-get-objects :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-iface-get-object :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-iface-get-interface :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-iface-object-added :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-iface-object-removed :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-iface-interface-added :: <C-function-pointer>;
+  constant slot g-d-bus-object-manager-iface-interface-removed :: <C-function-pointer>;
   pointer-type-name: <GDBusObjectManagerIface>;
 end C-struct;
 
 define open C-subtype <GDBusObjectManagerServer> (<GObject>)
-  constant slot gdbusobjectmanagerserver-parent-instance :: <GObject>;
-  constant slot gdbusobjectmanagerserver-priv :: <GDBusObjectManagerServerPrivate>;
+  constant slot g-d-bus-object-manager-server-parent-instance :: <GObject>;
+  constant slot g-d-bus-object-manager-server-priv :: <GDBusObjectManagerServerPrivate>;
 end C-subtype;
 
 define C-pointer-type <GDBusObjectManagerServer*> => <GDBusObjectManagerServer>;
 
-define property-getter dbusobjectmanagerserver-connection :: <GDBusConnection> on <GDBusObjectManagerServer> end;
-define property-setter dbusobjectmanagerserver-connection :: <GDBusConnection> on <GDBusObjectManagerServer> end;
-define property-getter dbusobjectmanagerserver-object-path :: <C-string> on <GDBusObjectManagerServer> end;
-define property-setter dbusobjectmanagerserver-object-path :: <C-string> on <GDBusObjectManagerServer> end;
 define C-function g-dbus-object-manager-server-new
   input parameter object_path_ :: <C-string>;
   result res :: <GDBusObjectManagerServer>;
@@ -2937,8 +2874,8 @@ define C-function g-dbus-object-manager-server-unexport
 end;
 
 define C-struct <_GDBusObjectManagerServerClass>
-  constant slot gdbusobjectmanagerserverclass-parent-class :: <GObjectClass>;
-  constant slot gdbusobjectmanagerserverclass-padding :: <C-void*>;
+  constant slot g-d-bus-object-manager-server-class-parent-class :: <GObjectClass>;
+  constant slot g-d-bus-object-manager-server-class-padding :: <C-void*>;
   pointer-type-name: <GDBusObjectManagerServerClass>;
 end C-struct;
 
@@ -2947,16 +2884,12 @@ define C-struct <_GDBusObjectManagerServerPrivate>
 end C-struct;
 
 define open C-subtype <GDBusObjectProxy> (<GObject>)
-  constant slot gdbusobjectproxy-parent-instance :: <GObject>;
-  constant slot gdbusobjectproxy-priv :: <GDBusObjectProxyPrivate>;
+  constant slot g-d-bus-object-proxy-parent-instance :: <GObject>;
+  constant slot g-d-bus-object-proxy-priv :: <GDBusObjectProxyPrivate>;
 end C-subtype;
 
 define C-pointer-type <GDBusObjectProxy*> => <GDBusObjectProxy>;
 
-define property-getter dbusobjectproxy-g-connection :: <GDBusConnection> on <GDBusObjectProxy> end;
-define property-setter dbusobjectproxy-g-connection :: <GDBusConnection> on <GDBusObjectProxy> end;
-define property-getter dbusobjectproxy-g-object-path :: <C-string> on <GDBusObjectProxy> end;
-define property-setter dbusobjectproxy-g-object-path :: <C-string> on <GDBusObjectProxy> end;
 define C-function g-dbus-object-proxy-new
   input parameter connection_ :: <GDBusConnection>;
   input parameter object_path_ :: <C-string>;
@@ -2971,8 +2904,8 @@ define C-function g-dbus-object-proxy-get-connection
 end;
 
 define C-struct <_GDBusObjectProxyClass>
-  constant slot gdbusobjectproxyclass-parent-class :: <GObjectClass>;
-  constant slot gdbusobjectproxyclass-padding :: <C-void*>;
+  constant slot g-d-bus-object-proxy-class-parent-class :: <GObjectClass>;
+  constant slot g-d-bus-object-proxy-class-padding :: <C-void*>;
   pointer-type-name: <GDBusObjectProxyClass>;
 end C-struct;
 
@@ -2981,14 +2914,12 @@ define C-struct <_GDBusObjectProxyPrivate>
 end C-struct;
 
 define open C-subtype <GDBusObjectSkeleton> (<GObject>)
-  constant slot gdbusobjectskeleton-parent-instance :: <GObject>;
-  constant slot gdbusobjectskeleton-priv :: <GDBusObjectSkeletonPrivate>;
+  constant slot g-d-bus-object-skeleton-parent-instance :: <GObject>;
+  constant slot g-d-bus-object-skeleton-priv :: <GDBusObjectSkeletonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GDBusObjectSkeleton*> => <GDBusObjectSkeleton>;
 
-define property-getter dbusobjectskeleton-g-object-path :: <C-string> on <GDBusObjectSkeleton> end;
-define property-setter dbusobjectskeleton-g-object-path :: <C-string> on <GDBusObjectSkeleton> end;
 define C-function g-dbus-object-skeleton-new
   input parameter object_path_ :: <C-string>;
   result res :: <GDBusObjectSkeleton>;
@@ -3025,9 +2956,9 @@ define C-function g-dbus-object-skeleton-set-object-path
 end;
 
 define C-struct <_GDBusObjectSkeletonClass>
-  constant slot gdbusobjectskeletonclass-parent-class :: <GObjectClass>;
-  constant slot gdbusobjectskeletonclass-authorize-method :: <C-function-pointer>;
-  constant slot gdbusobjectskeletonclass-padding :: <C-void*>;
+  constant slot g-d-bus-object-skeleton-class-parent-class :: <GObjectClass>;
+  constant slot g-d-bus-object-skeleton-class-authorize-method :: <C-function-pointer>;
+  constant slot g-d-bus-object-skeleton-class-padding :: <C-void*>;
   pointer-type-name: <GDBusObjectSkeletonClass>;
 end C-struct;
 
@@ -3036,11 +2967,11 @@ define C-struct <_GDBusObjectSkeletonPrivate>
 end C-struct;
 
 define C-struct <_GDBusPropertyInfo>
-  slot gdbuspropertyinfo-ref-count :: <C-signed-int>;
-  slot gdbuspropertyinfo-name :: <C-string>;
-  slot gdbuspropertyinfo-signature :: <C-string>;
-  slot gdbuspropertyinfo-flags :: <GDBusPropertyInfoFlags>;
-  slot gdbuspropertyinfo-annotations :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-property-info-ref-count :: <C-signed-int>;
+  slot g-d-bus-property-info-name :: <C-string>;
+  slot g-d-bus-property-info-signature :: <C-string>;
+  slot g-d-bus-property-info-flags :: <GDBusPropertyInfoFlags>;
+  slot g-d-bus-property-info-annotations :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GDBusPropertyInfo>;
 end C-struct;
 
@@ -3055,35 +2986,19 @@ define C-function g-dbus-property-info-unref
   c-name: "g_dbus_property_info_unref";
 end;
 
-define constant $G-DBUS-PROPERTY-INFO-FLAGS-NONE = 0;
-define constant $G-DBUS-PROPERTY-INFO-FLAGS-READABLE = 1;
-define constant $G-DBUS-PROPERTY-INFO-FLAGS-WRITABLE = 2;
+define constant $g-dbus-property-info-flags-none = 0;
+define constant $g-dbus-property-info-flags-readable = 1;
+define constant $g-dbus-property-info-flags-writable = 2;
 define constant <GDBusPropertyInfoFlags> = <C-int>;
 define C-pointer-type <GDBusPropertyInfoFlags*> => <GDBusPropertyInfoFlags>;
 
 define open C-subtype <GDBusProxy> (<GObject>)
-  constant slot gdbusproxy-parent-instance :: <GObject>;
-  constant slot gdbusproxy-priv :: <GDBusProxyPrivate>;
+  constant slot g-d-bus-proxy-parent-instance :: <GObject>;
+  constant slot g-d-bus-proxy-priv :: <GDBusProxyPrivate>;
 end C-subtype;
 
 define C-pointer-type <GDBusProxy*> => <GDBusProxy>;
 
-define property-setter dbusproxy-g-bus-type :: <GBusType> on <GDBusProxy> end;
-define property-getter dbusproxy-g-connection :: <GDBusConnection> on <GDBusProxy> end;
-define property-setter dbusproxy-g-connection :: <GDBusConnection> on <GDBusProxy> end;
-define property-getter dbusproxy-g-default-timeout :: <C-signed-int> on <GDBusProxy> end;
-define property-setter dbusproxy-g-default-timeout :: <C-signed-int> on <GDBusProxy> end;
-define property-getter dbusproxy-g-flags :: <GDBusProxyFlags> on <GDBusProxy> end;
-define property-setter dbusproxy-g-flags :: <GDBusProxyFlags> on <GDBusProxy> end;
-define property-getter dbusproxy-g-interface-info :: <GDBusInterfaceInfo> on <GDBusProxy> end;
-define property-setter dbusproxy-g-interface-info :: <GDBusInterfaceInfo> on <GDBusProxy> end;
-define property-getter dbusproxy-g-interface-name :: <C-string> on <GDBusProxy> end;
-define property-setter dbusproxy-g-interface-name :: <C-string> on <GDBusProxy> end;
-define property-getter dbusproxy-g-name :: <C-string> on <GDBusProxy> end;
-define property-setter dbusproxy-g-name :: <C-string> on <GDBusProxy> end;
-define property-getter dbusproxy-g-name-owner :: <C-string> on <GDBusProxy> end;
-define property-getter dbusproxy-g-object-path :: <C-string> on <GDBusProxy> end;
-define property-setter dbusproxy-g-object-path :: <C-string> on <GDBusProxy> end;
 define C-function g-dbus-proxy-new-finish
   input parameter res_ :: <GAsyncResult>;
   result res :: <GDBusProxy>;
@@ -3291,18 +3206,18 @@ define C-function g-dbus-proxy-set-interface-info
 end;
 
 define C-struct <_GDBusProxyClass>
-  constant slot gdbusproxyclass-parent-class :: <GObjectClass>;
-  constant slot gdbusproxyclass-g-properties-changed :: <C-function-pointer>;
-  constant slot gdbusproxyclass-g-signal :: <C-function-pointer>;
-  constant slot gdbusproxyclass-padding :: <C-void*>;
+  constant slot g-d-bus-proxy-class-parent-class :: <GObjectClass>;
+  constant slot g-d-bus-proxy-class-g-properties-changed :: <C-function-pointer>;
+  constant slot g-d-bus-proxy-class-g-signal :: <C-function-pointer>;
+  constant slot g-d-bus-proxy-class-padding :: <C-void*>;
   pointer-type-name: <GDBusProxyClass>;
 end C-struct;
 
-define constant $G-DBUS-PROXY-FLAGS-NONE = 0;
-define constant $G-DBUS-PROXY-FLAGS-DO-NOT-LOAD-PROPERTIES = 1;
-define constant $G-DBUS-PROXY-FLAGS-DO-NOT-CONNECT-SIGNALS = 2;
-define constant $G-DBUS-PROXY-FLAGS-DO-NOT-AUTO-START = 4;
-define constant $G-DBUS-PROXY-FLAGS-GET-INVALIDATED-PROPERTIES = 8;
+define constant $g-dbus-proxy-flags-none = 0;
+define constant $g-dbus-proxy-flags-do-not-load-properties = 1;
+define constant $g-dbus-proxy-flags-do-not-connect-signals = 2;
+define constant $g-dbus-proxy-flags-do-not-auto-start = 4;
+define constant $g-dbus-proxy-flags-get-invalidated-properties = 8;
 define constant <GDBusProxyFlags> = <C-int>;
 define C-pointer-type <GDBusProxyFlags*> => <GDBusProxyFlags>;
 
@@ -3310,8 +3225,8 @@ define C-struct <_GDBusProxyPrivate>
   pointer-type-name: <GDBusProxyPrivate>;
 end C-struct;
 
-define constant $G-DBUS-SEND-MESSAGE-FLAGS-NONE = 0;
-define constant $G-DBUS-SEND-MESSAGE-FLAGS-PRESERVE-SERIAL = 1;
+define constant $g-dbus-send-message-flags-none = 0;
+define constant $g-dbus-send-message-flags-preserve-serial = 1;
 define constant <GDBusSendMessageFlags> = <C-int>;
 define C-pointer-type <GDBusSendMessageFlags*> => <GDBusSendMessageFlags>;
 
@@ -3320,16 +3235,6 @@ end C-subtype;
 
 define C-pointer-type <GDBusServer*> => <GDBusServer>;
 
-define property-getter dbusserver-active :: <C-boolean> on <GDBusServer> end;
-define property-getter dbusserver-address :: <C-string> on <GDBusServer> end;
-define property-setter dbusserver-address :: <C-string> on <GDBusServer> end;
-define property-getter dbusserver-authentication-observer :: <GDBusAuthObserver> on <GDBusServer> end;
-define property-setter dbusserver-authentication-observer :: <GDBusAuthObserver> on <GDBusServer> end;
-define property-getter dbusserver-client-address :: <C-string> on <GDBusServer> end;
-define property-getter dbusserver-flags :: <GDBusServerFlags> on <GDBusServer> end;
-define property-setter dbusserver-flags :: <GDBusServerFlags> on <GDBusServer> end;
-define property-getter dbusserver-guid :: <C-string> on <GDBusServer> end;
-define property-setter dbusserver-guid :: <C-string> on <GDBusServer> end;
 define C-function g-dbus-server-new-sync
   input parameter address_ :: <C-string>;
   input parameter flags_ :: <GDBusServerFlags>;
@@ -3374,22 +3279,22 @@ define C-function g-dbus-server-stop
   c-name: "g_dbus_server_stop";
 end;
 
-define constant $G-DBUS-SERVER-FLAGS-NONE = 0;
-define constant $G-DBUS-SERVER-FLAGS-RUN-IN-THREAD = 1;
-define constant $G-DBUS-SERVER-FLAGS-AUTHENTICATION-ALLOW-ANONYMOUS = 2;
+define constant $g-dbus-server-flags-none = 0;
+define constant $g-dbus-server-flags-run-in-thread = 1;
+define constant $g-dbus-server-flags-authentication-allow-anonymous = 2;
 define constant <GDBusServerFlags> = <C-int>;
 define C-pointer-type <GDBusServerFlags*> => <GDBusServerFlags>;
 
-define constant $G-DBUS-SIGNAL-FLAGS-NONE = 0;
-define constant $G-DBUS-SIGNAL-FLAGS-NO-MATCH-RULE = 1;
+define constant $g-dbus-signal-flags-none = 0;
+define constant $g-dbus-signal-flags-no-match-rule = 1;
 define constant <GDBusSignalFlags> = <C-int>;
 define C-pointer-type <GDBusSignalFlags*> => <GDBusSignalFlags>;
 
 define C-struct <_GDBusSignalInfo>
-  slot gdbussignalinfo-ref-count :: <C-signed-int>;
-  slot gdbussignalinfo-name :: <C-string>;
-  slot gdbussignalinfo-args :: <C-unsigned-char*> /* Not supported */;
-  slot gdbussignalinfo-annotations :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-signal-info-ref-count :: <C-signed-int>;
+  slot g-d-bus-signal-info-name :: <C-string>;
+  slot g-d-bus-signal-info-args :: <C-unsigned-char*> /* Not supported */;
+  slot g-d-bus-signal-info-annotations :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GDBusSignalInfo>;
 end C-struct;
 
@@ -3404,32 +3309,28 @@ define C-function g-dbus-signal-info-unref
   c-name: "g_dbus_signal_info_unref";
 end;
 
-define constant $G-DBUS-SUBTREE-FLAGS-NONE = 0;
-define constant $G-DBUS-SUBTREE-FLAGS-DISPATCH-TO-UNENUMERATED-NODES = 1;
+define constant $g-dbus-subtree-flags-none = 0;
+define constant $g-dbus-subtree-flags-dispatch-to-unenumerated-nodes = 1;
 define constant <GDBusSubtreeFlags> = <C-int>;
 define C-pointer-type <GDBusSubtreeFlags*> => <GDBusSubtreeFlags>;
 
 define C-struct <_GDBusSubtreeVTable>
-  slot gdbussubtreevtable-enumerate :: <C-void*>;
-  slot gdbussubtreevtable-introspect :: <C-function-pointer>;
-  slot gdbussubtreevtable-dispatch :: <C-function-pointer>;
-  constant slot gdbussubtreevtable-padding :: <C-void*>;
+  slot g-d-bus-subtree-v-table-enumerate :: <C-void*>;
+  slot g-d-bus-subtree-v-table-introspect :: <C-function-pointer>;
+  slot g-d-bus-subtree-v-table-dispatch :: <C-function-pointer>;
+  constant slot g-d-bus-subtree-v-table-padding :: <C-void*>;
   pointer-type-name: <GDBusSubtreeVTable>;
 end C-struct;
 
-define constant $DESKTOP-APP-INFO-LOOKUP-EXTENSION-POINT-NAME = "gio-desktop-app-info-lookup";
+define constant $desktop-app-info-lookup-extension-point-name = "gio-desktop-app-info-lookup";
 
 define open C-subtype <GDataInputStream> (<GBufferedInputStream>)
-  constant slot gdatainputstream-parent-instance :: <GBufferedInputStream>;
-  constant slot gdatainputstream-priv :: <GDataInputStreamPrivate>;
+  constant slot g-data-input-stream-parent-instance :: <GBufferedInputStream>;
+  constant slot g-data-input-stream-priv :: <GDataInputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GDataInputStream*> => <GDataInputStream>;
 
-define property-getter datainputstream-byte-order :: <GDataStreamByteOrder> on <GDataInputStream> end;
-define property-setter datainputstream-byte-order :: <GDataStreamByteOrder> on <GDataInputStream> end;
-define property-getter datainputstream-newline-type :: <GDataStreamNewlineType> on <GDataInputStream> end;
-define property-setter datainputstream-newline-type :: <GDataStreamNewlineType> on <GDataInputStream> end;
 define C-function g-data-input-stream-new
   input parameter base_stream_ :: <GInputStream>;
   result res :: <GDataInputStream>;
@@ -3607,12 +3508,12 @@ define C-function g-data-input-stream-set-newline-type
 end;
 
 define C-struct <_GDataInputStreamClass>
-  constant slot gdatainputstreamclass-parent-class :: <GBufferedInputStreamClass>;
-  constant slot gdatainputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gdatainputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gdatainputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gdatainputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gdatainputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-data-input-stream-class-parent-class :: <GBufferedInputStreamClass>;
+  constant slot g-data-input-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-data-input-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-data-input-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-data-input-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-data-input-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GDataInputStreamClass>;
 end C-struct;
 
@@ -3621,14 +3522,12 @@ define C-struct <_GDataInputStreamPrivate>
 end C-struct;
 
 define open C-subtype <GDataOutputStream> (<GFilterOutputStream>)
-  constant slot gdataoutputstream-parent-instance :: <GFilterOutputStream>;
-  constant slot gdataoutputstream-priv :: <GDataOutputStreamPrivate>;
+  constant slot g-data-output-stream-parent-instance :: <GFilterOutputStream>;
+  constant slot g-data-output-stream-priv :: <GDataOutputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GDataOutputStream*> => <GDataOutputStream>;
 
-define property-getter dataoutputstream-byte-order :: <GDataStreamByteOrder> on <GDataOutputStream> end;
-define property-setter dataoutputstream-byte-order :: <GDataStreamByteOrder> on <GDataOutputStream> end;
 define C-function g-data-output-stream-new
   input parameter base_stream_ :: <GOutputStream>;
   result res :: <GDataOutputStream>;
@@ -3712,12 +3611,12 @@ define C-function g-data-output-stream-set-byte-order
 end;
 
 define C-struct <_GDataOutputStreamClass>
-  constant slot gdataoutputstreamclass-parent-class :: <GFilterOutputStreamClass>;
-  constant slot gdataoutputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gdataoutputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gdataoutputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gdataoutputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gdataoutputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-data-output-stream-class-parent-class :: <GFilterOutputStreamClass>;
+  constant slot g-data-output-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-data-output-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-data-output-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-data-output-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-data-output-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GDataOutputStreamClass>;
 end C-struct;
 
@@ -3725,16 +3624,16 @@ define C-struct <_GDataOutputStreamPrivate>
   pointer-type-name: <GDataOutputStreamPrivate>;
 end C-struct;
 
-define constant $G-DATA-STREAM-BYTE-ORDER-BIG-ENDIAN = 0;
-define constant $G-DATA-STREAM-BYTE-ORDER-LITTLE-ENDIAN = 1;
-define constant $G-DATA-STREAM-BYTE-ORDER-HOST-ENDIAN = 2;
+define constant $g-data-stream-byte-order-big-endian = 0;
+define constant $g-data-stream-byte-order-little-endian = 1;
+define constant $g-data-stream-byte-order-host-endian = 2;
 define constant <GDataStreamByteOrder> = <C-int>;
 define C-pointer-type <GDataStreamByteOrder*> => <GDataStreamByteOrder>;
 
-define constant $G-DATA-STREAM-NEWLINE-TYPE-LF = 0;
-define constant $G-DATA-STREAM-NEWLINE-TYPE-CR = 1;
-define constant $G-DATA-STREAM-NEWLINE-TYPE-CR-LF = 2;
-define constant $G-DATA-STREAM-NEWLINE-TYPE-ANY = 3;
+define constant $g-data-stream-newline-type-lf = 0;
+define constant $g-data-stream-newline-type-cr = 1;
+define constant $g-data-stream-newline-type-cr-lf = 2;
+define constant $g-data-stream-newline-type-any = 3;
 define constant <GDataStreamNewlineType> = <C-int>;
 define C-pointer-type <GDataStreamNewlineType*> => <GDataStreamNewlineType>;
 
@@ -3743,8 +3642,6 @@ end C-subtype;
 
 define C-pointer-type <GDesktopAppInfo*> => <GDesktopAppInfo>;
 
-define property-getter desktopappinfo-filename :: <C-string> on <GDesktopAppInfo> end;
-define property-setter desktopappinfo-filename :: <C-string> on <GDesktopAppInfo> end;
 define C-function g-desktop-app-info-new
   input parameter desktop_id_ :: <C-string>;
   result res :: <GDesktopAppInfo>;
@@ -3852,7 +3749,7 @@ define C-function g-desktop-app-info-launch-uris-as-manager
 end;
 
 define C-struct <_GDesktopAppInfoClass>
-  constant slot gdesktopappinfoclass-parent-class :: <GObjectClass>;
+  constant slot g-desktop-app-info-class-parent-class :: <GObjectClass>;
   pointer-type-name: <GDesktopAppInfoClass>;
 end C-struct;
 
@@ -3870,8 +3767,8 @@ define C-function g-desktop-app-info-lookup-get-default-for-uri-scheme
 end;
 
 define C-struct <_GDesktopAppInfoLookupIface>
-  constant slot gdesktopappinfolookupiface-g-iface :: <GTypeInterface>;
-  constant slot gdesktopappinfolookupiface-get-default-for-uri-scheme :: <C-function-pointer>;
+  constant slot g-desktop-app-info-lookup-iface-g-iface :: <GTypeInterface>;
+  constant slot g-desktop-app-info-lookup-iface-get-default-for-uri-scheme :: <C-function-pointer>;
   pointer-type-name: <GDesktopAppInfoLookupIface>;
 end C-struct;
 
@@ -4067,50 +3964,50 @@ define C-function g-drive-stop-finish
 end;
 
 define C-struct <_GDriveIface>
-  constant slot gdriveiface-g-iface :: <GTypeInterface>;
-  constant slot gdriveiface-changed :: <C-function-pointer>;
-  constant slot gdriveiface-disconnected :: <C-function-pointer>;
-  constant slot gdriveiface-eject-button :: <C-function-pointer>;
-  constant slot gdriveiface-get-name :: <C-function-pointer>;
-  constant slot gdriveiface-get-icon :: <C-function-pointer>;
-  constant slot gdriveiface-has-volumes :: <C-function-pointer>;
-  constant slot gdriveiface-get-volumes :: <C-function-pointer>;
-  constant slot gdriveiface-is-media-removable :: <C-function-pointer>;
-  constant slot gdriveiface-has-media :: <C-function-pointer>;
-  constant slot gdriveiface-is-media-check-automatic :: <C-function-pointer>;
-  constant slot gdriveiface-can-eject :: <C-function-pointer>;
-  constant slot gdriveiface-can-poll-for-media :: <C-function-pointer>;
-  constant slot gdriveiface-eject :: <C-function-pointer>;
-  constant slot gdriveiface-eject-finish :: <C-function-pointer>;
-  constant slot gdriveiface-poll-for-media :: <C-function-pointer>;
-  constant slot gdriveiface-poll-for-media-finish :: <C-function-pointer>;
-  constant slot gdriveiface-get-identifier :: <C-function-pointer>;
-  constant slot gdriveiface-enumerate-identifiers :: <C-function-pointer>;
-  constant slot gdriveiface-get-start-stop-type :: <C-function-pointer>;
-  constant slot gdriveiface-can-start :: <C-function-pointer>;
-  constant slot gdriveiface-can-start-degraded :: <C-function-pointer>;
-  constant slot gdriveiface-start :: <C-function-pointer>;
-  constant slot gdriveiface-start-finish :: <C-function-pointer>;
-  constant slot gdriveiface-can-stop :: <C-function-pointer>;
-  constant slot gdriveiface-stop :: <C-function-pointer>;
-  constant slot gdriveiface-stop-finish :: <C-function-pointer>;
-  constant slot gdriveiface-stop-button :: <C-function-pointer>;
-  constant slot gdriveiface-eject-with-operation :: <C-function-pointer>;
-  constant slot gdriveiface-eject-with-operation-finish :: <C-function-pointer>;
-  constant slot gdriveiface-get-sort-key :: <C-function-pointer>;
-  constant slot gdriveiface-get-symbolic-icon :: <C-function-pointer>;
+  constant slot g-drive-iface-g-iface :: <GTypeInterface>;
+  constant slot g-drive-iface-changed :: <C-function-pointer>;
+  constant slot g-drive-iface-disconnected :: <C-function-pointer>;
+  constant slot g-drive-iface-eject-button :: <C-function-pointer>;
+  constant slot g-drive-iface-get-name :: <C-function-pointer>;
+  constant slot g-drive-iface-get-icon :: <C-function-pointer>;
+  constant slot g-drive-iface-has-volumes :: <C-function-pointer>;
+  constant slot g-drive-iface-get-volumes :: <C-function-pointer>;
+  constant slot g-drive-iface-is-media-removable :: <C-function-pointer>;
+  constant slot g-drive-iface-has-media :: <C-function-pointer>;
+  constant slot g-drive-iface-is-media-check-automatic :: <C-function-pointer>;
+  constant slot g-drive-iface-can-eject :: <C-function-pointer>;
+  constant slot g-drive-iface-can-poll-for-media :: <C-function-pointer>;
+  constant slot g-drive-iface-eject :: <C-function-pointer>;
+  constant slot g-drive-iface-eject-finish :: <C-function-pointer>;
+  constant slot g-drive-iface-poll-for-media :: <C-function-pointer>;
+  constant slot g-drive-iface-poll-for-media-finish :: <C-function-pointer>;
+  constant slot g-drive-iface-get-identifier :: <C-function-pointer>;
+  constant slot g-drive-iface-enumerate-identifiers :: <C-function-pointer>;
+  constant slot g-drive-iface-get-start-stop-type :: <C-function-pointer>;
+  constant slot g-drive-iface-can-start :: <C-function-pointer>;
+  constant slot g-drive-iface-can-start-degraded :: <C-function-pointer>;
+  constant slot g-drive-iface-start :: <C-function-pointer>;
+  constant slot g-drive-iface-start-finish :: <C-function-pointer>;
+  constant slot g-drive-iface-can-stop :: <C-function-pointer>;
+  constant slot g-drive-iface-stop :: <C-function-pointer>;
+  constant slot g-drive-iface-stop-finish :: <C-function-pointer>;
+  constant slot g-drive-iface-stop-button :: <C-function-pointer>;
+  constant slot g-drive-iface-eject-with-operation :: <C-function-pointer>;
+  constant slot g-drive-iface-eject-with-operation-finish :: <C-function-pointer>;
+  constant slot g-drive-iface-get-sort-key :: <C-function-pointer>;
+  constant slot g-drive-iface-get-symbolic-icon :: <C-function-pointer>;
   pointer-type-name: <GDriveIface>;
 end C-struct;
 
-define constant $G-DRIVE-START-NONE = 0;
+define constant $g-drive-start-none = 0;
 define constant <GDriveStartFlags> = <C-int>;
 define C-pointer-type <GDriveStartFlags*> => <GDriveStartFlags>;
 
-define constant $G-DRIVE-START-STOP-TYPE-UNKNOWN = 0;
-define constant $G-DRIVE-START-STOP-TYPE-SHUTDOWN = 1;
-define constant $G-DRIVE-START-STOP-TYPE-NETWORK = 2;
-define constant $G-DRIVE-START-STOP-TYPE-MULTIDISK = 3;
-define constant $G-DRIVE-START-STOP-TYPE-PASSWORD = 4;
+define constant $g-drive-start-stop-type-unknown = 0;
+define constant $g-drive-start-stop-type-shutdown = 1;
+define constant $g-drive-start-stop-type-network = 2;
+define constant $g-drive-start-stop-type-multidisk = 3;
+define constant $g-drive-start-stop-type-password = 4;
 define constant <GDriveStartStopType> = <C-int>;
 define C-pointer-type <GDriveStartStopType*> => <GDriveStartStopType>;
 
@@ -4119,10 +4016,6 @@ end C-subtype;
 
 define C-pointer-type <GEmblem*> => <GEmblem>;
 
-define property-getter emblem-icon :: <GObject> on <GEmblem> end;
-define property-setter emblem-icon :: <GObject> on <GEmblem> end;
-define property-getter emblem-origin :: <GEmblemOrigin> on <GEmblem> end;
-define property-setter emblem-origin :: <GEmblemOrigin> on <GEmblem> end;
 define C-function g-emblem-new
   input parameter icon_ :: <GIcon>;
   result res :: <GEmblem>;
@@ -4152,22 +4045,20 @@ define C-struct <_GEmblemClass>
   pointer-type-name: <GEmblemClass>;
 end C-struct;
 
-define constant $G-EMBLEM-ORIGIN-UNKNOWN = 0;
-define constant $G-EMBLEM-ORIGIN-DEVICE = 1;
-define constant $G-EMBLEM-ORIGIN-LIVEMETADATA = 2;
-define constant $G-EMBLEM-ORIGIN-TAG = 3;
+define constant $g-emblem-origin-unknown = 0;
+define constant $g-emblem-origin-device = 1;
+define constant $g-emblem-origin-livemetadata = 2;
+define constant $g-emblem-origin-tag = 3;
 define constant <GEmblemOrigin> = <C-int>;
 define C-pointer-type <GEmblemOrigin*> => <GEmblemOrigin>;
 
 define open C-subtype <GEmblemedIcon> (<GObject>)
-  constant slot gemblemedicon-parent-instance :: <GObject>;
-  constant slot gemblemedicon-priv :: <GEmblemedIconPrivate>;
+  constant slot g-emblemed-icon-parent-instance :: <GObject>;
+  constant slot g-emblemed-icon-priv :: <GEmblemedIconPrivate>;
 end C-subtype;
 
 define C-pointer-type <GEmblemedIcon*> => <GEmblemedIcon>;
 
-define property-getter emblemedicon-gicon :: <GIcon> on <GEmblemedIcon> end;
-define property-setter emblemedicon-gicon :: <GIcon> on <GEmblemedIcon> end;
 define C-function g-emblemed-icon-new
   input parameter icon_ :: <GIcon>;
   input parameter emblem_ :: <GEmblem>;
@@ -4199,7 +4090,7 @@ define C-function g-emblemed-icon-get-icon
 end;
 
 define C-struct <_GEmblemedIconClass>
-  constant slot gemblemediconclass-parent-class :: <GObjectClass>;
+  constant slot g-emblemed-icon-class-parent-class :: <GObjectClass>;
   pointer-type-name: <GEmblemedIconClass>;
 end C-struct;
 
@@ -4207,159 +4098,159 @@ define C-struct <_GEmblemedIconPrivate>
   pointer-type-name: <GEmblemedIconPrivate>;
 end C-struct;
 
-define constant $FILE-ATTRIBUTE-ACCESS-CAN-DELETE = "access::can-delete";
+define constant $file-attribute-access-can-delete = "access::can-delete";
 
-define constant $FILE-ATTRIBUTE-ACCESS-CAN-EXECUTE = "access::can-execute";
+define constant $file-attribute-access-can-execute = "access::can-execute";
 
-define constant $FILE-ATTRIBUTE-ACCESS-CAN-READ = "access::can-read";
+define constant $file-attribute-access-can-read = "access::can-read";
 
-define constant $FILE-ATTRIBUTE-ACCESS-CAN-RENAME = "access::can-rename";
+define constant $file-attribute-access-can-rename = "access::can-rename";
 
-define constant $FILE-ATTRIBUTE-ACCESS-CAN-TRASH = "access::can-trash";
+define constant $file-attribute-access-can-trash = "access::can-trash";
 
-define constant $FILE-ATTRIBUTE-ACCESS-CAN-WRITE = "access::can-write";
+define constant $file-attribute-access-can-write = "access::can-write";
 
-define constant $FILE-ATTRIBUTE-DOS-IS-ARCHIVE = "dos::is-archive";
+define constant $file-attribute-dos-is-archive = "dos::is-archive";
 
-define constant $FILE-ATTRIBUTE-DOS-IS-SYSTEM = "dos::is-system";
+define constant $file-attribute-dos-is-system = "dos::is-system";
 
-define constant $FILE-ATTRIBUTE-ETAG-VALUE = "etag::value";
+define constant $file-attribute-etag-value = "etag::value";
 
-define constant $FILE-ATTRIBUTE-FILESYSTEM-FREE = "filesystem::free";
+define constant $file-attribute-filesystem-free = "filesystem::free";
 
-define constant $FILE-ATTRIBUTE-FILESYSTEM-READONLY = "filesystem::readonly";
+define constant $file-attribute-filesystem-readonly = "filesystem::readonly";
 
-define constant $FILE-ATTRIBUTE-FILESYSTEM-SIZE = "filesystem::size";
+define constant $file-attribute-filesystem-size = "filesystem::size";
 
-define constant $FILE-ATTRIBUTE-FILESYSTEM-TYPE = "filesystem::type";
+define constant $file-attribute-filesystem-type = "filesystem::type";
 
-define constant $FILE-ATTRIBUTE-FILESYSTEM-USED = "filesystem::used";
+define constant $file-attribute-filesystem-used = "filesystem::used";
 
-define constant $FILE-ATTRIBUTE-FILESYSTEM-USE-PREVIEW = "filesystem::use-preview";
+define constant $file-attribute-filesystem-use-preview = "filesystem::use-preview";
 
-define constant $FILE-ATTRIBUTE-GVFS-BACKEND = "gvfs::backend";
+define constant $file-attribute-gvfs-backend = "gvfs::backend";
 
-define constant $FILE-ATTRIBUTE-ID-FILE = "id::file";
+define constant $file-attribute-id-file = "id::file";
 
-define constant $FILE-ATTRIBUTE-ID-FILESYSTEM = "id::filesystem";
+define constant $file-attribute-id-filesystem = "id::filesystem";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-CAN-EJECT = "mountable::can-eject";
+define constant $file-attribute-mountable-can-eject = "mountable::can-eject";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-CAN-MOUNT = "mountable::can-mount";
+define constant $file-attribute-mountable-can-mount = "mountable::can-mount";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-CAN-POLL = "mountable::can-poll";
+define constant $file-attribute-mountable-can-poll = "mountable::can-poll";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-CAN-START = "mountable::can-start";
+define constant $file-attribute-mountable-can-start = "mountable::can-start";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-CAN-START-DEGRADED = "mountable::can-start-degraded";
+define constant $file-attribute-mountable-can-start-degraded = "mountable::can-start-degraded";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-CAN-STOP = "mountable::can-stop";
+define constant $file-attribute-mountable-can-stop = "mountable::can-stop";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-CAN-UNMOUNT = "mountable::can-unmount";
+define constant $file-attribute-mountable-can-unmount = "mountable::can-unmount";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-HAL-UDI = "mountable::hal-udi";
+define constant $file-attribute-mountable-hal-udi = "mountable::hal-udi";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-IS-MEDIA-CHECK-AUTOMATIC = "mountable::is-media-check-automatic";
+define constant $file-attribute-mountable-is-media-check-automatic = "mountable::is-media-check-automatic";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-START-STOP-TYPE = "mountable::start-stop-type";
+define constant $file-attribute-mountable-start-stop-type = "mountable::start-stop-type";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-UNIX-DEVICE = "mountable::unix-device";
+define constant $file-attribute-mountable-unix-device = "mountable::unix-device";
 
-define constant $FILE-ATTRIBUTE-MOUNTABLE-UNIX-DEVICE-FILE = "mountable::unix-device-file";
+define constant $file-attribute-mountable-unix-device-file = "mountable::unix-device-file";
 
-define constant $FILE-ATTRIBUTE-OWNER-GROUP = "owner::group";
+define constant $file-attribute-owner-group = "owner::group";
 
-define constant $FILE-ATTRIBUTE-OWNER-USER = "owner::user";
+define constant $file-attribute-owner-user = "owner::user";
 
-define constant $FILE-ATTRIBUTE-OWNER-USER-REAL = "owner::user-real";
+define constant $file-attribute-owner-user-real = "owner::user-real";
 
-define constant $FILE-ATTRIBUTE-PREVIEW-ICON = "preview::icon";
+define constant $file-attribute-preview-icon = "preview::icon";
 
-define constant $FILE-ATTRIBUTE-SELINUX-CONTEXT = "selinux::context";
+define constant $file-attribute-selinux-context = "selinux::context";
 
-define constant $FILE-ATTRIBUTE-STANDARD-ALLOCATED-SIZE = "standard::allocated-size";
+define constant $file-attribute-standard-allocated-size = "standard::allocated-size";
 
-define constant $FILE-ATTRIBUTE-STANDARD-CONTENT-TYPE = "standard::content-type";
+define constant $file-attribute-standard-content-type = "standard::content-type";
 
-define constant $FILE-ATTRIBUTE-STANDARD-COPY-NAME = "standard::copy-name";
+define constant $file-attribute-standard-copy-name = "standard::copy-name";
 
-define constant $FILE-ATTRIBUTE-STANDARD-DESCRIPTION = "standard::description";
+define constant $file-attribute-standard-description = "standard::description";
 
-define constant $FILE-ATTRIBUTE-STANDARD-DISPLAY-NAME = "standard::display-name";
+define constant $file-attribute-standard-display-name = "standard::display-name";
 
-define constant $FILE-ATTRIBUTE-STANDARD-EDIT-NAME = "standard::edit-name";
+define constant $file-attribute-standard-edit-name = "standard::edit-name";
 
-define constant $FILE-ATTRIBUTE-STANDARD-FAST-CONTENT-TYPE = "standard::fast-content-type";
+define constant $file-attribute-standard-fast-content-type = "standard::fast-content-type";
 
-define constant $FILE-ATTRIBUTE-STANDARD-ICON = "standard::icon";
+define constant $file-attribute-standard-icon = "standard::icon";
 
-define constant $FILE-ATTRIBUTE-STANDARD-IS-BACKUP = "standard::is-backup";
+define constant $file-attribute-standard-is-backup = "standard::is-backup";
 
-define constant $FILE-ATTRIBUTE-STANDARD-IS-HIDDEN = "standard::is-hidden";
+define constant $file-attribute-standard-is-hidden = "standard::is-hidden";
 
-define constant $FILE-ATTRIBUTE-STANDARD-IS-SYMLINK = "standard::is-symlink";
+define constant $file-attribute-standard-is-symlink = "standard::is-symlink";
 
-define constant $FILE-ATTRIBUTE-STANDARD-IS-VIRTUAL = "standard::is-virtual";
+define constant $file-attribute-standard-is-virtual = "standard::is-virtual";
 
-define constant $FILE-ATTRIBUTE-STANDARD-NAME = "standard::name";
+define constant $file-attribute-standard-name = "standard::name";
 
-define constant $FILE-ATTRIBUTE-STANDARD-SIZE = "standard::size";
+define constant $file-attribute-standard-size = "standard::size";
 
-define constant $FILE-ATTRIBUTE-STANDARD-SORT-ORDER = "standard::sort-order";
+define constant $file-attribute-standard-sort-order = "standard::sort-order";
 
-define constant $FILE-ATTRIBUTE-STANDARD-SYMBOLIC-ICON = "standard::symbolic-icon";
+define constant $file-attribute-standard-symbolic-icon = "standard::symbolic-icon";
 
-define constant $FILE-ATTRIBUTE-STANDARD-SYMLINK-TARGET = "standard::symlink-target";
+define constant $file-attribute-standard-symlink-target = "standard::symlink-target";
 
-define constant $FILE-ATTRIBUTE-STANDARD-TARGET-URI = "standard::target-uri";
+define constant $file-attribute-standard-target-uri = "standard::target-uri";
 
-define constant $FILE-ATTRIBUTE-STANDARD-TYPE = "standard::type";
+define constant $file-attribute-standard-type = "standard::type";
 
-define constant $FILE-ATTRIBUTE-THUMBNAILING-FAILED = "thumbnail::failed";
+define constant $file-attribute-thumbnailing-failed = "thumbnail::failed";
 
-define constant $FILE-ATTRIBUTE-THUMBNAIL-PATH = "thumbnail::path";
+define constant $file-attribute-thumbnail-path = "thumbnail::path";
 
-define constant $FILE-ATTRIBUTE-TIME-ACCESS = "time::access";
+define constant $file-attribute-time-access = "time::access";
 
-define constant $FILE-ATTRIBUTE-TIME-ACCESS-USEC = "time::access-usec";
+define constant $file-attribute-time-access-usec = "time::access-usec";
 
-define constant $FILE-ATTRIBUTE-TIME-CHANGED = "time::changed";
+define constant $file-attribute-time-changed = "time::changed";
 
-define constant $FILE-ATTRIBUTE-TIME-CHANGED-USEC = "time::changed-usec";
+define constant $file-attribute-time-changed-usec = "time::changed-usec";
 
-define constant $FILE-ATTRIBUTE-TIME-CREATED = "time::created";
+define constant $file-attribute-time-created = "time::created";
 
-define constant $FILE-ATTRIBUTE-TIME-CREATED-USEC = "time::created-usec";
+define constant $file-attribute-time-created-usec = "time::created-usec";
 
-define constant $FILE-ATTRIBUTE-TIME-MODIFIED = "time::modified";
+define constant $file-attribute-time-modified = "time::modified";
 
-define constant $FILE-ATTRIBUTE-TIME-MODIFIED-USEC = "time::modified-usec";
+define constant $file-attribute-time-modified-usec = "time::modified-usec";
 
-define constant $FILE-ATTRIBUTE-TRASH-DELETION-DATE = "trash::deletion-date";
+define constant $file-attribute-trash-deletion-date = "trash::deletion-date";
 
-define constant $FILE-ATTRIBUTE-TRASH-ITEM-COUNT = "trash::item-count";
+define constant $file-attribute-trash-item-count = "trash::item-count";
 
-define constant $FILE-ATTRIBUTE-TRASH-ORIG-PATH = "trash::orig-path";
+define constant $file-attribute-trash-orig-path = "trash::orig-path";
 
-define constant $FILE-ATTRIBUTE-UNIX-BLOCKS = "unix::blocks";
+define constant $file-attribute-unix-blocks = "unix::blocks";
 
-define constant $FILE-ATTRIBUTE-UNIX-BLOCK-SIZE = "unix::block-size";
+define constant $file-attribute-unix-block-size = "unix::block-size";
 
-define constant $FILE-ATTRIBUTE-UNIX-DEVICE = "unix::device";
+define constant $file-attribute-unix-device = "unix::device";
 
-define constant $FILE-ATTRIBUTE-UNIX-GID = "unix::gid";
+define constant $file-attribute-unix-gid = "unix::gid";
 
-define constant $FILE-ATTRIBUTE-UNIX-INODE = "unix::inode";
+define constant $file-attribute-unix-inode = "unix::inode";
 
-define constant $FILE-ATTRIBUTE-UNIX-IS-MOUNTPOINT = "unix::is-mountpoint";
+define constant $file-attribute-unix-is-mountpoint = "unix::is-mountpoint";
 
-define constant $FILE-ATTRIBUTE-UNIX-MODE = "unix::mode";
+define constant $file-attribute-unix-mode = "unix::mode";
 
-define constant $FILE-ATTRIBUTE-UNIX-NLINK = "unix::nlink";
+define constant $file-attribute-unix-nlink = "unix::nlink";
 
-define constant $FILE-ATTRIBUTE-UNIX-RDEV = "unix::rdev";
+define constant $file-attribute-unix-rdev = "unix::rdev";
 
-define constant $FILE-ATTRIBUTE-UNIX-UID = "unix::uid";
+define constant $file-attribute-unix-uid = "unix::uid";
 
 // Interface
 define open C-subtype <GFile> (<C-void*>)
@@ -5298,21 +5189,21 @@ define C-function g-file-unmount-mountable-with-operation-finish
 end;
 
 define C-struct <_GFileAttributeInfo>
-  slot gfileattributeinfo-name :: <C-string>;
-  slot gfileattributeinfo-type :: <GFileAttributeType>;
-  slot gfileattributeinfo-flags :: <GFileAttributeInfoFlags>;
+  slot g-file-attribute-info-name :: <C-string>;
+  slot g-file-attribute-info-type :: <GFileAttributeType>;
+  slot g-file-attribute-info-flags :: <GFileAttributeInfoFlags>;
   pointer-type-name: <GFileAttributeInfo>;
 end C-struct;
 
-define constant $G-FILE-ATTRIBUTE-INFO-NONE = 0;
-define constant $G-FILE-ATTRIBUTE-INFO-COPY-WITH-FILE = 1;
-define constant $G-FILE-ATTRIBUTE-INFO-COPY-WHEN-MOVED = 2;
+define constant $g-file-attribute-info-none = 0;
+define constant $g-file-attribute-info-copy-with-file = 1;
+define constant $g-file-attribute-info-copy-when-moved = 2;
 define constant <GFileAttributeInfoFlags> = <C-int>;
 define C-pointer-type <GFileAttributeInfoFlags*> => <GFileAttributeInfoFlags>;
 
 define C-struct <_GFileAttributeInfoList>
-  slot gfileattributeinfolist-infos :: <GFileAttributeInfo>;
-  slot gfileattributeinfolist-n-infos :: <C-signed-int>;
+  slot g-file-attribute-info-list-infos :: <GFileAttributeInfo>;
+  slot g-file-attribute-info-list-n-infos :: <C-signed-int>;
   pointer-type-name: <GFileAttributeInfoList>;
 end C-struct;
 
@@ -5414,38 +5305,38 @@ define C-function g-file-attribute-matcher-unref
   c-name: "g_file_attribute_matcher_unref";
 end;
 
-define constant $G-FILE-ATTRIBUTE-STATUS-UNSET = 0;
-define constant $G-FILE-ATTRIBUTE-STATUS-SET = 1;
-define constant $G-FILE-ATTRIBUTE-STATUS-ERROR-SETTING = 2;
+define constant $g-file-attribute-status-unset = 0;
+define constant $g-file-attribute-status-set = 1;
+define constant $g-file-attribute-status-error-setting = 2;
 define constant <GFileAttributeStatus> = <C-int>;
 define C-pointer-type <GFileAttributeStatus*> => <GFileAttributeStatus>;
 
-define constant $G-FILE-ATTRIBUTE-TYPE-INVALID = 0;
-define constant $G-FILE-ATTRIBUTE-TYPE-STRING = 1;
-define constant $G-FILE-ATTRIBUTE-TYPE-BYTE-STRING = 2;
-define constant $G-FILE-ATTRIBUTE-TYPE-BOOLEAN = 3;
-define constant $G-FILE-ATTRIBUTE-TYPE-UINT32 = 4;
-define constant $G-FILE-ATTRIBUTE-TYPE-INT32 = 5;
-define constant $G-FILE-ATTRIBUTE-TYPE-UINT64 = 6;
-define constant $G-FILE-ATTRIBUTE-TYPE-INT64 = 7;
-define constant $G-FILE-ATTRIBUTE-TYPE-OBJECT = 8;
-define constant $G-FILE-ATTRIBUTE-TYPE-STRINGV = 9;
+define constant $g-file-attribute-type-invalid = 0;
+define constant $g-file-attribute-type-string = 1;
+define constant $g-file-attribute-type-byte-string = 2;
+define constant $g-file-attribute-type-boolean = 3;
+define constant $g-file-attribute-type-uint32 = 4;
+define constant $g-file-attribute-type-int32 = 5;
+define constant $g-file-attribute-type-uint64 = 6;
+define constant $g-file-attribute-type-int64 = 7;
+define constant $g-file-attribute-type-object = 8;
+define constant $g-file-attribute-type-stringv = 9;
 define constant <GFileAttributeType> = <C-int>;
 define C-pointer-type <GFileAttributeType*> => <GFileAttributeType>;
 
-define constant $G-FILE-COPY-NONE = 0;
-define constant $G-FILE-COPY-OVERWRITE = 1;
-define constant $G-FILE-COPY-BACKUP = 2;
-define constant $G-FILE-COPY-NOFOLLOW-SYMLINKS = 4;
-define constant $G-FILE-COPY-ALL-METADATA = 8;
-define constant $G-FILE-COPY-NO-FALLBACK-FOR-MOVE = 16;
-define constant $G-FILE-COPY-TARGET-DEFAULT-PERMS = 32;
+define constant $g-file-copy-none = 0;
+define constant $g-file-copy-overwrite = 1;
+define constant $g-file-copy-backup = 2;
+define constant $g-file-copy-nofollow-symlinks = 4;
+define constant $g-file-copy-all-metadata = 8;
+define constant $g-file-copy-no-fallback-for-move = 16;
+define constant $g-file-copy-target-default-perms = 32;
 define constant <GFileCopyFlags> = <C-int>;
 define C-pointer-type <GFileCopyFlags*> => <GFileCopyFlags>;
 
-define constant $G-FILE-CREATE-NONE = 0;
-define constant $G-FILE-CREATE-PRIVATE = 1;
-define constant $G-FILE-CREATE-REPLACE-DESTINATION = 2;
+define constant $g-file-create-none = 0;
+define constant $g-file-create-private = 1;
+define constant $g-file-create-replace-destination = 2;
 define constant <GFileCreateFlags> = <C-int>;
 define C-pointer-type <GFileCreateFlags*> => <GFileCreateFlags>;
 
@@ -5462,19 +5353,18 @@ define C-function g-file-descriptor-based-get-fd
 end;
 
 define C-struct <_GFileDescriptorBasedIface>
-  constant slot gfiledescriptorbasediface-g-iface :: <GTypeInterface>;
-  constant slot gfiledescriptorbasediface-get-fd :: <C-function-pointer>;
+  constant slot g-file-descriptor-based-iface-g-iface :: <GTypeInterface>;
+  constant slot g-file-descriptor-based-iface-get-fd :: <C-function-pointer>;
   pointer-type-name: <GFileDescriptorBasedIface>;
 end C-struct;
 
 define open C-subtype <GFileEnumerator> (<GObject>)
-  constant slot gfileenumerator-parent-instance :: <GObject>;
-  constant slot gfileenumerator-priv :: <GFileEnumeratorPrivate>;
+  constant slot g-file-enumerator-parent-instance :: <GObject>;
+  constant slot g-file-enumerator-priv :: <GFileEnumeratorPrivate>;
 end C-subtype;
 
 define C-pointer-type <GFileEnumerator*> => <GFileEnumerator>;
 
-define property-setter fileenumerator-container :: <GFile> on <GFileEnumerator> end;
 define C-function g-file-enumerator-close
   input parameter self :: <GFileEnumerator>;
   input parameter cancellable_ :: <GCancellable>;
@@ -5554,20 +5444,20 @@ define C-function g-file-enumerator-set-pending
 end;
 
 define C-struct <_GFileEnumeratorClass>
-  constant slot gfileenumeratorclass-parent-class :: <GObjectClass>;
-  constant slot gfileenumeratorclass-next-file :: <C-function-pointer>;
-  constant slot gfileenumeratorclass-close-fn :: <C-function-pointer>;
-  constant slot gfileenumeratorclass-next-files-async :: <C-function-pointer>;
-  constant slot gfileenumeratorclass-next-files-finish :: <C-function-pointer>;
-  constant slot gfileenumeratorclass-close-async :: <C-function-pointer>;
-  constant slot gfileenumeratorclass-close-finish :: <C-function-pointer>;
-  constant slot gfileenumeratorclass--g-reserved1 :: <C-void*>;
-  constant slot gfileenumeratorclass--g-reserved2 :: <C-void*>;
-  constant slot gfileenumeratorclass--g-reserved3 :: <C-void*>;
-  constant slot gfileenumeratorclass--g-reserved4 :: <C-void*>;
-  constant slot gfileenumeratorclass--g-reserved5 :: <C-void*>;
-  constant slot gfileenumeratorclass--g-reserved6 :: <C-void*>;
-  constant slot gfileenumeratorclass--g-reserved7 :: <C-void*>;
+  constant slot g-file-enumerator-class-parent-class :: <GObjectClass>;
+  constant slot g-file-enumerator-class-next-file :: <C-function-pointer>;
+  constant slot g-file-enumerator-class-close-fn :: <C-function-pointer>;
+  constant slot g-file-enumerator-class-next-files-async :: <C-function-pointer>;
+  constant slot g-file-enumerator-class-next-files-finish :: <C-function-pointer>;
+  constant slot g-file-enumerator-class-close-async :: <C-function-pointer>;
+  constant slot g-file-enumerator-class-close-finish :: <C-function-pointer>;
+  constant slot g-file-enumerator-class-_g-reserved1 :: <C-void*>;
+  constant slot g-file-enumerator-class-_g-reserved2 :: <C-void*>;
+  constant slot g-file-enumerator-class-_g-reserved3 :: <C-void*>;
+  constant slot g-file-enumerator-class-_g-reserved4 :: <C-void*>;
+  constant slot g-file-enumerator-class-_g-reserved5 :: <C-void*>;
+  constant slot g-file-enumerator-class-_g-reserved6 :: <C-void*>;
+  constant slot g-file-enumerator-class-_g-reserved7 :: <C-void*>;
   pointer-type-name: <GFileEnumeratorClass>;
 end C-struct;
 
@@ -5576,8 +5466,8 @@ define C-struct <_GFileEnumeratorPrivate>
 end C-struct;
 
 define open C-subtype <GFileIOStream> (<GIOStream>)
-  constant slot gfileiostream-parent-instance :: <GIOStream>;
-  constant slot gfileiostream-priv :: <GFileIOStreamPrivate>;
+  constant slot g-file-io-stream-parent-instance :: <GIOStream>;
+  constant slot g-file-io-stream-priv :: <GFileIOStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GFileIOStream*> => <GFileIOStream>;
@@ -5614,21 +5504,21 @@ define C-function g-file-io-stream-query-info-finish
 end;
 
 define C-struct <_GFileIOStreamClass>
-  constant slot gfileiostreamclass-parent-class :: <GIOStreamClass>;
-  constant slot gfileiostreamclass-tell :: <C-function-pointer>;
-  constant slot gfileiostreamclass-can-seek :: <C-function-pointer>;
-  constant slot gfileiostreamclass-seek :: <C-function-pointer>;
-  constant slot gfileiostreamclass-can-truncate :: <C-function-pointer>;
-  constant slot gfileiostreamclass-truncate-fn :: <C-function-pointer>;
-  constant slot gfileiostreamclass-query-info :: <C-function-pointer>;
-  constant slot gfileiostreamclass-query-info-async :: <C-function-pointer>;
-  constant slot gfileiostreamclass-query-info-finish :: <C-function-pointer>;
-  constant slot gfileiostreamclass-get-etag :: <C-function-pointer>;
-  constant slot gfileiostreamclass--g-reserved1 :: <C-void*>;
-  constant slot gfileiostreamclass--g-reserved2 :: <C-void*>;
-  constant slot gfileiostreamclass--g-reserved3 :: <C-void*>;
-  constant slot gfileiostreamclass--g-reserved4 :: <C-void*>;
-  constant slot gfileiostreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-file-io-stream-class-parent-class :: <GIOStreamClass>;
+  constant slot g-file-io-stream-class-tell :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-can-seek :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-seek :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-can-truncate :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-truncate-fn :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-query-info :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-query-info-async :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-query-info-finish :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-get-etag :: <C-function-pointer>;
+  constant slot g-file-io-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-file-io-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-file-io-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-file-io-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-file-io-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GFileIOStreamClass>;
 end C-struct;
 
@@ -5641,8 +5531,6 @@ end C-subtype;
 
 define C-pointer-type <GFileIcon*> => <GFileIcon>;
 
-define property-getter fileicon-file :: <GFile> on <GFileIcon> end;
-define property-setter fileicon-file :: <GFile> on <GFileIcon> end;
 define C-function g-file-icon-new
   input parameter file_ :: <GFile>;
   result res :: <GFileIcon>;
@@ -5660,107 +5548,107 @@ define C-struct <_GFileIconClass>
 end C-struct;
 
 define C-struct <_GFileIface>
-  constant slot gfileiface-g-iface :: <GTypeInterface>;
-  constant slot gfileiface-dup :: <C-function-pointer>;
-  constant slot gfileiface-hash :: <C-function-pointer>;
-  constant slot gfileiface-equal :: <C-function-pointer>;
-  constant slot gfileiface-is-native :: <C-function-pointer>;
-  constant slot gfileiface-has-uri-scheme :: <C-function-pointer>;
-  constant slot gfileiface-get-uri-scheme :: <C-function-pointer>;
-  constant slot gfileiface-get-basename :: <C-function-pointer>;
-  constant slot gfileiface-get-path :: <C-function-pointer>;
-  constant slot gfileiface-get-uri :: <C-function-pointer>;
-  constant slot gfileiface-get-parse-name :: <C-function-pointer>;
-  constant slot gfileiface-get-parent :: <C-function-pointer>;
-  constant slot gfileiface-prefix-matches :: <C-function-pointer>;
-  constant slot gfileiface-get-relative-path :: <C-function-pointer>;
-  constant slot gfileiface-resolve-relative-path :: <C-function-pointer>;
-  constant slot gfileiface-get-child-for-display-name :: <C-function-pointer>;
-  constant slot gfileiface-enumerate-children :: <C-function-pointer>;
-  constant slot gfileiface-enumerate-children-async :: <C-function-pointer>;
-  constant slot gfileiface-enumerate-children-finish :: <C-function-pointer>;
-  constant slot gfileiface-query-info :: <C-function-pointer>;
-  constant slot gfileiface-query-info-async :: <C-function-pointer>;
-  constant slot gfileiface-query-info-finish :: <C-function-pointer>;
-  constant slot gfileiface-query-filesystem-info :: <C-function-pointer>;
-  constant slot gfileiface-query-filesystem-info-async :: <C-function-pointer>;
-  constant slot gfileiface-query-filesystem-info-finish :: <C-function-pointer>;
-  constant slot gfileiface-find-enclosing-mount :: <C-function-pointer>;
-  constant slot gfileiface-find-enclosing-mount-async :: <C-function-pointer>;
-  constant slot gfileiface-find-enclosing-mount-finish :: <C-function-pointer>;
-  constant slot gfileiface-set-display-name :: <C-function-pointer>;
-  constant slot gfileiface-set-display-name-async :: <C-function-pointer>;
-  constant slot gfileiface-set-display-name-finish :: <C-function-pointer>;
-  constant slot gfileiface-query-settable-attributes :: <C-function-pointer>;
-  constant slot gfileiface--query-settable-attributes-async :: <C-void*>;
-  constant slot gfileiface--query-settable-attributes-finish :: <C-void*>;
-  constant slot gfileiface-query-writable-namespaces :: <C-function-pointer>;
-  constant slot gfileiface--query-writable-namespaces-async :: <C-void*>;
-  constant slot gfileiface--query-writable-namespaces-finish :: <C-void*>;
-  constant slot gfileiface-set-attribute :: <C-function-pointer>;
-  constant slot gfileiface-set-attributes-from-info :: <C-function-pointer>;
-  constant slot gfileiface-set-attributes-async :: <C-function-pointer>;
-  constant slot gfileiface-set-attributes-finish :: <C-function-pointer>;
-  constant slot gfileiface-read-fn :: <C-function-pointer>;
-  constant slot gfileiface-read-async :: <C-function-pointer>;
-  constant slot gfileiface-read-finish :: <C-function-pointer>;
-  constant slot gfileiface-append-to :: <C-function-pointer>;
-  constant slot gfileiface-append-to-async :: <C-function-pointer>;
-  constant slot gfileiface-append-to-finish :: <C-function-pointer>;
-  constant slot gfileiface-create :: <C-function-pointer>;
-  constant slot gfileiface-create-async :: <C-function-pointer>;
-  constant slot gfileiface-create-finish :: <C-function-pointer>;
-  constant slot gfileiface-replace :: <C-function-pointer>;
-  constant slot gfileiface-replace-async :: <C-function-pointer>;
-  constant slot gfileiface-replace-finish :: <C-function-pointer>;
-  constant slot gfileiface-delete-file :: <C-function-pointer>;
-  constant slot gfileiface-delete-file-async :: <C-function-pointer>;
-  constant slot gfileiface-delete-file-finish :: <C-function-pointer>;
-  constant slot gfileiface-trash :: <C-function-pointer>;
-  constant slot gfileiface--trash-async :: <C-void*>;
-  constant slot gfileiface--trash-finish :: <C-void*>;
-  constant slot gfileiface-make-directory :: <C-function-pointer>;
-  constant slot gfileiface--make-directory-async :: <C-void*>;
-  constant slot gfileiface--make-directory-finish :: <C-void*>;
-  constant slot gfileiface-make-symbolic-link :: <C-function-pointer>;
-  constant slot gfileiface--make-symbolic-link-async :: <C-void*>;
-  constant slot gfileiface--make-symbolic-link-finish :: <C-void*>;
-  constant slot gfileiface-copy :: <C-function-pointer>;
-  constant slot gfileiface-copy-async :: <C-void*>;
-  constant slot gfileiface-copy-finish :: <C-function-pointer>;
-  constant slot gfileiface-move :: <C-function-pointer>;
-  constant slot gfileiface--move-async :: <C-void*>;
-  constant slot gfileiface--move-finish :: <C-void*>;
-  constant slot gfileiface-mount-mountable :: <C-function-pointer>;
-  constant slot gfileiface-mount-mountable-finish :: <C-function-pointer>;
-  constant slot gfileiface-unmount-mountable :: <C-function-pointer>;
-  constant slot gfileiface-unmount-mountable-finish :: <C-function-pointer>;
-  constant slot gfileiface-eject-mountable :: <C-function-pointer>;
-  constant slot gfileiface-eject-mountable-finish :: <C-function-pointer>;
-  constant slot gfileiface-mount-enclosing-volume :: <C-function-pointer>;
-  constant slot gfileiface-mount-enclosing-volume-finish :: <C-function-pointer>;
-  constant slot gfileiface-monitor-dir :: <C-function-pointer>;
-  constant slot gfileiface-monitor-file :: <C-function-pointer>;
-  constant slot gfileiface-open-readwrite :: <C-function-pointer>;
-  constant slot gfileiface-open-readwrite-async :: <C-function-pointer>;
-  constant slot gfileiface-open-readwrite-finish :: <C-function-pointer>;
-  constant slot gfileiface-create-readwrite :: <C-function-pointer>;
-  constant slot gfileiface-create-readwrite-async :: <C-function-pointer>;
-  constant slot gfileiface-create-readwrite-finish :: <C-function-pointer>;
-  constant slot gfileiface-replace-readwrite :: <C-function-pointer>;
-  constant slot gfileiface-replace-readwrite-async :: <C-function-pointer>;
-  constant slot gfileiface-replace-readwrite-finish :: <C-function-pointer>;
-  constant slot gfileiface-start-mountable :: <C-function-pointer>;
-  constant slot gfileiface-start-mountable-finish :: <C-function-pointer>;
-  constant slot gfileiface-stop-mountable :: <C-function-pointer>;
-  constant slot gfileiface-stop-mountable-finish :: <C-function-pointer>;
-  constant slot gfileiface-supports-thread-contexts :: <C-boolean>;
-  constant slot gfileiface-unmount-mountable-with-operation :: <C-function-pointer>;
-  constant slot gfileiface-unmount-mountable-with-operation-finish :: <C-function-pointer>;
-  constant slot gfileiface-eject-mountable-with-operation :: <C-function-pointer>;
-  constant slot gfileiface-eject-mountable-with-operation-finish :: <C-function-pointer>;
-  constant slot gfileiface-poll-mountable :: <C-function-pointer>;
-  constant slot gfileiface-poll-mountable-finish :: <C-function-pointer>;
+  constant slot g-file-iface-g-iface :: <GTypeInterface>;
+  constant slot g-file-iface-dup :: <C-function-pointer>;
+  constant slot g-file-iface-hash :: <C-function-pointer>;
+  constant slot g-file-iface-equal :: <C-function-pointer>;
+  constant slot g-file-iface-is-native :: <C-function-pointer>;
+  constant slot g-file-iface-has-uri-scheme :: <C-function-pointer>;
+  constant slot g-file-iface-get-uri-scheme :: <C-function-pointer>;
+  constant slot g-file-iface-get-basename :: <C-function-pointer>;
+  constant slot g-file-iface-get-path :: <C-function-pointer>;
+  constant slot g-file-iface-get-uri :: <C-function-pointer>;
+  constant slot g-file-iface-get-parse-name :: <C-function-pointer>;
+  constant slot g-file-iface-get-parent :: <C-function-pointer>;
+  constant slot g-file-iface-prefix-matches :: <C-function-pointer>;
+  constant slot g-file-iface-get-relative-path :: <C-function-pointer>;
+  constant slot g-file-iface-resolve-relative-path :: <C-function-pointer>;
+  constant slot g-file-iface-get-child-for-display-name :: <C-function-pointer>;
+  constant slot g-file-iface-enumerate-children :: <C-function-pointer>;
+  constant slot g-file-iface-enumerate-children-async :: <C-function-pointer>;
+  constant slot g-file-iface-enumerate-children-finish :: <C-function-pointer>;
+  constant slot g-file-iface-query-info :: <C-function-pointer>;
+  constant slot g-file-iface-query-info-async :: <C-function-pointer>;
+  constant slot g-file-iface-query-info-finish :: <C-function-pointer>;
+  constant slot g-file-iface-query-filesystem-info :: <C-function-pointer>;
+  constant slot g-file-iface-query-filesystem-info-async :: <C-function-pointer>;
+  constant slot g-file-iface-query-filesystem-info-finish :: <C-function-pointer>;
+  constant slot g-file-iface-find-enclosing-mount :: <C-function-pointer>;
+  constant slot g-file-iface-find-enclosing-mount-async :: <C-function-pointer>;
+  constant slot g-file-iface-find-enclosing-mount-finish :: <C-function-pointer>;
+  constant slot g-file-iface-set-display-name :: <C-function-pointer>;
+  constant slot g-file-iface-set-display-name-async :: <C-function-pointer>;
+  constant slot g-file-iface-set-display-name-finish :: <C-function-pointer>;
+  constant slot g-file-iface-query-settable-attributes :: <C-function-pointer>;
+  constant slot g-file-iface-_query-settable-attributes-async :: <C-void*>;
+  constant slot g-file-iface-_query-settable-attributes-finish :: <C-void*>;
+  constant slot g-file-iface-query-writable-namespaces :: <C-function-pointer>;
+  constant slot g-file-iface-_query-writable-namespaces-async :: <C-void*>;
+  constant slot g-file-iface-_query-writable-namespaces-finish :: <C-void*>;
+  constant slot g-file-iface-set-attribute :: <C-function-pointer>;
+  constant slot g-file-iface-set-attributes-from-info :: <C-function-pointer>;
+  constant slot g-file-iface-set-attributes-async :: <C-function-pointer>;
+  constant slot g-file-iface-set-attributes-finish :: <C-function-pointer>;
+  constant slot g-file-iface-read-fn :: <C-function-pointer>;
+  constant slot g-file-iface-read-async :: <C-function-pointer>;
+  constant slot g-file-iface-read-finish :: <C-function-pointer>;
+  constant slot g-file-iface-append-to :: <C-function-pointer>;
+  constant slot g-file-iface-append-to-async :: <C-function-pointer>;
+  constant slot g-file-iface-append-to-finish :: <C-function-pointer>;
+  constant slot g-file-iface-create :: <C-function-pointer>;
+  constant slot g-file-iface-create-async :: <C-function-pointer>;
+  constant slot g-file-iface-create-finish :: <C-function-pointer>;
+  constant slot g-file-iface-replace :: <C-function-pointer>;
+  constant slot g-file-iface-replace-async :: <C-function-pointer>;
+  constant slot g-file-iface-replace-finish :: <C-function-pointer>;
+  constant slot g-file-iface-delete-file :: <C-function-pointer>;
+  constant slot g-file-iface-delete-file-async :: <C-function-pointer>;
+  constant slot g-file-iface-delete-file-finish :: <C-function-pointer>;
+  constant slot g-file-iface-trash :: <C-function-pointer>;
+  constant slot g-file-iface-_trash-async :: <C-void*>;
+  constant slot g-file-iface-_trash-finish :: <C-void*>;
+  constant slot g-file-iface-make-directory :: <C-function-pointer>;
+  constant slot g-file-iface-_make-directory-async :: <C-void*>;
+  constant slot g-file-iface-_make-directory-finish :: <C-void*>;
+  constant slot g-file-iface-make-symbolic-link :: <C-function-pointer>;
+  constant slot g-file-iface-_make-symbolic-link-async :: <C-void*>;
+  constant slot g-file-iface-_make-symbolic-link-finish :: <C-void*>;
+  constant slot g-file-iface-copy :: <C-function-pointer>;
+  constant slot g-file-iface-copy-async :: <C-void*>;
+  constant slot g-file-iface-copy-finish :: <C-function-pointer>;
+  constant slot g-file-iface-move :: <C-function-pointer>;
+  constant slot g-file-iface-_move-async :: <C-void*>;
+  constant slot g-file-iface-_move-finish :: <C-void*>;
+  constant slot g-file-iface-mount-mountable :: <C-function-pointer>;
+  constant slot g-file-iface-mount-mountable-finish :: <C-function-pointer>;
+  constant slot g-file-iface-unmount-mountable :: <C-function-pointer>;
+  constant slot g-file-iface-unmount-mountable-finish :: <C-function-pointer>;
+  constant slot g-file-iface-eject-mountable :: <C-function-pointer>;
+  constant slot g-file-iface-eject-mountable-finish :: <C-function-pointer>;
+  constant slot g-file-iface-mount-enclosing-volume :: <C-function-pointer>;
+  constant slot g-file-iface-mount-enclosing-volume-finish :: <C-function-pointer>;
+  constant slot g-file-iface-monitor-dir :: <C-function-pointer>;
+  constant slot g-file-iface-monitor-file :: <C-function-pointer>;
+  constant slot g-file-iface-open-readwrite :: <C-function-pointer>;
+  constant slot g-file-iface-open-readwrite-async :: <C-function-pointer>;
+  constant slot g-file-iface-open-readwrite-finish :: <C-function-pointer>;
+  constant slot g-file-iface-create-readwrite :: <C-function-pointer>;
+  constant slot g-file-iface-create-readwrite-async :: <C-function-pointer>;
+  constant slot g-file-iface-create-readwrite-finish :: <C-function-pointer>;
+  constant slot g-file-iface-replace-readwrite :: <C-function-pointer>;
+  constant slot g-file-iface-replace-readwrite-async :: <C-function-pointer>;
+  constant slot g-file-iface-replace-readwrite-finish :: <C-function-pointer>;
+  constant slot g-file-iface-start-mountable :: <C-function-pointer>;
+  constant slot g-file-iface-start-mountable-finish :: <C-function-pointer>;
+  constant slot g-file-iface-stop-mountable :: <C-function-pointer>;
+  constant slot g-file-iface-stop-mountable-finish :: <C-function-pointer>;
+  constant slot g-file-iface-supports-thread-contexts :: <C-boolean>;
+  constant slot g-file-iface-unmount-mountable-with-operation :: <C-function-pointer>;
+  constant slot g-file-iface-unmount-mountable-with-operation-finish :: <C-function-pointer>;
+  constant slot g-file-iface-eject-mountable-with-operation :: <C-function-pointer>;
+  constant slot g-file-iface-eject-mountable-with-operation-finish :: <C-function-pointer>;
+  constant slot g-file-iface-poll-mountable :: <C-function-pointer>;
+  constant slot g-file-iface-poll-mountable-finish :: <C-function-pointer>;
   pointer-type-name: <GFileIface>;
 end C-struct;
 
@@ -6181,8 +6069,8 @@ define C-struct <_GFileInfoClass>
 end C-struct;
 
 define open C-subtype <GFileInputStream> (<GInputStream>)
-  constant slot gfileinputstream-parent-instance :: <GInputStream>;
-  constant slot gfileinputstream-priv :: <GFileInputStreamPrivate>;
+  constant slot g-file-input-stream-parent-instance :: <GInputStream>;
+  constant slot g-file-input-stream-priv :: <GFileInputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GFileInputStream*> => <GFileInputStream>;
@@ -6213,18 +6101,18 @@ define C-function g-file-input-stream-query-info-finish
 end;
 
 define C-struct <_GFileInputStreamClass>
-  constant slot gfileinputstreamclass-parent-class :: <GInputStreamClass>;
-  constant slot gfileinputstreamclass-tell :: <C-function-pointer>;
-  constant slot gfileinputstreamclass-can-seek :: <C-function-pointer>;
-  constant slot gfileinputstreamclass-seek :: <C-function-pointer>;
-  constant slot gfileinputstreamclass-query-info :: <C-function-pointer>;
-  constant slot gfileinputstreamclass-query-info-async :: <C-function-pointer>;
-  constant slot gfileinputstreamclass-query-info-finish :: <C-function-pointer>;
-  constant slot gfileinputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gfileinputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gfileinputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gfileinputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gfileinputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-file-input-stream-class-parent-class :: <GInputStreamClass>;
+  constant slot g-file-input-stream-class-tell :: <C-function-pointer>;
+  constant slot g-file-input-stream-class-can-seek :: <C-function-pointer>;
+  constant slot g-file-input-stream-class-seek :: <C-function-pointer>;
+  constant slot g-file-input-stream-class-query-info :: <C-function-pointer>;
+  constant slot g-file-input-stream-class-query-info-async :: <C-function-pointer>;
+  constant slot g-file-input-stream-class-query-info-finish :: <C-function-pointer>;
+  constant slot g-file-input-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-file-input-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-file-input-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-file-input-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-file-input-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GFileInputStreamClass>;
 end C-struct;
 
@@ -6233,15 +6121,12 @@ define C-struct <_GFileInputStreamPrivate>
 end C-struct;
 
 define open C-subtype <GFileMonitor> (<GObject>)
-  constant slot gfilemonitor-parent-instance :: <GObject>;
-  constant slot gfilemonitor-priv :: <GFileMonitorPrivate>;
+  constant slot g-file-monitor-parent-instance :: <GObject>;
+  constant slot g-file-monitor-priv :: <GFileMonitorPrivate>;
 end C-subtype;
 
 define C-pointer-type <GFileMonitor*> => <GFileMonitor>;
 
-define property-getter filemonitor-cancelled :: <C-boolean> on <GFileMonitor> end;
-define property-getter filemonitor-rate-limit :: <C-signed-int> on <GFileMonitor> end;
-define property-setter filemonitor-rate-limit :: <C-signed-int> on <GFileMonitor> end;
 define C-function g-file-monitor-cancel
   input parameter self :: <GFileMonitor>;
   result res :: <C-boolean>;
@@ -6269,32 +6154,32 @@ define C-function g-file-monitor-set-rate-limit
 end;
 
 define C-struct <_GFileMonitorClass>
-  constant slot gfilemonitorclass-parent-class :: <GObjectClass>;
-  constant slot gfilemonitorclass-changed :: <C-function-pointer>;
-  constant slot gfilemonitorclass-cancel :: <C-function-pointer>;
-  constant slot gfilemonitorclass--g-reserved1 :: <C-void*>;
-  constant slot gfilemonitorclass--g-reserved2 :: <C-void*>;
-  constant slot gfilemonitorclass--g-reserved3 :: <C-void*>;
-  constant slot gfilemonitorclass--g-reserved4 :: <C-void*>;
-  constant slot gfilemonitorclass--g-reserved5 :: <C-void*>;
+  constant slot g-file-monitor-class-parent-class :: <GObjectClass>;
+  constant slot g-file-monitor-class-changed :: <C-function-pointer>;
+  constant slot g-file-monitor-class-cancel :: <C-function-pointer>;
+  constant slot g-file-monitor-class-_g-reserved1 :: <C-void*>;
+  constant slot g-file-monitor-class-_g-reserved2 :: <C-void*>;
+  constant slot g-file-monitor-class-_g-reserved3 :: <C-void*>;
+  constant slot g-file-monitor-class-_g-reserved4 :: <C-void*>;
+  constant slot g-file-monitor-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GFileMonitorClass>;
 end C-struct;
 
-define constant $G-FILE-MONITOR-EVENT-CHANGED = 0;
-define constant $G-FILE-MONITOR-EVENT-CHANGES-DONE-HINT = 1;
-define constant $G-FILE-MONITOR-EVENT-DELETED = 2;
-define constant $G-FILE-MONITOR-EVENT-CREATED = 3;
-define constant $G-FILE-MONITOR-EVENT-ATTRIBUTE-CHANGED = 4;
-define constant $G-FILE-MONITOR-EVENT-PRE-UNMOUNT = 5;
-define constant $G-FILE-MONITOR-EVENT-UNMOUNTED = 6;
-define constant $G-FILE-MONITOR-EVENT-MOVED = 7;
+define constant $g-file-monitor-event-changed = 0;
+define constant $g-file-monitor-event-changes-done-hint = 1;
+define constant $g-file-monitor-event-deleted = 2;
+define constant $g-file-monitor-event-created = 3;
+define constant $g-file-monitor-event-attribute-changed = 4;
+define constant $g-file-monitor-event-pre-unmount = 5;
+define constant $g-file-monitor-event-unmounted = 6;
+define constant $g-file-monitor-event-moved = 7;
 define constant <GFileMonitorEvent> = <C-int>;
 define C-pointer-type <GFileMonitorEvent*> => <GFileMonitorEvent>;
 
-define constant $G-FILE-MONITOR-NONE = 0;
-define constant $G-FILE-MONITOR-WATCH-MOUNTS = 1;
-define constant $G-FILE-MONITOR-SEND-MOVED = 2;
-define constant $G-FILE-MONITOR-WATCH-HARD-LINKS = 4;
+define constant $g-file-monitor-none = 0;
+define constant $g-file-monitor-watch-mounts = 1;
+define constant $g-file-monitor-send-moved = 2;
+define constant $g-file-monitor-watch-hard-links = 4;
 define constant <GFileMonitorFlags> = <C-int>;
 define C-pointer-type <GFileMonitorFlags*> => <GFileMonitorFlags>;
 
@@ -6303,8 +6188,8 @@ define C-struct <_GFileMonitorPrivate>
 end C-struct;
 
 define open C-subtype <GFileOutputStream> (<GOutputStream>)
-  constant slot gfileoutputstream-parent-instance :: <GOutputStream>;
-  constant slot gfileoutputstream-priv :: <GFileOutputStreamPrivate>;
+  constant slot g-file-output-stream-parent-instance :: <GOutputStream>;
+  constant slot g-file-output-stream-priv :: <GFileOutputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GFileOutputStream*> => <GFileOutputStream>;
@@ -6341,21 +6226,21 @@ define C-function g-file-output-stream-query-info-finish
 end;
 
 define C-struct <_GFileOutputStreamClass>
-  constant slot gfileoutputstreamclass-parent-class :: <GOutputStreamClass>;
-  constant slot gfileoutputstreamclass-tell :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass-can-seek :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass-seek :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass-can-truncate :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass-truncate-fn :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass-query-info :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass-query-info-async :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass-query-info-finish :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass-get-etag :: <C-function-pointer>;
-  constant slot gfileoutputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gfileoutputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gfileoutputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gfileoutputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gfileoutputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-file-output-stream-class-parent-class :: <GOutputStreamClass>;
+  constant slot g-file-output-stream-class-tell :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-can-seek :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-seek :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-can-truncate :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-truncate-fn :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-query-info :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-query-info-async :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-query-info-finish :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-get-etag :: <C-function-pointer>;
+  constant slot g-file-output-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-file-output-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-file-output-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-file-output-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-file-output-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GFileOutputStreamClass>;
 end C-struct;
 
@@ -6363,18 +6248,18 @@ define C-struct <_GFileOutputStreamPrivate>
   pointer-type-name: <GFileOutputStreamPrivate>;
 end C-struct;
 
-define constant $G-FILE-QUERY-INFO-NONE = 0;
-define constant $G-FILE-QUERY-INFO-NOFOLLOW-SYMLINKS = 1;
+define constant $g-file-query-info-none = 0;
+define constant $g-file-query-info-nofollow-symlinks = 1;
 define constant <GFileQueryInfoFlags> = <C-int>;
 define C-pointer-type <GFileQueryInfoFlags*> => <GFileQueryInfoFlags>;
 
-define constant $G-FILE-TYPE-UNKNOWN = 0;
-define constant $G-FILE-TYPE-REGULAR = 1;
-define constant $G-FILE-TYPE-DIRECTORY = 2;
-define constant $G-FILE-TYPE-SYMBOLIC-LINK = 3;
-define constant $G-FILE-TYPE-SPECIAL = 4;
-define constant $G-FILE-TYPE-SHORTCUT = 5;
-define constant $G-FILE-TYPE-MOUNTABLE = 6;
+define constant $g-file-type-unknown = 0;
+define constant $g-file-type-regular = 1;
+define constant $g-file-type-directory = 2;
+define constant $g-file-type-symbolic-link = 3;
+define constant $g-file-type-special = 4;
+define constant $g-file-type-shortcut = 5;
+define constant $g-file-type-mountable = 6;
 define constant <GFileType> = <C-int>;
 define C-pointer-type <GFileType*> => <GFileType>;
 
@@ -6409,31 +6294,27 @@ define C-function g-filename-completer-set-dirs-only
 end;
 
 define C-struct <_GFilenameCompleterClass>
-  constant slot gfilenamecompleterclass-parent-class :: <GObjectClass>;
-  constant slot gfilenamecompleterclass-got-completion-data :: <C-function-pointer>;
-  constant slot gfilenamecompleterclass--g-reserved1 :: <C-void*>;
-  constant slot gfilenamecompleterclass--g-reserved2 :: <C-void*>;
-  constant slot gfilenamecompleterclass--g-reserved3 :: <C-void*>;
+  constant slot g-filename-completer-class-parent-class :: <GObjectClass>;
+  constant slot g-filename-completer-class-got-completion-data :: <C-function-pointer>;
+  constant slot g-filename-completer-class-_g-reserved1 :: <C-void*>;
+  constant slot g-filename-completer-class-_g-reserved2 :: <C-void*>;
+  constant slot g-filename-completer-class-_g-reserved3 :: <C-void*>;
   pointer-type-name: <GFilenameCompleterClass>;
 end C-struct;
 
-define constant $G-FILESYSTEM-PREVIEW-TYPE-IF-ALWAYS = 0;
-define constant $G-FILESYSTEM-PREVIEW-TYPE-IF-LOCAL = 1;
-define constant $G-FILESYSTEM-PREVIEW-TYPE-NEVER = 2;
+define constant $g-filesystem-preview-type-if-always = 0;
+define constant $g-filesystem-preview-type-if-local = 1;
+define constant $g-filesystem-preview-type-never = 2;
 define constant <GFilesystemPreviewType> = <C-int>;
 define C-pointer-type <GFilesystemPreviewType*> => <GFilesystemPreviewType>;
 
 define open C-subtype <GFilterInputStream> (<GInputStream>)
-  constant slot gfilterinputstream-parent-instance :: <GInputStream>;
-  constant slot gfilterinputstream-base-stream :: <GInputStream>;
+  constant slot g-filter-input-stream-parent-instance :: <GInputStream>;
+  constant slot g-filter-input-stream-base-stream :: <GInputStream>;
 end C-subtype;
 
 define C-pointer-type <GFilterInputStream*> => <GFilterInputStream>;
 
-define property-getter filterinputstream-base-stream :: <GInputStream> on <GFilterInputStream> end;
-define property-setter filterinputstream-base-stream :: <GInputStream> on <GFilterInputStream> end;
-define property-getter filterinputstream-close-base-stream :: <C-boolean> on <GFilterInputStream> end;
-define property-setter filterinputstream-close-base-stream :: <C-boolean> on <GFilterInputStream> end;
 define C-function g-filter-input-stream-get-base-stream
   input parameter self :: <GFilterInputStream>;
   result res :: <GInputStream>;
@@ -6453,24 +6334,20 @@ define C-function g-filter-input-stream-set-close-base-stream
 end;
 
 define C-struct <_GFilterInputStreamClass>
-  constant slot gfilterinputstreamclass-parent-class :: <GInputStreamClass>;
-  constant slot gfilterinputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gfilterinputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gfilterinputstreamclass--g-reserved3 :: <C-void*>;
+  constant slot g-filter-input-stream-class-parent-class :: <GInputStreamClass>;
+  constant slot g-filter-input-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-filter-input-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-filter-input-stream-class-_g-reserved3 :: <C-void*>;
   pointer-type-name: <GFilterInputStreamClass>;
 end C-struct;
 
 define open C-subtype <GFilterOutputStream> (<GOutputStream>)
-  constant slot gfilteroutputstream-parent-instance :: <GOutputStream>;
-  constant slot gfilteroutputstream-base-stream :: <GOutputStream>;
+  constant slot g-filter-output-stream-parent-instance :: <GOutputStream>;
+  constant slot g-filter-output-stream-base-stream :: <GOutputStream>;
 end C-subtype;
 
 define C-pointer-type <GFilterOutputStream*> => <GFilterOutputStream>;
 
-define property-getter filteroutputstream-base-stream :: <GOutputStream> on <GFilterOutputStream> end;
-define property-setter filteroutputstream-base-stream :: <GOutputStream> on <GFilterOutputStream> end;
-define property-getter filteroutputstream-close-base-stream :: <C-boolean> on <GFilterOutputStream> end;
-define property-setter filteroutputstream-close-base-stream :: <C-boolean> on <GFilterOutputStream> end;
 define C-function g-filter-output-stream-get-base-stream
   input parameter self :: <GFilterOutputStream>;
   result res :: <GOutputStream>;
@@ -6490,58 +6367,58 @@ define C-function g-filter-output-stream-set-close-base-stream
 end;
 
 define C-struct <_GFilterOutputStreamClass>
-  constant slot gfilteroutputstreamclass-parent-class :: <GOutputStreamClass>;
-  constant slot gfilteroutputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gfilteroutputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gfilteroutputstreamclass--g-reserved3 :: <C-void*>;
+  constant slot g-filter-output-stream-class-parent-class :: <GOutputStreamClass>;
+  constant slot g-filter-output-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-filter-output-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-filter-output-stream-class-_g-reserved3 :: <C-void*>;
   pointer-type-name: <GFilterOutputStreamClass>;
 end C-struct;
 
-define constant $G-IO-ERROR-FAILED = 0;
-define constant $G-IO-ERROR-NOT-FOUND = 1;
-define constant $G-IO-ERROR-EXISTS = 2;
-define constant $G-IO-ERROR-IS-DIRECTORY = 3;
-define constant $G-IO-ERROR-NOT-DIRECTORY = 4;
-define constant $G-IO-ERROR-NOT-EMPTY = 5;
-define constant $G-IO-ERROR-NOT-REGULAR-FILE = 6;
-define constant $G-IO-ERROR-NOT-SYMBOLIC-LINK = 7;
-define constant $G-IO-ERROR-NOT-MOUNTABLE-FILE = 8;
-define constant $G-IO-ERROR-FILENAME-TOO-LONG = 9;
-define constant $G-IO-ERROR-INVALID-FILENAME = 10;
-define constant $G-IO-ERROR-TOO-MANY-LINKS = 11;
-define constant $G-IO-ERROR-NO-SPACE = 12;
-define constant $G-IO-ERROR-INVALID-ARGUMENT = 13;
-define constant $G-IO-ERROR-PERMISSION-DENIED = 14;
-define constant $G-IO-ERROR-NOT-SUPPORTED = 15;
-define constant $G-IO-ERROR-NOT-MOUNTED = 16;
-define constant $G-IO-ERROR-ALREADY-MOUNTED = 17;
-define constant $G-IO-ERROR-CLOSED = 18;
-define constant $G-IO-ERROR-CANCELLED = 19;
-define constant $G-IO-ERROR-PENDING = 20;
-define constant $G-IO-ERROR-READ-ONLY = 21;
-define constant $G-IO-ERROR-CANT-CREATE-BACKUP = 22;
-define constant $G-IO-ERROR-WRONG-ETAG = 23;
-define constant $G-IO-ERROR-TIMED-OUT = 24;
-define constant $G-IO-ERROR-WOULD-RECURSE = 25;
-define constant $G-IO-ERROR-BUSY = 26;
-define constant $G-IO-ERROR-WOULD-BLOCK = 27;
-define constant $G-IO-ERROR-HOST-NOT-FOUND = 28;
-define constant $G-IO-ERROR-WOULD-MERGE = 29;
-define constant $G-IO-ERROR-FAILED-HANDLED = 30;
-define constant $G-IO-ERROR-TOO-MANY-OPEN-FILES = 31;
-define constant $G-IO-ERROR-NOT-INITIALIZED = 32;
-define constant $G-IO-ERROR-ADDRESS-IN-USE = 33;
-define constant $G-IO-ERROR-PARTIAL-INPUT = 34;
-define constant $G-IO-ERROR-INVALID-DATA = 35;
-define constant $G-IO-ERROR-DBUS-ERROR = 36;
-define constant $G-IO-ERROR-HOST-UNREACHABLE = 37;
-define constant $G-IO-ERROR-NETWORK-UNREACHABLE = 38;
-define constant $G-IO-ERROR-CONNECTION-REFUSED = 39;
-define constant $G-IO-ERROR-PROXY-FAILED = 40;
-define constant $G-IO-ERROR-PROXY-AUTH-FAILED = 41;
-define constant $G-IO-ERROR-PROXY-NEED-AUTH = 42;
-define constant $G-IO-ERROR-PROXY-NOT-ALLOWED = 43;
-define constant $G-IO-ERROR-BROKEN-PIPE = 44;
+define constant $g-io-error-failed = 0;
+define constant $g-io-error-not-found = 1;
+define constant $g-io-error-exists = 2;
+define constant $g-io-error-is-directory = 3;
+define constant $g-io-error-not-directory = 4;
+define constant $g-io-error-not-empty = 5;
+define constant $g-io-error-not-regular-file = 6;
+define constant $g-io-error-not-symbolic-link = 7;
+define constant $g-io-error-not-mountable-file = 8;
+define constant $g-io-error-filename-too-long = 9;
+define constant $g-io-error-invalid-filename = 10;
+define constant $g-io-error-too-many-links = 11;
+define constant $g-io-error-no-space = 12;
+define constant $g-io-error-invalid-argument = 13;
+define constant $g-io-error-permission-denied = 14;
+define constant $g-io-error-not-supported = 15;
+define constant $g-io-error-not-mounted = 16;
+define constant $g-io-error-already-mounted = 17;
+define constant $g-io-error-closed = 18;
+define constant $g-io-error-cancelled = 19;
+define constant $g-io-error-pending = 20;
+define constant $g-io-error-read-only = 21;
+define constant $g-io-error-cant-create-backup = 22;
+define constant $g-io-error-wrong-etag = 23;
+define constant $g-io-error-timed-out = 24;
+define constant $g-io-error-would-recurse = 25;
+define constant $g-io-error-busy = 26;
+define constant $g-io-error-would-block = 27;
+define constant $g-io-error-host-not-found = 28;
+define constant $g-io-error-would-merge = 29;
+define constant $g-io-error-failed-handled = 30;
+define constant $g-io-error-too-many-open-files = 31;
+define constant $g-io-error-not-initialized = 32;
+define constant $g-io-error-address-in-use = 33;
+define constant $g-io-error-partial-input = 34;
+define constant $g-io-error-invalid-data = 35;
+define constant $g-io-error-dbus-error = 36;
+define constant $g-io-error-host-unreachable = 37;
+define constant $g-io-error-network-unreachable = 38;
+define constant $g-io-error-connection-refused = 39;
+define constant $g-io-error-proxy-failed = 40;
+define constant $g-io-error-proxy-auth-failed = 41;
+define constant $g-io-error-proxy-need-auth = 42;
+define constant $g-io-error-proxy-not-allowed = 43;
+define constant $g-io-error-broken-pipe = 44;
 define constant <GIOErrorEnum> = <C-int>;
 define C-pointer-type <GIOErrorEnum*> => <GIOErrorEnum>;
 
@@ -6647,8 +6524,8 @@ define C-function g-io-module-scope-free
   c-name: "g_io_module_scope_free";
 end;
 
-define constant $G-IO-MODULE-SCOPE-NONE = 0;
-define constant $G-IO-MODULE-SCOPE-BLOCK-DUPLICATES = 1;
+define constant $g-io-module-scope-none = 0;
+define constant $g-io-module-scope-block-duplicates = 1;
 define constant <GIOModuleScopeFlags> = <C-int>;
 define C-pointer-type <GIOModuleScopeFlags*> => <GIOModuleScopeFlags>;
 
@@ -6674,15 +6551,12 @@ define C-function g-io-scheduler-job-send-to-mainloop-async
 end;
 
 define open C-subtype <GIOStream> (<GObject>)
-  constant slot giostream-parent-instance :: <GObject>;
-  constant slot giostream-priv :: <GIOStreamPrivate>;
+  constant slot g-io-stream-parent-instance :: <GObject>;
+  constant slot g-io-stream-priv :: <GIOStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GIOStream*> => <GIOStream>;
 
-define property-getter iostream-closed :: <C-boolean> on <GIOStream> end;
-define property-getter iostream-input-stream :: <GInputStream> on <GIOStream> end;
-define property-getter iostream-output-stream :: <GOutputStream> on <GIOStream> end;
 define C-function g-io-stream-splice-finish
   input parameter result_ :: <GAsyncResult>;
   result res :: <C-boolean>;
@@ -6763,22 +6637,22 @@ define C-struct <_GIOStreamAdapter>
 end C-struct;
 
 define C-struct <_GIOStreamClass>
-  constant slot giostreamclass-parent-class :: <GObjectClass>;
-  constant slot giostreamclass-get-input-stream :: <C-function-pointer>;
-  constant slot giostreamclass-get-output-stream :: <C-function-pointer>;
-  constant slot giostreamclass-close-fn :: <C-function-pointer>;
-  constant slot giostreamclass-close-async :: <C-function-pointer>;
-  constant slot giostreamclass-close-finish :: <C-function-pointer>;
-  constant slot giostreamclass--g-reserved1 :: <C-void*>;
-  constant slot giostreamclass--g-reserved2 :: <C-void*>;
-  constant slot giostreamclass--g-reserved3 :: <C-void*>;
-  constant slot giostreamclass--g-reserved4 :: <C-void*>;
-  constant slot giostreamclass--g-reserved5 :: <C-void*>;
-  constant slot giostreamclass--g-reserved6 :: <C-void*>;
-  constant slot giostreamclass--g-reserved7 :: <C-void*>;
-  constant slot giostreamclass--g-reserved8 :: <C-void*>;
-  constant slot giostreamclass--g-reserved9 :: <C-void*>;
-  constant slot giostreamclass--g-reserved10 :: <C-void*>;
+  constant slot g-io-stream-class-parent-class :: <GObjectClass>;
+  constant slot g-io-stream-class-get-input-stream :: <C-function-pointer>;
+  constant slot g-io-stream-class-get-output-stream :: <C-function-pointer>;
+  constant slot g-io-stream-class-close-fn :: <C-function-pointer>;
+  constant slot g-io-stream-class-close-async :: <C-function-pointer>;
+  constant slot g-io-stream-class-close-finish :: <C-function-pointer>;
+  constant slot g-io-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved5 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved6 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved7 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved8 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved9 :: <C-void*>;
+  constant slot g-io-stream-class-_g-reserved10 :: <C-void*>;
   pointer-type-name: <GIOStreamClass>;
 end C-struct;
 
@@ -6786,10 +6660,10 @@ define C-struct <_GIOStreamPrivate>
   pointer-type-name: <GIOStreamPrivate>;
 end C-struct;
 
-define constant $G-IO-STREAM-SPLICE-NONE = 0;
-define constant $G-IO-STREAM-SPLICE-CLOSE-STREAM1 = 1;
-define constant $G-IO-STREAM-SPLICE-CLOSE-STREAM2 = 2;
-define constant $G-IO-STREAM-SPLICE-WAIT-FOR-BOTH = 4;
+define constant $g-io-stream-splice-none = 0;
+define constant $g-io-stream-splice-close-stream1 = 1;
+define constant $g-io-stream-splice-close-stream2 = 2;
+define constant $g-io-stream-splice-wait-for-both = 4;
 define constant <GIOStreamSpliceFlags> = <C-int>;
 define C-pointer-type <GIOStreamSpliceFlags*> => <GIOStreamSpliceFlags>;
 
@@ -6825,35 +6699,21 @@ define C-function g-icon-to-string
 end;
 
 define C-struct <_GIconIface>
-  constant slot giconiface-g-iface :: <GTypeInterface>;
-  constant slot giconiface-hash :: <C-function-pointer>;
-  constant slot giconiface-equal :: <C-function-pointer>;
-  constant slot giconiface-to-tokens :: <C-void*>;
-  constant slot giconiface-from-tokens :: <C-void*>;
+  constant slot g-icon-iface-g-iface :: <GTypeInterface>;
+  constant slot g-icon-iface-hash :: <C-function-pointer>;
+  constant slot g-icon-iface-equal :: <C-function-pointer>;
+  constant slot g-icon-iface-to-tokens :: <C-void*>;
+  constant slot g-icon-iface-from-tokens :: <C-void*>;
   pointer-type-name: <GIconIface>;
 end C-struct;
 
 define open C-subtype <GInetAddress> (<GObject>)
-  constant slot ginetaddress-parent-instance :: <GObject>;
-  constant slot ginetaddress-priv :: <GInetAddressPrivate>;
+  constant slot g-inet-address-parent-instance :: <GObject>;
+  constant slot g-inet-address-priv :: <GInetAddressPrivate>;
 end C-subtype;
 
 define C-pointer-type <GInetAddress*> => <GInetAddress>;
 
-define property-getter inetaddress-bytes :: <C-void*> on <GInetAddress> end;
-define property-setter inetaddress-bytes :: <C-void*> on <GInetAddress> end;
-define property-getter inetaddress-family :: <GSocketFamily> on <GInetAddress> end;
-define property-setter inetaddress-family :: <GSocketFamily> on <GInetAddress> end;
-define property-getter inetaddress-is-any :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-link-local :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-loopback :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-mc-global :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-mc-link-local :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-mc-node-local :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-mc-org-local :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-mc-site-local :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-multicast :: <C-boolean> on <GInetAddress> end;
-define property-getter inetaddress-is-site-local :: <C-boolean> on <GInetAddress> end;
 define C-function g-inet-address-new-any
   input parameter family_ :: <GSocketFamily>;
   result res :: <GInetAddress>;
@@ -6965,24 +6825,19 @@ define C-function g-inet-address-to-string
 end;
 
 define C-struct <_GInetAddressClass>
-  constant slot ginetaddressclass-parent-class :: <GObjectClass>;
-  constant slot ginetaddressclass-to-string :: <C-function-pointer>;
-  constant slot ginetaddressclass-to-bytes :: <C-function-pointer>;
+  constant slot g-inet-address-class-parent-class :: <GObjectClass>;
+  constant slot g-inet-address-class-to-string :: <C-function-pointer>;
+  constant slot g-inet-address-class-to-bytes :: <C-function-pointer>;
   pointer-type-name: <GInetAddressClass>;
 end C-struct;
 
 define open C-subtype <GInetAddressMask> (<GObject>)
-  constant slot ginetaddressmask-parent-instance :: <GObject>;
-  constant slot ginetaddressmask-priv :: <GInetAddressMaskPrivate>;
+  constant slot g-inet-address-mask-parent-instance :: <GObject>;
+  constant slot g-inet-address-mask-priv :: <GInetAddressMaskPrivate>;
 end C-subtype;
 
 define C-pointer-type <GInetAddressMask*> => <GInetAddressMask>;
 
-define property-getter inetaddressmask-address :: <GInetAddress> on <GInetAddressMask> end;
-define property-setter inetaddressmask-address :: <GInetAddress> on <GInetAddressMask> end;
-define property-getter inetaddressmask-family :: <GSocketFamily> on <GInetAddressMask> end;
-define property-getter inetaddressmask-length :: <C-unsigned-int> on <GInetAddressMask> end;
-define property-setter inetaddressmask-length :: <C-unsigned-int> on <GInetAddressMask> end;
 define C-function g-inet-address-mask-new
   input parameter addr_ :: <GInetAddress>;
   input parameter length_ :: <C-unsigned-int>;
@@ -7035,7 +6890,7 @@ define C-function g-inet-address-mask-to-string
 end;
 
 define C-struct <_GInetAddressMaskClass>
-  constant slot ginetaddressmaskclass-parent-class :: <GObjectClass>;
+  constant slot g-inet-address-mask-class-parent-class :: <GObjectClass>;
   pointer-type-name: <GInetAddressMaskClass>;
 end C-struct;
 
@@ -7048,20 +6903,12 @@ define C-struct <_GInetAddressPrivate>
 end C-struct;
 
 define open C-subtype <GInetSocketAddress> (<GSocketAddress>)
-  constant slot ginetsocketaddress-parent-instance :: <GSocketAddress>;
-  constant slot ginetsocketaddress-priv :: <GInetSocketAddressPrivate>;
+  constant slot g-inet-socket-address-parent-instance :: <GSocketAddress>;
+  constant slot g-inet-socket-address-priv :: <GInetSocketAddressPrivate>;
 end C-subtype;
 
 define C-pointer-type <GInetSocketAddress*> => <GInetSocketAddress>;
 
-define property-getter inetsocketaddress-address :: <GInetAddress> on <GInetSocketAddress> end;
-define property-setter inetsocketaddress-address :: <GInetAddress> on <GInetSocketAddress> end;
-define property-getter inetsocketaddress-flowinfo :: <C-unsigned-int> on <GInetSocketAddress> end;
-define property-setter inetsocketaddress-flowinfo :: <C-unsigned-int> on <GInetSocketAddress> end;
-define property-getter inetsocketaddress-port :: <C-unsigned-int> on <GInetSocketAddress> end;
-define property-setter inetsocketaddress-port :: <C-unsigned-int> on <GInetSocketAddress> end;
-define property-getter inetsocketaddress-scope-id :: <C-unsigned-int> on <GInetSocketAddress> end;
-define property-setter inetsocketaddress-scope-id :: <C-unsigned-int> on <GInetSocketAddress> end;
 define C-function g-inet-socket-address-new
   input parameter address_ :: <GInetAddress>;
   input parameter port_ :: <C-unsigned-short>;
@@ -7094,7 +6941,7 @@ define C-function g-inet-socket-address-get-scope-id
 end;
 
 define C-struct <_GInetSocketAddressClass>
-  constant slot ginetsocketaddressclass-parent-class :: <GSocketAddressClass>;
+  constant slot g-inet-socket-address-class-parent-class :: <GSocketAddressClass>;
   pointer-type-name: <GInetSocketAddressClass>;
 end C-struct;
 
@@ -7125,14 +6972,14 @@ define C-function g-initable-init
 end;
 
 define C-struct <_GInitableIface>
-  constant slot ginitableiface-g-iface :: <GTypeInterface>;
-  constant slot ginitableiface-init :: <C-function-pointer>;
+  constant slot g-initable-iface-g-iface :: <GTypeInterface>;
+  constant slot g-initable-iface-init :: <C-function-pointer>;
   pointer-type-name: <GInitableIface>;
 end C-struct;
 
 define open C-subtype <GInputStream> (<GObject>)
-  constant slot ginputstream-parent-instance :: <GObject>;
-  constant slot ginputstream-priv :: <GInputStreamPrivate>;
+  constant slot g-input-stream-parent-instance :: <GObject>;
+  constant slot g-input-stream-priv :: <GInputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GInputStream*> => <GInputStream>;
@@ -7271,21 +7118,21 @@ define C-function g-input-stream-skip-finish
 end;
 
 define C-struct <_GInputStreamClass>
-  constant slot ginputstreamclass-parent-class :: <GObjectClass>;
-  constant slot ginputstreamclass-read-fn :: <C-function-pointer>;
-  constant slot ginputstreamclass-skip :: <C-function-pointer>;
-  constant slot ginputstreamclass-close-fn :: <C-function-pointer>;
-  constant slot ginputstreamclass-read-async :: <C-function-pointer>;
-  constant slot ginputstreamclass-read-finish :: <C-function-pointer>;
-  constant slot ginputstreamclass-skip-async :: <C-function-pointer>;
-  constant slot ginputstreamclass-skip-finish :: <C-function-pointer>;
-  constant slot ginputstreamclass-close-async :: <C-function-pointer>;
-  constant slot ginputstreamclass-close-finish :: <C-function-pointer>;
-  constant slot ginputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot ginputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot ginputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot ginputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot ginputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-input-stream-class-parent-class :: <GObjectClass>;
+  constant slot g-input-stream-class-read-fn :: <C-function-pointer>;
+  constant slot g-input-stream-class-skip :: <C-function-pointer>;
+  constant slot g-input-stream-class-close-fn :: <C-function-pointer>;
+  constant slot g-input-stream-class-read-async :: <C-function-pointer>;
+  constant slot g-input-stream-class-read-finish :: <C-function-pointer>;
+  constant slot g-input-stream-class-skip-async :: <C-function-pointer>;
+  constant slot g-input-stream-class-skip-finish :: <C-function-pointer>;
+  constant slot g-input-stream-class-close-async :: <C-function-pointer>;
+  constant slot g-input-stream-class-close-finish :: <C-function-pointer>;
+  constant slot g-input-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-input-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-input-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-input-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-input-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GInputStreamClass>;
 end C-struct;
 
@@ -7294,8 +7141,8 @@ define C-struct <_GInputStreamPrivate>
 end C-struct;
 
 define C-struct <_GInputVector>
-  slot ginputvector-buffer :: <C-void*>;
-  slot ginputvector-size :: <C-unsigned-long>;
+  slot g-input-vector-buffer :: <C-void*>;
+  slot g-input-vector-size :: <C-unsigned-long>;
   pointer-type-name: <GInputVector>;
 end C-struct;
 
@@ -7332,28 +7179,28 @@ define C-function g-loadable-icon-load-finish
 end;
 
 define C-struct <_GLoadableIconIface>
-  constant slot gloadableiconiface-g-iface :: <GTypeInterface>;
-  constant slot gloadableiconiface-load :: <C-function-pointer>;
-  constant slot gloadableiconiface-load-async :: <C-function-pointer>;
-  constant slot gloadableiconiface-load-finish :: <C-function-pointer>;
+  constant slot g-loadable-icon-iface-g-iface :: <GTypeInterface>;
+  constant slot g-loadable-icon-iface-load :: <C-function-pointer>;
+  constant slot g-loadable-icon-iface-load-async :: <C-function-pointer>;
+  constant slot g-loadable-icon-iface-load-finish :: <C-function-pointer>;
   pointer-type-name: <GLoadableIconIface>;
 end C-struct;
 
-define constant $MENU-ATTRIBUTE-ACTION = "action";
+define constant $menu-attribute-action = "action";
 
-define constant $MENU-ATTRIBUTE-ACTION-NAMESPACE = "action-namespace";
+define constant $menu-attribute-action-namespace = "action-namespace";
 
-define constant $MENU-ATTRIBUTE-LABEL = "label";
+define constant $menu-attribute-label = "label";
 
-define constant $MENU-ATTRIBUTE-TARGET = "target";
+define constant $menu-attribute-target = "target";
 
-define constant $MENU-LINK-SECTION = "section";
+define constant $menu-link-section = "section";
 
-define constant $MENU-LINK-SUBMENU = "submenu";
+define constant $menu-link-submenu = "submenu";
 
 define open C-subtype <GMemoryInputStream> (<GInputStream>)
-  constant slot gmemoryinputstream-parent-instance :: <GInputStream>;
-  constant slot gmemoryinputstream-priv :: <GMemoryInputStreamPrivate>;
+  constant slot g-memory-input-stream-parent-instance :: <GInputStream>;
+  constant slot g-memory-input-stream-priv :: <GMemoryInputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GMemoryInputStream*> => <GMemoryInputStream>;
@@ -7392,12 +7239,12 @@ define C-function g-memory-input-stream-add-data
 end;
 
 define C-struct <_GMemoryInputStreamClass>
-  constant slot gmemoryinputstreamclass-parent-class :: <GInputStreamClass>;
-  constant slot gmemoryinputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gmemoryinputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gmemoryinputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gmemoryinputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gmemoryinputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-memory-input-stream-class-parent-class :: <GInputStreamClass>;
+  constant slot g-memory-input-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-memory-input-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-memory-input-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-memory-input-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-memory-input-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GMemoryInputStreamClass>;
 end C-struct;
 
@@ -7406,17 +7253,12 @@ define C-struct <_GMemoryInputStreamPrivate>
 end C-struct;
 
 define open C-subtype <GMemoryOutputStream> (<GOutputStream>)
-  constant slot gmemoryoutputstream-parent-instance :: <GOutputStream>;
-  constant slot gmemoryoutputstream-priv :: <GMemoryOutputStreamPrivate>;
+  constant slot g-memory-output-stream-parent-instance :: <GOutputStream>;
+  constant slot g-memory-output-stream-priv :: <GMemoryOutputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GMemoryOutputStream*> => <GMemoryOutputStream>;
 
-define property-getter memoryoutputstream-data :: <C-void*> on <GMemoryOutputStream> end;
-define property-setter memoryoutputstream-data :: <C-void*> on <GMemoryOutputStream> end;
-define property-getter memoryoutputstream-data-size :: <C-unsigned-long> on <GMemoryOutputStream> end;
-define property-getter memoryoutputstream-size :: <C-unsigned-long> on <GMemoryOutputStream> end;
-define property-setter memoryoutputstream-size :: <C-unsigned-long> on <GMemoryOutputStream> end;
 define C-function g-memory-output-stream-new-resizable
   result res :: <GOutputStream>;
   c-name: "g_memory_output_stream_new_resizable";
@@ -7453,12 +7295,12 @@ define C-function g-memory-output-stream-steal-data
 end;
 
 define C-struct <_GMemoryOutputStreamClass>
-  constant slot gmemoryoutputstreamclass-parent-class :: <GOutputStreamClass>;
-  constant slot gmemoryoutputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gmemoryoutputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gmemoryoutputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gmemoryoutputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gmemoryoutputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-memory-output-stream-class-parent-class :: <GOutputStreamClass>;
+  constant slot g-memory-output-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-memory-output-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-memory-output-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-memory-output-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-memory-output-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GMemoryOutputStreamClass>;
 end C-struct;
 
@@ -7573,8 +7415,8 @@ define C-function g-menu-remove
 end;
 
 define open C-subtype <GMenuAttributeIter> (<GObject>)
-  constant slot gmenuattributeiter-parent-instance :: <GObject>;
-  constant slot gmenuattributeiter-priv :: <GMenuAttributeIterPrivate>;
+  constant slot g-menu-attribute-iter-parent-instance :: <GObject>;
+  constant slot g-menu-attribute-iter-priv :: <GMenuAttributeIterPrivate>;
 end C-subtype;
 
 define C-pointer-type <GMenuAttributeIter*> => <GMenuAttributeIter>;
@@ -7606,8 +7448,8 @@ define C-function g-menu-attribute-iter-next
 end;
 
 define C-struct <_GMenuAttributeIterClass>
-  constant slot gmenuattributeiterclass-parent-class :: <GObjectClass>;
-  constant slot gmenuattributeiterclass-get-next :: <C-function-pointer>;
+  constant slot g-menu-attribute-iter-class-parent-class :: <GObjectClass>;
+  constant slot g-menu-attribute-iter-class-get-next :: <C-function-pointer>;
   pointer-type-name: <GMenuAttributeIterClass>;
 end C-struct;
 
@@ -7709,8 +7551,8 @@ define C-function g-menu-item-set-submenu
 end;
 
 define open C-subtype <GMenuLinkIter> (<GObject>)
-  constant slot gmenulinkiter-parent-instance :: <GObject>;
-  constant slot gmenulinkiter-priv :: <GMenuLinkIterPrivate>;
+  constant slot g-menu-link-iter-parent-instance :: <GObject>;
+  constant slot g-menu-link-iter-priv :: <GMenuLinkIterPrivate>;
 end C-subtype;
 
 define C-pointer-type <GMenuLinkIter*> => <GMenuLinkIter>;
@@ -7742,8 +7584,8 @@ define C-function g-menu-link-iter-next
 end;
 
 define C-struct <_GMenuLinkIterClass>
-  constant slot gmenulinkiterclass-parent-class :: <GObjectClass>;
-  constant slot gmenulinkiterclass-get-next :: <C-function-pointer>;
+  constant slot g-menu-link-iter-class-parent-class :: <GObjectClass>;
+  constant slot g-menu-link-iter-class-get-next :: <C-function-pointer>;
   pointer-type-name: <GMenuLinkIterClass>;
 end C-struct;
 
@@ -7752,8 +7594,8 @@ define C-struct <_GMenuLinkIterPrivate>
 end C-struct;
 
 define open C-subtype <GMenuModel> (<GObject>)
-  constant slot gmenumodel-parent-instance :: <GObject>;
-  constant slot gmenumodel-priv :: <GMenuModelPrivate>;
+  constant slot g-menu-model-parent-instance :: <GObject>;
+  constant slot g-menu-model-priv :: <GMenuModelPrivate>;
 end C-subtype;
 
 define C-pointer-type <GMenuModel*> => <GMenuModel>;
@@ -7810,15 +7652,15 @@ define C-function g-menu-model-iterate-item-links
 end;
 
 define C-struct <_GMenuModelClass>
-  constant slot gmenumodelclass-parent-class :: <GObjectClass>;
-  constant slot gmenumodelclass-is-mutable :: <C-function-pointer>;
-  constant slot gmenumodelclass-get-n-items :: <C-function-pointer>;
-  constant slot gmenumodelclass-get-item-attributes :: <C-function-pointer>;
-  constant slot gmenumodelclass-iterate-item-attributes :: <C-function-pointer>;
-  constant slot gmenumodelclass-get-item-attribute-value :: <C-function-pointer>;
-  constant slot gmenumodelclass-get-item-links :: <C-function-pointer>;
-  constant slot gmenumodelclass-iterate-item-links :: <C-function-pointer>;
-  constant slot gmenumodelclass-get-item-link :: <C-function-pointer>;
+  constant slot g-menu-model-class-parent-class :: <GObjectClass>;
+  constant slot g-menu-model-class-is-mutable :: <C-function-pointer>;
+  constant slot g-menu-model-class-get-n-items :: <C-function-pointer>;
+  constant slot g-menu-model-class-get-item-attributes :: <C-function-pointer>;
+  constant slot g-menu-model-class-iterate-item-attributes :: <C-function-pointer>;
+  constant slot g-menu-model-class-get-item-attribute-value :: <C-function-pointer>;
+  constant slot g-menu-model-class-get-item-links :: <C-function-pointer>;
+  constant slot g-menu-model-class-iterate-item-links :: <C-function-pointer>;
+  constant slot g-menu-model-class-get-item-link :: <C-function-pointer>;
   pointer-type-name: <GMenuModelClass>;
 end C-struct;
 
@@ -8022,60 +7864,48 @@ define C-function g-mount-unshadow
 end;
 
 define C-struct <_GMountIface>
-  constant slot gmountiface-g-iface :: <GTypeInterface>;
-  constant slot gmountiface-changed :: <C-function-pointer>;
-  constant slot gmountiface-unmounted :: <C-function-pointer>;
-  constant slot gmountiface-get-root :: <C-function-pointer>;
-  constant slot gmountiface-get-name :: <C-function-pointer>;
-  constant slot gmountiface-get-icon :: <C-function-pointer>;
-  constant slot gmountiface-get-uuid :: <C-function-pointer>;
-  constant slot gmountiface-get-volume :: <C-function-pointer>;
-  constant slot gmountiface-get-drive :: <C-function-pointer>;
-  constant slot gmountiface-can-unmount :: <C-function-pointer>;
-  constant slot gmountiface-can-eject :: <C-function-pointer>;
-  constant slot gmountiface-unmount :: <C-function-pointer>;
-  constant slot gmountiface-unmount-finish :: <C-function-pointer>;
-  constant slot gmountiface-eject :: <C-function-pointer>;
-  constant slot gmountiface-eject-finish :: <C-function-pointer>;
-  constant slot gmountiface-remount :: <C-function-pointer>;
-  constant slot gmountiface-remount-finish :: <C-function-pointer>;
-  constant slot gmountiface-guess-content-type :: <C-function-pointer>;
-  constant slot gmountiface-guess-content-type-finish :: <C-function-pointer>;
-  constant slot gmountiface-guess-content-type-sync :: <C-function-pointer>;
-  constant slot gmountiface-pre-unmount :: <C-function-pointer>;
-  constant slot gmountiface-unmount-with-operation :: <C-function-pointer>;
-  constant slot gmountiface-unmount-with-operation-finish :: <C-function-pointer>;
-  constant slot gmountiface-eject-with-operation :: <C-function-pointer>;
-  constant slot gmountiface-eject-with-operation-finish :: <C-function-pointer>;
-  constant slot gmountiface-get-default-location :: <C-function-pointer>;
-  constant slot gmountiface-get-sort-key :: <C-function-pointer>;
-  constant slot gmountiface-get-symbolic-icon :: <C-function-pointer>;
+  constant slot g-mount-iface-g-iface :: <GTypeInterface>;
+  constant slot g-mount-iface-changed :: <C-function-pointer>;
+  constant slot g-mount-iface-unmounted :: <C-function-pointer>;
+  constant slot g-mount-iface-get-root :: <C-function-pointer>;
+  constant slot g-mount-iface-get-name :: <C-function-pointer>;
+  constant slot g-mount-iface-get-icon :: <C-function-pointer>;
+  constant slot g-mount-iface-get-uuid :: <C-function-pointer>;
+  constant slot g-mount-iface-get-volume :: <C-function-pointer>;
+  constant slot g-mount-iface-get-drive :: <C-function-pointer>;
+  constant slot g-mount-iface-can-unmount :: <C-function-pointer>;
+  constant slot g-mount-iface-can-eject :: <C-function-pointer>;
+  constant slot g-mount-iface-unmount :: <C-function-pointer>;
+  constant slot g-mount-iface-unmount-finish :: <C-function-pointer>;
+  constant slot g-mount-iface-eject :: <C-function-pointer>;
+  constant slot g-mount-iface-eject-finish :: <C-function-pointer>;
+  constant slot g-mount-iface-remount :: <C-function-pointer>;
+  constant slot g-mount-iface-remount-finish :: <C-function-pointer>;
+  constant slot g-mount-iface-guess-content-type :: <C-function-pointer>;
+  constant slot g-mount-iface-guess-content-type-finish :: <C-function-pointer>;
+  constant slot g-mount-iface-guess-content-type-sync :: <C-function-pointer>;
+  constant slot g-mount-iface-pre-unmount :: <C-function-pointer>;
+  constant slot g-mount-iface-unmount-with-operation :: <C-function-pointer>;
+  constant slot g-mount-iface-unmount-with-operation-finish :: <C-function-pointer>;
+  constant slot g-mount-iface-eject-with-operation :: <C-function-pointer>;
+  constant slot g-mount-iface-eject-with-operation-finish :: <C-function-pointer>;
+  constant slot g-mount-iface-get-default-location :: <C-function-pointer>;
+  constant slot g-mount-iface-get-sort-key :: <C-function-pointer>;
+  constant slot g-mount-iface-get-symbolic-icon :: <C-function-pointer>;
   pointer-type-name: <GMountIface>;
 end C-struct;
 
-define constant $G-MOUNT-MOUNT-NONE = 0;
+define constant $g-mount-mount-none = 0;
 define constant <GMountMountFlags> = <C-int>;
 define C-pointer-type <GMountMountFlags*> => <GMountMountFlags>;
 
 define open C-subtype <GMountOperation> (<GObject>)
-  constant slot gmountoperation-parent-instance :: <GObject>;
-  constant slot gmountoperation-priv :: <GMountOperationPrivate>;
+  constant slot g-mount-operation-parent-instance :: <GObject>;
+  constant slot g-mount-operation-priv :: <GMountOperationPrivate>;
 end C-subtype;
 
 define C-pointer-type <GMountOperation*> => <GMountOperation>;
 
-define property-getter mountoperation-anonymous :: <C-boolean> on <GMountOperation> end;
-define property-setter mountoperation-anonymous :: <C-boolean> on <GMountOperation> end;
-define property-getter mountoperation-choice :: <C-signed-int> on <GMountOperation> end;
-define property-setter mountoperation-choice :: <C-signed-int> on <GMountOperation> end;
-define property-getter mountoperation-domain :: <C-string> on <GMountOperation> end;
-define property-setter mountoperation-domain :: <C-string> on <GMountOperation> end;
-define property-getter mountoperation-password :: <C-string> on <GMountOperation> end;
-define property-setter mountoperation-password :: <C-string> on <GMountOperation> end;
-define property-getter mountoperation-password-save :: <GPasswordSave> on <GMountOperation> end;
-define property-setter mountoperation-password-save :: <GPasswordSave> on <GMountOperation> end;
-define property-getter mountoperation-username :: <C-string> on <GMountOperation> end;
-define property-setter mountoperation-username :: <C-string> on <GMountOperation> end;
 define C-function g-mount-operation-new
   result res :: <GMountOperation>;
   c-name: "g_mount_operation_new";
@@ -8160,22 +7990,22 @@ define C-function g-mount-operation-set-username
 end;
 
 define C-struct <_GMountOperationClass>
-  constant slot gmountoperationclass-parent-class :: <GObjectClass>;
-  constant slot gmountoperationclass-ask-password :: <C-function-pointer>;
-  constant slot gmountoperationclass-ask-question :: <C-function-pointer>;
-  constant slot gmountoperationclass-reply :: <C-function-pointer>;
-  constant slot gmountoperationclass-aborted :: <C-function-pointer>;
-  constant slot gmountoperationclass-show-processes :: <C-void*>;
-  constant slot gmountoperationclass-show-unmount-progress :: <C-function-pointer>;
-  constant slot gmountoperationclass--g-reserved1 :: <C-void*>;
-  constant slot gmountoperationclass--g-reserved2 :: <C-void*>;
-  constant slot gmountoperationclass--g-reserved3 :: <C-void*>;
-  constant slot gmountoperationclass--g-reserved4 :: <C-void*>;
-  constant slot gmountoperationclass--g-reserved5 :: <C-void*>;
-  constant slot gmountoperationclass--g-reserved6 :: <C-void*>;
-  constant slot gmountoperationclass--g-reserved7 :: <C-void*>;
-  constant slot gmountoperationclass--g-reserved8 :: <C-void*>;
-  constant slot gmountoperationclass--g-reserved9 :: <C-void*>;
+  constant slot g-mount-operation-class-parent-class :: <GObjectClass>;
+  constant slot g-mount-operation-class-ask-password :: <C-function-pointer>;
+  constant slot g-mount-operation-class-ask-question :: <C-function-pointer>;
+  constant slot g-mount-operation-class-reply :: <C-function-pointer>;
+  constant slot g-mount-operation-class-aborted :: <C-function-pointer>;
+  constant slot g-mount-operation-class-show-processes :: <C-void*>;
+  constant slot g-mount-operation-class-show-unmount-progress :: <C-function-pointer>;
+  constant slot g-mount-operation-class-_g-reserved1 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved2 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved3 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved4 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved5 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved6 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved7 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved8 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved9 :: <C-void*>;
   pointer-type-name: <GMountOperationClass>;
 end C-struct;
 
@@ -8183,46 +8013,40 @@ define C-struct <_GMountOperationPrivate>
   pointer-type-name: <GMountOperationPrivate>;
 end C-struct;
 
-define constant $G-MOUNT-OPERATION-HANDLED = 0;
-define constant $G-MOUNT-OPERATION-ABORTED = 1;
-define constant $G-MOUNT-OPERATION-UNHANDLED = 2;
+define constant $g-mount-operation-handled = 0;
+define constant $g-mount-operation-aborted = 1;
+define constant $g-mount-operation-unhandled = 2;
 define constant <GMountOperationResult> = <C-int>;
 define C-pointer-type <GMountOperationResult*> => <GMountOperationResult>;
 
-define constant $G-MOUNT-UNMOUNT-NONE = 0;
-define constant $G-MOUNT-UNMOUNT-FORCE = 1;
+define constant $g-mount-unmount-none = 0;
+define constant $g-mount-unmount-force = 1;
 define constant <GMountUnmountFlags> = <C-int>;
 define C-pointer-type <GMountUnmountFlags*> => <GMountUnmountFlags>;
 
-define constant $NATIVE-VOLUME-MONITOR-EXTENSION-POINT-NAME = "gio-native-volume-monitor";
+define constant $native-volume-monitor-extension-point-name = "gio-native-volume-monitor";
 
-define constant $NETWORK-MONITOR-EXTENSION-POINT-NAME = "gio-network-monitor";
+define constant $network-monitor-extension-point-name = "gio-network-monitor";
 
 define open C-subtype <GNativeVolumeMonitor> (<GVolumeMonitor>)
-  constant slot gnativevolumemonitor-parent-instance :: <GVolumeMonitor>;
+  constant slot g-native-volume-monitor-parent-instance :: <GVolumeMonitor>;
 end C-subtype;
 
 define C-pointer-type <GNativeVolumeMonitor*> => <GNativeVolumeMonitor>;
 
 define C-struct <_GNativeVolumeMonitorClass>
-  constant slot gnativevolumemonitorclass-parent-class :: <GVolumeMonitorClass>;
-  constant slot gnativevolumemonitorclass-get-mount-for-mount-path :: <C-void*>;
+  constant slot g-native-volume-monitor-class-parent-class :: <GVolumeMonitorClass>;
+  constant slot g-native-volume-monitor-class-get-mount-for-mount-path :: <C-void*>;
   pointer-type-name: <GNativeVolumeMonitorClass>;
 end C-struct;
 
 define open C-subtype <GNetworkAddress> (<GObject>)
-  constant slot gnetworkaddress-parent-instance :: <GObject>;
-  constant slot gnetworkaddress-priv :: <GNetworkAddressPrivate>;
+  constant slot g-network-address-parent-instance :: <GObject>;
+  constant slot g-network-address-priv :: <GNetworkAddressPrivate>;
 end C-subtype;
 
 define C-pointer-type <GNetworkAddress*> => <GNetworkAddress>;
 
-define property-getter networkaddress-hostname :: <C-string> on <GNetworkAddress> end;
-define property-setter networkaddress-hostname :: <C-string> on <GNetworkAddress> end;
-define property-getter networkaddress-port :: <C-unsigned-int> on <GNetworkAddress> end;
-define property-setter networkaddress-port :: <C-unsigned-int> on <GNetworkAddress> end;
-define property-getter networkaddress-scheme :: <C-string> on <GNetworkAddress> end;
-define property-setter networkaddress-scheme :: <C-string> on <GNetworkAddress> end;
 define C-function g-network-address-new
   input parameter hostname_ :: <C-string>;
   input parameter port_ :: <C-unsigned-short>;
@@ -8263,7 +8087,7 @@ define C-function g-network-address-get-scheme
 end;
 
 define C-struct <_GNetworkAddressClass>
-  constant slot gnetworkaddressclass-parent-class :: <GObjectClass>;
+  constant slot g-network-address-class-parent-class :: <GObjectClass>;
   pointer-type-name: <GNetworkAddressClass>;
 end C-struct;
 
@@ -8313,29 +8137,21 @@ define C-function g-network-monitor-get-network-available
 end;
 
 define C-struct <_GNetworkMonitorInterface>
-  constant slot gnetworkmonitorinterface-g-iface :: <GTypeInterface>;
-  constant slot gnetworkmonitorinterface-network-changed :: <C-function-pointer>;
-  constant slot gnetworkmonitorinterface-can-reach :: <C-function-pointer>;
-  constant slot gnetworkmonitorinterface-can-reach-async :: <C-function-pointer>;
-  constant slot gnetworkmonitorinterface-can-reach-finish :: <C-function-pointer>;
+  constant slot g-network-monitor-interface-g-iface :: <GTypeInterface>;
+  constant slot g-network-monitor-interface-network-changed :: <C-function-pointer>;
+  constant slot g-network-monitor-interface-can-reach :: <C-function-pointer>;
+  constant slot g-network-monitor-interface-can-reach-async :: <C-function-pointer>;
+  constant slot g-network-monitor-interface-can-reach-finish :: <C-function-pointer>;
   pointer-type-name: <GNetworkMonitorInterface>;
 end C-struct;
 
 define open C-subtype <GNetworkService> (<GObject>)
-  constant slot gnetworkservice-parent-instance :: <GObject>;
-  constant slot gnetworkservice-priv :: <GNetworkServicePrivate>;
+  constant slot g-network-service-parent-instance :: <GObject>;
+  constant slot g-network-service-priv :: <GNetworkServicePrivate>;
 end C-subtype;
 
 define C-pointer-type <GNetworkService*> => <GNetworkService>;
 
-define property-getter networkservice-domain :: <C-string> on <GNetworkService> end;
-define property-setter networkservice-domain :: <C-string> on <GNetworkService> end;
-define property-getter networkservice-protocol :: <C-string> on <GNetworkService> end;
-define property-setter networkservice-protocol :: <C-string> on <GNetworkService> end;
-define property-getter networkservice-scheme :: <C-string> on <GNetworkService> end;
-define property-setter networkservice-scheme :: <C-string> on <GNetworkService> end;
-define property-getter networkservice-service :: <C-string> on <GNetworkService> end;
-define property-setter networkservice-service :: <C-string> on <GNetworkService> end;
 define C-function g-network-service-new
   input parameter service_ :: <C-string>;
   input parameter protocol_ :: <C-string>;
@@ -8375,7 +8191,7 @@ define C-function g-network-service-set-scheme
 end;
 
 define C-struct <_GNetworkServiceClass>
-  constant slot gnetworkserviceclass-parent-class :: <GObjectClass>;
+  constant slot g-network-service-class-parent-class :: <GObjectClass>;
   pointer-type-name: <GNetworkServiceClass>;
 end C-struct;
 
@@ -8384,8 +8200,8 @@ define C-struct <_GNetworkServicePrivate>
 end C-struct;
 
 define open C-subtype <GOutputStream> (<GObject>)
-  constant slot goutputstream-parent-instance :: <GObject>;
-  constant slot goutputstream-priv :: <GOutputStreamPrivate>;
+  constant slot g-output-stream-parent-instance :: <GObject>;
+  constant slot g-output-stream-priv :: <GOutputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GOutputStream*> => <GOutputStream>;
@@ -8555,27 +8371,27 @@ define C-function g-output-stream-write-finish
 end;
 
 define C-struct <_GOutputStreamClass>
-  constant slot goutputstreamclass-parent-class :: <GObjectClass>;
-  constant slot goutputstreamclass-write-fn :: <C-function-pointer>;
-  constant slot goutputstreamclass-splice :: <C-function-pointer>;
-  constant slot goutputstreamclass-flush :: <C-function-pointer>;
-  constant slot goutputstreamclass-close-fn :: <C-function-pointer>;
-  constant slot goutputstreamclass-write-async :: <C-function-pointer>;
-  constant slot goutputstreamclass-write-finish :: <C-function-pointer>;
-  constant slot goutputstreamclass-splice-async :: <C-function-pointer>;
-  constant slot goutputstreamclass-splice-finish :: <C-function-pointer>;
-  constant slot goutputstreamclass-flush-async :: <C-function-pointer>;
-  constant slot goutputstreamclass-flush-finish :: <C-function-pointer>;
-  constant slot goutputstreamclass-close-async :: <C-function-pointer>;
-  constant slot goutputstreamclass-close-finish :: <C-function-pointer>;
-  constant slot goutputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot goutputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot goutputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot goutputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot goutputstreamclass--g-reserved5 :: <C-void*>;
-  constant slot goutputstreamclass--g-reserved6 :: <C-void*>;
-  constant slot goutputstreamclass--g-reserved7 :: <C-void*>;
-  constant slot goutputstreamclass--g-reserved8 :: <C-void*>;
+  constant slot g-output-stream-class-parent-class :: <GObjectClass>;
+  constant slot g-output-stream-class-write-fn :: <C-function-pointer>;
+  constant slot g-output-stream-class-splice :: <C-function-pointer>;
+  constant slot g-output-stream-class-flush :: <C-function-pointer>;
+  constant slot g-output-stream-class-close-fn :: <C-function-pointer>;
+  constant slot g-output-stream-class-write-async :: <C-function-pointer>;
+  constant slot g-output-stream-class-write-finish :: <C-function-pointer>;
+  constant slot g-output-stream-class-splice-async :: <C-function-pointer>;
+  constant slot g-output-stream-class-splice-finish :: <C-function-pointer>;
+  constant slot g-output-stream-class-flush-async :: <C-function-pointer>;
+  constant slot g-output-stream-class-flush-finish :: <C-function-pointer>;
+  constant slot g-output-stream-class-close-async :: <C-function-pointer>;
+  constant slot g-output-stream-class-close-finish :: <C-function-pointer>;
+  constant slot g-output-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-output-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-output-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-output-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-output-stream-class-_g-reserved5 :: <C-void*>;
+  constant slot g-output-stream-class-_g-reserved6 :: <C-void*>;
+  constant slot g-output-stream-class-_g-reserved7 :: <C-void*>;
+  constant slot g-output-stream-class-_g-reserved8 :: <C-void*>;
   pointer-type-name: <GOutputStreamClass>;
 end C-struct;
 
@@ -8583,38 +8399,35 @@ define C-struct <_GOutputStreamPrivate>
   pointer-type-name: <GOutputStreamPrivate>;
 end C-struct;
 
-define constant $G-OUTPUT-STREAM-SPLICE-NONE = 0;
-define constant $G-OUTPUT-STREAM-SPLICE-CLOSE-SOURCE = 1;
-define constant $G-OUTPUT-STREAM-SPLICE-CLOSE-TARGET = 2;
+define constant $g-output-stream-splice-none = 0;
+define constant $g-output-stream-splice-close-source = 1;
+define constant $g-output-stream-splice-close-target = 2;
 define constant <GOutputStreamSpliceFlags> = <C-int>;
 define C-pointer-type <GOutputStreamSpliceFlags*> => <GOutputStreamSpliceFlags>;
 
 define C-struct <_GOutputVector>
-  slot goutputvector-buffer :: <C-void*>;
-  slot goutputvector-size :: <C-unsigned-long>;
+  slot g-output-vector-buffer :: <C-void*>;
+  slot g-output-vector-size :: <C-unsigned-long>;
   pointer-type-name: <GOutputVector>;
 end C-struct;
 
-define constant $PROXY-EXTENSION-POINT-NAME = "gio-proxy";
+define constant $proxy-extension-point-name = "gio-proxy";
 
-define constant $PROXY-RESOLVER-EXTENSION-POINT-NAME = "gio-proxy-resolver";
+define constant $proxy-resolver-extension-point-name = "gio-proxy-resolver";
 
-define constant $G-PASSWORD-SAVE-NEVER = 0;
-define constant $G-PASSWORD-SAVE-FOR-SESSION = 1;
-define constant $G-PASSWORD-SAVE-PERMANENTLY = 2;
+define constant $g-password-save-never = 0;
+define constant $g-password-save-for-session = 1;
+define constant $g-password-save-permanently = 2;
 define constant <GPasswordSave> = <C-int>;
 define C-pointer-type <GPasswordSave*> => <GPasswordSave>;
 
 define open C-subtype <GPermission> (<GObject>)
-  constant slot gpermission-parent-instance :: <GObject>;
-  constant slot gpermission-priv :: <GPermissionPrivate>;
+  constant slot g-permission-parent-instance :: <GObject>;
+  constant slot g-permission-priv :: <GPermissionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GPermission*> => <GPermission>;
 
-define property-getter permission-allowed :: <C-boolean> on <GPermission> end;
-define property-getter permission-can-acquire :: <C-boolean> on <GPermission> end;
-define property-getter permission-can-release :: <C-boolean> on <GPermission> end;
 define C-function g-permission-acquire
   input parameter self :: <GPermission>;
   input parameter cancellable_ :: <GCancellable>;
@@ -8686,14 +8499,14 @@ define C-function g-permission-release-finish
 end;
 
 define C-struct <_GPermissionClass>
-  constant slot gpermissionclass-parent-class :: <GObjectClass>;
-  constant slot gpermissionclass-acquire :: <C-function-pointer>;
-  constant slot gpermissionclass-acquire-async :: <C-function-pointer>;
-  constant slot gpermissionclass-acquire-finish :: <C-function-pointer>;
-  constant slot gpermissionclass-release :: <C-function-pointer>;
-  constant slot gpermissionclass-release-async :: <C-function-pointer>;
-  constant slot gpermissionclass-release-finish :: <C-function-pointer>;
-  constant slot gpermissionclass-reserved :: <C-void*>;
+  constant slot g-permission-class-parent-class :: <GObjectClass>;
+  constant slot g-permission-class-acquire :: <C-function-pointer>;
+  constant slot g-permission-class-acquire-async :: <C-function-pointer>;
+  constant slot g-permission-class-acquire-finish :: <C-function-pointer>;
+  constant slot g-permission-class-release :: <C-function-pointer>;
+  constant slot g-permission-class-release-async :: <C-function-pointer>;
+  constant slot g-permission-class-release-finish :: <C-function-pointer>;
+  constant slot g-permission-class-reserved :: <C-void*>;
   pointer-type-name: <GPermissionClass>;
 end C-struct;
 
@@ -8736,11 +8549,11 @@ define C-function g-pollable-input-stream-read-nonblocking
 end;
 
 define C-struct <_GPollableInputStreamInterface>
-  constant slot gpollableinputstreaminterface-g-iface :: <GTypeInterface>;
-  constant slot gpollableinputstreaminterface-can-poll :: <C-function-pointer>;
-  constant slot gpollableinputstreaminterface-is-readable :: <C-function-pointer>;
-  constant slot gpollableinputstreaminterface-create-source :: <C-function-pointer>;
-  constant slot gpollableinputstreaminterface-read-nonblocking :: <C-function-pointer>;
+  constant slot g-pollable-input-stream-interface-g-iface :: <GTypeInterface>;
+  constant slot g-pollable-input-stream-interface-can-poll :: <C-function-pointer>;
+  constant slot g-pollable-input-stream-interface-is-readable :: <C-function-pointer>;
+  constant slot g-pollable-input-stream-interface-create-source :: <C-function-pointer>;
+  constant slot g-pollable-input-stream-interface-read-nonblocking :: <C-function-pointer>;
   pointer-type-name: <GPollableInputStreamInterface>;
 end C-struct;
 
@@ -8779,11 +8592,11 @@ define C-function g-pollable-output-stream-write-nonblocking
 end;
 
 define C-struct <_GPollableOutputStreamInterface>
-  constant slot gpollableoutputstreaminterface-g-iface :: <GTypeInterface>;
-  constant slot gpollableoutputstreaminterface-can-poll :: <C-function-pointer>;
-  constant slot gpollableoutputstreaminterface-is-writable :: <C-function-pointer>;
-  constant slot gpollableoutputstreaminterface-create-source :: <C-function-pointer>;
-  constant slot gpollableoutputstreaminterface-write-nonblocking :: <C-function-pointer>;
+  constant slot g-pollable-output-stream-interface-g-iface :: <GTypeInterface>;
+  constant slot g-pollable-output-stream-interface-can-poll :: <C-function-pointer>;
+  constant slot g-pollable-output-stream-interface-is-writable :: <C-function-pointer>;
+  constant slot g-pollable-output-stream-interface-create-source :: <C-function-pointer>;
+  constant slot g-pollable-output-stream-interface-write-nonblocking :: <C-function-pointer>;
   pointer-type-name: <GPollableOutputStreamInterface>;
 end C-struct;
 
@@ -8832,26 +8645,12 @@ define C-function g-proxy-supports-hostname
 end;
 
 define open C-subtype <GProxyAddress> (<GInetSocketAddress>)
-  constant slot gproxyaddress-parent-instance :: <GInetSocketAddress>;
-  constant slot gproxyaddress-priv :: <GProxyAddressPrivate>;
+  constant slot g-proxy-address-parent-instance :: <GInetSocketAddress>;
+  constant slot g-proxy-address-priv :: <GProxyAddressPrivate>;
 end C-subtype;
 
 define C-pointer-type <GProxyAddress*> => <GProxyAddress>;
 
-define property-getter proxyaddress-destination-hostname :: <C-string> on <GProxyAddress> end;
-define property-setter proxyaddress-destination-hostname :: <C-string> on <GProxyAddress> end;
-define property-getter proxyaddress-destination-port :: <C-unsigned-int> on <GProxyAddress> end;
-define property-setter proxyaddress-destination-port :: <C-unsigned-int> on <GProxyAddress> end;
-define property-getter proxyaddress-destination-protocol :: <C-string> on <GProxyAddress> end;
-define property-setter proxyaddress-destination-protocol :: <C-string> on <GProxyAddress> end;
-define property-getter proxyaddress-password :: <C-string> on <GProxyAddress> end;
-define property-setter proxyaddress-password :: <C-string> on <GProxyAddress> end;
-define property-getter proxyaddress-protocol :: <C-string> on <GProxyAddress> end;
-define property-setter proxyaddress-protocol :: <C-string> on <GProxyAddress> end;
-define property-getter proxyaddress-uri :: <C-string> on <GProxyAddress> end;
-define property-setter proxyaddress-uri :: <C-string> on <GProxyAddress> end;
-define property-getter proxyaddress-username :: <C-string> on <GProxyAddress> end;
-define property-setter proxyaddress-username :: <C-string> on <GProxyAddress> end;
 define C-function g-proxy-address-new
   input parameter inetaddr_ :: <GInetAddress>;
   input parameter port_ :: <C-unsigned-short>;
@@ -8907,32 +8706,26 @@ define C-function g-proxy-address-get-username
 end;
 
 define C-struct <_GProxyAddressClass>
-  constant slot gproxyaddressclass-parent-class :: <GInetSocketAddressClass>;
+  constant slot g-proxy-address-class-parent-class :: <GInetSocketAddressClass>;
   pointer-type-name: <GProxyAddressClass>;
 end C-struct;
 
 define open C-subtype <GProxyAddressEnumerator> (<GSocketAddressEnumerator>)
-  constant slot gproxyaddressenumerator-parent-instance :: <GSocketAddressEnumerator>;
-  constant slot gproxyaddressenumerator-priv :: <GProxyAddressEnumeratorPrivate>;
+  constant slot g-proxy-address-enumerator-parent-instance :: <GSocketAddressEnumerator>;
+  constant slot g-proxy-address-enumerator-priv :: <GProxyAddressEnumeratorPrivate>;
 end C-subtype;
 
 define C-pointer-type <GProxyAddressEnumerator*> => <GProxyAddressEnumerator>;
 
-define property-getter proxyaddressenumerator-connectable :: <GSocketConnectable> on <GProxyAddressEnumerator> end;
-define property-setter proxyaddressenumerator-connectable :: <GSocketConnectable> on <GProxyAddressEnumerator> end;
-define property-getter proxyaddressenumerator-proxy-resolver :: <GProxyResolver> on <GProxyAddressEnumerator> end;
-define property-setter proxyaddressenumerator-proxy-resolver :: <GProxyResolver> on <GProxyAddressEnumerator> end;
-define property-getter proxyaddressenumerator-uri :: <C-string> on <GProxyAddressEnumerator> end;
-define property-setter proxyaddressenumerator-uri :: <C-string> on <GProxyAddressEnumerator> end;
 define C-struct <_GProxyAddressEnumeratorClass>
-  constant slot gproxyaddressenumeratorclass-parent-class :: <GSocketAddressEnumeratorClass>;
-  constant slot gproxyaddressenumeratorclass--g-reserved1 :: <C-void*>;
-  constant slot gproxyaddressenumeratorclass--g-reserved2 :: <C-void*>;
-  constant slot gproxyaddressenumeratorclass--g-reserved3 :: <C-void*>;
-  constant slot gproxyaddressenumeratorclass--g-reserved4 :: <C-void*>;
-  constant slot gproxyaddressenumeratorclass--g-reserved5 :: <C-void*>;
-  constant slot gproxyaddressenumeratorclass--g-reserved6 :: <C-void*>;
-  constant slot gproxyaddressenumeratorclass--g-reserved7 :: <C-void*>;
+  constant slot g-proxy-address-enumerator-class-parent-class :: <GSocketAddressEnumeratorClass>;
+  constant slot g-proxy-address-enumerator-class-_g-reserved1 :: <C-void*>;
+  constant slot g-proxy-address-enumerator-class-_g-reserved2 :: <C-void*>;
+  constant slot g-proxy-address-enumerator-class-_g-reserved3 :: <C-void*>;
+  constant slot g-proxy-address-enumerator-class-_g-reserved4 :: <C-void*>;
+  constant slot g-proxy-address-enumerator-class-_g-reserved5 :: <C-void*>;
+  constant slot g-proxy-address-enumerator-class-_g-reserved6 :: <C-void*>;
+  constant slot g-proxy-address-enumerator-class-_g-reserved7 :: <C-void*>;
   pointer-type-name: <GProxyAddressEnumeratorClass>;
 end C-struct;
 
@@ -8945,11 +8738,11 @@ define C-struct <_GProxyAddressPrivate>
 end C-struct;
 
 define C-struct <_GProxyInterface>
-  constant slot gproxyinterface-g-iface :: <GTypeInterface>;
-  constant slot gproxyinterface-connect :: <C-function-pointer>;
-  constant slot gproxyinterface-connect-async :: <C-function-pointer>;
-  constant slot gproxyinterface-connect-finish :: <C-function-pointer>;
-  constant slot gproxyinterface-supports-hostname :: <C-function-pointer>;
+  constant slot g-proxy-interface-g-iface :: <GTypeInterface>;
+  constant slot g-proxy-interface-connect :: <C-function-pointer>;
+  constant slot g-proxy-interface-connect-async :: <C-function-pointer>;
+  constant slot g-proxy-interface-connect-finish :: <C-function-pointer>;
+  constant slot g-proxy-interface-supports-hostname :: <C-function-pointer>;
   pointer-type-name: <GProxyInterface>;
 end C-struct;
 
@@ -8995,11 +8788,11 @@ define C-function g-proxy-resolver-lookup-finish
 end;
 
 define C-struct <_GProxyResolverInterface>
-  constant slot gproxyresolverinterface-g-iface :: <GTypeInterface>;
-  constant slot gproxyresolverinterface-is-supported :: <C-function-pointer>;
-  constant slot gproxyresolverinterface-lookup :: <C-function-pointer>;
-  constant slot gproxyresolverinterface-lookup-async :: <C-function-pointer>;
-  constant slot gproxyresolverinterface-lookup-finish :: <C-function-pointer>;
+  constant slot g-proxy-resolver-interface-g-iface :: <GTypeInterface>;
+  constant slot g-proxy-resolver-interface-is-supported :: <C-function-pointer>;
+  constant slot g-proxy-resolver-interface-lookup :: <C-function-pointer>;
+  constant slot g-proxy-resolver-interface-lookup-async :: <C-function-pointer>;
+  constant slot g-proxy-resolver-interface-lookup-finish :: <C-function-pointer>;
   pointer-type-name: <GProxyResolverInterface>;
 end C-struct;
 
@@ -9026,15 +8819,15 @@ define C-function g-remote-action-group-change-action-state-full
 end;
 
 define C-struct <_GRemoteActionGroupInterface>
-  constant slot gremoteactiongroupinterface-g-iface :: <GTypeInterface>;
-  constant slot gremoteactiongroupinterface-activate-action-full :: <C-function-pointer>;
-  constant slot gremoteactiongroupinterface-change-action-state-full :: <C-function-pointer>;
+  constant slot g-remote-action-group-interface-g-iface :: <GTypeInterface>;
+  constant slot g-remote-action-group-interface-activate-action-full :: <C-function-pointer>;
+  constant slot g-remote-action-group-interface-change-action-state-full :: <C-function-pointer>;
   pointer-type-name: <GRemoteActionGroupInterface>;
 end C-struct;
 
 define open C-subtype <GResolver> (<GObject>)
-  constant slot gresolver-parent-instance :: <GObject>;
-  constant slot gresolver-priv :: <GResolverPrivate>;
+  constant slot g-resolver-parent-instance :: <GObject>;
+  constant slot g-resolver-priv :: <GResolverPrivate>;
 end C-subtype;
 
 define C-pointer-type <GResolver*> => <GResolver>;
@@ -9152,29 +8945,29 @@ define C-function g-resolver-set-default
 end;
 
 define C-struct <_GResolverClass>
-  constant slot gresolverclass-parent-class :: <GObjectClass>;
-  constant slot gresolverclass-reload :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-by-name :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-by-name-async :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-by-name-finish :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-by-address :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-by-address-async :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-by-address-finish :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-service :: <C-void*>;
-  constant slot gresolverclass-lookup-service-async :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-service-finish :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-records :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-records-async :: <C-function-pointer>;
-  constant slot gresolverclass-lookup-records-finish :: <C-function-pointer>;
-  constant slot gresolverclass--g-reserved4 :: <C-void*>;
-  constant slot gresolverclass--g-reserved5 :: <C-void*>;
-  constant slot gresolverclass--g-reserved6 :: <C-void*>;
+  constant slot g-resolver-class-parent-class :: <GObjectClass>;
+  constant slot g-resolver-class-reload :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-by-name :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-by-name-async :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-by-name-finish :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-by-address :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-by-address-async :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-by-address-finish :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-service :: <C-void*>;
+  constant slot g-resolver-class-lookup-service-async :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-service-finish :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-records :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-records-async :: <C-function-pointer>;
+  constant slot g-resolver-class-lookup-records-finish :: <C-function-pointer>;
+  constant slot g-resolver-class-_g-reserved4 :: <C-void*>;
+  constant slot g-resolver-class-_g-reserved5 :: <C-void*>;
+  constant slot g-resolver-class-_g-reserved6 :: <C-void*>;
   pointer-type-name: <GResolverClass>;
 end C-struct;
 
-define constant $G-RESOLVER-ERROR-NOT-FOUND = 0;
-define constant $G-RESOLVER-ERROR-TEMPORARY-FAILURE = 1;
-define constant $G-RESOLVER-ERROR-INTERNAL = 2;
+define constant $g-resolver-error-not-found = 0;
+define constant $g-resolver-error-temporary-failure = 1;
+define constant $g-resolver-error-internal = 2;
 define constant <GResolverError> = <C-int>;
 define C-pointer-type <GResolverError*> => <GResolverError>;
 
@@ -9182,11 +8975,11 @@ define C-struct <_GResolverPrivate>
   pointer-type-name: <GResolverPrivate>;
 end C-struct;
 
-define constant $G-RESOLVER-RECORD-SRV = 1;
-define constant $G-RESOLVER-RECORD-MX = 2;
-define constant $G-RESOLVER-RECORD-TXT = 3;
-define constant $G-RESOLVER-RECORD-SOA = 4;
-define constant $G-RESOLVER-RECORD-NS = 5;
+define constant $g-resolver-record-srv = 1;
+define constant $g-resolver-record-mx = 2;
+define constant $g-resolver-record-txt = 3;
+define constant $g-resolver-record-soa = 4;
+define constant $g-resolver-record-ns = 5;
 define constant <GResolverRecordType> = <C-int>;
 define C-pointer-type <GResolverRecordType*> => <GResolverRecordType>;
 
@@ -9261,17 +9054,17 @@ define C-function g-resource-load
   c-name: "g_resource_load";
 end;
 
-define constant $G-RESOURCE-ERROR-NOT-FOUND = 0;
-define constant $G-RESOURCE-ERROR-INTERNAL = 1;
+define constant $g-resource-error-not-found = 0;
+define constant $g-resource-error-internal = 1;
 define constant <GResourceError> = <C-int>;
 define C-pointer-type <GResourceError*> => <GResourceError>;
 
-define constant $G-RESOURCE-FLAGS-NONE = 0;
-define constant $G-RESOURCE-FLAGS-COMPRESSED = 1;
+define constant $g-resource-flags-none = 0;
+define constant $g-resource-flags-compressed = 1;
 define constant <GResourceFlags> = <C-int>;
 define C-pointer-type <GResourceFlags*> => <GResourceFlags>;
 
-define constant $G-RESOURCE-LOOKUP-FLAGS-NONE = 0;
+define constant $g-resource-lookup-flags-none = 0;
 define constant <GResourceLookupFlags> = <C-int>;
 define C-pointer-type <GResourceLookupFlags*> => <GResourceLookupFlags>;
 
@@ -9317,32 +9110,22 @@ define C-function g-seekable-truncate
 end;
 
 define C-struct <_GSeekableIface>
-  constant slot gseekableiface-g-iface :: <GTypeInterface>;
-  constant slot gseekableiface-tell :: <C-function-pointer>;
-  constant slot gseekableiface-can-seek :: <C-function-pointer>;
-  constant slot gseekableiface-seek :: <C-function-pointer>;
-  constant slot gseekableiface-can-truncate :: <C-function-pointer>;
-  constant slot gseekableiface-truncate-fn :: <C-function-pointer>;
+  constant slot g-seekable-iface-g-iface :: <GTypeInterface>;
+  constant slot g-seekable-iface-tell :: <C-function-pointer>;
+  constant slot g-seekable-iface-can-seek :: <C-function-pointer>;
+  constant slot g-seekable-iface-seek :: <C-function-pointer>;
+  constant slot g-seekable-iface-can-truncate :: <C-function-pointer>;
+  constant slot g-seekable-iface-truncate-fn :: <C-function-pointer>;
   pointer-type-name: <GSeekableIface>;
 end C-struct;
 
 define open C-subtype <GSettings> (<GObject>)
-  constant slot gsettings-parent-instance :: <GObject>;
-  constant slot gsettings-priv :: <GSettingsPrivate>;
+  constant slot g-settings-parent-instance :: <GObject>;
+  constant slot g-settings-priv :: <GSettingsPrivate>;
 end C-subtype;
 
 define C-pointer-type <GSettings*> => <GSettings>;
 
-define property-getter settings-delay-apply :: <C-boolean> on <GSettings> end;
-define property-getter settings-has-unapplied :: <C-boolean> on <GSettings> end;
-define property-getter settings-path :: <C-string> on <GSettings> end;
-define property-setter settings-path :: <C-string> on <GSettings> end;
-define property-getter settings-schema :: <C-string> on <GSettings> end;
-define property-setter settings-schema :: <C-string> on <GSettings> end;
-define property-getter settings-schema-id :: <C-string> on <GSettings> end;
-define property-setter settings-schema-id :: <C-string> on <GSettings> end;
-define property-getter settings-settings-schema :: <GSettingsSchema> on <GSettings> end;
-define property-setter settings-settings-schema :: <GSettingsSchema> on <GSettings> end;
 define C-function g-settings-new
   input parameter schema_id_ :: <C-string>;
   result res :: <GSettings>;
@@ -9640,22 +9423,22 @@ define C-struct <_GSettingsBackend>
   pointer-type-name: <GSettingsBackend>;
 end C-struct;
 
-define constant $G-SETTINGS-BIND-DEFAULT = 0;
-define constant $G-SETTINGS-BIND-GET = 1;
-define constant $G-SETTINGS-BIND-SET = 2;
-define constant $G-SETTINGS-BIND-NO-SENSITIVITY = 4;
-define constant $G-SETTINGS-BIND-GET-NO-CHANGES = 8;
-define constant $G-SETTINGS-BIND-INVERT-BOOLEAN = 16;
+define constant $g-settings-bind-default = 0;
+define constant $g-settings-bind-get = 1;
+define constant $g-settings-bind-set = 2;
+define constant $g-settings-bind-no-sensitivity = 4;
+define constant $g-settings-bind-get-no-changes = 8;
+define constant $g-settings-bind-invert-boolean = 16;
 define constant <GSettingsBindFlags> = <C-int>;
 define C-pointer-type <GSettingsBindFlags*> => <GSettingsBindFlags>;
 
 define C-struct <_GSettingsClass>
-  constant slot gsettingsclass-parent-class :: <GObjectClass>;
-  constant slot gsettingsclass-writable-changed :: <C-function-pointer>;
-  constant slot gsettingsclass-changed :: <C-function-pointer>;
-  constant slot gsettingsclass-writable-change-event :: <C-function-pointer>;
-  constant slot gsettingsclass-change-event :: <C-function-pointer>;
-  constant slot gsettingsclass-padding :: <C-void*>;
+  constant slot g-settings-class-parent-class :: <GObjectClass>;
+  constant slot g-settings-class-writable-changed :: <C-function-pointer>;
+  constant slot g-settings-class-changed :: <C-function-pointer>;
+  constant slot g-settings-class-writable-change-event :: <C-function-pointer>;
+  constant slot g-settings-class-change-event :: <C-function-pointer>;
+  constant slot g-settings-class-padding :: <C-void*>;
   pointer-type-name: <GSettingsClass>;
 end C-struct;
 
@@ -9731,15 +9514,6 @@ end C-subtype;
 
 define C-pointer-type <GSimpleAction*> => <GSimpleAction>;
 
-define property-getter simpleaction-enabled :: <C-boolean> on <GSimpleAction> end;
-define property-setter simpleaction-enabled :: <C-boolean> on <GSimpleAction> end;
-define property-getter simpleaction-name :: <C-string> on <GSimpleAction> end;
-define property-setter simpleaction-name :: <C-string> on <GSimpleAction> end;
-define property-getter simpleaction-parameter-type :: <GVariantType> on <GSimpleAction> end;
-define property-setter simpleaction-parameter-type :: <GVariantType> on <GSimpleAction> end;
-define property-getter simpleaction-state :: <GVariant> on <GSimpleAction> end;
-define property-setter simpleaction-state :: <GVariant> on <GSimpleAction> end;
-define property-getter simpleaction-state-type :: <GVariantType> on <GSimpleAction> end;
 define C-function g-simple-action-new
   input parameter name_ :: <C-string>;
   input parameter parameter_type_ :: <GVariantType>;
@@ -9768,8 +9542,8 @@ define C-function g-simple-action-set-state
 end;
 
 define open C-subtype <GSimpleActionGroup> (<GObject>)
-  constant slot gsimpleactiongroup-parent-instance :: <GObject>;
-  constant slot gsimpleactiongroup-priv :: <GSimpleActionGroupPrivate>;
+  constant slot g-simple-action-group-parent-instance :: <GObject>;
+  constant slot g-simple-action-group-priv :: <GSimpleActionGroupPrivate>;
 end C-subtype;
 
 define C-pointer-type <GSimpleActionGroup*> => <GSimpleActionGroup>;
@@ -9807,8 +9581,8 @@ define C-function g-simple-action-group-remove
 end;
 
 define C-struct <_GSimpleActionGroupClass>
-  constant slot gsimpleactiongroupclass-parent-class :: <GObjectClass>;
-  constant slot gsimpleactiongroupclass-padding :: <C-void*>;
+  constant slot g-simple-action-group-class-parent-class :: <GObjectClass>;
+  constant slot g-simple-action-group-class-padding :: <C-void*>;
   pointer-type-name: <GSimpleActionGroupClass>;
 end C-struct;
 
@@ -9921,16 +9695,12 @@ define C-function g-simple-permission-new
 end;
 
 define open C-subtype <GSimpleProxyResolver> (<GObject>)
-  constant slot gsimpleproxyresolver-parent-instance :: <GObject>;
-  constant slot gsimpleproxyresolver-priv :: <GSimpleProxyResolverPrivate>;
+  constant slot g-simple-proxy-resolver-parent-instance :: <GObject>;
+  constant slot g-simple-proxy-resolver-priv :: <GSimpleProxyResolverPrivate>;
 end C-subtype;
 
 define C-pointer-type <GSimpleProxyResolver*> => <GSimpleProxyResolver>;
 
-define property-getter simpleproxyresolver-default-proxy :: <C-string> on <GSimpleProxyResolver> end;
-define property-setter simpleproxyresolver-default-proxy :: <C-string> on <GSimpleProxyResolver> end;
-define property-getter simpleproxyresolver-ignore-hosts :: <C-string*> on <GSimpleProxyResolver> end;
-define property-setter simpleproxyresolver-ignore-hosts :: <C-string*> on <GSimpleProxyResolver> end;
 define C-function g-simple-proxy-resolver-set-default-proxy
   input parameter self :: <GSimpleProxyResolver>;
   input parameter default_proxy_ :: <C-string>;
@@ -9951,12 +9721,12 @@ define C-function g-simple-proxy-resolver-set-uri-proxy
 end;
 
 define C-struct <_GSimpleProxyResolverClass>
-  constant slot gsimpleproxyresolverclass-parent-class :: <GObjectClass>;
-  constant slot gsimpleproxyresolverclass--g-reserved1 :: <C-void*>;
-  constant slot gsimpleproxyresolverclass--g-reserved2 :: <C-void*>;
-  constant slot gsimpleproxyresolverclass--g-reserved3 :: <C-void*>;
-  constant slot gsimpleproxyresolverclass--g-reserved4 :: <C-void*>;
-  constant slot gsimpleproxyresolverclass--g-reserved5 :: <C-void*>;
+  constant slot g-simple-proxy-resolver-class-parent-class :: <GObjectClass>;
+  constant slot g-simple-proxy-resolver-class-_g-reserved1 :: <C-void*>;
+  constant slot g-simple-proxy-resolver-class-_g-reserved2 :: <C-void*>;
+  constant slot g-simple-proxy-resolver-class-_g-reserved3 :: <C-void*>;
+  constant slot g-simple-proxy-resolver-class-_g-reserved4 :: <C-void*>;
+  constant slot g-simple-proxy-resolver-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GSimpleProxyResolverClass>;
 end C-struct;
 
@@ -9965,38 +9735,12 @@ define C-struct <_GSimpleProxyResolverPrivate>
 end C-struct;
 
 define open C-subtype <GSocket> (<GObject>)
-  constant slot gsocket-parent-instance :: <GObject>;
-  constant slot gsocket-priv :: <GSocketPrivate>;
+  constant slot g-socket-parent-instance :: <GObject>;
+  constant slot g-socket-priv :: <GSocketPrivate>;
 end C-subtype;
 
 define C-pointer-type <GSocket*> => <GSocket>;
 
-define property-getter socket-blocking :: <C-boolean> on <GSocket> end;
-define property-setter socket-blocking :: <C-boolean> on <GSocket> end;
-define property-getter socket-broadcast :: <C-boolean> on <GSocket> end;
-define property-setter socket-broadcast :: <C-boolean> on <GSocket> end;
-define property-getter socket-family :: <GSocketFamily> on <GSocket> end;
-define property-setter socket-family :: <GSocketFamily> on <GSocket> end;
-define property-getter socket-fd :: <C-signed-int> on <GSocket> end;
-define property-setter socket-fd :: <C-signed-int> on <GSocket> end;
-define property-getter socket-keepalive :: <C-boolean> on <GSocket> end;
-define property-setter socket-keepalive :: <C-boolean> on <GSocket> end;
-define property-getter socket-listen-backlog :: <C-signed-int> on <GSocket> end;
-define property-setter socket-listen-backlog :: <C-signed-int> on <GSocket> end;
-define property-getter socket-local-address :: <GSocketAddress> on <GSocket> end;
-define property-getter socket-multicast-loopback :: <C-boolean> on <GSocket> end;
-define property-setter socket-multicast-loopback :: <C-boolean> on <GSocket> end;
-define property-getter socket-multicast-ttl :: <C-unsigned-int> on <GSocket> end;
-define property-setter socket-multicast-ttl :: <C-unsigned-int> on <GSocket> end;
-define property-getter socket-protocol :: <GSocketProtocol> on <GSocket> end;
-define property-setter socket-protocol :: <GSocketProtocol> on <GSocket> end;
-define property-getter socket-remote-address :: <GSocketAddress> on <GSocket> end;
-define property-getter socket-timeout :: <C-unsigned-int> on <GSocket> end;
-define property-setter socket-timeout :: <C-unsigned-int> on <GSocket> end;
-define property-getter socket-ttl :: <C-unsigned-int> on <GSocket> end;
-define property-setter socket-ttl :: <C-unsigned-int> on <GSocket> end;
-define property-getter socket-type :: <GSocketType> on <GSocket> end;
-define property-setter socket-type :: <GSocketType> on <GSocket> end;
 define C-function g-socket-new
   input parameter family_ :: <GSocketFamily>;
   input parameter type_ :: <GSocketType>;
@@ -10373,12 +10117,11 @@ define C-function g-socket-speaks-ipv4
 end;
 
 define open C-subtype <GSocketAddress> (<GObject>)
-  constant slot gsocketaddress-parent-instance :: <GObject>;
+  constant slot g-socket-address-parent-instance :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <GSocketAddress*> => <GSocketAddress>;
 
-define property-getter socketaddress-family :: <GSocketFamily> on <GSocketAddress> end;
 define C-function g-socket-address-new-from-native
   input parameter native_ :: <C-void*>;
   input parameter len_ :: <C-unsigned-long>;
@@ -10407,15 +10150,15 @@ define C-function g-socket-address-to-native
 end;
 
 define C-struct <_GSocketAddressClass>
-  constant slot gsocketaddressclass-parent-class :: <GObjectClass>;
-  constant slot gsocketaddressclass-get-family :: <C-function-pointer>;
-  constant slot gsocketaddressclass-get-native-size :: <C-function-pointer>;
-  constant slot gsocketaddressclass-to-native :: <C-function-pointer>;
+  constant slot g-socket-address-class-parent-class :: <GObjectClass>;
+  constant slot g-socket-address-class-get-family :: <C-function-pointer>;
+  constant slot g-socket-address-class-get-native-size :: <C-function-pointer>;
+  constant slot g-socket-address-class-to-native :: <C-function-pointer>;
   pointer-type-name: <GSocketAddressClass>;
 end C-struct;
 
 define open C-subtype <GSocketAddressEnumerator> (<GObject>)
-  constant slot gsocketaddressenumerator-parent-instance :: <GObject>;
+  constant slot g-socket-address-enumerator-parent-instance :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <GSocketAddressEnumerator*> => <GSocketAddressEnumerator>;
@@ -10443,53 +10186,35 @@ define C-function g-socket-address-enumerator-next-finish
 end;
 
 define C-struct <_GSocketAddressEnumeratorClass>
-  constant slot gsocketaddressenumeratorclass-parent-class :: <GObjectClass>;
-  constant slot gsocketaddressenumeratorclass-next :: <C-function-pointer>;
-  constant slot gsocketaddressenumeratorclass-next-async :: <C-function-pointer>;
-  constant slot gsocketaddressenumeratorclass-next-finish :: <C-function-pointer>;
+  constant slot g-socket-address-enumerator-class-parent-class :: <GObjectClass>;
+  constant slot g-socket-address-enumerator-class-next :: <C-function-pointer>;
+  constant slot g-socket-address-enumerator-class-next-async :: <C-function-pointer>;
+  constant slot g-socket-address-enumerator-class-next-finish :: <C-function-pointer>;
   pointer-type-name: <GSocketAddressEnumeratorClass>;
 end C-struct;
 
 define C-struct <_GSocketClass>
-  constant slot gsocketclass-parent-class :: <GObjectClass>;
-  constant slot gsocketclass--g-reserved1 :: <C-void*>;
-  constant slot gsocketclass--g-reserved2 :: <C-void*>;
-  constant slot gsocketclass--g-reserved3 :: <C-void*>;
-  constant slot gsocketclass--g-reserved4 :: <C-void*>;
-  constant slot gsocketclass--g-reserved5 :: <C-void*>;
-  constant slot gsocketclass--g-reserved6 :: <C-void*>;
-  constant slot gsocketclass--g-reserved7 :: <C-void*>;
-  constant slot gsocketclass--g-reserved8 :: <C-void*>;
-  constant slot gsocketclass--g-reserved9 :: <C-void*>;
-  constant slot gsocketclass--g-reserved10 :: <C-void*>;
+  constant slot g-socket-class-parent-class :: <GObjectClass>;
+  constant slot g-socket-class-_g-reserved1 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved2 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved3 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved4 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved5 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved6 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved7 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved8 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved9 :: <C-void*>;
+  constant slot g-socket-class-_g-reserved10 :: <C-void*>;
   pointer-type-name: <GSocketClass>;
 end C-struct;
 
 define open C-subtype <GSocketClient> (<GObject>)
-  constant slot gsocketclient-parent-instance :: <GObject>;
-  constant slot gsocketclient-priv :: <GSocketClientPrivate>;
+  constant slot g-socket-client-parent-instance :: <GObject>;
+  constant slot g-socket-client-priv :: <GSocketClientPrivate>;
 end C-subtype;
 
 define C-pointer-type <GSocketClient*> => <GSocketClient>;
 
-define property-getter socketclient-enable-proxy :: <C-boolean> on <GSocketClient> end;
-define property-setter socketclient-enable-proxy :: <C-boolean> on <GSocketClient> end;
-define property-getter socketclient-family :: <GSocketFamily> on <GSocketClient> end;
-define property-setter socketclient-family :: <GSocketFamily> on <GSocketClient> end;
-define property-getter socketclient-local-address :: <GSocketAddress> on <GSocketClient> end;
-define property-setter socketclient-local-address :: <GSocketAddress> on <GSocketClient> end;
-define property-getter socketclient-protocol :: <GSocketProtocol> on <GSocketClient> end;
-define property-setter socketclient-protocol :: <GSocketProtocol> on <GSocketClient> end;
-define property-getter socketclient-proxy-resolver :: <GProxyResolver> on <GSocketClient> end;
-define property-setter socketclient-proxy-resolver :: <GProxyResolver> on <GSocketClient> end;
-define property-getter socketclient-timeout :: <C-unsigned-int> on <GSocketClient> end;
-define property-setter socketclient-timeout :: <C-unsigned-int> on <GSocketClient> end;
-define property-getter socketclient-tls :: <C-boolean> on <GSocketClient> end;
-define property-setter socketclient-tls :: <C-boolean> on <GSocketClient> end;
-define property-getter socketclient-tls-validation-flags :: <GTlsCertificateFlags> on <GSocketClient> end;
-define property-setter socketclient-tls-validation-flags :: <GTlsCertificateFlags> on <GSocketClient> end;
-define property-getter socketclient-type :: <GSocketType> on <GSocketClient> end;
-define property-setter socketclient-type :: <GSocketType> on <GSocketClient> end;
 define C-function g-socket-client-new
   result res :: <GSocketClient>;
   c-name: "g_socket_client_new";
@@ -10712,24 +10437,24 @@ define C-function g-socket-client-set-tls-validation-flags
 end;
 
 define C-struct <_GSocketClientClass>
-  constant slot gsocketclientclass-parent-class :: <GObjectClass>;
-  constant slot gsocketclientclass-event :: <C-function-pointer>;
-  constant slot gsocketclientclass--g-reserved1 :: <C-void*>;
-  constant slot gsocketclientclass--g-reserved2 :: <C-void*>;
-  constant slot gsocketclientclass--g-reserved3 :: <C-void*>;
-  constant slot gsocketclientclass--g-reserved4 :: <C-void*>;
+  constant slot g-socket-client-class-parent-class :: <GObjectClass>;
+  constant slot g-socket-client-class-event :: <C-function-pointer>;
+  constant slot g-socket-client-class-_g-reserved1 :: <C-void*>;
+  constant slot g-socket-client-class-_g-reserved2 :: <C-void*>;
+  constant slot g-socket-client-class-_g-reserved3 :: <C-void*>;
+  constant slot g-socket-client-class-_g-reserved4 :: <C-void*>;
   pointer-type-name: <GSocketClientClass>;
 end C-struct;
 
-define constant $G-SOCKET-CLIENT-RESOLVING = 0;
-define constant $G-SOCKET-CLIENT-RESOLVED = 1;
-define constant $G-SOCKET-CLIENT-CONNECTING = 2;
-define constant $G-SOCKET-CLIENT-CONNECTED = 3;
-define constant $G-SOCKET-CLIENT-PROXY-NEGOTIATING = 4;
-define constant $G-SOCKET-CLIENT-PROXY-NEGOTIATED = 5;
-define constant $G-SOCKET-CLIENT-TLS-HANDSHAKING = 6;
-define constant $G-SOCKET-CLIENT-TLS-HANDSHAKED = 7;
-define constant $G-SOCKET-CLIENT-COMPLETE = 8;
+define constant $g-socket-client-resolving = 0;
+define constant $g-socket-client-resolved = 1;
+define constant $g-socket-client-connecting = 2;
+define constant $g-socket-client-connected = 3;
+define constant $g-socket-client-proxy-negotiating = 4;
+define constant $g-socket-client-proxy-negotiated = 5;
+define constant $g-socket-client-tls-handshaking = 6;
+define constant $g-socket-client-tls-handshaked = 7;
+define constant $g-socket-client-complete = 8;
 define constant <GSocketClientEvent> = <C-int>;
 define C-pointer-type <GSocketClientEvent*> => <GSocketClientEvent>;
 
@@ -10756,21 +10481,19 @@ define C-function g-socket-connectable-proxy-enumerate
 end;
 
 define C-struct <_GSocketConnectableIface>
-  constant slot gsocketconnectableiface-g-iface :: <GTypeInterface>;
-  constant slot gsocketconnectableiface-enumerate :: <C-function-pointer>;
-  constant slot gsocketconnectableiface-proxy-enumerate :: <C-function-pointer>;
+  constant slot g-socket-connectable-iface-g-iface :: <GTypeInterface>;
+  constant slot g-socket-connectable-iface-enumerate :: <C-function-pointer>;
+  constant slot g-socket-connectable-iface-proxy-enumerate :: <C-function-pointer>;
   pointer-type-name: <GSocketConnectableIface>;
 end C-struct;
 
 define open C-subtype <GSocketConnection> (<GIOStream>)
-  constant slot gsocketconnection-parent-instance :: <GIOStream>;
-  constant slot gsocketconnection-priv :: <GSocketConnectionPrivate>;
+  constant slot g-socket-connection-parent-instance :: <GIOStream>;
+  constant slot g-socket-connection-priv :: <GSocketConnectionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GSocketConnection*> => <GSocketConnection>;
 
-define property-getter socketconnection-socket :: <GSocket> on <GSocketConnection> end;
-define property-setter socketconnection-socket :: <GSocket> on <GSocketConnection> end;
 define C-function g-socket-connection-factory-lookup-type
   input parameter family_ :: <GSocketFamily>;
   input parameter type_ :: <GSocketType>;
@@ -10836,13 +10559,13 @@ define C-function g-socket-connection-is-connected
 end;
 
 define C-struct <_GSocketConnectionClass>
-  constant slot gsocketconnectionclass-parent-class :: <GIOStreamClass>;
-  constant slot gsocketconnectionclass--g-reserved1 :: <C-void*>;
-  constant slot gsocketconnectionclass--g-reserved2 :: <C-void*>;
-  constant slot gsocketconnectionclass--g-reserved3 :: <C-void*>;
-  constant slot gsocketconnectionclass--g-reserved4 :: <C-void*>;
-  constant slot gsocketconnectionclass--g-reserved5 :: <C-void*>;
-  constant slot gsocketconnectionclass--g-reserved6 :: <C-void*>;
+  constant slot g-socket-connection-class-parent-class :: <GIOStreamClass>;
+  constant slot g-socket-connection-class-_g-reserved1 :: <C-void*>;
+  constant slot g-socket-connection-class-_g-reserved2 :: <C-void*>;
+  constant slot g-socket-connection-class-_g-reserved3 :: <C-void*>;
+  constant slot g-socket-connection-class-_g-reserved4 :: <C-void*>;
+  constant slot g-socket-connection-class-_g-reserved5 :: <C-void*>;
+  constant slot g-socket-connection-class-_g-reserved6 :: <C-void*>;
   pointer-type-name: <GSocketConnectionClass>;
 end C-struct;
 
@@ -10851,8 +10574,8 @@ define C-struct <_GSocketConnectionPrivate>
 end C-struct;
 
 define open C-subtype <GSocketControlMessage> (<GObject>)
-  constant slot gsocketcontrolmessage-parent-instance :: <GObject>;
-  constant slot gsocketcontrolmessage-priv :: <GSocketControlMessagePrivate>;
+  constant slot g-socket-control-message-parent-instance :: <GObject>;
+  constant slot g-socket-control-message-priv :: <GSocketControlMessagePrivate>;
 end C-subtype;
 
 define C-pointer-type <GSocketControlMessage*> => <GSocketControlMessage>;
@@ -10891,17 +10614,17 @@ define C-function g-socket-control-message-serialize
 end;
 
 define C-struct <_GSocketControlMessageClass>
-  constant slot gsocketcontrolmessageclass-parent-class :: <GObjectClass>;
-  constant slot gsocketcontrolmessageclass-get-size :: <C-function-pointer>;
-  constant slot gsocketcontrolmessageclass-get-level :: <C-function-pointer>;
-  constant slot gsocketcontrolmessageclass-get-type :: <C-function-pointer>;
-  constant slot gsocketcontrolmessageclass-serialize :: <C-function-pointer>;
-  constant slot gsocketcontrolmessageclass-deserialize :: <C-void*>;
-  constant slot gsocketcontrolmessageclass--g-reserved1 :: <C-void*>;
-  constant slot gsocketcontrolmessageclass--g-reserved2 :: <C-void*>;
-  constant slot gsocketcontrolmessageclass--g-reserved3 :: <C-void*>;
-  constant slot gsocketcontrolmessageclass--g-reserved4 :: <C-void*>;
-  constant slot gsocketcontrolmessageclass--g-reserved5 :: <C-void*>;
+  constant slot g-socket-control-message-class-parent-class :: <GObjectClass>;
+  constant slot g-socket-control-message-class-get-size :: <C-function-pointer>;
+  constant slot g-socket-control-message-class-get-level :: <C-function-pointer>;
+  constant slot g-socket-control-message-class-get-type :: <C-function-pointer>;
+  constant slot g-socket-control-message-class-serialize :: <C-function-pointer>;
+  constant slot g-socket-control-message-class-deserialize :: <C-void*>;
+  constant slot g-socket-control-message-class-_g-reserved1 :: <C-void*>;
+  constant slot g-socket-control-message-class-_g-reserved2 :: <C-void*>;
+  constant slot g-socket-control-message-class-_g-reserved3 :: <C-void*>;
+  constant slot g-socket-control-message-class-_g-reserved4 :: <C-void*>;
+  constant slot g-socket-control-message-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GSocketControlMessageClass>;
 end C-struct;
 
@@ -10909,22 +10632,20 @@ define C-struct <_GSocketControlMessagePrivate>
   pointer-type-name: <GSocketControlMessagePrivate>;
 end C-struct;
 
-define constant $G-SOCKET-FAMILY-INVALID = 0;
-define constant $G-SOCKET-FAMILY-UNIX = 1;
-define constant $G-SOCKET-FAMILY-IPV4 = 2;
-define constant $G-SOCKET-FAMILY-IPV6 = 10;
+define constant $g-socket-family-invalid = 0;
+define constant $g-socket-family-unix = 1;
+define constant $g-socket-family-ipv4 = 2;
+define constant $g-socket-family-ipv6 = 10;
 define constant <GSocketFamily> = <C-int>;
 define C-pointer-type <GSocketFamily*> => <GSocketFamily>;
 
 define open C-subtype <GSocketListener> (<GObject>)
-  constant slot gsocketlistener-parent-instance :: <GObject>;
-  constant slot gsocketlistener-priv :: <GSocketListenerPrivate>;
+  constant slot g-socket-listener-parent-instance :: <GObject>;
+  constant slot g-socket-listener-priv :: <GSocketListenerPrivate>;
 end C-subtype;
 
 define C-pointer-type <GSocketListener*> => <GSocketListener>;
 
-define property-getter socketlistener-listen-backlog :: <C-signed-int> on <GSocketListener> end;
-define property-setter socketlistener-listen-backlog :: <C-signed-int> on <GSocketListener> end;
 define C-function g-socket-listener-new
   result res :: <GSocketListener>;
   c-name: "g_socket_listener_new";
@@ -11024,14 +10745,14 @@ define C-function g-socket-listener-set-backlog
 end;
 
 define C-struct <_GSocketListenerClass>
-  constant slot gsocketlistenerclass-parent-class :: <GObjectClass>;
-  constant slot gsocketlistenerclass-changed :: <C-function-pointer>;
-  constant slot gsocketlistenerclass--g-reserved1 :: <C-void*>;
-  constant slot gsocketlistenerclass--g-reserved2 :: <C-void*>;
-  constant slot gsocketlistenerclass--g-reserved3 :: <C-void*>;
-  constant slot gsocketlistenerclass--g-reserved4 :: <C-void*>;
-  constant slot gsocketlistenerclass--g-reserved5 :: <C-void*>;
-  constant slot gsocketlistenerclass--g-reserved6 :: <C-void*>;
+  constant slot g-socket-listener-class-parent-class :: <GObjectClass>;
+  constant slot g-socket-listener-class-changed :: <C-function-pointer>;
+  constant slot g-socket-listener-class-_g-reserved1 :: <C-void*>;
+  constant slot g-socket-listener-class-_g-reserved2 :: <C-void*>;
+  constant slot g-socket-listener-class-_g-reserved3 :: <C-void*>;
+  constant slot g-socket-listener-class-_g-reserved4 :: <C-void*>;
+  constant slot g-socket-listener-class-_g-reserved5 :: <C-void*>;
+  constant slot g-socket-listener-class-_g-reserved6 :: <C-void*>;
   pointer-type-name: <GSocketListenerClass>;
 end C-struct;
 
@@ -11039,10 +10760,10 @@ define C-struct <_GSocketListenerPrivate>
   pointer-type-name: <GSocketListenerPrivate>;
 end C-struct;
 
-define constant $G-SOCKET-MSG-NONE = 0;
-define constant $G-SOCKET-MSG-OOB = 1;
-define constant $G-SOCKET-MSG-PEEK = 2;
-define constant $G-SOCKET-MSG-DONTROUTE = 4;
+define constant $g-socket-msg-none = 0;
+define constant $g-socket-msg-oob = 1;
+define constant $g-socket-msg-peek = 2;
+define constant $g-socket-msg-dontroute = 4;
 define constant <GSocketMsgFlags> = <C-int>;
 define C-pointer-type <GSocketMsgFlags*> => <GSocketMsgFlags>;
 
@@ -11050,17 +10771,17 @@ define C-struct <_GSocketPrivate>
   pointer-type-name: <GSocketPrivate>;
 end C-struct;
 
-define constant $G-SOCKET-PROTOCOL-UNKNOWN = -1;
-define constant $G-SOCKET-PROTOCOL-DEFAULT = 0;
-define constant $G-SOCKET-PROTOCOL-TCP = 6;
-define constant $G-SOCKET-PROTOCOL-UDP = 17;
-define constant $G-SOCKET-PROTOCOL-SCTP = 132;
+define constant $g-socket-protocol-unknown = -1;
+define constant $g-socket-protocol-default = 0;
+define constant $g-socket-protocol-tcp = 6;
+define constant $g-socket-protocol-udp = 17;
+define constant $g-socket-protocol-sctp = 132;
 define constant <GSocketProtocol> = <C-int>;
 define C-pointer-type <GSocketProtocol*> => <GSocketProtocol>;
 
 define open C-subtype <GSocketService> (<GSocketListener>)
-  constant slot gsocketservice-parent-instance :: <GSocketListener>;
-  constant slot gsocketservice-priv :: <GSocketServicePrivate>;
+  constant slot g-socket-service-parent-instance :: <GSocketListener>;
+  constant slot g-socket-service-priv :: <GSocketServicePrivate>;
 end C-subtype;
 
 define C-pointer-type <GSocketService*> => <GSocketService>;
@@ -11087,14 +10808,14 @@ define C-function g-socket-service-stop
 end;
 
 define C-struct <_GSocketServiceClass>
-  constant slot gsocketserviceclass-parent-class :: <GSocketListenerClass>;
-  constant slot gsocketserviceclass-incoming :: <C-function-pointer>;
-  constant slot gsocketserviceclass--g-reserved1 :: <C-void*>;
-  constant slot gsocketserviceclass--g-reserved2 :: <C-void*>;
-  constant slot gsocketserviceclass--g-reserved3 :: <C-void*>;
-  constant slot gsocketserviceclass--g-reserved4 :: <C-void*>;
-  constant slot gsocketserviceclass--g-reserved5 :: <C-void*>;
-  constant slot gsocketserviceclass--g-reserved6 :: <C-void*>;
+  constant slot g-socket-service-class-parent-class :: <GSocketListenerClass>;
+  constant slot g-socket-service-class-incoming :: <C-function-pointer>;
+  constant slot g-socket-service-class-_g-reserved1 :: <C-void*>;
+  constant slot g-socket-service-class-_g-reserved2 :: <C-void*>;
+  constant slot g-socket-service-class-_g-reserved3 :: <C-void*>;
+  constant slot g-socket-service-class-_g-reserved4 :: <C-void*>;
+  constant slot g-socket-service-class-_g-reserved5 :: <C-void*>;
+  constant slot g-socket-service-class-_g-reserved6 :: <C-void*>;
   pointer-type-name: <GSocketServiceClass>;
 end C-struct;
 
@@ -11102,10 +10823,10 @@ define C-struct <_GSocketServicePrivate>
   pointer-type-name: <GSocketServicePrivate>;
 end C-struct;
 
-define constant $G-SOCKET-TYPE-INVALID = 0;
-define constant $G-SOCKET-TYPE-STREAM = 1;
-define constant $G-SOCKET-TYPE-DATAGRAM = 2;
-define constant $G-SOCKET-TYPE-SEQPACKET = 3;
+define constant $g-socket-type-invalid = 0;
+define constant $g-socket-type-stream = 1;
+define constant $g-socket-type-datagram = 2;
+define constant $g-socket-type-seqpacket = 3;
 define constant <GSocketType> = <C-int>;
 define C-pointer-type <GSocketType*> => <GSocketType>;
 
@@ -11158,11 +10879,11 @@ define C-function g-srv-target-get-weight
 end;
 
 define C-struct <_GStaticResource>
-  slot gstaticresource-data :: <C-unsigned-char*>;
-  slot gstaticresource-data-len :: <C-unsigned-long>;
-  slot gstaticresource-resource :: <GResource>;
-  slot gstaticresource-next :: <GStaticResource>;
-  slot gstaticresource-padding :: <C-void*>;
+  slot g-static-resource-data :: <C-unsigned-char*>;
+  slot g-static-resource-data-len :: <C-unsigned-long>;
+  slot g-static-resource-resource :: <GResource>;
+  slot g-static-resource-next :: <GStaticResource>;
+  slot g-static-resource-padding :: <C-void*>;
   pointer-type-name: <GStaticResource>;
 end C-struct;
 
@@ -11182,11 +10903,11 @@ define C-function g-static-resource-init
   c-name: "g_static_resource_init";
 end;
 
-define constant $TLS-BACKEND-EXTENSION-POINT-NAME = "gio-tls-backend";
+define constant $tls-backend-extension-point-name = "gio-tls-backend";
 
-define constant $TLS-DATABASE-PURPOSE-AUTHENTICATE-CLIENT = "1.3.6.1.5.5.7.3.2";
+define constant $tls-database-purpose-authenticate-client = "1.3.6.1.5.5.7.3.2";
 
-define constant $TLS-DATABASE-PURPOSE-AUTHENTICATE-SERVER = "1.3.6.1.5.5.7.3.1";
+define constant $tls-database-purpose-authenticate-server = "1.3.6.1.5.5.7.3.1";
 
 define open C-subtype <GTask> (<GObject>)
 end C-subtype;
@@ -11358,14 +11079,12 @@ define C-struct <_GTaskClass>
 end C-struct;
 
 define open C-subtype <GTcpConnection> (<GSocketConnection>)
-  constant slot gtcpconnection-parent-instance :: <GSocketConnection>;
-  constant slot gtcpconnection-priv :: <GTcpConnectionPrivate>;
+  constant slot g-tcp-connection-parent-instance :: <GSocketConnection>;
+  constant slot g-tcp-connection-priv :: <GTcpConnectionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GTcpConnection*> => <GTcpConnection>;
 
-define property-getter tcpconnection-graceful-disconnect :: <C-boolean> on <GTcpConnection> end;
-define property-setter tcpconnection-graceful-disconnect :: <C-boolean> on <GTcpConnection> end;
 define C-function g-tcp-connection-get-graceful-disconnect
   input parameter self :: <GTcpConnection>;
   result res :: <C-boolean>;
@@ -11379,7 +11098,7 @@ define C-function g-tcp-connection-set-graceful-disconnect
 end;
 
 define C-struct <_GTcpConnectionClass>
-  constant slot gtcpconnectionclass-parent-class :: <GSocketConnectionClass>;
+  constant slot g-tcp-connection-class-parent-class :: <GSocketConnectionClass>;
   pointer-type-name: <GTcpConnectionClass>;
 end C-struct;
 
@@ -11388,14 +11107,12 @@ define C-struct <_GTcpConnectionPrivate>
 end C-struct;
 
 define open C-subtype <GTcpWrapperConnection> (<GTcpConnection>)
-  constant slot gtcpwrapperconnection-parent-instance :: <GTcpConnection>;
-  constant slot gtcpwrapperconnection-priv :: <GTcpWrapperConnectionPrivate>;
+  constant slot g-tcp-wrapper-connection-parent-instance :: <GTcpConnection>;
+  constant slot g-tcp-wrapper-connection-priv :: <GTcpWrapperConnectionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GTcpWrapperConnection*> => <GTcpWrapperConnection>;
 
-define property-getter tcpwrapperconnection-base-io-stream :: <GIOStream> on <GTcpWrapperConnection> end;
-define property-setter tcpwrapperconnection-base-io-stream :: <GIOStream> on <GTcpWrapperConnection> end;
 define C-function g-tcp-wrapper-connection-new
   input parameter base_io_stream_ :: <GIOStream>;
   input parameter socket_ :: <GSocket>;
@@ -11410,7 +11127,7 @@ define C-function g-tcp-wrapper-connection-get-base-io-stream
 end;
 
 define C-struct <_GTcpWrapperConnectionClass>
-  constant slot gtcpwrapperconnectionclass-parent-class :: <GTcpConnectionClass>;
+  constant slot g-tcp-wrapper-connection-class-parent-class :: <GTcpConnectionClass>;
   pointer-type-name: <GTcpWrapperConnectionClass>;
 end C-struct;
 
@@ -11423,8 +11140,6 @@ end C-subtype;
 
 define C-pointer-type <GTestDBus*> => <GTestDBus>;
 
-define property-getter testdbus-flags :: <GTestDBusFlags> on <GTestDBus> end;
-define property-setter testdbus-flags :: <GTestDBusFlags> on <GTestDBus> end;
 define C-function g-test-dbus-new
   input parameter flags_ :: <GTestDBusFlags>;
   result res :: <GTestDBus>;
@@ -11468,7 +11183,7 @@ define C-function g-test-dbus-up
   c-name: "g_test_dbus_up";
 end;
 
-define constant $G-TEST-DBUS-NONE = 0;
+define constant $g-test-dbus-none = 0;
 define constant <GTestDBusFlags> = <C-int>;
 define C-pointer-type <GTestDBusFlags*> => <GTestDBusFlags>;
 
@@ -11477,11 +11192,6 @@ end C-subtype;
 
 define C-pointer-type <GThemedIcon*> => <GThemedIcon>;
 
-define property-setter themedicon-name :: <C-string> on <GThemedIcon> end;
-define property-getter themedicon-names :: <C-string*> on <GThemedIcon> end;
-define property-setter themedicon-names :: <C-string*> on <GThemedIcon> end;
-define property-getter themedicon-use-default-fallbacks :: <C-boolean> on <GThemedIcon> end;
-define property-setter themedicon-use-default-fallbacks :: <C-boolean> on <GThemedIcon> end;
 define C-function g-themed-icon-new
   input parameter iconname_ :: <C-string>;
   result res :: <GThemedIcon>;
@@ -11524,14 +11234,12 @@ define C-struct <_GThemedIconClass>
 end C-struct;
 
 define open C-subtype <GThreadedSocketService> (<GSocketService>)
-  constant slot gthreadedsocketservice-parent-instance :: <GSocketService>;
-  constant slot gthreadedsocketservice-priv :: <GThreadedSocketServicePrivate>;
+  constant slot g-threaded-socket-service-parent-instance :: <GSocketService>;
+  constant slot g-threaded-socket-service-priv :: <GThreadedSocketServicePrivate>;
 end C-subtype;
 
 define C-pointer-type <GThreadedSocketService*> => <GThreadedSocketService>;
 
-define property-getter threadedsocketservice-max-threads :: <C-signed-int> on <GThreadedSocketService> end;
-define property-setter threadedsocketservice-max-threads :: <C-signed-int> on <GThreadedSocketService> end;
 define C-function g-threaded-socket-service-new
   input parameter max_threads_ :: <C-signed-int>;
   result res :: <GSocketService>;
@@ -11539,13 +11247,13 @@ define C-function g-threaded-socket-service-new
 end;
 
 define C-struct <_GThreadedSocketServiceClass>
-  constant slot gthreadedsocketserviceclass-parent-class :: <GSocketServiceClass>;
-  constant slot gthreadedsocketserviceclass-run :: <C-function-pointer>;
-  constant slot gthreadedsocketserviceclass--g-reserved1 :: <C-void*>;
-  constant slot gthreadedsocketserviceclass--g-reserved2 :: <C-void*>;
-  constant slot gthreadedsocketserviceclass--g-reserved3 :: <C-void*>;
-  constant slot gthreadedsocketserviceclass--g-reserved4 :: <C-void*>;
-  constant slot gthreadedsocketserviceclass--g-reserved5 :: <C-void*>;
+  constant slot g-threaded-socket-service-class-parent-class :: <GSocketServiceClass>;
+  constant slot g-threaded-socket-service-class-run :: <C-function-pointer>;
+  constant slot g-threaded-socket-service-class-_g-reserved1 :: <C-void*>;
+  constant slot g-threaded-socket-service-class-_g-reserved2 :: <C-void*>;
+  constant slot g-threaded-socket-service-class-_g-reserved3 :: <C-void*>;
+  constant slot g-threaded-socket-service-class-_g-reserved4 :: <C-void*>;
+  constant slot g-threaded-socket-service-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GThreadedSocketServiceClass>;
 end C-struct;
 
@@ -11553,9 +11261,9 @@ define C-struct <_GThreadedSocketServicePrivate>
   pointer-type-name: <GThreadedSocketServicePrivate>;
 end C-struct;
 
-define constant $G-TLS-AUTHENTICATION-NONE = 0;
-define constant $G-TLS-AUTHENTICATION-REQUESTED = 1;
-define constant $G-TLS-AUTHENTICATION-REQUIRED = 2;
+define constant $g-tls-authentication-none = 0;
+define constant $g-tls-authentication-requested = 1;
+define constant $g-tls-authentication-required = 2;
 define constant <GTlsAuthenticationMode> = <C-int>;
 define C-pointer-type <GTlsAuthenticationMode*> => <GTlsAuthenticationMode>;
 
@@ -11607,31 +11315,23 @@ define C-function g-tls-backend-supports-tls
 end;
 
 define C-struct <_GTlsBackendInterface>
-  constant slot gtlsbackendinterface-g-iface :: <GTypeInterface>;
-  constant slot gtlsbackendinterface-supports-tls :: <C-function-pointer>;
-  constant slot gtlsbackendinterface-get-certificate-type :: <C-function-pointer>;
-  constant slot gtlsbackendinterface-get-client-connection-type :: <C-function-pointer>;
-  constant slot gtlsbackendinterface-get-server-connection-type :: <C-function-pointer>;
-  constant slot gtlsbackendinterface-get-file-database-type :: <C-function-pointer>;
-  constant slot gtlsbackendinterface-get-default-database :: <C-function-pointer>;
+  constant slot g-tls-backend-interface-g-iface :: <GTypeInterface>;
+  constant slot g-tls-backend-interface-supports-tls :: <C-function-pointer>;
+  constant slot g-tls-backend-interface-get-certificate-type :: <C-function-pointer>;
+  constant slot g-tls-backend-interface-get-client-connection-type :: <C-function-pointer>;
+  constant slot g-tls-backend-interface-get-server-connection-type :: <C-function-pointer>;
+  constant slot g-tls-backend-interface-get-file-database-type :: <C-function-pointer>;
+  constant slot g-tls-backend-interface-get-default-database :: <C-function-pointer>;
   pointer-type-name: <GTlsBackendInterface>;
 end C-struct;
 
 define open C-subtype <GTlsCertificate> (<GObject>)
-  constant slot gtlscertificate-parent-instance :: <GObject>;
-  constant slot gtlscertificate-priv :: <GTlsCertificatePrivate>;
+  constant slot g-tls-certificate-parent-instance :: <GObject>;
+  constant slot g-tls-certificate-priv :: <GTlsCertificatePrivate>;
 end C-subtype;
 
 define C-pointer-type <GTlsCertificate*> => <GTlsCertificate>;
 
-define property-getter tlscertificate-certificate :: <GByteArray> on <GTlsCertificate> end;
-define property-setter tlscertificate-certificate :: <GByteArray> on <GTlsCertificate> end;
-define property-getter tlscertificate-certificate-pem :: <C-string> on <GTlsCertificate> end;
-define property-setter tlscertificate-certificate-pem :: <C-string> on <GTlsCertificate> end;
-define property-getter tlscertificate-issuer :: <GTlsCertificate> on <GTlsCertificate> end;
-define property-setter tlscertificate-issuer :: <GTlsCertificate> on <GTlsCertificate> end;
-define property-setter tlscertificate-private-key :: <GByteArray> on <GTlsCertificate> end;
-define property-setter tlscertificate-private-key-pem :: <C-string> on <GTlsCertificate> end;
 define C-function g-tls-certificate-new-from-file
   input parameter file_ :: <C-string>;
   result res :: <GTlsCertificate>;
@@ -11680,20 +11380,20 @@ define C-function g-tls-certificate-verify
 end;
 
 define C-struct <_GTlsCertificateClass>
-  constant slot gtlscertificateclass-parent-class :: <GObjectClass>;
-  constant slot gtlscertificateclass-verify :: <C-function-pointer>;
-  constant slot gtlscertificateclass-padding :: <C-void*>;
+  constant slot g-tls-certificate-class-parent-class :: <GObjectClass>;
+  constant slot g-tls-certificate-class-verify :: <C-function-pointer>;
+  constant slot g-tls-certificate-class-padding :: <C-void*>;
   pointer-type-name: <GTlsCertificateClass>;
 end C-struct;
 
-define constant $G-TLS-CERTIFICATE-UNKNOWN-CA = 1;
-define constant $G-TLS-CERTIFICATE-BAD-IDENTITY = 2;
-define constant $G-TLS-CERTIFICATE-NOT-ACTIVATED = 4;
-define constant $G-TLS-CERTIFICATE-EXPIRED = 8;
-define constant $G-TLS-CERTIFICATE-REVOKED = 16;
-define constant $G-TLS-CERTIFICATE-INSECURE = 32;
-define constant $G-TLS-CERTIFICATE-GENERIC-ERROR = 64;
-define constant $G-TLS-CERTIFICATE-VALIDATE-ALL = 127;
+define constant $g-tls-certificate-unknown-ca = 1;
+define constant $g-tls-certificate-bad-identity = 2;
+define constant $g-tls-certificate-not-activated = 4;
+define constant $g-tls-certificate-expired = 8;
+define constant $g-tls-certificate-revoked = 16;
+define constant $g-tls-certificate-insecure = 32;
+define constant $g-tls-certificate-generic-error = 64;
+define constant $g-tls-certificate-validate-all = 127;
 define constant <GTlsCertificateFlags> = <C-int>;
 define C-pointer-type <GTlsCertificateFlags*> => <GTlsCertificateFlags>;
 
@@ -11757,33 +11457,17 @@ define C-function g-tls-client-connection-set-validation-flags
 end;
 
 define C-struct <_GTlsClientConnectionInterface>
-  constant slot gtlsclientconnectioninterface-g-iface :: <GTypeInterface>;
+  constant slot g-tls-client-connection-interface-g-iface :: <GTypeInterface>;
   pointer-type-name: <GTlsClientConnectionInterface>;
 end C-struct;
 
 define open C-subtype <GTlsConnection> (<GIOStream>)
-  constant slot gtlsconnection-parent-instance :: <GIOStream>;
-  constant slot gtlsconnection-priv :: <GTlsConnectionPrivate>;
+  constant slot g-tls-connection-parent-instance :: <GIOStream>;
+  constant slot g-tls-connection-priv :: <GTlsConnectionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GTlsConnection*> => <GTlsConnection>;
 
-define property-getter tlsconnection-base-io-stream :: <GIOStream> on <GTlsConnection> end;
-define property-setter tlsconnection-base-io-stream :: <GIOStream> on <GTlsConnection> end;
-define property-getter tlsconnection-certificate :: <GTlsCertificate> on <GTlsConnection> end;
-define property-setter tlsconnection-certificate :: <GTlsCertificate> on <GTlsConnection> end;
-define property-getter tlsconnection-database :: <GTlsDatabase> on <GTlsConnection> end;
-define property-setter tlsconnection-database :: <GTlsDatabase> on <GTlsConnection> end;
-define property-getter tlsconnection-interaction :: <GTlsInteraction> on <GTlsConnection> end;
-define property-setter tlsconnection-interaction :: <GTlsInteraction> on <GTlsConnection> end;
-define property-getter tlsconnection-peer-certificate :: <GTlsCertificate> on <GTlsConnection> end;
-define property-getter tlsconnection-peer-certificate-errors :: <GTlsCertificateFlags> on <GTlsConnection> end;
-define property-getter tlsconnection-rehandshake-mode :: <GTlsRehandshakeMode> on <GTlsConnection> end;
-define property-setter tlsconnection-rehandshake-mode :: <GTlsRehandshakeMode> on <GTlsConnection> end;
-define property-getter tlsconnection-require-close-notify :: <C-boolean> on <GTlsConnection> end;
-define property-setter tlsconnection-require-close-notify :: <C-boolean> on <GTlsConnection> end;
-define property-getter tlsconnection-use-system-certdb :: <C-boolean> on <GTlsConnection> end;
-define property-setter tlsconnection-use-system-certdb :: <C-boolean> on <GTlsConnection> end;
 define C-function g-tls-connection-emit-accept-certificate
   input parameter self :: <GTlsConnection>;
   input parameter peer_cert_ :: <GTlsCertificate>;
@@ -11900,12 +11584,12 @@ define C-function g-tls-connection-set-use-system-certdb
 end;
 
 define C-struct <_GTlsConnectionClass>
-  constant slot gtlsconnectionclass-parent-class :: <GIOStreamClass>;
-  constant slot gtlsconnectionclass-accept-certificate :: <C-function-pointer>;
-  constant slot gtlsconnectionclass-handshake :: <C-function-pointer>;
-  constant slot gtlsconnectionclass-handshake-async :: <C-function-pointer>;
-  constant slot gtlsconnectionclass-handshake-finish :: <C-function-pointer>;
-  constant slot gtlsconnectionclass-padding :: <C-void*>;
+  constant slot g-tls-connection-class-parent-class :: <GIOStreamClass>;
+  constant slot g-tls-connection-class-accept-certificate :: <C-function-pointer>;
+  constant slot g-tls-connection-class-handshake :: <C-function-pointer>;
+  constant slot g-tls-connection-class-handshake-async :: <C-function-pointer>;
+  constant slot g-tls-connection-class-handshake-finish :: <C-function-pointer>;
+  constant slot g-tls-connection-class-padding :: <C-void*>;
   pointer-type-name: <GTlsConnectionClass>;
 end C-struct;
 
@@ -11914,8 +11598,8 @@ define C-struct <_GTlsConnectionPrivate>
 end C-struct;
 
 define open C-subtype <GTlsDatabase> (<GObject>)
-  constant slot gtlsdatabase-parent-instance :: <GObject>;
-  constant slot gtlsdatabase-priv :: <GTlsDatabasePrivate>;
+  constant slot g-tls-database-parent-instance :: <GObject>;
+  constant slot g-tls-database-priv :: <GTlsDatabasePrivate>;
 end C-subtype;
 
 define C-pointer-type <GTlsDatabase*> => <GTlsDatabase>;
@@ -12044,26 +11728,26 @@ define C-function g-tls-database-verify-chain-finish
 end;
 
 define C-struct <_GTlsDatabaseClass>
-  constant slot gtlsdatabaseclass-parent-class :: <GObjectClass>;
-  constant slot gtlsdatabaseclass-verify-chain :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-verify-chain-async :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-verify-chain-finish :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-create-certificate-handle :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificate-for-handle :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificate-for-handle-async :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificate-for-handle-finish :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificate-issuer :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificate-issuer-async :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificate-issuer-finish :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificates-issued-by :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificates-issued-by-async :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-lookup-certificates-issued-by-finish :: <C-function-pointer>;
-  constant slot gtlsdatabaseclass-padding :: <C-void*>;
+  constant slot g-tls-database-class-parent-class :: <GObjectClass>;
+  constant slot g-tls-database-class-verify-chain :: <C-function-pointer>;
+  constant slot g-tls-database-class-verify-chain-async :: <C-function-pointer>;
+  constant slot g-tls-database-class-verify-chain-finish :: <C-function-pointer>;
+  constant slot g-tls-database-class-create-certificate-handle :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificate-for-handle :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificate-for-handle-async :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificate-for-handle-finish :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificate-issuer :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificate-issuer-async :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificate-issuer-finish :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificates-issued-by :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificates-issued-by-async :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificates-issued-by-finish :: <C-function-pointer>;
+  constant slot g-tls-database-class-padding :: <C-void*>;
   pointer-type-name: <GTlsDatabaseClass>;
 end C-struct;
 
-define constant $G-TLS-DATABASE-LOOKUP-NONE = 0;
-define constant $G-TLS-DATABASE-LOOKUP-KEYPAIR = 1;
+define constant $g-tls-database-lookup-none = 0;
+define constant $g-tls-database-lookup-keypair = 1;
 define constant <GTlsDatabaseLookupFlags> = <C-int>;
 define C-pointer-type <GTlsDatabaseLookupFlags*> => <GTlsDatabaseLookupFlags>;
 
@@ -12071,17 +11755,17 @@ define C-struct <_GTlsDatabasePrivate>
   pointer-type-name: <GTlsDatabasePrivate>;
 end C-struct;
 
-define constant $G-TLS-DATABASE-VERIFY-NONE = 0;
+define constant $g-tls-database-verify-none = 0;
 define constant <GTlsDatabaseVerifyFlags> = <C-int>;
 define C-pointer-type <GTlsDatabaseVerifyFlags*> => <GTlsDatabaseVerifyFlags>;
 
-define constant $G-TLS-ERROR-UNAVAILABLE = 0;
-define constant $G-TLS-ERROR-MISC = 1;
-define constant $G-TLS-ERROR-BAD-CERTIFICATE = 2;
-define constant $G-TLS-ERROR-NOT-TLS = 3;
-define constant $G-TLS-ERROR-HANDSHAKE = 4;
-define constant $G-TLS-ERROR-CERTIFICATE-REQUIRED = 5;
-define constant $G-TLS-ERROR-EOF = 6;
+define constant $g-tls-error-unavailable = 0;
+define constant $g-tls-error-misc = 1;
+define constant $g-tls-error-bad-certificate = 2;
+define constant $g-tls-error-not-tls = 3;
+define constant $g-tls-error-handshake = 4;
+define constant $g-tls-error-certificate-required = 5;
+define constant $g-tls-error-eof = 6;
 define constant <GTlsError> = <C-int>;
 define C-pointer-type <GTlsError*> => <GTlsError>;
 
@@ -12098,14 +11782,14 @@ define C-function g-tls-file-database-new
 end;
 
 define C-struct <_GTlsFileDatabaseInterface>
-  constant slot gtlsfiledatabaseinterface-g-iface :: <GTypeInterface>;
-  constant slot gtlsfiledatabaseinterface-padding :: <C-void*>;
+  constant slot g-tls-file-database-interface-g-iface :: <GTypeInterface>;
+  constant slot g-tls-file-database-interface-padding :: <C-void*>;
   pointer-type-name: <GTlsFileDatabaseInterface>;
 end C-struct;
 
 define open C-subtype <GTlsInteraction> (<GObject>)
-  constant slot gtlsinteraction-parent-instance :: <GObject>;
-  constant slot gtlsinteraction-priv :: <GTlsInteractionPrivate>;
+  constant slot g-tls-interaction-parent-instance :: <GObject>;
+  constant slot g-tls-interaction-priv :: <GTlsInteractionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GTlsInteraction*> => <GTlsInteraction>;
@@ -12143,11 +11827,11 @@ define C-function g-tls-interaction-invoke-ask-password
 end;
 
 define C-struct <_GTlsInteractionClass>
-  constant slot gtlsinteractionclass-parent-class :: <GObjectClass>;
-  constant slot gtlsinteractionclass-ask-password :: <C-function-pointer>;
-  constant slot gtlsinteractionclass-ask-password-async :: <C-function-pointer>;
-  constant slot gtlsinteractionclass-ask-password-finish :: <C-function-pointer>;
-  constant slot gtlsinteractionclass-padding :: <C-void*>;
+  constant slot g-tls-interaction-class-parent-class :: <GObjectClass>;
+  constant slot g-tls-interaction-class-ask-password :: <C-function-pointer>;
+  constant slot g-tls-interaction-class-ask-password-async :: <C-function-pointer>;
+  constant slot g-tls-interaction-class-ask-password-finish :: <C-function-pointer>;
+  constant slot g-tls-interaction-class-padding :: <C-void*>;
   pointer-type-name: <GTlsInteractionClass>;
 end C-struct;
 
@@ -12155,25 +11839,19 @@ define C-struct <_GTlsInteractionPrivate>
   pointer-type-name: <GTlsInteractionPrivate>;
 end C-struct;
 
-define constant $G-TLS-INTERACTION-UNHANDLED = 0;
-define constant $G-TLS-INTERACTION-HANDLED = 1;
-define constant $G-TLS-INTERACTION-FAILED = 2;
+define constant $g-tls-interaction-unhandled = 0;
+define constant $g-tls-interaction-handled = 1;
+define constant $g-tls-interaction-failed = 2;
 define constant <GTlsInteractionResult> = <C-int>;
 define C-pointer-type <GTlsInteractionResult*> => <GTlsInteractionResult>;
 
 define open C-subtype <GTlsPassword> (<GObject>)
-  constant slot gtlspassword-parent-instance :: <GObject>;
-  constant slot gtlspassword-priv :: <GTlsPasswordPrivate>;
+  constant slot g-tls-password-parent-instance :: <GObject>;
+  constant slot g-tls-password-priv :: <GTlsPasswordPrivate>;
 end C-subtype;
 
 define C-pointer-type <GTlsPassword*> => <GTlsPassword>;
 
-define property-getter tlspassword-description :: <C-string> on <GTlsPassword> end;
-define property-setter tlspassword-description :: <C-string> on <GTlsPassword> end;
-define property-getter tlspassword-flags :: <GTlsPasswordFlags> on <GTlsPassword> end;
-define property-setter tlspassword-flags :: <GTlsPasswordFlags> on <GTlsPassword> end;
-define property-getter tlspassword-warning :: <C-string> on <GTlsPassword> end;
-define property-setter tlspassword-warning :: <C-string> on <GTlsPassword> end;
 define C-function g-tls-password-new
   input parameter flags_ :: <GTlsPasswordFlags>;
   input parameter description_ :: <C-string>;
@@ -12240,18 +11918,18 @@ define C-function g-tls-password-set-warning
 end;
 
 define C-struct <_GTlsPasswordClass>
-  constant slot gtlspasswordclass-parent-class :: <GObjectClass>;
-  constant slot gtlspasswordclass-get-value :: <C-function-pointer>;
-  constant slot gtlspasswordclass-set-value :: <C-function-pointer>;
-  constant slot gtlspasswordclass-get-default-warning :: <C-function-pointer>;
-  constant slot gtlspasswordclass-padding :: <C-void*>;
+  constant slot g-tls-password-class-parent-class :: <GObjectClass>;
+  constant slot g-tls-password-class-get-value :: <C-function-pointer>;
+  constant slot g-tls-password-class-set-value :: <C-function-pointer>;
+  constant slot g-tls-password-class-get-default-warning :: <C-function-pointer>;
+  constant slot g-tls-password-class-padding :: <C-void*>;
   pointer-type-name: <GTlsPasswordClass>;
 end C-struct;
 
-define constant $G-TLS-PASSWORD-NONE = 0;
-define constant $G-TLS-PASSWORD-RETRY = 2;
-define constant $G-TLS-PASSWORD-MANY-TRIES = 4;
-define constant $G-TLS-PASSWORD-FINAL-TRY = 8;
+define constant $g-tls-password-none = 0;
+define constant $g-tls-password-retry = 2;
+define constant $g-tls-password-many-tries = 4;
+define constant $g-tls-password-final-try = 8;
 define constant <GTlsPasswordFlags> = <C-int>;
 define C-pointer-type <GTlsPasswordFlags*> => <GTlsPasswordFlags>;
 
@@ -12259,9 +11937,9 @@ define C-struct <_GTlsPasswordPrivate>
   pointer-type-name: <GTlsPasswordPrivate>;
 end C-struct;
 
-define constant $G-TLS-REHANDSHAKE-NEVER = 0;
-define constant $G-TLS-REHANDSHAKE-SAFELY = 1;
-define constant $G-TLS-REHANDSHAKE-UNSAFELY = 2;
+define constant $g-tls-rehandshake-never = 0;
+define constant $g-tls-rehandshake-safely = 1;
+define constant $g-tls-rehandshake-unsafely = 2;
 define constant <GTlsRehandshakeMode> = <C-int>;
 define C-pointer-type <GTlsRehandshakeMode*> => <GTlsRehandshakeMode>;
 
@@ -12279,13 +11957,13 @@ define C-function g-tls-server-connection-new
 end;
 
 define C-struct <_GTlsServerConnectionInterface>
-  constant slot gtlsserverconnectioninterface-g-iface :: <GTypeInterface>;
+  constant slot g-tls-server-connection-interface-g-iface :: <GTypeInterface>;
   pointer-type-name: <GTlsServerConnectionInterface>;
 end C-struct;
 
 define open C-subtype <GUnixConnection> (<GSocketConnection>)
-  constant slot gunixconnection-parent-instance :: <GSocketConnection>;
-  constant slot gunixconnection-priv :: <GUnixConnectionPrivate>;
+  constant slot g-unix-connection-parent-instance :: <GSocketConnection>;
+  constant slot g-unix-connection-priv :: <GUnixConnectionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GUnixConnection*> => <GUnixConnection>;
@@ -12350,7 +12028,7 @@ define C-function g-unix-connection-send-fd
 end;
 
 define C-struct <_GUnixConnectionClass>
-  constant slot gunixconnectionclass-parent-class :: <GSocketConnectionClass>;
+  constant slot g-unix-connection-class-parent-class :: <GSocketConnectionClass>;
   pointer-type-name: <GUnixConnectionClass>;
 end C-struct;
 
@@ -12359,14 +12037,12 @@ define C-struct <_GUnixConnectionPrivate>
 end C-struct;
 
 define open C-subtype <GUnixCredentialsMessage> (<GSocketControlMessage>)
-  constant slot gunixcredentialsmessage-parent-instance :: <GSocketControlMessage>;
-  constant slot gunixcredentialsmessage-priv :: <GUnixCredentialsMessagePrivate>;
+  constant slot g-unix-credentials-message-parent-instance :: <GSocketControlMessage>;
+  constant slot g-unix-credentials-message-priv :: <GUnixCredentialsMessagePrivate>;
 end C-subtype;
 
 define C-pointer-type <GUnixCredentialsMessage*> => <GUnixCredentialsMessage>;
 
-define property-getter unixcredentialsmessage-credentials :: <GCredentials> on <GUnixCredentialsMessage> end;
-define property-setter unixcredentialsmessage-credentials :: <GCredentials> on <GUnixCredentialsMessage> end;
 define C-function g-unix-credentials-message-new
   result res :: <GSocketControlMessage>;
   c-name: "g_unix_credentials_message_new";
@@ -12390,9 +12066,9 @@ define C-function g-unix-credentials-message-get-credentials
 end;
 
 define C-struct <_GUnixCredentialsMessageClass>
-  constant slot gunixcredentialsmessageclass-parent-class :: <GSocketControlMessageClass>;
-  constant slot gunixcredentialsmessageclass--g-reserved1 :: <C-void*>;
-  constant slot gunixcredentialsmessageclass--g-reserved2 :: <C-void*>;
+  constant slot g-unix-credentials-message-class-parent-class :: <GSocketControlMessageClass>;
+  constant slot g-unix-credentials-message-class-_g-reserved1 :: <C-void*>;
+  constant slot g-unix-credentials-message-class-_g-reserved2 :: <C-void*>;
   pointer-type-name: <GUnixCredentialsMessageClass>;
 end C-struct;
 
@@ -12401,8 +12077,8 @@ define C-struct <_GUnixCredentialsMessagePrivate>
 end C-struct;
 
 define open C-subtype <GUnixFDList> (<GObject>)
-  constant slot gunixfdlist-parent-instance :: <GObject>;
-  constant slot gunixfdlist-priv :: <GUnixFDListPrivate>;
+  constant slot g-unix-fd-list-parent-instance :: <GObject>;
+  constant slot g-unix-fd-list-priv :: <GUnixFDListPrivate>;
 end C-subtype;
 
 define C-pointer-type <GUnixFDList*> => <GUnixFDList>;
@@ -12454,12 +12130,12 @@ define C-function g-unix-fd-list-steal-fds
 end;
 
 define C-struct <_GUnixFDListClass>
-  constant slot gunixfdlistclass-parent-class :: <GObjectClass>;
-  constant slot gunixfdlistclass--g-reserved1 :: <C-void*>;
-  constant slot gunixfdlistclass--g-reserved2 :: <C-void*>;
-  constant slot gunixfdlistclass--g-reserved3 :: <C-void*>;
-  constant slot gunixfdlistclass--g-reserved4 :: <C-void*>;
-  constant slot gunixfdlistclass--g-reserved5 :: <C-void*>;
+  constant slot g-unix-fd-list-class-parent-class :: <GObjectClass>;
+  constant slot g-unix-fd-list-class-_g-reserved1 :: <C-void*>;
+  constant slot g-unix-fd-list-class-_g-reserved2 :: <C-void*>;
+  constant slot g-unix-fd-list-class-_g-reserved3 :: <C-void*>;
+  constant slot g-unix-fd-list-class-_g-reserved4 :: <C-void*>;
+  constant slot g-unix-fd-list-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GUnixFDListClass>;
 end C-struct;
 
@@ -12468,14 +12144,12 @@ define C-struct <_GUnixFDListPrivate>
 end C-struct;
 
 define open C-subtype <GUnixFDMessage> (<GSocketControlMessage>)
-  constant slot gunixfdmessage-parent-instance :: <GSocketControlMessage>;
-  constant slot gunixfdmessage-priv :: <GUnixFDMessagePrivate>;
+  constant slot g-unix-fd-message-parent-instance :: <GSocketControlMessage>;
+  constant slot g-unix-fd-message-priv :: <GUnixFDMessagePrivate>;
 end C-subtype;
 
 define C-pointer-type <GUnixFDMessage*> => <GUnixFDMessage>;
 
-define property-getter unixfdmessage-fd-list :: <GUnixFDList> on <GUnixFDMessage> end;
-define property-setter unixfdmessage-fd-list :: <GUnixFDList> on <GUnixFDMessage> end;
 define C-function g-unix-fd-message-new
   result res :: <GSocketControlMessage>;
   c-name: "g_unix_fd_message_new";
@@ -12508,9 +12182,9 @@ define C-function g-unix-fd-message-steal-fds
 end;
 
 define C-struct <_GUnixFDMessageClass>
-  constant slot gunixfdmessageclass-parent-class :: <GSocketControlMessageClass>;
-  constant slot gunixfdmessageclass--g-reserved1 :: <C-void*>;
-  constant slot gunixfdmessageclass--g-reserved2 :: <C-void*>;
+  constant slot g-unix-fd-message-class-parent-class :: <GSocketControlMessageClass>;
+  constant slot g-unix-fd-message-class-_g-reserved1 :: <C-void*>;
+  constant slot g-unix-fd-message-class-_g-reserved2 :: <C-void*>;
   pointer-type-name: <GUnixFDMessageClass>;
 end C-struct;
 
@@ -12519,16 +12193,12 @@ define C-struct <_GUnixFDMessagePrivate>
 end C-struct;
 
 define open C-subtype <GUnixInputStream> (<GInputStream>)
-  constant slot gunixinputstream-parent-instance :: <GInputStream>;
-  constant slot gunixinputstream-priv :: <GUnixInputStreamPrivate>;
+  constant slot g-unix-input-stream-parent-instance :: <GInputStream>;
+  constant slot g-unix-input-stream-priv :: <GUnixInputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GUnixInputStream*> => <GUnixInputStream>;
 
-define property-getter unixinputstream-close-fd :: <C-boolean> on <GUnixInputStream> end;
-define property-setter unixinputstream-close-fd :: <C-boolean> on <GUnixInputStream> end;
-define property-getter unixinputstream-fd :: <C-signed-int> on <GUnixInputStream> end;
-define property-setter unixinputstream-fd :: <C-signed-int> on <GUnixInputStream> end;
 define C-function g-unix-input-stream-new
   input parameter fd_ :: <C-signed-int>;
   input parameter close_fd_ :: <C-boolean>;
@@ -12555,12 +12225,12 @@ define C-function g-unix-input-stream-set-close-fd
 end;
 
 define C-struct <_GUnixInputStreamClass>
-  constant slot gunixinputstreamclass-parent-class :: <GInputStreamClass>;
-  constant slot gunixinputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gunixinputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gunixinputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gunixinputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gunixinputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-unix-input-stream-class-parent-class :: <GInputStreamClass>;
+  constant slot g-unix-input-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-unix-input-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-unix-input-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-unix-input-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-unix-input-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GUnixInputStreamClass>;
 end C-struct;
 
@@ -12675,16 +12345,12 @@ define C-function g-unix-mount-point-is-user-mountable
 end;
 
 define open C-subtype <GUnixOutputStream> (<GOutputStream>)
-  constant slot gunixoutputstream-parent-instance :: <GOutputStream>;
-  constant slot gunixoutputstream-priv :: <GUnixOutputStreamPrivate>;
+  constant slot g-unix-output-stream-parent-instance :: <GOutputStream>;
+  constant slot g-unix-output-stream-priv :: <GUnixOutputStreamPrivate>;
 end C-subtype;
 
 define C-pointer-type <GUnixOutputStream*> => <GUnixOutputStream>;
 
-define property-getter unixoutputstream-close-fd :: <C-boolean> on <GUnixOutputStream> end;
-define property-setter unixoutputstream-close-fd :: <C-boolean> on <GUnixOutputStream> end;
-define property-getter unixoutputstream-fd :: <C-signed-int> on <GUnixOutputStream> end;
-define property-setter unixoutputstream-fd :: <C-signed-int> on <GUnixOutputStream> end;
 define C-function g-unix-output-stream-new
   input parameter fd_ :: <C-signed-int>;
   input parameter close_fd_ :: <C-boolean>;
@@ -12711,12 +12377,12 @@ define C-function g-unix-output-stream-set-close-fd
 end;
 
 define C-struct <_GUnixOutputStreamClass>
-  constant slot gunixoutputstreamclass-parent-class :: <GOutputStreamClass>;
-  constant slot gunixoutputstreamclass--g-reserved1 :: <C-void*>;
-  constant slot gunixoutputstreamclass--g-reserved2 :: <C-void*>;
-  constant slot gunixoutputstreamclass--g-reserved3 :: <C-void*>;
-  constant slot gunixoutputstreamclass--g-reserved4 :: <C-void*>;
-  constant slot gunixoutputstreamclass--g-reserved5 :: <C-void*>;
+  constant slot g-unix-output-stream-class-parent-class :: <GOutputStreamClass>;
+  constant slot g-unix-output-stream-class-_g-reserved1 :: <C-void*>;
+  constant slot g-unix-output-stream-class-_g-reserved2 :: <C-void*>;
+  constant slot g-unix-output-stream-class-_g-reserved3 :: <C-void*>;
+  constant slot g-unix-output-stream-class-_g-reserved4 :: <C-void*>;
+  constant slot g-unix-output-stream-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GUnixOutputStreamClass>;
 end C-struct;
 
@@ -12725,20 +12391,12 @@ define C-struct <_GUnixOutputStreamPrivate>
 end C-struct;
 
 define open C-subtype <GUnixSocketAddress> (<GSocketAddress>)
-  constant slot gunixsocketaddress-parent-instance :: <GSocketAddress>;
-  constant slot gunixsocketaddress-priv :: <GUnixSocketAddressPrivate>;
+  constant slot g-unix-socket-address-parent-instance :: <GSocketAddress>;
+  constant slot g-unix-socket-address-priv :: <GUnixSocketAddressPrivate>;
 end C-subtype;
 
 define C-pointer-type <GUnixSocketAddress*> => <GUnixSocketAddress>;
 
-define property-getter unixsocketaddress-abstract :: <C-boolean> on <GUnixSocketAddress> end;
-define property-setter unixsocketaddress-abstract :: <C-boolean> on <GUnixSocketAddress> end;
-define property-getter unixsocketaddress-address-type :: <GUnixSocketAddressType> on <GUnixSocketAddress> end;
-define property-setter unixsocketaddress-address-type :: <GUnixSocketAddressType> on <GUnixSocketAddress> end;
-define property-getter unixsocketaddress-path :: <C-string> on <GUnixSocketAddress> end;
-define property-setter unixsocketaddress-path :: <C-string> on <GUnixSocketAddress> end;
-define property-getter unixsocketaddress-path-as-array :: <GByteArray> on <GUnixSocketAddress> end;
-define property-setter unixsocketaddress-path-as-array :: <GByteArray> on <GUnixSocketAddress> end;
 define C-function g-unix-socket-address-new
   input parameter path_ :: <C-string>;
   result res :: <GSocketAddress>;
@@ -12790,7 +12448,7 @@ define C-function g-unix-socket-address-get-path-len
 end;
 
 define C-struct <_GUnixSocketAddressClass>
-  constant slot gunixsocketaddressclass-parent-class :: <GSocketAddressClass>;
+  constant slot g-unix-socket-address-class-parent-class :: <GSocketAddressClass>;
   pointer-type-name: <GUnixSocketAddressClass>;
 end C-struct;
 
@@ -12798,32 +12456,32 @@ define C-struct <_GUnixSocketAddressPrivate>
   pointer-type-name: <GUnixSocketAddressPrivate>;
 end C-struct;
 
-define constant $G-UNIX-SOCKET-ADDRESS-INVALID = 0;
-define constant $G-UNIX-SOCKET-ADDRESS-ANONYMOUS = 1;
-define constant $G-UNIX-SOCKET-ADDRESS-PATH = 2;
-define constant $G-UNIX-SOCKET-ADDRESS-ABSTRACT = 3;
-define constant $G-UNIX-SOCKET-ADDRESS-ABSTRACT-PADDED = 4;
+define constant $g-unix-socket-address-invalid = 0;
+define constant $g-unix-socket-address-anonymous = 1;
+define constant $g-unix-socket-address-path = 2;
+define constant $g-unix-socket-address-abstract = 3;
+define constant $g-unix-socket-address-abstract-padded = 4;
 define constant <GUnixSocketAddressType> = <C-int>;
 define C-pointer-type <GUnixSocketAddressType*> => <GUnixSocketAddressType>;
 
-define constant $VFS-EXTENSION-POINT-NAME = "gio-vfs";
+define constant $vfs-extension-point-name = "gio-vfs";
 
-define constant $VOLUME-IDENTIFIER-KIND-CLASS = "class";
+define constant $volume-identifier-kind-class = "class";
 
-define constant $VOLUME-IDENTIFIER-KIND-HAL-UDI = "hal-udi";
+define constant $volume-identifier-kind-hal-udi = "hal-udi";
 
-define constant $VOLUME-IDENTIFIER-KIND-LABEL = "label";
+define constant $volume-identifier-kind-label = "label";
 
-define constant $VOLUME-IDENTIFIER-KIND-NFS-MOUNT = "nfs-mount";
+define constant $volume-identifier-kind-nfs-mount = "nfs-mount";
 
-define constant $VOLUME-IDENTIFIER-KIND-UNIX-DEVICE = "unix-device";
+define constant $volume-identifier-kind-unix-device = "unix-device";
 
-define constant $VOLUME-IDENTIFIER-KIND-UUID = "uuid";
+define constant $volume-identifier-kind-uuid = "uuid";
 
-define constant $VOLUME-MONITOR-EXTENSION-POINT-NAME = "gio-volume-monitor";
+define constant $volume-monitor-extension-point-name = "gio-volume-monitor";
 
 define open C-subtype <GVfs> (<GObject>)
-  constant slot gvfs-parent-instance :: <GObject>;
+  constant slot g-vfs-parent-instance :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <GVfs*> => <GVfs>;
@@ -12872,24 +12530,24 @@ define C-function g-vfs-parse-name
 end;
 
 define C-struct <_GVfsClass>
-  constant slot gvfsclass-parent-class :: <GObjectClass>;
-  constant slot gvfsclass-is-active :: <C-function-pointer>;
-  constant slot gvfsclass-get-file-for-path :: <C-function-pointer>;
-  constant slot gvfsclass-get-file-for-uri :: <C-function-pointer>;
-  constant slot gvfsclass-get-supported-uri-schemes :: <C-function-pointer>;
-  constant slot gvfsclass-parse-name :: <C-function-pointer>;
-  constant slot gvfsclass-local-file-add-info :: <C-function-pointer>;
-  constant slot gvfsclass-add-writable-namespaces :: <C-function-pointer>;
-  constant slot gvfsclass-local-file-set-attributes :: <C-function-pointer>;
-  constant slot gvfsclass-local-file-removed :: <C-function-pointer>;
-  constant slot gvfsclass-local-file-moved :: <C-function-pointer>;
-  constant slot gvfsclass--g-reserved1 :: <C-void*>;
-  constant slot gvfsclass--g-reserved2 :: <C-void*>;
-  constant slot gvfsclass--g-reserved3 :: <C-void*>;
-  constant slot gvfsclass--g-reserved4 :: <C-void*>;
-  constant slot gvfsclass--g-reserved5 :: <C-void*>;
-  constant slot gvfsclass--g-reserved6 :: <C-void*>;
-  constant slot gvfsclass--g-reserved7 :: <C-void*>;
+  constant slot g-vfs-class-parent-class :: <GObjectClass>;
+  constant slot g-vfs-class-is-active :: <C-function-pointer>;
+  constant slot g-vfs-class-get-file-for-path :: <C-function-pointer>;
+  constant slot g-vfs-class-get-file-for-uri :: <C-function-pointer>;
+  constant slot g-vfs-class-get-supported-uri-schemes :: <C-function-pointer>;
+  constant slot g-vfs-class-parse-name :: <C-function-pointer>;
+  constant slot g-vfs-class-local-file-add-info :: <C-function-pointer>;
+  constant slot g-vfs-class-add-writable-namespaces :: <C-function-pointer>;
+  constant slot g-vfs-class-local-file-set-attributes :: <C-function-pointer>;
+  constant slot g-vfs-class-local-file-removed :: <C-function-pointer>;
+  constant slot g-vfs-class-local-file-moved :: <C-function-pointer>;
+  constant slot g-vfs-class-_g-reserved1 :: <C-void*>;
+  constant slot g-vfs-class-_g-reserved2 :: <C-void*>;
+  constant slot g-vfs-class-_g-reserved3 :: <C-void*>;
+  constant slot g-vfs-class-_g-reserved4 :: <C-void*>;
+  constant slot g-vfs-class-_g-reserved5 :: <C-void*>;
+  constant slot g-vfs-class-_g-reserved6 :: <C-void*>;
+  constant slot g-vfs-class-_g-reserved7 :: <C-void*>;
   pointer-type-name: <GVfsClass>;
 end C-struct;
 
@@ -13029,34 +12687,34 @@ define C-function g-volume-should-automount
 end;
 
 define C-struct <_GVolumeIface>
-  constant slot gvolumeiface-g-iface :: <GTypeInterface>;
-  constant slot gvolumeiface-changed :: <C-function-pointer>;
-  constant slot gvolumeiface-removed :: <C-function-pointer>;
-  constant slot gvolumeiface-get-name :: <C-function-pointer>;
-  constant slot gvolumeiface-get-icon :: <C-function-pointer>;
-  constant slot gvolumeiface-get-uuid :: <C-function-pointer>;
-  constant slot gvolumeiface-get-drive :: <C-function-pointer>;
-  constant slot gvolumeiface-get-mount :: <C-function-pointer>;
-  constant slot gvolumeiface-can-mount :: <C-function-pointer>;
-  constant slot gvolumeiface-can-eject :: <C-function-pointer>;
-  constant slot gvolumeiface-mount-fn :: <C-function-pointer>;
-  constant slot gvolumeiface-mount-finish :: <C-function-pointer>;
-  constant slot gvolumeiface-eject :: <C-function-pointer>;
-  constant slot gvolumeiface-eject-finish :: <C-function-pointer>;
-  constant slot gvolumeiface-get-identifier :: <C-function-pointer>;
-  constant slot gvolumeiface-enumerate-identifiers :: <C-function-pointer>;
-  constant slot gvolumeiface-should-automount :: <C-function-pointer>;
-  constant slot gvolumeiface-get-activation-root :: <C-function-pointer>;
-  constant slot gvolumeiface-eject-with-operation :: <C-function-pointer>;
-  constant slot gvolumeiface-eject-with-operation-finish :: <C-function-pointer>;
-  constant slot gvolumeiface-get-sort-key :: <C-function-pointer>;
-  constant slot gvolumeiface-get-symbolic-icon :: <C-function-pointer>;
+  constant slot g-volume-iface-g-iface :: <GTypeInterface>;
+  constant slot g-volume-iface-changed :: <C-function-pointer>;
+  constant slot g-volume-iface-removed :: <C-function-pointer>;
+  constant slot g-volume-iface-get-name :: <C-function-pointer>;
+  constant slot g-volume-iface-get-icon :: <C-function-pointer>;
+  constant slot g-volume-iface-get-uuid :: <C-function-pointer>;
+  constant slot g-volume-iface-get-drive :: <C-function-pointer>;
+  constant slot g-volume-iface-get-mount :: <C-function-pointer>;
+  constant slot g-volume-iface-can-mount :: <C-function-pointer>;
+  constant slot g-volume-iface-can-eject :: <C-function-pointer>;
+  constant slot g-volume-iface-mount-fn :: <C-function-pointer>;
+  constant slot g-volume-iface-mount-finish :: <C-function-pointer>;
+  constant slot g-volume-iface-eject :: <C-function-pointer>;
+  constant slot g-volume-iface-eject-finish :: <C-function-pointer>;
+  constant slot g-volume-iface-get-identifier :: <C-function-pointer>;
+  constant slot g-volume-iface-enumerate-identifiers :: <C-function-pointer>;
+  constant slot g-volume-iface-should-automount :: <C-function-pointer>;
+  constant slot g-volume-iface-get-activation-root :: <C-function-pointer>;
+  constant slot g-volume-iface-eject-with-operation :: <C-function-pointer>;
+  constant slot g-volume-iface-eject-with-operation-finish :: <C-function-pointer>;
+  constant slot g-volume-iface-get-sort-key :: <C-function-pointer>;
+  constant slot g-volume-iface-get-symbolic-icon :: <C-function-pointer>;
   pointer-type-name: <GVolumeIface>;
 end C-struct;
 
 define open C-subtype <GVolumeMonitor> (<GObject>)
-  constant slot gvolumemonitor-parent-instance :: <GObject>;
-  constant slot gvolumemonitor-priv :: <C-void*>;
+  constant slot g-volume-monitor-parent-instance :: <GObject>;
+  constant slot g-volume-monitor-priv :: <C-void*>;
 end C-subtype;
 
 define C-pointer-type <GVolumeMonitor*> => <GVolumeMonitor>;
@@ -13105,32 +12763,32 @@ define C-function g-volume-monitor-get-volumes
 end;
 
 define C-struct <_GVolumeMonitorClass>
-  constant slot gvolumemonitorclass-parent-class :: <GObjectClass>;
-  constant slot gvolumemonitorclass-volume-added :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-volume-removed :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-volume-changed :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-mount-added :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-mount-removed :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-mount-pre-unmount :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-mount-changed :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-drive-connected :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-drive-disconnected :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-drive-changed :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-is-supported :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-get-connected-drives :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-get-volumes :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-get-mounts :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-get-volume-for-uuid :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-get-mount-for-uuid :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-adopt-orphan-mount :: <C-void*>;
-  constant slot gvolumemonitorclass-drive-eject-button :: <C-function-pointer>;
-  constant slot gvolumemonitorclass-drive-stop-button :: <C-function-pointer>;
-  constant slot gvolumemonitorclass--g-reserved1 :: <C-void*>;
-  constant slot gvolumemonitorclass--g-reserved2 :: <C-void*>;
-  constant slot gvolumemonitorclass--g-reserved3 :: <C-void*>;
-  constant slot gvolumemonitorclass--g-reserved4 :: <C-void*>;
-  constant slot gvolumemonitorclass--g-reserved5 :: <C-void*>;
-  constant slot gvolumemonitorclass--g-reserved6 :: <C-void*>;
+  constant slot g-volume-monitor-class-parent-class :: <GObjectClass>;
+  constant slot g-volume-monitor-class-volume-added :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-volume-removed :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-volume-changed :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-mount-added :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-mount-removed :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-mount-pre-unmount :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-mount-changed :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-drive-connected :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-drive-disconnected :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-drive-changed :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-is-supported :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-get-connected-drives :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-get-volumes :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-get-mounts :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-get-volume-for-uuid :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-get-mount-for-uuid :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-adopt-orphan-mount :: <C-void*>;
+  constant slot g-volume-monitor-class-drive-eject-button :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-drive-stop-button :: <C-function-pointer>;
+  constant slot g-volume-monitor-class-_g-reserved1 :: <C-void*>;
+  constant slot g-volume-monitor-class-_g-reserved2 :: <C-void*>;
+  constant slot g-volume-monitor-class-_g-reserved3 :: <C-void*>;
+  constant slot g-volume-monitor-class-_g-reserved4 :: <C-void*>;
+  constant slot g-volume-monitor-class-_g-reserved5 :: <C-void*>;
+  constant slot g-volume-monitor-class-_g-reserved6 :: <C-void*>;
   pointer-type-name: <GVolumeMonitorClass>;
 end C-struct;
 
@@ -13139,12 +12797,6 @@ end C-subtype;
 
 define C-pointer-type <GZlibCompressor*> => <GZlibCompressor>;
 
-define property-getter zlibcompressor-file-info :: <GFileInfo> on <GZlibCompressor> end;
-define property-setter zlibcompressor-file-info :: <GFileInfo> on <GZlibCompressor> end;
-define property-getter zlibcompressor-format :: <GZlibCompressorFormat> on <GZlibCompressor> end;
-define property-setter zlibcompressor-format :: <GZlibCompressorFormat> on <GZlibCompressor> end;
-define property-getter zlibcompressor-level :: <C-signed-int> on <GZlibCompressor> end;
-define property-setter zlibcompressor-level :: <C-signed-int> on <GZlibCompressor> end;
 define C-function g-zlib-compressor-new
   input parameter format_ :: <GZlibCompressorFormat>;
   input parameter level_ :: <C-signed-int>;
@@ -13165,13 +12817,13 @@ define C-function g-zlib-compressor-set-file-info
 end;
 
 define C-struct <_GZlibCompressorClass>
-  constant slot gzlibcompressorclass-parent-class :: <GObjectClass>;
+  constant slot g-zlib-compressor-class-parent-class :: <GObjectClass>;
   pointer-type-name: <GZlibCompressorClass>;
 end C-struct;
 
-define constant $G-ZLIB-COMPRESSOR-FORMAT-ZLIB = 0;
-define constant $G-ZLIB-COMPRESSOR-FORMAT-GZIP = 1;
-define constant $G-ZLIB-COMPRESSOR-FORMAT-RAW = 2;
+define constant $g-zlib-compressor-format-zlib = 0;
+define constant $g-zlib-compressor-format-gzip = 1;
+define constant $g-zlib-compressor-format-raw = 2;
 define constant <GZlibCompressorFormat> = <C-int>;
 define C-pointer-type <GZlibCompressorFormat*> => <GZlibCompressorFormat>;
 
@@ -13180,9 +12832,6 @@ end C-subtype;
 
 define C-pointer-type <GZlibDecompressor*> => <GZlibDecompressor>;
 
-define property-getter zlibdecompressor-file-info :: <GFileInfo> on <GZlibDecompressor> end;
-define property-getter zlibdecompressor-format :: <GZlibCompressorFormat> on <GZlibDecompressor> end;
-define property-setter zlibdecompressor-format :: <GZlibCompressorFormat> on <GZlibDecompressor> end;
 define C-function g-zlib-decompressor-new
   input parameter format_ :: <GZlibCompressorFormat>;
   result res :: <GZlibDecompressor>;
@@ -13196,7 +12845,7 @@ define C-function g-zlib-decompressor-get-file-info
 end;
 
 define C-struct <_GZlibDecompressorClass>
-  constant slot gzlibdecompressorclass-parent-class :: <GObjectClass>;
+  constant slot g-zlib-decompressor-class-parent-class :: <GObjectClass>;
   pointer-type-name: <GZlibDecompressorClass>;
 end C-struct;
 

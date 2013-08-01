@@ -17,7 +17,7 @@ define module xlib
   use gobject-glue;
 
   export
-    XOpenDisplay,
+    x-open-display,
     <XWindowAttributes>,
     <XVisualInfo>,
     <XTrapezoid>,

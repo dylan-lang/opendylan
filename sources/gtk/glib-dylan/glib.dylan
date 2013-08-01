@@ -5,25 +5,25 @@ copyright: See LICENSE file in this distribution.
 
 define C-pointer-type <C-void**> => <C-void*>;
 
-define constant $ASCII-DTOSTR-BUF-SIZE = 39;
+define constant $ascii-dtostr-buf-size = 39;
 
 define C-struct <_GArray>
-  slot garray-data :: <C-string>;
-  slot garray-len :: <C-unsigned-int>;
+  slot g-array-data :: <C-string>;
+  slot g-array-len :: <C-unsigned-int>;
   pointer-type-name: <GArray>;
 end C-struct;
 
-define constant $G-ASCII-ALNUM = 1;
-define constant $G-ASCII-ALPHA = 2;
-define constant $G-ASCII-CNTRL = 4;
-define constant $G-ASCII-DIGIT = 8;
-define constant $G-ASCII-GRAPH = 16;
-define constant $G-ASCII-LOWER = 32;
-define constant $G-ASCII-PRINT = 64;
-define constant $G-ASCII-PUNCT = 128;
-define constant $G-ASCII-SPACE = 256;
-define constant $G-ASCII-UPPER = 512;
-define constant $G-ASCII-XDIGIT = 1024;
+define constant $g-ascii-alnum = 1;
+define constant $g-ascii-alpha = 2;
+define constant $g-ascii-cntrl = 4;
+define constant $g-ascii-digit = 8;
+define constant $g-ascii-graph = 16;
+define constant $g-ascii-lower = 32;
+define constant $g-ascii-print = 64;
+define constant $g-ascii-punct = 128;
+define constant $g-ascii-space = 256;
+define constant $g-ascii-upper = 512;
+define constant $g-ascii-xdigit = 1024;
 define constant <GAsciiType> = <C-int>;
 define C-pointer-type <GAsciiType*> => <GAsciiType>;
 
@@ -80,7 +80,7 @@ define C-function g-async-queue-unref-and-unlock
   c-name: "g_async_queue_unref_and_unlock";
 end;
 
-define constant $BIG-ENDIAN = 4321;
+define constant $big-endian = 4321;
 
 define C-struct <_GBookmarkFile>
   pointer-type-name: <GBookmarkFile>;
@@ -353,20 +353,20 @@ define C-function g-bookmark-file-error-quark
   c-name: "g_bookmark_file_error_quark";
 end;
 
-define constant $G-BOOKMARK-FILE-ERROR-INVALID-URI = 0;
-define constant $G-BOOKMARK-FILE-ERROR-INVALID-VALUE = 1;
-define constant $G-BOOKMARK-FILE-ERROR-APP-NOT-REGISTERED = 2;
-define constant $G-BOOKMARK-FILE-ERROR-URI-NOT-FOUND = 3;
-define constant $G-BOOKMARK-FILE-ERROR-READ = 4;
-define constant $G-BOOKMARK-FILE-ERROR-UNKNOWN-ENCODING = 5;
-define constant $G-BOOKMARK-FILE-ERROR-WRITE = 6;
-define constant $G-BOOKMARK-FILE-ERROR-FILE-NOT-FOUND = 7;
+define constant $g-bookmark-file-error-invalid-uri = 0;
+define constant $g-bookmark-file-error-invalid-value = 1;
+define constant $g-bookmark-file-error-app-not-registered = 2;
+define constant $g-bookmark-file-error-uri-not-found = 3;
+define constant $g-bookmark-file-error-read = 4;
+define constant $g-bookmark-file-error-unknown-encoding = 5;
+define constant $g-bookmark-file-error-write = 6;
+define constant $g-bookmark-file-error-file-not-found = 7;
 define constant <GBookmarkFileError> = <C-int>;
 define C-pointer-type <GBookmarkFileError*> => <GBookmarkFileError>;
 
 define C-struct <_GByteArray>
-  slot gbytearray-data :: <C-unsigned-char*>;
-  slot gbytearray-len :: <C-unsigned-int>;
+  slot g-byte-array-data :: <C-unsigned-char*>;
+  slot g-byte-array-len :: <C-unsigned-int>;
   pointer-type-name: <GByteArray>;
 end C-struct;
 
@@ -483,11 +483,11 @@ define C-function g-bytes-unref-to-data
   c-name: "g_bytes_unref_to_data";
 end;
 
-define constant $CAN-INLINE = 1;
+define constant $can-inline = 1;
 
-define constant $CSET-A-2-Z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+define constant $cset-a-2-z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-define constant $CSET-DIGITS = "0123456789";
+define constant $cset-digits = "0123456789";
 
 define C-struct <_GChecksum>
   pointer-type-name: <GChecksum>;
@@ -534,16 +534,16 @@ define C-function g-checksum-type-get-length
   c-name: "g_checksum_type_get_length";
 end;
 
-define constant $G-CHECKSUM-MD5 = 0;
-define constant $G-CHECKSUM-SHA1 = 1;
-define constant $G-CHECKSUM-SHA256 = 2;
-define constant $G-CHECKSUM-SHA512 = 3;
+define constant $g-checksum-md5 = 0;
+define constant $g-checksum-sha1 = 1;
+define constant $g-checksum-sha256 = 2;
+define constant $g-checksum-sha512 = 3;
 define constant <GChecksumType> = <C-int>;
 define C-pointer-type <GChecksumType*> => <GChecksumType>;
 
 define C-struct <_GCond>
-  constant slot gcond-p :: <C-void*>;
-  constant slot gcond-i :: <C-unsigned-int*>;
+  constant slot g-cond-p :: <C-void*>;
+  constant slot g-cond-i :: <C-unsigned-int*>;
   pointer-type-name: <GCond>;
 end C-struct;
 
@@ -581,38 +581,38 @@ define C-function g-cond-wait-until
   c-name: "g_cond_wait_until";
 end;
 
-define constant $G-CONVERT-ERROR-NO-CONVERSION = 0;
-define constant $G-CONVERT-ERROR-ILLEGAL-SEQUENCE = 1;
-define constant $G-CONVERT-ERROR-FAILED = 2;
-define constant $G-CONVERT-ERROR-PARTIAL-INPUT = 3;
-define constant $G-CONVERT-ERROR-BAD-URI = 4;
-define constant $G-CONVERT-ERROR-NOT-ABSOLUTE-PATH = 5;
+define constant $g-convert-error-no-conversion = 0;
+define constant $g-convert-error-illegal-sequence = 1;
+define constant $g-convert-error-failed = 2;
+define constant $g-convert-error-partial-input = 3;
+define constant $g-convert-error-bad-uri = 4;
+define constant $g-convert-error-not-absolute-path = 5;
 define constant <GConvertError> = <C-int>;
 define C-pointer-type <GConvertError*> => <GConvertError>;
 
-define constant $DATALIST-FLAGS-MASK = 3;
+define constant $datalist-flags-mask = 3;
 
-define constant $DATE-BAD-DAY = 0;
+define constant $date-bad-day = 0;
 
-define constant $DATE-BAD-JULIAN = 0;
+define constant $date-bad-julian = 0;
 
-define constant $DATE-BAD-YEAR = 0;
+define constant $date-bad-year = 0;
 
-define constant $DIR-SEPARATOR = 92;
+define constant $dir-separator = 92;
 
-define constant $DIR-SEPARATOR-S = "\\";
+define constant $dir-separator-s = "\\";
 
 define C-struct <_GData>
   pointer-type-name: <GData>;
 end C-struct;
 
 define C-struct <_GDate>
-  slot gdate-julian-days :: <C-unsigned-int>;
-  slot gdate-julian :: <C-unsigned-int>;
-  slot gdate-dmy :: <C-unsigned-int>;
-  slot gdate-day :: <C-unsigned-int>;
-  slot gdate-month :: <C-unsigned-int>;
-  slot gdate-year :: <C-unsigned-int>;
+  slot g-date-julian-days :: <C-unsigned-int>;
+  slot g-date-julian :: <C-unsigned-int>;
+  slot g-date-dmy :: <C-unsigned-int>;
+  slot g-date-day :: <C-unsigned-int>;
+  slot g-date-month :: <C-unsigned-int>;
+  slot g-date-year :: <C-unsigned-int>;
   pointer-type-name: <GDate>;
 end C-struct;
 
@@ -915,25 +915,25 @@ define C-function g-date-valid-year
   c-name: "g_date_valid_year";
 end;
 
-define constant $G-DATE-DAY = 0;
-define constant $G-DATE-MONTH = 1;
-define constant $G-DATE-YEAR = 2;
+define constant $g-date-day = 0;
+define constant $g-date-month = 1;
+define constant $g-date-year = 2;
 define constant <GDateDMY> = <C-int>;
 define C-pointer-type <GDateDMY*> => <GDateDMY>;
 
-define constant $G-DATE-BAD-MONTH = 0;
-define constant $G-DATE-JANUARY = 1;
-define constant $G-DATE-FEBRUARY = 2;
-define constant $G-DATE-MARCH = 3;
-define constant $G-DATE-APRIL = 4;
-define constant $G-DATE-MAY = 5;
-define constant $G-DATE-JUNE = 6;
-define constant $G-DATE-JULY = 7;
-define constant $G-DATE-AUGUST = 8;
-define constant $G-DATE-SEPTEMBER = 9;
-define constant $G-DATE-OCTOBER = 10;
-define constant $G-DATE-NOVEMBER = 11;
-define constant $G-DATE-DECEMBER = 12;
+define constant $g-date-bad-month = 0;
+define constant $g-date-january = 1;
+define constant $g-date-february = 2;
+define constant $g-date-march = 3;
+define constant $g-date-april = 4;
+define constant $g-date-may = 5;
+define constant $g-date-june = 6;
+define constant $g-date-july = 7;
+define constant $g-date-august = 8;
+define constant $g-date-september = 9;
+define constant $g-date-october = 10;
+define constant $g-date-november = 11;
+define constant $g-date-december = 12;
 define constant <GDateMonth> = <C-int>;
 define C-pointer-type <GDateMonth*> => <GDateMonth>;
 
@@ -1258,20 +1258,20 @@ define C-function g-date-time-hash
   c-name: "g_date_time_hash";
 end;
 
-define constant $G-DATE-BAD-WEEKDAY = 0;
-define constant $G-DATE-MONDAY = 1;
-define constant $G-DATE-TUESDAY = 2;
-define constant $G-DATE-WEDNESDAY = 3;
-define constant $G-DATE-THURSDAY = 4;
-define constant $G-DATE-FRIDAY = 5;
-define constant $G-DATE-SATURDAY = 6;
-define constant $G-DATE-SUNDAY = 7;
+define constant $g-date-bad-weekday = 0;
+define constant $g-date-monday = 1;
+define constant $g-date-tuesday = 2;
+define constant $g-date-wednesday = 3;
+define constant $g-date-thursday = 4;
+define constant $g-date-friday = 5;
+define constant $g-date-saturday = 6;
+define constant $g-date-sunday = 7;
 define constant <GDateWeekday> = <C-int>;
 define C-pointer-type <GDateWeekday*> => <GDateWeekday>;
 
 define C-struct <_GDebugKey>
-  slot gdebugkey-key :: <C-string>;
-  slot gdebugkey-value :: <C-unsigned-int>;
+  slot g-debug-key-key :: <C-string>;
+  slot g-debug-key-value :: <C-unsigned-int>;
   pointer-type-name: <GDebugKey>;
 end C-struct;
 
@@ -1302,16 +1302,16 @@ define C-function g-dir-make-tmp
 end;
 
 define C-union <_GDoubleIEEE754>
-  slot gdoubleieee754-v-double :: <C-double>;
+  slot g-double-ieee754-v-double :: <C-double>;
   pointer-type-name: <GDoubleIEEE754>;
 end C-union;
 
-define constant $E = 2.7182820d0;
+define constant $e = 2.7182820d0;
 
 define C-struct <_GError>
-  slot gerror-domain :: <C-unsigned-int>;
-  slot gerror-code :: <C-signed-int>;
-  slot gerror-message :: <C-string>;
+  slot g-error-domain :: <C-unsigned-int>;
+  slot g-error-code :: <C-signed-int>;
+  slot g-error-message :: <C-string>;
   pointer-type-name: <GError>;
 end C-struct;
 
@@ -1342,111 +1342,111 @@ define C-function g-error-matches
   c-name: "g_error_matches";
 end;
 
-define constant $G-ERR-UNKNOWN = 0;
-define constant $G-ERR-UNEXP-EOF = 1;
-define constant $G-ERR-UNEXP-EOF-IN-STRING = 2;
-define constant $G-ERR-UNEXP-EOF-IN-COMMENT = 3;
-define constant $G-ERR-NON-DIGIT-IN-CONST = 4;
-define constant $G-ERR-DIGIT-RADIX = 5;
-define constant $G-ERR-FLOAT-RADIX = 6;
-define constant $G-ERR-FLOAT-MALFORMED = 7;
+define constant $g-err-unknown = 0;
+define constant $g-err-unexp-eof = 1;
+define constant $g-err-unexp-eof-in-string = 2;
+define constant $g-err-unexp-eof-in-comment = 3;
+define constant $g-err-non-digit-in-const = 4;
+define constant $g-err-digit-radix = 5;
+define constant $g-err-float-radix = 6;
+define constant $g-err-float-malformed = 7;
 define constant <GErrorType> = <C-int>;
 define C-pointer-type <GErrorType*> => <GErrorType>;
 
-define constant $G-FILE-ERROR-EXIST = 0;
-define constant $G-FILE-ERROR-ISDIR = 1;
-define constant $G-FILE-ERROR-ACCES = 2;
-define constant $G-FILE-ERROR-NAMETOOLONG = 3;
-define constant $G-FILE-ERROR-NOENT = 4;
-define constant $G-FILE-ERROR-NOTDIR = 5;
-define constant $G-FILE-ERROR-NXIO = 6;
-define constant $G-FILE-ERROR-NODEV = 7;
-define constant $G-FILE-ERROR-ROFS = 8;
-define constant $G-FILE-ERROR-TXTBSY = 9;
-define constant $G-FILE-ERROR-FAULT = 10;
-define constant $G-FILE-ERROR-LOOP = 11;
-define constant $G-FILE-ERROR-NOSPC = 12;
-define constant $G-FILE-ERROR-NOMEM = 13;
-define constant $G-FILE-ERROR-MFILE = 14;
-define constant $G-FILE-ERROR-NFILE = 15;
-define constant $G-FILE-ERROR-BADF = 16;
-define constant $G-FILE-ERROR-INVAL = 17;
-define constant $G-FILE-ERROR-PIPE = 18;
-define constant $G-FILE-ERROR-AGAIN = 19;
-define constant $G-FILE-ERROR-INTR = 20;
-define constant $G-FILE-ERROR-IO = 21;
-define constant $G-FILE-ERROR-PERM = 22;
-define constant $G-FILE-ERROR-NOSYS = 23;
-define constant $G-FILE-ERROR-FAILED = 24;
+define constant $g-file-error-exist = 0;
+define constant $g-file-error-isdir = 1;
+define constant $g-file-error-acces = 2;
+define constant $g-file-error-nametoolong = 3;
+define constant $g-file-error-noent = 4;
+define constant $g-file-error-notdir = 5;
+define constant $g-file-error-nxio = 6;
+define constant $g-file-error-nodev = 7;
+define constant $g-file-error-rofs = 8;
+define constant $g-file-error-txtbsy = 9;
+define constant $g-file-error-fault = 10;
+define constant $g-file-error-loop = 11;
+define constant $g-file-error-nospc = 12;
+define constant $g-file-error-nomem = 13;
+define constant $g-file-error-mfile = 14;
+define constant $g-file-error-nfile = 15;
+define constant $g-file-error-badf = 16;
+define constant $g-file-error-inval = 17;
+define constant $g-file-error-pipe = 18;
+define constant $g-file-error-again = 19;
+define constant $g-file-error-intr = 20;
+define constant $g-file-error-io = 21;
+define constant $g-file-error-perm = 22;
+define constant $g-file-error-nosys = 23;
+define constant $g-file-error-failed = 24;
 define constant <GFileError> = <C-int>;
 define C-pointer-type <GFileError*> => <GFileError>;
 
-define constant $G-FILE-TEST-IS-REGULAR = 1;
-define constant $G-FILE-TEST-IS-SYMLINK = 2;
-define constant $G-FILE-TEST-IS-DIR = 4;
-define constant $G-FILE-TEST-IS-EXECUTABLE = 8;
-define constant $G-FILE-TEST-EXISTS = 16;
+define constant $g-file-test-is-regular = 1;
+define constant $g-file-test-is-symlink = 2;
+define constant $g-file-test-is-dir = 4;
+define constant $g-file-test-is-executable = 8;
+define constant $g-file-test-exists = 16;
 define constant <GFileTest> = <C-int>;
 define C-pointer-type <GFileTest*> => <GFileTest>;
 
 define C-union <_GFloatIEEE754>
-  slot gfloatieee754-v-float :: <C-float>;
+  slot g-float-ieee754-v-float :: <C-float>;
   pointer-type-name: <GFloatIEEE754>;
 end C-union;
 
-define constant $G-FORMAT-SIZE-DEFAULT = 0;
-define constant $G-FORMAT-SIZE-LONG-FORMAT = 1;
-define constant $G-FORMAT-SIZE-IEC-UNITS = 2;
+define constant $g-format-size-default = 0;
+define constant $g-format-size-long-format = 1;
+define constant $g-format-size-iec-units = 2;
 define constant <GFormatSizeFlags> = <C-int>;
 define C-pointer-type <GFormatSizeFlags*> => <GFormatSizeFlags>;
 
-define constant $GINT16-FORMAT = "hi";
+define constant $gint16-format = "hi";
 
-define constant $GINT16-MODIFIER = "h";
+define constant $gint16-modifier = "h";
 
-define constant $GINT32-FORMAT = "i";
+define constant $gint32-format = "i";
 
-define constant $GINT32-MODIFIER = "";
+define constant $gint32-modifier = "";
 
-define constant $GINT64-FORMAT = "li";
+define constant $gint64-format = "li";
 
-define constant $GINT64-MODIFIER = "l";
+define constant $gint64-modifier = "l";
 
-define constant $GINTPTR-FORMAT = "li";
+define constant $gintptr-format = "li";
 
-define constant $GINTPTR-MODIFIER = "l";
+define constant $gintptr-modifier = "l";
 
-define constant $GSIZE-FORMAT = "lu";
+define constant $gsize-format = "lu";
 
-define constant $GSIZE-MODIFIER = "l";
+define constant $gsize-modifier = "l";
 
-define constant $GSSIZE-FORMAT = "li";
+define constant $gssize-format = "li";
 
-define constant $GUINT16-FORMAT = "hu";
+define constant $guint16-format = "hu";
 
-define constant $GUINT32-FORMAT = "u";
+define constant $guint32-format = "u";
 
-define constant $GUINT64-FORMAT = "lu";
+define constant $guint64-format = "lu";
 
-define constant $GUINTPTR-FORMAT = "lu";
+define constant $guintptr-format = "lu";
 
-define constant $HAVE-GINT64 = 1;
+define constant $have-gint64 = 1;
 
-define constant $HAVE-GNUC-VARARGS = 1;
+define constant $have-gnuc-varargs = 1;
 
-define constant $HAVE-GNUC-VISIBILITY = 1;
+define constant $have-gnuc-visibility = 1;
 
-define constant $HAVE-GROWING-STACK = 1;
+define constant $have-growing-stack = 1;
 
-define constant $HAVE-INLINE = 1;
+define constant $have-inline = 1;
 
-define constant $HAVE-ISO-VARARGS = 1;
+define constant $have-iso-varargs = 1;
 
-define constant $HAVE---INLINE = 1;
+define constant $have---inline = 1;
 
-define constant $HAVE---INLINE-- = 1;
+define constant $have---inline-- = 1;
 
-define constant $HOOK-FLAG-USER-SHIFT = 4;
+define constant $hook-flag-user-shift = 4;
 
 define C-struct <_GHashTable>
   pointer-type-name: <GHashTable>;
@@ -1529,12 +1529,12 @@ define C-function g-hash-table-unref
 end;
 
 define C-struct <_GHashTableIter>
-  constant slot ghashtableiter-dummy1 :: <C-void*>;
-  constant slot ghashtableiter-dummy2 :: <C-void*>;
-  constant slot ghashtableiter-dummy3 :: <C-void*>;
-  constant slot ghashtableiter-dummy4 :: <C-signed-int>;
-  constant slot ghashtableiter-dummy5 :: <C-boolean>;
-  constant slot ghashtableiter-dummy6 :: <C-void*>;
+  constant slot g-hash-table-iter-dummy1 :: <C-void*>;
+  constant slot g-hash-table-iter-dummy2 :: <C-void*>;
+  constant slot g-hash-table-iter-dummy3 :: <C-void*>;
+  constant slot g-hash-table-iter-dummy4 :: <C-signed-int>;
+  constant slot g-hash-table-iter-dummy5 :: <C-boolean>;
+  constant slot g-hash-table-iter-dummy6 :: <C-void*>;
   pointer-type-name: <GHashTableIter>;
 end C-struct;
 
@@ -1598,14 +1598,14 @@ define C-function g-hmac-update
 end;
 
 define C-struct <_GHook>
-  slot ghook-data :: <C-void*>;
-  slot ghook-next :: <GHook>;
-  slot ghook-prev :: <GHook>;
-  slot ghook-ref-count :: <C-unsigned-int>;
-  slot ghook-hook-id :: <C-unsigned-long>;
-  slot ghook-flags :: <C-unsigned-int>;
-  slot ghook-func :: <C-void*>;
-  slot ghook-destroy :: <C-function-pointer>;
+  slot g-hook-data :: <C-void*>;
+  slot g-hook-next :: <GHook>;
+  slot g-hook-prev :: <GHook>;
+  slot g-hook-ref-count :: <C-unsigned-int>;
+  slot g-hook-hook-id :: <C-unsigned-long>;
+  slot g-hook-flags :: <C-unsigned-int>;
+  slot g-hook-func :: <C-void*>;
+  slot g-hook-destroy :: <C-function-pointer>;
   pointer-type-name: <GHook>;
 end C-struct;
 
@@ -1614,13 +1614,6 @@ define C-function g-hook-compare-ids
   input parameter sibling_ :: <GHook>;
   result res :: <C-signed-int>;
   c-name: "g_hook_compare_ids";
-end;
-
-define C-function g-hook-destroy
-  input parameter hook_list_ :: <GHookList>;
-  input parameter hook_id_ :: <C-unsigned-long>;
-  result res :: <C-boolean>;
-  c-name: "g_hook_destroy";
 end;
 
 define C-function g-hook-destroy-link
@@ -1654,20 +1647,20 @@ define C-function g-hook-unref
   c-name: "g_hook_unref";
 end;
 
-define constant $G-HOOK-FLAG-ACTIVE = 1;
-define constant $G-HOOK-FLAG-IN-CALL = 2;
-define constant $G-HOOK-FLAG-MASK = 15;
+define constant $g-hook-flag-active = 1;
+define constant $g-hook-flag-in-call = 2;
+define constant $g-hook-flag-mask = 15;
 define constant <GHookFlagMask> = <C-int>;
 define C-pointer-type <GHookFlagMask*> => <GHookFlagMask>;
 
 define C-struct <_GHookList>
-  slot ghooklist-seq-id :: <C-unsigned-long>;
-  slot ghooklist-hook-size :: <C-unsigned-int>;
-  slot ghooklist-is-setup :: <C-unsigned-int>;
-  slot ghooklist-hooks :: <GHook>;
-  slot ghooklist-dummy3 :: <C-void*>;
-  slot ghooklist-finalize-hook :: <C-function-pointer>;
-  slot ghooklist-dummy :: <C-void*>;
+  slot g-hook-list-seq-id :: <C-unsigned-long>;
+  slot g-hook-list-hook-size :: <C-unsigned-int>;
+  slot g-hook-list-is-setup :: <C-unsigned-int>;
+  slot g-hook-list-hooks :: <GHook>;
+  slot g-hook-list-dummy3 :: <C-void*>;
+  slot g-hook-list-finalize-hook :: <C-function-pointer>;
+  slot g-hook-list-dummy :: <C-void*>;
   pointer-type-name: <GHookList>;
 end C-struct;
 
@@ -1714,31 +1707,31 @@ define C-function g-iconv-close
   c-name: "g_iconv_close";
 end;
 
-define constant $IEEE754-DOUBLE-BIAS = 1023;
+define constant $ieee754-double-bias = 1023;
 
-define constant $IEEE754-FLOAT-BIAS = 127;
+define constant $ieee754-float-bias = 127;
 
 define C-struct <_GIOChannel>
-  constant slot giochannel-ref-count :: <C-signed-int>;
-  constant slot giochannel-funcs :: <GIOFuncs>;
-  constant slot giochannel-encoding :: <C-string>;
-  constant slot giochannel-read-cd :: <GIConv>;
-  constant slot giochannel-write-cd :: <GIConv>;
-  constant slot giochannel-line-term :: <C-string>;
-  constant slot giochannel-line-term-len :: <C-unsigned-int>;
-  constant slot giochannel-buf-size :: <C-unsigned-long>;
-  constant slot giochannel-read-buf :: <GString>;
-  constant slot giochannel-encoded-read-buf :: <GString>;
-  constant slot giochannel-write-buf :: <GString>;
-  constant slot giochannel-partial-write-buf :: <C-signed-char*>;
-  constant slot giochannel-use-buffer :: <C-unsigned-int>;
-  constant slot giochannel-do-encode :: <C-unsigned-int>;
-  constant slot giochannel-close-on-unref :: <C-unsigned-int>;
-  constant slot giochannel-is-readable :: <C-unsigned-int>;
-  constant slot giochannel-is-writeable :: <C-unsigned-int>;
-  constant slot giochannel-is-seekable :: <C-unsigned-int>;
-  constant slot giochannel-reserved1 :: <C-void*>;
-  constant slot giochannel-reserved2 :: <C-void*>;
+  constant slot g-io-channel-ref-count :: <C-signed-int>;
+  constant slot g-io-channel-funcs :: <GIOFuncs>;
+  constant slot g-io-channel-encoding :: <C-string>;
+  constant slot g-io-channel-read-cd :: <GIConv>;
+  constant slot g-io-channel-write-cd :: <GIConv>;
+  constant slot g-io-channel-line-term :: <C-string>;
+  constant slot g-io-channel-line-term-len :: <C-unsigned-int>;
+  constant slot g-io-channel-buf-size :: <C-unsigned-long>;
+  constant slot g-io-channel-read-buf :: <GString>;
+  constant slot g-io-channel-encoded-read-buf :: <GString>;
+  constant slot g-io-channel-write-buf :: <GString>;
+  constant slot g-io-channel-partial-write-buf :: <C-signed-char*>;
+  constant slot g-io-channel-use-buffer :: <C-unsigned-int>;
+  constant slot g-io-channel-do-encode :: <C-unsigned-int>;
+  constant slot g-io-channel-close-on-unref :: <C-unsigned-int>;
+  constant slot g-io-channel-is-readable :: <C-unsigned-int>;
+  constant slot g-io-channel-is-writeable :: <C-unsigned-int>;
+  constant slot g-io-channel-is-seekable :: <C-unsigned-int>;
+  constant slot g-io-channel-reserved1 :: <C-void*>;
+  constant slot g-io-channel-reserved2 :: <C-void*>;
   pointer-type-name: <GIOChannel>;
 end C-struct;
 
@@ -1979,116 +1972,116 @@ define C-function g-io-channel-error-quark
   c-name: "g_io_channel_error_quark";
 end;
 
-define constant $G-IO-CHANNEL-ERROR-FBIG = 0;
-define constant $G-IO-CHANNEL-ERROR-INVAL = 1;
-define constant $G-IO-CHANNEL-ERROR-IO = 2;
-define constant $G-IO-CHANNEL-ERROR-ISDIR = 3;
-define constant $G-IO-CHANNEL-ERROR-NOSPC = 4;
-define constant $G-IO-CHANNEL-ERROR-NXIO = 5;
-define constant $G-IO-CHANNEL-ERROR-OVERFLOW = 6;
-define constant $G-IO-CHANNEL-ERROR-PIPE = 7;
-define constant $G-IO-CHANNEL-ERROR-FAILED = 8;
+define constant $g-io-channel-error-fbig = 0;
+define constant $g-io-channel-error-inval = 1;
+define constant $g-io-channel-error-io = 2;
+define constant $g-io-channel-error-isdir = 3;
+define constant $g-io-channel-error-nospc = 4;
+define constant $g-io-channel-error-nxio = 5;
+define constant $g-io-channel-error-overflow = 6;
+define constant $g-io-channel-error-pipe = 7;
+define constant $g-io-channel-error-failed = 8;
 define constant <GIOChannelError> = <C-int>;
 define C-pointer-type <GIOChannelError*> => <GIOChannelError>;
 
-define constant $G-IO-IN = 1;
-define constant $G-IO-OUT = 4;
-define constant $G-IO-PRI = 2;
-define constant $G-IO-ERR = 8;
-define constant $G-IO-HUP = 16;
-define constant $G-IO-NVAL = 32;
+define constant $g-io-in = 1;
+define constant $g-io-out = 4;
+define constant $g-io-pri = 2;
+define constant $g-io-err = 8;
+define constant $g-io-hup = 16;
+define constant $g-io-nval = 32;
 define constant <GIOCondition> = <C-int>;
 define C-pointer-type <GIOCondition*> => <GIOCondition>;
 
-define constant $G-IO-ERROR-NONE = 0;
-define constant $G-IO-ERROR-AGAIN = 1;
-define constant $G-IO-ERROR-INVAL = 2;
-define constant $G-IO-ERROR-UNKNOWN = 3;
+define constant $g-io-error-none = 0;
+define constant $g-io-error-again = 1;
+define constant $g-io-error-inval = 2;
+define constant $g-io-error-unknown = 3;
 define constant <GIOError> = <C-int>;
 define C-pointer-type <GIOError*> => <GIOError>;
 
-define constant $G-IO-FLAG-APPEND = 1;
-define constant $G-IO-FLAG-NONBLOCK = 2;
-define constant $G-IO-FLAG-IS-READABLE = 4;
-define constant $G-IO-FLAG-IS-WRITABLE = 8;
-define constant $G-IO-FLAG-IS-WRITEABLE = 8;
-define constant $G-IO-FLAG-IS-SEEKABLE = 16;
-define constant $G-IO-FLAG-MASK = 31;
-define constant $G-IO-FLAG-GET-MASK = 31;
-define constant $G-IO-FLAG-SET-MASK = 3;
+define constant $g-io-flag-append = 1;
+define constant $g-io-flag-nonblock = 2;
+define constant $g-io-flag-is-readable = 4;
+define constant $g-io-flag-is-writable = 8;
+define constant $g-io-flag-is-writeable = 8;
+define constant $g-io-flag-is-seekable = 16;
+define constant $g-io-flag-mask = 31;
+define constant $g-io-flag-get-mask = 31;
+define constant $g-io-flag-set-mask = 3;
 define constant <GIOFlags> = <C-int>;
 define C-pointer-type <GIOFlags*> => <GIOFlags>;
 
 define C-struct <_GIOFuncs>
-  constant slot giofuncs-io-read :: <C-function-pointer>;
-  constant slot giofuncs-io-write :: <C-function-pointer>;
-  constant slot giofuncs-io-seek :: <C-function-pointer>;
-  constant slot giofuncs-io-close :: <C-function-pointer>;
-  constant slot giofuncs-io-create-watch :: <C-function-pointer>;
-  constant slot giofuncs-io-free :: <C-function-pointer>;
-  constant slot giofuncs-io-set-flags :: <C-function-pointer>;
-  constant slot giofuncs-io-get-flags :: <C-function-pointer>;
+  constant slot g-io-funcs-io-read :: <C-function-pointer>;
+  constant slot g-io-funcs-io-write :: <C-function-pointer>;
+  constant slot g-io-funcs-io-seek :: <C-function-pointer>;
+  constant slot g-io-funcs-io-close :: <C-function-pointer>;
+  constant slot g-io-funcs-io-create-watch :: <C-function-pointer>;
+  constant slot g-io-funcs-io-free :: <C-function-pointer>;
+  constant slot g-io-funcs-io-set-flags :: <C-function-pointer>;
+  constant slot g-io-funcs-io-get-flags :: <C-function-pointer>;
   pointer-type-name: <GIOFuncs>;
 end C-struct;
 
-define constant $G-IO-STATUS-ERROR = 0;
-define constant $G-IO-STATUS-NORMAL = 1;
-define constant $G-IO-STATUS-EOF = 2;
-define constant $G-IO-STATUS-AGAIN = 3;
+define constant $g-io-status-error = 0;
+define constant $g-io-status-normal = 1;
+define constant $g-io-status-eof = 2;
+define constant $g-io-status-again = 3;
 define constant <GIOStatus> = <C-int>;
 define C-pointer-type <GIOStatus*> => <GIOStatus>;
 
-define constant $KEY-FILE-DESKTOP-GROUP = "Desktop Entry";
+define constant $key-file-desktop-group = "Desktop Entry";
 
-define constant $KEY-FILE-DESKTOP-KEY-CATEGORIES = "Categories";
+define constant $key-file-desktop-key-categories = "Categories";
 
-define constant $KEY-FILE-DESKTOP-KEY-COMMENT = "Comment";
+define constant $key-file-desktop-key-comment = "Comment";
 
-define constant $KEY-FILE-DESKTOP-KEY-EXEC = "Exec";
+define constant $key-file-desktop-key-exec = "Exec";
 
-define constant $KEY-FILE-DESKTOP-KEY-FULLNAME = "X-GNOME-FullName";
+define constant $key-file-desktop-key-fullname = "X-GNOME-FullName";
 
-define constant $KEY-FILE-DESKTOP-KEY-GENERIC-NAME = "GenericName";
+define constant $key-file-desktop-key-generic-name = "GenericName";
 
-define constant $KEY-FILE-DESKTOP-KEY-GETTEXT-DOMAIN = "X-GNOME-Gettext-Domain";
+define constant $key-file-desktop-key-gettext-domain = "X-GNOME-Gettext-Domain";
 
-define constant $KEY-FILE-DESKTOP-KEY-HIDDEN = "Hidden";
+define constant $key-file-desktop-key-hidden = "Hidden";
 
-define constant $KEY-FILE-DESKTOP-KEY-ICON = "Icon";
+define constant $key-file-desktop-key-icon = "Icon";
 
-define constant $KEY-FILE-DESKTOP-KEY-KEYWORDS = "Keywords";
+define constant $key-file-desktop-key-keywords = "Keywords";
 
-define constant $KEY-FILE-DESKTOP-KEY-MIME-TYPE = "MimeType";
+define constant $key-file-desktop-key-mime-type = "MimeType";
 
-define constant $KEY-FILE-DESKTOP-KEY-NAME = "Name";
+define constant $key-file-desktop-key-name = "Name";
 
-define constant $KEY-FILE-DESKTOP-KEY-NOT-SHOW-IN = "NotShowIn";
+define constant $key-file-desktop-key-not-show-in = "NotShowIn";
 
-define constant $KEY-FILE-DESKTOP-KEY-NO-DISPLAY = "NoDisplay";
+define constant $key-file-desktop-key-no-display = "NoDisplay";
 
-define constant $KEY-FILE-DESKTOP-KEY-ONLY-SHOW-IN = "OnlyShowIn";
+define constant $key-file-desktop-key-only-show-in = "OnlyShowIn";
 
-define constant $KEY-FILE-DESKTOP-KEY-PATH = "Path";
+define constant $key-file-desktop-key-path = "Path";
 
-define constant $KEY-FILE-DESKTOP-KEY-STARTUP-NOTIFY = "StartupNotify";
+define constant $key-file-desktop-key-startup-notify = "StartupNotify";
 
-define constant $KEY-FILE-DESKTOP-KEY-STARTUP-WM-CLASS = "StartupWMClass";
+define constant $key-file-desktop-key-startup-wm-class = "StartupWMClass";
 
-define constant $KEY-FILE-DESKTOP-KEY-TERMINAL = "Terminal";
+define constant $key-file-desktop-key-terminal = "Terminal";
 
-define constant $KEY-FILE-DESKTOP-KEY-TRY-EXEC = "TryExec";
+define constant $key-file-desktop-key-try-exec = "TryExec";
 
-define constant $KEY-FILE-DESKTOP-KEY-TYPE = "Type";
+define constant $key-file-desktop-key-type = "Type";
 
-define constant $KEY-FILE-DESKTOP-KEY-URL = "URL";
+define constant $key-file-desktop-key-url = "URL";
 
-define constant $KEY-FILE-DESKTOP-KEY-VERSION = "Version";
+define constant $key-file-desktop-key-version = "Version";
 
-define constant $KEY-FILE-DESKTOP-TYPE-APPLICATION = "Application";
+define constant $key-file-desktop-type-application = "Application";
 
-define constant $KEY-FILE-DESKTOP-TYPE-DIRECTORY = "Directory";
+define constant $key-file-desktop-type-directory = "Directory";
 
-define constant $KEY-FILE-DESKTOP-TYPE-LINK = "Link";
+define constant $key-file-desktop-type-link = "Link";
 
 define C-struct <_GKeyFile>
   pointer-type-name: <GKeyFile>;
@@ -2448,85 +2441,85 @@ define C-function g-key-file-error-quark
   c-name: "g_key_file_error_quark";
 end;
 
-define constant $G-KEY-FILE-ERROR-UNKNOWN-ENCODING = 0;
-define constant $G-KEY-FILE-ERROR-PARSE = 1;
-define constant $G-KEY-FILE-ERROR-NOT-FOUND = 2;
-define constant $G-KEY-FILE-ERROR-KEY-NOT-FOUND = 3;
-define constant $G-KEY-FILE-ERROR-GROUP-NOT-FOUND = 4;
-define constant $G-KEY-FILE-ERROR-INVALID-VALUE = 5;
+define constant $g-key-file-error-unknown-encoding = 0;
+define constant $g-key-file-error-parse = 1;
+define constant $g-key-file-error-not-found = 2;
+define constant $g-key-file-error-key-not-found = 3;
+define constant $g-key-file-error-group-not-found = 4;
+define constant $g-key-file-error-invalid-value = 5;
 define constant <GKeyFileError> = <C-int>;
 define C-pointer-type <GKeyFileError*> => <GKeyFileError>;
 
-define constant $G-KEY-FILE-NONE = 0;
-define constant $G-KEY-FILE-KEEP-COMMENTS = 1;
-define constant $G-KEY-FILE-KEEP-TRANSLATIONS = 2;
+define constant $g-key-file-none = 0;
+define constant $g-key-file-keep-comments = 1;
+define constant $g-key-file-keep-translations = 2;
 define constant <GKeyFileFlags> = <C-int>;
 define C-pointer-type <GKeyFileFlags*> => <GKeyFileFlags>;
 
-define constant $LITTLE-ENDIAN = 1234;
+define constant $little-endian = 1234;
 
-define constant $LN10 = 2.3025850d0;
+define constant $ln10 = 2.3025850d0;
 
-define constant $LN2 = 0.6931470d0;
+define constant $ln2 = 0.6931470d0;
 
-define constant $LOG-2-BASE-10 = 0.3010300d0;
+define constant $log-2-base-10 = 0.3010300d0;
 
-define constant $LOG-DOMAIN = 0;
+define constant $log-domain = 0;
 
-define constant $LOG-FATAL-MASK = 0;
+define constant $log-fatal-mask = 0;
 
-define constant $LOG-LEVEL-USER-SHIFT = 8;
+define constant $log-level-user-shift = 8;
 
 define C-struct <_GList>
-  slot glist-data :: <C-void*>;
-  slot glist-next :: <GList>;
-  slot glist-prev :: <GList>;
+  slot g-list-data :: <C-void*>;
+  slot g-list-next :: <GList>;
+  slot g-list-prev :: <GList>;
   pointer-type-name: <GList>;
 end C-struct;
 
-define constant $G-LOG-FLAG-RECURSION = 1;
-define constant $G-LOG-FLAG-FATAL = 2;
-define constant $G-LOG-LEVEL-ERROR = 4;
-define constant $G-LOG-LEVEL-CRITICAL = 8;
-define constant $G-LOG-LEVEL-WARNING = 16;
-define constant $G-LOG-LEVEL-MESSAGE = 32;
-define constant $G-LOG-LEVEL-INFO = 64;
-define constant $G-LOG-LEVEL-DEBUG = 128;
-define constant $G-LOG-LEVEL-MASK = -4;
+define constant $g-log-flag-recursion = 1;
+define constant $g-log-flag-fatal = 2;
+define constant $g-log-level-error = 4;
+define constant $g-log-level-critical = 8;
+define constant $g-log-level-warning = 16;
+define constant $g-log-level-message = 32;
+define constant $g-log-level-info = 64;
+define constant $g-log-level-debug = 128;
+define constant $g-log-level-mask = -4;
 define constant <GLogLevelFlags> = <C-int>;
 define C-pointer-type <GLogLevelFlags*> => <GLogLevelFlags>;
 
-define constant $MAJOR-VERSION = 2;
+define constant $major-version = 2;
 
-define constant $MAXINT16 = 32767;
+define constant $maxint16 = 32767;
 
-define constant $MAXINT32 = 2147483647;
+define constant $maxint32 = 2147483647;
 
-define constant $MAXINT64 = #x7FFFFFFFFFFFFFFF;
+define constant $maxint64 = #x7FFFFFFFFFFFFFFF;
 
-define constant $MAXINT8 = 127;
+define constant $maxint8 = 127;
 
-define constant $MAXUINT16 = 65535;
+define constant $maxuint16 = 65535;
 
-define constant $MAXUINT32 = 4294967295;
+define constant $maxuint32 = 4294967295;
 
-define constant $MAXUINT64 = -1;
+define constant $maxuint64 = -1;
 
-define constant $MAXUINT8 = 255;
+define constant $maxuint8 = 255;
 
-define constant $MICRO-VERSION = 1;
+define constant $micro-version = 1;
 
-define constant $MININT16 = -32768;
+define constant $minint16 = -32768;
 
-define constant $MININT32 = -214748364;
+define constant $minint32 = -214748364;
 
-define constant $MININT64 = #x8000000000000000;
+define constant $minint64 = #x8000000000000000;
 
-define constant $MININT8 = -128;
+define constant $minint8 = -128;
 
-define constant $MINOR-VERSION = 36;
+define constant $minor-version = 36;
 
-define constant $MODULE-SUFFIX = "so";
+define constant $module-suffix = "so";
 
 define C-struct <_GMainContext>
   pointer-type-name: <GMainContext>;
@@ -2767,22 +2760,22 @@ define C-function g-mapped-file-unref
   c-name: "g_mapped_file_unref";
 end;
 
-define constant $G-MARKUP-COLLECT-INVALID = 0;
-define constant $G-MARKUP-COLLECT-STRING = 1;
-define constant $G-MARKUP-COLLECT-STRDUP = 2;
-define constant $G-MARKUP-COLLECT-BOOLEAN = 3;
-define constant $G-MARKUP-COLLECT-TRISTATE = 4;
-define constant $G-MARKUP-COLLECT-OPTIONAL = 65536;
+define constant $g-markup-collect-invalid = 0;
+define constant $g-markup-collect-string = 1;
+define constant $g-markup-collect-strdup = 2;
+define constant $g-markup-collect-boolean = 3;
+define constant $g-markup-collect-tristate = 4;
+define constant $g-markup-collect-optional = 65536;
 define constant <GMarkupCollectType> = <C-int>;
 define C-pointer-type <GMarkupCollectType*> => <GMarkupCollectType>;
 
-define constant $G-MARKUP-ERROR-BAD-UTF8 = 0;
-define constant $G-MARKUP-ERROR-EMPTY = 1;
-define constant $G-MARKUP-ERROR-PARSE = 2;
-define constant $G-MARKUP-ERROR-UNKNOWN-ELEMENT = 3;
-define constant $G-MARKUP-ERROR-UNKNOWN-ATTRIBUTE = 4;
-define constant $G-MARKUP-ERROR-INVALID-CONTENT = 5;
-define constant $G-MARKUP-ERROR-MISSING-ATTRIBUTE = 6;
+define constant $g-markup-error-bad-utf8 = 0;
+define constant $g-markup-error-empty = 1;
+define constant $g-markup-error-parse = 2;
+define constant $g-markup-error-unknown-element = 3;
+define constant $g-markup-error-unknown-attribute = 4;
+define constant $g-markup-error-invalid-content = 5;
+define constant $g-markup-error-missing-attribute = 6;
 define constant <GMarkupError> = <C-int>;
 define C-pointer-type <GMarkupError*> => <GMarkupError>;
 
@@ -2849,18 +2842,18 @@ define C-function g-markup-parse-context-unref
   c-name: "g_markup_parse_context_unref";
 end;
 
-define constant $G-MARKUP-DO-NOT-USE-THIS-UNSUPPORTED-FLAG = 1;
-define constant $G-MARKUP-TREAT-CDATA-AS-TEXT = 2;
-define constant $G-MARKUP-PREFIX-ERROR-POSITION = 4;
+define constant $g-markup-do-not-use-this-unsupported-flag = 1;
+define constant $g-markup-treat-cdata-as-text = 2;
+define constant $g-markup-prefix-error-position = 4;
 define constant <GMarkupParseFlags> = <C-int>;
 define C-pointer-type <GMarkupParseFlags*> => <GMarkupParseFlags>;
 
 define C-struct <_GMarkupParser>
-  constant slot gmarkupparser-start-element :: <C-function-pointer>;
-  constant slot gmarkupparser-end-element :: <C-function-pointer>;
-  constant slot gmarkupparser-text :: <C-function-pointer>;
-  constant slot gmarkupparser-passthrough :: <C-function-pointer>;
-  constant slot gmarkupparser-error :: <C-function-pointer>;
+  constant slot g-markup-parser-start-element :: <C-function-pointer>;
+  constant slot g-markup-parser-end-element :: <C-function-pointer>;
+  constant slot g-markup-parser-text :: <C-function-pointer>;
+  constant slot g-markup-parser-passthrough :: <C-function-pointer>;
+  constant slot g-markup-parser-error :: <C-function-pointer>;
   pointer-type-name: <GMarkupParser>;
 end C-struct;
 
@@ -2966,18 +2959,18 @@ define C-function g-match-info-unref
 end;
 
 define C-struct <_GMemVTable>
-  constant slot gmemvtable-malloc :: <C-void*>;
-  constant slot gmemvtable-realloc :: <C-void*>;
-  constant slot gmemvtable-free :: <C-function-pointer>;
-  constant slot gmemvtable-calloc :: <C-void*>;
-  constant slot gmemvtable-try-malloc :: <C-void*>;
-  constant slot gmemvtable-try-realloc :: <C-void*>;
+  constant slot g-mem-v-table-malloc :: <C-void*>;
+  constant slot g-mem-v-table-realloc :: <C-void*>;
+  constant slot g-mem-v-table-free :: <C-function-pointer>;
+  constant slot g-mem-v-table-calloc :: <C-void*>;
+  constant slot g-mem-v-table-try-malloc :: <C-void*>;
+  constant slot g-mem-v-table-try-realloc :: <C-void*>;
   pointer-type-name: <GMemVTable>;
 end C-struct;
 
 define C-union <_GMutex>
-  constant slot gmutex-p :: <C-void*>;
-  constant slot gmutex-i :: <C-unsigned-int*>;
+  constant slot g-mutex-p :: <C-void*>;
+  constant slot g-mutex-i :: <C-unsigned-int*>;
   pointer-type-name: <GMutex>;
 end C-union;
 
@@ -3008,11 +3001,11 @@ define C-function g-mutex-unlock
 end;
 
 define C-struct <_GNode>
-  slot gnode-data :: <C-void*>;
-  slot gnode-next :: <GNode>;
-  slot gnode-prev :: <GNode>;
-  slot gnode-parent :: <GNode>;
-  slot gnode-children :: <GNode>;
+  slot g-node-data :: <C-void*>;
+  slot g-node-next :: <GNode>;
+  slot g-node-prev :: <GNode>;
+  slot g-node-parent :: <GNode>;
+  slot g-node-children :: <GNode>;
   pointer-type-name: <GNode>;
 end C-struct;
 
@@ -3077,22 +3070,22 @@ define C-function g-node-unlink
   c-name: "g_node_unlink";
 end;
 
-define constant $G-NORMALIZE-DEFAULT = 0;
-define constant $G-NORMALIZE-NFD = 0;
-define constant $G-NORMALIZE-DEFAULT-COMPOSE = 1;
-define constant $G-NORMALIZE-NFC = 1;
-define constant $G-NORMALIZE-ALL = 2;
-define constant $G-NORMALIZE-NFKD = 2;
-define constant $G-NORMALIZE-ALL-COMPOSE = 3;
-define constant $G-NORMALIZE-NFKC = 3;
+define constant $g-normalize-default = 0;
+define constant $g-normalize-nfd = 0;
+define constant $g-normalize-default-compose = 1;
+define constant $g-normalize-nfc = 1;
+define constant $g-normalize-all = 2;
+define constant $g-normalize-nfkd = 2;
+define constant $g-normalize-all-compose = 3;
+define constant $g-normalize-nfkc = 3;
 define constant <GNormalizeMode> = <C-int>;
 define C-pointer-type <GNormalizeMode*> => <GNormalizeMode>;
 
-define constant $OPTION-REMAINING = "";
+define constant $option-remaining = "";
 
 define C-struct <_GOnce>
-  slot gonce-status :: <GOnceStatus>;
-  slot gonce-retval :: <C-void*>;
+  slot g-once-status :: <GOnceStatus>;
+  slot g-once-retval :: <C-void*>;
   pointer-type-name: <GOnce>;
 end C-struct;
 
@@ -3108,21 +3101,21 @@ define C-function g-once-init-leave
   c-name: "g_once_init_leave";
 end;
 
-define constant $G-ONCE-STATUS-NOTCALLED = 0;
-define constant $G-ONCE-STATUS-PROGRESS = 1;
-define constant $G-ONCE-STATUS-READY = 2;
+define constant $g-once-status-notcalled = 0;
+define constant $g-once-status-progress = 1;
+define constant $g-once-status-ready = 2;
 define constant <GOnceStatus> = <C-int>;
 define C-pointer-type <GOnceStatus*> => <GOnceStatus>;
 
-define constant $G-OPTION-ARG-NONE = 0;
-define constant $G-OPTION-ARG-STRING = 1;
-define constant $G-OPTION-ARG-INT = 2;
-define constant $G-OPTION-ARG-CALLBACK = 3;
-define constant $G-OPTION-ARG-FILENAME = 4;
-define constant $G-OPTION-ARG-STRING-ARRAY = 5;
-define constant $G-OPTION-ARG-FILENAME-ARRAY = 6;
-define constant $G-OPTION-ARG-DOUBLE = 7;
-define constant $G-OPTION-ARG-INT64 = 8;
+define constant $g-option-arg-none = 0;
+define constant $g-option-arg-string = 1;
+define constant $g-option-arg-int = 2;
+define constant $g-option-arg-callback = 3;
+define constant $g-option-arg-filename = 4;
+define constant $g-option-arg-string-array = 5;
+define constant $g-option-arg-filename-array = 6;
+define constant $g-option-arg-double = 7;
+define constant $g-option-arg-int64 = 8;
 define constant <GOptionArg> = <C-int>;
 define C-pointer-type <GOptionArg*> => <GOptionArg>;
 
@@ -3233,29 +3226,29 @@ define C-function g-option-context-set-translation-domain
 end;
 
 define C-struct <_GOptionEntry>
-  slot goptionentry-long-name :: <C-string>;
-  slot goptionentry-short-name :: <C-signed-char>;
-  slot goptionentry-flags :: <C-signed-int>;
-  slot goptionentry-arg :: <GOptionArg>;
-  slot goptionentry-arg-data :: <C-void*>;
-  slot goptionentry-description :: <C-string>;
-  slot goptionentry-arg-description :: <C-string>;
+  slot g-option-entry-long-name :: <C-string>;
+  slot g-option-entry-short-name :: <C-signed-char>;
+  slot g-option-entry-flags :: <C-signed-int>;
+  slot g-option-entry-arg :: <GOptionArg>;
+  slot g-option-entry-arg-data :: <C-void*>;
+  slot g-option-entry-description :: <C-string>;
+  slot g-option-entry-arg-description :: <C-string>;
   pointer-type-name: <GOptionEntry>;
 end C-struct;
 
-define constant $G-OPTION-ERROR-UNKNOWN-OPTION = 0;
-define constant $G-OPTION-ERROR-BAD-VALUE = 1;
-define constant $G-OPTION-ERROR-FAILED = 2;
+define constant $g-option-error-unknown-option = 0;
+define constant $g-option-error-bad-value = 1;
+define constant $g-option-error-failed = 2;
 define constant <GOptionError> = <C-int>;
 define C-pointer-type <GOptionError*> => <GOptionError>;
 
-define constant $G-OPTION-FLAG-HIDDEN = 1;
-define constant $G-OPTION-FLAG-IN-MAIN = 2;
-define constant $G-OPTION-FLAG-REVERSE = 4;
-define constant $G-OPTION-FLAG-NO-ARG = 8;
-define constant $G-OPTION-FLAG-FILENAME = 16;
-define constant $G-OPTION-FLAG-OPTIONAL-ARG = 32;
-define constant $G-OPTION-FLAG-NOALIAS = 64;
+define constant $g-option-flag-hidden = 1;
+define constant $g-option-flag-in-main = 2;
+define constant $g-option-flag-reverse = 4;
+define constant $g-option-flag-no-arg = 8;
+define constant $g-option-flag-filename = 16;
+define constant $g-option-flag-optional-arg = 32;
+define constant $g-option-flag-noalias = 64;
 define constant <GOptionFlags> = <C-int>;
 define C-pointer-type <GOptionFlags*> => <GOptionFlags>;
 
@@ -3288,25 +3281,25 @@ define C-function g-option-group-set-translation-domain
   c-name: "g_option_group_set_translation_domain";
 end;
 
-define constant $PDP-ENDIAN = 3412;
+define constant $pdp-endian = 3412;
 
-define constant $PI = 3.1415930d0;
+define constant $pi = 3.1415930d0;
 
-define constant $PI-2 = 1.5707960d0;
+define constant $pi-2 = 1.5707960d0;
 
-define constant $PI-4 = 0.7853980d0;
+define constant $pi-4 = 0.7853980d0;
 
-define constant $POLLFD-FORMAT = "%#I64x";
+define constant $pollfd-format = "%#I64x";
 
-define constant $PRIORITY-DEFAULT = 0;
+define constant $priority-default = 0;
 
-define constant $PRIORITY-DEFAULT-IDLE = 200;
+define constant $priority-default-idle = 200;
 
-define constant $PRIORITY-HIGH = -100;
+define constant $priority-high = -100;
 
-define constant $PRIORITY-HIGH-IDLE = 100;
+define constant $priority-high-idle = 100;
 
-define constant $PRIORITY-LOW = 300;
+define constant $priority-low = 300;
 
 define C-struct <_GPatternSpec>
   pointer-type-name: <GPatternSpec>;
@@ -3325,16 +3318,16 @@ define C-function g-pattern-spec-free
 end;
 
 define C-struct <_GPollFD>
-  slot gpollfd-fd :: <C-signed-int>;
-  slot gpollfd-events :: <C-unsigned-short>;
-  slot gpollfd-revents :: <C-unsigned-short>;
+  slot g-poll-fd-fd :: <C-signed-int>;
+  slot g-poll-fd-events :: <C-unsigned-short>;
+  slot g-poll-fd-revents :: <C-unsigned-short>;
   pointer-type-name: <GPollFD>;
 end C-struct;
 
 define C-struct <_GPrivate>
-  constant slot gprivate-p :: <C-void*>;
-  constant slot gprivate-notify :: <C-function-pointer>;
-  constant slot gprivate-future :: <C-void*>;
+  constant slot g-private-p :: <C-void*>;
+  constant slot g-private-notify :: <C-function-pointer>;
+  constant slot g-private-future :: <C-void*>;
   pointer-type-name: <GPrivate>;
 end C-struct;
 
@@ -3351,15 +3344,15 @@ define C-function g-private-set
 end;
 
 define C-struct <_GPtrArray>
-  slot gptrarray-pdata :: <C-void*>;
-  slot gptrarray-len :: <C-unsigned-int>;
+  slot g-ptr-array-pdata :: <C-void*>;
+  slot g-ptr-array-len :: <C-unsigned-int>;
   pointer-type-name: <GPtrArray>;
 end C-struct;
 
 define C-struct <_GQueue>
-  slot gqueue-head :: <GList>;
-  slot gqueue-tail :: <GList>;
-  slot gqueue-length :: <C-unsigned-int>;
+  slot g-queue-head :: <GList>;
+  slot g-queue-tail :: <GList>;
+  slot g-queue-length :: <C-unsigned-int>;
   pointer-type-name: <GQueue>;
 end C-struct;
 
@@ -3442,8 +3435,8 @@ define C-function g-queue-reverse
 end;
 
 define C-struct <_GRWLock>
-  constant slot grwlock-p :: <C-void*>;
-  constant slot grwlock-i :: <C-unsigned-int*>;
+  constant slot g-rw-lock-p :: <C-void*>;
+  constant slot g-rw-lock-i :: <C-unsigned-int*>;
   pointer-type-name: <GRWLock>;
 end C-struct;
 
@@ -3540,8 +3533,8 @@ define C-function g-rand-set-seed-array
 end;
 
 define C-struct <_GRecMutex>
-  constant slot grecmutex-p :: <C-void*>;
-  constant slot grecmutex-i :: <C-unsigned-int*>;
+  constant slot g-rec-mutex-p :: <C-void*>;
+  constant slot g-rec-mutex-i :: <C-unsigned-int*>;
   pointer-type-name: <GRecMutex>;
 end C-struct;
 
@@ -3762,159 +3755,159 @@ define C-function g-regex-split-simple
   c-name: "g_regex_split_simple";
 end;
 
-define constant $G-REGEX-CASELESS = 1;
-define constant $G-REGEX-MULTILINE = 2;
-define constant $G-REGEX-DOTALL = 4;
-define constant $G-REGEX-EXTENDED = 8;
-define constant $G-REGEX-ANCHORED = 16;
-define constant $G-REGEX-DOLLAR-ENDONLY = 32;
-define constant $G-REGEX-UNGREEDY = 512;
-define constant $G-REGEX-RAW = 2048;
-define constant $G-REGEX-NO-AUTO-CAPTURE = 4096;
-define constant $G-REGEX-OPTIMIZE = 8192;
-define constant $G-REGEX-FIRSTLINE = 262144;
-define constant $G-REGEX-DUPNAMES = 524288;
-define constant $G-REGEX-NEWLINE-CR = 1048576;
-define constant $G-REGEX-NEWLINE-LF = 2097152;
-define constant $G-REGEX-NEWLINE-CRLF = 3145728;
-define constant $G-REGEX-NEWLINE-ANYCRLF = 5242880;
-define constant $G-REGEX-BSR-ANYCRLF = 8388608;
-define constant $G-REGEX-JAVASCRIPT-COMPAT = 33554432;
+define constant $g-regex-caseless = 1;
+define constant $g-regex-multiline = 2;
+define constant $g-regex-dotall = 4;
+define constant $g-regex-extended = 8;
+define constant $g-regex-anchored = 16;
+define constant $g-regex-dollar-endonly = 32;
+define constant $g-regex-ungreedy = 512;
+define constant $g-regex-raw = 2048;
+define constant $g-regex-no-auto-capture = 4096;
+define constant $g-regex-optimize = 8192;
+define constant $g-regex-firstline = 262144;
+define constant $g-regex-dupnames = 524288;
+define constant $g-regex-newline-cr = 1048576;
+define constant $g-regex-newline-lf = 2097152;
+define constant $g-regex-newline-crlf = 3145728;
+define constant $g-regex-newline-anycrlf = 5242880;
+define constant $g-regex-bsr-anycrlf = 8388608;
+define constant $g-regex-javascript-compat = 33554432;
 define constant <GRegexCompileFlags> = <C-int>;
 define C-pointer-type <GRegexCompileFlags*> => <GRegexCompileFlags>;
 
-define constant $G-REGEX-ERROR-COMPILE = 0;
-define constant $G-REGEX-ERROR-OPTIMIZE = 1;
-define constant $G-REGEX-ERROR-REPLACE = 2;
-define constant $G-REGEX-ERROR-MATCH = 3;
-define constant $G-REGEX-ERROR-INTERNAL = 4;
-define constant $G-REGEX-ERROR-STRAY-BACKSLASH = 101;
-define constant $G-REGEX-ERROR-MISSING-CONTROL-CHAR = 102;
-define constant $G-REGEX-ERROR-UNRECOGNIZED-ESCAPE = 103;
-define constant $G-REGEX-ERROR-QUANTIFIERS-OUT-OF-ORDER = 104;
-define constant $G-REGEX-ERROR-QUANTIFIER-TOO-BIG = 105;
-define constant $G-REGEX-ERROR-UNTERMINATED-CHARACTER-CLASS = 106;
-define constant $G-REGEX-ERROR-INVALID-ESCAPE-IN-CHARACTER-CLASS = 107;
-define constant $G-REGEX-ERROR-RANGE-OUT-OF-ORDER = 108;
-define constant $G-REGEX-ERROR-NOTHING-TO-REPEAT = 109;
-define constant $G-REGEX-ERROR-UNRECOGNIZED-CHARACTER = 112;
-define constant $G-REGEX-ERROR-POSIX-NAMED-CLASS-OUTSIDE-CLASS = 113;
-define constant $G-REGEX-ERROR-UNMATCHED-PARENTHESIS = 114;
-define constant $G-REGEX-ERROR-INEXISTENT-SUBPATTERN-REFERENCE = 115;
-define constant $G-REGEX-ERROR-UNTERMINATED-COMMENT = 118;
-define constant $G-REGEX-ERROR-EXPRESSION-TOO-LARGE = 120;
-define constant $G-REGEX-ERROR-MEMORY-ERROR = 121;
-define constant $G-REGEX-ERROR-VARIABLE-LENGTH-LOOKBEHIND = 125;
-define constant $G-REGEX-ERROR-MALFORMED-CONDITION = 126;
-define constant $G-REGEX-ERROR-TOO-MANY-CONDITIONAL-BRANCHES = 127;
-define constant $G-REGEX-ERROR-ASSERTION-EXPECTED = 128;
-define constant $G-REGEX-ERROR-UNKNOWN-POSIX-CLASS-NAME = 130;
-define constant $G-REGEX-ERROR-POSIX-COLLATING-ELEMENTS-NOT-SUPPORTED = 131;
-define constant $G-REGEX-ERROR-HEX-CODE-TOO-LARGE = 134;
-define constant $G-REGEX-ERROR-INVALID-CONDITION = 135;
-define constant $G-REGEX-ERROR-SINGLE-BYTE-MATCH-IN-LOOKBEHIND = 136;
-define constant $G-REGEX-ERROR-INFINITE-LOOP = 140;
-define constant $G-REGEX-ERROR-MISSING-SUBPATTERN-NAME-TERMINATOR = 142;
-define constant $G-REGEX-ERROR-DUPLICATE-SUBPATTERN-NAME = 143;
-define constant $G-REGEX-ERROR-MALFORMED-PROPERTY = 146;
-define constant $G-REGEX-ERROR-UNKNOWN-PROPERTY = 147;
-define constant $G-REGEX-ERROR-SUBPATTERN-NAME-TOO-LONG = 148;
-define constant $G-REGEX-ERROR-TOO-MANY-SUBPATTERNS = 149;
-define constant $G-REGEX-ERROR-INVALID-OCTAL-VALUE = 151;
-define constant $G-REGEX-ERROR-TOO-MANY-BRANCHES-IN-DEFINE = 154;
-define constant $G-REGEX-ERROR-DEFINE-REPETION = 155;
-define constant $G-REGEX-ERROR-INCONSISTENT-NEWLINE-OPTIONS = 156;
-define constant $G-REGEX-ERROR-MISSING-BACK-REFERENCE = 157;
-define constant $G-REGEX-ERROR-INVALID-RELATIVE-REFERENCE = 158;
-define constant $G-REGEX-ERROR-BACKTRACKING-CONTROL-VERB-ARGUMENT-FORBIDDEN = 159;
-define constant $G-REGEX-ERROR-UNKNOWN-BACKTRACKING-CONTROL-VERB = 160;
-define constant $G-REGEX-ERROR-NUMBER-TOO-BIG = 161;
-define constant $G-REGEX-ERROR-MISSING-SUBPATTERN-NAME = 162;
-define constant $G-REGEX-ERROR-MISSING-DIGIT = 163;
-define constant $G-REGEX-ERROR-INVALID-DATA-CHARACTER = 164;
-define constant $G-REGEX-ERROR-EXTRA-SUBPATTERN-NAME = 165;
-define constant $G-REGEX-ERROR-BACKTRACKING-CONTROL-VERB-ARGUMENT-REQUIRED = 166;
-define constant $G-REGEX-ERROR-INVALID-CONTROL-CHAR = 168;
-define constant $G-REGEX-ERROR-MISSING-NAME = 169;
-define constant $G-REGEX-ERROR-NOT-SUPPORTED-IN-CLASS = 171;
-define constant $G-REGEX-ERROR-TOO-MANY-FORWARD-REFERENCES = 172;
-define constant $G-REGEX-ERROR-NAME-TOO-LONG = 175;
-define constant $G-REGEX-ERROR-CHARACTER-VALUE-TOO-LARGE = 176;
+define constant $g-regex-error-compile = 0;
+define constant $g-regex-error-optimize = 1;
+define constant $g-regex-error-replace = 2;
+define constant $g-regex-error-match = 3;
+define constant $g-regex-error-internal = 4;
+define constant $g-regex-error-stray-backslash = 101;
+define constant $g-regex-error-missing-control-char = 102;
+define constant $g-regex-error-unrecognized-escape = 103;
+define constant $g-regex-error-quantifiers-out-of-order = 104;
+define constant $g-regex-error-quantifier-too-big = 105;
+define constant $g-regex-error-unterminated-character-class = 106;
+define constant $g-regex-error-invalid-escape-in-character-class = 107;
+define constant $g-regex-error-range-out-of-order = 108;
+define constant $g-regex-error-nothing-to-repeat = 109;
+define constant $g-regex-error-unrecognized-character = 112;
+define constant $g-regex-error-posix-named-class-outside-class = 113;
+define constant $g-regex-error-unmatched-parenthesis = 114;
+define constant $g-regex-error-inexistent-subpattern-reference = 115;
+define constant $g-regex-error-unterminated-comment = 118;
+define constant $g-regex-error-expression-too-large = 120;
+define constant $g-regex-error-memory-error = 121;
+define constant $g-regex-error-variable-length-lookbehind = 125;
+define constant $g-regex-error-malformed-condition = 126;
+define constant $g-regex-error-too-many-conditional-branches = 127;
+define constant $g-regex-error-assertion-expected = 128;
+define constant $g-regex-error-unknown-posix-class-name = 130;
+define constant $g-regex-error-posix-collating-elements-not-supported = 131;
+define constant $g-regex-error-hex-code-too-large = 134;
+define constant $g-regex-error-invalid-condition = 135;
+define constant $g-regex-error-single-byte-match-in-lookbehind = 136;
+define constant $g-regex-error-infinite-loop = 140;
+define constant $g-regex-error-missing-subpattern-name-terminator = 142;
+define constant $g-regex-error-duplicate-subpattern-name = 143;
+define constant $g-regex-error-malformed-property = 146;
+define constant $g-regex-error-unknown-property = 147;
+define constant $g-regex-error-subpattern-name-too-long = 148;
+define constant $g-regex-error-too-many-subpatterns = 149;
+define constant $g-regex-error-invalid-octal-value = 151;
+define constant $g-regex-error-too-many-branches-in-define = 154;
+define constant $g-regex-error-define-repetion = 155;
+define constant $g-regex-error-inconsistent-newline-options = 156;
+define constant $g-regex-error-missing-back-reference = 157;
+define constant $g-regex-error-invalid-relative-reference = 158;
+define constant $g-regex-error-backtracking-control-verb-argument-forbidden = 159;
+define constant $g-regex-error-unknown-backtracking-control-verb = 160;
+define constant $g-regex-error-number-too-big = 161;
+define constant $g-regex-error-missing-subpattern-name = 162;
+define constant $g-regex-error-missing-digit = 163;
+define constant $g-regex-error-invalid-data-character = 164;
+define constant $g-regex-error-extra-subpattern-name = 165;
+define constant $g-regex-error-backtracking-control-verb-argument-required = 166;
+define constant $g-regex-error-invalid-control-char = 168;
+define constant $g-regex-error-missing-name = 169;
+define constant $g-regex-error-not-supported-in-class = 171;
+define constant $g-regex-error-too-many-forward-references = 172;
+define constant $g-regex-error-name-too-long = 175;
+define constant $g-regex-error-character-value-too-large = 176;
 define constant <GRegexError> = <C-int>;
 define C-pointer-type <GRegexError*> => <GRegexError>;
 
-define constant $G-REGEX-MATCH-ANCHORED = 16;
-define constant $G-REGEX-MATCH-NOTBOL = 128;
-define constant $G-REGEX-MATCH-NOTEOL = 256;
-define constant $G-REGEX-MATCH-NOTEMPTY = 1024;
-define constant $G-REGEX-MATCH-PARTIAL = 32768;
-define constant $G-REGEX-MATCH-NEWLINE-CR = 1048576;
-define constant $G-REGEX-MATCH-NEWLINE-LF = 2097152;
-define constant $G-REGEX-MATCH-NEWLINE-CRLF = 3145728;
-define constant $G-REGEX-MATCH-NEWLINE-ANY = 4194304;
-define constant $G-REGEX-MATCH-NEWLINE-ANYCRLF = 5242880;
-define constant $G-REGEX-MATCH-BSR-ANYCRLF = 8388608;
-define constant $G-REGEX-MATCH-BSR-ANY = 16777216;
-define constant $G-REGEX-MATCH-PARTIAL-SOFT = 32768;
-define constant $G-REGEX-MATCH-PARTIAL-HARD = 134217728;
-define constant $G-REGEX-MATCH-NOTEMPTY-ATSTART = 268435456;
+define constant $g-regex-match-anchored = 16;
+define constant $g-regex-match-notbol = 128;
+define constant $g-regex-match-noteol = 256;
+define constant $g-regex-match-notempty = 1024;
+define constant $g-regex-match-partial = 32768;
+define constant $g-regex-match-newline-cr = 1048576;
+define constant $g-regex-match-newline-lf = 2097152;
+define constant $g-regex-match-newline-crlf = 3145728;
+define constant $g-regex-match-newline-any = 4194304;
+define constant $g-regex-match-newline-anycrlf = 5242880;
+define constant $g-regex-match-bsr-anycrlf = 8388608;
+define constant $g-regex-match-bsr-any = 16777216;
+define constant $g-regex-match-partial-soft = 32768;
+define constant $g-regex-match-partial-hard = 134217728;
+define constant $g-regex-match-notempty-atstart = 268435456;
 define constant <GRegexMatchFlags> = <C-int>;
 define C-pointer-type <GRegexMatchFlags*> => <GRegexMatchFlags>;
 
-define constant $SEARCHPATH-SEPARATOR = 59;
+define constant $searchpath-separator = 59;
 
-define constant $SEARCHPATH-SEPARATOR-S = ";";
+define constant $searchpath-separator-s = ";";
 
-define constant $SIZEOF-LONG = 8;
+define constant $sizeof-long = 8;
 
-define constant $SIZEOF-SIZE-T = 8;
+define constant $sizeof-size-t = 8;
 
-define constant $SIZEOF-VOID-P = 8;
+define constant $sizeof-void-p = 8;
 
 define C-struct <_GSList>
-  slot gslist-data :: <C-void*>;
-  slot gslist-next :: <GSList>;
+  slot g-s-list-data :: <C-void*>;
+  slot g-s-list-next :: <GSList>;
   pointer-type-name: <GSList>;
 end C-struct;
 
-define constant $SQRT2 = 1.4142140d0;
+define constant $sqrt2 = 1.4142140d0;
 
-define constant $STR-DELIMITERS = "_-|> <.";
+define constant $str-delimiters = "_-|> <.";
 
-define constant $SYSDEF-AF-INET = 2;
+define constant $sysdef-af-inet = 2;
 
-define constant $SYSDEF-AF-INET6 = 10;
+define constant $sysdef-af-inet6 = 10;
 
-define constant $SYSDEF-AF-UNIX = 1;
+define constant $sysdef-af-unix = 1;
 
-define constant $SYSDEF-MSG-DONTROUTE = 4;
+define constant $sysdef-msg-dontroute = 4;
 
-define constant $SYSDEF-MSG-OOB = 1;
+define constant $sysdef-msg-oob = 1;
 
-define constant $SYSDEF-MSG-PEEK = 2;
+define constant $sysdef-msg-peek = 2;
 
 define C-struct <_GScanner>
-  slot gscanner-user-data :: <C-void*>;
-  slot gscanner-max-parse-errors :: <C-unsigned-int>;
-  slot gscanner-parse-errors :: <C-unsigned-int>;
-  slot gscanner-input-name :: <C-string>;
-  slot gscanner-qdata :: <GData>;
-  slot gscanner-config :: <GScannerConfig>;
-  slot gscanner-token :: <GTokenType>;
-  slot gscanner-value :: <_GTokenValue>;
-  slot gscanner-line :: <C-unsigned-int>;
-  slot gscanner-position :: <C-unsigned-int>;
-  slot gscanner-next-token :: <GTokenType>;
-  slot gscanner-next-value :: <_GTokenValue>;
-  slot gscanner-next-line :: <C-unsigned-int>;
-  slot gscanner-next-position :: <C-unsigned-int>;
-  constant slot gscanner-symbol-table :: <GHashTable>;
-  constant slot gscanner-input-fd :: <C-signed-int>;
-  constant slot gscanner-text :: <C-string>;
-  constant slot gscanner-text-end :: <C-string>;
-  constant slot gscanner-buffer :: <C-string>;
-  constant slot gscanner-scope-id :: <C-unsigned-int>;
-  slot gscanner-msg-handler :: <C-function-pointer>;
+  slot g-scanner-user-data :: <C-void*>;
+  slot g-scanner-max-parse-errors :: <C-unsigned-int>;
+  slot g-scanner-parse-errors :: <C-unsigned-int>;
+  slot g-scanner-input-name :: <C-string>;
+  slot g-scanner-qdata :: <GData>;
+  slot g-scanner-config :: <GScannerConfig>;
+  slot g-scanner-token :: <GTokenType>;
+  slot g-scanner-value :: <_GTokenValue>;
+  slot g-scanner-line :: <C-unsigned-int>;
+  slot g-scanner-position :: <C-unsigned-int>;
+  slot g-scanner-next-token :: <GTokenType>;
+  slot g-scanner-next-value :: <_GTokenValue>;
+  slot g-scanner-next-line :: <C-unsigned-int>;
+  slot g-scanner-next-position :: <C-unsigned-int>;
+  constant slot g-scanner-symbol-table :: <GHashTable>;
+  constant slot g-scanner-input-fd :: <C-signed-int>;
+  constant slot g-scanner-text :: <C-string>;
+  constant slot g-scanner-text-end :: <C-string>;
+  constant slot g-scanner-buffer :: <C-string>;
+  constant slot g-scanner-scope-id :: <C-unsigned-int>;
+  slot g-scanner-msg-handler :: <C-function-pointer>;
   pointer-type-name: <GScanner>;
 end C-struct;
 
@@ -4011,39 +4004,39 @@ define C-function g-scanner-unexp-token
 end;
 
 define C-struct <_GScannerConfig>
-  slot gscannerconfig-cset-skip-characters :: <C-string>;
-  slot gscannerconfig-cset-identifier-first :: <C-string>;
-  slot gscannerconfig-cset-identifier-nth :: <C-string>;
-  slot gscannerconfig-cpair-comment-single :: <C-string>;
-  slot gscannerconfig-case-sensitive :: <C-unsigned-int>;
-  slot gscannerconfig-skip-comment-multi :: <C-unsigned-int>;
-  slot gscannerconfig-skip-comment-single :: <C-unsigned-int>;
-  slot gscannerconfig-scan-comment-multi :: <C-unsigned-int>;
-  slot gscannerconfig-scan-identifier :: <C-unsigned-int>;
-  slot gscannerconfig-scan-identifier-1char :: <C-unsigned-int>;
-  slot gscannerconfig-scan-identifier-null :: <C-unsigned-int>;
-  slot gscannerconfig-scan-symbols :: <C-unsigned-int>;
-  slot gscannerconfig-scan-binary :: <C-unsigned-int>;
-  slot gscannerconfig-scan-octal :: <C-unsigned-int>;
-  slot gscannerconfig-scan-float :: <C-unsigned-int>;
-  slot gscannerconfig-scan-hex :: <C-unsigned-int>;
-  slot gscannerconfig-scan-hex-dollar :: <C-unsigned-int>;
-  slot gscannerconfig-scan-string-sq :: <C-unsigned-int>;
-  slot gscannerconfig-scan-string-dq :: <C-unsigned-int>;
-  slot gscannerconfig-numbers-2-int :: <C-unsigned-int>;
-  slot gscannerconfig-int-2-float :: <C-unsigned-int>;
-  slot gscannerconfig-identifier-2-string :: <C-unsigned-int>;
-  slot gscannerconfig-char-2-token :: <C-unsigned-int>;
-  slot gscannerconfig-symbol-2-token :: <C-unsigned-int>;
-  slot gscannerconfig-scope-0-fallback :: <C-unsigned-int>;
-  slot gscannerconfig-store-int64 :: <C-unsigned-int>;
-  constant slot gscannerconfig-padding-dummy :: <C-unsigned-int>;
+  slot g-scanner-config-cset-skip-characters :: <C-string>;
+  slot g-scanner-config-cset-identifier-first :: <C-string>;
+  slot g-scanner-config-cset-identifier-nth :: <C-string>;
+  slot g-scanner-config-cpair-comment-single :: <C-string>;
+  slot g-scanner-config-case-sensitive :: <C-unsigned-int>;
+  slot g-scanner-config-skip-comment-multi :: <C-unsigned-int>;
+  slot g-scanner-config-skip-comment-single :: <C-unsigned-int>;
+  slot g-scanner-config-scan-comment-multi :: <C-unsigned-int>;
+  slot g-scanner-config-scan-identifier :: <C-unsigned-int>;
+  slot g-scanner-config-scan-identifier-1char :: <C-unsigned-int>;
+  slot g-scanner-config-scan-identifier-null :: <C-unsigned-int>;
+  slot g-scanner-config-scan-symbols :: <C-unsigned-int>;
+  slot g-scanner-config-scan-binary :: <C-unsigned-int>;
+  slot g-scanner-config-scan-octal :: <C-unsigned-int>;
+  slot g-scanner-config-scan-float :: <C-unsigned-int>;
+  slot g-scanner-config-scan-hex :: <C-unsigned-int>;
+  slot g-scanner-config-scan-hex-dollar :: <C-unsigned-int>;
+  slot g-scanner-config-scan-string-sq :: <C-unsigned-int>;
+  slot g-scanner-config-scan-string-dq :: <C-unsigned-int>;
+  slot g-scanner-config-numbers-2-int :: <C-unsigned-int>;
+  slot g-scanner-config-int-2-float :: <C-unsigned-int>;
+  slot g-scanner-config-identifier-2-string :: <C-unsigned-int>;
+  slot g-scanner-config-char-2-token :: <C-unsigned-int>;
+  slot g-scanner-config-symbol-2-token :: <C-unsigned-int>;
+  slot g-scanner-config-scope-0-fallback :: <C-unsigned-int>;
+  slot g-scanner-config-store-int64 :: <C-unsigned-int>;
+  constant slot g-scanner-config-padding-dummy :: <C-unsigned-int>;
   pointer-type-name: <GScannerConfig>;
 end C-struct;
 
-define constant $G-SEEK-CUR = 0;
-define constant $G-SEEK-SET = 1;
-define constant $G-SEEK-END = 2;
+define constant $g-seek-cur = 0;
+define constant $g-seek-set = 1;
+define constant $g-seek-end = 2;
 define constant <GSeekType> = <C-int>;
 define C-pointer-type <GSeekType*> => <GSeekType>;
 
@@ -4127,35 +4120,35 @@ define C-function g-sequence-iter-is-end
   c-name: "g_sequence_iter_is_end";
 end;
 
-define constant $G-SHELL-ERROR-BAD-QUOTING = 0;
-define constant $G-SHELL-ERROR-EMPTY-STRING = 1;
-define constant $G-SHELL-ERROR-FAILED = 2;
+define constant $g-shell-error-bad-quoting = 0;
+define constant $g-shell-error-empty-string = 1;
+define constant $g-shell-error-failed = 2;
 define constant <GShellError> = <C-int>;
 define C-pointer-type <GShellError*> => <GShellError>;
 
-define constant $G-SLICE-CONFIG-ALWAYS-MALLOC = 1;
-define constant $G-SLICE-CONFIG-BYPASS-MAGAZINES = 2;
-define constant $G-SLICE-CONFIG-WORKING-SET-MSECS = 3;
-define constant $G-SLICE-CONFIG-COLOR-INCREMENT = 4;
-define constant $G-SLICE-CONFIG-CHUNK-SIZES = 5;
-define constant $G-SLICE-CONFIG-CONTENTION-COUNTER = 6;
+define constant $g-slice-config-always-malloc = 1;
+define constant $g-slice-config-bypass-magazines = 2;
+define constant $g-slice-config-working-set-msecs = 3;
+define constant $g-slice-config-color-increment = 4;
+define constant $g-slice-config-chunk-sizes = 5;
+define constant $g-slice-config-contention-counter = 6;
 define constant <GSliceConfig> = <C-int>;
 define C-pointer-type <GSliceConfig*> => <GSliceConfig>;
 
 define C-struct <_GSource>
-  constant slot gsource-callback-data :: <C-void*>;
-  constant slot gsource-callback-funcs :: <GSourceCallbackFuncs>;
-  constant slot gsource-source-funcs :: <GSourceFuncs>;
-  constant slot gsource-ref-count :: <C-unsigned-int>;
-  constant slot gsource-context :: <GMainContext>;
-  constant slot gsource-priority :: <C-signed-int>;
-  constant slot gsource-flags :: <C-unsigned-int>;
-  constant slot gsource-source-id :: <C-unsigned-int>;
-  constant slot gsource-poll-fds :: <GSList>;
-  constant slot gsource-prev :: <GSource>;
-  constant slot gsource-next :: <GSource>;
-  constant slot gsource-name :: <C-string>;
-  constant slot gsource-priv :: <GSourcePrivate>;
+  constant slot g-source-callback-data :: <C-void*>;
+  constant slot g-source-callback-funcs :: <GSourceCallbackFuncs>;
+  constant slot g-source-source-funcs :: <GSourceFuncs>;
+  constant slot g-source-ref-count :: <C-unsigned-int>;
+  constant slot g-source-context :: <GMainContext>;
+  constant slot g-source-priority :: <C-signed-int>;
+  constant slot g-source-flags :: <C-unsigned-int>;
+  constant slot g-source-source-id :: <C-unsigned-int>;
+  constant slot g-source-poll-fds :: <GSList>;
+  constant slot g-source-prev :: <GSource>;
+  constant slot g-source-next :: <GSource>;
+  constant slot g-source-name :: <C-string>;
+  constant slot g-source-priv :: <GSourcePrivate>;
   pointer-type-name: <GSource>;
 end C-struct;
 
@@ -4358,19 +4351,19 @@ define C-function g-source-set-name-by-id
 end;
 
 define C-struct <_GSourceCallbackFuncs>
-  constant slot gsourcecallbackfuncs-ref :: <C-function-pointer>;
-  constant slot gsourcecallbackfuncs-unref :: <C-function-pointer>;
-  constant slot gsourcecallbackfuncs-get :: <C-void*>;
+  constant slot g-source-callback-funcs-ref :: <C-function-pointer>;
+  constant slot g-source-callback-funcs-unref :: <C-function-pointer>;
+  constant slot g-source-callback-funcs-get :: <C-void*>;
   pointer-type-name: <GSourceCallbackFuncs>;
 end C-struct;
 
 define C-struct <_GSourceFuncs>
-  constant slot gsourcefuncs-prepare :: <C-function-pointer>;
-  constant slot gsourcefuncs-check :: <C-function-pointer>;
-  constant slot gsourcefuncs-dispatch :: <C-void*>;
-  constant slot gsourcefuncs-finalize :: <C-function-pointer>;
-  constant slot gsourcefuncs-closure-callback :: <C-function-pointer>;
-  constant slot gsourcefuncs-closure-marshal :: <C-function-pointer>;
+  constant slot g-source-funcs-prepare :: <C-function-pointer>;
+  constant slot g-source-funcs-check :: <C-function-pointer>;
+  constant slot g-source-funcs-dispatch :: <C-void*>;
+  constant slot g-source-funcs-finalize :: <C-function-pointer>;
+  constant slot g-source-funcs-closure-callback :: <C-function-pointer>;
+  constant slot g-source-funcs-closure-marshal :: <C-function-pointer>;
   pointer-type-name: <GSourceFuncs>;
 end C-struct;
 
@@ -4378,38 +4371,38 @@ define C-struct <_GSourcePrivate>
   pointer-type-name: <GSourcePrivate>;
 end C-struct;
 
-define constant $G-SPAWN-ERROR-FORK = 0;
-define constant $G-SPAWN-ERROR-READ = 1;
-define constant $G-SPAWN-ERROR-CHDIR = 2;
-define constant $G-SPAWN-ERROR-ACCES = 3;
-define constant $G-SPAWN-ERROR-PERM = 4;
-define constant $G-SPAWN-ERROR-TOO-BIG = 5;
-define constant $G-SPAWN-ERROR-2BIG = 5;
-define constant $G-SPAWN-ERROR-NOEXEC = 6;
-define constant $G-SPAWN-ERROR-NAMETOOLONG = 7;
-define constant $G-SPAWN-ERROR-NOENT = 8;
-define constant $G-SPAWN-ERROR-NOMEM = 9;
-define constant $G-SPAWN-ERROR-NOTDIR = 10;
-define constant $G-SPAWN-ERROR-LOOP = 11;
-define constant $G-SPAWN-ERROR-TXTBUSY = 12;
-define constant $G-SPAWN-ERROR-IO = 13;
-define constant $G-SPAWN-ERROR-NFILE = 14;
-define constant $G-SPAWN-ERROR-MFILE = 15;
-define constant $G-SPAWN-ERROR-INVAL = 16;
-define constant $G-SPAWN-ERROR-ISDIR = 17;
-define constant $G-SPAWN-ERROR-LIBBAD = 18;
-define constant $G-SPAWN-ERROR-FAILED = 19;
+define constant $g-spawn-error-fork = 0;
+define constant $g-spawn-error-read = 1;
+define constant $g-spawn-error-chdir = 2;
+define constant $g-spawn-error-acces = 3;
+define constant $g-spawn-error-perm = 4;
+define constant $g-spawn-error-too-big = 5;
+define constant $g-spawn-error-2big = 5;
+define constant $g-spawn-error-noexec = 6;
+define constant $g-spawn-error-nametoolong = 7;
+define constant $g-spawn-error-noent = 8;
+define constant $g-spawn-error-nomem = 9;
+define constant $g-spawn-error-notdir = 10;
+define constant $g-spawn-error-loop = 11;
+define constant $g-spawn-error-txtbusy = 12;
+define constant $g-spawn-error-io = 13;
+define constant $g-spawn-error-nfile = 14;
+define constant $g-spawn-error-mfile = 15;
+define constant $g-spawn-error-inval = 16;
+define constant $g-spawn-error-isdir = 17;
+define constant $g-spawn-error-libbad = 18;
+define constant $g-spawn-error-failed = 19;
 define constant <GSpawnError> = <C-int>;
 define C-pointer-type <GSpawnError*> => <GSpawnError>;
 
-define constant $G-SPAWN-LEAVE-DESCRIPTORS-OPEN = 1;
-define constant $G-SPAWN-DO-NOT-REAP-CHILD = 2;
-define constant $G-SPAWN-SEARCH-PATH = 4;
-define constant $G-SPAWN-STDOUT-TO-DEV-NULL = 8;
-define constant $G-SPAWN-STDERR-TO-DEV-NULL = 16;
-define constant $G-SPAWN-CHILD-INHERITS-STDIN = 32;
-define constant $G-SPAWN-FILE-AND-ARGV-ZERO = 64;
-define constant $G-SPAWN-SEARCH-PATH-FROM-ENVP = 128;
+define constant $g-spawn-leave-descriptors-open = 1;
+define constant $g-spawn-do-not-reap-child = 2;
+define constant $g-spawn-search-path = 4;
+define constant $g-spawn-stdout-to-dev-null = 8;
+define constant $g-spawn-stderr-to-dev-null = 16;
+define constant $g-spawn-child-inherits-stdin = 32;
+define constant $g-spawn-file-and-argv-zero = 64;
+define constant $g-spawn-search-path-from-envp = 128;
 define constant <GSpawnFlags> = <C-int>;
 define C-pointer-type <GSpawnFlags*> => <GSpawnFlags>;
 
@@ -4418,9 +4411,9 @@ define C-struct <_GStatBuf>
 end C-struct;
 
 define C-struct <_GString>
-  slot gstring-str :: <C-string>;
-  slot gstring-len :: <C-unsigned-long>;
-  slot gstring-allocated-len :: <C-unsigned-long>;
+  slot g-string-str :: <C-string>;
+  slot g-string-len :: <C-unsigned-long>;
+  slot g-string-allocated-len :: <C-unsigned-long>;
   pointer-type-name: <GString>;
 end C-struct;
 
@@ -4656,33 +4649,33 @@ define C-function g-string-chunk-insert-len
   c-name: "g_string_chunk_insert_len";
 end;
 
-define constant $TIME-SPAN-DAY = 86400000000;
+define constant $time-span-day = 86400000000;
 
-define constant $TIME-SPAN-HOUR = 3600000000;
+define constant $time-span-hour = 3600000000;
 
-define constant $TIME-SPAN-MILLISECOND = 1000;
+define constant $time-span-millisecond = 1000;
 
-define constant $TIME-SPAN-MINUTE = 60000000;
+define constant $time-span-minute = 60000000;
 
-define constant $TIME-SPAN-SECOND = 1000000;
+define constant $time-span-second = 1000000;
 
 define C-struct <_GTestCase>
   pointer-type-name: <GTestCase>;
 end C-struct;
 
 define C-struct <_GTestConfig>
-  slot gtestconfig-test-initialized :: <C-boolean>;
-  slot gtestconfig-test-quick :: <C-boolean>;
-  slot gtestconfig-test-perf :: <C-boolean>;
-  slot gtestconfig-test-verbose :: <C-boolean>;
-  slot gtestconfig-test-quiet :: <C-boolean>;
-  slot gtestconfig-test-undefined :: <C-boolean>;
+  slot g-test-config-test-initialized :: <C-boolean>;
+  slot g-test-config-test-quick :: <C-boolean>;
+  slot g-test-config-test-perf :: <C-boolean>;
+  slot g-test-config-test-verbose :: <C-boolean>;
+  slot g-test-config-test-quiet :: <C-boolean>;
+  slot g-test-config-test-undefined :: <C-boolean>;
   pointer-type-name: <GTestConfig>;
 end C-struct;
 
 define C-struct <_GTestLogBuffer>
-  constant slot gtestlogbuffer-data :: <GString>;
-  constant slot gtestlogbuffer-msgs :: <GSList>;
+  constant slot g-test-log-buffer-data :: <GString>;
+  constant slot g-test-log-buffer-msgs :: <GSList>;
   pointer-type-name: <GTestLogBuffer>;
 end C-struct;
 
@@ -4699,11 +4692,11 @@ define C-function g-test-log-buffer-push
 end;
 
 define C-struct <_GTestLogMsg>
-  slot gtestlogmsg-log-type :: <GTestLogType>;
-  slot gtestlogmsg-n-strings :: <C-unsigned-int>;
-  slot gtestlogmsg-strings :: <C-string>;
-  slot gtestlogmsg-n-nums :: <C-unsigned-int>;
-  slot gtestlogmsg-nums :: <C-signed-long*>;
+  slot g-test-log-msg-log-type :: <GTestLogType>;
+  slot g-test-log-msg-n-strings :: <C-unsigned-int>;
+  slot g-test-log-msg-strings :: <C-string>;
+  slot g-test-log-msg-n-nums :: <C-unsigned-int>;
+  slot g-test-log-msg-nums :: <C-signed-long*>;
   pointer-type-name: <GTestLogMsg>;
 end C-struct;
 
@@ -4712,16 +4705,16 @@ define C-function g-test-log-msg-free
   c-name: "g_test_log_msg_free";
 end;
 
-define constant $G-TEST-LOG-NONE = 0;
-define constant $G-TEST-LOG-ERROR = 1;
-define constant $G-TEST-LOG-START-BINARY = 2;
-define constant $G-TEST-LOG-LIST-CASE = 3;
-define constant $G-TEST-LOG-SKIP-CASE = 4;
-define constant $G-TEST-LOG-START-CASE = 5;
-define constant $G-TEST-LOG-STOP-CASE = 6;
-define constant $G-TEST-LOG-MIN-RESULT = 7;
-define constant $G-TEST-LOG-MAX-RESULT = 8;
-define constant $G-TEST-LOG-MESSAGE = 9;
+define constant $g-test-log-none = 0;
+define constant $g-test-log-error = 1;
+define constant $g-test-log-start-binary = 2;
+define constant $g-test-log-list-case = 3;
+define constant $g-test-log-skip-case = 4;
+define constant $g-test-log-start-case = 5;
+define constant $g-test-log-stop-case = 6;
+define constant $g-test-log-min-result = 7;
+define constant $g-test-log-max-result = 8;
+define constant $g-test-log-message = 9;
 define constant <GTestLogType> = <C-int>;
 define C-pointer-type <GTestLogType*> => <GTestLogType>;
 
@@ -4741,9 +4734,9 @@ define C-function g-test-suite-add-suite
   c-name: "g_test_suite_add_suite";
 end;
 
-define constant $G-TEST-TRAP-SILENCE-STDOUT = 128;
-define constant $G-TEST-TRAP-SILENCE-STDERR = 256;
-define constant $G-TEST-TRAP-INHERIT-STDIN = 512;
+define constant $g-test-trap-silence-stdout = 128;
+define constant $g-test-trap-silence-stderr = 256;
+define constant $g-test-trap-inherit-stdin = 512;
 define constant <GTestTrapFlags> = <C-int>;
 define C-pointer-type <GTestTrapFlags*> => <GTestTrapFlags>;
 
@@ -4781,14 +4774,14 @@ define C-function g-thread-yield
   c-name: "g_thread_yield";
 end;
 
-define constant $G-THREAD-ERROR-AGAIN = 0;
+define constant $g-thread-error-again = 0;
 define constant <GThreadError> = <C-int>;
 define C-pointer-type <GThreadError*> => <GThreadError>;
 
 define C-struct <_GThreadPool>
-  slot gthreadpool-func :: <C-function-pointer>;
-  slot gthreadpool-user-data :: <C-void*>;
-  slot gthreadpool-exclusive :: <C-boolean>;
+  slot g-thread-pool-func :: <C-function-pointer>;
+  slot g-thread-pool-user-data :: <C-void*>;
+  slot g-thread-pool-exclusive :: <C-boolean>;
   pointer-type-name: <GThreadPool>;
 end C-struct;
 
@@ -4860,15 +4853,15 @@ define C-function g-thread-pool-stop-unused-threads
   c-name: "g_thread_pool_stop_unused_threads";
 end;
 
-define constant $G-TIME-TYPE-STANDARD = 0;
-define constant $G-TIME-TYPE-DAYLIGHT = 1;
-define constant $G-TIME-TYPE-UNIVERSAL = 2;
+define constant $g-time-type-standard = 0;
+define constant $g-time-type-daylight = 1;
+define constant $g-time-type-universal = 2;
 define constant <GTimeType> = <C-int>;
 define C-pointer-type <GTimeType*> => <GTimeType>;
 
 define C-struct <_GTimeVal>
-  slot gtimeval-tv-sec :: <C-signed-long>;
-  slot gtimeval-tv-usec :: <C-signed-long>;
+  slot g-time-val-tv-sec :: <C-signed-long>;
+  slot g-time-val-tv-usec :: <C-signed-long>;
   pointer-type-name: <GTimeVal>;
 end C-struct;
 
@@ -4995,50 +4988,50 @@ define C-function g-timer-stop
   c-name: "g_timer_stop";
 end;
 
-define constant $G-TOKEN-EOF = 0;
-define constant $G-TOKEN-LEFT-PAREN = 40;
-define constant $G-TOKEN-RIGHT-PAREN = 41;
-define constant $G-TOKEN-LEFT-CURLY = 123;
-define constant $G-TOKEN-RIGHT-CURLY = 125;
-define constant $G-TOKEN-LEFT-BRACE = 91;
-define constant $G-TOKEN-RIGHT-BRACE = 93;
-define constant $G-TOKEN-EQUAL-SIGN = 61;
-define constant $G-TOKEN-COMMA = 44;
-define constant $G-TOKEN-NONE = 256;
-define constant $G-TOKEN-ERROR = 257;
-define constant $G-TOKEN-CHAR = 258;
-define constant $G-TOKEN-BINARY = 259;
-define constant $G-TOKEN-OCTAL = 260;
-define constant $G-TOKEN-INT = 261;
-define constant $G-TOKEN-HEX = 262;
-define constant $G-TOKEN-FLOAT = 263;
-define constant $G-TOKEN-STRING = 264;
-define constant $G-TOKEN-SYMBOL = 265;
-define constant $G-TOKEN-IDENTIFIER = 266;
-define constant $G-TOKEN-IDENTIFIER-NULL = 267;
-define constant $G-TOKEN-COMMENT-SINGLE = 268;
-define constant $G-TOKEN-COMMENT-MULTI = 269;
+define constant $g-token-eof = 0;
+define constant $g-token-left-paren = 40;
+define constant $g-token-right-paren = 41;
+define constant $g-token-left-curly = 123;
+define constant $g-token-right-curly = 125;
+define constant $g-token-left-brace = 91;
+define constant $g-token-right-brace = 93;
+define constant $g-token-equal-sign = 61;
+define constant $g-token-comma = 44;
+define constant $g-token-none = 256;
+define constant $g-token-error = 257;
+define constant $g-token-char = 258;
+define constant $g-token-binary = 259;
+define constant $g-token-octal = 260;
+define constant $g-token-int = 261;
+define constant $g-token-hex = 262;
+define constant $g-token-float = 263;
+define constant $g-token-string = 264;
+define constant $g-token-symbol = 265;
+define constant $g-token-identifier = 266;
+define constant $g-token-identifier-null = 267;
+define constant $g-token-comment-single = 268;
+define constant $g-token-comment-multi = 269;
 define constant <GTokenType> = <C-int>;
 define C-pointer-type <GTokenType*> => <GTokenType>;
 
 define C-union <_GTokenValue>
-  slot gtokenvalue-v-symbol :: <C-void*>;
-  slot gtokenvalue-v-identifier :: <C-string>;
-  slot gtokenvalue-v-binary :: <C-unsigned-long>;
-  slot gtokenvalue-v-octal :: <C-unsigned-long>;
-  slot gtokenvalue-v-int :: <C-unsigned-long>;
-  slot gtokenvalue-v-int64 :: <C-unsigned-long>;
-  slot gtokenvalue-v-float :: <C-double>;
-  slot gtokenvalue-v-hex :: <C-unsigned-long>;
-  slot gtokenvalue-v-string :: <C-string>;
-  slot gtokenvalue-v-comment :: <C-string>;
-  slot gtokenvalue-v-char :: <C-unsigned-char>;
-  slot gtokenvalue-v-error :: <C-unsigned-int>;
+  slot g-token-value-v-symbol :: <C-void*>;
+  slot g-token-value-v-identifier :: <C-string>;
+  slot g-token-value-v-binary :: <C-unsigned-long>;
+  slot g-token-value-v-octal :: <C-unsigned-long>;
+  slot g-token-value-v-int :: <C-unsigned-long>;
+  slot g-token-value-v-int64 :: <C-unsigned-long>;
+  slot g-token-value-v-float :: <C-double>;
+  slot g-token-value-v-hex :: <C-unsigned-long>;
+  slot g-token-value-v-string :: <C-string>;
+  slot g-token-value-v-comment :: <C-string>;
+  slot g-token-value-v-char :: <C-unsigned-char>;
+  slot g-token-value-v-error :: <C-unsigned-int>;
   pointer-type-name: <GTokenValue>;
 end C-union;
 
 define C-struct <_GTrashStack>
-  slot gtrashstack-next :: <GTrashStack>;
+  slot g-trash-stack-next :: <GTrashStack>;
   pointer-type-name: <GTrashStack>;
 end C-struct;
 
@@ -5054,19 +5047,19 @@ define C-function g-trash-stack-push
   c-name: "g_trash_stack_push";
 end;
 
-define constant $G-TRAVERSE-LEAVES = 1;
-define constant $G-TRAVERSE-NON-LEAVES = 2;
-define constant $G-TRAVERSE-ALL = 3;
-define constant $G-TRAVERSE-MASK = 3;
-define constant $G-TRAVERSE-LEAFS = 1;
-define constant $G-TRAVERSE-NON-LEAFS = 2;
+define constant $g-traverse-leaves = 1;
+define constant $g-traverse-non-leaves = 2;
+define constant $g-traverse-all = 3;
+define constant $g-traverse-mask = 3;
+define constant $g-traverse-leafs = 1;
+define constant $g-traverse-non-leafs = 2;
 define constant <GTraverseFlags> = <C-int>;
 define C-pointer-type <GTraverseFlags*> => <GTraverseFlags>;
 
-define constant $G-IN-ORDER = 0;
-define constant $G-PRE-ORDER = 1;
-define constant $G-POST-ORDER = 2;
-define constant $G-LEVEL-ORDER = 3;
+define constant $g-in-order = 0;
+define constant $g-pre-order = 1;
+define constant $g-post-order = 2;
+define constant $g-level-order = 3;
 define constant <GTraverseType> = <C-int>;
 define C-pointer-type <GTraverseType*> => <GTraverseType>;
 
@@ -5133,212 +5126,212 @@ define C-function g-tree-unref
   c-name: "g_tree_unref";
 end;
 
-define constant $UNICHAR-MAX-DECOMPOSITION-LENGTH = 18;
+define constant $unichar-max-decomposition-length = 18;
 
-define constant $URI-RESERVED-CHARS-GENERIC-DELIMITERS = ":/?#[]@";
+define constant $uri-reserved-chars-generic-delimiters = ":/?#[]@";
 
-define constant $URI-RESERVED-CHARS-SUBCOMPONENT-DELIMITERS = "!$&'()*+,;=";
+define constant $uri-reserved-chars-subcomponent-delimiters = "!$&'()*+,;=";
 
-define constant $USEC-PER-SEC = 1000000;
+define constant $usec-per-sec = 1000000;
 
-define constant $G-UNICODE-BREAK-MANDATORY = 0;
-define constant $G-UNICODE-BREAK-CARRIAGE-RETURN = 1;
-define constant $G-UNICODE-BREAK-LINE-FEED = 2;
-define constant $G-UNICODE-BREAK-COMBINING-MARK = 3;
-define constant $G-UNICODE-BREAK-SURROGATE = 4;
-define constant $G-UNICODE-BREAK-ZERO-WIDTH-SPACE = 5;
-define constant $G-UNICODE-BREAK-INSEPARABLE = 6;
-define constant $G-UNICODE-BREAK-NON-BREAKING-GLUE = 7;
-define constant $G-UNICODE-BREAK-CONTINGENT = 8;
-define constant $G-UNICODE-BREAK-SPACE = 9;
-define constant $G-UNICODE-BREAK-AFTER = 10;
-define constant $G-UNICODE-BREAK-BEFORE = 11;
-define constant $G-UNICODE-BREAK-BEFORE-AND-AFTER = 12;
-define constant $G-UNICODE-BREAK-HYPHEN = 13;
-define constant $G-UNICODE-BREAK-NON-STARTER = 14;
-define constant $G-UNICODE-BREAK-OPEN-PUNCTUATION = 15;
-define constant $G-UNICODE-BREAK-CLOSE-PUNCTUATION = 16;
-define constant $G-UNICODE-BREAK-QUOTATION = 17;
-define constant $G-UNICODE-BREAK-EXCLAMATION = 18;
-define constant $G-UNICODE-BREAK-IDEOGRAPHIC = 19;
-define constant $G-UNICODE-BREAK-NUMERIC = 20;
-define constant $G-UNICODE-BREAK-INFIX-SEPARATOR = 21;
-define constant $G-UNICODE-BREAK-SYMBOL = 22;
-define constant $G-UNICODE-BREAK-ALPHABETIC = 23;
-define constant $G-UNICODE-BREAK-PREFIX = 24;
-define constant $G-UNICODE-BREAK-POSTFIX = 25;
-define constant $G-UNICODE-BREAK-COMPLEX-CONTEXT = 26;
-define constant $G-UNICODE-BREAK-AMBIGUOUS = 27;
-define constant $G-UNICODE-BREAK-UNKNOWN = 28;
-define constant $G-UNICODE-BREAK-NEXT-LINE = 29;
-define constant $G-UNICODE-BREAK-WORD-JOINER = 30;
-define constant $G-UNICODE-BREAK-HANGUL-L-JAMO = 31;
-define constant $G-UNICODE-BREAK-HANGUL-V-JAMO = 32;
-define constant $G-UNICODE-BREAK-HANGUL-T-JAMO = 33;
-define constant $G-UNICODE-BREAK-HANGUL-LV-SYLLABLE = 34;
-define constant $G-UNICODE-BREAK-HANGUL-LVT-SYLLABLE = 35;
-define constant $G-UNICODE-BREAK-CLOSE-PARANTHESIS = 36;
-define constant $G-UNICODE-BREAK-CONDITIONAL-JAPANESE-STARTER = 37;
-define constant $G-UNICODE-BREAK-HEBREW-LETTER = 38;
-define constant $G-UNICODE-BREAK-REGIONAL-INDICATOR = 39;
+define constant $g-unicode-break-mandatory = 0;
+define constant $g-unicode-break-carriage-return = 1;
+define constant $g-unicode-break-line-feed = 2;
+define constant $g-unicode-break-combining-mark = 3;
+define constant $g-unicode-break-surrogate = 4;
+define constant $g-unicode-break-zero-width-space = 5;
+define constant $g-unicode-break-inseparable = 6;
+define constant $g-unicode-break-non-breaking-glue = 7;
+define constant $g-unicode-break-contingent = 8;
+define constant $g-unicode-break-space = 9;
+define constant $g-unicode-break-after = 10;
+define constant $g-unicode-break-before = 11;
+define constant $g-unicode-break-before-and-after = 12;
+define constant $g-unicode-break-hyphen = 13;
+define constant $g-unicode-break-non-starter = 14;
+define constant $g-unicode-break-open-punctuation = 15;
+define constant $g-unicode-break-close-punctuation = 16;
+define constant $g-unicode-break-quotation = 17;
+define constant $g-unicode-break-exclamation = 18;
+define constant $g-unicode-break-ideographic = 19;
+define constant $g-unicode-break-numeric = 20;
+define constant $g-unicode-break-infix-separator = 21;
+define constant $g-unicode-break-symbol = 22;
+define constant $g-unicode-break-alphabetic = 23;
+define constant $g-unicode-break-prefix = 24;
+define constant $g-unicode-break-postfix = 25;
+define constant $g-unicode-break-complex-context = 26;
+define constant $g-unicode-break-ambiguous = 27;
+define constant $g-unicode-break-unknown = 28;
+define constant $g-unicode-break-next-line = 29;
+define constant $g-unicode-break-word-joiner = 30;
+define constant $g-unicode-break-hangul-l-jamo = 31;
+define constant $g-unicode-break-hangul-v-jamo = 32;
+define constant $g-unicode-break-hangul-t-jamo = 33;
+define constant $g-unicode-break-hangul-lv-syllable = 34;
+define constant $g-unicode-break-hangul-lvt-syllable = 35;
+define constant $g-unicode-break-close-paranthesis = 36;
+define constant $g-unicode-break-conditional-japanese-starter = 37;
+define constant $g-unicode-break-hebrew-letter = 38;
+define constant $g-unicode-break-regional-indicator = 39;
 define constant <GUnicodeBreakType> = <C-int>;
 define C-pointer-type <GUnicodeBreakType*> => <GUnicodeBreakType>;
 
-define constant $G-UNICODE-SCRIPT-INVALID-CODE = -1;
-define constant $G-UNICODE-SCRIPT-COMMON = 0;
-define constant $G-UNICODE-SCRIPT-INHERITED = 1;
-define constant $G-UNICODE-SCRIPT-ARABIC = 2;
-define constant $G-UNICODE-SCRIPT-ARMENIAN = 3;
-define constant $G-UNICODE-SCRIPT-BENGALI = 4;
-define constant $G-UNICODE-SCRIPT-BOPOMOFO = 5;
-define constant $G-UNICODE-SCRIPT-CHEROKEE = 6;
-define constant $G-UNICODE-SCRIPT-COPTIC = 7;
-define constant $G-UNICODE-SCRIPT-CYRILLIC = 8;
-define constant $G-UNICODE-SCRIPT-DESERET = 9;
-define constant $G-UNICODE-SCRIPT-DEVANAGARI = 10;
-define constant $G-UNICODE-SCRIPT-ETHIOPIC = 11;
-define constant $G-UNICODE-SCRIPT-GEORGIAN = 12;
-define constant $G-UNICODE-SCRIPT-GOTHIC = 13;
-define constant $G-UNICODE-SCRIPT-GREEK = 14;
-define constant $G-UNICODE-SCRIPT-GUJARATI = 15;
-define constant $G-UNICODE-SCRIPT-GURMUKHI = 16;
-define constant $G-UNICODE-SCRIPT-HAN = 17;
-define constant $G-UNICODE-SCRIPT-HANGUL = 18;
-define constant $G-UNICODE-SCRIPT-HEBREW = 19;
-define constant $G-UNICODE-SCRIPT-HIRAGANA = 20;
-define constant $G-UNICODE-SCRIPT-KANNADA = 21;
-define constant $G-UNICODE-SCRIPT-KATAKANA = 22;
-define constant $G-UNICODE-SCRIPT-KHMER = 23;
-define constant $G-UNICODE-SCRIPT-LAO = 24;
-define constant $G-UNICODE-SCRIPT-LATIN = 25;
-define constant $G-UNICODE-SCRIPT-MALAYALAM = 26;
-define constant $G-UNICODE-SCRIPT-MONGOLIAN = 27;
-define constant $G-UNICODE-SCRIPT-MYANMAR = 28;
-define constant $G-UNICODE-SCRIPT-OGHAM = 29;
-define constant $G-UNICODE-SCRIPT-OLD-ITALIC = 30;
-define constant $G-UNICODE-SCRIPT-ORIYA = 31;
-define constant $G-UNICODE-SCRIPT-RUNIC = 32;
-define constant $G-UNICODE-SCRIPT-SINHALA = 33;
-define constant $G-UNICODE-SCRIPT-SYRIAC = 34;
-define constant $G-UNICODE-SCRIPT-TAMIL = 35;
-define constant $G-UNICODE-SCRIPT-TELUGU = 36;
-define constant $G-UNICODE-SCRIPT-THAANA = 37;
-define constant $G-UNICODE-SCRIPT-THAI = 38;
-define constant $G-UNICODE-SCRIPT-TIBETAN = 39;
-define constant $G-UNICODE-SCRIPT-CANADIAN-ABORIGINAL = 40;
-define constant $G-UNICODE-SCRIPT-YI = 41;
-define constant $G-UNICODE-SCRIPT-TAGALOG = 42;
-define constant $G-UNICODE-SCRIPT-HANUNOO = 43;
-define constant $G-UNICODE-SCRIPT-BUHID = 44;
-define constant $G-UNICODE-SCRIPT-TAGBANWA = 45;
-define constant $G-UNICODE-SCRIPT-BRAILLE = 46;
-define constant $G-UNICODE-SCRIPT-CYPRIOT = 47;
-define constant $G-UNICODE-SCRIPT-LIMBU = 48;
-define constant $G-UNICODE-SCRIPT-OSMANYA = 49;
-define constant $G-UNICODE-SCRIPT-SHAVIAN = 50;
-define constant $G-UNICODE-SCRIPT-LINEAR-B = 51;
-define constant $G-UNICODE-SCRIPT-TAI-LE = 52;
-define constant $G-UNICODE-SCRIPT-UGARITIC = 53;
-define constant $G-UNICODE-SCRIPT-NEW-TAI-LUE = 54;
-define constant $G-UNICODE-SCRIPT-BUGINESE = 55;
-define constant $G-UNICODE-SCRIPT-GLAGOLITIC = 56;
-define constant $G-UNICODE-SCRIPT-TIFINAGH = 57;
-define constant $G-UNICODE-SCRIPT-SYLOTI-NAGRI = 58;
-define constant $G-UNICODE-SCRIPT-OLD-PERSIAN = 59;
-define constant $G-UNICODE-SCRIPT-KHAROSHTHI = 60;
-define constant $G-UNICODE-SCRIPT-UNKNOWN = 61;
-define constant $G-UNICODE-SCRIPT-BALINESE = 62;
-define constant $G-UNICODE-SCRIPT-CUNEIFORM = 63;
-define constant $G-UNICODE-SCRIPT-PHOENICIAN = 64;
-define constant $G-UNICODE-SCRIPT-PHAGS-PA = 65;
-define constant $G-UNICODE-SCRIPT-NKO = 66;
-define constant $G-UNICODE-SCRIPT-KAYAH-LI = 67;
-define constant $G-UNICODE-SCRIPT-LEPCHA = 68;
-define constant $G-UNICODE-SCRIPT-REJANG = 69;
-define constant $G-UNICODE-SCRIPT-SUNDANESE = 70;
-define constant $G-UNICODE-SCRIPT-SAURASHTRA = 71;
-define constant $G-UNICODE-SCRIPT-CHAM = 72;
-define constant $G-UNICODE-SCRIPT-OL-CHIKI = 73;
-define constant $G-UNICODE-SCRIPT-VAI = 74;
-define constant $G-UNICODE-SCRIPT-CARIAN = 75;
-define constant $G-UNICODE-SCRIPT-LYCIAN = 76;
-define constant $G-UNICODE-SCRIPT-LYDIAN = 77;
-define constant $G-UNICODE-SCRIPT-AVESTAN = 78;
-define constant $G-UNICODE-SCRIPT-BAMUM = 79;
-define constant $G-UNICODE-SCRIPT-EGYPTIAN-HIEROGLYPHS = 80;
-define constant $G-UNICODE-SCRIPT-IMPERIAL-ARAMAIC = 81;
-define constant $G-UNICODE-SCRIPT-INSCRIPTIONAL-PAHLAVI = 82;
-define constant $G-UNICODE-SCRIPT-INSCRIPTIONAL-PARTHIAN = 83;
-define constant $G-UNICODE-SCRIPT-JAVANESE = 84;
-define constant $G-UNICODE-SCRIPT-KAITHI = 85;
-define constant $G-UNICODE-SCRIPT-LISU = 86;
-define constant $G-UNICODE-SCRIPT-MEETEI-MAYEK = 87;
-define constant $G-UNICODE-SCRIPT-OLD-SOUTH-ARABIAN = 88;
-define constant $G-UNICODE-SCRIPT-OLD-TURKIC = 89;
-define constant $G-UNICODE-SCRIPT-SAMARITAN = 90;
-define constant $G-UNICODE-SCRIPT-TAI-THAM = 91;
-define constant $G-UNICODE-SCRIPT-TAI-VIET = 92;
-define constant $G-UNICODE-SCRIPT-BATAK = 93;
-define constant $G-UNICODE-SCRIPT-BRAHMI = 94;
-define constant $G-UNICODE-SCRIPT-MANDAIC = 95;
-define constant $G-UNICODE-SCRIPT-CHAKMA = 96;
-define constant $G-UNICODE-SCRIPT-MEROITIC-CURSIVE = 97;
-define constant $G-UNICODE-SCRIPT-MEROITIC-HIEROGLYPHS = 98;
-define constant $G-UNICODE-SCRIPT-MIAO = 99;
-define constant $G-UNICODE-SCRIPT-SHARADA = 100;
-define constant $G-UNICODE-SCRIPT-SORA-SOMPENG = 101;
-define constant $G-UNICODE-SCRIPT-TAKRI = 102;
+define constant $g-unicode-script-invalid-code = -1;
+define constant $g-unicode-script-common = 0;
+define constant $g-unicode-script-inherited = 1;
+define constant $g-unicode-script-arabic = 2;
+define constant $g-unicode-script-armenian = 3;
+define constant $g-unicode-script-bengali = 4;
+define constant $g-unicode-script-bopomofo = 5;
+define constant $g-unicode-script-cherokee = 6;
+define constant $g-unicode-script-coptic = 7;
+define constant $g-unicode-script-cyrillic = 8;
+define constant $g-unicode-script-deseret = 9;
+define constant $g-unicode-script-devanagari = 10;
+define constant $g-unicode-script-ethiopic = 11;
+define constant $g-unicode-script-georgian = 12;
+define constant $g-unicode-script-gothic = 13;
+define constant $g-unicode-script-greek = 14;
+define constant $g-unicode-script-gujarati = 15;
+define constant $g-unicode-script-gurmukhi = 16;
+define constant $g-unicode-script-han = 17;
+define constant $g-unicode-script-hangul = 18;
+define constant $g-unicode-script-hebrew = 19;
+define constant $g-unicode-script-hiragana = 20;
+define constant $g-unicode-script-kannada = 21;
+define constant $g-unicode-script-katakana = 22;
+define constant $g-unicode-script-khmer = 23;
+define constant $g-unicode-script-lao = 24;
+define constant $g-unicode-script-latin = 25;
+define constant $g-unicode-script-malayalam = 26;
+define constant $g-unicode-script-mongolian = 27;
+define constant $g-unicode-script-myanmar = 28;
+define constant $g-unicode-script-ogham = 29;
+define constant $g-unicode-script-old-italic = 30;
+define constant $g-unicode-script-oriya = 31;
+define constant $g-unicode-script-runic = 32;
+define constant $g-unicode-script-sinhala = 33;
+define constant $g-unicode-script-syriac = 34;
+define constant $g-unicode-script-tamil = 35;
+define constant $g-unicode-script-telugu = 36;
+define constant $g-unicode-script-thaana = 37;
+define constant $g-unicode-script-thai = 38;
+define constant $g-unicode-script-tibetan = 39;
+define constant $g-unicode-script-canadian-aboriginal = 40;
+define constant $g-unicode-script-yi = 41;
+define constant $g-unicode-script-tagalog = 42;
+define constant $g-unicode-script-hanunoo = 43;
+define constant $g-unicode-script-buhid = 44;
+define constant $g-unicode-script-tagbanwa = 45;
+define constant $g-unicode-script-braille = 46;
+define constant $g-unicode-script-cypriot = 47;
+define constant $g-unicode-script-limbu = 48;
+define constant $g-unicode-script-osmanya = 49;
+define constant $g-unicode-script-shavian = 50;
+define constant $g-unicode-script-linear-b = 51;
+define constant $g-unicode-script-tai-le = 52;
+define constant $g-unicode-script-ugaritic = 53;
+define constant $g-unicode-script-new-tai-lue = 54;
+define constant $g-unicode-script-buginese = 55;
+define constant $g-unicode-script-glagolitic = 56;
+define constant $g-unicode-script-tifinagh = 57;
+define constant $g-unicode-script-syloti-nagri = 58;
+define constant $g-unicode-script-old-persian = 59;
+define constant $g-unicode-script-kharoshthi = 60;
+define constant $g-unicode-script-unknown = 61;
+define constant $g-unicode-script-balinese = 62;
+define constant $g-unicode-script-cuneiform = 63;
+define constant $g-unicode-script-phoenician = 64;
+define constant $g-unicode-script-phags-pa = 65;
+define constant $g-unicode-script-nko = 66;
+define constant $g-unicode-script-kayah-li = 67;
+define constant $g-unicode-script-lepcha = 68;
+define constant $g-unicode-script-rejang = 69;
+define constant $g-unicode-script-sundanese = 70;
+define constant $g-unicode-script-saurashtra = 71;
+define constant $g-unicode-script-cham = 72;
+define constant $g-unicode-script-ol-chiki = 73;
+define constant $g-unicode-script-vai = 74;
+define constant $g-unicode-script-carian = 75;
+define constant $g-unicode-script-lycian = 76;
+define constant $g-unicode-script-lydian = 77;
+define constant $g-unicode-script-avestan = 78;
+define constant $g-unicode-script-bamum = 79;
+define constant $g-unicode-script-egyptian-hieroglyphs = 80;
+define constant $g-unicode-script-imperial-aramaic = 81;
+define constant $g-unicode-script-inscriptional-pahlavi = 82;
+define constant $g-unicode-script-inscriptional-parthian = 83;
+define constant $g-unicode-script-javanese = 84;
+define constant $g-unicode-script-kaithi = 85;
+define constant $g-unicode-script-lisu = 86;
+define constant $g-unicode-script-meetei-mayek = 87;
+define constant $g-unicode-script-old-south-arabian = 88;
+define constant $g-unicode-script-old-turkic = 89;
+define constant $g-unicode-script-samaritan = 90;
+define constant $g-unicode-script-tai-tham = 91;
+define constant $g-unicode-script-tai-viet = 92;
+define constant $g-unicode-script-batak = 93;
+define constant $g-unicode-script-brahmi = 94;
+define constant $g-unicode-script-mandaic = 95;
+define constant $g-unicode-script-chakma = 96;
+define constant $g-unicode-script-meroitic-cursive = 97;
+define constant $g-unicode-script-meroitic-hieroglyphs = 98;
+define constant $g-unicode-script-miao = 99;
+define constant $g-unicode-script-sharada = 100;
+define constant $g-unicode-script-sora-sompeng = 101;
+define constant $g-unicode-script-takri = 102;
 define constant <GUnicodeScript> = <C-int>;
 define C-pointer-type <GUnicodeScript*> => <GUnicodeScript>;
 
-define constant $G-UNICODE-CONTROL = 0;
-define constant $G-UNICODE-FORMAT = 1;
-define constant $G-UNICODE-UNASSIGNED = 2;
-define constant $G-UNICODE-PRIVATE-USE = 3;
-define constant $G-UNICODE-SURROGATE = 4;
-define constant $G-UNICODE-LOWERCASE-LETTER = 5;
-define constant $G-UNICODE-MODIFIER-LETTER = 6;
-define constant $G-UNICODE-OTHER-LETTER = 7;
-define constant $G-UNICODE-TITLECASE-LETTER = 8;
-define constant $G-UNICODE-UPPERCASE-LETTER = 9;
-define constant $G-UNICODE-SPACING-MARK = 10;
-define constant $G-UNICODE-ENCLOSING-MARK = 11;
-define constant $G-UNICODE-NON-SPACING-MARK = 12;
-define constant $G-UNICODE-DECIMAL-NUMBER = 13;
-define constant $G-UNICODE-LETTER-NUMBER = 14;
-define constant $G-UNICODE-OTHER-NUMBER = 15;
-define constant $G-UNICODE-CONNECT-PUNCTUATION = 16;
-define constant $G-UNICODE-DASH-PUNCTUATION = 17;
-define constant $G-UNICODE-CLOSE-PUNCTUATION = 18;
-define constant $G-UNICODE-FINAL-PUNCTUATION = 19;
-define constant $G-UNICODE-INITIAL-PUNCTUATION = 20;
-define constant $G-UNICODE-OTHER-PUNCTUATION = 21;
-define constant $G-UNICODE-OPEN-PUNCTUATION = 22;
-define constant $G-UNICODE-CURRENCY-SYMBOL = 23;
-define constant $G-UNICODE-MODIFIER-SYMBOL = 24;
-define constant $G-UNICODE-MATH-SYMBOL = 25;
-define constant $G-UNICODE-OTHER-SYMBOL = 26;
-define constant $G-UNICODE-LINE-SEPARATOR = 27;
-define constant $G-UNICODE-PARAGRAPH-SEPARATOR = 28;
-define constant $G-UNICODE-SPACE-SEPARATOR = 29;
+define constant $g-unicode-control = 0;
+define constant $g-unicode-format = 1;
+define constant $g-unicode-unassigned = 2;
+define constant $g-unicode-private-use = 3;
+define constant $g-unicode-surrogate = 4;
+define constant $g-unicode-lowercase-letter = 5;
+define constant $g-unicode-modifier-letter = 6;
+define constant $g-unicode-other-letter = 7;
+define constant $g-unicode-titlecase-letter = 8;
+define constant $g-unicode-uppercase-letter = 9;
+define constant $g-unicode-spacing-mark = 10;
+define constant $g-unicode-enclosing-mark = 11;
+define constant $g-unicode-non-spacing-mark = 12;
+define constant $g-unicode-decimal-number = 13;
+define constant $g-unicode-letter-number = 14;
+define constant $g-unicode-other-number = 15;
+define constant $g-unicode-connect-punctuation = 16;
+define constant $g-unicode-dash-punctuation = 17;
+define constant $g-unicode-close-punctuation = 18;
+define constant $g-unicode-final-punctuation = 19;
+define constant $g-unicode-initial-punctuation = 20;
+define constant $g-unicode-other-punctuation = 21;
+define constant $g-unicode-open-punctuation = 22;
+define constant $g-unicode-currency-symbol = 23;
+define constant $g-unicode-modifier-symbol = 24;
+define constant $g-unicode-math-symbol = 25;
+define constant $g-unicode-other-symbol = 26;
+define constant $g-unicode-line-separator = 27;
+define constant $g-unicode-paragraph-separator = 28;
+define constant $g-unicode-space-separator = 29;
 define constant <GUnicodeType> = <C-int>;
 define C-pointer-type <GUnicodeType*> => <GUnicodeType>;
 
-define constant $G-USER-DIRECTORY-DESKTOP = 0;
-define constant $G-USER-DIRECTORY-DOCUMENTS = 1;
-define constant $G-USER-DIRECTORY-DOWNLOAD = 2;
-define constant $G-USER-DIRECTORY-MUSIC = 3;
-define constant $G-USER-DIRECTORY-PICTURES = 4;
-define constant $G-USER-DIRECTORY-PUBLIC-SHARE = 5;
-define constant $G-USER-DIRECTORY-TEMPLATES = 6;
-define constant $G-USER-DIRECTORY-VIDEOS = 7;
-define constant $G-USER-N-DIRECTORIES = 8;
+define constant $g-user-directory-desktop = 0;
+define constant $g-user-directory-documents = 1;
+define constant $g-user-directory-download = 2;
+define constant $g-user-directory-music = 3;
+define constant $g-user-directory-pictures = 4;
+define constant $g-user-directory-public-share = 5;
+define constant $g-user-directory-templates = 6;
+define constant $g-user-directory-videos = 7;
+define constant $g-user-n-directories = 8;
 define constant <GUserDirectory> = <C-int>;
 define C-pointer-type <GUserDirectory*> => <GUserDirectory>;
 
-define constant $VA-COPY-AS-ARRAY = 1;
+define constant $va-copy-as-array = 1;
 
-define constant $VERSION-MIN-REQUIRED = 2;
+define constant $version-min-required = 2;
 
 define C-struct <_GVariant>
   pointer-type-name: <GVariant>;
@@ -5838,7 +5831,7 @@ define C-function g-variant-parser-get-error-quark
 end;
 
 define C-struct <_GVariantBuilder>
-  constant slot gvariantbuilder-x :: <C-unsigned-long*>;
+  constant slot g-variant-builder-x :: <C-unsigned-long*>;
   pointer-type-name: <GVariantBuilder>;
 end C-struct;
 
@@ -5882,45 +5875,45 @@ define C-function g-variant-builder-unref
   c-name: "g_variant_builder_unref";
 end;
 
-define constant $G-VARIANT-CLASS-BOOLEAN = 98;
-define constant $G-VARIANT-CLASS-BYTE = 121;
-define constant $G-VARIANT-CLASS-INT16 = 110;
-define constant $G-VARIANT-CLASS-UINT16 = 113;
-define constant $G-VARIANT-CLASS-INT32 = 105;
-define constant $G-VARIANT-CLASS-UINT32 = 117;
-define constant $G-VARIANT-CLASS-INT64 = 120;
-define constant $G-VARIANT-CLASS-UINT64 = 116;
-define constant $G-VARIANT-CLASS-HANDLE = 104;
-define constant $G-VARIANT-CLASS-DOUBLE = 100;
-define constant $G-VARIANT-CLASS-STRING = 115;
-define constant $G-VARIANT-CLASS-OBJECT-PATH = 111;
-define constant $G-VARIANT-CLASS-SIGNATURE = 103;
-define constant $G-VARIANT-CLASS-VARIANT = 118;
-define constant $G-VARIANT-CLASS-MAYBE = 109;
-define constant $G-VARIANT-CLASS-ARRAY = 97;
-define constant $G-VARIANT-CLASS-TUPLE = 40;
-define constant $G-VARIANT-CLASS-DICT-ENTRY = 123;
+define constant $g-variant-class-boolean = 98;
+define constant $g-variant-class-byte = 121;
+define constant $g-variant-class-int16 = 110;
+define constant $g-variant-class-uint16 = 113;
+define constant $g-variant-class-int32 = 105;
+define constant $g-variant-class-uint32 = 117;
+define constant $g-variant-class-int64 = 120;
+define constant $g-variant-class-uint64 = 116;
+define constant $g-variant-class-handle = 104;
+define constant $g-variant-class-double = 100;
+define constant $g-variant-class-string = 115;
+define constant $g-variant-class-object-path = 111;
+define constant $g-variant-class-signature = 103;
+define constant $g-variant-class-variant = 118;
+define constant $g-variant-class-maybe = 109;
+define constant $g-variant-class-array = 97;
+define constant $g-variant-class-tuple = 40;
+define constant $g-variant-class-dict-entry = 123;
 define constant <GVariantClass> = <C-int>;
 define C-pointer-type <GVariantClass*> => <GVariantClass>;
 
-define constant $G-VARIANT-PARSE-ERROR-FAILED = 0;
-define constant $G-VARIANT-PARSE-ERROR-BASIC-TYPE-EXPECTED = 1;
-define constant $G-VARIANT-PARSE-ERROR-CANNOT-INFER-TYPE = 2;
-define constant $G-VARIANT-PARSE-ERROR-DEFINITE-TYPE-EXPECTED = 3;
-define constant $G-VARIANT-PARSE-ERROR-INPUT-NOT-AT-END = 4;
-define constant $G-VARIANT-PARSE-ERROR-INVALID-CHARACTER = 5;
-define constant $G-VARIANT-PARSE-ERROR-INVALID-FORMAT-STRING = 6;
-define constant $G-VARIANT-PARSE-ERROR-INVALID-OBJECT-PATH = 7;
-define constant $G-VARIANT-PARSE-ERROR-INVALID-SIGNATURE = 8;
-define constant $G-VARIANT-PARSE-ERROR-INVALID-TYPE-STRING = 9;
-define constant $G-VARIANT-PARSE-ERROR-NO-COMMON-TYPE = 10;
-define constant $G-VARIANT-PARSE-ERROR-NUMBER-OUT-OF-RANGE = 11;
-define constant $G-VARIANT-PARSE-ERROR-NUMBER-TOO-BIG = 12;
-define constant $G-VARIANT-PARSE-ERROR-TYPE-ERROR = 13;
-define constant $G-VARIANT-PARSE-ERROR-UNEXPECTED-TOKEN = 14;
-define constant $G-VARIANT-PARSE-ERROR-UNKNOWN-KEYWORD = 15;
-define constant $G-VARIANT-PARSE-ERROR-UNTERMINATED-STRING-CONSTANT = 16;
-define constant $G-VARIANT-PARSE-ERROR-VALUE-EXPECTED = 17;
+define constant $g-variant-parse-error-failed = 0;
+define constant $g-variant-parse-error-basic-type-expected = 1;
+define constant $g-variant-parse-error-cannot-infer-type = 2;
+define constant $g-variant-parse-error-definite-type-expected = 3;
+define constant $g-variant-parse-error-input-not-at-end = 4;
+define constant $g-variant-parse-error-invalid-character = 5;
+define constant $g-variant-parse-error-invalid-format-string = 6;
+define constant $g-variant-parse-error-invalid-object-path = 7;
+define constant $g-variant-parse-error-invalid-signature = 8;
+define constant $g-variant-parse-error-invalid-type-string = 9;
+define constant $g-variant-parse-error-no-common-type = 10;
+define constant $g-variant-parse-error-number-out-of-range = 11;
+define constant $g-variant-parse-error-number-too-big = 12;
+define constant $g-variant-parse-error-type-error = 13;
+define constant $g-variant-parse-error-unexpected-token = 14;
+define constant $g-variant-parse-error-unknown-keyword = 15;
+define constant $g-variant-parse-error-unterminated-string-constant = 16;
+define constant $g-variant-parse-error-value-expected = 17;
 define constant <GVariantParseError> = <C-int>;
 define C-pointer-type <GVariantParseError*> => <GVariantParseError>;
 
@@ -6107,7 +6100,7 @@ define C-function g-variant-type-string-scan
   c-name: "g_variant_type_string_scan";
 end;
 
-define constant $WIN32-MSG-HANDLE = 19981206;
+define constant $win32-msg-handle = 19981206;
 
 define C-function g-access
   input parameter filename_ :: <C-string>;

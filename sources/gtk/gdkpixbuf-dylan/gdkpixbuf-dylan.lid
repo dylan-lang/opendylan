@@ -3,3 +3,4 @@ target-type: dll
 executable: gdkpixbuf-dylan
 files: library
        gdkpixbuf
+       properties

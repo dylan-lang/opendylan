@@ -40,20 +40,20 @@ define C-function g-binding-get-target-property
   c-name: "g_binding_get_target_property";
 end;
 
-define constant $G-BINDING-DEFAULT = 0;
-define constant $G-BINDING-BIDIRECTIONAL = 1;
-define constant $G-BINDING-SYNC-CREATE = 2;
-define constant $G-BINDING-INVERT-BOOLEAN = 4;
+define constant $g-binding-default = 0;
+define constant $g-binding-bidirectional = 1;
+define constant $g-binding-sync-create = 2;
+define constant $g-binding-invert-boolean = 4;
 define constant <GBindingFlags> = <C-int>;
 define C-pointer-type <GBindingFlags*> => <GBindingFlags>;
 
 define C-struct <_GCClosure>
-  slot gcclosure-closure :: <GClosure>;
-  slot gcclosure-callback :: <C-void*>;
+  slot g-c-closure-closure :: <GClosure>;
+  slot g-c-closure-callback :: <C-void*>;
   pointer-type-name: <GCClosure>;
 end C-struct;
 
-define C-function g-cclosure-marshal-BOOLEAN--BOXED-BOXED
+define C-function g-cclosure-marshal-boolean--boxed-boxed
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -63,7 +63,7 @@ define C-function g-cclosure-marshal-BOOLEAN--BOXED-BOXED
   c-name: "g_cclosure_marshal_BOOLEAN__BOXED_BOXED";
 end;
 
-define C-function g-cclosure-marshal-BOOLEAN--FLAGS
+define C-function g-cclosure-marshal-boolean--flags
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -73,7 +73,7 @@ define C-function g-cclosure-marshal-BOOLEAN--FLAGS
   c-name: "g_cclosure_marshal_BOOLEAN__FLAGS";
 end;
 
-define C-function g-cclosure-marshal-STRING--OBJECT-POINTER
+define C-function g-cclosure-marshal-string--object-pointer
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -83,7 +83,7 @@ define C-function g-cclosure-marshal-STRING--OBJECT-POINTER
   c-name: "g_cclosure_marshal_STRING__OBJECT_POINTER";
 end;
 
-define C-function g-cclosure-marshal-VOID--BOOLEAN
+define C-function g-cclosure-marshal-void--boolean
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -93,7 +93,7 @@ define C-function g-cclosure-marshal-VOID--BOOLEAN
   c-name: "g_cclosure_marshal_VOID__BOOLEAN";
 end;
 
-define C-function g-cclosure-marshal-VOID--BOXED
+define C-function g-cclosure-marshal-void--boxed
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -103,7 +103,7 @@ define C-function g-cclosure-marshal-VOID--BOXED
   c-name: "g_cclosure_marshal_VOID__BOXED";
 end;
 
-define C-function g-cclosure-marshal-VOID--CHAR
+define C-function g-cclosure-marshal-void--char
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -113,7 +113,7 @@ define C-function g-cclosure-marshal-VOID--CHAR
   c-name: "g_cclosure_marshal_VOID__CHAR";
 end;
 
-define C-function g-cclosure-marshal-VOID--DOUBLE
+define C-function g-cclosure-marshal-void--double
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -123,7 +123,7 @@ define C-function g-cclosure-marshal-VOID--DOUBLE
   c-name: "g_cclosure_marshal_VOID__DOUBLE";
 end;
 
-define C-function g-cclosure-marshal-VOID--ENUM
+define C-function g-cclosure-marshal-void--enum
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -133,7 +133,7 @@ define C-function g-cclosure-marshal-VOID--ENUM
   c-name: "g_cclosure_marshal_VOID__ENUM";
 end;
 
-define C-function g-cclosure-marshal-VOID--FLAGS
+define C-function g-cclosure-marshal-void--flags
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -143,7 +143,7 @@ define C-function g-cclosure-marshal-VOID--FLAGS
   c-name: "g_cclosure_marshal_VOID__FLAGS";
 end;
 
-define C-function g-cclosure-marshal-VOID--FLOAT
+define C-function g-cclosure-marshal-void--float
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -153,7 +153,7 @@ define C-function g-cclosure-marshal-VOID--FLOAT
   c-name: "g_cclosure_marshal_VOID__FLOAT";
 end;
 
-define C-function g-cclosure-marshal-VOID--INT
+define C-function g-cclosure-marshal-void--int
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -163,7 +163,7 @@ define C-function g-cclosure-marshal-VOID--INT
   c-name: "g_cclosure_marshal_VOID__INT";
 end;
 
-define C-function g-cclosure-marshal-VOID--LONG
+define C-function g-cclosure-marshal-void--long
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -173,7 +173,7 @@ define C-function g-cclosure-marshal-VOID--LONG
   c-name: "g_cclosure_marshal_VOID__LONG";
 end;
 
-define C-function g-cclosure-marshal-VOID--OBJECT
+define C-function g-cclosure-marshal-void--object
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -183,7 +183,7 @@ define C-function g-cclosure-marshal-VOID--OBJECT
   c-name: "g_cclosure_marshal_VOID__OBJECT";
 end;
 
-define C-function g-cclosure-marshal-VOID--PARAM
+define C-function g-cclosure-marshal-void--param
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -193,7 +193,7 @@ define C-function g-cclosure-marshal-VOID--PARAM
   c-name: "g_cclosure_marshal_VOID__PARAM";
 end;
 
-define C-function g-cclosure-marshal-VOID--POINTER
+define C-function g-cclosure-marshal-void--pointer
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -203,7 +203,7 @@ define C-function g-cclosure-marshal-VOID--POINTER
   c-name: "g_cclosure_marshal_VOID__POINTER";
 end;
 
-define C-function g-cclosure-marshal-VOID--STRING
+define C-function g-cclosure-marshal-void--string
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -213,7 +213,7 @@ define C-function g-cclosure-marshal-VOID--STRING
   c-name: "g_cclosure_marshal_VOID__STRING";
 end;
 
-define C-function g-cclosure-marshal-VOID--UCHAR
+define C-function g-cclosure-marshal-void--uchar
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -223,7 +223,7 @@ define C-function g-cclosure-marshal-VOID--UCHAR
   c-name: "g_cclosure_marshal_VOID__UCHAR";
 end;
 
-define C-function g-cclosure-marshal-VOID--UINT
+define C-function g-cclosure-marshal-void--uint
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -233,7 +233,7 @@ define C-function g-cclosure-marshal-VOID--UINT
   c-name: "g_cclosure_marshal_VOID__UINT";
 end;
 
-define C-function g-cclosure-marshal-VOID--UINT-POINTER
+define C-function g-cclosure-marshal-void--uint-pointer
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -243,7 +243,7 @@ define C-function g-cclosure-marshal-VOID--UINT-POINTER
   c-name: "g_cclosure_marshal_VOID__UINT_POINTER";
 end;
 
-define C-function g-cclosure-marshal-VOID--ULONG
+define C-function g-cclosure-marshal-void--ulong
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -253,7 +253,7 @@ define C-function g-cclosure-marshal-VOID--ULONG
   c-name: "g_cclosure_marshal_VOID__ULONG";
 end;
 
-define C-function g-cclosure-marshal-VOID--VARIANT
+define C-function g-cclosure-marshal-void--variant
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -263,7 +263,7 @@ define C-function g-cclosure-marshal-VOID--VARIANT
   c-name: "g_cclosure_marshal_VOID__VARIANT";
 end;
 
-define C-function g-cclosure-marshal-VOID--VOID
+define C-function g-cclosure-marshal-void--void
   input parameter closure_ :: <GClosure>;
   input parameter return_value_ :: <GValue>;
   input parameter n_param_values_ :: <C-unsigned-int>;
@@ -284,19 +284,19 @@ define C-function g-cclosure-marshal-generic
 end;
 
 define C-struct <_GClosure>
-  constant slot gclosure-ref-count :: <C-unsigned-int>;
-  constant slot gclosure-meta-marshal-nouse :: <C-unsigned-int>;
-  constant slot gclosure-n-guards :: <C-unsigned-int>;
-  constant slot gclosure-n-fnotifiers :: <C-unsigned-int>;
-  constant slot gclosure-n-inotifiers :: <C-unsigned-int>;
-  constant slot gclosure-in-inotify :: <C-unsigned-int>;
-  constant slot gclosure-floating :: <C-unsigned-int>;
-  constant slot gclosure-derivative-flag :: <C-unsigned-int>;
-  slot gclosure-in-marshal :: <C-unsigned-int>;
-  slot gclosure-is-invalid :: <C-unsigned-int>;
-  constant slot gclosure-marshal :: <C-function-pointer>;
-  constant slot gclosure-data :: <C-void*>;
-  constant slot gclosure-notifiers :: <GClosureNotifyData>;
+  constant slot g-closure-ref-count :: <C-unsigned-int>;
+  constant slot g-closure-meta-marshal-nouse :: <C-unsigned-int>;
+  constant slot g-closure-n-guards :: <C-unsigned-int>;
+  constant slot g-closure-n-fnotifiers :: <C-unsigned-int>;
+  constant slot g-closure-n-inotifiers :: <C-unsigned-int>;
+  constant slot g-closure-in-inotify :: <C-unsigned-int>;
+  constant slot g-closure-floating :: <C-unsigned-int>;
+  constant slot g-closure-derivative-flag :: <C-unsigned-int>;
+  slot g-closure-in-marshal :: <C-unsigned-int>;
+  slot g-closure-is-invalid :: <C-unsigned-int>;
+  constant slot g-closure-marshal :: <C-function-pointer>;
+  constant slot g-closure-data :: <C-void*>;
+  constant slot g-closure-notifiers :: <GClosureNotifyData>;
   pointer-type-name: <GClosure>;
 end C-struct;
 
@@ -345,82 +345,82 @@ define C-function g-closure-unref
 end;
 
 define C-struct <_GClosureNotifyData>
-  slot gclosurenotifydata-data :: <C-void*>;
-  slot gclosurenotifydata-notify :: <C-function-pointer>;
+  slot g-closure-notify-data-data :: <C-void*>;
+  slot g-closure-notify-data-notify :: <C-function-pointer>;
   pointer-type-name: <GClosureNotifyData>;
 end C-struct;
 
-define constant $G-CONNECT-AFTER = 1;
-define constant $G-CONNECT-SWAPPED = 2;
+define constant $g-connect-after = 1;
+define constant $g-connect-swapped = 2;
 define constant <GConnectFlags> = <C-int>;
 define C-pointer-type <GConnectFlags*> => <GConnectFlags>;
 
 define C-struct <_GEnumClass>
-  slot genumclass-g-type-class :: <GTypeClass>;
-  slot genumclass-minimum :: <C-signed-int>;
-  slot genumclass-maximum :: <C-signed-int>;
-  slot genumclass-n-values :: <C-unsigned-int>;
-  slot genumclass-values :: <GEnumValue>;
+  slot g-enum-class-g-type-class :: <GTypeClass>;
+  slot g-enum-class-minimum :: <C-signed-int>;
+  slot g-enum-class-maximum :: <C-signed-int>;
+  slot g-enum-class-n-values :: <C-unsigned-int>;
+  slot g-enum-class-values :: <GEnumValue>;
   pointer-type-name: <GEnumClass>;
 end C-struct;
 
 define C-struct <_GEnumValue>
-  slot genumvalue-value :: <C-signed-int>;
-  slot genumvalue-value-name :: <C-string>;
-  slot genumvalue-value-nick :: <C-string>;
+  slot g-enum-value-value :: <C-signed-int>;
+  slot g-enum-value-value-name :: <C-string>;
+  slot g-enum-value-value-nick :: <C-string>;
   pointer-type-name: <GEnumValue>;
 end C-struct;
 
 define C-struct <_GFlagsClass>
-  slot gflagsclass-g-type-class :: <GTypeClass>;
-  slot gflagsclass-mask :: <C-unsigned-int>;
-  slot gflagsclass-n-values :: <C-unsigned-int>;
-  slot gflagsclass-values :: <GFlagsValue>;
+  slot g-flags-class-g-type-class :: <GTypeClass>;
+  slot g-flags-class-mask :: <C-unsigned-int>;
+  slot g-flags-class-n-values :: <C-unsigned-int>;
+  slot g-flags-class-values :: <GFlagsValue>;
   pointer-type-name: <GFlagsClass>;
 end C-struct;
 
 define C-struct <_GFlagsValue>
-  slot gflagsvalue-value :: <C-unsigned-int>;
-  slot gflagsvalue-value-name :: <C-string>;
-  slot gflagsvalue-value-nick :: <C-string>;
+  slot g-flags-value-value :: <C-unsigned-int>;
+  slot g-flags-value-value-name :: <C-string>;
+  slot g-flags-value-value-nick :: <C-string>;
   pointer-type-name: <GFlagsValue>;
 end C-struct;
 
 define open C-subtype <GInitiallyUnowned> (<GObject>)
-  constant slot ginitiallyunowned-g-type-instance :: <GTypeInstance>;
-  constant slot ginitiallyunowned-ref-count :: <C-unsigned-int>;
-  constant slot ginitiallyunowned-qdata :: <GData>;
+  constant slot g-initially-unowned-g-type-instance :: <GTypeInstance>;
+  constant slot g-initially-unowned-ref-count :: <C-unsigned-int>;
+  constant slot g-initially-unowned-qdata :: <GData>;
 end C-subtype;
 
 define C-pointer-type <GInitiallyUnowned*> => <GInitiallyUnowned>;
 
 define C-struct <_GInitiallyUnownedClass>
-  constant slot ginitiallyunownedclass-g-type-class :: <GTypeClass>;
-  constant slot ginitiallyunownedclass-construct-properties :: <GSList>;
-  constant slot ginitiallyunownedclass-constructor :: <C-void*>;
-  constant slot ginitiallyunownedclass-set-property :: <C-function-pointer>;
-  constant slot ginitiallyunownedclass-get-property :: <C-function-pointer>;
-  constant slot ginitiallyunownedclass-dispose :: <C-function-pointer>;
-  constant slot ginitiallyunownedclass-finalize :: <C-function-pointer>;
-  constant slot ginitiallyunownedclass-dispatch-properties-changed :: <C-function-pointer>;
-  constant slot ginitiallyunownedclass-notify :: <C-function-pointer>;
-  constant slot ginitiallyunownedclass-constructed :: <C-function-pointer>;
-  constant slot ginitiallyunownedclass-flags :: <C-unsigned-long>;
-  constant slot ginitiallyunownedclass-pdummy :: <C-void*>;
+  constant slot g-initially-unowned-class-g-type-class :: <GTypeClass>;
+  constant slot g-initially-unowned-class-construct-properties :: <GSList>;
+  constant slot g-initially-unowned-class-constructor :: <C-void*>;
+  constant slot g-initially-unowned-class-set-property :: <C-function-pointer>;
+  constant slot g-initially-unowned-class-get-property :: <C-function-pointer>;
+  constant slot g-initially-unowned-class-dispose :: <C-function-pointer>;
+  constant slot g-initially-unowned-class-finalize :: <C-function-pointer>;
+  constant slot g-initially-unowned-class-dispatch-properties-changed :: <C-function-pointer>;
+  constant slot g-initially-unowned-class-notify :: <C-function-pointer>;
+  constant slot g-initially-unowned-class-constructed :: <C-function-pointer>;
+  constant slot g-initially-unowned-class-flags :: <C-unsigned-long>;
+  constant slot g-initially-unowned-class-pdummy :: <C-void*>;
   pointer-type-name: <GInitiallyUnownedClass>;
 end C-struct;
 
 define C-struct <_GInterfaceInfo>
-  slot ginterfaceinfo-interface-init :: <C-function-pointer>;
-  slot ginterfaceinfo-interface-finalize :: <C-function-pointer>;
-  slot ginterfaceinfo-interface-data :: <C-void*>;
+  slot g-interface-info-interface-init :: <C-function-pointer>;
+  slot g-interface-info-interface-finalize :: <C-function-pointer>;
+  slot g-interface-info-interface-data :: <C-void*>;
   pointer-type-name: <GInterfaceInfo>;
 end C-struct;
 
 define open C-subtype <GObject> (<GTypeInstance>)
-  constant slot gobject-g-type-instance :: <GTypeInstance>;
-  constant slot gobject-ref-count :: <C-unsigned-int>;
-  constant slot gobject-qdata :: <GData>;
+  constant slot g-object-g-type-instance :: <GTypeInstance>;
+  constant slot g-object-ref-count :: <C-unsigned-int>;
+  constant slot g-object-qdata :: <GData>;
 end C-subtype;
 
 define C-pointer-type <GObject*> => <GObject>;
@@ -615,18 +615,18 @@ define C-function g-object-watch-closure
 end;
 
 define C-struct <_GObjectClass>
-  constant slot gobjectclass-g-type-class :: <GTypeClass>;
-  constant slot gobjectclass-construct-properties :: <GSList>;
-  constant slot gobjectclass-constructor :: <C-void*>;
-  constant slot gobjectclass-set-property :: <C-function-pointer>;
-  constant slot gobjectclass-get-property :: <C-function-pointer>;
-  constant slot gobjectclass-dispose :: <C-function-pointer>;
-  constant slot gobjectclass-finalize :: <C-function-pointer>;
-  constant slot gobjectclass-dispatch-properties-changed :: <C-function-pointer>;
-  constant slot gobjectclass-notify :: <C-function-pointer>;
-  constant slot gobjectclass-constructed :: <C-function-pointer>;
-  constant slot gobjectclass-flags :: <C-unsigned-long>;
-  constant slot gobjectclass-pdummy :: <C-void*>;
+  constant slot g-object-class-g-type-class :: <GTypeClass>;
+  constant slot g-object-class-construct-properties :: <GSList>;
+  constant slot g-object-class-constructor :: <C-void*>;
+  constant slot g-object-class-set-property :: <C-function-pointer>;
+  constant slot g-object-class-get-property :: <C-function-pointer>;
+  constant slot g-object-class-dispose :: <C-function-pointer>;
+  constant slot g-object-class-finalize :: <C-function-pointer>;
+  constant slot g-object-class-dispatch-properties-changed :: <C-function-pointer>;
+  constant slot g-object-class-notify :: <C-function-pointer>;
+  constant slot g-object-class-constructed :: <C-function-pointer>;
+  constant slot g-object-class-flags :: <C-unsigned-long>;
+  constant slot g-object-class-pdummy :: <C-void*>;
   pointer-type-name: <GObjectClass>;
 end C-struct;
 
@@ -666,43 +666,43 @@ define C-function g-object-class-override-property
 end;
 
 define C-struct <_GObjectConstructParam>
-  slot gobjectconstructparam-pspec :: <GParamSpec>;
-  slot gobjectconstructparam-value :: <GValue>;
+  slot g-object-construct-param-pspec :: <GParamSpec>;
+  slot g-object-construct-param-value :: <GValue>;
   pointer-type-name: <GObjectConstructParam>;
 end C-struct;
 
-define constant $PARAM-MASK = 255;
+define constant $param-mask = 255;
 
-define constant $PARAM-READWRITE = 0;
+define constant $param-readwrite = 0;
 
-define constant $PARAM-STATIC-STRINGS = 0;
+define constant $param-static-strings = 0;
 
-define constant $PARAM-USER-SHIFT = 8;
+define constant $param-user-shift = 8;
 
-define constant $G-PARAM-READABLE = 1;
-define constant $G-PARAM-WRITABLE = 2;
-define constant $G-PARAM-CONSTRUCT = 4;
-define constant $G-PARAM-CONSTRUCT-ONLY = 8;
-define constant $G-PARAM-LAX-VALIDATION = 16;
-define constant $G-PARAM-STATIC-NAME = 32;
-define constant $G-PARAM-PRIVATE = 32;
-define constant $G-PARAM-STATIC-NICK = 64;
-define constant $G-PARAM-STATIC-BLURB = 128;
-define constant $G-PARAM-DEPRECATED = 2147483648;
+define constant $g-param-readable = 1;
+define constant $g-param-writable = 2;
+define constant $g-param-construct = 4;
+define constant $g-param-construct-only = 8;
+define constant $g-param-lax-validation = 16;
+define constant $g-param-static-name = 32;
+define constant $g-param-private = 32;
+define constant $g-param-static-nick = 64;
+define constant $g-param-static-blurb = 128;
+define constant $g-param-deprecated = 2147483648;
 define constant <GParamFlags> = <C-int>;
 define C-pointer-type <GParamFlags*> => <GParamFlags>;
 
 define open C-subtype <GParamSpec> (<C-void*>)
-  constant slot gparamspec-g-type-instance :: <GTypeInstance>;
-  constant slot gparamspec-name :: <C-string>;
-  constant slot gparamspec-flags :: <GParamFlags>;
-  constant slot gparamspec-value-type :: <C-long>;
-  constant slot gparamspec-owner-type :: <C-long>;
-  constant slot gparamspec--nick :: <C-string>;
-  constant slot gparamspec--blurb :: <C-string>;
-  constant slot gparamspec-qdata :: <GData>;
-  constant slot gparamspec-ref-count :: <C-unsigned-int>;
-  constant slot gparamspec-param-id :: <C-unsigned-int>;
+  constant slot g-param-spec-g-type-instance :: <GTypeInstance>;
+  constant slot g-param-spec-name :: <C-string>;
+  constant slot g-param-spec-flags :: <GParamFlags>;
+  constant slot g-param-spec-value-type :: <C-long>;
+  constant slot g-param-spec-owner-type :: <C-long>;
+  constant slot g-param-spec-_nick :: <C-string>;
+  constant slot g-param-spec-_blurb :: <C-string>;
+  constant slot g-param-spec-qdata :: <GData>;
+  constant slot g-param-spec-ref-count :: <C-unsigned-int>;
+  constant slot g-param-spec-param-id :: <C-unsigned-int>;
 end C-subtype;
 
 define C-pointer-type <GParamSpec*> => <GParamSpec>;
@@ -758,129 +758,129 @@ define C-function g-param-spec-steal-qdata
 end;
 
 define open C-subtype <GParamSpecBoolean> (<GParamSpec>)
-  constant slot gparamspecboolean-parent-instance :: <GParamSpec>;
-  constant slot gparamspecboolean-default-value :: <C-boolean>;
+  constant slot g-param-spec-boolean-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-boolean-default-value :: <C-boolean>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecBoolean*> => <GParamSpecBoolean>;
 
 define open C-subtype <GParamSpecBoxed> (<GParamSpec>)
-  constant slot gparamspecboxed-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-boxed-parent-instance :: <GParamSpec>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecBoxed*> => <GParamSpecBoxed>;
 
 define open C-subtype <GParamSpecChar> (<GParamSpec>)
-  constant slot gparamspecchar-parent-instance :: <GParamSpec>;
-  constant slot gparamspecchar-minimum :: <C-signed-char>;
-  constant slot gparamspecchar-maximum :: <C-signed-char>;
-  constant slot gparamspecchar-default-value :: <C-signed-char>;
+  constant slot g-param-spec-char-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-char-minimum :: <C-signed-char>;
+  constant slot g-param-spec-char-maximum :: <C-signed-char>;
+  constant slot g-param-spec-char-default-value :: <C-signed-char>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecChar*> => <GParamSpecChar>;
 
 define C-struct <_GParamSpecClass>
-  constant slot gparamspecclass-g-type-class :: <GTypeClass>;
-  constant slot gparamspecclass-value-type :: <C-long>;
-  constant slot gparamspecclass-finalize :: <C-function-pointer>;
-  constant slot gparamspecclass-value-set-default :: <C-function-pointer>;
-  constant slot gparamspecclass-value-validate :: <C-function-pointer>;
-  constant slot gparamspecclass-values-cmp :: <C-function-pointer>;
-  constant slot gparamspecclass-dummy :: <C-void*>;
+  constant slot g-param-spec-class-g-type-class :: <GTypeClass>;
+  constant slot g-param-spec-class-value-type :: <C-long>;
+  constant slot g-param-spec-class-finalize :: <C-function-pointer>;
+  constant slot g-param-spec-class-value-set-default :: <C-function-pointer>;
+  constant slot g-param-spec-class-value-validate :: <C-function-pointer>;
+  constant slot g-param-spec-class-values-cmp :: <C-function-pointer>;
+  constant slot g-param-spec-class-dummy :: <C-void*>;
   pointer-type-name: <GParamSpecClass>;
 end C-struct;
 
 define open C-subtype <GParamSpecDouble> (<GParamSpec>)
-  constant slot gparamspecdouble-parent-instance :: <GParamSpec>;
-  constant slot gparamspecdouble-minimum :: <C-double>;
-  constant slot gparamspecdouble-maximum :: <C-double>;
-  constant slot gparamspecdouble-default-value :: <C-double>;
-  constant slot gparamspecdouble-epsilon :: <C-double>;
+  constant slot g-param-spec-double-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-double-minimum :: <C-double>;
+  constant slot g-param-spec-double-maximum :: <C-double>;
+  constant slot g-param-spec-double-default-value :: <C-double>;
+  constant slot g-param-spec-double-epsilon :: <C-double>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecDouble*> => <GParamSpecDouble>;
 
 define open C-subtype <GParamSpecEnum> (<GParamSpec>)
-  constant slot gparamspecenum-parent-instance :: <GParamSpec>;
-  constant slot gparamspecenum-enum-class :: <GEnumClass>;
-  constant slot gparamspecenum-default-value :: <C-signed-int>;
+  constant slot g-param-spec-enum-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-enum-enum-class :: <GEnumClass>;
+  constant slot g-param-spec-enum-default-value :: <C-signed-int>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecEnum*> => <GParamSpecEnum>;
 
 define open C-subtype <GParamSpecFlags> (<GParamSpec>)
-  constant slot gparamspecflags-parent-instance :: <GParamSpec>;
-  constant slot gparamspecflags-flags-class :: <GFlagsClass>;
-  constant slot gparamspecflags-default-value :: <C-unsigned-int>;
+  constant slot g-param-spec-flags-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-flags-flags-class :: <GFlagsClass>;
+  constant slot g-param-spec-flags-default-value :: <C-unsigned-int>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecFlags*> => <GParamSpecFlags>;
 
 define open C-subtype <GParamSpecFloat> (<GParamSpec>)
-  constant slot gparamspecfloat-parent-instance :: <GParamSpec>;
-  constant slot gparamspecfloat-minimum :: <C-float>;
-  constant slot gparamspecfloat-maximum :: <C-float>;
-  constant slot gparamspecfloat-default-value :: <C-float>;
-  constant slot gparamspecfloat-epsilon :: <C-float>;
+  constant slot g-param-spec-float-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-float-minimum :: <C-float>;
+  constant slot g-param-spec-float-maximum :: <C-float>;
+  constant slot g-param-spec-float-default-value :: <C-float>;
+  constant slot g-param-spec-float-epsilon :: <C-float>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecFloat*> => <GParamSpecFloat>;
 
 define open C-subtype <GParamSpecGType> (<GParamSpec>)
-  constant slot gparamspecgtype-parent-instance :: <GParamSpec>;
-  constant slot gparamspecgtype-is-a-type :: <C-long>;
+  constant slot g-param-spec-g-type-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-g-type-is-a-type :: <C-long>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecGType*> => <GParamSpecGType>;
 
 define open C-subtype <GParamSpecInt> (<GParamSpec>)
-  constant slot gparamspecint-parent-instance :: <GParamSpec>;
-  constant slot gparamspecint-minimum :: <C-signed-int>;
-  constant slot gparamspecint-maximum :: <C-signed-int>;
-  constant slot gparamspecint-default-value :: <C-signed-int>;
+  constant slot g-param-spec-int-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-int-minimum :: <C-signed-int>;
+  constant slot g-param-spec-int-maximum :: <C-signed-int>;
+  constant slot g-param-spec-int-default-value :: <C-signed-int>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecInt*> => <GParamSpecInt>;
 
 define open C-subtype <GParamSpecInt64> (<GParamSpec>)
-  constant slot gparamspecint64-parent-instance :: <GParamSpec>;
-  constant slot gparamspecint64-minimum :: <C-signed-long>;
-  constant slot gparamspecint64-maximum :: <C-signed-long>;
-  constant slot gparamspecint64-default-value :: <C-signed-long>;
+  constant slot g-param-spec-int64-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-int64-minimum :: <C-signed-long>;
+  constant slot g-param-spec-int64-maximum :: <C-signed-long>;
+  constant slot g-param-spec-int64-default-value :: <C-signed-long>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecInt64*> => <GParamSpecInt64>;
 
 define open C-subtype <GParamSpecLong> (<GParamSpec>)
-  constant slot gparamspeclong-parent-instance :: <GParamSpec>;
-  constant slot gparamspeclong-minimum :: <C-signed-long>;
-  constant slot gparamspeclong-maximum :: <C-signed-long>;
-  constant slot gparamspeclong-default-value :: <C-signed-long>;
+  constant slot g-param-spec-long-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-long-minimum :: <C-signed-long>;
+  constant slot g-param-spec-long-maximum :: <C-signed-long>;
+  constant slot g-param-spec-long-default-value :: <C-signed-long>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecLong*> => <GParamSpecLong>;
 
 define open C-subtype <GParamSpecObject> (<GParamSpec>)
-  constant slot gparamspecobject-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-object-parent-instance :: <GParamSpec>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecObject*> => <GParamSpecObject>;
 
 define open C-subtype <GParamSpecOverride> (<GParamSpec>)
-  constant slot gparamspecoverride-parent-instance :: <GParamSpec>;
-  constant slot gparamspecoverride-overridden :: <GParamSpec>;
+  constant slot g-param-spec-override-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-override-overridden :: <GParamSpec>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecOverride*> => <GParamSpecOverride>;
 
 define open C-subtype <GParamSpecParam> (<GParamSpec>)
-  constant slot gparamspecparam-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-param-parent-instance :: <GParamSpec>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecParam*> => <GParamSpecParam>;
 
 define open C-subtype <GParamSpecPointer> (<GParamSpec>)
-  constant slot gparamspecpointer-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-pointer-parent-instance :: <GParamSpec>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecPointer*> => <GParamSpecPointer>;
@@ -933,165 +933,165 @@ define C-function g-param-spec-pool-new
 end;
 
 define open C-subtype <GParamSpecString> (<GParamSpec>)
-  constant slot gparamspecstring-parent-instance :: <GParamSpec>;
-  constant slot gparamspecstring-default-value :: <C-string>;
-  constant slot gparamspecstring-cset-first :: <C-string>;
-  constant slot gparamspecstring-cset-nth :: <C-string>;
-  constant slot gparamspecstring-substitutor :: <C-signed-char>;
-  constant slot gparamspecstring-null-fold-if-empty :: <C-unsigned-int>;
-  constant slot gparamspecstring-ensure-non-null :: <C-unsigned-int>;
+  constant slot g-param-spec-string-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-string-default-value :: <C-string>;
+  constant slot g-param-spec-string-cset-first :: <C-string>;
+  constant slot g-param-spec-string-cset-nth :: <C-string>;
+  constant slot g-param-spec-string-substitutor :: <C-signed-char>;
+  constant slot g-param-spec-string-null-fold-if-empty :: <C-unsigned-int>;
+  constant slot g-param-spec-string-ensure-non-null :: <C-unsigned-int>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecString*> => <GParamSpecString>;
 
 define C-struct <_GParamSpecTypeInfo>
-  slot gparamspectypeinfo-instance-size :: <C-unsigned-short>;
-  slot gparamspectypeinfo-n-preallocs :: <C-unsigned-short>;
-  constant slot gparamspectypeinfo-instance-init :: <C-function-pointer>;
-  slot gparamspectypeinfo-value-type :: <C-long>;
-  constant slot gparamspectypeinfo-finalize :: <C-function-pointer>;
-  constant slot gparamspectypeinfo-value-set-default :: <C-function-pointer>;
-  constant slot gparamspectypeinfo-value-validate :: <C-function-pointer>;
-  constant slot gparamspectypeinfo-values-cmp :: <C-function-pointer>;
+  slot g-param-spec-type-info-instance-size :: <C-unsigned-short>;
+  slot g-param-spec-type-info-n-preallocs :: <C-unsigned-short>;
+  constant slot g-param-spec-type-info-instance-init :: <C-function-pointer>;
+  slot g-param-spec-type-info-value-type :: <C-long>;
+  constant slot g-param-spec-type-info-finalize :: <C-function-pointer>;
+  constant slot g-param-spec-type-info-value-set-default :: <C-function-pointer>;
+  constant slot g-param-spec-type-info-value-validate :: <C-function-pointer>;
+  constant slot g-param-spec-type-info-values-cmp :: <C-function-pointer>;
   pointer-type-name: <GParamSpecTypeInfo>;
 end C-struct;
 
 define open C-subtype <GParamSpecUChar> (<GParamSpec>)
-  constant slot gparamspecuchar-parent-instance :: <GParamSpec>;
-  constant slot gparamspecuchar-minimum :: <C-unsigned-char>;
-  constant slot gparamspecuchar-maximum :: <C-unsigned-char>;
-  constant slot gparamspecuchar-default-value :: <C-unsigned-char>;
+  constant slot g-param-spec-u-char-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-u-char-minimum :: <C-unsigned-char>;
+  constant slot g-param-spec-u-char-maximum :: <C-unsigned-char>;
+  constant slot g-param-spec-u-char-default-value :: <C-unsigned-char>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecUChar*> => <GParamSpecUChar>;
 
 define open C-subtype <GParamSpecUInt> (<GParamSpec>)
-  constant slot gparamspecuint-parent-instance :: <GParamSpec>;
-  constant slot gparamspecuint-minimum :: <C-unsigned-int>;
-  constant slot gparamspecuint-maximum :: <C-unsigned-int>;
-  constant slot gparamspecuint-default-value :: <C-unsigned-int>;
+  constant slot g-param-spec-u-int-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-u-int-minimum :: <C-unsigned-int>;
+  constant slot g-param-spec-u-int-maximum :: <C-unsigned-int>;
+  constant slot g-param-spec-u-int-default-value :: <C-unsigned-int>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecUInt*> => <GParamSpecUInt>;
 
 define open C-subtype <GParamSpecUInt64> (<GParamSpec>)
-  constant slot gparamspecuint64-parent-instance :: <GParamSpec>;
-  constant slot gparamspecuint64-minimum :: <C-unsigned-long>;
-  constant slot gparamspecuint64-maximum :: <C-unsigned-long>;
-  constant slot gparamspecuint64-default-value :: <C-unsigned-long>;
+  constant slot g-param-spec-u-int64-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-u-int64-minimum :: <C-unsigned-long>;
+  constant slot g-param-spec-u-int64-maximum :: <C-unsigned-long>;
+  constant slot g-param-spec-u-int64-default-value :: <C-unsigned-long>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecUInt64*> => <GParamSpecUInt64>;
 
 define open C-subtype <GParamSpecULong> (<GParamSpec>)
-  constant slot gparamspeculong-parent-instance :: <GParamSpec>;
-  constant slot gparamspeculong-minimum :: <C-unsigned-long>;
-  constant slot gparamspeculong-maximum :: <C-unsigned-long>;
-  constant slot gparamspeculong-default-value :: <C-unsigned-long>;
+  constant slot g-param-spec-u-long-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-u-long-minimum :: <C-unsigned-long>;
+  constant slot g-param-spec-u-long-maximum :: <C-unsigned-long>;
+  constant slot g-param-spec-u-long-default-value :: <C-unsigned-long>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecULong*> => <GParamSpecULong>;
 
 define open C-subtype <GParamSpecUnichar> (<GParamSpec>)
-  constant slot gparamspecunichar-parent-instance :: <GParamSpec>;
-  constant slot gparamspecunichar-default-value :: <C-unsigned-int>;
+  constant slot g-param-spec-unichar-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-unichar-default-value :: <C-unsigned-int>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecUnichar*> => <GParamSpecUnichar>;
 
 define open C-subtype <GParamSpecValueArray> (<GParamSpec>)
-  constant slot gparamspecvaluearray-parent-instance :: <GParamSpec>;
-  constant slot gparamspecvaluearray-element-spec :: <GParamSpec>;
-  constant slot gparamspecvaluearray-fixed-n-elements :: <C-unsigned-int>;
+  constant slot g-param-spec-value-array-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-value-array-element-spec :: <GParamSpec>;
+  constant slot g-param-spec-value-array-fixed-n-elements :: <C-unsigned-int>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecValueArray*> => <GParamSpecValueArray>;
 
 define open C-subtype <GParamSpecVariant> (<GParamSpec>)
-  constant slot gparamspecvariant-parent-instance :: <GParamSpec>;
-  constant slot gparamspecvariant-type :: <GVariantType>;
-  constant slot gparamspecvariant-default-value :: <GVariant>;
-  constant slot gparamspecvariant-padding :: <C-void*>;
+  constant slot g-param-spec-variant-parent-instance :: <GParamSpec>;
+  constant slot g-param-spec-variant-type :: <GVariantType>;
+  constant slot g-param-spec-variant-default-value :: <GVariant>;
+  constant slot g-param-spec-variant-padding :: <C-void*>;
 end C-subtype;
 
 define C-pointer-type <GParamSpecVariant*> => <GParamSpecVariant>;
 
 define C-struct <_GParameter>
-  slot gparameter-name :: <C-string>;
-  slot gparameter-value :: <GValue>;
+  slot g-parameter-name :: <C-string>;
+  slot g-parameter-value :: <GValue>;
   pointer-type-name: <GParameter>;
 end C-struct;
 
-define constant $SIGNAL-FLAGS-MASK = 511;
+define constant $signal-flags-mask = 511;
 
-define constant $SIGNAL-MATCH-MASK = 63;
+define constant $signal-match-mask = 63;
 
-define constant $G-SIGNAL-RUN-FIRST = 1;
-define constant $G-SIGNAL-RUN-LAST = 2;
-define constant $G-SIGNAL-RUN-CLEANUP = 4;
-define constant $G-SIGNAL-NO-RECURSE = 8;
-define constant $G-SIGNAL-DETAILED = 16;
-define constant $G-SIGNAL-ACTION = 32;
-define constant $G-SIGNAL-NO-HOOKS = 64;
-define constant $G-SIGNAL-MUST-COLLECT = 128;
-define constant $G-SIGNAL-DEPRECATED = 256;
+define constant $g-signal-run-first = 1;
+define constant $g-signal-run-last = 2;
+define constant $g-signal-run-cleanup = 4;
+define constant $g-signal-no-recurse = 8;
+define constant $g-signal-detailed = 16;
+define constant $g-signal-action = 32;
+define constant $g-signal-no-hooks = 64;
+define constant $g-signal-must-collect = 128;
+define constant $g-signal-deprecated = 256;
 define constant <GSignalFlags> = <C-int>;
 define C-pointer-type <GSignalFlags*> => <GSignalFlags>;
 
 define C-struct <_GSignalInvocationHint>
-  slot gsignalinvocationhint-signal-id :: <C-unsigned-int>;
-  slot gsignalinvocationhint-detail :: <C-unsigned-int>;
-  slot gsignalinvocationhint-run-type :: <GSignalFlags>;
+  slot g-signal-invocation-hint-signal-id :: <C-unsigned-int>;
+  slot g-signal-invocation-hint-detail :: <C-unsigned-int>;
+  slot g-signal-invocation-hint-run-type :: <GSignalFlags>;
   pointer-type-name: <GSignalInvocationHint>;
 end C-struct;
 
-define constant $G-SIGNAL-MATCH-ID = 1;
-define constant $G-SIGNAL-MATCH-DETAIL = 2;
-define constant $G-SIGNAL-MATCH-CLOSURE = 4;
-define constant $G-SIGNAL-MATCH-FUNC = 8;
-define constant $G-SIGNAL-MATCH-DATA = 16;
-define constant $G-SIGNAL-MATCH-UNBLOCKED = 32;
+define constant $g-signal-match-id = 1;
+define constant $g-signal-match-detail = 2;
+define constant $g-signal-match-closure = 4;
+define constant $g-signal-match-func = 8;
+define constant $g-signal-match-data = 16;
+define constant $g-signal-match-unblocked = 32;
 define constant <GSignalMatchType> = <C-int>;
 define C-pointer-type <GSignalMatchType*> => <GSignalMatchType>;
 
 define C-struct <_GSignalQuery>
-  slot gsignalquery-signal-id :: <C-unsigned-int>;
-  slot gsignalquery-signal-name :: <C-string>;
-  slot gsignalquery-itype :: <C-long>;
-  slot gsignalquery-signal-flags :: <GSignalFlags>;
-  slot gsignalquery-return-type :: <C-long>;
-  slot gsignalquery-n-params :: <C-unsigned-int>;
-  slot gsignalquery-param-types :: <C-long*>;
+  slot g-signal-query-signal-id :: <C-unsigned-int>;
+  slot g-signal-query-signal-name :: <C-string>;
+  slot g-signal-query-itype :: <C-long>;
+  slot g-signal-query-signal-flags :: <GSignalFlags>;
+  slot g-signal-query-return-type :: <C-long>;
+  slot g-signal-query-n-params :: <C-unsigned-int>;
+  slot g-signal-query-param-types :: <C-long*>;
   pointer-type-name: <GSignalQuery>;
 end C-struct;
 
-define constant $TYPE-FLAG-RESERVED-ID-BIT = 1;
+define constant $type-flag-reserved-id-bit = 1;
 
-define constant $TYPE-FUNDAMENTAL-MAX = 255;
+define constant $type-fundamental-max = 255;
 
-define constant $TYPE-FUNDAMENTAL-SHIFT = 2;
+define constant $type-fundamental-shift = 2;
 
-define constant $TYPE-RESERVED-BSE-FIRST = 32;
+define constant $type-reserved-bse-first = 32;
 
-define constant $TYPE-RESERVED-BSE-LAST = 48;
+define constant $type-reserved-bse-last = 48;
 
-define constant $TYPE-RESERVED-GLIB-FIRST = 22;
+define constant $type-reserved-glib-first = 22;
 
-define constant $TYPE-RESERVED-GLIB-LAST = 31;
+define constant $type-reserved-glib-last = 31;
 
-define constant $TYPE-RESERVED-USER-FIRST = 49;
+define constant $type-reserved-user-first = 49;
 
 define C-union <_GTypeCValue>
-  slot gtypecvalue-v-int :: <C-signed-int>;
-  slot gtypecvalue-v-long :: <C-signed-long>;
-  slot gtypecvalue-v-int64 :: <C-signed-long>;
-  slot gtypecvalue-v-double :: <C-double>;
-  slot gtypecvalue-v-pointer :: <C-void*>;
+  slot g-type-c-value-v-int :: <C-signed-int>;
+  slot g-type-c-value-v-long :: <C-signed-long>;
+  slot g-type-c-value-v-int64 :: <C-signed-long>;
+  slot g-type-c-value-v-double :: <C-double>;
+  slot g-type-c-value-v-pointer :: <C-void*>;
   pointer-type-name: <GTypeCValue>;
 end C-union;
 
 define C-struct <_GTypeClass>
-  constant slot gtypeclass-g-type :: <C-long>;
+  constant slot g-type-class-g-type :: <C-long>;
   pointer-type-name: <GTypeClass>;
 end C-struct;
 
@@ -1130,44 +1130,44 @@ define C-function g-type-class-ref
   c-name: "g_type_class_ref";
 end;
 
-define constant $G-TYPE-FLAG-ABSTRACT = 16;
-define constant $G-TYPE-FLAG-VALUE-ABSTRACT = 32;
+define constant $g-type-flag-abstract = 16;
+define constant $g-type-flag-value-abstract = 32;
 define constant <GTypeFlags> = <C-int>;
 define C-pointer-type <GTypeFlags*> => <GTypeFlags>;
 
-define constant $G-TYPE-FLAG-CLASSED = 1;
-define constant $G-TYPE-FLAG-INSTANTIATABLE = 2;
-define constant $G-TYPE-FLAG-DERIVABLE = 4;
-define constant $G-TYPE-FLAG-DEEP-DERIVABLE = 8;
+define constant $g-type-flag-classed = 1;
+define constant $g-type-flag-instantiatable = 2;
+define constant $g-type-flag-derivable = 4;
+define constant $g-type-flag-deep-derivable = 8;
 define constant <GTypeFundamentalFlags> = <C-int>;
 define C-pointer-type <GTypeFundamentalFlags*> => <GTypeFundamentalFlags>;
 
 define C-struct <_GTypeFundamentalInfo>
-  slot gtypefundamentalinfo-type-flags :: <GTypeFundamentalFlags>;
+  slot g-type-fundamental-info-type-flags :: <GTypeFundamentalFlags>;
   pointer-type-name: <GTypeFundamentalInfo>;
 end C-struct;
 
 define C-struct <_GTypeInfo>
-  slot gtypeinfo-class-size :: <C-unsigned-short>;
-  slot gtypeinfo-base-init :: <C-function-pointer>;
-  slot gtypeinfo-base-finalize :: <C-function-pointer>;
-  slot gtypeinfo-class-init :: <C-function-pointer>;
-  slot gtypeinfo-class-finalize :: <C-function-pointer>;
-  slot gtypeinfo-class-data :: <C-void*>;
-  slot gtypeinfo-instance-size :: <C-unsigned-short>;
-  slot gtypeinfo-n-preallocs :: <C-unsigned-short>;
-  slot gtypeinfo-instance-init :: <C-function-pointer>;
-  slot gtypeinfo-value-table :: <GTypeValueTable>;
+  slot g-type-info-class-size :: <C-unsigned-short>;
+  slot g-type-info-base-init :: <C-function-pointer>;
+  slot g-type-info-base-finalize :: <C-function-pointer>;
+  slot g-type-info-class-init :: <C-function-pointer>;
+  slot g-type-info-class-finalize :: <C-function-pointer>;
+  slot g-type-info-class-data :: <C-void*>;
+  slot g-type-info-instance-size :: <C-unsigned-short>;
+  slot g-type-info-n-preallocs :: <C-unsigned-short>;
+  slot g-type-info-instance-init :: <C-function-pointer>;
+  slot g-type-info-value-table :: <GTypeValueTable>;
   pointer-type-name: <GTypeInfo>;
 end C-struct;
 
 define open C-subtype <GTypeInstance> (<C-void*>)
-  constant slot gtypeinstance-g-class :: <GTypeClass>;
+  constant slot g-type-instance-g-class :: <GTypeClass>;
 end C-subtype;
 
 define C-struct <_GTypeInterface>
-  constant slot gtypeinterface-g-type :: <C-long>;
-  constant slot gtypeinterface-g-instance-type :: <C-long>;
+  constant slot g-type-interface-g-type :: <C-long>;
+  constant slot g-type-interface-g-instance-type :: <C-long>;
   pointer-type-name: <GTypeInterface>;
 end C-struct;
 
@@ -1205,11 +1205,11 @@ define C-function g-type-interface-prerequisites
 end;
 
 define open C-subtype <GTypeModule> (<GObject>)
-  constant slot gtypemodule-parent-instance :: <GObject>;
-  constant slot gtypemodule-use-count :: <C-unsigned-int>;
-  constant slot gtypemodule-type-infos :: <GSList>;
-  constant slot gtypemodule-interface-infos :: <GSList>;
-  constant slot gtypemodule-name :: <C-string>;
+  constant slot g-type-module-parent-instance :: <GObject>;
+  constant slot g-type-module-use-count :: <C-unsigned-int>;
+  constant slot g-type-module-type-infos :: <GSList>;
+  constant slot g-type-module-interface-infos :: <GSList>;
+  constant slot g-type-module-name :: <C-string>;
 end C-subtype;
 
 define C-pointer-type <GTypeModule*> => <GTypeModule>;
@@ -1266,13 +1266,13 @@ define C-function g-type-module-use
 end;
 
 define C-struct <_GTypeModuleClass>
-  constant slot gtypemoduleclass-parent-class :: <GObjectClass>;
-  constant slot gtypemoduleclass-load :: <C-function-pointer>;
-  constant slot gtypemoduleclass-unload :: <C-function-pointer>;
-  constant slot gtypemoduleclass-reserved1 :: <C-function-pointer>;
-  constant slot gtypemoduleclass-reserved2 :: <C-function-pointer>;
-  constant slot gtypemoduleclass-reserved3 :: <C-function-pointer>;
-  constant slot gtypemoduleclass-reserved4 :: <C-function-pointer>;
+  constant slot g-type-module-class-parent-class :: <GObjectClass>;
+  constant slot g-type-module-class-load :: <C-function-pointer>;
+  constant slot g-type-module-class-unload :: <C-function-pointer>;
+  constant slot g-type-module-class-reserved1 :: <C-function-pointer>;
+  constant slot g-type-module-class-reserved2 :: <C-function-pointer>;
+  constant slot g-type-module-class-reserved3 :: <C-function-pointer>;
+  constant slot g-type-module-class-reserved4 :: <C-function-pointer>;
   pointer-type-name: <GTypeModuleClass>;
 end C-struct;
 
@@ -1309,41 +1309,41 @@ define C-function g-type-plugin-use
 end;
 
 define C-struct <_GTypePluginClass>
-  constant slot gtypepluginclass-base-iface :: <GTypeInterface>;
-  slot gtypepluginclass-use-plugin :: <C-function-pointer>;
-  slot gtypepluginclass-unuse-plugin :: <C-function-pointer>;
-  slot gtypepluginclass-complete-type-info :: <C-function-pointer>;
-  slot gtypepluginclass-complete-interface-info :: <C-function-pointer>;
+  constant slot g-type-plugin-class-base-iface :: <GTypeInterface>;
+  slot g-type-plugin-class-use-plugin :: <C-function-pointer>;
+  slot g-type-plugin-class-unuse-plugin :: <C-function-pointer>;
+  slot g-type-plugin-class-complete-type-info :: <C-function-pointer>;
+  slot g-type-plugin-class-complete-interface-info :: <C-function-pointer>;
   pointer-type-name: <GTypePluginClass>;
 end C-struct;
 
 define C-struct <_GTypeQuery>
-  slot gtypequery-type :: <C-long>;
-  slot gtypequery-type-name :: <C-string>;
-  slot gtypequery-class-size :: <C-unsigned-int>;
-  slot gtypequery-instance-size :: <C-unsigned-int>;
+  slot g-type-query-type :: <C-long>;
+  slot g-type-query-type-name :: <C-string>;
+  slot g-type-query-class-size :: <C-unsigned-int>;
+  slot g-type-query-instance-size :: <C-unsigned-int>;
   pointer-type-name: <GTypeQuery>;
 end C-struct;
 
 define C-struct <_GTypeValueTable>
-  constant slot gtypevaluetable-value-init :: <C-function-pointer>;
-  constant slot gtypevaluetable-value-free :: <C-function-pointer>;
-  constant slot gtypevaluetable-value-copy :: <C-function-pointer>;
-  constant slot gtypevaluetable-value-peek-pointer :: <C-void*>;
-  slot gtypevaluetable-collect-format :: <C-string>;
-  constant slot gtypevaluetable-collect-value :: <C-function-pointer>;
-  slot gtypevaluetable-lcopy-format :: <C-string>;
-  constant slot gtypevaluetable-lcopy-value :: <C-function-pointer>;
+  constant slot g-type-value-table-value-init :: <C-function-pointer>;
+  constant slot g-type-value-table-value-free :: <C-function-pointer>;
+  constant slot g-type-value-table-value-copy :: <C-function-pointer>;
+  constant slot g-type-value-table-value-peek-pointer :: <C-void*>;
+  slot g-type-value-table-collect-format :: <C-string>;
+  constant slot g-type-value-table-collect-value :: <C-function-pointer>;
+  slot g-type-value-table-lcopy-format :: <C-string>;
+  constant slot g-type-value-table-lcopy-value :: <C-function-pointer>;
   pointer-type-name: <GTypeValueTable>;
 end C-struct;
 
-define constant $VALUE-COLLECT-FORMAT-MAX-LENGTH = 8;
+define constant $value-collect-format-max-length = 8;
 
-define constant $VALUE-NOCOPY-CONTENTS = 134217728;
+define constant $value-nocopy-contents = 134217728;
 
 define C-struct <_GValue>
-  constant slot gvalue-g-type :: <C-long>;
-  slot gvalue-data :: <C-unsigned-char*> /* Not supported */;
+  constant slot g-value-g-type :: <C-long>;
+  slot g-value-data :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GValue>;
 end C-struct;
 
@@ -1723,9 +1723,9 @@ define C-function g-value-type-transformable
 end;
 
 define C-struct <_GValueArray>
-  slot gvaluearray-n-values :: <C-unsigned-int>;
-  slot gvaluearray-values :: <GValue>;
-  constant slot gvaluearray-n-prealloced :: <C-unsigned-int>;
+  slot g-value-array-n-values :: <C-unsigned-int>;
+  slot g-value-array-values :: <GValue>;
+  constant slot g-value-array-n-prealloced :: <C-unsigned-int>;
   pointer-type-name: <GValueArray>;
 end C-struct;
 
@@ -1795,15 +1795,15 @@ define C-struct <_GWeakRef>
 end C-struct;
 
 define C-union <_G_Value--data--union>
-  slot g-value--data--union-v-int :: <C-signed-int>;
-  slot g-value--data--union-v-uint :: <C-unsigned-int>;
-  slot g-value--data--union-v-long :: <C-signed-long>;
-  slot g-value--data--union-v-ulong :: <C-unsigned-long>;
-  slot g-value--data--union-v-int64 :: <C-signed-long>;
-  slot g-value--data--union-v-uint64 :: <C-unsigned-long>;
-  slot g-value--data--union-v-float :: <C-float>;
-  slot g-value--data--union-v-double :: <C-double>;
-  slot g-value--data--union-v-pointer :: <C-void*>;
+  slot g-_value--data--union-v-int :: <C-signed-int>;
+  slot g-_value--data--union-v-uint :: <C-unsigned-int>;
+  slot g-_value--data--union-v-long :: <C-signed-long>;
+  slot g-_value--data--union-v-ulong :: <C-unsigned-long>;
+  slot g-_value--data--union-v-int64 :: <C-signed-long>;
+  slot g-_value--data--union-v-uint64 :: <C-unsigned-long>;
+  slot g-_value--data--union-v-float :: <C-float>;
+  slot g-_value--data--union-v-double :: <C-double>;
+  slot g-_value--data--union-v-pointer :: <C-void*>;
   pointer-type-name: <G_Value--data--union>;
 end C-union;
 
@@ -1899,17 +1899,6 @@ define C-function g-param-spec-enum
   input parameter flags_ :: <GParamFlags>;
   result res :: <GParamSpec>;
   c-name: "g_param_spec_enum";
-end;
-
-define C-function g-param-spec-flags
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter flags_type_ :: <C-long>;
-  input parameter default_value_ :: <C-unsigned-int>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_flags";
 end;
 
 define C-function g-param-spec-float
