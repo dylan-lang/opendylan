@@ -51,9 +51,9 @@ define C-function g-module-supported
   c-name: "g_module_supported";
 end;
 
-define constant $G-MODULE-BIND-LAZY = 1;
-define constant $G-MODULE-BIND-LOCAL = 2;
-define constant $G-MODULE-BIND-MASK = 3;
+define constant $g-module-bind-lazy = 1;
+define constant $g-module-bind-local = 2;
+define constant $g-module-bind-mask = 3;
 define constant <GModuleFlags> = <C-int>;
 define C-pointer-type <GModuleFlags*> => <GModuleFlags>;
 

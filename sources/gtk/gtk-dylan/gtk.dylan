@@ -6,42 +6,12 @@ copyright: See LICENSE file in this distribution.
 define C-pointer-type <C-void**> => <C-void*>;
 
 define open C-subtype <GtkAboutDialog> (<GtkDialog>)
-  constant slot gtkaboutdialog-parent-instance :: <GtkDialog>;
-  constant slot gtkaboutdialog-priv :: <GtkAboutDialogPrivate>;
+  constant slot gtk-about-dialog-parent-instance :: <GtkDialog>;
+  constant slot gtk-about-dialog-priv :: <GtkAboutDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAboutDialog*> => <GtkAboutDialog>;
 
-define property-getter aboutdialog-artists :: <C-string*> on <GtkAboutDialog> end;
-define property-setter aboutdialog-artists :: <C-string*> on <GtkAboutDialog> end;
-define property-getter aboutdialog-authors :: <C-string*> on <GtkAboutDialog> end;
-define property-setter aboutdialog-authors :: <C-string*> on <GtkAboutDialog> end;
-define property-getter aboutdialog-comments :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-comments :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-copyright :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-copyright :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-documenters :: <C-string*> on <GtkAboutDialog> end;
-define property-setter aboutdialog-documenters :: <C-string*> on <GtkAboutDialog> end;
-define property-getter aboutdialog-license :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-license :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-license-type :: <GtkLicense> on <GtkAboutDialog> end;
-define property-setter aboutdialog-license-type :: <GtkLicense> on <GtkAboutDialog> end;
-define property-getter aboutdialog-logo :: <GdkPixbuf> on <GtkAboutDialog> end;
-define property-setter aboutdialog-logo :: <GdkPixbuf> on <GtkAboutDialog> end;
-define property-getter aboutdialog-logo-icon-name :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-logo-icon-name :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-program-name :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-program-name :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-translator-credits :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-translator-credits :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-version :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-version :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-website :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-website :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-website-label :: <C-string> on <GtkAboutDialog> end;
-define property-setter aboutdialog-website-label :: <C-string> on <GtkAboutDialog> end;
-define property-getter aboutdialog-wrap-license :: <C-boolean> on <GtkAboutDialog> end;
-define property-setter aboutdialog-wrap-license :: <C-boolean> on <GtkAboutDialog> end;
 define C-function gtk-about-dialog-new
   result res :: <GtkWidget>;
   c-name: "gtk_about_dialog_new";
@@ -235,12 +205,12 @@ define C-function gtk-about-dialog-set-wrap-license
 end;
 
 define C-struct <_GtkAboutDialogClass>
-  constant slot gtkaboutdialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkaboutdialogclass-activate-link :: <C-function-pointer>;
-  constant slot gtkaboutdialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkaboutdialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkaboutdialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkaboutdialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-about-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-about-dialog-class-activate-link :: <C-function-pointer>;
+  constant slot gtk-about-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-about-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-about-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-about-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkAboutDialogClass>;
 end C-struct;
 
@@ -248,21 +218,19 @@ define C-struct <_GtkAboutDialogPrivate>
   pointer-type-name: <GtkAboutDialogPrivate>;
 end C-struct;
 
-define constant $GTK-ACCEL-VISIBLE = 1;
-define constant $GTK-ACCEL-LOCKED = 2;
-define constant $GTK-ACCEL-MASK = 7;
+define constant $gtk-accel-visible = 1;
+define constant $gtk-accel-locked = 2;
+define constant $gtk-accel-mask = 7;
 define constant <GtkAccelFlags> = <C-int>;
 define C-pointer-type <GtkAccelFlags*> => <GtkAccelFlags>;
 
 define open C-subtype <GtkAccelGroup> (<GObject>)
-  constant slot gtkaccelgroup-parent :: <GObject>;
-  constant slot gtkaccelgroup-priv :: <GtkAccelGroupPrivate>;
+  constant slot gtk-accel-group-parent :: <GObject>;
+  constant slot gtk-accel-group-priv :: <GtkAccelGroupPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAccelGroup*> => <GtkAccelGroup>;
 
-define property-getter accelgroup-is-locked :: <C-boolean> on <GtkAccelGroup> end;
-define property-getter accelgroup-modifier-mask :: <GdkModifierType> on <GtkAccelGroup> end;
 define C-function gtk-accel-group-new
   result res :: <GtkAccelGroup>;
   c-name: "gtk_accel_group_new";
@@ -355,19 +323,19 @@ define C-function gtk-accel-group-unlock
 end;
 
 define C-struct <_GtkAccelGroupClass>
-  constant slot gtkaccelgroupclass-parent-class :: <GObjectClass>;
-  constant slot gtkaccelgroupclass-accel-changed :: <C-function-pointer>;
-  constant slot gtkaccelgroupclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkaccelgroupclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkaccelgroupclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkaccelgroupclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-accel-group-class-parent-class :: <GObjectClass>;
+  constant slot gtk-accel-group-class-accel-changed :: <C-function-pointer>;
+  constant slot gtk-accel-group-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-accel-group-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-accel-group-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-accel-group-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkAccelGroupClass>;
 end C-struct;
 
 define C-struct <_GtkAccelGroupEntry>
-  slot gtkaccelgroupentry-key :: <GtkAccelKey>;
-  slot gtkaccelgroupentry-closure :: <GClosure>;
-  slot gtkaccelgroupentry-accel-path-quark :: <C-unsigned-int>;
+  slot gtk-accel-group-entry-key :: <GtkAccelKey>;
+  slot gtk-accel-group-entry-closure :: <GClosure>;
+  slot gtk-accel-group-entry-accel-path-quark :: <C-unsigned-int>;
   pointer-type-name: <GtkAccelGroupEntry>;
 end C-struct;
 
@@ -376,23 +344,19 @@ define C-struct <_GtkAccelGroupPrivate>
 end C-struct;
 
 define C-struct <_GtkAccelKey>
-  slot gtkaccelkey-accel-key :: <C-unsigned-int>;
-  slot gtkaccelkey-accel-mods :: <GdkModifierType>;
-  slot gtkaccelkey-accel-flags :: <C-unsigned-int>;
+  slot gtk-accel-key-accel-key :: <C-unsigned-int>;
+  slot gtk-accel-key-accel-mods :: <GdkModifierType>;
+  slot gtk-accel-key-accel-flags :: <C-unsigned-int>;
   pointer-type-name: <GtkAccelKey>;
 end C-struct;
 
 define open C-subtype <GtkAccelLabel> (<GtkLabel>)
-  constant slot gtkaccellabel-label :: <GtkLabel>;
-  constant slot gtkaccellabel-priv :: <GtkAccelLabelPrivate>;
+  constant slot gtk-accel-label-label :: <GtkLabel>;
+  constant slot gtk-accel-label-priv :: <GtkAccelLabelPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAccelLabel*> => <GtkAccelLabel>;
 
-define property-getter accellabel-accel-closure :: <GClosure> on <GtkAccelLabel> end;
-define property-setter accellabel-accel-closure :: <GClosure> on <GtkAccelLabel> end;
-define property-getter accellabel-accel-widget :: <GtkWidget> on <GtkAccelLabel> end;
-define property-setter accellabel-accel-widget :: <GtkWidget> on <GtkAccelLabel> end;
 define C-function gtk-accel-label-new
   input parameter string_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -430,17 +394,17 @@ define C-function gtk-accel-label-set-accel-widget
 end;
 
 define C-struct <_GtkAccelLabelClass>
-  constant slot gtkaccellabelclass-parent-class :: <GtkLabelClass>;
-  constant slot gtkaccellabelclass-signal-quote1 :: <C-string>;
-  constant slot gtkaccellabelclass-signal-quote2 :: <C-string>;
-  constant slot gtkaccellabelclass-mod-name-shift :: <C-string>;
-  constant slot gtkaccellabelclass-mod-name-control :: <C-string>;
-  constant slot gtkaccellabelclass-mod-name-alt :: <C-string>;
-  constant slot gtkaccellabelclass-mod-separator :: <C-string>;
-  constant slot gtkaccellabelclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkaccellabelclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkaccellabelclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkaccellabelclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-accel-label-class-parent-class :: <GtkLabelClass>;
+  constant slot gtk-accel-label-class-signal-quote1 :: <C-string>;
+  constant slot gtk-accel-label-class-signal-quote2 :: <C-string>;
+  constant slot gtk-accel-label-class-mod-name-shift :: <C-string>;
+  constant slot gtk-accel-label-class-mod-name-control :: <C-string>;
+  constant slot gtk-accel-label-class-mod-name-alt :: <C-string>;
+  constant slot gtk-accel-label-class-mod-separator :: <C-string>;
+  constant slot gtk-accel-label-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-accel-label-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-accel-label-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-accel-label-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkAccelLabelClass>;
 end C-struct;
 
@@ -538,14 +502,12 @@ define C-struct <_GtkAccelMapClass>
 end C-struct;
 
 define open C-subtype <GtkAccessible> (<AtkObject>)
-  constant slot gtkaccessible-parent :: <AtkObject>;
-  constant slot gtkaccessible-priv :: <GtkAccessiblePrivate>;
+  constant slot gtk-accessible-parent :: <AtkObject>;
+  constant slot gtk-accessible-priv :: <GtkAccessiblePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAccessible*> => <GtkAccessible>;
 
-define property-getter accessible-widget :: <GtkWidget> on <GtkAccessible> end;
-define property-setter accessible-widget :: <GtkWidget> on <GtkAccessible> end;
 define C-function gtk-accessible-connect-widget-destroyed
   input parameter self :: <GtkAccessible>;
   c-name: "gtk_accessible_connect_widget_destroyed";
@@ -564,12 +526,12 @@ define C-function gtk-accessible-set-widget
 end;
 
 define C-struct <_GtkAccessibleClass>
-  constant slot gtkaccessibleclass-parent-class :: <AtkObjectClass>;
-  constant slot gtkaccessibleclass-connect-widget-destroyed :: <C-function-pointer>;
-  constant slot gtkaccessibleclass-widget-set :: <C-function-pointer>;
-  constant slot gtkaccessibleclass-widget-unset :: <C-function-pointer>;
-  constant slot gtkaccessibleclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkaccessibleclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-accessible-class-parent-class :: <AtkObjectClass>;
+  constant slot gtk-accessible-class-connect-widget-destroyed :: <C-function-pointer>;
+  constant slot gtk-accessible-class-widget-set :: <C-function-pointer>;
+  constant slot gtk-accessible-class-widget-unset :: <C-function-pointer>;
+  constant slot gtk-accessible-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-accessible-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkAccessibleClass>;
 end C-struct;
 
@@ -578,44 +540,12 @@ define C-struct <_GtkAccessiblePrivate>
 end C-struct;
 
 define open C-subtype <GtkAction> (<GObject>)
-  constant slot gtkaction-object :: <GObject>;
-  constant slot gtkaction-private-data :: <GtkActionPrivate>;
+  constant slot gtk-action-object :: <GObject>;
+  constant slot gtk-action-private-data :: <GtkActionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAction*> => <GtkAction>;
 
-define property-getter action-action-group :: <GtkActionGroup> on <GtkAction> end;
-define property-setter action-action-group :: <GtkActionGroup> on <GtkAction> end;
-define property-getter action-always-show-image :: <C-boolean> on <GtkAction> end;
-define property-setter action-always-show-image :: <C-boolean> on <GtkAction> end;
-define property-getter action-gicon :: <GIcon> on <GtkAction> end;
-define property-setter action-gicon :: <GIcon> on <GtkAction> end;
-define property-getter action-hide-if-empty :: <C-boolean> on <GtkAction> end;
-define property-setter action-hide-if-empty :: <C-boolean> on <GtkAction> end;
-define property-getter action-icon-name :: <C-string> on <GtkAction> end;
-define property-setter action-icon-name :: <C-string> on <GtkAction> end;
-define property-getter action-is-important :: <C-boolean> on <GtkAction> end;
-define property-setter action-is-important :: <C-boolean> on <GtkAction> end;
-define property-getter action-label :: <C-string> on <GtkAction> end;
-define property-setter action-label :: <C-string> on <GtkAction> end;
-define property-getter action-name :: <C-string> on <GtkAction> end;
-define property-setter action-name :: <C-string> on <GtkAction> end;
-define property-getter action-sensitive :: <C-boolean> on <GtkAction> end;
-define property-setter action-sensitive :: <C-boolean> on <GtkAction> end;
-define property-getter action-short-label :: <C-string> on <GtkAction> end;
-define property-setter action-short-label :: <C-string> on <GtkAction> end;
-define property-getter action-stock-id :: <C-string> on <GtkAction> end;
-define property-setter action-stock-id :: <C-string> on <GtkAction> end;
-define property-getter action-tooltip :: <C-string> on <GtkAction> end;
-define property-setter action-tooltip :: <C-string> on <GtkAction> end;
-define property-getter action-visible :: <C-boolean> on <GtkAction> end;
-define property-setter action-visible :: <C-boolean> on <GtkAction> end;
-define property-getter action-visible-horizontal :: <C-boolean> on <GtkAction> end;
-define property-setter action-visible-horizontal :: <C-boolean> on <GtkAction> end;
-define property-getter action-visible-overflown :: <C-boolean> on <GtkAction> end;
-define property-setter action-visible-overflown :: <C-boolean> on <GtkAction> end;
-define property-getter action-visible-vertical :: <C-boolean> on <GtkAction> end;
-define property-setter action-visible-vertical :: <C-boolean> on <GtkAction> end;
 define C-function gtk-action-new
   input parameter name_ :: <C-string>;
   input parameter label_ :: <C-string>;
@@ -868,45 +798,39 @@ define C-function gtk-action-unblock-activate
 end;
 
 define C-struct <_GtkActionClass>
-  constant slot gtkactionclass-parent-class :: <GObjectClass>;
-  constant slot gtkactionclass-activate :: <C-function-pointer>;
-  constant slot gtkactionclass-menu-item-type :: <C-long>;
-  constant slot gtkactionclass-toolbar-item-type :: <C-long>;
-  constant slot gtkactionclass-create-menu-item :: <C-function-pointer>;
-  constant slot gtkactionclass-create-tool-item :: <C-function-pointer>;
-  constant slot gtkactionclass-connect-proxy :: <C-function-pointer>;
-  constant slot gtkactionclass-disconnect-proxy :: <C-function-pointer>;
-  constant slot gtkactionclass-create-menu :: <C-function-pointer>;
-  constant slot gtkactionclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkactionclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkactionclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkactionclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-action-class-parent-class :: <GObjectClass>;
+  constant slot gtk-action-class-activate :: <C-function-pointer>;
+  constant slot gtk-action-class-menu-item-type :: <C-long>;
+  constant slot gtk-action-class-toolbar-item-type :: <C-long>;
+  constant slot gtk-action-class-create-menu-item :: <C-function-pointer>;
+  constant slot gtk-action-class-create-tool-item :: <C-function-pointer>;
+  constant slot gtk-action-class-connect-proxy :: <C-function-pointer>;
+  constant slot gtk-action-class-disconnect-proxy :: <C-function-pointer>;
+  constant slot gtk-action-class-create-menu :: <C-function-pointer>;
+  constant slot gtk-action-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-action-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-action-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-action-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkActionClass>;
 end C-struct;
 
 define C-struct <_GtkActionEntry>
-  slot gtkactionentry-name :: <C-string>;
-  slot gtkactionentry-stock-id :: <C-string>;
-  slot gtkactionentry-label :: <C-string>;
-  slot gtkactionentry-accelerator :: <C-string>;
-  slot gtkactionentry-tooltip :: <C-string>;
-  slot gtkactionentry-callback :: <C-function-pointer>;
+  slot gtk-action-entry-name :: <C-string>;
+  slot gtk-action-entry-stock-id :: <C-string>;
+  slot gtk-action-entry-label :: <C-string>;
+  slot gtk-action-entry-accelerator :: <C-string>;
+  slot gtk-action-entry-tooltip :: <C-string>;
+  slot gtk-action-entry-callback :: <C-function-pointer>;
   pointer-type-name: <GtkActionEntry>;
 end C-struct;
 
 define open C-subtype <GtkActionGroup> (<GObject>)
-  constant slot gtkactiongroup-parent :: <GObject>;
-  constant slot gtkactiongroup-priv :: <GtkActionGroupPrivate>;
+  constant slot gtk-action-group-parent :: <GObject>;
+  constant slot gtk-action-group-priv :: <GtkActionGroupPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkActionGroup*> => <GtkActionGroup>;
 
-define property-getter actiongroup-name :: <C-string> on <GtkActionGroup> end;
-define property-setter actiongroup-name :: <C-string> on <GtkActionGroup> end;
-define property-getter actiongroup-sensitive :: <C-boolean> on <GtkActionGroup> end;
-define property-setter actiongroup-sensitive :: <C-boolean> on <GtkActionGroup> end;
-define property-getter actiongroup-visible :: <C-boolean> on <GtkActionGroup> end;
-define property-setter actiongroup-visible :: <C-boolean> on <GtkActionGroup> end;
 define C-function gtk-action-group-new
   input parameter name_ :: <C-string>;
   result res :: <GtkActionGroup>;
@@ -997,12 +921,12 @@ define C-function gtk-action-group-translate-string
 end;
 
 define C-struct <_GtkActionGroupClass>
-  constant slot gtkactiongroupclass-parent-class :: <GObjectClass>;
-  constant slot gtkactiongroupclass-get-action :: <C-function-pointer>;
-  constant slot gtkactiongroupclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkactiongroupclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkactiongroupclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkactiongroupclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-action-group-class-parent-class :: <GObjectClass>;
+  constant slot gtk-action-group-class-get-action :: <C-function-pointer>;
+  constant slot gtk-action-group-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-action-group-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-action-group-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-action-group-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkActionGroupClass>;
 end C-struct;
 
@@ -1051,11 +975,11 @@ define C-function gtk-actionable-set-detailed-action-name
 end;
 
 define C-struct <_GtkActionableInterface>
-  constant slot gtkactionableinterface-g-iface :: <GTypeInterface>;
-  constant slot gtkactionableinterface-get-action-name :: <C-function-pointer>;
-  constant slot gtkactionableinterface-set-action-name :: <C-function-pointer>;
-  constant slot gtkactionableinterface-get-action-target-value :: <C-function-pointer>;
-  constant slot gtkactionableinterface-set-action-target-value :: <C-function-pointer>;
+  constant slot gtk-actionable-interface-g-iface :: <GTypeInterface>;
+  constant slot gtk-actionable-interface-get-action-name :: <C-function-pointer>;
+  constant slot gtk-actionable-interface-set-action-name :: <C-function-pointer>;
+  constant slot gtk-actionable-interface-get-action-target-value :: <C-function-pointer>;
+  constant slot gtk-actionable-interface-set-action-target-value :: <C-function-pointer>;
   pointer-type-name: <GtkActionableInterface>;
 end C-struct;
 
@@ -1102,31 +1026,19 @@ define C-function gtk-activatable-sync-action-properties
 end;
 
 define C-struct <_GtkActivatableIface>
-  constant slot gtkactivatableiface-g-iface :: <GTypeInterface>;
-  constant slot gtkactivatableiface-update :: <C-function-pointer>;
-  constant slot gtkactivatableiface-sync-action-properties :: <C-function-pointer>;
+  constant slot gtk-activatable-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-activatable-iface-update :: <C-function-pointer>;
+  constant slot gtk-activatable-iface-sync-action-properties :: <C-function-pointer>;
   pointer-type-name: <GtkActivatableIface>;
 end C-struct;
 
 define open C-subtype <GtkAdjustment> (<GInitiallyUnowned>)
-  constant slot gtkadjustment-parent-instance :: <GInitiallyUnowned>;
-  constant slot gtkadjustment-priv :: <GtkAdjustmentPrivate>;
+  constant slot gtk-adjustment-parent-instance :: <GInitiallyUnowned>;
+  constant slot gtk-adjustment-priv :: <GtkAdjustmentPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAdjustment*> => <GtkAdjustment>;
 
-define property-getter adjustment-lower :: <C-double> on <GtkAdjustment> end;
-define property-setter adjustment-lower :: <C-double> on <GtkAdjustment> end;
-define property-getter adjustment-page-increment :: <C-double> on <GtkAdjustment> end;
-define property-setter adjustment-page-increment :: <C-double> on <GtkAdjustment> end;
-define property-getter adjustment-page-size :: <C-double> on <GtkAdjustment> end;
-define property-setter adjustment-page-size :: <C-double> on <GtkAdjustment> end;
-define property-getter adjustment-step-increment :: <C-double> on <GtkAdjustment> end;
-define property-setter adjustment-step-increment :: <C-double> on <GtkAdjustment> end;
-define property-getter adjustment-upper :: <C-double> on <GtkAdjustment> end;
-define property-setter adjustment-upper :: <C-double> on <GtkAdjustment> end;
-define property-getter adjustment-value :: <C-double> on <GtkAdjustment> end;
-define property-setter adjustment-value :: <C-double> on <GtkAdjustment> end;
 define C-function gtk-adjustment-new
   input parameter value_ :: <C-double>;
   input parameter lower_ :: <C-double>;
@@ -1245,13 +1157,13 @@ define C-function gtk-adjustment-value-changed
 end;
 
 define C-struct <_GtkAdjustmentClass>
-  constant slot gtkadjustmentclass-parent-class :: <GInitiallyUnownedClass>;
-  constant slot gtkadjustmentclass-changed :: <C-function-pointer>;
-  constant slot gtkadjustmentclass-value-changed :: <C-function-pointer>;
-  constant slot gtkadjustmentclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkadjustmentclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkadjustmentclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkadjustmentclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-adjustment-class-parent-class :: <GInitiallyUnownedClass>;
+  constant slot gtk-adjustment-class-changed :: <C-function-pointer>;
+  constant slot gtk-adjustment-class-value-changed :: <C-function-pointer>;
+  constant slot gtk-adjustment-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-adjustment-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-adjustment-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-adjustment-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkAdjustmentClass>;
 end C-struct;
 
@@ -1259,36 +1171,20 @@ define C-struct <_GtkAdjustmentPrivate>
   pointer-type-name: <GtkAdjustmentPrivate>;
 end C-struct;
 
-define constant $GTK-ALIGN-FILL = 0;
-define constant $GTK-ALIGN-START = 1;
-define constant $GTK-ALIGN-END = 2;
-define constant $GTK-ALIGN-CENTER = 3;
+define constant $gtk-align-fill = 0;
+define constant $gtk-align-start = 1;
+define constant $gtk-align-end = 2;
+define constant $gtk-align-center = 3;
 define constant <GtkAlign> = <C-int>;
 define C-pointer-type <GtkAlign*> => <GtkAlign>;
 
 define open C-subtype <GtkAlignment> (<GtkBin>)
-  constant slot gtkalignment-bin :: <GtkBin>;
-  constant slot gtkalignment-priv :: <GtkAlignmentPrivate>;
+  constant slot gtk-alignment-bin :: <GtkBin>;
+  constant slot gtk-alignment-priv :: <GtkAlignmentPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAlignment*> => <GtkAlignment>;
 
-define property-getter alignment-bottom-padding :: <C-unsigned-int> on <GtkAlignment> end;
-define property-setter alignment-bottom-padding :: <C-unsigned-int> on <GtkAlignment> end;
-define property-getter alignment-left-padding :: <C-unsigned-int> on <GtkAlignment> end;
-define property-setter alignment-left-padding :: <C-unsigned-int> on <GtkAlignment> end;
-define property-getter alignment-right-padding :: <C-unsigned-int> on <GtkAlignment> end;
-define property-setter alignment-right-padding :: <C-unsigned-int> on <GtkAlignment> end;
-define property-getter alignment-top-padding :: <C-unsigned-int> on <GtkAlignment> end;
-define property-setter alignment-top-padding :: <C-unsigned-int> on <GtkAlignment> end;
-define property-getter alignment-xalign :: <C-float> on <GtkAlignment> end;
-define property-setter alignment-xalign :: <C-float> on <GtkAlignment> end;
-define property-getter alignment-xscale :: <C-float> on <GtkAlignment> end;
-define property-setter alignment-xscale :: <C-float> on <GtkAlignment> end;
-define property-getter alignment-yalign :: <C-float> on <GtkAlignment> end;
-define property-setter alignment-yalign :: <C-float> on <GtkAlignment> end;
-define property-getter alignment-yscale :: <C-float> on <GtkAlignment> end;
-define property-setter alignment-yscale :: <C-float> on <GtkAlignment> end;
 define C-function gtk-alignment-new
   input parameter xalign_ :: <C-float>;
   input parameter yalign_ :: <C-float>;
@@ -1326,11 +1222,11 @@ define C-function gtk-alignment-set-padding
 end;
 
 define C-struct <_GtkAlignmentClass>
-  constant slot gtkalignmentclass-parent-class :: <GtkBinClass>;
-  constant slot gtkalignmentclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkalignmentclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkalignmentclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkalignmentclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-alignment-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-alignment-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-alignment-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-alignment-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-alignment-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkAlignmentClass>;
 end C-struct;
 
@@ -1362,18 +1258,12 @@ define C-function gtk-app-chooser-refresh
 end;
 
 define open C-subtype <GtkAppChooserButton> (<GtkComboBox>)
-  constant slot gtkappchooserbutton-parent :: <GtkComboBox>;
-  constant slot gtkappchooserbutton-priv :: <GtkAppChooserButtonPrivate>;
+  constant slot gtk-app-chooser-button-parent :: <GtkComboBox>;
+  constant slot gtk-app-chooser-button-priv :: <GtkAppChooserButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAppChooserButton*> => <GtkAppChooserButton>;
 
-define property-getter appchooserbutton-heading :: <C-string> on <GtkAppChooserButton> end;
-define property-setter appchooserbutton-heading :: <C-string> on <GtkAppChooserButton> end;
-define property-getter appchooserbutton-show-default-item :: <C-boolean> on <GtkAppChooserButton> end;
-define property-setter appchooserbutton-show-default-item :: <C-boolean> on <GtkAppChooserButton> end;
-define property-getter appchooserbutton-show-dialog-item :: <C-boolean> on <GtkAppChooserButton> end;
-define property-setter appchooserbutton-show-dialog-item :: <C-boolean> on <GtkAppChooserButton> end;
 define C-function gtk-app-chooser-button-new
   input parameter content_type_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -1436,9 +1326,9 @@ define C-function gtk-app-chooser-button-set-show-dialog-item
 end;
 
 define C-struct <_GtkAppChooserButtonClass>
-  constant slot gtkappchooserbuttonclass-parent-class :: <GtkComboBoxClass>;
-  constant slot gtkappchooserbuttonclass-custom-item-activated :: <C-function-pointer>;
-  constant slot gtkappchooserbuttonclass-padding :: <C-void*>;
+  constant slot gtk-app-chooser-button-class-parent-class :: <GtkComboBoxClass>;
+  constant slot gtk-app-chooser-button-class-custom-item-activated :: <C-function-pointer>;
+  constant slot gtk-app-chooser-button-class-padding :: <C-void*>;
   pointer-type-name: <GtkAppChooserButtonClass>;
 end C-struct;
 
@@ -1447,16 +1337,12 @@ define C-struct <_GtkAppChooserButtonPrivate>
 end C-struct;
 
 define open C-subtype <GtkAppChooserDialog> (<GtkDialog>)
-  constant slot gtkappchooserdialog-parent :: <GtkDialog>;
-  constant slot gtkappchooserdialog-priv :: <GtkAppChooserDialogPrivate>;
+  constant slot gtk-app-chooser-dialog-parent :: <GtkDialog>;
+  constant slot gtk-app-chooser-dialog-priv :: <GtkAppChooserDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAppChooserDialog*> => <GtkAppChooserDialog>;
 
-define property-getter appchooserdialog-gfile :: <GFile> on <GtkAppChooserDialog> end;
-define property-setter appchooserdialog-gfile :: <GFile> on <GtkAppChooserDialog> end;
-define property-getter appchooserdialog-heading :: <C-string> on <GtkAppChooserDialog> end;
-define property-setter appchooserdialog-heading :: <C-string> on <GtkAppChooserDialog> end;
 define C-function gtk-app-chooser-dialog-new
   input parameter parent_ :: <GtkWindow>;
   input parameter flags_ :: <GtkDialogFlags>;
@@ -1492,8 +1378,8 @@ define C-function gtk-app-chooser-dialog-set-heading
 end;
 
 define C-struct <_GtkAppChooserDialogClass>
-  constant slot gtkappchooserdialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkappchooserdialogclass-padding :: <C-void*>;
+  constant slot gtk-app-chooser-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-app-chooser-dialog-class-padding :: <C-void*>;
   pointer-type-name: <GtkAppChooserDialogClass>;
 end C-struct;
 
@@ -1502,24 +1388,12 @@ define C-struct <_GtkAppChooserDialogPrivate>
 end C-struct;
 
 define open C-subtype <GtkAppChooserWidget> (<GtkBox>)
-  constant slot gtkappchooserwidget-parent :: <GtkBox>;
-  constant slot gtkappchooserwidget-priv :: <GtkAppChooserWidgetPrivate>;
+  constant slot gtk-app-chooser-widget-parent :: <GtkBox>;
+  constant slot gtk-app-chooser-widget-priv :: <GtkAppChooserWidgetPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAppChooserWidget*> => <GtkAppChooserWidget>;
 
-define property-getter appchooserwidget-default-text :: <C-string> on <GtkAppChooserWidget> end;
-define property-setter appchooserwidget-default-text :: <C-string> on <GtkAppChooserWidget> end;
-define property-getter appchooserwidget-show-all :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-setter appchooserwidget-show-all :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-getter appchooserwidget-show-default :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-setter appchooserwidget-show-default :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-getter appchooserwidget-show-fallback :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-setter appchooserwidget-show-fallback :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-getter appchooserwidget-show-other :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-setter appchooserwidget-show-other :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-getter appchooserwidget-show-recommended :: <C-boolean> on <GtkAppChooserWidget> end;
-define property-setter appchooserwidget-show-recommended :: <C-boolean> on <GtkAppChooserWidget> end;
 define C-function gtk-app-chooser-widget-new
   input parameter content_type_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -1599,11 +1473,11 @@ define C-function gtk-app-chooser-widget-set-show-recommended
 end;
 
 define C-struct <_GtkAppChooserWidgetClass>
-  constant slot gtkappchooserwidgetclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkappchooserwidgetclass-application-selected :: <C-function-pointer>;
-  constant slot gtkappchooserwidgetclass-application-activated :: <C-function-pointer>;
-  constant slot gtkappchooserwidgetclass-populate-popup :: <C-function-pointer>;
-  constant slot gtkappchooserwidgetclass-padding :: <C-void*>;
+  constant slot gtk-app-chooser-widget-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-app-chooser-widget-class-application-selected :: <C-function-pointer>;
+  constant slot gtk-app-chooser-widget-class-application-activated :: <C-function-pointer>;
+  constant slot gtk-app-chooser-widget-class-populate-popup :: <C-function-pointer>;
+  constant slot gtk-app-chooser-widget-class-padding :: <C-void*>;
   pointer-type-name: <GtkAppChooserWidgetClass>;
 end C-struct;
 
@@ -1612,18 +1486,12 @@ define C-struct <_GtkAppChooserWidgetPrivate>
 end C-struct;
 
 define open C-subtype <GtkApplication> (<GApplication>)
-  constant slot gtkapplication-parent :: <GApplication>;
-  constant slot gtkapplication-priv :: <GtkApplicationPrivate>;
+  constant slot gtk-application-parent :: <GApplication>;
+  constant slot gtk-application-priv :: <GtkApplicationPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkApplication*> => <GtkApplication>;
 
-define property-getter application-app-menu :: <GMenuModel> on <GtkApplication> end;
-define property-setter application-app-menu :: <GMenuModel> on <GtkApplication> end;
-define property-getter application-menubar :: <GMenuModel> on <GtkApplication> end;
-define property-setter application-menubar :: <GMenuModel> on <GtkApplication> end;
-define property-getter application-register-session :: <C-boolean> on <GtkApplication> end;
-define property-setter application-register-session :: <C-boolean> on <GtkApplication> end;
 define C-function gtk-application-new
   input parameter application_id_ :: <C-string>;
   input parameter flags_ :: <GApplicationFlags>;
@@ -1711,17 +1579,17 @@ define C-function gtk-application-uninhibit
 end;
 
 define C-struct <_GtkApplicationClass>
-  constant slot gtkapplicationclass-parent-class :: <GApplicationClass>;
-  constant slot gtkapplicationclass-window-added :: <C-function-pointer>;
-  constant slot gtkapplicationclass-window-removed :: <C-function-pointer>;
-  constant slot gtkapplicationclass-padding :: <C-void*>;
+  constant slot gtk-application-class-parent-class :: <GApplicationClass>;
+  constant slot gtk-application-class-window-added :: <C-function-pointer>;
+  constant slot gtk-application-class-window-removed :: <C-function-pointer>;
+  constant slot gtk-application-class-padding :: <C-void*>;
   pointer-type-name: <GtkApplicationClass>;
 end C-struct;
 
-define constant $GTK-APPLICATION-INHIBIT-LOGOUT = 1;
-define constant $GTK-APPLICATION-INHIBIT-SWITCH = 2;
-define constant $GTK-APPLICATION-INHIBIT-SUSPEND = 4;
-define constant $GTK-APPLICATION-INHIBIT-IDLE = 8;
+define constant $gtk-application-inhibit-logout = 1;
+define constant $gtk-application-inhibit-switch = 2;
+define constant $gtk-application-inhibit-suspend = 4;
+define constant $gtk-application-inhibit-idle = 8;
 define constant <GtkApplicationInhibitFlags> = <C-int>;
 define C-pointer-type <GtkApplicationInhibitFlags*> => <GtkApplicationInhibitFlags>;
 
@@ -1730,14 +1598,12 @@ define C-struct <_GtkApplicationPrivate>
 end C-struct;
 
 define open C-subtype <GtkApplicationWindow> (<GtkWindow>)
-  constant slot gtkapplicationwindow-parent-instance :: <GtkWindow>;
-  constant slot gtkapplicationwindow-priv :: <GtkApplicationWindowPrivate>;
+  constant slot gtk-application-window-parent-instance :: <GtkWindow>;
+  constant slot gtk-application-window-priv :: <GtkApplicationWindowPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkApplicationWindow*> => <GtkApplicationWindow>;
 
-define property-getter applicationwindow-show-menubar :: <C-boolean> on <GtkApplicationWindow> end;
-define property-setter applicationwindow-show-menubar :: <C-boolean> on <GtkApplicationWindow> end;
 define C-function gtk-application-window-new
   input parameter application_ :: <GtkApplication>;
   result res :: <GtkWidget>;
@@ -1757,8 +1623,8 @@ define C-function gtk-application-window-set-show-menubar
 end;
 
 define C-struct <_GtkApplicationWindowClass>
-  constant slot gtkapplicationwindowclass-parent-class :: <GtkWindowClass>;
-  constant slot gtkapplicationwindowclass-padding :: <C-void*>;
+  constant slot gtk-application-window-class-parent-class :: <GtkWindowClass>;
+  constant slot gtk-application-window-class-padding :: <C-void*>;
   pointer-type-name: <GtkApplicationWindowClass>;
 end C-struct;
 
@@ -1767,16 +1633,12 @@ define C-struct <_GtkApplicationWindowPrivate>
 end C-struct;
 
 define open C-subtype <GtkArrow> (<GtkMisc>)
-  constant slot gtkarrow-misc :: <GtkMisc>;
-  constant slot gtkarrow-priv :: <GtkArrowPrivate>;
+  constant slot gtk-arrow-misc :: <GtkMisc>;
+  constant slot gtk-arrow-priv :: <GtkArrowPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkArrow*> => <GtkArrow>;
 
-define property-getter arrow-arrow-type :: <GtkArrowType> on <GtkArrow> end;
-define property-setter arrow-arrow-type :: <GtkArrowType> on <GtkArrow> end;
-define property-getter arrow-shadow-type :: <GtkShadowType> on <GtkArrow> end;
-define property-setter arrow-shadow-type :: <GtkShadowType> on <GtkArrow> end;
 define C-function gtk-arrow-new
   input parameter arrow_type_ :: <GtkArrowType>;
   input parameter shadow_type_ :: <GtkShadowType>;
@@ -1792,17 +1654,17 @@ define C-function gtk-arrow-set
 end;
 
 define C-struct <_GtkArrowClass>
-  constant slot gtkarrowclass-parent-class :: <GtkMiscClass>;
-  constant slot gtkarrowclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkarrowclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkarrowclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkarrowclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-arrow-class-parent-class :: <GtkMiscClass>;
+  constant slot gtk-arrow-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-arrow-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-arrow-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-arrow-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkArrowClass>;
 end C-struct;
 
-define constant $GTK-ARROWS-BOTH = 0;
-define constant $GTK-ARROWS-START = 1;
-define constant $GTK-ARROWS-END = 2;
+define constant $gtk-arrows-both = 0;
+define constant $gtk-arrows-start = 1;
+define constant $gtk-arrows-end = 2;
 define constant <GtkArrowPlacement> = <C-int>;
 define C-pointer-type <GtkArrowPlacement*> => <GtkArrowPlacement>;
 
@@ -1810,29 +1672,21 @@ define C-struct <_GtkArrowPrivate>
   pointer-type-name: <GtkArrowPrivate>;
 end C-struct;
 
-define constant $GTK-ARROW-UP = 0;
-define constant $GTK-ARROW-DOWN = 1;
-define constant $GTK-ARROW-LEFT = 2;
-define constant $GTK-ARROW-RIGHT = 3;
-define constant $GTK-ARROW-NONE = 4;
+define constant $gtk-arrow-up = 0;
+define constant $gtk-arrow-down = 1;
+define constant $gtk-arrow-left = 2;
+define constant $gtk-arrow-right = 3;
+define constant $gtk-arrow-none = 4;
 define constant <GtkArrowType> = <C-int>;
 define C-pointer-type <GtkArrowType*> => <GtkArrowType>;
 
 define open C-subtype <GtkAspectFrame> (<GtkFrame>)
-  constant slot gtkaspectframe-frame :: <GtkFrame>;
-  constant slot gtkaspectframe-priv :: <GtkAspectFramePrivate>;
+  constant slot gtk-aspect-frame-frame :: <GtkFrame>;
+  constant slot gtk-aspect-frame-priv :: <GtkAspectFramePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAspectFrame*> => <GtkAspectFrame>;
 
-define property-getter aspectframe-obey-child :: <C-boolean> on <GtkAspectFrame> end;
-define property-setter aspectframe-obey-child :: <C-boolean> on <GtkAspectFrame> end;
-define property-getter aspectframe-ratio :: <C-float> on <GtkAspectFrame> end;
-define property-setter aspectframe-ratio :: <C-float> on <GtkAspectFrame> end;
-define property-getter aspectframe-xalign :: <C-float> on <GtkAspectFrame> end;
-define property-setter aspectframe-xalign :: <C-float> on <GtkAspectFrame> end;
-define property-getter aspectframe-yalign :: <C-float> on <GtkAspectFrame> end;
-define property-setter aspectframe-yalign :: <C-float> on <GtkAspectFrame> end;
 define C-function gtk-aspect-frame-new
   input parameter label_ :: <C-string>;
   input parameter xalign_ :: <C-float>;
@@ -1853,11 +1707,11 @@ define C-function gtk-aspect-frame-set
 end;
 
 define C-struct <_GtkAspectFrameClass>
-  constant slot gtkaspectframeclass-parent-class :: <GtkFrameClass>;
-  constant slot gtkaspectframeclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkaspectframeclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkaspectframeclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkaspectframeclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-aspect-frame-class-parent-class :: <GtkFrameClass>;
+  constant slot gtk-aspect-frame-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-aspect-frame-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-aspect-frame-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-aspect-frame-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkAspectFrameClass>;
 end C-struct;
 
@@ -1866,8 +1720,8 @@ define C-struct <_GtkAspectFramePrivate>
 end C-struct;
 
 define open C-subtype <GtkAssistant> (<GtkWindow>)
-  constant slot gtkassistant-parent :: <GtkWindow>;
-  constant slot gtkassistant-priv :: <GtkAssistantPrivate>;
+  constant slot gtk-assistant-parent :: <GtkWindow>;
+  constant slot gtk-assistant-priv :: <GtkAssistantPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkAssistant*> => <GtkAssistant>;
@@ -2041,25 +1895,25 @@ define C-function gtk-assistant-update-buttons-state
 end;
 
 define C-struct <_GtkAssistantClass>
-  constant slot gtkassistantclass-parent-class :: <GtkWindowClass>;
-  constant slot gtkassistantclass-prepare :: <C-function-pointer>;
-  constant slot gtkassistantclass-apply :: <C-function-pointer>;
-  constant slot gtkassistantclass-close :: <C-function-pointer>;
-  constant slot gtkassistantclass-cancel :: <C-function-pointer>;
-  constant slot gtkassistantclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkassistantclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkassistantclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkassistantclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkassistantclass--gtk-reserved5 :: <C-void*>;
+  constant slot gtk-assistant-class-parent-class :: <GtkWindowClass>;
+  constant slot gtk-assistant-class-prepare :: <C-function-pointer>;
+  constant slot gtk-assistant-class-apply :: <C-function-pointer>;
+  constant slot gtk-assistant-class-close :: <C-function-pointer>;
+  constant slot gtk-assistant-class-cancel :: <C-function-pointer>;
+  constant slot gtk-assistant-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-assistant-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-assistant-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-assistant-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-assistant-class-_gtk-reserved5 :: <C-void*>;
   pointer-type-name: <GtkAssistantClass>;
 end C-struct;
 
-define constant $GTK-ASSISTANT-PAGE-CONTENT = 0;
-define constant $GTK-ASSISTANT-PAGE-INTRO = 1;
-define constant $GTK-ASSISTANT-PAGE-CONFIRM = 2;
-define constant $GTK-ASSISTANT-PAGE-SUMMARY = 3;
-define constant $GTK-ASSISTANT-PAGE-PROGRESS = 4;
-define constant $GTK-ASSISTANT-PAGE-CUSTOM = 5;
+define constant $gtk-assistant-page-content = 0;
+define constant $gtk-assistant-page-intro = 1;
+define constant $gtk-assistant-page-confirm = 2;
+define constant $gtk-assistant-page-summary = 3;
+define constant $gtk-assistant-page-progress = 4;
+define constant $gtk-assistant-page-custom = 5;
 define constant <GtkAssistantPageType> = <C-int>;
 define C-pointer-type <GtkAssistantPageType*> => <GtkAssistantPageType>;
 
@@ -2067,17 +1921,17 @@ define C-struct <_GtkAssistantPrivate>
   pointer-type-name: <GtkAssistantPrivate>;
 end C-struct;
 
-define constant $GTK-EXPAND = 1;
-define constant $GTK-SHRINK = 2;
-define constant $GTK-FILL = 4;
+define constant $gtk-expand = 1;
+define constant $gtk-shrink = 2;
+define constant $gtk-fill = 4;
 define constant <GtkAttachOptions> = <C-int>;
 define C-pointer-type <GtkAttachOptions*> => <GtkAttachOptions>;
 
-define constant $BINARY-AGE = 402;
+define constant $binary-age = 402;
 
 define open C-subtype <GtkBin> (<GtkContainer>)
-  constant slot gtkbin-container :: <GtkContainer>;
-  constant slot gtkbin-priv :: <GtkBinPrivate>;
+  constant slot gtk-bin-container :: <GtkContainer>;
+  constant slot gtk-bin-priv :: <GtkBinPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkBin*> => <GtkBin>;
@@ -2089,11 +1943,11 @@ define C-function gtk-bin-get-child
 end;
 
 define C-struct <_GtkBinClass>
-  constant slot gtkbinclass-parent-class :: <GtkContainerClass>;
-  constant slot gtkbinclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkbinclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkbinclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkbinclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-bin-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-bin-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-bin-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-bin-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-bin-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkBinClass>;
 end C-struct;
 
@@ -2102,20 +1956,20 @@ define C-struct <_GtkBinPrivate>
 end C-struct;
 
 define C-struct <_GtkBindingArg>
-  slot gtkbindingarg-arg-type :: <C-long>;
+  slot gtk-binding-arg-arg-type :: <C-long>;
   pointer-type-name: <GtkBindingArg>;
 end C-struct;
 
 define C-struct <_GtkBindingEntry>
-  slot gtkbindingentry-keyval :: <C-unsigned-int>;
-  slot gtkbindingentry-modifiers :: <GdkModifierType>;
-  slot gtkbindingentry-binding-set :: <GtkBindingSet>;
-  slot gtkbindingentry-destroyed :: <C-unsigned-int>;
-  slot gtkbindingentry-in-emission :: <C-unsigned-int>;
-  slot gtkbindingentry-marks-unbound :: <C-unsigned-int>;
-  slot gtkbindingentry-set-next :: <GtkBindingEntry>;
-  slot gtkbindingentry-hash-next :: <GtkBindingEntry>;
-  slot gtkbindingentry-signals :: <GtkBindingSignal>;
+  slot gtk-binding-entry-keyval :: <C-unsigned-int>;
+  slot gtk-binding-entry-modifiers :: <GdkModifierType>;
+  slot gtk-binding-entry-binding-set :: <GtkBindingSet>;
+  slot gtk-binding-entry-destroyed :: <C-unsigned-int>;
+  slot gtk-binding-entry-in-emission :: <C-unsigned-int>;
+  slot gtk-binding-entry-marks-unbound :: <C-unsigned-int>;
+  slot gtk-binding-entry-set-next :: <GtkBindingEntry>;
+  slot gtk-binding-entry-hash-next :: <GtkBindingEntry>;
+  slot gtk-binding-entry-signals :: <GtkBindingSignal>;
   pointer-type-name: <GtkBindingEntry>;
 end C-struct;
 
@@ -2150,14 +2004,14 @@ define C-function gtk-binding-entry-skip
 end;
 
 define C-struct <_GtkBindingSet>
-  slot gtkbindingset-set-name :: <C-string>;
-  slot gtkbindingset-priority :: <C-signed-int>;
-  slot gtkbindingset-widget-path-pspecs :: <GSList>;
-  slot gtkbindingset-widget-class-pspecs :: <GSList>;
-  slot gtkbindingset-class-branch-pspecs :: <GSList>;
-  slot gtkbindingset-entries :: <GtkBindingEntry>;
-  slot gtkbindingset-current :: <GtkBindingEntry>;
-  slot gtkbindingset-parsed :: <C-unsigned-int>;
+  slot gtk-binding-set-set-name :: <C-string>;
+  slot gtk-binding-set-priority :: <C-signed-int>;
+  slot gtk-binding-set-widget-path-pspecs :: <GSList>;
+  slot gtk-binding-set-widget-class-pspecs :: <GSList>;
+  slot gtk-binding-set-class-branch-pspecs :: <GSList>;
+  slot gtk-binding-set-entries :: <GtkBindingEntry>;
+  slot gtk-binding-set-current :: <GtkBindingEntry>;
+  slot gtk-binding-set-parsed :: <C-unsigned-int>;
   pointer-type-name: <GtkBindingSet>;
 end C-struct;
 
@@ -2185,18 +2039,18 @@ define C-function gtk-binding-set-find
 end;
 
 define C-struct <_GtkBindingSignal>
-  slot gtkbindingsignal-next :: <GtkBindingSignal>;
-  slot gtkbindingsignal-signal-name :: <C-string>;
-  slot gtkbindingsignal-n-args :: <C-unsigned-int>;
-  slot gtkbindingsignal-args :: <GtkBindingArg>;
+  slot gtk-binding-signal-next :: <GtkBindingSignal>;
+  slot gtk-binding-signal-signal-name :: <C-string>;
+  slot gtk-binding-signal-n-args :: <C-unsigned-int>;
+  slot gtk-binding-signal-args :: <GtkBindingArg>;
   pointer-type-name: <GtkBindingSignal>;
 end C-struct;
 
 define C-struct <_GtkBorder>
-  slot gtkborder-left :: <C-signed-short>;
-  slot gtkborder-right :: <C-signed-short>;
-  slot gtkborder-top :: <C-signed-short>;
-  slot gtkborder-bottom :: <C-signed-short>;
+  slot gtk-border-left :: <C-signed-short>;
+  slot gtk-border-right :: <C-signed-short>;
+  slot gtk-border-top :: <C-signed-short>;
+  slot gtk-border-bottom :: <C-signed-short>;
   pointer-type-name: <GtkBorder>;
 end C-struct;
 
@@ -2216,30 +2070,26 @@ define C-function gtk-border-free
   c-name: "gtk_border_free";
 end;
 
-define constant $GTK-BORDER-STYLE-NONE = 0;
-define constant $GTK-BORDER-STYLE-SOLID = 1;
-define constant $GTK-BORDER-STYLE-INSET = 2;
-define constant $GTK-BORDER-STYLE-OUTSET = 3;
-define constant $GTK-BORDER-STYLE-HIDDEN = 4;
-define constant $GTK-BORDER-STYLE-DOTTED = 5;
-define constant $GTK-BORDER-STYLE-DASHED = 6;
-define constant $GTK-BORDER-STYLE-DOUBLE = 7;
-define constant $GTK-BORDER-STYLE-GROOVE = 8;
-define constant $GTK-BORDER-STYLE-RIDGE = 9;
+define constant $gtk-border-style-none = 0;
+define constant $gtk-border-style-solid = 1;
+define constant $gtk-border-style-inset = 2;
+define constant $gtk-border-style-outset = 3;
+define constant $gtk-border-style-hidden = 4;
+define constant $gtk-border-style-dotted = 5;
+define constant $gtk-border-style-dashed = 6;
+define constant $gtk-border-style-double = 7;
+define constant $gtk-border-style-groove = 8;
+define constant $gtk-border-style-ridge = 9;
 define constant <GtkBorderStyle> = <C-int>;
 define C-pointer-type <GtkBorderStyle*> => <GtkBorderStyle>;
 
 define open C-subtype <GtkBox> (<GtkContainer>)
-  constant slot gtkbox-container :: <GtkContainer>;
-  constant slot gtkbox-priv :: <GtkBoxPrivate>;
+  constant slot gtk-box-container :: <GtkContainer>;
+  constant slot gtk-box-priv :: <GtkBoxPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkBox*> => <GtkBox>;
 
-define property-getter box-homogeneous :: <C-boolean> on <GtkBox> end;
-define property-setter box-homogeneous :: <C-boolean> on <GtkBox> end;
-define property-getter box-spacing :: <C-signed-int> on <GtkBox> end;
-define property-setter box-spacing :: <C-signed-int> on <GtkBox> end;
 define C-function gtk-box-new
   input parameter orientation_ :: <GtkOrientation>;
   input parameter spacing_ :: <C-signed-int>;
@@ -2317,11 +2167,11 @@ define C-function gtk-box-set-spacing
 end;
 
 define C-struct <_GtkBoxClass>
-  constant slot gtkboxclass-parent-class :: <GtkContainerClass>;
-  constant slot gtkboxclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkboxclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkboxclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkboxclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-box-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-box-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-box-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-box-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-box-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkBoxClass>;
 end C-struct;
 
@@ -2415,29 +2265,27 @@ define C-function gtk-buildable-set-name
 end;
 
 define C-struct <_GtkBuildableIface>
-  constant slot gtkbuildableiface-g-iface :: <GTypeInterface>;
-  constant slot gtkbuildableiface-set-name :: <C-function-pointer>;
-  constant slot gtkbuildableiface-get-name :: <C-function-pointer>;
-  constant slot gtkbuildableiface-add-child :: <C-function-pointer>;
-  constant slot gtkbuildableiface-set-buildable-property :: <C-function-pointer>;
-  constant slot gtkbuildableiface-construct-child :: <C-function-pointer>;
-  constant slot gtkbuildableiface-custom-tag-start :: <C-function-pointer>;
-  constant slot gtkbuildableiface-custom-tag-end :: <C-function-pointer>;
-  constant slot gtkbuildableiface-custom-finished :: <C-function-pointer>;
-  constant slot gtkbuildableiface-parser-finished :: <C-function-pointer>;
-  constant slot gtkbuildableiface-get-internal-child :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-buildable-iface-set-name :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-get-name :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-add-child :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-set-buildable-property :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-construct-child :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-custom-tag-start :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-custom-tag-end :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-custom-finished :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-parser-finished :: <C-function-pointer>;
+  constant slot gtk-buildable-iface-get-internal-child :: <C-function-pointer>;
   pointer-type-name: <GtkBuildableIface>;
 end C-struct;
 
 define open C-subtype <GtkBuilder> (<GObject>)
-  constant slot gtkbuilder-parent-instance :: <GObject>;
-  constant slot gtkbuilder-priv :: <GtkBuilderPrivate>;
+  constant slot gtk-builder-parent-instance :: <GObject>;
+  constant slot gtk-builder-priv :: <GtkBuilderPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkBuilder*> => <GtkBuilder>;
 
-define property-getter builder-translation-domain :: <C-string> on <GtkBuilder> end;
-define property-setter builder-translation-domain :: <C-string> on <GtkBuilder> end;
 define C-function gtk-builder-new
   result res :: <GtkBuilder>;
   c-name: "gtk_builder_new";
@@ -2554,28 +2402,28 @@ define C-function gtk-builder-value-from-string-type
 end;
 
 define C-struct <_GtkBuilderClass>
-  constant slot gtkbuilderclass-parent-class :: <GObjectClass>;
-  constant slot gtkbuilderclass-get-type-from-name :: <C-function-pointer>;
-  constant slot gtkbuilderclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkbuilderclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkbuilderclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkbuilderclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkbuilderclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkbuilderclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkbuilderclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkbuilderclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-builder-class-parent-class :: <GObjectClass>;
+  constant slot gtk-builder-class-get-type-from-name :: <C-function-pointer>;
+  constant slot gtk-builder-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-builder-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-builder-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-builder-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-builder-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-builder-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-builder-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-builder-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkBuilderClass>;
 end C-struct;
 
-define constant $GTK-BUILDER-ERROR-INVALID-TYPE-FUNCTION = 0;
-define constant $GTK-BUILDER-ERROR-UNHANDLED-TAG = 1;
-define constant $GTK-BUILDER-ERROR-MISSING-ATTRIBUTE = 2;
-define constant $GTK-BUILDER-ERROR-INVALID-ATTRIBUTE = 3;
-define constant $GTK-BUILDER-ERROR-INVALID-TAG = 4;
-define constant $GTK-BUILDER-ERROR-MISSING-PROPERTY-VALUE = 5;
-define constant $GTK-BUILDER-ERROR-INVALID-VALUE = 6;
-define constant $GTK-BUILDER-ERROR-VERSION-MISMATCH = 7;
-define constant $GTK-BUILDER-ERROR-DUPLICATE-ID = 8;
+define constant $gtk-builder-error-invalid-type-function = 0;
+define constant $gtk-builder-error-unhandled-tag = 1;
+define constant $gtk-builder-error-missing-attribute = 2;
+define constant $gtk-builder-error-invalid-attribute = 3;
+define constant $gtk-builder-error-invalid-tag = 4;
+define constant $gtk-builder-error-missing-property-value = 5;
+define constant $gtk-builder-error-invalid-value = 6;
+define constant $gtk-builder-error-version-mismatch = 7;
+define constant $gtk-builder-error-duplicate-id = 8;
 define constant <GtkBuilderError> = <C-int>;
 define C-pointer-type <GtkBuilderError*> => <GtkBuilderError>;
 
@@ -2584,30 +2432,12 @@ define C-struct <_GtkBuilderPrivate>
 end C-struct;
 
 define open C-subtype <GtkButton> (<GtkBin>)
-  constant slot gtkbutton-bin :: <GtkBin>;
-  constant slot gtkbutton-priv :: <GtkButtonPrivate>;
+  constant slot gtk-button-bin :: <GtkBin>;
+  constant slot gtk-button-priv :: <GtkButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkButton*> => <GtkButton>;
 
-define property-getter button-focus-on-click :: <C-boolean> on <GtkButton> end;
-define property-setter button-focus-on-click :: <C-boolean> on <GtkButton> end;
-define property-getter button-image :: <GtkWidget> on <GtkButton> end;
-define property-setter button-image :: <GtkWidget> on <GtkButton> end;
-define property-getter button-image-position :: <GtkPositionType> on <GtkButton> end;
-define property-setter button-image-position :: <GtkPositionType> on <GtkButton> end;
-define property-getter button-label :: <C-string> on <GtkButton> end;
-define property-setter button-label :: <C-string> on <GtkButton> end;
-define property-getter button-relief :: <GtkReliefStyle> on <GtkButton> end;
-define property-setter button-relief :: <GtkReliefStyle> on <GtkButton> end;
-define property-getter button-use-stock :: <C-boolean> on <GtkButton> end;
-define property-setter button-use-stock :: <C-boolean> on <GtkButton> end;
-define property-getter button-use-underline :: <C-boolean> on <GtkButton> end;
-define property-setter button-use-underline :: <C-boolean> on <GtkButton> end;
-define property-getter button-xalign :: <C-float> on <GtkButton> end;
-define property-setter button-xalign :: <C-float> on <GtkButton> end;
-define property-getter button-yalign :: <C-float> on <GtkButton> end;
-define property-setter button-yalign :: <C-float> on <GtkButton> end;
 define C-function gtk-button-new
   result res :: <GtkWidget>;
   c-name: "gtk_button_new";
@@ -2761,14 +2591,12 @@ define C-function gtk-button-set-use-underline
 end;
 
 define open C-subtype <GtkButtonBox> (<GtkBox>)
-  constant slot gtkbuttonbox-box :: <GtkBox>;
-  constant slot gtkbuttonbox-priv :: <GtkButtonBoxPrivate>;
+  constant slot gtk-button-box-box :: <GtkBox>;
+  constant slot gtk-button-box-priv :: <GtkButtonBoxPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkButtonBox*> => <GtkButtonBox>;
 
-define property-getter buttonbox-layout-style :: <GtkButtonBoxStyle> on <GtkButtonBox> end;
-define property-setter buttonbox-layout-style :: <GtkButtonBoxStyle> on <GtkButtonBox> end;
 define C-function gtk-button-box-new
   input parameter orientation_ :: <GtkOrientation>;
   result res :: <GtkWidget>;
@@ -2816,11 +2644,11 @@ define C-function gtk-button-box-set-layout
 end;
 
 define C-struct <_GtkButtonBoxClass>
-  constant slot gtkbuttonboxclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkbuttonboxclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkbuttonboxclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkbuttonboxclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkbuttonboxclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-button-box-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-button-box-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-button-box-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-button-box-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-button-box-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkButtonBoxClass>;
 end C-struct;
 
@@ -2828,26 +2656,26 @@ define C-struct <_GtkButtonBoxPrivate>
   pointer-type-name: <GtkButtonBoxPrivate>;
 end C-struct;
 
-define constant $GTK-BUTTONBOX-SPREAD = 1;
-define constant $GTK-BUTTONBOX-EDGE = 2;
-define constant $GTK-BUTTONBOX-START = 3;
-define constant $GTK-BUTTONBOX-END = 4;
-define constant $GTK-BUTTONBOX-CENTER = 5;
+define constant $gtk-buttonbox-spread = 1;
+define constant $gtk-buttonbox-edge = 2;
+define constant $gtk-buttonbox-start = 3;
+define constant $gtk-buttonbox-end = 4;
+define constant $gtk-buttonbox-center = 5;
 define constant <GtkButtonBoxStyle> = <C-int>;
 define C-pointer-type <GtkButtonBoxStyle*> => <GtkButtonBoxStyle>;
 
 define C-struct <_GtkButtonClass>
-  constant slot gtkbuttonclass-parent-class :: <GtkBinClass>;
-  constant slot gtkbuttonclass-pressed :: <C-function-pointer>;
-  constant slot gtkbuttonclass-released :: <C-function-pointer>;
-  constant slot gtkbuttonclass-clicked :: <C-function-pointer>;
-  constant slot gtkbuttonclass-enter :: <C-function-pointer>;
-  constant slot gtkbuttonclass-leave :: <C-function-pointer>;
-  constant slot gtkbuttonclass-activate :: <C-function-pointer>;
-  constant slot gtkbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-button-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-button-class-pressed :: <C-function-pointer>;
+  constant slot gtk-button-class-released :: <C-function-pointer>;
+  constant slot gtk-button-class-clicked :: <C-function-pointer>;
+  constant slot gtk-button-class-enter :: <C-function-pointer>;
+  constant slot gtk-button-class-leave :: <C-function-pointer>;
+  constant slot gtk-button-class-activate :: <C-function-pointer>;
+  constant slot gtk-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkButtonClass>;
 end C-struct;
 
@@ -2855,42 +2683,22 @@ define C-struct <_GtkButtonPrivate>
   pointer-type-name: <GtkButtonPrivate>;
 end C-struct;
 
-define constant $GTK-BUTTONS-NONE = 0;
-define constant $GTK-BUTTONS-OK = 1;
-define constant $GTK-BUTTONS-CLOSE = 2;
-define constant $GTK-BUTTONS-CANCEL = 3;
-define constant $GTK-BUTTONS-YES-NO = 4;
-define constant $GTK-BUTTONS-OK-CANCEL = 5;
+define constant $gtk-buttons-none = 0;
+define constant $gtk-buttons-ok = 1;
+define constant $gtk-buttons-close = 2;
+define constant $gtk-buttons-cancel = 3;
+define constant $gtk-buttons-yes-no = 4;
+define constant $gtk-buttons-ok-cancel = 5;
 define constant <GtkButtonsType> = <C-int>;
 define C-pointer-type <GtkButtonsType*> => <GtkButtonsType>;
 
 define open C-subtype <GtkCalendar> (<GtkWidget>)
-  constant slot gtkcalendar-widget :: <GtkWidget>;
-  constant slot gtkcalendar-priv :: <GtkCalendarPrivate>;
+  constant slot gtk-calendar-widget :: <GtkWidget>;
+  constant slot gtk-calendar-priv :: <GtkCalendarPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCalendar*> => <GtkCalendar>;
 
-define property-getter calendar-day :: <C-signed-int> on <GtkCalendar> end;
-define property-setter calendar-day :: <C-signed-int> on <GtkCalendar> end;
-define property-getter calendar-detail-height-rows :: <C-signed-int> on <GtkCalendar> end;
-define property-setter calendar-detail-height-rows :: <C-signed-int> on <GtkCalendar> end;
-define property-getter calendar-detail-width-chars :: <C-signed-int> on <GtkCalendar> end;
-define property-setter calendar-detail-width-chars :: <C-signed-int> on <GtkCalendar> end;
-define property-getter calendar-month :: <C-signed-int> on <GtkCalendar> end;
-define property-setter calendar-month :: <C-signed-int> on <GtkCalendar> end;
-define property-getter calendar-no-month-change :: <C-boolean> on <GtkCalendar> end;
-define property-setter calendar-no-month-change :: <C-boolean> on <GtkCalendar> end;
-define property-getter calendar-show-day-names :: <C-boolean> on <GtkCalendar> end;
-define property-setter calendar-show-day-names :: <C-boolean> on <GtkCalendar> end;
-define property-getter calendar-show-details :: <C-boolean> on <GtkCalendar> end;
-define property-setter calendar-show-details :: <C-boolean> on <GtkCalendar> end;
-define property-getter calendar-show-heading :: <C-boolean> on <GtkCalendar> end;
-define property-setter calendar-show-heading :: <C-boolean> on <GtkCalendar> end;
-define property-getter calendar-show-week-numbers :: <C-boolean> on <GtkCalendar> end;
-define property-setter calendar-show-week-numbers :: <C-boolean> on <GtkCalendar> end;
-define property-getter calendar-year :: <C-signed-int> on <GtkCalendar> end;
-define property-setter calendar-year :: <C-signed-int> on <GtkCalendar> end;
 define C-function gtk-calendar-new
   result res :: <GtkWidget>;
   c-name: "gtk_calendar_new";
@@ -2986,26 +2794,26 @@ define C-function gtk-calendar-unmark-day
 end;
 
 define C-struct <_GtkCalendarClass>
-  constant slot gtkcalendarclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkcalendarclass-month-changed :: <C-function-pointer>;
-  constant slot gtkcalendarclass-day-selected :: <C-function-pointer>;
-  constant slot gtkcalendarclass-day-selected-double-click :: <C-function-pointer>;
-  constant slot gtkcalendarclass-prev-month :: <C-function-pointer>;
-  constant slot gtkcalendarclass-next-month :: <C-function-pointer>;
-  constant slot gtkcalendarclass-prev-year :: <C-function-pointer>;
-  constant slot gtkcalendarclass-next-year :: <C-function-pointer>;
-  constant slot gtkcalendarclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcalendarclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcalendarclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcalendarclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-calendar-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-calendar-class-month-changed :: <C-function-pointer>;
+  constant slot gtk-calendar-class-day-selected :: <C-function-pointer>;
+  constant slot gtk-calendar-class-day-selected-double-click :: <C-function-pointer>;
+  constant slot gtk-calendar-class-prev-month :: <C-function-pointer>;
+  constant slot gtk-calendar-class-next-month :: <C-function-pointer>;
+  constant slot gtk-calendar-class-prev-year :: <C-function-pointer>;
+  constant slot gtk-calendar-class-next-year :: <C-function-pointer>;
+  constant slot gtk-calendar-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-calendar-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-calendar-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-calendar-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCalendarClass>;
 end C-struct;
 
-define constant $GTK-CALENDAR-SHOW-HEADING = 1;
-define constant $GTK-CALENDAR-SHOW-DAY-NAMES = 2;
-define constant $GTK-CALENDAR-NO-MONTH-CHANGE = 4;
-define constant $GTK-CALENDAR-SHOW-WEEK-NUMBERS = 8;
-define constant $GTK-CALENDAR-SHOW-DETAILS = 32;
+define constant $gtk-calendar-show-heading = 1;
+define constant $gtk-calendar-show-day-names = 2;
+define constant $gtk-calendar-no-month-change = 4;
+define constant $gtk-calendar-show-week-numbers = 8;
+define constant $gtk-calendar-show-details = 32;
 define constant <GtkCalendarDisplayOptions> = <C-int>;
 define C-pointer-type <GtkCalendarDisplayOptions*> => <GtkCalendarDisplayOptions>;
 
@@ -3014,16 +2822,12 @@ define C-struct <_GtkCalendarPrivate>
 end C-struct;
 
 define open C-subtype <GtkCellArea> (<GInitiallyUnowned>)
-  constant slot gtkcellarea-parent-instance :: <GInitiallyUnowned>;
-  constant slot gtkcellarea-priv :: <GtkCellAreaPrivate>;
+  constant slot gtk-cell-area-parent-instance :: <GInitiallyUnowned>;
+  constant slot gtk-cell-area-priv :: <GtkCellAreaPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellArea*> => <GtkCellArea>;
 
-define property-getter cellarea-edit-widget :: <GtkCellEditable> on <GtkCellArea> end;
-define property-getter cellarea-edited-cell :: <GtkCellRenderer> on <GtkCellArea> end;
-define property-getter cellarea-focus-cell :: <GtkCellRenderer> on <GtkCellArea> end;
-define property-setter cellarea-focus-cell :: <GtkCellRenderer> on <GtkCellArea> end;
 define C-function gtk-cell-area-activate
   input parameter self :: <GtkCellArea>;
   input parameter context_ :: <GtkCellAreaContext>;
@@ -3330,14 +3134,12 @@ define C-function gtk-cell-area-stop-editing
 end;
 
 define open C-subtype <GtkCellAreaBox> (<GtkCellArea>)
-  constant slot gtkcellareabox-parent-instance :: <GtkCellArea>;
-  constant slot gtkcellareabox-priv :: <GtkCellAreaBoxPrivate>;
+  constant slot gtk-cell-area-box-parent-instance :: <GtkCellArea>;
+  constant slot gtk-cell-area-box-priv :: <GtkCellAreaBoxPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellAreaBox*> => <GtkCellAreaBox>;
 
-define property-getter cellareabox-spacing :: <C-signed-int> on <GtkCellAreaBox> end;
-define property-setter cellareabox-spacing :: <C-signed-int> on <GtkCellAreaBox> end;
 define C-function gtk-cell-area-box-new
   result res :: <GtkCellArea>;
   c-name: "gtk_cell_area_box_new";
@@ -3374,11 +3176,11 @@ define C-function gtk-cell-area-box-set-spacing
 end;
 
 define C-struct <_GtkCellAreaBoxClass>
-  constant slot gtkcellareaboxclass-parent-class :: <GtkCellAreaClass>;
-  constant slot gtkcellareaboxclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellareaboxclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellareaboxclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellareaboxclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-area-box-class-parent-class :: <GtkCellAreaClass>;
+  constant slot gtk-cell-area-box-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-area-box-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-area-box-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-area-box-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellAreaBoxClass>;
 end C-struct;
 
@@ -3387,34 +3189,34 @@ define C-struct <_GtkCellAreaBoxPrivate>
 end C-struct;
 
 define C-struct <_GtkCellAreaClass>
-  constant slot gtkcellareaclass-parent-class :: <GInitiallyUnownedClass>;
-  constant slot gtkcellareaclass-add :: <C-function-pointer>;
-  constant slot gtkcellareaclass-remove :: <C-function-pointer>;
-  constant slot gtkcellareaclass-foreach :: <C-function-pointer>;
-  constant slot gtkcellareaclass-foreach-alloc :: <C-function-pointer>;
-  constant slot gtkcellareaclass-event :: <C-function-pointer>;
-  constant slot gtkcellareaclass-render :: <C-function-pointer>;
-  constant slot gtkcellareaclass-apply-attributes :: <C-function-pointer>;
-  constant slot gtkcellareaclass-create-context :: <C-function-pointer>;
-  constant slot gtkcellareaclass-copy-context :: <C-function-pointer>;
-  constant slot gtkcellareaclass-get-request-mode :: <C-function-pointer>;
-  constant slot gtkcellareaclass-get-preferred-width :: <C-function-pointer>;
-  constant slot gtkcellareaclass-get-preferred-height-for-width :: <C-function-pointer>;
-  constant slot gtkcellareaclass-get-preferred-height :: <C-function-pointer>;
-  constant slot gtkcellareaclass-get-preferred-width-for-height :: <C-function-pointer>;
-  constant slot gtkcellareaclass-set-cell-property :: <C-function-pointer>;
-  constant slot gtkcellareaclass-get-cell-property :: <C-function-pointer>;
-  constant slot gtkcellareaclass-focus :: <C-function-pointer>;
-  constant slot gtkcellareaclass-is-activatable :: <C-function-pointer>;
-  constant slot gtkcellareaclass-activate :: <C-function-pointer>;
-  constant slot gtkcellareaclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellareaclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellareaclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellareaclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkcellareaclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkcellareaclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkcellareaclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkcellareaclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-cell-area-class-parent-class :: <GInitiallyUnownedClass>;
+  constant slot gtk-cell-area-class-add :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-remove :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-foreach :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-foreach-alloc :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-event :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-render :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-apply-attributes :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-create-context :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-copy-context :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-get-request-mode :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-get-preferred-width :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-get-preferred-height-for-width :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-get-preferred-height :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-get-preferred-width-for-height :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-set-cell-property :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-get-cell-property :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-focus :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-is-activatable :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-activate :: <C-function-pointer>;
+  constant slot gtk-cell-area-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-area-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-area-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-area-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-area-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-cell-area-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-cell-area-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-cell-area-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkCellAreaClass>;
 end C-struct;
 
@@ -3440,18 +3242,12 @@ define C-function gtk-cell-area-class-list-cell-properties
 end;
 
 define open C-subtype <GtkCellAreaContext> (<GObject>)
-  constant slot gtkcellareacontext-parent-instance :: <GObject>;
-  constant slot gtkcellareacontext-priv :: <GtkCellAreaContextPrivate>;
+  constant slot gtk-cell-area-context-parent-instance :: <GObject>;
+  constant slot gtk-cell-area-context-priv :: <GtkCellAreaContextPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellAreaContext*> => <GtkCellAreaContext>;
 
-define property-getter cellareacontext-area :: <GtkCellArea> on <GtkCellAreaContext> end;
-define property-setter cellareacontext-area :: <GtkCellArea> on <GtkCellAreaContext> end;
-define property-getter cellareacontext-minimum-height :: <C-signed-int> on <GtkCellAreaContext> end;
-define property-getter cellareacontext-minimum-width :: <C-signed-int> on <GtkCellAreaContext> end;
-define property-getter cellareacontext-natural-height :: <C-signed-int> on <GtkCellAreaContext> end;
-define property-getter cellareacontext-natural-width :: <C-signed-int> on <GtkCellAreaContext> end;
 define C-function gtk-cell-area-context-allocate
   input parameter self :: <GtkCellAreaContext>;
   input parameter width_ :: <C-signed-int>;
@@ -3522,17 +3318,17 @@ define C-function gtk-cell-area-context-reset
 end;
 
 define C-struct <_GtkCellAreaContextClass>
-  constant slot gtkcellareacontextclass-parent-class :: <GObjectClass>;
-  constant slot gtkcellareacontextclass-allocate :: <C-function-pointer>;
-  constant slot gtkcellareacontextclass-reset :: <C-function-pointer>;
-  constant slot gtkcellareacontextclass-get-preferred-height-for-width :: <C-function-pointer>;
-  constant slot gtkcellareacontextclass-get-preferred-width-for-height :: <C-function-pointer>;
-  constant slot gtkcellareacontextclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellareacontextclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellareacontextclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellareacontextclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkcellareacontextclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkcellareacontextclass--gtk-reserved6 :: <C-void*>;
+  constant slot gtk-cell-area-context-class-parent-class :: <GObjectClass>;
+  constant slot gtk-cell-area-context-class-allocate :: <C-function-pointer>;
+  constant slot gtk-cell-area-context-class-reset :: <C-function-pointer>;
+  constant slot gtk-cell-area-context-class-get-preferred-height-for-width :: <C-function-pointer>;
+  constant slot gtk-cell-area-context-class-get-preferred-width-for-height :: <C-function-pointer>;
+  constant slot gtk-cell-area-context-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-area-context-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-area-context-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-area-context-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-area-context-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-cell-area-context-class-_gtk-reserved6 :: <C-void*>;
   pointer-type-name: <GtkCellAreaContextClass>;
 end C-struct;
 
@@ -3567,10 +3363,10 @@ define C-function gtk-cell-editable-start-editing
 end;
 
 define C-struct <_GtkCellEditableIface>
-  constant slot gtkcelleditableiface-g-iface :: <GTypeInterface>;
-  constant slot gtkcelleditableiface-editing-done :: <C-function-pointer>;
-  constant slot gtkcelleditableiface-remove-widget :: <C-function-pointer>;
-  constant slot gtkcelleditableiface-start-editing :: <C-function-pointer>;
+  constant slot gtk-cell-editable-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-cell-editable-iface-editing-done :: <C-function-pointer>;
+  constant slot gtk-cell-editable-iface-remove-widget :: <C-function-pointer>;
+  constant slot gtk-cell-editable-iface-start-editing :: <C-function-pointer>;
   pointer-type-name: <GtkCellEditableIface>;
 end C-struct;
 
@@ -3642,56 +3438,26 @@ define C-function gtk-cell-layout-set-cell-data-func
 end;
 
 define C-struct <_GtkCellLayoutIface>
-  constant slot gtkcelllayoutiface-g-iface :: <GTypeInterface>;
-  constant slot gtkcelllayoutiface-pack-start :: <C-function-pointer>;
-  constant slot gtkcelllayoutiface-pack-end :: <C-function-pointer>;
-  constant slot gtkcelllayoutiface-clear :: <C-function-pointer>;
-  constant slot gtkcelllayoutiface-add-attribute :: <C-function-pointer>;
-  constant slot gtkcelllayoutiface-set-cell-data-func :: <C-function-pointer>;
-  constant slot gtkcelllayoutiface-clear-attributes :: <C-function-pointer>;
-  constant slot gtkcelllayoutiface-reorder :: <C-function-pointer>;
-  constant slot gtkcelllayoutiface-get-cells :: <C-function-pointer>;
-  constant slot gtkcelllayoutiface-get-area :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-cell-layout-iface-pack-start :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-pack-end :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-clear :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-add-attribute :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-set-cell-data-func :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-clear-attributes :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-reorder :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-get-cells :: <C-function-pointer>;
+  constant slot gtk-cell-layout-iface-get-area :: <C-function-pointer>;
   pointer-type-name: <GtkCellLayoutIface>;
 end C-struct;
 
 define open C-subtype <GtkCellRenderer> (<GInitiallyUnowned>)
-  constant slot gtkcellrenderer-parent-instance :: <GInitiallyUnowned>;
-  constant slot gtkcellrenderer-priv :: <GtkCellRendererPrivate>;
+  constant slot gtk-cell-renderer-parent-instance :: <GInitiallyUnowned>;
+  constant slot gtk-cell-renderer-priv :: <GtkCellRendererPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRenderer*> => <GtkCellRenderer>;
 
-define property-setter cellrenderer-cell-background :: <C-string> on <GtkCellRenderer> end;
-define property-getter cellrenderer-cell-background-gdk :: <GdkColor> on <GtkCellRenderer> end;
-define property-setter cellrenderer-cell-background-gdk :: <GdkColor> on <GtkCellRenderer> end;
-define property-getter cellrenderer-cell-background-rgba :: <GdkRGBA> on <GtkCellRenderer> end;
-define property-setter cellrenderer-cell-background-rgba :: <GdkRGBA> on <GtkCellRenderer> end;
-define property-getter cellrenderer-cell-background-set :: <C-boolean> on <GtkCellRenderer> end;
-define property-setter cellrenderer-cell-background-set :: <C-boolean> on <GtkCellRenderer> end;
-define property-getter cellrenderer-editing :: <C-boolean> on <GtkCellRenderer> end;
-define property-getter cellrenderer-height :: <C-signed-int> on <GtkCellRenderer> end;
-define property-setter cellrenderer-height :: <C-signed-int> on <GtkCellRenderer> end;
-define property-getter cellrenderer-is-expanded :: <C-boolean> on <GtkCellRenderer> end;
-define property-setter cellrenderer-is-expanded :: <C-boolean> on <GtkCellRenderer> end;
-define property-getter cellrenderer-is-expander :: <C-boolean> on <GtkCellRenderer> end;
-define property-setter cellrenderer-is-expander :: <C-boolean> on <GtkCellRenderer> end;
-define property-getter cellrenderer-mode :: <GtkCellRendererMode> on <GtkCellRenderer> end;
-define property-setter cellrenderer-mode :: <GtkCellRendererMode> on <GtkCellRenderer> end;
-define property-getter cellrenderer-sensitive :: <C-boolean> on <GtkCellRenderer> end;
-define property-setter cellrenderer-sensitive :: <C-boolean> on <GtkCellRenderer> end;
-define property-getter cellrenderer-visible :: <C-boolean> on <GtkCellRenderer> end;
-define property-setter cellrenderer-visible :: <C-boolean> on <GtkCellRenderer> end;
-define property-getter cellrenderer-width :: <C-signed-int> on <GtkCellRenderer> end;
-define property-setter cellrenderer-width :: <C-signed-int> on <GtkCellRenderer> end;
-define property-getter cellrenderer-xalign :: <C-float> on <GtkCellRenderer> end;
-define property-setter cellrenderer-xalign :: <C-float> on <GtkCellRenderer> end;
-define property-getter cellrenderer-xpad :: <C-unsigned-int> on <GtkCellRenderer> end;
-define property-setter cellrenderer-xpad :: <C-unsigned-int> on <GtkCellRenderer> end;
-define property-getter cellrenderer-yalign :: <C-float> on <GtkCellRenderer> end;
-define property-setter cellrenderer-yalign :: <C-float> on <GtkCellRenderer> end;
-define property-getter cellrenderer-ypad :: <C-unsigned-int> on <GtkCellRenderer> end;
-define property-setter cellrenderer-ypad :: <C-unsigned-int> on <GtkCellRenderer> end;
 define C-function gtk-cell-renderer-activate
   input parameter self :: <GtkCellRenderer>;
   input parameter event_ :: <GdkEvent>;
@@ -3881,39 +3647,31 @@ define C-function gtk-cell-renderer-stop-editing
 end;
 
 define open C-subtype <GtkCellRendererAccel> (<GtkCellRendererText>)
-  constant slot gtkcellrendereraccel-parent :: <GtkCellRendererText>;
-  constant slot gtkcellrendereraccel-priv :: <GtkCellRendererAccelPrivate>;
+  constant slot gtk-cell-renderer-accel-parent :: <GtkCellRendererText>;
+  constant slot gtk-cell-renderer-accel-priv :: <GtkCellRendererAccelPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRendererAccel*> => <GtkCellRendererAccel>;
 
-define property-getter cellrendereraccel-accel-key :: <C-unsigned-int> on <GtkCellRendererAccel> end;
-define property-setter cellrendereraccel-accel-key :: <C-unsigned-int> on <GtkCellRendererAccel> end;
-define property-getter cellrendereraccel-accel-mode :: <GtkCellRendererAccelMode> on <GtkCellRendererAccel> end;
-define property-setter cellrendereraccel-accel-mode :: <GtkCellRendererAccelMode> on <GtkCellRendererAccel> end;
-define property-getter cellrendereraccel-accel-mods :: <GdkModifierType> on <GtkCellRendererAccel> end;
-define property-setter cellrendereraccel-accel-mods :: <GdkModifierType> on <GtkCellRendererAccel> end;
-define property-getter cellrendereraccel-keycode :: <C-unsigned-int> on <GtkCellRendererAccel> end;
-define property-setter cellrendereraccel-keycode :: <C-unsigned-int> on <GtkCellRendererAccel> end;
 define C-function gtk-cell-renderer-accel-new
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_renderer_accel_new";
 end;
 
 define C-struct <_GtkCellRendererAccelClass>
-  constant slot gtkcellrendereraccelclass-parent-class :: <GtkCellRendererTextClass>;
-  constant slot gtkcellrendereraccelclass-accel-edited :: <C-function-pointer>;
-  constant slot gtkcellrendereraccelclass-accel-cleared :: <C-function-pointer>;
-  constant slot gtkcellrendereraccelclass--gtk-reserved0 :: <C-void*>;
-  constant slot gtkcellrendereraccelclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellrendereraccelclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrendereraccelclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrendereraccelclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-accel-class-parent-class :: <GtkCellRendererTextClass>;
+  constant slot gtk-cell-renderer-accel-class-accel-edited :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-accel-class-accel-cleared :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-accel-class-_gtk-reserved0 :: <C-void*>;
+  constant slot gtk-cell-renderer-accel-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-renderer-accel-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-accel-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-accel-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererAccelClass>;
 end C-struct;
 
-define constant $GTK-CELL-RENDERER-ACCEL-MODE-GTK = 0;
-define constant $GTK-CELL-RENDERER-ACCEL-MODE-OTHER = 1;
+define constant $gtk-cell-renderer-accel-mode-gtk = 0;
+define constant $gtk-cell-renderer-accel-mode-other = 1;
 define constant <GtkCellRendererAccelMode> = <C-int>;
 define C-pointer-type <GtkCellRendererAccelMode*> => <GtkCellRendererAccelMode>;
 
@@ -3922,23 +3680,23 @@ define C-struct <_GtkCellRendererAccelPrivate>
 end C-struct;
 
 define C-struct <_GtkCellRendererClass>
-  constant slot gtkcellrendererclass-parent-class :: <GInitiallyUnownedClass>;
-  constant slot gtkcellrendererclass-get-request-mode :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-get-preferred-width :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-get-preferred-height-for-width :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-get-preferred-height :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-get-preferred-width-for-height :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-get-aligned-area :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-get-size :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-render :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-activate :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-start-editing :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-editing-canceled :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-editing-started :: <C-function-pointer>;
-  constant slot gtkcellrendererclass-priv :: <GtkCellRendererClassPrivate>;
-  constant slot gtkcellrendererclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrendererclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrendererclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-class-parent-class :: <GInitiallyUnownedClass>;
+  constant slot gtk-cell-renderer-class-get-request-mode :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-get-preferred-width :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-get-preferred-height-for-width :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-get-preferred-height :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-get-preferred-width-for-height :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-get-aligned-area :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-get-size :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-render :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-activate :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-start-editing :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-editing-canceled :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-editing-started :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-class-priv :: <GtkCellRendererClassPrivate>;
+  constant slot gtk-cell-renderer-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererClass>;
 end C-struct;
 
@@ -3947,29 +3705,23 @@ define C-struct <_GtkCellRendererClassPrivate>
 end C-struct;
 
 define open C-subtype <GtkCellRendererCombo> (<GtkCellRendererText>)
-  constant slot gtkcellrenderercombo-parent :: <GtkCellRendererText>;
-  constant slot gtkcellrenderercombo-priv :: <GtkCellRendererComboPrivate>;
+  constant slot gtk-cell-renderer-combo-parent :: <GtkCellRendererText>;
+  constant slot gtk-cell-renderer-combo-priv :: <GtkCellRendererComboPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRendererCombo*> => <GtkCellRendererCombo>;
 
-define property-getter cellrenderercombo-has-entry :: <C-boolean> on <GtkCellRendererCombo> end;
-define property-setter cellrenderercombo-has-entry :: <C-boolean> on <GtkCellRendererCombo> end;
-define property-getter cellrenderercombo-model :: <GtkTreeModel> on <GtkCellRendererCombo> end;
-define property-setter cellrenderercombo-model :: <GtkTreeModel> on <GtkCellRendererCombo> end;
-define property-getter cellrenderercombo-text-column :: <C-signed-int> on <GtkCellRendererCombo> end;
-define property-setter cellrenderercombo-text-column :: <C-signed-int> on <GtkCellRendererCombo> end;
 define C-function gtk-cell-renderer-combo-new
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_renderer_combo_new";
 end;
 
 define C-struct <_GtkCellRendererComboClass>
-  constant slot gtkcellrenderercomboclass-parent :: <GtkCellRendererTextClass>;
-  constant slot gtkcellrenderercomboclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellrenderercomboclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrenderercomboclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrenderercomboclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-combo-class-parent :: <GtkCellRendererTextClass>;
+  constant slot gtk-cell-renderer-combo-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-renderer-combo-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-combo-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-combo-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererComboClass>;
 end C-struct;
 
@@ -3977,48 +3729,30 @@ define C-struct <_GtkCellRendererComboPrivate>
   pointer-type-name: <GtkCellRendererComboPrivate>;
 end C-struct;
 
-define constant $GTK-CELL-RENDERER-MODE-INERT = 0;
-define constant $GTK-CELL-RENDERER-MODE-ACTIVATABLE = 1;
-define constant $GTK-CELL-RENDERER-MODE-EDITABLE = 2;
+define constant $gtk-cell-renderer-mode-inert = 0;
+define constant $gtk-cell-renderer-mode-activatable = 1;
+define constant $gtk-cell-renderer-mode-editable = 2;
 define constant <GtkCellRendererMode> = <C-int>;
 define C-pointer-type <GtkCellRendererMode*> => <GtkCellRendererMode>;
 
 define open C-subtype <GtkCellRendererPixbuf> (<GtkCellRenderer>)
-  constant slot gtkcellrendererpixbuf-parent :: <GtkCellRenderer>;
-  constant slot gtkcellrendererpixbuf-priv :: <GtkCellRendererPixbufPrivate>;
+  constant slot gtk-cell-renderer-pixbuf-parent :: <GtkCellRenderer>;
+  constant slot gtk-cell-renderer-pixbuf-priv :: <GtkCellRendererPixbufPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRendererPixbuf*> => <GtkCellRendererPixbuf>;
 
-define property-getter cellrendererpixbuf-follow-state :: <C-boolean> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-follow-state :: <C-boolean> on <GtkCellRendererPixbuf> end;
-define property-getter cellrendererpixbuf-gicon :: <GIcon> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-gicon :: <GIcon> on <GtkCellRendererPixbuf> end;
-define property-getter cellrendererpixbuf-icon-name :: <C-string> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-icon-name :: <C-string> on <GtkCellRendererPixbuf> end;
-define property-getter cellrendererpixbuf-pixbuf :: <GdkPixbuf> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-pixbuf :: <GdkPixbuf> on <GtkCellRendererPixbuf> end;
-define property-getter cellrendererpixbuf-pixbuf-expander-closed :: <GdkPixbuf> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-pixbuf-expander-closed :: <GdkPixbuf> on <GtkCellRendererPixbuf> end;
-define property-getter cellrendererpixbuf-pixbuf-expander-open :: <GdkPixbuf> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-pixbuf-expander-open :: <GdkPixbuf> on <GtkCellRendererPixbuf> end;
-define property-getter cellrendererpixbuf-stock-detail :: <C-string> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-stock-detail :: <C-string> on <GtkCellRendererPixbuf> end;
-define property-getter cellrendererpixbuf-stock-id :: <C-string> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-stock-id :: <C-string> on <GtkCellRendererPixbuf> end;
-define property-getter cellrendererpixbuf-stock-size :: <C-unsigned-int> on <GtkCellRendererPixbuf> end;
-define property-setter cellrendererpixbuf-stock-size :: <C-unsigned-int> on <GtkCellRendererPixbuf> end;
 define C-function gtk-cell-renderer-pixbuf-new
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_renderer_pixbuf_new";
 end;
 
 define C-struct <_GtkCellRendererPixbufClass>
-  constant slot gtkcellrendererpixbufclass-parent-class :: <GtkCellRendererClass>;
-  constant slot gtkcellrendererpixbufclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellrendererpixbufclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrendererpixbufclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrendererpixbufclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-pixbuf-class-parent-class :: <GtkCellRendererClass>;
+  constant slot gtk-cell-renderer-pixbuf-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-renderer-pixbuf-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-pixbuf-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-pixbuf-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererPixbufClass>;
 end C-struct;
 
@@ -4031,35 +3765,23 @@ define C-struct <_GtkCellRendererPrivate>
 end C-struct;
 
 define open C-subtype <GtkCellRendererProgress> (<GtkCellRenderer>)
-  constant slot gtkcellrendererprogress-parent-instance :: <GtkCellRenderer>;
-  constant slot gtkcellrendererprogress-priv :: <GtkCellRendererProgressPrivate>;
+  constant slot gtk-cell-renderer-progress-parent-instance :: <GtkCellRenderer>;
+  constant slot gtk-cell-renderer-progress-priv :: <GtkCellRendererProgressPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRendererProgress*> => <GtkCellRendererProgress>;
 
-define property-getter cellrendererprogress-inverted :: <C-boolean> on <GtkCellRendererProgress> end;
-define property-setter cellrendererprogress-inverted :: <C-boolean> on <GtkCellRendererProgress> end;
-define property-getter cellrendererprogress-pulse :: <C-signed-int> on <GtkCellRendererProgress> end;
-define property-setter cellrendererprogress-pulse :: <C-signed-int> on <GtkCellRendererProgress> end;
-define property-getter cellrendererprogress-text :: <C-string> on <GtkCellRendererProgress> end;
-define property-setter cellrendererprogress-text :: <C-string> on <GtkCellRendererProgress> end;
-define property-getter cellrendererprogress-text-xalign :: <C-float> on <GtkCellRendererProgress> end;
-define property-setter cellrendererprogress-text-xalign :: <C-float> on <GtkCellRendererProgress> end;
-define property-getter cellrendererprogress-text-yalign :: <C-float> on <GtkCellRendererProgress> end;
-define property-setter cellrendererprogress-text-yalign :: <C-float> on <GtkCellRendererProgress> end;
-define property-getter cellrendererprogress-value :: <C-signed-int> on <GtkCellRendererProgress> end;
-define property-setter cellrendererprogress-value :: <C-signed-int> on <GtkCellRendererProgress> end;
 define C-function gtk-cell-renderer-progress-new
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_renderer_progress_new";
 end;
 
 define C-struct <_GtkCellRendererProgressClass>
-  constant slot gtkcellrendererprogressclass-parent-class :: <GtkCellRendererClass>;
-  constant slot gtkcellrendererprogressclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellrendererprogressclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrendererprogressclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrendererprogressclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-progress-class-parent-class :: <GtkCellRendererClass>;
+  constant slot gtk-cell-renderer-progress-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-renderer-progress-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-progress-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-progress-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererProgressClass>;
 end C-struct;
 
@@ -4068,29 +3790,23 @@ define C-struct <_GtkCellRendererProgressPrivate>
 end C-struct;
 
 define open C-subtype <GtkCellRendererSpin> (<GtkCellRendererText>)
-  constant slot gtkcellrendererspin-parent :: <GtkCellRendererText>;
-  constant slot gtkcellrendererspin-priv :: <GtkCellRendererSpinPrivate>;
+  constant slot gtk-cell-renderer-spin-parent :: <GtkCellRendererText>;
+  constant slot gtk-cell-renderer-spin-priv :: <GtkCellRendererSpinPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRendererSpin*> => <GtkCellRendererSpin>;
 
-define property-getter cellrendererspin-adjustment :: <GtkAdjustment> on <GtkCellRendererSpin> end;
-define property-setter cellrendererspin-adjustment :: <GtkAdjustment> on <GtkCellRendererSpin> end;
-define property-getter cellrendererspin-climb-rate :: <C-double> on <GtkCellRendererSpin> end;
-define property-setter cellrendererspin-climb-rate :: <C-double> on <GtkCellRendererSpin> end;
-define property-getter cellrendererspin-digits :: <C-unsigned-int> on <GtkCellRendererSpin> end;
-define property-setter cellrendererspin-digits :: <C-unsigned-int> on <GtkCellRendererSpin> end;
 define C-function gtk-cell-renderer-spin-new
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_renderer_spin_new";
 end;
 
 define C-struct <_GtkCellRendererSpinClass>
-  constant slot gtkcellrendererspinclass-parent :: <GtkCellRendererTextClass>;
-  constant slot gtkcellrendererspinclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellrendererspinclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrendererspinclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrendererspinclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-spin-class-parent :: <GtkCellRendererTextClass>;
+  constant slot gtk-cell-renderer-spin-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-renderer-spin-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-spin-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-spin-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererSpinClass>;
 end C-struct;
 
@@ -4099,29 +3815,23 @@ define C-struct <_GtkCellRendererSpinPrivate>
 end C-struct;
 
 define open C-subtype <GtkCellRendererSpinner> (<GtkCellRenderer>)
-  constant slot gtkcellrendererspinner-parent :: <GtkCellRenderer>;
-  constant slot gtkcellrendererspinner-priv :: <GtkCellRendererSpinnerPrivate>;
+  constant slot gtk-cell-renderer-spinner-parent :: <GtkCellRenderer>;
+  constant slot gtk-cell-renderer-spinner-priv :: <GtkCellRendererSpinnerPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRendererSpinner*> => <GtkCellRendererSpinner>;
 
-define property-getter cellrendererspinner-active :: <C-boolean> on <GtkCellRendererSpinner> end;
-define property-setter cellrendererspinner-active :: <C-boolean> on <GtkCellRendererSpinner> end;
-define property-getter cellrendererspinner-pulse :: <C-unsigned-int> on <GtkCellRendererSpinner> end;
-define property-setter cellrendererspinner-pulse :: <C-unsigned-int> on <GtkCellRendererSpinner> end;
-define property-getter cellrendererspinner-size :: <GtkIconSize> on <GtkCellRendererSpinner> end;
-define property-setter cellrendererspinner-size :: <GtkIconSize> on <GtkCellRendererSpinner> end;
 define C-function gtk-cell-renderer-spinner-new
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_renderer_spinner_new";
 end;
 
 define C-struct <_GtkCellRendererSpinnerClass>
-  constant slot gtkcellrendererspinnerclass-parent-class :: <GtkCellRendererClass>;
-  constant slot gtkcellrendererspinnerclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellrendererspinnerclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrendererspinnerclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrendererspinnerclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-spinner-class-parent-class :: <GtkCellRendererClass>;
+  constant slot gtk-cell-renderer-spinner-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-renderer-spinner-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-spinner-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-spinner-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererSpinnerClass>;
 end C-struct;
 
@@ -4129,114 +3839,23 @@ define C-struct <_GtkCellRendererSpinnerPrivate>
   pointer-type-name: <GtkCellRendererSpinnerPrivate>;
 end C-struct;
 
-define constant $GTK-CELL-RENDERER-SELECTED = 1;
-define constant $GTK-CELL-RENDERER-PRELIT = 2;
-define constant $GTK-CELL-RENDERER-INSENSITIVE = 4;
-define constant $GTK-CELL-RENDERER-SORTED = 8;
-define constant $GTK-CELL-RENDERER-FOCUSED = 16;
-define constant $GTK-CELL-RENDERER-EXPANDABLE = 32;
-define constant $GTK-CELL-RENDERER-EXPANDED = 64;
+define constant $gtk-cell-renderer-selected = 1;
+define constant $gtk-cell-renderer-prelit = 2;
+define constant $gtk-cell-renderer-insensitive = 4;
+define constant $gtk-cell-renderer-sorted = 8;
+define constant $gtk-cell-renderer-focused = 16;
+define constant $gtk-cell-renderer-expandable = 32;
+define constant $gtk-cell-renderer-expanded = 64;
 define constant <GtkCellRendererState> = <C-int>;
 define C-pointer-type <GtkCellRendererState*> => <GtkCellRendererState>;
 
 define open C-subtype <GtkCellRendererText> (<GtkCellRenderer>)
-  constant slot gtkcellrenderertext-parent :: <GtkCellRenderer>;
-  constant slot gtkcellrenderertext-priv :: <GtkCellRendererTextPrivate>;
+  constant slot gtk-cell-renderer-text-parent :: <GtkCellRenderer>;
+  constant slot gtk-cell-renderer-text-priv :: <GtkCellRendererTextPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRendererText*> => <GtkCellRendererText>;
 
-define property-getter cellrenderertext-align-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-align-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-alignment :: <PangoAlignment> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-alignment :: <PangoAlignment> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-attributes :: <PangoAttrList> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-attributes :: <PangoAttrList> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-background :: <C-string> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-background-gdk :: <GdkColor> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-background-gdk :: <GdkColor> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-background-rgba :: <GdkRGBA> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-background-rgba :: <GdkRGBA> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-background-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-background-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-editable :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-editable :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-editable-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-editable-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-ellipsize :: <PangoEllipsizeMode> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-ellipsize :: <PangoEllipsizeMode> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-ellipsize-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-ellipsize-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-family :: <C-string> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-family :: <C-string> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-family-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-family-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-font :: <C-string> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-font :: <C-string> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-font-desc :: <PangoFontDescription> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-font-desc :: <PangoFontDescription> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-foreground :: <C-string> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-foreground-gdk :: <GdkColor> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-foreground-gdk :: <GdkColor> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-foreground-rgba :: <GdkRGBA> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-foreground-rgba :: <GdkRGBA> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-foreground-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-foreground-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-language :: <C-string> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-language :: <C-string> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-language-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-language-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-markup :: <C-string> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-max-width-chars :: <C-signed-int> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-max-width-chars :: <C-signed-int> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-rise :: <C-signed-int> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-rise :: <C-signed-int> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-rise-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-rise-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-scale :: <C-double> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-scale :: <C-double> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-scale-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-scale-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-single-paragraph-mode :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-single-paragraph-mode :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-size :: <C-signed-int> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-size :: <C-signed-int> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-size-points :: <C-double> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-size-points :: <C-double> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-size-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-size-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-stretch :: <PangoStretch> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-stretch :: <PangoStretch> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-stretch-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-stretch-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-strikethrough :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-strikethrough :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-strikethrough-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-strikethrough-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-style :: <PangoStyle> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-style :: <PangoStyle> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-style-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-style-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-text :: <C-string> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-text :: <C-string> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-underline :: <PangoUnderline> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-underline :: <PangoUnderline> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-underline-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-underline-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-variant :: <PangoVariant> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-variant :: <PangoVariant> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-variant-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-variant-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-weight :: <C-signed-int> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-weight :: <C-signed-int> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-weight-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-weight-set :: <C-boolean> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-width-chars :: <C-signed-int> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-width-chars :: <C-signed-int> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-wrap-mode :: <PangoWrapMode> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-wrap-mode :: <PangoWrapMode> on <GtkCellRendererText> end;
-define property-getter cellrenderertext-wrap-width :: <C-signed-int> on <GtkCellRendererText> end;
-define property-setter cellrenderertext-wrap-width :: <C-signed-int> on <GtkCellRendererText> end;
 define C-function gtk-cell-renderer-text-new
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_renderer_text_new";
@@ -4249,12 +3868,12 @@ define C-function gtk-cell-renderer-text-set-fixed-height-from-font
 end;
 
 define C-struct <_GtkCellRendererTextClass>
-  constant slot gtkcellrenderertextclass-parent-class :: <GtkCellRendererClass>;
-  constant slot gtkcellrenderertextclass-edited :: <C-function-pointer>;
-  constant slot gtkcellrenderertextclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellrenderertextclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrenderertextclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrenderertextclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-text-class-parent-class :: <GtkCellRendererClass>;
+  constant slot gtk-cell-renderer-text-class-edited :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-text-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-renderer-text-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-text-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-text-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererTextClass>;
 end C-struct;
 
@@ -4263,22 +3882,12 @@ define C-struct <_GtkCellRendererTextPrivate>
 end C-struct;
 
 define open C-subtype <GtkCellRendererToggle> (<GtkCellRenderer>)
-  constant slot gtkcellrenderertoggle-parent :: <GtkCellRenderer>;
-  constant slot gtkcellrenderertoggle-priv :: <GtkCellRendererTogglePrivate>;
+  constant slot gtk-cell-renderer-toggle-parent :: <GtkCellRenderer>;
+  constant slot gtk-cell-renderer-toggle-priv :: <GtkCellRendererTogglePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellRendererToggle*> => <GtkCellRendererToggle>;
 
-define property-getter cellrenderertoggle-activatable :: <C-boolean> on <GtkCellRendererToggle> end;
-define property-setter cellrenderertoggle-activatable :: <C-boolean> on <GtkCellRendererToggle> end;
-define property-getter cellrenderertoggle-active :: <C-boolean> on <GtkCellRendererToggle> end;
-define property-setter cellrenderertoggle-active :: <C-boolean> on <GtkCellRendererToggle> end;
-define property-getter cellrenderertoggle-inconsistent :: <C-boolean> on <GtkCellRendererToggle> end;
-define property-setter cellrenderertoggle-inconsistent :: <C-boolean> on <GtkCellRendererToggle> end;
-define property-getter cellrenderertoggle-indicator-size :: <C-signed-int> on <GtkCellRendererToggle> end;
-define property-setter cellrenderertoggle-indicator-size :: <C-signed-int> on <GtkCellRendererToggle> end;
-define property-getter cellrenderertoggle-radio :: <C-boolean> on <GtkCellRendererToggle> end;
-define property-setter cellrenderertoggle-radio :: <C-boolean> on <GtkCellRendererToggle> end;
 define C-function gtk-cell-renderer-toggle-new
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_renderer_toggle_new";
@@ -4321,12 +3930,12 @@ define C-function gtk-cell-renderer-toggle-set-radio
 end;
 
 define C-struct <_GtkCellRendererToggleClass>
-  constant slot gtkcellrenderertoggleclass-parent-class :: <GtkCellRendererClass>;
-  constant slot gtkcellrenderertoggleclass-toggled :: <C-function-pointer>;
-  constant slot gtkcellrenderertoggleclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellrenderertoggleclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellrenderertoggleclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellrenderertoggleclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-renderer-toggle-class-parent-class :: <GtkCellRendererClass>;
+  constant slot gtk-cell-renderer-toggle-class-toggled :: <C-function-pointer>;
+  constant slot gtk-cell-renderer-toggle-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-renderer-toggle-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-renderer-toggle-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-renderer-toggle-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellRendererToggleClass>;
 end C-struct;
 
@@ -4335,29 +3944,12 @@ define C-struct <_GtkCellRendererTogglePrivate>
 end C-struct;
 
 define open C-subtype <GtkCellView> (<GtkWidget>)
-  constant slot gtkcellview-parent-instance :: <GtkWidget>;
-  constant slot gtkcellview-priv :: <GtkCellViewPrivate>;
+  constant slot gtk-cell-view-parent-instance :: <GtkWidget>;
+  constant slot gtk-cell-view-priv :: <GtkCellViewPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCellView*> => <GtkCellView>;
 
-define property-setter cellview-background :: <C-string> on <GtkCellView> end;
-define property-getter cellview-background-gdk :: <GdkColor> on <GtkCellView> end;
-define property-setter cellview-background-gdk :: <GdkColor> on <GtkCellView> end;
-define property-getter cellview-background-rgba :: <GdkRGBA> on <GtkCellView> end;
-define property-setter cellview-background-rgba :: <GdkRGBA> on <GtkCellView> end;
-define property-getter cellview-background-set :: <C-boolean> on <GtkCellView> end;
-define property-setter cellview-background-set :: <C-boolean> on <GtkCellView> end;
-define property-getter cellview-cell-area :: <GtkCellArea> on <GtkCellView> end;
-define property-setter cellview-cell-area :: <GtkCellArea> on <GtkCellView> end;
-define property-getter cellview-cell-area-context :: <GtkCellAreaContext> on <GtkCellView> end;
-define property-setter cellview-cell-area-context :: <GtkCellAreaContext> on <GtkCellView> end;
-define property-getter cellview-draw-sensitive :: <C-boolean> on <GtkCellView> end;
-define property-setter cellview-draw-sensitive :: <C-boolean> on <GtkCellView> end;
-define property-getter cellview-fit-model :: <C-boolean> on <GtkCellView> end;
-define property-setter cellview-fit-model :: <C-boolean> on <GtkCellView> end;
-define property-getter cellview-model :: <GtkTreeModel> on <GtkCellView> end;
-define property-setter cellview-model :: <GtkTreeModel> on <GtkCellView> end;
 define C-function gtk-cell-view-new
   result res :: <GtkWidget>;
   c-name: "gtk_cell_view_new";
@@ -4457,11 +4049,11 @@ define C-function gtk-cell-view-set-model
 end;
 
 define C-struct <_GtkCellViewClass>
-  constant slot gtkcellviewclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkcellviewclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcellviewclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcellviewclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcellviewclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-cell-view-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-cell-view-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-cell-view-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-cell-view-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-cell-view-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCellViewClass>;
 end C-struct;
 
@@ -4470,7 +4062,7 @@ define C-struct <_GtkCellViewPrivate>
 end C-struct;
 
 define open C-subtype <GtkCheckButton> (<GtkToggleButton>)
-  constant slot gtkcheckbutton-toggle-button :: <GtkToggleButton>;
+  constant slot gtk-check-button-toggle-button :: <GtkToggleButton>;
 end C-subtype;
 
 define C-pointer-type <GtkCheckButton*> => <GtkCheckButton>;
@@ -4493,28 +4085,22 @@ define C-function gtk-check-button-new-with-mnemonic
 end;
 
 define C-struct <_GtkCheckButtonClass>
-  constant slot gtkcheckbuttonclass-parent-class :: <GtkToggleButtonClass>;
-  constant slot gtkcheckbuttonclass-draw-indicator :: <C-function-pointer>;
-  constant slot gtkcheckbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcheckbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcheckbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcheckbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-check-button-class-parent-class :: <GtkToggleButtonClass>;
+  constant slot gtk-check-button-class-draw-indicator :: <C-function-pointer>;
+  constant slot gtk-check-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-check-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-check-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-check-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCheckButtonClass>;
 end C-struct;
 
 define open C-subtype <GtkCheckMenuItem> (<GtkMenuItem>)
-  constant slot gtkcheckmenuitem-menu-item :: <GtkMenuItem>;
-  constant slot gtkcheckmenuitem-priv :: <GtkCheckMenuItemPrivate>;
+  constant slot gtk-check-menu-item-menu-item :: <GtkMenuItem>;
+  constant slot gtk-check-menu-item-priv :: <GtkCheckMenuItemPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCheckMenuItem*> => <GtkCheckMenuItem>;
 
-define property-getter checkmenuitem-active :: <C-boolean> on <GtkCheckMenuItem> end;
-define property-setter checkmenuitem-active :: <C-boolean> on <GtkCheckMenuItem> end;
-define property-getter checkmenuitem-draw-as-radio :: <C-boolean> on <GtkCheckMenuItem> end;
-define property-setter checkmenuitem-draw-as-radio :: <C-boolean> on <GtkCheckMenuItem> end;
-define property-getter checkmenuitem-inconsistent :: <C-boolean> on <GtkCheckMenuItem> end;
-define property-setter checkmenuitem-inconsistent :: <C-boolean> on <GtkCheckMenuItem> end;
 define C-function gtk-check-menu-item-new
   result res :: <GtkWidget>;
   c-name: "gtk_check_menu_item_new";
@@ -4574,13 +4160,13 @@ define C-function gtk-check-menu-item-toggled
 end;
 
 define C-struct <_GtkCheckMenuItemClass>
-  constant slot gtkcheckmenuitemclass-parent-class :: <GtkMenuItemClass>;
-  constant slot gtkcheckmenuitemclass-toggled :: <C-function-pointer>;
-  constant slot gtkcheckmenuitemclass-draw-indicator :: <C-function-pointer>;
-  constant slot gtkcheckmenuitemclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcheckmenuitemclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcheckmenuitemclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcheckmenuitemclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-check-menu-item-class-parent-class :: <GtkMenuItemClass>;
+  constant slot gtk-check-menu-item-class-toggled :: <C-function-pointer>;
+  constant slot gtk-check-menu-item-class-draw-indicator :: <C-function-pointer>;
+  constant slot gtk-check-menu-item-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-check-menu-item-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-check-menu-item-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-check-menu-item-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCheckMenuItemClass>;
 end C-struct;
 
@@ -4767,22 +4353,12 @@ define C-function gtk-clipboard-wait-is-uris-available
 end;
 
 define open C-subtype <GtkColorButton> (<GtkButton>)
-  constant slot gtkcolorbutton-button :: <GtkButton>;
-  constant slot gtkcolorbutton-priv :: <GtkColorButtonPrivate>;
+  constant slot gtk-color-button-button :: <GtkButton>;
+  constant slot gtk-color-button-priv :: <GtkColorButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkColorButton*> => <GtkColorButton>;
 
-define property-getter colorbutton-alpha :: <C-unsigned-int> on <GtkColorButton> end;
-define property-setter colorbutton-alpha :: <C-unsigned-int> on <GtkColorButton> end;
-define property-getter colorbutton-color :: <GdkColor> on <GtkColorButton> end;
-define property-setter colorbutton-color :: <GdkColor> on <GtkColorButton> end;
-define property-getter colorbutton-rgba :: <GdkRGBA> on <GtkColorButton> end;
-define property-setter colorbutton-rgba :: <GdkRGBA> on <GtkColorButton> end;
-define property-getter colorbutton-title :: <C-string> on <GtkColorButton> end;
-define property-setter colorbutton-title :: <C-string> on <GtkColorButton> end;
-define property-getter colorbutton-use-alpha :: <C-boolean> on <GtkColorButton> end;
-define property-setter colorbutton-use-alpha :: <C-boolean> on <GtkColorButton> end;
 define C-function gtk-color-button-new
   result res :: <GtkWidget>;
   c-name: "gtk_color_button_new";
@@ -4861,12 +4437,12 @@ define C-function gtk-color-button-set-use-alpha
 end;
 
 define C-struct <_GtkColorButtonClass>
-  constant slot gtkcolorbuttonclass-parent-class :: <GtkButtonClass>;
-  constant slot gtkcolorbuttonclass-color-set :: <C-function-pointer>;
-  constant slot gtkcolorbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcolorbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcolorbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcolorbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-color-button-class-parent-class :: <GtkButtonClass>;
+  constant slot gtk-color-button-class-color-set :: <C-function-pointer>;
+  constant slot gtk-color-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-color-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-color-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-color-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkColorButtonClass>;
 end C-struct;
 
@@ -4914,14 +4490,12 @@ define C-function gtk-color-chooser-set-use-alpha
 end;
 
 define open C-subtype <GtkColorChooserDialog> (<GtkDialog>)
-  constant slot gtkcolorchooserdialog-parent-instance :: <GtkDialog>;
-  constant slot gtkcolorchooserdialog-priv :: <GtkColorChooserDialogPrivate>;
+  constant slot gtk-color-chooser-dialog-parent-instance :: <GtkDialog>;
+  constant slot gtk-color-chooser-dialog-priv :: <GtkColorChooserDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkColorChooserDialog*> => <GtkColorChooserDialog>;
 
-define property-getter colorchooserdialog-show-editor :: <C-boolean> on <GtkColorChooserDialog> end;
-define property-setter colorchooserdialog-show-editor :: <C-boolean> on <GtkColorChooserDialog> end;
 define C-function gtk-color-chooser-dialog-new
   input parameter title_ :: <C-string>;
   input parameter parent_ :: <GtkWindow>;
@@ -4930,11 +4504,11 @@ define C-function gtk-color-chooser-dialog-new
 end;
 
 define C-struct <_GtkColorChooserDialogClass>
-  constant slot gtkcolorchooserdialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkcolorchooserdialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcolorchooserdialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcolorchooserdialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcolorchooserdialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-color-chooser-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-color-chooser-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-color-chooser-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-color-chooser-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-color-chooser-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkColorChooserDialogClass>;
 end C-struct;
 
@@ -4943,39 +4517,37 @@ define C-struct <_GtkColorChooserDialogPrivate>
 end C-struct;
 
 define C-struct <_GtkColorChooserInterface>
-  constant slot gtkcolorchooserinterface-base-interface :: <GTypeInterface>;
-  constant slot gtkcolorchooserinterface-get-rgba :: <C-function-pointer>;
-  constant slot gtkcolorchooserinterface-set-rgba :: <C-function-pointer>;
-  constant slot gtkcolorchooserinterface-add-palette :: <C-function-pointer>;
-  constant slot gtkcolorchooserinterface-color-activated :: <C-function-pointer>;
-  constant slot gtkcolorchooserinterface-padding :: <C-void*>;
+  constant slot gtk-color-chooser-interface-base-interface :: <GTypeInterface>;
+  constant slot gtk-color-chooser-interface-get-rgba :: <C-function-pointer>;
+  constant slot gtk-color-chooser-interface-set-rgba :: <C-function-pointer>;
+  constant slot gtk-color-chooser-interface-add-palette :: <C-function-pointer>;
+  constant slot gtk-color-chooser-interface-color-activated :: <C-function-pointer>;
+  constant slot gtk-color-chooser-interface-padding :: <C-void*>;
   pointer-type-name: <GtkColorChooserInterface>;
 end C-struct;
 
 define open C-subtype <GtkColorChooserWidget> (<GtkBox>)
-  constant slot gtkcolorchooserwidget-parent-instance :: <GtkBox>;
-  constant slot gtkcolorchooserwidget-priv :: <GtkColorChooserWidgetPrivate>;
+  constant slot gtk-color-chooser-widget-parent-instance :: <GtkBox>;
+  constant slot gtk-color-chooser-widget-priv :: <GtkColorChooserWidgetPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkColorChooserWidget*> => <GtkColorChooserWidget>;
 
-define property-getter colorchooserwidget-show-editor :: <C-boolean> on <GtkColorChooserWidget> end;
-define property-setter colorchooserwidget-show-editor :: <C-boolean> on <GtkColorChooserWidget> end;
 define C-function gtk-color-chooser-widget-new
   result res :: <GtkWidget>;
   c-name: "gtk_color_chooser_widget_new";
 end;
 
 define C-struct <_GtkColorChooserWidgetClass>
-  constant slot gtkcolorchooserwidgetclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkcolorchooserwidgetclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcolorchooserwidgetclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcolorchooserwidgetclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcolorchooserwidgetclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkcolorchooserwidgetclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkcolorchooserwidgetclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkcolorchooserwidgetclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkcolorchooserwidgetclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-color-chooser-widget-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-color-chooser-widget-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-color-chooser-widget-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-color-chooser-widget-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-color-chooser-widget-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-color-chooser-widget-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-color-chooser-widget-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-color-chooser-widget-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-color-chooser-widget-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkColorChooserWidgetClass>;
 end C-struct;
 
@@ -4984,22 +4556,12 @@ define C-struct <_GtkColorChooserWidgetPrivate>
 end C-struct;
 
 define open C-subtype <GtkColorSelection> (<GtkBox>)
-  constant slot gtkcolorselection-parent-instance :: <GtkBox>;
-  constant slot gtkcolorselection-private-data :: <GtkColorSelectionPrivate>;
+  constant slot gtk-color-selection-parent-instance :: <GtkBox>;
+  constant slot gtk-color-selection-private-data :: <GtkColorSelectionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkColorSelection*> => <GtkColorSelection>;
 
-define property-getter colorselection-current-alpha :: <C-unsigned-int> on <GtkColorSelection> end;
-define property-setter colorselection-current-alpha :: <C-unsigned-int> on <GtkColorSelection> end;
-define property-getter colorselection-current-color :: <GdkColor> on <GtkColorSelection> end;
-define property-setter colorselection-current-color :: <GdkColor> on <GtkColorSelection> end;
-define property-getter colorselection-current-rgba :: <GdkRGBA> on <GtkColorSelection> end;
-define property-setter colorselection-current-rgba :: <GdkRGBA> on <GtkColorSelection> end;
-define property-getter colorselection-has-opacity-control :: <C-boolean> on <GtkColorSelection> end;
-define property-setter colorselection-has-opacity-control :: <C-boolean> on <GtkColorSelection> end;
-define property-getter colorselection-has-palette :: <C-boolean> on <GtkColorSelection> end;
-define property-setter colorselection-has-palette :: <C-boolean> on <GtkColorSelection> end;
 define C-function gtk-color-selection-new
   result res :: <GtkWidget>;
   c-name: "gtk_color_selection_new";
@@ -5123,26 +4685,22 @@ define C-function gtk-color-selection-set-previous-rgba
 end;
 
 define C-struct <_GtkColorSelectionClass>
-  constant slot gtkcolorselectionclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkcolorselectionclass-color-changed :: <C-function-pointer>;
-  constant slot gtkcolorselectionclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcolorselectionclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcolorselectionclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcolorselectionclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-color-selection-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-color-selection-class-color-changed :: <C-function-pointer>;
+  constant slot gtk-color-selection-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-color-selection-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-color-selection-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-color-selection-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkColorSelectionClass>;
 end C-struct;
 
 define open C-subtype <GtkColorSelectionDialog> (<GtkDialog>)
-  constant slot gtkcolorselectiondialog-parent-instance :: <GtkDialog>;
-  constant slot gtkcolorselectiondialog-priv :: <GtkColorSelectionDialogPrivate>;
+  constant slot gtk-color-selection-dialog-parent-instance :: <GtkDialog>;
+  constant slot gtk-color-selection-dialog-priv :: <GtkColorSelectionDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkColorSelectionDialog*> => <GtkColorSelectionDialog>;
 
-define property-getter colorselectiondialog-cancel-button :: <GtkWidget> on <GtkColorSelectionDialog> end;
-define property-getter colorselectiondialog-color-selection :: <GtkWidget> on <GtkColorSelectionDialog> end;
-define property-getter colorselectiondialog-help-button :: <GtkWidget> on <GtkColorSelectionDialog> end;
-define property-getter colorselectiondialog-ok-button :: <GtkWidget> on <GtkColorSelectionDialog> end;
 define C-function gtk-color-selection-dialog-new
   input parameter title_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -5156,11 +4714,11 @@ define C-function gtk-color-selection-dialog-get-color-selection
 end;
 
 define C-struct <_GtkColorSelectionDialogClass>
-  constant slot gtkcolorselectiondialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkcolorselectiondialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcolorselectiondialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcolorselectiondialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcolorselectiondialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-color-selection-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-color-selection-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-color-selection-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-color-selection-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-color-selection-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkColorSelectionDialogClass>;
 end C-struct;
 
@@ -5173,45 +4731,12 @@ define C-struct <_GtkColorSelectionPrivate>
 end C-struct;
 
 define open C-subtype <GtkComboBox> (<GtkBin>)
-  constant slot gtkcombobox-parent-instance :: <GtkBin>;
-  constant slot gtkcombobox-priv :: <GtkComboBoxPrivate>;
+  constant slot gtk-combo-box-parent-instance :: <GtkBin>;
+  constant slot gtk-combo-box-priv :: <GtkComboBoxPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkComboBox*> => <GtkComboBox>;
 
-define property-getter combobox-active :: <C-signed-int> on <GtkComboBox> end;
-define property-setter combobox-active :: <C-signed-int> on <GtkComboBox> end;
-define property-getter combobox-active-id :: <C-string> on <GtkComboBox> end;
-define property-setter combobox-active-id :: <C-string> on <GtkComboBox> end;
-define property-getter combobox-add-tearoffs :: <C-boolean> on <GtkComboBox> end;
-define property-setter combobox-add-tearoffs :: <C-boolean> on <GtkComboBox> end;
-define property-getter combobox-button-sensitivity :: <GtkSensitivityType> on <GtkComboBox> end;
-define property-setter combobox-button-sensitivity :: <GtkSensitivityType> on <GtkComboBox> end;
-define property-getter combobox-cell-area :: <GtkCellArea> on <GtkComboBox> end;
-define property-setter combobox-cell-area :: <GtkCellArea> on <GtkComboBox> end;
-define property-getter combobox-column-span-column :: <C-signed-int> on <GtkComboBox> end;
-define property-setter combobox-column-span-column :: <C-signed-int> on <GtkComboBox> end;
-define property-getter combobox-entry-text-column :: <C-signed-int> on <GtkComboBox> end;
-define property-setter combobox-entry-text-column :: <C-signed-int> on <GtkComboBox> end;
-define property-getter combobox-focus-on-click :: <C-boolean> on <GtkComboBox> end;
-define property-setter combobox-focus-on-click :: <C-boolean> on <GtkComboBox> end;
-define property-getter combobox-has-entry :: <C-boolean> on <GtkComboBox> end;
-define property-setter combobox-has-entry :: <C-boolean> on <GtkComboBox> end;
-define property-getter combobox-has-frame :: <C-boolean> on <GtkComboBox> end;
-define property-setter combobox-has-frame :: <C-boolean> on <GtkComboBox> end;
-define property-getter combobox-id-column :: <C-signed-int> on <GtkComboBox> end;
-define property-setter combobox-id-column :: <C-signed-int> on <GtkComboBox> end;
-define property-getter combobox-model :: <GtkTreeModel> on <GtkComboBox> end;
-define property-setter combobox-model :: <GtkTreeModel> on <GtkComboBox> end;
-define property-getter combobox-popup-fixed-width :: <C-boolean> on <GtkComboBox> end;
-define property-setter combobox-popup-fixed-width :: <C-boolean> on <GtkComboBox> end;
-define property-getter combobox-popup-shown :: <C-boolean> on <GtkComboBox> end;
-define property-getter combobox-row-span-column :: <C-signed-int> on <GtkComboBox> end;
-define property-setter combobox-row-span-column :: <C-signed-int> on <GtkComboBox> end;
-define property-getter combobox-tearoff-title :: <C-string> on <GtkComboBox> end;
-define property-setter combobox-tearoff-title :: <C-string> on <GtkComboBox> end;
-define property-getter combobox-wrap-width :: <C-signed-int> on <GtkComboBox> end;
-define property-setter combobox-wrap-width :: <C-signed-int> on <GtkComboBox> end;
 define C-function gtk-combo-box-new
   result res :: <GtkWidget>;
   c-name: "gtk_combo_box_new";
@@ -5453,12 +4978,12 @@ define C-function gtk-combo-box-set-wrap-width
 end;
 
 define C-struct <_GtkComboBoxClass>
-  constant slot gtkcomboboxclass-parent-class :: <GtkBinClass>;
-  constant slot gtkcomboboxclass-changed :: <C-function-pointer>;
-  constant slot gtkcomboboxclass-format-entry-text :: <C-function-pointer>;
-  constant slot gtkcomboboxclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcomboboxclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcomboboxclass--gtk-reserved3 :: <C-void*>;
+  constant slot gtk-combo-box-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-combo-box-class-changed :: <C-function-pointer>;
+  constant slot gtk-combo-box-class-format-entry-text :: <C-function-pointer>;
+  constant slot gtk-combo-box-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-combo-box-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-combo-box-class-_gtk-reserved3 :: <C-void*>;
   pointer-type-name: <GtkComboBoxClass>;
 end C-struct;
 
@@ -5467,8 +4992,8 @@ define C-struct <_GtkComboBoxPrivate>
 end C-struct;
 
 define open C-subtype <GtkComboBoxText> (<GtkComboBox>)
-  constant slot gtkcomboboxtext-parent-instance :: <GtkComboBox>;
-  constant slot gtkcomboboxtext-priv :: <GtkComboBoxTextPrivate>;
+  constant slot gtk-combo-box-text-parent-instance :: <GtkComboBox>;
+  constant slot gtk-combo-box-text-priv :: <GtkComboBoxTextPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkComboBoxText*> => <GtkComboBoxText>;
@@ -5542,11 +5067,11 @@ define C-function gtk-combo-box-text-remove-all
 end;
 
 define C-struct <_GtkComboBoxTextClass>
-  constant slot gtkcomboboxtextclass-parent-class :: <GtkComboBoxClass>;
-  constant slot gtkcomboboxtextclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcomboboxtextclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcomboboxtextclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcomboboxtextclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-combo-box-text-class-parent-class :: <GtkComboBoxClass>;
+  constant slot gtk-combo-box-text-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-combo-box-text-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-combo-box-text-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-combo-box-text-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkComboBoxTextClass>;
 end C-struct;
 
@@ -5555,17 +5080,12 @@ define C-struct <_GtkComboBoxTextPrivate>
 end C-struct;
 
 define open C-subtype <GtkContainer> (<GtkWidget>)
-  constant slot gtkcontainer-widget :: <GtkWidget>;
-  constant slot gtkcontainer-priv :: <GtkContainerPrivate>;
+  constant slot gtk-container-widget :: <GtkWidget>;
+  constant slot gtk-container-priv :: <GtkContainerPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkContainer*> => <GtkContainer>;
 
-define property-getter container-border-width :: <C-unsigned-int> on <GtkContainer> end;
-define property-setter container-border-width :: <C-unsigned-int> on <GtkContainer> end;
-define property-setter container-child :: <GtkWidget> on <GtkContainer> end;
-define property-getter container-resize-mode :: <GtkResizeMode> on <GtkContainer> end;
-define property-setter container-resize-mode :: <GtkResizeMode> on <GtkContainer> end;
 define C-function gtk-container-add
   input parameter self :: <GtkContainer>;
   input parameter widget_ :: <GtkWidget>;
@@ -5736,26 +5256,26 @@ define C-function gtk-container-unset-focus-chain
 end;
 
 define C-struct <_GtkContainerClass>
-  constant slot gtkcontainerclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkcontainerclass-add :: <C-function-pointer>;
-  constant slot gtkcontainerclass-remove :: <C-function-pointer>;
-  constant slot gtkcontainerclass-check-resize :: <C-function-pointer>;
-  constant slot gtkcontainerclass-forall :: <C-function-pointer>;
-  constant slot gtkcontainerclass-set-focus-child :: <C-function-pointer>;
-  constant slot gtkcontainerclass-child-type :: <C-function-pointer>;
-  constant slot gtkcontainerclass-composite-name :: <C-function-pointer>;
-  constant slot gtkcontainerclass-set-child-property :: <C-function-pointer>;
-  constant slot gtkcontainerclass-get-child-property :: <C-function-pointer>;
-  constant slot gtkcontainerclass-get-path-for-child :: <C-function-pointer>;
-  constant slot gtkcontainerclass--handle-border-width :: <C-unsigned-int>;
-  constant slot gtkcontainerclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkcontainerclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcontainerclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcontainerclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkcontainerclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkcontainerclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkcontainerclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkcontainerclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-container-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-container-class-add :: <C-function-pointer>;
+  constant slot gtk-container-class-remove :: <C-function-pointer>;
+  constant slot gtk-container-class-check-resize :: <C-function-pointer>;
+  constant slot gtk-container-class-forall :: <C-function-pointer>;
+  constant slot gtk-container-class-set-focus-child :: <C-function-pointer>;
+  constant slot gtk-container-class-child-type :: <C-function-pointer>;
+  constant slot gtk-container-class-composite-name :: <C-function-pointer>;
+  constant slot gtk-container-class-set-child-property :: <C-function-pointer>;
+  constant slot gtk-container-class-get-child-property :: <C-function-pointer>;
+  constant slot gtk-container-class-get-path-for-child :: <C-function-pointer>;
+  constant slot gtk-container-class-_handle-border-width :: <C-unsigned-int>;
+  constant slot gtk-container-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-container-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-container-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-container-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-container-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-container-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-container-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-container-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkContainerClass>;
 end C-struct;
 
@@ -5789,16 +5309,16 @@ define C-struct <_GtkContainerPrivate>
   pointer-type-name: <GtkContainerPrivate>;
 end C-struct;
 
-define constant $GTK-CORNER-TOP-LEFT = 0;
-define constant $GTK-CORNER-BOTTOM-LEFT = 1;
-define constant $GTK-CORNER-TOP-RIGHT = 2;
-define constant $GTK-CORNER-BOTTOM-RIGHT = 3;
+define constant $gtk-corner-top-left = 0;
+define constant $gtk-corner-bottom-left = 1;
+define constant $gtk-corner-top-right = 2;
+define constant $gtk-corner-bottom-right = 3;
 define constant <GtkCornerType> = <C-int>;
 define C-pointer-type <GtkCornerType*> => <GtkCornerType>;
 
 define open C-subtype <GtkCssProvider> (<GObject>)
-  constant slot gtkcssprovider-parent-instance :: <GObject>;
-  constant slot gtkcssprovider-priv :: <GtkCssProviderPrivate>;
+  constant slot gtk-css-provider-parent-instance :: <GObject>;
+  constant slot gtk-css-provider-priv :: <GtkCssProviderPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkCssProvider*> => <GtkCssProvider>;
@@ -5849,20 +5369,20 @@ define C-function gtk-css-provider-to-string
 end;
 
 define C-struct <_GtkCssProviderClass>
-  constant slot gtkcssproviderclass-parent-class :: <GObjectClass>;
-  constant slot gtkcssproviderclass-parsing-error :: <C-function-pointer>;
-  constant slot gtkcssproviderclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkcssproviderclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkcssproviderclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-css-provider-class-parent-class :: <GObjectClass>;
+  constant slot gtk-css-provider-class-parsing-error :: <C-function-pointer>;
+  constant slot gtk-css-provider-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-css-provider-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-css-provider-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkCssProviderClass>;
 end C-struct;
 
-define constant $GTK-CSS-PROVIDER-ERROR-FAILED = 0;
-define constant $GTK-CSS-PROVIDER-ERROR-SYNTAX = 1;
-define constant $GTK-CSS-PROVIDER-ERROR-IMPORT = 2;
-define constant $GTK-CSS-PROVIDER-ERROR-NAME = 3;
-define constant $GTK-CSS-PROVIDER-ERROR-DEPRECATED = 4;
-define constant $GTK-CSS-PROVIDER-ERROR-UNKNOWN-VALUE = 5;
+define constant $gtk-css-provider-error-failed = 0;
+define constant $gtk-css-provider-error-syntax = 1;
+define constant $gtk-css-provider-error-import = 2;
+define constant $gtk-css-provider-error-name = 3;
+define constant $gtk-css-provider-error-deprecated = 4;
+define constant $gtk-css-provider-error-unknown-value = 5;
 define constant <GtkCssProviderError> = <C-int>;
 define C-pointer-type <GtkCssProviderError*> => <GtkCssProviderError>;
 
@@ -5927,54 +5447,54 @@ define C-function gtk-css-section-unref
   c-name: "gtk_css_section_unref";
 end;
 
-define constant $GTK-CSS-SECTION-DOCUMENT = 0;
-define constant $GTK-CSS-SECTION-IMPORT = 1;
-define constant $GTK-CSS-SECTION-COLOR-DEFINITION = 2;
-define constant $GTK-CSS-SECTION-BINDING-SET = 3;
-define constant $GTK-CSS-SECTION-RULESET = 4;
-define constant $GTK-CSS-SECTION-SELECTOR = 5;
-define constant $GTK-CSS-SECTION-DECLARATION = 6;
-define constant $GTK-CSS-SECTION-VALUE = 7;
+define constant $gtk-css-section-document = 0;
+define constant $gtk-css-section-import = 1;
+define constant $gtk-css-section-color-definition = 2;
+define constant $gtk-css-section-binding-set = 3;
+define constant $gtk-css-section-ruleset = 4;
+define constant $gtk-css-section-selector = 5;
+define constant $gtk-css-section-declaration = 6;
+define constant $gtk-css-section-value = 7;
 define constant <GtkCssSectionType> = <C-int>;
 define C-pointer-type <GtkCssSectionType*> => <GtkCssSectionType>;
 
-define constant $GTK-DEBUG-MISC = 1;
-define constant $GTK-DEBUG-PLUGSOCKET = 2;
-define constant $GTK-DEBUG-TEXT = 4;
-define constant $GTK-DEBUG-TREE = 8;
-define constant $GTK-DEBUG-UPDATES = 16;
-define constant $GTK-DEBUG-KEYBINDINGS = 32;
-define constant $GTK-DEBUG-MULTIHEAD = 64;
-define constant $GTK-DEBUG-MODULES = 128;
-define constant $GTK-DEBUG-GEOMETRY = 256;
-define constant $GTK-DEBUG-ICONTHEME = 512;
-define constant $GTK-DEBUG-PRINTING = 1024;
-define constant $GTK-DEBUG-BUILDER = 2048;
-define constant $GTK-DEBUG-SIZE-REQUEST = 4096;
+define constant $gtk-debug-misc = 1;
+define constant $gtk-debug-plugsocket = 2;
+define constant $gtk-debug-text = 4;
+define constant $gtk-debug-tree = 8;
+define constant $gtk-debug-updates = 16;
+define constant $gtk-debug-keybindings = 32;
+define constant $gtk-debug-multihead = 64;
+define constant $gtk-debug-modules = 128;
+define constant $gtk-debug-geometry = 256;
+define constant $gtk-debug-icontheme = 512;
+define constant $gtk-debug-printing = 1024;
+define constant $gtk-debug-builder = 2048;
+define constant $gtk-debug-size-request = 4096;
 define constant <GtkDebugFlag> = <C-int>;
 define C-pointer-type <GtkDebugFlag*> => <GtkDebugFlag>;
 
-define constant $GTK-DELETE-CHARS = 0;
-define constant $GTK-DELETE-WORD-ENDS = 1;
-define constant $GTK-DELETE-WORDS = 2;
-define constant $GTK-DELETE-DISPLAY-LINES = 3;
-define constant $GTK-DELETE-DISPLAY-LINE-ENDS = 4;
-define constant $GTK-DELETE-PARAGRAPH-ENDS = 5;
-define constant $GTK-DELETE-PARAGRAPHS = 6;
-define constant $GTK-DELETE-WHITESPACE = 7;
+define constant $gtk-delete-chars = 0;
+define constant $gtk-delete-word-ends = 1;
+define constant $gtk-delete-words = 2;
+define constant $gtk-delete-display-lines = 3;
+define constant $gtk-delete-display-line-ends = 4;
+define constant $gtk-delete-paragraph-ends = 5;
+define constant $gtk-delete-paragraphs = 6;
+define constant $gtk-delete-whitespace = 7;
 define constant <GtkDeleteType> = <C-int>;
 define C-pointer-type <GtkDeleteType*> => <GtkDeleteType>;
 
-define constant $GTK-DEST-DEFAULT-MOTION = 1;
-define constant $GTK-DEST-DEFAULT-HIGHLIGHT = 2;
-define constant $GTK-DEST-DEFAULT-DROP = 4;
-define constant $GTK-DEST-DEFAULT-ALL = 7;
+define constant $gtk-dest-default-motion = 1;
+define constant $gtk-dest-default-highlight = 2;
+define constant $gtk-dest-default-drop = 4;
+define constant $gtk-dest-default-all = 7;
 define constant <GtkDestDefaults> = <C-int>;
 define C-pointer-type <GtkDestDefaults*> => <GtkDestDefaults>;
 
 define open C-subtype <GtkDialog> (<GtkWindow>)
-  constant slot gtkdialog-window :: <GtkWindow>;
-  constant slot gtkdialog-priv :: <GtkDialogPrivate>;
+  constant slot gtk-dialog-window :: <GtkWindow>;
+  constant slot gtk-dialog-priv :: <GtkDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkDialog*> => <GtkDialog>;
@@ -6058,18 +5578,18 @@ define C-function gtk-dialog-set-response-sensitive
 end;
 
 define C-struct <_GtkDialogClass>
-  constant slot gtkdialogclass-parent-class :: <GtkWindowClass>;
-  constant slot gtkdialogclass-response :: <C-function-pointer>;
-  constant slot gtkdialogclass-close :: <C-function-pointer>;
-  constant slot gtkdialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkdialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkdialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkdialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-dialog-class-parent-class :: <GtkWindowClass>;
+  constant slot gtk-dialog-class-response :: <C-function-pointer>;
+  constant slot gtk-dialog-class-close :: <C-function-pointer>;
+  constant slot gtk-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkDialogClass>;
 end C-struct;
 
-define constant $GTK-DIALOG-MODAL = 1;
-define constant $GTK-DIALOG-DESTROY-WITH-PARENT = 2;
+define constant $gtk-dialog-modal = 1;
+define constant $gtk-dialog-destroy-with-parent = 2;
 define constant <GtkDialogFlags> = <C-int>;
 define C-pointer-type <GtkDialogFlags*> => <GtkDialogFlags>;
 
@@ -6077,27 +5597,27 @@ define C-struct <_GtkDialogPrivate>
   pointer-type-name: <GtkDialogPrivate>;
 end C-struct;
 
-define constant $GTK-DIR-TAB-FORWARD = 0;
-define constant $GTK-DIR-TAB-BACKWARD = 1;
-define constant $GTK-DIR-UP = 2;
-define constant $GTK-DIR-DOWN = 3;
-define constant $GTK-DIR-LEFT = 4;
-define constant $GTK-DIR-RIGHT = 5;
+define constant $gtk-dir-tab-forward = 0;
+define constant $gtk-dir-tab-backward = 1;
+define constant $gtk-dir-up = 2;
+define constant $gtk-dir-down = 3;
+define constant $gtk-dir-left = 4;
+define constant $gtk-dir-right = 5;
 define constant <GtkDirectionType> = <C-int>;
 define C-pointer-type <GtkDirectionType*> => <GtkDirectionType>;
 
-define constant $GTK-DRAG-RESULT-SUCCESS = 0;
-define constant $GTK-DRAG-RESULT-NO-TARGET = 1;
-define constant $GTK-DRAG-RESULT-USER-CANCELLED = 2;
-define constant $GTK-DRAG-RESULT-TIMEOUT-EXPIRED = 3;
-define constant $GTK-DRAG-RESULT-GRAB-BROKEN = 4;
-define constant $GTK-DRAG-RESULT-ERROR = 5;
+define constant $gtk-drag-result-success = 0;
+define constant $gtk-drag-result-no-target = 1;
+define constant $gtk-drag-result-user-cancelled = 2;
+define constant $gtk-drag-result-timeout-expired = 3;
+define constant $gtk-drag-result-grab-broken = 4;
+define constant $gtk-drag-result-error = 5;
 define constant <GtkDragResult> = <C-int>;
 define C-pointer-type <GtkDragResult*> => <GtkDragResult>;
 
 define open C-subtype <GtkDrawingArea> (<GtkWidget>)
-  constant slot gtkdrawingarea-widget :: <GtkWidget>;
-  constant slot gtkdrawingarea-dummy :: <C-void*>;
+  constant slot gtk-drawing-area-widget :: <GtkWidget>;
+  constant slot gtk-drawing-area-dummy :: <C-void*>;
 end C-subtype;
 
 define C-pointer-type <GtkDrawingArea*> => <GtkDrawingArea>;
@@ -6108,11 +5628,11 @@ define C-function gtk-drawing-area-new
 end;
 
 define C-struct <_GtkDrawingAreaClass>
-  constant slot gtkdrawingareaclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkdrawingareaclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkdrawingareaclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkdrawingareaclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkdrawingareaclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-drawing-area-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-drawing-area-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-drawing-area-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-drawing-area-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-drawing-area-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkDrawingAreaClass>;
 end C-struct;
 
@@ -6205,107 +5725,27 @@ define C-function gtk-editable-set-position
 end;
 
 define C-struct <_GtkEditableInterface>
-  constant slot gtkeditableinterface-base-iface :: <GTypeInterface>;
-  constant slot gtkeditableinterface-insert-text :: <C-function-pointer>;
-  constant slot gtkeditableinterface-delete-text :: <C-function-pointer>;
-  constant slot gtkeditableinterface-changed :: <C-function-pointer>;
-  constant slot gtkeditableinterface-do-insert-text :: <C-function-pointer>;
-  constant slot gtkeditableinterface-do-delete-text :: <C-function-pointer>;
-  constant slot gtkeditableinterface-get-chars :: <C-function-pointer>;
-  constant slot gtkeditableinterface-set-selection-bounds :: <C-function-pointer>;
-  constant slot gtkeditableinterface-get-selection-bounds :: <C-function-pointer>;
-  constant slot gtkeditableinterface-set-position :: <C-function-pointer>;
-  constant slot gtkeditableinterface-get-position :: <C-function-pointer>;
+  constant slot gtk-editable-interface-base-iface :: <GTypeInterface>;
+  constant slot gtk-editable-interface-insert-text :: <C-function-pointer>;
+  constant slot gtk-editable-interface-delete-text :: <C-function-pointer>;
+  constant slot gtk-editable-interface-changed :: <C-function-pointer>;
+  constant slot gtk-editable-interface-do-insert-text :: <C-function-pointer>;
+  constant slot gtk-editable-interface-do-delete-text :: <C-function-pointer>;
+  constant slot gtk-editable-interface-get-chars :: <C-function-pointer>;
+  constant slot gtk-editable-interface-set-selection-bounds :: <C-function-pointer>;
+  constant slot gtk-editable-interface-get-selection-bounds :: <C-function-pointer>;
+  constant slot gtk-editable-interface-set-position :: <C-function-pointer>;
+  constant slot gtk-editable-interface-get-position :: <C-function-pointer>;
   pointer-type-name: <GtkEditableInterface>;
 end C-struct;
 
 define open C-subtype <GtkEntry> (<GtkWidget>)
-  constant slot gtkentry-parent-instance :: <GtkWidget>;
-  constant slot gtkentry-priv :: <GtkEntryPrivate>;
+  constant slot gtk-entry-parent-instance :: <GtkWidget>;
+  constant slot gtk-entry-priv :: <GtkEntryPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkEntry*> => <GtkEntry>;
 
-define property-getter entry-activates-default :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-activates-default :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-buffer :: <GtkEntryBuffer> on <GtkEntry> end;
-define property-setter entry-buffer :: <GtkEntryBuffer> on <GtkEntry> end;
-define property-getter entry-caps-lock-warning :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-caps-lock-warning :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-completion :: <GtkEntryCompletion> on <GtkEntry> end;
-define property-setter entry-completion :: <GtkEntryCompletion> on <GtkEntry> end;
-define property-getter entry-cursor-position :: <C-signed-int> on <GtkEntry> end;
-define property-getter entry-editable :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-editable :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-has-frame :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-has-frame :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-im-module :: <C-string> on <GtkEntry> end;
-define property-setter entry-im-module :: <C-string> on <GtkEntry> end;
-define property-getter entry-inner-border :: <GtkBorder> on <GtkEntry> end;
-define property-setter entry-inner-border :: <GtkBorder> on <GtkEntry> end;
-define property-getter entry-invisible-char :: <C-unsigned-int> on <GtkEntry> end;
-define property-setter entry-invisible-char :: <C-unsigned-int> on <GtkEntry> end;
-define property-getter entry-invisible-char-set :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-invisible-char-set :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-max-length :: <C-signed-int> on <GtkEntry> end;
-define property-setter entry-max-length :: <C-signed-int> on <GtkEntry> end;
-define property-getter entry-overwrite-mode :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-overwrite-mode :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-placeholder-text :: <C-string> on <GtkEntry> end;
-define property-setter entry-placeholder-text :: <C-string> on <GtkEntry> end;
-define property-getter entry-primary-icon-activatable :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-primary-icon-activatable :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-primary-icon-gicon :: <GIcon> on <GtkEntry> end;
-define property-setter entry-primary-icon-gicon :: <GIcon> on <GtkEntry> end;
-define property-getter entry-primary-icon-name :: <C-string> on <GtkEntry> end;
-define property-setter entry-primary-icon-name :: <C-string> on <GtkEntry> end;
-define property-getter entry-primary-icon-pixbuf :: <GdkPixbuf> on <GtkEntry> end;
-define property-setter entry-primary-icon-pixbuf :: <GdkPixbuf> on <GtkEntry> end;
-define property-getter entry-primary-icon-sensitive :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-primary-icon-sensitive :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-primary-icon-stock :: <C-string> on <GtkEntry> end;
-define property-setter entry-primary-icon-stock :: <C-string> on <GtkEntry> end;
-define property-getter entry-primary-icon-storage-type :: <GtkImageType> on <GtkEntry> end;
-define property-getter entry-primary-icon-tooltip-markup :: <C-string> on <GtkEntry> end;
-define property-setter entry-primary-icon-tooltip-markup :: <C-string> on <GtkEntry> end;
-define property-getter entry-primary-icon-tooltip-text :: <C-string> on <GtkEntry> end;
-define property-setter entry-primary-icon-tooltip-text :: <C-string> on <GtkEntry> end;
-define property-getter entry-progress-fraction :: <C-double> on <GtkEntry> end;
-define property-setter entry-progress-fraction :: <C-double> on <GtkEntry> end;
-define property-getter entry-progress-pulse-step :: <C-double> on <GtkEntry> end;
-define property-setter entry-progress-pulse-step :: <C-double> on <GtkEntry> end;
-define property-getter entry-scroll-offset :: <C-signed-int> on <GtkEntry> end;
-define property-getter entry-secondary-icon-activatable :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-secondary-icon-activatable :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-secondary-icon-gicon :: <GIcon> on <GtkEntry> end;
-define property-setter entry-secondary-icon-gicon :: <GIcon> on <GtkEntry> end;
-define property-getter entry-secondary-icon-name :: <C-string> on <GtkEntry> end;
-define property-setter entry-secondary-icon-name :: <C-string> on <GtkEntry> end;
-define property-getter entry-secondary-icon-pixbuf :: <GdkPixbuf> on <GtkEntry> end;
-define property-setter entry-secondary-icon-pixbuf :: <GdkPixbuf> on <GtkEntry> end;
-define property-getter entry-secondary-icon-sensitive :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-secondary-icon-sensitive :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-secondary-icon-stock :: <C-string> on <GtkEntry> end;
-define property-setter entry-secondary-icon-stock :: <C-string> on <GtkEntry> end;
-define property-getter entry-secondary-icon-storage-type :: <GtkImageType> on <GtkEntry> end;
-define property-getter entry-secondary-icon-tooltip-markup :: <C-string> on <GtkEntry> end;
-define property-setter entry-secondary-icon-tooltip-markup :: <C-string> on <GtkEntry> end;
-define property-getter entry-secondary-icon-tooltip-text :: <C-string> on <GtkEntry> end;
-define property-setter entry-secondary-icon-tooltip-text :: <C-string> on <GtkEntry> end;
-define property-getter entry-selection-bound :: <C-signed-int> on <GtkEntry> end;
-define property-getter entry-shadow-type :: <GtkShadowType> on <GtkEntry> end;
-define property-setter entry-shadow-type :: <GtkShadowType> on <GtkEntry> end;
-define property-getter entry-text :: <C-string> on <GtkEntry> end;
-define property-setter entry-text :: <C-string> on <GtkEntry> end;
-define property-getter entry-text-length :: <C-unsigned-int> on <GtkEntry> end;
-define property-getter entry-truncate-multiline :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-truncate-multiline :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-visibility :: <C-boolean> on <GtkEntry> end;
-define property-setter entry-visibility :: <C-boolean> on <GtkEntry> end;
-define property-getter entry-width-chars :: <C-signed-int> on <GtkEntry> end;
-define property-setter entry-width-chars :: <C-signed-int> on <GtkEntry> end;
-define property-getter entry-xalign :: <C-float> on <GtkEntry> end;
-define property-setter entry-xalign :: <C-float> on <GtkEntry> end;
 define C-function gtk-entry-new
   result res :: <GtkWidget>;
   c-name: "gtk_entry_new";
@@ -6719,17 +6159,12 @@ define C-function gtk-entry-unset-invisible-char
 end;
 
 define open C-subtype <GtkEntryBuffer> (<GObject>)
-  constant slot gtkentrybuffer-parent-instance :: <GObject>;
-  constant slot gtkentrybuffer-priv :: <GtkEntryBufferPrivate>;
+  constant slot gtk-entry-buffer-parent-instance :: <GObject>;
+  constant slot gtk-entry-buffer-priv :: <GtkEntryBufferPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkEntryBuffer*> => <GtkEntryBuffer>;
 
-define property-getter entrybuffer-length :: <C-unsigned-int> on <GtkEntryBuffer> end;
-define property-getter entrybuffer-max-length :: <C-signed-int> on <GtkEntryBuffer> end;
-define property-setter entrybuffer-max-length :: <C-signed-int> on <GtkEntryBuffer> end;
-define property-getter entrybuffer-text :: <C-string> on <GtkEntryBuffer> end;
-define property-setter entrybuffer-text :: <C-string> on <GtkEntryBuffer> end;
 define C-function gtk-entry-buffer-new
   input parameter initial_chars_ :: <C-string>;
   input parameter n_initial_chars_ :: <C-signed-int>;
@@ -6807,21 +6242,21 @@ define C-function gtk-entry-buffer-set-text
 end;
 
 define C-struct <_GtkEntryBufferClass>
-  constant slot gtkentrybufferclass-parent-class :: <GObjectClass>;
-  constant slot gtkentrybufferclass-inserted-text :: <C-function-pointer>;
-  constant slot gtkentrybufferclass-deleted-text :: <C-function-pointer>;
-  constant slot gtkentrybufferclass-get-text :: <C-function-pointer>;
-  constant slot gtkentrybufferclass-get-length :: <C-function-pointer>;
-  constant slot gtkentrybufferclass-insert-text :: <C-function-pointer>;
-  constant slot gtkentrybufferclass-delete-text :: <C-function-pointer>;
-  constant slot gtkentrybufferclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkentrybufferclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkentrybufferclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkentrybufferclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkentrybufferclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkentrybufferclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkentrybufferclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkentrybufferclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-entry-buffer-class-parent-class :: <GObjectClass>;
+  constant slot gtk-entry-buffer-class-inserted-text :: <C-function-pointer>;
+  constant slot gtk-entry-buffer-class-deleted-text :: <C-function-pointer>;
+  constant slot gtk-entry-buffer-class-get-text :: <C-function-pointer>;
+  constant slot gtk-entry-buffer-class-get-length :: <C-function-pointer>;
+  constant slot gtk-entry-buffer-class-insert-text :: <C-function-pointer>;
+  constant slot gtk-entry-buffer-class-delete-text :: <C-function-pointer>;
+  constant slot gtk-entry-buffer-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-entry-buffer-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-entry-buffer-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-entry-buffer-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-entry-buffer-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-entry-buffer-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-entry-buffer-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-entry-buffer-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkEntryBufferClass>;
 end C-struct;
 
@@ -6830,54 +6265,36 @@ define C-struct <_GtkEntryBufferPrivate>
 end C-struct;
 
 define C-struct <_GtkEntryClass>
-  constant slot gtkentryclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkentryclass-populate-popup :: <C-function-pointer>;
-  constant slot gtkentryclass-activate :: <C-function-pointer>;
-  constant slot gtkentryclass-move-cursor :: <C-function-pointer>;
-  constant slot gtkentryclass-insert-at-cursor :: <C-function-pointer>;
-  constant slot gtkentryclass-delete-from-cursor :: <C-function-pointer>;
-  constant slot gtkentryclass-backspace :: <C-function-pointer>;
-  constant slot gtkentryclass-cut-clipboard :: <C-function-pointer>;
-  constant slot gtkentryclass-copy-clipboard :: <C-function-pointer>;
-  constant slot gtkentryclass-paste-clipboard :: <C-function-pointer>;
-  constant slot gtkentryclass-toggle-overwrite :: <C-function-pointer>;
-  constant slot gtkentryclass-get-text-area-size :: <C-function-pointer>;
-  constant slot gtkentryclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkentryclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkentryclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkentryclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkentryclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkentryclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkentryclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkentryclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-entry-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-entry-class-populate-popup :: <C-function-pointer>;
+  constant slot gtk-entry-class-activate :: <C-function-pointer>;
+  constant slot gtk-entry-class-move-cursor :: <C-function-pointer>;
+  constant slot gtk-entry-class-insert-at-cursor :: <C-function-pointer>;
+  constant slot gtk-entry-class-delete-from-cursor :: <C-function-pointer>;
+  constant slot gtk-entry-class-backspace :: <C-function-pointer>;
+  constant slot gtk-entry-class-cut-clipboard :: <C-function-pointer>;
+  constant slot gtk-entry-class-copy-clipboard :: <C-function-pointer>;
+  constant slot gtk-entry-class-paste-clipboard :: <C-function-pointer>;
+  constant slot gtk-entry-class-toggle-overwrite :: <C-function-pointer>;
+  constant slot gtk-entry-class-get-text-area-size :: <C-function-pointer>;
+  constant slot gtk-entry-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-entry-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-entry-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-entry-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-entry-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-entry-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-entry-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-entry-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkEntryClass>;
 end C-struct;
 
 define open C-subtype <GtkEntryCompletion> (<GObject>)
-  constant slot gtkentrycompletion-parent-instance :: <GObject>;
-  constant slot gtkentrycompletion-priv :: <GtkEntryCompletionPrivate>;
+  constant slot gtk-entry-completion-parent-instance :: <GObject>;
+  constant slot gtk-entry-completion-priv :: <GtkEntryCompletionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkEntryCompletion*> => <GtkEntryCompletion>;
 
-define property-getter entrycompletion-cell-area :: <GtkCellArea> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-cell-area :: <GtkCellArea> on <GtkEntryCompletion> end;
-define property-getter entrycompletion-inline-completion :: <C-boolean> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-inline-completion :: <C-boolean> on <GtkEntryCompletion> end;
-define property-getter entrycompletion-inline-selection :: <C-boolean> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-inline-selection :: <C-boolean> on <GtkEntryCompletion> end;
-define property-getter entrycompletion-minimum-key-length :: <C-signed-int> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-minimum-key-length :: <C-signed-int> on <GtkEntryCompletion> end;
-define property-getter entrycompletion-model :: <GtkTreeModel> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-model :: <GtkTreeModel> on <GtkEntryCompletion> end;
-define property-getter entrycompletion-popup-completion :: <C-boolean> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-popup-completion :: <C-boolean> on <GtkEntryCompletion> end;
-define property-getter entrycompletion-popup-set-width :: <C-boolean> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-popup-set-width :: <C-boolean> on <GtkEntryCompletion> end;
-define property-getter entrycompletion-popup-single-match :: <C-boolean> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-popup-single-match :: <C-boolean> on <GtkEntryCompletion> end;
-define property-getter entrycompletion-text-column :: <C-signed-int> on <GtkEntryCompletion> end;
-define property-setter entrycompletion-text-column :: <C-signed-int> on <GtkEntryCompletion> end;
 define C-function gtk-entry-completion-new
   result res :: <GtkEntryCompletion>;
   c-name: "gtk_entry_completion_new";
@@ -7043,15 +6460,15 @@ define C-function gtk-entry-completion-set-text-column
 end;
 
 define C-struct <_GtkEntryCompletionClass>
-  constant slot gtkentrycompletionclass-parent-class :: <GObjectClass>;
-  constant slot gtkentrycompletionclass-match-selected :: <C-function-pointer>;
-  constant slot gtkentrycompletionclass-action-activated :: <C-function-pointer>;
-  constant slot gtkentrycompletionclass-insert-prefix :: <C-function-pointer>;
-  constant slot gtkentrycompletionclass-cursor-on-match :: <C-function-pointer>;
-  constant slot gtkentrycompletionclass--gtk-reserved0 :: <C-void*>;
-  constant slot gtkentrycompletionclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkentrycompletionclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkentrycompletionclass--gtk-reserved3 :: <C-void*>;
+  constant slot gtk-entry-completion-class-parent-class :: <GObjectClass>;
+  constant slot gtk-entry-completion-class-match-selected :: <C-function-pointer>;
+  constant slot gtk-entry-completion-class-action-activated :: <C-function-pointer>;
+  constant slot gtk-entry-completion-class-insert-prefix :: <C-function-pointer>;
+  constant slot gtk-entry-completion-class-cursor-on-match :: <C-function-pointer>;
+  constant slot gtk-entry-completion-class-_gtk-reserved0 :: <C-void*>;
+  constant slot gtk-entry-completion-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-entry-completion-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-entry-completion-class-_gtk-reserved3 :: <C-void*>;
   pointer-type-name: <GtkEntryCompletionClass>;
 end C-struct;
 
@@ -7059,8 +6476,8 @@ define C-struct <_GtkEntryCompletionPrivate>
   pointer-type-name: <GtkEntryCompletionPrivate>;
 end C-struct;
 
-define constant $GTK-ENTRY-ICON-PRIMARY = 0;
-define constant $GTK-ENTRY-ICON-SECONDARY = 1;
+define constant $gtk-entry-icon-primary = 0;
+define constant $gtk-entry-icon-secondary = 1;
 define constant <GtkEntryIconPosition> = <C-int>;
 define C-pointer-type <GtkEntryIconPosition*> => <GtkEntryIconPosition>;
 
@@ -7069,16 +6486,12 @@ define C-struct <_GtkEntryPrivate>
 end C-struct;
 
 define open C-subtype <GtkEventBox> (<GtkBin>)
-  constant slot gtkeventbox-bin :: <GtkBin>;
-  constant slot gtkeventbox-priv :: <GtkEventBoxPrivate>;
+  constant slot gtk-event-box-bin :: <GtkBin>;
+  constant slot gtk-event-box-priv :: <GtkEventBoxPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkEventBox*> => <GtkEventBox>;
 
-define property-getter eventbox-above-child :: <C-boolean> on <GtkEventBox> end;
-define property-setter eventbox-above-child :: <C-boolean> on <GtkEventBox> end;
-define property-getter eventbox-visible-window :: <C-boolean> on <GtkEventBox> end;
-define property-setter eventbox-visible-window :: <C-boolean> on <GtkEventBox> end;
 define C-function gtk-event-box-new
   result res :: <GtkWidget>;
   c-name: "gtk_event_box_new";
@@ -7109,11 +6522,11 @@ define C-function gtk-event-box-set-visible-window
 end;
 
 define C-struct <_GtkEventBoxClass>
-  constant slot gtkeventboxclass-parent-class :: <GtkBinClass>;
-  constant slot gtkeventboxclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkeventboxclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkeventboxclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkeventboxclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-event-box-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-event-box-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-event-box-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-event-box-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-event-box-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkEventBoxClass>;
 end C-struct;
 
@@ -7122,28 +6535,12 @@ define C-struct <_GtkEventBoxPrivate>
 end C-struct;
 
 define open C-subtype <GtkExpander> (<GtkBin>)
-  constant slot gtkexpander-bin :: <GtkBin>;
-  constant slot gtkexpander-priv :: <GtkExpanderPrivate>;
+  constant slot gtk-expander-bin :: <GtkBin>;
+  constant slot gtk-expander-priv :: <GtkExpanderPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkExpander*> => <GtkExpander>;
 
-define property-getter expander-expanded :: <C-boolean> on <GtkExpander> end;
-define property-setter expander-expanded :: <C-boolean> on <GtkExpander> end;
-define property-getter expander-label :: <C-string> on <GtkExpander> end;
-define property-setter expander-label :: <C-string> on <GtkExpander> end;
-define property-getter expander-label-fill :: <C-boolean> on <GtkExpander> end;
-define property-setter expander-label-fill :: <C-boolean> on <GtkExpander> end;
-define property-getter expander-label-widget :: <GtkWidget> on <GtkExpander> end;
-define property-setter expander-label-widget :: <GtkWidget> on <GtkExpander> end;
-define property-getter expander-resize-toplevel :: <C-boolean> on <GtkExpander> end;
-define property-setter expander-resize-toplevel :: <C-boolean> on <GtkExpander> end;
-define property-getter expander-spacing :: <C-signed-int> on <GtkExpander> end;
-define property-setter expander-spacing :: <C-signed-int> on <GtkExpander> end;
-define property-getter expander-use-markup :: <C-boolean> on <GtkExpander> end;
-define property-setter expander-use-markup :: <C-boolean> on <GtkExpander> end;
-define property-getter expander-use-underline :: <C-boolean> on <GtkExpander> end;
-define property-setter expander-use-underline :: <C-boolean> on <GtkExpander> end;
 define C-function gtk-expander-new
   input parameter label_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -7253,12 +6650,12 @@ define C-function gtk-expander-set-use-underline
 end;
 
 define C-struct <_GtkExpanderClass>
-  constant slot gtkexpanderclass-parent-class :: <GtkBinClass>;
-  constant slot gtkexpanderclass-activate :: <C-function-pointer>;
-  constant slot gtkexpanderclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkexpanderclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkexpanderclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkexpanderclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-expander-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-expander-class-activate :: <C-function-pointer>;
+  constant slot gtk-expander-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-expander-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-expander-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-expander-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkExpanderClass>;
 end C-struct;
 
@@ -7266,10 +6663,10 @@ define C-struct <_GtkExpanderPrivate>
   pointer-type-name: <GtkExpanderPrivate>;
 end C-struct;
 
-define constant $GTK-EXPANDER-COLLAPSED = 0;
-define constant $GTK-EXPANDER-SEMI-COLLAPSED = 1;
-define constant $GTK-EXPANDER-SEMI-EXPANDED = 2;
-define constant $GTK-EXPANDER-EXPANDED = 3;
+define constant $gtk-expander-collapsed = 0;
+define constant $gtk-expander-semi-collapsed = 1;
+define constant $gtk-expander-semi-expanded = 2;
+define constant $gtk-expander-expanded = 3;
 define constant <GtkExpanderStyle> = <C-int>;
 define C-pointer-type <GtkExpanderStyle*> => <GtkExpanderStyle>;
 
@@ -7638,27 +7035,20 @@ define C-function gtk-file-chooser-unselect-uri
   c-name: "gtk_file_chooser_unselect_uri";
 end;
 
-define constant $GTK-FILE-CHOOSER-ACTION-OPEN = 0;
-define constant $GTK-FILE-CHOOSER-ACTION-SAVE = 1;
-define constant $GTK-FILE-CHOOSER-ACTION-SELECT-FOLDER = 2;
-define constant $GTK-FILE-CHOOSER-ACTION-CREATE-FOLDER = 3;
+define constant $gtk-file-chooser-action-open = 0;
+define constant $gtk-file-chooser-action-save = 1;
+define constant $gtk-file-chooser-action-select-folder = 2;
+define constant $gtk-file-chooser-action-create-folder = 3;
 define constant <GtkFileChooserAction> = <C-int>;
 define C-pointer-type <GtkFileChooserAction*> => <GtkFileChooserAction>;
 
 define open C-subtype <GtkFileChooserButton> (<GtkBox>)
-  constant slot gtkfilechooserbutton-parent :: <GtkBox>;
-  constant slot gtkfilechooserbutton-priv :: <GtkFileChooserButtonPrivate>;
+  constant slot gtk-file-chooser-button-parent :: <GtkBox>;
+  constant slot gtk-file-chooser-button-priv :: <GtkFileChooserButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFileChooserButton*> => <GtkFileChooserButton>;
 
-define property-setter filechooserbutton-dialog :: <GtkFileChooser> on <GtkFileChooserButton> end;
-define property-getter filechooserbutton-focus-on-click :: <C-boolean> on <GtkFileChooserButton> end;
-define property-setter filechooserbutton-focus-on-click :: <C-boolean> on <GtkFileChooserButton> end;
-define property-getter filechooserbutton-title :: <C-string> on <GtkFileChooserButton> end;
-define property-setter filechooserbutton-title :: <C-string> on <GtkFileChooserButton> end;
-define property-getter filechooserbutton-width-chars :: <C-signed-int> on <GtkFileChooserButton> end;
-define property-setter filechooserbutton-width-chars :: <C-signed-int> on <GtkFileChooserButton> end;
 define C-function gtk-file-chooser-button-new
   input parameter title_ :: <C-string>;
   input parameter action_ :: <GtkFileChooserAction>;
@@ -7709,12 +7099,12 @@ define C-function gtk-file-chooser-button-set-width-chars
 end;
 
 define C-struct <_GtkFileChooserButtonClass>
-  constant slot gtkfilechooserbuttonclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkfilechooserbuttonclass-file-set :: <C-function-pointer>;
-  constant slot gtkfilechooserbuttonclass---gtk-reserved1 :: <C-void*>;
-  constant slot gtkfilechooserbuttonclass---gtk-reserved2 :: <C-void*>;
-  constant slot gtkfilechooserbuttonclass---gtk-reserved3 :: <C-void*>;
-  constant slot gtkfilechooserbuttonclass---gtk-reserved4 :: <C-void*>;
+  constant slot gtk-file-chooser-button-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-file-chooser-button-class-file-set :: <C-function-pointer>;
+  constant slot gtk-file-chooser-button-class-__gtk-reserved1 :: <C-void*>;
+  constant slot gtk-file-chooser-button-class-__gtk-reserved2 :: <C-void*>;
+  constant slot gtk-file-chooser-button-class-__gtk-reserved3 :: <C-void*>;
+  constant slot gtk-file-chooser-button-class-__gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFileChooserButtonClass>;
 end C-struct;
 
@@ -7722,25 +7112,25 @@ define C-struct <_GtkFileChooserButtonPrivate>
   pointer-type-name: <GtkFileChooserButtonPrivate>;
 end C-struct;
 
-define constant $GTK-FILE-CHOOSER-CONFIRMATION-CONFIRM = 0;
-define constant $GTK-FILE-CHOOSER-CONFIRMATION-ACCEPT-FILENAME = 1;
-define constant $GTK-FILE-CHOOSER-CONFIRMATION-SELECT-AGAIN = 2;
+define constant $gtk-file-chooser-confirmation-confirm = 0;
+define constant $gtk-file-chooser-confirmation-accept-filename = 1;
+define constant $gtk-file-chooser-confirmation-select-again = 2;
 define constant <GtkFileChooserConfirmation> = <C-int>;
 define C-pointer-type <GtkFileChooserConfirmation*> => <GtkFileChooserConfirmation>;
 
 define open C-subtype <GtkFileChooserDialog> (<GtkDialog>)
-  constant slot gtkfilechooserdialog-parent-instance :: <GtkDialog>;
-  constant slot gtkfilechooserdialog-priv :: <GtkFileChooserDialogPrivate>;
+  constant slot gtk-file-chooser-dialog-parent-instance :: <GtkDialog>;
+  constant slot gtk-file-chooser-dialog-priv :: <GtkFileChooserDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFileChooserDialog*> => <GtkFileChooserDialog>;
 
 define C-struct <_GtkFileChooserDialogClass>
-  constant slot gtkfilechooserdialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkfilechooserdialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkfilechooserdialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkfilechooserdialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkfilechooserdialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-file-chooser-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-file-chooser-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-file-chooser-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-file-chooser-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-file-chooser-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFileChooserDialogClass>;
 end C-struct;
 
@@ -7748,16 +7138,16 @@ define C-struct <_GtkFileChooserDialogPrivate>
   pointer-type-name: <GtkFileChooserDialogPrivate>;
 end C-struct;
 
-define constant $GTK-FILE-CHOOSER-ERROR-NONEXISTENT = 0;
-define constant $GTK-FILE-CHOOSER-ERROR-BAD-FILENAME = 1;
-define constant $GTK-FILE-CHOOSER-ERROR-ALREADY-EXISTS = 2;
-define constant $GTK-FILE-CHOOSER-ERROR-INCOMPLETE-HOSTNAME = 3;
+define constant $gtk-file-chooser-error-nonexistent = 0;
+define constant $gtk-file-chooser-error-bad-filename = 1;
+define constant $gtk-file-chooser-error-already-exists = 2;
+define constant $gtk-file-chooser-error-incomplete-hostname = 3;
 define constant <GtkFileChooserError> = <C-int>;
 define C-pointer-type <GtkFileChooserError*> => <GtkFileChooserError>;
 
 define open C-subtype <GtkFileChooserWidget> (<GtkBox>)
-  constant slot gtkfilechooserwidget-parent-instance :: <GtkBox>;
-  constant slot gtkfilechooserwidget-priv :: <GtkFileChooserWidgetPrivate>;
+  constant slot gtk-file-chooser-widget-parent-instance :: <GtkBox>;
+  constant slot gtk-file-chooser-widget-priv :: <GtkFileChooserWidgetPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFileChooserWidget*> => <GtkFileChooserWidget>;
@@ -7769,11 +7159,11 @@ define C-function gtk-file-chooser-widget-new
 end;
 
 define C-struct <_GtkFileChooserWidgetClass>
-  constant slot gtkfilechooserwidgetclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkfilechooserwidgetclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkfilechooserwidgetclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkfilechooserwidgetclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkfilechooserwidgetclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-file-chooser-widget-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-file-chooser-widget-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-file-chooser-widget-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-file-chooser-widget-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-file-chooser-widget-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFileChooserWidgetClass>;
 end C-struct;
 
@@ -7842,25 +7232,25 @@ define C-function gtk-file-filter-set-name
   c-name: "gtk_file_filter_set_name";
 end;
 
-define constant $GTK-FILE-FILTER-FILENAME = 1;
-define constant $GTK-FILE-FILTER-URI = 2;
-define constant $GTK-FILE-FILTER-DISPLAY-NAME = 4;
-define constant $GTK-FILE-FILTER-MIME-TYPE = 8;
+define constant $gtk-file-filter-filename = 1;
+define constant $gtk-file-filter-uri = 2;
+define constant $gtk-file-filter-display-name = 4;
+define constant $gtk-file-filter-mime-type = 8;
 define constant <GtkFileFilterFlags> = <C-int>;
 define C-pointer-type <GtkFileFilterFlags*> => <GtkFileFilterFlags>;
 
 define C-struct <_GtkFileFilterInfo>
-  slot gtkfilefilterinfo-contains :: <GtkFileFilterFlags>;
-  slot gtkfilefilterinfo-filename :: <C-string>;
-  slot gtkfilefilterinfo-uri :: <C-string>;
-  slot gtkfilefilterinfo-display-name :: <C-string>;
-  slot gtkfilefilterinfo-mime-type :: <C-string>;
+  slot gtk-file-filter-info-contains :: <GtkFileFilterFlags>;
+  slot gtk-file-filter-info-filename :: <C-string>;
+  slot gtk-file-filter-info-uri :: <C-string>;
+  slot gtk-file-filter-info-display-name :: <C-string>;
+  slot gtk-file-filter-info-mime-type :: <C-string>;
   pointer-type-name: <GtkFileFilterInfo>;
 end C-struct;
 
 define open C-subtype <GtkFixed> (<GtkContainer>)
-  constant slot gtkfixed-container :: <GtkContainer>;
-  constant slot gtkfixed-priv :: <GtkFixedPrivate>;
+  constant slot gtk-fixed-container :: <GtkContainer>;
+  constant slot gtk-fixed-priv :: <GtkFixedPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFixed*> => <GtkFixed>;
@@ -7887,18 +7277,18 @@ define C-function gtk-fixed-put
 end;
 
 define C-struct <_GtkFixedChild>
-  slot gtkfixedchild-widget :: <GtkWidget>;
-  slot gtkfixedchild-x :: <C-signed-int>;
-  slot gtkfixedchild-y :: <C-signed-int>;
+  slot gtk-fixed-child-widget :: <GtkWidget>;
+  slot gtk-fixed-child-x :: <C-signed-int>;
+  slot gtk-fixed-child-y :: <C-signed-int>;
   pointer-type-name: <GtkFixedChild>;
 end C-struct;
 
 define C-struct <_GtkFixedClass>
-  constant slot gtkfixedclass-parent-class :: <GtkContainerClass>;
-  constant slot gtkfixedclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkfixedclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkfixedclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkfixedclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-fixed-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-fixed-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-fixed-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-fixed-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-fixed-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFixedClass>;
 end C-struct;
 
@@ -7907,24 +7297,12 @@ define C-struct <_GtkFixedPrivate>
 end C-struct;
 
 define open C-subtype <GtkFontButton> (<GtkButton>)
-  constant slot gtkfontbutton-button :: <GtkButton>;
-  constant slot gtkfontbutton-priv :: <GtkFontButtonPrivate>;
+  constant slot gtk-font-button-button :: <GtkButton>;
+  constant slot gtk-font-button-priv :: <GtkFontButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFontButton*> => <GtkFontButton>;
 
-define property-getter fontbutton-font-name :: <C-string> on <GtkFontButton> end;
-define property-setter fontbutton-font-name :: <C-string> on <GtkFontButton> end;
-define property-getter fontbutton-show-size :: <C-boolean> on <GtkFontButton> end;
-define property-setter fontbutton-show-size :: <C-boolean> on <GtkFontButton> end;
-define property-getter fontbutton-show-style :: <C-boolean> on <GtkFontButton> end;
-define property-setter fontbutton-show-style :: <C-boolean> on <GtkFontButton> end;
-define property-getter fontbutton-title :: <C-string> on <GtkFontButton> end;
-define property-setter fontbutton-title :: <C-string> on <GtkFontButton> end;
-define property-getter fontbutton-use-font :: <C-boolean> on <GtkFontButton> end;
-define property-setter fontbutton-use-font :: <C-boolean> on <GtkFontButton> end;
-define property-getter fontbutton-use-size :: <C-boolean> on <GtkFontButton> end;
-define property-setter fontbutton-use-size :: <C-boolean> on <GtkFontButton> end;
 define C-function gtk-font-button-new
   result res :: <GtkWidget>;
   c-name: "gtk_font_button_new";
@@ -8010,12 +7388,12 @@ define C-function gtk-font-button-set-use-size
 end;
 
 define C-struct <_GtkFontButtonClass>
-  constant slot gtkfontbuttonclass-parent-class :: <GtkButtonClass>;
-  constant slot gtkfontbuttonclass-font-set :: <C-function-pointer>;
-  constant slot gtkfontbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkfontbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkfontbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkfontbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-font-button-class-parent-class :: <GtkButtonClass>;
+  constant slot gtk-font-button-class-font-set :: <C-function-pointer>;
+  constant slot gtk-font-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-font-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-font-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-font-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFontButtonClass>;
 end C-struct;
 
@@ -8104,8 +7482,8 @@ define C-function gtk-font-chooser-set-show-preview-entry
 end;
 
 define open C-subtype <GtkFontChooserDialog> (<GtkDialog>)
-  constant slot gtkfontchooserdialog-parent-instance :: <GtkDialog>;
-  constant slot gtkfontchooserdialog-priv :: <GtkFontChooserDialogPrivate>;
+  constant slot gtk-font-chooser-dialog-parent-instance :: <GtkDialog>;
+  constant slot gtk-font-chooser-dialog-priv :: <GtkFontChooserDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFontChooserDialog*> => <GtkFontChooserDialog>;
@@ -8118,11 +7496,11 @@ define C-function gtk-font-chooser-dialog-new
 end;
 
 define C-struct <_GtkFontChooserDialogClass>
-  constant slot gtkfontchooserdialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkfontchooserdialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkfontchooserdialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkfontchooserdialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkfontchooserdialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-font-chooser-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-font-chooser-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-font-chooser-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-font-chooser-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-font-chooser-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFontChooserDialogClass>;
 end C-struct;
 
@@ -8131,19 +7509,19 @@ define C-struct <_GtkFontChooserDialogPrivate>
 end C-struct;
 
 define C-struct <_GtkFontChooserIface>
-  constant slot gtkfontchooseriface-base-iface :: <GTypeInterface>;
-  constant slot gtkfontchooseriface-get-font-family :: <C-function-pointer>;
-  constant slot gtkfontchooseriface-get-font-face :: <C-function-pointer>;
-  constant slot gtkfontchooseriface-get-font-size :: <C-function-pointer>;
-  constant slot gtkfontchooseriface-set-filter-func :: <C-function-pointer>;
-  constant slot gtkfontchooseriface-font-activated :: <C-function-pointer>;
-  constant slot gtkfontchooseriface-padding :: <C-void*>;
+  constant slot gtk-font-chooser-iface-base-iface :: <GTypeInterface>;
+  constant slot gtk-font-chooser-iface-get-font-family :: <C-function-pointer>;
+  constant slot gtk-font-chooser-iface-get-font-face :: <C-function-pointer>;
+  constant slot gtk-font-chooser-iface-get-font-size :: <C-function-pointer>;
+  constant slot gtk-font-chooser-iface-set-filter-func :: <C-function-pointer>;
+  constant slot gtk-font-chooser-iface-font-activated :: <C-function-pointer>;
+  constant slot gtk-font-chooser-iface-padding :: <C-void*>;
   pointer-type-name: <GtkFontChooserIface>;
 end C-struct;
 
 define open C-subtype <GtkFontChooserWidget> (<GtkBox>)
-  constant slot gtkfontchooserwidget-parent-instance :: <GtkBox>;
-  constant slot gtkfontchooserwidget-priv :: <GtkFontChooserWidgetPrivate>;
+  constant slot gtk-font-chooser-widget-parent-instance :: <GtkBox>;
+  constant slot gtk-font-chooser-widget-priv :: <GtkFontChooserWidgetPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFontChooserWidget*> => <GtkFontChooserWidget>;
@@ -8154,15 +7532,15 @@ define C-function gtk-font-chooser-widget-new
 end;
 
 define C-struct <_GtkFontChooserWidgetClass>
-  constant slot gtkfontchooserwidgetclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkfontchooserwidgetclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkfontchooserwidgetclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkfontchooserwidgetclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkfontchooserwidgetclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkfontchooserwidgetclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkfontchooserwidgetclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkfontchooserwidgetclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkfontchooserwidgetclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-font-chooser-widget-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-font-chooser-widget-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-font-chooser-widget-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-font-chooser-widget-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-font-chooser-widget-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-font-chooser-widget-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-font-chooser-widget-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-font-chooser-widget-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-font-chooser-widget-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkFontChooserWidgetClass>;
 end C-struct;
 
@@ -8171,16 +7549,12 @@ define C-struct <_GtkFontChooserWidgetPrivate>
 end C-struct;
 
 define open C-subtype <GtkFontSelection> (<GtkBox>)
-  constant slot gtkfontselection-parent-instance :: <GtkBox>;
-  constant slot gtkfontselection-priv :: <GtkFontSelectionPrivate>;
+  constant slot gtk-font-selection-parent-instance :: <GtkBox>;
+  constant slot gtk-font-selection-priv :: <GtkFontSelectionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFontSelection*> => <GtkFontSelection>;
 
-define property-getter fontselection-font-name :: <C-string> on <GtkFontSelection> end;
-define property-setter fontselection-font-name :: <C-string> on <GtkFontSelection> end;
-define property-getter fontselection-preview-text :: <C-string> on <GtkFontSelection> end;
-define property-setter fontselection-preview-text :: <C-string> on <GtkFontSelection> end;
 define C-function gtk-font-selection-new
   result res :: <GtkWidget>;
   c-name: "gtk_font_selection_new";
@@ -8260,17 +7634,17 @@ define C-function gtk-font-selection-set-preview-text
 end;
 
 define C-struct <_GtkFontSelectionClass>
-  constant slot gtkfontselectionclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkfontselectionclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkfontselectionclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkfontselectionclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkfontselectionclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-font-selection-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-font-selection-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-font-selection-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-font-selection-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-font-selection-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFontSelectionClass>;
 end C-struct;
 
 define open C-subtype <GtkFontSelectionDialog> (<GtkDialog>)
-  constant slot gtkfontselectiondialog-parent-instance :: <GtkDialog>;
-  constant slot gtkfontselectiondialog-priv :: <GtkFontSelectionDialogPrivate>;
+  constant slot gtk-font-selection-dialog-parent-instance :: <GtkDialog>;
+  constant slot gtk-font-selection-dialog-priv :: <GtkFontSelectionDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFontSelectionDialog*> => <GtkFontSelectionDialog>;
@@ -8325,11 +7699,11 @@ define C-function gtk-font-selection-dialog-set-preview-text
 end;
 
 define C-struct <_GtkFontSelectionDialogClass>
-  constant slot gtkfontselectiondialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkfontselectiondialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkfontselectiondialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkfontselectiondialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkfontselectiondialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-font-selection-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-font-selection-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-font-selection-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-font-selection-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-font-selection-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFontSelectionDialogClass>;
 end C-struct;
 
@@ -8342,22 +7716,12 @@ define C-struct <_GtkFontSelectionPrivate>
 end C-struct;
 
 define open C-subtype <GtkFrame> (<GtkBin>)
-  constant slot gtkframe-bin :: <GtkBin>;
-  constant slot gtkframe-priv :: <GtkFramePrivate>;
+  constant slot gtk-frame-bin :: <GtkBin>;
+  constant slot gtk-frame-priv :: <GtkFramePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkFrame*> => <GtkFrame>;
 
-define property-getter frame-label :: <C-string> on <GtkFrame> end;
-define property-setter frame-label :: <C-string> on <GtkFrame> end;
-define property-getter frame-label-widget :: <GtkWidget> on <GtkFrame> end;
-define property-setter frame-label-widget :: <GtkWidget> on <GtkFrame> end;
-define property-getter frame-label-xalign :: <C-float> on <GtkFrame> end;
-define property-setter frame-label-xalign :: <C-float> on <GtkFrame> end;
-define property-getter frame-label-yalign :: <C-float> on <GtkFrame> end;
-define property-setter frame-label-yalign :: <C-float> on <GtkFrame> end;
-define property-getter frame-shadow-type :: <GtkShadowType> on <GtkFrame> end;
-define property-setter frame-shadow-type :: <GtkShadowType> on <GtkFrame> end;
 define C-function gtk-frame-new
   input parameter label_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -8415,12 +7779,12 @@ define C-function gtk-frame-set-shadow-type
 end;
 
 define C-struct <_GtkFrameClass>
-  constant slot gtkframeclass-parent-class :: <GtkBinClass>;
-  constant slot gtkframeclass-compute-child-allocation :: <C-function-pointer>;
-  constant slot gtkframeclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkframeclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkframeclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkframeclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-frame-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-frame-class-compute-child-allocation :: <C-function-pointer>;
+  constant slot gtk-frame-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-frame-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-frame-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-frame-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkFrameClass>;
 end C-struct;
 
@@ -8492,20 +7856,12 @@ define C-function gtk-gradient-unref
 end;
 
 define open C-subtype <GtkGrid> (<GtkContainer>)
-  constant slot gtkgrid-container :: <GtkContainer>;
-  constant slot gtkgrid-priv :: <GtkGridPrivate>;
+  constant slot gtk-grid-container :: <GtkContainer>;
+  constant slot gtk-grid-priv :: <GtkGridPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkGrid*> => <GtkGrid>;
 
-define property-getter grid-column-homogeneous :: <C-boolean> on <GtkGrid> end;
-define property-setter grid-column-homogeneous :: <C-boolean> on <GtkGrid> end;
-define property-getter grid-column-spacing :: <C-signed-int> on <GtkGrid> end;
-define property-setter grid-column-spacing :: <C-signed-int> on <GtkGrid> end;
-define property-getter grid-row-homogeneous :: <C-boolean> on <GtkGrid> end;
-define property-setter grid-row-homogeneous :: <C-boolean> on <GtkGrid> end;
-define property-getter grid-row-spacing :: <C-signed-int> on <GtkGrid> end;
-define property-setter grid-row-spacing :: <C-signed-int> on <GtkGrid> end;
 define C-function gtk-grid-new
   result res :: <GtkWidget>;
   c-name: "gtk_grid_new";
@@ -8599,15 +7955,15 @@ define C-function gtk-grid-set-row-spacing
 end;
 
 define C-struct <_GtkGridClass>
-  constant slot gtkgridclass-parent-class :: <GtkContainerClass>;
-  constant slot gtkgridclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkgridclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkgridclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkgridclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkgridclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkgridclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkgridclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkgridclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-grid-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-grid-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-grid-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-grid-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-grid-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-grid-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-grid-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-grid-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-grid-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkGridClass>;
 end C-struct;
 
@@ -8616,7 +7972,7 @@ define C-struct <_GtkGridPrivate>
 end C-struct;
 
 define open C-subtype <GtkHBox> (<GtkBox>)
-  constant slot gtkhbox-box :: <GtkBox>;
+  constant slot gtk-h-box-box :: <GtkBox>;
 end C-subtype;
 
 define C-pointer-type <GtkHBox*> => <GtkHBox>;
@@ -8629,12 +7985,12 @@ define C-function gtk-hbox-new
 end;
 
 define C-struct <_GtkHBoxClass>
-  constant slot gtkhboxclass-parent-class :: <GtkBoxClass>;
+  constant slot gtk-h-box-class-parent-class :: <GtkBoxClass>;
   pointer-type-name: <GtkHBoxClass>;
 end C-struct;
 
 define open C-subtype <GtkHButtonBox> (<GtkButtonBox>)
-  constant slot gtkhbuttonbox-button-box :: <GtkButtonBox>;
+  constant slot gtk-h-button-box-button-box :: <GtkButtonBox>;
 end C-subtype;
 
 define C-pointer-type <GtkHButtonBox*> => <GtkHButtonBox>;
@@ -8645,12 +8001,12 @@ define C-function gtk-hbutton-box-new
 end;
 
 define C-struct <_GtkHButtonBoxClass>
-  constant slot gtkhbuttonboxclass-parent-class :: <GtkButtonBoxClass>;
+  constant slot gtk-h-button-box-class-parent-class :: <GtkButtonBoxClass>;
   pointer-type-name: <GtkHButtonBoxClass>;
 end C-struct;
 
 define open C-subtype <GtkHPaned> (<GtkPaned>)
-  constant slot gtkhpaned-paned :: <GtkPaned>;
+  constant slot gtk-h-paned-paned :: <GtkPaned>;
 end C-subtype;
 
 define C-pointer-type <GtkHPaned*> => <GtkHPaned>;
@@ -8661,13 +8017,13 @@ define C-function gtk-hpaned-new
 end;
 
 define C-struct <_GtkHPanedClass>
-  constant slot gtkhpanedclass-parent-class :: <GtkPanedClass>;
+  constant slot gtk-h-paned-class-parent-class :: <GtkPanedClass>;
   pointer-type-name: <GtkHPanedClass>;
 end C-struct;
 
 define open C-subtype <GtkHSV> (<GtkWidget>)
-  constant slot gtkhsv-parent-instance :: <GtkWidget>;
-  constant slot gtkhsv-priv :: <GtkHSVPrivate>;
+  constant slot gtk-hsv-parent-instance :: <GtkWidget>;
+  constant slot gtk-hsv-priv :: <GtkHSVPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkHSV*> => <GtkHSV>;
@@ -8724,13 +8080,13 @@ define C-function gtk-hsv-set-metrics
 end;
 
 define C-struct <_GtkHSVClass>
-  constant slot gtkhsvclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkhsvclass-changed :: <C-function-pointer>;
-  constant slot gtkhsvclass-move :: <C-function-pointer>;
-  constant slot gtkhsvclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkhsvclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkhsvclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkhsvclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-hsv-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-hsv-class-changed :: <C-function-pointer>;
+  constant slot gtk-hsv-class-move :: <C-function-pointer>;
+  constant slot gtk-hsv-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-hsv-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-hsv-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-hsv-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkHSVClass>;
 end C-struct;
 
@@ -8739,7 +8095,7 @@ define C-struct <_GtkHSVPrivate>
 end C-struct;
 
 define open C-subtype <GtkHScale> (<GtkScale>)
-  constant slot gtkhscale-scale :: <GtkScale>;
+  constant slot gtk-h-scale-scale :: <GtkScale>;
 end C-subtype;
 
 define C-pointer-type <GtkHScale*> => <GtkHScale>;
@@ -8759,12 +8115,12 @@ define C-function gtk-hscale-new-with-range
 end;
 
 define C-struct <_GtkHScaleClass>
-  constant slot gtkhscaleclass-parent-class :: <GtkScaleClass>;
+  constant slot gtk-h-scale-class-parent-class :: <GtkScaleClass>;
   pointer-type-name: <GtkHScaleClass>;
 end C-struct;
 
 define open C-subtype <GtkHScrollbar> (<GtkScrollbar>)
-  constant slot gtkhscrollbar-scrollbar :: <GtkScrollbar>;
+  constant slot gtk-h-scrollbar-scrollbar :: <GtkScrollbar>;
 end C-subtype;
 
 define C-pointer-type <GtkHScrollbar*> => <GtkHScrollbar>;
@@ -8776,12 +8132,12 @@ define C-function gtk-hscrollbar-new
 end;
 
 define C-struct <_GtkHScrollbarClass>
-  constant slot gtkhscrollbarclass-parent-class :: <GtkScrollbarClass>;
+  constant slot gtk-h-scrollbar-class-parent-class :: <GtkScrollbarClass>;
   pointer-type-name: <GtkHScrollbarClass>;
 end C-struct;
 
 define open C-subtype <GtkHSeparator> (<GtkSeparator>)
-  constant slot gtkhseparator-separator :: <GtkSeparator>;
+  constant slot gtk-h-separator-separator :: <GtkSeparator>;
 end C-subtype;
 
 define C-pointer-type <GtkHSeparator*> => <GtkHSeparator>;
@@ -8792,26 +8148,17 @@ define C-function gtk-hseparator-new
 end;
 
 define C-struct <_GtkHSeparatorClass>
-  constant slot gtkhseparatorclass-parent-class :: <GtkSeparatorClass>;
+  constant slot gtk-h-separator-class-parent-class :: <GtkSeparatorClass>;
   pointer-type-name: <GtkHSeparatorClass>;
 end C-struct;
 
 define open C-subtype <GtkHandleBox> (<GtkBin>)
-  constant slot gtkhandlebox-bin :: <GtkBin>;
-  constant slot gtkhandlebox-priv :: <GtkHandleBoxPrivate>;
+  constant slot gtk-handle-box-bin :: <GtkBin>;
+  constant slot gtk-handle-box-priv :: <GtkHandleBoxPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkHandleBox*> => <GtkHandleBox>;
 
-define property-getter handlebox-child-detached :: <C-boolean> on <GtkHandleBox> end;
-define property-getter handlebox-handle-position :: <GtkPositionType> on <GtkHandleBox> end;
-define property-setter handlebox-handle-position :: <GtkPositionType> on <GtkHandleBox> end;
-define property-getter handlebox-shadow-type :: <GtkShadowType> on <GtkHandleBox> end;
-define property-setter handlebox-shadow-type :: <GtkShadowType> on <GtkHandleBox> end;
-define property-getter handlebox-snap-edge :: <GtkPositionType> on <GtkHandleBox> end;
-define property-setter handlebox-snap-edge :: <GtkPositionType> on <GtkHandleBox> end;
-define property-getter handlebox-snap-edge-set :: <C-boolean> on <GtkHandleBox> end;
-define property-setter handlebox-snap-edge-set :: <C-boolean> on <GtkHandleBox> end;
 define C-function gtk-handle-box-new
   result res :: <GtkWidget>;
   c-name: "gtk_handle_box_new";
@@ -8860,13 +8207,13 @@ define C-function gtk-handle-box-set-snap-edge
 end;
 
 define C-struct <_GtkHandleBoxClass>
-  constant slot gtkhandleboxclass-parent-class :: <GtkBinClass>;
-  constant slot gtkhandleboxclass-child-attached :: <C-function-pointer>;
-  constant slot gtkhandleboxclass-child-detached :: <C-function-pointer>;
-  constant slot gtkhandleboxclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkhandleboxclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkhandleboxclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkhandleboxclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-handle-box-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-handle-box-class-child-attached :: <C-function-pointer>;
+  constant slot gtk-handle-box-class-child-detached :: <C-function-pointer>;
+  constant slot gtk-handle-box-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-handle-box-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-handle-box-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-handle-box-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkHandleBoxClass>;
 end C-struct;
 
@@ -8875,7 +8222,7 @@ define C-struct <_GtkHandleBoxPrivate>
 end C-struct;
 
 define open C-subtype <GtkIMContext> (<GObject>)
-  constant slot gtkimcontext-parent-instance :: <GObject>;
+  constant slot gtk-im-context-parent-instance :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <GtkIMContext*> => <GtkIMContext>;
@@ -8953,44 +8300,44 @@ define C-function gtk-im-context-set-use-preedit
 end;
 
 define C-struct <_GtkIMContextClass>
-  constant slot gtkimcontextclass-parent-class :: <GObjectClass>;
-  constant slot gtkimcontextclass-preedit-start :: <C-function-pointer>;
-  constant slot gtkimcontextclass-preedit-end :: <C-function-pointer>;
-  constant slot gtkimcontextclass-preedit-changed :: <C-function-pointer>;
-  constant slot gtkimcontextclass-commit :: <C-function-pointer>;
-  constant slot gtkimcontextclass-retrieve-surrounding :: <C-function-pointer>;
-  constant slot gtkimcontextclass-delete-surrounding :: <C-function-pointer>;
-  constant slot gtkimcontextclass-set-client-window :: <C-function-pointer>;
-  constant slot gtkimcontextclass-get-preedit-string :: <C-function-pointer>;
-  constant slot gtkimcontextclass-filter-keypress :: <C-function-pointer>;
-  constant slot gtkimcontextclass-focus-in :: <C-function-pointer>;
-  constant slot gtkimcontextclass-focus-out :: <C-function-pointer>;
-  constant slot gtkimcontextclass-reset :: <C-function-pointer>;
-  constant slot gtkimcontextclass-set-cursor-location :: <C-function-pointer>;
-  constant slot gtkimcontextclass-set-use-preedit :: <C-function-pointer>;
-  constant slot gtkimcontextclass-set-surrounding :: <C-function-pointer>;
-  constant slot gtkimcontextclass-get-surrounding :: <C-function-pointer>;
-  constant slot gtkimcontextclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkimcontextclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkimcontextclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkimcontextclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkimcontextclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkimcontextclass--gtk-reserved6 :: <C-void*>;
+  constant slot gtk-im-context-class-parent-class :: <GObjectClass>;
+  constant slot gtk-im-context-class-preedit-start :: <C-function-pointer>;
+  constant slot gtk-im-context-class-preedit-end :: <C-function-pointer>;
+  constant slot gtk-im-context-class-preedit-changed :: <C-function-pointer>;
+  constant slot gtk-im-context-class-commit :: <C-function-pointer>;
+  constant slot gtk-im-context-class-retrieve-surrounding :: <C-function-pointer>;
+  constant slot gtk-im-context-class-delete-surrounding :: <C-function-pointer>;
+  constant slot gtk-im-context-class-set-client-window :: <C-function-pointer>;
+  constant slot gtk-im-context-class-get-preedit-string :: <C-function-pointer>;
+  constant slot gtk-im-context-class-filter-keypress :: <C-function-pointer>;
+  constant slot gtk-im-context-class-focus-in :: <C-function-pointer>;
+  constant slot gtk-im-context-class-focus-out :: <C-function-pointer>;
+  constant slot gtk-im-context-class-reset :: <C-function-pointer>;
+  constant slot gtk-im-context-class-set-cursor-location :: <C-function-pointer>;
+  constant slot gtk-im-context-class-set-use-preedit :: <C-function-pointer>;
+  constant slot gtk-im-context-class-set-surrounding :: <C-function-pointer>;
+  constant slot gtk-im-context-class-get-surrounding :: <C-function-pointer>;
+  constant slot gtk-im-context-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-im-context-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-im-context-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-im-context-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-im-context-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-im-context-class-_gtk-reserved6 :: <C-void*>;
   pointer-type-name: <GtkIMContextClass>;
 end C-struct;
 
 define C-struct <_GtkIMContextInfo>
-  slot gtkimcontextinfo-context-id :: <C-string>;
-  slot gtkimcontextinfo-context-name :: <C-string>;
-  slot gtkimcontextinfo-domain :: <C-string>;
-  slot gtkimcontextinfo-domain-dirname :: <C-string>;
-  slot gtkimcontextinfo-default-locales :: <C-string>;
+  slot gtk-im-context-info-context-id :: <C-string>;
+  slot gtk-im-context-info-context-name :: <C-string>;
+  slot gtk-im-context-info-domain :: <C-string>;
+  slot gtk-im-context-info-domain-dirname :: <C-string>;
+  slot gtk-im-context-info-default-locales :: <C-string>;
   pointer-type-name: <GtkIMContextInfo>;
 end C-struct;
 
 define open C-subtype <GtkIMContextSimple> (<GtkIMContext>)
-  constant slot gtkimcontextsimple-object :: <GtkIMContext>;
-  constant slot gtkimcontextsimple-priv :: <GtkIMContextSimplePrivate>;
+  constant slot gtk-im-context-simple-object :: <GtkIMContext>;
+  constant slot gtk-im-context-simple-priv :: <GtkIMContextSimplePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkIMContextSimple*> => <GtkIMContextSimple>;
@@ -9001,7 +8348,7 @@ define C-function gtk-im-context-simple-new
 end;
 
 define C-struct <_GtkIMContextSimpleClass>
-  constant slot gtkimcontextsimpleclass-parent-class :: <GtkIMContextClass>;
+  constant slot gtk-im-context-simple-class-parent-class :: <GtkIMContextClass>;
   pointer-type-name: <GtkIMContextSimpleClass>;
 end C-struct;
 
@@ -9010,8 +8357,8 @@ define C-struct <_GtkIMContextSimplePrivate>
 end C-struct;
 
 define open C-subtype <GtkIMMulticontext> (<GtkIMContext>)
-  constant slot gtkimmulticontext-object :: <GtkIMContext>;
-  constant slot gtkimmulticontext-priv :: <GtkIMMulticontextPrivate>;
+  constant slot gtk-im-multicontext-object :: <GtkIMContext>;
+  constant slot gtk-im-multicontext-priv :: <GtkIMMulticontextPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkIMMulticontext*> => <GtkIMMulticontext>;
@@ -9040,11 +8387,11 @@ define C-function gtk-im-multicontext-set-context-id
 end;
 
 define C-struct <_GtkIMMulticontextClass>
-  constant slot gtkimmulticontextclass-parent-class :: <GtkIMContextClass>;
-  constant slot gtkimmulticontextclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkimmulticontextclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkimmulticontextclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkimmulticontextclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-im-multicontext-class-parent-class :: <GtkIMContextClass>;
+  constant slot gtk-im-multicontext-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-im-multicontext-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-im-multicontext-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-im-multicontext-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkIMMulticontextClass>;
 end C-struct;
 
@@ -9052,25 +8399,25 @@ define C-struct <_GtkIMMulticontextPrivate>
   pointer-type-name: <GtkIMMulticontextPrivate>;
 end C-struct;
 
-define constant $GTK-IM-PREEDIT-NOTHING = 0;
-define constant $GTK-IM-PREEDIT-CALLBACK = 1;
-define constant $GTK-IM-PREEDIT-NONE = 2;
+define constant $gtk-im-preedit-nothing = 0;
+define constant $gtk-im-preedit-callback = 1;
+define constant $gtk-im-preedit-none = 2;
 define constant <GtkIMPreeditStyle> = <C-int>;
 define C-pointer-type <GtkIMPreeditStyle*> => <GtkIMPreeditStyle>;
 
-define constant $GTK-IM-STATUS-NOTHING = 0;
-define constant $GTK-IM-STATUS-CALLBACK = 1;
-define constant $GTK-IM-STATUS-NONE = 2;
+define constant $gtk-im-status-nothing = 0;
+define constant $gtk-im-status-callback = 1;
+define constant $gtk-im-status-none = 2;
 define constant <GtkIMStatusStyle> = <C-int>;
 define C-pointer-type <GtkIMStatusStyle*> => <GtkIMStatusStyle>;
 
-define constant $INPUT-ERROR = -1;
+define constant $input-error = -1;
 
-define constant $INTERFACE-AGE = 2;
+define constant $interface-age = 2;
 
 define open C-subtype <GtkIconFactory> (<GObject>)
-  constant slot gtkiconfactory-parent-instance :: <GObject>;
-  constant slot gtkiconfactory-priv :: <GtkIconFactoryPrivate>;
+  constant slot gtk-icon-factory-parent-instance :: <GObject>;
+  constant slot gtk-icon-factory-priv :: <GtkIconFactoryPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkIconFactory*> => <GtkIconFactory>;
@@ -9111,11 +8458,11 @@ define C-function gtk-icon-factory-remove-default
 end;
 
 define C-struct <_GtkIconFactoryClass>
-  constant slot gtkiconfactoryclass-parent-class :: <GObjectClass>;
-  constant slot gtkiconfactoryclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkiconfactoryclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkiconfactoryclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkiconfactoryclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-icon-factory-class-parent-class :: <GObjectClass>;
+  constant slot gtk-icon-factory-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-icon-factory-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-icon-factory-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-icon-factory-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkIconFactoryClass>;
 end C-struct;
 
@@ -9224,11 +8571,11 @@ define C-function gtk-icon-info-set-raw-coordinates
   c-name: "gtk_icon_info_set_raw_coordinates";
 end;
 
-define constant $GTK-ICON-LOOKUP-NO-SVG = 1;
-define constant $GTK-ICON-LOOKUP-FORCE-SVG = 2;
-define constant $GTK-ICON-LOOKUP-USE-BUILTIN = 4;
-define constant $GTK-ICON-LOOKUP-GENERIC-FALLBACK = 8;
-define constant $GTK-ICON-LOOKUP-FORCE-SIZE = 16;
+define constant $gtk-icon-lookup-no-svg = 1;
+define constant $gtk-icon-lookup-force-svg = 2;
+define constant $gtk-icon-lookup-use-builtin = 4;
+define constant $gtk-icon-lookup-generic-fallback = 8;
+define constant $gtk-icon-lookup-force-size = 16;
 define constant <GtkIconLookupFlags> = <C-int>;
 define C-pointer-type <GtkIconLookupFlags*> => <GtkIconLookupFlags>;
 
@@ -9297,13 +8644,13 @@ define C-function gtk-icon-set-unref
   c-name: "gtk_icon_set_unref";
 end;
 
-define constant $GTK-ICON-SIZE-INVALID = 0;
-define constant $GTK-ICON-SIZE-MENU = 1;
-define constant $GTK-ICON-SIZE-SMALL-TOOLBAR = 2;
-define constant $GTK-ICON-SIZE-LARGE-TOOLBAR = 3;
-define constant $GTK-ICON-SIZE-BUTTON = 4;
-define constant $GTK-ICON-SIZE-DND = 5;
-define constant $GTK-ICON-SIZE-DIALOG = 6;
+define constant $gtk-icon-size-invalid = 0;
+define constant $gtk-icon-size-menu = 1;
+define constant $gtk-icon-size-small-toolbar = 2;
+define constant $gtk-icon-size-large-toolbar = 3;
+define constant $gtk-icon-size-button = 4;
+define constant $gtk-icon-size-dnd = 5;
+define constant $gtk-icon-size-dialog = 6;
 define constant <GtkIconSize> = <C-int>;
 define C-pointer-type <GtkIconSize*> => <GtkIconSize>;
 
@@ -9436,8 +8783,8 @@ define C-function gtk-icon-source-set-state-wildcarded
 end;
 
 define open C-subtype <GtkIconTheme> (<GObject>)
-  constant slot gtkicontheme-parent-instance :: <GObject>;
-  constant slot gtkicontheme-priv :: <GtkIconThemePrivate>;
+  constant slot gtk-icon-theme-parent-instance :: <GObject>;
+  constant slot gtk-icon-theme-priv :: <GtkIconThemePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkIconTheme*> => <GtkIconTheme>;
@@ -9579,17 +8926,17 @@ define C-function gtk-icon-theme-set-search-path
 end;
 
 define C-struct <_GtkIconThemeClass>
-  constant slot gtkiconthemeclass-parent-class :: <GObjectClass>;
-  constant slot gtkiconthemeclass-changed :: <C-function-pointer>;
-  constant slot gtkiconthemeclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkiconthemeclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkiconthemeclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkiconthemeclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-icon-theme-class-parent-class :: <GObjectClass>;
+  constant slot gtk-icon-theme-class-changed :: <C-function-pointer>;
+  constant slot gtk-icon-theme-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-icon-theme-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-icon-theme-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-icon-theme-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkIconThemeClass>;
 end C-struct;
 
-define constant $GTK-ICON-THEME-NOT-FOUND = 0;
-define constant $GTK-ICON-THEME-FAILED = 1;
+define constant $gtk-icon-theme-not-found = 0;
+define constant $gtk-icon-theme-failed = 1;
 define constant <GtkIconThemeError> = <C-int>;
 define C-pointer-type <GtkIconThemeError*> => <GtkIconThemeError>;
 
@@ -9598,44 +8945,12 @@ define C-struct <_GtkIconThemePrivate>
 end C-struct;
 
 define open C-subtype <GtkIconView> (<GtkContainer>)
-  constant slot gtkiconview-parent :: <GtkContainer>;
-  constant slot gtkiconview-priv :: <GtkIconViewPrivate>;
+  constant slot gtk-icon-view-parent :: <GtkContainer>;
+  constant slot gtk-icon-view-priv :: <GtkIconViewPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkIconView*> => <GtkIconView>;
 
-define property-getter iconview-cell-area :: <GtkCellArea> on <GtkIconView> end;
-define property-setter iconview-cell-area :: <GtkCellArea> on <GtkIconView> end;
-define property-getter iconview-column-spacing :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-column-spacing :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-columns :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-columns :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-item-orientation :: <GtkOrientation> on <GtkIconView> end;
-define property-setter iconview-item-orientation :: <GtkOrientation> on <GtkIconView> end;
-define property-getter iconview-item-padding :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-item-padding :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-item-width :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-item-width :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-margin :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-margin :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-markup-column :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-markup-column :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-model :: <GtkTreeModel> on <GtkIconView> end;
-define property-setter iconview-model :: <GtkTreeModel> on <GtkIconView> end;
-define property-getter iconview-pixbuf-column :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-pixbuf-column :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-reorderable :: <C-boolean> on <GtkIconView> end;
-define property-setter iconview-reorderable :: <C-boolean> on <GtkIconView> end;
-define property-getter iconview-row-spacing :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-row-spacing :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-selection-mode :: <GtkSelectionMode> on <GtkIconView> end;
-define property-setter iconview-selection-mode :: <GtkSelectionMode> on <GtkIconView> end;
-define property-getter iconview-spacing :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-spacing :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-text-column :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-text-column :: <C-signed-int> on <GtkIconView> end;
-define property-getter iconview-tooltip-column :: <C-signed-int> on <GtkIconView> end;
-define property-setter iconview-tooltip-column :: <C-signed-int> on <GtkIconView> end;
 define C-function gtk-icon-view-new
   result res :: <GtkWidget>;
   c-name: "gtk_icon_view_new";
@@ -10041,28 +9356,28 @@ define C-function gtk-icon-view-unset-model-drag-source
 end;
 
 define C-struct <_GtkIconViewClass>
-  constant slot gtkiconviewclass-parent-class :: <GtkContainerClass>;
-  constant slot gtkiconviewclass-item-activated :: <C-function-pointer>;
-  constant slot gtkiconviewclass-selection-changed :: <C-function-pointer>;
-  constant slot gtkiconviewclass-select-all :: <C-function-pointer>;
-  constant slot gtkiconviewclass-unselect-all :: <C-function-pointer>;
-  constant slot gtkiconviewclass-select-cursor-item :: <C-function-pointer>;
-  constant slot gtkiconviewclass-toggle-cursor-item :: <C-function-pointer>;
-  constant slot gtkiconviewclass-move-cursor :: <C-function-pointer>;
-  constant slot gtkiconviewclass-activate-cursor-item :: <C-function-pointer>;
-  constant slot gtkiconviewclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkiconviewclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkiconviewclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkiconviewclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-icon-view-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-icon-view-class-item-activated :: <C-function-pointer>;
+  constant slot gtk-icon-view-class-selection-changed :: <C-function-pointer>;
+  constant slot gtk-icon-view-class-select-all :: <C-function-pointer>;
+  constant slot gtk-icon-view-class-unselect-all :: <C-function-pointer>;
+  constant slot gtk-icon-view-class-select-cursor-item :: <C-function-pointer>;
+  constant slot gtk-icon-view-class-toggle-cursor-item :: <C-function-pointer>;
+  constant slot gtk-icon-view-class-move-cursor :: <C-function-pointer>;
+  constant slot gtk-icon-view-class-activate-cursor-item :: <C-function-pointer>;
+  constant slot gtk-icon-view-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-icon-view-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-icon-view-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-icon-view-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkIconViewClass>;
 end C-struct;
 
-define constant $GTK-ICON-VIEW-NO-DROP = 0;
-define constant $GTK-ICON-VIEW-DROP-INTO = 1;
-define constant $GTK-ICON-VIEW-DROP-LEFT = 2;
-define constant $GTK-ICON-VIEW-DROP-RIGHT = 3;
-define constant $GTK-ICON-VIEW-DROP-ABOVE = 4;
-define constant $GTK-ICON-VIEW-DROP-BELOW = 5;
+define constant $gtk-icon-view-no-drop = 0;
+define constant $gtk-icon-view-drop-into = 1;
+define constant $gtk-icon-view-drop-left = 2;
+define constant $gtk-icon-view-drop-right = 3;
+define constant $gtk-icon-view-drop-above = 4;
+define constant $gtk-icon-view-drop-below = 5;
 define constant <GtkIconViewDropPosition> = <C-int>;
 define C-pointer-type <GtkIconViewDropPosition*> => <GtkIconViewDropPosition>;
 
@@ -10071,33 +9386,12 @@ define C-struct <_GtkIconViewPrivate>
 end C-struct;
 
 define open C-subtype <GtkImage> (<GtkMisc>)
-  constant slot gtkimage-misc :: <GtkMisc>;
-  constant slot gtkimage-priv :: <GtkImagePrivate>;
+  constant slot gtk-image-misc :: <GtkMisc>;
+  constant slot gtk-image-priv :: <GtkImagePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkImage*> => <GtkImage>;
 
-define property-getter image-file :: <C-string> on <GtkImage> end;
-define property-setter image-file :: <C-string> on <GtkImage> end;
-define property-getter image-gicon :: <GIcon> on <GtkImage> end;
-define property-setter image-gicon :: <GIcon> on <GtkImage> end;
-define property-getter image-icon-name :: <C-string> on <GtkImage> end;
-define property-setter image-icon-name :: <C-string> on <GtkImage> end;
-define property-getter image-icon-set :: <GtkIconSet> on <GtkImage> end;
-define property-setter image-icon-set :: <GtkIconSet> on <GtkImage> end;
-define property-getter image-icon-size :: <C-signed-int> on <GtkImage> end;
-define property-setter image-icon-size :: <C-signed-int> on <GtkImage> end;
-define property-getter image-pixbuf :: <GdkPixbuf> on <GtkImage> end;
-define property-setter image-pixbuf :: <GdkPixbuf> on <GtkImage> end;
-define property-getter image-pixbuf-animation :: <GdkPixbufAnimation> on <GtkImage> end;
-define property-setter image-pixbuf-animation :: <GdkPixbufAnimation> on <GtkImage> end;
-define property-getter image-pixel-size :: <C-signed-int> on <GtkImage> end;
-define property-setter image-pixel-size :: <C-signed-int> on <GtkImage> end;
-define property-getter image-stock :: <C-string> on <GtkImage> end;
-define property-setter image-stock :: <C-string> on <GtkImage> end;
-define property-getter image-storage-type :: <GtkImageType> on <GtkImage> end;
-define property-getter image-use-fallback :: <C-boolean> on <GtkImage> end;
-define property-setter image-use-fallback :: <C-boolean> on <GtkImage> end;
 define C-function gtk-image-new
   result res :: <GtkWidget>;
   c-name: "gtk_image_new";
@@ -10271,28 +9565,21 @@ define C-function gtk-image-set-pixel-size
 end;
 
 define C-struct <_GtkImageClass>
-  constant slot gtkimageclass-parent-class :: <GtkMiscClass>;
-  constant slot gtkimageclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkimageclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkimageclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkimageclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-image-class-parent-class :: <GtkMiscClass>;
+  constant slot gtk-image-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-image-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-image-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-image-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkImageClass>;
 end C-struct;
 
 define open C-subtype <GtkImageMenuItem> (<GtkMenuItem>)
-  constant slot gtkimagemenuitem-menu-item :: <GtkMenuItem>;
-  constant slot gtkimagemenuitem-priv :: <GtkImageMenuItemPrivate>;
+  constant slot gtk-image-menu-item-menu-item :: <GtkMenuItem>;
+  constant slot gtk-image-menu-item-priv :: <GtkImageMenuItemPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkImageMenuItem*> => <GtkImageMenuItem>;
 
-define property-setter imagemenuitem-accel-group :: <GtkAccelGroup> on <GtkImageMenuItem> end;
-define property-getter imagemenuitem-always-show-image :: <C-boolean> on <GtkImageMenuItem> end;
-define property-setter imagemenuitem-always-show-image :: <C-boolean> on <GtkImageMenuItem> end;
-define property-getter imagemenuitem-image :: <GtkWidget> on <GtkImageMenuItem> end;
-define property-setter imagemenuitem-image :: <GtkWidget> on <GtkImageMenuItem> end;
-define property-getter imagemenuitem-use-stock :: <C-boolean> on <GtkImageMenuItem> end;
-define property-setter imagemenuitem-use-stock :: <C-boolean> on <GtkImageMenuItem> end;
 define C-function gtk-image-menu-item-new
   result res :: <GtkWidget>;
   c-name: "gtk_image_menu_item_new";
@@ -10360,11 +9647,11 @@ define C-function gtk-image-menu-item-set-use-stock
 end;
 
 define C-struct <_GtkImageMenuItemClass>
-  constant slot gtkimagemenuitemclass-parent-class :: <GtkMenuItemClass>;
-  constant slot gtkimagemenuitemclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkimagemenuitemclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkimagemenuitemclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkimagemenuitemclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-image-menu-item-class-parent-class :: <GtkMenuItemClass>;
+  constant slot gtk-image-menu-item-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-image-menu-item-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-image-menu-item-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-image-menu-item-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkImageMenuItemClass>;
 end C-struct;
 
@@ -10376,25 +9663,23 @@ define C-struct <_GtkImagePrivate>
   pointer-type-name: <GtkImagePrivate>;
 end C-struct;
 
-define constant $GTK-IMAGE-EMPTY = 0;
-define constant $GTK-IMAGE-PIXBUF = 1;
-define constant $GTK-IMAGE-STOCK = 2;
-define constant $GTK-IMAGE-ICON-SET = 3;
-define constant $GTK-IMAGE-ANIMATION = 4;
-define constant $GTK-IMAGE-ICON-NAME = 5;
-define constant $GTK-IMAGE-GICON = 6;
+define constant $gtk-image-empty = 0;
+define constant $gtk-image-pixbuf = 1;
+define constant $gtk-image-stock = 2;
+define constant $gtk-image-icon-set = 3;
+define constant $gtk-image-animation = 4;
+define constant $gtk-image-icon-name = 5;
+define constant $gtk-image-gicon = 6;
 define constant <GtkImageType> = <C-int>;
 define C-pointer-type <GtkImageType*> => <GtkImageType>;
 
 define open C-subtype <GtkInfoBar> (<GtkBox>)
-  constant slot gtkinfobar-parent :: <GtkBox>;
-  constant slot gtkinfobar-priv :: <GtkInfoBarPrivate>;
+  constant slot gtk-info-bar-parent :: <GtkBox>;
+  constant slot gtk-info-bar-priv :: <GtkInfoBarPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkInfoBar*> => <GtkInfoBar>;
 
-define property-getter infobar-message-type :: <GtkMessageType> on <GtkInfoBar> end;
-define property-setter infobar-message-type :: <GtkMessageType> on <GtkInfoBar> end;
 define C-function gtk-info-bar-new
   result res :: <GtkWidget>;
   c-name: "gtk_info_bar_new";
@@ -10459,13 +9744,13 @@ define C-function gtk-info-bar-set-response-sensitive
 end;
 
 define C-struct <_GtkInfoBarClass>
-  constant slot gtkinfobarclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkinfobarclass-response :: <C-function-pointer>;
-  constant slot gtkinfobarclass-close :: <C-function-pointer>;
-  constant slot gtkinfobarclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkinfobarclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkinfobarclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkinfobarclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-info-bar-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-info-bar-class-response :: <C-function-pointer>;
+  constant slot gtk-info-bar-class-close :: <C-function-pointer>;
+  constant slot gtk-info-bar-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-info-bar-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-info-bar-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-info-bar-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkInfoBarClass>;
 end C-struct;
 
@@ -10474,14 +9759,12 @@ define C-struct <_GtkInfoBarPrivate>
 end C-struct;
 
 define open C-subtype <GtkInvisible> (<GtkWidget>)
-  constant slot gtkinvisible-widget :: <GtkWidget>;
-  constant slot gtkinvisible-priv :: <GtkInvisiblePrivate>;
+  constant slot gtk-invisible-widget :: <GtkWidget>;
+  constant slot gtk-invisible-priv :: <GtkInvisiblePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkInvisible*> => <GtkInvisible>;
 
-define property-getter invisible-screen :: <GdkScreen> on <GtkInvisible> end;
-define property-setter invisible-screen :: <GdkScreen> on <GtkInvisible> end;
 define C-function gtk-invisible-new
   result res :: <GtkWidget>;
   c-name: "gtk_invisible_new";
@@ -10506,11 +9789,11 @@ define C-function gtk-invisible-set-screen
 end;
 
 define C-struct <_GtkInvisibleClass>
-  constant slot gtkinvisibleclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkinvisibleclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkinvisibleclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkinvisibleclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkinvisibleclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-invisible-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-invisible-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-invisible-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-invisible-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-invisible-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkInvisibleClass>;
 end C-struct;
 
@@ -10518,66 +9801,32 @@ define C-struct <_GtkInvisiblePrivate>
   pointer-type-name: <GtkInvisiblePrivate>;
 end C-struct;
 
-define constant $GTK-JUNCTION-NONE = 0;
-define constant $GTK-JUNCTION-CORNER-TOPLEFT = 1;
-define constant $GTK-JUNCTION-CORNER-TOPRIGHT = 2;
-define constant $GTK-JUNCTION-CORNER-BOTTOMLEFT = 4;
-define constant $GTK-JUNCTION-CORNER-BOTTOMRIGHT = 8;
-define constant $GTK-JUNCTION-TOP = 3;
-define constant $GTK-JUNCTION-BOTTOM = 12;
-define constant $GTK-JUNCTION-LEFT = 5;
-define constant $GTK-JUNCTION-RIGHT = 10;
+define constant $gtk-junction-none = 0;
+define constant $gtk-junction-corner-topleft = 1;
+define constant $gtk-junction-corner-topright = 2;
+define constant $gtk-junction-corner-bottomleft = 4;
+define constant $gtk-junction-corner-bottomright = 8;
+define constant $gtk-junction-top = 3;
+define constant $gtk-junction-bottom = 12;
+define constant $gtk-junction-left = 5;
+define constant $gtk-junction-right = 10;
 define constant <GtkJunctionSides> = <C-int>;
 define C-pointer-type <GtkJunctionSides*> => <GtkJunctionSides>;
 
-define constant $GTK-JUSTIFY-LEFT = 0;
-define constant $GTK-JUSTIFY-RIGHT = 1;
-define constant $GTK-JUSTIFY-CENTER = 2;
-define constant $GTK-JUSTIFY-FILL = 3;
+define constant $gtk-justify-left = 0;
+define constant $gtk-justify-right = 1;
+define constant $gtk-justify-center = 2;
+define constant $gtk-justify-fill = 3;
 define constant <GtkJustification> = <C-int>;
 define C-pointer-type <GtkJustification*> => <GtkJustification>;
 
 define open C-subtype <GtkLabel> (<GtkMisc>)
-  constant slot gtklabel-misc :: <GtkMisc>;
-  constant slot gtklabel-priv :: <GtkLabelPrivate>;
+  constant slot gtk-label-misc :: <GtkMisc>;
+  constant slot gtk-label-priv :: <GtkLabelPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkLabel*> => <GtkLabel>;
 
-define property-getter label-angle :: <C-double> on <GtkLabel> end;
-define property-setter label-angle :: <C-double> on <GtkLabel> end;
-define property-getter label-attributes :: <PangoAttrList> on <GtkLabel> end;
-define property-setter label-attributes :: <PangoAttrList> on <GtkLabel> end;
-define property-getter label-cursor-position :: <C-signed-int> on <GtkLabel> end;
-define property-getter label-ellipsize :: <PangoEllipsizeMode> on <GtkLabel> end;
-define property-setter label-ellipsize :: <PangoEllipsizeMode> on <GtkLabel> end;
-define property-getter label-justify :: <GtkJustification> on <GtkLabel> end;
-define property-setter label-justify :: <GtkJustification> on <GtkLabel> end;
-define property-getter label-label :: <C-string> on <GtkLabel> end;
-define property-setter label-label :: <C-string> on <GtkLabel> end;
-define property-getter label-max-width-chars :: <C-signed-int> on <GtkLabel> end;
-define property-setter label-max-width-chars :: <C-signed-int> on <GtkLabel> end;
-define property-getter label-mnemonic-keyval :: <C-unsigned-int> on <GtkLabel> end;
-define property-getter label-mnemonic-widget :: <GtkWidget> on <GtkLabel> end;
-define property-setter label-mnemonic-widget :: <GtkWidget> on <GtkLabel> end;
-define property-setter label-pattern :: <C-string> on <GtkLabel> end;
-define property-getter label-selectable :: <C-boolean> on <GtkLabel> end;
-define property-setter label-selectable :: <C-boolean> on <GtkLabel> end;
-define property-getter label-selection-bound :: <C-signed-int> on <GtkLabel> end;
-define property-getter label-single-line-mode :: <C-boolean> on <GtkLabel> end;
-define property-setter label-single-line-mode :: <C-boolean> on <GtkLabel> end;
-define property-getter label-track-visited-links :: <C-boolean> on <GtkLabel> end;
-define property-setter label-track-visited-links :: <C-boolean> on <GtkLabel> end;
-define property-getter label-use-markup :: <C-boolean> on <GtkLabel> end;
-define property-setter label-use-markup :: <C-boolean> on <GtkLabel> end;
-define property-getter label-use-underline :: <C-boolean> on <GtkLabel> end;
-define property-setter label-use-underline :: <C-boolean> on <GtkLabel> end;
-define property-getter label-width-chars :: <C-signed-int> on <GtkLabel> end;
-define property-setter label-width-chars :: <C-signed-int> on <GtkLabel> end;
-define property-getter label-wrap :: <C-boolean> on <GtkLabel> end;
-define property-setter label-wrap :: <C-boolean> on <GtkLabel> end;
-define property-getter label-wrap-mode :: <PangoWrapMode> on <GtkLabel> end;
-define property-setter label-wrap-mode :: <PangoWrapMode> on <GtkLabel> end;
 define C-function gtk-label-new
   input parameter str_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -10847,19 +10096,19 @@ define C-function gtk-label-set-width-chars
 end;
 
 define C-struct <_GtkLabelClass>
-  constant slot gtklabelclass-parent-class :: <GtkMiscClass>;
-  constant slot gtklabelclass-move-cursor :: <C-function-pointer>;
-  constant slot gtklabelclass-copy-clipboard :: <C-function-pointer>;
-  constant slot gtklabelclass-populate-popup :: <C-function-pointer>;
-  constant slot gtklabelclass-activate-link :: <C-function-pointer>;
-  constant slot gtklabelclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtklabelclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtklabelclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtklabelclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtklabelclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtklabelclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtklabelclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtklabelclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-label-class-parent-class :: <GtkMiscClass>;
+  constant slot gtk-label-class-move-cursor :: <C-function-pointer>;
+  constant slot gtk-label-class-copy-clipboard :: <C-function-pointer>;
+  constant slot gtk-label-class-populate-popup :: <C-function-pointer>;
+  constant slot gtk-label-class-activate-link :: <C-function-pointer>;
+  constant slot gtk-label-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-label-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-label-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-label-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-label-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-label-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-label-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-label-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkLabelClass>;
 end C-struct;
 
@@ -10872,16 +10121,12 @@ define C-struct <_GtkLabelSelectionInfo>
 end C-struct;
 
 define open C-subtype <GtkLayout> (<GtkContainer>)
-  constant slot gtklayout-container :: <GtkContainer>;
-  constant slot gtklayout-priv :: <GtkLayoutPrivate>;
+  constant slot gtk-layout-container :: <GtkContainer>;
+  constant slot gtk-layout-priv :: <GtkLayoutPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkLayout*> => <GtkLayout>;
 
-define property-getter layout-height :: <C-unsigned-int> on <GtkLayout> end;
-define property-setter layout-height :: <C-unsigned-int> on <GtkLayout> end;
-define property-getter layout-width :: <C-unsigned-int> on <GtkLayout> end;
-define property-setter layout-width :: <C-unsigned-int> on <GtkLayout> end;
 define C-function gtk-layout-new
   input parameter hadjustment_ :: <GtkAdjustment>;
   input parameter vadjustment_ :: <GtkAdjustment>;
@@ -10950,11 +10195,11 @@ define C-function gtk-layout-set-vadjustment
 end;
 
 define C-struct <_GtkLayoutClass>
-  constant slot gtklayoutclass-parent-class :: <GtkContainerClass>;
-  constant slot gtklayoutclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtklayoutclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtklayoutclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtklayoutclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-layout-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-layout-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-layout-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-layout-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-layout-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkLayoutClass>;
 end C-struct;
 
@@ -10962,29 +10207,25 @@ define C-struct <_GtkLayoutPrivate>
   pointer-type-name: <GtkLayoutPrivate>;
 end C-struct;
 
-define constant $GTK-LICENSE-UNKNOWN = 0;
-define constant $GTK-LICENSE-CUSTOM = 1;
-define constant $GTK-LICENSE-GPL-2-0 = 2;
-define constant $GTK-LICENSE-GPL-3-0 = 3;
-define constant $GTK-LICENSE-LGPL-2-1 = 4;
-define constant $GTK-LICENSE-LGPL-3-0 = 5;
-define constant $GTK-LICENSE-BSD = 6;
-define constant $GTK-LICENSE-MIT-X11 = 7;
-define constant $GTK-LICENSE-ARTISTIC = 8;
+define constant $gtk-license-unknown = 0;
+define constant $gtk-license-custom = 1;
+define constant $gtk-license-gpl-2-0 = 2;
+define constant $gtk-license-gpl-3-0 = 3;
+define constant $gtk-license-lgpl-2-1 = 4;
+define constant $gtk-license-lgpl-3-0 = 5;
+define constant $gtk-license-bsd = 6;
+define constant $gtk-license-mit-x11 = 7;
+define constant $gtk-license-artistic = 8;
 define constant <GtkLicense> = <C-int>;
 define C-pointer-type <GtkLicense*> => <GtkLicense>;
 
 define open C-subtype <GtkLinkButton> (<GtkButton>)
-  constant slot gtklinkbutton-parent-instance :: <GtkButton>;
-  constant slot gtklinkbutton-priv :: <GtkLinkButtonPrivate>;
+  constant slot gtk-link-button-parent-instance :: <GtkButton>;
+  constant slot gtk-link-button-priv :: <GtkLinkButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkLinkButton*> => <GtkLinkButton>;
 
-define property-getter linkbutton-uri :: <C-string> on <GtkLinkButton> end;
-define property-setter linkbutton-uri :: <C-string> on <GtkLinkButton> end;
-define property-getter linkbutton-visited :: <C-boolean> on <GtkLinkButton> end;
-define property-setter linkbutton-visited :: <C-boolean> on <GtkLinkButton> end;
 define C-function gtk-link-button-new
   input parameter uri_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -11023,12 +10264,12 @@ define C-function gtk-link-button-set-visited
 end;
 
 define C-struct <_GtkLinkButtonClass>
-  constant slot gtklinkbuttonclass-parent-class :: <GtkButtonClass>;
-  constant slot gtklinkbuttonclass-activate-link :: <C-function-pointer>;
-  constant slot gtklinkbuttonclass--gtk-padding1 :: <C-void*>;
-  constant slot gtklinkbuttonclass--gtk-padding2 :: <C-void*>;
-  constant slot gtklinkbuttonclass--gtk-padding3 :: <C-void*>;
-  constant slot gtklinkbuttonclass--gtk-padding4 :: <C-void*>;
+  constant slot gtk-link-button-class-parent-class :: <GtkButtonClass>;
+  constant slot gtk-link-button-class-activate-link :: <C-function-pointer>;
+  constant slot gtk-link-button-class-_gtk-padding1 :: <C-void*>;
+  constant slot gtk-link-button-class-_gtk-padding2 :: <C-void*>;
+  constant slot gtk-link-button-class-_gtk-padding3 :: <C-void*>;
+  constant slot gtk-link-button-class-_gtk-padding4 :: <C-void*>;
   pointer-type-name: <GtkLinkButtonClass>;
 end C-struct;
 
@@ -11037,8 +10278,8 @@ define C-struct <_GtkLinkButtonPrivate>
 end C-struct;
 
 define open C-subtype <GtkListStore> (<GObject>)
-  constant slot gtkliststore-parent :: <GObject>;
-  constant slot gtkliststore-priv :: <GtkListStorePrivate>;
+  constant slot gtk-list-store-parent :: <GObject>;
+  constant slot gtk-list-store-priv :: <GtkListStorePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkListStore*> => <GtkListStore>;
@@ -11158,11 +10399,11 @@ define C-function gtk-list-store-swap
 end;
 
 define C-struct <_GtkListStoreClass>
-  constant slot gtkliststoreclass-parent-class :: <GObjectClass>;
-  constant slot gtkliststoreclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkliststoreclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkliststoreclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkliststoreclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-list-store-class-parent-class :: <GObjectClass>;
+  constant slot gtk-list-store-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-list-store-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-list-store-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-list-store-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkListStoreClass>;
 end C-struct;
 
@@ -11171,24 +10412,12 @@ define C-struct <_GtkListStorePrivate>
 end C-struct;
 
 define open C-subtype <GtkLockButton> (<GtkButton>)
-  constant slot gtklockbutton-parent :: <GtkButton>;
-  constant slot gtklockbutton-priv :: <GtkLockButtonPrivate>;
+  constant slot gtk-lock-button-parent :: <GtkButton>;
+  constant slot gtk-lock-button-priv :: <GtkLockButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkLockButton*> => <GtkLockButton>;
 
-define property-getter lockbutton-permission :: <GPermission> on <GtkLockButton> end;
-define property-setter lockbutton-permission :: <GPermission> on <GtkLockButton> end;
-define property-getter lockbutton-text-lock :: <C-string> on <GtkLockButton> end;
-define property-setter lockbutton-text-lock :: <C-string> on <GtkLockButton> end;
-define property-getter lockbutton-text-unlock :: <C-string> on <GtkLockButton> end;
-define property-setter lockbutton-text-unlock :: <C-string> on <GtkLockButton> end;
-define property-getter lockbutton-tooltip-lock :: <C-string> on <GtkLockButton> end;
-define property-setter lockbutton-tooltip-lock :: <C-string> on <GtkLockButton> end;
-define property-getter lockbutton-tooltip-not-authorized :: <C-string> on <GtkLockButton> end;
-define property-setter lockbutton-tooltip-not-authorized :: <C-string> on <GtkLockButton> end;
-define property-getter lockbutton-tooltip-unlock :: <C-string> on <GtkLockButton> end;
-define property-setter lockbutton-tooltip-unlock :: <C-string> on <GtkLockButton> end;
 define C-function gtk-lock-button-new
   input parameter permission_ :: <GPermission>;
   result res :: <GtkWidget>;
@@ -11208,15 +10437,15 @@ define C-function gtk-lock-button-set-permission
 end;
 
 define C-struct <_GtkLockButtonClass>
-  constant slot gtklockbuttonclass-parent-class :: <GtkButtonClass>;
-  constant slot gtklockbuttonclass-reserved0 :: <C-function-pointer>;
-  constant slot gtklockbuttonclass-reserved1 :: <C-function-pointer>;
-  constant slot gtklockbuttonclass-reserved2 :: <C-function-pointer>;
-  constant slot gtklockbuttonclass-reserved3 :: <C-function-pointer>;
-  constant slot gtklockbuttonclass-reserved4 :: <C-function-pointer>;
-  constant slot gtklockbuttonclass-reserved5 :: <C-function-pointer>;
-  constant slot gtklockbuttonclass-reserved6 :: <C-function-pointer>;
-  constant slot gtklockbuttonclass-reserved7 :: <C-function-pointer>;
+  constant slot gtk-lock-button-class-parent-class :: <GtkButtonClass>;
+  constant slot gtk-lock-button-class-reserved0 :: <C-function-pointer>;
+  constant slot gtk-lock-button-class-reserved1 :: <C-function-pointer>;
+  constant slot gtk-lock-button-class-reserved2 :: <C-function-pointer>;
+  constant slot gtk-lock-button-class-reserved3 :: <C-function-pointer>;
+  constant slot gtk-lock-button-class-reserved4 :: <C-function-pointer>;
+  constant slot gtk-lock-button-class-reserved5 :: <C-function-pointer>;
+  constant slot gtk-lock-button-class-reserved6 :: <C-function-pointer>;
+  constant slot gtk-lock-button-class-reserved7 :: <C-function-pointer>;
   pointer-type-name: <GtkLockButtonClass>;
 end C-struct;
 
@@ -11224,37 +10453,21 @@ define C-struct <_GtkLockButtonPrivate>
   pointer-type-name: <GtkLockButtonPrivate>;
 end C-struct;
 
-define constant $MAJOR-VERSION = 3;
+define constant $major-version = 3;
 
-define constant $MAX-COMPOSE-LEN = 7;
+define constant $max-compose-len = 7;
 
-define constant $MICRO-VERSION = 2;
+define constant $micro-version = 2;
 
-define constant $MINOR-VERSION = 4;
+define constant $minor-version = 4;
 
 define open C-subtype <GtkMenu> (<GtkMenuShell>)
-  constant slot gtkmenu-menu-shell :: <GtkMenuShell>;
-  constant slot gtkmenu-priv :: <GtkMenuPrivate>;
+  constant slot gtk-menu-menu-shell :: <GtkMenuShell>;
+  constant slot gtk-menu-priv :: <GtkMenuPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkMenu*> => <GtkMenu>;
 
-define property-getter menu-accel-group :: <GtkAccelGroup> on <GtkMenu> end;
-define property-setter menu-accel-group :: <GtkAccelGroup> on <GtkMenu> end;
-define property-getter menu-accel-path :: <C-string> on <GtkMenu> end;
-define property-setter menu-accel-path :: <C-string> on <GtkMenu> end;
-define property-getter menu-active :: <C-signed-int> on <GtkMenu> end;
-define property-setter menu-active :: <C-signed-int> on <GtkMenu> end;
-define property-getter menu-attach-widget :: <GtkWidget> on <GtkMenu> end;
-define property-setter menu-attach-widget :: <GtkWidget> on <GtkMenu> end;
-define property-getter menu-monitor :: <C-signed-int> on <GtkMenu> end;
-define property-setter menu-monitor :: <C-signed-int> on <GtkMenu> end;
-define property-getter menu-reserve-toggle-size :: <C-boolean> on <GtkMenu> end;
-define property-setter menu-reserve-toggle-size :: <C-boolean> on <GtkMenu> end;
-define property-getter menu-tearoff-state :: <C-boolean> on <GtkMenu> end;
-define property-setter menu-tearoff-state :: <C-boolean> on <GtkMenu> end;
-define property-getter menu-tearoff-title :: <C-string> on <GtkMenu> end;
-define property-setter menu-tearoff-title :: <C-string> on <GtkMenu> end;
 define C-function gtk-menu-new
   result res :: <GtkWidget>;
   c-name: "gtk_menu_new";
@@ -11421,16 +10634,12 @@ define C-function gtk-menu-set-title
 end;
 
 define open C-subtype <GtkMenuBar> (<GtkMenuShell>)
-  constant slot gtkmenubar-menu-shell :: <GtkMenuShell>;
-  constant slot gtkmenubar-priv :: <GtkMenuBarPrivate>;
+  constant slot gtk-menu-bar-menu-shell :: <GtkMenuShell>;
+  constant slot gtk-menu-bar-priv :: <GtkMenuBarPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkMenuBar*> => <GtkMenuBar>;
 
-define property-getter menubar-child-pack-direction :: <GtkPackDirection> on <GtkMenuBar> end;
-define property-setter menubar-child-pack-direction :: <GtkPackDirection> on <GtkMenuBar> end;
-define property-getter menubar-pack-direction :: <GtkPackDirection> on <GtkMenuBar> end;
-define property-setter menubar-pack-direction :: <GtkPackDirection> on <GtkMenuBar> end;
 define C-function gtk-menu-bar-new
   result res :: <GtkWidget>;
   c-name: "gtk_menu_bar_new";
@@ -11467,11 +10676,11 @@ define C-function gtk-menu-bar-set-pack-direction
 end;
 
 define C-struct <_GtkMenuBarClass>
-  constant slot gtkmenubarclass-parent-class :: <GtkMenuShellClass>;
-  constant slot gtkmenubarclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkmenubarclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkmenubarclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkmenubarclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-menu-bar-class-parent-class :: <GtkMenuShellClass>;
+  constant slot gtk-menu-bar-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-menu-bar-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-menu-bar-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-menu-bar-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkMenuBarClass>;
 end C-struct;
 
@@ -11480,38 +10689,28 @@ define C-struct <_GtkMenuBarPrivate>
 end C-struct;
 
 define C-struct <_GtkMenuClass>
-  constant slot gtkmenuclass-parent-class :: <GtkMenuShellClass>;
-  constant slot gtkmenuclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkmenuclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkmenuclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkmenuclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-menu-class-parent-class :: <GtkMenuShellClass>;
+  constant slot gtk-menu-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-menu-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-menu-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-menu-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkMenuClass>;
 end C-struct;
 
-define constant $GTK-MENU-DIR-PARENT = 0;
-define constant $GTK-MENU-DIR-CHILD = 1;
-define constant $GTK-MENU-DIR-NEXT = 2;
-define constant $GTK-MENU-DIR-PREV = 3;
+define constant $gtk-menu-dir-parent = 0;
+define constant $gtk-menu-dir-child = 1;
+define constant $gtk-menu-dir-next = 2;
+define constant $gtk-menu-dir-prev = 3;
 define constant <GtkMenuDirectionType> = <C-int>;
 define C-pointer-type <GtkMenuDirectionType*> => <GtkMenuDirectionType>;
 
 define open C-subtype <GtkMenuItem> (<GtkBin>)
-  constant slot gtkmenuitem-bin :: <GtkBin>;
-  constant slot gtkmenuitem-priv :: <GtkMenuItemPrivate>;
+  constant slot gtk-menu-item-bin :: <GtkBin>;
+  constant slot gtk-menu-item-priv :: <GtkMenuItemPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkMenuItem*> => <GtkMenuItem>;
 
-define property-getter menuitem-accel-path :: <C-string> on <GtkMenuItem> end;
-define property-setter menuitem-accel-path :: <C-string> on <GtkMenuItem> end;
-define property-getter menuitem-label :: <C-string> on <GtkMenuItem> end;
-define property-setter menuitem-label :: <C-string> on <GtkMenuItem> end;
-define property-getter menuitem-right-justified :: <C-boolean> on <GtkMenuItem> end;
-define property-setter menuitem-right-justified :: <C-boolean> on <GtkMenuItem> end;
-define property-getter menuitem-submenu :: <GtkMenu> on <GtkMenuItem> end;
-define property-setter menuitem-submenu :: <GtkMenu> on <GtkMenuItem> end;
-define property-getter menuitem-use-underline :: <C-boolean> on <GtkMenuItem> end;
-define property-setter menuitem-use-underline :: <C-boolean> on <GtkMenuItem> end;
 define C-function gtk-menu-item-new
   result res :: <GtkWidget>;
   c-name: "gtk_menu_item_new";
@@ -11629,20 +10828,20 @@ define C-function gtk-menu-item-toggle-size-request
 end;
 
 define C-struct <_GtkMenuItemClass>
-  constant slot gtkmenuitemclass-parent-class :: <GtkBinClass>;
-  constant slot gtkmenuitemclass-hide-on-activate :: <C-unsigned-int>;
-  constant slot gtkmenuitemclass-activate :: <C-function-pointer>;
-  constant slot gtkmenuitemclass-activate-item :: <C-function-pointer>;
-  constant slot gtkmenuitemclass-toggle-size-request :: <C-function-pointer>;
-  constant slot gtkmenuitemclass-toggle-size-allocate :: <C-function-pointer>;
-  constant slot gtkmenuitemclass-set-label :: <C-function-pointer>;
-  constant slot gtkmenuitemclass-get-label :: <C-function-pointer>;
-  constant slot gtkmenuitemclass-select :: <C-function-pointer>;
-  constant slot gtkmenuitemclass-deselect :: <C-function-pointer>;
-  constant slot gtkmenuitemclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkmenuitemclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkmenuitemclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkmenuitemclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-menu-item-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-menu-item-class-hide-on-activate :: <C-unsigned-int>;
+  constant slot gtk-menu-item-class-activate :: <C-function-pointer>;
+  constant slot gtk-menu-item-class-activate-item :: <C-function-pointer>;
+  constant slot gtk-menu-item-class-toggle-size-request :: <C-function-pointer>;
+  constant slot gtk-menu-item-class-toggle-size-allocate :: <C-function-pointer>;
+  constant slot gtk-menu-item-class-set-label :: <C-function-pointer>;
+  constant slot gtk-menu-item-class-get-label :: <C-function-pointer>;
+  constant slot gtk-menu-item-class-select :: <C-function-pointer>;
+  constant slot gtk-menu-item-class-deselect :: <C-function-pointer>;
+  constant slot gtk-menu-item-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-menu-item-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-menu-item-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-menu-item-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkMenuItemClass>;
 end C-struct;
 
@@ -11655,14 +10854,12 @@ define C-struct <_GtkMenuPrivate>
 end C-struct;
 
 define open C-subtype <GtkMenuShell> (<GtkContainer>)
-  constant slot gtkmenushell-container :: <GtkContainer>;
-  constant slot gtkmenushell-priv :: <GtkMenuShellPrivate>;
+  constant slot gtk-menu-shell-container :: <GtkContainer>;
+  constant slot gtk-menu-shell-priv :: <GtkMenuShellPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkMenuShell*> => <GtkMenuShell>;
 
-define property-getter menushell-take-focus :: <C-boolean> on <GtkMenuShell> end;
-define property-setter menushell-take-focus :: <C-boolean> on <GtkMenuShell> end;
 define C-function gtk-menu-shell-activate-item
   input parameter self :: <GtkMenuShell>;
   input parameter menu_item_ :: <GtkWidget>;
@@ -11741,21 +10938,21 @@ define C-function gtk-menu-shell-set-take-focus
 end;
 
 define C-struct <_GtkMenuShellClass>
-  constant slot gtkmenushellclass-parent-class :: <GtkContainerClass>;
-  constant slot gtkmenushellclass-submenu-placement :: <C-unsigned-int>;
-  constant slot gtkmenushellclass-deactivate :: <C-function-pointer>;
-  constant slot gtkmenushellclass-selection-done :: <C-function-pointer>;
-  constant slot gtkmenushellclass-move-current :: <C-function-pointer>;
-  constant slot gtkmenushellclass-activate-current :: <C-function-pointer>;
-  constant slot gtkmenushellclass-cancel :: <C-function-pointer>;
-  constant slot gtkmenushellclass-select-item :: <C-function-pointer>;
-  constant slot gtkmenushellclass-insert :: <C-function-pointer>;
-  constant slot gtkmenushellclass-get-popup-delay :: <C-function-pointer>;
-  constant slot gtkmenushellclass-move-selected :: <C-function-pointer>;
-  constant slot gtkmenushellclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkmenushellclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkmenushellclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkmenushellclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-menu-shell-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-menu-shell-class-submenu-placement :: <C-unsigned-int>;
+  constant slot gtk-menu-shell-class-deactivate :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-selection-done :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-move-current :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-activate-current :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-cancel :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-select-item :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-insert :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-get-popup-delay :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-move-selected :: <C-function-pointer>;
+  constant slot gtk-menu-shell-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-menu-shell-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-menu-shell-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-menu-shell-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkMenuShellClass>;
 end C-struct;
 
@@ -11764,14 +10961,12 @@ define C-struct <_GtkMenuShellPrivate>
 end C-struct;
 
 define open C-subtype <GtkMenuToolButton> (<GtkToolButton>)
-  constant slot gtkmenutoolbutton-parent :: <GtkToolButton>;
-  constant slot gtkmenutoolbutton-priv :: <GtkMenuToolButtonPrivate>;
+  constant slot gtk-menu-tool-button-parent :: <GtkToolButton>;
+  constant slot gtk-menu-tool-button-priv :: <GtkMenuToolButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkMenuToolButton*> => <GtkMenuToolButton>;
 
-define property-getter menutoolbutton-menu :: <GtkMenu> on <GtkMenuToolButton> end;
-define property-setter menutoolbutton-menu :: <GtkMenu> on <GtkMenuToolButton> end;
 define C-function gtk-menu-tool-button-new
   input parameter icon_widget_ :: <GtkWidget>;
   input parameter label_ :: <C-string>;
@@ -11810,12 +11005,12 @@ define C-function gtk-menu-tool-button-set-menu
 end;
 
 define C-struct <_GtkMenuToolButtonClass>
-  constant slot gtkmenutoolbuttonclass-parent-class :: <GtkToolButtonClass>;
-  constant slot gtkmenutoolbuttonclass-show-menu :: <C-function-pointer>;
-  constant slot gtkmenutoolbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkmenutoolbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkmenutoolbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkmenutoolbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-menu-tool-button-class-parent-class :: <GtkToolButtonClass>;
+  constant slot gtk-menu-tool-button-class-show-menu :: <C-function-pointer>;
+  constant slot gtk-menu-tool-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-menu-tool-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-menu-tool-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-menu-tool-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkMenuToolButtonClass>;
 end C-struct;
 
@@ -11824,26 +11019,12 @@ define C-struct <_GtkMenuToolButtonPrivate>
 end C-struct;
 
 define open C-subtype <GtkMessageDialog> (<GtkDialog>)
-  constant slot gtkmessagedialog-parent-instance :: <GtkDialog>;
-  constant slot gtkmessagedialog-priv :: <GtkMessageDialogPrivate>;
+  constant slot gtk-message-dialog-parent-instance :: <GtkDialog>;
+  constant slot gtk-message-dialog-priv :: <GtkMessageDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkMessageDialog*> => <GtkMessageDialog>;
 
-define property-setter messagedialog-buttons :: <GtkButtonsType> on <GtkMessageDialog> end;
-define property-getter messagedialog-image :: <GtkWidget> on <GtkMessageDialog> end;
-define property-setter messagedialog-image :: <GtkWidget> on <GtkMessageDialog> end;
-define property-getter messagedialog-message-area :: <GtkWidget> on <GtkMessageDialog> end;
-define property-getter messagedialog-message-type :: <GtkMessageType> on <GtkMessageDialog> end;
-define property-setter messagedialog-message-type :: <GtkMessageType> on <GtkMessageDialog> end;
-define property-getter messagedialog-secondary-text :: <C-string> on <GtkMessageDialog> end;
-define property-setter messagedialog-secondary-text :: <C-string> on <GtkMessageDialog> end;
-define property-getter messagedialog-secondary-use-markup :: <C-boolean> on <GtkMessageDialog> end;
-define property-setter messagedialog-secondary-use-markup :: <C-boolean> on <GtkMessageDialog> end;
-define property-getter messagedialog-text :: <C-string> on <GtkMessageDialog> end;
-define property-setter messagedialog-text :: <C-string> on <GtkMessageDialog> end;
-define property-getter messagedialog-use-markup :: <C-boolean> on <GtkMessageDialog> end;
-define property-setter messagedialog-use-markup :: <C-boolean> on <GtkMessageDialog> end;
 define C-function gtk-message-dialog-get-image
   input parameter self :: <GtkMessageDialog>;
   result res :: <GtkWidget>;
@@ -11869,11 +11050,11 @@ define C-function gtk-message-dialog-set-markup
 end;
 
 define C-struct <_GtkMessageDialogClass>
-  constant slot gtkmessagedialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkmessagedialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkmessagedialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkmessagedialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkmessagedialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-message-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-message-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-message-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-message-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-message-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkMessageDialogClass>;
 end C-struct;
 
@@ -11881,29 +11062,21 @@ define C-struct <_GtkMessageDialogPrivate>
   pointer-type-name: <GtkMessageDialogPrivate>;
 end C-struct;
 
-define constant $GTK-MESSAGE-INFO = 0;
-define constant $GTK-MESSAGE-WARNING = 1;
-define constant $GTK-MESSAGE-QUESTION = 2;
-define constant $GTK-MESSAGE-ERROR = 3;
-define constant $GTK-MESSAGE-OTHER = 4;
+define constant $gtk-message-info = 0;
+define constant $gtk-message-warning = 1;
+define constant $gtk-message-question = 2;
+define constant $gtk-message-error = 3;
+define constant $gtk-message-other = 4;
 define constant <GtkMessageType> = <C-int>;
 define C-pointer-type <GtkMessageType*> => <GtkMessageType>;
 
 define open C-subtype <GtkMisc> (<GtkWidget>)
-  constant slot gtkmisc-widget :: <GtkWidget>;
-  constant slot gtkmisc-priv :: <GtkMiscPrivate>;
+  constant slot gtk-misc-widget :: <GtkWidget>;
+  constant slot gtk-misc-priv :: <GtkMiscPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkMisc*> => <GtkMisc>;
 
-define property-getter misc-xalign :: <C-float> on <GtkMisc> end;
-define property-setter misc-xalign :: <C-float> on <GtkMisc> end;
-define property-getter misc-xpad :: <C-signed-int> on <GtkMisc> end;
-define property-setter misc-xpad :: <C-signed-int> on <GtkMisc> end;
-define property-getter misc-yalign :: <C-float> on <GtkMisc> end;
-define property-setter misc-yalign :: <C-float> on <GtkMisc> end;
-define property-getter misc-ypad :: <C-signed-int> on <GtkMisc> end;
-define property-setter misc-ypad :: <C-signed-int> on <GtkMisc> end;
 define C-function gtk-misc-get-alignment
   input parameter self :: <GtkMisc>;
   output parameter xalign_ :: <C-float*>;
@@ -11933,11 +11106,11 @@ define C-function gtk-misc-set-padding
 end;
 
 define C-struct <_GtkMiscClass>
-  constant slot gtkmiscclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkmiscclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkmiscclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkmiscclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkmiscclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-misc-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-misc-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-misc-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-misc-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-misc-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkMiscClass>;
 end C-struct;
 
@@ -11946,17 +11119,12 @@ define C-struct <_GtkMiscPrivate>
 end C-struct;
 
 define open C-subtype <GtkMountOperation> (<GMountOperation>)
-  constant slot gtkmountoperation-parent-instance :: <GMountOperation>;
-  constant slot gtkmountoperation-priv :: <GtkMountOperationPrivate>;
+  constant slot gtk-mount-operation-parent-instance :: <GMountOperation>;
+  constant slot gtk-mount-operation-priv :: <GtkMountOperationPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkMountOperation*> => <GtkMountOperation>;
 
-define property-getter mountoperation-is-showing :: <C-boolean> on <GtkMountOperation> end;
-define property-getter mountoperation-parent :: <GtkWindow> on <GtkMountOperation> end;
-define property-setter mountoperation-parent :: <GtkWindow> on <GtkMountOperation> end;
-define property-getter mountoperation-screen :: <GdkScreen> on <GtkMountOperation> end;
-define property-setter mountoperation-screen :: <GdkScreen> on <GtkMountOperation> end;
 define C-function gtk-mount-operation-new
   input parameter parent_ :: <GtkWindow>;
   result res :: <GMountOperation>;
@@ -11994,11 +11162,11 @@ define C-function gtk-mount-operation-set-screen
 end;
 
 define C-struct <_GtkMountOperationClass>
-  constant slot gtkmountoperationclass-parent-class :: <GMountOperationClass>;
-  constant slot gtkmountoperationclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkmountoperationclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkmountoperationclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkmountoperationclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-mount-operation-class-parent-class :: <GMountOperationClass>;
+  constant slot gtk-mount-operation-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-mount-operation-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-mount-operation-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-mount-operation-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkMountOperationClass>;
 end C-struct;
 
@@ -12006,40 +11174,26 @@ define C-struct <_GtkMountOperationPrivate>
   pointer-type-name: <GtkMountOperationPrivate>;
 end C-struct;
 
-define constant $GTK-MOVEMENT-LOGICAL-POSITIONS = 0;
-define constant $GTK-MOVEMENT-VISUAL-POSITIONS = 1;
-define constant $GTK-MOVEMENT-WORDS = 2;
-define constant $GTK-MOVEMENT-DISPLAY-LINES = 3;
-define constant $GTK-MOVEMENT-DISPLAY-LINE-ENDS = 4;
-define constant $GTK-MOVEMENT-PARAGRAPHS = 5;
-define constant $GTK-MOVEMENT-PARAGRAPH-ENDS = 6;
-define constant $GTK-MOVEMENT-PAGES = 7;
-define constant $GTK-MOVEMENT-BUFFER-ENDS = 8;
-define constant $GTK-MOVEMENT-HORIZONTAL-PAGES = 9;
+define constant $gtk-movement-logical-positions = 0;
+define constant $gtk-movement-visual-positions = 1;
+define constant $gtk-movement-words = 2;
+define constant $gtk-movement-display-lines = 3;
+define constant $gtk-movement-display-line-ends = 4;
+define constant $gtk-movement-paragraphs = 5;
+define constant $gtk-movement-paragraph-ends = 6;
+define constant $gtk-movement-pages = 7;
+define constant $gtk-movement-buffer-ends = 8;
+define constant $gtk-movement-horizontal-pages = 9;
 define constant <GtkMovementStep> = <C-int>;
 define C-pointer-type <GtkMovementStep*> => <GtkMovementStep>;
 
 define open C-subtype <GtkNotebook> (<GtkContainer>)
-  constant slot gtknotebook-container :: <GtkContainer>;
-  constant slot gtknotebook-priv :: <GtkNotebookPrivate>;
+  constant slot gtk-notebook-container :: <GtkContainer>;
+  constant slot gtk-notebook-priv :: <GtkNotebookPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkNotebook*> => <GtkNotebook>;
 
-define property-getter notebook-enable-popup :: <C-boolean> on <GtkNotebook> end;
-define property-setter notebook-enable-popup :: <C-boolean> on <GtkNotebook> end;
-define property-getter notebook-group-name :: <C-string> on <GtkNotebook> end;
-define property-setter notebook-group-name :: <C-string> on <GtkNotebook> end;
-define property-getter notebook-page :: <C-signed-int> on <GtkNotebook> end;
-define property-setter notebook-page :: <C-signed-int> on <GtkNotebook> end;
-define property-getter notebook-scrollable :: <C-boolean> on <GtkNotebook> end;
-define property-setter notebook-scrollable :: <C-boolean> on <GtkNotebook> end;
-define property-getter notebook-show-border :: <C-boolean> on <GtkNotebook> end;
-define property-setter notebook-show-border :: <C-boolean> on <GtkNotebook> end;
-define property-getter notebook-show-tabs :: <C-boolean> on <GtkNotebook> end;
-define property-setter notebook-show-tabs :: <C-boolean> on <GtkNotebook> end;
-define property-getter notebook-tab-pos :: <GtkPositionType> on <GtkNotebook> end;
-define property-setter notebook-tab-pos :: <GtkPositionType> on <GtkNotebook> end;
 define C-function gtk-notebook-new
   result res :: <GtkWidget>;
   c-name: "gtk_notebook_new";
@@ -12334,26 +11488,26 @@ define C-function gtk-notebook-set-tab-reorderable
 end;
 
 define C-struct <_GtkNotebookClass>
-  constant slot gtknotebookclass-parent-class :: <GtkContainerClass>;
-  constant slot gtknotebookclass-switch-page :: <C-function-pointer>;
-  constant slot gtknotebookclass-select-page :: <C-function-pointer>;
-  constant slot gtknotebookclass-focus-tab :: <C-function-pointer>;
-  constant slot gtknotebookclass-change-current-page :: <C-function-pointer>;
-  constant slot gtknotebookclass-move-focus-out :: <C-function-pointer>;
-  constant slot gtknotebookclass-reorder-tab :: <C-function-pointer>;
-  constant slot gtknotebookclass-insert-page :: <C-function-pointer>;
-  constant slot gtknotebookclass-create-window :: <C-void*>;
-  constant slot gtknotebookclass-page-reordered :: <C-function-pointer>;
-  constant slot gtknotebookclass-page-removed :: <C-function-pointer>;
-  constant slot gtknotebookclass-page-added :: <C-function-pointer>;
-  constant slot gtknotebookclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtknotebookclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtknotebookclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtknotebookclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtknotebookclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtknotebookclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtknotebookclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtknotebookclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-notebook-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-notebook-class-switch-page :: <C-function-pointer>;
+  constant slot gtk-notebook-class-select-page :: <C-function-pointer>;
+  constant slot gtk-notebook-class-focus-tab :: <C-function-pointer>;
+  constant slot gtk-notebook-class-change-current-page :: <C-function-pointer>;
+  constant slot gtk-notebook-class-move-focus-out :: <C-function-pointer>;
+  constant slot gtk-notebook-class-reorder-tab :: <C-function-pointer>;
+  constant slot gtk-notebook-class-insert-page :: <C-function-pointer>;
+  constant slot gtk-notebook-class-create-window :: <C-void*>;
+  constant slot gtk-notebook-class-page-reordered :: <C-function-pointer>;
+  constant slot gtk-notebook-class-page-removed :: <C-function-pointer>;
+  constant slot gtk-notebook-class-page-added :: <C-function-pointer>;
+  constant slot gtk-notebook-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-notebook-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-notebook-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-notebook-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-notebook-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-notebook-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-notebook-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-notebook-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkNotebookClass>;
 end C-struct;
 
@@ -12361,39 +11515,29 @@ define C-struct <_GtkNotebookPrivate>
   pointer-type-name: <GtkNotebookPrivate>;
 end C-struct;
 
-define constant $GTK-NOTEBOOK-TAB-FIRST = 0;
-define constant $GTK-NOTEBOOK-TAB-LAST = 1;
+define constant $gtk-notebook-tab-first = 0;
+define constant $gtk-notebook-tab-last = 1;
 define constant <GtkNotebookTab> = <C-int>;
 define C-pointer-type <GtkNotebookTab*> => <GtkNotebookTab>;
 
-define constant $GTK-NUMBER-UP-LAYOUT-LEFT-TO-RIGHT-TOP-TO-BOTTOM = 0;
-define constant $GTK-NUMBER-UP-LAYOUT-LEFT-TO-RIGHT-BOTTOM-TO-TOP = 1;
-define constant $GTK-NUMBER-UP-LAYOUT-RIGHT-TO-LEFT-TOP-TO-BOTTOM = 2;
-define constant $GTK-NUMBER-UP-LAYOUT-RIGHT-TO-LEFT-BOTTOM-TO-TOP = 3;
-define constant $GTK-NUMBER-UP-LAYOUT-TOP-TO-BOTTOM-LEFT-TO-RIGHT = 4;
-define constant $GTK-NUMBER-UP-LAYOUT-TOP-TO-BOTTOM-RIGHT-TO-LEFT = 5;
-define constant $GTK-NUMBER-UP-LAYOUT-BOTTOM-TO-TOP-LEFT-TO-RIGHT = 6;
-define constant $GTK-NUMBER-UP-LAYOUT-BOTTOM-TO-TOP-RIGHT-TO-LEFT = 7;
+define constant $gtk-number-up-layout-left-to-right-top-to-bottom = 0;
+define constant $gtk-number-up-layout-left-to-right-bottom-to-top = 1;
+define constant $gtk-number-up-layout-right-to-left-top-to-bottom = 2;
+define constant $gtk-number-up-layout-right-to-left-bottom-to-top = 3;
+define constant $gtk-number-up-layout-top-to-bottom-left-to-right = 4;
+define constant $gtk-number-up-layout-top-to-bottom-right-to-left = 5;
+define constant $gtk-number-up-layout-bottom-to-top-left-to-right = 6;
+define constant $gtk-number-up-layout-bottom-to-top-right-to-left = 7;
 define constant <GtkNumberUpLayout> = <C-int>;
 define C-pointer-type <GtkNumberUpLayout*> => <GtkNumberUpLayout>;
 
 define open C-subtype <GtkNumerableIcon> (<GEmblemedIcon>)
-  constant slot gtknumerableicon-parent :: <GEmblemedIcon>;
-  constant slot gtknumerableicon-priv :: <GtkNumerableIconPrivate>;
+  constant slot gtk-numerable-icon-parent :: <GEmblemedIcon>;
+  constant slot gtk-numerable-icon-priv :: <GtkNumerableIconPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkNumerableIcon*> => <GtkNumerableIcon>;
 
-define property-getter numerableicon-background-icon :: <GIcon> on <GtkNumerableIcon> end;
-define property-setter numerableicon-background-icon :: <GIcon> on <GtkNumerableIcon> end;
-define property-getter numerableicon-background-icon-name :: <C-string> on <GtkNumerableIcon> end;
-define property-setter numerableicon-background-icon-name :: <C-string> on <GtkNumerableIcon> end;
-define property-getter numerableicon-count :: <C-signed-int> on <GtkNumerableIcon> end;
-define property-setter numerableicon-count :: <C-signed-int> on <GtkNumerableIcon> end;
-define property-getter numerableicon-label :: <C-string> on <GtkNumerableIcon> end;
-define property-setter numerableicon-label :: <C-string> on <GtkNumerableIcon> end;
-define property-getter numerableicon-style-context :: <GtkStyleContext> on <GtkNumerableIcon> end;
-define property-setter numerableicon-style-context :: <GtkStyleContext> on <GtkNumerableIcon> end;
 define C-function gtk-numerable-icon-new
   input parameter base_icon_ :: <GIcon>;
   result res :: <GIcon>;
@@ -12468,8 +11612,8 @@ define C-function gtk-numerable-icon-set-style-context
 end;
 
 define C-struct <_GtkNumerableIconClass>
-  constant slot gtknumerableiconclass-parent-class :: <GEmblemedIconClass>;
-  constant slot gtknumerableiconclass-padding :: <C-void*>;
+  constant slot gtk-numerable-icon-class-parent-class :: <GEmblemedIconClass>;
+  constant slot gtk-numerable-icon-class-padding :: <C-void*>;
   pointer-type-name: <GtkNumerableIconClass>;
 end C-struct;
 
@@ -12478,7 +11622,7 @@ define C-struct <_GtkNumerableIconPrivate>
 end C-struct;
 
 define open C-subtype <GtkOffscreenWindow> (<GtkWindow>)
-  constant slot gtkoffscreenwindow-parent-object :: <GtkWindow>;
+  constant slot gtk-offscreen-window-parent-object :: <GtkWindow>;
 end C-subtype;
 
 define C-pointer-type <GtkOffscreenWindow*> => <GtkOffscreenWindow>;
@@ -12501,11 +11645,11 @@ define C-function gtk-offscreen-window-get-surface
 end;
 
 define C-struct <_GtkOffscreenWindowClass>
-  constant slot gtkoffscreenwindowclass-parent-class :: <GtkWindowClass>;
-  constant slot gtkoffscreenwindowclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkoffscreenwindowclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkoffscreenwindowclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkoffscreenwindowclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-offscreen-window-class-parent-class :: <GtkWindowClass>;
+  constant slot gtk-offscreen-window-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-offscreen-window-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-offscreen-window-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-offscreen-window-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkOffscreenWindowClass>;
 end C-struct;
 
@@ -12528,18 +11672,18 @@ define C-function gtk-orientable-set-orientation
 end;
 
 define C-struct <_GtkOrientableIface>
-  constant slot gtkorientableiface-base-iface :: <GTypeInterface>;
+  constant slot gtk-orientable-iface-base-iface :: <GTypeInterface>;
   pointer-type-name: <GtkOrientableIface>;
 end C-struct;
 
-define constant $GTK-ORIENTATION-HORIZONTAL = 0;
-define constant $GTK-ORIENTATION-VERTICAL = 1;
+define constant $gtk-orientation-horizontal = 0;
+define constant $gtk-orientation-vertical = 1;
 define constant <GtkOrientation> = <C-int>;
 define C-pointer-type <GtkOrientation*> => <GtkOrientation>;
 
 define open C-subtype <GtkOverlay> (<GtkBin>)
-  constant slot gtkoverlay-parent :: <GtkBin>;
-  constant slot gtkoverlay-priv :: <GtkOverlayPrivate>;
+  constant slot gtk-overlay-parent :: <GtkBin>;
+  constant slot gtk-overlay-priv :: <GtkOverlayPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkOverlay*> => <GtkOverlay>;
@@ -12556,16 +11700,16 @@ define C-function gtk-overlay-add-overlay
 end;
 
 define C-struct <_GtkOverlayClass>
-  constant slot gtkoverlayclass-parent-class :: <GtkBinClass>;
-  constant slot gtkoverlayclass-get-child-position :: <C-function-pointer>;
-  constant slot gtkoverlayclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkoverlayclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkoverlayclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkoverlayclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkoverlayclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkoverlayclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkoverlayclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkoverlayclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-overlay-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-overlay-class-get-child-position :: <C-function-pointer>;
+  constant slot gtk-overlay-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-overlay-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-overlay-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-overlay-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-overlay-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-overlay-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-overlay-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-overlay-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkOverlayClass>;
 end C-struct;
 
@@ -12573,112 +11717,112 @@ define C-struct <_GtkOverlayPrivate>
   pointer-type-name: <GtkOverlayPrivate>;
 end C-struct;
 
-define constant $PAPER-NAME-A3 = "iso_a3";
+define constant $paper-name-a3 = "iso_a3";
 
-define constant $PAPER-NAME-A4 = "iso_a4";
+define constant $paper-name-a4 = "iso_a4";
 
-define constant $PAPER-NAME-A5 = "iso_a5";
+define constant $paper-name-a5 = "iso_a5";
 
-define constant $PAPER-NAME-B5 = "iso_b5";
+define constant $paper-name-b5 = "iso_b5";
 
-define constant $PAPER-NAME-EXECUTIVE = "na_executive";
+define constant $paper-name-executive = "na_executive";
 
-define constant $PAPER-NAME-LEGAL = "na_legal";
+define constant $paper-name-legal = "na_legal";
 
-define constant $PAPER-NAME-LETTER = "na_letter";
+define constant $paper-name-letter = "na_letter";
 
-define constant $PATH-PRIO-MASK = 15;
+define constant $path-prio-mask = 15;
 
-define constant $PRINT-SETTINGS-COLLATE = "collate";
+define constant $print-settings-collate = "collate";
 
-define constant $PRINT-SETTINGS-DEFAULT-SOURCE = "default-source";
+define constant $print-settings-default-source = "default-source";
 
-define constant $PRINT-SETTINGS-DITHER = "dither";
+define constant $print-settings-dither = "dither";
 
-define constant $PRINT-SETTINGS-DUPLEX = "duplex";
+define constant $print-settings-duplex = "duplex";
 
-define constant $PRINT-SETTINGS-FINISHINGS = "finishings";
+define constant $print-settings-finishings = "finishings";
 
-define constant $PRINT-SETTINGS-MEDIA-TYPE = "media-type";
+define constant $print-settings-media-type = "media-type";
 
-define constant $PRINT-SETTINGS-NUMBER-UP = "number-up";
+define constant $print-settings-number-up = "number-up";
 
-define constant $PRINT-SETTINGS-NUMBER-UP-LAYOUT = "number-up-layout";
+define constant $print-settings-number-up-layout = "number-up-layout";
 
-define constant $PRINT-SETTINGS-N-COPIES = "n-copies";
+define constant $print-settings-n-copies = "n-copies";
 
-define constant $PRINT-SETTINGS-ORIENTATION = "orientation";
+define constant $print-settings-orientation = "orientation";
 
-define constant $PRINT-SETTINGS-OUTPUT-BIN = "output-bin";
+define constant $print-settings-output-bin = "output-bin";
 
-define constant $PRINT-SETTINGS-OUTPUT-FILE-FORMAT = "output-file-format";
+define constant $print-settings-output-file-format = "output-file-format";
 
-define constant $PRINT-SETTINGS-OUTPUT-URI = "output-uri";
+define constant $print-settings-output-uri = "output-uri";
 
-define constant $PRINT-SETTINGS-PAGE-RANGES = "page-ranges";
+define constant $print-settings-page-ranges = "page-ranges";
 
-define constant $PRINT-SETTINGS-PAGE-SET = "page-set";
+define constant $print-settings-page-set = "page-set";
 
-define constant $PRINT-SETTINGS-PAPER-FORMAT = "paper-format";
+define constant $print-settings-paper-format = "paper-format";
 
-define constant $PRINT-SETTINGS-PAPER-HEIGHT = "paper-height";
+define constant $print-settings-paper-height = "paper-height";
 
-define constant $PRINT-SETTINGS-PAPER-WIDTH = "paper-width";
+define constant $print-settings-paper-width = "paper-width";
 
-define constant $PRINT-SETTINGS-PRINTER = "printer";
+define constant $print-settings-printer = "printer";
 
-define constant $PRINT-SETTINGS-PRINTER-LPI = "printer-lpi";
+define constant $print-settings-printer-lpi = "printer-lpi";
 
-define constant $PRINT-SETTINGS-PRINT-PAGES = "print-pages";
+define constant $print-settings-print-pages = "print-pages";
 
-define constant $PRINT-SETTINGS-QUALITY = "quality";
+define constant $print-settings-quality = "quality";
 
-define constant $PRINT-SETTINGS-RESOLUTION = "resolution";
+define constant $print-settings-resolution = "resolution";
 
-define constant $PRINT-SETTINGS-RESOLUTION-X = "resolution-x";
+define constant $print-settings-resolution-x = "resolution-x";
 
-define constant $PRINT-SETTINGS-RESOLUTION-Y = "resolution-y";
+define constant $print-settings-resolution-y = "resolution-y";
 
-define constant $PRINT-SETTINGS-REVERSE = "reverse";
+define constant $print-settings-reverse = "reverse";
 
-define constant $PRINT-SETTINGS-SCALE = "scale";
+define constant $print-settings-scale = "scale";
 
-define constant $PRINT-SETTINGS-USE-COLOR = "use-color";
+define constant $print-settings-use-color = "use-color";
 
-define constant $PRINT-SETTINGS-WIN32-DRIVER-EXTRA = "win32-driver-extra";
+define constant $print-settings-win32-driver-extra = "win32-driver-extra";
 
-define constant $PRINT-SETTINGS-WIN32-DRIVER-VERSION = "win32-driver-version";
+define constant $print-settings-win32-driver-version = "win32-driver-version";
 
-define constant $PRIORITY-RESIZE = 10;
+define constant $priority-resize = 10;
 
-define constant $GTK-PACK-DIRECTION-LTR = 0;
-define constant $GTK-PACK-DIRECTION-RTL = 1;
-define constant $GTK-PACK-DIRECTION-TTB = 2;
-define constant $GTK-PACK-DIRECTION-BTT = 3;
+define constant $gtk-pack-direction-ltr = 0;
+define constant $gtk-pack-direction-rtl = 1;
+define constant $gtk-pack-direction-ttb = 2;
+define constant $gtk-pack-direction-btt = 3;
 define constant <GtkPackDirection> = <C-int>;
 define C-pointer-type <GtkPackDirection*> => <GtkPackDirection>;
 
-define constant $GTK-PACK-START = 0;
-define constant $GTK-PACK-END = 1;
+define constant $gtk-pack-start = 0;
+define constant $gtk-pack-end = 1;
 define constant <GtkPackType> = <C-int>;
 define C-pointer-type <GtkPackType*> => <GtkPackType>;
 
-define constant $GTK-PAGE-ORIENTATION-PORTRAIT = 0;
-define constant $GTK-PAGE-ORIENTATION-LANDSCAPE = 1;
-define constant $GTK-PAGE-ORIENTATION-REVERSE-PORTRAIT = 2;
-define constant $GTK-PAGE-ORIENTATION-REVERSE-LANDSCAPE = 3;
+define constant $gtk-page-orientation-portrait = 0;
+define constant $gtk-page-orientation-landscape = 1;
+define constant $gtk-page-orientation-reverse-portrait = 2;
+define constant $gtk-page-orientation-reverse-landscape = 3;
 define constant <GtkPageOrientation> = <C-int>;
 define C-pointer-type <GtkPageOrientation*> => <GtkPageOrientation>;
 
 define C-struct <_GtkPageRange>
-  slot gtkpagerange-start :: <C-signed-int>;
-  slot gtkpagerange-end :: <C-signed-int>;
+  slot gtk-page-range-start :: <C-signed-int>;
+  slot gtk-page-range-end :: <C-signed-int>;
   pointer-type-name: <GtkPageRange>;
 end C-struct;
 
-define constant $GTK-PAGE-SET-ALL = 0;
-define constant $GTK-PAGE-SET-EVEN = 1;
-define constant $GTK-PAGE-SET-ODD = 2;
+define constant $gtk-page-set-all = 0;
+define constant $gtk-page-set-even = 1;
+define constant $gtk-page-set-odd = 2;
 define constant <GtkPageSet> = <C-int>;
 define C-pointer-type <GtkPageSet*> => <GtkPageSet>;
 
@@ -12855,18 +11999,12 @@ define C-function gtk-page-setup-to-key-file
 end;
 
 define open C-subtype <GtkPaned> (<GtkContainer>)
-  constant slot gtkpaned-container :: <GtkContainer>;
-  constant slot gtkpaned-priv :: <GtkPanedPrivate>;
+  constant slot gtk-paned-container :: <GtkContainer>;
+  constant slot gtk-paned-priv :: <GtkPanedPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkPaned*> => <GtkPaned>;
 
-define property-getter paned-max-position :: <C-signed-int> on <GtkPaned> end;
-define property-getter paned-min-position :: <C-signed-int> on <GtkPaned> end;
-define property-getter paned-position :: <C-signed-int> on <GtkPaned> end;
-define property-setter paned-position :: <C-signed-int> on <GtkPaned> end;
-define property-getter paned-position-set :: <C-boolean> on <GtkPaned> end;
-define property-setter paned-position-set :: <C-boolean> on <GtkPaned> end;
 define C-function gtk-paned-new
   input parameter orientation_ :: <GtkOrientation>;
   result res :: <GtkWidget>;
@@ -12932,17 +12070,17 @@ define C-function gtk-paned-set-position
 end;
 
 define C-struct <_GtkPanedClass>
-  constant slot gtkpanedclass-parent-class :: <GtkContainerClass>;
-  constant slot gtkpanedclass-cycle-child-focus :: <C-function-pointer>;
-  constant slot gtkpanedclass-toggle-handle-focus :: <C-function-pointer>;
-  constant slot gtkpanedclass-move-handle :: <C-function-pointer>;
-  constant slot gtkpanedclass-cycle-handle-focus :: <C-function-pointer>;
-  constant slot gtkpanedclass-accept-position :: <C-function-pointer>;
-  constant slot gtkpanedclass-cancel-position :: <C-function-pointer>;
-  constant slot gtkpanedclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkpanedclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkpanedclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkpanedclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-paned-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-paned-class-cycle-child-focus :: <C-function-pointer>;
+  constant slot gtk-paned-class-toggle-handle-focus :: <C-function-pointer>;
+  constant slot gtk-paned-class-move-handle :: <C-function-pointer>;
+  constant slot gtk-paned-class-cycle-handle-focus :: <C-function-pointer>;
+  constant slot gtk-paned-class-accept-position :: <C-function-pointer>;
+  constant slot gtk-paned-class-cancel-position :: <C-function-pointer>;
+  constant slot gtk-paned-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-paned-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-paned-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-paned-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkPanedClass>;
 end C-struct;
 
@@ -13096,30 +12234,28 @@ define C-function gtk-paper-size-get-paper-sizes
   c-name: "gtk_paper_size_get_paper_sizes";
 end;
 
-define constant $GTK-PATH-PRIO-LOWEST = 0;
-define constant $GTK-PATH-PRIO-GTK = 4;
-define constant $GTK-PATH-PRIO-APPLICATION = 8;
-define constant $GTK-PATH-PRIO-THEME = 10;
-define constant $GTK-PATH-PRIO-RC = 12;
-define constant $GTK-PATH-PRIO-HIGHEST = 15;
+define constant $gtk-path-prio-lowest = 0;
+define constant $gtk-path-prio-gtk = 4;
+define constant $gtk-path-prio-application = 8;
+define constant $gtk-path-prio-theme = 10;
+define constant $gtk-path-prio-rc = 12;
+define constant $gtk-path-prio-highest = 15;
 define constant <GtkPathPriorityType> = <C-int>;
 define C-pointer-type <GtkPathPriorityType*> => <GtkPathPriorityType>;
 
-define constant $GTK-PATH-WIDGET = 0;
-define constant $GTK-PATH-WIDGET-CLASS = 1;
-define constant $GTK-PATH-CLASS = 2;
+define constant $gtk-path-widget = 0;
+define constant $gtk-path-widget-class = 1;
+define constant $gtk-path-class = 2;
 define constant <GtkPathType> = <C-int>;
 define C-pointer-type <GtkPathType*> => <GtkPathType>;
 
 define open C-subtype <GtkPlug> (<GtkWindow>)
-  constant slot gtkplug-window :: <GtkWindow>;
-  constant slot gtkplug-priv :: <GtkPlugPrivate>;
+  constant slot gtk-plug-window :: <GtkWindow>;
+  constant slot gtk-plug-priv :: <GtkPlugPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkPlug*> => <GtkPlug>;
 
-define property-getter plug-embedded :: <C-boolean> on <GtkPlug> end;
-define property-getter plug-socket-window :: <GdkWindow> on <GtkPlug> end;
 define C-function gtk-plug-new
   input parameter socket_id_ :: <C-unsigned-long>;
   result res :: <GtkWidget>;
@@ -13165,12 +12301,12 @@ define C-function gtk-plug-get-socket-window
 end;
 
 define C-struct <_GtkPlugClass>
-  constant slot gtkplugclass-parent-class :: <GtkWindowClass>;
-  constant slot gtkplugclass-embedded :: <C-function-pointer>;
-  constant slot gtkplugclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkplugclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkplugclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkplugclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-plug-class-parent-class :: <GtkWindowClass>;
+  constant slot gtk-plug-class-embedded :: <C-function-pointer>;
+  constant slot gtk-plug-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-plug-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-plug-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-plug-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkPlugClass>;
 end C-struct;
 
@@ -13178,16 +12314,16 @@ define C-struct <_GtkPlugPrivate>
   pointer-type-name: <GtkPlugPrivate>;
 end C-struct;
 
-define constant $GTK-POLICY-ALWAYS = 0;
-define constant $GTK-POLICY-AUTOMATIC = 1;
-define constant $GTK-POLICY-NEVER = 2;
+define constant $gtk-policy-always = 0;
+define constant $gtk-policy-automatic = 1;
+define constant $gtk-policy-never = 2;
 define constant <GtkPolicyType> = <C-int>;
 define C-pointer-type <GtkPolicyType*> => <GtkPolicyType>;
 
-define constant $GTK-POS-LEFT = 0;
-define constant $GTK-POS-RIGHT = 1;
-define constant $GTK-POS-TOP = 2;
-define constant $GTK-POS-BOTTOM = 3;
+define constant $gtk-pos-left = 0;
+define constant $gtk-pos-right = 1;
+define constant $gtk-pos-top = 2;
+define constant $gtk-pos-bottom = 3;
 define constant <GtkPositionType> = <C-int>;
 define C-pointer-type <GtkPositionType*> => <GtkPositionType>;
 
@@ -13268,59 +12404,26 @@ define C-function gtk-print-context-set-cairo-context
   c-name: "gtk_print_context_set_cairo_context";
 end;
 
-define constant $GTK-PRINT-DUPLEX-SIMPLEX = 0;
-define constant $GTK-PRINT-DUPLEX-HORIZONTAL = 1;
-define constant $GTK-PRINT-DUPLEX-VERTICAL = 2;
+define constant $gtk-print-duplex-simplex = 0;
+define constant $gtk-print-duplex-horizontal = 1;
+define constant $gtk-print-duplex-vertical = 2;
 define constant <GtkPrintDuplex> = <C-int>;
 define C-pointer-type <GtkPrintDuplex*> => <GtkPrintDuplex>;
 
-define constant $GTK-PRINT-ERROR-GENERAL = 0;
-define constant $GTK-PRINT-ERROR-INTERNAL-ERROR = 1;
-define constant $GTK-PRINT-ERROR-NOMEM = 2;
-define constant $GTK-PRINT-ERROR-INVALID-FILE = 3;
+define constant $gtk-print-error-general = 0;
+define constant $gtk-print-error-internal-error = 1;
+define constant $gtk-print-error-nomem = 2;
+define constant $gtk-print-error-invalid-file = 3;
 define constant <GtkPrintError> = <C-int>;
 define C-pointer-type <GtkPrintError*> => <GtkPrintError>;
 
 define open C-subtype <GtkPrintOperation> (<GObject>)
-  constant slot gtkprintoperation-parent-instance :: <GObject>;
-  constant slot gtkprintoperation-priv :: <GtkPrintOperationPrivate>;
+  constant slot gtk-print-operation-parent-instance :: <GObject>;
+  constant slot gtk-print-operation-priv :: <GtkPrintOperationPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkPrintOperation*> => <GtkPrintOperation>;
 
-define property-getter printoperation-allow-async :: <C-boolean> on <GtkPrintOperation> end;
-define property-setter printoperation-allow-async :: <C-boolean> on <GtkPrintOperation> end;
-define property-getter printoperation-current-page :: <C-signed-int> on <GtkPrintOperation> end;
-define property-setter printoperation-current-page :: <C-signed-int> on <GtkPrintOperation> end;
-define property-getter printoperation-custom-tab-label :: <C-string> on <GtkPrintOperation> end;
-define property-setter printoperation-custom-tab-label :: <C-string> on <GtkPrintOperation> end;
-define property-getter printoperation-default-page-setup :: <GtkPageSetup> on <GtkPrintOperation> end;
-define property-setter printoperation-default-page-setup :: <GtkPageSetup> on <GtkPrintOperation> end;
-define property-getter printoperation-embed-page-setup :: <C-boolean> on <GtkPrintOperation> end;
-define property-setter printoperation-embed-page-setup :: <C-boolean> on <GtkPrintOperation> end;
-define property-getter printoperation-export-filename :: <C-string> on <GtkPrintOperation> end;
-define property-setter printoperation-export-filename :: <C-string> on <GtkPrintOperation> end;
-define property-getter printoperation-has-selection :: <C-boolean> on <GtkPrintOperation> end;
-define property-setter printoperation-has-selection :: <C-boolean> on <GtkPrintOperation> end;
-define property-getter printoperation-job-name :: <C-string> on <GtkPrintOperation> end;
-define property-setter printoperation-job-name :: <C-string> on <GtkPrintOperation> end;
-define property-getter printoperation-n-pages :: <C-signed-int> on <GtkPrintOperation> end;
-define property-setter printoperation-n-pages :: <C-signed-int> on <GtkPrintOperation> end;
-define property-getter printoperation-n-pages-to-print :: <C-signed-int> on <GtkPrintOperation> end;
-define property-getter printoperation-print-settings :: <GtkPrintSettings> on <GtkPrintOperation> end;
-define property-setter printoperation-print-settings :: <GtkPrintSettings> on <GtkPrintOperation> end;
-define property-getter printoperation-show-progress :: <C-boolean> on <GtkPrintOperation> end;
-define property-setter printoperation-show-progress :: <C-boolean> on <GtkPrintOperation> end;
-define property-getter printoperation-status :: <GtkPrintStatus> on <GtkPrintOperation> end;
-define property-getter printoperation-status-string :: <C-string> on <GtkPrintOperation> end;
-define property-getter printoperation-support-selection :: <C-boolean> on <GtkPrintOperation> end;
-define property-setter printoperation-support-selection :: <C-boolean> on <GtkPrintOperation> end;
-define property-getter printoperation-track-print-status :: <C-boolean> on <GtkPrintOperation> end;
-define property-setter printoperation-track-print-status :: <C-boolean> on <GtkPrintOperation> end;
-define property-getter printoperation-unit :: <GtkUnit> on <GtkPrintOperation> end;
-define property-setter printoperation-unit :: <GtkUnit> on <GtkPrintOperation> end;
-define property-getter printoperation-use-full-page :: <C-boolean> on <GtkPrintOperation> end;
-define property-setter printoperation-use-full-page :: <C-boolean> on <GtkPrintOperation> end;
 define C-function gtk-print-operation-new
   result res :: <GtkPrintOperation>;
   c-name: "gtk_print_operation_new";
@@ -13498,34 +12601,34 @@ define C-function gtk-print-operation-set-use-full-page
   c-name: "gtk_print_operation_set_use_full_page";
 end;
 
-define constant $GTK-PRINT-OPERATION-ACTION-PRINT-DIALOG = 0;
-define constant $GTK-PRINT-OPERATION-ACTION-PRINT = 1;
-define constant $GTK-PRINT-OPERATION-ACTION-PREVIEW = 2;
-define constant $GTK-PRINT-OPERATION-ACTION-EXPORT = 3;
+define constant $gtk-print-operation-action-print-dialog = 0;
+define constant $gtk-print-operation-action-print = 1;
+define constant $gtk-print-operation-action-preview = 2;
+define constant $gtk-print-operation-action-export = 3;
 define constant <GtkPrintOperationAction> = <C-int>;
 define C-pointer-type <GtkPrintOperationAction*> => <GtkPrintOperationAction>;
 
 define C-struct <_GtkPrintOperationClass>
-  constant slot gtkprintoperationclass-parent-class :: <GObjectClass>;
-  constant slot gtkprintoperationclass-done :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-begin-print :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-paginate :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-request-page-setup :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-draw-page :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-end-print :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-status-changed :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-create-custom-widget :: <C-void*>;
-  constant slot gtkprintoperationclass-custom-widget-apply :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-preview :: <C-function-pointer>;
-  constant slot gtkprintoperationclass-update-custom-widget :: <C-function-pointer>;
-  constant slot gtkprintoperationclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkprintoperationclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkprintoperationclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkprintoperationclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkprintoperationclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkprintoperationclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkprintoperationclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkprintoperationclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-print-operation-class-parent-class :: <GObjectClass>;
+  constant slot gtk-print-operation-class-done :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-begin-print :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-paginate :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-request-page-setup :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-draw-page :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-end-print :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-status-changed :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-create-custom-widget :: <C-void*>;
+  constant slot gtk-print-operation-class-custom-widget-apply :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-preview :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-update-custom-widget :: <C-function-pointer>;
+  constant slot gtk-print-operation-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-print-operation-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-print-operation-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-print-operation-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-print-operation-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-print-operation-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-print-operation-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-print-operation-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkPrintOperationClass>;
 end C-struct;
 
@@ -13554,20 +12657,20 @@ define C-function gtk-print-operation-preview-render-page
 end;
 
 define C-struct <_GtkPrintOperationPreviewIface>
-  constant slot gtkprintoperationpreviewiface-g-iface :: <GTypeInterface>;
-  constant slot gtkprintoperationpreviewiface-ready :: <C-function-pointer>;
-  constant slot gtkprintoperationpreviewiface-got-page-size :: <C-function-pointer>;
-  constant slot gtkprintoperationpreviewiface-render-page :: <C-function-pointer>;
-  constant slot gtkprintoperationpreviewiface-is-selected :: <C-function-pointer>;
-  constant slot gtkprintoperationpreviewiface-end-preview :: <C-function-pointer>;
-  constant slot gtkprintoperationpreviewiface--gtk-reserved1 :: <C-void*>;
-  constant slot gtkprintoperationpreviewiface--gtk-reserved2 :: <C-void*>;
-  constant slot gtkprintoperationpreviewiface--gtk-reserved3 :: <C-void*>;
-  constant slot gtkprintoperationpreviewiface--gtk-reserved4 :: <C-void*>;
-  constant slot gtkprintoperationpreviewiface--gtk-reserved5 :: <C-void*>;
-  constant slot gtkprintoperationpreviewiface--gtk-reserved6 :: <C-void*>;
-  constant slot gtkprintoperationpreviewiface--gtk-reserved7 :: <C-void*>;
-  constant slot gtkprintoperationpreviewiface--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-print-operation-preview-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-print-operation-preview-iface-ready :: <C-function-pointer>;
+  constant slot gtk-print-operation-preview-iface-got-page-size :: <C-function-pointer>;
+  constant slot gtk-print-operation-preview-iface-render-page :: <C-function-pointer>;
+  constant slot gtk-print-operation-preview-iface-is-selected :: <C-function-pointer>;
+  constant slot gtk-print-operation-preview-iface-end-preview :: <C-function-pointer>;
+  constant slot gtk-print-operation-preview-iface-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-print-operation-preview-iface-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-print-operation-preview-iface-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-print-operation-preview-iface-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-print-operation-preview-iface-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-print-operation-preview-iface-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-print-operation-preview-iface-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-print-operation-preview-iface-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkPrintOperationPreviewIface>;
 end C-struct;
 
@@ -13575,24 +12678,24 @@ define C-struct <_GtkPrintOperationPrivate>
   pointer-type-name: <GtkPrintOperationPrivate>;
 end C-struct;
 
-define constant $GTK-PRINT-OPERATION-RESULT-ERROR = 0;
-define constant $GTK-PRINT-OPERATION-RESULT-APPLY = 1;
-define constant $GTK-PRINT-OPERATION-RESULT-CANCEL = 2;
-define constant $GTK-PRINT-OPERATION-RESULT-IN-PROGRESS = 3;
+define constant $gtk-print-operation-result-error = 0;
+define constant $gtk-print-operation-result-apply = 1;
+define constant $gtk-print-operation-result-cancel = 2;
+define constant $gtk-print-operation-result-in-progress = 3;
 define constant <GtkPrintOperationResult> = <C-int>;
 define C-pointer-type <GtkPrintOperationResult*> => <GtkPrintOperationResult>;
 
-define constant $GTK-PRINT-PAGES-ALL = 0;
-define constant $GTK-PRINT-PAGES-CURRENT = 1;
-define constant $GTK-PRINT-PAGES-RANGES = 2;
-define constant $GTK-PRINT-PAGES-SELECTION = 3;
+define constant $gtk-print-pages-all = 0;
+define constant $gtk-print-pages-current = 1;
+define constant $gtk-print-pages-ranges = 2;
+define constant $gtk-print-pages-selection = 3;
 define constant <GtkPrintPages> = <C-int>;
 define C-pointer-type <GtkPrintPages*> => <GtkPrintPages>;
 
-define constant $GTK-PRINT-QUALITY-LOW = 0;
-define constant $GTK-PRINT-QUALITY-NORMAL = 1;
-define constant $GTK-PRINT-QUALITY-HIGH = 2;
-define constant $GTK-PRINT-QUALITY-DRAFT = 3;
+define constant $gtk-print-quality-low = 0;
+define constant $gtk-print-quality-normal = 1;
+define constant $gtk-print-quality-high = 2;
+define constant $gtk-print-quality-draft = 3;
 define constant <GtkPrintQuality> = <C-int>;
 define C-pointer-type <GtkPrintQuality*> => <GtkPrintQuality>;
 
@@ -14075,37 +13178,25 @@ define C-function gtk-print-settings-unset
   c-name: "gtk_print_settings_unset";
 end;
 
-define constant $GTK-PRINT-STATUS-INITIAL = 0;
-define constant $GTK-PRINT-STATUS-PREPARING = 1;
-define constant $GTK-PRINT-STATUS-GENERATING-DATA = 2;
-define constant $GTK-PRINT-STATUS-SENDING-DATA = 3;
-define constant $GTK-PRINT-STATUS-PENDING = 4;
-define constant $GTK-PRINT-STATUS-PENDING-ISSUE = 5;
-define constant $GTK-PRINT-STATUS-PRINTING = 6;
-define constant $GTK-PRINT-STATUS-FINISHED = 7;
-define constant $GTK-PRINT-STATUS-FINISHED-ABORTED = 8;
+define constant $gtk-print-status-initial = 0;
+define constant $gtk-print-status-preparing = 1;
+define constant $gtk-print-status-generating-data = 2;
+define constant $gtk-print-status-sending-data = 3;
+define constant $gtk-print-status-pending = 4;
+define constant $gtk-print-status-pending-issue = 5;
+define constant $gtk-print-status-printing = 6;
+define constant $gtk-print-status-finished = 7;
+define constant $gtk-print-status-finished-aborted = 8;
 define constant <GtkPrintStatus> = <C-int>;
 define C-pointer-type <GtkPrintStatus*> => <GtkPrintStatus>;
 
 define open C-subtype <GtkProgressBar> (<GtkWidget>)
-  constant slot gtkprogressbar-parent :: <GtkWidget>;
-  constant slot gtkprogressbar-priv :: <GtkProgressBarPrivate>;
+  constant slot gtk-progress-bar-parent :: <GtkWidget>;
+  constant slot gtk-progress-bar-priv :: <GtkProgressBarPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkProgressBar*> => <GtkProgressBar>;
 
-define property-getter progressbar-ellipsize :: <PangoEllipsizeMode> on <GtkProgressBar> end;
-define property-setter progressbar-ellipsize :: <PangoEllipsizeMode> on <GtkProgressBar> end;
-define property-getter progressbar-fraction :: <C-double> on <GtkProgressBar> end;
-define property-setter progressbar-fraction :: <C-double> on <GtkProgressBar> end;
-define property-getter progressbar-inverted :: <C-boolean> on <GtkProgressBar> end;
-define property-setter progressbar-inverted :: <C-boolean> on <GtkProgressBar> end;
-define property-getter progressbar-pulse-step :: <C-double> on <GtkProgressBar> end;
-define property-setter progressbar-pulse-step :: <C-double> on <GtkProgressBar> end;
-define property-getter progressbar-show-text :: <C-boolean> on <GtkProgressBar> end;
-define property-setter progressbar-show-text :: <C-boolean> on <GtkProgressBar> end;
-define property-getter progressbar-text :: <C-string> on <GtkProgressBar> end;
-define property-setter progressbar-text :: <C-string> on <GtkProgressBar> end;
 define C-function gtk-progress-bar-new
   result res :: <GtkWidget>;
   c-name: "gtk_progress_bar_new";
@@ -14189,11 +13280,11 @@ define C-function gtk-progress-bar-set-text
 end;
 
 define C-struct <_GtkProgressBarClass>
-  constant slot gtkprogressbarclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkprogressbarclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkprogressbarclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkprogressbarclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkprogressbarclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-progress-bar-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-progress-bar-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-progress-bar-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-progress-bar-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-progress-bar-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkProgressBarClass>;
 end C-struct;
 
@@ -14202,17 +13293,12 @@ define C-struct <_GtkProgressBarPrivate>
 end C-struct;
 
 define open C-subtype <GtkRadioAction> (<GtkToggleAction>)
-  constant slot gtkradioaction-parent :: <GtkToggleAction>;
-  constant slot gtkradioaction-private-data :: <GtkRadioActionPrivate>;
+  constant slot gtk-radio-action-parent :: <GtkToggleAction>;
+  constant slot gtk-radio-action-private-data :: <GtkRadioActionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRadioAction*> => <GtkRadioAction>;
 
-define property-getter radioaction-current-value :: <C-signed-int> on <GtkRadioAction> end;
-define property-setter radioaction-current-value :: <C-signed-int> on <GtkRadioAction> end;
-define property-setter radioaction-group :: <GtkRadioAction> on <GtkRadioAction> end;
-define property-getter radioaction-value :: <C-signed-int> on <GtkRadioAction> end;
-define property-setter radioaction-value :: <C-signed-int> on <GtkRadioAction> end;
 define C-function gtk-radio-action-new
   input parameter name_ :: <C-string>;
   input parameter label_ :: <C-string>;
@@ -14254,22 +13340,22 @@ define C-function gtk-radio-action-set-group
 end;
 
 define C-struct <_GtkRadioActionClass>
-  constant slot gtkradioactionclass-parent-class :: <GtkToggleActionClass>;
-  constant slot gtkradioactionclass-changed :: <C-function-pointer>;
-  constant slot gtkradioactionclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkradioactionclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkradioactionclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkradioactionclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-radio-action-class-parent-class :: <GtkToggleActionClass>;
+  constant slot gtk-radio-action-class-changed :: <C-function-pointer>;
+  constant slot gtk-radio-action-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-radio-action-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-radio-action-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-radio-action-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRadioActionClass>;
 end C-struct;
 
 define C-struct <_GtkRadioActionEntry>
-  slot gtkradioactionentry-name :: <C-string>;
-  slot gtkradioactionentry-stock-id :: <C-string>;
-  slot gtkradioactionentry-label :: <C-string>;
-  slot gtkradioactionentry-accelerator :: <C-string>;
-  slot gtkradioactionentry-tooltip :: <C-string>;
-  slot gtkradioactionentry-value :: <C-signed-int>;
+  slot gtk-radio-action-entry-name :: <C-string>;
+  slot gtk-radio-action-entry-stock-id :: <C-string>;
+  slot gtk-radio-action-entry-label :: <C-string>;
+  slot gtk-radio-action-entry-accelerator :: <C-string>;
+  slot gtk-radio-action-entry-tooltip :: <C-string>;
+  slot gtk-radio-action-entry-value :: <C-signed-int>;
   pointer-type-name: <GtkRadioActionEntry>;
 end C-struct;
 
@@ -14278,13 +13364,12 @@ define C-struct <_GtkRadioActionPrivate>
 end C-struct;
 
 define open C-subtype <GtkRadioButton> (<GtkCheckButton>)
-  constant slot gtkradiobutton-check-button :: <GtkCheckButton>;
-  constant slot gtkradiobutton-priv :: <GtkRadioButtonPrivate>;
+  constant slot gtk-radio-button-check-button :: <GtkCheckButton>;
+  constant slot gtk-radio-button-priv :: <GtkRadioButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRadioButton*> => <GtkRadioButton>;
 
-define property-setter radiobutton-group :: <GtkRadioButton> on <GtkRadioButton> end;
 define C-function gtk-radio-button-new
   input parameter group_ :: <GSList>;
   result res :: <GtkWidget>;
@@ -14344,12 +13429,12 @@ define C-function gtk-radio-button-set-group
 end;
 
 define C-struct <_GtkRadioButtonClass>
-  constant slot gtkradiobuttonclass-parent-class :: <GtkCheckButtonClass>;
-  constant slot gtkradiobuttonclass-group-changed :: <C-function-pointer>;
-  constant slot gtkradiobuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkradiobuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkradiobuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkradiobuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-radio-button-class-parent-class :: <GtkCheckButtonClass>;
+  constant slot gtk-radio-button-class-group-changed :: <C-function-pointer>;
+  constant slot gtk-radio-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-radio-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-radio-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-radio-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRadioButtonClass>;
 end C-struct;
 
@@ -14358,13 +13443,12 @@ define C-struct <_GtkRadioButtonPrivate>
 end C-struct;
 
 define open C-subtype <GtkRadioMenuItem> (<GtkCheckMenuItem>)
-  constant slot gtkradiomenuitem-check-menu-item :: <GtkCheckMenuItem>;
-  constant slot gtkradiomenuitem-priv :: <GtkRadioMenuItemPrivate>;
+  constant slot gtk-radio-menu-item-check-menu-item :: <GtkCheckMenuItem>;
+  constant slot gtk-radio-menu-item-priv :: <GtkRadioMenuItemPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRadioMenuItem*> => <GtkRadioMenuItem>;
 
-define property-setter radiomenuitem-group :: <GtkRadioMenuItem> on <GtkRadioMenuItem> end;
 define C-function gtk-radio-menu-item-new-from-widget
   input parameter group_ :: <GtkRadioMenuItem>;
   result res :: <GtkWidget>;
@@ -14399,12 +13483,12 @@ define C-function gtk-radio-menu-item-get-group
 end;
 
 define C-struct <_GtkRadioMenuItemClass>
-  constant slot gtkradiomenuitemclass-parent-class :: <GtkCheckMenuItemClass>;
-  constant slot gtkradiomenuitemclass-group-changed :: <C-function-pointer>;
-  constant slot gtkradiomenuitemclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkradiomenuitemclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkradiomenuitemclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkradiomenuitemclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-radio-menu-item-class-parent-class :: <GtkCheckMenuItemClass>;
+  constant slot gtk-radio-menu-item-class-group-changed :: <C-function-pointer>;
+  constant slot gtk-radio-menu-item-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-radio-menu-item-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-radio-menu-item-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-radio-menu-item-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRadioMenuItemClass>;
 end C-struct;
 
@@ -14413,12 +13497,11 @@ define C-struct <_GtkRadioMenuItemPrivate>
 end C-struct;
 
 define open C-subtype <GtkRadioToolButton> (<GtkToggleToolButton>)
-  constant slot gtkradiotoolbutton-parent :: <GtkToggleToolButton>;
+  constant slot gtk-radio-tool-button-parent :: <GtkToggleToolButton>;
 end C-subtype;
 
 define C-pointer-type <GtkRadioToolButton*> => <GtkRadioToolButton>;
 
-define property-setter radiotoolbutton-group :: <GtkRadioToolButton> on <GtkRadioToolButton> end;
 define C-function gtk-radio-tool-button-new
   input parameter group_ :: <GSList>;
   result res :: <GtkToolItem>;
@@ -14451,37 +13534,21 @@ define C-function gtk-radio-tool-button-set-group
 end;
 
 define C-struct <_GtkRadioToolButtonClass>
-  constant slot gtkradiotoolbuttonclass-parent-class :: <GtkToggleToolButtonClass>;
-  constant slot gtkradiotoolbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkradiotoolbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkradiotoolbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkradiotoolbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-radio-tool-button-class-parent-class :: <GtkToggleToolButtonClass>;
+  constant slot gtk-radio-tool-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-radio-tool-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-radio-tool-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-radio-tool-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRadioToolButtonClass>;
 end C-struct;
 
 define open C-subtype <GtkRange> (<GtkWidget>)
-  constant slot gtkrange-widget :: <GtkWidget>;
-  constant slot gtkrange-priv :: <GtkRangePrivate>;
+  constant slot gtk-range-widget :: <GtkWidget>;
+  constant slot gtk-range-priv :: <GtkRangePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRange*> => <GtkRange>;
 
-define property-getter range-adjustment :: <GtkAdjustment> on <GtkRange> end;
-define property-setter range-adjustment :: <GtkAdjustment> on <GtkRange> end;
-define property-getter range-fill-level :: <C-double> on <GtkRange> end;
-define property-setter range-fill-level :: <C-double> on <GtkRange> end;
-define property-getter range-inverted :: <C-boolean> on <GtkRange> end;
-define property-setter range-inverted :: <C-boolean> on <GtkRange> end;
-define property-getter range-lower-stepper-sensitivity :: <GtkSensitivityType> on <GtkRange> end;
-define property-setter range-lower-stepper-sensitivity :: <GtkSensitivityType> on <GtkRange> end;
-define property-getter range-restrict-to-fill-level :: <C-boolean> on <GtkRange> end;
-define property-setter range-restrict-to-fill-level :: <C-boolean> on <GtkRange> end;
-define property-getter range-round-digits :: <C-signed-int> on <GtkRange> end;
-define property-setter range-round-digits :: <C-signed-int> on <GtkRange> end;
-define property-getter range-show-fill-level :: <C-boolean> on <GtkRange> end;
-define property-setter range-show-fill-level :: <C-boolean> on <GtkRange> end;
-define property-getter range-upper-stepper-sensitivity :: <GtkSensitivityType> on <GtkRange> end;
-define property-setter range-upper-stepper-sensitivity :: <GtkSensitivityType> on <GtkRange> end;
 define C-function gtk-range-get-adjustment
   input parameter self :: <GtkRange>;
   result res :: <GtkAdjustment>;
@@ -14654,18 +13721,18 @@ define C-function gtk-range-set-value
 end;
 
 define C-struct <_GtkRangeClass>
-  constant slot gtkrangeclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkrangeclass-slider-detail :: <C-string>;
-  constant slot gtkrangeclass-stepper-detail :: <C-string>;
-  constant slot gtkrangeclass-value-changed :: <C-function-pointer>;
-  constant slot gtkrangeclass-adjust-bounds :: <C-function-pointer>;
-  constant slot gtkrangeclass-move-slider :: <C-function-pointer>;
-  constant slot gtkrangeclass-get-range-border :: <C-function-pointer>;
-  constant slot gtkrangeclass-change-value :: <C-function-pointer>;
-  constant slot gtkrangeclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkrangeclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkrangeclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkrangeclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-range-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-range-class-slider-detail :: <C-string>;
+  constant slot gtk-range-class-stepper-detail :: <C-string>;
+  constant slot gtk-range-class-value-changed :: <C-function-pointer>;
+  constant slot gtk-range-class-adjust-bounds :: <C-function-pointer>;
+  constant slot gtk-range-class-move-slider :: <C-function-pointer>;
+  constant slot gtk-range-class-get-range-border :: <C-function-pointer>;
+  constant slot gtk-range-class-change-value :: <C-function-pointer>;
+  constant slot gtk-range-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-range-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-range-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-range-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRangeClass>;
 end C-struct;
 
@@ -14677,29 +13744,29 @@ define C-struct <_GtkRcContext>
   pointer-type-name: <GtkRcContext>;
 end C-struct;
 
-define constant $GTK-RC-FG = 1;
-define constant $GTK-RC-BG = 2;
-define constant $GTK-RC-TEXT = 4;
-define constant $GTK-RC-BASE = 8;
+define constant $gtk-rc-fg = 1;
+define constant $gtk-rc-bg = 2;
+define constant $gtk-rc-text = 4;
+define constant $gtk-rc-base = 8;
 define constant <GtkRcFlags> = <C-int>;
 define C-pointer-type <GtkRcFlags*> => <GtkRcFlags>;
 
 define open C-subtype <GtkRcStyle> (<GObject>)
-  constant slot gtkrcstyle-parent-instance :: <GObject>;
-  constant slot gtkrcstyle-name :: <C-string>;
-  constant slot gtkrcstyle-bg-pixmap-name :: <C-string*>;
-  constant slot gtkrcstyle-font-desc :: <PangoFontDescription>;
-  constant slot gtkrcstyle-color-flags :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkrcstyle-fg :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkrcstyle-bg :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkrcstyle-text :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkrcstyle-base :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkrcstyle-xthickness :: <C-signed-int>;
-  constant slot gtkrcstyle-ythickness :: <C-signed-int>;
-  constant slot gtkrcstyle-rc-properties :: <GArray>;
-  constant slot gtkrcstyle-rc-style-lists :: <GSList>;
-  constant slot gtkrcstyle-icon-factories :: <GSList>;
-  constant slot gtkrcstyle-engine-specified :: <C-unsigned-int>;
+  constant slot gtk-rc-style-parent-instance :: <GObject>;
+  constant slot gtk-rc-style-name :: <C-string>;
+  constant slot gtk-rc-style-bg-pixmap-name :: <C-string*>;
+  constant slot gtk-rc-style-font-desc :: <PangoFontDescription>;
+  constant slot gtk-rc-style-color-flags :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-rc-style-fg :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-rc-style-bg :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-rc-style-text :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-rc-style-base :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-rc-style-xthickness :: <C-signed-int>;
+  constant slot gtk-rc-style-ythickness :: <C-signed-int>;
+  constant slot gtk-rc-style-rc-properties :: <GArray>;
+  constant slot gtk-rc-style-rc-style-lists :: <GSList>;
+  constant slot gtk-rc-style-icon-factories :: <GSList>;
+  constant slot gtk-rc-style-engine-specified :: <C-unsigned-int>;
 end C-subtype;
 
 define C-pointer-type <GtkRcStyle*> => <GtkRcStyle>;
@@ -14716,27 +13783,25 @@ define C-function gtk-rc-style-copy
 end;
 
 define C-struct <_GtkRcStyleClass>
-  constant slot gtkrcstyleclass-parent-class :: <GObjectClass>;
-  constant slot gtkrcstyleclass-create-rc-style :: <C-void*>;
-  constant slot gtkrcstyleclass-parse :: <C-function-pointer>;
-  constant slot gtkrcstyleclass-merge :: <C-function-pointer>;
-  constant slot gtkrcstyleclass-create-style :: <C-void*>;
-  constant slot gtkrcstyleclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkrcstyleclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkrcstyleclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkrcstyleclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-rc-style-class-parent-class :: <GObjectClass>;
+  constant slot gtk-rc-style-class-create-rc-style :: <C-void*>;
+  constant slot gtk-rc-style-class-parse :: <C-function-pointer>;
+  constant slot gtk-rc-style-class-merge :: <C-function-pointer>;
+  constant slot gtk-rc-style-class-create-style :: <C-void*>;
+  constant slot gtk-rc-style-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-rc-style-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-rc-style-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-rc-style-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRcStyleClass>;
 end C-struct;
 
 define open C-subtype <GtkRecentAction> (<GtkAction>)
-  constant slot gtkrecentaction-parent-instance :: <GtkAction>;
-  constant slot gtkrecentaction-priv :: <GtkRecentActionPrivate>;
+  constant slot gtk-recent-action-parent-instance :: <GtkAction>;
+  constant slot gtk-recent-action-priv :: <GtkRecentActionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRecentAction*> => <GtkRecentAction>;
 
-define property-getter recentaction-show-numbers :: <C-boolean> on <GtkRecentAction> end;
-define property-setter recentaction-show-numbers :: <C-boolean> on <GtkRecentAction> end;
 define C-function gtk-recent-action-new
   input parameter name_ :: <C-string>;
   input parameter label_ :: <C-string>;
@@ -14769,11 +13834,11 @@ define C-function gtk-recent-action-set-show-numbers
 end;
 
 define C-struct <_GtkRecentActionClass>
-  constant slot gtkrecentactionclass-parent-class :: <GtkActionClass>;
-  constant slot gtkrecentactionclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkrecentactionclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkrecentactionclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkrecentactionclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-recent-action-class-parent-class :: <GtkActionClass>;
+  constant slot gtk-recent-action-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-recent-action-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-recent-action-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-recent-action-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRecentActionClass>;
 end C-struct;
 
@@ -14977,18 +14042,18 @@ define C-function gtk-recent-chooser-unselect-uri
 end;
 
 define open C-subtype <GtkRecentChooserDialog> (<GtkDialog>)
-  constant slot gtkrecentchooserdialog-parent-instance :: <GtkDialog>;
-  constant slot gtkrecentchooserdialog-priv :: <GtkRecentChooserDialogPrivate>;
+  constant slot gtk-recent-chooser-dialog-parent-instance :: <GtkDialog>;
+  constant slot gtk-recent-chooser-dialog-priv :: <GtkRecentChooserDialogPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRecentChooserDialog*> => <GtkRecentChooserDialog>;
 
 define C-struct <_GtkRecentChooserDialogClass>
-  constant slot gtkrecentchooserdialogclass-parent-class :: <GtkDialogClass>;
-  constant slot gtkrecentchooserdialogclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkrecentchooserdialogclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkrecentchooserdialogclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkrecentchooserdialogclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-recent-chooser-dialog-class-parent-class :: <GtkDialogClass>;
+  constant slot gtk-recent-chooser-dialog-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-recent-chooser-dialog-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-recent-chooser-dialog-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-recent-chooser-dialog-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRecentChooserDialogClass>;
 end C-struct;
 
@@ -14996,39 +14061,37 @@ define C-struct <_GtkRecentChooserDialogPrivate>
   pointer-type-name: <GtkRecentChooserDialogPrivate>;
 end C-struct;
 
-define constant $GTK-RECENT-CHOOSER-ERROR-NOT-FOUND = 0;
-define constant $GTK-RECENT-CHOOSER-ERROR-INVALID-URI = 1;
+define constant $gtk-recent-chooser-error-not-found = 0;
+define constant $gtk-recent-chooser-error-invalid-uri = 1;
 define constant <GtkRecentChooserError> = <C-int>;
 define C-pointer-type <GtkRecentChooserError*> => <GtkRecentChooserError>;
 
 define C-struct <_GtkRecentChooserIface>
-  constant slot gtkrecentchooseriface-base-iface :: <GTypeInterface>;
-  constant slot gtkrecentchooseriface-set-current-uri :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-get-current-uri :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-select-uri :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-unselect-uri :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-select-all :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-unselect-all :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-get-items :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-get-recent-manager :: <C-void*>;
-  constant slot gtkrecentchooseriface-add-filter :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-remove-filter :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-list-filters :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-set-sort-func :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-item-activated :: <C-function-pointer>;
-  constant slot gtkrecentchooseriface-selection-changed :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-base-iface :: <GTypeInterface>;
+  constant slot gtk-recent-chooser-iface-set-current-uri :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-get-current-uri :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-select-uri :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-unselect-uri :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-select-all :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-unselect-all :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-get-items :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-get-recent-manager :: <C-void*>;
+  constant slot gtk-recent-chooser-iface-add-filter :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-remove-filter :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-list-filters :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-set-sort-func :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-item-activated :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-iface-selection-changed :: <C-function-pointer>;
   pointer-type-name: <GtkRecentChooserIface>;
 end C-struct;
 
 define open C-subtype <GtkRecentChooserMenu> (<GtkMenu>)
-  constant slot gtkrecentchoosermenu-parent-instance :: <GtkMenu>;
-  constant slot gtkrecentchoosermenu-priv :: <GtkRecentChooserMenuPrivate>;
+  constant slot gtk-recent-chooser-menu-parent-instance :: <GtkMenu>;
+  constant slot gtk-recent-chooser-menu-priv :: <GtkRecentChooserMenuPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRecentChooserMenu*> => <GtkRecentChooserMenu>;
 
-define property-getter recentchoosermenu-show-numbers :: <C-boolean> on <GtkRecentChooserMenu> end;
-define property-setter recentchoosermenu-show-numbers :: <C-boolean> on <GtkRecentChooserMenu> end;
 define C-function gtk-recent-chooser-menu-new
   result res :: <GtkWidget>;
   c-name: "gtk_recent_chooser_menu_new";
@@ -15053,11 +14116,11 @@ define C-function gtk-recent-chooser-menu-set-show-numbers
 end;
 
 define C-struct <_GtkRecentChooserMenuClass>
-  constant slot gtkrecentchoosermenuclass-parent-class :: <GtkMenuClass>;
-  constant slot gtkrecentchoosermenuclass-gtk-recent1 :: <C-function-pointer>;
-  constant slot gtkrecentchoosermenuclass-gtk-recent2 :: <C-function-pointer>;
-  constant slot gtkrecentchoosermenuclass-gtk-recent3 :: <C-function-pointer>;
-  constant slot gtkrecentchoosermenuclass-gtk-recent4 :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-menu-class-parent-class :: <GtkMenuClass>;
+  constant slot gtk-recent-chooser-menu-class-gtk-recent1 :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-menu-class-gtk-recent2 :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-menu-class-gtk-recent3 :: <C-function-pointer>;
+  constant slot gtk-recent-chooser-menu-class-gtk-recent4 :: <C-function-pointer>;
   pointer-type-name: <GtkRecentChooserMenuClass>;
 end C-struct;
 
@@ -15066,8 +14129,8 @@ define C-struct <_GtkRecentChooserMenuPrivate>
 end C-struct;
 
 define open C-subtype <GtkRecentChooserWidget> (<GtkBox>)
-  constant slot gtkrecentchooserwidget-parent-instance :: <GtkBox>;
-  constant slot gtkrecentchooserwidget-priv :: <GtkRecentChooserWidgetPrivate>;
+  constant slot gtk-recent-chooser-widget-parent-instance :: <GtkBox>;
+  constant slot gtk-recent-chooser-widget-priv :: <GtkRecentChooserWidgetPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRecentChooserWidget*> => <GtkRecentChooserWidget>;
@@ -15084,11 +14147,11 @@ define C-function gtk-recent-chooser-widget-new-for-manager
 end;
 
 define C-struct <_GtkRecentChooserWidgetClass>
-  constant slot gtkrecentchooserwidgetclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkrecentchooserwidgetclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkrecentchooserwidgetclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkrecentchooserwidgetclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkrecentchooserwidgetclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-recent-chooser-widget-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-recent-chooser-widget-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-recent-chooser-widget-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-recent-chooser-widget-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-recent-chooser-widget-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkRecentChooserWidgetClass>;
 end C-struct;
 
@@ -15097,13 +14160,13 @@ define C-struct <_GtkRecentChooserWidgetPrivate>
 end C-struct;
 
 define C-struct <_GtkRecentData>
-  slot gtkrecentdata-display-name :: <C-string>;
-  slot gtkrecentdata-description :: <C-string>;
-  slot gtkrecentdata-mime-type :: <C-string>;
-  slot gtkrecentdata-app-name :: <C-string>;
-  slot gtkrecentdata-app-exec :: <C-string>;
-  slot gtkrecentdata-groups :: <C-string>;
-  slot gtkrecentdata-is-private :: <C-boolean>;
+  slot gtk-recent-data-display-name :: <C-string>;
+  slot gtk-recent-data-description :: <C-string>;
+  slot gtk-recent-data-mime-type :: <C-string>;
+  slot gtk-recent-data-app-name :: <C-string>;
+  slot gtk-recent-data-app-exec :: <C-string>;
+  slot gtk-recent-data-groups :: <C-string>;
+  slot gtk-recent-data-is-private :: <C-boolean>;
   pointer-type-name: <GtkRecentData>;
 end C-struct;
 
@@ -15186,23 +14249,23 @@ define C-function gtk-recent-filter-set-name
   c-name: "gtk_recent_filter_set_name";
 end;
 
-define constant $GTK-RECENT-FILTER-URI = 1;
-define constant $GTK-RECENT-FILTER-DISPLAY-NAME = 2;
-define constant $GTK-RECENT-FILTER-MIME-TYPE = 4;
-define constant $GTK-RECENT-FILTER-APPLICATION = 8;
-define constant $GTK-RECENT-FILTER-GROUP = 16;
-define constant $GTK-RECENT-FILTER-AGE = 32;
+define constant $gtk-recent-filter-uri = 1;
+define constant $gtk-recent-filter-display-name = 2;
+define constant $gtk-recent-filter-mime-type = 4;
+define constant $gtk-recent-filter-application = 8;
+define constant $gtk-recent-filter-group = 16;
+define constant $gtk-recent-filter-age = 32;
 define constant <GtkRecentFilterFlags> = <C-int>;
 define C-pointer-type <GtkRecentFilterFlags*> => <GtkRecentFilterFlags>;
 
 define C-struct <_GtkRecentFilterInfo>
-  slot gtkrecentfilterinfo-contains :: <GtkRecentFilterFlags>;
-  slot gtkrecentfilterinfo-uri :: <C-string>;
-  slot gtkrecentfilterinfo-display-name :: <C-string>;
-  slot gtkrecentfilterinfo-mime-type :: <C-string>;
-  slot gtkrecentfilterinfo-applications :: <C-string>;
-  slot gtkrecentfilterinfo-groups :: <C-string>;
-  slot gtkrecentfilterinfo-age :: <C-signed-int>;
+  slot gtk-recent-filter-info-contains :: <GtkRecentFilterFlags>;
+  slot gtk-recent-filter-info-uri :: <C-string>;
+  slot gtk-recent-filter-info-display-name :: <C-string>;
+  slot gtk-recent-filter-info-mime-type :: <C-string>;
+  slot gtk-recent-filter-info-applications :: <C-string>;
+  slot gtk-recent-filter-info-groups :: <C-string>;
+  slot gtk-recent-filter-info-age :: <C-signed-int>;
   pointer-type-name: <GtkRecentFilterInfo>;
 end C-struct;
 
@@ -15371,15 +14434,12 @@ define C-function gtk-recent-info-unref
 end;
 
 define open C-subtype <GtkRecentManager> (<GObject>)
-  constant slot gtkrecentmanager-parent-instance :: <GObject>;
-  constant slot gtkrecentmanager-priv :: <GtkRecentManagerPrivate>;
+  constant slot gtk-recent-manager-parent-instance :: <GObject>;
+  constant slot gtk-recent-manager-priv :: <GtkRecentManagerPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkRecentManager*> => <GtkRecentManager>;
 
-define property-getter recentmanager-filename :: <C-string> on <GtkRecentManager> end;
-define property-setter recentmanager-filename :: <C-string> on <GtkRecentManager> end;
-define property-getter recentmanager-size :: <C-signed-int> on <GtkRecentManager> end;
 define C-function gtk-recent-manager-new
   result res :: <GtkRecentManager>;
   c-name: "gtk_recent_manager_new";
@@ -15447,22 +14507,22 @@ define C-function gtk-recent-manager-remove-item
 end;
 
 define C-struct <_GtkRecentManagerClass>
-  constant slot gtkrecentmanagerclass-parent-class :: <GObjectClass>;
-  constant slot gtkrecentmanagerclass-changed :: <C-function-pointer>;
-  constant slot gtkrecentmanagerclass--gtk-recent1 :: <C-void*>;
-  constant slot gtkrecentmanagerclass--gtk-recent2 :: <C-void*>;
-  constant slot gtkrecentmanagerclass--gtk-recent3 :: <C-void*>;
-  constant slot gtkrecentmanagerclass--gtk-recent4 :: <C-void*>;
+  constant slot gtk-recent-manager-class-parent-class :: <GObjectClass>;
+  constant slot gtk-recent-manager-class-changed :: <C-function-pointer>;
+  constant slot gtk-recent-manager-class-_gtk-recent1 :: <C-void*>;
+  constant slot gtk-recent-manager-class-_gtk-recent2 :: <C-void*>;
+  constant slot gtk-recent-manager-class-_gtk-recent3 :: <C-void*>;
+  constant slot gtk-recent-manager-class-_gtk-recent4 :: <C-void*>;
   pointer-type-name: <GtkRecentManagerClass>;
 end C-struct;
 
-define constant $GTK-RECENT-MANAGER-ERROR-NOT-FOUND = 0;
-define constant $GTK-RECENT-MANAGER-ERROR-INVALID-URI = 1;
-define constant $GTK-RECENT-MANAGER-ERROR-INVALID-ENCODING = 2;
-define constant $GTK-RECENT-MANAGER-ERROR-NOT-REGISTERED = 3;
-define constant $GTK-RECENT-MANAGER-ERROR-READ = 4;
-define constant $GTK-RECENT-MANAGER-ERROR-WRITE = 5;
-define constant $GTK-RECENT-MANAGER-ERROR-UNKNOWN = 6;
+define constant $gtk-recent-manager-error-not-found = 0;
+define constant $gtk-recent-manager-error-invalid-uri = 1;
+define constant $gtk-recent-manager-error-invalid-encoding = 2;
+define constant $gtk-recent-manager-error-not-registered = 3;
+define constant $gtk-recent-manager-error-read = 4;
+define constant $gtk-recent-manager-error-write = 5;
+define constant $gtk-recent-manager-error-unknown = 6;
 define constant <GtkRecentManagerError> = <C-int>;
 define C-pointer-type <GtkRecentManagerError*> => <GtkRecentManagerError>;
 
@@ -15470,38 +14530,38 @@ define C-struct <_GtkRecentManagerPrivate>
   pointer-type-name: <GtkRecentManagerPrivate>;
 end C-struct;
 
-define constant $GTK-RECENT-SORT-NONE = 0;
-define constant $GTK-RECENT-SORT-MRU = 1;
-define constant $GTK-RECENT-SORT-LRU = 2;
-define constant $GTK-RECENT-SORT-CUSTOM = 3;
+define constant $gtk-recent-sort-none = 0;
+define constant $gtk-recent-sort-mru = 1;
+define constant $gtk-recent-sort-lru = 2;
+define constant $gtk-recent-sort-custom = 3;
 define constant <GtkRecentSortType> = <C-int>;
 define C-pointer-type <GtkRecentSortType*> => <GtkRecentSortType>;
 
-define constant $GTK-REGION-EVEN = 1;
-define constant $GTK-REGION-ODD = 2;
-define constant $GTK-REGION-FIRST = 4;
-define constant $GTK-REGION-LAST = 8;
-define constant $GTK-REGION-ONLY = 16;
-define constant $GTK-REGION-SORTED = 32;
+define constant $gtk-region-even = 1;
+define constant $gtk-region-odd = 2;
+define constant $gtk-region-first = 4;
+define constant $gtk-region-last = 8;
+define constant $gtk-region-only = 16;
+define constant $gtk-region-sorted = 32;
 define constant <GtkRegionFlags> = <C-int>;
 define C-pointer-type <GtkRegionFlags*> => <GtkRegionFlags>;
 
-define constant $GTK-RELIEF-NORMAL = 0;
-define constant $GTK-RELIEF-HALF = 1;
-define constant $GTK-RELIEF-NONE = 2;
+define constant $gtk-relief-normal = 0;
+define constant $gtk-relief-half = 1;
+define constant $gtk-relief-none = 2;
 define constant <GtkReliefStyle> = <C-int>;
 define C-pointer-type <GtkReliefStyle*> => <GtkReliefStyle>;
 
 define C-struct <_GtkRequestedSize>
-  slot gtkrequestedsize-data :: <C-void*>;
-  slot gtkrequestedsize-minimum-size :: <C-signed-int>;
-  slot gtkrequestedsize-natural-size :: <C-signed-int>;
+  slot gtk-requested-size-data :: <C-void*>;
+  slot gtk-requested-size-minimum-size :: <C-signed-int>;
+  slot gtk-requested-size-natural-size :: <C-signed-int>;
   pointer-type-name: <GtkRequestedSize>;
 end C-struct;
 
 define C-struct <_GtkRequisition>
-  slot gtkrequisition-width :: <C-signed-int>;
-  slot gtkrequisition-height :: <C-signed-int>;
+  slot gtk-requisition-width :: <C-signed-int>;
+  slot gtk-requisition-height :: <C-signed-int>;
   pointer-type-name: <GtkRequisition>;
 end C-struct;
 
@@ -15521,401 +14581,393 @@ define C-function gtk-requisition-free
   c-name: "gtk_requisition_free";
 end;
 
-define constant $GTK-RESIZE-PARENT = 0;
-define constant $GTK-RESIZE-QUEUE = 1;
-define constant $GTK-RESIZE-IMMEDIATE = 2;
+define constant $gtk-resize-parent = 0;
+define constant $gtk-resize-queue = 1;
+define constant $gtk-resize-immediate = 2;
 define constant <GtkResizeMode> = <C-int>;
 define C-pointer-type <GtkResizeMode*> => <GtkResizeMode>;
 
-define constant $GTK-RESPONSE-NONE = -1;
-define constant $GTK-RESPONSE-REJECT = -2;
-define constant $GTK-RESPONSE-ACCEPT = -3;
-define constant $GTK-RESPONSE-DELETE-EVENT = -4;
-define constant $GTK-RESPONSE-OK = -5;
-define constant $GTK-RESPONSE-CANCEL = -6;
-define constant $GTK-RESPONSE-CLOSE = -7;
-define constant $GTK-RESPONSE-YES = -8;
-define constant $GTK-RESPONSE-NO = -9;
-define constant $GTK-RESPONSE-APPLY = -10;
-define constant $GTK-RESPONSE-HELP = -11;
+define constant $gtk-response-none = -1;
+define constant $gtk-response-reject = -2;
+define constant $gtk-response-accept = -3;
+define constant $gtk-response-delete-event = -4;
+define constant $gtk-response-ok = -5;
+define constant $gtk-response-cancel = -6;
+define constant $gtk-response-close = -7;
+define constant $gtk-response-yes = -8;
+define constant $gtk-response-no = -9;
+define constant $gtk-response-apply = -10;
+define constant $gtk-response-help = -11;
 define constant <GtkResponseType> = <C-int>;
 define C-pointer-type <GtkResponseType*> => <GtkResponseType>;
 
-define constant $STOCK-ABOUT = "gtk-about";
+define constant $stock-about = "gtk-about";
 
-define constant $STOCK-ADD = "gtk-add";
+define constant $stock-add = "gtk-add";
 
-define constant $STOCK-APPLY = "gtk-apply";
+define constant $stock-apply = "gtk-apply";
 
-define constant $STOCK-BOLD = "gtk-bold";
+define constant $stock-bold = "gtk-bold";
 
-define constant $STOCK-CANCEL = "gtk-cancel";
+define constant $stock-cancel = "gtk-cancel";
 
-define constant $STOCK-CAPS-LOCK-WARNING = "gtk-caps-lock-warning";
+define constant $stock-caps-lock-warning = "gtk-caps-lock-warning";
 
-define constant $STOCK-CDROM = "gtk-cdrom";
+define constant $stock-cdrom = "gtk-cdrom";
 
-define constant $STOCK-CLEAR = "gtk-clear";
+define constant $stock-clear = "gtk-clear";
 
-define constant $STOCK-CLOSE = "gtk-close";
+define constant $stock-close = "gtk-close";
 
-define constant $STOCK-COLOR-PICKER = "gtk-color-picker";
+define constant $stock-color-picker = "gtk-color-picker";
 
-define constant $STOCK-CONNECT = "gtk-connect";
+define constant $stock-connect = "gtk-connect";
 
-define constant $STOCK-CONVERT = "gtk-convert";
+define constant $stock-convert = "gtk-convert";
 
-define constant $STOCK-COPY = "gtk-copy";
+define constant $stock-copy = "gtk-copy";
 
-define constant $STOCK-CUT = "gtk-cut";
+define constant $stock-cut = "gtk-cut";
 
-define constant $STOCK-DELETE = "gtk-delete";
+define constant $stock-delete = "gtk-delete";
 
-define constant $STOCK-DIALOG-AUTHENTICATION = "gtk-dialog-authentication";
+define constant $stock-dialog-authentication = "gtk-dialog-authentication";
 
-define constant $STOCK-DIALOG-ERROR = "gtk-dialog-error";
+define constant $stock-dialog-error = "gtk-dialog-error";
 
-define constant $STOCK-DIALOG-INFO = "gtk-dialog-info";
+define constant $stock-dialog-info = "gtk-dialog-info";
 
-define constant $STOCK-DIALOG-QUESTION = "gtk-dialog-question";
+define constant $stock-dialog-question = "gtk-dialog-question";
 
-define constant $STOCK-DIALOG-WARNING = "gtk-dialog-warning";
+define constant $stock-dialog-warning = "gtk-dialog-warning";
 
-define constant $STOCK-DIRECTORY = "gtk-directory";
+define constant $stock-directory = "gtk-directory";
 
-define constant $STOCK-DISCARD = "gtk-discard";
+define constant $stock-discard = "gtk-discard";
 
-define constant $STOCK-DISCONNECT = "gtk-disconnect";
+define constant $stock-disconnect = "gtk-disconnect";
 
-define constant $STOCK-DND = "gtk-dnd";
+define constant $stock-dnd = "gtk-dnd";
 
-define constant $STOCK-DND-MULTIPLE = "gtk-dnd-multiple";
+define constant $stock-dnd-multiple = "gtk-dnd-multiple";
 
-define constant $STOCK-EDIT = "gtk-edit";
+define constant $stock-edit = "gtk-edit";
 
-define constant $STOCK-EXECUTE = "gtk-execute";
+define constant $stock-execute = "gtk-execute";
 
-define constant $STOCK-FILE = "gtk-file";
+define constant $stock-file = "gtk-file";
 
-define constant $STOCK-FIND = "gtk-find";
+define constant $stock-find = "gtk-find";
 
-define constant $STOCK-FIND-AND-REPLACE = "gtk-find-and-replace";
+define constant $stock-find-and-replace = "gtk-find-and-replace";
 
-define constant $STOCK-FLOPPY = "gtk-floppy";
+define constant $stock-floppy = "gtk-floppy";
 
-define constant $STOCK-FULLSCREEN = "gtk-fullscreen";
+define constant $stock-fullscreen = "gtk-fullscreen";
 
-define constant $STOCK-GOTO-BOTTOM = "gtk-goto-bottom";
+define constant $stock-goto-bottom = "gtk-goto-bottom";
 
-define constant $STOCK-GOTO-FIRST = "gtk-goto-first";
+define constant $stock-goto-first = "gtk-goto-first";
 
-define constant $STOCK-GOTO-LAST = "gtk-goto-last";
+define constant $stock-goto-last = "gtk-goto-last";
 
-define constant $STOCK-GOTO-TOP = "gtk-goto-top";
+define constant $stock-goto-top = "gtk-goto-top";
 
-define constant $STOCK-GO-BACK = "gtk-go-back";
+define constant $stock-go-back = "gtk-go-back";
 
-define constant $STOCK-GO-DOWN = "gtk-go-down";
+define constant $stock-go-down = "gtk-go-down";
 
-define constant $STOCK-GO-FORWARD = "gtk-go-forward";
+define constant $stock-go-forward = "gtk-go-forward";
 
-define constant $STOCK-GO-UP = "gtk-go-up";
+define constant $stock-go-up = "gtk-go-up";
 
-define constant $STOCK-HARDDISK = "gtk-harddisk";
+define constant $stock-harddisk = "gtk-harddisk";
 
-define constant $STOCK-HELP = "gtk-help";
+define constant $stock-help = "gtk-help";
 
-define constant $STOCK-HOME = "gtk-home";
+define constant $stock-home = "gtk-home";
 
-define constant $STOCK-INDENT = "gtk-indent";
+define constant $stock-indent = "gtk-indent";
 
-define constant $STOCK-INDEX = "gtk-index";
+define constant $stock-index = "gtk-index";
 
-define constant $STOCK-INFO = "gtk-info";
+define constant $stock-info = "gtk-info";
 
-define constant $STOCK-ITALIC = "gtk-italic";
+define constant $stock-italic = "gtk-italic";
 
-define constant $STOCK-JUMP-TO = "gtk-jump-to";
+define constant $stock-jump-to = "gtk-jump-to";
 
-define constant $STOCK-JUSTIFY-CENTER = "gtk-justify-center";
+define constant $stock-justify-center = "gtk-justify-center";
 
-define constant $STOCK-JUSTIFY-FILL = "gtk-justify-fill";
+define constant $stock-justify-fill = "gtk-justify-fill";
 
-define constant $STOCK-JUSTIFY-LEFT = "gtk-justify-left";
+define constant $stock-justify-left = "gtk-justify-left";
 
-define constant $STOCK-JUSTIFY-RIGHT = "gtk-justify-right";
+define constant $stock-justify-right = "gtk-justify-right";
 
-define constant $STOCK-LEAVE-FULLSCREEN = "gtk-leave-fullscreen";
+define constant $stock-leave-fullscreen = "gtk-leave-fullscreen";
 
-define constant $STOCK-MEDIA-FORWARD = "gtk-media-forward";
+define constant $stock-media-forward = "gtk-media-forward";
 
-define constant $STOCK-MEDIA-NEXT = "gtk-media-next";
+define constant $stock-media-next = "gtk-media-next";
 
-define constant $STOCK-MEDIA-PAUSE = "gtk-media-pause";
+define constant $stock-media-pause = "gtk-media-pause";
 
-define constant $STOCK-MEDIA-PLAY = "gtk-media-play";
+define constant $stock-media-play = "gtk-media-play";
 
-define constant $STOCK-MEDIA-PREVIOUS = "gtk-media-previous";
+define constant $stock-media-previous = "gtk-media-previous";
 
-define constant $STOCK-MEDIA-RECORD = "gtk-media-record";
+define constant $stock-media-record = "gtk-media-record";
 
-define constant $STOCK-MEDIA-REWIND = "gtk-media-rewind";
+define constant $stock-media-rewind = "gtk-media-rewind";
 
-define constant $STOCK-MEDIA-STOP = "gtk-media-stop";
+define constant $stock-media-stop = "gtk-media-stop";
 
-define constant $STOCK-MISSING-IMAGE = "gtk-missing-image";
+define constant $stock-missing-image = "gtk-missing-image";
 
-define constant $STOCK-NETWORK = "gtk-network";
+define constant $stock-network = "gtk-network";
 
-define constant $STOCK-NEW = "gtk-new";
+define constant $stock-new = "gtk-new";
 
-define constant $STOCK-NO = "gtk-no";
+define constant $stock-no = "gtk-no";
 
-define constant $STOCK-OK = "gtk-ok";
+define constant $stock-ok = "gtk-ok";
 
-define constant $STOCK-OPEN = "gtk-open";
+define constant $stock-open = "gtk-open";
 
-define constant $STOCK-ORIENTATION-LANDSCAPE = "gtk-orientation-landscape";
+define constant $stock-orientation-landscape = "gtk-orientation-landscape";
 
-define constant $STOCK-ORIENTATION-PORTRAIT = "gtk-orientation-portrait";
+define constant $stock-orientation-portrait = "gtk-orientation-portrait";
 
-define constant $STOCK-ORIENTATION-REVERSE-LANDSCAPE = "gtk-orientation-reverse-landscape";
+define constant $stock-orientation-reverse-landscape = "gtk-orientation-reverse-landscape";
 
-define constant $STOCK-ORIENTATION-REVERSE-PORTRAIT = "gtk-orientation-reverse-portrait";
+define constant $stock-orientation-reverse-portrait = "gtk-orientation-reverse-portrait";
 
-define constant $STOCK-PAGE-SETUP = "gtk-page-setup";
+define constant $stock-page-setup = "gtk-page-setup";
 
-define constant $STOCK-PASTE = "gtk-paste";
+define constant $stock-paste = "gtk-paste";
 
-define constant $STOCK-PREFERENCES = "gtk-preferences";
+define constant $stock-preferences = "gtk-preferences";
 
-define constant $STOCK-PRINT = "gtk-print";
+define constant $stock-print = "gtk-print";
 
-define constant $STOCK-PRINT-ERROR = "gtk-print-error";
+define constant $stock-print-error = "gtk-print-error";
 
-define constant $STOCK-PRINT-PAUSED = "gtk-print-paused";
+define constant $stock-print-paused = "gtk-print-paused";
 
-define constant $STOCK-PRINT-PREVIEW = "gtk-print-preview";
+define constant $stock-print-preview = "gtk-print-preview";
 
-define constant $STOCK-PRINT-REPORT = "gtk-print-report";
+define constant $stock-print-report = "gtk-print-report";
 
-define constant $STOCK-PRINT-WARNING = "gtk-print-warning";
+define constant $stock-print-warning = "gtk-print-warning";
 
-define constant $STOCK-PROPERTIES = "gtk-properties";
+define constant $stock-properties = "gtk-properties";
 
-define constant $STOCK-QUIT = "gtk-quit";
+define constant $stock-quit = "gtk-quit";
 
-define constant $STOCK-REDO = "gtk-redo";
+define constant $stock-redo = "gtk-redo";
 
-define constant $STOCK-REFRESH = "gtk-refresh";
+define constant $stock-refresh = "gtk-refresh";
 
-define constant $STOCK-REMOVE = "gtk-remove";
+define constant $stock-remove = "gtk-remove";
 
-define constant $STOCK-REVERT-TO-SAVED = "gtk-revert-to-saved";
+define constant $stock-revert-to-saved = "gtk-revert-to-saved";
 
-define constant $STOCK-SAVE = "gtk-save";
+define constant $stock-save = "gtk-save";
 
-define constant $STOCK-SAVE-AS = "gtk-save-as";
+define constant $stock-save-as = "gtk-save-as";
 
-define constant $STOCK-SELECT-ALL = "gtk-select-all";
+define constant $stock-select-all = "gtk-select-all";
 
-define constant $STOCK-SELECT-COLOR = "gtk-select-color";
+define constant $stock-select-color = "gtk-select-color";
 
-define constant $STOCK-SELECT-FONT = "gtk-select-font";
+define constant $stock-select-font = "gtk-select-font";
 
-define constant $STOCK-SORT-ASCENDING = "gtk-sort-ascending";
+define constant $stock-sort-ascending = "gtk-sort-ascending";
 
-define constant $STOCK-SORT-DESCENDING = "gtk-sort-descending";
+define constant $stock-sort-descending = "gtk-sort-descending";
 
-define constant $STOCK-SPELL-CHECK = "gtk-spell-check";
+define constant $stock-spell-check = "gtk-spell-check";
 
-define constant $STOCK-STOP = "gtk-stop";
+define constant $stock-stop = "gtk-stop";
 
-define constant $STOCK-STRIKETHROUGH = "gtk-strikethrough";
+define constant $stock-strikethrough = "gtk-strikethrough";
 
-define constant $STOCK-UNDELETE = "gtk-undelete";
+define constant $stock-undelete = "gtk-undelete";
 
-define constant $STOCK-UNDERLINE = "gtk-underline";
+define constant $stock-underline = "gtk-underline";
 
-define constant $STOCK-UNDO = "gtk-undo";
+define constant $stock-undo = "gtk-undo";
 
-define constant $STOCK-UNINDENT = "gtk-unindent";
+define constant $stock-unindent = "gtk-unindent";
 
-define constant $STOCK-YES = "gtk-yes";
+define constant $stock-yes = "gtk-yes";
 
-define constant $STOCK-ZOOM-100 = "gtk-zoom-100";
+define constant $stock-zoom-100 = "gtk-zoom-100";
 
-define constant $STOCK-ZOOM-FIT = "gtk-zoom-fit";
+define constant $stock-zoom-fit = "gtk-zoom-fit";
 
-define constant $STOCK-ZOOM-IN = "gtk-zoom-in";
+define constant $stock-zoom-in = "gtk-zoom-in";
 
-define constant $STOCK-ZOOM-OUT = "gtk-zoom-out";
+define constant $stock-zoom-out = "gtk-zoom-out";
 
-define constant $STYLE-CLASS-ACCELERATOR = "accelerator";
+define constant $style-class-accelerator = "accelerator";
 
-define constant $STYLE-CLASS-ARROW = "arrow";
+define constant $style-class-arrow = "arrow";
 
-define constant $STYLE-CLASS-BACKGROUND = "background";
+define constant $style-class-background = "background";
 
-define constant $STYLE-CLASS-BOTTOM = "bottom";
+define constant $style-class-bottom = "bottom";
 
-define constant $STYLE-CLASS-BUTTON = "button";
+define constant $style-class-button = "button";
 
-define constant $STYLE-CLASS-CALENDAR = "calendar";
+define constant $style-class-calendar = "calendar";
 
-define constant $STYLE-CLASS-CELL = "cell";
+define constant $style-class-cell = "cell";
 
-define constant $STYLE-CLASS-CHECK = "check";
+define constant $style-class-check = "check";
 
-define constant $STYLE-CLASS-COMBOBOX-ENTRY = "combobox-entry";
+define constant $style-class-combobox-entry = "combobox-entry";
 
-define constant $STYLE-CLASS-DEFAULT = "default";
+define constant $style-class-default = "default";
 
-define constant $STYLE-CLASS-DND = "dnd";
+define constant $style-class-dnd = "dnd";
 
-define constant $STYLE-CLASS-DOCK = "dock";
+define constant $style-class-dock = "dock";
 
-define constant $STYLE-CLASS-ENTRY = "entry";
+define constant $style-class-entry = "entry";
 
-define constant $STYLE-CLASS-ERROR = "error";
+define constant $style-class-error = "error";
 
-define constant $STYLE-CLASS-EXPANDER = "expander";
+define constant $style-class-expander = "expander";
 
-define constant $STYLE-CLASS-FRAME = "frame";
+define constant $style-class-frame = "frame";
 
-define constant $STYLE-CLASS-GRIP = "grip";
+define constant $style-class-grip = "grip";
 
-define constant $STYLE-CLASS-HEADER = "header";
+define constant $style-class-header = "header";
 
-define constant $STYLE-CLASS-HIGHLIGHT = "highlight";
+define constant $style-class-highlight = "highlight";
 
-define constant $STYLE-CLASS-HORIZONTAL = "horizontal";
+define constant $style-class-horizontal = "horizontal";
 
-define constant $STYLE-CLASS-IMAGE = "image";
+define constant $style-class-image = "image";
 
-define constant $STYLE-CLASS-INFO = "info";
+define constant $style-class-info = "info";
 
-define constant $STYLE-CLASS-INLINE-TOOLBAR = "inline-toolbar";
+define constant $style-class-inline-toolbar = "inline-toolbar";
 
-define constant $STYLE-CLASS-LEFT = "left";
+define constant $style-class-left = "left";
 
-define constant $STYLE-CLASS-LINKED = "linked";
+define constant $style-class-linked = "linked";
 
-define constant $STYLE-CLASS-MARK = "mark";
+define constant $style-class-mark = "mark";
 
-define constant $STYLE-CLASS-MENU = "menu";
+define constant $style-class-menu = "menu";
 
-define constant $STYLE-CLASS-MENUBAR = "menubar";
+define constant $style-class-menubar = "menubar";
 
-define constant $STYLE-CLASS-MENUITEM = "menuitem";
+define constant $style-class-menuitem = "menuitem";
 
-define constant $STYLE-CLASS-NOTEBOOK = "notebook";
+define constant $style-class-notebook = "notebook";
 
-define constant $STYLE-CLASS-PANE-SEPARATOR = "pane-separator";
+define constant $style-class-pane-separator = "pane-separator";
 
-define constant $STYLE-CLASS-PRIMARY-TOOLBAR = "primary-toolbar";
+define constant $style-class-primary-toolbar = "primary-toolbar";
 
-define constant $STYLE-CLASS-PROGRESSBAR = "progressbar";
+define constant $style-class-progressbar = "progressbar";
 
-define constant $STYLE-CLASS-PULSE = "pulse";
+define constant $style-class-pulse = "pulse";
 
-define constant $STYLE-CLASS-QUESTION = "question";
+define constant $style-class-question = "question";
 
-define constant $STYLE-CLASS-RADIO = "radio";
+define constant $style-class-radio = "radio";
 
-define constant $STYLE-CLASS-RAISED = "raised";
+define constant $style-class-raised = "raised";
 
-define constant $STYLE-CLASS-RIGHT = "right";
+define constant $style-class-right = "right";
 
-define constant $STYLE-CLASS-RUBBERBAND = "rubberband";
+define constant $style-class-rubberband = "rubberband";
 
-define constant $STYLE-CLASS-SCALE = "scale";
+define constant $style-class-scale = "scale";
 
-define constant $STYLE-CLASS-SCALE-HAS-MARKS-ABOVE = "scale-has-marks-above";
+define constant $style-class-scale-has-marks-above = "scale-has-marks-above";
 
-define constant $STYLE-CLASS-SCALE-HAS-MARKS-BELOW = "scale-has-marks-below";
+define constant $style-class-scale-has-marks-below = "scale-has-marks-below";
 
-define constant $STYLE-CLASS-SCROLLBAR = "scrollbar";
+define constant $style-class-scrollbar = "scrollbar";
 
-define constant $STYLE-CLASS-SCROLLBARS-JUNCTION = "scrollbars-junction";
+define constant $style-class-scrollbars-junction = "scrollbars-junction";
 
-define constant $STYLE-CLASS-SEPARATOR = "separator";
+define constant $style-class-separator = "separator";
 
-define constant $STYLE-CLASS-SIDEBAR = "sidebar";
+define constant $style-class-sidebar = "sidebar";
 
-define constant $STYLE-CLASS-SLIDER = "slider";
+define constant $style-class-slider = "slider";
 
-define constant $STYLE-CLASS-SPINBUTTON = "spinbutton";
+define constant $style-class-spinbutton = "spinbutton";
 
-define constant $STYLE-CLASS-SPINNER = "spinner";
+define constant $style-class-spinner = "spinner";
 
-define constant $STYLE-CLASS-TOOLBAR = "toolbar";
+define constant $style-class-toolbar = "toolbar";
 
-define constant $STYLE-CLASS-TOOLTIP = "tooltip";
+define constant $style-class-tooltip = "tooltip";
 
-define constant $STYLE-CLASS-TOP = "top";
+define constant $style-class-top = "top";
 
-define constant $STYLE-CLASS-TROUGH = "trough";
+define constant $style-class-trough = "trough";
 
-define constant $STYLE-CLASS-VERTICAL = "vertical";
+define constant $style-class-vertical = "vertical";
 
-define constant $STYLE-CLASS-VIEW = "view";
+define constant $style-class-view = "view";
 
-define constant $STYLE-CLASS-WARNING = "warning";
+define constant $style-class-warning = "warning";
 
-define constant $STYLE-PROPERTY-BACKGROUND-COLOR = "background-color";
+define constant $style-property-background-color = "background-color";
 
-define constant $STYLE-PROPERTY-BACKGROUND-IMAGE = "background-image";
+define constant $style-property-background-image = "background-image";
 
-define constant $STYLE-PROPERTY-BORDER-COLOR = "border-color";
+define constant $style-property-border-color = "border-color";
 
-define constant $STYLE-PROPERTY-BORDER-RADIUS = "border-radius";
+define constant $style-property-border-radius = "border-radius";
 
-define constant $STYLE-PROPERTY-BORDER-STYLE = "border-style";
+define constant $style-property-border-style = "border-style";
 
-define constant $STYLE-PROPERTY-BORDER-WIDTH = "border-width";
+define constant $style-property-border-width = "border-width";
 
-define constant $STYLE-PROPERTY-COLOR = "color";
+define constant $style-property-color = "color";
 
-define constant $STYLE-PROPERTY-FONT = "font";
+define constant $style-property-font = "font";
 
-define constant $STYLE-PROPERTY-MARGIN = "margin";
+define constant $style-property-margin = "margin";
 
-define constant $STYLE-PROPERTY-PADDING = "padding";
+define constant $style-property-padding = "padding";
 
-define constant $STYLE-PROVIDER-PRIORITY-APPLICATION = 600;
+define constant $style-provider-priority-application = 600;
 
-define constant $STYLE-PROVIDER-PRIORITY-FALLBACK = 1;
+define constant $style-provider-priority-fallback = 1;
 
-define constant $STYLE-PROVIDER-PRIORITY-SETTINGS = 400;
+define constant $style-provider-priority-settings = 400;
 
-define constant $STYLE-PROVIDER-PRIORITY-THEME = 200;
+define constant $style-provider-priority-theme = 200;
 
-define constant $STYLE-PROVIDER-PRIORITY-USER = 800;
+define constant $style-provider-priority-user = 800;
 
-define constant $STYLE-REGION-COLUMN = "column";
+define constant $style-region-column = "column";
 
-define constant $STYLE-REGION-COLUMN-HEADER = "column-header";
+define constant $style-region-column-header = "column-header";
 
-define constant $STYLE-REGION-ROW = "row";
+define constant $style-region-row = "row";
 
-define constant $STYLE-REGION-TAB = "tab";
+define constant $style-region-tab = "tab";
 
 define open C-subtype <GtkScale> (<GtkRange>)
-  constant slot gtkscale-range :: <GtkRange>;
-  constant slot gtkscale-priv :: <GtkScalePrivate>;
+  constant slot gtk-scale-range :: <GtkRange>;
+  constant slot gtk-scale-priv :: <GtkScalePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkScale*> => <GtkScale>;
 
-define property-getter scale-digits :: <C-signed-int> on <GtkScale> end;
-define property-setter scale-digits :: <C-signed-int> on <GtkScale> end;
-define property-getter scale-draw-value :: <C-boolean> on <GtkScale> end;
-define property-setter scale-draw-value :: <C-boolean> on <GtkScale> end;
-define property-getter scale-has-origin :: <C-boolean> on <GtkScale> end;
-define property-setter scale-has-origin :: <C-boolean> on <GtkScale> end;
-define property-getter scale-value-pos :: <GtkPositionType> on <GtkScale> end;
-define property-setter scale-value-pos :: <GtkPositionType> on <GtkScale> end;
 define C-function gtk-scale-new
   input parameter orientation_ :: <GtkOrientation>;
   input parameter adjustment_ :: <GtkAdjustment>;
@@ -16007,20 +15059,12 @@ define C-function gtk-scale-set-value-pos
 end;
 
 define open C-subtype <GtkScaleButton> (<GtkButton>)
-  constant slot gtkscalebutton-parent :: <GtkButton>;
-  constant slot gtkscalebutton-priv :: <GtkScaleButtonPrivate>;
+  constant slot gtk-scale-button-parent :: <GtkButton>;
+  constant slot gtk-scale-button-priv :: <GtkScaleButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkScaleButton*> => <GtkScaleButton>;
 
-define property-getter scalebutton-adjustment :: <GtkAdjustment> on <GtkScaleButton> end;
-define property-setter scalebutton-adjustment :: <GtkAdjustment> on <GtkScaleButton> end;
-define property-getter scalebutton-icons :: <C-string*> on <GtkScaleButton> end;
-define property-setter scalebutton-icons :: <C-string*> on <GtkScaleButton> end;
-define property-getter scalebutton-size :: <GtkIconSize> on <GtkScaleButton> end;
-define property-setter scalebutton-size :: <GtkIconSize> on <GtkScaleButton> end;
-define property-getter scalebutton-value :: <C-double> on <GtkScaleButton> end;
-define property-setter scalebutton-value :: <C-double> on <GtkScaleButton> end;
 define C-function gtk-scale-button-new
   input parameter size_ :: <C-signed-int>;
   input parameter min_ :: <C-double>;
@@ -16080,12 +15124,12 @@ define C-function gtk-scale-button-set-value
 end;
 
 define C-struct <_GtkScaleButtonClass>
-  constant slot gtkscalebuttonclass-parent-class :: <GtkButtonClass>;
-  constant slot gtkscalebuttonclass-value-changed :: <C-function-pointer>;
-  constant slot gtkscalebuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkscalebuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkscalebuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkscalebuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-scale-button-class-parent-class :: <GtkButtonClass>;
+  constant slot gtk-scale-button-class-value-changed :: <C-function-pointer>;
+  constant slot gtk-scale-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-scale-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-scale-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-scale-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkScaleButtonClass>;
 end C-struct;
 
@@ -16094,14 +15138,14 @@ define C-struct <_GtkScaleButtonPrivate>
 end C-struct;
 
 define C-struct <_GtkScaleClass>
-  constant slot gtkscaleclass-parent-class :: <GtkRangeClass>;
-  constant slot gtkscaleclass-format-value :: <C-function-pointer>;
-  constant slot gtkscaleclass-draw-value :: <C-function-pointer>;
-  constant slot gtkscaleclass-get-layout-offsets :: <C-function-pointer>;
-  constant slot gtkscaleclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkscaleclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkscaleclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkscaleclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-scale-class-parent-class :: <GtkRangeClass>;
+  constant slot gtk-scale-class-format-value :: <C-function-pointer>;
+  constant slot gtk-scale-class-draw-value :: <C-function-pointer>;
+  constant slot gtk-scale-class-get-layout-offsets :: <C-function-pointer>;
+  constant slot gtk-scale-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-scale-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-scale-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-scale-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkScaleClass>;
 end C-struct;
 
@@ -16109,31 +15153,31 @@ define C-struct <_GtkScalePrivate>
   pointer-type-name: <GtkScalePrivate>;
 end C-struct;
 
-define constant $GTK-SCROLL-STEPS = 0;
-define constant $GTK-SCROLL-PAGES = 1;
-define constant $GTK-SCROLL-ENDS = 2;
-define constant $GTK-SCROLL-HORIZONTAL-STEPS = 3;
-define constant $GTK-SCROLL-HORIZONTAL-PAGES = 4;
-define constant $GTK-SCROLL-HORIZONTAL-ENDS = 5;
+define constant $gtk-scroll-steps = 0;
+define constant $gtk-scroll-pages = 1;
+define constant $gtk-scroll-ends = 2;
+define constant $gtk-scroll-horizontal-steps = 3;
+define constant $gtk-scroll-horizontal-pages = 4;
+define constant $gtk-scroll-horizontal-ends = 5;
 define constant <GtkScrollStep> = <C-int>;
 define C-pointer-type <GtkScrollStep*> => <GtkScrollStep>;
 
-define constant $GTK-SCROLL-NONE = 0;
-define constant $GTK-SCROLL-JUMP = 1;
-define constant $GTK-SCROLL-STEP-BACKWARD = 2;
-define constant $GTK-SCROLL-STEP-FORWARD = 3;
-define constant $GTK-SCROLL-PAGE-BACKWARD = 4;
-define constant $GTK-SCROLL-PAGE-FORWARD = 5;
-define constant $GTK-SCROLL-STEP-UP = 6;
-define constant $GTK-SCROLL-STEP-DOWN = 7;
-define constant $GTK-SCROLL-PAGE-UP = 8;
-define constant $GTK-SCROLL-PAGE-DOWN = 9;
-define constant $GTK-SCROLL-STEP-LEFT = 10;
-define constant $GTK-SCROLL-STEP-RIGHT = 11;
-define constant $GTK-SCROLL-PAGE-LEFT = 12;
-define constant $GTK-SCROLL-PAGE-RIGHT = 13;
-define constant $GTK-SCROLL-START = 14;
-define constant $GTK-SCROLL-END = 15;
+define constant $gtk-scroll-none = 0;
+define constant $gtk-scroll-jump = 1;
+define constant $gtk-scroll-step-backward = 2;
+define constant $gtk-scroll-step-forward = 3;
+define constant $gtk-scroll-page-backward = 4;
+define constant $gtk-scroll-page-forward = 5;
+define constant $gtk-scroll-step-up = 6;
+define constant $gtk-scroll-step-down = 7;
+define constant $gtk-scroll-page-up = 8;
+define constant $gtk-scroll-page-down = 9;
+define constant $gtk-scroll-step-left = 10;
+define constant $gtk-scroll-step-right = 11;
+define constant $gtk-scroll-page-left = 12;
+define constant $gtk-scroll-page-right = 13;
+define constant $gtk-scroll-start = 14;
+define constant $gtk-scroll-end = 15;
 define constant <GtkScrollType> = <C-int>;
 define C-pointer-type <GtkScrollType*> => <GtkScrollType>;
 
@@ -16192,17 +15236,17 @@ define C-function gtk-scrollable-set-vscroll-policy
 end;
 
 define C-struct <_GtkScrollableInterface>
-  constant slot gtkscrollableinterface-base-iface :: <GTypeInterface>;
+  constant slot gtk-scrollable-interface-base-iface :: <GTypeInterface>;
   pointer-type-name: <GtkScrollableInterface>;
 end C-struct;
 
-define constant $GTK-SCROLL-MINIMUM = 0;
-define constant $GTK-SCROLL-NATURAL = 1;
+define constant $gtk-scroll-minimum = 0;
+define constant $gtk-scroll-natural = 1;
 define constant <GtkScrollablePolicy> = <C-int>;
 define C-pointer-type <GtkScrollablePolicy*> => <GtkScrollablePolicy>;
 
 define open C-subtype <GtkScrollbar> (<GtkRange>)
-  constant slot gtkscrollbar-range :: <GtkRange>;
+  constant slot gtk-scrollbar-range :: <GtkRange>;
 end C-subtype;
 
 define C-pointer-type <GtkScrollbar*> => <GtkScrollbar>;
@@ -16215,41 +15259,21 @@ define C-function gtk-scrollbar-new
 end;
 
 define C-struct <_GtkScrollbarClass>
-  constant slot gtkscrollbarclass-parent-class :: <GtkRangeClass>;
-  constant slot gtkscrollbarclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkscrollbarclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkscrollbarclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkscrollbarclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-scrollbar-class-parent-class :: <GtkRangeClass>;
+  constant slot gtk-scrollbar-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-scrollbar-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-scrollbar-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-scrollbar-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkScrollbarClass>;
 end C-struct;
 
 define open C-subtype <GtkScrolledWindow> (<GtkBin>)
-  constant slot gtkscrolledwindow-container :: <GtkBin>;
-  constant slot gtkscrolledwindow-priv :: <GtkScrolledWindowPrivate>;
+  constant slot gtk-scrolled-window-container :: <GtkBin>;
+  constant slot gtk-scrolled-window-priv :: <GtkScrolledWindowPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkScrolledWindow*> => <GtkScrolledWindow>;
 
-define property-getter scrolledwindow-hadjustment :: <GtkAdjustment> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-hadjustment :: <GtkAdjustment> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-hscrollbar-policy :: <GtkPolicyType> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-hscrollbar-policy :: <GtkPolicyType> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-kinetic-scrolling :: <C-boolean> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-kinetic-scrolling :: <C-boolean> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-min-content-height :: <C-signed-int> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-min-content-height :: <C-signed-int> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-min-content-width :: <C-signed-int> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-min-content-width :: <C-signed-int> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-shadow-type :: <GtkShadowType> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-shadow-type :: <GtkShadowType> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-vadjustment :: <GtkAdjustment> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-vadjustment :: <GtkAdjustment> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-vscrollbar-policy :: <GtkPolicyType> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-vscrollbar-policy :: <GtkPolicyType> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-window-placement :: <GtkCornerType> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-window-placement :: <GtkCornerType> on <GtkScrolledWindow> end;
-define property-getter scrolledwindow-window-placement-set :: <C-boolean> on <GtkScrolledWindow> end;
-define property-setter scrolledwindow-window-placement-set :: <C-boolean> on <GtkScrolledWindow> end;
 define C-function gtk-scrolled-window-new
   input parameter hadjustment_ :: <GtkAdjustment>;
   input parameter vadjustment_ :: <GtkAdjustment>;
@@ -16391,14 +15415,14 @@ define C-function gtk-scrolled-window-unset-placement
 end;
 
 define C-struct <_GtkScrolledWindowClass>
-  constant slot gtkscrolledwindowclass-parent-class :: <GtkBinClass>;
-  constant slot gtkscrolledwindowclass-scrollbar-spacing :: <C-signed-int>;
-  constant slot gtkscrolledwindowclass-scroll-child :: <C-function-pointer>;
-  constant slot gtkscrolledwindowclass-move-focus-out :: <C-function-pointer>;
-  constant slot gtkscrolledwindowclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkscrolledwindowclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkscrolledwindowclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkscrolledwindowclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-scrolled-window-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-scrolled-window-class-scrollbar-spacing :: <C-signed-int>;
+  constant slot gtk-scrolled-window-class-scroll-child :: <C-function-pointer>;
+  constant slot gtk-scrolled-window-class-move-focus-out :: <C-function-pointer>;
+  constant slot gtk-scrolled-window-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-scrolled-window-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-scrolled-window-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-scrolled-window-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkScrolledWindowClass>;
 end C-struct;
 
@@ -16547,22 +15571,22 @@ define C-function gtk-selection-data-targets-include-uri
   c-name: "gtk_selection_data_targets_include_uri";
 end;
 
-define constant $GTK-SELECTION-NONE = 0;
-define constant $GTK-SELECTION-SINGLE = 1;
-define constant $GTK-SELECTION-BROWSE = 2;
-define constant $GTK-SELECTION-MULTIPLE = 3;
+define constant $gtk-selection-none = 0;
+define constant $gtk-selection-single = 1;
+define constant $gtk-selection-browse = 2;
+define constant $gtk-selection-multiple = 3;
 define constant <GtkSelectionMode> = <C-int>;
 define C-pointer-type <GtkSelectionMode*> => <GtkSelectionMode>;
 
-define constant $GTK-SENSITIVITY-AUTO = 0;
-define constant $GTK-SENSITIVITY-ON = 1;
-define constant $GTK-SENSITIVITY-OFF = 2;
+define constant $gtk-sensitivity-auto = 0;
+define constant $gtk-sensitivity-on = 1;
+define constant $gtk-sensitivity-off = 2;
 define constant <GtkSensitivityType> = <C-int>;
 define C-pointer-type <GtkSensitivityType*> => <GtkSensitivityType>;
 
 define open C-subtype <GtkSeparator> (<GtkWidget>)
-  constant slot gtkseparator-widget :: <GtkWidget>;
-  constant slot gtkseparator-priv :: <GtkSeparatorPrivate>;
+  constant slot gtk-separator-widget :: <GtkWidget>;
+  constant slot gtk-separator-priv :: <GtkSeparatorPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkSeparator*> => <GtkSeparator>;
@@ -16574,16 +15598,16 @@ define C-function gtk-separator-new
 end;
 
 define C-struct <_GtkSeparatorClass>
-  constant slot gtkseparatorclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkseparatorclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkseparatorclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkseparatorclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkseparatorclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-separator-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-separator-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-separator-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-separator-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-separator-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkSeparatorClass>;
 end C-struct;
 
 define open C-subtype <GtkSeparatorMenuItem> (<GtkMenuItem>)
-  constant slot gtkseparatormenuitem-menu-item :: <GtkMenuItem>;
+  constant slot gtk-separator-menu-item-menu-item :: <GtkMenuItem>;
 end C-subtype;
 
 define C-pointer-type <GtkSeparatorMenuItem*> => <GtkSeparatorMenuItem>;
@@ -16594,11 +15618,11 @@ define C-function gtk-separator-menu-item-new
 end;
 
 define C-struct <_GtkSeparatorMenuItemClass>
-  constant slot gtkseparatormenuitemclass-parent-class :: <GtkMenuItemClass>;
-  constant slot gtkseparatormenuitemclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkseparatormenuitemclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkseparatormenuitemclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkseparatormenuitemclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-separator-menu-item-class-parent-class :: <GtkMenuItemClass>;
+  constant slot gtk-separator-menu-item-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-separator-menu-item-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-separator-menu-item-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-separator-menu-item-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkSeparatorMenuItemClass>;
 end C-struct;
 
@@ -16607,14 +15631,12 @@ define C-struct <_GtkSeparatorPrivate>
 end C-struct;
 
 define open C-subtype <GtkSeparatorToolItem> (<GtkToolItem>)
-  constant slot gtkseparatortoolitem-parent :: <GtkToolItem>;
-  constant slot gtkseparatortoolitem-priv :: <GtkSeparatorToolItemPrivate>;
+  constant slot gtk-separator-tool-item-parent :: <GtkToolItem>;
+  constant slot gtk-separator-tool-item-priv :: <GtkSeparatorToolItemPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkSeparatorToolItem*> => <GtkSeparatorToolItem>;
 
-define property-getter separatortoolitem-draw :: <C-boolean> on <GtkSeparatorToolItem> end;
-define property-setter separatortoolitem-draw :: <C-boolean> on <GtkSeparatorToolItem> end;
 define C-function gtk-separator-tool-item-new
   result res :: <GtkToolItem>;
   c-name: "gtk_separator_tool_item_new";
@@ -16633,11 +15655,11 @@ define C-function gtk-separator-tool-item-set-draw
 end;
 
 define C-struct <_GtkSeparatorToolItemClass>
-  constant slot gtkseparatortoolitemclass-parent-class :: <GtkToolItemClass>;
-  constant slot gtkseparatortoolitemclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkseparatortoolitemclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkseparatortoolitemclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkseparatortoolitemclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-separator-tool-item-class-parent-class :: <GtkToolItemClass>;
+  constant slot gtk-separator-tool-item-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-separator-tool-item-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-separator-tool-item-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-separator-tool-item-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkSeparatorToolItemClass>;
 end C-struct;
 
@@ -16646,155 +15668,12 @@ define C-struct <_GtkSeparatorToolItemPrivate>
 end C-struct;
 
 define open C-subtype <GtkSettings> (<GObject>)
-  constant slot gtksettings-parent-instance :: <GObject>;
-  constant slot gtksettings-priv :: <GtkSettingsPrivate>;
+  constant slot gtk-settings-parent-instance :: <GObject>;
+  constant slot gtk-settings-priv :: <GtkSettingsPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkSettings*> => <GtkSettings>;
 
-define property-getter settings-color-hash :: <GHashTable> on <GtkSettings> end;
-define property-getter settings-gtk-alternative-button-order :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-alternative-button-order :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-alternative-sort-arrows :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-alternative-sort-arrows :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-application-prefer-dark-theme :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-application-prefer-dark-theme :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-auto-mnemonics :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-auto-mnemonics :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-button-images :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-button-images :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-can-change-accels :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-can-change-accels :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-color-palette :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-color-palette :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-color-scheme :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-color-scheme :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-cursor-blink :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-cursor-blink :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-cursor-blink-time :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-cursor-blink-time :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-cursor-blink-timeout :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-cursor-blink-timeout :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-cursor-theme-name :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-cursor-theme-name :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-cursor-theme-size :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-cursor-theme-size :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-dnd-drag-threshold :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-dnd-drag-threshold :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-double-click-distance :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-double-click-distance :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-double-click-time :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-double-click-time :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-enable-accels :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-enable-accels :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-enable-animations :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-enable-animations :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-enable-event-sounds :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-enable-event-sounds :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-enable-input-feedback-sounds :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-enable-input-feedback-sounds :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-enable-mnemonics :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-enable-mnemonics :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-enable-tooltips :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-enable-tooltips :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-entry-password-hint-timeout :: <C-unsigned-int> on <GtkSettings> end;
-define property-setter settings-gtk-entry-password-hint-timeout :: <C-unsigned-int> on <GtkSettings> end;
-define property-getter settings-gtk-entry-select-on-focus :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-entry-select-on-focus :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-error-bell :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-error-bell :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-fallback-icon-theme :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-fallback-icon-theme :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-file-chooser-backend :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-file-chooser-backend :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-font-name :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-font-name :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-fontconfig-timestamp :: <C-unsigned-int> on <GtkSettings> end;
-define property-setter settings-gtk-fontconfig-timestamp :: <C-unsigned-int> on <GtkSettings> end;
-define property-getter settings-gtk-icon-sizes :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-icon-sizes :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-icon-theme-name :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-icon-theme-name :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-im-module :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-im-module :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-im-preedit-style :: <GtkIMPreeditStyle> on <GtkSettings> end;
-define property-setter settings-gtk-im-preedit-style :: <GtkIMPreeditStyle> on <GtkSettings> end;
-define property-getter settings-gtk-im-status-style :: <GtkIMStatusStyle> on <GtkSettings> end;
-define property-setter settings-gtk-im-status-style :: <GtkIMStatusStyle> on <GtkSettings> end;
-define property-getter settings-gtk-key-theme-name :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-key-theme-name :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-keynav-cursor-only :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-keynav-cursor-only :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-keynav-wrap-around :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-keynav-wrap-around :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-label-select-on-focus :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-label-select-on-focus :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-menu-bar-accel :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-menu-bar-accel :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-menu-bar-popup-delay :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-menu-bar-popup-delay :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-menu-images :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-menu-images :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-menu-popdown-delay :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-menu-popdown-delay :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-menu-popup-delay :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-menu-popup-delay :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-modules :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-modules :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-print-backends :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-print-backends :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-print-preview-command :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-print-preview-command :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-recent-files-limit :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-recent-files-limit :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-recent-files-max-age :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-recent-files-max-age :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-scrolled-window-placement :: <GtkCornerType> on <GtkSettings> end;
-define property-setter settings-gtk-scrolled-window-placement :: <GtkCornerType> on <GtkSettings> end;
-define property-getter settings-gtk-shell-shows-app-menu :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-shell-shows-app-menu :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-shell-shows-menubar :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-shell-shows-menubar :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-show-input-method-menu :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-show-input-method-menu :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-show-unicode-menu :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-show-unicode-menu :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-sound-theme-name :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-sound-theme-name :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-split-cursor :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-split-cursor :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-theme-name :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-theme-name :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-timeout-expand :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-timeout-expand :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-timeout-initial :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-timeout-initial :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-timeout-repeat :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-timeout-repeat :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-toolbar-icon-size :: <GtkIconSize> on <GtkSettings> end;
-define property-setter settings-gtk-toolbar-icon-size :: <GtkIconSize> on <GtkSettings> end;
-define property-getter settings-gtk-toolbar-style :: <GtkToolbarStyle> on <GtkSettings> end;
-define property-setter settings-gtk-toolbar-style :: <GtkToolbarStyle> on <GtkSettings> end;
-define property-getter settings-gtk-tooltip-browse-mode-timeout :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-tooltip-browse-mode-timeout :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-tooltip-browse-timeout :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-tooltip-browse-timeout :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-tooltip-timeout :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-tooltip-timeout :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-touchscreen-mode :: <C-boolean> on <GtkSettings> end;
-define property-setter settings-gtk-touchscreen-mode :: <C-boolean> on <GtkSettings> end;
-define property-getter settings-gtk-visible-focus :: <GtkPolicyType> on <GtkSettings> end;
-define property-setter settings-gtk-visible-focus :: <GtkPolicyType> on <GtkSettings> end;
-define property-getter settings-gtk-xft-antialias :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-xft-antialias :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-xft-dpi :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-xft-dpi :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-xft-hinting :: <C-signed-int> on <GtkSettings> end;
-define property-setter settings-gtk-xft-hinting :: <C-signed-int> on <GtkSettings> end;
-define property-getter settings-gtk-xft-hintstyle :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-xft-hintstyle :: <C-string> on <GtkSettings> end;
-define property-getter settings-gtk-xft-rgba :: <C-string> on <GtkSettings> end;
-define property-setter settings-gtk-xft-rgba :: <C-string> on <GtkSettings> end;
 define C-function gtk-settings-get-default
   result res :: <GtkSettings>;
   c-name: "gtk_settings_get_default";
@@ -16849,11 +15728,11 @@ define C-function gtk-settings-set-string-property
 end;
 
 define C-struct <_GtkSettingsClass>
-  constant slot gtksettingsclass-parent-class :: <GObjectClass>;
-  constant slot gtksettingsclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtksettingsclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtksettingsclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtksettingsclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-settings-class-parent-class :: <GObjectClass>;
+  constant slot gtk-settings-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-settings-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-settings-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-settings-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkSettingsClass>;
 end C-struct;
 
@@ -16862,30 +15741,26 @@ define C-struct <_GtkSettingsPrivate>
 end C-struct;
 
 define C-struct <_GtkSettingsValue>
-  slot gtksettingsvalue-origin :: <C-string>;
-  slot gtksettingsvalue-value :: <GValue>;
+  slot gtk-settings-value-origin :: <C-string>;
+  slot gtk-settings-value-value :: <GValue>;
   pointer-type-name: <GtkSettingsValue>;
 end C-struct;
 
-define constant $GTK-SHADOW-NONE = 0;
-define constant $GTK-SHADOW-IN = 1;
-define constant $GTK-SHADOW-OUT = 2;
-define constant $GTK-SHADOW-ETCHED-IN = 3;
-define constant $GTK-SHADOW-ETCHED-OUT = 4;
+define constant $gtk-shadow-none = 0;
+define constant $gtk-shadow-in = 1;
+define constant $gtk-shadow-out = 2;
+define constant $gtk-shadow-etched-in = 3;
+define constant $gtk-shadow-etched-out = 4;
 define constant <GtkShadowType> = <C-int>;
 define C-pointer-type <GtkShadowType*> => <GtkShadowType>;
 
 define open C-subtype <GtkSizeGroup> (<GObject>)
-  constant slot gtksizegroup-parent-instance :: <GObject>;
-  constant slot gtksizegroup-priv :: <GtkSizeGroupPrivate>;
+  constant slot gtk-size-group-parent-instance :: <GObject>;
+  constant slot gtk-size-group-priv :: <GtkSizeGroupPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkSizeGroup*> => <GtkSizeGroup>;
 
-define property-getter sizegroup-ignore-hidden :: <C-boolean> on <GtkSizeGroup> end;
-define property-setter sizegroup-ignore-hidden :: <C-boolean> on <GtkSizeGroup> end;
-define property-getter sizegroup-mode :: <GtkSizeGroupMode> on <GtkSizeGroup> end;
-define property-setter sizegroup-mode :: <GtkSizeGroupMode> on <GtkSizeGroup> end;
 define C-function gtk-size-group-new
   input parameter mode_ :: <GtkSizeGroupMode>;
   result res :: <GtkSizeGroup>;
@@ -16935,18 +15810,18 @@ define C-function gtk-size-group-set-mode
 end;
 
 define C-struct <_GtkSizeGroupClass>
-  constant slot gtksizegroupclass-parent-class :: <GObjectClass>;
-  constant slot gtksizegroupclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtksizegroupclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtksizegroupclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtksizegroupclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-size-group-class-parent-class :: <GObjectClass>;
+  constant slot gtk-size-group-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-size-group-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-size-group-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-size-group-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkSizeGroupClass>;
 end C-struct;
 
-define constant $GTK-SIZE-GROUP-NONE = 0;
-define constant $GTK-SIZE-GROUP-HORIZONTAL = 1;
-define constant $GTK-SIZE-GROUP-VERTICAL = 2;
-define constant $GTK-SIZE-GROUP-BOTH = 3;
+define constant $gtk-size-group-none = 0;
+define constant $gtk-size-group-horizontal = 1;
+define constant $gtk-size-group-vertical = 2;
+define constant $gtk-size-group-both = 3;
 define constant <GtkSizeGroupMode> = <C-int>;
 define C-pointer-type <GtkSizeGroupMode*> => <GtkSizeGroupMode>;
 
@@ -16954,15 +15829,15 @@ define C-struct <_GtkSizeGroupPrivate>
   pointer-type-name: <GtkSizeGroupPrivate>;
 end C-struct;
 
-define constant $GTK-SIZE-REQUEST-HEIGHT-FOR-WIDTH = 0;
-define constant $GTK-SIZE-REQUEST-WIDTH-FOR-HEIGHT = 1;
-define constant $GTK-SIZE-REQUEST-CONSTANT-SIZE = 2;
+define constant $gtk-size-request-height-for-width = 0;
+define constant $gtk-size-request-width-for-height = 1;
+define constant $gtk-size-request-constant-size = 2;
 define constant <GtkSizeRequestMode> = <C-int>;
 define C-pointer-type <GtkSizeRequestMode*> => <GtkSizeRequestMode>;
 
 define open C-subtype <GtkSocket> (<GtkContainer>)
-  constant slot gtksocket-container :: <GtkContainer>;
-  constant slot gtksocket-priv :: <GtkSocketPrivate>;
+  constant slot gtk-socket-container :: <GtkContainer>;
+  constant slot gtk-socket-priv :: <GtkSocketPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkSocket*> => <GtkSocket>;
@@ -16991,13 +15866,13 @@ define C-function gtk-socket-get-plug-window
 end;
 
 define C-struct <_GtkSocketClass>
-  constant slot gtksocketclass-parent-class :: <GtkContainerClass>;
-  constant slot gtksocketclass-plug-added :: <C-function-pointer>;
-  constant slot gtksocketclass-plug-removed :: <C-function-pointer>;
-  constant slot gtksocketclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtksocketclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtksocketclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtksocketclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-socket-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-socket-class-plug-added :: <C-function-pointer>;
+  constant slot gtk-socket-class-plug-removed :: <C-function-pointer>;
+  constant slot gtk-socket-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-socket-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-socket-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-socket-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkSocketClass>;
 end C-struct;
 
@@ -17005,34 +15880,18 @@ define C-struct <_GtkSocketPrivate>
   pointer-type-name: <GtkSocketPrivate>;
 end C-struct;
 
-define constant $GTK-SORT-ASCENDING = 0;
-define constant $GTK-SORT-DESCENDING = 1;
+define constant $gtk-sort-ascending = 0;
+define constant $gtk-sort-descending = 1;
 define constant <GtkSortType> = <C-int>;
 define C-pointer-type <GtkSortType*> => <GtkSortType>;
 
 define open C-subtype <GtkSpinButton> (<GtkEntry>)
-  constant slot gtkspinbutton-entry :: <GtkEntry>;
-  constant slot gtkspinbutton-priv :: <GtkSpinButtonPrivate>;
+  constant slot gtk-spin-button-entry :: <GtkEntry>;
+  constant slot gtk-spin-button-priv :: <GtkSpinButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkSpinButton*> => <GtkSpinButton>;
 
-define property-getter spinbutton-adjustment :: <GtkAdjustment> on <GtkSpinButton> end;
-define property-setter spinbutton-adjustment :: <GtkAdjustment> on <GtkSpinButton> end;
-define property-getter spinbutton-climb-rate :: <C-double> on <GtkSpinButton> end;
-define property-setter spinbutton-climb-rate :: <C-double> on <GtkSpinButton> end;
-define property-getter spinbutton-digits :: <C-unsigned-int> on <GtkSpinButton> end;
-define property-setter spinbutton-digits :: <C-unsigned-int> on <GtkSpinButton> end;
-define property-getter spinbutton-numeric :: <C-boolean> on <GtkSpinButton> end;
-define property-setter spinbutton-numeric :: <C-boolean> on <GtkSpinButton> end;
-define property-getter spinbutton-snap-to-ticks :: <C-boolean> on <GtkSpinButton> end;
-define property-setter spinbutton-snap-to-ticks :: <C-boolean> on <GtkSpinButton> end;
-define property-getter spinbutton-update-policy :: <GtkSpinButtonUpdatePolicy> on <GtkSpinButton> end;
-define property-setter spinbutton-update-policy :: <GtkSpinButtonUpdatePolicy> on <GtkSpinButton> end;
-define property-getter spinbutton-value :: <C-double> on <GtkSpinButton> end;
-define property-setter spinbutton-value :: <C-double> on <GtkSpinButton> end;
-define property-getter spinbutton-wrap :: <C-boolean> on <GtkSpinButton> end;
-define property-setter spinbutton-wrap :: <C-boolean> on <GtkSpinButton> end;
 define C-function gtk-spin-button-new
   input parameter adjustment_ :: <GtkAdjustment>;
   input parameter climb_rate_ :: <C-double>;
@@ -17188,16 +16047,16 @@ define C-function gtk-spin-button-update
 end;
 
 define C-struct <_GtkSpinButtonClass>
-  constant slot gtkspinbuttonclass-parent-class :: <GtkEntryClass>;
-  constant slot gtkspinbuttonclass-input :: <C-function-pointer>;
-  constant slot gtkspinbuttonclass-output :: <C-function-pointer>;
-  constant slot gtkspinbuttonclass-value-changed :: <C-function-pointer>;
-  constant slot gtkspinbuttonclass-change-value :: <C-function-pointer>;
-  constant slot gtkspinbuttonclass-wrapped :: <C-function-pointer>;
-  constant slot gtkspinbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkspinbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkspinbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkspinbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-spin-button-class-parent-class :: <GtkEntryClass>;
+  constant slot gtk-spin-button-class-input :: <C-function-pointer>;
+  constant slot gtk-spin-button-class-output :: <C-function-pointer>;
+  constant slot gtk-spin-button-class-value-changed :: <C-function-pointer>;
+  constant slot gtk-spin-button-class-change-value :: <C-function-pointer>;
+  constant slot gtk-spin-button-class-wrapped :: <C-function-pointer>;
+  constant slot gtk-spin-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-spin-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-spin-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-spin-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkSpinButtonClass>;
 end C-struct;
 
@@ -17205,30 +16064,28 @@ define C-struct <_GtkSpinButtonPrivate>
   pointer-type-name: <GtkSpinButtonPrivate>;
 end C-struct;
 
-define constant $GTK-UPDATE-ALWAYS = 0;
-define constant $GTK-UPDATE-IF-VALID = 1;
+define constant $gtk-update-always = 0;
+define constant $gtk-update-if-valid = 1;
 define constant <GtkSpinButtonUpdatePolicy> = <C-int>;
 define C-pointer-type <GtkSpinButtonUpdatePolicy*> => <GtkSpinButtonUpdatePolicy>;
 
-define constant $GTK-SPIN-STEP-FORWARD = 0;
-define constant $GTK-SPIN-STEP-BACKWARD = 1;
-define constant $GTK-SPIN-PAGE-FORWARD = 2;
-define constant $GTK-SPIN-PAGE-BACKWARD = 3;
-define constant $GTK-SPIN-HOME = 4;
-define constant $GTK-SPIN-END = 5;
-define constant $GTK-SPIN-USER-DEFINED = 6;
+define constant $gtk-spin-step-forward = 0;
+define constant $gtk-spin-step-backward = 1;
+define constant $gtk-spin-page-forward = 2;
+define constant $gtk-spin-page-backward = 3;
+define constant $gtk-spin-home = 4;
+define constant $gtk-spin-end = 5;
+define constant $gtk-spin-user-defined = 6;
 define constant <GtkSpinType> = <C-int>;
 define C-pointer-type <GtkSpinType*> => <GtkSpinType>;
 
 define open C-subtype <GtkSpinner> (<GtkWidget>)
-  constant slot gtkspinner-parent :: <GtkWidget>;
-  constant slot gtkspinner-priv :: <GtkSpinnerPrivate>;
+  constant slot gtk-spinner-parent :: <GtkWidget>;
+  constant slot gtk-spinner-priv :: <GtkSpinnerPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkSpinner*> => <GtkSpinner>;
 
-define property-getter spinner-active :: <C-boolean> on <GtkSpinner> end;
-define property-setter spinner-active :: <C-boolean> on <GtkSpinner> end;
 define C-function gtk-spinner-new
   result res :: <GtkWidget>;
   c-name: "gtk_spinner_new";
@@ -17245,11 +16102,11 @@ define C-function gtk-spinner-stop
 end;
 
 define C-struct <_GtkSpinnerClass>
-  constant slot gtkspinnerclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkspinnerclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkspinnerclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkspinnerclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkspinnerclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-spinner-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-spinner-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-spinner-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-spinner-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-spinner-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkSpinnerClass>;
 end C-struct;
 
@@ -17257,59 +16114,34 @@ define C-struct <_GtkSpinnerPrivate>
   pointer-type-name: <GtkSpinnerPrivate>;
 end C-struct;
 
-define constant $GTK-STATE-FLAG-NORMAL = 0;
-define constant $GTK-STATE-FLAG-ACTIVE = 1;
-define constant $GTK-STATE-FLAG-PRELIGHT = 2;
-define constant $GTK-STATE-FLAG-SELECTED = 4;
-define constant $GTK-STATE-FLAG-INSENSITIVE = 8;
-define constant $GTK-STATE-FLAG-INCONSISTENT = 16;
-define constant $GTK-STATE-FLAG-FOCUSED = 32;
-define constant $GTK-STATE-FLAG-BACKDROP = 64;
+define constant $gtk-state-flag-normal = 0;
+define constant $gtk-state-flag-active = 1;
+define constant $gtk-state-flag-prelight = 2;
+define constant $gtk-state-flag-selected = 4;
+define constant $gtk-state-flag-insensitive = 8;
+define constant $gtk-state-flag-inconsistent = 16;
+define constant $gtk-state-flag-focused = 32;
+define constant $gtk-state-flag-backdrop = 64;
 define constant <GtkStateFlags> = <C-int>;
 define C-pointer-type <GtkStateFlags*> => <GtkStateFlags>;
 
-define constant $GTK-STATE-NORMAL = 0;
-define constant $GTK-STATE-ACTIVE = 1;
-define constant $GTK-STATE-PRELIGHT = 2;
-define constant $GTK-STATE-SELECTED = 3;
-define constant $GTK-STATE-INSENSITIVE = 4;
-define constant $GTK-STATE-INCONSISTENT = 5;
-define constant $GTK-STATE-FOCUSED = 6;
+define constant $gtk-state-normal = 0;
+define constant $gtk-state-active = 1;
+define constant $gtk-state-prelight = 2;
+define constant $gtk-state-selected = 3;
+define constant $gtk-state-insensitive = 4;
+define constant $gtk-state-inconsistent = 5;
+define constant $gtk-state-focused = 6;
 define constant <GtkStateType> = <C-int>;
 define C-pointer-type <GtkStateType*> => <GtkStateType>;
 
 define open C-subtype <GtkStatusIcon> (<GObject>)
-  constant slot gtkstatusicon-parent-instance :: <GObject>;
-  constant slot gtkstatusicon-priv :: <GtkStatusIconPrivate>;
+  constant slot gtk-status-icon-parent-instance :: <GObject>;
+  constant slot gtk-status-icon-priv :: <GtkStatusIconPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkStatusIcon*> => <GtkStatusIcon>;
 
-define property-getter statusicon-embedded :: <C-boolean> on <GtkStatusIcon> end;
-define property-setter statusicon-file :: <C-string> on <GtkStatusIcon> end;
-define property-getter statusicon-gicon :: <GIcon> on <GtkStatusIcon> end;
-define property-setter statusicon-gicon :: <GIcon> on <GtkStatusIcon> end;
-define property-getter statusicon-has-tooltip :: <C-boolean> on <GtkStatusIcon> end;
-define property-setter statusicon-has-tooltip :: <C-boolean> on <GtkStatusIcon> end;
-define property-getter statusicon-icon-name :: <C-string> on <GtkStatusIcon> end;
-define property-setter statusicon-icon-name :: <C-string> on <GtkStatusIcon> end;
-define property-getter statusicon-orientation :: <GtkOrientation> on <GtkStatusIcon> end;
-define property-getter statusicon-pixbuf :: <GdkPixbuf> on <GtkStatusIcon> end;
-define property-setter statusicon-pixbuf :: <GdkPixbuf> on <GtkStatusIcon> end;
-define property-getter statusicon-screen :: <GdkScreen> on <GtkStatusIcon> end;
-define property-setter statusicon-screen :: <GdkScreen> on <GtkStatusIcon> end;
-define property-getter statusicon-size :: <C-signed-int> on <GtkStatusIcon> end;
-define property-getter statusicon-stock :: <C-string> on <GtkStatusIcon> end;
-define property-setter statusicon-stock :: <C-string> on <GtkStatusIcon> end;
-define property-getter statusicon-storage-type :: <GtkImageType> on <GtkStatusIcon> end;
-define property-getter statusicon-title :: <C-string> on <GtkStatusIcon> end;
-define property-setter statusicon-title :: <C-string> on <GtkStatusIcon> end;
-define property-getter statusicon-tooltip-markup :: <C-string> on <GtkStatusIcon> end;
-define property-setter statusicon-tooltip-markup :: <C-string> on <GtkStatusIcon> end;
-define property-getter statusicon-tooltip-text :: <C-string> on <GtkStatusIcon> end;
-define property-setter statusicon-tooltip-text :: <C-string> on <GtkStatusIcon> end;
-define property-getter statusicon-visible :: <C-boolean> on <GtkStatusIcon> end;
-define property-setter statusicon-visible :: <C-boolean> on <GtkStatusIcon> end;
 define C-function gtk-status-icon-new
   result res :: <GtkStatusIcon>;
   c-name: "gtk_status_icon_new";
@@ -17520,18 +16352,18 @@ define C-function gtk-status-icon-set-visible
 end;
 
 define C-struct <_GtkStatusIconClass>
-  constant slot gtkstatusiconclass-parent-class :: <GObjectClass>;
-  constant slot gtkstatusiconclass-activate :: <C-function-pointer>;
-  constant slot gtkstatusiconclass-popup-menu :: <C-function-pointer>;
-  constant slot gtkstatusiconclass-size-changed :: <C-function-pointer>;
-  constant slot gtkstatusiconclass-button-press-event :: <C-function-pointer>;
-  constant slot gtkstatusiconclass-button-release-event :: <C-function-pointer>;
-  constant slot gtkstatusiconclass-scroll-event :: <C-function-pointer>;
-  constant slot gtkstatusiconclass-query-tooltip :: <C-function-pointer>;
-  constant slot gtkstatusiconclass---gtk-reserved1 :: <C-void*>;
-  constant slot gtkstatusiconclass---gtk-reserved2 :: <C-void*>;
-  constant slot gtkstatusiconclass---gtk-reserved3 :: <C-void*>;
-  constant slot gtkstatusiconclass---gtk-reserved4 :: <C-void*>;
+  constant slot gtk-status-icon-class-parent-class :: <GObjectClass>;
+  constant slot gtk-status-icon-class-activate :: <C-function-pointer>;
+  constant slot gtk-status-icon-class-popup-menu :: <C-function-pointer>;
+  constant slot gtk-status-icon-class-size-changed :: <C-function-pointer>;
+  constant slot gtk-status-icon-class-button-press-event :: <C-function-pointer>;
+  constant slot gtk-status-icon-class-button-release-event :: <C-function-pointer>;
+  constant slot gtk-status-icon-class-scroll-event :: <C-function-pointer>;
+  constant slot gtk-status-icon-class-query-tooltip :: <C-function-pointer>;
+  constant slot gtk-status-icon-class-__gtk-reserved1 :: <C-void*>;
+  constant slot gtk-status-icon-class-__gtk-reserved2 :: <C-void*>;
+  constant slot gtk-status-icon-class-__gtk-reserved3 :: <C-void*>;
+  constant slot gtk-status-icon-class-__gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkStatusIconClass>;
 end C-struct;
 
@@ -17540,8 +16372,8 @@ define C-struct <_GtkStatusIconPrivate>
 end C-struct;
 
 define open C-subtype <GtkStatusbar> (<GtkBox>)
-  constant slot gtkstatusbar-parent-widget :: <GtkBox>;
-  constant slot gtkstatusbar-priv :: <GtkStatusbarPrivate>;
+  constant slot gtk-statusbar-parent-widget :: <GtkBox>;
+  constant slot gtk-statusbar-priv :: <GtkStatusbarPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkStatusbar*> => <GtkStatusbar>;
@@ -17592,14 +16424,14 @@ define C-function gtk-statusbar-remove-all
 end;
 
 define C-struct <_GtkStatusbarClass>
-  constant slot gtkstatusbarclass-parent-class :: <GtkBoxClass>;
-  constant slot gtkstatusbarclass-reserved :: <C-void*>;
-  constant slot gtkstatusbarclass-text-pushed :: <C-function-pointer>;
-  constant slot gtkstatusbarclass-text-popped :: <C-function-pointer>;
-  constant slot gtkstatusbarclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkstatusbarclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkstatusbarclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkstatusbarclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-statusbar-class-parent-class :: <GtkBoxClass>;
+  constant slot gtk-statusbar-class-reserved :: <C-void*>;
+  constant slot gtk-statusbar-class-text-pushed :: <C-function-pointer>;
+  constant slot gtk-statusbar-class-text-popped :: <C-function-pointer>;
+  constant slot gtk-statusbar-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-statusbar-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-statusbar-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-statusbar-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkStatusbarClass>;
 end C-struct;
 
@@ -17608,11 +16440,11 @@ define C-struct <_GtkStatusbarPrivate>
 end C-struct;
 
 define C-struct <_GtkStockItem>
-  slot gtkstockitem-stock-id :: <C-string>;
-  slot gtkstockitem-label :: <C-string>;
-  slot gtkstockitem-modifier :: <GdkModifierType>;
-  slot gtkstockitem-keyval :: <C-unsigned-int>;
-  slot gtkstockitem-translation-domain :: <C-string>;
+  slot gtk-stock-item-stock-id :: <C-string>;
+  slot gtk-stock-item-label :: <C-string>;
+  slot gtk-stock-item-modifier :: <GdkModifierType>;
+  slot gtk-stock-item-keyval :: <C-unsigned-int>;
+  slot gtk-stock-item-translation-domain :: <C-string>;
   pointer-type-name: <GtkStockItem>;
 end C-struct;
 
@@ -17622,34 +16454,32 @@ define C-function gtk-stock-item-free
 end;
 
 define open C-subtype <GtkStyle> (<GObject>)
-  constant slot gtkstyle-parent-instance :: <GObject>;
-  constant slot gtkstyle-fg :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-bg :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-light :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-dark :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-mid :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-text :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-base :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-text-aa :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-black :: <GdkColor>;
-  constant slot gtkstyle-white :: <GdkColor>;
-  constant slot gtkstyle-font-desc :: <PangoFontDescription>;
-  constant slot gtkstyle-xthickness :: <C-signed-int>;
-  constant slot gtkstyle-ythickness :: <C-signed-int>;
-  constant slot gtkstyle-background :: <C-unsigned-char*> /* Not supported */;
-  constant slot gtkstyle-attach-count :: <C-signed-int>;
-  constant slot gtkstyle-visual :: <GdkVisual>;
-  constant slot gtkstyle-private-font-desc :: <PangoFontDescription>;
-  constant slot gtkstyle-rc-style :: <GtkRcStyle>;
-  constant slot gtkstyle-styles :: <GSList>;
-  constant slot gtkstyle-property-cache :: <GArray>;
-  constant slot gtkstyle-icon-factories :: <GSList>;
+  constant slot gtk-style-parent-instance :: <GObject>;
+  constant slot gtk-style-fg :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-bg :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-light :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-dark :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-mid :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-text :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-base :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-text-aa :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-black :: <GdkColor>;
+  constant slot gtk-style-white :: <GdkColor>;
+  constant slot gtk-style-font-desc :: <PangoFontDescription>;
+  constant slot gtk-style-xthickness :: <C-signed-int>;
+  constant slot gtk-style-ythickness :: <C-signed-int>;
+  constant slot gtk-style-background :: <C-unsigned-char*> /* Not supported */;
+  constant slot gtk-style-attach-count :: <C-signed-int>;
+  constant slot gtk-style-visual :: <GdkVisual>;
+  constant slot gtk-style-private-font-desc :: <PangoFontDescription>;
+  constant slot gtk-style-rc-style :: <GtkRcStyle>;
+  constant slot gtk-style-styles :: <GSList>;
+  constant slot gtk-style-property-cache :: <GArray>;
+  constant slot gtk-style-icon-factories :: <GSList>;
 end C-subtype;
 
 define C-pointer-type <GtkStyle*> => <GtkStyle>;
 
-define property-getter style-context :: <GtkStyleContext> on <GtkStyle> end;
-define property-setter style-context :: <GtkStyleContext> on <GtkStyle> end;
 define C-function gtk-style-new
   result res :: <GtkStyle>;
   c-name: "gtk_style_new";
@@ -17727,61 +16557,55 @@ define C-function gtk-style-set-background
 end;
 
 define C-struct <_GtkStyleClass>
-  constant slot gtkstyleclass-parent-class :: <GObjectClass>;
-  constant slot gtkstyleclass-realize :: <C-function-pointer>;
-  constant slot gtkstyleclass-unrealize :: <C-function-pointer>;
-  constant slot gtkstyleclass-copy :: <C-function-pointer>;
-  constant slot gtkstyleclass-clone :: <C-void*>;
-  constant slot gtkstyleclass-init-from-rc :: <C-function-pointer>;
-  constant slot gtkstyleclass-set-background :: <C-function-pointer>;
-  constant slot gtkstyleclass-render-icon :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-hline :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-vline :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-shadow :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-arrow :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-diamond :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-box :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-flat-box :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-check :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-option :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-tab :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-shadow-gap :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-box-gap :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-extension :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-focus :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-slider :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-handle :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-expander :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-layout :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-resize-grip :: <C-function-pointer>;
-  constant slot gtkstyleclass-draw-spinner :: <C-function-pointer>;
-  constant slot gtkstyleclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved8 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved9 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved10 :: <C-void*>;
-  constant slot gtkstyleclass--gtk-reserved11 :: <C-void*>;
+  constant slot gtk-style-class-parent-class :: <GObjectClass>;
+  constant slot gtk-style-class-realize :: <C-function-pointer>;
+  constant slot gtk-style-class-unrealize :: <C-function-pointer>;
+  constant slot gtk-style-class-copy :: <C-function-pointer>;
+  constant slot gtk-style-class-clone :: <C-void*>;
+  constant slot gtk-style-class-init-from-rc :: <C-function-pointer>;
+  constant slot gtk-style-class-set-background :: <C-function-pointer>;
+  constant slot gtk-style-class-render-icon :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-hline :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-vline :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-shadow :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-arrow :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-diamond :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-box :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-flat-box :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-check :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-option :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-tab :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-shadow-gap :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-box-gap :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-extension :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-focus :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-slider :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-handle :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-expander :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-layout :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-resize-grip :: <C-function-pointer>;
+  constant slot gtk-style-class-draw-spinner :: <C-function-pointer>;
+  constant slot gtk-style-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved8 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved9 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved10 :: <C-void*>;
+  constant slot gtk-style-class-_gtk-reserved11 :: <C-void*>;
   pointer-type-name: <GtkStyleClass>;
 end C-struct;
 
 define open C-subtype <GtkStyleContext> (<GObject>)
-  constant slot gtkstylecontext-parent-object :: <GObject>;
-  constant slot gtkstylecontext-priv :: <GtkStyleContextPrivate>;
+  constant slot gtk-style-context-parent-object :: <GObject>;
+  constant slot gtk-style-context-priv :: <GtkStyleContextPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkStyleContext*> => <GtkStyleContext>;
 
-define property-getter stylecontext-direction :: <GtkTextDirection> on <GtkStyleContext> end;
-define property-setter stylecontext-direction :: <GtkTextDirection> on <GtkStyleContext> end;
-define property-getter stylecontext-parent :: <GtkStyleContext> on <GtkStyleContext> end;
-define property-setter stylecontext-parent :: <GtkStyleContext> on <GtkStyleContext> end;
-define property-getter stylecontext-screen :: <GdkScreen> on <GtkStyleContext> end;
-define property-setter stylecontext-screen :: <GdkScreen> on <GtkStyleContext> end;
 define C-function gtk-style-context-new
   result res :: <GtkStyleContext>;
   c-name: "gtk_style_context_new";
@@ -18092,12 +16916,12 @@ define C-function gtk-style-context-state-is-running
 end;
 
 define C-struct <_GtkStyleContextClass>
-  constant slot gtkstylecontextclass-parent-class :: <GObjectClass>;
-  constant slot gtkstylecontextclass-changed :: <C-function-pointer>;
-  constant slot gtkstylecontextclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkstylecontextclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkstylecontextclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkstylecontextclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-style-context-class-parent-class :: <GObjectClass>;
+  constant slot gtk-style-context-class-changed :: <C-function-pointer>;
+  constant slot gtk-style-context-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-style-context-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-style-context-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-style-context-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkStyleContextClass>;
 end C-struct;
 
@@ -18106,8 +16930,8 @@ define C-struct <_GtkStyleContextPrivate>
 end C-struct;
 
 define open C-subtype <GtkStyleProperties> (<GObject>)
-  constant slot gtkstyleproperties-parent-object :: <GObject>;
-  constant slot gtkstyleproperties-priv :: <GtkStylePropertiesPrivate>;
+  constant slot gtk-style-properties-parent-object :: <GObject>;
+  constant slot gtk-style-properties-priv :: <GtkStylePropertiesPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkStyleProperties*> => <GtkStyleProperties>;
@@ -18168,11 +16992,11 @@ define C-function gtk-style-properties-unset-property
 end;
 
 define C-struct <_GtkStylePropertiesClass>
-  constant slot gtkstylepropertiesclass-parent-class :: <GObjectClass>;
-  constant slot gtkstylepropertiesclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkstylepropertiesclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkstylepropertiesclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkstylepropertiesclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-style-properties-class-parent-class :: <GObjectClass>;
+  constant slot gtk-style-properties-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-style-properties-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-style-properties-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-style-properties-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkStylePropertiesClass>;
 end C-struct;
 
@@ -18211,22 +17035,20 @@ define C-function gtk-style-provider-get-style-property
 end;
 
 define C-struct <_GtkStyleProviderIface>
-  constant slot gtkstyleprovideriface-g-iface :: <GTypeInterface>;
-  constant slot gtkstyleprovideriface-get-style :: <C-function-pointer>;
-  constant slot gtkstyleprovideriface-get-style-property :: <C-function-pointer>;
-  constant slot gtkstyleprovideriface-get-icon-factory :: <C-function-pointer>;
+  constant slot gtk-style-provider-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-style-provider-iface-get-style :: <C-function-pointer>;
+  constant slot gtk-style-provider-iface-get-style-property :: <C-function-pointer>;
+  constant slot gtk-style-provider-iface-get-icon-factory :: <C-function-pointer>;
   pointer-type-name: <GtkStyleProviderIface>;
 end C-struct;
 
 define open C-subtype <GtkSwitch> (<GtkWidget>)
-  constant slot gtkswitch-parent-instance :: <GtkWidget>;
-  constant slot gtkswitch-priv :: <GtkSwitchPrivate>;
+  constant slot gtk-switch-parent-instance :: <GtkWidget>;
+  constant slot gtk-switch-priv :: <GtkSwitchPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkSwitch*> => <GtkSwitch>;
 
-define property-getter switch-active :: <C-boolean> on <GtkSwitch> end;
-define property-setter switch-active :: <C-boolean> on <GtkSwitch> end;
 define C-function gtk-switch-new
   result res :: <GtkWidget>;
   c-name: "gtk_switch_new";
@@ -18245,14 +17067,14 @@ define C-function gtk-switch-set-active
 end;
 
 define C-struct <_GtkSwitchClass>
-  constant slot gtkswitchclass-parent-class :: <GtkWidgetClass>;
-  constant slot gtkswitchclass-activate :: <C-function-pointer>;
-  constant slot gtkswitchclass--switch-padding-1 :: <C-void*>;
-  constant slot gtkswitchclass--switch-padding-2 :: <C-void*>;
-  constant slot gtkswitchclass--switch-padding-3 :: <C-void*>;
-  constant slot gtkswitchclass--switch-padding-4 :: <C-void*>;
-  constant slot gtkswitchclass--switch-padding-5 :: <C-void*>;
-  constant slot gtkswitchclass--switch-padding-6 :: <C-void*>;
+  constant slot gtk-switch-class-parent-class :: <GtkWidgetClass>;
+  constant slot gtk-switch-class-activate :: <C-function-pointer>;
+  constant slot gtk-switch-class-_switch-padding-1 :: <C-void*>;
+  constant slot gtk-switch-class-_switch-padding-2 :: <C-void*>;
+  constant slot gtk-switch-class-_switch-padding-3 :: <C-void*>;
+  constant slot gtk-switch-class-_switch-padding-4 :: <C-void*>;
+  constant slot gtk-switch-class-_switch-padding-5 :: <C-void*>;
+  constant slot gtk-switch-class-_switch-padding-6 :: <C-void*>;
   pointer-type-name: <GtkSwitchClass>;
 end C-struct;
 
@@ -18330,25 +17152,15 @@ define C-function gtk-symbolic-color-unref
   c-name: "gtk_symbolic_color_unref";
 end;
 
-define constant $TEXT-VIEW-PRIORITY-VALIDATE = 5;
+define constant $text-view-priority-validate = 5;
 
 define open C-subtype <GtkTable> (<GtkContainer>)
-  constant slot gtktable-container :: <GtkContainer>;
-  constant slot gtktable-priv :: <GtkTablePrivate>;
+  constant slot gtk-table-container :: <GtkContainer>;
+  constant slot gtk-table-priv :: <GtkTablePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTable*> => <GtkTable>;
 
-define property-getter table-column-spacing :: <C-unsigned-int> on <GtkTable> end;
-define property-setter table-column-spacing :: <C-unsigned-int> on <GtkTable> end;
-define property-getter table-homogeneous :: <C-boolean> on <GtkTable> end;
-define property-setter table-homogeneous :: <C-boolean> on <GtkTable> end;
-define property-getter table-n-columns :: <C-unsigned-int> on <GtkTable> end;
-define property-setter table-n-columns :: <C-unsigned-int> on <GtkTable> end;
-define property-getter table-n-rows :: <C-unsigned-int> on <GtkTable> end;
-define property-setter table-n-rows :: <C-unsigned-int> on <GtkTable> end;
-define property-getter table-row-spacing :: <C-unsigned-int> on <GtkTable> end;
-define property-setter table-row-spacing :: <C-unsigned-int> on <GtkTable> end;
 define C-function gtk-table-new
   input parameter rows_ :: <C-unsigned-int>;
   input parameter columns_ :: <C-unsigned-int>;
@@ -18460,28 +17272,28 @@ define C-function gtk-table-set-row-spacings
 end;
 
 define C-struct <_GtkTableChild>
-  slot gtktablechild-widget :: <GtkWidget>;
-  slot gtktablechild-left-attach :: <C-unsigned-short>;
-  slot gtktablechild-right-attach :: <C-unsigned-short>;
-  slot gtktablechild-top-attach :: <C-unsigned-short>;
-  slot gtktablechild-bottom-attach :: <C-unsigned-short>;
-  slot gtktablechild-xpadding :: <C-unsigned-short>;
-  slot gtktablechild-ypadding :: <C-unsigned-short>;
-  slot gtktablechild-xexpand :: <C-unsigned-int>;
-  slot gtktablechild-yexpand :: <C-unsigned-int>;
-  slot gtktablechild-xshrink :: <C-unsigned-int>;
-  slot gtktablechild-yshrink :: <C-unsigned-int>;
-  slot gtktablechild-xfill :: <C-unsigned-int>;
-  slot gtktablechild-yfill :: <C-unsigned-int>;
+  slot gtk-table-child-widget :: <GtkWidget>;
+  slot gtk-table-child-left-attach :: <C-unsigned-short>;
+  slot gtk-table-child-right-attach :: <C-unsigned-short>;
+  slot gtk-table-child-top-attach :: <C-unsigned-short>;
+  slot gtk-table-child-bottom-attach :: <C-unsigned-short>;
+  slot gtk-table-child-xpadding :: <C-unsigned-short>;
+  slot gtk-table-child-ypadding :: <C-unsigned-short>;
+  slot gtk-table-child-xexpand :: <C-unsigned-int>;
+  slot gtk-table-child-yexpand :: <C-unsigned-int>;
+  slot gtk-table-child-xshrink :: <C-unsigned-int>;
+  slot gtk-table-child-yshrink :: <C-unsigned-int>;
+  slot gtk-table-child-xfill :: <C-unsigned-int>;
+  slot gtk-table-child-yfill :: <C-unsigned-int>;
   pointer-type-name: <GtkTableChild>;
 end C-struct;
 
 define C-struct <_GtkTableClass>
-  constant slot gtktableclass-parent-class :: <GtkContainerClass>;
-  constant slot gtktableclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktableclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktableclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktableclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-table-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-table-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-table-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-table-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-table-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTableClass>;
 end C-struct;
 
@@ -18490,21 +17302,21 @@ define C-struct <_GtkTablePrivate>
 end C-struct;
 
 define C-struct <_GtkTableRowCol>
-  slot gtktablerowcol-requisition :: <C-unsigned-short>;
-  slot gtktablerowcol-allocation :: <C-unsigned-short>;
-  slot gtktablerowcol-spacing :: <C-unsigned-short>;
-  slot gtktablerowcol-need-expand :: <C-unsigned-int>;
-  slot gtktablerowcol-need-shrink :: <C-unsigned-int>;
-  slot gtktablerowcol-expand :: <C-unsigned-int>;
-  slot gtktablerowcol-shrink :: <C-unsigned-int>;
-  slot gtktablerowcol-empty :: <C-unsigned-int>;
+  slot gtk-table-row-col-requisition :: <C-unsigned-short>;
+  slot gtk-table-row-col-allocation :: <C-unsigned-short>;
+  slot gtk-table-row-col-spacing :: <C-unsigned-short>;
+  slot gtk-table-row-col-need-expand :: <C-unsigned-int>;
+  slot gtk-table-row-col-need-shrink :: <C-unsigned-int>;
+  slot gtk-table-row-col-expand :: <C-unsigned-int>;
+  slot gtk-table-row-col-shrink :: <C-unsigned-int>;
+  slot gtk-table-row-col-empty :: <C-unsigned-int>;
   pointer-type-name: <GtkTableRowCol>;
 end C-struct;
 
 define C-struct <_GtkTargetEntry>
-  slot gtktargetentry-target :: <C-string>;
-  slot gtktargetentry-flags :: <C-unsigned-int>;
-  slot gtktargetentry-info :: <C-unsigned-int>;
+  slot gtk-target-entry-target :: <C-string>;
+  slot gtk-target-entry-flags :: <C-unsigned-int>;
+  slot gtk-target-entry-info :: <C-unsigned-int>;
   pointer-type-name: <GtkTargetEntry>;
 end C-struct;
 
@@ -18527,10 +17339,10 @@ define C-function gtk-target-entry-free
   c-name: "gtk_target_entry_free";
 end;
 
-define constant $GTK-TARGET-SAME-APP = 1;
-define constant $GTK-TARGET-SAME-WIDGET = 2;
-define constant $GTK-TARGET-OTHER-APP = 4;
-define constant $GTK-TARGET-OTHER-WIDGET = 8;
+define constant $gtk-target-same-app = 1;
+define constant $gtk-target-same-widget = 2;
+define constant $gtk-target-other-app = 4;
+define constant $gtk-target-other-widget = 8;
 define constant <GtkTargetFlags> = <C-int>;
 define C-pointer-type <GtkTargetFlags*> => <GtkTargetFlags>;
 
@@ -18613,8 +17425,8 @@ define C-function gtk-target-list-unref
 end;
 
 define open C-subtype <GtkTearoffMenuItem> (<GtkMenuItem>)
-  constant slot gtktearoffmenuitem-menu-item :: <GtkMenuItem>;
-  constant slot gtktearoffmenuitem-priv :: <GtkTearoffMenuItemPrivate>;
+  constant slot gtk-tearoff-menu-item-menu-item :: <GtkMenuItem>;
+  constant slot gtk-tearoff-menu-item-priv :: <GtkTearoffMenuItemPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTearoffMenuItem*> => <GtkTearoffMenuItem>;
@@ -18625,11 +17437,11 @@ define C-function gtk-tearoff-menu-item-new
 end;
 
 define C-struct <_GtkTearoffMenuItemClass>
-  constant slot gtktearoffmenuitemclass-parent-class :: <GtkMenuItemClass>;
-  constant slot gtktearoffmenuitemclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktearoffmenuitemclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktearoffmenuitemclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktearoffmenuitemclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tearoff-menu-item-class-parent-class :: <GtkMenuItemClass>;
+  constant slot gtk-tearoff-menu-item-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tearoff-menu-item-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tearoff-menu-item-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tearoff-menu-item-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTearoffMenuItemClass>;
 end C-struct;
 
@@ -18638,40 +17450,40 @@ define C-struct <_GtkTearoffMenuItemPrivate>
 end C-struct;
 
 define C-struct <_GtkTextAppearance>
-  slot gtktextappearance-bg-color :: <GdkColor>;
-  slot gtktextappearance-fg-color :: <GdkColor>;
-  slot gtktextappearance-rise :: <C-signed-int>;
-  slot gtktextappearance-underline :: <C-unsigned-int>;
-  slot gtktextappearance-strikethrough :: <C-unsigned-int>;
-  slot gtktextappearance-draw-bg :: <C-unsigned-int>;
-  slot gtktextappearance-inside-selection :: <C-unsigned-int>;
-  slot gtktextappearance-is-text :: <C-unsigned-int>;
-  slot gtktextappearance-rgba :: <C-unsigned-char*> /* Not supported */;
+  slot gtk-text-appearance-bg-color :: <GdkColor>;
+  slot gtk-text-appearance-fg-color :: <GdkColor>;
+  slot gtk-text-appearance-rise :: <C-signed-int>;
+  slot gtk-text-appearance-underline :: <C-unsigned-int>;
+  slot gtk-text-appearance-strikethrough :: <C-unsigned-int>;
+  slot gtk-text-appearance-draw-bg :: <C-unsigned-int>;
+  slot gtk-text-appearance-inside-selection :: <C-unsigned-int>;
+  slot gtk-text-appearance-is-text :: <C-unsigned-int>;
+  slot gtk-text-appearance-rgba :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <GtkTextAppearance>;
 end C-struct;
 
 define C-struct <_GtkTextAttributes>
-  constant slot gtktextattributes-refcount :: <C-unsigned-int>;
-  slot gtktextattributes-appearance :: <GtkTextAppearance>;
-  slot gtktextattributes-justification :: <GtkJustification>;
-  slot gtktextattributes-direction :: <GtkTextDirection>;
-  slot gtktextattributes-font :: <PangoFontDescription>;
-  slot gtktextattributes-font-scale :: <C-double>;
-  slot gtktextattributes-left-margin :: <C-signed-int>;
-  slot gtktextattributes-right-margin :: <C-signed-int>;
-  slot gtktextattributes-indent :: <C-signed-int>;
-  slot gtktextattributes-pixels-above-lines :: <C-signed-int>;
-  slot gtktextattributes-pixels-below-lines :: <C-signed-int>;
-  slot gtktextattributes-pixels-inside-wrap :: <C-signed-int>;
-  slot gtktextattributes-tabs :: <PangoTabArray>;
-  slot gtktextattributes-wrap-mode :: <GtkWrapMode>;
-  slot gtktextattributes-language :: <PangoLanguage>;
-  constant slot gtktextattributes-pg-bg-color :: <GdkColor>;
-  slot gtktextattributes-invisible :: <C-unsigned-int>;
-  slot gtktextattributes-bg-full-height :: <C-unsigned-int>;
-  slot gtktextattributes-editable :: <C-unsigned-int>;
-  constant slot gtktextattributes-pg-bg-rgba :: <GdkRGBA>;
-  constant slot gtktextattributes-padding :: <C-unsigned-int*>;
+  constant slot gtk-text-attributes-refcount :: <C-unsigned-int>;
+  slot gtk-text-attributes-appearance :: <GtkTextAppearance>;
+  slot gtk-text-attributes-justification :: <GtkJustification>;
+  slot gtk-text-attributes-direction :: <GtkTextDirection>;
+  slot gtk-text-attributes-font :: <PangoFontDescription>;
+  slot gtk-text-attributes-font-scale :: <C-double>;
+  slot gtk-text-attributes-left-margin :: <C-signed-int>;
+  slot gtk-text-attributes-right-margin :: <C-signed-int>;
+  slot gtk-text-attributes-indent :: <C-signed-int>;
+  slot gtk-text-attributes-pixels-above-lines :: <C-signed-int>;
+  slot gtk-text-attributes-pixels-below-lines :: <C-signed-int>;
+  slot gtk-text-attributes-pixels-inside-wrap :: <C-signed-int>;
+  slot gtk-text-attributes-tabs :: <PangoTabArray>;
+  slot gtk-text-attributes-wrap-mode :: <GtkWrapMode>;
+  slot gtk-text-attributes-language :: <PangoLanguage>;
+  constant slot gtk-text-attributes-pg-bg-color :: <GdkColor>;
+  slot gtk-text-attributes-invisible :: <C-unsigned-int>;
+  slot gtk-text-attributes-bg-full-height :: <C-unsigned-int>;
+  slot gtk-text-attributes-editable :: <C-unsigned-int>;
+  constant slot gtk-text-attributes-pg-bg-rgba :: <GdkRGBA>;
+  constant slot gtk-text-attributes-padding :: <C-unsigned-int*>;
   pointer-type-name: <GtkTextAttributes>;
 end C-struct;
 
@@ -18708,20 +17520,12 @@ define C-struct <_GtkTextBTree>
 end C-struct;
 
 define open C-subtype <GtkTextBuffer> (<GObject>)
-  constant slot gtktextbuffer-parent-instance :: <GObject>;
-  constant slot gtktextbuffer-priv :: <GtkTextBufferPrivate>;
+  constant slot gtk-text-buffer-parent-instance :: <GObject>;
+  constant slot gtk-text-buffer-priv :: <GtkTextBufferPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTextBuffer*> => <GtkTextBuffer>;
 
-define property-getter textbuffer-copy-target-list :: <GtkTargetList> on <GtkTextBuffer> end;
-define property-getter textbuffer-cursor-position :: <C-signed-int> on <GtkTextBuffer> end;
-define property-getter textbuffer-has-selection :: <C-boolean> on <GtkTextBuffer> end;
-define property-getter textbuffer-paste-target-list :: <GtkTargetList> on <GtkTextBuffer> end;
-define property-getter textbuffer-tag-table :: <GtkTextTagTable> on <GtkTextBuffer> end;
-define property-setter textbuffer-tag-table :: <GtkTextTagTable> on <GtkTextBuffer> end;
-define property-getter textbuffer-text :: <C-string> on <GtkTextBuffer> end;
-define property-setter textbuffer-text :: <C-string> on <GtkTextBuffer> end;
 define C-function gtk-text-buffer-new
   input parameter table_ :: <GtkTextTagTable>;
   result res :: <GtkTextBuffer>;
@@ -19231,24 +18035,24 @@ define C-function gtk-text-buffer-unregister-serialize-format
 end;
 
 define C-struct <_GtkTextBufferClass>
-  constant slot gtktextbufferclass-parent-class :: <GObjectClass>;
-  constant slot gtktextbufferclass-insert-text :: <C-function-pointer>;
-  constant slot gtktextbufferclass-insert-pixbuf :: <C-function-pointer>;
-  constant slot gtktextbufferclass-insert-child-anchor :: <C-function-pointer>;
-  constant slot gtktextbufferclass-delete-range :: <C-function-pointer>;
-  constant slot gtktextbufferclass-changed :: <C-function-pointer>;
-  constant slot gtktextbufferclass-modified-changed :: <C-function-pointer>;
-  constant slot gtktextbufferclass-mark-set :: <C-function-pointer>;
-  constant slot gtktextbufferclass-mark-deleted :: <C-function-pointer>;
-  constant slot gtktextbufferclass-apply-tag :: <C-function-pointer>;
-  constant slot gtktextbufferclass-remove-tag :: <C-function-pointer>;
-  constant slot gtktextbufferclass-begin-user-action :: <C-function-pointer>;
-  constant slot gtktextbufferclass-end-user-action :: <C-function-pointer>;
-  constant slot gtktextbufferclass-paste-done :: <C-function-pointer>;
-  constant slot gtktextbufferclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktextbufferclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktextbufferclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktextbufferclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-text-buffer-class-parent-class :: <GObjectClass>;
+  constant slot gtk-text-buffer-class-insert-text :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-insert-pixbuf :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-insert-child-anchor :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-delete-range :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-changed :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-modified-changed :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-mark-set :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-mark-deleted :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-apply-tag :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-remove-tag :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-begin-user-action :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-end-user-action :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-paste-done :: <C-function-pointer>;
+  constant slot gtk-text-buffer-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-text-buffer-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-text-buffer-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-text-buffer-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTextBufferClass>;
 end C-struct;
 
@@ -19256,15 +18060,15 @@ define C-struct <_GtkTextBufferPrivate>
   pointer-type-name: <GtkTextBufferPrivate>;
 end C-struct;
 
-define constant $GTK-TEXT-BUFFER-TARGET-INFO-BUFFER-CONTENTS = -1;
-define constant $GTK-TEXT-BUFFER-TARGET-INFO-RICH-TEXT = -2;
-define constant $GTK-TEXT-BUFFER-TARGET-INFO-TEXT = -3;
+define constant $gtk-text-buffer-target-info-buffer-contents = -1;
+define constant $gtk-text-buffer-target-info-rich-text = -2;
+define constant $gtk-text-buffer-target-info-text = -3;
 define constant <GtkTextBufferTargetInfo> = <C-int>;
 define C-pointer-type <GtkTextBufferTargetInfo*> => <GtkTextBufferTargetInfo>;
 
 define open C-subtype <GtkTextChildAnchor> (<GObject>)
-  constant slot gtktextchildanchor-parent-instance :: <GObject>;
-  constant slot gtktextchildanchor-segment :: <C-void*>;
+  constant slot gtk-text-child-anchor-parent-instance :: <GObject>;
+  constant slot gtk-text-child-anchor-segment :: <C-void*>;
 end C-subtype;
 
 define C-pointer-type <GtkTextChildAnchor*> => <GtkTextChildAnchor>;
@@ -19287,35 +18091,35 @@ define C-function gtk-text-child-anchor-get-widgets
 end;
 
 define C-struct <_GtkTextChildAnchorClass>
-  constant slot gtktextchildanchorclass-parent-class :: <GObjectClass>;
-  constant slot gtktextchildanchorclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktextchildanchorclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktextchildanchorclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktextchildanchorclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-text-child-anchor-class-parent-class :: <GObjectClass>;
+  constant slot gtk-text-child-anchor-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-text-child-anchor-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-text-child-anchor-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-text-child-anchor-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTextChildAnchorClass>;
 end C-struct;
 
-define constant $GTK-TEXT-DIR-NONE = 0;
-define constant $GTK-TEXT-DIR-LTR = 1;
-define constant $GTK-TEXT-DIR-RTL = 2;
+define constant $gtk-text-dir-none = 0;
+define constant $gtk-text-dir-ltr = 1;
+define constant $gtk-text-dir-rtl = 2;
 define constant <GtkTextDirection> = <C-int>;
 define C-pointer-type <GtkTextDirection*> => <GtkTextDirection>;
 
 define C-struct <_GtkTextIter>
-  constant slot gtktextiter-dummy1 :: <C-void*>;
-  constant slot gtktextiter-dummy2 :: <C-void*>;
-  constant slot gtktextiter-dummy3 :: <C-signed-int>;
-  constant slot gtktextiter-dummy4 :: <C-signed-int>;
-  constant slot gtktextiter-dummy5 :: <C-signed-int>;
-  constant slot gtktextiter-dummy6 :: <C-signed-int>;
-  constant slot gtktextiter-dummy7 :: <C-signed-int>;
-  constant slot gtktextiter-dummy8 :: <C-signed-int>;
-  constant slot gtktextiter-dummy9 :: <C-void*>;
-  constant slot gtktextiter-dummy10 :: <C-void*>;
-  constant slot gtktextiter-dummy11 :: <C-signed-int>;
-  constant slot gtktextiter-dummy12 :: <C-signed-int>;
-  constant slot gtktextiter-dummy13 :: <C-signed-int>;
-  constant slot gtktextiter-dummy14 :: <C-void*>;
+  constant slot gtk-text-iter-dummy1 :: <C-void*>;
+  constant slot gtk-text-iter-dummy2 :: <C-void*>;
+  constant slot gtk-text-iter-dummy3 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy4 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy5 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy6 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy7 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy8 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy9 :: <C-void*>;
+  constant slot gtk-text-iter-dummy10 :: <C-void*>;
+  constant slot gtk-text-iter-dummy11 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy12 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy13 :: <C-signed-int>;
+  constant slot gtk-text-iter-dummy14 :: <C-void*>;
   pointer-type-name: <GtkTextIter>;
 end C-struct;
 
@@ -19914,16 +18718,12 @@ define C-function gtk-text-iter-toggles-tag
 end;
 
 define open C-subtype <GtkTextMark> (<GObject>)
-  constant slot gtktextmark-parent-instance :: <GObject>;
-  constant slot gtktextmark-segment :: <C-void*>;
+  constant slot gtk-text-mark-parent-instance :: <GObject>;
+  constant slot gtk-text-mark-segment :: <C-void*>;
 end C-subtype;
 
 define C-pointer-type <GtkTextMark*> => <GtkTextMark>;
 
-define property-getter textmark-left-gravity :: <C-boolean> on <GtkTextMark> end;
-define property-setter textmark-left-gravity :: <C-boolean> on <GtkTextMark> end;
-define property-getter textmark-name :: <C-string> on <GtkTextMark> end;
-define property-setter textmark-name :: <C-string> on <GtkTextMark> end;
 define C-function gtk-text-mark-new
   input parameter name_ :: <C-string>;
   input parameter left_gravity_ :: <C-boolean>;
@@ -19968,152 +18768,27 @@ define C-function gtk-text-mark-set-visible
 end;
 
 define C-struct <_GtkTextMarkClass>
-  constant slot gtktextmarkclass-parent-class :: <GObjectClass>;
-  constant slot gtktextmarkclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktextmarkclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktextmarkclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktextmarkclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-text-mark-class-parent-class :: <GObjectClass>;
+  constant slot gtk-text-mark-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-text-mark-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-text-mark-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-text-mark-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTextMarkClass>;
 end C-struct;
 
-define constant $GTK-TEXT-SEARCH-VISIBLE-ONLY = 1;
-define constant $GTK-TEXT-SEARCH-TEXT-ONLY = 2;
-define constant $GTK-TEXT-SEARCH-CASE-INSENSITIVE = 4;
+define constant $gtk-text-search-visible-only = 1;
+define constant $gtk-text-search-text-only = 2;
+define constant $gtk-text-search-case-insensitive = 4;
 define constant <GtkTextSearchFlags> = <C-int>;
 define C-pointer-type <GtkTextSearchFlags*> => <GtkTextSearchFlags>;
 
 define open C-subtype <GtkTextTag> (<GObject>)
-  constant slot gtktexttag-parent-instance :: <GObject>;
-  constant slot gtktexttag-priv :: <GtkTextTagPrivate>;
+  constant slot gtk-text-tag-parent-instance :: <GObject>;
+  constant slot gtk-text-tag-priv :: <GtkTextTagPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTextTag*> => <GtkTextTag>;
 
-define property-getter texttag-accumulative-margin :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-accumulative-margin :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-background :: <C-string> on <GtkTextTag> end;
-define property-getter texttag-background-full-height :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-background-full-height :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-background-full-height-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-background-full-height-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-background-gdk :: <GdkColor> on <GtkTextTag> end;
-define property-setter texttag-background-gdk :: <GdkColor> on <GtkTextTag> end;
-define property-getter texttag-background-rgba :: <GdkRGBA> on <GtkTextTag> end;
-define property-setter texttag-background-rgba :: <GdkRGBA> on <GtkTextTag> end;
-define property-getter texttag-background-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-background-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-direction :: <GtkTextDirection> on <GtkTextTag> end;
-define property-setter texttag-direction :: <GtkTextDirection> on <GtkTextTag> end;
-define property-getter texttag-editable :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-editable :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-editable-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-editable-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-family :: <C-string> on <GtkTextTag> end;
-define property-setter texttag-family :: <C-string> on <GtkTextTag> end;
-define property-getter texttag-family-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-family-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-font :: <C-string> on <GtkTextTag> end;
-define property-setter texttag-font :: <C-string> on <GtkTextTag> end;
-define property-getter texttag-font-desc :: <PangoFontDescription> on <GtkTextTag> end;
-define property-setter texttag-font-desc :: <PangoFontDescription> on <GtkTextTag> end;
-define property-setter texttag-foreground :: <C-string> on <GtkTextTag> end;
-define property-getter texttag-foreground-gdk :: <GdkColor> on <GtkTextTag> end;
-define property-setter texttag-foreground-gdk :: <GdkColor> on <GtkTextTag> end;
-define property-getter texttag-foreground-rgba :: <GdkRGBA> on <GtkTextTag> end;
-define property-setter texttag-foreground-rgba :: <GdkRGBA> on <GtkTextTag> end;
-define property-getter texttag-foreground-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-foreground-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-indent :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-indent :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-indent-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-indent-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-invisible :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-invisible :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-invisible-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-invisible-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-justification :: <GtkJustification> on <GtkTextTag> end;
-define property-setter texttag-justification :: <GtkJustification> on <GtkTextTag> end;
-define property-getter texttag-justification-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-justification-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-language :: <C-string> on <GtkTextTag> end;
-define property-setter texttag-language :: <C-string> on <GtkTextTag> end;
-define property-getter texttag-language-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-language-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-left-margin :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-left-margin :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-left-margin-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-left-margin-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-name :: <C-string> on <GtkTextTag> end;
-define property-setter texttag-name :: <C-string> on <GtkTextTag> end;
-define property-setter texttag-paragraph-background :: <C-string> on <GtkTextTag> end;
-define property-getter texttag-paragraph-background-gdk :: <GdkColor> on <GtkTextTag> end;
-define property-setter texttag-paragraph-background-gdk :: <GdkColor> on <GtkTextTag> end;
-define property-getter texttag-paragraph-background-rgba :: <GdkRGBA> on <GtkTextTag> end;
-define property-setter texttag-paragraph-background-rgba :: <GdkRGBA> on <GtkTextTag> end;
-define property-getter texttag-paragraph-background-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-paragraph-background-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-pixels-above-lines :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-pixels-above-lines :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-pixels-above-lines-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-pixels-above-lines-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-pixels-below-lines :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-pixels-below-lines :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-pixels-below-lines-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-pixels-below-lines-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-pixels-inside-wrap :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-pixels-inside-wrap :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-pixels-inside-wrap-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-pixels-inside-wrap-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-right-margin :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-right-margin :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-right-margin-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-right-margin-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-rise :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-rise :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-rise-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-rise-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-scale :: <C-double> on <GtkTextTag> end;
-define property-setter texttag-scale :: <C-double> on <GtkTextTag> end;
-define property-getter texttag-scale-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-scale-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-size :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-size :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-size-points :: <C-double> on <GtkTextTag> end;
-define property-setter texttag-size-points :: <C-double> on <GtkTextTag> end;
-define property-getter texttag-size-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-size-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-stretch :: <PangoStretch> on <GtkTextTag> end;
-define property-setter texttag-stretch :: <PangoStretch> on <GtkTextTag> end;
-define property-getter texttag-stretch-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-stretch-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-strikethrough :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-strikethrough :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-strikethrough-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-strikethrough-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-style :: <PangoStyle> on <GtkTextTag> end;
-define property-setter texttag-style :: <PangoStyle> on <GtkTextTag> end;
-define property-getter texttag-style-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-style-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-tabs :: <PangoTabArray> on <GtkTextTag> end;
-define property-setter texttag-tabs :: <PangoTabArray> on <GtkTextTag> end;
-define property-getter texttag-tabs-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-tabs-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-underline :: <PangoUnderline> on <GtkTextTag> end;
-define property-setter texttag-underline :: <PangoUnderline> on <GtkTextTag> end;
-define property-getter texttag-underline-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-underline-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-variant :: <PangoVariant> on <GtkTextTag> end;
-define property-setter texttag-variant :: <PangoVariant> on <GtkTextTag> end;
-define property-getter texttag-variant-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-variant-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-weight :: <C-signed-int> on <GtkTextTag> end;
-define property-setter texttag-weight :: <C-signed-int> on <GtkTextTag> end;
-define property-getter texttag-weight-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-weight-set :: <C-boolean> on <GtkTextTag> end;
-define property-getter texttag-wrap-mode :: <GtkWrapMode> on <GtkTextTag> end;
-define property-setter texttag-wrap-mode :: <GtkWrapMode> on <GtkTextTag> end;
-define property-getter texttag-wrap-mode-set :: <C-boolean> on <GtkTextTag> end;
-define property-setter texttag-wrap-mode-set :: <C-boolean> on <GtkTextTag> end;
 define C-function gtk-text-tag-new
   input parameter name_ :: <C-string>;
   result res :: <GtkTextTag>;
@@ -20142,12 +18817,12 @@ define C-function gtk-text-tag-set-priority
 end;
 
 define C-struct <_GtkTextTagClass>
-  constant slot gtktexttagclass-parent-class :: <GObjectClass>;
-  constant slot gtktexttagclass-event :: <C-function-pointer>;
-  constant slot gtktexttagclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktexttagclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktexttagclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktexttagclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-text-tag-class-parent-class :: <GObjectClass>;
+  constant slot gtk-text-tag-class-event :: <C-function-pointer>;
+  constant slot gtk-text-tag-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-text-tag-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-text-tag-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-text-tag-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTextTagClass>;
 end C-struct;
 
@@ -20156,8 +18831,8 @@ define C-struct <_GtkTextTagPrivate>
 end C-struct;
 
 define open C-subtype <GtkTextTagTable> (<GObject>)
-  constant slot gtktexttagtable-parent-instance :: <GObject>;
-  constant slot gtktexttagtable-priv :: <GtkTextTagTablePrivate>;
+  constant slot gtk-text-tag-table-parent-instance :: <GObject>;
+  constant slot gtk-text-tag-table-priv :: <GtkTextTagTablePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTextTagTable*> => <GtkTextTagTable>;
@@ -20200,14 +18875,14 @@ define C-function gtk-text-tag-table-remove
 end;
 
 define C-struct <_GtkTextTagTableClass>
-  constant slot gtktexttagtableclass-parent-class :: <GObjectClass>;
-  constant slot gtktexttagtableclass-tag-changed :: <C-function-pointer>;
-  constant slot gtktexttagtableclass-tag-added :: <C-function-pointer>;
-  constant slot gtktexttagtableclass-tag-removed :: <C-function-pointer>;
-  constant slot gtktexttagtableclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktexttagtableclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktexttagtableclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktexttagtableclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-text-tag-table-class-parent-class :: <GObjectClass>;
+  constant slot gtk-text-tag-table-class-tag-changed :: <C-function-pointer>;
+  constant slot gtk-text-tag-table-class-tag-added :: <C-function-pointer>;
+  constant slot gtk-text-tag-table-class-tag-removed :: <C-function-pointer>;
+  constant slot gtk-text-tag-table-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-text-tag-table-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-text-tag-table-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-text-tag-table-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTextTagTableClass>;
 end C-struct;
 
@@ -20216,42 +18891,12 @@ define C-struct <_GtkTextTagTablePrivate>
 end C-struct;
 
 define open C-subtype <GtkTextView> (<GtkContainer>)
-  constant slot gtktextview-parent-instance :: <GtkContainer>;
-  constant slot gtktextview-priv :: <GtkTextViewPrivate>;
+  constant slot gtk-text-view-parent-instance :: <GtkContainer>;
+  constant slot gtk-text-view-priv :: <GtkTextViewPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTextView*> => <GtkTextView>;
 
-define property-getter textview-accepts-tab :: <C-boolean> on <GtkTextView> end;
-define property-setter textview-accepts-tab :: <C-boolean> on <GtkTextView> end;
-define property-getter textview-buffer :: <GtkTextBuffer> on <GtkTextView> end;
-define property-setter textview-buffer :: <GtkTextBuffer> on <GtkTextView> end;
-define property-getter textview-cursor-visible :: <C-boolean> on <GtkTextView> end;
-define property-setter textview-cursor-visible :: <C-boolean> on <GtkTextView> end;
-define property-getter textview-editable :: <C-boolean> on <GtkTextView> end;
-define property-setter textview-editable :: <C-boolean> on <GtkTextView> end;
-define property-getter textview-im-module :: <C-string> on <GtkTextView> end;
-define property-setter textview-im-module :: <C-string> on <GtkTextView> end;
-define property-getter textview-indent :: <C-signed-int> on <GtkTextView> end;
-define property-setter textview-indent :: <C-signed-int> on <GtkTextView> end;
-define property-getter textview-justification :: <GtkJustification> on <GtkTextView> end;
-define property-setter textview-justification :: <GtkJustification> on <GtkTextView> end;
-define property-getter textview-left-margin :: <C-signed-int> on <GtkTextView> end;
-define property-setter textview-left-margin :: <C-signed-int> on <GtkTextView> end;
-define property-getter textview-overwrite :: <C-boolean> on <GtkTextView> end;
-define property-setter textview-overwrite :: <C-boolean> on <GtkTextView> end;
-define property-getter textview-pixels-above-lines :: <C-signed-int> on <GtkTextView> end;
-define property-setter textview-pixels-above-lines :: <C-signed-int> on <GtkTextView> end;
-define property-getter textview-pixels-below-lines :: <C-signed-int> on <GtkTextView> end;
-define property-setter textview-pixels-below-lines :: <C-signed-int> on <GtkTextView> end;
-define property-getter textview-pixels-inside-wrap :: <C-signed-int> on <GtkTextView> end;
-define property-setter textview-pixels-inside-wrap :: <C-signed-int> on <GtkTextView> end;
-define property-getter textview-right-margin :: <C-signed-int> on <GtkTextView> end;
-define property-setter textview-right-margin :: <C-signed-int> on <GtkTextView> end;
-define property-getter textview-tabs :: <PangoTabArray> on <GtkTextView> end;
-define property-setter textview-tabs :: <PangoTabArray> on <GtkTextView> end;
-define property-getter textview-wrap-mode :: <GtkWrapMode> on <GtkTextView> end;
-define property-setter textview-wrap-mode :: <GtkWrapMode> on <GtkTextView> end;
 define C-function gtk-text-view-new
   result res :: <GtkWidget>;
   c-name: "gtk_text_view_new";
@@ -20671,25 +19316,25 @@ define C-function gtk-text-view-window-to-buffer-coords
 end;
 
 define C-struct <_GtkTextViewClass>
-  constant slot gtktextviewclass-parent-class :: <GtkContainerClass>;
-  constant slot gtktextviewclass-populate-popup :: <C-function-pointer>;
-  constant slot gtktextviewclass-move-cursor :: <C-function-pointer>;
-  constant slot gtktextviewclass-set-anchor :: <C-function-pointer>;
-  constant slot gtktextviewclass-insert-at-cursor :: <C-function-pointer>;
-  constant slot gtktextviewclass-delete-from-cursor :: <C-function-pointer>;
-  constant slot gtktextviewclass-backspace :: <C-function-pointer>;
-  constant slot gtktextviewclass-cut-clipboard :: <C-function-pointer>;
-  constant slot gtktextviewclass-copy-clipboard :: <C-function-pointer>;
-  constant slot gtktextviewclass-paste-clipboard :: <C-function-pointer>;
-  constant slot gtktextviewclass-toggle-overwrite :: <C-function-pointer>;
-  constant slot gtktextviewclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktextviewclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktextviewclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktextviewclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtktextviewclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtktextviewclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtktextviewclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtktextviewclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-text-view-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-text-view-class-populate-popup :: <C-function-pointer>;
+  constant slot gtk-text-view-class-move-cursor :: <C-function-pointer>;
+  constant slot gtk-text-view-class-set-anchor :: <C-function-pointer>;
+  constant slot gtk-text-view-class-insert-at-cursor :: <C-function-pointer>;
+  constant slot gtk-text-view-class-delete-from-cursor :: <C-function-pointer>;
+  constant slot gtk-text-view-class-backspace :: <C-function-pointer>;
+  constant slot gtk-text-view-class-cut-clipboard :: <C-function-pointer>;
+  constant slot gtk-text-view-class-copy-clipboard :: <C-function-pointer>;
+  constant slot gtk-text-view-class-paste-clipboard :: <C-function-pointer>;
+  constant slot gtk-text-view-class-toggle-overwrite :: <C-function-pointer>;
+  constant slot gtk-text-view-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-text-view-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-text-view-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-text-view-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-text-view-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-text-view-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-text-view-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-text-view-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkTextViewClass>;
 end C-struct;
 
@@ -20697,13 +19342,13 @@ define C-struct <_GtkTextViewPrivate>
   pointer-type-name: <GtkTextViewPrivate>;
 end C-struct;
 
-define constant $GTK-TEXT-WINDOW-PRIVATE = 0;
-define constant $GTK-TEXT-WINDOW-WIDGET = 1;
-define constant $GTK-TEXT-WINDOW-TEXT = 2;
-define constant $GTK-TEXT-WINDOW-LEFT = 3;
-define constant $GTK-TEXT-WINDOW-RIGHT = 4;
-define constant $GTK-TEXT-WINDOW-TOP = 5;
-define constant $GTK-TEXT-WINDOW-BOTTOM = 6;
+define constant $gtk-text-window-private = 0;
+define constant $gtk-text-window-widget = 1;
+define constant $gtk-text-window-text = 2;
+define constant $gtk-text-window-left = 3;
+define constant $gtk-text-window-right = 4;
+define constant $gtk-text-window-top = 5;
+define constant $gtk-text-window-bottom = 6;
 define constant <GtkTextWindowType> = <C-int>;
 define C-pointer-type <GtkTextWindowType*> => <GtkTextWindowType>;
 
@@ -20712,14 +19357,12 @@ define C-struct <_GtkThemeEngine>
 end C-struct;
 
 define open C-subtype <GtkThemingEngine> (<GObject>)
-  constant slot gtkthemingengine-parent-object :: <GObject>;
-  constant slot gtkthemingengine-priv :: <GtkThemingEnginePrivate>;
+  constant slot gtk-theming-engine-parent-object :: <GObject>;
+  constant slot gtk-theming-engine-priv :: <GtkThemingEnginePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkThemingEngine*> => <GtkThemingEngine>;
 
-define property-getter themingengine-name :: <C-string> on <GtkThemingEngine> end;
-define property-setter themingengine-name :: <C-string> on <GtkThemingEngine> end;
 define C-function gtk-theming-engine-load
   input parameter name_ :: <C-string>;
   result res :: <GtkThemingEngine>;
@@ -20852,24 +19495,24 @@ define C-function gtk-theming-engine-state-is-running
 end;
 
 define C-struct <_GtkThemingEngineClass>
-  constant slot gtkthemingengineclass-parent-class :: <GObjectClass>;
-  constant slot gtkthemingengineclass-render-line :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-background :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-frame :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-frame-gap :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-extension :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-check :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-option :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-arrow :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-expander :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-focus :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-layout :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-slider :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-handle :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-activity :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-render-icon-pixbuf :: <C-void*>;
-  constant slot gtkthemingengineclass-render-icon :: <C-function-pointer>;
-  constant slot gtkthemingengineclass-padding :: <C-void*>;
+  constant slot gtk-theming-engine-class-parent-class :: <GObjectClass>;
+  constant slot gtk-theming-engine-class-render-line :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-background :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-frame :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-frame-gap :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-extension :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-check :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-option :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-arrow :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-expander :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-focus :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-layout :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-slider :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-handle :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-activity :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-render-icon-pixbuf :: <C-void*>;
+  constant slot gtk-theming-engine-class-render-icon :: <C-function-pointer>;
+  constant slot gtk-theming-engine-class-padding :: <C-void*>;
   pointer-type-name: <GtkThemingEngineClass>;
 end C-struct;
 
@@ -20878,16 +19521,12 @@ define C-struct <_GtkThemingEnginePrivate>
 end C-struct;
 
 define open C-subtype <GtkToggleAction> (<GtkAction>)
-  constant slot gtktoggleaction-parent :: <GtkAction>;
-  constant slot gtktoggleaction-private-data :: <GtkToggleActionPrivate>;
+  constant slot gtk-toggle-action-parent :: <GtkAction>;
+  constant slot gtk-toggle-action-private-data :: <GtkToggleActionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkToggleAction*> => <GtkToggleAction>;
 
-define property-getter toggleaction-active :: <C-boolean> on <GtkToggleAction> end;
-define property-setter toggleaction-active :: <C-boolean> on <GtkToggleAction> end;
-define property-getter toggleaction-draw-as-radio :: <C-boolean> on <GtkToggleAction> end;
-define property-setter toggleaction-draw-as-radio :: <C-boolean> on <GtkToggleAction> end;
 define C-function gtk-toggle-action-new
   input parameter name_ :: <C-string>;
   input parameter label_ :: <C-string>;
@@ -20927,23 +19566,23 @@ define C-function gtk-toggle-action-toggled
 end;
 
 define C-struct <_GtkToggleActionClass>
-  constant slot gtktoggleactionclass-parent-class :: <GtkActionClass>;
-  constant slot gtktoggleactionclass-toggled :: <C-function-pointer>;
-  constant slot gtktoggleactionclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktoggleactionclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktoggleactionclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktoggleactionclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-toggle-action-class-parent-class :: <GtkActionClass>;
+  constant slot gtk-toggle-action-class-toggled :: <C-function-pointer>;
+  constant slot gtk-toggle-action-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-toggle-action-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-toggle-action-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-toggle-action-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkToggleActionClass>;
 end C-struct;
 
 define C-struct <_GtkToggleActionEntry>
-  slot gtktoggleactionentry-name :: <C-string>;
-  slot gtktoggleactionentry-stock-id :: <C-string>;
-  slot gtktoggleactionentry-label :: <C-string>;
-  slot gtktoggleactionentry-accelerator :: <C-string>;
-  slot gtktoggleactionentry-tooltip :: <C-string>;
-  slot gtktoggleactionentry-callback :: <C-function-pointer>;
-  slot gtktoggleactionentry-is-active :: <C-boolean>;
+  slot gtk-toggle-action-entry-name :: <C-string>;
+  slot gtk-toggle-action-entry-stock-id :: <C-string>;
+  slot gtk-toggle-action-entry-label :: <C-string>;
+  slot gtk-toggle-action-entry-accelerator :: <C-string>;
+  slot gtk-toggle-action-entry-tooltip :: <C-string>;
+  slot gtk-toggle-action-entry-callback :: <C-function-pointer>;
+  slot gtk-toggle-action-entry-is-active :: <C-boolean>;
   pointer-type-name: <GtkToggleActionEntry>;
 end C-struct;
 
@@ -20952,18 +19591,12 @@ define C-struct <_GtkToggleActionPrivate>
 end C-struct;
 
 define open C-subtype <GtkToggleButton> (<GtkButton>)
-  constant slot gtktogglebutton-button :: <GtkButton>;
-  constant slot gtktogglebutton-priv :: <GtkToggleButtonPrivate>;
+  constant slot gtk-toggle-button-button :: <GtkButton>;
+  constant slot gtk-toggle-button-priv :: <GtkToggleButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkToggleButton*> => <GtkToggleButton>;
 
-define property-getter togglebutton-active :: <C-boolean> on <GtkToggleButton> end;
-define property-setter togglebutton-active :: <C-boolean> on <GtkToggleButton> end;
-define property-getter togglebutton-draw-indicator :: <C-boolean> on <GtkToggleButton> end;
-define property-setter togglebutton-draw-indicator :: <C-boolean> on <GtkToggleButton> end;
-define property-getter togglebutton-inconsistent :: <C-boolean> on <GtkToggleButton> end;
-define property-setter togglebutton-inconsistent :: <C-boolean> on <GtkToggleButton> end;
 define C-function gtk-toggle-button-new
   result res :: <GtkWidget>;
   c-name: "gtk_toggle_button_new";
@@ -21023,12 +19656,12 @@ define C-function gtk-toggle-button-toggled
 end;
 
 define C-struct <_GtkToggleButtonClass>
-  constant slot gtktogglebuttonclass-parent-class :: <GtkButtonClass>;
-  constant slot gtktogglebuttonclass-toggled :: <C-function-pointer>;
-  constant slot gtktogglebuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktogglebuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktogglebuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktogglebuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-toggle-button-class-parent-class :: <GtkButtonClass>;
+  constant slot gtk-toggle-button-class-toggled :: <C-function-pointer>;
+  constant slot gtk-toggle-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-toggle-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-toggle-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-toggle-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkToggleButtonClass>;
 end C-struct;
 
@@ -21037,14 +19670,12 @@ define C-struct <_GtkToggleButtonPrivate>
 end C-struct;
 
 define open C-subtype <GtkToggleToolButton> (<GtkToolButton>)
-  constant slot gtktoggletoolbutton-parent :: <GtkToolButton>;
-  constant slot gtktoggletoolbutton-priv :: <GtkToggleToolButtonPrivate>;
+  constant slot gtk-toggle-tool-button-parent :: <GtkToolButton>;
+  constant slot gtk-toggle-tool-button-priv :: <GtkToggleToolButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkToggleToolButton*> => <GtkToggleToolButton>;
 
-define property-getter toggletoolbutton-active :: <C-boolean> on <GtkToggleToolButton> end;
-define property-setter toggletoolbutton-active :: <C-boolean> on <GtkToggleToolButton> end;
 define C-function gtk-toggle-tool-button-new
   result res :: <GtkToolItem>;
   c-name: "gtk_toggle_tool_button_new";
@@ -21069,12 +19700,12 @@ define C-function gtk-toggle-tool-button-set-active
 end;
 
 define C-struct <_GtkToggleToolButtonClass>
-  constant slot gtktoggletoolbuttonclass-parent-class :: <GtkToolButtonClass>;
-  constant slot gtktoggletoolbuttonclass-toggled :: <C-function-pointer>;
-  constant slot gtktoggletoolbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktoggletoolbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktoggletoolbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktoggletoolbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-toggle-tool-button-class-parent-class :: <GtkToolButtonClass>;
+  constant slot gtk-toggle-tool-button-class-toggled :: <C-function-pointer>;
+  constant slot gtk-toggle-tool-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-toggle-tool-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-toggle-tool-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-toggle-tool-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkToggleToolButtonClass>;
 end C-struct;
 
@@ -21083,24 +19714,12 @@ define C-struct <_GtkToggleToolButtonPrivate>
 end C-struct;
 
 define open C-subtype <GtkToolButton> (<GtkToolItem>)
-  constant slot gtktoolbutton-parent :: <GtkToolItem>;
-  constant slot gtktoolbutton-priv :: <GtkToolButtonPrivate>;
+  constant slot gtk-tool-button-parent :: <GtkToolItem>;
+  constant slot gtk-tool-button-priv :: <GtkToolButtonPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkToolButton*> => <GtkToolButton>;
 
-define property-getter toolbutton-icon-name :: <C-string> on <GtkToolButton> end;
-define property-setter toolbutton-icon-name :: <C-string> on <GtkToolButton> end;
-define property-getter toolbutton-icon-widget :: <GtkWidget> on <GtkToolButton> end;
-define property-setter toolbutton-icon-widget :: <GtkWidget> on <GtkToolButton> end;
-define property-getter toolbutton-label :: <C-string> on <GtkToolButton> end;
-define property-setter toolbutton-label :: <C-string> on <GtkToolButton> end;
-define property-getter toolbutton-label-widget :: <GtkWidget> on <GtkToolButton> end;
-define property-setter toolbutton-label-widget :: <GtkWidget> on <GtkToolButton> end;
-define property-getter toolbutton-stock-id :: <C-string> on <GtkToolButton> end;
-define property-setter toolbutton-stock-id :: <C-string> on <GtkToolButton> end;
-define property-getter toolbutton-use-underline :: <C-boolean> on <GtkToolButton> end;
-define property-setter toolbutton-use-underline :: <C-boolean> on <GtkToolButton> end;
 define C-function gtk-tool-button-new
   input parameter icon_widget_ :: <GtkWidget>;
   input parameter label_ :: <C-string>;
@@ -21187,13 +19806,13 @@ define C-function gtk-tool-button-set-use-underline
 end;
 
 define C-struct <_GtkToolButtonClass>
-  constant slot gtktoolbuttonclass-parent-class :: <GtkToolItemClass>;
-  constant slot gtktoolbuttonclass-button-type :: <C-long>;
-  constant slot gtktoolbuttonclass-clicked :: <C-function-pointer>;
-  constant slot gtktoolbuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktoolbuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktoolbuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktoolbuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tool-button-class-parent-class :: <GtkToolItemClass>;
+  constant slot gtk-tool-button-class-button-type :: <C-long>;
+  constant slot gtk-tool-button-class-clicked :: <C-function-pointer>;
+  constant slot gtk-tool-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tool-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tool-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tool-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkToolButtonClass>;
 end C-struct;
 
@@ -21202,18 +19821,12 @@ define C-struct <_GtkToolButtonPrivate>
 end C-struct;
 
 define open C-subtype <GtkToolItem> (<GtkBin>)
-  constant slot gtktoolitem-parent :: <GtkBin>;
-  constant slot gtktoolitem-priv :: <GtkToolItemPrivate>;
+  constant slot gtk-tool-item-parent :: <GtkBin>;
+  constant slot gtk-tool-item-priv :: <GtkToolItemPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkToolItem*> => <GtkToolItem>;
 
-define property-getter toolitem-is-important :: <C-boolean> on <GtkToolItem> end;
-define property-setter toolitem-is-important :: <C-boolean> on <GtkToolItem> end;
-define property-getter toolitem-visible-horizontal :: <C-boolean> on <GtkToolItem> end;
-define property-setter toolitem-visible-horizontal :: <C-boolean> on <GtkToolItem> end;
-define property-getter toolitem-visible-vertical :: <C-boolean> on <GtkToolItem> end;
-define property-setter toolitem-visible-vertical :: <C-boolean> on <GtkToolItem> end;
 define C-function gtk-tool-item-new
   result res :: <GtkToolItem>;
   c-name: "gtk_tool_item_new";
@@ -21382,33 +19995,23 @@ define C-function gtk-tool-item-toolbar-reconfigured
 end;
 
 define C-struct <_GtkToolItemClass>
-  constant slot gtktoolitemclass-parent-class :: <GtkBinClass>;
-  constant slot gtktoolitemclass-create-menu-proxy :: <C-function-pointer>;
-  constant slot gtktoolitemclass-toolbar-reconfigured :: <C-function-pointer>;
-  constant slot gtktoolitemclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktoolitemclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktoolitemclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktoolitemclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tool-item-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-tool-item-class-create-menu-proxy :: <C-function-pointer>;
+  constant slot gtk-tool-item-class-toolbar-reconfigured :: <C-function-pointer>;
+  constant slot gtk-tool-item-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tool-item-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tool-item-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tool-item-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkToolItemClass>;
 end C-struct;
 
 define open C-subtype <GtkToolItemGroup> (<GtkContainer>)
-  constant slot gtktoolitemgroup-parent-instance :: <GtkContainer>;
-  constant slot gtktoolitemgroup-priv :: <GtkToolItemGroupPrivate>;
+  constant slot gtk-tool-item-group-parent-instance :: <GtkContainer>;
+  constant slot gtk-tool-item-group-priv :: <GtkToolItemGroupPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkToolItemGroup*> => <GtkToolItemGroup>;
 
-define property-getter toolitemgroup-collapsed :: <C-boolean> on <GtkToolItemGroup> end;
-define property-setter toolitemgroup-collapsed :: <C-boolean> on <GtkToolItemGroup> end;
-define property-getter toolitemgroup-ellipsize :: <PangoEllipsizeMode> on <GtkToolItemGroup> end;
-define property-setter toolitemgroup-ellipsize :: <PangoEllipsizeMode> on <GtkToolItemGroup> end;
-define property-getter toolitemgroup-header-relief :: <GtkReliefStyle> on <GtkToolItemGroup> end;
-define property-setter toolitemgroup-header-relief :: <GtkReliefStyle> on <GtkToolItemGroup> end;
-define property-getter toolitemgroup-label :: <C-string> on <GtkToolItemGroup> end;
-define property-setter toolitemgroup-label :: <C-string> on <GtkToolItemGroup> end;
-define property-getter toolitemgroup-label-widget :: <GtkWidget> on <GtkToolItemGroup> end;
-define property-setter toolitemgroup-label-widget :: <GtkWidget> on <GtkToolItemGroup> end;
 define C-function gtk-tool-item-group-new
   input parameter label_ :: <C-string>;
   result res :: <GtkWidget>;
@@ -21518,11 +20121,11 @@ define C-function gtk-tool-item-group-set-label-widget
 end;
 
 define C-struct <_GtkToolItemGroupClass>
-  constant slot gtktoolitemgroupclass-parent-class :: <GtkContainerClass>;
-  constant slot gtktoolitemgroupclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktoolitemgroupclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktoolitemgroupclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktoolitemgroupclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tool-item-group-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-tool-item-group-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tool-item-group-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tool-item-group-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tool-item-group-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkToolItemGroupClass>;
 end C-struct;
 
@@ -21535,18 +20138,12 @@ define C-struct <_GtkToolItemPrivate>
 end C-struct;
 
 define open C-subtype <GtkToolPalette> (<GtkContainer>)
-  constant slot gtktoolpalette-parent-instance :: <GtkContainer>;
-  constant slot gtktoolpalette-priv :: <GtkToolPalettePrivate>;
+  constant slot gtk-tool-palette-parent-instance :: <GtkContainer>;
+  constant slot gtk-tool-palette-priv :: <GtkToolPalettePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkToolPalette*> => <GtkToolPalette>;
 
-define property-getter toolpalette-icon-size :: <GtkIconSize> on <GtkToolPalette> end;
-define property-setter toolpalette-icon-size :: <GtkIconSize> on <GtkToolPalette> end;
-define property-getter toolpalette-icon-size-set :: <C-boolean> on <GtkToolPalette> end;
-define property-setter toolpalette-icon-size-set :: <C-boolean> on <GtkToolPalette> end;
-define property-getter toolpalette-toolbar-style :: <GtkToolbarStyle> on <GtkToolPalette> end;
-define property-setter toolpalette-toolbar-style :: <GtkToolbarStyle> on <GtkToolPalette> end;
 define C-function gtk-tool-palette-new
   result res :: <GtkWidget>;
   c-name: "gtk_tool_palette_new";
@@ -21689,16 +20286,16 @@ define C-function gtk-tool-palette-unset-style
 end;
 
 define C-struct <_GtkToolPaletteClass>
-  constant slot gtktoolpaletteclass-parent-class :: <GtkContainerClass>;
-  constant slot gtktoolpaletteclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktoolpaletteclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktoolpaletteclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktoolpaletteclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tool-palette-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-tool-palette-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tool-palette-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tool-palette-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tool-palette-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkToolPaletteClass>;
 end C-struct;
 
-define constant $GTK-TOOL-PALETTE-DRAG-ITEMS = 1;
-define constant $GTK-TOOL-PALETTE-DRAG-GROUPS = 2;
+define constant $gtk-tool-palette-drag-items = 1;
+define constant $gtk-tool-palette-drag-groups = 2;
 define constant <GtkToolPaletteDragTargets> = <C-int>;
 define C-pointer-type <GtkToolPaletteDragTargets*> => <GtkToolPaletteDragTargets>;
 
@@ -21766,34 +20363,26 @@ define C-function gtk-tool-shell-rebuild-menu
 end;
 
 define C-struct <_GtkToolShellIface>
-  constant slot gtktoolshelliface-g-iface :: <GTypeInterface>;
-  constant slot gtktoolshelliface-get-icon-size :: <C-function-pointer>;
-  constant slot gtktoolshelliface-get-orientation :: <C-function-pointer>;
-  constant slot gtktoolshelliface-get-style :: <C-function-pointer>;
-  constant slot gtktoolshelliface-get-relief-style :: <C-function-pointer>;
-  constant slot gtktoolshelliface-rebuild-menu :: <C-function-pointer>;
-  constant slot gtktoolshelliface-get-text-orientation :: <C-function-pointer>;
-  constant slot gtktoolshelliface-get-text-alignment :: <C-function-pointer>;
-  constant slot gtktoolshelliface-get-ellipsize-mode :: <C-function-pointer>;
-  constant slot gtktoolshelliface-get-text-size-group :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-tool-shell-iface-get-icon-size :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-get-orientation :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-get-style :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-get-relief-style :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-rebuild-menu :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-get-text-orientation :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-get-text-alignment :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-get-ellipsize-mode :: <C-function-pointer>;
+  constant slot gtk-tool-shell-iface-get-text-size-group :: <C-function-pointer>;
   pointer-type-name: <GtkToolShellIface>;
 end C-struct;
 
 define open C-subtype <GtkToolbar> (<GtkContainer>)
-  constant slot gtktoolbar-container :: <GtkContainer>;
-  constant slot gtktoolbar-priv :: <GtkToolbarPrivate>;
+  constant slot gtk-toolbar-container :: <GtkContainer>;
+  constant slot gtk-toolbar-priv :: <GtkToolbarPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkToolbar*> => <GtkToolbar>;
 
-define property-getter toolbar-icon-size :: <C-signed-int> on <GtkToolbar> end;
-define property-setter toolbar-icon-size :: <C-signed-int> on <GtkToolbar> end;
-define property-getter toolbar-icon-size-set :: <C-boolean> on <GtkToolbar> end;
-define property-setter toolbar-icon-size-set :: <C-boolean> on <GtkToolbar> end;
-define property-getter toolbar-show-arrow :: <C-boolean> on <GtkToolbar> end;
-define property-setter toolbar-show-arrow :: <C-boolean> on <GtkToolbar> end;
-define property-getter toolbar-toolbar-style :: <GtkToolbarStyle> on <GtkToolbar> end;
-define property-setter toolbar-toolbar-style :: <GtkToolbarStyle> on <GtkToolbar> end;
 define C-function gtk-toolbar-new
   result res :: <GtkWidget>;
   c-name: "gtk_toolbar_new";
@@ -21894,14 +20483,14 @@ define C-function gtk-toolbar-unset-style
 end;
 
 define C-struct <_GtkToolbarClass>
-  constant slot gtktoolbarclass-parent-class :: <GtkContainerClass>;
-  constant slot gtktoolbarclass-orientation-changed :: <C-function-pointer>;
-  constant slot gtktoolbarclass-style-changed :: <C-function-pointer>;
-  constant slot gtktoolbarclass-popup-context-menu :: <C-function-pointer>;
-  constant slot gtktoolbarclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktoolbarclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktoolbarclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktoolbarclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-toolbar-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-toolbar-class-orientation-changed :: <C-function-pointer>;
+  constant slot gtk-toolbar-class-style-changed :: <C-function-pointer>;
+  constant slot gtk-toolbar-class-popup-context-menu :: <C-function-pointer>;
+  constant slot gtk-toolbar-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-toolbar-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-toolbar-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-toolbar-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkToolbarClass>;
 end C-struct;
 
@@ -21909,15 +20498,15 @@ define C-struct <_GtkToolbarPrivate>
   pointer-type-name: <GtkToolbarPrivate>;
 end C-struct;
 
-define constant $GTK-TOOLBAR-SPACE-EMPTY = 0;
-define constant $GTK-TOOLBAR-SPACE-LINE = 1;
+define constant $gtk-toolbar-space-empty = 0;
+define constant $gtk-toolbar-space-line = 1;
 define constant <GtkToolbarSpaceStyle> = <C-int>;
 define C-pointer-type <GtkToolbarSpaceStyle*> => <GtkToolbarSpaceStyle>;
 
-define constant $GTK-TOOLBAR-ICONS = 0;
-define constant $GTK-TOOLBAR-TEXT = 1;
-define constant $GTK-TOOLBAR-BOTH = 2;
-define constant $GTK-TOOLBAR-BOTH-HORIZ = 3;
+define constant $gtk-toolbar-icons = 0;
+define constant $gtk-toolbar-text = 1;
+define constant $gtk-toolbar-both = 2;
+define constant $gtk-toolbar-both-horiz = 3;
 define constant <GtkToolbarStyle> = <C-int>;
 define C-pointer-type <GtkToolbarStyle*> => <GtkToolbarStyle>;
 
@@ -22005,9 +20594,9 @@ define C-function gtk-tree-drag-dest-row-drop-possible
 end;
 
 define C-struct <_GtkTreeDragDestIface>
-  constant slot gtktreedragdestiface-g-iface :: <GTypeInterface>;
-  constant slot gtktreedragdestiface-drag-data-received :: <C-function-pointer>;
-  constant slot gtktreedragdestiface-row-drop-possible :: <C-function-pointer>;
+  constant slot gtk-tree-drag-dest-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-tree-drag-dest-iface-drag-data-received :: <C-function-pointer>;
+  constant slot gtk-tree-drag-dest-iface-row-drop-possible :: <C-function-pointer>;
   pointer-type-name: <GtkTreeDragDestIface>;
 end C-struct;
 
@@ -22040,18 +20629,18 @@ define C-function gtk-tree-drag-source-row-draggable
 end;
 
 define C-struct <_GtkTreeDragSourceIface>
-  constant slot gtktreedragsourceiface-g-iface :: <GTypeInterface>;
-  constant slot gtktreedragsourceiface-row-draggable :: <C-function-pointer>;
-  constant slot gtktreedragsourceiface-drag-data-get :: <C-function-pointer>;
-  constant slot gtktreedragsourceiface-drag-data-delete :: <C-function-pointer>;
+  constant slot gtk-tree-drag-source-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-tree-drag-source-iface-row-draggable :: <C-function-pointer>;
+  constant slot gtk-tree-drag-source-iface-drag-data-get :: <C-function-pointer>;
+  constant slot gtk-tree-drag-source-iface-drag-data-delete :: <C-function-pointer>;
   pointer-type-name: <GtkTreeDragSourceIface>;
 end C-struct;
 
 define C-struct <_GtkTreeIter>
-  slot gtktreeiter-stamp :: <C-signed-int>;
-  slot gtktreeiter-user-data :: <C-void*>;
-  slot gtktreeiter-user-data2 :: <C-void*>;
-  slot gtktreeiter-user-data3 :: <C-void*>;
+  slot gtk-tree-iter-stamp :: <C-signed-int>;
+  slot gtk-tree-iter-user-data :: <C-void*>;
+  slot gtk-tree-iter-user-data2 :: <C-void*>;
+  slot gtk-tree-iter-user-data3 :: <C-void*>;
   pointer-type-name: <GtkTreeIter>;
 end C-struct;
 
@@ -22249,16 +20838,12 @@ define C-function gtk-tree-model-unref-node
 end;
 
 define open C-subtype <GtkTreeModelFilter> (<GObject>)
-  constant slot gtktreemodelfilter-parent :: <GObject>;
-  constant slot gtktreemodelfilter-priv :: <GtkTreeModelFilterPrivate>;
+  constant slot gtk-tree-model-filter-parent :: <GObject>;
+  constant slot gtk-tree-model-filter-priv :: <GtkTreeModelFilterPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTreeModelFilter*> => <GtkTreeModelFilter>;
 
-define property-getter treemodelfilter-child-model :: <GtkTreeModel> on <GtkTreeModelFilter> end;
-define property-setter treemodelfilter-child-model :: <GtkTreeModel> on <GtkTreeModelFilter> end;
-define property-getter treemodelfilter-virtual-root :: <GtkTreePath> on <GtkTreeModelFilter> end;
-define property-setter treemodelfilter-virtual-root :: <GtkTreePath> on <GtkTreeModelFilter> end;
 define C-function gtk-tree-model-filter-clear-cache
   input parameter self :: <GtkTreeModelFilter>;
   c-name: "gtk_tree_model_filter_clear_cache";
@@ -22329,13 +20914,13 @@ define C-function gtk-tree-model-filter-set-visible-func
 end;
 
 define C-struct <_GtkTreeModelFilterClass>
-  constant slot gtktreemodelfilterclass-parent-class :: <GObjectClass>;
-  constant slot gtktreemodelfilterclass-visible :: <C-function-pointer>;
-  constant slot gtktreemodelfilterclass-modify :: <C-function-pointer>;
-  constant slot gtktreemodelfilterclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktreemodelfilterclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktreemodelfilterclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktreemodelfilterclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tree-model-filter-class-parent-class :: <GObjectClass>;
+  constant slot gtk-tree-model-filter-class-visible :: <C-function-pointer>;
+  constant slot gtk-tree-model-filter-class-modify :: <C-function-pointer>;
+  constant slot gtk-tree-model-filter-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tree-model-filter-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tree-model-filter-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tree-model-filter-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTreeModelFilterClass>;
 end C-struct;
 
@@ -22343,45 +20928,43 @@ define C-struct <_GtkTreeModelFilterPrivate>
   pointer-type-name: <GtkTreeModelFilterPrivate>;
 end C-struct;
 
-define constant $GTK-TREE-MODEL-ITERS-PERSIST = 1;
-define constant $GTK-TREE-MODEL-LIST-ONLY = 2;
+define constant $gtk-tree-model-iters-persist = 1;
+define constant $gtk-tree-model-list-only = 2;
 define constant <GtkTreeModelFlags> = <C-int>;
 define C-pointer-type <GtkTreeModelFlags*> => <GtkTreeModelFlags>;
 
 define C-struct <_GtkTreeModelIface>
-  constant slot gtktreemodeliface-g-iface :: <GTypeInterface>;
-  constant slot gtktreemodeliface-row-changed :: <C-function-pointer>;
-  constant slot gtktreemodeliface-row-inserted :: <C-function-pointer>;
-  constant slot gtktreemodeliface-row-has-child-toggled :: <C-function-pointer>;
-  constant slot gtktreemodeliface-row-deleted :: <C-function-pointer>;
-  constant slot gtktreemodeliface-rows-reordered :: <C-function-pointer>;
-  constant slot gtktreemodeliface-get-flags :: <C-function-pointer>;
-  constant slot gtktreemodeliface-get-n-columns :: <C-function-pointer>;
-  constant slot gtktreemodeliface-get-column-type :: <C-function-pointer>;
-  constant slot gtktreemodeliface-get-iter :: <C-function-pointer>;
-  constant slot gtktreemodeliface-get-path :: <C-function-pointer>;
-  constant slot gtktreemodeliface-get-value :: <C-function-pointer>;
-  constant slot gtktreemodeliface-iter-next :: <C-function-pointer>;
-  constant slot gtktreemodeliface-iter-previous :: <C-function-pointer>;
-  constant slot gtktreemodeliface-iter-children :: <C-function-pointer>;
-  constant slot gtktreemodeliface-iter-has-child :: <C-function-pointer>;
-  constant slot gtktreemodeliface-iter-n-children :: <C-function-pointer>;
-  constant slot gtktreemodeliface-iter-nth-child :: <C-function-pointer>;
-  constant slot gtktreemodeliface-iter-parent :: <C-function-pointer>;
-  constant slot gtktreemodeliface-ref-node :: <C-function-pointer>;
-  constant slot gtktreemodeliface-unref-node :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-tree-model-iface-row-changed :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-row-inserted :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-row-has-child-toggled :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-row-deleted :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-rows-reordered :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-get-flags :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-get-n-columns :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-get-column-type :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-get-iter :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-get-path :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-get-value :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-iter-next :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-iter-previous :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-iter-children :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-iter-has-child :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-iter-n-children :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-iter-nth-child :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-iter-parent :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-ref-node :: <C-function-pointer>;
+  constant slot gtk-tree-model-iface-unref-node :: <C-function-pointer>;
   pointer-type-name: <GtkTreeModelIface>;
 end C-struct;
 
 define open C-subtype <GtkTreeModelSort> (<GObject>)
-  constant slot gtktreemodelsort-parent :: <GObject>;
-  constant slot gtktreemodelsort-priv :: <GtkTreeModelSortPrivate>;
+  constant slot gtk-tree-model-sort-parent :: <GObject>;
+  constant slot gtk-tree-model-sort-priv :: <GtkTreeModelSortPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTreeModelSort*> => <GtkTreeModelSort>;
 
-define property-getter treemodelsort-model :: <GtkTreeModel> on <GtkTreeModelSort> end;
-define property-setter treemodelsort-model :: <GtkTreeModel> on <GtkTreeModelSort> end;
 define C-function gtk-tree-model-sort-clear-cache
   input parameter self :: <GtkTreeModelSort>;
   c-name: "gtk_tree_model_sort_clear_cache";
@@ -22435,11 +21018,11 @@ define C-function gtk-tree-model-sort-reset-default-sort-func
 end;
 
 define C-struct <_GtkTreeModelSortClass>
-  constant slot gtktreemodelsortclass-parent-class :: <GObjectClass>;
-  constant slot gtktreemodelsortclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktreemodelsortclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktreemodelsortclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktreemodelsortclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tree-model-sort-class-parent-class :: <GObjectClass>;
+  constant slot gtk-tree-model-sort-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tree-model-sort-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tree-model-sort-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tree-model-sort-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTreeModelSortClass>;
 end C-struct;
 
@@ -22613,14 +21196,12 @@ define C-function gtk-tree-row-reference-inserted
 end;
 
 define open C-subtype <GtkTreeSelection> (<GObject>)
-  constant slot gtktreeselection-parent :: <GObject>;
-  constant slot gtktreeselection-priv :: <GtkTreeSelectionPrivate>;
+  constant slot gtk-tree-selection-parent :: <GObject>;
+  constant slot gtk-tree-selection-priv :: <GtkTreeSelectionPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTreeSelection*> => <GtkTreeSelection>;
 
-define property-getter treeselection-mode :: <GtkSelectionMode> on <GtkTreeSelection> end;
-define property-setter treeselection-mode :: <GtkSelectionMode> on <GtkTreeSelection> end;
 define C-function gtk-tree-selection-count-selected-rows
   input parameter self :: <GtkTreeSelection>;
   result res :: <C-signed-int>;
@@ -22738,12 +21319,12 @@ define C-function gtk-tree-selection-unselect-range
 end;
 
 define C-struct <_GtkTreeSelectionClass>
-  constant slot gtktreeselectionclass-parent-class :: <GObjectClass>;
-  constant slot gtktreeselectionclass-changed :: <C-function-pointer>;
-  constant slot gtktreeselectionclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktreeselectionclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktreeselectionclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktreeselectionclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tree-selection-class-parent-class :: <GObjectClass>;
+  constant slot gtk-tree-selection-class-changed :: <C-function-pointer>;
+  constant slot gtk-tree-selection-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tree-selection-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tree-selection-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tree-selection-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTreeSelectionClass>;
 end C-struct;
 
@@ -22801,19 +21382,19 @@ define C-function gtk-tree-sortable-sort-column-changed
 end;
 
 define C-struct <_GtkTreeSortableIface>
-  constant slot gtktreesortableiface-g-iface :: <GTypeInterface>;
-  constant slot gtktreesortableiface-sort-column-changed :: <C-function-pointer>;
-  constant slot gtktreesortableiface-get-sort-column-id :: <C-function-pointer>;
-  constant slot gtktreesortableiface-set-sort-column-id :: <C-function-pointer>;
-  constant slot gtktreesortableiface-set-sort-func :: <C-function-pointer>;
-  constant slot gtktreesortableiface-set-default-sort-func :: <C-function-pointer>;
-  constant slot gtktreesortableiface-has-default-sort-func :: <C-function-pointer>;
+  constant slot gtk-tree-sortable-iface-g-iface :: <GTypeInterface>;
+  constant slot gtk-tree-sortable-iface-sort-column-changed :: <C-function-pointer>;
+  constant slot gtk-tree-sortable-iface-get-sort-column-id :: <C-function-pointer>;
+  constant slot gtk-tree-sortable-iface-set-sort-column-id :: <C-function-pointer>;
+  constant slot gtk-tree-sortable-iface-set-sort-func :: <C-function-pointer>;
+  constant slot gtk-tree-sortable-iface-set-default-sort-func :: <C-function-pointer>;
+  constant slot gtk-tree-sortable-iface-has-default-sort-func :: <C-function-pointer>;
   pointer-type-name: <GtkTreeSortableIface>;
 end C-struct;
 
 define open C-subtype <GtkTreeStore> (<GObject>)
-  constant slot gtktreestore-parent :: <GObject>;
-  constant slot gtktreestore-priv :: <GtkTreeStorePrivate>;
+  constant slot gtk-tree-store-parent :: <GObject>;
+  constant slot gtk-tree-store-priv :: <GtkTreeStorePrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTreeStore*> => <GtkTreeStore>;
@@ -22954,11 +21535,11 @@ define C-function gtk-tree-store-swap
 end;
 
 define C-struct <_GtkTreeStoreClass>
-  constant slot gtktreestoreclass-parent-class :: <GObjectClass>;
-  constant slot gtktreestoreclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktreestoreclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktreestoreclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktreestoreclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tree-store-class-parent-class :: <GObjectClass>;
+  constant slot gtk-tree-store-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tree-store-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tree-store-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tree-store-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTreeStoreClass>;
 end C-struct;
 
@@ -22967,46 +21548,12 @@ define C-struct <_GtkTreeStorePrivate>
 end C-struct;
 
 define open C-subtype <GtkTreeView> (<GtkContainer>)
-  constant slot gtktreeview-parent :: <GtkContainer>;
-  constant slot gtktreeview-priv :: <GtkTreeViewPrivate>;
+  constant slot gtk-tree-view-parent :: <GtkContainer>;
+  constant slot gtk-tree-view-priv :: <GtkTreeViewPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTreeView*> => <GtkTreeView>;
 
-define property-getter treeview-enable-grid-lines :: <GtkTreeViewGridLines> on <GtkTreeView> end;
-define property-setter treeview-enable-grid-lines :: <GtkTreeViewGridLines> on <GtkTreeView> end;
-define property-getter treeview-enable-search :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-enable-search :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-enable-tree-lines :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-enable-tree-lines :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-expander-column :: <GtkTreeViewColumn> on <GtkTreeView> end;
-define property-setter treeview-expander-column :: <GtkTreeViewColumn> on <GtkTreeView> end;
-define property-getter treeview-fixed-height-mode :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-fixed-height-mode :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-headers-clickable :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-headers-clickable :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-headers-visible :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-headers-visible :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-hover-expand :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-hover-expand :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-hover-selection :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-hover-selection :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-level-indentation :: <C-signed-int> on <GtkTreeView> end;
-define property-setter treeview-level-indentation :: <C-signed-int> on <GtkTreeView> end;
-define property-getter treeview-model :: <GtkTreeModel> on <GtkTreeView> end;
-define property-setter treeview-model :: <GtkTreeModel> on <GtkTreeView> end;
-define property-getter treeview-reorderable :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-reorderable :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-rubber-banding :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-rubber-banding :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-rules-hint :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-rules-hint :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-search-column :: <C-signed-int> on <GtkTreeView> end;
-define property-setter treeview-search-column :: <C-signed-int> on <GtkTreeView> end;
-define property-getter treeview-show-expanders :: <C-boolean> on <GtkTreeView> end;
-define property-setter treeview-show-expanders :: <C-boolean> on <GtkTreeView> end;
-define property-getter treeview-tooltip-column :: <C-signed-int> on <GtkTreeView> end;
-define property-setter treeview-tooltip-column :: <C-signed-int> on <GtkTreeView> end;
 define C-function gtk-tree-view-new
   result res :: <GtkWidget>;
   c-name: "gtk_tree_view_new";
@@ -23669,76 +22216,40 @@ define C-function gtk-tree-view-unset-rows-drag-source
 end;
 
 define C-struct <_GtkTreeViewClass>
-  constant slot gtktreeviewclass-parent-class :: <GtkContainerClass>;
-  constant slot gtktreeviewclass-row-activated :: <C-function-pointer>;
-  constant slot gtktreeviewclass-test-expand-row :: <C-function-pointer>;
-  constant slot gtktreeviewclass-test-collapse-row :: <C-function-pointer>;
-  constant slot gtktreeviewclass-row-expanded :: <C-function-pointer>;
-  constant slot gtktreeviewclass-row-collapsed :: <C-function-pointer>;
-  constant slot gtktreeviewclass-columns-changed :: <C-function-pointer>;
-  constant slot gtktreeviewclass-cursor-changed :: <C-function-pointer>;
-  constant slot gtktreeviewclass-move-cursor :: <C-function-pointer>;
-  constant slot gtktreeviewclass-select-all :: <C-function-pointer>;
-  constant slot gtktreeviewclass-unselect-all :: <C-function-pointer>;
-  constant slot gtktreeviewclass-select-cursor-row :: <C-function-pointer>;
-  constant slot gtktreeviewclass-toggle-cursor-row :: <C-function-pointer>;
-  constant slot gtktreeviewclass-expand-collapse-cursor-row :: <C-function-pointer>;
-  constant slot gtktreeviewclass-select-cursor-parent :: <C-function-pointer>;
-  constant slot gtktreeviewclass-start-interactive-search :: <C-function-pointer>;
-  constant slot gtktreeviewclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktreeviewclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktreeviewclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktreeviewclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtktreeviewclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtktreeviewclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtktreeviewclass--gtk-reserved7 :: <C-void*>;
-  constant slot gtktreeviewclass--gtk-reserved8 :: <C-void*>;
+  constant slot gtk-tree-view-class-parent-class :: <GtkContainerClass>;
+  constant slot gtk-tree-view-class-row-activated :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-test-expand-row :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-test-collapse-row :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-row-expanded :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-row-collapsed :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-columns-changed :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-cursor-changed :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-move-cursor :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-select-all :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-unselect-all :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-select-cursor-row :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-toggle-cursor-row :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-expand-collapse-cursor-row :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-select-cursor-parent :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-start-interactive-search :: <C-function-pointer>;
+  constant slot gtk-tree-view-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tree-view-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tree-view-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tree-view-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tree-view-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-tree-view-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-tree-view-class-_gtk-reserved7 :: <C-void*>;
+  constant slot gtk-tree-view-class-_gtk-reserved8 :: <C-void*>;
   pointer-type-name: <GtkTreeViewClass>;
 end C-struct;
 
 define open C-subtype <GtkTreeViewColumn> (<GInitiallyUnowned>)
-  constant slot gtktreeviewcolumn-parent-instance :: <GInitiallyUnowned>;
-  constant slot gtktreeviewcolumn-priv :: <GtkTreeViewColumnPrivate>;
+  constant slot gtk-tree-view-column-parent-instance :: <GInitiallyUnowned>;
+  constant slot gtk-tree-view-column-priv :: <GtkTreeViewColumnPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkTreeViewColumn*> => <GtkTreeViewColumn>;
 
-define property-getter treeviewcolumn-alignment :: <C-float> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-alignment :: <C-float> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-cell-area :: <GtkCellArea> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-cell-area :: <GtkCellArea> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-clickable :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-clickable :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-expand :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-expand :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-fixed-width :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-fixed-width :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-max-width :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-max-width :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-min-width :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-min-width :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-reorderable :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-reorderable :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-resizable :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-resizable :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-sizing :: <GtkTreeViewColumnSizing> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-sizing :: <GtkTreeViewColumnSizing> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-sort-column-id :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-sort-column-id :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-sort-indicator :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-sort-indicator :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-sort-order :: <GtkSortType> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-sort-order :: <GtkSortType> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-spacing :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-spacing :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-title :: <C-string> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-title :: <C-string> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-visible :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-visible :: <C-boolean> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-widget :: <GtkWidget> on <GtkTreeViewColumn> end;
-define property-setter treeviewcolumn-widget :: <GtkWidget> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-width :: <C-signed-int> on <GtkTreeViewColumn> end;
-define property-getter treeviewcolumn-x-offset :: <C-signed-int> on <GtkTreeViewColumn> end;
 define C-function gtk-tree-view-column-new
   result res :: <GtkTreeViewColumn>;
   c-name: "gtk_tree_view_column_new";
@@ -24059,12 +22570,12 @@ define C-function gtk-tree-view-column-set-widget
 end;
 
 define C-struct <_GtkTreeViewColumnClass>
-  constant slot gtktreeviewcolumnclass-parent-class :: <GInitiallyUnownedClass>;
-  constant slot gtktreeviewcolumnclass-clicked :: <C-function-pointer>;
-  constant slot gtktreeviewcolumnclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtktreeviewcolumnclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtktreeviewcolumnclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtktreeviewcolumnclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-tree-view-column-class-parent-class :: <GInitiallyUnownedClass>;
+  constant slot gtk-tree-view-column-class-clicked :: <C-function-pointer>;
+  constant slot gtk-tree-view-column-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-tree-view-column-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-tree-view-column-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-tree-view-column-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkTreeViewColumnClass>;
 end C-struct;
 
@@ -24072,23 +22583,23 @@ define C-struct <_GtkTreeViewColumnPrivate>
   pointer-type-name: <GtkTreeViewColumnPrivate>;
 end C-struct;
 
-define constant $GTK-TREE-VIEW-COLUMN-GROW-ONLY = 0;
-define constant $GTK-TREE-VIEW-COLUMN-AUTOSIZE = 1;
-define constant $GTK-TREE-VIEW-COLUMN-FIXED = 2;
+define constant $gtk-tree-view-column-grow-only = 0;
+define constant $gtk-tree-view-column-autosize = 1;
+define constant $gtk-tree-view-column-fixed = 2;
 define constant <GtkTreeViewColumnSizing> = <C-int>;
 define C-pointer-type <GtkTreeViewColumnSizing*> => <GtkTreeViewColumnSizing>;
 
-define constant $GTK-TREE-VIEW-DROP-BEFORE = 0;
-define constant $GTK-TREE-VIEW-DROP-AFTER = 1;
-define constant $GTK-TREE-VIEW-DROP-INTO-OR-BEFORE = 2;
-define constant $GTK-TREE-VIEW-DROP-INTO-OR-AFTER = 3;
+define constant $gtk-tree-view-drop-before = 0;
+define constant $gtk-tree-view-drop-after = 1;
+define constant $gtk-tree-view-drop-into-or-before = 2;
+define constant $gtk-tree-view-drop-into-or-after = 3;
 define constant <GtkTreeViewDropPosition> = <C-int>;
 define C-pointer-type <GtkTreeViewDropPosition*> => <GtkTreeViewDropPosition>;
 
-define constant $GTK-TREE-VIEW-GRID-LINES-NONE = 0;
-define constant $GTK-TREE-VIEW-GRID-LINES-HORIZONTAL = 1;
-define constant $GTK-TREE-VIEW-GRID-LINES-VERTICAL = 2;
-define constant $GTK-TREE-VIEW-GRID-LINES-BOTH = 3;
+define constant $gtk-tree-view-grid-lines-none = 0;
+define constant $gtk-tree-view-grid-lines-horizontal = 1;
+define constant $gtk-tree-view-grid-lines-vertical = 2;
+define constant $gtk-tree-view-grid-lines-both = 3;
 define constant <GtkTreeViewGridLines> = <C-int>;
 define C-pointer-type <GtkTreeViewGridLines*> => <GtkTreeViewGridLines>;
 
@@ -24097,15 +22608,12 @@ define C-struct <_GtkTreeViewPrivate>
 end C-struct;
 
 define open C-subtype <GtkUIManager> (<GObject>)
-  constant slot gtkuimanager-parent :: <GObject>;
-  constant slot gtkuimanager-private-data :: <GtkUIManagerPrivate>;
+  constant slot gtk-ui-manager-parent :: <GObject>;
+  constant slot gtk-ui-manager-private-data :: <GtkUIManagerPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkUIManager*> => <GtkUIManager>;
 
-define property-getter uimanager-add-tearoffs :: <C-boolean> on <GtkUIManager> end;
-define property-setter uimanager-add-tearoffs :: <C-boolean> on <GtkUIManager> end;
-define property-getter uimanager-ui :: <C-string> on <GtkUIManager> end;
 define C-function gtk-ui-manager-new
   result res :: <GtkUIManager>;
   c-name: "gtk_ui_manager_new";
@@ -24226,33 +22734,33 @@ define C-function gtk-ui-manager-set-add-tearoffs
 end;
 
 define C-struct <_GtkUIManagerClass>
-  constant slot gtkuimanagerclass-parent-class :: <GObjectClass>;
-  constant slot gtkuimanagerclass-add-widget :: <C-function-pointer>;
-  constant slot gtkuimanagerclass-actions-changed :: <C-function-pointer>;
-  constant slot gtkuimanagerclass-connect-proxy :: <C-function-pointer>;
-  constant slot gtkuimanagerclass-disconnect-proxy :: <C-function-pointer>;
-  constant slot gtkuimanagerclass-pre-activate :: <C-function-pointer>;
-  constant slot gtkuimanagerclass-post-activate :: <C-function-pointer>;
-  constant slot gtkuimanagerclass-get-widget :: <C-function-pointer>;
-  constant slot gtkuimanagerclass-get-action :: <C-function-pointer>;
-  constant slot gtkuimanagerclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkuimanagerclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkuimanagerclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkuimanagerclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-ui-manager-class-parent-class :: <GObjectClass>;
+  constant slot gtk-ui-manager-class-add-widget :: <C-function-pointer>;
+  constant slot gtk-ui-manager-class-actions-changed :: <C-function-pointer>;
+  constant slot gtk-ui-manager-class-connect-proxy :: <C-function-pointer>;
+  constant slot gtk-ui-manager-class-disconnect-proxy :: <C-function-pointer>;
+  constant slot gtk-ui-manager-class-pre-activate :: <C-function-pointer>;
+  constant slot gtk-ui-manager-class-post-activate :: <C-function-pointer>;
+  constant slot gtk-ui-manager-class-get-widget :: <C-function-pointer>;
+  constant slot gtk-ui-manager-class-get-action :: <C-function-pointer>;
+  constant slot gtk-ui-manager-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-ui-manager-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-ui-manager-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-ui-manager-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkUIManagerClass>;
 end C-struct;
 
-define constant $GTK-UI-MANAGER-AUTO = 0;
-define constant $GTK-UI-MANAGER-MENUBAR = 1;
-define constant $GTK-UI-MANAGER-MENU = 2;
-define constant $GTK-UI-MANAGER-TOOLBAR = 4;
-define constant $GTK-UI-MANAGER-PLACEHOLDER = 8;
-define constant $GTK-UI-MANAGER-POPUP = 16;
-define constant $GTK-UI-MANAGER-MENUITEM = 32;
-define constant $GTK-UI-MANAGER-TOOLITEM = 64;
-define constant $GTK-UI-MANAGER-SEPARATOR = 128;
-define constant $GTK-UI-MANAGER-ACCELERATOR = 256;
-define constant $GTK-UI-MANAGER-POPUP-WITH-ACCELS = 512;
+define constant $gtk-ui-manager-auto = 0;
+define constant $gtk-ui-manager-menubar = 1;
+define constant $gtk-ui-manager-menu = 2;
+define constant $gtk-ui-manager-toolbar = 4;
+define constant $gtk-ui-manager-placeholder = 8;
+define constant $gtk-ui-manager-popup = 16;
+define constant $gtk-ui-manager-menuitem = 32;
+define constant $gtk-ui-manager-toolitem = 64;
+define constant $gtk-ui-manager-separator = 128;
+define constant $gtk-ui-manager-accelerator = 256;
+define constant $gtk-ui-manager-popup-with-accels = 512;
 define constant <GtkUIManagerItemType> = <C-int>;
 define C-pointer-type <GtkUIManagerItemType*> => <GtkUIManagerItemType>;
 
@@ -24260,15 +22768,15 @@ define C-struct <_GtkUIManagerPrivate>
   pointer-type-name: <GtkUIManagerPrivate>;
 end C-struct;
 
-define constant $GTK-UNIT-PIXEL = 0;
-define constant $GTK-UNIT-POINTS = 1;
-define constant $GTK-UNIT-INCH = 2;
-define constant $GTK-UNIT-MM = 3;
+define constant $gtk-unit-pixel = 0;
+define constant $gtk-unit-points = 1;
+define constant $gtk-unit-inch = 2;
+define constant $gtk-unit-mm = 3;
 define constant <GtkUnit> = <C-int>;
 define C-pointer-type <GtkUnit*> => <GtkUnit>;
 
 define open C-subtype <GtkVBox> (<GtkBox>)
-  constant slot gtkvbox-box :: <GtkBox>;
+  constant slot gtk-v-box-box :: <GtkBox>;
 end C-subtype;
 
 define C-pointer-type <GtkVBox*> => <GtkVBox>;
@@ -24281,12 +22789,12 @@ define C-function gtk-vbox-new
 end;
 
 define C-struct <_GtkVBoxClass>
-  constant slot gtkvboxclass-parent-class :: <GtkBoxClass>;
+  constant slot gtk-v-box-class-parent-class :: <GtkBoxClass>;
   pointer-type-name: <GtkVBoxClass>;
 end C-struct;
 
 define open C-subtype <GtkVButtonBox> (<GtkButtonBox>)
-  constant slot gtkvbuttonbox-button-box :: <GtkButtonBox>;
+  constant slot gtk-v-button-box-button-box :: <GtkButtonBox>;
 end C-subtype;
 
 define C-pointer-type <GtkVButtonBox*> => <GtkVButtonBox>;
@@ -24297,12 +22805,12 @@ define C-function gtk-vbutton-box-new
 end;
 
 define C-struct <_GtkVButtonBoxClass>
-  constant slot gtkvbuttonboxclass-parent-class :: <GtkButtonBoxClass>;
+  constant slot gtk-v-button-box-class-parent-class :: <GtkButtonBoxClass>;
   pointer-type-name: <GtkVButtonBoxClass>;
 end C-struct;
 
 define open C-subtype <GtkVPaned> (<GtkPaned>)
-  constant slot gtkvpaned-paned :: <GtkPaned>;
+  constant slot gtk-v-paned-paned :: <GtkPaned>;
 end C-subtype;
 
 define C-pointer-type <GtkVPaned*> => <GtkVPaned>;
@@ -24313,12 +22821,12 @@ define C-function gtk-vpaned-new
 end;
 
 define C-struct <_GtkVPanedClass>
-  constant slot gtkvpanedclass-parent-class :: <GtkPanedClass>;
+  constant slot gtk-v-paned-class-parent-class :: <GtkPanedClass>;
   pointer-type-name: <GtkVPanedClass>;
 end C-struct;
 
 define open C-subtype <GtkVScale> (<GtkScale>)
-  constant slot gtkvscale-scale :: <GtkScale>;
+  constant slot gtk-v-scale-scale :: <GtkScale>;
 end C-subtype;
 
 define C-pointer-type <GtkVScale*> => <GtkVScale>;
@@ -24338,12 +22846,12 @@ define C-function gtk-vscale-new-with-range
 end;
 
 define C-struct <_GtkVScaleClass>
-  constant slot gtkvscaleclass-parent-class :: <GtkScaleClass>;
+  constant slot gtk-v-scale-class-parent-class :: <GtkScaleClass>;
   pointer-type-name: <GtkVScaleClass>;
 end C-struct;
 
 define open C-subtype <GtkVScrollbar> (<GtkScrollbar>)
-  constant slot gtkvscrollbar-scrollbar :: <GtkScrollbar>;
+  constant slot gtk-v-scrollbar-scrollbar :: <GtkScrollbar>;
 end C-subtype;
 
 define C-pointer-type <GtkVScrollbar*> => <GtkVScrollbar>;
@@ -24355,12 +22863,12 @@ define C-function gtk-vscrollbar-new
 end;
 
 define C-struct <_GtkVScrollbarClass>
-  constant slot gtkvscrollbarclass-parent-class :: <GtkScrollbarClass>;
+  constant slot gtk-v-scrollbar-class-parent-class :: <GtkScrollbarClass>;
   pointer-type-name: <GtkVScrollbarClass>;
 end C-struct;
 
 define open C-subtype <GtkVSeparator> (<GtkSeparator>)
-  constant slot gtkvseparator-separator :: <GtkSeparator>;
+  constant slot gtk-v-separator-separator :: <GtkSeparator>;
 end C-subtype;
 
 define C-pointer-type <GtkVSeparator*> => <GtkVSeparator>;
@@ -24371,19 +22879,17 @@ define C-function gtk-vseparator-new
 end;
 
 define C-struct <_GtkVSeparatorClass>
-  constant slot gtkvseparatorclass-parent-class :: <GtkSeparatorClass>;
+  constant slot gtk-v-separator-class-parent-class :: <GtkSeparatorClass>;
   pointer-type-name: <GtkVSeparatorClass>;
 end C-struct;
 
 define open C-subtype <GtkViewport> (<GtkBin>)
-  constant slot gtkviewport-bin :: <GtkBin>;
-  constant slot gtkviewport-priv :: <GtkViewportPrivate>;
+  constant slot gtk-viewport-bin :: <GtkBin>;
+  constant slot gtk-viewport-priv :: <GtkViewportPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkViewport*> => <GtkViewport>;
 
-define property-getter viewport-shadow-type :: <GtkShadowType> on <GtkViewport> end;
-define property-setter viewport-shadow-type :: <GtkShadowType> on <GtkViewport> end;
 define C-function gtk-viewport-new
   input parameter hadjustment_ :: <GtkAdjustment>;
   input parameter vadjustment_ :: <GtkAdjustment>;
@@ -24440,11 +22946,11 @@ define C-function gtk-viewport-set-vadjustment
 end;
 
 define C-struct <_GtkViewportClass>
-  constant slot gtkviewportclass-parent-class :: <GtkBinClass>;
-  constant slot gtkviewportclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkviewportclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkviewportclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkviewportclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-viewport-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-viewport-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-viewport-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-viewport-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-viewport-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkViewportClass>;
 end C-struct;
 
@@ -24453,100 +22959,32 @@ define C-struct <_GtkViewportPrivate>
 end C-struct;
 
 define open C-subtype <GtkVolumeButton> (<GtkScaleButton>)
-  constant slot gtkvolumebutton-parent :: <GtkScaleButton>;
+  constant slot gtk-volume-button-parent :: <GtkScaleButton>;
 end C-subtype;
 
 define C-pointer-type <GtkVolumeButton*> => <GtkVolumeButton>;
 
-define property-getter volumebutton-use-symbolic :: <C-boolean> on <GtkVolumeButton> end;
-define property-setter volumebutton-use-symbolic :: <C-boolean> on <GtkVolumeButton> end;
 define C-function gtk-volume-button-new
   result res :: <GtkWidget>;
   c-name: "gtk_volume_button_new";
 end;
 
 define C-struct <_GtkVolumeButtonClass>
-  constant slot gtkvolumebuttonclass-parent-class :: <GtkScaleButtonClass>;
-  constant slot gtkvolumebuttonclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkvolumebuttonclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkvolumebuttonclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkvolumebuttonclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-volume-button-class-parent-class :: <GtkScaleButtonClass>;
+  constant slot gtk-volume-button-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-volume-button-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-volume-button-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-volume-button-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkVolumeButtonClass>;
 end C-struct;
 
 define open C-subtype <GtkWidget> (<GInitiallyUnowned>)
-  constant slot gtkwidget-parent-instance :: <GInitiallyUnowned>;
-  constant slot gtkwidget-priv :: <GtkWidgetPrivate>;
+  constant slot gtk-widget-parent-instance :: <GInitiallyUnowned>;
+  constant slot gtk-widget-priv :: <GtkWidgetPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkWidget*> => <GtkWidget>;
 
-define property-getter widget-app-paintable :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-app-paintable :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-can-default :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-can-default :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-can-focus :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-can-focus :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-composite-child :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-double-buffered :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-double-buffered :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-events :: <GdkEventMask> on <GtkWidget> end;
-define property-setter widget-events :: <GdkEventMask> on <GtkWidget> end;
-define property-getter widget-expand :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-expand :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-halign :: <GtkAlign> on <GtkWidget> end;
-define property-setter widget-halign :: <GtkAlign> on <GtkWidget> end;
-define property-getter widget-has-default :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-has-default :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-has-focus :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-has-focus :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-has-tooltip :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-has-tooltip :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-height-request :: <C-signed-int> on <GtkWidget> end;
-define property-setter widget-height-request :: <C-signed-int> on <GtkWidget> end;
-define property-getter widget-hexpand :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-hexpand :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-hexpand-set :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-hexpand-set :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-is-focus :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-is-focus :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-margin :: <C-signed-int> on <GtkWidget> end;
-define property-setter widget-margin :: <C-signed-int> on <GtkWidget> end;
-define property-getter widget-margin-bottom :: <C-signed-int> on <GtkWidget> end;
-define property-setter widget-margin-bottom :: <C-signed-int> on <GtkWidget> end;
-define property-getter widget-margin-left :: <C-signed-int> on <GtkWidget> end;
-define property-setter widget-margin-left :: <C-signed-int> on <GtkWidget> end;
-define property-getter widget-margin-right :: <C-signed-int> on <GtkWidget> end;
-define property-setter widget-margin-right :: <C-signed-int> on <GtkWidget> end;
-define property-getter widget-margin-top :: <C-signed-int> on <GtkWidget> end;
-define property-setter widget-margin-top :: <C-signed-int> on <GtkWidget> end;
-define property-getter widget-name :: <C-string> on <GtkWidget> end;
-define property-setter widget-name :: <C-string> on <GtkWidget> end;
-define property-getter widget-no-show-all :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-no-show-all :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-parent :: <GtkContainer> on <GtkWidget> end;
-define property-setter widget-parent :: <GtkContainer> on <GtkWidget> end;
-define property-getter widget-receives-default :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-receives-default :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-sensitive :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-sensitive :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-style :: <GtkStyle> on <GtkWidget> end;
-define property-setter widget-style :: <GtkStyle> on <GtkWidget> end;
-define property-getter widget-tooltip-markup :: <C-string> on <GtkWidget> end;
-define property-setter widget-tooltip-markup :: <C-string> on <GtkWidget> end;
-define property-getter widget-tooltip-text :: <C-string> on <GtkWidget> end;
-define property-setter widget-tooltip-text :: <C-string> on <GtkWidget> end;
-define property-getter widget-valign :: <GtkAlign> on <GtkWidget> end;
-define property-setter widget-valign :: <GtkAlign> on <GtkWidget> end;
-define property-getter widget-vexpand :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-vexpand :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-vexpand-set :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-vexpand-set :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-visible :: <C-boolean> on <GtkWidget> end;
-define property-setter widget-visible :: <C-boolean> on <GtkWidget> end;
-define property-getter widget-width-request :: <C-signed-int> on <GtkWidget> end;
-define property-setter widget-width-request :: <C-signed-int> on <GtkWidget> end;
-define property-getter widget-window :: <GdkWindow> on <GtkWidget> end;
 define C-function gtk-widget-get-default-direction
   result res :: <GtkTextDirection>;
   c-name: "gtk_widget_get_default_direction";
@@ -25991,102 +24429,102 @@ define C-function gtk-widget-unset-state-flags
 end;
 
 define C-struct <_GtkWidgetAuxInfo>
-  slot gtkwidgetauxinfo-width :: <C-signed-int>;
-  slot gtkwidgetauxinfo-height :: <C-signed-int>;
-  slot gtkwidgetauxinfo-halign :: <C-unsigned-int>;
-  slot gtkwidgetauxinfo-valign :: <C-unsigned-int>;
-  slot gtkwidgetauxinfo-margin :: <GtkBorder>;
+  slot gtk-widget-aux-info-width :: <C-signed-int>;
+  slot gtk-widget-aux-info-height :: <C-signed-int>;
+  slot gtk-widget-aux-info-halign :: <C-unsigned-int>;
+  slot gtk-widget-aux-info-valign :: <C-unsigned-int>;
+  slot gtk-widget-aux-info-margin :: <GtkBorder>;
   pointer-type-name: <GtkWidgetAuxInfo>;
 end C-struct;
 
 define C-struct <_GtkWidgetClass>
-  constant slot gtkwidgetclass-parent-class :: <GInitiallyUnownedClass>;
-  constant slot gtkwidgetclass-activate-signal :: <C-unsigned-int>;
-  constant slot gtkwidgetclass-dispatch-child-properties-changed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-destroy :: <C-function-pointer>;
-  constant slot gtkwidgetclass-show :: <C-function-pointer>;
-  constant slot gtkwidgetclass-show-all :: <C-function-pointer>;
-  constant slot gtkwidgetclass-hide :: <C-function-pointer>;
-  constant slot gtkwidgetclass-map :: <C-function-pointer>;
-  constant slot gtkwidgetclass-unmap :: <C-function-pointer>;
-  constant slot gtkwidgetclass-realize :: <C-function-pointer>;
-  constant slot gtkwidgetclass-unrealize :: <C-function-pointer>;
-  constant slot gtkwidgetclass-size-allocate :: <C-function-pointer>;
-  constant slot gtkwidgetclass-state-changed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-state-flags-changed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-parent-set :: <C-function-pointer>;
-  constant slot gtkwidgetclass-hierarchy-changed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-style-set :: <C-function-pointer>;
-  constant slot gtkwidgetclass-direction-changed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-grab-notify :: <C-function-pointer>;
-  constant slot gtkwidgetclass-child-notify :: <C-function-pointer>;
-  constant slot gtkwidgetclass-draw :: <C-function-pointer>;
-  constant slot gtkwidgetclass-get-request-mode :: <C-function-pointer>;
-  constant slot gtkwidgetclass-get-preferred-height :: <C-function-pointer>;
-  constant slot gtkwidgetclass-get-preferred-width-for-height :: <C-function-pointer>;
-  constant slot gtkwidgetclass-get-preferred-width :: <C-function-pointer>;
-  constant slot gtkwidgetclass-get-preferred-height-for-width :: <C-function-pointer>;
-  constant slot gtkwidgetclass-mnemonic-activate :: <C-function-pointer>;
-  constant slot gtkwidgetclass-grab-focus :: <C-function-pointer>;
-  constant slot gtkwidgetclass-focus :: <C-function-pointer>;
-  constant slot gtkwidgetclass-move-focus :: <C-function-pointer>;
-  constant slot gtkwidgetclass-keynav-failed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-button-press-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-button-release-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-scroll-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-motion-notify-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-delete-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-destroy-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-key-press-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-key-release-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-enter-notify-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-leave-notify-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-configure-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-focus-in-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-focus-out-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-map-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-unmap-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-property-notify-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-selection-clear-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-selection-request-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-selection-notify-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-proximity-in-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-proximity-out-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-visibility-notify-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-window-state-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-damage-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-grab-broken-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-selection-get :: <C-function-pointer>;
-  constant slot gtkwidgetclass-selection-received :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-begin :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-end :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-data-get :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-data-delete :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-leave :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-motion :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-drop :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-data-received :: <C-function-pointer>;
-  constant slot gtkwidgetclass-drag-failed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-popup-menu :: <C-function-pointer>;
-  constant slot gtkwidgetclass-show-help :: <C-function-pointer>;
-  constant slot gtkwidgetclass-get-accessible :: <C-function-pointer>;
-  constant slot gtkwidgetclass-screen-changed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-can-activate-accel :: <C-function-pointer>;
-  constant slot gtkwidgetclass-composited-changed :: <C-function-pointer>;
-  constant slot gtkwidgetclass-query-tooltip :: <C-function-pointer>;
-  constant slot gtkwidgetclass-compute-expand :: <C-function-pointer>;
-  constant slot gtkwidgetclass-adjust-size-request :: <C-function-pointer>;
-  constant slot gtkwidgetclass-adjust-size-allocation :: <C-function-pointer>;
-  constant slot gtkwidgetclass-style-updated :: <C-function-pointer>;
-  constant slot gtkwidgetclass-touch-event :: <C-function-pointer>;
-  constant slot gtkwidgetclass-priv :: <GtkWidgetClassPrivate>;
-  constant slot gtkwidgetclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkwidgetclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkwidgetclass--gtk-reserved4 :: <C-void*>;
-  constant slot gtkwidgetclass--gtk-reserved5 :: <C-void*>;
-  constant slot gtkwidgetclass--gtk-reserved6 :: <C-void*>;
-  constant slot gtkwidgetclass--gtk-reserved7 :: <C-void*>;
+  constant slot gtk-widget-class-parent-class :: <GInitiallyUnownedClass>;
+  constant slot gtk-widget-class-activate-signal :: <C-unsigned-int>;
+  constant slot gtk-widget-class-dispatch-child-properties-changed :: <C-function-pointer>;
+  constant slot gtk-widget-class-destroy :: <C-function-pointer>;
+  constant slot gtk-widget-class-show :: <C-function-pointer>;
+  constant slot gtk-widget-class-show-all :: <C-function-pointer>;
+  constant slot gtk-widget-class-hide :: <C-function-pointer>;
+  constant slot gtk-widget-class-map :: <C-function-pointer>;
+  constant slot gtk-widget-class-unmap :: <C-function-pointer>;
+  constant slot gtk-widget-class-realize :: <C-function-pointer>;
+  constant slot gtk-widget-class-unrealize :: <C-function-pointer>;
+  constant slot gtk-widget-class-size-allocate :: <C-function-pointer>;
+  constant slot gtk-widget-class-state-changed :: <C-function-pointer>;
+  constant slot gtk-widget-class-state-flags-changed :: <C-function-pointer>;
+  constant slot gtk-widget-class-parent-set :: <C-function-pointer>;
+  constant slot gtk-widget-class-hierarchy-changed :: <C-function-pointer>;
+  constant slot gtk-widget-class-style-set :: <C-function-pointer>;
+  constant slot gtk-widget-class-direction-changed :: <C-function-pointer>;
+  constant slot gtk-widget-class-grab-notify :: <C-function-pointer>;
+  constant slot gtk-widget-class-child-notify :: <C-function-pointer>;
+  constant slot gtk-widget-class-draw :: <C-function-pointer>;
+  constant slot gtk-widget-class-get-request-mode :: <C-function-pointer>;
+  constant slot gtk-widget-class-get-preferred-height :: <C-function-pointer>;
+  constant slot gtk-widget-class-get-preferred-width-for-height :: <C-function-pointer>;
+  constant slot gtk-widget-class-get-preferred-width :: <C-function-pointer>;
+  constant slot gtk-widget-class-get-preferred-height-for-width :: <C-function-pointer>;
+  constant slot gtk-widget-class-mnemonic-activate :: <C-function-pointer>;
+  constant slot gtk-widget-class-grab-focus :: <C-function-pointer>;
+  constant slot gtk-widget-class-focus :: <C-function-pointer>;
+  constant slot gtk-widget-class-move-focus :: <C-function-pointer>;
+  constant slot gtk-widget-class-keynav-failed :: <C-function-pointer>;
+  constant slot gtk-widget-class-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-button-press-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-button-release-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-scroll-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-motion-notify-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-delete-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-destroy-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-key-press-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-key-release-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-enter-notify-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-leave-notify-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-configure-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-focus-in-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-focus-out-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-map-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-unmap-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-property-notify-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-selection-clear-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-selection-request-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-selection-notify-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-proximity-in-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-proximity-out-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-visibility-notify-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-window-state-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-damage-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-grab-broken-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-selection-get :: <C-function-pointer>;
+  constant slot gtk-widget-class-selection-received :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-begin :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-end :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-data-get :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-data-delete :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-leave :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-motion :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-drop :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-data-received :: <C-function-pointer>;
+  constant slot gtk-widget-class-drag-failed :: <C-function-pointer>;
+  constant slot gtk-widget-class-popup-menu :: <C-function-pointer>;
+  constant slot gtk-widget-class-show-help :: <C-function-pointer>;
+  constant slot gtk-widget-class-get-accessible :: <C-function-pointer>;
+  constant slot gtk-widget-class-screen-changed :: <C-function-pointer>;
+  constant slot gtk-widget-class-can-activate-accel :: <C-function-pointer>;
+  constant slot gtk-widget-class-composited-changed :: <C-function-pointer>;
+  constant slot gtk-widget-class-query-tooltip :: <C-function-pointer>;
+  constant slot gtk-widget-class-compute-expand :: <C-function-pointer>;
+  constant slot gtk-widget-class-adjust-size-request :: <C-function-pointer>;
+  constant slot gtk-widget-class-adjust-size-allocation :: <C-function-pointer>;
+  constant slot gtk-widget-class-style-updated :: <C-function-pointer>;
+  constant slot gtk-widget-class-touch-event :: <C-function-pointer>;
+  constant slot gtk-widget-class-priv :: <GtkWidgetClassPrivate>;
+  constant slot gtk-widget-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-widget-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-widget-class-_gtk-reserved4 :: <C-void*>;
+  constant slot gtk-widget-class-_gtk-reserved5 :: <C-void*>;
+  constant slot gtk-widget-class-_gtk-reserved6 :: <C-void*>;
+  constant slot gtk-widget-class-_gtk-reserved7 :: <C-void*>;
   pointer-type-name: <GtkWidgetClass>;
 end C-struct;
 
@@ -26126,8 +24564,8 @@ define C-struct <_GtkWidgetClassPrivate>
   pointer-type-name: <GtkWidgetClassPrivate>;
 end C-struct;
 
-define constant $GTK-WIDGET-HELP-TOOLTIP = 0;
-define constant $GTK-WIDGET-HELP-WHATS-THIS = 1;
+define constant $gtk-widget-help-tooltip = 0;
+define constant $gtk-widget-help-whats-this = 1;
 define constant <GtkWidgetHelpType> = <C-int>;
 define C-pointer-type <GtkWidgetHelpType*> => <GtkWidgetHelpType>;
 
@@ -26374,74 +24812,12 @@ define C-struct <_GtkWidgetPrivate>
 end C-struct;
 
 define open C-subtype <GtkWindow> (<GtkBin>)
-  constant slot gtkwindow-bin :: <GtkBin>;
-  constant slot gtkwindow-priv :: <GtkWindowPrivate>;
+  constant slot gtk-window-bin :: <GtkBin>;
+  constant slot gtk-window-priv :: <GtkWindowPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkWindow*> => <GtkWindow>;
 
-define property-getter window-accept-focus :: <C-boolean> on <GtkWindow> end;
-define property-setter window-accept-focus :: <C-boolean> on <GtkWindow> end;
-define property-getter window-application :: <GtkApplication> on <GtkWindow> end;
-define property-setter window-application :: <GtkApplication> on <GtkWindow> end;
-define property-getter window-attached-to :: <GtkWidget> on <GtkWindow> end;
-define property-setter window-attached-to :: <GtkWidget> on <GtkWindow> end;
-define property-getter window-decorated :: <C-boolean> on <GtkWindow> end;
-define property-setter window-decorated :: <C-boolean> on <GtkWindow> end;
-define property-getter window-default-height :: <C-signed-int> on <GtkWindow> end;
-define property-setter window-default-height :: <C-signed-int> on <GtkWindow> end;
-define property-getter window-default-width :: <C-signed-int> on <GtkWindow> end;
-define property-setter window-default-width :: <C-signed-int> on <GtkWindow> end;
-define property-getter window-deletable :: <C-boolean> on <GtkWindow> end;
-define property-setter window-deletable :: <C-boolean> on <GtkWindow> end;
-define property-getter window-destroy-with-parent :: <C-boolean> on <GtkWindow> end;
-define property-setter window-destroy-with-parent :: <C-boolean> on <GtkWindow> end;
-define property-getter window-focus-on-map :: <C-boolean> on <GtkWindow> end;
-define property-setter window-focus-on-map :: <C-boolean> on <GtkWindow> end;
-define property-getter window-focus-visible :: <C-boolean> on <GtkWindow> end;
-define property-setter window-focus-visible :: <C-boolean> on <GtkWindow> end;
-define property-getter window-gravity :: <GdkGravity> on <GtkWindow> end;
-define property-setter window-gravity :: <GdkGravity> on <GtkWindow> end;
-define property-getter window-has-resize-grip :: <C-boolean> on <GtkWindow> end;
-define property-setter window-has-resize-grip :: <C-boolean> on <GtkWindow> end;
-define property-getter window-has-toplevel-focus :: <C-boolean> on <GtkWindow> end;
-define property-getter window-hide-titlebar-when-maximized :: <C-boolean> on <GtkWindow> end;
-define property-setter window-hide-titlebar-when-maximized :: <C-boolean> on <GtkWindow> end;
-define property-getter window-icon :: <GdkPixbuf> on <GtkWindow> end;
-define property-setter window-icon :: <GdkPixbuf> on <GtkWindow> end;
-define property-getter window-icon-name :: <C-string> on <GtkWindow> end;
-define property-setter window-icon-name :: <C-string> on <GtkWindow> end;
-define property-getter window-is-active :: <C-boolean> on <GtkWindow> end;
-define property-getter window-mnemonics-visible :: <C-boolean> on <GtkWindow> end;
-define property-setter window-mnemonics-visible :: <C-boolean> on <GtkWindow> end;
-define property-getter window-modal :: <C-boolean> on <GtkWindow> end;
-define property-setter window-modal :: <C-boolean> on <GtkWindow> end;
-define property-getter window-opacity :: <C-double> on <GtkWindow> end;
-define property-setter window-opacity :: <C-double> on <GtkWindow> end;
-define property-getter window-resizable :: <C-boolean> on <GtkWindow> end;
-define property-setter window-resizable :: <C-boolean> on <GtkWindow> end;
-define property-getter window-resize-grip-visible :: <C-boolean> on <GtkWindow> end;
-define property-getter window-role :: <C-string> on <GtkWindow> end;
-define property-setter window-role :: <C-string> on <GtkWindow> end;
-define property-getter window-screen :: <GdkScreen> on <GtkWindow> end;
-define property-setter window-screen :: <GdkScreen> on <GtkWindow> end;
-define property-getter window-skip-pager-hint :: <C-boolean> on <GtkWindow> end;
-define property-setter window-skip-pager-hint :: <C-boolean> on <GtkWindow> end;
-define property-getter window-skip-taskbar-hint :: <C-boolean> on <GtkWindow> end;
-define property-setter window-skip-taskbar-hint :: <C-boolean> on <GtkWindow> end;
-define property-setter window-startup-id :: <C-string> on <GtkWindow> end;
-define property-getter window-title :: <C-string> on <GtkWindow> end;
-define property-setter window-title :: <C-string> on <GtkWindow> end;
-define property-getter window-transient-for :: <GtkWindow> on <GtkWindow> end;
-define property-setter window-transient-for :: <GtkWindow> on <GtkWindow> end;
-define property-getter window-type :: <GtkWindowType> on <GtkWindow> end;
-define property-setter window-type :: <GtkWindowType> on <GtkWindow> end;
-define property-getter window-type-hint :: <GdkWindowTypeHint> on <GtkWindow> end;
-define property-setter window-type-hint :: <GdkWindowTypeHint> on <GtkWindow> end;
-define property-getter window-urgency-hint :: <C-boolean> on <GtkWindow> end;
-define property-setter window-urgency-hint :: <C-boolean> on <GtkWindow> end;
-define property-getter window-window-position :: <GtkWindowPosition> on <GtkWindow> end;
-define property-setter window-window-position :: <GtkWindowPosition> on <GtkWindow> end;
 define C-function gtk-window-new
   input parameter type_ :: <GtkWindowType>;
   result res :: <GtkWidget>;
@@ -27131,15 +25507,15 @@ define C-function gtk-window-unstick
 end;
 
 define C-struct <_GtkWindowClass>
-  constant slot gtkwindowclass-parent-class :: <GtkBinClass>;
-  constant slot gtkwindowclass-set-focus :: <C-function-pointer>;
-  constant slot gtkwindowclass-activate-focus :: <C-function-pointer>;
-  constant slot gtkwindowclass-activate-default :: <C-function-pointer>;
-  constant slot gtkwindowclass-keys-changed :: <C-function-pointer>;
-  constant slot gtkwindowclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkwindowclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkwindowclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkwindowclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-window-class-parent-class :: <GtkBinClass>;
+  constant slot gtk-window-class-set-focus :: <C-function-pointer>;
+  constant slot gtk-window-class-activate-focus :: <C-function-pointer>;
+  constant slot gtk-window-class-activate-default :: <C-function-pointer>;
+  constant slot gtk-window-class-keys-changed :: <C-function-pointer>;
+  constant slot gtk-window-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-window-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-window-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-window-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkWindowClass>;
 end C-struct;
 
@@ -27148,8 +25524,8 @@ define C-struct <_GtkWindowGeometryInfo>
 end C-struct;
 
 define open C-subtype <GtkWindowGroup> (<GObject>)
-  constant slot gtkwindowgroup-parent-instance :: <GObject>;
-  constant slot gtkwindowgroup-priv :: <GtkWindowGroupPrivate>;
+  constant slot gtk-window-group-parent-instance :: <GObject>;
+  constant slot gtk-window-group-priv :: <GtkWindowGroupPrivate>;
 end C-subtype;
 
 define C-pointer-type <GtkWindowGroup*> => <GtkWindowGroup>;
@@ -27191,11 +25567,11 @@ define C-function gtk-window-group-remove-window
 end;
 
 define C-struct <_GtkWindowGroupClass>
-  constant slot gtkwindowgroupclass-parent-class :: <GObjectClass>;
-  constant slot gtkwindowgroupclass--gtk-reserved1 :: <C-void*>;
-  constant slot gtkwindowgroupclass--gtk-reserved2 :: <C-void*>;
-  constant slot gtkwindowgroupclass--gtk-reserved3 :: <C-void*>;
-  constant slot gtkwindowgroupclass--gtk-reserved4 :: <C-void*>;
+  constant slot gtk-window-group-class-parent-class :: <GObjectClass>;
+  constant slot gtk-window-group-class-_gtk-reserved1 :: <C-void*>;
+  constant slot gtk-window-group-class-_gtk-reserved2 :: <C-void*>;
+  constant slot gtk-window-group-class-_gtk-reserved3 :: <C-void*>;
+  constant slot gtk-window-group-class-_gtk-reserved4 :: <C-void*>;
   pointer-type-name: <GtkWindowGroupClass>;
 end C-struct;
 
@@ -27203,11 +25579,11 @@ define C-struct <_GtkWindowGroupPrivate>
   pointer-type-name: <GtkWindowGroupPrivate>;
 end C-struct;
 
-define constant $GTK-WIN-POS-NONE = 0;
-define constant $GTK-WIN-POS-CENTER = 1;
-define constant $GTK-WIN-POS-MOUSE = 2;
-define constant $GTK-WIN-POS-CENTER-ALWAYS = 3;
-define constant $GTK-WIN-POS-CENTER-ON-PARENT = 4;
+define constant $gtk-win-pos-none = 0;
+define constant $gtk-win-pos-center = 1;
+define constant $gtk-win-pos-mouse = 2;
+define constant $gtk-win-pos-center-always = 3;
+define constant $gtk-win-pos-center-on-parent = 4;
 define constant <GtkWindowPosition> = <C-int>;
 define C-pointer-type <GtkWindowPosition*> => <GtkWindowPosition>;
 
@@ -27215,23 +25591,23 @@ define C-struct <_GtkWindowPrivate>
   pointer-type-name: <GtkWindowPrivate>;
 end C-struct;
 
-define constant $GTK-WINDOW-TOPLEVEL = 0;
-define constant $GTK-WINDOW-POPUP = 1;
+define constant $gtk-window-toplevel = 0;
+define constant $gtk-window-popup = 1;
 define constant <GtkWindowType> = <C-int>;
 define C-pointer-type <GtkWindowType*> => <GtkWindowType>;
 
-define constant $GTK-WRAP-NONE = 0;
-define constant $GTK-WRAP-CHAR = 1;
-define constant $GTK-WRAP-WORD = 2;
-define constant $GTK-WRAP-WORD-CHAR = 3;
+define constant $gtk-wrap-none = 0;
+define constant $gtk-wrap-char = 1;
+define constant $gtk-wrap-word = 2;
+define constant $gtk-wrap-word-char = 3;
 define constant <GtkWrapMode> = <C-int>;
 define C-pointer-type <GtkWrapMode*> => <GtkWrapMode>;
 
 define C-struct <_Gtk_RcProperty>
-  slot gtk-rcproperty-type-name :: <C-unsigned-int>;
-  slot gtk-rcproperty-property-name :: <C-unsigned-int>;
-  slot gtk-rcproperty-origin :: <C-string>;
-  slot gtk-rcproperty-value :: <GValue>;
+  slot gtk-_rc-property-type-name :: <C-unsigned-int>;
+  slot gtk-_rc-property-property-name :: <C-unsigned-int>;
+  slot gtk-_rc-property-origin :: <C-string>;
+  slot gtk-_rc-property-value :: <GValue>;
   pointer-type-name: <Gtk_RcProperty>;
 end C-struct;
 
