@@ -71,6 +71,10 @@ The ``limited`` methods on fillable collection classes each return a limited
 type designated *L*. The ``fill:`` init-keyword of all *L* will have a default
 value of ``default-fill(L)`` instead of ``#f``.
 
+The defaulted or supplied ``default-fill:`` argument must be an instance of the
+element type of the collection class; it is an error to supply a default filler
+object that the collection cannot accommodate.
+
 
 ``default-fill``
 ----------------
@@ -126,8 +130,8 @@ initialization argument for all ``<collection>`` classes, as defined in the
 subsection of "Instance Creation and Initialization" in the [DRM]_. This does
 not imply that the initialization argument will be *used* by all
 ``<collection>`` classes; this just means that any call to ``make`` on a
-collection may include an initialization argument like ``fill: c.default-fill``
-without causing a spurious error.
+collection class may include an initialization argument like ``fill:
+c.default-fill`` without causing a spurious error.
 
 This initialization argument will be specialized as the ``element-type`` of the
 collection. That is, for the non-fillable collection classes (those that did
