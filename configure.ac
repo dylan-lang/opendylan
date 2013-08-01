@@ -16,11 +16,14 @@ GC_USE_STATIC_BOEHM=false
 GC_LIB=-lgc
 
 AC_CANONICAL_TARGET
+
+MULTIARCH=$host
 case $host in
   i*86-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-linux;
       SUPPORT_GC_MPS=yes;
       SUPPORT_GC_BOEHM=no
+      MULTIARCH=i386-linux-gnu
     ;;
   i*86-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-freebsd;
@@ -44,6 +47,7 @@ case $host in
     ;;
   x86_64-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=x86_64-linux;
+      MULTIARCH=x86_64-linux-gnu
     ;;
   arm-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=arm-linux;
@@ -168,7 +172,13 @@ if test "$cross_compiling" != "yes"; then
                                           [
                                             GC_LIBRARY="/usr/local/lib/${GC_LIB_NAME}"
                                           ],
-                                          [])
+                                          [
+                                            AC_CHECK_FILE([/usr/lib/${MULTIARCH}/${GC_LIB_NAME}],
+                                                          [
+                                                            GC_LIBRARY="/usr/lib/${MULTIARCH}/${GC_LIB_NAME}"
+                                                          ],
+                                                          [])
+                                          ])
                           ])
           ]
     )
