@@ -5,58 +5,58 @@ copyright: See LICENSE file in this distribution.
 
 define C-pointer-type <C-void**> => <C-void*>;
 
-define constant $ANALYSIS-FLAG-CENTERED-BASELINE = 1;
+define constant $analysis-flag-centered-baseline = 1;
 
-define constant $ATTR-INDEX-FROM-TEXT-BEGINNING = 0;
+define constant $attr-index-from-text-beginning = 0;
 
-define constant $PANGO-ALIGN-LEFT = 0;
-define constant $PANGO-ALIGN-CENTER = 1;
-define constant $PANGO-ALIGN-RIGHT = 2;
+define constant $pango-align-left = 0;
+define constant $pango-align-center = 1;
+define constant $pango-align-right = 2;
 define constant <PangoAlignment> = <C-int>;
 define C-pointer-type <PangoAlignment*> => <PangoAlignment>;
 
 define C-struct <_PangoAnalysis>
-  slot pangoanalysis-shape-engine :: <PangoEngineShape>;
-  slot pangoanalysis-lang-engine :: <PangoEngineLang>;
-  slot pangoanalysis-font :: <PangoFont>;
-  slot pangoanalysis-level :: <C-unsigned-char>;
-  slot pangoanalysis-gravity :: <C-unsigned-char>;
-  slot pangoanalysis-flags :: <C-unsigned-char>;
-  slot pangoanalysis-script :: <C-unsigned-char>;
-  slot pangoanalysis-language :: <PangoLanguage>;
-  slot pangoanalysis-extra-attrs :: <GSList>;
+  slot pango-analysis-shape-engine :: <PangoEngineShape>;
+  slot pango-analysis-lang-engine :: <PangoEngineLang>;
+  slot pango-analysis-font :: <PangoFont>;
+  slot pango-analysis-level :: <C-unsigned-char>;
+  slot pango-analysis-gravity :: <C-unsigned-char>;
+  slot pango-analysis-flags :: <C-unsigned-char>;
+  slot pango-analysis-script :: <C-unsigned-char>;
+  slot pango-analysis-language :: <PangoLanguage>;
+  slot pango-analysis-extra-attrs :: <GSList>;
   pointer-type-name: <PangoAnalysis>;
 end C-struct;
 
 define C-struct <_PangoAttrClass>
-  slot pangoattrclass-type :: <PangoAttrType>;
-  constant slot pangoattrclass-copy :: <C-void*>;
-  constant slot pangoattrclass-destroy :: <C-function-pointer>;
-  constant slot pangoattrclass-equal :: <C-function-pointer>;
+  slot pango-attr-class-type :: <PangoAttrType>;
+  constant slot pango-attr-class-copy :: <C-void*>;
+  constant slot pango-attr-class-destroy :: <C-function-pointer>;
+  constant slot pango-attr-class-equal :: <C-function-pointer>;
   pointer-type-name: <PangoAttrClass>;
 end C-struct;
 
 define C-struct <_PangoAttrColor>
-  slot pangoattrcolor-attr :: <PangoAttribute>;
-  slot pangoattrcolor-color :: <PangoColor>;
+  slot pango-attr-color-attr :: <PangoAttribute>;
+  slot pango-attr-color-color :: <PangoColor>;
   pointer-type-name: <PangoAttrColor>;
 end C-struct;
 
 define C-struct <_PangoAttrFloat>
-  slot pangoattrfloat-attr :: <PangoAttribute>;
-  slot pangoattrfloat-value :: <C-double>;
+  slot pango-attr-float-attr :: <PangoAttribute>;
+  slot pango-attr-float-value :: <C-double>;
   pointer-type-name: <PangoAttrFloat>;
 end C-struct;
 
 define C-struct <_PangoAttrFontDesc>
-  slot pangoattrfontdesc-attr :: <PangoAttribute>;
-  slot pangoattrfontdesc-desc :: <PangoFontDescription>;
+  slot pango-attr-font-desc-attr :: <PangoAttribute>;
+  slot pango-attr-font-desc-desc :: <PangoFontDescription>;
   pointer-type-name: <PangoAttrFontDesc>;
 end C-struct;
 
 define C-struct <_PangoAttrInt>
-  slot pangoattrint-attr :: <PangoAttribute>;
-  slot pangoattrint-value :: <C-signed-int>;
+  slot pango-attr-int-attr :: <PangoAttribute>;
+  slot pango-attr-int-value :: <C-signed-int>;
   pointer-type-name: <PangoAttrInt>;
 end C-struct;
 
@@ -97,8 +97,8 @@ define C-function pango-attr-iterator-range
 end;
 
 define C-struct <_PangoAttrLanguage>
-  slot pangoattrlanguage-attr :: <PangoAttribute>;
-  slot pangoattrlanguage-value :: <PangoLanguage>;
+  slot pango-attr-language-attr :: <PangoAttribute>;
+  slot pango-attr-language-value :: <PangoLanguage>;
   pointer-type-name: <PangoAttrLanguage>;
 end C-struct;
 
@@ -163,58 +163,58 @@ define C-function pango-attr-list-unref
 end;
 
 define C-struct <_PangoAttrShape>
-  slot pangoattrshape-attr :: <PangoAttribute>;
-  slot pangoattrshape-ink-rect :: <PangoRectangle>;
-  slot pangoattrshape-logical-rect :: <PangoRectangle>;
-  slot pangoattrshape-data :: <C-void*>;
-  slot pangoattrshape-copy-func :: <C-void*>;
-  slot pangoattrshape-destroy-func :: <C-function-pointer>;
+  slot pango-attr-shape-attr :: <PangoAttribute>;
+  slot pango-attr-shape-ink-rect :: <PangoRectangle>;
+  slot pango-attr-shape-logical-rect :: <PangoRectangle>;
+  slot pango-attr-shape-data :: <C-void*>;
+  slot pango-attr-shape-copy-func :: <C-void*>;
+  slot pango-attr-shape-destroy-func :: <C-function-pointer>;
   pointer-type-name: <PangoAttrShape>;
 end C-struct;
 
 define C-struct <_PangoAttrSize>
-  slot pangoattrsize-attr :: <PangoAttribute>;
-  slot pangoattrsize-size :: <C-signed-int>;
-  slot pangoattrsize-absolute :: <C-unsigned-int>;
+  slot pango-attr-size-attr :: <PangoAttribute>;
+  slot pango-attr-size-size :: <C-signed-int>;
+  slot pango-attr-size-absolute :: <C-unsigned-int>;
   pointer-type-name: <PangoAttrSize>;
 end C-struct;
 
 define C-struct <_PangoAttrString>
-  slot pangoattrstring-attr :: <PangoAttribute>;
-  slot pangoattrstring-value :: <C-string>;
+  slot pango-attr-string-attr :: <PangoAttribute>;
+  slot pango-attr-string-value :: <C-string>;
   pointer-type-name: <PangoAttrString>;
 end C-struct;
 
-define constant $PANGO-ATTR-INVALID = 0;
-define constant $PANGO-ATTR-LANGUAGE = 1;
-define constant $PANGO-ATTR-FAMILY = 2;
-define constant $PANGO-ATTR-STYLE = 3;
-define constant $PANGO-ATTR-WEIGHT = 4;
-define constant $PANGO-ATTR-VARIANT = 5;
-define constant $PANGO-ATTR-STRETCH = 6;
-define constant $PANGO-ATTR-SIZE = 7;
-define constant $PANGO-ATTR-FONT-DESC = 8;
-define constant $PANGO-ATTR-FOREGROUND = 9;
-define constant $PANGO-ATTR-BACKGROUND = 10;
-define constant $PANGO-ATTR-UNDERLINE = 11;
-define constant $PANGO-ATTR-STRIKETHROUGH = 12;
-define constant $PANGO-ATTR-RISE = 13;
-define constant $PANGO-ATTR-SHAPE = 14;
-define constant $PANGO-ATTR-SCALE = 15;
-define constant $PANGO-ATTR-FALLBACK = 16;
-define constant $PANGO-ATTR-LETTER-SPACING = 17;
-define constant $PANGO-ATTR-UNDERLINE-COLOR = 18;
-define constant $PANGO-ATTR-STRIKETHROUGH-COLOR = 19;
-define constant $PANGO-ATTR-ABSOLUTE-SIZE = 20;
-define constant $PANGO-ATTR-GRAVITY = 21;
-define constant $PANGO-ATTR-GRAVITY-HINT = 22;
+define constant $pango-attr-invalid = 0;
+define constant $pango-attr-language = 1;
+define constant $pango-attr-family = 2;
+define constant $pango-attr-style = 3;
+define constant $pango-attr-weight = 4;
+define constant $pango-attr-variant = 5;
+define constant $pango-attr-stretch = 6;
+define constant $pango-attr-size = 7;
+define constant $pango-attr-font-desc = 8;
+define constant $pango-attr-foreground = 9;
+define constant $pango-attr-background = 10;
+define constant $pango-attr-underline = 11;
+define constant $pango-attr-strikethrough = 12;
+define constant $pango-attr-rise = 13;
+define constant $pango-attr-shape = 14;
+define constant $pango-attr-scale = 15;
+define constant $pango-attr-fallback = 16;
+define constant $pango-attr-letter-spacing = 17;
+define constant $pango-attr-underline-color = 18;
+define constant $pango-attr-strikethrough-color = 19;
+define constant $pango-attr-absolute-size = 20;
+define constant $pango-attr-gravity = 21;
+define constant $pango-attr-gravity-hint = 22;
 define constant <PangoAttrType> = <C-int>;
 define C-pointer-type <PangoAttrType*> => <PangoAttrType>;
 
 define C-struct <_PangoAttribute>
-  slot pangoattribute-klass :: <PangoAttrClass>;
-  slot pangoattribute-start-index :: <C-unsigned-int>;
-  slot pangoattribute-end-index :: <C-unsigned-int>;
+  slot pango-attribute-klass :: <PangoAttrClass>;
+  slot pango-attribute-start-index :: <C-unsigned-int>;
+  slot pango-attribute-end-index :: <C-unsigned-int>;
   pointer-type-name: <PangoAttribute>;
 end C-struct;
 
@@ -236,32 +236,32 @@ define C-function pango-attribute-init
   c-name: "pango_attribute_init";
 end;
 
-define constant $PANGO-BIDI-TYPE-L = 0;
-define constant $PANGO-BIDI-TYPE-LRE = 1;
-define constant $PANGO-BIDI-TYPE-LRO = 2;
-define constant $PANGO-BIDI-TYPE-R = 3;
-define constant $PANGO-BIDI-TYPE-AL = 4;
-define constant $PANGO-BIDI-TYPE-RLE = 5;
-define constant $PANGO-BIDI-TYPE-RLO = 6;
-define constant $PANGO-BIDI-TYPE-PDF = 7;
-define constant $PANGO-BIDI-TYPE-EN = 8;
-define constant $PANGO-BIDI-TYPE-ES = 9;
-define constant $PANGO-BIDI-TYPE-ET = 10;
-define constant $PANGO-BIDI-TYPE-AN = 11;
-define constant $PANGO-BIDI-TYPE-CS = 12;
-define constant $PANGO-BIDI-TYPE-NSM = 13;
-define constant $PANGO-BIDI-TYPE-BN = 14;
-define constant $PANGO-BIDI-TYPE-B = 15;
-define constant $PANGO-BIDI-TYPE-S = 16;
-define constant $PANGO-BIDI-TYPE-WS = 17;
-define constant $PANGO-BIDI-TYPE-ON = 18;
+define constant $pango-bidi-type-l = 0;
+define constant $pango-bidi-type-lre = 1;
+define constant $pango-bidi-type-lro = 2;
+define constant $pango-bidi-type-r = 3;
+define constant $pango-bidi-type-al = 4;
+define constant $pango-bidi-type-rle = 5;
+define constant $pango-bidi-type-rlo = 6;
+define constant $pango-bidi-type-pdf = 7;
+define constant $pango-bidi-type-en = 8;
+define constant $pango-bidi-type-es = 9;
+define constant $pango-bidi-type-et = 10;
+define constant $pango-bidi-type-an = 11;
+define constant $pango-bidi-type-cs = 12;
+define constant $pango-bidi-type-nsm = 13;
+define constant $pango-bidi-type-bn = 14;
+define constant $pango-bidi-type-b = 15;
+define constant $pango-bidi-type-s = 16;
+define constant $pango-bidi-type-ws = 17;
+define constant $pango-bidi-type-on = 18;
 define constant <PangoBidiType> = <C-int>;
 define C-pointer-type <PangoBidiType*> => <PangoBidiType>;
 
 define C-struct <_PangoColor>
-  slot pangocolor-red :: <C-unsigned-short>;
-  slot pangocolor-green :: <C-unsigned-short>;
-  slot pangocolor-blue :: <C-unsigned-short>;
+  slot pango-color-red :: <C-unsigned-short>;
+  slot pango-color-green :: <C-unsigned-short>;
+  slot pango-color-blue :: <C-unsigned-short>;
   pointer-type-name: <PangoColor>;
 end C-struct;
 
@@ -470,31 +470,31 @@ define C-function pango-coverage-unref
   c-name: "pango_coverage_unref";
 end;
 
-define constant $PANGO-COVERAGE-NONE = 0;
-define constant $PANGO-COVERAGE-FALLBACK = 1;
-define constant $PANGO-COVERAGE-APPROXIMATE = 2;
-define constant $PANGO-COVERAGE-EXACT = 3;
+define constant $pango-coverage-none = 0;
+define constant $pango-coverage-fallback = 1;
+define constant $pango-coverage-approximate = 2;
+define constant $pango-coverage-exact = 3;
 define constant <PangoCoverageLevel> = <C-int>;
 define C-pointer-type <PangoCoverageLevel*> => <PangoCoverageLevel>;
 
-define constant $PANGO-DIRECTION-LTR = 0;
-define constant $PANGO-DIRECTION-RTL = 1;
-define constant $PANGO-DIRECTION-TTB-LTR = 2;
-define constant $PANGO-DIRECTION-TTB-RTL = 3;
-define constant $PANGO-DIRECTION-WEAK-LTR = 4;
-define constant $PANGO-DIRECTION-WEAK-RTL = 5;
-define constant $PANGO-DIRECTION-NEUTRAL = 6;
+define constant $pango-direction-ltr = 0;
+define constant $pango-direction-rtl = 1;
+define constant $pango-direction-ttb-ltr = 2;
+define constant $pango-direction-ttb-rtl = 3;
+define constant $pango-direction-weak-ltr = 4;
+define constant $pango-direction-weak-rtl = 5;
+define constant $pango-direction-neutral = 6;
 define constant <PangoDirection> = <C-int>;
 define C-pointer-type <PangoDirection*> => <PangoDirection>;
 
-define constant $ENGINE-TYPE-LANG = "PangoEngineLang";
+define constant $engine-type-lang = "PangoEngineLang";
 
-define constant $ENGINE-TYPE-SHAPE = "PangoEngineShape";
+define constant $engine-type-shape = "PangoEngineShape";
 
-define constant $PANGO-ELLIPSIZE-NONE = 0;
-define constant $PANGO-ELLIPSIZE-START = 1;
-define constant $PANGO-ELLIPSIZE-MIDDLE = 2;
-define constant $PANGO-ELLIPSIZE-END = 3;
+define constant $pango-ellipsize-none = 0;
+define constant $pango-ellipsize-start = 1;
+define constant $pango-ellipsize-middle = 2;
+define constant $pango-ellipsize-end = 3;
 define constant <PangoEllipsizeMode> = <C-int>;
 define C-pointer-type <PangoEllipsizeMode*> => <PangoEllipsizeMode>;
 
@@ -838,13 +838,13 @@ define C-function pango-font-map-load-fontset
   c-name: "pango_font_map_load_fontset";
 end;
 
-define constant $PANGO-FONT-MASK-FAMILY = 1;
-define constant $PANGO-FONT-MASK-STYLE = 2;
-define constant $PANGO-FONT-MASK-VARIANT = 4;
-define constant $PANGO-FONT-MASK-WEIGHT = 8;
-define constant $PANGO-FONT-MASK-STRETCH = 16;
-define constant $PANGO-FONT-MASK-SIZE = 32;
-define constant $PANGO-FONT-MASK-GRAVITY = 64;
+define constant $pango-font-mask-family = 1;
+define constant $pango-font-mask-style = 2;
+define constant $pango-font-mask-variant = 4;
+define constant $pango-font-mask-weight = 8;
+define constant $pango-font-mask-stretch = 16;
+define constant $pango-font-mask-size = 32;
+define constant $pango-font-mask-gravity = 64;
 define constant <PangoFontMask> = <C-int>;
 define C-pointer-type <PangoFontMask*> => <PangoFontMask>;
 
@@ -937,22 +937,22 @@ define C-function pango-fontset-get-metrics
 end;
 
 define C-struct <_PangoGlyphGeometry>
-  slot pangoglyphgeometry-width :: <C-signed-int>;
-  slot pangoglyphgeometry-x-offset :: <C-signed-int>;
-  slot pangoglyphgeometry-y-offset :: <C-signed-int>;
+  slot pango-glyph-geometry-width :: <C-signed-int>;
+  slot pango-glyph-geometry-x-offset :: <C-signed-int>;
+  slot pango-glyph-geometry-y-offset :: <C-signed-int>;
   pointer-type-name: <PangoGlyphGeometry>;
 end C-struct;
 
 define C-struct <_PangoGlyphInfo>
-  slot pangoglyphinfo-glyph :: <C-unsigned-int>;
-  slot pangoglyphinfo-geometry :: <PangoGlyphGeometry>;
-  slot pangoglyphinfo-attr :: <PangoGlyphVisAttr>;
+  slot pango-glyph-info-glyph :: <C-unsigned-int>;
+  slot pango-glyph-info-geometry :: <PangoGlyphGeometry>;
+  slot pango-glyph-info-attr :: <PangoGlyphVisAttr>;
   pointer-type-name: <PangoGlyphInfo>;
 end C-struct;
 
 define C-struct <_PangoGlyphItem>
-  slot pangoglyphitem-item :: <PangoItem>;
-  slot pangoglyphitem-glyphs :: <PangoGlyphString>;
+  slot pango-glyph-item-item :: <PangoItem>;
+  slot pango-glyph-item-glyphs :: <PangoGlyphString>;
   pointer-type-name: <PangoGlyphItem>;
 end C-struct;
 
@@ -999,14 +999,14 @@ define C-function pango-glyph-item-split
 end;
 
 define C-struct <_PangoGlyphItemIter>
-  slot pangoglyphitemiter-glyph-item :: <PangoGlyphItem>;
-  slot pangoglyphitemiter-text :: <C-string>;
-  slot pangoglyphitemiter-start-glyph :: <C-signed-int>;
-  slot pangoglyphitemiter-start-index :: <C-signed-int>;
-  slot pangoglyphitemiter-start-char :: <C-signed-int>;
-  slot pangoglyphitemiter-end-glyph :: <C-signed-int>;
-  slot pangoglyphitemiter-end-index :: <C-signed-int>;
-  slot pangoglyphitemiter-end-char :: <C-signed-int>;
+  slot pango-glyph-item-iter-glyph-item :: <PangoGlyphItem>;
+  slot pango-glyph-item-iter-text :: <C-string>;
+  slot pango-glyph-item-iter-start-glyph :: <C-signed-int>;
+  slot pango-glyph-item-iter-start-index :: <C-signed-int>;
+  slot pango-glyph-item-iter-start-char :: <C-signed-int>;
+  slot pango-glyph-item-iter-end-glyph :: <C-signed-int>;
+  slot pango-glyph-item-iter-end-index :: <C-signed-int>;
+  slot pango-glyph-item-iter-end-char :: <C-signed-int>;
   pointer-type-name: <PangoGlyphItemIter>;
 end C-struct;
 
@@ -1050,10 +1050,10 @@ define C-function pango-glyph-item-iter-prev-cluster
 end;
 
 define C-struct <_PangoGlyphString>
-  slot pangoglyphstring-num-glyphs :: <C-signed-int>;
-  slot pangoglyphstring-glyphs :: <PangoGlyphInfo>;
-  slot pangoglyphstring-log-clusters :: <C-signed-int*>;
-  constant slot pangoglyphstring-space :: <C-signed-int>;
+  slot pango-glyph-string-num-glyphs :: <C-signed-int>;
+  slot pango-glyph-string-glyphs :: <PangoGlyphInfo>;
+  slot pango-glyph-string-log-clusters :: <C-signed-int*>;
+  constant slot pango-glyph-string-space :: <C-signed-int>;
   pointer-type-name: <PangoGlyphString>;
 end C-struct;
 
@@ -1135,29 +1135,29 @@ define C-function pango-glyph-string-x-to-index
 end;
 
 define C-struct <_PangoGlyphVisAttr>
-  slot pangoglyphvisattr-is-cluster-start :: <C-unsigned-int>;
+  slot pango-glyph-vis-attr-is-cluster-start :: <C-unsigned-int>;
   pointer-type-name: <PangoGlyphVisAttr>;
 end C-struct;
 
-define constant $PANGO-GRAVITY-SOUTH = 0;
-define constant $PANGO-GRAVITY-EAST = 1;
-define constant $PANGO-GRAVITY-NORTH = 2;
-define constant $PANGO-GRAVITY-WEST = 3;
-define constant $PANGO-GRAVITY-AUTO = 4;
+define constant $pango-gravity-south = 0;
+define constant $pango-gravity-east = 1;
+define constant $pango-gravity-north = 2;
+define constant $pango-gravity-west = 3;
+define constant $pango-gravity-auto = 4;
 define constant <PangoGravity> = <C-int>;
 define C-pointer-type <PangoGravity*> => <PangoGravity>;
 
-define constant $PANGO-GRAVITY-HINT-NATURAL = 0;
-define constant $PANGO-GRAVITY-HINT-STRONG = 1;
-define constant $PANGO-GRAVITY-HINT-LINE = 2;
+define constant $pango-gravity-hint-natural = 0;
+define constant $pango-gravity-hint-strong = 1;
+define constant $pango-gravity-hint-line = 2;
 define constant <PangoGravityHint> = <C-int>;
 define C-pointer-type <PangoGravityHint*> => <PangoGravityHint>;
 
 define C-struct <_PangoItem>
-  slot pangoitem-offset :: <C-signed-int>;
-  slot pangoitem-length :: <C-signed-int>;
-  slot pangoitem-num-chars :: <C-signed-int>;
-  slot pangoitem-analysis :: <PangoAnalysis>;
+  slot pango-item-offset :: <C-signed-int>;
+  slot pango-item-length :: <C-signed-int>;
+  slot pango-item-num-chars :: <C-signed-int>;
+  slot pango-item-analysis :: <PangoAnalysis>;
   pointer-type-name: <PangoItem>;
 end C-struct;
 
@@ -1740,12 +1740,12 @@ define C-function pango-layout-iter-next-run
 end;
 
 define C-struct <_PangoLayoutLine>
-  slot pangolayoutline-layout :: <PangoLayout>;
-  slot pangolayoutline-start-index :: <C-signed-int>;
-  slot pangolayoutline-length :: <C-signed-int>;
-  slot pangolayoutline-runs :: <GSList>;
-  slot pangolayoutline-is-paragraph-start :: <C-unsigned-int>;
-  slot pangolayoutline-resolved-dir :: <C-unsigned-int>;
+  slot pango-layout-line-layout :: <PangoLayout>;
+  slot pango-layout-line-start-index :: <C-signed-int>;
+  slot pango-layout-line-length :: <C-signed-int>;
+  slot pango-layout-line-runs :: <GSList>;
+  slot pango-layout-line-is-paragraph-start :: <C-unsigned-int>;
+  slot pango-layout-line-resolved-dir :: <C-unsigned-int>;
   pointer-type-name: <PangoLayoutLine>;
 end C-struct;
 
@@ -1801,29 +1801,29 @@ define C-function pango-layout-line-x-to-index
 end;
 
 define C-struct <_PangoLogAttr>
-  slot pangologattr-is-line-break :: <C-unsigned-int>;
-  slot pangologattr-is-mandatory-break :: <C-unsigned-int>;
-  slot pangologattr-is-char-break :: <C-unsigned-int>;
-  slot pangologattr-is-white :: <C-unsigned-int>;
-  slot pangologattr-is-cursor-position :: <C-unsigned-int>;
-  slot pangologattr-is-word-start :: <C-unsigned-int>;
-  slot pangologattr-is-word-end :: <C-unsigned-int>;
-  slot pangologattr-is-sentence-boundary :: <C-unsigned-int>;
-  slot pangologattr-is-sentence-start :: <C-unsigned-int>;
-  slot pangologattr-is-sentence-end :: <C-unsigned-int>;
-  slot pangologattr-backspace-deletes-character :: <C-unsigned-int>;
-  slot pangologattr-is-expandable-space :: <C-unsigned-int>;
-  slot pangologattr-is-word-boundary :: <C-unsigned-int>;
+  slot pango-log-attr-is-line-break :: <C-unsigned-int>;
+  slot pango-log-attr-is-mandatory-break :: <C-unsigned-int>;
+  slot pango-log-attr-is-char-break :: <C-unsigned-int>;
+  slot pango-log-attr-is-white :: <C-unsigned-int>;
+  slot pango-log-attr-is-cursor-position :: <C-unsigned-int>;
+  slot pango-log-attr-is-word-start :: <C-unsigned-int>;
+  slot pango-log-attr-is-word-end :: <C-unsigned-int>;
+  slot pango-log-attr-is-sentence-boundary :: <C-unsigned-int>;
+  slot pango-log-attr-is-sentence-start :: <C-unsigned-int>;
+  slot pango-log-attr-is-sentence-end :: <C-unsigned-int>;
+  slot pango-log-attr-backspace-deletes-character :: <C-unsigned-int>;
+  slot pango-log-attr-is-expandable-space :: <C-unsigned-int>;
+  slot pango-log-attr-is-word-boundary :: <C-unsigned-int>;
   pointer-type-name: <PangoLogAttr>;
 end C-struct;
 
 define C-struct <_PangoMatrix>
-  slot pangomatrix-xx :: <C-double>;
-  slot pangomatrix-xy :: <C-double>;
-  slot pangomatrix-yx :: <C-double>;
-  slot pangomatrix-yy :: <C-double>;
-  slot pangomatrix-x0 :: <C-double>;
-  slot pangomatrix-y0 :: <C-double>;
+  slot pango-matrix-xx :: <C-double>;
+  slot pango-matrix-xy :: <C-double>;
+  slot pango-matrix-yx :: <C-double>;
+  slot pango-matrix-yy :: <C-double>;
+  slot pango-matrix-x0 :: <C-double>;
+  slot pango-matrix-y0 :: <C-double>;
   pointer-type-name: <PangoMatrix>;
 end C-struct;
 
@@ -1896,30 +1896,30 @@ define C-function pango-matrix-translate
   c-name: "pango_matrix_translate";
 end;
 
-define constant $RENDER-TYPE-NONE = "PangoRenderNone";
+define constant $render-type-none = "PangoRenderNone";
 
 define C-struct <_PangoRectangle>
-  slot pangorectangle-x :: <C-signed-int>;
-  slot pangorectangle-y :: <C-signed-int>;
-  slot pangorectangle-width :: <C-signed-int>;
-  slot pangorectangle-height :: <C-signed-int>;
+  slot pango-rectangle-x :: <C-signed-int>;
+  slot pango-rectangle-y :: <C-signed-int>;
+  slot pango-rectangle-width :: <C-signed-int>;
+  slot pango-rectangle-height :: <C-signed-int>;
   pointer-type-name: <PangoRectangle>;
 end C-struct;
 
-define constant $PANGO-RENDER-PART-FOREGROUND = 0;
-define constant $PANGO-RENDER-PART-BACKGROUND = 1;
-define constant $PANGO-RENDER-PART-UNDERLINE = 2;
-define constant $PANGO-RENDER-PART-STRIKETHROUGH = 3;
+define constant $pango-render-part-foreground = 0;
+define constant $pango-render-part-background = 1;
+define constant $pango-render-part-underline = 2;
+define constant $pango-render-part-strikethrough = 3;
 define constant <PangoRenderPart> = <C-int>;
 define C-pointer-type <PangoRenderPart*> => <PangoRenderPart>;
 
 define open C-subtype <PangoRenderer> (<GObject>)
-  constant slot pangorenderer-parent-instance :: <GObject>;
-  constant slot pangorenderer-underline :: <PangoUnderline>;
-  constant slot pangorenderer-strikethrough :: <C-boolean>;
-  constant slot pangorenderer-active-count :: <C-signed-int>;
-  constant slot pangorenderer-matrix :: <PangoMatrix>;
-  constant slot pangorenderer-priv :: <PangoRendererPrivate>;
+  constant slot pango-renderer-parent-instance :: <GObject>;
+  constant slot pango-renderer-underline :: <PangoUnderline>;
+  constant slot pango-renderer-strikethrough :: <C-boolean>;
+  constant slot pango-renderer-active-count :: <C-signed-int>;
+  constant slot pango-renderer-matrix :: <PangoMatrix>;
+  constant slot pango-renderer-priv :: <PangoRendererPrivate>;
 end C-subtype;
 
 define C-pointer-type <PangoRenderer*> => <PangoRenderer>;
@@ -2053,21 +2053,21 @@ define C-function pango-renderer-set-matrix
 end;
 
 define C-struct <_PangoRendererClass>
-  constant slot pangorendererclass-parent-class :: <GObjectClass>;
-  constant slot pangorendererclass-draw-glyphs :: <C-function-pointer>;
-  constant slot pangorendererclass-draw-rectangle :: <C-function-pointer>;
-  constant slot pangorendererclass-draw-error-underline :: <C-function-pointer>;
-  constant slot pangorendererclass-draw-shape :: <C-function-pointer>;
-  constant slot pangorendererclass-draw-trapezoid :: <C-function-pointer>;
-  constant slot pangorendererclass-draw-glyph :: <C-function-pointer>;
-  constant slot pangorendererclass-part-changed :: <C-function-pointer>;
-  constant slot pangorendererclass-begin :: <C-function-pointer>;
-  constant slot pangorendererclass-end :: <C-function-pointer>;
-  constant slot pangorendererclass-prepare-run :: <C-function-pointer>;
-  constant slot pangorendererclass-draw-glyph-item :: <C-function-pointer>;
-  constant slot pangorendererclass--pango-reserved2 :: <C-void*>;
-  constant slot pangorendererclass--pango-reserved3 :: <C-void*>;
-  constant slot pangorendererclass--pango-reserved4 :: <C-void*>;
+  constant slot pango-renderer-class-parent-class :: <GObjectClass>;
+  constant slot pango-renderer-class-draw-glyphs :: <C-function-pointer>;
+  constant slot pango-renderer-class-draw-rectangle :: <C-function-pointer>;
+  constant slot pango-renderer-class-draw-error-underline :: <C-function-pointer>;
+  constant slot pango-renderer-class-draw-shape :: <C-function-pointer>;
+  constant slot pango-renderer-class-draw-trapezoid :: <C-function-pointer>;
+  constant slot pango-renderer-class-draw-glyph :: <C-function-pointer>;
+  constant slot pango-renderer-class-part-changed :: <C-function-pointer>;
+  constant slot pango-renderer-class-begin :: <C-function-pointer>;
+  constant slot pango-renderer-class-end :: <C-function-pointer>;
+  constant slot pango-renderer-class-prepare-run :: <C-function-pointer>;
+  constant slot pango-renderer-class-draw-glyph-item :: <C-function-pointer>;
+  constant slot pango-renderer-class-_pango-reserved2 :: <C-void*>;
+  constant slot pango-renderer-class-_pango-reserved3 :: <C-void*>;
+  constant slot pango-renderer-class-_pango-reserved4 :: <C-void*>;
   pointer-type-name: <PangoRendererClass>;
 end C-struct;
 
@@ -2075,97 +2075,97 @@ define C-struct <_PangoRendererPrivate>
   pointer-type-name: <PangoRendererPrivate>;
 end C-struct;
 
-define constant $SCALE = 1024;
+define constant $scale = 1024;
 
-define constant $PANGO-SCRIPT-INVALID-CODE = -1;
-define constant $PANGO-SCRIPT-COMMON = 0;
-define constant $PANGO-SCRIPT-INHERITED = 1;
-define constant $PANGO-SCRIPT-ARABIC = 2;
-define constant $PANGO-SCRIPT-ARMENIAN = 3;
-define constant $PANGO-SCRIPT-BENGALI = 4;
-define constant $PANGO-SCRIPT-BOPOMOFO = 5;
-define constant $PANGO-SCRIPT-CHEROKEE = 6;
-define constant $PANGO-SCRIPT-COPTIC = 7;
-define constant $PANGO-SCRIPT-CYRILLIC = 8;
-define constant $PANGO-SCRIPT-DESERET = 9;
-define constant $PANGO-SCRIPT-DEVANAGARI = 10;
-define constant $PANGO-SCRIPT-ETHIOPIC = 11;
-define constant $PANGO-SCRIPT-GEORGIAN = 12;
-define constant $PANGO-SCRIPT-GOTHIC = 13;
-define constant $PANGO-SCRIPT-GREEK = 14;
-define constant $PANGO-SCRIPT-GUJARATI = 15;
-define constant $PANGO-SCRIPT-GURMUKHI = 16;
-define constant $PANGO-SCRIPT-HAN = 17;
-define constant $PANGO-SCRIPT-HANGUL = 18;
-define constant $PANGO-SCRIPT-HEBREW = 19;
-define constant $PANGO-SCRIPT-HIRAGANA = 20;
-define constant $PANGO-SCRIPT-KANNADA = 21;
-define constant $PANGO-SCRIPT-KATAKANA = 22;
-define constant $PANGO-SCRIPT-KHMER = 23;
-define constant $PANGO-SCRIPT-LAO = 24;
-define constant $PANGO-SCRIPT-LATIN = 25;
-define constant $PANGO-SCRIPT-MALAYALAM = 26;
-define constant $PANGO-SCRIPT-MONGOLIAN = 27;
-define constant $PANGO-SCRIPT-MYANMAR = 28;
-define constant $PANGO-SCRIPT-OGHAM = 29;
-define constant $PANGO-SCRIPT-OLD-ITALIC = 30;
-define constant $PANGO-SCRIPT-ORIYA = 31;
-define constant $PANGO-SCRIPT-RUNIC = 32;
-define constant $PANGO-SCRIPT-SINHALA = 33;
-define constant $PANGO-SCRIPT-SYRIAC = 34;
-define constant $PANGO-SCRIPT-TAMIL = 35;
-define constant $PANGO-SCRIPT-TELUGU = 36;
-define constant $PANGO-SCRIPT-THAANA = 37;
-define constant $PANGO-SCRIPT-THAI = 38;
-define constant $PANGO-SCRIPT-TIBETAN = 39;
-define constant $PANGO-SCRIPT-CANADIAN-ABORIGINAL = 40;
-define constant $PANGO-SCRIPT-YI = 41;
-define constant $PANGO-SCRIPT-TAGALOG = 42;
-define constant $PANGO-SCRIPT-HANUNOO = 43;
-define constant $PANGO-SCRIPT-BUHID = 44;
-define constant $PANGO-SCRIPT-TAGBANWA = 45;
-define constant $PANGO-SCRIPT-BRAILLE = 46;
-define constant $PANGO-SCRIPT-CYPRIOT = 47;
-define constant $PANGO-SCRIPT-LIMBU = 48;
-define constant $PANGO-SCRIPT-OSMANYA = 49;
-define constant $PANGO-SCRIPT-SHAVIAN = 50;
-define constant $PANGO-SCRIPT-LINEAR-B = 51;
-define constant $PANGO-SCRIPT-TAI-LE = 52;
-define constant $PANGO-SCRIPT-UGARITIC = 53;
-define constant $PANGO-SCRIPT-NEW-TAI-LUE = 54;
-define constant $PANGO-SCRIPT-BUGINESE = 55;
-define constant $PANGO-SCRIPT-GLAGOLITIC = 56;
-define constant $PANGO-SCRIPT-TIFINAGH = 57;
-define constant $PANGO-SCRIPT-SYLOTI-NAGRI = 58;
-define constant $PANGO-SCRIPT-OLD-PERSIAN = 59;
-define constant $PANGO-SCRIPT-KHAROSHTHI = 60;
-define constant $PANGO-SCRIPT-UNKNOWN = 61;
-define constant $PANGO-SCRIPT-BALINESE = 62;
-define constant $PANGO-SCRIPT-CUNEIFORM = 63;
-define constant $PANGO-SCRIPT-PHOENICIAN = 64;
-define constant $PANGO-SCRIPT-PHAGS-PA = 65;
-define constant $PANGO-SCRIPT-NKO = 66;
-define constant $PANGO-SCRIPT-KAYAH-LI = 67;
-define constant $PANGO-SCRIPT-LEPCHA = 68;
-define constant $PANGO-SCRIPT-REJANG = 69;
-define constant $PANGO-SCRIPT-SUNDANESE = 70;
-define constant $PANGO-SCRIPT-SAURASHTRA = 71;
-define constant $PANGO-SCRIPT-CHAM = 72;
-define constant $PANGO-SCRIPT-OL-CHIKI = 73;
-define constant $PANGO-SCRIPT-VAI = 74;
-define constant $PANGO-SCRIPT-CARIAN = 75;
-define constant $PANGO-SCRIPT-LYCIAN = 76;
-define constant $PANGO-SCRIPT-LYDIAN = 77;
-define constant $PANGO-SCRIPT-BATAK = 78;
-define constant $PANGO-SCRIPT-BRAHMI = 79;
-define constant $PANGO-SCRIPT-MANDAIC = 80;
-define constant $PANGO-SCRIPT-CHAKMA = 81;
-define constant $PANGO-SCRIPT-MEROITIC-CURSIVE = 82;
-define constant $PANGO-SCRIPT-MEROITIC-HIEROGLYPHS = 83;
-define constant $PANGO-SCRIPT-MIAO = 84;
-define constant $PANGO-SCRIPT-SHARADA = 85;
-define constant $PANGO-SCRIPT-SORA-SOMPENG = 86;
-define constant $PANGO-SCRIPT-TAKRI = 87;
+define constant $pango-script-invalid-code = -1;
+define constant $pango-script-common = 0;
+define constant $pango-script-inherited = 1;
+define constant $pango-script-arabic = 2;
+define constant $pango-script-armenian = 3;
+define constant $pango-script-bengali = 4;
+define constant $pango-script-bopomofo = 5;
+define constant $pango-script-cherokee = 6;
+define constant $pango-script-coptic = 7;
+define constant $pango-script-cyrillic = 8;
+define constant $pango-script-deseret = 9;
+define constant $pango-script-devanagari = 10;
+define constant $pango-script-ethiopic = 11;
+define constant $pango-script-georgian = 12;
+define constant $pango-script-gothic = 13;
+define constant $pango-script-greek = 14;
+define constant $pango-script-gujarati = 15;
+define constant $pango-script-gurmukhi = 16;
+define constant $pango-script-han = 17;
+define constant $pango-script-hangul = 18;
+define constant $pango-script-hebrew = 19;
+define constant $pango-script-hiragana = 20;
+define constant $pango-script-kannada = 21;
+define constant $pango-script-katakana = 22;
+define constant $pango-script-khmer = 23;
+define constant $pango-script-lao = 24;
+define constant $pango-script-latin = 25;
+define constant $pango-script-malayalam = 26;
+define constant $pango-script-mongolian = 27;
+define constant $pango-script-myanmar = 28;
+define constant $pango-script-ogham = 29;
+define constant $pango-script-old-italic = 30;
+define constant $pango-script-oriya = 31;
+define constant $pango-script-runic = 32;
+define constant $pango-script-sinhala = 33;
+define constant $pango-script-syriac = 34;
+define constant $pango-script-tamil = 35;
+define constant $pango-script-telugu = 36;
+define constant $pango-script-thaana = 37;
+define constant $pango-script-thai = 38;
+define constant $pango-script-tibetan = 39;
+define constant $pango-script-canadian-aboriginal = 40;
+define constant $pango-script-yi = 41;
+define constant $pango-script-tagalog = 42;
+define constant $pango-script-hanunoo = 43;
+define constant $pango-script-buhid = 44;
+define constant $pango-script-tagbanwa = 45;
+define constant $pango-script-braille = 46;
+define constant $pango-script-cypriot = 47;
+define constant $pango-script-limbu = 48;
+define constant $pango-script-osmanya = 49;
+define constant $pango-script-shavian = 50;
+define constant $pango-script-linear-b = 51;
+define constant $pango-script-tai-le = 52;
+define constant $pango-script-ugaritic = 53;
+define constant $pango-script-new-tai-lue = 54;
+define constant $pango-script-buginese = 55;
+define constant $pango-script-glagolitic = 56;
+define constant $pango-script-tifinagh = 57;
+define constant $pango-script-syloti-nagri = 58;
+define constant $pango-script-old-persian = 59;
+define constant $pango-script-kharoshthi = 60;
+define constant $pango-script-unknown = 61;
+define constant $pango-script-balinese = 62;
+define constant $pango-script-cuneiform = 63;
+define constant $pango-script-phoenician = 64;
+define constant $pango-script-phags-pa = 65;
+define constant $pango-script-nko = 66;
+define constant $pango-script-kayah-li = 67;
+define constant $pango-script-lepcha = 68;
+define constant $pango-script-rejang = 69;
+define constant $pango-script-sundanese = 70;
+define constant $pango-script-saurashtra = 71;
+define constant $pango-script-cham = 72;
+define constant $pango-script-ol-chiki = 73;
+define constant $pango-script-vai = 74;
+define constant $pango-script-carian = 75;
+define constant $pango-script-lycian = 76;
+define constant $pango-script-lydian = 77;
+define constant $pango-script-batak = 78;
+define constant $pango-script-brahmi = 79;
+define constant $pango-script-mandaic = 80;
+define constant $pango-script-chakma = 81;
+define constant $pango-script-meroitic-cursive = 82;
+define constant $pango-script-meroitic-hieroglyphs = 83;
+define constant $pango-script-miao = 84;
+define constant $pango-script-sharada = 85;
+define constant $pango-script-sora-sompeng = 86;
+define constant $pango-script-takri = 87;
 define constant <PangoScript> = <C-int>;
 define C-pointer-type <PangoScript*> => <PangoScript>;
 
@@ -2192,25 +2192,25 @@ define C-function pango-script-iter-next
   c-name: "pango_script_iter_next";
 end;
 
-define constant $PANGO-STRETCH-ULTRA-CONDENSED = 0;
-define constant $PANGO-STRETCH-EXTRA-CONDENSED = 1;
-define constant $PANGO-STRETCH-CONDENSED = 2;
-define constant $PANGO-STRETCH-SEMI-CONDENSED = 3;
-define constant $PANGO-STRETCH-NORMAL = 4;
-define constant $PANGO-STRETCH-SEMI-EXPANDED = 5;
-define constant $PANGO-STRETCH-EXPANDED = 6;
-define constant $PANGO-STRETCH-EXTRA-EXPANDED = 7;
-define constant $PANGO-STRETCH-ULTRA-EXPANDED = 8;
+define constant $pango-stretch-ultra-condensed = 0;
+define constant $pango-stretch-extra-condensed = 1;
+define constant $pango-stretch-condensed = 2;
+define constant $pango-stretch-semi-condensed = 3;
+define constant $pango-stretch-normal = 4;
+define constant $pango-stretch-semi-expanded = 5;
+define constant $pango-stretch-expanded = 6;
+define constant $pango-stretch-extra-expanded = 7;
+define constant $pango-stretch-ultra-expanded = 8;
 define constant <PangoStretch> = <C-int>;
 define C-pointer-type <PangoStretch*> => <PangoStretch>;
 
-define constant $PANGO-STYLE-NORMAL = 0;
-define constant $PANGO-STYLE-OBLIQUE = 1;
-define constant $PANGO-STYLE-ITALIC = 2;
+define constant $pango-style-normal = 0;
+define constant $pango-style-oblique = 1;
+define constant $pango-style-italic = 2;
 define constant <PangoStyle> = <C-int>;
 define C-pointer-type <PangoStyle*> => <PangoStyle>;
 
-define constant $PANGO-TAB-LEFT = 0;
+define constant $pango-tab-left = 0;
 define constant <PangoTabAlign> = <C-int>;
 define C-pointer-type <PangoTabAlign*> => <PangoTabAlign>;
 
@@ -2277,46 +2277,46 @@ define C-function pango-tab-array-set-tab
   c-name: "pango_tab_array_set_tab";
 end;
 
-define constant $UNKNOWN-GLYPH-HEIGHT = 14;
+define constant $unknown-glyph-height = 14;
 
-define constant $UNKNOWN-GLYPH-WIDTH = 10;
+define constant $unknown-glyph-width = 10;
 
-define constant $PANGO-UNDERLINE-NONE = 0;
-define constant $PANGO-UNDERLINE-SINGLE = 1;
-define constant $PANGO-UNDERLINE-DOUBLE = 2;
-define constant $PANGO-UNDERLINE-LOW = 3;
-define constant $PANGO-UNDERLINE-ERROR = 4;
+define constant $pango-underline-none = 0;
+define constant $pango-underline-single = 1;
+define constant $pango-underline-double = 2;
+define constant $pango-underline-low = 3;
+define constant $pango-underline-error = 4;
 define constant <PangoUnderline> = <C-int>;
 define C-pointer-type <PangoUnderline*> => <PangoUnderline>;
 
-define constant $PANGO-VARIANT-NORMAL = 0;
-define constant $PANGO-VARIANT-SMALL-CAPS = 1;
+define constant $pango-variant-normal = 0;
+define constant $pango-variant-small-caps = 1;
 define constant <PangoVariant> = <C-int>;
 define C-pointer-type <PangoVariant*> => <PangoVariant>;
 
-define constant $PANGO-WEIGHT-THIN = 100;
-define constant $PANGO-WEIGHT-ULTRALIGHT = 200;
-define constant $PANGO-WEIGHT-LIGHT = 300;
-define constant $PANGO-WEIGHT-BOOK = 380;
-define constant $PANGO-WEIGHT-NORMAL = 400;
-define constant $PANGO-WEIGHT-MEDIUM = 500;
-define constant $PANGO-WEIGHT-SEMIBOLD = 600;
-define constant $PANGO-WEIGHT-BOLD = 700;
-define constant $PANGO-WEIGHT-ULTRABOLD = 800;
-define constant $PANGO-WEIGHT-HEAVY = 900;
-define constant $PANGO-WEIGHT-ULTRAHEAVY = 1000;
+define constant $pango-weight-thin = 100;
+define constant $pango-weight-ultralight = 200;
+define constant $pango-weight-light = 300;
+define constant $pango-weight-book = 380;
+define constant $pango-weight-normal = 400;
+define constant $pango-weight-medium = 500;
+define constant $pango-weight-semibold = 600;
+define constant $pango-weight-bold = 700;
+define constant $pango-weight-ultrabold = 800;
+define constant $pango-weight-heavy = 900;
+define constant $pango-weight-ultraheavy = 1000;
 define constant <PangoWeight> = <C-int>;
 define C-pointer-type <PangoWeight*> => <PangoWeight>;
 
-define constant $PANGO-WRAP-WORD = 0;
-define constant $PANGO-WRAP-CHAR = 1;
-define constant $PANGO-WRAP-WORD-CHAR = 2;
+define constant $pango-wrap-word = 0;
+define constant $pango-wrap-char = 1;
+define constant $pango-wrap-word-char = 2;
 define constant <PangoWrapMode> = <C-int>;
 define C-pointer-type <PangoWrapMode*> => <PangoWrapMode>;
 
 define C-struct <_Pango_ScriptForLang>
-  slot pango-scriptforlang-lang :: <C-signed-char*>;
-  slot pango-scriptforlang-scripts :: <C-unsigned-char*> /* Not supported */;
+  slot pango-_script-for-lang-lang :: <C-signed-char*>;
+  slot pango-_script-for-lang-scripts :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <Pango_ScriptForLang>;
 end C-struct;
 

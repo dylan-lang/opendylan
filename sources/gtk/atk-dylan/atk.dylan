@@ -61,21 +61,21 @@ define C-function atk-action-set-description
 end;
 
 define C-struct <_AtkActionIface>
-  constant slot atkactioniface-parent :: <GTypeInterface>;
-  constant slot atkactioniface-do-action :: <C-function-pointer>;
-  constant slot atkactioniface-get-n-actions :: <C-function-pointer>;
-  constant slot atkactioniface-get-description :: <C-function-pointer>;
-  constant slot atkactioniface-get-name :: <C-function-pointer>;
-  constant slot atkactioniface-get-keybinding :: <C-function-pointer>;
-  constant slot atkactioniface-set-description :: <C-function-pointer>;
-  constant slot atkactioniface-get-localized-name :: <C-function-pointer>;
-  constant slot atkactioniface-pad2 :: <C-function-pointer>;
+  constant slot atk-action-iface-parent :: <GTypeInterface>;
+  constant slot atk-action-iface-do-action :: <C-function-pointer>;
+  constant slot atk-action-iface-get-n-actions :: <C-function-pointer>;
+  constant slot atk-action-iface-get-description :: <C-function-pointer>;
+  constant slot atk-action-iface-get-name :: <C-function-pointer>;
+  constant slot atk-action-iface-get-keybinding :: <C-function-pointer>;
+  constant slot atk-action-iface-set-description :: <C-function-pointer>;
+  constant slot atk-action-iface-get-localized-name :: <C-function-pointer>;
+  constant slot atk-action-iface-pad2 :: <C-function-pointer>;
   pointer-type-name: <AtkActionIface>;
 end C-struct;
 
 define C-struct <_AtkAttribute>
-  slot atkattribute-name :: <C-string>;
-  slot atkattribute-value :: <C-string>;
+  slot atk-attribute-name :: <C-string>;
+  slot atk-attribute-value :: <C-string>;
   pointer-type-name: <AtkAttribute>;
 end C-struct;
 
@@ -84,7 +84,7 @@ define C-function atk-attribute-set-free
   c-name: "atk_attribute_set_free";
 end;
 
-define constant $BINARY-AGE = 20810;
+define constant $binary-age = 20810;
 
 // Interface
 define open C-subtype <AtkComponent> (<C-void*>)
@@ -194,27 +194,27 @@ define C-function atk-component-set-size
 end;
 
 define C-struct <_AtkComponentIface>
-  constant slot atkcomponentiface-parent :: <GTypeInterface>;
-  constant slot atkcomponentiface-add-focus-handler :: <C-void*>;
-  constant slot atkcomponentiface-contains :: <C-function-pointer>;
-  constant slot atkcomponentiface-ref-accessible-at-point :: <C-function-pointer>;
-  constant slot atkcomponentiface-get-extents :: <C-function-pointer>;
-  constant slot atkcomponentiface-get-position :: <C-function-pointer>;
-  constant slot atkcomponentiface-get-size :: <C-function-pointer>;
-  constant slot atkcomponentiface-grab-focus :: <C-function-pointer>;
-  constant slot atkcomponentiface-remove-focus-handler :: <C-function-pointer>;
-  constant slot atkcomponentiface-set-extents :: <C-function-pointer>;
-  constant slot atkcomponentiface-set-position :: <C-function-pointer>;
-  constant slot atkcomponentiface-set-size :: <C-function-pointer>;
-  constant slot atkcomponentiface-get-layer :: <C-function-pointer>;
-  constant slot atkcomponentiface-get-mdi-zorder :: <C-function-pointer>;
-  constant slot atkcomponentiface-bounds-changed :: <C-function-pointer>;
-  constant slot atkcomponentiface-get-alpha :: <C-function-pointer>;
+  constant slot atk-component-iface-parent :: <GTypeInterface>;
+  constant slot atk-component-iface-add-focus-handler :: <C-void*>;
+  constant slot atk-component-iface-contains :: <C-function-pointer>;
+  constant slot atk-component-iface-ref-accessible-at-point :: <C-function-pointer>;
+  constant slot atk-component-iface-get-extents :: <C-function-pointer>;
+  constant slot atk-component-iface-get-position :: <C-function-pointer>;
+  constant slot atk-component-iface-get-size :: <C-function-pointer>;
+  constant slot atk-component-iface-grab-focus :: <C-function-pointer>;
+  constant slot atk-component-iface-remove-focus-handler :: <C-function-pointer>;
+  constant slot atk-component-iface-set-extents :: <C-function-pointer>;
+  constant slot atk-component-iface-set-position :: <C-function-pointer>;
+  constant slot atk-component-iface-set-size :: <C-function-pointer>;
+  constant slot atk-component-iface-get-layer :: <C-function-pointer>;
+  constant slot atk-component-iface-get-mdi-zorder :: <C-function-pointer>;
+  constant slot atk-component-iface-bounds-changed :: <C-function-pointer>;
+  constant slot atk-component-iface-get-alpha :: <C-function-pointer>;
   pointer-type-name: <AtkComponentIface>;
 end C-struct;
 
-define constant $ATK-XY-SCREEN = 0;
-define constant $ATK-XY-WINDOW = 1;
+define constant $atk-xy-screen = 0;
+define constant $atk-xy-window = 1;
 define constant <AtkCoordType> = <C-int>;
 define C-pointer-type <AtkCoordType*> => <AtkCoordType>;
 
@@ -258,17 +258,17 @@ define C-function atk-document-set-attribute-value
 end;
 
 define C-struct <_AtkDocumentIface>
-  constant slot atkdocumentiface-parent :: <GTypeInterface>;
-  constant slot atkdocumentiface-get-document-type :: <C-function-pointer>;
-  constant slot atkdocumentiface-get-document :: <C-function-pointer>;
-  constant slot atkdocumentiface-get-document-locale :: <C-function-pointer>;
-  constant slot atkdocumentiface-get-document-attributes :: <C-function-pointer>;
-  constant slot atkdocumentiface-get-document-attribute-value :: <C-function-pointer>;
-  constant slot atkdocumentiface-set-document-attribute :: <C-function-pointer>;
-  constant slot atkdocumentiface-pad1 :: <C-function-pointer>;
-  constant slot atkdocumentiface-pad2 :: <C-function-pointer>;
-  constant slot atkdocumentiface-pad3 :: <C-function-pointer>;
-  constant slot atkdocumentiface-pad4 :: <C-function-pointer>;
+  constant slot atk-document-iface-parent :: <GTypeInterface>;
+  constant slot atk-document-iface-get-document-type :: <C-function-pointer>;
+  constant slot atk-document-iface-get-document :: <C-function-pointer>;
+  constant slot atk-document-iface-get-document-locale :: <C-function-pointer>;
+  constant slot atk-document-iface-get-document-attributes :: <C-function-pointer>;
+  constant slot atk-document-iface-get-document-attribute-value :: <C-function-pointer>;
+  constant slot atk-document-iface-set-document-attribute :: <C-function-pointer>;
+  constant slot atk-document-iface-pad1 :: <C-function-pointer>;
+  constant slot atk-document-iface-pad2 :: <C-function-pointer>;
+  constant slot atk-document-iface-pad3 :: <C-function-pointer>;
+  constant slot atk-document-iface-pad4 :: <C-function-pointer>;
   pointer-type-name: <AtkDocumentIface>;
 end C-struct;
 
@@ -329,21 +329,21 @@ define C-function atk-editable-text-set-text-contents
 end;
 
 define C-struct <_AtkEditableTextIface>
-  constant slot atkeditabletextiface-parent-interface :: <GTypeInterface>;
-  constant slot atkeditabletextiface-set-run-attributes :: <C-function-pointer>;
-  constant slot atkeditabletextiface-set-text-contents :: <C-function-pointer>;
-  constant slot atkeditabletextiface-insert-text :: <C-function-pointer>;
-  constant slot atkeditabletextiface-copy-text :: <C-function-pointer>;
-  constant slot atkeditabletextiface-cut-text :: <C-function-pointer>;
-  constant slot atkeditabletextiface-delete-text :: <C-function-pointer>;
-  constant slot atkeditabletextiface-paste-text :: <C-function-pointer>;
-  constant slot atkeditabletextiface-pad1 :: <C-function-pointer>;
-  constant slot atkeditabletextiface-pad2 :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-parent-interface :: <GTypeInterface>;
+  constant slot atk-editable-text-iface-set-run-attributes :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-set-text-contents :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-insert-text :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-copy-text :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-cut-text :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-delete-text :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-paste-text :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-pad1 :: <C-function-pointer>;
+  constant slot atk-editable-text-iface-pad2 :: <C-function-pointer>;
   pointer-type-name: <AtkEditableTextIface>;
 end C-struct;
 
 define open C-subtype <AtkGObjectAccessible> (<AtkObject>)
-  constant slot atkgobjectaccessible-parent :: <AtkObject>;
+  constant slot atk-g-object-accessible-parent :: <AtkObject>;
 end C-subtype;
 
 define C-pointer-type <AtkGObjectAccessible*> => <AtkGObjectAccessible>;
@@ -361,22 +361,18 @@ define C-function atk-gobject-accessible-get-object
 end;
 
 define C-struct <_AtkGObjectAccessibleClass>
-  constant slot atkgobjectaccessibleclass-parent-class :: <AtkObjectClass>;
-  constant slot atkgobjectaccessibleclass-pad1 :: <C-function-pointer>;
-  constant slot atkgobjectaccessibleclass-pad2 :: <C-function-pointer>;
+  constant slot atk-g-object-accessible-class-parent-class :: <AtkObjectClass>;
+  constant slot atk-g-object-accessible-class-pad1 :: <C-function-pointer>;
+  constant slot atk-g-object-accessible-class-pad2 :: <C-function-pointer>;
   pointer-type-name: <AtkGObjectAccessibleClass>;
 end C-struct;
 
 define open C-subtype <AtkHyperlink> (<GObject>)
-  constant slot atkhyperlink-parent :: <GObject>;
+  constant slot atk-hyperlink-parent :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <AtkHyperlink*> => <AtkHyperlink>;
 
-define property-getter hyperlink-end-index :: <C-signed-int> on <AtkHyperlink> end;
-define property-getter hyperlink-number-of-anchors :: <C-signed-int> on <AtkHyperlink> end;
-define property-getter hyperlink-selected-link :: <C-boolean> on <AtkHyperlink> end;
-define property-getter hyperlink-start-index :: <C-signed-int> on <AtkHyperlink> end;
 define C-function atk-hyperlink-get-end-index
   input parameter self :: <AtkHyperlink>;
   result res :: <C-signed-int>;
@@ -422,17 +418,17 @@ define C-function atk-hyperlink-is-valid
 end;
 
 define C-struct <_AtkHyperlinkClass>
-  constant slot atkhyperlinkclass-parent :: <GObjectClass>;
-  constant slot atkhyperlinkclass-get-uri :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-get-object :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-get-end-index :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-get-start-index :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-is-valid :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-get-n-anchors :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-link-state :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-is-selected-link :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-link-activated :: <C-function-pointer>;
-  constant slot atkhyperlinkclass-pad1 :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-parent :: <GObjectClass>;
+  constant slot atk-hyperlink-class-get-uri :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-get-object :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-get-end-index :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-get-start-index :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-is-valid :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-get-n-anchors :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-link-state :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-is-selected-link :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-link-activated :: <C-function-pointer>;
+  constant slot atk-hyperlink-class-pad1 :: <C-function-pointer>;
   pointer-type-name: <AtkHyperlinkClass>;
 end C-struct;
 
@@ -449,13 +445,13 @@ define C-function atk-hyperlink-impl-get-hyperlink
 end;
 
 define C-struct <_AtkHyperlinkImplIface>
-  constant slot atkhyperlinkimpliface-parent :: <GTypeInterface>;
-  constant slot atkhyperlinkimpliface-get-hyperlink :: <C-function-pointer>;
-  constant slot atkhyperlinkimpliface-pad1 :: <C-function-pointer>;
+  constant slot atk-hyperlink-impl-iface-parent :: <GTypeInterface>;
+  constant slot atk-hyperlink-impl-iface-get-hyperlink :: <C-function-pointer>;
+  constant slot atk-hyperlink-impl-iface-pad1 :: <C-function-pointer>;
   pointer-type-name: <AtkHyperlinkImplIface>;
 end C-struct;
 
-define constant $ATK-HYPERLINK-IS-INLINE = 1;
+define constant $atk-hyperlink-is-inline = 1;
 define constant <AtkHyperlinkStateFlags> = <C-int>;
 define C-pointer-type <AtkHyperlinkStateFlags*> => <AtkHyperlinkStateFlags>;
 
@@ -486,18 +482,18 @@ define C-function atk-hypertext-get-n-links
 end;
 
 define C-struct <_AtkHypertextIface>
-  constant slot atkhypertextiface-parent :: <GTypeInterface>;
-  constant slot atkhypertextiface-get-link :: <C-function-pointer>;
-  constant slot atkhypertextiface-get-n-links :: <C-function-pointer>;
-  constant slot atkhypertextiface-get-link-index :: <C-function-pointer>;
-  constant slot atkhypertextiface-link-selected :: <C-function-pointer>;
-  constant slot atkhypertextiface-pad1 :: <C-function-pointer>;
-  constant slot atkhypertextiface-pad2 :: <C-function-pointer>;
-  constant slot atkhypertextiface-pad3 :: <C-function-pointer>;
+  constant slot atk-hypertext-iface-parent :: <GTypeInterface>;
+  constant slot atk-hypertext-iface-get-link :: <C-function-pointer>;
+  constant slot atk-hypertext-iface-get-n-links :: <C-function-pointer>;
+  constant slot atk-hypertext-iface-get-link-index :: <C-function-pointer>;
+  constant slot atk-hypertext-iface-link-selected :: <C-function-pointer>;
+  constant slot atk-hypertext-iface-pad1 :: <C-function-pointer>;
+  constant slot atk-hypertext-iface-pad2 :: <C-function-pointer>;
+  constant slot atk-hypertext-iface-pad3 :: <C-function-pointer>;
   pointer-type-name: <AtkHypertextIface>;
 end C-struct;
 
-define constant $INTERFACE-AGE = 1;
+define constant $interface-age = 1;
 
 // Interface
 define open C-subtype <AtkImage> (<C-void*>)
@@ -540,13 +536,13 @@ define C-function atk-image-set-image-description
 end;
 
 define C-struct <_AtkImageIface>
-  constant slot atkimageiface-parent :: <GTypeInterface>;
-  constant slot atkimageiface-get-image-position :: <C-function-pointer>;
-  constant slot atkimageiface-get-image-description :: <C-function-pointer>;
-  constant slot atkimageiface-get-image-size :: <C-function-pointer>;
-  constant slot atkimageiface-set-image-description :: <C-function-pointer>;
-  constant slot atkimageiface-get-image-locale :: <C-function-pointer>;
-  constant slot atkimageiface-pad1 :: <C-function-pointer>;
+  constant slot atk-image-iface-parent :: <GTypeInterface>;
+  constant slot atk-image-iface-get-image-position :: <C-function-pointer>;
+  constant slot atk-image-iface-get-image-description :: <C-function-pointer>;
+  constant slot atk-image-iface-get-image-size :: <C-function-pointer>;
+  constant slot atk-image-iface-set-image-description :: <C-function-pointer>;
+  constant slot atk-image-iface-get-image-locale :: <C-function-pointer>;
+  constant slot atk-image-iface-pad1 :: <C-function-pointer>;
   pointer-type-name: <AtkImageIface>;
 end C-struct;
 
@@ -567,41 +563,41 @@ end C-subtype;
 define C-pointer-type <AtkImplementorIface*> => <AtkImplementorIface>;
 
 define C-struct <_AtkKeyEventStruct>
-  slot atkkeyeventstruct-type :: <C-signed-int>;
-  slot atkkeyeventstruct-state :: <C-unsigned-int>;
-  slot atkkeyeventstruct-keyval :: <C-unsigned-int>;
-  slot atkkeyeventstruct-length :: <C-signed-int>;
-  slot atkkeyeventstruct-string :: <C-string>;
-  slot atkkeyeventstruct-keycode :: <C-unsigned-short>;
-  slot atkkeyeventstruct-timestamp :: <C-unsigned-int>;
+  slot atk-key-event-struct-type :: <C-signed-int>;
+  slot atk-key-event-struct-state :: <C-unsigned-int>;
+  slot atk-key-event-struct-keyval :: <C-unsigned-int>;
+  slot atk-key-event-struct-length :: <C-signed-int>;
+  slot atk-key-event-struct-string :: <C-string>;
+  slot atk-key-event-struct-keycode :: <C-unsigned-short>;
+  slot atk-key-event-struct-timestamp :: <C-unsigned-int>;
   pointer-type-name: <AtkKeyEventStruct>;
 end C-struct;
 
-define constant $ATK-KEY-EVENT-PRESS = 0;
-define constant $ATK-KEY-EVENT-RELEASE = 1;
-define constant $ATK-KEY-EVENT-LAST-DEFINED = 2;
+define constant $atk-key-event-press = 0;
+define constant $atk-key-event-release = 1;
+define constant $atk-key-event-last-defined = 2;
 define constant <AtkKeyEventType> = <C-int>;
 define C-pointer-type <AtkKeyEventType*> => <AtkKeyEventType>;
 
-define constant $ATK-LAYER-INVALID = 0;
-define constant $ATK-LAYER-BACKGROUND = 1;
-define constant $ATK-LAYER-CANVAS = 2;
-define constant $ATK-LAYER-WIDGET = 3;
-define constant $ATK-LAYER-MDI = 4;
-define constant $ATK-LAYER-POPUP = 5;
-define constant $ATK-LAYER-OVERLAY = 6;
-define constant $ATK-LAYER-WINDOW = 7;
+define constant $atk-layer-invalid = 0;
+define constant $atk-layer-background = 1;
+define constant $atk-layer-canvas = 2;
+define constant $atk-layer-widget = 3;
+define constant $atk-layer-mdi = 4;
+define constant $atk-layer-popup = 5;
+define constant $atk-layer-overlay = 6;
+define constant $atk-layer-window = 7;
 define constant <AtkLayer> = <C-int>;
 define C-pointer-type <AtkLayer*> => <AtkLayer>;
 
-define constant $MAJOR-VERSION = 2;
+define constant $major-version = 2;
 
-define constant $MICRO-VERSION = 0;
+define constant $micro-version = 0;
 
-define constant $MINOR-VERSION = 8;
+define constant $minor-version = 8;
 
 define open C-subtype <AtkMisc> (<GObject>)
-  constant slot atkmisc-parent :: <GObject>;
+  constant slot atk-misc-parent :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <AtkMisc*> => <AtkMisc>;
@@ -622,15 +618,15 @@ define C-function atk-misc-threads-leave
 end;
 
 define C-struct <_AtkMiscClass>
-  constant slot atkmiscclass-parent :: <GObjectClass>;
-  constant slot atkmiscclass-threads-enter :: <C-function-pointer>;
-  constant slot atkmiscclass-threads-leave :: <C-function-pointer>;
-  constant slot atkmiscclass-vfuncs :: <C-void*>;
+  constant slot atk-misc-class-parent :: <GObjectClass>;
+  constant slot atk-misc-class-threads-enter :: <C-function-pointer>;
+  constant slot atk-misc-class-threads-leave :: <C-function-pointer>;
+  constant slot atk-misc-class-vfuncs :: <C-void*>;
   pointer-type-name: <AtkMiscClass>;
 end C-struct;
 
 define open C-subtype <AtkNoOpObject> (<AtkObject>)
-  constant slot atknoopobject-parent :: <AtkObject>;
+  constant slot atk-no-op-object-parent :: <AtkObject>;
 end C-subtype;
 
 define C-pointer-type <AtkNoOpObject*> => <AtkNoOpObject>;
@@ -642,12 +638,12 @@ define C-function atk-no-op-object-new
 end;
 
 define C-struct <_AtkNoOpObjectClass>
-  constant slot atknoopobjectclass-parent-class :: <AtkObjectClass>;
+  constant slot atk-no-op-object-class-parent-class :: <AtkObjectClass>;
   pointer-type-name: <AtkNoOpObjectClass>;
 end C-struct;
 
 define open C-subtype <AtkNoOpObjectFactory> (<AtkObjectFactory>)
-  constant slot atknoopobjectfactory-parent :: <AtkObjectFactory>;
+  constant slot atk-no-op-object-factory-parent :: <AtkObjectFactory>;
 end C-subtype;
 
 define C-pointer-type <AtkNoOpObjectFactory*> => <AtkNoOpObjectFactory>;
@@ -658,49 +654,22 @@ define C-function atk-no-op-object-factory-new
 end;
 
 define C-struct <_AtkNoOpObjectFactoryClass>
-  constant slot atknoopobjectfactoryclass-parent-class :: <AtkObjectFactoryClass>;
+  constant slot atk-no-op-object-factory-class-parent-class :: <AtkObjectFactoryClass>;
   pointer-type-name: <AtkNoOpObjectFactoryClass>;
 end C-struct;
 
 define open C-subtype <AtkObject> (<GObject>)
-  constant slot atkobject-parent :: <GObject>;
-  constant slot atkobject-description :: <C-string>;
-  constant slot atkobject-name :: <C-string>;
-  constant slot atkobject-accessible-parent :: <AtkObject>;
-  constant slot atkobject-role :: <AtkRole>;
-  constant slot atkobject-relation-set :: <AtkRelationSet>;
-  constant slot atkobject-layer :: <AtkLayer>;
+  constant slot atk-object-parent :: <GObject>;
+  constant slot atk-object-description :: <C-string>;
+  constant slot atk-object-name :: <C-string>;
+  constant slot atk-object-accessible-parent :: <AtkObject>;
+  constant slot atk-object-role :: <AtkRole>;
+  constant slot atk-object-relation-set :: <AtkRelationSet>;
+  constant slot atk-object-layer :: <AtkLayer>;
 end C-subtype;
 
 define C-pointer-type <AtkObject*> => <AtkObject>;
 
-define property-getter object-accessible-component-layer :: <C-signed-int> on <AtkObject> end;
-define property-getter object-accessible-component-mdi-zorder :: <C-signed-int> on <AtkObject> end;
-define property-getter object-accessible-description :: <C-string> on <AtkObject> end;
-define property-setter object-accessible-description :: <C-string> on <AtkObject> end;
-define property-getter object-accessible-hypertext-nlinks :: <C-signed-int> on <AtkObject> end;
-define property-getter object-accessible-name :: <C-string> on <AtkObject> end;
-define property-setter object-accessible-name :: <C-string> on <AtkObject> end;
-define property-getter object-accessible-parent :: <AtkObject> on <AtkObject> end;
-define property-setter object-accessible-parent :: <AtkObject> on <AtkObject> end;
-define property-getter object-accessible-role :: <C-signed-int> on <AtkObject> end;
-define property-setter object-accessible-role :: <C-signed-int> on <AtkObject> end;
-define property-getter object-accessible-table-caption :: <C-string> on <AtkObject> end;
-define property-setter object-accessible-table-caption :: <C-string> on <AtkObject> end;
-define property-getter object-accessible-table-caption-object :: <AtkObject> on <AtkObject> end;
-define property-setter object-accessible-table-caption-object :: <AtkObject> on <AtkObject> end;
-define property-getter object-accessible-table-column-description :: <C-string> on <AtkObject> end;
-define property-setter object-accessible-table-column-description :: <C-string> on <AtkObject> end;
-define property-getter object-accessible-table-column-header :: <AtkObject> on <AtkObject> end;
-define property-setter object-accessible-table-column-header :: <AtkObject> on <AtkObject> end;
-define property-getter object-accessible-table-row-description :: <C-string> on <AtkObject> end;
-define property-setter object-accessible-table-row-description :: <C-string> on <AtkObject> end;
-define property-getter object-accessible-table-row-header :: <AtkObject> on <AtkObject> end;
-define property-setter object-accessible-table-row-header :: <AtkObject> on <AtkObject> end;
-define property-getter object-accessible-table-summary :: <AtkObject> on <AtkObject> end;
-define property-setter object-accessible-table-summary :: <AtkObject> on <AtkObject> end;
-define property-getter object-accessible-value :: <C-double> on <AtkObject> end;
-define property-setter object-accessible-value :: <C-double> on <AtkObject> end;
 define C-function atk-object-add-relationship
   input parameter self :: <AtkObject>;
   input parameter relationship_ :: <AtkRelationType>;
@@ -828,39 +797,39 @@ define C-function atk-object-set-role
 end;
 
 define C-struct <_AtkObjectClass>
-  constant slot atkobjectclass-parent :: <GObjectClass>;
-  constant slot atkobjectclass-get-name :: <C-function-pointer>;
-  constant slot atkobjectclass-get-description :: <C-function-pointer>;
-  constant slot atkobjectclass-get-parent :: <C-function-pointer>;
-  constant slot atkobjectclass-get-n-children :: <C-function-pointer>;
-  constant slot atkobjectclass-ref-child :: <C-void*>;
-  constant slot atkobjectclass-get-index-in-parent :: <C-function-pointer>;
-  constant slot atkobjectclass-ref-relation-set :: <C-function-pointer>;
-  constant slot atkobjectclass-get-role :: <C-function-pointer>;
-  constant slot atkobjectclass-get-layer :: <C-function-pointer>;
-  constant slot atkobjectclass-get-mdi-zorder :: <C-function-pointer>;
-  constant slot atkobjectclass-ref-state-set :: <C-function-pointer>;
-  constant slot atkobjectclass-set-name :: <C-function-pointer>;
-  constant slot atkobjectclass-set-description :: <C-function-pointer>;
-  constant slot atkobjectclass-set-parent :: <C-function-pointer>;
-  constant slot atkobjectclass-set-role :: <C-function-pointer>;
-  constant slot atkobjectclass-connect-property-change-handler :: <C-void*>;
-  constant slot atkobjectclass-remove-property-change-handler :: <C-function-pointer>;
-  constant slot atkobjectclass-initialize :: <C-function-pointer>;
-  constant slot atkobjectclass-children-changed :: <C-function-pointer>;
-  constant slot atkobjectclass-focus-event :: <C-function-pointer>;
-  constant slot atkobjectclass-property-change :: <C-void*>;
-  constant slot atkobjectclass-state-change :: <C-function-pointer>;
-  constant slot atkobjectclass-visible-data-changed :: <C-function-pointer>;
-  constant slot atkobjectclass-active-descendant-changed :: <C-function-pointer>;
-  constant slot atkobjectclass-get-attributes :: <C-function-pointer>;
-  constant slot atkobjectclass-get-object-locale :: <C-function-pointer>;
-  constant slot atkobjectclass-pad1 :: <C-function-pointer>;
+  constant slot atk-object-class-parent :: <GObjectClass>;
+  constant slot atk-object-class-get-name :: <C-function-pointer>;
+  constant slot atk-object-class-get-description :: <C-function-pointer>;
+  constant slot atk-object-class-get-parent :: <C-function-pointer>;
+  constant slot atk-object-class-get-n-children :: <C-function-pointer>;
+  constant slot atk-object-class-ref-child :: <C-void*>;
+  constant slot atk-object-class-get-index-in-parent :: <C-function-pointer>;
+  constant slot atk-object-class-ref-relation-set :: <C-function-pointer>;
+  constant slot atk-object-class-get-role :: <C-function-pointer>;
+  constant slot atk-object-class-get-layer :: <C-function-pointer>;
+  constant slot atk-object-class-get-mdi-zorder :: <C-function-pointer>;
+  constant slot atk-object-class-ref-state-set :: <C-function-pointer>;
+  constant slot atk-object-class-set-name :: <C-function-pointer>;
+  constant slot atk-object-class-set-description :: <C-function-pointer>;
+  constant slot atk-object-class-set-parent :: <C-function-pointer>;
+  constant slot atk-object-class-set-role :: <C-function-pointer>;
+  constant slot atk-object-class-connect-property-change-handler :: <C-void*>;
+  constant slot atk-object-class-remove-property-change-handler :: <C-function-pointer>;
+  constant slot atk-object-class-initialize :: <C-function-pointer>;
+  constant slot atk-object-class-children-changed :: <C-function-pointer>;
+  constant slot atk-object-class-focus-event :: <C-function-pointer>;
+  constant slot atk-object-class-property-change :: <C-void*>;
+  constant slot atk-object-class-state-change :: <C-function-pointer>;
+  constant slot atk-object-class-visible-data-changed :: <C-function-pointer>;
+  constant slot atk-object-class-active-descendant-changed :: <C-function-pointer>;
+  constant slot atk-object-class-get-attributes :: <C-function-pointer>;
+  constant slot atk-object-class-get-object-locale :: <C-function-pointer>;
+  constant slot atk-object-class-pad1 :: <C-function-pointer>;
   pointer-type-name: <AtkObjectClass>;
 end C-struct;
 
 define open C-subtype <AtkObjectFactory> (<GObject>)
-  constant slot atkobjectfactory-parent :: <GObject>;
+  constant slot atk-object-factory-parent :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <AtkObjectFactory*> => <AtkObjectFactory>;
@@ -884,17 +853,17 @@ define C-function atk-object-factory-invalidate
 end;
 
 define C-struct <_AtkObjectFactoryClass>
-  constant slot atkobjectfactoryclass-parent-class :: <GObjectClass>;
-  constant slot atkobjectfactoryclass-create-accessible :: <C-void*>;
-  constant slot atkobjectfactoryclass-invalidate :: <C-function-pointer>;
-  constant slot atkobjectfactoryclass-get-accessible-type :: <C-function-pointer>;
-  constant slot atkobjectfactoryclass-pad1 :: <C-function-pointer>;
-  constant slot atkobjectfactoryclass-pad2 :: <C-function-pointer>;
+  constant slot atk-object-factory-class-parent-class :: <GObjectClass>;
+  constant slot atk-object-factory-class-create-accessible :: <C-void*>;
+  constant slot atk-object-factory-class-invalidate :: <C-function-pointer>;
+  constant slot atk-object-factory-class-get-accessible-type :: <C-function-pointer>;
+  constant slot atk-object-factory-class-pad1 :: <C-function-pointer>;
+  constant slot atk-object-factory-class-pad2 :: <C-function-pointer>;
   pointer-type-name: <AtkObjectFactoryClass>;
 end C-struct;
 
 define open C-subtype <AtkPlug> (<AtkObject>)
-  constant slot atkplug-parent :: <AtkObject>;
+  constant slot atk-plug-parent :: <AtkObject>;
 end C-subtype;
 
 define C-pointer-type <AtkPlug*> => <AtkPlug>;
@@ -911,16 +880,16 @@ define C-function atk-plug-get-id
 end;
 
 define C-struct <_AtkPlugClass>
-  constant slot atkplugclass-parent-class :: <AtkObjectClass>;
-  constant slot atkplugclass-get-object-id :: <C-function-pointer>;
+  constant slot atk-plug-class-parent-class :: <AtkObjectClass>;
+  constant slot atk-plug-class-get-object-id :: <C-function-pointer>;
   pointer-type-name: <AtkPlugClass>;
 end C-struct;
 
 define C-struct <_AtkRectangle>
-  slot atkrectangle-x :: <C-signed-int>;
-  slot atkrectangle-y :: <C-signed-int>;
-  slot atkrectangle-width :: <C-signed-int>;
-  slot atkrectangle-height :: <C-signed-int>;
+  slot atk-rectangle-x :: <C-signed-int>;
+  slot atk-rectangle-y :: <C-signed-int>;
+  slot atk-rectangle-width :: <C-signed-int>;
+  slot atk-rectangle-height :: <C-signed-int>;
   pointer-type-name: <AtkRectangle>;
 end C-struct;
 
@@ -951,17 +920,13 @@ define C-function atk-registry-set-factory-type
 end;
 
 define open C-subtype <AtkRelation> (<GObject>)
-  constant slot atkrelation-parent :: <GObject>;
-  constant slot atkrelation-target :: <GPtrArray>;
-  constant slot atkrelation-relationship :: <AtkRelationType>;
+  constant slot atk-relation-parent :: <GObject>;
+  constant slot atk-relation-target :: <GPtrArray>;
+  constant slot atk-relation-relationship :: <AtkRelationType>;
 end C-subtype;
 
 define C-pointer-type <AtkRelation*> => <AtkRelation>;
 
-define property-getter relation-relation-type :: <AtkRelationType> on <AtkRelation> end;
-define property-setter relation-relation-type :: <AtkRelationType> on <AtkRelation> end;
-define property-getter relation-target :: <GValueArray> on <AtkRelation> end;
-define property-setter relation-target :: <GValueArray> on <AtkRelation> end;
 define C-function atk-relation-new
   input parameter targets_ :: <C-unsigned-char*> /* Not supported */;
   input parameter n_targets_ :: <C-signed-int>;
@@ -996,13 +961,13 @@ define C-function atk-relation-remove-target
 end;
 
 define C-struct <_AtkRelationClass>
-  constant slot atkrelationclass-parent :: <GObjectClass>;
+  constant slot atk-relation-class-parent :: <GObjectClass>;
   pointer-type-name: <AtkRelationClass>;
 end C-struct;
 
 define open C-subtype <AtkRelationSet> (<GObject>)
-  constant slot atkrelationset-parent :: <GObject>;
-  constant slot atkrelationset-relations :: <GPtrArray>;
+  constant slot atk-relation-set-parent :: <GObject>;
+  constant slot atk-relation-set-relations :: <GPtrArray>;
 end C-subtype;
 
 define C-pointer-type <AtkRelationSet*> => <AtkRelationSet>;
@@ -1067,136 +1032,136 @@ define C-function atk-relation-set-remove
 end;
 
 define C-struct <_AtkRelationSetClass>
-  constant slot atkrelationsetclass-parent :: <GObjectClass>;
-  constant slot atkrelationsetclass-pad1 :: <C-function-pointer>;
-  constant slot atkrelationsetclass-pad2 :: <C-function-pointer>;
+  constant slot atk-relation-set-class-parent :: <GObjectClass>;
+  constant slot atk-relation-set-class-pad1 :: <C-function-pointer>;
+  constant slot atk-relation-set-class-pad2 :: <C-function-pointer>;
   pointer-type-name: <AtkRelationSetClass>;
 end C-struct;
 
-define constant $ATK-RELATION-NULL = 0;
-define constant $ATK-RELATION-CONTROLLED-BY = 1;
-define constant $ATK-RELATION-CONTROLLER-FOR = 2;
-define constant $ATK-RELATION-LABEL-FOR = 3;
-define constant $ATK-RELATION-LABELLED-BY = 4;
-define constant $ATK-RELATION-MEMBER-OF = 5;
-define constant $ATK-RELATION-NODE-CHILD-OF = 6;
-define constant $ATK-RELATION-FLOWS-TO = 7;
-define constant $ATK-RELATION-FLOWS-FROM = 8;
-define constant $ATK-RELATION-SUBWINDOW-OF = 9;
-define constant $ATK-RELATION-EMBEDS = 10;
-define constant $ATK-RELATION-EMBEDDED-BY = 11;
-define constant $ATK-RELATION-POPUP-FOR = 12;
-define constant $ATK-RELATION-PARENT-WINDOW-OF = 13;
-define constant $ATK-RELATION-DESCRIBED-BY = 14;
-define constant $ATK-RELATION-DESCRIPTION-FOR = 15;
-define constant $ATK-RELATION-NODE-PARENT-OF = 16;
-define constant $ATK-RELATION-LAST-DEFINED = 17;
+define constant $atk-relation-null = 0;
+define constant $atk-relation-controlled-by = 1;
+define constant $atk-relation-controller-for = 2;
+define constant $atk-relation-label-for = 3;
+define constant $atk-relation-labelled-by = 4;
+define constant $atk-relation-member-of = 5;
+define constant $atk-relation-node-child-of = 6;
+define constant $atk-relation-flows-to = 7;
+define constant $atk-relation-flows-from = 8;
+define constant $atk-relation-subwindow-of = 9;
+define constant $atk-relation-embeds = 10;
+define constant $atk-relation-embedded-by = 11;
+define constant $atk-relation-popup-for = 12;
+define constant $atk-relation-parent-window-of = 13;
+define constant $atk-relation-described-by = 14;
+define constant $atk-relation-description-for = 15;
+define constant $atk-relation-node-parent-of = 16;
+define constant $atk-relation-last-defined = 17;
 define constant <AtkRelationType> = <C-int>;
 define C-pointer-type <AtkRelationType*> => <AtkRelationType>;
 
-define constant $ATK-ROLE-INVALID = 0;
-define constant $ATK-ROLE-ACCEL-LABEL = 1;
-define constant $ATK-ROLE-ALERT = 2;
-define constant $ATK-ROLE-ANIMATION = 3;
-define constant $ATK-ROLE-ARROW = 4;
-define constant $ATK-ROLE-CALENDAR = 5;
-define constant $ATK-ROLE-CANVAS = 6;
-define constant $ATK-ROLE-CHECK-BOX = 7;
-define constant $ATK-ROLE-CHECK-MENU-ITEM = 8;
-define constant $ATK-ROLE-COLOR-CHOOSER = 9;
-define constant $ATK-ROLE-COLUMN-HEADER = 10;
-define constant $ATK-ROLE-COMBO-BOX = 11;
-define constant $ATK-ROLE-DATE-EDITOR = 12;
-define constant $ATK-ROLE-DESKTOP-ICON = 13;
-define constant $ATK-ROLE-DESKTOP-FRAME = 14;
-define constant $ATK-ROLE-DIAL = 15;
-define constant $ATK-ROLE-DIALOG = 16;
-define constant $ATK-ROLE-DIRECTORY-PANE = 17;
-define constant $ATK-ROLE-DRAWING-AREA = 18;
-define constant $ATK-ROLE-FILE-CHOOSER = 19;
-define constant $ATK-ROLE-FILLER = 20;
-define constant $ATK-ROLE-FONT-CHOOSER = 21;
-define constant $ATK-ROLE-FRAME = 22;
-define constant $ATK-ROLE-GLASS-PANE = 23;
-define constant $ATK-ROLE-HTML-CONTAINER = 24;
-define constant $ATK-ROLE-ICON = 25;
-define constant $ATK-ROLE-IMAGE = 26;
-define constant $ATK-ROLE-INTERNAL-FRAME = 27;
-define constant $ATK-ROLE-LABEL = 28;
-define constant $ATK-ROLE-LAYERED-PANE = 29;
-define constant $ATK-ROLE-LIST = 30;
-define constant $ATK-ROLE-LIST-ITEM = 31;
-define constant $ATK-ROLE-MENU = 32;
-define constant $ATK-ROLE-MENU-BAR = 33;
-define constant $ATK-ROLE-MENU-ITEM = 34;
-define constant $ATK-ROLE-OPTION-PANE = 35;
-define constant $ATK-ROLE-PAGE-TAB = 36;
-define constant $ATK-ROLE-PAGE-TAB-LIST = 37;
-define constant $ATK-ROLE-PANEL = 38;
-define constant $ATK-ROLE-PASSWORD-TEXT = 39;
-define constant $ATK-ROLE-POPUP-MENU = 40;
-define constant $ATK-ROLE-PROGRESS-BAR = 41;
-define constant $ATK-ROLE-PUSH-BUTTON = 42;
-define constant $ATK-ROLE-RADIO-BUTTON = 43;
-define constant $ATK-ROLE-RADIO-MENU-ITEM = 44;
-define constant $ATK-ROLE-ROOT-PANE = 45;
-define constant $ATK-ROLE-ROW-HEADER = 46;
-define constant $ATK-ROLE-SCROLL-BAR = 47;
-define constant $ATK-ROLE-SCROLL-PANE = 48;
-define constant $ATK-ROLE-SEPARATOR = 49;
-define constant $ATK-ROLE-SLIDER = 50;
-define constant $ATK-ROLE-SPLIT-PANE = 51;
-define constant $ATK-ROLE-SPIN-BUTTON = 52;
-define constant $ATK-ROLE-STATUSBAR = 53;
-define constant $ATK-ROLE-TABLE = 54;
-define constant $ATK-ROLE-TABLE-CELL = 55;
-define constant $ATK-ROLE-TABLE-COLUMN-HEADER = 56;
-define constant $ATK-ROLE-TABLE-ROW-HEADER = 57;
-define constant $ATK-ROLE-TEAR-OFF-MENU-ITEM = 58;
-define constant $ATK-ROLE-TERMINAL = 59;
-define constant $ATK-ROLE-TEXT = 60;
-define constant $ATK-ROLE-TOGGLE-BUTTON = 61;
-define constant $ATK-ROLE-TOOL-BAR = 62;
-define constant $ATK-ROLE-TOOL-TIP = 63;
-define constant $ATK-ROLE-TREE = 64;
-define constant $ATK-ROLE-TREE-TABLE = 65;
-define constant $ATK-ROLE-UNKNOWN = 66;
-define constant $ATK-ROLE-VIEWPORT = 67;
-define constant $ATK-ROLE-WINDOW = 68;
-define constant $ATK-ROLE-HEADER = 69;
-define constant $ATK-ROLE-FOOTER = 70;
-define constant $ATK-ROLE-PARAGRAPH = 71;
-define constant $ATK-ROLE-RULER = 72;
-define constant $ATK-ROLE-APPLICATION = 73;
-define constant $ATK-ROLE-AUTOCOMPLETE = 74;
-define constant $ATK-ROLE-EDITBAR = 75;
-define constant $ATK-ROLE-EMBEDDED = 76;
-define constant $ATK-ROLE-ENTRY = 77;
-define constant $ATK-ROLE-CHART = 78;
-define constant $ATK-ROLE-CAPTION = 79;
-define constant $ATK-ROLE-DOCUMENT-FRAME = 80;
-define constant $ATK-ROLE-HEADING = 81;
-define constant $ATK-ROLE-PAGE = 82;
-define constant $ATK-ROLE-SECTION = 83;
-define constant $ATK-ROLE-REDUNDANT-OBJECT = 84;
-define constant $ATK-ROLE-FORM = 85;
-define constant $ATK-ROLE-LINK = 86;
-define constant $ATK-ROLE-INPUT-METHOD-WINDOW = 87;
-define constant $ATK-ROLE-TABLE-ROW = 88;
-define constant $ATK-ROLE-TREE-ITEM = 89;
-define constant $ATK-ROLE-DOCUMENT-SPREADSHEET = 90;
-define constant $ATK-ROLE-DOCUMENT-PRESENTATION = 91;
-define constant $ATK-ROLE-DOCUMENT-TEXT = 92;
-define constant $ATK-ROLE-DOCUMENT-WEB = 93;
-define constant $ATK-ROLE-DOCUMENT-EMAIL = 94;
-define constant $ATK-ROLE-COMMENT = 95;
-define constant $ATK-ROLE-LIST-BOX = 96;
-define constant $ATK-ROLE-GROUPING = 97;
-define constant $ATK-ROLE-IMAGE-MAP = 98;
-define constant $ATK-ROLE-NOTIFICATION = 99;
-define constant $ATK-ROLE-INFO-BAR = 100;
-define constant $ATK-ROLE-LEVEL-BAR = 101;
-define constant $ATK-ROLE-LAST-DEFINED = 102;
+define constant $atk-role-invalid = 0;
+define constant $atk-role-accel-label = 1;
+define constant $atk-role-alert = 2;
+define constant $atk-role-animation = 3;
+define constant $atk-role-arrow = 4;
+define constant $atk-role-calendar = 5;
+define constant $atk-role-canvas = 6;
+define constant $atk-role-check-box = 7;
+define constant $atk-role-check-menu-item = 8;
+define constant $atk-role-color-chooser = 9;
+define constant $atk-role-column-header = 10;
+define constant $atk-role-combo-box = 11;
+define constant $atk-role-date-editor = 12;
+define constant $atk-role-desktop-icon = 13;
+define constant $atk-role-desktop-frame = 14;
+define constant $atk-role-dial = 15;
+define constant $atk-role-dialog = 16;
+define constant $atk-role-directory-pane = 17;
+define constant $atk-role-drawing-area = 18;
+define constant $atk-role-file-chooser = 19;
+define constant $atk-role-filler = 20;
+define constant $atk-role-font-chooser = 21;
+define constant $atk-role-frame = 22;
+define constant $atk-role-glass-pane = 23;
+define constant $atk-role-html-container = 24;
+define constant $atk-role-icon = 25;
+define constant $atk-role-image = 26;
+define constant $atk-role-internal-frame = 27;
+define constant $atk-role-label = 28;
+define constant $atk-role-layered-pane = 29;
+define constant $atk-role-list = 30;
+define constant $atk-role-list-item = 31;
+define constant $atk-role-menu = 32;
+define constant $atk-role-menu-bar = 33;
+define constant $atk-role-menu-item = 34;
+define constant $atk-role-option-pane = 35;
+define constant $atk-role-page-tab = 36;
+define constant $atk-role-page-tab-list = 37;
+define constant $atk-role-panel = 38;
+define constant $atk-role-password-text = 39;
+define constant $atk-role-popup-menu = 40;
+define constant $atk-role-progress-bar = 41;
+define constant $atk-role-push-button = 42;
+define constant $atk-role-radio-button = 43;
+define constant $atk-role-radio-menu-item = 44;
+define constant $atk-role-root-pane = 45;
+define constant $atk-role-row-header = 46;
+define constant $atk-role-scroll-bar = 47;
+define constant $atk-role-scroll-pane = 48;
+define constant $atk-role-separator = 49;
+define constant $atk-role-slider = 50;
+define constant $atk-role-split-pane = 51;
+define constant $atk-role-spin-button = 52;
+define constant $atk-role-statusbar = 53;
+define constant $atk-role-table = 54;
+define constant $atk-role-table-cell = 55;
+define constant $atk-role-table-column-header = 56;
+define constant $atk-role-table-row-header = 57;
+define constant $atk-role-tear-off-menu-item = 58;
+define constant $atk-role-terminal = 59;
+define constant $atk-role-text = 60;
+define constant $atk-role-toggle-button = 61;
+define constant $atk-role-tool-bar = 62;
+define constant $atk-role-tool-tip = 63;
+define constant $atk-role-tree = 64;
+define constant $atk-role-tree-table = 65;
+define constant $atk-role-unknown = 66;
+define constant $atk-role-viewport = 67;
+define constant $atk-role-window = 68;
+define constant $atk-role-header = 69;
+define constant $atk-role-footer = 70;
+define constant $atk-role-paragraph = 71;
+define constant $atk-role-ruler = 72;
+define constant $atk-role-application = 73;
+define constant $atk-role-autocomplete = 74;
+define constant $atk-role-editbar = 75;
+define constant $atk-role-embedded = 76;
+define constant $atk-role-entry = 77;
+define constant $atk-role-chart = 78;
+define constant $atk-role-caption = 79;
+define constant $atk-role-document-frame = 80;
+define constant $atk-role-heading = 81;
+define constant $atk-role-page = 82;
+define constant $atk-role-section = 83;
+define constant $atk-role-redundant-object = 84;
+define constant $atk-role-form = 85;
+define constant $atk-role-link = 86;
+define constant $atk-role-input-method-window = 87;
+define constant $atk-role-table-row = 88;
+define constant $atk-role-tree-item = 89;
+define constant $atk-role-document-spreadsheet = 90;
+define constant $atk-role-document-presentation = 91;
+define constant $atk-role-document-text = 92;
+define constant $atk-role-document-web = 93;
+define constant $atk-role-document-email = 94;
+define constant $atk-role-comment = 95;
+define constant $atk-role-list-box = 96;
+define constant $atk-role-grouping = 97;
+define constant $atk-role-image-map = 98;
+define constant $atk-role-notification = 99;
+define constant $atk-role-info-bar = 100;
+define constant $atk-role-level-bar = 101;
+define constant $atk-role-last-defined = 102;
 define constant <AtkRole> = <C-int>;
 define C-pointer-type <AtkRole*> => <AtkRole>;
 
@@ -1253,23 +1218,23 @@ define C-function atk-selection-select-all-selection
 end;
 
 define C-struct <_AtkSelectionIface>
-  constant slot atkselectioniface-parent :: <GTypeInterface>;
-  constant slot atkselectioniface-add-selection :: <C-function-pointer>;
-  constant slot atkselectioniface-clear-selection :: <C-function-pointer>;
-  constant slot atkselectioniface-ref-selection :: <C-function-pointer>;
-  constant slot atkselectioniface-get-selection-count :: <C-function-pointer>;
-  constant slot atkselectioniface-is-child-selected :: <C-function-pointer>;
-  constant slot atkselectioniface-remove-selection :: <C-function-pointer>;
-  constant slot atkselectioniface-select-all-selection :: <C-function-pointer>;
-  constant slot atkselectioniface-selection-changed :: <C-function-pointer>;
-  constant slot atkselectioniface-pad1 :: <C-function-pointer>;
-  constant slot atkselectioniface-pad2 :: <C-function-pointer>;
+  constant slot atk-selection-iface-parent :: <GTypeInterface>;
+  constant slot atk-selection-iface-add-selection :: <C-function-pointer>;
+  constant slot atk-selection-iface-clear-selection :: <C-function-pointer>;
+  constant slot atk-selection-iface-ref-selection :: <C-function-pointer>;
+  constant slot atk-selection-iface-get-selection-count :: <C-function-pointer>;
+  constant slot atk-selection-iface-is-child-selected :: <C-function-pointer>;
+  constant slot atk-selection-iface-remove-selection :: <C-function-pointer>;
+  constant slot atk-selection-iface-select-all-selection :: <C-function-pointer>;
+  constant slot atk-selection-iface-selection-changed :: <C-function-pointer>;
+  constant slot atk-selection-iface-pad1 :: <C-function-pointer>;
+  constant slot atk-selection-iface-pad2 :: <C-function-pointer>;
   pointer-type-name: <AtkSelectionIface>;
 end C-struct;
 
 define open C-subtype <AtkSocket> (<AtkObject>)
-  constant slot atksocket-parent :: <AtkObject>;
-  constant slot atksocket-embedded-plug-id :: <C-string>;
+  constant slot atk-socket-parent :: <AtkObject>;
+  constant slot atk-socket-embedded-plug-id :: <C-string>;
 end C-subtype;
 
 define C-pointer-type <AtkSocket*> => <AtkSocket>;
@@ -1292,13 +1257,13 @@ define C-function atk-socket-is-occupied
 end;
 
 define C-struct <_AtkSocketClass>
-  constant slot atksocketclass-parent-class :: <AtkObjectClass>;
-  constant slot atksocketclass-embed :: <C-function-pointer>;
+  constant slot atk-socket-class-parent-class :: <AtkObjectClass>;
+  constant slot atk-socket-class-embed :: <C-function-pointer>;
   pointer-type-name: <AtkSocketClass>;
 end C-struct;
 
 define open C-subtype <AtkStateSet> (<GObject>)
-  constant slot atkstateset-parent :: <GObject>;
+  constant slot atk-state-set-parent :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <AtkStateSet*> => <AtkStateSet>;
@@ -1377,50 +1342,50 @@ define C-function atk-state-set-xor-sets
 end;
 
 define C-struct <_AtkStateSetClass>
-  constant slot atkstatesetclass-parent :: <GObjectClass>;
+  constant slot atk-state-set-class-parent :: <GObjectClass>;
   pointer-type-name: <AtkStateSetClass>;
 end C-struct;
 
-define constant $ATK-STATE-INVALID = 0;
-define constant $ATK-STATE-ACTIVE = 1;
-define constant $ATK-STATE-ARMED = 2;
-define constant $ATK-STATE-BUSY = 3;
-define constant $ATK-STATE-CHECKED = 4;
-define constant $ATK-STATE-DEFUNCT = 5;
-define constant $ATK-STATE-EDITABLE = 6;
-define constant $ATK-STATE-ENABLED = 7;
-define constant $ATK-STATE-EXPANDABLE = 8;
-define constant $ATK-STATE-EXPANDED = 9;
-define constant $ATK-STATE-FOCUSABLE = 10;
-define constant $ATK-STATE-FOCUSED = 11;
-define constant $ATK-STATE-HORIZONTAL = 12;
-define constant $ATK-STATE-ICONIFIED = 13;
-define constant $ATK-STATE-MODAL = 14;
-define constant $ATK-STATE-MULTI-LINE = 15;
-define constant $ATK-STATE-MULTISELECTABLE = 16;
-define constant $ATK-STATE-OPAQUE = 17;
-define constant $ATK-STATE-PRESSED = 18;
-define constant $ATK-STATE-RESIZABLE = 19;
-define constant $ATK-STATE-SELECTABLE = 20;
-define constant $ATK-STATE-SELECTED = 21;
-define constant $ATK-STATE-SENSITIVE = 22;
-define constant $ATK-STATE-SHOWING = 23;
-define constant $ATK-STATE-SINGLE-LINE = 24;
-define constant $ATK-STATE-STALE = 25;
-define constant $ATK-STATE-TRANSIENT = 26;
-define constant $ATK-STATE-VERTICAL = 27;
-define constant $ATK-STATE-VISIBLE = 28;
-define constant $ATK-STATE-MANAGES-DESCENDANTS = 29;
-define constant $ATK-STATE-INDETERMINATE = 30;
-define constant $ATK-STATE-TRUNCATED = 31;
-define constant $ATK-STATE-REQUIRED = 32;
-define constant $ATK-STATE-INVALID-ENTRY = 33;
-define constant $ATK-STATE-SUPPORTS-AUTOCOMPLETION = 34;
-define constant $ATK-STATE-SELECTABLE-TEXT = 35;
-define constant $ATK-STATE-DEFAULT = 36;
-define constant $ATK-STATE-ANIMATED = 37;
-define constant $ATK-STATE-VISITED = 38;
-define constant $ATK-STATE-LAST-DEFINED = 39;
+define constant $atk-state-invalid = 0;
+define constant $atk-state-active = 1;
+define constant $atk-state-armed = 2;
+define constant $atk-state-busy = 3;
+define constant $atk-state-checked = 4;
+define constant $atk-state-defunct = 5;
+define constant $atk-state-editable = 6;
+define constant $atk-state-enabled = 7;
+define constant $atk-state-expandable = 8;
+define constant $atk-state-expanded = 9;
+define constant $atk-state-focusable = 10;
+define constant $atk-state-focused = 11;
+define constant $atk-state-horizontal = 12;
+define constant $atk-state-iconified = 13;
+define constant $atk-state-modal = 14;
+define constant $atk-state-multi-line = 15;
+define constant $atk-state-multiselectable = 16;
+define constant $atk-state-opaque = 17;
+define constant $atk-state-pressed = 18;
+define constant $atk-state-resizable = 19;
+define constant $atk-state-selectable = 20;
+define constant $atk-state-selected = 21;
+define constant $atk-state-sensitive = 22;
+define constant $atk-state-showing = 23;
+define constant $atk-state-single-line = 24;
+define constant $atk-state-stale = 25;
+define constant $atk-state-transient = 26;
+define constant $atk-state-vertical = 27;
+define constant $atk-state-visible = 28;
+define constant $atk-state-manages-descendants = 29;
+define constant $atk-state-indeterminate = 30;
+define constant $atk-state-truncated = 31;
+define constant $atk-state-required = 32;
+define constant $atk-state-invalid-entry = 33;
+define constant $atk-state-supports-autocompletion = 34;
+define constant $atk-state-selectable-text = 35;
+define constant $atk-state-default = 36;
+define constant $atk-state-animated = 37;
+define constant $atk-state-visited = 38;
+define constant $atk-state-last-defined = 39;
 define constant <AtkStateType> = <C-int>;
 define C-pointer-type <AtkStateType*> => <AtkStateType>;
 
@@ -1458,14 +1423,14 @@ define C-function atk-streamable-content-get-uri
 end;
 
 define C-struct <_AtkStreamableContentIface>
-  constant slot atkstreamablecontentiface-parent :: <GTypeInterface>;
-  constant slot atkstreamablecontentiface-get-n-mime-types :: <C-function-pointer>;
-  constant slot atkstreamablecontentiface-get-mime-type :: <C-function-pointer>;
-  constant slot atkstreamablecontentiface-get-stream :: <C-function-pointer>;
-  constant slot atkstreamablecontentiface-get-uri :: <C-function-pointer>;
-  constant slot atkstreamablecontentiface-pad1 :: <C-function-pointer>;
-  constant slot atkstreamablecontentiface-pad2 :: <C-function-pointer>;
-  constant slot atkstreamablecontentiface-pad3 :: <C-function-pointer>;
+  constant slot atk-streamable-content-iface-parent :: <GTypeInterface>;
+  constant slot atk-streamable-content-iface-get-n-mime-types :: <C-function-pointer>;
+  constant slot atk-streamable-content-iface-get-mime-type :: <C-function-pointer>;
+  constant slot atk-streamable-content-iface-get-stream :: <C-function-pointer>;
+  constant slot atk-streamable-content-iface-get-uri :: <C-function-pointer>;
+  constant slot atk-streamable-content-iface-pad1 :: <C-function-pointer>;
+  constant slot atk-streamable-content-iface-pad2 :: <C-function-pointer>;
+  constant slot atk-streamable-content-iface-pad3 :: <C-function-pointer>;
   pointer-type-name: <AtkStreamableContentIface>;
 end C-struct;
 
@@ -1678,47 +1643,47 @@ define C-function atk-table-set-summary
 end;
 
 define C-struct <_AtkTableIface>
-  constant slot atktableiface-parent :: <GTypeInterface>;
-  constant slot atktableiface-ref-at :: <C-function-pointer>;
-  constant slot atktableiface-get-index-at :: <C-function-pointer>;
-  constant slot atktableiface-get-column-at-index :: <C-function-pointer>;
-  constant slot atktableiface-get-row-at-index :: <C-function-pointer>;
-  constant slot atktableiface-get-n-columns :: <C-function-pointer>;
-  constant slot atktableiface-get-n-rows :: <C-function-pointer>;
-  constant slot atktableiface-get-column-extent-at :: <C-function-pointer>;
-  constant slot atktableiface-get-row-extent-at :: <C-function-pointer>;
-  constant slot atktableiface-get-caption :: <C-function-pointer>;
-  constant slot atktableiface-get-column-description :: <C-function-pointer>;
-  constant slot atktableiface-get-column-header :: <C-function-pointer>;
-  constant slot atktableiface-get-row-description :: <C-function-pointer>;
-  constant slot atktableiface-get-row-header :: <C-function-pointer>;
-  constant slot atktableiface-get-summary :: <C-function-pointer>;
-  constant slot atktableiface-set-caption :: <C-function-pointer>;
-  constant slot atktableiface-set-column-description :: <C-function-pointer>;
-  constant slot atktableiface-set-column-header :: <C-function-pointer>;
-  constant slot atktableiface-set-row-description :: <C-function-pointer>;
-  constant slot atktableiface-set-row-header :: <C-function-pointer>;
-  constant slot atktableiface-set-summary :: <C-function-pointer>;
-  constant slot atktableiface-get-selected-columns :: <C-function-pointer>;
-  constant slot atktableiface-get-selected-rows :: <C-function-pointer>;
-  constant slot atktableiface-is-column-selected :: <C-function-pointer>;
-  constant slot atktableiface-is-row-selected :: <C-function-pointer>;
-  constant slot atktableiface-is-selected :: <C-function-pointer>;
-  constant slot atktableiface-add-row-selection :: <C-function-pointer>;
-  constant slot atktableiface-remove-row-selection :: <C-function-pointer>;
-  constant slot atktableiface-add-column-selection :: <C-function-pointer>;
-  constant slot atktableiface-remove-column-selection :: <C-function-pointer>;
-  constant slot atktableiface-row-inserted :: <C-function-pointer>;
-  constant slot atktableiface-column-inserted :: <C-function-pointer>;
-  constant slot atktableiface-row-deleted :: <C-function-pointer>;
-  constant slot atktableiface-column-deleted :: <C-function-pointer>;
-  constant slot atktableiface-row-reordered :: <C-function-pointer>;
-  constant slot atktableiface-column-reordered :: <C-function-pointer>;
-  constant slot atktableiface-model-changed :: <C-function-pointer>;
-  constant slot atktableiface-pad1 :: <C-function-pointer>;
-  constant slot atktableiface-pad2 :: <C-function-pointer>;
-  constant slot atktableiface-pad3 :: <C-function-pointer>;
-  constant slot atktableiface-pad4 :: <C-function-pointer>;
+  constant slot atk-table-iface-parent :: <GTypeInterface>;
+  constant slot atk-table-iface-ref-at :: <C-function-pointer>;
+  constant slot atk-table-iface-get-index-at :: <C-function-pointer>;
+  constant slot atk-table-iface-get-column-at-index :: <C-function-pointer>;
+  constant slot atk-table-iface-get-row-at-index :: <C-function-pointer>;
+  constant slot atk-table-iface-get-n-columns :: <C-function-pointer>;
+  constant slot atk-table-iface-get-n-rows :: <C-function-pointer>;
+  constant slot atk-table-iface-get-column-extent-at :: <C-function-pointer>;
+  constant slot atk-table-iface-get-row-extent-at :: <C-function-pointer>;
+  constant slot atk-table-iface-get-caption :: <C-function-pointer>;
+  constant slot atk-table-iface-get-column-description :: <C-function-pointer>;
+  constant slot atk-table-iface-get-column-header :: <C-function-pointer>;
+  constant slot atk-table-iface-get-row-description :: <C-function-pointer>;
+  constant slot atk-table-iface-get-row-header :: <C-function-pointer>;
+  constant slot atk-table-iface-get-summary :: <C-function-pointer>;
+  constant slot atk-table-iface-set-caption :: <C-function-pointer>;
+  constant slot atk-table-iface-set-column-description :: <C-function-pointer>;
+  constant slot atk-table-iface-set-column-header :: <C-function-pointer>;
+  constant slot atk-table-iface-set-row-description :: <C-function-pointer>;
+  constant slot atk-table-iface-set-row-header :: <C-function-pointer>;
+  constant slot atk-table-iface-set-summary :: <C-function-pointer>;
+  constant slot atk-table-iface-get-selected-columns :: <C-function-pointer>;
+  constant slot atk-table-iface-get-selected-rows :: <C-function-pointer>;
+  constant slot atk-table-iface-is-column-selected :: <C-function-pointer>;
+  constant slot atk-table-iface-is-row-selected :: <C-function-pointer>;
+  constant slot atk-table-iface-is-selected :: <C-function-pointer>;
+  constant slot atk-table-iface-add-row-selection :: <C-function-pointer>;
+  constant slot atk-table-iface-remove-row-selection :: <C-function-pointer>;
+  constant slot atk-table-iface-add-column-selection :: <C-function-pointer>;
+  constant slot atk-table-iface-remove-column-selection :: <C-function-pointer>;
+  constant slot atk-table-iface-row-inserted :: <C-function-pointer>;
+  constant slot atk-table-iface-column-inserted :: <C-function-pointer>;
+  constant slot atk-table-iface-row-deleted :: <C-function-pointer>;
+  constant slot atk-table-iface-column-deleted :: <C-function-pointer>;
+  constant slot atk-table-iface-row-reordered :: <C-function-pointer>;
+  constant slot atk-table-iface-column-reordered :: <C-function-pointer>;
+  constant slot atk-table-iface-model-changed :: <C-function-pointer>;
+  constant slot atk-table-iface-pad1 :: <C-function-pointer>;
+  constant slot atk-table-iface-pad2 :: <C-function-pointer>;
+  constant slot atk-table-iface-pad3 :: <C-function-pointer>;
+  constant slot atk-table-iface-pad4 :: <C-function-pointer>;
   pointer-type-name: <AtkTableIface>;
 end C-struct;
 
@@ -1890,115 +1855,115 @@ define C-function atk-text-set-selection
   c-name: "atk_text_set_selection";
 end;
 
-define constant $ATK-TEXT-ATTR-INVALID = 0;
-define constant $ATK-TEXT-ATTR-LEFT-MARGIN = 1;
-define constant $ATK-TEXT-ATTR-RIGHT-MARGIN = 2;
-define constant $ATK-TEXT-ATTR-INDENT = 3;
-define constant $ATK-TEXT-ATTR-INVISIBLE = 4;
-define constant $ATK-TEXT-ATTR-EDITABLE = 5;
-define constant $ATK-TEXT-ATTR-PIXELS-ABOVE-LINES = 6;
-define constant $ATK-TEXT-ATTR-PIXELS-BELOW-LINES = 7;
-define constant $ATK-TEXT-ATTR-PIXELS-INSIDE-WRAP = 8;
-define constant $ATK-TEXT-ATTR-BG-FULL-HEIGHT = 9;
-define constant $ATK-TEXT-ATTR-RISE = 10;
-define constant $ATK-TEXT-ATTR-UNDERLINE = 11;
-define constant $ATK-TEXT-ATTR-STRIKETHROUGH = 12;
-define constant $ATK-TEXT-ATTR-SIZE = 13;
-define constant $ATK-TEXT-ATTR-SCALE = 14;
-define constant $ATK-TEXT-ATTR-WEIGHT = 15;
-define constant $ATK-TEXT-ATTR-LANGUAGE = 16;
-define constant $ATK-TEXT-ATTR-FAMILY-NAME = 17;
-define constant $ATK-TEXT-ATTR-BG-COLOR = 18;
-define constant $ATK-TEXT-ATTR-FG-COLOR = 19;
-define constant $ATK-TEXT-ATTR-BG-STIPPLE = 20;
-define constant $ATK-TEXT-ATTR-FG-STIPPLE = 21;
-define constant $ATK-TEXT-ATTR-WRAP-MODE = 22;
-define constant $ATK-TEXT-ATTR-DIRECTION = 23;
-define constant $ATK-TEXT-ATTR-JUSTIFICATION = 24;
-define constant $ATK-TEXT-ATTR-STRETCH = 25;
-define constant $ATK-TEXT-ATTR-VARIANT = 26;
-define constant $ATK-TEXT-ATTR-STYLE = 27;
-define constant $ATK-TEXT-ATTR-LAST-DEFINED = 28;
+define constant $atk-text-attr-invalid = 0;
+define constant $atk-text-attr-left-margin = 1;
+define constant $atk-text-attr-right-margin = 2;
+define constant $atk-text-attr-indent = 3;
+define constant $atk-text-attr-invisible = 4;
+define constant $atk-text-attr-editable = 5;
+define constant $atk-text-attr-pixels-above-lines = 6;
+define constant $atk-text-attr-pixels-below-lines = 7;
+define constant $atk-text-attr-pixels-inside-wrap = 8;
+define constant $atk-text-attr-bg-full-height = 9;
+define constant $atk-text-attr-rise = 10;
+define constant $atk-text-attr-underline = 11;
+define constant $atk-text-attr-strikethrough = 12;
+define constant $atk-text-attr-size = 13;
+define constant $atk-text-attr-scale = 14;
+define constant $atk-text-attr-weight = 15;
+define constant $atk-text-attr-language = 16;
+define constant $atk-text-attr-family-name = 17;
+define constant $atk-text-attr-bg-color = 18;
+define constant $atk-text-attr-fg-color = 19;
+define constant $atk-text-attr-bg-stipple = 20;
+define constant $atk-text-attr-fg-stipple = 21;
+define constant $atk-text-attr-wrap-mode = 22;
+define constant $atk-text-attr-direction = 23;
+define constant $atk-text-attr-justification = 24;
+define constant $atk-text-attr-stretch = 25;
+define constant $atk-text-attr-variant = 26;
+define constant $atk-text-attr-style = 27;
+define constant $atk-text-attr-last-defined = 28;
 define constant <AtkTextAttribute> = <C-int>;
 define C-pointer-type <AtkTextAttribute*> => <AtkTextAttribute>;
 
-define constant $ATK-TEXT-BOUNDARY-CHAR = 0;
-define constant $ATK-TEXT-BOUNDARY-WORD-START = 1;
-define constant $ATK-TEXT-BOUNDARY-WORD-END = 2;
-define constant $ATK-TEXT-BOUNDARY-SENTENCE-START = 3;
-define constant $ATK-TEXT-BOUNDARY-SENTENCE-END = 4;
-define constant $ATK-TEXT-BOUNDARY-LINE-START = 5;
-define constant $ATK-TEXT-BOUNDARY-LINE-END = 6;
+define constant $atk-text-boundary-char = 0;
+define constant $atk-text-boundary-word-start = 1;
+define constant $atk-text-boundary-word-end = 2;
+define constant $atk-text-boundary-sentence-start = 3;
+define constant $atk-text-boundary-sentence-end = 4;
+define constant $atk-text-boundary-line-start = 5;
+define constant $atk-text-boundary-line-end = 6;
 define constant <AtkTextBoundary> = <C-int>;
 define C-pointer-type <AtkTextBoundary*> => <AtkTextBoundary>;
 
-define constant $ATK-TEXT-CLIP-NONE = 0;
-define constant $ATK-TEXT-CLIP-MIN = 1;
-define constant $ATK-TEXT-CLIP-MAX = 2;
-define constant $ATK-TEXT-CLIP-BOTH = 3;
+define constant $atk-text-clip-none = 0;
+define constant $atk-text-clip-min = 1;
+define constant $atk-text-clip-max = 2;
+define constant $atk-text-clip-both = 3;
 define constant <AtkTextClipType> = <C-int>;
 define C-pointer-type <AtkTextClipType*> => <AtkTextClipType>;
 
 define C-struct <_AtkTextIface>
-  constant slot atktextiface-parent :: <GTypeInterface>;
-  constant slot atktextiface-get-text :: <C-function-pointer>;
-  constant slot atktextiface-get-text-after-offset :: <C-function-pointer>;
-  constant slot atktextiface-get-text-at-offset :: <C-function-pointer>;
-  constant slot atktextiface-get-character-at-offset :: <C-function-pointer>;
-  constant slot atktextiface-get-text-before-offset :: <C-function-pointer>;
-  constant slot atktextiface-get-caret-offset :: <C-function-pointer>;
-  constant slot atktextiface-get-run-attributes :: <C-function-pointer>;
-  constant slot atktextiface-get-default-attributes :: <C-function-pointer>;
-  constant slot atktextiface-get-character-extents :: <C-function-pointer>;
-  constant slot atktextiface-get-character-count :: <C-function-pointer>;
-  constant slot atktextiface-get-offset-at-point :: <C-function-pointer>;
-  constant slot atktextiface-get-n-selections :: <C-function-pointer>;
-  constant slot atktextiface-get-selection :: <C-function-pointer>;
-  constant slot atktextiface-add-selection :: <C-function-pointer>;
-  constant slot atktextiface-remove-selection :: <C-function-pointer>;
-  constant slot atktextiface-set-selection :: <C-function-pointer>;
-  constant slot atktextiface-set-caret-offset :: <C-function-pointer>;
-  constant slot atktextiface-text-changed :: <C-function-pointer>;
-  constant slot atktextiface-text-caret-moved :: <C-function-pointer>;
-  constant slot atktextiface-text-selection-changed :: <C-function-pointer>;
-  constant slot atktextiface-text-attributes-changed :: <C-function-pointer>;
-  constant slot atktextiface-get-range-extents :: <C-function-pointer>;
-  constant slot atktextiface-get-bounded-ranges :: <C-function-pointer>;
-  constant slot atktextiface-pad4 :: <C-function-pointer>;
+  constant slot atk-text-iface-parent :: <GTypeInterface>;
+  constant slot atk-text-iface-get-text :: <C-function-pointer>;
+  constant slot atk-text-iface-get-text-after-offset :: <C-function-pointer>;
+  constant slot atk-text-iface-get-text-at-offset :: <C-function-pointer>;
+  constant slot atk-text-iface-get-character-at-offset :: <C-function-pointer>;
+  constant slot atk-text-iface-get-text-before-offset :: <C-function-pointer>;
+  constant slot atk-text-iface-get-caret-offset :: <C-function-pointer>;
+  constant slot atk-text-iface-get-run-attributes :: <C-function-pointer>;
+  constant slot atk-text-iface-get-default-attributes :: <C-function-pointer>;
+  constant slot atk-text-iface-get-character-extents :: <C-function-pointer>;
+  constant slot atk-text-iface-get-character-count :: <C-function-pointer>;
+  constant slot atk-text-iface-get-offset-at-point :: <C-function-pointer>;
+  constant slot atk-text-iface-get-n-selections :: <C-function-pointer>;
+  constant slot atk-text-iface-get-selection :: <C-function-pointer>;
+  constant slot atk-text-iface-add-selection :: <C-function-pointer>;
+  constant slot atk-text-iface-remove-selection :: <C-function-pointer>;
+  constant slot atk-text-iface-set-selection :: <C-function-pointer>;
+  constant slot atk-text-iface-set-caret-offset :: <C-function-pointer>;
+  constant slot atk-text-iface-text-changed :: <C-function-pointer>;
+  constant slot atk-text-iface-text-caret-moved :: <C-function-pointer>;
+  constant slot atk-text-iface-text-selection-changed :: <C-function-pointer>;
+  constant slot atk-text-iface-text-attributes-changed :: <C-function-pointer>;
+  constant slot atk-text-iface-get-range-extents :: <C-function-pointer>;
+  constant slot atk-text-iface-get-bounded-ranges :: <C-function-pointer>;
+  constant slot atk-text-iface-pad4 :: <C-function-pointer>;
   pointer-type-name: <AtkTextIface>;
 end C-struct;
 
 define C-struct <_AtkTextRange>
-  slot atktextrange-bounds :: <AtkTextRectangle>;
-  slot atktextrange-start-offset :: <C-signed-int>;
-  slot atktextrange-end-offset :: <C-signed-int>;
-  slot atktextrange-content :: <C-string>;
+  slot atk-text-range-bounds :: <AtkTextRectangle>;
+  slot atk-text-range-start-offset :: <C-signed-int>;
+  slot atk-text-range-end-offset :: <C-signed-int>;
+  slot atk-text-range-content :: <C-string>;
   pointer-type-name: <AtkTextRange>;
 end C-struct;
 
 define C-struct <_AtkTextRectangle>
-  slot atktextrectangle-x :: <C-signed-int>;
-  slot atktextrectangle-y :: <C-signed-int>;
-  slot atktextrectangle-width :: <C-signed-int>;
-  slot atktextrectangle-height :: <C-signed-int>;
+  slot atk-text-rectangle-x :: <C-signed-int>;
+  slot atk-text-rectangle-y :: <C-signed-int>;
+  slot atk-text-rectangle-width :: <C-signed-int>;
+  slot atk-text-rectangle-height :: <C-signed-int>;
   pointer-type-name: <AtkTextRectangle>;
 end C-struct;
 
 define open C-subtype <AtkUtil> (<GObject>)
-  constant slot atkutil-parent :: <GObject>;
+  constant slot atk-util-parent :: <GObject>;
 end C-subtype;
 
 define C-pointer-type <AtkUtil*> => <AtkUtil>;
 
 define C-struct <_AtkUtilClass>
-  constant slot atkutilclass-parent :: <GObjectClass>;
-  constant slot atkutilclass-add-global-event-listener :: <C-void*>;
-  constant slot atkutilclass-remove-global-event-listener :: <C-function-pointer>;
-  constant slot atkutilclass-add-key-event-listener :: <C-void*>;
-  constant slot atkutilclass-remove-key-event-listener :: <C-function-pointer>;
-  constant slot atkutilclass-get-root :: <C-void*>;
-  constant slot atkutilclass-get-toolkit-name :: <C-function-pointer>;
-  constant slot atkutilclass-get-toolkit-version :: <C-function-pointer>;
+  constant slot atk-util-class-parent :: <GObjectClass>;
+  constant slot atk-util-class-add-global-event-listener :: <C-void*>;
+  constant slot atk-util-class-remove-global-event-listener :: <C-function-pointer>;
+  constant slot atk-util-class-add-key-event-listener :: <C-void*>;
+  constant slot atk-util-class-remove-key-event-listener :: <C-function-pointer>;
+  constant slot atk-util-class-get-root :: <C-void*>;
+  constant slot atk-util-class-get-toolkit-name :: <C-function-pointer>;
+  constant slot atk-util-class-get-toolkit-version :: <C-function-pointer>;
   pointer-type-name: <AtkUtilClass>;
 end C-struct;
 
@@ -2040,13 +2005,13 @@ define C-function atk-value-set-current-value
 end;
 
 define C-struct <_AtkValueIface>
-  constant slot atkvalueiface-parent :: <GTypeInterface>;
-  constant slot atkvalueiface-get-current-value :: <C-function-pointer>;
-  constant slot atkvalueiface-get-maximum-value :: <C-function-pointer>;
-  constant slot atkvalueiface-get-minimum-value :: <C-function-pointer>;
-  constant slot atkvalueiface-set-current-value :: <C-function-pointer>;
-  constant slot atkvalueiface-get-minimum-increment :: <C-function-pointer>;
-  constant slot atkvalueiface-pad1 :: <C-function-pointer>;
+  constant slot atk-value-iface-parent :: <GTypeInterface>;
+  constant slot atk-value-iface-get-current-value :: <C-function-pointer>;
+  constant slot atk-value-iface-get-maximum-value :: <C-function-pointer>;
+  constant slot atk-value-iface-get-minimum-value :: <C-function-pointer>;
+  constant slot atk-value-iface-set-current-value :: <C-function-pointer>;
+  constant slot atk-value-iface-get-minimum-increment :: <C-function-pointer>;
+  constant slot atk-value-iface-pad1 :: <C-function-pointer>;
   pointer-type-name: <AtkValueIface>;
 end C-struct;
 
@@ -2057,27 +2022,27 @@ end C-subtype;
 define C-pointer-type <AtkWindow*> => <AtkWindow>;
 
 define C-struct <_AtkWindowIface>
-  constant slot atkwindowiface-parent :: <GTypeInterface>;
-  constant slot atkwindowiface--padding-dummy :: <C-void*>;
+  constant slot atk-window-iface-parent :: <GTypeInterface>;
+  constant slot atk-window-iface-_padding-dummy :: <C-void*>;
   pointer-type-name: <AtkWindowIface>;
 end C-struct;
 
 define C-struct <_Atk_PropertyValues>
-  slot atk-propertyvalues-property-name :: <C-string>;
-  slot atk-propertyvalues-old-value :: <GValue>;
-  slot atk-propertyvalues-new-value :: <GValue>;
+  slot atk-_property-values-property-name :: <C-string>;
+  slot atk-_property-values-old-value :: <GValue>;
+  slot atk-_property-values-new-value :: <GValue>;
   pointer-type-name: <Atk_PropertyValues>;
 end C-struct;
 
 define C-struct <_Atk_Registry>
-  slot atk-registry-parent :: <GObject>;
-  slot atk-registry-factory-type-registry :: <GHashTable>;
-  slot atk-registry-factory-singleton-cache :: <GHashTable>;
+  slot atk-_registry-parent :: <GObject>;
+  slot atk-_registry-factory-type-registry :: <GHashTable>;
+  slot atk-_registry-factory-singleton-cache :: <GHashTable>;
   pointer-type-name: <Atk_Registry>;
 end C-struct;
 
 define C-struct <_Atk_RegistryClass>
-  slot atk-registryclass-parent-class :: <GObjectClass>;
+  slot atk-_registry-class-parent-class :: <GObjectClass>;
   pointer-type-name: <Atk_RegistryClass>;
 end C-struct;
 

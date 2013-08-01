@@ -45,7 +45,7 @@ define C-struct <_XWindowAttributes>
   pointer-type-name: <XWindowAttributes>;
 end C-struct;
 
-define C-function XOpenDisplay
+define C-function x-open-display
   c-name: "XOpenDisplay";
 end;
 

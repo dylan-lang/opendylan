@@ -25,9 +25,9 @@ define C-struct <_cairoRegion>
   pointer-type-name: <cairoRegion>;
 end C-struct;
 
-define constant $CAIRO-CONTENT-COLOR = 4096;
-define constant $CAIRO-CONTENT-ALPHA = 8192;
-define constant $CAIRO-CONTENT-COLOR-ALPHA = 12288;
+define constant $cairo-content-color = 4096;
+define constant $cairo-content-alpha = 8192;
+define constant $cairo-content-color-alpha = 12288;
 define constant <cairoContent> = <C-int>;
 define C-pointer-type <cairoContent*> => <cairoContent>;
 
@@ -52,10 +52,10 @@ define C-struct <_cairoPath>
 end C-struct;
 
 define C-struct <_cairoRectangleInt>
-  slot cairorectangleint-x :: <C-signed-int>;
-  slot cairorectangleint-y :: <C-signed-int>;
-  slot cairorectangleint-width :: <C-signed-int>;
-  slot cairorectangleint-height :: <C-signed-int>;
+  slot cairo-rectangle-int-x :: <C-signed-int>;
+  slot cairo-rectangle-int-y :: <C-signed-int>;
+  slot cairo-rectangle-int-width :: <C-signed-int>;
+  slot cairo-rectangle-int-height :: <C-signed-int>;
   pointer-type-name: <cairoRectangleInt>;
 end C-struct;
 

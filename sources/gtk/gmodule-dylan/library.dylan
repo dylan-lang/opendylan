@@ -21,9 +21,9 @@ define module gmodule
   export
     <GModuleFlags*>,
     <GModuleFlags>,
-    $G-MODULE-BIND-MASK,
-    $G-MODULE-BIND-LOCAL,
-    $G-MODULE-BIND-LAZY,
+    $g-module-bind-mask,
+    $g-module-bind-local,
+    $g-module-bind-lazy,
     g-module-supported,
     g-module-error,
     g-module-build-path,

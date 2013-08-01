@@ -5,52 +5,36 @@ copyright: See LICENSE file in this distribution.
 
 define C-pointer-type <C-void**> => <C-void*>;
 
-define constant $GDK-COLORSPACE-RGB = 0;
+define constant $gdk-colorspace-rgb = 0;
 define constant <GdkColorspace> = <C-int>;
 define C-pointer-type <GdkColorspace*> => <GdkColorspace>;
 
-define constant $GDK-INTERP-NEAREST = 0;
-define constant $GDK-INTERP-TILES = 1;
-define constant $GDK-INTERP-BILINEAR = 2;
-define constant $GDK-INTERP-HYPER = 3;
+define constant $gdk-interp-nearest = 0;
+define constant $gdk-interp-tiles = 1;
+define constant $gdk-interp-bilinear = 2;
+define constant $gdk-interp-hyper = 3;
 define constant <GdkInterpType> = <C-int>;
 define C-pointer-type <GdkInterpType*> => <GdkInterpType>;
 
-define constant $PIXBUF-FEATURES-H = 1;
+define constant $pixbuf-features-h = 1;
 
-define constant $PIXBUF-MAGIC-NUMBER = 1197763408;
+define constant $pixbuf-magic-number = 1197763408;
 
-define constant $PIXBUF-MAJOR = 2;
+define constant $pixbuf-major = 2;
 
-define constant $PIXBUF-MICRO = 2;
+define constant $pixbuf-micro = 2;
 
-define constant $PIXBUF-MINOR = 28;
+define constant $pixbuf-minor = 28;
 
-define constant $PIXBUF-VERSION = "2.28.2";
+define constant $pixbuf-version = "2.28.2";
 
-define constant $PIXDATA-HEADER-LENGTH = 24;
+define constant $pixdata-header-length = 24;
 
 define open C-subtype <GdkPixbuf> (<GObject>)
 end C-subtype;
 
 define C-pointer-type <GdkPixbuf*> => <GdkPixbuf>;
 
-define property-getter pixbuf-bits-per-sample :: <C-signed-int> on <GdkPixbuf> end;
-define property-setter pixbuf-bits-per-sample :: <C-signed-int> on <GdkPixbuf> end;
-define property-getter pixbuf-colorspace :: <GdkColorspace> on <GdkPixbuf> end;
-define property-setter pixbuf-colorspace :: <GdkColorspace> on <GdkPixbuf> end;
-define property-getter pixbuf-has-alpha :: <C-boolean> on <GdkPixbuf> end;
-define property-setter pixbuf-has-alpha :: <C-boolean> on <GdkPixbuf> end;
-define property-getter pixbuf-height :: <C-signed-int> on <GdkPixbuf> end;
-define property-setter pixbuf-height :: <C-signed-int> on <GdkPixbuf> end;
-define property-getter pixbuf-n-channels :: <C-signed-int> on <GdkPixbuf> end;
-define property-setter pixbuf-n-channels :: <C-signed-int> on <GdkPixbuf> end;
-define property-getter pixbuf-pixels :: <C-void*> on <GdkPixbuf> end;
-define property-setter pixbuf-pixels :: <C-void*> on <GdkPixbuf> end;
-define property-getter pixbuf-rowstride :: <C-signed-int> on <GdkPixbuf> end;
-define property-setter pixbuf-rowstride :: <C-signed-int> on <GdkPixbuf> end;
-define property-getter pixbuf-width :: <C-signed-int> on <GdkPixbuf> end;
-define property-setter pixbuf-width :: <C-signed-int> on <GdkPixbuf> end;
 define C-function gdk-pixbuf-new
   input parameter colorspace_ :: <GdkColorspace>;
   input parameter has_alpha_ :: <C-boolean>;
@@ -441,8 +425,8 @@ define C-function gdk-pixbuf-scale-simple
   c-name: "gdk_pixbuf_scale_simple";
 end;
 
-define constant $GDK-PIXBUF-ALPHA-BILEVEL = 0;
-define constant $GDK-PIXBUF-ALPHA-FULL = 1;
+define constant $gdk-pixbuf-alpha-bilevel = 0;
+define constant $gdk-pixbuf-alpha-full = 1;
 define constant <GdkPixbufAlphaMode> = <C-int>;
 define C-pointer-type <GdkPixbufAlphaMode*> => <GdkPixbufAlphaMode>;
 
@@ -545,12 +529,12 @@ define C-function gdk-pixbuf-animation-iter-on-currently-loading-frame
   c-name: "gdk_pixbuf_animation_iter_on_currently_loading_frame";
 end;
 
-define constant $GDK-PIXBUF-ERROR-CORRUPT-IMAGE = 0;
-define constant $GDK-PIXBUF-ERROR-INSUFFICIENT-MEMORY = 1;
-define constant $GDK-PIXBUF-ERROR-BAD-OPTION = 2;
-define constant $GDK-PIXBUF-ERROR-UNKNOWN-TYPE = 3;
-define constant $GDK-PIXBUF-ERROR-UNSUPPORTED-OPERATION = 4;
-define constant $GDK-PIXBUF-ERROR-FAILED = 5;
+define constant $gdk-pixbuf-error-corrupt-image = 0;
+define constant $gdk-pixbuf-error-insufficient-memory = 1;
+define constant $gdk-pixbuf-error-bad-option = 2;
+define constant $gdk-pixbuf-error-unknown-type = 3;
+define constant $gdk-pixbuf-error-unsupported-operation = 4;
+define constant $gdk-pixbuf-error-failed = 5;
 define constant <GdkPixbufError> = <C-int>;
 define C-pointer-type <GdkPixbufError*> => <GdkPixbufError>;
 
@@ -624,8 +608,8 @@ define C-function gdk-pixbuf-format-set-disabled
 end;
 
 define open C-subtype <GdkPixbufLoader> (<GObject>)
-  constant slot gdkpixbufloader-parent-instance :: <GObject>;
-  constant slot gdkpixbufloader-priv :: <C-void*>;
+  constant slot gdk-pixbuf-loader-parent-instance :: <GObject>;
+  constant slot gdk-pixbuf-loader-priv :: <C-void*>;
 end C-subtype;
 
 define C-pointer-type <GdkPixbufLoader*> => <GdkPixbufLoader>;
@@ -687,18 +671,18 @@ define C-function gdk-pixbuf-loader-write
 end;
 
 define C-struct <_GdkPixbufLoaderClass>
-  constant slot gdkpixbufloaderclass-parent-class :: <GObjectClass>;
-  constant slot gdkpixbufloaderclass-size-prepared :: <C-function-pointer>;
-  constant slot gdkpixbufloaderclass-area-prepared :: <C-function-pointer>;
-  constant slot gdkpixbufloaderclass-area-updated :: <C-function-pointer>;
-  constant slot gdkpixbufloaderclass-closed :: <C-function-pointer>;
+  constant slot gdk-pixbuf-loader-class-parent-class :: <GObjectClass>;
+  constant slot gdk-pixbuf-loader-class-size-prepared :: <C-function-pointer>;
+  constant slot gdk-pixbuf-loader-class-area-prepared :: <C-function-pointer>;
+  constant slot gdk-pixbuf-loader-class-area-updated :: <C-function-pointer>;
+  constant slot gdk-pixbuf-loader-class-closed :: <C-function-pointer>;
   pointer-type-name: <GdkPixbufLoaderClass>;
 end C-struct;
 
-define constant $GDK-PIXBUF-ROTATE-NONE = 0;
-define constant $GDK-PIXBUF-ROTATE-COUNTERCLOCKWISE = 90;
-define constant $GDK-PIXBUF-ROTATE-UPSIDEDOWN = 180;
-define constant $GDK-PIXBUF-ROTATE-CLOCKWISE = 270;
+define constant $gdk-pixbuf-rotate-none = 0;
+define constant $gdk-pixbuf-rotate-counterclockwise = 90;
+define constant $gdk-pixbuf-rotate-upsidedown = 180;
+define constant $gdk-pixbuf-rotate-clockwise = 270;
 define constant <GdkPixbufRotation> = <C-int>;
 define C-pointer-type <GdkPixbufRotation*> => <GdkPixbufRotation>;
 
@@ -707,8 +691,6 @@ end C-subtype;
 
 define C-pointer-type <GdkPixbufSimpleAnim*> => <GdkPixbufSimpleAnim>;
 
-define property-getter pixbufsimpleanim-loop :: <C-boolean> on <GdkPixbufSimpleAnim> end;
-define property-setter pixbufsimpleanim-loop :: <C-boolean> on <GdkPixbufSimpleAnim> end;
 define C-function gdk-pixbuf-simple-anim-new
   input parameter width_ :: <C-signed-int>;
   input parameter height_ :: <C-signed-int>;
@@ -745,13 +727,13 @@ end C-subtype;
 define C-pointer-type <GdkPixbufSimpleAnimIter*> => <GdkPixbufSimpleAnimIter>;
 
 define C-struct <_GdkPixdata>
-  slot gdkpixdata-magic :: <C-unsigned-int>;
-  slot gdkpixdata-length :: <C-signed-int>;
-  slot gdkpixdata-pixdata-type :: <C-unsigned-int>;
-  slot gdkpixdata-rowstride :: <C-unsigned-int>;
-  slot gdkpixdata-width :: <C-unsigned-int>;
-  slot gdkpixdata-height :: <C-unsigned-int>;
-  slot gdkpixdata-pixel-data :: <C-unsigned-char*>;
+  slot gdk-pixdata-magic :: <C-unsigned-int>;
+  slot gdk-pixdata-length :: <C-signed-int>;
+  slot gdk-pixdata-pixdata-type :: <C-unsigned-int>;
+  slot gdk-pixdata-rowstride :: <C-unsigned-int>;
+  slot gdk-pixdata-width :: <C-unsigned-int>;
+  slot gdk-pixdata-height :: <C-unsigned-int>;
+  slot gdk-pixdata-pixel-data :: <C-unsigned-char*>;
   pointer-type-name: <GdkPixdata>;
 end C-struct;
 
@@ -778,25 +760,25 @@ define C-function gdk-pixdata-to-csource
   c-name: "gdk_pixdata_to_csource";
 end;
 
-define constant $GDK-PIXDATA-DUMP-PIXDATA-STREAM = 0;
-define constant $GDK-PIXDATA-DUMP-PIXDATA-STRUCT = 1;
-define constant $GDK-PIXDATA-DUMP-MACROS = 2;
-define constant $GDK-PIXDATA-DUMP-GTYPES = 0;
-define constant $GDK-PIXDATA-DUMP-CTYPES = 256;
-define constant $GDK-PIXDATA-DUMP-STATIC = 512;
-define constant $GDK-PIXDATA-DUMP-CONST = 1024;
-define constant $GDK-PIXDATA-DUMP-RLE-DECODER = 65536;
+define constant $gdk-pixdata-dump-pixdata-stream = 0;
+define constant $gdk-pixdata-dump-pixdata-struct = 1;
+define constant $gdk-pixdata-dump-macros = 2;
+define constant $gdk-pixdata-dump-gtypes = 0;
+define constant $gdk-pixdata-dump-ctypes = 256;
+define constant $gdk-pixdata-dump-static = 512;
+define constant $gdk-pixdata-dump-const = 1024;
+define constant $gdk-pixdata-dump-rle-decoder = 65536;
 define constant <GdkPixdataDumpType> = <C-int>;
 define C-pointer-type <GdkPixdataDumpType*> => <GdkPixdataDumpType>;
 
-define constant $GDK-PIXDATA-COLOR-TYPE-RGB = 1;
-define constant $GDK-PIXDATA-COLOR-TYPE-RGBA = 2;
-define constant $GDK-PIXDATA-COLOR-TYPE-MASK = 255;
-define constant $GDK-PIXDATA-SAMPLE-WIDTH-8 = 65536;
-define constant $GDK-PIXDATA-SAMPLE-WIDTH-MASK = 983040;
-define constant $GDK-PIXDATA-ENCODING-RAW = 16777216;
-define constant $GDK-PIXDATA-ENCODING-RLE = 33554432;
-define constant $GDK-PIXDATA-ENCODING-MASK = 251658240;
+define constant $gdk-pixdata-color-type-rgb = 1;
+define constant $gdk-pixdata-color-type-rgba = 2;
+define constant $gdk-pixdata-color-type-mask = 255;
+define constant $gdk-pixdata-sample-width-8 = 65536;
+define constant $gdk-pixdata-sample-width-mask = 983040;
+define constant $gdk-pixdata-encoding-raw = 16777216;
+define constant $gdk-pixdata-encoding-rle = 33554432;
+define constant $gdk-pixdata-encoding-mask = 251658240;
 define constant <GdkPixdataType> = <C-int>;
 define C-pointer-type <GdkPixdataType*> => <GdkPixdataType>;
 
