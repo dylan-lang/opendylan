@@ -50,37 +50,41 @@ define method close
     (stream :: <external-stream>,
      #rest keys, #key abort? = #f, wait? = #t, synchronize? = #f,
      already-unregistered? = #f) => ()
-  if (stream-open?(stream))
-    unless (abort?)
-      if (synchronize?)
-	force-output(stream, synchronize?: synchronize?);
-      elseif (wait?)
-	force-output(stream, synchronize?: #f);	
-      else
-	do-force-output(stream)
+  with-stream-locked (stream)
+    if (stream-open?(stream))
+      unless (abort?)
+        if (synchronize?)
+          force-output(stream, synchronize?: synchronize?);
+        elseif (wait?)
+          force-output(stream, synchronize?: #f);	
+        else
+          do-force-output(stream)
+        end if;
+      end unless;
+      if (stream.accessor)
+        accessor-close(stream.accessor, abort?: abort?, wait?: wait?);
       end if;
-    end unless;
-    if (stream.accessor)
-      accessor-close(stream.accessor, abort?: abort?, wait?: wait?);
-    end if;
-    unless (already-unregistered?)
-      remove-key!($open-external-streams, stream);
-    end unless;
-     // Let other methods know that this method has unregistered the
-     // stream for automatic closing on application exit.
-    apply(next-method, stream, already-unregistered?: #t, keys);
-  end if; //  what to do if it isn't open? warn? error? nothing?
+      unless (already-unregistered?)
+        remove-key!($open-external-streams, stream);
+      end unless;
+      // Let other methods know that this method has unregistered the
+      // stream for automatic closing on application exit.
+      apply(next-method, stream, already-unregistered?: #t, keys);
+    end if; //  what to do if it isn't open? warn? error? nothing?
+  end;
 end method close;
 
 // Force-output always blocks.  Do-force-output is the non-blocking form
 define method force-output
     (stream :: <external-stream>, 
      #key synchronize? :: <boolean> = #f) => ()
-  do-force-output(stream);
-  wait-for-io-completion(stream);
-  if(synchronize?)
-    accessor-synchronize(stream.accessor, stream);
-  end if;
+  with-stream-locked (stream)
+    do-force-output(stream);
+    wait-for-io-completion(stream);
+    if(synchronize?)
+      accessor-synchronize(stream.accessor, stream);
+    end if;
+  end;
 end method force-output;
 
 
