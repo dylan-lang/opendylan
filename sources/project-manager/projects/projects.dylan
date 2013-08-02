@@ -46,16 +46,6 @@ define open generic project-platform-name(project :: <project>)
 
 define open generic project-platform-name-setter(platform-name, project :: <project>);
 
-define open generic project-architecture(project :: <project>) 
- => architecture;
-
-define open generic project-architecture-setter(architecture, project :: <project>);
-
-define open generic project-operating-system(project :: <project>) 
- => os;
-
-define open generic project-operating-system-setter(os, project :: <project>);
-
 define open generic project-compilation-mode(project :: <project>) 
  => mode;
 
@@ -310,7 +300,7 @@ define open generic project-key? (project :: <project>, key) => key?;
 // library of the project) and platform info.  Only called if subproject
 // identified by key isn't already open.
 define open generic make-used-project (project :: <project>,
-				       key, platform-name, architecture, os) => project :: <project>;
+				       key, platform-name) => project :: <project>;
 
 // Class of projects to create from the listener interface.
 define variable *default-project-class* = #f;
@@ -377,14 +367,6 @@ define method project-build-property-setter(property,
  => (property);
   #f
 end;
-
-// Return the default target architecture and os.
-define open generic default-platform-info ()
- => (architecture, operating-system);
-
-// Change the default target architecture and os.
-define open generic set-default-platform-info (architecture,
-					       operating-system);
 
 // Called when the default target platform gets changed.
 define open generic note-platform-change (project :: <project>,

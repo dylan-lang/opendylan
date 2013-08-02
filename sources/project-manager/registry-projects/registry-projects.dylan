@@ -29,13 +29,12 @@ define class <registry-project-layout> (<project-layout>)
 end;
 
 define method initialize (project :: <registry-project-layout>, #rest keys,
-			  #key key, source-record-class, architecture, operating-system, 
-			  #all-keys)
+			  #key key, source-record-class, platform-name, #all-keys)
   assert(instance?(key, <symbol>), "<registry-project-layout>: key not a symbol");
   let source-class = if(source-record-class) source-record-class
 		     else <file-source-record> end;
   let (lid-location, registry)
-    =  compute-library-location(key, architecture, operating-system);
+    =  compute-library-location(key, platform-name);
   project.project-personal-library? := registry.registry-personal?;
   apply(next-method, project, 
 	source-record-class:, source-class,
@@ -89,13 +88,11 @@ end;
 
 define method note-platform-change (project :: <registry-project>,
                                     new-platform-name)
-  let old-architecture = project-compiler-setting(project, architecture:);
-  let old-os = project-compiler-setting(project, operating-system:);
-  let (new-architecture, new-os) = platform-namestring-info(new-platform-name);
-  unless (old-architecture == new-architecture & old-os == new-os)
+  let old-platform-name = project-compiler-setting(project, platform-name:);
+  unless (old-platform-name == new-platform-name)
     let key = project.project-registered-name;
     let (lid-location, registry) = 
-      compute-library-location(key, new-architecture, new-os);
+      compute-library-location(key, new-platform-name);
     if (lid-location ~= project.project-lid-location)
       // Have different sources for different platforms, so can't reuse.
       // It's not really necessary to close the project, but this way we
@@ -113,8 +110,6 @@ define method note-platform-change (project :: <registry-project>,
       project-profile-location(project) := 
 	library-profile-locator(profile-dir, key);
       project-platform-name(project) := new-platform-name;
-      project-architecture(project) := new-architecture;
-      project-operating-system(project) := new-os;
     end;
   end;
 end method;
@@ -128,11 +123,10 @@ define method note-compiling-definitions (project :: <registry-project>)
 end method;
 
 define method update-project-location(project :: <registry-project>)
-  let architecture = project.project-architecture;
-  let os = project.project-operating-system;
+  let platform-name = project.project-platform-name;
   let key = project-registered-name(project);
   let (lid-location, registry) =
-    compute-library-location(key, architecture, os);
+    compute-library-location(key, platform-name);
   let personal? = registry.registry-personal?;
   project.project-personal-library? := personal?;
   project.project-lid-location := lid-location;
@@ -165,14 +159,12 @@ end method;
 
 
 define method make-used-project (project :: <registry-project>,
-				 key :: <symbol>, platform-name, architecture, os)
+				 key :: <symbol>, platform-name)
                                => project :: <registry-project>;
   make-project(<registry-project>,
 	       key: key,
 	       source-record-class: project.project-source-record-class,
-	       platform-name: platform-name,
-	       architecture: architecture,
-	       operating-system: os)
+	       platform-name: platform-name)
 end method;
 
 define method project-key? (project :: <registry-project>,
