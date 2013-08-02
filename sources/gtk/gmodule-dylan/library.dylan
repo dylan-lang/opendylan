@@ -5,7 +5,6 @@ define library gmodule
   use dylan;
   use common-dylan;
   use c-ffi;
-  use gobject-glue;
   use glib;
 
   export gmodule;

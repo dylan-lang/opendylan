@@ -5,7 +5,6 @@ define library gdk
   use dylan;
   use common-dylan;
   use c-ffi;
-  use gobject-glue;
   use glib;
   use gmodule;
   use gmodule;
