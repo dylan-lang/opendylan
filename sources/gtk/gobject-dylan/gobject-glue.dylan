@@ -283,6 +283,12 @@ define function g-signal-connect(instance :: <GObject>,
                            run-after?);
 end function g-signal-connect;
 
+define open generic g-value-to-dylan-helper (id, address) => (dylan-instance);
+
+define method g-value-to-dylan-helper (type, address) => (dylan-instance)
+  error("Unknown type %=", id);
+end method g-value-to-dylan-helper;
+
 define function g-value-to-dylan (instance :: <GValue>)
  => (dylan-instance);
   let g-type = g-value-type(instance);
@@ -312,7 +318,8 @@ define function g-value-to-dylan (instance :: <GValue>)
         $G-TYPE-BOXED   => #f;
         $G-TYPE-PARAM   => #f;
         $G-TYPE-OBJECT  => #f;
-        otherwise       => error("Unknown Gtype %=", g-type);
+        g-type-from-name("GdkEvent") => g-value-to-dylan-helper(#"GdkEvent", address-thunk());
+        otherwise       => g-value-to-dylan-helper(g-type, address-thunk());
       end select;
     end if;
   end if;

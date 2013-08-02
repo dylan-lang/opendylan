@@ -5,7 +5,7 @@ define library cairo
   use dylan;
   use common-dylan;
   use c-ffi;
-  use gobject-glue;
+  use gobject;
 
   export cairo;
 end library;
