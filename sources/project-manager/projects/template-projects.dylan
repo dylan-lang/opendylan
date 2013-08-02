@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///
 /// Naming conventions.  
 ///
-/// (The tempation to make scratch'n'sniff jokes is almost irresistible!)
+/// (The temptation to make scratch'n'sniff jokes is almost irresistible!)
 ///
 define constant $scratch-module-name$  :: <symbol> = #"scratch-module";
 
