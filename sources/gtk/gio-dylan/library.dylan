@@ -5,7 +5,6 @@ define library gio
   use dylan;
   use common-dylan;
   use c-ffi;
-  use gobject-glue;
   use gobject;
   use glib;
 

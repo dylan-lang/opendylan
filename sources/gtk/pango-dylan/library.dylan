@@ -5,7 +5,6 @@ define library pango
   use dylan;
   use common-dylan;
   use c-ffi;
-  use gobject-glue;
   use cairo;
   use gobject;
   use glib;

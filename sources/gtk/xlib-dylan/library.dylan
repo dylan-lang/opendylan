@@ -5,7 +5,7 @@ define library xlib
   use dylan;
   use common-dylan;
   use c-ffi;
-  use gobject-glue;
+  use gobject;
 
   export xlib;
 end library;
