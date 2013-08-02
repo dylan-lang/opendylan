@@ -790,6 +790,7 @@ define module gobject-glue
     g-value-set-value,
     g-value-to-dylan,
     all-subclasses,
+    g-value-to-dylan-helper,
     property-setter-definer,
     property-getter-definer;
 end module;
