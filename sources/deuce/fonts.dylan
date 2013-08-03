@@ -49,20 +49,20 @@ define function make-font
     let nfonts :: <integer> = size(fonts);
     without-bounds-checks
       for (i :: <integer> from 0 below nfonts)
-	let font :: <font> = fonts[i];
-	// 'font-name' is compared for equality rather than identity since it can be a string
-	when (  font-family(font) == family
-	      & font-name(font)   =  name
-	      & font-weight(font) == weight
-	      & font-slant(font)  == slant
-	      & font-size(font)   == point-size)
-	  return(font)
-	end
+        let font :: <font> = fonts[i];
+        // 'font-name' is compared for equality rather than identity since it can be a string
+        when (  font-family(font) == family
+              & font-name(font)   =  name
+              & font-weight(font) == weight
+              & font-slant(font)  == slant
+              & font-size(font)   == point-size)
+          return(font)
+        end
       end
     end;
     let font = make(<font>,
-		    family: family, name: name, weight: weight, slant: slant,
-		    size: point-size);
+                    family: family, name: name, weight: weight, slant: slant,
+                    size: point-size);
     add!(fonts, font);
     font
   end
@@ -100,12 +100,12 @@ define variable $default-italic-font :: <font>
 // good, too.
 define constant $deuce-font-sizes :: <simple-object-vector>
     = #[#[5, #"tiny"],
-	#[6, #"very-small"],
-	#[7, #"small"],
-	#[8, #"normal"],
-	#[10, #"large"],
-	#[12, #"very-large"],
-	#[16, #"huge"]];
+        #[6, #"very-small"],
+        #[7, #"small"],
+        #[8, #"normal"],
+        #[10, #"large"],
+        #[12, #"very-large"],
+        #[16, #"huge"]];
 
 define function font-point-size
     (font :: <font>)
@@ -115,11 +115,11 @@ define function font-point-size
     <integer> => f-size;
     <symbol> =>
       any?(method (literal-logical)
-	     when (second(literal-logical) == f-size)
-	       first(literal-logical)
-	     end
-	   end,
-	   $deuce-font-sizes);
+             when (second(literal-logical) == f-size)
+               first(literal-logical)
+             end
+           end,
+           $deuce-font-sizes);
     otherwise => #f;
   end
 end function font-point-size;

@@ -71,7 +71,7 @@ define sealed method make
   else
     let (sbp, ebp) = order-bps(start-bp, end-bp);
     make(<simple-interval>,
-	 start-bp: copy-bp(sbp), end-bp: copy-bp(ebp))
+         start-bp: copy-bp(sbp), end-bp: copy-bp(ebp))
   end
 end method make;
 
@@ -80,8 +80,8 @@ define inline function make-interval
     (start-bp :: <basic-bp>, end-bp :: <basic-bp>, #key in-order? = #f)
  => (interval :: <simple-interval>)
   assert(bp-buffer(start-bp) == bp-buffer(end-bp),
-	 "The BPs %= and %= passed to 'make-interval' are from different buffers",
-	 start-bp, end-bp);
+         "The BPs %= and %= passed to 'make-interval' are from different buffers",
+         start-bp, end-bp);
   make(<interval>, start-bp: start-bp, end-bp: end-bp, in-order?: in-order?)
 end function make-interval;
 
@@ -101,18 +101,18 @@ define method copy-interval
   let first-line :: false-or(<basic-line>) = #f;
   let last-line  :: false-or(<basic-line>) = #f;
   local method copy (line :: <line>, si :: <integer>, ei :: <integer>, last?);
-	  ignore(last?);
-	  let line :: <basic-line> = copy-line(line, start: si, end: ei);
-	  unless (first-line)
-	    first-line := line
-	  end;
-	  line-previous(line) := last-line;
-	  when (last-line)
-	    line-next(last-line) := line
-	  end;
-	  last-line := line;
-	  line
-	end method;
+          ignore(last?);
+          let line :: <basic-line> = copy-line(line, start: si, end: ei);
+          unless (first-line)
+            first-line := line
+          end;
+          line-previous(line) := last-line;
+          when (last-line)
+            line-next(last-line) := line
+          end;
+          last-line := line;
+          line
+        end method;
   do-lines(copy, interval, skip-test: skip-test);
   make-interval(line-start(first-line), line-end(last-line), in-order?: #t)
 end method copy-interval;
@@ -128,34 +128,34 @@ define method do-lines
   let end-bp   :: <basic-bp> = interval-end-bp(interval);
   let (start-line, start-index, end-line, end-index, step :: <function>)
     = if (from-end?)
-	values(bp-line(end-bp),   bp-index(end-bp),
-	       bp-line(start-bp), bp-index(start-bp),
-	       line-previous-in-buffer)
+        values(bp-line(end-bp),   bp-index(end-bp),
+               bp-line(start-bp), bp-index(start-bp),
+               line-previous-in-buffer)
       else
-	values(bp-line(start-bp), bp-index(start-bp),
-	       bp-line(end-bp),   bp-index(end-bp),
-	       line-next-in-buffer)
+        values(bp-line(start-bp), bp-index(start-bp),
+               bp-line(end-bp),   bp-index(end-bp),
+               line-next-in-buffer)
       end;
   let buffer = bp-buffer(start-bp);
   assert(buffer == bp-buffer(end-bp),
-	 "The interval from %= to %= does not start and end in the same buffer",
-	 start-bp, end-bp);
+         "The interval from %= to %= does not start and end in the same buffer",
+         start-bp, end-bp);
   block (break)
     for (line = start-line
-	   then step(line, buffer, skip-test: #f))
+           then step(line, buffer, skip-test: #f))
       when (line & (~skip-test | ~skip-test(line)))
         let (si, ei)
-	  = if (from-end?)
-	      values(if (line == end-line)   end-index   else 0 end,
-		     if (line == start-line) start-index else line-length(line) end)
+          = if (from-end?)
+              values(if (line == end-line)   end-index   else 0 end,
+                     if (line == start-line) start-index else line-length(line) end)
             else
-	      values(if (line == start-line) start-index else 0 end,
-		     if (line == end-line)   end-index   else line-length(line) end)
-	    end;
-	function(line, si, ei, line == end-line)
+              values(if (line == start-line) start-index else 0 end,
+                     if (line == end-line)   end-index   else line-length(line) end)
+            end;
+        function(line, si, ei, line == end-line)
       end;
       when (~line | line == end-line)
-	break()
+        break()
       end
     end
   end
@@ -168,9 +168,9 @@ define method count-lines
   ignore(cache-result?);
   let n :: <integer> = 0;
   do-lines(method (line :: <line>, si, ei, last?)
-	     ignore(line, si, ei, last?);
-	     inc!(n)
-	   end method, interval, skip-test: skip-test);
+             ignore(line, si, ei, last?);
+             inc!(n)
+           end method, interval, skip-test: skip-test);
   n
 end method count-lines;
 
@@ -186,28 +186,28 @@ end method count-lines;
 define method do-characters
     (function :: <function>, interval :: <interval>,
      #key start: _start, end: _end, from-end? = #f,
-	  skip-test = line-for-display-only?) => ()
+          skip-test = line-for-display-only?) => ()
   ignore(_start, _end);
   let start-line = bp-line(interval-start-bp(interval));
   let end-line   = bp-line(interval-end-bp(interval));
   local method do-chars (line :: <line>, si :: <integer>, ei :: <integer>, last?) => ()
-	  ignore(last?);
-	  local method maybe-do-newline () => ()
-		  // Call function on '\n' if really in interval
-		  let length = line-length(line);
-		  when (select (line)
-			  start-line => (si <= length) & (line ~== end-line | length < ei);
-			  end-line   => (length < ei);
-			  otherwise  => #t;
-			end)
-		    function('\n', line, length)
-		  end
-		end method;
-	  when (from-end?) maybe-do-newline() end;
-	  do-characters(function, line,
-			start: si, end: ei, from-end?: from-end?);
-	  unless (from-end?) maybe-do-newline() end;
-	end method;
+          ignore(last?);
+          local method maybe-do-newline () => ()
+                  // Call function on '\n' if really in interval
+                  let length = line-length(line);
+                  when (select (line)
+                          start-line => (si <= length) & (line ~== end-line | length < ei);
+                          end-line   => (length < ei);
+                          otherwise  => #t;
+                        end)
+                    function('\n', line, length)
+                  end
+                end method;
+          when (from-end?) maybe-do-newline() end;
+          do-characters(function, line,
+                        start: si, end: ei, from-end?: from-end?);
+          unless (from-end?) maybe-do-newline() end;
+        end method;
   do-lines(do-chars, interval, from-end?: from-end?, skip-test: skip-test)
 end method do-characters;
 
@@ -219,13 +219,13 @@ define method count-characters
   let last-index = bp-index(interval-end-bp(interval));
   let n :: <integer> = 0;
   do-lines(method (line :: <line>, si :: <integer>, ei :: <integer>, last?)
-	     if (~last? | last-index > line-length(line))
-	       // '+ 1' accounts for the newline character...
-	       inc!(n, ei - si + 1)
-	     else
-	       inc!(n, ei - si)
-	     end
-	   end method, interval, skip-test: skip-test);
+             if (~last? | last-index > line-length(line))
+               // '+ 1' accounts for the newline character...
+               inc!(n, ei - si + 1)
+             else
+               inc!(n, ei - si)
+             end
+           end method, interval, skip-test: skip-test);
   n
 end method count-characters;
 
@@ -245,15 +245,15 @@ define method as
   let string = make(<byte-string>, size: count-characters(interval));
   let i :: <integer> = 0;
   do-lines(method (line, si, ei, last?)
-	     let n :: <integer> = ei - si;
-	     // Use the fastest method available to copy the line contents
-	     copy-bytes(string, i, line-contents(line), si, n);
-	     inc!(i, n);
-	     if (~last? | ei > line-length(line))
-	       string[i] := '\n';
-	       inc!(i)
-	     end
-	   end method, interval, skip-test: diagram-line?);
+             let n :: <integer> = ei - si;
+             // Use the fastest method available to copy the line contents
+             copy-bytes(string, i, line-contents(line), si, n);
+             inc!(i, n);
+             if (~last? | ei > line-length(line))
+               string[i] := '\n';
+               inc!(i)
+             end
+           end method, interval, skip-test: diagram-line?);
   string
 end method as;
 
@@ -267,11 +267,11 @@ define method interval-read-only?
   buffer-read-only?(buffer)
   | block (return)
       local method read-only? (line :: <line>, si, ei, last?)
-	      ignore(si, ei, last?);
-	      when (line-read-only?(line))
-		return(#t)
-	      end
-	    end method;
+              ignore(si, ei, last?);
+              when (line-read-only?(line))
+                return(#t)
+              end
+            end method;
       do-lines(read-only?, interval);
       #f
     end
@@ -280,9 +280,9 @@ end method interval-read-only?;
 define method interval-read-only?-setter
     (read-only? :: <boolean>, interval :: <basic-interval>) => (read-only? :: <boolean>)
   local method set-read-only (line :: <line>, si, ei, last?)
-	  ignore(si, ei, last?);
-	  line-read-only?(line) := read-only?
-	end method;
+          ignore(si, ei, last?);
+          line-read-only?(line) := read-only?
+        end method;
   do-lines(set-read-only, interval);
   read-only?
 end method interval-read-only?-setter;
@@ -301,21 +301,21 @@ define method bp-within-interval?
       // Speed up the case of a single-line interval, since
       // if crops up a lot during drag-selection
       when (first-line == _line)
-	let first-index = bp-index(start-bp);
-	let last-index  = bp-index(end-bp);
-	first-index <= _index & _index <= last-index
+        let first-index = bp-index(start-bp);
+        let last-index  = bp-index(end-bp);
+        first-index <= _index & _index <= last-index
       end
     else
       local method within-interval? (line :: <line>, si, ei, last?)
-	      ignore(last?);
-	      when (_line == line)
-		return(case
-			 line == first-line => _index >= si;
-			 line == last-line  => _index <= ei;
-			 otherwise => #t
-		       end)
-	      end
-	    end method;
+              ignore(last?);
+              when (_line == line)
+                return(case
+                         line == first-line => _index >= si;
+                         line == last-line  => _index <= ei;
+                         otherwise => #t
+                       end)
+              end
+            end method;
       do-lines(within-interval?, interval, skip-test: #f);
       #f
     end
@@ -441,18 +441,18 @@ define method make-section-node
  => (node :: <node>)
   let start-bp
     = make(<bp>,
-	   line: section-start-line(section), index: 0,
-	   buffer: buffer);
+           line: section-start-line(section), index: 0,
+           buffer: buffer);
   let end-bp
     = make(<bp>,
-	   line: section-end-line(section), index: line-length(section-end-line(section)),
-	   buffer: buffer,
-	   moving?: #t);
+           line: section-end-line(section), index: line-length(section-end-line(section)),
+           buffer: buffer,
+           moving?: #t);
   // Note that we don't associate the node with the buffer yet,
   // since it will probably get added with 'add-node!' later
   let node = make(node-class,
-		  start-bp: start-bp, end-bp: end-bp,
-		  section:  section);
+                  start-bp: start-bp, end-bp: end-bp,
+                  section:  section);
   push!(section-nodes(section), node);
   node
 end method make-section-node;
@@ -460,7 +460,7 @@ end method make-section-node;
 define method make-empty-section-node
     (buffer :: <buffer>,
      #key section-class = <section>,
-	  node-class    = <section-node>)
+          node-class    = <section-node>)
  => (node :: <node>)
   let section = make-empty-section(section-class: section-class);
   make-section-node(buffer, section, node-class: node-class)
@@ -490,7 +490,7 @@ define method count-lines
      #key skip-test = line-for-display-only?, cache-result? = #f)
  => (nlines :: <integer>)
   count-lines(node-section(node),
-	      skip-test: skip-test, cache-result?: cache-result?)
+              skip-test: skip-test, cache-result?: cache-result?)
 end method count-lines;
 
 

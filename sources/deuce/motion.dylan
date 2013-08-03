@@ -39,7 +39,7 @@ end function line-end;
 // When 'fixup?' is #t, then this (and all the functions herein) will return
 // the bounding BP when we get out of range; otherwise this will return #f.
 // The bounding interval is usually the buffer, but it can be changed by
-// supplying the 'interval' argument. 
+// supplying the 'interval' argument.
 // NB: this doesn't detect the case when BP argument is not in range.  That
 // should be done at a higher level.
 define sealed method increment-bp!
@@ -108,27 +108,27 @@ define sealed method move-forward-or-backward!
     block (return)
       let bp :: false-or(<basic-bp>) = bp;
       when (reverse?)
-	bp := decrement-bp!(bp, fixup?: fixup?, interval: interval)
+        bp := decrement-bp!(bp, fixup?: fixup?, interval: interval)
       end;
       while (bp)
-	let char = bp-character(bp);
-	let (match?, dont-include?) = predicate(char);
-	when (match?)
-	  return(if (dont-include? = reverse?)
-		   increment-bp!(bp, fixup?: fixup?, interval: interval)
-		 else
-		   bp
-		 end)
-	end;
-	unless (reverse?)
-	  bp := increment-bp!(bp, fixup?: fixup?, interval: interval)
-	end;
-	when (bp = limit)
-	  return(fixup? & limit)
-	end;
-	when (reverse?)
-	  bp := decrement-bp!(bp, fixup?: fixup?, interval: interval)
-	end
+        let char = bp-character(bp);
+        let (match?, dont-include?) = predicate(char);
+        when (match?)
+          return(if (dont-include? = reverse?)
+                   increment-bp!(bp, fixup?: fixup?, interval: interval)
+                 else
+                   bp
+                 end)
+        end;
+        unless (reverse?)
+          bp := increment-bp!(bp, fixup?: fixup?, interval: interval)
+        end;
+        when (bp = limit)
+          return(fixup? & limit)
+        end;
+        when (reverse?)
+          bp := decrement-bp!(bp, fixup?: fixup?, interval: interval)
+        end
       end
     end
   end
@@ -145,16 +145,16 @@ define sealed method move-over-characters
     unless (n = 0)
       let reverse? = (n < 0);
       let limit :: <basic-bp>
-	= if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
+        = if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
       local method true (ch)
-	      ignore(ch);
-	      values(#t, #f)
-	  end method;
+              ignore(ch);
+              values(#t, #f)
+          end method;
       for (i :: <integer> from 0 below abs(n))
-	when (bp = limit)
-	  return(fixup? & limit)
-	end;
-	move-forward-or-backward!(bp, true, reverse?, interval: interval)
+        when (bp = limit)
+          return(fixup? & limit)
+        end;
+        move-forward-or-backward!(bp, true, reverse?, interval: interval)
       end
     end;
     bp
@@ -173,21 +173,21 @@ define sealed method move-over-words
     unless (n = 0)
       let reverse? = (n < 0);
       let limit :: <basic-bp>
-	= if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
+        = if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
       local method word-break-char? (ch :: <byte-character>)
-	      values(word-syntax(ch) ~== $word-alphabetic, #t)
-	    end method,
-	    method word-char? (ch :: <byte-character>)
-	      values(word-syntax(ch)  == $word-alphabetic, #t)
-	    end method;
+              values(word-syntax(ch) ~== $word-alphabetic, #t)
+            end method,
+            method word-char? (ch :: <byte-character>)
+              values(word-syntax(ch)  == $word-alphabetic, #t)
+            end method;
       for (i :: <integer> from 0 below abs(n))
-	when (bp = limit)
+        when (bp = limit)
           return(fixup? & limit)
         end;
-	move-forward-or-backward!(bp, word-char?, reverse?, interval: interval);
-	unless (bp = limit)
-	  move-forward-or-backward!(bp, word-break-char?, reverse?, interval: interval)
-	end
+        move-forward-or-backward!(bp, word-char?, reverse?, interval: interval);
+        unless (bp = limit)
+          move-forward-or-backward!(bp, word-break-char?, reverse?, interval: interval)
+        end
       end
     end;
     bp
@@ -204,21 +204,21 @@ define sealed method move-over-atoms
     unless (n = 0)
       let reverse? = (n < 0);
       let limit :: <basic-bp>
-	= if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
+        = if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
       local method atom-break-char? (ch :: <byte-character>)
-	      values(atom-syntax(ch) ~== $atom-alphabetic, #t)
-	    end method,
-	    method atom-char? (ch :: <byte-character>)
-	      values(atom-syntax(ch)  == $atom-alphabetic, #t)
-	    end method;
+              values(atom-syntax(ch) ~== $atom-alphabetic, #t)
+            end method,
+            method atom-char? (ch :: <byte-character>)
+              values(atom-syntax(ch)  == $atom-alphabetic, #t)
+            end method;
       for (i :: <integer> from 0 below abs(n))
-	when (bp = limit)
+        when (bp = limit)
           return(fixup? & limit)
         end;
-	move-forward-or-backward!(bp, atom-char?, reverse?, interval: interval);
-	unless (bp = limit)
-	  move-forward-or-backward!(bp, atom-break-char?, reverse?, interval: interval)
-	end
+        move-forward-or-backward!(bp, atom-char?, reverse?, interval: interval);
+        unless (bp = limit)
+          move-forward-or-backward!(bp, atom-break-char?, reverse?, interval: interval)
+        end
       end
     end;
     bp
@@ -235,43 +235,43 @@ define sealed method move-over-lists
     unless (n = 0)
       let reverse? = (n < 0);
       let limit :: <basic-bp>
-	= if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
+        = if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
       local method true (ch)
-	      ignore(ch);
-	      values(#t, #f)
-	    end method,
-	    method non-whitespace? (ch :: <byte-character>)
-	      if (any-whitespace-char?(ch)) values(#f, #f)
-	      else values(#t, #t) end
-	    end method;
+              ignore(ch);
+              values(#t, #f)
+            end method,
+            method non-whitespace? (ch :: <byte-character>)
+              if (any-whitespace-char?(ch)) values(#f, #f)
+              else values(#t, #t) end
+            end method;
       for (i :: <integer> from 0 below abs(n))
-	when (bp = limit)
+        when (bp = limit)
           return(fixup? & limit)
         end;
-	move-forward-or-backward!(bp, non-whitespace?, reverse?, interval: interval);
-	unless (bp = limit)
-	  let start-char
-	    = if (reverse?) bp-character-before(bp) else bp-character(bp) end;
-	  when (~reverse? & list-syntax(start-char) == $list-single-quote)
-	    move-forward-or-backward!(bp, true, #t, interval: interval);
-	    move-forward-or-backward!(bp, true, #t, interval: interval);
-	    start-char := bp-character(bp)
-	  end;
+        move-forward-or-backward!(bp, non-whitespace?, reverse?, interval: interval);
+        unless (bp = limit)
+          let start-char
+            = if (reverse?) bp-character-before(bp) else bp-character(bp) end;
+          when (~reverse? & list-syntax(start-char) == $list-single-quote)
+            move-forward-or-backward!(bp, true, #t, interval: interval);
+            move-forward-or-backward!(bp, true, #t, interval: interval);
+            start-char := bp-character(bp)
+          end;
           let syntax = list-syntax(start-char);
-	  let nbp
-	    = case
-		syntax == $list-double-quote =>
-		  move-over-matching-thing!(bp, start-char, reverse?, interval: interval);
-		syntax == (if (reverse?) $list-close else $list-open end) =>
-		  move-over-balanced-thing!(bp, start-char, reverse?, interval: interval);
-		otherwise =>
-		  move-over-atom!(bp, reverse?, interval: interval);
-	      end;
-	  nbp | return(fixup? & limit)
-	end
+          let nbp
+            = case
+                syntax == $list-double-quote =>
+                  move-over-matching-thing!(bp, start-char, reverse?, interval: interval);
+                syntax == (if (reverse?) $list-close else $list-open end) =>
+                  move-over-balanced-thing!(bp, start-char, reverse?, interval: interval);
+                otherwise =>
+                  move-over-atom!(bp, reverse?, interval: interval);
+              end;
+          nbp | return(fixup? & limit)
+        end
       end
     end;
-    bp      
+    bp
   end
 end method move-over-lists;
 
@@ -285,13 +285,13 @@ define sealed method move-over-matching-thing!
   let limit :: <basic-bp>
     = if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
   local method true (ch)
-	  ignore(ch);
-	  values(#t, #f)
-	end method,
+          ignore(ch);
+          values(#t, #f)
+        end method,
         method matches-char? (ch :: <byte-character>)
-	  if (ch = char) values(#t, #f)
-	  else values(#f, #f) end
-	end method;
+          if (ch = char) values(#t, #f)
+          else values(#f, #f) end
+        end method;
   move-forward-or-backward!(bp, true, reverse?, interval: interval);
   unless (bp = limit)
     move-forward-or-backward!(bp, matches-char?, reverse?, interval: interval)
@@ -311,20 +311,20 @@ define sealed method move-over-balanced-thing!
  => (bp :: false-or(<basic-bp>))
   let end-char :: <byte-character>
     = select (start-char)
-	'(' => ')'; ')' => '(';
-	'[' => ']'; ']' => '[';
-	'{' => '}'; '}' => '{';
-	'<' => '>'; '>' => '<';		// for XML, e.g.
+        '(' => ')'; ')' => '(';
+        '[' => ']'; ']' => '[';
+        '{' => '}'; '}' => '{';
+        '<' => '>'; '>' => '<';                // for XML, e.g.
       end;
   let count :: <integer> = 0;
   let quote = #f;
   local method matches-char? (ch :: <byte-character>)
-	  case
-	    ch = start-char =>
+          case
+            ch = start-char =>
               when (~quote) inc!(count) end;
-	    ch = end-char   =>
+            ch = end-char   =>
               when (~quote) dec!(count) end;
-	    ch = '"' | ch = '\'' =>
+            ch = '"' | ch = '\'' =>
               case
                 ch = quote =>
                   dec!(count);
@@ -335,9 +335,9 @@ define sealed method move-over-balanced-thing!
                 otherwise =>
                   #f;
               end;
-	  end;
-	  values(count = 0, #f)
-	end method;
+          end;
+          values(count = 0, #f)
+        end method;
   move-forward-or-backward!(bp, matches-char?, reverse?, interval: interval);
   let matched?
     = ((if (reverse?) bp-character(bp) else bp-character-before(bp) end) = end-char);
@@ -352,11 +352,11 @@ define sealed method move-over-atom!
   let limit :: <basic-bp>
     = if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
   local method atom-break-char? (ch :: <byte-character>)
-	  values(atom-syntax(ch) ~== $atom-alphabetic, #t)
-	end method,
+          values(atom-syntax(ch) ~== $atom-alphabetic, #t)
+        end method,
         method atom-char? (ch :: <byte-character>)
-	  values(atom-syntax(ch)  == $atom-alphabetic, #t)
-	end method;
+          values(atom-syntax(ch)  == $atom-alphabetic, #t)
+        end method;
   move-forward-or-backward!(bp, atom-char?, reverse?, interval: interval);
   unless (bp = limit)
     move-forward-or-backward!(bp, atom-break-char?, reverse?, interval: interval)
@@ -373,7 +373,7 @@ define sealed method move-over-expressions
     copy-bp(bp)
   else
     do-move-over-expressions(buffer-major-mode(bp-buffer(bp)),
-			     bp, n, fixup?: fixup?, interval: interval)
+                             bp, n, fixup?: fixup?, interval: interval)
   end
 end method move-over-expressions;
 
@@ -389,32 +389,32 @@ define sealed method move-up-or-down-lists
     let lbp :: <basic-bp> = copy-bp(bp);
     unless (n = 0)
       let limit :: <basic-bp>
-	= if (n < 0) interval-start-bp(interval) else interval-end-bp(interval) end;
+        = if (n < 0) interval-start-bp(interval) else interval-end-bp(interval) end;
       let (open, close)
-	= if (n < 0) values($list-open, $list-close)
-	  else values($list-close, $list-open) end;
+        = if (n < 0) values($list-open, $list-close)
+          else values($list-close, $list-open) end;
       local method open-or-close? (ch :: <byte-character>)
-	      let syntax = list-syntax(ch);
-	      values(syntax == open | syntax == close, #f)
-	    end method;
+              let syntax = list-syntax(ch);
+              values(syntax == open | syntax == close, #f)
+            end method;
       for (i :: <integer> from 0 below abs(n))
-	block (break)
-	  while (#t)
-	    when (lbp = limit)
-	      return(fixup? & limit)
-	    end;
-	    move-forward-or-backward!(lbp, open-or-close?, n < 0, interval: interval);
-	    let char = bp-character(lbp);
-	    if (list-syntax(char) == close)
+        block (break)
+          while (#t)
+            when (lbp = limit)
+              return(fixup? & limit)
+            end;
+            move-forward-or-backward!(lbp, open-or-close?, n < 0, interval: interval);
+            let char = bp-character(lbp);
+            if (list-syntax(char) == close)
               when (n < 0) increment-bp!(lbp, interval: interval) end;
-	      move-over-balanced-thing!(lbp, char, n < 0, interval: interval);
+              move-over-balanced-thing!(lbp, char, n < 0, interval: interval);
               if (n < 0) decrement-bp!(lbp, interval: interval)
               else increment-bp!(lbp, interval: interval) end;
-	    else
-	      break()
-	    end
-	  end
-	end block;
+            else
+              break()
+            end
+          end
+        end block;
       end
     end;
     lbp
@@ -429,7 +429,7 @@ define sealed method move-up-or-down-expressions
     copy-bp(bp)
   else
     do-move-up-or-down-expressions(buffer-major-mode(bp-buffer(bp)),
-				   bp, n, fixup?: fixup?, interval: interval)
+                                   bp, n, fixup?: fixup?, interval: interval)
   end
 end method move-up-or-down-expressions;
 
@@ -437,43 +437,43 @@ end method move-up-or-down-expressions;
 define sealed method move-over-lines
     (bp :: <basic-bp>, n :: <integer>,
      #key fixup? = #t, interval = bp-buffer(bp),
-	  skip-test = line-for-display-only?)
+          skip-test = line-for-display-only?)
  => (bp :: false-or(<basic-bp>))
   let buffer = bp-buffer(bp);
   case
     n > 0 =>
       let last :: <basic-line> = bp-line(interval-end-bp(interval));
       block (return)
-	for (i :: <integer> from 0 below n,
-	     line = bp-line(bp)
-	       then line-next-in-buffer(line, buffer, skip-test: skip-test))
-	  when (~line | line == last)
-	    return(fixup? & line-start(last))
-	  end
-	finally
-	  if (line)
-	    return(line-start(line))
-	  else
-	    return(fixup? & line-start(last))
-	  end
-	end
+        for (i :: <integer> from 0 below n,
+             line = bp-line(bp)
+               then line-next-in-buffer(line, buffer, skip-test: skip-test))
+          when (~line | line == last)
+            return(fixup? & line-start(last))
+          end
+        finally
+          if (line)
+            return(line-start(line))
+          else
+            return(fixup? & line-start(last))
+          end
+        end
       end;
     n < 0 =>
       let first :: <basic-line> = bp-line(interval-start-bp(interval));
       block (return)
-	for (i :: <integer> from 0 below -n,
-	     line = bp-line(bp)
-	       then line-previous-in-buffer(line, buffer, skip-test: skip-test))
-	  when (~line | line == first)
-	    return(fixup? & line-start(first))
-	  end
-	finally
-	  if (line)
-	    return(line-start(line))
-	  else
-	    return(fixup? & line-start(first))
-	  end
-	end
+        for (i :: <integer> from 0 below -n,
+             line = bp-line(bp)
+               then line-previous-in-buffer(line, buffer, skip-test: skip-test))
+          when (~line | line == first)
+            return(fixup? & line-start(first))
+          end
+        finally
+          if (line)
+            return(line-start(line))
+          else
+            return(fixup? & line-start(first))
+          end
+        end
       end;
     otherwise =>
       copy-bp(bp);
@@ -495,11 +495,11 @@ define sealed method forward-over!
      #key fixup? = #t, interval = bp-buffer(bp))
  => (bp :: false-or(<basic-bp>))
   local method non-match? (char :: <byte-character>)
-	  if (member?(char, chars)) values(#f, #f)
-	  else values(#t, #t) end
-	end method;
+          if (member?(char, chars)) values(#f, #f)
+          else values(#t, #t) end
+        end method;
   move-forward-or-backward!(bp, non-match?, #f,
-			    fixup?: fixup?, interval: interval)
+                            fixup?: fixup?, interval: interval)
 end method forward-over!;
 
 define sealed method forward-over!
@@ -507,11 +507,11 @@ define sealed method forward-over!
      #key fixup? = #t, interval = bp-buffer(bp))
  => (bp :: false-or(<basic-bp>))
   local method non-match? (char :: <byte-character>)
-	  if (member?(char, chars)) values(#f, #f)
-	  else values(#t, #t) end
-	end method;
+          if (member?(char, chars)) values(#f, #f)
+          else values(#t, #t) end
+        end method;
   move-forward-or-backward!(bp, non-match?, #f,
-			    fixup?: fixup?, interval: interval)
+                            fixup?: fixup?, interval: interval)
 end method forward-over!;
 
 
@@ -523,11 +523,11 @@ define sealed method forward-until
      #key fixup? = #t, interval = bp-buffer(bp))
  => (bp :: false-or(<basic-bp>))
   local method match? (char :: <byte-character>)
-	  if (member?(char, chars)) values(#t, #t)
-	  else values(#f, #f) end
-	end method;
+          if (member?(char, chars)) values(#t, #t)
+          else values(#f, #f) end
+        end method;
   let nbp = move-forward-or-backward!(copy-bp(bp), match?, #f,
-				      fixup?: #f, interval: interval);
+                                      fixup?: #f, interval: interval);
   nbp | (fixup? & bp)
 end method forward-until;
 
@@ -544,11 +544,11 @@ define sealed method backward-over!
      #key fixup? = #t, interval = bp-buffer(bp))
  => (bp :: false-or(<basic-bp>))
   local method non-match? (ch :: <byte-character>)
-	  if (member?(ch, chars)) values(#f, #f)
-	  else values(#t, #t) end
-	end method;
+          if (member?(ch, chars)) values(#f, #f)
+          else values(#t, #t) end
+        end method;
   move-forward-or-backward!(bp, non-match?, #t,
-			    fixup?: fixup?, interval: interval)
+                            fixup?: fixup?, interval: interval)
 end method backward-over!;
 
 define sealed method backward-over!
@@ -556,11 +556,11 @@ define sealed method backward-over!
      #key fixup? = #t, interval = bp-buffer(bp))
  => (bp :: false-or(<basic-bp>))
   local method non-match? (ch :: <byte-character>)
-	  if (member?(ch, chars)) values(#f, #f)
-	  else values(#t, #t) end
-	end method;
+          if (member?(ch, chars)) values(#f, #f)
+          else values(#t, #t) end
+        end method;
   move-forward-or-backward!(bp, non-match?, #t,
-			    fixup?: fixup?, interval: interval)
+                            fixup?: fixup?, interval: interval)
 end method backward-over!;
 
 
@@ -572,11 +572,11 @@ define sealed method backward-until
      #key fixup? = #t, interval = bp-buffer(bp))
  => (bp :: false-or(<basic-bp>))
   local method match? (ch :: <byte-character>)
-	  if (member?(ch, chars)) values(#t, #t)
-	  else values(#f, #f) end
-	end method;
+          if (member?(ch, chars)) values(#t, #t)
+          else values(#f, #f) end
+        end method;
   let nbp = move-forward-or-backward!(copy-bp(bp), match?, #t,
-				      fixup?: #f, interval: interval);
+                                      fixup?: #f, interval: interval);
   nbp | (fixup? & bp)
 end method backward-until;
 
@@ -605,10 +605,10 @@ define method do-atom-under-bp
  => (sbp :: <basic-bp>, ebp :: <basic-bp>)
   let node = bp-node(bp) | bp-buffer(bp);
   let sbp  = if (atom-syntax(bp-character-before(bp)) == $atom-delimiter)
-	       forward-over(bp, #[' ', '\t', '\f'], interval: node)
-	     else
-	       move-over-atoms(bp, -1, interval: node)
-	     end;
+               forward-over(bp, #[' ', '\t', '\f'], interval: node)
+             else
+               move-over-atoms(bp, -1, interval: node)
+             end;
   let ebp  = move-over-atoms(sbp, 1, interval: node);
   values(sbp, ebp)
 end method do-atom-under-bp;
@@ -631,17 +631,17 @@ define method char-index->bp
      #key skip-test = line-for-display-only?)
  => (bp :: false-or(<basic-bp>))
   assert(index >= 0,
-	 "The character index must be non-negative");
+         "The character index must be non-negative");
   block (return)
     do-lines(method (line, si, ei, last?)
-	       ignore(si, ei, last?);
-	       if (line-length(line) + 1 > index)
-		 return(make(<simple-bp>, line: line, index: index))
-	       else
-		 // '+ 1' to include the '\n' character...
-		 dec!(index, line-length(line) + 1)
-	       end
-	     end method, buffer, skip-test: skip-test);
+               ignore(si, ei, last?);
+               if (line-length(line) + 1 > index)
+                 return(make(<simple-bp>, line: line, index: index))
+               else
+                 // '+ 1' to include the '\n' character...
+                 dec!(index, line-length(line) + 1)
+               end
+             end method, buffer, skip-test: skip-test);
     #f
   end
 end method char-index->bp;
@@ -661,15 +661,15 @@ define method line-index->line
      #key skip-test = line-for-display-only?)
  => (line :: false-or(<basic-line>))
   assert(index >= 0,
-	 "The line index must be non-negative");
+         "The line index must be non-negative");
   block (return)
     do-lines(method (line, si, ei, last?)
-	       ignore(si, ei, last?);
-	       when (index = 0)
-		 return(line)
-	       end;
-	       dec!(index)
-	     end method, buffer, skip-test: skip-test);
+               ignore(si, ei, last?);
+               when (index = 0)
+                 return(line)
+               end;
+               dec!(index)
+             end method, buffer, skip-test: skip-test);
     #f
   end
 end method line-index->line;
@@ -679,7 +679,7 @@ define method line->line-index
      #key skip-test = line-for-display-only?)
  => (index :: <integer>)
   let interval = make-interval(interval-start-bp(buffer), line-start(line),
-			       in-order?: #t);
+                               in-order?: #t);
   count-lines(interval, skip-test: skip-test) - 1
 end method line->line-index;
 
@@ -688,7 +688,7 @@ define method line->line-index
      #key skip-test = line-for-display-only?)
  => (index :: <integer>)
   let interval = make-interval(line-start(section-start-line(section)), line-start(line),
-			       in-order?: #t);
+                               in-order?: #t);
   count-lines(interval, skip-test: skip-test) - 1
 end method line->line-index;
 
@@ -707,6 +707,6 @@ define method bp->line-index
  => (index :: <integer>)
   let buffer   = bp-buffer(bp);
   let interval = make-interval(interval-start-bp(buffer), bp,
-			       in-order?: #t);
+                               in-order?: #t);
   count-lines(interval, skip-test: skip-test) - 1
 end method bp->line-index;

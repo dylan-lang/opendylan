@@ -16,5 +16,5 @@ define library duim-deuce
   use deuce;
 
   export duim-deuce,
-	 duim-deuce-internals;
+         duim-deuce-internals;
 end library duim-deuce;

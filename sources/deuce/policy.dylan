@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Editor policy
 
-define constant <command-set-policy>	 = one-of(#"emacs", #"windows");
+define constant <command-set-policy>         = one-of(#"emacs", #"windows");
 define constant <unselected-copy-policy> = one-of(#"copy-line", #"nothing");
-define constant <marking-policy>	 = one-of(#"end-of-line", #"right-margin");
+define constant <marking-policy>         = one-of(#"end-of-line", #"right-margin");
 
 // A class to contain editor policy
 // NB: the initial values reflect Emacs policies for no particular reason
@@ -92,26 +92,26 @@ end class <editor-policy>;
 define method copy-policy
     (policy :: <editor-policy>) => (new-policy :: <editor-policy>)
   make(<editor-policy>,
-       command-set-policy:	   command-set-policy(policy),
-       alt-key-is-meta?:	   alt-key-is-meta?(policy),
+       command-set-policy:           command-set-policy(policy),
+       alt-key-is-meta?:           alt-key-is-meta?(policy),
        initial-click-moves-point?: initial-click-moves-point?(policy),
-       clipboard-policy:	   clipboard-policy(policy),
+       clipboard-policy:           clipboard-policy(policy),
        typing-replaces-selection?: typing-replaces-selection?(policy),
-       unselected-copy-policy:	   unselected-copy-policy(policy),
+       unselected-copy-policy:           unselected-copy-policy(policy),
        next-line-adds-newline?:    next-line-adds-newline?(policy),
-       undo-past-save-policy:	   undo-past-save-policy(policy),
-       confirm-kill-buffer?:	   confirm-kill-buffer?(policy),
-       new-file-buffer?:	   new-file-buffer?(policy),
-       marking-policy:		   marking-policy(policy),
-       scrolling-moves-point?:	   scrolling-moves-point?(policy),
-       default-font:		   default-font(policy),
-       default-font-size:	   default-font-size(policy),
-       tab-stop-size:		   tab-stop-size(policy),
-       fixed-frame-buffer?:	   fixed-frame-buffer?(policy),
+       undo-past-save-policy:           undo-past-save-policy(policy),
+       confirm-kill-buffer?:           confirm-kill-buffer?(policy),
+       new-file-buffer?:           new-file-buffer?(policy),
+       marking-policy:                   marking-policy(policy),
+       scrolling-moves-point?:           scrolling-moves-point?(policy),
+       default-font:                   default-font(policy),
+       default-font-size:           default-font-size(policy),
+       tab-stop-size:                   tab-stop-size(policy),
+       fixed-frame-buffer?:           fixed-frame-buffer?(policy),
        show-section-separators?:   show-section-separators?(policy),
-       show-path-in-title?:	   show-path-in-title?(policy),
-       wrap-searches?:		   wrap-searches?(policy),
-       use-isearch?:		   use-isearch?(policy))
+       show-path-in-title?:           show-path-in-title?(policy),
+       wrap-searches?:                   wrap-searches?(policy),
+       use-isearch?:                   use-isearch?(policy))
 end method copy-policy;
 
 
@@ -140,49 +140,49 @@ end method install-command-set;
 
 define constant $emacs-editor-policy
     = make(<editor-policy>,
-	   command-set-policy:		#"emacs",
-	   alt-key-is-meta?:		#t,
-	   initial-click-moves-point?:	#f,
-	   clipboard-policy:		#t,
-	   typing-replaces-selection?:	#f,
-	   unselected-copy-policy:	#"copy-line",
-	   next-line-adds-newline?:	#t,
-	   undo-past-save-policy:	#f,
-	   confirm-kill-buffer?:	#t,
-	   new-file-buffer?:		#t,
-	   marking-policy:		#"right-margin",
-	   scrolling-moves-point?:	#t,
-	   default-font:		$default-font,
-	   default-font-size:		#"normal",
-	   tab-stop-size:		8,
-	   fixed-frame-buffer?:		#f,
-	   show-section-separators?:    #t,
-	   show-path-in-title?:		#t,
-	   wrap-searches?:		#t,
-	   use-isearch?:		#t);
+           command-set-policy:                #"emacs",
+           alt-key-is-meta?:                #t,
+           initial-click-moves-point?:        #f,
+           clipboard-policy:                #t,
+           typing-replaces-selection?:        #f,
+           unselected-copy-policy:        #"copy-line",
+           next-line-adds-newline?:        #t,
+           undo-past-save-policy:        #f,
+           confirm-kill-buffer?:        #t,
+           new-file-buffer?:                #t,
+           marking-policy:                #"right-margin",
+           scrolling-moves-point?:        #t,
+           default-font:                $default-font,
+           default-font-size:                #"normal",
+           tab-stop-size:                8,
+           fixed-frame-buffer?:                #f,
+           show-section-separators?:    #t,
+           show-path-in-title?:                #t,
+           wrap-searches?:                #t,
+           use-isearch?:                #t);
 
 define constant $windows-editor-policy
     = make(<editor-policy>,
-	   command-set-policy:		#"windows",
-	   alt-key-is-meta?:		#f,
-	   initial-click-moves-point?:	#f,
-	   clipboard-policy:		#t,
-	   typing-replaces-selection?:	#t,
-	   unselected-copy-policy:	#"copy-line",
-	   next-line-adds-newline?:	#f,
-	   undo-past-save-policy:	#f,
-	   confirm-kill-buffer?:	#f,
-	   new-file-buffer?:		#f,
-	   marking-policy:		#"end-of-line",
-	   scrolling-moves-point?:	#f,
-	   default-font:		$default-font,
-	   default-font-size:		#"normal",
-	   tab-stop-size:		8,
-	   fixed-frame-buffer?:		#t,
-	   show-section-separators?:    #f,
-	   show-path-in-title?:		#f,
-	   wrap-searches?:		#t,
-	   use-isearch?:		#f);
+           command-set-policy:                #"windows",
+           alt-key-is-meta?:                #f,
+           initial-click-moves-point?:        #f,
+           clipboard-policy:                #t,
+           typing-replaces-selection?:        #t,
+           unselected-copy-policy:        #"copy-line",
+           next-line-adds-newline?:        #f,
+           undo-past-save-policy:        #f,
+           confirm-kill-buffer?:        #f,
+           new-file-buffer?:                #f,
+           marking-policy:                #"end-of-line",
+           scrolling-moves-point?:        #f,
+           default-font:                $default-font,
+           default-font-size:                #"normal",
+           tab-stop-size:                8,
+           fixed-frame-buffer?:                #t,
+           show-section-separators?:    #f,
+           show-path-in-title?:                #f,
+           wrap-searches?:                #t,
+           use-isearch?:                #f);
 
 // The default behavior for DylanWorks is to use the Windows policy (yech!)
 define constant $default-editor-policy = $windows-editor-policy;

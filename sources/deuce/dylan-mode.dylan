@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Dylan mode
 
-//--- We should really have <dylan-syntax-mixin> that gets used by 
+//--- We should really have <dylan-syntax-mixin> that gets used by
 //--- both <dylan-mode> and <dylan-shell-mode>
 define open class <dylan-mode> (<language-mode>)
 end class <dylan-mode>;
@@ -27,25 +27,25 @@ define method initialize-major-mode
     #"emacs" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector('C', control, evaluate-region),
-		    vector('C', meta,    evaluate-buffer),
-		    vector('M', control, macroexpand-region),
-		    vector(#"f7",  nothing,       build-project),
-		    vector(#"f7",  control,       clean-build-project),
-		    vector(#"f7",  control+shift, evaluate-region));
+                    vector('C', control, evaluate-region),
+                    vector('C', meta,    evaluate-buffer),
+                    vector('M', control, macroexpand-region),
+                    vector(#"f7",  nothing,       build-project),
+                    vector(#"f7",  control,       clean-build-project),
+                    vector(#"f7",  control+shift, evaluate-region));
       let command-table = control-X-command-table(command-set);
       add-commands!(command-table,
-		    vector('c', control, build-project),
-		    vector('c', nothing, clean-build-project));
+                    vector('c', control, build-project),
+                    vector('c', nothing, clean-build-project));
       let command-table = escape-command-table(command-set);
       add-commands!(command-table,
-		    vector('C', nothing, evaluate-buffer));
+                    vector('C', nothing, evaluate-buffer));
     #"windows" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector(#"f7",  nothing,       build-project),
-		    vector(#"f7",  control,       clean-build-project),
-		    vector(#"f7",  control+shift, evaluate-region));
+                    vector(#"f7",  nothing,       build-project),
+                    vector(#"f7",  control,       clean-build-project),
+                    vector(#"f7",  control+shift, evaluate-region));
     otherwise =>
       #[];
   end
@@ -67,79 +67,79 @@ define method install-dylan-mode-bindings
     #"emacs" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector('f', control+meta, forward-expression),
-		    vector('b', control+meta, backward-expression),
-		    vector('u', control+meta, up-expression),
-		    vector('d', control+meta, down-expression),
-		    vector('a', control+meta, start-of-definition),
-		    vector('e', control+meta, end-of-definition),
-		    vector(#"right", meta,    forward-expression),
-		    vector(#"left",  meta,    backward-expression),
-		    vector(#"up",    meta,    up-expression),
-		    vector(#"down",  meta,    down-expression), 
-		    vector(#"prior", meta,    start-of-definition), 
-		    vector(#"next",  meta,    end-of-definition),
-		    vector(#"delete",    control+meta, delete-expression),
-		    vector(#"backspace", control+meta, rubout-expression),
-		    vector('k', control+meta, delete-expression),
-		    vector('t', control+meta, transpose-expressions),
-		    vector(';',    control,    insert-comment),
-		    vector(#"tab", control,    insert-tab),
-		    vector(#"tab", nothing,    indent-line),
-		    vector('\\', control+meta, indent-region),
-		    vector('q',  control+meta, indent-expression),
-		    vector(')', meta,         dylan-insert-block-end),
-		    vector('.', meta,         edit-definition),
-		    vector('i', control+meta, complete-name),
-		    vector('A', control,      show-arglist),
-		    vector('D', control,      show-documentation),
-		    vector('V', control,      describe-object),
-		    vector('O', control+meta, browse-object),
-		    vector('C', control+meta, browse-class),
-		    //---*** Clashes with Debugger's stepping bindings
-		    //---*** vector(#"f12", nothing,   complete-name),
-		    vector(#"f2", nothing,    browse-object),
-		    vector(#"f2", control,    browse-class),
-		    vector(#"f2", shift,      edit-definition));
+                    vector('f', control+meta, forward-expression),
+                    vector('b', control+meta, backward-expression),
+                    vector('u', control+meta, up-expression),
+                    vector('d', control+meta, down-expression),
+                    vector('a', control+meta, start-of-definition),
+                    vector('e', control+meta, end-of-definition),
+                    vector(#"right", meta,    forward-expression),
+                    vector(#"left",  meta,    backward-expression),
+                    vector(#"up",    meta,    up-expression),
+                    vector(#"down",  meta,    down-expression),
+                    vector(#"prior", meta,    start-of-definition),
+                    vector(#"next",  meta,    end-of-definition),
+                    vector(#"delete",    control+meta, delete-expression),
+                    vector(#"backspace", control+meta, rubout-expression),
+                    vector('k', control+meta, delete-expression),
+                    vector('t', control+meta, transpose-expressions),
+                    vector(';',    control,    insert-comment),
+                    vector(#"tab", control,    insert-tab),
+                    vector(#"tab", nothing,    indent-line),
+                    vector('\\', control+meta, indent-region),
+                    vector('q',  control+meta, indent-expression),
+                    vector(')', meta,         dylan-insert-block-end),
+                    vector('.', meta,         edit-definition),
+                    vector('i', control+meta, complete-name),
+                    vector('A', control,      show-arglist),
+                    vector('D', control,      show-documentation),
+                    vector('V', control,      describe-object),
+                    vector('O', control+meta, browse-object),
+                    vector('C', control+meta, browse-class),
+                    //---*** Clashes with Debugger's stepping bindings
+                    //---*** vector(#"f12", nothing,   complete-name),
+                    vector(#"f2", nothing,    browse-object),
+                    vector(#"f2", control,    browse-class),
+                    vector(#"f2", shift,      edit-definition));
       let command-table = control-X-command-table(command-set);
       add-commands!(command-table,
-		    vector(';', control,      comment-region));
+                    vector(';', control,      comment-region));
       let command-table = escape-command-table(command-set);
       add-commands!(command-table,
-		    vector('f', control,      forward-expression),
-		    vector('b', control,      backward-expression),
-		    vector('u', control,      up-expression),
-		    vector('d', control,      down-expression),
-		    vector('a', control,      start-of-definition),
-		    vector('e', control,      end-of-definition),
-		    vector(#"delete",    control, delete-expression),
-		    vector(#"backspace", control, rubout-expression),
-		    vector('k', control,      delete-expression),
-		    vector('t', control,      transpose-expressions),
-		    vector('\\', control,     indent-region),
-		    vector('q',  control,     indent-expression),
-		    vector(')', nothing,      dylan-insert-block-end),
-		    vector('.', nothing,      edit-definition),
-		    vector('i', control,      complete-name),
-		    vector('O', control,      browse-object),
-		    vector('C', control,      browse-class));
+                    vector('f', control,      forward-expression),
+                    vector('b', control,      backward-expression),
+                    vector('u', control,      up-expression),
+                    vector('d', control,      down-expression),
+                    vector('a', control,      start-of-definition),
+                    vector('e', control,      end-of-definition),
+                    vector(#"delete",    control, delete-expression),
+                    vector(#"backspace", control, rubout-expression),
+                    vector('k', control,      delete-expression),
+                    vector('t', control,      transpose-expressions),
+                    vector('\\', control,     indent-region),
+                    vector('q',  control,     indent-expression),
+                    vector(')', nothing,      dylan-insert-block-end),
+                    vector('.', nothing,      edit-definition),
+                    vector('i', control,      complete-name),
+                    vector('O', control,      browse-object),
+                    vector('C', control,      browse-class));
     #"windows" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector(#"right", meta,    forward-expression),
-		    vector(#"left",  meta,    backward-expression),
-		    vector(#"up",    meta,    up-expression),
-		    vector(#"down",  meta,    down-expression), 
-		    vector(#"prior", meta,    start-of-definition), 
-		    vector(#"next",  meta,    end-of-definition),
-		    vector(#"tab",   nothing, indent-region),
-		    vector('i',      control, insert-tab),
-		    //---*** Clashes with Debugger's stepping bindings
-		    //---*** vector(#"f12", nothing,   complete-name),
-		    vector(#"f1",  meta,      show-documentation),
-		    vector(#"f2", nothing,    browse-object),
-		    vector(#"f2", control,    browse-class),
-		    vector(#"f2", shift,      edit-definition));
+                    vector(#"right", meta,    forward-expression),
+                    vector(#"left",  meta,    backward-expression),
+                    vector(#"up",    meta,    up-expression),
+                    vector(#"down",  meta,    down-expression),
+                    vector(#"prior", meta,    start-of-definition),
+                    vector(#"next",  meta,    end-of-definition),
+                    vector(#"tab",   nothing, indent-region),
+                    vector('i',      control, insert-tab),
+                    //---*** Clashes with Debugger's stepping bindings
+                    //---*** vector(#"f12", nothing,   complete-name),
+                    vector(#"f1",  meta,      show-documentation),
+                    vector(#"f2", nothing,    browse-object),
+                    vector(#"f2", control,    browse-class),
+                    vector(#"f2", shift,      edit-definition));
     otherwise =>
       #[];
   end;
@@ -202,10 +202,10 @@ define method do-note-line-changed
       when (buffer & buffer-contains-section?(buffer, section))
         let definition-line = section-start-line(section);
         when (structural-diagram-line?(definition-line))
-	  line-modification-tick(definition-line) := tick();
-	  queue-redisplay(window, $display-line,
-			  line: definition-line, index: 0)
-	end
+          line-modification-tick(definition-line) := tick();
+          queue-redisplay(window, $display-line,
+                          line: definition-line, index: 0)
+        end
       end
     end
   end;
@@ -256,7 +256,7 @@ define sealed method display-line
      #key start: _start :: <integer> = 0, end: _end, align-y = #"top") => ()
   ignore(_end);
   unless (window-hide-section-separators?(window))
-    when (_start = 0)		// no icon on continuation lines
+    when (_start = 0)                // no icon on continuation lines
       let name  = section-definition-name(line-section(line));
       let font  = window-default-font(window);
       let color = $dylan-definition-line-color;
@@ -270,33 +270,33 @@ define sealed method display-line
       let height   = fh;
       let baseline = fa;
       when (align-y == #"baseline")
-	// Normalize the Y coordinate as though we are using 'align-y: #"top"'
-	dec!(y, baseline)
+        // Normalize the Y coordinate as though we are using 'align-y: #"top"'
+        dec!(y, baseline)
       end;
       let line-y   = y + floor/(height, 2);
       if (name)
-	// Here is the layout of the graphic we are drawing:
-	//        xoff1 line-width xoff2 name-width xoff2 line-width xoff1
-	//  |<-->|<--->|<-------->|<--->|<-------->|<--->|<-------->|<--->|
-	//  0    x                                                        width
-	let name-width = string-size(window, name, font: font);
-	let line-width = max(0, floor/(width - x - name-width, 2) - xoff1 - xoff2);
-	draw-line(window,
-		  x + xoff1, line-y,
-		  x + xoff1 + line-width, line-y,
-		  thickness: 1, color: color);
-	draw-line(window,
-		  width - xoff1, line-y,
-		  width - xoff1 - line-width, line-y,
-		  thickness: 1, color: color);
-	draw-string(window, name,
-		    x + xoff1 + line-width + xoff2, y,
-		    font: font, color: color, align-y: #"top")
+        // Here is the layout of the graphic we are drawing:
+        //        xoff1 line-width xoff2 name-width xoff2 line-width xoff1
+        //  |<-->|<--->|<-------->|<--->|<-------->|<--->|<-------->|<--->|
+        //  0    x                                                        width
+        let name-width = string-size(window, name, font: font);
+        let line-width = max(0, floor/(width - x - name-width, 2) - xoff1 - xoff2);
+        draw-line(window,
+                  x + xoff1, line-y,
+                  x + xoff1 + line-width, line-y,
+                  thickness: 1, color: color);
+        draw-line(window,
+                  width - xoff1, line-y,
+                  width - xoff1 - line-width, line-y,
+                  thickness: 1, color: color);
+        draw-string(window, name,
+                    x + xoff1 + line-width + xoff2, y,
+                    font: font, color: color, align-y: #"top")
       else
-	draw-line(window,
-		  x + xoff1, line-y,
-		  x + width - xoff1, line-y,
-		  thickness: 1, color: color);
+        draw-line(window,
+                  x + xoff1, line-y,
+                  x + width - xoff1, line-y,
+                  thickness: 1, color: color);
       end
     end
   end
@@ -346,22 +346,22 @@ define method do-presentation-at-position
     over-icon?
     & (menu?
        | (event-type == #"release"
-	  & ~gesture-matches?($menu-gesture, button, modifiers))) =>
+          & ~gesture-matches?($menu-gesture, button, modifiers))) =>
       // Mouse-right (press) on a breakpoint icon gets a presentation for a menu
       // Mouse-other (release) on a breakpoint icon also gets a presentation
       // Strictly speaking, we don't need to return #t as the third value,
       // but it makes the point-moving behavior more consistent...
       values(make(<presentation>,
-		  object: line, type: <dylan-breakpoint>),
-	     bp, #t);
+                  object: line, type: <dylan-breakpoint>),
+             bp, #t);
     dylan-line?
     & (menu?
        | (event-type == #"double-click"
-	  & gesture-matches?($move-gesture, button, modifiers))) =>
+          & gesture-matches?($move-gesture, button, modifiers))) =>
       // Mouse-right (press) on a dylan line gets a presentation for a menu
       values(make(<presentation>,
-		  object: line, type: <dylan-definition-line>),
-	     bp, #f);
+                  object: line, type: <dylan-definition-line>),
+             bp, #f);
     ~(sbp & ebp)
     | gesture-matches?($move-gesture, button, modifiers, event-type: event-type)
     | gesture-matches?($copy-gesture, button, modifiers, event-type: event-type) =>
@@ -370,14 +370,14 @@ define method do-presentation-at-position
     menu? & dline & x > display-line-width(dline) + 10 =>
       // Mouse-right (press) on blank area gets a presentation for a menu
       values(make(<presentation>,
-		  object: #f, type: <blank-area>),
-	     bp, #f);
+                  object: #f, type: <blank-area>),
+             bp, #f);
     event-type == #"press" | event-type == #"release" & sbp & ebp =>
       // If it's a button press or release that is not a copy or move,
       // give it a presentation as well
       values(make(<presentation>,
-		  object: make-interval(sbp, ebp), type: <dylan-atom>),
-	     bp, ~menu?);	// don't move point if a menu is requested
+                  object: make-interval(sbp, ebp), type: <dylan-atom>),
+             bp, ~menu?);        // don't move point if a menu is requested
     otherwise =>
       // Everything else just gets a raw BP
       values(#f, bp, #t);
@@ -393,45 +393,45 @@ define sealed domain initialize (<dylan-breakpoint>);
 
 define variable $cycle-break-gesture :: <gesture>
     = make(<gesture>,
-	   button: $left-button,  modifiers: 0, event-type: #"release");
+           button: $left-button,  modifiers: 0, event-type: #"release");
 define variable $cycle-trace-gesture :: <gesture>
     = make(<gesture>,
-	   button: $left-button,  modifiers: $shift-key, event-type: #"release");
+           button: $left-button,  modifiers: $shift-key, event-type: #"release");
 define variable $step-gesture :: <gesture>
     = make(<gesture>,
-	   button: $left-button,  modifiers: $control-key, event-type: #"release");
+           button: $left-button,  modifiers: $control-key, event-type: #"release");
 
 define method do-handle-presentation-event
     (mode :: <dylan-mode>, window :: <basic-window>,
      line :: <basic-line>, type == <dylan-breakpoint>,
      #key bp, x, y, button = $left-button, modifiers = 0, event-type = #"press",
-	  menu-function = dylan-breakpoint-menu) => ()
+          menu-function = dylan-breakpoint-menu) => ()
   let old-state = line-breakpoint?(mode, line);
   let menu? = gesture-matches?($menu-gesture, button, modifiers, event-type: event-type);
   when (old-state)
     case
       menu? =>
-	// Pop up a menu of operations for the breakpoint
-	menu-function(window, mode, line, bp: bp, x: x, y: y);
+        // Pop up a menu of operations for the breakpoint
+        menu-function(window, mode, line, bp: bp, x: x, y: y);
       gesture-matches?($cycle-break-gesture, button, modifiers, event-type: event-type) =>
-	// Cycle between breakpoint states
-	// Note that we don't ever cycle back to #"none", because
-	// that could easily lose carefully constructed state
-	let new-state = select (old-state)
-			  #"none"           => #"enabled-break";
-			  #"enabled-break"  => #"disabled-break";
-			  #"disabled-break" => #"enabled-break";
-			  otherwise   => #f;
-			end;
-	when (new-state)
-	  line-breakpoint?(mode, line) := new-state
-	end;
+        // Cycle between breakpoint states
+        // Note that we don't ever cycle back to #"none", because
+        // that could easily lose carefully constructed state
+        let new-state = select (old-state)
+                          #"none"           => #"enabled-break";
+                          #"enabled-break"  => #"disabled-break";
+                          #"disabled-break" => #"enabled-break";
+                          otherwise   => #f;
+                        end;
+        when (new-state)
+          line-breakpoint?(mode, line) := new-state
+        end;
       gesture-matches?($cycle-trace-gesture, button, modifiers, event-type: event-type) =>
-	let new-state = #"enabled-trace";
-	line-breakpoint?(mode, line) := new-state;
+        let new-state = #"enabled-trace";
+        line-breakpoint?(mode, line) := new-state;
       gesture-matches?($step-gesture, button, modifiers, event-type: event-type) =>
-	let new-state = #"step";
-	line-breakpoint?(mode, line) := new-state;
+        let new-state = #"step";
+        line-breakpoint?(mode, line) := new-state;
     end;
     queue-redisplay(window, $display-line, line: line, index: 0, centering: #f);
     redisplay-window(window)
@@ -445,12 +445,12 @@ define method dylan-breakpoint-menu
   // This is where DylanWorks mode calls out to the environment
   let new-state
     = choose-from-menu(window,
-		       #[#["Clear",          #"none"],
-			 #["Set Breakpoint", #"enabled-break"],
-			 #["Step to here",   #"step"],
-			 #["Set Tracepoint", #"enabled-trace"],
-			 #["Set Profile",    #"profile"]],
-		       label-key: first, value-key: second);
+                       #[#["Clear",          #"none"],
+                         #["Set Breakpoint", #"enabled-break"],
+                         #["Step to here",   #"step"],
+                         #["Set Tracepoint", #"enabled-trace"],
+                         #["Set Profile",    #"profile"]],
+                       label-key: first, value-key: second);
   when (new-state)
     line-breakpoint?(mode, line) := new-state
   end
@@ -467,7 +467,7 @@ define method do-handle-presentation-event
     (mode :: <dylan-mode>, window :: <basic-window>,
      atom :: <basic-interval>, type == <dylan-atom>,
      #key bp, x, y, button = $left-button, modifiers = 0, event-type = #"press",
-	  menu-function = dylan-atom-menu) => ()
+          menu-function = dylan-atom-menu) => ()
   let menu? = gesture-matches?($menu-gesture, button, modifiers, event-type: event-type);
   case
     gesture-matches?($edit-gesture, button, modifiers, event-type: event-type) =>
@@ -478,9 +478,9 @@ define method do-handle-presentation-event
     menu? =>
       // Pop up a menu of operations for the atom under the mouse
       with-temporary-selection (window, bp)
-	menu-function(window, mode, atom, bp: bp, x: x, y: y)
+        menu-function(window, mode, atom, bp: bp, x: x, y: y)
       selecter
-	select-atom-under-bp(window, bp);
+        select-atom-under-bp(window, bp);
       end;
     otherwise => #f;
   end
@@ -492,14 +492,14 @@ define method dylan-atom-menu
   ignore(atom, bp, x, y);
   let buffer = window-buffer(window);
   let module = instance?(buffer-start-node(buffer), <dylan-header-node>)
-	       & node-module-name(buffer-start-node(buffer));
+               & node-module-name(buffer-start-node(buffer));
   // This is where DylanWorks mode calls out to the environment
   choose-from-menu(window,
-		   #[#["Edit",         #"edit"],
-		     #["Browse",       #"browse"],
-		     #["Browse Class", #"browse-class"],
-		     #["Properties",   #"properties"]],
-		   label-key: first, value-key: second)
+                   #[#["Edit",         #"edit"],
+                     #["Browse",       #"browse"],
+                     #["Browse Class", #"browse-class"],
+                     #["Properties",   #"properties"]],
+                   label-key: first, value-key: second)
 end method dylan-atom-menu;
 
 
@@ -507,7 +507,7 @@ define method do-handle-presentation-event
     (mode :: <dylan-mode>, window :: <basic-window>,
      line :: <dylan-definition-line>, type == <dylan-definition-line>,
      #key bp, x, y, button = $left-button, modifiers = 0, event-type = #"press",
-	  menu-function = dylan-definition-line-menu) => ()
+          menu-function = dylan-definition-line-menu) => ()
   let menu? = gesture-matches?($menu-gesture, button, modifiers, event-type: event-type);
   case
     menu? =>
@@ -523,10 +523,10 @@ define method dylan-definition-line-menu
   ignore(line, bp, x, y);
   // This is where DylanWorks mode calls out to the environment
   choose-from-menu(window,
-		   #[#["Evaluate Definition", #"compile"],
-		     #["Browse Definition",   #"browse"],
-		     #["Properties",          #"properties"]],
-		   label-key: first, value-key: second)
+                   #[#["Evaluate Definition", #"compile"],
+                     #["Browse Definition",   #"browse"],
+                     #["Properties",          #"properties"]],
+                   label-key: first, value-key: second)
 end method dylan-definition-line-menu;
 
 
@@ -557,7 +557,7 @@ define method do-sectionize-buffer
   buffer-start-node(buffer) := #f;
   buffer-end-node(buffer)   := #f;
   add-dylan-section-nodes!(buffer, sections,
-			   header-section: header-section, module-line: module-line);
+                           header-section: header-section, module-line: module-line);
   /*
   when ($debug-sectionizer?)
     let start-bp   = interval-start-bp(buffer);
@@ -568,11 +568,11 @@ define method do-sectionize-buffer
     // some useful(?) diagnostics.
     dynamic-bind (*buffer* = buffer)
       assert(last-line-from(start-line, in-buffer?: #t, verbose?: #t) == end-line,
-	     "Buffer line link structure incorrect after sectionize-buffer");
+             "Buffer line link structure incorrect after sectionize-buffer");
       // If the following fails, you can add ", verbose?: #t" to get
       // some useful(?) diagnostics.
       assert(check-buffer-bps(buffer, verbose?: #t),
-	     "Buffer BPs incorrect after sectionize-buffer")
+             "Buffer BPs incorrect after sectionize-buffer")
     end
   end;
   */
@@ -608,15 +608,15 @@ define method do-resectionize-section
   let n-sections :: <integer>
     = size(sections) + (if (header-section) 1 else 0 end);
   assert(n-sections ~== 0,
-	 "Resectionizing the section resulted in no sections");
+         "Resectionizing the section resulted in no sections");
   let resectionized? :: <boolean> = (n-sections > 1);
   local method assign-section
-	    (first-line :: <basic-line>, section :: <basic-section>)
-	  for (line = first-line then line-next(line),
-	       until: ~line)
-	    line-section(line) := section
-	  end
-	end method;
+            (first-line :: <basic-line>, section :: <basic-section>)
+          for (line = first-line then line-next(line),
+               until: ~line)
+            line-section(line) := section
+          end
+        end method;
   // The 'sections' we've got back (not including the one we passed in) are
   // in a temporary container, so now we must move them into 'container'.
   // If the first new section, after any header, has no defining-line,
@@ -633,63 +633,63 @@ define method do-resectionize-section
   block (return)
     while (first-section & ~section-defining-line(first-section))
       local method merge-sections!
-		(section1 :: <basic-section>, section2 :: <basic-section>,
-		 into :: <basic-section>) => ()
-	      let (start1, end1, start2, end2)
-		= values(section-start-line(section1), section-end-line(section1),
-			 section-start-line(section2), section-end-line(section2));
-	      let from :: <basic-section>
-		= if (into == section1) section2 else section1 end;
-	      assert(start1 & end1 & start2 & end2,
-		     "There's an empty section while merging sections");
-	      // Move all the lines in 'from' to 'into'
-	      assign-section(section-start-line(from), into);
-	      line-next(end1)       := start2;
-	      line-previous(start2) := end1;
-	      section-start-line(into) := start1;
-	      section-end-line(into)   := end2;
-	      // Update the start/end BPs of any nodes using these sections
-	      for (node :: <basic-node> in section-nodes(section1))
-		move-bp!(interval-end-bp(node), end2, line-length(end2));
-		node-section(node) := into
-	      end;
-	      for (node :: <basic-node> in section-nodes(section2))
-		move-bp!(interval-start-bp(node), start1, line-length(start1));
-		node-section(node) := into
-	      end;
-	      into.%n-lines := #f;
-	    end method;
+                (section1 :: <basic-section>, section2 :: <basic-section>,
+                 into :: <basic-section>) => ()
+              let (start1, end1, start2, end2)
+                = values(section-start-line(section1), section-end-line(section1),
+                         section-start-line(section2), section-end-line(section2));
+              let from :: <basic-section>
+                = if (into == section1) section2 else section1 end;
+              assert(start1 & end1 & start2 & end2,
+                     "There's an empty section while merging sections");
+              // Move all the lines in 'from' to 'into'
+              assign-section(section-start-line(from), into);
+              line-next(end1)       := start2;
+              line-previous(start2) := end1;
+              section-start-line(into) := start1;
+              section-end-line(into)   := end2;
+              // Update the start/end BPs of any nodes using these sections
+              for (node :: <basic-node> in section-nodes(section1))
+                move-bp!(interval-end-bp(node), end2, line-length(end2));
+                node-section(node) := into
+              end;
+              for (node :: <basic-node> in section-nodes(section2))
+                move-bp!(interval-start-bp(node), start1, line-length(start1));
+                node-section(node) := into
+              end;
+              into.%n-lines := #f;
+            end method;
       if (old-index ~== 1 & ~header-section)
-	// Case (a): merge into the preceding section
-	// 'old-index ~== 1' ensures we don't merge into the header section
-	let into :: <basic-section> = old-sections[old-index - 1];
-	merge-sections!(into, first-section, into);
-	remove!(sections, first-section)
+        // Case (a): merge into the preceding section
+        // 'old-index ~== 1' ensures we don't merge into the header section
+        let into :: <basic-section> = old-sections[old-index - 1];
+        merge-sections!(into, first-section, into);
+        remove!(sections, first-section)
       else
-	let next-section
-	  = element(sections, 1, default: #f)
-	    | element(old-sections, old-index + 1, default: #f);
-	if (next-section)
-	  // Case (b): merge into the following section
-	  let next-section-start-line = section-start-line(next-section);
-	  let dylan-definition-line
-	    = if (instance?(next-section-start-line, <dylan-definition-line>))
-		remove-line!(next-section, next-section-start-line);
-		//---*** Following line is temporary until 'remove-line!' does it
-		line-section(next-section-start-line) := #f;
-		next-section-start-line
-	      else
-		#f
-	      end;
-	  merge-sections!(first-section, next-section, next-section);
-	  when (dylan-definition-line)
-	    add-line!(next-section, dylan-definition-line, after: #"start")
-	  end;
-	  remove!(sections, first-section)
-	else
-	  // Case (c): there's no possible following section, so don't merge
-	  return()
-	end
+        let next-section
+          = element(sections, 1, default: #f)
+            | element(old-sections, old-index + 1, default: #f);
+        if (next-section)
+          // Case (b): merge into the following section
+          let next-section-start-line = section-start-line(next-section);
+          let dylan-definition-line
+            = if (instance?(next-section-start-line, <dylan-definition-line>))
+                remove-line!(next-section, next-section-start-line);
+                //---*** Following line is temporary until 'remove-line!' does it
+                line-section(next-section-start-line) := #f;
+                next-section-start-line
+              else
+                #f
+              end;
+          merge-sections!(first-section, next-section, next-section);
+          when (dylan-definition-line)
+            add-line!(next-section, dylan-definition-line, after: #"start")
+          end;
+          remove!(sections, first-section)
+        else
+          // Case (c): there's no possible following section, so don't merge
+          return()
+        end
       end;
       first-section := element(sections, 0, default: #f)
     end while
@@ -728,16 +728,16 @@ define method do-resectionize-section
     when (first-section)
       let after-section :: <basic-section> = section;
       for (section :: <basic-section> in sections)
-	section-container(section) := #f;	// this is how we remove it...
-	add-section!(container, section, after: after-section);
-	after-section := section
+        section-container(section) := #f;        // this is how we remove it...
+        add-section!(container, section, after: after-section);
+        after-section := section
       end;
       for (node :: <basic-node> in section-nodes(section))
-	let buffer = node-buffer(node);
-	when (buffer)
-	  add-dylan-section-nodes!(buffer, sections,
-				   after: section-node(section, buffer: buffer))
-	end
+        let buffer = node-buffer(node);
+        when (buffer)
+          add-dylan-section-nodes!(buffer, sections,
+                                   after: section-node(section, buffer: buffer))
+        end
       end
     end
   else
@@ -747,7 +747,7 @@ define method do-resectionize-section
     for (node :: <basic-node> in section-nodes(section))
       let buffer = node-buffer(node);
       when (buffer)
-	remove-node!(buffer, node)
+        remove-node!(buffer, node)
       end
     end
   end;
@@ -755,19 +755,19 @@ define method do-resectionize-section
   when ($debug-sectionizer?)
     for (buffer :: false-or(<basic-buffer>) in section-buffers)
       when (buffer)
-	let start-bp   = interval-start-bp(buffer);
-	let start-line = start-bp & bp-line(start-bp);
-	let end-bp     = interval-end-bp(buffer);
-	let end-line   = end-bp & bp-line(end-bp);
-	// If the following fails, you can add ", verbose?: #t" to get
-	// some useful(?) diagnostics.
-	dynamic-bind (*buffer* = buffer)
-	  assert(last-line-from(start-line, in-buffer?: #t, verbose?: #t) == end-line,
-		 "Buffer line link structure incorrect after resectionize-section");
-	  // If the following fails, you can add ", verbose?: #t" to get
-	  // some useful(?) diagnostics.
-	  assert(check-buffer-bps(buffer, verbose?: #t),
-		 "Buffer BPs incorrect after sectionize-section")
+        let start-bp   = interval-start-bp(buffer);
+        let start-line = start-bp & bp-line(start-bp);
+        let end-bp     = interval-end-bp(buffer);
+        let end-line   = end-bp & bp-line(end-bp);
+        // If the following fails, you can add ", verbose?: #t" to get
+        // some useful(?) diagnostics.
+        dynamic-bind (*buffer* = buffer)
+          assert(last-line-from(start-line, in-buffer?: #t, verbose?: #t) == end-line,
+                 "Buffer line link structure incorrect after resectionize-section");
+          // If the following fails, you can add ", verbose?: #t" to get
+          // some useful(?) diagnostics.
+          assert(check-buffer-bps(buffer, verbose?: #t),
+                 "Buffer BPs incorrect after sectionize-section")
         end
       end
     end
@@ -795,7 +795,7 @@ define method split-lines-into-sections
   */
   unless (sectionizing-buffer?)
     assert(section-container(line-source) == container,
-	   "The section %= is not in the correct container", line-source)
+           "The section %= is not in the correct container", line-source)
   end;
   // We assume that the lines in the interval are all in the same section,
   // in which case the container provided should contain that section, and
@@ -805,7 +805,7 @@ define method split-lines-into-sections
   // which have the given container (without needing to be moved).
   unless (sectionizing-buffer?)
     container := make(<flat-file-source-container>,
-		      pathname: "*temporary dylan container*")
+                      pathname: "*temporary dylan container*")
   end;
   // First pick out the header and make a header section, collecting
   // the remaining lines for use downstream.
@@ -817,38 +817,38 @@ define method split-lines-into-sections
   // 'collect' will be bound to 'collect-header-line' then later 'collect-line'
   let collect :: <function> = identity;
   local method collect-line (line :: <line>)
-	  add!(lines, line)
-	end method,
+          add!(lines, line)
+        end method,
         method collect-header-line (line :: <line>)
-	  add!(header-lines, line);
-	  when (text-line?(line))	// no funny stuff in the header, please
-	    when (line-length(line) = 0)
-	      collect := collect-line;
-	      /*
-	      $sectionizer-debug-message
-		("Header lines:\n%=",
-		 if (empty?(header-lines)) "_None_"
-		 else reduce1(concatenate, map(curry(as, <string>), header-lines))
-		 end);
-	      */
-	    end
-	  end
-	end method;
+          add!(header-lines, line);
+          when (text-line?(line))        // no funny stuff in the header, please
+            when (line-length(line) = 0)
+              collect := collect-line;
+              /*
+              $sectionizer-debug-message
+                ("Header lines:\n%=",
+                 if (empty?(header-lines)) "_None_"
+                 else reduce1(concatenate, map(curry(as, <string>), header-lines))
+                 end);
+              */
+            end
+          end
+        end method;
   collect := if (starts-in-header?) collect-header-line else collect-line end;
   // We have to make sure that we catch and safely dispose of any
   // <dylan-definition-line>s, because node start/end BPs may point to them
   let old-definition-lines :: <stretchy-object-vector> = make(<stretchy-vector>);
   do-lines(method (line, si, ei, last?)
-	     ignore(si, ei, last?);
-	     if (instance?(line, <dylan-definition-line>))
-	       // Must remove these _later_, or we may confuse 'do-lines'
-	       add!(old-definition-lines, line)
-	     else
-	       // 'collect' is either 'collect-header-line' or 'collect-line'
-	       collect(line)
-	     end
-	   end method, line-source,
-	   skip-test: #f);
+             ignore(si, ei, last?);
+             if (instance?(line, <dylan-definition-line>))
+               // Must remove these _later_, or we may confuse 'do-lines'
+               add!(old-definition-lines, line)
+             else
+               // 'collect' is either 'collect-header-line' or 'collect-line'
+               collect(line)
+             end
+           end method, line-source,
+           skip-test: #f);
   for (line :: <dylan-definition-line> in old-definition-lines)
     remove-line!(line-section(line), line);
     /*
@@ -861,22 +861,22 @@ define method split-lines-into-sections
      if (empty?(lines)) "_None_"
      else reduce1(concatenate, map(curry(as, <string>), lines)) end);
   */
-  local method assign-section 
-	    (lines :: <stretchy-object-vector>,
-	     start-index :: <integer>, end-index :: <integer>,
-	     section :: <basic-section>)
-	  let prev-line :: false-or(<basic-line>) = #f;
-	  for (i :: <integer> from start-index to end-index)
-	    let line :: <basic-line> = lines[i];
-	    when (prev-line)
-	      line-next(prev-line) := line
-	    end;
-	    line-previous(line) := prev-line;
-	    line-section(line)  := section;
+  local method assign-section
+            (lines :: <stretchy-object-vector>,
+             start-index :: <integer>, end-index :: <integer>,
+             section :: <basic-section>)
+          let prev-line :: false-or(<basic-line>) = #f;
+          for (i :: <integer> from start-index to end-index)
+            let line :: <basic-line> = lines[i];
+            when (prev-line)
+              line-next(prev-line) := line
+            end;
+            line-previous(line) := prev-line;
+            line-section(line)  := section;
             prev-line := line
-	  end;
-	  line-next(lines[end-index]) := #f
-	end method;
+          end;
+          line-next(lines[end-index]) := #f
+        end method;
   unless (empty?(header-lines))
     let si :: <integer> = 0;
     let ei :: <integer> = size(header-lines) - 1;
@@ -885,10 +885,10 @@ define method split-lines-into-sections
     module-line := find-module-line(header-lines);
     let dylan-section :: <basic-section>
       = make(<dylan-section>,
-	     container:  container,
-	     start-line: start-line,
-	     end-line:   end-line,
-	     defining-line: first(header-lines));
+             container:  container,
+             start-line: start-line,
+             end-line:   end-line,
+             defining-line: first(header-lines));
     header-section := dylan-section;
     assign-section(header-lines, si, ei, header-section);
     /*
@@ -908,74 +908,74 @@ define method split-lines-into-sections
     //    - Set _this-start_ to _next-start_, and _prev-end_
     //      to _this-end_, and loop
     local method collect-section
-	      (si :: <integer>, ei :: <integer>, defining-line :: false-or(<basic-line>))
-	   => (section :: <basic-section>)
-	    let start-line :: <basic-line> = lines[si];
-	    let end-line   :: <basic-line> = lines[ei];
-	    let section = make(<dylan-section>,
-			       container:  container,
-			       start-line: start-line,
-			       end-line:   end-line,
-			       defining-line: defining-line);
-	    assign-section(lines, si, ei, section);
-	    add!(sections, section);
-	    section
-	  end method;
+              (si :: <integer>, ei :: <integer>, defining-line :: false-or(<basic-line>))
+           => (section :: <basic-section>)
+            let start-line :: <basic-line> = lines[si];
+            let end-line   :: <basic-line> = lines[ei];
+            let section = make(<dylan-section>,
+                               container:  container,
+                               start-line: start-line,
+                               end-line:   end-line,
+                               defining-line: defining-line);
+            assign-section(lines, si, ei, section);
+            add!(sections, section);
+            section
+          end method;
     block (break)
       let prev-end   = -1;
       let this-start = find-defining-line(lines, 0);
       let final = size(lines) - 1;
       if (~this-start)
-	// Only one section in the rest of the interval
-	let section = collect-section(0, final, #f);
-	/*
-	$sectionizer-debug-message
-	  ("Only one, non-definition section:\n%=\n",
-	   as(<string>, section));
-	*/
-	break()
+        // Only one section in the rest of the interval
+        let section = collect-section(0, final, #f);
+        /*
+        $sectionizer-debug-message
+          ("Only one, non-definition section:\n%=\n",
+           as(<string>, section));
+        */
+        break()
       else
-	when (~sectionizing-buffer? & this-start >= 1)
-	  // Grab any initial "extra" lines by looking backwards from
-	  // this-start with 'find-non-blank-line'.  They get their own
-	  // section with no defining-line, but they'll be moved later,
-	  // in 'do-resectionize-section'.
-	  let this-end = find-non-blank-line(lines, this-start - 1);
-	  when (this-end)
-	    prev-end := this-end - 1;
-	    let section = collect-section(0, prev-end, #f);
-	    /*
-	    $sectionizer-debug-message
-	      ("'Extra' section:\n%=\n", as(<string>, section))
-	    */
-	  end
-	end;
-	while (#t)
+        when (~sectionizing-buffer? & this-start >= 1)
+          // Grab any initial "extra" lines by looking backwards from
+          // this-start with 'find-non-blank-line'.  They get their own
+          // section with no defining-line, but they'll be moved later,
+          // in 'do-resectionize-section'.
+          let this-end = find-non-blank-line(lines, this-start - 1);
+          when (this-end)
+            prev-end := this-end - 1;
+            let section = collect-section(0, prev-end, #f);
+            /*
+            $sectionizer-debug-message
+              ("'Extra' section:\n%=\n", as(<string>, section))
+            */
+          end
+        end;
+        while (#t)
           // Despite its name, 'find-non-blank-line' can point to a blank line!
           // Try to make sure that blank lines after this section end up at the
           // end of this section, not at the beginning of the next one.
-	  let next-start = find-defining-line(lines, this-start + 1);
+          let next-start = find-defining-line(lines, this-start + 1);
           let non-blank  = next-start & (find-non-blank-line(lines, next-start - 1));
           let this-end   = if (non-blank & line-empty?(lines[non-blank])) non-blank
-			   elseif (non-blank) non-blank - 1
+                           elseif (non-blank) non-blank - 1
                            else final end;
-	  let section = collect-section(prev-end + 1, this-end, lines[this-start]);
-	  // Add section header line if requested
-	  when (*show-dylan-definition-lines?*)
-	    let diagram = make(<dylan-definition-line>);
-	    add-line!(section, diagram, after: #"start")
-	  end;
-	  /*
-	  $sectionizer-debug-message
-	    ("Next section:\n%=\n", as(<string>, section));
-	  */
-	  if (next-start)
-	    this-start := next-start;
-	    prev-end   := this-end
-	  else
-	    break()
-	  end
-	end
+          let section = collect-section(prev-end + 1, this-end, lines[this-start]);
+          // Add section header line if requested
+          when (*show-dylan-definition-lines?*)
+            let diagram = make(<dylan-definition-line>);
+            add-line!(section, diagram, after: #"start")
+          end;
+          /*
+          $sectionizer-debug-message
+            ("Next section:\n%=\n", as(<string>, section));
+          */
+          if (next-start)
+            this-start := next-start;
+            prev-end   := this-end
+          else
+            break()
+          end
+        end
       end
     end
   end;
@@ -986,31 +986,31 @@ end method split-lines-into-sections;
 define method add-dylan-section-nodes!
     (buffer :: <basic-buffer>, sections :: <stretchy-object-vector>,
      #key header-section :: false-or(<section>), module-line :: false-or(<line>),
-	  after :: false-or(<node>)) => ()
+          after :: false-or(<node>)) => ()
   for (section :: <basic-section> in sections)
     let start-bp
       = make(<bp>,
-	     line: section-start-line(section), index: 0,
-	     buffer: buffer);
+             line: section-start-line(section), index: 0,
+             buffer: buffer);
     let end-bp
       = make(<bp>,
-	     line: section-end-line(section), index: line-length(section-end-line(section)),
-	     buffer: buffer,
-	     moving?: #t);
+             line: section-end-line(section), index: line-length(section-end-line(section)),
+             buffer: buffer,
+             moving?: #t);
     let node
       = if (section == header-section)
-	  let module-name
-	    = module-line
-	      & trim-whitespace(copy-sequence(line-contents(module-line), start: 8));
-	  make(<dylan-header-node>,
-	       start-bp: start-bp, end-bp: end-bp,
-	       section:  header-section,
-	       module-name: module-name & as-lowercase(module-name))
-	else
-	  make(<dylan-definition-node>,
-	       start-bp: start-bp, end-bp: end-bp,
-	       section:  section)
-	end;
+          let module-name
+            = module-line
+              & trim-whitespace(copy-sequence(line-contents(module-line), start: 8));
+          make(<dylan-header-node>,
+               start-bp: start-bp, end-bp: end-bp,
+               section:  header-section,
+               module-name: module-name & as-lowercase(module-name))
+        else
+          make(<dylan-definition-node>,
+               start-bp: start-bp, end-bp: end-bp,
+               section:  section)
+        end;
     // Our caller may be adding this section to more than one buffer by
     // calling us repeatedly, so we must preserve existing section-nodes
     push!(section-nodes(section), node);
@@ -1043,9 +1043,9 @@ define function last-line-from
       end;
   block(return)
     for (this = line then next(this),
-	 until: ~next(this))
+         until: ~next(this))
       when (verbose?)
-	$sectionizer-debug-message("this = %=", line-contents(this));
+        $sectionizer-debug-message("this = %=", line-contents(this));
       end;
       unless(previous(next(this)) == this)
         when (verbose?)
@@ -1145,11 +1145,11 @@ define method find-module-line
   block (return)
     for (line in header-lines)
       when (text-line?(line))
-	let length   = line-length(line);
-	let contents = line-contents(line);
-	when (length > 7  & string-equal?(contents, "Module:", end1: 7))
-	  return(line)
-	end
+        let length   = line-length(line);
+        let contents = line-contents(line);
+        when (length > 7  & string-equal?(contents, "Module:", end1: 7))
+          return(line)
+        end
       end
     end;
     values(#f, #f)
@@ -1165,21 +1165,21 @@ define method find-defining-line
     for (i :: <integer> from index below n-lines)
       let line = lines[i];
       when (text-line?(line))
-	let length   = line-length(line);
-	let contents = line-contents(line);
-	/*
-	$sectionizer-debug-message
-	  ("Seeking define line at line %=/%=: %=", i, n-lines, contents);
-	*/
-	when (  (length > 6 & string-equal?(contents, "define", end1: 6))
-		// '>=' because 'begin' might stand alone on this line
-	      | (length >= 5 & string-equal?(contents, "begin", end1: 5)))
-	  /*
-	  $sectionizer-debug-message
-	    ("Found define line at line %=/%=", i, n-lines);
-	  */
-	  return(i)
-	end
+        let length   = line-length(line);
+        let contents = line-contents(line);
+        /*
+        $sectionizer-debug-message
+          ("Seeking define line at line %=/%=: %=", i, n-lines, contents);
+        */
+        when (  (length > 6 & string-equal?(contents, "define", end1: 6))
+                // '>=' because 'begin' might stand alone on this line
+              | (length >= 5 & string-equal?(contents, "begin", end1: 5)))
+          /*
+          $sectionizer-debug-message
+            ("Found define line at line %=/%=", i, n-lines);
+          */
+          return(i)
+        end
       end
     end;
     #f
@@ -1194,13 +1194,13 @@ define method find-non-blank-line
     while (index >= 0)
       let line = lines[index];
       when (text-line?(line))
-	let length   = line-length(line);
-	let contents = line-contents(line);
-	let bp = find-key(contents,
-			  method (ch) ~whitespace-char?(ch) end, failure: length);
-	when (length - bp > 2
-	      & ~string-equal?(contents, "//", start1: bp, end1: bp + 2))
-	  return(index + 1)
+        let length   = line-length(line);
+        let contents = line-contents(line);
+        let bp = find-key(contents,
+                          method (ch) ~whitespace-char?(ch) end, failure: length);
+        when (length - bp > 2
+              & ~string-equal?(contents, "//", start1: bp, end1: bp + 2))
+          return(index + 1)
         end
       end;
       index := index - 1
@@ -1220,7 +1220,7 @@ define sealed method do-relevant-function-interval
   let sbp = if (atom-syntax(bp-character-before(bp)) == $atom-delimiter)
               forward-over(bp, #[' ', '\t', '\f'], interval: node)
             else
-	      move-over-atoms(bp, -1, interval: node)
+              move-over-atoms(bp, -1, interval: node)
             end;
   let ebp = move-over-atoms(sbp, 1, interval: node);
   if (bp-character-before(sbp) = '.')
@@ -1244,15 +1244,15 @@ define method do-atom-under-bp
  => (sbp :: <basic-bp>, ebp :: <basic-bp>)
   let node = bp-node(bp) | bp-buffer(bp);
   let sbp  = if (atom-syntax(bp-character-before(bp)) == $atom-delimiter)
-	       forward-over(bp, #[' ', '\t', '\f'], interval: node)
-	     else
-	       move-over-atoms(bp, -1, interval: node)
-	     end;
+               forward-over(bp, #[' ', '\t', '\f'], interval: node)
+             else
+               move-over-atoms(bp, -1, interval: node)
+             end;
   let ebp  = move-over-atoms(sbp, 1, interval: node);
   // Some characters are magic at the beginning of an atom
   // Skip them, unless the user is right on top of one
   when (bp ~= sbp
-	& member?(bp-character(sbp), #['+', '-', '~', '?', '/']))
+        & member?(bp-character(sbp), #['+', '-', '~', '?', '/']))
     increment-bp!(sbp)
   end;
   values(sbp, ebp)
@@ -1309,25 +1309,25 @@ define sealed method compute-section-signature
   let end-line   = section-end-line(section);
   let signature
     = when (start-line)
-	let contents = line-contents(start-line);
-	let length   = line-length(start-line);
-	case
-	  string-equal?(contents, "define", start1: 0, end1: min(length, 6)) =>
-	    let interval
-	      = make-interval(line-start(start-line), line-end(end-line), in-order?: #t);
-	    let stream :: <interval-stream>
-	      = make(<interval-stream>, interval: interval, direction: #"input");
-	    block ()
-	      parse-dylan-signature(stream)
-	    cleanup
-	      close(stream)
-	    end;
-	  string-equal?(contents, "begin", start1: 0, end1: min(length, 5)) =>
-	    make(<dylan-signature>,
-		 type: #"top-level-form", name: "begin ... end");
-	  otherwise =>
-	    #f;
-	end;
+        let contents = line-contents(start-line);
+        let length   = line-length(start-line);
+        case
+          string-equal?(contents, "define", start1: 0, end1: min(length, 6)) =>
+            let interval
+              = make-interval(line-start(start-line), line-end(end-line), in-order?: #t);
+            let stream :: <interval-stream>
+              = make(<interval-stream>, interval: interval, direction: #"input");
+            block ()
+              parse-dylan-signature(stream)
+            cleanup
+              close(stream)
+            end;
+          string-equal?(contents, "begin", start1: 0, end1: min(length, 5)) =>
+            make(<dylan-signature>,
+                 type: #"top-level-form", name: "begin ... end");
+          otherwise =>
+            #f;
+        end;
       end;
   section.%signature := signature;
   signature
@@ -1368,144 +1368,144 @@ define sealed method parse-dylan-signature
   let buffer :: <stretchy-object-vector> = make(<stretchy-vector>);
   let params :: <stretchy-object-vector> = make(<stretchy-vector>);
   local method skip-whitespace () => ()
-	  while (any-whitespace-char?(peek(stream, on-end-of-stream: '\0')))
-	    read-element(stream)
-	  end
-	end method,
-	method next-name () => (name :: <string>)
-	  skip-whitespace();
-	  buffer.size := 0;
-	  block (return)
-	    for (ch = read-element(stream, on-end-of-stream: #f)
-		   then read-element(stream, on-end-of-stream: #f))
-	      case
-		~ch =>
-		  return(as(<string>, buffer));
-		ch == '\\' =>
-		  add!(buffer, read-element(stream, on-end-of-stream: '\0'));
-		token-terminator?(ch) =>
-		  if (buffer.size = 0)
-		    add!(buffer, ch)
-		  else
-		    unread-element(stream, ch)
-		  end;
-		  return(as(<string>, buffer));
-		otherwise =>
-		  add!(buffer, ch);
-	      end
-	    end
-	  end
-	end method,
-	method next-token () => (token :: <symbol>)
-	  as(<symbol>, next-name())
-	end method,
-	// The idea is to parse simple type expressions such as '<integer>',
-	// 'false-or(<integer>)', 'one-of(#t, #f)', etc.
-	//---*** We need to do a better job than this...
-	next-expression (format-string :: <string>) => (expression :: <string>)
-	  let name = next-name();
-	  let more = "";
-	  skip-whitespace();
-	  when (peek(stream, on-end-of-stream: #f) == '(')
-	    // If this token starts a function call, pick up the arguments
-	    let bp1 = stream-position(stream);
-	    let bp2 = move-over-lists(bp1, 1, fixup?: #f);
-	    when (bp2)
-	      let interval = make-interval(bp1, bp2, in-order?: #t);
-	      more := as(<string>, interval);
-	      stream-position(stream) := increment-bp!(bp2)
-	    end
-	  end;
-	  format-to-string(format-string, concatenate(name, more))
-	end method;
+          while (any-whitespace-char?(peek(stream, on-end-of-stream: '\0')))
+            read-element(stream)
+          end
+        end method,
+        method next-name () => (name :: <string>)
+          skip-whitespace();
+          buffer.size := 0;
+          block (return)
+            for (ch = read-element(stream, on-end-of-stream: #f)
+                   then read-element(stream, on-end-of-stream: #f))
+              case
+                ~ch =>
+                  return(as(<string>, buffer));
+                ch == '\\' =>
+                  add!(buffer, read-element(stream, on-end-of-stream: '\0'));
+                token-terminator?(ch) =>
+                  if (buffer.size = 0)
+                    add!(buffer, ch)
+                  else
+                    unread-element(stream, ch)
+                  end;
+                  return(as(<string>, buffer));
+                otherwise =>
+                  add!(buffer, ch);
+              end
+            end
+          end
+        end method,
+        method next-token () => (token :: <symbol>)
+          as(<symbol>, next-name())
+        end method,
+        // The idea is to parse simple type expressions such as '<integer>',
+        // 'false-or(<integer>)', 'one-of(#t, #f)', etc.
+        //---*** We need to do a better job than this...
+        next-expression (format-string :: <string>) => (expression :: <string>)
+          let name = next-name();
+          let more = "";
+          skip-whitespace();
+          when (peek(stream, on-end-of-stream: #f) == '(')
+            // If this token starts a function call, pick up the arguments
+            let bp1 = stream-position(stream);
+            let bp2 = move-over-lists(bp1, 1, fixup?: #f);
+            when (bp2)
+              let interval = make-interval(bp1, bp2, in-order?: #t);
+              more := as(<string>, interval);
+              stream-position(stream) := increment-bp!(bp2)
+            end
+          end;
+          format-to-string(format-string, concatenate(name, more))
+        end method;
   local method parse-function-parameters () => (parameters :: <vector>)
-	  if (next-token() ~== #"(")
-	    #[]
-	  else
-	    params.size := 0;
-	    block (break)
-	      while (#t)
-		// The next token should be either a parameter name or something like #key
-		let token = next-token();
-		when (member?(token, #[#"#rest", #"#key", #"#all-keys", #"#next"]))
-		  break()
-		end;
-		// We got a name, get the next token
-		let next = next-token();
-		case
-		  next == #"," | next == #")" =>
-		    add!(params, "<object>");
-		  next == #"::" =>
-		    add!(params, next-expression("%s"));
-		    next := next-token();
-		  next == #"==" =>
-		    add!(params, next-expression("singleton(%s)"));
-		    next := next-token();
-		end;
-		unless (next == #",")
-		  break()
-		end
-	      end
-	    end;
-	    as(<simple-object-vector>, params)
-	  end
-	end method,
-	method parse-domain-parameters () => (parameters :: <vector>)
-	  if (next-token() ~== #"(")
-	    #[]
-	  else
-	    params.size := 0;
-	    block (break)
-	      while (#t)
-		add!(params, next-expression("%s"));
-		let next = next-token();
-		unless (next == #",")
-		  break()
-		end
-	      end
-	    end;
-	    as(<simple-object-vector>, params)
-	  end
-	end method;
+          if (next-token() ~== #"(")
+            #[]
+          else
+            params.size := 0;
+            block (break)
+              while (#t)
+                // The next token should be either a parameter name or something like #key
+                let token = next-token();
+                when (member?(token, #[#"#rest", #"#key", #"#all-keys", #"#next"]))
+                  break()
+                end;
+                // We got a name, get the next token
+                let next = next-token();
+                case
+                  next == #"," | next == #")" =>
+                    add!(params, "<object>");
+                  next == #"::" =>
+                    add!(params, next-expression("%s"));
+                    next := next-token();
+                  next == #"==" =>
+                    add!(params, next-expression("singleton(%s)"));
+                    next := next-token();
+                end;
+                unless (next == #",")
+                  break()
+                end
+              end
+            end;
+            as(<simple-object-vector>, params)
+          end
+        end method,
+        method parse-domain-parameters () => (parameters :: <vector>)
+          if (next-token() ~== #"(")
+            #[]
+          else
+            params.size := 0;
+            block (break)
+              while (#t)
+                add!(params, next-expression("%s"));
+                let next = next-token();
+                unless (next == #",")
+                  break()
+                end
+              end
+            end;
+            as(<simple-object-vector>, params)
+          end
+        end method;
   // We should be looking at a defining form, but if we're not,
   // just give up and don't return a signature
   when (next-token() == #"define")
     block (return)
       while (#t)
-	let token = next-token();
-	select (token)
-	  #"library", #"module", #"interface", #"protocol", #"macro" =>
-	    let name = next-name();
-	    return(make(<dylan-signature>,
-			type: token, name: name));
-	  #"class", #"frame" =>
-	    let name = next-name();
-	    return(make(<dylan-signature>,
-			type: token, name: name));
-	  #"generic" =>
-	    let name = next-name();
-	    return(make(<dylan-signature>,
-			type: token, name: name,
-			parameters: parse-function-parameters()));
-	  #"function", #"method" =>
-	    let name = next-name();
-	    return(make(<dylan-signature>,
-			type: token, name: name,
-			parameters: parse-function-parameters()));
-	  #"domain" =>
-	    let name = next-name();
-	    return(make(<dylan-signature>,
-			type: token, name: name,
-			parameters: parse-domain-parameters()));
-	  #"sealed", #"open", #"primary", #"free", #"abstract", #"concrete",
-	  #"sideways", #"thread", #"atomic",
-	  #"inline", #"inline-only", #"may-inline", #"default-inline", #"not-inline" =>
-	    #f;
-	  otherwise =>
-	    let name = next-name();
-	    return(make(<dylan-signature>,
-			type: token, name: name));
-	end
+        let token = next-token();
+        select (token)
+          #"library", #"module", #"interface", #"protocol", #"macro" =>
+            let name = next-name();
+            return(make(<dylan-signature>,
+                        type: token, name: name));
+          #"class", #"frame" =>
+            let name = next-name();
+            return(make(<dylan-signature>,
+                        type: token, name: name));
+          #"generic" =>
+            let name = next-name();
+            return(make(<dylan-signature>,
+                        type: token, name: name,
+                        parameters: parse-function-parameters()));
+          #"function", #"method" =>
+            let name = next-name();
+            return(make(<dylan-signature>,
+                        type: token, name: name,
+                        parameters: parse-function-parameters()));
+          #"domain" =>
+            let name = next-name();
+            return(make(<dylan-signature>,
+                        type: token, name: name,
+                        parameters: parse-domain-parameters()));
+          #"sealed", #"open", #"primary", #"free", #"abstract", #"concrete",
+          #"sideways", #"thread", #"atomic",
+          #"inline", #"inline-only", #"may-inline", #"default-inline", #"not-inline" =>
+            #f;
+          otherwise =>
+            let name = next-name();
+            return(make(<dylan-signature>,
+                        type: token, name: name));
+        end
       end
     end
   end
@@ -1531,25 +1531,25 @@ define method do-comment-region
     (mode :: <dylan-mode>, region :: <basic-interval>, #key comment?) => ()
   block (return)
     local method comment (line :: <basic-line>, si, ei, last?)
-	    ignore(last?);
-	    // Comment out the line only if the start index is zero and
-	    // the end index is not zero
-	    when (si = 0 & ei ~= 0)
-	      insert-into-line(line, 0, "// ")
-	    end
-	  end method,
-	  method uncomment (line :: <basic-line>, si, ei, last?)
-	    ignore(last?);
-	    when (si = 0 & ei ~= 0)
-	      let length   = line-length(line);
-	      let contents = line-contents(line);
-	      if (length >= 3 & string-equal?(contents, "// ", end1: 3))
-		delete-within-line(line, 0, 3)
-	      else
-		return()
-	      end
-	    end
-	  end method;
+            ignore(last?);
+            // Comment out the line only if the start index is zero and
+            // the end index is not zero
+            when (si = 0 & ei ~= 0)
+              insert-into-line(line, 0, "// ")
+            end
+          end method,
+          method uncomment (line :: <basic-line>, si, ei, last?)
+            ignore(last?);
+            when (si = 0 & ei ~= 0)
+              let length   = line-length(line);
+              let contents = line-contents(line);
+              if (length >= 3 & string-equal?(contents, "// ", end1: 3))
+                delete-within-line(line, 0, 3)
+              else
+                return()
+              end
+            end
+          end method;
     do-lines(if (comment?) comment else uncomment end, region)
   end
 end method do-comment-region;
@@ -1567,19 +1567,19 @@ define sealed method indent-dylan-line
   let bp1 = line-start(line);
   let bp2 = forward-over(bp1, #[' ', '\t']);
   local method insert-indentation!
-	    (line :: <basic-line>, indentation :: <integer>)
-	 => (bp :: <basic-bp>, nchars :: <integer>)
-	  if (text-line?(line))
-	    let interval = make-interval(bp1, bp2, in-order?: #t);
-	    let old-n    = count-characters(interval);
-	    let new-n    = max(indentation, 0);
-	    delete!(interval);
-	    let spaces = make(<byte-string>, size: new-n, fill: ' ');
-	    values(insert-moving!(bp1, spaces), new-n - old-n)
-	  else
-	    values(bp1, 0)
-	  end
-	end method;
+            (line :: <basic-line>, indentation :: <integer>)
+         => (bp :: <basic-bp>, nchars :: <integer>)
+          if (text-line?(line))
+            let interval = make-interval(bp1, bp2, in-order?: #t);
+            let old-n    = count-characters(interval);
+            let new-n    = max(indentation, 0);
+            delete!(interval);
+            let spaces = make(<byte-string>, size: new-n, fill: ' ');
+            values(insert-moving!(bp1, spaces), new-n - old-n)
+          else
+            values(bp1, 0)
+          end
+        end method;
   let (old-indentation, new-indentation)
     = dylan-line-indentation(mode, line, definition-type: definition-type);
   let dx = new-indentation - old-indentation;
@@ -1599,46 +1599,46 @@ define sealed method dylan-line-indentation
   let margin = line-margin(line, mode, window);
   let space-width = string-size(window, " ");
   local method line-indentation
-	    (sbp :: <basic-bp>) => (indentation :: <integer>)
-	  if (text-line?(bp-line(sbp)))
-	    let indentation
-	      = index->position(bp-line(sbp), mode, window, bp-index(sbp)) - margin;
-	    floor/(indentation, space-width)
-	  else
-	    0
-	  end
-	end method,
-	method looking-at?
-	    (contents :: <byte-string>, _start :: <integer>, _end :: <integer>,
-	     string :: <byte-string>)
-	 => (true? :: <boolean>)
-	  let _end = min(_start + size(string), _end);
-	  string-equal?(contents, string, start1: _start, end1: _end)
-	end method,
-	method looking-at-atom?
-	    (contents :: <byte-string>, _start :: <integer>, _end :: <integer>,
-	     string :: <byte-string>)
-	 => (true? :: <boolean>)
-	  let _end = min(_start + size(string), _end);
-	  string-equal?(contents, string, start1: _start, end1: _end)
-	  /* & (_end >= size(contents)
-	        | atom-syntax(contents[_end]) ~= $atom-alphabetic) */
-	end method,
-	method bp-looking-at-call?
-	    (bp :: <basic-bp>, string :: <byte-string>)
-	 => (true? :: <boolean>)
-	  bp-looking-at-atom?(bp, string)
-	  & begin
-	      let bp = forward-over!(move-over-atoms(bp, 1), #[' ', '\t']);
+            (sbp :: <basic-bp>) => (indentation :: <integer>)
+          if (text-line?(bp-line(sbp)))
+            let indentation
+              = index->position(bp-line(sbp), mode, window, bp-index(sbp)) - margin;
+            floor/(indentation, space-width)
+          else
+            0
+          end
+        end method,
+        method looking-at?
+            (contents :: <byte-string>, _start :: <integer>, _end :: <integer>,
+             string :: <byte-string>)
+         => (true? :: <boolean>)
+          let _end = min(_start + size(string), _end);
+          string-equal?(contents, string, start1: _start, end1: _end)
+        end method,
+        method looking-at-atom?
+            (contents :: <byte-string>, _start :: <integer>, _end :: <integer>,
+             string :: <byte-string>)
+         => (true? :: <boolean>)
+          let _end = min(_start + size(string), _end);
+          string-equal?(contents, string, start1: _start, end1: _end)
+          /* & (_end >= size(contents)
+                | atom-syntax(contents[_end]) ~= $atom-alphabetic) */
+        end method,
+        method bp-looking-at-call?
+            (bp :: <basic-bp>, string :: <byte-string>)
+         => (true? :: <boolean>)
+          bp-looking-at-atom?(bp, string)
+          & begin
+              let bp = forward-over!(move-over-atoms(bp, 1), #[' ', '\t']);
               bp-character(bp) == '('
             end
-	end method;
+        end method;
   let section  = line-section(line);
   let type     = definition-type | section-definition-type(section);
   let this-bp  = line-start(line);
   let this-sbp = forward-over(this-bp, #[' ', '\t']);
   let this-indentation :: <integer> = line-indentation(this-sbp);
-  let prev-line = line-previous(line);		// stay within this node
+  let prev-line = line-previous(line);                // stay within this node
   let prev-bp   = prev-line & line-start(prev-line);
   let prev-sbp  = prev-bp   & forward-over(prev-bp, #[' ', '\t']);
   let prev-indentation :: <integer> = if (prev-sbp) line-indentation(prev-sbp) else 0 end;
@@ -1650,70 +1650,70 @@ define sealed method dylan-line-indentation
       let length   = line-length(line);
       let contents = line-contents(line);
       local method maybe-hack-function-indentation ()
-	      dec!(indentation, 2);
-	      when (prev-line)
-		let l = line-length(prev-line);
-		let c = line-contents(prev-line);
-		when (l >= 2
-		      & ((looking-at?(c, l - 2, l, ");") & dec!(l))
+              dec!(indentation, 2);
+              when (prev-line)
+                let l = line-length(prev-line);
+                let c = line-contents(prev-line);
+                when (l >= 2
+                      & ((looking-at?(c, l - 2, l, ");") & dec!(l))
                          | looking-at?(c, l - 1, l, ")")))
-		  let bp = move-over-lists(make-bp(prev-line, l), -2);
+                  let bp = move-over-lists(make-bp(prev-line, l), -2);
                   let bp = move-bp!(bp, bp-line(bp), 0);
                   let bp = forward-over!(bp, #[' ', '\t']);
-		  unless (bp-looking-at-call?(bp, "for")
-			  | bp-looking-at-call?(bp, "while")
-			  | bp-looking-at-call?(bp, "until")
-			  | bp-looking-at-call?(bp, "if")
-			  | bp-looking-at-call?(bp, "when")
-			  | bp-looking-at-call?(bp, "unless"))
-		    indentation := line-indentation(bp) - 2;
-		    break()
-		  end
+                  unless (bp-looking-at-call?(bp, "for")
+                          | bp-looking-at-call?(bp, "while")
+                          | bp-looking-at-call?(bp, "until")
+                          | bp-looking-at-call?(bp, "if")
+                          | bp-looking-at-call?(bp, "when")
+                          | bp-looking-at-call?(bp, "unless"))
+                    indentation := line-indentation(bp) - 2;
+                    break()
+                  end
                 end
               end
             end method;
       when (type == #"function" | type == #"method")
       end;
       case
-	looking-at-atom?(contents, index, length, "end") =>
-	maybe-hack-function-indentation();
-	looking-at-atom?(contents, index, length, "else")
-	| looking-at-atom?(contents, index, length, "elseif") =>
-	  maybe-hack-function-indentation();
-	looking-at-atom?(contents, index, length, "exception")
-	| looking-at-atom?(contents, index, length, "cleanup")
-	| looking-at-atom?(contents, index, length, "finally") =>
-	  maybe-hack-function-indentation();
-	looking-at?(contents, index, length, "= ")
-	| looking-at?(contents, index, length, ":= ") =>
-	  inc!(indentation, 2);
-	  break();
-	looking-at-atom?(contents, index, length, "define") =>
-	  // 'define' forms always start at the beginning of the line
-	  indentation := 0;
-	  break();
-	type == #"class"
+        looking-at-atom?(contents, index, length, "end") =>
+        maybe-hack-function-indentation();
+        looking-at-atom?(contents, index, length, "else")
+        | looking-at-atom?(contents, index, length, "elseif") =>
+          maybe-hack-function-indentation();
+        looking-at-atom?(contents, index, length, "exception")
+        | looking-at-atom?(contents, index, length, "cleanup")
+        | looking-at-atom?(contents, index, length, "finally") =>
+          maybe-hack-function-indentation();
+        looking-at?(contents, index, length, "= ")
+        | looking-at?(contents, index, length, ":= ") =>
+          inc!(indentation, 2);
+          break();
+        looking-at-atom?(contents, index, length, "define") =>
+          // 'define' forms always start at the beginning of the line
+          indentation := 0;
+          break();
+        type == #"class"
         & (looking-at-atom?(contents, index, length, "slot")
-	   | looking-at-atom?(contents, index, length, "sealed slot")
-	   | looking-at-atom?(contents, index, length, "constant slot")
-	   | looking-at-atom?(contents, index, length, "sealed constant slot")
-	   | looking-at-atom?(contents, index, length, "open slot")
-	   | looking-at-atom?(contents, index, length, "virtual slot")
-	   | looking-at-atom?(contents, index, length, "keyword")) =>
-	  indentation := 2;
-	  break();
-	looking-at?(contents, index, length, "=>") =>
-	  if (bp-line(move-over-lists(this-bp, -2)) == section-defining-line(section))
-	    // Assume '=>' at the beginning of the line is for return values
-	    indentation := 1;
-	    break()
-	  else
-	    inc!(indentation, 2)
-	  end;
-	(type == #"function" | type == #"method")
-	& length >= 2
-	& looking-at?(contents, length - 2, length, "=>") =>
-	  dec!(indentation, 2);
+           | looking-at-atom?(contents, index, length, "sealed slot")
+           | looking-at-atom?(contents, index, length, "constant slot")
+           | looking-at-atom?(contents, index, length, "sealed constant slot")
+           | looking-at-atom?(contents, index, length, "open slot")
+           | looking-at-atom?(contents, index, length, "virtual slot")
+           | looking-at-atom?(contents, index, length, "keyword")) =>
+          indentation := 2;
+          break();
+        looking-at?(contents, index, length, "=>") =>
+          if (bp-line(move-over-lists(this-bp, -2)) == section-defining-line(section))
+            // Assume '=>' at the beginning of the line is for return values
+            indentation := 1;
+            break()
+          else
+            inc!(indentation, 2)
+          end;
+        (type == #"function" | type == #"method")
+        & length >= 2
+        & looking-at?(contents, length - 2, length, "=>") =>
+          dec!(indentation, 2);
       end
     end;
     when (prev-line & text-line?(prev-line))
@@ -1723,23 +1723,23 @@ define sealed method dylan-line-indentation
       let contents = line-contents(line);
       when (type == #"function" | type == #"method")
         when (length >= 1
-	      & looking-at?(contents, length - 1, length, ",")
+              & looking-at?(contents, length - 1, length, ",")
               & ~bp-looking-at?(forward-over(prev-bp, #[' ', '\t']), "//"))
-	  // Comma at the end of a line is probably inside a parameter list,
-	  // so indent to one past the enclosing parenthesis
-	  let pbp = move-up-or-down-lists(this-bp, -1);
-	  indentation := line-indentation(pbp) + 1;
-	  break()
-	end;
-	let l = length;
+          // Comma at the end of a line is probably inside a parameter list,
+          // so indent to one past the enclosing parenthesis
+          let pbp = move-up-or-down-lists(this-bp, -1);
+          indentation := line-indentation(pbp) + 1;
+          break()
+        end;
+        let l = length;
         when (l >= 2
               & ((looking-at?(contents, l - 2, l, ");") & dec!(l))
                   | looking-at?(contents, l - 1, l, ")")))
-	  // We're probably looking at the end of a function call,
-	  // so indent to the same level as the function call
-	  let bp = move-over-lists(make-bp(line, l), -2);
-	  let bp = move-bp!(bp, bp-line(bp), 0);
-	  let bp = forward-over!(bp, #[' ', '\t']);
+          // We're probably looking at the end of a function call,
+          // so indent to the same level as the function call
+          let bp = move-over-lists(make-bp(line, l), -2);
+          let bp = move-bp!(bp, bp-line(bp), 0);
+          let bp = forward-over!(bp, #[' ', '\t']);
           if (bp-looking-at-call?(bp, "for")
               | bp-looking-at-call?(bp, "while")
               | bp-looking-at-call?(bp, "until")
@@ -1758,62 +1758,62 @@ define sealed method dylan-line-indentation
           elseif (bp-looking-at?(bp, "local method "))
             indentation := line-indentation(bp) + 8
           else
-	    indentation := line-indentation(bp);
-	    when (bp-looking-at?(bp, "= ")
+            indentation := line-indentation(bp);
+            when (bp-looking-at?(bp, "= ")
                   | bp-looking-at?(bp, ":= "))
-	      dec!(indentation, 2)
-	    end
-	  end;
-	  break()
-	end;
+              dec!(indentation, 2)
+            end
+          end;
+          break()
+        end;
         when (length >= 2
-	      & looking-at?(contents, length - 2, length, "=>"))
-	  // "=>" at the end of a line is probably for 'case' or 'select'
-	  inc!(indentation, 2)
-	end
+              & looking-at?(contents, length - 2, length, "=>"))
+          // "=>" at the end of a line is probably for 'case' or 'select'
+          inc!(indentation, 2)
+        end
       end;
       when (looking-at?(contents, index, length, "= "))
         inc!(index, 2);
         inc!(indentation, 2)
       end;
       case
-	looking-at-atom?(contents, index, length, "define") =>
-	  inc!(indentation, 4);
-	looking-at-atom?(contents, index, length, "begin") =>
-	  inc!(indentation, 2);
-	looking-at-atom?(contents, index, length, "block")
-	| looking-at-atom?(contents, index, length, "exception")
-	| looking-at-atom?(contents, index, length, "cleanup")
-	| looking-at-atom?(contents, index, length, "finally") =>
-	  inc!(indentation, 2);
-	looking-at-atom?(contents, index, length, "when")
-	| looking-at-atom?(contents, index, length, "unless") =>
-	  inc!(indentation, 2);
-	looking-at-atom?(contents, index, length, "if")
-	| looking-at-atom?(contents, index, length, "else")
-	| looking-at-atom?(contents, index, length, "elseif") =>
-	  inc!(indentation, 2);
-	looking-at-atom?(contents, index, length, "while")
-	| looking-at-atom?(contents, index, length, "until") =>
-	  inc!(indentation, 2);
-	looking-at-atom?(contents, index, length, "for") =>
-	  inc!(indentation, 2);
-	looking-at-atom?(contents, index, length, "case") =>
-	  inc!(indentation, 2);
-	looking-at-atom?(contents, index, length, "select") =>
-	  inc!(indentation, 2);
-	looking-at-atom?(contents, index, length, "local method") =>
-	  inc!(indentation, 8);
-	looking-at-atom?(contents, index, length, "slot")
-	| looking-at-atom?(contents, index, length, "sealed slot")
-	| looking-at-atom?(contents, index, length, "open slot")
-	| looking-at-atom?(contents, index, length, "virtual slot") =>
-	  inc!(indentation, 2);
-	// Special hack for 'with-XXX' macros, etc.
-	looking-at?(contents, index, length, "with-")
-	| looking-at?(contents, index, length, "without-")
-	| looking-at-atom?(contents, index, length, "dynamic-bind") =>
-	  inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "define") =>
+          inc!(indentation, 4);
+        looking-at-atom?(contents, index, length, "begin") =>
+          inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "block")
+        | looking-at-atom?(contents, index, length, "exception")
+        | looking-at-atom?(contents, index, length, "cleanup")
+        | looking-at-atom?(contents, index, length, "finally") =>
+          inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "when")
+        | looking-at-atom?(contents, index, length, "unless") =>
+          inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "if")
+        | looking-at-atom?(contents, index, length, "else")
+        | looking-at-atom?(contents, index, length, "elseif") =>
+          inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "while")
+        | looking-at-atom?(contents, index, length, "until") =>
+          inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "for") =>
+          inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "case") =>
+          inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "select") =>
+          inc!(indentation, 2);
+        looking-at-atom?(contents, index, length, "local method") =>
+          inc!(indentation, 8);
+        looking-at-atom?(contents, index, length, "slot")
+        | looking-at-atom?(contents, index, length, "sealed slot")
+        | looking-at-atom?(contents, index, length, "open slot")
+        | looking-at-atom?(contents, index, length, "virtual slot") =>
+          inc!(indentation, 2);
+        // Special hack for 'with-XXX' macros, etc.
+        looking-at?(contents, index, length, "with-")
+        | looking-at?(contents, index, length, "without-")
+        | looking-at-atom?(contents, index, length, "dynamic-bind") =>
+          inc!(indentation, 2);
       end
     end
   end;
@@ -1841,27 +1841,27 @@ define command dylan-insert-block-end (frame)
     move-bp!(bp2, line2, line-length(line2));
     case
       type == #"function" | type == #"method" =>
-	if (string-equal?(line-contents(line2), "end", end1: 3))
-	  // If we're in a function body and there's no indentation,
-	  // insert the "end of definition" frob
-	  insert-moving!(bp2, format-to-string(" %s %s;", as-lowercase(as(<string>, type)), name))
-	else
-	  // Take a reasonable guess as to whether to insert a ";"
-	  let next = line-next(line2);
-	  let nbp  = next & forward-over!(line-start(next), #[' ', '\t']);
-	  when (nbp & ~(bp-looking-at?(nbp, "end")
-			| bp-looking-at?(nbp, "else")
-			| bp-looking-at?(nbp, "elseif")))
-	    insert-moving!(bp2, ";")
-	  end
-	end;
+        if (string-equal?(line-contents(line2), "end", end1: 3))
+          // If we're in a function body and there's no indentation,
+          // insert the "end of definition" frob
+          insert-moving!(bp2, format-to-string(" %s %s;", as-lowercase(as(<string>, type)), name))
+        else
+          // Take a reasonable guess as to whether to insert a ";"
+          let next = line-next(line2);
+          let nbp  = next & forward-over!(line-start(next), #[' ', '\t']);
+          when (nbp & ~(bp-looking-at?(nbp, "end")
+                        | bp-looking-at?(nbp, "else")
+                        | bp-looking-at?(nbp, "elseif")))
+            insert-moving!(bp2, ";")
+          end
+        end;
       type == #"top-level-form" =>
-	insert-moving!(bp2, ";");
+        insert-moving!(bp2, ";");
       type & name =>
-	// Not within a function body, always insert the "end of definition" frob
-	insert-moving!(bp2, format-to-string(" %s %s;", as-lowercase(as(<string>, type)), name));
+        // Not within a function body, always insert the "end of definition" frob
+        insert-moving!(bp2, format-to-string(" %s %s;", as-lowercase(as(<string>, type)), name));
       type =>
-	insert-moving!(bp2, format-to-string(" %s;", as-lowercase(as(<string>, type))));
+        insert-moving!(bp2, format-to-string(" %s;", as-lowercase(as(<string>, type))));
       otherwise =>
         #f;
     end;
@@ -1870,9 +1870,9 @@ define command dylan-insert-block-end (frame)
       // The following bit is based on 'do-insert-newline'
       let last? = (line2 == bp-line(interval-end-bp(buffer)));
       if (last?)
-	queue-redisplay(window, $display-text, centering: 1)
+        queue-redisplay(window, $display-text, centering: 1)
       else
-	queue-redisplay(window, $display-blt, line: line1, index: 1, centering: 1)
+        queue-redisplay(window, $display-blt, line: line1, index: 1, centering: 1)
       end
     else
       queue-redisplay(window, $display-line, line: line1, index: 0, centering: 1)
@@ -1890,7 +1890,7 @@ define method line-breakpoint?
   let type = section-definition-type(line-section(line));
   when (type == #"function" | type == #"method" | type == #"command")
     if (line-empty?(line)
-	| bp-looking-at?(line-start(line), "//"))
+        | bp-looking-at?(line-start(line), "//"))
       #f
     else
       //--- This is where DylanWorks mode calls out to the environment
@@ -1958,21 +1958,21 @@ define variable *dylan-shell-count* :: <integer> = 0;
 
 define method make-dylan-shell
     (#key name, anonymous? = #f,
-	  buffer-class  = <simple-shell-buffer>,
-	  major-mode    = find-mode(<dylan-shell-mode>),
-	  section-class = <simple-shell-section>,
-	  editor        = frame-editor(*editor-frame*))
+          buffer-class  = <simple-shell-buffer>,
+          major-mode    = find-mode(<dylan-shell-mode>),
+          section-class = <simple-shell-section>,
+          editor        = frame-editor(*editor-frame*))
  => (buffer :: <basic-shell-buffer>)
   unless (name)
     inc!(*dylan-shell-count*);
     name := format-to-string("Dylan shell %d", *dylan-shell-count*)
   end;
   let buffer = make-empty-buffer(buffer-class,
-				 name:       name,
-				 major-mode: major-mode,
-				 anonymous?: anonymous?,
-				 section-class: section-class,
-				 editor: editor);
+                                 name:       name,
+                                 major-mode: major-mode,
+                                 anonymous?: anonymous?,
+                                 section-class: section-class,
+                                 editor: editor);
   shell-buffer-section-class(buffer) := section-class;
   buffer
 end method make-dylan-shell;
@@ -1991,21 +1991,21 @@ define sealed method display-line
      #key start: _start = 0, end: _end = line-length(line), align-y = #"top") => ()
   let section = line-section(line);
   let image = case
-		~shell-section?(section) =>
-		  #f;
-		line == section-start-line(section) =>
-		  $prompt-arrow;
-		line == section-output-line(section) =>
-		  $values-arrow;
-		otherwise =>
-		  #f;
-	      end;
-  when (image & _start = 0)	// no icon on continuation lines
+                ~shell-section?(section) =>
+                  #f;
+                line == section-start-line(section) =>
+                  $prompt-arrow;
+                line == section-output-line(section) =>
+                  $values-arrow;
+                otherwise =>
+                  #f;
+              end;
+  when (image & _start = 0)        // no icon on continuation lines
     let image-y = if (align-y == #"top") y else y - $prompt-image-height + 2 end;
     draw-image(window, standard-images(window, image), x, image-y + $prompt-image-offset)
   end;
   next-method(line, mode, window, x + $prompt-image-width, y,
-	      start: _start, end: _end, align-y: align-y)
+              start: _start, end: _end, align-y: align-y)
 end method display-line;
 
 define sealed method line-size

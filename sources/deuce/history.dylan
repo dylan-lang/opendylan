@@ -18,15 +18,15 @@ define open abstract primary class <basic-history> (<object>)
   sealed slot %current-length :: <integer> = 0;
   sealed slot %maximum-length :: false-or(<integer>) = $default-history-length,
     init-keyword: maximum-length:;
-  sealed slot %rotation :: <integer> = 0;	// state for 'yank-next'
-  sealed slot %position :: <integer> = 0;	// 'yank' to 'yank-next' communication
-  sealed slot %temporary-element = #f;		// can be bound to temporary front of list
+  sealed slot %rotation :: <integer> = 0;        // state for 'yank-next'
+  sealed slot %position :: <integer> = 0;        // 'yank' to 'yank-next' communication
+  sealed slot %temporary-element = #f;                // can be bound to temporary front of list
   // Where should 'yank-next' get the next element from?
   sealed slot %yank-state :: <yank-state> = #"yank",
     init-keyword: yank-state:;
 end class <basic-history>;
 
-define sealed method initialize-yank-state 
+define sealed method initialize-yank-state
     (history :: <basic-history>) => ()
   history.%yank-state := #"yank"
 end method initialize-yank-state;
@@ -49,22 +49,22 @@ define sealed method history-element
     let delta :: <integer> = 0;
     with-lock (history.%lock)
       when (history.%temporary-element)
-	when (index = 0 | (fixup? & index < 0))
-	  return(history.%temporary-element, 0)
-	end;
-	inc!(index);
-	dec!(delta)
+        when (index = 0 | (fixup? & index < 0))
+          return(history.%temporary-element, 0)
+        end;
+        inc!(index);
+        dec!(delta)
       end;
       let elements = history.%elements;
       case
-	index < 0 =>
-	  values(fixup? & ~empty?(elements) & head(elements), delta);
-	index < history.%current-length =>
-	  values(~empty?(elements) & elements[index], index + delta);
-	fixup? =>
-	  values(~empty?(elements) & last(elements), history.%current-length + delta - 1);
-	otherwise =>
-	  values(#f, #f);
+        index < 0 =>
+          values(fixup? & ~empty?(elements) & head(elements), delta);
+        index < history.%current-length =>
+          values(~empty?(elements) & elements[index], index + delta);
+        fixup? =>
+          values(~empty?(elements) & last(elements), history.%current-length + delta - 1);
+        otherwise =>
+          values(#f, #f);
       end
     end
   end
@@ -79,9 +79,9 @@ define sealed method do-history-elements
      #key index, offset :: <integer> = 0, cutoff-length, test)
   let index :: <integer>
     = case
-	~index    => offset;
-	index > 0 => offset + index - 1;
-	otherwise => offset + index;
+        ~index    => offset;
+        index > 0 => offset + index - 1;
+        otherwise => offset + index;
       end;
   let length = history-length(history);
   let n :: <integer> = if (cutoff-length) min(length, cutoff-length) else length end;
@@ -91,7 +91,7 @@ define sealed method do-history-elements
     end;
     let elt = history-element(history, index);
     when (history-element-visible?(history, elt)
-	  & (~test | test(elt)))
+          & (~test | test(elt)))
       function(elt, index)
     end;
     inc!(index)
@@ -107,25 +107,25 @@ define method yank-from-history
   block (return)
     let idx :: <integer>
       = case
-	  ~index    => history.%rotation;
-	  index > 0 => index - 1;
-	  index < 0 => index;
-	  otherwise => error("Zero should have been handled at a higher level");
-	end;
+          ~index    => history.%rotation;
+          index > 0 => index - 1;
+          index < 0 => index;
+          otherwise => error("Zero should have been handled at a higher level");
+        end;
     let fixup? = #t;
     with-lock (history.%lock)
       history.%yank-state := #"yank-next";
       while (#t)
-	let (elt, position) = history-element(history, idx, fixup?: fixup?);
-	case
-	  ~elt =>
-	    return(#f);
-	  (index | history-element-visible?(history, elt)) & (~test | test(elt)) =>
-	    history.%position := position;
-	    return(elt);
-	end;
-	inc!(idx);
-	fixup? := #f
+        let (elt, position) = history-element(history, idx, fixup?: fixup?);
+        case
+          ~elt =>
+            return(#f);
+          (index | history-element-visible?(history, elt)) & (~test | test(elt)) =>
+            history.%position := position;
+            return(elt);
+        end;
+        inc!(idx);
+        fixup? := #f
       end
     end
   end
@@ -143,17 +143,17 @@ define method yank-next-from-history
     end;
     when (history.%position)
       with-lock (history.%lock)
-	history.%yank-state := #"yank-next";
-	let old-elt = history-element(history, history.%position);
+        history.%yank-state := #"yank-next";
+        let old-elt = history-element(history, history.%position);
         local method do-element (elt, idx :: <integer>)
-		unless (history-elements-equal?(history, elt, old-elt))
-		  history.%rotation := idx;
-		  history.%position := idx;
-		  return(elt)
-		end
-	      end method;
-	do-history-elements(do-element, history,
-			    index: history.%position + 1, offset: index, test: test)
+                unless (history-elements-equal?(history, elt, old-elt))
+                  history.%rotation := idx;
+                  history.%position := idx;
+                  return(elt)
+                end
+              end method;
+        do-history-elements(do-element, history,
+                            index: history.%position + 1, offset: index, test: test)
       end
     end
   end
@@ -168,18 +168,18 @@ define method history-push
     // element if it is equal to the element currently on top
     unless (top-elt & history-elements-equal?(history, elt, top-elt))
       if (history.%current-length = history.%maximum-length)
-	let last-pair = begin
-			  let last-pair = history.%elements;
-			  for (i :: <integer> from 0 below history.%current-length - 3)
-			    last-pair := tail(last-pair)
-			  end;
-			  last-pair
-			end;
-	push!(history.%elements, elt);
-	tail(last-pair) := list(head(tail(last-pair)))
+        let last-pair = begin
+                          let last-pair = history.%elements;
+                          for (i :: <integer> from 0 below history.%current-length - 3)
+                            last-pair := tail(last-pair)
+                          end;
+                          last-pair
+                        end;
+        push!(history.%elements, elt);
+        tail(last-pair) := list(head(tail(last-pair)))
       else
-	push!(history.%elements, elt);
-	inc!(history.%current-length)
+        push!(history.%elements, elt);
+        inc!(history.%current-length)
       end
     end;
     history.%rotation := 0;
@@ -197,7 +197,7 @@ define method history-pop
       history.%elements := tail(history.%elements);
       elt
     end
-  end 
+  end
 end method history-pop;
 
 define method history-top
@@ -246,7 +246,7 @@ end class <kill-history>;
 define sealed domain make (singleton(<kill-history>));
 define sealed domain initialize (<kill-history>);
 
-define sealed method initialize-yank-state 
+define sealed method initialize-yank-state
     (history :: <kill-history>) => ()
   history.%yank-state := #"clipboard"
 end method initialize-yank-state;
@@ -312,24 +312,24 @@ define method add-to-kill-ring
     = merge? & history-top(kill-ring);
   let new-elt
     = if (instance?(object, <string>))
-	object
+        object
       else
-	let interval :: <basic-interval> = object;	// force tighter type...
-	if (bp-line(interval-start-bp(interval)) == bp-line(interval-end-bp(interval)))
-	  as(<byte-string>, interval)			// more efficient for simple things...
-	else
-	  copy-interval(interval)
-	end
+        let interval :: <basic-interval> = object;        // force tighter type...
+        if (bp-line(interval-start-bp(interval)) == bp-line(interval-end-bp(interval)))
+          as(<byte-string>, interval)                        // more efficient for simple things...
+        else
+          copy-interval(interval)
+        end
       end;
   let new-elt
     = if (top-elt)
-	if (reverse?)
-	  merge-history-elements(new-elt, top-elt)
-	else
-	  merge-history-elements(top-elt, new-elt)
-	end
+        if (reverse?)
+          merge-history-elements(new-elt, top-elt)
+        else
+          merge-history-elements(top-elt, new-elt)
+        end
       else
-	new-elt
+        new-elt
       end;
   if (top-elt)
     history-top(kill-ring) := new-elt
@@ -358,9 +358,9 @@ define method yank-from-kill-ring
       kill-ring.%yank-state := #"yank-next";
       let elt = yank-from-history(kill-ring, index: index | 1);
       if (clipboard? & elt = clipboard)
-	yank-next-from-history(kill-ring, index: index | 1)
+        yank-next-from-history(kill-ring, index: index | 1)
       else
-	elt
+        elt
       end
   end
 end method yank-from-kill-ring;

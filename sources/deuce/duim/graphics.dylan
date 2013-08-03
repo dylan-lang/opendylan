@@ -23,13 +23,13 @@ define sealed method make-duim-color
     color =>
       gethash($color-table, color)
       | begin
-	  let r = deuce/color-red(color);
-	  let g = deuce/color-green(color);
-	  let b = deuce/color-blue(color);
-	  let c = make-rgb-color(r / 255.0, g / 255.0, b / 255.0);
-	  gethash($color-table, color) := c;
-	  c
-	end;
+          let r = deuce/color-red(color);
+          let g = deuce/color-green(color);
+          let b = deuce/color-blue(color);
+          let c = make-rgb-color(r / 255.0, g / 255.0, b / 255.0);
+          gethash($color-table, color) := c;
+          c
+        end;
     otherwise =>
       if (medium) medium-foreground(medium) else $black end;
   end
@@ -53,17 +53,17 @@ define sealed method make-duim-text-style
     (medium :: false-or(<medium>), font)
  => (text-style :: <text-style>)
   let default = if (medium) medium-default-text-style(medium)
-		else $default-text-style end;
+                else $default-text-style end;
   if (font)
     gethash($font-table, font)
     | begin
-	let style
-	  = merge-text-styles(make-text-style(font-family(font), font-name(font),
+        let style
+          = merge-text-styles(make-text-style(font-family(font), font-name(font),
                                               font-weight(font), font-slant(font),
-					      font-size(font)),
-			      default);
-	gethash($font-table, font) := style;
-	style
+                                              font-size(font)),
+                              default);
+        gethash($font-table, font) := style;
+        style
       end
   else
     default
@@ -117,26 +117,26 @@ define sealed method deuce/draw-string
     (window :: <deuce-pane>,
      string :: <string>, x :: <integer>, y :: <integer>,
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(string),
-	  color = $default-foreground, font = window-default-font(window), do-tabs? = #t,
-	  align-x = #"left", align-y = #"top") => ()
+          color = $default-foreground, font = window-default-font(window), do-tabs? = #t,
+          align-x = #"left", align-y = #"top") => ()
   let medium = sheet-medium(window);
   establish-color(window, medium, color);
   establish-font(window, medium, font);
   draw-text(medium, string, x, y,
-	    start: _start, end: _end,
-	    align-x: align-x, align-y: align-y, do-tabs?: do-tabs?)
+            start: _start, end: _end,
+            align-x: align-x, align-y: align-y, do-tabs?: do-tabs?)
 end method deuce/draw-string;
 
 define sealed method deuce/string-size
     (window :: <deuce-pane>, string :: <string>,
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(string),
-	  font = window-default-font(window), do-tabs? = #t)
+          font = window-default-font(window), do-tabs? = #t)
  => (width :: <integer>, height :: <integer>, baseline :: <integer>)
   let medium = sheet-medium(window);
   let style = make-duim-text-style(medium, font);
   let (width, height, cursor-x, cursor-y, baseline)
     = text-size(medium, string, start: _start, end: _end,
-		text-style: style, do-tabs?: do-tabs?);
+                text-style: style, do-tabs?: do-tabs?);
   ignore(cursor-x, cursor-y);
   values(width, height, baseline)
 end method deuce/string-size;

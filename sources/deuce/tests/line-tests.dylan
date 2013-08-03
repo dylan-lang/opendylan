@@ -304,7 +304,7 @@ line-contents[-setter]
 line-empty?
   Check for different classes of <line>.
   Check for newly-created lines and for lines which have had contents
-    added and removed. 
+    added and removed.
 
 copy-line
   Check for each class of line.

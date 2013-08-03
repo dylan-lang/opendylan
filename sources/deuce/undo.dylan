@@ -87,7 +87,7 @@ define sealed method restore-modification-ticks
   let buffer   :: <basic-buffer> = bp-buffer(start-bp);
   let old-modified? = buffer-modified?(buffer);
   buffer-modification-tick(buffer) := record.%buffer-tick;
-  let new-modified? = buffer-modified?(buffer); 
+  let new-modified? = buffer-modified?(buffer);
   unless (new-modified? == old-modified?)
     note-buffer-changed-everywhere(buffer, new-modified?)
   end
@@ -111,30 +111,30 @@ define macro with-change-recording
       ?:body
     end }
     => { let (?record, _history) = find-change-record(?buffer, ?class, ?initargs);
-	 dynamic-bind (*change-record* = ?record)
-	   block ()
-	     ?body
-	   afterwards
-	     when (_history)
-	       close-change-record(?record);
-	       add-change-record(_history, ?record)
-	     end
-	   end
-	 end }
+         dynamic-bind (*change-record* = ?record)
+           block ()
+             ?body
+           afterwards
+             when (_history)
+               close-change-record(?record);
+               add-change-record(_history, ?record)
+             end
+           end
+         end }
   { with-change-recording (?buffer:expression, ?class:expression, #rest ?initargs:*)
       ?:body
     end }
     => { let (_record, _history) = find-change-record(?buffer, ?class, ?initargs);
-	 dynamic-bind (*change-record* = _record)
-	   block ()
-	     ?body
-	   afterwards
-	     when (_history)
-	       close-change-record(_record);
-	       add-change-record(_history, _record)
-	     end
-	   end
-	 end }
+         dynamic-bind (*change-record* = _record)
+           block ()
+             ?body
+           afterwards
+             when (_history)
+               close-change-record(_record);
+               add-change-record(_history, _record)
+             end
+           end
+         end }
 end macro with-change-recording;
 
 define sealed method add-change-record
@@ -209,16 +209,16 @@ define method find-change-record
     // Try to use the previous change record if it's for an insertion
     if (record & object-class(record) == <insert-change-record>)
       case
-	end-bp =>
-	  // Looks like we're doing a 'yank-next'
-	  values(record, history);
-	(start-bp = change-record-end-bp(record)) =>
-	  // If the new insertion is contiguous with the previous one,
-	  // and it's not across a newline, merge the two insertions
-	  values(record, history);
-	otherwise =>
-	  // Otherwise make a new record
-	  values(apply(make, class, initargs), history);
+        end-bp =>
+          // Looks like we're doing a 'yank-next'
+          values(record, history);
+        (start-bp = change-record-end-bp(record)) =>
+          // If the new insertion is contiguous with the previous one,
+          // and it's not across a newline, merge the two insertions
+          values(record, history);
+        otherwise =>
+          // Otherwise make a new record
+          values(apply(make, class, initargs), history);
       end
     else
       values(apply(make, class, initargs), history)
@@ -280,12 +280,12 @@ define method find-change-record
     // Try to use the previous change record we're doing 'yank-next'
     if (record & object-class(record) == <paste-change-record>)
       case
-	end-bp =>
-	  // Looks like we're doing a 'yank-next'
-	  values(record, history);
-	otherwise =>
-	  // Otherwise make a new record
-	  values(apply(make, class, initargs), history);
+        end-bp =>
+          // Looks like we're doing a 'yank-next'
+          values(record, history);
+        otherwise =>
+          // Otherwise make a new record
+          values(apply(make, class, initargs), history);
       end
     else
       values(apply(make, class, initargs), history)
@@ -310,7 +310,7 @@ define sealed method initialize
      #key start-bp: sbp, end-bp: ebp, interval) => ()
   next-method();
   let (start-bp, end-bp) = order-bps(sbp | interval-start-bp(interval),
-				     ebp | sbp | interval-end-bp(interval));
+                                     ebp | sbp | interval-end-bp(interval));
   // We maintain the BP positions by hand, so they don't need to be moving
   change-record-start-bp(record)
     := make(<bp>, line: bp-line(start-bp), index: bp-index(start-bp));
@@ -335,17 +335,17 @@ define method find-change-record
     // Try to use the previous change record if it's for a deletion
     if (record & object-class(record) == <delete-change-record>)
       case
-	start-bp = change-record-start-bp(record) =>
-	  // If the start BP is not apparently moving,
-	  // it's probably repeated uses of 'delete-character'
-	  values(record, history);
-	end-bp = change-record-start-bp(record) =>
-	  // If the start BP lines up with the saved end BP,
-	  // it's probably repeated uses of 'rubout-character'
-	  values(record, history);
-	otherwise =>
-	  // Otherwise don't merge
-	  values(apply(make, class, initargs), history);
+        start-bp = change-record-start-bp(record) =>
+          // If the start BP is not apparently moving,
+          // it's probably repeated uses of 'delete-character'
+          values(record, history);
+        end-bp = change-record-start-bp(record) =>
+          // If the start BP lines up with the saved end BP,
+          // it's probably repeated uses of 'rubout-character'
+          values(record, history);
+        otherwise =>
+          // Otherwise don't merge
+          values(apply(make, class, initargs), history);
       end
     else
       values(apply(make, class, initargs), history)
@@ -369,15 +369,15 @@ define method extend-deletion-record
       // Finish the merged delete
       change-record-old-text(record)
         := concatenate-as(<string>,
-			  change-record-old-text(record),
-			  as(<string>, interval));
+                          change-record-old-text(record),
+                          as(<string>, interval));
       move-bp!(change-record-end-bp(record), bp-line(end-bp), bp-index(end-bp));
     end-bp = change-record-start-bp(record) =>
       // Finish the merged rubout
       change-record-old-text(record)
         := concatenate-as(<string>,
-			  as(<string>, interval),
-			  change-record-old-text(record));
+                          as(<string>, interval),
+                          change-record-old-text(record));
       move-bp!(change-record-start-bp(record), bp-line(start-bp), bp-index(start-bp));
     otherwise =>
       // Otherwise nothing to do
@@ -447,7 +447,7 @@ define sealed method initialize
      #key start-bp: sbp, end-bp: ebp, interval, moving? = #f) => ()
   next-method();
   let (start-bp, end-bp) = order-bps(sbp | interval-start-bp(interval),
-				     ebp | sbp | interval-end-bp(interval));
+                                     ebp | sbp | interval-end-bp(interval));
   let interval = interval | make-interval(start-bp, end-bp, in-order?: #t);
   // The end BP may need to move in case the replacement changes
   // the size of the interval
@@ -455,7 +455,7 @@ define sealed method initialize
     := make(<bp>, line: bp-line(start-bp), index: bp-index(start-bp));
   change-record-end-bp(record)
     := make(<bp>, line: bp-line(end-bp),   index: bp-index(end-bp),
-	    moving?: moving?);
+            moving?: moving?);
   change-record-old-text(record) := as(<string>, interval);
   initialize-modification-ticks(record)
 end method initialize;
@@ -522,7 +522,7 @@ define sealed method initialize
      #key start-bp: sbp, end-bp: ebp, interval) => ()
   next-method();
   let (start-bp, end-bp) = order-bps(sbp | interval-start-bp(interval),
-				     ebp | sbp | interval-end-bp(interval));
+                                     ebp | sbp | interval-end-bp(interval));
   let start-bp = make(<bp>, line: bp-line(start-bp), index: 0);
   let end-bp   = make(<bp>, line: bp-line(end-bp),   index: 0);
   let interval = make-interval(start-bp, end-bp, in-order?: #t);
@@ -536,20 +536,20 @@ define sealed method initialize
   let mode   :: <major-mode>   = buffer-major-mode(bp-buffer(start-bp));
   let space-width = string-size(window, " ");
   local method measure-indentation (line :: <basic-line>, si, ei, last?)
-	  ignore(si, ei, last?);
-	  let indentation
-	    = if (text-line?(line))
-		let bp = forward-over!(line-start(line), #[' ', '\t']);
-		let margin = line-margin(line, mode, window);
-		let indentation
-		  = index->position(bp-line(bp), mode, window, bp-index(bp)) - margin;
-		floor/(indentation, space-width)
-	      else
-		0
-	      end;
-	  old[i] := indentation;
-	  inc!(i)
-	end method;
+          ignore(si, ei, last?);
+          let indentation
+            = if (text-line?(line))
+                let bp = forward-over!(line-start(line), #[' ', '\t']);
+                let margin = line-margin(line, mode, window);
+                let indentation
+                  = index->position(bp-line(bp), mode, window, bp-index(bp)) - margin;
+                floor/(indentation, space-width)
+              else
+                0
+              end;
+          old[i] := indentation;
+          inc!(i)
+        end method;
   do-lines(measure-indentation, interval);
   record.%old-indentation := old;
   initialize-modification-ticks(record)
@@ -583,20 +583,20 @@ define method close-change-record
   let mode   :: <major-mode>   = buffer-major-mode(bp-buffer(start-bp));
   let space-width = string-size(window, " ");
   local method measure-indentation (line :: <basic-line>, si, ei, last?)
-	  ignore(si, ei, last?);
-	  let indentation
-	    = if (text-line?(line))
-		let bp = forward-over!(line-start(line), #[' ', '\t']);
-		let margin = line-margin(line, mode, window);
-		let indentation
-		  = index->position(bp-line(bp), mode, window, bp-index(bp)) - margin;
-		floor/(indentation, space-width)
-	      else
-		0
-	      end;
-	  new[i] := indentation;
-	  inc!(i)
-	end method;
+          ignore(si, ei, last?);
+          let indentation
+            = if (text-line?(line))
+                let bp = forward-over!(line-start(line), #[' ', '\t']);
+                let margin = line-margin(line, mode, window);
+                let indentation
+                  = index->position(bp-line(bp), mode, window, bp-index(bp)) - margin;
+                floor/(indentation, space-width)
+              else
+                0
+              end;
+          new[i] := indentation;
+          inc!(i)
+        end method;
   do-lines(measure-indentation, interval);
   record.%new-indentation := new
 end method close-change-record;
@@ -609,15 +609,15 @@ define method do-undo
   let end-bp   :: <basic-bp> = change-record-end-bp(record);
   let interval = make-interval(start-bp, end-bp, in-order?: #t);
   local method change-indentation (line :: <basic-line>, si, ei, last?)
-	  ignore(si, ei, last?);
-	  let indentation = old[i];
-	  inc!(i);
-	  let bp1 = line-start(line);
-	  let bp2 = forward-over(bp1, #[' ', '\t']);
-	  delete!(make-interval(bp1, bp2, in-order?: #t));
-	  let spaces = make(<byte-string>, size: indentation, fill: ' ');
-	  insert!(bp1, spaces)
-	end method;
+          ignore(si, ei, last?);
+          let indentation = old[i];
+          inc!(i);
+          let bp1 = line-start(line);
+          let bp2 = forward-over(bp1, #[' ', '\t']);
+          delete!(make-interval(bp1, bp2, in-order?: #t));
+          let spaces = make(<byte-string>, size: indentation, fill: ' ');
+          insert!(bp1, spaces)
+        end method;
   do-lines(change-indentation, interval);
   restore-modification-ticks(record);
   move-point!(end-bp, window: window);
@@ -632,15 +632,15 @@ define method do-redo
   let end-bp   :: <basic-bp> = change-record-end-bp(record);
   let interval = make-interval(start-bp, end-bp, in-order?: #t);
   local method change-indentation (line :: <basic-line>, si, ei, last?)
-	  ignore(si, ei, last?);
-	  let indentation = new[i];
-	  inc!(i);
-	  let bp1 = line-start(line);
-	  let bp2 = forward-over(bp1, #[' ', '\t']);
-	  delete!(make-interval(bp1, bp2, in-order?: #t));
-	  let spaces = make(<byte-string>, size: indentation, fill: ' ');
-	  insert!(bp1, spaces)
-	end method;
+          ignore(si, ei, last?);
+          let indentation = new[i];
+          inc!(i);
+          let bp1 = line-start(line);
+          let bp2 = forward-over(bp1, #[' ', '\t']);
+          delete!(make-interval(bp1, bp2, in-order?: #t));
+          let spaces = make(<byte-string>, size: indentation, fill: ' ');
+          insert!(bp1, spaces)
+        end method;
   do-lines(change-indentation, interval);
   move-point!(end-bp, window: window);
   queue-region-redisplay(window, start-bp, end-bp, centering: 0)

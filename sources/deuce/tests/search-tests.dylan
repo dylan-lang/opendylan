@@ -12,54 +12,54 @@ define test simple-search-test ()
   let source = "this is a simple test source string";
   // Reverse
   check-equal("Find a matching substring",
-	      string-search(p1, source), 17);
+              string-search(p1, source), 17);
   check-equal("Find a matching substring starting at 5",
-	      string-search(p1, source, start: 5), 17);
+              string-search(p1, source, start: 5), 17);
   check-equal("Find a matching substring ending at 25",
-	      string-search(p1, source, start: 5, end: 25), 17);
+              string-search(p1, source, start: 5, end: 25), 17);
   check-equal("Miss on a non-matching substring",
-	      string-search(p2, source), #f);
+              string-search(p2, source), #f);
   check-equal("Miss on a non-matching substring starting at 5",
-	      string-search(p2, source, start: 5), #f);
+              string-search(p2, source, start: 5), #f);
   check-equal("Miss on a non-matching substring ending at 25",
-	      string-search(p2, source, start: 5, end: 25), #f);
+              string-search(p2, source, start: 5, end: 25), #f);
   check-equal("Find an upcased substring",
-	      string-search(as-uppercase(p1), source), 17);
+              string-search(as-uppercase(p1), source), 17);
   check-equal("Find an upcased substring starting at 5",
-	      string-search(as-uppercase(p1), source, start: 5), 17);
+              string-search(as-uppercase(p1), source, start: 5), 17);
   check-equal("Find an upcased substring ending at 25",
-	      string-search(as-uppercase(p1), source, start: 5, end: 25), 17);
+              string-search(as-uppercase(p1), source, start: 5, end: 25), 17);
   check-equal("Miss on an upcased substring",
-	      string-search(as-uppercase(p1), source, test: \=), #f);
+              string-search(as-uppercase(p1), source, test: \=), #f);
   check-equal("Miss on an upcased substring starting at 5",
-	      string-search(as-uppercase(p1), source, start: 5, test: \=), #f);
+              string-search(as-uppercase(p1), source, start: 5, test: \=), #f);
   check-equal("Miss on an upcased substring ending at 25",
-	      string-search(as-uppercase(p1), source, start: 5, end: 25, test: \=), #f);
+              string-search(as-uppercase(p1), source, start: 5, end: 25, test: \=), #f);
   // Reverse
   check-equal("Find a matching substring",
-	      string-reverse-search(p1, source), 17);
+              string-reverse-search(p1, source), 17);
   check-equal("Find a matching substring starting at 5",
-	      string-reverse-search(p1, source, start: 5), 17);
+              string-reverse-search(p1, source, start: 5), 17);
   check-equal("Find a matching substring ending at 25",
-	      string-reverse-search(p1, source, start: 5, end: 25), 17);
+              string-reverse-search(p1, source, start: 5, end: 25), 17);
   check-equal("Miss on a non-matching substring",
-	      string-reverse-search(p2, source), #f);
+              string-reverse-search(p2, source), #f);
   check-equal("Miss on a non-matching substring starting at 5",
-	      string-reverse-search(p2, source, start: 5), #f);
+              string-reverse-search(p2, source, start: 5), #f);
   check-equal("Miss on a non-matching substring ending at 25",
-	      string-reverse-search(p2, source, start: 5, end: 25), #f);
+              string-reverse-search(p2, source, start: 5, end: 25), #f);
   check-equal("Find an upcased substring",
-	      string-reverse-search(as-uppercase(p1), source), 17);
+              string-reverse-search(as-uppercase(p1), source), 17);
   check-equal("Find an upcased substring starting at 5",
-	      string-reverse-search(as-uppercase(p1), source, start: 5), 17);
+              string-reverse-search(as-uppercase(p1), source, start: 5), 17);
   check-equal("Find an upcased substring ending at 25",
-	      string-reverse-search(as-uppercase(p1), source, start: 5, end: 25), 17);
+              string-reverse-search(as-uppercase(p1), source, start: 5, end: 25), 17);
   check-equal("Miss on an upcased substring",
-	      string-reverse-search(as-uppercase(p1), source, test: \=), #f);
+              string-reverse-search(as-uppercase(p1), source, test: \=), #f);
   check-equal("Miss on an upcased substring starting at 5",
-	      string-reverse-search(as-uppercase(p1), source, start: 5, test: \=), #f);
+              string-reverse-search(as-uppercase(p1), source, start: 5, test: \=), #f);
   check-equal("Miss on an upcased substring ending at 25",
-	      string-reverse-search(as-uppercase(p1), source, start: 5, end: 25, test: \=), #f);
+              string-reverse-search(as-uppercase(p1), source, start: 5, end: 25, test: \=), #f);
 end test simple-search-test;
 
 define test boyer-search-test ()
@@ -68,29 +68,29 @@ define test boyer-search-test ()
   let source = "this is a boyer test source string";
   // Reverse
   check-equal("Find a matching substring",
-	      boyer-search(p1, source), 16);
+              boyer-search(p1, source), 16);
   check-equal("Find a matching substring starting at 5",
-	      boyer-search(p1, source, start: 5), 16);
+              boyer-search(p1, source, start: 5), 16);
   check-equal("Find a matching substring ending at 25",
-	      boyer-search(p1, source, start: 5, end: 25), 16);
+              boyer-search(p1, source, start: 5, end: 25), 16);
   check-equal("Miss on a non-matching substring",
-	      boyer-search(p2, source), #f);
+              boyer-search(p2, source), #f);
   check-equal("Miss on a non-matching substring starting at 5",
-	      boyer-search(p2, source, start: 5), #f);
+              boyer-search(p2, source, start: 5), #f);
   check-equal("Miss on a non-matching substring ending at 25",
-	      boyer-search(p2, source, start: 5, end: 25), #f);
+              boyer-search(p2, source, start: 5, end: 25), #f);
   check-equal("Find an upcased substring",
-	      boyer-search(as-uppercase(p1), source), 16);
+              boyer-search(as-uppercase(p1), source), 16);
   check-equal("Find an upcased substring starting at 5",
-	      boyer-search(as-uppercase(p1), source, start: 5), 16);
+              boyer-search(as-uppercase(p1), source, start: 5), 16);
   check-equal("Find an upcased substring ending at 25",
-	      boyer-search(as-uppercase(p1), source, start: 5, end: 25), 16);
+              boyer-search(as-uppercase(p1), source, start: 5, end: 25), 16);
   check-equal("Miss on an upcased substring",
-	      boyer-search(as-uppercase(p1), source, test: \=), #f);
+              boyer-search(as-uppercase(p1), source, test: \=), #f);
   check-equal("Miss on an upcased substring starting at 5",
-	      boyer-search(as-uppercase(p1), source, start: 5, test: \=), #f);
+              boyer-search(as-uppercase(p1), source, start: 5, test: \=), #f);
   check-equal("Miss on an upcased substring ending at 25",
-	      boyer-search(as-uppercase(p1), source, start: 5, end: 25, test: \=), #f);
+              boyer-search(as-uppercase(p1), source, start: 5, end: 25, test: \=), #f);
 end test boyer-search-test;
 
 define suite search-suite ()

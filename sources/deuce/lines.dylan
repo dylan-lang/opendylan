@@ -176,13 +176,13 @@ define sealed method line-length-setter
     // Ensure there's enough room in the contents for the new length
     let new-contents
       = make(object-class(contents),
-	     size: max(length,
-		       floor(contents-length * $line-expansion-factor)));
+             size: max(length,
+                       floor(contents-length * $line-expansion-factor)));
     copy-bytes(new-contents, 0, contents, 0, line-length(line));
     line.%contents := new-contents
   end;
   line.%length := length;
-  note-line-changed(line);	// note the change!
+  note-line-changed(line);        // note the change!
   length
 end method line-length-setter;
 
@@ -191,7 +191,7 @@ define sealed method line-contents-setter
  => (contents :: <byte-string>)
   line.%length   := size(contents);
   line.%contents := contents;
-  note-line-changed(line);	// note the change!
+  note-line-changed(line);        // note the change!
   contents
 end method line-contents-setter;
 
@@ -212,10 +212,10 @@ define sealed method line-empty?
     (line :: <text-line>, #key index :: <integer> = 0) => (empty? :: <boolean>)
   line-length(line) = 0
   | ~position-if(line-contents(line),
-		 method (ch :: <byte-character>) ~any-whitespace-char?(ch) end,
-		 // Whitespace tends to be at the beginning of a line, so
-		 // searching backwards for non-whitespace is likely faster
-		 start: index, end: line-length(line), from-end?: #t)
+                 method (ch :: <byte-character>) ~any-whitespace-char?(ch) end,
+                 // Whitespace tends to be at the beginning of a line, so
+                 // searching backwards for non-whitespace is likely faster
+                 start: index, end: line-length(line), from-end?: #t)
 end method line-empty?;
 
 define sealed method gc-line
@@ -231,9 +231,9 @@ define sealed inline method make
     (class == <text-line>, #rest initargs, #key contents, length, #all-keys)
  => (line :: <fixed-text-line>)
   apply(make, <fixed-text-line>,
-	contents: contents,
-	length:   length | size(contents),
-	initargs)
+        contents: contents,
+        length:   length | size(contents),
+        initargs)
 end method make;
 
 
@@ -277,7 +277,7 @@ define sealed class <style-change> (<object>)
     required-init-keyword: index:;
   // The font, given as a <font>
   // Images are represented having this be an image instead of a font
-  sealed slot style-change-font  = #f,		// use 'window-default-font'
+  sealed slot style-change-font  = #f,                // use 'window-default-font'
     init-keyword: font:;
   // The color, given as a <color> or foreground/background
   sealed slot style-change-color = $default-foreground,
@@ -307,7 +307,7 @@ end method dump-line;
 define sealed method do-characters
     (function :: <function>, line :: <text-line>,
      #key start: _start :: <integer> = 0, end: _end :: <integer> = line-length(line),
-	  from-end? = #f, skip-test) => ()
+          from-end? = #f, skip-test) => ()
   ignore(skip-test);
   let contents :: <byte-string> = line-contents(line);
   range-check(contents, line-length(line), _start, _end);
@@ -316,7 +316,7 @@ define sealed method do-characters
       else values(_start, _end, 1) end;
   without-bounds-checks
     for (i :: <integer> = _start then i + _step,
-	 until: i = _end)
+         until: i = _end)
       let char = contents[i];
       function(char, line, i)
     end

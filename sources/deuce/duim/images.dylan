@@ -29,7 +29,7 @@ define constant $breakpoint-gray             = make-rgb-color(0.60, 0.60, 0.60);
 
 define pattern $potential-breakpoint-pattern
     (vector($background,
-	    $breakpoint-gray))
+            $breakpoint-gray))
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
@@ -45,9 +45,9 @@ end pattern $potential-breakpoint-pattern;
 
 define pattern $enabled-breakpoint-pattern
     (vector($background,
-	    $breakpoint-red-highlight,
-	    $breakpoint-red,
-	    $breakpoint-red-shadow))
+            $breakpoint-red-highlight,
+            $breakpoint-red,
+            $breakpoint-red-shadow))
   0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0;
   0, 0, 1, 2, 2, 2, 2, 2, 2, 0, 0;
   0, 1, 2, 2, 2, 2, 2, 2, 2, 2, 0;
@@ -63,9 +63,9 @@ end pattern $enabled-breakpoint-pattern;
 
 define pattern $disabled-breakpoint-pattern
     (vector($background,
-	    $breakpoint-red-highlight,
-	    $breakpoint-red,
-	    $breakpoint-red-shadow))
+            $breakpoint-red-highlight,
+            $breakpoint-red,
+            $breakpoint-red-shadow))
   0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0;
   0, 0, 1, 2, 2, 2, 2, 2, 2, 0, 0;
   0, 1, 2, 3, 3, 3, 3, 2, 2, 2, 0;
@@ -192,7 +192,7 @@ end pattern $current-location-pattern;
 
 define pattern $prompt-pattern
     (vector($background,
-	    $foreground))
+            $foreground))
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0;
@@ -209,7 +209,7 @@ end pattern $prompt-pattern;
 
 define pattern $values-pattern
     (vector($background,
-	    $foreground))
+            $foreground))
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0;
@@ -227,8 +227,8 @@ end pattern $values-pattern;
 
 define pattern $warning-pattern
     (vector($background,
-	    $breakpoint-yellow,
-	    $black))
+            $breakpoint-yellow,
+            $black))
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0;
@@ -244,8 +244,8 @@ end pattern $warning-pattern;
 
 define pattern $serious-warning-pattern
     (vector($background,
-	    $breakpoint-red,
-	    $black))
+            $breakpoint-red,
+            $black))
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0;
   0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0;
@@ -283,19 +283,19 @@ define variable $standard-images :: <simple-object-vector> = #[];
 
 define function initialize-standard-images ()
   $standard-images
-    := vector($potential-breakpoint-image,	// $potential-breakpoint
-	      $enabled-breakpoint-image,	// $enabled-breakpoint
-	      $disabled-breakpoint-image,	// $disabled-breakpoint
-	      $step-breakpoint-image,		// $step-breakpoint
-	      $test-breakpoint-image,		// $test-breakpoint
-	      $enabled-tracepoint-image,	// $enabled-tracepoint
-	      $disabled-tracepoint-image,	// $disabled-tracepoint
-	      $profile-point-image,		// $profile-point
-	      $current-location-image,		// $current-location
-	      $prompt-image,			// $prompt-arrow
-	      $values-image,			// $values-arrow
-	      $warning-image,			// $warning-arrow
-	      $serious-warning-image)		// $serious-warning-arrow
+    := vector($potential-breakpoint-image,        // $potential-breakpoint
+              $enabled-breakpoint-image,        // $enabled-breakpoint
+              $disabled-breakpoint-image,        // $disabled-breakpoint
+              $step-breakpoint-image,                // $step-breakpoint
+              $test-breakpoint-image,                // $test-breakpoint
+              $enabled-tracepoint-image,        // $enabled-tracepoint
+              $disabled-tracepoint-image,        // $disabled-tracepoint
+              $profile-point-image,                // $profile-point
+              $current-location-image,                // $current-location
+              $prompt-image,                        // $prompt-arrow
+              $values-image,                        // $values-arrow
+              $warning-image,                        // $warning-arrow
+              $serious-warning-image)                // $serious-warning-arrow
 end function initialize-standard-images;
 
 initialize-standard-images();

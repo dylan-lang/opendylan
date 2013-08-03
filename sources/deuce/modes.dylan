@@ -86,7 +86,7 @@ define method find-mode
   block (return)
     for (mode :: <major-mode> in *major-modes*)
       when (object-class(mode) == class)
-	return(mode)
+        return(mode)
       end
     end;
     let mode = make(class);
@@ -100,7 +100,7 @@ define variable *keyword->major-mode* :: <object-table> = make(<table>);
 define function find-mode-from-keyword
     (keyword :: <symbol>) => (mode :: <major-mode>)
   find-mode(gethash(*keyword->major-mode*, keyword,
-		    default: <fundamental-mode>))
+                    default: <fundamental-mode>))
 end function find-mode-from-keyword;
 
 define variable *file-type->major-mode* :: <object-table> = make(<table>);
@@ -109,7 +109,7 @@ define function find-mode-from-file-type
     (file-type :: false-or(type-union(<symbol>, <string>)))
  => (mode :: <major-mode>)
   find-mode(gethash(*file-type->major-mode*, file-type & as(<symbol>, file-type),
-		    default: <fundamental-mode>))
+                    default: <fundamental-mode>))
 end function find-mode-from-file-type;
 
 define function find-mode-from-pathname
@@ -174,23 +174,23 @@ define method execute-command
     when (history)
       let (nu, nr) = undo-history-state(history);
       when (nu ~= n-undo | nr ~= n-redo)
-	window-note-undo/redo(window, nu ~= 0, nr ~= 0)
+        window-note-undo/redo(window, nu ~= 0, nr ~= 0)
       end
     end;
     // If we executed a "real" command, reset the numeric arg state,
     // but first record into the open keyboard macro, if any
     unless (frame-last-command-type(frame) == #"number")
       unless (frame-last-command-type(frame) == #"macro")
-	let kbdmac = frame-keyboard-macro(frame);
-	when (kbdmac & ~keyboard-macro-closed?(kbdmac))
-	  let item = make(<keyboard-macro-item>,
-			  command:           command,
-			  character:         frame-command-character(frame),
-			  modifiers:         frame-command-modifiers(frame),
-			  numeric-arg:       frame-numeric-arg(frame),
-			  numeric-arg-state: frame-numeric-arg-state(frame));
-	  add!(keyboard-macro-items(kbdmac), item)
-	end
+        let kbdmac = frame-keyboard-macro(frame);
+        when (kbdmac & ~keyboard-macro-closed?(kbdmac))
+          let item = make(<keyboard-macro-item>,
+                          command:           command,
+                          character:         frame-command-character(frame),
+                          modifiers:         frame-command-modifiers(frame),
+                          numeric-arg:       frame-numeric-arg(frame),
+                          numeric-arg-state: frame-numeric-arg-state(frame));
+          add!(keyboard-macro-items(kbdmac), item)
+        end
       end;
       frame-numeric-arg(frame) := 1;
       frame-numeric-arg-state(frame) := #f
@@ -206,8 +206,8 @@ define method execute-command
       let mode = buffer & buffer-major-mode(buffer);
       let bp   = window-point(window);
       window-goal-x-position(window)
-	:= if (mode) index->position(bp-line(bp), mode, window, bp-index(bp))
-	   else 0 end
+        := if (mode) index->position(bp-line(bp), mode, window, bp-index(bp))
+           else 0 end
     end;
     // Now do redisplay
     redisplay-window(window)
@@ -221,20 +221,20 @@ define sealed method execute-command-in-frame
   let mode = buffer & buffer-major-mode(buffer);
   if (mode)
     dynamic-bind (*editor-frame* = frame,
-		  *buffer*       = buffer)
+                  *buffer*       = buffer)
       if (handle-errors?)
-	block ()
-	  execute-command(mode, frame, command)
-	exception (e :: <command-error>)
-	  when (command-error-format-string(e))
-	    apply(display-error-message,
-		  command-error-window(e),
-		  command-error-format-string(e), command-error-format-arguments(e))
-	  end;
-	  #f
-	end
+        block ()
+          execute-command(mode, frame, command)
+        exception (e :: <command-error>)
+          when (command-error-format-string(e))
+            apply(display-error-message,
+                  command-error-window(e),
+                  command-error-format-string(e), command-error-format-arguments(e))
+          end;
+          #f
+        end
       else
-	execute-command(mode, frame, command)
+        execute-command(mode, frame, command)
       end
     end
   else
@@ -260,8 +260,8 @@ define method buffer-command-menu-items
     (mode :: <major-mode>, buffer :: <buffer>)
  => (menu-items-vectors :: <vector>)
   vector(vector(vector("Revert Buffer", revert-file),
-		vector("Close Buffer",  close-file),
-		vector("Save Buffer",   save-file)))
+                vector("Close Buffer",  close-file),
+                vector("Save Buffer",   save-file)))
 end method buffer-command-menu-items;
 
 
@@ -283,7 +283,7 @@ define method find-mode
   block (return)
     for (mode :: <minor-mode> in *minor-modes*)
       when (object-class(mode) == class)
-	return(mode)
+        return(mode)
       end
     end;
     let mode = make(class);

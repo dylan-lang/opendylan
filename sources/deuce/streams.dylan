@@ -8,9 +8,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Interval streams
 
-define sealed class <interval-stream> 
+define sealed class <interval-stream>
     (<positionable-stream>,
-     <basic-stream>)		// needed for ensure-readable, etc.
+     <basic-stream>)                // needed for ensure-readable, etc.
   sealed constant slot %start-bp :: <basic-bp>,
     required-init-keyword: start-bp:;
   sealed constant slot %end-bp :: <basic-bp>,
@@ -45,8 +45,8 @@ define sealed method make
         end;
   with-keywords-removed (initargs = initargs, #[interval:])
     apply(next-method, class,
-	  start-bp: start-bp, end-bp: end-bp,
-	  buffer: buffer, initargs)
+          start-bp: start-bp, end-bp: end-bp,
+          buffer: buffer, initargs)
   end
 end method make;
 
@@ -65,8 +65,8 @@ define sealed method make
         end;
   with-keywords-removed (initargs = initargs, #[interval:])
     apply(next-method, class,
-	  start-bp: start-bp, end-bp: end-bp,
-	  buffer: buffer, window: window, initargs)
+          start-bp: start-bp, end-bp: end-bp,
+          buffer: buffer, window: window, initargs)
   end
 end method make;
 
@@ -125,7 +125,7 @@ define sealed method peek
   end
 end method peek;
 
-define sealed method read 
+define sealed method read
     (stream :: <interval-stream>, n :: <integer>,
      #key on-end-of-stream = $unsupplied)
  => (string-or-eof :: <object>)
@@ -142,8 +142,8 @@ define sealed method read
   else
     if (unsupplied?(on-end-of-stream))
       signal(make(<incomplete-read-error>,
-		  stream: stream,
-		  sequence: if (interval) as(<byte-string>, interval) else "" end,
+                  stream: stream,
+                  sequence: if (interval) as(<byte-string>, interval) else "" end,
                   count: n-read | 0))
     else
       on-end-of-stream
@@ -165,15 +165,15 @@ define sealed method read-into!
     let i :: <integer> = start;
     block (break)
       do-lines(method (line, si, ei, last?)
-		 ignore(last?);
-		 let n :: <integer> = ei - si;
-		 copy-bytes(dst, i, line-contents(line), si, min(n, limit));
-		 inc!(i, n);
-		 dec!(limit, n);
-		 when (limit <= 0)
-		   break()
-		 end
-	       end method, interval)
+                 ignore(last?);
+                 let n :: <integer> = ei - si;
+                 copy-bytes(dst, i, line-contents(line), si, min(n, limit));
+                 inc!(i, n);
+                 dec!(limit, n);
+                 when (limit <= 0)
+                   break()
+                 end
+               end method, interval)
     end block;
     move-bp!(bp1, bp-line(bp2), bp-index(bp2));
   end;
@@ -181,7 +181,7 @@ define sealed method read-into!
     n-read
   else
     signal(make(<incomplete-read-error>,
-		stream: stream,
+                stream: stream,
                 sequence: if (interval) as(<byte-string>, interval) else "" end,
                 count: n-read | 0))
   end
@@ -193,7 +193,7 @@ define sealed method read-line
  => (string-or-eof :: <object>, newline? :: <boolean>)
   if (stream-at-end?(stream))
     values(end-of-stream-value(stream, on-end-of-stream), #f)
-  else 
+  else
     let bp :: <basic-bp> = stream.%current-position;
     let line  = bp-line(bp);
     let index = bp-index(bp);
@@ -216,7 +216,7 @@ define sealed method read-line-into!
  => (string-or-eof :: <object>, newline? :: <boolean>)
   if (stream-at-end?(stream))
     values(end-of-stream-value(stream, on-end-of-stream), #f)
-  else 
+  else
     let bp :: <basic-bp> = stream.%current-position;
     let line  = bp-line(bp);
     let index = bp-index(bp);
@@ -224,12 +224,12 @@ define sealed method read-line-into!
     let contents = line-contents(line);
     case
       length - index <= size(string) - start =>
-	copy-bytes(string, start, contents, index, length - index);
+        copy-bytes(string, start, contents, index, length - index);
       grow? =>
-	string := make(type-for-copy(string), size: length - index);
-	copy-bytes(string, start, contents, index, length - index);
+        string := make(type-for-copy(string), size: length - index);
+        copy-bytes(string, start, contents, index, length - index);
       otherwise =>
-	copy-bytes(string, start, contents, index, size(string) - start);
+        copy-bytes(string, start, contents, index, size(string) - start);
     end;
     let next = line-next-in-buffer(line, stream.%buffer);
     if (next)
@@ -315,9 +315,9 @@ define sealed method adjust-stream-position
  => (position :: <basic-bp>)
   stream-position(stream)
     := select (from)
-	 #"current" => move-over-characters(stream.%current-position, delta);
-	 #"start"   => move-over-characters(stream.%start-bp, delta);
-	 #"end"     => move-over-characters(stream.%end-bp, delta);
+         #"current" => move-over-characters(stream.%current-position, delta);
+         #"start"   => move-over-characters(stream.%start-bp, delta);
+         #"end"     => move-over-characters(stream.%end-bp, delta);
        end
 end method adjust-stream-position;
 

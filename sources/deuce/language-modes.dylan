@@ -10,9 +10,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant <breakpoint-state>
     = one-of(#f, #"none",
-	     #"enabled-break", #"disabled-break", #"test-break", #"step",
-	     #"enabled-trace", #"disabled-trace", #"profile", #"current",
-	     #"warning", #"serious-warning");
+             #"enabled-break", #"disabled-break", #"test-break", #"step",
+             #"enabled-trace", #"disabled-trace", #"profile", #"current",
+             #"warning", #"serious-warning");
 
 // Language-specific operations follow...
 define protocol <<language-major-mode>> (<<major-mode>>)
@@ -158,7 +158,7 @@ define method do-relevant-function-interval
   let sbp = if (atom-syntax(bp-character-before(bp)) == $atom-delimiter)
               forward-over(bp, #[' ', '\t', '\f'], interval: node)
             else
-	      move-over-atoms(bp, -1, interval: node)
+              move-over-atoms(bp, -1, interval: node)
             end;
   let ebp = move-over-atoms(sbp, 1, interval: node);
   make-interval(sbp, ebp, in-order?: #t)
@@ -198,9 +198,9 @@ end method do-indent-line;
 define method do-indent-region
     (mode :: <major-mode>, region :: <basic-interval>) => ()
   local method indent (line :: <basic-line>, si, ei, last?)
-	  ignore(si, ei, last?);
-	  do-indent-line(mode, line)
-	end method;
+          ignore(si, ei, last?);
+          do-indent-line(mode, line)
+        end method;
   do-lines(indent, region)
 end method do-indent-region;
 
@@ -236,44 +236,44 @@ define method do-complete-dynamically
  => (completion :: type-union(<string>, <boolean>), ambiguous? :: <boolean>)
   let (word, word-bp, search-bp, reverse?, completion)
     = if (state[0])
-	values(state[0], state[1], state[2], state[3], state[4])
+        values(state[0], state[1], state[2], state[3], state[4])
       else
-	let (bp1, bp2) = atom-under-bp(point());
-	let word = (atom-syntax(bp-character(bp1)) == $atom-alphabetic
-		    & as(<byte-string>, make-interval(bp1, bp2, in-order?: #t)));
-	values(word, bp1, bp1, #t, word)
+        let (bp1, bp2) = atom-under-bp(point());
+        let word = (atom-syntax(bp-character(bp1)) == $atom-alphabetic
+                    & as(<byte-string>, make-interval(bp1, bp2, in-order?: #t)));
+        values(word, bp1, bp1, #t, word)
       end;
-  state[0] := #f;		// assume failure
+  state[0] := #f;                // assume failure
   when (word)
     let bp = search-bp;
     block (break)
       local method maybe-break ()
-	      when (bp)
-		let is-atom?   = atom-syntax(bp-character-before(bp)) ~== $atom-alphabetic;
-		let (bp1, bp2) = atom-under-bp(bp);
-		bp := (if (reverse?) bp1 else bp2 end);
-		when (is-atom?)
-		  let string = as(<byte-string>, make-interval(bp1, bp2, in-order?: #t));
-		  when (~string-equal?(string, completion) & ~string-equal?(string, word))
-		    completion := string;
-		    break()
-		  end
-		end
-	      end
-	    end method;
+              when (bp)
+                let is-atom?   = atom-syntax(bp-character-before(bp)) ~== $atom-alphabetic;
+                let (bp1, bp2) = atom-under-bp(bp);
+                bp := (if (reverse?) bp1 else bp2 end);
+                when (is-atom?)
+                  let string = as(<byte-string>, make-interval(bp1, bp2, in-order?: #t));
+                  when (~string-equal?(string, completion) & ~string-equal?(string, word))
+                    completion := string;
+                    break()
+                  end
+                end
+              end
+            end method;
       // 'reverse?' could be either #t or #f here
       while (bp)
-	bp := search(bp, word, reverse?: reverse?);
-	maybe-break()
+        bp := search(bp, word, reverse?: reverse?);
+        maybe-break()
       end;
       // Switch to searching forward when reverse search fails
       when (~bp & reverse?)
-	bp       := move-over-atoms(word-bp, 1);
-	reverse? := #f;
-	while (bp)
-	  bp := search(bp, word, reverse?: reverse?);
-	  maybe-break()
-	end
+        bp       := move-over-atoms(word-bp, 1);
+        reverse? := #f;
+        while (bp)
+          bp := search(bp, word, reverse?: reverse?);
+          maybe-break()
+        end
       end
     end block;
     when (bp & completion)
@@ -408,18 +408,18 @@ define method line-breakpoint-icon
   ignore(window);
   let state = line-breakpoint?(mode, line);
   state & select (state)
-	    #"none"            => $potential-breakpoint;
-	    #"enabled-break"   => $enabled-breakpoint;
-	    #"disabled-break"  => $disabled-breakpoint;
-	    #"step"            => $step-breakpoint;
-	    #"test-break"      => $test-breakpoint;
-	    #"enabled-trace"   => $enabled-tracepoint;
-	    #"disabled-trace"  => $disabled-tracepoint;
-	    #"profile"         => $profile-point;
-	    #"current"         => $current-location;
-	    #"warning"         => $warning;
-	    #"serious-warning" => $serious-warning;
-	  end
+            #"none"            => $potential-breakpoint;
+            #"enabled-break"   => $enabled-breakpoint;
+            #"disabled-break"  => $disabled-breakpoint;
+            #"step"            => $step-breakpoint;
+            #"test-break"      => $test-breakpoint;
+            #"enabled-trace"   => $enabled-tracepoint;
+            #"disabled-trace"  => $disabled-tracepoint;
+            #"profile"         => $profile-point;
+            #"current"         => $current-location;
+            #"warning"         => $warning;
+            #"serious-warning" => $serious-warning;
+          end
 end method line-breakpoint-icon;
 
 
@@ -435,12 +435,12 @@ define method display-line
      x :: <integer>, y :: <integer>,
      #key start: _start = 0, end: _end = line-length(line), align-y = #"top") => ()
   let image = line-breakpoint-icon(mode, line, window);
-  when (image & _start = 0)	// no icon on continuation lines
+  when (image & _start = 0)        // no icon on continuation lines
     let image-y = if (align-y == #"top") y else y - $breakpoint-image-height + 2 end;
     draw-image(window, standard-images(window, image), x, image-y + $breakpoint-image-offset)
   end;
   next-method(line, mode, window, x + $breakpoint-image-width, y,
-	      start: _start, end: _end, align-y: align-y)
+              start: _start, end: _end, align-y: align-y)
 end method display-line;
 
 define method line-size

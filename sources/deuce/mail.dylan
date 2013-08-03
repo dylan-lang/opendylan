@@ -20,7 +20,7 @@ define variable *mail-buffer-count* :: <integer> = 0;
 define function make-mail-buffer
     (#rest buffer-initargs,
      #key name, editor = frame-editor(*editor-frame*),
-	  to, subject, body,
+          to, subject, body,
      #all-keys)
  => (buffer :: <mail-buffer>)
   ignore(editor);
@@ -30,9 +30,9 @@ define function make-mail-buffer
   end;
   with-keywords-removed (buffer-initargs = buffer-initargs, #[name:, to:, subject:, body:])
     let buffer = apply(make, <mail-buffer>,
-		       name: name,
-		       major-mode: find-mode(<mail-mode>),
-		       buffer-initargs);
+                       name: name,
+                       major-mode: find-mode(<mail-mode>),
+                       buffer-initargs);
     initialize-mail-buffer(buffer, to: to, subject: subject, body: body);
     buffer
   end
@@ -114,32 +114,32 @@ define sealed method parse-mail-buffer
   //--- I admit it, this is a pretty cheesy header parser
   when (header)
     local method looking-at? (contents :: <byte-string>, length :: <integer>,
-			      string :: <byte-string>)
-	    let _start = 0;
-	    let _end   = min(size(string), length);
-	    string-equal?(contents, string, start1: _start, end1: _end)
-	  end method;
+                              string :: <byte-string>)
+            let _start = 0;
+            let _end   = min(size(string), length);
+            string-equal?(contents, string, start1: _start, end1: _end)
+          end method;
     for (line = section-start-line(header) then line-next(line),
-	 until: ~line)
+         until: ~line)
       let contents = line-contents(line);
       let length   = line-length(line);
       case
-	looking-at?(contents, length, "From:") =>
-	  from := trim-whitespace(copy-sequence(contents, start: 5));
-	looking-at?(contents, length, "To:") =>
-	  to   := trim-whitespace(copy-sequence(contents, start: 3));
-	looking-at?(contents, length, "cc:") =>
-	  cc   := trim-whitespace(copy-sequence(contents, start: 3));
-	looking-at?(contents, length, "Subject:") =>
-	  subj := trim-whitespace(copy-sequence(contents, start: 8));
-	otherwise =>
-	  let colon = position(contents, ':');
-	  when (colon)
-	    let name  = copy-sequence(contents, end: colon);
-	    let key   = as(<symbol>, name);
-	    let value = trim-whitespace(copy-sequence(contents, start: colon + 1));
-	    add!(other-headers, vector(key, name, value))
-	  end;
+        looking-at?(contents, length, "From:") =>
+          from := trim-whitespace(copy-sequence(contents, start: 5));
+        looking-at?(contents, length, "To:") =>
+          to   := trim-whitespace(copy-sequence(contents, start: 3));
+        looking-at?(contents, length, "cc:") =>
+          cc   := trim-whitespace(copy-sequence(contents, start: 3));
+        looking-at?(contents, length, "Subject:") =>
+          subj := trim-whitespace(copy-sequence(contents, start: 8));
+        otherwise =>
+          let colon = position(contents, ':');
+          when (colon)
+            let name  = copy-sequence(contents, end: colon);
+            let key   = as(<symbol>, name);
+            let value = trim-whitespace(copy-sequence(contents, start: colon + 1));
+            add!(other-headers, vector(key, name, value))
+          end;
       end
     end
   end;
@@ -162,9 +162,9 @@ define sealed method initialize-major-mode
     #"emacs" =>
       let command-table = control-C-command-table(command-set);
       add-commands!(command-table,
-		    vector('s', control, mail-send),
-		    vector('c', control, mail-send-and-exit),
-		    vector('w', control, mail-signature));
+                    vector('s', control, mail-send),
+                    vector('c', control, mail-send-and-exit),
+                    vector('w', control, mail-signature));
     #"windows" =>
       #f;
     otherwise =>
@@ -246,8 +246,8 @@ define sealed method display-line
   let offset = 5;
   let line-y = y + floor/(height, 2);
   draw-line(window,
-	    x + offset, line-y, x + width - offset, line-y,
-	    thickness: 1, color: $divider-line-color);
+            x + offset, line-y, x + width - offset, line-y,
+            thickness: 1, color: $divider-line-color);
 end method display-line;
 
 define sealed method line-size
@@ -287,7 +287,7 @@ define command mail-send (frame)
       = parse-mail-buffer(buffer);
     let (success?, message)
       = do-send-mail(window, to, subject, body,
-		     from: from, cc: cc, other-headers: other-headers);
+                     from: from, cc: cc, other-headers: other-headers);
     if (success?)
       display-message(window, "Mail sent")
     else
@@ -312,7 +312,7 @@ define command mail-send-and-exit (frame)
       //--- Too bad 'select-buffer' doesn't know how to bury it!
       let prev-buffer = previously-selected-buffer(window, 1);
       when (prev-buffer)
-	select-buffer-in-appropriate-window(window, prev-buffer)
+        select-buffer-in-appropriate-window(window, prev-buffer)
       end
     end
   end;

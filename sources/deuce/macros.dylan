@@ -37,10 +37,10 @@ end macro min!;
 define macro swap!
   { swap! (?place1:expression, ?place2:expression) }
     => { begin
-	   let _value = ?place1;
-	   ?place1 := ?place2;
-	   ?place2 := _value 
-	 end }
+           let _value = ?place1;
+           ?place1 := ?place2;
+           ?place2 := _value
+         end }
 end macro swap!;
 
 
@@ -57,7 +57,7 @@ define macro pop!
            let _result = head(?list);
            ?list := tail(?list);
            _result
-	 end }
+         end }
 end macro pop!;
 
 
@@ -112,15 +112,15 @@ end macro with-window-locked;
 define macro with-thing-locked
   { with-thing-locked (?thing:expression, ?accessor:name) ?:body end }
     => { begin
-	   let _thing = ?thing;
-	   let _lock  = _thing & ?accessor(_thing);
-	   block ()
-	     when (_lock) wait-for(_lock) end;
-	     ?body
-	   cleanup
-	     when (_lock) release(_lock) end;
-	   end
-	 end }
+           let _thing = ?thing;
+           let _lock  = _thing & ?accessor(_thing);
+           block ()
+             when (_lock) wait-for(_lock) end;
+             ?body
+           cleanup
+             when (_lock) release(_lock) end;
+           end
+         end }
 end macro with-thing-locked;
 
 
@@ -129,22 +129,22 @@ end macro with-thing-locked;
 define macro with-editor-state-bound
   { with-editor-state-bound (?buffer:variable = ?window:expression) ?:body end }
     => { begin
-	   let _frame  = window-frame(?window);
-	   let ?buffer = frame-buffer(_frame);
-	   dynamic-bind (*editor-frame* = _frame,
-			 *buffer*       = ?buffer)
-	     ?body
-	   end
-	 end }
+           let _frame  = window-frame(?window);
+           let ?buffer = frame-buffer(_frame);
+           dynamic-bind (*editor-frame* = _frame,
+                         *buffer*       = ?buffer)
+             ?body
+           end
+         end }
   { with-editor-state-bound (?window:expression) ?:body end }
     => { begin
-	   let _frame  = window-frame(?window);
-	   let _buffer = frame-buffer(_frame);
-	   dynamic-bind (*editor-frame* = _frame,
-			 *buffer*       = _buffer)
-	     ?body
-	   end
-	 end }
+           let _frame  = window-frame(?window);
+           let _buffer = frame-buffer(_frame);
+           dynamic-bind (*editor-frame* = _frame,
+                         *buffer*       = _buffer)
+             ?body
+           end
+         end }
 end macro with-editor-state-bound;
 
 
@@ -153,13 +153,13 @@ end macro with-editor-state-bound;
 define macro do-associated-windows
   { do-associated-windows (?window:variable = ?frame:expression) ?:body end }
     => { begin
-	   let _frame = ?frame;
-	   when (_frame)
-	     for (?window in editor-windows(frame-editor(_frame)))
-	       ?body
-	     end
-	   end
-	 end }
+           let _frame = ?frame;
+           when (_frame)
+             for (?window in editor-windows(frame-editor(_frame)))
+               ?body
+             end
+           end
+         end }
 end macro do-associated-windows;
 
 // Iterate over the buffers associated with the given frame's editor.
@@ -167,11 +167,11 @@ end macro do-associated-windows;
 define macro do-associated-buffers
   { do-associated-buffers (?buffer:variable = ?frame:expression) ?:body end }
     => { begin
-	   let _frame = ?frame;
-	   when (_frame)
-	     for (?buffer in editor-buffers(frame-editor(_frame)))
-	       ?body
-	     end
-	   end
-	 end }
+           let _frame = ?frame;
+           when (_frame)
+             for (?buffer in editor-buffers(frame-editor(_frame)))
+               ?body
+             end
+           end
+         end }
 end macro do-associated-buffers;

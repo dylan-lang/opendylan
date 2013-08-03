@@ -83,10 +83,10 @@ define method find-source-container
   let container
     = gethash(containers, namestring)
       | begin
-	  let new-container = apply(make, class, pathname: pathname, initargs);
-	  gethash(containers, namestring) := new-container;
-	  new-container
-	end;
+          let new-container = apply(make, class, pathname: pathname, initargs);
+          gethash(containers, namestring) := new-container;
+          new-container
+        end;
   container
 end method find-source-container;
 
@@ -152,17 +152,17 @@ define method add-section!
     (container :: <basic-source-container>, section :: <basic-section>,
      #key after :: type-union(<basic-section>, one-of(#f, #"start", #"end")) = #"end") => ()
   assert(~section-container(section),
-	 "The section %= is already in the container %=", section, section-container(section));
+         "The section %= is already in the container %=", section, section-container(section));
   let index = select (after)
-		#f, #"start" =>
-		  #"start";
-		#"end" =>
-		  #"end";
-		otherwise =>
-		  assert(section-container(after) == container,
-			 "The 'after' section %= is not in the container %=", after, container);
-		  position(container-sections(container), after) + 1;
-	      end;
+                #f, #"start" =>
+                  #"start";
+                #"end" =>
+                  #"end";
+                otherwise =>
+                  assert(section-container(after) == container,
+                         "The 'after' section %= is not in the container %=", after, container);
+                  position(container-sections(container), after) + 1;
+              end;
   section-container(section) := container;
   insert-at!(container-sections(container), section, index)
 end method add-section!;
@@ -170,7 +170,7 @@ end method add-section!;
 define method remove-section!
     (container :: <basic-source-container>, section :: <basic-section>) => ()
   assert(section-container(section) == container,
-	 "The section %= is not in the container %=", section, section-container(section));
+         "The section %= is not in the container %=", section, section-container(section));
   //---*** This needs to notify all the nodes using this section
   section-container(section) := #f;
   container-sections(container) := remove!(container-sections(container), section)
@@ -203,8 +203,8 @@ define sealed method read-container-contents
   let pathname = container-pathname(container);
   // Make a section to hold all the lines of the file
   let section = make(<section>,
-		     container: container,
-		     start-line: #f, end-line: #f);
+                     container: container,
+                     start-line: #f, end-line: #f);
   container-sections(container)
     := make(<stretchy-vector>, size: 1, fill: section);
   unless (member?(buffer, container-buffers(container)))
@@ -247,30 +247,30 @@ define method read-section-contents-from-stream
   when (stream)
     block (break)
       while (#t)
-	let contents = read-line(stream, on-end-of-stream: #f);
-	if (contents)
-	  let line = make(<text-line>,
-			  contents: contents,
-			  section: section);
-	  unless (first-line)
-	    first-line := line
-	  end;
-	  line-previous(line) := last-line;
-	  when (last-line)
-	    line-next(last-line) := line
-	  end;
-	  last-line := line
-	else
-	  break()
-	end
+        let contents = read-line(stream, on-end-of-stream: #f);
+        if (contents)
+          let line = make(<text-line>,
+                          contents: contents,
+                          section: section);
+          unless (first-line)
+            first-line := line
+          end;
+          line-previous(line) := last-line;
+          when (last-line)
+            line-next(last-line) := line
+          end;
+          last-line := line
+        else
+          break()
+        end
       end
     end
   end;
   // Watch out for empty or non-existent files
   unless (first-line)
     first-line := make(<text-line>,
-		       contents: "",
-		       section: section);
+                       contents: "",
+                       section: section);
     last-line  := first-line
   end;
   section-start-line(section) := first-line;

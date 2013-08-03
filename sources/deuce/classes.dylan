@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Protocol classes
 
-define abstract class <bp> (<object>) end;		// _not_ open!
+define abstract class <bp> (<object>) end;                // _not_ open!
 
 define open abstract class <line> (<object>) end;
 

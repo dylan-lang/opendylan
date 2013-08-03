@@ -12,28 +12,28 @@ define variable *editor* :: false-or(<editor>) = #f;
 
 define constant $initially-disabled-commands
     = vector(save-file, find-next-string,
-	     deuce/undo-command, deuce/redo-command,
-	     compile-file, load-file,
-	     evaluate-region, evaluate-buffer, macroexpand-region,
-	     describe-object, browse-object, browse-class,
-	     show-arglist, show-documentation);
+             deuce/undo-command, deuce/redo-command,
+             compile-file, load-file,
+             evaluate-region, evaluate-buffer, macroexpand-region,
+             describe-object, browse-object, browse-class,
+             show-arglist, show-documentation);
 
 define function start-deuce (#key reset?)
   when (~*editor* | reset?)
     *editor* := make(<deuce-editor>);
   end;
   let frame = make(<deuce-frame>,
-		   width: 625, height: 650,
-		   title: "Deuce",
-		   editor: *editor*,
-		   disabled-commands: $initially-disabled-commands);
+                   width: 625, height: 650,
+                   title: "Deuce",
+                   editor: *editor*,
+                   disabled-commands: $initially-disabled-commands);
   frame-window(frame) := frame.%window;
   //---*** Globally set these because CAPI back-end never calls 'frame-top-level'
   *editor-frame* := frame;
   let buffer = make-initial-buffer();
   *buffer* := buffer;
   dynamic-bind (*editor-frame* = frame,
-		*buffer* = buffer)
+                *buffer* = buffer)
     select-buffer(frame-window(frame), buffer);
     start-frame(frame)
   end

@@ -163,13 +163,13 @@ define function reset-testing-buffer-state () => ()
         (section :: <section>, start-line :: <line>, end-line :: <line>)
      => (node :: <section-node>)
       let node :: <section-node>
-	= make(<section-node>, section: section,
-	       start-bp:
-		 make(<bp>, line: start-line, index: 0,
+        = make(<section-node>, section: section,
+               start-bp:
+                 make(<bp>, line: start-line, index: 0,
                       buffer: *testing-buffer*),
-	       end-bp:
-		 make(<bp>, line: end-line, index: line-length(end-line),
-		      buffer: *testing-buffer*, moving?: #t));
+               end-bp:
+                 make(<bp>, line: end-line, index: line-length(end-line),
+                      buffer: *testing-buffer*, moving?: #t));
       section-nodes(section) := list(node);
       node
     end method;

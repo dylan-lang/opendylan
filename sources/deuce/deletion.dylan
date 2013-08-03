@@ -23,9 +23,9 @@ define method kill!
     let editor    = frame-editor(*editor-frame*);
     let kill-ring = editor-kill-history(editor);
     let new-elt   = add-to-kill-ring(kill-ring, interval,
-				     merge?: merge?, reverse?: reverse?);
+                                     merge?: merge?, reverse?: reverse?);
     when (clipboard? == #t
-	  | (unsupplied?(clipboard?) & clipboard-policy(editor-policy(editor))))
+          | (unsupplied?(clipboard?) & clipboard-policy(editor-policy(editor))))
       let window = frame-window(*editor-frame*);
       add-to-clipboard(window, new-elt)
     end
@@ -53,9 +53,9 @@ define sealed method delete!
   let start-index = bp-index(start-bp);
   let end-index   = bp-index(end-bp);
   assert(start-index >= 0 & start-index <= line-length(start-line),
-	 "Start index %d is out of range for line %=", start-index, start-line);
+         "Start index %d is out of range for line %=", start-index, start-line);
   assert(end-index >= 0 & end-index <= line-length(end-line),
-	 "End index %d is out of range for line %=", end-index, end-line);
+         "End index %d is out of range for line %=", end-index, end-line);
   // Finalize the change record before we do the deletion
   when (*change-record*)
     extend-deletion-record(*change-record*, interval: interval)
@@ -79,21 +79,21 @@ define sealed method delete!
       note-multi-line-deletion(buffer-major-mode(buffer), interval);
       //---*** Relocate moving BPs
       let following-line
-	= delete-across-lines(start-line, start-index, end-line, end-index);
+        = delete-across-lines(start-line, start-index, end-line, end-index);
       when (start-section)
-	let start-section :: <basic-section> = start-section;	// force tighter type...
-	start-section.%n-lines := #f;
-	// If we deleted into or over 'section-end-line(start-section)',
-	// we need to fix it to point to the last line currently in the
+        let start-section :: <basic-section> = start-section;        // force tighter type...
+        start-section.%n-lines := #f;
+        // If we deleted into or over 'section-end-line(start-section)',
+        // we need to fix it to point to the last line currently in the
         // section.  There are separate cases for "into" and "over" to
         // save having to do something like 'bp-within-interval?'.
-	when (section-end-line(start-section) == end-line)
+        when (section-end-line(start-section) == end-line)
           section-end-line(start-section) := start-line
         end;
         when (end-section & start-section ~== end-section)
-	  let end-section :: <basic-section> = end-section;	// force tighter type...
+          let end-section :: <basic-section> = end-section;        // force tighter type...
           end-section.%n-lines := #f;
-          section-end-line(start-section) := start-line;	// note duplicate line
+          section-end-line(start-section) := start-line;        // note duplicate line
           section-start-line(end-section) := following-line;
           unless (following-line)
             section-end-line(end-section) := #f
@@ -103,27 +103,27 @@ define sealed method delete!
       // Clean up nodes and sections that got emptied dy the deletion.
       // First pull all remaining lines into the first section...
       when (start-section & end-section & start-section ~== end-section)
-	merge-sections(start-section, end-section)
+        merge-sections(start-section, end-section)
       end;
       // ...then fix up the first node's start and end BPs
       let (first-line, last-line)
-	= if (start-section) values(section-start-line(start-section),
-				    section-end-line(start-section))
-	  else values(start-node & bp-line(interval-start-bp(start-node)),
-		      end-node   & bp-line(interval-end-bp(end-node)))
-	  end;
+        = if (start-section) values(section-start-line(start-section),
+                                    section-end-line(start-section))
+          else values(start-node & bp-line(interval-start-bp(start-node)),
+                      end-node   & bp-line(interval-end-bp(end-node)))
+          end;
       when (start-node)
-	move-bp!(interval-start-bp(start-node), first-line, 0);
-	move-bp!(interval-end-bp(start-node),   last-line, line-length(last-line));
-	when (end-node)
-	  // ...and get rid of the empty sections and nodes at the end
-	  when (start-node ~== end-node)
-	    remove-empty-nodes(start-node, end-node)
-	  end
-	end
+        move-bp!(interval-start-bp(start-node), first-line, 0);
+        move-bp!(interval-end-bp(start-node),   last-line, line-length(last-line));
+        when (end-node)
+          // ...and get rid of the empty sections and nodes at the end
+          when (start-node ~== end-node)
+            remove-empty-nodes(start-node, end-node)
+          end
+        end
       end;
       when (resectionize?)
-	resectionize-section(start-section)
+        resectionize-section(start-section)
       end;
       update-buffer-line-count(buffer, start-node);
       start-bp
@@ -148,7 +148,7 @@ define method delete-within-line
   let contents = line-contents(line);
   without-bounds-checks
     for (i :: <integer> from start-index,
-	 j :: <integer> from end-index below length)
+         j :: <integer> from end-index below length)
       contents[i] := contents[j]
     end
   end;
@@ -172,7 +172,7 @@ define method delete-across-lines
   line-length(start-line) := new-length;
   // Copy the remainder of the end line into the start line
   insert-into-line(start-line, new-length, as(<byte-string>, end-line),
-		   start: end-index);
+                   start: end-index);
   // Unlink the intervening lines, including the original end-line
   let following-line = line-next(end-line);
   line-next(start-line) := following-line;
@@ -229,13 +229,13 @@ end method note-multi-line-deletion;
 define method merge-sections
     (start-section :: <basic-section>, end-section :: <basic-section>) => ()
   assert(start-section ~== end-section,
-	 "The start and end sections must be different in 'merge-sections'");
+         "The start and end sections must be different in 'merge-sections'");
   let start2 = section-start-line(end-section);
   let end2   = section-end-line(end-section);
   // Do nothing if the end section is already empty
   when (start2 & end2)
     for (line = start2 then line-next(line),
-	 until: ~line)
+         until: ~line)
       line-section(line) := start-section
     end;
     section-end-line(start-section) := end2
@@ -248,28 +248,28 @@ end method merge-sections;
 define method remove-empty-nodes
     (start-node :: <basic-node>, end-node :: <basic-node>) => ()
   assert(start-node ~== end-node,
-	 "The start and end nodes must be different in 'cleanup-empty-nodes'");
+         "The start and end nodes must be different in 'cleanup-empty-nodes'");
   block (break)
     let next = node-next(start-node);
     while (next)
       let node :: <basic-node> = next;
-      next := node-next(node);		// before we call 'remove-node!'...
+      next := node-next(node);                // before we call 'remove-node!'...
       let section = node-section(node);
       when (section)
-	let container = section-container(section);
-	when (container)
-	  remove-section!(container, section)
-	end
+        let container = section-container(section);
+        when (container)
+          remove-section!(container, section)
+        end
       end;
       when (section | interval-start-bp(node) = interval-end-bp(node))
-	let buffer = node-buffer(node);
-	when (buffer)
-	  remove-node!(buffer, node)
-	end
+        let buffer = node-buffer(node);
+        when (buffer)
+          remove-node!(buffer, node)
+        end
       end;
       when (node == end-node)
         break()
       end
     end
-  end      
+  end
 end method remove-empty-nodes;

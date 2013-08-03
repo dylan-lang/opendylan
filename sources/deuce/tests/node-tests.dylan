@@ -252,9 +252,9 @@ define test interval-characters-test ()
   let count :: <integer> = 0;
   local
     method accumulate-even-characters
-	(char :: <character>, line :: <line>, index :: <integer>)
+        (char :: <character>, line :: <line>, index :: <integer>)
       even?(count)
-	& (accum := pair(char, accum));
+        & (accum := pair(char, accum));
       count := count + 1;
     end method,
     method reset-state () => ()
@@ -382,14 +382,14 @@ define test interval-contents-test ()
       let start-bp = interval-start-bp(part-sections-interval-copy);
       let end-bp = interval-end-bp(part-sections-interval-copy);
       check-true
-	("Copied part-sections interval",
+        ("Copied part-sections interval",
          last-line-from(bp-line(start-bp)) == bp-line(end-bp));
       check-equal
-	("Contents equal after copying",
+        ("Contents equal after copying",
          as(<string>, part-sections-interval-copy),
          as(<string>, *part-sections-interval*));
     end;
-  
+
 
     // -=- bp-within-interval? -=-
     check-true
@@ -454,7 +454,7 @@ define test interval-contents-test ()
 
     // -=- interval-read-only?[-setter] -=-
     // NOTE: If any subclasses of <interval> define their own methods,
-    // we should test their behaviour in addition; but none do, yet. 
+    // we should test their behaviour in addition; but none do, yet.
 
     check-false
       ("buffer-interval is NOT read-only (1)",
@@ -619,7 +619,7 @@ methods on do-lines, count-lines
 
 node-section[-setter]
   Check #f for non-section nodes, and the correct <section> for
-    <section-node>s.  
+    <section-node>s.
 
 node-definition-{name,type}
   Check that you get #f for non-definition nodes, and the appropriate

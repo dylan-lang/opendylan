@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// BPs, that is, buffer pointers 
+/// BPs, that is, buffer pointers
 
 define protocol <<bp>> ()
   getter bp-line
@@ -44,7 +44,7 @@ end protocol <<bp>>;
 // A BP ("buffer pointer") points to a line and an index in the line.
 // "Moving" BPs will get this index updated as insertions and deletions
 // take place within the same line.
-define abstract primary class <basic-bp> (<bp>)		// _not_ open!
+define abstract primary class <basic-bp> (<bp>)                // _not_ open!
   sealed slot bp-line :: <basic-line>,
     required-init-keyword: line:;
   sealed slot bp-index :: <integer>,
@@ -55,10 +55,10 @@ define sealed inline method make
     (class == <bp>, #rest initargs, #key buffer = #f, moving? = #f, #all-keys)
  => (bp :: <basic-bp>)
   let class = if (buffer)
-		if (moving?) <permanent-moving-bp> else <permanent-bp> end
-	      else
-		if (moving?) <simple-moving-bp> else <simple-bp> end
-	      end;
+                if (moving?) <permanent-moving-bp> else <permanent-bp> end
+              else
+                if (moving?) <simple-moving-bp> else <simple-bp> end
+              end;
   apply(make, class, initargs)
 end method make;
 
@@ -66,7 +66,7 @@ end method make;
 define inline function make-bp
     (line :: <basic-line>, index :: <integer>) => (bp :: <simple-bp>)
   assert(index >= 0 & index <= line-length(line),
-	 "Index %d is out of range for line %= in 'make-bp'", index, line);
+         "Index %d is out of range for line %= in 'make-bp'", index, line);
   make(<simple-bp>, line: line, index: index)
 end function make-bp;
 
@@ -80,7 +80,7 @@ end method \=;
 define sealed method bp-less?
     (bp1 :: <basic-bp>, bp2 :: <basic-bp>) => (less? :: <boolean>)
   assert(bp-buffer(bp1) == bp-buffer(bp2),
-	 "'bp-less?' can't compare BPs from two different buffers: %= and %=", bp1, bp2);
+         "'bp-less?' can't compare BPs from two different buffers: %= and %=", bp1, bp2);
   let line1 = bp-line(bp1);
   let line2 = bp-line(bp2);
   if (line1 == line2)
@@ -93,7 +93,7 @@ end method bp-less?;
 define sealed method bp-greater?
     (bp1 :: <basic-bp>, bp2 :: <basic-bp>) => (greater? :: <boolean>)
   assert(bp-buffer(bp1) == bp-buffer(bp2),
-	 "'bp-greater?' can't compare BPs from two different buffers: %= and %=", bp1, bp2);
+         "'bp-greater?' can't compare BPs from two different buffers: %= and %=", bp1, bp2);
   let line1 = bp-line(bp1);
   let line2 = bp-line(bp2);
   if (line1 == line2)
@@ -217,7 +217,7 @@ define sealed method move-bp!
  => (bp :: <basic-bp>)
   let old-line = bp-line(bp);
   assert(index >= 0 & index <= line-length(line),
-	 "Index %d is out of range for line %= in 'move-bp!'", index, line);
+         "Index %d is out of range for line %= in 'move-bp!'", index, line);
   if (line == old-line)
     bp-index(bp) := index
   else
@@ -260,7 +260,7 @@ define sealed method bp-character-setter
     (char :: <byte-character>, bp :: <basic-bp>)
  => (char :: <byte-character>)
   assert(char ~== '\n',
-	 "'bp-character-setter' can't insert newline characters");
+         "'bp-character-setter' can't insert newline characters");
   let line  = bp-line(bp);
   let index = bp-index(bp);
   line-contents(line)[index] := char
@@ -298,7 +298,7 @@ define sealed method bp-looking-at?
   let index = bp-index(bp);
   text-line?(line)
   & string-equal?(line-contents(line), string,
-		  start1: index, end1: min(index + size(string), line-length(line)))
+                  start1: index, end1: min(index + size(string), line-length(line)))
 end method bp-looking-at?;
 
 define sealed method bp-looking-at-word?

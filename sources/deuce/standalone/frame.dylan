@@ -24,24 +24,24 @@ define function edit-random-sections (frame :: <editor-state-mixin>) => ()
   let buffer :: <basic-buffer> = frame-buffer(frame);
   let mode   :: <major-mode>   = buffer-major-mode(buffer);
   let node-class = if (instance?(mode, <dylan-mode>)) <dylan-definition-node>
-		   else <definition-node> end;
+                   else <definition-node> end;
   local method random-sections (buffer) => (sections :: <vector>)
-	  let sections :: <stretchy-object-vector> = make(<stretchy-vector>);
-	  for (i :: <integer> from 0,
-	       node = buffer-start-node(buffer) then node-next(node),
-	       until: ~node)
-	    when (even?(i))
-	      add!(sections, node-section(node))
-	    end
-	  end;
-	  sections
-	end method;
+          let sections :: <stretchy-object-vector> = make(<stretchy-vector>);
+          for (i :: <integer> from 0,
+               node = buffer-start-node(buffer) then node-next(node),
+               until: ~node)
+            when (even?(i))
+              add!(sections, node-section(node))
+            end
+          end;
+          sections
+        end method;
   let buffer = make-empty-buffer(<random-sections-buffer>,
-				 definition: buffer,
-				 name-key:   buffer-name,
-				 generator:  random-sections,
-				 major-mode: mode,
-				 node-class: node-class);
+                                 definition: buffer,
+                                 name-key:   buffer-name,
+                                 generator:  random-sections,
+                                 major-mode: mode,
+                                 node-class: node-class);
   revert-buffer(buffer);
   select-buffer-in-appropriate-window(window, buffer);
   frame-last-command-type(frame) := #"file"
@@ -58,45 +58,45 @@ define sideways method do-send-mail
      to :: <string>, subject :: <string>, body :: <string>,
      #key from :: false-or(<string>), cc :: false-or(<string>), other-headers)
  => (success? :: <boolean>, message :: false-or(<string>))
-  start-sockets();    
+  start-sockets();
   let from
     = from
       | begin
-	  let name = login-name();
-	  let host = local-host-name();
-	  name & host & concatenate-as(<string>, name, "@", host)
-	end;
+          let name = login-name();
+          let host = local-host-name();
+          name & host & concatenate-as(<string>, name, "@", host)
+        end;
   let success? :: <boolean> = #t;
   let message  :: false-or(<string>) = #f;
   block ()
     with-smtp-message-stream (stream to *smtp-mail-host*,
-			      from: from,
-			      recipients: vector(to))
+                              from: from,
+                              recipients: vector(to))
       // Write the other headers
       when (cc)
-	write(stream, format-to-string("cc: %s\r\n", cc))
+        write(stream, format-to-string("cc: %s\r\n", cc))
       end;
       write(stream, format-to-string("Subject: %s\r\n", subject));
       for (header in other-headers)
-	let key   = header[0];
-	let name  = header[1];
-	let value = header[2];
-	write(stream, format-to-string("%s: %s\r\n", name, value))
+        let key   = header[0];
+        let name  = header[1];
+        let value = header[2];
+        write(stream, format-to-string("%s: %s\r\n", name, value))
       end;
       write(stream, "\r\n");
       // Write the message body
       let line-start :: <integer> = 0;
       for (i :: <integer> from 0 below size(body))
-	let c = body[i];
-	when (c == '\n')
-	  write(stream, body, start: line-start, end: i);
-	  write(stream, "\r\n");
-	  line-start := i + 1;
-	end;
+        let c = body[i];
+        when (c == '\n')
+          write(stream, body, start: line-start, end: i);
+          write(stream, "\r\n");
+          line-start := i + 1;
+        end;
       finally
-	unless (i = line-start)
-	  write(stream, "\r\n")
-	end;
+        unless (i = line-start)
+          write(stream, "\r\n")
+        end;
       end
     end;
   exception (c :: <smtp-error>)
@@ -113,10 +113,10 @@ end method do-send-mail;
 define function make-deuce-command
     (function :: <function>) => (command :: <function>)
   let command = method (frame)
-		  // Prefer the Deuce frame to the DUIM frame...
-		  let frame = *editor-frame* | frame;
-		  execute-command-in-frame(frame, function)
-		end method;
+                  // Prefer the Deuce frame to the DUIM frame...
+                  let frame = *editor-frame* | frame;
+                  execute-command-in-frame(frame, function)
+                end method;
   command
 end function make-deuce-command;
 
@@ -227,9 +227,9 @@ define frame <deuce-frame>
     init-keyword: columns:;
   pane %window (frame)
     make(<deuce-pane>,
-	 frame: frame,
-	 lines:   frame.%lines,
-	 columns: frame.%columns);
+         frame: frame,
+         lines:   frame.%lines,
+         columns: frame.%columns);
   layout (frame)
     scrolling (scroll-bars: #"both")
       frame.%window
@@ -241,7 +241,7 @@ define frame <deuce-frame>
   keyword icon: = $deuce-small-icon;
 end frame <deuce-frame>;
 
-define method initialize 
+define method initialize
     (frame :: <deuce-frame>, #key) => ()
   next-method();
   frame-input-focus(frame) := frame.%window;
@@ -256,17 +256,17 @@ define method frame-top-level
       select-buffer(frame-window(frame), buffer);
       let top-sheet = top-level-sheet(frame);
       while (#t)
-	let event = read-event(top-sheet);
-	block ()
-	  handle-event(event-handler(event-client(event)), event);
-	exception (e :: <command-error>)
-	  when (command-error-format-string(e))
-	    apply(deuce/display-error-message,
-		  command-error-window(e),
-		  command-error-format-string(e), command-error-format-arguments(e))
-	  end;
-	  #f
-	end
+        let event = read-event(top-sheet);
+        block ()
+          handle-event(event-handler(event-client(event)), event);
+        exception (e :: <command-error>)
+          when (command-error-format-string(e))
+            apply(deuce/display-error-message,
+                  command-error-window(e),
+                  command-error-format-string(e), command-error-format-arguments(e))
+          end;
+          #f
+        end
       end
     end
   end
@@ -300,10 +300,10 @@ define method handle-event
     when (window)
       let buffers = save-buffers-dialog(window, exit-label: "&Close");
       select (buffers)
-	#f        => #f;
-	#"cancel" => return();
-	otherwise =>
-	  do-save-all-files(frame, buffers, curry(deuce/display-message, window));
+        #f        => #f;
+        #"cancel" => return();
+        otherwise =>
+          do-save-all-files(frame, buffers, curry(deuce/display-message, window));
       end
     end;
     when (event-destroy-frame?(event))

@@ -69,7 +69,7 @@ end method cursor-at-position;
 
 define method do-cursor-at-position
     (mode :: <major-mode>, window :: <basic-window>, x :: <integer>, y :: <integer>) => (cursor)
-  #f			// use the window's default
+  #f                        // use the window's default
 end method do-cursor-at-position;
 
 
@@ -87,9 +87,9 @@ define method presentation-at-position
   let buffer = window-buffer(window);
   if (buffer)
     let mode = buffer-major-mode(buffer);
-    do-presentation-at-position(mode, window, x, y, 
-				button: button, modifiers: modifiers,
-				event-type: event-type)
+    do-presentation-at-position(mode, window, x, y,
+                                button: button, modifiers: modifiers,
+                                event-type: event-type)
   else
     values(#f, #f, #f)
   end
@@ -110,8 +110,8 @@ define method do-presentation-at-position
     menu? & dline & x > display-line-width(dline) + 10 =>
       // Mouse-right (press) on blank area gets a presentation for a menu
       values(make(<presentation>,
-		  object: #f, type: <blank-area>),
-	     bp, #f);
+                  object: #f, type: <blank-area>),
+             bp, #f);
     otherwise =>
       // Everything else just gets a raw BP
       values(#f, bp, #t);
@@ -126,16 +126,16 @@ define method handle-presentation-event
   when (buffer)
     let mode = buffer-major-mode(buffer);
     do-handle-presentation-event(mode, window, object, type,
-				 bp: bp, x: x, y: y,
-				 button: button, modifiers: modifiers,
-				 event-type: event-type)
+                                 bp: bp, x: x, y: y,
+                                 button: button, modifiers: modifiers,
+                                 event-type: event-type)
   end
 end method handle-presentation-event;
 
 define method do-handle-presentation-event
     (mode :: <major-mode>, window :: <basic-window>, object :: <object>, type :: <type>,
      #key bp, x, y, button = $left-button, modifiers = 0, event-type = #"press",
-	  menu-function) => ()
+          menu-function) => ()
   ignore(bp, x, y, button, modifiers, event-type, menu-function);
   #f
 end method do-handle-presentation-event;
@@ -148,19 +148,19 @@ define macro with-temporary-selection
       ?selecter:body
     end }
     => { begin
-	   local method temporary-selection-body
-		     (?window :: <basic-window>, ?bp :: <basic-bp>) => (#rest values)
-		   ignore(?window, ?bp);
-		   ?body
-		 end method,
-		 method temporary-selection-selecter
-		     (?window :: <basic-window>, ?bp :: <basic-bp>) => ()
-		   ignore(?window, ?bp);
-		   ?selecter
-		 end method;
-	   do-with-temporary-selection
-	     (?window, ?bp, temporary-selection-body, temporary-selection-selecter)
-	 end }
+           local method temporary-selection-body
+                     (?window :: <basic-window>, ?bp :: <basic-bp>) => (#rest values)
+                   ignore(?window, ?bp);
+                   ?body
+                 end method,
+                 method temporary-selection-selecter
+                     (?window :: <basic-window>, ?bp :: <basic-bp>) => ()
+                   ignore(?window, ?bp);
+                   ?selecter
+                 end method;
+           do-with-temporary-selection
+             (?window, ?bp, temporary-selection-body, temporary-selection-selecter)
+         end }
 end macro with-temporary-selection;
 
 define method do-with-temporary-selection
@@ -188,9 +188,9 @@ define method do-with-temporary-selection
     window-temporary-mark?(window) := #f;
     unless (already-in-selection?)
       when (new-mark = window-mark(window)
-	    & new-point = window-point(window))
-	// The selection hasn't changed from the one we just made, so clear
-	clear-mark!(window: window, redisplay?: #t)
+            & new-point = window-point(window))
+        // The selection hasn't changed from the one we just made, so clear
+        clear-mark!(window: window, redisplay?: #t)
       end
     end
   end
@@ -209,9 +209,9 @@ define method do-handle-presentation-event
       let old-mark  = window-mark(window);
       let old-point = window-point(window);
       let already-in-selection?
-	= bp & old-mark & bp-within-interval?(bp, make-interval(old-mark, old-point));
+        = bp & old-mark & bp-within-interval?(bp, make-interval(old-mark, old-point));
       unless (already-in-selection?)
-	clear-mark!(window: window, redisplay?: #t)
+        clear-mark!(window: window, redisplay?: #t)
       end;
       menu-function(window, mode, nothing, bp: bp, x: x, y: y);
     otherwise => #f;
@@ -231,9 +231,9 @@ define method blank-area-menu
   // Other back ends might choose to do this differently...
   let command
     = choose-from-menu(window,
-		       buffer-command-menu-items(mode, buffer),
-		       label-key: first, value-key: second,
-		       multiple-sets?: #t);
+                       buffer-command-menu-items(mode, buffer),
+                       label-key: first, value-key: second,
+                       multiple-sets?: #t);
   when (command)
     execute-command(mode, frame, command)
   end

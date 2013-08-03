@@ -21,37 +21,37 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // and installs the help for the command
 define macro command-definer
   { define ?modifiers:* command ?:name (?frame:name, ?opt-args:*)
-	?documentation:expression
+        ?documentation:expression
       ?:body
     end }
     => { define open generic ?name (?frame :: <editor-state-mixin>, ?opt-args) => ();
-	 define ?modifiers method ?name (?frame :: <editor-state-mixin>, ?opt-args) => ()
-	   ?body;
-	 end method ?name;
-	 initialize-command-help(?name, ?documentation); }
+         define ?modifiers method ?name (?frame :: <editor-state-mixin>, ?opt-args) => ()
+           ?body;
+         end method ?name;
+         initialize-command-help(?name, ?documentation); }
   { define ?modifiers:* command ?:name (?frame:name :: ?type:name, ?opt-args:*)
-	?documentation:expression
+        ?documentation:expression
       ?:body
     end }
     => { define open generic ?name (?frame :: <editor-state-mixin>, ?opt-args) => ();
-	 define ?modifiers method ?name (?frame :: ?type, ?opt-args) => ()
-	   ?body;
-	 end method ?name;
-	 initialize-command-help(?name, ?documentation); }
+         define ?modifiers method ?name (?frame :: ?type, ?opt-args) => ()
+           ?body;
+         end method ?name;
+         initialize-command-help(?name, ?documentation); }
 end macro command-definer;
 
 /*
 //--- This is nicer, but it doesn't work in the emulator
 define macro command-definer
   { define ?modifiers:* command ?:name (?frame:name ?opt-type, ?opt-args:*)
-	?documentation:expression
+        ?documentation:expression
       ?:body
     end }
     => { define open generic ?name (?frame :: <editor-state-mixin>, ?opt-args) => ();
-	 define ?modifiers method ?name (?frame ?opt-type, ?opt-args) => ()
-	   ?body;
-	 end method ?name;
-	 initialize-command-help(?name, ?documentation); }
+         define ?modifiers method ?name (?frame ?opt-type, ?opt-args) => ()
+           ?body;
+         end method ?name;
+         initialize-command-help(?name, ?documentation); }
  opt-type:
   { :: ?type:expression } => { :: ?type }
   { } => { :: <editor-state-mixin> }
@@ -102,9 +102,9 @@ define function command-error
   frame-numeric-arg-state(frame) := #f;
   abort-keyboard-macro-definition(frame);
   error(make(<command-error>,
-	     window: window,
-	     format-string:    concatenate-as(<string>, "Error: ", format-string),
-	     format-arguments: copy-sequence(format-args)))
+             window: window,
+             format-string:    concatenate-as(<string>, "Error: ", format-string),
+             format-arguments: copy-sequence(format-args)))
 end function command-error;
 
 
@@ -125,9 +125,9 @@ define function read-only-command-error
   frame-numeric-arg-state(frame) := #f;
   abort-keyboard-macro-definition(frame);
   error(make(<read-only-command-error>,
-	     window: window,
-	     format-string:    concatenate-as(<string>, "Error: ", format-string),
-	     format-arguments: copy-sequence(format-args)))
+             window: window,
+             format-string:    concatenate-as(<string>, "Error: ", format-string),
+             format-arguments: copy-sequence(format-args)))
 end function read-only-command-error;
 
 define sealed method check-read-only
@@ -144,10 +144,10 @@ define sealed inline method check-read-only-line
     (line :: <basic-line>) => ()
   let buffer = *buffer*;
   let home   = if (composite-buffer?(buffer)) section-home-buffer(line-section(line))
-	       else buffer end;
+               else buffer end;
   when (buffer-read-only?(buffer)
-	| (home & buffer-read-only?(home))
-	| line-read-only?(line))
+        | (home & buffer-read-only?(home))
+        | line-read-only?(line))
     read-only-command-error("Can't modify a read-only region")
   end
 end method check-read-only-line;
@@ -160,14 +160,14 @@ define sealed method check-read-only
     read-only-command-error("Can't modify a read-only region")
   end;
   local method read-only? (line :: <basic-line>, si, ei, last?)
-	  ignore(si, ei, last?);
-	  let home = if (composite?) section-home-buffer(line-section(line))
-		     else buffer end;
-	  when ((home & buffer-read-only?(home))
-		| line-read-only?(line))
-	    read-only-command-error("Can't modify a read-only region")
-	  end
-	end method;
+          ignore(si, ei, last?);
+          let home = if (composite?) section-home-buffer(line-section(line))
+                     else buffer end;
+          when ((home & buffer-read-only?(home))
+                | line-read-only?(line))
+            read-only-command-error("Can't modify a read-only region")
+          end
+        end method;
   do-lines(read-only?, interval)
 end method check-read-only;
 
@@ -222,7 +222,7 @@ define command insert-tab (frame)
   let char :: <byte-character> = '\t';
   insert-character(frame, char)
 end command insert-tab;
-  
+
 define method insert-character
     (frame :: <editor-state-mixin>, char) => ()
   let window :: <basic-window> = frame-window(frame);
@@ -235,22 +235,22 @@ define method insert-character
     let bp2 = typing-replaces-selection?(editor-policy(frame-editor(frame))) & mark();
     check-read-only(bp);
     let thing = if (n > 1) make(<byte-string>, size: n, fill: char)
-		else char end;
+                else char end;
     if (bp2)
       with-change-recording (buffer, <replace-change-record>,
-			     start-bp: bp, end-bp: bp2, moving?: #t)
-	let interval = make-interval(bp, bp2);
-	check-read-only(interval);
-	queue-region-redisplay(window, bp, bp2);
-	bp := kill!(interval)
-	      | command-error("Can't delete across hard sections");
-	clear-mark!();
-	insert-moving!(bp, thing)
+                             start-bp: bp, end-bp: bp2, moving?: #t)
+        let interval = make-interval(bp, bp2);
+        check-read-only(interval);
+        queue-region-redisplay(window, bp, bp2);
+        bp := kill!(interval)
+              | command-error("Can't delete across hard sections");
+        clear-mark!();
+        insert-moving!(bp, thing)
       end
     else
       with-change-recording (buffer, <insert-change-record>, start-bp: bp)
-	clear-mark!();
-	insert-moving!(bp, thing)
+        clear-mark!();
+        insert-moving!(bp, thing)
       end
     end;
     move-point!(bp);
@@ -258,7 +258,7 @@ define method insert-character
       queue-redisplay(window, $display-text, centering: n)
     else
       queue-redisplay(window, $display-line,
-		      line: bp-line(bp), index: bp-index(bp) - n)
+                      line: bp-line(bp), index: bp-index(bp) - n)
     end
   end;
   frame-last-command-type(frame) := #"insert"
@@ -343,60 +343,60 @@ define command editor-help (frame)
     "Show help for all the current key bindings."
   let window :: <basic-window> = frame-window(frame);
   local method get-command
-	    (window :: <basic-window>, comtab :: <command-table>, message :: <byte-string>)
-	 => (command)
-	  block (return)
-	    while (#t)
-	      display-message(window, message);
-	      let (keysym, char, modifiers) = read-gesture(window);
-	      let gesture = vector(char | keysym, modifiers);
-	      let command = find-command(comtab, gesture);
-	      case
-		instance?(command, <command-table>) =>
-		  // It's a command prefix (c-X), so change the state
-		  comtab := command;
-		command =>
-		  // We've gotten to a command, all done
-		  return(command);
-		otherwise =>
-		  return(#f);
-	      end
-	    end
-	  end
-	end method;
+            (window :: <basic-window>, comtab :: <command-table>, message :: <byte-string>)
+         => (command)
+          block (return)
+            while (#t)
+              display-message(window, message);
+              let (keysym, char, modifiers) = read-gesture(window);
+              let gesture = vector(char | keysym, modifiers);
+              let command = find-command(comtab, gesture);
+              case
+                instance?(command, <command-table>) =>
+                  // It's a command prefix (c-X), so change the state
+                  comtab := command;
+                command =>
+                  // We've gotten to a command, all done
+                  return(command);
+                otherwise =>
+                  return(#f);
+              end
+            end
+          end
+        end method;
   display-message(window, "Help: ");
   let char = read-character(window);
   select (char)
     '?' =>
       display-message(window,
-		      "Help: Use 'b' to see all bindings, 'k' to see what a key is bound to.");
+                      "Help: Use 'b' to see all bindings, 'k' to see what a key is bound to.");
     'b', 'B' =>
       display-message(window,
-		      "Help: All current key bindings.");
+                      "Help: All current key bindings.");
       editor-key-bindings(frame);
     'c', 'C' =>
       let comtab  = standard-command-table(frame-command-set(frame));
       let command = get-command(window, comtab, "Brief help for key: ");
       if (command)
-	let documentation
-	  = gethash($brief-command-help, command);
-	when (documentation)
-	  display-message(window, "%s", documentation)
-	end
+        let documentation
+          = gethash($brief-command-help, command);
+        when (documentation)
+          display-message(window, "%s", documentation)
+        end
       else
-	display-error-message(window, "No binding for that key")
+        display-error-message(window, "No binding for that key")
       end;
     'k', 'K' =>
       let comtab  = standard-command-table(frame-command-set(frame));
       let command = get-command(window, comtab, "Help for key: ");
       if (command)
-	let documentation
-	  = gethash($long-command-help, command) | gethash($brief-command-help, command);
-	when (documentation)
-	  display-message(window, "%s", documentation)
-	end
+        let documentation
+          = gethash($long-command-help, command) | gethash($brief-command-help, command);
+        when (documentation)
+          display-message(window, "%s", documentation)
+        end
       else
-	display-error-message(window, "No binding for that key")
+        display-error-message(window, "No binding for that key")
       end;
     otherwise =>
       error(make(<command-error>, window: window));
@@ -410,32 +410,32 @@ define command editor-key-bindings (frame)
   let name   = "Key bindings";
   let editor = frame-editor(frame);
   let buffer = find-buffer(editor, name)
-	       | make-empty-buffer(<simple-display-buffer>,
-				   name:       name,
-				   major-mode: find-mode(<text-mode>),
-				   read-only?: #t,
-				   editor:     editor);
+               | make-empty-buffer(<simple-display-buffer>,
+                                   name:       name,
+                                   major-mode: find-mode(<text-mode>),
+                                   read-only?: #t,
+                                   editor:     editor);
   let command-set = frame-command-set(frame);
   let set-name    = command-set-name(command-set);
   unless (get-property(buffer-properties(buffer), #"command-set") == command-set
-	  & get-property(buffer-properties(buffer), #"command-set-name") == set-name)
+          & get-property(buffer-properties(buffer), #"command-set-name") == set-name)
     put-property!(buffer-properties(buffer), #"command-set", command-set);
     put-property!(buffer-properties(buffer), #"command-set-name", set-name);
     let lines   = compute-key-binding-documentation(command-set);
     let section = make(<section>,
-		       start-line: #f, end-line: #f);
+                       start-line: #f, end-line: #f);
     let first-line :: false-or(<basic-line>) = #f;
     let last-line  :: false-or(<basic-line>) = #f;
     for (line in lines)
       let line = make(<text-line>,
-		      contents: line,
-		      section: section);
+                      contents: line,
+                      section: section);
       unless (first-line)
-	first-line := line
+        first-line := line
       end;
       line-previous(line) := last-line;
       when (last-line)
-	line-next(last-line) := line
+        line-next(last-line) := line
       end;
       last-line := line
     end;
@@ -443,20 +443,20 @@ define command editor-key-bindings (frame)
       // Be flashy and use italics...
       let contents = "Binding\t\tCommand";
       let changes  = vector(make(<style-change>,
-				 index: 0,
-				 font:  window-default-italic-font(window)));
+                                 index: 0,
+                                 font:  window-default-italic-font(window)));
       let line     = make(<rich-text-line>,
-			  contents: contents,
-			  length:   size(contents),
-			  section:  section,
-			  style-changes: changes);
+                          contents: contents,
+                          length:   size(contents),
+                          section:  section,
+                          style-changes: changes);
       line-next(line) := first-line;
       line-previous(first-line) := line;
       first-line := line
     else
       first-line := make(<text-line>,
-			 contents: "No help available",
-			 section: section);
+                         contents: "No help available",
+                         section: section);
       last-line  := first-line
     end;
     section-start-line(section) := first-line;
@@ -475,83 +475,83 @@ define method compute-key-binding-documentation
     (command-set :: <command-set>) => (commands :: <stretchy-object-vector>)
   let set-name    = command-set-name(command-set);
   unless ($editor-help-cache[0] == command-set
-	  & $editor-help-cache[1] == set-name)
+          & $editor-help-cache[1] == set-name)
     let standard-commands  = standard-command-table(command-set);
     let control-X-commands = control-X-command-table(command-set);
     let control-C-commands = control-C-command-table(command-set);
     let escape-commands    = escape-command-table(command-set);
     local method find-binding
-	      (comtab :: <command-table>, command) => (binding)
-	    block (return)
-	      for (bucket in comtab.%key-table,
-		   code :: <integer> from 0)
-		let bits = position(bucket, command);
-		when (bits)
-		  let char :: <byte-character> = as(<byte-character>, code);
-		  when (upper-case?(char))
-		    bits := logior(bits, $shift-key)
-		  end;
-		  return(vector(char, bits))
-		end
-	      end;
-	      for (bucket keyed-by keysym in comtab.%keysym-table)
-		let bits = position(bucket, command);
-		when (bits)
-		  return(vector(keysym, bits))
-		end
-	      end;
-	      #f
-	    end
-	  end method;
+              (comtab :: <command-table>, command) => (binding)
+            block (return)
+              for (bucket in comtab.%key-table,
+                   code :: <integer> from 0)
+                let bits = position(bucket, command);
+                when (bits)
+                  let char :: <byte-character> = as(<byte-character>, code);
+                  when (upper-case?(char))
+                    bits := logior(bits, $shift-key)
+                  end;
+                  return(vector(char, bits))
+                end
+              end;
+              for (bucket keyed-by keysym in comtab.%keysym-table)
+                let bits = position(bucket, command);
+                when (bits)
+                  return(vector(keysym, bits))
+                end
+              end;
+              #f
+            end
+          end method;
     let commands :: <stretchy-object-vector> = make(<stretchy-vector>);
     local method print-bindings
-	      (comtab :: false-or(<command-table>), #key prefix) => ()
-	    when (comtab)
-	      for (bucket in comtab.%key-table,
-		   code :: <integer> from 0)
-		for (command in bucket,
-		     bits :: <integer> from 0)
-		  let keysym = as(<byte-character>, code);
-		  let bits :: <integer>
-		    = if (upper-case?(keysym)) logior(bits, $shift-key) else bits end;
-		  print-binding(prefix, bits, if (keysym = ' ') "Space" else as-uppercase(keysym) end, command)
-		end
-	      end;
-	      for (bucket keyed-by keysym in comtab.%keysym-table)
-		for (command in bucket,
-		     bits :: <integer> from 0)
-		  let keysym
-		    = select (keysym)
-			#"prior"  => "PageUp";
-			#"next"   => "PageDn";
-			otherwise => string-capitalize(as(<string>, keysym));
-		      end;
-		  print-binding(prefix, bits, keysym, command)
-		end
-	      end
-	    end
-	  end method,
+              (comtab :: false-or(<command-table>), #key prefix) => ()
+            when (comtab)
+              for (bucket in comtab.%key-table,
+                   code :: <integer> from 0)
+                for (command in bucket,
+                     bits :: <integer> from 0)
+                  let keysym = as(<byte-character>, code);
+                  let bits :: <integer>
+                    = if (upper-case?(keysym)) logior(bits, $shift-key) else bits end;
+                  print-binding(prefix, bits, if (keysym = ' ') "Space" else as-uppercase(keysym) end, command)
+                end
+              end;
+              for (bucket keyed-by keysym in comtab.%keysym-table)
+                for (command in bucket,
+                     bits :: <integer> from 0)
+                  let keysym
+                    = select (keysym)
+                        #"prior"  => "PageUp";
+                        #"next"   => "PageDn";
+                        otherwise => string-capitalize(as(<string>, keysym));
+                      end;
+                  print-binding(prefix, bits, keysym, command)
+                end
+              end
+            end
+          end method,
           method print-binding
-	      (prefix, bits :: <integer>, keysym, command) => ()
-	    when (command
-		  & command ~== self-insert
-		  & command ~== numeric-argument)
-	      let documentation = gethash($brief-command-help, command);
-	      when (documentation)
-		let binding
-		  = if (prefix)
-		      format-to-string("%s %s%s", prefix, $modifier-key-names[bits], keysym)
-		    else
-		      format-to-string("%s%s", $modifier-key-names[bits], keysym)
-		    end;
-		if (size(binding) < 8)
-		  add!(commands, format-to-string("%s\t\t%s", binding, documentation))
-		else
-		  add!(commands, format-to-string("%s\t%s", binding, documentation))
-		end
-	      end
-	    end
-	  end method;
+              (prefix, bits :: <integer>, keysym, command) => ()
+            when (command
+                  & command ~== self-insert
+                  & command ~== numeric-argument)
+              let documentation = gethash($brief-command-help, command);
+              when (documentation)
+                let binding
+                  = if (prefix)
+                      format-to-string("%s %s%s", prefix, $modifier-key-names[bits], keysym)
+                    else
+                      format-to-string("%s%s", $modifier-key-names[bits], keysym)
+                    end;
+                if (size(binding) < 8)
+                  add!(commands, format-to-string("%s\t\t%s", binding, documentation))
+                else
+                  add!(commands, format-to-string("%s\t%s", binding, documentation))
+                end
+              end
+            end
+          end method;
     when (find-binding(standard-commands, numeric-argument))
       add!(commands, "c-<digit>\tNumeric argument");
       add!(commands, "m-<digit>\tNumeric argument")
@@ -574,7 +574,7 @@ end method compute-key-binding-documentation;
 define command scroll-forward (frame)
     "Scroll forward a page, or N lines.\n"
     "With a numeric argument, scroll by lines; otherwise scroll a page."
-  let n :: <integer> = frame-numeric-arg(frame);  
+  let n :: <integer> = frame-numeric-arg(frame);
   unless (n = 0)
     let state = frame-numeric-arg-state(frame);
     let direction = if (n < 0) #"backward" else #"forward" end;
@@ -585,7 +585,7 @@ end command scroll-forward;
 define command scroll-backward (frame)
     "Scroll backward a page, or N lines.\n"
     "With a numeric argument, scroll by lines; otherwise scroll a page."
-  let n :: <integer> = frame-numeric-arg(frame);  
+  let n :: <integer> = frame-numeric-arg(frame);
   unless (n = 0)
     let state = frame-numeric-arg-state(frame);
     let direction = if (n < 0) #"forward" else #"backward" end;
@@ -596,7 +596,7 @@ end command scroll-backward;
 define command scroll-forward-ext (frame)
     "Scroll forward a page, or N lines, extending the selection if the Shift key is held down.\n"
     "With a numeric argument, scroll by lines; otherwise scroll a page."
-  let n :: <integer> = frame-numeric-arg(frame);  
+  let n :: <integer> = frame-numeric-arg(frame);
   unless (n = 0)
     let state = frame-numeric-arg-state(frame);
     let direction = if (n < 0) #"backward" else #"forward" end;
@@ -608,7 +608,7 @@ end command scroll-forward-ext;
 define command scroll-backward-ext (frame)
     "Scroll backward a page, or N lines, extending the selection if the Shift key is held down.\n"
     "With a numeric argument, scroll by lines; otherwise scroll a page."
-  let n :: <integer> = frame-numeric-arg(frame);  
+  let n :: <integer> = frame-numeric-arg(frame);
   unless (n = 0)
     let state = frame-numeric-arg-state(frame);
     let direction = if (n < 0) #"forward" else #"backward" end;
@@ -631,56 +631,56 @@ define method scroll-forward-or-backward
     let index = dline & (hint - 1);
     case
       state == #f | state == #"sign" =>
-	// Scrolling forward/backward one page
-	select (direction)
-	  #"forward" =>
-	    if (line == bp-line(interval-end-bp(buffer)) & index & index = 0)
-	      break()
-	    else
-	      let dline :: <display-line> = dlines[n-lines - 1];
-	      let line  :: <basic-line>   = display-line-line(dline);
-	      move-point!(line, index: 0);
-	      recenter-window(window, line, #"top");
-	      fraction := 0.0;		// caret goes to the top of the window
-	    end;
-	  #"backward" =>
-	    if (line == bp-line(interval-start-bp(buffer)))
-	      break()
-	    else
-	      let dline :: <display-line> = dlines[0];
-	      let line  :: <basic-line>   = display-line-line(dline);
-	      move-point!(line, index: 0);
-	      recenter-window(window, line, #"bottom");
-	      fraction := 1.0;		// caret goes to the bottom of the window
-	    end;
-	end;
+        // Scrolling forward/backward one page
+        select (direction)
+          #"forward" =>
+            if (line == bp-line(interval-end-bp(buffer)) & index & index = 0)
+              break()
+            else
+              let dline :: <display-line> = dlines[n-lines - 1];
+              let line  :: <basic-line>   = display-line-line(dline);
+              move-point!(line, index: 0);
+              recenter-window(window, line, #"top");
+              fraction := 0.0;                // caret goes to the top of the window
+            end;
+          #"backward" =>
+            if (line == bp-line(interval-start-bp(buffer)))
+              break()
+            else
+              let dline :: <display-line> = dlines[0];
+              let line  :: <basic-line>   = display-line-line(dline);
+              move-point!(line, index: 0);
+              recenter-window(window, line, #"bottom");
+              fraction := 1.0;                // caret goes to the bottom of the window
+            end;
+        end;
       otherwise =>
-	// Otherwise scroll forward/backward n lines
-	select (direction)
-	  #"forward" =>
-	    case
-	      line == bp-line(interval-end-bp(buffer)) & index & index = 0 =>
-	        break();
-	      n < n-lines =>
-		// If we're only scrolling a little, we can do this faster
-		scroll-n-lines(window, n, move-point?: #t);
-		break();
-	      otherwise =>
-		scroll-n-lines-slowly(window, n, move-point?: #t);
-		break();
-	    end;
-	  #"backward" =>
-	    case
-	      line == bp-line(interval-start-bp(buffer)) =>
-		break();
-	      n < n-lines =>
-		scroll-n-lines(window, -n, move-point?: #t);
-		break();
-	      otherwise =>
-		scroll-n-lines-slowly(window, -n, move-point?: #t);
-		break();
-	    end;
-	end;
+        // Otherwise scroll forward/backward n lines
+        select (direction)
+          #"forward" =>
+            case
+              line == bp-line(interval-end-bp(buffer)) & index & index = 0 =>
+                break();
+              n < n-lines =>
+                // If we're only scrolling a little, we can do this faster
+                scroll-n-lines(window, n, move-point?: #t);
+                break();
+              otherwise =>
+                scroll-n-lines-slowly(window, n, move-point?: #t);
+                break();
+            end;
+          #"backward" =>
+            case
+              line == bp-line(interval-start-bp(buffer)) =>
+                break();
+              n < n-lines =>
+                scroll-n-lines(window, -n, move-point?: #t);
+                break();
+              otherwise =>
+                scroll-n-lines-slowly(window, -n, move-point?: #t);
+                break();
+            end;
+        end;
     end;
     window-centering-fraction(window) := fraction;
     queue-redisplay(window, degree)
@@ -695,13 +695,13 @@ define command start-of-page (frame)
   let buffer :: <basic-buffer> = window-buffer(window);
   block (break)
     local method find-page-break (line :: <basic-line>, si, ei, last?)
-	    ignore(last?);
-	    let index = position(line-contents(line), '\f', start: si, end: ei, from-end?: #t);
-	    when (index)
-	      move-point!(line, index: index);
-	      break()
-	    end
-	  end method;
+            ignore(last?);
+            let index = position(line-contents(line), '\f', start: si, end: ei, from-end?: #t);
+            when (index)
+              move-point!(line, index: index);
+              break()
+            end
+          end method;
     let interval = make-interval(interval-start-bp(buffer), point());
     do-lines(find-page-break, interval, from-end?: #t);
     move-point!(interval-start-bp(buffer))
@@ -716,13 +716,13 @@ define command end-of-page (frame)
   let buffer :: <basic-buffer> = window-buffer(window);
   block (break)
     local method find-page-break (line :: <basic-line>, si, ei, last?)
-	    ignore(last?);
-	    let index = position(line-contents(line), '\f', start: si, end: ei, from-end?: #f);
-	    when (index)
-	      move-point!(line, index: index + 1);
-	      break()
-	    end
-	  end method;
+            ignore(last?);
+            let index = position(line-contents(line), '\f', start: si, end: ei, from-end?: #f);
+            when (index)
+              move-point!(line, index: index + 1);
+              break()
+            end
+          end method;
     let interval = make-interval(point(), interval-end-bp(buffer));
     do-lines(find-page-break, interval, from-end?: #f);
     move-point!(interval-end-bp(buffer))
@@ -792,10 +792,10 @@ define command show-position (frame)
   let code    = as(<integer>, char);
   if (code < #o40 | code > #o176)
     display-message(window, "Line %d of %d %s(%d%%), column %d, char code #o%o #x%x",
-		    line-no, n-lines, in-region, percent, index, code, code);
+                    line-no, n-lines, in-region, percent, index, code, code);
   else
     display-message(window, "Line %d of %d %s(%d%%), column %d, char '%c' (#o%o #x%x)",
-		    line-no, n-lines, in-region, percent, index, char, code, code);
+                    line-no, n-lines, in-region, percent, index, char, code, code);
   end;
   frame-last-command-type(frame) := #"display"
 end command show-position;
@@ -885,9 +885,9 @@ define command forward-list (frame)
   let bp   = point();
   let node = bp-node(bp) | bp-buffer(bp);
   local method move (bp :: <basic-bp>, n :: <integer>, #key fixup? = #t)
-		 => (bp :: false-or(<basic-bp>))
-	  move-over-lists(bp, n, fixup?: fixup?, interval: node)
-	end method;
+                 => (bp :: false-or(<basic-bp>))
+          move-over-lists(bp, n, fixup?: fixup?, interval: node)
+        end method;
   forward-or-backward-thing(frame, move, n, message: "Unbalanced parentheses")
 end command forward-list;
 
@@ -897,9 +897,9 @@ define command backward-list (frame)
   let bp   = point();
   let node = bp-node(bp) | bp-buffer(bp);
   local method move (bp :: <basic-bp>, n :: <integer>, #key fixup? = #t)
-		 => (bp :: false-or(<basic-bp>))
-	  move-over-lists(bp, n, fixup?: fixup?, interval: node)
-	end method;
+                 => (bp :: false-or(<basic-bp>))
+          move-over-lists(bp, n, fixup?: fixup?, interval: node)
+        end method;
   forward-or-backward-thing(frame, move, -n, message: "Unbalanced parentheses")
 end command backward-list;
 
@@ -910,9 +910,9 @@ define command forward-expression (frame)
   let bp   = point();
   let node = bp-node(bp) | bp-buffer(bp);
   local method move (bp :: <basic-bp>, n :: <integer>, #key fixup? = #t)
-		 => (bp :: false-or(<basic-bp>))
-	  move-over-expressions(bp, n, fixup?: fixup?, interval: node)
-	end method;
+                 => (bp :: false-or(<basic-bp>))
+          move-over-expressions(bp, n, fixup?: fixup?, interval: node)
+        end method;
   forward-or-backward-thing(frame, move, n, message: "Unbalanced parentheses")
 end command forward-expression;
 
@@ -922,9 +922,9 @@ define command backward-expression (frame)
   let bp   = point();
   let node = bp-node(bp) | bp-buffer(bp);
   local method move (bp :: <basic-bp>, n :: <integer>, #key fixup? = #t)
-		 => (bp :: false-or(<basic-bp>))
-	  move-over-expressions(bp, n, fixup?: fixup?, interval: node)
-	end method;
+                 => (bp :: false-or(<basic-bp>))
+          move-over-expressions(bp, n, fixup?: fixup?, interval: node)
+        end method;
   forward-or-backward-thing(frame, move, -n, message: "Unbalanced parentheses")
 end command backward-expression;
 
@@ -996,8 +996,8 @@ define method next-or-previous-line
   else
     let line   = bp-line(nbp);
     let goal-x = preferred-x
-		 | window-goal-x-position(window)
-		 | index->position(bp-line(bp), mode, window, bp-index(bp));
+                 | window-goal-x-position(window)
+                 | index->position(bp-line(bp), mode, window, bp-index(bp));
     let index  = position->index(line, mode, window, goal-x);
     move-point!(line, index: index);
     queue-redisplay(window, $display-point, centering: n)
@@ -1195,13 +1195,13 @@ define method goto-thing
   when (n & (n > 0))
     let bp
       = select (what)
-	  #"line"      => line-index->bp(buffer, n - 1);
-	  #"character" => char-index->bp(buffer, n - 1);
-	end;
+          #"line"      => line-index->bp(buffer, n - 1);
+          #"character" => char-index->bp(buffer, n - 1);
+        end;
     when (bp)
       queue-redisplay(window, $display-point, centering: 0);
       unless (bp-line(bp) = bp-line(point()))
-	push-point-pdl!(window, point())
+        push-point-pdl!(window, point())
       end;
       move-point!(bp)
     end
@@ -1237,8 +1237,8 @@ define method delete-or-rubout-char
     queue-region-redisplay(window, bp1, bp2);
     with-change-recording (buffer, <kill-change-record>, interval: interval)
       move-point!(kill!(interval,
-			merge?: frame-last-command-type(frame) == #"kill")
-		  | command-error("Can't delete across hard sections"))
+                        merge?: frame-last-command-type(frame) == #"kill")
+                  | command-error("Can't delete across hard sections"))
     end;
     frame-last-command-type(frame) := #"delete"
   else
@@ -1254,15 +1254,15 @@ define method delete-or-rubout-char
     let class = if (kill?) <kill-change-record> else <delete-change-record> end;
     with-change-recording (buffer, class, interval: interval)
       if (kill?)
-	move-point!(kill!(interval,
-			  merge?:   frame-last-command-type(frame) == #"kill",
-			  reverse?: n < 0)
-		    | command-error("Can't delete across hard sections"));
-	frame-last-command-type(frame) := #"kill"
+        move-point!(kill!(interval,
+                          merge?:   frame-last-command-type(frame) == #"kill",
+                          reverse?: n < 0)
+                    | command-error("Can't delete across hard sections"));
+        frame-last-command-type(frame) := #"kill"
       else
-	move-point!(delete!(interval)
-		    | command-error("Can't delete across hard sections"));
-	frame-last-command-type(frame) := #"delete"
+        move-point!(delete!(interval)
+                    | command-error("Can't delete across hard sections"));
+        frame-last-command-type(frame) := #"delete"
       end
     end
   end
@@ -1320,9 +1320,9 @@ define method kill-region
   queue-region-redisplay(window, bp1, bp2, centering: n);
   with-change-recording (buffer, <kill-change-record>, interval: interval)
     move-point!(kill!(interval,
-		      merge?:   frame-last-command-type(frame) == #"kill",
-		      reverse?: n < 0)
-		| command-error("Can't delete across hard sections"))
+                      merge?:   frame-last-command-type(frame) == #"kill",
+                      reverse?: n < 0)
+                | command-error("Can't delete across hard sections"))
   end;
   frame-last-command-type(frame) := #"kill"
 end method kill-region;
@@ -1340,7 +1340,7 @@ define command delete-region (frame)
   if (mark())
     cut-or-delete-region(frame, clipboard?: #f)
   else
-    delete-character(frame)		//--- kludge for Delete accelerator on Windows
+    delete-character(frame)                //--- kludge for Delete accelerator on Windows
   end
 end command delete-region;
 
@@ -1357,9 +1357,9 @@ define method cut-or-delete-region
     queue-region-redisplay(window, bp1, bp2);
     with-change-recording (buffer, <kill-change-record>, interval: interval)
       move-point!(kill!(interval,
-			merge?: frame-last-command-type(frame) == #"kill",
-			clipboard?: clipboard?)
-		  | command-error("Can't delete across hard sections"))
+                        merge?: frame-last-command-type(frame) == #"kill",
+                        clipboard?: clipboard?)
+                  | command-error("Can't delete across hard sections"))
     end;
     frame-last-command-type(frame) := #"kill"
   else
@@ -1379,7 +1379,7 @@ define command copy-region (frame)
     bp2 := if (nbp) line-start(bp-line(nbp)) else line-end(bp-line(bp1)) end
   end;
   if (bp2)
-    unless (typing-replaces-selection?(policy))		// i.e., when Emacs-like
+    unless (typing-replaces-selection?(policy))                // i.e., when Emacs-like
       clear-mark!()
     end;
     queue-redisplay(window, $display-region);
@@ -1443,7 +1443,7 @@ define command yank-next (frame)
       let index = (state & state ~== #"universal") & n;
       let elt   = yank-from-kill-ring(kill-ring, window, index: index);
       when (elt)
-	insert-yanked-element(frame, elt, replace?: #t)
+        insert-yanked-element(frame, elt, replace?: #t)
       end
     end
   else
@@ -1460,7 +1460,7 @@ define method insert-yanked-element
   let nlines = 0;
   // Don't move the point on commands like c-U c-Y...
   let move?  = ~(frame-numeric-arg-state(frame) == #"universal"
-		 | frame-last-command-type(frame) == #"yank-no-motion");
+                 | frame-last-command-type(frame) == #"yank-no-motion");
   clear-mark!();
   with-change-recording (buffer, <paste-change-record>, start-bp: bp1, end-bp: bp2)
     when (bp2)
@@ -1486,13 +1486,13 @@ define method insert-yanked-element
     let index = dline & (hint - 1);
     case
       nlines <= 0 =>
-	// If we're not adding any new line, there's no need to recenter
-	queue-region-redisplay(window, bp1, bp2, centering: #f);
+        // If we're not adding any new line, there's no need to recenter
+        queue-region-redisplay(window, bp1, bp2, centering: #f);
       index + nlines >= window-n-display-lines(window) =>
-	// The end of the display is off the screen, so we need to recenter
-	queue-region-redisplay(window, bp1, bp2, centering: 1);
+        // The end of the display is off the screen, so we need to recenter
+        queue-region-redisplay(window, bp1, bp2, centering: 1);
       otherwise =>
-	// All the new lines will be on-screen, so we can use bitblt
+        // All the new lines will be on-screen, so we can use bitblt
         queue-redisplay(window, $display-blt, line: line, index: nlines);
     end
   end;
@@ -1507,14 +1507,14 @@ define command insert-newline (frame)
   do-insert-newline(frame);
   frame-last-command-type(frame) := #"insert"
 end command insert-newline;
-  
+
 define command indent-newline (frame)
     "Insert a newline at the current position and indent the new line."
   do-insert-newline(frame);
   indent-line(frame);
   frame-last-command-type(frame) := #"insert"
 end command indent-newline;
-  
+
 define method do-insert-newline
     (frame :: <editor-state-mixin>) => (bp :: <basic-bp>)
   let window :: <basic-window> = frame-window(frame);
@@ -1524,12 +1524,12 @@ define method do-insert-newline
   check-read-only(bp);
   if (bp2)
     with-change-recording (buffer, <replace-change-record>,
-			   start-bp: bp, end-bp: bp2, moving?: #t)
+                           start-bp: bp, end-bp: bp2, moving?: #t)
       let interval = make-interval(bp, bp2);
       check-read-only(interval);
       queue-region-redisplay(window, bp, bp2);
       bp := kill!(interval)
-	    | command-error("Can't delete across hard sections");
+            | command-error("Can't delete across hard sections");
       clear-mark!();
       move-point!(insert-moving!(bp, '\n'))
     end
@@ -1605,17 +1605,17 @@ define command kill-line (frame)
       // Numeric arg means to kill that many lines
       let n :: <integer> = frame-numeric-arg(frame);
       unless (n = 0)
-	bp2 := move-over-lines(bp1, n);
-	reverse? := (n < 0)
+        bp2 := move-over-lines(bp1, n);
+        reverse? := (n < 0)
       end;
     line-empty?(line, index: index) =>
       // If the line has nothing but whitespace past the current position,
       // merge the next line to the end of this one
       let next = line-next-in-buffer(line, buffer);
       if (next)
-	bp2 := line-start(next)
+        bp2 := line-start(next)
       else
-	command-error("Nothing to delete")
+        command-error("Nothing to delete")
       end;
     otherwise =>
       // Otherwise just truncate this line from the current point
@@ -1628,9 +1628,9 @@ define command kill-line (frame)
     queue-region-redisplay(window, bp1, bp2);
     with-change-recording (buffer, <kill-change-record>, interval: interval)
       move-point!(kill!(interval,
-			merge?:   frame-last-command-type(frame) == #"kill",
-			reverse?: reverse?)
-		  | command-error("Can't delete across hard sections"))
+                        merge?:   frame-last-command-type(frame) == #"kill",
+                        reverse?: reverse?)
+                  | command-error("Can't delete across hard sections"))
     end
   end;
   frame-last-command-type(frame) := #"kill"
@@ -1642,7 +1642,7 @@ define command join-lines (frame)
   let buffer :: <basic-buffer> = frame-buffer(frame);
   let bp = point();
   let this-bp = if (line-empty?(bp-line(bp))) bp
-		else forward-over!(line-start(bp-line(bp)), #[' ', '\t']) end;
+                else forward-over!(line-start(bp-line(bp)), #[' ', '\t']) end;
   let prev-bp = move-over-lines(this-bp, -1);
   let this-line = bp-line(this-bp);
   let prev-line = bp-line(prev-bp);
@@ -1686,11 +1686,11 @@ define command transpose-characters (frame)
       check-read-only(this);
       check-read-only(prev);
       with-change-recording (buffer, <replace-change-record>,
-			     start-bp: prev, end-bp: next)
-	bp-character(this) := ch2;
-	bp-character(prev) := ch1;
-	note-line-changed(bp-line(this));
-	note-line-changed(bp-line(prev))
+                             start-bp: prev, end-bp: next)
+        bp-character(this) := ch2;
+        bp-character(prev) := ch1;
+        note-line-changed(bp-line(this));
+        note-line-changed(bp-line(prev))
       end;
       queue-region-redisplay(window, prev, this);
       move-point!(increment-bp!(this))
@@ -1756,7 +1756,7 @@ define method do-transpose-regions
   let s3 = as(<byte-string>, interval3);
   queue-region-redisplay(window, start1, end2);
   with-change-recording (buffer, <replace-change-record>,
-			 start-bp: start1, end-bp: end2)
+                         start-bp: start1, end-bp: end2)
     if (s2 = "\n")
       // Be a bit more efficient when twiddling around a newline
       delete!(interval1);
@@ -1805,7 +1805,7 @@ define command upcase-region (frame)
   if (bp2)
     change-region-case(frame, bp1, bp2, as-uppercase, bp-less?(bp2, bp1))
   else
-    upcase-word(frame)		// upcase the next word if there's no region
+    upcase-word(frame)                // upcase the next word if there's no region
   end
 end command upcase-region;
 
@@ -1816,7 +1816,7 @@ define command downcase-region (frame)
   if (bp2)
     change-region-case(frame, bp1, bp2, as-lowercase, bp-less?(bp2, bp1))
   else
-    downcase-word(frame)	// downcase the next word if there's no region
+    downcase-word(frame)        // downcase the next word if there's no region
   end
 end command downcase-region;
 
@@ -1825,22 +1825,22 @@ define method change-region-case
      function :: <function>, reverse? :: <boolean>) => ()
   let window :: <basic-window> = frame-window(frame);
   let buffer :: <basic-buffer> = frame-buffer(frame);
-  let interval = make-interval(bp1, bp2); 
+  let interval = make-interval(bp1, bp2);
   check-read-only(interval);
   local method change-case (line :: <line>, si :: <integer>, ei :: <integer>, last?)
-	  ignore(last?);
-	  let line = note-line-changed(line);
-	  let contents = line-contents(line);
-	  for (i :: <integer> from si below ei)
-	    let old = contents[i];
-	    let new = function(old);
-	    contents[i] := new;
-	    // Start redisplay at the first changed character
-	    unless (old == new)
-	      move-bp!(bp1, line, i)
+          ignore(last?);
+          let line = note-line-changed(line);
+          let contents = line-contents(line);
+          for (i :: <integer> from si below ei)
+            let old = contents[i];
+            let new = function(old);
+            contents[i] := new;
+            // Start redisplay at the first changed character
+            unless (old == new)
+              move-bp!(bp1, line, i)
             end
-	  end
-	end method;
+          end
+        end method;
   clear-mark!();
   queue-region-redisplay(window, bp1, bp2, centering: #f);
   with-change-recording (buffer, <replace-change-record>, interval: interval)
@@ -1863,38 +1863,38 @@ define command capitalize-word (frame)
   end;
   when (n > 0)
     for (i :: <integer> from 0 below n,
-	 while: bp)
+         while: bp)
       let sbp = bp;
       let ebp = move-over-words(sbp, 1, fixup?: #f);
       when (ebp)
         let interval = make-interval(sbp, ebp);
-	check-read-only(interval);
-	clear-mark!();
-	queue-region-redisplay(window, sbp, ebp, centering: 1);
-	with-change-recording (buffer, <replace-change-record>, interval: interval)
-	  do-lines(method (line :: <line>, si, ei, last?)
-		     ignore(si, ei, last?);
-		     note-line-changed(line)
-		   end method, interval, skip-test: diagram-line?);
-	  let state = #f;
-	  until (sbp = ebp)
-	    let ch :: <byte-character> = bp-character(sbp);
-	    if (state)
-	      if (alpha-char?(ch))
-		bp-character(sbp) := as-lowercase(ch)
-	      else
-		state := #f
-	      end
-	    else
-	      when (alpha-char?(ch))
-		bp-character(sbp) := as-uppercase(ch);
-		state := #t
-	      end
-	    end;
-	    increment-bp!(sbp)
-	  end
-	end;
-	move-point!(ebp)
+        check-read-only(interval);
+        clear-mark!();
+        queue-region-redisplay(window, sbp, ebp, centering: 1);
+        with-change-recording (buffer, <replace-change-record>, interval: interval)
+          do-lines(method (line :: <line>, si, ei, last?)
+                     ignore(si, ei, last?);
+                     note-line-changed(line)
+                   end method, interval, skip-test: diagram-line?);
+          let state = #f;
+          until (sbp = ebp)
+            let ch :: <byte-character> = bp-character(sbp);
+            if (state)
+              if (alpha-char?(ch))
+                bp-character(sbp) := as-lowercase(ch)
+              else
+                state := #f
+              end
+            else
+              when (alpha-char?(ch))
+                bp-character(sbp) := as-uppercase(ch);
+                state := #t
+              end
+            end;
+            increment-bp!(sbp)
+          end
+        end;
+        move-point!(ebp)
       end;
       bp := ebp
     end
@@ -1910,11 +1910,11 @@ define command change-region-font (frame)
   let n :: <integer> = frame-numeric-arg(frame);
   let (bp1, bp2)
     = if (mark())
-	values(point(), mark())
+        values(point(), mark())
       else
-	let bp1 = copy-bp(point());
-	let bp2 = move-over-words(bp1, n);
-	values(bp1, bp2)
+        let bp1 = copy-bp(point());
+        let bp2 = move-over-words(bp1, n);
+        values(bp1, bp2)
       end;
   display-message(window, "Change font: ");
   let char = read-character(window);
@@ -1941,29 +1941,29 @@ define command change-region-font (frame)
       display-message(window, "Change font: face: ");
       let char = read-character(window);
       let face = select (char)
-		   's', 'S' => #"serif";	// 's' for Swiss or Serif
-		   'n', 'N' => #"sans-serif";	// 'n' for saNs-serif
-		   'h', 'H' => #"sans-serif";	// 'h' for Helvetica
-		   'f', 'F' => #"fixed";	// 'f' for Fixed
-		   'c', 'C' => #"fixed";	// 'c' for Courier
-		   '?' =>
-		     display-message(window,
-				     "'s' for serif, 'n' for sans-serif, 'f' for fixed.");
-		     #f;
-		   otherwise =>
-		     error(make(<command-error>, window: window));
-		 end;
+                   's', 'S' => #"serif";        // 's' for Swiss or Serif
+                   'n', 'N' => #"sans-serif";        // 'n' for saNs-serif
+                   'h', 'H' => #"sans-serif";        // 'h' for Helvetica
+                   'f', 'F' => #"fixed";        // 'f' for Fixed
+                   'c', 'C' => #"fixed";        // 'c' for Courier
+                   '?' =>
+                     display-message(window,
+                                     "'s' for serif, 'n' for sans-serif, 'f' for fixed.");
+                     #f;
+                   otherwise =>
+                     error(make(<command-error>, window: window));
+                 end;
       when (face)
-	display-message(window, "Change font: face to %s",
-			if (face == #"serif") "serif"
-			elseif (face == #"sans-serif") "sans-serif"
-			else "fix" end);
-	change-font(frame, bp1, bp2, face: face)
+        display-message(window, "Change font: face to %s",
+                        if (face == #"serif") "serif"
+                        elseif (face == #"sans-serif") "sans-serif"
+                        else "fix" end);
+        change-font(frame, bp1, bp2, face: face)
       end;
     '?' =>
       display-message(window,
-		      "'b' or 'n' for weight, 'i' or 'r' for slant, "
-		      "'+' or '-' for size, 'f' for face.");
+                      "'b' or 'n' for weight, 'i' or 'r' for slant, "
+                      "'+' or '-' for size, 'f' for face.");
     otherwise =>
       error(make(<command-error>, window: window));
   end
@@ -1995,15 +1995,15 @@ define method change-font
   let window :: <basic-window> = frame-window(frame);
   let buffer :: <basic-buffer> = frame-buffer(frame);
   let reverse? = bp-less?(bp2, bp1);
-  let interval = make-interval(bp1, bp2, in-order?: ~reverse?); 
+  let interval = make-interval(bp1, bp2, in-order?: ~reverse?);
   check-read-only(interval);
   local method set-font (line :: <line>, si :: <integer>, ei :: <integer>, last?)
-	  ignore(last?);
-	  let line = note-line-changed(line);
-	  //---*** Do it
+          ignore(last?);
+          let line = note-line-changed(line);
+          //---*** Do it
           //---*** Requires "fattening" and "thinning" lines as needed,
           //---*** but how do we maintain line identity in the current design?
-	end method;
+        end method;
   clear-mark!();
   queue-region-redisplay(window, bp1, bp2, centering: #f);
   with-change-recording (buffer, <replace-change-record>, interval: interval)
@@ -2023,10 +2023,10 @@ define command find-string (frame)
   // Display the modeless string search dialog, which updates the
   // frame state as the user messes around with it
   string-search-dialog(window,
-		       string:   editor-search-string(editor),
-		       reverse?: editor-reverse-search?(editor),
-		       case-sensitive?: editor-case-sensitive-search?(editor),
-		       whole-word?:     editor-whole-word-search?(editor))
+                       string:   editor-search-string(editor),
+                       reverse?: editor-reverse-search?(editor),
+                       case-sensitive?: editor-case-sensitive-search?(editor),
+                       whole-word?:     editor-whole-word-search?(editor))
 end command find-string;
 
 define command find-next-string (frame)
@@ -2069,10 +2069,10 @@ define method find-next-or-previous-string
     let test = if (case-sensitive?) \= else char-equal? end;
     unless (editor-skip-table(editor) & editor-reoccurrence-table(editor))
       let (skip-table, reoccurrence-table)
-	= compute-boyer-tables(string,
-			       skip-table: editor-skip-table(editor),
-			       reoccurrence-table: editor-reoccurrence-table(editor),
-			       test: test);
+        = compute-boyer-tables(string,
+                               skip-table: editor-skip-table(editor),
+                               reoccurrence-table: editor-reoccurrence-table(editor),
+                               test: test);
       editor-skip-table(editor) := skip-table;
       editor-reoccurrence-table(editor) := reoccurrence-table
     end;
@@ -2081,37 +2081,37 @@ define method find-next-or-previous-string
     display-message(window, "Searching for: %s", string);
     while (state)
       let bp = search(point(), string,
-		      test: test, reverse?: reverse?,
-		      syntax-table: syntax-table,
-		      skip-table:   editor-skip-table(editor),
-		      reoccurrence-table: editor-reoccurrence-table(editor));
+                      test: test, reverse?: reverse?,
+                      syntax-table: syntax-table,
+                      skip-table:   editor-skip-table(editor),
+                      reoccurrence-table: editor-reoccurrence-table(editor));
       if (bp)
-	frame-search-string-found?(frame) := buffer;
-	let length = size(string);
-	let (pbp, mbp)
-	  = if (reverse?) values(bp, move-over-characters(bp, length))
-	    else values(move-over-characters(bp, length), bp) end;
-	move-point!(pbp, window: window);
-	when (mbp)
-	  move-mark!(mbp, window: window)
-	end;
-	queue-redisplay(window, $display-point, centering: 0);
-	state := #f		// force the search to end
+        frame-search-string-found?(frame) := buffer;
+        let length = size(string);
+        let (pbp, mbp)
+          = if (reverse?) values(bp, move-over-characters(bp, length))
+            else values(move-over-characters(bp, length), bp) end;
+        move-point!(pbp, window: window);
+        when (mbp)
+          move-mark!(mbp, window: window)
+        end;
+        queue-redisplay(window, $display-point, centering: 0);
+        state := #f                // force the search to end
       else
-	frame-search-string-found?(frame) := #f;
-	if (wrap-search?)
-	  display-message(window, "Wrapping search for: %s", string);
-	  if (reverse?)
-	    move-point!(interval-end-bp(buffer), window: window);
-	  else
-	    move-point!(interval-start-bp(buffer), window: window);
-	  end;
-	  state := wrap-search?;
-	  wrap-search? := #f	// give up next time around
-	else
-	  move-point!(start-bp, window: window);
-	  command-error("Search failed for: %s", string)
-	end
+        frame-search-string-found?(frame) := #f;
+        if (wrap-search?)
+          display-message(window, "Wrapping search for: %s", string);
+          if (reverse?)
+            move-point!(interval-end-bp(buffer), window: window);
+          else
+            move-point!(interval-start-bp(buffer), window: window);
+          end;
+          state := wrap-search?;
+          wrap-search? := #f        // give up next time around
+        else
+          move-point!(start-bp, window: window);
+          command-error("Search failed for: %s", string)
+        end
       end;
       frame-last-command-type(frame) := #"motion"
     end
@@ -2124,11 +2124,11 @@ define command replace-string (frame)
   let window :: <basic-window> = frame-window(frame);
   let editor :: <basic-editor> = frame-editor(frame);
   string-replace-dialog(window,
-		        string:   editor-search-string(editor),
-		        replace:  editor-replace-string(editor),
-			reverse?: editor-reverse-search?(editor),
-			case-sensitive?: editor-case-sensitive-search?(editor),
-			whole-word?:     editor-whole-word-search?(editor))
+                        string:   editor-search-string(editor),
+                        replace:  editor-replace-string(editor),
+                        reverse?: editor-reverse-search?(editor),
+                        case-sensitive?: editor-case-sensitive-search?(editor),
+                        whole-word?:     editor-whole-word-search?(editor))
 end command replace-string;
 
 define command query-replace-string (frame)
@@ -2136,25 +2136,25 @@ define command query-replace-string (frame)
   let window :: <basic-window> = frame-window(frame);
   let editor :: <basic-editor> = frame-editor(frame);
   string-replace-dialog(window,
-		        string:   editor-search-string(editor),
-		        replace:  editor-replace-string(editor),
-			reverse?: editor-reverse-search?(editor),
-			case-sensitive?: editor-case-sensitive-search?(editor),
-			whole-word?:     editor-whole-word-search?(editor))
+                        string:   editor-search-string(editor),
+                        replace:  editor-replace-string(editor),
+                        reverse?: editor-reverse-search?(editor),
+                        case-sensitive?: editor-case-sensitive-search?(editor),
+                        whole-word?:     editor-whole-word-search?(editor))
 end command query-replace-string;
 
 define method replace-next-or-previous-string
     (frame :: <editor-state-mixin>,
      #key reverse? = $unsupplied, replace-all? :: <boolean> = #f) => ()
   local method compare-strings
-	    (char-test :: <function>, s1 :: <byte-string>, s2 :: <byte-string>)
-	 => (equal? :: <boolean>)
-	  // Automatically not equal if they're not the same size.
-	  let equal? = (size(s1) = size(s2));
+            (char-test :: <function>, s1 :: <byte-string>, s2 :: <byte-string>)
+         => (equal? :: <boolean>)
+          // Automatically not equal if they're not the same size.
+          let equal? = (size(s1) = size(s2));
           for (c1 in s1, c2 in s2, until: ~equal?)
-	    equal? := char-test(c1, c2)
-	  end;
-	  equal?
+            equal? := char-test(c1, c2)
+          end;
+          equal?
         end method;
   let window :: <basic-window> = frame-window(frame);
   let buffer :: <basic-buffer> = frame-buffer(frame);
@@ -2170,65 +2170,65 @@ define method replace-next-or-previous-string
     let test = if (case-sensitive?) \= else char-equal? end;
     unless (editor-skip-table(editor) & editor-reoccurrence-table(editor))
       let (skip-table, reoccurrence-table)
-	= compute-boyer-tables(string,
-			       skip-table: editor-skip-table(editor),
-			       reoccurrence-table: editor-reoccurrence-table(editor),
-			       test: test);
+        = compute-boyer-tables(string,
+                               skip-table: editor-skip-table(editor),
+                               reoccurrence-table: editor-reoccurrence-table(editor),
+                               test: test);
       editor-skip-table(editor) := skip-table;
       editor-reoccurrence-table(editor) := reoccurrence-table
     end;
     let bp = point();
     let found? = frame-search-string-found?(frame);
-    frame-search-string-found?(frame) := #f;	// string is now unfound...
+    frame-search-string-found?(frame) := #f;        // string is now unfound...
     while (bp)
       let ebp = window-mark(window);
       let interval = ebp & make-interval(bp, ebp);
       // If the search string has already been found and there's a selected
       // region matching it, use that; otherwise, go searching
       unless (found? == buffer & interval
-	      & compare-strings(test, as(<string>, interval), string))
-	// String was found but is not selected now, so we'll have to search
-	bp := search(bp, string,
-		     test: test, reverse?: reverse?, 
-		     syntax-table: syntax-table,
-		     skip-table:   editor-skip-table(editor),
-		     reoccurrence-table: editor-reoccurrence-table(editor));
-	if (bp)
-	  ebp := move-over-characters(bp, size(string));
-	  interval := make-interval(bp, ebp)
-	else
-	  interval := #f
-	end
+              & compare-strings(test, as(<string>, interval), string))
+        // String was found but is not selected now, so we'll have to search
+        bp := search(bp, string,
+                     test: test, reverse?: reverse?,
+                     syntax-table: syntax-table,
+                     skip-table:   editor-skip-table(editor),
+                     reoccurrence-table: editor-reoccurrence-table(editor));
+        if (bp)
+          ebp := move-over-characters(bp, size(string));
+          interval := make-interval(bp, ebp)
+        else
+          interval := #f
+        end
       end;
       if (interval)
-	check-read-only(interval);
-	queue-region-redisplay(window, bp, ebp, centering: #f);
-	inc!(n-replaced);
-	if (replace)
-	  with-change-recording (buffer, <replace-change-record>,
-				 interval: interval, moving?: #t)
-	    let dbp = delete!(interval);
-	    let nbp = insert!(interval-start-bp(interval), replace);
-	    bp := if (reverse?) dbp else nbp end
-	  end
+        check-read-only(interval);
+        queue-region-redisplay(window, bp, ebp, centering: #f);
+        inc!(n-replaced);
+        if (replace)
+          with-change-recording (buffer, <replace-change-record>,
+                                 interval: interval, moving?: #t)
+            let dbp = delete!(interval);
+            let nbp = insert!(interval-start-bp(interval), replace);
+            bp := if (reverse?) dbp else nbp end
+          end
         else
-	  with-change-recording (buffer, <kill-change-record>, interval: interval)
-	    let dbp = delete!(interval);
-	    bp := dbp
-	  end
-	end;
+          with-change-recording (buffer, <kill-change-record>, interval: interval)
+            let dbp = delete!(interval);
+            bp := dbp
+          end
+        end;
         move-point!(bp)
       else
         if (replace-all?)
-	  display-message(window, "Replaced %d items", n-replaced)
-	else
-	  //--- What about search wrapping?
-	  command-error("Search failed for: %s", string)
-	end
+          display-message(window, "Replaced %d items", n-replaced)
+        else
+          //--- What about search wrapping?
+          command-error("Search failed for: %s", string)
+        end
       end;
       // Stop after one replacement if we're not replacing everything
       unless (replace-all?)
-	bp := #f
+        bp := #f
       end;
     end
   end
@@ -2251,7 +2251,7 @@ define command hack-matching-lines (frame)
   end
 end command hack-matching-lines;
 
-define function do-hack-matching-lines 
+define function do-hack-matching-lines
     (frame :: <editor-state-mixin>, title :: <byte-string>,
      string :: <byte-string>, filter :: <function>) => ()
   let window :: <basic-window> = frame-window(frame);
@@ -2345,26 +2345,26 @@ define command set-mark (frame)
   let state  = frame-numeric-arg-state(frame);
   let degree = $display-point;
   case
-    state == #f =>			// c-Space
+    state == #f =>                        // c-Space
       push-point-pdl!(window, point());
       move-mark!(point());
-    state == #"universal" & n = 4 =>	// c-U c-Space
+    state == #"universal" & n = 4 =>        // c-U c-Space
       clear-mark!();
       let bp = pop-point-pdl!(window);
       if (bp)
-	display-message(window, "Saved cursor position restored");
-	move-point!(bp)
+        display-message(window, "Saved cursor position restored");
+        move-point!(bp)
       else
-	command-error("The point stack is empty")
+        command-error("The point stack is empty")
       end;
-    state == #"universal" & n = 16 =>	// c-U c-U c-Space
+    state == #"universal" & n = 16 =>        // c-U c-U c-Space
       clear-mark!();
       let bp = pop-point-pdl!(window);
       if (bp)
-	display-message(window, "Saved cursor position discarded");
-	degree := $display-region;
+        display-message(window, "Saved cursor position discarded");
+        degree := $display-region;
       else
-	command-error("The point stack is empty")
+        command-error("The point stack is empty")
       end;
     otherwise =>
       #f;
@@ -2454,7 +2454,7 @@ define command mark-word (frame)
   let sbp = if (word-syntax(bp-character-before(bp)) == $word-delimiter)
               forward-over(bp, #[' ', '\t', '\f'], interval: node)
             else
-	      move-over-words(bp, -1, interval: node)
+              move-over-words(bp, -1, interval: node)
             end;
   let ebp = move-over-words(sbp, 1, interval: node);
   move-mark!(sbp);
@@ -2501,13 +2501,13 @@ define constant $register-point-table :: <object-table> = make(<table>);
 
 define command save-point-in-register (frame)
     "Store the current point in the given register."
-  let window :: <basic-window> = frame-window(frame); 
+  let window :: <basic-window> = frame-window(frame);
   let register = get-register-name(window, "Save point in register: ");
   let bp = point();
   let bp = make(<bp>,
-		line: bp-line(bp), index: bp-index(bp),
-		buffer: bp-buffer(bp),
-		moving?: #t);
+                line: bp-line(bp), index: bp-index(bp),
+                buffer: bp-buffer(bp),
+                moving?: #t);
   gethash($register-point-table, register) := bp;
   frame-last-command-type(frame) := #"motion"
 end command save-point-in-register;
@@ -2521,7 +2521,7 @@ define command restore-point-from-register (frame)
   if (bp & member?(bp-buffer(bp), editor-buffers(frame-editor(frame))))
     unless (bp-buffer(bp) == buffer)
       select-buffer-in-appropriate-window(window, bp-buffer(bp),
-					  line: bp-line(bp), index: bp-index(bp));
+                                          line: bp-line(bp), index: bp-index(bp));
       queue-redisplay(window, $display-all)
     end;
     move-point!(bp);
@@ -2596,7 +2596,7 @@ define command undo-command (frame)
     if (n-undo > 0)
       let n :: <integer> = min(frame-numeric-arg(frame), n-undo);
       for (i :: <integer> from 0 below n)
-	undo!(window, home-buffer, history)
+        undo!(window, home-buffer, history)
       end
     else
       command-error("Nothing to undo")
@@ -2632,7 +2632,7 @@ define command redo-command (frame)
     if (n-redo > 0)
       let n :: <integer> = min(frame-numeric-arg(frame), n-redo);
       for (i :: <integer> from 0 below n)
-	redo!(window, home-buffer, history)
+        redo!(window, home-buffer, history)
       end
     else
       command-error("Nothing to redo")
@@ -2665,21 +2665,21 @@ define command indent-line (frame)
   let line = bp-line(bp);
   check-read-only(bp);
   queue-redisplay(window, $display-line,
-		  line: line, index: 0, centering: #f);
+                  line: line, index: 0, centering: #f);
   let bp1 = line-start(line);
   let bp2 = forward-over(bp1, #[' ', '\t']);
   let at-start? = (forward-over(bp, #[' ', '\t']) = bp2);
   with-change-recording (buffer, <replace-change-record>,
-			 start-bp: bp1, end-bp: bp2, moving?: #t)
+                         start-bp: bp1, end-bp: bp2, moving?: #t)
     let (ebp, nchars)
       = do-indent-line(buffer-major-mode(buffer), line);
     case
       ~ebp      =>
-	command-error("Can't indent this line");
+        command-error("Can't indent this line");
       at-start? =>
-	move-point!(ebp);	// don't move the point if it was not at the start
+        move-point!(ebp);        // don't move the point if it was not at the start
       otherwise =>
-	move-point!(line, index: bp-index(bp) + nchars);
+        move-point!(line, index: bp-index(bp) + nchars);
     end
   end;
   frame-last-command-type(frame) := #"insert"
@@ -2716,7 +2716,7 @@ define command indent-region (frame)
       do-indent-region(buffer-major-mode(buffer), interval)
     end
   else
-    indent-line(frame)		// no region, just indent the line
+    indent-line(frame)                // no region, just indent the line
   end;
   frame-last-command-type(frame) := #"insert"
 end command indent-region;
@@ -2737,42 +2737,42 @@ define command indent-rigidly (frame)
       clear-mark!();
       queue-region-redisplay(window, bp1, bp2, centering: #f);
       if (n > 0)
-	let spaces = make(<byte-string>, size: n, fill: ' ');
-	local method indent (line :: <basic-line>, si, ei, last?)
-		ignore(last?);
-		// Indent the line only if the start index is zero and
-		// the end index is not zero
-		when (si = 0 & ei ~= 0)
-		  insert-into-line(line, 0, spaces)
-		end
-	      end method indent;
+        let spaces = make(<byte-string>, size: n, fill: ' ');
+        local method indent (line :: <basic-line>, si, ei, last?)
+                ignore(last?);
+                // Indent the line only if the start index is zero and
+                // the end index is not zero
+                when (si = 0 & ei ~= 0)
+                  insert-into-line(line, 0, spaces)
+                end
+              end method indent;
         with-change-recording (buffer, <indentation-change-record>, interval: interval)
-	  do-lines(indent, interval, skip-test: diagram-line?)
-	end
+          do-lines(indent, interval, skip-test: diagram-line?)
+        end
       else
-	let n :: <integer> = -n;
-	let interval = make-interval(bp1, bp2);
- 	local method unindent (line :: <basic-line>, si, ei, last?)
-		ignore(last?);
-		// Indent the line only if the start index is zero and
-		// the end index is not zero
-		when (si = 0 & ei ~= 0)
-		ignore(si, ei);
-		  let contents = line-contents(line);
-		  for (i :: <integer> from 0 below min(line-length(line), n),
-		       while: whitespace-char?(contents[i]))
-		  finally
-		    when (i > 0)
-		      move-bp!(interval-start-bp(interval), line, 0);
-		      move-bp!(interval-end-bp(interval),   line, i);
-		      delete!(interval);
-		    end
-		  end
-		end
-	      end method unindent;
+        let n :: <integer> = -n;
+        let interval = make-interval(bp1, bp2);
+         local method unindent (line :: <basic-line>, si, ei, last?)
+                ignore(last?);
+                // Indent the line only if the start index is zero and
+                // the end index is not zero
+                when (si = 0 & ei ~= 0)
+                ignore(si, ei);
+                  let contents = line-contents(line);
+                  for (i :: <integer> from 0 below min(line-length(line), n),
+                       while: whitespace-char?(contents[i]))
+                  finally
+                    when (i > 0)
+                      move-bp!(interval-start-bp(interval), line, 0);
+                      move-bp!(interval-end-bp(interval),   line, i);
+                      delete!(interval);
+                    end
+                  end
+                end
+              end method unindent;
         with-change-recording (buffer, <indentation-change-record>, interval: interval)
-	  do-lines(unindent, interval, skip-test: diagram-line?)
-	end
+          do-lines(unindent, interval, skip-test: diagram-line?)
+        end
       end
     else
       command-error("There is no selected region")
@@ -2846,7 +2846,7 @@ define command delete-whitespace (frame)
     queue-region-redisplay(window, bp1, bp2, centering: #f);
     with-change-recording (buffer, <kill-change-record>, interval: interval)
       move-point!(delete!(interval)
-		  | command-error("Can't delete across hard sections"))
+                  | command-error("Can't delete across hard sections"))
     end
   end;
   frame-last-command-type(frame) := #"delete"
@@ -2859,7 +2859,7 @@ define command find-file (frame)
     "Create a buffer with this file in it.\n"
     "With a numeric argument, the buffer is put in \"fundamental\" mode."
   let window :: <basic-window> = frame-window(frame);
-  let buffer = frame-buffer(frame);	// might get called before there's a buffer
+  let buffer = frame-buffer(frame);        // might get called before there's a buffer
   let home
     = if (composite-buffer?(buffer)) section-home-buffer(line-section(bp-line(point())))
       else buffer end;
@@ -2871,15 +2871,15 @@ define command find-file (frame)
       let editor = frame-editor(frame);
       let buffer = find-buffer-from-pathname(editor, pathname);
       if (buffer)
-	revert-buffer-if-necessary(buffer, window: window)
+        revert-buffer-if-necessary(buffer, window: window)
       else
-	let mode = frame-numeric-arg-state(frame) & find-mode(<fundamental-mode>);
-	buffer  := do-find-file(editor, pathname, direction: #"input", major-mode: mode)
+        let mode = frame-numeric-arg-state(frame) & find-mode(<fundamental-mode>);
+        buffer  := do-find-file(editor, pathname, direction: #"input", major-mode: mode)
       end;
       if (buffer)
-	select-buffer-in-appropriate-window(window, buffer)
+        select-buffer-in-appropriate-window(window, buffer)
       else
-	command-error("Couldn't find file %s", as(<string>, pathname))
+        command-error("Couldn't find file %s", as(<string>, pathname))
       end
     end
   end;
@@ -2890,7 +2890,7 @@ define command new-file (frame)
     "Create an empty file buffer.\n"
     "With a numeric argument, the buffer is put in \"fundamental\" mode."
   let window :: <basic-window> = frame-window(frame);
-  let buffer = frame-buffer(frame);	// might get called before there's a buffer
+  let buffer = frame-buffer(frame);        // might get called before there's a buffer
   let home
     = if (composite-buffer?(buffer)) section-home-buffer(line-section(bp-line(point())))
       else buffer end;
@@ -2901,19 +2901,19 @@ define command new-file (frame)
     let pathname = new-file-dialog(window, default: default, default-type: type);
     when (pathname)
       with-busy-cursor (window)
-	let mode   = frame-numeric-arg-state(frame) & find-mode(<fundamental-mode>);
-	let buffer = find-buffer-from-pathname(editor, pathname)
-		     | do-find-file(editor, pathname, direction: #"output", major-mode: mode);
-	if (buffer)
-	  when (~mode & interval-start-bp(buffer) = interval-end-bp(buffer))
-	    // If the buffer is empty, at least enter the proper major mode
-	    let mode = find-mode-from-pathname(pathname);
-	    enter-mode(buffer, mode)
-	  end;
-	  select-buffer-in-appropriate-window(window, buffer)
-	else
-	  command-error("Couldn't open file %s", as(<string>, pathname))
-	end
+        let mode   = frame-numeric-arg-state(frame) & find-mode(<fundamental-mode>);
+        let buffer = find-buffer-from-pathname(editor, pathname)
+                     | do-find-file(editor, pathname, direction: #"output", major-mode: mode);
+        if (buffer)
+          when (~mode & interval-start-bp(buffer) = interval-end-bp(buffer))
+            // If the buffer is empty, at least enter the proper major mode
+            let mode = find-mode-from-pathname(pathname);
+            enter-mode(buffer, mode)
+          end;
+          select-buffer-in-appropriate-window(window, buffer)
+        else
+          command-error("Couldn't open file %s", as(<string>, pathname))
+        end
       end
     end
   else
@@ -2929,12 +2929,12 @@ define method do-find-file
  => (buffer :: false-or(<basic-buffer>))
   let container :: <source-container>
     = find-source-container(editor, source-container-class(pathname), pathname);
-  let buffer :: false-or(<file-buffer>)		// so we can set it to #f below...
+  let buffer :: false-or(<file-buffer>)                // so we can set it to #f below...
     = make-empty-buffer(<file-buffer>,
-			name:       pathname->buffer-name(pathname),
-			major-mode: major-mode | find-mode(<text-mode>),
-			container:  container,
-			editor:     editor);
+                        name:       pathname->buffer-name(pathname),
+                        major-mode: major-mode | find-mode(<text-mode>),
+                        container:  container,
+                        editor:     editor);
   block ()
     // Always try to revert the buffer, even for output files
     revert-buffer(buffer, major-mode: major-mode)
@@ -2962,28 +2962,28 @@ define command insert-file (frame)
     with-busy-cursor (window)
       // Read the contents of the file into a section
       let section = make(<section>,
-			 container: #f,
-			 start-line: #f, end-line: #f);
+                         container: #f,
+                         start-line: #f, end-line: #f);
       let stream  = make(<file-stream>,
-			 locator: pathname, direction: #"input");
+                         locator: pathname, direction: #"input");
       block ()
-	read-section-contents-from-stream(section, stream)
+        read-section-contents-from-stream(section, stream)
       cleanup
-	when (stream & stream-open?(stream))
-	  close(stream)
-	end
+        when (stream & stream-open?(stream))
+          close(stream)
+        end
       end;
       // Splice all the lines into the current buffer
       let bp = point();
       let interval = make-interval(line-start(section-start-line(section)),
-				   line-end(section-end-line(section)),
-				   in-order?: #t);
+                                   line-end(section-end-line(section)),
+                                   in-order?: #t);
       with-change-recording (buffer, <paste-change-record>, start-bp: bp)
-	clear-mark!();
-	insert!(bp, interval)
+        clear-mark!();
+        insert!(bp, interval)
       end;
       when (sectionize-buffer(buffer))
-	queue-redisplay(window, $display-all)
+        queue-redisplay(window, $display-all)
       end
     end
   end;
@@ -2998,23 +2998,23 @@ define command save-file (frame)
   if (saves-like-file-buffer?(buffer))
     if (buffer-modified?(buffer))
       with-busy-cursor (window)
-	let (pathname, condition) = save-buffer(buffer, frame: frame);
-	ignore(condition);
-	if (pathname)
-	  display-message(window, "Saved to %s", as(<string>, pathname));
-	  note-buffer-changed-everywhere(buffer, #f);
-	  frame-last-command-type(frame) := #"file";
-	  when (resectionize-changed-sections(buffer))
-	    queue-redisplay(window, $display-all)	// might want to redraw sections...
-	  end
-	else
-	  command-error("Couldn't save file %s",
-			as(<string>, buffer-default-pathname(buffer)));
-	end
+        let (pathname, condition) = save-buffer(buffer, frame: frame);
+        ignore(condition);
+        if (pathname)
+          display-message(window, "Saved to %s", as(<string>, pathname));
+          note-buffer-changed-everywhere(buffer, #f);
+          frame-last-command-type(frame) := #"file";
+          when (resectionize-changed-sections(buffer))
+            queue-redisplay(window, $display-all)        // might want to redraw sections...
+          end
+        else
+          command-error("Couldn't save file %s",
+                        as(<string>, buffer-default-pathname(buffer)));
+        end
       end
     else
       display-message(window, "No changes need to be saved for %s",
-		      as(<string>, buffer-default-pathname(buffer)))
+                      as(<string>, buffer-default-pathname(buffer)))
     end
   else
     save-file-as(frame)
@@ -3027,7 +3027,7 @@ define command save-file-as (frame)
   let buffer :: <basic-buffer> = frame-buffer(frame);
   do-save-file-as(frame, buffer);
   when (resectionize-changed-sections(buffer))
-    queue-redisplay(window, $display-all)	// might want to redraw sections...
+    queue-redisplay(window, $display-all)        // might want to redraw sections...
   end
 end command save-file-as;
 
@@ -3047,31 +3047,31 @@ define method do-save-file-as
   when (pathname)
     with-busy-cursor (window)
       result := save-buffer-as(source-container-class(pathname), buffer, pathname,
-			       frame: frame)
+                               frame: frame)
     end;
     if (result)
       when (~file-buffer?(buffer) & ~special-purpose-buffer?(buffer))
-	// If we saved out a simple non-file buffer, "upgrade" it
-	// to be a file buffer by creating a new (saved) file buffer
-	// and killing the old buffer
-	let new-buffer
-	  = as-file-buffer(<file-buffer>, buffer, result, frame-editor(frame));
-	// Kill the old buffer gently and select the new one
-	let editor = frame-editor(frame);
-	remove!(editor-buffers(editor), buffer);
-	for (window :: <basic-window> in editor-windows(editor))
-	  let buffers = window-selected-buffers(window);
-	  let entry
-	    = find-value(buffers, method (s) selection-buffer(s) == buffer end);
-	  when (entry)
-	    remove!(buffers, entry)
-	  end;
-	  when (window-buffer(window) == buffer)
-	    select-buffer(window, new-buffer)
-	  end
-	end;
+        // If we saved out a simple non-file buffer, "upgrade" it
+        // to be a file buffer by creating a new (saved) file buffer
+        // and killing the old buffer
+        let new-buffer
+          = as-file-buffer(<file-buffer>, buffer, result, frame-editor(frame));
+        // Kill the old buffer gently and select the new one
+        let editor = frame-editor(frame);
+        remove!(editor-buffers(editor), buffer);
+        for (window :: <basic-window> in editor-windows(editor))
+          let buffers = window-selected-buffers(window);
+          let entry
+            = find-value(buffers, method (s) selection-buffer(s) == buffer end);
+          when (entry)
+            remove!(buffers, entry)
+          end;
+          when (window-buffer(window) == buffer)
+            select-buffer(window, new-buffer)
+          end
+        end;
         queue-redisplay(window, $display-all);
-	buffer := new-buffer
+        buffer := new-buffer
       end;
       note-buffer-changed-everywhere(buffer, #f);
       display-buffer-name-everywhere(buffer);
@@ -3101,7 +3101,7 @@ define command save-all-files
       #f        => #f;
       #"cancel" => #f;
       otherwise =>
-	do-save-all-files(frame, buffers, curry(display-message, window));
+        do-save-all-files(frame, buffers, curry(display-message, window));
     end
   end;
   //--- This should 'display-buffer-name' for all for all editor windows
@@ -3132,20 +3132,20 @@ define method try-to-save-buffer
   let name = as(<string>, buffer-pathname(buffer) | buffer-name(buffer));
   let pathname
     = block ()
-	if (file-buffer?(buffer))
-	  with-busy-cursor (window)
-	    let pathname = save-buffer(buffer, frame: frame);
-	    when (pathname)
-	      note-buffer-changed-everywhere(buffer, #f)
-	    end;
-	    pathname
-	  end
-	else
-	  do-save-file-as(frame, buffer)
-	end;
+        if (file-buffer?(buffer))
+          with-busy-cursor (window)
+            let pathname = save-buffer(buffer, frame: frame);
+            when (pathname)
+              note-buffer-changed-everywhere(buffer, #f)
+            end;
+            pathname
+          end
+        else
+          do-save-file-as(frame, buffer)
+        end;
       exception(<command-error>)
-	command-error("Couldn't save file %s", as(<string>, name));
-	#f
+        command-error("Couldn't save file %s", as(<string>, name));
+        #f
       end;
   when (pathname)
     display-message-function("Saved %s", as(<string>, name))
@@ -3164,16 +3164,16 @@ define command revert-file (frame)
   if (file-buffer?(buffer) & pathname & ~file-exists?(pathname))
     // If the file is gone, don't revert
     warning-dialog(window, "%s no longer exists on disk; revert cancelled.",
-		   as(<string>, pathname))
+                   as(<string>, pathname))
   else
     when (~buffer-modified?(buffer)
-	  | yes-or-no-dialog(window, "The document is modified; really revert it?"))
+          | yes-or-no-dialog(window, "The document is modified; really revert it?"))
       let line = bp->line-index(point());
       with-busy-cursor (window)
-	when (revert-buffer(buffer))
-	  restore-previous-position(buffer, window, line);
-	  queue-redisplay(window, $display-all)
-	end
+        when (revert-buffer(buffer))
+          restore-previous-position(buffer, window, line);
+          queue-redisplay(window, $display-all)
+        end
       end
     end
   end;
@@ -3185,11 +3185,11 @@ define method restore-previous-position
     (buffer :: <basic-buffer>, window :: <basic-window>, line :: false-or(<integer>)) => ()
   let (tbp :: <basic-bp>, centering)
     = if (line)
-	let bp = line-index->bp(buffer, line);
-	if (bp) values(bp, #"center")
-	else values(interval-start-bp(buffer), #"top") end
+        let bp = line-index->bp(buffer, line);
+        if (bp) values(bp, #"center")
+        else values(interval-start-bp(buffer), #"top") end
       else
-	values(interval-start-bp(buffer), #"top")
+        values(interval-start-bp(buffer), #"top")
       end;
   let bp = make(<bp>, line: bp-line(tbp), index: bp-index(tbp), buffer: buffer);
   window-point(window) := as(<permanent-bp>, bp);
@@ -3210,39 +3210,39 @@ define command close-file (frame)
   // user has got the confirmation policy turned on
   let buffers
     = if (confirm-kill-buffer?(editor-policy(frame-editor(frame)))
-	  & frame-command-character(frame))	// kludge-o-rama
-	choose-buffers-dialog(window,
-			      title: "Documents to Close",
-			      ok-label: "&Close", all-label: "Close &All",
-			      buffer: buffer)
+          & frame-command-character(frame))        // kludge-o-rama
+        choose-buffers-dialog(window,
+                              title: "Documents to Close",
+                              ok-label: "&Close", all-label: "Close &All",
+                              buffer: buffer)
       else
-	vector(buffer)
+        vector(buffer)
       end;
   when (buffers)
     let killed? = #f;
     block (break)
       for (b in buffers)
-	unless (b == buffer)		// kill the current buffer last
-	  let result = maybe-save-buffer(window, b);
-	  select (result)
-	    #f => 
-	      // Note that this might exit in the one-frame-per-buffer policy...
-	      kill-buffer(b, frame: frame);
-	      killed? := #t;
-	    #t        => #f;
-	    #"cancel" => break();
-	  end
-	end
+        unless (b == buffer)                // kill the current buffer last
+          let result = maybe-save-buffer(window, b);
+          select (result)
+            #f =>
+              // Note that this might exit in the one-frame-per-buffer policy...
+              kill-buffer(b, frame: frame);
+              killed? := #t;
+            #t        => #f;
+            #"cancel" => break();
+          end
+        end
       end;
       when (member?(buffer, buffers))
-	let result = maybe-save-buffer(window, buffer);
-	select (result)
-	  #f => 
-	    kill-buffer(buffer, frame: frame);
-	    killed? := #t;
-	  #t        => #f;
-	  #"cancel" => break();
-	end
+        let result = maybe-save-buffer(window, buffer);
+        select (result)
+          #f =>
+            kill-buffer(buffer, frame: frame);
+            killed? := #t;
+          #t        => #f;
+          #"cancel" => break();
+        end
       end
     end block;
     when (killed?)
@@ -3273,17 +3273,17 @@ define method maybe-save-buffer
   // state is irrelevant -- we never offer to save it
   if (~buffer-modified?(buffer)
       | special-purpose-buffer?(buffer))
-    #f				// succeeded, after a fashion
+    #f                                // succeeded, after a fashion
   else
     let result = yes-no-or-cancel-dialog(window, "Do you want to save changes to %s?",
-					 buffer-name(buffer));
+                                         buffer-name(buffer));
     select (result)
-      #t        =>		// "Yes"
-	let pathname
-	  = try-to-save-buffer(window-frame(window), buffer, curry(display-message, window));
-	~pathname;		// pathname => succeeded, no pathname => failed
-      #f        => #f;		// "No"     => succeeded, after a fashion
-      otherwise => #"cancel";	// "Cancel" => failed
+      #t        =>                // "Yes"
+        let pathname
+          = try-to-save-buffer(window-frame(window), buffer, curry(display-message, window));
+        ~pathname;                // pathname => succeeded, no pathname => failed
+      #f        => #f;                // "No"     => succeeded, after a fashion
+      otherwise => #"cancel";        // "Cancel" => failed
     end
   end
 end method maybe-save-buffer;
@@ -3319,12 +3319,12 @@ define command toggle-read-only (frame)
     let read-only? = interval-read-only?(interval);
     interval-read-only?(interval) := ~read-only?;
     display-message(window,
-		    if (read-only?) "Region now writable" else "Region now read-only" end)
+                    if (read-only?) "Region now writable" else "Region now read-only" end)
   else
     let read-only? = buffer-read-only?(buffer);
     buffer-read-only?(buffer) := ~read-only?;
     display-message(window,
-		    if (read-only?) "Buffer now writable" else "Buffer now read-only" end)
+                    if (read-only?) "Buffer now writable" else "Buffer now read-only" end)
   end;
   frame-last-command-type(frame) := #"file"
 end command toggle-read-only;
@@ -3339,8 +3339,8 @@ define command choose-buffer (frame)
     let window :: <basic-window> = frame-window(frame);
     let buffer :: false-or(<basic-buffer>)
       = choose-buffer-dialog(window,
-			     title: "Select Document",
-			     buffer: previously-selected-buffer(window, 1));
+                             title: "Select Document",
+                             buffer: previously-selected-buffer(window, 1));
     when (buffer)
       select-buffer-in-appropriate-window(window, buffer)
     end;
@@ -3363,21 +3363,21 @@ define command switch-buffers (frame)
     n = 0 =>
       let buffers = map(selection-buffer, window-selected-buffers(window));
       let buffer :: false-or(<basic-buffer>)
-	= choose-buffer-dialog(window,
-			       title: "Select Document",
-			       buffers: buffers,
-			       buffer:  previously-selected-buffer(window, 1));
+        = choose-buffer-dialog(window,
+                               title: "Select Document",
+                               buffers: buffers,
+                               buffer:  previously-selected-buffer(window, 1));
       when (buffer)
-	select-buffer-in-appropriate-window(window, buffer)
+        select-buffer-in-appropriate-window(window, buffer)
       end;
     n > 1 =>
       let buffer = previously-selected-buffer(window, n - 1);
       if (buffer)
-	when (buffer ~= window-buffer(window))
-	  select-buffer-in-appropriate-window(window, buffer)
-	end
+        when (buffer ~= window-buffer(window))
+          select-buffer-in-appropriate-window(window, buffer)
+        end
       else
-	command-error("This window hasn't shown that many documents")
+        command-error("This window hasn't shown that many documents")
       end;
     otherwise =>
       #f;
@@ -3401,9 +3401,9 @@ define command new-buffer (frame)
   when (name)
     let editor = frame-editor(frame);
     let buffer = make-empty-buffer(<non-file-buffer>,
-				   name: ~empty?(name) & name,
-				   major-mode: find-mode(<text-mode>),
-				   editor: editor);
+                                   name: ~empty?(name) & name,
+                                   major-mode: find-mode(<text-mode>),
+                                   editor: editor);
     select-buffer-in-appropriate-window(window, buffer)
   end;
   frame-last-command-type(frame) := #"motion"
@@ -3464,7 +3464,7 @@ define command end-of-definition (frame)
     let next = node & node-next(node);
     when (next)
       line := section-end-line(node-section(next))
-     end    
+     end
   end;
   move-point!(line, index: 0);
   queue-redisplay(window, $display-point, centering: 1);
@@ -3479,8 +3479,8 @@ define command edit-definition (frame)
   let interval = selected-language-object();
   let name
     = unless (mark())
-	let name = edit-definition-dialog(window, as(<string>, interval));
-	name | error(make(<command-error>, window: window))
+        let name = edit-definition-dialog(window, as(<string>, interval));
+        name | error(make(<command-error>, window: window))
       end;
   unless (do-edit-definition(buffer-major-mode(buffer), interval, window, name: name))
     command-error("Couldn't find the definition for %s", as(<string>, interval))
@@ -3512,7 +3512,7 @@ define method do-completion
   check-read-only(interval);
   let (completion, ambiguous?)
     = apply(completer, buffer-major-mode(buffer), interval, window,
-	    menu?: frame-numeric-arg-state(frame) ~== #f, completer-args);
+            menu?: frame-numeric-arg-state(frame) ~== #f, completer-args);
   case
     ~completion =>
       command-error("No completion for \"%s\"", as(<string>, interval));
@@ -3522,17 +3522,17 @@ define method do-completion
       move-point!(ebp);
     otherwise =>
       queue-redisplay(window, $display-line,
-		      line: bp-line(sbp), index: bp-index(sbp), centering: #f);
+                      line: bp-line(sbp), index: bp-index(sbp), centering: #f);
       with-change-recording (buffer, <replace-change-record>,
-			     interval: interval, moving?: #t)
-	delete!(interval);
-	let ebp = insert-moving!(sbp, completion);
-	move-point!(ebp)
+                             interval: interval, moving?: #t)
+        delete!(interval);
+        let ebp = insert-moving!(sbp, completion);
+        move-point!(ebp)
       end;
   end;
   when (completion & ambiguous?)
     display-message(window, "The completion for \"%s\" was ambiguous",
-		    as(<string>, interval))
+                    as(<string>, interval))
   end
 end method do-completion;
 
@@ -3546,16 +3546,16 @@ define command show-value (frame)
   frame-last-command-type(frame) := #"browse"
 end command show-value;
 
-define command describe-object (frame) 
+define command describe-object (frame)
     "Describe the value of the selected language object."
   let window :: <basic-window> = frame-window(frame);
   let buffer :: <basic-buffer> = frame-buffer(frame);
   let interval = selected-language-object();
   let name
     = unless (mark())
-	let name = edit-definition-dialog(window, as(<string>, interval),
-					  title: "Describe Object");
-	name | error(make(<command-error>, window: window))
+        let name = edit-definition-dialog(window, as(<string>, interval),
+                                          title: "Describe Object");
+        name | error(make(<command-error>, window: window))
       end;
   unless (do-describe-object(buffer-major-mode(buffer), interval, window, name: name))
     command-error("Couldn't describe %s", as(<string>, interval))
@@ -3563,16 +3563,16 @@ define command describe-object (frame)
   frame-last-command-type(frame) := #"browse"
 end command describe-object;
 
-define command browse-object (frame) 
+define command browse-object (frame)
     "Browse the value of the selected language object."
   let window :: <basic-window> = frame-window(frame);
   let buffer :: <basic-buffer> = frame-buffer(frame);
   let interval = selected-language-object();
   let name
     = unless (mark())
-	let name = edit-definition-dialog(window, as(<string>, interval),
-					  title: "Browse Object");
-	name | error(make(<command-error>, window: window))
+        let name = edit-definition-dialog(window, as(<string>, interval),
+                                          title: "Browse Object");
+        name | error(make(<command-error>, window: window))
       end;
   unless (do-browse-object(buffer-major-mode(buffer), interval, window, name: name))
     command-error("Couldn't browse %s", as(<string>, interval))
@@ -3587,9 +3587,9 @@ define command browse-class (frame)
   let interval = selected-language-object();
   let name
     = unless (mark())
-	let name = edit-definition-dialog(window, as(<string>, interval),
-					  title: "Browse Class");
-	name | error(make(<command-error>, window: window))
+        let name = edit-definition-dialog(window, as(<string>, interval),
+                                          title: "Browse Class");
+        name | error(make(<command-error>, window: window))
       end;
   unless (do-browse-class(buffer-major-mode(buffer), interval, window, name: name))
     command-error("Couldn't browse the class of %s", as(<string>, interval))
@@ -3604,9 +3604,9 @@ define command browse-function (frame)
   let interval = selected-language-object();
   let name
     = unless (mark())
-	let name = edit-definition-dialog(window, as(<string>, interval),
-					  title: "Browse Function");
-	name | error(make(<command-error>, window: window))
+        let name = edit-definition-dialog(window, as(<string>, interval),
+                                          title: "Browse Function");
+        name | error(make(<command-error>, window: window))
       end;
   unless (do-browse-function(buffer-major-mode(buffer), interval, window, name: name))
     command-error("Couldn't browse the function %s", as(<string>, interval))
@@ -3631,9 +3631,9 @@ define command show-arglist (frame)
       else relevant-function-interval(point()) end;
   let name
     = unless (mark())
-	let name = edit-definition-dialog(window, as(<string>, interval),
-					  title: "Show Parameters");
-	name | error(make(<command-error>, window: window))
+        let name = edit-definition-dialog(window, as(<string>, interval),
+                                          title: "Show Parameters");
+        name | error(make(<command-error>, window: window))
       end;
   unless (do-show-arglist(buffer-major-mode(buffer), interval, window, name: name))
     command-error("Couldn't show the parameters for %s", as(<string>, interval))
@@ -3648,9 +3648,9 @@ define command show-documentation (frame)
   let interval = selected-language-object();
   let name
     = unless (mark())
-	let name = edit-definition-dialog(window, as(<string>, interval),
-					  title: "Show Documentation");
-	name | error(make(<command-error>, window: window))
+        let name = edit-definition-dialog(window, as(<string>, interval),
+                                          title: "Show Documentation");
+        name | error(make(<command-error>, window: window))
       end;
   unless (do-show-documentation(buffer-major-mode(buffer), interval, window, name: name))
     command-error("Couldn't show the documentation for %s", as(<string>, interval))
@@ -3673,16 +3673,16 @@ define command evaluate-region (frame)
   else
     let (interval, what)
       = if (mark())
-	  values(make-interval(point(), mark()), "region")
-	else
-	  values(definition-interval(point()), "definition")
-	end;
+          values(make-interval(point(), mark()), "region")
+        else
+          values(definition-interval(point()), "definition")
+        end;
     compile-to-core(frame, interval, what)
   end
 end command evaluate-region;
 
 define command evaluate-buffer (frame)
-    "Interactively compile the entire buffer." 
+    "Interactively compile the entire buffer."
   let buffer = frame-buffer(frame);
   let interval = make-interval(interval-start-bp(buffer), interval-end-bp(buffer));
   compile-to-core(frame, interval, "buffer");
@@ -3705,7 +3705,7 @@ define command macroexpand-region (frame)
   let window :: <basic-window> = frame-window(frame);
   let buffer :: <basic-buffer> = frame-buffer(frame);
   let interval = if (mark()) make-interval(point(), mark())
-		 else definition-interval(point()) end;
+                 else definition-interval(point()) end;
   let stream   = make(<string-stream>, direction: #"output");
   do-macroexpand(buffer-major-mode(buffer), interval, stream);
   let expansion = stream-contents(stream);
@@ -3817,37 +3817,37 @@ end method build-buffer-project;
 define command edit-class-subclasses (frame)
     "Create a browsing buffer containing the subclasses of a class."
   make-definition-browser(frame, #"class-subclasses",
-			  buffer-class: <subclasses-browsing-buffer>)
+                          buffer-class: <subclasses-browsing-buffer>)
 end command edit-class-subclasses;
 
 define command edit-class-superclasses (frame)
     "Create a browsing buffer containing the superclasses of a class."
   make-definition-browser(frame, #"class-superclasses",
-			  buffer-class: <superclasses-browsing-buffer>)
+                          buffer-class: <superclasses-browsing-buffer>)
 end command edit-class-superclasses;
 
 define command edit-class-methods (frame)
     "Create a browsing buffer containing the methods of a class."
   make-definition-browser(frame, #"class-methods",
-			  buffer-class: <class-methods-browsing-buffer>)
+                          buffer-class: <class-methods-browsing-buffer>)
 end command edit-class-methods;
 
 define command edit-generic-function-methods (frame)
     "Create a browsing buffer containing the methods of a generic function."
   make-definition-browser(frame, #"generic-function-methods",
-			  buffer-class: <generic-function-methods-browsing-buffer>)
+                          buffer-class: <generic-function-methods-browsing-buffer>)
 end command edit-generic-function-methods;
 
 define command edit-callers (frame)
     "Create a browsing buffer containing the callers of a function."
   make-definition-browser(frame, #"function-callers",
-			  buffer-class: <callers-browsing-buffer>)
+                          buffer-class: <callers-browsing-buffer>)
 end command edit-callers;
 
 define command edit-callees (frame)
     "Create a browsing buffer containing the callees of a function."
   make-definition-browser(frame, #"function-callees",
-			  buffer-class: <callees-browsing-buffer>)
+                          buffer-class: <callees-browsing-buffer>)
 end command edit-callees;
 
 define method make-definition-browser
@@ -3861,13 +3861,13 @@ define method make-definition-browser
     = definition-browser-parameters(mode, interval, what);
   when (definition)
     let buffer = make-empty-buffer(buffer-class,
-				   name:       as(<string>, what),
-				   definition: definition,
-				   name-key:   name-key,
-				   generator:  generator,
-				   major-mode: major-mode,
-				   node-class: node-class,
-				   editor:     editor);
+                                   name:       as(<string>, what),
+                                   definition: definition,
+                                   name-key:   name-key,
+                                   generator:  generator,
+                                   major-mode: major-mode,
+                                   node-class: node-class,
+                                   editor:     editor);
     with-busy-cursor (window)
       revert-buffer(buffer)
     end;
@@ -3884,10 +3884,10 @@ define command redisplay-toggle-bitblt (frame)
   let window :: <basic-window> = frame-window(frame);
   $scroll-with-bitblt? := ~$scroll-with-bitblt?;
   display-message(window, if ($scroll-with-bitblt?)
-			    "Bitblt scrolling enabled"
-			  else
-			    "Bitblt scrolling disabled"
-			  end)  
+                            "Bitblt scrolling enabled"
+                          else
+                            "Bitblt scrolling disabled"
+                          end)
 end command redisplay-toggle-bitblt;
 
 define command redisplay-toggle-debugging (frame)
@@ -3896,8 +3896,8 @@ define command redisplay-toggle-debugging (frame)
   $debug-redisplay? := ~$debug-redisplay?;
   $debug-scrolling? :=  $debug-redisplay?;
   display-message(window, if ($debug-redisplay?)
-			    "Redisplay debugging enabled"
-			  else
-			    "Redisplay debugging disabled"
-			  end)  
+                            "Redisplay debugging enabled"
+                          else
+                            "Redisplay debugging disabled"
+                          end)
 end command redisplay-toggle-debugging;

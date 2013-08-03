@@ -127,11 +127,11 @@ define sealed domain initialize (<simple-section>);
 define function make-empty-section
     (#key section-class = <section>) => (section :: <section>)
   let section = make(section-class,
-		     container: #f,
-		     start-line: #f, end-line: #f);
+                     container: #f,
+                     start-line: #f, end-line: #f);
   let line    = make(<text-line>,
-		     contents: "",
-		     section: section);
+                     contents: "",
+                     section: section);
   section-start-line(section) := line;
   section-end-line(section)   := line;
   section
@@ -168,21 +168,21 @@ define method do-lines
      #key from-end? = #f, skip-test = line-for-display-only?) => ()
   let (start-line, end-line, step :: <function>)
     = if (from-end?)
-	values(section-end-line(section), section-start-line(section), line-previous)
+        values(section-end-line(section), section-start-line(section), line-previous)
       else
-	values(section-start-line(section), section-end-line(section), line-next)
+        values(section-start-line(section), section-end-line(section), line-next)
       end;
-  when (start-line)	// the section might be empty
+  when (start-line)        // the section might be empty
     block (break)
       for (line = start-line then step(line))
-	when (line & (~skip-test | ~skip-test(line)))
-	  let si = 0;
-	  let ei = line-length(line);
-	  function(line, si, ei, line == end-line)
-	end;
-	when (~line | line == end-line)
-	  break()
-	end
+        when (line & (~skip-test | ~skip-test(line)))
+          let si = 0;
+          let ei = line-length(line);
+          function(line, si, ei, line == end-line)
+        end;
+        when (~line | line == end-line)
+          break()
+        end
       end
     end
   end
@@ -248,12 +248,12 @@ define sealed method resectionize-section
       section-sectionization-tick(section) := section-modification-tick(section);
       // If we resectionized this section, arrange to redisplay it
       when (resectionized?)
-	do-associated-windows (window :: <basic-window> = *editor-frame*)
-	  let buffer = window-buffer(window);
-	  when (buffer & buffer-contains-section?(buffer, section))
-	    queue-redisplay(window, $display-all)
-	  end
-	end
+        do-associated-windows (window :: <basic-window> = *editor-frame*)
+          let buffer = window-buffer(window);
+          when (buffer & buffer-contains-section?(buffer, section))
+            queue-redisplay(window, $display-all)
+          end
+        end
       end;
       resectionized?
     end
@@ -264,20 +264,20 @@ end method resectionize-section;
 /// Adding and removing lines to sections
 
 define sealed method add-line!
-    (section :: <basic-section>, line :: <basic-line>, 
+    (section :: <basic-section>, line :: <basic-line>,
      #key after :: type-union(<basic-line>, one-of(#f, #"start", #"end")) = #"end") => ()
   assert(~line-section(line),
-	 "The line %= is already in the section %=", line, line-section(line));
+         "The line %= is already in the section %=", line, line-section(line));
   let (next, prev)
     = select (after)
-	#f, #"start" =>
-	  values(section-start-line(section), #f);
-	#"end" =>
-	  values(#f, section-end-line(section));
-	otherwise =>
-	  assert(line-section(after) == section,
-		 "The 'after' line %= is not in the section %=", after, section);
-	  values(line-next(after), after);
+        #f, #"start" =>
+          values(section-start-line(section), #f);
+        #"end" =>
+          values(#f, section-end-line(section));
+        otherwise =>
+          assert(line-section(after) == section,
+                 "The 'after' line %= is not in the section %=", after, section);
+          values(line-next(after), after);
       end;
   line-section(line)  := section;
   line-next(line)     := next;
@@ -306,7 +306,7 @@ end method add-line!;
 define sealed method remove-line!
     (section :: <basic-section>, line :: <basic-line>) => ()
   assert(line-section(line) == section,
-	 "The line %= is not in the section %=", line, section);
+         "The line %= is not in the section %=", line, section);
   let (next, prev)
     = values(line-next(line), line-previous(line));
   if (next)
@@ -351,12 +351,12 @@ define sealed method update-section-line-count
     let buffer = node-buffer(node);
     when (buffer)
       do-associated-windows (window :: <basic-window> = *editor-frame*)
-	let buffer = window-buffer(window);
-	when (buffer
-	      & window.%total-lines
-	      & buffer-contains-section?(buffer, section))
-	  window-total-lines(window) := window.%total-lines + delta
-	end
+        let buffer = window-buffer(window);
+        when (buffer
+              & window.%total-lines
+              & buffer-contains-section?(buffer, section))
+          window-total-lines(window) := window.%total-lines + delta
+        end
       end
     end
   end

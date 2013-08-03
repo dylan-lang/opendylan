@@ -44,7 +44,7 @@ define protocol <<buffer>> (<<interval>>)
     (buffer :: <buffer>) => (saves? :: <boolean>);
   getter special-purpose-buffer?
     (buffer :: <buffer>) => (special-purpose? :: <boolean>);
-  getter buffer-anonymous?		// could also be called 'buffer-invisible?'
+  getter buffer-anonymous?                // could also be called 'buffer-invisible?'
     (buffer :: <buffer>) => (anonymous? :: <boolean>);
   getter buffer-section-separator-style
     (buffer :: <buffer>) => (style :: <section-separator-style>);
@@ -107,11 +107,11 @@ define protocol <<buffer>> (<<interval>>)
  => (reverted? :: <boolean>);
   function save-buffer
     (buffer :: <buffer>, #key frame, editor)
- => (pathname :: false-or(<pathname>), condition);	// #f => failed to save
+ => (pathname :: false-or(<pathname>), condition);        // #f => failed to save
   function save-buffer-as
     (container-class, buffer :: <buffer>, pathname :: <pathname>,
      #key frame, editor, format, if-exists)
- => (pathname :: false-or(<pathname>), condition);	// #f => failed to save
+ => (pathname :: false-or(<pathname>), condition);        // #f => failed to save
   function kill-buffer
     (buffer :: <buffer>, #key frame, editor, no-exit-frame) => ();
   function gc-buffer
@@ -331,9 +331,9 @@ define method buffer-contains-section?
  => (contains? :: <boolean>)
   block (return)
     for (node = buffer-start-node(buffer) then node-next(node),
-	 until: ~node)
+         until: ~node)
       when (node-section(node) == section)
-	return(#t)
+        return(#t)
       end
     end;
     #f
@@ -355,7 +355,7 @@ define method save-buffer-as
     (container-class == <flat-file-source-container>,
      buffer :: <basic-buffer>, pathname :: <pathname>,
      #key frame = *editor-frame*, editor,
-	  format, if-exists = #"signal")
+          format, if-exists = #"signal")
  => (pathname :: false-or(<pathname>), condition)
   ignore(editor, format);
   dynamic-bind (*buffer* = buffer)
@@ -364,45 +364,45 @@ define method save-buffer-as
     let condition = #f;
     for (n :: <integer> from 0 below 2)
       block ()
-	with-open-file (stream = pathname, direction: #"output", if-exists: if-exists)
-	  local method dump (line :: <line>, si, ei, last?)
-		  ignore(si, ei, last?);
-		  //--- Uncomment this if we decide to GC lines on save
-		  // gc-line(line);
-		  dump-line(line, stream)
-		end method;
-	  do-lines(dump, buffer);
-	  n := 2				// terminate the loop
-	end
+        with-open-file (stream = pathname, direction: #"output", if-exists: if-exists)
+          local method dump (line :: <line>, si, ei, last?)
+                  ignore(si, ei, last?);
+                  //--- Uncomment this if we decide to GC lines on save
+                  // gc-line(line);
+                  dump-line(line, stream)
+                end method;
+          do-lines(dump, buffer);
+          n := 2                                // terminate the loop
+        end
       exception (<file-exists-error>)
         let save?
-	  = (n = 0 & window)
-	    & yes-or-no-dialog(window,
-			       "%s already exists.\nDo you want to overwrite it?",
-			       as(<string>, pathname | "The file"));
+          = (n = 0 & window)
+            & yes-or-no-dialog(window,
+                               "%s already exists.\nDo you want to overwrite it?",
+                               as(<string>, pathname | "The file"));
         case
-	  save? =>
-	    if-exists := #"new-version";	// try again, but this time overwrite
-	  n = 0 =>
-	    n := 2;				// give up now
-	    pathname := #f;
-	  otherwise =>
-	    warning-dialog(window, "Couldn't save %s.\nThe file already exists.",
-			   as(<string>, pathname | "the file"));
-	    pathname := #f;
-	end;
+          save? =>
+            if-exists := #"new-version";        // try again, but this time overwrite
+          n = 0 =>
+            n := 2;                                // give up now
+            pathname := #f;
+          otherwise =>
+            warning-dialog(window, "Couldn't save %s.\nThe file already exists.",
+                           as(<string>, pathname | "the file"));
+            pathname := #f;
+        end;
       exception (c :: <condition>)
         warning-dialog(window, "Couldn't save %s.\n%s",
-		       as(<string>, pathname | "the file"), condition-to-string(c));
-	n := 2;
-	pathname  := #f;
-	condition := c;
+                       as(<string>, pathname | "the file"), condition-to-string(c));
+        n := 2;
+        pathname  := #f;
+        condition := c;
       end
     end;
     when (pathname & file-buffer?(buffer))
       buffer-pathname(buffer) := pathname;
       container-modification-date(buffer-source-container(buffer))
-	:= get-file-property(pathname, #"modification-date", default: current-date())
+        := get-file-property(pathname, #"modification-date", default: current-date())
     end;
     values(pathname, condition)
   end
@@ -414,11 +414,11 @@ end method save-buffer-as;
 define method kill-buffer
     (buffer :: <basic-buffer>,
      #key frame = *editor-frame*, editor,
-	  no-exit-frame :: false-or(<editor-state-mixin>) = #f) => ()
+          no-exit-frame :: false-or(<editor-state-mixin>) = #f) => ()
   let editor = editor | frame-editor(frame);
   // Call 'exit-mode' to undo any side-effects, and revert to fundamental
   // mode in case we fail to kill the buffer
-  exit-mode(buffer, buffer-major-mode(buffer));  
+  exit-mode(buffer, buffer-major-mode(buffer));
   enter-mode(buffer, find-mode(<fundamental-mode>));
   // Clean up all the pointers to the nodes in this buffer
   for (node = buffer-start-node(buffer) then node-next(node),
@@ -450,28 +450,28 @@ define method kill-buffer
     when (buffer == window-buffer(window))
       let policy = editor-policy(editor);
       if (fixed-frame-buffer?(policy))
-	// One-frame-per-buffer, so exit this window now, unless it will be
-	// exited on our return
-	let frame = window-frame(window);
-	unless (frame == no-exit-frame)
-	  exit-editor(frame)
-	end;
+        // One-frame-per-buffer, so exit this window now, unless it will be
+        // exited on our return
+        let frame = window-frame(window);
+        unless (frame == no-exit-frame)
+          exit-editor(frame)
+        end;
       else
-	// If this window isn't going away, we need a new buffer for it
-	let new-buffer
-	  = if (empty?(selected-buffers))
-	      // If it's the last buffer from those ever shown in this
-	      // window, try a non-anonymous buffer from any old window.
-	      // If there are no other buffers at all, create a new one.
-	      let new-buffer
-		= find-value(buffers, method (b) ~buffer-anonymous?(b) end);
-	      new-buffer | make-initial-buffer(editor: editor)
-	    else
-	      // Otherwise, choose buffer most recently shown in this window
-	      selection-buffer(selected-buffers[0])
-	    end;
-	select-buffer(window, new-buffer);
-	queue-redisplay(window, $display-all)
+        // If this window isn't going away, we need a new buffer for it
+        let new-buffer
+          = if (empty?(selected-buffers))
+              // If it's the last buffer from those ever shown in this
+              // window, try a non-anonymous buffer from any old window.
+              // If there are no other buffers at all, create a new one.
+              let new-buffer
+                = find-value(buffers, method (b) ~buffer-anonymous?(b) end);
+              new-buffer | make-initial-buffer(editor: editor)
+            else
+              // Otherwise, choose buffer most recently shown in this window
+              selection-buffer(selected-buffers[0])
+            end;
+        select-buffer(window, new-buffer);
+        queue-redisplay(window, $display-all)
       end
     end
   end
@@ -549,10 +549,10 @@ define method make-empty-buffer
     (buffer-class :: subclass(<buffer>),
      #rest buffer-initargs,
      #key buffer, name,
-	  major-mode    = find-mode(<fundamental-mode>),
+          major-mode    = find-mode(<fundamental-mode>),
           section-class = <section>,
           node-class    = <section-node>,
-	  editor        = frame-editor(*editor-frame*),
+          editor        = frame-editor(*editor-frame*),
      #all-keys)
  => (buffer :: <buffer>)
   ignore(editor);
@@ -561,15 +561,15 @@ define method make-empty-buffer
     name := format-to-string("Untitled %d", *untitled-buffer-count*)
   end;
   with-keywords-removed (buffer-initargs = buffer-initargs,
-			 #[name:, major-mode:, section-class:, node-class:])
+                         #[name:, major-mode:, section-class:, node-class:])
     let buffer = buffer
-		 | apply(make, buffer-class,
-			 name: name,
-			 major-mode: major-mode,
-			 buffer-initargs);
+                 | apply(make, buffer-class,
+                         name: name,
+                         major-mode: major-mode,
+                         buffer-initargs);
     let node = make-empty-section-node(buffer,
-				       section-class: section-class,
-				       node-class:    node-class);
+                                       section-class: section-class,
+                                       node-class:    node-class);
     node-buffer(node)         := buffer;
     buffer-start-node(buffer) := node;
     buffer-end-node(buffer)   := node;
@@ -582,10 +582,10 @@ define function make-initial-buffer
  => (buffer :: <buffer>)
   let name   = "Initial buffer";
   let buffer = find-buffer(editor, name)
-	       | make-empty-buffer(<non-file-buffer>, name: name, editor: editor);
+               | make-empty-buffer(<non-file-buffer>, name: name, editor: editor);
   buffer
 end function make-initial-buffer;
-    
+
 
 /// File buffers
 
@@ -605,7 +605,7 @@ define method initialize
     let container = buffer-source-container(buffer);
     when (container)
       buffer-name(buffer)
-	:= pathname->buffer-name(container-pathname(container))
+        := pathname->buffer-name(container-pathname(container))
     end
   end
 end method initialize;
@@ -621,7 +621,7 @@ define function pathname->buffer-name
     name
   end
 end function pathname->buffer-name;
-  
+
 // Buffers are non-file buffers by default
 define method file-buffer?
     (buffer :: <buffer>) => (file-buffer? :: singleton(#f))
@@ -671,9 +671,9 @@ define sealed method buffer-pathname-setter
     enter-mode(buffer, new-mode);
     do-associated-windows (window :: <basic-window> = *editor-frame*)
       when (window-buffer(window) == buffer)
-	window-note-mode-entered(window, new-mode);
-	// Changing modes might change the display arbitrarily, so refresh
-	queue-redisplay(window, $display-all)
+        window-note-mode-entered(window, new-mode);
+        // Changing modes might change the display arbitrarily, so refresh
+        queue-redisplay(window, $display-all)
       end
     end
   end;
@@ -733,9 +733,9 @@ define sealed method note-buffer-changed
       // the modification tick, offer to revert the buffer
       let reverted? = revert-buffer-if-necessary(buffer, window: window);
       when (reverted?)
-	// Redisplay, then back to the command loop if we reverted
-	redisplay-window(window);
-	signal(make(<command-error>, window: window))
+        // Redisplay, then back to the command loop if we reverted
+        redisplay-window(window);
+        signal(make(<command-error>, window: window))
       end
     end;
     // The method on <basic-buffer> will increment the modification tick
@@ -763,19 +763,19 @@ define method revert-buffer-if-necessary
       = get-file-property(pathname, #"modification-date", default: current-date());
     when (cdate & cdate ~= fdate)
       when (yes-or-no-dialog(window,
-			     "%s has been modified on disk.\nDo you want to re-read it?",
-			     as(<string>, pathname)))
-	let line = bp->line-index(point());
-	when (revert-buffer(buffer))
-	  restore-previous-position(buffer, window, line);
-	  queue-redisplay(window, $display-all)
-	end;
-	#t
+                             "%s has been modified on disk.\nDo you want to re-read it?",
+                             as(<string>, pathname)))
+        let line = bp->line-index(point());
+        when (revert-buffer(buffer))
+          restore-previous-position(buffer, window, line);
+          queue-redisplay(window, $display-all)
+        end;
+        #t
       end
     end
   else
     warning-dialog(window, "%s no longer exists on disk.",
-		   as(<string>, pathname));
+                   as(<string>, pathname));
     #f
   end
 end method revert-buffer-if-necessary;
@@ -811,7 +811,7 @@ define method revert-buffer
   do-associated-windows (window :: <basic-window> = *editor-frame*)
     when (window-buffer(window) == buffer)
       unless (mode == old-mode)
-	window-note-mode-entered(window, mode)
+        window-note-mode-entered(window, mode)
       end;
       window-note-buffer-selected(window, buffer)
     end
@@ -845,8 +845,8 @@ define method save-buffer
   when (cdate & cdate ~= fdate)
     let window = frame-window(frame);
     unless (yes-or-no-dialog(window,
-			     "%s has been modified on disk.\nDo you want to save it anyway?",
-			     as(<string>, pathname)))
+                             "%s has been modified on disk.\nDo you want to save it anyway?",
+                             as(<string>, pathname)))
       signal(make(<command-error>, window: window))
     end
   end;
@@ -863,8 +863,8 @@ define method save-buffer
   // Finally, write out the contents of the buffer
   let (pathname, condition)
     = save-buffer-as(source-container-class(pathname), buffer, pathname,
-		     frame: frame,
-		     if-exists: #"new-version");
+                     frame: frame,
+                     if-exists: #"new-version");
   when (pathname)
     buffer-modified?(buffer) := #f
   end;
@@ -977,36 +977,36 @@ define method as-file-buffer
     = find-source-container(editor, source-container-class(pathname), pathname);
   let new-buffer :: <file-buffer>
     = make-empty-buffer(<file-buffer>,
-			name:       pathname->buffer-name(pathname),
-			major-mode: find-mode(<fundamental-mode>),
-			container:  container,
-			editor:     editor);
+                        name:       pathname->buffer-name(pathname),
+                        major-mode: find-mode(<fundamental-mode>),
+                        container:  container,
+                        editor:     editor);
   local method move-lines (new-buffer :: <basic-buffer>)
-	  // There's one node and one section in the new buffer --
-	  // fill it in from the old buffer
-	  let new-node    = buffer-start-node(new-buffer);
-	  let new-section = node-section(buffer-start-node(new-buffer));
-	  // First move the lines from the old buffer
-	  let first-line :: <basic-line> = bp-line(interval-start-bp(buffer));
-	  let last-line  :: <basic-line> = bp-line(interval-end-bp(buffer));
-	  let line :: false-or(<basic-line>) = first-line;
-	  let next :: false-or(<basic-line>) = #f;
-	  while (line)
-	    next := line-next-in-buffer(line, buffer);
-	    line-section(line) := new-section;
-	    line := next
-	  end;
-	  // Then fix up the new buffer's node and section
-	  section-start-line(new-section) := first-line;
-	  section-end-line(new-section)   := last-line;
-	  interval-start-bp(new-node)
-	    := make(<bp>,
-		    line: first-line, index: 0, buffer: new-buffer);
-	  interval-end-bp(new-node)
-	    := make(<bp>,
-		    line: last-line, index: line-length(last-line), buffer: new-buffer,
-		    moving?: #t)
-	end method;
+          // There's one node and one section in the new buffer --
+          // fill it in from the old buffer
+          let new-node    = buffer-start-node(new-buffer);
+          let new-section = node-section(buffer-start-node(new-buffer));
+          // First move the lines from the old buffer
+          let first-line :: <basic-line> = bp-line(interval-start-bp(buffer));
+          let last-line  :: <basic-line> = bp-line(interval-end-bp(buffer));
+          let line :: false-or(<basic-line>) = first-line;
+          let next :: false-or(<basic-line>) = #f;
+          while (line)
+            next := line-next-in-buffer(line, buffer);
+            line-section(line) := new-section;
+            line := next
+          end;
+          // Then fix up the new buffer's node and section
+          section-start-line(new-section) := first-line;
+          section-end-line(new-section)   := last-line;
+          interval-start-bp(new-node)
+            := make(<bp>,
+                    line: first-line, index: 0, buffer: new-buffer);
+          interval-end-bp(new-node)
+            := make(<bp>,
+                    line: last-line, index: line-length(last-line), buffer: new-buffer,
+                    moving?: #t)
+        end method;
   revert-buffer(new-buffer, buffer-filler: move-lines);
   new-buffer
 end method as-file-buffer;
@@ -1019,17 +1019,17 @@ define method do-lines
      #key from-end? = #f, skip-test = line-for-display-only?) => ()
   let (start-node, end-node, step :: <function>)
     = if (from-end?)
-	values(buffer-end-node(buffer), buffer-start-node(buffer), node-previous)
+        values(buffer-end-node(buffer), buffer-start-node(buffer), node-previous)
       else
-	values(buffer-start-node(buffer), buffer-end-node(buffer), node-next)
+        values(buffer-start-node(buffer), buffer-end-node(buffer), node-next)
       end;
   block (break)
     for (node = start-node then step(node))
       when (node)
-	do-lines(function, node, from-end?: from-end?, skip-test: skip-test)
+        do-lines(function, node, from-end?: from-end?, skip-test: skip-test)
       end;
       when (~node | node == end-node)
-	break()
+        break()
       end
     end
   end
@@ -1045,9 +1045,9 @@ define method count-lines
   block (break)
     for (node = start-node then node-next(node))
       inc!(n, count-lines(node,
-			  skip-test: skip-test, cache-result?: cache-result?));
+                          skip-test: skip-test, cache-result?: cache-result?));
       when (node == end-node)
-	break()
+        break()
       end
     end
   end;
@@ -1079,10 +1079,10 @@ define method line-next-in-buffer
   let next-line
     = line-next(line)
       | when (buffer)
-	  let node = line-node(line, buffer: buffer);
-	  let next-node = node & node-next(node);
-	  next-node & bp-line(interval-start-bp(next-node))
-	end;
+          let node = line-node(line, buffer: buffer);
+          let next-node = node & node-next(node);
+          next-node & bp-line(interval-start-bp(next-node))
+        end;
   if (next-line & skip-test & skip-test(next-line))
     line-next-in-buffer(next-line, buffer, skip-test: skip-test)
   else
@@ -1098,10 +1098,10 @@ define method line-previous-in-buffer
   let prev-line
     = line-previous(line)
       | when (buffer)
-	  let node = line-node(line, buffer: buffer);
-	  let prev-node = node & node-previous(node);
-	  prev-node & bp-line(interval-end-bp(prev-node))
-	end;
+          let node = line-node(line, buffer: buffer);
+          let prev-node = node & node-previous(node);
+          prev-node & bp-line(interval-end-bp(prev-node))
+        end;
   if (prev-line & skip-test & skip-test(prev-line))
     line-previous-in-buffer(prev-line, buffer, skip-test: skip-test)
   else
@@ -1120,25 +1120,25 @@ define method line-less?
     let section2 :: false-or(<basic-section>) = line-section(line2);
     case
       section1 == section2 =>
-	// This catches the case where both sections are #f
-	//--- Note that this might be a bad idea!
-	for (line = line1 then line-next(line),
-	     until: ~line)
-	  when (line == line2)
-	    return(#t)
-	  end
-	end;
-	#f;
+        // This catches the case where both sections are #f
+        //--- Note that this might be a bad idea!
+        for (line = line1 then line-next(line),
+             until: ~line)
+          when (line == line2)
+            return(#t)
+          end
+        end;
+        #f;
       section1 & section2 =>
-	let section1 :: <basic-section> = section1;	// force tighter type...
-	let section2 :: <basic-section> = section2;	// force tighter type...
-	// line1 precedes line2 if its section precedes line2's
-	// section in the buffer
-	section-less?(buffer, section1, section2);
+        let section1 :: <basic-section> = section1;        // force tighter type...
+        let section2 :: <basic-section> = section2;        // force tighter type...
+        // line1 precedes line2 if its section precedes line2's
+        // section in the buffer
+        section-less?(buffer, section1, section2);
       otherwise =>
-	assert(section1 & section2,
-	       "The lines %= and %= are in completely unrelated sections in 'line-less?'",
-	       line1, line2);
+        assert(section1 & section2,
+               "The lines %= and %= are in completely unrelated sections in 'line-less?'",
+               line1, line2);
     end
   end
 end method line-less?;
@@ -1150,9 +1150,9 @@ define method section-less?
  => (less? :: <boolean>)
   block (return)
     for (node = section-node(section1, buffer: buffer) then node-next(node),
-	 until: ~node)
+         until: ~node)
       when (node-section(node) == section2)
-	return(#t)
+        return(#t)
       end
     end;
     #f
@@ -1168,7 +1168,7 @@ define method section-node
   block (return)
     for (node :: <basic-node> in section-nodes(section))
       when (node-buffer(node) == buffer)
-	return(node)
+        return(node)
       end
     end;
     #f
@@ -1191,27 +1191,27 @@ end method bp-node;
 /// Adding and removing nodes to buffers
 
 define sealed method add-node!
-    (buffer :: <basic-buffer>, node :: <basic-node>, 
+    (buffer :: <basic-buffer>, node :: <basic-node>,
      #key after :: type-union(<basic-node>, one-of(#f, #"start", #"end")) = #"end") => ()
   assert(~node-buffer(node),
-	 "The node %= is already in the buffer %=", node, node-buffer(node));
+         "The node %= is already in the buffer %=", node, node-buffer(node));
   let section = node-section(node);
   when (section)
     for (n :: <basic-node> in section-nodes(section))
       assert(n == node | node-buffer(n) ~== buffer,
-	     "The section for node %= is already in the buffer %=", node, node-buffer(node))
+             "The section for node %= is already in the buffer %=", node, node-buffer(node))
     end
   end;
   let (next, prev)
     = select (after)
-	#f, #"start" =>
-	  values(buffer-start-node(buffer), #f);
-	#"end" =>
-	  values(#f, buffer-end-node(buffer));
-	otherwise =>
-	  assert(node-buffer(after) == buffer,
-		 "The 'after' node %= is not in the buffer %=", after, buffer);
-	  values(node-next(after), after);
+        #f, #"start" =>
+          values(buffer-start-node(buffer), #f);
+        #"end" =>
+          values(#f, buffer-end-node(buffer));
+        otherwise =>
+          assert(node-buffer(after) == buffer,
+                 "The 'after' node %= is not in the buffer %=", after, buffer);
+          values(node-next(after), after);
       end;
   node-buffer(node)   := buffer;
   node-next(node)     := next;
@@ -1232,7 +1232,7 @@ end method add-node!;
 define sealed method remove-node!
     (buffer :: <basic-buffer>, node :: <basic-node>) => ()
   assert(node-buffer(node) == buffer,
-	 "The node %= is not in the buffer %=", node, buffer);
+         "The node %= is not in the buffer %=", node, buffer);
   let (next, prev)
     = values(node-next(node), node-previous(node));
   if (next)

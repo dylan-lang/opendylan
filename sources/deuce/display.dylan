@@ -142,7 +142,7 @@ define sealed method queue-redisplay
     window-degree
   end;
 end method queue-redisplay;
-  
+
 define sealed method queue-redisplay-1
     (window :: <basic-window>, degree :: <redisplay-degree>,
      #key line :: false-or(<basic-line>) = #f, index :: false-or(<integer>) = #f)
@@ -245,7 +245,7 @@ define sealed method recenter-window
       otherwise                  => error("Unrecognized recenter type %=", type);
     end;
     let first-line
-      = find-initial-display-line(window, line, 
+      = find-initial-display-line(window, line,
                                   fraction: fraction,
                                   line-number: line-number);
     when ($debug-scrolling?)
@@ -323,7 +323,7 @@ define method find-initial-display-line
       let last-line = line;
       block (return)
         while (line-number < -1)
-          let next-line 
+          let next-line
             = line-next-in-buffer(last-line, buffer, skip-test: invisible?);
           if (next-line)
             last-line := next-line
@@ -375,7 +375,7 @@ define method total-visible-display-lines
       ignore(line-width, line-baseline);
       let invisible-line? = zero?(line-height);
       unless (invisible-line?)
-	vheight := vheight - line-height - vsp;
+        vheight := vheight - line-height - vsp;
       end;
       let next-line = line-next-in-buffer(first-line, buffer, skip-test: invisible?);
       if (next-line)
@@ -394,7 +394,7 @@ define method total-visible-display-lines
 end method total-visible-display-lines;
 
 // Sets the centering fraction based on the direction of the motion
-// of the last command 
+// of the last command
 define sealed method set-centering-fraction
     (window :: <basic-window>, centering :: <real>) => ()
   let fraction = case
@@ -470,7 +470,7 @@ define method redisplay-window-within-frame
     (frame :: <editor-state-mixin>, window :: <basic-window>,
      #key move-point? = #f, move-viewport? = #t) => ()
   do-redisplay-window(window,
-		      move-point?: move-point?, move-viewport?: move-viewport?)
+                      move-point?: move-point?, move-viewport?: move-viewport?)
 end method redisplay-window-within-frame;
 
 
@@ -568,8 +568,8 @@ define sealed method do-redisplay-window
                   // If the number of lines we are inserting/deleting fits on
                   // the screen, we can do the bitblt optimization
                   case
-		    count < 0 =>
-		      delete-display-lines(window, line, index, -count,
+                    count < 0 =>
+                      delete-display-lines(window, line, index, -count,
                                            move-point?: move-point?);
                     count > 0 =>
                       insert-display-lines(window, line, index, count,
@@ -620,9 +620,9 @@ define inline function draw-marked-area
     let mw = display-line-mark-width(dline);
     let mh = display-line-height(dline);
     draw-rectangle(window,
-		   mark-x, my, mark-x + mw, my + mh + $duim-kludge-fudge,
-		   color: $region-marking-color,
-		   filled?: #t)
+                   mark-x, my, mark-x + mw, my + mh + $duim-kludge-fudge,
+                   color: $region-marking-color,
+                   filled?: #t)
   end;
 end function draw-marked-area;
 
@@ -639,20 +639,20 @@ define inline function draw-display-line
      #key start :: false-or(<integer>)) => ()
   let line = display-line-line(dline);
   let dx = if (start)
-	     index->position(line, mode, window, start)
-	       - line-margin(line, mode, window) 	       // ????
-	   else
-	     0
-	   end;
+             index->position(line, mode, window, start)
+               - line-margin(line, mode, window)                // ????
+           else
+             0
+           end;
   let dy = display-line-y(dline);
   display-line(line, mode, window, dx, dy + display-line-baseline(dline),
-	       start: start | display-line-start(dline),
-	       end: display-line-end(dline),
-	       align-y: #"baseline")
+               start: start | display-line-start(dline),
+               end: display-line-end(dline),
+               align-y: #"baseline")
 end function draw-display-line;
 
 define method redisplay-line
-    (window :: <basic-window>, line :: <basic-line>, dline :: <display-line>, 
+    (window :: <basic-window>, line :: <basic-line>, dline :: <display-line>,
      degree :: <redisplay-degree>) => ()
   let buffer       = window-buffer(window);
   let mode         = buffer-major-mode(buffer);
@@ -725,7 +725,7 @@ define method redisplay-text
       let line  :: <basic-line>   = display-line-line(dline);
       when (redisplay? | display-line-tick(dline) < line-modification-tick(line))
         display-line-tick(dline) := line-modification-tick(line);
-	let dy = display-line-y(dline);
+        let dy = display-line-y(dline);
         when ((~redisplay-y & ~redisplay?)
               | (redisplay-y & dy < redisplay-y))
           // If we didn't clear the whole area, we need to clear this line
@@ -733,12 +733,12 @@ define method redisplay-text
           clear-line-area(window, dline, 0, width)
         end;
         // Display the marked region, if any
-        when (redisplay? 
-		| display-line-mark-tick(dline) < display-line-tick(dline))
+        when (redisplay?
+                | display-line-mark-tick(dline) < display-line-tick(dline))
           draw-marked-area(window, dline);
         end;
         // Now we can finally display the line
-	draw-display-line(window, dline, mode);
+        draw-display-line(window, dline, mode);
       end
     end
   end
@@ -799,29 +799,29 @@ define sealed method update-caret-position
       // position, or by moving the point (and the caret again)
       case
         move-viewport? =>
-	  case
-	    x- < sx =>
-	      let margin = line-margin(line, buffer-major-mode(buffer), window);
-	      when (x- <= margin) x- := 0 end;
-	      set-scroll-position(window, max(0, x- - caret-width), #f);
-	    x+ >= sx + vw =>
-	      let dx = x+ - (sx + vw);
-	      set-scroll-position(window, sx + dx + caret-width, #f);
-	  end;
+          case
+            x- < sx =>
+              let margin = line-margin(line, buffer-major-mode(buffer), window);
+              when (x- <= margin) x- := 0 end;
+              set-scroll-position(window, max(0, x- - caret-width), #f);
+            x+ >= sx + vw =>
+              let dx = x+ - (sx + vw);
+              set-scroll-position(window, sx + dx + caret-width, #f);
+          end;
         move-point? =>
-	  case
-	    x- < sx =>
-	      let margin = line-margin(line, buffer-major-mode(buffer), window);
-	      let bp = position->bp(window, sx, y);
-	      move-point!(bp, window: window);
-	      set-caret-position(window, sx, y);
-	    x+ >= sx + vw =>
-	      let bp = position->bp(window, sx + vw, y);
-	      move-point!(bp, window: window);
-	      set-caret-position(window, sx + vw, y);
-	    otherwise =>
-	      set-caret-position(window, x, y);
-	  end;
+          case
+            x- < sx =>
+              let margin = line-margin(line, buffer-major-mode(buffer), window);
+              let bp = position->bp(window, sx, y);
+              move-point!(bp, window: window);
+              set-caret-position(window, sx, y);
+            x+ >= sx + vw =>
+              let bp = position->bp(window, sx + vw, y);
+              move-point!(bp, window: window);
+              set-caret-position(window, sx + vw, y);
+            otherwise =>
+              set-caret-position(window, x, y);
+          end;
       end;
       #t;
     move-point? =>
@@ -830,14 +830,14 @@ define sealed method update-caret-position
       // move the point to the top (or bottom) and try again.
       let lines :: <simple-object-vector> = window-display-lines(window);
       let dline :: <display-line>
-	= case
-	    fraction & fraction < 0.5 =>
-	      adjust-display-line(lines, 0, n-lines, 1);
-	    fraction & fraction > 0.5 =>
-	      adjust-display-line(lines, n-lines - 1, n-lines, -1);
-	    otherwise =>
-	      adjust-display-line(lines, floor/(n-lines, 2), n-lines, 1);
-	  end;
+        = case
+            fraction & fraction < 0.5 =>
+              adjust-display-line(lines, 0, n-lines, 1);
+            fraction & fraction > 0.5 =>
+              adjust-display-line(lines, n-lines - 1, n-lines, -1);
+            otherwise =>
+              adjust-display-line(lines, floor/(n-lines, 2), n-lines, 1);
+          end;
       move-point!(display-line-line(dline), index: 0, window: window);
       update-caret-position(window, buffer, move-point?: #f, move-viewport?: move-viewport?);
     move-viewport? =>
@@ -850,10 +850,10 @@ define sealed method update-caret-position
       // the point to force it to be visible. If we are in Emacs-style
       // mode, then this is a bug.
       when ($debug-redisplay?)
-	let frame = window-frame(window);
-	when (scrolling-moves-point?(editor-policy(frame-editor(frame))))
-	  debug-message("Whoops... lost the caret position")
-	end
+        let frame = window-frame(window);
+        when (scrolling-moves-point?(editor-policy(frame-editor(frame))))
+          debug-message("Whoops... lost the caret position")
+        end
       end;
       #f;
   end
@@ -869,7 +869,7 @@ define method adjust-display-line
     while (line-for-display-only?(display-line-line(dline)))
       index := index + delta;
       when (index < 0 | index >= n-lines)
-	return()
+        return()
       end;
       dline := lines[index]
     end
@@ -1059,7 +1059,7 @@ define sealed method find-display-line
                 // point is only a few lines from the bottom.
                 //--- Yeah, "compulsive" is a kludge.  Sorry about that.
                 let buffer :: <basic-buffer> = window-buffer(window);
-		let invisible? :: <function> = window.%line-invisible-test;
+                let invisible? :: <function> = window.%line-invisible-test;
                 for (n :: <integer> from 0,
                      l = display-line-line(lines[0])
                        then line-next-in-buffer(l, buffer, skip-test: invisible?),
@@ -1137,7 +1137,7 @@ define sealed method scroll-n-lines
         let n      :: <integer> = -n;
         let min-n  :: <integer> = 0;
         let buffer :: <basic-buffer> = window-buffer(window);
-	let invisible? :: <function> = window.%line-invisible-test;
+        let invisible? :: <function> = window.%line-invisible-test;
         for (i :: <integer> from 0 below n,
              prev = line-previous-in-buffer(line, buffer, skip-test: invisible?)
                then line-previous-in-buffer(prev, buffer, skip-test: invisible?),
@@ -1362,7 +1362,7 @@ define sealed method insert-display-lines
         let dline :: <display-line> = lines[i];
         let line  :: <basic-line>   = display-line-line(dline);
         display-line-tick(dline) := line-modification-tick(line);
-	draw-marked-area(window, dline);
+        draw-marked-area(window, dline);
         draw-display-line(window, dline, mode)
       end
     end;
@@ -1372,7 +1372,7 @@ define sealed method insert-display-lines
     end;
     update-scroll-bars(window, buffer);
     show-caret? := update-caret-position(window, buffer,
-					 move-point?: move-point?, move-viewport?: #f);
+                                         move-point?: move-point?, move-viewport?: #f);
     height;
   cleanup
     window-redisplay-line(window)   := #f;
@@ -1386,7 +1386,7 @@ define sealed method insert-display-lines
 end method insert-display-lines;
 
 // Delete 'n' display lines at the given index,
-// using bitblt to move to existing lines up, 
+// using bitblt to move to existing lines up,
 // displaying new lines at the bottom of the display
 define sealed method delete-display-lines
     (window :: <basic-window>,
@@ -1478,7 +1478,7 @@ define sealed method delete-display-lines
         let dline :: <display-line> = lines[i];
         let line  :: <basic-line>   = display-line-line(dline);
         display-line-tick(dline) := line-modification-tick(line);
-	draw-marked-area(window, dline);
+        draw-marked-area(window, dline);
         draw-display-line(window, dline, mode);
       end
     end;
@@ -1488,7 +1488,7 @@ define sealed method delete-display-lines
     end;
     update-scroll-bars(window, buffer);
     show-caret? := update-caret-position(window, buffer,
-					 move-point?: move-point?, move-viewport?: #f);
+                                         move-point?: move-point?, move-viewport?: #f);
     height;
   cleanup
     window-redisplay-line(window)   := #f;
@@ -1566,7 +1566,7 @@ define sealed method display-region-marking
       for (i :: <integer> from 0 below n-lines)
         let dline :: <display-line> = lines[i];
         when (display-line-mark-x(dline)
-		& display-line-mark-tick(dline) < display-line-tick(dline))
+                & display-line-mark-tick(dline) < display-line-tick(dline))
           draw-marked-area(window, dline);
           draw-display-line(window, dline, mode)
         end
@@ -1669,8 +1669,8 @@ define sealed method decache-display-line-marking
         let dline :: <display-line> = dline;            // force tighter type...
         let x = display-line-mark-x(dline);
         // Would like to only clear the marked region if it's getting
-	// smaller, but can't tell without knowing which is the other
-	// end of the region.
+        // smaller, but can't tell without knowing which is the other
+        // end of the region.
         when (x)
           let w = display-line-mark-width(dline);
           clear-line-area(window, dline, x, w);
@@ -1754,12 +1754,12 @@ define sealed method highlight-matching-thing
     let index = bp-index(bp);
     let dline = find-display-line(window, line);
     when (dline)
-      let char2 
-	= if (index + 1 >= line-length(line))
-	    ' '
-	  else
-	    line-contents(line)[index + 1]
-	  end;
+      let char2
+        = if (index + 1 >= line-length(line))
+            ' '
+          else
+            line-contents(line)[index + 1]
+          end;
       window-matching-string(window)[0] := char1;
       window-matching-string(window)[1] := char2;
       let x = index->position(line, mode, window, index);
@@ -1777,7 +1777,7 @@ define sealed method highlight-matching-thing
                      filled?: #t);
       draw-string(window, window-matching-string(window),
                   x, y + display-line-baseline(dline),
-		  start: 0, end: 1,
+                  start: 0, end: 1,
                   font: bold, align-y: #"baseline")
     end
   end
@@ -1794,13 +1794,13 @@ define sealed method unhighlight-matching-thing
     when (index <= line-length(line))
       let dline = find-display-line(window, line);
       when (dline)
-	let char1 = bp-character(bp);
-	let char2 
-	  = if (index + 1 >= line-length(line))
-	      ' '
-	    else
-	      line-contents(line)[index + 1]
-	    end;
+        let char1 = bp-character(bp);
+        let char2
+          = if (index + 1 >= line-length(line))
+              ' '
+            else
+              line-contents(line)[index + 1]
+            end;
         window-matching-string(window)[0] := char1;
         window-matching-string(window)[1] := char2;
         let mode = buffer-major-mode(window-buffer(window));
@@ -1857,15 +1857,15 @@ define sealed method position->bp
       let n-lines :: <integer> = window-n-display-lines(window);
       let last-y = 0;
       when (n-lines > 0 & y < lines[0].display-line-y)
-	dline := lines[0];
-	return()
+        dline := lines[0];
+        return()
       end;
       without-bounds-checks
         for (i :: <integer> from 0 below n-lines)
           dline := lines[i];
           let dy = display-line-y(dline);
           // display-line-height includes inter-line spacing, so we're
-	  // taking that as hits in the line right above.
+          // taking that as hits in the line right above.
           if (last-y <= y & y < dy + display-line-height(dline))
             return()
           else
@@ -2181,4 +2181,4 @@ define method position->index
       min(index, length)
     end
   end
-end method position->index; 
+end method position->index;

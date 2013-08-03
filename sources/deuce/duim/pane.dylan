@@ -21,8 +21,8 @@ define open abstract class <deuce-pane>
   sealed slot %horizontal-scroll-bar = #f;
   sealed slot %vertical-scroll-bar   = #f;
   sealed slot %caret-visible = #t;
-  // keyword foreground: = $black;	// leave this to 'port-default-foreground'...
-  // keyword background: = $white;	// leave this to 'port-default-background'...
+  // keyword foreground: = $black;        // leave this to 'port-default-foreground'...
+  // keyword background: = $white;        // leave this to 'port-default-background'...
   keyword caret:  = #t;
   keyword cursor: = #"i-beam";
 end class <deuce-pane>;
@@ -89,18 +89,18 @@ define method initialize
     inc!(*gadget-buffer-count*);
     let name   = format-to-string("Gadget %d", *gadget-buffer-count*);
     let buffer = make-empty-buffer(<non-file-buffer>,
-				   name: name,
-				   anonymous?: #t);
+                                   name: name,
+                                   anonymous?: #t);
     buffer-read-only?(buffer) := read-only?;
     dynamic-bind (*buffer* = buffer)
       select-buffer(window, buffer);
       case
-	supplied?(value) =>
-	  gadget-value(window, do-callback?: #f) := value;
-	supplied?(text) =>
-	  gadget-text(window, do-callback?: #f) := text;
-	otherwise =>
-	  #f;
+        supplied?(value) =>
+          gadget-value(window, do-callback?: #f) := value;
+        supplied?(text) =>
+          gadget-text(window, do-callback?: #f) := text;
+        otherwise =>
+          #f;
       end
     end
   end
@@ -125,7 +125,7 @@ define sealed method do-compose-space
     (pane :: <deuce-pane>, #key width, height)
  => (space-req :: <space-requirement>)
   let style = default-text-style(pane)
-	      | make-duim-text-style(#f, window-default-font(pane));
+              | make-duim-text-style(#f, window-default-font(pane));
   let (font, fw, fh, fa, fd) = font-metrics(style, port(pane));
   ignore(font, fa, fd);
   let nlines = gadget-lines(pane);
@@ -133,10 +133,10 @@ define sealed method do-compose-space
   when (nlines & ~height) height := nlines * fh end;
   when (ncols  & ~width)  width  := ncols  * fw end;
   local method constrain-size
-	    (size :: <integer>, minimum :: <integer>, maximum :: <integer>)
-	 => (size :: <integer>)
-	  max(minimum, min(maximum, size))
-	end method;
+            (size :: <integer>, minimum :: <integer>, maximum :: <integer>)
+         => (size :: <integer>)
+          max(minimum, min(maximum, size))
+        end method;
   let min-chars = 25;
   let min-lines =  3;
   let extra-height = 6;
@@ -153,7 +153,7 @@ end method do-compose-space;
 
 define method do-destroy-sheet
     (sheet :: <deuce-pane>) => ()
-  let frame = window-frame(sheet);	// ~= sheet-frame for <deuce-gadget>
+  let frame = window-frame(sheet);        // ~= sheet-frame for <deuce-gadget>
   when (frame)
     // If this window is going away, stop tracking it
     let windows = editor-windows(frame-editor(frame));
@@ -164,7 +164,7 @@ end method do-destroy-sheet;
 
 define method do-destroy-sheet
     (sheet :: <deuce-gadget>) => ()
-  let frame = window-frame(sheet);	// ~= sheet-frame for <deuce-gadget>
+  let frame = window-frame(sheet);        // ~= sheet-frame for <deuce-gadget>
   when (frame)
     // Deuce gadgets act as Deuce frames, so we need to stop tracking
     // the gadget-as-frame, too
@@ -363,8 +363,8 @@ define sealed method scroll-window-vertically
                                   skip-test: rcurry(line-invisible-in-window?, window));
       when (line)
         when (move-point?)
-	  move-point!(line-start(line), window: window)
-	end;
+          move-point!(line-start(line), window: window)
+        end;
         recenter-window(window, line, #"top");
         window-centering-fraction(window) := #f;
         queue-redisplay(window, $display-all);
@@ -428,8 +428,8 @@ define sealed method get-from-clipboard
     (window :: <deuce-pane>, class :: subclass(<string>))
  => (data :: false-or(<string>))
   let data = with-clipboard (clipboard = window)
-	       get-clipboard-data-as(class, clipboard)
-	     end;
+               get-clipboard-data-as(class, clipboard)
+             end;
   // If there's a Return character in the clipboard data,
   // fix newline sequences to conform to Deuce's conventions.
   when (data & position(data, '\r'))
@@ -438,14 +438,14 @@ define sealed method get-from-clipboard
     for (i :: <integer> from 0 below length)
       let ch :: <character> = data[i];
       if (ch = '\r')
-	// If we found a '\r' that's not followed by a '\n',
-	// convert it to a '\n'.  If it is followed by a '\n',
-	// just skip over it.
-	when (i = length - 1 | data[i + 1] ~= '\n')
-	  add!(sv, '\n')
-	end
+        // If we found a '\r' that's not followed by a '\n',
+        // convert it to a '\n'.  If it is followed by a '\n',
+        // just skip over it.
+        when (i = length - 1 | data[i + 1] ~= '\n')
+          add!(sv, '\n')
+        end
       else
-	add!(sv, ch)
+        add!(sv, ch)
       end
     end;
     data := as(<string>, sv)
@@ -535,7 +535,7 @@ define sealed method handle-repaint
   ignore(region);
   // Simple enough -- just redraw the existing display lines
   with-editor-state-bound (sheet)
-    let frame = window-frame(sheet);	// ~= sheet-frame for <deuce-gadget>
+    let frame = window-frame(sheet);        // ~= sheet-frame for <deuce-gadget>
     let move-point? = scrolling-moves-point?(editor-policy(frame-editor(frame)));
     do-redisplay-window(sheet, redisplay?: #t, move-point?: move-point?, move-viewport?: #f)
   end

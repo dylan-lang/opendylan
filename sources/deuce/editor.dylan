@@ -123,11 +123,11 @@ end method buffer-source-location-equals;
 
 define constant <command-type>
     = one-of(#"cancel", #"number",
-	     #"motion", #"line-motion", #"mark", #"scroll", #"display",
-	     #"insert", #"delete", #"kill", #"yank", #"yank-no-motion",
-	     #"undo", #"redo", #"file", #"compile", #"shell", #"macro",
-	     #"complete", #"dynamic-complete", #"browse",
-	     #"mail", #"version-control", #f);
+             #"motion", #"line-motion", #"mark", #"scroll", #"display",
+             #"insert", #"delete", #"kill", #"yank", #"yank-no-motion",
+             #"undo", #"redo", #"file", #"compile", #"shell", #"macro",
+             #"complete", #"dynamic-complete", #"browse",
+             #"mail", #"version-control", #f);
 
 define constant <argument-state>
     = one-of(#"digits", #"sign", #"universal", #"universal-digits", #"universal-sign", #f);
@@ -179,7 +179,7 @@ define open abstract class <editor-state-mixin> (<editor-frame>)
   sealed slot frame-isearch-move-mark?  :: <boolean> = #f;
   sealed slot frame-isearch-last-string :: false-or(<byte-string>) = #f;
   // Search&Replace state
-  slot frame-search-string-found? :: false-or(<buffer>) = #f;	// _not_ sealed
+  slot frame-search-string-found? :: false-or(<buffer>) = #f;        // _not_ sealed
   // Dynamic completion state
   sealed slot frame-dynamic-completion-state = #f;
 end class <editor-state-mixin>;

@@ -38,12 +38,12 @@ define sealed method add-node!
   let section = node-section(node);
   do-associated-buffers (other :: <basic-buffer> = *editor-frame*)
     when (buffer ~== other
-	  & buffer-contains-section?(other, section))
+          & buffer-contains-section?(other, section))
       unless (member?(buffer, buffer-associated-buffers(other)))
-	push!(buffer-associated-buffers(other), buffer)
+        push!(buffer-associated-buffers(other), buffer)
       end;
       unless (member?(other, buffer-associated-buffers(buffer)))
-	push!(buffer-associated-buffers(buffer), other)
+        push!(buffer-associated-buffers(buffer), other)
       end
     end
   end
@@ -54,7 +54,7 @@ define sealed method remove-node!
   let section = node-section(node);
   do-associated-buffers (other :: <basic-buffer> = *editor-frame*)
     when (buffer ~== other
-	  & buffer-contains-section?(other, section))
+          & buffer-contains-section?(other, section))
       buffer-associated-buffers(other) := remove!(buffer-associated-buffers(other), buffer)
     end
   end;
@@ -91,7 +91,7 @@ define method save-buffer
     when (section-modification-tick(section) > section-sectionization-tick(section))
       let home-buffer = section-home-buffer(section, editor: editor);
       when (home-buffer & file-buffer?(home-buffer))
-	add-new!(buffers, home-buffer)
+        add-new!(buffers, home-buffer)
       end
     end
   end;
@@ -109,8 +109,8 @@ define sealed method kill-buffer
     let section = node-section(node);
     do-associated-buffers (other :: <basic-buffer> = frame)
       when (buffer ~== other
-	    & buffer-contains-section?(other, section))
-	buffer-associated-buffers(other) := remove!(buffer-associated-buffers(other), buffer)
+            & buffer-contains-section?(other, section))
+        buffer-associated-buffers(other) := remove!(buffer-associated-buffers(other), buffer)
       end
     end
   end;
@@ -128,7 +128,7 @@ define command edit-home-definition (frame, #key section)
     let home    = section-home-buffer(section);
     when (home & home ~== buffer)
       select-buffer-in-appropriate-window(window, home,
-					  line: section-start-line(section))
+                                          line: section-start-line(section))
     end
   end;
   frame-last-command-type(frame) := #"motion"
@@ -206,7 +206,7 @@ define method fill-definition-browsing-buffer
   if (sections & ~empty?(sections))
     for (section :: <basic-section> in sections)
       let node = make-section-node(buffer, section,
-				   node-class: buffer.%node-class);
+                                   node-class: buffer.%node-class);
       add-node!(buffer, node)
     end
   else

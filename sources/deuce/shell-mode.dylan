@@ -47,27 +47,27 @@ define method initialize-major-mode
     #"emacs" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector('p', meta,    previous-shell-input),
-		    vector('n', meta,    next-shell-input),
-		    vector(#"up",        control, previous-shell-input),
-		    vector(#"down",      control, next-shell-input),
-		    vector(#"return",    nothing, activate-shell-input-newline),
-		    vector(#"return",    control, activate-shell-input),
-		    vector('w', control, trim-shell-output-history),
-		    vector('g', control, cancel-shell-command));
+                    vector('p', meta,    previous-shell-input),
+                    vector('n', meta,    next-shell-input),
+                    vector(#"up",        control, previous-shell-input),
+                    vector(#"down",      control, next-shell-input),
+                    vector(#"return",    nothing, activate-shell-input-newline),
+                    vector(#"return",    control, activate-shell-input),
+                    vector('w', control, trim-shell-output-history),
+                    vector('g', control, cancel-shell-command));
       let command-table = escape-command-table(command-set);
       add-commands!(command-table,
-		    vector('p', nothing, previous-shell-input),
-		    vector('n', nothing, next-shell-input));
+                    vector('p', nothing, previous-shell-input),
+                    vector('n', nothing, next-shell-input));
     #"windows" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector(#"up",        control, previous-shell-input),
-		    vector(#"down",      control, next-shell-input),
-		    vector(#"return",    nothing, activate-shell-input-newline),
-		    vector(#"return",    control, activate-shell-input),
-		    vector('x', control, trim-shell-output-history),
-		    vector(#"escape", nothing, cancel-shell-command));
+                    vector(#"up",        control, previous-shell-input),
+                    vector(#"down",      control, next-shell-input),
+                    vector(#"return",    nothing, activate-shell-input-newline),
+                    vector(#"return",    control, activate-shell-input),
+                    vector('x', control, trim-shell-output-history),
+                    vector(#"escape", nothing, cancel-shell-command));
     otherwise =>
       #[];
   end
@@ -100,10 +100,10 @@ define method buffer-initial-point
  => (bp :: false-or(<basic-bp>))
   block (return)
     for (node = buffer-end-node(buffer) then node-previous(node),
-	 until: ~node)
+         until: ~node)
       let section = node-section(node);
       when (shell-section?(section))
-	return(line-start(section-start-line(section)))
+        return(line-start(section-start-line(section)))
       end
     end;
     let node    = buffer-start-node(buffer);
@@ -207,9 +207,9 @@ define method process-shell-input
   let end-line   = section-end-line(section);
   let end-bp     = line-end(end-line);
   insert-moving!(end-bp, '\n');
-  section-output-line(section) := bp-line(end-bp);	// first line of output
+  section-output-line(section) := bp-line(end-bp);        // first line of output
   let interval = make-interval(start-bp, line-end(line-previous(bp-line(end-bp))),
-			       in-order?: #t);
+                               in-order?: #t);
   block ()
     // Ask the concrete mode implementation to process the input
     // This will presumably generate some output in the process
@@ -217,10 +217,10 @@ define method process-shell-input
     // Mark the input section with a "presentation"
     let property = list(#"input", interval);
     local method set-property (line :: <basic-line>, si, ei, last?);
-	    ignore(si, ei, last?);
-	    line-properties(line)
-	      := concatenate!(line-properties(line), property)
-	  end method;
+            ignore(si, ei, last?);
+            line-properties(line)
+              := concatenate!(line-properties(line), property)
+          end method;
     do-lines(set-property, interval);
   cleanup
     create-next-shell-section(buffer, section, window: window)
@@ -236,7 +236,7 @@ define method create-next-shell-section
   // Now create the next shell section
   let new-node
     = make-empty-section-node(buffer,
-			      section-class: shell-buffer-section-class(buffer));
+                              section-class: shell-buffer-section-class(buffer));
   add-node!(buffer, new-node);
   move-point!(interval-end-bp(new-node), window: window);
   queue-redisplay(window, $display-text, centering: 1)
@@ -276,13 +276,13 @@ define command activate-shell-input (frame)
       let mode :: <shell-mode> = buffer-major-mode(buffer);
       let (complete?, message) = shell-input-complete?(mode, buffer, section);
       if (complete?)
-	process-shell-input(mode, buffer, section, window: window);
+        process-shell-input(mode, buffer, section, window: window);
         buffer.%current-input := #f;
         frame-last-command-type(frame) := #"shell"
       else
-	if (message)
-	  command-error(message)
-	else
+        if (message)
+          command-error(message)
+        else
           do-insert-newline(frame);
           frame-last-command-type(frame) := #"insert"
         end
@@ -309,11 +309,11 @@ define command activate-shell-input-newline (frame)
       // or there is only trailing whitespace
       let end-bp = interval-end-bp(buffer);
       if (bp = end-bp
-	  | forward-over(bp, #[' ', '\t', '\n', '\f']) = end-bp)
-	// Ensure redisplay has already happened in case the input line gets
-	// a parse error
+          | forward-over(bp, #[' ', '\t', '\n', '\f']) = end-bp)
+        // Ensure redisplay has already happened in case the input line gets
+        // a parse error
         redisplay-window(window);
-	activate-shell-input(frame)
+        activate-shell-input(frame)
       else
         do-insert-newline(frame);
         frame-last-command-type(frame) := #"insert"
@@ -333,7 +333,7 @@ define method copy-previous-section
   let input     = line & get-property(line-properties(line), #"input");
   when (input)
     let interval = make-interval(interval-start-bp(last-node), interval-end-bp(last-node),
-				 in-order?: #t);
+                                 in-order?: #t);
     let bp = interval-end-bp(last-node);
     move-point!(bp);
     delete!(interval);
@@ -343,7 +343,7 @@ define method copy-previous-section
   end;
   frame-last-command-type(frame) := #"insert"
 end method copy-previous-section;
-  
+
 
 define command previous-shell-input (frame)
     "Yank the previous shell input line."
@@ -357,34 +357,34 @@ define command previous-shell-input (frame)
     // but don't wrap around more than once
     while (#t)
       node := case
-		node-previous(node) =>
-		  node-previous(node);
-		wrapped? =>
-		  command-error("The input history is empty");
-		otherwise => 
-		  wrapped? := #t;
-		  node-previous(last-node);
-	      end;
+                node-previous(node) =>
+                  node-previous(node);
+                wrapped? =>
+                  command-error("The input history is empty");
+                otherwise =>
+                  wrapped? := #t;
+                  node-previous(last-node);
+              end;
       if (node)
-	buffer.%current-input := node;
-	let section = node-section(node);
-	when (shell-section?(section))
-	  let line  = section & section-start-line(section);
-	  let input = line & get-property(line-properties(line), #"input");
-	  when (input)
-	    let interval = make-interval(interval-start-bp(last-node), interval-end-bp(last-node),
-					 in-order?: #t);
-	    let bp = interval-end-bp(last-node);
-	    move-point!(bp);
-	    delete!(interval);
-	    insert-moving!(bp, input);
-	    move-point!(bp);
-	    queue-redisplay(window, $display-text, centering: 1);
-	    break()
-	  end
-	end
+        buffer.%current-input := node;
+        let section = node-section(node);
+        when (shell-section?(section))
+          let line  = section & section-start-line(section);
+          let input = line & get-property(line-properties(line), #"input");
+          when (input)
+            let interval = make-interval(interval-start-bp(last-node), interval-end-bp(last-node),
+                                         in-order?: #t);
+            let bp = interval-end-bp(last-node);
+            move-point!(bp);
+            delete!(interval);
+            insert-moving!(bp, input);
+            move-point!(bp);
+            queue-redisplay(window, $display-text, centering: 1);
+            break()
+          end
+        end
       else
-	command-error("The input history is empty")
+        command-error("The input history is empty")
       end
     end
   end;
@@ -402,34 +402,34 @@ define command next-shell-input (frame)
   block (break)
     while (#t)
       node := case
-		node-next(node) =>
-		  node-next(node);
-		wrapped? =>
-		  command-error("The input history is empty");
-		otherwise => 
-		  wrapped? := #t;
-		  node-next(first-node);
-	      end;
+                node-next(node) =>
+                  node-next(node);
+                wrapped? =>
+                  command-error("The input history is empty");
+                otherwise =>
+                  wrapped? := #t;
+                  node-next(first-node);
+              end;
       if (node)
-	buffer.%current-input := node;
-	let section = node-section(node);
-	when (shell-section?(section))
-	  let line  = section & section-start-line(section);
-	  let input = line & get-property(line-properties(line), #"input");
-	  when (input)
-	    let interval = make-interval(interval-start-bp(last-node), interval-end-bp(last-node),
-					 in-order?: #t);
-	    let bp = interval-end-bp(last-node);
-	    move-point!(bp);
-	    delete!(interval);
-	    insert-moving!(bp, input);
-	    move-point!(bp);
-	    queue-redisplay(window, $display-text, centering: 1);
-	    break()
-	  end
-	end
+        buffer.%current-input := node;
+        let section = node-section(node);
+        when (shell-section?(section))
+          let line  = section & section-start-line(section);
+          let input = line & get-property(line-properties(line), #"input");
+          when (input)
+            let interval = make-interval(interval-start-bp(last-node), interval-end-bp(last-node),
+                                         in-order?: #t);
+            let bp = interval-end-bp(last-node);
+            move-point!(bp);
+            delete!(interval);
+            insert-moving!(bp, input);
+            move-point!(bp);
+            queue-redisplay(window, $display-text, centering: 1);
+            break()
+          end
+        end
       else
-	command-error("The input history is empty")
+        command-error("The input history is empty")
       end
     end
   end;
@@ -451,18 +451,18 @@ define command trim-shell-output-history (frame)
       let last-node  = buffer-end-node(buffer);
       // If both BPs are in the last node, it's just a simple cut operation
       when (start-node == last-node & end-node == last-node)
-	return(cut-region(frame))
+        return(cut-region(frame))
       end;
       // Otherwise, "trim" the output history
       when (end-node == last-node)
-	end-node := node-previous(last-node);
-	when (~end-node)
-	  command-error("You can't delete the only remaining input section")
-	end
+        end-node := node-previous(last-node);
+        when (~end-node)
+          command-error("You can't delete the only remaining input section")
+        end
       end;
       move-point!(section-start-line(node-section(node-next(end-node))));
       let interval = make-interval(interval-start-bp(start-node), interval-end-bp(end-node),
-				   in-order?: #t);
+                                   in-order?: #t);
       kill!(interval);
       queue-redisplay(window, $display-all)
     else

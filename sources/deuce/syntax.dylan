@@ -22,10 +22,10 @@ define constant $largest-byte-character-code :: <integer> = 255;
 
 // A syntax table maps from a character code to a lexical syntax code
 define sealed class <syntax-table> (<object>)
-  // A vector that's just big enough to hold the byte characters  
+  // A vector that's just big enough to hold the byte characters
   sealed slot %syntax-table :: <simple-object-vector>
     = make(<simple-object-vector>,
-	   size: $largest-byte-character-code + 1, fill: -1);
+           size: $largest-byte-character-code + 1, fill: -1);
 end class <syntax-table>;
 
 define sealed domain make (singleton(<syntax-table>));
@@ -69,12 +69,12 @@ end method character-syntax-setter;
 
 
 // Word syntax constants
-define constant $word-alphabetic = 0;	// the char is alphanumeric
-define constant $word-delimiter  = 1;	// the char is a delimiter
+define constant $word-alphabetic = 0;        // the char is alphanumeric
+define constant $word-delimiter  = 1;        // the char is a delimiter
 
 // Word syntax constants
-define constant $atom-alphabetic = 0;	// the char is alphanumeric
-define constant $atom-delimiter  = 1;	// the char is a delimiter
+define constant $atom-alphabetic = 0;        // the char is alphanumeric
+define constant $atom-delimiter  = 1;        // the char is a delimiter
 
 assert($word-alphabetic == $atom-alphabetic & $word-delimiter == $atom-delimiter,
        "Atom syntax constants inconsistent");
@@ -82,11 +82,11 @@ assert($word-alphabetic == $atom-alphabetic & $word-delimiter == $atom-delimiter
 // List syntax constants
 define constant $list-alphabetic   = 0;
 define constant $list-delimiter    = 1;
-define constant $list-escape       = 2;	// "quotes" the next character
-define constant $list-single-quote = 3;	// a single quote, might or might not act like a double quote
-define constant $list-double-quote = 4;	// a double quote, starts a grouping terminated by another double quote
-define constant $list-open         = 5;	// an open parenthesis or bracket
-define constant $list-close        = 6;	// an close parenthesis or bracket
+define constant $list-escape       = 2;        // "quotes" the next character
+define constant $list-single-quote = 3;        // a single quote, might or might not act like a double quote
+define constant $list-double-quote = 4;        // a double quote, starts a grouping terminated by another double quote
+define constant $list-open         = 5;        // an open parenthesis or bracket
+define constant $list-close        = 6;        // an close parenthesis or bracket
 
 assert($word-alphabetic == $list-alphabetic & $word-delimiter == $list-delimiter,
        "List syntax constants inconsistent");
@@ -137,7 +137,7 @@ define function initialize-syntax-tables () => ()
   copy-syntax-table-into!($default-atom-syntax, $default-list-syntax);
   let table = $default-list-syntax.%syntax-table;
   table[as(<integer>, '"')]  := $list-double-quote;
-  table[as(<integer>, '\'')] := $list-double-quote;	// in Dylan, this acts like a double quote
+  table[as(<integer>, '\'')] := $list-double-quote;        // in Dylan, this acts like a double quote
   table[as(<integer>, '\\')] := $list-escape;
   table[as(<integer>, '#')]  := $list-single-quote;
   table[as(<integer>, '(')]  := $list-open;

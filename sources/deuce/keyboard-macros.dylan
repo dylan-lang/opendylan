@@ -77,23 +77,23 @@ define command execute-keyboard-macro (frame)
       command-error("You can't execute a macro while you are defining it");
     otherwise =>
       block ()
-	let n = frame-numeric-arg(frame);
-	for (i :: <integer> from 0 below n)
-	  do-execute-keyboard-macro(frame, kbdmac)
-	end
+        let n = frame-numeric-arg(frame);
+        for (i :: <integer> from 0 below n)
+          do-execute-keyboard-macro(frame, kbdmac)
+        end
       exception (e :: <command-error>)
-	when (command-error-format-string(e))
-	  apply(display-error-message,
-		command-error-window(e),
-		command-error-format-string(e), command-error-format-arguments(e))
-	end;
-	#f
+        when (command-error-format-string(e))
+          apply(display-error-message,
+                command-error-window(e),
+                command-error-format-string(e), command-error-format-arguments(e))
+        end;
+        #f
       end;
       let section = line-section(bp-line(window-point(window)));
       let history = buffer & buffer-undo-history(buffer, section: section);
       when (history)
-	let (n-undo, n-redo) = undo-history-state(history);
-	window-note-undo/redo(window, n-undo ~= 0, n-redo ~= 0)
+        let (n-undo, n-redo) = undo-history-state(history);
+        window-note-undo/redo(window, n-undo ~= 0, n-redo ~= 0)
       end;
   end
 end command execute-keyboard-macro;
@@ -121,8 +121,8 @@ define method do-execute-keyboard-macro
       let mode = buffer & buffer-major-mode(buffer);
       let bp   = window-point(window);
       window-goal-x-position(window)
-	:= if (mode) index->position(bp-line(bp), mode, window, bp-index(bp))
-	   else 0 end
+        := if (mode) index->position(bp-line(bp), mode, window, bp-index(bp))
+           else 0 end
     end
   end
 end method do-execute-keyboard-macro;

@@ -211,19 +211,19 @@ end method gesture-matches?;
 
 
 define variable $menu-gesture :: <gesture>
-    = make(<gesture>, 
-	   button: $right-button, modifiers: 0, event-type: #"press");
+    = make(<gesture>,
+           button: $right-button, modifiers: 0, event-type: #"press");
 
 define variable $move-gesture :: <gesture>
     = make(<gesture>,
-	   button: $left-button, modifiers: 0, event-type: #"press");
+           button: $left-button, modifiers: 0, event-type: #"press");
 define variable $copy-gesture :: <gesture>
     = make(<gesture>,
-	   button: $left-button, modifiers: $control-key, event-type: #"press");
+           button: $left-button, modifiers: $control-key, event-type: #"press");
 
 define variable $edit-gesture :: <gesture>
     = make(<gesture>,
-	   button: $left-button, modifiers: $control-key + $shift-key, event-type: #"press");
+           button: $left-button, modifiers: $control-key + $shift-key, event-type: #"press");
 
 
 // The gesture is a <gesture>, a character, or a two-element sequence of
@@ -242,31 +242,31 @@ define method decode-gesture
       let modifiers = gesture[1];
       let modifier-state = 0;
       if (instance?(modifiers, <integer>))
-	modifier-state := modifiers
+        modifier-state := modifiers
       else
         if (instance?(keysym, <character>))
-	  when (member?(#"shift", modifiers))
-	    keysym := as-uppercase(keysym)
-	  end
+          when (member?(#"shift", modifiers))
+            keysym := as-uppercase(keysym)
+          end
         else
           when (member?(#"shift", modifiers))
             modifier-state := logior(modifier-state, $shift-key)
           end
         end;
-	when (member?(#"control", modifiers))
-	  modifier-state := logior(modifier-state, $control-key)
-	end;
-	when (member?(#"meta", modifiers) | member?(#"alt", modifiers))
-	  modifier-state := logior(modifier-state, $meta-key)
-	end;
-	when (member?(#"super", modifiers) | member?(#"option", modifiers))
-	  modifier-state := logior(modifier-state, $super-key)
-	end
+        when (member?(#"control", modifiers))
+          modifier-state := logior(modifier-state, $control-key)
+        end;
+        when (member?(#"meta", modifiers) | member?(#"alt", modifiers))
+          modifier-state := logior(modifier-state, $meta-key)
+        end;
+        when (member?(#"super", modifiers) | member?(#"option", modifiers))
+          modifier-state := logior(modifier-state, $super-key)
+        end
       end;
       if (instance?(keysym, <character>))
-	values(as(<integer>, keysym), modifier-state)
+        values(as(<integer>, keysym), modifier-state)
       else
-	values(keysym, modifier-state)
+        values(keysym, modifier-state)
       end;
   end
 end method decode-gesture;
@@ -306,11 +306,11 @@ define sealed method copy-command-set
     (command-set :: <standard-command-set>)
  => (new-command-set :: <standard-command-set>)
   copy-command-set-into!(command-set,
-			 make(<command-set>,
-			      standard-command-table:  make(<command-table>),
-			      control-X-command-table: make(<command-table>),
-			      control-C-command-table: make(<command-table>),
-			      escape-command-table:    make(<command-table>)))
+                         make(<command-set>,
+                              standard-command-table:  make(<command-table>),
+                              control-X-command-table: make(<command-table>),
+                              control-C-command-table: make(<command-table>),
+                              escape-command-table:    make(<command-table>)))
 end method copy-command-set;
 
 define sealed method copy-command-set-into!
@@ -318,23 +318,23 @@ define sealed method copy-command-set-into!
  => (into :: <standard-command-set>)
   command-set-name(into) := command-set-name(command-set);
   copy-command-table-into!(standard-command-table(command-set),
-			   standard-command-table(into));
+                           standard-command-table(into));
   copy-command-table-into!(control-X-command-table(command-set),
-			   control-X-command-table(into));
+                           control-X-command-table(into));
   copy-command-table-into!(control-C-command-table(command-set),
-			   control-C-command-table(into));
+                           control-C-command-table(into));
   copy-command-table-into!(escape-command-table(command-set),
-			   escape-command-table(into));
+                           escape-command-table(into));
   //--- Kludgy way to fix up the prefix bindings...
   select (command-set-name(into))
     #"emacs" =>
       let command-table = standard-command-table(into);
       add-command!(command-table, vector('x', $control-key),
-		   control-X-command-table(into));
+                   control-X-command-table(into));
       add-command!(command-table, vector('c', $control-key),
-		   control-C-command-table(into));
+                   control-C-command-table(into));
       add-command!(command-table, vector(#"escape", 0),
-		   escape-command-table(into));
+                   escape-command-table(into));
     #"windows" =>
       #f;
     otherwise =>

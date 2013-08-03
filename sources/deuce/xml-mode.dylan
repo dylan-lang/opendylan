@@ -57,59 +57,59 @@ define method initialize-major-mode
     #"emacs" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector('f', control+meta, forward-expression),
-		    vector('b', control+meta, backward-expression),
-		    vector('u', control+meta, up-expression),
-		    vector('d', control+meta, down-expression),
-		    vector('a', control+meta, start-of-definition),
-		    vector('e', control+meta, end-of-definition),
-		    vector(#"right", meta,    forward-expression),
-		    vector(#"left",  meta,    backward-expression),
-		    vector(#"up",    meta,    up-expression),
-		    vector(#"down",  meta,    down-expression), 
-		    vector(#"prior", meta,    start-of-definition), 
-		    vector(#"next",  meta,    end-of-definition),
-		    vector(#"delete",    control+meta, delete-expression),
-		    vector(#"backspace", control+meta, rubout-expression),
-		    vector('k', control+meta, delete-expression),
-		    vector('t', control+meta, transpose-expressions),
-		    vector(';',    control,    insert-comment),
-		    vector(#"tab", control,    insert-tab),
-		    vector(#"tab", nothing,    indent-line),
-		    vector('\\', control+meta, indent-region),
-		    vector('q',  control+meta, indent-expression),
-		    vector(')', meta,         xml-insert-close-element),
-		    vector('i', control+meta, complete-name));
+                    vector('f', control+meta, forward-expression),
+                    vector('b', control+meta, backward-expression),
+                    vector('u', control+meta, up-expression),
+                    vector('d', control+meta, down-expression),
+                    vector('a', control+meta, start-of-definition),
+                    vector('e', control+meta, end-of-definition),
+                    vector(#"right", meta,    forward-expression),
+                    vector(#"left",  meta,    backward-expression),
+                    vector(#"up",    meta,    up-expression),
+                    vector(#"down",  meta,    down-expression),
+                    vector(#"prior", meta,    start-of-definition),
+                    vector(#"next",  meta,    end-of-definition),
+                    vector(#"delete",    control+meta, delete-expression),
+                    vector(#"backspace", control+meta, rubout-expression),
+                    vector('k', control+meta, delete-expression),
+                    vector('t', control+meta, transpose-expressions),
+                    vector(';',    control,    insert-comment),
+                    vector(#"tab", control,    insert-tab),
+                    vector(#"tab", nothing,    indent-line),
+                    vector('\\', control+meta, indent-region),
+                    vector('q',  control+meta, indent-expression),
+                    vector(')', meta,         xml-insert-close-element),
+                    vector('i', control+meta, complete-name));
       let command-table = control-X-command-table(command-set);
       add-commands!(command-table,
-		    vector(';', control,      comment-region));
+                    vector(';', control,      comment-region));
       let command-table = escape-command-table(command-set);
       add-commands!(command-table,
-		    vector('f', control,      forward-expression),
-		    vector('b', control,      backward-expression),
-		    vector('u', control,      up-expression),
-		    vector('d', control,      down-expression),
-		    vector('a', control,      start-of-definition),
-		    vector('e', control,      end-of-definition),
-		    vector(#"delete",    control, delete-expression),
-		    vector(#"backspace", control, rubout-expression),
-		    vector('k', control,      delete-expression),
-		    vector('t', control,      transpose-expressions),
-		    vector('\\', control,     indent-region),
-		    vector('q',  control,     indent-expression),
-		    vector(')', nothing,      xml-insert-close-element),
-		    vector('i', control,      complete-name));
+                    vector('f', control,      forward-expression),
+                    vector('b', control,      backward-expression),
+                    vector('u', control,      up-expression),
+                    vector('d', control,      down-expression),
+                    vector('a', control,      start-of-definition),
+                    vector('e', control,      end-of-definition),
+                    vector(#"delete",    control, delete-expression),
+                    vector(#"backspace", control, rubout-expression),
+                    vector('k', control,      delete-expression),
+                    vector('t', control,      transpose-expressions),
+                    vector('\\', control,     indent-region),
+                    vector('q',  control,     indent-expression),
+                    vector(')', nothing,      xml-insert-close-element),
+                    vector('i', control,      complete-name));
     #"windows" =>
       let command-table = standard-command-table(command-set);
       add-commands!(command-table,
-		    vector(#"right", meta,    forward-expression),
-		    vector(#"left",  meta,    backward-expression),
-		    vector(#"up",    meta,    up-expression),
-		    vector(#"down",  meta,    down-expression), 
-		    vector(#"prior", meta,    start-of-definition), 
-		    vector(#"next",  meta,    end-of-definition),
-		    vector(#"tab",   nothing, indent-region),
-		    vector('i',      control, insert-tab));
+                    vector(#"right", meta,    forward-expression),
+                    vector(#"left",  meta,    backward-expression),
+                    vector(#"up",    meta,    up-expression),
+                    vector(#"down",  meta,    down-expression),
+                    vector(#"prior", meta,    start-of-definition),
+                    vector(#"next",  meta,    end-of-definition),
+                    vector(#"tab",   nothing, indent-region),
+                    vector('i',      control, insert-tab));
     otherwise =>
       #[];
   end;
@@ -164,15 +164,15 @@ define method do-atom-under-bp
  => (sbp :: <basic-bp>, ebp :: <basic-bp>)
   let node = bp-node(bp) | bp-buffer(bp);
   let sbp  = if (atom-syntax(bp-character-before(bp)) == $atom-delimiter)
-	       forward-over(bp, #[' ', '\t', '\f'], interval: node)
-	     else
-	       move-over-atoms(bp, -1, interval: node)
-	     end;
+               forward-over(bp, #[' ', '\t', '\f'], interval: node)
+             else
+               move-over-atoms(bp, -1, interval: node)
+             end;
   let ebp  = move-over-atoms(sbp, 1, interval: node);
   // Some characters are magic at the beginning of an atom
   // Skip them, unless the user is right on top of one
   when (bp ~= sbp
-	& member?(bp-character(sbp), #['+', '-', '~', '?', '/']))
+        & member?(bp-character(sbp), #['+', '-', '~', '?', '/']))
     increment-bp!(sbp)
   end;
   values(sbp, ebp)
@@ -209,38 +209,38 @@ define sealed method move-over-xml-tags
     unless (n = 0)
       let reverse? = (n < 0);
       let limit :: <basic-bp>
-	= if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
+        = if (reverse?) interval-start-bp(interval) else interval-end-bp(interval) end;
       local method true (ch)
-	      ignore(ch);
-	      values(#t, #f)
-	    end method,
-	    method non-whitespace? (ch :: <byte-character>)
-	      if (any-whitespace-char?(ch)) values(#f, #f)
-	      else values(#t, #t) end
-	    end method;
+              ignore(ch);
+              values(#t, #f)
+            end method,
+            method non-whitespace? (ch :: <byte-character>)
+              if (any-whitespace-char?(ch)) values(#f, #f)
+              else values(#t, #t) end
+            end method;
       for (i :: <integer> from 0 below abs(n))
-	when (bp = limit)
+        when (bp = limit)
           return(fixup? & limit)
         end;
-	move-forward-or-backward!(bp, non-whitespace?, reverse?, interval: interval);
-	unless (bp = limit)
-	  let start-char
-	    = if (reverse?) bp-character-before(bp) else bp-character(bp) end;
-	  let syntax = list-syntax(start-char);
-	  let nbp
-	    = case
-		syntax == $list-double-quote | syntax == $list-single-quote =>
-		  move-over-matching-thing!(bp, start-char, reverse?, interval: interval);
-		syntax == (if (reverse?) $list-close else $list-open end) =>
-		  move-over-balanced-thing!(bp, start-char, reverse?, interval: interval);
-		otherwise =>
-		  move-over-atom!(bp, reverse?, interval: interval);
-	      end;
-	  nbp | return(fixup? & limit)
-	end
+        move-forward-or-backward!(bp, non-whitespace?, reverse?, interval: interval);
+        unless (bp = limit)
+          let start-char
+            = if (reverse?) bp-character-before(bp) else bp-character(bp) end;
+          let syntax = list-syntax(start-char);
+          let nbp
+            = case
+                syntax == $list-double-quote | syntax == $list-single-quote =>
+                  move-over-matching-thing!(bp, start-char, reverse?, interval: interval);
+                syntax == (if (reverse?) $list-close else $list-open end) =>
+                  move-over-balanced-thing!(bp, start-char, reverse?, interval: interval);
+                otherwise =>
+                  move-over-atom!(bp, reverse?, interval: interval);
+              end;
+          nbp | return(fixup? & limit)
+        end
       end
     end;
-    bp      
+    bp
   end
 end method move-over-xml-tags;
 
@@ -303,18 +303,18 @@ define method do-comment-region
   let first-line = bp-line(interval-start-bp(region));
   let last-line  = bp-line(interval-end-bp(region));
   local method comment (line :: <basic-line>, si, ei, last?)
-	  ignore(last?);
+          ignore(last?);
           when (line == first-line)
-	    insert-into-line(line, si, "<!-- ")
-	  end;
+            insert-into-line(line, si, "<!-- ")
+          end;
           when (line == last-line)
-	    insert-into-line(line, ei, " -->")
-	  end;
-	end method,
-	method uncomment (line :: <basic-line>, si, ei, last?)
-	  ignore(last?);
-	  //---*** How to do this?
-	end method;
+            insert-into-line(line, ei, " -->")
+          end;
+        end method,
+        method uncomment (line :: <basic-line>, si, ei, last?)
+          ignore(last?);
+          //---*** How to do this?
+        end method;
   do-lines(if (comment?) comment else uncomment end, region)
 end method do-comment-region;
 
@@ -336,19 +336,19 @@ define sealed method indent-xml-line
   let bp1 = line-start(line);
   let bp2 = forward-over(bp1, #[' ', '\t']);
   local method insert-indentation!
-	    (line :: <basic-line>, indentation :: <integer>)
-	 => (bp :: <basic-bp>, nchars :: <integer>)
-	  if (text-line?(line))
-	    let interval = make-interval(bp1, bp2, in-order?: #t);
-	    let old-n    = count-characters(interval);
-	    let new-n    = max(indentation, 0);
-	    delete!(interval);
-	    let spaces = make(<byte-string>, size: new-n, fill: ' ');
-	    values(insert-moving!(bp1, spaces), new-n - old-n)
-	  else
-	    values(bp1, 0)
-	  end
-	end method;
+            (line :: <basic-line>, indentation :: <integer>)
+         => (bp :: <basic-bp>, nchars :: <integer>)
+          if (text-line?(line))
+            let interval = make-interval(bp1, bp2, in-order?: #t);
+            let old-n    = count-characters(interval);
+            let new-n    = max(indentation, 0);
+            delete!(interval);
+            let spaces = make(<byte-string>, size: new-n, fill: ' ');
+            values(insert-moving!(bp1, spaces), new-n - old-n)
+          else
+            values(bp1, 0)
+          end
+        end method;
   let (old-indentation, new-indentation)
     = xml-line-indentation(mode, line, definition-type: definition-type);
   let dx = new-indentation - old-indentation;
@@ -368,15 +368,15 @@ define sealed method xml-line-indentation
   let margin = line-margin(line, mode, window);
   let space-width = string-size(window, " ");
   local method line-indentation
-	    (sbp :: <basic-bp>) => (indentation :: <integer>)
-	  if (text-line?(bp-line(sbp)))
-	    let indentation
-	      = index->position(bp-line(sbp), mode, window, bp-index(sbp)) - margin;
-	    floor/(indentation, space-width)
-	  else
-	    0
-	  end
-	end method;
+            (sbp :: <basic-bp>) => (indentation :: <integer>)
+          if (text-line?(bp-line(sbp)))
+            let indentation
+              = index->position(bp-line(sbp), mode, window, bp-index(sbp)) - margin;
+            floor/(indentation, space-width)
+          else
+            0
+          end
+        end method;
   let section  = line-section(line);
   let this-bp  = line-start(line);
   let this-sbp = forward-over(this-bp, #[' ', '\t']);

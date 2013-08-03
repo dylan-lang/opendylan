@@ -14,6 +14,6 @@ define library deuce
   use system;
 
   export deuce-commands,
-	 deuce,
-	 deuce-internals;
+         deuce,
+         deuce-internals;
 end library deuce;

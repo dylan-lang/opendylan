@@ -133,8 +133,8 @@ define open abstract class <basic-window> (<window>)
   sealed slot window-default-italic-font :: <font> = $default-italic-font,
     init-keyword: italic-font:;
   // Caches for the window back-end
-  sealed slot window-color = #f;	// <color> or foreground/background
-  sealed slot window-font  = #f;	// <font>
+  sealed slot window-color = #f;        // <color> or foreground/background
+  sealed slot window-font  = #f;        // <font>
 end class <basic-window>;
 
 define method initialize
@@ -152,10 +152,10 @@ define method window-line-number
   | begin
       let line = window-initial-line(window);
       when (line)
-	let index = bp->line-index(line-start(line),
+        let index = bp->line-index(line-start(line),
                                    skip-test: window.%line-invisible-test);
-	window-line-number(window) := index;
-	index
+        window-line-number(window) := index;
+        index
       end
     end
 end method window-line-number;
@@ -167,11 +167,11 @@ define method window-total-lines
   | begin
       let buffer = window-buffer(window);
       when (buffer)
-	let total = count-lines(buffer,
+        let total = count-lines(buffer,
                                 skip-test: window.%line-invisible-test,
-				cache-result?: #t);
-	window-total-lines(window) := total;
-	total
+                                cache-result?: #t);
+        window-total-lines(window) := total;
+        total
       end
     end
 end method window-total-lines;
@@ -274,13 +274,13 @@ define method window-note-policy-changed
   window-note-search-string(window, editor-search-string(editor));
   // If necessary, update the window's "title-bar".
   when (~old-policy
-	| show-path-in-title?(old-policy) ~== show-path-in-title?(new-policy))
+        | show-path-in-title?(old-policy) ~== show-path-in-title?(new-policy))
     display-buffer-name(window, window-buffer(window))
   end;
   // Update the font and redisplay, if it changed.
   when (~old-policy
-	| default-font(new-policy) ~= default-font(old-policy)
-	| show-section-separators?(new-policy) ~= show-section-separators?(old-policy))
+        | default-font(new-policy) ~= default-font(old-policy)
+        | show-section-separators?(new-policy) ~= show-section-separators?(old-policy))
     set-default-font(window, default-font(new-policy));
     // Don't redisplay immediately in case previous methods are also going
     // to do things requiring redisplay; leave redisplay to the caller
@@ -407,7 +407,7 @@ define protocol <<window-back-end>> ()
   function save-buffers-dialog
     (window :: <window>,
      #key exit-label :: false-or(<string>), reason :: false-or(<string>),
-	  buffers :: false-or(<sequence>), default-buffers :: false-or(<sequence>))
+          buffers :: false-or(<sequence>), default-buffers :: false-or(<sequence>))
  => (buffers :: type-union(<sequence>, singleton(#f), singleton(#"cancel")),
      no-buffers? :: <boolean>);
   function choose-buffer-dialog
@@ -435,11 +435,11 @@ define protocol <<window-back-end>> ()
   function string-search-dialog
     (window :: <window>,
      #key string,
-	  reverse? :: <boolean>, case-sensitive? :: <boolean>, whole-word? :: <boolean>) => ();
+          reverse? :: <boolean>, case-sensitive? :: <boolean>, whole-word? :: <boolean>) => ();
   function string-replace-dialog
     (window :: <window>,
      #key string, replace,
-	  reverse? :: <boolean>, case-sensitive? :: <boolean>, whole-word? :: <boolean>) => ();
+          reverse? :: <boolean>, case-sensitive? :: <boolean>, whole-word? :: <boolean>) => ();
   function configuration-dialog
     (window :: <window>) => (policy :: false-or(<editor-policy>));
   // Clipboard
@@ -465,8 +465,8 @@ end protocol <<window-back-end>>;
 define macro with-busy-cursor
   { with-busy-cursor (?window:expression) ?:body end }
     => { begin
-	   let with-busy-cursor-body = method () ?body end;
-	   do-with-busy-cursor(?window, with-busy-cursor-body)
+           let with-busy-cursor-body = method () ?body end;
+           do-with-busy-cursor(?window, with-busy-cursor-body)
          end }
 end macro with-busy-cursor;
 
@@ -529,13 +529,13 @@ define method set-default-font
   // Update all of the window's fonts
   window-default-font(window)
     := make-font(font-family(font), font-name(font), font-weight(font),
-		 font-slant(font), font-size(font));
+                 font-slant(font), font-size(font));
   window-default-bold-font(window)
     := make-font(font-family(font), font-name(font), #"bold",
-		 font-slant(font), font-size(font));
+                 font-slant(font), font-size(font));
   window-default-italic-font(window)
     := make-font(font-family(font), font-name(font), font-weight(font),
-		 #"italic", font-size(font));
+                 #"italic", font-size(font));
   // Update the height of the caret
   update-caret-from-font(window);
 end method set-default-font;
@@ -548,9 +548,9 @@ define open generic set-default-font-size
 define method set-default-font-size
     (window :: <basic-window>, font-size) => ()
   local method merge-size (font :: <font>, size)
-	  make-font(font-family(font), font-name(font), font-weight(font),
-		    font-slant(font), size)
-	end method;
+          make-font(font-family(font), font-name(font), font-weight(font),
+                    font-slant(font), size)
+        end method;
   // Update all of the window's fonts
   window-default-font(window)
     := merge-size(window-default-font(window), font-size);
@@ -579,7 +579,7 @@ define constant $profile-point        :: <integer> =  7;
 define constant $current-location     :: <integer> =  8;
 define constant $prompt-arrow         :: <integer> =  9;
 define constant $values-arrow         :: <integer> = 10;
-define constant $warning	      :: <integer> = 11;
+define constant $warning              :: <integer> = 11;
 define constant $serious-warning      :: <integer> = 12;
 
 
@@ -598,12 +598,12 @@ define sealed method push-point-pdl!
   if (size(pdl) = $point-pdl-size)
     kill-bp!(last(pdl));
     let last-pair = begin
-		      let last-pair = pdl;
-		      for (i :: <integer> from 0 below size(pdl) - 3)
-			last-pair := tail(last-pair)
-		      end;
-		      last-pair
-		    end;
+                      let last-pair = pdl;
+                      for (i :: <integer> from 0 below size(pdl) - 3)
+                        last-pair := tail(last-pair)
+                      end;
+                      last-pair
+                    end;
     push!(window-point-pdl(window), bp);
     tail(last-pair) := list(head(tail(last-pair)))
   else
@@ -649,12 +649,12 @@ define sealed method select-buffer
   let old-entry  = find-value(buffers, method (s) selection-buffer(s) == old-buffer end);
   let old-mode   = old-buffer & buffer-major-mode(old-buffer);
   // Update the buffer history
-  unless (buffer == window-buffer(window))		// maybe avoid some work
+  unless (buffer == window-buffer(window))                // maybe avoid some work
     when (new-entry)
       remove!(buffers, new-entry)
     end;
     when (old-entry)
-      let old-entry :: <buffer-selection> = old-entry;	// force tighter type...
+      let old-entry :: <buffer-selection> = old-entry;        // force tighter type...
       selection-point(old-entry) := window-point(window);
       selection-mark(old-entry)  := ~window-temporary-mark?(window) & window-mark(window);
       selection-initial-line(old-entry)    := window-initial-line(window);
@@ -663,10 +663,10 @@ define sealed method select-buffer
     let new-entry :: <buffer-selection>
       = new-entry | make(<buffer-selection>, buffer: new-buffer);
     initialize-redisplay-for-buffer(window, new-buffer,
-				    point:  selection-point(new-entry),
-				    mark:   selection-mark(new-entry),
-				    line:   selection-initial-line(new-entry),
-				    goal-x: selection-goal-x-position(new-entry));
+                                    point:  selection-point(new-entry),
+                                    mark:   selection-mark(new-entry),
+                                    line:   selection-initial-line(new-entry),
+                                    goal-x: selection-goal-x-position(new-entry));
     set-scroll-position(window, 0, #f);
     push(buffers, new-entry)
   end;

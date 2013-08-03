@@ -22,5 +22,5 @@ define library standalone-deuce
   use duim-deuce;
 
   export standalone-deuce,
-	 standalone-deuce-internals;
+         standalone-deuce-internals;
 end library standalone-deuce;

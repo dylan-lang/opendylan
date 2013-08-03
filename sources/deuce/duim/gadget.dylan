@@ -66,8 +66,8 @@ define sealed method gadget-text-setter
   with-editor-state-bound (buffer = window)
     // "Read" the new contents into the buffer
     let section = make(<section>,
-		       container: #f,
-		       start-line: #f, end-line: #f);
+                       container: #f,
+                       start-line: #f, end-line: #f);
     let stream = make(<string-stream>, contents: value);
     read-buffer-contents-from-stream(buffer, section, stream);
     close(stream);
@@ -111,20 +111,20 @@ define sealed method text-selection-setter
   with-editor-state-bound (buffer = window)
     select (range)
       #t =>
-	let bp1 = interval-end-bp(buffer);
-	let bp2 = interval-start-bp(buffer);
-	move-point!(bp1, window: window);
-	move-mark!(bp2, window: window);
-	queue-redisplay(window, $display-point, centering: -1);
+        let bp1 = interval-end-bp(buffer);
+        let bp2 = interval-start-bp(buffer);
+        move-point!(bp1, window: window);
+        move-mark!(bp2, window: window);
+        queue-redisplay(window, $display-point, centering: -1);
       #f =>
-	clear-mark!(window: window);
-	queue-redisplay(window, $display-region);
+        clear-mark!(window: window);
+        queue-redisplay(window, $display-region);
       otherwise =>
-	let bp1 = char-index->bp(buffer, text-range-end(range));
-	let bp2 = char-index->bp(buffer, text-range-start(range));
-	move-point!(bp1, window: window);
-	move-mark!(bp2, window: window);
-	queue-redisplay(window, $display-point, centering: 0);
+        let bp1 = char-index->bp(buffer, text-range-end(range));
+        let bp2 = char-index->bp(buffer, text-range-start(range));
+        move-point!(bp1, window: window);
+        move-mark!(bp2, window: window);
+        queue-redisplay(window, $display-point, centering: 0);
     end;
     redisplay-window(window);
     range
@@ -154,7 +154,7 @@ define sealed method selected-text-setter
       let interval = make-interval(bp1, bp2);
       let bp = delete!(interval);
       when (string)
-	insert-moving!(bp, string)
+        insert-moving!(bp, string)
       end;
       clear-mark!(window: window);
       move-point!(bp, window: window);
@@ -214,7 +214,7 @@ define sealed method text-caret-position-setter
       move-point!(bp, window: window);
       queue-redisplay(window, $display-point, centering: 0);
       when (sheet-mapped?(window))
-	redisplay-window(window)
+        redisplay-window(window)
       end
     end;
     index
@@ -307,7 +307,7 @@ define sealed method text-range->interval
 end method text-range->interval;
 
 
-define sealed method find-text 
+define sealed method find-text
     (window :: <deuce-pane>, string :: <byte-string>) => (index :: false-or(<integer>))
   with-editor-state-bound (window)
     //---*** Do this

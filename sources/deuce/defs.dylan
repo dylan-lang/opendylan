@@ -71,10 +71,10 @@ define inline function primitive-position
         end;
     without-bounds-checks
       for (i :: <integer> = _start then i + increment,
-	   until: i = _end)
-	when (test(item, sequence[i]))
-	  return(i)
-	end
+           until: i = _end)
+        when (test(item, sequence[i]))
+          return(i)
+        end
       end
     end;
     #f
@@ -87,7 +87,7 @@ define method position
           start: _start :: <integer> = 0, end: _end :: <integer> = size(sequence), from-end?)
  => (index :: false-or(<integer>))
   primitive-position(sequence, item,
-		     test: test, start: _start, end: _end, from-end?: from-end?)
+                     test: test, start: _start, end: _end, from-end?: from-end?)
 end method position;
 
 define sealed method position
@@ -96,7 +96,7 @@ define sealed method position
           start: _start :: <integer> = 0, end: _end :: <integer> = size(vector), from-end?)
  => (index :: false-or(<integer>))
   primitive-position(vector, item,
-		     test: test, start: _start, end: _end, from-end?: from-end?)
+                     test: test, start: _start, end: _end, from-end?: from-end?)
 end method position;
 
 define sealed method position
@@ -105,7 +105,7 @@ define sealed method position
           start: _start :: <integer> = 0, end: _end :: <integer> = size(vector), from-end?)
  => (index :: false-or(<integer>))
   primitive-position(vector, item,
-		     test: test, start: _start, end: _end, from-end?: from-end?)
+                     test: test, start: _start, end: _end, from-end?: from-end?)
 end method position;
 
 define sealed method position
@@ -114,7 +114,7 @@ define sealed method position
           start: _start :: <integer> = 0, end: _end :: <integer> = size(string), from-end?)
  => (index :: false-or(<integer>))
   primitive-position(string, item,
-		     test: test, start: _start, end: _end, from-end?: from-end?)
+                     test: test, start: _start, end: _end, from-end?: from-end?)
 end method position;
 
 
@@ -132,10 +132,10 @@ define inline function primitive-position-if
         end;
     without-bounds-checks
       for (i :: <integer> = _start then i + increment,
-	   until: i = _end)
-	when (predicate(sequence[i]))
-	  return(i)
-	end
+           until: i = _end)
+        when (predicate(sequence[i]))
+          return(i)
+        end
       end
     end;
     #f
@@ -147,7 +147,7 @@ define method position-if
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(sequence), from-end?)
  => (index :: false-or(<integer>))
   primitive-position-if(sequence, predicate,
-			start: _start, end: _end, from-end?: from-end?)
+                        start: _start, end: _end, from-end?: from-end?)
 end method position-if;
 
 define sealed method position-if
@@ -155,7 +155,7 @@ define sealed method position-if
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(vector), from-end?)
  => (index :: false-or(<integer>))
   primitive-position-if(vector, predicate,
-			start: _start, end: _end, from-end?: from-end?)
+                        start: _start, end: _end, from-end?: from-end?)
 end method position-if;
 
 define sealed method position-if
@@ -163,7 +163,7 @@ define sealed method position-if
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(vector), from-end?)
  => (index :: false-or(<integer>))
   primitive-position-if(vector, predicate,
-			start: _start, end: _end, from-end?: from-end?)
+                        start: _start, end: _end, from-end?: from-end?)
 end method position-if;
 
 define sealed method position-if
@@ -171,7 +171,7 @@ define sealed method position-if
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(string), from-end?)
  => (index :: false-or(<integer>))
   primitive-position-if(string, predicate,
-			start: _start, end: _end, from-end?: from-end?)
+                        start: _start, end: _end, from-end?: from-end?)
 end method position-if;
 
 
@@ -185,7 +185,7 @@ define inline function primitive-count
   without-bounds-checks
     for (i :: <integer> from _start below _end)
       when (test(item, sequence[i]))
-	inc!(n)
+        inc!(n)
       end
     end
   end;
@@ -198,7 +198,7 @@ define method count
           start: _start :: <integer> = 0, end: _end :: <integer> = size(sequence))
  => (index :: false-or(<integer>))
   primitive-count(sequence, item,
-		  test: test, start: _start, end: _end)
+                  test: test, start: _start, end: _end)
 end method count;
 
 define sealed method count
@@ -207,7 +207,7 @@ define sealed method count
           start: _start :: <integer> = 0, end: _end :: <integer> = size(vector))
  => (index :: false-or(<integer>))
   primitive-count(vector, item,
-		  test: test, start: _start, end: _end)
+                  test: test, start: _start, end: _end)
 end method count;
 
 define sealed method count
@@ -216,7 +216,7 @@ define sealed method count
           start: _start :: <integer> = 0, end: _end :: <integer> = size(vector))
  => (index :: false-or(<integer>))
   primitive-count(vector, item,
-		  test: test, start: _start, end: _end)
+                  test: test, start: _start, end: _end)
 end method count;
 
 define sealed method count
@@ -225,7 +225,7 @@ define sealed method count
           start: _start :: <integer> = 0, end: _end :: <integer> = size(string))
  => (index :: false-or(<integer>))
   primitive-count(string, item,
-		  test: test, start: _start, end: _end)
+                  test: test, start: _start, end: _end)
 end method count;
 
 
@@ -235,12 +235,12 @@ define method insert-at!
     (v :: type-union(<vector>, <string>), item, index)
  => (v :: type-union(<vector>, <string>))
   local method expand (v, index :: <integer>) => ()
-	  without-bounds-checks
-	    for (i :: <integer> from (size(v) - 1) to (index + 1) by -1)
-	      v[i] := v[i - 1]
-	    end
-	  end
-	end method;
+          without-bounds-checks
+            for (i :: <integer> from (size(v) - 1) to (index + 1) by -1)
+              v[i] := v[i - 1]
+            end
+          end
+        end method;
   select (index)
     #"start" =>
       expand(v, 0);
@@ -259,12 +259,12 @@ define method insert-at!
     (sv :: <stretchy-object-vector>, item, index)
  => (sv :: <stretchy-object-vector>)
   local method expand (sv, index :: <integer>) => ()
-	  without-bounds-checks
-	    for (i :: <integer> from (size(sv) - 1) to (index + 1) by -1)
-	      sv[i] := sv[i - 1]
-	    end
-	  end
-	end method;
+          without-bounds-checks
+            for (i :: <integer> from (size(sv) - 1) to (index + 1) by -1)
+              sv[i] := sv[i - 1]
+            end
+          end
+        end method;
   select (index)
     #"start" =>
       sv.size := sv.size + 1;
@@ -285,12 +285,12 @@ define method remove-at!
     (v :: type-union(<vector>, <string>), index)
  => (v :: type-union(<vector>, <string>))
   local method contract (v, index :: <integer>) => ()
-	  without-bounds-checks
-	    for (i :: <integer> from index to (size(v) - 2))
-	      v[i] := v[i + 1]
-	    end
-	  end
-	end method;
+          without-bounds-checks
+            for (i :: <integer> from index to (size(v) - 2))
+              v[i] := v[i + 1]
+            end
+          end
+        end method;
   select (index)
     #"start"  => contract(v, 0);
     #"end"    => #f;
@@ -303,12 +303,12 @@ define method remove-at!
     (sv :: <stretchy-object-vector>, index)
  => (sv :: <stretchy-object-vector>)
   local method contract (sv, index :: <integer>) => ()
-	  without-bounds-checks
-	    for (i :: <integer> from index to (size(sv) - 2))
-	      sv[i] := sv[i + 1]
-	    end
-	  end
-	end method;
+          without-bounds-checks
+            for (i :: <integer> from index to (size(sv) - 2))
+              sv[i] := sv[i + 1]
+            end
+          end
+        end method;
   select (index)
     #"start"  => contract(sv, 0);
     #"end"    => #f;
@@ -330,7 +330,7 @@ define method get-file-property
       let value = file-property(pathname, property);
       value
     exception (<condition>)
-      default		// if there's an error, return the default
+      default                // if there's an error, return the default
     end
   end
 end method get-file-property;

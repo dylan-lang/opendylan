@@ -69,12 +69,12 @@ define function test-insert!
   for (line-index :: <integer> in $insertion-line-indices)
     let check-message
       = format-to-string
-	  ("%s at line %=", check-message, line-index);
+          ("%s at line %=", check-message, line-index);
     for (idx :: <pair> in $insertion-indices)
       let (index, index-description) = values(head(idx), tail(idx));
       let check-message
-	= format-to-string
-	    ("%s, %s", check-message, index-description);
+        = format-to-string
+            ("%s, %s", check-message, index-description);
       reset-testing-buffer-state();
       dynamic-bind(*buffer* = *testing-buffer*)
         // Get the "line-index"th line in the buffer.  We can't just

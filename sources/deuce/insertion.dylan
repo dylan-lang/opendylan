@@ -35,7 +35,7 @@ define sealed method insert!
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(string))
  => (new-bp :: <basic-bp>)
   let bp = insert-into-line(bp-line(bp), bp-index(bp), string,
-			    start: _start, end: _end);
+                            start: _start, end: _end);
   when (*change-record*)
     extend-insertion-record(*change-record*, end-bp: bp)
   end;
@@ -67,10 +67,10 @@ define sealed method insert!
       let section = line-section(line);
       let prev = line;
       for (line = line-next(first-line) then line-next(line),
-	   until: line == last-line)
-	let line = copy-line(line);
-	add-line!(section, line, after: prev);
-	prev := line
+           until: line == last-line)
+        let line = copy-line(line);
+        add-line!(section, line, after: prev);
+        prev := line
       end
     end;
     when (*change-record*)
@@ -83,18 +83,18 @@ end method insert!;
 // Split the line at the given index, and return the new line.
 // The old line contains the line contents up to the index, and
 // the new line contains the old line contents after the index.
-define sealed method split-for-insertion 
+define sealed method split-for-insertion
     (line :: <text-line>, index :: <integer>) => (new-line :: <text-line>)
   let length   = line-length(line);
   let contents = line-contents(line);
   let section  = line-section(line);
   assert(index >= 0 & index <= length,
-	 "Index %d is out of range for line %=", index, line);
+         "Index %d is out of range for line %=", index, line);
   // Make a new line with the contents of the old line _after_ the index
   let new-length = length - index;
   let new-line   = make(object-class(line),
-			length:   new-length,
-			contents: copy-sequence(contents, start: index, end: length));
+                        length:   new-length,
+                        contents: copy-sequence(contents, start: index, end: length));
   // Truncate the new line to contain the contents up to the new '\n'
   line-length(line) := index;
   // Add the new line
@@ -120,7 +120,7 @@ define sealed method insert-into-line
   else
     let length = line-length(line);
     assert(index >= 0 & index <= length,
-	   "Index %d is out of range for line %=", index, line);
+           "Index %d is out of range for line %=", index, line);
     // Grow the line first, since it might clobber the contents
     line-length(line) := length + 1;
     let contents = line-contents(line);
@@ -129,7 +129,7 @@ define sealed method insert-into-line
     for (bp :: <basic-bp> in line-bps(line))
       let i = bp-index(bp);
       when (i >= index)
-	bp-index(bp) := i + 1
+        bp-index(bp) := i + 1
       end
     end;
     make(<simple-bp>, line: line, index: index + 1)
@@ -152,27 +152,27 @@ define sealed method insert-into-line
       let length     :: <integer> = line-length(line);
       let new-length :: <integer> = length + string-length;
       assert(index >= 0 & index <= length,
-	     "Index %d is out of range for line %=", index, line);
+             "Index %d is out of range for line %=", index, line);
       line-length(line) := new-length;
       let contents = line-contents(line);
       without-bounds-checks
-	for (i :: <integer> from length - 1 by -1,
-	     j :: <integer> from new-length - 1 by -1,
-	     until: i < index)
-	  contents[j] := contents[i]
-	end;
-	// Copy in the new contents
-	for (i :: <integer> from _start below _end,
-	     j :: <integer> from index)
-	  contents[j] := string[i]
-	end
+        for (i :: <integer> from length - 1 by -1,
+             j :: <integer> from new-length - 1 by -1,
+             until: i < index)
+          contents[j] := contents[i]
+        end;
+        // Copy in the new contents
+        for (i :: <integer> from _start below _end,
+             j :: <integer> from index)
+          contents[j] := string[i]
+        end
       end;
       // Relocate moving BPs
       for (bp :: <basic-bp> in line-bps(line))
-	let i = bp-index(bp);
-	when (i >= index)
-	  bp-index(bp) := i + string-length
-	end
+        let i = bp-index(bp);
+        when (i >= index)
+          bp-index(bp) := i + string-length
+        end
       end;
       make(<simple-bp>, line: line, index: index + string-length)
     end
@@ -181,7 +181,7 @@ define sealed method insert-into-line
     //--- This could do with a more efficient implementation
     until (~nl)
       let nbp = insert-into-line(line, index, string,
-				 start: _start, end: nl);
+                                 start: _start, end: nl);
       when (nl < size(string) & string[nl] = '\n')
         insert-moving!(nbp, '\n')
       end;
@@ -201,7 +201,7 @@ define method insert-into-line
     (line :: <diagram-line>, index :: <integer>, char :: <byte-character>, #key)
  => (bp :: <basic-bp>)
   assert(index = 0,
-	 "Diagram lines can only be inserted into at index 0");
+         "Diagram lines can only be inserted into at index 0");
   let section = line-section(line);
   let new = make(<text-line>, contents: "");
   add-line!(section, new, after: line-previous(line));
@@ -215,7 +215,7 @@ define method insert-into-line
      #key start: _start :: <integer> = 0, end: _end :: <integer> = size(string))
  => (bp :: <basic-bp>)
   assert(index = 0,
-	 "Diagram lines can only be inserted into at index 0");
+         "Diagram lines can only be inserted into at index 0");
   let section = line-section(line);
   let new = make(<text-line>, contents: "");
   add-line!(section, new, after: line-previous(line));

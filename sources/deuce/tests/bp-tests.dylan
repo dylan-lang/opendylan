@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define test bp-creation-test ()
   let buffer = make(<non-file-buffer>,
-		    major-mode: find-mode(<fundamental-mode>));
+                    major-mode: find-mode(<fundamental-mode>));
   let line = make(<text-line>, contents: "A line of text");
   dynamic-bind (*buffer* = buffer)
     let sbp = make(<bp>, line: line, index: 0);
@@ -78,7 +78,7 @@ end test bp-creation-test;
 
 define test bp-contents-test ()
   let buffer = make(<non-file-buffer>,
-		    major-mode: find-mode(<fundamental-mode>));
+                    major-mode: find-mode(<fundamental-mode>));
   // We'll modify the contents of line1, so we use copy-sequence.
   let line1 = make(<text-line>, contents: copy-sequence("A line of text"));
   let line2 = make(<text-line>, contents: "Another line of text");
@@ -166,7 +166,7 @@ end test bp-contents-test;
 
 define test moving-bp-test ()
   let buffer = make(<non-file-buffer>,
-		    major-mode: find-mode(<fundamental-mode>));
+                    major-mode: find-mode(<fundamental-mode>));
   let line1 = make(<text-line>, contents: "A line of text");
   let line2 = make(<text-line>, contents: "A line of text");
   dynamic-bind (*buffer* = buffer)
