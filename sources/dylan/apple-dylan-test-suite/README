@@ -131,7 +131,7 @@ please document it here.
           return <type>
 
      + Suite TEST-COMPARISON-SUITE, The very second check is the
-          wierdest thing I have seen to signal a bus error
+          weirdest thing I have seen to signal a bus error
 
      + Suite TEST-CONTROL-SUITE has 3 tests: cond-3, and-2 and or-3
         which are failing and they look like bugs to me.

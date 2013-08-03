@@ -18,7 +18,7 @@ define test truth (description: "")
   check-true("", #t = #t & ~(#t = #f) & #"a" & 0 & #() & #t);
 end test truth;
 
-// not sure what this is supposed to be -it acts wierd
+// not sure what this is supposed to be -it acts weird
 
 define test not-type-0 (description: "")
   check-true("", instance?(\~, <function>));

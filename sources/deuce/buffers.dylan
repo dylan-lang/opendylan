@@ -929,7 +929,7 @@ define method buffer-undo-history
   if (history)
     values(history, buffer)
   else
-    // This is where things get a bit wierd!  We return the history
+    // This is where things get a bit weird!  We return the history
     // for the container and its home buffer as well.  This is so that
     // 'undo!' and 'redo!' can establish the right binding for *buffer*,
     // so that temporary BPs in change records don't end up getting an

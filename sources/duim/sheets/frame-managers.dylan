@@ -395,7 +395,7 @@ define open generic do-choose-from-dialog
 
 
 // Returns the pathname (or pathnames!) on normal exit, or #f on "cancel"
-// The 'filters' argument is a bit wierd; it takes the form:
+// The 'filters' argument is a bit weird; it takes the form:
 //  #[#["Text files", "*.txt", "*.text"],
 //    #["Dylan files", "*.dylan"],
 //    ...]

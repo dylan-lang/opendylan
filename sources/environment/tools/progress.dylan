@@ -280,7 +280,7 @@ define function make-compiler-progress-window
  => (window :: <compiler-progress-window>)
   find-compiler-progress-window(frame)
   | apply(make-environment-frame, port(frame), <compiler-progress-window>,
-          //---*** andrewa: this causes some wierd effects
+          //---*** andrewa: this causes some weird effects
           // owner: frame,
           progress-frame: frame,
           minimize-box?: #t, maximize-box?: #t,
