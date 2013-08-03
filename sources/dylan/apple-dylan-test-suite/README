@@ -148,7 +148,7 @@ please document it here.
 
      + A couple of \+ operations in Suite test-intro-mop not only
        fail but also return an instance of <ratio> which is really
-       bizzare cuz ratio is not defined. Do run this suite for
+       bizarre cuz ratio is not defined. Do run this suite for
        sure as there are a bunch of interlocked problems including
        the problem with values - I have put comments to show where
        the problems are.
@@ -219,7 +219,7 @@ please document it here.
         when executed. It compiles but just does not execute - dunno why?
 
         + Any number say 4 for instance(in test-class2.dylan) does not
-        test #t as a <complex>, but isnt it just a complex number with
+        test #t as a <complex>, but isn't it just a complex number with
         a zero imaginary part or was this a design decision to keep it
         this way??
 
@@ -238,4 +238,4 @@ please document it here.
         maybe it is?
 
         + The whole handler chunk in test-condition suite simply fails to
-        compile with a bus error. I dont understand what is wrong.
+        compile with a bus error. I don't understand what is wrong.
