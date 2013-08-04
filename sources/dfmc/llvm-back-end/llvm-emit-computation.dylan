@@ -101,12 +101,6 @@ define method emit-reference
   ins--bitcast(back-end, temporary-value(o), $llvm-object-pointer-type)
 end method;
 
-define method emit-reference
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, o :: <cell>)
- => (reference :: <llvm-value>);
-  error("Direct reference to cell %=", o);
-end method;
-
 // Local temporary definitions
 
 define method emit-local-tmp-definition
@@ -1267,16 +1261,13 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <make-cell>) => ()
-  let computation = emit-reference(back-end, m, c.computation-value);
+  let value = emit-reference(back-end, m, c.computation-value);
   let tmp = c.temporary;
+  let rep = cell-representation(cell-type(tmp));
   if (closed-over?(tmp))
-/*
-    call-primitive(back-end, emit-reference(back-end, m, c.temporary),
-		   op--make-box%(computation), computation);
-*/
-    error("make-cell for closed-over cell %=", tmp);
+    let cell = op--make-closed-over-cell(back-end, rep, value);
+    temporary-value(tmp) := cell;
   else
-    let rep = cell-representation(cell-type(tmp));
     let type = llvm-reference-type(back-end, rep);
 
     let alloca = ins--alloca(back-end, type, i32(1));
@@ -1306,17 +1297,17 @@ define method emit-computation
       ins--call-intrinsic(back-end, "llvm.dbg.declare", vector(v, lv));
     end if;
     temporary-value(tmp) := alloca;
-    ins--store(back-end, computation, alloca);
+    ins--store(back-end, value, alloca);
   end if;
 end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <get-cell-value>) => ()
   if (closed-over?(c.computation-cell))
-/*
-    op--load-index%(the-temporary)(back-end, the-temporary, the-cell, 0, bytes%(back-end, 1));
-*/
-    error("get-cell-value for closed-over cell");
+    let cell = emit-reference(back-end, m, c.computation-cell);
+    let rep = cell-representation(cell-type(c.computation-cell));
+    let value = op--get-closed-over-cell(back-end, rep, cell);
+    computation-result(back-end, c, value);
   else
     let value = ins--load(back-end, temporary-value(c.computation-cell));
     computation-result(back-end, c, value);
@@ -1325,15 +1316,14 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <set-cell-value!>) => ()
-  let computation = emit-reference(back-end, m, c.computation-value);
-  if (closed-over?(c.temporary))
-/*
-    op--store-index%(computation)
-      (back-end, the-temporary, computation,
-       emit-reference(back-end, m, c.computation-cell), 0, bytes%(back-end, 1)*/
-    error("set-cell-value! for closed-over cell");
+  let value = emit-reference(back-end, m, c.computation-value);
+  if (closed-over?(c.computation-cell))
+    let cell = emit-reference(back-end, m, c.computation-cell);
+    let rep = cell-representation(cell-type(c.computation-cell));
+    op--set-closed-over-cell(back-end, rep, cell, value)
   else
-    ins--store(back-end, computation, temporary-value(c.computation-cell));
-    computation-result(back-end, c, computation);
+    ins--store(back-end, value, temporary-value(c.computation-cell));
   end if;
+  computation-result(back-end, c, value);
 end method;
+

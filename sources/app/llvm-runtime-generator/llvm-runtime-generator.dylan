@@ -15,7 +15,10 @@ define constant $wrapper-classes
       #"<simple-object-vector>",
       #"<byte-string>",
       #"<empty-list>",
-      #"<unbound>"];
+      #"<unbound>",
+      #"<traceable-value-cell>",
+      #"<untraceable-value-cell>",
+      #"<untraceable-double-value-cell>"];
 
 // Well-known objects referenced by the generated runtime
 define constant $runtime-referenced-objects
