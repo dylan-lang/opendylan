@@ -43,7 +43,6 @@ define constant $simple-build-keyword = #[#"executable",
 
 define constant $list-build-keyword = #[#"linker-options",
                                         #"c-source-files",
-                                        #"c-files",
                                         #"c-header-files",
                                         #"c-object-files",
                                         #"c-libraries",
@@ -498,12 +497,7 @@ define function lid-build-settings (source-loc, properties)
           merge-locators(as(<file-locator>, file-name), source-loc)
         end;
   let c-names = element(properties, #"c-source-files", default: #f);
-  if (c-names)
-    add-setting(c-source-files: map(source-dir, c-names))
-  else
-    let c-names = element(properties, #"c-files", default: #f);
-    if (c-names) add-setting(c-source-files: map(source-dir, c-names)) end
-  end;
+  if (c-names) add-setting(c-source-files: map(source-dir, c-names)) end;
   let h-names = element(properties, #"c-header-files", default: #f);
   if (h-names) add-setting(c-header-files: map(source-dir, h-names)) end;
   let o-names = element(properties, #"c-object-files", default: #f);
