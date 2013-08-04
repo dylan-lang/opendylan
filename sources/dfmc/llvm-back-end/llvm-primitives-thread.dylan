@@ -243,7 +243,7 @@ define stateful side-effect-free dynamic-extent &unimplemented-primitive-descrip
   //---*** Fill this in...
 end;
 
-define side-effecting stateful dynamic-extent &unimplemented-primitive-descriptor primitive-synchronize-side-effects
+define side-effecting stateful dynamic-extent &primitive-descriptor primitive-synchronize-side-effects
     () => ();
-  //---*** Fill this in...
+  ins--fence(be, ordering: #"sequentially-consistent");
 end;
