@@ -1275,26 +1275,28 @@ define method emit-computation
       let local-name = hygienic-mangle(back-end, tmp.name, tmp.frame-offset);
       ins--local(back-end, local-name, alloca);
 
-      let dbg-function = back-end.llvm-back-end-dbg-functions.last;
-      let (dbg-file, dbg-line)
-        = source-location-dbg-file-line(back-end, c.dfm-source-location);
-      let var-type
-        = llvm-reference-dbg-type(back-end, cell-type(tmp));
-      let function-name
-        = back-end.llvm-builder-function.llvm-global-name;
-      let v
-        = make(<llvm-metadata-node>,
-               function-local?: #t,
-               node-values: list(alloca));
-      let lv
-        = llvm-make-dbg-local-variable(#"auto",
-                                       dbg-function,
-                                       as(<string>, tmp.name),
-                                       dbg-file, dbg-line,
-                                       var-type,
-                                       module: m,
-                                       function-name: function-name);
-      ins--call-intrinsic(back-end, "llvm.dbg.declare", vector(v, lv));
+      if (c.dfm-source-location)
+        let dbg-function = back-end.llvm-back-end-dbg-functions.last;
+        let (dbg-file, dbg-line)
+          = source-location-dbg-file-line(back-end, c.dfm-source-location);
+        let var-type
+          = llvm-reference-dbg-type(back-end, cell-type(tmp));
+        let function-name
+          = back-end.llvm-builder-function.llvm-global-name;
+        let v
+          = make(<llvm-metadata-node>,
+                 function-local?: #t,
+                 node-values: list(alloca));
+        let lv
+          = llvm-make-dbg-local-variable(#"auto",
+                                         dbg-function,
+                                         as(<string>, tmp.name),
+                                         dbg-file, dbg-line,
+                                         var-type,
+                                         module: m,
+                                         function-name: function-name);
+        ins--call-intrinsic(back-end, "llvm.dbg.declare", vector(v, lv));
+      end if;
     end if;
     temporary-value(tmp) := alloca;
     ins--store(back-end, value, alloca);
