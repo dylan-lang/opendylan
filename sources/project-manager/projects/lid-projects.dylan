@@ -537,7 +537,7 @@ end function;
 // TO DO:
 // we calculate here the location of dylan source files relative to lid/project file location
 // In other places we use project-source-location
-// remnant of registry projects, but stll works
+// remnant of registry projects, but it still works
 define function read-lid-data (lid-location :: <file-locator>)
   let (library-name, file-names, properties)
     = read-file-library-description(lid-location);
