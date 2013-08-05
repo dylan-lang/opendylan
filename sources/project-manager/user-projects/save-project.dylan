@@ -35,8 +35,7 @@ define function lid-project-build-settings
 	 project-build-property(p, #"start-function") | #f,
 
 	 project-build-property(p, #"linker-options") | #[],
-	 project-build-property(p, #"c-source-files") | 
-         project-build-property(p, #"c-files") | #[],
+	 project-build-property(p, #"c-source-files") | #[],
 	 project-build-property(p, #"c-header-files") | #[],
 	 project-build-property(p, #"c-object-files") | #[],
 	 project-build-property(p, #"c-libraries") | #[],
