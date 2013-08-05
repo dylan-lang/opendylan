@@ -986,17 +986,14 @@ D primitive_mep_apply_with_optionals (FN* fn, D new_next_methods, D args) {
     if (teb->argument_count > 64) {
       primitive_break();
     }
-    COPY_WORDS(teb->a, v, teb->argument_count);
-    return(mep(
-teb->a[ 0], teb->a[ 1], teb->a[ 2], teb->a[ 3], teb->a[ 4], teb->a[ 5], teb->a[ 6], teb->a[ 7],
-teb->a[ 8], teb->a[ 9], teb->a[10], teb->a[11], teb->a[12], teb->a[13], teb->a[14], teb->a[15],
-teb->a[16], teb->a[17], teb->a[18], teb->a[19], teb->a[20], teb->a[21], teb->a[22], teb->a[23],
-teb->a[24], teb->a[25], teb->a[26], teb->a[27], teb->a[28], teb->a[29], teb->a[30], teb->a[31],
-teb->a[32], teb->a[33], teb->a[34], teb->a[35], teb->a[36], teb->a[37], teb->a[38], teb->a[39],
-teb->a[40], teb->a[41], teb->a[42], teb->a[43], teb->a[44], teb->a[45], teb->a[46], teb->a[47],
-teb->a[48], teb->a[49], teb->a[50], teb->a[51], teb->a[52], teb->a[53], teb->a[54], teb->a[55],
-teb->a[56], teb->a[57], teb->a[58], teb->a[59], teb->a[60], teb->a[61], teb->a[62], teb->a[63]
-                                                         ));
+    return(mep(v[ 0], v[ 1], v[ 2], v[ 3], v[ 4], v[ 5], v[ 6], v[ 7],
+               v[ 8], v[ 9], v[10], v[11], v[12], v[13], v[14], v[15],
+               v[16], v[17], v[18], v[19], v[20], v[21], v[22], v[23],
+               v[24], v[25], v[26], v[27], v[28], v[29], v[30], v[31],
+               v[32], v[33], v[34], v[35], v[36], v[37], v[38], v[39],
+               v[40], v[41], v[42], v[43], v[44], v[45], v[46], v[47],
+               v[48], v[49], v[50], v[51], v[52], v[53], v[54], v[55],
+               v[56], v[57], v[58], v[59], v[60], v[61], v[62], v[63]));
   }
 }
 
