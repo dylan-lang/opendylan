@@ -70,10 +70,6 @@ DUIM-Extended-Geometry	DUIM extended geometry support -- separately
 			loadable library that implements more complex
 			geometric regions.
 
-CAPI-DUIM		CAPI back-end -- separately loadable library that
-			implements a back-end that runs in the LispWorks
-			Dylan emulator.
-
 PostScript-DUIM		PostScript back-end -- separately loadable library
 			that implements a back-end for PostScript drawing.
 
@@ -89,35 +85,3 @@ Othello			Sample DUIM Othello game.
 
 Interface-Builder	Beginnings of a DUIM Interface Builder, used
 			to test a bunch of DUIM's dynamic gadget stuff.
-
-
-* Instructions for use under LispWorks
-
-You can load things into the LispWorks Dylan emulator by doing:
-
- require: capi-duim;		// gets DUIM core + CAPI back-end
- require: duim-test-suite;	// loads the test suite
-
-Note that the CAPI back-end will generate some redefinition errors.
-You can get around this by setting sys::*handle-warn-on-redefinition*
-to :warn in your .lispworks file.
-
-You can verify that everything compiled correctly by doing:
-
- in: duim-test-suite;
- run-all-tests();
-
-The test results will be output in the listener, and the final three lines
-should show that there is only a few failed checks, as below:
-
-  Ran 15 test suites: 12 passed, 3 failed
-  Ran 62 tests: 59 passed, 3 failed, 0 crashed
-  Completed 4964 checks: 4960 passed, 4 failed (0.1%)
-
-You can also load some examples:
-
- require: duim-examples;
- require: othello;
- require: web-browser;
- require: interface-builder;
-
