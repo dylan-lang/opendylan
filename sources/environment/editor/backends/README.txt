@@ -62,13 +62,6 @@ Unix, emacs19 (and the gnuserv process) must already be running.
 (This is a limitation of the Unix version of the gnuserv package.)
 
 
-LispWorks
----------
-
-This is a backend which uses the LispWorks editor directly.  Therefore
-it can only be used in the emulator-environment.
-
-
 Vi
 --
 
