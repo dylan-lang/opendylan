@@ -1,2 +1,5 @@
-LINKLIBS += `pkg-config --libs gobject-2.0` ;
-CCFLAGS += `pkg-config --cflags gobject-2.0` ;
+{
+  local _dll = [ FDLLName $(image) ] ;
+  LINKLIBS on $(_dll) += `pkg-config --libs gobject-2.0` ;
+  CCFLAGS += `pkg-config --cflags gobject-2.0` ;
+}

@@ -1,0 +1,5 @@
+{
+  local _dll = [ FDLLName $(image) ] ;
+  LINKLIBS on $(_dll) += `pkg-config --libs gdk-pixbuf-2.0` ;
+  CCFLAGS += `pkg-config --cflags gdk-pixbuf-2.0` ;
+}

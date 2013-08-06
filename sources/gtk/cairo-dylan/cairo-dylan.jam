@@ -1,2 +1,5 @@
-LINKLIBS += `pkg-config --libs cairo` ;
-CCFLAGS += `pkg-config --cflags cairo` ;
+{
+  local _dll = [ FDLLName $(image) ] ;
+  LINKLIBS on $(_dll) += `pkg-config --libs cairo` ;
+  CCFLAGS += `pkg-config --cflags cairo` ;
+}

@@ -1,2 +1,5 @@
-LINKLIBS += `pkg-config --libs gdk-3.0` ;
-CCFLAGS += `pkg-config --cflags gdk-3.0` ;
+{
+  local _dll = [ FDLLName $(image) ] ;
+  LINKLIBS on $(_dll) += `pkg-config --libs gdk-3.0` ;
+  CCFLAGS += `pkg-config --cflags gdk-3.0` ;
+}

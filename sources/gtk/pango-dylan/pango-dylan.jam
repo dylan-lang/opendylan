@@ -1,2 +1,5 @@
-LINKLIBS += `pkg-config --libs pango` ;
-CCFLAGS += `pkg-config --cflags pango` ;
+{
+  local _dll = [ FDLLName $(image) ] ;
+  LINKLIBS on $(_dll) += `pkg-config --libs pango` ;
+  CCFLAGS += `pkg-config --cflags pango` ;
+}

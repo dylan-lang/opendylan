@@ -1,2 +1,5 @@
-LINKLIBS += `pkg-config --libs gio-2.0` ;
-CCFLAGS += `pkg-config --cflags gio-2.0` ;
+{
+  local _dll = [ FDLLName $(image) ] ;
+  LINKLIBS on $(_dll) += `pkg-config --libs gio-2.0` ;
+  CCFLAGS += `pkg-config --cflags gio-2.0` ;
+}
