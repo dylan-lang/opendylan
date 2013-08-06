@@ -40,12 +40,12 @@ define macro form-properties-aux-definer
          define form-properties-accessors ?name ?slots end;
          define method form-properties-class 
              (form :: ?name) => (c :: singleton(?name))
-	   ?name
+           ?name
          end method;
          define method merge-form-properties!
              (old :: ?name, new :: ?name, #next next-method)
-	   next-method();
-	   ?mergers;
+           next-method();
+           ?mergers;
          end method; }
 cslots:
   { } => { }
@@ -70,14 +70,14 @@ define macro form-properties-accessors-definer
       ?more:*
     end }
     => { define method ?accessor (object :: ?class) => (val :: ?type)
-	   let p = form-properties-in-context
-	              (current-library-description(), object, #f);
-	   if (p) "shadowable-" ## ?accessor(p) else ?default end
-	 end method;
+           let p = form-properties-in-context
+                      (current-library-description(), object, #f);
+           if (p) "shadowable-" ## ?accessor(p) else ?default end
+         end method;
          define method ?accessor ## "-setter" (value, object :: ?class)
-	   let p = form-properties-in-context
-	              (current-library-description(), object, #t);
-	   "shadowable-" ## ?accessor ## "-setter" (value, p)
+           let p = form-properties-in-context
+                      (current-library-description(), object, #t);
+           "shadowable-" ## ?accessor ## "-setter" (value, p)
          end method;
          define form-properties-accessors ?class ?more end }
 end macro;
@@ -106,11 +106,11 @@ define function make-default-form-properties
 end function;
 
 define generic merge-form-properties! (old :: <form-properties>,
-				      new :: <form-properties>);
+                                      new :: <form-properties>);
 
 // Base case.
 define method merge-form-properties! (old :: <form-properties>,
-				      new :: <form-properties>)
+                                      new :: <form-properties>)
 end method;
 
 
@@ -262,17 +262,17 @@ define inline function do-with-dependent (stage, dependent, f)
     f()
   else
     debug-assert(~*interactive-compilation-layer*
-		   | ~compilation-record-downloaded?
-		        (compilation-record-of(dependent)),
-		 // Trying to compile something that's already been downloaded?
-		 "Changing interactive context to downloaded dependent?");
+                   | ~compilation-record-downloaded?
+                        (compilation-record-of(dependent)),
+                 // Trying to compile something that's already been downloaded?
+                 "Changing interactive context to downloaded dependent?");
     debug-assert(current-library-description?
-		   (compilation-record-library
-		      (compilation-record-of(dependent))),
-		 "New dependent %s is not in current context %s!",
-		 dependent, current-library-description());
+                   (compilation-record-library
+                      (compilation-record-of(dependent))),
+                 "New dependent %s is not in current context %s!",
+                 dependent, current-library-description());
     dynamic-bind (*current-stage* = stage,
-		  *current-dependent* = dependent)
+                  *current-dependent* = dependent)
       f()
     end;
   end if;
@@ -281,8 +281,8 @@ end function;
 define macro without-dependency-tracking
   { without-dependency-tracking ?:body end }
     => { dynamic-bind (*current-stage* = #"testing",
-		       *current-dependent* = $no-dependent)
-	  ?body
+                       *current-dependent* = $no-dependent)
+          ?body
          end }
 end macro;
 
@@ -370,8 +370,8 @@ define function note-binding-dependency (binding, kind)
       error("Unknown dependent for binding dependency on %s", binding.name);
     end;
     note-binding-dependency-of(dependent,
-			       make-dependency-condition(stage, kind),
-			       binding)
+                               make-dependency-condition(stage, kind),
+                               binding)
   end;
 end function;
 
@@ -383,8 +383,8 @@ define function note-name-dependency (binding, kind, word, module)
       error("Unknown dependent for binding dependency on %s", binding.name);
     end;
     note-name-dependency-of(dependent,
-			    make-dependency-condition(stage, kind),
-			    binding, word, module)
+                            make-dependency-condition(stage, kind),
+                            binding, word, module)
   end;
 end function;
 
@@ -406,8 +406,8 @@ end macro;
 
 define inline function do-with-boot-form-creation (seq, parent, fn)
   dynamic-bind (*last-form-sequence-number* = seq - 1,
-		*current-dependent* = parent,
-		*current-stage* = $top-level-processing)
+                *current-dependent* = parent,
+                *current-stage* = $top-level-processing)
     fn()
   end;
 end function;
@@ -450,13 +450,13 @@ define inline function library-defined-after? (base-lib, other-lib)
     ~other-lib
   else
     debug-assert(current-library-in-context?(other-lib) |
-		   current-library-in-context?(base-lib));
+                   current-library-in-context?(base-lib));
     current-library-in-context?(other-lib)
   end;
 end function;
 
 define inline method defined-after? (cr1 :: <compilation-record>,
-				     cr2 :: <compilation-record>) => after?;
+                                     cr2 :: <compilation-record>) => after?;
   let lib1 = cr1.compilation-record-original-library;
   let lib2 = cr2.compilation-record-original-library;
   if (lib1 == lib2)
@@ -469,34 +469,34 @@ define inline method defined-after? (cr1 :: <compilation-record>,
 end method;
 
 define inline method defined-before? (cr1 :: <compilation-record>,
-				      cr2 :: <compilation-record>) => before?;
+                                      cr2 :: <compilation-record>) => before?;
   defined-after?(cr2, cr1)
 end;
 
 define method defined-after? (cr :: <compilation-record>,
-			      form :: <top-level-form>) => after?;
+                              form :: <top-level-form>) => after?;
   let form-cr :: <compilation-record> = form.form-compilation-record;
   defined-after?(cr, form-cr)
 end;
 
 define method defined-after? (form :: <top-level-form>,
-			      cr :: <compilation-record>) => after?;
+                              cr :: <compilation-record>) => after?;
   defined-before?(cr, form)
 end;
 
 define method defined-before? (cr :: <compilation-record>,
-			       form :: <top-level-form>) => before?;
+                               form :: <top-level-form>) => before?;
   let form-cr :: <compilation-record> = form.form-compilation-record;
   defined-before?(cr, form-cr)
 end;
 
 define method defined-before? (form :: <top-level-form>,
-			       cr :: <compilation-record>) => before?;
+                               cr :: <compilation-record>) => before?;
   defined-after?(cr, form)
 end;
 
 define method defined-after? (base :: <top-level-form>,
-			      form :: <top-level-form>) => after?;
+                              form :: <top-level-form>) => after?;
   let base-cr = base.form-compilation-record;
   let form-cr = form.form-compilation-record;
   let base-lib = base-cr.compilation-record-original-library;
@@ -505,18 +505,18 @@ define method defined-after? (base :: <top-level-form>,
     library-defined-after?(base-lib, form-lib)
   elseif (base-cr == form-cr)
     local method after?(base, form)
-	    let base-parent = base.form-parent-form;
-	    let form-parent = form.form-parent-form;
-	    if (base-parent == form-parent)
-	      base.form-sequence-number < form.form-sequence-number
-	    elseif (base == form-parent)
-	      #t
-	    elseif (base-parent == #f)
-	      after?(base, form-parent)
-	    else
-	      after?(base-parent, form)
-	    end
-	  end method;
+            let base-parent = base.form-parent-form;
+            let form-parent = form.form-parent-form;
+            if (base-parent == form-parent)
+              base.form-sequence-number < form.form-sequence-number
+            elseif (base == form-parent)
+              #t
+            elseif (base-parent == #f)
+              after?(base, form-parent)
+            else
+              after?(base-parent, form)
+            end
+          end method;
     after?(base, form)
   else
     base-cr.compilation-record-sequence-number
@@ -525,7 +525,7 @@ define method defined-after? (base :: <top-level-form>,
 end method;
 
 define method defined-before? (base :: <top-level-form>,
-			       form :: <top-level-form>) => before?;
+                               form :: <top-level-form>) => before?;
   defined-after?(form, base)
 end method;
 
@@ -614,11 +614,11 @@ define method form-top-level-installed? (form :: <top-level-form>)
   ~form-top-level-installable?(form) |
     begin
       let p = form-properties-in-context
-	       (current-library-description(), form, #f);
+               (current-library-description(), form, #f);
       if (p)
-	shadowable-form-top-level-installed?(p)
+        shadowable-form-top-level-installed?(p)
       else
-	#t
+        #t
       end
     end
 end method;

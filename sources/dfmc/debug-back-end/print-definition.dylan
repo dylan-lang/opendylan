@@ -52,7 +52,7 @@ end method;
 define compiler-sideways method print-object
     (o :: <generic-definition>, stream :: <stream>) => ()
   format(stream, "{ %sdefine generic %s ",
-	 if (form-implicitly-defined?(o)) "(implicit) " else "" end,
+         if (form-implicitly-defined?(o)) "(implicit) " else "" end,
          fragment-identifier(form-variable-name(o)));
   print-contents(form-signature(o), stream);
   format(stream, " }");

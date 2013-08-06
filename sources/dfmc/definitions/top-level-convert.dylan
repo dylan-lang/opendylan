@@ -54,7 +54,7 @@ end method;
 
 define method top-level-convert (parent, fragment :: <fragment>)
   list(make(<top-level-init-form>, 
-	    parent-form: parent,
+            parent-form: parent,
             source-location: fragment-source-location(fragment),
             body:            fragment))
 end method;
@@ -72,9 +72,9 @@ define method top-level-convert (parent, fragment :: <body-fragment>)
   else
     // Source level, make a form for the browser to show.
     let parent = make(<macro-call-form>, // Like, statement macro, dig?
-		      define-word: #f,
-		      parent-form: #f,
-		      source-location: fragment-source-location(fragment));
+                      define-word: #f,
+                      parent-form: #f,
+                      source-location: fragment-source-location(fragment));
     let forms = top-level-convert*(parent, constituents);
     parent.form-derived-forms := as(<vector>, forms);
     pair(parent, forms)
@@ -209,9 +209,9 @@ define method top-level-convert-using-definition
   else
     let (word, kind) = macro-definition-word(definition);
     let parent = make(<macro-call-form>,
-		      define-word: if (kind == #"define") word end,
-		      parent-form: #f,
-		      source-location: fragment-source-location(fragment));
+                      define-word: if (kind == #"define") word end,
+                      parent-form: #f,
+                      source-location: fragment-source-location(fragment));
     let forms = top-level-convert(parent, expansion);
     parent.form-derived-forms := as(<vector>, forms);
     pair(parent, forms);
@@ -227,9 +227,9 @@ define method top-level-convert-forms
   // to parse the sources.
   if (boot-definitions-form?(fragment))
     let parent = make(<macro-call-form>,
-		      source-location: fragment-source-location(fragment),
-		      define-word: #f,
-		      parent-form: #f);
+                      source-location: fragment-source-location(fragment),
+                      define-word: #f,
+                      parent-form: #f);
     let forms = booted-definition-sequence();
     for (form in forms)
       unless (form.form-parent-form) form.form-parent-form := parent end;

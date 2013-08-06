@@ -26,7 +26,7 @@ define sealed inline method as (class == <string>, string :: <string>)
 end method as;
 
 define method as (class == <string>, collection :: <collection>)
-     => (bs :: <byte-string>)
+ => (bs :: <byte-string>)
   as(<byte-string>, collection)
 end method as;
 
@@ -47,9 +47,9 @@ end method make;
 define macro shared-string-definer
   { define shared-string ?:name (#key ?fill:expression) }
     => { define method make
-              (class == "<" ## ?name ## "-string>",
-               #key fill :: "<" ## ?name ## "-character>" = ?fill, size :: <integer> = 0)
-           => (res :: "<" ## ?name ## "-string>")
+             (class == "<" ## ?name ## "-string>",
+              #key fill :: "<" ## ?name ## "-character>" = ?fill, size :: <integer> = 0)
+          => (res :: "<" ## ?name ## "-string>")
            if (size = 0)
              empty(class)
            else
@@ -82,14 +82,14 @@ define macro shared-string-definer
 
          define inline sealed method element-no-bounds-check
              (string :: "<" ## ?name ## "-string>", index :: <integer>, #key default)
-                  => (character :: "<" ## ?name ## "-character>")
+          => (character :: "<" ## ?name ## "-character>")
            string-element(string, index)
          end method element-no-bounds-check;
 
          define inline sealed method element-setter
              (new-value :: "<" ## ?name ## "-character>",
               string :: "<" ## ?name ## "-string>", index :: <integer>)
-                 => (character :: "<" ## ?name ## "-character>")
+          => (character :: "<" ## ?name ## "-character>")
            if (element-range-check(index, size(string)))
              string-element(string, index) := new-value
            else
@@ -107,7 +107,7 @@ define macro shared-string-definer
          define inline sealed method element-no-bounds-check-setter
              (new-value :: "<" ## ?name ## "-character>",
               string :: "<" ## ?name ## "-string>", index :: <integer>)
-                 => (character :: "<" ## ?name ## "-character>")
+          => (character :: "<" ## ?name ## "-character>")
            string-element(string, index) := new-value
          end method element-no-bounds-check-setter;
 
@@ -156,12 +156,12 @@ define macro shared-string-definer
          end function;
 
          define sealed inline method forward-iteration-protocol
-           (sequence :: "<" ## ?name ## "-string>")
-             => (initial-state :: <integer>, limit :: <integer>,
-                 next-state :: <function>, finished-state? :: <function>,
-                 current-key :: <function>,
-                 current-element :: <function>, current-element-setter :: <function>,
-                 copy-state :: <function>)
+             (sequence :: "<" ## ?name ## "-string>")
+          => (initial-state :: <integer>, limit :: <integer>,
+              next-state :: <function>, finished-state? :: <function>,
+              current-key :: <function>,
+              current-element :: <function>, current-element-setter :: <function>,
+              copy-state :: <function>)
            values(0,
                   sequence.size,
                   sequence-next-state,
@@ -173,15 +173,15 @@ define macro shared-string-definer
          end method forward-iteration-protocol;
 
          define sealed inline method backward-iteration-protocol
-           (sequence :: "<" ## ?name ## "-string>")
-             => (final-state :: <integer>,
-                 limit :: <integer>,
-                 previous-state :: <function>,
-                 finished-state? :: <function>,
-                 current-key :: <function>,
-                 current-element :: <function>,
-                 current-element-setter :: <function>,
-                 copy-state :: <function>)
+             (sequence :: "<" ## ?name ## "-string>")
+          => (final-state :: <integer>,
+              limit :: <integer>,
+              previous-state :: <function>,
+              finished-state? :: <function>,
+              current-key :: <function>,
+              current-element :: <function>,
+              current-element-setter :: <function>,
+              copy-state :: <function>)
            values(sequence.size - 1,
                   -1,
                   sequence-previous-state,
@@ -280,7 +280,7 @@ define macro shared-string-definer
          end method as-uppercase;
 
          define sealed method as-uppercase! (string :: "<" ## ?name ## "-string>")
-             => (string :: "<" ## ?name ## "-string>")
+          => (string :: "<" ## ?name ## "-string>")
            for (i :: <integer> from 0 below string.size)
              string-element(string, i)
                := as-uppercase(string-element(string, i))
@@ -308,7 +308,7 @@ define macro string-definer
 
          define sealed method empty
              (class == "<" ## ?name ## "-string>") => (res :: "<" ## ?name ## "-string>")
-          "$empty-<" ## ?name ## "-string>"
+           "$empty-<" ## ?name ## "-string>"
          end method; }
 end macro;
 
