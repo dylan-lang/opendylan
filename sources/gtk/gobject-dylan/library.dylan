@@ -9,6 +9,7 @@ define library gobject
 
   export gobject;
   export gobject-glue;
+  export gobject-properties;
 end library;
 
 define module gobject
@@ -793,4 +794,21 @@ define module gobject-glue
     g-value-to-dylan-helper,
     property-setter-definer,
     property-getter-definer;
+end module;
+
+define module gobject-properties
+  use gobject;
+  use gobject-glue;
+
+  export
+    @target-property-setter,
+    @target-property,
+    @target-setter,
+    @target,
+    @source-property-setter,
+    @source-property,
+    @source-setter,
+    @source,
+    @flags-setter,
+    @flags;
 end module;
