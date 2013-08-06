@@ -4,6 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 
 define C-pointer-type <C-void**> => <C-void*>;
+ignore(<C-void**>);
+
+define C-pointer-type <GError*> => <GError>;
+ignore(<GError*>);
 
 // Interface
 define open C-subtype <GAction> (<C-void*>)
@@ -221,7 +225,7 @@ end;
 
 define C-function g-action-map-add-action-entries
   input parameter self :: <GActionMap>;
-  input parameter entries_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter entries_ :: <GActionEntry>;
   input parameter n_entries_ :: <C-signed-int>;
   input parameter user_data_ :: <C-void*>;
   c-name: "g_action_map_add_action_entries";
@@ -258,6 +262,7 @@ define C-function g-app-info-create-from-commandline
   input parameter commandline_ :: <C-string>;
   input parameter application_name_ :: <C-string>;
   input parameter flags_ :: <GAppInfoCreateFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GAppInfo>;
   c-name: "g_app_info_create_from_commandline";
 end;
@@ -301,6 +306,7 @@ end;
 define C-function g-app-info-launch-default-for-uri
   input parameter uri_ :: <C-string>;
   input parameter launch_context_ :: <GAppLaunchContext>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_app_info_launch_default_for_uri";
 end;
@@ -313,6 +319,7 @@ end;
 define C-function g-app-info-add-supports-type
   input parameter self :: <GAppInfo>;
   input parameter content_type_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_app_info_add_supports_type";
 end;
@@ -390,16 +397,11 @@ define C-function g-app-info-get-name
   c-name: "g_app_info_get_name";
 end;
 
-define C-function g-app-info-get-supported-types
-  input parameter self :: <GAppInfo>;
-  result res :: <C-string*>;
-  c-name: "g_app_info_get_supported_types";
-end;
-
 define C-function g-app-info-launch
   input parameter self :: <GAppInfo>;
   input parameter files_ :: <GList>;
   input parameter launch_context_ :: <GAppLaunchContext>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_app_info_launch";
 end;
@@ -408,6 +410,7 @@ define C-function g-app-info-launch-uris
   input parameter self :: <GAppInfo>;
   input parameter uris_ :: <GList>;
   input parameter launch_context_ :: <GAppLaunchContext>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_app_info_launch_uris";
 end;
@@ -415,6 +418,7 @@ end;
 define C-function g-app-info-remove-supports-type
   input parameter self :: <GAppInfo>;
   input parameter content_type_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_app_info_remove_supports_type";
 end;
@@ -422,6 +426,7 @@ end;
 define C-function g-app-info-set-as-default-for-extension
   input parameter self :: <GAppInfo>;
   input parameter extension_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_app_info_set_as_default_for_extension";
 end;
@@ -429,6 +434,7 @@ end;
 define C-function g-app-info-set-as-default-for-type
   input parameter self :: <GAppInfo>;
   input parameter content_type_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_app_info_set_as_default_for_type";
 end;
@@ -436,6 +442,7 @@ end;
 define C-function g-app-info-set-as-last-used-for-type
   input parameter self :: <GAppInfo>;
   input parameter content_type_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_app_info_set_as_last_used_for_type";
 end;
@@ -489,7 +496,6 @@ define C-struct <_GAppInfoIface>
   constant slot g-app-info-iface-get-commandline :: <C-function-pointer>;
   constant slot g-app-info-iface-get-display-name :: <C-function-pointer>;
   constant slot g-app-info-iface-set-as-last-used-for-type :: <C-function-pointer>;
-  constant slot g-app-info-iface-get-supported-types :: <C-function-pointer>;
   pointer-type-name: <GAppInfoIface>;
 end C-struct;
 
@@ -551,11 +557,11 @@ define C-struct <_GAppLaunchContextClass>
   constant slot g-app-launch-context-class-get-display :: <C-function-pointer>;
   constant slot g-app-launch-context-class-get-startup-notify-id :: <C-function-pointer>;
   constant slot g-app-launch-context-class-launch-failed :: <C-function-pointer>;
-  constant slot g-app-launch-context-class-launched :: <C-function-pointer>;
   constant slot g-app-launch-context-class-_g-reserved1 :: <C-void*>;
   constant slot g-app-launch-context-class-_g-reserved2 :: <C-void*>;
   constant slot g-app-launch-context-class-_g-reserved3 :: <C-void*>;
   constant slot g-app-launch-context-class-_g-reserved4 :: <C-void*>;
+  constant slot g-app-launch-context-class-_g-reserved5 :: <C-void*>;
   pointer-type-name: <GAppLaunchContextClass>;
 end C-struct;
 
@@ -597,18 +603,6 @@ define C-function g-application-get-application-id
   input parameter self :: <GApplication>;
   result res :: <C-string>;
   c-name: "g_application_get_application_id";
-end;
-
-define C-function g-application-get-dbus-connection
-  input parameter self :: <GApplication>;
-  result res :: <GDBusConnection>;
-  c-name: "g_application_get_dbus_connection";
-end;
-
-define C-function g-application-get-dbus-object-path
-  input parameter self :: <GApplication>;
-  result res :: <C-string>;
-  c-name: "g_application_get_dbus_object_path";
 end;
 
 define C-function g-application-get-flags
@@ -656,6 +650,7 @@ end;
 define C-function g-application-register
   input parameter self :: <GApplication>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_application_register";
 end;
@@ -715,8 +710,6 @@ define C-struct <_GApplicationClass>
   constant slot g-application-class-quit-mainloop :: <C-function-pointer>;
   constant slot g-application-class-run-mainloop :: <C-function-pointer>;
   constant slot g-application-class-shutdown :: <C-function-pointer>;
-  constant slot g-application-class-dbus-register :: <C-function-pointer>;
-  constant slot g-application-class-dbus-unregister :: <C-function-pointer>;
   constant slot g-application-class-padding :: <C-void*>;
   pointer-type-name: <GApplicationClass>;
 end C-struct;
@@ -727,13 +720,6 @@ define open C-subtype <GApplicationCommandLine> (<GObject>)
 end C-subtype;
 
 define C-pointer-type <GApplicationCommandLine*> => <GApplicationCommandLine>;
-
-define C-function g-application-command-line-create-file-for-arg
-  input parameter self :: <GApplicationCommandLine>;
-  input parameter arg_ :: <C-string>;
-  result res :: <GFile>;
-  c-name: "g_application_command_line_create_file_for_arg";
-end;
 
 define C-function g-application-command-line-get-arguments
   input parameter self :: <GApplicationCommandLine>;
@@ -772,12 +758,6 @@ define C-function g-application-command-line-get-platform-data
   c-name: "g_application_command_line_get_platform_data";
 end;
 
-define C-function g-application-command-line-get-stdin
-  input parameter self :: <GApplicationCommandLine>;
-  result res :: <GInputStream>;
-  c-name: "g_application_command_line_get_stdin";
-end;
-
 define C-function g-application-command-line-getenv
   input parameter self :: <GApplicationCommandLine>;
   input parameter name_ :: <C-string>;
@@ -795,7 +775,6 @@ define C-struct <_GApplicationCommandLineClass>
   constant slot g-application-command-line-class-parent-class :: <GObjectClass>;
   constant slot g-application-command-line-class-print-literal :: <C-function-pointer>;
   constant slot g-application-command-line-class-printerr-literal :: <C-function-pointer>;
-  constant slot g-application-command-line-class-get-stdin :: <C-function-pointer>;
   constant slot g-application-command-line-class-padding :: <C-void*>;
   pointer-type-name: <GApplicationCommandLineClass>;
 end C-struct;
@@ -855,6 +834,7 @@ end;
 define C-function g-async-initable-init-finish
   input parameter self :: <GAsyncInitable>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_async_initable_init_finish";
 end;
@@ -862,6 +842,7 @@ end;
 define C-function g-async-initable-new-finish
   input parameter self :: <GAsyncInitable>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GObject>;
   c-name: "g_async_initable_new_finish";
 end;
@@ -891,24 +872,10 @@ define C-function g-async-result-get-user-data
   c-name: "g_async_result_get_user_data";
 end;
 
-define C-function g-async-result-is-tagged
-  input parameter self :: <GAsyncResult>;
-  input parameter source_tag_ :: <C-void*>;
-  result res :: <C-boolean>;
-  c-name: "g_async_result_is_tagged";
-end;
-
-define C-function g-async-result-legacy-propagate-error
-  input parameter self :: <GAsyncResult>;
-  result res :: <C-boolean>;
-  c-name: "g_async_result_legacy_propagate_error";
-end;
-
 define C-struct <_GAsyncResultIface>
   constant slot g-async-result-iface-g-iface :: <GTypeInterface>;
   constant slot g-async-result-iface-get-user-data :: <C-function-pointer>;
   constant slot g-async-result-iface-get-source-object :: <C-function-pointer>;
-  constant slot g-async-result-iface-is-tagged :: <C-function-pointer>;
   pointer-type-name: <GAsyncResultIface>;
 end C-struct;
 
@@ -936,6 +903,7 @@ define C-function g-buffered-input-stream-fill
   input parameter self :: <GBufferedInputStream>;
   input parameter count_ :: <C-signed-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_buffered_input_stream_fill";
 end;
@@ -953,6 +921,7 @@ end;
 define C-function g-buffered-input-stream-fill-finish
   input parameter self :: <GBufferedInputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_buffered_input_stream_fill_finish";
 end;
@@ -988,6 +957,7 @@ end;
 define C-function g-buffered-input-stream-read-byte
   input parameter self :: <GBufferedInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int>;
   c-name: "g_buffered_input_stream_read_byte";
 end;
@@ -1166,6 +1136,7 @@ end;
 
 define C-function g-cancellable-set-error-if-cancelled
   input parameter self :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_cancellable_set_error_if_cancelled";
 end;
@@ -1193,6 +1164,7 @@ define C-pointer-type <GCharsetConverter*> => <GCharsetConverter>;
 define C-function g-charset-converter-new
   input parameter to_charset_ :: <C-string>;
   input parameter from_charset_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GCharsetConverter>;
   c-name: "g_charset_converter_new";
 end;
@@ -1235,6 +1207,7 @@ define C-function g-converter-convert
   input parameter flags_ :: <GConverterFlags>;
   output parameter bytes_read_ :: <C-unsigned-long*>;
   output parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <GConverterResult>;
   c-name: "g_converter_convert";
 end;
@@ -1342,14 +1315,9 @@ define C-function g-credentials-new
   c-name: "g_credentials_new";
 end;
 
-define C-function g-credentials-get-unix-pid
-  input parameter self :: <GCredentials>;
-  result res :: <C-signed-int>;
-  c-name: "g_credentials_get_unix_pid";
-end;
-
 define C-function g-credentials-get-unix-user
   input parameter self :: <GCredentials>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "g_credentials_get_unix_user";
 end;
@@ -1357,6 +1325,7 @@ end;
 define C-function g-credentials-is-same-user
   input parameter self :: <GCredentials>;
   input parameter other_credentials_ :: <GCredentials>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_credentials_is_same_user";
 end;
@@ -1371,6 +1340,7 @@ end;
 define C-function g-credentials-set-unix-user
   input parameter self :: <GCredentials>;
   input parameter uid_ :: <C-unsigned-int>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_credentials_set_unix_user";
 end;
@@ -1460,13 +1430,6 @@ define C-function g-dbus-auth-observer-new
   c-name: "g_dbus_auth_observer_new";
 end;
 
-define C-function g-dbus-auth-observer-allow-mechanism
-  input parameter self :: <GDBusAuthObserver>;
-  input parameter mechanism_ :: <C-string>;
-  result res :: <C-boolean>;
-  c-name: "g_dbus_auth_observer_allow_mechanism";
-end;
-
 define C-function g-dbus-auth-observer-authorize-authenticated-peer
   input parameter self :: <GDBusAuthObserver>;
   input parameter stream_ :: <GIOStream>;
@@ -1492,12 +1455,14 @@ define C-pointer-type <GDBusConnection*> => <GDBusConnection>;
 
 define C-function g-dbus-connection-new-finish
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusConnection>;
   c-name: "g_dbus_connection_new_finish";
 end;
 
 define C-function g-dbus-connection-new-for-address-finish
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusConnection>;
   c-name: "g_dbus_connection_new_for_address_finish";
 end;
@@ -1507,6 +1472,7 @@ define C-function g-dbus-connection-new-for-address-sync
   input parameter flags_ :: <GDBusConnectionFlags>;
   input parameter observer_ :: <GDBusAuthObserver>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusConnection>;
   c-name: "g_dbus_connection_new_for_address_sync";
 end;
@@ -1517,6 +1483,7 @@ define C-function g-dbus-connection-new-sync
   input parameter flags_ :: <GDBusConnectionFlags>;
   input parameter observer_ :: <GDBusAuthObserver>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusConnection>;
   c-name: "g_dbus_connection_new_sync";
 end;
@@ -1570,6 +1537,7 @@ end;
 define C-function g-dbus-connection-call-finish
   input parameter self :: <GDBusConnection>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_dbus_connection_call_finish";
 end;
@@ -1585,6 +1553,7 @@ define C-function g-dbus-connection-call-sync
   input parameter flags_ :: <GDBusCallFlags>;
   input parameter timeout_msec_ :: <C-signed-int>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_dbus_connection_call_sync";
 end;
@@ -1610,6 +1579,7 @@ define C-function g-dbus-connection-call-with-unix-fd-list-finish
   input parameter self :: <GDBusConnection>;
   output parameter out_fd_list_ :: <GUnixFDList*>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_dbus_connection_call_with_unix_fd_list_finish";
 end;
@@ -1627,6 +1597,7 @@ define C-function g-dbus-connection-call-with-unix-fd-list-sync
   input parameter fd_list_ :: <GUnixFDList>;
   output parameter out_fd_list_ :: <GUnixFDList*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_dbus_connection_call_with_unix_fd_list_sync";
 end;
@@ -1642,6 +1613,7 @@ end;
 define C-function g-dbus-connection-close-finish
   input parameter self :: <GDBusConnection>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_connection_close_finish";
 end;
@@ -1649,6 +1621,7 @@ end;
 define C-function g-dbus-connection-close-sync
   input parameter self :: <GDBusConnection>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_connection_close_sync";
 end;
@@ -1660,6 +1633,7 @@ define C-function g-dbus-connection-emit-signal
   input parameter interface_name_ :: <C-string>;
   input parameter signal_name_ :: <C-string>;
   input parameter parameters_ :: <GVariant>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_connection_emit_signal";
 end;
@@ -1668,6 +1642,7 @@ define C-function g-dbus-connection-export-action-group
   input parameter self :: <GDBusConnection>;
   input parameter object_path_ :: <C-string>;
   input parameter action_group_ :: <GActionGroup>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "g_dbus_connection_export_action_group";
 end;
@@ -1676,6 +1651,7 @@ define C-function g-dbus-connection-export-menu-model
   input parameter self :: <GDBusConnection>;
   input parameter object_path_ :: <C-string>;
   input parameter menu_ :: <GMenuModel>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "g_dbus_connection_export_menu_model";
 end;
@@ -1691,6 +1667,7 @@ end;
 define C-function g-dbus-connection-flush-finish
   input parameter self :: <GDBusConnection>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_connection_flush_finish";
 end;
@@ -1698,6 +1675,7 @@ end;
 define C-function g-dbus-connection-flush-sync
   input parameter self :: <GDBusConnection>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_connection_flush_sync";
 end;
@@ -1718,12 +1696,6 @@ define C-function g-dbus-connection-get-guid
   input parameter self :: <GDBusConnection>;
   result res :: <C-string>;
   c-name: "g_dbus_connection_get_guid";
-end;
-
-define C-function g-dbus-connection-get-last-serial
-  input parameter self :: <GDBusConnection>;
-  result res :: <C-unsigned-int>;
-  c-name: "g_dbus_connection_get_last_serial";
 end;
 
 define C-function g-dbus-connection-get-peer-credentials
@@ -1757,6 +1729,7 @@ define C-function g-dbus-connection-register-object
   input parameter vtable_ :: <GDBusInterfaceVTable>;
   input parameter user_data_ :: <C-void*>;
   input parameter user_data_free_func_ :: <C-function-pointer>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "g_dbus_connection_register_object";
 end;
@@ -1768,6 +1741,7 @@ define C-function g-dbus-connection-register-subtree
   input parameter flags_ :: <GDBusSubtreeFlags>;
   input parameter user_data_ :: <C-void*>;
   input parameter user_data_free_func_ :: <C-function-pointer>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "g_dbus_connection_register_subtree";
 end;
@@ -1783,6 +1757,7 @@ define C-function g-dbus-connection-send-message
   input parameter message_ :: <GDBusMessage>;
   input parameter flags_ :: <GDBusSendMessageFlags>;
   output parameter out_serial_ :: <C-unsigned-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_connection_send_message";
 end;
@@ -1802,6 +1777,7 @@ end;
 define C-function g-dbus-connection-send-message-with-reply-finish
   input parameter self :: <GDBusConnection>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusMessage>;
   c-name: "g_dbus_connection_send_message_with_reply_finish";
 end;
@@ -1813,6 +1789,7 @@ define C-function g-dbus-connection-send-message-with-reply-sync
   input parameter timeout_msec_ :: <C-signed-int>;
   output parameter out_serial_ :: <C-unsigned-int*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusMessage>;
   c-name: "g_dbus_connection_send_message_with_reply_sync";
 end;
@@ -2037,6 +2014,7 @@ define C-function g-dbus-interface-skeleton-export
   input parameter self :: <GDBusInterfaceSkeleton>;
   input parameter connection_ :: <GDBusConnection>;
   input parameter object_path_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_interface_skeleton_export";
 end;
@@ -2162,6 +2140,7 @@ define C-function g-dbus-message-new-from-blob
   input parameter blob_ :: <C-unsigned-char*>;
   input parameter blob_len_ :: <C-unsigned-long>;
   input parameter capabilities_ :: <GDBusCapabilityFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusMessage>;
   c-name: "g_dbus_message_new_from_blob";
 end;
@@ -2186,12 +2165,14 @@ end;
 define C-function g-dbus-message-bytes-needed
   input parameter blob_ :: <C-unsigned-char*>;
   input parameter blob_len_ :: <C-unsigned-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_dbus_message_bytes_needed";
 end;
 
 define C-function g-dbus-message-copy
   input parameter self :: <GDBusMessage>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusMessage>;
   c-name: "g_dbus_message_copy";
 end;
@@ -2438,12 +2419,14 @@ define C-function g-dbus-message-to-blob
   input parameter self :: <GDBusMessage>;
   output parameter out_size_ :: <C-unsigned-long*>;
   input parameter capabilities_ :: <GDBusCapabilityFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-char*>;
   c-name: "g_dbus_message_to_blob";
 end;
 
 define C-function g-dbus-message-to-gerror
   input parameter self :: <GDBusMessage>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_message_to_gerror";
 end;
@@ -2598,6 +2581,7 @@ end C-struct;
 
 define C-function g-dbus-node-info-new-for-xml
   input parameter xml_data_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusNodeInfo>;
   c-name: "g_dbus_node_info_new_for_xml";
 end;
@@ -2704,12 +2688,14 @@ define C-pointer-type <GDBusObjectManagerClient*> => <GDBusObjectManagerClient>;
 
 define C-function g-dbus-object-manager-client-new-finish
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusObjectManagerClient>;
   c-name: "g_dbus_object_manager_client_new_finish";
 end;
 
 define C-function g-dbus-object-manager-client-new-for-bus-finish
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusObjectManagerClient>;
   c-name: "g_dbus_object_manager_client_new_for_bus_finish";
 end;
@@ -2723,6 +2709,7 @@ define C-function g-dbus-object-manager-client-new-for-bus-sync
   input parameter get_proxy_type_user_data_ :: <C-void*>;
   input parameter get_proxy_type_destroy_notify_ :: <C-function-pointer>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusObjectManagerClient>;
   c-name: "g_dbus_object_manager_client_new_for_bus_sync";
 end;
@@ -2736,6 +2723,7 @@ define C-function g-dbus-object-manager-client-new-sync
   input parameter get_proxy_type_user_data_ :: <C-void*>;
   input parameter get_proxy_type_destroy_notify_ :: <C-function-pointer>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusObjectManagerClient>;
   c-name: "g_dbus_object_manager_client_new_sync";
 end;
@@ -2851,13 +2839,6 @@ define C-function g-dbus-object-manager-server-get-connection
   input parameter self :: <GDBusObjectManagerServer>;
   result res :: <GDBusConnection>;
   c-name: "g_dbus_object_manager_server_get_connection";
-end;
-
-define C-function g-dbus-object-manager-server-is-exported
-  input parameter self :: <GDBusObjectManagerServer>;
-  input parameter object_ :: <GDBusObjectSkeleton>;
-  result res :: <C-boolean>;
-  c-name: "g_dbus_object_manager_server_is_exported";
 end;
 
 define C-function g-dbus-object-manager-server-set-connection
@@ -3001,12 +2982,14 @@ define C-pointer-type <GDBusProxy*> => <GDBusProxy>;
 
 define C-function g-dbus-proxy-new-finish
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusProxy>;
   c-name: "g_dbus_proxy_new_finish";
 end;
 
 define C-function g-dbus-proxy-new-for-bus-finish
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusProxy>;
   c-name: "g_dbus_proxy_new_for_bus_finish";
 end;
@@ -3019,6 +3002,7 @@ define C-function g-dbus-proxy-new-for-bus-sync
   input parameter object_path_ :: <C-string>;
   input parameter interface_name_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusProxy>;
   c-name: "g_dbus_proxy_new_for_bus_sync";
 end;
@@ -3031,6 +3015,7 @@ define C-function g-dbus-proxy-new-sync
   input parameter object_path_ :: <C-string>;
   input parameter interface_name_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusProxy>;
   c-name: "g_dbus_proxy_new_sync";
 end;
@@ -3076,6 +3061,7 @@ end;
 define C-function g-dbus-proxy-call-finish
   input parameter self :: <GDBusProxy>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_dbus_proxy_call_finish";
 end;
@@ -3087,6 +3073,7 @@ define C-function g-dbus-proxy-call-sync
   input parameter flags_ :: <GDBusCallFlags>;
   input parameter timeout_msec_ :: <C-signed-int>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_dbus_proxy_call_sync";
 end;
@@ -3108,6 +3095,7 @@ define C-function g-dbus-proxy-call-with-unix-fd-list-finish
   input parameter self :: <GDBusProxy>;
   output parameter out_fd_list_ :: <GUnixFDList*>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_dbus_proxy_call_with_unix_fd_list_finish";
 end;
@@ -3121,6 +3109,7 @@ define C-function g-dbus-proxy-call-with-unix-fd-list-sync
   input parameter fd_list_ :: <GUnixFDList>;
   output parameter out_fd_list_ :: <GUnixFDList*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_dbus_proxy_call_with_unix_fd_list_sync";
 end;
@@ -3241,6 +3230,7 @@ define C-function g-dbus-server-new-sync
   input parameter guid_ :: <C-string>;
   input parameter observer_ :: <GDBusAuthObserver>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusServer>;
   c-name: "g_dbus_server_new_sync";
 end;
@@ -3352,6 +3342,7 @@ end;
 define C-function g-data-input-stream-read-byte
   input parameter self :: <GDataInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-char>;
   c-name: "g_data_input_stream_read_byte";
 end;
@@ -3359,6 +3350,7 @@ end;
 define C-function g-data-input-stream-read-int16
   input parameter self :: <GDataInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-short>;
   c-name: "g_data_input_stream_read_int16";
 end;
@@ -3366,6 +3358,7 @@ end;
 define C-function g-data-input-stream-read-int32
   input parameter self :: <GDataInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int>;
   c-name: "g_data_input_stream_read_int32";
 end;
@@ -3373,6 +3366,7 @@ end;
 define C-function g-data-input-stream-read-int64
   input parameter self :: <GDataInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_data_input_stream_read_int64";
 end;
@@ -3381,6 +3375,7 @@ define C-function g-data-input-stream-read-line
   input parameter self :: <GDataInputStream>;
   output parameter length_ :: <C-unsigned-long*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-char*>;
   c-name: "g_data_input_stream_read_line";
 end;
@@ -3398,6 +3393,7 @@ define C-function g-data-input-stream-read-line-finish
   input parameter self :: <GDataInputStream>;
   input parameter result_ :: <GAsyncResult>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-char*>;
   c-name: "g_data_input_stream_read_line_finish";
 end;
@@ -3406,6 +3402,7 @@ define C-function g-data-input-stream-read-line-finish-utf8
   input parameter self :: <GDataInputStream>;
   input parameter result_ :: <GAsyncResult>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_data_input_stream_read_line_finish_utf8";
 end;
@@ -3414,6 +3411,7 @@ define C-function g-data-input-stream-read-line-utf8
   input parameter self :: <GDataInputStream>;
   output parameter length_ :: <C-unsigned-long*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_data_input_stream_read_line_utf8";
 end;
@@ -3421,6 +3419,7 @@ end;
 define C-function g-data-input-stream-read-uint16
   input parameter self :: <GDataInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-short>;
   c-name: "g_data_input_stream_read_uint16";
 end;
@@ -3428,6 +3427,7 @@ end;
 define C-function g-data-input-stream-read-uint32
   input parameter self :: <GDataInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "g_data_input_stream_read_uint32";
 end;
@@ -3435,6 +3435,7 @@ end;
 define C-function g-data-input-stream-read-uint64
   input parameter self :: <GDataInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-long>;
   c-name: "g_data_input_stream_read_uint64";
 end;
@@ -3444,6 +3445,7 @@ define C-function g-data-input-stream-read-until
   input parameter stop_chars_ :: <C-string>;
   output parameter length_ :: <C-unsigned-long*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_data_input_stream_read_until";
 end;
@@ -3462,6 +3464,7 @@ define C-function g-data-input-stream-read-until-finish
   input parameter self :: <GDataInputStream>;
   input parameter result_ :: <GAsyncResult>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_data_input_stream_read_until_finish";
 end;
@@ -3472,6 +3475,7 @@ define C-function g-data-input-stream-read-upto
   input parameter stop_chars_len_ :: <C-signed-long>;
   output parameter length_ :: <C-unsigned-long*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_data_input_stream_read_upto";
 end;
@@ -3491,6 +3495,7 @@ define C-function g-data-input-stream-read-upto-finish
   input parameter self :: <GDataInputStream>;
   input parameter result_ :: <GAsyncResult>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_data_input_stream_read_upto_finish";
 end;
@@ -3544,6 +3549,7 @@ define C-function g-data-output-stream-put-byte
   input parameter self :: <GDataOutputStream>;
   input parameter data_ :: <C-unsigned-char>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_data_output_stream_put_byte";
 end;
@@ -3552,6 +3558,7 @@ define C-function g-data-output-stream-put-int16
   input parameter self :: <GDataOutputStream>;
   input parameter data_ :: <C-signed-short>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_data_output_stream_put_int16";
 end;
@@ -3560,6 +3567,7 @@ define C-function g-data-output-stream-put-int32
   input parameter self :: <GDataOutputStream>;
   input parameter data_ :: <C-signed-int>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_data_output_stream_put_int32";
 end;
@@ -3568,6 +3576,7 @@ define C-function g-data-output-stream-put-int64
   input parameter self :: <GDataOutputStream>;
   input parameter data_ :: <C-signed-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_data_output_stream_put_int64";
 end;
@@ -3576,6 +3585,7 @@ define C-function g-data-output-stream-put-string
   input parameter self :: <GDataOutputStream>;
   input parameter str_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_data_output_stream_put_string";
 end;
@@ -3584,6 +3594,7 @@ define C-function g-data-output-stream-put-uint16
   input parameter self :: <GDataOutputStream>;
   input parameter data_ :: <C-unsigned-short>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_data_output_stream_put_uint16";
 end;
@@ -3592,6 +3603,7 @@ define C-function g-data-output-stream-put-uint32
   input parameter self :: <GDataOutputStream>;
   input parameter data_ :: <C-unsigned-int>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_data_output_stream_put_uint32";
 end;
@@ -3600,6 +3612,7 @@ define C-function g-data-output-stream-put-uint64
   input parameter self :: <GDataOutputStream>;
   input parameter data_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_data_output_stream_put_uint64";
 end;
@@ -3665,13 +3678,6 @@ define C-function g-desktop-app-info-set-desktop-env
   c-name: "g_desktop_app_info_set_desktop_env";
 end;
 
-define C-function g-desktop-app-info-get-boolean
-  input parameter self :: <GDesktopAppInfo>;
-  input parameter key_ :: <C-string>;
-  result res :: <C-boolean>;
-  c-name: "g_desktop_app_info_get_boolean";
-end;
-
 define C-function g-desktop-app-info-get-categories
   input parameter self :: <GDesktopAppInfo>;
   result res :: <C-string>;
@@ -3715,26 +3721,6 @@ define C-function g-desktop-app-info-get-show-in
   c-name: "g_desktop_app_info_get_show_in";
 end;
 
-define C-function g-desktop-app-info-get-startup-wm-class
-  input parameter self :: <GDesktopAppInfo>;
-  result res :: <C-string>;
-  c-name: "g_desktop_app_info_get_startup_wm_class";
-end;
-
-define C-function g-desktop-app-info-get-string
-  input parameter self :: <GDesktopAppInfo>;
-  input parameter key_ :: <C-string>;
-  result res :: <C-string>;
-  c-name: "g_desktop_app_info_get_string";
-end;
-
-define C-function g-desktop-app-info-has-key
-  input parameter self :: <GDesktopAppInfo>;
-  input parameter key_ :: <C-string>;
-  result res :: <C-boolean>;
-  c-name: "g_desktop_app_info_has_key";
-end;
-
 define C-function g-desktop-app-info-launch-uris-as-manager
   input parameter self :: <GDesktopAppInfo>;
   input parameter uris_ :: <GList>;
@@ -3744,6 +3730,7 @@ define C-function g-desktop-app-info-launch-uris-as-manager
   input parameter user_setup_data_ :: <C-void*>;
   input parameter pid_callback_ :: <C-function-pointer>;
   input parameter pid_callback_data_ :: <C-void*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_desktop_app_info_launch_uris_as_manager";
 end;
@@ -3820,6 +3807,7 @@ end;
 define C-function g-drive-eject-finish
   input parameter self :: <GDrive>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_drive_eject_finish";
 end;
@@ -3837,6 +3825,7 @@ end;
 define C-function g-drive-eject-with-operation-finish
   input parameter self :: <GDrive>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_drive_eject_with_operation_finish";
 end;
@@ -3876,12 +3865,6 @@ define C-function g-drive-get-start-stop-type
   input parameter self :: <GDrive>;
   result res :: <GDriveStartStopType>;
   c-name: "g_drive_get_start_stop_type";
-end;
-
-define C-function g-drive-get-symbolic-icon
-  input parameter self :: <GDrive>;
-  result res :: <GIcon>;
-  c-name: "g_drive_get_symbolic_icon";
 end;
 
 define C-function g-drive-get-volumes
@@ -3925,6 +3908,7 @@ end;
 define C-function g-drive-poll-for-media-finish
   input parameter self :: <GDrive>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_drive_poll_for_media_finish";
 end;
@@ -3942,6 +3926,7 @@ end;
 define C-function g-drive-start-finish
   input parameter self :: <GDrive>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_drive_start_finish";
 end;
@@ -3959,6 +3944,7 @@ end;
 define C-function g-drive-stop-finish
   input parameter self :: <GDrive>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_drive_stop_finish";
 end;
@@ -3995,7 +3981,6 @@ define C-struct <_GDriveIface>
   constant slot g-drive-iface-eject-with-operation :: <C-function-pointer>;
   constant slot g-drive-iface-eject-with-operation-finish :: <C-function-pointer>;
   constant slot g-drive-iface-get-sort-key :: <C-function-pointer>;
-  constant slot g-drive-iface-get-symbolic-icon :: <C-function-pointer>;
   pointer-type-name: <GDriveIface>;
 end C-struct;
 
@@ -4198,8 +4183,6 @@ define constant $file-attribute-standard-size = "standard::size";
 
 define constant $file-attribute-standard-sort-order = "standard::sort-order";
 
-define constant $file-attribute-standard-symbolic-icon = "standard::symbolic-icon";
-
 define constant $file-attribute-standard-symlink-target = "standard::symlink-target";
 
 define constant $file-attribute-standard-target-uri = "standard::target-uri";
@@ -4264,13 +4247,6 @@ define C-function g-file-new-for-commandline-arg
   c-name: "g_file_new_for_commandline_arg";
 end;
 
-define C-function g-file-new-for-commandline-arg-and-cwd
-  input parameter arg_ :: <C-string>;
-  input parameter cwd_ :: <C-string>;
-  result res :: <GFile>;
-  c-name: "g_file_new_for_commandline_arg_and_cwd";
-end;
-
 define C-function g-file-new-for-path
   input parameter path_ :: <C-string>;
   result res :: <GFile>;
@@ -4286,6 +4262,7 @@ end;
 define C-function g-file-new-tmp
   input parameter tmpl_ :: <C-string>;
   output parameter iostream_ :: <GFileIOStream*>;
+  output parameter error_ :: <GError*>;
   result res :: <GFile>;
   c-name: "g_file_new_tmp";
 end;
@@ -4300,6 +4277,7 @@ define C-function g-file-append-to
   input parameter self :: <GFile>;
   input parameter flags_ :: <GFileCreateFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileOutputStream>;
   c-name: "g_file_append_to";
 end;
@@ -4317,6 +4295,7 @@ end;
 define C-function g-file-append-to-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileOutputStream>;
   c-name: "g_file_append_to_finish";
 end;
@@ -4328,6 +4307,7 @@ define C-function g-file-copy
   input parameter cancellable_ :: <GCancellable>;
   input parameter progress_callback_ :: <C-function-pointer>;
   input parameter progress_callback_data_ :: <C-void*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_copy";
 end;
@@ -4337,6 +4317,7 @@ define C-function g-file-copy-attributes
   input parameter destination_ :: <GFile>;
   input parameter flags_ :: <GFileCopyFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_copy_attributes";
 end;
@@ -4344,6 +4325,7 @@ end;
 define C-function g-file-copy-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_copy_finish";
 end;
@@ -4352,6 +4334,7 @@ define C-function g-file-create
   input parameter self :: <GFile>;
   input parameter flags_ :: <GFileCreateFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileOutputStream>;
   c-name: "g_file_create";
 end;
@@ -4369,6 +4352,7 @@ end;
 define C-function g-file-create-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileOutputStream>;
   c-name: "g_file_create_finish";
 end;
@@ -4377,6 +4361,7 @@ define C-function g-file-create-readwrite
   input parameter self :: <GFile>;
   input parameter flags_ :: <GFileCreateFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileIOStream>;
   c-name: "g_file_create_readwrite";
 end;
@@ -4394,6 +4379,7 @@ end;
 define C-function g-file-create-readwrite-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileIOStream>;
   c-name: "g_file_create_readwrite_finish";
 end;
@@ -4401,24 +4387,9 @@ end;
 define C-function g-file-delete
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_delete";
-end;
-
-define C-function g-file-delete-async
-  input parameter self :: <GFile>;
-  input parameter io_priority_ :: <C-signed-int>;
-  input parameter cancellable_ :: <GCancellable>;
-  input parameter callback_ :: <C-function-pointer>;
-  input parameter user_data_ :: <C-void*>;
-  c-name: "g_file_delete_async";
-end;
-
-define C-function g-file-delete-finish
-  input parameter self :: <GFile>;
-  input parameter result_ :: <GAsyncResult>;
-  result res :: <C-boolean>;
-  c-name: "g_file_delete_finish";
 end;
 
 define C-function g-file-dup
@@ -4439,6 +4410,7 @@ end;
 define C-function g-file-eject-mountable-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_eject_mountable_finish";
 end;
@@ -4456,6 +4428,7 @@ end;
 define C-function g-file-eject-mountable-with-operation-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_eject_mountable_with_operation_finish";
 end;
@@ -4465,6 +4438,7 @@ define C-function g-file-enumerate-children
   input parameter attributes_ :: <C-string>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileEnumerator>;
   c-name: "g_file_enumerate_children";
 end;
@@ -4483,6 +4457,7 @@ end;
 define C-function g-file-enumerate-children-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileEnumerator>;
   c-name: "g_file_enumerate_children_finish";
 end;
@@ -4497,6 +4472,7 @@ end;
 define C-function g-file-find-enclosing-mount
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GMount>;
   c-name: "g_file_find_enclosing_mount";
 end;
@@ -4513,6 +4489,7 @@ end;
 define C-function g-file-find-enclosing-mount-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GMount>;
   c-name: "g_file_find_enclosing_mount_finish";
 end;
@@ -4533,6 +4510,7 @@ end;
 define C-function g-file-get-child-for-display-name
   input parameter self :: <GFile>;
   input parameter display_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GFile>;
   c-name: "g_file_get_child_for_display_name";
 end;
@@ -4613,6 +4591,7 @@ define C-function g-file-load-contents
   output parameter contents_ :: <C-unsigned-char*>;
   output parameter length_ :: <C-unsigned-long*>;
   output parameter etag_out_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_load_contents";
 end;
@@ -4631,6 +4610,7 @@ define C-function g-file-load-contents-finish
   output parameter contents_ :: <C-unsigned-char*>;
   output parameter length_ :: <C-unsigned-long*>;
   output parameter etag_out_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_load_contents_finish";
 end;
@@ -4641,6 +4621,7 @@ define C-function g-file-load-partial-contents-finish
   output parameter contents_ :: <C-unsigned-char*>;
   output parameter length_ :: <C-unsigned-long*>;
   output parameter etag_out_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_load_partial_contents_finish";
 end;
@@ -4648,6 +4629,7 @@ end;
 define C-function g-file-make-directory
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_make_directory";
 end;
@@ -4655,6 +4637,7 @@ end;
 define C-function g-file-make-directory-with-parents
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_make_directory_with_parents";
 end;
@@ -4663,6 +4646,7 @@ define C-function g-file-make-symbolic-link
   input parameter self :: <GFile>;
   input parameter symlink_value_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_make_symbolic_link";
 end;
@@ -4671,6 +4655,7 @@ define C-function g-file-monitor
   input parameter self :: <GFile>;
   input parameter flags_ :: <GFileMonitorFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileMonitor>;
   c-name: "g_file_monitor";
 end;
@@ -4679,6 +4664,7 @@ define C-function g-file-monitor-directory
   input parameter self :: <GFile>;
   input parameter flags_ :: <GFileMonitorFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileMonitor>;
   c-name: "g_file_monitor_directory";
 end;
@@ -4687,6 +4673,7 @@ define C-function g-file-monitor-file
   input parameter self :: <GFile>;
   input parameter flags_ :: <GFileMonitorFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileMonitor>;
   c-name: "g_file_monitor_file";
 end;
@@ -4704,6 +4691,7 @@ end;
 define C-function g-file-mount-enclosing-volume-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_mount_enclosing_volume_finish";
 end;
@@ -4721,6 +4709,7 @@ end;
 define C-function g-file-mount-mountable-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFile>;
   c-name: "g_file_mount_mountable_finish";
 end;
@@ -4732,6 +4721,7 @@ define C-function g-file-move
   input parameter cancellable_ :: <GCancellable>;
   input parameter progress_callback_ :: <C-function-pointer>;
   input parameter progress_callback_data_ :: <C-void*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_move";
 end;
@@ -4739,6 +4729,7 @@ end;
 define C-function g-file-open-readwrite
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileIOStream>;
   c-name: "g_file_open_readwrite";
 end;
@@ -4755,6 +4746,7 @@ end;
 define C-function g-file-open-readwrite-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileIOStream>;
   c-name: "g_file_open_readwrite_finish";
 end;
@@ -4770,6 +4762,7 @@ end;
 define C-function g-file-poll-mountable-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_poll_mountable_finish";
 end;
@@ -4777,6 +4770,7 @@ end;
 define C-function g-file-query-default-handler
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GAppInfo>;
   c-name: "g_file_query_default_handler";
 end;
@@ -4800,6 +4794,7 @@ define C-function g-file-query-filesystem-info
   input parameter self :: <GFile>;
   input parameter attributes_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_query_filesystem_info";
 end;
@@ -4817,6 +4812,7 @@ end;
 define C-function g-file-query-filesystem-info-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_query_filesystem_info_finish";
 end;
@@ -4826,6 +4822,7 @@ define C-function g-file-query-info
   input parameter attributes_ :: <C-string>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_query_info";
 end;
@@ -4844,6 +4841,7 @@ end;
 define C-function g-file-query-info-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_query_info_finish";
 end;
@@ -4851,6 +4849,7 @@ end;
 define C-function g-file-query-settable-attributes
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileAttributeInfoList>;
   c-name: "g_file_query_settable_attributes";
 end;
@@ -4858,6 +4857,7 @@ end;
 define C-function g-file-query-writable-namespaces
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileAttributeInfoList>;
   c-name: "g_file_query_writable_namespaces";
 end;
@@ -4865,6 +4865,7 @@ end;
 define C-function g-file-read
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInputStream>;
   c-name: "g_file_read";
 end;
@@ -4881,6 +4882,7 @@ end;
 define C-function g-file-read-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInputStream>;
   c-name: "g_file_read_finish";
 end;
@@ -4891,6 +4893,7 @@ define C-function g-file-replace
   input parameter make_backup_ :: <C-boolean>;
   input parameter flags_ :: <GFileCreateFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileOutputStream>;
   c-name: "g_file_replace";
 end;
@@ -4916,6 +4919,7 @@ define C-function g-file-replace-contents
   input parameter flags_ :: <GFileCreateFlags>;
   output parameter new_etag_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_replace_contents";
 end;
@@ -4937,6 +4941,7 @@ define C-function g-file-replace-contents-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
   output parameter new_etag_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_replace_contents_finish";
 end;
@@ -4944,6 +4949,7 @@ end;
 define C-function g-file-replace-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileOutputStream>;
   c-name: "g_file_replace_finish";
 end;
@@ -4954,6 +4960,7 @@ define C-function g-file-replace-readwrite
   input parameter make_backup_ :: <C-boolean>;
   input parameter flags_ :: <GFileCreateFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileIOStream>;
   c-name: "g_file_replace_readwrite";
 end;
@@ -4973,6 +4980,7 @@ end;
 define C-function g-file-replace-readwrite-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileIOStream>;
   c-name: "g_file_replace_readwrite_finish";
 end;
@@ -4991,6 +4999,7 @@ define C-function g-file-set-attribute
   input parameter value_p_ :: <C-void*>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attribute";
 end;
@@ -5001,6 +5010,7 @@ define C-function g-file-set-attribute-byte-string
   input parameter value_ :: <C-string>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attribute_byte_string";
 end;
@@ -5011,6 +5021,7 @@ define C-function g-file-set-attribute-int32
   input parameter value_ :: <C-signed-int>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attribute_int32";
 end;
@@ -5021,6 +5032,7 @@ define C-function g-file-set-attribute-int64
   input parameter value_ :: <C-signed-long>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attribute_int64";
 end;
@@ -5031,6 +5043,7 @@ define C-function g-file-set-attribute-string
   input parameter value_ :: <C-string>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attribute_string";
 end;
@@ -5041,6 +5054,7 @@ define C-function g-file-set-attribute-uint32
   input parameter value_ :: <C-unsigned-int>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attribute_uint32";
 end;
@@ -5051,6 +5065,7 @@ define C-function g-file-set-attribute-uint64
   input parameter value_ :: <C-unsigned-long>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attribute_uint64";
 end;
@@ -5070,6 +5085,7 @@ define C-function g-file-set-attributes-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
   output parameter info_ :: <GFileInfo*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attributes_finish";
 end;
@@ -5079,6 +5095,7 @@ define C-function g-file-set-attributes-from-info
   input parameter info_ :: <GFileInfo>;
   input parameter flags_ :: <GFileQueryInfoFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_attributes_from_info";
 end;
@@ -5087,6 +5104,7 @@ define C-function g-file-set-display-name
   input parameter self :: <GFile>;
   input parameter display_name_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFile>;
   c-name: "g_file_set_display_name";
 end;
@@ -5104,6 +5122,7 @@ end;
 define C-function g-file-set-display-name-finish
   input parameter self :: <GFile>;
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFile>;
   c-name: "g_file_set_display_name_finish";
 end;
@@ -5121,6 +5140,7 @@ end;
 define C-function g-file-start-mountable-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_start_mountable_finish";
 end;
@@ -5138,6 +5158,7 @@ end;
 define C-function g-file-stop-mountable-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_stop_mountable_finish";
 end;
@@ -5151,6 +5172,7 @@ end;
 define C-function g-file-trash
   input parameter self :: <GFile>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_trash";
 end;
@@ -5167,6 +5189,7 @@ end;
 define C-function g-file-unmount-mountable-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_unmount_mountable_finish";
 end;
@@ -5184,6 +5207,7 @@ end;
 define C-function g-file-unmount-mountable-with-operation-finish
   input parameter self :: <GFile>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_unmount_mountable_with_operation_finish";
 end;
@@ -5368,6 +5392,7 @@ define C-pointer-type <GFileEnumerator*> => <GFileEnumerator>;
 define C-function g-file-enumerator-close
   input parameter self :: <GFileEnumerator>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_enumerator_close";
 end;
@@ -5384,15 +5409,9 @@ end;
 define C-function g-file-enumerator-close-finish
   input parameter self :: <GFileEnumerator>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_enumerator_close_finish";
-end;
-
-define C-function g-file-enumerator-get-child
-  input parameter self :: <GFileEnumerator>;
-  input parameter info_ :: <GFileInfo>;
-  result res :: <GFile>;
-  c-name: "g_file_enumerator_get_child";
 end;
 
 define C-function g-file-enumerator-get-container
@@ -5416,6 +5435,7 @@ end;
 define C-function g-file-enumerator-next-file
   input parameter self :: <GFileEnumerator>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_enumerator_next_file";
 end;
@@ -5433,6 +5453,7 @@ end;
 define C-function g-file-enumerator-next-files-finish
   input parameter self :: <GFileEnumerator>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GList>;
   c-name: "g_file_enumerator_next_files_finish";
 end;
@@ -5482,6 +5503,7 @@ define C-function g-file-io-stream-query-info
   input parameter self :: <GFileIOStream>;
   input parameter attributes_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_io_stream_query_info";
 end;
@@ -5499,6 +5521,7 @@ end;
 define C-function g-file-io-stream-query-info-finish
   input parameter self :: <GFileIOStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_io_stream_query_info_finish";
 end;
@@ -5602,8 +5625,8 @@ define C-struct <_GFileIface>
   constant slot g-file-iface-replace-async :: <C-function-pointer>;
   constant slot g-file-iface-replace-finish :: <C-function-pointer>;
   constant slot g-file-iface-delete-file :: <C-function-pointer>;
-  constant slot g-file-iface-delete-file-async :: <C-function-pointer>;
-  constant slot g-file-iface-delete-file-finish :: <C-function-pointer>;
+  constant slot g-file-iface-_delete-file-async :: <C-void*>;
+  constant slot g-file-iface-_delete-file-finish :: <C-void*>;
   constant slot g-file-iface-trash :: <C-function-pointer>;
   constant slot g-file-iface-_trash-async :: <C-void*>;
   constant slot g-file-iface-_trash-finish :: <C-void*>;
@@ -5779,12 +5802,6 @@ define C-function g-file-info-get-content-type
   c-name: "g_file_info_get_content_type";
 end;
 
-define C-function g-file-info-get-deletion-date
-  input parameter self :: <GFileInfo>;
-  result res :: <GDateTime>;
-  c-name: "g_file_info_get_deletion_date";
-end;
-
 define C-function g-file-info-get-display-name
   input parameter self :: <GFileInfo>;
   result res :: <C-string>;
@@ -5855,12 +5872,6 @@ define C-function g-file-info-get-sort-order
   input parameter self :: <GFileInfo>;
   result res :: <C-signed-int>;
   c-name: "g_file_info_get_sort_order";
-end;
-
-define C-function g-file-info-get-symbolic-icon
-  input parameter self :: <GFileInfo>;
-  result res :: <GIcon>;
-  c-name: "g_file_info_get_symbolic_icon";
 end;
 
 define C-function g-file-info-get-symlink-target
@@ -6047,12 +6058,6 @@ define C-function g-file-info-set-sort-order
   c-name: "g_file_info_set_sort_order";
 end;
 
-define C-function g-file-info-set-symbolic-icon
-  input parameter self :: <GFileInfo>;
-  input parameter icon_ :: <GIcon>;
-  c-name: "g_file_info_set_symbolic_icon";
-end;
-
 define C-function g-file-info-set-symlink-target
   input parameter self :: <GFileInfo>;
   input parameter symlink_target_ :: <C-string>;
@@ -6079,6 +6084,7 @@ define C-function g-file-input-stream-query-info
   input parameter self :: <GFileInputStream>;
   input parameter attributes_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_input_stream_query_info";
 end;
@@ -6096,6 +6102,7 @@ end;
 define C-function g-file-input-stream-query-info-finish
   input parameter self :: <GFileInputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_input_stream_query_info_finish";
 end;
@@ -6179,7 +6186,6 @@ define C-pointer-type <GFileMonitorEvent*> => <GFileMonitorEvent>;
 define constant $g-file-monitor-none = 0;
 define constant $g-file-monitor-watch-mounts = 1;
 define constant $g-file-monitor-send-moved = 2;
-define constant $g-file-monitor-watch-hard-links = 4;
 define constant <GFileMonitorFlags> = <C-int>;
 define C-pointer-type <GFileMonitorFlags*> => <GFileMonitorFlags>;
 
@@ -6204,6 +6210,7 @@ define C-function g-file-output-stream-query-info
   input parameter self :: <GFileOutputStream>;
   input parameter attributes_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_output_stream_query_info";
 end;
@@ -6221,6 +6228,7 @@ end;
 define C-function g-file-output-stream-query-info-finish
   input parameter self :: <GFileOutputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GFileInfo>;
   c-name: "g_file_output_stream_query_info_finish";
 end;
@@ -6418,7 +6426,6 @@ define constant $g-io-error-proxy-failed = 40;
 define constant $g-io-error-proxy-auth-failed = 41;
 define constant $g-io-error-proxy-need-auth = 42;
 define constant $g-io-error-proxy-not-allowed = 43;
-define constant $g-io-error-broken-pipe = 44;
 define constant <GIOErrorEnum> = <C-int>;
 define C-pointer-type <GIOErrorEnum*> => <GIOErrorEnum>;
 
@@ -6559,6 +6566,7 @@ define C-pointer-type <GIOStream*> => <GIOStream>;
 
 define C-function g-io-stream-splice-finish
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_io_stream_splice_finish";
 end;
@@ -6571,6 +6579,7 @@ end;
 define C-function g-io-stream-close
   input parameter self :: <GIOStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_io_stream_close";
 end;
@@ -6587,6 +6596,7 @@ end;
 define C-function g-io-stream-close-finish
   input parameter self :: <GIOStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_io_stream_close_finish";
 end;
@@ -6617,6 +6627,7 @@ end;
 
 define C-function g-io-stream-set-pending
   input parameter self :: <GIOStream>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_io_stream_set_pending";
 end;
@@ -6681,6 +6692,7 @@ end;
 
 define C-function g-icon-new-for-string
   input parameter str_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GIcon>;
   c-name: "g_icon_new_for_string";
 end;
@@ -6702,7 +6714,7 @@ define C-struct <_GIconIface>
   constant slot g-icon-iface-g-iface :: <GTypeInterface>;
   constant slot g-icon-iface-hash :: <C-function-pointer>;
   constant slot g-icon-iface-equal :: <C-function-pointer>;
-  constant slot g-icon-iface-to-tokens :: <C-void*>;
+  constant slot g-icon-iface-to-tokens :: <C-function-pointer>;
   constant slot g-icon-iface-from-tokens :: <C-void*>;
   pointer-type-name: <GIconIface>;
 end C-struct;
@@ -6841,12 +6853,14 @@ define C-pointer-type <GInetAddressMask*> => <GInetAddressMask>;
 define C-function g-inet-address-mask-new
   input parameter addr_ :: <GInetAddress>;
   input parameter length_ :: <C-unsigned-int>;
+  output parameter error_ :: <GError*>;
   result res :: <GInetAddressMask>;
   c-name: "g_inet_address_mask_new";
 end;
 
 define C-function g-inet-address-mask-new-from-string
   input parameter mask_string_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GInetAddressMask>;
   c-name: "g_inet_address_mask_new_from_string";
 end;
@@ -6960,13 +6974,15 @@ define C-function g-initable-newv
   input parameter n_parameters_ :: <C-unsigned-int>;
   input parameter parameters_ :: <C-unsigned-char*> /* Not supported */;
   input parameter cancellable_ :: <GCancellable>;
-  result res :: <GObject>;
+  output parameter error_ :: <GError*>;
+  result res :: <C-void*>;
   c-name: "g_initable_newv";
 end;
 
 define C-function g-initable-init
   input parameter self :: <GInitable>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_initable_init";
 end;
@@ -6992,6 +7008,7 @@ end;
 define C-function g-input-stream-close
   input parameter self :: <GInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_input_stream_close";
 end;
@@ -7008,6 +7025,7 @@ end;
 define C-function g-input-stream-close-finish
   input parameter self :: <GInputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_input_stream_close_finish";
 end;
@@ -7026,26 +7044,28 @@ end;
 
 define C-function g-input-stream-read
   input parameter self :: <GInputStream>;
-  input parameter buffer_ :: <C-unsigned-char*>;
+  input parameter buffer_ :: <C-void*>;
   input parameter count_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_input_stream_read";
 end;
 
 define C-function g-input-stream-read-all
   input parameter self :: <GInputStream>;
-  input parameter buffer_ :: <C-unsigned-char*>;
+  input parameter buffer_ :: <C-void*>;
   input parameter count_ :: <C-unsigned-long>;
   output parameter bytes_read_ :: <C-unsigned-long*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_input_stream_read_all";
 end;
 
 define C-function g-input-stream-read-async
   input parameter self :: <GInputStream>;
-  input parameter buffer_ :: <C-unsigned-char*>;
+  input parameter buffer_ :: <C-void*>;
   input parameter count_ :: <C-unsigned-long>;
   input parameter io_priority_ :: <C-signed-int>;
   input parameter cancellable_ :: <GCancellable>;
@@ -7054,40 +7074,17 @@ define C-function g-input-stream-read-async
   c-name: "g_input_stream_read_async";
 end;
 
-define C-function g-input-stream-read-bytes
-  input parameter self :: <GInputStream>;
-  input parameter count_ :: <C-unsigned-long>;
-  input parameter cancellable_ :: <GCancellable>;
-  result res :: <GBytes>;
-  c-name: "g_input_stream_read_bytes";
-end;
-
-define C-function g-input-stream-read-bytes-async
-  input parameter self :: <GInputStream>;
-  input parameter count_ :: <C-unsigned-long>;
-  input parameter io_priority_ :: <C-signed-int>;
-  input parameter cancellable_ :: <GCancellable>;
-  input parameter callback_ :: <C-function-pointer>;
-  input parameter user_data_ :: <C-void*>;
-  c-name: "g_input_stream_read_bytes_async";
-end;
-
-define C-function g-input-stream-read-bytes-finish
-  input parameter self :: <GInputStream>;
-  input parameter result_ :: <GAsyncResult>;
-  result res :: <GBytes>;
-  c-name: "g_input_stream_read_bytes_finish";
-end;
-
 define C-function g-input-stream-read-finish
   input parameter self :: <GInputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_input_stream_read_finish";
 end;
 
 define C-function g-input-stream-set-pending
   input parameter self :: <GInputStream>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_input_stream_set_pending";
 end;
@@ -7096,6 +7093,7 @@ define C-function g-input-stream-skip
   input parameter self :: <GInputStream>;
   input parameter count_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_input_stream_skip";
 end;
@@ -7113,6 +7111,7 @@ end;
 define C-function g-input-stream-skip-finish
   input parameter self :: <GInputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_input_stream_skip_finish";
 end;
@@ -7157,6 +7156,7 @@ define C-function g-loadable-icon-load
   input parameter size_ :: <C-signed-int>;
   output parameter type_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GInputStream>;
   c-name: "g_loadable_icon_load";
 end;
@@ -7174,6 +7174,7 @@ define C-function g-loadable-icon-load-finish
   input parameter self :: <GLoadableIcon>;
   input parameter res_ :: <GAsyncResult>;
   input parameter type_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GInputStream>;
   c-name: "g_loadable_icon_load_finish";
 end;
@@ -7187,8 +7188,6 @@ define C-struct <_GLoadableIconIface>
 end C-struct;
 
 define constant $menu-attribute-action = "action";
-
-define constant $menu-attribute-action-namespace = "action-namespace";
 
 define constant $menu-attribute-label = "label";
 
@@ -7210,24 +7209,12 @@ define C-function g-memory-input-stream-new
   c-name: "g_memory_input_stream_new";
 end;
 
-define C-function g-memory-input-stream-new-from-bytes
-  input parameter bytes_ :: <GBytes>;
-  result res :: <GInputStream>;
-  c-name: "g_memory_input_stream_new_from_bytes";
-end;
-
 define C-function g-memory-input-stream-new-from-data
   input parameter data_ :: <C-unsigned-char*>;
   input parameter len_ :: <C-signed-long>;
   input parameter destroy_ :: <C-function-pointer>;
   result res :: <GInputStream>;
   c-name: "g_memory_input_stream_new_from_data";
-end;
-
-define C-function g-memory-input-stream-add-bytes
-  input parameter self :: <GMemoryInputStream>;
-  input parameter bytes_ :: <GBytes>;
-  c-name: "g_memory_input_stream_add_bytes";
 end;
 
 define C-function g-memory-input-stream-add-data
@@ -7259,11 +7246,6 @@ end C-subtype;
 
 define C-pointer-type <GMemoryOutputStream*> => <GMemoryOutputStream>;
 
-define C-function g-memory-output-stream-new-resizable
-  result res :: <GOutputStream>;
-  c-name: "g_memory_output_stream_new_resizable";
-end;
-
 define C-function g-memory-output-stream-get-data
   input parameter self :: <GMemoryOutputStream>;
   result res :: <C-void*>;
@@ -7280,12 +7262,6 @@ define C-function g-memory-output-stream-get-size
   input parameter self :: <GMemoryOutputStream>;
   result res :: <C-unsigned-long>;
   c-name: "g_memory_output_stream_get_size";
-end;
-
-define C-function g-memory-output-stream-steal-as-bytes
-  input parameter self :: <GMemoryOutputStream>;
-  result res :: <GBytes>;
-  c-name: "g_memory_output_stream_steal_as_bytes";
 end;
 
 define C-function g-memory-output-stream-steal-data
@@ -7469,13 +7445,6 @@ define C-function g-menu-item-new
   c-name: "g_menu_item_new";
 end;
 
-define C-function g-menu-item-new-from-model
-  input parameter model_ :: <GMenuModel>;
-  input parameter item_index_ :: <C-signed-int>;
-  result res :: <GMenuItem>;
-  c-name: "g_menu_item_new_from_model";
-end;
-
 define C-function g-menu-item-new-section
   input parameter label_ :: <C-string>;
   input parameter section_ :: <GMenuModel>;
@@ -7488,21 +7457,6 @@ define C-function g-menu-item-new-submenu
   input parameter submenu_ :: <GMenuModel>;
   result res :: <GMenuItem>;
   c-name: "g_menu_item_new_submenu";
-end;
-
-define C-function g-menu-item-get-attribute-value
-  input parameter self :: <GMenuItem>;
-  input parameter attribute_ :: <C-string>;
-  input parameter expected_type_ :: <GVariantType>;
-  result res :: <GVariant>;
-  c-name: "g_menu_item_get_attribute_value";
-end;
-
-define C-function g-menu-item-get-link
-  input parameter self :: <GMenuItem>;
-  input parameter link_ :: <C-string>;
-  result res :: <GMenuModel>;
-  c-name: "g_menu_item_get_link";
 end;
 
 define C-function g-menu-item-set-action-and-target-value
@@ -7698,6 +7652,7 @@ end;
 define C-function g-mount-eject-finish
   input parameter self :: <GMount>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_mount_eject_finish";
 end;
@@ -7715,6 +7670,7 @@ end;
 define C-function g-mount-eject-with-operation-finish
   input parameter self :: <GMount>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_mount_eject_with_operation_finish";
 end;
@@ -7755,12 +7711,6 @@ define C-function g-mount-get-sort-key
   c-name: "g_mount_get_sort_key";
 end;
 
-define C-function g-mount-get-symbolic-icon
-  input parameter self :: <GMount>;
-  result res :: <GIcon>;
-  c-name: "g_mount_get_symbolic_icon";
-end;
-
 define C-function g-mount-get-uuid
   input parameter self :: <GMount>;
   result res :: <C-string>;
@@ -7785,6 +7735,7 @@ end;
 define C-function g-mount-guess-content-type-finish
   input parameter self :: <GMount>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_mount_guess_content_type_finish";
 end;
@@ -7793,6 +7744,7 @@ define C-function g-mount-guess-content-type-sync
   input parameter self :: <GMount>;
   input parameter force_rescan_ :: <C-boolean>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_mount_guess_content_type_sync";
 end;
@@ -7816,6 +7768,7 @@ end;
 define C-function g-mount-remount-finish
   input parameter self :: <GMount>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_mount_remount_finish";
 end;
@@ -7837,6 +7790,7 @@ end;
 define C-function g-mount-unmount-finish
   input parameter self :: <GMount>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_mount_unmount_finish";
 end;
@@ -7854,6 +7808,7 @@ end;
 define C-function g-mount-unmount-with-operation-finish
   input parameter self :: <GMount>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_mount_unmount_with_operation_finish";
 end;
@@ -7891,7 +7846,6 @@ define C-struct <_GMountIface>
   constant slot g-mount-iface-eject-with-operation-finish :: <C-function-pointer>;
   constant slot g-mount-iface-get-default-location :: <C-function-pointer>;
   constant slot g-mount-iface-get-sort-key :: <C-function-pointer>;
-  constant slot g-mount-iface-get-symbolic-icon :: <C-function-pointer>;
   pointer-type-name: <GMountIface>;
 end C-struct;
 
@@ -7995,8 +7949,7 @@ define C-struct <_GMountOperationClass>
   constant slot g-mount-operation-class-ask-question :: <C-function-pointer>;
   constant slot g-mount-operation-class-reply :: <C-function-pointer>;
   constant slot g-mount-operation-class-aborted :: <C-function-pointer>;
-  constant slot g-mount-operation-class-show-processes :: <C-void*>;
-  constant slot g-mount-operation-class-show-unmount-progress :: <C-function-pointer>;
+  constant slot g-mount-operation-class-show-processes :: <C-function-pointer>;
   constant slot g-mount-operation-class-_g-reserved1 :: <C-void*>;
   constant slot g-mount-operation-class-_g-reserved2 :: <C-void*>;
   constant slot g-mount-operation-class-_g-reserved3 :: <C-void*>;
@@ -8006,6 +7959,7 @@ define C-struct <_GMountOperationClass>
   constant slot g-mount-operation-class-_g-reserved7 :: <C-void*>;
   constant slot g-mount-operation-class-_g-reserved8 :: <C-void*>;
   constant slot g-mount-operation-class-_g-reserved9 :: <C-void*>;
+  constant slot g-mount-operation-class-_g-reserved10 :: <C-void*>;
   pointer-type-name: <GMountOperationClass>;
 end C-struct;
 
@@ -8057,6 +8011,7 @@ end;
 define C-function g-network-address-parse
   input parameter host_and_port_ :: <C-string>;
   input parameter default_port_ :: <C-unsigned-short>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnectable>;
   c-name: "g_network_address_parse";
 end;
@@ -8064,6 +8019,7 @@ end;
 define C-function g-network-address-parse-uri
   input parameter uri_ :: <C-string>;
   input parameter default_port_ :: <C-unsigned-short>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnectable>;
   c-name: "g_network_address_parse_uri";
 end;
@@ -8110,6 +8066,7 @@ define C-function g-network-monitor-can-reach
   input parameter self :: <GNetworkMonitor>;
   input parameter connectable_ :: <GSocketConnectable>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_network_monitor_can_reach";
 end;
@@ -8126,6 +8083,7 @@ end;
 define C-function g-network-monitor-can-reach-finish
   input parameter self :: <GNetworkMonitor>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_network_monitor_can_reach_finish";
 end;
@@ -8214,6 +8172,7 @@ end;
 define C-function g-output-stream-close
   input parameter self :: <GOutputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_output_stream_close";
 end;
@@ -8230,6 +8189,7 @@ end;
 define C-function g-output-stream-close-finish
   input parameter self :: <GOutputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_output_stream_close_finish";
 end;
@@ -8237,6 +8197,7 @@ end;
 define C-function g-output-stream-flush
   input parameter self :: <GOutputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_output_stream_flush";
 end;
@@ -8253,6 +8214,7 @@ end;
 define C-function g-output-stream-flush-finish
   input parameter self :: <GOutputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_output_stream_flush_finish";
 end;
@@ -8277,6 +8239,7 @@ end;
 
 define C-function g-output-stream-set-pending
   input parameter self :: <GOutputStream>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_output_stream_set_pending";
 end;
@@ -8286,6 +8249,7 @@ define C-function g-output-stream-splice
   input parameter source_ :: <GInputStream>;
   input parameter flags_ :: <GOutputStreamSpliceFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_output_stream_splice";
 end;
@@ -8304,6 +8268,7 @@ end;
 define C-function g-output-stream-splice-finish
   input parameter self :: <GOutputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_output_stream_splice_finish";
 end;
@@ -8313,6 +8278,7 @@ define C-function g-output-stream-write
   input parameter buffer_ :: <C-unsigned-char*>;
   input parameter count_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_output_stream_write";
 end;
@@ -8323,6 +8289,7 @@ define C-function g-output-stream-write-all
   input parameter count_ :: <C-unsigned-long>;
   output parameter bytes_written_ :: <C-unsigned-long*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_output_stream_write_all";
 end;
@@ -8338,34 +8305,10 @@ define C-function g-output-stream-write-async
   c-name: "g_output_stream_write_async";
 end;
 
-define C-function g-output-stream-write-bytes
-  input parameter self :: <GOutputStream>;
-  input parameter bytes_ :: <GBytes>;
-  input parameter cancellable_ :: <GCancellable>;
-  result res :: <C-signed-long>;
-  c-name: "g_output_stream_write_bytes";
-end;
-
-define C-function g-output-stream-write-bytes-async
-  input parameter self :: <GOutputStream>;
-  input parameter bytes_ :: <GBytes>;
-  input parameter io_priority_ :: <C-signed-int>;
-  input parameter cancellable_ :: <GCancellable>;
-  input parameter callback_ :: <C-function-pointer>;
-  input parameter user_data_ :: <C-void*>;
-  c-name: "g_output_stream_write_bytes_async";
-end;
-
-define C-function g-output-stream-write-bytes-finish
-  input parameter self :: <GOutputStream>;
-  input parameter result_ :: <GAsyncResult>;
-  result res :: <C-signed-long>;
-  c-name: "g_output_stream_write_bytes_finish";
-end;
-
 define C-function g-output-stream-write-finish
   input parameter self :: <GOutputStream>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_output_stream_write_finish";
 end;
@@ -8431,6 +8374,7 @@ define C-pointer-type <GPermission*> => <GPermission>;
 define C-function g-permission-acquire
   input parameter self :: <GPermission>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_permission_acquire";
 end;
@@ -8446,6 +8390,7 @@ end;
 define C-function g-permission-acquire-finish
   input parameter self :: <GPermission>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_permission_acquire_finish";
 end;
@@ -8479,6 +8424,7 @@ end;
 define C-function g-permission-release
   input parameter self :: <GPermission>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_permission_release";
 end;
@@ -8494,6 +8440,7 @@ end;
 define C-function g-permission-release-finish
   input parameter self :: <GPermission>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_permission_release_finish";
 end;
@@ -8542,8 +8489,9 @@ end;
 define C-function g-pollable-input-stream-read-nonblocking
   input parameter self :: <GPollableInputStream>;
   input parameter buffer_ :: <C-void*>;
-  input parameter count_ :: <C-unsigned-long>;
+  input parameter size_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_pollable_input_stream_read_nonblocking";
 end;
@@ -8585,8 +8533,9 @@ end;
 define C-function g-pollable-output-stream-write-nonblocking
   input parameter self :: <GPollableOutputStream>;
   input parameter buffer_ :: <C-unsigned-char*>;
-  input parameter count_ :: <C-unsigned-long>;
+  input parameter size_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_pollable_output_stream_write_nonblocking";
 end;
@@ -8617,6 +8566,7 @@ define C-function g-proxy-connect
   input parameter connection_ :: <GIOStream>;
   input parameter proxy_address_ :: <GProxyAddress>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStream>;
   c-name: "g_proxy_connect";
 end;
@@ -8634,6 +8584,7 @@ end;
 define C-function g-proxy-connect-finish
   input parameter self :: <GProxy>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStream>;
   c-name: "g_proxy_connect_finish";
 end;
@@ -8675,12 +8626,6 @@ define C-function g-proxy-address-get-destination-port
   c-name: "g_proxy_address_get_destination_port";
 end;
 
-define C-function g-proxy-address-get-destination-protocol
-  input parameter self :: <GProxyAddress>;
-  result res :: <C-string>;
-  c-name: "g_proxy_address_get_destination_protocol";
-end;
-
 define C-function g-proxy-address-get-password
   input parameter self :: <GProxyAddress>;
   result res :: <C-string>;
@@ -8691,12 +8636,6 @@ define C-function g-proxy-address-get-protocol
   input parameter self :: <GProxyAddress>;
   result res :: <C-string>;
   c-name: "g_proxy_address_get_protocol";
-end;
-
-define C-function g-proxy-address-get-uri
-  input parameter self :: <GProxyAddress>;
-  result res :: <C-string>;
-  c-name: "g_proxy_address_get_uri";
 end;
 
 define C-function g-proxy-address-get-username
@@ -8767,6 +8706,7 @@ define C-function g-proxy-resolver-lookup
   input parameter self :: <GProxyResolver>;
   input parameter uri_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_proxy_resolver_lookup";
 end;
@@ -8783,6 +8723,7 @@ end;
 define C-function g-proxy-resolver-lookup-finish
   input parameter self :: <GProxyResolver>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_proxy_resolver_lookup_finish";
 end;
@@ -8841,6 +8782,7 @@ define C-function g-resolver-lookup-by-address
   input parameter self :: <GResolver>;
   input parameter address_ :: <GInetAddress>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_resolver_lookup_by_address";
 end;
@@ -8857,6 +8799,7 @@ end;
 define C-function g-resolver-lookup-by-address-finish
   input parameter self :: <GResolver>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_resolver_lookup_by_address_finish";
 end;
@@ -8865,6 +8808,7 @@ define C-function g-resolver-lookup-by-name
   input parameter self :: <GResolver>;
   input parameter hostname_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GList>;
   c-name: "g_resolver_lookup_by_name";
 end;
@@ -8881,34 +8825,9 @@ end;
 define C-function g-resolver-lookup-by-name-finish
   input parameter self :: <GResolver>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GList>;
   c-name: "g_resolver_lookup_by_name_finish";
-end;
-
-define C-function g-resolver-lookup-records
-  input parameter self :: <GResolver>;
-  input parameter rrname_ :: <C-string>;
-  input parameter record_type_ :: <GResolverRecordType>;
-  input parameter cancellable_ :: <GCancellable>;
-  result res :: <GList>;
-  c-name: "g_resolver_lookup_records";
-end;
-
-define C-function g-resolver-lookup-records-async
-  input parameter self :: <GResolver>;
-  input parameter rrname_ :: <C-string>;
-  input parameter record_type_ :: <GResolverRecordType>;
-  input parameter cancellable_ :: <GCancellable>;
-  input parameter callback_ :: <C-function-pointer>;
-  input parameter user_data_ :: <C-void*>;
-  c-name: "g_resolver_lookup_records_async";
-end;
-
-define C-function g-resolver-lookup-records-finish
-  input parameter self :: <GResolver>;
-  input parameter result_ :: <GAsyncResult>;
-  result res :: <GList>;
-  c-name: "g_resolver_lookup_records_finish";
 end;
 
 define C-function g-resolver-lookup-service
@@ -8917,6 +8836,7 @@ define C-function g-resolver-lookup-service
   input parameter protocol_ :: <C-string>;
   input parameter domain_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GList>;
   c-name: "g_resolver_lookup_service";
 end;
@@ -8935,6 +8855,7 @@ end;
 define C-function g-resolver-lookup-service-finish
   input parameter self :: <GResolver>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GList>;
   c-name: "g_resolver_lookup_service_finish";
 end;
@@ -8956,9 +8877,9 @@ define C-struct <_GResolverClass>
   constant slot g-resolver-class-lookup-service :: <C-void*>;
   constant slot g-resolver-class-lookup-service-async :: <C-function-pointer>;
   constant slot g-resolver-class-lookup-service-finish :: <C-function-pointer>;
-  constant slot g-resolver-class-lookup-records :: <C-function-pointer>;
-  constant slot g-resolver-class-lookup-records-async :: <C-function-pointer>;
-  constant slot g-resolver-class-lookup-records-finish :: <C-function-pointer>;
+  constant slot g-resolver-class-_g-reserved1 :: <C-void*>;
+  constant slot g-resolver-class-_g-reserved2 :: <C-void*>;
+  constant slot g-resolver-class-_g-reserved3 :: <C-void*>;
   constant slot g-resolver-class-_g-reserved4 :: <C-void*>;
   constant slot g-resolver-class-_g-reserved5 :: <C-void*>;
   constant slot g-resolver-class-_g-reserved6 :: <C-void*>;
@@ -8975,20 +8896,13 @@ define C-struct <_GResolverPrivate>
   pointer-type-name: <GResolverPrivate>;
 end C-struct;
 
-define constant $g-resolver-record-srv = 1;
-define constant $g-resolver-record-mx = 2;
-define constant $g-resolver-record-txt = 3;
-define constant $g-resolver-record-soa = 4;
-define constant $g-resolver-record-ns = 5;
-define constant <GResolverRecordType> = <C-int>;
-define C-pointer-type <GResolverRecordType*> => <GResolverRecordType>;
-
 define C-struct <_GResource>
   pointer-type-name: <GResource>;
 end C-struct;
 
 define C-function g-resource-new-from-data
   input parameter data_ :: <GBytes>;
+  output parameter error_ :: <GError*>;
   result res :: <GResource>;
   c-name: "g_resource_new_from_data";
 end;
@@ -9007,6 +8921,7 @@ define C-function g-resource-enumerate-children
   input parameter self :: <GResource>;
   input parameter path_ :: <C-string>;
   input parameter lookup_flags_ :: <GResourceLookupFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_resource_enumerate_children";
 end;
@@ -9017,6 +8932,7 @@ define C-function g-resource-get-info
   input parameter lookup_flags_ :: <GResourceLookupFlags>;
   output parameter size_ :: <C-unsigned-long*>;
   output parameter flags_ :: <C-unsigned-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_resource_get_info";
 end;
@@ -9025,6 +8941,7 @@ define C-function g-resource-lookup-data
   input parameter self :: <GResource>;
   input parameter path_ :: <C-string>;
   input parameter lookup_flags_ :: <GResourceLookupFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GBytes>;
   c-name: "g_resource_lookup_data";
 end;
@@ -9033,6 +8950,7 @@ define C-function g-resource-open-stream
   input parameter self :: <GResource>;
   input parameter path_ :: <C-string>;
   input parameter lookup_flags_ :: <GResourceLookupFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GInputStream>;
   c-name: "g_resource_open_stream";
 end;
@@ -9050,6 +8968,7 @@ end;
 
 define C-function g-resource-load
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GResource>;
   c-name: "g_resource_load";
 end;
@@ -9091,6 +9010,7 @@ define C-function g-seekable-seek
   input parameter offset_ :: <C-signed-long>;
   input parameter type_ :: <GSeekType>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_seekable_seek";
 end;
@@ -9105,6 +9025,7 @@ define C-function g-seekable-truncate
   input parameter self :: <GSeekable>;
   input parameter offset_ :: <C-signed-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_seekable_truncate";
 end;
@@ -9481,6 +9402,7 @@ define C-function g-settings-schema-source-new-from-directory
   input parameter directory_ :: <C-string>;
   input parameter parent_ :: <GSettingsSchemaSource>;
   input parameter trusted_ :: <C-boolean>;
+  output parameter error_ :: <GError*>;
   result res :: <GSettingsSchemaSource>;
   c-name: "g_settings_schema_source_new_from_directory";
 end;
@@ -9645,6 +9567,7 @@ end;
 
 define C-function g-simple-async-result-propagate-error
   input parameter self :: <GSimpleAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_simple_async_result_propagate_error";
 end;
@@ -9694,46 +9617,6 @@ define C-function g-simple-permission-new
   c-name: "g_simple_permission_new";
 end;
 
-define open C-subtype <GSimpleProxyResolver> (<GObject>)
-  constant slot g-simple-proxy-resolver-parent-instance :: <GObject>;
-  constant slot g-simple-proxy-resolver-priv :: <GSimpleProxyResolverPrivate>;
-end C-subtype;
-
-define C-pointer-type <GSimpleProxyResolver*> => <GSimpleProxyResolver>;
-
-define C-function g-simple-proxy-resolver-set-default-proxy
-  input parameter self :: <GSimpleProxyResolver>;
-  input parameter default_proxy_ :: <C-string>;
-  c-name: "g_simple_proxy_resolver_set_default_proxy";
-end;
-
-define C-function g-simple-proxy-resolver-set-ignore-hosts
-  input parameter self :: <GSimpleProxyResolver>;
-  input parameter ignore_hosts_ :: <C-string>;
-  c-name: "g_simple_proxy_resolver_set_ignore_hosts";
-end;
-
-define C-function g-simple-proxy-resolver-set-uri-proxy
-  input parameter self :: <GSimpleProxyResolver>;
-  input parameter uri_scheme_ :: <C-string>;
-  input parameter proxy_ :: <C-string>;
-  c-name: "g_simple_proxy_resolver_set_uri_proxy";
-end;
-
-define C-struct <_GSimpleProxyResolverClass>
-  constant slot g-simple-proxy-resolver-class-parent-class :: <GObjectClass>;
-  constant slot g-simple-proxy-resolver-class-_g-reserved1 :: <C-void*>;
-  constant slot g-simple-proxy-resolver-class-_g-reserved2 :: <C-void*>;
-  constant slot g-simple-proxy-resolver-class-_g-reserved3 :: <C-void*>;
-  constant slot g-simple-proxy-resolver-class-_g-reserved4 :: <C-void*>;
-  constant slot g-simple-proxy-resolver-class-_g-reserved5 :: <C-void*>;
-  pointer-type-name: <GSimpleProxyResolverClass>;
-end C-struct;
-
-define C-struct <_GSimpleProxyResolverPrivate>
-  pointer-type-name: <GSimpleProxyResolverPrivate>;
-end C-struct;
-
 define open C-subtype <GSocket> (<GObject>)
   constant slot g-socket-parent-instance :: <GObject>;
   constant slot g-socket-priv :: <GSocketPrivate>;
@@ -9745,12 +9628,14 @@ define C-function g-socket-new
   input parameter family_ :: <GSocketFamily>;
   input parameter type_ :: <GSocketType>;
   input parameter protocol_ :: <GSocketProtocol>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocket>;
   c-name: "g_socket_new";
 end;
 
 define C-function g-socket-new-from-fd
   input parameter fd_ :: <C-signed-int>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocket>;
   c-name: "g_socket_new_from_fd";
 end;
@@ -9758,6 +9643,7 @@ end;
 define C-function g-socket-accept
   input parameter self :: <GSocket>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocket>;
   c-name: "g_socket_accept";
 end;
@@ -9766,18 +9652,21 @@ define C-function g-socket-bind
   input parameter self :: <GSocket>;
   input parameter address_ :: <GSocketAddress>;
   input parameter allow_reuse_ :: <C-boolean>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_bind";
 end;
 
 define C-function g-socket-check-connect-result
   input parameter self :: <GSocket>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_check_connect_result";
 end;
 
 define C-function g-socket-close
   input parameter self :: <GSocket>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_close";
 end;
@@ -9794,6 +9683,7 @@ define C-function g-socket-condition-timed-wait
   input parameter condition_ :: <GIOCondition>;
   input parameter timeout_ :: <C-signed-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_condition_timed_wait";
 end;
@@ -9802,6 +9692,7 @@ define C-function g-socket-condition-wait
   input parameter self :: <GSocket>;
   input parameter condition_ :: <GIOCondition>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_condition_wait";
 end;
@@ -9810,6 +9701,7 @@ define C-function g-socket-connect
   input parameter self :: <GSocket>;
   input parameter address_ :: <GSocketAddress>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_connect";
 end;
@@ -9840,6 +9732,7 @@ end;
 
 define C-function g-socket-get-credentials
   input parameter self :: <GSocket>;
+  output parameter error_ :: <GError*>;
   result res :: <GCredentials>;
   c-name: "g_socket_get_credentials";
 end;
@@ -9870,6 +9763,7 @@ end;
 
 define C-function g-socket-get-local-address
   input parameter self :: <GSocket>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketAddress>;
   c-name: "g_socket_get_local_address";
 end;
@@ -9886,15 +9780,6 @@ define C-function g-socket-get-multicast-ttl
   c-name: "g_socket_get_multicast_ttl";
 end;
 
-define C-function g-socket-get-option
-  input parameter self :: <GSocket>;
-  input parameter level_ :: <C-signed-int>;
-  input parameter optname_ :: <C-signed-int>;
-  output parameter value_ :: <C-signed-int*>;
-  result res :: <C-boolean>;
-  c-name: "g_socket_get_option";
-end;
-
 define C-function g-socket-get-protocol
   input parameter self :: <GSocket>;
   result res :: <GSocketProtocol>;
@@ -9903,6 +9788,7 @@ end;
 
 define C-function g-socket-get-remote-address
   input parameter self :: <GSocket>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketAddress>;
   c-name: "g_socket_get_remote_address";
 end;
@@ -9942,6 +9828,7 @@ define C-function g-socket-join-multicast-group
   input parameter group_ :: <GInetAddress>;
   input parameter source_specific_ :: <C-boolean>;
   input parameter iface_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_join_multicast_group";
 end;
@@ -9951,21 +9838,24 @@ define C-function g-socket-leave-multicast-group
   input parameter group_ :: <GInetAddress>;
   input parameter source_specific_ :: <C-boolean>;
   input parameter iface_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_leave_multicast_group";
 end;
 
 define C-function g-socket-listen
   input parameter self :: <GSocket>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_listen";
 end;
 
 define C-function g-socket-receive
   input parameter self :: <GSocket>;
-  input parameter buffer_ :: <C-unsigned-char*>;
+  input parameter buffer_ :: <C-string>;
   input parameter size_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_socket_receive";
 end;
@@ -9976,6 +9866,7 @@ define C-function g-socket-receive-from
   input parameter buffer_ :: <C-unsigned-char*>;
   input parameter size_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_socket_receive_from";
 end;
@@ -9989,16 +9880,18 @@ define C-function g-socket-receive-message
   input parameter num_messages_ :: <C-signed-int*>;
   input parameter flags_ :: <C-signed-int*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_socket_receive_message";
 end;
 
 define C-function g-socket-receive-with-blocking
   input parameter self :: <GSocket>;
-  input parameter buffer_ :: <C-unsigned-char*>;
+  input parameter buffer_ :: <C-string>;
   input parameter size_ :: <C-unsigned-long>;
   input parameter blocking_ :: <C-boolean>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_socket_receive_with_blocking";
 end;
@@ -10008,6 +9901,7 @@ define C-function g-socket-send
   input parameter buffer_ :: <C-unsigned-char*>;
   input parameter size_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_socket_send";
 end;
@@ -10021,6 +9915,7 @@ define C-function g-socket-send-message
   input parameter num_messages_ :: <C-signed-int>;
   input parameter flags_ :: <C-signed-int>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_socket_send_message";
 end;
@@ -10031,6 +9926,7 @@ define C-function g-socket-send-to
   input parameter buffer_ :: <C-unsigned-char*>;
   input parameter size_ :: <C-unsigned-long>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_socket_send_to";
 end;
@@ -10041,6 +9937,7 @@ define C-function g-socket-send-with-blocking
   input parameter size_ :: <C-unsigned-long>;
   input parameter blocking_ :: <C-boolean>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_socket_send_with_blocking";
 end;
@@ -10081,15 +9978,6 @@ define C-function g-socket-set-multicast-ttl
   c-name: "g_socket_set_multicast_ttl";
 end;
 
-define C-function g-socket-set-option
-  input parameter self :: <GSocket>;
-  input parameter level_ :: <C-signed-int>;
-  input parameter optname_ :: <C-signed-int>;
-  input parameter value_ :: <C-signed-int>;
-  result res :: <C-boolean>;
-  c-name: "g_socket_set_option";
-end;
-
 define C-function g-socket-set-timeout
   input parameter self :: <GSocket>;
   input parameter timeout_ :: <C-unsigned-int>;
@@ -10106,6 +9994,7 @@ define C-function g-socket-shutdown
   input parameter self :: <GSocket>;
   input parameter shutdown_read_ :: <C-boolean>;
   input parameter shutdown_write_ :: <C-boolean>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_shutdown";
 end;
@@ -10145,6 +10034,7 @@ define C-function g-socket-address-to-native
   input parameter self :: <GSocketAddress>;
   input parameter dest_ :: <C-void*>;
   input parameter destlen_ :: <C-unsigned-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_address_to_native";
 end;
@@ -10166,6 +10056,7 @@ define C-pointer-type <GSocketAddressEnumerator*> => <GSocketAddressEnumerator>;
 define C-function g-socket-address-enumerator-next
   input parameter self :: <GSocketAddressEnumerator>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketAddress>;
   c-name: "g_socket_address_enumerator_next";
 end;
@@ -10181,6 +10072,7 @@ end;
 define C-function g-socket-address-enumerator-next-finish
   input parameter self :: <GSocketAddressEnumerator>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketAddress>;
   c-name: "g_socket_address_enumerator_next_finish";
 end;
@@ -10230,6 +10122,7 @@ define C-function g-socket-client-connect
   input parameter self :: <GSocketClient>;
   input parameter connectable_ :: <GSocketConnectable>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_client_connect";
 end;
@@ -10246,6 +10139,7 @@ end;
 define C-function g-socket-client-connect-finish
   input parameter self :: <GSocketClient>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_client_connect_finish";
 end;
@@ -10255,6 +10149,7 @@ define C-function g-socket-client-connect-to-host
   input parameter host_and_port_ :: <C-string>;
   input parameter default_port_ :: <C-unsigned-short>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_client_connect_to_host";
 end;
@@ -10272,6 +10167,7 @@ end;
 define C-function g-socket-client-connect-to-host-finish
   input parameter self :: <GSocketClient>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_client_connect_to_host_finish";
 end;
@@ -10281,6 +10177,7 @@ define C-function g-socket-client-connect-to-service
   input parameter domain_ :: <C-string>;
   input parameter service_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_client_connect_to_service";
 end;
@@ -10298,6 +10195,7 @@ end;
 define C-function g-socket-client-connect-to-service-finish
   input parameter self :: <GSocketClient>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_client_connect_to_service_finish";
 end;
@@ -10307,6 +10205,7 @@ define C-function g-socket-client-connect-to-uri
   input parameter uri_ :: <C-string>;
   input parameter default_port_ :: <C-unsigned-short>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_client_connect_to_uri";
 end;
@@ -10324,6 +10223,7 @@ end;
 define C-function g-socket-client-connect-to-uri-finish
   input parameter self :: <GSocketClient>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_client_connect_to_uri_finish";
 end;
@@ -10350,12 +10250,6 @@ define C-function g-socket-client-get-protocol
   input parameter self :: <GSocketClient>;
   result res :: <GSocketProtocol>;
   c-name: "g_socket_client_get_protocol";
-end;
-
-define C-function g-socket-client-get-proxy-resolver
-  input parameter self :: <GSocketClient>;
-  result res :: <GProxyResolver>;
-  c-name: "g_socket_client_get_proxy_resolver";
 end;
 
 define C-function g-socket-client-get-socket-type
@@ -10404,12 +10298,6 @@ define C-function g-socket-client-set-protocol
   input parameter self :: <GSocketClient>;
   input parameter protocol_ :: <GSocketProtocol>;
   c-name: "g_socket_client_set_protocol";
-end;
-
-define C-function g-socket-client-set-proxy-resolver
-  input parameter self :: <GSocketClient>;
-  input parameter proxy_resolver_ :: <GProxyResolver>;
-  c-name: "g_socket_client_set_proxy_resolver";
 end;
 
 define C-function g-socket-client-set-socket-type
@@ -10514,6 +10402,7 @@ define C-function g-socket-connection-connect
   input parameter self :: <GSocketConnection>;
   input parameter address_ :: <GSocketAddress>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_connection_connect";
 end;
@@ -10530,18 +10419,21 @@ end;
 define C-function g-socket-connection-connect-finish
   input parameter self :: <GSocketConnection>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_connection_connect_finish";
 end;
 
 define C-function g-socket-connection-get-local-address
   input parameter self :: <GSocketConnection>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketAddress>;
   c-name: "g_socket_connection_get_local_address";
 end;
 
 define C-function g-socket-connection-get-remote-address
   input parameter self :: <GSocketConnection>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketAddress>;
   c-name: "g_socket_connection_get_remote_address";
 end;
@@ -10655,6 +10547,7 @@ define C-function g-socket-listener-accept
   input parameter self :: <GSocketListener>;
   output parameter source_object_ :: <GObject*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_listener_accept";
 end;
@@ -10671,6 +10564,7 @@ define C-function g-socket-listener-accept-finish
   input parameter self :: <GSocketListener>;
   input parameter result_ :: <GAsyncResult>;
   output parameter source_object_ :: <GObject*>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocketConnection>;
   c-name: "g_socket_listener_accept_finish";
 end;
@@ -10679,6 +10573,7 @@ define C-function g-socket-listener-accept-socket
   input parameter self :: <GSocketListener>;
   output parameter source_object_ :: <GObject*>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocket>;
   c-name: "g_socket_listener_accept_socket";
 end;
@@ -10695,6 +10590,7 @@ define C-function g-socket-listener-accept-socket-finish
   input parameter self :: <GSocketListener>;
   input parameter result_ :: <GAsyncResult>;
   output parameter source_object_ :: <GObject*>;
+  output parameter error_ :: <GError*>;
   result res :: <GSocket>;
   c-name: "g_socket_listener_accept_socket_finish";
 end;
@@ -10706,6 +10602,7 @@ define C-function g-socket-listener-add-address
   input parameter protocol_ :: <GSocketProtocol>;
   input parameter source_object_ :: <GObject>;
   output parameter effective_address_ :: <GSocketAddress*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_listener_add_address";
 end;
@@ -10713,6 +10610,7 @@ end;
 define C-function g-socket-listener-add-any-inet-port
   input parameter self :: <GSocketListener>;
   input parameter source_object_ :: <GObject>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-short>;
   c-name: "g_socket_listener_add_any_inet_port";
 end;
@@ -10721,6 +10619,7 @@ define C-function g-socket-listener-add-inet-port
   input parameter self :: <GSocketListener>;
   input parameter port_ :: <C-unsigned-short>;
   input parameter source_object_ :: <GObject>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_listener_add_inet_port";
 end;
@@ -10729,6 +10628,7 @@ define C-function g-socket-listener-add-socket
   input parameter self :: <GSocketListener>;
   input parameter socket_ :: <GSocket>;
   input parameter source_object_ :: <GObject>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_socket_listener_add_socket";
 end;
@@ -10909,175 +10809,6 @@ define constant $tls-database-purpose-authenticate-client = "1.3.6.1.5.5.7.3.2";
 
 define constant $tls-database-purpose-authenticate-server = "1.3.6.1.5.5.7.3.1";
 
-define open C-subtype <GTask> (<GObject>)
-end C-subtype;
-
-define C-pointer-type <GTask*> => <GTask>;
-
-define C-function g-task-new
-  input parameter source_object_ :: <GObject>;
-  input parameter cancellable_ :: <GCancellable>;
-  input parameter callback_ :: <C-function-pointer>;
-  input parameter callback_data_ :: <C-void*>;
-  result res :: <GTask>;
-  c-name: "g_task_new";
-end;
-
-define C-function g-task-is-valid
-  input parameter result_ :: <GAsyncResult>;
-  input parameter source_object_ :: <GObject>;
-  result res :: <C-boolean>;
-  c-name: "g_task_is_valid";
-end;
-
-define C-function g-task-report-error
-  input parameter source_object_ :: <GObject>;
-  input parameter callback_ :: <C-function-pointer>;
-  input parameter callback_data_ :: <C-void*>;
-  input parameter source_tag_ :: <C-void*>;
-  input parameter error_ :: <GError>;
-  c-name: "g_task_report_error";
-end;
-
-define C-function g-task-get-cancellable
-  input parameter self :: <GTask>;
-  result res :: <GCancellable>;
-  c-name: "g_task_get_cancellable";
-end;
-
-define C-function g-task-get-check-cancellable
-  input parameter self :: <GTask>;
-  result res :: <C-boolean>;
-  c-name: "g_task_get_check_cancellable";
-end;
-
-define C-function g-task-get-context
-  input parameter self :: <GTask>;
-  result res :: <GMainContext>;
-  c-name: "g_task_get_context";
-end;
-
-define C-function g-task-get-priority
-  input parameter self :: <GTask>;
-  result res :: <C-signed-int>;
-  c-name: "g_task_get_priority";
-end;
-
-define C-function g-task-get-return-on-cancel
-  input parameter self :: <GTask>;
-  result res :: <C-boolean>;
-  c-name: "g_task_get_return_on_cancel";
-end;
-
-define C-function g-task-get-source-object
-  input parameter self :: <GTask>;
-  result res :: <GObject>;
-  c-name: "g_task_get_source_object";
-end;
-
-define C-function g-task-get-source-tag
-  input parameter self :: <GTask>;
-  result res :: <C-void*>;
-  c-name: "g_task_get_source_tag";
-end;
-
-define C-function g-task-get-task-data
-  input parameter self :: <GTask>;
-  result res :: <C-void*>;
-  c-name: "g_task_get_task_data";
-end;
-
-define C-function g-task-had-error
-  input parameter self :: <GTask>;
-  result res :: <C-boolean>;
-  c-name: "g_task_had_error";
-end;
-
-define C-function g-task-propagate-boolean
-  input parameter self :: <GTask>;
-  result res :: <C-boolean>;
-  c-name: "g_task_propagate_boolean";
-end;
-
-define C-function g-task-propagate-int
-  input parameter self :: <GTask>;
-  result res :: <C-signed-long>;
-  c-name: "g_task_propagate_int";
-end;
-
-define C-function g-task-propagate-pointer
-  input parameter self :: <GTask>;
-  result res :: <C-void*>;
-  c-name: "g_task_propagate_pointer";
-end;
-
-define C-function g-task-return-boolean
-  input parameter self :: <GTask>;
-  input parameter result_ :: <C-boolean>;
-  c-name: "g_task_return_boolean";
-end;
-
-define C-function g-task-return-error
-  input parameter self :: <GTask>;
-  input parameter error_ :: <GError>;
-  c-name: "g_task_return_error";
-end;
-
-define C-function g-task-return-error-if-cancelled
-  input parameter self :: <GTask>;
-  result res :: <C-boolean>;
-  c-name: "g_task_return_error_if_cancelled";
-end;
-
-define C-function g-task-return-int
-  input parameter self :: <GTask>;
-  input parameter result_ :: <C-signed-long>;
-  c-name: "g_task_return_int";
-end;
-
-define C-function g-task-return-pointer
-  input parameter self :: <GTask>;
-  input parameter result_ :: <C-void*>;
-  input parameter result_destroy_ :: <C-function-pointer>;
-  c-name: "g_task_return_pointer";
-end;
-
-define C-function g-task-set-check-cancellable
-  input parameter self :: <GTask>;
-  input parameter check_cancellable_ :: <C-boolean>;
-  c-name: "g_task_set_check_cancellable";
-end;
-
-define C-function g-task-set-priority
-  input parameter self :: <GTask>;
-  input parameter priority_ :: <C-signed-int>;
-  c-name: "g_task_set_priority";
-end;
-
-define C-function g-task-set-return-on-cancel
-  input parameter self :: <GTask>;
-  input parameter return_on_cancel_ :: <C-boolean>;
-  result res :: <C-boolean>;
-  c-name: "g_task_set_return_on_cancel";
-end;
-
-define C-function g-task-set-source-tag
-  input parameter self :: <GTask>;
-  input parameter source_tag_ :: <C-void*>;
-  c-name: "g_task_set_source_tag";
-end;
-
-define C-function g-task-set-task-data
-  input parameter self :: <GTask>;
-  input parameter task_data_ :: <C-void*>;
-  input parameter task_data_destroy_ :: <C-function-pointer>;
-  c-name: "g_task_set_task_data";
-end;
-
-define C-struct <_GTaskClass>
-  pointer-type-name: <GTaskClass>;
-end C-struct;
-
 define open C-subtype <GTcpConnection> (<GSocketConnection>)
   constant slot g-tcp-connection-parent-instance :: <GSocketConnection>;
   constant slot g-tcp-connection-priv :: <GTcpConnectionPrivate>;
@@ -11134,58 +10865,6 @@ end C-struct;
 define C-struct <_GTcpWrapperConnectionPrivate>
   pointer-type-name: <GTcpWrapperConnectionPrivate>;
 end C-struct;
-
-define open C-subtype <GTestDBus> (<GObject>)
-end C-subtype;
-
-define C-pointer-type <GTestDBus*> => <GTestDBus>;
-
-define C-function g-test-dbus-new
-  input parameter flags_ :: <GTestDBusFlags>;
-  result res :: <GTestDBus>;
-  c-name: "g_test_dbus_new";
-end;
-
-define C-function g-test-dbus-unset
-  c-name: "g_test_dbus_unset";
-end;
-
-define C-function g-test-dbus-add-service-dir
-  input parameter self :: <GTestDBus>;
-  input parameter path_ :: <C-string>;
-  c-name: "g_test_dbus_add_service_dir";
-end;
-
-define C-function g-test-dbus-down
-  input parameter self :: <GTestDBus>;
-  c-name: "g_test_dbus_down";
-end;
-
-define C-function g-test-dbus-get-bus-address
-  input parameter self :: <GTestDBus>;
-  result res :: <C-string>;
-  c-name: "g_test_dbus_get_bus_address";
-end;
-
-define C-function g-test-dbus-get-flags
-  input parameter self :: <GTestDBus>;
-  result res :: <GTestDBusFlags>;
-  c-name: "g_test_dbus_get_flags";
-end;
-
-define C-function g-test-dbus-stop
-  input parameter self :: <GTestDBus>;
-  c-name: "g_test_dbus_stop";
-end;
-
-define C-function g-test-dbus-up
-  input parameter self :: <GTestDBus>;
-  c-name: "g_test_dbus_up";
-end;
-
-define constant $g-test-dbus-none = 0;
-define constant <GTestDBusFlags> = <C-int>;
-define C-pointer-type <GTestDBusFlags*> => <GTestDBusFlags>;
 
 define open C-subtype <GThemedIcon> (<GObject>)
 end C-subtype;
@@ -11334,6 +11013,7 @@ define C-pointer-type <GTlsCertificate*> => <GTlsCertificate>;
 
 define C-function g-tls-certificate-new-from-file
   input parameter file_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificate>;
   c-name: "g_tls_certificate_new_from_file";
 end;
@@ -11341,6 +11021,7 @@ end;
 define C-function g-tls-certificate-new-from-files
   input parameter cert_file_ :: <C-string>;
   input parameter key_file_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificate>;
   c-name: "g_tls_certificate_new_from_files";
 end;
@@ -11348,12 +11029,14 @@ end;
 define C-function g-tls-certificate-new-from-pem
   input parameter data_ :: <C-string>;
   input parameter length_ :: <C-signed-long>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificate>;
   c-name: "g_tls_certificate_new_from_pem";
 end;
 
 define C-function g-tls-certificate-list-new-from-file
   input parameter file_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GList>;
   c-name: "g_tls_certificate_list_new_from_file";
 end;
@@ -11362,13 +11045,6 @@ define C-function g-tls-certificate-get-issuer
   input parameter self :: <GTlsCertificate>;
   result res :: <GTlsCertificate>;
   c-name: "g_tls_certificate_get_issuer";
-end;
-
-define C-function g-tls-certificate-is-same
-  input parameter self :: <GTlsCertificate>;
-  input parameter cert_two_ :: <GTlsCertificate>;
-  result res :: <C-boolean>;
-  c-name: "g_tls_certificate_is_same";
 end;
 
 define C-function g-tls-certificate-verify
@@ -11410,6 +11086,7 @@ define C-pointer-type <GTlsClientConnection*> => <GTlsClientConnection>;
 define C-function g-tls-client-connection-new
   input parameter base_io_stream_ :: <GIOStream>;
   input parameter server_identity_ :: <GSocketConnectable>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsClientConnection>;
   c-name: "g_tls_client_connection_new";
 end;
@@ -11527,6 +11204,7 @@ end;
 define C-function g-tls-connection-handshake
   input parameter self :: <GTlsConnection>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_tls_connection_handshake";
 end;
@@ -11543,6 +11221,7 @@ end;
 define C-function g-tls-connection-handshake-finish
   input parameter self :: <GTlsConnection>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_tls_connection_handshake_finish";
 end;
@@ -11617,6 +11296,7 @@ define C-function g-tls-database-lookup-certificate-for-handle
   input parameter interaction_ :: <GTlsInteraction>;
   input parameter flags_ :: <GTlsDatabaseLookupFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificate>;
   c-name: "g_tls_database_lookup_certificate_for_handle";
 end;
@@ -11635,6 +11315,7 @@ end;
 define C-function g-tls-database-lookup-certificate-for-handle-finish
   input parameter self :: <GTlsDatabase>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificate>;
   c-name: "g_tls_database_lookup_certificate_for_handle_finish";
 end;
@@ -11645,6 +11326,7 @@ define C-function g-tls-database-lookup-certificate-issuer
   input parameter interaction_ :: <GTlsInteraction>;
   input parameter flags_ :: <GTlsDatabaseLookupFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificate>;
   c-name: "g_tls_database_lookup_certificate_issuer";
 end;
@@ -11663,6 +11345,7 @@ end;
 define C-function g-tls-database-lookup-certificate-issuer-finish
   input parameter self :: <GTlsDatabase>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificate>;
   c-name: "g_tls_database_lookup_certificate_issuer_finish";
 end;
@@ -11673,6 +11356,7 @@ define C-function g-tls-database-lookup-certificates-issued-by
   input parameter interaction_ :: <GTlsInteraction>;
   input parameter flags_ :: <GTlsDatabaseLookupFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GList>;
   c-name: "g_tls_database_lookup_certificates_issued_by";
 end;
@@ -11688,13 +11372,6 @@ define C-function g-tls-database-lookup-certificates-issued-by-async
   c-name: "g_tls_database_lookup_certificates_issued_by_async";
 end;
 
-define C-function g-tls-database-lookup-certificates-issued-by-finish
-  input parameter self :: <GTlsDatabase>;
-  input parameter result_ :: <GAsyncResult>;
-  result res :: <GList>;
-  c-name: "g_tls_database_lookup_certificates_issued_by_finish";
-end;
-
 define C-function g-tls-database-verify-chain
   input parameter self :: <GTlsDatabase>;
   input parameter chain_ :: <GTlsCertificate>;
@@ -11703,6 +11380,7 @@ define C-function g-tls-database-verify-chain
   input parameter interaction_ :: <GTlsInteraction>;
   input parameter flags_ :: <GTlsDatabaseVerifyFlags>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificateFlags>;
   c-name: "g_tls_database_verify_chain";
 end;
@@ -11723,6 +11401,7 @@ end;
 define C-function g-tls-database-verify-chain-finish
   input parameter self :: <GTlsDatabase>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsCertificateFlags>;
   c-name: "g_tls_database_verify_chain_finish";
 end;
@@ -11741,7 +11420,7 @@ define C-struct <_GTlsDatabaseClass>
   constant slot g-tls-database-class-lookup-certificate-issuer-finish :: <C-function-pointer>;
   constant slot g-tls-database-class-lookup-certificates-issued-by :: <C-function-pointer>;
   constant slot g-tls-database-class-lookup-certificates-issued-by-async :: <C-function-pointer>;
-  constant slot g-tls-database-class-lookup-certificates-issued-by-finish :: <C-function-pointer>;
+  constant slot g-tls-database-class-lookup-certificates-issued-by-finish :: <C-void*>;
   constant slot g-tls-database-class-padding :: <C-void*>;
   pointer-type-name: <GTlsDatabaseClass>;
 end C-struct;
@@ -11777,6 +11456,7 @@ define C-pointer-type <GTlsFileDatabase*> => <GTlsFileDatabase>;
 
 define C-function g-tls-file-database-new
   input parameter anchors_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsFileDatabase>;
   c-name: "g_tls_file_database_new";
 end;
@@ -11798,6 +11478,7 @@ define C-function g-tls-interaction-ask-password
   input parameter self :: <GTlsInteraction>;
   input parameter password_ :: <GTlsPassword>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsInteractionResult>;
   c-name: "g_tls_interaction_ask_password";
 end;
@@ -11814,6 +11495,7 @@ end;
 define C-function g-tls-interaction-ask-password-finish
   input parameter self :: <GTlsInteraction>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsInteractionResult>;
   c-name: "g_tls_interaction_ask_password_finish";
 end;
@@ -11822,6 +11504,7 @@ define C-function g-tls-interaction-invoke-ask-password
   input parameter self :: <GTlsInteraction>;
   input parameter password_ :: <GTlsPassword>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsInteractionResult>;
   c-name: "g_tls_interaction_invoke_ask_password";
 end;
@@ -11952,6 +11635,7 @@ define C-pointer-type <GTlsServerConnection*> => <GTlsServerConnection>;
 define C-function g-tls-server-connection-new
   input parameter base_io_stream_ :: <GIOStream>;
   input parameter certificate_ :: <GTlsCertificate>;
+  output parameter error_ :: <GError*>;
   result res :: <GTlsServerConnection>;
   c-name: "g_tls_server_connection_new";
 end;
@@ -11971,6 +11655,7 @@ define C-pointer-type <GUnixConnection*> => <GUnixConnection>;
 define C-function g-unix-connection-receive-credentials
   input parameter self :: <GUnixConnection>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GCredentials>;
   c-name: "g_unix_connection_receive_credentials";
 end;
@@ -11986,6 +11671,7 @@ end;
 define C-function g-unix-connection-receive-credentials-finish
   input parameter self :: <GUnixConnection>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GCredentials>;
   c-name: "g_unix_connection_receive_credentials_finish";
 end;
@@ -11993,6 +11679,7 @@ end;
 define C-function g-unix-connection-receive-fd
   input parameter self :: <GUnixConnection>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int>;
   c-name: "g_unix_connection_receive_fd";
 end;
@@ -12000,6 +11687,7 @@ end;
 define C-function g-unix-connection-send-credentials
   input parameter self :: <GUnixConnection>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_unix_connection_send_credentials";
 end;
@@ -12015,6 +11703,7 @@ end;
 define C-function g-unix-connection-send-credentials-finish
   input parameter self :: <GUnixConnection>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_unix_connection_send_credentials_finish";
 end;
@@ -12023,6 +11712,7 @@ define C-function g-unix-connection-send-fd
   input parameter self :: <GUnixConnection>;
   input parameter fd_ :: <C-signed-int>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_unix_connection_send_fd";
 end;
@@ -12098,6 +11788,7 @@ end;
 define C-function g-unix-fd-list-append
   input parameter self :: <GUnixFDList>;
   input parameter fd_ :: <C-signed-int>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int>;
   c-name: "g_unix_fd_list_append";
 end;
@@ -12105,6 +11796,7 @@ end;
 define C-function g-unix-fd-list-get
   input parameter self :: <GUnixFDList>;
   input parameter index__ :: <C-signed-int>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int>;
   c-name: "g_unix_fd_list_get";
 end;
@@ -12164,6 +11856,7 @@ end;
 define C-function g-unix-fd-message-append-fd
   input parameter self :: <GUnixFDMessage>;
   input parameter fd_ :: <C-signed-int>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_unix_fd_message_append_fd";
 end;
@@ -12320,12 +12013,6 @@ define C-function g-unix-mount-point-guess-name
   c-name: "g_unix_mount_point_guess_name";
 end;
 
-define C-function g-unix-mount-point-guess-symbolic-icon
-  input parameter self :: <GUnixMountPoint>;
-  result res :: <GIcon>;
-  c-name: "g_unix_mount_point_guess_symbolic_icon";
-end;
-
 define C-function g-unix-mount-point-is-loopback
   input parameter self :: <GUnixMountPoint>;
   result res :: <C-boolean>;
@@ -12404,14 +12091,14 @@ define C-function g-unix-socket-address-new
 end;
 
 define C-function g-unix-socket-address-new-abstract
-  input parameter path_ :: <C-signed-char*>;
+  input parameter path_ :: <C-unsigned-char*>;
   input parameter path_len_ :: <C-signed-int>;
   result res :: <GSocketAddress>;
   c-name: "g_unix_socket_address_new_abstract";
 end;
 
 define C-function g-unix-socket-address-new-with-type
-  input parameter path_ :: <C-signed-char*>;
+  input parameter path_ :: <C-unsigned-char*>;
   input parameter path_len_ :: <C-signed-int>;
   input parameter type_ :: <GUnixSocketAddressType>;
   result res :: <GSocketAddress>;
@@ -12581,6 +12268,7 @@ end;
 define C-function g-volume-eject-finish
   input parameter self :: <GVolume>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_volume_eject_finish";
 end;
@@ -12598,6 +12286,7 @@ end;
 define C-function g-volume-eject-with-operation-finish
   input parameter self :: <GVolume>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_volume_eject_with_operation_finish";
 end;
@@ -12651,12 +12340,6 @@ define C-function g-volume-get-sort-key
   c-name: "g_volume_get_sort_key";
 end;
 
-define C-function g-volume-get-symbolic-icon
-  input parameter self :: <GVolume>;
-  result res :: <GIcon>;
-  c-name: "g_volume_get_symbolic_icon";
-end;
-
 define C-function g-volume-get-uuid
   input parameter self :: <GVolume>;
   result res :: <C-string>;
@@ -12676,6 +12359,7 @@ end;
 define C-function g-volume-mount-finish
   input parameter self :: <GVolume>;
   input parameter result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_volume_mount_finish";
 end;
@@ -12708,7 +12392,6 @@ define C-struct <_GVolumeIface>
   constant slot g-volume-iface-eject-with-operation :: <C-function-pointer>;
   constant slot g-volume-iface-eject-with-operation-finish :: <C-function-pointer>;
   constant slot g-volume-iface-get-sort-key :: <C-function-pointer>;
-  constant slot g-volume-iface-get-symbolic-icon :: <C-function-pointer>;
   pointer-type-name: <GVolumeIface>;
 end C-struct;
 
@@ -12859,6 +12542,7 @@ end;
 
 define C-function g-bus-get-finish
   input parameter res_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusConnection>;
   c-name: "g_bus_get_finish";
 end;
@@ -12866,6 +12550,7 @@ end;
 define C-function g-bus-get-sync
   input parameter bus_type_ :: <GBusType>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GDBusConnection>;
   c-name: "g_bus_get_sync";
 end;
@@ -12946,12 +12631,6 @@ define C-function g-content-type-get-description
   c-name: "g_content_type_get_description";
 end;
 
-define C-function g-content-type-get-generic-icon-name
-  input parameter type_ :: <C-string>;
-  result res :: <C-string>;
-  c-name: "g_content_type_get_generic_icon_name";
-end;
-
 define C-function g-content-type-get-icon
   input parameter type_ :: <C-string>;
   result res :: <GIcon>;
@@ -12962,12 +12641,6 @@ define C-function g-content-type-get-mime-type
   input parameter type_ :: <C-string>;
   result res :: <C-string>;
   c-name: "g_content_type_get_mime_type";
-end;
-
-define C-function g-content-type-get-symbolic-icon
-  input parameter type_ :: <C-string>;
-  result res :: <GIcon>;
-  c-name: "g_content_type_get_symbolic_icon";
 end;
 
 define C-function g-content-type-guess
@@ -13003,15 +12676,10 @@ define C-function g-content-types-get-registered
   c-name: "g_content_types_get_registered";
 end;
 
-define C-function g-dbus-address-escape-value
-  input parameter string_ :: <C-string>;
-  result res :: <C-string>;
-  c-name: "g_dbus_address_escape_value";
-end;
-
 define C-function g-dbus-address-get-for-bus-sync
   input parameter bus_type_ :: <GBusType>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_dbus_address_get_for_bus_sync";
 end;
@@ -13027,6 +12695,7 @@ end;
 define C-function g-dbus-address-get-stream-finish
   input parameter res_ :: <GAsyncResult>;
   input parameter out_guid_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStream>;
   c-name: "g_dbus_address_get_stream_finish";
 end;
@@ -13035,6 +12704,7 @@ define C-function g-dbus-address-get-stream-sync
   input parameter address_ :: <C-string>;
   input parameter out_guid_ :: <C-string>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStream>;
   c-name: "g_dbus_address_get_stream_sync";
 end;
@@ -13113,7 +12783,7 @@ end;
 
 define C-function g-dbus-gvariant-to-gvalue
   input parameter value_ :: <GVariant>;
-  output parameter out_gvalue_ :: <GValue>;
+  input parameter out_gvalue_ :: <GValue>;
   c-name: "g_dbus_gvariant_to_gvalue";
 end;
 
@@ -13149,6 +12819,7 @@ end;
 
 define C-function g-dbus-is-supported-address
   input parameter string_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_dbus_is_supported_address";
 end;
@@ -13194,53 +12865,23 @@ define C-function g-io-modules-scan-all-in-directory-with-scope
   c-name: "g_io_modules_scan_all_in_directory_with_scope";
 end;
 
-define C-function g-networking-init
-  c-name: "g_networking_init";
+define C-function g-io-scheduler-cancel-all-jobs
+  c-name: "g_io_scheduler_cancel_all_jobs";
+end;
+
+define C-function g-io-scheduler-push-job
+  input parameter job_func_ :: <C-function-pointer>;
+  input parameter user_data_ :: <C-void*>;
+  input parameter notify_ :: <C-function-pointer>;
+  input parameter io_priority_ :: <C-signed-int>;
+  input parameter cancellable_ :: <GCancellable>;
+  c-name: "g_io_scheduler_push_job";
 end;
 
 define C-function g-pollable-source-new
   input parameter pollable_stream_ :: <GObject>;
   result res :: <GSource>;
   c-name: "g_pollable_source_new";
-end;
-
-define C-function g-pollable-source-new-full
-  input parameter pollable_stream_ :: <GObject>;
-  input parameter child_source_ :: <GSource>;
-  input parameter cancellable_ :: <GCancellable>;
-  result res :: <GSource>;
-  c-name: "g_pollable_source_new_full";
-end;
-
-define C-function g-pollable-stream-read
-  input parameter stream_ :: <GInputStream>;
-  input parameter buffer_ :: <C-void*>;
-  input parameter count_ :: <C-unsigned-long>;
-  input parameter blocking_ :: <C-boolean>;
-  input parameter cancellable_ :: <GCancellable>;
-  result res :: <C-signed-long>;
-  c-name: "g_pollable_stream_read";
-end;
-
-define C-function g-pollable-stream-write
-  input parameter stream_ :: <GOutputStream>;
-  input parameter buffer_ :: <C-unsigned-char*>;
-  input parameter count_ :: <C-unsigned-long>;
-  input parameter blocking_ :: <C-boolean>;
-  input parameter cancellable_ :: <GCancellable>;
-  result res :: <C-signed-long>;
-  c-name: "g_pollable_stream_write";
-end;
-
-define C-function g-pollable-stream-write-all
-  input parameter stream_ :: <GOutputStream>;
-  input parameter buffer_ :: <C-unsigned-char*>;
-  input parameter count_ :: <C-unsigned-long>;
-  input parameter blocking_ :: <C-boolean>;
-  output parameter bytes_written_ :: <C-unsigned-long*>;
-  input parameter cancellable_ :: <GCancellable>;
-  result res :: <C-boolean>;
-  c-name: "g_pollable_stream_write_all";
 end;
 
 define C-function g-resolver-error-quark
@@ -13256,6 +12897,7 @@ end;
 define C-function g-resources-enumerate-children
   input parameter path_ :: <C-string>;
   input parameter lookup_flags_ :: <GResourceLookupFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_resources_enumerate_children";
 end;
@@ -13265,6 +12907,7 @@ define C-function g-resources-get-info
   input parameter lookup_flags_ :: <GResourceLookupFlags>;
   output parameter size_ :: <C-unsigned-long*>;
   output parameter flags_ :: <C-unsigned-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_resources_get_info";
 end;
@@ -13272,6 +12915,7 @@ end;
 define C-function g-resources-lookup-data
   input parameter path_ :: <C-string>;
   input parameter lookup_flags_ :: <GResourceLookupFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GBytes>;
   c-name: "g_resources_lookup_data";
 end;
@@ -13279,6 +12923,7 @@ end;
 define C-function g-resources-open-stream
   input parameter path_ :: <C-string>;
   input parameter lookup_flags_ :: <GResourceLookupFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GInputStream>;
   c-name: "g_resources_open_stream";
 end;
@@ -13354,12 +12999,6 @@ define C-function g-unix-mount-guess-should-display
   input parameter mount_entry_ :: <GUnixMountEntry>;
   result res :: <C-boolean>;
   c-name: "g_unix_mount_guess_should_display";
-end;
-
-define C-function g-unix-mount-guess-symbolic-icon
-  input parameter mount_entry_ :: <GUnixMountEntry>;
-  result res :: <GIcon>;
-  c-name: "g_unix_mount_guess_symbolic_icon";
 end;
 
 define C-function g-unix-mount-is-readonly

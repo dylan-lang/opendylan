@@ -4,6 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 
 define C-pointer-type <C-void**> => <C-void*>;
+ignore(<C-void**>);
+
+define C-pointer-type <GError*> => <GError>;
+ignore(<GError*>);
 
 define constant $analysis-flag-centered-baseline = 1;
 
@@ -91,8 +95,8 @@ end;
 
 define C-function pango-attr-iterator-range
   input parameter self :: <PangoAttrIterator>;
-  output parameter start_ :: <C-signed-int*>;
-  output parameter end_ :: <C-signed-int*>;
+  input parameter start_ :: <C-signed-int*>;
+  input parameter end_ :: <C-signed-int*>;
   c-name: "pango_attr_iterator_range";
 end;
 
@@ -299,11 +303,6 @@ define C-function pango-context-new
   c-name: "pango_context_new";
 end;
 
-define C-function pango-context-changed
-  input parameter self :: <PangoContext>;
-  c-name: "pango_context_changed";
-end;
-
 define C-function pango-context-get-base-dir
   input parameter self :: <PangoContext>;
   result res :: <PangoDirection>;
@@ -358,12 +357,6 @@ define C-function pango-context-get-metrics
   input parameter language_ :: <PangoLanguage>;
   result res :: <PangoFontMetrics>;
   c-name: "pango_context_get_metrics";
-end;
-
-define C-function pango-context-get-serial
-  input parameter self :: <PangoContext>;
-  result res :: <C-unsigned-int>;
-  c-name: "pango_context_get_serial";
 end;
 
 define C-function pango-context-list-families
@@ -460,8 +453,8 @@ end;
 
 define C-function pango-coverage-to-bytes
   input parameter self :: <PangoCoverage>;
-  output parameter bytes_ :: <C-unsigned-char*>;
-  output parameter n_bytes_ :: <C-signed-int*>;
+  input parameter bytes_ :: <C-unsigned-char*>;
+  input parameter n_bytes_ :: <C-signed-int*>;
   c-name: "pango_coverage_to_bytes";
 end;
 
@@ -768,8 +761,8 @@ end;
 
 define C-function pango-font-face-list-sizes
   input parameter self :: <PangoFontFace>;
-  output parameter sizes_ :: <C-signed-int*>;
-  output parameter n_sizes_ :: <C-signed-int*>;
+  input parameter sizes_ :: <C-signed-int*>;
+  input parameter n_sizes_ :: <C-signed-int*>;
   c-name: "pango_font_face_list_sizes";
 end;
 
@@ -806,12 +799,6 @@ define C-function pango-font-map-create-context
   input parameter self :: <PangoFontMap>;
   result res :: <PangoContext>;
   c-name: "pango_font_map_create_context";
-end;
-
-define C-function pango-font-map-get-serial
-  input parameter self :: <PangoFontMap>;
-  result res :: <C-unsigned-int>;
-  c-name: "pango_font_map_get_serial";
 end;
 
 define C-function pango-font-map-list-families
@@ -956,14 +943,6 @@ define C-struct <_PangoGlyphItem>
   pointer-type-name: <PangoGlyphItem>;
 end C-struct;
 
-define C-function pango-glyph-item-apply-attrs
-  input parameter self :: <PangoGlyphItem>;
-  input parameter text_ :: <C-string>;
-  input parameter list_ :: <PangoAttrList>;
-  result res :: <GSList>;
-  c-name: "pango_glyph_item_apply_attrs";
-end;
-
 define C-function pango-glyph-item-copy
   input parameter self :: <PangoGlyphItem>;
   result res :: <PangoGlyphItem>;
@@ -985,7 +964,7 @@ end;
 define C-function pango-glyph-item-letter-space
   input parameter self :: <PangoGlyphItem>;
   input parameter text_ :: <C-string>;
-  input parameter log_attrs_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter log_attrs_ :: <PangoLogAttr>;
   input parameter letter_spacing_ :: <C-signed-int>;
   c-name: "pango_glyph_item_letter_space";
 end;
@@ -1081,8 +1060,8 @@ define C-function pango-glyph-string-extents-range
   input parameter start_ :: <C-signed-int>;
   input parameter end_ :: <C-signed-int>;
   input parameter font_ :: <PangoFont>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_glyph_string_extents_range";
 end;
 
@@ -1113,7 +1092,7 @@ define C-function pango-glyph-string-index-to-x
   input parameter analysis_ :: <PangoAnalysis>;
   input parameter index__ :: <C-signed-int>;
   input parameter trailing_ :: <C-boolean>;
-  output parameter x_pos_ :: <C-signed-int*>;
+  input parameter x_pos_ :: <C-signed-int*>;
   c-name: "pango_glyph_string_index_to_x";
 end;
 
@@ -1129,8 +1108,8 @@ define C-function pango-glyph-string-x-to-index
   input parameter length_ :: <C-signed-int>;
   input parameter analysis_ :: <PangoAnalysis>;
   input parameter x_pos_ :: <C-signed-int>;
-  output parameter index__ :: <C-signed-int*>;
-  output parameter trailing_ :: <C-signed-int*>;
+  input parameter index__ :: <C-signed-int*>;
+  input parameter trailing_ :: <C-signed-int*>;
   c-name: "pango_glyph_string_x_to_index";
 end;
 
@@ -1198,7 +1177,7 @@ end;
 define C-function pango-language-get-scripts
   input parameter self :: <PangoLanguage>;
   output parameter num_scripts_ :: <C-signed-int*>;
-  result res :: <C-unsigned-char*> /* Not supported */;
+  result res :: <PangoScript>;
   c-name: "pango_language_get_scripts";
 end;
 
@@ -1383,8 +1362,8 @@ end;
 
 define C-function pango-layout-get-log-attrs-readonly
   input parameter self :: <PangoLayout>;
-  output parameter n_attrs_ :: <C-signed-int*>;
-  result res :: <C-unsigned-char*> /* Not supported */;
+  input parameter n_attrs_ :: <C-signed-int*>;
+  result res :: <PangoLogAttr>;
   c-name: "pango_layout_get_log_attrs_readonly";
 end;
 
@@ -1400,12 +1379,6 @@ define C-function pango-layout-get-pixel-size
   output parameter width_ :: <C-signed-int*>;
   output parameter height_ :: <C-signed-int*>;
   c-name: "pango_layout_get_pixel_size";
-end;
-
-define C-function pango-layout-get-serial
-  input parameter self :: <PangoLayout>;
-  result res :: <C-unsigned-int>;
-  c-name: "pango_layout_get_serial";
 end;
 
 define C-function pango-layout-get-single-paragraph-mode
@@ -1492,7 +1465,7 @@ define C-function pango-layout-move-cursor-visually
   input parameter old_trailing_ :: <C-signed-int>;
   input parameter direction_ :: <C-signed-int>;
   output parameter new_index_ :: <C-signed-int*>;
-  output parameter new_trailing_ :: <C-signed-int*>;
+  input parameter new_trailing_ :: <C-signed-int*>;
   c-name: "pango_layout_move_cursor_visually";
 end;
 
@@ -1640,7 +1613,7 @@ end;
 
 define C-function pango-layout-iter-get-char-extents
   input parameter self :: <PangoLayoutIter>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_iter_get_char_extents";
 end;
 
@@ -2156,16 +2129,6 @@ define constant $pango-script-vai = 74;
 define constant $pango-script-carian = 75;
 define constant $pango-script-lycian = 76;
 define constant $pango-script-lydian = 77;
-define constant $pango-script-batak = 78;
-define constant $pango-script-brahmi = 79;
-define constant $pango-script-mandaic = 80;
-define constant $pango-script-chakma = 81;
-define constant $pango-script-meroitic-cursive = 82;
-define constant $pango-script-meroitic-hieroglyphs = 83;
-define constant $pango-script-miao = 84;
-define constant $pango-script-sharada = 85;
-define constant $pango-script-sora-sompeng = 86;
-define constant $pango-script-takri = 87;
 define constant <PangoScript> = <C-int>;
 define C-pointer-type <PangoScript*> => <PangoScript>;
 
@@ -2315,7 +2278,7 @@ define constant <PangoWrapMode> = <C-int>;
 define C-pointer-type <PangoWrapMode*> => <PangoWrapMode>;
 
 define C-struct <_Pango_ScriptForLang>
-  slot pango-_script-for-lang-lang :: <C-signed-char*>;
+  slot pango-_script-for-lang-lang :: <C-unsigned-char*>;
   slot pango-_script-for-lang-scripts :: <C-unsigned-char*> /* Not supported */;
   pointer-type-name: <Pango_ScriptForLang>;
 end C-struct;
@@ -2342,7 +2305,7 @@ define C-function pango-break
   input parameter text_ :: <C-string>;
   input parameter length_ :: <C-signed-int>;
   input parameter analysis_ :: <PangoAnalysis>;
-  input parameter attrs_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter attrs_ :: <PangoLogAttr>;
   input parameter attrs_len_ :: <C-signed-int>;
   c-name: "pango_break";
 end;
@@ -2363,8 +2326,8 @@ end;
 define C-function pango-find-paragraph-boundary
   input parameter text_ :: <C-string>;
   input parameter length_ :: <C-signed-int>;
-  output parameter paragraph_delimiter_index_ :: <C-signed-int*>;
-  output parameter next_paragraph_start_ :: <C-signed-int*>;
+  input parameter paragraph_delimiter_index_ :: <C-signed-int*>;
+  input parameter next_paragraph_start_ :: <C-signed-int*>;
   c-name: "pango_find_paragraph_boundary";
 end;
 
@@ -2373,7 +2336,7 @@ define C-function pango-get-log-attrs
   input parameter length_ :: <C-signed-int>;
   input parameter level_ :: <C-signed-int>;
   input parameter language_ :: <PangoLanguage>;
-  input parameter log_attrs_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter log_attrs_ :: <PangoLogAttr>;
   input parameter attrs_len_ :: <C-signed-int>;
   c-name: "pango_get_log_attrs";
 end;
@@ -2451,21 +2414,6 @@ define C-function pango-log2vis-get-embedding-levels
   c-name: "pango_log2vis_get_embedding_levels";
 end;
 
-define C-function pango-markup-parser-finish
-  input parameter context_ :: <GMarkupParseContext>;
-  output parameter attr_list_ :: <PangoAttrList>;
-  output parameter text_ :: <C-string>;
-  output parameter accel_char_ :: <C-unsigned-int*>;
-  result res :: <C-boolean>;
-  c-name: "pango_markup_parser_finish";
-end;
-
-define C-function pango-markup-parser-new
-  input parameter accel_marker_ :: <C-unsigned-int>;
-  result res :: <GMarkupParseContext>;
-  c-name: "pango_markup_parser_new";
-end;
-
 define C-function pango-parse-enum
   input parameter type_ :: <C-long>;
   input parameter str_ :: <C-string>;
@@ -2483,13 +2431,14 @@ define C-function pango-parse-markup
   output parameter attr_list_ :: <PangoAttrList>;
   output parameter text_ :: <C-string>;
   output parameter accel_char_ :: <C-unsigned-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "pango_parse_markup";
 end;
 
 define C-function pango-parse-stretch
   input parameter str_ :: <C-string>;
-  output parameter stretch_ :: <PangoStretch*>;
+  input parameter stretch_ :: <PangoStretch>;
   input parameter warn_ :: <C-boolean>;
   result res :: <C-boolean>;
   c-name: "pango_parse_stretch";
@@ -2497,7 +2446,7 @@ end;
 
 define C-function pango-parse-style
   input parameter str_ :: <C-string>;
-  output parameter style_ :: <PangoStyle*>;
+  input parameter style_ :: <PangoStyle>;
   input parameter warn_ :: <C-boolean>;
   result res :: <C-boolean>;
   c-name: "pango_parse_style";
@@ -2505,7 +2454,7 @@ end;
 
 define C-function pango-parse-variant
   input parameter str_ :: <C-string>;
-  output parameter variant_ :: <PangoVariant*>;
+  input parameter variant_ :: <PangoVariant>;
   input parameter warn_ :: <C-boolean>;
   result res :: <C-boolean>;
   c-name: "pango_parse_variant";
@@ -2513,7 +2462,7 @@ end;
 
 define C-function pango-parse-weight
   input parameter str_ :: <C-string>;
-  output parameter weight_ :: <PangoWeight*>;
+  input parameter weight_ :: <PangoWeight>;
   input parameter warn_ :: <C-boolean>;
   result res :: <C-boolean>;
   c-name: "pango_parse_weight";
@@ -2530,12 +2479,6 @@ define C-function pango-read-line
   output parameter str_ :: <GString>;
   result res :: <C-signed-int>;
   c-name: "pango_read_line";
-end;
-
-define C-function pango-reorder-items
-  input parameter logical_items_ :: <GList>;
-  result res :: <GList>;
-  c-name: "pango_reorder_items";
 end;
 
 define C-function pango-scan-int
@@ -2577,16 +2520,6 @@ define C-function pango-shape
   input parameter analysis_ :: <PangoAnalysis>;
   input parameter glyphs_ :: <PangoGlyphString>;
   c-name: "pango_shape";
-end;
-
-define C-function pango-shape-full
-  input parameter item_text_ :: <C-string>;
-  input parameter item_length_ :: <C-signed-int>;
-  input parameter paragraph_text_ :: <C-string>;
-  input parameter paragraph_length_ :: <C-signed-int>;
-  input parameter analysis_ :: <PangoAnalysis>;
-  input parameter glyphs_ :: <PangoGlyphString>;
-  c-name: "pango_shape_full";
 end;
 
 define C-function pango-skip-space

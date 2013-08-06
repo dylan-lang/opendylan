@@ -4,6 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 
 define C-pointer-type <C-void**> => <C-void*>;
+ignore(<C-void**>);
+
+define C-pointer-type <GError*> => <GError>;
+ignore(<GError*>);
 
 define open C-subtype <GBinding> (<GObject>)
 end C-subtype;
@@ -543,28 +547,6 @@ define C-function g-object-ref-sink
   c-name: "g_object_ref_sink";
 end;
 
-define C-function g-object-replace-data
-  input parameter self :: <GObject>;
-  input parameter key_ :: <C-string>;
-  input parameter oldval_ :: <C-void*>;
-  input parameter newval_ :: <C-void*>;
-  input parameter destroy_ :: <C-function-pointer>;
-  input parameter old_destroy_ :: <C-function-pointer>;
-  result res :: <C-boolean>;
-  c-name: "g_object_replace_data";
-end;
-
-define C-function g-object-replace-qdata
-  input parameter self :: <GObject>;
-  input parameter quark_ :: <C-unsigned-int>;
-  input parameter oldval_ :: <C-void*>;
-  input parameter newval_ :: <C-void*>;
-  input parameter destroy_ :: <C-function-pointer>;
-  input parameter old_destroy_ :: <C-function-pointer>;
-  result res :: <C-boolean>;
-  c-name: "g_object_replace_qdata";
-end;
-
 define C-function g-object-run-dispose
   input parameter self :: <GObject>;
   c-name: "g_object_run_dispose";
@@ -937,7 +919,7 @@ define open C-subtype <GParamSpecString> (<GParamSpec>)
   constant slot g-param-spec-string-default-value :: <C-string>;
   constant slot g-param-spec-string-cset-first :: <C-string>;
   constant slot g-param-spec-string-cset-nth :: <C-string>;
-  constant slot g-param-spec-string-substitutor :: <C-signed-char>;
+  constant slot g-param-spec-string-substitutor :: <C-unsigned-char>;
   constant slot g-param-spec-string-null-fold-if-empty :: <C-unsigned-int>;
   constant slot g-param-spec-string-ensure-non-null :: <C-unsigned-int>;
 end C-subtype;
@@ -1065,8 +1047,6 @@ define C-struct <_GSignalQuery>
   pointer-type-name: <GSignalQuery>;
 end C-struct;
 
-define constant $type-flag-reserved-id-bit = 1;
-
 define constant $type-fundamental-max = 255;
 
 define constant $type-fundamental-shift = 2;
@@ -1129,6 +1109,13 @@ define C-function g-type-class-ref
   result res :: <GTypeClass>;
   c-name: "g_type_class_ref";
 end;
+
+define constant $g-type-debug-none = 0;
+define constant $g-type-debug-objects = 1;
+define constant $g-type-debug-signals = 2;
+define constant $g-type-debug-mask = 3;
+define constant <GTypeDebugFlags> = <C-int>;
+define C-pointer-type <GTypeDebugFlags*> => <GTypeDebugFlags>;
 
 define constant $g-type-flag-abstract = 16;
 define constant $g-type-flag-value-abstract = 32;
@@ -1391,7 +1378,7 @@ end;
 
 define C-function g-value-get-char
   input parameter self :: <GValue>;
-  result res :: <C-signed-char>;
+  result res :: <C-unsigned-char>;
   c-name: "g_value_get_char";
 end;
 
@@ -1542,7 +1529,7 @@ end;
 
 define C-function g-value-set-char
   input parameter self :: <GValue>;
-  input parameter v_char_ :: <C-signed-char>;
+  input parameter v_char_ :: <C-unsigned-char>;
   c-name: "g_value_set_char";
 end;
 
@@ -1846,227 +1833,6 @@ define C-function g-gtype-get-type
   c-name: "g_gtype_get_type";
 end;
 
-define C-function g-param-spec-boolean
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter default_value_ :: <C-boolean>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_boolean";
-end;
-
-define C-function g-param-spec-boxed
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter boxed_type_ :: <C-long>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_boxed";
-end;
-
-define C-function g-param-spec-char
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-signed-char>;
-  input parameter maximum_ :: <C-signed-char>;
-  input parameter default_value_ :: <C-signed-char>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_char";
-end;
-
-define C-function g-param-spec-double
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-double>;
-  input parameter maximum_ :: <C-double>;
-  input parameter default_value_ :: <C-double>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_double";
-end;
-
-define C-function g-param-spec-enum
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter enum_type_ :: <C-long>;
-  input parameter default_value_ :: <C-signed-int>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_enum";
-end;
-
-define C-function g-param-spec-float
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-float>;
-  input parameter maximum_ :: <C-float>;
-  input parameter default_value_ :: <C-float>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_float";
-end;
-
-define C-function g-param-spec-gtype
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter is_a_type_ :: <C-long>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_gtype";
-end;
-
-define C-function g-param-spec-int
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-signed-int>;
-  input parameter maximum_ :: <C-signed-int>;
-  input parameter default_value_ :: <C-signed-int>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_int";
-end;
-
-define C-function g-param-spec-int64
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-signed-long>;
-  input parameter maximum_ :: <C-signed-long>;
-  input parameter default_value_ :: <C-signed-long>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_int64";
-end;
-
-define C-function g-param-spec-long
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-signed-long>;
-  input parameter maximum_ :: <C-signed-long>;
-  input parameter default_value_ :: <C-signed-long>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_long";
-end;
-
-define C-function g-param-spec-object
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter object_type_ :: <C-long>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_object";
-end;
-
-define C-function g-param-spec-param
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter param_type_ :: <C-long>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_param";
-end;
-
-define C-function g-param-spec-pointer
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_pointer";
-end;
-
-define C-function g-param-spec-string
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter default_value_ :: <C-string>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_string";
-end;
-
-define C-function g-param-spec-uchar
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-unsigned-char>;
-  input parameter maximum_ :: <C-unsigned-char>;
-  input parameter default_value_ :: <C-unsigned-char>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_uchar";
-end;
-
-define C-function g-param-spec-uint
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-unsigned-int>;
-  input parameter maximum_ :: <C-unsigned-int>;
-  input parameter default_value_ :: <C-unsigned-int>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_uint";
-end;
-
-define C-function g-param-spec-uint64
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-unsigned-long>;
-  input parameter maximum_ :: <C-unsigned-long>;
-  input parameter default_value_ :: <C-unsigned-long>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_uint64";
-end;
-
-define C-function g-param-spec-ulong
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter minimum_ :: <C-unsigned-long>;
-  input parameter maximum_ :: <C-unsigned-long>;
-  input parameter default_value_ :: <C-unsigned-long>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_ulong";
-end;
-
-define C-function g-param-spec-unichar
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter default_value_ :: <C-unsigned-int>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_unichar";
-end;
-
-define C-function g-param-spec-variant
-  input parameter name_ :: <C-string>;
-  input parameter nick_ :: <C-string>;
-  input parameter blurb_ :: <C-string>;
-  input parameter type_ :: <GVariantType>;
-  input parameter default_value_ :: <GVariant>;
-  input parameter flags_ :: <GParamFlags>;
-  result res :: <GParamSpec>;
-  c-name: "g_param_spec_variant";
-end;
-
 define C-function g-param-type-register-static
   input parameter name_ :: <C-string>;
   input parameter pspec_info_ :: <GParamSpecTypeInfo>;
@@ -2146,7 +1912,7 @@ define C-function g-signal-add-emission-hook
 end;
 
 define C-function g-signal-chain-from-overridden
-  input parameter instance_and_params_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter instance_and_params_ :: <GValue>;
   input parameter return_value_ :: <GValue>;
   c-name: "g_signal_chain_from_overridden";
 end;
@@ -2453,11 +2219,6 @@ define C-function g-type-depth
   c-name: "g_type_depth";
 end;
 
-define C-function g-type-ensure
-  input parameter type_ :: <C-long>;
-  c-name: "g_type_ensure";
-end;
-
 define C-function g-type-free-instance
   input parameter instance_ :: <GTypeInstance>;
   c-name: "g_type_free_instance";
@@ -2493,9 +2254,13 @@ define C-function g-type-get-qdata
   c-name: "g_type_get_qdata";
 end;
 
-define C-function g-type-get-type-registration-serial
-  result res :: <C-unsigned-int>;
-  c-name: "g_type_get_type_registration_serial";
+define C-function g-type-init
+  c-name: "g_type_init";
+end;
+
+define C-function g-type-init-with-debug-flags
+  input parameter debug_flags_ :: <GTypeDebugFlags>;
+  c-name: "g_type_init_with_debug_flags";
 end;
 
 define C-function g-type-interfaces

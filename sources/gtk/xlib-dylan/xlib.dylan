@@ -4,6 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 
 define C-pointer-type <C-void**> => <C-void*>;
+ignore(<C-void**>);
+
+define C-pointer-type <GError*> => <GError>;
+ignore(<GError*>);
 
 define C-struct <_Display>
   pointer-type-name: <Display>;

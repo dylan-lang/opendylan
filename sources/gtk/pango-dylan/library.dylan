@@ -5,8 +5,9 @@ define library pango
   use dylan;
   use common-dylan;
   use c-ffi;
-  use cairo;
+  use glib;
   use gobject;
+  use cairo;
   use glib;
 
   export pango;
@@ -17,8 +18,9 @@ define module pango
   use common-dylan;
   use c-ffi;
   use gobject-glue;
-  use cairo;
+  use glib;
   use gobject;
+  use cairo;
   use glib;
 
   export
@@ -31,14 +33,12 @@ define module pango
     pango-trim-string,
     pango-split-file-list,
     pango-skip-space,
-    pango-shape-full,
     pango-shape,
     pango-script-get-sample-language,
     pango-script-for-unichar,
     pango-scan-word,
     pango-scan-string,
     pango-scan-int,
-    pango-reorder-items,
     pango-read-line,
     pango-quantize-line-geometry,
     pango-parse-weight,
@@ -47,8 +47,6 @@ define module pango
     pango-parse-stretch,
     pango-parse-markup,
     pango-parse-enum,
-    pango-markup-parser-new,
-    pango-markup-parser-finish,
     pango-log2vis-get-embedding-levels,
     pango-itemize-with-base-dir,
     pango-itemize,
@@ -137,16 +135,6 @@ define module pango
     <PangoScriptIter>,
     <PangoScript*>,
     <PangoScript>,
-    $pango-script-takri,
-    $pango-script-sora-sompeng,
-    $pango-script-sharada,
-    $pango-script-miao,
-    $pango-script-meroitic-hieroglyphs,
-    $pango-script-meroitic-cursive,
-    $pango-script-chakma,
-    $pango-script-mandaic,
-    $pango-script-brahmi,
-    $pango-script-batak,
     $pango-script-lydian,
     $pango-script-lycian,
     $pango-script-carian,
@@ -408,7 +396,6 @@ define module pango
     pango-layout-get-spacing,
     pango-layout-get-size,
     pango-layout-get-single-paragraph-mode,
-    pango-layout-get-serial,
     pango-layout-get-pixel-size,
     pango-layout-get-pixel-extents,
     pango-layout-get-log-attrs-readonly,
@@ -519,7 +506,6 @@ define module pango
     pango-glyph-item-get-logical-widths,
     pango-glyph-item-free,
     pango-glyph-item-copy,
-    pango-glyph-item-apply-attrs,
     pango-glyph-item-glyphs-setter,
     pango-glyph-item-glyphs,
     pango-glyph-item-item-setter,
@@ -567,7 +553,6 @@ define module pango
     pango-font-map-load-fontset,
     pango-font-map-load-font,
     pango-font-map-list-families,
-    pango-font-map-get-serial,
     pango-font-map-create-context,
     <PangoFontMap*>,
     <PangoFontMap>,
@@ -664,7 +649,6 @@ define module pango
     pango-context-load-fontset,
     pango-context-load-font,
     pango-context-list-families,
-    pango-context-get-serial,
     pango-context-get-metrics,
     pango-context-get-matrix,
     pango-context-get-language,
@@ -674,7 +658,6 @@ define module pango
     pango-context-get-font-description,
     pango-context-get-base-gravity,
     pango-context-get-base-dir,
-    pango-context-changed,
     pango-context-new,
     <PangoContext*>,
     <PangoContext>,

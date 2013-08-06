@@ -4,6 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 
 define C-pointer-type <C-void**> => <C-void*>;
+ignore(<C-void**>);
+
+define C-pointer-type <GError*> => <GError>;
+ignore(<GError*>);
 
 // Interface
 define open C-subtype <AtkAction> (<C-void*>)
@@ -83,8 +87,6 @@ define C-function atk-attribute-set-free
   input parameter attrib_set_ :: <GSList>;
   c-name: "atk_attribute_set_free";
 end;
-
-define constant $binary-age = 20810;
 
 // Interface
 define open C-subtype <AtkComponent> (<C-void*>)
@@ -249,6 +251,12 @@ define C-function atk-document-get-document-type
   c-name: "atk_document_get_document_type";
 end;
 
+define C-function atk-document-get-locale
+  input parameter self :: <AtkDocument>;
+  result res :: <C-string>;
+  c-name: "atk_document_get_locale";
+end;
+
 define C-function atk-document-set-attribute-value
   input parameter self :: <AtkDocument>;
   input parameter attribute_name_ :: <C-string>;
@@ -262,7 +270,7 @@ define C-struct <_AtkDocumentIface>
   constant slot atk-document-iface-get-document-type :: <C-function-pointer>;
   constant slot atk-document-iface-get-document :: <C-function-pointer>;
   constant slot atk-document-iface-get-document-locale :: <C-function-pointer>;
-  constant slot atk-document-iface-get-document-attributes :: <C-function-pointer>;
+  constant slot atk-document-iface-get-document-attributes :: <C-void*>;
   constant slot atk-document-iface-get-document-attribute-value :: <C-function-pointer>;
   constant slot atk-document-iface-set-document-attribute :: <C-function-pointer>;
   constant slot atk-document-iface-pad1 :: <C-function-pointer>;
@@ -493,8 +501,6 @@ define C-struct <_AtkHypertextIface>
   pointer-type-name: <AtkHypertextIface>;
 end C-struct;
 
-define constant $interface-age = 1;
-
 // Interface
 define open C-subtype <AtkImage> (<C-void*>)
 end C-subtype;
@@ -589,12 +595,6 @@ define constant $atk-layer-overlay = 6;
 define constant $atk-layer-window = 7;
 define constant <AtkLayer> = <C-int>;
 define C-pointer-type <AtkLayer*> => <AtkLayer>;
-
-define constant $major-version = 2;
-
-define constant $micro-version = 0;
-
-define constant $minor-version = 8;
 
 define open C-subtype <AtkMisc> (<GObject>)
   constant slot atk-misc-parent :: <GObject>;
@@ -708,12 +708,6 @@ define C-function atk-object-get-name
   c-name: "atk_object_get_name";
 end;
 
-define C-function atk-object-get-object-locale
-  input parameter self :: <AtkObject>;
-  result res :: <C-string>;
-  c-name: "atk_object_get_object_locale";
-end;
-
 define C-function atk-object-get-parent
   input parameter self :: <AtkObject>;
   result res :: <AtkObject>;
@@ -823,8 +817,8 @@ define C-struct <_AtkObjectClass>
   constant slot atk-object-class-visible-data-changed :: <C-function-pointer>;
   constant slot atk-object-class-active-descendant-changed :: <C-function-pointer>;
   constant slot atk-object-class-get-attributes :: <C-function-pointer>;
-  constant slot atk-object-class-get-object-locale :: <C-function-pointer>;
   constant slot atk-object-class-pad1 :: <C-function-pointer>;
+  constant slot atk-object-class-pad2 :: <C-function-pointer>;
   pointer-type-name: <AtkObjectClass>;
 end C-struct;
 
@@ -928,7 +922,7 @@ end C-subtype;
 define C-pointer-type <AtkRelation*> => <AtkRelation>;
 
 define C-function atk-relation-new
-  input parameter targets_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter targets_ :: <AtkObject>;
   input parameter n_targets_ :: <C-signed-int>;
   input parameter relationship_ :: <AtkRelationType>;
   result res :: <AtkRelation>;
@@ -995,14 +989,6 @@ define C-function atk-relation-set-contains
   input parameter relationship_ :: <AtkRelationType>;
   result res :: <C-boolean>;
   c-name: "atk_relation_set_contains";
-end;
-
-define C-function atk-relation-set-contains-target
-  input parameter self :: <AtkRelationSet>;
-  input parameter relationship_ :: <AtkRelationType>;
-  input parameter target_ :: <AtkObject>;
-  result res :: <C-boolean>;
-  c-name: "atk_relation_set_contains_target";
 end;
 
 define C-function atk-relation-set-get-n-relations
@@ -1160,8 +1146,7 @@ define constant $atk-role-grouping = 97;
 define constant $atk-role-image-map = 98;
 define constant $atk-role-notification = 99;
 define constant $atk-role-info-bar = 100;
-define constant $atk-role-level-bar = 101;
-define constant $atk-role-last-defined = 102;
+define constant $atk-role-last-defined = 101;
 define constant <AtkRole> = <C-int>;
 define C-pointer-type <AtkRole*> => <AtkRole>;
 
@@ -1282,7 +1267,7 @@ end;
 
 define C-function atk-state-set-add-states
   input parameter self :: <AtkStateSet>;
-  input parameter types_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter types_ :: <AtkStateType>;
   input parameter n_types_ :: <C-signed-int>;
   c-name: "atk_state_set_add_states";
 end;
@@ -1308,7 +1293,7 @@ end;
 
 define C-function atk-state-set-contains-states
   input parameter self :: <AtkStateSet>;
-  input parameter types_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter types_ :: <AtkStateType>;
   input parameter n_types_ :: <C-signed-int>;
   result res :: <C-boolean>;
   c-name: "atk_state_set_contains_states";
@@ -1694,7 +1679,7 @@ end C-subtype;
 define C-pointer-type <AtkText*> => <AtkText>;
 
 define C-function atk-text-free-ranges
-  input parameter ranges_ :: <C-unsigned-char*> /* Not supported */;
+  input parameter ranges_ :: <AtkTextRange>;
   c-name: "atk_text_free_ranges";
 end;
 
@@ -1779,8 +1764,8 @@ end;
 define C-function atk-text-get-run-attributes
   input parameter self :: <AtkText>;
   input parameter offset_ :: <C-signed-int>;
-  output parameter start_offset_ :: <C-signed-int*>;
-  output parameter end_offset_ :: <C-signed-int*>;
+  input parameter start_offset_ :: <C-signed-int*>;
+  input parameter end_offset_ :: <C-signed-int*>;
   result res :: <GSList>;
   c-name: "atk_text_get_run_attributes";
 end;
@@ -1788,8 +1773,8 @@ end;
 define C-function atk-text-get-selection
   input parameter self :: <AtkText>;
   input parameter selection_num_ :: <C-signed-int>;
-  output parameter start_offset_ :: <C-signed-int*>;
-  output parameter end_offset_ :: <C-signed-int*>;
+  input parameter start_offset_ :: <C-signed-int*>;
+  input parameter end_offset_ :: <C-signed-int*>;
   result res :: <C-string>;
   c-name: "atk_text_get_selection";
 end;
@@ -1806,8 +1791,8 @@ define C-function atk-text-get-text-after-offset
   input parameter self :: <AtkText>;
   input parameter offset_ :: <C-signed-int>;
   input parameter boundary_type_ :: <AtkTextBoundary>;
-  output parameter start_offset_ :: <C-signed-int*>;
-  output parameter end_offset_ :: <C-signed-int*>;
+  input parameter start_offset_ :: <C-signed-int*>;
+  input parameter end_offset_ :: <C-signed-int*>;
   result res :: <C-string>;
   c-name: "atk_text_get_text_after_offset";
 end;
@@ -1816,8 +1801,8 @@ define C-function atk-text-get-text-at-offset
   input parameter self :: <AtkText>;
   input parameter offset_ :: <C-signed-int>;
   input parameter boundary_type_ :: <AtkTextBoundary>;
-  output parameter start_offset_ :: <C-signed-int*>;
-  output parameter end_offset_ :: <C-signed-int*>;
+  input parameter start_offset_ :: <C-signed-int*>;
+  input parameter end_offset_ :: <C-signed-int*>;
   result res :: <C-string>;
   c-name: "atk_text_get_text_at_offset";
 end;
@@ -1826,8 +1811,8 @@ define C-function atk-text-get-text-before-offset
   input parameter self :: <AtkText>;
   input parameter offset_ :: <C-signed-int>;
   input parameter boundary_type_ :: <AtkTextBoundary>;
-  output parameter start_offset_ :: <C-signed-int*>;
-  output parameter end_offset_ :: <C-signed-int*>;
+  input parameter start_offset_ :: <C-signed-int*>;
+  input parameter end_offset_ :: <C-signed-int*>;
   result res :: <C-string>;
   c-name: "atk_text_get_text_before_offset";
 end;
@@ -2051,11 +2036,6 @@ define C-function atk-focus-tracker-notify
   c-name: "atk_focus_tracker_notify";
 end;
 
-define C-function atk-get-binary-age
-  result res :: <C-unsigned-int>;
-  c-name: "atk_get_binary_age";
-end;
-
 define C-function atk-get-default-registry
   result res :: <AtkRegistry>;
   c-name: "atk_get_default_registry";
@@ -2064,26 +2044,6 @@ end;
 define C-function atk-get-focus-object
   result res :: <AtkObject>;
   c-name: "atk_get_focus_object";
-end;
-
-define C-function atk-get-interface-age
-  result res :: <C-unsigned-int>;
-  c-name: "atk_get_interface_age";
-end;
-
-define C-function atk-get-major-version
-  result res :: <C-unsigned-int>;
-  c-name: "atk_get_major_version";
-end;
-
-define C-function atk-get-micro-version
-  result res :: <C-unsigned-int>;
-  c-name: "atk_get_micro_version";
-end;
-
-define C-function atk-get-minor-version
-  result res :: <C-unsigned-int>;
-  c-name: "atk_get_minor_version";
 end;
 
 define C-function atk-get-root

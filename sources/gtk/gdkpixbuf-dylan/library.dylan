@@ -5,9 +5,11 @@ define library gdkpixbuf
   use dylan;
   use common-dylan;
   use c-ffi;
+  use glib;
+  use gmodule;
   use gobject;
   use gio;
-  use gmodule;
+  use gobject;
   use glib;
 
   export gdkpixbuf;
@@ -19,9 +21,11 @@ define module gdkpixbuf
   use common-dylan;
   use c-ffi;
   use gobject-glue;
+  use glib;
+  use gmodule;
   use gobject;
   use gio;
-  use gmodule;
+  use gobject;
   use glib;
 
   export
@@ -129,10 +133,6 @@ define module gdkpixbuf
     gdk-pixbuf-animation-get-static-image,
     gdk-pixbuf-animation-get-iter,
     gdk-pixbuf-animation-get-height,
-    gdk-pixbuf-animation-new-from-stream-async,
-    gdk-pixbuf-animation-new-from-stream-finish,
-    gdk-pixbuf-animation-new-from-stream,
-    gdk-pixbuf-animation-new-from-resource,
     gdk-pixbuf-animation-new-from-file,
     <GdkPixbufAnimation*>,
     <GdkPixbufAnimation>,

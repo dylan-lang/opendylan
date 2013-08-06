@@ -8,13 +8,14 @@ define library gtk
   use xlib;
   use gdk;
   use gmodule;
-  use gmodule;
   use gio;
+  use gmodule;
   use gdkpixbuf;
   use cairo;
   use pango;
   use gmodule;
   use atk;
+  use glib;
   use gobject;
   use glib;
 
@@ -30,13 +31,14 @@ define module gtk
   use xlib;
   use gdk;
   use gmodule;
-  use gmodule;
   use gio;
+  use gmodule;
   use gdkpixbuf;
   use cairo;
   use pango;
   use gmodule;
   use atk;
+  use glib;
   use gobject;
   use glib;
 
@@ -3357,6 +3359,7 @@ define module gtk
     gtk-range-get-inverted,
     gtk-range-get-flippable,
     gtk-range-get-fill-level,
+    gtk-range-get-event-window,
     gtk-range-get-adjustment,
     <GtkRange*>,
     gtk-range-priv,
@@ -4227,10 +4230,10 @@ define module gtk
     gtk-menu-priv,
     gtk-menu-menu-shell,
     <GtkMenu>,
-    $minor-version,
-    $micro-version,
+    $gtk-minor-version,
+    $gtk-micro-version,
     $max-compose-len,
-    $major-version,
+    $gtk-major-version,
     <GtkLockButtonPrivate>,
     gtk-lock-button-class-reserved7,
     gtk-lock-button-class-reserved6,
@@ -4718,7 +4721,7 @@ define module gtk
     gtk-icon-factory-priv,
     gtk-icon-factory-parent-instance,
     <GtkIconFactory>,
-    $interface-age,
+    $gtk-interface-age,
     $input-error,
     <GtkIMStatusStyle*>,
     <GtkIMStatusStyle>,
@@ -6078,6 +6081,7 @@ define module gtk
     <GtkCellRendererAccelPrivate>,
     <GtkCellRendererAccelMode*>,
     <GtkCellRendererAccelMode>,
+    $gtk-cell-renderer-accel-mode-modifier-tap,
     $gtk-cell-renderer-accel-mode-other,
     $gtk-cell-renderer-accel-mode-gtk,
     gtk-cell-renderer-accel-class-_gtk-reserved4,
@@ -6567,7 +6571,7 @@ define module gtk
     gtk-bin-priv,
     gtk-bin-container,
     <GtkBin>,
-    $binary-age,
+    $gtk-binary-age,
     <GtkAttachOptions*>,
     <GtkAttachOptions>,
     $gtk-fill,

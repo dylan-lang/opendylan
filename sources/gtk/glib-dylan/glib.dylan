@@ -4,6 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 
 define C-pointer-type <C-void**> => <C-void*>;
+ignore(<C-void**>);
+
+define C-pointer-type <GError*> => <GError>;
+ignore(<GError*>);
 
 define constant $ascii-dtostr-buf-size = 39;
 
@@ -12,6 +16,30 @@ define C-struct <_GArray>
   slot g-array-len :: <C-unsigned-int>;
   pointer-type-name: <GArray>;
 end C-struct;
+
+define C-function g-array-free
+  input parameter array_ :: <GArray>;
+  input parameter free_segment_ :: <C-boolean>;
+  result res :: <C-string>;
+  c-name: "g_array_free";
+end;
+
+define C-function g-array-get-element-size
+  input parameter array_ :: <GArray>;
+  result res :: <C-unsigned-int>;
+  c-name: "g_array_get_element_size";
+end;
+
+define C-function g-array-set-clear-func
+  input parameter array_ :: <GArray>;
+  input parameter clear_func_ :: <C-function-pointer>;
+  c-name: "g_array_set_clear_func";
+end;
+
+define C-function g-array-unref
+  input parameter array_ :: <GArray>;
+  c-name: "g_array_unref";
+end;
 
 define constant $g-ascii-alnum = 1;
 define constant $g-ascii-alpha = 2;
@@ -109,6 +137,7 @@ end;
 define C-function g-bookmark-file-get-added
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_bookmark_file_get_added";
 end;
@@ -120,6 +149,7 @@ define C-function g-bookmark-file-get-app-info
   input parameter exec_ :: <C-string>;
   input parameter count_ :: <C-unsigned-int*>;
   input parameter stamp_ :: <C-signed-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_get_app_info";
 end;
@@ -127,6 +157,7 @@ end;
 define C-function g-bookmark-file-get-description
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_bookmark_file_get_description";
 end;
@@ -136,6 +167,7 @@ define C-function g-bookmark-file-get-icon
   input parameter uri_ :: <C-string>;
   input parameter href_ :: <C-string>;
   input parameter mime_type_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_get_icon";
 end;
@@ -143,6 +175,7 @@ end;
 define C-function g-bookmark-file-get-is-private
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_get_is_private";
 end;
@@ -150,6 +183,7 @@ end;
 define C-function g-bookmark-file-get-mime-type
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_bookmark_file_get_mime_type";
 end;
@@ -157,6 +191,7 @@ end;
 define C-function g-bookmark-file-get-modified
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_bookmark_file_get_modified";
 end;
@@ -170,6 +205,7 @@ end;
 define C-function g-bookmark-file-get-title
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_bookmark_file_get_title";
 end;
@@ -177,6 +213,7 @@ end;
 define C-function g-bookmark-file-get-visited
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_bookmark_file_get_visited";
 end;
@@ -185,6 +222,7 @@ define C-function g-bookmark-file-has-application
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
   input parameter name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_has_application";
 end;
@@ -193,6 +231,7 @@ define C-function g-bookmark-file-has-group
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
   input parameter group_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_has_group";
 end;
@@ -208,6 +247,7 @@ define C-function g-bookmark-file-load-from-data
   input parameter self :: <GBookmarkFile>;
   input parameter data_ :: <C-string>;
   input parameter length_ :: <C-unsigned-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_load_from_data";
 end;
@@ -216,6 +256,7 @@ define C-function g-bookmark-file-load-from-data-dirs
   input parameter self :: <GBookmarkFile>;
   input parameter file_ :: <C-string>;
   input parameter full_path_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_load_from_data_dirs";
 end;
@@ -223,6 +264,7 @@ end;
 define C-function g-bookmark-file-load-from-file
   input parameter self :: <GBookmarkFile>;
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_load_from_file";
 end;
@@ -231,6 +273,7 @@ define C-function g-bookmark-file-move-item
   input parameter self :: <GBookmarkFile>;
   input parameter old_uri_ :: <C-string>;
   input parameter new_uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_move_item";
 end;
@@ -239,6 +282,7 @@ define C-function g-bookmark-file-remove-application
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
   input parameter name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_remove_application";
 end;
@@ -247,6 +291,7 @@ define C-function g-bookmark-file-remove-group
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
   input parameter group_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_remove_group";
 end;
@@ -254,6 +299,7 @@ end;
 define C-function g-bookmark-file-remove-item
   input parameter self :: <GBookmarkFile>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_remove_item";
 end;
@@ -272,6 +318,7 @@ define C-function g-bookmark-file-set-app-info
   input parameter exec_ :: <C-string>;
   input parameter count_ :: <C-signed-int>;
   input parameter stamp_ :: <C-signed-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_set_app_info";
 end;
@@ -337,6 +384,7 @@ end;
 define C-function g-bookmark-file-to-data
   input parameter self :: <GBookmarkFile>;
   input parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_bookmark_file_to_data";
 end;
@@ -344,6 +392,7 @@ end;
 define C-function g-bookmark-file-to-file
   input parameter self :: <GBookmarkFile>;
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_bookmark_file_to_file";
 end;
@@ -383,11 +432,6 @@ define C-function g-byte-array-free-to-bytes
   c-name: "g_byte_array_free_to_bytes";
 end;
 
-define C-function g-byte-array-new
-  result res :: <GByteArray>;
-  c-name: "g_byte_array_new";
-end;
-
 define C-function g-byte-array-new-take
   input parameter data_ :: <C-unsigned-char*>;
   input parameter len_ :: <C-unsigned-long>;
@@ -405,17 +449,33 @@ define C-struct <_GBytes>
 end C-struct;
 
 define C-function g-bytes-new
-  input parameter data_ :: <C-unsigned-char*>;
+  input parameter data_ :: <C-void*>;
   input parameter size_ :: <C-unsigned-long>;
   result res :: <GBytes>;
   c-name: "g_bytes_new";
 end;
 
+define C-function g-bytes-new-static
+  input parameter data_ :: <C-void*>;
+  input parameter size_ :: <C-unsigned-long>;
+  result res :: <GBytes>;
+  c-name: "g_bytes_new_static";
+end;
+
 define C-function g-bytes-new-take
-  input parameter data_ :: <C-unsigned-char*>;
+  input parameter data_ :: <C-void*>;
   input parameter size_ :: <C-unsigned-long>;
   result res :: <GBytes>;
   c-name: "g_bytes_new_take";
+end;
+
+define C-function g-bytes-new-with-free-func
+  input parameter data_ :: <C-void*>;
+  input parameter size_ :: <C-unsigned-long>;
+  input parameter free_func_ :: <C-function-pointer>;
+  input parameter user_data_ :: <C-void*>;
+  result res :: <GBytes>;
+  c-name: "g_bytes_new_with_free_func";
 end;
 
 define C-function g-bytes-compare
@@ -430,13 +490,6 @@ define C-function g-bytes-equal
   input parameter bytes2_ :: <GBytes>;
   result res :: <C-boolean>;
   c-name: "g_bytes_equal";
-end;
-
-define C-function g-bytes-get-data
-  input parameter self :: <GBytes>;
-  output parameter size_ :: <C-unsigned-long*>;
-  result res :: <C-unsigned-char*>;
-  c-name: "g_bytes_get_data";
 end;
 
 define C-function g-bytes-get-size
@@ -493,21 +546,16 @@ define C-struct <_GChecksum>
   pointer-type-name: <GChecksum>;
 end C-struct;
 
-define C-function g-checksum-new
-  input parameter checksum_type_ :: <GChecksumType>;
-  result res :: <GChecksum>;
-  c-name: "g_checksum_new";
-end;
-
-define C-function g-checksum-copy
-  input parameter self :: <GChecksum>;
-  result res :: <GChecksum>;
-  c-name: "g_checksum_copy";
-end;
-
 define C-function g-checksum-free
   input parameter self :: <GChecksum>;
   c-name: "g_checksum_free";
+end;
+
+define C-function g-checksum-get-digest
+  input parameter self :: <GChecksum>;
+  input parameter buffer_ :: <C-unsigned-char*>;
+  input parameter digest_len_ :: <C-unsigned-long*>;
+  c-name: "g_checksum_get_digest";
 end;
 
 define C-function g-checksum-get-string
@@ -537,7 +585,6 @@ end;
 define constant $g-checksum-md5 = 0;
 define constant $g-checksum-sha1 = 1;
 define constant $g-checksum-sha256 = 2;
-define constant $g-checksum-sha512 = 3;
 define constant <GChecksumType> = <C-int>;
 define C-pointer-type <GChecksumType*> => <GChecksumType>;
 
@@ -1297,6 +1344,7 @@ end;
 
 define C-function g-dir-make-tmp
   input parameter tmpl_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_dir_make_tmp";
 end;
@@ -1415,6 +1463,10 @@ define constant $gint64-modifier = "l";
 define constant $gintptr-format = "li";
 
 define constant $gintptr-modifier = "l";
+
+define constant $gnuc-function = "";
+
+define constant $gnuc-pretty-function = "";
 
 define constant $gsize-format = "lu";
 
@@ -1723,7 +1775,7 @@ define C-struct <_GIOChannel>
   constant slot g-io-channel-read-buf :: <GString>;
   constant slot g-io-channel-encoded-read-buf :: <GString>;
   constant slot g-io-channel-write-buf :: <GString>;
-  constant slot g-io-channel-partial-write-buf :: <C-signed-char*>;
+  constant slot g-io-channel-partial-write-buf :: <C-unsigned-char*>;
   constant slot g-io-channel-use-buffer :: <C-unsigned-int>;
   constant slot g-io-channel-do-encode :: <C-unsigned-int>;
   constant slot g-io-channel-close-on-unref :: <C-unsigned-int>;
@@ -1738,6 +1790,7 @@ end C-struct;
 define C-function g-io-channel-new-file
   input parameter filename_ :: <C-string>;
   input parameter mode_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOChannel>;
   c-name: "g_io_channel_new_file";
 end;
@@ -1755,6 +1808,7 @@ end;
 
 define C-function g-io-channel-flush
   input parameter self :: <GIOChannel>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_flush";
 end;
@@ -1818,18 +1872,20 @@ end;
 
 define C-function g-io-channel-read-chars
   input parameter self :: <GIOChannel>;
-  output parameter buf_ :: <C-unsigned-char*>;
+  input parameter buf_ :: <C-string>;
   input parameter count_ :: <C-unsigned-long>;
-  output parameter bytes_read_ :: <C-unsigned-long*>;
+  input parameter bytes_read_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_read_chars";
 end;
 
 define C-function g-io-channel-read-line
   input parameter self :: <GIOChannel>;
-  output parameter str_return_ :: <C-string>;
-  output parameter length_ :: <C-unsigned-long*>;
-  output parameter terminator_pos_ :: <C-unsigned-long*>;
+  input parameter str_return_ :: <C-string>;
+  input parameter length_ :: <C-unsigned-long*>;
+  input parameter terminator_pos_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_read_line";
 end;
@@ -1838,14 +1894,16 @@ define C-function g-io-channel-read-line-string
   input parameter self :: <GIOChannel>;
   input parameter buffer_ :: <GString>;
   input parameter terminator_pos_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_read_line_string";
 end;
 
 define C-function g-io-channel-read-to-end
   input parameter self :: <GIOChannel>;
-  output parameter str_return_ :: <C-unsigned-char*>;
-  output parameter length_ :: <C-unsigned-long*>;
+  input parameter str_return_ :: <C-string>;
+  input parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_read_to_end";
 end;
@@ -1853,6 +1911,7 @@ end;
 define C-function g-io-channel-read-unichar
   input parameter self :: <GIOChannel>;
   input parameter thechar_ :: <C-unsigned-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_read_unichar";
 end;
@@ -1875,6 +1934,7 @@ define C-function g-io-channel-seek-position
   input parameter self :: <GIOChannel>;
   input parameter offset_ :: <C-signed-long>;
   input parameter type_ :: <GSeekType>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_seek_position";
 end;
@@ -1900,6 +1960,7 @@ end;
 define C-function g-io-channel-set-encoding
   input parameter self :: <GIOChannel>;
   input parameter encoding_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_set_encoding";
 end;
@@ -1907,6 +1968,7 @@ end;
 define C-function g-io-channel-set-flags
   input parameter self :: <GIOChannel>;
   input parameter flags_ :: <GIOFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_set_flags";
 end;
@@ -1921,6 +1983,7 @@ end;
 define C-function g-io-channel-shutdown
   input parameter self :: <GIOChannel>;
   input parameter flush_ :: <C-boolean>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_shutdown";
 end;
@@ -1947,9 +2010,10 @@ end;
 
 define C-function g-io-channel-write-chars
   input parameter self :: <GIOChannel>;
-  input parameter buf_ :: <C-unsigned-char*>;
+  input parameter buf_ :: <C-string>;
   input parameter count_ :: <C-signed-long>;
-  output parameter bytes_written_ :: <C-unsigned-long*>;
+  input parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_write_chars";
 end;
@@ -1957,6 +2021,7 @@ end;
 define C-function g-io-channel-write-unichar
   input parameter self :: <GIOChannel>;
   input parameter thechar_ :: <C-unsigned-int>;
+  output parameter error_ :: <GError*>;
   result res :: <GIOStatus>;
   c-name: "g_io_channel_write_unichar";
 end;
@@ -2004,7 +2069,6 @@ define constant $g-io-flag-append = 1;
 define constant $g-io-flag-nonblock = 2;
 define constant $g-io-flag-is-readable = 4;
 define constant $g-io-flag-is-writable = 8;
-define constant $g-io-flag-is-writeable = 8;
 define constant $g-io-flag-is-seekable = 16;
 define constant $g-io-flag-mask = 31;
 define constant $g-io-flag-get-mask = 31;
@@ -2096,6 +2160,7 @@ define C-function g-key-file-get-boolean
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_get_boolean";
 end;
@@ -2105,6 +2170,7 @@ define C-function g-key-file-get-boolean-list
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-int*>;
   c-name: "g_key_file_get_boolean_list";
 end;
@@ -2113,6 +2179,7 @@ define C-function g-key-file-get-comment
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_key_file_get_comment";
 end;
@@ -2121,6 +2188,7 @@ define C-function g-key-file-get-double
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-double>;
   c-name: "g_key_file_get_double";
 end;
@@ -2130,6 +2198,7 @@ define C-function g-key-file-get-double-list
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-double*>;
   c-name: "g_key_file_get_double_list";
 end;
@@ -2145,6 +2214,7 @@ define C-function g-key-file-get-int64
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-long>;
   c-name: "g_key_file_get_int64";
 end;
@@ -2153,6 +2223,7 @@ define C-function g-key-file-get-integer
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int>;
   c-name: "g_key_file_get_integer";
 end;
@@ -2162,6 +2233,7 @@ define C-function g-key-file-get-integer-list
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int*>;
   c-name: "g_key_file_get_integer_list";
 end;
@@ -2170,6 +2242,7 @@ define C-function g-key-file-get-keys
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_key_file_get_keys";
 end;
@@ -2179,6 +2252,7 @@ define C-function g-key-file-get-locale-string
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
   input parameter locale_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_key_file_get_locale_string";
 end;
@@ -2189,6 +2263,7 @@ define C-function g-key-file-get-locale-string-list
   input parameter key_ :: <C-string>;
   input parameter locale_ :: <C-string>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_key_file_get_locale_string_list";
 end;
@@ -2203,6 +2278,7 @@ define C-function g-key-file-get-string
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_key_file_get_string";
 end;
@@ -2212,6 +2288,7 @@ define C-function g-key-file-get-string-list
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string*>;
   c-name: "g_key_file_get_string_list";
 end;
@@ -2220,6 +2297,7 @@ define C-function g-key-file-get-uint64
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-long>;
   c-name: "g_key_file_get_uint64";
 end;
@@ -2228,6 +2306,7 @@ define C-function g-key-file-get-value
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_key_file_get_value";
 end;
@@ -2244,6 +2323,7 @@ define C-function g-key-file-load-from-data
   input parameter data_ :: <C-string>;
   input parameter length_ :: <C-unsigned-long>;
   input parameter flags_ :: <GKeyFileFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_load_from_data";
 end;
@@ -2253,6 +2333,7 @@ define C-function g-key-file-load-from-data-dirs
   input parameter file_ :: <C-string>;
   output parameter full_path_ :: <C-string>;
   input parameter flags_ :: <GKeyFileFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_load_from_data_dirs";
 end;
@@ -2263,6 +2344,7 @@ define C-function g-key-file-load-from-dirs
   input parameter search_dirs_ :: <C-string*>;
   output parameter full_path_ :: <C-string>;
   input parameter flags_ :: <GKeyFileFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_load_from_dirs";
 end;
@@ -2271,6 +2353,7 @@ define C-function g-key-file-load-from-file
   input parameter self :: <GKeyFile>;
   input parameter file_ :: <C-string>;
   input parameter flags_ :: <GKeyFileFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_load_from_file";
 end;
@@ -2279,6 +2362,7 @@ define C-function g-key-file-remove-comment
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_remove_comment";
 end;
@@ -2286,6 +2370,7 @@ end;
 define C-function g-key-file-remove-group
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_remove_group";
 end;
@@ -2294,6 +2379,7 @@ define C-function g-key-file-remove-key
   input parameter self :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_remove_key";
 end;
@@ -2320,6 +2406,7 @@ define C-function g-key-file-set-comment
   input parameter group_name_ :: <C-string>;
   input parameter key_ :: <C-string>;
   input parameter comment_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_key_file_set_comment";
 end;
@@ -2368,7 +2455,7 @@ end;
 
 define C-function g-key-file-set-list-separator
   input parameter self :: <GKeyFile>;
-  input parameter separator_ :: <C-signed-char>;
+  input parameter separator_ :: <C-unsigned-char>;
   c-name: "g_key_file_set_list_separator";
 end;
 
@@ -2427,6 +2514,7 @@ end;
 define C-function g-key-file-to-data
   input parameter self :: <GKeyFile>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_key_file_to_data";
 end;
@@ -2464,8 +2552,6 @@ define constant $ln2 = 0.6931470d0;
 
 define constant $log-2-base-10 = 0.3010300d0;
 
-define constant $log-domain = 0;
-
 define constant $log-fatal-mask = 0;
 
 define constant $log-level-user-shift = 8;
@@ -2489,35 +2575,11 @@ define constant $g-log-level-mask = -4;
 define constant <GLogLevelFlags> = <C-int>;
 define C-pointer-type <GLogLevelFlags*> => <GLogLevelFlags>;
 
-define constant $major-version = 2;
+define constant $g-major-version = 2;
 
-define constant $maxint16 = 32767;
+define constant $g-micro-version = 0;
 
-define constant $maxint32 = 2147483647;
-
-define constant $maxint64 = #x7FFFFFFFFFFFFFFF;
-
-define constant $maxint8 = 127;
-
-define constant $maxuint16 = 65535;
-
-define constant $maxuint32 = 4294967295;
-
-define constant $maxuint64 = -1;
-
-define constant $maxuint8 = 255;
-
-define constant $micro-version = 1;
-
-define constant $minint16 = -32768;
-
-define constant $minint32 = -214748364;
-
-define constant $minint64 = #x8000000000000000;
-
-define constant $minint8 = -128;
-
-define constant $minor-version = 36;
+define constant $g-minor-version = 32;
 
 define constant $module-suffix = "so";
 
@@ -2737,12 +2799,6 @@ define C-function g-mapped-file-free
   c-name: "g_mapped_file_free";
 end;
 
-define C-function g-mapped-file-get-bytes
-  input parameter self :: <GMappedFile>;
-  result res :: <GBytes>;
-  c-name: "g_mapped_file_get_bytes";
-end;
-
 define C-function g-mapped-file-get-contents
   input parameter self :: <GMappedFile>;
   result res :: <C-string>;
@@ -2783,17 +2839,9 @@ define C-struct <_GMarkupParseContext>
   pointer-type-name: <GMarkupParseContext>;
 end C-struct;
 
-define C-function g-markup-parse-context-new
-  input parameter parser_ :: <GMarkupParser>;
-  input parameter flags_ :: <GMarkupParseFlags>;
-  input parameter user_data_ :: <C-void*>;
-  input parameter user_data_dnotify_ :: <C-function-pointer>;
-  result res :: <GMarkupParseContext>;
-  c-name: "g_markup_parse_context_new";
-end;
-
 define C-function g-markup-parse-context-end-parse
   input parameter self :: <GMarkupParseContext>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_markup_parse_context_end_parse";
 end;
@@ -2820,6 +2868,7 @@ define C-function g-markup-parse-context-parse
   input parameter self :: <GMarkupParseContext>;
   input parameter text_ :: <C-string>;
   input parameter text_len_ :: <C-signed-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_markup_parse_context_parse";
 end;
@@ -2829,17 +2878,6 @@ define C-function g-markup-parse-context-push
   input parameter parser_ :: <GMarkupParser>;
   input parameter user_data_ :: <C-void*>;
   c-name: "g_markup_parse_context_push";
-end;
-
-define C-function g-markup-parse-context-ref
-  input parameter self :: <GMarkupParseContext>;
-  result res :: <GMarkupParseContext>;
-  c-name: "g_markup_parse_context_ref";
-end;
-
-define C-function g-markup-parse-context-unref
-  input parameter self :: <GMarkupParseContext>;
-  c-name: "g_markup_parse_context_unref";
 end;
 
 define constant $g-markup-do-not-use-this-unsupported-flag = 1;
@@ -2864,6 +2902,7 @@ end C-struct;
 define C-function g-match-info-expand-references
   input parameter self :: <GMatchInfo>;
   input parameter string_to_expand_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_match_info_expand_references";
 end;
@@ -2873,12 +2912,6 @@ define C-function g-match-info-fetch
   input parameter match_num_ :: <C-signed-int>;
   result res :: <C-string>;
   c-name: "g_match_info_fetch";
-end;
-
-define C-function g-match-info-fetch-all
-  input parameter self :: <GMatchInfo>;
-  result res :: <C-string*>;
-  c-name: "g_match_info_fetch_all";
 end;
 
 define C-function g-match-info-fetch-named
@@ -2943,6 +2976,7 @@ end;
 
 define C-function g-match-info-next
   input parameter self :: <GMatchInfo>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_match_info_next";
 end;
@@ -3177,6 +3211,7 @@ define C-function g-option-context-parse
   input parameter self :: <GOptionContext>;
   input output parameter argc_ :: <C-signed-int*>;
   input output parameter argv_ :: <C-string*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_option_context_parse";
 end;
@@ -3227,7 +3262,7 @@ end;
 
 define C-struct <_GOptionEntry>
   slot g-option-entry-long-name :: <C-string>;
-  slot g-option-entry-short-name :: <C-signed-char>;
+  slot g-option-entry-short-name :: <C-unsigned-char>;
   slot g-option-entry-flags :: <C-signed-int>;
   slot g-option-entry-arg :: <GOptionArg>;
   slot g-option-entry-arg-data :: <C-void*>;
@@ -3348,6 +3383,50 @@ define C-struct <_GPtrArray>
   slot g-ptr-array-len :: <C-unsigned-int>;
   pointer-type-name: <GPtrArray>;
 end C-struct;
+
+define C-function g-ptr-array-add
+  input parameter array_ :: <GPtrArray>;
+  input parameter data_ :: <C-void*>;
+  c-name: "g_ptr_array_add";
+end;
+
+define C-function g-ptr-array-remove
+  input parameter array_ :: <GPtrArray>;
+  input parameter data_ :: <C-void*>;
+  result res :: <C-boolean>;
+  c-name: "g_ptr_array_remove";
+end;
+
+define C-function g-ptr-array-remove-fast
+  input parameter array_ :: <GPtrArray>;
+  input parameter data_ :: <C-void*>;
+  result res :: <C-boolean>;
+  c-name: "g_ptr_array_remove_fast";
+end;
+
+define C-function g-ptr-array-remove-range
+  input parameter array_ :: <GPtrArray>;
+  input parameter index__ :: <C-unsigned-int>;
+  input parameter length_ :: <C-unsigned-int>;
+  c-name: "g_ptr_array_remove_range";
+end;
+
+define C-function g-ptr-array-set-free-func
+  input parameter array_ :: <GPtrArray>;
+  input parameter element_free_func_ :: <C-function-pointer>;
+  c-name: "g_ptr_array_set_free_func";
+end;
+
+define C-function g-ptr-array-set-size
+  input parameter array_ :: <GPtrArray>;
+  input parameter length_ :: <C-signed-int>;
+  c-name: "g_ptr_array_set_size";
+end;
+
+define C-function g-ptr-array-unref
+  input parameter array_ :: <GPtrArray>;
+  c-name: "g_ptr_array_unref";
+end;
 
 define C-struct <_GQueue>
   slot g-queue-head :: <GList>;
@@ -3572,6 +3651,7 @@ define C-function g-regex-new
   input parameter pattern_ :: <C-string>;
   input parameter compile_options_ :: <GRegexCompileFlags>;
   input parameter match_options_ :: <GRegexMatchFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GRegex>;
   c-name: "g_regex_new";
 end;
@@ -3586,12 +3666,6 @@ define C-function g-regex-get-compile-flags
   input parameter self :: <GRegex>;
   result res :: <GRegexCompileFlags>;
   c-name: "g_regex_get_compile_flags";
-end;
-
-define C-function g-regex-get-has-cr-or-lf
-  input parameter self :: <GRegex>;
-  result res :: <C-boolean>;
-  c-name: "g_regex_get_has_cr_or_lf";
 end;
 
 define C-function g-regex-get-match-flags
@@ -3644,6 +3718,7 @@ define C-function g-regex-match-all-full
   input parameter start_position_ :: <C-signed-int>;
   input parameter match_options_ :: <GRegexMatchFlags>;
   output parameter match_info_ :: <GMatchInfo>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_regex_match_all_full";
 end;
@@ -3655,6 +3730,7 @@ define C-function g-regex-match-full
   input parameter start_position_ :: <C-signed-int>;
   input parameter match_options_ :: <GRegexMatchFlags>;
   output parameter match_info_ :: <GMatchInfo>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_regex_match_full";
 end;
@@ -3672,6 +3748,7 @@ define C-function g-regex-replace
   input parameter start_position_ :: <C-signed-int>;
   input parameter replacement_ :: <C-string>;
   input parameter match_options_ :: <GRegexMatchFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_regex_replace";
 end;
@@ -3683,27 +3760,9 @@ define C-function g-regex-replace-literal
   input parameter start_position_ :: <C-signed-int>;
   input parameter replacement_ :: <C-string>;
   input parameter match_options_ :: <GRegexMatchFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_regex_replace_literal";
-end;
-
-define C-function g-regex-split
-  input parameter self :: <GRegex>;
-  input parameter string_ :: <C-string>;
-  input parameter match_options_ :: <GRegexMatchFlags>;
-  result res :: <C-string*>;
-  c-name: "g_regex_split";
-end;
-
-define C-function g-regex-split-full
-  input parameter self :: <GRegex>;
-  input parameter string_ :: <C-string*>;
-  input parameter string_len_ :: <C-signed-long>;
-  input parameter start_position_ :: <C-signed-int>;
-  input parameter match_options_ :: <GRegexMatchFlags>;
-  input parameter max_tokens_ :: <C-signed-int>;
-  result res :: <C-string*>;
-  c-name: "g_regex_split_full";
 end;
 
 define C-function g-regex-unref
@@ -3714,6 +3773,7 @@ end;
 define C-function g-regex-check-replacement
   input parameter replacement_ :: <C-string>;
   output parameter has_references_ :: <C-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_regex_check_replacement";
 end;
@@ -3746,15 +3806,6 @@ define C-function g-regex-match-simple
   c-name: "g_regex_match_simple";
 end;
 
-define C-function g-regex-split-simple
-  input parameter pattern_ :: <C-string>;
-  input parameter string_ :: <C-string>;
-  input parameter compile_options_ :: <GRegexCompileFlags>;
-  input parameter match_options_ :: <GRegexMatchFlags>;
-  result res :: <C-string*>;
-  c-name: "g_regex_split_simple";
-end;
-
 define constant $g-regex-caseless = 1;
 define constant $g-regex-multiline = 2;
 define constant $g-regex-dotall = 4;
@@ -3765,14 +3816,10 @@ define constant $g-regex-ungreedy = 512;
 define constant $g-regex-raw = 2048;
 define constant $g-regex-no-auto-capture = 4096;
 define constant $g-regex-optimize = 8192;
-define constant $g-regex-firstline = 262144;
 define constant $g-regex-dupnames = 524288;
 define constant $g-regex-newline-cr = 1048576;
 define constant $g-regex-newline-lf = 2097152;
 define constant $g-regex-newline-crlf = 3145728;
-define constant $g-regex-newline-anycrlf = 5242880;
-define constant $g-regex-bsr-anycrlf = 8388608;
-define constant $g-regex-javascript-compat = 33554432;
 define constant <GRegexCompileFlags> = <C-int>;
 define C-pointer-type <GRegexCompileFlags*> => <GRegexCompileFlags>;
 
@@ -3818,21 +3865,6 @@ define constant $g-regex-error-too-many-branches-in-define = 154;
 define constant $g-regex-error-define-repetion = 155;
 define constant $g-regex-error-inconsistent-newline-options = 156;
 define constant $g-regex-error-missing-back-reference = 157;
-define constant $g-regex-error-invalid-relative-reference = 158;
-define constant $g-regex-error-backtracking-control-verb-argument-forbidden = 159;
-define constant $g-regex-error-unknown-backtracking-control-verb = 160;
-define constant $g-regex-error-number-too-big = 161;
-define constant $g-regex-error-missing-subpattern-name = 162;
-define constant $g-regex-error-missing-digit = 163;
-define constant $g-regex-error-invalid-data-character = 164;
-define constant $g-regex-error-extra-subpattern-name = 165;
-define constant $g-regex-error-backtracking-control-verb-argument-required = 166;
-define constant $g-regex-error-invalid-control-char = 168;
-define constant $g-regex-error-missing-name = 169;
-define constant $g-regex-error-not-supported-in-class = 171;
-define constant $g-regex-error-too-many-forward-references = 172;
-define constant $g-regex-error-name-too-long = 175;
-define constant $g-regex-error-character-value-too-large = 176;
 define constant <GRegexError> = <C-int>;
 define C-pointer-type <GRegexError*> => <GRegexError>;
 
@@ -3845,12 +3877,6 @@ define constant $g-regex-match-newline-cr = 1048576;
 define constant $g-regex-match-newline-lf = 2097152;
 define constant $g-regex-match-newline-crlf = 3145728;
 define constant $g-regex-match-newline-any = 4194304;
-define constant $g-regex-match-newline-anycrlf = 5242880;
-define constant $g-regex-match-bsr-anycrlf = 8388608;
-define constant $g-regex-match-bsr-any = 16777216;
-define constant $g-regex-match-partial-soft = 32768;
-define constant $g-regex-match-partial-hard = 134217728;
-define constant $g-regex-match-notempty-atstart = 268435456;
 define constant <GRegexMatchFlags> = <C-int>;
 define C-pointer-type <GRegexMatchFlags*> => <GRegexMatchFlags>;
 
@@ -4219,12 +4245,6 @@ define C-function g-source-get-priority
   c-name: "g_source_get_priority";
 end;
 
-define C-function g-source-get-ready-time
-  input parameter self :: <GSource>;
-  result res :: <C-signed-long>;
-  c-name: "g_source_get_ready_time";
-end;
-
 define C-function g-source-get-time
   input parameter self :: <GSource>;
   result res :: <C-signed-long>;
@@ -4235,20 +4255,6 @@ define C-function g-source-is-destroyed
   input parameter self :: <GSource>;
   result res :: <C-boolean>;
   c-name: "g_source_is_destroyed";
-end;
-
-define C-function g-source-modify-unix-fd
-  input parameter self :: <GSource>;
-  input parameter tag_ :: <C-void*>;
-  input parameter new_events_ :: <GIOCondition>;
-  c-name: "g_source_modify_unix_fd";
-end;
-
-define C-function g-source-query-unix-fd
-  input parameter self :: <GSource>;
-  input parameter tag_ :: <C-void*>;
-  result res :: <GIOCondition>;
-  c-name: "g_source_query_unix_fd";
 end;
 
 define C-function g-source-ref
@@ -4267,12 +4273,6 @@ define C-function g-source-remove-poll
   input parameter self :: <GSource>;
   input parameter fd_ :: <GPollFD>;
   c-name: "g_source_remove_poll";
-end;
-
-define C-function g-source-remove-unix-fd
-  input parameter self :: <GSource>;
-  input parameter tag_ :: <C-void*>;
-  c-name: "g_source_remove_unix_fd";
 end;
 
 define C-function g-source-set-callback
@@ -4312,12 +4312,6 @@ define C-function g-source-set-priority
   input parameter self :: <GSource>;
   input parameter priority_ :: <C-signed-int>;
   c-name: "g_source_set_priority";
-end;
-
-define C-function g-source-set-ready-time
-  input parameter self :: <GSource>;
-  input parameter ready_time_ :: <C-signed-long>;
-  c-name: "g_source_set_ready_time";
 end;
 
 define C-function g-source-unref
@@ -4402,7 +4396,6 @@ define constant $g-spawn-stdout-to-dev-null = 8;
 define constant $g-spawn-stderr-to-dev-null = 16;
 define constant $g-spawn-child-inherits-stdin = 32;
 define constant $g-spawn-file-and-argv-zero = 64;
-define constant $g-spawn-search-path-from-envp = 128;
 define constant <GSpawnFlags> = <C-int>;
 define C-pointer-type <GSpawnFlags*> => <GSpawnFlags>;
 
@@ -4426,7 +4419,7 @@ end;
 
 define C-function g-string-append-c
   input parameter self :: <GString>;
-  input parameter c_ :: <C-signed-char>;
+  input parameter c_ :: <C-unsigned-char>;
   result res :: <GString>;
   c-name: "g_string_append_c";
 end;
@@ -4502,12 +4495,6 @@ define C-function g-string-free
   c-name: "g_string_free";
 end;
 
-define C-function g-string-free-to-bytes
-  input parameter self :: <GString>;
-  result res :: <GBytes>;
-  c-name: "g_string_free_to_bytes";
-end;
-
 define C-function g-string-hash
   input parameter self :: <GString>;
   result res :: <C-unsigned-int>;
@@ -4525,7 +4512,7 @@ end;
 define C-function g-string-insert-c
   input parameter self :: <GString>;
   input parameter pos_ :: <C-signed-long>;
-  input parameter c_ :: <C-signed-char>;
+  input parameter c_ :: <C-unsigned-char>;
   result res :: <GString>;
   c-name: "g_string_insert_c";
 end;
@@ -4573,7 +4560,7 @@ end;
 
 define C-function g-string-prepend-c
   input parameter self :: <GString>;
-  input parameter c_ :: <C-signed-char>;
+  input parameter c_ :: <C-unsigned-char>;
   result res :: <GString>;
   c-name: "g_string_prepend_c";
 end;
@@ -4648,16 +4635,6 @@ define C-function g-string-chunk-insert-len
   result res :: <C-string>;
   c-name: "g_string_chunk_insert_len";
 end;
-
-define constant $time-span-day = 86400000000;
-
-define constant $time-span-hour = 3600000000;
-
-define constant $time-span-millisecond = 1000;
-
-define constant $time-span-minute = 60000000;
-
-define constant $time-span-second = 1000000;
 
 define C-struct <_GTestCase>
   pointer-type-name: <GTestCase>;
@@ -4744,12 +4721,6 @@ define C-struct <_GThread>
   pointer-type-name: <GThread>;
 end C-struct;
 
-define C-function g-thread-ref
-  input parameter self :: <GThread>;
-  result res :: <GThread>;
-  c-name: "g_thread_ref";
-end;
-
 define C-function g-thread-unref
   input parameter self :: <GThread>;
   c-name: "g_thread_unref";
@@ -4763,11 +4734,6 @@ end;
 define C-function g-thread-exit
   input parameter retval_ :: <C-void*>;
   c-name: "g_thread_exit";
-end;
-
-define C-function g-thread-self
-  result res :: <GThread>;
-  c-name: "g_thread_self";
 end;
 
 define C-function g-thread-yield
@@ -4807,6 +4773,7 @@ end;
 define C-function g-thread-pool-push
   input parameter self :: <GThreadPool>;
   input parameter data_ :: <C-void*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_thread_pool_push";
 end;
@@ -4814,6 +4781,7 @@ end;
 define C-function g-thread-pool-set-max-threads
   input parameter self :: <GThreadPool>;
   input parameter max_threads_ :: <C-signed-int>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_thread_pool_set_max_threads";
 end;
@@ -4888,22 +4856,6 @@ define C-struct <_GTimeZone>
   pointer-type-name: <GTimeZone>;
 end C-struct;
 
-define C-function g-time-zone-new
-  input parameter identifier_ :: <C-string>;
-  result res :: <GTimeZone>;
-  c-name: "g_time_zone_new";
-end;
-
-define C-function g-time-zone-new-local
-  result res :: <GTimeZone>;
-  c-name: "g_time_zone_new_local";
-end;
-
-define C-function g-time-zone-new-utc
-  result res :: <GTimeZone>;
-  c-name: "g_time_zone_new_utc";
-end;
-
 define C-function g-time-zone-adjust-time
   input parameter self :: <GTimeZone>;
   input parameter type_ :: <GTimeType>;
@@ -4939,12 +4891,6 @@ define C-function g-time-zone-is-dst
   input parameter interval_ :: <C-signed-int>;
   result res :: <C-boolean>;
   c-name: "g_time_zone_is_dst";
-end;
-
-define C-function g-time-zone-ref
-  input parameter self :: <GTimeZone>;
-  result res :: <GTimeZone>;
-  c-name: "g_time_zone_ref";
 end;
 
 define C-function g-time-zone-unref
@@ -5173,7 +5119,6 @@ define constant $g-unicode-break-hangul-lvt-syllable = 35;
 define constant $g-unicode-break-close-paranthesis = 36;
 define constant $g-unicode-break-conditional-japanese-starter = 37;
 define constant $g-unicode-break-hebrew-letter = 38;
-define constant $g-unicode-break-regional-indicator = 39;
 define constant <GUnicodeBreakType> = <C-int>;
 define C-pointer-type <GUnicodeBreakType*> => <GUnicodeBreakType>;
 
@@ -5331,8 +5276,6 @@ define C-pointer-type <GUserDirectory*> => <GUserDirectory>;
 
 define constant $va-copy-as-array = 1;
 
-define constant $version-min-required = 2;
-
 define C-struct <_GVariant>
   pointer-type-name: <GVariant>;
 end C-struct;
@@ -5390,14 +5333,6 @@ define C-function g-variant-new-fixed-array
   input parameter element_size_ :: <C-unsigned-long>;
   result res :: <GVariant>;
   c-name: "g_variant_new_fixed_array";
-end;
-
-define C-function g-variant-new-from-bytes
-  input parameter type_ :: <GVariantType>;
-  input parameter bytes_ :: <GBytes>;
-  input parameter trusted_ :: <C-boolean>;
-  result res :: <GVariant>;
-  c-name: "g_variant_new_from_bytes";
 end;
 
 define C-function g-variant-new-from-data
@@ -5511,14 +5446,6 @@ define C-function g-variant-byteswap
   c-name: "g_variant_byteswap";
 end;
 
-define C-function g-variant-check-format-string
-  input parameter self :: <GVariant>;
-  input parameter format_string_ :: <C-string>;
-  input parameter copy_only_ :: <C-boolean>;
-  result res :: <C-boolean>;
-  c-name: "g_variant_check_format_string";
-end;
-
 define C-function g-variant-classify
   input parameter self :: <GVariant>;
   result res :: <GVariantClass>;
@@ -5535,7 +5462,7 @@ end;
 define C-function g-variant-dup-bytestring
   input parameter self :: <GVariant>;
   output parameter length_ :: <C-unsigned-long*>;
-  result res :: <C-unsigned-char*>;
+  result res :: <C-string>;
   c-name: "g_variant_dup_bytestring";
 end;
 
@@ -5612,16 +5539,18 @@ define C-function g-variant-get-data
   c-name: "g_variant_get_data";
 end;
 
-define C-function g-variant-get-data-as-bytes
-  input parameter self :: <GVariant>;
-  result res :: <GBytes>;
-  c-name: "g_variant_get_data_as_bytes";
-end;
-
 define C-function g-variant-get-double
   input parameter self :: <GVariant>;
   result res :: <C-double>;
   c-name: "g_variant_get_double";
+end;
+
+define C-function g-variant-get-fixed-array
+  input parameter self :: <GVariant>;
+  output parameter n_elements_ :: <C-unsigned-long*>;
+  input parameter element_size_ :: <C-unsigned-long>;
+  result res :: <C-void*>;
+  c-name: "g_variant_get_fixed_array";
 end;
 
 define C-function g-variant-get-handle
@@ -5821,6 +5750,7 @@ define C-function g-variant-parse
   input parameter text_ :: <C-string>;
   input parameter limit_ :: <C-string>;
   input parameter endptr_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GVariant>;
   c-name: "g_variant_parse";
 end;
@@ -5925,25 +5855,6 @@ define C-function g-variant-type-new
   input parameter type_string_ :: <C-string>;
   result res :: <GVariantType>;
   c-name: "g_variant_type_new";
-end;
-
-define C-function g-variant-type-new-array
-  input parameter element_ :: <GVariantType>;
-  result res :: <GVariantType>;
-  c-name: "g_variant_type_new_array";
-end;
-
-define C-function g-variant-type-new-dict-entry
-  input parameter key_ :: <GVariantType>;
-  input parameter value_ :: <GVariantType>;
-  result res :: <GVariantType>;
-  c-name: "g_variant_type_new_dict_entry";
-end;
-
-define C-function g-variant-type-new-maybe
-  input parameter element_ :: <GVariantType>;
-  result res :: <GVariantType>;
-  c-name: "g_variant_type_new_maybe";
 end;
 
 define C-function g-variant-type-new-tuple
@@ -6068,6 +5979,25 @@ define C-function g-variant-type-n-items
   c-name: "g_variant_type_n_items";
 end;
 
+define C-function g-variant-type-new-array
+  input parameter self :: <GVariantType>;
+  result res :: <GVariantType>;
+  c-name: "g_variant_type_new_array";
+end;
+
+define C-function g-variant-type-new-dict-entry
+  input parameter self :: <GVariantType>;
+  input parameter value_ :: <GVariantType>;
+  result res :: <GVariantType>;
+  c-name: "g_variant_type_new_dict_entry";
+end;
+
+define C-function g-variant-type-new-maybe
+  input parameter self :: <GVariantType>;
+  result res :: <GVariantType>;
+  c-name: "g_variant_type_new_maybe";
+end;
+
 define C-function g-variant-type-next
   input parameter self :: <GVariantType>;
   result res :: <GVariantType>;
@@ -6081,7 +6011,7 @@ define C-function g-variant-type-value
 end;
 
 define C-function g-variant-type-checked-
-  input parameter arg0_ :: <C-string>;
+  input parameter unknown_ :: <C-string>;
   result res :: <GVariantType>;
   c-name: "g_variant_type_checked_";
 end;
@@ -6110,7 +6040,7 @@ define C-function g-access
 end;
 
 define C-function g-ascii-digit-value
-  input parameter c_ :: <C-signed-char>;
+  input parameter c_ :: <C-unsigned-char>;
   result res :: <C-signed-int>;
   c-name: "g_ascii_digit_value";
 end;
@@ -6185,19 +6115,19 @@ define C-function g-ascii-strup
 end;
 
 define C-function g-ascii-tolower
-  input parameter c_ :: <C-signed-char>;
-  result res :: <C-signed-char>;
+  input parameter c_ :: <C-unsigned-char>;
+  result res :: <C-unsigned-char>;
   c-name: "g_ascii_tolower";
 end;
 
 define C-function g-ascii-toupper
-  input parameter c_ :: <C-signed-char>;
-  result res :: <C-signed-char>;
+  input parameter c_ :: <C-unsigned-char>;
+  result res :: <C-unsigned-char>;
   c-name: "g_ascii_toupper";
 end;
 
 define C-function g-ascii-xdigit-value
-  input parameter c_ :: <C-signed-char>;
+  input parameter c_ :: <C-unsigned-char>;
   result res :: <C-signed-int>;
   c-name: "g_ascii_xdigit_value";
 end;
@@ -6251,6 +6181,11 @@ define C-function g-assertion-message-expr
   input parameter func_ :: <C-string>;
   input parameter expr_ :: <C-string>;
   c-name: "g_assertion_message_expr";
+end;
+
+define C-function g-atexit
+  input parameter func_ :: <C-function-pointer>;
+  c-name: "g_atexit";
 end;
 
 define C-function g-atomic-int-add
@@ -6405,6 +6340,12 @@ define C-function g-base64-encode-step
   c-name: "g_base64_encode_step";
 end;
 
+define C-function g-basename
+  input parameter file_name_ :: <C-string>;
+  result res :: <C-string>;
+  c-name: "g_basename";
+end;
+
 define C-function g-bit-lock
   input parameter address_ :: <C-signed-int*>;
   input parameter lock_bit_ :: <C-signed-int>;
@@ -6488,20 +6429,8 @@ define C-function g-child-watch-source-new
 end;
 
 define C-function g-clear-error
+  output parameter error_ :: <GError*>;
   c-name: "g_clear_error";
-end;
-
-define C-function g-close
-  input parameter fd_ :: <C-signed-int>;
-  result res :: <C-boolean>;
-  c-name: "g_close";
-end;
-
-define C-function g-compute-checksum-for-bytes
-  input parameter checksum_type_ :: <GChecksumType>;
-  input parameter data_ :: <GBytes>;
-  result res :: <C-string>;
-  c-name: "g_compute_checksum_for_bytes";
 end;
 
 define C-function g-compute-checksum-for-data
@@ -6547,6 +6476,7 @@ define C-function g-convert
   input parameter from_codeset_ :: <C-string>;
   output parameter bytes_read_ :: <C-unsigned-long*>;
   output parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_convert";
 end;
@@ -6564,6 +6494,7 @@ define C-function g-convert-with-fallback
   input parameter fallback_ :: <C-string>;
   input parameter bytes_read_ :: <C-unsigned-long*>;
   input parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_convert_with_fallback";
 end;
@@ -6574,6 +6505,7 @@ define C-function g-convert-with-iconv
   input parameter converter_ :: <GIConv>;
   input parameter bytes_read_ :: <C-unsigned-long*>;
   input parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_convert_with_iconv";
 end;
@@ -6587,17 +6519,6 @@ define C-function g-datalist-get-flags
   input parameter datalist_ :: <GData>;
   result res :: <C-unsigned-int>;
   c-name: "g_datalist_get_flags";
-end;
-
-define C-function g-datalist-id-replace-data
-  input parameter datalist_ :: <GData>;
-  input parameter key_id_ :: <C-unsigned-int>;
-  input parameter oldval_ :: <C-void*>;
-  input parameter newval_ :: <C-void*>;
-  input parameter destroy_ :: <C-function-pointer>;
-  input parameter old_destroy_ :: <C-function-pointer>;
-  result res :: <C-boolean>;
-  c-name: "g_datalist_id_replace_data";
 end;
 
 define C-function g-datalist-id-set-data-full
@@ -6742,6 +6663,7 @@ define C-function g-file-get-contents
   input parameter filename_ :: <C-string>;
   output parameter contents_ :: <C-unsigned-char*>;
   output parameter length_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_get_contents";
 end;
@@ -6749,12 +6671,14 @@ end;
 define C-function g-file-open-tmp
   input parameter tmpl_ :: <C-string>;
   output parameter name_used_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int>;
   c-name: "g_file_open_tmp";
 end;
 
 define C-function g-file-read-link
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_file_read_link";
 end;
@@ -6763,6 +6687,7 @@ define C-function g-file-set-contents
   input parameter filename_ :: <C-string>;
   input parameter contents_ :: <C-unsigned-char*>;
   input parameter length_ :: <C-signed-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_file_set_contents";
 end;
@@ -6788,7 +6713,8 @@ end;
 
 define C-function g-filename-from-uri
   input parameter uri_ :: <C-string>;
-  output parameter hostname_ :: <C-string>;
+  input parameter hostname_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_filename_from_uri";
 end;
@@ -6796,15 +6722,17 @@ end;
 define C-function g-filename-from-utf8
   input parameter utf8string_ :: <C-string>;
   input parameter len_ :: <C-signed-long>;
-  output parameter bytes_read_ :: <C-unsigned-long*>;
-  output parameter bytes_written_ :: <C-unsigned-long*>;
-  result res :: <C-unsigned-char*>;
+  input parameter bytes_read_ :: <C-unsigned-long*>;
+  input parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
+  result res :: <C-string>;
   c-name: "g_filename_from_utf8";
 end;
 
 define C-function g-filename-to-uri
   input parameter filename_ :: <C-string>;
   input parameter hostname_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_filename_to_uri";
 end;
@@ -6814,6 +6742,7 @@ define C-function g-filename-to-utf8
   input parameter len_ :: <C-signed-long>;
   input parameter bytes_read_ :: <C-unsigned-long*>;
   input parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_filename_to_utf8";
 end;
@@ -6828,6 +6757,12 @@ define C-function g-format-size
   input parameter size_ :: <C-unsigned-long>;
   result res :: <C-string>;
   c-name: "g_format_size";
+end;
+
+define C-function g-format-size-for-display
+  input parameter size_ :: <C-signed-long>;
+  result res :: <C-string>;
+  c-name: "g_format_size_for_display";
 end;
 
 define C-function g-format-size-full
@@ -6903,11 +6838,6 @@ end;
 define C-function g-get-monotonic-time
   result res :: <C-signed-long>;
   c-name: "g_get_monotonic_time";
-end;
-
-define C-function g-get-num-processors
-  result res :: <C-unsigned-int>;
-  c-name: "g_get_num_processors";
 end;
 
 define C-function g-get-prgname
@@ -7093,6 +7023,7 @@ define C-function g-locale-from-utf8
   input parameter len_ :: <C-signed-long>;
   input parameter bytes_read_ :: <C-unsigned-long*>;
   input parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_locale_from_utf8";
 end;
@@ -7102,6 +7033,7 @@ define C-function g-locale-to-utf8
   input parameter len_ :: <C-signed-long>;
   input parameter bytes_read_ :: <C-unsigned-long*>;
   input parameter bytes_written_ :: <C-unsigned-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_locale_to_utf8";
 end;
@@ -7416,6 +7348,7 @@ define C-function g-shell-parse-argv
   input parameter command_line_ :: <C-string>;
   output parameter argcp_ :: <C-signed-int*>;
   output parameter argvp_ :: <C-string*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_shell_parse_argv";
 end;
@@ -7428,6 +7361,7 @@ end;
 
 define C-function g-shell-unquote
   input parameter quoted_string_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_shell_unquote";
 end;
@@ -7479,6 +7413,7 @@ define C-function g-spawn-async
   input parameter child_setup_ :: <C-function-pointer>;
   input parameter user_data_ :: <C-void*>;
   output parameter child_pid_ :: <C-signed-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_spawn_async";
 end;
@@ -7494,14 +7429,9 @@ define C-function g-spawn-async-with-pipes
   output parameter standard_input_ :: <C-signed-int*>;
   output parameter standard_output_ :: <C-signed-int*>;
   output parameter standard_error_ :: <C-signed-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_spawn_async_with_pipes";
-end;
-
-define C-function g-spawn-check-exit-status
-  input parameter exit_status_ :: <C-signed-int>;
-  result res :: <C-boolean>;
-  c-name: "g_spawn_check_exit_status";
 end;
 
 define C-function g-spawn-close-pid
@@ -7511,6 +7441,7 @@ end;
 
 define C-function g-spawn-command-line-async
   input parameter command_line_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_spawn_command_line_async";
 end;
@@ -7520,6 +7451,7 @@ define C-function g-spawn-command-line-sync
   output parameter standard_output_ :: <C-unsigned-char*>;
   output parameter standard_error_ :: <C-unsigned-char*>;
   output parameter exit_status_ :: <C-signed-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_spawn_command_line_sync";
 end;
@@ -7527,11 +7459,6 @@ end;
 define C-function g-spawn-error-quark
   result res :: <C-unsigned-int>;
   c-name: "g_spawn_error_quark";
-end;
-
-define C-function g-spawn-exit-error-quark
-  result res :: <C-unsigned-int>;
-  c-name: "g_spawn_exit_error_quark";
 end;
 
 define C-function g-spawn-sync
@@ -7544,6 +7471,7 @@ define C-function g-spawn-sync
   output parameter standard_output_ :: <C-unsigned-char*>;
   output parameter standard_error_ :: <C-unsigned-char*>;
   output parameter exit_status_ :: <C-signed-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "g_spawn_sync";
 end;
@@ -7585,9 +7513,16 @@ end;
 define C-function g-strcanon
   input parameter string_ :: <C-string>;
   input parameter valid_chars_ :: <C-string>;
-  input parameter substitutor_ :: <C-signed-char>;
+  input parameter substitutor_ :: <C-unsigned-char>;
   result res :: <C-string>;
   c-name: "g_strcanon";
+end;
+
+define C-function g-strcasecmp
+  input parameter s1_ :: <C-string>;
+  input parameter s2_ :: <C-string>;
+  result res :: <C-signed-int>;
+  c-name: "g_strcasecmp";
 end;
 
 define C-function g-strchomp
@@ -7618,9 +7553,15 @@ end;
 define C-function g-strdelimit
   input parameter string_ :: <C-string>;
   input parameter delimiters_ :: <C-string>;
-  input parameter new_delimiter_ :: <C-signed-char>;
+  input parameter new_delimiter_ :: <C-unsigned-char>;
   result res :: <C-string>;
   c-name: "g_strdelimit";
+end;
+
+define C-function g-strdown
+  input parameter string_ :: <C-string>;
+  result res :: <C-string>;
+  c-name: "g_strdown";
 end;
 
 define C-function g-strdup
@@ -7696,6 +7637,14 @@ define C-function g-strlcpy
   c-name: "g_strlcpy";
 end;
 
+define C-function g-strncasecmp
+  input parameter s1_ :: <C-string>;
+  input parameter s2_ :: <C-string>;
+  input parameter n_ :: <C-unsigned-int>;
+  result res :: <C-signed-int>;
+  c-name: "g_strncasecmp";
+end;
+
 define C-function g-strndup
   input parameter str_ :: <C-string>;
   input parameter n_ :: <C-unsigned-long>;
@@ -7705,7 +7654,7 @@ end;
 
 define C-function g-strnfill
   input parameter length_ :: <C-unsigned-long>;
-  input parameter fill_char_ :: <C-signed-char>;
+  input parameter fill_char_ :: <C-unsigned-char>;
   result res :: <C-string>;
   c-name: "g_strnfill";
 end;
@@ -7752,6 +7701,12 @@ define C-function g-strtod
   c-name: "g_strtod";
 end;
 
+define C-function g-strup
+  input parameter string_ :: <C-string>;
+  result res :: <C-string>;
+  c-name: "g_strup";
+end;
+
 define C-function g-strv-get-type
   result res :: <C-long>;
   c-name: "g_strv_get_type";
@@ -7763,22 +7718,6 @@ define C-function g-strv-length
   c-name: "g_strv_length";
 end;
 
-define C-function g-test-add-data-func-full
-  input parameter testpath_ :: <C-string>;
-  input parameter test_data_ :: <C-void*>;
-  input parameter test_func_ :: <C-function-pointer>;
-  input parameter data_free_func_ :: <C-function-pointer>;
-  c-name: "g_test_add_data_func_full";
-end;
-
-define C-function g-test-assert-expected-messages-internal
-  input parameter domain_ :: <C-string>;
-  input parameter file_ :: <C-string>;
-  input parameter line_ :: <C-signed-int>;
-  input parameter func_ :: <C-string>;
-  c-name: "g_test_assert_expected_messages_internal";
-end;
-
 define C-function g-test-bug
   input parameter bug_uri_snippet_ :: <C-string>;
   c-name: "g_test_bug";
@@ -7787,13 +7726,6 @@ end;
 define C-function g-test-bug-base
   input parameter uri_pattern_ :: <C-string>;
   c-name: "g_test_bug_base";
-end;
-
-define C-function g-test-expect-message
-  input parameter log_domain_ :: <C-string>;
-  input parameter log_level_ :: <GLogLevelFlags>;
-  input parameter pattern_ :: <C-string>;
-  c-name: "g_test_expect_message";
 end;
 
 define C-function g-test-fail
@@ -7930,6 +7862,7 @@ define C-function g-ucs4-to-utf16
   input parameter len_ :: <C-signed-long>;
   input parameter items_read_ :: <C-signed-long*>;
   input parameter items_written_ :: <C-signed-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-short*>;
   c-name: "g_ucs4_to_utf16";
 end;
@@ -7939,6 +7872,7 @@ define C-function g-ucs4-to-utf8
   input parameter len_ :: <C-signed-long>;
   input parameter items_read_ :: <C-signed-long*>;
   input parameter items_written_ :: <C-signed-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_ucs4_to_utf8";
 end;
@@ -8162,59 +8096,6 @@ define C-function g-unicode-script-to-iso15924
   c-name: "g_unicode_script_to_iso15924";
 end;
 
-define C-function g-unix-error-quark
-  result res :: <C-unsigned-int>;
-  c-name: "g_unix_error_quark";
-end;
-
-define C-function g-unix-fd-add-full
-  input parameter priority_ :: <C-signed-int>;
-  input parameter fd_ :: <C-signed-int>;
-  input parameter condition_ :: <GIOCondition>;
-  input parameter function_ :: <C-function-pointer>;
-  input parameter user_data_ :: <C-void*>;
-  input parameter notify_ :: <C-function-pointer>;
-  result res :: <C-unsigned-int>;
-  c-name: "g_unix_fd_add_full";
-end;
-
-define C-function g-unix-fd-source-new
-  input parameter fd_ :: <C-signed-int>;
-  input parameter condition_ :: <GIOCondition>;
-  result res :: <GSource>;
-  c-name: "g_unix_fd_source_new";
-end;
-
-define C-function g-unix-open-pipe
-  input parameter fds_ :: <C-signed-int*>;
-  input parameter flags_ :: <C-signed-int>;
-  result res :: <C-boolean>;
-  c-name: "g_unix_open_pipe";
-end;
-
-define C-function g-unix-set-fd-nonblocking
-  input parameter fd_ :: <C-signed-int>;
-  input parameter nonblock_ :: <C-boolean>;
-  result res :: <C-boolean>;
-  c-name: "g_unix_set_fd_nonblocking";
-end;
-
-define C-function g-unix-signal-add-full
-  input parameter priority_ :: <C-signed-int>;
-  input parameter signum_ :: <C-signed-int>;
-  input parameter handler_ :: <C-function-pointer>;
-  input parameter user_data_ :: <C-void*>;
-  input parameter notify_ :: <C-function-pointer>;
-  result res :: <C-unsigned-int>;
-  c-name: "g_unix_signal_add_full";
-end;
-
-define C-function g-unix-signal-source-new
-  input parameter signum_ :: <C-signed-int>;
-  result res :: <GSource>;
-  c-name: "g_unix_signal_source_new";
-end;
-
 define C-function g-unlink
   input parameter filename_ :: <C-string>;
   result res :: <C-signed-int>;
@@ -8232,12 +8113,6 @@ define C-function g-uri-escape-string
   input parameter allow_utf8_ :: <C-boolean>;
   result res :: <C-string>;
   c-name: "g_uri_escape_string";
-end;
-
-define C-function g-uri-list-extract-uris
-  input parameter uri_list_ :: <C-string>;
-  result res :: <C-string*>;
-  c-name: "g_uri_list_extract_uris";
 end;
 
 define C-function g-uri-parse-scheme
@@ -8271,6 +8146,7 @@ define C-function g-utf16-to-ucs4
   input parameter len_ :: <C-signed-long>;
   input parameter items_read_ :: <C-signed-long*>;
   input parameter items_written_ :: <C-signed-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int*>;
   c-name: "g_utf16_to_ucs4";
 end;
@@ -8280,6 +8156,7 @@ define C-function g-utf16-to-utf8
   input parameter len_ :: <C-signed-long>;
   input parameter items_read_ :: <C-signed-long*>;
   input parameter items_written_ :: <C-signed-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-string>;
   c-name: "g_utf16_to_utf8";
 end;
@@ -8432,6 +8309,7 @@ define C-function g-utf8-to-ucs4
   input parameter len_ :: <C-signed-long>;
   input parameter items_read_ :: <C-signed-long*>;
   input parameter items_written_ :: <C-signed-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int*>;
   c-name: "g_utf8_to_ucs4";
 end;
@@ -8449,12 +8327,13 @@ define C-function g-utf8-to-utf16
   input parameter len_ :: <C-signed-long>;
   input parameter items_read_ :: <C-signed-long*>;
   input parameter items_written_ :: <C-signed-long*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-short*>;
   c-name: "g_utf8_to_utf16";
 end;
 
 define C-function g-utf8-validate
-  input parameter str_ :: <C-unsigned-char*>;
+  input parameter str_ :: <C-string>;
   input parameter max_len_ :: <C-signed-long>;
   output parameter end_ :: <C-string>;
   result res :: <C-boolean>;

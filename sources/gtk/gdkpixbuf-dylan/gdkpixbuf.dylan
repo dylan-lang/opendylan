@@ -4,6 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 
 define C-pointer-type <C-void**> => <C-void*>;
+ignore(<C-void**>);
+
+define C-pointer-type <GError*> => <GError>;
+ignore(<GError*>);
 
 define constant $gdk-colorspace-rgb = 0;
 define constant <GdkColorspace> = <C-int>;
@@ -22,11 +26,11 @@ define constant $pixbuf-magic-number = 1197763408;
 
 define constant $pixbuf-major = 2;
 
-define constant $pixbuf-micro = 2;
+define constant $pixbuf-micro = 1;
 
-define constant $pixbuf-minor = 28;
+define constant $pixbuf-minor = 26;
 
-define constant $pixbuf-version = "2.28.2";
+define constant $pixbuf-version = "2.26.1";
 
 define constant $pixdata-header-length = 24;
 
@@ -61,6 +65,7 @@ end;
 
 define C-function gdk-pixbuf-new-from-file
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_file";
 end;
@@ -70,6 +75,7 @@ define C-function gdk-pixbuf-new-from-file-at-scale
   input parameter width_ :: <C-signed-int>;
   input parameter height_ :: <C-signed-int>;
   input parameter preserve_aspect_ratio_ :: <C-boolean>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_file_at_scale";
 end;
@@ -78,6 +84,7 @@ define C-function gdk-pixbuf-new-from-file-at-size
   input parameter filename_ :: <C-string>;
   input parameter width_ :: <C-signed-int>;
   input parameter height_ :: <C-signed-int>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_file_at_size";
 end;
@@ -86,12 +93,14 @@ define C-function gdk-pixbuf-new-from-inline
   input parameter data_length_ :: <C-signed-int>;
   input parameter data_ :: <C-unsigned-char*>;
   input parameter copy_pixels_ :: <C-boolean>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_inline";
 end;
 
 define C-function gdk-pixbuf-new-from-resource
   input parameter resource_path_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_resource";
 end;
@@ -101,6 +110,7 @@ define C-function gdk-pixbuf-new-from-resource-at-scale
   input parameter width_ :: <C-signed-int>;
   input parameter height_ :: <C-signed-int>;
   input parameter preserve_aspect_ratio_ :: <C-boolean>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_resource_at_scale";
 end;
@@ -108,6 +118,7 @@ end;
 define C-function gdk-pixbuf-new-from-stream
   input parameter stream_ :: <GInputStream>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_stream";
 end;
@@ -118,18 +129,20 @@ define C-function gdk-pixbuf-new-from-stream-at-scale
   input parameter height_ :: <C-signed-int>;
   input parameter preserve_aspect_ratio_ :: <C-boolean>;
   input parameter cancellable_ :: <GCancellable>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_stream_at_scale";
 end;
 
 define C-function gdk-pixbuf-new-from-stream-finish
   input parameter async_result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_stream_finish";
 end;
 
 define C-function gdk-pixbuf-new-from-xpm-data
-  input parameter data_ :: <C-string*>;
+  input parameter data_ :: <C-string>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_new_from_xpm_data";
 end;
@@ -137,6 +150,7 @@ end;
 define C-function gdk-pixbuf-from-pixdata
   input parameter pixdata_ :: <GdkPixdata>;
   input parameter copy_pixels_ :: <C-boolean>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gdk_pixbuf_from_pixdata";
 end;
@@ -181,6 +195,7 @@ end;
 
 define C-function gdk-pixbuf-save-to-stream-finish
   input parameter async_result_ :: <GAsyncResult>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gdk_pixbuf_save_to_stream_finish";
 end;
@@ -376,6 +391,7 @@ define C-function gdk-pixbuf-save-to-bufferv
   input parameter type_ :: <C-string>;
   input parameter option_keys_ :: <C-string*>;
   input parameter option_values_ :: <C-string*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gdk_pixbuf_save_to_bufferv";
 end;
@@ -387,6 +403,7 @@ define C-function gdk-pixbuf-save-to-callbackv
   input parameter type_ :: <C-string>;
   input parameter option_keys_ :: <C-string*>;
   input parameter option_values_ :: <C-string*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gdk_pixbuf_save_to_callbackv";
 end;
@@ -397,6 +414,7 @@ define C-function gdk-pixbuf-savev
   input parameter type_ :: <C-string>;
   input parameter option_keys_ :: <C-string*>;
   input parameter option_values_ :: <C-string*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gdk_pixbuf_savev";
 end;
@@ -437,35 +455,9 @@ define C-pointer-type <GdkPixbufAnimation*> => <GdkPixbufAnimation>;
 
 define C-function gdk-pixbuf-animation-new-from-file
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbufAnimation>;
   c-name: "gdk_pixbuf_animation_new_from_file";
-end;
-
-define C-function gdk-pixbuf-animation-new-from-resource
-  input parameter resource_path_ :: <C-string>;
-  result res :: <GdkPixbufAnimation>;
-  c-name: "gdk_pixbuf_animation_new_from_resource";
-end;
-
-define C-function gdk-pixbuf-animation-new-from-stream
-  input parameter stream_ :: <GInputStream>;
-  input parameter cancellable_ :: <GCancellable>;
-  result res :: <GdkPixbufAnimation>;
-  c-name: "gdk_pixbuf_animation_new_from_stream";
-end;
-
-define C-function gdk-pixbuf-animation-new-from-stream-finish
-  input parameter async_result_ :: <GAsyncResult>;
-  result res :: <GdkPixbufAnimation>;
-  c-name: "gdk_pixbuf_animation_new_from_stream_finish";
-end;
-
-define C-function gdk-pixbuf-animation-new-from-stream-async
-  input parameter stream_ :: <GInputStream>;
-  input parameter cancellable_ :: <GCancellable>;
-  input parameter callback_ :: <C-function-pointer>;
-  input parameter user_data_ :: <C-void*>;
-  c-name: "gdk_pixbuf_animation_new_from_stream_async";
 end;
 
 define C-function gdk-pixbuf-animation-get-height
@@ -621,18 +613,21 @@ end;
 
 define C-function gdk-pixbuf-loader-new-with-mime-type
   input parameter mime_type_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbufLoader>;
   c-name: "gdk_pixbuf_loader_new_with_mime_type";
 end;
 
 define C-function gdk-pixbuf-loader-new-with-type
   input parameter image_type_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbufLoader>;
   c-name: "gdk_pixbuf_loader_new_with_type";
 end;
 
 define C-function gdk-pixbuf-loader-close
   input parameter self :: <GdkPixbufLoader>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gdk_pixbuf_loader_close";
 end;
@@ -666,6 +661,7 @@ define C-function gdk-pixbuf-loader-write
   input parameter self :: <GdkPixbufLoader>;
   input parameter buf_ :: <C-unsigned-char*>;
   input parameter count_ :: <C-unsigned-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gdk_pixbuf_loader_write";
 end;
@@ -741,6 +737,7 @@ define C-function gdk-pixdata-deserialize
   input parameter self :: <GdkPixdata>;
   input parameter stream_length_ :: <C-unsigned-int>;
   input parameter stream_ :: <C-unsigned-char*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gdk_pixdata_deserialize";
 end;

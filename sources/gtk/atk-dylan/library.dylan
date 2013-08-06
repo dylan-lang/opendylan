@@ -5,8 +5,8 @@ define library atk
   use dylan;
   use common-dylan;
   use c-ffi;
-  use gobject;
   use glib;
+  use gobject;
 
   export atk;
   export atk-properties;
@@ -17,8 +17,8 @@ define module atk
   use common-dylan;
   use c-ffi;
   use gobject-glue;
-  use gobject;
   use glib;
+  use gobject;
 
   export
     atk-text-attribute-register,
@@ -42,13 +42,8 @@ define module atk
     atk-get-toolkit-version,
     atk-get-toolkit-name,
     atk-get-root,
-    atk-get-minor-version,
-    atk-get-micro-version,
-    atk-get-major-version,
-    atk-get-interface-age,
     atk-get-focus-object,
     atk-get-default-registry,
-    atk-get-binary-age,
     atk-focus-tracker-notify,
     atk-_registry-class-parent-class-setter,
     atk-_registry-class-parent-class,
@@ -391,7 +386,6 @@ define module atk
     <AtkRole*>,
     <AtkRole>,
     $atk-role-last-defined,
-    $atk-role-level-bar,
     $atk-role-info-bar,
     $atk-role-notification,
     $atk-role-image-map,
@@ -521,7 +515,6 @@ define module atk
     atk-relation-set-get-relation-by-type,
     atk-relation-set-get-relation,
     atk-relation-set-get-n-relations,
-    atk-relation-set-contains-target,
     atk-relation-set-contains,
     atk-relation-set-add-relation-by-type,
     atk-relation-set-add,
@@ -577,8 +570,8 @@ define module atk
     <AtkObjectFactory*>,
     atk-object-factory-parent,
     <AtkObjectFactory>,
+    atk-object-class-pad2,
     atk-object-class-pad1,
-    atk-object-class-get-object-locale,
     atk-object-class-get-attributes,
     atk-object-class-active-descendant-changed,
     atk-object-class-visible-data-changed,
@@ -619,7 +612,6 @@ define module atk
     atk-object-initialize,
     atk-object-get-role,
     atk-object-get-parent,
-    atk-object-get-object-locale,
     atk-object-get-name,
     atk-object-get-n-accessible-children,
     atk-object-get-index-in-parent,
@@ -658,9 +650,6 @@ define module atk
     <AtkMisc*>,
     atk-misc-parent,
     <AtkMisc>,
-    $minor-version,
-    $micro-version,
-    $major-version,
     <AtkLayer*>,
     <AtkLayer>,
     $atk-layer-window,
@@ -710,7 +699,6 @@ define module atk
     atk-image-get-image-description,
     <AtkImage*>,
     <AtkImage>,
-    $interface-age,
     atk-hypertext-iface-pad3,
     atk-hypertext-iface-pad2,
     atk-hypertext-iface-pad1,
@@ -799,6 +787,7 @@ define module atk
     atk-document-iface-parent,
     <AtkDocumentIface>,
     atk-document-set-attribute-value,
+    atk-document-get-locale,
     atk-document-get-document-type,
     atk-document-get-document,
     atk-document-get-attributes,
@@ -841,7 +830,6 @@ define module atk
     atk-component-contains,
     <AtkComponent*>,
     <AtkComponent>,
-    $binary-age,
     atk-attribute-set-free,
     atk-attribute-value-setter,
     atk-attribute-value,

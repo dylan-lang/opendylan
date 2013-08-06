@@ -4,6 +4,10 @@ copyright: See LICENSE file in this distribution.
 
 
 define C-pointer-type <C-void**> => <C-void*>;
+ignore(<C-void**>);
+
+define C-pointer-type <GError*> => <GError>;
+ignore(<GError*>);
 
 define open C-subtype <GtkAboutDialog> (<GtkDialog>)
   constant slot gtk-about-dialog-parent-instance :: <GtkDialog>;
@@ -1927,7 +1931,7 @@ define constant $gtk-fill = 4;
 define constant <GtkAttachOptions> = <C-int>;
 define C-pointer-type <GtkAttachOptions*> => <GtkAttachOptions>;
 
-define constant $binary-age = 402;
+define constant $gtk-binary-age = 402;
 
 define open C-subtype <GtkBin> (<GtkContainer>)
   constant slot gtk-bin-container :: <GtkContainer>;
@@ -2294,6 +2298,7 @@ end;
 define C-function gtk-builder-add-from-file
   input parameter self :: <GtkBuilder>;
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_builder_add_from_file";
 end;
@@ -2301,6 +2306,7 @@ end;
 define C-function gtk-builder-add-from-resource
   input parameter self :: <GtkBuilder>;
   input parameter resource_path_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_builder_add_from_resource";
 end;
@@ -2309,6 +2315,7 @@ define C-function gtk-builder-add-from-string
   input parameter self :: <GtkBuilder>;
   input parameter buffer_ :: <C-string>;
   input parameter length_ :: <C-unsigned-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_builder_add_from_string";
 end;
@@ -2317,6 +2324,7 @@ define C-function gtk-builder-add-objects-from-file
   input parameter self :: <GtkBuilder>;
   input parameter filename_ :: <C-string>;
   input parameter object_ids_ :: <C-string*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_builder_add_objects_from_file";
 end;
@@ -2325,6 +2333,7 @@ define C-function gtk-builder-add-objects-from-resource
   input parameter self :: <GtkBuilder>;
   input parameter resource_path_ :: <C-string>;
   input parameter object_ids_ :: <C-string*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_builder_add_objects_from_resource";
 end;
@@ -2334,6 +2343,7 @@ define C-function gtk-builder-add-objects-from-string
   input parameter buffer_ :: <C-string>;
   input parameter length_ :: <C-unsigned-long>;
   input parameter object_ids_ :: <C-string*>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_builder_add_objects_from_string";
 end;
@@ -2388,6 +2398,7 @@ define C-function gtk-builder-value-from-string
   input parameter pspec_ :: <GParamSpec>;
   input parameter string_ :: <C-string>;
   output parameter value_ :: <GValue>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_builder_value_from_string";
 end;
@@ -2397,6 +2408,7 @@ define C-function gtk-builder-value-from-string-type
   input parameter type_ :: <C-long>;
   input parameter string_ :: <C-string>;
   output parameter value_ :: <GValue>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_builder_value_from_string_type";
 end;
@@ -3672,6 +3684,7 @@ end C-struct;
 
 define constant $gtk-cell-renderer-accel-mode-gtk = 0;
 define constant $gtk-cell-renderer-accel-mode-other = 1;
+define constant $gtk-cell-renderer-accel-mode-modifier-tap = 2;
 define constant <GtkCellRendererAccelMode> = <C-int>;
 define C-pointer-type <GtkCellRendererAccelMode*> => <GtkCellRendererAccelMode>;
 
@@ -5344,6 +5357,7 @@ define C-function gtk-css-provider-load-from-data
   input parameter self :: <GtkCssProvider>;
   input parameter data_ :: <C-unsigned-char*>;
   input parameter length_ :: <C-signed-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_css_provider_load_from_data";
 end;
@@ -5351,6 +5365,7 @@ end;
 define C-function gtk-css-provider-load-from-file
   input parameter self :: <GtkCssProvider>;
   input parameter file_ :: <GFile>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_css_provider_load_from_file";
 end;
@@ -5358,6 +5373,7 @@ end;
 define C-function gtk-css-provider-load-from-path
   input parameter self :: <GtkCssProvider>;
   input parameter path_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_css_provider_load_from_path";
 end;
@@ -6685,6 +6701,7 @@ end;
 define C-function gtk-file-chooser-add-shortcut-folder
   input parameter self :: <GtkFileChooser>;
   input parameter folder_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_file_chooser_add_shortcut_folder";
 end;
@@ -6692,6 +6709,7 @@ end;
 define C-function gtk-file-chooser-add-shortcut-folder-uri
   input parameter self :: <GtkFileChooser>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_file_chooser_add_shortcut_folder_uri";
 end;
@@ -6861,6 +6879,7 @@ end;
 define C-function gtk-file-chooser-remove-shortcut-folder
   input parameter self :: <GtkFileChooser>;
   input parameter folder_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_file_chooser_remove_shortcut_folder";
 end;
@@ -6868,6 +6887,7 @@ end;
 define C-function gtk-file-chooser-remove-shortcut-folder-uri
   input parameter self :: <GtkFileChooser>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_file_chooser_remove_shortcut_folder_uri";
 end;
@@ -6880,6 +6900,7 @@ end;
 define C-function gtk-file-chooser-select-file
   input parameter self :: <GtkFileChooser>;
   input parameter file_ :: <GFile>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_file_chooser_select_file";
 end;
@@ -6920,6 +6941,7 @@ end;
 define C-function gtk-file-chooser-set-current-folder-file
   input parameter self :: <GtkFileChooser>;
   input parameter file_ :: <GFile>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_file_chooser_set_current_folder_file";
 end;
@@ -6952,6 +6974,7 @@ end;
 define C-function gtk-file-chooser-set-file
   input parameter self :: <GtkFileChooser>;
   input parameter file_ :: <GFile>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_file_chooser_set_file";
 end;
@@ -8413,7 +8436,7 @@ define C-pointer-type <GtkIMStatusStyle*> => <GtkIMStatusStyle>;
 
 define constant $input-error = -1;
 
-define constant $interface-age = 2;
+define constant $gtk-interface-age = 2;
 
 define open C-subtype <GtkIconFactory> (<GObject>)
   constant slot gtk-icon-factory-parent-instance :: <GObject>;
@@ -8533,6 +8556,7 @@ end;
 
 define C-function gtk-icon-info-load-icon
   input parameter self :: <GtkIconInfo>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gtk_icon_info_load_icon";
 end;
@@ -8544,6 +8568,7 @@ define C-function gtk-icon-info-load-symbolic
   input parameter warning_color_ :: <GdkRGBA>;
   input parameter error_color_ :: <GdkRGBA>;
   output parameter was_symbolic_ :: <C-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gtk_icon_info_load_symbolic";
 end;
@@ -8552,6 +8577,7 @@ define C-function gtk-icon-info-load-symbolic-for-context
   input parameter self :: <GtkIconInfo>;
   input parameter context_ :: <GtkStyleContext>;
   output parameter was_symbolic_ :: <C-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gtk_icon_info_load_symbolic_for_context";
 end;
@@ -8561,6 +8587,7 @@ define C-function gtk-icon-info-load-symbolic-for-style
   input parameter style_ :: <GtkStyle>;
   input parameter state_ :: <GtkStateType>;
   output parameter was_symbolic_ :: <C-int*>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gtk_icon_info_load_symbolic_for_style";
 end;
@@ -8872,6 +8899,7 @@ define C-function gtk-icon-theme-load-icon
   input parameter icon_name_ :: <C-string>;
   input parameter size_ :: <C-signed-int>;
   input parameter flags_ :: <GtkIconLookupFlags>;
+  output parameter error_ :: <GError*>;
   result res :: <GdkPixbuf>;
   c-name: "gtk_icon_theme_load_icon";
 end;
@@ -10453,13 +10481,13 @@ define C-struct <_GtkLockButtonPrivate>
   pointer-type-name: <GtkLockButtonPrivate>;
 end C-struct;
 
-define constant $major-version = 3;
+define constant $gtk-major-version = 3;
 
 define constant $max-compose-len = 7;
 
-define constant $micro-version = 2;
+define constant $gtk-micro-version = 2;
 
-define constant $minor-version = 4;
+define constant $gtk-minor-version = 4;
 
 define open C-subtype <GtkMenu> (<GtkMenuShell>)
   constant slot gtk-menu-menu-shell :: <GtkMenuShell>;
@@ -11838,6 +11866,7 @@ end;
 
 define C-function gtk-page-setup-new-from-file
   input parameter file_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GtkPageSetup>;
   c-name: "gtk_page_setup_new_from_file";
 end;
@@ -11845,6 +11874,7 @@ end;
 define C-function gtk-page-setup-new-from-key-file
   input parameter key_file_ :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GtkPageSetup>;
   c-name: "gtk_page_setup_new_from_key_file";
 end;
@@ -11926,6 +11956,7 @@ end;
 define C-function gtk-page-setup-load-file
   input parameter self :: <GtkPageSetup>;
   input parameter file_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_page_setup_load_file";
 end;
@@ -11934,6 +11965,7 @@ define C-function gtk-page-setup-load-key-file
   input parameter self :: <GtkPageSetup>;
   input parameter key_file_ :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_page_setup_load_key_file";
 end;
@@ -11987,6 +12019,7 @@ end;
 define C-function gtk-page-setup-to-file
   input parameter self :: <GtkPageSetup>;
   input parameter file_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_page_setup_to_file";
 end;
@@ -12111,6 +12144,7 @@ end;
 define C-function gtk-paper-size-new-from-key-file
   input parameter key_file_ :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GtkPaperSize>;
   c-name: "gtk_paper_size_new_from_key_file";
 end;
@@ -12453,6 +12487,7 @@ end;
 
 define C-function gtk-print-operation-get-error
   input parameter self :: <GtkPrintOperation>;
+  output parameter error_ :: <GError*>;
   c-name: "gtk_print_operation_get_error";
 end;
 
@@ -12502,6 +12537,7 @@ define C-function gtk-print-operation-run
   input parameter self :: <GtkPrintOperation>;
   input parameter action_ :: <GtkPrintOperationAction>;
   input parameter parent_ :: <GtkWindow>;
+  output parameter error_ :: <GError*>;
   result res :: <GtkPrintOperationResult>;
   c-name: "gtk_print_operation_run";
 end;
@@ -12711,6 +12747,7 @@ end;
 
 define C-function gtk-print-settings-new-from-file
   input parameter file_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GtkPrintSettings>;
   c-name: "gtk_print_settings_new_from_file";
 end;
@@ -12718,6 +12755,7 @@ end;
 define C-function gtk-print-settings-new-from-key-file
   input parameter key_file_ :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GtkPrintSettings>;
   c-name: "gtk_print_settings_new_from_key_file";
 end;
@@ -12956,6 +12994,7 @@ end;
 define C-function gtk-print-settings-load-file
   input parameter self :: <GtkPrintSettings>;
   input parameter file_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_print_settings_load_file";
 end;
@@ -12964,6 +13003,7 @@ define C-function gtk-print-settings-load-key-file
   input parameter self :: <GtkPrintSettings>;
   input parameter key_file_ :: <GKeyFile>;
   input parameter group_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_print_settings_load_key_file";
 end;
@@ -13161,6 +13201,7 @@ end;
 define C-function gtk-print-settings-to-file
   input parameter self :: <GtkPrintSettings>;
   input parameter file_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_print_settings_to_file";
 end;
@@ -13553,6 +13594,12 @@ define C-function gtk-range-get-adjustment
   input parameter self :: <GtkRange>;
   result res :: <GtkAdjustment>;
   c-name: "gtk_range_get_adjustment";
+end;
+
+define C-function gtk-range-get-event-window
+  input parameter self :: <GtkRange>;
+  result res :: <GdkWindow>;
+  c-name: "gtk_range_get_event_window";
 end;
 
 define C-function gtk-range-get-fill-level
@@ -13957,6 +14004,7 @@ end;
 define C-function gtk-recent-chooser-select-uri
   input parameter self :: <GtkRecentChooser>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_recent_chooser_select_uri";
 end;
@@ -13964,6 +14012,7 @@ end;
 define C-function gtk-recent-chooser-set-current-uri
   input parameter self :: <GtkRecentChooser>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_recent_chooser_set_current_uri";
 end;
@@ -14276,6 +14325,7 @@ end C-struct;
 define C-function gtk-recent-info-create-app-info
   input parameter self :: <GtkRecentInfo>;
   input parameter app_name_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GAppInfo>;
   c-name: "gtk_recent_info_create_app_info";
 end;
@@ -14481,6 +14531,7 @@ end;
 define C-function gtk-recent-manager-lookup-item
   input parameter self :: <GtkRecentManager>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <GtkRecentInfo>;
   c-name: "gtk_recent_manager_lookup_item";
 end;
@@ -14489,12 +14540,14 @@ define C-function gtk-recent-manager-move-item
   input parameter self :: <GtkRecentManager>;
   input parameter uri_ :: <C-string>;
   input parameter new_uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_recent_manager_move_item";
 end;
 
 define C-function gtk-recent-manager-purge-items
   input parameter self :: <GtkRecentManager>;
+  output parameter error_ :: <GError*>;
   result res :: <C-signed-int>;
   c-name: "gtk_recent_manager_purge_items";
 end;
@@ -14502,6 +14555,7 @@ end;
 define C-function gtk-recent-manager-remove-item
   input parameter self :: <GtkRecentManager>;
   input parameter uri_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_recent_manager_remove_item";
 end;
@@ -17647,6 +17701,7 @@ define C-function gtk-text-buffer-deserialize
   input parameter iter_ :: <GtkTextIter>;
   input parameter data_ :: <C-unsigned-char*>;
   input parameter length_ :: <C-unsigned-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_text_buffer_deserialize";
 end;
@@ -22633,6 +22688,7 @@ end;
 define C-function gtk-ui-manager-add-ui-from-file
   input parameter self :: <GtkUIManager>;
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_ui_manager_add_ui_from_file";
 end;
@@ -22640,6 +22696,7 @@ end;
 define C-function gtk-ui-manager-add-ui-from-resource
   input parameter self :: <GtkUIManager>;
   input parameter resource_path_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_ui_manager_add_ui_from_resource";
 end;
@@ -22648,6 +22705,7 @@ define C-function gtk-ui-manager-add-ui-from-string
   input parameter self :: <GtkUIManager>;
   input parameter buffer_ :: <C-string>;
   input parameter length_ :: <C-signed-long>;
+  output parameter error_ :: <GError*>;
   result res :: <C-unsigned-int>;
   c-name: "gtk_ui_manager_add_ui_from_string";
 end;
@@ -24851,6 +24909,7 @@ end;
 
 define C-function gtk-window-set-default-icon-from-file
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_window_set_default_icon_from_file";
 end;
@@ -25361,6 +25420,7 @@ end;
 define C-function gtk-window-set-icon-from-file
   input parameter self :: <GtkWindow>;
   input parameter filename_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_window_set_icon_from_file";
 end;
@@ -25981,6 +26041,7 @@ define C-function gtk-init-with-args
   input parameter parameter_string_ :: <C-string>;
   input parameter entries_ :: <C-unsigned-char*> /* Not supported */;
   input parameter translation_domain_ :: <C-string>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_init_with_args";
 end;
@@ -26678,6 +26739,7 @@ define C-function gtk-show-uri
   input parameter screen_ :: <GdkScreen>;
   input parameter uri_ :: <C-string>;
   input parameter timestamp_ :: <C-unsigned-int>;
+  output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_show_uri";
 end;
