@@ -62,7 +62,7 @@ define method set-mirror-parent
     let widget = mirror-widget(child);
     with-gdk-lock
       if (child.mirror-sheet.gadget-label = "Help")
-        gtk-menu-item-set-right-justified ((widget), /* TRUE */ 1)
+        gtk-menu-item-set-right-justified ((widget), #t);
       end;
       let menu = gtk-menu-new();
       duim-debug-message("Creating submenu for menu bar");

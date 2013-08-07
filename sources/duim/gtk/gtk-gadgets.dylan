@@ -826,7 +826,7 @@ define sealed method make-gtk-mirror
     assert(~null-pointer?(widget), "gtk-entry-new failed");
     // Note that this is happening before install-event-handlers, so don't
     // need to disable events.
-    gtk-entry-set-visibility(widget, if (visibility) 1 else 0 end);
+    gtk-entry-set-visibility(widget, visibility);
     unless (empty?(text))
       with-c-string (c-text = text)
         gtk-entry-set-text(widget, c-text);
@@ -1376,7 +1376,7 @@ define sealed method make-gtk-mirror
     let widget = gtk-tree-view-new();
     let renderer = gtk-cell-renderer-text-new();
     let column = gtk-tree-view-column-new();
-    gtk-tree-view-column-pack-start(column, renderer, 0);
+    gtk-tree-view-column-pack-start(column, renderer, #f);
     gtk-tree-view-column-add-attribute(column, renderer, "text", 1);
     gtk-tree-view-append-column(widget, column);
     make(<gadget-mirror>,
@@ -1408,7 +1408,7 @@ define sealed method make-gtk-mirror
     let widget = gtk-tree-view-new();
     let renderer = gtk-cell-renderer-text-new();
     let column = gtk-tree-view-column-new();
-    gtk-tree-view-column-pack-start(column, renderer, 0);
+    gtk-tree-view-column-pack-start(column, renderer, #f);
     gtk-tree-view-column-add-attribute(column, renderer, "text", 1);
     gtk-tree-view-append-column(widget, column);
     make(<gadget-mirror>,
@@ -1503,12 +1503,12 @@ define sealed method make-gtk-mirror
     for (c in columns, i from 1)
       let renderer = gtk-cell-renderer-text-new();
       let column = gtk-tree-view-column-new();
-      gtk-tree-view-column-pack-start(column, renderer, 0);
+      gtk-tree-view-column-pack-start(column, renderer, #f);
       gtk-tree-view-column-add-attribute(column, renderer, "text", i);
-      //gtk-tree-view-column-set-resizable(column, 1);
+      //gtk-tree-view-column-set-resizable(column, #t);
       gtk-tree-view-append-column(widget, column);
     end;
-    gtk-tree-view-set-fixed-height-mode(widget, 1);
+    gtk-tree-view-set-fixed-height-mode(widget, #t);
     let scrolled-win
       = init-scrolled-window(widget, gadget);
     make(<scrolled-mirror>,
@@ -1676,7 +1676,7 @@ define sealed method make-gtk-mirror
     let widget = gtk-tree-view-new();
     let renderer = gtk-cell-renderer-text-new();
     let column = gtk-tree-view-column-new();
-    gtk-tree-view-column-pack-start(column, renderer, 0);
+    gtk-tree-view-column-pack-start(column, renderer, #f);
     gtk-tree-view-column-add-attribute(column, renderer, "text", 1);
     gtk-tree-view-append-column(widget, column);
     let type-vector = make(<GType*>, element-count: 2);
