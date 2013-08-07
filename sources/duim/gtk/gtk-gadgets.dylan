@@ -817,12 +817,11 @@ define sealed method make-gtk-mirror
     let max = text-field-maximum-size(gadget);
     let text = gadget-text-buffer(gadget);
     let visibility = %gtk-text-visibility(gadget);
-    let widget = if (max)
-                   gtk-entry-new-with-max-length(max)
-                 else
-                   gtk-entry-new();
-                 end;
+    let widget = gtk-entry-new();
     assert(~null-pointer?(widget), "gtk-entry-new failed");
+    if (max)
+      gtk-entry-set-max-length(widget, max)
+    end;
     // Note that this is happening before install-event-handlers, so don't
     // need to disable events.
     gtk-entry-set-visibility(widget, visibility);
