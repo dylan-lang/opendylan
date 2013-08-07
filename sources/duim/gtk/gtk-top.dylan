@@ -547,10 +547,10 @@ define sealed method handle-gtk-configure-event
      event :: <GdkEventConfigure>)
  => (handled? :: <boolean>)
   let frame  = sheet-frame(sheet);
-  let left   = event.GdkEventConfigure-x;
-  let top    = event.GdkEventConfigure-y;
-  let width  = event.GdkEventConfigure-width;
-  let height = event.GdkEventConfigure-height;
+  let left   = event.gdk-event-configure-x;
+  let top    = event.gdk-event-configure-y;
+  let width  = event.gdk-event-configure-width;
+  let height = event.gdk-event-configure-height;
   let region = make-bounding-box(left, top, left + width, top + height);
   let (old-width, old-height) = box-size(sheet-region(sheet));
   duim-debug-message("Resizing %= to %dx%d -- was %dx%d",
