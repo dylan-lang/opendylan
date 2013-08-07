@@ -500,19 +500,7 @@ define instruction-set
   op call (fnptrval :: <llvm-value>, args :: <sequence>,
            #rest options, #key metadata :: <list> = #(), #all-keys)
     => let args = map(curry(llvm-builder-value, builder), args);
-       let fnptrtype = type-forward(fnptrval.llvm-value-type);
-       let return-type
-         = if (instance?(fnptrtype, <llvm-pointer-type>))
-             let pointee
-               = type-forward(fnptrtype.llvm-pointer-type-pointee);
-             if (instance?(pointee, <llvm-function-type>))
-               for (arg-type in pointee.llvm-function-type-parameter-types,
-                    arg in args)
-                 llvm-constrain-type(llvm-value-type(arg), arg-type);
-               end for;
-               type-forward(pointee.llvm-function-type-return-type)
-             end if
-           end if;
+       let return-type = do-constrain-call-type(fnptrval, args);
        if (return-type)
          apply(make, <llvm-call-instruction>,
                type: return-type,
@@ -616,11 +604,23 @@ define instruction-set
 
   op invoke (to, unwind, fnptrval, args :: <sequence>,
              #rest options, #key metadata :: <list> = #(), #all-keys)
-    => apply(make, <llvm-invoke-instruction>,
-             operands: map(curry(llvm-builder-value, builder),
-                           concatenate(vector(to, unwind, fnptrval), args)),
-             metadata: builder-metadata(builder, metadata),
-             options);
+    => let args = map(curry(llvm-builder-value, builder), args);
+       let return-type = do-constrain-call-type(fnptrval, args);
+       if (return-type)
+         apply(make, <llvm-invoke-instruction>,
+               operands: concatenate(map(curry(llvm-builder-value, builder),
+                                         vector(to, unwind, fnptrval)),
+                                     args),
+               type: return-type,
+               metadata: builder-metadata(builder, metadata),
+               options)
+       else
+         apply(make, <llvm-invoke-instruction>,
+               operands: map(curry(llvm-builder-value, builder),
+                             concatenate(vector(to, unwind, fnptrval), args)),
+               metadata: builder-metadata(builder, metadata),
+               options)
+       end if;
 
   op resume (value, #key metadata :: <list> = #())
     => make(<llvm-resume-instruction>,
@@ -631,6 +631,21 @@ define instruction-set
     => make(<llvm-unreachable-instruction>,
             metadata: builder-metadata(builder, metadata));
 end instruction-set;
+
+define function do-constrain-call-type
+    (fnptrval :: <llvm-value>, args :: <sequence>)
+ => (type :: false-or(<llvm-type>));
+  let fnptrtype = type-forward(fnptrval.llvm-value-type);
+  if (instance?(fnptrtype, <llvm-pointer-type>))
+    let pointee = type-forward(fnptrtype.llvm-pointer-type-pointee);
+    if (instance?(pointee, <llvm-function-type>))
+      for (arg-type in pointee.llvm-function-type-parameter-types, arg in args)
+        llvm-constrain-type(llvm-value-type(arg), arg-type);
+      end for;
+      type-forward(pointee.llvm-function-type-return-type)
+    end if
+  end if
+end function;
 
 define inline function ins--tail-call
     (builder :: <llvm-builder>, fnptrval :: <llvm-value>, args :: <sequence>,
