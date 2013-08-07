@@ -1212,20 +1212,20 @@ define sealed method handle-gtk-button-press-event
     (gadget :: <gtk-list-control-mixin>, event :: <GdkEventButton>)
  => (handled? :: <boolean>)
   gtk-debug("Pressed button %=, type %=",
-            event.GdkEventButton-button,
-            select (event.GdkEventButton-type)
+            event.gdk-event-button-button,
+            select (event.gdk-event-button-type)
               $GDK-BUTTON-PRESS  => "button press";
               $GDK-2BUTTON-PRESS => "double click";
               $GDK-3BUTTON-PRESS => "treble click";
-              otherwise => event.GdkEventButton-type;
+              otherwise => event.gdk-event-button-type;
             end);
-  if (event.GdkEventButton-type == $GDK-2BUTTON-PRESS)
+  if (event.gdk-event-button-type == $GDK-2BUTTON-PRESS)
     gtk-debug("Double clicked on list control!");
     when (gadget-activate-callback(gadget))
       distribute-activate-callback(gadget);
     end;
     #t
-  elseif ((event.GdkEventButton-type == $GDK-BUTTON-PRESS) & (event.GdkEventButton-button == 3)) //right click
+  elseif ((event.gdk-event-button-type == $GDK-BUTTON-PRESS) & (event.gdk-event-button-button == 3)) //right click
     gtk-debug("right clicked on list control!");
     when (gadget-popup-menu-callback(gadget))
       gtk-set-button-time(event);
@@ -1233,12 +1233,12 @@ define sealed method handle-gtk-button-press-event
                    make(<popup-menu-gadget-event>,
 			gadget: gadget,
 			target: 0,
-                        x: round(event.GdkEventButton-x),
-                        y: round(event.GdkEventButton-y)));
+                        x: round(event.gdk-event-button-x),
+                        y: round(event.gdk-event-button-y)));
       //XXX: fix this when there is some spare time
       //distribute-popup-menu-callback(gadget, 0,
-      //                               x: round(event.GdkEventButton-x),
-      //                               y: round(event.GdkEventButton-y));
+      //                               x: round(event.gdk-event-button-x),
+      //                               y: round(event.gdk-event-button-y));
     end;
     #t
   end
