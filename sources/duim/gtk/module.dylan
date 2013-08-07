@@ -24,6 +24,7 @@ define module gtk-duim
   use cairo;
   use gdk;
   use gtk;
+  use gtk-properties;
 
   // Basic classes
   export <gtk-port>,
