@@ -53,10 +53,10 @@ define method handle-gtk-motion-event
   when (_port)
     ignoring("motion modifiers");
     let (unused-widget, native-x, native-y, native-state)
-    = if (event.GdkEventMotion-is-hint ~= 0)
-         gdk-window-get-pointer(event.GdkEventMotion-window)
+    = if (event.gdk-event-motion-is-hint ~= 0)
+         gdk-window-get-pointer(event.gdk-event-motion-window)
       else
-        values(event.GdkEventMotion-window, event.GdkEventMotion-x, event.GdkEventMotion-y, event.GdkEventMotion-state)
+        values(event.gdk-event-motion-window, event.gdk-event-motion-x, event.gdk-event-motion-y, event.gdk-event-motion-state)
       end;
     let modifiers = 0;
     let state = key-flags->button-state(native-state); 
@@ -103,11 +103,11 @@ define sealed method handle-gtk-crossing-event
  => (handled? :: <boolean>)
   let _port = port(sheet);
   when (_port)
-    let native-x  = event.GdkEventCrossing-x;
-    let native-y  = event.GdkEventCrossing-y;
-    let state     = event.GdkEventCrossing-state;
+    let native-x  = event.gdk-event-crossing-x;
+    let native-y  = event.gdk-event-crossing-y;
+    let state     = event.gdk-event-crossing-state;
     let modifiers = 0;  //--- Do this properly!
-    let detail    = event.GdkEventCrossing-detail;
+    let detail    = event.gdk-event-crossing-detail;
     let (x, y)
       = untransform-position(sheet-native-transform(sheet), native-x, native-y);
     distribute-event(_port,
@@ -137,11 +137,11 @@ define method handle-gtk-button-event
  => (handled? :: <boolean>)
   let _port = port(sheet);
   when (_port)
-    let native-x  = event.GdkEventButton-x;
-    let native-y  = event.GdkEventButton-y;
-    let button    = gtk-button->duim-button(event.GdkEventButton-button);
-    let state     = event.GdkEventButton-state;
-    let type      = event.GdkEventButton-type;
+    let native-x  = event.gdk-event-button-x;
+    let native-y  = event.gdk-event-button-y;
+    let button    = gtk-button->duim-button(event.gdk-event-button-button);
+    let state     = event.gdk-event-button-state;
+    let type      = event.gdk-event-button-type;
     let modifiers = 0;  //--- Do this!
     let event-class
       = select (type)

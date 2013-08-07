@@ -13,15 +13,15 @@ define method handle-gtk-key-event
  => (handled? :: <boolean>)
   let _port = port(sheet);
   when (_port)
-    let char-codepoint = gdk-keyval-to-unicode(event.GdkEventkey-keyval);
+    let char-codepoint = gdk-keyval-to-unicode(event.gdk-event-key-keyval);
     let char = when (char-codepoint > 0) as(<character>, char-codepoint) end;
-    let class = if (event.GdkEventKey-type == $GDK-KEY-PRESS)
+    let class = if (event.gdk-event-key-type == $GDK-KEY-PRESS)
                   <key-press-event>
                 else
                   <key-release-event>
                 end;
-    let keysym = keyval->keysym(event.GdkEventkey-keyval);
-    let modifiers = map-modifiers(event.GdkEventKey-state);
+    let keysym = keyval->keysym(event.gdk-event-key-keyval);
+    let modifiers = map-modifiers(event.gdk-event-key-state);
     distribute-event(_port,
 		     make(class,
 			  sheet:     sheet,
