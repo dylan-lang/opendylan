@@ -1253,8 +1253,8 @@ define method glist-to-vector
 	    null-pointer?(GList) =>
 	      #f;
 	    otherwise =>
-	      add!(vector, c-type-cast(type, glist.GList-data));
-	      process-list(glist.GList-next);
+	      add!(vector, c-type-cast(type, glist.g-list-data));
+	      process-list(glist.g-list-next);
 	  end
 	end;
   process-list(GList);
