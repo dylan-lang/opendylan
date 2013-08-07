@@ -24,6 +24,7 @@ define constant <gushort> = <C-unsigned-short>;
 define constant <gssize> = <C-signed-long>;
 define constant <GQuark> = <guint32>;
 define constant <GType> = <gsize>;
+define C-pointer-type <GType*> => <GType>;
 
 define constant $G-TYPE-INVALID = 0;
 define constant $G-TYPE-NONE = 4;
