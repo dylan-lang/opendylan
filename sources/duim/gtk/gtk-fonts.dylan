@@ -260,9 +260,9 @@ define sealed method text-size
                                   _end - _start); 
             with-stack-structure (rectangle :: <PangoRectangle>)
               pango-layout-get-pixel-extents(layout, null-pointer(<PangoRectangle>), rectangle);
-              values(rectangle.PangoRectangle-x, rectangle.PangoRectangle-y,
-                     rectangle.PangoRectangle-x + rectangle.PangoRectangle-width,
-                     rectangle.PangoRectangle-y + rectangle.PangoRectangle-height)
+              values(rectangle.pango-rectangle-x, rectangle.pango-rectangle-y,
+                     rectangle.pango-rectangle-x + rectangle.pango-rectangle-width,
+                     rectangle.pango-rectangle-y + rectangle.pango-rectangle-height)
             end;
           end;
 	end method measure-string;

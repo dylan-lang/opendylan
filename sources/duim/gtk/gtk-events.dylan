@@ -184,11 +184,11 @@ define method handle-gtk-expose-event
   
   let _port = port(sheet);
   when (_port)
-    let area = event.GdkEventExpose-area;
-    let native-x = area.GdkRectangle-x;
-    let native-y = area.GdkRectangle-y;
-    let native-width = area.GdkRectangle-width;
-    let native-height = area.GdkRectangle-height;
+    let area = event.gdk-event-expose-area;
+    let native-x = area.cairo-rectangle-int-x;
+    let native-y = area.cairo-rectangle-int-y;
+    let native-width = area.cairo-rectangle-int-width;
+    let native-height = area.cairo-rectangle-int-height;
     let native-transform = sheet-native-transform(sheet);
     let (x, y)
       = untransform-position(native-transform, native-x, native-y);
@@ -292,10 +292,10 @@ define method handle-gtk-configure-event
     (sheet :: <sheet>, widget :: <GtkWidget>, event :: <GdkEventConfigure>)
  => (handled? :: <boolean>)
   let allocation = widget.gtk-widget-get-allocation;
-  let native-x  = event.GdkEventConfigure-x;
-  let native-y  = event.GdkEventConfigure-y;
-  let native-width  = allocation.GdkRectangle-width;
-  let native-height = allocation.GdkRectangle-height;
+  let native-x  = event.gdk-event-configure-x;
+  let native-y  = event.gdk-event-configure-y;
+  let native-width  = allocation.cairo-rectangle-int-width;
+  let native-height = allocation.cairo-rectangle-int-height;
   let native-transform = sheet-native-transform(sheet);
   let (x, y)
     = untransform-position(native-transform, native-x, native-y);

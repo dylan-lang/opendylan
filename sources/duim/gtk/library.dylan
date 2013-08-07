@@ -19,6 +19,7 @@ define library gtk-duim
   use glib;
   use gobject;
   use pango;
+  use cairo;
   use gdk;
   use gtk;
 

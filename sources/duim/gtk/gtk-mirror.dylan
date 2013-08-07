@@ -399,11 +399,11 @@ end method install-event-handlers;
 define sealed method handle-gtk-expose-event
     (sheet :: <mirrored-sheet-mixin>, event :: <GdkEventExpose>)
  => (handled? :: <boolean>)
-  let area   = event.GdkEventExpose-area;
-  let x      = area.GdkRectangle-x;
-  let y      = area.GdkRectangle-y;
-  let width  = area.GdkRectangle-width;
-  let height = area.GdkRectangle-height;
+  let area   = event.gdk-event-expose-area;
+  let x      = area.cairo-rectangle-int-x;
+  let y      = area.cairo-rectangle-int-y;
+  let width  = area.cairo-rectangle-int-width;
+  let height = area.cairo-rectangle-int-height;
   let region = make-bounding-box(x, y, x + width, y + height);
   duim-debug-message("Repainting %=: %d, %d %d x %d",
 		     sheet, x, y, width, height);

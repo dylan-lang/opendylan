@@ -516,7 +516,7 @@ define sealed method draw-text
             else
               with-stack-structure (rectangle :: <PangoRectangle>)
                 pango-layout-get-pixel-extents(layout, null-pointer(<PangoRectangle>), rectangle);
-                x := floor/(x + rectangle.PangoRectangle-x + rectangle.PangoRectangle-width 
+                x := floor/(x + rectangle.pango-rectangle-x + rectangle.pango-rectangle-width
                               + tab-width, tab-width) * tab-width;
                 s := min(e + 1, _end)
               end;
