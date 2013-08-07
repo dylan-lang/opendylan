@@ -114,16 +114,15 @@ end method gtk-space-requirements;
 define method widget-size
     (widget :: <GtkWidget>)
  => (width :: <integer>, height :: <integer>)
-  with-stack-structure (request :: <GtkRequisition>)
+  let request =
     with-gdk-lock
-      gtk-widget-size-request(widget, request);
+      gtk-widget-size-request(widget);
     end;
-    duim-debug-message("widget-size for %= is %=x%=",
-                       widget,
-                       request.GtkRequisition-width,
-                       request.GtkRequisition-height);
-    values(request.GtkRequisition-width, request.GtkRequisition-height)
-  end
+  duim-debug-message("widget-size for %= is %=x%=",
+                     widget,
+                     request.gtk-requisition-width,
+                     request.gtk-requisition-height);
+  values(request.gtk-requisition-width, request.gtk-requisition-height)
 end method widget-size;
 
 
