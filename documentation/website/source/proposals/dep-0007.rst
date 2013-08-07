@@ -9,7 +9,7 @@ Status:          Draft
 Type:            Standards Track
 Affects-DRM:     Yes
 Created:         28-Jul-2013
-Last-Modified:   31-Jul-2013
+Last-Modified:   06-Aug-2013
 Post-History:    28-Jul-2013
 Target-Version:  2013.2
 Requires:        0005
@@ -69,10 +69,10 @@ unspecified values equivalent to a space character.
 
 The ``limited`` methods on fillable collection classes each return a limited
 type designated *L*. The ``fill:`` init-keyword of all *L* will have a default
-value of ``default-fill(L)`` instead of ``#f``.
+value identical to the default value listed above instead of ``#f``.
 
 The defaulted or supplied ``default-fill:`` argument must be an instance of the
-element type of the collection class; it is an error to supply a default filler
+element type of the collection; it is an error to supply a default filler
 object that the collection cannot accommodate.
 
 
@@ -81,11 +81,12 @@ object that the collection cannot accommodate.
 
 A new generic function will be added to the Dylan library::
 
-   default-fill (type :: subclass(<collection>)) => (fill-object :: <object>)
+   default-fill (coll :: <collection>) => (fill-object :: <object>)
 
-For fillable collection classes returned by ``limited``, this function will
-return the (possibly defaulted) ``default-fill:`` argument to ``limited``. For
-all other collection classes, this function will return the following:
+For instances of fillable collection classes returned by ``limited``, this
+function will return the (possibly defaulted) ``default-fill:`` argument to
+``limited``. For instances of all other collection classes, this function will
+return the following:
 
 ====================  ============  
 Class                 Return Value
@@ -105,11 +106,11 @@ All others            ``#f``
 
 A new generic function will be added to the Dylan library::
 
-   element-type (type :: subclass(<collection>)) => (element-type :: <type>)
+   element-type (coll :: <collection>) => (element-type :: <type>)
 
-For collection classes with a limited element type, this function will return
-that element type. For other collection classes, this function will return the
-element type described in
+For instances of collection classes with a limited element type, this function
+will return that element type. For instances of other collection classes, this
+function will return the element type described in
 `Element Types <http://opendylan.org/books/drm/Element_Types>`__ of the [DRM]_.
 
 
@@ -118,7 +119,7 @@ element type described in
 
 Every function that uses the first value of an existing collection as the
 filler element in a newly instantiated collection will use the ``default-fill``
-value of the existing collection class instead.
+value of the existing collection instead.
 
 
 ``<collection>``
@@ -191,13 +192,19 @@ element type. Adding the ``element-type`` method solves that problem.
 Rationale
 =========
 
-This DEP does not add the default fill information to *instances* of collection
-classes, but only adds it to the *type*. I had originally considered a more
-extensive change where each instance of a fillable collection class would track
-the ``fill:`` value that it was created with, but in thinking about it, I feel
-the designers made the right call in leaving that information out of each
-instance. In particular, the implementation of ``<list>`` would be difficult if
-each instance tracked its ``fill:`` value.
+The ``default-fill`` and ``element-type`` methods take an *instance* of a
+collection class as an argument rather than the *type* of the collection. This
+is necessary because the [DRM]_ allows the ``limited`` function on *C* to
+return *C* itself as a type, implying that the default fill and element type
+information associated with the limited collection has to be available on a
+per-instance basis. Plus, creating getters on *types* is not idiomatic to Dylan.
+
+I had originally considered a more extensive change where each instance of a
+fillable collection class would not only track its *default* fill value, but
+also track the *specific* ``fill:`` value that it was created with. But in
+thinking about it, I feel the designers made the right call in leaving that
+information out of each instance. In particular, the implementation of
+``<list>`` would be difficult if each instance tracked its ``fill:`` value.
 
 In an earlier unpublished draft, I had also specified that the ``default-fill``
 method only be defined for *L*. But in rereading the [DRM]_ note reproduced
@@ -213,15 +220,6 @@ purposes.
 
 Implementation Notes
 --------------------
-
-``default-fill``
-''''''''''''''''
-
-There is an optimization opportunity here to minimize the run-time impact of
-the ``default-fill`` method (already minimal). Since ``default-fill`` is saved
-on a per-type basis rather than a per-instance basis, its value may be known at
-compile time, allowing it to be inlined as a constant.
-
 
 ``element-type``
 ''''''''''''''''
