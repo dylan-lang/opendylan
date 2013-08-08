@@ -6,6 +6,9 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+//---*** Temporary hack until Pango exports this.
+define constant $PANGO-SCALE = 1024;
+
 /// GTK font management
 
 define sealed class <gtk-font> (<object>)
