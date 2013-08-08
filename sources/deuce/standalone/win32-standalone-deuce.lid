@@ -1,7 +1,7 @@
 Library:      standalone-deuce
 Synopsis:     Standalone wrapper for DUIM-Deuce, for Win-32
 Author:       Scott McKay
-Files:  library
+Files:  win32-library
         module
         frame
         icons

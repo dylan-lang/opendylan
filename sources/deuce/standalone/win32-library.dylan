@@ -17,6 +17,7 @@ define library standalone-deuce
   // use smtp-client;
 
   use duim;
+  use win32-duim;
   use deuce;
   use duim-deuce;
 
@@ -54,6 +55,8 @@ define module standalone-deuce-internals
     import: { read-event,
               event-status-code,
               update-scroll-bar };
+  use win32-duim,
+    import: { <win32-icon> };
   use standalone-deuce,
     export: all;
   use deuce-internals,
