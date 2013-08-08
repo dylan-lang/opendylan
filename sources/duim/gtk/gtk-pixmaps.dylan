@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // /*---*** Not doing pixmaps yet!
 
 define sealed class <gtk-pixmap> (<pixmap>)
-  sealed slot %pixmap :: false-or(<GdkPixmap>) = #f,
+  sealed slot %pixmap /* :: false-or(<GdkPixmap>) */ = #f,
     init-keyword: pixmap:;
   sealed slot %medium :: <gtk-medium>,
     required-init-keyword: medium:;
