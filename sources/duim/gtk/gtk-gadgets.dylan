@@ -120,9 +120,9 @@ define method widget-size
     end;
     duim-debug-message("widget-size for %= is %=x%=",
                        widget,
-                       request.GtkRequisition-width,
-                       request.GtkRequisition-height);
-    values(request.GtkRequisition-width, request.GtkRequisition-height)
+                       request.gtk-requisition-width,
+                       request.gtk-requisition-height);
+    values(request.gtk-requisition-width, request.gtk-requisition-height)
   end
 end method widget-size;
 
