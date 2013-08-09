@@ -2,7 +2,6 @@ Library:      standalone-deuce
 Synopsis:     Standalone wrapper for DUIM-Deuce
 Author:       Scott McKay
 Files:  library
-        module
         frame
         start
 Major-version: 2
