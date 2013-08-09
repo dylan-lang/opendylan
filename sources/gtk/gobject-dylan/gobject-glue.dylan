@@ -127,8 +127,9 @@ define method make(type :: subclass(<GTypeInstance>), #rest args,
       let g-type = g-type-from-instance(instance);
       let dylan-type = find-gtype(g-type);
       unless (dylan-type)
-        error("Unknown GType %= encountered. Re-run melange or implement dynamic class generation.",
-              as(<byte-string>, g-type-name(g-type)));
+        format(*standard-error*, "Unknown GType %= encountered. Re-run melange or implement dynamic class generation.\n",
+               as(<byte-string>, g-type-name(g-type)));
+        dylan-type := <GObject>;
       end;
       let result = next-method(dylan-type, address: address);
       g-object-ref-sink(result);
@@ -287,7 +288,7 @@ end function g-signal-connect;
 define open generic g-value-to-dylan-helper (id, address) => (dylan-instance);
 
 define method g-value-to-dylan-helper (type, address) => (dylan-instance)
-  error("Unknown type %=", id);
+  error("Unknown type %=", type);
 end method g-value-to-dylan-helper;
 
 define function g-value-to-dylan (instance :: <GValue>)
