@@ -5,6 +5,7 @@ define library gobject
   use dylan;
   use common-dylan;
   use c-ffi;
+  use io;
   use glib;
 
   export gobject;
@@ -760,6 +761,8 @@ end module;
 define module gobject-glue
   use common-dylan;
   use c-ffi;
+  use format;
+  use standard-io;
   use dylan;
   use finalization;
   use dylan-primitives;

@@ -481,7 +481,7 @@ end;
 
 define C-function gtk-accel-map-lookup-entry
   input parameter accel_path_ :: <C-string>;
-  output parameter key_ :: <GtkAccelKey>;
+  input parameter key_ :: <GtkAccelKey>;
   result res :: <C-boolean>;
   c-name: "gtk_accel_map_lookup_entry";
 end;
@@ -2228,7 +2228,7 @@ define C-function gtk-buildable-custom-tag-start
   input parameter builder_ :: <GtkBuilder>;
   input parameter child_ :: <GObject>;
   input parameter tagname_ :: <C-string>;
-  output parameter parser_ :: <GMarkupParser>;
+  input parameter parser_ :: <GMarkupParser>;
   output parameter data_ :: <C-void**>;
   result res :: <C-boolean>;
   c-name: "gtk_buildable_custom_tag_start";
@@ -2397,7 +2397,7 @@ define C-function gtk-builder-value-from-string
   input parameter self :: <GtkBuilder>;
   input parameter pspec_ :: <GParamSpec>;
   input parameter string_ :: <C-string>;
-  output parameter value_ :: <GValue>;
+  input parameter value_ :: <GValue>;
   output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_builder_value_from_string";
@@ -2407,7 +2407,7 @@ define C-function gtk-builder-value-from-string-type
   input parameter self :: <GtkBuilder>;
   input parameter type_ :: <C-long>;
   input parameter string_ :: <C-string>;
-  output parameter value_ :: <GValue>;
+  input parameter value_ :: <GValue>;
   output parameter error_ :: <GError*>;
   result res :: <C-boolean>;
   c-name: "gtk_builder_value_from_string_type";
@@ -2970,7 +2970,7 @@ define C-function gtk-cell-area-get-cell-allocation
   input parameter widget_ :: <GtkWidget>;
   input parameter renderer_ :: <GtkCellRenderer>;
   input parameter cell_area_ :: <cairoRectangleInt>;
-  output parameter allocation_ :: <cairoRectangleInt>;
+  input parameter allocation_ :: <cairoRectangleInt>;
   c-name: "gtk_cell_area_get_cell_allocation";
 end;
 
@@ -2981,7 +2981,7 @@ define C-function gtk-cell-area-get-cell-at-position
   input parameter cell_area_ :: <cairoRectangleInt>;
   input parameter x_ :: <C-signed-int>;
   input parameter y_ :: <C-signed-int>;
-  output parameter alloc_area_ :: <cairoRectangleInt>;
+  input parameter alloc_area_ :: <cairoRectangleInt>;
   result res :: <GtkCellRenderer>;
   c-name: "gtk_cell_area_get_cell_at_position";
 end;
@@ -3079,7 +3079,7 @@ define C-function gtk-cell-area-inner-cell-area
   input parameter self :: <GtkCellArea>;
   input parameter widget_ :: <GtkWidget>;
   input parameter cell_area_ :: <cairoRectangleInt>;
-  output parameter inner_area_ :: <cairoRectangleInt>;
+  input parameter inner_area_ :: <cairoRectangleInt>;
   c-name: "gtk_cell_area_inner_cell_area";
 end;
 
@@ -3487,7 +3487,7 @@ define C-function gtk-cell-renderer-get-aligned-area
   input parameter widget_ :: <GtkWidget>;
   input parameter flags_ :: <GtkCellRendererState>;
   input parameter cell_area_ :: <cairoRectangleInt>;
-  output parameter aligned_area_ :: <cairoRectangleInt>;
+  input parameter aligned_area_ :: <cairoRectangleInt>;
   c-name: "gtk_cell_renderer_get_aligned_area";
 end;
 
@@ -3532,8 +3532,8 @@ end;
 define C-function gtk-cell-renderer-get-preferred-size
   input parameter self :: <GtkCellRenderer>;
   input parameter widget_ :: <GtkWidget>;
-  output parameter minimum_size_ :: <GtkRequisition>;
-  output parameter natural_size_ :: <GtkRequisition>;
+  input parameter minimum_size_ :: <GtkRequisition>;
+  input parameter natural_size_ :: <GtkRequisition>;
   c-name: "gtk_cell_renderer_get_preferred_size";
 end;
 
@@ -4020,7 +4020,7 @@ end;
 define C-function gtk-cell-view-get-size-of-row
   input parameter self :: <GtkCellView>;
   input parameter path_ :: <GtkTreePath>;
-  output parameter requisition_ :: <GtkRequisition>;
+  input parameter requisition_ :: <GtkRequisition>;
   result res :: <C-boolean>;
   c-name: "gtk_cell_view_get_size_of_row";
 end;
@@ -4307,7 +4307,7 @@ end;
 define C-function gtk-clipboard-wait-for-rich-text
   input parameter self :: <GtkClipboard>;
   input parameter buffer_ :: <GtkTextBuffer>;
-  output parameter format_ :: <GdkAtom>;
+  input parameter format_ :: <GdkAtom>;
   output parameter length_ :: <C-unsigned-long*>;
   result res :: <C-unsigned-char*>;
   c-name: "gtk_clipboard_wait_for_rich_text";
@@ -4397,7 +4397,7 @@ end;
 
 define C-function gtk-color-button-get-color
   input parameter self :: <GtkColorButton>;
-  output parameter color_ :: <GdkColor>;
+  input parameter color_ :: <GdkColor>;
   c-name: "gtk_color_button_get_color";
 end;
 
@@ -4603,13 +4603,13 @@ end;
 
 define C-function gtk-color-selection-get-current-color
   input parameter self :: <GtkColorSelection>;
-  output parameter color_ :: <GdkColor>;
+  input parameter color_ :: <GdkColor>;
   c-name: "gtk_color_selection_get_current_color";
 end;
 
 define C-function gtk-color-selection-get-current-rgba
   input parameter self :: <GtkColorSelection>;
-  output parameter rgba_ :: <GdkRGBA>;
+  input parameter rgba_ :: <GdkRGBA>;
   c-name: "gtk_color_selection_get_current_rgba";
 end;
 
@@ -4633,13 +4633,13 @@ end;
 
 define C-function gtk-color-selection-get-previous-color
   input parameter self :: <GtkColorSelection>;
-  output parameter color_ :: <GdkColor>;
+  input parameter color_ :: <GdkColor>;
   c-name: "gtk_color_selection_get_previous_color";
 end;
 
 define C-function gtk-color-selection-get-previous-rgba
   input parameter self :: <GtkColorSelection>;
-  output parameter rgba_ :: <GdkRGBA>;
+  input parameter rgba_ :: <GdkRGBA>;
   c-name: "gtk_color_selection_get_previous_rgba";
 end;
 
@@ -4798,7 +4798,7 @@ end;
 
 define C-function gtk-combo-box-get-active-iter
   input parameter self :: <GtkComboBox>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_combo_box_get_active_iter";
 end;
@@ -5825,7 +5825,7 @@ end;
 define C-function gtk-entry-get-icon-area
   input parameter self :: <GtkEntry>;
   input parameter icon_pos_ :: <GtkEntryIconPosition>;
-  output parameter icon_area_ :: <cairoRectangleInt>;
+  input parameter icon_area_ :: <cairoRectangleInt>;
   c-name: "gtk_entry_get_icon_area";
 end;
 
@@ -5956,7 +5956,7 @@ end;
 
 define C-function gtk-entry-get-text-area
   input parameter self :: <GtkEntry>;
-  output parameter text_area_ :: <cairoRectangleInt>;
+  input parameter text_area_ :: <cairoRectangleInt>;
   c-name: "gtk_entry_get_text_area";
 end;
 
@@ -7855,7 +7855,7 @@ end;
 define C-function gtk-gradient-resolve
   input parameter self :: <GtkGradient>;
   input parameter props_ :: <GtkStyleProperties>;
-  output parameter resolved_gradient_ :: <cairoPattern>;
+  input parameter resolved_gradient_ :: <cairoPattern>;
   result res :: <C-boolean>;
   c-name: "gtk_gradient_resolve";
 end;
@@ -8278,7 +8278,7 @@ end;
 define C-function gtk-im-context-get-preedit-string
   input parameter self :: <GtkIMContext>;
   output parameter str_ :: <C-string>;
-  output parameter attrs_ :: <PangoAttrList>;
+  input parameter attrs_ :: <PangoAttrList>;
   output parameter cursor_pos_ :: <C-signed-int*>;
   c-name: "gtk_im_context_get_preedit_string";
 end;
@@ -8286,7 +8286,7 @@ end;
 define C-function gtk-im-context-get-surrounding
   input parameter self :: <GtkIMContext>;
   output parameter text_ :: <C-string>;
-  input parameter cursor_index_ :: <C-signed-int*>;
+  output parameter cursor_index_ :: <C-signed-int*>;
   result res :: <C-boolean>;
   c-name: "gtk_im_context_get_surrounding";
 end;
@@ -8543,7 +8543,7 @@ end;
 
 define C-function gtk-icon-info-get-embedded-rect
   input parameter self :: <GtkIconInfo>;
-  output parameter rectangle_ :: <cairoRectangleInt>;
+  input parameter rectangle_ :: <cairoRectangleInt>;
   result res :: <C-boolean>;
   c-name: "gtk_icon_info_get_embedded_rect";
 end;
@@ -9043,7 +9043,7 @@ end;
 
 define C-function gtk-icon-view-get-cursor
   input parameter self :: <GtkIconView>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter cell_ :: <GtkCellRenderer*>;
   result res :: <C-boolean>;
   c-name: "gtk_icon_view_get_cursor";
@@ -9053,7 +9053,7 @@ define C-function gtk-icon-view-get-dest-item-at-pos
   input parameter self :: <GtkIconView>;
   input parameter drag_x_ :: <C-signed-int>;
   input parameter drag_y_ :: <C-signed-int>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter pos_ :: <GtkIconViewDropPosition*>;
   result res :: <C-boolean>;
   c-name: "gtk_icon_view_get_dest_item_at_pos";
@@ -9061,7 +9061,7 @@ end;
 
 define C-function gtk-icon-view-get-drag-dest-item
   input parameter self :: <GtkIconView>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter pos_ :: <GtkIconViewDropPosition*>;
   c-name: "gtk_icon_view_get_drag_dest_item";
 end;
@@ -9070,7 +9070,7 @@ define C-function gtk-icon-view-get-item-at-pos
   input parameter self :: <GtkIconView>;
   input parameter x_ :: <C-signed-int>;
   input parameter y_ :: <C-signed-int>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter cell_ :: <GtkCellRenderer*>;
   result res :: <C-boolean>;
   c-name: "gtk_icon_view_get_item_at_pos";
@@ -9188,16 +9188,16 @@ define C-function gtk-icon-view-get-tooltip-context
   input output parameter y_ :: <C-signed-int*>;
   input parameter keyboard_tip_ :: <C-boolean>;
   output parameter model_ :: <GtkTreeModel*>;
-  output parameter path_ :: <GtkTreePath>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter path_ :: <GtkTreePath>;
+  input parameter iter_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_icon_view_get_tooltip_context";
 end;
 
 define C-function gtk-icon-view-get-visible-range
   input parameter self :: <GtkIconView>;
-  output parameter start_path_ :: <GtkTreePath>;
-  output parameter end_path_ :: <GtkTreePath>;
+  input parameter start_path_ :: <GtkTreePath>;
+  input parameter end_path_ :: <GtkTreePath>;
   result res :: <C-boolean>;
   c-name: "gtk_icon_view_get_visible_range";
 end;
@@ -9504,7 +9504,7 @@ end;
 
 define C-function gtk-image-get-icon-set
   input parameter self :: <GtkImage>;
-  output parameter icon_set_ :: <GtkIconSet>;
+  input parameter icon_set_ :: <GtkIconSet>;
   output parameter size_ :: <C-signed-int*>;
   c-name: "gtk_image_get_icon_set";
 end;
@@ -10321,7 +10321,7 @@ end;
 
 define C-function gtk-list-store-append
   input parameter self :: <GtkListStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   c-name: "gtk_list_store_append";
 end;
 
@@ -10332,28 +10332,28 @@ end;
 
 define C-function gtk-list-store-insert
   input parameter self :: <GtkListStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter position_ :: <C-signed-int>;
   c-name: "gtk_list_store_insert";
 end;
 
 define C-function gtk-list-store-insert-after
   input parameter self :: <GtkListStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter sibling_ :: <GtkTreeIter>;
   c-name: "gtk_list_store_insert_after";
 end;
 
 define C-function gtk-list-store-insert-before
   input parameter self :: <GtkListStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter sibling_ :: <GtkTreeIter>;
   c-name: "gtk_list_store_insert_before";
 end;
 
 define C-function gtk-list-store-insert-with-valuesv
   input parameter self :: <GtkListStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter position_ :: <C-signed-int>;
   input parameter columns_ :: <C-signed-int*>;
   input parameter values_ :: <C-unsigned-char*> /* Not supported */;
@@ -10384,7 +10384,7 @@ end;
 
 define C-function gtk-list-store-prepend
   input parameter self :: <GtkListStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   c-name: "gtk_list_store_prepend";
 end;
 
@@ -13596,12 +13596,6 @@ define C-function gtk-range-get-adjustment
   c-name: "gtk_range_get_adjustment";
 end;
 
-define C-function gtk-range-get-event-window
-  input parameter self :: <GtkRange>;
-  result res :: <GdkWindow>;
-  c-name: "gtk_range_get_event_window";
-end;
-
 define C-function gtk-range-get-fill-level
   input parameter self :: <GtkRange>;
   result res :: <C-double>;
@@ -13634,7 +13628,7 @@ end;
 
 define C-function gtk-range-get-range-rect
   input parameter self :: <GtkRange>;
-  output parameter range_rect_ :: <cairoRectangleInt>;
+  input parameter range_rect_ :: <cairoRectangleInt>;
   c-name: "gtk_range_get_range_rect";
 end;
 
@@ -16243,7 +16237,7 @@ end;
 define C-function gtk-status-icon-get-geometry
   input parameter self :: <GtkStatusIcon>;
   output parameter screen_ :: <GdkScreen*>;
-  output parameter area_ :: <cairoRectangleInt>;
+  input parameter area_ :: <cairoRectangleInt>;
   output parameter orientation_ :: <GtkOrientation*>;
   result res :: <C-boolean>;
   c-name: "gtk_status_icon_get_geometry";
@@ -16579,7 +16573,7 @@ end;
 define C-function gtk-style-lookup-color
   input parameter self :: <GtkStyle>;
   input parameter color_name_ :: <C-string>;
-  output parameter color_ :: <GdkColor>;
+  input parameter color_ :: <GdkColor>;
   result res :: <C-boolean>;
   c-name: "gtk_style_lookup_color";
 end;
@@ -16712,28 +16706,28 @@ end;
 define C-function gtk-style-context-get-background-color
   input parameter self :: <GtkStyleContext>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter color_ :: <GdkRGBA>;
+  input parameter color_ :: <GdkRGBA>;
   c-name: "gtk_style_context_get_background_color";
 end;
 
 define C-function gtk-style-context-get-border
   input parameter self :: <GtkStyleContext>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter border_ :: <GtkBorder>;
+  input parameter border_ :: <GtkBorder>;
   c-name: "gtk_style_context_get_border";
 end;
 
 define C-function gtk-style-context-get-border-color
   input parameter self :: <GtkStyleContext>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter color_ :: <GdkRGBA>;
+  input parameter color_ :: <GdkRGBA>;
   c-name: "gtk_style_context_get_border_color";
 end;
 
 define C-function gtk-style-context-get-color
   input parameter self :: <GtkStyleContext>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter color_ :: <GdkRGBA>;
+  input parameter color_ :: <GdkRGBA>;
   c-name: "gtk_style_context_get_color";
 end;
 
@@ -16759,14 +16753,14 @@ end;
 define C-function gtk-style-context-get-margin
   input parameter self :: <GtkStyleContext>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter margin_ :: <GtkBorder>;
+  input parameter margin_ :: <GtkBorder>;
   c-name: "gtk_style_context_get_margin";
 end;
 
 define C-function gtk-style-context-get-padding
   input parameter self :: <GtkStyleContext>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter padding_ :: <GtkBorder>;
+  input parameter padding_ :: <GtkBorder>;
   c-name: "gtk_style_context_get_padding";
 end;
 
@@ -16786,7 +16780,7 @@ define C-function gtk-style-context-get-property
   input parameter self :: <GtkStyleContext>;
   input parameter property_ :: <C-string>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter value_ :: <GValue>;
+  input parameter value_ :: <GValue>;
   c-name: "gtk_style_context_get_property";
 end;
 
@@ -16851,7 +16845,7 @@ end;
 define C-function gtk-style-context-lookup-color
   input parameter self :: <GtkStyleContext>;
   input parameter color_name_ :: <C-string>;
-  output parameter color_ :: <GdkRGBA>;
+  input parameter color_ :: <GdkRGBA>;
   result res :: <C-boolean>;
   c-name: "gtk_style_context_lookup_color";
 end;
@@ -17004,7 +16998,7 @@ define C-function gtk-style-properties-get-property
   input parameter self :: <GtkStyleProperties>;
   input parameter property_ :: <C-string>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter value_ :: <GValue>;
+  input parameter value_ :: <GValue>;
   result res :: <C-boolean>;
   c-name: "gtk_style_properties_get_property";
 end;
@@ -17083,7 +17077,7 @@ define C-function gtk-style-provider-get-style-property
   input parameter path_ :: <GtkWidgetPath>;
   input parameter state_ :: <GtkStateFlags>;
   input parameter pspec_ :: <GParamSpec>;
-  output parameter value_ :: <GValue>;
+  input parameter value_ :: <GValue>;
   result res :: <C-boolean>;
   c-name: "gtk_style_provider_get_style_property";
 end;
@@ -17190,7 +17184,7 @@ end;
 define C-function gtk-symbolic-color-resolve
   input parameter self :: <GtkSymbolicColor>;
   input parameter props_ :: <GtkStyleProperties>;
-  output parameter resolved_color_ :: <GdkRGBA>;
+  input parameter resolved_color_ :: <GdkRGBA>;
   result res :: <C-boolean>;
   c-name: "gtk_symbolic_color_resolve";
 end;
@@ -17727,8 +17721,8 @@ end;
 
 define C-function gtk-text-buffer-get-bounds
   input parameter self :: <GtkTextBuffer>;
-  output parameter start_ :: <GtkTextIter>;
-  output parameter end_ :: <GtkTextIter>;
+  input parameter start_ :: <GtkTextIter>;
+  input parameter end_ :: <GtkTextIter>;
   c-name: "gtk_text_buffer_get_bounds";
 end;
 
@@ -17753,7 +17747,7 @@ end;
 
 define C-function gtk-text-buffer-get-end-iter
   input parameter self :: <GtkTextBuffer>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   c-name: "gtk_text_buffer_get_end_iter";
 end;
 
@@ -17771,21 +17765,21 @@ end;
 
 define C-function gtk-text-buffer-get-iter-at-child-anchor
   input parameter self :: <GtkTextBuffer>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   input parameter anchor_ :: <GtkTextChildAnchor>;
   c-name: "gtk_text_buffer_get_iter_at_child_anchor";
 end;
 
 define C-function gtk-text-buffer-get-iter-at-line
   input parameter self :: <GtkTextBuffer>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   input parameter line_number_ :: <C-signed-int>;
   c-name: "gtk_text_buffer_get_iter_at_line";
 end;
 
 define C-function gtk-text-buffer-get-iter-at-line-index
   input parameter self :: <GtkTextBuffer>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   input parameter line_number_ :: <C-signed-int>;
   input parameter byte_index_ :: <C-signed-int>;
   c-name: "gtk_text_buffer_get_iter_at_line_index";
@@ -17793,7 +17787,7 @@ end;
 
 define C-function gtk-text-buffer-get-iter-at-line-offset
   input parameter self :: <GtkTextBuffer>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   input parameter line_number_ :: <C-signed-int>;
   input parameter char_offset_ :: <C-signed-int>;
   c-name: "gtk_text_buffer_get_iter_at_line_offset";
@@ -17801,14 +17795,14 @@ end;
 
 define C-function gtk-text-buffer-get-iter-at-mark
   input parameter self :: <GtkTextBuffer>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   input parameter mark_ :: <GtkTextMark>;
   c-name: "gtk_text_buffer_get_iter_at_mark";
 end;
 
 define C-function gtk-text-buffer-get-iter-at-offset
   input parameter self :: <GtkTextBuffer>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   input parameter char_offset_ :: <C-signed-int>;
   c-name: "gtk_text_buffer_get_iter_at_offset";
 end;
@@ -17846,8 +17840,8 @@ end;
 
 define C-function gtk-text-buffer-get-selection-bounds
   input parameter self :: <GtkTextBuffer>;
-  output parameter start_ :: <GtkTextIter>;
-  output parameter end_ :: <GtkTextIter>;
+  input parameter start_ :: <GtkTextIter>;
+  input parameter end_ :: <GtkTextIter>;
   result res :: <C-boolean>;
   c-name: "gtk_text_buffer_get_selection_bounds";
 end;
@@ -17870,7 +17864,7 @@ end;
 
 define C-function gtk-text-buffer-get-start-iter
   input parameter self :: <GtkTextBuffer>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   c-name: "gtk_text_buffer_get_start_iter";
 end;
 
@@ -18236,8 +18230,8 @@ define C-function gtk-text-iter-backward-search
   input parameter self :: <GtkTextIter>;
   input parameter str_ :: <C-string>;
   input parameter flags_ :: <GtkTextSearchFlags>;
-  output parameter match_start_ :: <GtkTextIter>;
-  output parameter match_end_ :: <GtkTextIter>;
+  input parameter match_start_ :: <GtkTextIter>;
+  input parameter match_end_ :: <GtkTextIter>;
   input parameter limit_ :: <GtkTextIter>;
   result res :: <C-boolean>;
   c-name: "gtk_text_iter_backward_search";
@@ -18433,8 +18427,8 @@ define C-function gtk-text-iter-forward-search
   input parameter self :: <GtkTextIter>;
   input parameter str_ :: <C-string>;
   input parameter flags_ :: <GtkTextSearchFlags>;
-  output parameter match_start_ :: <GtkTextIter>;
-  output parameter match_end_ :: <GtkTextIter>;
+  input parameter match_start_ :: <GtkTextIter>;
+  input parameter match_end_ :: <GtkTextIter>;
   input parameter limit_ :: <GtkTextIter>;
   result res :: <C-boolean>;
   c-name: "gtk_text_iter_forward_search";
@@ -18530,7 +18524,7 @@ end;
 
 define C-function gtk-text-iter-get-attributes
   input parameter self :: <GtkTextIter>;
-  output parameter values_ :: <GtkTextAttributes>;
+  input parameter values_ :: <GtkTextAttributes>;
   result res :: <C-boolean>;
   c-name: "gtk_text_iter_get_attributes";
 end;
@@ -19039,8 +19033,8 @@ end;
 define C-function gtk-text-view-get-cursor-locations
   input parameter self :: <GtkTextView>;
   input parameter iter_ :: <GtkTextIter>;
-  output parameter strong_ :: <cairoRectangleInt>;
-  output parameter weak_ :: <cairoRectangleInt>;
+  input parameter strong_ :: <cairoRectangleInt>;
+  input parameter weak_ :: <cairoRectangleInt>;
   c-name: "gtk_text_view_get_cursor_locations";
 end;
 
@@ -19076,7 +19070,7 @@ end;
 
 define C-function gtk-text-view-get-iter-at-location
   input parameter self :: <GtkTextView>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   input parameter x_ :: <C-signed-int>;
   input parameter y_ :: <C-signed-int>;
   c-name: "gtk_text_view_get_iter_at_location";
@@ -19084,7 +19078,7 @@ end;
 
 define C-function gtk-text-view-get-iter-at-position
   input parameter self :: <GtkTextView>;
-  output parameter iter_ :: <GtkTextIter>;
+  input parameter iter_ :: <GtkTextIter>;
   output parameter trailing_ :: <C-signed-int*>;
   input parameter x_ :: <C-signed-int>;
   input parameter y_ :: <C-signed-int>;
@@ -19094,7 +19088,7 @@ end;
 define C-function gtk-text-view-get-iter-location
   input parameter self :: <GtkTextView>;
   input parameter iter_ :: <GtkTextIter>;
-  output parameter location_ :: <cairoRectangleInt>;
+  input parameter location_ :: <cairoRectangleInt>;
   c-name: "gtk_text_view_get_iter_location";
 end;
 
@@ -19112,7 +19106,7 @@ end;
 
 define C-function gtk-text-view-get-line-at-y
   input parameter self :: <GtkTextView>;
-  output parameter target_iter_ :: <GtkTextIter>;
+  input parameter target_iter_ :: <GtkTextIter>;
   input parameter y_ :: <C-signed-int>;
   output parameter line_top_ :: <C-signed-int*>;
   c-name: "gtk_text_view_get_line_at_y";
@@ -19170,7 +19164,7 @@ end;
 
 define C-function gtk-text-view-get-visible-rect
   input parameter self :: <GtkTextView>;
-  output parameter visible_rect_ :: <cairoRectangleInt>;
+  input parameter visible_rect_ :: <cairoRectangleInt>;
   c-name: "gtk_text_view_get_visible_rect";
 end;
 
@@ -19427,28 +19421,28 @@ end;
 define C-function gtk-theming-engine-get-background-color
   input parameter self :: <GtkThemingEngine>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter color_ :: <GdkRGBA>;
+  input parameter color_ :: <GdkRGBA>;
   c-name: "gtk_theming_engine_get_background_color";
 end;
 
 define C-function gtk-theming-engine-get-border
   input parameter self :: <GtkThemingEngine>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter border_ :: <GtkBorder>;
+  input parameter border_ :: <GtkBorder>;
   c-name: "gtk_theming_engine_get_border";
 end;
 
 define C-function gtk-theming-engine-get-border-color
   input parameter self :: <GtkThemingEngine>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter color_ :: <GdkRGBA>;
+  input parameter color_ :: <GdkRGBA>;
   c-name: "gtk_theming_engine_get_border_color";
 end;
 
 define C-function gtk-theming-engine-get-color
   input parameter self :: <GtkThemingEngine>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter color_ :: <GdkRGBA>;
+  input parameter color_ :: <GdkRGBA>;
   c-name: "gtk_theming_engine_get_color";
 end;
 
@@ -19474,14 +19468,14 @@ end;
 define C-function gtk-theming-engine-get-margin
   input parameter self :: <GtkThemingEngine>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter margin_ :: <GtkBorder>;
+  input parameter margin_ :: <GtkBorder>;
   c-name: "gtk_theming_engine_get_margin";
 end;
 
 define C-function gtk-theming-engine-get-padding
   input parameter self :: <GtkThemingEngine>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter padding_ :: <GtkBorder>;
+  input parameter padding_ :: <GtkBorder>;
   c-name: "gtk_theming_engine_get_padding";
 end;
 
@@ -19495,7 +19489,7 @@ define C-function gtk-theming-engine-get-property
   input parameter self :: <GtkThemingEngine>;
   input parameter property_ :: <C-string>;
   input parameter state_ :: <GtkStateFlags>;
-  output parameter value_ :: <GValue>;
+  input parameter value_ :: <GValue>;
   c-name: "gtk_theming_engine_get_property";
 end;
 
@@ -19536,7 +19530,7 @@ end;
 define C-function gtk-theming-engine-lookup-color
   input parameter self :: <GtkThemingEngine>;
   input parameter color_name_ :: <C-string>;
-  output parameter color_ :: <GdkRGBA>;
+  input parameter color_ :: <GdkRGBA>;
   result res :: <C-boolean>;
   c-name: "gtk_theming_engine_lookup_color";
 end;
@@ -20671,7 +20665,7 @@ end;
 define C-function gtk-tree-drag-source-drag-data-get
   input parameter self :: <GtkTreeDragSource>;
   input parameter path_ :: <GtkTreePath>;
-  output parameter selection_data_ :: <GtkSelectionData>;
+  input parameter selection_data_ :: <GtkSelectionData>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_drag_source_drag_data_get";
 end;
@@ -20745,7 +20739,7 @@ end;
 
 define C-function gtk-tree-model-get-iter
   input parameter self :: <GtkTreeModel>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter path_ :: <GtkTreePath>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_model_get_iter";
@@ -20753,14 +20747,14 @@ end;
 
 define C-function gtk-tree-model-get-iter-first
   input parameter self :: <GtkTreeModel>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_model_get_iter_first";
 end;
 
 define C-function gtk-tree-model-get-iter-from-string
   input parameter self :: <GtkTreeModel>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter path_string_ :: <C-string>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_model_get_iter_from_string";
@@ -20790,13 +20784,13 @@ define C-function gtk-tree-model-get-value
   input parameter self :: <GtkTreeModel>;
   input parameter iter_ :: <GtkTreeIter>;
   input parameter column_ :: <C-signed-int>;
-  output parameter value_ :: <GValue>;
+  input parameter value_ :: <GValue>;
   c-name: "gtk_tree_model_get_value";
 end;
 
 define C-function gtk-tree-model-iter-children
   input parameter self :: <GtkTreeModel>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter parent_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_model_iter_children";
@@ -20825,7 +20819,7 @@ end;
 
 define C-function gtk-tree-model-iter-nth-child
   input parameter self :: <GtkTreeModel>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter parent_ :: <GtkTreeIter>;
   input parameter n_ :: <C-signed-int>;
   result res :: <C-boolean>;
@@ -20834,7 +20828,7 @@ end;
 
 define C-function gtk-tree-model-iter-parent
   input parameter self :: <GtkTreeModel>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter child_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_model_iter_parent";
@@ -20906,7 +20900,7 @@ end;
 
 define C-function gtk-tree-model-filter-convert-child-iter-to-iter
   input parameter self :: <GtkTreeModelFilter>;
-  output parameter filter_iter_ :: <GtkTreeIter>;
+  input parameter filter_iter_ :: <GtkTreeIter>;
   input parameter child_iter_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_model_filter_convert_child_iter_to_iter";
@@ -20921,7 +20915,7 @@ end;
 
 define C-function gtk-tree-model-filter-convert-iter-to-child-iter
   input parameter self :: <GtkTreeModelFilter>;
-  output parameter child_iter_ :: <GtkTreeIter>;
+  input parameter child_iter_ :: <GtkTreeIter>;
   input parameter filter_iter_ :: <GtkTreeIter>;
   c-name: "gtk_tree_model_filter_convert_iter_to_child_iter";
 end;
@@ -21027,7 +21021,7 @@ end;
 
 define C-function gtk-tree-model-sort-convert-child-iter-to-iter
   input parameter self :: <GtkTreeModelSort>;
-  output parameter sort_iter_ :: <GtkTreeIter>;
+  input parameter sort_iter_ :: <GtkTreeIter>;
   input parameter child_iter_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_model_sort_convert_child_iter_to_iter";
@@ -21042,7 +21036,7 @@ end;
 
 define C-function gtk-tree-model-sort-convert-iter-to-child-iter
   input parameter self :: <GtkTreeModelSort>;
-  output parameter child_iter_ :: <GtkTreeIter>;
+  input parameter child_iter_ :: <GtkTreeIter>;
   input parameter sorted_iter_ :: <GtkTreeIter>;
   c-name: "gtk_tree_model_sort_convert_iter_to_child_iter";
 end;
@@ -21272,7 +21266,7 @@ end;
 define C-function gtk-tree-selection-get-selected
   input parameter self :: <GtkTreeSelection>;
   output parameter model_ :: <GtkTreeModel*>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_selection_get_selected";
 end;
@@ -21463,7 +21457,7 @@ end;
 
 define C-function gtk-tree-store-append
   input parameter self :: <GtkTreeStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter parent_ :: <GtkTreeIter>;
   c-name: "gtk_tree_store_append";
 end;
@@ -21475,7 +21469,7 @@ end;
 
 define C-function gtk-tree-store-insert
   input parameter self :: <GtkTreeStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter parent_ :: <GtkTreeIter>;
   input parameter position_ :: <C-signed-int>;
   c-name: "gtk_tree_store_insert";
@@ -21483,7 +21477,7 @@ end;
 
 define C-function gtk-tree-store-insert-after
   input parameter self :: <GtkTreeStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter parent_ :: <GtkTreeIter>;
   input parameter sibling_ :: <GtkTreeIter>;
   c-name: "gtk_tree_store_insert_after";
@@ -21491,7 +21485,7 @@ end;
 
 define C-function gtk-tree-store-insert-before
   input parameter self :: <GtkTreeStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter parent_ :: <GtkTreeIter>;
   input parameter sibling_ :: <GtkTreeIter>;
   c-name: "gtk_tree_store_insert_before";
@@ -21499,7 +21493,7 @@ end;
 
 define C-function gtk-tree-store-insert-with-valuesv
   input parameter self :: <GtkTreeStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter parent_ :: <GtkTreeIter>;
   input parameter position_ :: <C-signed-int>;
   input parameter columns_ :: <C-signed-int*>;
@@ -21546,7 +21540,7 @@ end;
 
 define C-function gtk-tree-store-prepend
   input parameter self :: <GtkTreeStore>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter iter_ :: <GtkTreeIter>;
   input parameter parent_ :: <GtkTreeIter>;
   c-name: "gtk_tree_store_prepend";
 end;
@@ -21745,7 +21739,7 @@ define C-function gtk-tree-view-get-background-area
   input parameter self :: <GtkTreeView>;
   input parameter path_ :: <GtkTreePath>;
   input parameter column_ :: <GtkTreeViewColumn>;
-  output parameter rect_ :: <cairoRectangleInt>;
+  input parameter rect_ :: <cairoRectangleInt>;
   c-name: "gtk_tree_view_get_background_area";
 end;
 
@@ -21759,7 +21753,7 @@ define C-function gtk-tree-view-get-cell-area
   input parameter self :: <GtkTreeView>;
   input parameter path_ :: <GtkTreePath>;
   input parameter column_ :: <GtkTreeViewColumn>;
-  output parameter rect_ :: <cairoRectangleInt>;
+  input parameter rect_ :: <cairoRectangleInt>;
   c-name: "gtk_tree_view_get_cell_area";
 end;
 
@@ -21778,7 +21772,7 @@ end;
 
 define C-function gtk-tree-view-get-cursor
   input parameter self :: <GtkTreeView>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter focus_column_ :: <GtkTreeViewColumn*>;
   c-name: "gtk_tree_view_get_cursor";
 end;
@@ -21787,7 +21781,7 @@ define C-function gtk-tree-view-get-dest-row-at-pos
   input parameter self :: <GtkTreeView>;
   input parameter drag_x_ :: <C-signed-int>;
   input parameter drag_y_ :: <C-signed-int>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter pos_ :: <GtkTreeViewDropPosition*>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_view_get_dest_row_at_pos";
@@ -21795,7 +21789,7 @@ end;
 
 define C-function gtk-tree-view-get-drag-dest-row
   input parameter self :: <GtkTreeView>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter pos_ :: <GtkTreeViewDropPosition*>;
   c-name: "gtk_tree_view_get_drag_dest_row";
 end;
@@ -21882,7 +21876,7 @@ define C-function gtk-tree-view-get-path-at-pos
   input parameter self :: <GtkTreeView>;
   input parameter x_ :: <C-signed-int>;
   input parameter y_ :: <C-signed-int>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter column_ :: <GtkTreeViewColumn*>;
   output parameter cell_x_ :: <C-signed-int*>;
   output parameter cell_y_ :: <C-signed-int*>;
@@ -21944,8 +21938,8 @@ define C-function gtk-tree-view-get-tooltip-context
   input output parameter y_ :: <C-signed-int*>;
   input parameter keyboard_tip_ :: <C-boolean>;
   output parameter model_ :: <GtkTreeModel*>;
-  output parameter path_ :: <GtkTreePath>;
-  output parameter iter_ :: <GtkTreeIter>;
+  input parameter path_ :: <GtkTreePath>;
+  input parameter iter_ :: <GtkTreeIter>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_view_get_tooltip_context";
 end;
@@ -21958,15 +21952,15 @@ end;
 
 define C-function gtk-tree-view-get-visible-range
   input parameter self :: <GtkTreeView>;
-  output parameter start_path_ :: <GtkTreePath>;
-  output parameter end_path_ :: <GtkTreePath>;
+  input parameter start_path_ :: <GtkTreePath>;
+  input parameter end_path_ :: <GtkTreePath>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_view_get_visible_range";
 end;
 
 define C-function gtk-tree-view-get-visible-rect
   input parameter self :: <GtkTreeView>;
-  output parameter visible_rect_ :: <cairoRectangleInt>;
+  input parameter visible_rect_ :: <cairoRectangleInt>;
   c-name: "gtk_tree_view_get_visible_rect";
 end;
 
@@ -21994,7 +21988,7 @@ define C-function gtk-tree-view-is-blank-at-pos
   input parameter self :: <GtkTreeView>;
   input parameter x_ :: <C-signed-int>;
   input parameter y_ :: <C-signed-int>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   output parameter column_ :: <GtkTreeViewColumn*>;
   output parameter cell_x_ :: <C-signed-int*>;
   output parameter cell_y_ :: <C-signed-int*>;
@@ -23387,7 +23381,7 @@ end;
 
 define C-function gtk-widget-get-allocation
   input parameter self :: <GtkWidget>;
-  output parameter allocation_ :: <cairoRectangleInt>;
+  input parameter allocation_ :: <cairoRectangleInt>;
   c-name: "gtk_widget_get_allocation";
 end;
 
@@ -23418,7 +23412,7 @@ end;
 
 define C-function gtk-widget-get-child-requisition
   input parameter self :: <GtkWidget>;
-  output parameter requisition_ :: <GtkRequisition>;
+  input parameter requisition_ :: <GtkRequisition>;
   c-name: "gtk_widget_get_child_requisition";
 end;
 
@@ -23612,8 +23606,8 @@ end;
 
 define C-function gtk-widget-get-preferred-size
   input parameter self :: <GtkWidget>;
-  output parameter minimum_size_ :: <GtkRequisition>;
-  output parameter natural_size_ :: <GtkRequisition>;
+  input parameter minimum_size_ :: <GtkRequisition>;
+  input parameter natural_size_ :: <GtkRequisition>;
   c-name: "gtk_widget_get_preferred_size";
 end;
 
@@ -23652,7 +23646,7 @@ end;
 
 define C-function gtk-widget-get-requisition
   input parameter self :: <GtkWidget>;
-  output parameter requisition_ :: <GtkRequisition>;
+  input parameter requisition_ :: <GtkRequisition>;
   c-name: "gtk_widget_get_requisition";
 end;
 
@@ -24428,7 +24422,7 @@ end;
 
 define C-function gtk-widget-size-request
   input parameter self :: <GtkWidget>;
-  output parameter requisition_ :: <GtkRequisition>;
+  input parameter requisition_ :: <GtkRequisition>;
   c-name: "gtk_widget_size_request";
 end;
 
@@ -25133,7 +25127,7 @@ end;
 
 define C-function gtk-window-get-resize-grip-area
   input parameter self :: <GtkWindow>;
-  output parameter rect_ :: <cairoRectangleInt>;
+  input parameter rect_ :: <cairoRectangleInt>;
   result res :: <C-boolean>;
   c-name: "gtk_window_get_resize_grip_area";
 end;
@@ -26763,7 +26757,7 @@ end;
 
 define C-function gtk-stock-lookup
   input parameter stock_id_ :: <C-string>;
-  output parameter item_ :: <GtkStockItem>;
+  input parameter item_ :: <GtkStockItem>;
   result res :: <C-boolean>;
   c-name: "gtk_stock_lookup";
 end;
@@ -26909,7 +26903,7 @@ end;
 define C-function gtk-tree-get-row-drag-data
   input parameter selection_data_ :: <GtkSelectionData>;
   output parameter tree_model_ :: <GtkTreeModel*>;
-  output parameter path_ :: <GtkTreePath>;
+  input parameter path_ :: <GtkTreePath>;
   result res :: <C-boolean>;
   c-name: "gtk_tree_get_row_drag_data";
 end;
