@@ -9,10 +9,9 @@ Status:          Draft
 Type:            Standards Track
 Affects-DRM:     Yes
 Created:         28-Jul-2013
-Last-Modified:   06-Aug-2013
+Last-Modified:   08-Aug-2013
 Post-History:    28-Jul-2013
 Target-Version:  2013.2
-Requires:        0005
 ===============  ===============
 
 .. contents:: Contents
@@ -79,14 +78,14 @@ object that the collection cannot accommodate.
 ``default-fill``
 ----------------
 
-A new generic function will be added to the Dylan library::
+A new open generic function will be added to the Dylan library::
 
    default-fill (coll :: <collection>) => (fill-object :: <object>)
 
 For instances of fillable collection classes returned by ``limited``, this
 function will return the (possibly defaulted) ``default-fill:`` argument to
-``limited``. For instances of all other collection classes, this function will
-return the following:
+``limited``. For instances of all other fillable collection classes, this
+function will return the following:
 
 ====================  ============  
 Class                 Return Value
@@ -94,17 +93,21 @@ Class                 Return Value
 ``<string>``          ``' '``
 ``<byte-string>``     C1
 ``<unicode-string>``  C2
-``<range>``           ``0``
 All others            ``#f``
 ====================  ============  
 
 *C1* and *C2* are unspecified values equivalent to a space character.
 
+It is an error to call ``default-fill`` on an instance of a collection class
+that does not support the ``fill:`` init-keyword. However, implementations may
+find this difficult to check and may return ``#f`` for such collections
+instead. Portable programs should not rely on this behavior.
+
 
 ``element-type``
 ----------------
 
-A new generic function will be added to the Dylan library::
+A new open generic function will be added to the Dylan library::
 
    element-type (coll :: <collection>) => (element-type :: <type>)
 
@@ -117,34 +120,9 @@ function will return the element type described in
 ``map``, ``map-as``, etc.
 -------------------------
 
-Every function that uses the first value of an existing collection as the
-filler element in a newly instantiated collection will use the ``default-fill``
-value of the existing collection instead.
-
-
-``<collection>``
-----------------
-
-To support the above changes to ``map``, etc., ``fill:`` will be a valid
-initialization argument for all ``<collection>`` classes, as defined in the
-`Overview <http://opendylan.org/books/drm/Instance_Creation_and_Initialization#HEADING-43-2>`__
-subsection of "Instance Creation and Initialization" in the [DRM]_. This does
-not imply that the initialization argument will be *used* by all
-``<collection>`` classes; this just means that any call to ``make`` on a
-collection class may include an initialization argument like ``fill:
-c.default-fill`` without causing a spurious error.
-
-This initialization argument will be specialized as the ``element-type`` of the
-collection. That is, for the non-fillable collection classes (those that did
-not already specify a ``fill:`` init-keyword), the keyword will be specialized
-as follows:
-
-===========  ==============
-Class        Specialization
-===========  ==============
-``<range>``  ``<real>``
-All others   ``<object>``
-===========  ==============
+Every function that instantiates a new collection using the first value of an
+existing collection as the ``fill:`` initialization argument will instead use
+the new collection's default fill argument (i.e., omit the ``fill:`` argument).
 
 
 Motivation
@@ -197,7 +175,7 @@ collection class as an argument rather than the *type* of the collection. This
 is necessary because the [DRM]_ allows the ``limited`` function on *C* to
 return *C* itself as a type, implying that the default fill and element type
 information associated with the limited collection has to be available on a
-per-instance basis. Plus, creating getters on *types* is not idiomatic to Dylan.
+per-instance basis. Plus, creating getters on types is not idiomatic to Dylan.
 
 I had originally considered a more extensive change where each instance of a
 fillable collection class would not only track its *default* fill value, but
@@ -205,17 +183,6 @@ also track the *specific* ``fill:`` value that it was created with. But in
 thinking about it, I feel the designers made the right call in leaving that
 information out of each instance. In particular, the implementation of
 ``<list>`` would be difficult if each instance tracked its ``fill:`` value.
-
-In an earlier unpublished draft, I had also specified that the ``default-fill``
-method only be defined for *L*. But in rereading the [DRM]_ note reproduced
-above, I was reminded that ``map``, etc., would need to call ``default-fill``
-to do its job properly. Since ``map`` is defined as *function* on
-``<collection>`` rather than a generic method, ``default-fill`` would need to
-be applicable to all collections, and ``fill:`` would likewise need to be a
-valid init-argument to all collections, or else ``map``, etc., would need to
-distinguish between fillable and non-fillable collections internally. I opted
-for the simpler model of treating all collections as fillable for instantiation
-purposes.
 
 
 Implementation Notes
@@ -250,11 +217,13 @@ work as before, but will not longer be consistent with the behavior of ``map``,
 etc.
 
 Existing subclasses of ``<collection>`` that define their own ``fill:``
-init-keyword will still work. The exception is a subclass of ``<range>`` that
-defines a ``fill:`` init-keyword specialized to something other than
-``<real>``. In this case, the compiler will correctly report an error, since
-the element type of ``<range>`` is ``<real>`` and the filler element has to be
-of legal element type.
+init-keyword will still work, assuming they also define a default value that is
+of the element type of the subclass.
+
+New code may use ``element-type`` or ``default-fill`` in conjunction with an
+existing subclass of ``<collection>`` that does not define those methods. Those
+functions will then return ``<object>`` and ``#f``, which may not be
+appropriate for the existing collection.
 
 The only other backwards compatibility issue is a namespace collision if the
 user defines his own unrelated "element-type" or "default-fill" bindings.
@@ -263,11 +232,7 @@ user defines his own unrelated "element-type" or "default-fill" bindings.
 Reference Implementation
 ========================
 
-I believe the only difficult part of implementing this DEP is updating the
-collection functions to instantiate new collections with the ``fill:
-c.default-fill`` argument. There are a lot of collection functions, but it
-should be easy to determine which calls to ``make`` instantiate new collections
-(as opposed to some other internal task).
+I have begun a reference implementation.
 
 
 .. [DRM] `Dylan Reference Manual`:title-reference:
