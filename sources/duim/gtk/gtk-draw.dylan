@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// GTK graphics
 
-define constant $2pi-in-64ths-of-degree :: <integer> = 360 * 64;
+define constant $2pi-in-64ths-of-degree :: <double-float> = 360.0d0 * 64.0d0;
 define constant $supports-titled-ellipses = #f;
 
 define sealed method draw-point
@@ -20,7 +20,11 @@ define sealed method draw-point
     let thickness = pen-width(medium-pen(medium));
     with-gdk-lock
       let thickness/2 = truncate/(thickness, 2);
-      cairo-arc(gcontext, x, y, thickness, 0, $2pi-in-64ths-of-degree);
+      cairo-arc(gcontext,
+                as(<double-float>, x),
+                as(<double-float>, y),
+                as(<double-float>, thickness/2),
+                0.0d0, $2pi-in-64ths-of-degree);
       cairo-fill(gcontext);
     end;
   end;
@@ -38,7 +42,11 @@ define sealed method draw-points
     do-coordinates
       (method (x, y)
          with-device-coordinates (transform, x, y)
-           cairo-arc(gcontext, x, y, thickness, 0, $2pi-in-64ths-of-degree);
+           cairo-arc(gcontext,
+                     as(<double-float>, x),
+                     as(<double-float>, y),
+                     as(<double-float>, thickness/2),
+                     0.0d0, $2pi-in-64ths-of-degree);
            cairo-fill(gcontext);
          end
        end,
@@ -80,8 +88,12 @@ define sealed method draw-line
     with-gdk-lock
       cairo-set-line-width(gcontext, 1.0d0);
       cairo-set-line-cap(gcontext, $cairo-line-cap-square);
-      cairo-move-to(gcontext, x1, y1);
-      cairo-line-to(gcontext, x2, y2);
+      cairo-move-to(gcontext,
+                    as(<double-float>, x1),
+                    as(<double-float>, y1));
+      cairo-line-to(gcontext,
+                    as(<double-float>, x2),
+                    as(<double-float>, y2));
       cairo-stroke(gcontext);
     end;
   end;
@@ -100,8 +112,12 @@ define sealed method draw-lines
     do-endpoint-coordinates
       (method (x1, y1, x2, y2)
          with-device-coordinates (transform, x1, y1, x2, y2)
-           cairo-move-to(gcontext, x1, y1);
-           cairo-line-to(gcontext, x2, y2);
+           cairo-move-to(gcontext,
+                         as(<double-float>, x1),
+                         as(<double-float>, y1));
+           cairo-line-to(gcontext,
+                         as(<double-float>, x2),
+                         as(<double-float>, y2));
          end
        end,
        coord-seq);
@@ -126,7 +142,11 @@ define sealed method draw-rectangle
       with-gdk-lock
         cairo-set-line-width(gcontext, 1.0d0);
         cairo-set-line-cap(gcontext, $cairo-line-cap-square);
-        cairo-rectangle(gcontext, x1, y1, x2 - x1, y2 - y1);
+        cairo-rectangle(gcontext,
+                        as(<double-float>, x1),
+                        as(<double-float>, y1),
+                        as(<double-float>, x2 - x1),
+                        as(<double-float>, y2 - y1));
         if (filled?)
           cairo-fill(gcontext);
         else
@@ -154,7 +174,11 @@ define sealed method draw-rectangles
            with-gdk-lock
              cairo-set-line-width(gcontext, 1.0d0);
              cairo-set-line-cap(gcontext, $cairo-line-cap-square);
-             cairo-rectangle(gcontext, x1, y1, x2 - x1, y2 - y1);
+             cairo-rectangle(gcontext,
+                             as(<double-float>, x1),
+                             as(<double-float>, y1),
+                             as(<double-float>, x2 - x1),
+                             as(<double-float>, y2 - y1));
              if (filled?)
                cairo-fill(gcontext);
              else
@@ -257,12 +281,14 @@ define sealed method draw-polygon
         cairo-set-line-cap(gcontext, $cairo-line-cap-butt);
 
         let previous-p = pointer-value-address(points, index: 0);
-        cairo-move-to(gcontext, previous-p.gdk-point-x, previous-p.gdk-point-y);
+        cairo-move-to(gcontext,
+                      as(<double-float>, previous-p.gdk-point-x),
+                      as(<double-float>, previous-p.gdk-point-y));
         for (i from 1 below npoints)
           let p = pointer-value-address(points, index: i);
-          let x = p.gdk-point-x;
-          let y = p.gdk-point-y;
-          cairo-line-to(x, y);
+          let x = as(<double-float>, p.gdk-point-x);
+          let y = as(<double-float>, p.gdk-point-y);
+          cairo-line-to(gcontext, x, y);
         end;
         if (filled?)
           cairo-fill(gcontext);
@@ -313,7 +339,9 @@ define sealed method draw-ellipse
                           center-x + x-radius / 2.0d0,
                           center-y + y-radius / 2.0d0);
           cairo-scale(gcontext, x-radius / 2.0d0, y-radius / 2.0d0);
-          cairo-arc(gcontext, 0.0d0, 0.0d0, 1.0d0, angle, delta-angle);
+          cairo-arc(gcontext, 0.0d0, 0.0d0, 1.0d0,
+                    as(<double-float>, angle),
+                    as(<double-float>, delta-angle));
           cairo-restore(gcontext);
           if (filled?)
             cairo-fill(gcontext);
@@ -440,7 +468,11 @@ define sealed method clear-box
     let sheet = medium-sheet(medium);
     let transform = sheet-device-transform(sheet);
     with-device-coordinates (transform, left, top, right, bottom)
-      cairo-rectangle(gcontext, left, top, right - left, bottom - top);
+      cairo-rectangle(gcontext,
+                      as(<double-float>, left),
+                      as(<double-float>, top),
+                      as(<double-float>, right - left),
+                      as(<double-float>, bottom - top));
       cairo-fill(gcontext);
     end;
     cairo-set-source-rgb(gcontext, 0.0d0, 0.0d0, 0.0d0); // Black
