@@ -531,8 +531,8 @@ end;
 define C-function pango-font-get-glyph-extents
   input parameter self :: <PangoFont>;
   input parameter glyph_ :: <C-unsigned-int>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_font_get_glyph_extents";
 end;
 
@@ -1050,8 +1050,8 @@ end;
 define C-function pango-glyph-string-extents
   input parameter self :: <PangoGlyphString>;
   input parameter font_ :: <PangoFont>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_glyph_string_extents";
 end;
 
@@ -1273,8 +1273,8 @@ end;
 define C-function pango-layout-get-cursor-pos
   input parameter self :: <PangoLayout>;
   input parameter index__ :: <C-signed-int>;
-  output parameter strong_pos_ :: <PangoRectangle>;
-  output parameter weak_pos_ :: <PangoRectangle>;
+  input parameter strong_pos_ :: <PangoRectangle>;
+  input parameter weak_pos_ :: <PangoRectangle>;
   c-name: "pango_layout_get_cursor_pos";
 end;
 
@@ -1286,8 +1286,8 @@ end;
 
 define C-function pango-layout-get-extents
   input parameter self :: <PangoLayout>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_get_extents";
 end;
 
@@ -1369,8 +1369,8 @@ end;
 
 define C-function pango-layout-get-pixel-extents
   input parameter self :: <PangoLayout>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_get_pixel_extents";
 end;
 
@@ -1442,7 +1442,7 @@ end;
 define C-function pango-layout-index-to-pos
   input parameter self :: <PangoLayout>;
   input parameter index__ :: <C-signed-int>;
-  output parameter pos_ :: <PangoRectangle>;
+  input parameter pos_ :: <PangoRectangle>;
   c-name: "pango_layout_index_to_pos";
 end;
 
@@ -1619,8 +1619,8 @@ end;
 
 define C-function pango-layout-iter-get-cluster-extents
   input parameter self :: <PangoLayoutIter>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_iter_get_cluster_extents";
 end;
 
@@ -1638,8 +1638,8 @@ end;
 
 define C-function pango-layout-iter-get-layout-extents
   input parameter self :: <PangoLayoutIter>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_iter_get_layout_extents";
 end;
 
@@ -1651,8 +1651,8 @@ end;
 
 define C-function pango-layout-iter-get-line-extents
   input parameter self :: <PangoLayoutIter>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_iter_get_line_extents";
 end;
 
@@ -1677,8 +1677,8 @@ end;
 
 define C-function pango-layout-iter-get-run-extents
   input parameter self :: <PangoLayoutIter>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_iter_get_run_extents";
 end;
 
@@ -1724,15 +1724,15 @@ end C-struct;
 
 define C-function pango-layout-line-get-extents
   input parameter self :: <PangoLayoutLine>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_line_get_extents";
 end;
 
 define C-function pango-layout-line-get-pixel-extents
   input parameter self :: <PangoLayoutLine>;
-  output parameter ink_rect_ :: <PangoRectangle>;
-  output parameter logical_rect_ :: <PangoRectangle>;
+  input parameter ink_rect_ :: <PangoRectangle>;
+  input parameter logical_rect_ :: <PangoRectangle>;
   c-name: "pango_layout_line_get_pixel_extents";
 end;
 
@@ -1845,7 +1845,7 @@ end;
 
 define C-function pango-matrix-transform-pixel-rectangle
   input parameter self :: <PangoMatrix>;
-  input output parameter rect_ :: <PangoRectangle>;
+  input parameter rect_ :: <PangoRectangle>;
   c-name: "pango_matrix_transform_pixel_rectangle";
 end;
 
@@ -1858,7 +1858,7 @@ end;
 
 define C-function pango-matrix-transform-rectangle
   input parameter self :: <PangoMatrix>;
-  input output parameter rect_ :: <PangoRectangle>;
+  input parameter rect_ :: <PangoRectangle>;
   c-name: "pango_matrix_transform_rectangle";
 end;
 
@@ -2428,7 +2428,7 @@ define C-function pango-parse-markup
   input parameter markup_text_ :: <C-string>;
   input parameter length_ :: <C-signed-int>;
   input parameter accel_marker_ :: <C-unsigned-int>;
-  output parameter attr_list_ :: <PangoAttrList>;
+  input parameter attr_list_ :: <PangoAttrList>;
   output parameter text_ :: <C-string>;
   output parameter accel_char_ :: <C-unsigned-int*>;
   output parameter error_ :: <GError*>;
@@ -2476,7 +2476,7 @@ end;
 
 define C-function pango-read-line
   input parameter stream_ :: <C-void*>;
-  output parameter str_ :: <GString>;
+  input parameter str_ :: <GString>;
   result res :: <C-signed-int>;
   c-name: "pango_read_line";
 end;
@@ -2490,14 +2490,14 @@ end;
 
 define C-function pango-scan-string
   input output parameter pos_ :: <C-string>;
-  output parameter out_ :: <GString>;
+  input parameter out_ :: <GString>;
   result res :: <C-boolean>;
   c-name: "pango_scan_string";
 end;
 
 define C-function pango-scan-word
   input output parameter pos_ :: <C-string>;
-  output parameter out_ :: <GString>;
+  input parameter out_ :: <GString>;
   result res :: <C-boolean>;
   c-name: "pango_scan_word";
 end;
