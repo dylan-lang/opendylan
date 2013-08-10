@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // /*---*** Not doing pixmaps yet!
 
 define sealed class <gtk-pixmap> (<pixmap>)
-  sealed slot %pixmap /* :: false-or(<GdkPixmap>) */ = #f,
+  sealed slot %pixmap :: false-or(<CairoSurface>) = #f,
     init-keyword: pixmap:;
   sealed slot %medium :: <gtk-medium>,
     required-init-keyword: medium:;
@@ -45,7 +45,7 @@ define sealed method destroy-pixmap
     (pixmap :: <gtk-pixmap>) => ()
   let x-pixmap  = pixmap.%pixmap;
   pixmap.%pixmap := #f;
-  gdk-pixmap-unref(x-pixmap)
+  cairo-surface-destroy(x-pixmap)
 end method destroy-pixmap;
 
 define sealed method port 

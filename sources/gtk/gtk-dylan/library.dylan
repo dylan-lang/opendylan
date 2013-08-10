@@ -3359,7 +3359,6 @@ define module gtk
     gtk-range-get-inverted,
     gtk-range-get-flippable,
     gtk-range-get-fill-level,
-    gtk-range-get-event-window,
     gtk-range-get-adjustment,
     <GtkRange*>,
     gtk-range-priv,

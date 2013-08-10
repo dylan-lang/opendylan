@@ -18,7 +18,7 @@ define sealed class <gtk-medium> (<basic-medium>)
   sealed slot %background-color :: false-or(<GdkColor>) = #f;
   // Cached clipping region
   sealed slot %clip-mask = #f;		// #f, #"none", or an X region
-  sealed slot %gcontext = #f;
+  sealed slot %context = #f;
 end class <gtk-medium>;
 
 define sealed domain make (singleton(<gtk-medium>));
@@ -170,23 +170,23 @@ end method synchronize-display;
 
 define inline method get-gcontext
     (medium :: <gtk-medium>)
- => (drawable /* :: <GdkDrawable> */, gcontext /* :: <GdkGC> */)
+ => (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
   let drawable = medium-drawable(medium);
   unless (drawable)
     let widget = medium.medium-sheet.sheet-mirror.mirror-widget;
     drawable := widget.gtk-widget-get-window;
     medium-drawable(medium) := drawable;
-    %gcontext(medium) := gdk-gc-new(drawable);
+    %context(medium) := cairo-create(drawable);
   end;
-  values(drawable, %gcontext(medium))
+  values(drawable, %context(medium))
 end method get-gcontext;
 
 // Note that the brush defaults to 'medium-brush(medium)',
 // but the pen and font default to #f in order to avoid unnecessary work
 define sealed method update-drawing-state
     (medium :: <gtk-medium>, #key brush, pen, font)
- => (drawable /* :: <GdkDrawable> */, gcontext /* :: <GdkGC> */)
-  let (drawable /* :: <GdkDrawable> */, gcontext /* :: <GdkGC> */)
+ => (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
     = get-gcontext(medium);
   ignoring("update-drawing-state");
   /*
