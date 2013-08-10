@@ -13,7 +13,7 @@ define constant $supports-titled-ellipses = #f;
 
 define sealed method draw-point
     (medium :: <gtk-medium>, x, y) => (record)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = update-drawing-state(medium);
   let transform = medium-device-transform(medium);
   with-device-coordinates (transform, x, y)
@@ -29,7 +29,7 @@ end method draw-point;
 
 define sealed method draw-points
     (medium :: <gtk-medium>, coord-seq :: <coordinate-sequence>) => (record)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = update-drawing-state(medium);
   let transform = medium-device-transform(medium);
   let thickness = pen-width(medium-pen(medium));
@@ -73,7 +73,7 @@ end method set-pixels;
 
 define sealed method draw-line
     (medium :: <gtk-medium>, x1, y1, x2, y2) => (record)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = update-drawing-state(medium, pen: medium-pen(medium));
   let transform = medium-device-transform(medium);
   with-device-coordinates (transform, x1, y1, x2, y2)
@@ -90,7 +90,7 @@ end method draw-line;
 
 define sealed method draw-lines
     (medium :: <gtk-medium>, coord-seq :: <coordinate-sequence>) => (record)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = update-drawing-state(medium, pen: medium-pen(medium));
   let transform = medium-device-transform(medium);
   //---*** Use gdk-draw-segments
@@ -119,7 +119,7 @@ define sealed method draw-rectangle
       draw-polygon(medium, coords, filled?: filled?, closed?: #t)
     end
   else
-    let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+    let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
       = update-drawing-state(medium, pen: ~filled? & medium-pen(medium));
     //---*** Might need to use 'gdk-gc-set-ts-origin' to set tile/stipple origin to x1/y1
     with-device-coordinates (transform, x1, y1, x2, y2)
@@ -145,7 +145,7 @@ define sealed method draw-rectangles
   if (~rectilinear-transform?(transform))
     draw-transformed-rectangles(medium, coord-seq, filled?: filled?)
   else
-    let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+    let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
       = update-drawing-state(medium, pen: ~filled? & medium-pen(medium));
     let transform = medium-device-transform(medium);
     do-endpoint-coordinates
@@ -194,7 +194,7 @@ end method draw-transformed-rectangles;
 define sealed method draw-rounded-rectangle
     (medium :: <gtk-medium>, x1, y1, x2, y2,
      #key filled? = #t, radius) => (record)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = update-drawing-state(medium, pen: ~filled? & medium-pen(medium));
   let transform = medium-device-transform(medium);
   with-device-coordinates (transform, x1, y1, x2, y2)
@@ -212,7 +212,7 @@ end method draw-rounded-rectangle;
 define sealed method draw-polygon
     (medium :: <gtk-medium>, coord-seq :: <coordinate-sequence>,
      #key closed? = #t, filled? = #t) => (record)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = update-drawing-state(medium, pen: ~filled? & medium-pen(medium));
   let transform = medium-device-transform(medium);
   let scoords :: <integer> = size(coord-seq);
@@ -283,7 +283,7 @@ define sealed method draw-ellipse
     (medium :: <gtk-medium>, center-x, center-y,
      radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy,
      #key start-angle, end-angle, filled? = #t) => (record)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = update-drawing-state(medium, pen: ~filled? & medium-pen(medium));
   let transform = medium-device-transform(medium);
   with-device-coordinates (transform, center-x, center-y)
@@ -334,7 +334,7 @@ end method draw-ellipse;
 // GTK bitmaps and icons are handled separately
 define sealed method draw-image
     (medium :: <gtk-medium>, image :: <image>, x, y) => (record)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = update-drawing-state(medium);
   let transform = medium-device-transform(medium);
   with-device-coordinates (transform, x, y)
@@ -434,7 +434,7 @@ end method draw-pixmap;
 define sealed method clear-box
     (medium :: <gtk-medium>, left, top, right, bottom) => ()
   with-gdk-lock
-    let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+    let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
       = get-gcontext(medium);
     cairo-set-source-rgb(gcontext, 1.0d0, 1.0d0, 1.0d0); // White
     let sheet = medium-sheet(medium);
@@ -472,7 +472,7 @@ define sealed method draw-text
     let text-style :: <text-style> = medium-merged-text-style(medium);
     let font :: <gtk-font> = text-style-mapping(port(medium), text-style);
     let length :: <integer> = size(string);
-    let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+    let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
       = update-drawing-state(medium, font: font);
     let screen = gdk-drawable-get-screen(drawable);
     //  let renderer = gdk-pango-renderer-get-default(screen);

@@ -170,7 +170,7 @@ end method synchronize-display;
 
 define inline method get-gcontext
     (medium :: <gtk-medium>)
- => (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+ => (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
   let drawable = medium-drawable(medium);
   unless (drawable)
     let widget = medium.medium-sheet.sheet-mirror.mirror-widget;
@@ -185,8 +185,8 @@ end method get-gcontext;
 // but the pen and font default to #f in order to avoid unnecessary work
 define sealed method update-drawing-state
     (medium :: <gtk-medium>, #key brush, pen, font)
- => (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
-  let (drawable :: <CairoSurface>, gcontext :: <CairoContext>)
+ => (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
+  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
     = get-gcontext(medium);
   ignoring("update-drawing-state");
   /*
