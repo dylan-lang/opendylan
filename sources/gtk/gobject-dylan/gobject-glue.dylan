@@ -117,7 +117,6 @@ define macro with-gdk-lock
      end }
 end;
 
-
 define method make(type :: subclass(<GTypeInstance>), #rest args, 
                    #key address, #all-keys)
  => (result :: <GTypeInstance>)
@@ -125,11 +124,10 @@ define method make(type :: subclass(<GTypeInstance>), #rest args,
     let instance = next-method(<GTypeInstance>, address: address);
     if (~ null-pointer?(instance))
       let g-type = g-type-from-instance(instance);
-      let dylan-type = find-gtype(g-type);
+      let dylan-type = find-gtype(g-type) | find-closest-gtype(g-type);
       unless (dylan-type)
-        format(*standard-error*, "Unknown GType %= encountered. Re-run melange or implement dynamic class generation.\n",
-               as(<byte-string>, g-type-name(g-type)));
-        dylan-type := <GObject>;
+        error("Unknown GType %= encountered. Re-run melange or implement dynamic class generation.\n",
+              as(<byte-string>, g-type-name(g-type)));
       end;
       let result = next-method(dylan-type, address: address);
       g-object-ref-sink(result);
@@ -187,6 +185,19 @@ define function find-gtype(g-type)
   end unless;
   dylan-type
 end function find-gtype;
+
+define function find-closest-gtype (g-type)
+ => (type :: false-or(<class>))
+  let parent-type = g-type-parent(g-type);
+  unless (parent-type == 0)
+    let dylan-type = find-gtype(parent-type);
+    if (dylan-type)
+      dylan-type;
+    else
+      find-closest-gtype(parent-type);
+    end if;
+  end;
+end function find-closest-gtype;
 
 define variable $all-gtype-instances = #[];
 
