@@ -291,21 +291,23 @@ end method handle-gtk-state-change-no-config-event;
 define method handle-gtk-configure-event
     (sheet :: <sheet>, widget :: <GtkWidget>, event :: <GdkEventConfigure>)
  => (handled? :: <boolean>)
-  let allocation = widget.gtk-widget-get-allocation;
-  let native-x  = event.gdk-event-configure-x;
-  let native-y  = event.gdk-event-configure-y;
-  let native-width  = allocation.cairo-rectangle-int-width;
-  let native-height = allocation.cairo-rectangle-int-height;
-  let native-transform = sheet-native-transform(sheet);
-  let (x, y)
-    = untransform-position(native-transform, native-x, native-y);
-  let (width, height)
-    = untransform-distance(native-transform, native-width, native-height);
-  let region = make-bounding-box(x, y, x + width, y + height);
-  distribute-event(port(sheet),
-       make(<window-configuration-event>,
-      sheet:  sheet,
-      region: region));
+  with-stack-structure (allocation :: <cairoRectangleInt>)
+    gtk-widget-get-allocation(widget, allocation);
+    let native-x  = event.gdk-event-configure-x;
+    let native-y  = event.gdk-event-configure-y;
+    let native-width  = allocation.cairo-rectangle-int-width;
+    let native-height = allocation.cairo-rectangle-int-height;
+    let native-transform = sheet-native-transform(sheet);
+    let (x, y)
+      = untransform-position(native-transform, native-x, native-y);
+    let (width, height)
+      = untransform-distance(native-transform, native-width, native-height);
+    let region = make-bounding-box(x, y, x + width, y + height);
+    distribute-event(port(sheet),
+         make(<window-configuration-event>,
+        sheet:  sheet,
+        region: region));
+  end with-stack-structure;
   #t
 end method handle-gtk-configure-event;
 
