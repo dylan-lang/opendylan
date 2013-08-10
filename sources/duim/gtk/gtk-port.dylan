@@ -38,8 +38,7 @@ define sideways method class-for-make-port
  => (class :: <class>, initargs :: false-or(<sequence>))
   values(<gtk-port>,
          concatenate(initargs,
-                     list(event-processor-type:,
-                          if ($os-name == #"win32") #"n" else #"n+1" end)))
+                     list(event-processor-type:, #"n")))
 end method class-for-make-port;
 
 define sealed method port-type
