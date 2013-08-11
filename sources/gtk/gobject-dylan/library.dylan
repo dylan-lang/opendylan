@@ -796,6 +796,7 @@ define module gobject-glue
     $G-TYPE-OBJECT;
 
   export \with-gdk-lock,
+    g-type-from-instance,
     g-signal-connect,
     g-value-nullify,
     g-value-set-value,
