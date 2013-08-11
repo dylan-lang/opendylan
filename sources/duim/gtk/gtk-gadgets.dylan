@@ -1121,15 +1121,11 @@ define sealed method note-scroll-bar-changed
       adjustment.@step-increment := step-inc;
       adjustment.@page-increment := page-inc;
       adjustment.@page-size := page-size;
-      // --- TODO: cache gtk-signal-lookup
-      with-c-string (name = "changed")
-        gtk-signal-emitv-by-name(adjustment, name, null-pointer(<GtkArg>));
-      end;
     end
   end;
 end method note-scroll-bar-changed;
 
-
+
 /// List gadgets
 
 define sealed class <gtk-list-control-mixin> 
