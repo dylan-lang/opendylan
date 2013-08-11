@@ -299,38 +299,43 @@ define sealed method establish-pen
     (medium :: <gtk-medium>, pen :: <standard-pen>, gcontext /* :: <GdkGC> */) => ()
   let width 
     = begin
-	let width = pen-width(pen);
-	when (pen-units(pen) == #"point")
-	  width := width * display-pixels-per-point(display(medium))
-	end;
-	if (width < 2) 0 else truncate(width) end
+        let width = pen-width(pen);
+        when (pen-units(pen) == #"point")
+          width := width * display-pixels-per-point(display(medium))
+        end;
+        if (width < 2) 0 else truncate(width) end
       end;
   let dashes = pen-dashes(pen);
   let (dashed?, dash)
     = select (dashes by instance?)
-	singleton(#f) => values(#f, #f);
-	singleton(#t) => values(#t, #[4,4]);
-	<vector>      => values(#t, dashes);
-	<list>        => values(#t, as(<vector>, dashes));
+        singleton(#f) => values(#f, #f);
+        singleton(#t) => values(#t, #[4,4]);
+        <vector>      => values(#t, dashes);
+        <list>        => values(#t, as(<vector>, dashes));
       end;
   let cap-shape
     = select (pen-cap-shape(pen))
-	#"butt"         => $GDK-CAP-BUTT;
-	#"square"       => $GDK-CAP-PROJECTING;
-	#"round"        => $GDK-CAP-ROUND;
-	#"no-end-point" => $GDK-CAP-NOT-LAST;
+        #"butt"         => $cairo-line-cap-butt;
+        #"square"       => $cairo-line-cap-square;
+        #"round"        => $cairo-line-cap-round;
+        #"no-end-point" => $cairo-line-cap-butt;
       end;
   let joint-shape
     = select (pen-joint-shape(pen))
-	#"miter" => $GDK-JOIN-MITER;
-	#"none"  => $GDK-JOIN-MITER;
-	#"bevel" => $GDK-JOIN-BEVEL;
-	#"round" => $GDK-JOIN-ROUND;
+        #"miter" => $cairo-line-join-miter;
+        #"none"  => $cairo-line-join-miter;
+        #"bevel" => $cairo-line-join-bevel;
+        #"round" => $cairo-line-join-round;
       end;
-  gdk-gc-set-line-attributes(gcontext, 
-			     width,
-			     if (dashed?) $GDK-LINE-ON-OFF-DASH else $GDK-LINE-SOLID end,
-			     cap-shape, joint-shape);
+  cairo-set-line-width(gcontext, as(<double-float>, width));
+  cairo-set-line-cap(gcontext, cap-shape);
+  cairo-set-line-join(gcontext, joint-shape);
+  if (dashed?)
+    // This is probably wrong
+    cairo-set-dash(gcontext, dash, size(dash), 0.0d0);
+  else
+    cairo-set-dash(gcontext, null-pointer(<C-double>), 0, 0.0d0);
+  end if;
   when (dashed?)
     ignoring("pen dashes option");
     // gdk-gc-set-dashes(gcontext, 0, dash)
