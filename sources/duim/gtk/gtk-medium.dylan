@@ -176,8 +176,8 @@ define inline method get-gcontext
     let widget = medium.medium-sheet.sheet-mirror.mirror-widget;
     drawable := widget.gtk-widget-get-window;
     medium-drawable(medium) := drawable;
-    %context(medium) := gdk-cairo-create(drawable);
   end;
+  %context(medium) := gdk-cairo-create(drawable);
   values(drawable, %context(medium))
 end method get-gcontext;
 
