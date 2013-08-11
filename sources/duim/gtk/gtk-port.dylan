@@ -155,15 +155,22 @@ define method grab-pointer
   when (widget)
     //---*** Get real current time...
     let current-time = 0;
-    result
-      := with-gdk-lock gdk-pointer-grab(widget,
-                                        0,		// owner events
-                                        logior($GDK-POINTER-MOTION-MASK,
-                                               $GDK-BUTTON-PRESS-MASK,
-                                               $GDK-BUTTON-RELEASE-MASK),
-                                        null-pointer(<GdkWindow>),		// confine to
-                                        null-pointer(<GdkCursor>),		// cursor
-                                        current-time) end;
+    let device = gtk-get-current-event-device();
+    if (null-pointer?(device))
+      let display = gdk-display-get-default();
+      device := gdk-device-manager-get-client-pointer(gdk-display-get-device-manager(display));
+    end;
+    result := with-gdk-lock
+      gdk-device-grab(device,
+                      gtk-widget-get-window(widget),
+                      $gdk-ownership-none,
+                      #f,
+                      logior($gdk-pointer-motion-mask,
+                             $gdk-button-press-mask,
+                             $gdk-button-release-mask),
+                      null-pointer(<GdkCursor>),
+                      current-time)
+    end;
   end;
   result ~= 0
 end method grab-pointer;
@@ -178,7 +185,12 @@ define method ungrab-pointer
   if (widget)
     //---*** How do we get the current time?
     let current-time = 0;
-    with-gdk-lock gdk-pointer-ungrab(current-time) end;
+    let device = gtk-get-current-event-device();
+    if (null-pointer?(device))
+      let display = gdk-display-get-default();
+      device := gdk-device-manager-get-client-pointer(gdk-display-get-device-manager(display));
+    end;
+    with-gdk-lock gdk-device-ungrab(device, current-time) end;
     #t
   end
 end method ungrab-pointer;
