@@ -1185,20 +1185,18 @@ define sealed method handle-gtk-select-row-event
   let selection = gtk-tree-view-get-selection(widget);
   let new-selection = make(<stretchy-vector>);
   
-  with-stack-structure (model :: <GtkTreeModel*>)
-    let selected-paths
-      = glist-to-vector
-      (gtk-tree-selection-get-selected-rows(selection, model),
-       <GtkTreePath>);
-    
-    for (path in selected-paths)
-      with-stack-structure (iter :: <GtkTreeIter>)
-        gtk-tree-model-get-iter(model[0], iter, path);
-        with-stack-structure (value :: <GValue>)
-          g-value-nullify(value);
-          gtk-tree-model-get-value(model[0], iter, 0, value);
-          add!(new-selection, g-value-to-dylan(value));
-        end;
+  let (selected-path-list, model)
+    = gtk-tree-selection-get-selected-rows(selection);
+  let selected-paths
+    = glist-to-vector(selected-path-list, <GtkTreePath>);
+
+  for (path in selected-paths)
+    with-stack-structure (iter :: <GtkTreeIter>)
+      gtk-tree-model-get-iter(model[0], iter, path);
+      with-stack-structure (value :: <GValue>)
+        g-value-nullify(value);
+        gtk-tree-model-get-value(model[0], iter, 0, value);
+        add!(new-selection, g-value-to-dylan(value));
       end;
     end;
   end;
