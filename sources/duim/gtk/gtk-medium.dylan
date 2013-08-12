@@ -18,7 +18,6 @@ define sealed class <gtk-medium> (<basic-medium>)
   sealed slot %background-color :: false-or(<GdkColor>) = #f;
   // Cached clipping region
   sealed slot %clip-mask = #f;                // #f, #"none", or an X region
-  sealed slot %context = #f;
 end class <gtk-medium>;
 
 define sealed domain make (singleton(<gtk-medium>));
@@ -177,8 +176,8 @@ define inline method get-gcontext
     drawable := widget.gtk-widget-get-window;
     medium-drawable(medium) := drawable;
   end;
-  %context(medium) := gdk-cairo-create(drawable);
-  values(drawable, %context(medium))
+  let context := gdk-cairo-create(drawable);
+  values(drawable, context)
 end method get-gcontext;
 
 // Note that the brush defaults to 'medium-brush(medium)',
