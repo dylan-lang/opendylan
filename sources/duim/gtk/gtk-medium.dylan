@@ -251,13 +251,13 @@ end;
 */
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, brush :: <standard-brush>, gcontext /* :: <GdkGC> */)
+    (medium :: <gtk-medium>, brush :: <standard-brush>, gcontext :: <CairoContext>)
  => ()
   ignoring("establish-brush for <standard-brush>")
 end method establish-brush;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, color :: <rgb-color>, gcontext /* :: <GdkGC> */) => ()
+    (medium :: <gtk-medium>, color :: <rgb-color>, gcontext :: <CairoContext>) => ()
   ignoring("establish-brush");
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
@@ -267,12 +267,12 @@ define sealed method establish-brush
 end method establish-brush;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, color :: <contrasting-color>, gcontext /* :: <GdkGC> */) => ()
+    (medium :: <gtk-medium>, color :: <contrasting-color>, gcontext :: <CairoContext>) => ()
   ignoring("establish-brush for <contrasting-color>")
 end method establish-brush;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, brush :: <foreground>, gcontext /* :: <GdkGC> */) => ()
+    (medium :: <gtk-medium>, brush :: <foreground>, gcontext :: <CairoContext>) => ()
   ignoring("establish-brush");
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
@@ -282,7 +282,7 @@ define sealed method establish-brush
 end method establish-brush;
 
 define sealed method establish-brush
-    (medium :: <gtk-medium>, brush :: <background>, gcontext /* :: <GdkGC> */) => ()
+    (medium :: <gtk-medium>, brush :: <background>, gcontext :: <CairoContext>) => ()
   ignoring("establish-brush");
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
@@ -293,7 +293,7 @@ end method establish-brush;
 
 
 define sealed method establish-pen
-    (medium :: <gtk-medium>, pen :: <standard-pen>, gcontext /* :: <GdkGC> */) => ()
+    (medium :: <gtk-medium>, pen :: <standard-pen>, gcontext :: <CairoContext>) => ()
   let width
     = begin
         let width = pen-width(pen);
@@ -341,7 +341,7 @@ end method establish-pen;
 
 
 define sealed method establish-font
-    (medium :: <gtk-medium>, font :: <gtk-font>, gcontext /* :: <GdkGC> */) => ()
+    (medium :: <gtk-medium>, font :: <gtk-font>, gcontext :: <CairoContext>) => ()
   ignoring("establish-font");
   // gdk-gc-set-font(gcontext, font.%font-id)
 end method establish-font;
@@ -350,33 +350,33 @@ end method establish-font;
 /// Ink decoding
 
 define generic decode-ink
-    (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, brush)
+    (medium :: <gtk-medium>, gcontext :: <CairoContext>, brush)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>));
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, brush :: <foreground>)
+    (medium :: <gtk-medium>, gcontext :: <CairoContext>, brush :: <foreground>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   decode-ink(medium, gcontext, medium-foreground(medium))
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, brush :: <background>)
+    (medium :: <gtk-medium>, gcontext :: <CairoContext>, brush :: <background>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   decode-ink(medium, gcontext, medium-background(medium))
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, color :: <color>)
+    (medium :: <gtk-medium>, gcontext :: <CairoContext>, color :: <color>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   values(allocate-color(color, medium.%palette), $GDK-SOLID, $boole-1, #f)
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, color :: <contrasting-color>)
+    (medium :: <gtk-medium>, gcontext :: <CairoContext>, color :: <contrasting-color>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   let color = contrasting-color->color(color);
@@ -384,7 +384,7 @@ define sealed method decode-ink
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, pattern :: <stencil>)
+    (medium :: <gtk-medium>, gcontext :: <CairoContext>, pattern :: <stencil>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   not-yet-implemented("decode-ink");
@@ -421,14 +421,14 @@ define sealed method decode-ink
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, pixmap :: <pixmap>)
+    (medium :: <gtk-medium>, gcontext :: <CairoContext>, pixmap :: <pixmap>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   not-yet-implemented("decode-ink for <pixmap>")
 end method decode-ink;
 
 define sealed method decode-ink
-    (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, brush :: <standard-brush>)
+    (medium :: <gtk-medium>, gcontext :: <CairoContext>, brush :: <standard-brush>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   let (color :: <native-color>, fill-style, operation :: <integer>, pattern)
