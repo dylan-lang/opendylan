@@ -339,9 +339,11 @@ define sealed method draw-ellipse
         with-gdk-lock
           cairo-save(gcontext);
           cairo-translate(gcontext,
-                          center-x + x-radius / 2.0d0,
-                          center-y + y-radius / 2.0d0);
-          cairo-scale(gcontext, x-radius / 2.0d0, y-radius / 2.0d0);
+                          as(<double-float>, center-x),
+                          as(<double-float>, center-y));
+          cairo-scale(gcontext,
+                      as(<double-float>, x-radius),
+                      as(<double-float>, y-radius));
           cairo-arc(gcontext, 0.0d0, 0.0d0, 1.0d0,
                     as(<double-float>, angle),
                     as(<double-float>, delta-angle));
