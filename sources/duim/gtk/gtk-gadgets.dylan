@@ -179,7 +179,7 @@ define sealed method note-gadget-enabled
   next-method();
   let widget = gadget-widget(gadget);
   widget & with-gdk-lock
-    gtk-widget-set-sensitive(widget, $true)
+    gtk-widget-set-sensitive(widget, #t)
   end
 end method note-gadget-enabled;
 
@@ -189,7 +189,7 @@ define sealed method note-gadget-disabled
   next-method();
   let widget = gadget-widget(gadget);
   widget & with-gdk-lock
-    gtk-widget-set-sensitive(widget, $false)
+    gtk-widget-set-sensitive(widget, #f)
   end
 end method note-gadget-disabled;
 
@@ -544,8 +544,7 @@ define method update-mirror-attributes
   let widget = mirror-widget(mirror);
   with-gdk-lock
     with-disabled-event-handler (mirror, #"clicked")
-      gtk-toggle-button-set-active
-        (widget, if (selected?) $true else $false end)
+      gtk-toggle-button-set-active(widget, selected?)
     end
   end
 end method update-mirror-attributes;
@@ -618,8 +617,7 @@ define method update-mirror-attributes
   let widget = mirror-widget(mirror);
   with-gdk-lock
     with-disabled-event-handler (mirror, #"clicked")
-      gtk-toggle-button-set-active
-        (widget, if (selected?) $true else $false end)
+      gtk-toggle-button-set-active(widget, selected?)
     end
   end
 end method update-mirror-attributes;
@@ -859,7 +857,7 @@ define sealed class <gtk-text-field>
      <text-field>,
      <leaf-pane>,
      <sealed-constructor-mixin>)
-  keyword gtk-text-visibility: = $true;
+  keyword gtk-text-visibility: = #t;
 end class <gtk-text-field>;
 
 define method %gtk-text-visibility
@@ -881,7 +879,7 @@ define sealed class <gtk-password-field>
      <password-field>,
      <leaf-pane>,
      <sealed-constructor-mixin>)
-  keyword gtk-text-visibility: = $false;
+  keyword gtk-text-visibility: = #f;
 end class <gtk-password-field>;
 
 define method %gtk-text-visibility
@@ -1758,7 +1756,7 @@ define sealed method do-expand-node
     (pane :: <gtk-tree-control>, node :: <gtk-tree-node>) => ()
   with-gdk-lock
     let path = gtk-tree-model-get-path(pane.store-model, node.gtk-iter);
-    gtk-tree-view-expand-row(pane.sheet-direct-mirror.mirror-widget , path, $false)
+    gtk-tree-view-expand-row(pane.sheet-direct-mirror.mirror-widget , path, #f)
   end;
 end method do-expand-node;
 
