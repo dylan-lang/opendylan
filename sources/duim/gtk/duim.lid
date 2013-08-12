@@ -1,7 +1,7 @@
 Library:      DUIM
 Synopsis:     DUIM core + GTK backend
-Author:	      Scott McKay
-Files:	   duim-library
+Author:       Scott McKay
+Files:        duim-library
 Major-version: 2
 Minor-version: 1
 Base-address:  0x65c00000

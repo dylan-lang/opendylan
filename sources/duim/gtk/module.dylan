@@ -13,7 +13,7 @@ define module gtk-duim
 
   use duim-imports;
   use duim-internals;
-  use duim-gadget-panes-internals;	//---*** until we've got all native gadgets in
+  use duim-gadget-panes-internals;        //---*** until we've got all native gadgets in
 
   use c-ffi;
 
@@ -46,9 +46,9 @@ define module gtk-duim
   // These can be used by someone who wants to import their own GTK gadget
   export \event-handler-definer,
          <gtk-pane-mixin>,
-	 <gtk-gadget-mixin>,
-	 <gtk-text-gadget-mixin>,
-	 <gtk-top-level-sheet-mixin>,
+         <gtk-gadget-mixin>,
+         <gtk-text-gadget-mixin>,
+         <gtk-top-level-sheet-mixin>,
          handle-gtk-destroy-event,
          handle-gtk-delete-event,
          handle-gtk-motion-event,

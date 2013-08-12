@@ -61,10 +61,10 @@ end method destroy-port;
 define function shutdown-gtk-duim ()
   let ports :: <stretchy-object-vector> = make(<stretchy-vector>);
   do-ports(method (_port)
-	     when (instance?(_port, <gtk-port>))
-	       add!(ports, _port)
-	     end
-	   end method);
+             when (instance?(_port, <gtk-port>))
+               add!(ports, _port)
+             end
+           end method);
   do(destroy-port, ports)
 end function shutdown-gtk-duim;
 
@@ -94,14 +94,14 @@ define sealed method do-pointer-position
 end method do-pointer-position;
 
 define sealed method do-set-pointer-position
-    (_port :: <gtk-port>, pointer :: <pointer>, sheet :: <sheet>, 
+    (_port :: <gtk-port>, pointer :: <pointer>, sheet :: <sheet>,
      x :: <integer>, y :: <integer>)
  => ()
   ignoring("do-set-pointer-position")
 end method do-set-pointer-position;
 
 define sealed method do-set-pointer-position
-    (_port :: <gtk-port>, pointer :: <pointer>, sheet :: <display>, 
+    (_port :: <gtk-port>, pointer :: <pointer>, sheet :: <display>,
      x :: <integer>, y :: <integer>) => ()
   ignoring("do-set-pointer-position")
 end method do-set-pointer-position;
@@ -316,8 +316,8 @@ end method query-widget-for-color;
 // We arrange to map this to something close to ANSI_VAR_FONT
 define constant $gtk-default-text-style
     = make(<text-style>,
-	   family: #"sans-serif", weight: #"normal",
-	   slant: #"roman", size: #"normal");
+           family: #"sans-serif", weight: #"normal",
+           slant: #"roman", size: #"normal");
 
 // Note that this "default default" text style is _not_ the one that we use
 // for gadgets.  There's another method for that on <gtk-gadget-mixin>.

@@ -38,17 +38,17 @@ define sealed method install-default-palette
   let colormap = xt/XtGetValues(app-shell, #"colormap");
   let (color?, dynamic?)
     = select (vclass)
-	#"static-gray"  => values(#f, #f);
-	#"gray-scale"   => values(#f, #t);
-	#"static-color" => values(#t, #f);
-	#"true-color"   => values(#t, #f);
-	#"pseudo-color" => values(#t, #t);
-	#"direct-color" => values(#t, #t);
+        #"static-gray"  => values(#f, #f);
+        #"gray-scale"   => values(#f, #t);
+        #"static-color" => values(#t, #f);
+        #"true-color"   => values(#t, #f);
+        #"pseudo-color" => values(#t, #t);
+        #"direct-color" => values(#t, #t);
       end;
   port-default-palette(_port)
     := make-palette(port,
-		    color?: color?, dynamic?: dynamic?,
-		    colormap: colormap)
+                    color?: color?, dynamic?: dynamic?,
+                    colormap: colormap)
 end method install-default-palette;
 
 define sealed method palette-depth
@@ -64,7 +64,7 @@ define sealed method palette-depth
 end method palette-depth;
 
 
-define sealed method allocate-color 
+define sealed method allocate-color
     (color :: <color>, palette :: <gtk-palette>)
  => (pixel :: <integer>)
   let cache = palette.%color-cache;
@@ -75,8 +75,8 @@ define sealed method allocate-color
       pixel
     end
 end method allocate-color;
-	
-define sealed method deallocate-color 
+
+define sealed method deallocate-color
     (color :: <color>, palette :: <gtk-palette>) => ()
   let cache = palette.%color-cache;
   let pixel = gethash(cache, color);
@@ -96,9 +96,9 @@ define sealed method clear-colors
   let pixels    = list(pixel);
   let planes    = 0;
   local method collect-pixel (color, pixel)
-	  ignore(color);
-	  pixels := add-new!(pixels, pixel, test: \=)
-	end method;
+          ignore(color);
+          pixels := add-new!(pixels, pixel, test: \=)
+        end method;
   do(collect-pixel, cache);
   x-free-colors(x-display, medium.%colormap, pixels, planes);
   remove-all-keys!(cache)
@@ -146,14 +146,14 @@ define sealed method find-color
   with-stack-structure (screen-color :: x/<XColor>)
     with-stack-structure (exact-color :: x/<XColor>)
       if (x/XAllocNamedColor(x-display, x-colormap, name, screen-color, exact-color))
-	let color = make-rgb-color(_16-bits->float(screen-color.x/red-value),
-				   _16-bits->float(screen-color.x/green-value),
-				   _16-bits->float(screen-color.x/blue-value));
-	let pixel = screen-color.x/pixel-value;
-	gethash(cache, color) := pixel;
-	color
+        let color = make-rgb-color(_16-bits->float(screen-color.x/red-value),
+                                   _16-bits->float(screen-color.x/green-value),
+                                   _16-bits->float(screen-color.x/blue-value));
+        let pixel = screen-color.x/pixel-value;
+        gethash(cache, color) := pixel;
+        color
       else
-	error? & error(make(<color-not-found>, color: name))
+        error? & error(make(<color-not-found>, color: name))
       end
     end
   end

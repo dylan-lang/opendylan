@@ -22,8 +22,8 @@ define method set-mirror-parent
     (child :: <menu-button-mirror>, parent :: <menu-mirror>)
  => ()
   duim-debug-message("Adding %= to menu %=",
-		gadget-label(mirror-sheet(child)),
-		gadget-label(mirror-sheet(parent)));
+                gadget-label(mirror-sheet(child)),
+                gadget-label(mirror-sheet(parent)));
   with-gdk-lock
     gtk-menu-shell-append(mirror-widget(parent).Gtk-Menu-Item-get-submenu,
                           mirror-widget(child))
@@ -34,14 +34,14 @@ define method set-mirror-parent
     (child :: <menu-button-mirror>, parent :: <popup-menu-mirror>)
  => ()
   duim-debug-message("Adding %= to popup menu %=",
-		gadget-label(mirror-sheet(child)),
-		gadget-label(mirror-sheet(parent)));
+                gadget-label(mirror-sheet(child)),
+                gadget-label(mirror-sheet(parent)));
   with-gdk-lock
     gtk-menu-shell-append(mirror-widget(parent),
                           mirror-widget(child))
   end
 end method set-mirror-parent;
-    
+
 define method set-mirror-parent
     (child :: <menu-mirror>, parent :: <menu-mirror>)
  => ()
@@ -54,7 +54,7 @@ define method set-mirror-parent
     gtk-menu-shell-append(mirror-widget(parent).Gtk-Menu-Item-get-submenu, widget)
   end
 end method set-mirror-parent;
-    
+
 define method set-mirror-parent
     (child :: <menu-mirror>, parent :: <gadget-mirror>)
  => ()
@@ -74,8 +74,8 @@ define method set-mirror-parent
     next-method()
   end
 end method set-mirror-parent;
-    
-define sealed method destroy-mirror 
+
+define sealed method destroy-mirror
     (_port :: <gtk-port>, menu :: <menu>, mirror :: <menu-mirror>) => ()
   ignoring("destroy-mirror for <menu>")
 end method destroy-mirror;
@@ -172,7 +172,7 @@ define table $mnemonic-table :: <object-table>
       #"Status Bar"           => "Status &Bar" };
 
 define sealed method compute-mnemonic-from-label
-    (gadget :: <gtk-gadget-mixin>, label :: <string>, 
+    (gadget :: <gtk-gadget-mixin>, label :: <string>,
      #key remove-ampersand? = #t)
  => (label, mnemonic :: false-or(<mnemonic>), index :: false-or(<integer>))
   let (label, mnemonic, index) = next-method();
@@ -207,12 +207,12 @@ define sealed method compute-standard-gtk-mnemonic
   end
 end method compute-standard-gtk-mnemonic;
 
-define inline function vowel? 
+define inline function vowel?
     (char :: <character>) => (vowel? :: <boolean>)
   member?(as-uppercase(char), "AEIOU")
 end function vowel?;
 
-define inline function consonant? 
+define inline function consonant?
     (char :: <character>) => (consonant? :: <boolean>)
   member?(as-uppercase(char), "BCDFGHJKLMNPQRSTVWXYZ")
 end function consonant?;
@@ -223,33 +223,33 @@ define sealed method compute-used-mnemonics
   let used-mnemonics = mirror.%used-mnemonics;
   used-mnemonics.size := 0;
   local method maybe-add-mnemonic
-	    (mnemonic :: false-or(<character>))
-	  if (mnemonic)
-	    add!(used-mnemonics,
-		 as-uppercase(gesture-character(mnemonic)))
-	  end
-	end method maybe-add-mnemonic;
+            (mnemonic :: false-or(<character>))
+          if (mnemonic)
+            add!(used-mnemonics,
+                 as-uppercase(gesture-character(mnemonic)))
+          end
+        end method maybe-add-mnemonic;
   for (child in sheet-children(gadget))
     select (child by instance?)
       <menu>, <menu-button> =>
-	let (label, mnemonic, index)
-	  = compute-mnemonic-from-label(child, defaulted-gadget-label(child));
-	ignore(label, index);
-	maybe-add-mnemonic(mnemonic);
+        let (label, mnemonic, index)
+          = compute-mnemonic-from-label(child, defaulted-gadget-label(child));
+        ignore(label, index);
+        maybe-add-mnemonic(mnemonic);
       <menu-box> =>
-	for (sub-child in sheet-children(child))
-	  select (sub-child by instance?)
-	    <menu>, <menu-button> =>
-	      let (label, mnemonic, index)
-		= compute-mnemonic-from-label
-		    (sub-child, defaulted-gadget-label(sub-child));
-	      ignore(label, index);
-	      maybe-add-mnemonic(mnemonic);
-	    <menu-box> =>
-	      error("Found menu-box %= as child of menu-box %=",
-		    sub-child, child);
-	  end;
-	end;
+        for (sub-child in sheet-children(child))
+          select (sub-child by instance?)
+            <menu>, <menu-button> =>
+              let (label, mnemonic, index)
+                = compute-mnemonic-from-label
+                    (sub-child, defaulted-gadget-label(sub-child));
+              ignore(label, index);
+              maybe-add-mnemonic(mnemonic);
+            <menu-box> =>
+              error("Found menu-box %= as child of menu-box %=",
+                    sub-child, child);
+          end;
+        end;
     end
   end;
 end method compute-used-mnemonics;
@@ -261,42 +261,42 @@ end method compute-used-mnemonics;
 //   - any digit (our own rule)
 // Note that all of the standard mnemonics and any user chosen ones
 // have already been removed from consideration by 'compute-used-mnemonics'.
-define sealed method allocate-unique-mnemonic 
+define sealed method allocate-unique-mnemonic
     (gadget :: <gtk-gadget-mixin>, string :: <string>)
  => (char :: false-or(<character>))
   assert(~empty?(string),
-	 "Menu label for %= must have contents", gadget);
+         "Menu label for %= must have contents", gadget);
   let mirror = sheet-mirror(gadget);
   let used-mnemonics = mirror.%used-mnemonics;
   block (return)
     local method maybe-return-char (char)
-	    let uppercase-char = as-uppercase(char);
-	    unless (member?(uppercase-char, used-mnemonics))
-	      add!(used-mnemonics, uppercase-char);
-	      return(uppercase-char)
-	    end
-	  end;
+            let uppercase-char = as-uppercase(char);
+            unless (member?(uppercase-char, used-mnemonics))
+              add!(used-mnemonics, uppercase-char);
+              return(uppercase-char)
+            end
+          end;
     if (size(string) > 0)
       let first-char = string[0];
       when (consonant?(first-char)
-	    | vowel?(first-char)
-	    | digit-char?(first-char))
-	maybe-return-char(string[0])
+            | vowel?(first-char)
+            | digit-char?(first-char))
+        maybe-return-char(string[0])
       end;
       for (char in string)
-	when (consonant?(char))
-	  maybe-return-char(char)
-	end
+        when (consonant?(char))
+          maybe-return-char(char)
+        end
       end;
       for (char in string)
-	when (vowel?(char))
-	  maybe-return-char(char)
-	end
+        when (vowel?(char))
+          maybe-return-char(char)
+        end
       end;
       for (char in string)
-	when (digit-char?(char))
-	  maybe-return-char(char)
-	end
+        when (digit-char?(char))
+          maybe-return-char(char)
+        end
       end
     end
   end
@@ -345,7 +345,7 @@ define sealed method make-gtk-menu-bar-contents
   let _port = port(menu-bar);
   compute-used-mnemonics(menu-bar);
   do(method (menu)
-       menu.%port := _port;		//--- normally done in 'graft-sheet'
+       menu.%port := _port;                //--- normally done in 'graft-sheet'
        make-mirror(_port, menu)
      end,
      sheet-children(menu-bar));
@@ -418,7 +418,7 @@ end class <gtk-menu>;
 define sealed class <gtk-popup-menu> (<gtk-menu>)
 end;
 
-define sealed method class-for-make-pane 
+define sealed method class-for-make-pane
     (framem :: <gtk-frame-manager>, class == <menu>, #key owner)
  => (class :: <class>, options :: false-or(<sequence>))
   if (owner)
@@ -432,11 +432,11 @@ define sealed method make-gtk-mirror
   (gadget :: <gtk-popup-menu>) => (mirror :: <menu-mirror>)
   let widget = with-gdk-lock gtk-menu-new() end;
   let selection-owner = menu-record-selection?(gadget) & gadget;
-  make(<popup-menu-mirror>, 
+  make(<popup-menu-mirror>,
        widget: widget,
-       sheet:  gadget, 
+       sheet:  gadget,
        selection-owner: selection-owner)
-end;   
+end;
 
 define sealed method make-gtk-mirror
     (gadget :: <gtk-menu>)
@@ -453,13 +453,13 @@ define sealed method make-gtk-mirror
 end method make-gtk-mirror;
 
 define sealed method map-mirror
-    (_port :: <gtk-port>, menu :: <gtk-popup-menu>, 
+    (_port :: <gtk-port>, menu :: <gtk-popup-menu>,
      mirror :: <popup-menu-mirror>) => ()
   with-gdk-lock popup-gtk-menu(mirror.mirror-widget, 3); end
 end method map-mirror;
 
-define method sheet-mapped?-setter 
-    (mapped? == #f, menu :: <gtk-popup-menu>, 
+define method sheet-mapped?-setter
+    (mapped? == #f, menu :: <gtk-popup-menu>,
      #key do-repaint? = #t, clear? = do-repaint?)
  => (mapped? :: <boolean>)
   #f;
@@ -475,15 +475,15 @@ end;
 define method handle-menu-update
     (menu :: <gtk-menu>) => ()
   local method update-child-menu-boxes
-	    (gadget :: <gadget>) => ()
-	  execute-update-callback
-	    (gadget, gadget-client(gadget), gadget-id(gadget));
-	  for (child in sheet-children(gadget))
-	    if (instance?(child, <menu-box>))
-	      update-child-menu-boxes(child)
-	    end
-	  end
-	end method update-child-menu-boxes;
+            (gadget :: <gadget>) => ()
+          execute-update-callback
+            (gadget, gadget-client(gadget), gadget-id(gadget));
+          for (child in sheet-children(gadget))
+            if (instance?(child, <menu-box>))
+              update-child-menu-boxes(child)
+            end
+          end
+        end method update-child-menu-boxes;
   update-child-menu-boxes(menu);
   ensure-menus-mirrored(menu)
 end method handle-menu-update;
@@ -492,13 +492,13 @@ define sealed method ensure-menus-mirrored
     (gadget :: <gadget>) => ()
   let mirrored?
     = begin
-	if (instance?(gadget, <gtk-menu>))
-	  let mirror = sheet-direct-mirror(gadget);
-	  if (mirror & ~mirror.%created?)
-	    make-gtk-menu-contents(gadget, mirror);
-	    #t
-	  end
-	end
+        if (instance?(gadget, <gtk-menu>))
+          let mirror = sheet-direct-mirror(gadget);
+          if (mirror & ~mirror.%created?)
+            make-gtk-menu-contents(gadget, mirror);
+            #t
+          end
+        end
       end;
   unless (mirrored?)
     do(ensure-menus-mirrored, sheet-children(gadget))
@@ -523,22 +523,22 @@ define sealed method make-gtk-menu-contents
     end method add-separator,
 
     method add-menu-children
-	(gadget :: <gadget>) => ()
+        (gadget :: <gadget>) => ()
       for (child in sheet-children(gadget))
-	select (child by instance?)
-	  <menu> =>
-	    child.%port := _port;	//--- normally done in 'graft-sheet'
-	    make-mirror(_port, child);
-	    seen-item? := #t;
-	  <menu-box> =>
-	    if (seen-item?) need-separator? := #t end;
-	    add-menu-children(child);
-	    need-separator? := #t;
-	  <menu-button> =>
-	    when (need-separator?) add-separator() end;
-	    make-mirror(_port, child);
-	    seen-item? := #t;
-	end
+        select (child by instance?)
+          <menu> =>
+            child.%port := _port;        //--- normally done in 'graft-sheet'
+            make-mirror(_port, child);
+            seen-item? := #t;
+          <menu-box> =>
+            if (seen-item?) need-separator? := #t end;
+            add-menu-children(child);
+            need-separator? := #t;
+          <menu-button> =>
+            when (need-separator?) add-separator() end;
+            make-mirror(_port, child);
+            seen-item? := #t;
+        end
       end;
       mirror.%created? := #t
     end method add-menu-children;
@@ -622,7 +622,7 @@ define sealed method note-gadget-value-changed
   ignoring("note-gadget-value-changed for <menu-button>")
 end method note-gadget-value-changed;
 
-define sealed method note-gadget-enabled 
+define sealed method note-gadget-enabled
     (client, gadget :: <gtk-menu-button-mixin>) => ()
   ignoring("note-gadget-enabled for <menu-button>")
 end method note-gadget-enabled;
@@ -632,7 +632,7 @@ define sealed method note-gadget-disabled
   ignoring("note-gadget-disabled for <menu-button>")
 end method note-gadget-disabled;
 
-define sealed method note-gadget-enabled 
+define sealed method note-gadget-enabled
     (client, gadget :: <gtk-menu>) => ()
   ignoring("note-gadget-enabled for <menu>")
 end method note-gadget-enabled;
@@ -672,7 +672,7 @@ define sealed class <gtk-radio-menu-button>
      <leaf-pane>)
 end class <gtk-radio-menu-button>;
 
-define sealed method class-for-make-pane 
+define sealed method class-for-make-pane
     (framem :: <gtk-frame-manager>, class == <radio-menu-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<gtk-radio-menu-button>, #f)
@@ -690,7 +690,7 @@ define sealed class <gtk-check-menu-button>
      <leaf-pane>)
 end class <gtk-check-menu-button>;
 
-define sealed method class-for-make-pane 
+define sealed method class-for-make-pane
     (framem :: <gtk-frame-manager>, class == <check-menu-button>, #key)
  => (class :: <class>, options :: false-or(<sequence>))
   values(<gtk-check-menu-button>, #f)
@@ -706,8 +706,8 @@ define sealed method do-choose-from-menu
           multiple-sets?,
      #all-keys)
  => (value, success? :: <boolean>)
-  ignore(title, value, label-key, value-key, 
-	 width, height, foreground, background, text-style, multiple-sets?);
+  ignore(title, value, label-key, value-key,
+         width, height, foreground, background, text-style, multiple-sets?);
   // record-selection? determines whether the events are distributed or
   // just recorded so that we can pick them up afterwards.
   menu-record-selection?(menu) := #t;

@@ -52,7 +52,7 @@ define method handle-gtk-motion-event
         values(event.gdk-event-motion-window, event.gdk-event-motion-x, event.gdk-event-motion-y, event.gdk-event-motion-state)
       end;
     let modifiers = 0;
-    let state = key-flags->button-state(native-state); 
+    let state = key-flags->button-state(native-state);
     let (x, y)
       = untransform-position(sheet-native-transform(sheet), native-x, native-y);
     if (logand(state, logior($left-button,$middle-button,$right-button))  ~= 0)
@@ -174,7 +174,7 @@ end function gtk-button->duim-button;
 define method handle-gtk-expose-event
     (sheet :: <sheet>, event :: <GdkEventExpose>)
  => (handled? :: <boolean>)
-  
+
   let _port = port(sheet);
   when (_port)
     let area = event.gdk-event-expose-area;

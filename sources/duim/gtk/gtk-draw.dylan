@@ -71,7 +71,7 @@ end method set-pixel;
 
 //---*** Do an efficient version of this
 define sealed method set-pixels
-    (medium :: <gtk-medium>, color :: <rgb-color>, 
+    (medium :: <gtk-medium>, color :: <rgb-color>,
      coord-seq :: <coordinate-sequence>)
  => (record)
   with-drawing-options (medium, brush: color)
@@ -205,17 +205,17 @@ define sealed method draw-transformed-rectangles
   ignore(filled?);
   let ncoords :: <integer> = size(coord-seq);
   assert(zero?(modulo(ncoords, 4)),
-	 "The coordinate sequence has the wrong number of elements");
+         "The coordinate sequence has the wrong number of elements");
   local method draw-one (x1, y1, x2, y2) => ()
-	  with-stack-vector (coords = x1, y1, x2, y1, x2, y2, x1, y2)
-	    apply(draw-polygon, medium, coords, closed?: #t, keys)
-	  end
+          with-stack-vector (coords = x1, y1, x2, y1, x2, y2, x1, y2)
+            apply(draw-polygon, medium, coords, closed?: #t, keys)
+          end
         end method;
   dynamic-extent(draw-one);
   without-bounds-checks
     for (i :: <integer> = 0 then i + 4, until: i = ncoords)
       draw-one(coord-seq[i + 0], coord-seq[i + 1],
-	       coord-seq[i + 2], coord-seq[i + 3])
+               coord-seq[i + 2], coord-seq[i + 3])
     end
   end;
   #f
@@ -322,24 +322,24 @@ define sealed method draw-ellipse
   with-device-coordinates (transform, center-x, center-y)
     with-device-distances (transform, radius-1-dx, radius-1-dy, radius-2-dx, radius-2-dy)
       let (angle-2, x-radius, y-radius, angle-1)
-	= singular-value-decomposition-2x2(radius-1-dx, radius-2-dx, radius-1-dy, radius-2-dy);
+        = singular-value-decomposition-2x2(radius-1-dx, radius-2-dx, radius-1-dy, radius-2-dy);
       if (~$supports-titled-ellipses
-	  | x-radius = abs(y-radius)		// a circle - rotations are irrelevant
-	  | zero?(angle-1))			// axis-aligned ellipse
-	let (angle, delta-angle)
-	  = if (start-angle & end-angle)
-	      let start-angle = modulo(start-angle, $2pi);
-	      let end-angle   = modulo(end-angle, $2pi);
-	      when (end-angle < start-angle)
-		end-angle := end-angle + $2pi
-	      end;
-	      values(round($2pi-in-64ths-of-degree * (($2pi - start-angle) / $2pi)),
-		     round($2pi-in-64ths-of-degree * ((start-angle - end-angle) / $2pi)))
-	    else
-	      values(0, $2pi-in-64ths-of-degree)
-	    end;
-	x-radius := abs(x-radius);
-	y-radius := abs(y-radius);
+          | x-radius = abs(y-radius)                // a circle - rotations are irrelevant
+          | zero?(angle-1))                        // axis-aligned ellipse
+        let (angle, delta-angle)
+          = if (start-angle & end-angle)
+              let start-angle = modulo(start-angle, $2pi);
+              let end-angle   = modulo(end-angle, $2pi);
+              when (end-angle < start-angle)
+                end-angle := end-angle + $2pi
+              end;
+              values(round($2pi-in-64ths-of-degree * (($2pi - start-angle) / $2pi)),
+                     round($2pi-in-64ths-of-degree * ((start-angle - end-angle) / $2pi)))
+            else
+              values(0, $2pi-in-64ths-of-degree)
+            end;
+        x-radius := abs(x-radius);
+        y-radius := abs(y-radius);
         with-gdk-lock
           cairo-save(gcontext);
           cairo-translate(gcontext,
@@ -463,7 +463,7 @@ define sealed method draw-pixmap
     (medium :: <gtk-medium>, pixmap :: <pixmap>, x, y,
      #key function = $boole-1) => (record)
   do-copy-area(pixmap, 0, 0, image-width(pixmap), image-height(pixmap),
-	       medium, x, y)
+               medium, x, y)
 end method draw-pixmap;
 
 define sealed method clear-box
@@ -555,7 +555,7 @@ define sealed method draw-text
         end
       else
         let substring
-          = if (_start = 0 & _end = length) 
+          = if (_start = 0 & _end = length)
               string
             else
               copy-sequence(string, start: _start, end: _end)

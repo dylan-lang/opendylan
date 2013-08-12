@@ -76,7 +76,7 @@ end method note-frame-disabled;
 
 define sealed method note-frame-iconified
     (framem :: <gtk-frame-manager>, frame :: <simple-frame>) => ()
-  next-method();				// update the frame's state
+  next-method();                                // update the frame's state
   let sheet  = top-level-sheet(frame);
   let mirror = sheet & sheet-direct-mirror(sheet);
   when (mirror)
@@ -86,7 +86,7 @@ end method note-frame-iconified;
 
 define sealed method note-frame-deiconified
     (framem :: <gtk-frame-manager>, frame :: <simple-frame>) => ()
-  next-method();				// update the frame's state
+  next-method();                                // update the frame's state
   let sheet  = top-level-sheet(frame);
   let mirror = sheet & sheet-direct-mirror(sheet);
   when (mirror)

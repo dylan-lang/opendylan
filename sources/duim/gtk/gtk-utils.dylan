@@ -22,16 +22,16 @@ define sealed domain initialize (<sealed-constructor-mixin>);
 
 define function not-yet-implemented
     (format-message :: <string>, #rest format-args)
-  apply(error, 
-	concatenate(format-message, " not yet implemented!"),
-	format-args)
+  apply(error,
+        concatenate(format-message, " not yet implemented!"),
+        format-args)
 end function not-yet-implemented;
 
 define function ignoring
     (format-message :: <string>, #rest format-args)
-  apply(duim-debug-message, 
-	concatenate("Ignoring ", format-message),
-	format-args)
+  apply(duim-debug-message,
+        concatenate("Ignoring ", format-message),
+        format-args)
 end function ignoring;
 
 // define constant *gtk-debug* = #f;

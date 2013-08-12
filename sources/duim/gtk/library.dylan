@@ -12,7 +12,7 @@ define library gtk-duim
 
   use duim-utilities;
   use duim-core;
-  use gtk-duim-gadget-panes;	//---*** until we've got all native gadgets in
+  use gtk-duim-gadget-panes; //---*** until we've got all native gadgets in
 
   use c-ffi;
 

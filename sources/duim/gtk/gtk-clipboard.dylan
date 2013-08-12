@@ -101,18 +101,18 @@ end method clipboard-format-available?;
 define macro with-clipboard-lock
   { with-clipboard-lock (?buffer:name = ?buffer-handle:expression) ?body:body end }
     => { begin
-	   let _locked? = #f;
-	   //---*** LOCK THE CLIPBOARD
-	   _locked? := #t;
-	   block ()
-	     let ?buffer :: <C-string> = XXX;	//---*** GET A DATA BUFFER
-	     ?body
-	   cleanup
-	     when (_locked?)
-	       //---*** UNLOCK THE CLIPBOARD
-	     end
-	   end
-	 end }
+           let _locked? = #f;
+           //---*** LOCK THE CLIPBOARD
+           _locked? := #t;
+           block ()
+             let ?buffer :: <C-string> = XXX;        //---*** GET A DATA BUFFER
+             ?body
+           cleanup
+             when (_locked?)
+               //---*** UNLOCK THE CLIPBOARD
+             end
+           end
+         end }
 end macro with-clipboard-lock;
 
 define function string-to-clipboard-buffer

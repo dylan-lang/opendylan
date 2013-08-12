@@ -23,11 +23,11 @@ define method handle-gtk-key-event
     let keysym = keyval->keysym(event.gdk-event-key-keyval);
     let modifiers = map-modifiers(event.gdk-event-key-state);
     distribute-event(_port,
-		     make(class,
-			  sheet:     sheet,
-			  key-name:  keysym,
-			  character: char,
-			  modifier-state: modifiers));
+                     make(class,
+                          sheet:     sheet,
+                          key-name:  keysym,
+                          character: char,
+                          modifier-state: modifiers));
     #t
   end
 end method handle-gtk-key-event;

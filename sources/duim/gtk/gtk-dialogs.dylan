@@ -28,7 +28,7 @@ ignore(mirror-registered-dialogs);
 define sealed method make-top-level-mirror
     (sheet :: <top-level-sheet>, frame :: <dialog-frame>)
  => (mirror :: <top-level-mirror>)
-  
+
   let widget = with-gdk-lock gtk-window-new($GTK-WINDOW-TOPLEVEL) end;
   let owner = frame-owner(frame);
   make(<dialog-mirror>,
@@ -99,22 +99,22 @@ define sealed method compute-dialog-position
       // let (owner-width, owner-height) = get-client-size(owner-handle);
       let (owner-width, owner-height) = sheet-size(owner);
       duim-debug-message("  Owner currently %d x %d, at %d, %d",
-			 owner-width, owner-height, owner-x, owner-y);
+                         owner-width, owner-height, owner-x, owner-y);
       duim-debug-message("  Dialog currently %d x %d",
-			 width, height);
+                         width, height);
       let x
-	= max(min(screen-width - width,
-		  owner-x + floor/(owner-width  - width, 2)),
-	      0);
+        = max(min(screen-width - width,
+                  owner-x + floor/(owner-width  - width, 2)),
+              0);
       let y
-	= max(min(screen-height - height,
-		  owner-y + floor/(owner-height - height, 2)),
-	      0);
+        = max(min(screen-height - height,
+                  owner-y + floor/(owner-height - height, 2)),
+              0);
       values(x, y)
     else
       // Center the dialog on the screen
       values(max(floor/(screen-width  - width, 2),  0),
-	     max(floor/(screen-height - height, 2), 0))
+             max(floor/(screen-height - height, 2), 0))
     end
   end
 end method compute-dialog-position;
@@ -123,7 +123,7 @@ end method compute-dialog-position;
 /// Piggy-back on the default dialogs from gadget-panes for now
 
 define method top-level-layout-child
-    (framem :: <gtk-frame-manager>, 
+    (framem :: <gtk-frame-manager>,
      dialog :: <dialog-frame>,
      layout :: false-or(<sheet>))
  => (layout :: false-or(<sheet>))
@@ -138,20 +138,20 @@ end method update-frame-layout;
 define method make-exit-button
     (framem :: <gtk-frame-manager>, dialog :: <dialog-frame>,
      callback :: false-or(<callback-type>), label :: <string>,
-     #rest initargs, 
+     #rest initargs,
      #key enabled? = (callback ~= #f), #all-keys)
  => (button :: false-or(<push-button>))
   when (callback)
     with-frame-manager (framem)
       apply(make, <push-button>,
-	    activate-callback: method (button)
-				 let dialog = sheet-frame(button);
-				 execute-callback(dialog, callback, dialog)
-			       end,
-	    label: label,
-	    enabled?: enabled?,
-	    min-width: $exit-button-min-width,
-	    initargs)
+            activate-callback: method (button)
+                                 let dialog = sheet-frame(button);
+                                 execute-callback(dialog, callback, dialog)
+                               end,
+            label: label,
+            enabled?: enabled?,
+            min-width: $exit-button-min-width,
+            initargs)
     end
   end
 end method make-exit-button;
@@ -201,13 +201,13 @@ define sealed method do-exit-dialog
   end;
   frame-mapped?(dialog) := #f;
   distribute-event(port(dialog),
-		   make(<dialog-exit-event>,
-			frame: dialog,
-			destroy-frame?: destroy?))
+                   make(<dialog-exit-event>,
+                        frame: dialog,
+                        destroy-frame?: destroy?))
 end method do-exit-dialog;
 
 // Generate an "error" exit event
-define sealed method do-cancel-dialog 
+define sealed method do-cancel-dialog
     (framem :: <gtk-frame-manager>, dialog :: <dialog-frame>, #key destroy? = #t) => ()
   let owner  = frame-owner(dialog);
   let modal? = (frame-mode(dialog) == #"modal");
@@ -216,9 +216,9 @@ define sealed method do-cancel-dialog
   end;
   frame-mapped?(dialog) := #f;
   distribute-event(port(dialog),
-		   make(<dialog-cancel-event>,
-			frame: dialog,
-			destroy-frame?: destroy?))
+                   make(<dialog-cancel-event>,
+                        frame: dialog,
+                        destroy-frame?: destroy?))
 end method do-cancel-dialog;
 
 
@@ -245,21 +245,21 @@ define sealed method do-notify-user
   ignore(exit-boxes);
   let (x, y)
     = begin
-	let (x, y) = sheet-size(owner);
-	let (x, y) = values(floor/(x, 2), floor/(y, 2));
-	with-device-coordinates (sheet-device-transform(owner), x, y)
-	  values(x, y)
-	end
+        let (x, y) = sheet-size(owner);
+        let (x, y) = values(floor/(x, 2), floor/(y, 2));
+        with-device-coordinates (sheet-device-transform(owner), x, y)
+          values(x, y)
+        end
       end;
   let title
     = title | select (style)
-		#"information"   => "Note";
-		#"question"      => "Note";
-		#"warning"       => "Warning";
-		#"error"         => "Error";
-		#"serious-error" => "Error";
-		#"fatal-error"   => "Error";
-	      end;
+                #"information"   => "Note";
+                #"question"      => "Note";
+                #"warning"       => "Warning";
+                #"error"         => "Error";
+                #"serious-error" => "Error";
+                #"fatal-error"   => "Error";
+              end;
   let exit-style
     = exit-style | if (style == #"question") #"yes-no" else #"ok" end;
   local
@@ -286,7 +286,7 @@ define sealed method do-notify-user
                  no-callback: rcurry(notify-callback, #"no"),
                  exit-callback: #f);
       end;
-        
+
   let dialog = apply(make,
                      <notification-dialog>,
                      x: x, y: y,
@@ -333,12 +333,12 @@ end method make-exit-buttons;
 
 /// Choose file
 define sealed method do-choose-file
-    (framem :: <gtk-frame-manager>, owner :: <sheet>, 
+    (framem :: <gtk-frame-manager>, owner :: <sheet>,
      direction :: one-of(#"input", #"output"),
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  if-exists, if-does-not-exist = #"ask",
-	  default :: false-or(<string>), default-type = $unsupplied,
-	  filters, default-filter, selection-mode,
+          if-exists, if-does-not-exist = #"ask",
+          default :: false-or(<string>), default-type = $unsupplied,
+          filters, default-filter, selection-mode,
      #all-keys)
  => (locator :: false-or(<string>), filter :: false-or(<integer>))
   ignore(if-exists);
@@ -394,22 +394,22 @@ define function gtk-directory-and-pattern
   else
     let type
       = select (type by instance?)
-	  <string> =>
-	    type;
-	  <symbol> =>
-	    gethash($file-type-table, type) | as-lowercase(as(<string>, type));
-	  otherwise =>
-	    "";
-	end;
+          <string> =>
+            type;
+          <symbol> =>
+            gethash($file-type-table, type) | as-lowercase(as(<string>, type));
+          otherwise =>
+            "";
+        end;
     //---*** USE PROPER LOCATORS FUNCTIONS
     let default    = as(<locator>, default);
     let directory  = DIRECTORY-NAMESTRING(DEFAULT);
     let wild-name? = (LOCATOR-NAME(DEFAULT) = "*");
     let wild-type? = (LOCATOR-TYPE(DEFAULT) = "*");
     let pattern    = when (wild-name? ~== wild-type?)
-		       as(<string>, make-locator(name: LOCATOR-NAME(DEFAULT),
-						 type: LOCATOR-type(DEFAULT)))
-		     end;
+                       as(<string>, make-locator(name: LOCATOR-NAME(DEFAULT),
+                                                 type: LOCATOR-type(DEFAULT)))
+                     end;
     values(directory, pattern)
   end
 end function gtk-directory-and-pattern;
@@ -428,7 +428,7 @@ define table $file-type-table :: <table>
       #"resource"    => "res",
       #"library"     => "lib" };
 
- 
+
 /// Choose directory
 
 define variable $Shell-IMalloc :: false-or(<C-Interface>) = #f;
@@ -446,7 +446,7 @@ end function get-shell-IMalloc;
 define sealed method do-choose-directory
     (framem :: <gtk-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  default :: false-or(<string>),
+          default :: false-or(<string>),
      #all-keys)
  => (locator :: false-or(<string>))
   let locator = #f;
@@ -454,8 +454,8 @@ define sealed method do-choose-directory
   with-gdk-lock
     let dialog
       = gtk-file-chooser-dialog-new (title | "Choose Directory", parent-widget,
-				     $GTK-FILE-CHOOSER-ACTION-SELECT-FOLDER,
-				     null-pointer(<gchar*>));
+                                     $GTK-FILE-CHOOSER-ACTION-SELECT-FOLDER,
+                                     null-pointer(<gchar*>));
     gtk-dialog-add-button(dialog, $GTK-STOCK-CANCEL, $GTK-RESPONSE-CANCEL);
     gtk-dialog-add-button(dialog, $GTK-STOCK-OPEN, $GTK-RESPONSE-ACCEPT);
     if (default)
@@ -474,12 +474,12 @@ define sealed method do-choose-directory
 end method do-choose-directory;
 /*
 // This callback allows the dialog to open with its selection set to
-// the 'default:' passed in to 'do-choose-directory' 
+// the 'default:' passed in to 'do-choose-directory'
 define sealed method browse-for-folder-function
-    (handle :: <HWND>,		// window handle
-     message :: <message-type>,	// type of message
-     lParam  :: <wparam-type>,	// additional information
-     lpData  :: <lparam-type>)	// additional information
+    (handle :: <HWND>,                // window handle
+     message :: <message-type>,        // type of message
+     lParam  :: <wparam-type>,        // additional information
+     lpData  :: <lparam-type>)        // additional information
  => (result :: <lresult-type>)
   ignore(lParam);
   when (message = $BFFM-INITIALIZED)
@@ -490,7 +490,7 @@ end method browse-for-folder-function;
 
 define callback browse-for-folder :: <LPBFFCALLBACK> = browse-for-folder-function;
 
- 
+
 /// Color chooser
 
 define variable *custom-colors* :: <LPCOLORREF>
@@ -499,7 +499,7 @@ define variable *custom-colors* :: <LPCOLORREF>
 define sealed method do-choose-color
     (framem :: <gtk-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  default :: false-or(<color>),
+          default :: false-or(<color>),
      #all-keys)
  => (color :: false-or(<color>));
   let handle = dialog-owner-handle(owner);
@@ -508,10 +508,10 @@ define sealed method do-choose-color
     color.hwndOwner-value    := handle;
     color.hInstance-value    := application-instance-handle();
     color.rgbResult-value    := if (default) %color->native-color(default)
-				else $native-black end;
+                                else $native-black end;
     color.Flags-value        := %logior($CC-ANYCOLOR,
-					if (default) $CC-RGBINIT else 0 end,
-					$CC-SHOWHELP);
+                                        if (default) $CC-RGBINIT else 0 end,
+                                        $CC-SHOWHELP);
     color.lpCustColors-value := *custom-colors*;
     if (ChooseColor(color))
       let colorref = color.rgbResult-value;
@@ -528,7 +528,7 @@ end method do-choose-color;
 define sealed method do-choose-text-style
     (framem :: <gtk-frame-manager>, owner :: <sheet>,
      #key title :: false-or(<string>), documentation :: false-or(<string>), exit-boxes,
-	  default :: false-or(<text-style>),
+          default :: false-or(<text-style>),
      #all-keys)
  => (text-style :: false-or(<text-style>));
   let _port = port(framem);
@@ -542,14 +542,14 @@ define sealed method do-choose-text-style
       cf.hDC-value         := hDC;
       cf.lpLogFont-value   := logfont;
       cf.Flags-value       := %logior($CF-SHOWHELP,
-				      $CF-FORCEFONTEXIST,
-				      $CF-SCREENFONTS,
-				      $CF-EFFECTS);
+                                      $CF-FORCEFONTEXIST,
+                                      $CF-SCREENFONTS,
+                                      $CF-EFFECTS);
       cf.lpszStyle-value   := $NULL-string;
       if (ChooseFont(cf))
-	make-text-style-from-font(_port, logfont)
+        make-text-style-from-font(_port, logfont)
       else
-	ensure-no-dialog-error("ChooseFont")
+        ensure-no-dialog-error("ChooseFont")
       end
     end
   end

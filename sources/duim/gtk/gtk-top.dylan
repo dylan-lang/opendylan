@@ -6,11 +6,11 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// Useful constants 
+/// Useful constants
 
 //---*** This should really be computed
 define constant $top-level-border     = 0;
-define constant $top-level-y-spacing  = 3;		// in pixels
+define constant $top-level-y-spacing  = 3;                // in pixels
 define constant $default-window-title = "DUIM Window";
 
 
@@ -47,7 +47,7 @@ define method set-mirror-parent
                       mirror-widget(child))
   end
 end method set-mirror-parent;
-    
+
 define method move-mirror
     (parent :: <top-level-mirror>, child :: <widget-mirror>,
      x :: <integer>, y :: <integer>)
@@ -79,8 +79,8 @@ define function gesture-modifiers
  => (shift? :: <boolean>, control? :: <boolean>, alt? :: <boolean>)
   let modifier-state = gesture-modifier-state(gesture);
   values(~zero?(logand(modifier-state, $shift-key)),
-	 ~zero?(logand(modifier-state, $control-key)),
-	 ~zero?(logand(modifier-state, $alt-key)))
+         ~zero?(logand(modifier-state, $control-key)),
+         ~zero?(logand(modifier-state, $alt-key)))
 end function gesture-modifiers;
 
 //---*** WHAT ABOUT ALL THIS ACCELERATOR STUFF?
@@ -154,13 +154,13 @@ define sealed method add-gadget-label-postfix
   if (gesture)
     let keysym = gesture-keysym(gesture);
     let (shift?, control?, alt?) = gesture-modifiers(gesture);
-    concatenate-as(<string>, 
-		   label,
-		   "\t",
-		   if (shift?)   "Shift+" else "" end,
-		   if (control?) "Ctrl+"  else "" end,
-		   if (alt?)     "Alt+"   else "" end,
-		   keysym->key-name(keysym))
+    concatenate-as(<string>,
+                   label,
+                   "\t",
+                   if (shift?)   "Shift+" else "" end,
+                   if (control?) "Ctrl+"  else "" end,
+                   if (alt?)     "Alt+"   else "" end,
+                   keysym->key-name(keysym))
   else
     label
   end
@@ -171,14 +171,14 @@ define table $keysym->key-name :: <object-table>
   = { #"return"     => "Enter",
       #"newline"    => "Shift+Enter",
       #"linefeed"   => "Line Feed",
-      #"up"	    => "Up Arrow",
-      #"down"	    => "Down Arrow",
-      #"left"	    => "Left Arrow",
-      #"right"	    => "Right Arrow",
-      #"prior"	    => "Page Up",
-      #"next"	    => "Page Down",
-      #"lwin"	    => "Left Windows",
-      #"rwin"	    => "Right Windows",
+      #"up"            => "Up Arrow",
+      #"down"            => "Down Arrow",
+      #"left"            => "Left Arrow",
+      #"right"            => "Right Arrow",
+      #"prior"            => "Page Up",
+      #"next"            => "Page Down",
+      #"lwin"            => "Left Windows",
+      #"rwin"            => "Right Windows",
       #"numpad0"    => "Num 0",
       #"numpad1"    => "Num 1",
       #"numpad2"    => "Num 2",
@@ -221,43 +221,43 @@ end method accelerator-table;
 define method make-accelerator-table
     (sheet :: <top-level-sheet>) => (accelerators :: <HACCEL>)
   local method fill-accelerator-entry
-	    (gadget :: <accelerator-mixin>, accelerator :: <accelerator>,
-	     entry :: <LPACCEL>) => ()
-	  let keysym    = gesture-keysym(accelerator);
-	  let modifiers = gesture-modifier-state(accelerator);
-	  let char      = gesture-character(accelerator);
-	  let (vkey :: <integer>, fVirt :: <integer>)
-	    = case
-		char
-		& zero?(logand(modifiers, logior($control-key, $meta-key)))
-		& character->virtual-key(char) =>
-		  values(character->virtual-key(char), 0);
-		keysym->virtual-key(keysym) =>
-		  values(keysym->virtual-key(keysym),
-			 logior($ACCEL-FVIRTKEY,
-				if (zero?(logand(modifiers, $shift-key)))   0 else $ACCEL-FSHIFT end,
-				if (zero?(logand(modifiers, $control-key))) 0 else $ACCEL-FCONTROL end,
-				if (zero?(logand(modifiers, $alt-key)))     0 else $ACCEL-FALT end));
-		otherwise =>
-		  error("Can't decode the gesture with keysym %=, modifiers #o%o",
-			keysym, modifiers);
-	      end;
-	  let cmd :: <integer>
-	    = sheet-resource-id(gadget) | gadget->id(gadget);
-	  entry.fVirt-value := fVirt;
-	  entry.key-value   := vkey;
-	  entry.cmd-value   := cmd;
-	end method;
+            (gadget :: <accelerator-mixin>, accelerator :: <accelerator>,
+             entry :: <LPACCEL>) => ()
+          let keysym    = gesture-keysym(accelerator);
+          let modifiers = gesture-modifier-state(accelerator);
+          let char      = gesture-character(accelerator);
+          let (vkey :: <integer>, fVirt :: <integer>)
+            = case
+                char
+                & zero?(logand(modifiers, logior($control-key, $meta-key)))
+                & character->virtual-key(char) =>
+                  values(character->virtual-key(char), 0);
+                keysym->virtual-key(keysym) =>
+                  values(keysym->virtual-key(keysym),
+                         logior($ACCEL-FVIRTKEY,
+                                if (zero?(logand(modifiers, $shift-key)))   0 else $ACCEL-FSHIFT end,
+                                if (zero?(logand(modifiers, $control-key))) 0 else $ACCEL-FCONTROL end,
+                                if (zero?(logand(modifiers, $alt-key)))     0 else $ACCEL-FALT end));
+                otherwise =>
+                  error("Can't decode the gesture with keysym %=, modifiers #o%o",
+                        keysym, modifiers);
+              end;
+          let cmd :: <integer>
+            = sheet-resource-id(gadget) | gadget->id(gadget);
+          entry.fVirt-value := fVirt;
+          entry.key-value   := vkey;
+          entry.cmd-value   := cmd;
+        end method;
   let accelerators   = frame-accelerators(sheet-frame(sheet));
   let n :: <integer> = size(accelerators);
   if (n > 0)
     with-stack-structure (entries :: <LPACCEL>, element-count: n)
       for (i :: <integer> from 0 below n)
-	let entry  = accelerators[i];
-	let gadget = entry[0];
-	let accel  = entry[1];
-	let entry  = pointer-value-address(entries, index: i);
-	fill-accelerator-entry(gadget, accel, entry)
+        let entry  = accelerators[i];
+        let gadget = entry[0];
+        let accel  = entry[1];
+        let entry  = pointer-value-address(entries, index: i);
+        fill-accelerator-entry(gadget, accel, entry)
       end;
       check-result("CreateAcceleratorTable", CreateAcceleratorTable(entries, n))
     end
@@ -403,7 +403,7 @@ define sealed method unmap-mirror
   end
 end method unmap-mirror;
 
-define sealed method raise-mirror 
+define sealed method raise-mirror
     (_port :: <gtk-port>, sheet :: <gtk-top-level-sheet-mixin>,
      mirror :: <top-level-mirror>,
      #key activate? :: <boolean> = #f)
@@ -415,7 +415,7 @@ define sealed method raise-mirror
 end method raise-mirror;
 
 define sealed method lower-mirror
-    (_port :: <gtk-port>, sheet :: <gtk-top-level-sheet-mixin>, 
+    (_port :: <gtk-port>, sheet :: <gtk-top-level-sheet-mixin>,
      mirror :: <top-level-mirror>)
  => ()
   ignoring("lower-mirror")
@@ -434,7 +434,7 @@ define sealed method handle-gtk-delete-event
   #t
 end method handle-gtk-delete-event;
 
-define sealed method destroy-mirror 
+define sealed method destroy-mirror
     (_port :: <gtk-port>,
      sheet :: <gtk-top-level-sheet-mixin>, mirror :: <top-level-mirror>)
  => ()
@@ -449,24 +449,24 @@ end method destroy-mirror;
 
 /// Top level layout
 
-define class <top-level-layout> 
-    (<mirrored-sheet-mixin>, 
+define class <top-level-layout>
+    (<mirrored-sheet-mixin>,
      <single-child-wrapping-pane>)
 end class <top-level-layout>;
 
 define method frame-wrapper
-    (framem :: <gtk-frame-manager>, 
+    (framem :: <gtk-frame-manager>,
      frame :: <simple-frame>,
      layout :: false-or(<sheet>))
  => (wrapper :: false-or(<top-level-layout>))
   with-frame-manager (framem)
     make(<top-level-layout>,
-	 child: top-level-layout-child(framem, frame, layout))
+         child: top-level-layout-child(framem, frame, layout))
   end
 end method frame-wrapper;
 
 define method top-level-layout-child
-    (framem :: <gtk-frame-manager>, 
+    (framem :: <gtk-frame-manager>,
      frame :: <simple-frame>,
      layout :: false-or(<sheet>))
  => (layout :: false-or(<column-layout>))
@@ -478,15 +478,15 @@ define method top-level-layout-child
       = make-children(tool-bar & tool-bar-decoration(tool-bar), layout);
     let indented-children-layout
       = unless (empty?(indented-children))
-	  with-spacing (spacing: 2)
-	    make(<column-layout>,
-		 children: indented-children,
-		 y-spacing: $top-level-y-spacing)
+          with-spacing (spacing: 2)
+            make(<column-layout>,
+                 children: indented-children,
+                 y-spacing: $top-level-y-spacing)
           end
         end;
     make(<column-layout>,
-	 children: make-children(menu-bar, indented-children-layout, status-bar),
-	 y-spacing: $top-level-y-spacing)
+         children: make-children(menu-bar, indented-children-layout, status-bar),
+         y-spacing: $top-level-y-spacing)
   end
 end method top-level-layout-child;
 
@@ -536,7 +536,7 @@ define sealed method handle-move
   unless (x = old-x & y = old-y)
     let frame = sheet-frame(sheet);
     duim-debug-message("Sheet %= moved to %=, %= (from %=, %=)",
-		       sheet, x, y, old-x, old-y);
+                       sheet, x, y, old-x, old-y);
     set-sheet-position(sheet, x, y)
   end;
   #t

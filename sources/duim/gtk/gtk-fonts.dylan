@@ -35,7 +35,7 @@ end class <font-name-private-font-registry>;
 define method condition-to-string
     (condition :: <font-name-private-font-registry>) => (string :: <string>)
   format-to-string("Font name %s is from a private registry",
-		   condition.%font-name)
+                   condition.%font-name)
 end method condition-to-string;
 
 define sealed class <font-name-numeric-field-non-numeric> (<font-name-parse-error>)
@@ -47,7 +47,7 @@ end class <font-name-numeric-field-non-numeric>;
 define method condition-to-string
     (condition :: <font-name-numeric-field-non-numeric>) => (string :: <string>)
   format-to-string("Font name %s should have had an integer in %d..%d while looking for %s)",
-		   condition.%font-name, condition.%start, condition.%end, condition.%token)
+                   condition.%font-name, condition.%start, condition.%end, condition.%token)
 end method condition-to-string;
 
 
@@ -62,19 +62,19 @@ define constant $gtk-font-families :: <list>
 //--- We should compute the numbers based on either device characteristics
 //--- or some user option
 define constant $gtk-logical-sizes :: <simple-object-vector>
-    = #[#[#"normal",     10],	// put most common one first for efficiency
-	#[#"small",       8],
-	#[#"large",      12],
-	#[#"very-small",  6],
-	#[#"very-large", 14],
-	#[#"tiny",        5],
-	#[#"huge",       18]];
+    = #[#[#"normal",     10],        // put most common one first for efficiency
+        #[#"small",       8],
+        #[#"large",      12],
+        #[#"very-small",  6],
+        #[#"very-large", 14],
+        #[#"tiny",        5],
+        #[#"huge",       18]];
 
 define method install-default-text-style-mappings
     (_port :: <gtk-port>) => ()
   ignoring("install-default-text-style-mappings");
 end method install-default-text-style-mappings;
-      
+
 define method can-install-entire-family?
     (_port :: <gtk-port>, duim-family, x-family :: <byte-string>)
  => (can-install? :: <boolean>)
@@ -116,14 +116,14 @@ define sealed method do-text-style-mapping
                          attributes,
                          size);
     duim-debug-message("do-text-style-mapping: %s", font-name);
-    let font-description = with-gdk-lock pango-font-description-from-string(font-name) end; 
+    let font-description = with-gdk-lock pango-font-description-from-string(font-name) end;
     let font = make(<gtk-font>, name: font-name, description: font-description);
     table[text-style] := font;
     font
   end;
 end method do-text-style-mapping;
 
-//--- This approach seems unnecessarily clumsy; we might as well just have 
+//--- This approach seems unnecessarily clumsy; we might as well just have
 //--- 'do-text-style-mapping' do the table lookup directly itself.  We shouldn't
 //--- need to cons up a whole new text-style object just to map the size.
 define sealed method standardize-text-style
@@ -131,7 +131,7 @@ define sealed method standardize-text-style
      #rest keys, #key character-set)
  => (text-style :: <text-style>)
   apply(standardize-text-style-size,
-	_port, text-style, $gtk-logical-sizes, keys)
+        _port, text-style, $gtk-logical-sizes, keys)
 end method standardize-text-style;
 
 
@@ -251,16 +251,16 @@ define sealed method text-size
     = font-metrics(text-style, _port);
   ignore(width, height);
   local method measure-string
-	    (font :: <gtk-font>, string :: <string>,
-	     _start :: <integer>, _end :: <integer>)
-	 => (x1 :: <integer>, y1 :: <integer>, 
-	     x2 :: <integer>, y2 :: <integer>)
+            (font :: <gtk-font>, string :: <string>,
+             _start :: <integer>, _end :: <integer>)
+         => (x1 :: <integer>, y1 :: <integer>,
+             x2 :: <integer>, y2 :: <integer>)
           with-gdk-lock
             let layout = pango-layout-new(gtk-get-pango-context-from-port(_port));
             pango-layout-set-font-description(layout, font.%font-description);
             pango-layout-set-text(layout,
                                   copy-sequence(string, start: _start, end: _end),
-                                  _end - _start); 
+                                  _end - _start);
             with-stack-structure (rectangle :: <PangoRectangle>)
               pango-layout-get-pixel-extents(layout, null-pointer(<PangoRectangle>), rectangle);
               values(rectangle.pango-rectangle-x, rectangle.pango-rectangle-y,
@@ -268,31 +268,31 @@ define sealed method text-size
                      rectangle.pango-rectangle-y + rectangle.pango-rectangle-height)
             end;
           end;
-	end method measure-string;
+        end method measure-string;
   case
     do-tabs? & do-newlines? =>
-      next-method();		// the slow case...
+      next-method();                // the slow case...
     do-tabs? =>
       let tab-width :: <integer> = width * 8;
       let last-x    :: <integer> = 0;
       let last-y    :: <integer> = 0;
       let s         :: <integer> = _start;
       block (return)
-	while (#t)
-	  let e = position(string, '\t', start: s, end: _end) | _end;
-	  let (x1, y1, x2, y2) = measure-string(font, string, s, e);
-	  ignore(x1);
-	  if (e = _end)
-	    last-x := last-x + x2
-	  else
-	    last-x := floor/(last-x + x2 + tab-width, tab-width) * tab-width;
-	  end;
-	  max!(last-y, y2 - y1);
-	  s := min(e + 1, _end);
-	  when (e = _end)
-	    return(last-x, last-y, last-x, last-y, ascent)
-	  end
-	end
+        while (#t)
+          let e = position(string, '\t', start: s, end: _end) | _end;
+          let (x1, y1, x2, y2) = measure-string(font, string, s, e);
+          ignore(x1);
+          if (e = _end)
+            last-x := last-x + x2
+          else
+            last-x := floor/(last-x + x2 + tab-width, tab-width) * tab-width;
+          end;
+          max!(last-y, y2 - y1);
+          s := min(e + 1, _end);
+          when (e = _end)
+            return(last-x, last-y, last-x, last-y, ascent)
+          end
+        end
       end;
     do-newlines? =>
       let largest-x :: <integer> = 0;
@@ -301,19 +301,19 @@ define sealed method text-size
       let last-y    :: <integer> = 0;
       let s         :: <integer> = _start;
       block (return)
-	while (#t)
-	  let e = position(string, '\n', start: s, end: _end) | _end;
-	  let (x1, y1, x2, y2) = measure-string(font, string, s, e);
-	  ignore(x1);
-	  max!(largest-x, x2);
-	  last-x := x2;
-	  inc!(largest-y, y2 - y1);
-	  last-y := y2;
-	  s := min(e + 1, _end);
-	  when (e = _end)
-	    return(largest-x, largest-y, last-x, last-y, ascent)
-	  end
-	end
+        while (#t)
+          let e = position(string, '\n', start: s, end: _end) | _end;
+          let (x1, y1, x2, y2) = measure-string(font, string, s, e);
+          ignore(x1);
+          max!(largest-x, x2);
+          last-x := x2;
+          inc!(largest-y, y2 - y1);
+          last-y := y2;
+          s := min(e + 1, _end);
+          when (e = _end)
+            return(largest-x, largest-y, last-x, last-y, ascent)
+          end
+        end
       end;
     otherwise =>
       let (x1, y1, x2, y2) = measure-string(font, string, _start, _end);

@@ -13,11 +13,11 @@ define constant <native-color> = <integer>;
 
 define sealed class <gtk-medium> (<basic-medium>)
   sealed slot %ink-cache :: <object-table> = make(<table>);
-  sealed slot %palette = #f;		//---*** MAYBE JUST USE THE FRAME'S PALETTE?
+  sealed slot %palette = #f;                //---*** MAYBE JUST USE THE FRAME'S PALETTE?
   sealed slot %foreground-color :: false-or(<GdkColor>) = #f;
   sealed slot %background-color :: false-or(<GdkColor>) = #f;
   // Cached clipping region
-  sealed slot %clip-mask = #f;		// #f, #"none", or an X region
+  sealed slot %clip-mask = #f;                // #f, #"none", or an X region
   sealed slot %context = #f;
 end class <gtk-medium>;
 
@@ -47,10 +47,10 @@ define sealed method do-attach-medium
   let _port  = port(sheet);
   let mirror = sheet-mirror(sheet);
   assert(mirror,
-	 "Unexpected failure: no mirror when attaching medium for %=",
-	 sheet);
+         "Unexpected failure: no mirror when attaching medium for %=",
+         sheet);
   duim-debug-message("Attaching medium to %= (medium-sheet %=)",
-		sheet, medium-sheet(medium));
+                sheet, medium-sheet(medium));
   let widget = mirror.mirror-widget;
 // FIXME
 //  let drawable = widget.gtk-widget-get-window;
@@ -65,15 +65,15 @@ define sealed method do-attach-medium
   medium.%palette := palette;
   medium.%foreground-color
     := case
-	 fg => allocate-color(fg, palette);
-	   //---*** Fill this in!
-	 otherwise => error("Can't get default foreground pixel!");
+         fg => allocate-color(fg, palette);
+           //---*** Fill this in!
+         otherwise => error("Can't get default foreground pixel!");
        end;
   medium.%background-color
     := case
-	 fg => allocate-color(fg, palette);
-	   //---*** Fill this in!
-	 otherwise => error("Can't get default background pixel!");
+         fg => allocate-color(fg, palette);
+           //---*** Fill this in!
+         otherwise => error("Can't get default background pixel!");
        end;
   */
 end method do-attach-medium;
@@ -96,7 +96,7 @@ end method deallocate-medium;
 define sealed method medium-foreground-setter
     (foreground :: <color>, medium :: <gtk-medium>)
  => (foreground :: <color>)
-  next-method();	// also sets 'medium-drawing-state-cache' to 0
+  next-method();        // also sets 'medium-drawing-state-cache' to 0
   not-yet-implemented("medium-foreground-setter");
   /*---*** Colors not implemented yet!
   clear-ink-cache(medium);
@@ -110,7 +110,7 @@ end method medium-foreground-setter;
 define sealed method medium-background-setter
     (background :: <color>, medium :: <gtk-medium>)
  => (background :: <color>)
-  next-method();	// also sets 'medium-drawing-state-cache' to 0
+  next-method();        // also sets 'medium-drawing-state-cache' to 0
   not-yet-implemented("medium-foreground-setter");
   /*---*** Colors not implemented yet!
   clear-ink-cache(medium);
@@ -194,7 +194,7 @@ define sealed method update-drawing-state
   let new-cache :: <integer> = 0;
   when (old-cache ~= $medium-fully-cached)
     // Establish a brush, unless it's already cached
-    when (zero?(logand(old-cache, $medium-brush-cached)))  
+    when (zero?(logand(old-cache, $medium-brush-cached)))
       let brush = brush | medium-brush(medium);
       establish-brush(medium, brush, gcontext);
       new-cache := logior(new-cache, $medium-brush-cached)
@@ -215,10 +215,10 @@ define sealed method update-drawing-state
       ignoring("clip-mask in update-drawing-state");
       let mask = compute-clip-mask(medium);
       if (mask == #"none")
-	//---*** Clear the mask!
+        //---*** Clear the mask!
       else
-	let (x, y, width, height) = values(mask[0], mask[1], mask[2], mask[3]);
-	//---*** Set the mask!
+        let (x, y, width, height) = values(mask[0], mask[1], mask[2], mask[3]);
+        //---*** Set the mask!
       end;
       new-cache := logior(new-cache, $medium-region-cached)
     end;
@@ -237,7 +237,7 @@ begin
   $function-map[$boole-clr]   := $GDK-CLEAR;
   $function-map[$boole-set]   := $GDK-SET;
   $function-map[$boole-1]     := $GDK-COPY;
-  $function-map[$boole-2]     := $GDK-NOOP; 
+  $function-map[$boole-2]     := $GDK-NOOP;
   $function-map[$boole-c1]    := $GDK-COPY-INVERT;
   $function-map[$boole-c2]    := $GDK-INVERT;
   $function-map[$boole-and]   := $GDK-AND;
@@ -295,9 +295,9 @@ define sealed method establish-brush
 end method establish-brush;
 
 
-define sealed method establish-pen 
+define sealed method establish-pen
     (medium :: <gtk-medium>, pen :: <standard-pen>, gcontext /* :: <GdkGC> */) => ()
-  let width 
+  let width
     = begin
         let width = pen-width(pen);
         when (pen-units(pen) == #"point")
@@ -357,21 +357,21 @@ define generic decode-ink
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>));
 
-define sealed method decode-ink 
+define sealed method decode-ink
     (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, brush :: <foreground>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   decode-ink(medium, gcontext, medium-foreground(medium))
 end method decode-ink;
 
-define sealed method decode-ink 
+define sealed method decode-ink
     (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, brush :: <background>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
   decode-ink(medium, gcontext, medium-background(medium))
 end method decode-ink;
 
-define sealed method decode-ink 
+define sealed method decode-ink
     (medium :: <gtk-medium>, gcontext /* :: <GdkGC> */, color :: <color>)
  => (color :: <native-color>, fill-style, operation :: <integer>,
      image :: false-or(<image>))
@@ -396,29 +396,29 @@ define sealed method decode-ink
   let bitmap :: false-or(<image>)
     = gethash(cache, pattern)
       | begin
-	  let (array, colors) = decode-pattern(pattern);
-	  let width   :: <integer> = image-width(pattern);
-	  let height  :: <integer> = image-height(pattern);
-	  let ncolors :: <integer> = size(colors);
-	  //---*** Should we create a DIB here or what?
-	  let pixels   :: <simple-object-vector> = make(<simple-vector>, size: ncolors);
-	  let pixarray :: <array> = make(<array>, dimensions: list(width, height));
-	  without-bounds-checks
-	    for (n :: <integer> from 0 below ncolors)
-	      let pixel = decode-ink(medium, gcontext, colors[n]);
-	      pixels[n] := pixel
-	    end;
-	    for (y :: <integer> from 0 below height)
-	      for (x :: <integer> from 0 below width)
-		pixarray[y,x] := pixels[array[y,x]]
-	      end
-	    end
-	  end;
-	  //---*** Fill in the DIB
-	  let bitmap = list(pixels, pixarray);
-	  gethash(cache, pattern) := bitmap;
-	  bitmap
-	end;
+          let (array, colors) = decode-pattern(pattern);
+          let width   :: <integer> = image-width(pattern);
+          let height  :: <integer> = image-height(pattern);
+          let ncolors :: <integer> = size(colors);
+          //---*** Should we create a DIB here or what?
+          let pixels   :: <simple-object-vector> = make(<simple-vector>, size: ncolors);
+          let pixarray :: <array> = make(<array>, dimensions: list(width, height));
+          without-bounds-checks
+            for (n :: <integer> from 0 below ncolors)
+              let pixel = decode-ink(medium, gcontext, colors[n]);
+              pixels[n] := pixel
+            end;
+            for (y :: <integer> from 0 below height)
+              for (x :: <integer> from 0 below width)
+                pixarray[y,x] := pixels[array[y,x]]
+              end
+            end
+          end;
+          //---*** Fill in the DIB
+          let bitmap = list(pixels, pixarray);
+          gethash(cache, pattern) := bitmap;
+          bitmap
+        end;
   values($native-white, $GDK-SOLID, $boole-1, bitmap)
   */
 end method decode-ink;
@@ -437,7 +437,7 @@ define sealed method decode-ink
   let (color :: <native-color>, fill-style, operation :: <integer>, pattern)
     = decode-ink
         (medium, gcontext,
-	 brush-tile(brush) | brush-stipple(brush) | brush-foreground(brush));
+         brush-tile(brush) | brush-stipple(brush) | brush-foreground(brush));
   // ignore(operation);
   values(color, fill-style, brush-mode(brush), pattern)
 end method decode-ink;
@@ -458,11 +458,11 @@ define sealed method compute-clip-mask
     unless (mregion == $everywhere)
       let (mleft, mtop, mright, mbottom) = box-edges(mregion);
       let (mleft, mtop, mright, mbottom)
-	= transform-box(sheet-device-transform(sheet), 
-			mleft, mtop, mright, mbottom);
+        = transform-box(sheet-device-transform(sheet),
+                        mleft, mtop, mright, mbottom);
       let (v, left, top, right, bottom)
-	= ltrb-intersects-ltrb?(sleft, stop, sright, sbottom,
-				mleft, mtop, mright, mbottom);
+        = ltrb-intersects-ltrb?(sleft, stop, sright, sbottom,
+                                mleft, mtop, mright, mbottom);
       sleft := left;
       stop  := top;
       sright  := right;

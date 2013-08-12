@@ -71,10 +71,10 @@ define sealed method display-help
     let top-sheet = top-level-sheet(frame);
     when (top-sheet)
       do-display-help(system,
-		      window-handle(top-sheet),
-		      help-path(system, command),
-		      help-id(system, command),
-		      help-data(system, command));
+                      window-handle(top-sheet),
+                      help-path(system, command),
+                      help-id(system, command),
+                      help-data(system, command));
     end;
   exception (condition :: <help-system-error>)
     notify-user(format-to-string("%s", condition), owner: frame);
@@ -104,8 +104,8 @@ define sealed method help-path
  => (path :: <string>)
   let path = as(<string>, help-source-locator(help-source(command)));
   let path-window = unless (any?(curry(\=, '>'), path))
-		      help-path-window(system, command, path)
-		    end unless;
+                      help-path-window(system, command, path)
+                    end unless;
   if (path-window)
     concatenate(path, ">", path-window)
   else
@@ -190,9 +190,9 @@ define sealed method help-data
   let region = help-window-region(command);
   let (left, top, right, bottom) = box-edges(region);
   let info = make(<LPHELPWININFO>,
-		  x:  left, y:  top, 
-		  dx: right - left, dy: bottom - top,
-		  wMax: $SW-SHOWNA);
+                  x:  left, y:  top,
+                  dx: right - left, dy: bottom - top,
+                  wMax: $SW-SHOWNA);
   info
 end method help-data;
 */

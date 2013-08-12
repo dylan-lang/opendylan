@@ -14,11 +14,11 @@ define sealed class <display-mirror> (<gtk-mirror>)
 end class <display-mirror>;
 
 // Mirror the display, set its region, and set its characteristics
-define sealed method initialize-display 
+define sealed method initialize-display
     (_port :: <gtk-port>, _display :: <standard-display>) => ()
   let mirror
     = make(<display-mirror>,
-	   sheet:  _display);
+           sheet:  _display);
   with-gdk-lock
     let mm-width     = gdk-screen-width-mm();
     let mm-height    = gdk-screen-height-mm();
@@ -30,10 +30,10 @@ define sealed method initialize-display
     display-mm-height(_display)    := mm-height;
     display-pixels-per-point(_display)
       := sqrt(  (pixel-width  / (mm-width  * $points-per-mm))
-  	    * (pixel-height / (mm-height * $points-per-mm)));
+              * (pixel-height / (mm-height * $points-per-mm)));
     sheet-region(_display)
       := set-box-edges(sheet-region(_display),
-  		     0, 0, pixel-width, pixel-height);
+                       0, 0, pixel-width, pixel-height);
     sheet-direct-mirror(_display) := mirror;
   end
 /*---*** Not doing palettes yet...
@@ -49,7 +49,7 @@ define method set-mirror-parent
  => ()
   ignoring("set-mirror-parent for <top-level-mirror>")
 end method set-mirror-parent;
-    
+
 define method move-mirror
     (parent :: <display-mirror>, child :: <top-level-mirror>,
      x :: <integer>, y :: <integer>)

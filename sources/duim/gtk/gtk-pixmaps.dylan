@@ -20,7 +20,7 @@ define sealed domain make (singleton(<gtk-pixmap>));
 define sealed domain initialize (<gtk-pixmap>);
 
 define sealed method do-make-pixmap
-    (_port :: <gtk-port>, medium :: <gtk-medium>, 
+    (_port :: <gtk-port>, medium :: <gtk-medium>,
      width :: <integer>, height :: <integer>)
  => (pixmap :: <gtk-pixmap>)
   make(<gtk-pixmap>, medium: medium, width: width, height: height)
@@ -48,7 +48,7 @@ define sealed method destroy-pixmap
   cairo-surface-destroy(x-pixmap)
 end method destroy-pixmap;
 
-define sealed method port 
+define sealed method port
     (pixmap :: <gtk-pixmap>) => (port :: <gtk-port>)
   port(pixmap.%medium)
 end method port;
@@ -60,7 +60,7 @@ end method pixmap-drawable;
 
 /* ---*** Implement me
 
-define sealed method image-width 
+define sealed method image-width
     (pixmap :: <gtk-pixmap>) => (width :: <integer>)
   let x-display = port(pixmap).%display;
   let x-pixmap  = pixmap.%pixmap;
@@ -70,7 +70,7 @@ define sealed method image-width
   width
 end method image-width;
 
-define sealed method image-height 
+define sealed method image-height
     (pixmap :: <gtk-pixmap>) => (height :: <integer>)
   let x-display = port(pixmap).%display;
   let x-pixmap  = pixmap.%pixmap;
@@ -80,7 +80,7 @@ define sealed method image-height
   height
 end method image-height;
 
-define sealed method image-depth 
+define sealed method image-depth
     (pixmap :: <gtk-pixmap>) => (depth :: <integer>)
   let x-display = port(pixmap).%display;
   let x-pixmap  = pixmap.%pixmap;
@@ -95,7 +95,7 @@ end method image-depth;
 /// GTK pixmap mediums
 
 define sealed class <gtk-pixmap-medium>
-    (<gtk-medium>, 
+    (<gtk-medium>,
      <basic-pixmap-medium>)
 end class <gtk-pixmap-medium>;
 
@@ -108,9 +108,9 @@ define sealed method make-pixmap-medium
   with-sheet-medium (medium = sheet)
     let pixmap = do-make-pixmap(_port, medium, width, height);
     let medium = make(<gtk-pixmap-medium>,
-		      port: _port,
-		      sheet: sheet,
-		      pixmap: pixmap);
+                      port: _port,
+                      sheet: sheet,
+                      pixmap: pixmap);
     medium-drawable(medium) := pixmap;
     medium
   end
@@ -130,7 +130,7 @@ define sealed method do-copy-area
     let transform = sheet-device-transform(sheet);
     with-device-coordinates (transform, from-x, from-y, to-x, to-y)
       with-device-distances (transform, width, height)
-	gdk-draw-drawable(drawable, gcontext, drawable, from-x, from-y,
+        gdk-draw-drawable(drawable, gcontext, drawable, from-x, from-y,
                           to-x, to-y, width, height)
       end
     end
@@ -143,10 +143,10 @@ define sealed method do-copy-area
     let to-transform   = sheet-device-transform(to-sheet);
     with-device-coordinates (from-transform, from-x, from-y)
       with-device-coordinates (to-transform, to-x, to-y)
-	with-device-distances (from-transform, width, height)
-	  gdk-draw-drawable(to-drawable, gcontext, from-drawable, from-x, from-y,
+        with-device-distances (from-transform, width, height)
+          gdk-draw-drawable(to-drawable, gcontext, from-drawable, from-x, from-y,
                             to-x, to-y, width, height)
-	end
+        end
       end
     end
   end
@@ -164,7 +164,7 @@ define sealed method do-copy-area
   with-device-coordinates (from-transform, from-x, from-y)
     with-device-distances (from-transform, width, height)
       gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
-			   from-drawable, from-x, from-y, width, height)
+                           from-drawable, from-x, from-y, width, height)
     end
   end
 end method do-copy-area;
@@ -180,7 +180,7 @@ define sealed method do-copy-area
   with-device-coordinates (from-transform, from-x, from-y)
     with-device-distances (from-transform, width, height)
       gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
-			   from-drawable, from-x, from-y, width, height)
+                           from-drawable, from-x, from-y, width, height)
     end
   end
 end method do-copy-area;
@@ -195,7 +195,7 @@ define sealed method do-copy-area
   let to-drawable   = medium-drawable(to-medium);
   with-device-coordinates (to-transform, to-x, to-y)
     gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
-			 from-drawable, from-x, from-y, width, height)
+                         from-drawable, from-x, from-y, width, height)
   end
 end method do-copy-area;
 
@@ -209,7 +209,7 @@ define sealed method do-copy-area
   let to-drawable   = medium-drawable(to-medium);
   with-device-coordinates (to-transform, to-x, to-y)
     gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
-			 from-drawable, from-x, from-y, width, height)
+                         from-drawable, from-x, from-y, width, height)
   end
 end method do-copy-area;
 
@@ -221,7 +221,7 @@ define sealed method do-copy-area
   let from-drawable = medium-drawable(from-medium);
   let to-drawable   = medium-drawable(to-medium);
   gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
-		       from-drawable, from-x, from-y, width, height)
+                       from-drawable, from-x, from-y, width, height)
 end method do-copy-area;
 
 define sealed method do-copy-area
@@ -232,6 +232,6 @@ define sealed method do-copy-area
   let from-drawable = from-pixmap.%pixmap;
   let to-drawable   = to-pixmap.%pixmap;
   gdk-window-copy-area(to-drawable, gcontext, to-x, to-y,
-		       from-drawable, from-x, from-y, width, height)
+                       from-drawable, from-x, from-y, width, height)
 end method do-copy-area;
 */
