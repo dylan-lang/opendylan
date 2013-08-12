@@ -169,24 +169,22 @@ end method synchronize-display;
 
 define inline method get-gcontext
     (medium :: <gtk-medium>)
- => (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
+ => (gcontext :: <CairoContext>)
   let drawable = medium-drawable(medium);
   unless (drawable)
     let widget = medium.medium-sheet.sheet-mirror.mirror-widget;
     drawable := widget.gtk-widget-get-window;
     medium-drawable(medium) := drawable;
   end;
-  let context := gdk-cairo-create(drawable);
-  values(drawable, context)
+  gdk-cairo-create(drawable)
 end method get-gcontext;
 
 // Note that the brush defaults to 'medium-brush(medium)',
 // but the pen and font default to #f in order to avoid unnecessary work
 define sealed method update-drawing-state
     (medium :: <gtk-medium>, #key brush, pen, font)
- => (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
-  let (drawable /* :: <CairoSurface> */, gcontext :: <CairoContext>)
-    = get-gcontext(medium);
+ => (gcontext :: <CairoContext>)
+  let gcontext :: <CairoContext> = get-gcontext(medium);
   ignoring("update-drawing-state");
   /*
   let old-cache :: <integer> = medium-drawing-state-cache(medium);
@@ -224,7 +222,7 @@ define sealed method update-drawing-state
     medium-drawing-state-cache(medium) := logior(old-cache, new-cache)
   end;
   */
-  values(drawable, gcontext)
+  gcontext
 end method update-drawing-state;
 
 

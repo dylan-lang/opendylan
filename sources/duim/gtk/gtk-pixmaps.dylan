@@ -125,7 +125,7 @@ define sealed method do-copy-area
      to-medium :: <gtk-medium>, to-x :: <integer>, to-y :: <integer>,
      #key function = $boole-1) => ()
   if (from-medium == to-medium)
-    let (drawable, gcontext) = get-gcontext(from-medium);
+    let gcontext  = get-gcontext(from-medium);
     let sheet     = medium-sheet(from-medium);
     let transform = sheet-device-transform(sheet);
     with-device-coordinates (transform, from-x, from-y, to-x, to-y)
