@@ -477,8 +477,6 @@ define sealed method clear-box
                       as(<double-float>, bottom - top));
       cairo-fill(gcontext);
     end;
-    cairo-set-source-rgb(gcontext, 0.0d0, 0.0d0, 0.0d0); // Black
-
     cairo-destroy(gcontext);
   end with-gdk-lock;
 end method clear-box;
