@@ -466,7 +466,13 @@ define sealed method clear-box
     (medium :: <gtk-medium>, left, top, right, bottom) => ()
   with-gdk-lock
     let gcontext :: <CairoContext> = get-gcontext(medium);
-    cairo-set-source-rgb(gcontext, 1.0d0, 1.0d0, 1.0d0); // White
+    let background-color = medium-background(medium);
+    let (red, green, blue, opacity) = color-rgb(background-color);
+    cairo-set-source-rgba(gcontext,
+                          as(<double-float>, red),
+                          as(<double-float>, green),
+                          as(<double-float>, blue),
+                          as(<double-float>, opacity));
     let sheet = medium-sheet(medium);
     let transform = sheet-device-transform(sheet);
     with-device-coordinates (transform, left, top, right, bottom)
