@@ -352,8 +352,7 @@ define sealed method do-choose-file
       end;
   with-gdk-lock
     let dialog
-      = gtk-file-chooser-dialog-new (title | mtitle, parent-widget, action,
-                                     null-pointer(<gchar*>));
+      = gtk-file-chooser-dialog-new (title | mtitle, parent-widget, action);
     gtk-dialog-add-button(dialog, $GTK-STOCK-CANCEL, $GTK-RESPONSE-CANCEL);
     gtk-dialog-add-button(dialog, second-name, $GTK-RESPONSE-ACCEPT);
     if (default)
@@ -454,8 +453,7 @@ define sealed method do-choose-directory
   with-gdk-lock
     let dialog
       = gtk-file-chooser-dialog-new (title | "Choose Directory", parent-widget,
-                                     $GTK-FILE-CHOOSER-ACTION-SELECT-FOLDER,
-                                     null-pointer(<gchar*>));
+                                     $GTK-FILE-CHOOSER-ACTION-SELECT-FOLDER);
     gtk-dialog-add-button(dialog, $GTK-STOCK-CANCEL, $GTK-RESPONSE-CANCEL);
     gtk-dialog-add-button(dialog, $GTK-STOCK-OPEN, $GTK-RESPONSE-ACCEPT);
     if (default)

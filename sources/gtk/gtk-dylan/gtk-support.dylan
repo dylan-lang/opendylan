@@ -12,3 +12,18 @@ define C-function popup-gtk-menu
   input parameter button :: <C-unsigned-int>;
   c-name: "popup_gtk_menu";
 end;
+
+define C-function %gtk-file-chooser-dialog-new
+  input parameter title_ :: <C-string>;
+  input parameter parent_ :: <GtkWindow>;
+  input parameter action_ :: <GtkFileChooserAction>;
+  input parameter first-button-text_ :: <C-string>;
+  result res :: <GtkWidget>;
+  c-name: "gtk_file_chooser_dialog_new";
+end;
+
+define function gtk-file-chooser-dialog-new
+    (title :: <string>, parent :: <GtkWindow>, action :: <integer>)
+ => (dialog :: <GtkFileChooserDialog>)
+  %gtk-file-chooser-dialog-new(title, parent, action, null-pointer(<C-string>));
+end;
