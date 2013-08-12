@@ -186,7 +186,6 @@ define sealed method update-drawing-state
  => (gcontext :: <CairoContext>)
   let gcontext :: <CairoContext> = get-gcontext(medium);
   ignoring("update-drawing-state");
-  /*
   let old-cache :: <integer> = medium-drawing-state-cache(medium);
   let new-cache :: <integer> = 0;
   when (old-cache ~= $medium-fully-cached)
@@ -196,6 +195,7 @@ define sealed method update-drawing-state
       establish-brush(medium, brush, gcontext);
       new-cache := logior(new-cache, $medium-brush-cached)
     end;
+    /*
     // Establish a pen, unless it's already cached
     when (zero?(logand(old-cache, $medium-pen-cached)))
       let pen = pen | medium-pen(medium);
@@ -219,9 +219,9 @@ define sealed method update-drawing-state
       end;
       new-cache := logior(new-cache, $medium-region-cached)
     end;
+    */
     medium-drawing-state-cache(medium) := logior(old-cache, new-cache)
   end;
-  */
   gcontext
 end method update-drawing-state;
 
@@ -258,7 +258,12 @@ end method establish-brush;
 
 define sealed method establish-brush
     (medium :: <gtk-medium>, color :: <rgb-color>, gcontext :: <CairoContext>) => ()
-  ignoring("establish-brush");
+  let (red, green, blue, opacity) = color-rgb(color);
+  cairo-set-source-rgba(gcontext,
+                        as(<double-float>, red),
+                        as(<double-float>, green),
+                        as(<double-float>, blue),
+                        as(<double-float>, opacity));
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
   gdk-gc-set-function(gcontext, $function-map[$boole-set]);
@@ -273,7 +278,13 @@ end method establish-brush;
 
 define sealed method establish-brush
     (medium :: <gtk-medium>, brush :: <foreground>, gcontext :: <CairoContext>) => ()
-  ignoring("establish-brush");
+  let color = medium-foreground(medium);
+  let (red, green, blue, opacity) = color-rgb(color);
+  cairo-set-source-rgba(gcontext,
+                        as(<double-float>, red),
+                        as(<double-float>, green),
+                        as(<double-float>, blue),
+                        as(<double-float>, opacity));
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
   gdk-gc-set-function(gcontext, $GDK-COPY);
@@ -283,7 +294,13 @@ end method establish-brush;
 
 define sealed method establish-brush
     (medium :: <gtk-medium>, brush :: <background>, gcontext :: <CairoContext>) => ()
-  ignoring("establish-brush");
+  let color = medium-background(medium);
+  let (red, green, blue, opacity) = color-rgb(color);
+  cairo-set-source-rgba(gcontext,
+                        as(<double-float>, red),
+                        as(<double-float>, green),
+                        as(<double-float>, blue),
+                        as(<double-float>, opacity));
   /*---*** Colors not implemented yet!
   gdk-gc-set-fill(gcontext, $GDK-SOLID);
   gdk-gc-set-function(gcontext, $GDK-COPY);
