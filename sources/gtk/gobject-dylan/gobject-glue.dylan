@@ -268,7 +268,7 @@ define C-callable-wrapper _dylan-meta-marshaller of dylan-meta-marshaller
   parameter param-values    :: <GValue>;
   parameter invocation-hint :: <gpointer>;
   parameter marshal-data    :: <gpointer>;
-  c-name: "foo";
+  c-name: "dylan_meta_marshaller";
 end;
 
 define C-function sizeof-gvalue
