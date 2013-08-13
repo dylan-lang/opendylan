@@ -590,10 +590,10 @@ end;
 
 define C-function cairo-clip-extents
   input parameter cr_ :: <CairoContext>;
-  input parameter x1_ :: <double*>;
-  input parameter y1_ :: <double*>;
-  input parameter x2_ :: <double*>;
-  input parameter y2_ :: <double*>;
+  output parameter x1_ :: <double*>;
+  output parameter y1_ :: <double*>;
+  output parameter x2_ :: <double*>;
+  output parameter y2_ :: <double*>;
   c-name: "cairo_clip_extents";
 end;
 
