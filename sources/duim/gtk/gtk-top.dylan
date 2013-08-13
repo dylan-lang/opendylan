@@ -370,7 +370,7 @@ define method update-mirror-attributes
   let title = frame-title(frame) | $default-window-title;
   with-gdk-lock
     gtk-window-set-title(widget, title);
-    gtk-window-set-modal(widget, if (modal?) $true else $false end);
+    gtk-window-set-modal(widget, modal?);
     gtk-container-set-border-width(widget, $top-level-border);
   end
 end method update-mirror-attributes;

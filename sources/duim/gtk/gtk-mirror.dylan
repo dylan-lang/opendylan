@@ -235,7 +235,7 @@ define sealed method mirror-visible?
  => (visible? :: <boolean>)
   let widget = mirror-widget(mirror);
   with-gdk-lock
-    gdk-window-is-visible(widget.gtk-widget-get-window) == $false
+    gdk-window-is-visible(widget.gtk-widget-get-window) == #f
   end
 end method mirror-visible?;
 
@@ -324,7 +324,7 @@ define method do-make-gtk-mirror
   with-gdk-lock
     let widget = gtk-drawing-area-new();
     gtk-widget-set-size-request(widget, 200, 200);
-    widget.@can-focus := $true;
+    widget.@can-focus := #t;
     make(<drawing-area-mirror>,
          widget: widget,
          sheet:  sheet);

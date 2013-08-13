@@ -7192,6 +7192,10 @@ define module gtk
     $GTK-STOCK-ZOOM-FIT,
     $GTK-STOCK-ZOOM-IN,
     $GTK-STOCK-ZOOM-OUT;
+
+  export gtk-set-button-time,
+    popup-gtk-menu,
+    gtk-file-chooser-dialog-new;
 end module;
 
 define module gtk-properties
