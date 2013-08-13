@@ -126,17 +126,35 @@ define sealed method do-copy-area
      #key function = $boole-1) => ()
   if (from-medium == to-medium)
     let gcontext  = get-gcontext(from-medium);
+    let drawable  = medium-drawable(from-medium);
     let sheet     = medium-sheet(from-medium);
     let transform = sheet-device-transform(sheet);
     with-device-coordinates (transform, from-x, from-y, to-x, to-y)
       with-device-distances (transform, width, height)
-        gdk-draw-drawable(drawable, gcontext, drawable, from-x, from-y,
-                          to-x, to-y, width, height)
+        with-stack-structure (area :: <CairoRectangleInt>)
+          area.cairo-rectangle-int-x := to-x;
+          area.cairo-rectangle-int-y := to-y;
+          area.cairo-rectangle-int-width := width;
+          area.cairo-rectangle-int-height := height;
+
+          gdk-cairo-rectangle(gcontext, area);
+          cairo-clip(gcontext);
+          cairo-push-group(gcontext);
+          cairo-set-source-surface(gcontext,
+                                   drawable,
+                                   as(<double-float>, from-x - to-x),
+                                   as(<double-float>, from-y - to-y));
+          cairo-paint(gcontext);
+          cairo-pop-group-to-source(gcontext);
+          cairo-paint(gcontext);
+          cairo-destroy(gcontext);
+        end with-stack-structure
       end
     end
   else
-    let from-drawable = get-gcontext(from-medium);
-    let (to-drawable, gcontext) = get-gcontext(from-medium);
+    let from-drawable  = get-gcontext(from-medium);
+    let to-drawable    = medium-drawable(to-medium);
+    let gcontext       = get-gcontext(to-medium);
     let from-sheet     = medium-sheet(from-medium);
     let from-transform = sheet-device-transform(from-sheet);
     let to-sheet       = medium-sheet(to-medium);
@@ -144,8 +162,21 @@ define sealed method do-copy-area
     with-device-coordinates (from-transform, from-x, from-y)
       with-device-coordinates (to-transform, to-x, to-y)
         with-device-distances (from-transform, width, height)
-          gdk-draw-drawable(to-drawable, gcontext, from-drawable, from-x, from-y,
-                            to-x, to-y, width, height)
+          with-stack-structure (area :: <CairoRectangleInt>)
+            area.cairo-rectangle-int-x := to-x;
+            area.cairo-rectangle-int-y := to-y;
+            area.cairo-rectangle-int-width := width;
+            area.cairo-rectangle-int-height := height;
+
+            gdk-cairo-rectangle(gcontext, area);
+            cairo-clip(gcontext);
+            gdk-cairo-set-source-window(gcontext,
+                                        to-drawable,
+                                        as(<double-float>, from-x),
+                                        as(<double-float>, from-y));
+            cairo-paint(gcontext);
+            cairo-destroy(gcontext);
+          end with-stack-structure
         end
       end
     end
