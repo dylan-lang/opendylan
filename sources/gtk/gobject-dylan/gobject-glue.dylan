@@ -117,10 +117,10 @@ define macro with-gdk-lock
      end }
 end;
 
-define method make(type :: subclass(<GTypeInstance>), #rest args, 
+define method make(type :: subclass(<GTypeInstance>), #rest args,
                    #key address, #all-keys)
  => (result :: <GTypeInstance>)
-  if(address)
+  if (address)
     let instance = next-method(<GTypeInstance>, address: address);
     if (~ null-pointer?(instance))
       let g-type = g-type-from-instance(instance);
@@ -163,10 +163,10 @@ define function all-subclasses (x :: <class>)
 end;
 
 define function find-gtype-by-name(name :: <string>)
-  block(return)
+  block (return)
     let dylan-name = as-uppercase(concatenate("<", name, ">"));
-    for(i in all-gtype-instances())
-      if(as-uppercase(i.debug-name) = dylan-name)
+    for (i in all-gtype-instances())
+      if (as-uppercase(i.debug-name) = dylan-name)
         return(i)
       end if;
 //    finally
@@ -178,7 +178,7 @@ end function find-gtype-by-name;
 define function find-gtype(g-type)
  => (type :: false-or(<class>));
   let dylan-type = element($gtype-table, g-type, default: #f);
-  unless(dylan-type)
+  unless (dylan-type)
     let type-name = g-type-name(g-type);
     dylan-type := find-gtype-by-name(type-name);
     $gtype-table[g-type] := dylan-type;
@@ -231,7 +231,7 @@ define function dylan-meta-marshaller (closure :: <GClosure>,
                                        invocation-hint :: <gpointer>,
                                        marshal-data :: <gpointer>)
   let values = #();
-  for(i from 0 below n-param-values)
+  for (i from 0 below n-param-values)
 
 //    let address = integer-as-raw(param-values.raw-pointer-address.raw-as-integer + i * sizeof-gvalue());
 //    let value* = make(<GValue>, address: address);
@@ -250,8 +250,8 @@ define function dylan-meta-marshaller (closure :: <GClosure>,
   *holding-gdk-lock* := *holding-gdk-lock* + 1;
   let res = apply(import-c-dylan-object(c-type-cast(<C-dylan-object>, marshal-data)), values);
   *holding-gdk-lock* := *holding-gdk-lock* - 1;
-  if(return-value ~= null-pointer(<gvalue>))
-    select(g-value-type(return-value))
+  if (return-value ~= null-pointer(<gvalue>))
+    select (g-value-type(return-value))
       $G-TYPE-BOOLEAN => g-value-set-boolean(return-value, res);
       $G-TYPE-NONE, $G-TYPE-INVALID => ;
       otherwise =>
@@ -291,7 +291,7 @@ define function g-signal-connect(instance :: <GObject>,
   g-closure-set-meta-marshal
     (closure, export-c-dylan-object(function), _dylan-meta-marshaller);
   g-signal-connect-closure(instance,
-                           signal, 
+                           signal,
                            closure,
                            run-after?);
 end function g-signal-connect;
@@ -305,13 +305,13 @@ end method g-value-to-dylan-helper;
 define function g-value-to-dylan (instance :: <GValue>)
  => (dylan-instance);
   let g-type = g-value-type(instance);
-  if(g-type ~= $G-TYPE-INVALID)
+  if (g-type ~= $G-TYPE-INVALID)
     let dylan-type = find-gtype(g-type);
     let address-thunk = method () pointer-address(g-value-peek-pointer(instance)) end;
-    if(dylan-type & subtype?(dylan-type, <GTypeInstance>))
+    if (dylan-type & subtype?(dylan-type, <GTypeInstance>))
       make(dylan-type, address: address-thunk())
     else
-      select(g-type)
+      select (g-type)
         $G-TYPE-NONE    => #f;
         $G-TYPE-CHAR    => g-value-get-char(instance);
         $G-TYPE-UCHAR   => g-value-get-uchar(instance);
