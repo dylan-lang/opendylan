@@ -284,12 +284,13 @@ end;
 define function g-signal-connect(instance :: <GObject>,
                                  signal :: <string>,
                                  function :: <function>,
-                                 #key run-after? :: <boolean>)
+                                 #key run-after? :: <boolean>,
+                                      marshaller = _dylan-meta-marshaller)
   register-c-dylan-object(function);
   let closure = g-closure-new-simple(sizeof-gclosure(),
                                      null-pointer(<gpointer>));
   g-closure-set-meta-marshal
-    (closure, export-c-dylan-object(function), _dylan-meta-marshaller);
+    (closure, export-c-dylan-object(function), marshaller);
   g-signal-connect-closure(instance,
                            signal,
                            closure,
