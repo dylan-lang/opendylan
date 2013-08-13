@@ -759,7 +759,7 @@ define module gobject
 end module;
 
 define module gobject-glue
-  use common-dylan;
+  use common-dylan, exclude: { format-to-string };
   use c-ffi;
   use format;
   use standard-io;
