@@ -7,6 +7,7 @@ define library cairo
   use common-dylan;
   use io;
   use c-ffi;
+  use gobject;
 
   export cairo;
 end library;
@@ -15,6 +16,7 @@ define module cairo
   use common-dylan, exclude: { format-to-string };
   use c-ffi;
   use dylan-direct-c-ffi;
+  use gobject-glue; // For g-value-to-dylan-helper
 
   export
     $CAIRO-ANTIALIAS-DEFAULT,

@@ -333,6 +333,7 @@ define function g-value-to-dylan (instance :: <GValue>)
         $G-TYPE-PARAM   => #f;
         $G-TYPE-OBJECT  => #f;
         g-type-from-name("GdkEvent") => g-value-to-dylan-helper(#"GdkEvent", address-thunk());
+        g-type-from-name("CairoContext") => g-value-to-dylan-helper(#"CairoContext", address-thunk());
         otherwise       => g-value-to-dylan-helper(g-type, address-thunk());
       end select;
     end if;
