@@ -171,30 +171,21 @@ define function gtk-button->duim-button
   end
 end function gtk-button->duim-button;
 
-define method handle-gtk-expose-event
-    (sheet :: <sheet>, event :: <GdkEventExpose>)
+define method handle-gtk-draw-event
+    (sheet :: <sheet>, gcontext :: <CairoContext>)
  => (handled? :: <boolean>)
 
   let _port = port(sheet);
   when (_port)
-    let area = event.gdk-event-expose-area;
-    let native-x = area.cairo-rectangle-int-x;
-    let native-y = area.cairo-rectangle-int-y;
-    let native-width = area.cairo-rectangle-int-width;
-    let native-height = area.cairo-rectangle-int-height;
-    let native-transform = sheet-native-transform(sheet);
-    let (x, y)
-      = untransform-position(native-transform, native-x, native-y);
-    let (width, height)
-      = untransform-distance(native-transform, native-width, native-height);
-    let region = make-bounding-box(x, y, x + width, y + height);
+    let (x1, y1, x2, y2) = cairo-clip-extents(gcontext);
+    let region = make-bounding-box(x1, y1, x2, y2);
     distribute-event(_port,
                      make(<window-repaint-event>,
                           sheet:  sheet,
                           region: region));
     #f
   end;
-end method handle-gtk-expose-event;
+end method handle-gtk-draw-event;
 
 /*---*** Not handling state changes yet
 define xt/xt-event-handler state-change-callback

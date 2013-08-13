@@ -368,7 +368,7 @@ define method install-event-handlers
     (sheet :: <mirrored-sheet-mixin>, mirror :: <fixed-container-mirror>) => ()
   next-method();
   let widget = mirror-widget(mirror);
-  duim-g-signal-connect(sheet, #"expose-event") (widget, event) handle-gtk-expose-event(sheet, event) end;
+  duim-g-signal-connect(sheet, #"draw") (widget, gcontext) handle-gtk-draw-event(sheet, gcontext) end;
   with-gdk-lock
     gtk-widget-add-events(widget, $GDK-EXPOSURE-MASK);
   end
@@ -378,7 +378,7 @@ define method install-event-handlers
     (sheet :: <mirrored-sheet-mixin>, mirror :: <drawing-area-mirror>) => ()
   next-method();
   let widget = mirror-widget(mirror);
-  duim-g-signal-connect(sheet, #"expose-event") (widget, event) handle-gtk-expose-event(sheet, event) end;
+  duim-g-signal-connect(sheet, #"draw") (widget, gcontext) handle-gtk-draw-event(sheet, gcontext) end;
   duim-g-signal-connect(sheet, #"button-press-event") (widget, event)
      gtk-widget-grab-focus(widget);
      handle-gtk-button-event(sheet, event)
@@ -396,17 +396,13 @@ define method install-event-handlers
   end
 end method install-event-handlers;
 
-define sealed method handle-gtk-expose-event
-    (sheet :: <mirrored-sheet-mixin>, event :: <GdkEventExpose>)
+define sealed method handle-gtk-draw-event
+    (sheet :: <mirrored-sheet-mixin>, gcontext :: <CairoContext>)
  => (handled? :: <boolean>)
-  let area   = event.gdk-event-expose-area;
-  let x      = area.cairo-rectangle-int-x;
-  let y      = area.cairo-rectangle-int-y;
-  let width  = area.cairo-rectangle-int-width;
-  let height = area.cairo-rectangle-int-height;
-  let region = make-bounding-box(x, y, x + width, y + height);
+  let (x1, y1, x2, y2) = cairo-clip-extents(gcontext);
   duim-debug-message("Repainting %=: %d, %d %d x %d",
-                     sheet, x, y, width, height);
+                     sheet, x1, y1, x2 - x1, y2 - y1);
+  let region = make-bounding-box(x1, y1, x2, y2);
   // We call 'handle-event' instead of 'distribute-event' because we
   // want the repainting to happen between BeginPaint and EndPaint
   distribute-event(port(sheet),
@@ -414,7 +410,7 @@ define sealed method handle-gtk-expose-event
                         sheet: sheet,
                         region: region));
   #f;
-end method handle-gtk-expose-event;
+end method handle-gtk-draw-event;
 
 define method set-mirror-parent
     (child :: <widget-mirror>, parent :: <fixed-container-mirror>)
