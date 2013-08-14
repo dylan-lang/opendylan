@@ -5,7 +5,6 @@ define library gtk
   use dylan;
   use common-dylan;
   use c-ffi;
-  use xlib;
   use gdk;
   use gmodule;
   use gio;
@@ -28,7 +27,6 @@ define module gtk
   use common-dylan;
   use c-ffi;
   use gobject-glue;
-  use xlib;
   use gdk;
   use gmodule;
   use gio;
