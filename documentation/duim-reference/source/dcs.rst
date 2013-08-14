@@ -23,7 +23,6 @@ which is a subclass of *<object>*. They are shown in Table `Overall
 class hierarchy for the DUIM-DCs library`_.
 
 Overall class hierarchy for the DUIM-DCs library
-                                                
 
 .. figure:: images/dcs-2.png
    :align: center
@@ -98,11 +97,9 @@ Two error classes are provided by the DUIM-DCs library, both of which
 are immediate subclasses of *<error>*.
 
 *<color-not-found>*
-                   
 
 This class of error is signalled when a color is requested but is not
 available on the user’s system.
-                                                                                                     
 
 -  *<palette-full>* This class of error is signalled when an attempt is
    made to add a color to a palette, and the palette cannot accept any
@@ -119,19 +116,12 @@ are exported from the *duim-dcs* module.
 --
 
 G.f. method
+Returns ``#t`` if two objects are equal.
 
-Summary
-
-Returns *#t* if two objects are equal.
-
-Signature
-
-.. code-block:: dylan
-
-    = *color1 color2* => *boolean*
-    = *pen1* *pen2* => *boolean*
-    = *brush1* *brush2* => *boolean*
-    = *text-style1* *text-style2* => *value*
+   :signature: = *color1 color2* => *boolean*
+   :signature: = *pen1* *pen2* => *boolean*
+   :signature: = *brush1* *brush2* => *boolean*
+   :signature: = *text-style1* *text-style2* => *value*
 
 Arguments
 
@@ -148,42 +138,31 @@ Arguments
 
 Values
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
+   :description:
 
-Returns *#t* if two objects are equal.
+Returns ``#t`` if two objects are equal.
 
 add-colors
 ----------
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Adds one or more colors to a palette and returns the updated palette.
 
-Signature
-         
-
-*add-colors* *palette* *#rest* *colors* => *palette*
-                                                    
+   :signature: add-colors* *palette* *#rest* *colors* => *palette*
 
 Arguments
-         
 
 -  *palette* An instance of type `<palette>`_.
 -  *colors* Instances of type `<color>`_.
 
 Values
-      
 
 -  *palette* An instance of type `<palette>`_.
 
-Description
-           
+   :description:
 
 Adds *colors* to *palette* and returns the updated palette.
 
@@ -192,25 +171,17 @@ $background
 
 Constant
 ''''''''
-
-Summary
-       
-
 An indirect ink that uses the medium's background design.
 
-Type
-    
+   :type:
 
 `<ink>`_
-                            
 
-Description
-           
+   :description:
 
 An indirect ink that uses the medium's background design.
 
-See also
-        
+   See also
 
 `<palette>`_
 
@@ -221,26 +192,18 @@ $black
 
 Constant
 ''''''''
-
-Summary
-       
-
 The usual definition of black.
 
-Type
-    
+   :type:
 
 `<color>`_
-                              
 
-Description
-           
+   :description:
 
 The usual definition black, the absence of all colors. In the *rgb*
 color model, its value is *000*.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -249,25 +212,17 @@ $blue
 
 Constant
 ''''''''
-
-Summary
-       
-
 The usual definition of the color blue.
 
-Type
-    
+   :type:
 
 `<color>`_
-                              
 
-Description
-           
+   :description:
 
 The usual definition of the color blue.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -276,20 +231,13 @@ $boole-clr
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is always 0.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is always 0. It is a suitable first argument
 to the *boole* function.
@@ -299,20 +247,13 @@ $boole-set
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is always 1.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is always 1. It is a suitable first argument
 to the *boole* function.
@@ -322,21 +263,14 @@ $boole-1
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is always he same as the first integer
 argument to the *boole* function.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is always the same as the first integer
 argument to the *boole* function. It is a suitable first argument to the
@@ -347,21 +281,14 @@ $boole-2
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is always he same as the second integer
 argument to the *boole* function.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is always the same as the second integer
 argument to the *boole* function. It is a suitable first argument to the
@@ -372,21 +299,14 @@ $boole-c1
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is always he same as the complement of the
 first integer argument to the *boole* function.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is always the same as the complement of the
 first integer argument to the *boole* function. It is a suitable first
@@ -397,21 +317,14 @@ $boole-c2
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is always he same as the complement of the
 second integer argument to the *boole* function.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is always the same as the complement of the
 second integer argument to the *boole* function. It is a suitable first
@@ -422,20 +335,13 @@ $boole-and
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator *and*.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator *and*. It is a suitable first argument to the
 *boole* function.
@@ -445,20 +351,13 @@ $boole-ior
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator *inclusive* *or*.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator *inclusive* *or*. It is a suitable first argument
 to the *boole* function.
@@ -468,20 +367,13 @@ $boole-xor
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator *exclusive* *or*.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator *exclusive* *or*. It is a suitable first argument
 to the *boole* function.
@@ -491,20 +383,13 @@ $boole-eqv
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator *equivalence* (*exclusive* *nor*).
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator *equivalence* (*exclusive* *nor*). It is a
 suitable first argument to the *boole* function.
@@ -514,20 +399,13 @@ $boole-nand
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator *not-and*.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator *not-and*. It is a suitable first argument to the
 *boole* function.
@@ -537,20 +415,13 @@ $boole-nor
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator *not-or*.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator *not-or*. It is a suitable first argument to the
 *boole* function.
@@ -560,21 +431,14 @@ $boole-andc1
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is the *and* of the complement of the first
 integer argument to the *boole* function with the second.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is the *and* of the complement of the first
 integer argument to the *boole* function with the second. It is a
@@ -585,21 +449,14 @@ $boole-andc2
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is the *and* of the first integer argument to
 the *boole* function with the second with the complement of the second.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is *and* of the first integer argument to the
 *boole* function with the complement of the second. It is a suitable
@@ -610,21 +467,14 @@ $boole-orc1
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is the *or* of the complement of the first
 integer argument to the *boole* function with the second.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is the *or* of the complement of the first
 integer argument to the *boole* function with the second. It is a
@@ -635,21 +485,14 @@ $boole-orc2
 
 Constant
 ''''''''
-
-Summary
-       
-
 The logical operator that is the *or* of the first integer argument to
 the *boole* function with the second with the complement of the second.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
-Description
-           
+   :description:
 
 The logical operator that is *or* of the first integer argument to the
 *boole* function with the complement of the second. It is a suitable
@@ -660,27 +503,19 @@ $bricks-stipple
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush with horizontal
 and vertical lines in the pattern of the mortar in a brick wall.
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush with horizontal
 and vertical lines in the pattern of the mortar in a brick wall.
 
-See also
-        
+   See also
 
 `brush-stipple`_
 
@@ -689,42 +524,33 @@ See also
 
 Abstract instantiable class
 '''''''''''''''''''''''''''
-
-Summary
-       
-
 The protocol class for brushes.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
-          
 
 Init-keywords
-             
 
 -  *foreground:* An instance of type `<ink>`_.
 -  *background:* An instance of type `<ink>`_.
--  *mode:* An instance of type *<integer>*.
+-  *mode:* An instance of type ``<integer>``.
 -  *fill-style:* An instance of type *false-or(<integer>)*. Default
-   value: *#f*.
+   value: ``#f``.
 -  *fill-rule:* An instance of type *false-or(<integer>)*.** Default
-   value: *#f*.
+   value: ``#f``.
 -  *tile:* An instance of type *false-or(<integer>)*.** Default value:
-   *#f*.
+   ``#f``.
 -  *stipple:* An instance of type *false-or(<integer>)*.** Default
-   value: *#f*.
--  *ts-x:* An instance of *false-or(<integer>).* Default value: *#f*.
--  *ts-y:* An instance of *false-or(<integer>).* Default value: *#f*.
+   value: ``#f``.
+-  *ts-x:* An instance of *false-or(<integer>).* Default value: ``#f``.
+-  *ts-y:* An instance of *false-or(<integer>).* Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The protocol class for brushes.
 
-Operations
-          
+   :operations:
 
 The following operations are exported from the *DUIM-DCs* module.
 
@@ -737,8 +563,7 @@ brush-foreground`_ `brush-mode`_
 brush-stretch-mode`_ `brush-tile`_
 `brush-ts-x`_ `brush-ts-y`_
 
-See also
-        
+   See also
 
 `make`_
 
@@ -747,67 +572,44 @@ brush?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if its argument is a brush.
 
-Summary
-       
-
-Returns *#t* if its argument is a brush.
-
-Signature
-         
-
-*brush?* *object* => *boolean*
-                              
+   :signature: brush?* *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if its argument is a brush.
+Returns ``#t`` if its argument is a brush.
 
 brush-background
 ----------------
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the ink that is the background color of a brush.
 
-Signature
-         
-
-*brush-background* *brush* => *ink*
-                                   
+   :signature: brush-background* *brush* => *ink*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
 -  *ink* An instance of type `<ink>`_.
 
-Description
-           
+   :description:
 
 Returns the *ink* that is the background color of *brush*.
 
-See also
-        
+   See also
 
 `brush-fill-rule`_
 
@@ -816,36 +618,24 @@ brush-fill-rule
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the fill rule of the brush.
 
-Signature
-         
-
-*brush-fill-rule* *brush* => *fill-rule*
-                                        
+   :signature: brush-fill-rule* *brush* => *fill-rule*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
 -  *fill-rule* An instance of type *fill-rule* or *<boolean>*.
 
-Description
-           
+   :description:
 
-Returns the fill rule for *brush*, or *#f* if *brush* does not have a
+Returns the fill rule for *brush*, or ``#f`` if *brush* does not have a
 fill rule.
 
-See also
-        
+   See also
 
 `brush-fill-style`_
 
@@ -854,36 +644,24 @@ brush-fill-style
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the fill style of the brush.
 
-Signature
-         
-
-*brush-fill-style* *brush* => *fill-style*
-                                          
+   :signature: brush-fill-style* *brush* => *fill-style*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
 -  *fill-style* An instance of *fill-style* or *<boolean>*.
 
-Description
-           
+   :description:
 
-Returns the fill style of *brush*, or *#f*, if *brush* does not have a
+Returns the fill style of *brush*, or ``#f``, if *brush* does not have a
 fill style.
 
-See also
-        
+   See also
 
 `brush-fill-rule`_.
 
@@ -892,35 +670,23 @@ brush-foreground
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the ink that is the foreground color of a brush.
 
-Signature
-         
-
-*brush-foreground* *brush* => *ink*
-                                   
+   :signature: brush-foreground* *brush* => *ink*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
 -  *ink* An instance of type `<ink>`_.
 
-Description
-           
+   :description:
 
 Returns the *ink* that is the foreground color of *brush*.
 
-See also
-        
+   See also
 
 `brush-stipple`_.
 
@@ -929,36 +695,24 @@ brush-mode
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns an integer representing the drawing mode of a brush.
 
-Signature
-         
-
-*brush-mode* *brush* => *integer*
-                                 
+   :signature: brush-mode* *brush* => *integer*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
--  *integer* An instance of type *<integer>*. Default value: *$boole-1*
+-  *integer* An instance of type ``<integer>``. Default value: *$boole-1*
    .
 
-Description
-           
+   :description:
 
 Returns an integer representing the drawing mode of *brush*.
 
-See also
-        
+   See also
 
 `$boole-1`_.
 
@@ -967,35 +721,23 @@ brush-stipple
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the stipple pattern of a brush.
 
-Signature
-         
-
-*brush-stipple* *brush* => *stipple*
-                                    
+   :signature: brush-stipple* *brush* => *stipple*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
--  *stipple* A *(stipple)* or *#f*.
+-  *stipple* A *(stipple)* or ``#f``.
 
-Description
-           
+   :description:
 
 Returns the stipple pattern of *brush*.
 
-See also
-        
+   See also
 
 `brush-tile`_
 
@@ -1008,30 +750,19 @@ brush-stretch-mode
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the stretch mode of the brush.
 
-Signature
-         
-
-*brush-stretch-mode* *brush* => *stretch-mode*
-                                              
+   :signature: brush-stretch-mode* *brush* => *stretch-mode*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
 -  *stretch-mode* An instance of *stretch-mode* or *<boolean>*.
 
-Description
-           
+   :description:
 
 Returns the stretch mode of the brush.
 
@@ -1040,35 +771,23 @@ brush-tile
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the tile pattern of a brush.
 
-Signature
-         
-
-*brush-tile* *brush* => *image*
-                               
+   :signature: brush-tile* *brush* => *image*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
 -  *image* An instance of type *<image>*.
 
-Description
-           
+   :description:
 
 Returns the tile pattern of *brush*.
 
-See also
-        
+   See also
 
 `brush-stipple`_.
 
@@ -1079,38 +798,26 @@ brush-ts-x
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the value of the *x* coordinate that is used to align the
 brush’s tile or stipple pattern.
 
-Signature
-         
-
-*brush-ts-x* *brush* => *value*
-                               
+   :signature: brush-ts-x* *brush* => *value*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
 -  *value* An instance of type *false-or(<integer>)*.
 
-Description
-           
+   :description:
 
 Returns the value of the *x* coordinate that is used to align the tile
 or stipple pattern of *brush*. If *brush* has no tile or stipple
 pattern, *brush-ts-x* returns *#f.*
 
-See also
-        
+   See also
 
 `brush-ts-y`_.
 
@@ -1119,38 +826,26 @@ brush-ts-y
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the value of the *y* coordinate that is used to align the
 brush’s tile or stipple pattern.
 
-Signature
-         
-
-*brush-ts-y* *brush* => *value*
-                               
+   :signature: brush-ts-y* *brush* => *value*
 
 Arguments
-         
 
 -  *brush* An instance of type `<brush>`_.
 
 Values
-      
 
 -  *value* An instance of type *false-or(<integer>)*.
 
-Description
-           
+   :description:
 
 Returns the value of the *y* coordinate that is used to align the tile
 or stipple pattern of *brush*. If *brush* has no tile or stipple
 pattern, *brush-ts-y* returns *#f.*
 
-See also
-        
+   See also
 
 `brush-ts-x`_.
 
@@ -1159,32 +854,24 @@ See also
 
 Abstract instantiable class
 '''''''''''''''''''''''''''
-
-Summary
-       
-
 The protocol class for colors.
 
-Superclasses
-            
+   :superclasses:
 
 `<ink>`_
-                            
 
 Init-keywords
-             
 
--  *red:* An instance of type *<real>*.
--  *green:* An instance of type *<real>*.
--  *blue:* An instance of type *<real>*.
+-  *red:* An instance of type ``<real>``.
+-  *green:* An instance of type ``<real>``.
+-  *blue:* An instance of type ``<real>``.
 -  *intensity:* An instance of type *limited(<real>, min: 0, max:
    sqrt(3()*.
 -  *hue:* An instance of type *limited(<real>, min: 0, max: 1)*.
 -  *saturation:* An instance of type *limited(<real>, min: 0, max: 1)*.
 -  *opacity:* An instance of type *limited(<real>, min: 0, max: 1)*.
 
-Description
-           
+   :description:
 
 The *<color>* class is the protocol class for a color, and is a subclass
 of `<ink>`_. A member of the class *<color>* is an
@@ -1231,8 +918,7 @@ An opacity may be specified by a real number between 0 and 1
 fractions are translucent. The opacity of a color is the degree to which
 it hides the previous contents of the drawing plane when it is drawn.
 
-Operations
-          
+   :operations:
 
 The following operations are exported from the *DUIM-DCs* module.
 
@@ -1240,8 +926,7 @@ The following operations are exported from the *DUIM-DCs* module.
 color-rgb`_ `color-ihs`_ `See
 color-luminosity`_
 
-See also
-        
+   See also
 
 `color?`_
 
@@ -1262,35 +947,23 @@ color?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if object is a color.
 
-Summary
-       
-
-Returns *#t* if object is a color.
-
-Signature
-         
-
-*color?* *object* => *boolean*
-                              
+   :signature: color?* *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if object is a color, otherwise returns *#f*.
+Returns ``#t`` if object is a color, otherwise returns ``#f``.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -1309,26 +982,16 @@ color-ihs
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns four values, the intensity, hue, saturation, and opacity
 components of a color.
 
-Signature
-         
-
-*color-ihs* *color* => *intensity* *hue* *saturation* *opacity*
-                                                               
+   :signature: color-ihs* *color* => *intensity* *hue* *saturation* *opacity*
 
 Arguments
-         
 
 -  *color* An instance of type `<color>`_.
 
 Values
-      
 
 -  *intensity* An instance of type *limited(<real>, min: 0, max:
    sqrt(3()*.
@@ -1336,16 +999,14 @@ Values
 -  *saturation* An instance of type *limited(<real>, min: 0, max: 1)*.
 -  *opacity* An instance of type *limited(<real>, min: 0, max: 1)*.
 
-Description
-           
+   :description:
 
 Returns four values, the *intensity*, *hue,* *saturation*, and
 *opacity* components of the color *color*. The first value is a real
 number between *0* and *sqrt{3* } (inclusive). The second and third
 values are real numbers between *0* and *1* (inclusive).
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -1362,37 +1023,25 @@ color-luminosity
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the brightness of a color.
 
-Signature
-         
-
-*color-luminosity* *color* => *luminosity*
-                                          
+   :signature: color-luminosity* *color* => *luminosity*
 
 Arguments
-         
 
 -  *color* An instance of type `<color>`_.
 
 Values
-      
 
 -  *luminosity* An instance of type *limited(<real>, min: 0, max: 1)*.
 
-Description
-           
+   :description:
 
 Returns the brightness of color *color* as real number between *0* and
 *1*. The value is the solution of a function that describes the
 perception of the color by the human retina.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -1409,44 +1058,32 @@ See also
 
 Sealed concrete class
 '''''''''''''''''''''
-
-Summary
-       
-
 The class of the error that is signalled when a color that is not
 available is requested.
 
-Superclasses
-            
+   :superclasses:
 
 <error>
-       
 
-Superclasses
-            
+   :superclasses:
 
 *<error>*
-         
 
 Init-keywords
-             
 
 -  *color:* An instance of type `<color>`_.
 
-Description
-           
+   :description:
 
 The class of the error that is signalled when a color that is not
 available is requested. The *color:* init-keyword is used to specify the
 color that was requested but was not available.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -1459,35 +1096,23 @@ color-palette?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if the stream or medium supports color.
 
-Summary
-       
-
-Returns *#t* if the stream or medium supports color.
-
-Signature
-         
-
-*color-palette?* *palette* => *boolean*
-                                       
+   :signature: color-palette?* *palette* => *boolean*
 
 Arguments
-         
 
 -  *palette* An instance of type `<palette>`_.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if the stream or medium supports color.
+Returns ``#t`` if the stream or medium supports color.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -1504,41 +1129,29 @@ color-rgb
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns four values, the red, green, blue, and opacity components of a
 color.
 
-Signature
-         
-
-*color-rgb* *color* => *ref* *green* *blue* *opacity*
-                                                     
+   :signature: color-rgb* *color* => *ref* *green* *blue* *opacity*
 
 Arguments
-         
 
 -  *color* An instance of type `<color>`_.
 
 Values
-      
 
 -  *red* An instance of type *limited(<real>, min: 0, max: 1)*
 -  *gree* n An instance of type *limited(<real>, min: 0, max: 1)*
 -  *blue* An instance of type *limited(<real>, min: 0, max: 1)*
 -  *opacity* An instance of type *limited(<real>, min: 0, max: 1)*.
 
-Description
-           
+   :description:
 
 Returns four values, the *red*, *green*, *blue*, and *opacity*
 components of the color *color.* The values are real numbers between 0
 and 1 (inclusive).
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -1555,31 +1168,20 @@ contrasting-colors-limit
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the number of contrasting colors that can be rendered on the
 current platform.
 
-Signature
-         
-
-*contrasting-colors-limit* *port* => *integer*
-                                              
+   :signature: contrasting-colors-limit* *port* => *integer*
 
 Arguments
-         
 
 -  *port* An instance of type ` <silica.htm#11606>`_.
 
 Values
-      
 
--  *integer* An instance of type *<integer>*.
+-  *integer* An instance of type ``<integer>``.
 
-Description
-           
+   :description:
 
 Returns the number of contrasting colors (or stipple patterns if port is
 monochrome or grayscale) that can be rendered on any medium on the port
@@ -1587,8 +1189,7 @@ monochrome or grayscale) that can be rendered on any medium on the port
 possible, but it must be at least 8. All classes that obey the medium
 protocol must implement a method for this generic function.
 
-See also
-        
+   See also
 
 `contrasting-dash-patterns-limit`_
 
@@ -1599,37 +1200,25 @@ contrasting-dash-patterns-limit
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the number of contrasting dash patterns that the specified port
 can generate.
 
-Signature
-         
-
-*contrasting-dash-patterns-limit* *port* => *no-of-patterns*
-                                                            
+   :signature: contrasting-dash-patterns-limit* *port* => *no-of-patterns*
 
 Arguments
-         
 
 -  *port* An instance of type ` <silica.htm#11606>`_.
 
 Values
-      
 
--  *no-of-patterns* An instance of type *<integer>*.
+-  *no-of-patterns* An instance of type ``<integer>``.
 
-Description
-           
+   :description:
 
 Returns the number of contrasting dash patterns that the specified port
 can generate.
 
-See also
-        
+   See also
 
 `contrasting-colors-limit`_
 
@@ -1640,27 +1229,19 @@ $cross-hatch
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush with alternating
 solid and dashed lines.
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush with alternating
 solid and dashed lines.
 
-See also
-        
+   See also
 
 `<color>`_.
 
@@ -1669,25 +1250,17 @@ $cyan
 
 Constant
 ''''''''
-
-Summary
-       
-
 The usual definition for the color cyan.
 
-Type
-    
+   :type:
 
 `<color>`_
-                              
 
-Description
-           
+   :description:
 
 The usual definition for the color cyan.
 
-See also
-        
+   See also
 
 `<color>`_.
 
@@ -1696,26 +1269,18 @@ $dash-dot-dot-pen
 
 Constant
 ''''''''
-
-Summary
-       
-
 A pen that draws a line with two dots between each dash.
 
-Type
-    
+   :type:
 
 `<pen>`_
-                            
 
-Description
-           
+   :description:
 
 A pen that draws a line with two dots between each dash. The line width
 is *1* and *dashes:* is *#[4, 1, 1, 1, 1, 1]*.
 
-See also
-        
+   See also
 
 `<pen>`_
 
@@ -1732,26 +1297,18 @@ $dash-dot-pen
 
 Constant
 ''''''''
-
-Summary
-       
-
 A pen that draws a dashed and dotted line.
 
-Type
-    
+   :type:
 
 `<pen>`_
-                            
 
-Description
-           
+   :description:
 
 A pen that draws a dashed and dotted line. The line width is *1* and
 *dashes:* is *#[4, 1, 1, 1]*.
 
-See also
-        
+   See also
 
 `<pen>`_
 
@@ -1768,26 +1325,18 @@ $dashed-pen
 
 Constant
 ''''''''
-
-Summary
-       
-
 A pen that draws a dashed line.
 
-Type
-    
+   :type:
 
 `<pen>`_
-                            
 
-Description
-           
+   :description:
 
 A pen that draws a dashed line. The line width is *1* and *dashes:* is
-*#t*.
+``#t``.
 
-See also
-        
+   See also
 
 `<pen>`_
 
@@ -1804,35 +1353,23 @@ default-background
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the ink that is the default background of its argument.
 
-Signature
-         
-
-*default-foreground* *object* => *background*
-                                             
+   :signature: default-foreground* *object* => *background*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
 -  *background* An instance of type `<ink>`_.
 
-Description
-           
+   :description:
 
 Returns the ink that is the default background of its argument.
 
-See also
-        
+   See also
 
 `brush-fill-style`_.
 
@@ -1845,36 +1382,24 @@ default-background-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the default background.
 
-Signature
-         
-
-*default-foreground-setter* *background* *object* => *background*
-                                                                 
+   :signature: default-foreground-setter* *background* *object* => *background*
 
 Arguments
-         
 
 -  *background* An instance of type `<ink>`_.
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
 -  *background* An instance of type `<ink>`_.
 
-Description
-           
+   :description:
 
 Sets the default background for *object*.
 
-See also
-        
+   See also
 
 `brush-fill-style`_.
 
@@ -1887,35 +1412,23 @@ default-foreground
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the ink that is the default foreground of its argument.
 
-Signature
-         
-
-*default-foreground* *object* => *foreground*
-                                             
+   :signature: default-foreground* *object* => *foreground*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
 -  *foreground* An instance of type `<ink>`_.
 
-Description
-           
+   :description:
 
 Returns the ink that is the default foreground of its argument.
 
-See also
-        
+   See also
 
 `brush-fill-rule`_.
 
@@ -1928,36 +1441,24 @@ default-foreground-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the default foreground.
 
-Signature
-         
-
-*default-foreground-setter* *foreground* *object* => *foreground*
-                                                                 
+   :signature: default-foreground-setter* *foreground* *object* => *foreground*
 
 Arguments
-         
 
 -  *foreground* An instance of type `<ink>`_.
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
 -  *foreground* An instance of type `<ink>`_.
 
-Description
-           
+   :description:
 
 Sets the default foreground for *object*.
 
-See also
-        
+   See also
 
 `brush-fill-rule`_.
 
@@ -1970,37 +1471,25 @@ default-text-style
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the default text style for its argument.
 
-Signature
-         
-
-*default-text-style* *object* => *text-style*
-                                             
+   :signature: default-text-style* *object* => *text-style*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
 -  *text-style* An instance of type *<text-style>*.
 
-Description
-           
+   :description:
 
 Returns the default text style for its argument.This function is used to
 merge against if the text style is not fully specified, or if no text
 style is specified.
 
-See also
-        
+   See also
 
 `default-text-style-setter`_.
 
@@ -2009,36 +1498,24 @@ default-text-style-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the default text style.
 
-Signature
-         
-
-*default-text-style-setter* *text-style* *object* => *text-style*
-                                                                 
+   :signature: default-text-style-setter* *text-style* *object* => *text-style*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
 -  *text-style* An instance of type *<text-style>*.
 
-Description
-           
+   :description:
 
 Sets the default text style.
 
-See also
-        
+   See also
 
 `default-text-style`_
 
@@ -2047,36 +1524,26 @@ See also
 
 Sealed concrete class
 '''''''''''''''''''''
-
-Summary
-       
-
 The protocol class for device-specific fonts.
 
-Superclasses
-            
+   :superclasses:
 
 <*text-style>*
-              
 
 Init-keywords
-             
 
 -  *port:*
 -  *font-name:*
 
-Description
-           
+   :description:
 
 The protocol class for device-specific fonts.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<text-style>`_.
 
@@ -2085,28 +1552,20 @@ $diagonal-hatch-down
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush with alternating
 dashes and spaces.
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush with alternating
 dashes and spaces, the first line starting with a dash, followed by a
 space, and the second line starting with a space followed by a dash.
 
-See also
-        
+   See also
 
 `brush-stipple`_.
 
@@ -2115,28 +1574,20 @@ $diagonal-hatch-up
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush with alternating
 dashes and spaces.
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush with alternating
 dashes and spaces, the first line starting with a space, followed by a
 dash, and the second line starting with a dash followed by a space.
 
-See also
-        
+   See also
 
 `brush-stipple`_.
 
@@ -2145,26 +1596,18 @@ $dotted-pen
 
 Constant
 ''''''''
-
-Summary
-       
-
 A pen that draws a dotted line.
 
-Type
-    
+   :type:
 
 `<pen>`_
-                            
 
-Description
-           
+   :description:
 
 A pen that draws a dotted line. The line width is *1* and *dashes:* is
 *#[1, 1]*.
 
-See also
-        
+   See also
 
 `<pen>`_
 
@@ -2177,39 +1620,27 @@ find-color
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Looks up and returns a color by name.
 
-Signature
-         
-
-*find-color* *name* *palette* #key *error?* => *color*
-                                                      
+   :signature: find-color* *name* *palette* #key *error?* => *color*
 
 Arguments
-         
 
 -  *name* An instance of type *<string>*.
 -  *palette* An instance of type `<palette>`_.
--  *error?* An instance of type *<boolean>*. Default value: *#f*.
+-  *error?* An instance of type ``<boolean>``. Default value: ``#f``.
 
 Values
-      
 
 -  *color* An instance of type `<color>`_.
 
-Description
-           
+   :description:
 
 Looks up and returns a color by name. `Common color
 names`_ lists the commonly provided color names that can
 be looked up with *find-color*.
 
 Common color names
-                  
 
 .. figure:: images/dcs-2.png
    :align: center
@@ -2476,8 +1907,7 @@ Application programs can define other colors; these are provided because
 they are commonly used in the X Windows community, not because there is
 anything special about these particular colors.
 
-See also
-        
+   See also
 
 `$black`_
 
@@ -2500,25 +1930,17 @@ $foreground
 
 Constant
 ''''''''
-
-Summary
-       
-
 An indirect ink that uses the medium's foreground design.
 
-Type
-    
+   :type:
 
 `<ink>`_
-                            
 
-Description
-           
+   :description:
 
 An indirect ink that uses the medium's foreground design.
 
-See also
-        
+   See also
 
 `<ink>`_
 
@@ -2529,35 +1951,23 @@ fully-merged-text-style?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if the specified text style is completely specified.
 
-Summary
-       
-
-Returns *#t* if the specified text style is completely specified.
-
-Signature
-         
-
-fully-merged-text-style? *text-style* => *boolean*
-                                                  
+   :signature: fully-merged-text-style? *text-style* => *boolean*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if the specified text style is completely specified.
+Returns ``#t`` if the specified text style is completely specified.
 
-See also
-        
+   See also
 
 `merge-text-styles`_
 
@@ -2566,25 +1976,17 @@ $green
 
 Constant
 ''''''''
-
-Summary
-       
-
 The usual definition of the color green.
 
-Type
-    
+   :type:
 
 `<color>`_
-                              
 
-Description
-           
+   :description:
 
 The usual definition of the color green.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -2593,27 +1995,19 @@ $hearts-stipple
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush that draws a
 heart shape.
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush that draws a
 heart shape.
 
-See also
-        
+   See also
 
 `brush-stipple`_
 
@@ -2622,27 +2016,19 @@ $horizontal-hatch
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush with alternating
 horizontal rows of lines and spaces.
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush with alternating
 horizontal rows of lines and spaces.
 
-See also
-        
+   See also
 
 `brush-stipple`_.
 
@@ -2651,30 +2037,21 @@ See also
 
 Abstract class
 ''''''''''''''
-
-Summary
-       
-
 The class for objects that are images.
 
-Superclasses
-            
+   :superclasses:
 
 `<ink>`_
-                            
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class for objects that are images.
 
-Operations
-          
+   :operations:
 
 The following operation is exported from the *DUIM-DCs* module.
 
@@ -2684,8 +2061,7 @@ The following operation is exported from the *DUIM-Graphics* module.
 
 ` <graphics.htm#64653>`_
 
-See also
-        
+   See also
 
 `image?`_
 
@@ -2702,35 +2078,23 @@ image?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if its argument is an image.
 
-Summary
-       
-
-Returns *#t* if its argument is an image.
-
-Signature
-         
-
-*image?* *object* => *boolean*
-                              
+   :signature: image?* *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if its argument is an image.
+Returns ``#t`` if its argument is an image.
 
-See also
-        
+   See also
 
 `<image>`_
 
@@ -2745,35 +2109,23 @@ image-depth
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the depth of an image.
 
-Signature
-         
-
-*image-depth* *image* => *depth*
-                                
+   :signature: image-depth* *image* => *depth*
 
 Arguments
-         
 
 -  *image* An instance of type *<image>*.
 
 Values
-      
 
--  *depth* An instance of type *<real>*.
+-  *depth* An instance of type ``<real>``.
 
-Description
-           
+   :description:
 
 Returns the depth of the image *image*.
 
-See also
-        
+   See also
 
 `<image>`_
 
@@ -2788,35 +2140,23 @@ image-height
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the height of an image.
 
-Signature
-         
-
-*image-height* *image* => *height*
-                                  
+   :signature: image-height* *image* => *height*
 
 Arguments
-         
 
 -  *image* An instance of type *<image>*.
 
 Values
-      
 
--  *height* An instance of type *<real>*.
+-  *height* An instance of type ``<real>``.
 
-Description
-           
+   :description:
 
 Returns the height of the image *image*.
 
-See also
-        
+   See also
 
 `<image>`_
 
@@ -2831,35 +2171,23 @@ image-width
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the width of an image.
 
-Signature
-         
-
-*image-width* *image* => *width*
-                                
+   :signature: image-width* *image* => *width*
 
 Arguments
-         
 
 -  *image* An instance of type *<image>*.
 
 Values
-      
 
--  *width* An instance of type *<real>*.
+-  *width* An instance of type ``<real>``.
 
-Description
-           
+   :description:
 
 Returns the width of the image *image*.
 
-See also
-        
+   See also
 
 `<image>`_
 
@@ -2874,26 +2202,18 @@ See also
 
 Abstract class
 ''''''''''''''
-
-Summary
-       
-
 The class of objects that represent a way of arranging colors and
 opacities in the drawing plane.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
-          
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of objects that represent a way of arranging colors and
 opacities in the drawing plane. Intuitively, it is anything that can be
@@ -2901,15 +2221,13 @@ drawn with. An ink is anything that can be used in medium-foreground,
 medium-background, medium-ink, or the foreground or background of a
 brush.
 
-Operations
-          
+   :operations:
 
 The following operation is exported from the *DUIM-DCs* module.
 
 `ink?`_
 
-See also
-        
+   See also
 
 `ink?`_
 
@@ -2918,35 +2236,23 @@ ink?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if its argument is an ink.
 
-Summary
-       
-
-Returns *#t* if its argument is an ink.
-
-Signature
-         
-
-*ink?* *object* => *boolean*
-                            
+   :signature: ink?* *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if *object* is an ink, otherwise returns *#f*.
+Returns ``#t`` if *object* is an ink, otherwise returns ``#f``.
 
-See also
-        
+   See also
 
 `<ink>`_
 
@@ -2955,25 +2261,17 @@ $magenta
 
 Constant
 ''''''''
-
-Summary
-       
-
 The usual definition of the color magenta.
 
-Type
-    
+   :type:
 
 `<color>`_
-                              
 
-Description
-           
+   :description:
 
 The usual definition of the color magenta.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -2982,32 +2280,22 @@ make
 
 G.f. method
 '''''''''''
-
-Summary
-       
-
 Returns an object that is of the same type as the class given as its
 argument.
 
-Signature
-         
-
-*make* *(class* *==* *<pen>)* *#key* *width* *units* *dashes*
+   :signature: make* *(class* *==* *<pen>)* *#key* *width* *units* *dashes*
 *joint-shape* *cap-shape* => *pen*
-                                                                                                
 
 *make* *(class* *==* *<brush>)* *#key* *foreground* *background* *mode*
 *fill-style* *fill-rule* *tile* *stipple* *ts-x* *ts-y* => *brush*
-                                                                                                                                          
 
 Arguments
-         
 
 -  *(class==<pen>)* The class `<pen>`_.
 -  *width* An instance of type *<pen-width>*. Default value: *1*.
 -  *units* An instance of type *<pen-units>*. Default value:
    *#"normal"*.
--  *dashes* An instance of type *<pen-dashes>*. Default value: *#f*.
+-  *dashes* An instance of type *<pen-dashes>*. Default value: ``#f``.
 -  *joint-shape* An instance of type *<pen-joint-shape>*. Default
    value: *#"miter"*.
 -  *cap-shape* An instance of type *<pen-cap-shape>*. Default value:
@@ -3017,30 +2305,27 @@ Arguments
    Default value: *$foreground*.
 -  *background* An instance of type `<ink>`_.
    Default value: *$background*.
--  *mode* An instance of type *<integer>*. Default value: *$boole-1*.
--  *fill-style* A *(fill-style)* or *#f*.** Default value: *#f*.
--  *fill-rule* A *(fill-rule)* or *#f*.** Default value: *#f*.
--  *tile* An *(image)* or *#f*.** Default value: *#f*.
--  *stipple* A *(stipple)* or *#f*.** Default value: *#f*.
--  *ts-x* An instance of *false-or(<integer>).* Default value: *#f*.
--  *ts-y* An instance of *false-or(<integer>).* Default value: *#f*.
+-  *mode* An instance of type ``<integer>``. Default value: *$boole-1*.
+-  *fill-style* A *(fill-style)* or ``#f``.** Default value: ``#f``.
+-  *fill-rule* A *(fill-rule)* or ``#f``.** Default value: ``#f``.
+-  *tile* An *(image)* or ``#f``.** Default value: ``#f``.
+-  *stipple* A *(stipple)* or ``#f``.** Default value: ``#f``.
+-  *ts-x* An instance of *false-or(<integer>).* Default value: ``#f``.
+-  *ts-y* An instance of *false-or(<integer>).* Default value: ``#f``.
 
 Values
-      
 
 -  *pen* An instance of type `<pen>`_.
 -  *brush* An instance of type `<brush>`_.
 
-Description
-           
+   :description:
 
 Returns an object that is of the same type as the class given as its
 argument. Default values for the keywords that specify object are
 provided, or the keywords can be given explicitly to override the
 defaults.
 
-See also
-        
+   See also
 
 `<brush>`_
 
@@ -3051,35 +2336,23 @@ make-color-for-contrasting-color
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns a color that is recognizably different from the main color.
 
-Signature
-         
-
-*make-color-for-contrasting-color* *ink* => *color*
-                                                   
+   :signature: make-color-for-contrasting-color* *ink* => *color*
 
 Arguments
-         
 
 -  *ink* An instance of type `<ink>`_.
 
 Values
-      
 
 -  *color* An instance of type `<color>`_.
 
-Description
-           
+   :description:
 
 Returns a color that is recognizably different from the main color.
 
-See also
-        
+   See also
 
 `make-contrasting-colors`_
 
@@ -3088,32 +2361,21 @@ make-contrasting-colors
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a vector of colors with recognizably different appearance.
 
-Signature
-         
-
-*make-contrasting-colors* *n* #key *k* => *colors*
-                                                  
+   :signature: make-contrasting-colors* *n* #key *k* => *colors*
 
 Arguments
-         
 
--  *n* An instance of type *<integer>*.
--  *k* An instance of type *<integer>*.
+-  *n* An instance of type ``<integer>``.
+-  *k* An instance of type ``<integer>``.
 
 Values
-      
 
 -  *colors* An instance of type *limited(<sequence>, of:* `See
    <color>`_*)*.
 
-Description
-           
+   :description:
 
 Returns a vector of n colors with recognizably different appearance.
 Elements of the vector are guaranteed to be acceptable values for the
@@ -3132,8 +2394,7 @@ If the implementation does not have *n* different contrasting colors,
 The rendering of the color is a true color or a stippled pattern,
 depending on whether the output medium supports color.
 
-See also
-        
+   See also
 
 `contrasting-colors-limit`_
 
@@ -3148,32 +2409,21 @@ make-contrasting-dash-patterns
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a vector of dash patterns with recognizably different
 appearances.
 
-Signature
-         
-
-*make-contrasting-dash-patterns* *n* *#key* *k* => *dashes*
-                                                           
+   :signature: make-contrasting-dash-patterns* *n* *#key* *k* => *dashes*
 
 Arguments
-         
 
--  *n* An instance of type *<integer>*.
--  *k* An instance of type *<integer>*.
+-  *n* An instance of type ``<integer>``.
+-  *k* An instance of type ``<integer>``.
 
 Values
-      
 
 -  *dashes* An instance of type *<vector>*.
 
-Description
-           
+   :description:
 
 Returns a vector of *n* dash patterns with recognizably different
 appearances. If the keyword *k* is supplied,
@@ -3185,8 +2435,7 @@ The argument *n* represents the number of dash patterns.
 The argument *k* represents the index in the vector of dash patterns
 indicating the pattern to use.
 
-See also
-        
+   See also
 
 `contrasting-dash-patterns-limit`_
 
@@ -3197,31 +2446,20 @@ make-device-font
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a device-specific font.
 
-Signature
-         
-
-*make-device-font* *port* *font* => *device-font*
-                                                 
+   :signature: make-device-font* *port* *font* => *device-font*
 
 Arguments
-         
 
 -  *port* An instance of type ` <silica.htm#11606>`_.
--  *font* An instance of type *<object>*.
+-  *font* An instance of type ``<object>``.
 
 Values
-      
 
 -  *device-font* A font object or the name of a font.
 
-Description
-           
+   :description:
 
 Returns a device-specific font. Text styles are mapped to fonts for a
 port, a character set, and a text style. All ports must implement
@@ -3240,32 +2478,21 @@ make-gray-color
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a member of class *<color>*.
 
-Signature
-         
-
-*make-gray-color* *luminosity* #key *opacity* => *color*
-                                                        
+   :signature: make-gray-color* *luminosity* #key *opacity* => *color*
 
 Arguments
-         
 
 -  *luminosity* An instance of type *limited(<real>, min: 0, max: 1)*.
 -  *opacity* An instance of type *limited(<real>, min: 0, max: 1)*.
    Default value: *1.0*.
 
 Values
-      
 
 -  *color* An instance of type `<color>`_.
 
-Description
-           
+   :description:
 
 Returns a member of class *<color>*. The *luminance* is a real number
 between *0* and *1* (inclusive). On a black-on-white display device, *0*
@@ -3273,8 +2500,7 @@ means black, *1* means white, and the values in between are shades of
 gray. On a white-on-black display device, *0* means white, *1* means
 black, and the values in between are shades of gray.
 
-See also
-        
+   See also
 
 `make-ihs-color`_
 
@@ -3285,21 +2511,12 @@ make-ihs-color
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a member of the class *<color>*.
 
-Signature
-         
-
-*make-ihs-color* *intensity* *hue* *saturation* #key *opacity* =>
+   :signature: make-ihs-color* *intensity* *hue* *saturation* #key *opacity* =>
 *color*
-                                                                         
 
 Arguments
-         
 
 -  *intensity* An instance of type *limited(<real>, min: 0, max:
    sqrt(3))*.
@@ -3309,19 +2526,16 @@ Arguments
    Default value: *1.0*.
 
 Values
-      
 
 -  *color* An instance of type `<color>`_.
 
-Description
-           
+   :description:
 
 Returns a member of class *<color>*. The *intensity* argument is a real
 number between *0* and sqrt(*3*) (inclusive). The *hue* and
 *saturation* arguments are real numbers between 0 and 1 (inclusive).
 
-See also
-        
+   See also
 
 `make-gray-color`_
 
@@ -3332,30 +2546,19 @@ make-palette
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns a member of the class *<palette>*.
 
-Signature
-         
-
-*make-palette* *port* *#key* => *palette*
-                                         
+   :signature: make-palette* *port* *#key* => *palette*
 
 Arguments
-         
 
 -  *port* An instance of type ` <silica.htm#11606>`_.
 
 Values
-      
 
 -  *palette* An instance of type `<palette>`_.
 
-Description
-           
+   :description:
 
 Returns a member of the class `<palette>`_.
 
@@ -3364,32 +2567,21 @@ make-pattern
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a pattern generated from a two-dimensional array.
 
-Signature
-         
-
-*make-pattern* *array* *colors* => *pattern*
-                                            
+   :signature: make-pattern* *array* *colors* => *pattern*
 
 Arguments
-         
 
 -  *array* An instance of type *<array>*.
 -  *colors* An instance of type *limited(<sequence>, of:* `See
    <color>`_*)*.
 
 Values
-      
 
 -  *pattern* An instance of type *<pattern>*.
 
-Description
-           
+   :description:
 
 Returns a pattern design that has *(array-dimension* *array* *0)* cells
 in the vertical direction and *(array-dimension* *array* *1}* cells in
@@ -3428,20 +2620,11 @@ make-rgb-color
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a member of class *<color>*.
 
-Signature
-         
-
-*make-rgb-color* *red* *green* *blue* #key *opacity* => *color*
-                                                               
+   :signature: make-rgb-color* *red* *green* *blue* #key *opacity* => *color*
 
 Arguments
-         
 
 -  *red* An instance of type *limited(<real>, min: 0, max: 1)*.
 -  *green* An instance of type *limited(<real>, min: 0, max: 1)*.
@@ -3450,12 +2633,10 @@ Arguments
    Default value: *1.0*.
 
 Values
-      
 
 -  *color* An instance of type `<color>`_.
 
-Description
-           
+   :description:
 
 Returns a member of class *<color>*. The *red*, *green*, and*blue*
 arguments are real numbers between 0 and 1 (inclusive) that specify the
@@ -3464,8 +2645,7 @@ values of the corresponding color components.
 When all three color components are 1, the resulting color is white.
 When all three color components are 0, the resulting color is black.
 
-See also
-        
+   See also
 
 `make-gray-color`_
 
@@ -3476,30 +2656,19 @@ make-stencil
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a pattern design generated from a two-dimensional array.
 
-Signature
-         
-
-*make-stencil* *array* => *stencil*
-                                   
+   :signature: make-stencil* *array* => *stencil*
 
 Arguments
-         
 
 -  *array* An instance of type *<array>*.
 
 Values
-      
 
 -  *stencil* An instance of type *<stencil>*.
 
-Description
-           
+   :description:
 
 Returns a pattern design that has (*array-dimension* *array* *0*) cells
 in the vertical direction and (*array-dimension* *array* *1*) cells in
@@ -3513,21 +2682,12 @@ make-text-style
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns an instance of *<text-style>*.
 
-Signature
-         
-
-*make-text-style* *family* *weight* *slant* *size* #key *underline?*
+   :signature: make-text-style* *family* *weight* *slant* *size* #key *underline?*
 *strikeout?* => *text-style*
-                                                                                                 
 
 Arguments
-         
 
 -  *family* An instance of type *one-of(#"fix", #"serif", #"sans-serif",
    #f)*.
@@ -3539,16 +2699,14 @@ Arguments
 -  *size* An instance of *<integer>*, or an instance of type
    *one-of(#"normal", #"tiny", #"very-small", #"small", #"large",
    #"very-large:", #"huge", #"smaller", #"larger", #f)*.
--  *underline?* An instance of type *<boolean>*.
--  *strikeout?* An instance of type *<boolean>*.
+-  *underline?* An instance of type ``<boolean>``.
+-  *strikeout?* An instance of type ``<boolean>``.
 
 Values
-      
 
 -  *text-style* An instance of type *<text-style>*.
 
-Description
-           
+   :description:
 
 Returns an instance of *<text-style>*.
 
@@ -3556,9 +2714,9 @@ Text style objects have components for family, face, and size. Not all
 of these attributes need be supplied for a given text style object. Text
 styles can be merged in much the same way as pathnames are merged;
 unspecified components in the style object (that is, components that
-have *#f* in them) may be filled in by the components of a default style
+have ``#f`` in them) may be filled in by the components of a default style
 object. A text style object is called *fully specified* if none of its
-components is *#f*, and the size component is not a relative size (that
+components is ``#f``, and the size component is not a relative size (that
 is, neither *#"smaller"* nor *#"larger"*).
 
 If *size* is an integer, it represents the size of the font in printer’s
@@ -3567,8 +2725,7 @@ points.
 Implementations are permitted to extend legal values for family, face,
 and size.
 
-See also
-        
+   See also
 
 `$solid-pen`_.
 
@@ -3577,33 +2734,22 @@ merge-text-styles
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Merges two text styles and returns a new text style that is the same as
 the first, except that unspecified components in are filled in from the
 second.
 
-Signature
-         
-
-*merge-text-styles* *text-style* *default-style* => *text-style*
-                                                                
+   :signature: merge-text-styles* *text-style* *default-style* => *text-style*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 -  *default-style* An instance of type *<text-style>*.
 
 Values
-      
 
 -  *text-style* An instance of type *<text-style>*.
 
-Description
-           
+   :description:
 
 Merges the text styles *text-style* with *default-style*, that is,
 returns a new text style that is the same as *text-style,* except that
@@ -3617,8 +2763,7 @@ or next larger size than is specified by *default-style*. The ordering
 of sizes, from smallest to largest, is *#"tiny"*, *#"very-small"*,
 *#"small"*, *#"normal"*, *#"large"*,*#"very-large"*, and *#"huge"*.
 
-See also
-        
+   See also
 
 `default-background-setter`_.
 
@@ -3627,36 +2772,26 @@ See also
 
 Abstract instantiable class
 '''''''''''''''''''''''''''
-
-Summary
-       
-
 The protocol class for color palettes.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
-          
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The protocol class for color palettes.
 
-Operations
-          
+   :operations:
 
 ` <silica.htm#25428>`_ ` <silica.htm#39992>`_ ` <frames.htm#29202>`_
 ` <frames.htm#56600>`_ ` <silica.htm#84661>`_
 
-See also
-        
+   See also
 
 `palette?`_
 
@@ -3665,36 +2800,24 @@ palette?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if an object is a palette.
 
-Summary
-       
-
-Returns *#t* if an object is a palette.
-
-Signature
-         
-
-*palette?* *object* => *boolean*
-                                
+   :signature: palette?* *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if the object *object* is a palette. A palette is a color
+Returns ``#t`` if the object *object* is a palette. A palette is a color
 map that maps 16 bit colors into a, for example, 8 bit display.
 
-See also
-        
+   See also
 
 `<palette>`_
 
@@ -3703,30 +2826,21 @@ See also
 
 Sealed concrete class
 '''''''''''''''''''''
-
-Summary
-       
-
 The class for errors that are signalled when a color palette is full.
 
-Superclasses
-            
+   :superclasses:
 
 *<error>*
-         
 
 Init-keywords
-             
 
 -  *palette:*
 
-Description
-           
+   :description:
 
 The class for errors that are signalled when a color palette is full.
 
-See also
-        
+   See also
 
 `<palette>`_
 
@@ -3735,27 +2849,19 @@ $parquet-stipple
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush that looks like
 a parquet floor.
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush that looks like
 a parquet floor.
 
-See also
-        
+   See also
 
 `brush-stipple`_.
 
@@ -3764,40 +2870,30 @@ See also
 
 Sealed concrete class
 '''''''''''''''''''''
-
-Summary
-       
-
 The class for patterns.
 
-Superclasses
-            
+   :superclasses:
 
 *<stencil>*
-           
 
 Init-keywords
-             
 
 -  *colors:* An instance of type *limited(<sequence> of: `See
    <color>`_)*.
 
-Description
-           
+   :description:
 
 The class for patterns. A pattern is a bounded rectangular arrangement
 of color, like a checkerboard. Drawing a pattern draws a different
 design in each rectangular cell of the pattern.
 
-Operations
-          
+   :operations:
 
 The following operation is exported from the *DUIM-DCs* module.
 
 -  `pattern?`_
 
-See also
-        
+   See also
 
 `<stencil>`_
 
@@ -3808,35 +2904,23 @@ pattern?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if its argument is a pattern.
 
-Summary
-       
-
-Returns *#t* if its argument is a pattern.
-
-Signature
-         
-
-*pattern?* *object* => *boolean*
-                                
+   :signature: pattern?* *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if *object* is a pattern.
+Returns ``#t`` if *object* is a pattern.
 
-See also
-        
+   See also
 
 `make-pattern`_
 
@@ -3845,38 +2929,29 @@ See also
 
 Abstract instantiable class
 '''''''''''''''''''''''''''
-
-Summary
-       
-
 The protocol class for pens.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
-          
 
 Init-keywords
-             
 
--  *width:* An instance of type *<integer>*. Default value: *1*.
+-  *width:* An instance of type ``<integer>``. Default value: *1*.
 -  *units:* An instance of type *one-of(#"normal", #"point", #"device")*
    . Default value: *#"normal"*.
 -  *dashes:* An instance of type *union(<boolean>, <sequence>)*.
-   Default value: *#f*.
+   Default value: ``#f``.
 -  *joint-shape:* An instance of type *one-of(#"miter", #"bevel",
    #"round", #"none")*. Default value: *#"miter"*.
 -  *cap-shape:* An instance of type *one-of(#"butt", #"square",
    #"round", #"no-end-point")*. Default value: *#"butt"*.
 
-Description
-           
+   :description:
 
 The protocol class for pens. A pen imparts ink to a medium.
 
-Operations
-          
+   :operations:
 
 The following operations are exported from the *DUIM-DCs* module.
 
@@ -3885,8 +2960,7 @@ pen-cap-shape`_ `pen-dashes`_ `See
 pen-joint-shape`_ `pen-units`_ `See
 pen-width`_
 
-See also
-        
+   See also
 
 `<ink>`_
 
@@ -3909,35 +2983,23 @@ pen?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if its argument is a pen.
 
-Summary
-       
-
-Returns *#t* if its argument is a pen.
-
-Signature
-         
-
-*pen?* *object* => *boolean*
-                            
+   :signature: pen?* *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if *object* is a pen, otherwise returns *#f*.
+Returns ``#t`` if *object* is a pen, otherwise returns ``#f``.
 
-See also
-        
+   See also
 
 `<pen>`_
 
@@ -3956,36 +3018,24 @@ pen-cap-shape
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the shape of the end of a line or an arc drawn by the pen.
 
-Signature
-         
-
-*pen-cap-shape* *pen* => *value*
-                                
+   :signature: pen-cap-shape* *pen* => *value*
 
 Arguments
-         
 
 -  *pen* An instance of type `<pen>`_.
 
 Values
-      
 
 -  *value* An instance of type *one-of(#"butt", #"square", #"round",
    #"no-end-point")*.
 
-Description
-           
+   :description:
 
 Returns the shape of the end of a line or an arc drawn by *pen*.
 
-See also
-        
+   See also
 
 `make-contrasting-dash-patterns`_
 
@@ -4006,39 +3056,27 @@ pen-dashes
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if the lines drawn by a pen are dashed.
 
-Summary
-       
-
-Returns *#t* if the lines drawn by a pen are dashed.
-
-Signature
-         
-
-*pen-dashes* *pen* => *value*
-                             
+   :signature: pen-dashes* *pen* => *value*
 
 Arguments
-         
 
 -  *pen* An instance of type `<pen>`_.
 
 Values
-      
 
 -  *value* An instance of type *type-union(<boolean>, <sequence>)*.
 
-Description
-           
+   :description:
 
-Returns *#t* if the lines drawn by *pen* are dashed. The sequence is a
+Returns ``#t`` if the lines drawn by *pen* are dashed. The sequence is a
 vector of integers indicating the pattern of dashes. There must be an
 even number of integers. The odd elements in the list indicate the
 length of the inked dashes and the even elements indicate the length of
 the gaps between dashes.
 
-See also
-        
+   See also
 
 `<pen>`_
 
@@ -4057,38 +3095,26 @@ pen-joint-shape
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the shape of the joints between line segments of a closed,
 unfilled figure.
 
-Signature
-         
-
-*pen-joint-shape* *pen* => *value*
-                                  
+   :signature: pen-joint-shape* *pen* => *value*
 
 Arguments
-         
 
 -  *pen* An instance of type `<pen>`_.
 
 Values
-      
 
 -  *value* An instance of type *one-of(#"miter", #"bevel", #"round",
    #"none")*.
 
-Description
-           
+   :description:
 
 Returns the shape of the joints between line segments of a closed,
 unfilled figure drawn by *pen*.
 
-See also
-        
+   See also
 
 `make-contrasting-dash-patterns`_
 
@@ -4109,38 +3135,26 @@ pen-units
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the units in which the pen width is specified.
 
-Signature
-         
-
-*pen-units* *pen* => *value*
-                            
+   :signature: pen-units* *pen* => *value*
 
 Arguments
-         
 
 -  *pen* An instance of type `<pen>`_.
 
 Values
-      
 
 -  *value* An instance of type *one-of(#"normal", #"point", #"device")*
    .
 
-Description
-           
+   :description:
 
 Returns the units in which the pen width is specified. They may be
 normal, points, or device-dependent. A width of *#"normal"* is a
 comfortably visible thin line.
 
-See also
-        
+   See also
 
 `make-contrasting-dash-patterns`_
 
@@ -4161,39 +3175,27 @@ pen-width
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the pen-width, that is how wide a stroke the pen draws, of its
 argument.
 
-Signature
-         
-
-*pen-width* *pen* => *width*
-                            
+   :signature: pen-width* *pen* => *width*
 
 Arguments
-         
 
 -  *pen* An instance of type `<pen>`_.
 
 Values
-      
 
 -  *width* An instance of type *<pen-width>*. The units that specify
    the width of the pen may be *#"normal"*, *#"points"*, or
    *#"device"*.
 
-Description
-           
+   :description:
 
 Returns the pen width, that is how wide a stroke the pen draws, of *pen*
 . A width of *#"normal"* is a comfortably visible thin line.
 
-See also
-        
+   See also
 
 `make-contrasting-dash-patterns`_
 
@@ -4214,39 +3216,27 @@ read-image
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Reads an image.
 
-Signature
-         
-
-*read-image* *resource-id* *#key image-type:* *image-type* *#all-keys*
+   :signature: read-image* *resource-id* *#key image-type:* *image-type* *#all-keys*
 => *image*
-                                                                                 
 
 Arguments
-         
 
 -  *locator* An instance of type *type-union(<string>, <locator>)*.
 -  *image-type* On Windows, an instance of type *one-of(#"bitmap",
    #"icon")*.
 
 Values
-      
 
 -  *image* An instance of type *<image>*.
 
-Description
-           
+   :description:
 
 Reads an image from the location *resource-id*. This function calls
 *read-image-as*.
 
-See also
-        
+   See also
 
 `read-image-as`_.
 
@@ -4255,32 +3245,21 @@ read-image-as
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Reads an image.
 
-Signature
-         
-
-*read-image-as* *class* *locator* *image-type* #key #all-keys => *image*
-                                                                        
+   :signature: read-image-as* *class* *locator* *image-type* #key #all-keys => *image*
 
 Arguments
-         
 
--  *class* An instance of type *<object>*.
+-  *class* An instance of type ``<object>``.
 -  *locator* An instance of type *<string>*.
 -  *image-type* On Windows, *#"bitmap"* or *#"icon"*.
 
 Values
-      
 
 -  *image* An instance of type *<image>*.
 
-Description
-           
+   :description:
 
 Reads the image in the location pointed to be *locator*, as an instance
 of a particular class*.* This function is called by *read-image.*
@@ -4288,8 +3267,7 @@ of a particular class*.* This function is called by *read-image.*
 The *class* represents the class that the image is read as an instance
 of.
 
-See also
-        
+   See also
 
 `read-image`_
 
@@ -4298,25 +3276,17 @@ $red
 
 Constant
 ''''''''
-
-Summary
-       
-
 The usual definition of the color red.
 
-Type
-    
+   :type:
 
 `<color>`_
-                              
 
-Description
-           
+   :description:
 
 The usual definition of the color red.
 
-See also
-        
+   See also
 
 See the class `$blue`_.
 
@@ -4325,32 +3295,21 @@ remove-colors
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Removes one or more colors from a palette and returns the updated
 palette.
 
-Signature
-         
-
-*remove-colors* *palette* *#rest* *colors* => *palette*
-                                                       
+   :signature: remove-colors* *palette* *#rest* *colors* => *palette*
 
 Arguments
-         
 
 -  *palette* An instance of type `<palette>`_.
 -  *colors* Instances of type `<color>`_.
 
 Values
-      
 
 *palette*
 
-Description
-           
+   :description:
 
 Removes *colors* from *palette* and returns the updated palette.
 
@@ -4359,26 +3318,18 @@ $solid-pen
 
 Constant
 ''''''''
-
-Summary
-       
-
 A pen that draws a solid line.
 
-Type
-    
+   :type:
 
 `<pen>`_
-                            
 
-Description
-           
+   :description:
 
 A pen that draws a solid line. The width of the line is *1*, and
 *dashes:* is *#f.*
 
-See also
-        
+   See also
 
 See the class `<pen>`_ and the constants `See
 make`_, `$dash-dot-pen`_, and `See
@@ -4389,33 +3340,24 @@ $dotted-pen`_.
 
 Sealed concrete class
 '''''''''''''''''''''
-
-Summary
-       
-
 The class for stencils.
 
-Superclasses
-            
+   :superclasses:
 
 *<image>*
-         
 
 Init-keywords
-             
 
 -  *array:* An instance of type *<array>*. Required.
 -  *transform:* An instance of type `<transform> <geom.htm#33417>`_.
-   Default value: *#f*.
+   Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class for stencils. A *stencil* is a special kind of pattern that
 contains only opacities.
 
-Operations
-          
+   :operations:
 
 The following operations are exported from the *DUIM-DCs* module.
 
@@ -4426,8 +3368,7 @@ The following operation is exported from the *DUIM-Geometry* module.
 
 `box-edges <geom.htm#52858>`_
 
-See also
-        
+   See also
 
 `<image>`_
 
@@ -4440,35 +3381,23 @@ stencil?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if its argument is a stencil.
 
-Summary
-       
-
-Returns *#t* if its argument is a stencil.
-
-Signature
-         
-
-stencil? *object* => *boolean*
-                              
+   :signature: stencil? *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if its argument is a stencil.
+Returns ``#t`` if its argument is a stencil.
 
-See also
-        
+   See also
 
 `make-pattern`_.
 
@@ -4479,23 +3408,16 @@ See also
 
 Abstract instantiable class
 '''''''''''''''''''''''''''
-
-Summary
-       
-
 The protocol class for text styles.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
-          
 
 Init-keywords
-             
 
 -  *family:* An instance of type *one-of(#"fix", #"serif",
-   #"sans-serif", #f)*. Default value: *#f*.
+   #"sans-serif", #f)*. Default value: ``#f``.
 -  *weight:* An instance of type *one-of(#"normal", #"condensed",
    #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold",
    #"extra-bold", #"black", #f)*.
@@ -4504,12 +3426,11 @@ Init-keywords
 -  *size:* An instance of *<integer>*, or an instance of type
    *one-of(#"normal", #"tiny", #"very-small", #"small", #"large",
    #"very-large:", #"huge", #"smaller", #"larger", #f)*. Default value:
-   *#f*.
--  *underline?:* An instance of type *<boolean>*. Default value: *#f*.
--  *strikeout?:* An instance of type *<boolean>*. Default value: *#f*.
+   ``#f``.
+-  *underline?:* An instance of type ``<boolean>``. Default value: ``#f``.
+-  *strikeout?:* An instance of type ``<boolean>``. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The protocol class for text styles. When specifying a particular
 appearance for rendered characters, there is a tension between
@@ -4527,8 +3448,7 @@ portability for control.
 If *size:* is specified as an integer, then it represents the font size
 in printer’s points.
 
-Operations
-          
+   :operations:
 
 The following operations are exported from the *DUIM-DCs* module.
 
@@ -4549,8 +3469,7 @@ The following operations are exported from the *DUIM-Sheets* module.
 ` <silica.htm#19634>`_ ` <silica.htm#96248>`_ ` <silica.htm#20511>`_
 ` <silica.htm#39545>`_ ` <silica.htm#66055>`_ ` <silica.htm#79518>`_
 
-See also
-        
+   See also
 
 `text-style?`_
 
@@ -4573,35 +3492,23 @@ text-style?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if its argument is a text-style.
 
-Summary
-       
-
-Returns *#t* if its argument is a text-style.
-
-Signature
-         
-
-*text-style?* *object* => *text-style?*
-                                       
+   :signature: text-style?* *object* => *text-style?*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *text-style?* An instance of type *<boolean>*.
+-  *text-style?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if its argument is a text-style.
+Returns ``#t`` if its argument is a text-style.
 
-See also
-        
+   See also
 
 `<text-style>`_
 
@@ -4624,27 +3531,17 @@ text-style-components
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the components of a text style as the values family, face,
 slant, size, underline and strikeout.
 
-Signature
-         
-
-*text-style-components* *text-style* => *family* *weight* *slant* *size*
+   :signature: text-style-components* *text-style* => *family* *weight* *slant* *size*
 *underline?* *strikeout?*
-                                                                                                  
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 
 Values
-      
 
 -  *family* An instance of type *one-of(#"fix", #"serif", #"sans-serif",
    #f)*.
@@ -4656,18 +3553,16 @@ Values
 -  *size* An instance of *<integer>*, or an instance of type
    *one-of(#"normal", #"tiny", #"very-small", #"small", #"large",
    #"very-large:", #"huge", #"smaller", #"larger", #f)*. Default value:
-   *#f*.
--  *underline?* An instance of type *<boolean>*.
--  *strikeout?* An instance of type *<boolean>*.
+   ``#f``.
+-  *underline?* An instance of type ``<boolean>``.
+-  *strikeout?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns the components of the text style *text-style* as the values
 family, face, slant, size, underline and strikeout.
 
-See also
-        
+   See also
 
 `<text-style>`_
 
@@ -4690,36 +3585,24 @@ text-style-family
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the family component of the specified text style.
 
-Signature
-         
-
-*text-style-family* *text-style* => *family*
-                                            
+   :signature: text-style-family* *text-style* => *family*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 
 Values
-      
 
 -  *family* An instance of type *one-of(#"fix", #"serif", #"sans-serif",
    #f)*.
 
-Description
-           
+   :description:
 
 Returns the family component of the specified text style.
 
-See also
-        
+   See also
 
 `<text-style>`_
 
@@ -4742,38 +3625,26 @@ text-style-size
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the style component of the specified text style.
 
-Signature
-         
-
-*text-style-size* *text-style* => *size*
-                                        
+   :signature: text-style-size* *text-style* => *size*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 
 Values
-      
 
 -  *size* An instance of *<integer>*, or an instance of type
    *one-of(#"normal", #"tiny", #"very-small", #"small", #"large",
    #"very-large:", #"huge", #"smaller", #"larger", #f)*. Default value:
-   *#f*.
+   ``#f``.
 
-Description
-           
+   :description:
 
 Returns the style component of the specified text style.
 
-See also
-        
+   See also
 
 `<text-style>`_
 
@@ -4796,36 +3667,24 @@ text-style-slant
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the slant component of the specified text style.
 
-Signature
-         
-
-*text-style-slant* *text-style* => *slant*
-                                          
+   :signature: text-style-slant* *text-style* => *slant*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 
 Values
-      
 
 -  *slant* An instance of type *one-of(#"roman", #"italic", #"oblique",
    #f)*.
 
-Description
-           
+   :description:
 
 Returns the slant component of the specified text style.
 
-See also
-        
+   See also
 
 `<text-style>`_
 
@@ -4848,37 +3707,25 @@ text-style-strikeout?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
-Returns *#t* if the text style includes a line through it, striking it
+Returns ``#t`` if the text style includes a line through it, striking it
 out.
 
-Signature
-         
-
-*text-style-strikeout?* *text-style* => *strikeout?*
-                                                    
+   :signature: text-style-strikeout?* *text-style* => *strikeout?*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 
 Values
-      
 
--  *strikeout?* An instance of type *<boolean>*.
+-  *strikeout?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if the text style includes a line through it, striking it
+Returns ``#t`` if the text style includes a line through it, striking it
 out.
 
-See also
-        
+   See also
 
 `<text-style>`_
 
@@ -4901,35 +3748,23 @@ text-style-underline?
 
 Generic function
 ''''''''''''''''
+Returns ``#t`` if the text style is underlined.
 
-Summary
-       
-
-Returns *#t* if the text style is underlined.
-
-Signature
-         
-
-*text-style-underline?* *text-style* => *underline?*
-                                                    
+   :signature: text-style-underline?* *text-style* => *underline?*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 
 Values
-      
 
--  *underline?* An instance of type *<boolean>*.
+-  *underline?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if the text style is underlined.
+Returns ``#t`` if the text style is underlined.
 
-See also
-        
+   See also
 
 `<text-style>`_
 
@@ -4952,37 +3787,25 @@ text-style-weight
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the weight component of the specified text style.
 
-Signature
-         
-
-*text-style-weight* *text-style* => *weight*
-                                            
+   :signature: text-style-weight* *text-style* => *weight*
 
 Arguments
-         
 
 -  *text-style* An instance of type *<text-style>*.
 
 Values
-      
 
 -  *weight* An instance of type *one-of(#"normal", #"condensed",
    #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold",
    #"extra-bold", #"black", #f)*.
 
-Description
-           
+   :description:
 
 Returns the weight component of the text style.
 
-See also
-        
+   See also
 
 `<text-style>`_
 
@@ -5005,27 +3828,19 @@ $tiles-stipple
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush with lines and
 spaces suggesting tiles
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush with lines and
 spaces suggesting tiles
 
-See also
-        
+   See also
 
 `brush-stipple`_.
 
@@ -5034,27 +3849,19 @@ $vertical-hatch
 
 Constant
 ''''''''
-
-Summary
-       
-
 A stipple pattern for use in creating a patterned brush with alternating
 vertical columns of lines and spaces.
 
-Type
-    
+   :type:
 
 *<array>*
-         
 
-Description
-           
+   :description:
 
 A stipple pattern for use in creating a patterned brush with alternating
 vertical columns of lines and spaces.
 
-See also
-        
+   See also
 
 `brush-stipple`_.
 
@@ -5063,26 +3870,18 @@ $white
 
 Constant
 ''''''''
-
-Summary
-       
-
 The usual definition of white.
 
-Type
-    
+   :type:
 
 `<color>`_
-                              
 
-Description
-           
+   :description:
 
 The usual definition of white. In the *rgb* color model, its value is
 *111*.
 
-See also
-        
+   See also
 
 `<color>`_
 
@@ -5091,31 +3890,17 @@ write-image
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Writes out a copy of an image to disk (or other designated medium).
 
-Signature
-         
-
-*write-image* *image* *locator* => ()
-                                     
+   :signature: write-image* *image* *locator* => ()
 
 Arguments
-         
 
 -  *image* An instance of type *<image>*.
 -  *locator* An instance of type *<string>*.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Writes out a copy of *image* to the designated medium *locator*.
 
@@ -5124,20 +3909,13 @@ $xor-brush
 
 Constant
 ''''''''
-
-Summary
-       
-
 A standard brush with the drawing property of *$boole-xor*.
 
-Type
-    
+   :type:
 
 `<brush>`_
-                              
 
-Description
-           
+   :description:
 
 A standard brush with the drawing property of *$boole-xor*.
 
@@ -5146,25 +3924,17 @@ $yellow
 
 Constant
 ''''''''
-
-Summary
-       
-
 The usual definition of the color yellow.
 
-Type
-    
+   :type:
 
 `<color>`_
-                              
 
-Description
-           
+   :description:
 
 The usual definition of the color yellow.
 
-See also
-        
+   See also
 
 `<color>`_
 

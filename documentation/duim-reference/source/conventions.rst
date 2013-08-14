@@ -107,7 +107,7 @@ Immutability of objects
 
 Most DUIM objects are *immutable*, that is, at the API level none of
 their components can be modified once the object is created. Examples of
-immutable objects include all of the members of the *<region>* classes,
+immutable objects include all of the members of the :class:`<region>` classes,
 pens, brushes, colors, and text styles. Since immutable objects by
 definition never change, functions in the DUIM API can safely capture
 immutable objects without first copying them. This also allows DUIM to

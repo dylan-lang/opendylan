@@ -40,7 +40,6 @@ subclasses defined. See `Subclasses of
 *<layout>*.
 
 Overall class hierarchy for the DUIM-Layouts library
-                                                    
 
 .. figure:: images/layouts-2.png
    :align: center
@@ -73,7 +72,6 @@ Subclasses of <layout>`_. In addition, a number of
 different types of pane are supplied by the DUIM-Layouts library.
 
 *<basic-composite-pane>*
-                        
 
 -  This is a basic type of pane that is used to create any sheet that
    can contain children. It has two subclasses, one used for sheets that
@@ -81,7 +79,6 @@ different types of pane are supplied by the DUIM-Layouts library.
    children.
 
 *<drawing-pane>*
-                
 
 -  This type of pane is used to create sheets on which geometric objects
    are drawn, for example, using the function provided by the
@@ -91,7 +88,6 @@ different types of pane are supplied by the DUIM-Layouts library.
    Library <graphics.htm#46330>`_, respectively.
 
 *<top-level-sheet>*
-                   
 
 -  This class is used for any sheets that are at the top level of the
    hierarchy of windows on the screen: that is, there is no other sheet
@@ -109,7 +105,6 @@ The subclasses of *<layout>* are shown in `Subclasses of the
 <layout> class`_.
 
 Subclasses of the *<layout>* class
-                                  
 
 .. figure:: images/layouts-2.png
    :align: center
@@ -140,7 +135,6 @@ The layouts provided by DUIM fall roughly into two categories:
 The classes of layout available are as follows:
 
 *<column-layout>*
-                 
 
 -  This class lays out its children in a single column, with all its
    children left-aligned by default.
@@ -154,7 +148,6 @@ The classes of layout available are as follows:
    according to a specified number of rows and columns.
 
 *<pinboard-layout>*
-                   
 
 -  This does not constrain the position of its children in any way. It
    is up to you to position each child individually, like pins on a
@@ -170,7 +163,6 @@ In addition to the basic types of layout described above, a subclass of
    in which all the cells in the table are forced to be the same size.
 
 Column, row, and pinboard layouts
-                                 
 
 .. figure:: images/layouts-2.png
    :align: center
@@ -190,32 +182,18 @@ allocate-space
 
 Open generic function
 '''''''''''''''''''''
-
-Summary
-       
-
 Allocates space within a layout for its children.
 
-Signature
-         
-
-allocate-space *pane* *width height* => ()
-                                          
+   :signature: allocate-space *pane* *width height* => ()
 
 Arguments
-         
 
 -  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
 
-Values
-      
 
-None.
-
-Description
-           
+   :description:
 
 Allocates space within a layout for its children. During the space
 allocation pass, a composite pane arranges its children within the
@@ -232,8 +210,7 @@ do-allocate-space`_ to perform the calculations.
 Client code may specialize `do-allocate-space`_,
 but not call it. Call *allocate-space* instead.
 
-See also
-        
+   See also
 
 `do-allocate-space`_
 
@@ -242,39 +219,30 @@ See also
 
 Base class
 ''''''''''
-
-Summary
-       
-
 The class of basic user panes.
 
-Superclasses
-            
+   :superclasses:
 
 <wrapping-layout-pane>
-                      
 
 Init-keywords
-             
 
 -  *region:* An instance of type `<region> <geom.htm#79228>`_.
    Default value: *`$nowhere <geom.htm#77397>`_*.
 -  *transform:* An instance of type `<transform> <geom.htm#33417>`_.
    Default value: `$identity-transform <geom.htm#70198>`_.
 -  *port:* An instance of type *false-or(`See
-   <port> <silica.htm#11606>`_)*. Default value: *#f*.
+   <port> <silica.htm#11606>`_)*. Default value: ``#f``.
 
 *style-descriptor:*
-                   
 
--  An instance of type *false-or(<object>)*. Default value: *#f*.
+-  An instance of type *false-or(<object>)*. Default value: ``#f``.
 -  *help-context:* An instance of type *<object-table>*. Default value:
    *make(<object-table>)*.
 -  *help-source:* An instance of type *<object-table>*. Default value:
    *make(<object-table>)*.
 
-Description
-           
+   :description:
 
 The class of basic user panes. This is the class that gets subclassed by
 `define pane`_.
@@ -302,13 +270,11 @@ identifies the source file in which the help topic identified by
 *help-context:* can be found. A list of context-IDs should be provided
 by the author of the online help system.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `define pane`_
 
@@ -317,55 +283,42 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of column layouts.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
--  *border:* An instance of type *<integer>*. Default value: 0.
+-  *border:* An instance of type ``<integer>``. Default value: 0.
 
 *spacing:*, *y-spacing:*
-                         
 
--  An instance of type *<integer>*. Default value: 0.
+-  An instance of type ``<integer>``. Default value: 0.
 
 *equalize-heights?:*
-                    
 
--  An instance of type *<boolean>*. Default value: *#f*.
+-  An instance of type ``<boolean>``. Default value: ``#f``.
 
 *equalize-widths?:*
-                   
 
--  An instance of type *<boolean>*. Default value: *#f*.
+-  An instance of type ``<boolean>``. Default value: ``#f``.
 -  *x-alignment:* An instance of type *one-of(#"left", #"right",
    #"center")*. Default value: *#"left"*.
 
 *ratios:*, *y-ratios:*
-                       
 
 -  An instance of type *false-or(limited(<sequence>), of: <integer>))*.
-   Default value: *#f*.
+   Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of column layouts. A column layout arranges its children in a
 column, automatically calculating the size and placement of each child
 within the specified parameters.
 
 Three buttons arranged in a column layout
-                                         
 
 .. figure:: images/layouts-2.png
    :align: center
@@ -410,16 +363,13 @@ half the vertical space, as shown in the diagram below.
 .. figure:: images/layouts-5.png
    :align: center
    :alt: 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<column-layout>,
-                             
 
 children: vector(make(<button>,
 
@@ -434,10 +384,8 @@ spacing: 100,
 x-alignment: #"right",
 
 ratios: #(1, 3)));
-                  
 
-See also
-        
+   See also
 
 `<grid-layout>`_
 
@@ -456,34 +404,23 @@ compose-space
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the amount of space required for a specified child of a
 composite pane.
 
-Signature
-         
-
-compose-space *pane* #key *width height* => *space-req*
-                                                       
+   :signature: compose-space *pane* #key *width height* => *space-req*
 
 Arguments
-         
 
 -  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *width* An instance of type *<integer>>*.
--  *height* An instance of type *<integer>*.
+-  *height* An instance of type ``<integer>``.
 
 Values
-      
 
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
-Description
-           
+   :description:
 
 Returns the amount of space required for *pane*, which is a child of a
 composite pane. During the space composition pass, a composite pane will
@@ -507,8 +444,7 @@ to perform the space calculations. Client code may specialize `See
 do-compose-space`_ but should not call it. Call
 *compose-space* instead.
 
-See also
-        
+   See also
 
 `do-compose-space`_
 
@@ -519,30 +455,15 @@ current-pane
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the current pane.
 
-Signature
-         
+   :signature: current-pane => *pane*
 
-current-pane => *pane*
-                      
-
-Arguments
-         
-
-None.
-
-Values
-      
+ Values
 
 -  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 
-Description
-           
+   :description:
 
 Returns the current pane: that is, the pane that has the mouse focus.
 
@@ -551,32 +472,23 @@ define pane
 
 Definition macro
 ''''''''''''''''
-
-Summary
-       
-
 Defines a new class of DUIM pane.
 
 Macro call
-          
 
 define pane *name* ({*supers* },\*) {*slots-and-panes* } end
-                                                            
 
 Arguments
-         
 
 -  *name* A Dylan name*bnf*.
 -  *supers* A Dylan name*bnf*.
 -  *slots-and-panes* A Dylan body*bnf*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 This macro lets you define a new class of DUIM pane.
 
@@ -601,10 +513,8 @@ protocol class called *<pane>*.
 In general, a pane is best described as a *concrete* sheet.
 
 Example
-       
 
 define pane <my-pane> ()
-                        
 
 slot my-layout,
 
@@ -615,10 +525,8 @@ slot my-exit-buttons,
 init-keyword: exit-buttons:;
 
 end pane <my-pane>;
-                   
 
-See also
-        
+   See also
 
 ` <frames.htm#50581>`_
 
@@ -627,33 +535,19 @@ do-allocate-space
 
 Open generic function
 '''''''''''''''''''''
-
-Summary
-       
-
 Called by `allocate-space`_ to calculate space
 requirements for a pane.
 
-Signature
-         
-
-do-allocate-space *pane width height* => ()
-                                           
+   :signature: do-allocate-space *pane width height* => ()
 
 Arguments
-         
 
 -  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
 
-Values
-      
 
-None.
-
-Description
-           
+   :description:
 
 This function is called by `allocate-space`_ to
 calculate space requirements for a pane. When calculating space
@@ -661,8 +555,7 @@ requirements for classes of pane you have defined yourself, you should
 add methods to this function, but not call it directly. Call
 *allocate-space* instead.
 
-See also
-        
+   See also
 
 `allocate-space`_
 
@@ -671,34 +564,23 @@ do-compose-space
 
 Open generic function
 '''''''''''''''''''''
-
-Summary
-       
-
 Called by `compose-space`_ to calculate space
 requirements for a child.
 
-Signature
-         
-
-do-compose-space *pane* #key *width height* => *space-req*
-                                                          
+   :signature: do-compose-space *pane* #key *width height* => *space-req*
 
 Arguments
-         
 
 -  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
 
 Values
-      
 
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
-Description
-           
+   :description:
 
 This function is called by *`compose-space`_* to
 calculate space requirements for a child. When calculating space
@@ -708,26 +590,20 @@ you should not call *do-compose-space* explicitly: call *`See
 compose-space`_* instead.
 
 Example
-       
 
 Assume that you have defined a new class of scroll bar as follows:
-                                                                  
 
 define class <my-scroll-bar>
-                            
 
 (<scroll-bar>,
 
 <leaf-pane>)
 
 end class <test-scroll-bar>;
-                            
 
 A new method for do-compose-space can be defined as follows:
-                                                            
 
 define method do-compose-space
-                              
 
 (pane :: <my-scroll-bar>, #key width, height)
 
@@ -762,10 +638,8 @@ max-height: $fill);
 end
 
 end method do-compose-space;
-                            
 
-See also
-        
+   See also
 
 `compose-space`_
 
@@ -774,28 +648,19 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of drawing panes.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
 *display-function:*
-                   
 
--  An instance of type *false-or(<function>)*. Default value: *#f*.
+-  An instance of type *false-or(<function>)*. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of drawing panes. This is a pane that provides event handling
 and a drawing surface. Note that a drawing pane can be wrapped around a
@@ -805,13 +670,11 @@ The *display-function:* init-keyword defines the display function for
 the pane. This gets called by the `See
 handle-repaint <silica.htm#28833>`_ method for *<simple-pane>*.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `handle-repaint <silica.htm#28833>`_
 
@@ -824,25 +687,17 @@ $fill
 
 Constant
 ''''''''
-
-Summary
-       
-
 Default value for width and height init-keywords for layout panes.
 
-Type
-    
+   :type:
 
 *<integer>*
-           
 
 Value
-     
 
 100000
 
-Description
-           
+   :description:
 
 This constant is used as the default value for any *width:* and
 *height:* init-keywords in layout panes.
@@ -853,8 +708,7 @@ space, and it may be given extra space if there is extra space in the
 layout. This default behavior can be changed if either the *min-width:*
 or *min-height:* init-keywords are specified explicitly.
 
-See also
-        
+   See also
 
 `make`_
 
@@ -863,25 +717,17 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of fixed layouts.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
 -  None.
 
-Description
-           
+   :description:
 
 The class of fixed layouts. Fixed layouts are similar to pinboard
 layouts, in that the positioning and geometry of the children of a fixed
@@ -898,13 +744,11 @@ constraints they have been given.
 Fixed layouts are most useful if you know exactly what size and position
 every child in the layout should be.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<layout>`_
 
@@ -915,28 +759,19 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of grid layouts.
 
-Superclasses
-            
+   :superclasses:
 
 `<table-layout>`_
-                                         
 
 Init-keywords
-             
 
 *cell-space-requirement:*
-                         
 
 -  An instance of type `<space-requirement>`_.
 
-Description
-           
+   :description:
 
 The class of grid layouts. A grid layout arranges its children in a
 grid, automatically calculating the size and placement of each child
@@ -945,13 +780,11 @@ within the specified parameters.
 The *cell-space-requirement:* init-keyword lets you specify the
 preferred space requirement for any individual cell in the grid layout.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<column-layout>`_
 
@@ -966,31 +799,22 @@ horizontally
 
 Statement macro
 '''''''''''''''
-
-Summary
-       
-
 Lays out a series of gadgets horizontally.
 
 Macro call
-          
 
 horizontally ([*options* ]) {*panes* }+ end
-                                           
 
 Arguments
-         
 
 -  *options* Dylan arguments*bnf*.
 -  *panes* One or more occurrences of Dylan body*bnf*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 This macro lays a series of gadgets out horizontally, creating the
 necessary layouts for you automatically.
@@ -1005,20 +829,16 @@ which creates an instance of a gadget or layout that is to be included
 in the horizontal layout.
 
 Example
-       
 
 contain(horizontally ()
-                       
 
 make(<button>, label: "Hello");
 
 make(<button>, label: "World")
 
 end);
-     
 
-See also
-        
+   See also
 
 `<row-layout>`_
 
@@ -1031,42 +851,33 @@ See also
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The superclass class of all layout classes.
 
-Superclasses
-            
+   :superclasses:
 
 `<sheet> <silica.htm#13118>`_
-                                 
 
 Init-keywords
-             
 
 *space-requirement:*
-                    
 
 -  An instance of type `<space-requirement>`_.
    Required.
--  *width:* An instance of type *<integer>*. Required.
--  *height:* An instance of type *<integer>*. Required.
--  *min-width:* An instance of type *<integer>*. Default value: 0.
--  *min-height:* An instance of type *<integer>*. Default value: 0.
--  *max-width:* An instance of type *<integer>*. Default value: `See
+-  *width:* An instance of type ``<integer>``. Required.
+-  *height:* An instance of type ``<integer>``. Required.
+-  *min-width:* An instance of type ``<integer>``. Default value: 0.
+-  *min-height:* An instance of type ``<integer>``. Default value: 0.
+-  *max-width:* An instance of type ``<integer>``. Default value: `See
    $fill`_.
--  *max-height:* An instance of type *<integer>*. Default value: `See
+-  *max-height:* An instance of type ``<integer>``. Default value: `See
    $fill`_.
--  *resizable?:* An instance of type *<boolean>*. Default value: *#t*.
--  *fixed-width?:* An instance of type *<boolean>*. Default value: *#f*
+-  *resizable?:* An instance of type ``<boolean>``. Default value: ``#t``.
+-  *fixed-width?:* An instance of type ``<boolean>``. Default value: ``#f``
    .
--  *fixed-height?:* An instance of type *<boolean>*. Default value:
-   *#f*.
+-  *fixed-height?:* An instance of type ``<boolean>``. Default value:
+   ``#f``.
 
-Description
-           
+   :description:
 
 The class of layouts. This is the basic class from which all other forms
 of layout inherit. You cannot create direct instances of this class.
@@ -1087,18 +898,16 @@ is affected when the frame containing it is resized. All three
 init-keywords take boolean values. You can specify whether a layout is
 resizeable using the *resizable?:* init-keyword. If *fixed-width?:* or
 *fixed-height?:* are true, then the layout cannot be resized in the
-appropriate direction. Setting both to *#t* is equivalent to setting
-resizeable?: to *#f*. Different subclasses of layout restrict the
+appropriate direction. Setting both to ``#t`` is equivalent to setting
+resizeable?: to ``#f``. Different subclasses of layout restrict the
 values of these init-keywords in different ways, such that, for
 instance, a row layout has a fixed height.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<column-layout>`_
 
@@ -1117,20 +926,11 @@ layout-border
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the amount of whitespace around the children in a layout.
 
-Signature
-         
-
-layout-border *layout* => *border*
-                                  
+   :signature: layout-border *layout* => *border*
 
 Arguments
-         
 
 -  *layout* An instance of type *type-union(
     `<row-layout>`_, `See
@@ -1140,12 +940,10 @@ Arguments
     `<stack-layout>`_)*.
 
 Values
-      
 
--  *border* An instance of type *<integer>*.
+-  *border* An instance of type ``<integer>``.
 
-Description
-           
+   :description:
 
 Returns the amount of whitespace, in pixels, around the children in
 *layout*.
@@ -1154,8 +952,7 @@ Note that this function does not apply to pinboard layouts, because the
 positioning of the children in a pinboard layout is completely in the
 control of the programmer.
 
-See also
-        
+   See also
 
 *`layout-border-setter`_*
 
@@ -1164,22 +961,13 @@ layout-border-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the amount of whitespace around the children in a layout.
 
-Signature
-         
-
-layout-border *border* *layout* => *border*
-                                           
+   :signature: layout-border *border* *layout* => *border*
 
 Arguments
-         
 
--  *border* An instance of type *<integer>*.
+-  *border* An instance of type ``<integer>``.
 -  *layout* An instance of type *type-union(
     `<row-layout>`_, `See
    <column-layout>`_, `See
@@ -1188,12 +976,10 @@ Arguments
     `<stack-layout>`_)*.
 
 Values
-      
 
--  *border* An instance of type *<integer>*.
+-  *border* An instance of type ``<integer>``.
 
-Description
-           
+   :description:
 
 Sets the amount of whitespace, in pixels, around the children in
 *layout*.
@@ -1205,8 +991,7 @@ Note that this function does not apply to pinboard layouts, because the
 positioning of the children in a pinboard layout is completely in the
 control of the programmer.
 
-See also
-        
+   See also
 
 *`layout-border`_*
 
@@ -1215,33 +1000,22 @@ layout-equalize-heights?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the children of the specified layout are all the same
 height.
 
-Signature
-         
-
-layout-equalize-heights? *layout* => *equal?*
-                                             
+   :signature: layout-equalize-heights? *layout* => *equal?*
 
 Arguments
-         
 
 -  *layout* An instance of type *type-union(
     `<row-layout>`_, `See
    <column-layout>`_)*.
 
 Values
-      
 
--  *equal?* An instance of type *<boolean>*.
+-  *equal?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if the children of *layout* are all the same height. The
 layout must be either a row or a column layout.
@@ -1250,8 +1024,7 @@ You can only set this value when a layout is created, using the
 *equalize-heights?:* init-keyword. There is no equivalent setter
 function.
 
-See also
-        
+   See also
 
 *`layout-equalize-widths?`_*
 
@@ -1260,33 +1033,22 @@ layout-equalize-widths?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the children of the specified layout are all the same
 width.
 
-Signature
-         
-
-layout-equalize-widths? *layout* => *equal?*
-                                            
+   :signature: layout-equalize-widths? *layout* => *equal?*
 
 Arguments
-         
 
 -  *layout* An instance of type *type-union(
     `<row-layout>`_, `See
    <column-layout>`_)*.
 
 Values
-      
 
--  *equal?* An instance of type *<boolean>*.
+-  *equal?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if the children of *layout* are all the same width. The
 layout must be either a row or a column layout.
@@ -1295,8 +1057,7 @@ You can only set this value when a layout is created, using the
 *equalize-widths?:* init-keyword. There is no equivalent setter
 function.
 
-See also
-        
+   See also
 
 *`layout-equalize-heights?`_*
 
@@ -1305,31 +1066,22 @@ See also
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The class of leaf panes.
 
-Superclasses
-            
+   :superclasses:
 
 `<sheet> <silica.htm#13118>`_
-                                 
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of leaf panes. These are sheets that live at the leaf of the
 sheet tree that obeys the layout protocols.
 
 Subclass this class if you want to create a basic leaf pane.
-                                                            
 
 -  If you want to do output to it, mix in one of the
    *<sheet-with-medium-mixin>* classes.
@@ -1338,8 +1090,7 @@ Subclass this class if you want to create a basic leaf pane.
 -  If you want to repaint it, mix in one of the
    *<sheet-with-repainting-mixin>* classes.
 
-Operations
-          
+   :operations:
 
 -  None.
 
@@ -1348,46 +1099,35 @@ make
 
 G.f. method
 '''''''''''
-
-Summary
-       
-
 Creates an instance of *<space-requirement>*.
 
-Signature
-         
-
-make *space-requirement-class* #key *width min-width max-width height
+   :signature: make *space-requirement-class* #key *width min-width max-width height
 * *min-height max-height*
  => *space-req*
-                                                                     
 
 Arguments
-         
 
 -  *space-requirement-class* The class `See
    <space-requirement>`_.
--  *width* An instance of type *<integer>*. Default value: `See
+-  *width* An instance of type ``<integer>``. Default value: `See
    $fill`_.
--  *min-width* An instance of type *<integer>*. Default value: *width*
+-  *min-width* An instance of type ``<integer>``. Default value: *width*
    .
--  *max-width* An instance of type *<integer>*. Default value: *width*
+-  *max-width* An instance of type ``<integer>``. Default value: *width*
    .
--  *height* An instance of type *<integer>*. Default value: `See
+-  *height* An instance of type ``<integer>``. Default value: `See
    $fill`_.
--  *min-height* An instance of type *<integer>*. Default value:
+-  *min-height* An instance of type ``<integer>``. Default value:
    *height*.
--  *max-height* An instance of type *<integer>*. Default value:
+-  *max-height* An instance of type ``<integer>``. Default value:
    *height*.
 
 Values
-      
 
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
-Description
-           
+   :description:
 
 Creates an instance of *<space-requirement>*.
 
@@ -1398,8 +1138,7 @@ width and height of a layout under various circumstances. See `See
 <space-requirement>`_, for a full description of
 this behavior.
 
-See also
-        
+   See also
 
 `$fill`_
 
@@ -1410,37 +1149,27 @@ See also
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The class of composite panes that can have multiple children.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of composite panes that can have multiple children. Subclass
 this class if you want to create a class of pane that can have more than
 one child.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<single-child-composite-pane>`_
 
@@ -1449,36 +1178,26 @@ See also
 
 Sealed instantiable class
 '''''''''''''''''''''''''
-
-Summary
-       
-
 The class of null panes.
 
-Superclasses
-            
+   :superclasses:
 
 `<leaf-pane>`_
-                                      
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of null panes. This class acts as a filler: use it when you
 need to "fill space" somewhere in a complex layout.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 ` <gadgets.htm#12504>`_
 
@@ -1489,33 +1208,21 @@ pane-display-function
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the function used to display the specified pane.
 
-Signature
-         
-
-pane-display-function *pane* => *pane-display-function*
-                                                       
+   :signature: pane-display-function *pane* => *pane-display-function*
 
 Arguments
-         
 
 -  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
-      
 
 *pane-display-function*
-                       
 
 -  An instance of type *false-or(<function>)*.
 
-Description
-           
+   :description:
 
 Returns the function used to display *pane*, where *pane* is any pane
 that can have a *display-function:* init-keyword specified. The *value*
@@ -1527,8 +1234,7 @@ handle-repaint <silica.htm#28833>`_ method for `See
 <simple-pane>`_ and `See
 <drawing-pane>`_.
 
-See also
-        
+   See also
 
 `<drawing-pane>`_
 
@@ -1537,36 +1243,24 @@ pane-layout
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the layout that contains the specified pane in *define pane*.
 
-Signature
-         
-
-pane-layout *pane* => *layout-pane*
-                                   
+   :signature: pane-layout *pane* => *layout-pane*
 
 Arguments
-         
 
 -  *pane* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
-      
 
 -  *layout-pane* An instance of type `<sheet> <silica.htm#13118>`_.
 
-Description
-           
+   :description:
 
 Returns the layout that contains the specified pane in `define
 pane`_.
 
-See also
-        
+   See also
 
 `define pane`_
 
@@ -1575,25 +1269,17 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of pinboard layouts.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
--  *stretchable?:* An instance of type *<boolean>*.
+-  *stretchable?:* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 The class of pinboard layouts. Unlike other types of layout, pinboard
 layouts are unusual in that the positioning and geometry of the children
@@ -1603,7 +1289,6 @@ layout does not attempt to calculate an optimum position or size for any
 of them.
 
 Three buttons arranged in a pinboard layout
-                                           
 
 .. figure:: images/layouts-2.png
    :align: center
@@ -1627,13 +1312,11 @@ If *stretchable?:* is true, then the pinboard layout can be resized
 dynamically as its parent is resized (for instance, by the user resizing
 a window on screen).
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<fixed-layout>`_
 
@@ -1644,37 +1327,22 @@ relayout-children
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Lays out the children of the specified sheet again.
 
-Signature
-         
-
-relayout-children *sheet* #key *port-did-it?* => ()
-                                                   
+   :signature: relayout-children *sheet* #key *port-did-it?* => ()
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
--  *port-did-it?* An instance of type *<boolean>*. Default value: *#f*
+-  *port-did-it?* An instance of type ``<boolean>``. Default value: ``#f``
    .
 
-Values
-      
 
-None.
-
-Description
-           
+   :description:
 
 Lays out the children of *sheet* again.
 
-See also
-        
+   See also
 
 `relayout-parent`_
 
@@ -1683,39 +1351,24 @@ relayout-parent
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Lays out the parent of the specified sheet again.
 
-Signature
-         
-
-relayout-parent *sheet* #key *width height* => ()
-                                                 
+   :signature: relayout-parent *sheet* #key *width height* => ()
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
 
-Values
-      
 
-None.
-
-Description
-           
+   :description:
 
 Lays out the parent of *sheet* again. If *width* and *height* are
 specified, then the parent is laid out in accordance with these
 dimensions.
 
-See also
-        
+   See also
 
 `relayout-children`_
 
@@ -1724,54 +1377,41 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of row layouts.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
--  *border:* An instance of type *<integer>*. Default value: 0.
+-  *border:* An instance of type ``<integer>``. Default value: 0.
 
 *x-spacing:*, *spacing:*
-                         
 
--  An instance of type *<integer>*. Default value: 0.
+-  An instance of type ``<integer>``. Default value: 0.
 
 *equalize-heights?:*
-                    
 
--  An instance of type *<boolean>*. Default value: *#f*.
+-  An instance of type ``<boolean>``. Default value: ``#f``.
 
 *equalize-widths?:*
-                   
 
--  An instance of type *<boolean>*. Default value: *#f*.
+-  An instance of type ``<boolean>``. Default value: ``#f``.
 -  *y-alignment:* An instance of type *one-of(#"top", #"bottom",
    #"center")*. Default value: *#"top"*.
 
 *x-ratios:*, *ratios:*
-                       
 
--  An instance of type *false-or(<sequence>)*. Default value: *#f*.
+-  An instance of type *false-or(<sequence>)*. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of row layouts. A row layout arranges its children in a row,
 automatically calculating the size and placement of each child within
 the specified parameters.
 
 Three buttons arranged in a row layout
-                                      
 
 .. figure:: images/layouts-2.png
    :align: center
@@ -1816,27 +1456,21 @@ horizontal space, as shown in the diagram below.
 .. figure:: images/layouts-8.png
    :align: center
    :alt: 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 To make a row of buttons that are all the same size:
-                                                    
 
 contain(make(<row-layout>,
-                          
 
 equalize-widths?: #t,
 
 children: buttons))
-                   
 
-See also
-        
+   See also
 
 `<column-layout>`_
 
@@ -1855,28 +1489,19 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of simple panes.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
 *display-function:*
-                   
 
--  An instance of type *false-or(<function>)*. Default value: *#f*.
+-  An instance of type *false-or(<function>)*. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of simple panes.
 
@@ -1884,13 +1509,11 @@ The *display-function:* init-keyword defines the display function for
 the pane. This gets called by the `See
 handle-repaint <silica.htm#28833>`_ method for *<simple-pane>*.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<drawing-pane>`_
 
@@ -1903,35 +1526,25 @@ See also
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The class of composite panes that can only have one child.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of composite panes that can only have one child.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<multiple-child-composite-pane>`_
 
@@ -1940,38 +1553,30 @@ See also
 
 Abstract instantiable class
 '''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of all space requirement objects.
 
-Superclasses
-            
+   :superclasses:
 
 <object>
-        
 
 Init-keywords
-             
 
--  *width:* An instance of type *<integer>*. Default value: `See
+-  *width:* An instance of type ``<integer>``. Default value: `See
    $fill`_.
--  *min-width:* An instance of type *<integer>*. Default value: *width*
+-  *min-width:* An instance of type ``<integer>``. Default value: *width*
    .
--  *max-width:* An instance of type *<integer>*. Default value: *width*
+-  *max-width:* An instance of type ``<integer>``. Default value: *width*
    .
--  *height:* An instance of type *<integer>*. Default value: `See
+-  *height:* An instance of type ``<integer>``. Default value: `See
    $fill`_.
--  *min-height:* An instance of type *<integer>*. Default value:
+-  *min-height:* An instance of type ``<integer>``. Default value:
    *height*.
--  *max-height:* An instance of type *<integer>*. Default value:
+-  *max-height:* An instance of type ``<integer>``. Default value:
    *height*.
 -  *label:* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
 
-Description
-           
+   :description:
 
 The class of all space requirement objects. This type of object is used
 to reserve space when it is required in a layout in order to accommodate
@@ -1992,10 +1597,8 @@ and maximum width or height for the object.
 The following inequalities hold for all widths and heights:
 
 min-height: <= height: <= max-height:
-                                     
 
 min-width: <= width: <= max-width:
-                                  
 
 If either *min-width:* or *min-height:* is 0, the object is "infinitely
 shrinkable" in that direction. If either *max-width:* or *max-height:*
@@ -2012,8 +1615,7 @@ fit the available space can be found in the entry for
 The *label:* init-keyword specifies a label which is measured to give
 the preferred width and height.
 
-Operations
-          
+   :operations:
 
 `space-requirement-height`_ `See
 space-requirement-max-height`_ `See
@@ -2023,25 +1625,20 @@ space-requirement-min-width`_
  `space-requirement-width`_
 
 Example
-       
 
 Given the following definition of a button class:
-                                                 
 
 define class <basic-test-button>
-                                
 
 (<leaf-pane>)
 
 end class <basic-test-button>;
-                              
 
 The following method for `do-compose-space`_
 creates the necessary space requirements to accommodate the new button
 class in a layout.
 
 define method do-compose-space
-                              
 
 (pane :: <basic-test-button>, #key width, height)
 
@@ -2056,10 +1653,8 @@ width: 40,
 height: 15)
 
 end method do-compose-space;
-                            
 
-See also
-        
+   See also
 
 `$fill`_
 
@@ -2068,36 +1663,24 @@ space-requirement?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the specified object is a space requirement.
 
-Signature
-         
-
-space-requirement? *object* => *boolean*
-                                        
+   :signature: space-requirement? *object* => *boolean*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *boolean* An instance of type *<boolean>*.
+-  *boolean* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if *object* is an instance of `See
 <space-requirement>`_.
 
-See also
-        
+   See also
 
 `<space-requirement>`_
 
@@ -2106,38 +1689,26 @@ space-requirement-height
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the preferred height of the specified space requirement.
 
-Signature
-         
-
-space-requirement-height *sheet* *space-req* => *height*
-                                                        
+   :signature: space-requirement-height *sheet* *space-req* => *height*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
 Values
-      
 
 -  *height* An instance of type *<number>*.
 
-Description
-           
+   :description:
 
 Returns preferred the height of *space-req*. This is the value of the
 *height:* init-keyword that was passed when the object was created.
 
-See also
-        
+   See also
 
 `space-requirement-max-height`_
 
@@ -2148,39 +1719,27 @@ space-requirement-max-height
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the maximum allowed height of the specified space requirement.
 
-Signature
-         
-
-space-requirement-max-height *sheet* *space-req* => *max-height*
-                                                                
+   :signature: space-requirement-max-height *sheet* *space-req* => *max-height*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
 Values
-      
 
 -  *max-height* An instance of type *<number>*.
 
-Description
-           
+   :description:
 
 Returns the maximum allowed height of *space-req*. This is the value of
 the *max-height:* init-keyword that was passed when the object was
 created.
 
-See also
-        
+   See also
 
 `space-requirement-height`_
 
@@ -2191,39 +1750,27 @@ space-requirement-max-width
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the maximum allowed width of the specified space requirement.
 
-Signature
-         
-
-space-requirement-max-width *sheet* *space-req* => *max-width*
-                                                              
+   :signature: space-requirement-max-width *sheet* *space-req* => *max-width*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
 Values
-      
 
 -  *max-width* An instance of type *<number>*.
 
-Description
-           
+   :description:
 
 Returns the maximum allowed width of *space-req*. This is the value of
 the *max-width:* init-keyword that was passed when the object was
 created.
 
-See also
-        
+   See also
 
 `space-requirement-min-width`_
 
@@ -2234,39 +1781,27 @@ space-requirement-min-height
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the minimum allowed height of the specified space requirement.
 
-Signature
-         
-
-space-requirement-min-height *sheet* *space-req* => *min-height*
-                                                                
+   :signature: space-requirement-min-height *sheet* *space-req* => *min-height*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
 Values
-      
 
 -  *min-height* An instance of type *<number>*.
 
-Description
-           
+   :description:
 
 Returns the minimum allowed height of *space-req*. This is the value of
 the *min-height:* init-keyword that was passed when the object was
 created.
 
-See also
-        
+   See also
 
 `space-requirement-height`_
 
@@ -2277,39 +1812,27 @@ space-requirement-min-width
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the minimum allowed width of the specified space requirement.
 
-Signature
-         
-
-space-requirement-min-width *sheet* *space-req* => *min-width*
-                                                              
+   :signature: space-requirement-min-width *sheet* *space-req* => *min-width*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
 Values
-      
 
 -  *min-width* An instance of type *<number>*.
 
-Description
-           
+   :description:
 
 Returns the minimum allowed width of *space-req*. This is the value of
 the *min-width:* init-keyword that was passed when the object was
 created.
 
-See also
-        
+   See also
 
 `space-requirement-max-width`_
 
@@ -2320,38 +1843,26 @@ space-requirement-width
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the preferred width of the specified space requirement.
 
-Signature
-         
-
-space-requirement-width *sheet* *space-req* => *width*
-                                                      
+   :signature: space-requirement-width *sheet* *space-req* => *width*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *space-req* An instance of type `See
    <space-requirement>`_.
 
 Values
-      
 
 -  *width* An instance of type *<number>*.
 
-Description
-           
+   :description:
 
 Returns the preferred width of *space-req*. This is the value of the
 *width:* init-keyword that was passed when the object was created.
 
-See also
-        
+   See also
 
 `space-requirement-max-width`_
 
@@ -2362,26 +1873,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of stack layouts.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
--  *border:* An instance of type *<integer>*. Default value: 0.
+-  *border:* An instance of type ``<integer>``. Default value: 0.
 -  *mapped-page:* An instance of *<sheet>*.
 
-Description
-           
+   :description:
 
 The class of stack layouts. Stack layouts position all of their children
 at the top-left one on top of the other. The layout sizes itself to be
@@ -2403,13 +1906,11 @@ The *mapped-page:* init-keyword allows you to assign a page to be mapped
 onto the screen when a stack layout is first created. If it is not
 specified, then the first page in the stack layout is mapped.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<column-layout>`_
 
@@ -2426,30 +1927,19 @@ stack-layout-mapped-page
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the currently mapped page for a stack layout.
 
-Signature
-         
-
-stack-layout-mapped-page *stack-layout* => *page*
-                                                 
+   :signature: stack-layout-mapped-page *stack-layout* => *page*
 
 Arguments
-         
 
 -  *stack-layout* An instance of *<stack-layout>*.
 
 Values
-      
 
 -  *page* An instance of *<sheet>*.
 
-Description
-           
+   :description:
 
 Returns the currently mapped *page* for the specified *stack-layout*.
 
@@ -2458,31 +1948,20 @@ stack-layout-mapped-page-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the mapped page for a stack layout.
 
-Signature
-         
-
-stack-layout-mapped-page *page* *stack-layout* => *page*
-                                                        
+   :signature: stack-layout-mapped-page *page* *stack-layout* => *page*
 
 Arguments
-         
 
 -  *page* An instance of *<sheet>*.**
 -  *stack-layout* An instance of *<stack-layout>*.
 
 Values
-      
 
 -  *page* An instance of *<sheet>*.
 
-Description
-           
+   :description:
 
 Sets the mapped page for the specified *stack-layout* to *page*.
 
@@ -2491,36 +1970,24 @@ table-contents
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the contents of the specified table.
 
-Signature
-         
-
-table-contents *table* => *contents*
-                                    
+   :signature: table-contents *table* => *contents*
 
 Arguments
-         
 
 -  *table* An instance of type `See
    <table-layout>`_.
 
 Values
-      
 
 -  *contents* An instance of type `<sheet> <silica.htm#13118>`_.
 
-Description
-           
+   :description:
 
 Returns the contents of *table*.
 
-See also
-        
+   See also
 
 `table-contents-setter`_
 
@@ -2529,37 +1996,25 @@ table-contents-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the contents of the specified table.
 
-Signature
-         
-
-table-contents-setter *contents table* => *contents*
-                                                    
+   :signature: table-contents-setter *contents table* => *contents*
 
 Arguments
-         
 
 -  *contents* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *table* An instance of type `See
    <table-layout>`_.
 
 Values
-      
 
 -  *contents* An instance of type `<sheet> <silica.htm#13118>`_.
 
-Description
-           
+   :description:
 
 Sets the contents of *table*.
 
-See also
-        
+   See also
 
 `table-contents`_
 
@@ -2568,41 +2023,33 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of table layouts.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
--  *border:* An instance of type *<integer>*. Default value: 0.
+-  *border:* An instance of type ``<integer>``. Default value: 0.
 -  *rows:* An instance of type *false-or(<integer>)*. Default value:
-   *#f*.
+   ``#f``.
 -  *columns:* An instance of type *false-or(<integer>)*. Default value:
-   *#f*.
+   ``#f``.
 -  *contents:* An instance of type *limited(<sequence>, of:
    limited(<sequence>, of: <sheet>))*.
--  *x-spacing:* An instance of type *<integer>*. Default value: 0.
--  *y-spacing:* An instance of type *<integer>*. Default value: 0.
+-  *x-spacing:* An instance of type ``<integer>``. Default value: 0.
+-  *y-spacing:* An instance of type ``<integer>``. Default value: 0.
 -  *x-ratios:* An instance of type *false-or(<sequence>)*. Default
-   value: *#f*.
+   value: ``#f``.
 -  *y-ratios:* An instance of type *false-or(<sequence>)*. Default
-   value: *#f*.
+   value: ``#f``.
 -  *x-alignment:* An instance of type *one-of(#"left", #"right",
    #"center")*. Default value: *#"left"*.
 -  *y-alignment:* An instance of type *one-of(#"top", #"bottom",
    #"center")*. Default value: *#"top"*.
 
-Description
-           
+   :description:
 
 The class of table layouts.
 
@@ -2674,33 +2121,26 @@ By default, all the children of a table layout are aligned at the top.
 You can specify that they should be aligned at the bottom, or in the
 center, using the *y-alignment:* keyword.
 
-Operations
-          
+   :operations:
 
 -  `table-contents`_ `See
    table-contents-setter`_
 
 Example
-       
 
 \*t\* := make(<vector>, size: 9);
-                                 
 
 for (i from 1 to 9) \*t\*[i - 1] :=
 
 make(<button>, label: format-to-string("%d", i)) end;
-                                                     
 
 contain(make(<table-layout>,
-                            
 
 x-spacing: 10, y-spacing: 0,
 
 children: \*t\*, columns: 3));
-                              
 
-See also
-        
+   See also
 
 `<column-layout>`_
 
@@ -2719,31 +2159,22 @@ tabling
 
 Statement macro
 '''''''''''''''
-
-Summary
-       
-
 Lays out a series of gadgets in a table.
 
 Macro call
-          
 
 tabling ([*options* ]) {*panes* }+ end
-                                      
 
 Arguments
-         
 
 -  *options* Dylan arguments*bnf*.
 -  *panes* One or more occurrences of Dylan body*bnf*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 This macro lays a series of gadgets out in a table, creating the
 necessary layouts for you automatically.
@@ -2757,8 +2188,7 @@ The *panes* argument consists of a number of Dylan expressions, each of
 which creates an instance of a gadget or layout that is to be included
 in the vertical layout.
 
-See also
-        
+   See also
 
 `horizontally`_
 
@@ -2771,39 +2201,30 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of top level sheets.
 
-Superclasses
-            
+   :superclasses:
 
 `<layout>`_
-                                   
 
 Init-keywords
-             
 
 -  *display:* An instance of type *false-or(`See
-   <display> <silica.htm#77659>`_)*. Default value: *#f*.
+   <display> <silica.htm#77659>`_)*. Default value: ``#f``.
 -  *frame:* An instance of type *false-or(* ` <frames.htm#16922>`_*)*.
-   Default value: *#f*.
+   Default value: ``#f``.
 -  *frame-manager:* An instance of type
     *false-or(* `<frame-manager> <silica.htm#32466>`_*)*. Default
-   value: *#f*.
+   value: ``#f``.
 -  *container:* An instance of type *false-or(<object>)*. Default
-   value: *#f*.
+   value: ``#f``.
 
 *container-region:*
-                   
 
 -  An instance of type *false-or(`<region> <geom.htm#79228>`_)*.
-   Default value: *#f*.
+   Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of top level sheets.
 
@@ -2814,8 +2235,7 @@ embedded frames, such as OLE objects in HTML browser windows. The
 the container appears. Note that the container referred to is a native
 window system object.
 
-Operations
-          
+   :operations:
 
 -  None.
 
@@ -2824,31 +2244,22 @@ vertically
 
 Statement macro
 '''''''''''''''
-
-Summary
-       
-
 Lays out a series of gadgets vertically.
 
 Macro call
-          
 
 vertically ([*options* ]) {*panes* }+ end
-                                         
 
 Arguments
-         
 
 -  *options* Dylan arguments*bnf*.
 -  *panes* One or more occurrences of Dylan body*bnf*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 This macro lays a series of gadgets out vertically, creating the
 necessary column layout for you automatically.
@@ -2863,20 +2274,16 @@ which creates an instance of a gadget or layout that is to be included
 in the vertical layout.
 
 Example
-       
 
 contain(vertically (border: 5, equalize-widths: #t)
-                                                   
 
 make(<button>, label: "Hello");
 
 make(<button>, label: "World")
 
 end);
-     
 
-See also
-        
+   See also
 
 `<column-layout>`_
 

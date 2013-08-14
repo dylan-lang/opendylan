@@ -27,11 +27,9 @@ approximation of the appearance specified by the model: however, another
 important consequence of this is that the model is highly portable.
 
 DUIM separates output into two layers:
-                                      
 
 A text/graphics layer in which you specify the desired visual appearance
 independent of device resolution and characteristics
-                                                                                                                             
 
 #. A rendering layer in which some approximation of the desired visual
    appearance is created on the device.
@@ -196,7 +194,6 @@ how much of it is inside the shape.
 
 The conventions used by DUIM are the same as the conventions used by
 X11:
-                                                                         
 
 -  A pixel is a addressed by its upper-left corner.
 -  A pixel is considered to be inside a shape, and hence affected by the
@@ -237,7 +234,6 @@ no issue. When the boundary passes through a decision point, which side
 the inside of the figure is on is used to decide.
 
 Two triangles
-             
 
 .. figure:: images/graphics-2.png
    :align: center
@@ -259,7 +255,6 @@ for all figures, there is no choice but to pick only two of the four
 points, leading to an undesirable lopsided figure.
 
 Choosing any two of the shaded pixels causes asymmetry
-                                                      
 
 .. figure:: images/graphics-2.png
    :align: center
@@ -277,7 +272,6 @@ In the left-hand figure, the decision point is at the center of the
 pixel, but in the right-hand figure, it is not.
 
 Two forms of a circle inscribed in a square
-                                           
 
 .. figure:: images/graphics-2.png
    :align: center
@@ -291,7 +285,6 @@ pixel. This draws circles that look like the one in `An
 aesthetically pleasing circle`_.
 
 An aesthetically pleasing circle
-                                
 
 .. figure:: images/graphics-2.png
    :align: center
@@ -325,7 +318,6 @@ single device unit wide. The right-hand line is drawn as a tilted
 rectangle, the left as the "thinnest visible" line.
 
 Two examples of lines of thickness 1
-                                    
 
 .. figure:: images/graphics-2.png
    :align: center
@@ -342,7 +334,6 @@ depicted in `Two examples of lines of thickness
 2`_ are both reasonable.
 
 Two examples of lines of thickness 2
-                                    
 
 .. figure:: images/graphics-2.png
    :align: center
@@ -364,7 +355,6 @@ rectilinear borders around rectilinear areas.
 
 Two possible definitions of horizontal lines. Left figure is X11
 definition
-                                                                           
 
 .. figure:: images/graphics-2.png
    :align: center
@@ -383,7 +373,6 @@ been defined explicitly. You can use these functions by following the
 general procedure below:
 
 Create a new path using *start-path*.
-                                      
 
 #. Define the appearance of the path using any combination of *line-to*
    , *move-to*, *curve-to*, and *arc-to*.
@@ -411,13 +400,10 @@ definition of a path. In each case, the argument *drawable* is either a
 sheet or a medium.
 
 start-path
-          
 
 Generic function
-                
 
 start-path *drawable* => ()
-                           
 
 Starts a new path on *drawable*. The path can be created with any
 number of calls to *line-to*, *curve-to*, *arc-to*, and *move-to*.
@@ -428,13 +414,10 @@ After creating the path, use either *close-path* or *end-path* to finish
 the path, or *abort-path* to abandon it altogether.
 
 end-path
-        
 
 Generic function
-                
 
 end-path *drawable* => ()
-                         
 
 Ends the definition of the current path in *drawable*. Once the
 definition has been ended, the path can be rendered to the drawable
@@ -444,13 +427,10 @@ The function *close-path* can also be used to end the definition of a
 path.
 
 close-path
-          
 
 Generic function
-                
 
 close-path *drawable* => ()
-                           
 
 Closes the current path on the *drawable*: that is, creates a closed
 figure from the elements already defined.
@@ -460,25 +440,19 @@ For example, if you create a path that has four connected lines (using
 in the path to create a closed, five-sided figure.
 
 abort-path
-          
 
 Generic function
-                
 
 abort-path *drawable* => ()
-                           
 
 Aborts the current path on *drawable*. Any operations that have been
 performed since the last call to *start-path* are discarded.
 
 fill-path
-         
 
 Generic function
-                
 
 fill-path *drawable* => ()
-                          
 
 Uses the current brush to fill the current path on *drawable*. Only
 closed paths can be filled. If the path has not already been closed
@@ -486,13 +460,10 @@ using `close-path`_, it is closed
 automatically.
 
 stroke-path
-           
 
 Generic function
-                
 
 stroke-path *drawable* => ()
-                            
 
 Uses the current pen to draw the current path on *drawable*. Note that
 the path must not have been previously filled. This function does not
@@ -503,40 +474,31 @@ Functions for describing the appearance of a path
 
 The following generic functions actually perform drawing operations
 within a path. Again, in each case, the argument *drawable* is either a
-sheet or a medium. All other arguments are instances of *<real>*.
+sheet or a medium. All other arguments are instances of ``<real>``.
 
 line-to
-       
 
 Generic function
-                
 
 line-to *drawable x y* => ()
-                            
 
 Draws a line from the current position in the path to (*x*,*y*).
 
 curve-to
-        
 
 Generic function
-                
 
 curve-to *drawable x1 y1 x2 y2 x3 y3* => ()
-                                           
 
 Draws a curve in the current path on *drawable* starting from the
 current position, and passing through (*x1*,*y1*), (*x2*, *y2*), and
 (*x3*, *y3*).
 
 move-to
-       
 
 Generic function
-                
 
 move-to *drawable x y* => ()
-                            
 
 Move the position in the current path on *drawable* to (*x*,*y*).
 
@@ -545,19 +507,15 @@ of a path, allowing for the definition of several visually separate
 sections within the same path.
 
 arc-to
-      
 
 Generic function
-                
 
 arc-to *drawable center-x center-y radius-1-dx radius-1-dy radius-2-dx
 radius-2-dy* #key *start-angle end-angle* => ()
-                                                                                                                      
 
 Draws an arc in the current path on *drawable*.
 
 Description of the arguments for arc-to
-                                       
 
 .. figure:: images/graphics-2.png
    :align: center
@@ -596,37 +554,26 @@ abort-path
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Aborts the current path on the specified drawable object.
 
-Signature
-         
-
-abort-path *drawable* => ()
+   :signature: abort-path *drawable* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Aborts the current path on *drawable*. Any operations that have been
 performed since the last call to `start-path`_
 are discarded.
 
-See also
-        
+   See also
 
 `close-path`_
 
@@ -639,49 +586,39 @@ arc-to
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws an arc in the current path on the specified drawable.
 
-Signature
-         
-
-arc-to *drawable center-x center-y radius-1-dx radius-1-dy radius-2-dx
+   :signature: arc-to *drawable center-x center-y radius-1-dx radius-1-dy radius-2-dx
 radius-2-dy* #key *start-angle end-angle* => ()
 
 arc-to\* *drawable center radius-1-dx radius-1-dy radius-2-dx
 radius-2-dy* #key *start-angle end-angle* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *radius-1-dx* An instance of type *<real>*.
--  *radius-1-dy* An instance of type *<real>*.
--  *radius-2-dx* An instance of type *<real>*.
--  *radius-2-dy* An instance of type *<real>*.
--  *start-angle* An instance of type *false-or(<real>)*.
--  *end-angle* An instance of type *false-or(<real>)*.
+-  *radius-1-dx* An instance of type ``<real>``.
+-  *radius-1-dy* An instance of type ``<real>``.
+-  *radius-2-dx* An instance of type ``<real>``.
+-  *radius-2-dy* An instance of type ``<real>``.
+-  *start-angle* An instance of type ``false-or(<real>)``.
+-  *end-angle* An instance of type ``false-or(<real>)``.
 
 The following arguments are specific to *arc-to*.
 
--  *center-x* An instance of type *<real>*.
--  *center-y* An instance of type *<real>*.
+-  *center-x* An instance of type ``<real>``.
+-  *center-y* An instance of type ``<real>``.
 
 The following argument is specific to *arc-to\**.
 
 -  *center* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws an arc in the current path on the specified drawable.
 
@@ -716,8 +653,7 @@ composite objects, rather than separate coordinates, in its arguments.
 You should be aware that using this function may lead to a loss of
 performance.
 
-See also
-        
+   See also
 
 `curve-to`_
 
@@ -734,30 +670,20 @@ close-path
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Closes the current path on the specified drawable.
 
-Signature
-         
-
-close-path *drawable* => ()
+   :signature: close-path *drawable* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Closes the current path on the *drawable*: that is, creates a closed
 figure from the elements already defined.
@@ -771,8 +697,7 @@ Only closed paths can be filled, although `See
 fill-path`_ will close a non-closed path
 automatically.
 
-See also
-        
+   See also
 
 `abort-path`_
 
@@ -785,38 +710,25 @@ copy-area
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Copies a rectangle of pixels from a specified medium to the same medium.
 
-Signature
-         
-
-copy-area *medium from-x from-y width height to-x to-y* #key *function*
+   :signature: copy-area *medium from-x from-y width height to-x to-y* #key *function*
 => ()
 
 Arguments
-         
 
 -  *medium* An instance of type *`<medium> <silica.htm#60437>`_*.
 -  *from-x* An instance of type *<coordinate>*.
 -  *from-y* An instance of type *<coordinate>*.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
 -  *to-x* An instance of type *<coordinate>*.
 -  *to-y* An instance of type *<coordinate>*.
--  *function* An instance of type *<function>*. Default value: `See
+-  *function* An instance of type ``<function>``. Default value: `See
    $boole-1 <dcs.htm#36174>`_.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Copies the pixels from the *medium* starting at the position specified
 by (*from-x*, *from-y*) to the position (*to-x*, *to-y*) on the same
@@ -825,8 +737,7 @@ medium. A rectangle whose width and height is specified by *width* and
 y values are transformed by the user transformation. The copying must be
 done by *medium-copy-copy*.
 
-See also
-        
+   See also
 
 `copy-from-pixmap`_
 
@@ -837,40 +748,27 @@ copy-from-pixmap
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Copies a rectangle of pixels from the specified pixmap to the specified
 medium.
 
-Signature
-         
-
-copy-from-pixmap *pixmap pixmap-x pixmap-y width height medium medium-x
+   :signature: copy-from-pixmap *pixmap pixmap-x pixmap-y width height medium medium-x
 medium-y* #key *function* => ()
 
 Arguments
-         
 
--  *pixmap* An instance of type `<pixmap>`_.
+-  *pixmap* An instance of type :class:`<pixmap>`.
 -  *pixmap-x* An instance of type *<coordinate>*.
 -  *pixmap-y* An instance of type *<coordinate>*.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
 -  *medium* An instance of type *<coordinate>*.
 -  *medium-x* An instance of type *<coordinate>*.
 -  *medium-y* An instance of type *<coordinate>*.
--  *function* An instance of type *<function>*. Default value: `See
+-  *function* An instance of type ``<function>``. Default value: `See
    $boole-1 <dcs.htm#36174>`_.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Copies a rectangle of pixels from *pixmap* starting at the position
 specified by (*pixmap-x*,*pixmap-y*) into *medium* at the position
@@ -879,8 +777,7 @@ specified by *width* and *height* is copied. If *medium* is a medium or
 a stream, then *medium-x* and *medium-y* are transformed by the user
 transformation. The copying must be done by *medium-copy-copy*.
 
-See also
-        
+   See also
 
 `copy-area`_
 
@@ -893,40 +790,27 @@ copy-to-pixmap
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Copies a rectangle of pixels from the specified medium to the specified
 pixmap.
 
-Signature
-         
-
-copy-to-pixmap *medium medium-x medium-y width height pixmap pixmap-x
+   :signature: copy-to-pixmap *medium medium-x medium-y width height pixmap pixmap-x
 pixmap-y* #key *function* => ()
 
 Arguments
-         
 
 -  *medium* An instance of type *`<medium> <silica.htm#60437>`_*.
 -  *medium-x* An instance of type *<coordinate>*.
 -  *medium-y* An instance of type *<coordinate>*.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
--  *pixmap* An instance of type `<pixmap>`_.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
+-  *pixmap* An instance of type :class:`<pixmap>`.
 -  *pixmap-x* An instance of type *<coordinate>*.
 -  *pixmap-y* An instance of type *<coordinate>*.
--  *function* An instance of type *<function>*. Default value: `See
+-  *function* An instance of type ``<function>``. Default value: `See
    $boole-1 <dcs.htm#36174>`_.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Copies the pixels from the *medium* starting at the position specified
 by (*medium-x*,*medium-y*) into *pixmap* at the position specified by
@@ -937,8 +821,7 @@ transformation. The copying must be done by *medium-copy-copy*.
 
 If *pixmap* is not supplied, a new pixmap will be allocated.
 
-See also
-        
+   See also
 
 `copy-area`_
 
@@ -949,34 +832,26 @@ curve-to
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a curve through three specified points in the current path on the
 specified drawable.
 
-Signature
-         
-
-curve-to *drawable x1 y1 x2 y2 x3 y3* => ()
+   :signature: curve-to *drawable x1 y1 x2 y2 x3 y3* => ()
 
 curve-to\* *drawable point1 point2 point3* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *curve-to*.
 
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
--  *x3* An instance of type *<real>*.
--  *y3* An instance of type *<real>*.
+-  *x1* An instance of type ``<real>``.
+-  *y1* An instance of type ``<real>``.
+-  *x2* An instance of type ``<real>``.
+-  *y2* An instance of type ``<real>``.
+-  *x3* An instance of type ``<real>``.
+-  *y3* An instance of type ``<real>``.
 
 The following arguments are specific to *curve-to\**.
 
@@ -985,12 +860,10 @@ The following arguments are specific to *curve-to\**.
 -  *point3* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a curve in the current path on *drawable* starting from the
 current position, and passing through (*x1*,*y1*), (*x2*, *y2*), and
@@ -1008,8 +881,7 @@ passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `arc-to`_
 
@@ -1026,34 +898,20 @@ destroy-pixmap
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Destroys the specified pixmap.
 
-Signature
-         
-
-destroy-pixmap *pixmap* => ()
+   :signature: destroy-pixmap *pixmap* => ()
 
 Arguments
-         
 
--  *pixmap* An instance of type `<pixmap>`_.
+-  *pixmap* An instance of type :class:`<pixmap>`.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Destroys *pixmap*.
 
-See also
-        
+   See also
 
 `draw-pixmap`_
 
@@ -1062,34 +920,24 @@ do-with-output-to-pixmap
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns a pixmap for the specified medium.
 
-Signature
-         
-
-do-with-output-to-pixmap *medium continuation* #key *width height
+   :signature: do-with-output-to-pixmap *medium continuation* #key *width height
 clear?* => *pixmap*
 
 Arguments
-         
 
 -  *medium* An instance of type *`<medium> <silica.htm#60437>`_*.
--  *continuation* An instance of type *<function>*.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
--  *clear?* An instance of type *<boolean>*. Default value: *#t*.
+-  *continuation* An instance of type ``<function>``.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
+-  *clear?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 Values
-      
 
--  *pixmap* An instance of type `<pixmap>`_.
+-  *pixmap* An instance of type :class:`<pixmap>`.
 
-Description
-           
+   :description:
 
 Returns a pixmap for the specified medium. This function is called by
 `with-output-to-pixmap`_ and returns the pixmap
@@ -1102,8 +950,7 @@ the pixmap. If they are unsupplied, the result pixmap will be large
 enough to contain all of the output done by the body of code executed by
 `with-output-to-pixmap`_.
 
-See also
-        
+   See also
 
 `with-output-to-pixmap`_
 
@@ -1112,37 +959,29 @@ draw-arrow
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws an arrow between two specified points.
 
-Signature
-         
-
-draw-arrow *drawable x1 y1 x2 y2* #key *from-head? to-head? head-length
+   :signature: draw-arrow *drawable x1 y1 x2 y2* #key *from-head? to-head? head-length
 head-width* => ()
 
 draw-arrow\* *drawable point1 point2* #key *from-head? to-head?
 head-length head-width* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *from-head?* An instance of type *<boolean>*. Default value: *#f*.
--  *to-head?* An instance of type *<boolean>*. Default value: *#t*.
--  *head-length* An instance of type *<integer>*. Default value: *10*.
--  *head-width* An instance of type *<integer>*. Default value: *5*.
+-  *from-head?* An instance of type ``<boolean>``. Default value: ``#f``.
+-  *to-head?* An instance of type ``<boolean>``. Default value: ``#t``.
+-  *head-length* An instance of type ``<integer>``. Default value: *10*.
+-  *head-width* An instance of type ``<integer>``. Default value: *5*.
 
 The following arguments are specific to *draw-arrow*.
 
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
+-  *x1* An instance of type ``<real>``.
+-  *y1* An instance of type ``<real>``.
+-  *x2* An instance of type ``<real>``.
+-  *y2* An instance of type ``<real>``.
 
 The following arguments are specific to *draw-arrow\**.
 
@@ -1150,22 +989,20 @@ The following arguments are specific to *draw-arrow\**.
 -  *point2* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws an arrow on *drawable* between two (*x1*,*y1*) and (*x2*, *y2*
 ), using the current pen. Dashed lines start dashing from the first
 point.
 
-If *from-head?* is *#t*, then the arrow-head points from (*x1*,*y1*)
-to (*x2*, *y2*). If *to-head?* is *#t*, then the arrow-head points
+If *from-head?* is ``#t``, then the arrow-head points from (*x1*,*y1*)
+to (*x2*, *y2*). If *to-head?* is ``#t``, then the arrow-head points
 from (*x2*, *y2*) to (*x1*,*y1*).
 
-If both *from-head?* and *to-head?* are *#t*, then a double-headed
+If both *from-head?* and *to-head?* are ``#t``, then a double-headed
 arrow is drawn.
 
 The arguments *head-length* and *head-width* specify the length and
@@ -1179,8 +1016,7 @@ it passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `draw-line`_
 
@@ -1189,23 +1025,15 @@ draw-bezier-curve
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a bezier curve through the specified set of points.
 
-Signature
-         
-
-draw-bezier-curve *sheet coord-seq* #key *filled?* => ()
+   :signature: draw-bezier-curve *sheet coord-seq* #key *filled?* => ()
 
 draw-bezier-curve\* *drawable points* #key *filled?* => ()
 
 Arguments
-         
 
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following arguments are specific to *draw-bezier-curve*.
 
@@ -1221,18 +1049,16 @@ The following arguments are specific to *draw-bezier-curve\**.
    <point> <geom.htm#15734>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a bezier curve on *sheet* or *drawable* (depending on the function
 you use) through the sequence of coordinates given by *coord-seq*,
 using the current pen. Dashed lines start dashing from the first point.
 
-If *filled?* is *#t* then the bezier-curve will be filled, using the
+If *filled?* is ``#t`` then the bezier-curve will be filled, using the
 current brush.
 
 The function *draw-bezier-curve\** is identical to *draw-bezier-curve*,
@@ -1240,8 +1066,7 @@ except that it passes composite objects, rather than separate
 coordinates, in its arguments. You should be aware that using this
 function may lead to a loss of performance.
 
-See also
-        
+   See also
 
 `curve-to`_
 
@@ -1252,47 +1077,37 @@ draw-circle
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a circle with the specified center and radius.
 
-Signature
-         
-
-draw-circle *drawable center-x center-y radius* #key *start-angle
+   :signature: draw-circle *drawable center-x center-y radius* #key *start-angle
 end-angle filled?* => ()
 
 draw-circle\* *drawable center radius #key start-angle end-angle
 filled?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *radius* An instance of type *<real>*.
--  *start-angle* An instance of type *false-or(<real>)*.
--  *end-angle* An instance of type *false-or(<real>)*.
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *radius* An instance of type ``<real>``.
+-  *start-angle* An instance of type ``false-or(<real>)``.
+-  *end-angle* An instance of type ``false-or(<real>)``.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following arguments are specific to *draw-circle*.
 
--  *center-x* An instance of type *<real>*.
--  *center-y* An instance of type *<real>*.
+-  *center-x* An instance of type ``<real>``.
+-  *center-y* An instance of type ``<real>``.
 
 The following argument is specific to *draw-circle\**.
 
 -  *center* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a circle on *drawable* with center (*center-x*,*center-y*) and a
 radius of *radius* pixels, using the current pen.
@@ -1300,7 +1115,7 @@ radius of *radius* pixels, using the current pen.
 The *start-angle* and *end-angle* arguments let you draw a sector of a
 circle rather than a whole circle.
 
-If *filled?* is *#t*, then the circle will be filled, using the current
+If *filled?* is ``#t``, then the circle will be filled, using the current
 brush.
 
 The function *draw-circle\** is identical to *draw-circle*, except that
@@ -1308,8 +1123,7 @@ it passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `draw-ellipse`_
 
@@ -1320,50 +1134,40 @@ draw-ellipse
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws an ellipse with the specified center and radius vectors.
 
-Signature
-         
-
-draw-ellipse *drawable center-x center-y radius-1-dx radius-1-dy
+   :signature: draw-ellipse *drawable center-x center-y radius-1-dx radius-1-dy
 radius-2-dx radius-2-dy* #key *start-angle end-angle filled?* => ()
 
 draw-ellipse\* *drawable center radius-1-dx radius-1-dy radius-2-dx
 radius-2-dy* #key *start-angle end-angle filled?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *radius-1-dx* An instance of type *<real>*.
--  *radius-1-dy* An instance of type *<real>*.
--  *radius-2-dx* An instance of type *<real>*.
--  *radius-2-dy* An instance of type *<real>*.
--  *start-angle* An instance of type *false-or(<real>)*.
--  *end-angle* An instance of type *false-or(<real>)*.
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *radius-1-dx* An instance of type ``<real>``.
+-  *radius-1-dy* An instance of type ``<real>``.
+-  *radius-2-dx* An instance of type ``<real>``.
+-  *radius-2-dy* An instance of type ``<real>``.
+-  *start-angle* An instance of type ``false-or(<real>)``.
+-  *end-angle* An instance of type ``false-or(<real>)``.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following arguments are specific to *draw-ellipse*.
 
--  *center-x* An instance of type *<real>*.
--  *center-y* An instance of type *<real>*.
+-  *center-x* An instance of type ``<real>``.
+-  *center-y* An instance of type ``<real>``.
 
 The following argument is specific to *draw-ellipse\**.
 
 -  *center* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws an ellipse on *drawable* with the specified center and extreme
 points, using the current pen.
@@ -1387,7 +1191,7 @@ non-axis-aligned ellipses. For all practical purposes, this means that
 The arguments *start-angle* and *end-angle* let you draw just a section
 of the ellipse, rather than the whole ellipse.
 
-If *filled?* is *#t* then the ellipse will be filled, using the current
+If *filled?* is ``#t`` then the ellipse will be filled, using the current
 brush.
 
 The function *draw-ellipse\** is identical to *draw-ellipse*, except
@@ -1395,8 +1199,7 @@ that it passes composite objects, rather than separate coordinates, in
 its arguments. You should be aware that using this function may lead to
 a loss of performance.
 
-See also
-        
+   See also
 
 `draw-circle`_
 
@@ -1407,21 +1210,13 @@ draw-image
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws the specified image at the specified position.
 
-Signature
-         
-
-draw-image *drawable image x y* => ()
+   :signature: draw-image *drawable image x y* => ()
 
 draw-image\* *drawable image point* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
@@ -1429,20 +1224,18 @@ Arguments
 
 The following arguments are specific to *draw-image*.
 
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
+-  *x* An instance of type ``<real>``.
+-  *y* An instance of type ``<real>``.
 
 The following argument is specific to *draw-image\**.
 
 -  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws *image* on *drawable* at (*x*,*y*).
 
@@ -1451,8 +1244,7 @@ it passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `draw-pixmap`_
 
@@ -1463,31 +1255,23 @@ draw-line
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a line between the specified points.
 
-Signature
-         
-
-draw-line *drawable x1 y1 x2 y2* => ()
+   :signature: draw-line *drawable x1 y1 x2 y2* => ()
 
 draw-line\* *drawable point1 point2* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *draw-line*.
 
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
+-  *x1* An instance of type ``<real>``.
+-  *y1* An instance of type ``<real>``.
+-  *x2* An instance of type ``<real>``.
+-  *y2* An instance of type ``<real>``.
 
 The following arguments are specific to *draw-line\**.
 
@@ -1495,12 +1279,10 @@ The following arguments are specific to *draw-line\**.
 -  *point2* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a line on *drawable* between (*x1*, *y1*) and (*x2*,*y2*),
 using the current pen. Dashed lines start dashing from the first point.
@@ -1510,8 +1292,7 @@ passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `curve-to`_
 
@@ -1530,21 +1311,13 @@ draw-lines
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a series of lines between the specified sequence of points.
 
-Signature
-         
-
-draw-lines *drawable coord-seq* => ()
+   :signature: draw-lines *drawable coord-seq* => ()
 
 draw-lines\* *drawable points* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
@@ -1560,12 +1333,10 @@ The following argument is specific to *draw-lines\**.
    <point> <geom.htm#15734>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a series of lines on *drawable* between the specified sequence of
 points, using the current pen. Dashed lines start dashing from the first
@@ -1577,10 +1348,8 @@ arguments. You should be aware that using this function may lead to a
 loss of performance.
 
 Example
-       
 
 draw-lines(medium,
-                  
 
 vector(100, 150,
 
@@ -1589,10 +1358,8 @@ vector(100, 150,
 300, 350,
 
 400, 450));
-           
 
-See also
-        
+   See also
 
 `draw-line`_
 
@@ -1605,45 +1372,35 @@ draw-oval
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws an oval with the specified center and radii.
 
-Signature
-         
-
-draw-oval *drawable center-x center-y x-radius y-radius* #key *filled?*
+   :signature: draw-oval *drawable center-x center-y x-radius y-radius* #key *filled?*
 => ()
 
 draw-oval\* *drawable center x-radius y-radius* #key *filled?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *x-radius* An instance of type *<real>*.
--  *y-radius* An instance of type *<real>*.
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *x-radius* An instance of type ``<real>``.
+-  *y-radius* An instance of type ``<real>``.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following arguments are specific to *draw-oval*.
 
--  *center-x* An instance of type *<real>*.
--  *center-y* An instance of type *<real>*.
+-  *center-x* An instance of type ``<real>``.
+-  *center-y* An instance of type ``<real>``.
 
 The following argument is specific to *draw-oval\**.
 
 -  *center* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws an oval on *drawable* with center (*center-x*,*center-y*) and
 radii defined by *x-radius* and *y-radius*, using the current pen.
@@ -1653,7 +1410,7 @@ Ovals are similar to ellipses, except that they have straight edges.
 .. figure:: images/graphics-15.png
    :align: center
    :alt: 
-If *filled?* is *#t* then the oval will be filled, using the current
+If *filled?* is ``#t`` then the oval will be filled, using the current
 brush.
 
 The function *draw-oval\** is identical to *draw-oval*, except that it
@@ -1661,8 +1418,7 @@ passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `draw-circle`_
 
@@ -1673,44 +1429,34 @@ draw-pixmap
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws the contents of the specified pixmap at the specified point.
 
-Signature
-         
-
-draw-pixmap *drawable pixmap x y* #key *function* => ()
+   :signature: draw-pixmap *drawable pixmap x y* #key *function* => ()
 
 draw-pixmap\* *drawable pixmap point* #key *function* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *pixmap* An instance of type `<pixmap>`_.
--  *function* An instance of type *<function>*. Default value: `See
+-  *pixmap* An instance of type :class:`<pixmap>`.
+-  *function* An instance of type ``<function>``. Default value: `See
    $boole-1 <dcs.htm#36174>`_.
 
 The following arguments are specific to *draw-pixmap*.
 
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
+-  *x* An instance of type ``<real>``.
+-  *y* An instance of type ``<real>``.
 
 The following argument is specific to *draw-pixmap\**.
 
 -  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws the contents of *pixmap* on *drawable* at (*x*,*y*).
 
@@ -1719,8 +1465,7 @@ it passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `destroy-pixmap`_
 
@@ -1735,21 +1480,13 @@ draw-point
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a single point at the specified position.
 
-Signature
-         
-
-draw-point *drawable x y* => ()
+   :signature: draw-point *drawable x y* => ()
 
 draw-point\* *drawable point* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
@@ -1764,12 +1501,10 @@ The following argument is specific to *draw-point\**.
 -  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a single point on *drawable* at (*x*,*y*).
 
@@ -1778,8 +1513,7 @@ it passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `draw-line`_
 
@@ -1790,21 +1524,13 @@ draw-points
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a sequence of points at the specified positions.
 
-Signature
-         
-
-draw-points *drawable coord-seq* => ()
+   :signature: draw-points *drawable coord-seq* => ()
 
 draw-points\* *drawable points* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
@@ -1820,12 +1546,10 @@ The following argument is specific to *draw-points\**.
    <point> <geom.htm#15734>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a sequence of points on *drawable* at the specified positions.
 
@@ -1834,8 +1558,7 @@ it passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `draw-lines`_
 
@@ -1848,26 +1571,18 @@ draw-polygon
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a polygon joining the specified points.
 
-Signature
-         
-
-draw-polygon *drawable coord-seq* #key *closed? filled?* => ()
+   :signature: draw-polygon *drawable coord-seq* #key *closed? filled?* => ()
 
 draw-polygon\* *drawable points* #key *closed? filled?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *closed?* An instance of type *<boolean>*. Default value: *#t*.
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *closed?* An instance of type ``<boolean>``. Default value: ``#t``.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following argument is specific to *draw-polygon*.
 
@@ -1880,21 +1595,19 @@ The following argument is specific to *draw-polygon\**.
    <point> <geom.htm#15734>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a polygon on *drawable* joining the specified points, using the
 current pen. Dashed lines start dashing at the starting point of the
 first segment.
 
-If *closed?* is *#t*, then the polygon is closed, that is, a line is
+If *closed?* is ``#t``, then the polygon is closed, that is, a line is
 drawn from the last point in the sequence back to the first.
 
-If *filled?* is *#t* then the polygon will be filled, using the current
+If *filled?* is ``#t`` then the polygon will be filled, using the current
 brush.
 
 The function *draw-polygon\** is identical to *draw-polygon*, except
@@ -1902,8 +1615,7 @@ that it passes composite objects, rather than separate coordinates, in
 its arguments. You should be aware that using this function may lead to
 a loss of performance.
 
-See also
-        
+   See also
 
 `draw-rectangle`_
 
@@ -1916,32 +1628,24 @@ draw-rectangle
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a rectangle at the specified position.
 
-Signature
-         
-
-draw-rectangle *drawable x1 y1 x2 y2* #key *filled?* => ()
+   :signature: draw-rectangle *drawable x1 y1 x2 y2* #key *filled?* => ()
 
 draw-rectangle\* *drawable point1 point2* #key *filled?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following arguments are specific to *draw-rectangle*.
 
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
+-  *x1* An instance of type ``<real>``.
+-  *y1* An instance of type ``<real>``.
+-  *x2* An instance of type ``<real>``.
+-  *y2* An instance of type ``<real>``.
 
 The following arguments are specific to *draw-rectangle\**.
 
@@ -1949,12 +1653,10 @@ The following arguments are specific to *draw-rectangle\**.
 -  *point2* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a rectangle on *drawable* with left and right corners at (*x1*
 ,*y1*) and (*x2*,*y2*), using the current pen. Dashed lines start
@@ -1966,7 +1668,7 @@ corners: only one rectangle is possible between and pair of points.
 .. figure:: images/graphics-16.png
    :align: center
    :alt: 
-If *filled?* is *#t* then the rectangle will be filled, using the
+If *filled?* is ``#t`` then the rectangle will be filled, using the
 current brush.
 
 The function *draw-rectangle\** is identical to *draw-rectangle*,
@@ -1974,8 +1676,7 @@ except that it passes composite objects, rather than separate
 coordinates, in its arguments. You should be aware that using this
 function may lead to a loss of performance.
 
-See also
-        
+   See also
 
 `draw-polygon`_
 
@@ -1990,25 +1691,17 @@ draw-rectangles
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a sequence of rectangles at the specified positions.
 
-Signature
-         
-
-draw-rectangles *drawable coord-seq* #key *filled?* => ()
+   :signature: draw-rectangles *drawable coord-seq* #key *filled?* => ()
 
 draw-rectangles\* *drawable points* #key *filled?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following argument is specific to *draw-rectangles*.
 
@@ -2021,18 +1714,16 @@ The following argument is specific to *draw-rectangles\**.
    <point> <geom.htm#15734>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a sequence of rectangles on *drawable* with left and right corners
 at the specified positions, using the current pen. Dashed lines start
 dashing at the starting point of the first segment of each rectangle.
 
-If *filled?* is *#t* then the rectangles will be filled, using the
+If *filled?* is ``#t`` then the rectangles will be filled, using the
 current brush.
 
 The function *draw-rectangles\** is identical to *draw-rectangles*,
@@ -2040,8 +1731,7 @@ except that it passes composite objects, rather than separate
 coordinates, in its arguments. You should be aware that using this
 function may lead to a loss of performance.
 
-See also
-        
+   See also
 
 `draw-lines`_
 
@@ -2054,38 +1744,30 @@ draw-regular-polygon
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a regular polygon that touches the specified points, and has the
 specified number of sides.
 
-Signature
-         
-
-draw-regular-polygon *drawable x1 y1 x2 y2 nsides* #key *handedness
+   :signature: draw-regular-polygon *drawable x1 y1 x2 y2 nsides* #key *handedness
 closed? filled?* => ()
 
 draw-regular-polygon\* *drawable point1 point2 nsides* #key *handedness
 closed? filled?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *nsides* An instance of type *<integer>*.
+-  *nsides* An instance of type ``<integer>``.
 -  *handedness* Default value: *#"left"*.
--  *closed?* An instance of type *<boolean>*. Default value: *#t*.
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *closed?* An instance of type ``<boolean>``. Default value: ``#t``.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following arguments are specific to *draw-regular-polygon*.
 
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
+-  *x1* An instance of type ``<real>``.
+-  *y1* An instance of type ``<real>``.
+-  *x2* An instance of type ``<real>``.
+-  *y2* An instance of type ``<real>``.
 
 The following arguments are specific to *draw-regular-polygon\**.
 
@@ -2093,12 +1775,10 @@ The following arguments are specific to *draw-regular-polygon\**.
 -  *point2* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a regular polygon on *drawable*, using the current pen, that
 touches the specified points, and has the specified number of sides.
@@ -2107,7 +1787,7 @@ Dashed lines start dashing at the starting point of the first segment.
 .. figure:: images/graphics-17.png
    :align: center
    :alt: 
-If *filled?* is *#t* then the polygon will be filled, using the current
+If *filled?* is ``#t`` then the polygon will be filled, using the current
 brush.
 
 The function *draw-regular-polygon\** is identical to
@@ -2115,8 +1795,7 @@ The function *draw-regular-polygon\** is identical to
 than separate coordinates, in its arguments. You should be aware that
 using this function may lead to a loss of performance.
 
-See also
-        
+   See also
 
 `draw-polygon`_
 
@@ -2129,44 +1808,36 @@ draw-text
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws text at the specified point, in a specified direction.
 
-Signature
-         
-
-draw-text *drawable text x y* #key *start end align-x align-y
+   :signature: draw-text *drawable text x y* #key *start end align-x align-y
 towards-point transform-glyphs?* => ()
 
 draw-text\* *drawable text point* #key *start end align-x align-y
 towards-point transform-glyphs?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 -  *text* An instance of type *type-union(<string>, <character>)*.
--  *start* An instance of type *<integer>*. Default value: 0.
--  *end* An instance of type *<integer>*. Default value: *size(* *text*
+-  *start* An instance of type ``<integer>``. Default value: 0.
+-  *end* An instance of type ``<integer>``. Default value: *size(* *text*
    *)*.
 -  *align-x* An instance of type *one-of(#"left", #"right", #"center")*
    . Default value: *#"left"*.
 -  *align-y* An instance of type *one-of(#"top", #"bottom",
    #"baseline")*. Default value: *#"baseline"*.
--  *transform-glyphs?* An instance of type *<boolean>*. Default value:
-   *#f*.
--  *do-tabs?* An instance of type *<boolean>*. Default value: *#f*
+-  *transform-glyphs?* An instance of type ``<boolean>``. Default value:
+   ``#f``.
+-  *do-tabs?* An instance of type ``<boolean>``. Default value: ``#f``
 
 The following arguments are specific to *draw-text*.
 
--  *towards-x* An instance of type *<real>*.
--  *towards-y* An instance of type *<real>*.
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
+-  *towards-x* An instance of type ``<real>``.
+-  *towards-y* An instance of type ``<real>``.
+-  *x* An instance of type ``<real>``.
+-  *y* An instance of type ``<real>``.
 
 The following arguments are specific to *draw-text\**.
 
@@ -2175,12 +1846,10 @@ The following arguments are specific to *draw-text\**.
 -  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws text from *text* on *drawable* at (*x*,*y*). Text is drawn in
 the direction of the point (*towards-x*,*towards-y*).
@@ -2204,15 +1873,15 @@ distance between these two points.
 
 The argument *transform-glyphs?* controls whether the text is reversed
 in cases when *towards-x* is less than *x*. If *transform-glyphs?* is
-*#t*, then text is reversed in these cases, that is, the last character
+``#t``, then text is reversed in these cases, that is, the last character
 of *text* to be written is still closest to the point (*towards-x*
 ,*towards-y*), and the text appears reversed. If *transform-glyphs?* is
-*#f*, then the first character of *text* to be written is closest to
+``#f``, then the first character of *text* to be written is closest to
 the point (*towards-x*,*towards-y*), and the text does not appear
 reversed.
 
-If *do-tabs?* is *#t*, then any tab characters in *text* are honored,
-and are drawn as tabs. If *do-tabs?* is *#f*, then tab characters are
+If *do-tabs?* is ``#t``, then any tab characters in *text* are honored,
+and are drawn as tabs. If *do-tabs?* is ``#f``, then tab characters are
 replaced by spaces.
 
 The function *draw-text\** is identical to *draw-text*, except that it
@@ -2220,8 +1889,7 @@ passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `draw-image`_
 
@@ -2232,34 +1900,26 @@ draw-triangle
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a triangle between the specified points.
 
-Signature
-         
-
-draw-triangle *drawable x1 y1 x2 y2 x3 y3* #key *filled?* => ()
+   :signature: draw-triangle *drawable x1 y1 x2 y2 x3 y3* #key *filled?* => ()
 
 draw-triangle\* *drawable p1 p2 p3* #key *filled?* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
--  *filled?* An instance of type *<boolean>*. Default value: *#t*.
+-  *filled?* An instance of type ``<boolean>``. Default value: ``#t``.
 
 The following arguments are specific to *draw-triangle*.
 
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
--  *x3* An instance of type *<real>*.
--  *y3* An instance of type *<real>*.
+-  *x1* An instance of type ``<real>``.
+-  *y1* An instance of type ``<real>``.
+-  *x2* An instance of type ``<real>``.
+-  *y2* An instance of type ``<real>``.
+-  *x3* An instance of type ``<real>``.
+-  *y3* An instance of type ``<real>``.
 
 The following arguments are specific to *draw-triangle\**.
 
@@ -2268,12 +1928,10 @@ The following arguments are specific to *draw-triangle\**.
 -  *p3* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a triangle on *drawable* between the specified points, using the
 current pen. Dashed lines start dashing at the starting point of the
@@ -2282,7 +1940,7 @@ first segment.
 .. figure:: images/graphics-19.png
    :align: center
    :alt: 
-If *filled?* is *#t* then the triangle will be filled, using the current
+If *filled?* is ``#t`` then the triangle will be filled, using the current
 brush.
 
 The function *draw-triangle\** is identical to *draw-triangle*, except
@@ -2290,8 +1948,7 @@ that it passes composite objects, rather than separate coordinates, in
 its arguments. You should be aware that using this function may lead to
 a loss of performance.
 
-See also
-        
+   See also
 
 `draw-polygon`_
 
@@ -2304,31 +1961,21 @@ end-path
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Ends the definition of the current path in the specified drawable
 object.
 
-Signature
-         
-
-end-path *drawable* => ()
+   :signature: end-path *drawable* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Ends the definition of the current path in *drawable*. Once the
 definition has been ended, the path can be rendered to the drawable
@@ -2338,8 +1985,7 @@ stroke-path`_.
 The function `close-path`_ can also be used to
 end the definition of a path.
 
-See also
-        
+   See also
 
 `abort-path`_
 
@@ -2352,38 +1998,27 @@ fill-path
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Uses the current brush to fill the current path on the specified
 drawable object.
 
-Signature
-         
-
-fill-path *drawable* => ()
+   :signature: fill-path *drawable* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Uses the current brush to fill the current path on *drawable*. If the
 path has not already been closed using `See
 close-path`_, it is closed automatically.
 
-See also
-        
+   See also
 
 `stroke-path`_
 
@@ -2394,41 +2029,31 @@ line-to
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Draws a line from the current position in the path to a new position.
 
-Signature
-         
-
-line-to *drawable x y* => ()
+   :signature: line-to *drawable x y* => ()
 
 line-to\* *drawable point* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *line-to*.
 
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
+-  *x* An instance of type ``<real>``.
+-  *y* An instance of type ``<real>``.
 
 The following argument is specific to *line-to\**.
 
 -  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Draws a line from the current position in the path to (*x*,*y*).
 
@@ -2444,8 +2069,7 @@ passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `arc-to`_
 
@@ -2462,37 +2086,26 @@ make-pixmap
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Creates a pixmap from the specified medium with a specified size.
 
-Signature
-         
-
-make-pixmap *medium width height* => *pixmap*
+   :signature: make-pixmap *medium width height* => *pixmap*
 
 Arguments
-         
 
 -  *medium* An instance of type *`<medium> <silica.htm#60437>`_*.
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
+-  *width* An instance of type ``<integer>``.
+-  *height* An instance of type ``<integer>``.
 
 Values
-      
 
--  *pixmap* An instance of type `<pixmap>`_.
+-  *pixmap* An instance of type :class:`<pixmap>`.
 
-Description
-           
+   :description:
 
 Creates a pixmap from *medium* with a specified size, in pixels, given
 by *width* and *height*.
 
-See also
-        
+   See also
 
 `draw-pixmap`_
 
@@ -2505,41 +2118,31 @@ move-to
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Move the position in the current path on the specified drawable.
 
-Signature
-         
-
-move-to *drawable x y* => ()
+   :signature: move-to *drawable x y* => ()
 
 move-to\* *drawable point* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 The following arguments are specific to *move-to*.
 
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
+-  *x* An instance of type ``<real>``.
+-  *y* An instance of type ``<real>``.
 
 The following argument is specific to *move-to\**.
 
 -  *point* An instance of type `<transform> <geom.htm#33417>`_.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Move the position in the current path on *drawable* to (*x*,*y*).
 
@@ -2559,8 +2162,7 @@ passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
 loss of performance.
 
-See also
-        
+   See also
 
 `arc-to`_
 
@@ -2573,24 +2175,17 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of pixmap objects.
 
-Superclasses
-            
+   :superclasses:
 
 `<image> <dcs.htm#51234>`_
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of pixmap objects.
 
@@ -2603,8 +2198,7 @@ generate a pixmap that corresponds to a complex, frequently used part in
 a VLSI schematic, and then use `See
 copy-from-pixmap`_ to draw the part as needed.
 
-Operations
-          
+   :operations:
 
 The following operation is exported from the *DUIM-Graphics* module.
 
@@ -2618,8 +2212,7 @@ The following operation is exported from the *DUIM-DCs* module.
 
 `image-height <dcs.htm#44679>`_ `image-width <dcs.htm#32781>`_
 
-See also
-        
+   See also
 
 `draw-pixmap`_
 
@@ -2632,34 +2225,23 @@ pixmap?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the specified object is a pixmap.
 
-Signature
-         
-
-pixmap? *object* => *pixmap?*
+   :signature: pixmap? *object* => *pixmap?*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *pixmap?* An instance of type *<boolean>*.
+-  *pixmap?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if *object* is a pixmap.
 
-See also
-        
+   See also
 
 `<pixmap>`_
 
@@ -2668,35 +2250,26 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of pixmap mediums.
 
-Superclasses
-            
+   :superclasses:
 
 *`<medium> <silica.htm#60437>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of pixmap mediums, that, is mediums capable of doing output to
 a pixmap.
 
-Operations
-          
+   :operations:
 
 -  `with-output-to-pixmap`_
 
-See also
-        
+   See also
 
 `<medium> <silica.htm#60437>`_
 
@@ -2710,30 +2283,20 @@ start-path
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Starts a new path on the specified drawable object.
 
-Signature
-         
-
-start-path *drawable* => ()
+   :signature: start-path *drawable* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Starts a new path on *drawable*. The path can be created with any
 number of calls to `line-to`_, `See
@@ -2747,8 +2310,7 @@ close-path`_ or `See
 end-path`_ to finish the path, or `See
 abort-path`_ to abandon it altogether.
 
-See also
-        
+   See also
 
 `abort-path`_
 
@@ -2761,39 +2323,28 @@ stroke-path
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Uses the current pen to draw the current path on the specified drawable
 object.
 
-Signature
-         
-
-stroke-path *drawable* => ()
+   :signature: stroke-path *drawable* => ()
 
 Arguments
-         
 
 -  *drawable* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, `<medium> <silica.htm#60437>`_)*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Uses the current pen to draw the current path on *drawable*. Note that
 the path must not have been previously filled. This function does not
 close the path: you must use `close-path`_ if
 you wish to do this.
 
-See also
-        
+   See also
 
 `close-path`_
 
@@ -2804,33 +2355,25 @@ with-output-to-pixmap
 
 Macro
 '''''
-
-Summary
-       
-
 Executes a body of code, returning the results to a pixmap.
 
 Macro call
-          
 
 with-output-to-pixmap (*medium*, #rest *options*) *body* end =>
 *pixmap*
 
 Arguments
-         
 
 -  *medium* An instance of type `See
    <pixmap-medium>`_.
--  *options* An instance of type *<object>*.
--  *body* An instance of type *<object>*.
+-  *options* An instance of type ``<object>``.
+-  *body* An instance of type ``<object>``.
 
 Values
-      
 
--  *pixmap* An instance of type `<pixmap>`_.
+-  *pixmap* An instance of type :class:`<pixmap>`.
 
-Description
-           
+   :description:
 
 Executes a body of code, returning the results to a pixmap.Binds
 *medium* to a pixmap medium, that is, a medium that does output to a
@@ -2842,8 +2385,7 @@ graphics functions.
 The returned value is a pixmap that can be drawn onto *medium* using
 `copy-from-pixmap`_.
 
-See also
-        
+   See also
 
 `do-with-output-to-pixmap`_
 

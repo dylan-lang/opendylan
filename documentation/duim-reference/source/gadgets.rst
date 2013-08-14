@@ -45,14 +45,12 @@ Some of the more important types of gadget are as follows:
    (for instance, push buttons).
 
 *Value range gadgets*
-                     
 
 -  Value range gadgets are those value gadgets for which the possible
    value sits within a defined range. This includes gadgets such as
    scroll bars and sliders.
 
 *Collection gadgets*
-                    
 
 -  Collection gadgets are those gadgets that can contain a number of
    "child" gadgets, the specification of which can be described in terms
@@ -140,16 +138,15 @@ Every gadget has some or all of these properties.
 
 -  *gadget-label* This slot holds the label that appears on the gadget
    on the screen. If a gadget does not have a label, the *gadget-label*
-   function returns *#f*.
+   function returns ``#f``.
 -  *gadget-value* This slot holds the value(s) of the gadget. If a
    gadget does not have any values, the *gadget-value* function returns
-   *#f*.
+   ``#f``.
 -  *gadget-items* This slot is a list of the contents of the gadget. If
    the gadget does not have items, for example a button, *gadget-items*
    returns nothing.
 
 *gadget-enabled?*
-                 
 
 -  This slot tests whether or not the gadget is active. All gadgets have
    a *gadget-enabled?* slot.
@@ -235,7 +232,6 @@ as follows:
    border and label identifying the grouping.
 
 Overall class hierarchy for the DUIM-Gadgets library
-                                                    
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -298,7 +294,6 @@ subclasses defined. These include:
    fields (single line edit controls).
 
 *<value-range-gadget>*
-                      
 
 -  Value gadgets whose value can vary within a known range, such as
    scroll bars.
@@ -307,7 +302,6 @@ subclasses defined. These include:
    more details about the classes of button available.
 
 *<collection-gadget>*
-                     
 
 -  Any gadget whose contents form a collection, such as a list, a tree
    control, or a group of buttons. See `Subclasses of
@@ -330,7 +324,6 @@ The subclasses of *<value-gadget>* are as shown in `Subclasses of
 the <value-gadget> class`_.
 
 Subclasses of the *<value-gadget>* class
-                                        
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -380,7 +373,6 @@ The subclasses of *<page>* are as shown in `Subclasses of the <page>
 class`_.
 
 Subclasses of the *<page>* class
-                                
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -397,7 +389,6 @@ The *<tab-control-page>* class is used to define the elements that are
 associated with each tab in a tab control.
 
 A tab control page
-                  
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -413,7 +404,6 @@ information. Property frames are so named because they are often used to
 display the user-configurable properties of an application.
 
 A property page
-               
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -428,7 +418,6 @@ consist of several physically distinct windows that are presented to the
 user in a strict order.
 
 A tab control page
-                  
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -453,7 +442,6 @@ each one supports the *value* protocol, as described in `See
 Overview`_.
 
 Subclasses of the *<button>* class
-                                  
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -483,7 +471,6 @@ subclasses support the *items* protocol, even though they are not
 displayed in bold.
 
 Subclasses of the *<collection-gadget>* class
-                                             
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -563,7 +550,6 @@ information:
    hierarchical relationship between the objects.
 
 *<table-control>*
-                 
 
 -  These allow you to display information as a table, with information
    divided into a number of column headings.
@@ -582,7 +568,6 @@ as push buttons, radio buttons, and check boxes, and, less obviously,
 menu items.
 
 A selection of button and equivalent menu buttons
-                                                 
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -604,7 +589,6 @@ of which is a subclass of the *<text-gadget>* class.
 -  *<text-editor>*
 
 *<password-field>*
-                  
 
 -  
 
@@ -635,7 +619,6 @@ buttons so as to delineate them visually from other menu buttons in the
 same menu.
 
 A variety of simple collection gadgets
-                                      
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -651,7 +634,6 @@ A value range gadget is any gadget whose value falls within a defined
 Dylan range.
 
 A variety of value range gadgets
-                                
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -678,13 +660,11 @@ used for different types of multi-page control. There are three types of
 page available:
 
 *<tab-control-page>*
-                    
 
 -  These are pages that are used within a tab control. Clicking on any
    tab in a tab control displays a different page of information.
 
 *<property-page>*
-                 
 
 -  These are pages that are displayed in property frames: modeless
    dialog boxes that contain several pages of information displayed as
@@ -697,7 +677,6 @@ page available:
    wizard frames, see ` <frames.htm#89815>`_.
 
 A tab control page, a property page, and a wizard page
-                                                      
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -750,7 +729,6 @@ information your application requires, and to this end, status bars can
 take a number of children.
 
 A status bar
-            
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -774,7 +752,6 @@ contains several "pages" of information. Each page of information is
 displayed by clicking on the appropriate tab along the top of the sheet.
 
 A tab control
-             
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -809,41 +786,30 @@ are exported from the *duim-gadgets* module.
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The protocol class for gadgets that have action callbacks.
 
-Superclasses
-            
+   :superclasses:
 
 *`<gadget>`_*
 
 Init-keywords
-             
 
 *activate-callback:*
-                    
 
-An instance of type *false-or(<function>)*. Default value: *#f*.
-                                                                  
+An instance of type *false-or(<function>)*. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class used by gadgets that have an action callback that allows some
 type of action to be performed, such as a push button. Action gadgets
 can only be activated when they are enabled.
 
-Operations
-          
+   :operations:
 
 `gadget-activate-callback`_ `See
 gadget-activate-callback-setter`_
 
-See also
-        
+   See also
 
 *`<gadget>`_*
 
@@ -852,29 +818,16 @@ activate-gadget
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Activates the specified gadget.
 
-Signature
-         
-
-activate-gadget *gadget* => ()
+   :signature: activate-gadget *gadget* => ()
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Activates gadget by calling the activate callback. For example, in the
 case of a button, calling this generic function would be as if the user
@@ -885,42 +838,28 @@ add-column
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Adds a column to the specified table.
 
-Signature
-         
-
-add-column *table heading generator index* => ()
+   :signature: add-column *table heading generator index* => ()
 
 Arguments
-         
 
 -  *table* An instance of type `See
    <table-control>`_.
 -  *heading* An instance of type *type-union(<string>,* `See
    <label>`_*)*.
--  *generator* An instance of type *<function>*.
--  *index* An instance of type *<integer>*.
+-  *generator* An instance of type ``<function>``.
+-  *index* An instance of type ``<integer>``.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Adds a column *table*, with a table heading given by *heading*. The
 contents of the column are generated by calling the *generator* function
 on the item for each row of *table*. The *index* specifies where in the
 column order the new column should be added.
 
-See also
-        
+   See also
 
 *`remove-column`_*
 
@@ -929,19 +868,11 @@ add-item
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Adds an item to the specified list or table control.
 
-Signature
-         
-
-add-item *list-or-table item* #key *after* => *item*
+   :signature: add-item *list-or-table item* #key *after* => *item*
 
 Arguments
-         
 
 -  *list-or-table* An instance of *type-union(
     `<list-control>`_, `See
@@ -954,22 +885,19 @@ Arguments
    <table-item>`_)*.
 
 Values
-      
 
 -  *item* An instance of type *type-union(`See
    <list-item>`_, `See
    <table-item>`_)*.
 
-Description
-           
+   :description:
 
 Adds an *item* to the specified *list-or-table*. The new item is
 created via a call to *`make-item`_*.
 
 The *after* argument indicates which item to place the new item after.
 
-See also
-        
+   See also
 
 `find-item`_
 
@@ -990,34 +918,24 @@ add-node
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Adds node to the specified tree control.
 
-Signature
-         
-
-add-node *tree parent node* #key *after setting-roots?* => *node*
+   :signature: add-node *tree parent node* #key *after setting-roots?* => *node*
 
 Arguments
-         
 
 -  *tree* An instance of *`<tree-control>`_*.
 -  *parent* An instance of *`<tree-control>`_*.
 -  *node* An instance of type *`<tree-node>`_*.
 -  *after* An instance of type *`<tree-node>`_*
    .
--  *setting-roots?* An instance of type *<boolean>*.
+-  *setting-roots?* An instance of type ``<boolean>``.
 
 Values
-      
 
 -  *node* An instance of type *`<tree-node>`_*.
 
-Description
-           
+   :description:
 
 Adds a *node* to the specified *tree* with the specified *parent*. The
 new item is created via a call to *make-node*.
@@ -1026,8 +944,7 @@ The *after* argument indicates which node to place the new node after.
 If *setting-roots?* is true, then the new node is added at the root of
 *tree*.
 
-See also
-        
+   See also
 
 *`find-node`_*
 
@@ -1042,28 +959,21 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of bordering gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 *`<gadget>`_ `See
 <single-child-composite-pane> <layouts.htm#47412>`_*
 
 Init-keywords
-             
 
--  *thickness:* An instance of type *<integer>*. Default value: 1.
+-  *thickness:* An instance of type ``<integer>``. Default value: 1.
 -  *type:* An instance of type *one-of(#f, #"flat", #"sunken",
    #"raised", #"ridge", #"groove", #"input", #"output")*. Default
-   value: *#f*.
+   value: ``#f``.
 
-Description
-           
+   :description:
 
 The base class of gadgets that provide borders to their children.
 
@@ -1076,7 +986,6 @@ respect to it. Alternatively, a border may be displayed as a thin ridge
 or groove. Input and output borders represent "logical" borders.
 
 Different types of border
-                         
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -1089,13 +998,11 @@ Borders are usually created using the `See
 with-border`_ macro, rather than by making direct
 instances of this class.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 *`<group-box>`_*
 
@@ -1106,27 +1013,20 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of all button gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-gadget>`_*
 
 Init-keywords
-             
 
 -  *accelerator:* An instance of type *false-or(`See
-   <gesture> <silica.htm#76256>`_)*. Default value: *#f*.
+   <gesture> <silica.htm#76256>`_)*. Default value: ``#f``.
 -  *mnemonic:* An instance of type *false-or(<character>)*. Default
-   value: *#f*.
+   value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of all button gadgets.
 
@@ -1171,8 +1071,7 @@ force a button to use all the available width or height, specify
 *max-width: $fill* or *max-height: $fill* accordingly in the button
 definition. See the second example below to see how this is done.
 
-Operations
-          
+   :operations:
 
 ` <frames.htm#56017>`_ ` <frames.htm#56015>`_
  ` <frames.htm#24406>`_
@@ -1180,10 +1079,8 @@ Operations
 ` <frames.htm#56017>`_
 
 Example
-       
 
 contain
-       
 
 (make(<button>, label: "Hello",
 
@@ -1200,7 +1097,6 @@ notify-user
 owner: gadget)
 
 end));
-      
 
 The following example creates a column layout that contains two
 elements.
@@ -1220,7 +1116,6 @@ label, and there would be empty space in the row layout. However, using
 possible, so as to fit the entire width of the row layout.
 
 vertically (equalize-widths?: #t)
-                                 
 
 horizontally ()
 
@@ -1239,10 +1134,8 @@ label:
 "A button with a really really long label");
 
 end
-   
 
-See also
-        
+   See also
 
 `<button-box>`_
 
@@ -1263,20 +1156,14 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 A class that groups buttons.
 
-Superclasses
-            
+   :superclasses:
 
 `<collection-gadget>`_ `See
 <multiple-child-composite-pane> <layouts.htm#45992>`_
 
 Init-keywords
-             
 
 -  *rows:* An instance of type *false-or(<integer>)*.
 -  *columns:* An instance of type *false-or(<integer>)*.
@@ -1287,10 +1174,9 @@ Init-keywords
    <column-layout> <layouts.htm#22240>`_* or *`See
    <row-layout> <layouts.htm#32870>`_*, depending on orientation.
 -  *child:* An instance of type *false-or(`See
-   <sheet> <silica.htm#13118>`_)*. Default value: *#f*.
+   <sheet> <silica.htm#13118>`_)*. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of grouped buttons; the superclass of *`See
 <check-box>`_* and *`See
@@ -1326,21 +1212,17 @@ If you use *child:*, then the *gadget-value* returned by the gadget is
 the *gadget-id* of the selected button. Contrast this with *items:*,
 where the selected item is returned as the *gadget-value*.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Examples
-        
 
 contain(make(<button-box>,
-                          
 
 selection-mode: #"multiple",
 
 items: range(from: 0, to: 20)));
-                                
 
 The following examples illustrate the use of some of the init-keywords
 described. They each create an instance of a subclass of *<button-box>*
@@ -1348,27 +1230,20 @@ described. They each create an instance of a subclass of *<button-box>*
 rather than creating a direct instance of one of the subclasses.
 
 contain(make(<check-box>, items: range(from: 1, to: 9),
-                                                       
 
 columns: 3));
-             
 
 contain(make(<radio-box>, items: #("Yes", "No"),
-                                                
 
 orientation: #"vertical");
-                          
 
 contain(make(<check-box>, items: #(1, 2, 3. 4),
-                                               
 
 layout-class: <table-layout>
 
 rows: 2));
-          
 
-See also
-        
+   See also
 
 *`<check-box>`_*
 
@@ -1381,25 +1256,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of check boxes, or groups of check buttons.
 
-Superclasses
-            
+   :superclasses:
 
 *`<button-box>`_ `See
 <action-gadget>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 |image1| The instantiable class that implements an abstract check box,
 that is, a gadget that constrains a number of toggle buttons, zero or
@@ -1408,33 +1276,25 @@ more of which may be selected at any one time.
 The value of a check box is a sequence of all the currently selected
 items in the check box.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Examples
-        
 
 contain(make(<check-box>, items: #(1, 2, 3, 4, 5)));
-                                                    
 
 contain(make(<check-box>, items: range(from: 1, to: 9),
-                                                       
 
 columns: 3));
-             
 
 contain(make(<check-box>, items: #(1, 2, 3, 4),
-                                               
 
 layout-class: <table-layout>
 
 rows: 2));
-          
 
-See also
-        
+   See also
 
 `<group-box>`_
 
@@ -1447,44 +1307,33 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of check buttons.
 
-Superclasses
-            
+   :superclasses:
 
 `<button>`_ `See
 <action-gadget>`_
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 |image2| The class of check buttons. The value of a check button is
-either *#t* or *#f*, depending whether or not it is currently selected.
+either ``#t`` or ``#f``, depending whether or not it is currently selected.
 
 Internally, this class maps into the check box Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<check-button>, label: "Check button"));
-                                                     
 
-See also
-        
+   See also
 
 `<check-menu-button>`_
 
@@ -1497,43 +1346,33 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of groups of check buttons displayed in a menu.
 
-Superclasses
-            
+   :superclasses:
 
 *`<menu-box>`_ `See
 <action-gadget>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of groups of check buttons displayed in a menu|image3| .
 
 Internally, this class maps into the menu Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 The following example creates a menu that shows an example of a check
 menu box.
 
 contain(make(<menu>,
-                    
 
 label: "Hello...",
 
@@ -1548,10 +1387,8 @@ items:
 "Everyone")),
 
 )));
-    
 
-See also
-        
+   See also
 
 *`<menu-box>`_*
 
@@ -1564,40 +1401,30 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of check buttons that can be displayed in a menu.
 
-Superclasses
-            
+   :superclasses:
 
 `<menu-button>`_
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 |image4| The class of check buttons that can be displayed in a menu. The
-values of a menu button is either *#t* or *#f*.
+values of a menu button is either ``#t`` or ``#f``.
 
 Internally, this class maps into the menu item Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain
-       
 
 (make(<check-menu-button>,
 
@@ -1610,10 +1437,8 @@ method (gadget)
 notify-user(format-to-string
 
 ("Toggled button %=", gadget)) end));
-                                     
 
-See also
-        
+   See also
 
 `<check-button>`_
 
@@ -1624,43 +1449,32 @@ See also
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The class of all gadgets that contain collections.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-gadget>`_*
 
 Init-keywords
-             
 
 -  *items:* An instance of type *<sequence>*. Default value: *#[]*.
--  *label-key:* An instance of type *<function>*.
--  *value-key:* An instance of type *<function>*. Default value:
+-  *label-key:* An instance of type ``<function>``.
+-  *value-key:* An instance of type ``<function>``. Default value:
    *identity*.
--  *test:* An instance of type *<function>*. Default value: *==*.
+-  *test:* An instance of type ``<function>``. Default value: *==*.
 -  *selection:* An instance of type *limited(<sequence>, of: <integer>)*
    . Default value: *#[]*.
 
 *selection-mode:*
-                 
 
 An instance of type *one-of(#"single", #"multiple", #"none")*. Default
 value: *#"single"*.
-                                                                                            
 
 *key-press-callback:*
-                     
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
-Description
-           
+   :description:
 
 The class of all gadgets that can contain collections.
 
@@ -1714,8 +1528,7 @@ controls, list controls, tab controls, and table controls. See `See
 gadget-key-press-callback`_, for a fuller
 description of key-press callbacks.
 
-Operations
-          
+   :operations:
 
 `gadget-items`_ `See
 gadget-items-setter`_ `See
@@ -1728,8 +1541,7 @@ gadget-selection-mode`_
 gadget-test`_ `See
 gadget-value-key`_
 
-See also
-        
+   See also
 
 `<button-box>`_
 
@@ -1758,31 +1570,24 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of combo boxes, which combine options boxes with text fields.
 
-Superclasses
-            
+   :superclasses:
 
 *`<collection-gadget>`_ `See
 <action-gadget>`_ `See
 <text-gadget>`_*
 
 Init-keywords
-             
 
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
-   Default value: *#f*.
+   Default value: ``#f``.
 -  *scroll-bars:* An instance of type *one-of(#f, #"none",
    #"horizontal", #"vertical", #"both", #"dynamic")*. Default value:
    *#"both"*.
 
-Description
-           
+   :description:
 
 The class of combo boxes. Combo boxes are similar to option boxes,
 except that the text field is editable, so that new values can be
@@ -1808,22 +1613,17 @@ for the gadget.
 
 Internally, this class maps into the Windows combo box control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<combo-box>, value-type: <integer>
-                                               
 
 items: range(from: 1 to: 5)));
-                              
 
-See also
-        
+   See also
 
 `<option-box>`_
 
@@ -1834,37 +1634,23 @@ contract-node
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Contracts the specified node in a tree control.
 
-Signature
-         
-
-contract-node *tree-control* *node* => ()
+   :signature: contract-node *tree-control* *node* => ()
 
 Arguments
-         
 
 -  *tree-control* An instance of `See
    <tree-control>`_.
 -  *node* An instance of type `<tree-node>`_.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Contracts the specified *node* in *tree-control*, thereby hiding any
 children of the node that were displayed.
 
-See also
-        
+   See also
 
 `expand-node`_
 
@@ -1873,31 +1659,18 @@ display-menu
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Displays the specified menu.
 
-Signature
-         
-
-display-menu *menu* #key *x y* => ()
+   :signature: display-menu *menu* #key *x y* => ()
 
 Arguments
-         
 
 -  *menu* An instance of type `<menu>`_.
--  *x* An instance of type *false-or(<integer>)*. Default value: *#f*.
--  *y* An instance of type *false-or(<integer>)*. Default value: *#f*.
+-  *x* An instance of type *false-or(<integer>)*. Default value: ``#f``.
+-  *y* An instance of type *false-or(<integer>)*. Default value: ``#f``.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Displays the specified menu, optionally at a precise position on the
 screen, specified by *x* and *y*, where *x* and *y* are both relative
@@ -1905,8 +1678,7 @@ to the owner of the menu.
 
 The function returns when the menu has been popped down again.
 
-See also
-        
+   See also
 
 `<menu>`_
 
@@ -1915,31 +1687,18 @@ expand-node
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Expands the specified node in a tree control.
 
-Signature
-         
-
-expand-node *tree-control* *node* #key *sort-function* => ()
+   :signature: expand-node *tree-control* *node* #key *sort-function* => ()
 
 Arguments
-         
 
 -  *tree-control* An instance of `See
    <tree-control>`_.
 -  *node* An instance of type `<tree-node>`_.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Expands the specified node in a *tree-control*, thereby displaying any
 children that the node has.
@@ -1948,8 +1707,7 @@ If no children have been explicitly added to the node before it is
 expanded, they are generated by calling the tree’s children generating
 function on the node.
 
-See also
-        
+   See also
 
 `contract-node`_
 
@@ -1960,40 +1718,29 @@ find-item
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Finds an item in a list control or a table control.
 
-Signature
-         
-
-find-item *list-or-table* *object* #key => *found-item*
+   :signature: find-item *list-or-table* *object* #key => *found-item*
 
 Arguments
-         
 
 -  *list-or-table* An instance of *type-union
     (`<list-control>`_*, `See
    <table-control>`_).
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
 -  *found-item* An instance of type *type-union(* `See
    <list-item>`_, `See
    <table-item>`_*, #f)*.
 
-Description
-           
+   :description:
 
 Finds the item in a list control or a table control that corresponds to
 *object*.
 
-See also
-        
+   See also
 
 `add-item`_
 
@@ -2014,19 +1761,11 @@ find-node
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Finds a node in a tree control.
 
-Signature
-         
-
-find-item *tree* *object* #key *parent-node* => *found-item*
+   :signature: find-item *tree* *object* #key *parent-node* => *found-item*
 
 Arguments
-         
 
 -  *tree* An instance of *`<tree-control>`_*.
 -  *object* An instance of *<object>*.
@@ -2034,18 +1773,15 @@ Arguments
    <tree-node>`_*.
 
 Values
-      
 
 -  *found-item* An instance of type *`See
    <tree-node>`_*.
 
-Description
-           
+   :description:
 
 Finds the item in a tree control that corresponds to *object*.
 
-See also
-        
+   See also
 
 `add-node`_
 
@@ -2060,33 +1796,26 @@ See also
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The protocol class of all gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
 
 Init-keywords
-             
 
--  *id:* An instance of type *false-or(<object>)*. Default value: *#f*
+-  *id:* An instance of type *false-or(<object>)*. Default value: ``#f``
    .
 -  *client:* An instance of type *false-or(<object>)*. Default value:
-   *#f*.
+   ``#f``.
 -  *label:* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*. Required.
 -  *documentation:* An instance of type *false-or(<string>)*. Default
-   value: *#f*.
--  *enabled?:* An instance of type *<boolean>*. Default value: *#t*.
--  *read-only?:* An instance of type *<boolean>*. Default value: *#f*.
+   value: ``#f``.
+-  *enabled?:* An instance of type ``<boolean>``. Default value: ``#t``.
+-  *read-only?:* An instance of type ``<boolean>``. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of all gadgets. You should not create a direct instance of
 this class.
@@ -2097,14 +1826,12 @@ you with an additional way of controlling execution of your code,
 allowing you to create simple branching statements such as:
 
 select (gadget-id)
-                  
 
 #"ok" => do-okay();
 
 #"cancel" => do-cancel();
 
 end select;
-           
 
 Note, however, that specifying *id:* is not generally necessary. The
 *id:* init-keyword is useful in the case of tab controls, where it is
@@ -2138,8 +1865,7 @@ that this is not the same as disabling the gadget — if a gadget is set
 to read-only, it is not grayed out, and the user may still interact with
 it: only the values cannot be changed.
 
-Operations
-          
+   :operations:
 
 `activate-gadget`_ `See
 choose-from-dialog <silica.htm#89621>`_ `See
@@ -2171,8 +1897,7 @@ gadget-scrolling-horizontally?`_
  `gadget-scrolling-vertically?`_ `See
 update-gadget`_
 
-See also
-        
+   See also
 
 `<action-gadget>`_
 
@@ -2203,48 +1928,33 @@ gadget?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the specified object is a gadget.
 
-Signature
-         
-
-gadget? *object* => *gadget?*
+   :signature: gadget? *object* => *gadget?*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *gadget?* An instance of type *<boolean>*.
+-  *gadget?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if *object* is a gadget.
 
 Example
-       
 
 \*gadget\* := contain(make
-                          
 
 (<radio-menu-box>,
 
 items: range(from: 0, to: 20)));
-                                
 
 gadget?(\*gadget\*);
-                    
 
-See also
-        
+   See also
 
 `<gadget>`_
 
@@ -2253,30 +1963,20 @@ gadget-accelerator
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the keyboard accelerator of the specified gadget.
 
-Signature
-         
-
-gadget-accelerator *gadget* => *accelerator*
+   :signature: gadget-accelerator *gadget* => *accelerator*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *accelerator* An instance of type `See
    <gesture> <silica.htm#76256>`_.
 
-Description
-           
+   :description:
 
 Returns the keyboard accelerator of the specified gadget. An accelerator
 is a keyboard gesture that activates a gadget (that is, it invokes the
@@ -2285,8 +1985,7 @@ activate callback for the gadget) without needing to use the mouse.
 Accelerators are of most use with button gadgets, and in particular menu
 button gadgets.
 
-See also
-        
+   See also
 
 `<button>`_
 
@@ -2301,32 +2000,22 @@ gadget-accelerator-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the keyboard accelerator of the specified gadget.
 
-Signature
-         
-
-gadget-accelerator-setter *accelerator gadget* => *accelerator*
+   :signature: gadget-accelerator-setter *accelerator gadget* => *accelerator*
 
 Arguments
-         
 
 -  *accelerator* An instance of type `See
    <gesture> <silica.htm#76256>`_.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *accelerator* An instance of type `See
    <gesture> <silica.htm#76256>`_.
 
-Description
-           
+   :description:
 
 Sets the keyboard accelerator of the specified gadget. An accelerator is
 a keyboard gesture that invokes the activate callback of a gadget
@@ -2335,8 +2024,7 @@ without needing to use the mouse.
 Accelerators are of most use with button gadgets, and in particular menu
 button gadgets.
 
-See also
-        
+   See also
 
 `<button>`_
 
@@ -2351,39 +2039,28 @@ gadget-activate-callback
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the activate callback of the specified gadget.
 
-Signature
-         
-
-gadget-activate-callback *gadget* => *activate-callback*
+   :signature: gadget-activate-callback *gadget* => *activate-callback*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <action-gadget>`_.
 
 Values
-      
 
 -  *activate-callback* An instance of type *false-or(<function>)*.
 
-Description
-           
+   :description:
 
 Returns the function that will be called when *gadget* is activated.
 This function will be invoked with one argument, the gadget itself.
 
-When this function returns *#f*, this indicates that there is no
+When this function returns ``#f``, this indicates that there is no
 activate callback for the gadget.
 
-See also
-        
+   See also
 
 `gadget-activate-callback-setter`_
 
@@ -2392,37 +2069,26 @@ gadget-activate-callback-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the activate callback for the specified gadget.
 
-Signature
-         
-
-gadget-activate-callback-setter *activate-callback gadget*
+   :signature: gadget-activate-callback-setter *activate-callback gadget*
  => *activate-callback*
 
 Arguments
-         
 
 -  *activate-callback* An instance of type *false-or(<function>)*.
 -  *gadget* An instance of type `See
    <action-gadget>`_.
 
 Values
-      
 
 -  *activate-callback* An instance of type *false-or(<function>)*.
 
-Description
-           
+   :description:
 
 Sets the activate callback for *gadget* to *function*.
 
-See also
-        
+   See also
 
 `gadget-activate-callback`_
 
@@ -2431,29 +2097,19 @@ gadget-client
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the client of the specified gadget.
 
-Signature
-         
-
-gadget-client *gadget* => *client*
+   :signature: gadget-client *gadget* => *client*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *client* An instance of type *<object>*.
+-  *client* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 Returns the client of *gadget*. The client is the gadget or frame that
 gadget should look to for callback information.
@@ -2476,8 +2132,7 @@ details.
 Gadget clients enable you to pass messages between the gadget and its
 client when a callback is received.
 
-See also
-        
+   See also
 
 `gadget-client-setter`_
 
@@ -2486,30 +2141,20 @@ gadget-client-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the client of the specified gadget.
 
-Signature
-         
-
-gadget-client-setter *client gadget* => *client*
+   :signature: gadget-client-setter *client gadget* => *client*
 
 Arguments
-         
 
--  *client* An instance of type *<object>*.
+-  *client* An instance of type ``<object>``.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *client* An instance of type *<object>*.
+-  *client* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 Sets the *client* of the specified *gadget*.
 
@@ -2521,8 +2166,7 @@ the client of the button could be the radio box). See `See
 Gadget clients enable you to pass messages between the gadget and its
 client when a callback is received.
 
-See also
-        
+   See also
 
 `gadget-client`_
 
@@ -2531,29 +2175,19 @@ gadget-command
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the command associated with the specified gadget.
 
-Signature
-         
-
-gadget-command *gadget* => *command*
+   :signature: gadget-command *gadget* => *command*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *command* An instance of type *false-or(` <frames.htm#40934>`_)*.
 
-Description
-           
+   :description:
 
 Returns the command associated with *gadget*.
 
@@ -2562,8 +2196,7 @@ created by using a command table. For example, the command associated
 with a menu button would represent the callback that is invoked when the
 user chooses the relevant menu command.
 
-See also
-        
+   See also
 
 `gadget-command-setter`_
 
@@ -2572,30 +2205,20 @@ gadget-command-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the command of the specified gadget.
 
-Signature
-         
-
-gadget-command-setter *command* *gadget* => *command*
+   :signature: gadget-command-setter *command* *gadget* => *command*
 
 Arguments
-         
 
 -  *command* An instance of type *false-or(` <frames.htm#40934>`_)*.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *command* An instance of type *false-or(` <frames.htm#40934>`_)*.
 
-Description
-           
+   :description:
 
 Sets the command of the specified *gadget*.
 
@@ -2604,8 +2227,7 @@ created by using a command table. For example, the command associated
 with a menu button would represent the callback that is invoked when the
 user chooses the relevant menu command.
 
-See also
-        
+   See also
 
 `gadget-command`_
 
@@ -2614,29 +2236,19 @@ gadget-default?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the specified gadget is the default gadget in a frame.
 
-Signature
-         
-
-gadget-default? *gadget* => *default?*
+   :signature: gadget-default? *gadget* => *default?*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *default?* An instance of type *<boolean>*.
+-  *default?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if the specified gadget is the default gadget for the frame
 it is part of.
@@ -2648,8 +2260,7 @@ When a default gadget is specified, using the default keyboard gesture
 in the frame invokes the activate callback for the default gadget. The
 default gesture is usually pressing the RETURN button.
 
-See also
-        
+   See also
 
 `gadget-default?-setter`_
 
@@ -2658,34 +2269,24 @@ gadget-default?-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Toggles whether the specified button is the default for the current
 frame.
 
-Signature
-         
-
-gadget-default?-setter *default? button* => *default?*
+   :signature: gadget-default?-setter *default? button* => *default?*
 
 Arguments
-         
 
--  *default?* An instance of type *<boolean>*.
+-  *default?* An instance of type ``<boolean>``.
 -  *button* An instance of type `<button>`_.
 
 Values
-      
 
--  *default?* An instance of type *<boolean>*.
+-  *default?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 If *default?* is true, *button* becomes the default gadget for the
-current frame. If *default?* is *#f*, *button* is not the default
+current frame. If *default?* is ``#f``, *button* is not the default
 gadget for the current frame, regardless of any previous value the
 *gadget-default?* slot may have had.
 
@@ -2696,8 +2297,7 @@ When a default gadget is specified, using the default keyboard gesture
 in the frame invokes the activate callback for the default gadget. The
 default gesture is usually pressing the RETURN button.
 
-See also
-        
+   See also
 
 `gadget-default?`_
 
@@ -2706,29 +2306,19 @@ gadget-documentation
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the documentation string for the specified gadget.
 
-Signature
-         
-
-gadget-documentation *gadget* => *documentation*
+   :signature: gadget-documentation *gadget* => *documentation*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *documentation* An instance of type *false-or(<string>)*.
 
-Description
-           
+   :description:
 
 Returns the documentation string for *gadget*.
 
@@ -2745,8 +2335,7 @@ You are strongly encouraged to supply documentation strings for
 significant gadgets in your application. Because of the nature of their
 presentation, you should keep them as short as possible.
 
-See also
-        
+   See also
 
 `gadget-documentation-setter`_
 
@@ -2755,30 +2344,20 @@ gadget-documentation-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the documentation string for the specified gadget.
 
-Signature
-         
-
-gadget-documentation-setter *documentation gadget* => *documentation*
+   :signature: gadget-documentation-setter *documentation gadget* => *documentation*
 
 Arguments
-         
 
 -  *documentation* An instance of type *<string>*.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *documentation* An instance of type *<string>*.
 
-Description
-           
+   :description:
 
 Sets the documentation string for *gadget* to *documentation*.
 
@@ -2795,8 +2374,7 @@ You are strongly encouraged to supply documentation strings for
 significant gadgets in your application. Because of the nature of their
 presentation, you should keep them as short as possible.
 
-See also
-        
+   See also
 
 *`gadget-documentation`_*
 
@@ -2807,29 +2385,19 @@ gadget-enabled?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the gadget is enabled.
 
-Signature
-         
-
-gadget-enabled? *gadget* => *enabled?*
+   :signature: gadget-enabled? *gadget* => *enabled?*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *enabled?* An instance of type *<boolean>*.
+-  *enabled?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if *gadget* is enabled.
 
@@ -2841,21 +2409,16 @@ be switched on or off. Gadgets that are not enabled are generally grayed
 out on the screen.
 
 Example
-       
 
 \*gadget\* := contain(make
-                          
 
 (<radio-box>,
 
 items: range(from: 0, to: 20)));
-                                
 
 gadget-enabled?(\*gadget\*);
-                            
 
-See also
-        
+   See also
 
 *`<gadget>`_*
 
@@ -2866,30 +2429,20 @@ gadget-enabled?-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Toggles the enabled state of the specified gadget.
 
-Signature
-         
-
-gadget-enabled?-setter *enabled?* *gadget* => *enabled?*
+   :signature: gadget-enabled?-setter *enabled?* *gadget* => *enabled?*
 
 Arguments
-         
 
--  *enabled?* An instance of type *<boolean>*.
+-  *enabled?* An instance of type ``<boolean>``.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *enabled?* An instance of type *<boolean>*.
+-  *enabled?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Causes *gadget* to become active (that is, available for input) or
 inactive, by toggling its enabled state. If *enabled?* is true, then
@@ -2903,21 +2456,16 @@ be switched on or off. Gadgets that are not enabled are generally grayed
 out on the screen.
 
 Example
-       
 
 \*gadget\* := contain(make
-                          
 
 (<radio-box>,
 
 items: range(from: 0, to: 20)));
-                                
 
 gadget-enabled?(\*gadget\*) := #f;
-                                  
 
-See also
-        
+   See also
 
 *`<gadget>`_*
 
@@ -2928,29 +2476,19 @@ gadget-id
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the ID of the specified gadget.
 
-Signature
-         
-
-gadget-id *gadget* => *id*
+   :signature: gadget-id *gadget* => *id*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *id* An instance of type *<object>*.
+-  *id* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 Returns the identifier of *gadget*. The identifier is typically a
 simple Dylan object that uniquely identifies the gadget. For most
@@ -2959,7 +2497,6 @@ you with an additional way of controlling execution of your code,
 allowing you to create simple branching statements such as:
 
 select (gadget-id)
-                  
 
 #"modify" => do-modify();
 
@@ -2970,26 +2507,20 @@ select (gadget-id)
 #"done" => do-done();
 
 end select;
-           
 
 In the specific case of tab controls, it is more important that you
 specify an ID. The gadget ID for a tab control is returned as the gadget
 value for that tab control.
 
 Example
-       
 
 \*gadget\* := contain(make(<button>, id: #test,
-                                               
 
 label: "Test"));
-                
 
 gadget-id(\*gadget\*);
-                      
 
-See also
-        
+   See also
 
 *`gadget-id-setter`_*
 
@@ -3002,30 +2533,20 @@ gadget-id-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the ID of the specified gadget.
 
-Signature
-         
-
-gadget-id-setter *id gadget* => *id*
+   :signature: gadget-id-setter *id gadget* => *id*
 
 Arguments
-         
 
--  *id* An instance of type *<object>*.
+-  *id* An instance of type ``<object>``.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *id* An instance of type *<object>*.
+-  *id* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 Sets the identifier of *gadget*. The identifier is typically a simple
 Dylan object that uniquely identifies the gadget. For most gadgets, it
@@ -3037,22 +2558,16 @@ specify an ID. The gadget ID for a tab control is returned as the gadget
 value for that tab control.
 
 Example
-       
 
 \*gadget\* := contain(make(<button>, id: #test,
-                                               
 
 label: "Test"));
-                
 
 gadget-id(\*gadget\*) := #test-two;
-                                   
 
 gadget-id(\*gadget\*);
-                      
 
-See also
-        
+   See also
 
 *`gadget-id`_*
 
@@ -3065,44 +2580,32 @@ gadget-items
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the items for the specified gadget.
 
-Signature
-         
-
-gadget-items *gadget* => *items*
+   :signature: gadget-items *gadget* => *items*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
 -  *items* An instance of type *<sequence>*. Default value: *#[]*.
 
-Description
-           
+   :description:
 
 Returns the items for *gadget*. The items of any collection gadget is
 the collection of items that the collection gadget contains. In a list
 box, for example, the items are the list items themselves.
 
 Example
-       
 
 The following code creates a list box whose items are the lower-cased
 equivalents of the symbols stated. Note that the label key for a gadget
 is a function that computes the label for the items in that gadget.
 
 \*gadget\* := contain
-                     
 
 (make(<list-box>,
 
@@ -3115,17 +2618,14 @@ method (symbol)
 as-lowercase
 
 (as(<string>, symbol)) end));
-                             
 
 You can return the items in the gadget as follows:
 
 gadget-items(\*g\*);
-                    
 
 This returns the symbol: *#(#"one", #"two", #"three")*.
 
-See also
-        
+   See also
 
 *`gadget-items-setter`_*
 
@@ -3140,50 +2640,35 @@ gadget-items-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the items for the specified gadget.
 
-Signature
-         
-
-gadget-items-setter *items gadget* => *items*
+   :signature: gadget-items-setter *items gadget* => *items*
 
 Arguments
-         
 
 -  *items* An instance of type *<sequence>*.
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
 -  *items* An instance of type *<sequence>*.
 
-Description
-           
+   :description:
 
 Sets the items for *gadget* to the items specified by *items*.
 
 Example
-       
 
 \*gadget\* := contain(make
-                          
 
 (<radio-box>,
 
 items: range(from: 0, to: 20)));
-                                
 
 gadget-items(\*gadget\*) := range(from: 0, to: 15);
-                                                   
 
-See also
-        
+   See also
 
 *`gadget-items`_*
 
@@ -3192,34 +2677,22 @@ gadget-key-press-callback
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the key-press callback for the specified gadget.
 
-Signature
-         
-
-gadget-key-press-callback *gadget* => *key-press-callback*
+   :signature: gadget-key-press-callback *gadget* => *key-press-callback*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
 *key-press-callback*
-                    
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
-Description
-           
+   :description:
 
 Returns the key-press callback for *gadget*. The key-press callback is
 the callback invoked when a key on the keyboard is pressed while the
@@ -3231,8 +2704,7 @@ behavior of Windows Explorer, where typing a filename, or part of a
 filename, selects the first file in the current folder whose name
 matches that typed.
 
-See also
-        
+   See also
 
 *`gadget-key-press-callback-setter`_*
 
@@ -3249,41 +2721,27 @@ gadget-key-press-callback-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the key-press callback for the specified gadget.
 
-Signature
-         
-
-gadget-key-press-callback-setter *key-press-callback* *gadget
+   :signature: gadget-key-press-callback-setter *key-press-callback* *gadget
 * => *key-press-callback*
 
 Arguments
-         
 
 *key-press-callback*
-                    
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
 *key-press-callback*
-                    
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
-Description
-           
+   :description:
 
 Sets the key-press callback for *gadget*. The key-press callback is the
 callback invoked when a key on the keyboard is pressed while the gadget
@@ -3295,8 +2753,7 @@ behavior of Windows Explorer, where typing a filename, or part of a
 filename, selects the first file in the current folder whose name
 matches that typed.
 
-See also
-        
+   See also
 
 *`gadget-key-press-callback`_*
 
@@ -3313,44 +2770,30 @@ gadget-label
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the label for the specified gadget.
 
-Signature
-         
-
-gadget-label *gadget* => *label*
+   :signature: gadget-label *gadget* => *label*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *label* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
 
-Description
-           
+   :description:
 
 Returns the label for *gadget*.
 
 Example
-       
 
 \*gadget\* := contain(make(<button>, label: "Hello"));
-                                                      
 
 gadget-label(\*gadget\*);
-                         
 
-See also
-        
+   See also
 
 *`gadget-label-key`_*
 
@@ -3361,31 +2804,21 @@ gadget-label-key
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the function that is used to compute the label for the items in
 the specified gadget.
 
-Signature
-         
-
-gadget-label-key *gadget* => *label-key*
+   :signature: gadget-label-key *gadget* => *label-key*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
--  *label-key* An instance of type *<function>*.
+-  *label-key* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Returns the function that is used to compute the labels for the items in
 *gadget*. Using a label key can be a useful way of consistently
@@ -3395,13 +2828,11 @@ case of item labels, and this is useful if the items are specified as
 symbol names, rather than strings.
 
 Example
-       
 
 The following code creates a list box whose items are the lower-cased
 equivalents of the symbols stated.
 
 \*gadget\* := contain
-                     
 
 (make(<list-box>,
 
@@ -3416,15 +2847,12 @@ as-lowercase
 (as(<string>, symbol))
 
 end));
-      
 
 The label key function can be returned as follows:
 
 gadget-label-key(\*gadget\*);
-                             
 
-See also
-        
+   See also
 
 *`gadget-label`_*
 
@@ -3437,50 +2865,36 @@ gadget-label-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the label for the specified gadget.
 
-Signature
-         
-
-gadget-label-setter *label gadget* => *label*
+   :signature: gadget-label-setter *label gadget* => *label*
 
 Arguments
-         
 
 -  *label* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *label* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
 
-Description
-           
+   :description:
 
-Sets the label for *gadget* to *label*. The *label* must be *#f*, a
+Sets the label for *gadget* to *label*. The *label* must be ``#f``, a
 string, or an instance of `<image> <dcs.htm#51234>`_. Changing the
 label of a gadget may result in invoking the layout protocol on the
 gadget and its ancestor sheets, if the new label occupies a different
 amount of space than the old label.
 
 Example
-       
 
 \*gadget\* := contain(make(<button>, label: "Hello"));
-                                                      
 
 gadget-label(\*gadget\*) := "Hello world";
-                                          
 
-See also
-        
+   See also
 
 *`gadget-label`_*
 
@@ -3491,37 +2905,26 @@ gadget-mnemonic
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the mnemonic for the specified gadget.
 
-Signature
-         
-
-gadget-mnemonic *gadget* => *mnemonic*
+   :signature: gadget-mnemonic *gadget* => *mnemonic*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *mnemonic* An instance of type *false-or(<character>)*.
 
-Description
-           
+   :description:
 
 Returns the mnemonic for *gadget*. On Windows, the mnemonic is
 displayed as an underlined character in the label of the gadget, and
 pressing the key for that character activates the gadget or gives it the
 focus.
 
-See also
-        
+   See also
 
 *`gadget-accelerator`_*
 
@@ -3532,38 +2935,27 @@ gadget-mnemonic-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the mnemonic for the specified gadget.
 
-Signature
-         
-
-gadget-mnemonic-setter *mnemonic gadget* => *mnemonic*
+   :signature: gadget-mnemonic-setter *mnemonic gadget* => *mnemonic*
 
 Arguments
-         
 
 -  *mnemonic* An instance of type *false-or(<character>)*.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *mnemonic* An instance of type *false-or(<character>)*.
 
-Description
-           
+   :description:
 
 Sets the mnemonic for *gadget* to *mnemonic*. On Windows, the mnemonic
 is displayed as an underlined character in the label of the gadget, and
 pressing the key for that character activates the gadget or gives it the
 focus.
 
-See also
-        
+   See also
 
 *`gadget-accelerator-setter`_*
 
@@ -3574,93 +2966,66 @@ gadget-orientation
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the orientation of the specified gadget.
 
-Signature
-         
-
-gadget-orientation *gadget* => *orientation*
+   :signature: gadget-orientation *gadget* => *orientation*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *orientation* An instance of *type one-of(#"horizontal", #"vertical",
    #"none")*.
 
-Description
-           
+   :description:
 
 Returns the orientation of *gadget*: either horizontal or vertical.
 
 Example
-       
 
 The following code creates a vertical row of buttons:
 
 \*buttons\* := contain(make(<button-box>,
-                                         
 
 selection-mode: #"multiple",
 
 orientation: #"vertical",
 
 items: range(from: 0, to: 5)));
-                               
 
 The orientation can be returned as follows:
 
 gadget-orientation(\*buttons\*);
-                                
 
 gadget-popup-menu-callback
 --------------------------
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the popup menu callback of the specified gadget.
 
-Signature
-         
-
-gadget-popup-menu-callback *gadget* => *popup-menu-callback*
+   :signature: gadget-popup-menu-callback *gadget* => *popup-menu-callback*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 *popup-menu-callback*
-                     
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Returns the popup menu callback of *gadget*. This is typically a
 function that is used to create a context-sensitive menu of available
 commands. It is generally invoked when the user right clicks on the
 gadget.
 
-See also
-        
+   See also
 
 *`gadget-popup-menu-callback-setter`_*
 
@@ -3669,49 +3034,34 @@ gadget-popup-menu-callback-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the popup menu callback of the specified gadget.
 
-Signature
-         
-
-gadget-popup-menu-callback-setter
+   :signature: gadget-popup-menu-callback-setter
  *popup-menu-callback gadget*
  => *popup-menu-callback*
 
 Arguments
-         
 
 *popup-menu-callback*
-                     
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 *popup-menu-callback*
-                     
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Sets the popup menu callback of *gadget* to *function*. The function
 should typically create a menu of commands suited to the context in
 which the function is called. The function is generally invoked by
 right-clicking on the gadget.
 
-See also
-        
+   See also
 
 *`gadget-popup-menu-callback`_*
 
@@ -3722,7 +3072,6 @@ Generic function
 ''''''''''''''''
 
 gadget-ratios *splitter* => *ratios*
-                                    
 
 Returns the ratios of the windows in *splitter*. This generic function
 lets you query the position of a splitter.
@@ -3737,14 +3086,13 @@ Generic function
 ''''''''''''''''
 
 gadget-ratios-setter *ratios splitter* => *ratios*
-                                                  
 
 Sets the ratios of the windows in *splitter*. This generic function
 lets you set the position of a splitter.
 
 The *splitter* argument is an instance of type *<splitter>*. The
 *ratios* argument is an instance of type
- *false-or(<sequence>)*. Set *ratios* to *#f* if you do not care what
+ *false-or(<sequence>)*. Set *ratios* to ``#f`` if you do not care what
 ratios are used.
 
 gadget-read-only?
@@ -3752,35 +3100,24 @@ gadget-read-only?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the gadget is editable.
 
-Signature
-         
-
-gadget-read-only? *gadget* => *read-only?*
+   :signature: gadget-read-only? *gadget* => *read-only?*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *read-only?* An instance of type *<boolean>*.
+-  *read-only?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if *gadget* is read-only. The read-only attribute of a
 gadget is of most use with text gadgets.
 
-See also
-        
+   See also
 
 *`gadget-enabled?`_*
 
@@ -3789,36 +3126,25 @@ gadget-scrolling-horizontally?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the specified gadget has an associated horizontal scroll
 bar.
 
-Signature
-         
-
-gadget-scrolling-horizontally? *gadget* => *horizontal?*
+   :signature: gadget-scrolling-horizontally? *gadget* => *horizontal?*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *horizontal?* An instance of type *<boolean>*.
+-  *horizontal?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if the *gadget* has an associated horizontal scroll bar,
 false otherwise.
 
-See also
-        
+   See also
 
 *`gadget-scrolling-vertically?`_*
 
@@ -3827,36 +3153,25 @@ gadget-scrolling-vertically?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the specified gadget has an associated vertical scroll
 bar.
 
-Signature
-         
-
-gadget-scrolling-vertically? *gadget* => *vertical?*
+   :signature: gadget-scrolling-vertically? *gadget* => *vertical?*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *vertical?* An instance of type *<boolean>*.
+-  *vertical?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if the *gadget* has an associated vertical scroll bar,
 false otherwise.
 
-See also
-        
+   See also
 
 *`gadget-scrolling-horizontally?`_*
 
@@ -3865,31 +3180,21 @@ gadget-selection
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the currently selected items of the specified gadget.
 
-Signature
-         
-
-gadget-selection *gadget* => *selection*
+   :signature: gadget-selection *gadget* => *selection*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
 -  *selection* An instance of type *limited(<sequence>, of: <integer>)*
    . Default value: *#[]*.
 
-Description
-           
+   :description:
 
 Returns the keys for the currently selected items of *gadget*.
 Generally, you should use `gadget-value`_ to
@@ -3902,24 +3207,19 @@ or more keys selected. The value of a collection gadget is determined by
 calling the value key of the gadget on each selected item in the gadget.
 
 Example
-       
 
 Create a radio box as follows:
 
 \*radio\* := contain(make(<radio-box>,
-                                      
 
 items: range(from: 0, to: 5)));
-                               
 
 Select one of the items in the radio box. This selection can be returned
 with:
 
 gadget-selection(\*radio\*);
-                            
 
-See also
-        
+   See also
 
 *`gadget-items`_*
 
@@ -3934,31 +3234,21 @@ gadget-selection-mode
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the type of selection for the specified gadget.
 
-Signature
-         
-
-gadget-selection-mode *gadget* => *selection-mode*
+   :signature: gadget-selection-mode *gadget* => *selection-mode*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
 -  *selection-mode* An instance of *type one-of(#"single", #"multiple",
    #"none")*.
 
-Description
-           
+   :description:
 
 Returns the selection mode for *gadget*. Typically, gadgets are either
 single or multiple selection (that is, either only one item can be
@@ -3968,26 +3258,21 @@ list boxes and button boxes, can choose a selection mode at
 initialization time using the *selection-mode:* init-keyword.
 
 Example
-       
 
 Create a radio box as follows:
 
 \*radio\* := contain(make(<radio-box>,
-                                      
 
 items: range(from: 0, to: 5)));
-                               
 
 The selection mode of the radio box is returned with:
 
 gadget-selection-mode(\*radio\*);
-                                 
 
 Because the gadget is a radio box, only one item of which may be
 selected at a time, the selection mode returned is *#"single"*.
 
-See also
-        
+   See also
 
 *`<button-box>`_*
 
@@ -4002,36 +3287,26 @@ gadget-selection-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the selection of the specified gadget.
 
-Signature
-         
-
-gadget-selection-setter *selection gadget* #key *do-callback?* =>
+   :signature: gadget-selection-setter *selection gadget* #key *do-callback?* =>
  *selection*
 
 Arguments
-         
 
 -  *selection* An instance of type *limited(<sequence>, of: <integer>)*
    .
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
--  *do-callback?* An instance of type *<boolean>*. Default value: *#f*
+-  *do-callback?* An instance of type ``<boolean>``. Default value: ``#f``
    .
 
 Values
-      
 
 -  *selection* An instance of type *limited(<sequence>, of: <integer>)*
    .
 
-Description
-           
+   :description:
 
 Sets the selection of *gadget*. When setting the selection, you need to
 be wary of the selection mode for *gadget*. It is an error to try to
@@ -4047,27 +3322,22 @@ handling repeated items. See `gadget-selection`_
 for more details.
 
 Example
-       
 
 Create a radio box as follows:
 
 \*radio\* := contain(make(<radio-box>,
-                                      
 
 items: range(from: 0, to: 5)));
-                               
 
 You can select the third item with:
 
 gadget-selection(\*radio\*, do-callback?: #t) := #[3];
-                                                      
 
 This sets the appropriate item, and invokes the callback that would have
 been invoked had the item been set manually, rather than
 programmatically (assuming that such a callback has been defined).
 
-See also
-        
+   See also
 
 *`gadget-selection`_*
 
@@ -4080,29 +3350,19 @@ gadget-slug-size
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the slug size of the specified gadget.
 
-Signature
-         
-
-gadget-slug-size *gadget* => *slug-size*
+   :signature: gadget-slug-size *gadget* => *slug-size*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<scroll-bar>`_.
 
 Values
-      
 
--  *slug-size* An instance of type *<real>*.
+-  *slug-size* An instance of type ``<real>``.
 
-Description
-           
+   :description:
 
 Returns the slug size of *gadget*. The slug is the part of *gadget*
 that can be dragged using the mouse. The value returned uses the same
@@ -4113,8 +3373,7 @@ a *scroll-box*, and the area in which the slug can slide as the
 *scroll-shaft*. You should be aware of this difference if you are using
 those guidelines as a reference.
 
-See also
-        
+   See also
 
 *`gadget-slug-size-setter`_*
 
@@ -4125,30 +3384,20 @@ gadget-slug-size-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the slug size of the specified gadget.
 
-Signature
-         
-
-gadget-slug-size-setter *slug-size gadget* => *slug-size*
+   :signature: gadget-slug-size-setter *slug-size gadget* => *slug-size*
 
 Arguments
-         
 
--  *slug-size* An instance of type *<real>*.
+-  *slug-size* An instance of type ``<real>``.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
--  *slug-size* An instance of type *<real>*.
+-  *slug-size* An instance of type ``<real>``.
 
-Description
-           
+   :description:
 
 Sets the slug size of *gadget*. The value should use the same units as
 those used for `gadget-value-range`_.
@@ -4158,8 +3407,7 @@ a *scroll-box*, and the area in which the slug can slide as the
 *scroll-shaft*. You should be aware of this difference if you are using
 those guidelines as a reference.
 
-See also
-        
+   See also
 
 *`gadget-slug-size`_*
 
@@ -4168,30 +3416,20 @@ gadget-test
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the test function for the specified gadget.
 
-Signature
-         
-
-gadget-test *gadget* => *gadget-test*
+   :signature: gadget-test *gadget* => *gadget-test*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
--  *gadget-test* An instance of type *<function>*.
+-  *gadget-test* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Returns the test function for the specified gadget. This function is
 used to test whether two items of the collection are considered
@@ -4202,53 +3440,38 @@ gadget-text
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the text for the specified gadget.
 
-Signature
-         
-
-gadget-text *gadget* => *gadget-text*
+   :signature: gadget-text *gadget* => *gadget-text*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <text-gadget>`_.
 
 Values
-      
 
 -  *gadget-text* An instance of type *<string>*.
 
-Description
-           
+   :description:
 
 Returns the text for the specified gadget.
 
 Example
-       
 
 First, create and display a text field by typing the following into an
 interactor:
 
 \*g\* := contain(make(<text-field>,
-                                   
 
 value-type: <integer>));
-                        
 
 Next, type something into the text field. You can return the text string
 that you just typed with the following form:
 
 gadget-text(\*g\*);
-                   
 
-See also
-        
+   See also
 
 `gadget-text-setter`_
 
@@ -4259,53 +3482,38 @@ gadget-text-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the text for the specified gadget.
 
-Signature
-         
-
-gadget-text *gadget-text* *gadget* => *gadget-text*
+   :signature: gadget-text *gadget-text* *gadget* => *gadget-text*
 
 Arguments
-         
 
 -  *gadget-text* An instance of type *<string>*.
 -  *gadget* An instance of type `See
    <text-gadget>`_.
 
 Values
-      
 
 -  *gadget-text* An instance of type *<string>*.
 
-Description
-           
+   :description:
 
 Sets the text for the specified gadget.
 
 Example
-       
 
 First, create and display a text field by typing the following into an
 interactor:
 
 \*g\* := contain(make(<text-field>,
-                                   
 
 value-type: <integer>));
-                        
 
 Next, set the value of the text field with the following form:
 
 gadget-text-setter("Hello world", \*g\*);
-                                         
 
-See also
-        
+   See also
 
 `gadget-text`_
 
@@ -4316,30 +3524,20 @@ gadget-value
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the gadget value of the specified gadget.
 
-Signature
-         
-
-gadget-value *gadget* => *gadget-value*
+   :signature: gadget-value *gadget* => *gadget-value*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <value-gadget>`_.
 
 Values
-      
 
--  *gadget-value* An instance of type *<object>*.
+-  *gadget-value* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 Returns the gadget value of the specified gadget.
 
@@ -4366,26 +3564,21 @@ items is returned.
 is returned as the gadget value.
 
 Example
-       
 
 Create a radio button:
 
 \*radio\* := contain(make(<radio-button>,
-                                         
 
 label: "Radio"));
-                 
 
 The gadget value of *\*radio\** can be returned as follows:
 
 gadget-value(\*radio\*);
-                        
 
-If the radio button is selected, *gadget-value* returns *#t*. If not
-selected, *gadget-value* returns *#f*.
+If the radio button is selected, *gadget-value* returns ``#t``. If not
+selected, *gadget-value* returns ``#f``.
 
-See also
-        
+   See also
 
 `<gadget>`_
 
@@ -4404,35 +3597,23 @@ gadget-value-changed-callback
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the value-changed callback of the specified gadget.
 
-Signature
-         
-
-gadget-value-changed-callback *gadget*
+   :signature: gadget-value-changed-callback *gadget*
  => *value-changed-callback*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <value-gadget>`_.
 
 Values
-      
 
 *value-changed-callback*
-                        
 
 An instance of type *false-or(<function>)*.
-                                            
 
-Description
-           
+   :description:
 
 Returns the value-changed callback of *gadget*. This is the callback
 function that is called once the gadget value of *gadget* has been
@@ -4441,11 +3622,10 @@ changed.
 The value-changed callback function is invoked with one argument, the
 gadget.
 
-If *gadget-value-changed-callback* returns *#f*, there is no value
+If *gadget-value-changed-callback* returns ``#f``, there is no value
 changed callback for *gadget*.
 
-See also
-        
+   See also
 
 *`gadget-value-changed-callback-setter`_*
 
@@ -4454,31 +3634,21 @@ gadget-value-changed-callback-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the value-changed-callback of the specified gadget.
 
-Signature
-         
-
-gadget-value-changed-callback-setter *callback gadget*
+   :signature: gadget-value-changed-callback-setter *callback gadget*
  => *callback*
 
 Arguments
-         
 
 -  *callback* An instance of type *false-or(<function>)*.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *callback* An instance of type *false-or(<function>)*.
 
-Description
-           
+   :description:
 
 Sets the value-changed callback of *gadget* to *function*. This is the
 callback function that is called once the gadget value of *gadget* has
@@ -4487,8 +3657,7 @@ been changed.
 The value-changed callback function is invoked with one argument, the
 gadget.
 
-See also
-        
+   See also
 
 *`gadget-value-changed-callback`_*
 
@@ -4497,42 +3666,29 @@ gadget-value-changing-callback
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the value changing callback of the specified gadget.
 
-Signature
-         
-
-gadget-value-changing-callback *gadget*
+   :signature: gadget-value-changing-callback *gadget*
  => *value-changing-callback*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 *value-changing-callback*
-                         
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Returns the function that will be called when the value of *gadget* is
 in the process of changing, such as when a slider is being dragged. The
 *function* will be invoked with a two arguments, *gadget* and the new
 value.
 
-See also
-        
+   See also
 
 *`gadget-value-changing-callback-setter`_*
 
@@ -4541,48 +3697,33 @@ gadget-value-changing-callback-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the value-changing callback of the specified gadget.
 
-Signature
-         
-
-gadget-value-changing-callback-setter
+   :signature: gadget-value-changing-callback-setter
  *value-changing-callback gadget* =>*value-chaning-callback*
 
 Arguments
-         
 
 *value-changing-callback*
-                         
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 *value-changing-callback*
-                         
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Sets the function that will be called when the value of *gadget* is in
 the process of changing, such as when a slider is being dragged. The
 *function* will be invoked with a two arguments, *gadget* and the new
 value.
 
-See also
-        
+   See also
 
 *`gadget-value-changing-callback`_*
 
@@ -4591,39 +3732,28 @@ gadget-value-key
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the function that is used to calculate the gadget value of the
 specified gadget.
 
-Signature
-         
-
-gadget-value-key *gadget* => *value-key*
+   :signature: gadget-value-key *gadget* => *value-key*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <collection-gadget>`_.
 
 Values
-      
 
--  *value-key* An instance of type *<function>*. Default value:
+-  *value-key* An instance of type ``<function>``. Default value:
    *identity*.
 
-Description
-           
+   :description:
 
 Returns the function that is used to calculate the gadget value of
 *gadget*, given the selected items. The function takes an item and
 returns a value.
 
 Example
-       
 
 The list box defined below has three items, each of which is a pair of
 two symbols. A label-key and a value-key is defined such that the label
@@ -4631,7 +3761,6 @@ for each item is calculated from the first symbol in each pair, and the
 gadget value is calculated from the second.
 
 \*list\* := contain(make(<list-box>,
-                                    
 
 items: #(#("One", #"one"),
 
@@ -4642,7 +3771,6 @@ items: #(#("One", #"one"),
 label-key: first,
 
 value-key: second));
-                    
 
 This ensures that while the label of the first item is displayed
 on-screen as *One*, the value returned from that item is *#"one"*, and
@@ -4651,10 +3779,8 @@ similarly for the other items in the list.
 The gadget value key function can be returned with:
 
 gadget-value-key(\*list\*);
-                           
 
-See also
-        
+   See also
 
 *`gadget-label-key`_*
 
@@ -4665,30 +3791,20 @@ gadget-value-range
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the range of values for the specified gadget.
 
-Signature
-         
-
-gadget-value-range *gadget* => *range*
+   :signature: gadget-value-range *gadget* => *range*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <value-range-gadget>`_.
 
 Values
-      
 
 -  *range* An instance of type *<range>*.
 
-Description
-           
+   :description:
 
 Returns the range of values for *gadget*. The value range is the
 elements represented by the range specified for gadget.
@@ -4697,7 +3813,6 @@ elements represented by the range specified for gadget.
 and minimum values in the range. Consider the following range:
 
 range (from: 10, to: 0, by: -2)
-                               
 
 In this case, the value range is the elements 10, 8, 6, 4, 2, 0.
 
@@ -4705,29 +3820,24 @@ The units in which the range is specified are also used for *`See
 gadget-slug-size`_*.
 
 Example
-       
 
 You can create a slider with a given range as follows:
 
 \*slider\* := contain(make(<slider>,
-                                    
 
 value-range: range(from: -20,
 
 to: 20,
 
 by: 5)));
-         
 
 You can return the range of this gadget by executing the following:
 
 gadget-value-range(\*slider\*);
-                               
 
 which in this case returns *{range -20 through 20, by 5}*.
 
-See also
-        
+   See also
 
 *`gadget-slug-size`_*
 
@@ -4740,53 +3850,38 @@ gadget-value-range-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the range of values for the specified gadget.
 
-Signature
-         
-
-gadget-value-range-setter *range gadget* => *range*
+   :signature: gadget-value-range-setter *range gadget* => *range*
 
 Arguments
-         
 
 -  *range* An instance of type *<range>*.
 -  *gadget* An instance of type `See
    <value-range-gadget>`_.
 
 Values
-      
 
 -  *range* An instance of type *<range>*.
 
-Description
-           
+   :description:
 
 Sets the range of values for *gadget*. The value range is the elements
 represented by the range specified for gadget.
 
 Example
-       
 
 Create a slider without specifying a range:
 
 \*slider\* := contain(make(<slider>);
-                                     
 
 You can specify the range of this gadget by executing the following:
 
 gadget-value-range(\*slider\*) :=
-                                 
 
 (range (from: -20 to: 20, by: 5});
-                                  
 
-See also
-        
+   See also
 
 *`gadget-value-range`_*
 
@@ -4795,34 +3890,24 @@ gadget-value-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the gadget value of the specified gadget.
 
-Signature
-         
-
-gadget-value-setter *gadget-value gadget* #key *do-callback?* =>
+   :signature: gadget-value-setter *gadget-value gadget* #key *do-callback?* =>
 *gadget-value*
 
 Arguments
-         
 
--  *gadget-value* An instance of type *<object>*.
+-  *gadget-value* An instance of type ``<object>``.
 -  *gadget* An instance of type `See
    <value-gadget>`_.
--  *do-callback?* An instance of type *<boolean>*. Default value: *#f*
+-  *do-callback?* An instance of type ``<boolean>``. Default value: ``#f``
    .
 
 Values
-      
 
--  *gadget-value* An instance of type *<object>*.
+-  *gadget-value* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 Sets the gadget value of *gadget*.
 
@@ -4834,29 +3919,23 @@ If *do-callback?* is true, the value-changed callback for *gadget* is
 invoked.
 
 Example
-       
 
 Create a radio button:
 
 \*radio\* := contain(make(<radio-button>,
-                                         
 
 label: "Radio"));
-                 
 
 The gadget value of *\*radio\** can be set with either of the following:
 
 gadget-value(\*radio\*) := #t;
-                              
 
 gadget-value(\*radio\*) := #f;
-                              
 
-Setting the gadget value to *#t* selects the button, and setting it to
-*#f* deselects it.
+Setting the gadget value to ``#t`` selects the button, and setting it to
+``#f`` deselects it.
 
-See also
-        
+   See also
 
 *`gadget-value`_*
 
@@ -4865,53 +3944,38 @@ gadget-value-type
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the type of the gadget value for the specified gadget.
 
-Signature
-         
-
-gadget-value-type *gadget* => *type*
+   :signature: gadget-value-type *gadget* => *type*
 
 Arguments
-         
 
 -  *gadget* An instance of type `See
    <value-gadget>`_.
 
 Values
-      
 
 -  *type* An instance of type *<type>*.
 
-Description
-           
+   :description:
 
 Returns the type of the gadget value for *gadget*.
 
 Example
-       
 
 The following code creates a text field, the contents of which are
 constrained to be an integer.
 
 \*numeric\* := contain(make(<text-field>,
-                                         
 
 value-type: <integer>));
-                        
 
 Evaluating the following code confirms the gadget value type to be the
 class *<integer>*.
 
 gadget-value-type(\*numeric\*);
-                               
 
-See also
-        
+   See also
 
 *`gadget-value`_*
 
@@ -4920,37 +3984,26 @@ gadget-x-alignment
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the horizontal alignment of the specified gadget.
 
-Signature
-         
-
-gadget-x-alignment *gadget* => *alignment*
+   :signature: gadget-x-alignment *gadget* => *alignment*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *alignment* An instance of type *one-of(#"left", #"right",
    #"center")*.
 
-Description
-           
+   :description:
 
 Returns the horizontal alignment of *gadget*. You can only set the
 horizontal alignment of a gadget when first initializing that gadget,
 using the *x-alignment:* init-keyword.
 
-See also
-        
+   See also
 
 *`gadget-y-alignment`_*
 
@@ -4959,37 +4012,26 @@ gadget-y-alignment
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the vertical alignment of the specified gadget.
 
-Signature
-         
-
-gadget-x-alignment *gadget* => *alignment*
+   :signature: gadget-x-alignment *gadget* => *alignment*
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
-      
 
 -  *alignment* An instance of type *one-of(#"top", #"bottom",
    #"center")*.
 
-Description
-           
+   :description:
 
 Returns the vertical alignment of *gadget*. You can only set the
 vertical alignment of a gadget when first initializing that gadget,
 using the *y-alignment:* init-keyword.
 
-See also
-        
+   See also
 
 *`gadget-x-alignment`_*
 
@@ -4998,38 +4040,28 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of gadgets that group their children using a labelled border.
 
-Superclasses
-            
+   :superclasses:
 
 `<gadget>`_
 
 Init-keywords
-             
 
 -  *label:* An instance of type `<label>`_.
 
 *label-position:*
-                 
 
 An instance of type *one-of(#"top", #"bottom")*. Default value:
 *#"top"*.
-                                                                           
 
-Description
-           
+   :description:
 
 The class of gadgets that group their children using a labelled border.
 You can use this gadget class to group together a number of related
 items visually.
 
 A group box
-           
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -5046,26 +4078,21 @@ should be displayed along the top or the bottom edge of the border.
 
 Internally, this class maps into the Windows group box control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<group-box>,
-                         
 
 child: make(<radio-box>, items: #(1,2,3,4),
 
 orientation: #"vertical"),
 
 label: "Select integer:"));
-                           
 
-See also
-        
+   See also
 
 `<border>`_
 
@@ -5080,32 +4107,22 @@ item-object
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the Dylan object representing an item in a list or table
 control.
 
-Signature
-         
-
-item-object *item* => *object*
+   :signature: item-object *item* => *object*
 
 Arguments
-         
 
 -  *item* An instance of type *type-union(`See
    <list-item>`_, `See
    <table-item>`_)*.
 
 Values
-      
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 Returns the Dylan object representing an item in a list or table
 control.
@@ -5115,25 +4132,18 @@ control.
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of label gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 `<gadget>`_
 
 Init-keywords
-             
 
 -  *label:* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
 
-Description
-           
+   :description:
 
 The class of label gadgets.
 
@@ -5143,21 +4153,17 @@ its size: only use images that are the size of a typical icon.
 
 Internally, this class maps into the Windows static control.
 
-Operations
-          
+   :operations:
 
 `gadget-label`_ `See
 gadget-label-setter`_ ` <frames.htm#74637>`_
 ` <frames.htm#10131>`_ ` <frames.htm#68823>`_ ` <frames.htm#14565>`_
 
 Example
-       
 
 contain(make(<label>, label: "Hello"));
-                                       
 
-See also
-        
+   See also
 
 *`labelling`_*
 
@@ -5166,30 +4172,22 @@ labelling
 
 Statement macro
 '''''''''''''''
-
-Summary
-       
-
 Creates the specified sheet and assigns a label to it.
 
 Macro call
-          
 
 labelling ([*options* ]) {*pane* } end
 
 Arguments
-         
 
 -  *options* Dylan arguments*bnf*.
 -  *pane* A Dylan expression*bnf*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Creates *pane* with a label assigned to it, taking into account any of
 the specified *options*.
@@ -5202,18 +4200,14 @@ The *pane* is an expression whose return value is the sheet to which the
 label should be assigned.
 
 Example
-       
 
 labelling ("Color Type:")
-                         
 
 make(<check-box>, items: #("Color", "Monochrome"))
 
 end;
-    
 
-See also
-        
+   See also
 
 *`<label>`_*
 
@@ -5222,30 +4216,23 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of list boxes.
 
-Superclasses
-            
+   :superclasses:
 
 `<collection-gadget>`_ `See
 <action-gadget>`_
 
 Init-keywords
-             
 
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
-   Default value: *#f*.
+   Default value: ``#f``.
 -  *scroll-bars:* An instance of type *one-of(#f, #"none",
    #"horizontal", #"vertical", #"both", #"dynamic")*. Default value:
    *#"both"*.
 
-Description
-           
+   :description:
 
 The class of list boxes.
 
@@ -5261,23 +4248,20 @@ bars around the gadget. By default, both horizontal and vertical scroll
 bars are created. You can also force the creation of only horizontal or
 vertical scroll bars, or you can create scroll bars dynamically: that
 is, have them created only if necessary, dependent on the size of the
-gadget. If *scroll-bars:* is *#f*, no scroll bars are added to the
+gadget. If *scroll-bars:* is ``#f``, no scroll bars are added to the
 gadget.
 
 Internally, this class maps into the Windows list box control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 The following creates a list of three items, without scroll bars.
 
 \*list\* := contain(make(<list-box>,
-                                    
 
 items: #(#("One", #"one"),
 
@@ -5290,10 +4274,8 @@ label-key: first,
 value-key: second,
 
 scroll-bars: #f));
-                  
 
-See also
-        
+   See also
 
 `<list-control>`_
 
@@ -5304,45 +4286,34 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of list controls.
 
-Superclasses
-            
+   :superclasses:
 
 `<collection-gadget>`_ `See
 <action-gadget>`_
 
 Init-keywords
-             
 
--  *icon-function:* An instance of type *<function>*.
+-  *icon-function:* An instance of type ``<function>``.
 -  *view:* An instance of type `See
    <list-control-view>`_. Default value: *#"list"*.
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
-   Default value: *#f*.
+   Default value: ``#f``.
 -  *scroll-bars:* An instance of type *one-of(#f, #"none",
    #"horizontal", #"vertical", #"both", #"dynamic")*. Default value:
    *#"both"*.
 
 *popup-menu-callback:*
-                      
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
 *key-press-callback:*
-                     
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
-Description
-           
+   :description:
 
 |image6| The class of list controls. These are controls that can list
 items in a number of different ways, using a richer format than the `See
@@ -5374,7 +4345,7 @@ bars around the gadget. By default, both horizontal and vertical scroll
 bars are created. You can also force the creation of only horizontal or
 vertical scroll bars, or you can create scroll bars dynamically: that
 is, have them created only if necessary, dependent on the size of the
-gadget. If *scroll-bars:* is *#f*, no scroll bars are added to the
+gadget. If *scroll-bars:* is ``#f``, no scroll bars are added to the
 gadget.
 
 You can use the *popup-menu-callback:* init-keyword to specify a
@@ -5391,16 +4362,14 @@ description of key-press callbacks.
 
 Internally, this class maps into the Windows list view control.
 
-Operations
-          
+   :operations:
 
 `add-item`_ `find-item`_
 `list-control-view`_ `See
 list-control-view-setter`_ `See
 make-item`_ `remove-item`_
 
-See also
-        
+   See also
 
 *`add-item`_*
 
@@ -5415,30 +4384,20 @@ See also
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the icon function for the specified list control.
 
-Signature
-         
-
-list-control-icon-function *list-control* => *icon-function*
+   :signature: list-control-icon-function *list-control* => *icon-function*
 
 Arguments
-         
 
 -  *list-control* An instance of `See
    <list-control>`_.
 
 Values
-      
 
--  *icon-function* An instance of type *<function>*.
+-  *icon-function* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Returns the icon-function for *list-control*. This function lets you
 specify which icon to display for each item in the control. The function
@@ -5452,8 +4411,7 @@ return the appropriate icon for each registered file type.
 Note that, unlike tree controls, the icon function for a list control
 can be changed once the list control has been created.
 
-See also
-        
+   See also
 
 `<list-control>`_
 
@@ -5464,32 +4422,22 @@ See also
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the icon function for the specified list control.
 
-Signature
-         
-
-list-control-icon-function-setter *icon-function* *list-control* =>
+   :signature: list-control-icon-function-setter *icon-function* *list-control* =>
 *icon-function*
 
 Arguments
-         
 
--  *icon-function* An instance of type *<function>*.
+-  *icon-function* An instance of type ``<function>``.
 -  *list-control* An instance of `See
    <list-control>`_.
 
 Values
-      
 
--  *icon-function* An instance of type *<function>*.
+-  *icon-function* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Sets the icon-function for *list-control*. This function lets you
 specify which icon to display for each item in the control. The function
@@ -5503,8 +4451,7 @@ return the appropriate icon for each registered file type.
 Note that, unlike tree controls, the icon function for a list control
 can be changed once the list control has been created.
 
-See also
-        
+   See also
 
 `<list-control>`_
 
@@ -5513,31 +4460,23 @@ See also
 <list-control-view>
 -------------------
 
-Type
+   :type:
 ''''
-
-Summary
-       
-
 The type of possible views for a list control
 
 Equivalent
-          
 
 one-of(#"small-icon", #"large-icon", #"list")
 
-Superclasses
-            
+   :superclasses:
 
 None.
 
 Init-keywords
-             
 
 -  None.
 
-Description
-           
+   :description:
 
 This type represents the acceptable values for the view arguments to
 operators of `<list-control>`_. You should not
@@ -5553,8 +4492,7 @@ will be familiar to most users of GUI-based operating systems:
 -  *#"list"* Displays each item in the list control using a small icon
    to the left of the item. Items are arranged vertically in one column.
 
-See also
-        
+   See also
 
 `<list-control>`_
 
@@ -5567,31 +4505,21 @@ list-control-view
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the view for the specified list control.
 
-Signature
-         
-
-list-control-view *list-control* => *view*
+   :signature: list-control-view *list-control* => *view*
 
 Arguments
-         
 
 -  *list-control* An instance of `See
    <list-control>`_.
 
 Values
-      
 
 -  *view* An instance of type `See
    <list-control-view>`_.
 
-Description
-           
+   :description:
 
 Returns the view for *list-control*. The view defines how items in the
 list control are displayed. Three views are available; items are
@@ -5601,12 +4529,10 @@ each item. For more details, see the description for `See
 <list-control-view>`_.
 
 Example
-       
 
 Given a list control created with the following code:
 
 \*list\* := contain(make(<list-control>,
-                                        
 
 items: #(#("One", #"one"),
 
@@ -5617,15 +4543,12 @@ items: #(#("One", #"one"),
 view: #"list"
 
 scroll-bars: #f));
-                  
 
 The list control view may be returned with:
 
 list-control-view(\*list\*);
-                            
 
-See also
-        
+   See also
 
 `<list-control>`_
 
@@ -5638,19 +4561,11 @@ list-control-view-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the view for the specified list control.
 
-Signature
-         
-
-list-control-view-setter *view list-control* => *view*
+   :signature: list-control-view-setter *view list-control* => *view*
 
 Arguments
-         
 
 -  *view* An instance of type `See
    <list-control-view>`_.
@@ -5658,13 +4573,11 @@ Arguments
    <list-control>`_.
 
 Values
-      
 
 -  *view* An instance of type `See
    <list-control-view>`_.
 
-Description
-           
+   :description:
 
 Sets the view for *list-control*. The view defines how items in the
 list control are displayed. Three views are available; items are
@@ -5674,27 +4587,22 @@ each item. For more details, see the description for `See
 <list-control-view>`_.
 
 Example
-       
 
 Given a list control created with the following code:
 
 \*list\* := contain(make(<list-control>,
-                                        
 
 items: #("One",
 
 "Two",
 
 "Three")));
-           
 
 The list control view may be specified with:
 
 list-control-view(\*list\*) := #"view";
-                                       
 
-See also
-        
+   See also
 
 `<list-control>`_
 
@@ -5707,36 +4615,27 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class that represents an item in a list control.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
 
 Init-keywords
-             
 
--  *object:* An instance of type *<object>*. Default value: *#f*.
+-  *object:* An instance of type ``<object>``. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class that represents an item in a list control.
 
-Operations
-          
+   :operations:
 
 -  `add-item`_ `See
    item-object`_ `See
    remove-item`_
 
-See also
-        
+   See also
 
 `<list-control>`_
 
@@ -5747,35 +4646,25 @@ make-item
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Creates an item which can be inserted in the specified list control or
 table control.
 
-Signature
-         
-
-make-item *list-or-table object* #key *frame-manager* => *item*
+   :signature: make-item *list-or-table object* #key *frame-manager* => *item*
 
 Arguments
-         
 
 -  *list-or-table* An instance of *type-union
     (`<list-control>`_, `See
    <table-control>`_)*.
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 -  *frame-manager* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
 
 Values
-      
 
 -  *item* An instance of type *`<list-item>`_*.
 
-Description
-           
+   :description:
 
 Creates an item that represents *object* which can be inserted in the
 specified *list-or-table*. To insert the item in the list control or
@@ -5787,8 +4676,7 @@ before it is added to the list or table control.
 If the *frame-manager* argument is specified, then this is used instead
 of the default frame manager.
 
-See also
-        
+   See also
 
 *`add-item`_*
 
@@ -5809,20 +4697,12 @@ make-menu-from-items
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns a menu object created from the specified items.
 
-Signature
-         
-
-make-menu-from-items *framem items* #key *owner title label-key
+   :signature: make-menu-from-items *framem items* #key *owner title label-key
 value-key foreground background text-style* => *menu*
 
 Arguments
-         
 
 -  *framem* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
@@ -5832,18 +4712,16 @@ Arguments
 -  *label-key* An instance of *<function>*. Default value: *identity*.
 -  *value-key* An instance of *<function>*. Default value: *identity*.
 -  *foreground* An instance of type *false-or(* `See
-   <ink> <dcs.htm#15007>`_*)*. Default value: *#f*.
+   <ink> <dcs.htm#15007>`_*)*. Default value: ``#f``.
 -  *background* An instance of type *false-or(* `See
-   <ink> <dcs.htm#15007>`_*)*. Default value: *#f*.
+   <ink> <dcs.htm#15007>`_*)*. Default value: ``#f``.
 -  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
 
 Values
-      
 
 -  *menu* An instance of type *`<menu>`_*.
 
-Description
-           
+   :description:
 
 Returns a menu object created from the specified *items*.
 
@@ -5866,8 +4744,7 @@ The *text-style* argument specified a text style for the menu. The
 background colors for the menu: *foreground* being used for the text in
 the menu, and *background* for the menu itself.
 
-See also
-        
+   See also
 
 `display-menu`_
 
@@ -5876,30 +4753,20 @@ make-node
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Creates a node which can be inserted in the specified tree control.
 
-Signature
-         
-
-make-node *tree object* #key #all-keys => *node*
+   :signature: make-node *tree object* #key #all-keys => *node*
 
 Arguments
-         
 
 -  *tree* An instance of *`<tree-control>`_*.
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
 -  *node* An instance of type *`<tree-node>`_*.
 
-Description
-           
+   :description:
 
 Creates a node that represents *object* which can be inserted in the
 specified *tree*. To insert the item in the tree control, *`See
@@ -5908,8 +4775,7 @@ add-node`_* is used. You would not normally call
 and the node is created automatically before it is added to the tree
 control.
 
-See also
-        
+   See also
 
 *`add-node`_*
 
@@ -5924,35 +4790,26 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of menu gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 `<gadget>`_ `See
 <multiple-child-composite-pane> <layouts.htm#45992>`_
 
 Init-keywords
-             
 
 *update-callback:*
-                  
 
 An instance of type *false-or(<function>)*.
-                                            
 
 -  *owner:* An instance of type `<sheet> <silica.htm#13118>`_.
 -  *mnemonic:* An instance of type *false-or(<character>)*. Default
-   value: *#f*.
+   value: ``#f``.
 -  *command:* An instance of *false-or(` <frames.htm#40934>`_)*.
-   Default value: *#f*.
+   Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of menu gadgets.
 
@@ -5982,8 +4839,7 @@ command, you can use this init-keyword.
 
 Internally, this class maps into the menu Windows control.
 
-Operations
-          
+   :operations:
 
 ` <frames.htm#89020>`_ `choose-from-dialog <silica.htm#89621>`_ `See
 choose-from-menu <silica.htm#30973>`_
@@ -5991,7 +4847,6 @@ choose-from-menu <silica.htm#30973>`_
 menu-owner`_
 
 Example
-       
 
 The following code creates a menu, *Hello*, that contains a single
 button, *World*. Notice how using *contain* creates a menu bar for you
@@ -5999,7 +4854,6 @@ automatically. You should note that using `See
 display-menu`_ would not have this effect.
 
 \*menu\* := contain(make(<menu>,
-                                
 
 label: "Hello",
 
@@ -6010,10 +4864,8 @@ vector
 (make(<menu-button>,
 
 label: "World"))));
-                   
 
-See also
-        
+   See also
 
 `display-menu`_
 
@@ -6024,41 +4876,30 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of menu bar gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-gadget>`_* `See
 <multiple-child-composite-pane> <layouts.htm#45992>`_
 
 Init-keywords
-             
 
 *update-callback:*
-                  
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 The class of menu bar gadgets.
 
 Internally, this class maps into the Windows menu control.
 
-Operations
-          
+   :operations:
 
 -  ` <frames.htm#63229>`_ ` <frames.htm#56600>`_
 
 Example
-       
 
 The following example is similar to the example for `See
 <menu>`_, except that here, the menu bar object is
@@ -6066,7 +4907,6 @@ explicitly defined. In the example for *<menu>*, it is created
 automatically by using *contain* :
 
 \*menu\* := make(<menu-bar>,
-                            
 
 children:
 
@@ -6081,10 +4921,8 @@ children: vector
 label: "World")
 
 ))));
-     
 
-See also
-        
+   See also
 
 `<menu>`_
 
@@ -6093,28 +4931,19 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 A class that groups menu buttons.
 
-Superclasses
-            
+   :superclasses:
 
 `<collection-gadget>`_
 
 Init-keywords
-             
 
 *update-callback:*
-                  
 
 An instance of type *false-or(<function>)*.
-                                            
 
-Description
-           
+   :description:
 
 A class that groups menu buttons. Like the `See
 <button-box>`_ class, you can use this class to
@@ -6138,24 +4967,19 @@ which the menu box is a part is displayed). This callback is free to
 make changes to the contents of the menu box, which will then appear
 when the update callback is complete.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 \*menu-box\* := contain(make(<menu-box>,
-                                        
 
 items: range
 
 (from: 0, to: 5)));
-                   
 
-See also
-        
+   See also
 
 *`<check-menu-box>`_*
 
@@ -6168,28 +4992,19 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of all buttons that can appear in menus.
 
-Superclasses
-            
+   :superclasses:
 
 `<button>`_
 
 Init-keywords
-             
 
 *update-callback:*
-                  
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 The class of all buttons that can appear on menus.
 
@@ -6200,16 +5015,13 @@ discussion on this, see the entry for `See
 
 Internally, this class maps into the menu item Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain
-       
 
 (make(<menu-button>, label: "Hello",
 
@@ -6224,10 +5036,8 @@ notify-user
 ("Pressed button %=", gadget),
 
 owner: gadget) end));
-                     
 
-See also
-        
+   See also
 
 `<check-menu-button>`_
 
@@ -6244,29 +5054,19 @@ menu-owner
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the sheet that owns the specified menu.
 
-Signature
-         
-
-menu-owner *menu* => *sheet*
+   :signature: menu-owner *menu* => *sheet*
 
 Arguments
-         
 
 -  *menu* An instance of type `<menu>`_.
 
 Values
-      
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 
-Description
-           
+   :description:
 
 Returns the sheet that owns *menu*, that is, the sheet in which *menu*
 is displayed.
@@ -6279,36 +5079,25 @@ node-children
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the children of the specified node in a tree control.
 
-Signature
-         
-
-node-children *tree-node* => *children*
+   :signature: node-children *tree-node* => *children*
 
 Arguments
-         
 
 -  *tree-node* An instance of type `See
    <tree-node>`_.
 
 Values
-      
 
 -  *children* An instance of type *limited(<sequence>, of: `See
    <tree-node>`_)*.
 
-Description
-           
+   :description:
 
 Returns the children of *tree-node* in a tree control.
 
-See also
-        
+   See also
 
 *`node-children-setter`_*
 
@@ -6323,19 +5112,11 @@ node-children-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the children of the specified node in a tree control.
 
-Signature
-         
-
-node-children-setter *children tree-node* => *children*
+   :signature: node-children-setter *children tree-node* => *children*
 
 Arguments
-         
 
 -  *children* An instance of type *limited(<sequence>, of: `See
    <tree-node>`_)*.
@@ -6343,18 +5124,15 @@ Arguments
    <tree-node>`_.
 
 Values
-      
 
 -  *children* An instance of type *limited(<sequence>, of: `See
    <tree-node>`_)*.
 
-Description
-           
+   :description:
 
 Sets the children of *tree-node* in a tree control.
 
-See also
-        
+   See also
 
 *`node-children`_*
 
@@ -6369,36 +5147,25 @@ node-expanded?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the specified node is expanded in a tree control.
 
-Signature
-         
-
-node-expanded? *tree-node* => *expanded?*
+   :signature: node-expanded? *tree-node* => *expanded?*
 
 Arguments
-         
 
 -  *tree-node* An instance of type `See
    <tree-node>`_.
 
 Values
-      
 
--  *expanded?* An instance of type *<boolean>*.
+-  *expanded?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if *tree-node* is expanded in a tree control, so that its
 children are displayed in the tree control.
 
-See also
-        
+   See also
 
 *`<tree-node>`_*
 
@@ -6407,35 +5174,24 @@ node-object
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the object that the specified node in a tree control represents.
 
-Signature
-         
-
-node-object *tree-node* => *object*
+   :signature: node-object *tree-node* => *object*
 
 Arguments
-         
 
 -  *tree-node* An instance of type `See
    <tree-node>`_.
 
 Values
-      
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 Returns the object that *tree-node* represents.
 
-See also
-        
+   See also
 
 *`<tree-node>`_*
 
@@ -6444,35 +5200,24 @@ node-parents
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the parents of the specified node in a tree control.
 
-Signature
-         
-
-node-parents *tree-node* => *parents*
+   :signature: node-parents *tree-node* => *parents*
 
 Arguments
-         
 
 -  *tree-node* An instance of type `See
    <tree-node>`_.
 
 Values
-      
 
 -  *parents* An instance of type *<sequence>*.
 
-Description
-           
+   :description:
 
 Returns the parents of *tree-node* in a tree control.
 
-See also
-        
+   See also
 
 *`node-children`_*
 
@@ -6483,38 +5228,27 @@ node-state
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the state of the specified node in a tree control.
 
-Signature
-         
-
-node-parents *tree-node* => *state*
+   :signature: node-parents *tree-node* => *state*
 
 Arguments
-         
 
 -  *tree-node* An instance of type `See
    <tree-node>`_.
 
 Values
-      
 
 -  *parents* An instance of type *one-of(#"expanded", #"contracted",
    #f)*.
 
-Description
-           
+   :description:
 
 Returns the state of *tree-node* in a tree control, that is, whether it
-is currently expanded or contracted. This function returns *#f* if
+is currently expanded or contracted. This function returns ``#f`` if
 tree-node does not exist.
 
-See also
-        
+   See also
 
 *`node-expanded?`_*
 
@@ -6525,29 +5259,22 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of option boxes.
 
-Superclasses
-            
+   :superclasses:
 
 `<collection-gadget>`_
 
 Init-keywords
-             
 
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
-   Default value: *#f*.
+   Default value: ``#f``.
 -  *scroll-bars:* An instance of type *one-of(#f, #"none",
    #"horizontal", #"vertical", #"both", #"dynamic")*. Default value:
    *#"both"*.
 
-Description
-           
+   :description:
 
 The class of option boxes.
 
@@ -6563,13 +5290,11 @@ for the gadget.
 
 Internally, this class maps into the Windows drop-down list control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 *`<combo-box>`_*
 
@@ -6578,25 +5303,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class that represents a page in a tab control.
 
-Superclasses
-            
+   :superclasses:
 
 `<gadget>`_
 
 Init-keywords
-             
 
 -  *label:* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
 
-Description
-           
+   :description:
 
 The class that represents a page in a multi-page frame, such as a tab
 control or wizard frame or property frame.
@@ -6605,13 +5323,11 @@ The *label:* init-keyword specifies a string or icon that is to be used
 as a label for the gadget. Pages typically appear inside a tab control,
 where the label for the page becomes the label on the tab for the page.
 
-Operations
-          
+   :operations:
 
 -  ` <frames.htm#88015>`_ ` <frames.htm#89408>`_
 
-See also
-        
+   See also
 
 ` <frames.htm#93333>`_
 
@@ -6624,24 +5340,17 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of text fields that do not echo typed text.
 
-Superclasses
-            
+   :superclasses:
 
 *`<text-field>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 |image7| The class of text fields that do not echo typed text. This
 class of gadgets are very similar in appearance to the *`See
@@ -6652,19 +5361,15 @@ screen in the normal way.
 Internally, this class maps into the Windows single-line edit control
 with ES-PASSWORD style.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 \*pass\* := contain(make(<password-field>));
-                                            
 
-See also
-        
+   See also
 
 *`<text-field>`_*
 
@@ -6673,25 +5378,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of progress bar windows.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-range-gadget>`_*
 
 Init-keywords
-             
 
 -  *orientation:* An instance of type *one-of(#"horizontal",
    #"vertical")*. Default value: *#"horizontal"*.
 
-Description
-           
+   :description:
 
 The class of progress bar windows.
 
@@ -6703,34 +5401,28 @@ bar should be horizontal or vertical.
 
 Internally, this class maps into the Windows progress indicator control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 The following code creates an "empty" progress bar:
 
 \*prog\* := contain
-                   
 
 (make(<progress-bar>,
 
 value-range:
 
 range(from: 0, to: 100)));
-                          
 
 By setting the gadget value of the progress bar, the progress of a task
 can be monitored as follows:
 
 for (i from 0 to 100) gadget-value(\*prog\*) := i end;
-                                                      
 
-See also
-        
+   See also
 
 *`<slider>`_*
 
@@ -6739,25 +5431,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of grouped push buttons.
 
-Superclasses
-            
+   :superclasses:
 
 *`<button-box>`_ `See
 <action-gadget>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of grouped push buttons.
 
@@ -6769,24 +5454,19 @@ gadget value of the last push button in the box to be pressed. You
 should use the gadget value of a push box as the way of determining
 which button has been pressed in a callback for the push box.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 \*push-box\* := contain
-                       
 
 (make(<push-box>,
 
 items: range(from: 0, to: 5)));
-                               
 
-See also
-        
+   See also
 
 *`<check-box>`_*
 
@@ -6799,25 +5479,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of push buttons.
 
-Superclasses
-            
+   :superclasses:
 
 `<button>`_ `See
 <action-gadget>`_
 
 Init-keywords
-             
 
--  *default?:* An instance of type *<boolean>*. Default value: *#f*.
+-  *default?:* An instance of type ``<boolean>``. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of push buttons.The push button gadget provides
 press-to-activate switch behavior.
@@ -6840,19 +5513,16 @@ this means that pressing the Return key invokes the activate callback.
 
 Internally, this class maps into the push button Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 The following code creates a push button which, when clicked, displays a
 message showing the label of the button.
 
 contain(make(<push-button>,
-                           
 
 label: "Hello",
 
@@ -6867,10 +5537,8 @@ notify-user(format-to-string
 gadget-label(gadget)),
 
 owner: gadget) end));
-                     
 
-See also
-        
+   See also
 
 *`<check-button>`_*
 
@@ -6881,25 +5549,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of grouped push buttons in menus.
 
-Superclasses
-            
+   :superclasses:
 
 *`<menu-box>`_ `See
 <action-gadget>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of grouped push buttons in menus.
 
@@ -6908,22 +5569,17 @@ The class of grouped push buttons in menus.
    :alt: 
 Internally, this class maps into the menu Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<push-menu-box>,
-                             
 
 items: range(from: 0, to: 5)));
-                               
 
-See also
-        
+   See also
 
 *`<check-menu-box>`_*
 
@@ -6936,24 +5592,17 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of push buttons that appear on menus.
 
-Superclasses
-            
+   :superclasses:
 
 `<push-menu-button>`_
 
 Init-keywords
-             
 
--  *default?:* An instance of type *<boolean>*. Default value: *#f*.
+-  *default?:* An instance of type ``<boolean>``. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of push buttons that appear on menus.
 
@@ -6965,13 +5614,11 @@ button gadget.
 
 Internally, this class maps into the menu item Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 *`<check-menu-button>`_*
 
@@ -6984,25 +5631,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of radio boxes, or groups of mutually exclusive radio buttons.
 
-Superclasses
-            
+   :superclasses:
 
 *`<button-box>`_ `See
 <action-gadget>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 |image8| The instantiable class that implements an abstract radio box,
 that is, a gadget that constrains a number of toggle buttons, only one
@@ -7011,26 +5651,21 @@ of which may be selected at any one time.
 The value of the radio box is the value of the currently selected item
 in the radio box.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Examples
-        
 
 contain(make(<radio-box>, items: #("Yes", "No"),
-                                                
 
 orientation: #"vertical");
-                          
 
 The following example defines a label-key function which formats the
 label of each item in the radio box, rather than just using the item
 itself.
 
 \*radio-box\* := contain
-                        
 
 (make(<radio-box>,
 
@@ -7045,10 +5680,8 @@ method (item)
 format-to-string("===%d===",
 
 item) end));
-            
 
-See also
-        
+   See also
 
 *`<check-box>`_*
 
@@ -7061,25 +5694,18 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of radio buttons.
 
-Superclasses
-            
+   :superclasses:
 
 `<button>`_ *`See
 <action-gadget>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 |image9| The class of radio buttons. Isolated radio buttons are of
 limited use: you will normally want to combine several instances of such
@@ -7087,19 +5713,15 @@ buttons using the *<radio-box>* gadget.
 
 Internally, this class maps into the radio button Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<radio-button>, label: "Hello"));
-                                              
 
-See also
-        
+   See also
 
 `<button>`_
 
@@ -7114,30 +5736,22 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of grouped radio buttons that can appear in menus.
 
-Superclasses
-            
+   :superclasses:
 
 *`<menu-box>`_ `See
 <action-gadget>`_*
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class of grouped radio buttons that can appear in menus.
 
 A radio menu box
-                
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -7148,19 +5762,16 @@ A radio menu box
    :alt: 
 Internally, this class maps into the menu Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 The following example creates a menu that shows an example of a radio
 menu box, as well as several other menu gadgets.
 
 contain(make(<menu>,
-                    
 
 label: "Hello...",
 
@@ -7195,10 +5806,8 @@ vector
 items: #(1, 2, 3)))
 
 ))));
-     
 
-See also
-        
+   See also
 
 *`<menu-box>`_*
 
@@ -7211,24 +5820,17 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of radio buttons that can appear in menus.
 
-Superclasses
-            
+   :superclasses:
 
 `<menu-button>`_
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 |image10| The class of radio buttons that can appear in menus. Isolated
 radio menu buttons are of limited use: you will normally want to combine
@@ -7236,19 +5838,15 @@ several instances of such buttons using the *<radio-menu-box>* gadget.
 
 Internally, this class maps into the menu radio item Windows control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<radio-menu-button>, label: "Hello"));
-                                                   
 
-See also
-        
+   See also
 
 *`<menu-button>`_*
 
@@ -7261,36 +5859,25 @@ remove-column
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Removes a column from the specified table.
 
-Signature
-         
-
-remove-column *table index* =>
+   :signature: remove-column *table index* =>
 
 Arguments
-         
 
 -  *table* An instance of type `See
    <table-control>`_.
--  *index* An instance of type *<integer>*.
+-  *index* An instance of type ``<integer>``.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Removes a column from *table*.
 
-See also
-        
+   See also
 
 *`add-column`_*
 
@@ -7299,37 +5886,23 @@ remove-item
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Removes an item from a list control or table control.
 
-Signature
-         
-
-remove-item *list-or-table item* => ()
+   :signature: remove-item *list-or-table item* => ()
 
 Arguments
-         
 
 -  *list-or-table* An instance of *type-union(`See
    <list-control>`_, `See
    <table-control>`_)*.
 -  *item* An instance of type *`<list-item>`_*.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Removes *item* from *list-or-table*.
 
-See also
-        
+   See also
 
 *`add-item`_*
 
@@ -7350,35 +5923,21 @@ remove-node
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Removes a node from a tree control.
 
-Signature
-         
-
-remove-node *tree node* => ()
+   :signature: remove-node *tree node* => ()
 
 Arguments
-         
 
 -  *tree* An instance of `<tree-control>`_.
 -  *node* An instance of type *`<tree-node>`_*.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Removes *node* from *tree*.
 
-See also
-        
+   See also
 
 *`add-node`_*
 
@@ -7393,39 +5952,28 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of scroll bars.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-range-gadget>`_*
 
 Init-keywords
-             
 
 -  *orientation:* An instance of type *one-of(#"horizontal",
    #"vertical", #"none")*. Default value: *#"none"*.
 
 *value-changing-callback:*
-                          
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
 *value-changed-callback:*
-                         
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
--  *slug-size:* An instance of type *<real>*.
+-  *slug-size:* An instance of type ``<real>``.
 
-Description
-           
+   :description:
 
 |image11| The instantiable class that implements an abstract scroll bar.
 
@@ -7456,37 +6004,30 @@ those guidelines as a reference.
 
 Internally, this class maps into the Windows scroll bar control.
 
-Operations
-          
+   :operations:
 
 -  `gadget-slug-size`_ `See
    gadget-slug-size-setter`_
 
 Example
-       
 
 As an example of how the *slug-size:* init-keyword operates, compare the
 two examples of scroll bars below. The second scroll bar has a slug that
 is twice the size of the first.
 
 contain(make(<scroll-bar>,
-                          
 
 value-range: range(from: 0, to: 100)
 
 slug-size: 10));
-                
 
 contain(make(<scroll-bar>,
-                          
 
 value-range: range(from: 0, to: 100)
 
 slug-size: 20));
-                
 
-See also
-        
+   See also
 
 *`<slider>`_*
 
@@ -7495,30 +6036,22 @@ scrolling
 
 Statement macro
 '''''''''''''''
-
-Summary
-       
-
 Places scroll bars around the specified DUIM panes, if required.
 
 Macro call
-          
 
 scrolling ([*options* ]) {*pane* } end
 
 Arguments
-         
 
 -  *options* Dylan arguments*bnf*.
 -  *pane* A Dylan expression*bnf*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Places scroll bars around the DUIM panes created by *pane*, if
 required. It is useful to use this macro if you are unsure that the
@@ -7542,10 +6075,8 @@ The pane is a body of code whose return value is the sheet to which the
 label should be assigned.
 
 Example
-       
 
 scrolling (scroll-bars: #"vertical")
-                                    
 
 make(<radio-box>,
 
@@ -7554,10 +6085,8 @@ orientation: #"vertical",
 items: range(from: 1, to: 50))
 
 end
-   
 
-See also
-        
+   See also
 
 `<scroll-bar>`_
 
@@ -7570,30 +6099,20 @@ scroll-position
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the position of the scroll bar slug in the specified sheet.
 
-Signature
-         
-
-scroll-position *sheet* => *x y*
+   :signature: scroll-position *sheet* => *x y*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
-      
 
--  *x* An instance of type *<integer>*.
--  *y* An instance of type *<integer>*.
+-  *x* An instance of type ``<integer>``.
+-  *y* An instance of type ``<integer>``.
 
-Description
-           
+   :description:
 
 Returns the position of the scroll bar slug in *sheet*. Note that this
 generic function only returns the position of scroll bar slugs that have
@@ -7606,10 +6125,8 @@ a *scroll-box*, and the area in which the slug can slide as the
 those guidelines as a reference.
 
 Example
-       
 
-See also
-        
+   See also
 
 *`scrolling`_*
 
@@ -7620,30 +6137,22 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of gadgets used as a visual separator.
 
-Superclasses
-            
+   :superclasses:
 
 `<gadget>`_
 
 Init-keywords
-             
 
 -  *orientation:* An instance of type *one-of(#"horizontal",
    #"vertical")*. Default value: *#"horizontal"*.
 
-Description
-           
+   :description:
 
 The class of gadgets used as a visual separator.
 
 A separator
-           
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -7655,19 +6164,16 @@ A separator
 The *orientation:* init-keyword specifies whether the separator is
 vertical or horizontal.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 The following example creates a column layout and places two buttons in
 it, separated with a separator.
 
 contain(vertically ()
-                     
 
 make(<button>, label: "Hello");
 
@@ -7676,10 +6182,8 @@ make(<separator>);
 make(<button>, label: "World")
 
 end);
-     
 
-See also
-        
+   See also
 
 *`<spacing>`_*
 
@@ -7688,31 +6192,18 @@ set-scroll-position
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Scrolls the window on the specified sheet.
 
-Signature
-         
-
-set-scroll-position *sheet x y* => ()
+   :signature: set-scroll-position *sheet x y* => ()
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
--  *x* An instance of type *<integer>*.
--  *y* An instance of type *<integer>*.
+-  *x* An instance of type ``<integer>``.
+-  *y* An instance of type ``<integer>``.
 
-Values
-      
 
-None.
-
-Description
-           
+   :description:
 
 Scrolls the window on *sheet* by setting the position of the scroll bar
 slug. Note that this generic function only sets the position of scroll
@@ -7725,8 +6216,7 @@ a *scroll-box*, and the area in which the slug can slide as the
 *scroll-shaft*. You should be aware of this difference if you are using
 those guidelines as a reference.
 
-See also
-        
+   See also
 
 *`scroll-position`_*
 
@@ -7737,35 +6227,24 @@ sheet-viewport
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the viewport that is clipping the specified sheet.
 
-Signature
-         
-
-sheet-viewport *sheet* => *viewport*
+   :signature: sheet-viewport *sheet* => *viewport*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
-      
 
 -  *viewport* An instance of type *false-or(* `See
    <viewport>`_*)*.
 
-Description
-           
+   :description:
 
 Returns the viewport that is clipping *sheet*.
 
-See also
-        
+   See also
 
 *`sheet-viewport-region`_*
 
@@ -7776,36 +6255,25 @@ sheet-viewport-region
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the sheet region of the specified sheet’s viewport, if it has
 one.
 
-Signature
-         
-
-sheet-viewport-region *sheet* => *region*
+   :signature: sheet-viewport-region *sheet* => *region*
 
 Arguments
-         
 
 -  *sheet* An instance of type `<sheet> <silica.htm#13118>`_.
 
 Values
-      
 
--  *region* An instance of type *<region>*.
+-  *region* An instance of type :class:`<region>`.
 
-Description
-           
+   :description:
 
 Returns the sheet region of *sheet* ’s viewport, if it has one. If sheet
 has no viewport, it returns *sheet* ’s own region.
 
-See also
-        
+   See also
 
 *`sheet-viewport`_*
 
@@ -7816,19 +6284,13 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of slider gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-range-gadget>`_*
 
 Init-keywords
-             
 
 -  *min-label:* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
@@ -7836,20 +6298,17 @@ Init-keywords
    <image> <dcs.htm#51234>`_*)*.
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
-   Default value: *#f*.
+   Default value: ``#f``.
 -  *tick-marks:* An instance of type *false-or(<integer>)*. Default
-   value: *#f*
+   value: ``#f``
 -  *orientation:* An instance of type *one-of(#"horizontal",
    #"vertical")*. Default value: *#"horizontal"*.
 
 *value-changing-callback:*
-                          
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 |image12| The class of slider gadgets. This is a gadget used for setting
 or adjusting the value on a continuous range of values, such as a volume
@@ -7880,24 +6339,19 @@ Internally, this class maps into the Windows trackbar control.
 When designing a user interface, you will find that spin boxes are a
 suitable alternative to spin boxes in many situations.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<slider>,
-                      
 
 value-range:
 
 range(from: -20, to: 20, by: 5)));
-                                  
 
-See also
-        
+   See also
 
 `<scroll-bar>`_
 
@@ -7908,26 +6362,19 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of gadgets that can be used to provide spacing around a sheet.
 
-Superclasses
-            
+   :superclasses:
 
 `<gadget>`_
 
 Init-keywords
-             
 
 -  *child:* An instance of type *limited(<sequence> of: `See
    <sheet> <silica.htm#13118>`_)*.
--  *thickness:* An instance of type *<integer>*. Default value: 1.
+-  *thickness:* An instance of type ``<integer>``. Default value: 1.
 
-Description
-           
+   :description:
 
 The class of gadgets that can be used to provide spacing around a sheet.
 
@@ -7941,19 +6388,16 @@ It is usually clearer to use the *`See
 with-spacing`_* macro, rather than to create an
 instance of *<spacing>* explicitly.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 The following creates a vertical layout containing two buttons separated
 by a text field that has spacing added to it.
 
 contain(vertically ()
-                     
 
 make(<button>, label: "Hello");
 
@@ -7966,10 +6410,8 @@ thickness: 10);
 make(<button>, label: "World")
 
 end);
-     
 
-See also
-        
+   See also
 
 *`<null-pane> <layouts.htm#65339>`_*
 
@@ -7982,26 +6424,19 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of spin box gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 `<collection-gadget>`_
 
 Init-keywords
-             
 
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
-   Default value: *#f*.
+   Default value: ``#f``.
 
-Description
-           
+   :description:
 
 |image13| The class of spin box gadgets. A spin box gadget is a text box
 that only accepts a limited range of values that form an ordered loop.
@@ -8022,21 +6457,17 @@ gadget.
 When designing a user interface, you will find that sliders are a
 suitable alternative to spin boxes in many situations.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 contain(make(<spin-box>,
-                        
 
 items: range(from: 1, to: 10)));
 
-See also
-        
+   See also
 
 `<slider>`_
 
@@ -8082,12 +6513,11 @@ Generic function
 ''''''''''''''''
 
 splitter-split-bar-moved-callback *splitter* => *function*
-                                                          
 
 Returns the function invoked when the split bar of *splitter* is moved.
 
 The *splitter* argument is an instance of type *<splitter>*. The
-*function* argument is an instance of type *<function>*.
+*function* argument is an instance of type ``<function>``.
 
 splitter-split-bar-moved-callback-setter
 ----------------------------------------
@@ -8096,15 +6526,13 @@ Generic function
 ''''''''''''''''
 
 splitter-split-bar-moved-callback-setter *function splitter*
-                                                            
 
 => *function*
-             
 
 Sets the callback invoked when the split bar of *splitter* is moved.
 
 The *splitter* argument is an instance of type *<splitter>*. The
-*function* argument is an instance of type *<function>*.
+*function* argument is an instance of type ``<function>``.
 
 splitter-split-box-callback
 ---------------------------
@@ -8113,13 +6541,12 @@ Generic function
 ''''''''''''''''
 
 splitter-split-box-callback *splitter* => *function*
-                                                    
 
 Returns the callback invoked when the split box of *splitter* is
 clicked.
 
 The *splitter* argument is an instance of type *<splitter>*. The
-*function* argument is an instance of type *<function>*.
+*function* argument is an instance of type ``<function>``.
 
 splitter-split-box-callback-setter
 ----------------------------------
@@ -8128,48 +6555,39 @@ Generic function
 ''''''''''''''''
 
 splitter-split-box-callback-setter *function splitter*
-                                                      
 
 => *function*
-             
 
 Sets the callback invoked when the split box of *splitter* is clicked.
 
 The *splitter* argument is an instance of type *<splitter>*. The
-*function* argument is an instance of type *<function>*.
+*function* argument is an instance of type ``<function>``.
 
 <status-bar>
 ------------
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of status bars.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-range-gadget>`_*
 
 Init-keywords
-             
 
 -  *label:* An instance of type *type-union(<string>,* `See
    <image> <dcs.htm#51234>`_*)*.
 -  *label-pane:* An instance of *false-or(`See
-   <gadget>`_)*. Default value: *#f*.
--  *progress-bar?:* An instance of type *<boolean>*. Default value:
-   *#f*.
+   <gadget>`_)*. Default value: ``#f``.
+-  *progress-bar?:* An instance of type ``<boolean>``. Default value:
+   ``#f``.
 -  *progress-bar:* An instance of *false-or(`See
-   <progress-bar>`_)*. Default value: *#f*.
--  *value:* An instance of type *<object>*.
+   <progress-bar>`_)*. Default value: ``#f``.
+-  *value:* An instance of type ``<object>``.
 -  *value-range:* An instance of type *<range>*.
 
-Description
-           
+   :description:
 
 The class of status bars. Status bars are often used at the bottom of an
 application window, and can provide a range of feedback on the current
@@ -8250,31 +6668,26 @@ init-keyword lets you define a progress bar to add to the status bar. If
 you create a status bar from scratch, you should not use either the
 *label:* or *progress-bar?:* init-keywords.
 
-Operations
-          
+   :operations:
 
 ` <frames.htm#32720>`_ ` <frames.htm#56600>`_ `See
 status-bar-label-pane`_ `See
 status-bar-progress-bar`_
 
 Example
-       
 
 The following creates a basic status bar with the given label, and a
 progress bar with the given range of values.
 
 contain(make(<status-bar>,
-                          
 
 progress-bar?: #t,
 
 value-range: range(from: 0, to: 50)
 
 label: "Status"));
-                  
 
-See also
-        
+   See also
 
 *` <frames.htm#12376>`_*
 
@@ -8291,57 +6704,42 @@ status-bar-label-pane
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the gadget that displays the label of the specified status bar.
 
-Signature
-         
-
-status-bar-label-pane *status-bar* => *label*
+   :signature: status-bar-label-pane *status-bar* => *label*
 
 Arguments
-         
 
 -  *status-bar* An instance of type *`See
    <status-bar>`_*.
 
 Values
-      
 
 -  *label* An instance of type *false-or(* `See
    <label>`_*)*.
 
-Description
-           
+   :description:
 
 Returns the gadget that displays the label of *status-bar*.
 
 Example
-       
 
 Create a status bar with a label as follows:
 
 \*status\* := contain(make(<status-bar>,
-                                        
 
 value-range:
 
 range(from: 0, to: 100),
 
 label: "Status"));
-                  
 
 The pane that the label of the status bar is displayed in can be
 returned with the following call:
 
 status-bar-label-pane(\*status\*);
-                                  
 
-See also
-        
+   See also
 
 *`<status-bar>`_*
 
@@ -8352,36 +6750,25 @@ status-bar-progress-bar
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the progress bar for the specified status bar.
 
-Signature
-         
-
-status-bar-progress-bar *status-bar* => *progress-bar*
+   :signature: status-bar-progress-bar *status-bar* => *progress-bar*
 
 Arguments
-         
 
 -  *status-bar* An instance of type *`See
    <status-bar>`_*.
 
 Values
-      
 
 -  *progress-bar* An instance of type *false-or(`See
    <progress-bar>`_)*.
 
-Description
-           
+   :description:
 
 Returns the progress bar for *status-bar*, if there is one.
 
-See also
-        
+   See also
 
 *`<progress-bar>`_*
 
@@ -8390,19 +6777,13 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of tab controls.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-gadget>`_*
 
 Init-keywords
-             
 
 -  *pages:* An instance of type *limited(<sequence>, of: `See
    <page>`_)*.
@@ -8410,13 +6791,10 @@ Init-keywords
    <sheet> <silica.htm#13118>`_)*.
 
 *key-press-callback:*
-                     
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
-Description
-           
+   :description:
 
 |image14| The class of tab controls. These controls let you implement a
 multi-page environment in a window or dialog. Each page in a tab control
@@ -8446,8 +6824,7 @@ gadget-value`_*.
 
 Internally, this class maps into the Windows tab control.
 
-Operations
-          
+   :operations:
 
 `tab-control-current-page`_ `See
 tab-control-current-page-setter`_ `See
@@ -8456,13 +6833,11 @@ tab-control-pages`_
  `tab-control-pages-setter`_
 
 Example
-       
 
 The following example creates a tab control that has two pages. The
 first page contains a button, and the second page contains a list.
 
 contain(make(<tab-control>,
-                           
 
 pages:
 
@@ -8485,10 +6860,8 @@ items:
 #(1, 2, 3)
 
 )))));
-      
 
-See also
-        
+   See also
 
 `<page>`_
 
@@ -8497,40 +6870,28 @@ tab-control-current-page
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the current visible page of the specified tab control.
 
-Signature
-         
-
-tab-control-current-page *tab-control* => *visible-page*
+   :signature: tab-control-current-page *tab-control* => *visible-page*
 
 Arguments
-         
 
 -  *tab-control* An instance of type `See
    <tab-control>`_.
 
 Values
-      
 
 -  *visible-page* An instance of type `<page>`_.
 
-Description
-           
+   :description:
 
 Returns the current visible page of *tab-control*.
 
 Example
-       
 
 The following example creates a tab control that has two pages.
 
 \*tab\* := contain
-                  
 
 (make
 
@@ -8557,16 +6918,13 @@ items:
 #(1, 2, 3)
 
 )))));
-      
 
 The current page of the tab control can be returned with the following
 code:
 
 tab-control-current-page(\*tab\*);
-                                  
 
-See also
-        
+   See also
 
 `<page>`_
 
@@ -8581,42 +6939,30 @@ tab-control-current-page-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the current visible page of the specified tab control.
 
-Signature
-         
-
-tab-control-current-page-setter *visible-page tab-control*
+   :signature: tab-control-current-page-setter *visible-page tab-control*
  => *visible-page*
 
 Arguments
-         
 
 -  *visible-page* An instance of type `<page>`_.
 -  *tab-control* An instance of type `See
    <tab-control>`_.
 
 Values
-      
 
 -  *visible-page* An instance of type `<page>`_.
 
-Description
-           
+   :description:
 
 Sets the current visible page of *tab-control*.
 
 Example
-       
 
 The following example creates a tab control that has two pages.
 
 \*tab\* := contain
-                  
 
 (make
 
@@ -8643,22 +6989,18 @@ items:
 #(1, 2, 3)
 
 )))));
-      
 
 Assign a variable to the current page of the tab control as follows:
 
 \*page\* := tab-control-current-page(\*tab\*);
-                                              
 
 Next, change the current page of the tab control by clicking on the tab
 for the hidden page. The, set the current page to be the original
 current page as follows:
 
 tab-control-current-page(\*tab\*) := \*page\*;
-                                              
 
-See also
-        
+   See also
 
 `<page>`_
 
@@ -8671,42 +7013,30 @@ tab-control-labels
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the tab labels of the specified pane.
 
-Signature
-         
-
-tab-control-labels *tab-control* => *labels*
+   :signature: tab-control-labels *tab-control* => *labels*
 
 Arguments
-         
 
 -  *tab-control* An instance of type `See
    <tab-control>`_.
 
 Values
-      
 
 -  *labels* An instance of type *limited(<sequence>, of: `See
    <label>`_*.
 
-Description
-           
+   :description:
 
 Returns the tab labels of *tab-control*, as a sequence. Each element in
 *labels* is an instance of `<label>`_.
 
 Example
-       
 
 Given the tab control created by the code below:
 
 \*tab\* := contain
-                  
 
 (make
 
@@ -8733,15 +7063,12 @@ label: "Fourth"),
 make(<tab-control-page>,
 
 label: "Fifth"))));
-                   
 
 You can return a list of the labels as follows:
 
 tab-control-labels(\*tab\*);
-                            
 
-See also
-        
+   See also
 
 *`<tab-control>`_*
 
@@ -8752,29 +7079,21 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class that represents a page in a tab control.
 
-Superclasses
-            
+   :superclasses:
 
 `<page>`_
 
 Init-keywords
-             
 
 None.
 
-Description
-           
+   :description:
 
 The class that represents a page in a tab control.
 
 A tab control page
-                  
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -8783,13 +7102,11 @@ A tab control page
 .. figure:: images/gadgets-42.png
    :align: center
    :alt: 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `<page>`_
 
@@ -8804,41 +7121,29 @@ tab-control-pages
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the tab pages of the specified pane.
 
-Signature
-         
-
-tab-control-pages *tab-control* => *pages*
+   :signature: tab-control-pages *tab-control* => *pages*
 
 Arguments
-         
 
 -  *tab-control* An instance of type `See
    <tab-control>`_.
 
 Values
-      
 
 -  *pages* An instance of type *limited(<sequence>, of: `See
    <page>`_)*. Default value: *#[]*.
 
-Description
-           
+   :description:
 
 Returns the tab pages of *pane*.
 
 Example
-       
 
 Given the tab control created by the code below:
 
 \*tab\* := contain
-                  
 
 (make
 
@@ -8865,15 +7170,12 @@ label: "Fourth"),
 make(<tab-control-page>,
 
 label: "Fifth"))));
-                   
 
 You can return a list of the pages as follows:
 
 tab-control-pages(\*tab\*);
-                           
 
-See also
-        
+   See also
 
 `<page>`_
 
@@ -8890,23 +7192,13 @@ tab-control-pages-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the tab pages of the specified tab control.
 
-Signature
-         
-
-tab-control-pages-setter *pages tab-control* #key *page*
-                                                        
+   :signature: tab-control-pages-setter *pages tab-control* #key *page*
 
 => *pages*
-          
 
 Arguments
-         
 
 -  *pages* An instance of type *limited(<sequence>, of: `See
    <page>`_)*.
@@ -8915,13 +7207,11 @@ Arguments
 -  *page* An instance of *`<page>`_*.
 
 Values
-      
 
 -  *pages* An instance of type *limited(<sequence>, of: `See
    <page>`_)*.
 
-Description
-           
+   :description:
 
 Sets the tab pages available to *tab-control*, optionally setting
 *page* to the default page to be displayed. The pages argument is an
@@ -8932,13 +7222,10 @@ contained in *pages*.
 The *tab-control-pages-setter* function is used as follows:
 
 tab-control-pages(my-tab-control, page: my-page)
-                                                
 
 := my-pages
-           
 
-See also
-        
+   See also
 
 `<page>`_
 
@@ -8951,30 +7238,23 @@ See also
 
 Sealed class
 ''''''''''''
-
-Summary
-       
-
 The class of columns in table controls.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
 
 Init-keywords
-             
 
 -  *heading:* An instance of type *<string>*.
--  *width:* An instance of type *<integer>*. Default value: 100.
+-  *width:* An instance of type ``<integer>``. Default value: 100.
 -  *alignment:* An instance of type *one-of(#"left", #"right",
    #"center")*. Default value: *#"left"*.
--  *generator:* An instance of type *<function>*.
+-  *generator:* An instance of type ``<function>``.
 -  *callback:* An instance of type *false-or(<function>)*. Default
-   value: *#f*.
+   value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of columns in table controls.
 
@@ -8990,16 +7270,13 @@ In addition, you can also specify a callback that can be used for
 sorting the items in the table column, using the *callback:*
 init-keyword.
 
-Operations
-          
+   :operations:
 
 None.
 
 Example
-       
 
-See also
-        
+   See also
 
 `<table-control>`_
 
@@ -9008,20 +7285,14 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of table controls.
 
-Superclasses
-            
+   :superclasses:
 
 `<collection-gadget>`_ `See
 <action-gadget>`_
 
 Init-keywords
-             
 
 -  *headings:* An instance of type *limited(<sequence>, of: <string>)*.
 -  *generators:* An instance of type *limited(<sequence>, of:
@@ -9031,27 +7302,22 @@ Init-keywords
    .
 -  *borders:* An instance of type *one-of(#f, #"none", #"flat",
    #"sunken", #"raised", #"ridge", #"groove", #"input", #"output")*.
-   Default value: *#f*.
+   Default value: ``#f``.
 -  *scroll-bars:* An instance of type *one-of(#f, #"none",
    #"horizontal", #"vertical", #"both", #"dynamic")*. Default value:
    *#"both"*.
 
 *popup-menu-callback:*
-                      
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
 *key-press-callback:*
-                     
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
 -  *widths:* An instance of type *limited(<sequence>, of: <integer>)*.
 
-Description
-           
+   :description:
 
 The class of table controls.
 
@@ -9098,7 +7364,6 @@ This is illustrated in `Defining column headings and contents in
 table controls`_.
 
 Defining column headings and contents in table controls
-                                                       
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -9119,16 +7384,14 @@ control. Note that there must be as many widths as there are columns.
 Internally, this class maps into the Windows list view control with
 LVS-REPORT style.
 
-Operations
-          
+   :operations:
 
 `add-column`_ `See
 remove-column`_ `See
 table-control-view`_ `See
 table-control-view-setter`_
 
-See also
-        
+   See also
 
 `<table-column>`_
 
@@ -9137,31 +7400,23 @@ See also
 <table-control-view>
 --------------------
 
-Type
+   :type:
 ''''
-
-Summary
-       
-
 The type of possible views for a table control
 
 Equivalent
-          
 
 one-of(#"table", #"small-icon", #"large-icon", #"list")
 
-Superclasses
-            
+   :superclasses:
 
 None.
 
 Init-keywords
-             
 
 -  None.
 
-Description
-           
+   :description:
 
 This type represents the acceptable values for the view arguments to
 operators of `<table-control>`_.
@@ -9185,8 +7440,7 @@ will be familiar to most users of GUI-based operating systems:
    displayed in the table control, additional details may include the
    author of the e-mail, its subject, and the date and time it was sent.
 
-See also
-        
+   See also
 
 `<list-control-view>`_
 
@@ -9199,38 +7453,27 @@ table-control-view
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the current view of the specified table control.
 
-Signature
-         
-
-table-control-view *table-control* => *view*
+   :signature: table-control-view *table-control* => *view*
 
 Arguments
-         
 
 -  *table-control* An instance of type `See
    <table-control>`_.
 
 Values
-      
 
 -  *view* An instance of type `See
    <table-control-view>`_.
 
-Description
-           
+   :description:
 
 Returns the current view of *table-control*. The available views are
 described in the entry for `See
 <table-control-view>`_.
 
-See also
-        
+   See also
 
 `<table-control-view>`_
 
@@ -9241,19 +7484,11 @@ table-control-view-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the current view of the specified table control.
 
-Signature
-         
-
-table-control-view-setter *view table-control* => *view*
+   :signature: table-control-view-setter *view table-control* => *view*
 
 Arguments
-         
 
 -  *view* An instance of type `See
    <table-control-view>`_.
@@ -9261,21 +7496,18 @@ Arguments
    <table-control>`_.
 
 Values
-      
 
 -  *view* An instance of type `See
    <table-control-view>`_.
 
-Description
-           
+   :description:
 
 Sets the current view of *table-control*.
 
 The *view* argument is used to specify the way in which the items in the
 table control are displayed.
 
-See also
-        
+   See also
 
 `<table-control-view>`_
 
@@ -9286,37 +7518,28 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class that represents an item in a table control.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
 
 Init-keywords
-             
 
--  *object:* An instance of type *<object>*.
+-  *object:* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 The class that represents an item in a table control.
 
 The *object:* init-keyword describes the object that an instance of
 table item represents.
 
-Operations
-          
+   :operations:
 
 -  None.
 
-See also
-        
+   See also
 
 `add-item`_
 
@@ -9333,30 +7556,23 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of multiple line text editors.
 
-Superclasses
-            
+   :superclasses:
 
 *`<text-field>`_*
 
 Init-keywords
-             
 
 -  *columns:* An instance of type *false-or(<integer>)*. Default value:
-   *#f*.
+   ``#f``.
 -  *lines:* An instance of type *false-or(<integer>)*. Default value:
-   *#f*.
+   ``#f``.
 -  *scroll-bars:* An instance of type *one-of(#f, #"none",
    #"horizontal", #"vertical", #"both", #"dynamic")*. Default value:
    *#"both"*.
 
-Description
-           
+   :description:
 
 The class of multiple line text editors.
 
@@ -9372,30 +7588,24 @@ scroll bars or not.
 Internally, this class maps into the multi-line edit control Windows
 control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Examples
-        
 
 To constrain the number of lines and columns when an editor is first
 displayed:
 
 \*editor\* := contain(make(<text-editor>,
-                                         
 
 lines: 20, columns: 80));
-                         
 
 To make a text editor that is fixed at 10 lines high:
 
 make(<text-editor>, lines: 10, fixed-height?: #t);
-                                                  
 
-See also
-        
+   See also
 
 *`<text-field>`_*
 
@@ -9404,29 +7614,22 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of single line text fields.
 
-Superclasses
-            
+   :superclasses:
 
 *`<text-gadget>`_*
 
 Init-keywords
-             
 
 -  *x-alignment:* An instance of type *one-of(#"left", #"right",
    #"center")*. Default value: *#"left"*.
 -  *case:* An instance of type *one-of(#f, #"lower", #"upper")*.
-   Default value: *#f*.
--  *auto-scroll?:* An instance of type *<boolean>*. Default value: *#f*
+   Default value: ``#f``.
+-  *auto-scroll?:* An instance of type ``<boolean>``. Default value: ``#f``
    .
 
-Description
-           
+   :description:
 
 The class of single line text fields.
 
@@ -9447,24 +7650,20 @@ itself.
 Internally, this class maps into the single-line edit control Windows
 control.
 
-Operations
-          
+   :operations:
 
 -  None.
 
 Example
-       
 
 To make a text field with a fixed width:
 
 make(<text-field>, width: 200, fixed-width?: #t);
-                                                 
 
 The following example creates a text field which, after pressing Return,
 invokes a callback that displays the gadget value in a dialog box.
 
 \*text\* := contain
-                   
 
 (make(<text-field>,
 
@@ -9481,10 +7680,8 @@ notify-user
 gadget-value(gadget)),
 
 owner: gadget) end));
-                     
 
-See also
-        
+   See also
 
 *`<password-field>`_*
 
@@ -9493,33 +7690,24 @@ See also
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The class of all text gadgets.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-gadget>`_ `See
 <action-gadget>`_*
 
 Init-keywords
-             
 
 -  *text:* An instance of type *<string>*. Default value: *""*.
 -  *value-type:* An instance of type *<type>*. Default value:
    *<string>*.
 
 *value-changing-callback:*
-                          
 
 An instance of type *false-or(<function>)*.
-                                            
 
-Description
-           
+   :description:
 
 The class of all text gadgets. You should not create a direct instance
 of this class.
@@ -9545,7 +7733,7 @@ characters that are not appropriate to the `See
 gadget-value-type`_ (for example, if the string
 contains any non-integers, and the `See
 gadget-value-type`_ is *<integer>*), then `See
-gadget-value`_ returns *#f*.
+gadget-value`_ returns ``#f``.
 
 Setting the gadget value "prints" the value and inserts the appropriate
 text into the text field.
@@ -9563,22 +7751,17 @@ the RETURN key).
 The action required to "commit" a text change is defined by the back-end
 for the platform that you are writing for, and is not configurable.
 
-Operations
-          
+   :operations:
 
 -  `gadget-text`_
 
 Example
-       
 
 contain(make(<text-field>, value-type: <integer>
-                                                
 
 text: "1234"));
-               
 
-See also
-        
+   See also
 
 `<combo-box>`_
 
@@ -9595,29 +7778,20 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of tool bars.
 
-Superclasses
-            
+   :superclasses:
 
 *`<gadget>`_ `See
 <multiple-child-composite-pane> <layouts.htm#45992>`_*
 
 Init-keywords
-             
 
 *update-callback:*
-                  
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 The class of tool bars. A tool bar is a gadget that contains, as
 children, a number of buttons that give the user quick access to the
@@ -9626,7 +7800,6 @@ button is an icon that pictorially represents the operation that
 clicking the button performs.
 
 A tool bar
-          
 
 .. figure:: images/gadgets-2.png
    :align: center
@@ -9643,13 +7816,11 @@ window inside the application.
 
 Internally, this class maps into the Windows toolbar control.
 
-Operations
-          
+   :operations:
 
 -  ` <frames.htm#88622>`_ ` <frames.htm#56600>`_
 
-See also
-        
+   See also
 
 *`<button-box>`_*
 
@@ -9660,60 +7831,45 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of tree controls.
 
-Superclasses
-            
+   :superclasses:
 
 `<collection-gadget>`_
 
 Init-keywords
-             
 
 *children-generator:*
-                     
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
 *children-predicate:*
-                     
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
--  *icon-function:* An instance of type *<function>*.
--  *show-edges?:* An instance of type *<boolean>*. Default value: *#t*
+-  *icon-function:* An instance of type ``<function>``.
+-  *show-edges?:* An instance of type ``<boolean>``. Default value: ``#t``
    .
--  *show-root-edges?:* An instance of type *<boolean>*. Default value:
-   *#t*.
--  *show-buttons?:* An instance of type *<boolean>*. Default value:
-   *#t*.
--  *initial-depth:* An instance of type *<integer>*. Default value: 0.
+-  *show-root-edges?:* An instance of type ``<boolean>``. Default value:
+   ``#t``.
+-  *show-buttons?:* An instance of type ``<boolean>``. Default value:
+   ``#t``.
+-  *initial-depth:* An instance of type ``<integer>``. Default value: 0.
 -  *scroll-bars:* An instance of type *one-of(#f, #"none",
    #"horizontal", #"vertical", #"both", #"dynamic")*. Default value:
    *#"both"*.
 
 *popup-menu-callback:*
-                      
 
-An instance of type *<function>*.
-                                  
+An instance of type ``<function>``.
 
 *key-press-callback:*
-                     
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
 -  *roots:* An instance of type *<sequence>*. Default value: *#[]*.
 
-Description
-           
+   :description:
 
 The class of tree controls.
 
@@ -9765,8 +7921,7 @@ control. It is a sequence.
 
 Internally, this class maps into the Windows tree view control.
 
-Operations
-          
+   :operations:
 
 `contract-node`_ `See
 expand-node`_ `See
@@ -9778,10 +7933,8 @@ tree-control-roots`_ `See
 tree-control-roots-setter`_
 
 Example
-       
 
 make(<tree-control>,
-                    
 
 roots: #[1],
 
@@ -9798,10 +7951,8 @@ odd?(item) => $odd-icon;
 even?(item) => $even-icon;
 
 end);
-     
 
-See also
-        
+   See also
 
 *`add-node`_*
 
@@ -9816,36 +7967,25 @@ tree-control-children-predicate
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the children predicate function of the specified tree control.
 
-Signature
-         
-
-tree-control-children-predicate *tree-control*
+   :signature: tree-control-children-predicate *tree-control*
  => *children-predicate*
 
 Arguments
-         
 
 -  *tree-control* An instance of type `See
    <tree-control>`_.
 
 Values
-      
 
--  *children-predicate* An instance of type *<function>*.
+-  *children-predicate* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Returns the children predicate function of *tree-control*.
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -9858,38 +7998,27 @@ tree-control-children-predicate-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the children predicate function of the specified tree control.
 
-Signature
-         
-
-tree-control-children-predicate-setter
+   :signature: tree-control-children-predicate-setter
  *children-predicate tree-control*
  => *children-predicate*
 
 Arguments
-         
 
--  *children-predicate* An instance of type *<function>*.
+-  *children-predicate* An instance of type ``<function>``.
 -  *tree-control* An instance of type `See
    <tree-control>`_.
 
 Values
-      
 
--  *children-predicate* An instance of type *<function>*.
+-  *children-predicate* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Sets the children predicate function of *tree-control*.
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -9902,39 +8031,28 @@ tree-control-children-generator
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the function that generates the children of the specified tree
 control.
 
-Signature
-         
-
-tree-control-children-generator *tree-control*
+   :signature: tree-control-children-generator *tree-control*
  => *children-generator*
 
 Arguments
-         
 
 -  *tree-control* An instance of type `See
    <tree-control>`_.
 
 Values
-      
 
--  *children-generator* An instance of type *<function>*.
+-  *children-generator* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Returns the function that generates the children of *tree-control*.
 This is the function that is used to generate the children below the
 root of *tree-control*.
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -9947,41 +8065,30 @@ tree-control-children-generator-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the function that generates the children of the specified tree
 control.
 
-Signature
-         
-
-tree-control-children-generator-setter
+   :signature: tree-control-children-generator-setter
  *children-generator tree-control
 * => *children-generator*
 
 Arguments
-         
 
--  *children-generator* An instance of type *<function>*.
+-  *children-generator* An instance of type ``<function>``.
 -  *tree-control* An instance of type `See
    <tree-control>`_.
 
 Values
-      
 
--  *children-generator* An instance of type *<function>*.
+-  *children-generator* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Sets the function that generates the children of *tree-control*. This
 is the function that is used to generate the children below the root of
 *tree-control*.
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -9994,30 +8101,20 @@ tree-control-icon-function
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the icon function for the specified list control.
 
-Signature
-         
-
-tree-control-icon-function *tree-control* => *icon-function*
+   :signature: tree-control-icon-function *tree-control* => *icon-function*
 
 Arguments
-         
 
 -  *tree-control* An instance of `See
    <tree-control>`_.
 
 Values
-      
 
--  *icon-function* An instance of type *<function>*.
+-  *icon-function* An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
 Returns the icon function for *tree-control*. This function lets you
 specify which icon to display for each item in the control. The function
@@ -10031,8 +8128,7 @@ return the appropriate icon for each registered file type.
 Note that, unlike list controls, the icon function for a tree control
 cannot be changed once the list control has been created.
 
-See also
-        
+   See also
 
 *`list-control-icon-function`_*
 
@@ -10043,30 +8139,20 @@ tree-control-initial-depth
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the initial depth of the specified tree control.
 
-Signature
-         
-
-tree-control-initial-depth *tree-control* => *initial-depth*
+   :signature: tree-control-initial-depth *tree-control* => *initial-depth*
 
 Arguments
-         
 
 -  *tree-control* An instance of type `See
    <tree-control>`_.
 
 Values
-      
 
--  *initial-depth* An instance of type *<integer>*.
+-  *initial-depth* An instance of type ``<integer>``.
 
-Description
-           
+   :description:
 
 Returns the initial depth of *tree-control*. This is the number of
 levels of outline that are visible in the tree control when it is first
@@ -10075,8 +8161,7 @@ outline is displayed initially. A return value of 1 indicates that
 outline is expanded to a depth of one (that is, any direct subnodes of
 the top level are displayed, but no others).
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -10087,32 +8172,22 @@ tree-control-initial-depth-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the initial depth of the specified tree control.
 
-Signature
-         
-
-tree-control-inital-depth *initial-depth* *tree-control* =>
+   :signature: tree-control-inital-depth *initial-depth* *tree-control* =>
 *initial-depth*
 
 Arguments
-         
 
--  *initial-depth* An instance of type *<integer>*.
+-  *initial-depth* An instance of type ``<integer>``.
 -  *tree-control* An instance of type `See
    <tree-control>`_.
 
 Values
-      
 
--  *initial-depth* An instance of type *<integer>*.
+-  *initial-depth* An instance of type ``<integer>``.
 
-Description
-           
+   :description:
 
 Sets the initial depth of *tree-control*. This is the number of levels
 of outline that are visible in the tree control when it is first
@@ -10121,8 +8196,7 @@ outline is displayed initially. A return value of 1 indicates that
 outline is expanded to a depth of one (that is, any direct subnodes of
 the top level are displayed, but no others).
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -10133,39 +8207,27 @@ tree-control-roots
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the roots of the specified tree control.
 
-Signature
-         
-
-tree-control-roots *tree* => *roots*
+   :signature: tree-control-roots *tree* => *roots*
 
 Arguments
-         
 
 -  *tree* An instance of type `<tree-control>`_.
 
 Values
-      
 
 -  *roots* An instance of type *<sequence>*.
 
-Description
-           
+   :description:
 
 Returns the roots of *tree*.
 
 Example
-       
 
 Create a tree control as follows:
 
 \*tree\* := contain(make(<tree-control>,
-                                        
 
 roots: #(1, 2, 3),
 
@@ -10176,15 +8238,12 @@ method (x)
 vector(x, x + 1)
 
 end));
-      
 
 You can return the roots of this tree control as follows:
 
 tree-control-roots(\*tree\*);
-                             
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -10195,19 +8254,11 @@ tree-control-roots-setter
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Sets the roots of the specified tree control.
 
-Signature
-         
-
-tree-control-roots-setter *roots tree* #key *frame-manager* => *roots*
+   :signature: tree-control-roots-setter *roots tree* #key *frame-manager* => *roots*
 
 Arguments
-         
 
 -  *roots* An instance of type *<sequence>*.
 -  *tree* An instance of type `<tree-control>`_.
@@ -10215,22 +8266,18 @@ Arguments
    <frame-manager> <silica.htm#32466>`_.
 
 Values
-      
 
 -  *roots* An instance of type *<sequence>*.
 
-Description
-           
+   :description:
 
 Sets the roots of *tree*.
 
 Example
-       
 
 Create a tree control without specifying any roots as follows:
 
 \*tree\* := contain(make(<tree-control>,
-                                        
 
 children-generator:
 
@@ -10239,17 +8286,14 @@ method (x)
 vector(x, x + 1)
 
 end));
-      
 
 You can set the roots of this tree control as follows:
 
 tree-control-roots(\*tree\*) := #(1, 2, 3);
-                                           
 
 The tree control is updated on the screen to reflect this change.
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -10260,27 +8304,20 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of nodes in tree controls.
 
-Superclasses
-            
+   :superclasses:
 
 *<object>*
 
 Init-keywords
-             
 
 -  *parent-nodes:* An instance of type *<sequence>*.
 -  *child-nodes:* An instance of type *<sequence>*.
--  *generation:* An instance of type *<integer>*. Default value: 0.
--  *object:* An instance of type *<object>*.
+-  *generation:* An instance of type ``<integer>``. Default value: 0.
+-  *object:* An instance of type ``<object>``.
 
-Description
-           
+   :description:
 
 The class of nodes in tree controls. A tree node represents an object,
 and is displayed as a text label accompanied by an icon. Tree nodes are
@@ -10300,8 +8337,7 @@ The *object:* init-keyword specifies the object that is represented by
 the tree node. For example, in the case of a file manager application,
 this might be a directory on disk.
 
-Operations
-          
+   :operations:
 
 `contract-node`_ `See
 expand-node`_ `See
@@ -10309,8 +8345,7 @@ node-children`_ `See
 node-expanded?`_ `See
 node-parents`_
 
-See also
-        
+   See also
 
 *`<tree-control>`_*
 
@@ -10319,29 +8354,16 @@ update-gadget
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Forces the specified gadget to be redrawn.
 
-Signature
-         
-
-update-gadget *gadget* => ()
+   :signature: update-gadget *gadget* => ()
 
 Arguments
-         
 
 -  *gadget* An instance of type `<gadget>`_.
 
-Values
-      
 
-None
-
-Description
-           
+   :description:
 
 Forces *gadget* to be redrawn. This can be useful if a number of changes
 have been made which have not been reflected in the gadget automatically
@@ -10352,30 +8374,21 @@ have been made which have not been reflected in the gadget automatically
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The class of gadgets that can have values.
 
-Superclasses
-            
+   :superclasses:
 
 `<gadget>`_
 
 Init-keywords
-             
 
--  *value:* An instance of type *<object>*.
+-  *value:* An instance of type ``<object>``.
 
 *value-changed-callback:*
-                         
 
 An instance of type *false-or(` <frames.htm#40934>`_, <function>)*.
-                                                                    
 
-Description
-           
+   :description:
 
 The class of gadgets that can take values.
 
@@ -10388,8 +8401,7 @@ invoked when the gadget value has changed, such as when a scroll bar
 slug has come to rest after being dragged, or when the changes to text
 in a text field have been committed by pressing the RETURN key.
 
-Operations
-          
+   :operations:
 
 `gadget-value`_ `See
 gadget-value-changed-callback`_ `See
@@ -10398,10 +8410,8 @@ gadget-value-setter`_ `See
 gadget-value-type`_
 
 Example
-       
 
-See also
-        
+   See also
 
 *`gadget-value`_*
 
@@ -10412,25 +8422,18 @@ See also
 
 Open abstract class
 '''''''''''''''''''
-
-Summary
-       
-
 The class of all value gadgets with ranges.
 
-Superclasses
-            
+   :superclasses:
 
 *`<value-gadget>`_*
 
 Init-keywords
-             
 
 -  *value-range:* An instance of type *<range>*. Default value:
    *range(from: 0, to: 100)*.
 
-Description
-           
+   :description:
 
 The class of all value gadgets with ranges. You should not create a
 direct instance of this class.
@@ -10443,25 +8446,20 @@ might want to use a value range of 0-100, to indicate percentage done
 server, however, you may want to use a range equal to the number of
 messages being downloaded.
 
-Operations
-          
+   :operations:
 
 `gadget-value-range`_ `See
 gadget-value-range-setter`_
 
 Example
-       
 
 contain(make(<slider>,
-                      
 
 value-range:
 
 range(from: -20, to: 20, by: 5)));
-                                  
 
-See also
-        
+   See also
 
 `<progress-bar>`_
 
@@ -10476,37 +8474,26 @@ See also
 
 Open abstract instantiable class
 ''''''''''''''''''''''''''''''''
-
-Summary
-       
-
 The class of viewports.
 
-Superclasses
-            
+   :superclasses:
 
 `<gadget>`_ `See
 <single-child-composite-pane> <layouts.htm#47412>`_
 
 Init-keywords
-             
 
 *horizontal-scroll-bar:*
-                        
 
 An instance of type *false-or(`<scroll-bar>`_)*
-. Default value: *#f*.
-                                                                                               
+. Default value: ``#f``.
 
 *vertical-scroll-bar:*
-                      
 
 An instance of type *false-or(`<scroll-bar>`_)*
-. Default value: *#f*.
-                                                                                               
+. Default value: ``#f``.
 
-Description
-           
+   :description:
 
 The class of viewports. A viewport is a sheet "through" which other
 sheets are visible; they are used to implement a clipping region for
@@ -10531,13 +8518,11 @@ common:
    need to scroll with the document. Note that you may also choose to
    implement this kind of functionality using a table control.
 
-Operations
-          
+   :operations:
 
 -  `viewport-region`_
 
-See also
-        
+   See also
 
 *`sheet-viewport`_*
 
@@ -10552,42 +8537,29 @@ viewport?
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns true if the specified object is a viewport.
 
-Signature
-         
-
-viewport? *object* => *viewport?*
+   :signature: viewport? *object* => *viewport?*
 
 Arguments
-         
 
--  *object* An instance of type *<object>*.
+-  *object* An instance of type ``<object>``.
 
 Values
-      
 
--  *viewport?* An instance of type *<boolean>*.
+-  *viewport?* An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
 Returns true if *object* is a viewport.
 
 Example
-       
 
 To test whether the gadget *\*gadget\** is a viewport:
 
 viewport?(\*gadget\*);
-                      
 
-See also
-        
+   See also
 
 `<viewport>`_
 
@@ -10600,42 +8572,29 @@ viewport-region
 
 Generic function
 ''''''''''''''''
-
-Summary
-       
-
 Returns the region for the specified viewport.
 
-Signature
-         
-
-viewport-region *viewport* => *region*
+   :signature: viewport-region *viewport* => *region*
 
 Arguments
-         
 
 -  *viewport* An instance of type `<viewport>`_.
 
 Values
-      
 
--  *region* An instance of type *<region>*.
+-  *region* An instance of type :class:`<region>`.
 
-Description
-           
+   :description:
 
 Returns the region for *viewport*.
 
 Example
-       
 
 To return the region for a viewport *\*viewer\** :
 
 viewport-region(\*viewer\*);
-                            
 
-See also
-        
+   See also
 
 `<viewport>`_
 
@@ -10644,30 +8603,22 @@ with-border
 
 Statement macro
 '''''''''''''''
-
-Summary
-       
-
 Creates the specified sheet and places a border around it.
 
 Macro call
-          
 
 with-border ([*options* ]) {*pane* } end
 
 Arguments
-         
 
 -  *options* Dylan arguments*bnf*.
 -  *pane* A Dylan expressionbnf.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Creates *pane* with a border around it, taking into account any of the
 specified *options*.
@@ -10680,20 +8631,16 @@ The pane is an expression whose return value is the sheet around which a
 border should be placed.
 
 Example
-       
 
 To create a button in a border:
 
 contain(with-border (type: #"raised")
-                                     
 
 make(<button>,
 
 label: "Hello") end);
-                     
 
-See also
-        
+   See also
 
 *`<border>`_*
 
@@ -10706,30 +8653,22 @@ with-spacing
 
 Statement macro
 '''''''''''''''
-
-Summary
-       
-
 Creates the specified sheet and places spacing around it.
 
 Macro call
-          
 
 with-spacing ([*options* ]) {*pane* } end
 
 Arguments
-         
 
 -  *options* Dylan arguments*bnf*.
 -  *pane* A Dylan expression*bnf*.
 
 Values
-      
 
 -  None.
 
-Description
-           
+   :description:
 
 Creates *pane* with spacing around it, taking into account any of the
 specified *options*.
@@ -10742,10 +8681,8 @@ The pane is an expression whose return value is the sheet around which
 spacing should be placed.
 
 Example
-       
 
 contain(with-spacing (thickness: 10)
-                                    
 
 (vertically () make(<button>,
 
@@ -10758,10 +8695,8 @@ label: "World")
 end)
 
 end);
-     
 
-See also
-        
+   See also
 
 *`<null-pane> <layouts.htm#65339>`_*
 

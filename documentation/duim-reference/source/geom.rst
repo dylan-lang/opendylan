@@ -2,6 +2,9 @@
 DUIM-Geometry Library
 *********************
 
+.. current-library:: duim-geometry
+.. current-module:: duim-geometry
+
 Overview
 ========
 
@@ -22,7 +25,7 @@ direct subclasses.
 
 -  ``<transform>`` The superclass of all transforms. A transform describes
    the mapping of one set of points onto another. There are one or more
-   subclasses of `<transform>`_ that implement
+   subclasses of :class:`<transform>` that implement
    transforms. These subclasses have implementation-dependent names
    which are explicitly unspecified. All of the instantiable
    transformation classes provided by DUIM are immutable.
@@ -41,11 +44,10 @@ DUIM-Extended-Geometry library exposes some subclasses of *<area>* and
 *<path>*.
 
 The <region> class and its subclasses
-                                     
 
 .. figure:: images/geom-2.png
    :align: center
-   :alt: 
+
 <region>
 
 <region-set>
@@ -58,8 +60,8 @@ The <region> class and its subclasses
 
 <bounding-box>
 
--  *<region>* This class is used to represent any set of points.
-   The*<region>* class includes both bounded regions (that is, regions
+-  :class:`<region>` This class is used to represent any set of points.
+   The:class:`<region>` class includes both bounded regions (that is, regions
    whose edges are known) and unbounded regions (that is, regions with
    no known edges).
 -  *<region-set>* This class represents a region set, that is, a set of
@@ -83,11 +85,10 @@ errors shown are subclasses of the *<error>* class. Note that the
 subclasses of *<transform-error>* are all specific to particular errors.
 
 The <transform-error> class and its subclasses
-                                              
 
 .. figure:: images/geom-2.png
    :align: center
-   :alt: 
+
 <transform-error>
 
 <transform-underspecified>
@@ -97,32 +98,24 @@ The <transform-error> class and its subclasses
 <singular-transform>
 
 *<transform-error>*
-                   
 
 The superclass of all error conditions signalled when there is an error
 with a transform.
-                                                                                         
 
 *<transform-underspecified>*
-                            
 
 The error that is signalled when *make-3-point-transform* is given three
 colinear image points.
-                                                                                               
 
-*<reflection-<underspecified>*
-                              
+*<reflection-underspecified>*
 
 The error that is signalled when *make-reflection-transform* is given
 two coincident points.
-                                                                                            
 
 *<singular-transform>*
-                      
 
 The error that is signalled when *invert-transform* is called on a
 singular transform, that is, a transform that has no inverse.
-                                                                                                                                
 
 DUIM-Geometry Module
 ====================
@@ -130,1498 +123,881 @@ DUIM-Geometry Module
 This section contains a complete reference of all the interfaces that
 are exported from the *duim-geometry* module.
 
-=
-~
+.. method:: =
+   :specializer: <region>
 
-G.f. method
-'''''''''''
+   Tests if its arguments are equal.
 
-Summary
-       
+   :signature: = *region1 region2* => *boolean*
 
-Tests if its arguments are equal*.*
+   :parameter region1: An instance of type :class:`<region>`.
+   :parameter region2: An instance of type :class:`<region>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Signature
-         
+   :description:
 
-= *region1 region2* => *boolean*
+     Tests if its arguments are equal. Returns ``#t`` if the two regions
+     are the same, otherwise returns ``#f``. Two regions are considered
+     equal if they contain exactly the same set of points.
 
-= *transform1 transform2* => *boolean*
+.. method:: =
+   :specializer: <transform>
 
-Arguments
-         
+   Tests if its arguments are equal.
 
--  *region1* An instance of type *<region>*.
--  *region2* An instance of type *<region>*.
--  *transform1* An instance of type `<transform>`_.
--  *transform2* An instance of type `<transform>`_.
+   :signature: = *transform1 transform2* => *boolean*
 
-Values
-      
+   :parameter transform1: An instance of type :class:`<transform>`.
+   :parameter transform2: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
--  *boolean* An instance of type *<boolean>*.
+   :description:
 
-Description
-           
+     Tests if its arguments are equal. Returns ``#t`` if the two
+     transforms are the same, otherwise returns ``#f``. Two transforms
+     are considered equal if they transform every region the same way.
 
-Tests if its arguments are equal*.* Returns *#t* if the two regions or
-transforms are the same, otherwise returns *#f*. Two regions are
-considered equal if they contain exactly the same set of points. Two
-transforms are considered equal if they transform every region the same
-way.
+.. class:: <area>
+   :open:
+   :abstract:
 
-<area>
-------
+   The class ``<area>`` denotes bounded regions that have dimensionality
+   2 (that is, have area).
 
-Open abstract class
-'''''''''''''''''''
+   :superclasses: :class:`<region>`
 
-Summary
-       
+   :description:
 
-The class *<area>* denotes bounded regions that have dimensionality 2
-(that is, have area).
+     The class ``<area>`` denotes bounded regions that have
+     dimensionality 2 (that is, have area). ``<area>`` is a subclass of
+     :class:`<region>`.
 
-Superclasses
-            
+     Note that constructing an area object with no area (such as calling
+     :func:`make-rectangle` with two coincident points, for example) may
+     canonicalize it to :const:`$nowhere`.
 
-*<region>*
+   :operations:
 
-Init-keywords
-             
+     The following operation is exported from the *DUIM-Geometry* module.
 
-None.
+     - :gf:`area?`
 
-Description
-           
+   See also
 
-The class *<area>* denotes bounded regions that have dimensionality 2
-(that is, have area).*<area>* is a subclass of *<region>*.
+   - :gf:`area?`
 
-Note that constructing an area object with no area (such as calling
-*make-rectangle* with two coincident points, for example) may
-canonicalize it to *$nowhere*.
+.. generic-function:: area?
 
-Operations
-          
+   Returns ``#t`` if its argument is an area, otherwise returns ``#f``.
 
-The following operation is exported from the *DUIM-Geometry* module.
+   :signature: area? *object* => *boolean*
 
--  `area?`_
+   :parameter object: An instance of type ``<object>``.
+   :value boolean: An instance of type ``<boolean>``.
 
-See also
-        
+   :description:
 
-`area?`_
+     Returns ``#t`` if *object* is an area, otherwise returns ``#f``.
 
-area?
------
+   See also
 
-Generic function
-''''''''''''''''
+   - :class:`<area>`
 
-Summary
-       
+.. class:: <bounding-box>
+   :open:
+   :abstract:
+   :instantiable:
 
-Returns *#t* if its argument** is an area, otherwise returns *#f*.
+   The class that represents a bounding box.
 
-Signature
-         
+   :superclasses: :class:`<region>`
 
-*area?* *object* => *boolean*
+   :keyword left: An instance of type ``<integer>``.
+   :keyword top: An instance of type ``<integer>``.
+   :keyword right: An instance of type ``<integer>``.
+   :keyword bottom: An instance of type ``<integer>``.
 
-Arguments
-         
+   :description:
 
--  *object* An instance of type *<object>*.
+     A bounding box is an axis aligned rectangle that contains some
+     region. The representation of bounding boxes in DUIM is chosen to
+     be efficient. This representation is not sufficient to represent
+     the result of arbitrary transformations (such as rotations) of
+     bounding boxes. The most general class of transformations that is
+     guaranteed to transform a box into another box is the class of
+     transformations that satisfy :gf:`rectilinear-transformation?`.
 
-Values
-      
+     Bounding boxes are immutable, but since they reflect the live state
+     of such mutable objects as sheets, bounding boxes are volatile.
+     Therefore, programmers must not depend on the bounding box
+     associated with a mutable object remaining constant.
 
--  *boolean* An instance of type *<boolean>*.
+   :operations:
 
-Description
-           
+     The following operations are exported from the *DUIM-Geometry* module.
 
-Returns *#t* if *object* is an area, otherwise returns *#f*
+     - :gf:`bounding-box?`
+     - :gf:`box-edges`
+     - :gf:`region-contains-position?`
+     - :gf:`region-contains-region?`
+     - :gf:`region-difference`
+     - :gf:`region-empty?`
+     - :gf:`region-intersection`
+     - :gf:`region-intersects-region?`
+     - :gf:`region-union`
+     - :gf:`set-box-edges`
+     - :gf:`set-box-position`
+     - :gf:`set-box-size`
+     - :gf:`transform-region`
+     - :gf:`untransform-region`
 
-See also
-        
+   See also
 
-`<area>`_
+   - :gf:`bounding-box?`
+   - :gf:`bounding-box`
+   - :gf:`box-edges`
 
-<bounding-box>
---------------
+.. generic-function:: bounding-box?
 
-Open abstract instantiable class
-''''''''''''''''''''''''''''''''
+   Returns true if its argument is a bounding box.
 
-Summary
-       
+   :signature: bounding-box? *object* => *boolean*
 
-The class that represents a bounding box.
+   :parameter object: An instance of type ``<object>``.
+   :value boolean: An instance of type ``<boolean>``.
 
-Superclasses
-            
+   :description:
 
-*<region>*
+     Returns ``#t`` if *object* is a bounding box (that is, supports the
+     bounding box protocol), otherwise returns ``#f``.
 
-Init-keywords
-             
+   See also
 
--  *left:* An instance of type *<integer>*.
--  *top:* An instance of type *<integer>*.
--  *right:* An instance of type *<integer>*.
--  *bottom:* An instance of type *<integer>*.
+   - :class:`<bounding-box>`
+   - :gf:`bounding-box`
+   - :gf:`box-edges`
 
-Description
-           
+.. generic-function:: bounding-box
 
-A bounding box is an axis aligned rectangle that contains some region.
-The representation of bounding boxes in DUIM is chosen to be efficient.
-This representation is not sufficient to represent the result of
-arbitrary transformations (such as rotations) of bounding boxes. The
-most general class of transformations that is guaranteed to transform a
-box into another box is the class of transformations that satisfy
-*rectilinear-transformation?*.
+   Returns the bounding box of a region.
 
-Bounding boxes are immutable, but since they reflect the live state of
-such mutable objects as sheets, bounding boxes are volatile. Therefore,
-programmers must not depend on the bounding box associated with a
-mutable object remaining constant.
+   :signature: bounding-box *region* *#key* *into* => *box*
 
-Operations
-          
+   :parameter region: An instance of type :class:`<region>`.
+   :parameter into: An instance of type ``false-or(<bounding-box>)``.
+   :value box: An instance of type :class:`<bounding-box>`.
 
-The following operations are exported from the *DUIM-Geometry* module.
+   :description:
 
-`bounding-box?`_ `box-edges`_
-`region-contains-position?`_ `See
-region-contains-region?`_ `See
-region-difference`_ `See
-region-empty?`_ `See
-region-intersection`_ `See
-region-intersects-region?`_ `See
-region-union`_ `set-box-edges`_
-`set-box-position`_ `See
-set-box-size`_ `transform-region`_
-`untransform-region`_
+     The argument *region* must be either a bounded region (such as a
+     line or an ellipse) or some other object that obeys the bounding
+     box protocol, such as a sheet.
 
-See also
-        
+     This function often returns an existing object, so you should not
+     modify the returned result.
 
-`bounding-box?`_
+     If *into* is supplied, it is a bounding box that might be
+     destructively modified to contain the result.
 
-`bounding-box`_
+   See also
 
-`box-edges`_
+   - :class:`<bounding-box>`
+   - :gf:`bounding-box?`
+   - :gf:`box-edges`
 
-bounding-box?
--------------
+.. function:: box-bottom
 
-Generic function
-''''''''''''''''
+   Returns the *y* coordinate of the bottom right corner of the bounding
+   box of a region.
 
-Summary
-       
+   :signature: box-bottom *region* => *bottom*
 
-Returns true** if its argument is a bounding box*.*
+   :parameter region: An instance of type :class:`<region>`.
+   :value bottom: An instance of type ``<integer>``.
 
-Signature
-         
+   :description:
 
-*bounding-box?* *object* => *boolean*
+     Returns the *y* coordinate of the bottom right corner of the
+     bounding box of *region*. The argument *region* must be either a
+     bounded region or some other object that obeys the bounding box
+     protocol.
 
-Arguments
-         
+   See also
 
--  *object* An instance of type *<object>*.
+   - :func:`box-left`
+   - :func:`box-right`
+   - :func:`box-top`
 
-Values
-      
+.. generic-function:: box-edges
 
--  *boolean* An instance of type *<boolean>*.
+   Returns the bounding box of a region.
 
-Description
-           
+   :signature: box-edges *region* => *left* *top* *right* *bottom*
 
-Returns *#t* if *object* is a bounding box (that is, supports the
-bounding box protocol), otherwise returns *#f.*
+   :parameter region: An instance of type :class:`<region>`.
+   :value left: An instance of type ``<integer>``.
+   :value top: An instance of type ``<integer>``.
+   :value right: An instance of type ``<integer>``.
+   :value bottom: An instance of type ``<integer>``.
 
-See also
-        
+   :description:
 
-`<bounding-box>`_
+     Returns the bounding box of *region* as four integers specifying
+     the *x* and *y* coordinates of the top left point and the *x* and
+     *y* coordinates of the bottom right point of the box
 
-`bounding-box`_
+     The argument *region* must be either a bounded region (such as a
+     line or an ellipse) or some other object that obeys the bounding
+     box protocol, such as a sheet.
 
-`box-edges`_
+     The four returned values *left, top, right*, and *bottom* will
+     satisfy the inequalities::
 
-bounding-box
-------------
+       *left* <= *right*
+       *top* <= *bottom*
 
-Generic function
-''''''''''''''''
+   See also
 
-Summary
-       
+   - :class:`<bounding-box>`
+   - :gf:`bounding-box?`
+   - :gf:`bounding-box`
 
-Returns the bounding box of a region.
+.. function:: box-height
 
-Signature
-         
+   Returns the height of the bounding box of a region.
 
-*bounding-box* *region* *#key* *into* => *box*
+   :signature: box-height *region* => *height*
 
-Arguments
-         
+   :parameter region: An instance of type :class:`<region>`.
+   :value height: An instance of type ``<integer>``.
 
--  *region* An instance of type *<region>*.
--  *into* An instance of type *false-or(`See
-   <bounding-box>`_)*.
+   :description:
 
-Values
-      
+     Returns the height of the bounding box *region*. The height of a
+     bounding box is the difference between the maximum *y* coordinate
+     and its minimum *y* coordinate. The argument *region* must be
+     either a bounded region or some other object that obeys the
+     bounding box protocol.
 
--  *box* An instance of type *`<bounding-box>`_*.
+   See also
 
-Description
-           
+   - :gf:`box-position`
+   - :gf:`box-size`
+   - :func:`box-width`
 
-The argument *region* must be either a bounded region (such as a line or
-an ellipse) or some other object that obeys the bounding box protocol,
-such as a sheet.
+.. function:: box-left
 
-This function often returns an existing object, so you should not modify
-the returned result.
+   Returns the *x* coordinate of the upper left corner of the bounding
+   box of a region.
 
-If *into* is supplied, it is a bounding box that might be destructively
-modified to contain the result.
+   :signature: box-left *region* => *left*
 
-See also
-        
+   :parameter region: An instance of type :class:`<region>`.
+   :value left: An instance of type ``<integer>``.
 
-`<bounding-box>`_
+   :description:
 
-`bounding-box?`_
+     Returns the *x* coordinate of the upper left corner of the bounding
+     box *region*. The argument *region* must be either a bounded region
+     or some other object that obeys the bounding box protocol, such as
+     a sheet.
 
-`box-edges`_
+   See also
 
-box-bottom
-----------
+   - :func:`box-bottom`
+   - :func:`box-right`
+   - :func:`box-top`
 
-Function
-''''''''
+.. generic-function:: box-position
 
-Summary
-       
+   Returns the position of the bounding box of a region as two values.
 
-Returns the *y* coordinate of the bottom right corner of the bounding
-box of a region.
+   :signature: box-position *region* => *x* *y*
 
-Signature
-         
+   :parameter region: An instance of type :class:`<region>`.
+   :value x: An instance of type <integer>.
+   :value y: An instance of type <integer>.
 
-*box-bottom* *region* => *bottom*
+   :description:
 
-Arguments
-         
+     Returns the position of the bounding box of *region* as two values.
+     The position of a bounding box is specified by its top left point.
 
--  *region* An instance of type *<region>*.
+   See also
 
-Values
-      
+   - :func:`box-height`
+   - :gf:`box-size`
+   - :func:`box-width`
 
--  *bottom* An instance of type *<integer>*.
+.. function:: box-right
 
-Description
-           
+   Returns the *x* coordinate of the bottom right corner of the bounding
+   box of a region.
 
-Returns the *y* coordinate of the bottom right corner of the bounding
-box of *region*. The argument *region* must be either a bounded region
-or some other object that obeys the bounding box protocol.
+   :signature: box-right *region* => *right*
 
-See also
-        
+   :parameter region: An instance of type :class:`<region>`.
+   :value right: An instance of type ``<integer>``.
 
-`box-left`_
+   :description:
 
-`box-right`_
+     Returns the *x* coordinate of the bottom right corner of the
+     bounding box *region*. The argument *region* must be either a
+     bounded region or some other object that obeys the bounding box
+     protocol, such as a sheet.
 
-`box-top`_
+   See also
 
-box-edges
----------
+   - :func:`box-bottom`
+   - :func:`box-left`
+   - :func:`box-top`
 
-Generic function
-''''''''''''''''
+.. generic-function:: box-size
 
-Summary
-       
+   Returns the width and height of the bounding box of a region as two
+   values
 
-Returns the bounding box of a region.
+   :signature: box-size *region* => *width* *height*
 
-Signature
-         
+   :parameter region: An instance of type :class:`<region>`.
+   :value width: An instance of type ``<integer>``.
+   :value height: An instance of type ``<integer>``.
 
-*box-edges* *region* => *left* *top* *right* *bottom*
+   :description:
 
-Arguments
-         
+     Returns the width and height of the bounding box of *region* as two
+     values The argument *region* must be either a bounded region or
+     some other object that obeys the bounding box protocol, such as a
+     sheet.
 
--  *region* An instance of type *<region>*.
+   See also
 
-Values
-      
+   - :func:`box-height`
+   - :gf:`box-position`
+   - :func:`box-width`
 
--  *left* An instance of type *<integer>*.
--  *top* An instance of type *<integer>*.
--  *right* An instance of type *<integer>*.
--  *bottom* An instance of type *<integer>*.
+.. function:: box-top
 
-Description
-           
+   Returns the *y* coordinate of the upper left corner of the bounding
+   box of a region.
 
-Returns the bounding box of *region* as four integers specifying the *x*
-and *y* coordinates of the top left point and the *x* and *y*
-coordinates of the bottom right point of the box
+   :signature: box-top *region* => *top*
 
-The argument *region* must be either a bounded region (such as a line or
-an ellipse) or some other object that obeys the bounding box protocol,
-such as a sheet.
+   :parameter region: An instance of type :class:`<region>`.
+   :value top: An instance of type ``<integer>``.
 
-The four returned values *left, top, right*, and *bottom* will satisfy
-the inequalities
+   :description:
 
-*left* <= *right*
-                 
+     Returns the *y* coordinate of the upper left corner of the bounding
+     box *region*. The argument *region* must be either a bounded region
+     or some other object that obeys the bounding box protocol.
 
-*top* <= *bottom*
-                 
+   See also
 
-See also
-        
+   - :func:`box-bottom`
+   - :func:`box-left`
+   - :func:`box-right`
 
-`<bounding-box>`_
+.. function:: box-width
 
-`bounding-box?`_
+   Returns the width of the bounding box of a region.
 
-`bounding-box`_
+   :signature: box-width *region* => *width*
 
-box-height
-----------
+   :parameter region: An instance of type :class:`<region>`.
+   :value width: An instance of type ``<integer>``.
 
-Function
-''''''''
+   :description:
 
-Summary
-       
+     Returns the width of the bounding box *region*. The width of a
+     bounding box is the difference between its maximum *x* coordinate
+     (right) and its minimum *x* coordinate (left).The argument *region*
+     must be either a bounded region or some other object that obeys the
+     bounding box protocol, such as a sheet.
 
-Returns the height of the bounding box of a region.
+   See also
 
-Signature
-         
+   - :gf:`box-height`
+   - :gf:`box-position`
+   - :gf:`box-size`
 
-*box-height* *region* => *height*
+.. generic-function:: compose-rotation-with-transform
 
-Arguments
-         
+   Creates a new transform by composing a transform with the given rotation
 
--  *region* An instance of type *<region>*.
+   :signature: compose-rotation-with-transform *transform* *angle* *#key* *origin* => *transform*
 
-Values
-      
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter angle: An instance of type ``<real>``.
+   :parameter #key origin: An instance of type :class:`<point>`. Default
+     value: (0, 0).
+   :value transform: An instance of type :class:`<transform>`.
 
--  *height* An instance of type *<integer>*.
+   :description:
 
-Description
-           
+     Creates a new transform by composing the transform *transform* with
+     the given rotation The order of composition is that the rotation
+     transform is applied first, followed by the argument *transform*.
 
-Returns the height of the bounding box *region*. The height of a
-bounding box is the difference between the maximum *y* coordinate and
-its minimum *y* coordinate. The argument *region* must be either a
-bounded region or some other object that obeys the bounding box
-protocol.
+     Note that this function could be implemented by using
+     :func:`make-rotation-transform` and :gf:`compose-transforms`. It is
+     provided because it is common to build up a transform as a series
+     of simple transforms.
 
-See also
-        
+   See also
 
-`box-position`_
+   - :func:`make-rotation-transform`
 
-`box-size`_
+.. generic-function:: compose-scaling-with-transform
 
-`box-width`_
+   Creates a new transform by composing a transform with the given scaling.
 
-box-left
---------
+   :signature: compose-scaling-with-transform *transform* *scale-x* *scale-y* #key *origin* => *transform*
 
-Function
-''''''''
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter scale-x: An instance of type ``<real>``.
+   :parameter scale-y: An instance of type ``<real>``.
+   :parameter #key origin: An instance of type :class:`<point>`. Default
+     value: (0, 0).
+   :value transform: An instance of type :class:`<transform>`.
 
-Summary
-       
+   :description:
 
-Returns the *x* coordinate of the upper left corner of the bounding box
-of a region.
+     Creates a new transform by composing the transform *transform* with
+     the given scaling. The order of composition is that the scaling
+     transform is applied first, followed by the argument *transform*.
 
-Signature
-         
+     The argument *scale-x* represents the scaling factor for the *x*
+     direction.
 
-*box-left* *region* => *left*
+     The argument *scale-y* represents the scaling factor for the *y*
+     direction.
 
-Arguments
-         
+     The argument *origin* represents the point around which scaling is
+     performed. The default is to scale around the origin.
 
--  *region* An instance of type *<region>*.
+     Note that this function could be implemented by using
+     :func:`make-scaling-transform` and :gf:`compose-transforms`. It is
+     provided because it is common to build up a transform as a series
+     of simple transforms.
 
-Values
-      
+   See also
 
--  *left* An instance of type *<integer>*.
+   - :func:`make-scaling-transform`
 
-Description
-           
+.. generic-function:: compose-transforms
 
-Returns the *x* coordinate of the upper left corner of the bounding box
-*region*. The argument *region* must be either a bounded region or some
-other object that obeys the bounding box protocol, such as a sheet.
+   Returns a transform that is the mathematical composition of its
+   arguments.
 
-See also
-        
+   :signature: compose-transforms *transform1* *transform2* => *transform*
 
-`box-bottom`_
+   :parameter transform1: An instance of type :class:`<transform>`.
+   :parameter transform2: An instance of type :class:`<transform>`.
+   :value transform: An instance of type :class:`<transform>`.
 
-`box-right`_
+   :description:
 
-`box-top`_
+     Returns a transform that is the mathematical composition of its
+     arguments. Composition is in right-to-left order, that is, the
+     resulting transform represents the effects of applying the
+     transform *transform2* followed by the transform *transform1*.
 
-box-position
-------------
+   See also
 
-Generic function
-''''''''''''''''
+   - :gf:`compose-transform-with-rotation`
 
-Summary
-       
+.. generic-function:: compose-transform-with-rotation
 
-Returns the position of the bounding box of a region as two values.
+   Creates a new transform by composing a given rotation with a transform.
 
-Signature
-         
+   :signature: compose-transform-with-rotation *transform* *angle* #key *origin* => *transform*
 
-*box-position* *region* => *x* *y*
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter angle: An instance of type ``<real>``.
+   :parameter #key origin: An instance of type :class:`<point>`. Default
+     value: (0,0).
+   :value transform: An instance of type :class:`<transform>`.
 
-Arguments
-         
+   :description:
 
--  *region* An instance of type *<region>*.
+     Creates a new transform by composing a given rotation with the
+     transform *transform.* The order of composition is *transform*
+     first, followed by the rotation transform.
 
-Values
-      
+     The argument *angle* represents the angle by which to rotate, in
+     radians.
 
--  *x* An instance of type <integer>.
--  *y*
+     The argument *origin* represents the point about which to rotate.
+     The default is to rotate around (0,0).
 
-Description
-           
+     Note that this function could be implemented by using
+     :func:`make-rotation-transform` and :gf:`compose-transforms`. It is
+     provided because it is common to build up a transform as a series
+     of simple transforms.
 
-Returns the position of the bounding box of *region* as two values. The
-position of a bounding box is specified by its top left point.
+   See also
 
-See also
-        
+   - :gf:`compose-transforms`
+   - :func:`make-rotation-transform`
 
-`box-height`_
+.. generic-function:: compose-transform-with-scaling
 
-`box-size`_
+   Creates a new transform by composing a given scaling with a transform.
 
-`box-width`_
+   :signature: compose-transform-with-scaling *transform* *scale-x* *scale-y* *#key* *origin* => *transform*
 
-box-right
----------
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter scale-x: An instance of type ``<real>``.
+   :parameter scale-y: An instance of type ``<real>``.
+   :parameter #key origin: An instance of type :class:`<point>`. Default
+     value: (0,0).
+   :value transform: An instance of type :class:`<transform>`.
 
-Function
-''''''''
+   :description:
 
-Summary
-       
+     Creates a new transform by composing a given scaling with the
+     transform *transform.* The order of composition is *transform*
+     first, followed by the scaling transform.
 
-Returns the *x* coordinate of the bottom right corner of the bounding
-box of a region.
+     The argument *scale-x* represents the scaling factor for the *x*
+     direction.
 
-Signature
-         
+     The argument *scale-y* represents the scaling factor for the *y*
+     direction.
 
-*box-right* *region* => *right*
+     The argument *origin* represents the point around which scaling is
+     performed. The default is to scale around the origin.
 
-Arguments
-         
+     Note that this function could be implemented by using
+     :func:`make-scaling-transform` and :gf:`compose-transforms`. It is
+     provided because it is common to build up a transform as a series
+     of simple transforms.
 
--  *region* An instance of type *<region>*.
+   See also
 
-Values
-      
+   - :gf:`compose-transforms`
+   - :func:`make-scaling-transform`
 
--  *right* An instance of type *<integer>*.
+.. generic-function:: compose-transform-with-translation
 
-Description
-           
+   Creates a new transform by composing a given translation with a
+   transform.
 
-Returns the *x* coordinate of the bottom right corner of the bounding
-box *region*. The argument *region* must be either a bounded region or
-some other object that obeys the bounding box protocol, such as a sheet.
+   :signature: compose-transform-with-translation *transform* *dx* *dy* => *transform*
 
-See also
-        
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter dx: An instance of type ``<real>``.
+   :parameter dy: An instance of type ``<real>``.
+   :value transform: An instance of type :class:`<transform>`.
 
-`box-bottom`_
+   :description:
 
-`box-left`_
+     Creates a new transform by composing a given translation with the
+     transform *transform*. The order of composition is *transform*
+     first, followed by the translation transform.
 
-`box-top`_
+     The argument *dx* represents the *delta* by which to translate the
+     *x* coordinate.
 
-box-size
---------
+     The argument *dy* represents the *delta* by which to translate the
+     *y* coordinate.
 
-Generic function
-''''''''''''''''
+     Note that this function could be implemented by using
+     :func:`make-translation-transform` and :gf:`compose-transforms`. It
+     is provided because it is common to build up a transform as a
+     series of simple transforms.
 
-Summary
-       
+   See also
 
-Returns the width and height of the bounding box of a region as two
-values
+   - :func:`make-translation-transform`
+   - :gf:`compose-transforms`
 
-Signature
-         
+.. generic-function:: compose-translation-with-transform
 
-*box-size* *region* => *width* *height*
+   Creates a new transform by composing a transform with the given
+   translation.
 
-Arguments
-         
+   :signature: compose-translation-with-transform *transform* *dx* *dy* => *transform*
 
--  *region* An instance of type *<region>*.
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter dx: An instance of type ``<real>``.
+   :parameter dy: An instance of type ``<real>``.
+   :value transform: An instance of type :class:`<transform>`.
 
-Values
-      
+   :description:
 
--  *width* An instance of type *<integer>*.
--  *height* An instance of type *<integer>*.
+     Creates a new transform by composing the transform *transform* with
+     the given translation. The order of composition is that the
+     translation transform is applied first, followed by the argument
+     *transform*.
 
-Description
-           
+     The argument *dx* represents the *delta* by which to translate the
+     *x* coordinate.
 
-Returns the width and height of the bounding box of *region* as two
-values The argument *region* must be either a bounded region or some
-other object that obeys the bounding box protocol, such as a sheet.
+     The argument *dy* represents the *delta* by which to translate the
+     *y* coordinate.
 
-See also
-        
+     Note that this function could be implemented by using
+     :func:`make-translation-transform` and :gf:`compose-transforms`. It
+     is provided, because it is common to build up a transform as a
+     series of simple transforms.
 
-`box-height`_
+   See also
 
-`box-position`_
+   - :func:`make-translation-transform`
+   - :gf:`compose-transforms`
 
-`box-width`_
+.. function:: do-coordinates
 
-box-top
--------
+   Applies a function to each coordinate pair in its argument list.
 
-Function
-''''''''
+   :signature: do-coordinates *function* *coordinates* => ()
 
-Summary
-       
+   :parameter function: An instance of type ``<function>``.
+   :parameter coordinates: An instance of type ``limited(<sequence>, of: <real>)``.
 
-Returns the *y* coordinate of the upper left corner of the bounding box
-of a region.
+   :description:
 
-Signature
-         
+     Applies *function* to each coordinate pair in *coordinates*. The
+     length of *coordinates* must be a multiple of 2. *Function* takes
+     two arguments, the *x* and *y* value of each coordinate pair.
 
-*box-top* *region* => *top*
+.. function:: do-endpoint-coordinates
 
-Arguments
-         
+   Applies a function to each coordinate pair in its argument list.
 
--  *region* An instance of type *<region>*.
+   :signature: do-endpoint-coordinates *function* *coordinates* => ()
 
-Values
-      
+   :parameter function: An instance of type ``<function>``.
+   :parameter coordinates: An instance of type ``limited(<sequence>, of: <real>)``.
 
--  *top* An instance of type *<integer>*.
+   :description:
 
-Description
-           
+     Applies *function* to each pair of coordinate pairs in
+     *coordinates*. The arguments *coordinates* represents a set of line
+     segments rather than a set of points: The length of this sequence
+     must therefore be a multiple of 4. Function takes 4 arguments,
+     (*x1*, *y1*, *x2*, *y2*).
 
-Returns the *y* coordinate of the upper left corner of the bounding box
-*region*. The argument *region* must be either a bounded region or some
-other object that obeys the bounding box protocol.
+.. generic-function:: do-regions
 
-See also
-        
+   Calls a function on each region in a set of regions.
 
-`box-bottom`_
+   :signature: do-regions *function* *region* *#key* *normalize?* => ()
 
-`box-left`_
+   :parameter function: An instance of type ``<function>``.
+   :parameter region: An instance of type :class:`<region>`.
+   :parameter #key normalize?: An instance of type ``<boolean>``. Default value: ``#f``.
 
-`box-right`_
+   :description:
 
-box-width
----------
+     Calls *function* on each region in the region set *region.* This is
+     often more efficient than calling *region-set-regions*. *function*
+     is a function of one argument, a region. *Region* can be either a
+     region set or a simple region, in which case *function* is called
+     once on *region* itself. If *normalize* is supplied, it must be
+     either ``#"x-banding"`` or ``#"y-banding"``. If it is
+     ``#"x-banding"`` and all the regions in *region* are axis-aligned
+     rectangles, the result is normalized by merging adjacent rectangles
+     with banding done in the *x* direction. If it is ``#"y-banding"``
+     and all the regions in *region* are rectangles, the result is
+     normalized with banding done in the *y* direction. Normalizing a
+     region set that is not composed entirely of axis-aligned rectangles
+     using x- or y-banding causes DUIM to signal the
+     :class:`<region-set-not-rectangular>` error.
 
-Function
-''''''''
+.. generic-function:: even-scaling-transform?
 
-Summary
-       
+   Returns ``#t`` if the transform *transform* multiplies all *x*
+   lengths and *y* lengths by the same magnitude, otherwise returns
+   ``#f``.
 
-Returns the width of the bounding box of a region.
+   :signature: even-scaling-transform? *transform* => *boolean*
 
-Signature
-         
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-box-width *region* => *width*
+   :description:
 
-Arguments
-         
+     Returns ``#t`` if the transform *transform* multiplies all *x*
+     lengths and *y* lengths by the same magnitude, otherwise returns
+     ``#f``. ``even-scaling-transform?`` includes pure reflections
+     through vertical and horizontal lines.
 
--  *region* An instance of type *<region>*.
+.. constant:: $everywhere
 
-Values
-      
+   The region that includes all the points on the two-dimensional
+   infinite drawing plane.
 
--  *width* An instance of type *<integer>*.
+   :type: :class:`<region>`
 
-Description
-           
+   :description:
 
-Returns the width of the bounding box *region*. The width of a bounding
-box is the difference between its maximum *x* coordinate (right) and its
-minimum *x* coordinate (left).The argument *region* must be either a
-bounded region or some other object that obeys the bounding box
-protocol, such as a sheet.
+     The region that includes all the points on the two-dimensional
+     infinite drawing plane.
 
-See also
-        
+   See also
 
-`box-height`_
+   - :const:`$nowhere`
 
-`box-position`_
+.. function:: fix-coordinate
 
-`box-size`_
+   Coerces the given coordinate into an *<integer>*.
 
-compose-rotation-with-transform
--------------------------------
+   :signature: fix-coordinate *coordinate* => *integer*
 
-Generic function
-''''''''''''''''
+   :parameter coordinate: An instance of type ``<real>``.
+   :value integer: An instance of type ``<integer>``.
 
-Summary
-       
+   :description:
 
-Creates a new transform by composing a transform with the given rotation
+     Coerces the given coordinate into an ``<integer>``.
 
-Signature
-         
+.. constant:: $identity-transform
 
-*compose-rotation-with-transform* *transform* *angle* *#key* *origin* =>
-*transform*
+   An instance of a transform that is guaranteed to be an identity
+   transform, that is, the transform that does nothing.
 
-Arguments
-         
+   :type: :class:`<transform>`
 
--  *transform* An instance of type `<transform>`_.
--  *angle* An instance of type *<real>*.
--  *origin* An instance of type `<point>`_. Default
-   value: (0, 0).
+   :description:
 
-Values
-      
+     An instance of a transform that is guaranteed to be an identity
+     transform, that is, the transform that does nothing.
 
--  *transform* An instance of type `<transform>`_.
+   See also
 
-Description
-           
+   - :gf:`identity-transform?`
 
-Creates a new transform by composing the transform *transform* with the
-given rotation The order of composition is that the rotation transform
-is applied first, followed by the argument *transform*.
+.. generic-function:: identity-transform?
 
-Note that this function could be implemented by using
-*make-rotation-transform* and *compose-transforms*. It is provided
-because it is common to build up a transform as a series of simple
-transforms.
+   Returns ``#t`` if a transform is equal (in the sense of *transform-equal*) to the identity transform.
 
-See also
-        
+   :signature: identity-transform? *transform* => *boolean*
 
-`make-rotation-transform`_
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-compose-scaling-with-transform
-------------------------------
+   :description:
 
-Generic function
-''''''''''''''''
+     Returns ``#t`` if the transform *transform* is equal (in the sense
+     of *transform-equal*) to the identity transform, otherwise returns
+     ``#f``.
 
-Summary
-       
+   See also
 
-Creates a new transform by composing a transform with the given scaling.
+   - :const:`$identity-transform`
 
-Signature
-         
+.. generic-function:: invert-transform
 
-*compose-scaling-with-transform* *transform* *scale-x* *scale-y* #key
-*origin* => *transform*
+   Returns a transform that is the inverse of the given transform.
 
-Arguments
-         
+   :signature: invert-transform *transform* => *transform*
 
--  *transform* An instance of type `<transform>`_.
--  *scale-x* An instance of type *<real>*.
--  *scale-y* An instance of type *<real>*.
--  *origin* An instance of type `<point>`_. Default
-   value: (0, 0).
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value transform: An instance of type :class:`<transform>`.
 
-Values
-      
+   :conditions:
 
--  *transform* An instance of type `<transform>`_.
+     If *transform* is singular, ``invert-transform`` signals the
+     :class:`<singular-transform>` error.
 
-Description
-           
+     .. note:: With finite-precision arithmetic there are several
+       low-level conditions that might occur during the attempt to invert
+       a singular or *almost* singular transform. (These include
+       computation of a zero determinant, floating-point underflow during
+       computation of the determinant, or floating-point overflow during
+       subsequent multiplication.) ``invert-transform`` signals the
+       :class:`<singular-transform>` error for all of these cases.
 
-Creates a new transform by composing the transform *transform* with the
-given scaling. The order of composition is that the scaling transform is
-applied first, followed by the argument *transform*.
+   :description:
 
-The argument *scale-x* represents the scaling factor for the *x*
-direction.
+     Returns a transform that is the inverse of the transform
+     *transform*. The result of composing a transform with its inverse
+     is equal to the identity transform.
 
-The argument *scale-y* represents the scaling factor for the *y*
-direction.
+   See also
 
-The argument *origin* represents the point around which scaling is
-performed. The default is to scale around the origin.
+   - :gf:`invertible-transform?`
 
-Note that this function could be implemented by using
-*make-scaling-transform* and *compose-transforms*. It is provided
-because it is common to build up a transform as a series of simple
-transforms.
+.. generic-function:: invertible-transform?
 
-See also
-        
+   Returns ``#t`` if the given transform has an inverse.
 
-`make-scaling-transform`_
+   :signature: invertible-transform? *transform* => *boolean*
 
-compose-transforms
-------------------
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Generic function
-''''''''''''''''
+   :description:
 
-Summary
-       
+     Returns ``#t`` if the transform *transform* has an inverse,
+     otherwise returns ``#f``.
 
-Returns a transform that is the mathematical composition of its
-arguments.
+   See also
 
-Signature
-         
+   - :gf:`invert-transform`
 
-*compose-transforms* *transform1* *transform2* => *transform*
+.. constant:: $largest-coordinate
 
-Arguments
-         
+   The largest valid coordinate.
 
--  *transform1* An instance of type `<transform>`_.
--  *transform2* An instance of type `<transform>`_.
+   :type: <integer>
 
-Values
-      
+   :description:
 
--  *transform* An instance of type `<transform>`_.
+     The largest valid coordinate.
 
-Description
-           
+   See also
 
-Returns a transform that is the mathematical composition of its
-arguments. Composition is in right-to-left order, that is, the resulting
-transform represents the effects of applying the transform *transform2*
-followed by the transform *transform1*.
-
-See also
-        
-
-`compose-transform-with-rotation`_
-
-compose-transform-with-rotation
--------------------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Creates a new transform by composing a given rotation with a transform.
-
-Signature
-         
-
-*compose-transform-with-rotation* *transform* *angle* #key *origin* =>
-*transform*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *angle* An instance of type *<real>*.
--  *origin* An instance of type `<point>`_. Default
-   value: (0,0).
-
-Values
-      
-
--  *transform* An instance of type `<transform>`_.
-
-Description
-           
-
-Creates a new transform by composing a given rotation with the transform
-*transform.* The order of composition is *transform* first, followed by
-the rotation transform.
-
-The argument *angle* represents the angle by which to rotate, in
-radians.
-
-The argument *origin* represents the point about which to rotate. The
-default is to rotate around (0,0).
-
-Note that this function could be implemented by using
-*make-rotation-transform* and *compose-transforms*. It is provided
-because it is common to build up a transform as a series of simple
-transforms.
-
-See also
-        
-
-`compose-transforms`_
-
-`make-rotation-transform`_
-
-compose-transform-with-scaling
-------------------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Creates a new transform by composing a given scaling with a transform.
-
-Signature
-         
-
-*compose-transform-with-scaling* *transform* *scale-x* *scale-y* *#key*
-*origin* => *transform*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *scale-x* An instance of type *<real>*.
--  *scale-y* An instance of type *<real>*.
--  o*rigin* An instance of type `<point>`_. Default
-   value: (0,0).
-
-Values
-      
-
--  *transform* An instance of type `<transform>`_.
-
-Description
-           
-
-Creates a new transform by composing a given scaling with the transform
-*transform.* The order of composition is *transform* first, followed by
-the scaling transform.
-
-The argument *scale-x* represents the scaling factor for the *x*
-direction.
-
-The argument *scale-y* represents the scaling factor for the *y*
-direction.
-
-The argument *origin* represents the point around which scaling is
-performed. The default is to scale around the origin.
-
-Note that this function could be implemented by using
-*make-scaling-transform* and *compose-transforms*. It is provided
-because it is common to build up a transform as a series of simple
-transforms.
-
-See also
-        
-
-`compose-transforms`_.
-
-`make-scaling-transform`_
-
-compose-transform-with-translation
-----------------------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Creates a new transform by composing a given translation with a
-transform*.*
-
-Signature
-         
-
-*compose-transform-with-translation* *transform* *dx* *dy* =>
-*transform*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *dx* An instance of type *<real>*.
--  *dy* An instance of type *<real>*.
-
-Values
-      
-
--  *transform* An instance of type `<transform>`_.
-
-Description
-           
-
-Creates a new transform by composing a given translation with the
-transform *transform*. The order of composition is *transform* first,
-followed by the translation transform.
-
-The argument *dx* represents the *delta* by which to translate the *x*
-coordinate.
-
-The argument *dy* represents the *delta* by which to translate the *y*
-coordinate.
-
-Note that this function could be implemented by using
-*make-translation-transform* and *compose-transforms*. It is provided
-because it is common to build up a transform as a series of simple
-transforms.
-
-See also
-        
-
-See the functions `make-translation-transform`_ and
-`compose-transforms`_.
-
-compose-translation-with-transform
-----------------------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Creates a new transform by composing a transform with the given
-translation.
-
-Signature
-         
-
-*compose-translation-with-transform* *transform* *dx* *dy* =>
-*transform*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *dx* An instance of type *<real>*.
--  *dy* An instance of type *<real>*.
-
-Values
-      
-
--  *transform* An instance of type `<transform>`_.
-
-Description
-           
-
-Creates a new transform by composing the transform *transform* with the
-given translation. The order of composition is that the translation
-transform is applied first, followed by the argument *transform*.
-
-The argument *dx* represents the *delta* by which to translate the *x*
-coordinate.
-
-The argument *dy* represents the *delta* by which to translate the *y*
-coordinate.
-
-Note that this function could be implemented by using
-*make-translation-transform* and *compose-transforms*. It is provided,
-because it is common to build up a transform as a series of simple
-transforms.
-
-See also
-        
-
-See the functions `make-translation-transform`_ and
-`compose-transforms`_.
-
-do-coordinates
---------------
-
-Function
-''''''''
-
-Summary
-       
-
-Applies a function to each coordinate pair in its argument list.
-
-Signature
-         
-
-*do-coordinates* *function* *coordinates* => ()
-
-Arguments
-         
-
--  *function* An instance of type *<function>*.
--  *coordinates* An instance of type *limited(<sequence>, of: <real>)*.
-
-Values
-      
-
-None
-
-Description
-           
-
-Applies *function* to each coordinate pair in *coordinates*. The length
-of *coordinates* must be a multiple of 2. *Function* takes two
-arguments, the *x* and *y* value of each coordinate pair.
-
-do-endpoint-coordinates
------------------------
-
-Function
-''''''''
-
-Summary
-       
-
-Applies a function to each coordinate pair in its argument list.
-
-Signature
-         
-
-*do-endpoint-coordinates* *function* *coordinates* => ()
-
-Arguments
-         
-
--  *function* An instance of type *<function>*.
--  *coordinates* An instance of type *limited(<sequence>, of: <real>)*.
-
-Values
-      
-
-None
-
-Description
-           
-
-Applies *function* to each pair of coordinate pairs in *coordinates*.
-The arguments *coordinates* represents a set of line segments rather
-than a set of points: The length of this sequence must therefore be a
-multiple of 4. Function takes 4 arguments, (*x1*, *y1*, *x2*, *y2*).
-
-do-regions
-----------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Calls a function on each region in a set of regions.
-
-Signature
-         
-
-*do-regions* *function* *region* *#key* *normalize?* => ()
-
-Arguments
-         
-
--  *function* An instance of type *<function>*.
--  *region* An instance of type *<region>*.
--  *normalize?* An instance of type *<boolean>*. Default value: *#f*.
-
-Values
-      
-
-None
-
-Description
-           
-
-Calls *function* on each region in the region set *region.* This is
-often more efficient than calling *region-set-regions*. *function* is a
-function of one argument, a region. *Region* can be either a region set
-or a simple region, in which case *function* is called once on *region*
-itself. If *normalize* is supplied, it must be either *#"x-banding"* or
-*#"y-banding"*. If it is *#"x-banding"* and all the regions in *region*
-are axis-aligned rectangles, the result is normalized by merging
-adjacent rectangles with banding done in the *x* direction. If it is
-*#"y-banding"* and all the regions in *region* are rectangles, the
-result is normalized with banding done in the *y* direction. Normalizing
-a region set that is not composed entirely of axis-aligned rectangles
-using x- or y-banding causes DUIM to signal the
-*<region-set-not-rectangular>* error.
-
-even-scaling-transform?
------------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Returns *#t* if the transform *transform* multiplies all *x* lengths and
-*y* lengths by the same magnitude, otherwise returns *#f*.
-
-Signature
-         
-
-*even-scaling-transform?* *transform* => *boolean*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
-
-Values
-      
-
--  *boolean* An instance of type *<boolean>*.
-
-Description
-           
-
-Returns *#t* if the transform *transform* multiplies all *x* lengths and
-*y* lengths by the same magnitude, otherwise returns *#f*.
-*even-scaling-transform?* includes pure reflections through vertical and
-horizontal lines.
-
-$everywhere
------------
-
-Constant
-''''''''
-
-Summary
-       
-
-The region that includes all the points on the two-dimensional infinite
-drawing plane.
-
-Type
-    
-
-*<region>*
-
-Description
-           
-
-The region that includes all the points on the two-dimensional infinite
-drawing plane.
-
-See also
-        
-
-`$nowhere`_
-
-fix-coordinate
---------------
-
-Function
-''''''''
-
-Summary
-       
-
-Coerces the given coordinate into an *<integer>*.
-
-Signature
-         
-
-*fix-coordinate* *coordinate* => *integer*
-
-Arguments
-         
-
--  *coordinate* An instance of type *<real>*.
-
-Values
-      
-
--  *integer* An instance of type *<integer>*.
-
-Description
-           
-
-Coerces the given coordinate into an *<integer>*.
-
-$identity-transform
--------------------
-
-Constant
-''''''''
-
-Summary
-       
-
-An instance of a transform that is guaranteed to be an identity
-transform, that is, the transform that does nothing.
-
-Type
-    
-
-`<transform>`_
-
-Description
-           
-
-An instance of a transform that is guaranteed to be an identity
-transform, that is, the transform that does nothing.
-
-See also
-        
-
-`identity-transform?`_
-
-identity-transform?
--------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Returns *#t* if a transform is equal (in the sense of *transform-equal*
-) to the identity transform.
-
-Signature
-         
-
-*identity-transform?* *transform* => *boolean*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
-
-Values
-      
-
--  *boolean* An instance of type *<boolean>*.
-
-Description
-           
-
-Returns *#t* if the transform *transform* is equal (in the sense of
-*transform-equal*) to the identity transform, otherwise returns *#f*.
-
-See also
-        
-
-`$identity-transform`_
-
-invert-transform
-----------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Returns a transform that is the inverse of the given transform.
-
-Signature
-         
-
-*invert-transform* *transform* => *transform*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
-
-Values
-      
-
--  *transform* An instance of type `<transform>`_.
-
-Exceptions
-          
-
-If *transform* is singular, *invert-transform* signals the *`See
-<singular-transform>`_* error.
-
-*Note:* With finite-precision arithmetic there are several low-level
-conditions that might occur during the attempt to invert a singular or
-*almost* singular transform. (These include computation of a zero
-determinant, floating-point underflow during computation of the
-determinant, or floating-point overflow during subsequent
-multiplication.) *invert-transform* signals the *<singular-transform>*
-error for all of these cases.
-
-Description
-           
-
-Returns a transform that is the inverse of the transform *transform*.
-The result of composing a transform with its inverse is equal to the
-identity transform.
-
-See also
-        
-
-`invertible-transform?`_
-
-invertible-transform?
----------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Returns *#t* if the given transform has an inverse.
-
-Signature
-         
-
-*invertible-transform?* *transform* => *boolean*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
-
-Values
-      
-
--  *boolean* An instance of type *<boolean>*.
-
-Description
-           
-
-Returns *#t* if the transform *transform* has an inverse, otherwise
-returns *#f*.
-
-See also
-        
-
-`invert-transform`_
-
-$largest-coordinate
--------------------
-
-Constant
-''''''''
-
-Summary
-       
-
-The largest valid coordinate.
-
-Type
-    
-
-*<integer>*
-
-Description
-           
-
-The largest valid coordinate.
-
-See also
-        
-
-`$smallest-coordinate`_
+   - :const:`$smallest-coordinate`
 
 make-3-point-transform
 ----------------------
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a transform that takes points *point-1* into *point-1-image*,
 *point-2* into *point-2-image* and *point-3* into *point-3-image*.
 
-Signature
-         
-
-*make-3-point-transform* *x1* *y1* *x2* *y2* *x3* *y3* *x1-image*
+   :signature: make-3-point-transform* *x1* *y1* *x2* *y2* *x3* *y3* *x1-image*
 *y1-image* *x2-image* *y2-image* *x3-image* *y3-image* => *transform*
 
 make-3-point-transform\* *point-1 point-2 point-3 point-1-image
 point-2-image point-3-image* => *transform*
 
 Arguments
-         
 
 The following arguments are specific to *make-3-point-transform*.
 
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
--  *x3* An instance of type *<real>*.
--  *y3* An instance of type *<real>*.
--  *x1-image* An instance of type *<real>*.
--  *y1-image* An instance of type *<real>*.
--  *x2-image* An instance of type *<real>*.
--  *y2-image* An instance of type *<real>*.
--  *x3-image* An instance of type *<real>*.
--  *y3-image* An instance of type *<real>*.
+-  *x1* An instance of type ``<real>``.
+-  *y1* An instance of type ``<real>``.
+-  *x2* An instance of type ``<real>``.
+-  *y2* An instance of type ``<real>``.
+-  *x3* An instance of type ``<real>``.
+-  *y3* An instance of type ``<real>``.
+-  *x1-image* An instance of type ``<real>``.
+-  *y1-image* An instance of type ``<real>``.
+-  *x2-image* An instance of type ``<real>``.
+-  *y2-image* An instance of type ``<real>``.
+-  *x3-image* An instance of type ``<real>``.
+-  *y3-image* An instance of type ``<real>``.
 
 The following arguments are specific to *make-3-point-transform\**.
 
--  *point-1* An instance of type `<point>`_.
--  *point-2* An instance of type `<point>`_.
--  *point-3* An instance of type `<point>`_.
--  *point-1-image* An instance of type `<point>`_.
--  *point-2-image* An instance of type `<point>`_.
--  *point-3-image* An instance of type `<point>`_.
+-  *point-1* An instance of type :class:`<point>`.
+-  *point-2* An instance of type :class:`<point>`.
+-  *point-3* An instance of type :class:`<point>`.
+-  *point-1-image* An instance of type :class:`<point>`.
+-  *point-2-image* An instance of type :class:`<point>`.
+-  *point-3-image* An instance of type :class:`<point>`.
 
 Values
-      
 
--  *transform* An instance of type `<transform>`_.
+-  *transform* An instance of type :class:`<transform>`.
 
-Exceptions
-          
+   :conditions:
 
 If *point-1*, *point-2* and *point-3* are colinear, the*`See
 <transform-underspecified>`_* error is signalled. If
@@ -1629,8 +1005,7 @@ If *point-1*, *point-2* and *point-3* are colinear, the*`See
 resulting transform will be singular (that is, will have no inverse) but
 this is not an error.
 
-Description
-           
+   :description:
 
 Returns a transform that takes points *point-1* into *point-1-image*,
 *point-2* into *point-2-image* and *point-3* into *point-3-image*.
@@ -1642,204 +1017,157 @@ The function *make-3-point-transform\** is identical to
 rather than separate coordinates, in its arguments. You should be aware
 that using this function may lead to a loss of performance.
 
-make-bounding-box
------------------
+.. function:: make-bounding-box
 
-Function
-''''''''
+   Returns an object of the class :class:`<bounding-box>`.
 
-Summary
-       
+   :signature: make-bounding-box *x1* *y1* *x2* *y2* => *box*
 
-Returns an object of the class *<bounding-box>.*
+   :parameter x1: An instance of type ``<real>``.
+   :parameter y1: An instance of type ``<real>``.
+   :parameter x2: An instance of type ``<real>``.
+   :parameter y2: An instance of type ``<real>``.
+   :value box: An instance of type :class:`<bounding-box>`.
 
-Signature
-         
+   :description:
 
-*make-bounding-box* *x1* *y1* *x2* *y2* => *box*
+     Returns an object of the class :class:`<bounding-box>` with the
+     edges specified by *x1, y1, x2*, and *y2. x1, y1, x2*, and *y2* are
+     canonicalized in the following way. The min point of the box has an
+     *x* coordinate that is the smaller of *x1* and *x2* and a *y*
+     coordinate that is the smaller of *y1* and *y2*. The max point of
+     the box has an *x* coordinate that is the larger of *x1* and *x2*
+     and a *y* coordinate that is the larger of *y1* and *y2*.
+     (Therefore, in a right-handed coordinate system the canonicalized
+     values of *x1, y1, x2,* and *y2* correspond to the left, top,
+     right, and bottom edges of the box, respectively.)
 
-Arguments
-         
+     This is a convenient shorthand function for ``make(<bounding-box>,
+     left: top: right: bottom:)``.
 
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
+.. function:: make-point
 
-Values
-      
+   Returns an object of class :class:`<point>`.
 
--  *box* An instance of type *`<bounding-box>`_*.
+   :signature: make-point *x* *y* => *point*
 
-Description
-           
+   :parameter x: An instance of ``<real>``.
+   :parameter y: An instance of ``<real>``.
+   :value point: An instance of type :class:`<point>`.
 
-Returns an object of the class *`<bounding-box>`_*
-with the edges specified by *x1, y1, x2*, and *y2. x1, y1, x2*, and
-*y2* are canonicalized in the following way. The min point of the box
-has an *x* coordinate that is the smaller of *x1* and *x2* and a *y*
-coordinate that is the smaller of *y1* and *y2*. The max point of the
-box has an *x* coordinate that is the larger of *x1* and *x2* and a *y*
-coordinate that is the larger of *y1* and *y2*. (Therefore, in a
-right-handed coordinate system the canonicalized values of *x1, y1, x2,*
-and *y2* correspond to the left, top, right, and bottom edges of the
-box, respectively.)
+   :description:
 
-This is a convenient shorthand function for *make(`See
-<bounding-box>`_, left: top: right: bottom:)*
+     Returns an object of class :class:`<point>` whose coordinates are
+     *x* and *y*.
 
-make-point
-----------
+.. function:: make-reflection-transform
 
-Function
-''''''''
+   Returns a transform that reflects every point through the line
+   passing through the positions *x1,y1* and *x2,y2*.
 
-Summary
-       
+   :signature: make-reflection-transform *x1* *y1* *x2* *y2* => *transform*
 
-Returns an object of class *<point>*.
+   :parameter x1: An instance of type ``<real>``.
+   :parameter y1: An instance of type ``<real>``.
+   :parameter x2: An instance of type ``<real>``.
+   :parameter y2: An instance of type ``<real>``.
+   :value transform: An instance of type :class:`<transform>`. The
+     resultant transformation.
 
-Signature
-         
+   :description:
 
-*make-point* *x* *y* => *point*
+     Returns a transform that reflects every point through the line
+     passing through the positions *x1,y1* and *x2,y2*.
 
-Arguments
-         
+     The arguments *x1* and *y1* represent the coordinates of the first
+     point of reflection. The arguments *x2* and *y2* represent the
+     coordinates of the second point of reflection.
 
--  *x* An instance of *<real>*.
--  *y* An instance of *<real>*
+     A reflection is a transform that preserves lengths and magnitudes
+     of angles, but changes the sign (or handedness) of angles. If you
+     think of the drawing plane on a transparent sheet of paper, a
+     reflection is a transformation that turns the paper over.
 
-Values
-      
+   See also
 
--  *point* An instance of type `<point>`_.
+   - :func:`make-rotation-transform`
+   - :func:`make-scaling-transform`
+   - :func:`make-transform`
+   - :func:`make-translation-transform`
+   - :class:`<reflection-underspecified>`
 
-Description
-           
+.. function:: make-reflection-transform
 
-Returns an object of class *<point>* whose coordinates are *x* and *y*.
+   Returns a transform that reflects every point through the line
+   passing through the positions *x1,y1* and *x2,y2* or through the
+   points *point1* and *point2*.
 
-make-reflection-transform
--------------------------
+   :signature: make-reflection-transform\* *point-1* *point-2* => *transform*
 
-Function
-''''''''
+   :parameter point1: An instance of type :class:`<point>`. The
+     first point.
+   :parameter point2: An instance of type :class:`<point>`. The
+     second point.
+   :value transform: An instance of type :class:`<transform>`.
+     The resultant transformation.
 
-Summary
-       
+   :description:
 
-Returns a transform that reflects every point through the line passing
-through the positions *x1,y1* and *x2,y2* or through the points *point1*
-and *point2*.
+     Returns a transform that reflects every point through the line
+     passing through the points *point1* and *point2*.
 
-Signature
-         
+     A reflection is a transform that preserves lengths and magnitudes
+     of angles, but changes the sign (or handedness) of angles. If you
+     think of the drawing plane on a transparent sheet of paper, a
+     reflection is a transformation that turns the paper over.
 
-*make-reflection-transform* *x1* *y1* *x2* *y2* => *transform*
+     The function ``make-reflection-transform*`` is identical to
+     :func:make-reflection-transform, except that it passes composite
+     objects, rather than separate coordinates, in its arguments. You
+     should be aware that using this function may lead to a loss of
+     performance.
 
-make-reflection-transform\* *point-1* *point-2* => *transform*
+   See also
 
-Arguments
-         
-
-The following arguments are specific to *make-reflection-transform*.
-
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
-
-The following arguments are specific to *make-reflection-transform\**.
-
--  *point1* An instance of type `<point>`_. The
-   first point.
--  *point2* An instance of type `<point>`_. The
-   second point.
-
-Values
-      
-
--  *transform* An instance of type `<transform>`_.
-   The resultant transformation.
-
-Description
-           
-
-Returns a transform that reflects every point through the line passing
-through the positions *x1,y1* and *x2,y2* or through the points *point1*
-and *point2*.
-
-The arguments *x1* and *y1* represent the coordinates of the first point
-of reflection. The arguments *x2* and *y2* represent the coordinates of
-the second point of reflection.
-
-A reflection is a transform that preserves lengths and magnitudes of
-angles, but changes the sign (or handedness) of angles. If you think of
-the drawing plane on a transparent sheet of paper, a reflection is a
-transformation that turns the paper over.
-
-The function *make-reflection-transform\** is identical to
-*make-reflection-transform*, except that it passes composite objects,
-rather than separate coordinates, in its arguments. You should be aware
-that using this function may lead to a loss of performance.
-
-See also
-        
-
-`make-rotation-transform`_
-
-`make-scaling-transform`_
-
-`make-transform`_
-
-`make-translation-transform`_
-
-`<reflection-underspecified>`_
+   - :func:`make-rotation-transform`
+   - :func:`make-scaling-transform`
+   - :func:`make-transform`
+   - :func:`make-translation-transform`
+   - :class:`<reflection-underspecified>`
 
 make-rotation-transform
 -----------------------
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a transform that rotates all points by *angle* around the point
 specified by coordinates *origin-x* and *origin-y* or the point object
 *origin*.
 
-Signature
-         
-
-*make-rotation-transform* *angle* *#key* *origin-x* *origin-y* =>
+   :signature: make-rotation-transform *angle* *#key* *origin-x* *origin-y* =>
 *transform*
 
 make-rotation-transform\* *angle* #key *origin* => *transform*
 
 Arguments
-         
 
--  *angle* An instance of type *<real>*.
+-  *angle* An instance of type ``<real>``.
 
 The following arguments are specific to *make-rotation-transform*.
 
--  *origin-x* An instance of type *<real>*. Default value: *0*.
--  *origin-y* An instance of type *<real>*. Default value: *0*.
+-  *origin-x* An instance of type ``<real>``. Default value: *0*.
+-  *origin-y* An instance of type ``<real>``. Default value: *0*.
 
 The following argument is specific to *make-reflection-transform\**.
 
--  *origin* An instance of type `<point>`_. Default
+-  *origin* An instance of type :class:`<point>`. Default
    value: (0, 0).
 
 Values
-      
 
--  *transform* An instance of type `<transform>`_.
+-  *transform* An instance of type :class:`<transform>`.
 
-Description
-           
+   :description:
 
 Returns a transform that rotates all points by *angle* around the point
 specified by coordinates *origin-x* and *origin-y* or the point object
@@ -1854,62 +1182,47 @@ The function *make-rotation-transform\** is identical to
 rather than separate coordinates, in its arguments. You should be aware
 that using this function may lead to a loss of performance.
 
-See also
-        
+   See also
 
-`make-reflection-transform`_
-
-`make-scaling-transform`_
-
-`make-transform`_
-
-`make-translation-transform`_
+   - :func:`make-reflection-transform`
+   - :func:`make-scaling-transform`
+   - :func:`make-transform`
+   - :func:`make-translation-transform`
 
 make-scaling-transform
 ----------------------
 
 Function
 ''''''''
-
-Summary
-       
-
 Returns a transform that multiplies the *x* -coordinate distance of
 every point from *origin* by *scale-x* and the *y* -coordinate distance
 of every point from *origin* by *scale-y*.
 
-Signature
-         
-
-*make-scaling-transform* *scale-x* *scale-y* #key *origin-x* *origin-y*
-=> *transform*
+   :signature: make-scaling-transform *scale-x* *scale-y* #key *origin-x* *origin-y* => *transform*
 
 make-scaling-transform\* *scale-x* *scale-y* #key *origin* =>
 *transform*
 
 Arguments
-         
 
--  *scale-x* An instance of type *<real>*.
--  *scale-y* An instance of type *<real>*.
+-  *scale-x* An instance of type ``<real>``.
+-  *scale-y* An instance of type ``<real>``.
 
 The following arguments are specific to *make-scaling-transform*.
 
--  *origin-x* An instance of type *<real>*. Default value: 0.
--  *origin-y* An instance of type *<real>*. Default value: 0.
+-  *origin-x* An instance of type ``<real>``. Default value: 0.
+-  *origin-y* An instance of type ``<real>``. Default value: 0.
 
 The following argument is specific to *make-scaling-transform\**.
 
--  *origin* An instance of type `<point>`_.
+-  *origin* An instance of type :class:`<point>`.
 
 Values
-      
 
--  *transform* An instance of type `<transform>`_.
+-  *transform* An instance of type :class:`<transform>`.
    The resultant transformation.
 
-Description
-           
+   :description:
 
 Returns a transform that multiplies the *x* -coordinate distance of
 every point from *origin* by *scale-x* and the *y* -coordinate distance
@@ -1936,2002 +1249,1130 @@ The function *make-scaling-transform\** is identical to
 rather than separate coordinates, in its arguments. You should be aware
 that using this function may lead to a loss of performance.
 
-See also
-        
+   See also
 
-`make-reflection-transform`_
+   - :func:`make-reflection-transform`
+   - :func:`make-rotation-transform`
+   - :func:`make-transform`
+   - :func:`make-translation-transform`
 
-`make-rotation-transform`_
+.. function:: make-transform
 
-`make-transform`_
+   Returns a general affine transform.
 
-`make-translation-transform`_
+   :signature: make-transform *mxx* *mxy* *myx* *myy* *tx* *ty* => *transform*
 
-make-transform
---------------
+   :parameter mxx: An instance of type ``<real>``.
+   :parameter mxy: An instance of type ``<real>``.
+   :parameter myx: An instance of type ``<real>``.
+   :parameter myy: An instance of type ``<real>``.
+   :parameter tx: An instance of type ``<real>``.
+   :parameter ty: An instance of type ``<real>``.
+   :value transform: An instance of type :class:`<transform>`.
 
-Function
-''''''''
+   :description:
 
-Summary
-       
+     Returns a general transform whose effect is::
 
-Returns a general affine transform.
+       x'= *mxx* x + *mxy* y + *tx*
+       y'= *myx* x + *myy* y + *ty*
 
-Signature
-         
+     where *x* and *y* are the coordinates of a point before the transform
+     and *x'* and *y'* are the coordinates of the corresponding point after.
 
-*make-transform* *mxx* *mxy* *myx* *myy* *tx* *ty* => *transform*
+     All of the arguments to ``make-transform`` must be real numbers.
 
-Arguments
-         
+     This is a convenient shorthand for ``make(<transform>, ...)``.
 
--  *mxx* An instance of type *<real>*.
--  *mxy* An instance of type *<real>*.
--  *myx* An instance of type *<real>*.
--  *myy* An instance of type *<real>*.
--  *tx* An instance of type *<real>*.
--  *ty* An instance of type *<real>*.
+   See also
 
-Values
-      
+   - :func:`make-reflection-transform`
+   - :func:`make-rotation-transform`
+   - :func:`make-scaling-transform`
+   - :func:`make-translation-transform`
 
--  *transform* An instance of type `<transform>`_.
+.. function:: make-translation-transform
 
-Description
-           
+   Returns a transform that translates all points by *dx* in the *x*
+   direction and *dy* in the *y* direction.
 
-Returns a general transform whose effect is:
+   :signature: make-translation-transform *dx* *dy* => *transform*
 
-x'= m*xx* x + m*xy* y + t*x*
-                            
+   :parameter dx: An instance of type ``<real>``.
+   :parameter dy: An instance of type ``<real>``.
+   :value transform: An instance of type :class:`<transform>`.
 
-y'= m*yx* x + m*yy* y + t*y*
-                            
+   :description:
 
-where *x* and *y* are the coordinates of a point before the transform
-and *x'* and *y'* are the coordinates of the corresponding point after.
+     Returns a transform that translates all points by *dx* in the *x*
+     direction and *dy* in the *y* direction.
 
-All of the arguments to *make-transform* must be real numbers.
+     The argument *dx* represents the *delta* by which to translate the
+     *x* coordinate.
 
-This is a convenient shorthand for *make(* `See
-<transform>`_*...).*
+     The argument *dy* represents the *delta* by which to translate the
+     *y* coordinate.
 
-See also
-        
+     A translation is a transform that preserves length, angle, and
+     orientation of all geometric entities.
 
-`make-reflection-transform`_
+   See also
 
-`make-rotation-transform`_
+   - :func:`make-reflection-transform`
+   - :func:`make-rotation-transform`
+   - :func:`make-scaling-transform`
+   - :func:`make-transform`
 
-`make-scaling-transform`_
+.. constant:: $nowhere
 
-`make-translation-transform`_
+   The empty region, the opposite of :const:`$everywhere`.
 
-make-translation-transform
---------------------------
+   :type: :class:`<region>`
 
-Function
-''''''''
+   :description:
 
-Summary
-       
+     The empty region, the opposite of :const:`$everywhere`.
 
-Returns a transform that translates all points by *dx* in the *x*
-direction and *dy* in the *y* direction.
+   See also
 
-Signature
-         
+   - :const:`$everywhere`
 
-*make-translation-transform* *dx* *dy* => *transform*
+.. class:: <path>
+   :open:
+   :abstract:
 
-Arguments
-         
+   The class ``<path>`` denotes bounded regions that have dimensionality
+   1 (that is, have length).
 
--  *dx* An instance of type *<real>*.
--  *dy* An instance of type *<real>*.
+   :superclasses: :class:`<region>`
 
-Values
-      
+   :description:
 
--  *transform* An instance of type `<transform>`_.
+     The class ``<path>`` denotes bounded regions that have
+     dimensionality 1 (that is, have length).
 
-Description
-           
+     ``<path>`` is a subclass of :class:`<region>`.
 
-Returns a transform that translates all points by *dx* in the *x*
-direction and *dy* in the *y* direction.
+     Constructing a ``<path>`` object with no length (via
+     :func:`make-line*`, for example) may canonicalize it to
+     :const:`$nowhere`.
 
-The argument *dx* represents the *delta* by which to translate the *x*
-coordinate.
+   :operations:
 
-The argument *dy* represents the *delta* by which to translate the *y*
-coordinate.
+     The following operation is exported from the *DUIM-Geometry* module.
 
-A translation is a transform that preserves length, angle, and
-orientation of all geometric entities.
+     - :gf:`path?`
 
-See also
-        
+   See also
 
-`make-reflection-transform`_
+   - :gf:`path?`
 
-`make-rotation-transform`_
+.. generic-function:: path?
 
-`make-scaling-transform`_
+   Returns ``#t`` if its argument is a path.
 
-`make-transform`_
+   :signature: path? *object* => *boolean*
 
-$nowhere
---------
+   :parameter object: An instance of type ``<object>``.
+   :value boolean: An instance of type ``<boolean>``.
 
-Constant
-''''''''
+   :description:
 
-Summary
-       
+     Returns ``#t`` if *object* is a path, otherwise returns ``#f``.
 
-The empty region, the opposite of `$everywhere`_.
+   See also
 
-Type
-    
+   - :class:`<path>`
 
-*<region>*
+.. class:: <point>
+   :open:
+   :abstract:
+   :instantiable:
 
-Description
-           
+   The class that corresponds to a mathematical point.
 
-The empty region, the opposite of `$everywhere`_.
+   :superclasses: :class:`<region>`
 
-See also
-        
+   :keyword x: An instance of type ``<integer>``.
+   :keyword y: An instance of type ``<integer>``.
 
-`$everywhere`_
+   :description:
 
-<path>
-------
+     The class that corresponds to a mathematical point. ``<point>`` is
+     a subclass of :class:`<region>`. The ``x:`` and ``y:``
+     init-keywords correspond to the x and y coordinates, respectively.
 
-Open abstract class
-'''''''''''''''''''
+   :operations:
 
-Summary
-       
+     The following operations are exported from the *DUIM-Geometry* module.
 
-The class *<path>* denotes bounded regions that have dimensionality 1
-(that is, have length).
+     - :gf:`=`
+     - :gf:`box-edges`
+     - :gf:`point?`
+     - :gf:`point-position`
+     - :gf:`point-x`
+     - :gf:`point-y`
+     - :gf:`region-contains-position?`
+     - :gf:`region-contains-region?`
+     - :gf:`region-intersection`
+     - :gf:`region-intersects-region?`
+     - :gf:`transform-region`
 
-Superclasses
-            
+.. generic-function:: point?
 
-*<region>*
+   Returns true if *object* is a point.
 
-Init-keywords
-             
+   :signature: point? *object* => *boolean*
 
-None.
+   :parameter object: An instance of type ``<object>``.
+   :value boolean: An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-The class *<path>* denotes bounded regions that have dimensionality 1
-(that is, have length).
+     Returns ``#t`` if *object* is a point.
 
-*<path>* is a subclass of *<region>*.
+.. generic-function:: point-position
 
-Constructing a *<path>* object with no length (via *make-line\**, for
-example) may canonicalize it to *$nowhere*.
+   Returns both the *x* and *y* coordinates of a point.
 
-Operations
-          
+   :signature: point-position *point* => *x* *y*
 
-The following operation is exported from the *DUIM-Geometry* module.
+   :parameter point: An instance of type :class:`<point>`.
+   :value x: An instance of type ``<real>``.
+   :value y: An instance of type ``<real>``.
 
--  `path?`_
+   :description:
 
-See also
-        
+     Returns both the *x* and *y* coordinates of the point *point* as
+     two values.
 
-`path?`_
+   See also
 
-path?
------
+   - :gf:`point-x`
+   - :gf:`point-y`
 
-Generic function
-''''''''''''''''
+.. generic-function:: point-x
 
-Summary
-       
+   Returns the *x* coordinate of a point.
 
-Returns *#t* if its argument is a path.
+   :signature: point-x *point* => *x*
 
-Signature
-         
+   :parameter point: An instance of type :class:`<point>`.
+   :value x: An instance of type ``<real>``.
 
-*path?* *object* => *boolean*
+   :description:
 
-Arguments
-         
+     Returns the *x* coordinate of *point*.
 
--  *object* An instance of type *<object>*.
+   See also
 
-Values
-      
+   - :gf:`point-position`
+   - :gf:`point-y`
 
--  *boolean* An instance of type *<boolean>*.
+.. generic-function:: point-y
 
-Description
-           
+   Returns the *y* coordinate of a point.
 
-Returns *#t* if *object* is a path, otherwise returns *#f*.
+   :signature: point-y *point* => *y*
 
-See also
-        
+   :parameter point: An instance of type :class:`<point>`.
+   :value y: An instance of type ``<real>``
 
-`<path>`_
+   :description:
 
-<point>
--------
+     Returns the *y* coordinate of *point*.
 
-Open abstract instantiable class
-''''''''''''''''''''''''''''''''
+   See also
 
-Summary
-       
+   - :gf:`point-position`
+   - :gf:`point-x`
 
-The class that corresponds to a mathematical point.
+.. generic-function:: rectilinear-transform?
 
-Superclasses
-            
+   Returns ``#t`` if a transform always transforms any axis-aligned
+   rectangle into another axis-aligned rectangle.
 
-*<region>*
+   :signature: rectilinear-transform? *transform* => *boolean*
 
-Init-keywords
-             
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
--  *x:* An instance of type *<integer>*.
--  *y:* An instance of type *<integer>*.
+   :description:
 
-Description
-           
+     Returns ``#t`` if the transform *transform* always transforms any
+     axis-aligned rectangle into another axis-aligned rectangle,
+     otherwise returns ``#f``.
 
-The class that corresponds to a mathematical point.*<point>* is a
-subclass of *<region>*. The *x:* and *y:* init-keywords correspond to
-the x and y coordinates, respectively.
+     This category includes scalings as a subset, and also includes 90
+     degree rotations.
 
-Operations
-          
+     Rectilinear transforms are the most general category of transforms
+     for which the bounding rectangle of a transformed object can be
+     found by transforming the bounding rectangle of the original
+     object.
 
-The following operations are exported from the *DUIM-Geometry* module.
+.. generic-function:: reflection-transform?
 
-`=`_ `box-edges`_ `See
-point?`_ `point-position`_ `See
-point-x`_ `point-y`_ `See
-region-contains-position?`_ `See
-region-contains-region?`_ `See
-region-intersection`_ `See
-region-intersects-region?`_
- `transform-region`_
+   Returns ``#t`` if the transform inverts the *handedness* of the
+   coordinate system.
 
-point?
-------
+   :signature: reflection-transform? *transform* => *boolean*
 
-Generic function
-''''''''''''''''
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Summary
-       
+   :description:
 
-Returns true if *object* is a point*.*
+     Returns ``#t`` if the transform *transform* inverts the
+     *handedness* of the coordinate system, otherwise returns *#f.*
 
-Signature
-         
+     Note that this is a very inclusive category — transforms are
+     considered reflections even if they distort, scale, or skew the
+     coordinate system, as long as they invert the handedness.
 
-*point?* *object* => *boolean*
+.. class:: <reflection-underspecified>
+   :sealed:
+   :concrete:
 
-Arguments
-         
+   The error that is signalled when :func:`make-reflection-transform` is
+   given two coincident points.
 
--  *object* An instance of type *<object>*.
+   :superclasses: <transform-underspecified>
 
-Values
-      
+   :keyword points: Instances of type :class:`<point>`.
 
--  *boolean* An instance of type *<boolean>*.
+   :description:
 
-Description
-           
+     The error that is signalled when :func:`make-reflection-transform`
+     is given two coincident points. This condition handles the
+     ``points:`` initarg, which is used to supply the points that are in
+     error.
 
-Returns *#t* if *object* is a point*.*
+   See also
 
-point-position
---------------
+   - :func:`make-reflection-transform`
 
-Generic function
-''''''''''''''''
+.. class:: <region>
+   :open:
+   :abstract:
 
-Summary
-       
+   The class that corresponds to a set of points.
 
-Returns both the *x* and *y* coordinates of a point.
+   :superclasses: <object>
 
-Signature
-         
+   :description:
 
-*point-position* *point* => *x* *y*
+     The class that corresponds to a set of points. The:class:`<region>`
+     class includes both bounded and unbounded regions.
 
-Arguments
-         
+     There is no :drm:`make` method for :class:`<region>` because of the
+     impossibility of a uniform way to specify the arguments to such a
+     function.
 
--  *point* An instance of type `<point>`_.
+   :operations:
 
-Values
-      
+     The following operations are exported from the *DUIM-Geometry* module.
 
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
+     - :gf:`=`
+     - :gf:`do-regions`
+     - :gf:`region?`
+     - :gf:`region-contains-position?`
+     - :gf:`region-contains-region?`
+     - :gf:`region-difference`
+     - :gf:`region-empty?`
+     - :gf:`region-equal`
+     - :gf:`region-intersection`
+     - :gf:`region-intersects-region?`
+     - :gf:`region-set-function`
+     - :gf:`region-set-regions`
+     - :gf:`region-union`
 
-Description
-           
+   See also
 
-Returns both the *x* and *y* coordinates of the point *point* as two
-values.
+   - :gf:`region?`
 
-See also
-        
+.. generic-function:: region?
 
-`point-x`_
+   Returns ``#t`` if its argument is a region.
 
-`point-y`_
+   :signature: region? *object* => *boolean*
 
-point-x
--------
+   :parameter object: An instance of type ``<object>``.
+   :value boolean: An instance of type ``<boolean>``.
 
-Generic function
-''''''''''''''''
+   :description:
 
-Summary
-       
+     Returns ``#t`` if *object* is a region, otherwise returns``#f``.
 
-Returns the *x* coordinate of a point.
+   See also
 
-Signature
-         
+   - :class:`<region>`
 
-*point-x* *point* => *x*
+.. generic-function:: region-contains-position?
 
-Arguments
-         
+   Returns ``#t`` if the point at *x,y* is contained in the region.
 
--  *point* An instance of type `<point>`_.
+   :signature: region-contains-position? *region* *x* *y* => *boolean*
 
-Values
-      
+   :parameter region: An instance of type :class:`<region>`.
+   :parameter x: An instance of type ``<real>``.
+   :parameter y: An instance of type ``<real>``.
+   :value boolean: An instance of type ``<boolean>``.
 
--  *x* An instance of type *<real>*.
+   :description:
 
-Description
-           
+     Returns ``#t`` if the point at *x,y* is contained in the region
+     *region*, otherwise returns ``#f``. Since regions in DUIM are
+     closed, this returns ``#t`` if the point at *x,y* is on the
+     region's boundary.
 
-Returns the *x* coordinate of *point*.
+   See also
 
-See also
-        
+   - :gf:`region-contains-region?`
 
-`point-position`_
+.. generic-function:: region-contains-region?
 
-`point-y`_
+   Returns ``#t`` if all points in the second region are members of the
+   first region.
 
-point-y
--------
+   :signature: region-contains-region? *region1* *region2* => *boolean*
 
-Generic function
-''''''''''''''''
+   :parameter region1: An instance of type :class:`<region>`.
+   :parameter region2: An instance of type :class:`<region>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Summary
-       
+   :description:
 
-Returns the *y* coordinate of a point.
+     Returns ``#t`` if all points in the region *region2* are members of
+     the region *region1*, otherwise returns ``#f``.
+     :gf:`region-contains-position?` is a special case of
+     :gf:`region-contains-region?` in which the region is the point
+     *x,y*.
 
-Signature
-         
+   See also
 
-*point-y* *point* => *y*
+   - :gf:`region-contains-position?`
 
-Arguments
-         
+.. generic-function:: region-difference
 
--  *point* An instance of type `<point>`_.
+   Returns a region that contains all points in the region *region1*
+   that are not in the region *region2* (possibly plus additional
+   boundary points to make the result closed).
 
-Values
-      
+   :signature: region-difference *region1* *region2* => *region*
 
--  *y* An instance of type *<real>*
+   :parameter region1: An instance of type :class:`<region>`.
+   :parameter region2: An instance of type :class:`<region>`.
+   :value region: An instance of type :class:`<region>`.
 
-Description
-           
+   :description:
 
-Returns the *y* coordinate of *point*.
+     Returns a region that contains all points in the region *region1*
+     that are not in the region *region2* (possibly plus additional
+     boundary points to make the result closed).
 
-See also
-        
+     The result of ``region-difference`` has the same dimensionality as
+     *region1*, or is :const:`$nowhere`. For example, the difference of
+     an area and a path produces the same area; the difference of a path
+     and an area produces the path clipped to stay outside of the area.
 
-`point-position`_
+     .. note:: ``region-difference`` may return either a simple region
+        or a region set.
 
-`point-x`_
+.. generic-function:: region-empty?
 
-rectilinear-transform?
-----------------------
+   Returns ``#t`` if the region is empty.
 
-Generic function
-''''''''''''''''
+   :signature: region-empty? *region* => *boolean*
 
-Summary
-       
+   :parameter region: An instance of type :class:`<region>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Returns *#t* if a transform always transforms any axis-aligned rectangle
-into another axis-aligned rectangle.
+   :description:
 
-Signature
-         
+     Returns ``#t`` if the region is empty, otherwise returns ``#f``.
 
-*rectilinear-transform?* *transform* => *boolean*
+.. generic-function:: region-equal
 
-Arguments
-         
+   Returns ``#t`` if the two regions *region1* and *region2* contain
+   exactly the same set of points.
 
--  *transform* An instance of type `<transform>`_.
+   :signature: region-equal *region1* *region2* => *boolean*
 
-Values
-      
+   :parameter region1: An instance of type :class:`<region>`.
+   :parameter region2: An instance of type :class:`<region>`.
+   :value boolean: An instance of type ``<boolean>``.
 
--  *boolean* An instance of type *<boolean>*.
+   :description:
 
-Description
-           
+     Returns ``#t`` if the two regions *region1* and *region2* contain
+     exactly the same set of points, otherwise returns ``#f``. There is
+     a method on :gf:`=` on :class:`<region>` and :class:`<region>` that
+     calls ``region-equal``.
 
-Returns *#t* if the transform *transform* always transforms any
-axis-aligned rectangle into another axis-aligned rectangle, otherwise
-returns *#f*.
+.. generic-function:: region-intersection
 
-This category includes scalings as a subset, and also includes 90 degree
-rotations.
+   Returns the intersection of two regions, as a region.
 
-Rectilinear transforms are the most general category of transforms for
-which the bounding rectangle of a transformed object can be found by
-transforming the bounding rectangle of the original object.
+   :signature: region-intersection *region1* *region2* => *region*
 
-reflection-transform?
----------------------
+   :parameter region1: An instance of type :class:`<region>`.
+   :parameter region2: An instance of type :class:`<region>`.
+   :value region: An instance of type :class:`<region>`.
 
-Generic function
-''''''''''''''''
+   :description:
 
-Summary
-       
+     Returns a region that contains all points that are in both of the
+     regions *region1* and *region2* (possibly with some points removed
+     in order to satisfy the dimensionality rule).
 
-Returns *#t* if the transform inverts the *handedness* of the coordinate
-system*.*
+     The result of ``region-intersection`` has dimensionality that is
+     the minimum dimensionality of *region1* and *region2*, or is
+     :const:`$nowhere`. For example, the intersection of two areas is
+     either another area or :const:`$nowhere`; the intersection of two
+     paths is either another path or :const:`$nowhere`; the intersection
+     of a path and an area produces the path clipped to stay inside of
+     the area.
 
-Signature
-         
+     .. note:: ``region-intersection`` may return either a simple region
+        or a region set.
 
-*reflection-transform?* *transform* => *boolean*
+   See also
 
-Arguments
-         
+   - :gf:`region-union`
 
--  *transform* An instance of type `<transform>`_.
+.. generic-function:: region-intersects-region?
 
-Values
-      
+   Returns ``#f`` if two regions do not intersect*.*
 
--  *boolean* An instance of type *<boolean>*.
+   :signature: region-intersects-region? *region1* *region2* => *boolean*
 
-Description
-           
+   :parameter region1: An instance of type :class:`<region>`.
+   :parameter region2: An instance of type :class:`<region>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Returns *#t* if the transform *transform* inverts the *handedness* of
-the coordinate system, otherwise returns *#f.*
+   :description:
 
-Note that this is a very inclusive category — transforms are considered
-reflections even if they distort, scale, or skew the coordinate system,
-as long as they invert the handedness.
+     Returns ``#f`` if :gf:`region-intersection` of the two regions
+     *region1* and *region2* would be :const:`$nowhere` (that is, they
+     do not intersect), otherwise returns *#t.*
 
-<reflection-underspecified>
----------------------------
+.. class:: <region-set>
+   :open:
+   :abstract:
 
-Sealed concrete class
-'''''''''''''''''''''
+   The class that represents a region set.
 
-Summary
-       
+   :superclasses: :class:`<region>`
 
-The error that is signalled when *make-reflection-transform* is given
-two coincident points.
+   :description:
 
-Superclasses
-            
+     The class that represents a region set; a subclass of
+     :class:`<region>`.
 
-*<transform-underspecified>*
+   :operations:
 
-Init-keywords
-             
+     The following operations are exported from the *DUIM-Geometry* module.
 
--  *points:* Instances of type `<point>`_.
+     - :gf:`box-edges`
+     - :gf:`do-regions`
+     - :gf:`region-contains-position?`
+     - :gf:`region-contains-region?`
+     - :gf:`region-difference`
+     - :gf:`region-empty?`
+     - :gf:`region-intersection`
+     - :gf:`region-set-function`
+     - :gf:`region-set-regions`
+     - :gf:`region-union`
+     - :gf:`transform-region`
 
-Description
-           
+   See also
 
-The error that is signalled when *make-reflection-transform* is given
-two coincident points. This condition handles the *points:* initarg,
-which is used to supply the points that are in error.
+   - :gf:`region-set?`
 
-Operations
-          
+.. generic-function:: region-set?
 
--  None.
+   Returns ``#t`` if its argument is a region set.
 
-See also
-        
+   :signature: region-set? *object* => *boolean*
 
-`make-reflection-transform`_
+   :parameter object: An instance of type ``<object>``.
+   :value boolean: An instance of type ``<boolean>``.
 
-<region>
---------
+   :description:
 
-Open abstract class
-'''''''''''''''''''
+     Returns ``#t`` if *object* is a region set, otherwise returns
+     ``#f``.
 
-Summary
-       
+   See also
 
-The class that corresponds to a set of points.
+   - :class:`<region-set>`
 
-Superclasses
-            
+.. generic-function:: region-set-function
 
-*<object>*
+   Returns the function that composed the region.
 
-Init-keywords
-             
+   :signature: region-set-function *region* => *function*
 
-None.
+   :parameter region: An instance of type :class:`<region>`.
+   :value function: An instance of type ``<function>``.
 
-Description
-           
+   :description:
 
-The class that corresponds to a set of points. The*<region>* class
-includes both bounded and unbounded regions.
+     Returns the function that composed the region,
+     :gf:`region-intersection`, :gf:`region-union`, or
+     :gf:`region-difference`.
 
-There is no *make* method for *<region>* because of the impossibility of
-a uniform way to specify the arguments to such a function.
+.. generic-function:: region-set-regions
 
-Operations
-          
+   Returns a sequence of the regions in the region set.
 
-The following operations are exported from the *DUIM-Geometry* module.
+   :signature: region-set-regions *region* #key *normalize?* => *regions*
 
-`=`_ `do-regions`_ `See
-region?`_ `See
-region-contains-position?`_ `See
-region-contains-region?`_ `See
-region-difference`_ `See
-region-empty?`_ `region-equal`_
-`region-intersection`_ `See
-region-intersects-region?`_ `See
-region-set-function`_ `See
-region-set-regions`_ `See
-region-union`_
+   :parameter region: An instance of type :class:`<region>`.
+   :parameter normalize?: ``one-of(#f, #"x-banding", #"y-banding")``.
+     Default value: ``#f``.
+   :value regions: An instance of type ``limited(<sequence>, of: <region>)``.
 
-See also
-        
+   :conditions:
 
-`region?`_
+     Normalizing a region set that is not composed entirely of axis-aligned
+     rectangles using x- or y-banding causes DUIM to signal the
+     :class:`<region-set-not-rectangular>` error.
 
-region?
--------
+   :description:
 
-Generic function
-''''''''''''''''
+     Returns a sequence of the regions in the region set *region*.
+     *region* can be either a region set or a simple region, in which
+     case the result is simply a sequence of one element: region.
 
-Summary
-       
+     For the case of region sets that are unions of axis-aligned
+     rectangles, the rectangles returned by ``region-set-regions`` are
+     guaranteed not to overlap. If *normalize?* is supplied, it must be
+     either ``#"x-banding"`` or ``#"y-banding"``. If it is
+     ``#"x-banding"`` and all the regions in *region* are axis-aligned
+     rectangles, the result is normalized by merging adjacent rectangles
+     with banding done in the *x* direction. If it is ``#"y-banding"``
+     and all the regions in *region* are rectangles, the result is
+     normalized with banding done in the *y* direction.
 
-Returns *#t* if its argument is a region.
+.. generic-function:: region-union
 
-Signature
-         
+   Returns the union of two regions, as a region.
 
-*region?* *object* => *boolean*
+   :signature: region-union *region1* *region2* => *region*
 
-Arguments
-         
+   :parameter region1: An instance of type :class:`<region>`.
+   :parameter region2: An instance of type :class:`<region>`.
+   :value region: An instance of type :class:`<region>`.
 
--  *object* An instance of type *<object>*.
+   :description:
 
-Values
-      
+     Returns a region that contains all points that are in either of the
+     regions *region1* or *region2* (possibly with some points removed
+     in order to satisfy the dimensionality rule)
 
--  *boolean* An instance of type *<boolean>*.
+     The result of ``region-union`` always has dimensionality that is
+     the maximum dimensionality of *region1* and *region2*. For example,
+     the union of a path and an area produces an area; the union of two
+     paths is a path.
 
-Description
-           
+     .. note:: *region-union* may return either a simple region
+       or a region set.
 
-Returns *#t* if *object* is a region, otherwise returns*#f*.
+   See also
 
-See also
-        
+   - :gf:`region-intersection`
 
-`<region>`_
+.. generic-function:: rigid-transform?
 
-region-contains-position?
--------------------------
+   Returns ``#t`` if the *transform* transforms the coordinate system as
+   a rigid object.
 
-Generic function
-''''''''''''''''
+   :signature: rigid-transform? *transform* => *boolean*
 
-Summary
-       
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Returns *#t* if the point at *x,y* is contained in the region.
+   :description:
 
-Signature
-         
+     Returns ``#t`` if the *transform* transforms the coordinate system
+     as a rigid object, that is, as a combination of translations,
+     rotations, and pure reflections. Otherwise, it returns ``#f``.
 
-*region-contains-position?* *region* *x* *y* => *boolean*
+     Rigid transforms are the most general category of transforms that
+     preserve magnitudes of all lengths and angles.
 
-Arguments
-         
+.. generic-function:: scaling-transform?
 
--  *region* An instance of type *<region>*.
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
+   Returns ``#t`` if the transform *transform* multiplies all *x*
+   lengths by one magnitude and all *y* lengths by another magnitude,
+   otherwise returns ``#f``.
 
-Values
-      
+   :signature: scaling-transform? *transform* => *boolean*
 
--  *boolean* An instance of type *<boolean>*.
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Description
-           
+   :description:
 
-Returns *#t* if the point at *x,y* is contained in the region *region*,
-otherwise returns *#f*. Since regions in DUIM are closed, this returns
-*#t* if the point at *x,y* is on the region's boundary.
+     Returns ``#t`` if the transform *transform* multiplies all *x*
+     lengths by one magnitude and all *y* lengths by another magnitude,
+     otherwise returns ``#f``. This category includes even scalings as a
+     subset.
 
-See also
-        
+.. generic-function:: set-box-edges
 
-`region-contains-region?`_
+   Sets the edges of a box and returns the bounding box.
 
-region-contains-region?
------------------------
+   :signature: set-box-edges *box* *left* *top* *right* *bottom* => *box*
 
-Generic function
-''''''''''''''''
+   :parameter box: An instance of type :class:`<bounding-box>`.
+   :parameter left: An instance of type ``<integer>``.
+   :parameter top: An instance of type ``<integer>``.
+   :parameter right: An instance of type ``<integer>``.
+   :parameter bottom: An instance of type ``<integer>``.
+   :value box: An instance of type :class:`<bounding-box>`.
 
-Summary
-       
+   :description:
 
-Returns *#t* if all points in the second region are members of the first
-region.
+     Sets the edges of a box and returns the bounding box *box*. This
+     might destructively modify *box* or it might not, depending on what
+     class *box* is.
 
-Signature
-         
+.. generic-function:: set-box-position
 
-*region-contains-region?* *region1* *region2* => *boolean*
+   Sets the position of the bounding box and returns a (possibly new)
+   box.
 
-Arguments
-         
+   :signature: set-box-position *box* *x* *y* => *box*
 
--  *region1* An instance of type *<region>*.
--  *region2* An instance of type *<region>*.
+   :parameter box: An instance of type :class:`<bounding-box>`.
+   :parameter x: An instance of type ``<real>``.
+   :parameter y: An instance of type ``<real>``.
+   :value box: An instance of type :class:`<bounding-box>`.
 
-Values
-      
+   :description:
 
--  *boolean* An instance of type *<boolean>*.
+     Sets the position of the bounding box *box* and might or might not
+     modify the box.
 
-Description
-           
+.. generic-function:: set-box-size
 
-Returns *#t* if all points in the region *region2* are members of the
-region *region1*, otherwise returns *#f*.*region-contains-position?*
-is a special case of *region-contains-region?* in which the region is
-the point *x,y*.
+   Sets the size (width and height) of the bounding box *box*.
 
-See also
-        
+   :signature: set-box-size *box* *width* *height* => *box*
 
-`region-contains-position?`_.
+   :parameter box: An instance of type :class:`<bounding-box>`.
+   :parameter width: An instance of type ``<integer>``.
+   :parameter height: An instance of type ``<integer>``
+   :value box: An instance of type :class:`<bounding-box>`.
 
-region-difference
------------------
+   :description:
 
-Generic function
-''''''''''''''''
+     Sets the size (width and height) of the bounding box *box*.
 
-Summary
-       
+.. class:: <singular-transform>
+   :sealed:
+   :instantiable:
 
-Returns a region that contains all points in the region *region1* that
-are not in the region *region2* (possibly plus additional boundary
-points to make the result closed).
+   The error that is signalled when :gf:`invert-transform` is called on
+   a singular transform, that is, a transform that has no inverse.
 
-Signature
-         
+   :superclasses: <transform-error>
 
-*region-difference* *region1* *region2* => *region*
+   :keyword transform: Used to supply the transform that is singular.
 
-Arguments
-         
+   :description:
 
--  *region1* An instance of type *<region>*.
--  *region2* An instance of type *<region>*.
+     The error that is signalled when :gf:`invert-transform` is called
+     on a singular transform, that is, a transform that has no inverse.
 
-Values
-      
+     This condition handles the ``transform:`` initarg, which is used to
+     supply the transform that is singular.
 
--  *region* An instance of type *<region>*.
+   See also
 
-Description
-           
+   - :gf:`invert-transform`
 
-Returns a region that contains all points in the region *region1* that
-are not in the region *region2* (possibly plus additional boundary
-points to make the result closed).
+.. constant:: $smallest-coordinate
 
-The result of *region-difference* has the same dimensionality as
-*region1*, or is *$nowhere*. For example, the difference of an area
-and a path produces the same area; the difference of a path and an area
-produces the path clipped to stay outside of the area.
+   The smallest valid coordinate.
 
-*Note:* *region-difference* may return either a simple region or a
-region set.
+   :type: <integer>
 
-region-empty?
--------------
+   :description:
 
-Generic function
-''''''''''''''''
+     The smallest valid coordinate. Coordinates must be instances of type
+     ``<integer>``.
 
-Summary
-       
+   See also
 
-Returns *#t* if the region is empty.
+   - :const:`$largest-coordinate`
 
-Signature
-         
+.. class:: <transform>
+   :open:
+   :abstract:
+   :instantiable:
 
-*region-empty?* *region* => *boolean*
+   The superclass of all transforms.
 
-Arguments
-         
+   :superclasses: <object>
 
--  *region* An instance of type *<region>*.
+   :keyword mxx: An instance of type ``<real>``.
+   :keyword mxy: An instance of type ``<real>``.
+   :keyword myx: An instance of type ``<real>``.
+   :keyword myy: An instance of type ``<real>``.
+   :keyword tx: An instance of type ``<real>``.
+   :keyword ty: An instance of type ``<real>``.
 
-Values
-      
+   :description:
 
--  *boolean* An instance of type *<boolean>*.
+     The superclass of all transforms. There are one or more subclasses
+     of :class:`<transform>` with implementation-dependent names that
+     implement transforms. The exact names of these classes is
+     explicitly unspecified.
+     All of the instantiable transformation classes provided by DUIM
+     are immutable.
 
-Description
-           
+   :operations:
 
-Returns *#t* if the region is empty, otherwise returns *#f*.
+     The following operations are exported from the *DUIM-Geometry* module.
 
-region-equal
-------------
+     - :gf:`=`
+     - :gf:`compose-rotation-with-transform`
+     - :gf:`compose-scaling-with-transform`
+     - :gf:`compose-transforms`
+     - :gf:`compose-transform-with-translation`
+     - :gf:`compose-translation-with-transform`
+     - :gf:`even-scaling-transform?`
+     - :gf:`identity-transform?`
+     - :gf:`invert-transform`
+     - :gf:`invertible-transform?`
+     - :gf:`rectilinear-transform?`
+     - :gf:`reflection-transform?`
+     - :gf:`rigid-transform?`
+     - :gf:`scaling-transform?`
+     - :gf:`transform-angles`
+     - :gf:`transform-box`
+     - :gf:`transform-distance`
+     - :gf:`transform-position`
+     - :gf:`transform-region`
+     - :gf:`translation-transform?`
+     - :gf:`untransform-angles`
+     - :gf:`untransform-box`
+     - :gf:`untransform-distance`
+     - :gf:`untransform-position`
+     - :gf:`untransform-region`
 
-Generic function
-''''''''''''''''
+   See also
 
-Summary
-       
+   - :gf:`transform?`
 
-Returns *#t* if the two regions *region1* and *region2* contain exactly
-the same set of points.
+.. generic-function:: transform?
 
-Signature
-         
+   Returns ``#t`` if its argument is a transform.
 
-*region-equal* *region1* *region2* => *boolean*
+   :signature: transform? *object* => *boolean*
 
-Arguments
-         
+   :parameter object: An instance of type ``<object>``.
+   :value boolean: An instance of type ``<boolean>``.
 
--  *region1* An instance of type *<region>*.
--  *region2* An instance of type *<region>*.
+   :description:
 
-Values
-      
+     Returns ``#t`` if *object* is a transform, otherwise returns ``#f``.
 
--  *boolean* An instance of type *<boolean>*.
+   See also
 
-Description
-           
+   - :class:`<transform>`
 
-Returns *#t* if the two regions *region1* and *region2* contain exactly
-the same set of points, otherwise returns *#f*. There is a method on
-*=* on *<region>* and *<region>* that calls *region-equal*.
+.. generic-function:: transform-angles
 
-region-intersection
--------------------
+   Applies the transform to the start and end angles of an object, and
+   returns the transformed angles.
 
-Generic function
-''''''''''''''''
+   :signature: transform-angles *transform* *start-angle* *end-angle* => *new-start* *new-end*
 
-Summary
-       
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter start-angle: An instance of type ``<real>``.
+   :parameter end-angle: An instance of type ``<real>``.
+   :value new-start: An instance of type ``<real>``.
+   :value new-end: An instance of type ``<real>``.
 
-Returns the intersection of two regions, as a region.
+   :description:
 
-Signature
-         
+     Applies the transform *transform* to the angles *start-angle* and
+     *end-angle* of an object, and returns the transformed angles.
 
-*region-intersection* *region1* *region2* => *region*
+.. generic-function:: transform-box
 
-Arguments
-         
+   Applies the transform to the rectangle specified by the four
+   coordinate arguments.
 
--  *region1* An instance of type *<region>*.
--  *region2* An instance of type *<region>*.
+   :signature: transform-box *transform* *x1* *y1* *x2* *y2* => *left top* *right bottom*
 
-Values
-      
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter x1: An instance of type ``<real>``.
+   :parameter y1: An instance of type ``<real>``.
+   :parameter x2: An instance of type ``<real>``.
+   :parameter y2: An instance of type ``<real>``.
+   :value left: An instance of type ``<real>``.
+   :value top: An instance of type ``<real>``.
+   :value right: An instance of type ``<real>``.
+   :value bottom: An instance of type ``<real>``.
 
--  *region* An instance of type *<region>*.
+   :description:
 
-Description
-           
+     Applies the transform *transform* to the rectangle specified by the
+     four coordinate arguments. *transform-box* is the spread version of
+     :gf:`transform-region` in the case where the transform is
+     rectilinear and the region is a rectangle.
 
-Returns a region that contains all points that are in both of the
-regions *region1* and *region2* (possibly with some points removed in
-order to satisfy the dimensionality rule).
+     The arguments *x1*, *y1*, *x2*, and *y2* are canonicalized and the
+     four return values specify the minimum and maximum points of the
+     transformed rectangle in the order *left*, *top*, *right*, and
+     *bottom*.
 
-The result of *region-intersection* has dimensionality that is the
-minimum dimensionality of *region1* and *region2*, or is *$nowhere*.
-For example, the intersection of two areas is either another area or
-*$nowhere* ; the intersection of two paths is either another path or
-*$nowhere* ; the intersection of a path and an area produces the path
-clipped to stay inside of the area.
+     An error is signalled if *transform* does not satisfy
+     :gf:`rectilinear-transform?`.
 
-*Note:* *region-intersection* may return either a simple region or a
-region set.
+.. generic-function:: transform-distance
 
-See also
-        
+   Applies a transform to a distance represented by the coordinate
+   arguments and returns the transformed coordinates.
 
-`region-union`_
+   :signature: transform-distance *transform* *dx* *dy* => *dx* *dy*
 
-region-intersects-region?
--------------------------
 
-Generic function
-''''''''''''''''
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter dx: An instance of type ``<real>``.
+   :parameter dy: An instance of type ``<real>``.
+   :value dx: An instance of type ``<real>``.
+   :value dy: An instance of type ``<real>``.
 
-Summary
-       
+   :description:
 
-Returns *#f* if two regions do not intersect*.*
+     Applies the transform *transform* to the distance represented by
+     *dx* and *dy*, and returns the transformed *dx* and *dy*. A
+     distance represents the difference between two points. It does not
+     transform like a point.
 
-Signature
-         
+.. class:: <transform-error>
+   :sealed:
 
-*region-intersects-region?* *region1* *region2* => *boolean*
+   The superclass of all error conditions distributed when there is an
+   error with a transform.
 
-Arguments
-         
+   :superclasses: <error>
 
--  *region1* An instance of type *<region>*.
--  *region2* An instance of type *<region>*.
+   :description:
 
-Values
-      
+     The class that is the superclass of three error conditions,
+     :class:`<transform-underspecified>`,
+     :class:`<reflection-underspecified>`, and
+     :class:`<singular-transform>`.
 
--  *boolean* An instance of type *<boolean>*.
+.. generic-function:: transform-position
 
-Description
-           
+   Applies a transform to the point whose coordinates are *x* and *y*.
 
-Returns *#f* if *region-intersection* of the two regions *region1* and
-*region2* would be *$nowhere* (that is, they do not intersect),
-otherwise returns *#t.*
+   :signature: transform-position *transform* *x* *y* => new-*x* new-*y*
 
-<region-set>
-------------
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter x: An instance of type ``<real>``
+   :parameter y: An instance of type ``<real>``
+   :value new-x: An instance of type ``<real>``
+   :value new-y: An instance of type ``<real>``
 
-Open abstract class
-'''''''''''''''''''
+   :description:
 
-Summary
-       
+     Applies the transform *transform* to the point whose coordinates
+     are *x* and *y*. ``transform-position`` is the *spread* version of
+     :gf:`transform-region` in the case where the region is a point.
 
-The class that represents a region set.
+.. generic-function:: transform-region
 
-Superclasses
-            
+   Applies a transform to a region, and returns the transformed region.
 
-*<region>*
+   :signature: transform-region *transform* *region* => *region*
 
-Init-keywords
-             
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter region: An instance of type :class:`<region>`.
+   :value region: An instance of type :class:`<region>`.
 
-None.
+   :description:
 
-Description
-           
+     Applies *transform* to the region *region*, and returns the transformed
+     region.
 
-The class that represents a region set; a subclass of *<region>*.
+.. class:: <transform-underspecified>
+   :sealed:
+   :concrete:
 
-Operations
-          
+   The error that is signalled when :func:`make-3-point-transform` is
+   given three colinear image points.
 
-The following operations are exported from the *DUIM-Geometry* module.
+   :superclasses: <transform-error>
 
-`box-edges`_ `do-regions`_
-`region-contains-position?`_ `See
-region-contains-region?`_ `See
-region-difference`_ `See
-region-empty?`_ `See
-region-intersection`_ `See
-region-set-function`_ `See
-region-set-regions`_ `See
-region-union`_ `transform-region`_
+   :keyword points: The points that are in error.
 
-See also
-        
+   :description:
 
-`region-set?`_
+     The error that is signalled when :func:`make-3-point-transform` is
+     given three colinear image points. This condition handles the
+     ``points:`` initarg, which is used to supply the points that are in
+     error.
 
-region-set?
------------
+   See also
 
-Generic function
-''''''''''''''''
+   - :func:`make-3-point-transform`
 
-Summary
-       
+.. generic-function:: translation-transform?
 
-Returns *#t* if its argument is a region set.
+   Returns ``#t`` if a transform is a pure translation, that is, a transform
+   such that there are two distance components transform *dx* and *dy* and
+   every point *(x,y)* is moved to *(x+dx,y+dy)*.
 
-Signature
-         
+   :signature: translation-transform? *transform* => *boolean*
 
-*region-set?* *object* => *boolean*
+   :parameter transform: An instance of type :class:`<transform>`.
+   :value boolean: An instance of type ``<boolean>``.
 
-Arguments
-         
+   :description:
 
--  *object* An instance of type *<object>*.
+     Returns ``#t`` if the transform *transform* is a pure translation, that
+     is, a transform such that there are two distance components transform
+     *dx* and *dy* and every point *(x,y)* is moved to *(x+dx,y+dy)*.
+     Otherwise, *translation-transform?* returns ``#f``.
 
-Values
-      
+.. generic-function:: untransform-angles
 
--  *boolean* An instance of type *<boolean>*.
+   Undoes a transform and returns the original start and end angles of
+   the object.
 
-Description
-           
+   :signature: untransform-angles *transform* *start-angle* *end-angle* => *orig-start* *orig-end*
 
-Returns *#t* if *object* is a region set, otherwise returns *#f*.
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter start-angle: An instance of type ``<real>``.
+   :parameter end-angle: An instance of type ``<real>``.
+   :value orig-start: An instance of type ``<real>``.
+   :value orig-end: An instance of type ``<real>``.
 
-See also
-        
+   :conditions:
 
-`<region-set>`_
+     - :class:`<singular-transform>` cannot be inverted.
 
-region-set-function
--------------------
+   :description:
 
-Generic function
-''''''''''''''''
+     Undoes the transform *transform* to the angles *new-start* and*new-end,*
+     returning the original *orig-start* and *orig-end.* This is exactly
+     equivalent to:
 
-Summary
-       
+     .. code-block:: dylan
 
-Returns the function that composed the region.
+       transform-angles(invert-transform(*transform*))
 
-Signature
-         
+.. generic-function:: untransform-box
 
-*region-set-function* *region* => *function*
+   Undoes the previous transformation on the rectangle *left, top* and
+   *right, bottom,* returning the original box.
 
-Arguments
-         
+   :signature: untransform-box *transform x1 y1 x2 y2* => *left top right bottom*
 
--  *region* An instance of type *<region>*.
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter x1: An instance of type ``<real>``.
+   :parameter y1: An instance of type ``<real>``.
+   :parameter x2: An instance of type ``<real>``.
+   :parameter y2: An instance of type ``<real>``.
+   :value left: An instance of type ``<real>``.
+   :value top: An instance of type ``<real>``.
+   :value right: An instance of type ``<real>``.
+   :value bottom: An instance of type ``<real>``.
 
-Values
-      
+   :conditions:
+     - :class:`<singular-transform>` cannot be inverted.
 
--  *function* An instance of type *<function>*.
+   :description:
 
-Description
-           
+     Undoes the previous transformation on the rectangle *top-left-s,
+     top-left-y* and *bottom-right-x, bottom-right-y,* returning the original
+     box. This is exactly equivalent to:
 
-Returns the function that composed the region, *intersection*, *union*
-, or *difference*.
+     .. code-block:: dylan
 
-region-set-regions
-------------------
+       transform-box(invert-transform(*transform*))
 
-Generic function
-''''''''''''''''
+.. generic-function:: untransform-distance
 
-Summary
-       
+   Undoes the previous transformation on the distance *dx,dy*, returning
+   the original *dx,dy*.
 
-Returns a sequence of the regions in the region set.
+   :signature: untransform-distance *transform* *dx* *dy* => *dx* *dy*
 
-Signature
-         
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter dx: An instance of type ``<real>``.
+   :parameter dy: An instance of type ``<real>``.
+   :value dx: An instance of type ``<real>``.
+   :value dy: An instance of type ``<real>``.
 
-*region-set-regions* *region* #key *normalize?* => *regions*
+   :conditions:
 
-Arguments
-         
+     - :class:`<singular-transform>` cannot be inverted.
 
--  *region* An instance of type *<region>*.
--  *normalize?* *one-of(#f, #"x-banding", "y-banding")*. Default value:
-   *#f*.
+   :description:
 
-Values
-      
+     Undoes the previous transformation on the distance *dx,dy*, returning
+     the original *dx,dy*. This is exactly equivalent to:
 
--  *regions* An instance of type *limited(<sequence>, of: <region>)*.
+     .. code-block:: dylan
 
-Exceptions
-          
+       transform-position(invert-transform(*transform*))
 
-Normalizing a region set that is not composed entirely of axis-aligned
-rectangles using x- or y-banding causes DUIM to signal the
-*<region-set-not-rectangular>* error.
+.. generic-function:: untransform-position
 
-Description
-           
+   Undoes the previous transformation on the point *x,y*, returning the
+   original point.
 
-Returns a sequence of the regions in the region set *region*.*region*
-can be either a region set or a simple region, in which case the result
-is simply a sequence of one element: region.
+   :signature: untransform-position *transform* *x* *y* => *x* *y*
 
-For the case of region sets that are unions of axis-aligned rectangles,
-the rectangles returned by *region-set-regions* are guaranteed not to
-overlap. If *normalize* is supplied, it must be either *#"x-banding"* or
-*#"y-banding"*. If it is *#"x-banding"* and all the regions in *region*
-are axis-aligned rectangles, the result is normalized by merging
-adjacent rectangles with banding done in the *x* direction. If it is
-*#"y-banding"* and all the regions in *region* are rectangles, the
-result is normalized with banding done in the *y* direction.
+   :parameter transform* An instance of type :class:`<transform>`.
+   :parameter x: An instance of type ``<real>``.
+   :parameter y: An instance of type ``<real>``.
+   :value x: An instance of type ``<real>``.
+   :value y: An instance of type ``<real>``.
 
-region-union
-------------
+   :conditions:
+     - :class:`<singular-transform>` cannot be inverted.
 
-Generic function
-''''''''''''''''
+   :description:
 
-Summary
-       
+     Undoes the previous transformation on the point *x,y*, returning
+     the original point. This is exactly equivalent to:
 
-Returns the union of two regions, as a region.
+     .. code-block:: dylan
 
-Signature
-         
+       transform-position(invert-transform(*transform*))
 
-*region-union* *region1* *region2* => *region*
+.. generic-function:: untransform-region
 
-Arguments
-         
+   Undoes the previous transformation on a region, returning the
+   original region.
 
--  *region1* An instance of type *<region>*.
--  *region2* An instance of type *<region>*.
+   :signature: untransform-region *transform* *region2* => *region1*
 
-Values
-      
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter region2: An instance of type :class:`<region>`. The region to untransform.
+   :value region1: An instance of type :class:`<region>`. The original region.
 
--  *region* An instance of type *<region>*.
+   :conditions:
 
-Description
-           
+   - :class:`<singular-transform>` cannot be inverted.
 
-Returns a region that contains all points that are in either of the
-regions *region1* or *region2* (possibly with some points removed in
-order to satisfy the dimensionality rule)
+   :description:
 
-The result of *region-union* always has dimensionality that is the
-maximum dimensionality of *region1* and *region2*. For example, the
-union of a path and an area produces an area; the union of two paths is
-a path.
+     Undoes the previous transformation on the region *region*,
+     returning the original region. This is exactly equivalent to
 
-*Note*: *region-union* may return either a simple region or a region
-set.
+     .. code-block:: dylan
 
-See also
-        
-
-`region-intersection`_
-
-rigid-transform?
-----------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Returns *#t* if the *transform* transforms the coordinate system as a
-rigid object.
-
-Signature
-         
-
-*rigid-transform?* *transform* => *boolean*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
-
-Values
-      
-
--  *boolean* An instance of type *<boolean>*.
-
-Description
-           
-
-Returns *#t* if the *transform* transforms the coordinate system as a
-rigid object, that is, as a combination of translations, rotations, and
-pure reflections. Otherwise, it returns *#f*.
-
-Rigid transforms are the most general category of transforms that
-preserve magnitudes of all lengths and angles.
-
-scaling-transform?
-------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Returns *#t* if the transform *transform* multiplies all *x* lengths by
-one magnitude and all *y* lengths by another magnitude, otherwise
-returns *#f*.
-
-Signature
-         
-
-*scaling-transform?* *transform* => *boolean*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
-
-Values
-      
-
--  *boolean* An instance of type *<boolean>*.
-
-Description
-           
-
-Returns *#t* if the transform *transform* multiplies all *x* lengths by
-one magnitude and all *y* lengths by another magnitude, otherwise
-returns *#f*. This category includes even scalings as a subset.
-
-set-box-edges
--------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Sets the edges of a box and returns the bounding box.
-
-Signature
-         
-
-*set-box-edges* *box* *left* *top* *right* *bottom* => *box*
-
-Arguments
-         
-
--  *box* An instance of type *`<bounding-box>`_*.
--  *left* An instance of type *<integer>*.
--  *top* An instance of type *<integer>*.
--  *right* An instance of type *<integer>*.
--  *bottom* An instance of type *<integer>*.
-
-Values
-      
-
--  *box* An instance of type *`<bounding-box>`_*.
-
-Description
-           
-
-Sets the edges of a box and returns the bounding box *box*. This might
-destructively modify *box* or it might not, depending on what class
-*box* is.
-
-set-box-position
-----------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Sets the position of the bounding box and returns a (possibly new) box.
-
-Signature
-         
-
-*set-box-position* *box* *x* *y* => *box*
-
-Arguments
-         
-
--  *box* An instance of type *`<bounding-box>`_*.
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
-
-Values
-      
-
--  *box* An instance of type *`<bounding-box>`_*.
-
-Description
-           
-
-Sets the position of the bounding box *box* and might or might not
-modify the box.
-
-set-box-size
-------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Sets the size (width and height) of the bounding box *box*.
-
-Signature
-         
-
-*set-box-size* *box* *width* *height* => *box*
-
-Arguments
-         
-
--  *box* An instance of type *`<bounding-box>`_*.
--  *width* An instance of type <*integer* >.
--  *height* An instance of type <*integer* >
-
-Values
-      
-
--  *box* An instance of type *`<bounding-box>`_*.
-
-Description
-           
-
-Sets the size (width and height) of the bounding box *box*.
-
-<singular-transform>
---------------------
-
-Sealed instantiable class
-'''''''''''''''''''''''''
-
-Summary
-       
-
-The error that is signalled when *invert-transform* is called on a
-singular transform, that is, a transform that has no inverse.
-
-Superclasses
-            
-
-*<transform-error>*
-
-Init-keywords
-             
-
--  *transform:* Used to supply the transform that is singular.
-
-Description
-           
-
-The error that is signalled when *invert-transform* is called on a
-singular transform, that is, a transform that has no inverse.
-
-This condition handles the *transform:* initarg, which is used to supply
-the transform that is singular.
-
-Operations
-          
-
--  None.
-
-See also
-        
-
-`invert-transform`_
-
-$smallest-coordinate
---------------------
-
-Constant
-''''''''
-
-Summary
-       
-
-The smallest valid coordinate.
-
-Type
-    
-
-*<integer>*
-
-Description
-           
-
-The smallest valid coordinate. Coordinates must be instances of type
-*<integer>*.
-
-See also
-        
-
-`$largest-coordinate`_
-
-<transform>
------------
-
-Open abstract instantiable class
-''''''''''''''''''''''''''''''''
-
-Summary
-       
-
-The superclass of all transforms.
-
-Superclasses
-            
-
-*<object>*
-
-Init-keywords
-             
-
--  *mxx:* An instance of type *<real>*.
--  *mxy:* An instance of type *<real>*.
--  *myx:* An instance of type *<real>*.
--  *myy:* An instance of type *<real>*.
--  *tx:* An instance of type *<real>*.
--  *ty:* An instance of type *<real>*.
-
-Description
-           
-
-The superclass of all transforms. There are one or more subclasses of
-`<transform>`_ with implementation-dependent names
-that implement transforms. The exact names of these classes is
-explicitly unspecified.
-
-All of the instantiable transformation classes provided by DUIM are
-immutable.
-
-Operations
-          
-
-The following operations are exported from the *DUIM-Geometry* module.
-
-`=`_ `See
-compose-rotation-with-transform`_ `See
-compose-scaling-with-transform`_ `See
-compose-transforms`_ `See
-compose-transform-with-translation`_ `See
-compose-translation-with-transform`_ `See
-even-scaling-transform?`_ `See
-identity-transform?`_ `See
-invert-transform`_ `See
-invertible-transform?`_
- `rectilinear-transform?`_ `See
-reflection-transform?`_ `See
-rigid-transform?`_ `See
-scaling-transform?`_ `transform?`_
-`transform-angles`_ `See
-transform-box`_ `See
-transform-distance`_ `See
-transform-position`_ `See
-transform-region`_ `See
-translation-transform?`_ `See
-untransform-angles`_ `See
-untransform-box`_
- `untransform-distance`_ `See
-untransform-position`_
- `untransform-region`_
-
-See also
-        
-
-`transform?`_
-
-transform?
-----------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Returns *#t* if its argument is a transform.
-
-Signature
-         
-
-*transform?* *object* => *boolean*
-
-Arguments
-         
-
--  *object* An instance of type *<object>*.
-
-Values
-      
-
--  *boolean* An instance of type *<boolean>*.
-
-Description
-           
-
-Returns *#t* if *object* is a transform, otherwise returns *#f*.
-
-See also
-        
-
-`<transform>`_
-
-transform-angles
-----------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Applies the transform to the start and end angles of an object, and
-returns the transformed angles.
-
-Signature
-         
-
-*transform-angles* *transform* *start-angle* *end-angle* => *new-start*
-*new-end*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *start-angle* An instance of type *<real>*.
--  *end-angle* An instance of type *<real>*.
-
-Values
-      
-
--  *new-start* An instance of type *<real>*.
--  *new-end* An instance of type *<real>*.
-
-Description
-           
-
-Applies the transform *transform* to the angles *start-angle* and
-*end-angle* of an object, and returns the transformed angles.
-
-transform-box
--------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Applies the transform to the rectangle specified by the four coordinate
-arguments.
-
-Signature
-         
-
-*transform-box* *transform* *x1* *y1* *x2* *y2* => *left top* *right
-bottom*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
-
-Values
-      
-
--  *left* An instance of type *<real>*.
--  *top* An instance of type *<real>*.
--  *right* An instance of type *<real>*.
--  *bottom* An instance of type *<real>*.
-
-Description
-           
-
-Applies the transform *transform* to the rectangle specified by the four
-coordinate arguments. *transform-box* is the spread version of `See
-transform-region`_ in the case where the transform is
-rectilinear and the region is a rectangle.
-
-The arguments *x1*, *y1*, *x2*, and *y2* are canonicalized and the
-four return values specify the minimum and maximum points of the
-transformed rectangle in the order *left*, *top*, *right*, and
-*bottom*.
-
-An error is signalled if *transform* does not satisfy `See
-rectilinear-transform?`_.
-
-transform-distance
-------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Applies a transform to a distance represented by the coordinate
-arguments and returns the transformed coordinates.
-
-Signature
-         
-
-*transform-distance* *transform* *dx* *dy* => *dx* *dy*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *dx* An instance of type *<real>*.
--  *dy* An instance of type *<real>*.
-
-Values
-      
-
--  *dx* An instance of type *<real>*.
--  *dy* An instance of type *<real>*.
-
-Description
-           
-
-Applies the transform *transform* to the distance represented by *dx*
-and *dy*, and returns the transformed *dx* and *dy*. A distance
-represents the difference between two points. It does not transform like
-a point.
-
-<transform-error>
------------------
-
-Sealed class
-''''''''''''
-
-Summary
-       
-
-The superclass of all error conditions distributed when there is an
-error with a transform.
-
-Superclasses
-            
-
-*<error>*
-
-Init-keywords
-             
-
-None.
-
-Description
-           
-
-The class that is the superclass of three error conditions, *`See
-<transform-underspecified>`_*,
- `<reflection-underspecified>`_*,* and
- `<singular-transform>`_.
-
-Operations
-          
-
-None.
-
-transform-position
-------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Applies a transform to the point whose coordinates are *x* and *y*.
-
-Signature
-         
-
-*transform-position* *transform* *x* *y* => new-*x* new-*y*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *x* An instance of type *<real>*
--  *y* An instance of type *<real>*
-
-Values
-      
-
--  *new-x* An instance of type *<real>*
--  *new-y* An instance of type *<real>*
-
-Description
-           
-
-Applies the transform *transform* } to the point whose coordinates are
-*x* and *y*.*transform-position* is the *spread* version of `See
-transform-region`_ in the case where the region is a
-point.
-
-transform-region
-----------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Applies a transform to a region, and returns the transformed region.
-
-Signature
-         
-
-*transform-region* *transform* *region* => *region*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *region* An instance of type *<region>*.
-
-Values
-      
-
--  *region* An instance of type *<region>*.
-
-Description
-           
-
-Applies *transform* to the region *region*, and returns the transformed
-region.
-
-<transform-underspecified>
---------------------------
-
-Sealed concrete class
-'''''''''''''''''''''
-
-Summary
-       
-
-The error that is signalled when *make-3-point-transform* is given three
-colinear image points.
-
-Superclasses
-            
-
-*<transform-error>*
-
-Init-keywords
-             
-
--  *points:* The points that are in error.
-
-Description
-           
-
-The error that is signalled when *make-3-point-transform* is given three
-colinear image points. This condition handles the *points:* initarg,
-which is used to supply the points that are in error.
-
-Operations
-          
-
--  None.
-
-See also
-        
-
-`make-3-point-transform`_
-
-translation-transform?
-----------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Returns *#t* if a transform is a pure translation, that is, a transform
-such that there are two distance components transform *dx* and *dy* and
-every point *(x,y)* is moved to *(x+dx,y+dy)*.
-
-Signature
-         
-
-*translation-transform?* *transform* => *boolean*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
-
-Values
-      
-
--  *boolean* An instance of type *<boolean>*.
-
-Description
-           
-
-Returns *#t* if the transform *transform* is a pure translation, that
-is, a transform such that there are two distance components transform
-*dx* and *dy* and every point *(x,y)* is moved to *(x+dx,y+dy)*.
-Otherwise, *translation-transform?* returns *#f*.
-
-untransform-angles
-------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Undoes a transform and** returns the original start and end angles of
-the object.
-
-Signature
-         
-
-*untransform-angles* *transform* *start-angle* *end-angle* =>
-*orig-start* *orig-end*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *start-angle* An instance of type *<real>*.
--  *end-angle* An instance of type *<real>*.
-
-Values
-      
-
--  *orig-start* An instance of type *<real>*.
--  *orig-end* An instance of type *<real>*.
-
-Exceptions
-          
-
-*<singular-transform>* cannot be inverted.
-
-Description
-           
-
-Undoes the transform *transform* to the angles *new-start* and*new-end,*
-returning the original *orig-start* and *orig-end.* This is exactly
-equivalent to:
-
-transform-angles(invert-transform(*transform*))
-                                                
-
-untransform-box
----------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Undoes the previous transformation on the rectangle *left, top* and
-*right, bottom,* returning the original box.
-
-Signature
-         
-
-*untransform-box* *transform x1 y1 x2 y2* => *left top right bottom*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *x1* An instance of type *<real>*.
--  *y1* An instance of type *<real>*.
--  *x2* An instance of type *<real>*.
--  *y2* An instance of type *<real>*.
-
-Values
-      
-
--  *left* An instance of type *<real>*.
--  *top* An instance of type *<real>*.
--  *right* An instance of type *<real>*.
--  *bottom* An instance of type *<real>*.
-
-Exceptions
-          
-
-*<singular-transform>* cannot be inverted.
-
-Description
-           
-
-Undoes the previous transformation on the rectangle *top-left-s,
-top-left-y* and *bottom-right-x, bottom-right-y,* returning the original
-box. This is exactly equivalent to:
-
-transform-box(invert-transform(*transform*))
-                                             
-
-untransform-distance
---------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Undoes the previous transformation on the distance *dx,dy*, returning
-the original *dx,dy*.
-
-Signature
-         
-
-*untransform-distance* *transform* *dx* *dy* => *dx* *dy*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *dx* An instance of type *<real>*.
--  *dy* An instance of type *<real>*.
-
-Values
-      
-
--  *dx* An instance of type *<real>*.
--  *dy* An instance of type *<real>*.
-
-Exceptions
-          
-
-*<singular-transform>* cannot be inverted.
-
-Description
-           
-
-Undoes the previous transformation on the distance *dx,dy*, returning
-the original *dx,dy*. This is exactly equivalent to:
-
-transform-position(invert-transform(*transform*))
-                                                  
-
-untransform-position
---------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Undoes the previous transformation on the point *x,y*, returning the
-original point.
-
-Signature
-         
-
-*untransform-position* *transform* *x* *y* => *x* *y*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
-
-Values
-      
-
--  *x* An instance of type *<real>*.
--  *y* An instance of type *<real>*.
-
-Exceptions
-          
-
-*<singular-transform>* cannot be inverted.
-
-Description
-           
-
-Undoes the previous transformation on the point *x,y*, returning the
-original point. This is exactly equivalent to:
-
-transform-position(invert-transform(*transform*))
-                                                  
-
-untransform-region
-------------------
-
-Generic function
-''''''''''''''''
-
-Summary
-       
-
-Undoes the previous transformation on a region, returning the original
-region.
-
-Signature
-         
-
-*untransform-region* *transform* *region2* => *region1*
-
-Arguments
-         
-
--  *transform* An instance of type `<transform>`_.
--  *region2* An instance of type *<region>*. The region to untransform.
-
-Values
-      
-
--  *region1* An instance of type *<region>*. The original region.
-
-Exceptions
-          
-
-*<singular-transform>* cannot be inverted.
-
-Description
-           
-
-Undoes the previous transformation on the region *region*, returning
-the original region. This is exactly equivalent to
-
-transform-region(invert-transform(*transform region*))
-                                                       
-
-
+       transform-region(invert-transform(*transform region*))
