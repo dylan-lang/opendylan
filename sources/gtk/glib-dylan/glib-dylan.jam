@@ -1,5 +1,5 @@
 {
   local _dll = [ FDLLName $(image) ] ;
-  LINKLIBS on $(_dll) += `pkg-config --libs glib-2.0` ;
-  CCFLAGS += `pkg-config --cflags glib-2.0` ;
+  LINKLIBS on $(_dll) += `pkg-config --libs glib-2.0 gobject-2.0` ;
+  CCFLAGS += `pkg-config --cflags glib-2.0 gobject-2.0` ;
 }
