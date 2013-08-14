@@ -12283,71 +12283,6 @@ define constant $gtk-path-class = 2;
 define constant <GtkPathType> = <C-int>;
 define C-pointer-type <GtkPathType*> => <GtkPathType>;
 
-define open C-subtype <GtkPlug> (<GtkWindow>)
-  constant slot gtk-plug-window :: <GtkWindow>;
-  constant slot gtk-plug-priv :: <GtkPlugPrivate>;
-end C-subtype;
-
-define C-pointer-type <GtkPlug*> => <GtkPlug>;
-
-define C-function gtk-plug-new
-  input parameter socket_id_ :: <C-unsigned-long>;
-  result res :: <GtkWidget>;
-  c-name: "gtk_plug_new";
-end;
-
-define C-function gtk-plug-new-for-display
-  input parameter display_ :: <GdkDisplay>;
-  input parameter socket_id_ :: <C-unsigned-long>;
-  result res :: <GtkWidget>;
-  c-name: "gtk_plug_new_for_display";
-end;
-
-define C-function gtk-plug-construct
-  input parameter self :: <GtkPlug>;
-  input parameter socket_id_ :: <C-unsigned-long>;
-  c-name: "gtk_plug_construct";
-end;
-
-define C-function gtk-plug-construct-for-display
-  input parameter self :: <GtkPlug>;
-  input parameter display_ :: <GdkDisplay>;
-  input parameter socket_id_ :: <C-unsigned-long>;
-  c-name: "gtk_plug_construct_for_display";
-end;
-
-define C-function gtk-plug-get-embedded
-  input parameter self :: <GtkPlug>;
-  result res :: <C-boolean>;
-  c-name: "gtk_plug_get_embedded";
-end;
-
-define C-function gtk-plug-get-id
-  input parameter self :: <GtkPlug>;
-  result res :: <C-unsigned-long>;
-  c-name: "gtk_plug_get_id";
-end;
-
-define C-function gtk-plug-get-socket-window
-  input parameter self :: <GtkPlug>;
-  result res :: <GdkWindow>;
-  c-name: "gtk_plug_get_socket_window";
-end;
-
-define C-struct <_GtkPlugClass>
-  constant slot gtk-plug-class-parent-class :: <GtkWindowClass>;
-  constant slot gtk-plug-class-embedded :: <C-function-pointer>;
-  constant slot gtk-plug-class-_gtk-reserved1 :: <C-void*>;
-  constant slot gtk-plug-class-_gtk-reserved2 :: <C-void*>;
-  constant slot gtk-plug-class-_gtk-reserved3 :: <C-void*>;
-  constant slot gtk-plug-class-_gtk-reserved4 :: <C-void*>;
-  pointer-type-name: <GtkPlugClass>;
-end C-struct;
-
-define C-struct <_GtkPlugPrivate>
-  pointer-type-name: <GtkPlugPrivate>;
-end C-struct;
-
 define constant $gtk-policy-always = 0;
 define constant $gtk-policy-automatic = 1;
 define constant $gtk-policy-never = 2;
@@ -15882,51 +15817,6 @@ define constant $gtk-size-request-width-for-height = 1;
 define constant $gtk-size-request-constant-size = 2;
 define constant <GtkSizeRequestMode> = <C-int>;
 define C-pointer-type <GtkSizeRequestMode*> => <GtkSizeRequestMode>;
-
-define open C-subtype <GtkSocket> (<GtkContainer>)
-  constant slot gtk-socket-container :: <GtkContainer>;
-  constant slot gtk-socket-priv :: <GtkSocketPrivate>;
-end C-subtype;
-
-define C-pointer-type <GtkSocket*> => <GtkSocket>;
-
-define C-function gtk-socket-new
-  result res :: <GtkWidget>;
-  c-name: "gtk_socket_new";
-end;
-
-define C-function gtk-socket-add-id
-  input parameter self :: <GtkSocket>;
-  input parameter window_ :: <C-unsigned-long>;
-  c-name: "gtk_socket_add_id";
-end;
-
-define C-function gtk-socket-get-id
-  input parameter self :: <GtkSocket>;
-  result res :: <C-unsigned-long>;
-  c-name: "gtk_socket_get_id";
-end;
-
-define C-function gtk-socket-get-plug-window
-  input parameter self :: <GtkSocket>;
-  result res :: <GdkWindow>;
-  c-name: "gtk_socket_get_plug_window";
-end;
-
-define C-struct <_GtkSocketClass>
-  constant slot gtk-socket-class-parent-class :: <GtkContainerClass>;
-  constant slot gtk-socket-class-plug-added :: <C-function-pointer>;
-  constant slot gtk-socket-class-plug-removed :: <C-function-pointer>;
-  constant slot gtk-socket-class-_gtk-reserved1 :: <C-void*>;
-  constant slot gtk-socket-class-_gtk-reserved2 :: <C-void*>;
-  constant slot gtk-socket-class-_gtk-reserved3 :: <C-void*>;
-  constant slot gtk-socket-class-_gtk-reserved4 :: <C-void*>;
-  pointer-type-name: <GtkSocketClass>;
-end C-struct;
-
-define C-struct <_GtkSocketPrivate>
-  pointer-type-name: <GtkSocketPrivate>;
-end C-struct;
 
 define constant $gtk-sort-ascending = 0;
 define constant $gtk-sort-descending = 1;
@@ -23293,12 +23183,6 @@ define C-function gtk-drag-source-set
   c-name: "gtk_drag_source_set";
 end;
 
-define C-function gtk-drag-source-set-icon-gicon
-  input parameter self :: <GtkWidget>;
-  input parameter icon_ :: <GIcon>;
-  c-name: "gtk_drag_source_set_icon_gicon";
-end;
-
 define C-function gtk-drag-source-set-icon-name
   input parameter self :: <GtkWidget>;
   input parameter icon_name_ :: <C-string>;
@@ -25838,14 +25722,6 @@ end;
 define C-function gtk-drag-set-icon-default
   input parameter context_ :: <GdkDragContext>;
   c-name: "gtk_drag_set_icon_default";
-end;
-
-define C-function gtk-drag-set-icon-gicon
-  input parameter context_ :: <GdkDragContext>;
-  input parameter icon_ :: <GIcon>;
-  input parameter hot_x_ :: <C-signed-int>;
-  input parameter hot_y_ :: <C-signed-int>;
-  c-name: "gtk_drag_set_icon_gicon";
 end;
 
 define C-function gtk-drag-set-icon-name

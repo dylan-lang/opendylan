@@ -762,8 +762,6 @@ define property-setter current-page :: <C-signed-int> on <GtkPrintOperation> end
 define property-getter current-page :: <C-signed-int> on <GtkPrintOperation> end;
 define property-setter allow-async :: <C-boolean> on <GtkPrintOperation> end;
 define property-getter allow-async :: <C-boolean> on <GtkPrintOperation> end;
-define property-getter socket-window :: <GdkWindow> on <GtkPlug> end;
-define property-getter embedded :: <C-boolean> on <GtkPlug> end;
 define property-setter position-set :: <C-boolean> on <GtkPaned> end;
 define property-getter position-set :: <C-boolean> on <GtkPaned> end;
 define property-setter position :: <C-signed-int> on <GtkPaned> end;
