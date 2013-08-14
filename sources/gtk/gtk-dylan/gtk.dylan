@@ -1261,7 +1261,7 @@ define C-function gtk-app-chooser-refresh
   c-name: "gtk_app_chooser_refresh";
 end;
 
-define open C-subtype <GtkAppChooserButton> (<GtkComboBox>, <AtkImplementorIface>, <GtkAppChooser>, <GtkBuildable>, <GtkCellEditable>, <GtkCellLayout>)
+define open C-subtype <GtkAppChooserButton> (<GtkComboBox>, <GtkAppChooser>, <GtkCellEditable>, <AtkImplementorIface>, <GtkBuildable>, <GtkCellLayout>)
   constant slot gtk-app-chooser-button-parent :: <GtkComboBox>;
   constant slot gtk-app-chooser-button-priv :: <GtkAppChooserButtonPrivate>;
 end C-subtype;
@@ -1340,7 +1340,7 @@ define C-struct <_GtkAppChooserButtonPrivate>
   pointer-type-name: <GtkAppChooserButtonPrivate>;
 end C-struct;
 
-define open C-subtype <GtkAppChooserDialog> (<GtkDialog>, <AtkImplementorIface>, <GtkAppChooser>, <GtkBuildable>)
+define open C-subtype <GtkAppChooserDialog> (<GtkDialog>, <GtkAppChooser>, <AtkImplementorIface>, <GtkBuildable>)
   constant slot gtk-app-chooser-dialog-parent :: <GtkDialog>;
   constant slot gtk-app-chooser-dialog-priv :: <GtkAppChooserDialogPrivate>;
 end C-subtype;
@@ -1489,7 +1489,7 @@ define C-struct <_GtkAppChooserWidgetPrivate>
   pointer-type-name: <GtkAppChooserWidgetPrivate>;
 end C-struct;
 
-define open C-subtype <GtkApplication> (<GApplication>, <GActionGroup>, <GActionMap>)
+define open C-subtype <GtkApplication> (<GApplication>, <GActionMap>, <GActionGroup>)
   constant slot gtk-application-parent :: <GApplication>;
   constant slot gtk-application-priv :: <GtkApplicationPrivate>;
 end C-subtype;
@@ -1601,7 +1601,7 @@ define C-struct <_GtkApplicationPrivate>
   pointer-type-name: <GtkApplicationPrivate>;
 end C-struct;
 
-define open C-subtype <GtkApplicationWindow> (<GtkWindow>, <AtkImplementorIface>, <GActionGroup>, <GActionMap>, <GtkBuildable>)
+define open C-subtype <GtkApplicationWindow> (<GtkWindow>, <AtkImplementorIface>, <GActionMap>, <GActionGroup>, <GtkBuildable>)
   constant slot gtk-application-window-parent-instance :: <GtkWindow>;
   constant slot gtk-application-window-priv :: <GtkApplicationWindowPrivate>;
 end C-subtype;
@@ -2087,7 +2087,8 @@ define constant $gtk-border-style-ridge = 9;
 define constant <GtkBorderStyle> = <C-int>;
 define C-pointer-type <GtkBorderStyle*> => <GtkBorderStyle>;
 
-define open C-subtype <GtkBox> (<GtkContainer>, <AtkImplementorIface>, <GtkBuildable>, <GtkOrientable>)
+// Missing interface: <AtkImplementorIface>
+define open C-subtype <GtkBox> (<GtkContainer>, <GtkBuildable>, <GtkOrientable>)
   constant slot gtk-box-container :: <GtkContainer>;
   constant slot gtk-box-priv :: <GtkBoxPrivate>;
 end C-subtype;
@@ -2443,7 +2444,7 @@ define C-struct <_GtkBuilderPrivate>
   pointer-type-name: <GtkBuilderPrivate>;
 end C-struct;
 
-define open C-subtype <GtkButton> (<GtkBin>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkButton> (<GtkBin>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-button-bin :: <GtkBin>;
   constant slot gtk-button-priv :: <GtkButtonPrivate>;
 end C-subtype;
@@ -4074,7 +4075,7 @@ define C-struct <_GtkCellViewPrivate>
   pointer-type-name: <GtkCellViewPrivate>;
 end C-struct;
 
-define open C-subtype <GtkCheckButton> (<GtkToggleButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkCheckButton> (<GtkToggleButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-check-button-toggle-button :: <GtkToggleButton>;
 end C-subtype;
 
@@ -4107,7 +4108,7 @@ define C-struct <_GtkCheckButtonClass>
   pointer-type-name: <GtkCheckButtonClass>;
 end C-struct;
 
-define open C-subtype <GtkCheckMenuItem> (<GtkMenuItem>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkCheckMenuItem> (<GtkMenuItem>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-check-menu-item-menu-item :: <GtkMenuItem>;
   constant slot gtk-check-menu-item-priv :: <GtkCheckMenuItemPrivate>;
 end C-subtype;
@@ -4365,7 +4366,7 @@ define C-function gtk-clipboard-wait-is-uris-available
   c-name: "gtk_clipboard_wait_is_uris_available";
 end;
 
-define open C-subtype <GtkColorButton> (<GtkButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>, <GtkColorChooser>)
+define open C-subtype <GtkColorButton> (<GtkButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>, <GtkColorChooser>)
   constant slot gtk-color-button-button :: <GtkButton>;
   constant slot gtk-color-button-priv :: <GtkColorButtonPrivate>;
 end C-subtype;
@@ -4502,7 +4503,7 @@ define C-function gtk-color-chooser-set-use-alpha
   c-name: "gtk_color_chooser_set_use_alpha";
 end;
 
-define open C-subtype <GtkColorChooserDialog> (<GtkDialog>, <AtkImplementorIface>, <GtkBuildable>, <GtkColorChooser>)
+define open C-subtype <GtkColorChooserDialog> (<GtkDialog>, <GtkBuildable>, <GtkColorChooser>)
   constant slot gtk-color-chooser-dialog-parent-instance :: <GtkDialog>;
   constant slot gtk-color-chooser-dialog-priv :: <GtkColorChooserDialogPrivate>;
 end C-subtype;
@@ -4743,7 +4744,7 @@ define C-struct <_GtkColorSelectionPrivate>
   pointer-type-name: <GtkColorSelectionPrivate>;
 end C-struct;
 
-define open C-subtype <GtkComboBox> (<GtkBin>, <AtkImplementorIface>, <GtkBuildable>, <GtkCellEditable>, <GtkCellLayout>)
+define open C-subtype <GtkComboBox> (<GtkBin>, <GtkCellEditable>, <AtkImplementorIface>, <GtkBuildable>, <GtkCellLayout>)
   constant slot gtk-combo-box-parent-instance :: <GtkBin>;
   constant slot gtk-combo-box-priv :: <GtkComboBoxPrivate>;
 end C-subtype;
@@ -5004,7 +5005,7 @@ define C-struct <_GtkComboBoxPrivate>
   pointer-type-name: <GtkComboBoxPrivate>;
 end C-struct;
 
-define open C-subtype <GtkComboBoxText> (<GtkComboBox>, <AtkImplementorIface>, <GtkBuildable>, <GtkCellEditable>, <GtkCellLayout>)
+define open C-subtype <GtkComboBoxText> (<GtkComboBox>, <GtkCellEditable>, <AtkImplementorIface>, <GtkBuildable>, <GtkCellLayout>)
   constant slot gtk-combo-box-text-parent-instance :: <GtkComboBox>;
   constant slot gtk-combo-box-text-priv :: <GtkComboBoxTextPrivate>;
 end C-subtype;
@@ -5092,7 +5093,7 @@ define C-struct <_GtkComboBoxTextPrivate>
   pointer-type-name: <GtkComboBoxTextPrivate>;
 end C-struct;
 
-define open C-subtype <GtkContainer> (<GtkWidget>, <AtkImplementorIface>, <GtkBuildable>)
+define open C-subtype <GtkContainer> (<GtkWidget>, <GtkBuildable>)
   constant slot gtk-container-widget :: <GtkWidget>;
   constant slot gtk-container-priv :: <GtkContainerPrivate>;
 end C-subtype;
@@ -5631,7 +5632,7 @@ define constant $gtk-drag-result-error = 5;
 define constant <GtkDragResult> = <C-int>;
 define C-pointer-type <GtkDragResult*> => <GtkDragResult>;
 
-define open C-subtype <GtkDrawingArea> (<GtkWidget>, <AtkImplementorIface>, <GtkBuildable>)
+define open C-subtype <GtkDrawingArea> (<GtkWidget>, <GtkBuildable>)
   constant slot gtk-drawing-area-widget :: <GtkWidget>;
   constant slot gtk-drawing-area-dummy :: <C-void*>;
 end C-subtype;
@@ -5755,7 +5756,7 @@ define C-struct <_GtkEditableInterface>
   pointer-type-name: <GtkEditableInterface>;
 end C-struct;
 
-define open C-subtype <GtkEntry> (<GtkWidget>, <AtkImplementorIface>, <GtkBuildable>, <GtkCellEditable>, <GtkEditable>)
+define open C-subtype <GtkEntry> (<GtkWidget>, <GtkEditable>, <GtkBuildable>)
   constant slot gtk-entry-parent-instance :: <GtkWidget>;
   constant slot gtk-entry-priv :: <GtkEntryPrivate>;
 end C-subtype;
@@ -7065,7 +7066,7 @@ define constant $gtk-file-chooser-action-create-folder = 3;
 define constant <GtkFileChooserAction> = <C-int>;
 define C-pointer-type <GtkFileChooserAction*> => <GtkFileChooserAction>;
 
-define open C-subtype <GtkFileChooserButton> (<GtkBox>, <AtkImplementorIface>, <GtkBuildable>, <GtkFileChooser>, <GtkOrientable>)
+define open C-subtype <GtkFileChooserButton> (<GtkBox>, <GtkFileChooser>, <GtkOrientable>)
   constant slot gtk-file-chooser-button-parent :: <GtkBox>;
   constant slot gtk-file-chooser-button-priv :: <GtkFileChooserButtonPrivate>;
 end C-subtype;
@@ -7141,7 +7142,7 @@ define constant $gtk-file-chooser-confirmation-select-again = 2;
 define constant <GtkFileChooserConfirmation> = <C-int>;
 define C-pointer-type <GtkFileChooserConfirmation*> => <GtkFileChooserConfirmation>;
 
-define open C-subtype <GtkFileChooserDialog> (<GtkDialog>, <AtkImplementorIface>, <GtkBuildable>, <GtkFileChooser>)
+define open C-subtype <GtkFileChooserDialog> (<GtkDialog>, <GtkFileChooser>)
   constant slot gtk-file-chooser-dialog-parent-instance :: <GtkDialog>;
   constant slot gtk-file-chooser-dialog-priv :: <GtkFileChooserDialogPrivate>;
 end C-subtype;
@@ -7168,7 +7169,7 @@ define constant $gtk-file-chooser-error-incomplete-hostname = 3;
 define constant <GtkFileChooserError> = <C-int>;
 define C-pointer-type <GtkFileChooserError*> => <GtkFileChooserError>;
 
-define open C-subtype <GtkFileChooserWidget> (<GtkBox>, <AtkImplementorIface>, <GtkBuildable>, <GtkFileChooser>, <GtkOrientable>)
+define open C-subtype <GtkFileChooserWidget> (<GtkBox>, <GtkFileChooser>, <GtkBuildable>, <GtkOrientable>)
   constant slot gtk-file-chooser-widget-parent-instance :: <GtkBox>;
   constant slot gtk-file-chooser-widget-priv :: <GtkFileChooserWidgetPrivate>;
 end C-subtype;
@@ -7319,7 +7320,7 @@ define C-struct <_GtkFixedPrivate>
   pointer-type-name: <GtkFixedPrivate>;
 end C-struct;
 
-define open C-subtype <GtkFontButton> (<GtkButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>, <GtkFontChooser>)
+define open C-subtype <GtkFontButton> (<GtkButton>, <GtkActionable>, <GtkActivatable>, <GtkFontChooser>, <GtkBuildable>)
   constant slot gtk-font-button-button :: <GtkButton>;
   constant slot gtk-font-button-priv :: <GtkFontButtonPrivate>;
 end C-subtype;
@@ -9601,7 +9602,7 @@ define C-struct <_GtkImageClass>
   pointer-type-name: <GtkImageClass>;
 end C-struct;
 
-define open C-subtype <GtkImageMenuItem> (<GtkMenuItem>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkImageMenuItem> (<GtkMenuItem>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-image-menu-item-menu-item :: <GtkMenuItem>;
   constant slot gtk-image-menu-item-priv :: <GtkImageMenuItemPrivate>;
 end C-subtype;
@@ -9848,7 +9849,8 @@ define constant $gtk-justify-fill = 3;
 define constant <GtkJustification> = <C-int>;
 define C-pointer-type <GtkJustification*> => <GtkJustification>;
 
-define open C-subtype <GtkLabel> (<GtkMisc>)
+
+define open C-subtype <GtkLabel> (<GtkMisc>, <AtkImplementorIface>, <GtkBuildable>)
   constant slot gtk-label-misc :: <GtkMisc>;
   constant slot gtk-label-priv :: <GtkLabelPrivate>;
 end C-subtype;
@@ -10305,7 +10307,7 @@ define C-struct <_GtkLinkButtonPrivate>
   pointer-type-name: <GtkLinkButtonPrivate>;
 end C-struct;
 
-define open C-subtype <GtkListStore> (<GObject>, <GtkBuildable>, <GtkTreeDragDest>, <GtkTreeDragSource>, <GtkTreeModel>, <GtkTreeSortable>)
+define open C-subtype <GtkListStore> (<GObject>, <GtkBuildable>, <GtkTreeDragDest>, <GtkTreeDragSource>, <GtkTreeSortable>, <GtkTreeModel>)
   constant slot gtk-list-store-parent :: <GObject>;
   constant slot gtk-list-store-priv :: <GtkListStorePrivate>;
 end C-subtype;
@@ -10439,7 +10441,7 @@ define C-struct <_GtkListStorePrivate>
   pointer-type-name: <GtkListStorePrivate>;
 end C-struct;
 
-define open C-subtype <GtkLockButton> (<GtkButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkLockButton> (<GtkButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-lock-button-parent :: <GtkButton>;
   constant slot gtk-lock-button-priv :: <GtkLockButtonPrivate>;
 end C-subtype;
@@ -10732,7 +10734,7 @@ define constant $gtk-menu-dir-prev = 3;
 define constant <GtkMenuDirectionType> = <C-int>;
 define C-pointer-type <GtkMenuDirectionType*> => <GtkMenuDirectionType>;
 
-define open C-subtype <GtkMenuItem> (<GtkBin>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkMenuItem> (<GtkBin>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-menu-item-bin :: <GtkBin>;
   constant slot gtk-menu-item-priv :: <GtkMenuItemPrivate>;
 end C-subtype;
@@ -10988,7 +10990,7 @@ define C-struct <_GtkMenuShellPrivate>
   pointer-type-name: <GtkMenuShellPrivate>;
 end C-struct;
 
-define open C-subtype <GtkMenuToolButton> (<GtkToolButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkMenuToolButton> (<GtkToolButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-menu-tool-button-parent :: <GtkToolButton>;
   constant slot gtk-menu-tool-button-priv :: <GtkMenuToolButtonPrivate>;
 end C-subtype;
@@ -13339,7 +13341,7 @@ define C-struct <_GtkRadioActionPrivate>
   pointer-type-name: <GtkRadioActionPrivate>;
 end C-struct;
 
-define open C-subtype <GtkRadioButton> (<GtkCheckButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkRadioButton> (<GtkCheckButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-radio-button-check-button :: <GtkCheckButton>;
   constant slot gtk-radio-button-priv :: <GtkRadioButtonPrivate>;
 end C-subtype;
@@ -13418,7 +13420,7 @@ define C-struct <_GtkRadioButtonPrivate>
   pointer-type-name: <GtkRadioButtonPrivate>;
 end C-struct;
 
-define open C-subtype <GtkRadioMenuItem> (<GtkCheckMenuItem>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkRadioMenuItem> (<GtkCheckMenuItem>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-radio-menu-item-check-menu-item :: <GtkCheckMenuItem>;
   constant slot gtk-radio-menu-item-priv :: <GtkRadioMenuItemPrivate>;
 end C-subtype;
@@ -13472,7 +13474,7 @@ define C-struct <_GtkRadioMenuItemPrivate>
   pointer-type-name: <GtkRadioMenuItemPrivate>;
 end C-struct;
 
-define open C-subtype <GtkRadioToolButton> (<GtkToggleToolButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkRadioToolButton> (<GtkToggleToolButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-radio-tool-button-parent :: <GtkToggleToolButton>;
 end C-subtype;
 
@@ -15041,7 +15043,7 @@ define C-function gtk-scale-set-value-pos
   c-name: "gtk_scale_set_value_pos";
 end;
 
-define open C-subtype <GtkScaleButton> (<GtkButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>, <GtkOrientable>)
+define open C-subtype <GtkScaleButton> (<GtkButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>, <GtkOrientable>)
   constant slot gtk-scale-button-parent :: <GtkButton>;
   constant slot gtk-scale-button-priv :: <GtkScaleButtonPrivate>;
 end C-subtype;
@@ -15589,7 +15591,7 @@ define C-struct <_GtkSeparatorClass>
   pointer-type-name: <GtkSeparatorClass>;
 end C-struct;
 
-define open C-subtype <GtkSeparatorMenuItem> (<GtkMenuItem>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkSeparatorMenuItem> (<GtkMenuItem>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-separator-menu-item-menu-item :: <GtkMenuItem>;
 end C-subtype;
 
@@ -15823,7 +15825,7 @@ define constant $gtk-sort-descending = 1;
 define constant <GtkSortType> = <C-int>;
 define C-pointer-type <GtkSortType*> => <GtkSortType>;
 
-define open C-subtype <GtkSpinButton> (<GtkEntry>, <AtkImplementorIface>, <GtkBuildable>, <GtkCellEditable>, <GtkEditable>, <GtkOrientable>)
+define open C-subtype <GtkSpinButton> (<GtkEntry>, <AtkImplementorIface>, <GtkCellEditable>, <GtkEditable>, <GtkOrientable>, <GtkBuildable>)
   constant slot gtk-spin-button-entry :: <GtkEntry>;
   constant slot gtk-spin-button-priv :: <GtkSpinButtonPrivate>;
 end C-subtype;
@@ -16980,7 +16982,7 @@ define C-struct <_GtkStyleProviderIface>
   pointer-type-name: <GtkStyleProviderIface>;
 end C-struct;
 
-define open C-subtype <GtkSwitch> (<GtkWidget>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkSwitch> (<GtkWidget>)
   constant slot gtk-switch-parent-instance :: <GtkWidget>;
   constant slot gtk-switch-priv :: <GtkSwitchPrivate>;
 end C-subtype;
@@ -17362,7 +17364,7 @@ define C-function gtk-target-list-unref
   c-name: "gtk_target_list_unref";
 end;
 
-define open C-subtype <GtkTearoffMenuItem> (<GtkMenuItem>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkTearoffMenuItem> (<GtkMenuItem>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-tearoff-menu-item-menu-item :: <GtkMenuItem>;
   constant slot gtk-tearoff-menu-item-priv :: <GtkTearoffMenuItemPrivate>;
 end C-subtype;
@@ -18769,7 +18771,7 @@ define C-struct <_GtkTextTagPrivate>
   pointer-type-name: <GtkTextTagPrivate>;
 end C-struct;
 
-define open C-subtype <GtkTextTagTable> (<GObject>, <GtkBuildable>)
+define open C-subtype <GtkTextTagTable> (<GObject>)
   constant slot gtk-text-tag-table-parent-instance :: <GObject>;
   constant slot gtk-text-tag-table-priv :: <GtkTextTagTablePrivate>;
 end C-subtype;
@@ -18829,7 +18831,7 @@ define C-struct <_GtkTextTagTablePrivate>
   pointer-type-name: <GtkTextTagTablePrivate>;
 end C-struct;
 
-define open C-subtype <GtkTextView> (<GtkContainer>, <AtkImplementorIface>, <GtkBuildable>, <GtkScrollable>)
+define open C-subtype <GtkTextView> (<GtkContainer>, <GtkBuildable>, <GtkScrollable>)
   constant slot gtk-text-view-parent-instance :: <GtkContainer>;
   constant slot gtk-text-view-priv :: <GtkTextViewPrivate>;
 end C-subtype;
@@ -19459,7 +19461,7 @@ define C-struct <_GtkThemingEnginePrivate>
   pointer-type-name: <GtkThemingEnginePrivate>;
 end C-struct;
 
-define open C-subtype <GtkToggleAction> (<GtkAction>, <GtkBuildable>)
+define open C-subtype <GtkToggleAction> (<GtkAction>)
   constant slot gtk-toggle-action-parent :: <GtkAction>;
   constant slot gtk-toggle-action-private-data :: <GtkToggleActionPrivate>;
 end C-subtype;
@@ -19529,7 +19531,7 @@ define C-struct <_GtkToggleActionPrivate>
   pointer-type-name: <GtkToggleActionPrivate>;
 end C-struct;
 
-define open C-subtype <GtkToggleButton> (<GtkButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkToggleButton> (<GtkButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-toggle-button-button :: <GtkButton>;
   constant slot gtk-toggle-button-priv :: <GtkToggleButtonPrivate>;
 end C-subtype;
@@ -19608,7 +19610,7 @@ define C-struct <_GtkToggleButtonPrivate>
   pointer-type-name: <GtkToggleButtonPrivate>;
 end C-struct;
 
-define open C-subtype <GtkToggleToolButton> (<GtkToolButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkToggleToolButton> (<GtkToolButton>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-toggle-tool-button-parent :: <GtkToolButton>;
   constant slot gtk-toggle-tool-button-priv :: <GtkToggleToolButtonPrivate>;
 end C-subtype;
@@ -19652,7 +19654,7 @@ define C-struct <_GtkToggleToolButtonPrivate>
   pointer-type-name: <GtkToggleToolButtonPrivate>;
 end C-struct;
 
-define open C-subtype <GtkToolButton> (<GtkToolItem>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
+define open C-subtype <GtkToolButton> (<GtkToolItem>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>)
   constant slot gtk-tool-button-parent :: <GtkToolItem>;
   constant slot gtk-tool-button-priv :: <GtkToolButtonPrivate>;
 end C-subtype;
@@ -19944,7 +19946,7 @@ define C-struct <_GtkToolItemClass>
   pointer-type-name: <GtkToolItemClass>;
 end C-struct;
 
-define open C-subtype <GtkToolItemGroup> (<GtkContainer>, <AtkImplementorIface>, <GtkBuildable>, <GtkToolShell>)
+define open C-subtype <GtkToolItemGroup> (<GtkContainer>, <AtkImplementorIface>, <GtkToolShell>, <GtkBuildable>)
   constant slot gtk-tool-item-group-parent-instance :: <GtkContainer>;
   constant slot gtk-tool-item-group-priv :: <GtkToolItemGroupPrivate>;
 end C-subtype;
@@ -20315,7 +20317,7 @@ define C-struct <_GtkToolShellIface>
   pointer-type-name: <GtkToolShellIface>;
 end C-struct;
 
-define open C-subtype <GtkToolbar> (<GtkContainer>, <AtkImplementorIface>, <GtkBuildable>, <GtkOrientable>, <GtkToolShell>)
+define open C-subtype <GtkToolbar> (<GtkContainer>, <AtkImplementorIface>, <GtkOrientable>, <GtkToolShell>, <GtkBuildable>)
   constant slot gtk-toolbar-container :: <GtkContainer>;
   constant slot gtk-toolbar-priv :: <GtkToolbarPrivate>;
 end C-subtype;
@@ -20776,7 +20778,7 @@ define C-function gtk-tree-model-unref-node
   c-name: "gtk_tree_model_unref_node";
 end;
 
-define open C-subtype <GtkTreeModelFilter> (<GObject>, <GtkTreeDragSource>, <GtkTreeModel>)
+define open C-subtype <GtkTreeModelFilter> (<GtkTreeModel>, <GtkTreeDragSource>, <GObject>)
   constant slot gtk-tree-model-filter-parent :: <GObject>;
   constant slot gtk-tree-model-filter-priv :: <GtkTreeModelFilterPrivate>;
 end C-subtype;
@@ -20897,7 +20899,7 @@ define C-struct <_GtkTreeModelIface>
   pointer-type-name: <GtkTreeModelIface>;
 end C-struct;
 
-define open C-subtype <GtkTreeModelSort> (<GObject>, <GtkTreeDragSource>, <GtkTreeModel>, <GtkTreeSortable>)
+define open C-subtype <GtkTreeModelSort> (<GObject>, <GtkTreeDragSource>, <GtkTreeSortable>, <GtkTreeModel>)
   constant slot gtk-tree-model-sort-parent :: <GObject>;
   constant slot gtk-tree-model-sort-priv :: <GtkTreeModelSortPrivate>;
 end C-subtype;
@@ -21331,7 +21333,7 @@ define C-struct <_GtkTreeSortableIface>
   pointer-type-name: <GtkTreeSortableIface>;
 end C-struct;
 
-define open C-subtype <GtkTreeStore> (<GObject>, <GtkBuildable>, <GtkTreeDragDest>, <GtkTreeDragSource>, <GtkTreeModel>, <GtkTreeSortable>)
+define open C-subtype <GtkTreeStore> (<GObject>, <GtkTreeDragDest>, <GtkTreeDragSource>, <GtkTreeSortable>, <GtkTreeModel>, <GtkBuildable>)
   constant slot gtk-tree-store-parent :: <GObject>;
   constant slot gtk-tree-store-priv :: <GtkTreeStorePrivate>;
 end C-subtype;
@@ -22900,7 +22902,7 @@ define C-struct <_GtkViewportPrivate>
   pointer-type-name: <GtkViewportPrivate>;
 end C-struct;
 
-define open C-subtype <GtkVolumeButton> (<GtkScaleButton>, <AtkImplementorIface>, <GtkActionable>, <GtkActivatable>, <GtkBuildable>, <GtkOrientable>)
+define open C-subtype <GtkVolumeButton> (<GtkScaleButton>, <GtkActionable>, <GtkActivatable>)
   constant slot gtk-volume-button-parent :: <GtkScaleButton>;
 end C-subtype;
 
@@ -22920,7 +22922,7 @@ define C-struct <_GtkVolumeButtonClass>
   pointer-type-name: <GtkVolumeButtonClass>;
 end C-struct;
 
-define open C-subtype <GtkWidget> (<GInitiallyUnowned>, <AtkImplementorIface>, <GtkBuildable>)
+define open C-subtype <GtkWidget> (<GInitiallyUnowned>, <GtkBuildable>)
   constant slot gtk-widget-parent-instance :: <GInitiallyUnowned>;
   constant slot gtk-widget-priv :: <GtkWidgetPrivate>;
 end C-subtype;
