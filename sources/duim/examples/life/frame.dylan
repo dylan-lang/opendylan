@@ -114,10 +114,10 @@ define method add-pattern-menu-items
     (frame :: <life-frame>) => (buttons :: false-or(<menu-box>))
   let menu
     = block (return)
-	do-command-menu-gadgets(method (menu) return(menu) end,
-				frame, *pattern-command-table*,
-				tool-bar?: #f);
-	#f
+        do-command-menu-gadgets(method (menu) return(menu) end,
+                                frame, *pattern-command-table*,
+                                tool-bar?: #f);
+        #f
       end;
   when (menu)
     let buttons = make(<vector>, size: size(*patterns*));
@@ -134,7 +134,7 @@ define method add-pattern-menu-items
                                             end);
     end for;
     let menu-box = make(<push-menu-box>,
-			children: as(<simple-vector>, buttons));
+                        children: as(<simple-vector>, buttons));
     add-child(menu, menu-box);
     sheet-mapped?(menu-box) := sheet-mapped?(menu);
     menu-box
@@ -239,12 +239,11 @@ define method update-time
   display-time/generation(frame);
 end method update-time;
 
-//--- Note that this is Win32-specific code!
-define constant $life-icon  = read-image-as(<win32-icon>, "LLARGE", #"small-icon");
-define constant $play-icon  = read-image-as(<win32-icon>, "PLAY",   #"small-icon");
-define constant $step-icon  = read-image-as(<win32-icon>, "STEP",   #"small-icon");
-define constant $stop-icon  = read-image-as(<win32-icon>, "STOP",   #"small-icon");
-define constant $erase-icon = read-image-as(<win32-icon>, "ERASE",  #"small-icon");
+define constant $life-icon  = #f;
+define constant $play-icon  = "Play";
+define constant $step-icon  = "Step";
+define constant $stop-icon  = "Stop";
+define constant $erase-icon = "Erase";
 
 define frame <life-frame> (<simple-frame>)
   // Holds current board state, except during do-n-generations.
@@ -281,37 +280,37 @@ define frame <life-frame> (<simple-frame>)
 
   pane display-sheet (frame)   // Sheet on which the life board will be drawn.
     make(<life-sheet>,
-	 width: 500, max-width: $fill,
-	 height: 400, max-height: $fill);
+         width: 500, max-width: $fill,
+         height: 400, max-height: $fill);
 
   pane run-button (frame)
     make(<push-button>,
-	 label: $play-icon,
-	 documentation: "Start",
-	 activate-callback: method (gadget)
+         label: $play-icon,
+         documentation: "Start",
+         activate-callback: method (gadget)
                               com-start(sheet-frame(gadget))
-			    end);
+                            end);
   pane stop-button (frame)
     make(<push-button>,
-	 label: $stop-icon,
-	 documentation: "Stop",
-	 activate-callback: method (g)
+         label: $stop-icon,
+         documentation: "Stop",
+         activate-callback: method (g)
                               com-stop(sheet-frame(g));
-			    end);
+                            end);
   pane step-button (frame)
     make(<push-button>,
-	 label: $step-icon,
-	 documentation: "Step",
-	 activate-callback: method (g)
+         label: $step-icon,
+         documentation: "Step",
+         activate-callback: method (g)
                               com-step(sheet-frame(g));
-			    end);
+                            end);
   pane clear-button (frame)
     make(<push-button>,
-	 label: $erase-icon,
-	 documentation: "Clear All",
-	 activate-callback: method (button)
+         label: $erase-icon,
+         documentation: "Clear All",
+         activate-callback: method (button)
                               com-clear(sheet-frame(button))
-			    end);
+                            end);
   pane cell-size-pane (frame)
     labelling("Cell size:")
       make(<spin-box>,
@@ -393,8 +392,8 @@ define method start-logic-thread (frame :: <life-frame>)
     frame.logic-thread := make(<thread>,
                                function: method ()
                                            life-logic-loop(frame)
-					 end,
-			       name: "Life logic loop");
+                                         end,
+                               name: "Life logic loop");
   end if;
 end method start-logic-thread;
 
@@ -435,25 +434,25 @@ define constant *life-rules*
 define method frame-display-rules (frame :: <life-frame>) => ()
   with-frame-manager (frame-manager(frame))
     let rules = make(<text-editor>,
-		     text: *life-rules*,
-		     read-only?: #t,
+                     text: *life-rules*,
+                     read-only?: #t,
                      scroll-bars: #"vertical",
-		     columns: 80,
-	             lines: 8);
+                     columns: 80,
+                     lines: 8);
     let dialog = make(<dialog-frame>, title: "Rules to the Game of Life",
-		      layout: rules);
+                      layout: rules);
     start-frame(dialog);
   end;
 end method frame-display-rules;
 
 define method format-to-status-bar (frame :: <life-frame>,
-				    format-string :: <string>,
-				    #rest message-args)
+                                    format-string :: <string>,
+                                    #rest message-args)
  => ()
   local method do-format-to-status-bar ()
-	  let message = apply(format-to-string, format-string, message-args);
+          let message = apply(format-to-string, format-string, message-args);
           frame-status-message(frame) := message;
-	end method;
+        end method;
   call-in-frame(frame, do-format-to-status-bar);
 end method format-to-status-bar;
 
@@ -467,9 +466,9 @@ define method clear-board (frame :: <life-frame>) => ()
     with-board-size(board, rows, cols)
       let dead = set-modified(set-alive(0, #f), #f);
       for (row :: <integer> from 0 below rows)
-	for (col :: <integer> from 0 below cols)
-	  set-cell(board, dead, row, col);
-	end for;
+        for (col :: <integer> from 0 below cols)
+          set-cell(board, dead, row, col);
+        end for;
       end for;
     end;
     frame.live-cell-count := 0;
@@ -488,4 +487,3 @@ define method initialize-game
   end if;
   display-all(frame);
 end method initialize-game;
-
