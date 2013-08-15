@@ -116,7 +116,7 @@ define method widget-size
  => (width :: <integer>, height :: <integer>)
   with-stack-structure (request :: <GtkRequisition>)
     with-gdk-lock
-      gtk-widget-size-request(widget, request);
+      gtk-widget-get-preferred-size(widget, null-pointer(<GtkRequisition>), request);
     end;
     duim-debug-message("widget-size for %= is %=x%=",
                        widget,
@@ -1987,7 +1987,6 @@ define method make-gtk-mirror
   with-gdk-lock
    let widget = gtk-viewport-new(gtk-adjustment-new(0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0),
                                  gtk-adjustment-new(0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0));
-//   gtk-widget-set-size-request(widget, 200, 200);
    make(<drawing-area-mirror>,
         widget: widget,
         sheet:  sheet);
