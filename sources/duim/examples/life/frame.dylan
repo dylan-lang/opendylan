@@ -239,12 +239,11 @@ define method update-time
   display-time/generation(frame);
 end method update-time;
 
-//--- Note that this is Win32-specific code!
-define constant $life-icon  = read-image-as(<win32-icon>, "LLARGE", #"small-icon");
-define constant $play-icon  = read-image-as(<win32-icon>, "PLAY",   #"small-icon");
-define constant $step-icon  = read-image-as(<win32-icon>, "STEP",   #"small-icon");
-define constant $stop-icon  = read-image-as(<win32-icon>, "STOP",   #"small-icon");
-define constant $erase-icon = read-image-as(<win32-icon>, "ERASE",  #"small-icon");
+define constant $life-icon  = #f;
+define constant $play-icon  = "Play";
+define constant $step-icon  = "Step";
+define constant $stop-icon  = "Stop";
+define constant $erase-icon = "Erase";
 
 define frame <life-frame> (<simple-frame>)
   // Holds current board state, except during do-n-generations.
