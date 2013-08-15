@@ -30,12 +30,12 @@ define method life-logic-loop (frame :: <life-frame>) => ()
       // to wait-for atomically releases the lock frame.lock and starts blocking,
       // waiting for another thread to release the notification.
       with-lock(frame.lock)
-	if (frame.command == #"stop")
-	  wait-for(frame.user-input-received);
-	end if;
+        if (frame.command == #"stop")
+          wait-for(frame.user-input-received);
+        end if;
       end;
       if (frame.command ~== #"exit")
-	clear-status-bar(frame);
+        clear-status-bar(frame);
       end;
       while(frame.command == #"run")
         with-sheet-medium (medium = display-sheet(frame))
@@ -55,16 +55,16 @@ define method life-logic-loop (frame :: <life-frame>) => ()
           update-time(frame, sec, usec);
           update-live-cell-count(frame, cell-delta);
                 
-	  // new-board contains the new current board.  swap if necessary.
-	  if (new-board ~== frame.current-board)
-	    frame.buffer-board := frame.current-board;
-	    frame.current-board := new-board;
-	  end if;
+          // new-board contains the new current board.  swap if necessary.
+          if (new-board ~== frame.current-board)
+            frame.buffer-board := frame.current-board;
+            frame.current-board := new-board;
+          end if;
           call-in-frame(frame, display-changed-cells, frame, frame.current-board);
-	  // Wait for the redisplay to complete before letting this thread
-	  // continue, else it may be possible for this thread to swamp the
-	  // main thread with events, making it hard for the user to interact
-	  // with the application (e.g., click the Stop button).
+          // Wait for the redisplay to complete before letting this thread
+          // continue, else it may be possible for this thread to swamp the
+          // main thread with events, making it hard for the user to interact
+          // with the application (e.g., click the Stop button).
           with-lock(frame.lock)
             wait-for(frame.display-done)
           end;
@@ -111,8 +111,8 @@ end method current-color;
 
 // Display a single cell in the life world.
 define method display-one-cell (frame :: <life-frame>, sheet :: <life-sheet>,
-				row :: <integer>, col :: <integer>,
-				#key value)
+                                row :: <integer>, col :: <integer>,
+                                #key value)
  => ()
   with-sheet-medium (medium = sheet)
     display-one-cell(frame, medium, row, col, value: value);
@@ -120,16 +120,16 @@ define method display-one-cell (frame :: <life-frame>, sheet :: <life-sheet>,
 end method display-one-cell;
 
 define method display-one-cell (frame :: <life-frame>, medium :: <medium>,
-				row :: <integer>, col :: <integer>,
-				#key value)
+                                row :: <integer>, col :: <integer>,
+                                #key value)
  => ()
   value := value | get-cell(frame.current-board, row, col);
   with-drawing-options (medium,
                         brush: if(alive?(value))
-				 current-color(frame)
-			       else
+                                 current-color(frame)
+                               else
                                  $background
-			       end)
+                               end)
     let cell-size = frame.cell-size;
     let x1 = col * cell-size;
     let y1 = row * cell-size;

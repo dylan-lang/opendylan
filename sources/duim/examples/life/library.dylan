@@ -17,7 +17,7 @@ end library life;
 
 define module life
   use common-dylan;
-  use simple-random;		// exported from common-dylan
+  use simple-random;            // exported from common-dylan
   use simple-profiling;
   use operating-system;         // exported from system
   use threads;
@@ -25,9 +25,6 @@ define module life
   use duim;
   use duim-internals,
     import: { do-command-menu-gadgets };
-  // The following is for giving the app an associated icon.
-  use win32-duim,
-    import: { <win32-icon> };
 
   export <life-frame>,
          life;
