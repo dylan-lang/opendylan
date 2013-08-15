@@ -24,7 +24,7 @@ So far, we have a new set of GTK+ bindings for GTK+ 3.x available
 in `sources/gtk`_ and have begun the work to update the old
 `DUIM GTK+`_ back-end and make further improvements.
 
-At this point, we would welcome some assistance. We have
+At this point, we would welcome some assistance. There are
 further improvements to make to the GTK+ bindings and a lot of
 work to do on DUIM/Gtk. (We have started building a
 `list of bugs`_.) We've also started to collect some notes
