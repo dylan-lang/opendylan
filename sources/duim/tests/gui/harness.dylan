@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define variable *test-frames* = make(<stretchy-vector>);
 
-define variable *use-threads?* :: <boolean> = #t;
+define variable *use-threads?* :: <boolean> = #f;
 
 define method find-test-class (class :: <class>)
   block (return)
