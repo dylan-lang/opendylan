@@ -1,3 +1,7 @@
+:doc:`Bringing Back DUIM/Gtk </news/2013/08/15/duim-gtk>` *- 2013-08-15*
+  We're bringing back the GTK+ backend for DUIM, the Dylan UI framework.
+  See how you can help!
+
 :doc:`New release: 2013.1 </news/2013/07/11/new-release>` *- 2013-07-11*
   We just released Open Dylan 2013.1 in preparation for the
   hack-a-thon.
@@ -9,8 +13,3 @@
   <https://github.com/dylan-lang/opendylan/wiki>`_ that we're
   collecting and some people will bring their own Dylan-related
   projects.
-
-:doc:`Updated Dylan Programming Guide </news/2013/01/21/dylan-programming-guide>` *— 2013-01-21*
-  The Dylan Programming Guide has been updated to our
-  new documentation format and is now available in
-  PDF and ePub formats.
