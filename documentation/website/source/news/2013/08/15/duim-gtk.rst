@@ -14,7 +14,7 @@ originally cross-platform, the only back-end that works now
 is for Windows.  Bringing back the GTK+ back-end and completing
 it will enable us to support Linux, FreeBSD and perhaps Mac OS X.
 
-This is a great first step towards making the IDE more widely
+This is a great first step towards making the `IDE`_ more widely
 available. Apart from being able to use the IDE on additional
 platforms, which is great in and of itself, having the IDE available to
 more of us makes it easier to fix bugs and improve the functionality
@@ -34,6 +34,7 @@ If you're interested in learning more or helping out, get
 in touch with us on `IRC or the mailing list`_!
 
 .. _DUIM: http://opendylan.org/documentation/building-with-duim/
+.. _IDE: http://opendylan.org/documentation/getting-started-ide/
 .. _sources/gtk: https://github.com/dylan-lang/opendylan/tree/master/sources/gtk
 .. _DUIM GTK+: https://github.com/dylan-lang/opendylan/tree/master/sources/duim/gtk
 .. _list of bugs: https://github.com/dylan-lang/opendylan/issues?labels=DUIM+%2F+Gtk&page=1&state=open
