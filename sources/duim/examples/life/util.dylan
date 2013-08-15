@@ -104,8 +104,8 @@ define macro with-board-size
      ?:body
     end
   } => { let board = ?board;
-	 let ?rows :: <integer> = board-rows(board);
-	 let ?cols :: <integer> = board-columns(board);
-	 ?body
+         let ?rows :: <integer> = board-rows(board);
+         let ?cols :: <integer> = board-columns(board);
+         ?body
        }
 end macro;

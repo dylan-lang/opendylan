@@ -29,7 +29,7 @@ define method handle-repaint
 end method handle-repaint;
 
 
-define method handler-helper		   // get it?
+define method handler-helper               // get it?
     (sheet :: <life-sheet>, x :: <integer>, y :: <integer>,
      dragging? :: <boolean>)
  => ()
@@ -42,25 +42,25 @@ define method handler-helper		   // get it?
   // This works for both rows and columns since the board is aligned
   // to the upper-left corner of the sheet.
   local method coord-to-index(n :: <integer>)
-	  floor/(n, frame.cell-size);
-	end;
+          floor/(n, frame.cell-size);
+        end;
   let row = coord-to-index(y);
   let col = coord-to-index(x);
   if (row >= 0 & row < rows & col >= 0 & col < cols)
     let old-val :: <integer> = get-cell(board, row, col);
     let was-alive? :: <boolean> = alive?(old-val);
     let val = if (dragging?)
-		sheet.saved-val;
-	      else
+                sheet.saved-val;
+              else
                 if (was-alive?)
                   set-alive(0, #f)
                 else
                   set-alive(0, #t)
                 end if;
-	      end if;
+              end if;
     if (~dragging?
-	  | saved-row ~== row
-	  | saved-col ~== col)
+          | saved-row ~== row
+          | saved-col ~== col)
       set-cell(board, val, row, col);
       if (alive?(val) ~== alive?(old-val))
         frame.live-cell-count
