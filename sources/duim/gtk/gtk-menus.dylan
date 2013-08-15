@@ -363,7 +363,7 @@ end method refresh-menu-bar;
 
 /// Menu buttons
 
-define open abstract class <gtk-menu-button-mixin>
+define abstract class <gtk-menu-button-mixin>
     (<gtk-gadget-mixin>,
      <value-gadget>)
 end class <gtk-menu-button-mixin>;

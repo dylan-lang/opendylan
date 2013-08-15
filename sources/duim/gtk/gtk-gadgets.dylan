@@ -28,7 +28,7 @@ define open abstract class <gtk-gadget-mixin>
   //   init-keyword: gtk-fixed-height?:;
 end class <gtk-gadget-mixin>;
 
-define open generic %gtk-fixed-width?
+define generic %gtk-fixed-width?
     (gadget :: <gtk-gadget-mixin>)
  => (fixed? :: <boolean>);
 
@@ -38,7 +38,7 @@ define method %gtk-fixed-width?
   #f;
 end method;
 
-define open generic %gtk-fixed-height?
+define generic %gtk-fixed-height?
     (gadget :: <gtk-gadget-mixin>)
  => (fixed? :: <boolean>);
 
@@ -799,7 +799,7 @@ define abstract class <gtk-text-field-mixin>
   keyword gtk-fixed-height?: = #t;
 end class <gtk-text-field-mixin>;
 
-define open generic %gtk-text-visibility
+define generic %gtk-text-visibility
     (gadget :: <gtk-text-field-mixin>)
  => (fixed? :: <boolean>);
 
