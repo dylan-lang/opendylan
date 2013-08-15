@@ -1186,10 +1186,10 @@ define sealed method handle-gtk-select-row-event
 
   for (path in selected-paths)
     with-stack-structure (iter :: <GtkTreeIter>)
-      gtk-tree-model-get-iter(model[0], iter, path);
+      gtk-tree-model-get-iter(model, iter, path);
       with-stack-structure (value :: <GValue>)
         g-value-nullify(value);
-        gtk-tree-model-get-value(model[0], iter, 0, value);
+        gtk-tree-model-get-value(model, iter, 0, value);
         add!(new-selection, g-value-to-dylan(value));
       end;
     end;
