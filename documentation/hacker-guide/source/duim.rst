@@ -34,5 +34,12 @@ We have not yet integrated GTK+'s Mac OS X integration module, so
 the menu bar will not (yet) be integrated with the system menu bar
 when running a DUIM application.
 
+.. note:: GTK+ will be built as a 64 bit binary. This means that
+   your Dylan code will also have to be built as a 64 bit binary.
+   Doing this requires a build of Open Dylan from the master branch.
+   Once you have a current build of Open Dylan, set the
+   ``OPEN_DYLAN_TARGET_PLATFORM`` environment variable to
+   ``x86_64-darwin`` and your builds will be 64 bit.
+
 .. _gir-dylan: https://github.com/dylan-foundry/gir-dylan
 .. _directions: https://wiki.gnome.org/GTK+/OSX/Building
