@@ -57,7 +57,7 @@ define module gtk-duim
          handle-gtk-key-press-event,
          handle-gtk-key-release-event,
          handle-gtk-configure-event,
-         handle-gtk-expose-event,
+         handle-gtk-draw-event,
          handle-gtk-enter-event,
          handle-gtk-leave-event,
          handle-gtk-clicked-event,
