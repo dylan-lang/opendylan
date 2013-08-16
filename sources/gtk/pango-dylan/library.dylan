@@ -10,7 +10,7 @@ define library pango
   use cairo;
   use glib;
 
-  export pango;
+  export pango, pango-cairo;
 end library;
 
 define module pango
