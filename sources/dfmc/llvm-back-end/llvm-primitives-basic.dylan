@@ -36,7 +36,8 @@ end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-raw-as-boolean
     (x :: <raw-boolean>) => (true? :: <boolean>)
-  let cmp = ins--icmp-ne(be, x, 0);
+  let zero = make(<llvm-integer-constant>, type: llvm-value-type(x), integer: 0);
+  let cmp = ins--icmp-ne(be, x, zero);
   op--boolean(be, cmp)
 end;
 
