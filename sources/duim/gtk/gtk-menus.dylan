@@ -90,86 +90,84 @@ define sealed class <popup-menu-mirror> (<menu-mirror>)
   sealed slot mirror-selected-gadget :: false-or(<gadget>) = #f;
 end class <popup-menu-mirror>;
 
-
-/// Mnemonic handling
-///---*** Is this the right thing for GTK?
 
+/// Mnemonic handling
 define table $mnemonic-table :: <object-table>
   = { // This is the set defined by WIG, Appendix B, Table B.5, page 441
-      #"About"                => "&About",
-      #"Always on Top"        => "Always on &Top",
-      #"Apply"                => "&Apply",
-      #"Back"                 => "&Back",
-      #"< Back"               => "< &Back",
-      #"Browse"               => "&Browse",
-      #"Close"                => "&Close",
-      #"Copy"                 => "&Copy",
-      #"Copy Here"            => "&Copy Here",
-      #"Create Shortcut"      => "Create &Shortcut",
-      #"Create Shortcut Here" => "Create &Shortcut Here",
-      #"Cut"                  => "Cu&t",
-      #"Delete"               => "&Delete",
-      #"Edit"                 => "&Edit",
-      #"Exit"                 => "E&xit",
-      #"Explore"              => "&Explore",
-      #"File"                 => "&File",
-      #"Find"                 => "&Find",
-      #"Help"                 => "&Help",
-      #"Help Topics"          => "Help &Topics",
-      #"Hide"                 => "&Hide",
-      #"Insert"               => "&Insert",
-      #"Insert Object"        => "Insert &Object",
-      #"Link Here"            => "&Link Here",
-      #"Maximize"             => "Ma&ximize",
-      #"Minimize"             => "Mi&nimize",
-      #"Move"                 => "&Move",
-      #"Move Here"            => "&Move Here",
-      #"New"                  => "&New",
-      #"Next"                 => "&Next",
-      #"Next >"               => "&Next >",
-      #"No"                   => "&No",
-      #"Open"                 => "&Open",
-      #"Open With"            => "Open &With",
-      #"Paste"                => "&Paste",
-      #"Paste Link"           => "Paste &Link",
-      #"Paste Shortcut"       => "Paste &Shortcut",
-      #"Page Setup"           => "Page Set&up",
-      #"Paste Special"        => "Paste &Special",
-      #"Pause"                => "&Pause",
-      #"Play"                 => "&Play",
-      #"Print"                => "&Print",
-      #"Print Here"           => "&Print Here",
-      #"Properties"           => "P&roperties",
-      #"Quick View"           => "&Quick View",
-      #"Redo"                 => "&Redo",
-      #"Repeat"               => "&Repeat",
-      #"Restore"              => "&Restore",
-      #"Resume"               => "&Resume",
-      #"Retry"                => "&Retry",
-      #"Run"                  => "&Run",
-      #"Save"                 => "&Save",
-      #"Save As"              => "Save &As",
-      #"Select All"           => "Select &All",
-      #"Send To"              => "Se&nd To",
-      #"Show"                 => "&Show",
-      #"Size"                 => "&Size",
-      #"Split"                => "S&plit",
-      #"Stop"                 => "&Stop",
-      #"Undo"                 => "&Undo",
-      #"View"                 => "&View",
-      #"What's This?"         => "&What's This?",
-      #"Window"               => "&Window",
-      #"Yes"                  => "&Yes",
+      #"About"                => "_About",
+      #"Always on Top"        => "Always on _Top",
+      #"Apply"                => "_Apply",
+      #"Back"                 => "_Back",
+      #"< Back"               => "< _Back",
+      #"Browse"               => "_Browse",
+      #"Close"                => "_Close",
+      #"Copy"                 => "_Copy",
+      #"Copy Here"            => "_Copy Here",
+      #"Create Shortcut"      => "Create _Shortcut",
+      #"Create Shortcut Here" => "Create _Shortcut Here",
+      #"Cut"                  => "Cu_t",
+      #"Delete"               => "_Delete",
+      #"Edit"                 => "_Edit",
+      #"Exit"                 => "E_xit",
+      #"Explore"              => "_Explore",
+      #"File"                 => "_File",
+      #"Find"                 => "_Find",
+      #"Help"                 => "_Help",
+      #"Help Topics"          => "Help _Topics",
+      #"Hide"                 => "_Hide",
+      #"Insert"               => "_Insert",
+      #"Insert Object"        => "Insert _Object",
+      #"Link Here"            => "_Link Here",
+      #"Maximize"             => "Ma_ximize",
+      #"Minimize"             => "Mi_nimize",
+      #"Move"                 => "_Move",
+      #"Move Here"            => "_Move Here",
+      #"New"                  => "_New",
+      #"Next"                 => "_Next",
+      #"Next >"               => "_Next >",
+      #"No"                   => "_No",
+      #"Open"                 => "_Open",
+      #"Open With"            => "Open _With",
+      #"Paste"                => "_Paste",
+      #"Paste Link"           => "Paste _Link",
+      #"Paste Shortcut"       => "Paste _Shortcut",
+      #"Page Setup"           => "Page Set_up",
+      #"Paste Special"        => "Paste _Special",
+      #"Pause"                => "_Pause",
+      #"Play"                 => "_Play",
+      #"Print"                => "_Print",
+      #"Print Here"           => "_Print Here",
+      #"Properties"           => "P_roperties",
+      #"Quick View"           => "_Quick View",
+      #"Redo"                 => "_Redo",
+      #"Repeat"               => "_Repeat",
+      #"Restore"              => "_Restore",
+      #"Resume"               => "_Resume",
+      #"Retry"                => "_Retry",
+      #"Run"                  => "_Run",
+      #"Save"                 => "_Save",
+      #"Save As"              => "Save _As",
+      #"Select All"           => "Select _All",
+      #"Send To"              => "Se_nd To",
+      #"Show"                 => "_Show",
+      #"Size"                 => "_Size",
+      #"Split"                => "S_plit",
+      #"Stop"                 => "_Stop",
+      #"Undo"                 => "_Undo",
+      #"View"                 => "_View",
+      #"What's This?"         => "_What's This?",
+      #"Window"               => "_Window",
+      #"Yes"                  => "_Yes",
 
       // Some extras that seemed to be missing
-      #"Find Next"            => "Find &Next",
-      #"Find Previous"        => "Find &Previous",
-      #"Forward"              => "&Forward",
-      #"Previous"             => "&Previous",
-      #"Replace"              => "R&eplace",
-      #"Replace All"          => "Replace &All",
-      #"Save All"             => "Save Al&l",
-      #"Status Bar"           => "Status &Bar" };
+      #"Find Next"            => "Find _Next",
+      #"Find Previous"        => "Find _Previous",
+      #"Forward"              => "_Forward",
+      #"Previous"             => "_Previous",
+      #"Replace"              => "R_eplace",
+      #"Replace All"          => "Replace _All",
+      #"Save All"             => "Save Al_l",
+      #"Status Bar"           => "Status _Bar" };
 
 define sealed method compute-mnemonic-from-label
     (gadget :: <gtk-gadget-mixin>, label :: <string>,
@@ -183,6 +181,13 @@ define sealed method compute-mnemonic-from-label
       (gadget, label, remove-ampersand?: remove-ampersand?)
   end
 end method compute-mnemonic-from-label;
+
+// Don't use mnemonics for push buttons
+define sealed method compute-standard-gtk-mnemonic
+    (gadget :: <gtk-push-button>, label :: <string>, #key remove-ampersand? = #t)
+ => (label, mnemonic :: false-or(<mnemonic>), index :: false-or(<integer>))
+  values(label, #f, #f);
+end method compute-standard-gtk-mnemonic;
 
 define sealed method compute-standard-gtk-mnemonic
     (gadget :: <gadget>, label :: <string>, #key remove-ampersand? = #t)
@@ -381,7 +386,8 @@ define sealed method make-gtk-mirror
   unless (mnemonic)
     mnemonic := allocate-unique-mnemonic(gadget, text)
   end;
-  let widget = with-gdk-lock gtk-menu-item-new-with-label(text) end;
+  text := replace-substrings(text, "&", "_");
+  let widget = with-gdk-lock gtk-menu-item-new-with-mnemonic(text) end;
   make(<menu-button-mirror>,
        widget: widget,
        sheet:  gadget)
@@ -446,7 +452,8 @@ define sealed method make-gtk-mirror
   if (image)
     ignoring("menu with image")
   end;
-  let widget = with-gdk-lock gtk-menu-item-new-with-label(text) end;
+  text := replace-substrings(text, "&", "_");
+  let widget = with-gdk-lock gtk-menu-item-new-with-mnemonic(text) end;
   make(<menu-mirror>,
        widget: widget,
        sheet:  gadget)
