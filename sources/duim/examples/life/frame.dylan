@@ -159,9 +159,9 @@ end;
 
 define command-table *main-command-table* (*global-command-table*)
     menu-item "File" = *file-command-table*;
-    menu-item "Color" = *color-command-table*;
-    menu-item "Pattern" = *pattern-command-table*;
-    menu-item "Help" = *help-command-table*;
+    menu-item "&Color" = *color-command-table*;
+    menu-item "&Pattern" = *pattern-command-table*;
+    menu-item "&Help" = *help-command-table*;
 end;
 
 // Number of seconds to sleep between Life generations.
