@@ -344,7 +344,7 @@ define method make-test-gadgets
          index from 0 by 2)
       let class = gadget-class[0];
       let label = gadget-class[1];
-      let args  = rest(rest(gadget-class));
+      let args  = tail(tail(gadget-class));
       children[index] := make(<label>, label: concatenate(label, ":"));
       let documentation = format-to-string("A test %s", label);
       let gadget
