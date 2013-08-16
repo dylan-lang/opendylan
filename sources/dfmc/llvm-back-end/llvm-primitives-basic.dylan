@@ -110,7 +110,7 @@ define side-effect-free dynamic-extent &primitive-descriptor primitive-element
  => (obj :: <object>);
   let byte-ptr = ins--gep(be, x, byte-offset);
   let slots-ptr
-    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+    = ins--bitcast(be, byte-ptr, llvm-pointer-to(be, $llvm-object-pointer-type));
   let slot-ptr = ins--gep(be, slots-ptr, offset);
   ins--load(be, slot-ptr)
 end;
@@ -121,7 +121,7 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-e
  => (obj :: <object>);
   let byte-ptr = ins--gep(be, x, byte-offset);
   let slots-ptr
-    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+    = ins--bitcast(be, byte-ptr, llvm-pointer-to(be, $llvm-object-pointer-type));
   let slot-ptr = ins--gep(be, slots-ptr, offset);
   ins--store(be, new-value, slot-ptr);
   new-value
