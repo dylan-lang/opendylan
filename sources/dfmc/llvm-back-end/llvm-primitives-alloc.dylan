@@ -316,7 +316,6 @@ define side-effect-free stateful indefinite-extent &primitive-descriptor primiti
      repeated-size :: <raw-integer>,
      repeated-size-offset :: <raw-integer>)
   => (object :: <object>);
-  let number-bytes = ins--mul(be, number-words, back-end-word-size(be));
   let word-size = back-end-word-size(be);
   let repeated-byte-size = ins--mul(be, number-words, word-size);
   let total-size = ins--add(be, repeated-byte-size, repeated-size);
