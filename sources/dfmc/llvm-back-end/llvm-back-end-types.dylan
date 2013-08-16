@@ -80,7 +80,7 @@ define method initialize-type-table
   register-raw-type(#"<raw-c-void>",               $llvm-void-type,
                     #f);
   register-raw-type(#"<raw-c-pointer>",            $llvm-i8*-type,
-                    #f);
+                    #"pointer");
   register-raw-type(#"<raw-boolean>",              $llvm-i8-type,
                     #"boolean");
   register-raw-type(#"<raw-byte-character>",       $llvm-i8-type,
@@ -92,7 +92,7 @@ define method initialize-type-table
   register-raw-type(#"<raw-double-byte>",          $llvm-i16-type,
                     #"unsigned");
   register-raw-type(#"<raw-byte-string>",          $llvm-i8*-type,
-                    #f);
+                    #"pointer");
   register-raw-type(#"<raw-integer>",              t["iWord"],
                     #"signed");
   register-raw-type(#"<raw-single-float>",         $llvm-float-type,
@@ -104,7 +104,7 @@ define method initialize-type-table
   register-raw-type(#"<raw-extended-float>",       llvm-long-double-type,
                     #"float");
   register-raw-type(#"<raw-pointer>",              $llvm-i8*-type,
-                    #f);
+                    #"pointer");
   register-raw-type(#"<raw-address>",              t["iWord"],
                     #"address");
 

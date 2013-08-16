@@ -165,13 +165,7 @@ define method llvm-reference-dbg-type
               let type-name = o.^debug-name;
               let type-size = o.raw-type-size;
               let type-alignment = o.raw-type-alignment;
-              let kind = 
-                select (o)
-                  dylan-value(#"<raw-pointer>") => #"pointer";
-                  dylan-value(#"<raw-byte>")    => #"unsigned-char";
-                  otherwise =>
-                    error("No debug type mapping for %s", type-name);
-                end;
+              let kind = back-end.%raw-type-dbg-encoding-table[o];
               if (kind == #"pointer")
                 llvm-make-dbg-derived-type
                   (kind, #f,
