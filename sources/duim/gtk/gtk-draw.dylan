@@ -516,12 +516,9 @@ define sealed method draw-text
     let length :: <integer> = size(string);
     let gcontext :: <CairoContext>
       = update-drawing-state(medium, font: font);
-    let screen = gdk-drawable-get-screen(drawable);
-    //  let renderer = gdk-pango-renderer-get-default(screen);
-    //  gdk-pango-renderer-set-gc(renderer, gcontext);
-    let context = gdk-pango-context-get-for-screen(screen);
-    let (_font, _width, _height, ascent) = gtk-font-metrics(font, context);
-    let layout = pango-layout-new(context);
+    let pcontext = pango-cairo-create-context(gcontext);
+    let (_font, _width, _height, ascent) = gtk-font-metrics(font, pcontext);
+    let layout = pango-cairo-create-layout(gcontext);
     pango-layout-set-font-description(layout, font.%font-description);
     let transform = medium-device-transform(medium);
     with-device-coordinates (transform, x, y)
@@ -539,9 +536,10 @@ define sealed method draw-text
             let e = position(string, '\t', start: s, end: _end) | _end;
             let substring = copy-sequence(string, start: s, end: e);
             pango-layout-set-text(layout, substring, e - s);
-            //          pango-layout-context-changed(layout);
-            //          pango-renderer-draw-layout(renderer, layout, tab-origin + x, y);
-            gdk-draw-layout(drawable, gcontext, tab-origin + x, y - ascent, layout);
+            cairo-move-to(gcontext,
+                          as(<double-float>, tab-origin + x),
+                          as(<double-float>, y - ascent));
+            pango-cairo-show-layout(gcontext, layout);
             if (e = _end)
               break()
             else
@@ -562,9 +560,10 @@ define sealed method draw-text
               copy-sequence(string, start: _start, end: _end)
             end;
         pango-layout-set-text(layout, substring, -1);
-        //pango-layout-context-changed(layout);
-        //pango-renderer-draw-layout(renderer, layout, x, y);
-        gdk-draw-layout(drawable, gcontext, x, y - ascent, layout);
+        cairo-move-to(gcontext,
+                      as(<double-float>, x),
+                      as(<double-float>, y - ascent));
+        pango-cairo-show-layout(gcontext, layout);
       end
     end
   end

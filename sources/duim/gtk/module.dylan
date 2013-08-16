@@ -21,6 +21,7 @@ define module gtk-duim
   use gobject;
   use gobject-glue;
   use pango;
+  use pango-cairo;
   use cairo;
   use gdk;
   use gtk;
