@@ -60,11 +60,12 @@ define /* inline */ function make-c-pointer-internal
    init-args :: <simple-object-vector>)
  => (v :: <C-pointer>);
   let instance :: <C-pointer> = allocate-c-pointer-instance(class, init-args);
-  let raw-address :: <raw-pointer> = primitive-unwrap-machine-word(address);
+  let raw-address :: <raw-address> = primitive-unwrap-machine-word(address);
   let init-args
     = concatenate-2(init-args, class.defaulted-initialization-arguments);
   apply(default-initialize, class, instance,
-        raw-pointer-address: raw-address, init-args);
+        raw-pointer-address: primitive-cast-raw-as-pointer(raw-address),
+        init-args);
   apply(initialize, instance, init-args);
   instance
 end;
