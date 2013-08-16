@@ -827,3 +827,46 @@ define module pango
     $attr-index-from-text-beginning,
     $analysis-flag-centered-baseline;
 end module;
+
+define module pango-cairo
+  use dylan;
+  use common-dylan;
+  use c-ffi;
+  use gobject-glue;
+  use glib;
+  use gobject;
+  use cairo;
+  use pango;
+
+  export
+    pango-cairo-context-get-font-options,
+    pango-cairo-context-get-resolution,
+    pango-cairo-context-get-shape-renderer,
+    pango-cairo-context-set-font-options,
+    pango-cairo-context-set-resolution,
+    pango-cairo-context-set-shape-renderer,
+    pango-cairo-create-context,
+    pango-cairo-create-layout,
+    pango-cairo-error-underline-path,
+    pango-cairo-font-get-scaled-font,
+    pango-cairo-font-get-type,
+    pango-cairo-font-map-create-context,
+    pango-cairo-font-map-get-default,
+    pango-cairo-font-map-get-font-type,
+    pango-cairo-font-map-get-resolution,
+    pango-cairo-font-map-get-type,
+    pango-cairo-font-map-new,
+    pango-cairo-font-map-new-for-font-type,
+    pango-cairo-font-map-set-default,
+    pango-cairo-font-map-set-resolution,
+    pango-cairo-glyph-string-path,
+    pango-cairo-layout-line-path,
+    pango-cairo-layout-path,
+    pango-cairo-show-error-underline,
+    pango-cairo-show-glyph-item,
+    pango-cairo-show-glyph-string,
+    pango-cairo-show-layout,
+    pango-cairo-show-layout-line,
+    pango-cairo-update-context,
+    pango-cairo-update-layout;
+end module;
