@@ -33,6 +33,14 @@ end method;
 
 define method do-emit-type-check
     (back-end :: <llvm-back-end>, object :: <llvm-value>,
+     type :: <&raw-type>, type-ref :: <llvm-value>)
+ => (true? :: <llvm-value>)
+  // Do nothing
+  emit-reference(back-end, back-end.llvm-builder-module, &true)
+end method;
+
+define method do-emit-type-check
+    (back-end :: <llvm-back-end>, object :: <llvm-value>,
      type, type-ref :: <llvm-value>)
  => (true? :: <llvm-value>)
   let module = back-end.llvm-builder-module;
