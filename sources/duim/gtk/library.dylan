@@ -9,6 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define library gtk-duim
   use common-dylan;
   use system;
+  use strings;
 
   use duim-utilities;
   use duim-core;

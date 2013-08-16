@@ -10,6 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module gtk-duim
   use dylan;
   use operating-system;
+  use strings, import: { replace-substrings };
 
   use duim-imports;
   use duim-internals;
