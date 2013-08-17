@@ -596,6 +596,8 @@ define method compute-slot-initialization-code
         let type-check
           = if (type == dylan-value(#"<object>"))
               #{ }
+            elseif (instance?(type, <&raw-type>))
+              #{ let ?name :: ?type = primitive-cast-pointer-as-raw(?name); }
             else
               // This optimization also works around a gotcha - by an abuse,
               // repeated slot size slot descriptors have the repeated slot
