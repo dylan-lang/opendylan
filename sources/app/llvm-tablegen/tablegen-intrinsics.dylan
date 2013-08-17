@@ -20,6 +20,12 @@ define function llvm-type-void?
   vt == $tablegen-definitions["isVoid"]
 end function;
 
+define function llvm-type-vector?
+    (llvm-type :: <tablegen-definition>) => (result? :: <boolean>);
+  let vt-name = record-field-value(llvm-type, "VT").record-name;
+  vt-name[0] == 'v' | vt-name = "x86mmx"
+end function;
+
 define table $valuetype-map :: <string-table>
   = {
      "i1"         => "$llvm-i1-type",
@@ -29,6 +35,7 @@ define table $valuetype-map :: <string-table>
      "i64"        => "$llvm-i64-type",
      "f32"        => "$llvm-float-type",
      "f64"        => "$llvm-double-type",
+     "x86mmx"     => "make(<llvm-primitive-type>, kind: #\"X86_MMX\"",
      "MetadataVT" => "$llvm-metadata-type",
      "OtherVT"    => "make(<llvm-struct-type>, elements: vector())",
     };
@@ -310,46 +317,46 @@ define function tablegen-gen-intrinsic () => ();
       // Target prefix
       let target-prefix = record-field-value(def, "TargetPrefix", default: "");
 
-      // FIXME: For now, only generate target-independent intrinsics,
-      // and target-dependent intrinsics that we know we need
-      if (empty?(target-prefix)
-            | def-name = "int_x86_int")
-        // Intrinsic name
-        let llvm-name = record-field-value(def, "LLVMName", default: "");
-        let name
-          = if (empty?(llvm-name))
-              concatenate("llvm.",
-                          map(method (c)
-                                if (c == '_') '.' else c end
-                              end,
-                              copy-sequence(def-name, start: 4)))
-            else
-              llvm-name
-            end if;
+      // Intrinsic name
+      let llvm-name = record-field-value(def, "LLVMName", default: "");
+      let name
+        = if (empty?(llvm-name))
+            concatenate("llvm.",
+                        map(method (c)
+                              if (c == '_') '.' else c end
+                            end,
+                            copy-sequence(def-name, start: 4)))
+          else
+            llvm-name
+          end if;
 
-        // Return types
-        let return-types = record-field-value(def, "RetTypes");
+      // Return types
+      let return-types = record-field-value(def, "RetTypes");
 
-        // Parameter types
-        let param-types = record-field-value(def, "ParamTypes");
-        let (parameter-types, varargs?)
-          = if (~empty?(param-types) & llvm-type-void?(param-types.last))
-              values(copy-sequence(param-types, end: param-types.size - 1), #t)
-            else
-              values(param-types, #f)
-            end if;
+      // Parameter types
+      let param-types = record-field-value(def, "ParamTypes");
+      let (parameter-types, varargs?)
+        = if (~empty?(param-types) & llvm-type-void?(param-types.last))
+            values(copy-sequence(param-types, end: param-types.size - 1), #t)
+          else
+            values(param-types, #f)
+          end if;
 
         // Properties
         let properties = record-field-value(def, "Properties");
 
-        if (any?(llvm-type-overloaded?, parameter-types)
-              | any?(llvm-type-overloaded?, return-types))
-          gen-overloaded
-            (name, return-types, parameter-types, varargs?, properties);
-        else
-          gen-non-overloaded
-            (name, return-types, parameter-types, varargs?, properties);
-        end if;
+      if ((~empty?(target-prefix) & def-name ~= "int_x86_int")
+	    | any?(llvm-type-vector?, parameter-types)
+	    | any?(llvm-type-vector?, return-types))
+        // FIXME: For now, only generate target-independent intrinsics,
+        // and target-dependent intrinsics that we know we need
+      elseif (any?(llvm-type-overloaded?, parameter-types)
+            | any?(llvm-type-overloaded?, return-types))
+        gen-overloaded
+          (name, return-types, parameter-types, varargs?, properties);
+      else
+        gen-non-overloaded
+          (name, return-types, parameter-types, varargs?, properties);
       end if;
     end if;
   end for;
