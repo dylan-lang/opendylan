@@ -524,7 +524,10 @@ define sealed method make-gtk-menu-contents
   let seen-item? = #f;
   local
     method add-separator () => ()
-      ignoring("add-separator");
+      let separator = gtk-separator-menu-item-new();
+      duim-debug-message("Creating separator for menu %=",
+                         gadget-label(menu));
+      gtk-menu-shell-append(widget, separator);
       need-separator? := #f;
       seen-item? := #f
     end method add-separator,
