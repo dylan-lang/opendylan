@@ -3,6 +3,7 @@ Files:        library
               tablegen-type
               tablegen-value
               tablegen-record
+	      tablegen-multi-class
               tablegen-parser
               tablegen-reader
 	      tablegen-print-records

@@ -1,12 +1,12 @@
 Module:       llvm-tablegen
 Author:       Peter S. Housel
-Copyright:    Original Code is Copyright 2009-2010 Gwydion Dylan Maintainers
+Copyright:    Original Code is Copyright 2009-2011 Gwydion Dylan Maintainers
               All rights reserved.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define class <tablegen-class-reference> (<object>)
-  constant slot class-reference-class :: <tablegen-class>,
+  constant slot class-reference-class :: type-union(<tablegen-class>, <tablegen-multi-class>),
     required-init-keyword: class:;
   constant slot class-reference-template-arguments :: <sequence>,
     init-value: #(), init-keyword: template-arguments:;
@@ -85,13 +85,13 @@ object-list:
 
 object:
   class-inst
-    => #f;;
+    => arg$1("", make(<string-table>));;
   def-inst
-    => #f;;
+    => arg$1("", make(<string-table>));;
   multi-class-inst
-    => error("multi-class-inst");;
-  def-minst
-    => error("def-minst");;
+    => #f;;
+  defm-inst
+    => #f;;
   let-command %LBRACE object-list %RBRACE
     => *tablegen-overrides* := arg$1;;
   let-command object
@@ -99,9 +99,8 @@ object:
 
 class-inst:
   %CLASS class-name opt-template-parameter-list object-body
-    => begin
+    => method (prefix :: <string>, environment :: <string-table>)
          // Alpha-convert template parameters
-         let environment = make(<string-table>);
          for (parameter in arg$3)
            environment[parameter.initializer-name]
              := make(<tablegen-named-value>,
@@ -380,9 +379,8 @@ opt-bit-list:
 
 def-inst:
   %DEF def-name object-body
-    => begin
+    => method (prefix :: <string>, environment :: <string-table>)
          let initializers = make(<stretchy-object-vector>);
-         let environment = make(<string-table>);
          for (reference in arg$3.head)
            instantiate-class-reference
              (initializers, environment, reference, #t);
@@ -391,7 +389,7 @@ def-inst:
 
          $tablegen-definitions[arg$2]
            := make(<tablegen-definition>,
-                   name: arg$2,
+                   name: concatenate(prefix, arg$2),
                    superclasses: map(class-reference-class, arg$3.head),
                    initializers: initializers);
        end;;
@@ -402,23 +400,29 @@ def-name:
 
 multi-class-inst:
   %MULTICLASS multi-class-name opt-template-parameter-list %LBRACE multi-class-body %RBRACE
-    => #f;;
+    => begin
+         $tablegen-classes[arg$2]
+           := make(<tablegen-multi-class>,
+                   name: arg$2,
+                   template-parameters: arg$3,
+                   definitions: arg$5);
+       end;;
 
 multi-class-name:
   %ID
-    => #f;;
+    => arg$1;;
 
 multi-class-body:
   multi-class-def
-    => #f;;
+    => list(arg$1);;
   multi-class-body multi-class-def
-    => #f;;
+    => add(arg$1, arg$2);;
 
 multi-class-def:
   def-inst
-    => #f;;
+    => arg$1;;
 
-def-minst:
+defm-inst:
   %DEFM %ID %COLON sub-class-ref %SEMI
     => #f;;
 
