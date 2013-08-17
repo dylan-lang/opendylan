@@ -176,11 +176,50 @@ define side-effecting stateless dynamic-extent &unimplemented-primitive-descript
   //---*** Fill this in...
 end;
 
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-fill!
+define function op--slot-ptr
+    (be :: <llvm-back-end>, x, base-offset, offset)
+ => (ptr :: <llvm-value>);
+  let slots-ptr
+    = ins--bitcast(be, x, llvm-pointer-to(be, $llvm-object-pointer-type));
+  let base-ptr = ins--gep(be, slots-ptr, base-offset);
+  ins--gep(be, base-ptr, offset)
+end function;
+
+define side-effecting stateless dynamic-extent &primitive-descriptor primitive-fill!
     (dst :: <object>, base-offset :: <raw-integer>, offset :: <raw-integer>, size :: <raw-integer>,
      value :: <object>)
  => ();
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+
+  // Basic blocks
+  let entry-bb = be.llvm-builder-basic-block;
+  let loop-head-bb = make(<llvm-basic-block>);
+  let loop-body-bb = make(<llvm-basic-block>);
+  let loop-exit-bb = make(<llvm-basic-block>);
+
+  // Initialization
+  let dst-ptr = op--slot-ptr(be, dst, base-offset, offset);
+  ins--br(be, loop-head-bb);
+
+  // Loop head
+  ins--block(be, loop-head-bb);
+  let i-placeholder
+    = make(<llvm-symbolic-value>, type: be.%type-table["iWord"], name: "i");
+  let i-phi = ins--phi(be, 0, entry-bb, i-placeholder, loop-body-bb);
+
+  let cmp = ins--icmp-ult(be, i-phi, size);
+  ins--br(be, cmp, loop-body-bb, loop-exit-bb);
+
+  // Loop body
+  ins--block(be, loop-body-bb);
+  let fill-ptr = ins--gep(be, dst-ptr, i-phi);
+  ins--store(be, value, fill-ptr, alignment: word-size);
+
+  i-placeholder.llvm-placeholder-value-forward := ins--add(be, i-phi, 1);
+  ins--br(be, loop-head-bb);
+
+  // Loop exit
+  ins--block(be, loop-exit-bb);
 end;
 
 define side-effecting stateless dynamic-extent &primitive-descriptor primitive-fill-bytes!
@@ -192,12 +231,21 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-f
                       vector(dst-ptr, value, size, i32(0), $llvm-false));
 end;
 
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-replace!
+define side-effecting stateless dynamic-extent &primitive-descriptor primitive-replace!
     (dst :: <object>, dst-base-offset :: <raw-integer>, dst-offset :: <raw-integer>,
      src :: <object>, src-base-offset :: <raw-integer>, src-offset :: <raw-integer>,
      size :: <raw-integer>)
  => ();
-  //---*** Fill this in...
+  let word-size = back-end-word-size(be);
+
+  let dst-ptr = op--slot-ptr(be, dst, dst-base-offset, dst-offset);
+  let dst-byte-ptr = ins--bitcast(be, dst-ptr, $llvm-i8*-type);
+  let src-ptr = op--slot-ptr(be, src, src-base-offset, src-offset);
+  let src-byte-ptr = ins--bitcast(be, src-ptr, $llvm-i8*-type);
+  let byte-size = ins--mul(be, size, word-size);
+  ins--call-intrinsic(be, "llvm.memcpy",
+                      vector(dst-byte-ptr, src-byte-ptr, byte-size,
+                             i32(word-size), $llvm-false));
 end;
 
 define side-effecting stateless dynamic-extent &primitive-descriptor primitive-replace-bytes!
