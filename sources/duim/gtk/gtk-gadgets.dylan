@@ -1909,7 +1909,7 @@ define sealed method make-gtk-mirror
     (gadget :: <gtk-combo-box>)
  => (mirror :: <gadget-mirror>)
   with-gdk-lock
-    let widget = gtk-combo-box-entry-new();
+    let widget = gtk-combo-box-text-new-with-entry();
     make(<gadget-mirror>,
          widget: widget,
          sheet:  gadget)
@@ -1920,7 +1920,7 @@ define method update-mirror-attributes
     (gadget :: <gtk-combo-box>, mirror :: <gadget-mirror>) => ()
   next-method();
   with-gdk-lock
-    gtk-combo-box-entry-set-text-column(mirror.mirror-widget, 1);
+    mirror.mirror-widget.@entry-text-column := 1;
   end
 end;
 
@@ -1934,7 +1934,7 @@ end;
 
 define method handle-changed-selection (gadget :: <gtk-combo-box>) => (handled? :: <boolean>)
   let widget = mirror-widget(sheet-direct-mirror(gadget));
-  let text = as(<byte-string>, gtk-combo-box-get-active-text(widget));
+  let text = as(<byte-string>, gtk-combo-box-text-get-active-text(widget));
   distribute-text-changed-callback(gadget, text);
   #t
 end;
@@ -1944,7 +1944,7 @@ define method handle-changing-selection (gadget :: <gtk-combo-box>) => (handled?
   let row = gtk-combo-box-get-active(widget);
   let text =
     if (row = -1)
-      as(<byte-string>, gtk-combo-box-get-active-text(widget));
+      as(<byte-string>, gtk-combo-box-text-get-active-text(widget));
     else
       let gtkentry = gtk-bin-get-child(widget);
       gtk-entry-set-text(gtkentry, gadget-items(gadget)[row]);
