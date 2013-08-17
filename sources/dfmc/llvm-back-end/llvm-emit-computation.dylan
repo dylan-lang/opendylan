@@ -560,12 +560,14 @@ end method;
 
 define method emit-slot-ptr
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <any-slot-value>)
- => (slot-ptr :: <llvm-value>, instance :: <llvm-value>)
+ => (slot-ptr :: <llvm-value>, slot-type :: <llvm-type>,
+     instance :: <llvm-value>)
   let instance = emit-reference(back-end, m, c.computation-instance);
   let header-words = dylan-value(#"$number-header-words");
 
   let slot-descriptor = c.computation-slot-descriptor;
   let slot-owner = slot-descriptor.^slot-owner;
+  let slot-type = llvm-reference-type(back-end, slot-descriptor.^slot-type);
 
   let offset = c.computation-slot-offset;
   let owner-offset = ^slot-offset(slot-descriptor, slot-owner);
@@ -587,17 +589,17 @@ define method emit-slot-ptr
         // of slots
         let instance-slots
           = ins--bitcast(back-end, instance,
-                         llvm-pointer-to(back-end, $llvm-object-pointer-type));
+                         llvm-pointer-to(back-end, slot-type));
         ins--gep-inbounds(back-end, instance-slots, header-words + offset)
       end if;
-  values(slot-ptr, instance)
+  values(slot-ptr, slot-type, instance)
 end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <slot-value>) => ()
   let word-size = back-end-word-size(back-end);
-  let (slot-ptr :: <llvm-value>, instance :: <llvm-value>)
-    = emit-slot-ptr(back-end, m, c);
+  let (slot-ptr :: <llvm-value>, slot-type :: <llvm-type>,
+       instance :: <llvm-value>) = emit-slot-ptr(back-end, m, c);
   let result
     = ins--load(back-end, slot-ptr, alignment: word-size);
 
@@ -636,8 +638,9 @@ define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <slot-value-setter>) => ()
   let word-size = back-end-word-size(back-end);
   let new-value = emit-reference(back-end, m, c.computation-new-value);
-  let (slot-ptr :: <llvm-value>, instance :: <llvm-value>)
-    = emit-slot-ptr(back-end, m, c);
+  let (slot-ptr :: <llvm-value>, slot-type :: <llvm-type>,
+       instance :: <llvm-value>) = emit-slot-ptr(back-end, m, c);
+  llvm-constrain-type(new-value.llvm-value-type, slot-type);
   ins--store(back-end, new-value, slot-ptr, alignment: word-size);
   computation-result(back-end, c, new-value);
 end method;
