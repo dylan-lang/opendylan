@@ -227,8 +227,9 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-f
      value :: <raw-byte-character>)
  => ();
   let dst-ptr = op--byte-element-ptr(be, dst, base-offset, offset);
+  let byte-value = ins--trunc(be, value, $llvm-i8-type);
   ins--call-intrinsic(be, "llvm.memset",
-                      vector(dst-ptr, value, size, i32(0), $llvm-false));
+                      vector(dst-ptr, byte-value, size, i32(0), $llvm-false));
 end;
 
 define side-effecting stateless dynamic-extent &primitive-descriptor primitive-replace!
