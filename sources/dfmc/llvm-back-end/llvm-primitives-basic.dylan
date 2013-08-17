@@ -139,7 +139,14 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-b
      x :: <object>, offset :: <raw-integer>, byte-offset :: <raw-integer>)
  => (obj :: <raw-byte-character>);
   let ptr = op--byte-element-ptr(be, x, offset, byte-offset);
-  ins--store(be, new-value, ptr)
+  let new-value-type = llvm-type-forward(llvm-value-type(new-value));
+  if (new-value-type.llvm-integer-type-width > 8)
+    let trunc = ins--trunc(be, new-value, $llvm-i8-type);
+    ins--store(be, trunc, ptr);
+  else
+    ins--store(be, new-value, ptr);
+  end if;
+  new-value
 end;
 
 /*
@@ -292,7 +299,15 @@ end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-raw-as-byte-character
      (r :: <raw-integer>) => (x :: <byte-character>);
-  let shifted = ins--shl(be, r, $dylan-tag-bits);
+  let r-type = llvm-type-forward(llvm-value-type(r));
+  let word-type = be.%type-table["iWord"];
+  let word
+    = if (r-type.llvm-integer-type-width < word-type.llvm-integer-type-width)
+        ins--zext(be, r, word-type);
+      else
+        r
+      end if;
+  let shifted = ins--shl(be, word, $dylan-tag-bits);
   let tagged = ins--or(be, shifted, $dylan-tag-character);
   ins--inttoptr(be, tagged, $llvm-object-pointer-type);
 end;
