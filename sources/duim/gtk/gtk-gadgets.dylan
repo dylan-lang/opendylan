@@ -88,7 +88,7 @@ end method widget-attributes;
 define method do-compose-space
     (gadget :: <gtk-gadget-mixin>, #key width, height)
  => (space-req :: <space-requirement>)
-  duim-debug-message("do-compose-space(%= , %d, %d)", gadget, width, height);
+  duim-debug-message("do-compose-space(%= , %=, %=)", gadget, width, height);
   let mirror = sheet-direct-mirror(gadget);
   if (mirror)
     let widget = mirror-widget(mirror);
@@ -1434,7 +1434,7 @@ end;
 define method do-compose-space
     (gadget :: <scrolled-mixin>, #key width, height)
  => (space-req :: <space-requirement>)
-  duim-debug-message("do-compose-space(%= , %d, %d)", gadget, width, height);
+  duim-debug-message("do-compose-space(%= , %=, %=)", gadget, width, height);
   let mirror = sheet-direct-mirror(gadget);
   if (mirror)
     let widget = scrolled-window(mirror);
@@ -2282,14 +2282,14 @@ define sealed method do-allocate-space
       ignore(left);
       min-height := max(min-height, bottom - top);
       final-x    := right;
-      duim-debug-message("  part %d has right edge at %d", i, right);
+      duim-debug-message("  part %= has right edge at %=", i, right);
       pointer-value(widths, index: i) := right
     end;
     // Allocate a little extra space so the size grip doesn't
     // overlap the final part
     pointer-value(widths, index: n-parts - 1) := final-x + extra-width;
     inc!(min-height, $status-bar-border * 2);
-    duim-debug-message("  fixed height %d", min-height);
+    duim-debug-message("  fixed height %=", min-height);
     SendMessage(handle, $SB-SETMINHEIGHT, min-height, 0);
     SendMessage(handle, $SB-SETPARTS, n-parts, pointer-address(widths))
   end;

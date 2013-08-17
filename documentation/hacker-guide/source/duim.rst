@@ -41,5 +41,20 @@ when running a DUIM application.
    ``OPEN_DYLAN_TARGET_PLATFORM`` environment variable to
    ``x86_64-darwin`` and your builds will be 64 bit.
 
+Debugging Informations
+----------------------
+
+To enable more debugging informations uncomment the following line in
+``sources/duim/gtk/gtk-debug.dylan``:
+
+.. code-block:: dylan
+
+    *debug-duim-function* := dbg;
+
+You can then output debugging informations with the following functions:
+
+- ``ignoring(msg)``
+- ``duim-debug-message(format, args)``
+
 .. _gir-dylan: https://github.com/dylan-foundry/gir-dylan
 .. _directions: https://wiki.gnome.org/GTK+/OSX/Building
