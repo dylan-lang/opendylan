@@ -1055,8 +1055,11 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
  => (sum :: <raw-machine-word>, carry :: <raw-machine-word>);
   let result
     = ins--call-intrinsic(be, "llvm.uadd.with.overflow", vector(x, y));
-  values(ins--extractvalue(be, result, 0),
-         ins--extractvalue(be, result, 1))
+  let sum = ins--extractvalue(be, result, 0);
+  let carry
+    = ins--zext(be, ins--extractvalue(be, result, 1),
+                llvm-reference-type(be, dylan-value(#"<raw-machine-word>")));
+  values(sum, carry)
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-unsigned-subtract-with-borrow
@@ -1064,8 +1067,11 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
  => (difference :: <raw-machine-word>, borrow :: <raw-machine-word>);
   let result
     = ins--call-intrinsic(be, "llvm.usub.with.overflow", vector(x, y));
-  values(ins--extractvalue(be, result, 0),
-         ins--extractvalue(be, result, 1))
+  let difference = ins--extractvalue(be, result, 0);
+  let borrow
+    = ins--zext(be, ins--extractvalue(be, result, 1),
+                llvm-reference-type(be, dylan-value(#"<raw-machine-word>")));
+  values(difference, borrow)
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-unsigned-multiply-high
