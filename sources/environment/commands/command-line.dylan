@@ -802,6 +802,8 @@ define macro command-line-definer
   { define command-line ?name:name (?options:*)
       ?parameters:*
     end }
+      // I don't see command-line-class-definer anywhere.  Is this
+      // code unused?  --cgay
     => { define command-line-class ?name (?options) ?parameters end;
          define command-line-constant ?name => "<" ## ?name ## "-command>" (?options)
            ?parameters

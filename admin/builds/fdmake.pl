@@ -149,7 +149,7 @@ sub build_library {
 
     print "Building $library... ";
 
-    my $command = $compiler;
+    my $command = $compiler . " -verbose";
     if ($debugger) {
         $command .= " -debugger";
     } 
