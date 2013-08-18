@@ -1987,9 +1987,11 @@ define method make-gtk-mirror
   with-gdk-lock
    let widget = gtk-viewport-new(gtk-adjustment-new(0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0),
                                  gtk-adjustment-new(0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0, 0.0d0));
+   let layout = gtk-fixed-new();
    make(<drawing-area-mirror>,
         widget: widget,
-        sheet:  sheet);
+        sheet:  sheet,
+        layout: layout);
   end
 end method;
 

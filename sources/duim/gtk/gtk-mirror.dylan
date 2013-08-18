@@ -299,6 +299,8 @@ define class <fixed-container-mirror> (<widget-mirror>)
 end class <fixed-container-mirror>;
 
 define class <drawing-area-mirror> (<widget-mirror>)
+  slot drawing-area-fixed-layout :: <GtkFixed>,
+    required-init-keyword: layout:;
 end class <drawing-area-mirror>;
 
 define method make-gtk-mirror
@@ -322,12 +324,14 @@ define method do-make-gtk-mirror
     (sheet :: <standard-repainting-mixin>)
   => (mirror :: <widget-mirror>)
   with-gdk-lock
+    let layout = gtk-fixed-new();
     let widget = gtk-drawing-area-new();
     gtk-widget-set-size-request(widget, 200, 200);
     widget.@can-focus := #t;
     make(<drawing-area-mirror>,
          widget: widget,
-         sheet:  sheet);
+         sheet:  sheet,
+         layout: layout);
   end;
 end method do-make-gtk-mirror;
 
@@ -427,8 +431,9 @@ define method set-mirror-parent
     (child :: <widget-mirror>, parent :: <drawing-area-mirror>)
  => ()
   let (x, y) = sheet-native-edges(mirror-sheet(child));
+  let layout = drawing-area-fixed-layout(parent);
   with-gdk-lock
-    gtk-fixed-put(mirror-widget(parent),
+    gtk-fixed-put(layout,
                   mirror-widget(child),
                   x, y)
   end
