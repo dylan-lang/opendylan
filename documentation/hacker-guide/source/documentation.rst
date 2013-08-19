@@ -38,7 +38,7 @@ We hope to improve this tool in the future.
 Doctower
 --------
 
-Doctower is a tool written by Dustin Voss and is `available on GitHub`.
+Doctower is a tool written by Dustin Voss and is `available on GitHub`_.
 
 This tool doesn't yet generate RST output, so the documentation from
 it will not integrate cleanly with Sphinx and our other documentation.
