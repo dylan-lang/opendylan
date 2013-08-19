@@ -101,10 +101,7 @@ end method get-clipboard-data-as;
 define method clipboard-format-available?
     (clipboard :: <gtk-clipboard>, format)
  => (available? :: <boolean>)
-  // FIXME: At the moment gtk-clipboard-wait* functions block the application,
-  // so for now we always return #f
-  //gtk-clipboard-wait-is-text-available(*clipboard*.clipboard-gtk-clipboard);
-  #f
+  gtk-clipboard-wait-is-text-available(*clipboard*.clipboard-gtk-clipboard);
 end method clipboard-format-available?;
 
 define macro with-clipboard-lock
