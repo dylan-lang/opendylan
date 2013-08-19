@@ -15,6 +15,34 @@ reStructuredText markup and Sphinx extensions to it, and see the
 details about the Dylan language extensions. (You may use the ``rst2html`` tool
 to generate an HTML page from an ``.rst`` file.)
 
+Generating Documentation
+========================
+
+dylan-compiler
+--------------
+
+``dylan-compiler`` can output skeletal documentation for a library once
+it has been compiled. Prior to compiling the project, it will not output
+anything.
+
+To generate documentation, once you've loaded and compiled your project,
+simply::
+
+   export -format rst interface-reference
+
+The generated documention will need cleaning up and will not include
+anything from comments in the source.
+
+We hope to improve this tool in the future.
+
+Doctower
+--------
+
+Doctower is a tool written by Dustin Voss and is `available on GitHub`.
+
+This tool doesn't yet generate RST output, so the documentation from
+it will not integrate cleanly with Sphinx and our other documentation.
+
 Example documentation
 =====================
 
@@ -102,3 +130,5 @@ A skip-list is a data type equivalent to a balanced (binary) tree.
    :param #key default:  A value to return if the element is not found. If
                          omitted and element not found, signals an error.
    :value object:        The element associated with the key.
+
+.. _available on GitHub: http://github.com/dylan-lang/doctower
