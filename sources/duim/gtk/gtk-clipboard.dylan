@@ -8,11 +8,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// GTK clipboard handling
 
-/*---*** No clipboard for now...
 define class <gtk-clipboard> (<clipboard>)
   sealed slot clipboard-sheet :: <sheet>,
     required-init-keyword: sheet:;
   sealed slot clipboard-cleared? :: <boolean> = #f;
+  sealed slot clipboard-gtk-clipboard :: <GtkClipboard>,
+    required-init-keyword: clipboard:;
 end class <gtk-clipboard>;
 
 define variable *clipboard* :: false-or(<gtk-clipboard>) = #f;
@@ -22,19 +23,21 @@ define sealed method open-clipboard
  => (clipboard :: false-or(<gtk-clipboard>))
   let top-sheet = top-level-sheet(sheet);
   when (top-sheet)
-    //---*** OPEN THE CLIPBOARD, e.g. Win32 OpenClipboard
+    let clipboard = *clipboard*;
     if (clipboard)
       clipboard-sheet(clipboard) := top-sheet;
       clipboard
     else
-      *clipboard* := make(<gtk-clipboard>, sheet: top-sheet)
+      *clipboard* := make(<gtk-clipboard>,
+                          sheet: top-sheet,
+                          clipboard: gtk-clipboard-get(gdk-atom-intern("CLIPBOARD", #f)));
     end
   end
 end method open-clipboard;
 
+// Not needed in Gtk+
 define sealed method close-clipboard
     (port :: <gtk-port>, clipboard :: <gtk-clipboard>) => ()
-  //---*** CLOSE THE CLIPBOARD, e.g. Win32 CloseClipboard
   clipboard-cleared?(clipboard) := #f
 end method close-clipboard;
 
@@ -42,8 +45,10 @@ define sealed method clipboard-owner
     (clipboard :: <gtk-clipboard>)
  => (owner :: false-or(<sheet>))
   //---*** GET THE OWNER, e.g. GetClipboardOwner
+  /*
   let mirror = window-mirror(owner);
   mirror & mirror-sheet(mirror)
+  */
 end method clipboard-owner;
 
 define sealed method add-clipboard-data-as
@@ -52,7 +57,8 @@ define sealed method add-clipboard-data-as
   let buffer = string-to-clipboard-buffer(data);
   when (buffer)
     maybe-clear-clipboard(clipboard);
-    //---*** SET THE DATA, e.g. SetClipboardData
+    gtk-clipboard-set-text(*clipboard*.clipboard-gtk-clipboard, data, size(data));
+    duim-debug-message("Set clipboard to '%s'", data);
     #t
   end
 end method add-clipboard-data-as;
@@ -67,7 +73,7 @@ end method maybe-clear-clipboard;
 define sealed method clear-clipboard
     (clipboard :: <gtk-clipboard>) => ()
   next-method();
-  //---*** CLEAR THE CLIPBOARD, e.g. EmptyClipboard
+  gtk-clipboard-clear(*clipboard*.clipboard-gtk-clipboard);
   clipboard-cleared?(clipboard) := #t
 end method clear-clipboard;
 
@@ -83,46 +89,41 @@ define sealed method get-clipboard-data-as
  => (string :: false-or(<string>))
   ignore(class);
   when (clipboard-format-available?(clipboard, #"text"))
-    //---*** GET THE TEXT DATA FROM THE CLIPBOARD, e.g. GetClipboardData
+    let buffer = gtk-clipboard-wait-for-text(*clipboard*.clipboard-gtk-clipboard);
     clipboard-buffer-to-string(buffer)
   end
 end method get-clipboard-data-as;
 
-
+
 /// Raw clipboard handling
 
 // _Not_ sealed, so that users can extend it
 define method clipboard-format-available?
     (clipboard :: <gtk-clipboard>, format)
  => (available? :: <boolean>)
-  //---*** SEE IF THERE IS DATA OF THE GIVEN FORMAT
+  // FIXME: At the moment gtk-clipboard-wait* functions block the application,
+  // so for now we always return #f
+  //gtk-clipboard-wait-is-text-available(*clipboard*.clipboard-gtk-clipboard);
+  #f
 end method clipboard-format-available?;
 
 define macro with-clipboard-lock
   { with-clipboard-lock (?buffer:name = ?buffer-handle:expression) ?body:body end }
     => { begin
-           let _locked? = #f;
-           //---*** LOCK THE CLIPBOARD
-           _locked? := #t;
-           block ()
-             let ?buffer :: <C-string> = XXX;        //---*** GET A DATA BUFFER
+           with-gdk-lock
+             let ?buffer :: <string> = ?buffer-handle;
              ?body
-           cleanup
-             when (_locked?)
-               //---*** UNLOCK THE CLIPBOARD
-             end
            end
          end }
 end macro with-clipboard-lock;
 
 define function string-to-clipboard-buffer
-    (string :: <string>) => (handle :: <XXX>)
-  let string = convert-to-native-newlines(string);
-  //---*** COPY THE STRING INTO THE CLIPBOARD BUFFER
+    (string :: <string>) => (handle :: <string>)
+  convert-to-native-newlines(string);
 end function string-to-clipboard-buffer;
 
 define function clipboard-buffer-to-string
-    (handle :: <XXX>) => (string :: <byte-string>)
+    (handle :: <string>) => (string :: <byte-string>)
   with-clipboard-lock (buffer = handle)
     let string-size = size(buffer);
     let string = make(<byte-string>, size: string-size);
@@ -134,7 +135,3 @@ define function clipboard-buffer-to-string
     convert-from-native-newlines(string)
   end
 end function clipboard-buffer-to-string;
-*/
-
-//---*** Until the code above is commented back in
-ignore(convert-from-native-newlines);
