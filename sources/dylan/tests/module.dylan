@@ -24,4 +24,6 @@ define module dylan-test-suite
   export test-collection-class,
          test-condition-class,
          test-number-class;
+
+  // Stifle compiler warnings
 end module dylan-test-suite;

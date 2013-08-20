@@ -49,7 +49,6 @@ define module operating-system
     import: { application-name,
               application-filename,
               application-arguments,
-              tokenize-command-string,
               exit-application,
               register-application-exit-function },
     export: all;

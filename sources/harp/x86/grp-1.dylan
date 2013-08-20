@@ -144,6 +144,9 @@ define local-pentium-template (adc2, add2, and2, cmp2, or2, sbb2, sub2, xor2)
 
 end local-pentium-template;
 
+ignore(harp-sbb2, harp-adc2);
+
+
 define local-pentium-template (fast-add)
   // The 2 operands are not spills, and that the destination is a
   // machine register. The LEA instruction can do this - but it does

@@ -223,7 +223,6 @@ define module-spec operating-system ()
   //---*** application-filename should return <file-locator>...
   function application-filename () => (false-or(<string>));
   function application-arguments () => (<sequence>);
-  function tokenize-command-string (<string>) => (<sequence>);
   function command-line-option-prefix () => (<character>);
   function exit-application (<integer>) => ();
   function register-application-exit-function (<function>) => ();

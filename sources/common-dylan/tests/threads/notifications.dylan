@@ -272,14 +272,6 @@ define test monitor-test ()
 end test;
 
 
-define method fixup (n :: <integer>)
-  // Fixup any screwup with the notification
-  with-lock (*mlock*)
-    for (i from 1 to n) release(*non-zero*) end;
-  end with-lock;
-end method;
-
-
 //////////
 //
 //

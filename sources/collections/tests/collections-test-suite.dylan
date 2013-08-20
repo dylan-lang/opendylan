@@ -43,7 +43,13 @@ define suite bit-set-test-suite ()
   test bit-set-laws;
 end suite bit-set-test-suite;
 
+define test bug-4351 ()
+  check-no-errors("remove-all-keys! has a method on <set>",
+                  remove-all-keys!(make(<set>)));
+end test bug-4351;
+
 define suite collections-test-suite ()
   suite bit-vector-test-suite;
   suite bit-set-test-suite;
+  test bug-4351;
 end suite collections-test-suite;

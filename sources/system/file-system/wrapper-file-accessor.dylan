@@ -96,6 +96,7 @@ define method accessor-newline-sequence
   newline-sequence(accessor-stream)
 end method;
 
+/* Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
 define method accessor-file-position
     (x :: <wrapper-file-accessor>)
  => (position :: <integer>)
@@ -123,4 +124,4 @@ define method file-size
   let accessor-stream = wrapper-file-accessor-stream(x);
   stream-size(accessor-stream)
 end method file-size;
-
+*/

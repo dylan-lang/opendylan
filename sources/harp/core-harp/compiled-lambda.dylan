@@ -148,6 +148,9 @@ define packed-slots?(<compiled-lambda>)
   constant lambda-is-export?       :: <object>, init-keyword: export:;
 end;
 
+// Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
+ignore(make-compiled-lambda-unpacked-slots);
+
 
 define method make
     (class == <compiled-lambda>,
