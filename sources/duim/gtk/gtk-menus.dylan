@@ -25,7 +25,7 @@ define method set-mirror-parent
                 gadget-label(mirror-sheet(child)),
                 gadget-label(mirror-sheet(parent)));
   with-gdk-lock
-    gtk-menu-shell-append(mirror-widget(parent).Gtk-Menu-Item-get-submenu,
+    gtk-menu-shell-append(mirror-widget(parent).gtk-menu-item-get-submenu,
                           mirror-widget(child))
   end
 end method set-mirror-parent;
@@ -51,7 +51,7 @@ define method set-mirror-parent
     duim-debug-message("Creating submenu for %s",
                        gadget-label(mirror-sheet(child)));
     gtk-menu-item-set-submenu(widget, menu);
-    gtk-menu-shell-append(mirror-widget(parent).Gtk-Menu-Item-get-submenu, widget)
+    gtk-menu-shell-append(mirror-widget(parent).gtk-menu-item-get-submenu, widget)
   end
 end method set-mirror-parent;
 
