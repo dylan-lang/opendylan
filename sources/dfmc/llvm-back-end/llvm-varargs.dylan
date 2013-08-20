@@ -65,7 +65,7 @@ define method op--va-list-to-stack-vector
     = make(<llvm-symbolic-value>,
            type: back-end.%type-table["iWord"], name: "index");
   let index
-    = ins--phi(back-end, 0, new-vector-bb, index-placeholder, loop-tail-bb);
+    = ins--phi*(back-end, 0, new-vector-bb, index-placeholder, loop-tail-bb);
   let cmp = ins--icmp-slt(back-end, index, count);
   ins--br(back-end, cmp, loop-tail-bb, return-common-bb);
 
@@ -84,7 +84,7 @@ define method op--va-list-to-stack-vector
   ins--block(back-end, return-common-bb);
   let empty-vector
     = emit-reference(back-end, module, dylan-value(#"%empty-vector"));
-  ins--phi(back-end, empty-vector, entry-bb, new-vector, loop-head-bb)
+  ins--phi*(back-end, empty-vector, entry-bb, new-vector, loop-head-bb)
 end method;
 
 define method op--va-end

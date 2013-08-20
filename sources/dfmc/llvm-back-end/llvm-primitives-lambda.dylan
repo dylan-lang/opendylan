@@ -96,7 +96,7 @@ define side-effecting stateless indefinite-extent mapped-parameter &runtime-prim
   let return-bb = make(<llvm-basic-block>, name: "bb.return");
 
   // Branch to the appropriate case
-  apply(ins--switch, be, vector-size, default-bb, jump-table);
+  ins--switch(be, vector-size, default-bb, jump-table);
 
   // Generate all of the cases
   let result-phi-arguments = make(<stretchy-object-vector>);
@@ -143,7 +143,7 @@ define side-effecting stateless indefinite-extent mapped-parameter &runtime-prim
 
   // Return
   ins--block(be, return-bb);
-  apply(ins--phi, be, result-phi-arguments)
+  ins--phi(be, result-phi-arguments)
 end;
 
 
@@ -276,7 +276,7 @@ define method op--init-closure-environment
   let index-placeholder
     = make(<llvm-symbolic-value>, type: be.%type-table["iWord"], name: "index");
   let index
-    = ins--phi(be, 0, entry-bb, index-placeholder, loop-tail-bb);
+    = ins--phi*(be, 0, entry-bb, index-placeholder, loop-tail-bb);
   let cmp = ins--icmp-ult(be, index, closure-size);
   ins--br(be, cmp, loop-tail-bb, return-bb);
 

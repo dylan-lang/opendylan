@@ -389,7 +389,7 @@ define entry-point-descriptor apply-xep
     let return-bb = make(<llvm-basic-block>, name: "bb.return");
 
     // Branch to the appropriate case
-    apply(ins--switch, be, vector-size, default-bb, jump-table);
+    ins--switch(be, vector-size, default-bb, jump-table);
 
     // Generate all of the cases
     let result-phi-arguments = make(<stretchy-object-vector>);
@@ -442,7 +442,7 @@ define entry-point-descriptor apply-xep
 
     // Return
     ins--block(be, return-bb);
-    apply(ins--phi, be, result-phi-arguments)
+    ins--phi(be, result-phi-arguments)
   end if
 end entry-point-descriptor;
 

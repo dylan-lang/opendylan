@@ -1023,6 +1023,10 @@ define llvm-builder function-test ins--shufflevector ()
 end function-test ins--shufflevector;
 
 define llvm-builder function-test ins--phi ()
+  //---*** Fill this in...
+end function-test ins--phi;
+
+define llvm-builder function-test ins--phi* ()
   with-test-unit ("ins--phi valid")
     let builder = make-builder-with-test-function();
     let entry = builder.llvm-builder-basic-block;
@@ -1031,13 +1035,13 @@ define llvm-builder function-test ins--phi ()
 
     ins--block(builder, loop);
     let indvar0
-      = ins--phi(builder,
-                 0, entry,
-                 llvm-builder-local(builder, "nextindvar0"), loop);
+      = ins--phi*(builder,
+		  0, entry,
+		  llvm-builder-local(builder, "nextindvar0"), loop);
     let indvar1
-      = ins--phi(builder,
-                 40, entry,
-                 llvm-builder-local(builder, "nextindvar1"), loop);
+      = ins--phi*(builder,
+		  40, entry,
+		  llvm-builder-local(builder, "nextindvar1"), loop);
     ins--local(builder, "nextindvar0", ins--add(builder, indvar0, 1));
     ins--local(builder, "nextindvar1", ins--add(builder, indvar1, 1));
     ins--br(builder, loop);
@@ -1053,7 +1057,7 @@ define llvm-builder function-test ins--phi ()
                 builder-test-function-disassembly(builder));
   end;
 
-  with-test-unit ("ins--phi invalid")
+  with-test-unit ("ins--phi* invalid")
     check-condition
       ("ins--phi must be grouped at basic block beginning",
        <error>,
@@ -1064,19 +1068,19 @@ define llvm-builder function-test ins--phi ()
          ins--br(builder, loop);
          ins--block(builder, loop);
          let indvar0
-           = ins--phi(builder,
-                      0, entry,
-                      llvm-builder-local(builder, "nextindvar0"), loop);
+           = ins--phi*(builder,
+		       0, entry,
+		       llvm-builder-local(builder, "nextindvar0"), loop);
          ins--local(builder, "nextindvar0", ins--add(builder, indvar0, 1));
          let indvar1
-           = ins--phi(builder,
-                      40, entry,
-                      llvm-builder-local(builder, "nextindvar1"), loop);
+           = ins--phi*(builder,
+		       40, entry,
+		       llvm-builder-local(builder, "nextindvar1"), loop);
          ins--local(builder, "nextindvar1", ins--add(builder, indvar1, 1));
          ins--br(builder, loop);
        end);
   end;
-end function-test ins--phi;
+end function-test ins--phi*;
 
 define llvm-builder function-test ins--call ()
   //---*** Fill this in...
@@ -1419,13 +1423,17 @@ define llvm-builder function-test ins--br ()
 end function-test ins--br;
 
 define llvm-builder function-test ins--switch ()
+  //---*** Fill this in...
+end function-test ins--switch;
+
+define llvm-builder function-test ins--switch* ()
   let builder = make-builder-with-test-function();
   let bb1 = make(<llvm-basic-block>, name: "bb.1");
   let bb2 = make(<llvm-basic-block>, name: "bb.2");
   let bb3 = make(<llvm-basic-block>, name: "bb.3");
-  ins--switch(builder, 17, bb3,
-              1, bb1,
-              2, bb2);
+  ins--switch*(builder, 17, bb3,
+	       1, bb1,
+	       2, bb2);
   ins--block(builder, bb1);
   ins--br(builder, bb2);
   ins--block(builder, bb2);
@@ -1433,7 +1441,7 @@ define llvm-builder function-test ins--switch ()
   ins--block(builder, bb3);
   ins--ret(builder);
 
-  check-equal("ins--switch disassembly",
+  check-equal("ins--switch* disassembly",
               #("entry:",
                 "switch i32 17, label %bb.3 [",
                 "  i32 1, label %bb.1",
@@ -1443,7 +1451,7 @@ define llvm-builder function-test ins--switch ()
                 "bb.2:", "br label %bb.1",
                 "bb.3:", "ret void"),
               builder-test-function-disassembly(builder));
-end function-test ins--switch;
+end function-test ins--switch*;
 
 define llvm-builder function-test ins--invoke ()
   //---*** Fill this in...

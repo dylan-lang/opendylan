@@ -247,7 +247,7 @@ define method emit-merge-assignment
       = emit-reference(back-end, module, c.merge-left-value | &false);
     let right-value
       = emit-reference(back-end, module, c.merge-right-value | &false);
-    let phi = ins--phi(back-end, left-value, left-bb, right-value, right-bb);
+    let phi = ins--phi*(back-end, left-value, left-bb, right-value, right-bb);
     emit-result-assignment(back-end, c, temp, list(phi), #f);
   elseif (left-bb)
     let left-value
@@ -270,9 +270,9 @@ define method emit-merge-assignment
     let left-mv  :: <pair> = temporary-value(c.merge-left-value);
     let right-mv :: <pair> = temporary-value(c.merge-right-value);
     let results = map(method (left-value, right-value)
-                        ins--phi(back-end,
-                                 left-value, left-bb,
-                                 right-value, right-bb)
+                        ins--phi*(back-end,
+				  left-value, left-bb,
+				  right-value, right-bb)
                       end,
                       left-mv.head, right-mv.head);
     if (left-mv.tail ~= right-mv.tail)

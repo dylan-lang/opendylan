@@ -161,7 +161,7 @@ define method do-emit-instance-cmp
 
       // Result
       ins--block(back-end, result-bb);
-      ins--phi(back-end, $llvm-false, entry-bb, true-cmp, nonfalse-bb);
+      ins--phi*(back-end, $llvm-false, entry-bb, true-cmp, nonfalse-bb);
 
     ^sealed-with-no-subclasses?(type) =>
       let result-bb = make(<llvm-basic-block>);
@@ -189,7 +189,7 @@ define method do-emit-instance-cmp
 
       // Result
       ins--block(back-end, result-bb);
-      ins--phi(back-end, $llvm-false, entry-bb, wrapper-cmp, obj-bb);
+      ins--phi*(back-end, $llvm-false, entry-bb, wrapper-cmp, obj-bb);
 
     // One of the designated system classes with a reserved subtype bit:
     ^class-subtype-bit(type) ~== 0 =>
@@ -215,7 +215,7 @@ define method do-emit-instance-cmp
         = ins--ptrtoint(back-end, object, back-end.%type-table["iWord"]);
       let tag-bits
         = ins--and(back-end, object-word, ash(1, $dylan-tag-bits) - 1);
-      apply(ins--switch, back-end, tag-bits, result-bb,
+      apply(ins--switch*, back-end, tag-bits, result-bb,
             $dylan-tag-pointer, tag-pointer-bb,
             switch-cases);
 
@@ -252,7 +252,7 @@ define method do-emit-instance-cmp
       ins--block(back-end, result-bb);
       let true-operands
         = if (empty?(switch-cases)) #[] else vector($llvm-true, true-bb) end;
-      apply(ins--phi, back-end,
+      apply(ins--phi*, back-end,
             $llvm-false, entry-bb,
             mask-cmp, tag-pointer-bb,
             true-operands);
@@ -298,7 +298,7 @@ define method do-emit-instance-cmp
 
   // Result
   ins--block(back-end, result-bb);
-  ins--phi(back-end, $llvm-true, type1-branch-bb, cmp2, type2-branch-bb)
+  ins--phi*(back-end, $llvm-true, type1-branch-bb, cmp2, type2-branch-bb)
 end method;
 
 // Compile-time instance check against a <singleton> instance
@@ -367,9 +367,10 @@ define method do-emit-instance-cmp
       ins--br(back-end, result-bb);
 
       ins--block(back-end, result-bb);
-      ins--phi(back-end, $llvm-false, entry-bb,
-                         $llvm-false, integer-bb,
-                         max-cmp, above-bb);
+      ins--phi*(back-end,
+		$llvm-false, entry-bb,
+		$llvm-false, integer-bb,
+		max-cmp, above-bb);
 
     // Lower limit only
     tagged-min =>
@@ -377,8 +378,8 @@ define method do-emit-instance-cmp
       ins--br(back-end, result-bb);
 
       ins--block(back-end, result-bb);
-      ins--phi(back-end, $llvm-false, entry-bb,
-                         min-cmp, integer-bb);
+      ins--phi*(back-end, $llvm-false, entry-bb,
+		min-cmp, integer-bb);
 
     // Upper limit only
     tagged-max =>
@@ -386,8 +387,7 @@ define method do-emit-instance-cmp
       ins--br(back-end, result-bb);
 
       ins--block(back-end, result-bb);
-      ins--phi(back-end, $llvm-false, entry-bb,
-                         max-cmp, integer-bb);
+      ins--phi*(back-end, $llvm-false, entry-bb, max-cmp, integer-bb);
 
     otherwise =>
       error("Neither min nor max set for limited-integer type check");

@@ -212,7 +212,7 @@ define side-effecting stateless dynamic-extent &primitive-descriptor primitive-f
   ins--block(be, loop-head-bb);
   let i-placeholder
     = make(<llvm-symbolic-value>, type: be.%type-table["iWord"], name: "i");
-  let i-phi = ins--phi(be, 0, entry-bb, i-placeholder, loop-body-bb);
+  let i-phi = ins--phi*(be, 0, entry-bb, i-placeholder, loop-body-bb);
 
   let cmp = ins--icmp-ult(be, i-phi, size);
   ins--br(be, cmp, loop-body-bb, loop-exit-bb);
@@ -380,8 +380,8 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   ins--block(be, first-word-loop-head);
   let p-placeholder
     = make(<llvm-symbolic-value>, type: $llvm-i8*-type, name: "p");
-  let first-word-p = ins--phi(be, x, first-word-loop-init,
-                                  p-placeholder, first-word-loop-inc);
+  let first-word-p = ins--phi*(be, x, first-word-loop-init,
+			       p-placeholder, first-word-loop-inc);
   let done? = ins--icmp-eq(be, first-word-p, limit);
   ins--br(be, done?, main-loop-head, first-word-loop-body);
 
@@ -406,8 +406,8 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   let lp-placeholder = make(<llvm-symbolic-value>,
                             type: iWord*-type,
                             name: "lp");
-  let lp = ins--phi(be, lp1, main-loop-head,
-                        lp-placeholder, main-loop-inc);
+  let lp = ins--phi*(be, lp1, main-loop-head,
+		     lp-placeholder, main-loop-inc);
   let word = ins--load(be, lp, alignment: word-size);
   let word-contains-zero? = op--word-contains-zero-byte?(be, word);
   ins--br(be, word-contains-zero?, last-word-loop-init, main-loop-inc);
@@ -427,8 +427,8 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   ins--block(be, last-word-loop-body);
   let last-word-p-placeholder
     = make(<llvm-symbolic-value>, type: $llvm-i8*-type, name: "p");
-  let last-word-p = ins--phi(be, last-word-p-init, last-word-loop-init,
-                                 last-word-p-placeholder, last-word-loop-inc);
+  let last-word-p = ins--phi*(be, last-word-p-init, last-word-loop-init,
+			      last-word-p-placeholder, last-word-loop-inc);
   let byte = ins--load(be, last-word-p, type: $llvm-i8-type);
   let found? = ins--icmp-eq(be, byte, zero-byte);
   ins--br(be, found?, return, last-word-loop-inc);
@@ -442,8 +442,8 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
   // Return the difference between the address of the found zero byte
   // and the start of the string
   ins--block(be, return);
-  let p = ins--phi(be, first-word-p, first-word-loop-body,
-                       last-word-p, last-word-loop-body);
+  let p = ins--phi*(be, first-word-p, first-word-loop-body,
+		    last-word-p, last-word-loop-body);
   let p-as-word = ins--ptrtoint(be, p, iWord-type);
   ins--sub(be, p-as-word, as-word)
 end;
@@ -567,7 +567,7 @@ define side-effect-free stateless dynamic-extent mapped &runtime-primitive-descr
   let empty-vector-name
     = emit-name(be, module, dylan-value(#"%empty-vector"));
   let empty-vector = llvm-builder-global(be, empty-vector-name);
-  ins--phi(be, empty-vector, entry-block, copied-vector, return-copied-vector)
+  ins--phi*(be, empty-vector, entry-block, copied-vector, return-copied-vector)
 end;
 
 define side-effect-free stateless dynamic-extent mapped-parameter &primitive-descriptor primitive-vector-element

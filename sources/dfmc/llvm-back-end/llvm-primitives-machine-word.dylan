@@ -166,7 +166,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
 
   // Allocate and initialize a <double-integer> instance
   ins--block(be, common-alloc);
-  let high = ins--phi(be, 0, entry-block, -1, below-check);
+  let high = ins--phi*(be, 0, entry-block, -1, below-check);
   let double-integer = op--allocate-double-integer(be, x, high);
   let double-integer-ptr
     = ins--bitcast(be, double-integer, $llvm-object-pointer-type);
@@ -174,7 +174,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
 
   // Common return
   ins--block(be, common-return);
-  ins--phi(be, tagged-ptr, fixed, double-integer-ptr, common-alloc);
+  ins--phi*(be, tagged-ptr, fixed, double-integer-ptr, common-alloc);
 end;
 
 define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-wrap-unsigned-abstract-integer
@@ -208,7 +208,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
 
   // Common return
   ins--block(be, common-return);
-  ins--phi(be, tagged-ptr, fixed, double-integer-ptr, common-alloc);
+  ins--phi*(be, tagged-ptr, fixed, double-integer-ptr, common-alloc);
 end;
 
 define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor primitive-unwrap-abstract-integer
@@ -242,7 +242,7 @@ define side-effect-free stateless dynamic-extent &runtime-primitive-descriptor p
 
   // Common return block
   ins--block(be, return-common);
-  ins--phi(be, untagged, return-untagged, low, return-double)
+  ins--phi*(be, untagged, return-untagged, low, return-double)
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-logand
@@ -526,14 +526,14 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
 
   // Common return
   ins--block(be, return);
-  values(ins--phi(be, dec, decrease,
-                      div, divisor-negative,
-                      div, divisor-nonnegative,
-                      div, entry),
-         ins--phi(be, add, decrease,
-                      rem, divisor-negative,
-                      rem, divisor-nonnegative,
-                      0,   entry))
+  values(ins--phi*(be, dec, decrease,
+		   div, divisor-negative,
+		   div, divisor-nonnegative,
+		   div, entry),
+         ins--phi*(be, add, decrease,
+		   rem, divisor-negative,
+		   rem, divisor-nonnegative,
+		   0,   entry))
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-ceiling/-quotient
@@ -592,14 +592,14 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
 
   // Common return
   ins--block(be, return);
-  values(ins--phi(be, inc, increase,
-                      div, divisor-negative,
-                      div, divisor-nonnegative,
-                      div, entry),
-         ins--phi(be, sub, increase,
-                      rem, divisor-negative,
-                      rem, divisor-nonnegative,
-                      0,   entry))
+  values(ins--phi*(be, inc, increase,
+		   div, divisor-negative,
+		   div, divisor-nonnegative,
+		   div, entry),
+         ins--phi*(be, sub, increase,
+		   rem, divisor-negative,
+		   rem, divisor-nonnegative,
+		   0,   entry))
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-round/-quotient
@@ -694,14 +694,14 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
 
   // Common return
   ins--block(be, return);
-  values(ins--phi(be, inc, increase,
-                      dec, decrease,
-                      div, test-case2-b,
-                      div, test-case2-a),
-         ins--phi(be, sub, increase,
-                      add, decrease,
-                      rem, test-case2-b,
-                      rem, test-case2-a))
+  values(ins--phi*(be, inc, increase,
+		   dec, decrease,
+		   div, test-case2-b,
+		   div, test-case2-a),
+         ins--phi*(be, sub, increase,
+		   add, decrease,
+		   rem, test-case2-b,
+		   rem, test-case2-a))
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-truncate/-quotient

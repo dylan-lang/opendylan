@@ -476,7 +476,7 @@ define instruction-set
             operands: vector(vec1, vec2, mask),
             metadata: builder-metadata(builder, metadata));
 
-  op phi (#rest operands)
+  op phi (operands :: <sequence>)
     => let operands = map(curry(llvm-builder-value, builder), operands);
        let type = llvm-value-type(operands[0]);
        llvm-constrain-type(llvm-value-type(operands[1]), $llvm-label-type);
@@ -596,7 +596,7 @@ define instruction-set
             operands: map(curry(llvm-builder-value, builder), operands),
             metadata: builder-metadata(builder, #()));
 
-  op switch (value, default, #rest jump-table)
+  op switch (value, default, jump-table :: <sequence>)
     => make(<llvm-switch-instruction>,
             operands: map(curry(llvm-builder-value, builder),
                           concatenate(vector(value, default), jump-table)),
@@ -666,4 +666,17 @@ define inline function ins--call-intrinsic
   apply(ins--call, builder, function, args,
         attribute-list: function.llvm-function-attribute-list,
         options)
+end function;
+
+// Spread operands
+define inline function ins--phi*
+    (builder :: <llvm-builder>, #rest operands)
+ => (instruction :: <llvm-instruction>);
+  ins--phi(builder, operands)
+end function;
+
+define inline function ins--switch*
+    (builder :: <llvm-builder>, value, default, #rest jump-table)
+ => (instruction :: <llvm-instruction>);
+  ins--switch(builder, value, default, jump-table)
 end function;

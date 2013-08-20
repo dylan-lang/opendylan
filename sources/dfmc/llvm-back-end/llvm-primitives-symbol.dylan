@@ -54,7 +54,7 @@ define side-effecting stateless indefinite-extent mapped &runtime-primitive-desc
 
   // Now we have an interned symbol; return it
   ins--block(be, return-common);
-  ins--phi(be, interned, interned-found, symbol, interned-not-found)
+  ins--phi*(be, interned, interned-found, symbol, interned-not-found)
 end;
 
 define method op--lookup-symbol
