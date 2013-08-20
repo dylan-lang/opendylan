@@ -44,8 +44,8 @@ define method initialize (date :: <date>, #key, #all-keys) => (#rest objects)
 	 => (ok? :: <boolean>)
 	  if (value < low | if (inclusive?) value > high else value >= high end)
 	    cerror(replacement,
-		   "A date's %s must be between %d, inclusive, and %d, %s",
-		   name, low, high, if (inclusive?) "inclusive" else "exclusive" end);
+		   "A date's %s must be between %d, inclusive, and %d, %s (was: %=)",
+		   name, low, high, if (inclusive?) "inclusive" else "exclusive" end, value);
 	    #f
 	  else
 	    #t
