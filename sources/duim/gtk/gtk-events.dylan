@@ -58,18 +58,18 @@ define method handle-gtk-motion-event
     if (logand(state, logior($left-button,$middle-button,$right-button))  ~= 0)
       distribute-event(_port,
         make(<pointer-drag-event>,
-          sheet: sheet,
-          pointer: port-pointer(_port),
-          modifier-state: modifiers,
-          button: state,
-          x: round(x), y: round(y)));
+             sheet: sheet,
+             pointer: port-pointer(_port),
+             modifier-state: modifiers,
+             button: state,
+             x: round(x), y: round(y)));
     else
       distribute-event(_port,
         make(<pointer-motion-event>,
-          sheet: sheet,
-          pointer: port-pointer(_port),
-          modifier-state: modifiers,
-          x: round(x), y: round(y)));
+             sheet: sheet,
+             pointer: port-pointer(_port),
+             modifier-state: modifiers,
+             x: round(x), y: round(y)));
     end;
   end;
   #t
@@ -104,12 +104,12 @@ define sealed method handle-gtk-crossing-event
     let (x, y)
       = untransform-position(sheet-native-transform(sheet), native-x, native-y);
     distribute-event(_port,
-         make(event-class,
-        sheet: sheet,
-        pointer: port-pointer(_port),
-        kind: gtk-detail->duim-crossing-kind(detail),
-        modifier-state: modifiers,
-        x: x, y: y));
+                     make(event-class,
+                          sheet: sheet,
+                          pointer: port-pointer(_port),
+                          kind: gtk-detail->duim-crossing-kind(detail),
+                          modifier-state: modifiers,
+                          x: x, y: y));
     #t
   end
 end method handle-gtk-crossing-event;
@@ -203,11 +203,11 @@ define sealed method handle-gtk-state-change-event
     let type = event.x/type-value;
     select (type)
       #"configure-notify" =>
-  handle-gtk-configuration-change-event(_port, sheet, event);
+        handle-gtk-configuration-change-event(_port, sheet, event);
       #"map-notify"       =>
-  note-mirror-enabled/disabled(_port, sheet, #t);
+        note-mirror-enabled/disabled(_port, sheet, #t);
       #"unmap-notify"     =>
-  note-mirror-enabled/disabled(_port, sheet, #f);
+        note-mirror-enabled/disabled(_port, sheet, #f);
       #"circulate-notify" => #f;
       #"destroy-notify"   => #f;
       #"gravity-notify"   => #f;
@@ -232,7 +232,7 @@ define sealed method handle-gtk-state-change-config-event
     let type = event.x/type-value;
     select (type)
       #"configure-notify" =>
-  handle-gtk-configuration-change-event(_port, sheet, event);
+        handle-gtk-configuration-change-event(_port, sheet, event);
       #"map-notify"       => #f;
       #"unmap-notify"     => #f;
       #"circulate-notify" => #f;
@@ -259,9 +259,9 @@ define sealed method handle-gtk-state-change-no-config-event
     let type = event.x/type-value;
     select (type)
       #"map-notify"       =>
-  note-mirror-enabled/disabled(_port, sheet, #t);
+        note-mirror-enabled/disabled(_port, sheet, #t);
       #"unmap-notify"     =>
-  note-mirror-enabled/disabled(_port, sheet, #f);
+        note-mirror-enabled/disabled(_port, sheet, #f);
       #"configure-notify" => #f;
       #"circulate-notify" => #f;
       #"destroy-notify"   => #f;
@@ -288,9 +288,9 @@ define method handle-gtk-configure-event
       = untransform-distance(native-transform, native-width, native-height);
     let region = make-bounding-box(x, y, x + width, y + height);
     distribute-event(port(sheet),
-         make(<window-configuration-event>,
-        sheet:  sheet,
-        region: region));
+                     make(<window-configuration-event>,
+                          sheet:  sheet,
+                          region: region));
   end with-stack-structure;
   #t
 end method handle-gtk-configure-event;
