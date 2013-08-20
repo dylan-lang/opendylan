@@ -174,6 +174,7 @@ define inline method get-gcontext
   unless (drawable)
     let widget = medium.medium-sheet.sheet-mirror.mirror-widget;
     drawable := widget.gtk-widget-get-window;
+    assert(~null-pointer?(drawable), "get-gcontext: window must not be null");
     medium-drawable(medium) := drawable;
   end;
   gdk-cairo-create(drawable)
