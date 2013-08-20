@@ -527,14 +527,21 @@ define sealed method make-gtk-mirror
         = if (push-button-like?(gadget))
             gtk-toggle-button-new-with-label(c-string)
           else
-            gtk-radio-button-new-with-label(null-pointer(<GSList>), c-string)
+            let first-mirror = any?(sheet-direct-mirror,
+                                    gadget-box-buttons(gadget.button-gadget-box));
+            let group = if (first-mirror)
+                          gtk-radio-button-get-group(first-mirror.mirror-widget)
+                        else
+                          null-pointer(<GSList>)
+                        end if;
+            gtk-radio-button-new-with-label(group, c-string)
           end;
       assert(~null-pointer?(widget), "gtk-toggle/radio-button-new-with-label failed");
       make(<gadget-mirror>,
            widget: widget,
            sheet:  gadget)
-    end
-  end
+    end with-gdk-lock
+  end with-c-string
 end method make-gtk-mirror;
 
 define method update-mirror-attributes
@@ -544,7 +551,11 @@ define method update-mirror-attributes
   let widget = mirror-widget(mirror);
   with-gdk-lock
     with-disabled-event-handler (mirror, #"clicked")
-      gtk-toggle-button-set-active(widget, selected?)
+      // If we set active on a radio button we enter a loop where
+      // value-changed-gadget-event are generated.
+      if (push-button-like?(gadget))
+        gtk-toggle-button-set-active(widget, selected?)
+      end if
     end
   end
 end method update-mirror-attributes;
