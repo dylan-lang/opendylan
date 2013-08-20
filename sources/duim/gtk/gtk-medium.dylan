@@ -186,7 +186,6 @@ define sealed method update-drawing-state
     (medium :: <gtk-medium>, #key brush, pen, font)
  => (gcontext :: <CairoContext>)
   let gcontext :: <CairoContext> = get-gcontext(medium);
-  ignoring("update-drawing-state");
   let old-cache :: <integer> = medium-drawing-state-cache(medium);
   let new-cache :: <integer> = 0;
   when (old-cache ~= $medium-fully-cached)
@@ -196,7 +195,6 @@ define sealed method update-drawing-state
       establish-brush(medium, brush, gcontext);
       new-cache := logior(new-cache, $medium-brush-cached)
     end;
-    /*
     // Establish a pen, unless it's already cached
     when (zero?(logand(old-cache, $medium-pen-cached)))
       let pen = pen | medium-pen(medium);
@@ -211,6 +209,7 @@ define sealed method update-drawing-state
     unless (medium.%clip-mask)
       //---*** Fill this in!
       ignoring("clip-mask in update-drawing-state");
+      /*
       let mask = compute-clip-mask(medium);
       if (mask == #"none")
         //---*** Clear the mask!
@@ -219,8 +218,8 @@ define sealed method update-drawing-state
         //---*** Set the mask!
       end;
       new-cache := logior(new-cache, $medium-region-cached)
+      */
     end;
-    */
     medium-drawing-state-cache(medium) := logior(old-cache, new-cache)
   end;
   gcontext
@@ -346,15 +345,12 @@ define sealed method establish-pen
   cairo-set-line-cap(gcontext, cap-shape);
   cairo-set-line-join(gcontext, joint-shape);
   if (dashed?)
-    // This is probably wrong
-    cairo-set-dash(gcontext, dash, size(dash), 0.0d0);
-  else
-    cairo-set-dash(gcontext, null-pointer(<C-double>), 0, 0.0d0);
-  end if;
-  when (dashed?)
     ignoring("pen dashes option");
-    // gdk-gc-set-dashes(gcontext, 0, dash)
-  end
+    // This is probably wrong
+    // cairo-set-dash(gcontext, dash, size(dash), 0.0d0);
+  else
+    // cairo-set-dash(gcontext, null-pointer(<C-double>), 0, 0.0d0);
+  end if;
 end method establish-pen;
 
 
