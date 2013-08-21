@@ -387,7 +387,18 @@ define sealed method make-gtk-mirror
     mnemonic := allocate-unique-mnemonic(gadget, text)
   end;
   text := replace-substrings(text, "&", "_");
-  let widget = with-gdk-lock gtk-menu-item-new-with-mnemonic(text) end;
+  let widget = if (radio-button?)
+                 let first-mirror = any?(sheet-direct-mirror,
+                                        gadget-box-buttons(gadget.button-gadget-box));
+                 let group = if (first-mirror)
+                               gtk-radio-menu-item-get-group(first-mirror.mirror-widget)
+                             else
+                               null-pointer(<GSList>)
+                             end if;
+                 gtk-radio-menu-item-new-with-mnemonic(group, text)
+               else
+                 gtk-menu-item-new-with-mnemonic(text)
+               end if;
   make(<menu-button-mirror>,
        widget: widget,
        sheet:  gadget)

@@ -3369,6 +3369,7 @@ define module gtk
     gtk-radio-menu-item-new-with-mnemonic-from-widget,
     gtk-radio-menu-item-new-with-label-from-widget,
     gtk-radio-menu-item-new-with-label,
+    gtk-radio-menu-item-new-with-mnemonic,
     gtk-radio-menu-item-new-from-widget,
     <GtkRadioMenuItem*>,
     gtk-radio-menu-item-priv,

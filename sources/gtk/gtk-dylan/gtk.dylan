@@ -13440,6 +13440,13 @@ define C-function gtk-radio-menu-item-new-with-label
   c-name: "gtk_radio_menu_item_new_with_label";
 end;
 
+define C-function gtk-radio-menu-item-new-with-mnemonic
+  input parameter group_ :: <GSList>;
+  input parameter mnemonic_ :: <C-string>;
+  result res :: <GtkWidget>;
+  c-name: "gtk_radio_menu_item_new_with_mnemonic";
+end;
+
 define C-function gtk-radio-menu-item-new-with-label-from-widget
   input parameter group_ :: <GtkRadioMenuItem>;
   input parameter label_ :: <C-string>;
