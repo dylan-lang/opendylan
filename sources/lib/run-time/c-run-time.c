@@ -1374,13 +1374,15 @@ INLINE void default_arguments
 
   /* copy arguments into staging ground */
 
-  for (i=0; i<number_required; i++)
+  for (i=0; i<number_required; i++) {
     new_arguments[i] = arguments[i];
+  }
 
   /* default keyword parameters */
 
-  for (j=1, i=0; i < number_keywords; j += 2, i++)
+  for (j=1, i=0; i < number_keywords; j += 2, i++) {
     new_arguments[i + keyword_arguments_offset] = keyword_specifiers[j];
+  }
 }
 
 INLINE void process_keyword_parameters
@@ -3312,8 +3314,9 @@ INLINE D MV_SPILL_into (D first_value, MV *dest) {
   TEB* teb = get_teb();
   int i, n = teb->return_values.count;
   teb->return_values.value[0] = first_value;
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; i++) {
     dest->value[i] = teb->return_values.value[i];
+  }
   dest->count = n;
   return (D) dest;
 }
@@ -3331,8 +3334,9 @@ D MV_UNSPILL (D spill_t) {
   MV *src = (MV *) spill_t;
   int i;
   int n = src->count;
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; i++) {
     teb->return_values.value[i] = src->value[i];
+  }
   teb->return_values.count = n;
   return teb->return_values.count == 0 ? DFALSE : teb->return_values.value[0];
 }
@@ -3347,8 +3351,9 @@ D MV_CHECK_TYPE_REST (D first_value, D rest_type, int n, ...) {
     D type = va_arg(ap, D);
     PERFORM_INLINE_TYPE_CHECK(spill.value[i], type);
   }
-  for (; i < mv_n; i++)
+  for (; i < mv_n; i++) {
     PERFORM_INLINE_TYPE_CHECK(spill.value[i], rest_type);
+  }
   MV_UNSPILL((D)&spill);
   return first_value;
 }
@@ -3365,8 +3370,9 @@ D MV_GET_REST_AT (D first_value, DSINT first) {
 D MV_SET_REST_AT (D v, DSINT first) {
   TEB* teb = get_teb();
   int i, size = vector_size(v), offset = first;
-  for (i=0; i<size; ++i)
+  for (i=0; i<size; ++i) {
     teb->return_values.value[offset + i] = vector_ref(v, i);
+  }
   teb->return_values.count = offset + size;
   return teb->return_values.count == 0 ? DFALSE : teb->return_values.value[0];
 }
