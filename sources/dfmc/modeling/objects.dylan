@@ -10,20 +10,20 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// Booted simple objects.
 
 define variable $dylan-system-subtype-bit-type-names :: <simple-object-vector> 
-  = #[#"<value-object>",		// 1
-      #"<mm-wrapper>",			// 2
-      #"<class>",			// 4
-      #"<implementation-class>",	// 8
-      #"<by-class-discriminator>",	// 16
-      #"<abstract-integer>",		// 32
-      #"<function>",			// 64
-      #"<sequence>",			// 128
-      #"<string>",			// 256
-      #"<error>",			// 512
-      #"<collection>",			// 1024
-      #"<cache-header-engine-node>",	// 2048
+  = #[#"<value-object>",                // 1
+      #"<mm-wrapper>",                  // 2
+      #"<class>",                       // 4
+      #"<implementation-class>",        // 8
+      #"<by-class-discriminator>",      // 16
+      #"<abstract-integer>",            // 32
+      #"<function>",                    // 64
+      #"<sequence>",                    // 128
+      #"<string>",                      // 256
+      #"<error>",                       // 512
+      #"<collection>",                  // 1024
+      #"<cache-header-engine-node>",    // 2048
       #"<list>"                         // 4096
-	];
+        ];
 
 define abstract &top-type <top>
 end;
@@ -45,8 +45,8 @@ define sealed domain initialize-packed-slots (<&object>);
 
 define constant <model-value> 
   = type-union(<&top>, <heap-deferred-model>,
-	       <number>, <character>, <boolean>, <mapped-unbound>,
-	       <list>, <vector>, <string>, <symbol>); // etc.
+               <number>, <character>, <boolean>, <mapped-unbound>,
+               <list>, <vector>, <string>, <symbol>); // etc.
 
 define sealed concrete &class <boolean> (<object>) end;
 define constant &true = #t;
@@ -600,10 +600,10 @@ define macro iclass-transfer-compiletime-slot-definer
   { define iclass-transfer-compiletime-slot ?slotname:name , ?otherslotname:name ( ?type:* ) ; }
     =>
     { define inline method ?slotname (c :: <&class>) => (v :: ?type)
-	?otherslotname (^class-implementation-class(c))
+        ?otherslotname (^class-implementation-class(c))
       end method;
       define inline method ?slotname ## "-setter" (v :: ?type, c :: <&class>)
-	  ?otherslotname ## "-setter"(v, ^class-implementation-class(c))
+          ?otherslotname ## "-setter"(v, ^class-implementation-class(c))
       end method;
     }
 type:
@@ -638,12 +638,12 @@ define macro iclass-transfer-runtime-slot-definer
     { do-define-evaluator-override(?#"slotname", "^" ## ?slotname);
       do-define-evaluator-override(?#"slotname" ## "-setter", "^" ## ?slotname ## "-setter");
       define function "source-constructor-for-iclass-transfer-" ## ?slotname ()
-	  #{ define inline method ?slotname (c :: <class>) => (v :: ?type)
-	       ?slotname(class-implementation-class(c)) 
-	     end method;
+          #{ define inline method ?slotname (c :: <class>) => (v :: ?type)
+               ?slotname(class-implementation-class(c)) 
+             end method;
              define inline method ?slotname ## "-setter" (v :: ?type, c :: <class>)
-	       ?slotname ## "-setter" (v, class-implementation-class(c))
-	     end method
+               ?slotname ## "-setter" (v, class-implementation-class(c))
+             end method
            }
       end function;
       do-define-core-unadorned-definition
@@ -858,8 +858,8 @@ define function compute-compile-stage-setter (slot :: <&slot-descriptor>)
     let module = getter-var.binding-home;
     if (booted-module?(module))
       let name = as(<symbol>,
-		    concatenate(as(<string>, getter-var.binding-identifier),
-				"-setter"));
+                    concatenate(as(<string>, getter-var.binding-identifier),
+                                "-setter"));
       lookup-compile-stage-function(untracked-lookup-binding-in(module, name))
     end;
   end;
@@ -1282,7 +1282,7 @@ define method dood-restore-proxy
     // with-dood-context (namespace-library-description(binding.binding-home))
       let object = untracked-binding-model-object-if-computed(binding);
       if (instance?(object, <dood-cross-model-proxy>))
-	break("CIRCULARITY %=", proxy);
+        break("CIRCULARITY %=", proxy);
       end if;
       object
     // end with-dood-context;
@@ -1339,10 +1339,10 @@ define method ^init-arg-descriptor
     (class :: <&class>, keyword :: <symbol>) => (descriptor)
   block (return)
     for (d :: <&init-arg-descriptor> in
-	   ^direct-initialization-argument-descriptors(class))
+           ^direct-initialization-argument-descriptors(class))
       if (^init-keyword(d) == keyword &
-	    (^init-keyword-required?(d) | ^init-supplied?(d)))
-	return(d)
+            (^init-keyword-required?(d) | ^init-supplied?(d)))
+        return(d)
       end;
     end;
   end block;
@@ -1403,18 +1403,18 @@ define compiler-sideways method dood-disk-object-default
     if (instance?(object, <simple-object-vector>))
       let properties = find-model-properties-in(ld, object, #f, create?: #f); 
       if (properties)
-	if (ld == model-library(object))
-	  dood-as-proxy(dood, object, dood-make-mapped-object-proxy, properties)
-	else
-	  dood-as-proxy(dood, object, dood-make-binding-value-proxy)
-	end if
+        if (ld == model-library(object))
+          dood-as-proxy(dood, object, dood-make-mapped-object-proxy, properties)
+        else
+          dood-as-proxy(dood, object, dood-make-binding-value-proxy)
+        end if
       else
-	object
+        object
       end if
     else
       let properties = lookup-owned-model-properties-in(ld, object); 
       if (properties)
-	dood-as-proxy(dood, object, dood-make-mapped-object-proxy, properties)
+        dood-as-proxy(dood, object, dood-make-mapped-object-proxy, properties)
       else
         object
       end if

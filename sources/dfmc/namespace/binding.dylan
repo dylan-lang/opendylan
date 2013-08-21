@@ -17,10 +17,10 @@ define macro with-dood-context
   =>
   { if (*interactive-compilation-layer*)
       dynamic-bind (*interactive-compilation-layer* = #f,
-	            *library-description* = #f)
+                    *library-description* = #f)
         with-library-context (?ld)
-	  ?body
-	end
+          ?body
+        end
       end
     else
       with-library-context (?ld)
@@ -113,16 +113,16 @@ define macro binding-properties-accessors
       ?more:*
     end }
     => { define method ?accessor (object :: ?class) => (val :: ?type)
-	   let p
-	     = binding-properties-in-context
-	         (current-library-description(), object, #f);
-	   if (p) "shadowable-" ## ?accessor(p) else ?default end
-	 end method;
+           let p
+             = binding-properties-in-context
+                 (current-library-description(), object, #f);
+           if (p) "shadowable-" ## ?accessor(p) else ?default end
+         end method;
          define method ?accessor ## "-setter" (value, object :: ?class)
-	   let p
-	     = binding-properties-in-context
-	         (current-library-description(), object, #t);
-	   "shadowable-" ## ?accessor ## "-setter" (value, p)
+           let p
+             = binding-properties-in-context
+                 (current-library-description(), object, #t);
+           "shadowable-" ## ?accessor ## "-setter" (value, p)
          end method;
          binding-properties-accessors (?class) ?more end }
 end macro;
@@ -157,7 +157,7 @@ end function;
 define inline function binding-value-slot-setter
     (value, binding :: <module-binding>) => (res)
   debug-assert(value == untracked-binding-model-object-if-computed(binding),
-	       "unsupported use of binding-value-slot-setter");
+               "unsupported use of binding-value-slot-setter");
   value
 end function;
 
@@ -250,17 +250,17 @@ define method add-definition (name, definition) => ()
     binding.binding-previous-definition := old;
     binding.binding-active-definition := definition;
   elseif (defined-after?(definition, old)
-	    | (form-implicitly-defined?(old) &
-		 current-library-description?(form-original-library(old))))
+            | (form-implicitly-defined?(old) &
+                 current-library-description?(form-original-library(old))))
     debug-assert(current-library-description?(form-original-library(old)));
     retract-top-level-form(old);
     add-definition(name, definition);
   else
     note(<serious-duplicate-definition>,
          source-location: form-source-location(definition),
-	 binding: binding,
-	 active: old,
-	 duplicate: definition);
+         binding: binding,
+         active: old,
+         duplicate: definition);
     add-local-duplicate-definition(binding, definition);
   end;
 end method;
@@ -353,7 +353,7 @@ define method eval-certain-modifying-definitions!
     unless (empty?(pair))
       let model-or-definition = head(pair);
       when (form-predicate(model-or-definition))
-	head(pair) := untracked-ensure-form-model(model-or-definition);
+        head(pair) := untracked-ensure-form-model(model-or-definition);
       end when;
       loop(tail(pair))
     end unless;
@@ -367,8 +367,8 @@ define inline method shadowable-binding-certain-local-modifying-models
   let models-or-forms
     = shadowable-%binding-local-modifying-models(properties)
         | (shadowable-%binding-local-modifying-models(properties)
-	     := copy-sequence
-	          (shadowable-binding-local-modifying-definitions(properties)));
+             := copy-sequence
+                  (shadowable-binding-local-modifying-definitions(properties)));
   // TODO: COULD HAVE A BIT TO SAY WHETHER ALL DEFINITIONS ARE EVALUATED
   eval-certain-modifying-definitions!(models-or-forms, form-predicate);
   models-or-forms
@@ -448,7 +448,7 @@ define compiler-open generic form-ignored? (form);
 define method form-ignored-internal? (form :: <modifying-form>)
   // Simplification so we can use LOCAL-ignored-definitions
   debug-assert(current-library-description?(form-library(form)),
-	       "General case not implemented");
+               "General case not implemented");
   let binding = form-variable-binding(form);
   member?(form, binding.binding-local-ignored-definitions)
 end method;
@@ -496,9 +496,17 @@ end function;
 define program-warning <circular-reference>
   slot condition-variable-name,
     required-init-keyword: variable-name:;
-  format-string    "The definition of %= is circular.";
-  format-arguments variable-name;
+  format-string    "The definition of %= is circular among the following:\n%=";
+  format-arguments variable-name, circularity-chain;
 end program-warning;
+
+define function note-circular-reference
+    (binding, definition) => ()
+  note(<circular-reference>,
+       source-location:   form-source-location(definition),
+       variable-name:     binding-variable-name(binding),
+       circularity-chain: *forms-in-processing*);
+end function;
 
 define function binding-model-access-denied? 
     (binding :: <module-binding>) => (well? :: <boolean>)
@@ -508,8 +516,8 @@ define function binding-model-access-denied?
 end function;
 
 define method binding-model-object (binding :: <module-binding>,
-				    #key default = #f,
-				    error-if-circular? = #t)
+                                    #key default = #f,
+                                    error-if-circular? = #t)
  => (model)
   let model = untracked-binding-model-object(binding, error-if-circular?);
   if (model == $binding-model-not-computed)
@@ -548,10 +556,8 @@ define method untracked-binding-model-object
       $binding-model-not-computed
     elseif (form-models-installed?(definition))
       if (error-if-circular? &
-	    form-models-installed?(definition) == #"processing")
-	note(<circular-reference>,
-	     source-location: form-source-location(definition),
-	     variable-name:   binding-variable-name(binding));
+            form-models-installed?(definition) == #"processing")
+        note-circular-reference(binding, definition);
         gts-debug("circ", "ubmo, circular - returning <object>.\n");
         dylan-value(#"<object>");
       else
@@ -563,7 +569,7 @@ define method untracked-binding-model-object
       $binding-model-not-computed
     else
       compute-cached-binding-model-object-in
-	(current-library-description(), binding, definition)
+        (current-library-description(), binding, definition)
     end;
   end
 end method;
@@ -587,16 +593,14 @@ define method binding-type-model-object
                   $binding-model-not-computed
                 elseif (form-models-installed?(definition) == #"processing")
                   if (error-if-circular?)
-                    note(<circular-reference>,
-		         source-location: form-source-location(definition),
-		         variable-name:   binding-variable-name(binding));
-		    break("Circularity");
+                    note-circular-reference(binding, definition);
+                    break("Circularity");
                   end;
-		  $binding-model-not-computed
+                  $binding-model-not-computed
                 else
-		  maybe-compute-and-install-form-model-objects(definition);
-		  binding-cached-type-model-object(binding);
-	        end;
+                  maybe-compute-and-install-form-model-objects(definition);
+                  binding-cached-type-model-object(binding);
+                end;
     if (value == $binding-model-not-computed)
       note-binding-dependency
         (binding, dep$active-definition);
@@ -682,8 +686,8 @@ define method lookup-model-object
     model-object
   else
     debug-assert(supplied?(default),
-		 "No model-object found for %= and no default supplied.",
-		 name);
+                 "No model-object found for %= and no default supplied.",
+                 name);
     default
   end
 end method;
@@ -839,16 +843,16 @@ end method;
 define method binding-variable-name
     (binding :: <module-binding>) => (variable-name)
   make-variable-name-fragment-in-module(binding.name,
-					binding.binding-home)
+                                        binding.binding-home)
 end method;
 
 define method untracked-binding-definition
     (binding :: <module-binding>, #key default = unsupplied()) => (definition)
   binding.binding-active-definition
     | begin
-	debug-assert(supplied?(default),
-		     "No definition found for %=.", binding);
-	default
+        debug-assert(supplied?(default),
+                     "No definition found for %=.", binding);
+        default
       end
 end method;
 
@@ -912,14 +916,14 @@ define method binding-accessible-to-other-libraries?
     exported-name?(lib, namespace-name(home-module)) |
       // The binding might be re-exported through some other module
       any?(method (lbinding)
-	     if (defined?(lbinding) & exported?(lbinding))
-	       let module = library-binding-value(lbinding);
-	       member?(home-module, module.all-used-namespaces)
-		 // Argh...  Hopefully this won't happen too often
-		 & member?(binding, module.exported-imports-table)
-	     end;
-	   end method,
-	   lib.namespace-local-bindings)
+             if (defined?(lbinding) & exported?(lbinding))
+               let module = library-binding-value(lbinding);
+               member?(home-module, module.all-used-namespaces)
+                 // Argh...  Hopefully this won't happen too often
+                 & member?(binding, module.exported-imports-table)
+             end;
+           end method,
+           lib.namespace-local-bindings)
   end
 end method;
 
@@ -934,8 +938,8 @@ define method remove-binding-definition
       binding.binding-active-definition := #f;
     else
       let oldest = reduce1(method(old, def)
-			       if (defined-before?(old, def)) def else old end
-			   end, dups);
+                               if (defined-before?(old, def)) def else old end
+                           end, dups);
       remove-local-duplicate-definition(binding, oldest);
       // At this point nobody depends on binding having or not having any
       // definition, so don't need to note-adding-definition.
@@ -993,22 +997,22 @@ end;
 define macro imported-binding-delegated-getter-definer
   { define imported-binding-delegated-getter ?:name = ?default:expression }
     => { define method ?name (b :: <imported-module-binding>)
-	   let p = imported-binding-delegated-property(b);
-	   if (p) "shadowable-" ## ?name(p)
-	   else ?default end;
-	 end method }
+           let p = imported-binding-delegated-property(b);
+           if (p) "shadowable-" ## ?name(p)
+           else ?default end;
+         end method }
 end macro;
-	   
+           
 define macro imported-binding-delegated-accessors-definer
   { define imported-binding-delegated-accessors ?:name = ?default:expression }
     => { define imported-binding-delegated-getter ?name = ?default;
          define method ?name ## "-setter" (v, b :: <imported-module-binding>)
-	   let p = imported-binding-delegated-property(b);
-	   if (p) "shadowable-" ## ?name(p) := v;
-	   else v end;
-	 end method }
+           let p = imported-binding-delegated-property(b);
+           if (p) "shadowable-" ## ?name(p) := v;
+           else v end;
+         end method }
 end macro;
-	   
+           
 define imported-binding-delegated-accessors binding-macro-class? = #f;
 
 define imported-binding-delegated-accessors binding-defined? = #f;
@@ -1036,25 +1040,25 @@ end method;
 
 
 define function collect-used-bindings (func :: <function>,
-				       binding :: <imported-module-binding>)
+                                       binding :: <imported-module-binding>)
   debug-assert(valid-binding-home-library?(binding), "Bad binding");
   debug-assert(~*interactive-compilation-layer*, "Interactive?");
   let canonical = binding-canonical-binding(binding);
   let current = func(binding);
   concatenate!
     (reduce(method (result, ld)
-	      let imported
-		= lookup-imported-binding(ld.language-definition, canonical);
-	      if (imported)
-		with-library-context (ld)
-		  concatenate!(result, copy-sequence(func(imported)))
-		end;
-	      else
-		result
-	      end
-	    end method,
-	    #(),
-	    all-used-library-descriptions(current-library-description())),
+              let imported
+                = lookup-imported-binding(ld.language-definition, canonical);
+              if (imported)
+                with-library-context (ld)
+                  concatenate!(result, copy-sequence(func(imported)))
+                end;
+              else
+                result
+              end
+            end method,
+            #(),
+            all-used-library-descriptions(current-library-description())),
      copy-sequence(func(canonical)),
      copy-sequence(current))
 end function;
@@ -1064,8 +1068,8 @@ define method untracked-binding-modifying-definitions
   %binding-modifying-definitions(binding)
     | (%binding-modifying-definitions(binding)
          := collect-modifying-objects
-	      (binding, binding-local-modifying-definitions, 
-	       shadowable-binding-local-modifying-definitions))
+              (binding, binding-local-modifying-definitions, 
+               shadowable-binding-local-modifying-definitions))
 end method;
 
 define method untracked-binding-certain-modifying-models
@@ -1077,8 +1081,8 @@ define method untracked-binding-certain-modifying-models
   let all-modifying-models
     = collect-modifying-objects // BUG: shadowable???
         (binding, 
-	 rcurry(binding-certain-local-modifying-models, form-predicate), 
-	 rcurry(shadowable-binding-certain-local-modifying-models, form-predicate),
+         rcurry(binding-certain-local-modifying-models, form-predicate), 
+         rcurry(shadowable-binding-certain-local-modifying-models, form-predicate),
          imported-only?: imported-only?);
   all-modifying-models
 end method;
@@ -1106,22 +1110,22 @@ define inline function collect-modifying-objects
     (copy-sequence(current-defs),
      copy-sequence(canonical-defs),
      reduce(method (result, ld)
-	      let imported
-		= lookup-imported-binding(ld.language-definition, canonical);
-	      if (imported)
-		let p = binding-properties-in-context(ld, imported, #f);
-		if (p)
-		  let seq = p.binding-local-objects;
-		  concatenate!(result, copy-sequence(seq))
-		else
-		  result
-		end
-	      else
-		result
-	      end;
-	    end method,
-	    #(),
-	    all-used-library-descriptions(current-library-description())))
+              let imported
+                = lookup-imported-binding(ld.language-definition, canonical);
+              if (imported)
+                let p = binding-properties-in-context(ld, imported, #f);
+                if (p)
+                  let seq = p.binding-local-objects;
+                  concatenate!(result, copy-sequence(seq))
+                else
+                  result
+                end
+              else
+                result
+              end;
+            end method,
+            #(),
+            all-used-library-descriptions(current-library-description())))
 end function;
 
 
@@ -1179,8 +1183,8 @@ define method defined? (binding :: <module-binding>) => (value :: <boolean>)
   note-binding-dependency(binding, dep$defined?);
   binding-defined?(binding)
     | begin
-	let def = untracked-binding-definition(binding, default: $unfound);
-	found?(def) & ~instance?(def, <missing-variable-defining-form>)
+        let def = untracked-binding-definition(binding, default: $unfound);
+        found?(def) & ~instance?(def, <missing-variable-defining-form>)
       end 
 end method;
 
