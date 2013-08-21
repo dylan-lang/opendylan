@@ -83,9 +83,9 @@ define compiler-sideways method compute-and-install-form-model-objects
     if (form-defines-variable?(form, variable-name))
       let binding = lookup-binding(variable-name, reference?: #f);
       let (model-object, computed?) =
-	untracked-binding-model-object-if-computed(binding);
+        untracked-binding-model-object-if-computed(binding);
       if (computed?)
-	install-definition (model-object, form, variable-name);
+        install-definition (model-object, form, variable-name);
       end;
     end;
   end;
@@ -115,9 +115,9 @@ define compiler-sideways method compute-and-install-form-model-objects
       lookup-constant-model-object
       (#f,
        spec-type-expression
-	 (first(spec-value-required-variable-specs(form-bindings-spec(form)))));
+         (first(spec-value-required-variable-specs(form-bindings-spec(form)))));
     if (var-type &
-	  ^instance?(model-object, var-type))
+          ^instance?(model-object, var-type))
       define-model-object-and-type(name, model-object, var-type);
       install-definition (model-object, form, name);
     else
@@ -143,7 +143,7 @@ define compiler-sideways method compute-and-install-form-model-objects
         lambda-top-level?(model) := #t;
         define-model-object(name, model);
       else
-	form-evaluation-tried-and-failed?(form) := #t;
+        form-evaluation-tried-and-failed?(form) := #t;
         next-method();
       end;
     end;

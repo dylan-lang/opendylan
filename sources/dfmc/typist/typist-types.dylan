@@ -228,7 +228,7 @@ define inline function as-false-or-type-variable-coll(x :: false-or(<collection>
     => (result :: false-or(<collection>))
   // Coerce a collection to a collection of type variables.
   if (x == #f |                                          // unsupplied keyword
-	every?(rcurry(instance?, <type-variable>), x))   // proper collection
+        every?(rcurry(instance?, <type-variable>), x))   // proper collection
     x
   else
     map(curry(make, <type-variable>, contents:), x)
@@ -366,20 +366,20 @@ define method make
   let fixed :: false-or(<fixed-sequence>)
     = fixed & as(<fixed-sequence>, fixed);
   apply(next-method, tev, 
-	fixed: case
-		 fixed     => as-false-or-type-variable-coll(fixed);
-		 otherwise => #[];
-	       end,
-	rest:  as-false-or-type-variable(
+        fixed: case
+                 fixed     => as-false-or-type-variable-coll(fixed);
+                 otherwise => #[];
+               end,
+        rest:  as-false-or-type-variable(
                  case
-		   // Unsupplied means values(#rest <object>).
-		   // #f means no rest return type.
-		   // A type means that return type.
-		   rest == #"unsupplied" => as(<type-estimate>, 
-					       dylan-value(#"<object>"));
-		   otherwise             => rest;
-		 end), 
-	keys)
+                   // Unsupplied means values(#rest <object>).
+                   // #f means no rest return type.
+                   // A type means that return type.
+                   rest == #"unsupplied" => as(<type-estimate>, 
+                                               dylan-value(#"<object>"));
+                   otherwise             => rest;
+                 end), 
+        keys)
 end;
 
 define method print-type-estimate-internals(vte :: <type-estimate-values>, 
@@ -578,7 +578,7 @@ define method make (cl == <type-estimate-limited-instance>,
            let new-te = just-cons-it();
            te-cons-cache[singleton] := new-te;
            new-te
-	 end;
+         end;
     otherwise
       // Everything else is just consed and not encached.
       // Warning: Note that if you attempt to use the cons cache for classes here,
@@ -607,13 +607,13 @@ define type-class <type-estimate-limited-collection> (<type-estimate-limited>)
     init-keyword: size:;
   constant slot type-estimate-dimensions :: false-or(limited(<sequence>, 
                                                              of: <integer>
-							       // limited(<integer>, min: 0)
-							       )),
+                                                               // limited(<integer>, min: 0)
+                                                               )),
     init-value: #f, init-keyword: dimensions:;
 end;
 
 define method make (lc :: subclass(<type-estimate-limited-collection>), 
-		    #rest the-keys, 
+                    #rest the-keys, 
                     #key class, concrete-class, of, size, dimensions, #all-keys)
  => (te :: <type-estimate>)
   assert(of | size | dimensions, 
@@ -628,25 +628,25 @@ define method make (lc :: subclass(<type-estimate-limited-collection>),
           dimensions, class);
   // Add root: and coerce of:.
   apply(next-method, lc, 
-	root:           dylan-value(#"<collection>"),
-	class:          class,
-	concrete-class: concrete-class,
-	of:             as-false-or-type-variable(of),
-	size:           size,
-	dimensions:     dimensions, 
-	the-keys)
+        root:           dylan-value(#"<collection>"),
+        class:          class,
+        concrete-class: concrete-class,
+        of:             as-false-or-type-variable(of),
+        size:           size,
+        dimensions:     dimensions, 
+        the-keys)
 end;
 
 define method print-type-estimate-internals
     (lc :: <type-estimate-limited-collection>, #key stream) => ()
   format(stream, "limited(%s", 
-	 type-estimate-debug-name(type-estimate-class(lc)));
+         type-estimate-debug-name(type-estimate-class(lc)));
   ~type-estimate-of(lc)         | format(stream, ", of: %s", 
-					 type-estimate-of(lc));
+                                         type-estimate-of(lc));
   ~type-estimate-size(lc)       | format(stream, ", size: %s", 
-					 type-estimate-size(lc));
+                                         type-estimate-size(lc));
   ~type-estimate-dimensions(lc) | format(stream, ", dimensions: %s", 
-					 type-estimate-dimensions(lc));
+                                         type-estimate-dimensions(lc));
   write-element(stream, ')')
 end;
 
@@ -693,15 +693,15 @@ define method make
   apply(next-method, lf, 
         // TODO: callable-object is no longer valid superclass model
         // root:      dylan-value(#"<callable-object>"),
-	requireds: case
-		     requireds => as-false-or-type-variable-coll(requireds);
-		     otherwise => #[];
-		   end,
-	keys:      as-false-or-type-variable-coll(keys),
+        requireds: case
+                     requireds => as-false-or-type-variable-coll(requireds);
+                     otherwise => #[];
+                   end,
+        keys:      as-false-or-type-variable-coll(keys),
         vals:      select (vals by instance?)
-		     <type-variable> => vals;
-		     otherwise       => make(<type-variable>, contents: vals);
-		   end,
+                     <type-variable> => vals;
+                     otherwise       => make(<type-variable>, contents: vals);
+                   end,
         the-keys)
 end;
 
@@ -717,7 +717,7 @@ define method print-type-estimate-internals
           predecessors? := #t
         end;
   format(stream, "limited(%s, arguments: (", 
-	 type-estimate-debug-name(type-estimate-class(tef)));
+         type-estimate-debug-name(type-estimate-class(tef)));
   unless (empty?(type-estimate-requireds(tef)))
     maybe-comma();                                           // Required args
     print-separated-collection(type-estimate-requireds(tef), stream: stream)
@@ -725,20 +725,20 @@ define method print-type-estimate-internals
   when (type-estimate-rest?(tef))
     maybe-comma();
     format(stream, "#rest %s", 
-	   type-estimate-debug-name(dylan-value(#"<object>"))) // #rest present
+           type-estimate-debug-name(dylan-value(#"<object>"))) // #rest present
   end;
   when (type-estimate-keys(tef))
     maybe-comma();
     write(stream, "#key ");                                  // Keyword args
     let prev-key? = #f;                                      // For commas
     map-table(type-estimate-keys(tef),
-	      method (key, key-type)
-		when (prev-key?)
-		  write(stream, ", ")                        // Comma between
-		end;
-		format(stream, "%s :: %s", key, key-type);
-		prev-key? := #t
-	      end)
+              method (key, key-type)
+                when (prev-key?)
+                  write(stream, ", ")                        // Comma between
+                end;
+                format(stream, "%s :: %s", key, key-type);
+                prev-key? := #t
+              end)
   end;
   when (type-estimate-all-keys?(tef))
     maybe-comma();
@@ -763,7 +763,7 @@ define method make
   // Enwrap the unionees in type variables.
   let unionees :: <unionee-sequence> = as(<unionee-sequence>, unionees);
   apply(next-method, teu, unionees: as-false-or-type-variable-coll(unionees),
-	the-keys)
+        the-keys)
 end;
 
 define method print-type-estimate-internals(un :: <type-estimate-union>, 
@@ -833,26 +833,26 @@ define as-type-estimate-rules
   t :: <&raw-aggregate-type>      -> make(<type-estimate-raw>, raw: t);
   // *** Is <&values> a rep'n of multiple values?
   t :: <&limited-integer>         -> make(<type-estimate-limited-integer>, 
-					  min: ^limited-integer-min(t),
-					  max: ^limited-integer-max(t));
+                                          min: ^limited-integer-min(t),
+                                          max: ^limited-integer-max(t));
   // *** Limited collections, ranges
   t :: <&subclass>                -> make(<type-estimate-limited-class>, // *** Use cons cache?
-					  subclass: ^subclass-class(t));
+                                          subclass: ^subclass-class(t));
   t :: <&limited-collection-type> -> make(<type-estimate-limited-collection>, // *** Use cons cache?
-					  class:          ^limited-collection-class(t),
-					  concrete-class: ^limited-collection-concrete-class(t),
-					  of:             as(<type-estimate>, ^limited-collection-element-type(t)),
-					  size:           ^limited-collection-size(t),
-					  dimensions:     ^limited-collection-dimensions(t) &
-					                    as(limited(<vector>, of: <integer>),
-							       ^limited-collection-dimensions(t)));
+                                          class:          ^limited-collection-class(t),
+                                          concrete-class: ^limited-collection-concrete-class(t),
+                                          of:             as(<type-estimate>, ^limited-collection-element-type(t)),
+                                          size:           ^limited-collection-size(t),
+                                          dimensions:     ^limited-collection-dimensions(t) &
+                                                            as(limited(<vector>, of: <integer>),
+                                                               ^limited-collection-dimensions(t)));
   t :: <&singleton>               -> make(<type-estimate-limited-instance>, // *** Use cons cache?
-					  singleton: ^singleton-object(t));
+                                          singleton: ^singleton-object(t));
   t :: <&union>                   -> make(<type-estimate-union>,
-					  unionees: list(as(<type-estimate>,
-							    ^union-type1(t)),
-							 as(<type-estimate>,
-							    ^union-type2(t))));
+                                          unionees: list(as(<type-estimate>,
+                                                            ^union-type1(t)),
+                                                         as(<type-estimate>,
+                                                            ^union-type2(t))));
 end;
 
 ///

@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define macro for-library-method
   { for-library-method (?doc:expression,
-			?stage:expression of ?:variable in ?:expression)
+                        ?stage:expression of ?:variable in ?:expression)
       ?:body
     end }
     => { do-for-library-method
@@ -20,10 +20,10 @@ define macro compiling-forms
      ?:body
     end }
     => { let stage = ?stage;
-	 for (?form in compilation-record-top-level-forms(?cr))
-	   with-dependent (stage of ?form)
-	     ?body
-	   end
+         for (?form in compilation-record-top-level-forms(?cr))
+           with-dependent (stage of ?form)
+             ?body
+           end
          end
        }
 end macro;
@@ -76,10 +76,10 @@ define function compute-and-install-model-objects
     unless (cr.compilation-record-model-heap)
       progress-line("  Computing models for %s.dylan", name);
       compiling-forms ($compilation of form in cr)
-	unless (form-ignored?(form))
-	  maybe-compute-and-install-form-model-objects(form);
-	  finish-installing-form-model-objects(form);
-	end unless;
+        unless (form-ignored?(form))
+          maybe-compute-and-install-form-model-objects(form);
+          finish-installing-form-model-objects(form);
+        end unless;
       end compiling-forms;
     end unless;
     source-record-progress-report();
@@ -124,11 +124,11 @@ define sideways method maybe-compute-and-install-form-model-objects
       note-compilation-from-definitions-started(current-library-description());
       form.form-models-installed? := #"processing";
       block ()
-	with-fragment-info (form-variable-names(form).first)
-	  compute-and-install-form-model-objects(form);
-	end;
+        with-fragment-info (form-variable-names(form).first)
+          compute-and-install-form-model-objects(form);
+        end;
       cleanup
-	form.form-models-installed? := #f;
+        form.form-models-installed? := #f;
       end block;
       form.form-models-installed? := #t;
     end;
@@ -164,59 +164,59 @@ end;
 
 define function finish-models (ld :: <library-description>) => ()
   local method form-mapper (ld :: <library-description>,
-			    model-selector :: <function>,
-			    model-handler :: <function>)
-	 => ()
-	  with-library-context (ld)
-	    for (cr in library-description-compilation-records(ld))
-	      compiling-forms ($compilation of form in cr)
-		  model-selector(form, model-handler)
-	      end
-	    end
-	  end
-	end method;
+                            model-selector :: <function>,
+                            model-handler :: <function>)
+         => ()
+          with-library-context (ld)
+            for (cr in library-description-compilation-records(ld))
+              compiling-forms ($compilation of form in cr)
+                  model-selector(form, model-handler)
+              end
+            end
+          end
+        end method;
   with-library-context(ld)
     finish-library-models(ld);
     // There are no static models to finish in loose mode.
     unless (library-forms-dynamic?(ld))
       let form = ld.language-definition.namespace-definition;
       when (form)
-	with-dependent-context ($compilation of form)
-	  let lib = form-model(form);
-	  size(library-accumulating-defined-generics(lib)) := 0;
-	end with-dependent-context;
+        with-dependent-context ($compilation of form)
+          let lib = form-model(form);
+          size(library-accumulating-defined-generics(lib)) := 0;
+        end with-dependent-context;
       end when;
       if (~library-description-system-class-init-code(ld))
-	let cr = first(library-description-compilation-records(ld));
-	with-dependent ($compilation of cr)
-	  library-description-system-class-init-code(ld) 
-	    := convert-top-level-initializer
-		  (finish-class-models
-		     (ld, method (ld :: <library-description>, 
-			    model-handler :: <function>)
-			    form-mapper
-			      (ld, finish-class-model-forms, model-handler)
-			  end method));
-  	  library-description-system-gf-init-code(ld) 
-	    := convert-top-level-initializer
-	          (finish-generic-function-models
+        let cr = first(library-description-compilation-records(ld));
+        with-dependent ($compilation of cr)
+          library-description-system-class-init-code(ld) 
+            := convert-top-level-initializer
+                  (finish-class-models
+                     (ld, method (ld :: <library-description>, 
+                            model-handler :: <function>)
+                            form-mapper
+                              (ld, finish-class-model-forms, model-handler)
+                          end method));
+          library-description-system-gf-init-code(ld) 
+            := convert-top-level-initializer
+                  (finish-generic-function-models
                      (ld, method (ld :: <library-description>, model-handler :: <function>)
-			    form-mapper(ld, finish-gf-model-forms, model-handler)
-			  end method));
-	  finish-method-models
-	    (ld, method (ld :: <library-description>, model-handler :: <function>)
-		   form-mapper(ld, finish-method-model-forms, model-handler)
-		 end method);
-	end
+                            form-mapper(ld, finish-gf-model-forms, model-handler)
+                          end method));
+          finish-method-models
+            (ld, method (ld :: <library-description>, model-handler :: <function>)
+                   form-mapper(ld, finish-method-model-forms, model-handler)
+                 end method);
+        end
       end if;
       let form = ld.language-definition.namespace-definition;
       when (form)
-	with-dependent-context ($compilation of form)
-	  let lib :: <&library> = form-model(form);
-	  ^library-defined-generics(lib)
-	    := mapped-model(as(<simple-object-vector>, library-accumulating-defined-generics(lib)));
-	  size(library-accumulating-defined-generics(lib)) := 0;
-	end with-dependent-context;
+        with-dependent-context ($compilation of form)
+          let lib :: <&library> = form-model(form);
+          ^library-defined-generics(lib)
+            := mapped-model(as(<simple-object-vector>, library-accumulating-defined-generics(lib)));
+          size(library-accumulating-defined-generics(lib)) := 0;
+        end with-dependent-context;
       end when;
     end unless;
   end
@@ -230,7 +230,7 @@ end method;
 
 
 define method finish-method-model-forms (form :: <generic-definition>, 
-					 model-handler :: <function>)
+                                         model-handler :: <function>)
   => ()
   map-definition-variable-models
     (form, method (gf) 
@@ -269,16 +269,16 @@ define method finish-library-models (ld :: <library-description>) => ()
       ^library-build-count(lib)   := library-description-build-count(ld);
       let used-libraries
         = map-as(<simple-object-vector>,
-		 method (uld)
-		   ^make(<&used-library>, 
-			 used-library: library-description-model(uld),
-			 binding: if (library-dynamically-bound-in?(ld, uld))
-				    #"loose"
-				  else
-				    #"tight"
-				  end)
-		 end,
-		 library-description-used-descriptions(ld));
+                 method (uld)
+                   ^make(<&used-library>, 
+                         used-library: library-description-model(uld),
+                         binding: if (library-dynamically-bound-in?(ld, uld))
+                                    #"loose"
+                                  else
+                                    #"tight"
+                                  end)
+                 end,
+                 library-description-used-descriptions(ld));
       ^used-libraries(lib) := mapped-model(used-libraries);
     end with-dependent-context;
   end when;
@@ -298,57 +298,57 @@ define function finish-method-models
  => ()
   local method walk-it (m :: <&method>) => ()
           let gf = ^method-generic-function(m);
-	  // HACK: SEEMS TOO LOW LEVEL -- DETAILS ABOUT SINGLE SEALED GF-METHODS
+          // HACK: SEEMS TOO LOW LEVEL -- DETAILS ABOUT SINGLE SEALED GF-METHODS
           let name 
             = if (gf == m)
                 mapped-model(as-lowercase(as(<string>, debug-name(m))))
               else
                 gf
               end;
-  	  // ^debug-name(m) := name;
-	  /*
-	  when (*register-subclass-dependent-generics?*)
-	    let m-library = model-library(m);
-	    when (gf ~== m & m-library == model-library(gf))
-	      let dependent-classes
-		= collecting ()
-		    let sig = ^function-signature(m);
-		    ^map-congruency-classes-sov
-		       (method (class :: <&class>)
-			  unless (class == dylan-value(#"<object>"))
-			    let iclass = ^class-implementation-class(class);
-			    unless (^iclass-subclasses-fixed?(iclass))
-			      if (*register-subclass-dependent-generics-at-runtime?*
-				    | m-library == form-library(model-definition(class)))
-				^iclass-subclass-dependent-generics(iclass)
-				  := mapped-model
-				       (add-new(^iclass-subclass-dependent-generics(iclass), gf));
-			      else 
-				collect(class);
-			      end if;
-			    end unless;
-			  end unless;
-			end method,
-			^signature-required(sig),
-			^signature-number-required(sig));
-		  end collecting;
-	      unless (empty?(dependent-classes))
-		let form
-		  = model-definition(m);
-		let dependent-classes
-		  = mapped-model(as(<simple-object-vector>, dependent-classes));
-		let code
-		  = (with-expansion-source-form(form)
-		       let register = dylan-value(#"%register-subclasses-dependent-generic");
-		       #{ ?register(?gf, ?dependent-classes) }
-		     end with-expansion-source-form);
-		let init-model = convert-top-level-initializer(code);
-		form-init-method(form) := init-model;
-	      end unless;
-	    end when;
-  	  end when;
+          // ^debug-name(m) := name;
+          /*
+          when (*register-subclass-dependent-generics?*)
+            let m-library = model-library(m);
+            when (gf ~== m & m-library == model-library(gf))
+              let dependent-classes
+                = collecting ()
+                    let sig = ^function-signature(m);
+                    ^map-congruency-classes-sov
+                       (method (class :: <&class>)
+                          unless (class == dylan-value(#"<object>"))
+                            let iclass = ^class-implementation-class(class);
+                            unless (^iclass-subclasses-fixed?(iclass))
+                              if (*register-subclass-dependent-generics-at-runtime?*
+                                    | m-library == form-library(model-definition(class)))
+                                ^iclass-subclass-dependent-generics(iclass)
+                                  := mapped-model
+                                       (add-new(^iclass-subclass-dependent-generics(iclass), gf));
+                              else 
+                                collect(class);
+                              end if;
+                            end unless;
+                          end unless;
+                        end method,
+                        ^signature-required(sig),
+                        ^signature-number-required(sig));
+                  end collecting;
+              unless (empty?(dependent-classes))
+                let form
+                  = model-definition(m);
+                let dependent-classes
+                  = mapped-model(as(<simple-object-vector>, dependent-classes));
+                let code
+                  = (with-expansion-source-form(form)
+                       let register = dylan-value(#"%register-subclasses-dependent-generic");
+                       #{ ?register(?gf, ?dependent-classes) }
+                     end with-expansion-source-form);
+                let init-model = convert-top-level-initializer(code);
+                form-init-method(form) := init-model;
+              end unless;
+            end when;
+          end when;
           */
-	end method;
+        end method;
   form-mapper(ld, walk-it);
 end function;
   
@@ -373,10 +373,10 @@ define method finish-gf-model-forms (form :: <generic-definition>, model-handler
   if (instance?(model, <&generic-function>))
     when (*profile-all-calls?*)
       unless (model-compile-stage-only?(model) | ~model-has-definition?(model))
-	let ld   = model-library(model);
-	let lib  = language-definition(model-library(ld));
-	let &lib = namespace-model(lib);
-	add!(library-accumulating-defined-generics(&lib), model);
+        let ld   = model-library(model);
+        let lib  = language-definition(model-library(ld));
+        let &lib = namespace-model(lib);
+        add!(library-accumulating-defined-generics(&lib), model);
       end unless;
     end when;
     model-handler(model, form)
@@ -420,7 +420,7 @@ end method;
 
 
 define function map-definition-variable-models (form :: <variable-defining-form>, 
-						model-handler :: <function>)
+                                                model-handler :: <function>)
  => ()
   for (binding in form-defined-bindings(form))
     let model = binding-model-object(binding, default: #f);
@@ -436,16 +436,16 @@ end function;
 //    let gfs = library-description-generic-function-models(ld);
 //    library-description-models-closed-for-finishing?(ld) := #t;
 //    let pick-one = if (size(classes) > 0) first(classes)
-//		   elseif (size(gfs) > 0) first(gfs)
-//		   else #f
-//		   end if;
+//                 elseif (size(gfs) > 0) first(gfs)
+//                 else #f
+//                 end if;
 //    if (pick-one)
 //      let model-def = model-definition(pick-one);
 //      assert(~(form-init-method(model-def)));
 //      with-dependent ($compilation of model-def)
-//	let class-code = finish-class-models(ld, classes);
-//	let gf-code = finish-generic-function-models(ld, gfs);
-//	form-init-method(model-def) := convert-top-level-initializer(#{ ?class-code ; ?gf-code });
+//      let class-code = finish-class-models(ld, classes);
+//      let gf-code = finish-generic-function-models(ld, gfs);
+//      form-init-method(model-def) := convert-top-level-initializer(#{ ?class-code ; ?gf-code });
 //      end
 //    end if
 //  end;
@@ -540,23 +540,23 @@ define function do-for-library-method (doc, stage, f, ld)
   for (cr in compilation-context-records(ld), firstp = #t then #f)
     unless (cr.compilation-record-model-heap)
       if (doc)
-	let sr = cr.compilation-record-source-record;
-	let name = sr.source-record-name;
-	progress-line("  %s %s.dylan", doc, name);
-	source-record-progress-text("%s %s.dylan", doc, name);
+        let sr = cr.compilation-record-source-record;
+        let name = sr.source-record-name;
+        progress-line("  %s %s.dylan", doc, name);
+        source-record-progress-text("%s %s.dylan", doc, name);
       end;
       // TODO: CORRECTNESS: What's the recommended way to disable this
       // stuff in interactive mode?
       if (firstp & ~instance?(ld, <interactive-layer>))
-	let class-init-code = library-description-system-class-init-code(ld);
-	let gf-init-code = library-description-system-gf-init-code(ld);
-	with-dependent(stage of cr)
-	  if (class-init-code) f(class-init-code) end;
-	  if (gf-init-code) f(gf-init-code) end;
+        let class-init-code = library-description-system-class-init-code(ld);
+        let gf-init-code = library-description-system-gf-init-code(ld);
+        with-dependent(stage of cr)
+          if (class-init-code) f(class-init-code) end;
+          if (gf-init-code) f(gf-init-code) end;
         end
       end if;
       compiling-forms (stage of form in cr)
-	do(f, form-top-level-methods(form));
+        do(f, form-top-level-methods(form));
       end;
     end;
     source-record-progress-report();
@@ -645,7 +645,7 @@ end program-warning;
 define method generated-definition? (form :: <top-level-form>)
   let parent = form.form-parent-form;
   parent & (~instance?(parent, <macro-call-form>)
-	      | generated-definition?(parent))
+              | generated-definition?(parent))
 end;
 
 // Except for slot definitions, which have a class definition for a parent
@@ -677,7 +677,7 @@ end;
 define function form-containing-source-location
     (form :: false-or(<top-level-form>))
   form & (form.form-source-location
-	    | form-containing-source-location(form.form-parent-form))
+            | form-containing-source-location(form.form-parent-form))
 end function;
 
 define method check-bindings
@@ -688,9 +688,9 @@ define method check-bindings
     remove-dependent-program-conditions(library-def, $compilation-mask);
     with-dependent ($compilation of library-def)
       for (binding in undefined-module-bindings-in(library))
-	note(<module-exported-but-not-defined>, 
-	     library: library,
-	     module:  binding.name);
+        note(<module-exported-but-not-defined>, 
+             library: library,
+             module:  binding.name);
       end;
       // TODO: should we check something about imported bindings?
       // Really only want to check if explicitly imported rather than
@@ -710,49 +710,49 @@ define method check-bindings
       // any binding definition or any binding local reference changes.
       remove-dependent-program-conditions(module-def, $compilation-mask);
       with-dependent ($compilation of module-def)
-	let defined-but-not-used = #();
-	// TODO: There's currently no way to tell whether a binding is both
-	// referenced and exported when undefined.
-	for (binding in module.namespace-local-bindings)
-	  let def? = untracked-binding-definition(binding, default: #f);
-	  if (def? & ~instance?(def?, <missing-variable-defining-form>))
-	    unless (exported?(binding) |
-		    generated-definition?(def?) |
-		    binding-local-references?(binding))
-	      defined-but-not-used := pair(pair(def?, binding.name),
-					   defined-but-not-used);
-	    end unless;
-	  else // else undefined
-	   /* This just duplicates warnings at the point of reference
-	    if (binding-local-references?(binding))
-	      note(<binding-referenced-but-not-defined>,
-		   variable-name: binding.name);
-	    end;
-	   */
-	    if (exported?(binding))
-	      let mod-loc = form-source-location(namespace-definition(module));
-	      note(if (created?(binding)) <binding-created-but-not-defined>
-		   else <binding-exported-but-not-defined> end,
-		   source-location: mod-loc,
-		   module:          module,
-		   variable-name:   binding.name);
+        let defined-but-not-used = #();
+        // TODO: There's currently no way to tell whether a binding is both
+        // referenced and exported when undefined.
+        for (binding in module.namespace-local-bindings)
+          let def? = untracked-binding-definition(binding, default: #f);
+          if (def? & ~instance?(def?, <missing-variable-defining-form>))
+            unless (exported?(binding) |
+                    generated-definition?(def?) |
+                    binding-local-references?(binding))
+              defined-but-not-used := pair(pair(def?, binding.name),
+                                           defined-but-not-used);
+            end unless;
+          else // else undefined
+           /* This just duplicates warnings at the point of reference
+            if (binding-local-references?(binding))
+              note(<binding-referenced-but-not-defined>,
+                   variable-name: binding.name);
+            end;
+           */
+            if (exported?(binding))
+              let mod-loc = form-source-location(namespace-definition(module));
+              note(if (created?(binding)) <binding-created-but-not-defined>
+                   else <binding-exported-but-not-defined> end,
+                   source-location: mod-loc,
+                   module:          module,
+                   variable-name:   binding.name);
               // if (def?)
               //   install-missing-definition(binding);
               // end;
-	    end;
-	  end if;
-	end for;
-	do(method (info :: <pair>)
-	     note(<binding-defined-but-not-used>,
-		  source-location: form-containing-source-location(info.head),
-		  variable-name:   info.tail);
-	   end,
-	   sort!(defined-but-not-used,
-		 test: method (info1 :: <pair>, info2 :: <pair>)
-			 let form1 :: <top-level-form> = info1.head;
-			 let form2 :: <top-level-form> = info2.head;
-			 defined-before?(form2, form1)
-		       end));
+            end;
+          end if;
+        end for;
+        do(method (info :: <pair>)
+             note(<binding-defined-but-not-used>,
+                  source-location: form-containing-source-location(info.head),
+                  variable-name:   info.tail);
+           end,
+           sort!(defined-but-not-used,
+                 test: method (info1 :: <pair>, info2 :: <pair>)
+                         let form1 :: <top-level-form> = info1.head;
+                         let form2 :: <top-level-form> = info2.head;
+                         defined-before?(form2, form1)
+                       end));
       end with-dependent;
     end for;
   else
@@ -838,63 +838,63 @@ define method compact-coloring-info (cr :: <compilation-record>)
     // sort by location, and remove any entries shadowed by another entry
     // with same location but "lower" type.
     local method less? (dd1 :: <simple-object-vector>,
-			dd2 :: <simple-object-vector>)
-	    let ordered-types = #[#"not-all-methods-known",
-				  #"failed-to-select-where-all-known", 
-				  #"lambda-call", 
-				  #"inlining", 
-				  #"slot-accessor-fixed-offset", 
-				  #"eliminated", 
-				  #"dynamic-extent",
-				  #"bogus-upgrade"];
-	    let start-offset-1 = dd1[0];
-	    let start-offset-2 = dd2[0];
-	    start-offset-1 < start-offset-2 |
-	      (start-offset-1 = start-offset-2 &
-		 begin
-		   let end-offset-1 = dd1[1];
-		   let end-offset-2 = dd2[1];
-		   end-offset-2 < end-offset-1 |
-		     (end-offset-2 = end-offset-1 &
-			begin
-			  let dispatch-1 = dd1[2]; // dispatch type
-			  let dispatch-2 = dd2[2];
-			  dispatch-1 ~== dispatch-2 &
-			    dispatch-1 ~== any?(method (dt)
-						  (dt == dispatch-1 |
-						     dt == dispatch-2)
-						    & dt
-						end, ordered-types)
-			end)
-		 end)
-	  end;
+                        dd2 :: <simple-object-vector>)
+            let ordered-types = #[#"not-all-methods-known",
+                                  #"failed-to-select-where-all-known", 
+                                  #"lambda-call", 
+                                  #"inlining", 
+                                  #"slot-accessor-fixed-offset", 
+                                  #"eliminated", 
+                                  #"dynamic-extent",
+                                  #"bogus-upgrade"];
+            let start-offset-1 = dd1[0];
+            let start-offset-2 = dd2[0];
+            start-offset-1 < start-offset-2 |
+              (start-offset-1 = start-offset-2 &
+                 begin
+                   let end-offset-1 = dd1[1];
+                   let end-offset-2 = dd2[1];
+                   end-offset-2 < end-offset-1 |
+                     (end-offset-2 = end-offset-1 &
+                        begin
+                          let dispatch-1 = dd1[2]; // dispatch type
+                          let dispatch-2 = dd2[2];
+                          dispatch-1 ~== dispatch-2 &
+                            dispatch-1 ~== any?(method (dt)
+                                                  (dt == dispatch-1 |
+                                                     dt == dispatch-2)
+                                                    & dt
+                                                end, ordered-types)
+                        end)
+                 end)
+          end;
     let v = sort!(as(<vector>, dds), test: less?);
     let count = 3 * v.size;
     for (i from 1 below v.size,
-	 dd = v[0] then begin
-			  let new-dd = v[i];
-			  if (new-dd[0] = dd[0] & new-dd[1] = dd[1])
-			    count := count - 3;
-			    v[i] := #f;
-			    dd
-			  else
-			    new-dd
-			  end
-			end)
+         dd = v[0] then begin
+                          let new-dd = v[i];
+                          if (new-dd[0] = dd[0] & new-dd[1] = dd[1])
+                            count := count - 3;
+                            v[i] := #f;
+                            dd
+                          else
+                            new-dd
+                          end
+                        end)
     end;
     let dds = make(<vector>, size: count);
     for (i from 0 below v.size,
-	 j = 0 then begin
-		      let dd = v[i];
-		      if (dd)
-			dds[j] := dd[0];
-			dds[j + 1] := dd[1];
-			dds[j + 2] := dd[2];
-			j + 3
-		      else
-			j
-		      end if
-		    end)
+         j = 0 then begin
+                      let dd = v[i];
+                      if (dd)
+                        dds[j] := dd[0];
+                        dds[j + 1] := dd[1];
+                        dds[j + 2] := dd[2];
+                        j + 3
+                      else
+                        j
+                      end if
+                    end)
     end for;
     cr.compilation-record-dispatch-decisions := dds;
   end;
@@ -908,14 +908,14 @@ define method dispatch-decisions-progress-line (ld :: <compilation-context>)
     for (i from 2 below dds.size by 3)
       let type = dds[i];
       if (member?(type, #[#"not-all-methods-known",
-			  #"failed-to-select-where-all-known"]))
-	calls-unoptimized := calls-unoptimized + 1;	
+                          #"failed-to-select-where-all-known"]))
+        calls-unoptimized := calls-unoptimized + 1;     
       elseif (member?(type, #[#"lambda-call", 
-			      #"inlining", 
-			      #"slot-accessor-fixed-offset", 
-			      #"eliminated", 
-			      #"dynamic-extent"]))
-	calls-optimized := calls-optimized + 1;
+                              #"inlining", 
+                              #"slot-accessor-fixed-offset", 
+                              #"eliminated", 
+                              #"dynamic-extent"]))
+        calls-optimized := calls-optimized + 1;
       end;
     end;
   end;
