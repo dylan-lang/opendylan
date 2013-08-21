@@ -55,10 +55,13 @@ extern OBJECT KPunboundVKi;
 
 #if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
 #define INLINE __inline
+#define FORCE_INLINE __forceinline
 #elif defined(OPEN_DYLAN_COMPILER_CLANG)
 #define INLINE static inline
+#define FORCE_INLINE static inline __attribute__((always_inline))
 #else
 #define INLINE inline
+#define FORCE_INLINE inline __attribute__((always_inline))
 #endif
 
 /* stubbed primitives */
@@ -690,7 +693,7 @@ int FUNCTIONP(D x) {
      (R((((Wrapper*)OBJECT_WRAPPER(x)))->subtype_mask) & 64) \
      )
 
-INLINE D perform_inline_type_check(D value, D type) {
+FORCE_INLINE D PERFORM_INLINE_TYPE_CHECK(D value, D type) {
   if (unlikely(type != LobjectGVKd && !INSTANCEP(value, type))) {
     Ktype_check_errorVKiI(value, type);
   }
@@ -698,7 +701,7 @@ INLINE D perform_inline_type_check(D value, D type) {
 }
 
 D primitive_type_check (D value, D type) {
-  return perform_inline_type_check(value, type);
+  return PERFORM_INLINE_TYPE_CHECK(value, type);
 }
 
 extern D Kstack_overflow_errorVKiI();
@@ -722,8 +725,8 @@ INLINE void CALL_CHECK(FN* function, int argument_count) {
   }
 }
 
-INLINE void TYPE_CHECK_ARG (D specializer, D argument) {
-  perform_inline_type_check(argument, specializer);
+FORCE_INLINE void TYPE_CHECK_ARG (D specializer, D argument) {
+  PERFORM_INLINE_TYPE_CHECK(argument, specializer);
 }
 
 INLINE void TYPE_CHECK_ARGS(D function, int argument_count, D* arguments) {
@@ -3342,10 +3345,10 @@ D MV_CHECK_TYPE_REST (D first_value, D rest_type, int n, ...) {
   MV_SPILL_into(first_value, &spill);
   for (i = 0; i < n; i++) {
     D type = va_arg(ap, D);
-    perform_inline_type_check(spill.value[i], type);
+    PERFORM_INLINE_TYPE_CHECK(spill.value[i], type);
   }
   for (; i < mv_n; i++)
-    perform_inline_type_check(spill.value[i], rest_type);
+    PERFORM_INLINE_TYPE_CHECK(spill.value[i], rest_type);
   MV_UNSPILL((D)&spill);
   return first_value;
 }
