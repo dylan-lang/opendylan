@@ -634,7 +634,10 @@ define form-properties <variable-defining-form-properties>
     (<installable-form-properties>)
 end;
 
-define inline function pack-installed? (x) => (z :: <integer>)
+define constant <form-installed-type> = one-of(#f, #t, #"processing");
+
+define inline function pack-installed?
+    (x :: <form-installed-type>) => (z :: <integer>)
   select (x)
     #f            => 0;
     #"processing" => 1;
@@ -642,7 +645,8 @@ define inline function pack-installed? (x) => (z :: <integer>)
   end select;
 end function;
 
-define inline function unpack-installed? (x :: <integer>) => (res)
+define inline function unpack-installed?
+    (x :: <integer>) => (res :: <form-installed-type>)
   select (x)
     0 => #f            ;
     1 => #"processing" ;
@@ -652,7 +656,7 @@ end function;
 
 define packed-slots form-properties-flags
     (<variable-defining-form-properties>, <installable-form-properties>)
-  eval slot form-models-installed? = #f, field-size: 2,
+  eval slot %form-models-installed? :: <form-installed-type> = #f, field-size: 2,
     pack-function: pack-installed?, unpack-function: unpack-installed?;
 end packed-slots;
 
@@ -662,8 +666,30 @@ define compiler-open dood-class <variable-defining-form>
   lazy constant slot form-variable-name-or-names 
                        :: type-union(<sequence>, <variable-name-fragment>),
     required-init-keyword: variable-name:;
+  virtual slot form-models-installed? :: <form-installed-type>;
   slot form-properties :: <integer> = 0;
 end dood-class;
+
+// Track circular definitions.
+
+define variable *forms-in-processing* :: <list> = #();
+
+define method form-models-installed?
+    (form :: <variable-defining-form>) => (installed? :: <form-installed-type>)
+  form.%form-models-installed?
+end method;
+
+define method form-models-installed?-setter
+    (new-value :: <form-installed-type>, form :: <variable-defining-form>)
+ => (new-value :: <form-installed-type>)
+  select (new-value)
+    #"processing" =>
+      *forms-in-processing* := add!(*forms-in-processing*, form);
+    otherwise =>
+      *forms-in-processing* := remove!(*forms-in-processing*, form);
+  end select;
+  form.%form-models-installed? := new-value
+end method;
 
 define inline function pack-inline-policy 
     (policy :: <symbol>) => (encoding :: <integer>)

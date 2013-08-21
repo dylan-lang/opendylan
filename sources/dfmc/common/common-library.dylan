@@ -80,6 +80,7 @@ define module dfmc-common
     \coagulate-name,
 
     \debug-out, *debug-out*,
+    *forms-in-processing*,
 
     \sealed-constructor-definer;
 

@@ -496,9 +496,17 @@ end function;
 define program-warning <circular-reference>
   slot condition-variable-name,
     required-init-keyword: variable-name:;
-  format-string    "The definition of %= is circular.";
-  format-arguments variable-name;
+  format-string    "The definition of %= is circular among the following:\n%=";
+  format-arguments variable-name, circularity-chain;
 end program-warning;
+
+define function note-circular-reference
+    (binding, definition) => ()
+  note(<circular-reference>,
+       source-location:   form-source-location(definition),
+       variable-name:     binding-variable-name(binding),
+       circularity-chain: *forms-in-processing*);
+end function;
 
 define function binding-model-access-denied? 
     (binding :: <module-binding>) => (well? :: <boolean>)
@@ -549,9 +557,7 @@ define method untracked-binding-model-object
     elseif (form-models-installed?(definition))
       if (error-if-circular? &
             form-models-installed?(definition) == #"processing")
-        note(<circular-reference>,
-             source-location: form-source-location(definition),
-             variable-name:   binding-variable-name(binding));
+        note-circular-reference(binding, definition);
         gts-debug("circ", "ubmo, circular - returning <object>.\n");
         dylan-value(#"<object>");
       else
@@ -587,9 +593,7 @@ define method binding-type-model-object
                   $binding-model-not-computed
                 elseif (form-models-installed?(definition) == #"processing")
                   if (error-if-circular?)
-                    note(<circular-reference>,
-                         source-location: form-source-location(definition),
-                         variable-name:   binding-variable-name(binding));
+                    note-circular-reference(binding, definition);
                     break("Circularity");
                   end;
                   $binding-model-not-computed
