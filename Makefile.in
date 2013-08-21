@@ -5,6 +5,7 @@ abs_builddir    = @abs_builddir@
 
 OPEN_DYLAN_TARGET_PLATFORM = @OPEN_DYLAN_TARGET_PLATFORM@
 RUNTIME_SOURCES = sources/lib/run-time
+RUNTIME_TARGET_PLATFORMS = @OPEN_DYLAN_TARGET_PLATFORM@ @ADDITIONAL_RUNTIME_TARGET_PLATFORMS@
 
 FDMAKE_OPTIONS  =
 fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl $(FDMAKE_OPTIONS)
@@ -122,8 +123,12 @@ $(abs_builddir)/Bootstrap.1/bin/dylan-compiler:
 	@echo Building Open Dylan bootstrap stage 1...
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
 	  $(MAKE) -C sources/jamfiles install
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
-	  $(MAKE) -C $(RUNTIME_SOURCES) install
+	@for target_platform in $(RUNTIME_TARGET_PLATFORMS); do \
+	  $(MAKE) -C $(RUNTIME_SOURCES) \
+	    OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.1 \
+	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
+	    install; \
+	done
 	@$(BOOTSTRAP_1_ENV) \
 	  $(fdmake) --compiler="$(DYLANCOMPILER)" dylan-compiler
 
@@ -164,9 +169,13 @@ $(abs_builddir)/Bootstrap.2/bin/dylan-compiler:
 	@echo Building Open Dylan bootstrap stage 2...
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
 	  $(MAKE) -C sources/jamfiles install
-	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
-	  OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
-	  $(MAKE) -C $(RUNTIME_SOURCES) install
+	@for target_platform in $(RUNTIME_TARGET_PLATFORMS); do \
+	  unset $(BOOTSTRAP_2_UNSET_ENV) ; \
+	    $(MAKE) -C $(RUNTIME_SOURCES) \
+	    OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.2 \
+	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
+	    install; \
+	done
 	@unset $(BOOTSTRAP_2_UNSET_ENV) ; \
 	  $(BOOTSTRAP_2_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_2_COMPILER)" dylan-compiler
@@ -211,8 +220,12 @@ bootstrap-stage-3: $(abs_builddir)/Bootstrap.3
 	@echo Building Open Dylan bootstrap stage 3...
 	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
 	  $(MAKE) -C sources/jamfiles install
-	@OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
-	  $(MAKE) -C $(RUNTIME_SOURCES) install
+	@for target_platform in $(RUNTIME_TARGET_PLATFORMS); do \
+	  $(MAKE) -C $(RUNTIME_SOURCES) \
+	    OPEN_DYLAN_USER_INSTALL=$(abs_builddir)/Bootstrap.3 \
+	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
+	    install; \
+	done
 	@$(BOOTSTRAP_3_ENV) \
 	  $(fdmake) --compiler="$(BOOTSTRAP_3_COMPILER)" $(BOOTSTRAP_3_LIBRARIES)
 
@@ -373,7 +386,11 @@ clean:
 	-rm -rf $(abs_builddir)/release
 	-rm -rf $(abs_builddir)/opendylan-*.tar.bz2
 	-rm -rf $(BOOTSTRAP_1_REGISTRY)
-	$(MAKE) -C $(RUNTIME_SOURCES) clean
+	@for target_platform in $(RUNTIME_TARGET_PLATFORMS); do \
+	  $(MAKE) -C $(RUNTIME_SOURCES) \
+	    OPEN_DYLAN_TARGET_PLATFORM=$$target_platform \
+	    clean; \
+	done
 
 distclean: clean
 	-rm -f aclocal.m4
