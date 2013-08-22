@@ -479,6 +479,7 @@ define inline method grow-bit-subset?
 
 end method;
 
+/* Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
 define method bitset-to-string(set :: <vector-32bit>)
  => (set :: <string>)
   reduce
@@ -489,3 +490,4 @@ define method bitset-to-string(set :: <vector-32bit>)
      "",
      set);
 end;
+*/

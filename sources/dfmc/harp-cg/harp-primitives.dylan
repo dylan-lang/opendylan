@@ -1226,6 +1226,13 @@ define opposite-instructions dbeq dbne;
 define opposite-instructions dblt dbge;
 define opposite-instructions dynamic-bit dynamic-nbit;
 
+// Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
+ignore($bge-opposite,
+       $fbne-opposite,
+       $fbge-opposite,
+       $dbne-opposite,
+       $dbge-opposite,
+       $dynamic-nbit-opposite);
 
 define method op--true?(back-end :: <harp-back-end>, result, x) => (result :: <test-result>)
 

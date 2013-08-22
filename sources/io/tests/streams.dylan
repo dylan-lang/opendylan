@@ -446,11 +446,6 @@ define streams constant-test <unicode-character> ()
 end;
 */
 
-define sideways method make-test-instance
-    (class == <byte-vector>) => (vector :: <byte-vector>)
-  make(<byte-vector>, size: 1, fill: 0)
-end method make-test-instance;
-
 
 define streams class-test <byte-vector> ()
   // ---*** Fill this in.

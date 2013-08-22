@@ -101,8 +101,10 @@ define inline function dood-write-at
   dood-write-word-at(dood, as(<dood-word>, value), address)
 end function;
 
+/* Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
 define inline function dood-write-machine-word-at 
     (dood :: <dood>, value :: <machine-word>, address :: <address>)
   dood-position(dood) := address;
   dood-write-machine-word(dood, value);
 end function;
+*/

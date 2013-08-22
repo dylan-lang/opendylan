@@ -15,7 +15,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// book contradicts itself.
 
 define constant bvs-x = #x70;   // JO, Jump if no overflow
-define constant bno-x = #x71;   // JNO, Jump if no overflow
+// Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
+// define constant bno-x = #x71;   // JNO, Jump if no overflow
 define constant bov-x = #x72;   // JB, Jump if below (carry flag set)
 
 

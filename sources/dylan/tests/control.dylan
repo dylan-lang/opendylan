@@ -479,7 +479,8 @@ define test begins ()
 end test begins;
 
 define function no-param-function () 1 end;
-define function one-param-function (x) x end;
+// See comment below.
+// define function one-param-function (x) x end;
 
 define test required-calls ()
   check-equal("no param call",
@@ -522,7 +523,12 @@ define test keyword-calls ()
   check-equal("one key call supplied",
 	      (method (#key x) x end)(x: 1), 1);
   check-condition("one key call wrong supplied", <error>,
-                  (method (#key x) x end)(y: 1));
+                  begin
+                    local method m (#key x) x end;
+                    // Stifle compiler warning we get if called directly.
+                    let methods = list(m);
+                    methods[0](y: 1)
+                  end);
   check-false("one key call wrong supplied but all-keys",
 	      (method (#key x, #all-keys) x end)(y: 1));
   check-equal("two key call first supplied",
@@ -539,7 +545,12 @@ define test rest-keyword-calls ()
   check-equal("rest one key call no args", 
 	      (method (#rest keys, #key x) keys end)(), #[]);
   check-condition("rest one key call one arg", <error>,
-                  (method (#rest keys, #key) keys end)(x: 1));
+                  begin
+                    local method m (#rest k, #key) k end;
+                    // Stifle compiler warning we get if called directly.
+                    let methods = list(m);
+                    methods[0](y: 1)
+                  end);
   check-equal("rest one key call one arg keys", 
 	      (method (#rest keys, #key x) keys end)(x: 1), #[#"x", 1]);
   check-equal("rest one key call one arg key", 

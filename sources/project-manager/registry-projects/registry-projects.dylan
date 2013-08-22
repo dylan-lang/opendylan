@@ -24,8 +24,6 @@ define class <registry-project-layout> (<project-layout>)
   // Name under which is listed in registry
   constant slot project-registered-name :: <symbol>,
     required-init-keyword: key:;
-  slot project-registry :: <registry>,
-    init-keyword: registry:;
   slot project-personal-library? :: <boolean>,
     init-keyword: personal-library?:;
 end;
@@ -38,7 +36,6 @@ define method initialize (project :: <registry-project-layout>, #rest keys,
 		     else <file-source-record> end;
   let (lid-location, registry)
     =  compute-library-location(key, architecture, operating-system);
-  project.project-registry := registry;
   project.project-personal-library? := registry.registry-personal?;
   apply(next-method, project, 
 	source-record-class:, source-class,
@@ -135,7 +132,6 @@ define method update-project-location(project :: <registry-project>)
   let (lid-location, registry) =
     compute-library-location(key, architecture, os);
   let personal? = registry.registry-personal?;
-  project.project-registry := registry;
   project.project-personal-library? := personal?;
   project.project-lid-location := lid-location;
   let (builds-dir, db-dir, profile-dir) = project-build-locations(project);

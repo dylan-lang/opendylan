@@ -405,6 +405,7 @@ define sideways method return-address-on-stack?
   #t
 end method;
 
+/* Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
 define method indirect-runtime-reference 
     (name :: <byte-string>) => (c :: <constant-reference>)
   make(<constant-reference>, 
@@ -412,6 +413,7 @@ define method indirect-runtime-reference
        address-mode: #"indirect",
        const-offset: 0);
 end method;
+*/
 
 define method thread-local-runtime-reference
 (name :: <byte-string>) => (c :: <constant-reference>)
