@@ -407,7 +407,7 @@ end method make-gtk-mirror;
 define method install-event-handlers
     (sheet :: <gtk-menu-button-mixin>, mirror :: <gadget-mirror>) => ()
   next-method();
-  duim-g-signal-connect(sheet, #"activate") (#rest args) activate-gtk-gadget(sheet) end;
+  duim-g-signal-connect(sheet, #"activate") (#rest args) handle-button-gadget-click(sheet) end;
 end method install-event-handlers;
 
 define method update-mirror-attributes
