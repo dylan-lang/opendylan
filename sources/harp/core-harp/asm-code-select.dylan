@@ -150,7 +150,9 @@ define method emit-sdi (backend :: <harp-back-end>, sdi :: <new-sdi>)
   // set up some fields in the sdi
   sdi.new-sdi-fixed-offset := vars.block-fixed-offset + curr.bb-fixed-offset;
   sdi.new-sdi-preceding-sdis := size(all-sdis);
-  sdi.new-sdi-my-block := curr;
+  // new-sdi-my-block slot getter not referenced or exported, so no
+  // point setting it. https://github.com/dylan-lang/opendylan/issues/561
+  // sdi.new-sdi-my-block := curr;
 
   let target-bb :: <basic-block> = find-bb(backend, sdi.new-sdi-dest-tag);
   let prev-set = target-bb.bb-prev-set;

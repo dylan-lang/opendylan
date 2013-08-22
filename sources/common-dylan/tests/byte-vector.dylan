@@ -10,8 +10,9 @@ define byte-vector constant-test <byte> ()
   //---*** Fill this in...
 end constant-test <byte>;
 
-define sideways method make-test-instance (class == <byte-vector>) => (object)
-  make(<byte-vector>, size: 1);
+define sideways method make-test-instance
+    (class == <byte-vector>) => (object)
+  make(<byte-vector>, size: 1, fill: 0);
 end method make-test-instance;
 
 define byte-vector class-test <byte-vector> ()

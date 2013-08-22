@@ -10,7 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // When this function returns true, we use the assembler to generate code
 // from our symbolic information.
 
-define open generic emit-jumps-symbolically?(be :: <harp-x86-back-end>) => (b :: <boolean>);
+// Not exported so not "open".  https://github.com/dylan-lang/opendylan/issues/561
+define /* open */ generic emit-jumps-symbolically?(be :: <harp-x86-back-end>) => (b :: <boolean>);
 
 define method emit-jumps-symbolically?(be :: <harp-x86-back-end>) => (b :: <boolean>)
   #t;

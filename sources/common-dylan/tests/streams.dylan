@@ -269,15 +269,6 @@ define method make-test-instance
   make(<test-input-stream>, test-sequence: "Test")
 end method make-test-instance;
 
-define method stream-direction
-    (stream :: <test-input-stream>) => (direction :: <symbol>)
-  if (stream.stream-closed?)
-    #"closed"
-  else
-    #"input"
-  end
-end method stream-direction;
-
 define method stream-contents
     (stream :: <test-input-stream>,
      #key clear-contents? :: <boolean> = #t)
@@ -382,15 +373,6 @@ register-stream-class-info("<test-output-stream>", <test-output-stream>,
                            input-stream?: #f,
                            output-stream?: #t,
                            element-type: <object>);
-
-define method stream-direction
-    (stream :: <test-output-stream>) => (direction :: <symbol>)
-  if (stream.stream-closed?)
-    #"closed"
-  else
-    #"output"
-  end
-end method stream-direction;
 
 define method write-element
     (stream :: <test-output-stream>, char :: <character>) => ()

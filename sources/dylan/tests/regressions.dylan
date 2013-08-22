@@ -132,7 +132,7 @@ define test bug-2178 ()
              end);
 end test bug-2178;
 
-define open generic foo-function (i);
+define generic foo-function (i);
 
 define method foo-function (i :: <integer>)
   if (i > 0)

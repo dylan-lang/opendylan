@@ -14,7 +14,7 @@ define library io-test-suite
   use testworks;
   use testworks-specs;
 
-  use common-dylan-test-suite;	// For stream testing protocol
+  use common-dylan-test-suite;  // For stream testing protocol
 
   export io-test-suite;
 end library io-test-suite;
@@ -38,7 +38,8 @@ define module io-test-suite
   use testworks;
   use testworks-specs;
 
-  use common-dylan-test-suite;	// For stream testing protocol
+  use common-dylan-test-suite,  // For stream testing protocol
+    exclude: { make-test-instance };
 
   // IO test suite
   export io-test-suite;

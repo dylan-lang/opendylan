@@ -28,7 +28,8 @@ define primary open class <new-sdi> (<object>)
 	init-value: 0, init-keyword: cached-size:;
 	// current estimate of instruction size
 
-  slot new-sdi-my-block :: <basic-block>;
+  // Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
+  // slot new-sdi-my-block :: <basic-block>;
 	// sdi's own block
 
   slot new-sdi-fixed-offset :: <integer>, init-value: 0;
@@ -54,9 +55,11 @@ define primary open class <new-sdi> (<object>)
   slot new-sdi-checked :: <boolean>, init-value: #f;	
 	// whether an sdi has been ok'd with respect to it's size and span
 
-  constant slot new-sdi-defines;		// used in scheduling
-  constant slot new-sdi-uses;		// used in scheduling
-  constant slot new-sdi-transfer;	// used in scheduling
+  /* Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
+  constant slot new-sdi-defines;     // used in scheduling
+  constant slot new-sdi-uses;        // used in scheduling
+  constant slot new-sdi-transfer;    // used in scheduling
+  */
 end;
 
 

@@ -55,7 +55,8 @@ define packed-slots? (<relative-source-position>)
   constant function-relative-code-position    :: <integer>, init-keyword: code-position:,   width: 17;
 end;
 
-
+// Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
+ignore(make-relative-source-position-unpacked-slots);
 
 
 // The class which encapsulates the source record corresponding
@@ -536,6 +537,8 @@ define packed-slots? (<debug-scopes>)
   constant size-debug-scopes    :: <integer>, init-keyword: size:,      width: 12;
 end;
 
+// Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
+ignore(make-debug-scopes-unpacked-slots);
 
 /// <debug-scope> 
 /// Defines a contiguous liveness scope for a set of <named-variable>s
@@ -604,6 +607,9 @@ define packed-slots? (<packed-debug-scope>)
   constant begin-code-offset                :: <integer>, init-keyword: start-offset:,      width: 7;
   constant finish-code-offset               :: <integer>, init-keyword: end-offset:,        width: 8;
 end;
+
+// Not referenced or exported.  https://github.com/dylan-lang/opendylan/issues/561
+ignore(make-packed-debug-scope-unpacked-slots);
 
 define method debug-scope-with-frame?(debug-scope :: <debug-scope-internal>)
  => (with-frame? :: <boolean>)
