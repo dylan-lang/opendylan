@@ -67,18 +67,6 @@ define method handle-event
   end;
 end method handle-event;
 
-define method draw-piece 
-    (sheet :: <reversi-square>, medium :: <medium>, shape == #"circle") => ()
-  when (square-piece(sheet))
-    let (cx, cy, xr, yr, color) = square-geometry(sheet);
-    with-drawing-options (medium, brush: color)
-      draw-ellipse(medium,
-                   cx, cy, xr, 0, 0, yr,
-		   filled?: #t);
-    end;
-  end;
-end method draw-piece;
-
 define sealed method square-geometry
     (sheet :: <reversi-square>)
  => (cx :: <integer>, cy :: <integer>, xr :: <integer>, yr :: <integer>,
