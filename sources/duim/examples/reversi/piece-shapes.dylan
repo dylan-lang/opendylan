@@ -33,7 +33,7 @@ define method draw-piece
                     cx - xr, cy + yr,
                     cx + xr, cy + yr,
                     cx,      cy - yr,
-                    filled: #t);
+                    filled?: #t);
     end;
   end;
 end method draw-piece;
