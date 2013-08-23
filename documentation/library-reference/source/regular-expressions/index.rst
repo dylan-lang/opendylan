@@ -33,7 +33,7 @@ and your module, and then...
 
   define constant $re :: <regex> = compile-regex("^abc(.+)123$");
 
-  let match :: <regex-match> = regex-search($re, "abcdef123");
+  let match :: false-or(<regex-match>) = regex-search($re, "abcdef123");
   // match is #f if search failed.
 
   if (match)
