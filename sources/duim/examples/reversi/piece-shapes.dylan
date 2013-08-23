@@ -12,7 +12,20 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 *changed?* := #t;
 
-define method draw-piece 
+
+define method draw-piece
+    (sheet :: <reversi-square>, medium :: <medium>, shape == #"circle") => ()
+  when (square-piece(sheet))
+    let (cx, cy, xr, yr, color) = square-geometry(sheet);
+    with-drawing-options (medium, brush: color)
+      draw-ellipse(medium,
+                   cx, cy, xr, 0, 0, yr,
+                   filled?: #t);
+    end;
+  end;
+end method draw-piece;
+
+define method draw-piece
     (sheet :: <reversi-square>, medium :: <medium>, shape == #"square") => ()
   when (square-piece(sheet))
     let (cx, cy, xr, yr, color) = square-geometry(sheet);
@@ -24,7 +37,7 @@ define method draw-piece
   end;
 end method draw-piece;
 
-define method draw-piece 
+define method draw-piece
     (sheet :: <reversi-square>, medium :: <medium>, shape == #"triangle") => ()
   when (square-piece(sheet))
     let (cx, cy, xr, yr, color) = square-geometry(sheet);
