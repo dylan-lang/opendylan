@@ -201,7 +201,7 @@ define method emit-result-assignment
   let value = results.first;
   temporary-value(temp) := value;
 
-  if (named?(temp))
+  if (named?(temp) & *temporary-locals?*)
     let name = hygienic-mangle(back-end, temp.name, temp.frame-offset);
     ins--local(back-end, name, value);
   end if;
@@ -1351,7 +1351,9 @@ define method emit-computation
     let alloca = ins--alloca(back-end, type, i32(1));
     if (named?(tmp))
       let local-name = hygienic-mangle(back-end, tmp.name, tmp.frame-offset);
-      ins--local(back-end, local-name, alloca);
+      if (*temporary-locals?*)
+        ins--local(back-end, local-name, alloca);
+      end if;
 
       if (c.dfm-source-location)
         let dbg-function = back-end.llvm-back-end-dbg-functions.last;

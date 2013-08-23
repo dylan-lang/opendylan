@@ -50,6 +50,17 @@ end method;
 /// Code emission
 
 define method emit-code
+define thread variable *temporary-locals?* = #t;
+
+define macro without-persistent-temporaries
+  { without-persistent-temporaries () ?:body end }
+  => { dynamic-bind (*temporary-value-table* = shallow-copy(*temporary-value-table*),
+                     *temporary-locals?* = #f,
+                     *merge-operands-table* = shallow-copy(*merge-operands-table*))
+         ?body;
+       end }
+end macro;
+
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o,
      #key init? = #f)
  => ();
