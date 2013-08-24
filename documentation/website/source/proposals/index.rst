@@ -39,4 +39,5 @@ All Proposals by Number
 4    Standard      Final      `New strings library <dep-0004.html>`_  (`source <../_sources/proposals/dep-0004.txt>`__)
 5    Standard      Final      `Subclass <dep-0005.html>`_  (`source <../_sources/proposals/dep-0005.txt>`__)
 6    Standard      Draft      `Single File Libraries <dep-0006.html>`_  (`source <../_sources/proposals/dep-0006.txt>`__)
+7    Standard      Draft      `Type-Safe Limited Collections <dep-0007.html>`_  (`source <../_sources/proposals/dep-0007.txt>`__)
 ==== ============= ========== =============================================
