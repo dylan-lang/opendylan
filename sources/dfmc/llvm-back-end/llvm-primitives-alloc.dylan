@@ -574,3 +574,32 @@ define side-effecting stateful &c-primitive-descriptor primitive-begin-heap-allo
   () => ();
 define side-effecting stateful &c-primitive-descriptor primitive-end-heap-alloc-stats
   (string-buffer :: <raw-byte-string>) => (number-read :: <raw-integer>);
+
+
+/// Auxiliary allocation operations
+
+define method op--allocate-vector
+    (back-end :: <llvm-back-end>, count, #key fill = &unbound)
+ => (new-vector :: <llvm-value>);
+  let module = back-end.llvm-builder-module;
+  let header-words = dylan-value(#"$number-header-words");
+
+  let class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let instance-size = ^instance-storage-size(class);
+  let total-size = header-words + instance-size;
+  let wrapper = emit-reference(back-end, module, ^class-mm-wrapper(class));
+  let unbound = emit-reference(back-end, module, &unbound);
+  let size-slot-descriptor :: <&slot-descriptor>
+    = ^slot-descriptor(class, dylan-value(#"size"));
+  let size-slot-offset
+    = header-words + ^slot-offset(size-slot-descriptor, class);
+  let fill-ref = emit-reference(back-end, module, fill);
+  call-primitive(back-end, primitive-object-allocate-filled-descriptor,
+                 llvm-back-end-value-function(back-end, total-size),
+                 wrapper,
+                 llvm-back-end-value-function(back-end, instance-size),
+                 unbound,
+                 llvm-back-end-value-function(back-end, count),
+                 llvm-back-end-value-function(back-end, size-slot-offset),
+                 fill-ref)
+end method;

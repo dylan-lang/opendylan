@@ -50,7 +50,7 @@ define method initialize-teb-struct-type (back-end :: <llvm-back-end>) => ()
 		     // Offset 9: MV area
 		     make(<raw-aggregate-array-member>,
 			  name: #"teb-mv-area",
-			  array-length: 64,
+			  array-length: $maximum-value-count,
                           raw-type: dylan-value(#"<raw-pointer>"))));
 
   // Record TEB structure field indicies

@@ -21,6 +21,7 @@ files:   llvm-back-end-library
 	 llvm-primitives-os
          llvm-primitives-value-cell
          llvm-entry-points
+         llvm-mv
 	 llvm-emit
 	 llvm-emit-object
 	 llvm-emit-code

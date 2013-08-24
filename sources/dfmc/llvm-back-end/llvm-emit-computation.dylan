@@ -157,9 +157,6 @@ define method emit-local-definition
 //   end if
 end method;
 
-
-
-
 // Temporary value transfers
 
 define method emit-transfer
@@ -179,113 +176,193 @@ end method;
 // Results
 
 define method computation-result
-    (back-end :: <llvm-back-end>, c :: <computation>, result :: <llvm-value>)
- => ()
-  computation-results(back-end, c, list(result));
-end method;
-
-define method computation-results
-    (back-end :: <llvm-back-end>, c :: <computation>, results :: <sequence>,
-     #key rest-results :: false-or(<llvm-value>))
+    (back-end :: <llvm-back-end>, c :: <computation>,
+     result :: type-union(<llvm-value>, <llvm-mv>))
  => ()
   if (c.temporary & c.temporary.used?)
-    emit-result-assignment(back-end, c, c.temporary, results, rest-results);
+    emit-result-assignment(back-end, c, c.temporary, result);
   end if;
 end method;
 
 define method emit-result-assignment
     (back-end :: <llvm-back-end>, c :: <computation>,
-     temp :: <temporary>, results :: <sequence>,
-     rest-results :: false-or(<llvm-value>))
+     temp :: <temporary>, result :: <llvm-value>)
  => ()
-  let value = results.first;
-  temporary-value(temp) := value;
+  temporary-value(temp) := result;
 
   if (named?(temp) & *temporary-locals?*)
     let name = hygienic-mangle(back-end, temp.name, temp.frame-offset);
-    ins--local(back-end, name, value);
+    ins--local(back-end, name, result);
   end if;
 end method;
 
 define method emit-result-assignment
     (back-end :: <llvm-back-end>, c :: <computation>,
-     temp :: <multiple-value-temporary>, results :: <sequence>,
-     rest-results :: false-or(<llvm-value>))
+     temp :: <temporary>, result :: <llvm-global-mv>)
  => ()
-/*
-  if (temp.required-values ~= results.size & ~temp.rest-values?)
-    error("MV required-values mismatch (%d vs %d) in %=",
-          temp.required-values, results.size, c);
-  elseif (~temp.rest-values? & rest-results)
-    error("MV rest-values mismatch (%= vs %=) in %=",
-          temp.rest-values?, rest-results, c);
-  end if;
-*/
-  temporary-value(temp) := pair(results, rest-results);
+  let primary = ins--extractvalue(back-end, result.llvm-mv-struct, 0);
+  emit-result-assignment(back-end, c, temp, primary);
 end method;
 
-define method merge-result
-    (back-end :: <llvm-back-end>, c :: <binary-merge>,
-     left-bb :: false-or(<llvm-basic-block>),
-     right-bb :: false-or(<llvm-basic-block>))
- => ()
-  let temp = c.temporary;
-  if (temp & temp.used?)
-    emit-merge-assignment(back-end, c, temp, left-bb, right-bb);
-  end if;
-end;
+define method emit-result-assignment
+    (back-end :: <llvm-back-end>, c :: <computation>,
+     temp :: <multiple-value-temporary>, result :: <llvm-global-mv>)
+ => ();
+  if (temp.rest-values?)
+    // No maximum
+    temporary-value(temp) := result;
+  else
+    // Limit maximum available values
+    temporary-value(temp)
+      := make(<llvm-global-mv>,
+              struct: result.llvm-mv-struct,
+              maximum: temp.required-values);
+  end if
+end method;
 
-define method emit-merge-assignment
-    (back-end :: <llvm-back-end>, c :: <binary-merge>,
-     temp :: <temporary>,
-     left-bb :: false-or(<llvm-basic-block>),
-     right-bb :: false-or(<llvm-basic-block>))
+define method emit-result-assignment
+    (back-end :: <llvm-back-end>, c :: <computation>,
+     temp :: <multiple-value-temporary>, result :: <llvm-local-mv>)
+ => ();
+  temporary-value(temp) := result;
+end method;
+
+define method merge-results
+    (back-end :: <llvm-back-end>, c :: <merge>, results :: <vector>)
  => ();
   let module = back-end.llvm-builder-module;
-  if (left-bb & right-bb)
-    let left-value
-      = emit-reference(back-end, module, c.merge-left-value | &false);
-    let right-value
-      = emit-reference(back-end, module, c.merge-right-value | &false);
-    let phi = ins--phi*(back-end, left-value, left-bb, right-value, right-bb);
-    emit-result-assignment(back-end, c, temp, list(phi), #f);
-  elseif (left-bb)
-    let left-value
-      = emit-reference(back-end, module, c.merge-left-value | &false);
-    emit-result-assignment(back-end, c, temp, list(left-value), #f);
-  elseif (right-bb)
-    let right-value
-      = emit-reference(back-end, module, c.merge-right-value | &false);
-    emit-result-assignment(back-end, c, temp, list(right-value), #f);
+  let temp = c.temporary;
+  if (results.empty? | ~temp.used?)
+    #f // Do nothing
+  elseif (results.size = 2)
+    // Only one predecessor block
+    emit-transfer(back-end, module, temp, results[0]);
+  else
+    emit-merge-assignment(back-end, c, temp, results);
   end if;
 end method;
 
 define method emit-merge-assignment
-    (back-end :: <llvm-back-end>, c :: <binary-merge>,
-     temp :: <multiple-value-temporary>,
-     left-bb :: false-or(<llvm-basic-block>),
-     right-bb :: false-or(<llvm-basic-block>))
+    (back-end :: <llvm-back-end>, c :: <merge>,
+     temp :: <temporary>, results :: <vector>)
  => ();
-  if (left-bb & right-bb)
-    let left-mv  :: <pair> = temporary-value(c.merge-left-value);
-    let right-mv :: <pair> = temporary-value(c.merge-right-value);
-    let results = map(method (left-value, right-value)
-                        ins--phi*(back-end,
-				  left-value, left-bb,
-				  right-value, right-bb)
-                      end,
-                      left-mv.head, right-mv.head);
-    if (left-mv.tail ~= right-mv.tail)
-      error("MV merge mismatch: %=", c);
+  let module = back-end.llvm-builder-module;
+  let phi-operands = make(<simple-object-vector>, size: results.size);
+  for (i :: <integer> from 0 below results.size by 2)
+    with-insert-before-terminator (back-end, results[i + 1])
+      phi-operands[i] := emit-reference(back-end, module, results[i]);
     end;
-    emit-result-assignment(back-end, c, temp, results, left-mv.tail);
-  elseif (left-bb)
-    let left-mv  :: <pair> = temporary-value(c.merge-left-value);
-    emit-result-assignment(back-end, c, temp, left-mv.head, left-mv.tail);
-  elseif (right-bb)
-    let right-mv :: <pair> = temporary-value(c.merge-right-value);
-    emit-result-assignment(back-end, c, temp, right-mv.head, right-mv.tail);
-  end if;
+    phi-operands[i + 1] := results[i + 1];
+  end for;
+  emit-result-assignment(back-end, c, temp, ins--phi(back-end, phi-operands));
+end method;
+
+define method emit-merge-assignment
+    (back-end :: <llvm-back-end>, c :: <merge>,
+     temp :: <multiple-value-temporary>, results :: <vector>)
+ => ();
+  // Choose a merge strategy:
+  // - Merge as a <llvm-local-mv> if any of the merge operands are
+  //   <llvm-local-mv> values with two or more values
+  // - Otherwise merge as a <llvm-global-mv> if any of the merge operands
+  //   are <llvm-global-mv> values
+  // - Otherwise merge as a <llvm-local-mv>
+  let post-primary? = temp.rest-values? | temp.required-values > 1;
+  iterate loop (i :: <integer> = 0, strategy = #f)
+    if (i < results.size)
+      let mv = temporary-value(results[i]);
+      if (instance?(mv, <llvm-local-mv>)
+            & post-primary?
+            & (mv.llvm-mv-fixed.size > 1 | mv.llvm-mv-rest))
+        emit-local-merge-assignment(back-end, c, temp, results);
+      elseif (instance?(mv, <llvm-global-mv>))
+        loop(i + 2, emit-global-merge-assignment);
+      else
+        loop(i + 2, strategy);
+      end if;
+    else
+      let strategy = strategy | emit-local-merge-assignment;
+      strategy(back-end, c, temp, results);
+    end if;
+  end iterate;
+end method;
+
+define method emit-local-merge-assignment
+    (back-end :: <llvm-back-end>, c :: <merge>,
+     temp :: <multiple-value-temporary>, results :: <vector>)
+ => ();
+  // Determine how many phi instructions we need
+  let (count, rest?)
+    = iterate loop (i :: <integer> = 0, count = temp.required-values,
+                    rest? = #f)
+        if (i < results.size)
+          let mv = temporary-value(results[i]);
+          if (instance?(mv, <llvm-local-mv>))
+            loop(i + 2,
+                 max(count, mv.llvm-mv-fixed.size),
+                 rest? | (mv.llvm-mv-rest & temp.rest-values?))
+          else
+            loop(i + 2, max(count, 1), rest?)
+          end if
+        else
+          values(count, rest?)
+        end if
+      end;
+
+  // Create phi instructions for fixed values
+  let fixed = make(<stretchy-object-vector>);
+  for (m from 0 below count)
+    let phi-operands = make(<simple-object-vector>, size: results.size);
+    for (i :: <integer> from 0 below results.size by 2)
+      let mv = temporary-value(results[i]);
+      with-insert-before-terminator (back-end, results[i + 1])
+        phi-operands[i] := op--mv-extract(back-end, mv, m);
+      end;
+      phi-operands[i + 1] := results[i + 1];
+    end for;
+    add!(fixed, ins--phi(back-end, phi-operands));
+  end for;
+
+  // Create a phi instruction for rest values if needed
+  let rest
+    = if (rest?)
+        let phi-operands = make(<simple-object-vector>, size: results.size);
+        for (i :: <integer> from 0 below results.size by 2)
+          let mv = temporary-value(results[i]);
+          with-insert-before-terminator (back-end, results[i + 1])
+            phi-operands[i] := op--mv-extract-rest(back-end, mv, count);
+          end;
+          phi-operands[i + 1] := results[i + 1];
+        end for;
+        ins--phi(back-end, phi-operands);
+      end if;
+
+  let mv = make(<llvm-local-mv>, fixed: fixed, rest: rest);
+  emit-result-assignment(back-end, c, temp, mv);
+end method;
+
+define method emit-global-merge-assignment
+    (back-end :: <llvm-back-end>, c :: <merge>,
+     temp :: <multiple-value-temporary>, results :: <vector>)
+ => ();
+  // FIXME set maximum
+  let phi-operands = make(<simple-object-vector>, size: results.size);
+  for (i :: <integer> from 0 below results.size by 2)
+    let mv = temporary-value(results[i]);
+    if (instance?(mv, <llvm-local-mv>))
+      with-insert-before-terminator (back-end, results[i + 1])
+        let value = op--mv-extract(back-end, mv, 0);
+        phi-operands[i] := op--global-mv-struct(back-end, value, i8(1));
+      end;
+    else
+      phi-operands[i] := mv.llvm-mv-struct;
+    end if;
+    phi-operands[i + 1] := results[i + 1];
+  end for;
+
+  let phi = ins--phi(back-end, phi-operands);
+  let mv = make(<llvm-global-mv>, struct: phi);
+  emit-result-assignment(back-end, c, temp, mv);
 end method;
 
 
@@ -501,35 +578,30 @@ define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <function-call>)
  => ()
   let effective-function = call-effective-function(c);
-  emit-call(back-end, m, c, effective-function);
-  //if (instance?(c.temporary, <multiple-value-temporary>))
-  //  emit-transfer(b, s, d, c.temporary, $global-all-rest);
-  //end if;
+  let call = emit-call(back-end, m, c, effective-function);
+  computation-result(back-end, c, make(<llvm-global-mv>, struct: call));
 end method;
 
 define method emit-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <function-call>, f)
- => ();
+ => (call :: <llvm-value>);
   error("%= calling %=", c, f)
 end method;
 
 define method emit-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      c :: <simple-call>, f :: <&iep>)
- => ();
+ => (call :: <llvm-value>);
   let name = emit-name(back-end, m, f);
   let global = llvm-builder-global(back-end, name);
   let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  let call
-    = ins--call(back-end, global,
-                concatenate(map(curry(emit-reference, back-end, m), c.arguments),
-                            vector(undef, undef)),
-                type: return-type,
-                calling-convention:
-                  llvm-calling-convention(back-end, f));
-  let primary = ins--extractvalue(back-end, call, 0);
-  computation-result(back-end, c, primary); // FIXME
+  ins--call(back-end, global,
+            concatenate(map(curry(emit-reference, back-end, m), c.arguments),
+                        vector(undef, undef)),
+            type: return-type,
+            calling-convention:
+              llvm-calling-convention(back-end, f))
 end method;
 
 /*
@@ -747,7 +819,11 @@ define method emit-primitive-call
     = map(curry(emit-reference, back-end, m), c.arguments);
   let (#rest results)
     = apply(descriptor.primitive-mapped-emitter, back-end, arguments);
-  computation-results(back-end, c, results);
+  if (results.size = 1)
+    computation-result(back-end, c, results.first);
+  else
+    computation-result(back-end, c, make(<llvm-local-mv>, fixed: results));
+  end if;
 end method;
 
 define method emit-primitive-call
@@ -920,66 +996,37 @@ define method emit-computation
   let merge-bb = make(<llvm-basic-block>);
 
   let merge :: <if-merge> = next-computation(c);
-  local
-    method dead-branch?
-        (branch :: <computation>, ref :: false-or(<value-reference>))
-      branch == merge & ~ref
-    end method;
+  let merge-temp = merge.temporary;
 
-  let (consequent-branch-bb, alternative-branch-bb)
-    = if (dead-branch?(c.consequent, merge-left-value(merge)))
-        // Alternative only
-        let alternative-bb = make(<llvm-basic-block>);
-        ins--br(back-end, cmp, merge-bb, alternative-bb);
+  let phi-operands = make(<stretchy-object-vector>);
+  merge-operands(merge-temp) := phi-operands;
 
-        ins--block(back-end, alternative-bb);
-        emit-computations(back-end, m, c.alternative, merge);
-        let alternative-branch-bb = back-end.llvm-builder-basic-block;
-        if (alternative-branch-bb)
-          ins--br(back-end, merge-bb);
-        end;
+  let consequent-bb = make(<llvm-basic-block>);
+  let alternative-bb = make(<llvm-basic-block>);
+  ins--br(back-end, cmp, consequent-bb, alternative-bb);
 
-        values(condition-branch-bb, alternative-branch-bb)
-      elseif (dead-branch?(c.alternative, merge-right-value(merge)))
-        // Consequent only
-        let consequent-bb = make(<llvm-basic-block>);
-        ins--br(back-end, cmp, consequent-bb, merge-bb);
+  ins--block(back-end, consequent-bb);
+  emit-computations(back-end, m, c.consequent, merge);
+  let consequent-branch-bb = back-end.llvm-builder-basic-block;
+  if (consequent-branch-bb)
+    add-merge-operands(merge-temp, merge.merge-left-value | &false,
+                       consequent-branch-bb);
+    ins--br(back-end, merge-bb);
+  end;
 
-        ins--block(back-end, consequent-bb);
-        emit-computations(back-end, m, c.consequent, merge);
-        let consequent-branch-bb = back-end.llvm-builder-basic-block;
-        if (consequent-branch-bb)
-          ins--br(back-end, merge-bb);
-        end;
-
-        values(consequent-branch-bb, condition-branch-bb)
-      else
-        // Both
-        let consequent-bb = make(<llvm-basic-block>);
-        let alternative-bb = make(<llvm-basic-block>);
-        ins--br(back-end, cmp, consequent-bb, alternative-bb);
-
-        ins--block(back-end, consequent-bb);
-        emit-computations(back-end, m, c.consequent, merge);
-        let consequent-branch-bb = back-end.llvm-builder-basic-block;
-        if (consequent-branch-bb)
-          ins--br(back-end, merge-bb);
-        end;
-
-        ins--block(back-end, alternative-bb);
-        emit-computations(back-end, m, c.alternative, merge);
-        let alternative-branch-bb = back-end.llvm-builder-basic-block;
-        if (alternative-branch-bb)
-          ins--br(back-end, merge-bb);
-        end;
-
-        values(consequent-branch-bb, alternative-branch-bb)
-      end if;
+  ins--block(back-end, alternative-bb);
+  emit-computations(back-end, m, c.alternative, merge);
+  let alternative-branch-bb = back-end.llvm-builder-basic-block;
+  if (alternative-branch-bb)
+    add-merge-operands(merge-temp, merge.merge-right-value | &false,
+                       alternative-branch-bb);
+    ins--br(back-end, merge-bb);
+  end;
 
   // Common control flow (corresponding to <if-merge>)
   if (consequent-branch-bb | alternative-branch-bb)
     ins--block(back-end, merge-bb);
-    merge-result(back-end, merge, consequent-branch-bb, alternative-branch-bb);
+    merge-results(back-end, merge, phi-operands);
   end if;
 end method;
 
@@ -1178,31 +1225,46 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <return>) => ();
+  let value = c.computation-value;
+  do-emit-return(back-end, m, value, temporary-value(value));
+end method;
+
+define method do-emit-return
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     temp :: <multiple-value-temporary>, mv :: <llvm-global-mv>)
+ => ();
+  ins--ret(back-end, mv.llvm-mv-struct);
+end method;
+
+define method do-emit-return
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     temp :: <multiple-value-temporary>, mv :: <llvm-local-mv>)
+ => ();
   let undef-struct
     = make(<llvm-undef-constant>,
            type: llvm-reference-type(back-end, back-end.%mv-struct-type));
-  if (instance?(c.computation-value, <multiple-value-temporary>))
-    let mv :: <pair> = temporary-value(c.computation-value);
-    if (mv.head.size = 0)      // FIXME
-      let value-struct
-        = ins--insertvalue(back-end, undef-struct,
-                           emit-reference(back-end, m, &false), 0);
-      let value-count-struct
-        = ins--insertvalue(back-end, value-struct, i8(0), 1);
-      ins--ret(back-end, value-count-struct);
-    elseif (mv.head.size = 1)
-      // FIXME
-      let value-struct
-        = ins--insertvalue(back-end, undef-struct, mv.head.first, 0);
-      let value-count-struct
-        = ins--insertvalue(back-end, value-struct, i8(1), 1);
-      ins--ret(back-end, value-count-struct);
-    else
-      error("FIXME: MV return %d", c.computation-value.required-values);
-    end if;
+  if (mv.llvm-mv-fixed.empty?)
+    let result
+      = op--global-mv-struct(back-end,
+                             emit-reference(back-end, m, &false),
+                             i8(0));
+    ins--ret(back-end, result);
   else
-    let test-value = emit-reference(back-end, m, c.computation-value);
-    ins--ret(back-end, test-value);
+    // Store values beyond the first in the MV area
+    let count = mv.llvm-mv-fixed.size;
+    for (i from 1 below count)
+      let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", i);
+      ins--store(back-end, mv.llvm-mv-fixed[i], ptr);
+    end for;
+
+    if (mv.llvm-mv-rest)
+      error("FIXME return llvm-mv-rest")
+    end;
+
+    // Return the primary value in the MV struct
+    let result
+      = op--global-mv-struct(back-end, mv.llvm-mv-fixed.first, i8(count));
+    ins--ret(back-end, result);
   end if;
 end method;
 
@@ -1225,27 +1287,32 @@ define method emit-computation
 end method;
 
 define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <values>) => ()
-  // FIXME <values> should do an automatic adjust
-  let fixed = map(curry(emit-reference, back-end, m), c.fixed-values);
-  let rest = c.rest-value & emit-reference(back-end, m, c.rest-value);
-  computation-results(back-end, c, fixed, rest-results: rest);
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <values>) => ();
+  let (fixed, rest)
+    = if (c.rest-value & instance?(generator(c.rest-value), <stack-vector>))
+        let sv-c :: <stack-vector> = generator(c.rest-value);
+        values(concatenate(c.fixed-values, sv-c.arguments), #f)
+      else
+        values(c.fixed-values, c.rest-value)
+      end;
+  let result
+    = make(<llvm-local-mv>,
+           fixed: map(curry(emit-reference, back-end, m), fixed),
+           rest: rest & emit-reference(back-end, m, rest));
+  computation-result(back-end, c, result);
 end method;
 
 define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <extract-single-value>) => ()
-  let mv :: <pair> = temporary-value(c.computation-value);
-  let vals = mv.head;
-  if (c.index < vals.size)
-    computation-result(back-end, c, element(vals, c.index));
-  else
-    error("Not enough fixed (%d) for %=", vals.size, c);
-  end if;
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <extract-single-value>) => ();
+  let value = c.computation-value;
+  computation-result(back-end, c,
+                     op--mv-extract(back-end, temporary-value(value), c.index));
 end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <extract-rest-value>) => ()
-  // FIXME
+  let mv = temporary-value(c.computation-value);
+  computation-result(back-end, c, op--mv-extract-rest(back-end, mv, c.index));
 end method;
 
 define method emit-computation
@@ -1302,23 +1369,33 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <multiple-value-check-type>) => ()
-  let mv :: <pair> = temporary-value(c.computation-value);
-  for (value in mv.head, type in c.types)
+  do-emit-mv-check-type(back-end, m, c, temporary-value(c.computation-value));
+  next-method();
+end method;
+
+define method do-emit-mv-check-type
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <multiple-value-check-type>, mv :: <llvm-local-mv>)
+ => ();
+  for (value in mv.llvm-mv-fixed, type in c.types)
     emit-type-check(back-end, value, type);
   end for;
-  next-method();
+end method;
+
+define method do-emit-mv-check-type
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <multiple-value-check-type>, mv :: <llvm-global-mv>)
+ => ();
+  for (index from 0, type in c.types)
+    let value = op--mv-extract(back-end, mv, index);
+    emit-type-check(back-end, value, type);
+  end for;
 end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      c :: <multiple-value-check-type-rest>)
  => ()
-/*
-  let mv :: <pair> = temporary-value(c.computation-value);
-  for (value in mv.head, type in c.types)
-    emit-type-check(back-end, value, type);
-  end for;
-*/
   next-method();
   // FIXME rest-type
 end method;

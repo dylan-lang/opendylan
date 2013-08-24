@@ -5,6 +5,9 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+// Maximum number of values for multiple-value return
+define constant $maximum-value-count = 64;
+
 define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   // Predefined LLVM types
   constant slot %type-table :: <mutable-explicit-key-collection>

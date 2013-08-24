@@ -10,15 +10,16 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define thread variable *temporary-value-table* = false-or(<object-table>) = #f;
 
 define method temporary-value
-    (temporary :: <temporary>) => (value :: type-union(<llvm-value>, <pair>));
+    (temporary :: <temporary>)
+ => (value :: type-union(<llvm-value>, <llvm-mv>));
   element(*temporary-value-table*, temporary, default: #f)
     | error("No value defined for temporary %s (generator %=)",
             temporary, temporary.generator)
 end method;
 
 define method temporary-value-setter
-    (value :: type-union(<llvm-value>, <pair>), temporary :: <temporary>)
- => (value :: type-union(<llvm-value>, <pair>));
+    (value :: type-union(<llvm-value>, <llvm-mv>), temporary :: <temporary>)
+ => (value :: type-union(<llvm-value>, <llvm-mv>));
   if (element(*temporary-value-table*, temporary, default: #f))
     error("Temporary %s is already set", temporary)
   else
@@ -29,27 +30,26 @@ end method;
 define thread variable *merge-operands-table* :: false-or(<object-table>) = #f;
 
 define method merge-operands-setter
-    (operands :: <stretchy-vector>, temporary :: <temporary>)
+    (operands :: <stretchy-vector>, temporary :: false-or(<temporary>))
  => (operands :: <stretchy-vector>);
   if (element(*merge-operands-table*, temporary, default: #f))
     error("Merge operands for %s is already set", temporary)
-  else
+  elseif (temporary)
     *merge-operands-table*[temporary] := operands
-  end if
+  end if;
+  operands
 end method;
 
 define method add-merge-operands
-    (temporary :: <temporary>, value :: <llvm-value>, bb :: <llvm-value>)
- => ()
-  let operands = *merge-operands-table*[temporary];
-  add!(operands, value);
-  add!(operands, bb);
+    (temporary :: false-or(<temporary>), value :: <object>, bb :: <llvm-value>)
+ => ();
+  if (temporary)
+    let operands = *merge-operands-table*[temporary];
+    add!(operands, value);
+    add!(operands, bb)
+  end if;
 end method;
 
-
-/// Code emission
-
-define method emit-code
 define thread variable *temporary-locals?* = #t;
 
 define macro without-persistent-temporaries
@@ -61,6 +61,10 @@ define macro without-persistent-temporaries
        end }
 end macro;
 
+
+/// Code emission
+
+define method emit-code
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o,
      #key init? = #f)
  => ();
