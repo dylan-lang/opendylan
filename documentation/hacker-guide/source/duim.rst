@@ -57,5 +57,10 @@ following functions:
 - ``ignoring(msg)``
 - ``duim-debug-message(format, args)``
 
+Additional debug information can be obtained via the `GTK_DEBUG`_
+and `GDK_DEBUG`_ environment variables.
+
 .. _gir-dylan: https://github.com/dylan-foundry/gir-dylan
 .. _directions: https://wiki.gnome.org/GTK+/OSX/Building
+.. _GTK_DEBUG: https://developer.gnome.org/gtk3/3.8/gtk-running.html#GTK-Debug-Options
+.. _GDK_DEBUG: https://developer.gnome.org/gtk3/3.8/gtk-running.html#GDK-Debug-Options
