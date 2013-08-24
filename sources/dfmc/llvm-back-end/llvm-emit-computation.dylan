@@ -582,7 +582,14 @@ define method emit-computation
  => ()
   let effective-function = call-effective-function(c);
   let call = emit-call(back-end, m, c, effective-function);
-  computation-result(back-end, c, make(<llvm-global-mv>, struct: call));
+
+  // Mark path unreachable if called function never returns
+  let temp = c.temporary;
+  if (temp & instance?(type-estimate(temp), <type-estimate-bottom>))
+    ins--unreachable(back-end);
+  else
+    computation-result(back-end, c, make(<llvm-global-mv>, struct: call));
+  end if;
 end method;
 
 define method emit-call
