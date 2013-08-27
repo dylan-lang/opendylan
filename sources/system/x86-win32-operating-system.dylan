@@ -8,8 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define constant $architecture-little-endian? :: <boolean> = #t;
 
-define constant $machine-name 	= #"x86";
-define constant $os-name 	= #"win32";
+define constant $machine-name   = #"x86";
+define constant $os-name        = #"win32";
 
 define constant $DWORD_SIZE = raw-as-integer(primitive-word-size());
 
@@ -25,8 +25,8 @@ define macro with-stack-dword
   { with-stack-dword (?dword:name) ?:body end }
   => { begin
          let ?dword = primitive-wrap-machine-word(integer-as-raw(0));
-	 block ()
-	   ?dword
+         block ()
+           ?dword
              := primitive-wrap-machine-word
                   (primitive-cast-pointer-as-raw
                      (%call-c-function ("LocalAlloc", c-modifiers: "__stdcall")
@@ -35,20 +35,20 @@ define macro with-stack-dword
                         => (pointer :: <raw-c-pointer>)
                         (integer-as-raw(0), integer-as-raw($DWORD_SIZE))
                       end));
-	   if (primitive-machine-word-equal?
+           if (primitive-machine-word-equal?
                  (primitive-unwrap-machine-word(?dword), integer-as-raw(0)))
-	     error("Can't allocate space for a DWORD")
-	   end;
-	   ?body
-	 cleanup
-	   if (primitive-machine-word-not-equal?
+             error("Can't allocate space for a DWORD")
+           end;
+           ?body
+         cleanup
+           if (primitive-machine-word-not-equal?
                  (primitive-unwrap-machine-word(?dword), integer-as-raw(0)))
-	     %call-c-function ("LocalFree", c-modifiers: "__stdcall")
+             %call-c-function ("LocalFree", c-modifiers: "__stdcall")
                (pointer :: <raw-c-pointer>) => (null-pointer :: <raw-c-pointer>)
-	       (primitive-cast-raw-as-pointer
+               (primitive-cast-raw-as-pointer
                   (primitive-unwrap-machine-word(?dword)))
-	     end
-	   end
+             end
+           end
          end
        end }
 end macro with-stack-dword;
@@ -56,14 +56,14 @@ end macro with-stack-dword;
 define constant $osversioninfo
   = method ()
       let buffer :: <byte-string> = make(<byte-string>, size: $OSVERSIONINFO-SIZE,
-					                fill: '\0');
+                                                        fill: '\0');
       primitive-c-unsigned-long-at
-	  (primitive-cast-raw-as-pointer(primitive-string-as-raw(buffer)),
-	   integer-as-raw(0), integer-as-raw(0))
-	:= integer-as-raw(size(buffer));
+          (primitive-cast-raw-as-pointer(primitive-string-as-raw(buffer)),
+           integer-as-raw(0), integer-as-raw(0))
+        := integer-as-raw(size(buffer));
       %call-c-function ("GetVersionExA", c-modifiers: "__stdcall")
-  	  (lpOSVersionInfo :: <raw-c-pointer>) => (success? :: <raw-c-signed-int>)
-	(primitive-cast-raw-as-pointer(primitive-string-as-raw(buffer)))
+          (lpOSVersionInfo :: <raw-c-pointer>) => (success? :: <raw-c-signed-int>)
+        (primitive-cast-raw-as-pointer(primitive-string-as-raw(buffer)))
       end;
       buffer
     end
@@ -71,42 +71,42 @@ define constant $osversioninfo
 
 define inline-only function os-platform () => (platform :: <integer>)
   raw-as-integer(primitive-c-unsigned-long-at
-		   (primitive-cast-raw-as-pointer
-		      (primitive-string-as-raw($osversioninfo)),
-		    integer-as-raw(4), integer-as-raw(0)))
+                   (primitive-cast-raw-as-pointer
+                      (primitive-string-as-raw($osversioninfo)),
+                    integer-as-raw(4), integer-as-raw(0)))
 end function os-platform;
 
 define constant $os-variant 
   = method ()
       select (os-platform())
-	$VER_PLATFORM_WIN32s => #"win3.1";
-	$VER_PLATFORM_WIN32_WINDOWS =>
-	  begin
-	    let minorversion
-	      = raw-as-integer(primitive-c-unsigned-long-at
-				 (primitive-cast-raw-as-pointer
-				    (primitive-string-as-raw($osversioninfo)),
-				  integer-as-raw(2), integer-as-raw(0)));
-	    if (minorversion = 0)
-	      #"win95"
-	    elseif (minorversion = 10)
-	      #"win98"
+        $VER_PLATFORM_WIN32s => #"win3.1";
+        $VER_PLATFORM_WIN32_WINDOWS =>
+          begin
+            let minorversion
+              = raw-as-integer(primitive-c-unsigned-long-at
+                                 (primitive-cast-raw-as-pointer
+                                    (primitive-string-as-raw($osversioninfo)),
+                                  integer-as-raw(2), integer-as-raw(0)));
+            if (minorversion = 0)
+              #"win95"
+            elseif (minorversion = 10)
+              #"win98"
             else /* if (minorversion = 90) */
               #"winme"
-	    end
-	  end;
-	$VER_PLATFORM_WIN32_NT =>
-	  begin
-	    let majorversion
-	      = raw-as-integer(primitive-c-unsigned-long-at
-				 (primitive-cast-raw-as-pointer
-				    (primitive-string-as-raw($osversioninfo)),
-				  integer-as-raw(1), integer-as-raw(0)));
-	    let minorversion
-	      = raw-as-integer(primitive-c-unsigned-long-at
-				 (primitive-cast-raw-as-pointer
-				    (primitive-string-as-raw($osversioninfo)),
-				  integer-as-raw(2), integer-as-raw(0)));
+            end
+          end;
+        $VER_PLATFORM_WIN32_NT =>
+          begin
+            let majorversion
+              = raw-as-integer(primitive-c-unsigned-long-at
+                                 (primitive-cast-raw-as-pointer
+                                    (primitive-string-as-raw($osversioninfo)),
+                                  integer-as-raw(1), integer-as-raw(0)));
+            let minorversion
+              = raw-as-integer(primitive-c-unsigned-long-at
+                                 (primitive-cast-raw-as-pointer
+                                    (primitive-string-as-raw($osversioninfo)),
+                                  integer-as-raw(2), integer-as-raw(0)));
             if (majorversion < 5)
               #"winnt";
             elseif ((majorversion = 5) & (minorversion = 0))
@@ -130,56 +130,56 @@ define constant $os-variant
 define constant $os-version
   = method ()
       let majorversion
-	= raw-as-integer(primitive-c-unsigned-long-at
-			   (primitive-cast-raw-as-pointer
-			      (primitive-string-as-raw($osversioninfo)),
-			    integer-as-raw(1), integer-as-raw(0)));
+        = raw-as-integer(primitive-c-unsigned-long-at
+                           (primitive-cast-raw-as-pointer
+                              (primitive-string-as-raw($osversioninfo)),
+                            integer-as-raw(1), integer-as-raw(0)));
       let minorversion
-	= raw-as-integer(primitive-c-unsigned-long-at
-			   (primitive-cast-raw-as-pointer
-			      (primitive-string-as-raw($osversioninfo)),
-			    integer-as-raw(2), integer-as-raw(0)));
+        = raw-as-integer(primitive-c-unsigned-long-at
+                           (primitive-cast-raw-as-pointer
+                              (primitive-string-as-raw($osversioninfo)),
+                            integer-as-raw(2), integer-as-raw(0)));
       let buildnumber
-	= raw-as-integer(primitive-c-unsigned-long-at
-			   (primitive-cast-raw-as-pointer
-			      (primitive-string-as-raw($osversioninfo)),
-			    integer-as-raw(3), integer-as-raw(0)));
+        = raw-as-integer(primitive-c-unsigned-long-at
+                           (primitive-cast-raw-as-pointer
+                              (primitive-string-as-raw($osversioninfo)),
+                            integer-as-raw(3), integer-as-raw(0)));
       if (os-platform() == $VER_PLATFORM_WIN32_WINDOWS)
         buildnumber := logand(buildnumber, #xFFFF)
       end;
       let additionalinfo
-	= begin
-	    let buffer = make(<stretchy-vector>);
-	    block (return)
-	      for (i :: <integer> from 0 below 128)
-		let c
-		  = raw-as-integer(primitive-c-unsigned-char-at
-				     (primitive-cast-raw-as-pointer
-					(primitive-string-as-raw($osversioninfo)),
-				      integer-as-raw(i),
-				      integer-as-raw(5 * $DWORD_SIZE)));
-		if (c = 0)
-		  return (as(<string>, buffer))
-		else
-		  add!(buffer, as(<character>, c))
-		end
-	      end;
-	      as(<string>, buffer)
-	    end
-	  end;
+        = begin
+            let buffer = make(<stretchy-vector>);
+            block (return)
+              for (i :: <integer> from 0 below 128)
+                let c
+                  = raw-as-integer(primitive-c-unsigned-char-at
+                                     (primitive-cast-raw-as-pointer
+                                        (primitive-string-as-raw($osversioninfo)),
+                                      integer-as-raw(i),
+                                      integer-as-raw(5 * $DWORD_SIZE)));
+                if (c = 0)
+                  return (as(<string>, buffer))
+                else
+                  add!(buffer, as(<character>, c))
+                end
+              end;
+              as(<string>, buffer)
+            end
+          end;
       let version = concatenate-as(<byte-string>,
-				   integer-to-string(majorversion), ".",
-				   integer-to-string(minorversion), ".",
-				   integer-to-string(buildnumber));
+                                   integer-to-string(majorversion), ".",
+                                   integer-to-string(minorversion), ".",
+                                   integer-to-string(buildnumber));
       if (size(additionalinfo) > 0)
-	concatenate-as(<byte-string>, version, " ", additionalinfo)
+        concatenate-as(<byte-string>, version, " ", additionalinfo)
       else
-	version
+        version
       end
     end
     ();
 
-define constant $UNLEN = 256;		// Maximum username length
+define constant $UNLEN = 256;           // Maximum username length
 
 define function command-line-option-prefix
     () => (prefix :: <character>)
@@ -190,20 +190,20 @@ define function login-name () => (name :: false-or(<string>))
   let buffer :: <byte-string> = make(<byte-string>, size: $UNLEN + 1, fill: '\0');
   let length :: <byte-string> = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
   primitive-c-unsigned-long-at(primitive-cast-raw-as-pointer(primitive-string-as-raw(length)),
-			       integer-as-raw(0), integer-as-raw(0))
+                               integer-as-raw(0), integer-as-raw(0))
     := integer-as-raw($UNLEN + 1);
   if (primitive-raw-as-boolean(%call-c-function ("GetUserNameA", c-modifiers: "__stdcall")
-				   (lpBuffer :: <raw-c-pointer>, nSize :: <raw-c-pointer>)
-				=> (success? :: <raw-c-signed-int>)
-				 (primitive-cast-raw-as-pointer
-				    (primitive-string-as-raw(buffer)),
-				  primitive-cast-raw-as-pointer
-				    (primitive-string-as-raw(length)))
-			       end))
+                                   (lpBuffer :: <raw-c-pointer>, nSize :: <raw-c-pointer>)
+                                => (success? :: <raw-c-signed-int>)
+                                 (primitive-cast-raw-as-pointer
+                                    (primitive-string-as-raw(buffer)),
+                                  primitive-cast-raw-as-pointer
+                                    (primitive-string-as-raw(length)))
+                               end))
     let length
       = raw-as-integer(primitive-c-unsigned-long-at
-			 (primitive-cast-raw-as-pointer(primitive-string-as-raw(length)),
-			  integer-as-raw(0), integer-as-raw(0)));
+                         (primitive-cast-raw-as-pointer(primitive-string-as-raw(length)),
+                          integer-as-raw(0), integer-as-raw(0)));
     copy-sequence(buffer, end: length - 1)
   else
     #f
@@ -216,49 +216,49 @@ define function login-group () => (group :: false-or(<string>))
     if (name)
       let sid-buffer :: <byte-string> = make(<byte-string>, size: 1024, fill: '\0');
       let sid-buffer-length :: <byte-string>
-	= make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
+        = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
       let sid-use :: <byte-string> = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
       let domain-name :: <byte-string> = make(<byte-string>, size: 1024, fill: '\0');
       let domain-name-length :: <byte-string>
-	= make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
+        = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
       primitive-c-unsigned-long-at
-	  (primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-buffer-length)),
-	   integer-as-raw(0), integer-as-raw(0))
-	:= integer-as-raw(size(sid-buffer));
+          (primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-buffer-length)),
+           integer-as-raw(0), integer-as-raw(0))
+        := integer-as-raw(size(sid-buffer));
       primitive-c-unsigned-long-at
-	  (primitive-cast-raw-as-pointer(primitive-string-as-raw(domain-name-length)),
-	   integer-as-raw(0), integer-as-raw(0))
-	:= integer-as-raw(size(domain-name));
+          (primitive-cast-raw-as-pointer(primitive-string-as-raw(domain-name-length)),
+           integer-as-raw(0), integer-as-raw(0))
+        := integer-as-raw(size(domain-name));
       if (primitive-raw-as-boolean
-	    (%call-c-function ("LookupAccountNameA", c-modifiers: "__stdcall")
-	         (lpSystemName :: <raw-byte-string>,
-		  lpAccountName :: <raw-byte-string>,
-		  Sid :: <raw-c-pointer>,
-		  cbSid :: <raw-c-pointer>,
-		  ReferencedDomainName :: <raw-byte-string>,
-		  cbReferencedDomainName :: <raw-c-pointer>,
-		  peUse :: <raw-c-pointer>)
-	      => (success? :: <raw-c-signed-int>)
-	       (primitive-cast-raw-as-pointer(integer-as-raw(0)),
-		primitive-string-as-raw(name),
-		primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-buffer)),
-		primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-buffer-length)),
-		primitive-string-as-raw(domain-name),
-		primitive-cast-raw-as-pointer(primitive-string-as-raw(domain-name-length)),
-		primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-use)))
-	    end))
-	let domain-name-length 
-	  = raw-as-integer
-	      (primitive-c-unsigned-long-at
-		 (primitive-cast-raw-as-pointer(primitive-string-as-raw(domain-name-length)),
-		  integer-as-raw(0), integer-as-raw(0)));
-	if (~zero?(domain-name-length))
-	  copy-sequence(domain-name, end: domain-name-length)
-	else
-	  #f
-	end
+            (%call-c-function ("LookupAccountNameA", c-modifiers: "__stdcall")
+                 (lpSystemName :: <raw-byte-string>,
+                  lpAccountName :: <raw-byte-string>,
+                  Sid :: <raw-c-pointer>,
+                  cbSid :: <raw-c-pointer>,
+                  ReferencedDomainName :: <raw-byte-string>,
+                  cbReferencedDomainName :: <raw-c-pointer>,
+                  peUse :: <raw-c-pointer>)
+              => (success? :: <raw-c-signed-int>)
+               (primitive-cast-raw-as-pointer(integer-as-raw(0)),
+                primitive-string-as-raw(name),
+                primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-buffer)),
+                primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-buffer-length)),
+                primitive-string-as-raw(domain-name),
+                primitive-cast-raw-as-pointer(primitive-string-as-raw(domain-name-length)),
+                primitive-cast-raw-as-pointer(primitive-string-as-raw(sid-use)))
+            end))
+        let domain-name-length 
+          = raw-as-integer
+              (primitive-c-unsigned-long-at
+                 (primitive-cast-raw-as-pointer(primitive-string-as-raw(domain-name-length)),
+                  integer-as-raw(0), integer-as-raw(0)));
+        if (~zero?(domain-name-length))
+          copy-sequence(domain-name, end: domain-name-length)
+        else
+          #f
+        end
       else
-	#f
+        #f
       end
     else
       #f
@@ -281,132 +281,132 @@ define inline-only function current-version-key (name :: <byte-string>)
  => (value :: false-or(<string>))
   block (return)
     local method doit (key :: <machine-word>, subKey :: <byte-string>, f :: <function>) => ()
-	    let handle :: <byte-string> = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
-	    let valid? :: <boolean> = #f;
-	    block ()
-	      let status
-		= raw-as-integer(%call-c-function ("RegOpenKeyExA", c-modifiers: "__stdcall")
-				     (hKey :: <raw-c-pointer>,
-				      lpSubKey :: <raw-byte-string>,
-				      ulOptions :: <raw-c-unsigned-long>,
-				      samDesired :: <raw-c-unsigned-long>,
-				      phkResult :: <raw-c-pointer>)
-				  => (success? :: <raw-c-signed-long>)
-				   (primitive-cast-raw-as-pointer
-				      (primitive-unwrap-machine-word(key)),
-				    primitive-string-as-raw(subKey),
-				    integer-as-raw(0),
-				    integer-as-raw($KEY_QUERY_VALUE),
-				    primitive-cast-raw-as-pointer
-				      (primitive-string-as-raw(handle)))
-				 end);
-	      if (status = $ERROR_SUCCESS)
-		valid? := #t;
-		f(primitive-wrap-machine-word
-		    (primitive-c-unsigned-long-at
-		       (primitive-cast-raw-as-pointer(primitive-string-as-raw(handle)),
-			integer-as-raw(0), integer-as-raw(0))))
-	      else
-		return(#f)
-	      end;
-	    cleanup
-	      if (valid?)
-		%call-c-function ("RegCloseKey", c-modifiers: "__stdcall")
-		    (hKey :: <raw-c-pointer>) => (success? :: <raw-c-signed-long>)
-		  (primitive-cast-raw-as-pointer
-		     (primitive-c-unsigned-long-at
-			(primitive-cast-raw-as-pointer(primitive-string-as-raw(handle)),
-			 integer-as-raw(0), integer-as-raw(0))))
+            let handle :: <byte-string> = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
+            let valid? :: <boolean> = #f;
+            block ()
+              let status
+                = raw-as-integer(%call-c-function ("RegOpenKeyExA", c-modifiers: "__stdcall")
+                                     (hKey :: <raw-c-pointer>,
+                                      lpSubKey :: <raw-byte-string>,
+                                      ulOptions :: <raw-c-unsigned-long>,
+                                      samDesired :: <raw-c-unsigned-long>,
+                                      phkResult :: <raw-c-pointer>)
+                                  => (success? :: <raw-c-signed-long>)
+                                   (primitive-cast-raw-as-pointer
+                                      (primitive-unwrap-machine-word(key)),
+                                    primitive-string-as-raw(subKey),
+                                    integer-as-raw(0),
+                                    integer-as-raw($KEY_QUERY_VALUE),
+                                    primitive-cast-raw-as-pointer
+                                      (primitive-string-as-raw(handle)))
+                                 end);
+              if (status = $ERROR_SUCCESS)
+                valid? := #t;
+                f(primitive-wrap-machine-word
+                    (primitive-c-unsigned-long-at
+                       (primitive-cast-raw-as-pointer(primitive-string-as-raw(handle)),
+                        integer-as-raw(0), integer-as-raw(0))))
+              else
+                return(#f)
+              end;
+            cleanup
+              if (valid?)
+                %call-c-function ("RegCloseKey", c-modifiers: "__stdcall")
+                    (hKey :: <raw-c-pointer>) => (success? :: <raw-c-signed-long>)
+                  (primitive-cast-raw-as-pointer
+                     (primitive-c-unsigned-long-at
+                        (primitive-cast-raw-as-pointer(primitive-string-as-raw(handle)),
+                         integer-as-raw(0), integer-as-raw(0))))
                 end
               end
             end
-	  end method doit;
+          end method doit;
     doit($HKEY_LOCAL_MACHINE,
-	 "Software",
-	 method (handle :: <machine-word>) => ()
-	   doit(handle,
-		"Microsoft",
-		method (handle :: <machine-word>) => ()
-		  doit(handle,
-		       if (os-platform() == $VER_PLATFORM_WIN32_NT)
-			 "Windows NT"
-		       else
-			 "Windows"
-		       end,
-		       method (handle :: <machine-word>) => ()
-			 doit(handle,
-			      "CurrentVersion",
-			      method (handle :: <machine-word>) => ()
-				let type-buffer :: <byte-string>
-				  = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
-				let buffer-size-buffer :: <byte-string>
-				  = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
-				let status
-				  = raw-as-integer
-				      (%call-c-function ("RegQueryValueExA",
-							 c-modifiers: "__stdcall")
-					   (hKey :: <raw-c-pointer>,
-					    lpValueName :: <raw-byte-string>, 
-					    lpReserved :: <raw-c-pointer>,
-					    lpType :: <raw-c-pointer>,
-					    lpData :: <raw-c-pointer>,
-					    lpcbData :: <raw-c-pointer>)
-					=> (success? :: <raw-c-signed-long>)
-					 (primitive-cast-raw-as-pointer
-					    (primitive-unwrap-machine-word(handle)),
-					  primitive-string-as-raw(name),
-					  primitive-cast-raw-as-pointer(integer-as-raw(0)),
-					  primitive-cast-raw-as-pointer
-					    (primitive-string-as-raw(type-buffer)),
-					  primitive-cast-raw-as-pointer(integer-as-raw(0)),
-					  primitive-cast-raw-as-pointer
-					    (primitive-string-as-raw(buffer-size-buffer)))
-				       end);
-				if (status = $ERROR_SUCCESS)
-				  let buffer-size
-				    = raw-as-integer
-				        (primitive-c-unsigned-long-at
-					   (primitive-cast-raw-as-pointer
-					      (primitive-string-as-raw(buffer-size-buffer)),
-					    integer-as-raw(0), integer-as-raw(0)));
-				  // NOTE: For registry entries, the returned buffer-size 
-				  //       includes the trailing NUL character ...
-				  let buffer :: <byte-string>
-				    = make(<byte-string>, size: buffer-size, fill: '\0');
-				  let status
-				    = raw-as-integer
-					(%call-c-function ("RegQueryValueExA",
-							   c-modifiers: "__stdcall")
-					     (hKey :: <raw-c-pointer>,
-					      lpValueName :: <raw-byte-string>, 
-					      lpReserved :: <raw-c-pointer>,
-					      lpType :: <raw-c-pointer>,
-					      lpData :: <raw-c-pointer>,
-					      lpcbData :: <raw-c-pointer>)
-					  => (success? :: <raw-c-signed-long>)
-					   (primitive-cast-raw-as-pointer
-					      (primitive-unwrap-machine-word(handle)),
-					    primitive-string-as-raw(name),
-					    primitive-cast-raw-as-pointer(integer-as-raw(0)),
-					    primitive-cast-raw-as-pointer
-					      (primitive-string-as-raw(type-buffer)),
-					    primitive-cast-raw-as-pointer
-					      (primitive-string-as-raw(buffer)),
-					    primitive-cast-raw-as-pointer
-					      (primitive-string-as-raw(buffer-size-buffer)))
-					 end);
-				  if (status = $ERROR_SUCCESS)
-				    return(copy-sequence(buffer, end: buffer-size - 1))
-				  else
-				    return(#f)
-				  end
-				else
-				  return(#f)
-				end
-			      end)
-		       end)
-		end)
-	 end)
+         "Software",
+         method (handle :: <machine-word>) => ()
+           doit(handle,
+                "Microsoft",
+                method (handle :: <machine-word>) => ()
+                  doit(handle,
+                       if (os-platform() == $VER_PLATFORM_WIN32_NT)
+                         "Windows NT"
+                       else
+                         "Windows"
+                       end,
+                       method (handle :: <machine-word>) => ()
+                         doit(handle,
+                              "CurrentVersion",
+                              method (handle :: <machine-word>) => ()
+                                let type-buffer :: <byte-string>
+                                  = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
+                                let buffer-size-buffer :: <byte-string>
+                                  = make(<byte-string>, size: $DWORD_SIZE, fill: '\0');
+                                let status
+                                  = raw-as-integer
+                                      (%call-c-function ("RegQueryValueExA",
+                                                         c-modifiers: "__stdcall")
+                                           (hKey :: <raw-c-pointer>,
+                                            lpValueName :: <raw-byte-string>, 
+                                            lpReserved :: <raw-c-pointer>,
+                                            lpType :: <raw-c-pointer>,
+                                            lpData :: <raw-c-pointer>,
+                                            lpcbData :: <raw-c-pointer>)
+                                        => (success? :: <raw-c-signed-long>)
+                                         (primitive-cast-raw-as-pointer
+                                            (primitive-unwrap-machine-word(handle)),
+                                          primitive-string-as-raw(name),
+                                          primitive-cast-raw-as-pointer(integer-as-raw(0)),
+                                          primitive-cast-raw-as-pointer
+                                            (primitive-string-as-raw(type-buffer)),
+                                          primitive-cast-raw-as-pointer(integer-as-raw(0)),
+                                          primitive-cast-raw-as-pointer
+                                            (primitive-string-as-raw(buffer-size-buffer)))
+                                       end);
+                                if (status = $ERROR_SUCCESS)
+                                  let buffer-size
+                                    = raw-as-integer
+                                        (primitive-c-unsigned-long-at
+                                           (primitive-cast-raw-as-pointer
+                                              (primitive-string-as-raw(buffer-size-buffer)),
+                                            integer-as-raw(0), integer-as-raw(0)));
+                                  // NOTE: For registry entries, the returned buffer-size 
+                                  //       includes the trailing NUL character ...
+                                  let buffer :: <byte-string>
+                                    = make(<byte-string>, size: buffer-size, fill: '\0');
+                                  let status
+                                    = raw-as-integer
+                                        (%call-c-function ("RegQueryValueExA",
+                                                           c-modifiers: "__stdcall")
+                                             (hKey :: <raw-c-pointer>,
+                                              lpValueName :: <raw-byte-string>, 
+                                              lpReserved :: <raw-c-pointer>,
+                                              lpType :: <raw-c-pointer>,
+                                              lpData :: <raw-c-pointer>,
+                                              lpcbData :: <raw-c-pointer>)
+                                          => (success? :: <raw-c-signed-long>)
+                                           (primitive-cast-raw-as-pointer
+                                              (primitive-unwrap-machine-word(handle)),
+                                            primitive-string-as-raw(name),
+                                            primitive-cast-raw-as-pointer(integer-as-raw(0)),
+                                            primitive-cast-raw-as-pointer
+                                              (primitive-string-as-raw(type-buffer)),
+                                            primitive-cast-raw-as-pointer
+                                              (primitive-string-as-raw(buffer)),
+                                            primitive-cast-raw-as-pointer
+                                              (primitive-string-as-raw(buffer-size-buffer)))
+                                         end);
+                                  if (status = $ERROR_SUCCESS)
+                                    return(copy-sequence(buffer, end: buffer-size - 1))
+                                  else
+                                    return(#f)
+                                  end
+                                else
+                                  return(#f)
+                                end
+                              end)
+                       end)
+                end)
+         end)
   end
 end function current-version-key;
 
@@ -426,14 +426,14 @@ define function environment-variable
   let envvar-buffer :: <byte-string> = make(<byte-string>, size: eb-size, fill: '\0');
   let envvar-size :: <integer>
     = raw-as-integer(%call-c-function ("GetEnvironmentVariableA", c-modifiers: "__stdcall")
-		         (lpName :: <raw-byte-string>,
-			  lpBuffer :: <raw-byte-string>,
-			  nSize :: <raw-c-unsigned-long>)
-		      => (value-size :: <raw-c-unsigned-long>)
-		       (primitive-string-as-raw(name),
-			primitive-string-as-raw(envvar-buffer),
-			integer-as-raw(eb-size))
-		     end);
+                         (lpName :: <raw-byte-string>,
+                          lpBuffer :: <raw-byte-string>,
+                          nSize :: <raw-c-unsigned-long>)
+                      => (value-size :: <raw-c-unsigned-long>)
+                       (primitive-string-as-raw(name),
+                        primitive-string-as-raw(envvar-buffer),
+                        integer-as-raw(eb-size))
+                     end);
   if (envvar-size > eb-size)
     // Value was too large to fit in our initial buffer but GetEnvironmentVariableA
     // tells us how long it actually is so we can just make a buffer large enough
@@ -441,20 +441,20 @@ define function environment-variable
     envvar-buffer := make(<byte-string>, size: eb-size, fill: '\0');
     envvar-size :=
       raw-as-integer(%call-c-function ("GetEnvironmentVariableA", c-modifiers: "__stdcall")
-			 (lpName :: <raw-byte-string>,
-			  lpBuffer :: <raw-byte-string>,
-			  nSize :: <raw-c-unsigned-long>)
-		      => (value-size :: <raw-c-unsigned-long>)
-		       (primitive-string-as-raw(name),
-			primitive-string-as-raw(envvar-buffer),
-			integer-as-raw(eb-size))
-		     end)
+                         (lpName :: <raw-byte-string>,
+                          lpBuffer :: <raw-byte-string>,
+                          nSize :: <raw-c-unsigned-long>)
+                      => (value-size :: <raw-c-unsigned-long>)
+                       (primitive-string-as-raw(name),
+                        primitive-string-as-raw(envvar-buffer),
+                        integer-as-raw(eb-size))
+                     end)
   end;
   if (envvar-size > 0)
     copy-sequence(envvar-buffer, end: envvar-size)
   else
     %call-c-function ("SetLastError", c-modifiers: "__stdcall")
-	(dwErrorCode :: <raw-c-unsigned-long>) => (nothing :: <raw-c-void>)
+        (dwErrorCode :: <raw-c-unsigned-long>) => (nothing :: <raw-c-void>)
       (integer-as-raw(0))
     end;
     #f
@@ -469,10 +469,10 @@ define function environment-variable-setter
       (lpName :: <raw-byte-string>, lpValue :: <raw-byte-string>)
    => (success? :: <raw-c-signed-int>)
     (primitive-string-as-raw(name), if (new-value)
-				      primitive-string-as-raw(new-value)
-				    else
-				      integer-as-raw(0)
-				    end)
+                                      primitive-string-as-raw(new-value)
+                                    else
+                                      integer-as-raw(0)
+                                    end)
   end;
   new-value
 end function environment-variable-setter;
@@ -523,7 +523,7 @@ define inline-only function startupinfo-dwFlags
   raw-as-integer
     (primitive-c-unsigned-long-at
        (primitive-cast-raw-as-pointer(primitive-string-as-raw(startupinfo)),
-	integer-as-raw(11), integer-as-raw(0)))
+        integer-as-raw(11), integer-as-raw(0)))
 end function startupinfo-dwFlags;
 
 define inline-only function startupinfo-dwFlags-setter
@@ -585,7 +585,7 @@ define inline-only function process-information-hProcess
     (primitive-c-unsigned-long-at
        (primitive-cast-raw-as-pointer
           (primitive-string-as-raw(process-information)),
-	integer-as-raw(0), integer-as-raw(0)))
+        integer-as-raw(0), integer-as-raw(0)))
 end function process-information-hProcess;
 
 define inline-only function process-information-hThread
@@ -594,7 +594,7 @@ define inline-only function process-information-hThread
     (primitive-c-unsigned-long-at
        (primitive-cast-raw-as-pointer
           (primitive-string-as-raw(process-information)),
-	integer-as-raw(1), integer-as-raw(0)))
+        integer-as-raw(1), integer-as-raw(0)))
 end function process-information-hThread;
 
 /// Masks out all but the result code to enable easier comparisions.
@@ -604,9 +604,9 @@ define inline-only function win32-last-error () => (status :: <integer>)
   raw-as-integer
     (primitive-machine-word-logand
        (%call-c-function ("GetLastError", c-modifiers: "__stdcall")
-	    () => (status :: <raw-c-unsigned-long>) ()
-	end,
-	integer-as-raw($HRESULT_CODE_MASK)))
+            () => (status :: <raw-c-unsigned-long>) ()
+        end,
+        integer-as-raw($HRESULT_CODE_MASK)))
 end function win32-last-error;
 
 define constant $null-device = "NUL:";
@@ -656,13 +656,13 @@ define function run-application
   startupinfo-wShowWindow(startupInfo)
     := case
          hide?                   => $SW-HIDE;
-	 activate?  & minimize?  => $SW-SHOWMINIMIZED;
-	 activate?  & ~minimize? => $SW-SHOWNORMAL;
-	 ~activate? & minimize?  => $SW-SHOWMINNOACTIVE;
-	 ~activate? & ~minimize? => $SW-SHOWNOACTIVATE;
-	 // compiler can't figure out that above covers all cases, so thinks
-	 // there is a chance of returning #f.  Disabuse it of that notion.
-	 otherwise => -1;
+         activate?  & minimize?  => $SW-SHOWMINIMIZED;
+         activate?  & ~minimize? => $SW-SHOWNORMAL;
+         ~activate? & minimize?  => $SW-SHOWMINNOACTIVE;
+         ~activate? & ~minimize? => $SW-SHOWNOACTIVATE;
+         // compiler can't figure out that above covers all cases, so thinks
+         // there is a chance of returning #f.  Disabuse it of that notion.
+         otherwise => -1;
        end;
 
   let streams :: <list> = #();
@@ -792,25 +792,25 @@ define function run-application
       end if;
 
   if (primitive-raw-as-boolean
-	(%call-c-function ("CreateProcessA", c-modifiers: "__stdcall")
-	     (lpApplicationName :: <raw-byte-string>,
-	      lpCommandLine :: <raw-byte-string>,
-	      lpProcessAttributes :: <raw-c-pointer>,
-	      lpThreadAttributes :: <raw-c-pointer>,
-	      bInheritHandles :: <raw-c-signed-int>,
-	      dwCreationFlags :: <raw-c-unsigned-long>,
-	      lpEnvironment :: <raw-c-pointer>,
-	      lpCurrentDirectory :: <raw-byte-string>,
-	      lpStartupInfo :: <raw-c-pointer>,
+        (%call-c-function ("CreateProcessA", c-modifiers: "__stdcall")
+             (lpApplicationName :: <raw-byte-string>,
+              lpCommandLine :: <raw-byte-string>,
+              lpProcessAttributes :: <raw-c-pointer>,
+              lpThreadAttributes :: <raw-c-pointer>,
+              bInheritHandles :: <raw-c-signed-int>,
+              dwCreationFlags :: <raw-c-unsigned-long>,
+              lpEnvironment :: <raw-c-pointer>,
+              lpCurrentDirectory :: <raw-byte-string>,
+              lpStartupInfo :: <raw-c-pointer>,
 
 
-	      lpProcessInformation :: <raw-c-pointer>)
-	  => (success? :: <raw-c-signed-int>)
-	   (integer-as-raw(0),
-	    primitive-string-as-raw(command),
-	    integer-as-raw(0), integer-as-raw(0),
-	    if (inherit-console?) integer-as-raw(1) else integer-as-raw(0) end,
-	    integer-as-raw(0),
+              lpProcessInformation :: <raw-c-pointer>)
+          => (success? :: <raw-c-signed-int>)
+           (integer-as-raw(0),
+            primitive-string-as-raw(command),
+            integer-as-raw(0), integer-as-raw(0),
+            if (inherit-console?) integer-as-raw(1) else integer-as-raw(0) end,
+            integer-as-raw(0),
             primitive-cast-raw-as-pointer
               (primitive-unwrap-machine-word(envp)),
             if (working-directory)
@@ -818,9 +818,9 @@ define function run-application
             else
               integer-as-raw(0)
             end,
-	    primitive-cast-raw-as-pointer(primitive-string-as-raw(startupInfo)),
-	    primitive-cast-raw-as-pointer(primitive-string-as-raw(processInfo)))
-	 end))
+            primitive-cast-raw-as-pointer(primitive-string-as-raw(startupInfo)),
+            primitive-cast-raw-as-pointer(primitive-string-as-raw(processInfo)))
+         end))
     block ()
       if (asynchronous?)
         // Close the handle for the created main thread, we don't need it
@@ -861,7 +861,7 @@ define function run-application
         if (~success?)
           error("get exit code failed: %s", win32-last-error-message());
         end;
-	let exit-code
+        let exit-code
           = raw-as-integer
               (primitive-machine-word-logand
                  (primitive-unwrap-machine-word(code),
@@ -1070,11 +1070,11 @@ define inline-only function Win32CreatePipe()
      integer-as-raw($BUFFER-MAX))
   end;
   values(primitive-wrap-machine-word
-	   (primitive-c-unsigned-long-at
-	      (input-pipe, integer-as-raw(0), integer-as-raw(0))),
-	 primitive-wrap-machine-word
-	   (primitive-c-unsigned-long-at
-	      (output-pipe, integer-as-raw(0), integer-as-raw(0))))
+           (primitive-c-unsigned-long-at
+              (input-pipe, integer-as-raw(0), integer-as-raw(0))),
+         primitive-wrap-machine-word
+           (primitive-c-unsigned-long-at
+              (output-pipe, integer-as-raw(0), integer-as-raw(0))))
 end function;
 
 define inline-only function Win32SetHandleInformation
@@ -1114,7 +1114,7 @@ define inline-only function Win32ReadFile
       primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(buffer)),
       integer-as-raw($BUFFER-MAX),
       primitive-cast-raw-as-pointer
-	(primitive-unwrap-machine-word(actual-transfer)),
+        (primitive-unwrap-machine-word(actual-transfer)),
       primitive-cast-raw-as-pointer(integer-as-raw(0)))
   end);
 end function;
@@ -1160,8 +1160,8 @@ define function win32-wait-for-single-object
           (hHandle :: <raw-c-pointer>, dwMilliseconds :: <raw-c-unsigned-long>)
        => (result :: <raw-c-signed-int>)
        (primitive-cast-raw-as-pointer
-	  (primitive-unwrap-machine-word(handle)),
-	integer-as-raw(timeout))
+          (primitive-unwrap-machine-word(handle)),
+        integer-as-raw(timeout))
      end)
 end function;
 
@@ -1197,14 +1197,14 @@ define function create-application-event
     primitive-wrap-machine-word
     (%call-c-function ("CreateEventA", c-modifiers: "__stdcall")
        (lpEventAttributes :: <raw-c-pointer>,
-	bManualReset :: <raw-c-signed-int>,
-	bInitialState :: <raw-c-signed-int>,
-	lpName :: <raw-byte-string>)
+        bManualReset :: <raw-c-signed-int>,
+        bInitialState :: <raw-c-signed-int>,
+        lpName :: <raw-byte-string>)
        => (handle :: <raw-c-pointer>)
        (primitive-cast-raw-as-pointer(integer-as-raw(0)),
-	integer-as-raw(0),
-	integer-as-raw(0),
-	primitive-cast-raw-as-pointer(primitive-string-as-raw(event)))
+        integer-as-raw(0),
+        integer-as-raw(0),
+        primitive-cast-raw-as-pointer(primitive-string-as-raw(event)))
     end);
 end function;
 
@@ -1231,12 +1231,12 @@ define function signal-application-event
     primitive-wrap-machine-word
     (%call-c-function ("OpenEventA", c-modifiers: "__stdcall")
        (dwDesiredAccess :: <raw-c-unsigned-long>,
-	bInheritHandle :: <raw-c-signed-int>,
-	lpName :: <raw-byte-string>)
+        bInheritHandle :: <raw-c-signed-int>,
+        lpName :: <raw-byte-string>)
        => (handle :: <raw-c-pointer>)
        (integer-as-raw($EVENT_ALL_ACCESS),
-	integer-as-raw(0),
-	primitive-cast-raw-as-pointer(primitive-string-as-raw(event)))
+        integer-as-raw(0),
+        primitive-cast-raw-as-pointer(primitive-string-as-raw(event)))
     end);
   
   let success? :: <boolean> =
@@ -1245,7 +1245,7 @@ define function signal-application-event
        (hHandle :: <raw-c-pointer>)
        => (result :: <raw-c-signed-int>)
        (primitive-cast-raw-as-pointer
-	  (primitive-unwrap-machine-word(event-object)))
+          (primitive-unwrap-machine-word(event-object)))
     end);
 
   win32-close-handle(event-object);
@@ -1268,5 +1268,3 @@ define function load-library
   module
 
 end function;
-
-
