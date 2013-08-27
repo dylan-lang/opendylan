@@ -737,7 +737,9 @@ define method write-superclass
      superclass :: <definition-object>,
      #key last? :: <boolean> = #f, first? :: <boolean> = #f)
  => ()
-  format(stream, "%s", definition-name(report, superclass))
+  format(stream, "%s%s",
+         if (~first?) ", " else "" end,
+         definition-name(report, superclass))
 end method write-superclass;
 
 define method write-superclasses-footer
