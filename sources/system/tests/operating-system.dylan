@@ -332,6 +332,17 @@ define operating-system function-test load-library ()
   //---*** Fill this in...
 end function-test load-library;
 
+define operating-system function-test current-process-id ()
+  let pid = current-process-id();
+  check-true("current-process-id is an integer", instance?(pid, <integer>));
+  check-true("current-process-id > 0", pid > 0);
+end;
+
+define operating-system function-test parent-process-id ()
+  let pid = parent-process-id();
+  check-true("parent-process-id is an integer", instance?(pid, <integer>));
+end;
+
 
 // Application startup handling
 

@@ -66,7 +66,9 @@ define module operating-system
          create-application-event,
          wait-for-application-event,
          signal-application-event,
-         load-library;
+         load-library,
+         current-process-id,
+         parent-process-id;
 
   create command-line-option-prefix;
 end module operating-system;

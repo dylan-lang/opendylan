@@ -1268,3 +1268,17 @@ define function load-library
   module
 
 end function;
+
+
+define function current-process-id
+    () => (pid :: <integer>)
+  raw-as-integer(%call-c-function("GetCurrentProcessId", c-modifiers: "__stdcall")
+                     () => (pid :: <raw-c-unsigned-int>)
+                     ()
+                 end);
+end;
+
+define function parent-process-id
+    () => (pid :: <integer>)
+  0
+end;
