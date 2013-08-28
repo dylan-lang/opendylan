@@ -217,6 +217,8 @@ define module-spec operating-system ()
   function wait-for-application-process
     (<application-process>) => (<integer>, false-or(<integer>));
   function load-library (<string>) => (<object>);
+  function current-process-id () => (<integer>);
+  function parent-process-id () => (<integer>);
 
   // Application startup handling
   function application-name () => (false-or(<string>));

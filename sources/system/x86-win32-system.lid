@@ -3,7 +3,7 @@ Synopsis:     Portable operating system APIs
 Author:       Gail Zacharias
 Major-Version: 2
 Minor-Version: 1
-Target-Type:	dll
+Target-Type: dll
 Files: library
        operating-system
        x86-win32-operating-system

@@ -546,3 +546,20 @@ define function load-library
     end);
   module
 end function load-library;
+
+
+define function current-process-id
+    () => (pid :: <integer>)
+  raw-as-integer(%call-c-function("getpid")
+                     () => (pid :: <raw-c-signed-int>)
+                     ()
+                 end);
+end;
+
+define function parent-process-id
+    () => (pid :: <integer>)
+  raw-as-integer(%call-c-function("getppid")
+                     () => (pid :: <raw-c-signed-int>)
+                     ()
+                 end);
+end;
