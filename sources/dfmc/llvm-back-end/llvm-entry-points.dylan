@@ -553,6 +553,47 @@ define variable-arity outer entry-point-descriptor rest-key-xep
        type: llvm-reference-type(be, be.%mv-struct-type))
 end entry-point-descriptor;
 
+define method op--engine-node-call
+    (be :: <llvm-back-end>, function :: <llvm-value>, n,
+     arguments :: <sequence>)
+ => (call :: <llvm-value>);
+  let word-size = back-end-word-size(be);
+
+  // Retrieve the dispatch engine
+  let gf-class :: <&class> = dylan-value(#"<generic-function>");
+  let function-cast = op--object-pointer-cast(be, function, gf-class);
+
+  let discriminator-slot-ptr
+    = op--getslotptr(be, function-cast, gf-class, #"discriminator");
+  let engine = ins--load(be, discriminator-slot-ptr, alignment: word-size);
+
+  // Retrieve the engine entry point from the engine
+  let engine-node-class :: <&class> = dylan-value(#"<engine-node>");
+  let engine-cast = op--object-pointer-cast(be, engine, engine-node-class);
+  let entry-point-slot-ptr
+    = op--getslotptr(be, engine-cast,
+                     engine-node-class, #"engine-node-entry-point");
+  let entry-point = ins--load(be, entry-point-slot-ptr, alignment: word-size);
+
+  // Chain to the engine entry point function
+  let parameter-types
+    = make(<simple-object-vector>,
+           size: 3 + arguments.size,
+           fill: $llvm-object-pointer-type);
+  parameter-types[2] := be.%type-table["iWord"];
+  let entry-point-type
+    = make(<llvm-function-type>,
+           return-type: llvm-reference-type(be, be.%mv-struct-type),
+           parameter-types: parameter-types,
+           varargs?: #f);
+  let entry-point-cast
+    = ins--bitcast(be, entry-point, llvm-pointer-to(be, entry-point-type));
+  ins--tail-call
+    (be, entry-point-cast,
+     concatenate(vector(engine, function, n), arguments),
+     calling-convention: $llvm-calling-convention-c)
+end method;
+
 // For GF calls with fixed arguments only
 define outer entry-point-descriptor gf-xep
     (function :: <generic-function>, n :: <raw-integer>, #rest arguments)
@@ -571,37 +612,9 @@ define outer entry-point-descriptor gf-xep
   ins--block(be, error-bb);
   op--argument-count-error(be, function, n);
 
-  // Retrieve the dispatch engine
+  // Call using the dispatch engine
   ins--block(be, call-bb);
-  let gf-class :: <&class> = dylan-value(#"<generic-function>");
-  let function-cast = op--object-pointer-cast(be, function, gf-class);
-
-  let discriminator-slot-ptr
-    = op--getslotptr(be, function-cast, gf-class, #"discriminator");
-  let engine = ins--load(be, discriminator-slot-ptr, alignment: word-size);
-
-  // Retrieve the engine entry point from the engine
-  let engine-node-class :: <&class> = dylan-value(#"<engine-node>");
-  let engine-cast = op--object-pointer-cast(be, engine, engine-node-class);
-  let entry-point-slot-ptr
-    = op--getslotptr(be, engine-cast,
-                     engine-node-class, #"engine-node-entry-point");
-  let entry-point = ins--load(be, entry-point-slot-ptr, alignment: word-size);
-
-  // Chain to the engine entry point function
-  let entry-point-type
-    = make(<llvm-function-type>,
-           return-type: llvm-reference-type(be, be.%mv-struct-type),
-           parameter-types: make(<simple-object-vector>,
-                                 size: num + 2,
-                                 fill: $llvm-object-pointer-type),
-           varargs?: #f);
-  let entry-point-cast
-    = ins--bitcast(be, entry-point, llvm-pointer-to(be, entry-point-type));
-  ins--tail-call
-    (be, entry-point-cast,
-     concatenate(vector(function, engine), arguments),
-     calling-convention: $llvm-calling-convention-fast)
+  op--engine-node-call(be, function, n, arguments)
 end entry-point-descriptor;
 
 // For GF calls with optional arguments
@@ -629,36 +642,9 @@ define variable-arity outer entry-point-descriptor gf-optional-xep
   let rest-vector = op--va-list-to-stack-vector(be, va-list, count);
   op--va-end(be, va-list);
 
-  // Retrieve the dispatch engine
-  let gf-class :: <&class> = dylan-value(#"<generic-function>");
-  let function-cast = op--object-pointer-cast(be, function, gf-class);
-
-  let discriminator-slot-ptr
-    = op--getslotptr(be, function-cast, gf-class, #"discriminator");
-  let engine = ins--load(be, discriminator-slot-ptr, alignment: word-size);
-
-  // Retrieve the engine entry point from the engine
-  let engine-node-class :: <&class> = dylan-value(#"<engine-node>");
-  let engine-cast = op--object-pointer-cast(be, engine, engine-node-class);
-  let entry-point-slot-ptr
-    = op--getslotptr(be, engine-cast,
-                     engine-node-class, #"engine-node-entry-point");
-  let entry-point = ins--load(be, entry-point-slot-ptr, alignment: word-size);
-
-  // Chain to the engine entry point function
-  let entry-point-type
-    = make(<llvm-function-type>,
-           return-type: llvm-reference-type(be, be.%mv-struct-type),
-           parameter-types: make(<simple-object-vector>,
-                                 size: num + 3,
-                                 fill: $llvm-object-pointer-type),
-           varargs?: #f);
-  let entry-point-cast
-    = ins--bitcast(be, entry-point, llvm-pointer-to(be, entry-point-type));
-  ins--tail-call
-    (be, entry-point-cast,
-     concatenate(vector(function, engine), arguments, vector(rest-vector)),
-     calling-convention: $llvm-calling-convention-fast)
+  // Call using the dispatch engine
+  op--engine-node-call(be, function, n,
+                       concatenate(arguments, vector(rest-vector)))
 end entry-point-descriptor;
 
 // For MEP calls with #key (and possibly #rest)
