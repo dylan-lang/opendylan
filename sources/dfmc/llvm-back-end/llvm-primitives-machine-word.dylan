@@ -776,10 +776,22 @@ define side-effect-free stateless dynamic-extent &unimplemented-primitive-descri
   //---*** Fill this in...
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-shift-left-with-overflow
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-shift-left-with-overflow
     (x :: <raw-machine-word>, shift :: <raw-machine-word>)
  => (low :: <raw-machine-word>, high :: <raw-machine-word>, overflow? :: <boolean>);
-  //---*** Fill this in...
+  // Extend the operands to double the word width and perform the shift
+  let iDoubleWord-type = be.%type-table["iDoubleWord"];
+  let double-x = ins--zext(be, x, iDoubleWord-type);
+  let double-shift = ins--sext(be, shift, iDoubleWord-type);
+  let full = ins--shl(be, double-x, double-shift);
+
+  // Shift the result back to see if any bits disappeared
+  let unfull = ins--lshr(be, full, double-shift);
+  let overflow = ins--icmp-ne(be, double-x, unfull);
+
+  // Extract the high and low words of the result
+  let (low, high) = op--split-double-integer(be, full);
+  values(low, high, op--boolean(be, overflow))
 end;
 
 define sign-extend side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-shift-right
