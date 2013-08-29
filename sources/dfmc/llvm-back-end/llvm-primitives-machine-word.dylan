@@ -1017,25 +1017,40 @@ define side-effect-free stateless dynamic-extent &unimplemented-primitive-descri
   //---*** Fill this in...
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-divide-quotient
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-divide-quotient
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-divide-descriptor,
+                     dividend-low, dividend-high, divisor);
+  quotient
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-divide-remainder
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-divide-remainder
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-divide-descriptor,
+                     dividend-low, dividend-high, divisor);
+  remainder
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-divide
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-divide
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let iDoubleWord-type = be.%type-table["iDoubleWord"];
+  let raw-machine-word-type
+    = llvm-reference-type(be, dylan-value(#"<raw-machine-word>"));
+
+  let dividend-full = op--double-integer-merge(be, dividend-low, dividend-high);
+  let divisor-full = ins--sext(be, divisor, iDoubleWord-type);
+  let quotient-full = ins--sdiv(be, dividend-full, divisor-full);
+  let remainder-full = ins--srem(be, dividend-full, divisor-full);
+  values(ins--trunc(be, quotient-full, raw-machine-word-type),
+         ins--trunc(be, remainder-full, raw-machine-word-type))
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-unsigned-less-than?
@@ -1164,28 +1179,43 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   ins--lshr(be, x, shift)
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-unsigned-double-divide-quotient
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-unsigned-double-divide-quotient
     (dividend-low :: <raw-machine-word>,
      dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-unsigned-double-divide-descriptor,
+                     dividend-low, dividend-high, divisor);
+  quotient
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-unsigned-double-divide-remainder
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-unsigned-double-divide-remainder
     (dividend-low :: <raw-machine-word>,
      dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-unsigned-double-divide-descriptor,
+                     dividend-low, dividend-high, divisor);
+  remainder;
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-unsigned-double-divide
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-unsigned-double-divide
     (dividend-low :: <raw-machine-word>,
      dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let iDoubleWord-type = be.%type-table["iDoubleWord"];
+  let raw-machine-word-type
+    = llvm-reference-type(be, dylan-value(#"<raw-machine-word>"));
+
+  let dividend-full = op--double-integer-merge(be, dividend-low, dividend-high);
+  let divisor-full = ins--zext(be, divisor, iDoubleWord-type);
+  let quotient-full = ins--udiv(be, dividend-full, divisor-full);
+  let remainder-full = ins--urem(be, dividend-full, divisor-full);
+  values(ins--trunc(be, quotient-full, raw-machine-word-type),
+         ins--trunc(be, remainder-full, raw-machine-word-type))
 end;
 
 define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-unsigned-shift-left-high
