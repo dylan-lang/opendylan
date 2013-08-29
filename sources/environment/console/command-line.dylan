@@ -49,8 +49,6 @@ define abstract class <basic-main-command> (<basic-command>)
     init-keyword: target:;
   constant slot %force? :: <boolean> = #f,
     init-keyword: force?:;
-  constant slot %verbose? :: <boolean> = #f,
-    init-keyword: verbose?:;
   constant slot %unify? :: <boolean> = #f,
     init-keyword: unify?:;
   constant slot %save? :: <boolean> = #t,
@@ -97,7 +95,6 @@ define method execute-main-command
 	save?:       command.%save?,
 	link?:       #f,
 	release?:    command.%release?,
-	verbose?:    command.%verbose?,
 	subprojects: command.%subprojects?,
         output:      begin
                        let output = make(<stretchy-object-vector>);

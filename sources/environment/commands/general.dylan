@@ -138,7 +138,7 @@ define class <project-context> (<server-context>)
   slot context-build-script :: <file-locator> = default-build-script(),
     init-keyword: build-script:;
   slot context-properties :: <list> = #();
-  slot context-last-heading :: false-or(<string>) = #f;
+  // slot context-last-heading :: false-or(<string>) = #f;
   slot context-last-item-label :: false-or(<string>) = #f;
 end class <project-context>;
 
