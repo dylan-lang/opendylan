@@ -16,6 +16,7 @@ define constant $caret-width :: <integer> = 2;
 define sealed class <gtk-port> (<basic-port>)
   sealed slot %app-context = #f;
   sealed slot %app-shell   = #f;
+  sealed slot %focus       = #f;
   sealed slot %modifier-map :: <simple-object-vector> = #[];
   // Cache for image cursors
   sealed slot %cursor-cache :: <object-table> = make(<object-table>);
@@ -265,13 +266,21 @@ end method do-hide-caret;
 define sealed method note-focus-in
     (_port :: <gtk-port>, sheet :: <sheet>) => ()
   next-method();
-  ignoring("note-focus-in")
+  let mirror = sheet-mirror(sheet);
+  let widget = mirror & mirror-widget(mirror);
+  when (widget)
+    _port.%focus := widget;
+    gtk-widget-grab-focus(widget);
+  end;
+  // let frame = sheet-frame(sheet);
+  // frame & call-in-frame(frame, method () set-focus(sheet) end)
 end method note-focus-in;
 
 define sealed method note-focus-out
     (_port :: <gtk-port>, sheet :: <sheet>) => ()
   next-method();
-  ignoring("note-focus-out")
+  _port.%focus := #f;
+  ignoring("note-focus-out");
 end method note-focus-out;
 
 
