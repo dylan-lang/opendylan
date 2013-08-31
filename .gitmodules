@@ -16,3 +16,6 @@
 [submodule "sources/lib/strings"]
 	path = sources/lib/strings
 	url = git://github.com/dylan-lang/strings.git
+[submodule "sources/lib/logging"]
+	path = sources/lib/logging
+	url = git://github.com/dylan-lang/logging.git
