@@ -43,23 +43,24 @@ Make another logger for debugging server requests:
 
 There are several things to notice about the above setup:
 
-  * Loggers have no log targets by default.  The simplest way to add a
-    target is to add a pre-existing target such as $stdout-log-target or 
-    $stderr-log-target.
+* Loggers have no log targets by default.  The simplest way to add a
+  target is to add a pre-existing target such as ``$stdout-log-target`` or 
+  ``$stderr-log-target`` using :gf:`add-target`.
 
-  * Different loggers are associated by name.  In this example the logger
-    named "my-app" is an ancestor of the one named "my-app.debug.request"
-    because the first dotted name component matches.
+* Different loggers are associated by name.  In this example the logger
+  named ``"my-app"`` is an ancestor of the one named ``"my-app.debug.request"``
+  because the first dotted name component matches.
 
-  * No targets were added to the my-app.debug.request logger.  Since all
-    log messages sent to a child are also sent to its ancestors (but see
-    logger-additive?-setter), anything logged to the my-app.debug.request
-    logger will be passed along to the my-app logger.
+* No targets were added to the ``my-app.debug.request`` logger.  Since
+  all log messages sent to a child are also sent to its ancestors (but
+  see :gf:`logger-additive?-setter`), anything logged to the
+  ``my-app.debug.request`` logger will be passed along to the ``my-app``
+  logger.
 
-    So what's the benefit of having both loggers?  You can enable/disable
-    them separately at runtime.  Also, if for example you wanted to log
-    debug messages to a separate file you could add a target to the
-    my-app.debug logger.
+  So what's the benefit of having both loggers?  You can enable/disable
+  them separately at runtime.  Also, if for example you wanted to log
+  debug messages to a separate file you could add a target to the
+  ``my-app.debug`` logger.
 
 Log to a file:
 
@@ -74,7 +75,7 @@ in the above call.
 
 Loggers may be disabled with ``logger-enabled?(logger) := #f``.  When
 disabled, no messages will be logged to the logger's local targets,
-but the value of logger-additive? will still be respected.  In other
+but the value of :gf:`logger-additive?` will still be respected.  In other
 words, logging to a disabled logger will still log to ancestor loggers
 if they are themselves enabled.
 
@@ -89,7 +90,7 @@ control string or in finding a :class:`<logger>` object by name, a
 .. class:: <logging-error>
    :open:
 
-   :superclasses: :drm:`<error>`, <simple-condition>:dylan-extensions:dylan
+   :superclasses: :drm:`<error>`, :class:`<simple-condition>`
 
 
 Log Levels
