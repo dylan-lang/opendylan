@@ -19,7 +19,9 @@ a single module named "logging".
 Quick Start
 -----------
 
-Log to stdout::
+Log to stdout:
+
+.. code-block:: dylan
 
   define constant $log
     = make(<logger>,
@@ -32,7 +34,9 @@ The above results in log lines like this::
 
   12345 INFO [Main Thread] - My-app starting with args blah
 
-Make another logger for debugging server requests::
+Make another logger for debugging server requests:
+
+.. code-block:: dylan
 
   define constant $request-log
     = make(<logger>, name: "my-app.debug.request");
@@ -57,7 +61,9 @@ There are several things to notice about the above setup:
     debug messages to a separate file you could add a target to the
     my-app.debug logger.
 
-Log to a file::
+Log to a file:
+
+.. code-block:: dylan
 
   add-target($log, make(<rolling-file-log-target>,
                         pathname: "/var/log/my-app.log"));
