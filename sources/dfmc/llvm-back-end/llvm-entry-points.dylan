@@ -95,6 +95,7 @@ end class;
 
 // Define an entry point
 // Adjectives:
+//   - singular:       Generate only one instance
 //   - outer:          Called by callers that may not know the exact signature
 //                     (thus requiring the C calling convention)
 //   - variable-arity: Uses varargs
@@ -140,7 +141,8 @@ end macro;
 define macro entry-point-emitter-method
   { entry-point-emitter-method (?parameters) => (?values) ?:body end }
     => { method
-             (?=be :: <llvm-back-end>, ?=num :: <integer>, ?parameters)
+             (?=be :: <llvm-back-end>, ?=num :: false-or(<integer>),
+              ?parameters)
           => (?values)
            ?body
          end }
@@ -165,12 +167,15 @@ end function;
 
 define method llvm-entry-point-function
     (back-end :: <llvm-back-end>, desc :: <llvm-entry-point-descriptor>,
-     count :: <integer>)
+     count :: false-or(<integer>))
  => (function :: <llvm-function>);
+  let mangled-base = raw-mangle(back-end, desc.entry-point-name);
   let mangled-name
-    = format-to-string("%s_%d",
-                       raw-mangle(back-end, desc.entry-point-name),
-                       count);
+    = if (count)
+        format-to-string("%s_%d", mangled-base, count);
+      else
+        mangled-base
+      end if;
   let global-table = back-end.llvm-builder-module.llvm-global-table;
   element(global-table, mangled-name, default: #f)
     | begin
@@ -184,7 +189,7 @@ end method;
 define method make-entry-point-function
     (back-end :: <llvm-back-end>, mangled-name :: <string>,
      descriptor :: <llvm-entry-point-descriptor>,
-     count :: <integer>,
+     count :: false-or(<integer>),
      #key parameter-names :: <simple-object-vector> = #[],
           parameter-types-spec :: <simple-object-vector>,
      #all-keys)
@@ -260,7 +265,7 @@ define method llvm-entry-point-function-type
      descriptor :: <llvm-entry-point-descriptor>,
      required-parameter-type-specs :: <simple-object-vector>,
      parameters-rest? :: <boolean>,
-     count :: <integer>)
+     count :: false-or(<integer>))
  => (type :: <llvm-function-type>);
   local
     method parameter-type (type-name :: <symbol>) => (type :: <llvm-type>);

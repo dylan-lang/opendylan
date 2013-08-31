@@ -135,7 +135,7 @@ end function;
 define function generate-runtime-entry-point
     (be :: <llvm-back-end>, m :: <llvm-module>,
      name :: <symbol>, descriptor :: <llvm-entry-point-descriptor>,
-     count :: <integer>)
+     count :: false-or(<integer>))
  => ();
   // Generate the function definition and add it to the runtime module
   let function = llvm-entry-point-function(be, descriptor, count);
@@ -185,9 +185,13 @@ define function generate-runtime-entry-points
   for (descriptor :: <llvm-entry-point-descriptor>
          keyed-by name :: <symbol>
          in $llvm-entry-point-descriptors)
-    for (count from 0 to 9)
-      generate-runtime-entry-point(be, m, name, descriptor, count);
-    end for;
+    if (member?(#"singular", descriptor.entry-point-attributes))
+      generate-runtime-entry-point(be, m, name, descriptor, #f);
+    else
+      for (count from 0 to 9)
+        generate-runtime-entry-point(be, m, name, descriptor, count);
+      end for;
+    end if;
   end for;
 end function;
 
