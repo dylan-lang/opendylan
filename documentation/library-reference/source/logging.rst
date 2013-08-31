@@ -335,6 +335,13 @@ Loggers
    :parameter logger: An instance of :class:`<logger>`.
    :value name: An instance of :drm:`<string>`.
 
+.. generic-function:: add-target
+
+   :signature: add-target (logger target) => ()
+
+   :parameter logger: An instance of :class:`<logger>`.
+   :parameter target: An instance of :class:`<log-target>`.
+
 .. generic-function:: remove-all-targets
 
    :signature: remove-all-targets (logger) => ()
@@ -365,12 +372,6 @@ Loggers
 Log Targets
 -----------
 
-.. constant:: $null-log-target
-
-.. constant:: $stderr-log-target
-
-.. constant:: $stdout-log-target
-
 .. class:: <log-target>
    :open:
    :abstract:
@@ -378,72 +379,112 @@ Log Targets
    :superclasses: <closable-object>:common-extensions:common-dylan
 
 
+.. class:: <null-log-target>
+
+   :superclasses: <log-target>
+
+   A log target that discards all messages.
+
+
 .. class:: <file-log-target>
 
    :superclasses: <log-target>
 
    :keyword pathname:
+      *(required)* An instance of :class:`<pathname>`.
 
-.. class:: <null-log-target>
+   A log target that logs to a single, monolithic file.  You probably
+   want :class:`<rolling-file-log-target>` instead.
 
-   :superclasses: <log-target>
+.. generic-function:: target-pathname
+
+   :signature: target-pathname (file-log-target) => (pathname)
+
+   :parameter target: An instance of :class:`<file-log-target>`.
+   :value pathname: An instance of :class:`<pathname>`.
+
+.. generic-function:: open-target-stream
+   :open:
+
+   This should not be called except by the logging library itself.
+   Implementers of new log target classes may override it.
+
+   :signature: open-target-stream (target) => (stream)
+
+   :parameter target: An instance of ``<file-log-target>``.
+   :value stream: An instance of :class:`<stream>`.
 
 .. class:: <rolling-file-log-target>
 
    :superclasses: <file-log-target>
 
    :keyword max-size:
+      An :drm:`<integer>`.  The size in bytes at which to roll the file.
+      The default size is 100MB.  Note that the actual size of the file
+      when it rolls may be slightly larger, depending on the size of the
+      last message logged.
    :keyword roll:
+      A :drm:`<boolean>` specifying whether to roll the log file at the
+      time this log target is created, if it already exists and is not
+      empty.
 
 .. class:: <stream-log-target>
    :open:
 
+   A log target that sends all messages to a stream.
+
    :superclasses: <log-target>
 
    :keyword stream:
+      *(required)* An instance of :class:`<stream>`.
 
-.. generic-function:: add-target
+.. generic-function:: target-stream
 
-   :signature: add-target (logger target) => (#rest results)
+   :signature: target-stream (target) => (stream)
 
-   :parameter logger: An instance of :drm:`<object>`.
-   :parameter target: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
+   :parameter target: An instance of :class:`<stream-log-target>`.
+   :value stream: An instance of :class:`<stream>`.
 
+   
 .. generic-function:: log-to-target
    :open:
 
-   :signature: log-to-target (target formatter object #rest args) => (#rest results)
+   This should not be called except by the logging library itself.
+   Implementers of new log target classes may override it.
+
+   :signature: log-to-target (target formatter object #rest args) => ()
 
    :parameter target: An instance of ``<log-target>``.
    :parameter formatter: An instance of ``<log-formatter>``.
    :parameter object: An instance of :drm:`<object>`.
    :parameter #rest args: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
-
-.. generic-function:: target-pathname
-
-   :signature: target-pathname (object) => (#rest results)
-
-   :parameter object: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
-
-.. generic-function:: target-stream
-
-   :signature: target-stream (object) => (#rest results)
-
-   :parameter object: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: write-message
    :open:
 
-   :signature: write-message (target object #rest args) => (#rest results)
+   This should not be called except by the logging library itself.
+   Implementers of new log target classes may override it.
+
+   :signature: write-message (target object #rest args) => ()
 
    :parameter target: An instance of ``<log-target>``.
    :parameter object: An instance of :drm:`<object>`.
    :parameter #rest args: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
+
+.. constant:: $null-log-target
+
+   An predefined instance of :class:`<null-log-target>`.
+
+.. constant:: $stderr-log-target
+
+   An predefined instance of :class:`<stream-log-target>` that sends
+   log messages to ``*standard-error*``.
+
+.. constant:: $stdout-log-target
+
+   An predefined instance of :class:`<stream-log-target>` that sends
+   log messages to ``*standard-output*``.
+
 
 
 Log Formatting
@@ -483,56 +524,15 @@ will be right justified and padded with spaces on the left if needed.
 
 .. constant:: $default-log-formatter
 
-   Formatter used if none is specified.  Has this pattern::
+   Formatter used if none is specified when a :class:`<logger>` is
+   created.  Has this pattern::
 
      "%{date:%Y-%m-%dT%H:%M:%S.%F%z} %-5L [%t] %m"
 
 .. class:: <log-formatter>
    :open:
 
-   :superclasses: <object>:dylan:dylan
+   :superclasses: :drm:`<object>`
 
    :keyword pattern:
-
-.. generic-function:: as-common-logfile-date
-
-   :signature: as-common-logfile-date (date) => (#rest results)
-
-   :parameter date: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
-
-.. function:: current-log-args
-
-   :signature: current-log-args () => (args)
-
-   :value args: An instance of :drm:`<sequence>`.
-
-.. function:: current-log-object
-
-   :signature: current-log-object () => (obj)
-
-   :value obj: An instance of :drm:`<object>`.
-
-.. generic-function:: date-to-stream
-
-   :signature: date-to-stream (stream date) => (#rest results)
-
-   :parameter stream: An instance of :drm:`<object>`.
-   :parameter date: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
-
-.. generic-function:: open-target-stream
-   :open:
-
-   :signature: open-target-stream (target) => (stream)
-
-   :parameter target: An instance of ``<file-log-target>``.
-   :value stream: An instance of ``<stream>:common-extensions:common-dylan``.
-
-.. generic-function:: pattern-to-stream
-
-   :signature: pattern-to-stream (formatter stream) => (#rest results)
-
-   :parameter formatter: An instance of :drm:`<object>`.
-   :parameter stream: An instance of :drm:`<object>`.
-   :value #rest results: An instance of :drm:`<object>`.
+      An instance of :drm:`<string>`.
