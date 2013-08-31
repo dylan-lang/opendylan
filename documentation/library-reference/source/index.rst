@@ -10,6 +10,7 @@ Dylan Library Reference
    common-dylan/index
    collections/index
    io/index
+   logging
    numbers
    network/index
    regular-expressions/index
