@@ -10,11 +10,11 @@ Dylan Library Reference
    common-dylan/index
    collections/index
    io/index
-   logging
+   logging/index
    numbers
    network/index
    regular-expressions/index
-   strings
+   strings/index
    system/index
    c-ffi/index
    win32/index
