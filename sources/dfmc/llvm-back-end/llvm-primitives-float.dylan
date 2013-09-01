@@ -203,7 +203,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
     (low :: <raw-machine-word>, high :: <raw-machine-word>)
  => (f :: <raw-double-float>);
   let full = op--double-integer-merge(be, low, high);
-  let type = llvm-reference-type(be, dylan-value(#"<raw-single-float>"));
+  let type = llvm-reference-type(be, dylan-value(#"<raw-double-float>"));
   ins--sitofp(be, full, type)
 end;
 
