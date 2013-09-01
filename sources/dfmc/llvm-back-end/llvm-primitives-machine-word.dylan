@@ -491,6 +491,18 @@ end;
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-floor/
     (dividend :: <raw-machine-word>, divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
+  // Compute quotient and remainder
+  let div = ins--sdiv(be, dividend, divisor);
+  let rem = ins--srem(be, dividend, divisor);
+
+  // Adjust as necessary for floor/
+  op--machine-word-floor/(be, divisor, div, rem)
+end;
+
+define method op--machine-word-floor/
+    (be :: <llvm-back-end>, divisor :: <llvm-value>,
+     div :: <llvm-value>, rem :: <llvm-value>)
+ => (quotient :: <llvm-value>, remainder :: <llvm-value>);
   // Basic blocks
   let entry               = be.llvm-builder-basic-block;
   let rem-nonzero         = make(<llvm-basic-block>);
@@ -499,9 +511,6 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let decrease            = make(<llvm-basic-block>);
   let return              = make(<llvm-basic-block>);
 
-  // Compute quotient and remainder
-  let div = ins--sdiv(be, dividend, divisor);
-  let rem = ins--srem(be, dividend, divisor);
   let rem-zero? = ins--icmp-eq(be, rem, 0);
   ins--br(be, rem-zero?, return, rem-nonzero);
 
@@ -534,7 +543,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
 		   rem, divisor-negative,
 		   rem, divisor-nonnegative,
 		   0,   entry))
-end;
+end method;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-ceiling/-quotient
     (dividend :: <raw-machine-word>, divisor :: <raw-machine-word>)
@@ -557,6 +566,18 @@ end;
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-ceiling/
     (dividend :: <raw-machine-word>, divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
+  // Compute quotient and remainder
+  let div = ins--sdiv(be, dividend, divisor);
+  let rem = ins--srem(be, dividend, divisor);
+
+  // Adjust for ceiling/
+  op--machine-word-ceiling/(be, divisor, div, rem);
+end;
+
+define method op--machine-word-ceiling/
+    (be :: <llvm-back-end>, divisor :: <llvm-value>,
+     div :: <llvm-value>, rem :: <llvm-value>)
+ => (quotient :: <llvm-value>, remainder :: <llvm-value>);
   // Basic blocks
   let entry               = be.llvm-builder-basic-block;
   let rem-nonzero         = make(<llvm-basic-block>);
@@ -565,9 +586,6 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let increase            = make(<llvm-basic-block>);
   let return              = make(<llvm-basic-block>);
 
-  // Compute quotient and remainder
-  let div = ins--sdiv(be, dividend, divisor);
-  let rem = ins--srem(be, dividend, divisor);
   let rem-zero? = ins--icmp-eq(be, rem, 0);
   ins--br(be, rem-zero?, return, rem-nonzero);
 
@@ -623,6 +641,18 @@ end;
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-round/
     (dividend :: <raw-machine-word>, divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
+  // Compute quotient and remainder
+  let div = ins--sdiv(be, dividend, divisor);
+  let rem = ins--srem(be, dividend, divisor);
+
+  // Adjust for round/
+  op--machine-word-round/(be, divisor, div, rem);
+end;
+
+define method op--machine-word-round/
+    (be :: <llvm-back-end>, divisor :: <llvm-value>,
+     div :: <llvm-value>, rem :: <llvm-value>)
+ => (quotient :: <llvm-value>, remainder :: <llvm-value>);
   // Basic blocks
   let entry               = be.llvm-builder-basic-block;
   let test-case1-a        = make(<llvm-basic-block>);
@@ -636,9 +666,6 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let decrease            = make(<llvm-basic-block>);
   let return              = make(<llvm-basic-block>);
 
-  // Compute quotient and remainder
-  let div = ins--sdiv(be, dividend, divisor);
-  let rem = ins--srem(be, dividend, divisor);
   let divisor-negative? = ins--icmp-slt(be, divisor, 0);
   let neg = ins--sub(be, 0, divisor, no-signed-wrap?: #t);
   let abs-divisor = ins--select(be, divisor-negative?, neg, divisor);
@@ -702,7 +729,7 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
 		   add, decrease,
 		   rem, test-case2-b,
 		   rem, test-case2-a))
-end;
+end method;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-truncate/-quotient
     (dividend :: <raw-machine-word>, divisor :: <raw-machine-word>)
@@ -933,88 +960,122 @@ define sign-extend overflow side-effect-free stateless dynamic-extent &primitive
   product
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-floor/-quotient
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-floor/-quotient
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-floor/-descriptor,
+                     dividend-low, dividend-high, divisor);
+  quotient
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-floor/-remainder
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-floor/-remainder
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-floor/-descriptor,
+                     dividend-low, dividend-high, divisor);
+  remainder
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-floor/
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-floor/
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (div :: <llvm-value>, rem :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-divide-descriptor,
+                     dividend-low, dividend-high, divisor);
+  op--machine-word-floor/(be, divisor, div, rem)
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-ceiling/-quotient
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-ceiling/-quotient
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-ceiling/-descriptor,
+                     dividend-low, dividend-high, divisor);
+  quotient
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-ceiling/-remainder
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-ceiling/-remainder
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-ceiling/-descriptor,
+                     dividend-low, dividend-high, divisor);
+  remainder
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-ceiling/
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-ceiling/
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (div :: <llvm-value>, rem :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-divide-descriptor,
+                     dividend-low, dividend-high, divisor);
+  op--machine-word-ceiling/(be, divisor, div, rem)
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-round/-quotient
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-round/-quotient
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-round/-descriptor,
+                     dividend-low, dividend-high, divisor);
+  quotient
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-round/-remainder
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-round/-remainder
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-round/-descriptor,
+                     dividend-low, dividend-high, divisor);
+  remainder
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-round/
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-round/
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (div :: <llvm-value>, rem :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-divide-descriptor,
+                     dividend-low, dividend-high, divisor);
+  op--machine-word-round/(be, divisor, div, rem)
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-truncate/-quotient
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-truncate/-quotient
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-truncate/-descriptor,
+                     dividend-low, dividend-high, divisor);
+  quotient
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-truncate/-remainder
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-truncate/-remainder
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  let (quotient :: <llvm-value>, remainder :: <llvm-value>)
+    = call-primitive(be, primitive-machine-word-double-truncate/-descriptor,
+                     dividend-low, dividend-high, divisor);
+  remainder
 end;
 
-define side-effect-free stateless dynamic-extent &unimplemented-primitive-descriptor primitive-machine-word-double-truncate/
+define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-truncate/
     (dividend-low :: <raw-machine-word>, dividend-high :: <raw-machine-word>,
      divisor :: <raw-machine-word>)
  => (quotient :: <raw-machine-word>, remainder :: <raw-machine-word>);
-  //---*** Fill this in...
+  call-primitive(be, primitive-machine-word-double-divide-descriptor,
+                 dividend-low, dividend-high, divisor)
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-double-divide-quotient
