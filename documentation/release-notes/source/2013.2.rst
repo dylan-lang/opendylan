@@ -71,10 +71,17 @@ file.
 A new method ``force-out`` has been added to the ``format-out`` module.
 This method allows avoiding to import the ``streams`` and ``standard-io`` modules when all you want is to flush the stream corresponding to ``format-out``.
 
+logging
+^^^^^^^
+
+The logging library is now part of Open Dylan.  This means it is no
+longer necessary to add it as a git submodule in your project's
+sources and set up a registry entry in order to use it.
+
 network
 ^^^^^^^
 
-The bindings ``$local-host`` and ``$loopback-address`` are removed. The function ``local-host-name`` is now provided which returns the host name.
+The bindings ``$local-host`` and ``$loopback-address`` have been removed. The function ``local-host-name`` is now provided which returns the host name.
 The main reason for this change was ongoing confusion by the way the network library initialized itself (calling ``gethostname`` and passing its result to ``gethostbyname``, which does not work on all computers).
 
 System
@@ -92,8 +99,8 @@ Bug Fixes
 I/O
 ---
 
-Several cases of missing locking where fixed in the ``io`` library.
+Several cases of missing locking were fixed in the ``io`` library.
 The added locking may cause changes in performance.
-If you encounter this you can mitigate by disabling locking on affected streams.
+If you encounter this you can mitigate it by disabling locking on affected streams.
 We are considering a switch to an opt-in locking scheme to improve performance.
 
