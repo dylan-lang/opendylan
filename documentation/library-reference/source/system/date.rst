@@ -629,7 +629,7 @@ methods that are defined on +.
    See also
 
    - :func:`as-iso8601-string`
-   - `<day-of-week>`_
+   - :class:`<day-of-week>`
 
 .. function:: date-day
 
@@ -682,7 +682,7 @@ methods that are defined on +.
    - :func:`date-microseconds`
    - :func:`date-time-zone-offset`
    - :func:`date-day`
-   - `<day-of-week>`_
+   - :class:`<day-of-week>`
 
 .. function:: date-hours
 
@@ -900,30 +900,20 @@ methods that are defined on +.
    - :func:`date-time-zone-offset`
    - :func:`date-day-of-week`
 
-<day-of-week>
-^^^^^^^^^^^^~
+:: todo Make this a type.
 
-Type
+.. class:: <day-of-week>
 
    The days of the week.
-
-Equivalent
-
-one-of(#"Sunday", #"Monday", #"Tuesday", #"Wednesday",
- #"Thursday", #"Friday", #"Saturday")
-
-Supertypes
-
-None.
-
-Init-keywords
-
--  None.
 
    :description:
 
      The days of the week. This is the type of the return value of the
      :func:`date-day-of-week` function.
+
+     .. code-block:: dylan
+
+        one-of(#"Sunday", #"Monday", #"Tuesday", #"Wednesday", #"Thursday", #"Friday", #"Saturday")
 
    :operations:
 
