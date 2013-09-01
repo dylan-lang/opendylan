@@ -510,7 +510,7 @@ format directives:
 Short  Long         Description
 =====  ===========  ===================================================
 %d     %{date:fmt}  Current date.  In the long form, fmt is any string
-                    acceptable as the first argument to format-date.
+                    acceptable as the first argument to :func:`format-date`.
 %l     %{level}     Log level.  e.g., INFO, DEBUG, ERROR, etc
 %m     %{message}   Log message, as passed to log-info, log-debug etc.,
                     with format arguments already interpolated.
