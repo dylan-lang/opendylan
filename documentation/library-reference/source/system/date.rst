@@ -231,6 +231,8 @@ function :func:`as-iso8601-string`.
 Dates can also be returned in RFC-822 and RFC-1123 formats with the
 :func:`as-rfc822-string` and :func:`as-rfc1123-string` functions.
 
+More flexible date formatting is available with :func:`format-date`.
+
 The date module
 ---------------
 
@@ -549,11 +551,18 @@ methods that are defined on +.
      however, accepts ISO 8601 strings with other time zone
      specifications.
 
+     This is the same as calling:
+
+     .. code-block:: dylan
+
+        format-date("%Y-%m-%dT%H:%M:%S%:z", date);
+
    See also
 
    - :class:`<date>`
    - :func:`as-rfc822-string`
    - :func:`as-rfc1123-string`
+   - :func:`format-date`
 
 .. function:: as-rfc822-string
 
@@ -571,11 +580,18 @@ methods that are defined on +.
 
         Sun, 01 Sep 13 17:00:00 GMT
 
+     This is the same as calling:
+
+     .. code-block:: dylan
+
+        format-date("%a, %d %b %y %H:%M:%S %z", date);
+
    See also
 
    - :class:`<date>`
    - :func:`as-rfc1123-string`
    - :func:`as-iso8601-string`
+   - :func:`format-date`
 
 .. function:: as-rfc1123-string
 
@@ -594,6 +610,12 @@ methods that are defined on +.
 
         Sun, 01 Sep 2013 17:00:00 GMT
 
+     This is the same as calling:
+
+     .. code-block:: dylan
+
+        format-date("%a, %d %b %Y %H:%M:%S %z", date);
+
      This format is commonly used in email, HTTP headers,
      RSS feeds and other protocols where date representations
      are used.
@@ -603,6 +625,7 @@ methods that are defined on +.
    - :class:`<date>`
    - :func:`as-rfc822-string`
    - :func:`as-iso8601-string`
+   - :func:`format-date`
 
 .. function:: current-date
 
@@ -1233,6 +1256,50 @@ methods that are defined on +.
 
    - :gf:`decode-duration`
    - :func:`encode-day/time-duration`
+
+.. function:: format-date
+
+   Formats a date according to a format string.
+
+   :signature: format-date *format* *date* => *formatted-date*
+
+   :parameter format: An instance of :drm:`<string>`.
+   :parameter date: An instance of :class:`<date>`.
+   :value formatted-date: An instance of :drm:`<string>`.
+
+   :description:
+
+     ``format-date`` interprets a control string, ``format``,
+     to create a string representing the ``date``.
+
+     The control string can contain these directives:
+
+     - ``%Y`` - The year.
+     - ``%y`` - The year, in 2 digit form.
+     - ``%H`` - Hours, zero padded.
+     - ``%k`` - Hours, space padded.
+     - ``%M`` - Minutes, zero padded.
+     - ``%S`` - Seconds, zero padded.
+     - ``%f`` - Microseconds, 6 digits.
+     - ``%F`` - Milliseconds, 3 digits.
+     - ``%T`` - Time, each component zero padded.
+     - ``%m`` - Month in numeric form, zero padded.
+     - ``%d`` - Day of the month, zero padded.
+     - ``%e`` - Day of the month, space padded.
+     - ``%A`` - Name of the day of the week.
+     - ``%a`` - Short name of the day of the week.
+     - ``%B`` - Name of the month.
+     - ``%b`` - Short name of the month.
+     - ``%z`` - Time zone offset.
+     - ``%:z`` - Time zone offset, but using ``:`` between hours and minutes.
+     - ``%n`` - A new line.
+     - ``%%`` - A % character.
+
+   See also
+
+   - :func:`as-rfc822-string`
+   - :func:`as-rfc1123-string`
+   - :func:`as-iso8601-string`
 
 .. function:: local-daylight-savings-time?
 
