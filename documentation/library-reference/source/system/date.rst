@@ -222,8 +222,14 @@ the reference entries of each function. See also the function
 :func:`date-time-zone-offset-setter`, which allows you to set
 the time-zone offset of a ``<date>`` explicitly.
 
+Formatting Dates
+----------------
+
 To return an ISO 8601 format date from a ``<date>`` object, use the
 function :func:`as-iso8601-string`.
+
+Dates can also be returned in RFC-822 and RFC-1123 formats with the
+:func:`as-rfc822-string` and :func:`as-rfc1123-string` functions.
 
 The date module
 ---------------
@@ -526,7 +532,7 @@ methods that are defined on +.
 
    :signature: as-iso8601-string *date* #key *precision* => *iso8601-string*
 
-   :paramter date: An instance of :class:`<date>`.
+   :parameter date: An instance of :class:`<date>`.
    :parameter precision: An instance of :drm:`<integer>`. Default value: 0.
    :value iso8601-string: An instance of :drm:`<string>`.
 
@@ -546,6 +552,57 @@ methods that are defined on +.
    See also
 
    - :class:`<date>`
+   - :func:`as-rfc822-string`
+   - :func:`as-rfc1123-string`
+
+.. function:: as-rfc822-string
+
+   Returns a string representation of a date, conforming to
+   `RFC 822 <http://www.w3.org/Protocols/rfc822/#z28>`_.
+
+   :signature: as-rfc822-string *date* => *rfc822-string*
+
+   :parameter date: An instance of :class:`<date>`.
+   :value rfc822-string: An instance of :drm:`<string>`.
+
+   :description:
+
+     An example in this format is::
+
+        Sun, 01 Sep 13 17:00:00 GMT
+
+   See also
+
+   - :class:`<date>`
+   - :func:`as-rfc1123-string`
+   - :func:`as-iso8601-string`
+
+.. function:: as-rfc1123-string
+
+   Returns a string representation of a date, conforming to
+   `RFC 1123 <http://www.faqs.org/rfcs/rfc1123.html>`_.
+
+   :signature: as-rfc1123-string *date* => *rfc1123-string*
+
+   :parameter date: An instance of :class:`<date>`.
+   :value rfc1123-string: An instance of :drm:`<string>`.
+
+   :description:
+
+     The date format for RFC-1123 is the same as for RFC-822
+     except that the year must be 4 digits rather than 2::
+
+        Sun, 01 Sep 2013 17:00:00 GMT
+
+     This format is commonly used in email, HTTP headers,
+     RSS feeds and other protocols where date representations
+     are used.
+
+   See also
+
+   - :class:`<date>`
+   - :func:`as-rfc822-string`
+   - :func:`as-iso8601-string`
 
 .. function:: current-date
 
@@ -613,6 +670,8 @@ methods that are defined on +.
      - :meth:`+ <+(<date>)>`
      - :meth:`- <-(<date>)>`
      - :func:`as-iso8601-string`
+     - :func:`as-rfc822-string`
+     - :func:`as-rfc1123-string`
      - :func:`current-date`
      - :func:`date-day`
      - :func:`date-day-of-week`
@@ -629,6 +688,8 @@ methods that are defined on +.
    See also
 
    - :func:`as-iso8601-string`
+   - :func:`as-rfc822-string`
+   - :func:`as-rfc1123-string`
    - :class:`<day-of-week>`
 
 .. function:: date-day
