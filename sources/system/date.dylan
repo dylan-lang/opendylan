@@ -16,13 +16,13 @@ define class <date> (<number>)
   slot date-minutes :: <integer> = 0, init-keyword: minutes:;
   slot date-seconds :: <integer> = 0, init-keyword: seconds:;
   slot date-microseconds :: <integer> = 0, init-keyword: microseconds:;
-  slot date-time-zone-offset :: <integer> = 0, init-keyword: time-zone-offset:, 
-					       setter: %date-time-zone-offset-setter;
+  slot date-time-zone-offset :: <integer> = 0, init-keyword: time-zone-offset:,
+                                               setter: %date-time-zone-offset-setter;
 end class <date>;
 
 define method make (class == <date>, #rest init-keywords,
                                      #key iso8601-string :: false-or(<string>) = #f,
-		                          native-clock = #f,
+                                          native-clock = #f,
                                      #all-keys)
  => (date :: <date>)
   if (iso8601-string)
@@ -41,16 +41,16 @@ define method initialize (date :: <date>, #key, #all-keys) => (#rest objects)
     error("Either year, month, and day or an ISO 8601 string must be given to make(<date>)")
   end;
   local method validate (value, low, high, inclusive?, name, replacement)
-	 => (ok? :: <boolean>)
-	  if (value < low | if (inclusive?) value > high else value >= high end)
-	    cerror(replacement,
-		   "A date's %s must be between %d, inclusive, and %d, %s (was: %=)",
-		   name, low, high, if (inclusive?) "inclusive" else "exclusive" end, value);
-	    #f
-	  else
-	    #t
-	  end
-	end method validate;
+         => (ok? :: <boolean>)
+          if (value < low | if (inclusive?) value > high else value >= high end)
+            cerror(replacement,
+                   "A date's %s must be between %d, inclusive, and %d, %s (was: %=)",
+                   name, low, high, if (inclusive?) "inclusive" else "exclusive" end, value);
+            #f
+          else
+            #t
+          end
+        end method validate;
   unless (validate(date-year(date), 1800, 2200, #f, "year", "Use the current year"))
     date-year(date) := date-year(current-date())
   end;
@@ -58,7 +58,7 @@ define method initialize (date :: <date>, #key, #all-keys) => (#rest objects)
     date-month(date) := date-month(current-date())
   end;
   unless (validate(date-day(date), 1, days-in-month(date-year(date), date-month(date)),
-		   #t, "day of the month", "Use day 1 (one)"))
+                   #t, "day of the month", "Use day 1 (one)"))
     date-day(date) := 1
   end;
   unless (validate(date-hours(date), 0, 24, #f, "hour of the day", "Use midnight"))
@@ -74,21 +74,21 @@ define method initialize (date :: <date>, #key, #all-keys) => (#rest objects)
     date-microseconds(date) := 0
   end;
   unless (validate(date-time-zone-offset(date), -24 * 60, 24 * 60, #t,
-		   "time zone offset", "Use the local time zone offset"))
+                   "time zone offset", "Use the local time zone offset"))
     date-time-zone-offset(date) := local-time-zone-offset()
   end;
   date
 end method initialize;
 
 define method date-universal-date (date :: <date>) => (ut :: <integer>)
-  %universal-date(date) | begin 
+  %universal-date(date) | begin
                             update-date-universal-slots(date);
                             %universal-date(date)
                           end
 end method date-universal-date;
 
 define method date-universal-time (date :: <date>) => (ut :: <integer>)
-  %universal-time(date) | begin 
+  %universal-time(date) | begin
                             update-date-universal-slots(date);
                             %universal-time(date)
                           end
@@ -139,20 +139,20 @@ define inline function canonicalize-date (date :: <date>) => (date :: <date>)
   //
   while (date-day(date) > days-in-month(date-year(date), date-month(date)))
     date-day(date) := date-day(date) - days-in-month(date-year(date), date-month(date));
-    date-month(date) := if (date-month(date) = 12) 
-			   date-year(date) := date-year(date) + 1;
-			   1
-			 else
-			   date-month(date) + 1 
-			 end
+    date-month(date) := if (date-month(date) = 12)
+                           date-year(date) := date-year(date) + 1;
+                           1
+                         else
+                           date-month(date) + 1
+                         end
   end;
   while (date-day(date) < 1)
     date-month(date) := if (date-month(date) = 1)
-			   date-year(date) := date-year(date) - 1;
-			   12
-			 else
-			   date-month(date) - 1 
-			end;
+                           date-year(date) := date-year(date) - 1;
+                           12
+                         else
+                           date-month(date) - 1
+                        end;
     date-day(date) := date-day(date) + days-in-month(date-year(date), date-month(date))
   end;
   date
@@ -163,12 +163,12 @@ define constant $month-names
       "July", "August", "September", "October", "November", "December"];
 
 define constant <day-of-week> = one-of(#"Sunday", #"Monday", #"Tuesday", #"Wednesday",
-				       #"Thursday", #"Friday", #"Saturday");
+                                       #"Thursday", #"Friday", #"Saturday");
 
-define constant $dow-Jan-1-1900-offset = 1;	// 1900/1/1 is a Monday
+define constant $dow-Jan-1-1900-offset = 1;        // 1900/1/1 is a Monday
 
 define constant $days-of-week = #[#"Sunday", #"Monday", #"Tuesday", #"Wednesday",
-				  #"Thursday", #"Friday", #"Saturday"];
+                                  #"Thursday", #"Friday", #"Saturday"];
 
 define function date-day-of-week (date :: <date>) => (dow :: <day-of-week>)
   let days = days-since-1900(date-year(date), date-month(date), date-day(date));
@@ -191,7 +191,7 @@ define method update-date-universal-slots (date :: <date>) => ()
   let (ud, ut) = compute-universal-time(date-year(date), date-month(date),
                                         date-day(date), date-hours(date),
                                         date-minutes(date), date-seconds(date),
-					date-time-zone-offset(date));
+                                        date-time-zone-offset(date));
   %universal-date(date) := ud;
   %universal-time(date) := ut;
 end method update-date-universal-slots;
@@ -225,30 +225,30 @@ define function days-since-1900 (year :: <integer>, month :: <integer>, day :: <
  => (days :: <integer>)
   if (year < 1900)
     (day
-       - 1		 		// Account for the day itself
+       - 1                                 // Account for the day itself
        - days-in-month(year, month)
        - if (leap-year?(year) & month < 2)
-	   1				// In a leap year, count leap day but only in ...
-	 else				// ... January as days-in-month handles February
-	   0
-	 end
+           1                                // In a leap year, count leap day but only in ...
+         else                                // ... January as days-in-month handles February
+           0
+         end
        - reduce1(\+, copy-sequence($month-days, start: month + 1))
-       - 365 * (1899 - year))		// Normal days in all years after this year
-      - truncate/(1899 - year, 4)	// Leap days after this year
-      + truncate/(1899 - year, 100)	// ... excluding centuries
-      - truncate/(1899 + 100 - year, 400)	// ... but including mod 400 centuries
+       - 365 * (1899 - year))                // Normal days in all years after this year
+      - truncate/(1899 - year, 4)        // Leap days after this year
+      + truncate/(1899 - year, 100)        // ... excluding centuries
+      - truncate/(1899 + 100 - year, 400)        // ... but including mod 400 centuries
   else
     day
       + if (leap-year?(year) & month > 2)
-	  0				// In a leap year, count Februrary 29th
-	else
-	  -1				// Normal year or before the 29th
-	end
+          0                                // In a leap year, count Februrary 29th
+        else
+          -1                                // Normal year or before the 29th
+        end
       + reduce1(\+, copy-sequence($month-days, end: month))
-      + 365 * (year - 1900)		// Normal days in all years before this year
-      + truncate/(year - 1901, 4)	// Leap days before this year
-      - truncate/(year - 1901, 100)	// ... excluding centuries
-      + truncate/(year - 1901 + 300, 400)	// ... but including mod 400 centuries
+      + 365 * (year - 1900)                // Normal days in all years before this year
+      + truncate/(year - 1901, 4)        // Leap days before this year
+      - truncate/(year - 1901, 100)        // ... excluding centuries
+      + truncate/(year - 1901 + 300, 400)        // ... but including mod 400 centuries
   end
 end function days-since-1900;
 
@@ -262,7 +262,7 @@ define method compute-universal-time
   // Now adjust the time (and, possibly the date) to account for the time zone
   let tzs = 60 * time-zone-offset;
   let (date-offset, time-offset) = floor/(tzs, 86400);
-  ut := ut - time-offset;		// Converting from local time to UTC
+  ut := ut - time-offset;                // Converting from local time to UTC
   ud := ud - date-offset;
   unless (-1 < ut & ut < 86400)
     let (date-offset, new-ut) = floor/(ut, 86400);
@@ -276,15 +276,15 @@ end method compute-universal-time;
 
 /// Some convenience functions ...
 
-define inline function encode-date 
+define inline function encode-date
     (year :: <integer>, month :: <integer>, day :: <integer>, hours :: <integer>,
-     minutes :: <integer>, seconds :: <integer>, 
+     minutes :: <integer>, seconds :: <integer>,
      #key microseconds :: <integer> = 0,
-	  time-zone-offset :: <integer> = local-time-zone-offset())
+          time-zone-offset :: <integer> = local-time-zone-offset())
  => (date :: <date>)
-  make(<date>, year: year, month: month, day: day, 
-	       hours: hours, minutes: minutes, seconds: seconds, 
-	       microseconds: microseconds, time-zone-offset: time-zone-offset)
+  make(<date>, year: year, month: month, day: day,
+               hours: hours, minutes: minutes, seconds: seconds,
+               microseconds: microseconds, time-zone-offset: time-zone-offset)
 end function encode-date;
 
 define inline function decode-date (date :: <date>)
@@ -292,15 +292,15 @@ define inline function decode-date (date :: <date>)
      minutes :: <integer>, seconds :: <integer>, day-of-week :: <day-of-week>,
      time-zone-offset :: <integer>)
   values(date-year(date), date-month(date), date-day(date), date-hours(date),
-	 date-minutes(date), date-seconds(date), date-day-of-week(date),
-	 date-time-zone-offset(date))
+         date-minutes(date), date-seconds(date), date-day-of-week(date),
+         date-time-zone-offset(date))
 end function decode-date;
 
 define function clone-date (date :: <date>) => (date :: <date>)
   encode-date(date-year(date), date-month(date), date-day(date),
-	      date-hours(date), date-minutes(date), date-seconds(date),
-	      microseconds: date-microseconds(date),
-	      time-zone-offset: date-time-zone-offset(date))
+              date-hours(date), date-minutes(date), date-seconds(date),
+              microseconds: date-microseconds(date),
+              time-zone-offset: date-time-zone-offset(date))
 end function clone-date;
 
 ///
@@ -365,9 +365,9 @@ define method format-date (format :: <string>, date :: <date>)
         'S' => wrap("0", seconds);
         'f' => format-integer(date.date-microseconds, 6);
         'F' => format-integer(round/(date.date-microseconds, 1000), 3);
-	'T' => concatenate(wrap("0", hours), ":",
+        'T' => concatenate(wrap("0", hours), ":",
                            wrap("0", minutes), ":",
-			   wrap("0", seconds));
+                           wrap("0", seconds));
         'm' => wrap("0", month);
         'd' => wrap("0", day);
         'e' => wrap(" ", day);
@@ -376,7 +376,7 @@ define method format-date (format :: <string>, date :: <date>)
         'B' => *month-names*[month - 1];
         'b' => *short-month-names*[month - 1];
         'z' => concatenate(if (negative?(time-zone-offset))
-                  "-" else "+" 
+                  "-" else "+"
                 end if, wrap("0", floor/(absolute-time-zone-offset, 60)),
                 if (use-dots?) ":" else "" end if,
                 wrap("0", modulo(absolute-time-zone-offset, 60)));
@@ -427,7 +427,7 @@ define method parse-date-string (date :: <string>, format :: <string>)
             end if;
           end for;
         end block;
-    end; 
+    end;
 
   for (char in format)
     if (char = '%' & ~ format?)
@@ -437,7 +437,7 @@ define method parse-date-string (date :: <string>, format :: <string>)
     elseif (format?)
       select (char)
         'Y' => date.date-year := string-to-integer(read(date-stream, 4));
-        'y' => date.date-year := begin 
+        'y' => date.date-year := begin
                   let year = string-to-integer(read(date-stream, 2));
                   if (year > 70) 1900 else 2000 end if + year;
                 end;

@@ -20,7 +20,7 @@ define abstract class <duration> (<number>)
   slot %duration-microseconds :: <integer> = 0;
 end class <duration>;
 
-define class <year/month-duration> (<duration>) 
+define class <year/month-duration> (<duration>)
 end class <year/month-duration>;
 
 define class <day/time-duration> (<duration>)
@@ -39,44 +39,44 @@ define sealed domain \* (<real>, <duration>);
 define sealed domain \/ (<duration>, <real>);
 
 define method make (class == <duration>, #rest init-keywords,
-					 #key years :: false-or(<integer>) = #f,
-					      months :: false-or(<integer>) = #f,
-					      days :: false-or(<integer>) = #f,
-					      hours :: false-or(<integer>) = #f,
-					      minutes :: false-or(<integer>) = #f,
-					      seconds :: false-or(<integer>) = #f,
-					      microseconds :: false-or(<integer>) = #f,
-					 #all-keys)
+                                         #key years :: false-or(<integer>) = #f,
+                                              months :: false-or(<integer>) = #f,
+                                              days :: false-or(<integer>) = #f,
+                                              hours :: false-or(<integer>) = #f,
+                                              minutes :: false-or(<integer>) = #f,
+                                              seconds :: false-or(<integer>) = #f,
+                                              microseconds :: false-or(<integer>) = #f,
+                                         #all-keys)
  => (duration :: <duration>)
   case
     years | months =>
       if (days | hours | minutes | seconds | microseconds)
-	error("Can't make(<duration>) with both years/months and days/hours/minutes/seconds")
+        error("Can't make(<duration>) with both years/months and days/hours/minutes/seconds")
       end;
       apply(make, <year/month-duration>, init-keywords);
     days | hours | minutes | seconds | microseconds =>
       apply(make, <day/time-duration>, init-keywords);
     otherwise =>
       error
-	("Either years/months or days/hours/minutes/seconds must be given to make(<duration>)"
-	   )
+        ("Either years/months or days/hours/minutes/seconds must be given to make(<duration>)"
+           )
   end
 end method make;
 
 define method initialize (duration :: <year/month-duration>, #key years :: <integer> = 0,
-								  months :: <integer> = 0,
-							     #all-keys)
+                                                                  months :: <integer> = 0,
+                                                             #all-keys)
  => (#rest objects)
   %duration-months(duration) := 12 * years + months;
   duration
 end method initialize;
 
 define method initialize (duration :: <day/time-duration>, #key days :: <integer> = 0,
-								hours :: <integer> = 0,
-								minutes :: <integer> = 0,
-								seconds :: <integer> = 0,
-								microseconds :: <integer> = 0,
-							   #all-keys)
+                                                                hours :: <integer> = 0,
+                                                                minutes :: <integer> = 0,
+                                                                seconds :: <integer> = 0,
+                                                                microseconds :: <integer> = 0,
+                                                           #all-keys)
  => (#rest objects)
   %duration-days(duration) := days;
   %duration-seconds(duration) := seconds + 60 * (minutes + 60 * hours);
@@ -95,8 +95,8 @@ end method clone-duration;
 define sealed inline method clone-duration (duration :: <day/time-duration>)
  => (new :: <day/time-duration>)
   make(<day/time-duration>, days: %duration-days(duration),
-			    seconds: %duration-seconds(duration),
-			    microseconds: %duration-microseconds(duration))
+                            seconds: %duration-seconds(duration),
+                            microseconds: %duration-microseconds(duration))
 end method clone-duration;
 
 /// Ensure that all fields of a <duration> have proper, canonical values by adjusting
@@ -105,7 +105,7 @@ end method clone-duration;
 define inline function canonicalize-duration (duration :: <duration>)
  => (duration :: <duration>)
   unless (-1000000 < %duration-microseconds(duration)
-	    & %duration-microseconds(duration) < 1000000)
+            & %duration-microseconds(duration) < 1000000)
     let (seconds-change, new-microsecs) = floor/(%duration-microseconds(duration), 1000000);
     %duration-microseconds(duration) := new-microsecs;
     %duration-seconds(duration) := %duration-seconds(duration) + seconds-change
@@ -116,21 +116,21 @@ define inline function canonicalize-duration (duration :: <duration>)
     %duration-days(duration) := %duration-days(duration) + days-change
   end;
   unless (negative?(%duration-seconds(duration)) = negative?(%duration-days(duration))
-	    | zero?(%duration-seconds(duration)) | zero?(%duration-days(duration)))
+            | zero?(%duration-seconds(duration)) | zero?(%duration-days(duration)))
     let negative-seconds? :: <boolean> = negative?(%duration-seconds(duration));
     %duration-days(duration)
       := %duration-days(duration) + if (negative-seconds?) -1 else 1 end;
-    %duration-seconds(duration) 
+    %duration-seconds(duration)
       := %duration-seconds(duration) + if (negative-seconds?) 86400 else -86400 end
   end;
   unless (negative?(%duration-microseconds(duration)) = negative?(%duration-seconds(duration))
-	    | zero?(%duration-microseconds(duration)) | zero?(%duration-seconds(duration)))
+            | zero?(%duration-microseconds(duration)) | zero?(%duration-seconds(duration)))
     let negative-microseconds? :: <boolean> = negative?(%duration-microseconds(duration));
     %duration-seconds(duration)
       := %duration-seconds(duration) + if (negative-microseconds?) -1 else 1 end;
-    %duration-microseconds(duration) 
+    %duration-microseconds(duration)
       := %duration-microseconds(duration) + if (negative-microseconds?) 1000000
-					    else -1000000 end
+                                            else -1000000 end
   end;
   duration
 end function canonicalize-duration;
@@ -151,12 +151,12 @@ define class <date-arithmetic-invalid-day> (<date-arithmetic-error>)
   required keyword day:;
 end class <date-arithmetic-invalid-day>;
 
-define sealed method condition-to-string (condition :: <date-arithmetic-invalid-day>) 
+define sealed method condition-to-string (condition :: <date-arithmetic-invalid-day>)
  => (description :: <string>)
   format-to-string("%s, %d does not have %d days",
-		   $month-names[dae-month(condition) - 1], 
-		   dae-year(condition),
-		   dae-day(condition))
+                   $month-names[dae-month(condition) - 1],
+                   dae-year(condition),
+                   dae-day(condition))
 end method condition-to-string;
 
 define sealed method return-allowed? (condition :: <date-arithmetic-invalid-day>)
@@ -169,16 +169,16 @@ end class <date-arithmetic-use-last-valid-day>;
 
 define sealed method condition-to-string (condition :: <date-arithmetic-use-last-valid-day>)
  => (description :: <string>)
-  format-to-string("Use %s %d, %d", 
-		   $month-names[dae-month(condition) - 1], 
-		   days-in-month(dae-year(condition), dae-month(condition)),
-		   dae-year(condition))
+  format-to-string("Use %s %d, %d",
+                   $month-names[dae-month(condition) - 1],
+                   days-in-month(dae-year(condition), dae-month(condition)),
+                   dae-year(condition))
 end method condition-to-string;
 
 define sealed method return-description (condition :: <date-arithmetic-invalid-day>)
  => (description :: <date-arithmetic-use-last-valid-day>)
   make(<date-arithmetic-use-last-valid-day>, year: dae-year(condition),
-					     month: dae-month(condition))
+                                             month: dae-month(condition))
 end method return-description;
 
 
@@ -194,7 +194,7 @@ define inline function encode-day/time-duration
      seconds :: <integer>, microseconds :: <integer>)
  => (duration :: <day/time-duration>)
   make(<day/time-duration>, days: days, hours: hours, minutes: minutes,
-			    seconds: seconds, microseconds: microseconds)
+                            seconds: seconds, microseconds: microseconds)
 end function encode-day/time-duration;
 
 define sealed generic decode-duration (duration :: <duration>)
@@ -206,7 +206,7 @@ define sealed method decode-duration (duration :: <year/month-duration>)
 end method decode-duration;
 
 define sealed method decode-duration (duration :: <day/time-duration>)
- => (days :: <integer>, hours :: <integer>, minutes :: <integer>, 
+ => (days :: <integer>, hours :: <integer>, minutes :: <integer>,
      seconds :: <integer>, microseconds :: <integer>)
   let (minutes, seconds) = truncate/(%duration-seconds(duration), 60);
   let (hours, minutes) = truncate/(minutes, 60);
@@ -230,8 +230,8 @@ define sealed method \< (x :: <day/time-duration>, y :: <day/time-duration>)
   %duration-days(x) < %duration-days(y)
   | (%duration-days(x) = %duration-days(y)
        & (%duration-seconds(x) < %duration-seconds(y)
-	    | (%duration-seconds(x) = %duration-seconds(y)
-		 & %duration-microseconds(x) < %duration-microseconds(y))))
+            | (%duration-seconds(x) = %duration-seconds(y)
+                 & %duration-microseconds(x) < %duration-microseconds(y))))
 end method \<;
 
 /// Ensure that a <date>'s month and year have proper, canonical values by adjusting
@@ -248,10 +248,10 @@ define inline function canonicalize-date-month-year (date :: <date>) => (date ::
   unless (date-day(date) <= days-in-month(date-year(date), date-month(date)))
     block ()
       signal(make(<date-arithmetic-invalid-day>, year: date-year(date),
-						 month: date-month(date),
-						 day: date-day(date)));
-    exception(<date-arithmetic-use-last-valid-day>, 
-	      init-arguments: vector(year: date-year(date), month: date-month(date)))
+                                                 month: date-month(date),
+                                                 day: date-day(date)));
+    exception(<date-arithmetic-use-last-valid-day>,
+              init-arguments: vector(year: date-year(date), month: date-month(date)))
       date-day(date) := days-in-month(date-year(date), date-month(date))
     end;
   end;
@@ -279,8 +279,8 @@ end method \+;
 
 define sealed method \- (x :: <date>, y :: <date>) => (duration :: <day/time-duration>)
   make(<day/time-duration>, days: date-universal-date(x) - date-universal-date(y),
-			    seconds: date-universal-time(x) - date-universal-time(y),
-			    microseconds: date-microseconds(x) - date-microseconds(y))
+                            seconds: date-universal-time(x) - date-universal-time(y),
+                            microseconds: date-microseconds(x) - date-microseconds(y))
 end method \-;
 
 define sealed method \- (x :: <date>, y :: <duration>) => (date :: <date>)
