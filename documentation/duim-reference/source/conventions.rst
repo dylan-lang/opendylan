@@ -10,7 +10,8 @@ Audience, goals, and purpose
 
 This manual is intended for programmers using DUIM, and forms a complete
 reference for the Application Programmer’s Interface (API) for DUIM. You
-should also see *Building Applications using DUIM* for a description of
+should also see `Building Applications using DUIM
+<http://opendylan.org/documentation/building-with-duim/>`_ for a description of
 how to start building applications using DUIM. At some points, the API
 also includes lower-level layers, which DUIM programmers are free to
 specialize.
@@ -51,32 +52,32 @@ chapter of this manual indicates what module its API is exported from.
 The *duim* module is the main API module, which contains the variables
 for the API-level functions available.
 
-The *duim-geometry* module provides basic support for coordinate
+The :doc:`geom` module provides basic support for coordinate
 geometry. This allows the position of elements in a window object to be
 determined correctly.
 
-The *duim-extended-geometry* module provides more extensive support for
+The :doc:`ext-geom` module provides more extensive support for
 co-ordinate geometry that is only required for more specialist uses.
 
-The *duim-dcs* module provides color support to the DUIM library.
+The :doc:`dcs` module provides color support to the DUIM library.
 
-The *duim-sheets* module provides basic support for sheets. Sheets are
+The :doc:`silica` module provides basic support for sheets. Sheets are
 the basic unit of window applications, and can be nested hierarchically
 to build up a complete user interface.
 
-The *duim-graphics* module provides support for graphics drawing
+The :doc:`graphics` module provides support for graphics drawing
 
-The *duim-layouts* module provides support for a layout protocol that
+The :doc:`layouts` module provides support for a layout protocol that
 makes it easy to create and layout groups of related elements in a given
 interface. This module can handle layout problems such as the spacing
 and justification of a group of elements automatically.
 
-The *duim-gadgets* module provides all the gadgets available for use in
+The :doc:`gadgets` module provides all the gadgets available for use in
 the DUIM library. Gadgets are the sheet objects that make up any user
 interface, and the DUIM library supplies all the gadgets you will need
 in your applications.
 
-The *duim-frames* module provides support for frames. A DUIM frame is a
+The :doc:`frames` module provides support for frames. A DUIM frame is a
 combination of a set of nested sheets, together with an event loop that
 describes the behavior of the elements in those sheets. DUIM frames can
 be used to specify whether a given user interface is displayed in an
@@ -99,7 +100,7 @@ arguments take a pair of arguments that correspond to the *x* and *y*
 coordinates of the point.
 
 Functions that take structured point arguments, or return structured
-point values have an asterisk in their name, for example, *draw-line\**
+point values have an asterisk in their name, for example, ``draw-line*``
 .
 
 Immutability of objects
