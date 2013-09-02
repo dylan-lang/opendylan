@@ -64,15 +64,15 @@ The <region> class and its subclasses
    The:class:`<region>` class includes both bounded regions (that is, regions
    whose edges are known) and unbounded regions (that is, regions with
    no known edges).
--  *<region-set>* This class represents a region set, that is, a set of
+-  :class:`<region-set>` This class represents a region set, that is, a set of
    regions.
--  *<point>* This class is used to represent mathematical points (that
+-  :class:`<point>` This class is used to represent mathematical points (that
    is, regions with dimensionality 0).
--  *<path>* The class *<path>* denotes bounded regions with a length,
+-  :class:`<path>` The class *<path>* denotes bounded regions with a length,
    but no area (that is, they have dimensionality 1).
--  *<area>* This class denotes bounded regions that have an area (that
+-  :class:`<area>` This class denotes bounded regions that have an area (that
    is, they have dimensionality 2).
--  *<bounding-box>* A bounding box is an axis aligned rectangle that
+-  :class:`<bounding-box>` A bounding box is an axis aligned rectangle that
    contains some region.
 
 Error classes provided by DUIM-Geometry
@@ -97,25 +97,15 @@ The <transform-error> class and its subclasses
 
 <singular-transform>
 
-*<transform-error>*
-
-The superclass of all error conditions signalled when there is an error
-with a transform.
-
-*<transform-underspecified>*
-
-The error that is signalled when *make-3-point-transform* is given three
-colinear image points.
-
-*<reflection-underspecified>*
-
-The error that is signalled when *make-reflection-transform* is given
-two coincident points.
-
-*<singular-transform>*
-
-The error that is signalled when *invert-transform* is called on a
-singular transform, that is, a transform that has no inverse.
+-  :class:`<transform-error>` The superclass of all error conditions signalled
+   when there is an error with a transform.
+-  :class:`<transform-underspecified>` The error that is signalled when
+   :func:`make-3-point-transform` is given three colinear image points.
+-  :class:`<reflection-underspecified>` The error that is signalled when
+   :func:`make-reflection-transform` is given two coincident points.
+-  :class:`<singular-transform>` The error that is signalled when
+   :func:`invert-transform` is called on a singular transform, that is,
+   a transform that has no inverse.
 
 DUIM-Geometry Module
 ====================
@@ -953,69 +943,60 @@ are exported from the *duim-geometry* module.
 
    - :const:`$smallest-coordinate`
 
-make-3-point-transform
-----------------------
+.. function:: make-3-point-transform
 
-Function
-''''''''
-Returns a transform that takes points *point-1* into *point-1-image*,
-*point-2* into *point-2-image* and *point-3* into *point-3-image*.
+   Returns a transform that takes points *point-1* into *point-1-image*,
+   *point-2* into *point-2-image* and *point-3* into *point-3-image*.
 
-   :signature: make-3-point-transform* *x1* *y1* *x2* *y2* *x3* *y3* *x1-image*
-*y1-image* *x2-image* *y2-image* *x3-image* *y3-image* => *transform*
+   :signature: make-3-point-transform *x1* *y1* *x2* *y2* *x3* *y3* *x1-image* *y1-image* *x2-image* *y2-image* *x3-image* *y3-image* => *transform*
 
-make-3-point-transform\* *point-1 point-2 point-3 point-1-image
-point-2-image point-3-image* => *transform*
+   :signature: make-3-point-transform\* *point-1 point-2 point-3 point-1-image point-2-image point-3-image* => *transform*
 
-Arguments
+   The following arguments are specific to ``make-3-point-transform``.
 
-The following arguments are specific to *make-3-point-transform*.
+   :parameter x1: An instance of type ``<real>``.
+   :parameter y1: An instance of type ``<real>``.
+   :parameter x2: An instance of type ``<real>``.
+   :parameter y2: An instance of type ``<real>``.
+   :parameter x3: An instance of type ``<real>``.
+   :parameter y3: An instance of type ``<real>``.
+   :parameter x1-image: An instance of type ``<real>``.
+   :parameter y1-image: An instance of type ``<real>``.
+   :parameter x2-image: An instance of type ``<real>``.
+   :parameter y2-image: An instance of type ``<real>``.
+   :parameter x3-image: An instance of type ``<real>``.
+   :parameter y3-image: An instance of type ``<real>``.
 
--  *x1* An instance of type ``<real>``.
--  *y1* An instance of type ``<real>``.
--  *x2* An instance of type ``<real>``.
--  *y2* An instance of type ``<real>``.
--  *x3* An instance of type ``<real>``.
--  *y3* An instance of type ``<real>``.
--  *x1-image* An instance of type ``<real>``.
--  *y1-image* An instance of type ``<real>``.
--  *x2-image* An instance of type ``<real>``.
--  *y2-image* An instance of type ``<real>``.
--  *x3-image* An instance of type ``<real>``.
--  *y3-image* An instance of type ``<real>``.
+   The following arguments are specific to ``make-3-point-transform*``.
 
-The following arguments are specific to *make-3-point-transform\**.
+   :parameter point-1: An instance of type :class:`<point>`.
+   :parameter point-2: An instance of type :class:`<point>`.
+   :parameter point-3: An instance of type :class:`<point>`.
+   :parameter point-1-image: An instance of type :class:`<point>`.
+   :parameter point-2-image: An instance of type :class:`<point>`.
+   :parameter point-3-image: An instance of type :class:`<point>`.
 
--  *point-1* An instance of type :class:`<point>`.
--  *point-2* An instance of type :class:`<point>`.
--  *point-3* An instance of type :class:`<point>`.
--  *point-1-image* An instance of type :class:`<point>`.
--  *point-2-image* An instance of type :class:`<point>`.
--  *point-3-image* An instance of type :class:`<point>`.
-
-Values
-
--  *transform* An instance of type :class:`<transform>`.
+   :value transform: An instance of type :class:`<transform>`.
 
    :conditions:
 
-If *point-1*, *point-2* and *point-3* are colinear, the*`See
-<transform-underspecified>`_* error is signalled. If
-*point-1-image*,*point-2-image* and *point-3-image* are colinear, the
-resulting transform will be singular (that is, will have no inverse) but
-this is not an error.
+     If *point-1*, *point-2* and *point-3* are colinear, the
+     :class:`<transform-underspecified>` error is signalled. If
+     *point-1-image*,*point-2-image* and *point-3-image* are colinear, the
+     resulting transform will be singular (that is, will have no inverse) but
+     this is not an error.
 
    :description:
 
-Returns a transform that takes points *point-1* into *point-1-image*,
-*point-2* into *point-2-image* and *point-3* into *point-3-image*.
-Three non-colinear points and their images under the transform are
-enough to specify any affine transformation.
+     Returns a transform that takes points *point-1* into *point-1-image*,
+     *point-2* into *point-2-image* and *point-3* into *point-3-image*.
+     Three non-colinear points and their images under the transform are
+     enough to specify any affine transformation.
 
-The function *make-3-point-transform\** is identical to
-*make-3-point-transform*, except that it passes composite objects,
-rather than separate coordinates, in its arguments. You should be aware
-that using this function may lead to a loss of performance.
+     The function ``make-3-point-transform*`` is identical to
+     ``make-3-point-transform``, except that it passes composite objects,
+     rather than separate coordinates, in its arguments. You should be aware
+     that using this function may lead to a loss of performance.
 
 .. function:: make-bounding-box
 
@@ -1135,52 +1116,43 @@ that using this function may lead to a loss of performance.
    - :func:`make-translation-transform`
    - :class:`<reflection-underspecified>`
 
-make-rotation-transform
------------------------
+.. function:: make-rotation-transform
 
-Function
-''''''''
-Returns a transform that rotates all points by *angle* around the point
-specified by coordinates *origin-x* and *origin-y* or the point object
-*origin*.
+   Returns a transform that rotates all points by *angle* around the point
+   specified by coordinates *origin-x* and *origin-y* or the point object
+   *origin*.
 
-   :signature: make-rotation-transform *angle* *#key* *origin-x* *origin-y* =>
-*transform*
+   :signature: make-rotation-transform *angle* *#key* *origin-x* *origin-y* => *transform*
 
-make-rotation-transform\* *angle* #key *origin* => *transform*
+   :signature: make-rotation-transform\* *angle* #key *origin* => *transform*
 
-Arguments
+   :parameter angle: An instance of type ``<real>``.
 
--  *angle* An instance of type ``<real>``.
+   The following arguments are specific to ``make-rotation-transform``.
 
-The following arguments are specific to *make-rotation-transform*.
+   :parameter origin-x: An instance of type ``<real>``. Default value: 0.
+   :parameter origin-y: An instance of type ``<real>``. Default value: 0.
 
--  *origin-x* An instance of type ``<real>``. Default value: *0*.
--  *origin-y* An instance of type ``<real>``. Default value: *0*.
+   The following argument is specific to ``make-reflection-transform*``.
 
-The following argument is specific to *make-reflection-transform\**.
+   :parameter origin: An instance of type :class:`<point>`. Default value: (0, 0).
 
--  *origin* An instance of type :class:`<point>`. Default
-   value: (0, 0).
-
-Values
-
--  *transform* An instance of type :class:`<transform>`.
+   :value transform: An instance of type :class:`<transform>`.
 
    :description:
 
-Returns a transform that rotates all points by *angle* around the point
-specified by coordinates *origin-x* and *origin-y* or the point object
-*origin*. The angle must be expressed in radians.
+     Returns a transform that rotates all points by *angle* around the point
+     specified by coordinates *origin-x* and *origin-y* or the point object
+     *origin*. The angle must be expressed in radians.
 
-A rotation is a transform that preserves length and angles of all
-geometric entities. Rotations also preserve one point (the origin) and
-the distance of all entities from that point.
+     A rotation is a transform that preserves length and angles of all
+     geometric entities. Rotations also preserve one point (the origin) and
+     the distance of all entities from that point.
 
-The function *make-rotation-transform\** is identical to
-*make-rotation-transform*, except that it passes composite objects,
-rather than separate coordinates, in its arguments. You should be aware
-that using this function may lead to a loss of performance.
+     The function *make-rotation-transform\** is identical to
+     *make-rotation-transform*, except that it passes composite objects,
+     rather than separate coordinates, in its arguments. You should be aware
+     that using this function may lead to a loss of performance.
 
    See also
 
@@ -1189,65 +1161,56 @@ that using this function may lead to a loss of performance.
    - :func:`make-transform`
    - :func:`make-translation-transform`
 
-make-scaling-transform
-----------------------
+.. function:: make-scaling-transform
 
-Function
-''''''''
-Returns a transform that multiplies the *x* -coordinate distance of
-every point from *origin* by *scale-x* and the *y* -coordinate distance
-of every point from *origin* by *scale-y*.
+   Returns a transform that multiplies the *x* -coordinate distance of
+   every point from *origin* by *scale-x* and the *y* -coordinate distance
+   of every point from *origin* by *scale-y*.
 
    :signature: make-scaling-transform *scale-x* *scale-y* #key *origin-x* *origin-y* => *transform*
 
-make-scaling-transform\* *scale-x* *scale-y* #key *origin* =>
-*transform*
+   :signature: make-scaling-transform\* *scale-x* *scale-y* #key *origin* => *transform*
 
-Arguments
+   :parameter scale-x: An instance of type ``<real>``.
+   :parameter scale-y: An instance of type ``<real>``.
 
--  *scale-x* An instance of type ``<real>``.
--  *scale-y* An instance of type ``<real>``.
+   The following arguments are specific to ``make-scaling-transform``.
 
-The following arguments are specific to *make-scaling-transform*.
+   :parameter origin-x: An instance of type ``<real>``. Default value: 0.
+   :parameter origin-y: An instance of type ``<real>``. Default value: 0.
 
--  *origin-x* An instance of type ``<real>``. Default value: 0.
--  *origin-y* An instance of type ``<real>``. Default value: 0.
+   The following argument is specific to ``make-scaling-transform*``.
 
-The following argument is specific to *make-scaling-transform\**.
+   :parameter origin: An instance of type :class:`<point>`.
 
--  *origin* An instance of type :class:`<point>`.
-
-Values
-
--  *transform* An instance of type :class:`<transform>`.
-   The resultant transformation.
+   :value transform: An instance of type :class:`<transform>`. The resultant transformation.
 
    :description:
 
-Returns a transform that multiplies the *x* -coordinate distance of
-every point from *origin* by *scale-x* and the *y* -coordinate distance
-of every point from *origin* by *scale-y*.
+     Returns a transform that multiplies the *x* -coordinate distance of
+     every point from *origin* by *scale-x* and the *y* -coordinate distance
+     of every point from *origin* by *scale-y*.
 
-The argument *scale-x* represents the scaling factor for the *x*
-direction.
+     The argument *scale-x* represents the scaling factor for the *x*
+     direction.
 
-The argument *scale-y* represents the scaling factor for the *y*
-direction.
+     The argument *scale-y* represents the scaling factor for the *y*
+     direction.
 
-The arguments *origin-x* and *origin-y* represent the point around which
-scaling is performed. The default is to scale around the origin.
+     The arguments *origin-x* and *origin-y* represent the point around which
+     scaling is performed. The default is to scale around the origin.
 
-There is no single definition of a scaling transformation. Transforms
-that preserve all angles and multiply all lengths by the same factor
-(preserving the *shape* of all entities) are certainly scaling
-transformations. However, scaling is also used to refer to transforms
-that scale distances in the *x* direction by one amount and distances in
-the *y* direction by another amount.
+     There is no single definition of a scaling transformation. Transforms
+     that preserve all angles and multiply all lengths by the same factor
+     (preserving the *shape* of all entities) are certainly scaling
+     transformations. However, scaling is also used to refer to transforms
+     that scale distances in the *x* direction by one amount and distances in
+     the *y* direction by another amount.
 
-The function *make-scaling-transform\** is identical to
-*make-scaling-transform*, except that it passes composite objects,
-rather than separate coordinates, in its arguments. You should be aware
-that using this function may lead to a loss of performance.
+     The function *make-scaling-transform\** is identical to
+     *make-scaling-transform*, except that it passes composite objects,
+     rather than separate coordinates, in its arguments. You should be aware
+     that using this function may lead to a loss of performance.
 
    See also
 
