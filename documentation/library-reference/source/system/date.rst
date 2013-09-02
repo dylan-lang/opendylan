@@ -542,7 +542,7 @@ methods that are defined on +.
    :signature: as-iso8601-string *date* #key *precision* => *iso8601-string*
 
    :parameter date: An instance of :class:`<date>`.
-   :parameter precision: An instance of :drm:`<integer>`. Default value: 0.
+   :parameter #key precision: An instance of :drm:`<integer>`. Default value: 0.
    :value iso8601-string: An instance of :drm:`<string>`.
 
    :description:
@@ -1211,9 +1211,9 @@ methods that are defined on +.
    :parameter hours: An instance of :drm:`<integer>`.
    :parameter minutes: An instance of :drm:`<integer>`.
    :parameter seconds: An instance of :drm:`<integer>`.
-   :parameter microseconds: An instance of :drm:`<integer>`. Default value:
+   :parameter #key microseconds: An instance of :drm:`<integer>`. Default value:
      0.
-   :parameter time-zone-offset: An instance of :drm:`<integer>`. Default
+   :parameter  #keytime-zone-offset: An instance of :drm:`<integer>`. Default
      value: :func:`local-time-zone-offset()`.
    :value date: An instance of :class:`<date>`.
 
