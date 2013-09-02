@@ -233,6 +233,13 @@ Dates can also be returned in RFC-822 and RFC-1123 formats with the
 
 More flexible date formatting is available with :func:`format-date`.
 
+
+Parsing Dates
+-------------
+
+Dates can be parsed with :func:`parse-date-string`. ISO-8601 formatted
+date strings can be parsed with :func:`parse-iso8601-string`.
+
 The date module
 ---------------
 
@@ -563,6 +570,8 @@ methods that are defined on +.
    - :func:`as-rfc822-string`
    - :func:`as-rfc1123-string`
    - :func:`format-date`
+   - :func:`parse-date-string`
+   - :func:`parse-iso8601-string`
 
 .. function:: as-rfc822-string
 
@@ -592,6 +601,7 @@ methods that are defined on +.
    - :func:`as-rfc1123-string`
    - :func:`as-iso8601-string`
    - :func:`format-date`
+   - :func:`parse-date-string`
 
 .. function:: as-rfc1123-string
 
@@ -626,6 +636,7 @@ methods that are defined on +.
    - :func:`as-rfc822-string`
    - :func:`as-iso8601-string`
    - :func:`format-date`
+   - :func:`parse-date-string`
 
 .. function:: current-date
 
@@ -1300,6 +1311,8 @@ methods that are defined on +.
    - :func:`as-rfc822-string`
    - :func:`as-rfc1123-string`
    - :func:`as-iso8601-string`
+   - :func:`parse-date-string`
+   - :func:`parse-iso8601-string`
 
 .. function:: local-daylight-savings-time?
 
@@ -1384,7 +1397,8 @@ methods that are defined on +.
 
      **Note**: The iso8601-string keyword accepts a richer subset of
      the ISO 8601 specification than is produced by the
-     :func:`as-iso8601-string` function.
+     :func:`as-iso8601-string` function. See :func:`parse-iso8601-string`
+     for details.
 
    :example:
 
@@ -1396,6 +1410,79 @@ methods that are defined on +.
 
    - :class:`<date>`
    - :func:`encode-date`
+   - :func:`parse-iso8601-string`
+
+.. function:: parse-date-string
+
+   Parse a date in string form according to a control string, returning
+   a date.
+
+   :signature: parse-date-string *date* *format* => *date*
+
+   :parameter date: An instance of :drm:`<string>`.
+   :parameter format: An instance of :drm:`<string>`.
+   :value date: An instance of :class:`<date>`.
+
+   :description:
+
+     Parses a date in string form according to a control string, ``format``.
+     The control string uses the same directives as :func:`format-date`.
+
+   See also
+
+   * :func:`format-date`
+   * :func:`parse-iso8601-string`
+
+.. function:: parse-iso8601-string
+
+   Parse a variety of variants on ISO-8601 formatted date strings.
+
+   :signature: parse-iso8601-string *string* #key *strict?* => *date*
+
+   :parameter string: An instance of :drm:`<string>`.
+   :parameter #key strict?: An instance of :drm:`<boolean>`, default ``#t``.
+   :value date: An instance of :class:`<date>`.
+
+   :description:
+
+     This function parses the ISO 8601 formats listed below, with the
+     following differences if strict? = #f:
+
+     * the '-' in YYYY-MM-DD is optional
+     * the ':' in hh:mm:ss is optional
+     * the ':' in the timezone is optional
+     * the date and time may be separated by a space character
+     * TZD may be preceded by a space character
+
+     See http://www.w3.org/TR/NOTE-datetime.html.
+
+     Year:
+        YYYY (eg 1997)
+     Year and month:
+        YYYY-MM (eg 1997-07)
+     Complete date:
+        YYYY-MM-DD (eg 1997-07-16)
+     Complete date plus hours and minutes:
+        YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
+     Complete date plus hours, minutes and seconds:
+        YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
+     Complete date plus hours, minutes, seconds and a decimal fraction of a second
+        YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)
+     where:
+        * YYYY = four-digit year
+        * MM   = two-digit month (01=January, etc.)
+        * DD   = two-digit day of month (01 through 31)
+        * hh   = two digits of hour (00 through 23) (am/pm NOT allowed)
+        * mm   = two digits of minute (00 through 59)
+        * ss   = two digits of second (00 through 59)
+        * s    = one or more digits representing a decimal fraction of a second
+        * TZD  = time zone designator (Z or +hh:mm or -hh:mm)
+
+   See also
+
+   * :func:`as-iso8601-string`
+   * :func:`format-date`
+   * :func:`parse-date-string`
 
 .. class:: <year/month-duration>
    :sealed:
