@@ -422,7 +422,8 @@ CHECK_APPS = \
 	deuce-test-suite-app \
 	jam-test-suite-app \
 	channels-tests \
-	command-line-parser-test-suite-app
+	command-line-parser-test-suite-app \
+	logging-test-suite-app
 
 CHECK_ENV = \
 	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \
