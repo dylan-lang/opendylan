@@ -657,10 +657,11 @@ asks the user to type the text for a new task. The definition of
 initial design, with the exception that the activate callback exits the
 dialog, rather than calling the ``not-yet-implemented`` function.
 
-The dialog box created by the prompt-for-task method
 
 .. figure:: images/new-task.png
    :align: center
+
+   The dialog box created by the prompt-for-task method
 
 The method takes two keyword arguments: a title, which is assigned a
 value by default, and an owner, which is used as the owner for the

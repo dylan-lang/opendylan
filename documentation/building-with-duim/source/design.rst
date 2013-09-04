@@ -39,10 +39,11 @@ for the final design into the environment, choose **Tools > Open Example
 Project** from any window in the environment, and load the Task List 1
 project from the Documentation category of the Open Example Project dialog.
 
-The Task List Manager Application
 
 .. figure:: images/tasklist.png
    :align: center
+
+   The Task List Manager Application
 
 The task list manager is very simple to use. You create a list of things
 that you need to do, assigning a priority to each task as you create it.
