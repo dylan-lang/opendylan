@@ -18,7 +18,7 @@ Improvements
 Documentation
 -------------
 
-The `logging <http://opendylan.org/documentation/library-reference/logging.html>`_ library has been documented.
+The `logging <http://opendylan.org/documentation/library-reference/logging/>`_ library has been documented.
 
 The `regular-expressions <http://opendylan.org/documentation/library-reference/regular-expressions/index.html>`_ library documentation has been greatly improved.
 
