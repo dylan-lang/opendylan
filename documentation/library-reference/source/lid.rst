@@ -7,8 +7,8 @@ Introduction
 
 This chapter is about the library interchange definition format, *LID*.
 
-The DRM defines an interchange format for Dylan source files (DRM, page
-21), but does not define an interchange format for Dylan libraries.
+The DRM defines an :drm:`interchange format for Dylan source files <Dylan_Interchange_Format>`,
+but does not define an interchange format for Dylan libraries.
 Without such an agreed format, different Dylan development environments
 would find it difficult to import and build libraries developed using
 another Dylan vendor’s environment. It would also be impossible to
@@ -49,8 +49,8 @@ LID keyword statements
 ======================
 
 A LID file consists of a series of keyword/value statements, just like
-the Dylan source file interchange format described in DRM (page 21.) In
-this section, we describe the standard LID keywords.
+the Dylan :drm:`source file interchange format <Dylan_Interchange_Format>`.
+In this section, we describe the standard LID keywords.
 
 Library:
 --------
