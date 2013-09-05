@@ -325,10 +325,13 @@ Specifies the name of a JAM file to process. This is typically used
 when integrating with a third party library and needing custom flags
 for the C compiler or linker.
 
-An example JAM file might look like::
+An example JAM (for a library, not an executable) file might look like::
 
-    LINKLIBS += `pkg-config --ldflags gtk+-2.0` ;
-    CCFLAGS += `pkg-config --cflags gtk+-2.0` ;
+    {
+      local _dll = [ FDLLName $(image) ] ;
+      LINKLIBS on $(_dll) += `pkg-config --libs gtk+-3.0` ;
+      CCFLAGS += `pkg-config --cflags gtk+-3.0` ;
+    }
 
 The use of backticks ```...``` will execute the command enclosed
 within and return the output of that command.
