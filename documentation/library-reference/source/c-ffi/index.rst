@@ -396,6 +396,53 @@ necessary.
    C-address` macro, which defines a constant that is a pointer to the
    storage allocated for the C variable.
 
+Notes on Linking
+================
+
+When using C-FFI, you will typically need to link in an existing library
+or framework.
+
+:doc:`LID files <../lid>` provide many options for controlling
+the compilation and linking of the project depending on what exactly
+is required.
+
+Linking against a Library
+-------------------------
+
+This can be done in a :doc:`LID file <../lid>` using the :ref:`C-Libraries <lid-c-libraries>`
+keyword.  This supports both static and shared libraries. It also supports
+specifying a search path.  For example::
+
+    C-Libraries: -lGL
+
+Linking against a Mac OS X Framework
+------------------------------------
+
+Just as with a regular shared library, the :ref:`C-Libraries <lid-c-libraries>`
+keyword in a :doc:`LID file <../lid>`.  For example::
+
+    C-Libraries: -framework OpenGL
+
+Using pkg-config
+----------------
+
+Libraries that use "pkg-config" are slightly more complicated to work with in
+that they require using the :ref:`Jam-Includes <lid-jam-includes>` keyword and
+an additional file within the project.  The GTK+ bindings provide multiple
+examples of this.
+
+In the LID file, you would include the additional Jam file::
+
+    Jam-Includes: gtk-dylan.jam
+
+And you would provide the additional Jam file::
+
+    {
+      local _dll = [ FDLLName $(image) ] ;
+      LINKLIBS on $(_dll) += `pkg-config --libs gtk+-3.0` ;
+      CCFLAGS += `pkg-config --cflags gtk+-3.0` ;
+    }
+
 Terminology
 ===========
 

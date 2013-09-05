@@ -237,6 +237,8 @@ resulting resource object files are included in the ``.DLL`` or ``.EXE``
 built for the library. The file names given here must include the ``.rc``
 suffix.
 
+.. _lid-c-libraries:
+
 C-Libraries:
 ^^^^^^^^^^^^
 
@@ -311,6 +313,8 @@ contained in that file into the current LID file.
 
 This is commonly used to share common definitions and settings between
 platform or OS specific LID files.
+
+.. _lid-jam-includes:
 
 Jam-Includes:
 ^^^^^^^^^^^^^
