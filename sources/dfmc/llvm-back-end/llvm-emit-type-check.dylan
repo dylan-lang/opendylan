@@ -308,8 +308,9 @@ define method do-emit-instance-cmp
  => (cmp :: <llvm-value>);
   let word-size = back-end-word-size(back-end);
   let module = back-end.llvm-builder-module;
+  let o = type.^singleton-object;
   let singleton-ref
-    = if (type.^singleton-object)
+    = if (o & ~load-bound-object?(o))
         emit-indirect-reference(back-end, module, type.^singleton-object);
       else
         let class :: <&class> = dylan-value(#"<singleton>");
