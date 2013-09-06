@@ -116,6 +116,20 @@ define function llvm-builder-global
          := make(<llvm-symbolic-constant>, name: name))
 end function;
 
+define function llvm-builder-global-defined?
+    (builder :: <llvm-builder>, name :: <string>)
+ => (defined? :: <boolean>);
+  let global-table = builder.llvm-builder-module.llvm-global-table;
+  let definition
+    = element(global-table, name, default: #f);
+  definition
+    & if (instance?(definition, <llvm-symbolic-constant>))
+        slot-initialized?(definition, llvm-placeholder-value-forward)
+      else
+        #t
+      end if
+end function;
+
 
 /// Local variables
 
@@ -153,6 +167,23 @@ define function llvm-builder-local
   element(builder-function.llvm-function-value-table, name, default: #f)
     | (element(builder-function.llvm-function-value-table, name)
          := make(<llvm-symbolic-value>, name: name))
+end function;
+
+define function llvm-builder-local-defined?
+    (builder :: <llvm-builder>, name :: <string>)
+ => (defined? :: <boolean>);
+  let builder-function
+    = builder.llvm-builder-function
+    | error("llvm-builder-function is not set");
+  let value-table = builder-function.llvm-function-value-table;
+  let definition
+    = element(value-table, name, default: #f);
+  definition
+    & if (instance?(definition, <llvm-symbolic-constant>))
+        slot-initialized?(definition, llvm-placeholder-value-forward)
+      else
+        #t
+      end if
 end function;
 
 

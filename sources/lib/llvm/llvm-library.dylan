@@ -235,11 +235,13 @@ define module llvm-builder
     llvm-builder-define-global,
     llvm-builder-declare-global,
     llvm-builder-global,
+    llvm-builder-global-defined?,
 
     <llvm-local-value>,
     ins--local,
     llvm-builder-local,
-    
+    llvm-builder-local-defined?,
+
     ins--block,
     with-insert-before-terminator,
 
