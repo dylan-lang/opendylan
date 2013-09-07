@@ -357,6 +357,27 @@ define method llvm-lambda-type
        varargs?: #f)
 end method;
 
+// Function type for a C function
+// FIXME these are actually subject to target-specific/ABI-specific
+// normalization
+define method llvm-c-function-type
+    (back-end :: <llvm-back-end>, o :: <&c-function>)
+ => (type :: <llvm-function-type>);
+  let signature = o.c-signature;
+  let parameter-types
+    = map(curry(llvm-reference-type, back-end), signature.^signature-required);
+  let return-type
+    = if (empty?(signature.^signature-values))
+        $llvm-void-type
+      else
+        llvm-reference-type(back-end, signature.^signature-values.first);
+      end if;
+  make(<llvm-function-type>,
+       parameter-types: parameter-types,
+       return-type: return-type,
+       varargs?: #f)
+end method;
+
 // Shared generic entry points
 
 define method llvm-entry-point-type

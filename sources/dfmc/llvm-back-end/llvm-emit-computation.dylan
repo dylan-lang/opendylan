@@ -729,15 +729,90 @@ define method emit-computation
 end method;
 
 define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <primitive-call>) => ()
-  let primitive-name = c.primitive.primitive-descriptor-getter-name;
-  let descriptor = $llvm-primitive-descriptors[primitive-name];
+    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <primitive-call>)
+ => ();
+  emit-primitive-call(back-end, m, c, c.primitive)
+end method;
+
+define method emit-primitive-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <primitive-call>, primitive :: <&primitive>)
+ => ();
+  let primitive-name = primitive.primitive-descriptor-getter-name;
+  let descriptor
+    = element($llvm-primitive-descriptors, primitive-name, default: #f)
+    | error("No primitive named %=", primitive-name);
 
   let arguments
-    = map (curry(emit-reference, back-end, m), c.arguments);
+    = map(curry(emit-reference, back-end, m), c.arguments);
   let (#rest results)
     = apply(descriptor.primitive-mapped-emitter, back-end, arguments);
   computation-results(back-end, c, results);
+end method;
+
+define method emit-primitive-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <primitive-call>, primitive :: <&c-function>)
+ => ();
+  let name = primitive.binding-name;
+  let calling-convention
+    = llvm-c-function-calling-convention(back-end, primitive);
+  let function-type = llvm-c-function-type(back-end, primitive);
+
+  // Call the C function
+  let result
+    = ins--call(back-end,
+                llvm-builder-global(back-end, name),
+                map(curry(emit-reference, back-end, m), c.arguments),
+                type: function-type.llvm-function-type-return-type,
+                calling-convention: calling-convention);
+  computation-result(back-end, c, result);
+end method;
+
+define method emit-primitive-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <primitive-indirect-call>, primitive :: <&c-function>)
+ => ();
+  let calling-convention
+    = llvm-c-function-calling-convention(back-end, primitive);
+  let function-type = llvm-c-function-type(back-end, primitive);
+  let function-ptr-type = llvm-pointer-to(back-end, function-type);
+  let function
+    = ins--bitcast(back-end, emit-reference(back-end, m, c.arguments.first),
+                   function-ptr-type);
+
+  // Call the C function
+  let result
+    = ins--call(back-end, function,
+                map(curry(emit-reference, back-end, m),
+                    copy-sequence(c.arguments, start: 1)),
+                type: function-type.llvm-function-type-return-type,
+                calling-convention: calling-convention);
+  computation-result(back-end, c, result);
+end method;
+
+define method llvm-c-function-calling-convention
+    (back-end :: <llvm-back-end>, o :: <&c-function>)
+ => (calling-convention :: <integer>);
+  $llvm-calling-convention-c
+end method;
+
+define method llvm-c-function-calling-convention
+    (back-end :: <llvm-x86-windows-back-end>, o :: <&c-function>)
+ => (calling-convention :: <integer>);
+  if (o.c-modifiers = "__stdcall")
+    $llvm-calling-convention-x86-stdcall
+  else
+    $llvm-calling-convention-c
+  end if
+end method;
+
+define method emit-primitive-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <c-variable-pointer-call>, primitive)
+ => ();
+  let result = llvm-builder-global(back-end, c.c-variable.name);
+  computation-result(back-end, c, result);
 end method;
 
 define method emit-computation

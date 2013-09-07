@@ -119,29 +119,38 @@ define method emit-extern
     (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&c-function>)
  => ();
   let name = o.binding-name;
-  unless (element(module.llvm-global-table, name, default: #f))
-    let sig-values = o.primitive-signature.^signature-values;
-    // FIXME these are actually subject to target-specific/ABI-specific
-    // normalization
-    let return-type
-      = llvm-reference-type
-          (back-end, first(sig-values, default: dylan-value(#"<object>")));
-    let parameter-types
-      = map(curry(llvm-reference-type, back-end),
-            o.c-signature.^signature-required);
-    let function-type
-      = make(<llvm-function-type>,
-             return-type: return-type,
-             parameter-types: parameter-types,
-             varargs?: #f);
-    let function
+  if (name & ~llvm-builder-global-defined?(back-end, name))
+    let calling-convention
+      = llvm-c-function-calling-convention(back-end, o);
+
+    let function-type = llvm-c-function-type(back-end, o);
+    let args
+      = map(method (arg-type, index)
+              make(<llvm-argument>, type: arg-type, index: index)
+            end,
+            function-type.llvm-function-type-parameter-types, range(from: 0));
+    let global
       = make(<llvm-function>,
-             name: name,
-             type: llvm-pointer-to(back-end, function-type),
-             arguments: #[],
              linkage: #"external",
-             calling-convention: $llvm-calling-convention-c); // FIXME
-    llvm-builder-define-global(back-end, name, function);
+             name: primitive.binding-name,
+             type: llvm-pointer-to(back-end, function-type),
+             arguments: args,
+             calling-convention: calling-convention);
+    llvm-builder-define-global(back-end, name, global);
+  end if;
+end method;
+
+define method emit-extern
+    (back-end :: <llvm-back-end>, module :: <llvm-module>, o :: <&c-variable>)
+ => ();
+  unless (llvm-builder-global-defined?(back-end, o.name))
+    let global
+      = make(<llvm-global-variable>,
+             name: o.name,
+             constant?: #f,
+             linkage: if (o.dll-import?) #"dllimport" else #"external" end,
+             type: $llvm-i8*-type);
+    llvm-builder-define-global(back-end, o.name, global);
   end unless;
 end method;
 

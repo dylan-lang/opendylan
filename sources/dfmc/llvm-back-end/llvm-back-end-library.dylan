@@ -51,6 +51,7 @@ define module dfmc-llvm-back-end
     llvm-class-type,
     llvm-reference-type,
     llvm-lambda-type,
+    llvm-c-function-type,
     llvm-entry-point-type,
 
     <llvm-primitive-descriptor>,
@@ -72,6 +73,7 @@ define module dfmc-llvm-back-end
     llvm-entry-point-rest?,
 
     llvm-calling-convention,
+    llvm-c-function-calling-convention,
 
     llvm-raw-byte-character;
 end module;
