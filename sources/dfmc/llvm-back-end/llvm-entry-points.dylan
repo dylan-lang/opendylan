@@ -446,6 +446,13 @@ define entry-point-descriptor apply-xep
   end if
 end entry-point-descriptor;
 
+define entry-point-descriptor apply-mep
+    (next :: <list>, function :: <lambda>, #rest arguments) => (#rest values)
+  // FIXME placeholder
+  ins--call-intrinsic(be, "llvm.trap", #[]);
+  ins--unreachable(be);
+end entry-point-descriptor;
+
 
 /// Dispatcher entry points
 
