@@ -298,6 +298,17 @@ define method print-computation (stream :: <stream>, c :: <primitive-call>)
   print-tail-call-annotation(stream, c);
 end method;
 
+define method print-computation (stream :: <stream>, c :: <primitive-indirect-call>)
+  format(stream, "[INDIRECT-PRIMOP (");
+  print-args(stream, c.arguments);
+  format(stream, ")]");
+  print-tail-call-annotation(stream, c);
+end method;
+
+define method print-computation (stream :: <stream>, c :: <c-variable-pointer-call>)
+  format(stream, "[C-VARIABLE-PRIMOP %=", c.c-variable);
+end method;
+
 define method print-computation (stream :: <stream>, c :: <if>) 
   format(stream, "if (%s) ... else ... end", c.test);
 end method;
