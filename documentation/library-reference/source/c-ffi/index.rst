@@ -443,6 +443,65 @@ And you would provide the additional Jam file::
       CCFLAGS += `pkg-config --cflags gtk+-3.0` ;
     }
 
+Tracing FFI Calls
+=================
+
+When working with the C-FFI, it is very useful to be able to trace what
+is happening, what is getting called, what the arguments are, and what
+the return value is. To aid in this, C-FFI enables the programmer to
+enable tracing.
+
+To do this, you will need to exclude the default implementation of
+tracing when importing the ``c-ffi`` module and define your own
+implementation.
+
+In your ``library.dylan``, you would change your module declaration:
+
+.. code-block:: dylan
+
+    use c-ffi;
+
+to:
+
+.. code-block:: dylan
+
+    use c-ffi, exclude: {
+      $trace-ffi-calls,
+      log-entry,
+      log-exit };
+    use format-out;
+
+Note that we've used the ``format-out`` module from the ``io``
+library in addition to the exclusion.
+
+After doing that, you can define your own implementation of
+tracing such that your implementation is in the same lexical
+scope as the ``C-function`` definitions that you want to trace:
+
+.. code-block:: dylan
+
+    define constant $trace-ffi-calls = #t;
+
+    define inline-only function log-entry(c-function-name, #rest args) => ();
+      format-out("entering %s %=", c-function-name, args);
+    end;
+    define inline-only function log-exit(c-function-name, #rest results) => ();
+      format-out(" => %=\n", results);
+    end;
+
+    define C-function ...
+
+When this is run, you will see output like::
+
+    entering nn_socket #[1, 16] => #[0]
+    entering nn_socket #[1, 16] => #[1]
+    entering nn_bind #[0, "inproc://a"] => #[1]
+    entering nn_connect #[1, "inproc://a"] => #[1]
+    entering nn_send #[1, #x007D0AAC, 3, 0] => #[3]
+    entering nn_recv #[0, #x007D0AE4, 3, 0] => #[3]
+    entering nn_close #[0] => #[0]
+    entering nn_close #[1] => #[0]
+
 Terminology
 ===========
 
