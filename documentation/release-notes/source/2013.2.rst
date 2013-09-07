@@ -24,7 +24,7 @@ The `regular-expressions <http://opendylan.org/documentation/library-reference/r
 
 The `date <http://opendylan.org/documentation/library-reference/system/date.html>`_ module documentation has been improved and now covers date formatting and parsing.
 
-The `C-FFI <http://opendylan.org/documentation/library-reference/c-ffi/>`_ library now discusses `linking against a library <http://opendylan.org/documentation/library-reference/c-ffi/#notes-on-linking>`_ rather than assuming that people will find the LID file documentation.
+The `C-FFI <http://opendylan.org/documentation/library-reference/c-ffi/>`_ library now discusses `linking against a library <http://opendylan.org/documentation/library-reference/c-ffi/#notes-on-linking>`_ rather than assuming that people will find the LID file documentation. `Tracing FFI calls <http://opendylan.org/documentation/library-reference/c-ffi/#tracing-ffi-calls>`_ has also been documented.
 
 Build Tools
 -----------
