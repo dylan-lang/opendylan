@@ -192,7 +192,9 @@ define method emit-result-assignment
 
   if (named?(temp) & *temporary-locals?*)
     let name = hygienic-mangle(back-end, temp.name, temp.frame-offset);
-    ins--local(back-end, name, result);
+    unless (llvm-builder-local-defined?(back-end, name))
+      ins--local(back-end, name, result);
+    end;
   end if;
 end method;
 
@@ -1442,7 +1444,8 @@ define method emit-computation
     let alloca = ins--alloca(back-end, type, i32(1));
     if (named?(tmp))
       let local-name = hygienic-mangle(back-end, tmp.name, tmp.frame-offset);
-      if (*temporary-locals?*)
+      if (*temporary-locals?*
+            & ~llvm-builder-local-defined?(back-end, local-name))
         ins--local(back-end, local-name, alloca);
       end if;
 
