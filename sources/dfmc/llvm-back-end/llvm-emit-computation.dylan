@@ -592,12 +592,7 @@ define method emit-computation
   end if;
 end method;
 
-define method emit-call
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <function-call>, f)
- => (call :: <llvm-value>);
-  error("%= calling %=", c, f)
-end method;
-
+// Call a known top-level method with no further next methods
 define method emit-call
     (back-end :: <llvm-back-end>, m :: <llvm-module>,
      c :: <simple-call>, f :: <&iep>)
@@ -606,39 +601,206 @@ define method emit-call
   let global = llvm-builder-global(back-end, name);
   let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  let env = f.environment;
+  let fn
+    = if (~env | empty?(env.closure))
+        // Not a closure... we don't need to pass the <function> object
+        undef
+      else
+        emit-reference(back-end, m, f);
+      end if;
   ins--call(back-end, global,
             concatenate(map(curry(emit-reference, back-end, m), c.arguments),
-                        vector(undef, undef)),
+                        vector(undef, fn)),
             type: return-type,
-            calling-convention:
-              llvm-calling-convention(back-end, f))
+            calling-convention: llvm-calling-convention(back-end, f))
 end method;
 
-/*
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <simple-call>) => ()
+// Call a known top-level method with the possibility of next methods
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <method-call>, f :: <&iep>)
+ => (call :: <llvm-value>);
+  let name = emit-name(back-end, m, f);
+  let global = llvm-builder-global(back-end, name);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  let next
+    = if (^next?(function(f)))
+        emit-reference(back-end, m, c.next-methods)
+      else
+        undef
+      end if;
+  ins--call(back-end, global,
+           concatenate(map(curry(emit-reference, back-end, m), c.arguments),
+                       vector(next, undef)),
+           type: return-type,
+           calling-convention: llvm-calling-convention(back-end, f))
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <method-call>) => ()
+// Method calls
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <method-call>, f)
+ => (call :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+
+  let fn = emit-reference(back-end, m, f);
+  let fn-cast = op--object-pointer-cast(back-end, fn, #"<lambda>");
+  let mep-slot-ptr = op--getslotptr(back-end, fn-cast, #"<lambda>", #"mep");
+  let mep = ins--load(back-end, mep-slot-ptr, alignment: word-size);
+
+  // Cast to the appropriate MEP type
+  let parameter-types
+    = make(<simple-object-vector>, size: c.arguments.size + 3);
+  parameter-types[0] := $llvm-object-pointer-type; // next
+  parameter-types[1] := $llvm-object-pointer-type; // function
+  parameter-types[2] := back-end.%type-table["iWord"]; // argument count
+  fill!(parameter-types, $llvm-object-pointer-type, start: 3);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let mep-type
+    = make(<llvm-function-type>,
+           return-type: return-type,
+           parameter-types: parameter-types,
+           varargs?: #f);
+  let mep-cast
+    = ins--bitcast(back-end, mep, llvm-pointer-to(back-end, mep-type));
+
+  let next
+    = emit-reference(back-end, m, c.next-methods);
+
+  ins--call(back-end, mep-cast,
+            concatenate(vector(next, fn, c.arguments.size),
+                        map(curry(emit-reference, back-end, m),
+                            c.arguments)),
+           type: return-type,
+           calling-convention: $llvm-calling-convention-c)
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <engine-node-call>) => ()
+// Generic function call through a known <engine-node>
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <engine-node-call>, f :: <&generic-function>)
+ => (call :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+
+  // Retrieve the entry point function from the engine node
+  let node = emit-reference(back-end, m, c.engine-node);
+  let node-cast = op--object-pointer-cast(back-end, node, #"<engine-node>");
+  let node-ep-ptr
+    = op--getslotptr(back-end, node-cast,
+                     #"<engine-node>", #"engine-node-entry-point");
+  let ep = ins--load(back-end, node-ep-ptr, alignment: word-size);
+
+  let fn = emit-reference(back-end, m, f);
+
+  // Cast to the appropriate engine-node entry point type
+  let parameter-types
+    = make(<simple-object-vector>, size: c.arguments.size + 3);
+  parameter-types[0] := $llvm-object-pointer-type; // node
+  parameter-types[1] := $llvm-object-pointer-type; // function
+  parameter-types[2] := back-end.%type-table["iWord"]; // argument count
+  fill!(parameter-types, $llvm-object-pointer-type, start: 3);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let ep-type
+    = make(<llvm-function-type>,
+           return-type: return-type,
+           parameter-types: parameter-types,
+           varargs?: #f);
+  let ep-cast
+    = ins--bitcast(back-end, ep, llvm-pointer-to(back-end, ep-type));
+
+  ins--call(back-end, ep-cast,
+            concatenate(vector(node, fn, c.arguments.size),
+                        map(curry(emit-reference, back-end, m),
+                            c.arguments)),
+            type: return-type,
+            calling-convention: $llvm-calling-convention-c)
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <apply>) => ()
+// Calls to general functions using the XEP
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <simple-call>, f)
+ => (call :: <llvm-value>);
+  let word-size = back-end-word-size(back-end);
+
+  let fn = emit-reference(back-end, m, f);
+  let fn-cast = op--object-pointer-cast(back-end, fn, #"<function>");
+  let xep-slot-ptr = op--getslotptr(back-end, fn-cast, #"<function>", #"xep");
+  let xep = ins--load(back-end, xep-slot-ptr, alignment: word-size);
+
+  // Cast to the appropriate XEP type
+  let parameter-types
+    = make(<simple-object-vector>, size: c.arguments.size + 2);
+  parameter-types[0] := $llvm-object-pointer-type; // function
+  parameter-types[1] := back-end.%type-table["iWord"]; // argument count
+  fill!(parameter-types, $llvm-object-pointer-type, start: 2);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  let xep-type
+    = make(<llvm-function-type>,
+           return-type: return-type,
+           parameter-types: parameter-types,
+           varargs?: #f);
+  let xep-cast
+    = ins--bitcast(back-end, xep, llvm-pointer-to(back-end, xep-type));
+
+  ins--call(back-end, xep-cast,
+            concatenate(vector(fn, c.arguments.size),
+                        map(curry(emit-reference, back-end, m),
+                            c.arguments)),
+            type: return-type,
+            calling-convention: $llvm-calling-convention-c)
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <method-apply>) => ()
+// Possibly congruent calls to a generic function
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <simple-call>, f :: <&generic-function>)
+ => (call :: <llvm-value>);
+  if (call-congruent?(c))
+    let gfn = emit-reference(back-end, m, f);
+    op--engine-node-call(back-end, gfn, c.arguments.size,
+                         map(curry(emit-reference, back-end, m), c.arguments))
+  else
+    next-method()
+  end if
 end method;
 
-define method emit-computation
-    (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <engine-node-apply>) => ()
+// Calls through a function's XEP using apply()
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <apply>, f)
+ => (call :: <llvm-value>);
+  let apply-xep-entry-point
+    = llvm-entry-point-function(back-end, apply-xep-descriptor,
+                                c.arguments.size);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  ins--call(back-end, apply-xep-entry-point,
+            concatenate(vector(emit-reference(back-end, m, f)),
+                        map(curry(emit-reference, back-end, m),
+                            c.arguments)),
+            type: return-type,
+            calling-convention: $llvm-calling-convention-fast)
 end method;
-*/
+
+// Calls through a function's MEP using apply() where next-methods are known
+define method emit-call
+    (back-end :: <llvm-back-end>, m :: <llvm-module>,
+     c :: <method-apply>, f)
+ => (call :: <llvm-value>);
+  let apply-mep-entry-point
+    = llvm-entry-point-function(back-end, apply-mep-descriptor,
+                                c.arguments.size);
+  let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
+  ins--call(back-end, apply-mep-entry-point,
+            concatenate(vector(emit-reference(back-end, m, c.next-methods),
+                               emit-reference(back-end, m, f)),
+                        map(curry(emit-reference, back-end, m),
+                            c.arguments)),
+            type: return-type,
+            calling-convention: $llvm-calling-convention-fast)
+end method;
 
 define method emit-slot-ptr
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <any-slot-value>)
