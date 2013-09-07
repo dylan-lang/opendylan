@@ -5,6 +5,8 @@ The C-FFI Library
 .. current-library:: c-ffi
 .. current-module:: c-ffi
 
+.. contents::
+
 Introduction
 ============
 
