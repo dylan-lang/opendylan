@@ -335,204 +335,223 @@ Date module.
 
    - :meth:`= <=(<duration>)>`
 
-\+
-^^
-
-Sealed methods
+.. method:: +
+   :sealed:
+   :specializer: <date>
 
    Performs addition on specific combinations of dates and durations.
 
    :signature: + *arg1* *arg2* => *sum*
 
-Arguments
-
--  *arg1* An instance of :class:`<date>` or
-   :class:`<duration>`. See description for details.
--  *arg2* An instance of :class:`<date>` or
-   :class:`<duration>`. See description for details.
-
-Values
-
--  *sum* An instance of :class:`<date>` or
-   :class:`<duration>`. See description for details.
+   :parameter arg1: An instance of :class:`<date>` or
+     :class:`<duration>`. See description for details.
+   :parameter arg2: An instance of :class:`<date>` or
+     :class:`<duration>`. See description for details.
+   :value sum: An instance of :class:`<date>`.
 
    :description:
 
-A number of methods are defined for the *+* generic function to allow
-summing of various combinations of dates and durations. Note that there
-is not a method defined for every possible combination of date and
-duration. Specifically, you cannot sum different types of duration, and
-you cannot sum two dates. The return value can be either a date or a
-duration, depending on the arguments supplied. The table below lists the
-methods that are defined on *+*.
+     A number of methods are defined for the ``+`` generic function to allow
+     summing of various combinations of dates and durations. Note that there
+     is not a method defined for every possible combination of date and
+     duration. Specifically, you cannot sum two dates. The table below lists
+     the methods that are defined on ``+`` and :class:`<date>`.
 
-Methods defined for addition of dates and durations
+     Methods defined for addition of dates and durations
 
-*arg1*
+     +--------------------------------+--------------------------------+--------------------------------+
+     | arg1                           | arg2                           | sum                            |
+     +================================+================================+================================+
+     | :class:`<date>`                | :class:`<duration>`            | :class:`<date>`                |
+     +--------------------------------+--------------------------------+--------------------------------+
+     | :class:`<duration>`            | :class:`<date>`                | :class:`<date>`                |
+     +--------------------------------+--------------------------------+--------------------------------+
 
-*arg2*
+   See also:
 
-*sum*
+   * :meth:`+(<duration>)`
+   * :meth:`-(<date>)`
+   * :meth:`-(<duration>)`
+   * :meth:`*(<duration>)`
+   * :meth:`/(<duration>)`
 
-#. ``<duration>``
+.. method:: +
+   :sealed:
+   :specializer: <duration>
 
-#. ``<duration>``
+   Performs addition on durations.
 
-#. ``<duration>``
+   :signature: + *arg1* *arg2* => *sum*
 
-#. ``<year/month-duration>``
+   :parameter arg1: An instance of :class:`<duration>`.
+   :parameter arg2: An instance of :class:`<duration>`.
+   :value sum: An instance of :class:`<duration>`.
 
-#. ``<year/month-duration>``
+   :description:
 
-#. ``<year/month-duration>``
+     A number of methods are defined for the ``+`` generic function
+     allow summing of durations. Note that there is not a method defined
+     for every possible combination of duration Specifically, you cannot
+     sum different types of duration. The table below lists the methods
+     that are defined on ``+``.
 
-#. ``<day/time-duration>``
+     Methods defined for addition of durations
 
-#. ``<day/time-duration>``
+     +--------------------------------+--------------------------------+--------------------------------+
+     | arg1                           | arg2                           | sum                            |
+     +================================+================================+================================+
+     | :class:`<duration>`            | :class:`<duration>`            | :class:`<duration>`            |
+     +--------------------------------+--------------------------------+--------------------------------+
+     | :class:`<year/month-duration>` | :class:`<year/month-duration>` | :class:`<year/month-duration>` |
+     +--------------------------------+--------------------------------+--------------------------------+
+     | :class:`<day/time-duration>`   | :class:`<day/time-duration>`   | :class:`<day/time-duration>`   |
+     +--------------------------------+--------------------------------+--------------------------------+
 
-#. ``<day/time-duration>``
+   See also:
 
-#. ``<date>``
+   * :meth:`+(<date>)`
+   * :meth:`-(<date>)`
+   * :meth:`-(<duration>)`
+   * :meth:`*(<duration>)`
+   * :meth:`/(<duration>)`
 
-#. ``<duration>``
-
-#. ``<date>``
-
-#. ``<duration>``
-
-#. ``<date>``
-
-#. ``<date>``
-
-   See also: `-`_, `\*`_, `/`_
-
-\-
-^^
-
-Sealed methods
+.. method:: -
+   :sealed:
+   :specializer: <date>
 
    Performs subtraction on specific combinations of dates and durations.
 
    :signature: - *arg1* *arg2* => *diff*
 
-Arguments
-
--  *arg1* An instance of :class:`<date>` or
-   :class:`<duration>`. See description for details.
--  *arg2* An instance of :class:`<duration>`, or an
-   instance of :class:`<date>` if *arg1* is a ``<date>``.
-   See description for details.
-
-Values
-
--  *diff* An instance of :class:`<date>` or
-   :class:`<duration>`. See description for details.
+   :parameter arg1: An instance of :class:`<date>` or
+     :class:`<duration>`. See description for details.
+   :parameter arg2: An instance of :class:`<duration>`, or an
+     instance of :class:`<date>` if *arg1* is a ``<date>``.
+     See description for details.
+   :value diff: An instance of :class:`<date>` or
+     :class:`<duration>`. See description for details.
 
    :description:
 
-A number of methods are defined for the *-* generic function to allow
-subtraction of various combinations of dates and durations. Note that
-there is not a method defined for every possible combination of date and
-duration. Specifically, you cannot subtract a date from a duration, and
-you cannot subtract different types of duration. The return value can be
-either a date or a duration, depending on the arguments supplied. The
-table below lists the methods that are defined on *-*.
+     A number of methods are defined for the ``-`` generic function to allow
+     subtraction of various combinations of dates and durations. Note that
+     there is not a method defined for every possible combination of date and
+     duration. Specifically, you cannot subtract a date from a duration, and
+     you cannot subtract different types of duration. The return value can be
+     either a date or a duration, depending on the arguments supplied. The
+     table below lists the methods that are defined on ``-``.
 
-Methods defined for subtraction of dates and durations
+     Methods defined for subtraction of dates and durations
                                                       
-*arg1*
+     +--------------------------------+--------------------------------+--------------------------------+
+     | arg1                           | arg2                           | difference                     |
+     +================================+================================+================================+
+     | :class:`<date>`                | :class:`<duration>`            | :class:`<date>`                |
+     +--------------------------------+--------------------------------+--------------------------------+
+     | :class:`<date>`                | :class:`<date>`                | :class:`<day/time-duration>`   |
+     +--------------------------------+--------------------------------+--------------------------------+
 
-*arg2*
+   See also:
 
-*diff*
+   * :meth:`+(<date>)`
+   * :meth:`+(<duration>)`
+   * :meth:`-(<duration>)`
+   * :meth:`*(<duration>)`
+   * :meth:`/(<duration>)`
 
-#. ``<year/month-duration>``
+.. method:: -
+   :sealed:
+   :specializer: <duration>
 
-#. ``<year/month-duration>``
+   Performs subtraction on specific combinations of durations.
 
-#. ``<year/month-duration>``
+   :signature: - *arg1* *arg2* => *diff*
 
-#. ``<day/time-duration>``
+   :parameter arg1: An instance of :class:`<date>` or
+     :class:`<duration>`. See description for details.
+   :parameter arg2: An instance of :class:`<duration>`, or an
+     instance of :class:`<date>` if *arg1* is a ``<date>``.
+     See description for details.
+   :value diff: An instance of :class:`<date>` or
+     :class:`<duration>`. See description for details.
 
-#. ``<day/time-duration>``
+   :description:
 
-#. ``<day/time-duration>``
+     A number of methods are defined for the ``-`` generic function to allow
+     subtraction of durations. Note that there is not a method defined for
+     every possible combination of duration. Specifically, you cannot
+     subtract different types of duration. The table below lists the
+     methods that are defined on ``-``.
 
-#. ``<date>``
+     Methods defined for subtraction of dates and durations
+                                                      
+     +--------------------------------+--------------------------------+--------------------------------+
+     | arg1                           | arg2                           | difference                     |
+     +================================+================================+================================+
+     | :class:`<year/month-duration>` | :class:`<year/month-duration>` | :class:`<year/month-duration>` |
+     +--------------------------------+--------------------------------+--------------------------------+
+     | :class:`<day/time-duration>`   | :class:`<day/time-duration>`   | :class:`<day/time-duration>`   |
+     +--------------------------------+--------------------------------+--------------------------------+
 
-#. ``<duration>``
+   See also:
 
-#. ``<date>``
+   * :meth:`+(<date>)`
+   * :meth:`+(<duration>)`
+   * :meth:`-(<date>)`
+   * :meth:`*(<duration>)`
+   * :meth:`/(<duration>)`
 
-#. ``<date>``
-
-#. ``<date>``
-
-#. ``<day/time-duration>``
-
-   See also: `+`_ `\*`_ `/`_
-
-\*
-^^
-
-Sealed methods
+.. method:: *
+   :sealed:
+   :specializer: <duration>
 
    Multiplies a duration by a scale factor.
 
    :signature: \* *duration* *scale* => *new-duration*
    :signature: \* *scale* *duration* => *new-duration*
 
-Arguments
-
--  *duration* An instance of :class:`<duration>`.
--  *scale* An instance of :drm:`<real>`.
-
-*Note:* These arguments can be expressed in any order.
-
-Values
-
--  *new-duration* An instance of :class:`<date>` or
-   :class:`<duration>`. See description for details.
+   :parameter duration: An instance of :class:`<duration>`.
+   :parameter scale: An instance of :drm:`<real>`.
+   :value new-duration: An instance of :class:`<duration>`.
 
    :description:
 
-Multiples a duration by a scale factor and returns the result. Note that
-the arguments can be expressed in any order: methods are defined such
-that the duration can be placed first or second in the list of
-arguments.
+     *Note:* These arguments can be expressed in any order.
 
-   See also: `+`_, `-`_, `/`_
+     Multiples a duration by a scale factor and returns the result. Note that
+     the arguments can be expressed in any order: methods are defined such
+     that the duration can be placed first or second in the list of
+     arguments.
 
-/
-^
+   See also:
 
-Sealed methods
+   * :meth:`+(<date>)`
+   * :meth:`+(<duration>)`
+   * :meth:`-(<date>)`
+   * :meth:`-(<duration>)`
+   * :meth:`/(<duration>)`
+
+.. method:: /
+   :sealed:
+   :specializer: <duration>
 
    Divides a duration by a scale factor
 
    :signature: / *duration* *scale* => *new-duration*
 
-Arguments
-
--  *duration* An instance of :class:`<duration>`.
--  *scale* An instance of :drm:`<real>`.
-
-Values
-
--  *new-duration* An instance of :class:`<date>` or
-   :class:`<duration>`. See description for details.
+   :parameter duration: An instance of :class:`<duration>`.
+   :parameter scale: An instance of :drm:`<real>`.
+   :value new-duration: An instance of :class:`<duration>`.
 
    :description:
 
-A number of methods are defined for the + generic function to allow
-summing of various combinations of dates and durations. Note that there
-is not a method defined for every possible combination of date and
-duration. Specifically, you cannot sum different types of duration, and
-you cannot sum two dates. The return value can be either a date or a
-duration, depending on the arguments supplied. The table below lists the
-methods that are defined on +.
+   See also:
 
-   See also: `+`_, `-`_, `\*`_
+   * :meth:`+(<date>)`
+   * :meth:`+(<duration>)`
+   * :meth:`-(<date>)`
+   * :meth:`-(<duration>)`
+   * :meth:`*(<duration>)`
 
 .. function:: as-iso8601-string
 
@@ -1506,9 +1525,9 @@ methods that are defined on +.
 
    :operations:
 
-     - :meth:`< <<(duration>)>`
-     - :meth:`+ <+(<year/month-duration>)>`
-     - :meth:`- <-(<year/month-duration>)>`
+     - :meth:`< <<(<duration>)>`
+     - :meth:`+ <+(<duration>)>`
+     - :meth:`- <-(<duration>)>`
      - :func:`decode-duration`
      - :func:`encode-year/month-duration`
 
