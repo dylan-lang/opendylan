@@ -9,7 +9,7 @@ Status:          Draft
 Type:            Standards Track
 Affects-DRM:     Yes
 Created:         28-Jul-2013
-Last-Modified:   08-Aug-2013
+Last-Modified:   10-Aug-2013
 Post-History:    28-Jul-2013
 Target-Version:  2013.2
 ===============  ===============
@@ -23,7 +23,8 @@ Abstract
 
 To improve type safety of collections and particularly limited collections,
 this DEP adds a ``default-fill:`` keyword argument to limited collection
-classes and a ``default-fill`` and ``element-type`` getter to all collections.
+classes and an ``element-type-fill`` and ``element-type`` getter to all
+collections.
 
 
 Specification
@@ -75,12 +76,12 @@ element type of the collection; it is an error to supply a default filler
 object that the collection cannot accommodate.
 
 
-``default-fill``
-----------------
+``element-type-fill``
+---------------------
 
 A new open generic function will be added to the Dylan library::
 
-   default-fill (coll :: <collection>) => (fill-object :: <object>)
+   element-type-fill (coll :: <collection>) => (fill-object :: <object>)
 
 For instances of fillable collection classes returned by ``limited``, this
 function will return the (possibly defaulted) ``default-fill:`` argument to
@@ -98,9 +99,10 @@ All others            ``#f``
 
 *C1* and *C2* are unspecified values equivalent to a space character.
 
-It is an error to call ``default-fill`` on an instance of a collection class
-that does not support the ``fill:`` init-keyword. However, implementations may
-find this difficult to check and may return ``#f`` for such collections
+It is an error to call ``element-type-fill`` on an instance of a collection
+class that does not support the ``fill:`` init-keyword. However,
+implementations may find this difficult to check (because users can introduce
+that keyword in any subclass) and may return ``#f`` for such collections
 instead. Portable programs should not rely on this behavior.
 
 
@@ -170,7 +172,13 @@ element type. Adding the ``element-type`` method solves that problem.
 Rationale
 =========
 
-The ``default-fill`` and ``element-type`` methods take an *instance* of a
+I named ``element-type-fill`` that rather than ``default-fill`` because the
+latter name is a little more misleading. A user can define a subclass of a
+collection and provide a new default value for the ``fill:`` init-keyword
+without needing to define a new ``element-type-fill`` method; he only needs to
+do that when restricting the element type of a collection.
+
+The ``element-type-fill`` and ``element-type`` methods take an *instance* of a
 collection class as an argument rather than the *type* of the collection. This
 is necessary because the [DRM]_ allows the ``limited`` function on *C* to
 return *C* itself as a type, implying that the default fill and element type
@@ -220,13 +228,13 @@ Existing subclasses of ``<collection>`` that define their own ``fill:``
 init-keyword will still work, assuming they also define a default value that is
 of the element type of the subclass.
 
-New code may use ``element-type`` or ``default-fill`` in conjunction with an
-existing subclass of ``<collection>`` that does not define those methods. Those
-functions will then return ``<object>`` and ``#f``, which may not be
-appropriate for the existing collection.
+New code may use ``element-type`` or ``element-type-fill`` in conjunction with
+an existing subclass of ``<collection>`` with restricted types that does not
+define those methods. Those functions will then return ``<object>`` and ``#f``,
+which may not be appropriate for the existing collection.
 
 The only other backwards compatibility issue is a namespace collision if the
-user defines his own unrelated "element-type" or "default-fill" bindings.
+user defines his own unrelated "element-type" or "element-type-fill" bindings.
 
 
 Reference Implementation
