@@ -22,30 +22,23 @@ The class hierarchy for DUIM-DCs
 ================================
 
 A number of base classes are exposed in the DUIM-DCs library, each of
-which is a subclass of :class:`<object>`. They are shown in Table `Overall
-class hierarchy for the DUIM-DCs library`_.
+which is a subclass of :class:`<object>`. They are shown in the following table
 
-Overall class hierarchy for the DUIM-DCs library
-
-.. figure:: images/dcs-2.png
-   :align: center
-   :alt: 
-
-<object>
-
-<pen>
-
-<brush>
-
-<palette>
-
-<ink>
-
-See `Subclasses of <ink>`_
-
-<text-style>
-
-<device-font>
++----------+--------------+------------------------------+
+| <object> |              |                              |
++----------+--------------+------------------------------+
+|          | <pen>        |                              |
++----------+--------------+------------------------------+
+|          | <brush>      |                              |
++----------+--------------+------------------------------+
+|          | <palette>    |                              |
++----------+--------------+------------------------------+
+|          | <ink>        | See `Subclasses of \<ink\>`_ |
++----------+--------------+------------------------------+
+|          | <text-style> |                              |
++----------+--------------+------------------------------+
+|          |              | <device-font>                |
++----------+--------------+------------------------------+
 
 -  :class:`<pen>` This is protocol class for pens. A pen is used to draw 1
    dimensional graphics such as lines or outline, using a specific color
@@ -59,7 +52,7 @@ See `Subclasses of <ink>`_
    used by a given pen or brush. That is, the pen and brush define the
    drawing style (outlining or filling, respectively), and an ink is
    used to describe the color or pattern that is drawn. This class has a
-   number of subclasses, described in `Subclasses of <ink>`_.
+   number of subclasses, described in `Subclasses of \<ink\>`_.
 -  :class:`<text-style>` The protocol class for text styles. A text style is a
    portable way of describing the appearance of a piece of text on
    screen (its font family, size, weight, and so on) in an abstract
