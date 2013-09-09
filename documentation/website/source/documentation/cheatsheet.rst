@@ -2,10 +2,8 @@
 Dylan Cheat Sheet
 *****************
 
-* `Literals`_
-* `Naming Conventions`_
-* `Operators`_
-* `String Formatting`_
+.. contents::
+   :local:
 
 Literals
 ========
@@ -159,13 +157,39 @@ This table shows what is required/allowed in method parameter lists,
 depending on what is specified in the generic function's parameter
 list.
 
-=================================  =========  =============  =============  =========
-Generic function's parameter list  ``#key``   ``#key a, b``  ``#all-keys``  ``#rest``
-=================================  =========  =============  =============  =========
-``(x)``                            Forbidden  Forbidden      Forbidden      Forbidden
-``(x, #key)``                      Required   Allowed        Allowed        Allowed
-``(x, #key a, b)``                 Required   Required       Allowed        Allowed
-``(x, #key, #all-keys)``           Required   Allowed        Automatic      Allowed
-``(x, #key a, b, #all-keys)``      Required   Required       Automatic      Allowed
-``(x, #rest r)``                   Forbidden  Forbidden      Forbidden      Required
-=================================  =========  =============  =============  =========
++-----------------------------------+-------------------------------------------------------+
+| Generic function's parameter list | Methods' parameter lists                              |
+|                                   +-----------+---------------+---------------+-----------+
+|                                   | ``#key``  | ``#key a, b`` | ``#all-keys`` | ``#rest`` |
++===================================+===========+===============+===============+===========+
+| ``(x)``                           | Forbidden | Forbidden     | Forbidden     | Forbidden |
++-----------------------------------+-----------+---------------+---------------+-----------+
+| ``(x, #key)``                     | Required  | Allowed       | Allowed       | Allowed   |
++-----------------------------------+-----------+---------------+---------------+-----------+
+| ``(x, #key a, b)``                | Required  | Required      | Allowed       | Allowed   |
++-----------------------------------+-----------+---------------+---------------+-----------+
+| ``(x, #key, #all-keys)``          | Required  | Allowed       | Automatic     | Allowed   |
++-----------------------------------+-----------+---------------+---------------+-----------+
+| ``(x, #key a, b, #all-keys)``     | Required  | Required      | Automatic     | Allowed   |
++-----------------------------------+-----------+---------------+---------------+-----------+
+| ``(x, #rest r)``                  | Forbidden | Forbidden     | Forbidden     | Required  |
++-----------------------------------+-----------+---------------+---------------+-----------+
+
+This table shows the different kinds of parameter lists that a method can have,
+what the ``r`` variable contains for each, and which keywords are permitted by
+each.
+
+======================================  =================  =========================  ======================
+Method's parameter list                 Contents of ``r``  Permits ``a:`` and ``b:``  Permits other keywords
+======================================  =================  =========================  ======================
+``(x)``                                 —                  No                         No            
+``(x, #key)``                           —                  If next method permits     If next method permits
+``(x, #key a, b)``                      —                  Yes                        If next method permits
+``(x, #key, #all-keys)``                —                  Yes                        Yes           
+``(x, #key a, b, #all-keys)``           —                  Yes                        Yes           
+``(x, #rest r)``                        Extra arguments    No                         No            
+``(x, #rest r, #key)``                  Keywords/values    If next method permits     If next method permits
+``(x, #rest r, #key a, b)``             Keywords/values    Yes                        If next method permits
+``(x, #rest r, #key, #all-keys)``       Keywords/values    Yes                        Yes           
+``(x, #rest r, #key a, b, #all-keys)``  Keywords/values    Yes                        Yes           
+======================================  =================  =========================  ======================
