@@ -2,13 +2,16 @@
 DUIM-Sheets Library
 *******************
 
+.. current-library:: duim-sheets
+.. current-module:: duim-sheets
+
 Overview
 ========
 
 The elements that comprise a Graphical User Interface (GUI) are arranged
 in a hierarchical ordering of object classes. At the top level of the
-DUIM hierarchy there are three main classes*,* *<sheet>*, *<gadget>*,
-and *<frame>*, all of which are subclasses of *<object>.*
+DUIM hierarchy there are three main classes, :class:`<sheet>`, :class:`<gadget>`,
+and :class:`<frame>`, all of which are subclasses of :class:`<object>`.
 
 Sheets are the most basic visual GUI element, and can be any unique part
 of a window: either a control such as a gadget or pane, or a layout.
@@ -36,10 +39,9 @@ without the need for any special action on your part. However, if you
 need to define your own sheet classes, you will also need to handle
 events occurring within those classes.
 
-The DUIM-Sheets library contains a single module, *duim-sheets*, from
-which all the interfaces described in this chapter are exposed. `See
-DUIM-Sheets Module`_ contains complete reference
-entries for each exposed interface.
+The DUIM-Sheets library contains a single module, *duim-sheets*, from which all
+the interfaces described in this chapter are exposed.  `DUIM-Sheets Module`_
+contains complete reference entries for each exposed interface.
 
 A sheet is the basic unit in a DUIM window. Inside any window, sheets
 are nested in a parent-child hierarchy. All sheets have the following
@@ -53,9 +55,9 @@ attributes:
    ignoring issues of occluding windows.
 
 The *sheet-transform* is an instance of a concrete subclass of
-*<transform>*. The *sheet-region* can be an instance of any concrete
+:class:`<transform>`. The *sheet-region* can be an instance of any concrete
 subclass of :class:`<region>`, but is usually represented by the region class
-*<bounding-box>*.
+:class:`<bounding-box>`.
 
 Some sheets (menu bars, button boxes, or tool bars, for instance) also
 have single or multiple children, in which case they have additional
@@ -83,27 +85,27 @@ and*set-sheet-edges*.
 Some classes of sheet can receive input. These have:
 
 -  A *sheet-event-queue* slot.
--  Methods for *<handle-event>*.
+-  Methods for :class:`<handle-event>`.
 
 Sheets that can be repainted have methods for *handle-repaint*.
 
 Sheets that can do output, have a *sheet-medium* slot.
 
 Some sheets act as *controls* such as push buttons, scroll bars, and
-sliders. These are represented by the *<gadget>* class and its
+sliders. These are represented by the :class:`<gadget>` class and its
 subclasses.
 
 Other sheets act as layout controls, which allow you to specify how the
 elements in a sheet are laid out, whether they are placed vertically or
 horizontally, whether they are left, right, or center-aligned, and so
-on. These are represented by the *<layout>* class and its subclasses,
-and are described in ` <layouts.htm#21962>`_.
+on. These are represented by the :class:`<layout>` class and its subclasses,
+and are described in :doc:`layouts`.
 
-A sheet can be associated with a *<display>*, which is an object that
+A sheet can be associated with a :class:`<display>`, which is an object that
 represents a single display (or screen) on some display server.
 
 A display (and all the sheets attached to the display) is associated
-with a *<port>* that is a connection to a display server. The port
+with a :class:`<port>` that is a connection to a display server. The port
 manages:
 
 -  a primary input device, such as a keyboard.
@@ -115,7 +117,7 @@ manipulate the Windows clipboard from within DUIM, the clipboard needs
 to be locked, so that its contents can be manipulated. DUIM uses the
 functions *open-clipboard* and *close-clipboard* to create and free
 clipboard locks. The *open-clipboard* function creates an instance of
-the class *<clipboard>* which is used to hold the contents of the
+the class :class:`<clipboard>` which is used to hold the contents of the
 clipboard for the duration of the lock. For general use of the
 clipboard, use the macro *with-clipboard*, rather than calling
 *open-clipboard* and *close-clipboard* explicitly. This lets you
@@ -151,292 +153,238 @@ The base classes in the DUIM-Sheets library
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The base classes for the majority of subclasses exposed from the
-DUIM-Sheets library are *<sheet>* and *<event>*, although a number of
-additional subclasses of *<object>* are also exposed.
+DUIM-Sheets library are :class:`<sheet>` and :class:`<event>`, although a number of
+additional subclasses of :class:`<object>` are also exposed.
 
-The base classes exposed by the DUIM-Sheets library are shown in `See
-Overall class hierarchy for the DUIM-Sheets
-library`_. Only *<sheet>*, and *<event>* have any
-subclasses defined. An *<event>* is an object representing some sort of
-event. See `Subclasses of <event>`_ for details
-of the subclasses of *<event>*.
+The base classes exposed by the DUIM-Sheets library are shown in the following
+table . Only :class:`<sheet>`, and :class:`<event>` have any subclasses
+defined. An :class:`<event>` is an object representing some sort of event. See
+`Subclasses of \<event\>`_ for details of the subclasses of :class:`<event>`.
 
 Overall class hierarchy for the DUIM-Sheets library
 
-.. figure:: images/silica-2.png
-   :align: center
-   :alt: 
-<object>
++----------+-----------------+-----------+
+| <object> |                 |           |
++----------+-----------------+-----------+
+|          | <sheet>         |           |
++          +-----------------+-----------+
+|          |                 | <display> |
++          +-----------------+-----------+
+|          | <port>          |           |
++          +-----------------+-----------+
+|          | <clipboard>     |           |
++          +-----------------+-----------+
+|          | <caret>         |           |
++          +-----------------+-----------+
+|          | <pointer>       |           |
++          +-----------------+-----------+
+|          | <medium>        |           |
++          +-----------------+-----------+
+|          | <frame-manager> |           |
++          +-----------------+-----------+
+|          | <event>         |           |
++----------+-----------------+-----------+
 
-<sheet>
-
-<display>
-
-<port>
-
-<clipboard>
-
-<caret>
-
-<pointer>
-
-<medium•
-
-<frame-manager•
-
-<event>
-
--  *<sheet>* As already mentioned, a sheet is the basic unit of window
+-  :class:`<sheet>` As already mentioned, a sheet is the basic unit of window
    applications, and they can be nested in a parent-child hierarchy. A
-   subclass of sheet is provided — *<display>* — which is an object that
+   subclass of sheet is provided — :class:`<display>` — which is an object that
    represents a single display (or screen) on a display server. All
    sheets can be attached to a display.
--  *<port>* A port is a connection to a display server. A display,
+-  :class:`<port>` A port is a connection to a display server. A display,
    together with all the sheets attached to it, is associated with a
    port, which manages a primary input device, such as a keyboard, a
    pointing device, such as a mouse, and an event processor that
    dispatches events to the appropriate sheet.
--  *<clipboard>* This class is used as a clipboard that can be used to
+-  :class:`<clipboard>` This class is used as a clipboard that can be used to
    hold information temporarily while it is transferred from one sheet
    to another, or between applications. Clipboards provide support for
    the standard *Cut*, *Copy*, and *Paste* commands common in most
    applications.
-
-*<caret>* and *<pointer>*
-
--  These two classes form an interface between the keyboard and the
-   display, and the pointing device and the display, respectively.
--  The *<caret>* represents the position on screen that characters typed
+-  :class:`<caret>` and :class:`<pointer>` These two classes form an interface
+   between the keyboard and the display, and the pointing device and the
+   display, respectively.
+-  The :class:`<caret>` represents the position on screen that characters typed
    on the keyboard will be placed. This is often a position in a
    document.
--  The *<pointer>* represents the position of the pointing device on the
+-  The :class:`<pointer>` represents the position of the pointing device on the
    screen, and thus shows the area that will be affected by any events
    generated with the pointing device, such as pressing or clicking one
    of the buttons on the device.
-
-*<pointer-drag-event>*
-
--  The class of events where the pointer for the pointing device
-   attached to the computer is moving, and one of the buttons on the
-   pointing device is pressed down as well. The effects of this event
-   are rather like a combination of the *<button-press-event>* and
-   *<pointer-motion-event>* classes. For more information about these
-   and other pointer event classes, see `Subclasses of
-   <device-event>`_.
-
-*<pointer-enter-event>*
-
--  This event is used to describe the event where the pointer for the
-   pointing device enters a specified area of the screen, such as a
-   sheet. For more information about these and other pointer event
-   classes, see `Subclasses of <device-event>`_.
--  *<medium>* A medium represents a destination for drawn or written
+-  :class:`<pointer-drag-event>` The class of events where the pointer for the
+   pointing device attached to the computer is moving, and one of the buttons
+   on the pointing device is pressed down as well. The effects of this event
+   are rather like a combination of the :class:`<button-press-event>` and
+   :class:`<pointer-motion-event>` classes. For more information about these
+   and other pointer event classes, see `Subclasses of \<device-event\>`_.
+-  :class:`<pointer-enter-event>` This event is used to describe the event
+   where the pointer for the pointing device enters a specified area of the
+   screen, such as a sheet. For more information about these and other pointer
+   event classes, see `Subclasses of \<device-event\>`_.
+-  :class:`<medium>` A medium represents a destination for drawn or written
    output. It has several items associated with it, such as a drawing
    plane, foreground and background colors, and default line and text
    styles.
-
-*<frame-manager>*
-
--  A frame manager represents the "look and feel" of a frame. This
-   controls standard interface elements for the platform you are
-   delivering on, such as the appearance and behavior of title bars,
-   borders, menu commands and scroll bars. Unless you are developing for
-   more than one platform, you do not need to be too concerned with
-   frame managers, since you will only using the default frame manager.
+-  :class:`<frame-manager>` A frame manager represents the "look and feel" of
+   a frame. This controls standard interface elements for the platform you are
+   delivering on, such as the appearance and behavior of title bars, borders,
+   menu commands and scroll bars. Unless you are developing for more than one
+   platform, you do not need to be too concerned with frame managers, since you
+   will only using the default frame manager.
 
 Subclasses of <event>
 ^^^^^^^^^^^^^^^^^^^^^
 
-`Subclasses of the <event> class`_ shows the
-subclasses of the *<event>* class that are exposed by the DUIM-Sheets
-library.
+The following table shows the subclasses of the :class:`<event>` class that are
+exposed by the DUIM-Sheets library.
 
-Subclasses of the *<event>* class
-
-.. figure:: images/silica-2.png
-   :align: center
-   :alt: 
-<event>
-
-<frame-event>
-
-<port-terminated-event>
-
-<timer-event>
-
-<sheet-event>
-
-<device-event>
-
-See `Subclasses of <device-event>`_
-
-<window-event>
-
-<window-configuration-event>
-
-<window-repaint-event>
++---------+---------------+-------------------------+---------------------------------------+
+| <event> |               |                         |                                       |
++---------+---------------+-------------------------+---------------------------------------+
+|         | <frame-event> |                         |                                       |
++         +---------------+-------------------------+---------------------------------------+
+|         |               | <port-terminated-event> |                                       |
++         +---------------+-------------------------+---------------------------------------+
+|         |               | <timer-event>           |                                       |
++         +---------------+-------------------------+---------------------------------------+
+|         | <sheet-event> |                         |                                       |
++         +---------------+-------------------------+---------------------------------------+
+|         |               | <device-event>          |                                       |
++         +---------------+-------------------------+---------------------------------------+
+|         |               | <window-event>          | See `Subclasses of \<device-event\>`_ |
++         +---------------+-------------------------+---------------------------------------+
+|         |               |                         | <window-configuration-event>          |
++         +---------------+-------------------------+---------------------------------------+
+|         |               |                         | <window-repaint-event>                |
++---------+---------------+-------------------------+---------------------------------------+
 
 The classes of event that are exposed by the DUIM-Sheets library fall
 into two categories:
 
--  Events that occur in frames: subclasses of the *<frame-event>* class
--  Events that occur in sheets: subclasses of the *<sheet-event>* class
+-  Events that occur in frames: subclasses of the :class:`<frame-event>` class
+-  Events that occur in sheets: subclasses of the :class:`<sheet-event>` class
 
-Most subclasses of *<frame-event>* are exposed by the DUIM-Frames
-library. See ` <frames.htm#89815>`_, for full details about these
-subclasses. However, two subclasses of *<frame-event>* are exposed by
+Most subclasses of :class:`<frame-event>` are exposed by the DUIM-Frames
+library. See :doc:`frames`, for full details about these
+subclasses. However, two subclasses of :class:`<frame-event>` are exposed by
 the DUIM-Sheets library:
 
-*<port-terminated-event>*
+- :class:`<port-terminated-event>` This class represents the event of a port
+  — a connection to a display — being terminated.
+- :class:`<timer-event>` This is the class of any event that is timed.
 
--  This class represents the event of a port — a connection to a display
-   — being terminated.
--  *<timer-event>* This is the class of any event that is timed.
-
-Subclasses of *<sheet-event>* fall into two categories:
+Subclasses of :class:`<sheet-event>` fall into two categories:
 
 -  Device events that occur to devices attached to the computer
    (typically the keyboard and the pointing device). These are described
    in `Subclasses of <device-event>`_.
 -  Window events that occur in a window.
 
-Events that occur in a window are subclasses of *<window-event>*. Two
+Events that occur in a window are subclasses of :class:`<window-event>`. Two
 such events are supplied:
 
-*<window-configuration-event>*
-
--  This event occurs whenever the configuration of sheets in a window
-   needs to be recalculated. This may occur in property frames, for
-   example, when clicking on the available tabs to display different
-   pages of information.
--  Sometimes, dialog boxes have buttons that allow you to show or hide
-   additional details, which are themselves displayed in an extra pane
-   at the bottom or on the right hand side of the dialog. Clicking on
-   such a button would also create a *<window-configuration-event>*, as
-   the additional pane would need to be displayed or hidden, forcing a
-   recalculation of the layout of the sheets in the frame.
-
-*<window-repaint-event>*
-
--  This event occurs whenever a region of a window needs to be
-   repainted. This may occur when refreshing a chart or drawing in a
-   frame.
+- :class:`<window-configuration-event>` This event occurs whenever the
+  configuration of sheets in a window needs to be recalculated. This may occur
+  in property frames, for example, when clicking on the available tabs to
+  display different pages of information.  Sometimes, dialog boxes have buttons
+  that allow you to show or hide additional details, which are themselves
+  displayed in an extra pane at the bottom or on the right hand side of the
+  dialog. Clicking on such a button would also create
+  a :class:`<window-configuration-event>`, as the additional pane would need to
+  be displayed or hidden, forcing a recalculation of the layout of the sheets
+  in the frame.
+- :class:`<window-repaint-event>` This event occurs whenever a region of
+  a window needs to be repainted. This may occur when refreshing a chart or
+  drawing in a frame.
 
 Subclasses of <device-event>
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-`Subclasses of the <device-event> class`_ shows
-the subclasses of the *<device-event>* class that are exposed by the
-DUIM-Sheets library. Device events, broadly speaking, describe any event
-that can occur on a device connected to the computer.
+The following table shows the subclasses of the :class:`<device-event>` class
+that are exposed by the DUIM-Sheets library.  Device events, broadly speaking,
+describe any event that can occur on a device connected to the computer.
 
-Subclasses of the *<device-event>* class
++----------------+------------------+------------------------+--------------------------+------------------------+
+| <device-event> |                  |                        |                          |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                | <pointer-event>  |                        |                          |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  | <pointer-button-event> |                          |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  |                        | <button-press-event>     |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  |                        | <button-release-event>   |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  |                        | <button-click-event>     |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  |                        | <double-click-event>     |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  |                        | <pointer-drag-event>     |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  | <pointer-motion-event> |                          |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  |                        | <pointer-drag-event>     |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  |                        | <pointer-boundary-event> |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                | <keyboard-event> |                        |                          |  <pointer-exit-event>  |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  | <key-press-event>      |                          |  <pointer-enter-event> |
++----------------+------------------+------------------------+--------------------------+------------------------+
+|                |                  | <key-release-event>    |                          |                        |
++----------------+------------------+------------------------+--------------------------+------------------------+
 
-.. figure:: images/silica-2.png
-   :align: center
-   :alt: 
-<device-event>
-
-<pointer-event>
-
-<pointer-button-event>
-
-<button-press-event>
-
-<button-release-event>
-
-<button-click-event>
-
-<double-click-event>
-
-<pointer-drag-event>
-
-<pointer-motion-event>
-
-<pointer-drag-event>
-
-<pointer-boundary-event>
-
-<keyboard-event>
-
-<pointer-exit-event>
-
-<key-press-event>
-
-<pointer-enter-event
-
-<key-release-event>
-
-*Note:* The *<pointer-drag-event>* class is a subclass of both
-*<pointer-button-event>* and *<pointer-motion-event>*.
+*Note:* The :class:`<pointer-drag-event>` class is a subclass of both
+:class:`<pointer-button-event>` and :class:`<pointer-motion-event>`.
 
 Device events fall into two distinct categories:
 
 -  Keyboard events that occur on the keyboard attached to the computer:
-   subclasses of *<keyboard-event>*
+   subclasses of :class:`<keyboard-event>`
 -  Pointer events that occur on the pointing device attached to the
-   computer: subclasses of *<pointer-event>*
+   computer: subclasses of :class:`<pointer-event>`
 
-There are two classes of keyboard event. The classes *<key-press-event>*
-and *<key-release-event>* describe the events that occur when any key on
+There are two classes of keyboard event. The classes :class:`<key-press-event>`
+and :class:`<key-release-event>` describe the events that occur when any key on
 the keyboard is pressed or released, respectively.
 
 There are three classes of pointer event, some of which provide a number
 of subclasses. Note that there are another two classes of pointer event
-that are immediate subclasses of *<object>*. These are described in
+that are immediate subclasses of :class:`<object>`. These are described in
 `The base classes in the DUIM-Sheets library`_.
 
-*<pointer-button-event>*
+- :class:`<pointer-button-event>` These events occur whenever there is any
+  activity on one of the buttons on the pointing device. Several subclasses of
+  this class are provided.
+- :class:`<pointer-exit-event>` This is an event that occurs when the pointer
+  leaves a specified area such as a sheet.
+- :class:`<pointer-motion-event>` This class of events occur when the pointer
+  is in motion. There is one subclass provided,
+  :class:`<pointer-boundary-event>`, for the specific case when the motion of
+  the pointer causes the boundary of a sheet to be crossed.  *Note:* Unlike
+  :class:`<pointer-drag-event>`, no button needs to be pressed on the attached
+  pointing device.
 
--  These events occur whenever there is any activity on one of the
-   buttons on the pointing device. Several subclasses of this class are
-   provided.
+The subclasses provided for :class:`<pointer-button-event>` are as follows:
 
-*<pointer-exit-event>*
-
--  This is an event that occurs when the pointer leaves a specified area
-   such as a sheet.
-
-*<pointer-motion-event>*
-
--  This class of events occur when the pointer is in motion. There is
-   one subclass provided, *<pointer-boundary-event>*, for the specific
-   case when the motion of the pointer causes the boundary of a sheet to
-   be crossed.
--  *Note:* Unlike *<pointer-drag-event>*, no button needs to be pressed
-   on the attached pointing device.
-
-The subclasses provided for *<pointer-button-event>* are as follows:
-
-*<button-press-event>*
-
--  This event occurs when any button on the pointing device is pressed
-   down by the user. Note that this is distinct from
-   *<button-click-event>*, described below.
-
-*<button-release-event>*
-
--  This event occurs when any previously pressed button on the pointing
-   device is released by the user.
-
-*<button-click-event>*
-
--  This event occurs when any button on the pointing device is pressed
-   down by the user and then released again within a certain time frame.
-   An instance of this class is created if the creation of an instance
-   of *<button-press-event>* is closely followed by the creation of an
-   instance of *<button-release-event>*. The necessary time frame is
-   dictated by the configuration of your computer. In Windows, for
-   example, this time can be set using the Control Panel.
-
-*<double-click-event>*
-
--  This event occurs when a button is clicked twice within a certain
-   time frame. An instance of this class is created if the creation of
-   an instance of *<button-click-event>* is closely followed by the
-   creation of another instance of *<button-click-event>*. The
-   necessary time frame is dictated by the configuration of your
-   computer.
+- :class:`<button-press-event>` This event occurs when any button on the
+  pointing device is pressed down by the user. Note that this is distinct from
+  :class:`<button-click-event>`, described below.
+- :class:`<button-release-event>`
+  This event occurs when any previously pressed button on the pointing device
+  is released by the user.
+- :class:`<button-click-event>` This event occurs when any button on the
+  pointing device is pressed down by the user and then released again within
+  a certain time frame.  An instance of this class is created if the creation
+  of an instance of :class:`<button-press-event>` is closely followed by the
+  creation of an instance of :class:`<button-release-event>`. The necessary
+  time frame is dictated by the configuration of your computer. In Windows, for
+  example, this time can be set using the Control Panel.
+- :class:`<double-click-event>` This event occurs when a button is clicked
+  twice within a certain time frame. An instance of this class is created if
+  the creation of an instance of :class:`<button-click-event>` is closely
+  followed by the creation of another instance of
+  :class:`<button-click-event>`. The necessary time frame is dictated by the
+  configuration of your computer.
 
 DUIM-Sheets Module
 ==================
@@ -444,8350 +392,6068 @@ DUIM-Sheets Module
 This section contains a complete reference of all the interfaces that
 are exported from the *duim-sheets* module.
 
-=
-~
+.. generic-function:: =
 
-G.f. method
-'''''''''''
-Returns true if the specified gestures are the same.
+   Returns true if the specified gestures are the same.
 
    :signature: = *gesture1* *gesture2* => *equal?*
 
-Arguments
+   :parameter gesture1: An instance of type :class:`<gesture>`.
+   :parameter gesture2: An instance of type :class:`<gesture>`.
 
--  *gesture1* An instance of type `<gesture>`_.
--  *gesture2* An instance of type `<gesture>`_.
-
-Values
-
--  *equal?* An instance of type ``<boolean>``.
+   :value equal?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *gesture1* and *gesture2* are the same.
+     Returns true if *gesture1* and *gesture2* are the same.
 
    See also
 
-`gesture-spec-equal`_
+   - :gf:`gesture-spec-equal`
 
-add-child
----------
+.. generic-function:: add-child
 
-Generic function
-''''''''''''''''
-Adds a child to the specified sheet.
+   Adds a child to the specified sheet.
 
    :signature: add-child *sheet* *child* #key *index* => *sheet*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter child: An instance of type :class:`<sheet>`.
+   :parameter index: An instance of type *false-or(<integer>)*.
 
--  *sheet* An instance of type `<sheet>`_.
--  *child* An instance of type `<sheet>`_.
--  *index* An instance of type *false-or(<integer>)*.
-
-Values
-
--  *sheet* An instance of type `<sheet>`_.
+   :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Adds a child to *sheet*.
+     Adds a child to *sheet*.
 
    See also
 
-`remove-child`_
+   - :gf:`remove-child`
+   - :gf:`replace-child`
 
-`replace-child`_
+.. generic-function:: add-clipboard-data
 
-add-clipboard-data
-------------------
-
-Generic function
-''''''''''''''''
-Adds data to a clipboard.
+   Adds data to a clipboard.
 
    :signature: add-clipboard-data *clipboard* *data* => *success?*
 
-Arguments
+   :parameter clipboard: An instance of :class:`<clipboard>`.
+   :parameter data: An instance of :class:`<object>`.
 
--  *clipboard* An instance of `<clipboard>`_.
--  *data* An instance of *<object>*.
-
-Values
-
--  *success?* An instance of *<boolean>*.
+   :value success?: An instance of :class:`<boolean>`.
 
    :description:
 
-This generic function adds *data* to *clipboard*. It returns ``#t`` if
-*data* was successfully added to the clipboard.
+     This generic function adds *data* to *clipboard*. It returns ``#t`` if
+     *data* was successfully added to the clipboard.
 
-add-clipboard-data-as
----------------------
+.. generic-function:: add-clipboard-data-as
 
-Generic function
-''''''''''''''''
-Coerces data to a particular type and then adds it to a clipboard.
+   Coerces data to a particular type and then adds it to a clipboard.
 
    :signature: add-clipboard-data *type clipboard data* => *success?*
 
-Arguments
+   :parameter type: An instance of *type-union(<symbol>,* *<type>)*.
+   :parameter clipboard: An instance of :class:`<clipboard>`.
+   :parameter data: An instance of :class:`<object>`.
 
--  *type* An instance of *type-union(<symbol>,* *<type>)*.
--  *clipboard* An instance of `<clipboard>`_.
--  *data* An instance of *<object>*.
-
-Values
-
--  *success?* An instance of *<boolean>*.
+   :value success?: An instance of :class:`<boolean>`.
 
    :description:
 
-This generic function adds *data* to *clipboard*, first coercing it to
-*type*. The argument *type* is an instance of *type-union(<symbol>,*
-*<type>)*. It returns ``#t`` if *data* was successfully added to the
-clipboard.
+     This generic function adds *data* to *clipboard*, first coercing it to
+     *type*. The argument *type* is an instance of *type-union(<symbol>,*
+     *<type>)*. It returns ``#t`` if *data* was successfully added to the
+     clipboard.
 
-$alt-key
---------
+.. constant:: $alt-key
 
-Constant
-''''''''
-A constant that represents the ALT key on the keyboard.
+   A constant that represents the ALT key on the keyboard.
 
-   :type:
+   :type: :class:`<integer>`
 
-*<integer>*
-
-Value
-
-`$meta-key`_
+   :value: :const:`$meta-key`
 
    :description:
 
-A constant that represents the ALT key on the keyboard. This is set to
-the same value as the META key, to deal with the case where the META key
-is not present on the keyboard.
+     A constant that represents the ALT key on the keyboard. This is set to
+     the same value as the META key, to deal with the case where the META key
+     is not present on the keyboard.
 
    See also
 
-`$control-key`_
+   - :const:`$control-key`
+   - :const:`$hyper-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index`
+   - :gf:`modifier-key-index-name`
+   - :const:`$modifier-keys`
+   - :const:`$option-key`
+   - :const:`$shift-key`
+   - :const:`$super-key`
 
-`$hyper-key`_
+.. generic-function:: beep
 
-`$meta-key`_
-
-`modifier-key-index`_
-
-`modifier-key-index-name`_
-
-`$modifier-keys`_
-
-`$option-key`_
-
-`$shift-key`_
-
-`$super-key`_
-
-beep
-----
-
-Generic function
-''''''''''''''''
    :signature: beep *drawable* => ()
 
-Arguments
-
--  *drawable* An instance of type *type-union(`See
-   <sheet>`_, `<medium>`_)*.
-
+   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
 
    :description:
 
-boundary-event-kind
--------------------
+.. generic-function:: boundary-event-kind
 
-Generic function
-''''''''''''''''
-Returns the kind of boundary event for the specified event.
+   Returns the kind of boundary event for the specified event.
 
    :signature: boundary-event-kind *event* => *symbol*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *symbol* An instance of type *one-of(#"ancestor", #"virtual",
-   #"inferior", #"nonlinear", #"nonlinear-virtual", #f)*.
+   :value symbol: An instance of type *one-of(#"ancestor", #"virtual", #"inferior", #"nonlinear", #"nonlinear-virtual", #f)*.
 
    :description:
 
-Returns the kind of boundary event for *event*. These correspond to the
-detail members for X11 enter and exit events.
+     Returns the kind of boundary event for *event*. These correspond to the
+     detail members for X11 enter and exit events.
 
    See also
 
-`<pointer-boundary-event>`_
+   - :class:`<pointer-boundary-event>`
 
-button-index
-------------
+.. function:: button-index
 
-Inline function
-'''''''''''''''
-Returns the index for the specified pointer button.
+   Returns the index for the specified pointer button.
 
    :signature: button-index *button* => *index*
 
-Arguments
+   :parameter button: An instance of type *one-of(#"left", #"middle", #"right")*.
 
--  *button* An instance of type *one-of(#"left", #"middle", #"right")*.
-
-Values
-
--  *index* An instance of type ``<integer>``.
+   :value index: An instance of type ``<integer>``.
 
    :description:
 
-Returns the index for *button*, a button on the pointer device
-connected to the computer (typically a mouse). The *index* returned is
-either 0, 1, or 2, for the left, middle, or right buttons, respectively.
+     Returns the index for *button*, a button on the pointer device
+     connected to the computer (typically a mouse). The *index* returned is
+     either 0, 1, or 2, for the left, middle, or right buttons, respectively.
 
    See also
 
-`button-index-name`_
+   - :gf:`button-index-name`
+   - :const:`$pointer-buttons`
 
-`$pointer-buttons`_
+.. function:: button-index-name
 
-button-index-name
------------------
-
-Function
-''''''''
-Returns the button on the pointer device represented by the specified
-index.
+   Returns the button on the pointer device represented by the specified
+   index.
 
    :signature: button-index-name *index* => *button*
 
-Arguments
+   :parameter index: An instance of type ``<integer>``.
 
--  *index* An instance of type ``<integer>``.
-
-Values
-
--  *button* An instance of type *one-of(#"left", #"middle", #"right")*.
+   :value button: An instance of type *one-of(#"left", #"middle", #"right")*.
 
    :description:
 
-Returns the button on the pointer device connected to the computer
-(typically a mouse) represented by *index*. The *index* is either 0, 1,
-or 2, these values corresponding to the left, middle, or right buttons,
-respectively.
+     Returns the button on the pointer device connected to the computer
+     (typically a mouse) represented by *index*. The *index* is either 0, 1,
+     or 2, these values corresponding to the left, middle, or right buttons,
+     respectively.
 
    See also
 
-`button-index`_
+   - :gf:`button-index`
+   - :const:`$pointer-buttons`
 
-`$pointer-buttons`_
+.. class:: <button-press-event>
+   :sealed:
+   :instantiable:
 
-<button-press-event>
---------------------
+   The class of events representing button presses.
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events representing button presses.
-
-   :superclasses:
-
-`<pointer-button-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<pointer-button-event>`
 
    :description:
 
-The class of events representing button presses. A instance of this
-class is generated if a button press is detected, and a second button
-press is not detected within the allowed interval for a double-click
-event. Alternatively, if a double-click event has just been generated,
-then an instance of this class is generated when a subsequent button
-press is detected.
+     The class of events representing button presses. A instance of this
+     class is generated if a button press is detected, and a second button
+     press is not detected within the allowed interval for a double-click
+     event. Alternatively, if a double-click event has just been generated,
+     then an instance of this class is generated when a subsequent button
+     press is detected.
 
    :operations:
 
--  None.
-
    See also
 
-`<button-release-event>`_
+   - :class:`<button-release-event>`
+   - :class:`<double-click-event>`
 
-`<double-click-event>`_
+.. class:: <button-release-event>
+   :sealed:
+   :instantiable:
 
-<button-release-event>
-----------------------
+   The class of events representing button releases.
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events representing button releases.
-
-   :superclasses:
-
-`<pointer-button-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<pointer-button-event>`
 
    :description:
 
-The class of events representing button releases. An instance of this
-class is generated if the mouse button is released after a period of
-being pressed, for example, at the end of a drag and drop maneuver.
+     The class of events representing button releases. An instance of this
+     class is generated if the mouse button is released after a period of
+     being pressed, for example, at the end of a drag and drop maneuver.
 
    :operations:
 
--  None.
-
    See also
 
-`<button-press-event>`_
+   - :class:`<button-press-event>`
 
-<caret>
--------
+.. class:: <caret>
+   :abstract:
+   :instantiable:
 
-Abstract instantiable class
-'''''''''''''''''''''''''''
-The class of carets.
+   The class of carets.
 
-   :superclasses:
+   :superclasses: :class:`<object>`
 
-*<object>*
-
-Init-keywords
-
--  *sheet:* An instance of type *false-or(`See
-   <sheet>`_)*.
--  *x:* An instance of type ``<integer>``. Default value: 0.
--  *y:* An instance of type ``<integer>``. Default value: 0.
--  *width:* An instance of type ``<integer>``. Default value: 0.
--  *height:* An instance of type ``<integer>``. Default value: 0.
+   :keyword sheet: An instance of type false-or(:class:`<sheet>`).
+   :keyword x: An instance of type ``<integer>``. Default value: 0.
+   :keyword y: An instance of type ``<integer>``. Default value: 0.
+   :keyword width: An instance of type ``<integer>``. Default value: 0.
+   :keyword height: An instance of type ``<integer>``. Default value: 0.
 
    :description:
 
-The class of carets, or text cursors. A cursor can actually be any
-instance of *<symbol>* or any instance of `See
-<image> <dcs.htm#51234>`_.
+     The class of carets, or text cursors. A cursor can actually be any
+     instance of :class:`<symbol>` or any instance of :class:`<image>`.
 
-The *sheet:* init-keyword specifies the sheet that the caret is
-positioned in.
+     The *sheet:* init-keyword specifies the sheet that the caret is
+     positioned in.
 
-The *x:*, *y:*, *width:*, and *height:* init-keywords define the
-position and size of the caret, with respect to the sheet that contains
-it. The position of the caret is measured from the top left of the
-sheet. All units are measured in pixels.
+     The *x:*, *y:*, *width:*, and *height:* init-keywords define the
+     position and size of the caret, with respect to the sheet that contains
+     it. The position of the caret is measured from the top left of the
+     sheet. All units are measured in pixels.
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
-`caret-position`_ `See
-caret-sheet`_ `caret-size`_
-`caret-visible?`_ `See
-caret-visible?-setter`_ `See
-display`_ `port`_ `See
-set-caret-position`_
+     - :gf:`caret-position`
+     - :gf:`caret-sheet`
+     - :gf:`caret-size`
+     - :gf:`caret-visible?`
+     - :gf:`caret-visible?-setter`
+     - :gf:`display`
+     - :gf:`port`
+     - :gf:`set-caret-position`
 
    See also
 
-`caret-position`_
+   - :gf:`caret-position`
+   - :gf:`caret-sheet`
+   - :gf:`caret-size`
+   - :gf:`caret-visible?`
+   - :class:`<cursor>`
 
-`caret-sheet`_
+.. generic-function:: caret-position
 
-`caret-size`_
-
-`caret-visible?`_
-
-`<cursor>`_
-
-caret-position
---------------
-
-Generic function
-''''''''''''''''
-Returns the position of the specified caret.
+   Returns the position of the specified caret.
 
    :signature: cursor-position *caret* => *x y*
 
-Arguments
+   :parameter caret: An instance of type :class:`<caret>`.
 
--  *caret* An instance of type `<caret>`_.
-
-Values
-
--  *x* An instance of type ``<integer>``.
--  *y* An instance of type ``<integer>``.
+   :value x: An instance of type ``<integer>``.
+   :value y: An instance of type ``<integer>``.
 
    :description:
 
-Returns the position of *caret*.
+     Returns the position of *caret*.
 
    See also
 
-`caret-sheet`_
+   - :gf:`caret-sheet`
+   - :gf:`caret-size`
 
-`caret-size`_
+.. generic-function:: caret-sheet
 
-caret-sheet
------------
-
-Generic function
-''''''''''''''''
-Returns the sheet that owns the specified caret.
+   Returns the sheet that owns the specified caret.
 
    :signature: cursor-sheet *caret* => *sheet*
 
-Arguments
+   :parameter caret: An instance of type :class:`<caret>`.
 
--  *caret* An instance of type `<caret>`_.
-
-Values
-
--  *sheet* An instance of type `<sheet>`_.
+   :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Returns the sheet that owns *caret*.
+     Returns the sheet that owns *caret*.
 
    See also
 
-`caret-position`_
+   - :gf:`caret-position`
+   - :gf:`caret-size`
 
-`caret-size`_
+.. generic-function:: caret-size
 
-caret-size
-----------
-
-Generic function
-''''''''''''''''
-Returns the size of the specified caret.
+   Returns the size of the specified caret.
 
    :signature: cursor-size *caret* => *width height*
 
-Arguments
+   :parameter caret: An instance of type :class:`<caret>`.
 
--  *caret* An instance of type `<caret>`_.
-
-Values
-
--  *width* An instance of type ``<integer>``.
--  *height* An instance of type ``<integer>``.
+   :value width: An instance of type ``<integer>``.
+   :value height: An instance of type ``<integer>``.
 
    :description:
 
-Returns the size of *caret*.
+     Returns the size of *caret*.
 
    See also
 
-`caret-position`_
+   - :gf:`caret-position`
+   - :gf:`caret-sheet`
 
-`caret-sheet`_
+.. generic-function:: caret-visible?
 
-caret-visible?
---------------
-
-Generic function
-''''''''''''''''
-Returns true if the specified caret is visible.
+   Returns true if the specified caret is visible.
 
    :signature: cursor-visible? *caret* => *visible?*
 
-Arguments
+   :parameter caret: An instance of type :class:`<caret>`.
 
--  *caret* An instance of type `<caret>`_.
-
-Values
-
--  *visible?* An instance of type ``<boolean>``.
+   :value visible?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *caret* is visible.
+     Returns true if *caret* is visible.
 
    See also
 
-`<cursor>`_
+   - :class:`<cursor>`
+   - :gf:`caret-visible?-setter`
 
-`caret-visible?-setter`_
+.. generic-function:: caret-visible?-setter
 
-caret-visible?-setter
----------------------
-
-Generic function
-''''''''''''''''
-Specifies whether or not the specified caret is visible.
+   Specifies whether or not the specified caret is visible.
 
    :signature: cursor-visible?-setter *visible? caret* => *boolean*
 
-Arguments
+   :parameter visible?: An instance of type ``<boolean>``.
+   :parameter caret: An instance of type :class:`<caret>`.
 
--  *visible?* An instance of type ``<boolean>``.
--  *caret* An instance of type `<caret>`_.
-
-Values
-
--  *boolean* An instance of type ``<boolean>``.
+   :value boolean: An instance of type ``<boolean>``.
 
    :description:
 
-Specifies whether or not *caret* is visible.
+     Specifies whether or not *caret* is visible.
 
    See also
 
-`<cursor>`_
+   - :class:`<cursor>`
+   - :gf:`caret-visible?`
 
-`caret-visible?`_
+.. generic-function:: child-containing-position
 
-child-containing-position
--------------------------
-
-Generic function
-''''''''''''''''
-Returns the topmost child of the specified sheet that occupies a
-specified position.
+   Returns the topmost child of the specified sheet that occupies a
+   specified position.
 
    :signature: child-containing-position *sheet x y* => *value*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter x: An instance of type ``<real>``.
+   :parameter y: An instance of type ``<real>``.
 
--  *sheet* An instance of type `<sheet>`_.
--  *x* An instance of type ``<real>``.
--  *y* An instance of type ``<real>``.
-
-Values
-
--  *value* An instance of type *false-or(`See
-   <sheet>`_)*.
+   :value value: An instance of type false-or(:class:`<sheet>`).
 
    :description:
 
-Returns the topmost enabled direct child of *sheet* whose region
-contains the position *(* *x* *,* *y* *)*. The position is expressed in
-the coordinate system used by *sheet*.
+     Returns the topmost enabled direct child of *sheet* whose region
+     contains the position *(* *x* *,* *y* *)*. The position is expressed in
+     the coordinate system used by *sheet*.
 
    See also
 
-`children-overlapping-region`_
+   - :gf:`children-overlapping-region`
+   - :gf:`do-children-containing-position`
 
-`do-children-containing-position`_
+.. generic-function:: children-overlapping-region
 
-children-overlapping-region
----------------------------
-
-Generic function
-''''''''''''''''
-Returns any children of the specified sheet whose regions overlap a
-specified region.
+   Returns any children of the specified sheet whose regions overlap a
+   specified region.
 
    :signature: children-overlapping-region *sheet region* => *sheets*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter region: An instance of type `<region> <geom.htm#79228>`_.
 
--  *sheet* An instance of type `<sheet>`_.
--  *region* An instance of type `<region> <geom.htm#79228>`_.
-
-Values
-
--  *sheets* An instance of type *limited(<sequence>, of: `See
-   <sheet>`_)*.
+   :value sheets: An instance of type limited(``<sequence>``, of: :class:`<sheet>`).
 
    :description:
 
-Returns the list of enabled direct children of *sheet* whose region
-overlaps *region*.
+     Returns the list of enabled direct children of *sheet* whose region
+     overlaps *region*.
 
    See also
 
-`child-containing-position`_
+   - :gf:`child-containing-position`
+   - :gf:`do-children-overlapping-region`
 
-`do-children-overlapping-region`_
+.. generic-function:: choose-color
 
-choose-color
-------------
+   Displays the built-in color dialog for the target platform.
 
-Generic function
-''''''''''''''''
-Displays the built-in color dialog for the target platform.
+   :signature: choose-color #key *frame owner title documentation exit-boxes name default* => *color*
 
-   :signature: choose-color #key *frame owner title documentation exit-boxes name
-default* => *color*
+   :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
+   :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
+   :parameter title: An instance of type :class:`<string>`.
+   :parameter documentation: An instance of type :class:`<string>`.
+   :parameter exit-boxes: An instance of type ``<object>``.
+   :parameter name: An instance of type ``<object>``.
+   :parameter default: An instance of type ``<object>``.
 
-Arguments
-
--  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
-   ``#f``.
--  *owner* An instance of type `<sheet>`_.
-   Default value: ``#f``.
--  *title* An instance of type *<string>*.
--  *documentation* An instance of type *<string>*.
--  *exit-boxes* An instance of type ``<object>``.
--  *name* An instance of type ``<object>``.
--  *default* An instance of type ``<object>``.
-
-Values
-
--  *color* An instance of type `<color> <dcs.htm#55341>`_.
+   :value color: An instance of type :class:`<color>`
 
    :description:
 
-Displays the built-in color dialog for the target platform, which allows
-the user to choose a color from the standard palette for whatever
-environment the application is running in.
+     Displays the built-in color dialog for the target platform, which allows
+     the user to choose a color from the standard palette for whatever
+     environment the application is running in.
 
-The standard Choose Color dialog
+     The standard Choose Color dialog
 
-.. figure:: images/silica-2.png
-   :align: center
-   :alt: 
+     .. figure:: images/silica-2.png
+        :align: center
+        :alt: 
 
-.. figure:: images/silica-3.png
-   :align: center
-   :alt: 
-If the *frame* argument is specified, the top-level sheet of *frame*
-becomes the owner of the dialog.
+     .. figure:: images/silica-3.png
+        :align: center
+        :alt: 
 
-Alternatively, you can specify the owner directly using the *owner*
-argument, which takes an instance of *<sheet>* as its value.
+      If the *frame* argument is specified, the top-level sheet of *frame*
+      becomes the owner of the dialog.
 
-By default, both *frame* and *owner* are ``#f``, meaning the dialog has
-no owner. You should not specify both of these values.
+      Alternatively, you can specify the owner directly using the *owner*
+      argument, which takes an instance of :class:`<sheet>` as its value.
 
-If you wish, you can specify a *title* for the dialog; this is displayed
-in the title bar of the frame containing the dialog.
+      By default, both *frame* and *owner* are ``#f``, meaning the dialog has
+      no owner. You should not specify both of these values.
 
-Example
+      If you wish, you can specify a *title* for the dialog; this is displayed
+      in the title bar of the frame containing the dialog.
 
-The following example illustrates how you can define a class of frame
-that contains a button that displays the Choose Color dialog, using the
-pre-built dialog classes for your target environment. The frame also
-contains an ellipse whose color is set to the color chosen from the
-dialog.
+      Example
 
-define frame <color-dialog-frame> (<simple-frame>)
+      The following example illustrates how you can define a class of frame
+      that contains a button that displays the Choose Color dialog, using the
+      pre-built dialog classes for your target environment. The frame also
+      contains an ellipse whose color is set to the color chosen from the
+      dialog.
 
-pane ellipse-pane (frame)
+      .. code-block:: dylan
 
-make(<ellipse-pane>, foreground: $red);
-
-pane choose-color-button (frame)
-
-make(<menu-button>,
-
-label: "Choose Color...",
-
-documentation:
-
-"Example of standard 'choose color' dialog",
-
-activate-callback:
-
-method (button)
-
-let color = choose-color(owner: frame);
-
-color & change-ellipse-color(frame, color)
-
-end);
-
-end frame <color-dialog-frame>;
+          define frame <color-dialog-frame> (<simple-frame>)
+            pane ellipse-pane (frame)
+            make(<ellipse-pane>, foreground: $red);
+            pane choose-color-button (frame)
+            make(<menu-button>,
+                 label: "Choose Color...",
+                 documentation:
+                 "Example of standard 'choose color' dialog",
+                 activate-callback:
+                 method (button)
+                   let color = choose-color(owner: frame);
+                   color & change-ellipse-color(frame, color)
+                 end);
+          end frame <color-dialog-frame>;
 
    See also
 
-`choose-directory`_
+   - :gf:`choose-directory`
+   - :gf:`choose-file`
+   - :gf:`notify-user`
 
-`choose-file`_
+.. generic-function:: choose-directory
 
-`notify-user`_
+   Displays the built-in directory dialog for the target platform.
 
-choose-directory
-----------------
+   :signature: choose-directory #key *frame owner title documentation exit-boxes name default* => *locator*
 
-Generic function
-''''''''''''''''
-Displays the built-in directory dialog for the target platform.
+   :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
+   :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
+   :parameter title: An instance of type :class:`<string>`.
+   :parameter documentation: An instance of type :class:`<string>`.
+   :parameter exit-boxes: An instance of type ``<object>``.
+   :parameter name: An instance of type ``<object>``.
+   :parameter default: An instance of type ``<object>``.
 
-   :signature: choose-directory #key *frame owner title documentation exit-boxes name
-default* => *locator*
-
-Arguments
-
--  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
-   ``#f``.
--  *owner* An instance of type `<sheet>`_.
-   Default value: ``#f``.
--  *title* An instance of type *<string>*.
--  *documentation* An instance of type *<string>*.
--  *exit-boxes* An instance of type ``<object>``.
--  *name* An instance of type ``<object>``.
--  *default* An instance of type ``<object>``.
-
-Values
-
--  *locator* An instance of type *type-union(<string>, <locator>)*.
+   :value locator: An instance of type *type-union(<string>, <locator>)*.
 
    :description:
 
-Displays the built-in directory dialog for the target platform, which
-allows the user to choose a directory from any of the local or networked
-drives currently connected to the computer.
+     Displays the built-in directory dialog for the target platform, which
+     allows the user to choose a directory from any of the local or networked
+     drives currently connected to the computer.
 
-If the *frame* argument is specified, the top-level sheet of *frame*
-becomes the owner of the dialog.
+     If the *frame* argument is specified, the top-level sheet of *frame*
+     becomes the owner of the dialog.
 
-Alternatively, you can specify the owner directly using the *owner*
-argument, which takes an instance of *<sheet>* as its value.
+     Alternatively, you can specify the owner directly using the *owner*
+     argument, which takes an instance of :class:`<sheet>` as its value.
 
-By default, both *frame* and *owner* are ``#f``, meaning the dialog has
-no owner. You should not specify both of these values.
+     By default, both *frame* and *owner* are ``#f``, meaning the dialog has
+     no owner. You should not specify both of these values.
 
-If you wish, you can specify a *title* for the dialog; this is displayed
-in the title bar of the frame containing the dialog.
+     If you wish, you can specify a *title* for the dialog; this is displayed
+     in the title bar of the frame containing the dialog.
 
-Example
+     Example
 
-The following example illustrates how you can define a class of frame
-that contains a button that displays the Choose Directory dialog, using
-the pre-built dialog classes for your target environment.
+     The following example illustrates how you can define a class of frame
+     that contains a button that displays the Choose Directory dialog, using
+     the pre-built dialog classes for your target environment.
 
-define frame <directory-dialog-frame> (<simple-frame>)
+     .. code-block:: dylan
 
-pane dir-file-button (frame)
-
-make(<menu-button>,
-
-label: "Choose directory ...",
-
-documentation:
-
-"Example of standard 'Choose Dir' dialog",
-
-activate-callback:
-
-method (button)
-
-let dir = choose-directory (owner: frame);
-
-if (dir) frame-status-message(frame)
-
-:= format-to-string
-
-("Chose directory %s", dir);
-
-end
-
-end);
-
-pane dir-layout (frame)
-
-vertically ()
-
-frame.dir-file-button;
-
-end;
-
-layout (frame) frame.dir-layout;
-
-keyword title: = "Choose directory example";
-
-end frame <directory-dialog-frame>;
+         define frame <directory-dialog-frame> (<simple-frame>)
+           pane dir-file-button (frame)
+             make(<menu-button>,
+                  label: "Choose directory ...",
+                  documentation:
+                  "Example of standard 'Choose Dir' dialog",
+                  activate-callback:
+                  method (button)
+                    let dir = choose-directory (owner: frame);
+                    if (dir)
+                      frame-status-message(frame) := format-to-string 
+                                                     ("Chose directory %s", dir);
+                    end
+                  end);
+           pane dir-layout (frame)
+             vertically ()
+             frame.dir-file-button;
+           end;
+           layout (frame) frame.dir-layout;
+           keyword title: = "Choose directory example";
+         end frame <directory-dialog-frame>;
 
    See also
 
-`choose-color`_
+   - :gf:`choose-color`
+   - :gf:`choose-file`
+   - :gf:`notify-user`
 
-`choose-file`_
+.. generic-function:: choose-file
 
-`notify-user`_
+   Displays the built-in file dialog for the target platform.
 
-choose-file
------------
+   :signature: choose-file #key *frame owner title documentation exit-boxes name default* => *locator*
 
-Generic function
-''''''''''''''''
-Displays the built-in file dialog for the target platform.
+   :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
+   :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
+   :parameter title: An instance of type :class:`<string>`.
+   :parameter documentation: An instance of type :class:`<string>`.
+   :parameter direction: An instance of type *one-of(#"input", #"output")*. Default value: *#"input"*.
+   :parameter filters: An instance of type *limited(<sequence>, of: <sequence>)*.
+   :parameter exit-boxes: An instance of type ``<object>``.
+   :parameter name: An instance of type ``<object>``.
+   :parameter default: An instance of type :class:`<string>`.
 
-   :signature: choose-file #key *frame owner title documentation exit-boxes name
-default* => *locator*
-
-Arguments
-
--  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
-   ``#f``.
--  *owner* An instance of type `<sheet>`_.
-   Default value: ``#f``.
--  *title* An instance of type *<string>*.
--  *documentation* An instance of type *<string>*.
--  *direction* An instance of type *one-of(#"input", #"output")*.
-   Default value: *#"input"*.
--  *filters* An instance of type *limited(<sequence>, of: <sequence>)*.
--  *exit-boxes* An instance of type ``<object>``.
--  *name* An instance of type ``<object>``.
--  *default* An instance of type *<string>*.
-
-Values
-
--  *locator* An instance of type *<string>*.
+   :value locator: An instance of type :class:`<string>`.
 
    :description:
 
-Displays the built-in file dialog for the target platform, which allows
-the user to choose a file from any of the local or networked drives
-currently connected to the computer. The function returns the name of
-the file chosen by the user.
+     Displays the built-in file dialog for the target platform, which allows
+     the user to choose a file from any of the local or networked drives
+     currently connected to the computer. The function returns the name of
+     the file chosen by the user.
 
-Typical appearance of a choose-file dialog
+     Typical appearance of a choose-file dialog
 
-.. figure:: images/silica-2.png
-   :align: center
-   :alt: 
+     .. figure:: images/silica-2.png
+        :align: center
+        :alt: 
 
-.. figure:: images/silica-4.png
-   :align: center
-   :alt: 
-If the *frame* argument is specified, the top-level sheet of *frame*
-becomes the owner of the dialog.
+     .. figure:: images/silica-4.png
+        :align: center
+        :alt: 
 
-Alternatively, you can specify the owner directly using the *owner*
-argument, which takes an instance of *<sheet>* as its value.
+      If the *frame* argument is specified, the top-level sheet of *frame*
+      becomes the owner of the dialog.
 
-By default, both *frame* and *owner* are ``#f``, meaning the dialog has
-no owner. You should not specify both of these values.
+      Alternatively, you can specify the owner directly using the *owner*
+      argument, which takes an instance of :class:`<sheet>` as its value.
 
-If you wish, you can specify a *title* for the dialog; this is displayed
-in the title bar of the frame containing the dialog.
+      By default, both *frame* and *owner* are ``#f``, meaning the dialog has
+      no owner. You should not specify both of these values.
 
-The *direction* argument is used to specify whether the file chosen is
-being opened (that is, information in the file is loaded into the
-application) or saved to (that is, information in the application is
-being saved to a file on disk).
+      If you wish, you can specify a *title* for the dialog; this is displayed
+      in the title bar of the frame containing the dialog.
 
-The *filters* argument lets you specify the file filters that should be
-offered to the user in the dialog. These filters are typically available
-in a drop-down list box, and let the user display only certain types of
-file, such as text files. Each filter is described as a sequence of
-strings:
+      The *direction* argument is used to specify whether the file chosen is
+      being opened (that is, information in the file is loaded into the
+      application) or saved to (that is, information in the application is
+      being saved to a file on disk).
 
--  The first string in the sequence is a description of the files that
-   are displayed when this filter is chosen.
--  Each subsequent string is a regular expression that describes which
-   files to display in the dialog.
+      The *filters* argument lets you specify the file filters that should be
+      offered to the user in the dialog. These filters are typically available
+      in a drop-down list box, and let the user display only certain types of
+      file, such as text files. Each filter is described as a sequence of
+      strings:
 
-For example, to specify a filter that lets the user choose to display
-either text files, HTML files, or Dylan source files, the following
-sequence should be passed to the filters argument:
+      1.  The first string in the sequence is a description of the files that
+          are displayed when this filter is chosen.
+      2.  Each subsequent string is a regular expression that describes which
+          files to display in the dialog.
 
-#[#["Text files", "\*.txt", "\*.text"],
+      For example, to specify a filter that lets the user choose to display
+      either text files, HTML files, or Dylan source files, the following
+      sequence should be passed to the filters argument:
 
-#["HTML files", "\*.htm", "\*.html"],
+      .. code-block:: dylan
 
-#["Dylan files", "\*.dylan"]
+          #[#["Text files", "\*.txt", "\*.text"],
 
-Here, text files are defined as any file with a filename suffix of
-*.txt* or *.text*, HTML files have filenames with a suffix of either
-*.htm* or *.html*, and Dylan files have filenames with a suffix of
-*.dylan*.
+          #["HTML files", "\*.htm", "\*.html"],
 
-The *default* argument is used to specify a default filename to pass to
-the dialog. This is a convenient way to suggest a file in which some
-information may be saved, or a file to be loaded into an application.
+          #["Dylan files", "\*.dylan"]
 
-Example
+      Here, text files are defined as any file with a filename suffix of
+      *.txt* or *.text*, HTML files have filenames with a suffix of either
+      *.htm* or *.html*, and Dylan files have filenames with a suffix of
+      *.dylan*.
 
-The following example illustrates how you can define a class of frame
-that contains buttons to display both Open and Save As dialogs, using
-the pre-built dialog classes for your target environment.
+      The *default* argument is used to specify a default filename to pass to
+      the dialog. This is a convenient way to suggest a file in which some
+      information may be saved, or a file to be loaded into an application.
 
-define frame <open-save-dialog-frame> (<simple-frame>)
+      Example
 
-pane open-file-button (frame)
+      The following example illustrates how you can define a class of frame
+      that contains buttons to display both Open and Save As dialogs, using
+      the pre-built dialog classes for your target environment.
 
-make(<menu-button>,
+      .. code-block:: dylan
 
-label: "Open...",
-
-documentation:
-
-"Example of standard file 'Open' dialog",
-
-activate-callback:
-
-method (button)
-
-let file = choose-file(direction: #"input",
-
-owner: frame);
-
-if (file) frame-status-message(frame)
-
-:= format-to-string
-
-("Opened file %s", file);
-
-end
-
-end);
-
-pane save-file-button (frame)
-
-make(<menu-button>,
-
-label: "Save As...",
-
-documentation:
-
-"Example of standard file 'Save As' dialog",
-
-activate-callback:
-
-method (button)
-
-let file = choose-file(direction: #"output",
-
-owner: frame);
-
-if (file) frame-status-message(frame)
-
-:= format-to-string
-
-("Saved file as %s", file);
-
-end
-
-end);
-
-end frame <open-save-dialog-frame>;
+          define frame <open-save-dialog-frame> (<simple-frame>)
+            pane open-file-button (frame)
+              make(<menu-button>,
+                   label: "Open...",
+                   documentation:
+                   "Example of standard file 'Open' dialog",
+                   activate-callback:
+                   method (button)
+                     let file = choose-file(direction: #"input",
+                                            owner: frame);
+                     if (file)
+                       frame-status-message(frame) := format-to-string
+                                                      ("Opened file %s", file);
+                     end
+                   end);
+            pane save-file-button (frame)
+              make(<menu-button>,
+                   label: "Save As...",
+                   documentation:
+                   "Example of standard file 'Save As' dialog",
+                   activate-callback:
+                   method (button)
+                     let file = choose-file(direction: #"output",
+                                            owner: frame);
+                     if (file)
+                       frame-status-message(frame) := format-to-string
+                                                      ("Saved file as %s", file);
+                     end
+                   end);
+          end frame <open-save-dialog-frame>;
 
    See also
 
-`choose-color`_
+   - :gf:`choose-color`
+   - :gf:`choose-directory`
+   - :gf:`notify-user`
 
-`choose-directory`_
+.. generic-function:: choose-from-dialog
 
-`notify-user`_
+   Prompt the user to choose from a collection of items, using a dialog
+   box.
 
-choose-from-dialog
-------------------
+   :signature: choose-from-dialog *items*  #key *frame owner title value default-item label-key value-key selection-mode gadget-class gadget-options width height foreground background text-style* => *value success?*
 
-Generic function
-''''''''''''''''
-Prompt the user to choose from a collection of items, using a dialog
-box.
+   :parameter items: An instance of *type-union(* :class:`<sequence>`, :class:`<menu>` *)*.
+   :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
+   :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
+   :parameter title: An instance of type :class:`<string>`.
+   :parameter default-item: An instance of type ``<object>``.
+   :parameter label-key: An instance of type ``<function>``. Default value: *identity*.
+   :parameter value-key: An instance of type ``<function>``. Default value: *identity*.
+   :parameter selection-mode: An instance of :class:`<symbol>`. Default value: *#"single"*.
+   :parameter gadget-class: An instance of type :class:`<gadget>`.
+   :parameter gadget-options: An instance of type :class:`<sequence>`.
+   :parameter foreground: An instance of type :class:`<ink>`.
+   :parameter background: An instance of type :class:`<ink>`.
+   :parameter text-style: An instance of type :class:`<text-style>`.
 
-   :signature: choose-from-dialog *items*
- #key *frame owner title value default-item label-key value-key
-* *selection-mode gadget-class gadget-options width height
-* *foreground background text-style
-* => *value success?*
-
-Arguments
-
--  *items* An instance of *type-union(<sequence>,*
-   ` <gadgets.htm#81833>`_*)*.
--  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
-   ``#f``.
--  *owner* An instance of type `<sheet>`_.
-   Default value: ``#f``.
--  *title* An instance of type *<string>*.
--  *default-item* An instance of type ``<object>``.
--  *label-key* An instance of type ``<function>``. Default value:
-   *identity*.
--  *value-key* An instance of type ``<function>``. Default value:
-   *identity*.
--  *selection-mode* An instance of *<symbol>*. Default value:
-   *#"single"*.
--  *gadget-class* An instance of type ` <gadgets.htm#34543>`_.
--  *gadget-options* An instance of type *<sequence>*.
--  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
--  *background* An instance of type `<ink> <dcs.htm#15007>`_.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
-
-Values
-
--  *value* An instance of type ``<object>``.
--  *success?* An instance of type ``<boolean>``.
+   :value value: An instance of type ``<object>``.
+   :value success?: An instance of type ``<boolean>``.
 
    :description:
 
-Prompt the user to choose from a collection of *items*, using a dialog
-box. This generic function is similar to *choose-from-menu*.
+     Prompt the user to choose from a collection of *items*, using a dialog
+     box. This generic function is similar to *choose-from-menu*.
 
-The function returns the values chosen by the user, and a boolean value:
-``#t`` if a value was chosen, ``#f`` if nothing was chosen. Unlike
-*choose-from-menu*, the user can choose several values if desired,
-depending on the value of *selection-mode*, described below.
+     The function returns the values chosen by the user, and a boolean value:
+     ``#t`` if a value was chosen, ``#f`` if nothing was chosen. Unlike
+     *choose-from-menu*, the user can choose several values if desired,
+     depending on the value of *selection-mode*, described below.
 
-At its most basic, *choose-from-dialog* can be passed a simple sequence
-of items, as follows:
+     At its most basic, *choose-from-dialog* can be passed a simple sequence
+     of items, as follows:
 
-choose-from-dialog(range(from: 1, to: 10));
+     .. code-block:: dylan
 
-However, any of a large number of keywords can be supplied to specify
-more clearly the dialog that is created. A range of typical options can
-be chosen: The *frame* keyword specifies a frame whose top level sheet
-becomes the owner of the menu. Alternatively, you can specify this top
-level sheet explicitly using *owner*. The *title* keyword lets you
-choose a title for the dialog. By default, each of these values is ``#f``
-.
+         choose-from-dialog(range(from: 1, to: 10));
 
-In addition, *choose-from-dialog* offers options similar to collection
-gadgets, that can act upon the items specified. The *default-item*
-keyword lets you specify an item that is returned by default if no value
-is chosen explicitly (thereby ensuring that *success?* will always be
-``#t``). You can also specify a *value-key* or *label-key* for the items
-in the menu. The *selection-mode* keyword is used to make the dialog box
-single-selection (the user can only choose one value) or
-multiple-selection (the user can return any number of values). The
-default value of *selection-mode* is *#"single"*. By specifying
-*selection-mode: #"multiple"*, the user can choose several values from
-the dialog box. The *gadget-class* keyword lets you specify which type
-of collection gadget is displayed in the dialog box. This lets you, for
-example, display a list of check boxes or radio boxes. Finally,
-*gadget-options* let you specify a set of options to be applied to the
-collection gadgets in the dialog box.
+     However, any of a large number of keywords can be supplied to specify
+     more clearly the dialog that is created. A range of typical options can
+     be chosen: The *frame* keyword specifies a frame whose top level sheet
+     becomes the owner of the menu. Alternatively, you can specify this top
+     level sheet explicitly using *owner*. The *title* keyword lets you
+     choose a title for the dialog. By default, each of these values is ``#f``
+     .
 
-You can also configure the appearance of the menu itself. The *width*
-and *height* keywords let you set the size of the menu. The *foreground*
-and *background* keywords let you set the text color and the menu color
-respectively. The *text-style* keyword lets you specify a font to
-display the menu items.
+     In addition, *choose-from-dialog* offers options similar to collection
+     gadgets, that can act upon the items specified. The *default-item*
+     keyword lets you specify an item that is returned by default if no value
+     is chosen explicitly (thereby ensuring that *success?* will always be
+     ``#t``). You can also specify a *value-key* or *label-key* for the items
+     in the menu. The *selection-mode* keyword is used to make the dialog box
+     single-selection (the user can only choose one value) or
+     multiple-selection (the user can return any number of values). The
+     default value of *selection-mode* is *#"single"*. By specifying
+     *selection-mode: #"multiple"*, the user can choose several values from
+     the dialog box. The *gadget-class* keyword lets you specify which type
+     of collection gadget is displayed in the dialog box. This lets you, for
+     example, display a list of check boxes or radio boxes. Finally,
+     *gadget-options* let you specify a set of options to be applied to the
+     collection gadgets in the dialog box.
+
+     You can also configure the appearance of the menu itself. The *width*
+     and *height* keywords let you set the size of the menu. The *foreground*
+     and *background* keywords let you set the text color and the menu color
+     respectively. The *text-style* keyword lets you specify a font to
+     display the menu items.
 
    See also
 
-`choose-from-menu`_
+   - :gf:`choose-from-menu`
 
-choose-from-menu
-----------------
+.. generic-function:: choose-from-menu
 
-Generic function
-''''''''''''''''
-Prompt the user to choose from a collection of items, using a pop-up
-menu.
+   Prompt the user to choose from a collection of items, using a pop-up
+   menu.
 
-   :signature: choose-from-menu *items*
- #key *frame owner title value default-item label-key value-key
-* *width height foreground background text-style multiple-sets?*
- => *value success?*
+   :signature: choose-from-menu *items*  #key *frame owner title value default-item label-key value-key width height foreground background text-style multiple-sets?* => *value success?*
 
-Arguments
+   :parameter items: An instance of *type-union(* :class:`<sequence>`, :class:`<menu>` *)*.
+   :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
+   :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
+   :parameter title: An instance of type :class:`<string>`. Default value: ``#f``.
+   :parameter default-item: An instance of type ``<object>``.
+   :parameter label-key: An instance of type ``<function>``. Default value: *identity*.
+   :parameter value-key: An instance of type ``<function>``. Default value: *identity*.
+   :parameter foreground: An instance of type :class:`<ink>`.
+   :parameter background: An instance of type :class:`<ink>`.
+   :parameter text-style: An instance of type :class:`<text-style>`.
 
--  *items* An instance of *type-union(<sequence>,*
-   ` <gadgets.htm#81833>`_*)*.
--  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
-   ``#f``.
--  *owner* An instance of type `<sheet>`_.
-   Default value: ``#f``.
--  *title* An instance of type *<string>*. Default value: ``#f``.
--  *default-item* An instance of type ``<object>``.
--  *label-key* An instance of type ``<function>``. Default value:
-   *identity*.
--  *value-key* An instance of type ``<function>``. Default value:
-   *identity*.
--  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
--  *background* An instance of type `<ink> <dcs.htm#15007>`_.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
-
-Values
-
--  *value* An instance of type ``<object>``.
--  *success?* An instance of type ``<boolean>``.
+   :value value: An instance of type ``<object>``.
+   :value success?: An instance of type ``<boolean>``.
 
    :description:
 
-Prompt the user to choose from a collection of *items*, using a pop-up
-menu.This generic function is similar to *choose-from-dialog*.
+     Prompt the user to choose from a collection of *items*, using a pop-up
+     menu.This generic function is similar to *choose-from-dialog*.
 
-The function returns the value chosen by the user, and a boolean value:
-``#t`` if a value was chosen, ``#f`` if nothing was chosen.
+     The function returns the value chosen by the user, and a boolean value:
+     ``#t`` if a value was chosen, ``#f`` if nothing was chosen.
 
-At its most basic, *choose-from-menu* can be passed a simple sequence of
-items, as follows:
+     At its most basic, *choose-from-menu* can be passed a simple sequence of
+     items, as follows:
 
-choose-from-menu(#(1, 2, 3));
+     .. code-block:: dylan
 
-However, any of a large number of keywords can be supplied to specify
-more clearly the menu that is created. A range of typical options can be
-chosen: The *frame* keyword specifies a frame whose top level sheet
-becomes the owner of the menu. Alternatively, you can specify this top
-level sheet explicitly using *owner*. The *title* keyword lets you
-choose a title for the dialog. By default, each of these values is ``#f``
-.
+         choose-from-menu(#(1, 2, 3));
 
-In addition, *choose-from-menu* offers options similar to collection
-gadgets, that can act upon the items specified. The *default-item*
-keyword lets you specify an item that is returned by default if no value
-is chosen explicitly (thereby ensuring that *success?* will always be
-``#t``). You can also specify a *value-key* or *label-key* for the items
-in the menu.
+     However, any of a large number of keywords can be supplied to specify
+     more clearly the menu that is created. A range of typical options can be
+     chosen: The *frame* keyword specifies a frame whose top level sheet
+     becomes the owner of the menu. Alternatively, you can specify this top
+     level sheet explicitly using *owner*. The *title* keyword lets you
+     choose a title for the dialog. By default, each of these values is ``#f``
+     .
 
-Finally, you can configure the appearance of the menu itself. The
-*width* and *height* keywords let you set the size of the menu. The
-*foreground* and *background* keywords let you set the text color and
-the menu color respectively. The *text-style* keyword lets you specify a
-font to display the menu items.
+     In addition, *choose-from-menu* offers options similar to collection
+     gadgets, that can act upon the items specified. The *default-item*
+     keyword lets you specify an item that is returned by default if no value
+     is chosen explicitly (thereby ensuring that *success?* will always be
+     ``#t``). You can also specify a *value-key* or *label-key* for the items
+     in the menu.
+
+     Finally, you can configure the appearance of the menu itself. The
+     *width* and *height* keywords let you set the size of the menu. The
+     *foreground* and *background* keywords let you set the text color and
+     the menu color respectively. The *text-style* keyword lets you specify a
+     font to display the menu items.
 
    See also
 
-`choose-from-dialog`_
+   - :gf:`choose-from-dialog`
 
-choose-text-style
------------------
+.. generic-function:: choose-text-style
 
-Generic function
-''''''''''''''''
-Displays the built-in font dialog for the target platform, thereby
-letting the user choose a font.
+   Displays the built-in font dialog for the target platform, thereby
+   letting the user choose a font.
 
    :signature: choose-text-style #key *frame* *owner* *title* => *font*
 
-Arguments
+   :parameter frame: An instance of type :class:`<frame>`. Default value: ``#f``.
+   :parameter owner: An instance of type :class:`<sheet>`. Default value: ``#f``.
+   :parameter title: An instance of type :class:`<string>`. Default value: ``#f``.
 
--  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
-   ``#f``.
--  *owner* An instance of type `<sheet>`_.
-   Default value: ``#f``.
--  *title* An instance of type *<string>*. Default value: ``#f``.
-
-Values
-
--  *font* An instance of *<text-style>*.
+   :value font: An instance of :class:`<text-style>`.
 
    :description:
 
-Displays the built-in font dialog for the target platform, thereby
-letting the user choose a font.
+     Displays the built-in font dialog for the target platform, thereby
+     letting the user choose a font.
 
-The *frame* keyword specifies a frame whose top-level sheet becomes the
-owner of the menu. Alternatively, you can specify this top level sheet
-explicitly using *owner*. The *title* keyword lets you choose a title
-for the dialog. By default, each of these values is ``#f``.
+     The *frame* keyword specifies a frame whose top-level sheet becomes the
+     owner of the menu. Alternatively, you can specify this top level sheet
+     explicitly using *owner*. The *title* keyword lets you choose a title
+     for the dialog. By default, each of these values is ``#f``.
 
-If you wish, you can specify a *title* for the dialog; this is an
-instance of *<string>* and is displayed in the title bar of the frame
-containing the dialog. If you do not specify *title*, then DUIM uses
-the default title for that type of dialog on the target platform.
+     If you wish, you can specify a *title* for the dialog; this is an
+     instance of :class:`<string>` and is displayed in the title bar of the frame
+     containing the dialog. If you do not specify *title*, then DUIM uses
+     the default title for that type of dialog on the target platform.
 
-clear-box
----------
+.. generic-function:: clear-box
 
-Generic function
-''''''''''''''''
-Clears a box-shaped area in the specified drawable.
+   Clears a box-shaped area in the specified drawable.
 
    :signature: clear-box *drawable left top right bottom* => ()
+   :signature: clear-box\* *drawable region* => ()
 
-clear-box\* *drawable region* => ()
+   :parameter drawable: An instance of type type-union(:class:`<sheet>`, :class:`<medium>`).
 
-Arguments
+   The following arguments are specific to *clear-box*.
 
--  *drawable* An instance of type *type-union(* `See
-   <sheet>`_*, `<medium>`_)*.
+   :parameter left: An instance of type :class:`<coordinate>`.
+   :parameter top: An instance of type :class:`<coordinate>`.
+   :parameter right: An instance of type :class:`<coordinate>`.
+   :parameter bottom: An instance of type :class:`<coordinate>`.
 
-The following arguments are specific to *clear-box*.
+   The following argument is specific to *clear-box\**.
 
--  *left* An instance of type *<coordinate>*.
--  *top* An instance of type *<coordinate>*.
--  *right* An instance of type *<coordinate>*.
--  *bottom* An instance of type *<coordinate>*.
-
-The following argument is specific to *clear-box\**.
-
--  *region* An instance of type `<region> <geom.htm#79228>`_.
-
+   :parameter region: An instance of type :class:`<region>`.
 
    :description:
 
-Clears a box-shaped area in the specified drawable, removing anything
-that was drawn in that region.
+     Clears a box-shaped area in the specified drawable, removing anything
+     that was drawn in that region.
 
-The function *clear-box\** is identical to *clear-box*, except that it
-passes composite objects, rather than separate coordinates, in its
-arguments. You should be aware that using this function may lead to a
-loss of performance.
+     The function *clear-box\** is identical to *clear-box*, except that it
+     passes composite objects, rather than separate coordinates, in its
+     arguments. You should be aware that using this function may lead to a
+     loss of performance.
 
-clear-clipboard
----------------
+.. generic-function:: clear-clipboard
 
-Generic function
-''''''''''''''''
-Clears the contents of a clipboard.
+   Clears the contents of a clipboard.
 
    :signature: clear-clipboard *clipboard* => ()
 
-Arguments
-
--  *clipboard* An instance of *<clipboard>*.
-
-Values
-
--  None.
+   :parameter clipboard: An instance of :class:`<clipboard>`.
 
    :description:
 
-Clears the contents of *clipboard*, which represents the locked
-clipboard.
+     Clears the contents of *clipboard*, which represents the locked
+     clipboard.
 
-<clipboard>
------------
+.. class:: <clipboard>
+   :open:
+   :abstract:
 
-Open abstract class
-'''''''''''''''''''
-The class of clipboard objects.
-
-Init-keywords
-
-None.
+   The class of clipboard objects.
 
    :description:
 
-The class of clipboard objects. An instance of this class is created
-when a clipboard lock is created, and is used to hold the contents of
-the Windows clipboard for the duration of the lock. You do not need to
-worry about creating instances of *<clipboard>* yourself, since this is
-handled automatically by the macro *with-clipboard*.
+     The class of clipboard objects. An instance of this class is created when
+     a clipboard lock is created, and is used to hold the contents of the
+     Windows clipboard for the duration of the lock. You do not need to worry
+     about creating instances of :class:`<clipboard>` yourself, since this is
+     handled automatically by the macro :macro:`with-clipboard`.
 
    See also
 
-`add-clipboard-data`_
+   - :gf:`add-clipboard-data`
+   - :gf:`add-clipboard-data-as`
+   - :gf:`clear-clipboard`
+   - :gf:`clipboard-data-available?`
+   - :gf:`clipboard-sheet`
+   - :gf:`clipboard-owner`
+   - :gf:`close-clipboard`
+   - :gf:`get-clipboard-data-as`
+   - :gf:`open-clipboard`
+   - :gf:`with-clipboard`
 
-`add-clipboard-data-as`_
+.. generic-function:: clipboard-data-available?
 
-`clear-clipboard`_
-
-`clipboard-data-available?`_
-
-`clipboard-sheet`_
-
-`clipboard-owner`_
-
-`close-clipboard`_
-
-`get-clipboard-data-as`_
-
-`open-clipboard`_
-
-`with-clipboard`_
-
-clipboard-data-available?
--------------------------
-
-Generic function
-''''''''''''''''
-Returns false if there is any data of a particular type on a clipboard.
+   Returns false if there is any data of a particular type on a clipboard.
 
    :signature: clipboard-data-available? *type clipboard* => *available?*
 
-Arguments
+   :parameter type: An instance of *type-union(<symbol>,* *<type>)*.
+   :parameter clipboard: An instance of :class:`<clipboard>`.
 
--  *type* An instance of *type-union(<symbol>,* *<type>)*.
--  *clipboard* An instance of *<clipboard>*.
-
-Values
-
--  *available?* An instance of *<boolean>*.
+   :value available?: An instance of :class:`<boolean>`.
 
    :description:
 
-Returns ``#f`` if and only if there is any data of type *type* on the
-clipboard. The argument *type* is an instance of *type-union(<symbol>,*
-*<type>)*.
+     Returns ``#f`` if and only if there is any data of type *type* on the
+     clipboard. The argument *type* is an instance of *type-union(<symbol>,*
+     *<type>)*.
 
    See also
 
-`add-clipboard-data`_
+   - :gf:`add-clipboard-data`
+   - :gf:`add-clipboard-data-as`
+   - :class:`<clipboard>`
+   - :gf:`get-clipboard-data-as`
 
-`add-clipboard-data-as`_
+.. generic-function:: clipboard-sheet
 
-`<clipboard>`_
-
-`get-clipboard-data-as`_
-
-clipboard-sheet
----------------
-
-Generic function
-''''''''''''''''
-Returns the sheet with the clipboard lock.
+   Returns the sheet with the clipboard lock.
 
    :signature: clipboard-sheet *clipboard* => *sheet*
 
--  *clipboard* An instance of *<clipboard>*.
+   :parameter clipboard: An instance of :class:`<clipboard>`.
 
-Values
-
--  *sheet* An instance of *<sheet>*.
+   :value sheet: An instance of :class:`<sheet>`.
 
    :description:
 
-Returns the sheet with the clipboard lock.
+     Returns the sheet with the clipboard lock.
 
    See also
 
-`<clipboard>`_
+   - :class:`<clipboard>`
 
-clipboard-owner
----------------
+.. generic-function:: clipboard-owner
 
-Generic function
-''''''''''''''''
-Returns the sheet that owns the current clipboard data.
+   Returns the sheet that owns the current clipboard data.
 
    :signature: clipboard-owner *clipboard* => *owner*
 
-Arguments
+   :parameter clipboard: An instance of :class:`<clipboard>`.
 
--  *clipboard* An instance of *<clipboard>*.
-
-Values
-
--  *owner* An instance of *<sheet>*.
+   :value owner: An instance of :class:`<sheet>`.
 
    :description:
 
-Returns the sheet that owns the current clipboard data.
+     Returns the sheet that owns the current clipboard data.
 
    See also
 
-`<clipboard>`_
+   - :class:`<clipboard>`
 
-close-clipboard
----------------
+.. function:: close-clipboard
 
-Function
-''''''''
-Closes the current clipboard lock for a sheet on a port.
+   Closes the current clipboard lock for a sheet on a port.
 
    :signature: close-clipboard *port sheet* => ()
 
-Arguments
-
--  *port* An instance of *<port>*.
--  *sheet* An instance of *<sheet>*.
-
-Values
-
--  None.
+   :parameter port: An instance of :class:`<port>`.
+   :parameter sheet: An instance of :class:`<sheet>`.
 
    :description:
 
-Closes the current clipboard lock for *sheet* on *port*. A clipboard
-lock needs to be closed safely after it the clipboard has been used, to
-free the clipboard for further use.
+     Closes the current clipboard lock for *sheet* on *port*. A clipboard
+     lock needs to be closed safely after it the clipboard has been used, to
+     free the clipboard for further use.
 
-You should not normally call *close-clipboard* yourself to close a
-clipboard lock. Use the macro *with-clipboard* to create and free the
-lock for you.
+     You should not normally call *close-clipboard* yourself to close a
+     clipboard lock. Use the macro :macro:`with-clipboard` to create and free the
+     lock for you.
 
    See also
 
-`<clipboard>`_
+   - :class:`<clipboard>`
+   - :gf:`with-clipboard`
 
-`with-clipboard`_
+.. constant:: $control-key
 
-$control-key
-------------
+   A constant that represents the CONTROL key on the keyboard.
 
-Constant
-''''''''
-A constant that represents the CONTROL key on the keyboard.
+   :type: :class:`<integer>`
 
-   :type:
-
-*<integer>*
-
-Value
-
-ash(1, %modifier\_base + 1);
+   :value: ash(1, %modifier\_base + 1);
 
    :description:
 
-A constant that represents the CONTROL key on the keyboard.
+     A constant that represents the CONTROL key on the keyboard.
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$hyper-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index`
+   - :gf:`modifier-key-index-name`
+   - :const:`$modifier-keys`
+   - :const:`$option-key`
+   - :const:`$shift-key`
+   - :const:`$super-key`
 
-`$hyper-key`_
+.. class:: <cursor>
 
-`$meta-key`_
+   The class of cursor objects.
 
-`modifier-key-index`_
-
-`modifier-key-index-name`_
-
-`$modifier-keys`_
-
-`$option-key`_
-
-`$shift-key`_
-
-`$super-key`_
-
-<cursor>
---------
-
-   :type:
-''''
-The class of cursor objects.
-
-Equivalent
-
-*type-union(<symbol>,* `<image> <dcs.htm#51234>`_*)*
-
-Init-keywords
-
-None.
+   Equivalent: ``type-union(<symbol>, <image>)``
 
    :description:
 
-The class of cursor objects. The cursor is the small image that is used
-to display the location of the mouse pointer at any time. A cursor can
-actually be any instance of *<symbol>* or any instance of `See
-<image> <dcs.htm#51234>`_.
+     The class of cursor objects. The cursor is the small image that is used
+     to display the location of the mouse pointer at any time. A cursor can
+     actually be any instance of :class:`<symbol>` or any instance of
+     :class:`<image>`.
 
    :operations:
 
-`pointer-cursor-setter`_ `See
-set-caret-position`_ `See
-sheet-pointer-cursor-setter`_
+     - :gf:`pointer-cursor-setter`
+     - :gf:`set-caret-position`
+     - :gf:`sheet-pointer-cursor-setter`
 
    See also
 
-`<caret>`_
+   - :class:`<caret>`
+   - :gf:`cursor?`
 
-`cursor?`_
+.. generic-function:: cursor?
 
-cursor?
--------
-
-Generic function
-''''''''''''''''
-Returns true if the specified object is a cursor.
+   Returns true if the specified object is a cursor.
 
    :signature: cursor? *object* => *cursor?*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *cursor?* An instance of type ``<boolean>``.
+   :value cursor?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *object* is a cursor. In practice, you can create a
-cursor from any instance of *<symbol>* or `See
-<image> <dcs.htm#51234>`_.
+     Returns true if *object* is a cursor. In practice, you can create a cursor
+     from any instance of :class:`<symbol>` or :class:`<image>`.
 
    See also
 
-`<cursor>`_
+   - :class:`<cursor>`
 
-default-port
-------------
+.. function:: default-port
 
-Function
-''''''''
-Returns the default port for the specified server.
+   Returns the default port for the specified server.
 
    :signature: default-port #key *server-path* => *port*
 
-Arguments
+   :parameter server-path: An instance of type :class:`<vector>`. Default value: *#(#"local")*.
 
--  *server-path* An instance of type *<vector>*. Default value:
-   *#(#"local")*.
-
-Values
-
--  *port* An instance of type *false-or(`See
-   <port>`_)*.
+   :parameter port: An instance of type false-or(:class:`<port>`).
 
    :description:
 
-Returns the default port for server specified by *server-path*.
+     Returns the default port for server specified by *server-path*.
 
    See also
 
-`default-port-setter`_
+   - :gf:`default-port-setter`
+   - :gf:`destroy-port`
 
-`destroy-port`_
+.. function:: default-port-setter
 
-default-port-setter
--------------------
-
-Function
-''''''''
-Sets the default port.
+   Sets the default port.
 
    :signature: default-port-setter *port* => *port*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`. Default value: ``#f``.
 
--  *port* An instance of type `<port>`_. Default
-   value: ``#f``.
-
-Values
-
--  *port* An instance of type `<port>`_.
+   :value port: An instance of type :class:`<port>`.
 
    :description:
 
-Sets the default port.
+     Sets the default port.
 
    See also
 
-`default-port`_
+   - :gf:`default-port`
+   - :gf:`destroy-port`
 
-`destroy-port`_
+.. generic-function:: destroy-port
 
-destroy-port
-------------
-
-Generic function
-''''''''''''''''
-Destroys the specified port.
+   Destroys the specified port.
 
    :signature: destroy-port *port* => ()
 
-Arguments
-
--  *port* An instance of type `<port>`_.
-
+   :parameter port: An instance of type :class:`<port>`.
 
    :description:
 
-Destroys *port*.
+     Destroys *port*.
 
    See also
 
-`default-port`_
+   - :gf:`default-port`
+   - :gf:`default-port-setter`
 
-`default-port-setter`_
+.. generic-function:: destroy-sheet
 
-destroy-sheet
--------------
-
-Generic function
-''''''''''''''''
-Destroys the specified sheet.
+   Destroys the specified sheet.
 
    :signature: destroy-sheet *sheet* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Destroys *sheet*.
+     Destroys *sheet*.
 
-<device-event>
---------------
+.. class:: <device-event>
+   :open:
+   :abstract:
 
-Open abstract class
-'''''''''''''''''''
-The class of device events.
+   The class of device events.
 
-   :superclasses:
+   :superclasses: :class:`<sheet-event>`
 
-`<sheet-event>`_
-
-Init-keywords
-
--  *sheet:* An instance of type `<sheet>`_.
--  *modifier-state:* An instance of type ``<integer>``. Default value: 0.
+   :keyword sheet: An instance of type :class:`<sheet>`.
+   :keyword modifier-state: An instance of type ``<integer>``. Default value: 0.
 
    :description:
 
-The class of device events.
+     The class of device events.
 
-The *modifier-state:* init-keyword is used to record the state of the
-device at the time the event occurred.
+     The *modifier-state:* init-keyword is used to record the state of the
+     device at the time the event occurred.
 
    :operations:
 
-The following operation is exported from the *DUIM-Sheets* module.
+     The following operation is exported from the *DUIM-Sheets* module.
 
--  `event-modifier-state`_
+     - :gf:`event-modifier-state`
 
-<display>
----------
+.. class:: <display>
+   :open:
+   :abstract:
 
-Open abstract class
-'''''''''''''''''''
-The class of displays.
+   The class of displays.
 
-   :superclasses:
+   :superclasses: :class:`<sheet>`
 
-`<sheet>`_
-
-Init-keywords
-
--  *orientation:* An instance of type *one-of(#"vertical",
-   #"horizontal", #"default")*. Default value: *#"default"*.
--  *units:* An instance of type *one-of(#"device", #"mm", #"pixels")*.
-   Default value: *#"device"*.
+   :keyword orientation: An instance of type *one-of(#"vertical", #"horizontal", #"default")*. Default value: *#"default"*.
+   :keyword units: An instance of type *one-of(#"device", #"mm", #"pixels")*. Default value: *#"device"*.
 
    :description:
 
-The class of displays. An instance of *<display>* is an object that
-represents a single display (or screen) on some display server. Any
-sheet can be attached to an instance of *<display>*, and a display, and
-all the sheets attached to it, are associated with a `See
-<port>`_ that is a connection to a display server.
+     The class of displays. An instance of :class:`<display>` is an object that
+     represents a single display (or screen) on some display server. Any sheet
+     can be attached to an instance of :class:`<display>`, and a display, and
+     all the sheets attached to it, are associated with a :class:`<port>` that
+     is a connection to a display server.
 
-The *orientation:* init-keyword is used to specify the orientation of a
-display.
+     The *orientation:* init-keyword is used to specify the orientation of a
+     display.
 
-The *units:* init-keyword is used to specify the units in which height
-and width measurements are made with respect to the display. The default
-is whatever units are standard for the display device (usually pixels).
+     The *units:* init-keyword is used to specify the units in which height
+     and width measurements are made with respect to the display. The default
+     is whatever units are standard for the display device (usually pixels).
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
-`display`_ `display?`_
-`display-depth`_ `See
-display-height`_ `See
-display-mm-height`_ `See
-display-mm-width`_ `See
-display-orientation`_
- `display-pixel-height`_ `See
-display-pixels-per-point`_ `See
-display-pixel-width`_ `See
-display-units`_ `See
-display-width`_
+     - :gf:`display`
+     - :gf:`display?`
+     - :gf:`display-depth`
+     - :gf:`display-height`
+     - :gf:`display-mm-height`
+     - :gf:`display-mm-width`
+     - :gf:`display-orientation`
+     - :gf:`display-pixel-height`
+     - :gf:`display-pixels-per-point`
+     - :gf:`display-pixel-width`
+     - :gf:`display-units`
+     - :gf:`display-width`
 
    See also
 
-`display`_
+   - :gf:`display`
+   - :gf:`display?`
+   - :gf:`display-depth`
+   - :gf:`display-height`
+   - :gf:`display-orientation`
+   - :gf:`display-units`
+   - :gf:`display-width`
+   - :class:`<port>`
+   - :class:`<sheet>`
 
-`display?`_
+.. generic-function:: display
 
-`display-depth`_
-
-`display-height`_
-
-`display-orientation`_
-
-`display-units`_
-
-`display-width`_
-
-`<port>`_
-
-`<sheet>`_
-
-display
--------
-
-Generic function
-''''''''''''''''
-Returns the display for the specified object.
+   Returns the display for the specified object.
 
    :signature: display *object* => *display*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *display* An instance of type *false-or(`See
-   <display>`_)*.
+   :parameter display: An instance of type false-or(:class:`<display>`).
 
    :description:
 
-Returns the display used to display *object*.
+     Returns the display used to display *object*.
 
    See also
 
-`<display>`_
+   - :class:`<display>`
+   - :gf:`frame-manager`
+   - :gf:`port`
 
-`frame-manager`_
+.. generic-function:: display?
 
-`port`_
-
-display?
---------
-
-Generic function
-''''''''''''''''
-Returns true if the specified object is a display.
+   Returns true if the specified object is a display.
 
    :signature: display? *object* => *display?*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *display?* An instance of type ``<boolean>``.
+   :value display?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *object* is a display.
+     Returns true if *object* is a display.
 
    See also
 
-`<display>`_
+   - :class:`<display>`
 
-display-depth
--------------
+.. generic-function:: display-depth
 
-Generic function
-''''''''''''''''
-Returns the color depth of the specified display.
+   Returns the color depth of the specified display.
 
    :signature: display-depth *display* => *depth*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
 
--  *display* An instance of type *`<display>`_*.
-
-Values
-
--  *depth* An instance of type ``<integer>``.
+   :value depth: An instance of type ``<integer>``.
 
    :description:
 
-Returns the color depth of *display*. By default, the color depth of
-any display is assumed to be 8.
+     Returns the color depth of *display*. By default, the color depth of
+     any display is assumed to be 8.
 
    See also
 
-`display-height`_
+   - :gf:`display-height`
+   - :gf:`display-orientation`
+   - :gf:`display-width`
 
-`display-orientation`_
+.. generic-function:: display-height
 
-`display-width`_
-
-display-height
---------------
-
-Generic function
-''''''''''''''''
-Returns the height of the specified display.
+   Returns the height of the specified display.
 
    :signature: display-height *display* #key *units* => *height*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
+   :parameter units: An instance of *one-of(#"device", #"mm", #"pixels")*. Default value: *#"device"*.
 
--  *display* An instance of type *`<display>`_*.
--  *units* An instance of *one-of(#"device", #"mm", #"pixels")*.
-   Default value: *#"device"*.
-
-Values
-
--  *height* An instance of type *<number>*.
+   :value height: An instance of type :class:`<number>`.
 
    :description:
 
-Returns the height of *display*, in device-independent units. If
-*units* is specified, then the value returned is converted into the
-appropriate type of units.
+     Returns the height of *display*, in device-independent units. If
+     *units* is specified, then the value returned is converted into the
+     appropriate type of units.
 
    See also
 
-`display-depth`_
+   - :gf:`display-depth`
+   - :gf:`display-mm-height`
+   - :gf:`display-orientation`
+   - :gf:`display-pixel-height`
+   - :gf:`display-units`
+   - :gf:`display-width`
 
-`display-mm-height`_
+.. generic-function:: display-mm-height
 
-`display-orientation`_
-
-`display-pixel-height`_
-
-`display-units`_
-
-`display-width`_
-
-display-mm-height
------------------
-
-Generic function
-''''''''''''''''
-Returns the height of the specified display in millimeters.
+   Returns the height of the specified display in millimeters.
 
    :signature: display-mm-height *display* => *height*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
 
--  *display* An instance of type *`<display>`_*.
-
-Values
-
--  *height* An instance of type *<number>*.
+   :value height: An instance of type :class:`<number>`.
 
    :description:
 
-Returns the height of *display* in millimeters. This is equivalent to
-calling `display-height`_ with the *units*
-argument set to *#"mm"*.
+     Returns the height of *display* in millimeters. This is equivalent to
+     calling :gf:`display-height` with the *units* argument set to *#"mm"*.
 
    See also
 
-`display-height`_
+   - :gf:`display-height`
+   - :gf:`display-mm-width`
+   - :gf:`display-pixel-height`
+   - :gf:`display-units`
 
-`display-mm-width`_
+.. generic-function:: display-mm-width
 
-`display-pixel-height`_
-
-`display-units`_
-
-display-mm-width
-----------------
-
-Generic function
-''''''''''''''''
-Returns the width of the specified display in millimeters.
+   Returns the width of the specified display in millimeters.
 
    :signature: display-mm-width *display* => *width*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
 
--  *display* An instance of type *`<display>`_*.
-
-Values
-
--  *width* An instance of type *<number>*.
+   :value width: An instance of type :class:`<number>`.
 
    :description:
 
-Returns the width of *display* in millimeters. This is equivalent to
-calling `display-width`_ with the *units*
-argument set to *#"mm"*.
+     Returns the width of *display* in millimeters. This is equivalent to
+     calling :gf:`display-width` with the *units* argument set to *#"mm"*.
 
    See also
 
-`display-mm-height`_
+   - :gf:`display-mm-height`
+   - :gf:`display-pixel-width`
+   - :gf:`display-units`
+   - :gf:`display-width`
 
-`display-pixel-width`_
+.. generic-function:: display-orientation
 
-`display-units`_
-
-`display-width`_
-
-display-orientation
--------------------
-
-Generic function
-''''''''''''''''
-Returns the orientation of the specified display.
+   Returns the orientation of the specified display.
 
    :signature: display-orientation *display* => *orientation*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
 
--  *display* An instance of type *`<display>`_*.
-
-Values
-
--  *orientation* An instance of type *one-of(#"vertical", #"horizontal",
-   #"default")*.
+   :value orientation: An instance of type *one-of(#"vertical", #"horizontal", #"default")*.
 
    :description:
 
-Returns the orientation of *display*. Unless specified otherwise, the
-orientation of any display is *#"default"*.
+     Returns the orientation of *display*. Unless specified otherwise, the
+     orientation of any display is *#"default"*.
 
    See also
 
-`display-depth`_
+   - :gf:`display-depth`
+   - :gf:`display-height`
+   - :gf:`display-width`
 
-`display-height`_
+.. generic-function:: display-pixel-height
 
-`display-width`_
-
-display-pixel-height
---------------------
-
-Generic function
-''''''''''''''''
-Returns the height of the specified display in pixels.
+   Returns the height of the specified display in pixels.
 
    :signature: display-pixel-height *display* => *height*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
 
--  *display* An instance of type *`<display>`_*.
-
-Values
-
--  *height* An instance of type ``<integer>``.
+   :value height: An instance of type ``<integer>``.
 
    :description:
 
-Returns the height of *display* in pixels. This is equivalent to calling
-`display-height`_ with the *units* argument set
-to *#"pixels"*.
+     Returns the height of *display* in pixels. This is equivalent to calling
+     :gf:`display-height` with the *units* argument set to *#"pixels"*.
 
    See also
 
-`display-height`_
+   - :gf:`display-height`
+   - :gf:`display-mm-height`
+   - :gf:`display-pixel-width`
+   - :gf:`display-units`
 
-`display-mm-height`_
+.. generic-function:: display-pixels-per-point
 
-`display-pixel-width`_
-
-`display-units`_
-
-display-pixels-per-point
-------------------------
-
-Generic function
-''''''''''''''''
-Returns the number of pixels per point for the specified display.
+   Returns the number of pixels per point for the specified display.
 
    :signature: display-pixels-per-point *display* => *number*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
 
--  *display* An instance of type *`<display>`_*.
-
-Values
-
--  *number* An instance of type *<number>*.
+   :value number: An instance of type :class:`<number>`.
 
    :description:
 
-Returns the number of pixels per point for *display*.
+     Returns the number of pixels per point for *display*.
 
    See also
 
-`display-pixel-height`_
+   - :gf:`display-pixel-height`
+   - :gf:`display-pixel-width`
+   - :gf:`display-units`
 
-`display-pixel-width`_
+.. generic-function:: display-pixel-width
 
-`display-units`_
-
-display-pixel-width
--------------------
-
-Generic function
-''''''''''''''''
-Returns the width of the specified display in pixels.
+   Returns the width of the specified display in pixels.
 
    :signature: display-pixel-width *display* => *width*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
 
--  *display* An instance of type *`<display>`_*.
-
-Values
-
--  *width* An instance of type ``<integer>``.
+   :value width: An instance of type ``<integer>``.
 
    :description:
 
-Returns the height of *display* in pixels. This is equivalent to calling
-`display-width`_ with the *units* argument set to
-*#"pixels"*.
+     Returns the height of *display* in pixels. This is equivalent to calling
+     :gf:`display-width` with the *units* argument set to *#"pixels"*.
 
    See also
 
-`display-mm-width`_
+   - :gf:`display-mm-width`
+   - :gf:`display-pixel-height`
+   - :gf:`display-units`
+   - :gf:`display-width`
 
-`display-pixel-height`_
+.. generic-function:: display-units
 
-`display-units`_
-
-`display-width`_
-
-display-units
--------------
-
-Generic function
-''''''''''''''''
-Returns the default units for the specified display.
+   Returns the default units for the specified display.
 
    :signature: display-units *display* => *value*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
 
--  *display* An instance of type *`<display>`_*.
-
-Values
-
--  *value* An instance of type *one-of(#"device", #"pixels", #"mm")*.
+   :value value: An instance of type *one-of(#"device", #"pixels", #"mm")*.
 
    :description:
 
-Returns the default units for *display*. These are the units in which
-height and width measurements are made, both for the display, and for
-any children of the display. Unless otherwise specified, the value
-returned is *#"default"*, so as to maintain a device-independent
-measurement as far as possible.
+     Returns the default units for *display*. These are the units in which
+     height and width measurements are made, both for the display, and for
+     any children of the display. Unless otherwise specified, the value
+     returned is *#"default"*, so as to maintain a device-independent
+     measurement as far as possible.
 
    See also
 
-`display-height`_
+   - :gf:`display-height`
+   - :gf:`display-width`
 
-`display-width`_
+.. generic-function:: display-width
 
-display-width
--------------
-
-Generic function
-''''''''''''''''
-Returns the width of the specified display.
+   Returns the width of the specified display.
 
    :signature: display-width *display* #key *units* => *width*
 
-Arguments
+   :parameter display: An instance of type :class:`<display>`.
+   :parameter units: An instance of *one-of(#"device", #"mm", #"pixels")*. Default value: *#"device"*.
 
--  *display* An instance of type *`<display>`_*.
--  *units* An instance of *one-of(#"device", #"mm", #"pixels")*.
-   Default value: *#"device"*.
-
-Values
-
--  *width* An instance of type *<number>*.
+   :value width: An instance of type :class:`<number>`.
 
    :description:
 
-Returns the width of *display*, in device-independent units. If *units*
-is specified, then the value returned is converted into the appropriate
-type of units.
+     Returns the width of *display*, in device-independent units. If *units*
+     is specified, then the value returned is converted into the appropriate
+     type of units.
 
    See also
 
-`display-depth`_
+   - :gf:`display-depth`
+   - :gf:`display-height`
+   - :gf:`display-mm-width`
+   - :gf:`display-orientation`
+   - :gf:`display-pixel-width`
+   - :gf:`display-units`
 
-`display-height`_
+.. generic-function:: do-children-containing-position
 
-`display-mm-width`_
-
-`display-orientation`_
-
-`display-pixel-width`_
-
-`display-units`_
-
-do-children-containing-position
--------------------------------
-
-Generic function
-''''''''''''''''
-Invokes a function on any children that occupy a specified position in
-the specified sheet.
+   Invokes a function on any children that occupy a specified position in
+   the specified sheet.
 
    :signature: do-children-containing-position *function sheet x y* => ()
 
-Arguments
-
--  *function* An instance of type ``<function>``.
--  *sheet* An instance of type `<sheet>`_.
--  *x* An instance of type ``<real>``.
--  *y* An instance of type ``<real>``.
-
+   :parameter function: An instance of type ``<function>``.
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter x: An instance of type ``<real>``.
+   :parameter y: An instance of type ``<real>``.
 
    :description:
 
-Invokes *function* on any children that occupy position *(* *x* *,* *y*
-*)* in *sheet*. This is used by `See
-child-containing-position`_ to ascertain which
-children occupy the position. The function `See
-child-containing-position`_ then decides which of the
-children returned is the topmost direct enabled child.
+     Invokes *function* on any children that occupy position *(* *x* *,* *y*
+     *)* in *sheet*. This is used by :gf:`child-containing-position` to
+     ascertain which children occupy the position. The function
+     :gf:`child-containing-position` then decides which of the children
+     returned is the topmost direct enabled child.
 
    See also
 
-`child-containing-position`_
+   - :gf:`child-containing-position`
 
-do-children-overlapping-region
-------------------------------
+.. generic-function:: do-children-overlapping-region
 
-Generic function
-''''''''''''''''
-Invokes a function on any children of the specified sheet whose regions
-overlap a specified region.
+   Invokes a function on any children of the specified sheet whose regions
+   overlap a specified region.
 
    :signature: do-children-overlapping-region *function sheet region* => ()
 
-Arguments
-
--  *function* An instance of type ``<function>``.
--  *sheet* An instance of type `<sheet>`_.
--  *region* An instance of type `<region> <geom.htm#79228>`_.
-
+   :parameter function: An instance of type ``<function>``.
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter region: An instance of type :class:`<region>`.
 
    :description:
 
-Invokes *function* on any children of *sheet* whose regions overlap
-*region*. This is used by `See
-children-overlapping-region`_ to ascertain which
-children overlap *region*.
+     Invokes *function* on any children of *sheet* whose regions overlap
+     *region*. This is used by :gf:`children-overlapping-region` to ascertain
+     which children overlap *region*.
 
    See also
 
-`children-overlapping-region`_
+   - :gf:`children-overlapping-region`
+   - :gf:`do-children-containing-position`
 
-`do-children-containing-position`_
+.. function:: do-displays
 
-do-displays
------------
-
-Inline function
-'''''''''''''''
-Runs a function on all the displays attached to a given port.
+   Runs a function on all the displays attached to a given port.
 
    :signature: do-displays *function port* => ()
 
-Arguments
-
--  *function* An instance of type ``<function>``.
--  *port* An instance of type `<port>`_.
-
+   :parameter function: An instance of type ``<function>``.
+   :parameter port: An instance of type :class:`<port>`.
 
    :description:
 
-Runs a function on all the displays attached to a given port. By
-default, the current port is used, unless *port* is specified.
+     Runs a function on all the displays attached to a given port. By
+     default, the current port is used, unless *port* is specified.
 
-do-frames
----------
+.. generic-function:: do-frames
 
-Generic function
-''''''''''''''''
-Runs a function on all the frames managed by a given frame manager.
+   Runs a function on all the frames managed by a given frame manager.
 
    :signature: do-frames *function* #key *port frame-manager* => ()
 
-Arguments
-
--  *function* An instance of type ``<function>``.
--  *port* An instance of type `<port>`_.
--  *frame-manager* An instance of type `See
-   <frame-manager>`_.
-
+   :parameter function: An instance of type ``<function>``.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter frame-manager: An instance of type :class:`<frame-manager>`.
 
    :description:
 
-Runs a function on all the frames managed by a given frame manager. By
-default, the current frame manager on the current port is used, unless
-*port* or *frame-manager* are specified.
+     Runs a function on all the frames managed by a given frame manager. By
+     default, the current frame manager on the current port is used, unless
+     *port* or *frame-manager* are specified.
 
-do-ports
---------
+.. function:: do-ports
 
-Function
-''''''''
-Runs a function on all the current ports.
+   Runs a function on all the current ports.
 
    :signature: do-ports *function* => ()
 
-Arguments
-
--  *function* An instance of type ``<function>``.
-
+   :parameter function: An instance of type ``<function>``.
 
    :description:
 
-Runs a function on all the current ports.
+     Runs a function on all the current ports.
 
-do-sheet-children
------------------
+.. generic-function:: do-sheet-children
 
-Generic function
-''''''''''''''''
-Runs a function on all the immediate children of the specified sheet.
+   Runs a function on all the immediate children of the specified sheet.
 
    :signature: do-sheet-children *function sheet* => ()
 
-Arguments
-
--  *function* An instance of type ``<function>``.
--  *sheet* An instance of type `<sheet>`_.
-
+   :parameter function: An instance of type ``<function>``.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Runs *function* on all the immediate children of *sheet*. This function
-calls `sheet-children`_ to find the children of
-*sheet*.
+     Runs *function* on all the immediate children of *sheet*. This function
+     calls :gf:`sheet-children` to find the children of *sheet*.
 
    See also
 
-`sheet-children`_
+   - :gf:`sheet-children`
 
-do-sheet-tree
--------------
+.. generic-function:: do-sheet-tree
 
-Generic function
-''''''''''''''''
-Runs a function on all the children in the hierarchy of the specified
-sheet.
+   Runs a function on all the children in the hierarchy of the specified
+   sheet.
 
    :signature: do-sheet-tree *function sheet* => ()
 
-Arguments
-
--  *function* An instance of type ``<function>``.
--  *sheet* An instance of type `<sheet>`_.
-
+   :parameter function: An instance of type ``<function>``.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Runs a function on all the children in the hierarchy of the specified
-sheet. The function is run on *sheet*, then on the children of *sheet*
-, then on the children of the children of *sheet*, and so on.
+     Runs a function on all the children in the hierarchy of the specified
+     sheet. The function is run on *sheet*, then on the children of *sheet*,
+     then on the children of the children of *sheet*, and so on.
 
-<double-click-event>
---------------------
+.. class:: <double-click-event>
+   :sealed:
+   :instantiable:
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of double-click events on the pointer device.
+   The class of double-click events on the pointer device.
 
-   :superclasses:
-
-`<button-press-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<button-press-event>`
 
    :description:
 
-The class of double-click events on the pointer device. An instance of
-this class is generated when a button press is detected within a certain
-(small) amount of time after a previous button press. If a double click
-event is generated, the clock is reset, so that the next press generated
-is an instance of `<button-press-event>`_.
+     The class of double-click events on the pointer device. An instance of
+     this class is generated when a button press is detected within a certain
+     (small) amount of time after a previous button press. If a double click
+     event is generated, the clock is reset, so that the next press generated
+     is an instance of :class:`<button-press-event>`.
 
    :operations:
 
--  None.
-
    See also
 
-`<button-press-event>`_
+   - :class:`<button-press-event>`
 
-do-with-drawing-options
------------------------
+.. generic-function:: do-with-drawing-options
 
-Generic function
-''''''''''''''''
-Runs some code on a drawable in a given drawing context.
+   Runs some code on a drawable in a given drawing context.
 
-   :signature: do-with-drawing-options *drawable function* #key *brush pen text-style
-clipping-region transform* => #rest *values*
+   :signature: do-with-drawing-options *drawable function* #key *brush pen text-style clipping-region transform* => #rest *values*
 
-Arguments
+   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter function: An instance of type ``<function>``.
+   :parameter brush: An instance of type :class:`<brush>`.
+   :parameter pen: An instance of type :class:`<pen>`.
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter clipping-region: An instance of type :class:`<region>`.
+   :parameter transform: An instance of type :class:`<transform>`.
 
--  *drawable* An instance of type *type-union(* `See
-   <sheet>`_*, `<medium>`_)*.
--  *function* An instance of type ``<function>``.
--  *brush* An instance of type `<brush> <dcs.htm#29492>`_.
--  *pen* An instance of type `<pen> <dcs.htm#41757>`_.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *clipping-region* An instance of type `See
-   <region> <geom.htm#79228>`_.
--  *transform* An instance of type `<transform> <geom.htm#54995>`_.
-
-Values
-
--  *values* An instance of type ``<object>``.
+   :value values: An instance of type ``<object>``.
 
    :description:
 
-Runs some code on a drawable in a given drawing context. This function
-is called by the macro `with-drawing-options`_,
-and you should define new methods on it for new classes of drawable.
+     Runs some code on a drawable in a given drawing context. This function
+     is called by the macro :macro:`with-drawing-options`,
+     and you should define new methods on it for new classes of drawable.
 
-The *function* passed to *do-with-drawing-options* is the result of
-encapsulating the body passed to `See
-with-drawing-options`_ as a stand-alone method.
+     The *function* passed to *do-with-drawing-options* is the result of
+     encapsulating the body passed to :macro:`with-drawing-options` as
+     a stand-alone method.
 
-The values returned are the values that are returned from `See
-with-drawing-options`_.
+     The values returned are the values that are returned from
+     :macro:`with-drawing-options`.
 
-The various keywords specify a drawing context in which function is run.
+     The various keywords specify a drawing context in which function is run.
 
    See also
 
-`with-drawing-options`_
+   - :macro:`with-drawing-options`
 
-do-with-pointer-grabbed
------------------------
+.. generic-function:: do-with-pointer-grabbed
 
-Generic function
-''''''''''''''''
-Runs some specified code, forwarding all pointer events to a sheet.
+   Runs some specified code, forwarding all pointer events to a sheet.
 
    :signature: do-with-pointer-grabbed *port sheet continuation* #key => #rest *values*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter continuation: An instance of type ``<function>``.
 
--  *port* An instance of type `<port>`_.
--  *sheet* An instance of type `<sheet>`_.
--  *continuation* An instance of type ``<function>``.
-
-Values
-
--  *values* An instance of type ``<object>``.
+   :value values: An instance of type ``<object>``.
 
    :description:
 
-Runs the code specified in *continuation*, forwarding all pointer
-events to *sheet*, even if the pointer leaves the sheet-region of
-*sheet*. The argument continuation is an instance of *<function>*.
+     Runs the code specified in *continuation*, forwarding all pointer
+     events to *sheet*, even if the pointer leaves the sheet-region of
+     *sheet*. The argument continuation is an instance of :class:`<function>`.
 
-This function is called by `See
-with-pointer-grabbed`_, and *continuation* is
-actually the result of creating a stand-alone method from the body of
-code passed to *with-pointer-grabbed*.
+     This function is called by :macro:`with-pointer-grabbed`, and
+     *continuation* is actually the result of creating a stand-alone method
+     from the body of code passed to :macro:`with-pointer-grabbed`.
 
    See also
 
-`with-pointer-grabbed`_
+   - :macro:`with-pointer-grabbed`
 
-do-with-sheet-medium
---------------------
+.. generic-function:: do-with-sheet-medium
 
-Generic function
-''''''''''''''''
-Runs a continuation function on a sheet.
+   Runs a continuation function on a sheet.
 
    :signature: do-with-sheet-medium *sheet continuation* => #rest *values*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter continuation: An instance of type ``<function>``.
 
--  *sheet* An instance of type `<sheet>`_.
--  *continuation* An instance of type ``<function>``.
-
-Values
-
--  *values* An instance of type ``<object>``.
+   :value values: An instance of type ``<object>``.
 
    :description:
 
-Runs a continuation function on a sheet.
+     Runs a continuation function on a sheet.
 
    See also
 
-`with-sheet-medium`_
+   - :macro:`with-sheet-medium`
 
-do-with-text-style
-------------------
+.. generic-function:: do-with-text-style
 
-Generic function
-''''''''''''''''
-Runs some code on a drawable in the context of a given text style.
+   Runs some code on a drawable in the context of a given text style.
 
    :signature: do-with-text-style *drawable function text-style* => ()
 
-Arguments
-
--  *drawable* An instance of type *type-union(* `See
-   <sheet>`_*, `<medium>`_)*.
--  *function* An instance of type ``<function>``.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
-
+   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter function: An instance of type ``<function>``.
+   :parameter text-style: An instance of type `<text-style> <dcs.htm#85385>`_.
 
    :description:
 
-Runs some code on a drawable in the context of a given text style.
+     Runs some code on a drawable in the context of a given text style.
 
    See also
 
-`with-text-style`_
+   - :macro:`with-text-style`
 
-do-with-transform
------------------
+.. generic-function:: do-with-transform
 
-Generic function
-''''''''''''''''
-Returns the result of running a function in a transform defined on a
-specified medium.
+   Returns the result of running a function in a transform defined on a
+   specified medium.
 
    :signature: do-with-transform *drawable function transform* => #rest *values*
 
-Arguments
+   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter function: An instance of type ``<function>``.
+   :parameter transform: An instance of type :class:`<transform>`.
 
--  *drawable* An instance of type *type-union(* `See
-   <sheet>`_*, `<medium>`_)*.
--  *function* An instance of type ``<function>``.
--  *transform* An instance of type `<transform> <geom.htm#54995>`_.
-
-Values
-
--  *values* An instance of type ``<object>``.
+   :value values: An instance of type ``<object>``.
 
    :description:
 
-Returns the result of running a function in a transform defined on a
-specified medium. Methods on this function are called by `See
-with-transform`_, which in turn is used by the
-similar macros `with-rotation`_, `See
-with-scaling`_, and
- `with-translation`_.
+   Returns the result of running a function in a transform defined on
+   a specified medium. Methods on this function are called by
+   :macro:`with-transform`, which in turn is used by the similar macros
+   :macro:`with-rotation`, :macro:`with-scaling`, and
+   :macro:`with-translation`.
 
    See also
 
-`with-transform`_
+   - :gf:`with-transform`
 
-<event>
--------
+.. class:: <event>
+   :open:
+   :abstract:
 
-Open abstract class
-'''''''''''''''''''
-The base class of all DUIM events.
+   The base class of all DUIM events.
 
-   :superclasses:
+   :superclasses: :class:`<object>`
 
-*<object>*
-
-Init-keywords
-
--  *timestamp:* An instance of type ``<integer>``. Default value:
-   *next-event-timestamp()*.
+   :keyword timestamp: An instance of type ``<integer>``. Default value: *next-event-timestamp()*.
 
    :description:
 
-The base class of all DUIM events.
+     The base class of all DUIM events.
 
-The *timestamp:* init-keyword is used to give a unique identifier for
-the event.
+     The *timestamp:* init-keyword is used to give a unique identifier for
+     the event.
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
-`event?`_ `See
-event-matches-gesture?`_ `See
-handle-event`_ `queue-event`_
+     - :gf:`event?`
+     - :gf:`event-matches-gesture?`
+     - :gf:`handle-event`
+     - :gf:`queue-event`
 
    See also
 
-`<frame-event>`_
+   - :class:`<frame-event>`
+   - :class:`<sheet-event>`
 
-`<sheet-event>`_
+.. generic-function:: event?
 
-event?
-------
-
-Generic function
-''''''''''''''''
-Returns true if the specified object is an event.
+   Returns true if the specified object is an event.
 
    :signature: event? *object* => *event?*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *event?* An instance of type ``<boolean>``.
+   :value event?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *object* is an instance of `See
-<event>`_ or one of its subclasses.
+     Returns true if *object* is an instance of :class:`<event>` or one of its
+     subclasses.
 
    See also
 
-`<event>`_
+   - :class:`<event>`
 
-event-button
-------------
+.. generic-function:: event-button
 
-Generic function
-''''''''''''''''
-Returns an integer corresponding to the mouse button that was pressed or
-released.
+   Returns an integer corresponding to the mouse button that was pressed or
+   released.
 
    :signature: event-button *event* => *integer*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *integer* An instance of type ``<integer>``.
+   :value integer: An instance of type ``<integer>``.
 
    :description:
 
-Returns an integer corresponding to the mouse button that was pressed or
-released, which will be one of `$left-button`_,
-`$middle-button`_, or `See
-$right-button`_.
+     Returns an integer corresponding to the mouse button that was pressed or
+     released, which will be one of :const:`$left-button`,
+     :const:`$middle-button`, or :const:`$right-button`.
 
-*Note:* The function *event-button* records the button state at the time
-that the event occurred, and hence can be different from `See
-pointer-button-state`_.
+     *Note:* The function *event-button* records the button state at the time
+     that the event occurred, and hence can be different from
+     :gf:`pointer-button-state`.
 
    See also
 
-`$left-button`_
+   - :const:`$left-button`
+   - :const:`$middle-button`
+   - :class:`<pointer-button-event>`
+   - :gf:`pointer-button-state`
+   - :const:`$right-button`
 
-`$middle-button`_
+.. generic-function:: event-character
 
-`<pointer-button-event>`_
-
-`pointer-button-state`_
-
-`$right-button`_
-
-event-character
----------------
-
-Generic function
-''''''''''''''''
-Returns the character that was pressed on the keyboard.
+   Returns the character that was pressed on the keyboard.
 
    :signature: event-character *event* => *value*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *value* An instance of type *false-or(<character>)*.
+   :value value: An instance of type *false-or(<character>)*.
 
    :description:
 
-Returns the character associated with the keyboard event, if there is
-any.
+     Returns the character associated with the keyboard event, if there is
+     any.
 
    See also
 
-`event-key-name`_
+   - :gf:`event-key-name`
+   - :class:`<keyboard-event>`
 
-`<keyboard-event>`_
+.. generic-function:: event-key-name
 
-event-key-name
---------------
-
-Generic function
-''''''''''''''''
-Returns the name of the key that was pressed or released on the
-keyboard.
+   Returns the name of the key that was pressed or released on the
+   keyboard.
 
    :signature: event-key-name *event* => name
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *name* An instance of type *<symbol>*.
+   :value name: An instance of type :class:`<symbol>`.
 
    :description:
 
-Returns the name of the key that was pressed or released in a keyboard
-event. This will be a symbol whose value is specific to the current
-port.
+     Returns the name of the key that was pressed or released in a keyboard
+     event. This will be a symbol whose value is specific to the current
+     port.
 
    See also
 
-`event-character`_
+   - :gf:`event-character`
+   - :class:`<keyboard-event>`
 
-`<keyboard-event>`_
+.. generic-function:: event-matches-gesture?
 
-event-matches-gesture?
-----------------------
-
-Generic function
-''''''''''''''''
-Returns true if an event matches a defined gesture.
+   Returns true if an event matches a defined gesture.
 
    :signature: event-matches-gesture? *event gesture-name* => *matches?*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
+   :parameter gesture-name: An instance of type *type-union(* :class:`<gesture>`, ``<character>`` *)*.
 
--  *event* An instance of type `<event>`_.
--  *gesture-name* An instance of type *type-union(`See
-   <gesture>`_, <character>)*.
-
-Values
-
--  *matches?* An instance of type ``<boolean>``.
+   :value matches?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if an event matches a defined gesture.
+     Returns true if an event matches a defined gesture.
 
-event-modifier-state
---------------------
+.. generic-function:: event-modifier-state
 
-Generic function
-''''''''''''''''
-Returns an integer value that encodes the state of all the modifier keys
-on the keyboard.
+   Returns an integer value that encodes the state of all the modifier keys
+   on the keyboard.
 
    :signature: event-modifier-state *event* => *integer*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *integer* An instance of type ``<integer>``.
+   :value integer: An instance of type ``<integer>``.
 
    :description:
 
-Returns an integer value that encodes the state of all the modifier keys
-on the keyboard. This is a mask consisting of the *logior* of `See
-$shift-key`_, `$control-key`_,
-`$meta-key`_, `See
-$super-key`_, and `See
-$hyper-key`_.
+     Returns an integer value that encodes the state of all the modifier keys on
+     the keyboard. This is a mask consisting of the *logior* of
+     :const:`$shift-key`, :const:`$control-key`, :const:`$meta-key`,
+     :const:`$super-key`, and :const:`$hyper-key`.
 
    See also
 
-`event-sheet`_
+   - :gf:`event-sheet`
+   - :gf:`gesture-modifier-state`
+   - :gf:`make-modifier-state`
+   - :gf:`port-modifier-state`
 
-`gesture-modifier-state`_
+.. generic-function:: event-pointer
 
-`make-modifier-state`_
-
-`port-modifier-state`_
-
-event-pointer
--------------
-
-Generic function
-''''''''''''''''
-Returns the pointer object to which the specified event refers.
+   Returns the pointer object to which the specified event refers.
 
    :signature: event-pointer *event* => *pointer*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *pointer* An instance of type `<pointer>`_.
+   :value pointer: An instance of type :class:`<pointer>`.
 
    :description:
 
-Returns the pointer object to which *event* refers.
+     Returns the pointer object to which *event* refers.
 
    See also
 
-`<pointer>`_
+   - :class:`<pointer>`
+   - :gf:`event-x`
+   - :gf:`event-y`
 
-`event-x`_
+.. generic-function:: event-region
 
-`event-y`_
-
-event-region
-------------
-
-Generic function
-''''''''''''''''
-Returns the region in the sheet that is affected by the specified event.
+   Returns the region in the sheet that is affected by the specified event.
 
    :signature: event-region *event* => *region*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *region* An instance of type `<region> <geom.htm#79228>`_.
+   :value region: An instance of type :class:`<region>`.
 
    :description:
 
-Returns the region of the sheet that is affected by *event*.
+     Returns the region of the sheet that is affected by *event*.
 
    See also
 
-`event-x`_
+   - :gf:`event-x`
+   - :gf:`event-y`
+   - :class:`<window-event>`
 
-`event-y`_
+.. generic-function:: event-sheet
 
-`<window-event>`_
-
-event-sheet
------------
-
-Generic function
-''''''''''''''''
-Returns the sheet associated with the specified event.
+   Returns the sheet associated with the specified event.
 
    :signature: event-sheet *event* => *sheet*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *sheet* An instance of type `<sheet>`_.
+   :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Returns the sheet associated with *event*.
+     Returns the sheet associated with *event*.
 
    See also
 
-`event-modifier-state`_
+   - :gf:`event-modifier-state`
 
-event-x
--------
+.. generic-function:: event-x
 
-Generic function
-''''''''''''''''
-Returns the x position of the pointer at the time the event occurred.
+   Returns the x position of the pointer at the time the event occurred.
 
    :signature: event-x *event* => *x*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *x* An instance of type ``<integer>``.
+   :value x: An instance of type ``<integer>``.
 
    :description:
 
-Returns the x position of the pointer at the time the event occurred, in
-the coordinate system of the sheet that received the event.
+     Returns the x position of the pointer at the time the event occurred, in
+     the coordinate system of the sheet that received the event.
 
    See also
 
-`event-pointer`_
+   - :gf:`event-pointer`
+   - :gf:`event-region`
+   - :gf:`event-y`
 
-`event-region`_
+.. generic-function:: event-y
 
-`event-y`_
-
-event-y
--------
-
-Generic function
-''''''''''''''''
-Returns the y position of the pointer at the time the event occurred.
+   Returns the y position of the pointer at the time the event occurred.
 
    :signature: event-y *event* => *y*
 
-Arguments
+   :parameter event: An instance of type :class:`<event>`.
 
--  *event* An instance of type `<event>`_.
-
-Values
-
--  *y* An instance of type ``<integer>``.
+   :value y: An instance of type ``<integer>``.
 
    :description:
 
-Returns the y position of the pointer at the time the event occurred, in
-the coordinate system of the sheet that received the event.
+     Returns the y position of the pointer at the time the event occurred, in
+     the coordinate system of the sheet that received the event.
 
    See also
 
-`event-pointer`_
+   - :gf:`event-pointer`
+   - :gf:`event-region`
+   - :gf:`event-x`
 
-`event-region`_
+.. function:: find-display
 
-`event-x`_
-
-find-display
-------------
-
-Function
-''''''''
-Returns a suitable display for the specified port and server-path
-criteria.
+   Returns a suitable display for the specified port and server-path
+   criteria.
 
    :signature: find-display #key *server-path port orientation units* => *display*
 
-Arguments
+   :parameter server-path: An instance of type :class:`<symbol>`. Default value: *#(#"local")*.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter orientation: An instance of type *one-of(#"default")*. Default value: *#"default"*.
+   :parameter units: An instance of type *one-of(#"device", #"pixels", #"mm")*. Default value: *#"device"*.
 
--  *server-path* An instance of type *<symbol>*. Default value:
-   *#(#"local")*.
--  *port* An instance of type `<port>`_.
--  *orientation* An instance of type *one-of(#"default")*. Default
-   value: *#"default"*.
--  *units* An instance of type *one-of(#"device", #"pixels", #"mm")*.
-   Default value: *#"device"*.
-
-Values
-
--  *display* An instance of type *`<display>`_*.
+   :value display: An instance of type :class:`<display>`.
 
    :description:
 
-Returns a suitable display for the specified port and server-path
-criteria.
+     Returns a suitable display for the specified port and server-path
+     criteria.
 
-The *orientation* and *units* arguments can be used to specify the
-orientation and display units that the returned *display* needs to use.
+     The *orientation* and *units* arguments can be used to specify the
+     orientation and display units that the returned *display* needs to use.
 
    See also
 
-`find-port`_
+   - :gf:`find-port`
 
-find-frame-manager
-------------------
+.. function:: find-frame-manager
 
-Function
-''''''''
-Returns a suitable frame manager for the specified criteria.
+   Returns a suitable frame manager for the specified criteria.
 
-   :signature: find-frame-manager #rest *options* #key *port server-path class palette*
-=> *framem*
+   :signature: find-frame-manager #rest *options* #key *port server-path class palette* => *framem*
 
-Arguments
+   :parameter options: An instance of type ``<object>``.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter server-path: An instance of type ``<object>``.
+   :parameter class: An instance of type :class:`<type>`.
+   :parameter palette: An instance of type :class:`<palette>`.
 
--  *options* An instance of type ``<object>``.
--  *port* An instance of type `<port>`_.
--  *server-path* An instance of type ``<object>``.
--  *class* An instance of type *<type>*.
--  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
-
-Values
-
--  *framem* An instance of type `See
-   <frame-manager>`_.
+   :value framem: An instance of type :class:`<frame-manager>`.
 
    :description:
 
-Returns a suitable frame manager for the specified criteria.
+     Returns a suitable frame manager for the specified criteria.
 
-If necessary, you can specify a *port*, *server-path*, *class*, or
-*palette*. If any of these are not specified, then the default value is
-used in each case. The *class* argument specifies the class of frame
-manager that should be returned.
+     If necessary, you can specify a *port*, *server-path*, *class*, or
+     *palette*. If any of these are not specified, then the default value is
+     used in each case. The *class* argument specifies the class of frame
+     manager that should be returned.
 
-find-port
----------
+.. function:: find-port
 
-Function
-''''''''
-Returns a suitable port for the specified server-path.
+   Returns a suitable port for the specified server-path.
 
    :signature: find-port #rest *initargs* #key *server-path* => *port*
 
-Arguments
+   :parameter initargs: An instance of type ``<object>``.
+   :parameter server-path: An instance of type ``<object>``. Default value: *\*default-server-path\**.
 
--  *initargs* An instance of type ``<object>``.
--  *server-path* An instance of type ``<object>``. Default value:
-   *\*default-server-path\**.
-
-Values
-
--  *port* An instance of type `<port>`_.
+   :value port: An instance of type :class:`<port>`.
 
    :description:
 
-Returns a suitable port for the specified server-path.
+     Returns a suitable port for the specified server-path.
 
    See also
 
-`find-display`_
+   - :gf:`find-display`
 
-fixed-width-font?
------------------
+.. generic-function:: fixed-width-font?
 
-Generic function
-''''''''''''''''
-Returns true if the specified text style uses a fixed-width font.
+   Returns true if the specified text style uses a fixed-width font.
 
    :signature: fixed-width-font? *text-style port* #key *character-set* => *fixed?*
 
-Arguments
+   :parameter text-style: An instance of type `<text-style> <dcs.htm#85385>`_.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter character-set: An instance of type ``<object>``. Default value: *$standard-character-set*.
 
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `<port>`_.
--  *character-set* An instance of type ``<object>``. Default value:
-   *$standard-character-set*.
-
-Values
-
--  *fixed?* An instance of type ``<boolean>``.
+   :value fixed?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *text-style* uses a fixed-width font.
+     Returns true if *text-style* uses a fixed-width font.
 
-font-ascent
------------
+.. generic-function:: font-ascent
 
-Generic function
-''''''''''''''''
-Returns the ascent of the font in the specified text style.
+   Returns the ascent of the font in the specified text style.
 
    :signature: font-ascent *text-style port* #key *character-set* => *ascent*
 
-Arguments
+   :parameter text-style: An instance of type `<text-style> <dcs.htm#85385>`_.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter character-set: An instance of type ``<object>``. Default value: *$standard-character-set*.
 
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `<port>`_.
--  *character-set* An instance of type ``<object>``. Default value:
-   *$standard-character-set*.
-
-Values
-
--  *ascent* An instance of type ``<real>``.
+   :value ascent: An instance of type ``<real>``.
 
    :description:
 
-Returns the ascent of the font in the *text-style* on *port*.
+     Returns the ascent of the font in the *text-style* on *port*.
 
    See also
 
-`font-descent`_
+   - :gf:`font-descent`
+   - :gf:`font-height`
+   - :gf:`font-metrics`
+   - :gf:`font-width`
 
-`font-height`_
+.. generic-function:: font-descent
 
-`font-metrics`_
-
-`font-width`_
-
-font-descent
-------------
-
-Generic function
-''''''''''''''''
-Returns the descent of the font in the specified text style.
+   Returns the descent of the font in the specified text style.
 
    :signature: font-descent *text-style port* #key *character-set* => *descent*
 
-Arguments
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter character-set: An instance of type ``<object>``.
 
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `<port>`_.
--  *character-set* An instance of type ``<object>``.
-
-Values
-
--  *descent* An instance of type ``<real>``.
+   :value descent: An instance of type ``<real>``.
 
    :description:
 
-Returns the descent of the font in the *text-style* on *port*.
+     Returns the descent of the font in the *text-style* on *port*.
 
    See also
 
-`font-ascent`_
+   - :gf:`font-ascent`
+   - :gf:`font-height`
+   - :gf:`font-metrics`
+   - :gf:`font-width`
 
-`font-height`_
+.. generic-function:: font-height
 
-`font-metrics`_
-
-`font-width`_
-
-font-height
------------
-
-Generic function
-''''''''''''''''
-Returns the height of the font in the specified text style.
+   Returns the height of the font in the specified text style.
 
    :signature: font-height *text-style port* #key *character-set* => *height*
 
-Arguments
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter character-set: An instance of type ``<object>``.
 
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `<port>`_.
--  *character-set* An instance of type ``<object>``.
-
-Values
-
--  *height* An instance of type ``<real>``.
+   :value height: An instance of type ``<real>``.
 
    :description:
 
-Returns the height of the font in the *text-style* on *port*.
+     Returns the height of the font in the *text-style* on *port*.
 
    See also
 
-`font-ascent`_
+   - :gf:`font-ascent`
+   - :gf:`font-descent`
+   - :gf:`font-metrics`
+   - :gf:`font-width`
 
-`font-descent`_
+.. generic-function:: font-metrics
 
-`font-metrics`_
+   Returns the metrics of the font in the specified text style.
 
-`font-width`_
+   :signature: font-metrics *text-style port* #key *character-set* => *font width height ascent descent*
 
-font-metrics
-------------
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter character-set: An instance of type ``<object>``.
 
-Generic function
-''''''''''''''''
-Returns the metrics of the font in the specified text style.
-
-   :signature: font-metrics *text-style port* #key *character-set* => *font width
-height ascent descent*
-
-Arguments
-
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `<port>`_.
--  *character-set* An instance of type ``<object>``.
-
-Values
-
--  *font* An instance of type ``<object>``.
--  *width* An instance of type ``<real>``.
--  *height* An instance of type ``<real>``.
--  *ascent* An instance of type ``<real>``.
--  *descent* An instance of type ``<real>``.
+   :value font: An instance of type ``<object>``.
+   :value width: An instance of type ``<real>``.
+   :value height: An instance of type ``<real>``.
+   :value ascent: An instance of type ``<real>``.
+   :value descent: An instance of type ``<real>``.
 
    :description:
 
-Returns the metrics of the font in the *text-style* on *port*.
+     Returns the metrics of the font in the *text-style* on *port*.
 
    See also
 
-`font-ascent`_
+   - :gf:`font-ascent`
+   - :gf:`font-descent`
+   - :gf:`font-height`
+   - :gf:`font-width`
 
-`font-descent`_
+.. generic-function:: font-width
 
-`font-height`_
-
-`font-width`_
-
-font-width
-----------
-
-Generic function
-''''''''''''''''
-Returns the width of the font in the specified text style.
+   Returns the width of the font in the specified text style.
 
    :signature: font-width *text-style port* #key *character-set* => *width*
 
-Arguments
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter character-set: An instance of type ``<object>``.
 
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *port* An instance of type `<port>`_.
--  *character-set* An instance of type ``<object>``.
-
-Values
-
--  *width* An instance of type ``<real>``.
+   :value width: An instance of type ``<real>``.
 
    :description:
 
-Returns the with of the font in the *text-style* on *port*.
+     Returns the with of the font in the *text-style* on *port*.
 
    See also
 
-`font-ascent`_
+   - :gf:`font-ascent`
+   - :gf:`font-descent`
+   - :gf:`font-height`
+   - :gf:`font-metrics`
 
-`font-descent`_
+.. generic-function:: force-display
 
-`font-height`_
-
-`font-metrics`_
-
-force-display
--------------
-
-Generic function
-''''''''''''''''
-Forces the specified drawable object to be displayed.
+   Forces the specified drawable object to be displayed.
 
    :signature: force-display *drawable* => ()
 
-Arguments
-
--  *drawable* An instance of type *type-union(* `See
-   <sheet>`_*, `<medium>`_)*.
-
+   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
 
    :description:
 
-Forces *drawable* to be displayed.
+     Forces *drawable* to be displayed.
 
-<frame-event>
--------------
+.. class:: <frame-event>
+   :open:
+   :abstract:
 
-Open abstract class
-'''''''''''''''''''
-The class of events that occur in frames.
+   The class of events that occur in frames.
 
-   :superclasses:
+   :superclasses: :class:`<event>`
 
-`<event>`_
-
-Init-keywords
-
--  *frame:* An instance of type ` <frames.htm#16922>`_. Required.
+   :parameter frame: An instance of type :class:`<frame>`. Required.
 
    :description:
 
-The class of events that occur in frames. The *frame:* init-keyword
-specified the frame in which the event occurs.
+     The class of events that occur in frames. The *frame:* init-keyword
+     specified the frame in which the event occurs.
 
    :operations:
 
--  None.
-
    See also
 
-` <frames.htm#53985>`_
+   - :class:`<frame-created-event>`
+   - :class:`<frame-destroyed-event>`
+   - :class:`<frame-exited-event>`
+   - :class:`<frame-exit-event>`
+   - :class:`<frame-mapped-event>`
+   - :class:`<frame-unmapped-event>`
 
-` <frames.htm#27782>`_
+.. class:: <frame-manager>
+   :open:
+   :abstract:
 
-` <frames.htm#20261>`_
+   The class of frame managers.
 
-` <frames.htm#25227>`_
-
-` <frames.htm#43736>`_
-
-` <frames.htm#49435>`_
-
-<frame-manager>
----------------
-
-Open abstract class
-'''''''''''''''''''
-The class of frame managers.
-
-   :superclasses:
-
-*<object>*
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<object>`
 
    :description:
 
-The class of frame managers.
+     The class of frame managers.
 
-Frame managers control the realization of the look and feel of a frame.
-The frame manager interprets the specification of the application frame
-in the context of the available window system facilities, taking into
-account preferences expressed by the user.
+     Frame managers control the realization of the look and feel of a frame.
+     The frame manager interprets the specification of the application frame
+     in the context of the available window system facilities, taking into
+     account preferences expressed by the user.
 
-In addition, the frame manager takes care of attaching the pane
-hierarchy of an application frame to an appropriate place in a window
-hierarchy.
+     In addition, the frame manager takes care of attaching the pane
+     hierarchy of an application frame to an appropriate place in a window
+     hierarchy.
 
-Thus, the frame manager decides the following:
+     Thus, the frame manager decides the following:
 
--  What concrete gadget to create for an abstract gadget.
--  How to layout the various parts of a frame, such as its menu, tool,
-   and status bars.
--  How to lay out dialogs and their exit buttons.
--  How much spacing to use in various conventional layouts.
+     A.  What concrete gadget to create for an abstract gadget.
+     B.  How to layout the various parts of a frame, such as its menu, tool,
+         and status bars.
+     C.  How to lay out dialogs and their exit buttons.
+     D.  How much spacing to use in various conventional layouts.
 
-In addition, a frame manager maps dialog functions such as `See
-choose-file`_ to their appropriate native dialogs.
+     In addition, a frame manager maps dialog functions such as
+     :gf:`choose-file` to their appropriate native dialogs.
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
-`display`_ `See
-frame-manager?`_ `See
-frame-manager-frames`_ `See
-frame-manager-palette`_ `See
-frame-manager-palette-setter`_ `See
-port`_
+     - :gf:`display`
+     - :gf:`frame-manager?`
+     - :gf:`frame-manager-frames`
+     - :gf:`frame-manager-palette`
+     - :gf:`frame-manager-palette-setter`
+     - :gf:`port`
 
-The following operations are exported from the *DUIM-Frames* module.
+     The following operations are exported from the *DUIM-Frames* module.
 
-` <frames.htm#15853>`_ ` <frames.htm#90512>`_ ` <frames.htm#10131>`_
+     - :gf:`clear-progress-note`
+     - :gf:`display-progress-note`
+     - :gf:`make-menus-from-command-table`
 
-The following operation is exported from the *DUIM-DCs* module.
+     The following operation is exported from the *DUIM-DCs* module.
 
-`find-color <dcs.htm#33969>`_
+     - :gf:`find-color`
 
    See also
 
-`frame-manager`_
+   - :gf:`frame-manager`
+   - :gf:`frame-manager?`
 
-`frame-manager?`_
+.. generic-function:: frame-manager
 
-frame-manager
--------------
-
-Generic function
-''''''''''''''''
-Returns the frame manager for the specified object.
+   Returns the frame manager for the specified object.
 
    :signature: frame-manager *object* => *value*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *value* An instance of type *false-or
-    (`<frame-manager>`_)*.
+   :parameter value: An instance of type *false-or(* :class:`<frame-manager>` *)*.
 
    :description:
 
-Returns the frame manager used to control the look and feel of the
-display of *object*.
+     Returns the frame manager used to control the look and feel of the
+     display of *object*.
 
    See also
 
-`display`_
+   - :gf:`display`
+   - :class:`<frame-manager>`
+   - :gf:`frame-manager?`
+   - :gf:`port`
 
-`<frame-manager>`_
+.. generic-function:: frame-manager?
 
-`frame-manager?`_
-
-`port`_
-
-frame-manager?
---------------
-
-Generic function
-''''''''''''''''
-Returns true if the specified object is a frame manager.
+   Returns true if the specified object is a frame manager.
 
    :signature: frame-manager? *object* => *framem?*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *framem?* An instance of type ``<boolean>``.
+   :value framem?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *object* is a frame manager.
+     Returns true if *object* is a frame manager.
 
    See also
 
-`<frame-manager>`_
+   - :class:`<frame-manager>`
+   - :gf:`frame-manager`
 
-`frame-manager`_
+.. generic-function:: frame-manager-frames
 
-frame-manager-frames
---------------------
-
-Generic function
-''''''''''''''''
-Returns the frames managed by the specified frame manager.
+   Returns the frames managed by the specified frame manager.
 
    :signature: frame-manager-frames *framem* => *frames*
 
-Arguments
+   :parameter framem: An instance of type :class:`<frame-manager>`.
 
--  *framem* An instance of type `See
-   <frame-manager>`_.
-
-Values
-
--  *frames* An instance of type *limited(<sequence>, of:*
-   ` <frames.htm#16922>`_*)*.
+   :parameter frames: An instance of type *limited(<sequence>, of:* :class:`<frame>` *)*.
 
    :description:
 
-Returns the frames managed by *framem*.
+     Returns the frames managed by *framem*.
 
-frame-manager-palette
----------------------
+.. generic-function:: frame-manager-palette
 
-Generic function
-''''''''''''''''
-Returns the palette used by the specified frame manager.
+   Returns the palette used by the specified frame manager.
 
    :signature: frame-manager-palette *framem* => *palette*
 
-Arguments
+   :parameter framem: An instance of type :class:`<frame-manager>`.
 
--  *framem* An instance of type `See
-   <frame-manager>`_.
-
-Values
-
--  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
+   :value palette: An instance of type :class:`<palette>`.
 
    :description:
 
-Returns the palette used by *framem*.
+     Returns the palette used by *framem*.
 
    See also
 
-`frame-manager-palette-setter`_
+   - :gf:`frame-manager-palette-setter`
 
-frame-manager-palette-setter
-----------------------------
+.. generic-function:: frame-manager-palette-setter
 
-Generic function
-''''''''''''''''
-Sets the palette used by the specified frame manager.
+   Sets the palette used by the specified frame manager.
 
    :signature: frame-manager-palette-setter *palette framem* => *palette*
 
-Arguments
+   :parameter palette: An instance of type :class:`<palette>`.
+   :parameter framem: An instance of type :class:`<frame-manager>`.
 
--  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
--  *framem* An instance of type `See
-   <frame-manager>`_.
-
-Values
-
--  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
+   :value palette: An instance of type :class:`<palette>`.
 
    :description:
 
-Sets the palette used by *framem*.
+     Sets the palette used by *framem*.
 
    See also
 
-`frame-manager-palette`_
+   - :gf:`frame-manager-palette`
 
-<gesture>
----------
+.. class:: <gesture>
+   :abstract:
+   :instantiable:
 
-Abstract instantiable class
-'''''''''''''''''''''''''''
-The base class of all gestures.
+   The base class of all gestures.
 
-   :superclasses:
+   :superclasses: :class:`<object>`
 
-*<object>*
-
-Init-keywords
-
--  *keysym:* An instance of type *<symbol>*. Required.
--  *button:* An instance of type ``<integer>``. Required.
--  *modifier-state:* An instance of type ``<integer>``. Required.
--  *modifiers:* An instance of type *<sequence>*.
+   :keyword keysym: An instance of type :class:`<symbol>`. Required.
+   :keyword button: An instance of type ``<integer>``. Required.
+   :keyword modifier-state: An instance of type ``<integer>``. Required.
+   :keyword modifiers: An instance of type :class:`<sequence>`.
 
    :description:
 
-The base class of all gestures.
+     The base class of all gestures.
 
    :operations:
 
-` <frames.htm#89020>`_ ` <frames.htm#44746>`_ `See
-event-matches-gesture?`_ ` <gadgets.htm#80239>`_ `See
-gesture-modifier-state`_ `See
-gesture-spec-equal`_
+     - :gf:`add-command`
+     - :gf:`add-command-table-menu-item`
+     - :gf:`event-matches-gesture?`
+     - :gf:`gadget-accelerator-setter`
+     - :gf:`gesture-modifier-state`
+     - :gf:`gesture-spec-equal`
 
    See also
 
-`<keyboard-gesture>`_
+   - :class:`<keyboard-gesture>`
+   - :class:`<pointer-gesture>`
 
-`<pointer-gesture>`_
+.. generic-function:: gesture-button
 
-gesture-button
---------------
-
-Generic function
-''''''''''''''''
-Returns the button associated with the specified gesture.
+   Returns the button associated with the specified gesture.
 
    :signature: gesture-button *pointer-gesture* => *button*
 
-Arguments
+   :parameter pointer-gesture: An instance of type :class:`<pointer-gesture>`.
 
--  *pointer-gesture* An instance of type `See
-   <pointer-gesture>`_.
-
-Values
-
--  *button* An instance of type ``<integer>``.
+   :value button: An instance of type ``<integer>``.
 
    :description:
 
-Returns the button associated with *pointer-gesture*.
+     Returns the button associated with *pointer-gesture*.
 
    See also
 
-`<pointer-gesture>`_
+   - :class:`<pointer-gesture>`
 
-gesture-keysym
---------------
+.. generic-function:: gesture-keysym
 
-Generic function
-''''''''''''''''
-Returns the keysym associated with the specified gesture.
+   Returns the keysym associated with the specified gesture.
 
    :signature: gesture-keysym *keyboard-gesture* => *keysym*
 
-Arguments
+   :parameter keyboard-gesture: An instance of type :class:`<keyboard-gesture>`.
 
--  *keyboard-gesture* An instance of type `See
-   <keyboard-gesture>`_.
-
-Values
-
--  *keysym* An instance of type *<symbol>*.
+   :value keysym: An instance of type :class:`<symbol>`.
 
    :description:
 
-Returns the keysym associated with *keyboard-gesture*.
+     Returns the keysym associated with *keyboard-gesture*.
 
    See also
 
-`<keyboard-gesture>`_
+   - :class:`<keyboard-gesture>`
 
-gesture-modifier-state
-----------------------
+.. generic-function:: gesture-modifier-state
 
-Generic function
-''''''''''''''''
-Returns the modifier-state associated with the specified gesture.
+   Returns the modifier-state associated with the specified gesture.
 
    :signature: gesture-modifier-state *gesture* => *modifier-state*
 
-Arguments
+   :parameter gesture: An instance of type :class:`<gesture>`.
 
--  *gesture* An instance of type `<gesture>`_.
-
-Values
-
--  *modifier-state* An instance of type ``<integer>``.
+   :value modifier-state: An instance of type ``<integer>``.
 
    :description:
 
-Returns the modifier-state associated with *gesture*.
+     Returns the modifier-state associated with *gesture*.
 
    See also
 
-`event-modifier-state`_
+   - :gf:`event-modifier-state`
+   - :class:`<keyboard-gesture>`
+   - :gf:`make-modifier-state`
+   - :gf:`port-modifier-state`
 
-`<keyboard-gesture>`_
+.. function:: gesture-spec-equal
 
-`make-modifier-state`_
-
-`port-modifier-state`_
-
-gesture-spec-equal
-------------------
-
-Function
-''''''''
-Returns true if the two specified gestures are equivalent.
+   Returns true if the two specified gestures are equivalent.
 
    :signature: gesture-spec-equal *gesture1 gesture2* => *equal?*
 
-Arguments
+   :parameter gesture1: An instance of type :class:`<gesture>`.
+   :parameter gesture2: An instance of type :class:`<gesture>`.
 
--  *gesture1* An instance of type `<gesture>`_.
--  *gesture2* An instance of type `<gesture>`_.
-
-Values
-
--  *equal?* An instance of type ``<boolean>``.
+   :value equal?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *gesture1* and *gesture2* are equivalent.
+     Returns true if *gesture1* and *gesture2* are equivalent.
 
    See also
 
-`=`_
+   - :gf:`=`
 
-get-clipboard-data-as
----------------------
+.. generic-function:: get-clipboard-data-as
 
-Generic function
-''''''''''''''''
-Returns data of a given type from a clipboard.
+   Returns data of a given type from a clipboard.
 
    :signature: get-clipboard-data-as *type clipboard* => *data*
 
-Arguments
+   :parameter type: An instance of *type-union(<symbol>,* *<type>)*.
+   :parameter clipboard: An instance of :class:`<clipboard>`.
 
--  *type* An instance of *type-union(<symbol>,* *<type>)*.
--  *clipboard* An instance of `<clipboard>`_.
-
-Values
-
--  *data* Instances of *<object>*.
+   :value data: Instances of :class:`<object>`.
 
    :description:
 
-This generic function returns *data* of *type* from the clipboard. The
-argument *type* is an instance of *type-union(<symbol>, <type>)*.
+     This generic function returns *data* of *type* from the clipboard. The
+     argument *type* is an instance of *type-union(<symbol>, <type>)*.
 
    See also
 
-`add-clipboard-data`_
+   - :gf:`add-clipboard-data`
+   - :gf:`add-clipboard-data-as`
+   - :class:`<clipboard>`
+   - :gf:`clipboard-data-available?`
 
-`add-clipboard-data-as`_
+.. generic-function:: get-default-background
 
-`<clipboard>`_
-
-`clipboard-data-available?`_
-
-get-default-background
-----------------------
-
-Generic function
-''''''''''''''''
-Returns the default background for the specified sheet.
+   Returns the default background for the specified sheet.
 
    :signature: get-default-background *port sheet* #key *background* => *background*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter background: An instance of type :class:`<ink>`.
 
--  *port* An instance of type `<port>`_.
--  *sheet* An instance of type `<sheet>`_.
--  *background* An instance of type `<ink> <dcs.htm#15007>`_.
-
-Values
-
--  *background* An instance of type `<ink> <dcs.htm#15007>`_.
+   :value background: An instance of type :class:`<ink>`.
 
    :description:
 
-Returns the default background for *sheet* on *port*.
+     Returns the default background for *sheet* on *port*.
 
-If *background* is specified, then this is used instead of the default.
+     If *background* is specified, then this is used instead of the default.
 
    See also
 
-`get-default-foreground`_
+   - :gf:`get-default-foreground`
+   - :gf:`get-default-text-style`
 
-`get-default-text-style`_
+.. generic-function:: get-default-foreground
 
-get-default-foreground
-----------------------
-
-Generic function
-''''''''''''''''
-Returns the default foreground for the specified sheet.
+   Returns the default foreground for the specified sheet.
 
    :signature: get-default-foreground *port sheet* #key *foreground* => *foreground*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter foreground: An instance of type :class:`<ink>`.
 
--  *port* An instance of type `<port>`_.
--  *sheet* An instance of type `<sheet>`_.
--  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
-
-Values
-
--  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
+   :value foreground: An instance of type :class:`<ink>`.
 
    :description:
 
-Returns the default foreground for *sheet* on *port*.
+     Returns the default foreground for *sheet* on *port*.
 
-If *foreground* is specified, then this is used instead of the default.
+     If *foreground* is specified, then this is used instead of the default.
 
    See also
 
-`get-default-background`_
+   - :gf:`get-default-background`
+   - :gf:`get-default-text-style`
 
-`get-default-text-style`_
+.. generic-function:: get-default-text-style
 
-get-default-text-style
-----------------------
-
-Generic function
-''''''''''''''''
-Returns the default text style for the specified sheet.
+   Returns the default text style for the specified sheet.
 
    :signature: get-default-text-style *port sheet* #key *text-style* => *text-style*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter text-style: An instance of type :class:`<text-style>`.
 
--  *port* An instance of type `<port>`_.
--  *sheet* An instance of type `<sheet>`_.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
-
-Values
-
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+   :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
 
-Returns the default text style for *sheet* on *port*.
+     Returns the default text style for *sheet* on *port*.
 
-If *text-style* is specified, then this is used instead of the default.
+     If *text-style* is specified, then this is used instead of the default.
 
    See also
 
-`get-default-background`_
+   - :gf:`get-default-background`
+   - :gf:`get-default-foreground`
 
-`get-default-foreground`_
+.. generic-function:: handle-event
 
-handle-event
-------------
-
-Generic function
-''''''''''''''''
-Implements any defined policies of the specified sheet with respect to
-the specified event.
+   Implements any defined policies of the specified sheet with respect to
+   the specified event.
 
    :signature: handle-event *sheet event* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
--  *event* An instance of type `<event>`_.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter event: An instance of type :class:`<event>`.
 
    :description:
 
-Implements any defined policies of *sheet* with respect to *event*.
-Methods defined on this generic are called by DUIM to do the handling.
+     Implements any defined policies of *sheet* with respect to *event*.
+     Methods defined on this generic are called by DUIM to do the handling.
 
-For example, to highlight a sheet in response to an event that informs
-the sheet when the pointer has entered the region it occupies, there
-should be a method to carry out the policy that specializes the
-appropriate sheet and event classes.
+     For example, to highlight a sheet in response to an event that informs
+     the sheet when the pointer has entered the region it occupies, there
+     should be a method to carry out the policy that specializes the
+     appropriate sheet and event classes.
 
-DUIM itself implements no semantically meaningful *handle-event*
-methods; It is the responsibility of any application to implement all of
-its own *handle-event* methods. It is also the responsibility of the
-application to decide the protocol and relationship between all of these
-methods.
+     DUIM itself implements no semantically meaningful *handle-event*
+     methods; It is the responsibility of any application to implement all of
+     its own *handle-event* methods. It is also the responsibility of the
+     application to decide the protocol and relationship between all of these
+     methods.
 
-Take care when adding *next-method()* calls in any *handle-event*
-methods that you write. Because DUIM itself supplies no built-in
-methods, you must ensure that you have supplied a valid method yourself.
-For each event class you are handling, you should decide whether a call
-to *next-method* is actually required.
+     Take care when adding *next-method()* calls in any *handle-event*
+     methods that you write. Because DUIM itself supplies no built-in
+     methods, you must ensure that you have supplied a valid method yourself.
+     For each event class you are handling, you should decide whether a call
+     to *next-method* is actually required.
 
    See also
 
-`handle-repaint`_
+   - :gf:`handle-repaint`
+   - :gf:`queue-event`
 
-`queue-event`_
+.. generic-function:: handle-repaint
 
-handle-repaint
---------------
-
-Generic function
-''''''''''''''''
-Implements region repainting for a given sheet class.
+   Implements region repainting for a given sheet class.
 
    :signature: handle-repaint *sheet medium region* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
--  *medium* An instance of type *`<medium>`_*.
--  *region* An instance of type `<region> <geom.htm#79228>`_.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter medium: An instance of type :class:`<medium>`.
+   :parameter region: An instance of type :class:`<region>`.
 
    :description:
 
-Implements region repainting for a given sheet class. Methods on this
-generic are called by DUIM in an application thread in order to handle
-repainting a given part of the screen. By calling available methods, it
-repaints the *region* of the *sheet* on *medium*.
+     Implements region repainting for a given sheet class. Methods on this
+     generic are called by DUIM in an application thread in order to handle
+     repainting a given part of the screen. By calling available methods, it
+     repaints the *region* of the *sheet* on *medium*.
 
-DUIM itself implements no semantically meaningful *handle-repaint*
-methods; It is the responsibility of any application to implement all of
-its own *handle-repaint* methods. It is also the responsibility of the
-application to decide the protocol and relationship between all of these
-methods.
+     DUIM itself implements no semantically meaningful *handle-repaint*
+     methods; It is the responsibility of any application to implement all of
+     its own *handle-repaint* methods. It is also the responsibility of the
+     application to decide the protocol and relationship between all of these
+     methods.
 
-Take care when adding *next-method()* calls in any *handle-repaint*
-methods that you write. Because DUIM itself supplies no built-in
-methods, you must ensure that you have supplied a valid method yourself.
-For each sheet class you are handling, you should decide whether a call
-to *next-method* is actually required.
+     Take care when adding *next-method()* calls in any *handle-repaint*
+     methods that you write. Because DUIM itself supplies no built-in
+     methods, you must ensure that you have supplied a valid method yourself.
+     For each sheet class you are handling, you should decide whether a call
+     to *next-method* is actually required.
 
-The *sheet* on *medium* is repainted and *region* is the region to
-repaint.
+     The *sheet* on *medium* is repainted and *region* is the region to
+     repaint.
 
    See also
 
-` <layouts.htm#68254>`_
+   - :class:`<drawing-pane>`
+   - :gf:`pane-display-function`
+   - :gf:`queue-repaint`
+   - :gf:`repaint-sheet`
+   - :class:`<simple-pane>`
+   - :class:`<window-repaint-event>`
 
-` <layouts.htm#40953>`_
+.. constant:: $hyper-key
 
-`queue-repaint`_
+   A constant that represents the HYPER key on the keyboard.
 
-`repaint-sheet`_
+   :type: :class:`<integer>`
 
-` <layouts.htm#78056>`_
-
-`<window-repaint-event>`_
-
-$hyper-key
-----------
-
-Constant
-''''''''
-A constant that represents the HYPER key on the keyboard.
-
-   :type:
-
-*<integer>*
-
-Value
-
-ash(1, %modifier\_base + 4);
+   :value: ash(1, %modifier\_base + 4);
 
    :description:
 
-A constant that represents the HYPER key on the keyboard.
+     A constant that represents the HYPER key on the keyboard.
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$control-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index`
+   - :gf:`modifier-key-index-name`
+   - :const:`$modifier-keys`
+   - :const:`$option-key`
+   - :const:`$shift-key`
+   - :const:`$super-key`
 
-`$control-key`_
+.. class:: <keyboard-event>
+   :open:
+   :abstract:
 
-`$meta-key`_
+   The base class of all keyboard events.
 
-`modifier-key-index`_
+   :superclasses: :class:`<device-event>`
 
-`modifier-key-index-name`_
-
-`$modifier-keys`_
-
-`$option-key`_
-
-`$shift-key`_
-
-`$super-key`_
-
-<keyboard-event>
-----------------
-
-Open abstract class
-'''''''''''''''''''
-The base class of all keyboard events.
-
-   :superclasses:
-
-`<device-event>`_
-
-Init-keywords
-
--  *key-name:* An instance of type *false-or(<symbol>)*. Default value:
-   ``#f``.
--  *character:* An instance of type *false-or(<character>)*. Default
-   value: ``#f``.
+   :keyword key-name: An instance of type *false-or(<symbol>)*. Default value: ``#f``.
+   :keyword character: An instance of type *false-or(<character>)*. Default value: ``#f``.
 
    :description:
 
-The base class of all keyboard events.
+     The base class of all keyboard events.
 
-The key-name: init-keyword represents the name of the key on the
-keyboard that was pressed.
+     The key-name: init-keyword represents the name of the key on the
+     keyboard that was pressed.
 
-The *character:* init-keyword represents the keyboard character that was
-pressed for characters in the standard character set.
+     The *character:* init-keyword represents the keyboard character that was
+     pressed for characters in the standard character set.
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
--  `event-character`_ `See
-   event-key-name`_ `See
-   event-matches-gesture?`_
+     - :gf:`event-character`
+     - :gf:`event-key-name`
+     - :gf:`event-matches-gesture?`
 
    See also
 
-`event-character`_
+   - :gf:`event-character`
+   - :gf:`event-key-name`
+   - :class:`<key-press-event>`
+   - :class:`<key-release-event>`
 
-`event-key-name`_
+.. class:: <keyboard-gesture>
+   :sealed:
+   :instantiable:
 
-`<key-press-event>`_
+   The base class of all keyboard gestures.
 
-`<key-release-event>`_
+   :superclasses: :class:`<gesture>`
 
-<keyboard-gesture>
-------------------
-
-Sealed instantiable class
-'''''''''''''''''''''''''
-The base class of all keyboard gestures.
-
-   :superclasses:
-
-`<gesture>`_
-
-Init-keywords
-
--  *keysym:* An instance of type *<symbol>*.
--  *modifier-state:* An instance of type ``<integer>``.
+   :keyword keysym: An instance of type :class:`<symbol>`.
+   :keyword modifier-state: An instance of type ``<integer>``.
 
    :description:
 
-The base class of all keyboard gestures.
+     The base class of all keyboard gestures.
 
-The *keysym:* init-keyword represents the keysym for the gesture, and
-the *modifier-state:* init-keyword represents its modifier state.
+     The *keysym:* init-keyword represents the keysym for the gesture, and
+     the *modifier-state:* init-keyword represents its modifier state.
 
    :operations:
 
--  `gesture-keysym`_
+     - :gf:`gesture-keysym`
 
    See also
 
-`gesture-keysym`_
+   - :gf:`gesture-keysym`
+   - :gf:`gesture-modifier-state`
 
-`gesture-modifier-state`_
+.. class:: <key-press-event>
+   :sealed:
+   :instantiable:
 
-<key-press-event>
------------------
+   The class of events passed when a key is pressed.
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events passed when a key is pressed.
-
-   :superclasses:
-
-`<keyboard-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<keyboard-event>`
 
    :description:
 
-The class of events passed when a key is pressed.
+     The class of events passed when a key is pressed.
 
    :operations:
 
--  None.
-
    See also
 
-`<keyboard-event>`_
+   - :class:`<keyboard-event>`
+   - :class:`<key-release-event>`
 
-`<key-release-event>`_
+.. class:: <key-release-event>
+   :sealed:
+   :instantiable:
 
-<key-release-event>
--------------------
+   The class of events passed when a key is released.
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events passed when a key is released.
-
-   :superclasses:
-
-`<keyboard-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<keyboard-event>`
 
    :description:
 
-The class of events passed when a key is released.
+     The class of events passed when a key is released.
 
    :operations:
 
--  None.
-
    See also
 
-`<keyboard-event>`_
+   - :class:`<keyboard-event>`
+   - :class:`<key-press-event>`
 
-`<key-press-event>`_
+.. constant:: $left-button
 
-$left-button
-------------
+      A constant that represents the left button on the attached pointing
+      device.
 
-Constant
-''''''''
-A constant that represents the left button on the attached pointing
-device.
+   :type: :class:`<integer>`
 
-   :type:
-
-*<integer>*
-
-Value
-
-ash(1, %button\_base + 0)
+   :value: ash(1, %button\_base + 0)
 
    :description:
 
-A constant that represents the left button on the attached pointing
-device.
+     A constant that represents the left button on the attached pointing
+     device.
 
    See also
 
-`$middle-button`_
+   - :const:`$middle-button`
+   - :const:`$pointer-buttons`
+   - :const:`$right-button`
 
-`$pointer-buttons`_
+.. generic-function:: lower-sheet
 
-`$right-button`_
-
-lower-sheet
------------
-
-Generic function
-''''''''''''''''
-Lowers the specified sheet to the bottom of the current hierarchy of
-sheets.
+   Lowers the specified sheet to the bottom of the current hierarchy of
+   sheets.
 
    :signature: lower-sheet *sheet* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Lowers *sheet* to the bottom of the current hierarchy of sheets.
+     Lowers *sheet* to the bottom of the current hierarchy of sheets.
 
    See also
 
-` <frames.htm#85200>`_
+   - :gf:`lower-frame`
+   - :gf:`raise-frame`
+   - :gf:`raise-sheet`
 
-` <frames.htm#28075>`_
+.. generic-function:: make-frame-manager
 
-`raise-sheet`_
-
-make-frame-manager
-------------------
-
-Generic function
-''''''''''''''''
-Returns an instance of *<frame-manager>* on the specified port.
+   Returns an instance of :class:`<frame-manager>` on the specified port.
 
    :signature: make-frame-manager *port* #key *palette* => *framem*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter palette: An instance of type :class:`<palette>`.
 
--  *port* An instance of type `<port>`_.
--  *palette* An instance of type `<palette> <dcs.htm#11494>`_.
-
-Values
-
--  *framem* An instance of type `See
-   <frame-manager>`_.
+   :parameter framem: An instance of type :class:`<frame-manager>`.
 
    :description:
 
-Returns an instance of *<frame-manager>* on *port*. If specified, the
-palette described by *palette* is used.
+     Returns an instance of :class:`<frame-manager>` on *port*. If specified,
+     the palette described by *palette* is used.
 
    See also
 
-`<frame-manager>`_
+   - :class:`<frame-manager>`
 
-make-modifier-state
--------------------
+.. function:: make-modifier-state
 
-Function
-''''''''
-Returns a modifier state for the specified modifiers.
+   Returns a modifier state for the specified modifiers.
 
    :signature: make-modifier-state #rest *modifiers* => *integer*
 
-Arguments
+   :parameter modifiers: An instance of type *limited(<sequence>, of: <integer>)*.
 
--  *modifiers* An instance of type *limited(<sequence>, of: <integer>)*
-   .
-
-Values
-
--  *integer* An instance of type ``<integer>``.
+   :value integer: An instance of type ``<integer>``.
 
    :description:
 
-Returns a modifier state for *modifiers*.
+     Returns a modifier state for *modifiers*.
 
    See also
 
-`event-modifier-state`_
+   - :gf:`event-modifier-state`
+   - :gf:`gesture-modifier-state`
+   - :gf:`port-modifier-state`
 
-`gesture-modifier-state`_
+.. generic-function:: make-pane
 
-`port-modifier-state`_
+   Selects and returns an instance of a suitable class of pane for the
+   supplied options.
 
-make-pane
----------
+   :signature: make-pane *pane-class* #rest *pane-options* #key *frame-manager* => *sheet*
 
-Generic function
-''''''''''''''''
-Selects and returns an instance of a suitable class of pane for the
-supplied options.
+   :parameter pane-class: An instance of type :class:`<class>`.
+   :parameter pane-options: Instances of type ``<object>``.
+   :parameter frame-manager: An instance of type :class:`<frame-manager>`.
 
-   :signature: make-pane *pane-class* #rest *pane-options* #key *frame-manager* =>
-*sheet*
-
-Arguments
-
--  *pane-class* An instance of type *<class>*.
--  *pane-options* Instances of type ``<object>``.
--  *frame-manager* An instance of type `See
-   <frame-manager>`_.
-
-Values
-
--  *sheet* An instance of type `<sheet>`_.
+   :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Selects a class that implements the behavior of pane-class and
-constructs a pane of that class.
+     Selects a class that implements the behavior of pane-class and
+     constructs a pane of that class.
 
-<medium>
---------
+.. class:: <medium>
+   :open:
+   :abstract:
+   :instantiable:
 
-Open abstract instantiable class
-''''''''''''''''''''''''''''''''
-The class of all mediums.
+   The class of all mediums.
 
-   :superclasses:
-
-*<object>*
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<object>`
 
    :description:
 
-The class of all mediums.
+     The class of all mediums.
 
-Mediums have the following elements associated with them:
+     Mediums have the following elements associated with them:
 
--  A drawing plane, to which text and lines may be drawn
--  A foreground color, which describes the default color of anything
-   drawn on the drawing plane
--  A background color, which describes the background color of the
-   drawing plane
--  A transformation which describes the position of the drawing plane
-   relative to the sheet which is its parent
--  A clipping region, on which any editing operations (such as cutting,
-   copying, or pasting) will have effect.
--  A line style that describes the appearance of any lines drawn on the
-   drawing plane
--  A text style that describes the appearance of any text written to the
-   drawing plane
+     - A drawing plane, to which text and lines may be drawn
+     - A foreground color, which describes the default color of anything
+       drawn on the drawing plane
+     - A background color, which describes the background color of the
+       drawing plane
+     - A transformation which describes the position of the drawing plane
+       relative to the sheet which is its parent
+     - A clipping region, on which any editing operations (such as cutting,
+       copying, or pasting) will have effect.
+     - A line style that describes the appearance of any lines drawn on the
+       drawing plane
+     - A text style that describes the appearance of any text written to the
+       drawing plane
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
-`beep`_ `clear-box`_ `See
-display`_ `See
-do-with-drawing-options`_ `See
-do-with-text-style`_ `See
-do-with-transform`_ `See
-force-display`_ `See
-handle-repaint`_ `medium?`_
-`medium-background`_ `See
-medium-background-setter`_ `See
-medium-brush`_ `See
-medium-brush-setter`_ `See
-medium-clipping-region`_ `See
-medium-clipping-region-setter`_ `See
-medium-default-text-style`_ `See
-medium-default-text-style-setter`_ `See
-medium-drawable`_ `See
-medium-drawable-setter`_ `See
-medium-foreground`_ `See
-medium-foreground-setter`_ `See
-medium-merged-text-style`_ `See
-medium-pen`_ `See
-medium-pen-setter`_ `See
-medium-pixmap`_ `See
-medium-pixmap-setter`_ `See
-medium-sheet`_ `See
-medium-text-style`_ `See
-medium-text-style-setter`_ `See
-medium-transform`_ `See
-medium-transform-setter`_ `See
-port`_`synchronize-display`_
-`text-size`_
+     - :gf:`beep`
+     - :gf:`clear-box`
+     - :gf:`display`
+     - :gf:`do-with-drawing-options`
+     - :gf:`do-with-text-style`
+     - :gf:`do-with-transform`
+     - :gf:`force-display`
+     - :gf:`handle-repaint`
+     - :gf:`medium?`
+     - :gf:`medium-background`
+     - :gf:`medium-background-setter`
+     - :gf:`medium-brush`
+     - :gf:`medium-brush-setter`
+     - :gf:`medium-clipping-region`
+     - :gf:`medium-clipping-region-setter`
+     - :gf:`medium-default-text-style`
+     - :gf:`medium-default-text-style-setter`
+     - :gf:`medium-drawable`
+     - :gf:`medium-drawable-setter`
+     - :gf:`medium-foreground`
+     - :gf:`medium-foreground-setter`
+     - :gf:`medium-merged-text-style`
+     - :gf:`medium-pen`
+     - :gf:`medium-pen-setter`
+     - :gf:`medium-pixmap`
+     - :gf:`medium-pixmap-setter`
+     - :gf:`medium-sheet`
+     - :gf:`medium-text-style`
+     - :gf:`medium-text-style-setter`
+     - :gf:`medium-transform`
+     - :gf:`medium-transform-setter`
+     - :gf:`port`
+     - :gf:`synchronize-display`
+     - :gf:`text-size`
 
-The following operations are exported from the *DUIM-Graphics* module.
+     The following operations are exported from the *DUIM-Graphics* module.
 
-` <graphics.htm#62343>`_ ` <graphics.htm#64636>`_
-` <graphics.htm#28334>`_ ` <graphics.htm#69389>`_
-` <graphics.htm#62628>`_ ` <graphics.htm#64653>`_
-` <graphics.htm#55252>`_
+     - :gf:`copy-area`
+     - :gf:`copy-from-pixmap`
+     - :gf:`copy-to-pixmap`
+     - :gf:`do-with-output-to-pixmap`
+     - :gf:`draw-bezier-curve`
+     - :gf:`draw-image`
+     - :gf:`make-pixmap`
 
-The following operations are exported from the *DUIM-Extended-Geometry*
-module.
+     The following operations are exported from the *DUIM-Extended-Geometry*
+     module.
 
-`draw-design <ext-geom.htm#88093>`_
+     - :gf:`draw-design`
 
    See also
 
-`medium?`_
+   - :gf:`medium?`
+   - :class:`<pixmap-medium>`
 
-` <graphics.htm#46456>`_
+.. generic-function:: medium?
 
-medium?
--------
-
-Generic function
-''''''''''''''''
-Returns true if the specified object is a medium.
+   Returns true if the specified object is a medium.
 
    :signature: medium? *object* => *medium?*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *medium?* An instance of type ``<boolean>``.
+   :value medium?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *object* is a medium.
+     Returns true if *object* is a medium.
 
    See also
 
-`<medium>`_
+   - :class:`<medium>`
+   - :gf:`sheet?`
 
-`sheet?`_
+.. generic-function:: medium-background
 
-medium-background
------------------
-
-Generic function
-''''''''''''''''
-Returns the background for the specified medium.
+   Returns the background for the specified medium.
 
    :signature: medium-background *medium* => *ink*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *ink* An instance of type `<ink> <dcs.htm#15007>`_.
+   :value ink: An instance of type :class:`<ink>`.
 
    :description:
 
-Returns the background for *medium*.
+     Returns the background for *medium*.
 
    See also
 
-`medium-background-setter`_
+   - :gf:`medium-background-setter`
+   - :gf:`medium-foreground`
 
-`medium-foreground`_
+.. generic-function:: medium-background-setter
 
-medium-background-setter
-------------------------
-
-Generic function
-''''''''''''''''
-Sets the background for the specified medium.
+   Sets the background for the specified medium.
 
    :signature: medium-background-setter *background medium* => *background*
 
-Arguments
+   :parameter background: An instance of type :class:`<ink>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *background* An instance of type `<ink> <dcs.htm#15007>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *background* An instance of type `<ink> <dcs.htm#15007>`_.
+   :value background: An instance of type :class:`<ink>`.
 
    :description:
 
-Sets the background for *medium*.
+     Sets the background for *medium*.
 
    See also
 
-`medium-background`_
+   - :gf:`medium-background`
+   - :gf:`medium-foreground-setter`
 
-`medium-foreground-setter`_
+.. generic-function:: medium-brush
 
-medium-brush
-------------
-
-Generic function
-''''''''''''''''
-Returns the brush for the specified medium.
+   Returns the brush for the specified medium.
 
    :signature: medium-brush *medium* => *brush*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *brush* An instance of type `<brush> <dcs.htm#29492>`_.
+   :value brush: An instance of type :class:`<brush>`.
 
    :description:
 
-Returns the brush for *medium*. This brush is used by all subsequent
-painting operations on *medium*.
+     Returns the brush for *medium*. This brush is used by all subsequent
+     painting operations on *medium*.
 
    See also
 
-`medium-brush-setter`_
+   - :gf:`medium-brush-setter`
+   - :gf:`medium-pen`
 
-`medium-pen`_
+.. generic-function:: medium-brush-setter
 
-medium-brush-setter
--------------------
-
-Generic function
-''''''''''''''''
-Sets the brush for the specified medium.
+   Sets the brush for the specified medium.
 
    :signature: medium-brush-setter *brush medium* => *brush*
 
-Arguments
+   :parameter brush: An instance of type :class:`<brush>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *brush* An instance of type `<brush> <dcs.htm#29492>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *brush* An instance of type `<brush> <dcs.htm#29492>`_.
+   :value brush: An instance of type :class:`<brush>`.
 
    :description:
 
-Sets the brush for *medium*. This brush is used by all subsequent
-painting operations on *medium*.
+     Sets the brush for *medium*. This brush is used by all subsequent
+     painting operations on *medium*.
 
    See also
 
-`medium-brush`_
+   - :gf:`medium-brush`
+   - :gf:`medium-pen-setter`
 
-`medium-pen-setter`_
+.. generic-function:: medium-clipping-region
 
-medium-clipping-region
-----------------------
-
-Generic function
-''''''''''''''''
-Returns the clipping region for the specified medium.
+   Returns the clipping region for the specified medium.
 
    :signature: medium-clipping-region *medium* => *region*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *region* An instance of type `<region> <geom.htm#79228>`_.
+   :value region: An instance of type :class:`<region>`.
 
    :description:
 
-Returns the clipping region for *medium*.
+     Returns the clipping region for *medium*.
 
    See also
 
-`medium-clipping-region-setter`_
+   - :gf:`medium-clipping-region-setter`
 
-medium-clipping-region-setter
------------------------------
+.. generic-function:: medium-clipping-region-setter
 
-Generic function
-''''''''''''''''
-Sets the clipping region for the specified medium.
+   Sets the clipping region for the specified medium.
 
    :signature: medium-clipping-region-setter *region medium* => *region*
 
-Arguments
+   :parameter region: An instance of type :class:`<region>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *region* An instance of type `<region> <geom.htm#79228>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *region* An instance of type `<region> <geom.htm#79228>`_.
+   :value region: An instance of type :class:`<region>`.
 
    :description:
 
-Sets the clipping region for *medium*.
+     Sets the clipping region for *medium*.
 
    See also
 
-`medium-clipping-region`_
+   - :gf:`medium-clipping-region`
 
-medium-default-text-style
--------------------------
+.. generic-function:: medium-default-text-style
 
-Generic function
-''''''''''''''''
-Returns the default text style for the specified medium.
+   Returns the default text style for the specified medium.
 
    :signature: medium-default-text-style *medium* => *text-style*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+   :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
 
-Returns the default text style for *medium*. This style is used for any
-subsequent text that is written to *medium*.
+     Returns the default text style for *medium*. This style is used for any
+     subsequent text that is written to *medium*.
 
    See also
 
-`medium-default-text-style-setter`_
+   - :gf:`medium-default-text-style-setter`
+   - :gf:`medium-merged-text-style`
+   - :gf:`medium-text-style`
 
-`medium-merged-text-style`_
+.. generic-function:: medium-default-text-style-setter
 
-`medium-text-style`_
-
-medium-default-text-style-setter
---------------------------------
-
-Generic function
-''''''''''''''''
-Sets the default text style for the specified medium.
+   Sets the default text style for the specified medium.
 
    :signature: medium-default-text-style-setter *text-style medium* => *text-style*
 
-Arguments
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+   :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
 
-Sets the default text style for *medium*. This style is used for any
-subsequent text that is written to *medium*.
+     Sets the default text style for *medium*. This style is used for any
+     subsequent text that is written to *medium*.
 
    See also
 
-`medium-default-text-style`_
+   - :gf:`medium-default-text-style`
+   - :gf:`medium-text-style-setter`
 
-`medium-text-style-setter`_
+.. generic-function:: medium-drawable
 
-medium-drawable
----------------
-
-Generic function
-''''''''''''''''
-Returns the drawable for the specified medium.
+   Returns the drawable for the specified medium.
 
    :signature: medium-drawable *medium* => *drawable*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *drawable* An instance of type ``<object>``.
+   :value drawable: An instance of type ``<object>``.
 
    :description:
 
-Returns the drawable for *medium*.
+     Returns the drawable for *medium*.
 
    See also
 
-`medium-drawable-setter`_
+   - :gf:`medium-drawable-setter`
 
-medium-drawable-setter
-----------------------
+.. generic-function:: medium-drawable-setter
 
-Generic function
-''''''''''''''''
-Sets the drawable for the specified medium.
+   Sets the drawable for the specified medium.
 
    :signature: medium-drawable-setter *drawable medium* => *object*
 
-Arguments
+   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *drawable* An instance of type *type-union(* `See
-   <sheet>`_*, `<medium>`_)*.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *object* An instance of type ``<object>``.
+   :value object: An instance of type ``<object>``.
 
    :description:
 
-Sets the drawable for *medium*.
+     Sets the drawable for *medium*.
 
    See also
 
-`medium-drawable`_
+   - :gf:`medium-drawable`
 
-medium-foreground
------------------
+.. generic-function:: medium-foreground
 
-Generic function
-''''''''''''''''
-Returns the foreground of the specified medium.
+   Returns the foreground of the specified medium.
 
    :signature: medium-foreground *medium* => *ink*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *ink* An instance of type `<ink> <dcs.htm#15007>`_.
+   :value ink: An instance of type :class:`<ink>`.
 
    :description:
 
-Returns the foreground of *medium*.
+     Returns the foreground of *medium*.
 
    See also
 
-`medium-background`_
+   - :gf:`medium-background`
+   - :gf:`medium-foreground-setter`
 
-`medium-foreground-setter`_
+.. generic-function:: medium-foreground-setter
 
-medium-foreground-setter
-------------------------
-
-Generic function
-''''''''''''''''
-Sets the foreground of the specified medium.
+   Sets the foreground of the specified medium.
 
    :signature: medium-foreground-setter *foreground medium* => *foreground*
 
-Arguments
+   :parameter foreground: An instance of type :class:`<ink>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *foreground* An instance of type `<ink> <dcs.htm#15007>`_.
+   :value foreground: An instance of type :class:`<ink>`.
 
    :description:
 
-Sets the foreground of *medium*.
+     Sets the foreground of *medium*.
 
    See also
 
-`medium-background-setter`_
+   - :gf:`medium-background-setter`
+   - :gf:`medium-foreground`
 
-`medium-foreground`_
+.. generic-function:: medium-merged-text-style
 
-medium-merged-text-style
-------------------------
-
-Generic function
-''''''''''''''''
-Returns the merged text style of the specified medium.
+   Returns the merged text style of the specified medium.
 
    :signature: medium-merged-text-style *medium* => *text-style*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+   :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
 
-Returns the merged text style of *medium*.
+     Returns the merged text style of *medium*.
 
    See also
 
-`medium-default-text-style`_
+   - :gf:`medium-default-text-style`
+   - :gf:`medium-text-style`
 
-`medium-text-style`_
+.. generic-function:: medium-pen
 
-medium-pen
-----------
-
-Generic function
-''''''''''''''''
-Returns the pen for the specified medium.
+   Returns the pen for the specified medium.
 
    :signature: medium-pen *medium* => *pen*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *pen* An instance of type `<pen> <dcs.htm#41757>`_.
+   :value pen: An instance of type :class:`<pen>`.
 
    :description:
 
-Returns the pen for *medium*. This brush is used by all subsequent
-drawing operations on *medium*.
+     Returns the pen for *medium*. This brush is used by all subsequent
+     drawing operations on *medium*.
 
    See also
 
-`medium-brush`_
+   - :gf:`medium-brush`
+   - :gf:`medium-pen-setter`
 
-`medium-pen-setter`_
+.. generic-function:: medium-pen-setter
 
-medium-pen-setter
------------------
-
-Generic function
-''''''''''''''''
-Sets the pen for the specified medium.
+   Sets the pen for the specified medium.
 
    :signature: medium-pen-setter *pen medium* => *pen*
 
-Arguments
+   :parameter pen: An instance of type :class:`<pen>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *pen* An instance of type `<pen> <dcs.htm#41757>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *pen* An instance of type `<pen> <dcs.htm#41757>`_.
+   :value pen: An instance of type :class:`<pen>`.
 
    :description:
 
-Sets the pen for *medium*. This brush is used by all subsequent drawing
-operations on *medium*.
+     Sets the pen for *medium*. This brush is used by all subsequent drawing
+     operations on *medium*.
 
    See also
 
-`medium-brush-setter`_
+   - :gf:`medium-brush-setter`
+   - :gf:`medium-pen`
 
-`medium-pen`_
+.. generic-function:: medium-pixmap
 
-medium-pixmap
--------------
-
-Generic function
-''''''''''''''''
-Returns the pixmap for the specified medium.
+   Returns the pixmap for the specified medium.
 
    :signature: medium-pixmap *medium* => *value*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *value* An instance of type *false-or(` <graphics.htm#45866>`_)*.
+   :value value: An instance of type *false-or(* :class:`<pixmap>` *)*.
 
    :description:
 
-Returns the pixmap for *medium*.This pixmap is used by all subsequent
-pixmap operations on *medium*.
+     Returns the pixmap for *medium*.This pixmap is used by all subsequent
+     pixmap operations on *medium*.
 
    See also
 
-`medium-pixmap-setter`_
+   - :gf:`medium-pixmap-setter`
 
-medium-pixmap-setter
---------------------
+.. generic-function:: medium-pixmap-setter
 
-Generic function
-''''''''''''''''
-Sets the pixmap for the specified medium.
+   Sets the pixmap for the specified medium.
 
    :signature: medium-pixmap-setter *pixmap medium* => *value*
 
-Arguments
+   :parameter pixmap: An instance of type :class:`<pixmap>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *pixmap* An instance of type ` <graphics.htm#45866>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *value* An instance of type *false-or(* ` <graphics.htm#45866>`_*)*.
+   :value value: An instance of type *false-or(* :class:`<pixmap>` *)*.
 
    :description:
 
-Returns the pixmap for *medium*.This pixmap is used by all subsequent
-pixmap operations on *medium*.
+     Returns the pixmap for *medium*.This pixmap is used by all subsequent
+     pixmap operations on *medium*.
 
    See also
 
-`medium-pixmap`_
+   - :gf:`medium-pixmap`
 
-medium-sheet
-------------
+.. generic-function:: medium-sheet
 
-Generic function
-''''''''''''''''
-Returns the sheet for the specified medium.
+   Returns the sheet for the specified medium.
 
    :signature: medium-sheet *medium* => *sheet*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *sheet* An instance of type *false-or(* `See
-   <sheet>`_*)*.
+   :value sheet: An instance of type *false-or(* :class:`<sheet>` *)*.
 
    :description:
 
-Returns the sheet for *medium*, if there is one.
+     Returns the sheet for *medium*, if there is one.
 
-medium-text-style
------------------
+.. generic-function:: medium-text-style
 
-Generic function
-''''''''''''''''
-Returns the text style for the specified medium.
+   Returns the text style for the specified medium.
 
    :signature: medium-text-style *medium* => *text-style*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+   :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
 
-Returns the text style for *medium*.
+     Returns the text style for *medium*.
 
    See also
 
-`medium-default-text-style`_
+   - :gf:`medium-default-text-style`
+   - :gf:`medium-merged-text-style`
+   - :gf:`medium-text-style-setter`
 
-`medium-merged-text-style`_
+.. generic-function:: medium-text-style-setter
 
-`medium-text-style-setter`_
-
-medium-text-style-setter
-------------------------
-
-Generic function
-''''''''''''''''
-Sets the text style for the specified medium.
+   Sets the text style for the specified medium.
 
    :signature: medium-text-style-setter *text-style medium* => *text-style*
 
-Arguments
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
+   :value text-style: An instance of type :class:`<text-style>`.
 
    :description:
 
-Sets the text style for *medium*.
+     Sets the text style for *medium*.
 
    See also
 
-`medium-default-text-style-setter`_
+   - :gf:`medium-default-text-style-setter`
+   - :gf:`medium-text-style`
 
-`medium-text-style`_
+.. generic-function:: medium-transform
 
-medium-transform
-----------------
-
-Generic function
-''''''''''''''''
-Returns the transform for the specified medium.
+   Returns the transform for the specified medium.
 
    :signature: medium-transform *medium* => *transform*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *transform* An instance of type `<transform> <geom.htm#54995>`_.
+   :value transform: An instance of type :class:`<transform>`.
 
    :description:
 
-Returns the transform for *medium*.
+     Returns the transform for *medium*.
 
    See also
 
-`medium-transform-setter`_
+   - :gf:`medium-transform-setter`
+   - :gf:`sheet-transform`
 
-`sheet-transform`_
+.. generic-function:: medium-transform-setter
 
-medium-transform-setter
------------------------
-
-Generic function
-''''''''''''''''
-Sets the transform for the specified medium.
+   Sets the transform for the specified medium.
 
    :signature: medium-transform-setter *transform medium* => *transform*
 
-Arguments
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
--  *transform* An instance of type `<transform> <geom.htm#54995>`_.
--  *medium* An instance of type *`<medium>`_*.
-
-Values
-
--  *transform* An instance of type `<transform> <geom.htm#54995>`_.
+   :value transform: An instance of type :class:`<transform>`.
 
    :description:
 
-Sets the transform for *medium*.
+     Sets the transform for *medium*.
 
    See also
 
-`medium-transform`_
+   - :gf:`medium-transform`
+   - :gf:`sheet-transform-setter`
 
-`sheet-transform-setter`_
+.. constant:: $meta-key
 
-$meta-key
----------
+   A constant that represents the META key on the keyboard.
 
-Constant
-''''''''
-A constant that represents the META key on the keyboard.
+   :type: :class:`<integer>`
 
-   :type:
-
-*<integer>*
-
-Value
-
-ash(1, %modifier\_base + 2);
+   :value: ash(1, %modifier\_base + 2);
 
    :description:
 
-A constant that represents the META key on the keyboard, if it exists.
-To deal with the case where there is no META key, the value of the
-constant `$alt-key`_ is bound to this constant.
+     A constant that represents the META key on the keyboard, if it exists.
+     To deal with the case where there is no META key, the value of the
+     constant :const:`$alt-key` is bound to this constant.
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$control-key`
+   - :const:`$hyper-key`
+   - :gf:`modifier-key-index`
+   - :gf:`modifier-key-index-name`
+   - :const:`$modifier-keys`
+   - :const:`$option-key`
+   - :const:`$shift-key`
+   - :const:`$super-key`
 
-`$control-key`_
+.. constant:: $middle-button
 
-`$hyper-key`_
+   A constant that represents the middle button on the attached pointing
+   device.
 
-`modifier-key-index`_
+   :type: :class:`<integer>`
 
-`modifier-key-index-name`_
-
-`$modifier-keys`_
-
-`$option-key`_
-
-`$shift-key`_
-
-`$super-key`_
-
-$middle-button
---------------
-
-Constant
-''''''''
-A constant that represents the middle button on the attached pointing
-device.
-
-   :type:
-
-*<integer>*
-
-Value
-
-ash(1, %button\_base + 1)
+   :value: ash(1, %button\_base + 1)
 
    :description:
 
-A constant that represents the middle button on the attached pointing
-device.
+     A constant that represents the middle button on the attached pointing
+     device.
 
    See also
 
-`$left-button`_
+   - :const:`$left-button`
+   - :const:`$pointer-buttons`
+   - :const:`$right-button`
 
-`$pointer-buttons`_
+.. function:: modifier-key-index
 
-`$right-button`_
-
-modifier-key-index
-------------------
-
-Function
-''''''''
-Returns the index number of the specified modifier key.
+   Returns the index number of the specified modifier key.
 
    :signature: modifier-key-index *key-name* => *index*
 
-Arguments
+   :parameter key-name: An instance of type :class:`<symbol>`.
 
--  *key-name* An instance of type *<symbol>*.
-
-Values
-
--  *index* An instance of type ``<integer>``.
+   :value index: An instance of type ``<integer>``.
 
    :description:
 
-Returns the index number of the specified modifier key. The *key-name*
-specified may be any of the elements of `See
-$modifier-keys`_
+     Returns the index number of the specified modifier key. The *key-name*
+     specified may be any of the elements of :const:`$modifier-keys`
 
-The returned index value is either 0, 1, 2, 3, or 4.
+     The returned index value is either 0, 1, 2, 3, or 4.
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$control-key`
+   - :const:`$hyper-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index-name`
+   - :const:`$modifier-keys`
+   - :const:`$option-key`
+   - :const:`$shift-key`
+   - :const:`$super-key`
 
-`$control-key`_
+.. function:: modifier-key-index-name
 
-`$hyper-key`_
-
-`$meta-key`_
-
-`modifier-key-index-name`_
-
-`$modifier-keys`_
-
-`$option-key`_
-
-`$shift-key`_
-
-`$super-key`_
-
-modifier-key-index-name
------------------------
-
-Function
-''''''''
-Returns the key name of the specified modifier key index.
+   Returns the key name of the specified modifier key index.
 
    :signature: modifier-key-index-name *index* => *key-name*
 
-Arguments
+   :parameter index: An instance of type ``<integer>``.
 
--  *index* An instance of type ``<integer>``.
-
-Values
-
--  *key-name* An instance of type *<symbol>*.
+   :value key-name: An instance of type :class:`<symbol>`.
 
    :description:
 
-Returns the key name of the specified modifier key index. The *index*
-specified is either 0, 1, 2, 3, or 4.
+     Returns the key name of the specified modifier key index. The *index*
+     specified is either 0, 1, 2, 3, or 4.
 
-The *key-name* returned may be any of the elements of `See
-$modifier-keys`_
+     The *key-name* returned may be any of the elements of
+     :const:`$modifier-keys`
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$control-key`
+   - :const:`$hyper-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index`
+   - :const:`$modifier-keys`
+   - :const:`$option-key`
+   - :const:`$shift-key`
+   - :const:`$super-key`
 
-`$control-key`_
+.. constant:: $modifier-keys
 
-`$hyper-key`_
+   The default list of keys on the keyboard that are used as modifiers.
 
-`$meta-key`_
+   :type: :class:`<sequence>`
 
-`modifier-key-index`_
-
-`$modifier-keys`_
-
-`$option-key`_
-
-`$shift-key`_
-
-`$super-key`_
-
-$modifier-keys
---------------
-
-Constant
-''''''''
-The default list of keys on the keyboard that are used as modifiers.
-
-   :type:
-
-*<sequence>*
-
-Value
-
-#[#"shift", #"control", #"meta", #"super", #"hyper"]
+   :value: #[#"shift", #"control", #"meta", #"super", #"hyper"]
 
    :description:
 
-The default list of keys on the keyboard that are used as modifiers for
-keyboard accelerators and mnemonics.
+     The default list of keys on the keyboard that are used as modifiers for
+     keyboard accelerators and mnemonics.
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$control-key`
+   - :const:`$hyper-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index`
+   - :gf:`modifier-key-index-name`
+   - :const:`$option-key`
+   - :const:`$shift-key`
+   - :const:`$super-key`
 
-`$control-key`_
+.. generic-function:: notify-user
 
-`$hyper-key`_
+   Creates and displays an alert dialog box with the specified criteria.
 
-`$meta-key`_
+   :signature: notify-user *message-string* #key *frame owner title documentation exit-boxes name style foreground background text-style* => *boolean*
 
-`modifier-key-index`_
+   :parameter message-string: An instance of type :class:`<string>`.
+   :parameter frame: An instance of type :class:`<frame>`. Default value: :gf:`current-frame` ().
+   :parameter owner: An instance of type :class:`<sheet>`.
+   :parameter title: An instance of type :class:`<string>`.
+   :parameter documentation: An instance of type *false-or(<string>)*. Default value: ``#f``.
+   :parameter exit-boxes: An instance of type ``<object>``.
+   :parameter name: An instance of type ``<object>``.
+   :parameter style: An instance of type *one-of(#"information", #"question", #"warning", #"error", #"serious-error", #"fatal-error")*.
+   :parameter foreground: An instance of type *false-or(* :class:`<ink>` *)*. Default value: ``#f``.
+   :parameter background: An instance of type *false-or(* :class:`<ink>` *)*. Default value: ``#f``.
+   :parameter text-style: An instance of type *false-or(* :class:`<text-style>` *)*. Default value: ``#f``.
 
-`modifier-key-index-name`_
-
-`$option-key`_
-
-`$shift-key`_
-
-`$super-key`_
-
-notify-user
------------
-
-Generic function
-''''''''''''''''
-Creates and displays an alert dialog box with the specified criteria.
-
-   :signature: notify-user *message-string* #key *frame owner title documentation
-exit-boxes name style foreground background text-style* => *boolean*
-
-Arguments
-
--  *message-string* An instance of type *<string>*.
--  *frame* An instance of type ` <frames.htm#16922>`_. Default value:
-   *` <frames.htm#78942>`_()*.
--  *owner* An instance of type `<sheet>`_.
--  *title* An instance of type *<string>*.
--  *documentation* An instance of type *false-or(<string>)*. Default
-   value: ``#f``.
--  *exit-boxes* An instance of type ``<object>``.
--  *name* An instance of type ``<object>``.
--  *style* An instance of type *one-of(#"information", #"question",
-   #"warning", #"error", #"serious-error", #"fatal-error")*.
--  *foreground* An instance of type *false-or(* `See
-   <ink> <dcs.htm#15007>`_*)*. Default value: ``#f``.
--  *background* An instance of type *false-or(* `See
-   <ink> <dcs.htm#15007>`_*)*. Default value: ``#f``.
--  *text-style* An instance of type *false-or(* `See
-   <text-style> <dcs.htm#85385>`_*)*. Default value: ``#f``.
-
-Values
-
--  *boolean* An instance of type ``<boolean>``.
+   :value boolean: An instance of type ``<boolean>``.
 
    :description:
 
-Creates and displays an alert dialog box with the specified criteria.
-Use this function as a way of easily displaying simple messages to the
-user.
+     Creates and displays an alert dialog box with the specified criteria.
+     Use this function as a way of easily displaying simple messages to the
+     user.
 
-Simple output from notify-user
+     Simple output from notify-user
 
-.. figure:: images/silica-2.png
-   :align: center
-   :alt: 
+     .. figure:: images/silica-2.png
+        :align: center
+        :alt: 
 
-.. figure:: images/silica-5.png
-   :align: center
-   :alt: 
-The *message-string* is the message that is displayed in the dialog. The
-arguments frame, owner, title, and documentation let you specify
-different attributes for the dialog in the same way as they can be
-specified for any other frame or dialog.
+     .. figure:: images/silica-5.png
+        :align: center
+        :alt: 
 
-The *exit-boxes* argument lets you specify the buttons that are
-available in the dialog. If not supplied, then a single *OK* button is
-used by default, unless the *style* of the dialog is set to
-*#"question"*, in which case, two buttons are created, to allow the
-user to respond "yes" or "no".
+     The *message-string* is the message that is displayed in the dialog. The
+     arguments frame, owner, title, and documentation let you specify
+     different attributes for the dialog in the same way as they can be
+     specified for any other frame or dialog.
 
-The *style* argument lets you specify the style of dialog that is
-produced. The different styles available reflect the Motif specification
-for dialog box types. Depending on the style of dialog you choose, the
-appearance of the dialog created may vary. For example, a different icon
-is commonly used to distinguish between error, informational, and
-warning messages.
+     The *exit-boxes* argument lets you specify the buttons that are
+     available in the dialog. If not supplied, then a single *OK* button is
+     used by default, unless the *style* of the dialog is set to
+     *#"question"*, in which case, two buttons are created, to allow the
+     user to respond "yes" or "no".
 
-The *foreground*, *background*, and *text-style* arguments let you
-specify foreground and background colors, and the font to use in the
-message text.
+     The *style* argument lets you specify the style of dialog that is
+     produced. The different styles available reflect the Motif specification
+     for dialog box types. Depending on the style of dialog you choose, the
+     appearance of the dialog created may vary. For example, a different icon
+     is commonly used to distinguish between error, informational, and
+     warning messages.
+
+     The *foreground*, *background*, and *text-style* arguments let you
+     specify foreground and background colors, and the font to use in the
+     message text.
 
    See also
 
-`choose-color`_
+   - :gf:`choose-color`
+   - :gf:`choose-directory`
+   - :gf:`choose-file`
 
-`choose-directory`_
+.. function:: open-clipboard
 
-`choose-file`_
-
-open-clipboard
---------------
-
-Function
-''''''''
-Creates a clipboard lock for a sheet on a port.
+   Creates a clipboard lock for a sheet on a port.
 
    :signature: open-clipboard *port sheet* => *clipboard*
 
-Arguments
+   :parameter port: An instance of :class:`<port>`.
+   :parameter sheet: An instance of :class:`<sheet>`.
 
--  *port* An instance of `<port>`_.
--  *sheet* An instance of `<sheet>`_.
-
-Values
-
--  *clipboard* An instance of `<clipboard>`_.
+   :value clipboard: An instance of :class:`<clipboard>`.
 
    :description:
 
-Creates a clipboard lock for *sheet* on *port*. Once a clipboard lock
-has been created, you can manipulate the clipboard contents safely. An
-instance of `<clipboard>`_ is returned, which is
-used to hold the clipboard contents.
+     Creates a clipboard lock for *sheet* on *port*. Once a clipboard lock
+     has been created, you can manipulate the clipboard contents safely. An
+     instance of :class:`<clipboard>` is returned, which is
+     used to hold the clipboard contents.
 
-You should not normally call *open-clipboard* yourself to create a
-clipboard lock. Use the macro `with-clipboard`_
-to create and free the lock for you.
+     You should not normally call *open-clipboard* yourself to create
+     a clipboard lock. Use the macro :macro:`with-clipboard` to create and free
+     the lock for you.
 
    See also
 
-`<clipboard>`_
+   - :class:`<clipboard>`
+   - :gf:`with-clipboard`
 
-`with-clipboard`_
+.. constant:: $option-key
 
-$option-key
------------
+   A constant that represents the OPTION key on the keyboard.
 
-Constant
-''''''''
-A constant that represents the OPTION key on the keyboard.
+   :type: :class:`<integer>`
 
-   :type:
-
-*<integer>*
-
-Value
-
-`$super-key`_
+   :value: :const:`$super-key`
 
    :description:
 
-A constant that represents the OPTION key on the keyboard. This is set
-to the same value as the SUPER key, to deal with the case where the
-OPTION key is not present on the keyboard.
+     A constant that represents the OPTION key on the keyboard. This is set
+     to the same value as the SUPER key, to deal with the case where the
+     OPTION key is not present on the keyboard.
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$control-key`
+   - :const:`$hyper-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index`
+   - :gf:`modifier-key-index-name`
+   - :const:`$modifier-keys`
+   - :const:`$shift-key`
+   - :const:`$super-key`
 
-`$control-key`_
+.. class:: <pointer>
+   :open:
+   :abstract:
+   :instantiable:
 
-`$hyper-key`_
+   The class of all pointers.
 
-`$meta-key`_
+   :superclasses: :class:`<object>`
 
-`modifier-key-index`_
-
-`modifier-key-index-name`_
-
-`$modifier-keys`_
-
-`$shift-key`_
-
-`$super-key`_
-
-<pointer>
----------
-
-Open abstract instantiable class
-''''''''''''''''''''''''''''''''
-The class of all pointers.
-
-   :superclasses:
-
-*<object>*
-
-Init-keywords
-
--  *port:* An instance of type `<port>`_.
+   :keyword port: An instance of type :class:`<port>`.
 
    :description:
 
-The class of all pointers.
+     The class of all pointers.
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
-`display`_ `pointer?`_
-`pointer-button-state`_ `See
-pointer-cursor`_ `See
-pointer-cursor-setter`_ `See
-pointer-position`_ `See
-pointer-sheet`_ `port`_ `See
-set-pointer-position`_
+     - :gf:`display`
+     - :gf:`pointer?`
+     - :gf:`pointer-button-state`
+     - :gf:`pointer-cursor`
+     - :gf:`pointer-cursor-setter`
+     - :gf:`pointer-position`
+     - :gf:`pointer-sheet`
+     - :gf:`port`
+     - :gf:`set-pointer-position`
 
    See also
 
-`pointer?`_
+   - :gf:`pointer?`
 
-pointer?
---------
+.. generic-function:: pointer?
 
-Generic function
-''''''''''''''''
-Returns true if the specified object is a pointer.
+   Returns true if the specified object is a pointer.
 
    :signature: pointer? *object* => *pointer?*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *pointer?* An instance of type ``<boolean>``.
+   :value pointer?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *object* is a pointer.
+     Returns true if *object* is a pointer.
 
    See also
 
-`<pointer>`_
+   - :class:`<pointer>`
 
-<pointer-boundary-event>
-------------------------
+.. class:: <pointer-boundary-event>
+   :sealed:
+   :instantiable:
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class that corresponds to a pointer motion event that crosses a
-sheet boundary.
+   The class that corresponds to a pointer motion event that crosses a
+   sheet boundary.
 
-   :superclasses:
+   :superclasses: :class:`<pointer-motion-event>`
 
-`<pointer-motion-event>`_
-
-Init-keywords
-
--  *kind:* An instance of type *one-of(#"ancestor", #"virtual",
-   #"inferior", #"nonlinear", #"nonlinear-virtual", #f)*. Default
-   value: ``#f``.
+   :keyword kind: An instance of type *one-of(#"ancestor", #"virtual", #"inferior", #"nonlinear", #"nonlinear-virtual", #f)*. Default value: ``#f``.
 
    :description:
 
-The class that corresponds to a pointer motion event that crosses some
-sort of sheet boundary.
+     The class that corresponds to a pointer motion event that crosses some
+     sort of sheet boundary.
 
-The *kind:* init-keyword represents the boundary event kind. These
-correspond to the detail members for X11 enter and exit events.
+     The *kind:* init-keyword represents the boundary event kind. These
+     correspond to the detail members for X11 enter and exit events.
 
    :operations:
 
-The following operation is exported from the *DUIM-Sheets* module.
+     The following operation is exported from the *DUIM-Sheets* module.
 
--  `boundary-event-kind`_
+     - :gf:`boundary-event-kind`
 
    See also
 
-`boundary-event-kind`_
+   - :gf:`boundary-event-kind`
+   - :class:`<pointer-enter-event>`
+   - :class:`<pointer-exit-event>`
 
-`<pointer-enter-event>`_
+.. class:: <pointer-button-event>
+   :open:
+   :abstract:
 
-`<pointer-exit-event>`_
+   The class of events that occur when mouse buttons are pressed.
 
-<pointer-button-event>
-----------------------
+   :superclasses: :class:`<pointer-event>`
 
-Open abstract class
-'''''''''''''''''''
-The class of events that occur when mouse buttons are pressed.
-
-   :superclasses:
-
-`<pointer-event>`_
-
-Init-keywords
-
--  *button:* An instance of type *one-of(`See
-   $left-button`_, `See
-   $middle-button`_, `See
-   $right-button`_)*.
+   :keyword button: An instance of type *one-of(* :const:`$left-button`, :const:`$middle-button`, :const:`$right-button` *)*.
 
    :description:
 
-The class of events that occur when mouse buttons are pressed.
+     The class of events that occur when mouse buttons are pressed.
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
--  `event-button`_ `See
-   event-matches-gesture?`_ `See
-   handle-event`_
+     - :gf:`event-button`
+     - :gf:`event-matches-gesture?`
+     - :gf:`handle-event`
 
    See also
 
-`event-button`_
+   - :gf:`event-button`
+   - :const:`$left-button`
+   - :const:`$middle-button`
+   - :gf:`pointer-button-state`
+   - :class:`<pointer-drag-event>`
+   - :const:`$right-button`
 
-`$left-button`_
+.. constant:: $pointer-buttons
 
-`$middle-button`_
+   The constant representing the possible buttons on the pointing device.
 
-`pointer-button-state`_
+   :type: :class:`<sequence>`
 
-`<pointer-drag-event>`_
-
-`$right-button`_
-
-$pointer-buttons
-----------------
-
-Constant
-''''''''
-The constant representing the possible buttons on the pointing device.
-
-   :type:
-
-*<sequence>*
-
-Value
-
-#[#"left", #"middle", #"right"];
+   :value: #[#"left", #"middle", #"right"];
 
    :description:
 
-The constant representing the possible buttons on the pointing device
-attached to the computer, typically a mouse. Up to three buttons are
-provided for.
+     The constant representing the possible buttons on the pointing device
+     attached to the computer, typically a mouse. Up to three buttons are
+     provided for.
 
-The order of the elements in this sequence must match the order of the
-values of `$left-button`_, `See
-$middle-button`_, and `See
-$right-button`_
+     The order of the elements in this sequence must match the order of the
+     values of :const:`$left-button`, :const:`$middle-button`, and
+     :const:`$right-button`.
 
    See also
 
-`button-index`_
+   - :gf:`button-index`
+   - :gf:`button-index-name`
+   - :const:`$left-button`
+   - :const:`$middle-button`
+   - :const:`$right-button`
 
-`button-index-name`_
+.. generic-function:: pointer-button-state
 
-`$left-button`_
-
-`$middle-button`_
-
-`$right-button`_
-
-pointer-button-state
---------------------
-
-Generic function
-''''''''''''''''
-Returns the state of the specified pointer.
+   Returns the state of the specified pointer.
 
    :signature: pointer-button-state *pointer* => *integer*
 
-Arguments
+   :parameter pointer: An instance of type :class:`<pointer>`.
 
--  *pointer* An instance of type `<pointer>`_.
-
-Values
-
--  *integer* An instance of type ``<integer>``.
+   :value integer: An instance of type ``<integer>``.
 
    :description:
 
-Returns the state of *pointer*.
+     Returns the state of *pointer*.
 
-pointer-cursor
---------------
+.. generic-function:: pointer-cursor
 
-Generic function
-''''''''''''''''
-Returns the cursor used for the specified pointer.
+   Returns the cursor used for the specified pointer.
 
    :signature: pointer-cursor *pointer* => *cursor*
 
-Arguments
+   :parameter pointer: An instance of type :class:`<pointer>`.
 
--  *pointer* An instance of type `<pointer>`_.
-
-Values
-
--  *cursor* An instance of type `<cursor>`_.
+   :value cursor: An instance of type :class:`<cursor>`.
 
    :description:
 
-Returns the cursor used for *pointer*.
+     Returns the cursor used for *pointer*.
 
    See also
 
-`pointer-cursor-setter`_
+   - :gf:`pointer-cursor-setter`
 
-pointer-cursor-setter
----------------------
+.. generic-function:: pointer-cursor-setter
 
-Generic function
-''''''''''''''''
-Sets the cursor used for the specified pointer.
+   Sets the cursor used for the specified pointer.
 
    :signature: pointer-cursor-setter *cursor pointer* => cursor
 
-Arguments
+   :parameter cursor: An instance of type :class:`<cursor>`.
+   :parameter pointer: An instance of type :class:`<pointer>`.
 
--  *cursor* An instance of type `<cursor>`_.
--  *pointer* An instance of type `<pointer>`_.
-
-Values
-
--  *cursor* An instance of type `<cursor>`_.
+   :value cursor: An instance of type :class:`<cursor>`.
 
    :description:
 
-Sets the cursor used for *pointer*.
+     Sets the cursor used for *pointer*.
 
    See also
 
-`pointer-cursor`_
+   - :gf:`pointer-cursor`
 
-<pointer-drag-event>
---------------------
+.. class:: <pointer-drag-event>
+   :sealed:
+   :instantiable:
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events describing drag movements.
+   The class of events describing drag movements.
 
-   :superclasses:
+   :superclasses: :class:`<pointer-motion-event>` :class:`<pointer-button-event>`
 
-*`<pointer-motion-event>`_ `See
-<pointer-button-event>`_*
-
-Init-keywords
-
--  *button:* An instance of type *one-of(`See
-   $left-button`_, `See
-   $middle-button`_, `See
-   $right-button`_)*.
+   :keyword button: An instance of type *one-of(* :const:`$left-button`, :const:`$middle-button`, :const:`$right-button` *)*.
 
    :description:
 
-The class of events describing drag movements. This is the same as `See
-<pointer-motion-event>`_, except that a button on the
-attached pointing device must also be held down as the pointer is
-moving.
+     The class of events describing drag movements. This is the same as
+     :class:`<pointer-motion-event>`, except that a button on the attached
+     pointing device must also be held down as the pointer is moving.
 
-The *button:* init-keyword is inherited from the superclass `See
-<pointer-button-event>`_.
+     The *button:* init-keyword is inherited from the superclass
+     :class:`<pointer-button-event>`.
 
    :operations:
-
--  None.
 
    See also
 
-`<pointer-motion-event>`_
+   - :class:`<pointer-motion-event>`
 
-<pointer-enter-event>
----------------------
+.. class:: <pointer-enter-event>
+   :sealed:
+   :instantiable:
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events that describe a pointer entering an area such as a
-sheet.
+   The class of events that describe a pointer entering an area such as a
+   sheet.
 
-   :superclasses:
-
-`<pointer-boundary-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<pointer-boundary-event>`
 
    :description:
 
-The class of events that describe a pointer entering an area such as a
-sheet.
+     The class of events that describe a pointer entering an area such as a
+     sheet.
 
    :operations:
-
--  None.
 
    See also
 
-`<pointer-exit-event>`_
+   - :class:`<pointer-exit-event>`
 
-<pointer-event>
----------------
+.. class:: <pointer-event>
+   :open:
+   :abstract:
 
-Open abstract class
-'''''''''''''''''''
-The base class of events occurring on pointers.
+   The base class of events occurring on pointers.
 
-   :superclasses:
+   :superclasses: :class:`<device-event>`
 
-`<device-event>`_
-
-Init-keywords
-
--  *x:* An instance of type ``<real>``.
--  *y:* An instance of type ``<real>``.
--  *pointer:* An instance of type `<pointer>`_.
+   :keyword x: An instance of type ``<real>``.
+   :keyword y: An instance of type ``<real>``.
+   :keyword pointer: An instance of type :class:`<pointer>`.
 
    :description:
 
-The base class of events occurring on pointers on the computer screen.
+     The base class of events occurring on pointers on the computer screen.
 
-The *x:* and *y:* init-keywords specify the location of the pointer when
-the event occurs. The *pointer:* init-keyword specifies the pointer to
-which the event occurs.
+     The *x:* and *y:* init-keywords specify the location of the pointer when
+     the event occurs. The *pointer:* init-keyword specifies the pointer to
+     which the event occurs.
 
    :operations:
-
--  None.
 
    See also
 
-`<pointer-button-event>`_
+   - :class:`<pointer-button-event>`
+   - :class:`<pointer-exit-event>`
+   - :class:`<pointer-motion-event>`
 
-`<pointer-exit-event>`_
+.. class:: <pointer-exit-event>
+   :sealed:
+   :instantiable:
 
-`<pointer-motion-event>`_
+   The class of events that describe a pointer leaving an area such as a
+   sheet.
 
-<pointer-exit-event>
---------------------
-
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events that describe a pointer leaving an area such as a
-sheet.
-
-   :superclasses:
-
-`<pointer-boundary-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<pointer-boundary-event>`
 
    :description:
 
-The class of events that describe a pointer leaving an area such as a
-sheet.
+     The class of events that describe a pointer leaving an area such as a
+     sheet.
 
    :operations:
-
--  None.
 
    See also
 
-`<pointer-button-event>`_
+   - :class:`<pointer-button-event>`
+   - :class:`<pointer-enter-event>`
+   - :class:`<pointer-motion-event>`
 
-`<pointer-enter-event>`_
+.. class:: <pointer-gesture>
+   :sealed:
+   :instantiable:
 
-`<pointer-motion-event>`_
+   The class of all gestures that occur on pointers.
 
-<pointer-gesture>
------------------
+   :superclasses: :class:`<gesture>`
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of all gestures that occur on pointers.
-
-   :superclasses:
-
-`<gesture>`_
-
-Init-keywords
-
--  *button:* An instance of type ``<integer>``.
--  *modifier-state:* An instance of type ``<integer>``.
+   :keyword button: An instance of type ``<integer>``.
+   :keyword modifier-state: An instance of type ``<integer>``.
 
    :description:
 
-The class of all gestures that occur on pointers.
+     The class of all gestures that occur on pointers.
 
-The *button:* init-keyword specifies the button on the attached pointer
-device on which the gesture has occurred, and the *modifier-state:*
-init-keyword specifies the modifier-state of the gesture.
+     The *button:* init-keyword specifies the button on the attached pointer
+     device on which the gesture has occurred, and the *modifier-state:*
+     init-keyword specifies the modifier-state of the gesture.
 
    :operations:
 
--  `gesture-button`_
+   - :gf:`gesture-button`
 
-<pointer-motion-event>
-----------------------
+.. class:: <pointer-motion-event>
+   :sealed:
+   :instantiable:
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events that describe a pointer that is moving.
+   The class of events that describe a pointer that is moving.
 
-   :superclasses:
-
-`<pointer-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<pointer-event>`
 
    :description:
 
-The class of events that describe a pointer that is moving.
+     The class of events that describe a pointer that is moving.
 
    :operations:
-
--  None.
 
    See also
 
-`<pointer-button-event>`_
+   - :class:`<pointer-button-event>`
+   - :class:`<pointer-drag-event>`
+   - :class:`<pointer-enter-event>`
+   - :class:`<pointer-event>`
+   - :class:`<pointer-exit-event>`
 
-`<pointer-drag-event>`_
+.. generic-function:: pointer-position
 
-`<pointer-enter-event>`_
-
-`<pointer-event>`_
-
-`<pointer-exit-event>`_
-
-pointer-position
-----------------
-
-Generic function
-''''''''''''''''
-Returns the current position of the specified pointer.
+   Returns the current position of the specified pointer.
 
    :signature: pointer-position *pointer* #key *sheet* => *x y*
 
-Arguments
+   :parameter pointer: An instance of type :class:`<pointer>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *pointer* An instance of type `<pointer>`_.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *x* An instance of type ``<real>``.
--  *y* An instance of type ``<real>``.
+   :value x: An instance of type ``<real>``.
+   :value y: An instance of type ``<real>``.
 
    :description:
 
-Returns the current position of *pointer*. If *sheet* is specified,
-then the pointer must be over it.
+     Returns the current position of *pointer*. If *sheet* is specified,
+     then the pointer must be over it.
 
    See also
 
-`pointer-sheet`_
+   - :gf:`pointer-sheet`
+   - :gf:`set-pointer-position`
 
-`set-pointer-position`_
+.. generic-function:: pointer-sheet
 
-pointer-sheet
--------------
-
-Generic function
-''''''''''''''''
-Returns the sheet under the specified pointer.
+   Returns the sheet under the specified pointer.
 
    :signature: pointer-sheet *pointer* => *sheet*
 
-Arguments
+   :parameter pointer: An instance of type :class:`<pointer>`.
 
--  *pointer* An instance of type `<pointer>`_.
-
-Values
-
--  *sheet* An instance of type *false-or(* `See
-   <sheet>`_*)*.
+   :parameter sheet: An instance of type *false-or(* :class:`<sheet>` *)*.
 
    :description:
 
-Returns the sheet under *pointer*, or #f if there is no sheet under the
-pointer.
+     Returns the sheet under *pointer*, or #f if there is no sheet under the
+     pointer.
 
    See also
 
-`pointer-position`_
+   - :gf:`pointer-position`
 
-<port>
-------
+.. class:: <port>
+   :open:
+   :abstract:
 
-Open abstract class
-'''''''''''''''''''
-The class of all ports.
+   The class of all ports.
 
-   :superclasses:
-
-*<object>*
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<object>`
 
    :description:
 
-The class of all ports. A display, and all the sheets attached to a
-display, is associated with a port that is a connection to a display
-server. The port manages:
+     The class of all ports. A display, and all the sheets attached to a
+     display, is associated with a port that is a connection to a display
+     server. The port manages:
 
--  A primary input device (usually a keyboard)
--  A pointing device, such as a mouse or trackball
--  An event processor that dispatched events to the appropriate sheet.
+     - A primary input device (usually a keyboard)
+     - A pointing device, such as a mouse or trackball
+     - An event processor that dispatched events to the appropriate sheet.
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
-`beep`_ `See
-default-port-setter`_ `See
-destroy-port`_ `See
-force-display`_ `See
-get-default-background`_ `See
-get-default-foreground`_ `See
-get-default-text-style`_ `See
-port`_ `port?`_ `See
-port-modifier-state`_ `See
-port-pointer`_ `See
-port-server-path`_ `See
-synchronize-display`_ `See
-text-size`_ `See
-text-style-mapping`_ `See
-text-style-mapping-setter`_
+     - :gf:`beep`
+     - :gf:`default-port-setter`
+     - :gf:`destroy-port`
+     - :gf:`force-display`
+     - :gf:`get-default-background`
+     - :gf:`get-default-foreground`
+     - :gf:`get-default-text-style`
+     - :gf:`port`
+     - :gf:`port?`
+     - :gf:`port-modifier-state`
+     - :gf:`port-pointer`
+     - :gf:`port-server-path`
+     - :gf:`synchronize-display`
+     - :gf:`text-size`
+     - :gf:`text-style-mapping`
+     - :gf:`text-style-mapping-setter`
 
-The following operation is exported from the *DUIM-DCs* module.
+     The following operation is exported from the *DUIM-DCs* module.
 
-`find-color <dcs.htm#33969>`_
+     - :gf:`find-color`
 
    See also
 
-`<display>`_
+   - :class:`<display>`
+   - :class:`<sheet>`
 
-`<sheet>`_
+.. generic-function:: port
 
-port
-----
-
-Generic function
-''''''''''''''''
-Returns the port for the specified object.
+   Returns the port for the specified object.
 
    :signature: port *object* => *value*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *value* An instance of type *false-or(* `See
-   <port>`_*)*.
+   :parameter value: An instance of type *false-or(* :class:`<port>` *)*.
 
    :description:
 
-Returns the port used to display *object*.
+     Returns the port used to display *object*.
 
    See also
 
-`display`_
+   - :gf:`display`
+   - :gf:`frame-manager`
+   - :class:`<port>`
+   - :gf:`port?`
 
-`frame-manager`_
+.. generic-function:: port?
 
-`<port>`_
-
-`port?`_
-
-port?
------
-
-Generic function
-''''''''''''''''
-Returns true if the specified object is a port.
+   Returns true if the specified object is a port.
 
    :signature: port? *object* => *boolean*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *boolean* An instance of type ``<boolean>``.
+   :value boolean: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *object* is a port.
+     Returns true if *object* is a port.
 
    See also
 
-`<port>`_
+   - :class:`<port>`
+   - :class:`<port>`
 
-`<port>`_
+.. generic-function:: port-modifier-state
 
-port-modifier-state
--------------------
-
-Generic function
-''''''''''''''''
-Returns the modifier state of the specified port.
+   Returns the modifier state of the specified port.
 
    :signature: port-modifier-state *port* => *integer*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
 
--  *port* An instance of type `<port>`_.
-
-Values
-
--  *integer* An instance of type ``<integer>``.
+   :value integer: An instance of type ``<integer>``.
 
    :description:
 
-Returns the modifier state of *port*.
+     Returns the modifier state of *port*.
 
    See also
 
-`event-modifier-state`_
+   - :gf:`event-modifier-state`
+   - :gf:`gesture-modifier-state`
+   - :gf:`make-modifier-state`
+   - :gf:`port-name`
+   - :gf:`port-pointer`
+   - :gf:`port-server-path`
+   - :gf:`port-type`
 
-`gesture-modifier-state`_
+.. generic-function:: port-name
 
-`make-modifier-state`_
-
-`port-name`_
-
-`port-pointer`_
-
-`port-server-path`_
-
-`port-type`_
-
-port-name
----------
-
-Generic function
-''''''''''''''''
-Returns the name of the specified port.
+   Returns the name of the specified port.
 
    :signature: port-name *port* => *name*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
 
--  *port* An instance of type `<port>`_.
-
-Values
-
--  *name* An instance of type ``<object>``.
+   :value name: An instance of type ``<object>``.
 
    :description:
 
-Returns the name of *port*.
+     Returns the name of *port*.
 
    See also
 
-`port-modifier-state`_
+   - :gf:`port-modifier-state`
+   - :gf:`port-pointer`
+   - :gf:`port-server-path`
+   - :gf:`port-type`
 
-`port-pointer`_
+.. generic-function:: port-pointer
 
-`port-server-path`_
-
-`port-type`_
-
-port-pointer
-------------
-
-Generic function
-''''''''''''''''
-Returns the pointer used on the specified port.
+   Returns the pointer used on the specified port.
 
    :signature: port-pointer *port* => *pointer*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
 
--  *port* An instance of type `<port>`_.
-
-Values
-
--  *pointer* An instance of type `<pointer>`_.
+   :value pointer: An instance of type :class:`<pointer>`.
 
    :description:
 
-Returns the pointer used on *port*.
+     Returns the pointer used on *port*.
 
    See also
 
-`port-modifier-state`_
+   - :gf:`port-modifier-state`
+   - :gf:`port-name`
+   - :gf:`port-server-path`
+   - :gf:`port-type`
 
-`port-name`_
+.. generic-function:: port-server-path
 
-`port-server-path`_
-
-`port-type`_
-
-port-server-path
-----------------
-
-Generic function
-''''''''''''''''
-Returns the server path of the specified port.
+   Returns the server path of the specified port.
 
    :signature: port-server-path *port* => *object*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
 
--  *port* An instance of type `<port>`_.
-
-Values
-
--  *object* An instance of type ``<object>``.
+   :value object: An instance of type ``<object>``.
 
    :description:
 
-Returns the server path of *port*.
+     Returns the server path of *port*.
 
    See also
 
-`port-modifier-state`_
+   - :gf:`port-modifier-state`
+   - :gf:`port-name`
+   - :gf:`port-pointer`
+   - :gf:`port-type`
 
-`port-name`_
+.. class:: <port-terminated-event>
+   :sealed:
+   :instantiable:
 
-`port-pointer`_
+   The class of events that describe the termination of a port.
 
-`port-type`_
+   :superclasses: :class:`<frame-event>`
 
-<port-terminated-event>
------------------------
-
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events that describe the termination of a port.
-
-   :superclasses:
-
-` <frames.htm#20261>`_
-
-Init-keywords
-
--  *condition:* An instance of type *<condition>*. Required.
+   :keyword condition: An instance of type :class:`<condition>`. Required.
 
    :description:
 
-The class of events that describe the termination of a port.
+     The class of events that describe the termination of a port.
 
-The *condition:* init-keyword returns the error condition signalled when
-the port was terminated.
+     The *condition:* init-keyword returns the error condition signalled when
+     the port was terminated.
 
    :operations:
 
--  None.
+.. generic-function:: port-type
 
-port-type
----------
-
-Generic function
-''''''''''''''''
-Returns the type of the specified port.
+   Returns the type of the specified port.
 
    :signature: port-type *port* => *type*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
 
--  *port* An instance of type `<port>`_.
-
-Values
-
--  *type* An instance of type *<symbol>*.
+   :value type: An instance of type :class:`<symbol>`.
 
    :description:
 
-Returns the type of *port*.
+     Returns the type of *port*.
 
    See also
 
-`port-modifier-state`_
+   - :gf:`port-modifier-state`
+   - :gf:`port-name`
+   - :gf:`port-pointer`
+   - :gf:`port-server-path`
 
-`port-name`_
+.. generic-function:: queue-event
 
-`port-pointer`_
-
-`port-server-path`_
-
-queue-event
------------
-
-Generic function
-''''''''''''''''
-Queues an event for the specified sheet.
+   Queues an event for the specified sheet.
 
    :signature: queue-event *sheet event* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
--  *event* An instance of type `<event>`_.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter event: An instance of type :class:`<event>`.
 
    :description:
 
-Queues *event* on the event-queue for *sheet*.
+     Queues *event* on the event-queue for *sheet*.
 
    See also
 
-`handle-event`_
+   - :gf:`handle-event`
 
-queue-repaint
--------------
+.. generic-function:: queue-repaint
 
-Generic function
-''''''''''''''''
-Queues a repaint for the specified region of the specified sheet.
+   Queues a repaint for the specified region of the specified sheet.
 
    :signature: queue-repaint *sheet region* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
--  *region* An instance of type `<region> <geom.htm#79228>`_.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter region: An instance of type :class:`<region>`.
 
    :description:
 
-Queues a repaint for the area** of *sheet* defined by *region*.
+     Queues a repaint for the area** of *sheet* defined by *region*.
 
    See also
 
-`handle-repaint`_
+   - :gf:`handle-repaint`
+   - :gf:`repaint-sheet`
+   - :class:`<window-repaint-event>`
 
-`repaint-sheet`_
+.. generic-function:: raise-sheet
 
-`<window-repaint-event>`_
-
-raise-sheet
------------
-
-Generic function
-''''''''''''''''
-Raises the specified sheet to the top of the current hierarchy of
-sheets.
+   Raises the specified sheet to the top of the current hierarchy of
+   sheets.
 
    :signature: raise-sheet *sheet* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Raises *sheet* to the top of the current hierarchy of sheets.
+     Raises *sheet* to the top of the current hierarchy of sheets.
 
    See also
 
-` <frames.htm#85200>`_
+   - :gf:`lower-frame`
+   - :gf:`lower-sheet`
+   - :gf:`raise-frame`
 
-`lower-sheet`_
+.. generic-function:: remove-child
 
-` <frames.htm#28075>`_
-
-remove-child
-------------
-
-Generic function
-''''''''''''''''
-Removes a child from the specified sheet.
+   Removes a child from the specified sheet.
 
    :signature: remove-child *sheet child* => *sheet*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter child: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
--  *child* An instance of type `<sheet>`_.
-
-Values
-
--  *sheet* An instance of type `<sheet>`_.
+   :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Removes *child* from *sheet*. The remaining children in the sheet are
-laid out again appropriately.
+     Removes *child* from *sheet*. The remaining children in the sheet are
+     laid out again appropriately.
 
    See also
 
-`add-child`_
+   - :gf:`add-child`
+   - :gf:`replace-child`
 
-`replace-child`_
+.. generic-function:: repaint-sheet
 
-repaint-sheet
--------------
-
-Generic function
-''''''''''''''''
-Repaints the specified region of a sheet.
+   Repaints the specified region of a sheet.
 
    :signature: repaint-sheet *sheet region* #key *medium* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
--  *region* An instance of type `<region> <geom.htm#79228>`_.
--  *medium* An instance of type *`<medium>`_*.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter region: An instance of type :class:`<region>`.
+   :parameter medium: An instance of type :class:`<medium>`.
 
    :description:
 
-Repaints the are of *sheet* defined by *region*. If specified, the
-appropriate *medium* is used.
+     Repaints the are of *sheet* defined by *region*. If specified, the
+     appropriate *medium* is used.
 
    See also
 
-`handle-repaint`_
+   - :gf:`handle-repaint`
+   - :gf:`queue-repaint`
+   - :class:`<window-repaint-event>`
 
-`queue-repaint`_
+.. generic-function:: replace-child
 
-`<window-repaint-event>`_
-
-replace-child
--------------
-
-Generic function
-''''''''''''''''
-Replaces a child from the specified sheet with a new one.
+   Replaces a child from the specified sheet with a new one.
 
    :signature: replace-child *sheet old-child new-child* => *sheet*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter old-child: An instance of type ``<object>``.
+   :parameter new-child: An instance of type ``<object>``.
 
--  *sheet* An instance of type `<sheet>`_.
--  *old-child* An instance of type ``<object>``.
--  *new-child* An instance of type ``<object>``.
-
-Values
-
--  *sheet* An instance of type `<sheet>`_.
+   :value sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Replaces *old-child* with *new-child* in *sheet*. The children in the
-sheet are laid out again appropriately.
+     Replaces *old-child* with *new-child* in *sheet*. The children in the
+     sheet are laid out again appropriately.
 
    See also
 
-`add-child`_
+   - :gf:`add-child`
+   - :gf:`remove-child`
 
-`remove-child`_
+.. constant:: $right-button
 
-$right-button
--------------
+   A constant that represents the right button on the attached pointing
+   device.
 
-Constant
-''''''''
-A constant that represents the right button on the attached pointing
-device.
+   :type: :class:`<integer>`
 
-   :type:
-
-*<integer>*
-
-Value
-
-ash(1, %button\_base + 2)
+   :value: ash(1, %button\_base + 2)
 
    :description:
 
-A constant that represents the right button on the attached pointing
-device.
+     A constant that represents the right button on the attached pointing
+     device.
 
    See also
 
-`$left-button`_
+   - :const:`$left-button`
+   - :const:`$middle-button`
+   - :const:`$pointer-buttons`
 
-`$middle-button`_
+.. generic-function:: set-caret-position
 
-`$pointer-buttons`_
-
-set-caret-position
-------------------
-
-Generic function
-''''''''''''''''
-Sets the position of the specified cursor.
+   Sets the position of the specified cursor.
 
    :signature: set-cursor-position *cursor x y* => ()
 
-Arguments
-
--  *cursor* An instance of type `<caret>`_.
--  *x* An instance of type ``<real>``.
--  *y* An instance of type ``<real>``.
+   :parameter cursor: An instance of type :class:`<caret>`.
+   :parameter x: An instance of type ``<real>``.
+   :parameter y: An instance of type ``<real>``.
 
 
    :description:
 
-Sets the position of *cursor* to *(* *x* *,* *y* *)*.
+     Sets the position of *cursor* to *(* *x* *,* *y* *)*.
 
    See also
 
-`caret-position`_
+   - :gf:`caret-position`
+   - :gf:`set-pointer-position`
 
-`set-pointer-position`_
+.. generic-function:: set-pointer-position
 
-set-pointer-position
---------------------
-
-Generic function
-''''''''''''''''
-Sets the position of the specified pointer.
+   Sets the position of the specified pointer.
 
    :signature: set-pointer-position *pointer x y* #key *sheet* => ()
 
-Arguments
-
--  *pointer* An instance of type `<pointer>`_.
--  *x* An instance of type ``<real>``.
--  *y* An instance of type ``<real>``.
--  *sheet* An instance of type `<sheet>`_.
-
+   :parameter pointer: An instance of type :class:`<pointer>`.
+   :parameter x: An instance of type ``<real>``.
+   :parameter y: An instance of type ``<real>``.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Sets the position of *pointer* to *(* *x* *,* *y* *)*, relative to the
-top left corner of *sheet*, if specified. Units are measured in pixels.
+     Sets the position of *pointer* to *(* *x* *,* *y* *)*, relative to the
+     top left corner of *sheet*, if specified. Units are measured in pixels.
 
    See also
 
-`pointer-position`_
+   - :gf:`pointer-position`
+   - :gf:`set-pointer-position`
 
-`set-pointer-position`_
+.. generic-function:: set-sheet-edges
 
-set-sheet-edges
----------------
-
-Generic function
-''''''''''''''''
-Sets the edges of the specified sheet relative to its parent.
+   Sets the edges of the specified sheet relative to its parent.
 
    :signature: set-sheet-edges *sheet left top right bottom* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
--  *left* An instance of type ``<integer>``.
--  *top* An instance of type ``<integer>``.
--  *right* An instance of type ``<integer>``.
--  *bottom* An instance of type ``<integer>``.
-
+   -  *sheet* An instance of type :class:`<sheet>`.
+   -  *left* An instance of type ``<integer>``.
+   -  *top* An instance of type ``<integer>``.
+   -  *right* An instance of type ``<integer>``.
+   -  *bottom* An instance of type ``<integer>``.
 
    :description:
 
-Sets the edges of *sheet* to *top*, *left*, *right*, and *bottom*.
-Each edge is specified relative to the corresponding edge of the parent
-of *sheet*. The layout of *sheet* is recalculated automatically.
+     Sets the edges of *sheet* to *top*, *left*, *right*, and *bottom*.
+     Each edge is specified relative to the corresponding edge of the parent
+     of *sheet*. The layout of *sheet* is recalculated automatically.
 
    See also
 
-`set-sheet-position`_
+   - :gf:`set-sheet-position`
+   - :gf:`set-sheet-size`
+   - :gf:`sheet-edges`
 
-`set-sheet-size`_
+.. generic-function:: set-sheet-position
 
-`sheet-edges`_
-
-set-sheet-position
-------------------
-
-Generic function
-''''''''''''''''
-Sets the position of the specified sheet relative to its parent.
+   Sets the position of the specified sheet relative to its parent.
 
    :signature: set-sheet-position *sheet x y* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
--  *x* An instance of type ``<real>``.
--  *y* An instance of type ``<real>``.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter x: An instance of type ``<real>``.
+   :parameter y: An instance of type ``<real>``.
 
    :description:
 
-Sets the position of *sheet* to *(* *x* *,* *y* *)* relative to the
-position of its parent. The layout of *sheet* is recalculated
-automatically.
+     Sets the position of *sheet* to *(* *x* *,* *y* *)* relative to the
+     position of its parent. The layout of *sheet* is recalculated
+     automatically.
 
    See also
 
-`set-sheet-edges`_
+   - :gf:`set-sheet-edges`
+   - :gf:`set-sheet-size`
+   - :gf:`sheet-position`
 
-`set-sheet-size`_
+.. generic-function:: set-sheet-size
 
-`sheet-position`_
-
-set-sheet-size
---------------
-
-Generic function
-''''''''''''''''
-Sets the size of the specified sheet.
+   Sets the size of the specified sheet.
 
    :signature: set-sheet-size *sheet width height* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
--  *width* An instance of type ``<integer>``.
--  *height* An instance of type ``<integer>``.
-
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter width: An instance of type ``<integer>``.
+   :parameter height: An instance of type ``<integer>``.
 
    :description:
 
-Sets the size of *sheet*. The layout of *sheet* is recalculated
-automatically.
+     Sets the size of *sheet*. The layout of *sheet* is recalculated
+     automatically.
 
    See also
 
-`set-sheet-edges`_
+   - :gf:`set-sheet-edges`
+   - :gf:`set-sheet-position`
 
-`set-sheet-position`_
+.. class:: <sheet>
+   :open:
+   :abstract:
 
-<sheet>
--------
+   The base object class for DUIM windows.
 
-Open abstract class
-'''''''''''''''''''
-The base object class for DUIM windows.
+   :superclasses: :class:`<object>`
 
-   :superclasses:
-
-*<object>*
-
-Init-keywords
-
--  *region:* An instance of type `<region> <geom.htm#79228>`_.
-   Default value *$nowhere*.
--  *transform:* An instance of type `<transform> <geom.htm#54995>`_.
-   Default value *`$identity-transform <geom.htm#70198>`_*.
--  *port:* An instance of type *false-or(* `See
-   <port>`_*)*. Default value ``#f``.
-
-*style-descriptor:*
-
--  An instance of type *false-or(style-descriptor)*. Default value ``#f``
-   .
--  *help-context:* An instance of type *<object-table>*. Default value
-   *make(<object-table>)*.
--  *help-source:* An instance of type *<object-table>*. Default value
-   *make(<object-table>)*.
--  *parent:* An instance of type *false-or(<sheet>)*. Default value:
-   ``#f``.
--  *child:* An instance of type *false-or(<sheet>)*. Default value:
-   ``#f``.
--  *children:* An instance of type *limited(<sequence>, of: <sheet>)*.
-   Default value: *#[]*.
--  *x:* An instance of type ``<integer>``.
--  *y:* An instance of type ``<integer>``.
--  *withdrawn?:* An instance of type ``<boolean>``. Default value: ``#f``.
-
-*accepts-focus?:*
-
--  An instance of type ``<boolean>``. Default value: ``#t``.
--  *cursor:* An instance of type `<cursor>`_.
--  *caret:* An instance of type *type-union(<caret>, one-of(#f, #t))*.
-   Default value: ``#f``.
--  *foreground:* An instance of type `<ink> <dcs.htm#15007>`_.
--  *background:* An instance of type `<ink> <dcs.htm#15007>`_.
--  *text-style:* An instance of type `See
-   <text-style> <dcs.htm#85385>`_.
--  *fixed-width?:* An instance of type ``<boolean>``.
--  *fixed-height?:* An instance of type ``<boolean>``.
--  *resizable?:* An instance of type ``<boolean>``.
+   :keyword region: An instance of type :class:`<region>`. Default value *$nowhere*.
+   :keyword transform: An instance of type :class:`<transform>`. Default value :const:`$identity-transform`.
+   :keyword port: An instance of type *false-or(* :class:`<port>` *)*. Default value ``#f``.
+   :keyword style-descriptor: An instance of type *false-or(style-descriptor)*. Default value ``#f``.
+   :keyword help-context: An instance of type :class:`<object-table>`. Default value *make(<object-table>)*.
+   :keyword help-source: An instance of type :class:`<object-table>`. Default value *make(<object-table>)*.
+   :keyword parent: An instance of type *false-or(<sheet>)*. Default value: ``#f``.
+   :keyword child: An instance of type *false-or(<sheet>)*. Default value: ``#f``.
+   :keyword children: An instance of type *limited(<sequence>, of: <sheet>)*. Default value: *#[]*.
+   :keyword x: An instance of type ``<integer>``.
+   :keyword y: An instance of type ``<integer>``.
+   :keyword withdrawn?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :keyword accepts-focus?: An instance of type ``<boolean>``. Default value: ``#t``.
+   :keyword cursor: An instance of type :class:`<cursor>`.
+   :keyword caret: An instance of type *type-union(<caret>, one-of(#f, #t))*. Default value: ``#f``.
+   :keyword foreground: An instance of type :class:`<ink>`.
+   :keyword background: An instance of type :class:`<ink>`.
+   :keyword text-style: An instance of type :class:`<text-style>`.
+   :keyword fixed-width?: An instance of type ``<boolean>``.
+   :keyword fixed-height?: An instance of type ``<boolean>``.
+   :keyword resizable?: An instance of type ``<boolean>``.
 
    :description:
 
-The *port:* init-keyword is true if the pane (and its mirror, if it has
-one) has been mapped, ``#f`` otherwise. In this case, the term *mapped*
-means visible on the display, ignoring issues of occlusion.
+     The *port:* init-keyword is true if the pane (and its mirror, if it has
+     one) has been mapped, ``#f`` otherwise. In this case, the term *mapped*
+     means visible on the display, ignoring issues of occlusion.
 
-The *help-source:* and *help-context:* keywords let you specify pointers
-to valid information available in any online help you supply with your
-application. The *help-context:* keyword should specify a context-ID
-present in the online help. This context-ID identifies the help topic
-that is applicable to the current pane. The *help-source:* init-keyword
-identifies the source file in which the help topic identified by
-*help-context:* can be found. A list of context-IDs should be provided
-by the author of the online help system.
+     The *help-source:* and *help-context:* keywords let you specify pointers
+     to valid information available in any online help you supply with your
+     application. The *help-context:* keyword should specify a context-ID
+     present in the online help. This context-ID identifies the help topic
+     that is applicable to the current pane. The *help-source:* init-keyword
+     identifies the source file in which the help topic identified by
+     *help-context:* can be found. A list of context-IDs should be provided
+     by the author of the online help system.
 
-The *parent:*, *child:*, and *children:* init-keywords let you specify
-a lineage for the sheet if you wish, specifying the parent of the sheet
-and as many children as you wish.
+     The *parent:*, *child:*, and *children:* init-keywords let you specify
+     a lineage for the sheet if you wish, specifying the parent of the sheet
+     and as many children as you wish.
 
-The *x:* and *y:* init-keywords specify the initial position of the
-sheet relative to its parent. When *accepts-focus?:* is true, the sheet
-will accept the pointer focus.
+     The *x:* and *y:* init-keywords specify the initial position of the
+     sheet relative to its parent. When *accepts-focus?:* is true, the sheet
+     will accept the pointer focus.
 
-The init-keywords *cursor:*, *foreground:*, *background:*, and
-*text-style:* can be used to specify the appearance of elements in the
-sheet.
+     The init-keywords *cursor:*, *foreground:*, *background:*, and
+     *text-style:* can be used to specify the appearance of elements in the
+     sheet.
 
-The *caret:* init-keyword is used to specify the caret to be used within
-the drawing pane, if one is to be used at all.
+     The *caret:* init-keyword is used to specify the caret to be used within
+     the drawing pane, if one is to be used at all.
 
-The *fixed-width?:* and *fixed-height?:* init-keywords are used to fix
-the width or height of a sheet to the size defined by other appropriate
-init-keywords. This is a useful way of ensuring that the default size
-defined for a sheet is fixed in either direction. The init-keywords
-force the space requirements for the sheet to make the minimum and
-maximum sizes equal to the size defined at the time of creation. These
-keywords are most useful when creating sheets of unknown size, when you
-want to ensure that any child of that sheet is fixed at that size,
-whatever it may be.
+     The *fixed-width?:* and *fixed-height?:* init-keywords are used to fix
+     the width or height of a sheet to the size defined by other appropriate
+     init-keywords. This is a useful way of ensuring that the default size
+     defined for a sheet is fixed in either direction. The init-keywords
+     force the space requirements for the sheet to make the minimum and
+     maximum sizes equal to the size defined at the time of creation. These
+     keywords are most useful when creating sheets of unknown size, when you
+     want to ensure that any child of that sheet is fixed at that size,
+     whatever it may be.
 
-If *resizable?:* is ``#t`` then the sheet can be resized in either
-direction. If *resizable?:* is ``#f`` then it cannot be resized in either
-direction. If *resizable?:* is ``#t``, but one of *fixed-width?:* or
-*fixed-height?:* is ``#t``, then the sheet can only be resized in one
-direction as appropriate.
+     If *resizable?:* is ``#t`` then the sheet can be resized in either
+     direction. If *resizable?:* is ``#f`` then it cannot be resized in either
+     direction. If *resizable?:* is ``#t``, but one of *fixed-width?:* or
+     *fixed-height?:* is ``#t``, then the sheet can only be resized in one
+     direction as appropriate.
 
    :operations:
 
-The following operations are exported from the *DUIM-Sheets* module.
+     The following operations are exported from the *DUIM-Sheets* module.
 
-`add-child`_ `beep`_ `See
-child-containing-position`_ `See
-children-overlapping-region`_ `See
-clear-box`_ ` <graphics.htm#33334>`_ `See
-destroy-sheet`_ `display`_
+     - :gf:`add-child`
+     - :gf:`beep`
+     - :gf:`child-containing-position`
+     - :gf:`children-overlapping-region`
+     - :gf:`clear-box`
+     - :gf:`destroy-sheet`
+     - :gf:`display`
+     - :gf:`do-children-containing-position`
+     - :gf:`do-children-overlapping-region`
+     - :gf:`do-sheet-children`
+     - :gf:`do-sheet-tree`
+     - :gf:`do-with-drawing-options`
+     - :gf:`do-with-pointer-grabbed`
+     - :gf:`do-with-sheet-medium`
+     - :gf:`do-with-text-style`
+     - :gf:`do-with-transform`
+     - :gf:`force-display`
+     - :gf:`frame-manager`
+     - :gf:`get-default-background`
+     - :gf:`get-default-foreground`
+     - :gf:`get-default-text-style`
+     - :gf:`handle-event`
+     - :gf:`handle-repaint`
+     - :gf:`medium-background`
+     - :gf:`medium-background-setter`
+     - :gf:`medium-brush`
+     - :gf:`medium-brush-setter`
+     - :gf:`medium-clipping-region`
+     - :gf:`medium-clipping-region-setter`
+     - :gf:`medium-default-text-style`
+     - :gf:`medium-default-text-style-setter`
+     - :gf:`medium-foreground`
+     - :gf:`medium-foreground-setter`
+     - :gf:`medium-pen`
+     - :gf:`medium-pen-setter`
+     - :gf:`medium-text-style`
+     - :gf:`medium-text-style-setter`
+     - :gf:`medium-transform`
+     - :gf:`medium-transform-setter`
+     - :gf:`port`
+     - :gf:`queue-event`
+     - :gf:`queue-repaint`
+     - :gf:`raise-sheet`
+     - :gf:`remove-child`
+     - :gf:`repaint-sheet`
+     - :gf:`replace-child`
+     - :gf:`set-sheet-edges`
+     - :gf:`set-sheet-position`
+     - :gf:`set-sheet-size`
+     - :gf:`sheet?`
+     - :gf:`sheet-ancestor?`
+     - :gf:`sheet-child`
+     - :gf:`sheet-children`
+     - :gf:`sheet-children-setter`
+     - :gf:`sheet-child-setter`
+     - :gf:`sheet-edges`
+     - :gf:`sheet-frame`
+     - :gf:`sheet-mapped?`
+     - :gf:`sheet-mapped?-setter`
+     - :gf:`sheet-medium`
+     - :gf:`sheet-parent`
+     - :gf:`sheet-parent-setter`
+     - :gf:`sheet-position`
+     - :gf:`sheet-region`
+     - :gf:`sheet-region-setter`
+     - :gf:`sheet-size`
+     - :gf:`sheet-state`
+     - :gf:`sheet-transform`
+     - :gf:`sheet-transform-setter`
+     - :gf:`sheet-withdrawn?`
+     - :gf:`synchronize-display`
+     - :gf:`text-size`
+     - :gf:`top-level-sheet`
 
-`do-children-containing-position`_ `See
-do-children-overlapping-region`_ `See
-do-sheet-children`_ `See
-do-sheet-tree`_ `See
-do-with-drawing-options`_ `See
-do-with-pointer-grabbed`_ `See
-do-with-sheet-medium`_ `See
-do-with-text-style`_ `See
-do-with-transform`_
+     The following operations are exported from the *DUIM-Gadgets* module.
 
-`force-display`_ `See
-frame-manager`_
+     - :gf:`scroll-position`
+     - :gf:`set-scroll-position`
 
-`get-default-background`_ `See
-get-default-foreground`_ `See
-get-default-text-style`_
+     The following operations are exported from the *DUIM-Layouts* module.
 
-`handle-event`_ `See
-handle-repaint`_
+     - :gf:`allocate-space`
+     - :gf:`compose-space`
+     - :gf:`do-allocate-space`
+     - :gf:`do-compose-space`
+     - :gf:`relayout-children`
+     - :gf:`relayout-parent`
+     - :gf:`space-requirement-height`
+     - :gf:`space-requirement-max-height`
+     - :gf:`space-requirement-max-width`
+     - :gf:`space-requirement-min-height`
+     - :gf:`space-requirement-min-width`
+     - :gf:`space-requirement-width`
 
-`medium-background`_ `See
-medium-background-setter`_ `See
-medium-brush`_ `See
-medium-brush-setter`_ `See
-medium-clipping-region`_ `See
-medium-clipping-region-setter`_ `See
-medium-default-text-style`_ `See
-medium-default-text-style-setter`_ `See
-medium-foreground`_ `See
-medium-foreground-setter`_ `See
-medium-pen`_ `See
-medium-pen-setter`_ `See
-medium-text-style`_
- `medium-text-style-setter`_ `See
-medium-transform`_ `See
-medium-transform-setter`_ `See
-port`_
+     The following operations are exported from the *DUIM-Frames* module.
 
-`queue-event`_ `See
-queue-repaint`_
+     - :gf:`exit-dialog`
 
-`raise-sheet`_ `See
-remove-child`_ `See
-repaint-sheet`_ `See
-replace-child`_
+     The following operations are exported from the *DUIM-Graphics* module.
 
-`set-sheet-edges`_ `See
-set-sheet-position`_ `See
-set-sheet-size`_ `sheet?`_
+     - :gf:`abort-path`
+     - :gf:`arc-to`
+     - :gf:`close-path`
+     - :gf:`copy-area`
+     - :gf:`curve-to`
+     - :gf:`do-with-output-to-pixmap`
+     - :gf:`draw-bezier-curve`
+     - :gf:`draw-ellipse`
+     - :gf:`draw-image`
+     - :gf:`draw-line`
+     - :gf:`draw-lines`
+     - :gf:`draw-pixmap`
+     - :gf:`draw-point`
+     - :gf:`draw-points`
+     - :gf:`draw-polygon`
+     - :gf:`draw-rectangle`
+     - :gf:`draw-text`
+     - :gf:`end-path`
+     - :gf:`fill-path`
+     - :gf:`line-to`
+     - :gf:`move-to`
+     - :gf:`restore-clipping-region`
+     - :gf:`start-path`
+     - :gf:`stroke-path`
 
-`sheet-ancestor?`_ `See
-sheet-child`_ `See
-sheet-children`_ `See
-sheet-children-setter`_ `See
-sheet-child-setter`_ `See
-sheet-edges`_ `sheet-frame`_
-`sheet-mapped?`_ `See
-sheet-mapped?-setter`_ `See
-sheet-medium`_
- `sheet-parent`_ `See
-sheet-parent-setter`_ `See
-sheet-position`_ `See
-sheet-region`_ `See
-sheet-region-setter`_ `See
-sheet-size`_ `sheet-state`_
-`sheet-transform`_ `See
-sheet-transform-setter`_ ` <gadgets.htm#94297>`_
-` <gadgets.htm#63140>`_ `sheet-withdrawn?`_
+     The following operations are exported from the *DUIM-DCS* module.
 
-`synchronize-display`_ `See
-text-size`_ `top-level-sheet`_
+     - :gf:`default-background <dcs.htm#19900>`
+     - :gf:`default-foreground <dcs.htm#40602>`
+     - :gf:`default-text-style <dcs.htm#95321>`
 
-The following operations are exported from the *DUIM-Gadgets* module.
+     The following operations are exported from the *DUIM-Geometry* module.
 
-` <gadgets.htm#50508>`_ ` <gadgets.htm#55381>`_
+     - :gf:`box-edges`
 
-The following operations are exported from the *DUIM-Layouts* module.
+     The following operations are exported from the *DUIM-Extended-Geometry*
+     module.
 
-` <layouts.htm#93434>`_ ` <layouts.htm#58068>`_
+     - :gf:`draw-design`
 
-` <layouts.htm#78360>`_ ` <layouts.htm#46699>`_
+     Examples
 
-` <layouts.htm#49008>`_ ` <layouts.htm#15793>`_
+     To make a text editor that is fixed at 10 lines high:
 
-` <layouts.htm#25115>`_ ` <layouts.htm#38366>`_ ` <layouts.htm#82762>`_
-` <layouts.htm#23614>`_ ` <layouts.htm#67986>`_
- ` <layouts.htm#52993>`_
+     .. code-block:: dylan
 
-The following operations are exported from the *DUIM-Frames* module.
-
-` <frames.htm#48986>`_
-
-The following operations are exported from the *DUIM-Graphics* module.
-
-` <graphics.htm#49050>`_ ` <graphics.htm#33456>`_
-` <graphics.htm#93626>`_ ` <graphics.htm#62343>`_
-` <graphics.htm#33334>`_ ` <graphics.htm#69389>`_
-` <graphics.htm#62628>`_ ` <graphics.htm#13339>`_
-` <graphics.htm#64653>`_ ` <graphics.htm#67791>`_
-` <graphics.htm#73313>`_ ` <graphics.htm#15200>`_
-` <graphics.htm#82363>`_ ` <graphics.htm#77171>`_
-` <graphics.htm#85474>`_ ` <graphics.htm#84651>`_
-` <graphics.htm#17442>`_ ` <graphics.htm#17265>`_
-` <graphics.htm#38731>`_ ` <graphics.htm#92428>`_
-` <graphics.htm#83384>`_ ` <graphics.htm#22290>`_
-` <graphics.htm#88171>`_ ` <graphics.htm#37942>`_
-
-The following operations are exported from the *DUIM-DCS* module.
-
-`default-background <dcs.htm#19900>`_ `See
-default-foreground <dcs.htm#40602>`_ `See
-default-text-style <dcs.htm#95321>`_
-
-The following operations are exported from the *DUIM-Geometry* module.
-
-`box-edges <geom.htm#52858>`_
-
-The following operations are exported from the *DUIM-Extended-Geometry*
-module.
-
-`draw-design <ext-geom.htm#88093>`_
-
-Examples
-
-To make a text editor that is fixed at 10 lines high:
-
-make(<text-editor>, lines: 10, fixed-height?: #t);
+         make(<text-editor>, lines: 10, fixed-height?: #t);
 
    See also
 
-`<display>`_
+   - :class:`<display>`
+   - :class:`<port>`
 
-`<port>`_
+.. generic-function:: sheet?
 
-sheet?
-------
-
-Generic function
-''''''''''''''''
-Returns true if the specified object is a sheet.
+   Returns true if the specified object is a sheet.
 
    :signature: sheet? *object* => *boolean*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *boolean* An instance of type ``<boolean>``.
+   :value boolean: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *object* is a sheet.
+     Returns true if *object* is a sheet.
 
    See also
 
-`medium?`_
+   - :gf:`medium?`
 
-sheet-ancestor?
----------------
+.. generic-function:: sheet-ancestor?
 
-Generic function
-''''''''''''''''
-Returns true if the specified sheet has the specified ancestor.
+   Returns true if the specified sheet has the specified ancestor.
 
    :signature: sheet-ancestor? *sheet putative-ancestor* => *boolean*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
+   :parameter putative-ancestor: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
--  *putative-ancestor* An instance of type `See
-   <sheet>`_.
-
-Values
-
--  *boolean* An instance of type ``<boolean>``.
+   :value boolean: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *putative-ancestor* is an ancestor of *sheet*.
+     Returns true if *putative-ancestor* is an ancestor of *sheet*.
 
    See also
 
-`sheet?`_
+   - :gf:`sheet?`
 
-sheet-child
------------
+.. generic-function:: sheet-child
 
-Generic function
-''''''''''''''''
-Returns the child of the specified sheet.
+   Returns the child of the specified sheet.
 
    :signature: sheet-child *sheet* => *child*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *child* An instance of type *false-or(* `See
-   <sheet>`_*)*.
+   :parameter child: An instance of type *false-or(* :class:`<sheet>` *)*.
 
    :description:
 
-Returns the child of *sheet*.
+     Returns the child of *sheet*.
 
    See also
 
-`sheet-children`_
+   - :gf:`sheet-children`
+   - :gf:`sheet-child-setter`
 
-`sheet-child-setter`_
+.. generic-function:: sheet-children
 
-sheet-children
---------------
-
-Generic function
-''''''''''''''''
-Returns a list of sheets that are the children of the specified sheet.
+   Returns a list of sheets that are the children of the specified sheet.
 
    :signature: sheet-children *sheet* => *sheets*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *sheets* An instance of type *limited(<sequence>, of:* `See
-   <sheet>`_*)*.
+   :parameter sheets: An instance of type *limited(<sequence>, of:* :class:`<sheet>` *)*.
 
    :description:
 
-Returns a list of sheets that are the children of *sheet*. Some sheet
-classes support only a single child; in this case, the return value of
-sheet-children is a list of one element.
+     Returns a list of sheets that are the children of *sheet*. Some sheet
+     classes support only a single child; in this case, the return value of
+     sheet-children is a list of one element.
 
    See also
 
-`do-sheet-children`_
+   - :gf:`do-sheet-children`
+   - :gf:`sheet-child`
+   - :gf:`sheet-children-setter`
 
-`sheet-child`_
+.. generic-function:: sheet-children-setter
 
-`sheet-children-setter`_
-
-sheet-children-setter
----------------------
-
-Generic function
-''''''''''''''''
-Sets the children of the specified sheet.
+   Sets the children of the specified sheet.
 
    :signature: sheet-children-setter *children sheet* => *sheets*
 
-Arguments
+   :parameter children: An instance of type *limited(<sequence>, of:* :class:`<sheet>` *)*.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *children* An instance of type *limited(<sequence>, of:* `See
-   <sheet>`_*)*.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *children* An instance of type *limited(<sequence>, of:* `See
-   <sheet>`_*)*.
+   :parameter children: An instance of type *limited(<sequence>, of:* :class:`<sheet>` *)*.
 
    :description:
 
-Sets the children of *sheet*. Some sheet classes support only a single
-child; in this case, *children* is a list of one element.
+     Sets the children of *sheet*. Some sheet classes support only a single
+     child; in this case, *children* is a list of one element.
 
    See also
 
-`sheet-children`_
+   - :gf:`sheet-children`
+   - :gf:`sheet-child-setter`
 
-`sheet-child-setter`_
+.. generic-function:: sheet-child-setter
 
-sheet-child-setter
-------------------
-
-Generic function
-''''''''''''''''
-Sets the child of the specified sheet.
+   Sets the child of the specified sheet.
 
    :signature: sheet-child-setter *child sheet* => *child*
 
-Arguments
+   :parameter child: An instance of type :class:`<sheet>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *child* An instance of type `<sheet>`_.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *child* An instance of type *false-or(* `See
-   <sheet>`_*)*.
+   :parameter child: An instance of type *false-or(* :class:`<sheet>` *)*.
 
    :description:
 
-Sets the child of *sheet*.
+     Sets the child of *sheet*.
 
    See also
 
-`sheet-child`_
+   - :gf:`sheet-child`
+   - :gf:`sheet-children-setter`
 
-`sheet-children-setter`_
+.. generic-function:: sheet-edges
 
-sheet-edges
------------
-
-Generic function
-''''''''''''''''
-Returns the edges of the specified sheet, relative to its parent.
+   Returns the edges of the specified sheet, relative to its parent.
 
    :signature: sheet-edges *sheet* => *left top right bottom*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *left* An instance of type *<coordinate>*.
--  *top* An instance of type *<coordinate>*.
--  *right* An instance of type *<coordinate>*.
--  *bottom* An instance of type *<coordinate>*.
+   :parameter left: An instance of type :class:`<coordinate>`.
+   :parameter top: An instance of type :class:`<coordinate>`.
+   :parameter right: An instance of type :class:`<coordinate>`.
+   :parameter bottom: An instance of type :class:`<coordinate>`.
 
    :description:
 
-Returns the edges of *sheet*. Each edge is specified relative to the
-corresponding edge of the parent of *sheet*.
+     Returns the edges of *sheet*. Each edge is specified relative to the
+     corresponding edge of the parent of *sheet*.
 
    See also
 
-`set-sheet-edges`_
+   - :gf:`set-sheet-edges`
+   - :gf:`sheet-position`
+   - :gf:`sheet-size`
+   - :gf:`sheet-transform`
 
-`sheet-position`_
+.. class:: <sheet-event>
+   :open:
+   :abstract:
 
-`sheet-size`_
+   The class of events that can occur in sheets.
 
-`sheet-transform`_
+   :superclasses: :class:`<event>`
 
-<sheet-event>
--------------
-
-Open abstract class
-'''''''''''''''''''
-The class of events that can occur in sheets.
-
-   :superclasses:
-
-`<event>`_
-
-Init-keywords
-
--  *sheet:* An instance of type *false-or(`See
-   <sheet>`_)*. Required.
+   :keyword sheet: An instance of type *false-or(* :class:`<sheet>` *)*. Required.
 
    :description:
 
-The class of events that can occur in sheets.
+     The class of events that can occur in sheets.
 
-The required init-keyword *sheet:* specifies a sheet in which the event
-occurs.
+     The required init-keyword *sheet:* specifies a sheet in which the event
+     occurs.
 
    :operations:
 
-The following operation is exported from the *DUIM-Sheets* module.
+     The following operation is exported from the *DUIM-Sheets* module.
 
--  `event-sheet`_
+     - :gf:`event-sheet`
 
    See also
 
-`<device-event>`_
+   - :class:`<device-event>`
 
-sheet-event-mask
-----------------
+.. generic-function:: sheet-event-mask
 
-Generic function
-''''''''''''''''
-Returns the event mask of the specified sheet.
+   Returns the event mask of the specified sheet.
 
    :signature: sheet-event-mask *sheet* => *integer*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *integer* An instance of type ``<integer>``.
+   :value integer: An instance of type ``<integer>``.
 
    :description:
 
-Returns the event mask of *sheet*.
+     Returns the event mask of *sheet*.
 
    See also
 
-`sheet-event-mask-setter`_
+   - :gf:`sheet-event-mask-setter`
+   - :gf:`sheet-event-queue`
 
-`sheet-event-queue`_
+.. generic-function:: sheet-event-mask-setter
 
-sheet-event-mask-setter
------------------------
-
-Generic function
-''''''''''''''''
-Sets the event mask of the specified sheet.
+   Sets the event mask of the specified sheet.
 
    :signature: sheet-event-mask-setter *mask sheet* => *mask*
 
-Arguments
+   :parameter mask: An instance of type ``<integer>``.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *mask* An instance of type ``<integer>``.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *mask* An instance of type ``<integer>``.
+   :value mask: An instance of type ``<integer>``.
 
    :description:
 
-Sets the event mask of *sheet*.
+     Sets the event mask of *sheet*.
 
    See also
 
-`sheet-event-mask`_
+   - :gf:`sheet-event-mask`
 
-sheet-event-queue
------------------
+.. generic-function:: sheet-event-queue
 
-Generic function
-''''''''''''''''
-Returns the event queue of the specified sheet.
+   Returns the event queue of the specified sheet.
 
    :signature: sheet-event-queue *sheet* => *event-queue*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *event-queue* An instance of type *<event-queue>*.
+   :value event-queue: An instance of type :class:`<event-queue>`.
 
    :description:
 
-Returns the event mask of *sheet*. This is a list of all the events
-that are currently queued ready for execution.
+     Returns the event mask of *sheet*. This is a list of all the events
+     that are currently queued ready for execution.
 
    See also
 
-`sheet-event-mask`_
+   - :gf:`sheet-event-mask`
 
-sheet-frame
------------
+.. generic-function:: sheet-frame
 
-Generic function
-''''''''''''''''
-Returns the frame associated with the specified sheet.
+   Returns the frame associated with the specified sheet.
 
    :signature: sheet-frame *sheet* => *frame*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *frame* An instance of type *false-or(` <frames.htm#16922>`_)*.
+   :parameter frame: An instance of type *false-or(* :class:`<frame>` *)*.
 
    :description:
 
-Returns the frame associated with *sheet*.
+     Returns the frame associated with *sheet*.
 
    See also
 
-`sheet-medium`_
+   - :gf:`sheet-medium`
+   - :gf:`sheet-parent`
 
-`sheet-parent`_
+.. generic-function:: sheet-mapped?
 
-sheet-mapped?
--------------
-
-Generic function
-''''''''''''''''
-Returns true if the specified sheet is mapped.
+   Returns true if the specified sheet is mapped.
 
    :signature: sheet-mapped? *sheet* => *mapped?*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *mapped?* An instance of type ``<boolean>``.
+   :value mapped?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *sheet* is mapped, that is, displayed on screen (issues
-of occluding windows notwithstanding).
+     Returns true if *sheet* is mapped, that is, displayed on screen (issues
+     of occluding windows notwithstanding).
 
    See also
 
-`sheet-mapped?-setter`_
+   - :gf:`sheet-mapped?-setter`
+   - :gf:`sheet-withdrawn?`
 
-`sheet-withdrawn?`_
+.. generic-function:: sheet-mapped?-setter
 
-sheet-mapped?-setter
---------------------
-
-Generic function
-''''''''''''''''
-Specifies whether the specified sheet is mapped.
+   Specifies whether the specified sheet is mapped.
 
    :signature: sheet-mapped?-setter *mapped? sheet* => *boolean*
 
-Arguments
+   :parameter mapped?: An instance of type ``<boolean>``.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *mapped?* An instance of type ``<boolean>``.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *boolean* An instance of type ``<boolean>``.
+   :value boolean: An instance of type ``<boolean>``.
 
    :description:
 
-Specifies whether *sheet* is mapped, that is, displayed on screen
-(issues of occluding windows notwithstanding). If ``#t``, *sheet* is
-mapped, if ``#f``, it is not.
+     Specifies whether *sheet* is mapped, that is, displayed on screen
+     (issues of occluding windows notwithstanding). If ``#t``, *sheet* is
+     mapped, if ``#f``, it is not.
 
    See also
 
-`sheet-mapped?`_
+   - :gf:`sheet-mapped?`
 
-sheet-medium
-------------
+.. generic-function:: sheet-medium
 
-Generic function
-''''''''''''''''
-Returns the medium associated with the specified sheet.
+   Returns the medium associated with the specified sheet.
 
    :signature: sheet-medium *sheet* => *medium*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *medium* An instance of type *false-or(`See
-   <medium>`_)*.
+   :parameter medium: An instance of type *false-or(* :class:`<medium>` *)*.
 
    :description:
 
-Returns the medium associated with *sheet*.
+     Returns the medium associated with *sheet*.
 
    See also
 
-`sheet-frame`_
+   - :gf:`sheet-frame`
 
-sheet-parent
-------------
+.. generic-function:: sheet-parent
 
-Generic function
-''''''''''''''''
-Returns the parent of the specified sheet.
+   Returns the parent of the specified sheet.
 
    :signature: sheet-parent *sheet* => *parent*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *parent* An instance of type *false-or(* `See
-   <sheet>`_*)*.
+   :parameter parent: An instance of type *false-or(* :class:`<sheet>` *)*.
 
    :description:
 
-Returns the parent of *sheet*.
+     Returns the parent of *sheet*.
 
    See also
 
-`sheet-medium`_
+   - :gf:`sheet-medium`
+   - :gf:`sheet-parent-setter`
+   - :gf:`sheet-position`
 
-`sheet-parent-setter`_
+.. generic-function:: sheet-parent-setter
 
-`sheet-position`_
-
-sheet-parent-setter
--------------------
-
-Generic function
-''''''''''''''''
-Sets the parent of the specified sheet.
+   Sets the parent of the specified sheet.
 
    :signature: sheet-parent-setter *parent sheet* => *value*
 
-Arguments
+   :parameter parent: An instance of type *false-or(* :class:`<sheet>` *)*.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *parent* An instance of type *false-or(* `See
-   <sheet>`_*)*.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *value* An instance of type *false-or(* `See
-   <sheet>`_*)*.
+   :value value: An instance of type *false-or(* :class:`<sheet>` *)*.
 
    :description:
 
-Sets the parent of *sheet*.
+     Sets the parent of *sheet*.
 
    See also
 
-`sheet-parent`_
+   - :gf:`sheet-parent`
 
-sheet-pointer-cursor
---------------------
+.. generic-function:: sheet-pointer-cursor
 
-Generic function
-''''''''''''''''
-Returns the pointer cursor associated with the specified sheet.
+   Returns the pointer cursor associated with the specified sheet.
 
    :signature: sheet-pointer-cursor *sheet* => *cursor*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *cursor* An instance of type `<cursor>`_.
+   :value cursor: An instance of type :class:`<cursor>`.
 
    :description:
 
-Returns the pointer cursor associated with *sheet*. This is the cursor
-used to represent the mouse pointer whenever the mouse pointer is inside
-the boundary of *sheet*.
+     Returns the pointer cursor associated with *sheet*. This is the cursor
+     used to represent the mouse pointer whenever the mouse pointer is inside
+     the boundary of *sheet*.
 
    See also
 
-`sheet-pointer-cursor-setter`_
+   - :gf:`sheet-pointer-cursor-setter`
+   - :gf:`sheet-text-cursor`
 
-`sheet-text-cursor`_
+.. generic-function:: sheet-pointer-cursor-setter
 
-sheet-pointer-cursor-setter
----------------------------
-
-Generic function
-''''''''''''''''
-Sets the pointer cursor associated with the specified sheet.
+   Sets the pointer cursor associated with the specified sheet.
 
    :signature: sheet-pointer-cursor-setter *cursor sheet* => *cursor*
 
-Arguments
+   :parameter cursor: An instance of type :class:`<cursor>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *cursor* An instance of type `<cursor>`_.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *cursor* An instance of type `<cursor>`_.
+   :value cursor: An instance of type :class:`<cursor>`.
 
    :description:
 
-Sets the pointer cursor associated with *sheet*. This is the cursor
-used to represent the mouse pointer whenever the mouse pointer is inside
-the boundary of *sheet*.
+     Sets the pointer cursor associated with *sheet*. This is the cursor
+     used to represent the mouse pointer whenever the mouse pointer is inside
+     the boundary of *sheet*.
 
    See also
 
-`sheet-pointer-cursor`_
+   - :gf:`sheet-pointer-cursor`
 
-sheet-position
---------------
+.. generic-function:: sheet-position
 
-Generic function
-''''''''''''''''
-Returns the position of the specified sheet relative to its parent.
+   Returns the position of the specified sheet relative to its parent.
 
    :signature: sheet-position *sheet* => *x y*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *x* An instance of type ``<real>``.
--  *y* An instance of type ``<real>``.
+   :value x: An instance of type ``<real>``.
+   :value y: An instance of type ``<real>``.
 
    :description:
 
-Returns the position of *sheet*. The position is represented by the
-coordinate (x,y), as measured relative to the parent of *sheet*, or
-relative to the top left of the screen if *sheet* has no parent.
+     Returns the position of *sheet*. The position is represented by the
+     coordinate (x,y), as measured relative to the parent of *sheet*, or
+     relative to the top left of the screen if *sheet* has no parent.
 
    See also
 
-`set-sheet-position`_
+   - :gf:`set-sheet-position`
+   - :gf:`sheet-edges`
+   - :gf:`sheet-parent`
+   - :gf:`sheet-size`
+   - :gf:`sheet-transform`
 
-`sheet-edges`_
+.. generic-function:: sheet-region
 
-`sheet-parent`_
-
-`sheet-size`_
-
-`sheet-transform`_
-
-sheet-region
-------------
-
-Generic function
-''''''''''''''''
-Returns the region associated with the specified sheet.
+   Returns the region associated with the specified sheet.
 
    :signature: sheet-region *sheet* => *region*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *region* An instance of type `<region> <geom.htm#79228>`_.
+   :value region: An instance of type :class:`<region>`.
 
    :description:
 
-Returns an instance of `<region> <geom.htm#79228>`_ that represents
-the set of points to which *sheet* refers. The region is expressed in
-the same coordinate system as *sheet*.
+     Returns an instance of :class:`<region>` that represents
+     the set of points to which *sheet* refers. The region is expressed in
+     the same coordinate system as *sheet*.
 
    See also
 
-`sheet-region-setter`_
+   - :gf:`sheet-region-setter`
 
-sheet-region-setter
--------------------
+.. generic-function:: sheet-region-setter
 
-Generic function
-''''''''''''''''
-Sets the region associated with the specified sheet.
+   Sets the region associated with the specified sheet.
 
    :signature: sheet-region-setter *region sheet* => *region*
 
-Arguments
+   :parameter region: An instance of type :class:`<region>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *region* An instance of type `<region> <geom.htm#79228>`_.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *region* An instance of type `<region> <geom.htm#79228>`_.
+   :value region: An instance of type :class:`<region>`.
 
    :description:
 
-Creates or modifies an instance of `<region> <geom.htm#79228>`_ that
-represents the set of points to which *sheet* refers. The region is
-expressed in the same coordinate system as *sheet*.
+     Creates or modifies an instance of :class:`<region>` that represents the
+     set of points to which *sheet* refers. The region is expressed in the same
+     coordinate system as *sheet*.
 
    See also
 
-`sheet-region`_
+   - :gf:`sheet-region`
 
-sheet-size
-----------
+.. generic-function:: sheet-size
 
-Generic function
-''''''''''''''''
-Returns the width and height of the specified sheet.
+   Returns the width and height of the specified sheet.
 
    :signature: sheet-size *sheet* => *width height*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *width* An instance of type ``<integer>``.
--  *height* An instance of type ``<integer>``.
+   :value width: An instance of type ``<integer>``.
+   :value height: An instance of type ``<integer>``.
 
    :description:
 
-Returns the width and height of the specified sheet. Use `See
-set-sheet-size`_ to set or modify the size of a
-sheet.
+     Returns the width and height of the specified sheet. Use
+     :gf:`set-sheet-size` to set or modify the size of a sheet.
 
    See also
 
-`set-sheet-size`_
+   - :gf:`set-sheet-size`
+   - :gf:`sheet-edges`
+   - :gf:`sheet-position`
+   - :gf:`sheet-transform`
 
-`sheet-edges`_
+.. generic-function:: sheet-state
 
-`sheet-position`_
-
-`sheet-transform`_
-
-sheet-state
------------
-
-Generic function
-''''''''''''''''
-Returns the current state of the specified sheet.
+   Returns the current state of the specified sheet.
 
    :signature: sheet-state *sheet* => *value*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *value* An instance of type *one-of(#"withdrawn", #"managed",
-   #"mapped", #"unknown")*.
+   :value value: An instance of type *one-of(#"withdrawn", #"managed", #"mapped", #"unknown")*.
 
    :description:
 
-Returns the current state of *sheet*. The state of a sheet tells you
-whether the sheet is currently mapped on screen, or whether it has been
-withdrawn from the list of sheets.
+     Returns the current state of *sheet*. The state of a sheet tells you
+     whether the sheet is currently mapped on screen, or whether it has been
+     withdrawn from the list of sheets.
 
-sheet-text-cursor
------------------
+.. generic-function:: sheet-text-cursor
 
-Generic function
-''''''''''''''''
-Returns the text cursor associated with the specified sheet.
+   Returns the text cursor associated with the specified sheet.
 
    :signature: sheet-text-cursor *sheet* => *text-cursor*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *text-cursor* An instance of type *false-or(`See
-   <cursor>`_)*.
+   :parameter text-cursor: An instance of type *false-or(* :class:`<cursor>` *)*.
 
    :description:
 
-Returns the text cursor associated with *sheet*. The text cursor
-associated with a sheet is distinct from the pointer cursor associated
-with the same sheet: the pointer cursor represents the current position
-of the pointer associated with the attached pointer device, while the
-text cursor represents the position in the sheet that any text typed
-using the keyboard will be added. Only those sheets that contain
-children that allow some form of text-based input have an associated
-text cursor.
+     Returns the text cursor associated with *sheet*. The text cursor
+     associated with a sheet is distinct from the pointer cursor associated
+     with the same sheet: the pointer cursor represents the current position
+     of the pointer associated with the attached pointer device, while the
+     text cursor represents the position in the sheet that any text typed
+     using the keyboard will be added. Only those sheets that contain
+     children that allow some form of text-based input have an associated
+     text cursor.
 
    See also
 
-`sheet-pointer-cursor`_
+   - :gf:`sheet-pointer-cursor`
 
-sheet-transform
----------------
+.. generic-function:: sheet-transform
 
-Generic function
-''''''''''''''''
-Returns the transform associated with the specified sheet.
+   Returns the transform associated with the specified sheet.
 
    :signature: sheet-transform *sheet* => *transform*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *transform* An instance of type `<transform> <geom.htm#54995>`_.
+   :value transform: An instance of type :class:`<transform>`.
 
    :description:
 
-Returns the transform associated with *sheet*.
+     Returns the transform associated with *sheet*.
 
    See also
 
-`medium-transform`_
+   - :gf:`medium-transform`
+   - :gf:`sheet-edges`
+   - :gf:`sheet-position`
+   - :gf:`sheet-size`
 
-`sheet-edges`_
+.. generic-function:: sheet-transform-setter
 
-`sheet-position`_
-
-`sheet-size`_
-
-sheet-transform-setter
-----------------------
-
-Generic function
-''''''''''''''''
-Sets the transform associated with the specified sheet.
+   Sets the transform associated with the specified sheet.
 
    :signature: sheet-transform-setter *transform sheet* => *transform*
 
-Arguments
+   :parameter transform: An instance of type :class:`<transform>`.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *transform* An instance of type `<transform> <geom.htm#54995>`_.
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *transform* An instance of type `<transform> <geom.htm#54995>`_.
+   :value transform: An instance of type :class:`<transform>`.
 
    :description:
 
-Sets or modifies the transform associated with *sheet*.
+     Sets or modifies the transform associated with *sheet*.
 
    See also
 
-`medium-transform-setter`_
+   - :gf:`medium-transform-setter`
 
-sheet-withdrawn?
-----------------
+.. generic-function:: sheet-withdrawn?
 
-Generic function
-''''''''''''''''
-Returns true if the specified sheet has been withdrawn from the display.
+   Returns true if the specified sheet has been withdrawn from the display.
 
    :signature: sheet-withdrawn? *sheet* => *withdrawn?*
 
-Arguments
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  *withdrawn?* An instance of type ``<boolean>``.
+   :value withdrawn?: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if *sheet* has been withdrawn from the display, and is no
-longer mapped.
+     Returns true if *sheet* has been withdrawn from the display, and is no
+     longer mapped.
 
    See also
 
-`sheet-mapped?`_
+   - :gf:`sheet-mapped?`
 
-$shift-key
-----------
+.. constant:: $shift-key
 
-Constant
-''''''''
-A constant that represents the SHIFT key on the keyboard.
+   A constant that represents the SHIFT key on the keyboard.
 
-   :type:
+   :type: :class:`<integer>`
 
-*<integer>*
-
-Value
-
-ash(1, %modifier\_base + 0);
+   :value: ash(1, %modifier\_base + 0);
 
    :description:
 
-A constant that represents the SHIFT key on the keyboard.
+     A constant that represents the SHIFT key on the keyboard.
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$control-key`
+   - :const:`$hyper-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index`
+   - :gf:`modifier-key-index-name`
+   - :const:`$modifier-keys`
+   - :const:`$option-key`
+   - :const:`$super-key`
 
-`$control-key`_
+.. constant:: $super-key
 
-`$hyper-key`_
+   A constant that represents the SUPER key on the keyboard.
 
-`$meta-key`_
+   :type: :class:`<integer>`
 
-`modifier-key-index`_
-
-`modifier-key-index-name`_
-
-`$modifier-keys`_
-
-`$option-key`_
-
-`$super-key`_
-
-$super-key
-----------
-
-Constant
-''''''''
-A constant that represents the SUPER key on the keyboard.
-
-   :type:
-
-*<integer>*
-
-Value
-
-ash(1, %modifier\_base + 3);
+   :value: ash(1, %modifier\_base + 3);
 
    :description:
 
-A constant that represents the SUPER key on the keyboard, if it exists.
-To deal with the case where there is no SUPER key, the value of the
-constant `$option-key`_ is bound to this
-constant.
+     A constant that represents the SUPER key on the keyboard, if it exists.
+     To deal with the case where there is no SUPER key, the value of the
+     constant :const:`$option-key` is bound to this
+     constant.
 
    See also
 
-`$alt-key`_
+   - :const:`$alt-key`
+   - :const:`$control-key`
+   - :const:`$hyper-key`
+   - :const:`$meta-key`
+   - :gf:`modifier-key-index`
+   - :gf:`modifier-key-index-name`
+   - :const:`$modifier-keys`
+   - :const:`$option-key`
+   - :const:`$shift-key`
 
-`$control-key`_
+.. generic-function:: synchronize-display
 
-`$hyper-key`_
-
-`$meta-key`_
-
-`modifier-key-index`_
-
-`modifier-key-index-name`_
-
-`$modifier-keys`_
-
-`$option-key`_
-
-`$shift-key`_
-
-synchronize-display
--------------------
-
-Generic function
-''''''''''''''''
-Synchronizes all displays on which the specified drawable is mapped.
+   Synchronizes all displays on which the specified drawable is mapped.
 
    :signature: synchronize-display *drawable* => ()
 
-Arguments
-
--  *drawable* An instance of type *type-union(* `See
-   <sheet>`_*, `<medium>`_)*.
+   :parameter drawable: An instance of type *type-union(* :class:`<sheet>`, :class:`<medium>` *)*.
 
 
    :description:
 
-Synchronizes all displays on which the specified drawable is mapped.
+     Synchronizes all displays on which the specified drawable is mapped.
 
-text-size
----------
+.. generic-function:: text-size
 
-Generic function
-''''''''''''''''
-Returns information about the size of the specified text on the
-specified medium.
+   Returns information about the size of the specified text on the
+   specified medium.
 
-   :signature: text-size *medium text* #key *text-style start end do-newlines?* =>
-*largest-x largest-y cursor-x cursor-y baseline*
+   :signature: text-size *medium text* #key *text-style start end do-newlines?* => *largest-x largest-y cursor-x cursor-y baseline*
 
-Arguments
+   :parameter medium: An instance of type :class:`<medium>`.
+   :parameter text: An instance of type *type-union(<string>, <character>)*.
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter start: An instance of type ``<integer>``. Default value: 0.
+   :parameter end: An instance of type ``<integer>``. Default value: *size(* *text* *)*.
+   :parameter do-newlines?: An instance of type ``<boolean>``. Default value: ``#f``.
+   :parameter do-tabs?: An instance of type ``<boolean>``. Default value: ``#f``.
 
--  *medium* An instance of type *`<medium>`_*.
--  *text* An instance of type *type-union(<string>, <character>)*.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *start* An instance of type ``<integer>``. Default value: 0.
--  *end* An instance of type ``<integer>``. Default value: *size(* *text*
-   *)*.
--  *do-newlines?* An instance of type ``<boolean>``. Default value: ``#f``
-   .
--  *do-tabs?* An instance of type ``<boolean>``. Default value: ``#f``.
-
-Values
-
--  *largest-x* An instance of type ``<integer>``.
--  *total-height* An instance of type ``<integer>``.
--  *last-x* An instance of type ``<integer>``.
--  *last-y* An instance of type ``<integer>``.
--  *baseline* An instance of type ``<integer>``.
+   :value largest-x: An instance of type ``<integer>``.
+   :value total-height: An instance of type ``<integer>``.
+   :value last-x: An instance of type ``<integer>``.
+   :value last-y: An instance of type ``<integer>``.
+   :value baseline: An instance of type ``<integer>``.
 
    :description:
 
-Returns information about the size of *text* on *medium*.
+     Returns information about the size of *text* on *medium*.
 
-If *text-style* is specified, then the information that *text-size*
-returns is based on the text style it describes.
+     If *text-style* is specified, then the information that *text-size*
+     returns is based on the text style it describes.
 
-If *start* and *end* are specified, then these values represent a
-portion of the string specified by *text*, and only the characters they
-represent are examined by *text-size*. Both *start* and *end* represent
-the index of each character in *text*, starting at 0. By default, the
-whole of *text* is examined.
+     If *start* and *end* are specified, then these values represent a
+     portion of the string specified by *text*, and only the characters they
+     represent are examined by *text-size*. Both *start* and *end* represent
+     the index of each character in *text*, starting at 0. By default, the
+     whole of *text* is examined.
 
-The *do-newlines?* and *do-tabs?* arguments let you specify how newline
-or tab characters in *text* should be handled. If either of these
-arguments is true, then any newline or tab characters in text are
-examined, as appropriate. By default, newline characters are ignored.
+     The *do-newlines?* and *do-tabs?* arguments let you specify how newline
+     or tab characters in *text* should be handled. If either of these
+     arguments is true, then any newline or tab characters in text are
+     examined, as appropriate. By default, newline characters are ignored.
 
-text-style-mapping
-------------------
+.. generic-function:: text-style-mapping
 
-Generic function
-''''''''''''''''
-Returns the mapping for the specified text style on the specified port.
+   Returns the mapping for the specified text style on the specified port.
 
    :signature: text-style-mapping *port text-style* #key *character-set* => *font*
 
-Arguments
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter text-style: An instance of type :class:`<text-style>`
+   :parameter character-set: An instance of type ``<object>``.
 
--  *port* An instance of type `<port>`_.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *character-set* An instance of type ``<object>``.
-
-Values
-
--  *font* An instance of type ``<object>``.
+   :value font: An instance of type ``<object>``.
 
    :description:
 
-Returns the mapping for *text-style* on *port*. Mapping text styles
-onto fonts lets you control how different text styles are displayed on
-different servers, depending on the connection. For instance, it is
-possible to define how colored text is displayed on monochrome displays,
-or how fonts specified by *text-style* are mapped onto fonts available
-on the display.
+     Returns the mapping for *text-style* on *port*. Mapping text styles
+     onto fonts lets you control how different text styles are displayed on
+     different servers, depending on the connection. For instance, it is
+     possible to define how colored text is displayed on monochrome displays,
+     or how fonts specified by *text-style* are mapped onto fonts available
+     on the display.
 
-If *character-set* is specified, then this character set is used instead
-of the default. This is most useful for non-English displays.
+     If *character-set* is specified, then this character set is used instead
+     of the default. This is most useful for non-English displays.
 
    See also
 
-`text-style-mapping-exists?`_
+   - :gf:`text-style-mapping-exists?`
+   - :gf:`text-style-mapping-setter`
+   - :class:`<undefined-text-style-mapping>`
 
-`text-style-mapping-setter`_
+.. generic-function:: text-style-mapping-exists?
 
-`<undefined-text-style-mapping>`_
+   Returns true if a mapping exists for the specified text style on the
+   specified port.
 
-text-style-mapping-exists?
---------------------------
+   :signature: text-style-mapping-exists? *port text-style* #key *character-set exact-size?* => *boolean*
 
-Generic function
-''''''''''''''''
-Returns true if a mapping exists for the specified text style on the
-specified port.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter character-set: An instance of type ``<object>``.
+   :parameter exact-size?: An instance of type ``<boolean>``. Default value: ``#f``.
 
-   :signature: text-style-mapping-exists? *port text-style* #key *character-set
-exact-size?* => *boolean*
-
-Arguments
-
--  *port* An instance of type `<port>`_.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *character-set* An instance of type ``<object>``.
--  *exact-size?* An instance of type ``<boolean>``. Default value: ``#f``.
-
-Values
-
--  *boolean* An instance of type ``<boolean>``.
+   :value boolean: An instance of type ``<boolean>``.
 
    :description:
 
-Returns true if a mapping exists for *text-style* on *port*. This
-control function is useful if, for example, you are setting up text
-style mappings for a range of text styles in one go, or for a range of
-different ports. Using this function, you can test for the existence of
-a previous mapping before creating a new one, thereby ensuring that
-existing mappings are not overwritten.
+     Returns true if a mapping exists for *text-style* on *port*. This
+     control function is useful if, for example, you are setting up text
+     style mappings for a range of text styles in one go, or for a range of
+     different ports. Using this function, you can test for the existence of
+     a previous mapping before creating a new one, thereby ensuring that
+     existing mappings are not overwritten.
 
    See also
 
-`text-style-mapping`_
+   - :gf:`text-style-mapping`
+   - :gf:`text-style-mapping-setter`
+   - :class:`<undefined-text-style-mapping>`
 
-`text-style-mapping-setter`_
+.. generic-function:: text-style-mapping-setter
 
-`<undefined-text-style-mapping>`_
+   Sets the mapping for the specified text style on the specified port.
 
-text-style-mapping-setter
--------------------------
+   :signature: text-style-mapping-setter *font port text-style* #key *character-set* => *font*
 
-Generic function
-''''''''''''''''
-Sets the mapping for the specified text style on the specified port.
+   :parameter font: An instance of type ``<object>``.
+   :parameter port: An instance of type :class:`<port>`.
+   :parameter text-style: An instance of type :class:`<text-style>`.
+   :parameter character-set: An instance of type ``<object>``.
 
-   :signature: text-style-mapping-setter *font port text-style* #key *character-set* =>
-*font*
-
-Arguments
-
--  *font* An instance of type ``<object>``.
--  *port* An instance of type `<port>`_.
--  *text-style* An instance of type `<text-style> <dcs.htm#85385>`_.
--  *character-set* An instance of type ``<object>``.
-
-Values
-
--  *font* An instance of type ``<object>``.
+   :value font: An instance of type ``<object>``.
 
    :description:
 
-Sets the mapping for *text-style* on *port* to the specified *font*.
-This function lets you have some control over the way in which different
-text styles are displayed on different servers, depending on the
-connection. Using this function, for instance, it is possible to define
-how colored text is displayed on monochrome displays, or how fonts
-specified by *text-style* are mapped onto fonts available on the
-display.
+     Sets the mapping for *text-style* on *port* to the specified *font*.
+     This function lets you have some control over the way in which different
+     text styles are displayed on different servers, depending on the
+     connection. Using this function, for instance, it is possible to define
+     how colored text is displayed on monochrome displays, or how fonts
+     specified by *text-style* are mapped onto fonts available on the
+     display.
 
-If *character-set* is specified, then this character set is used instead
-of the default. This is most useful for non-English displays.
+     If *character-set* is specified, then this character set is used instead
+     of the default. This is most useful for non-English displays.
 
    See also
 
-`text-style-mapping`_
+   - :gf:`text-style-mapping`
+   - :gf:`text-style-mapping-exists?`
+   - :class:`<undefined-text-style-mapping>`
 
-`text-style-mapping-exists?`_
+.. class:: <timer-event>
+   :sealed:
+   :instantiable:
 
-`<undefined-text-style-mapping>`_
+   The class of timed events.
 
-<timer-event>
--------------
-
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of timed events.
-
-   :superclasses:
-
-`<frame-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<frame-event>`
 
    :description:
 
-The class of timed events.
+     The class of timed events.
 
    :operations:
 
--  None.
+.. generic-function:: top-level-sheet
 
-top-level-sheet
----------------
-
-Generic function
-''''''''''''''''
-Returns the top level sheet for the specified object.
+   Returns the top level sheet for the specified object.
 
    :signature: top-level-sheet *object* => *top-level-sheet*
 
-Arguments
+   :parameter object: An instance of type ``<object>``.
 
--  *object* An instance of type ``<object>``.
-
-Values
-
--  *top-level-sheet* An instance of type *false-or(* `See
-   <sheet>`_*)*.
+   :value top-level-sheet: An instance of type *false-or(* :class:`<sheet>` *)*.
 
    :description:
 
-Returns the top level sheet for *object*. This is the sheet that has as
-its descendents all of the panes of *object*.
+     Returns the top level sheet for *object*. This is the sheet that has as
+     its descendents all of the panes of *object*.
 
-<undefined-text-style-mapping>
-------------------------------
+.. class:: <undefined-text-style-mapping>
+   :sealed:
+   :instantiable:
 
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of undefined text style mappings.
+   The class of undefined text style mappings.
 
-   :superclasses:
+   :superclasses: :class:`<error>`
 
-*<error>*
-
-Init-keywords
-
--  *port:* An instance of type `<port>`_.
-   Required.
--  *text-style:* An instance of type `See
-   <text-style> <dcs.htm#85385>`_. Required.
+   :keyword port:: An instance of type :class:`<port>`. Required.
+   :keyword text-style:: An instance of type :class:`<text-style>`. Required.
 
    :description:
 
-The class of undefined text style mappings. This class is used for any
-text styles that have not had mappings defined for a given port.
+     The class of undefined text style mappings. This class is used for any
+     text styles that have not had mappings defined for a given port.
 
    :operations:
 
--  None.
-
    See also
 
-`text-style-mapping`_
+   - :gf:`text-style-mapping`
+   - :gf:`text-style-mapping-exists?`
+   - :gf:`text-style-mapping-setter`
 
-`text-style-mapping-exists?`_
+.. class:: <window-configuration-event>
+   :sealed:
+   :instantiable:
 
-`text-style-mapping-setter`_
+   The class of events involving changes to the window configuration.
 
-<window-configuration-event>
-----------------------------
-
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events involving changes to the window configuration.
-
-   :superclasses:
-
-`<window-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<window-event>`
 
    :description:
 
-The class of events involving changes to the window configuration.
+     The class of events involving changes to the window configuration.
 
    :operations:
 
--  None.
-
    See also
 
-`<window-repaint-event>`_
+   - :class:`<window-repaint-event>`
 
-<window-event>
---------------
+.. class:: <window-event>
+   :open:
+   :abstract:
 
-Open abstract class
-'''''''''''''''''''
-The base class of events that occur in windows.
+   The base class of events that occur in windows.
 
-   :superclasses:
+   :superclasses: :class:`<sheet-event>`
 
-<sheet-event>
-
-Init-keywords
-
--  *region:* An instance of type `<region> <geom.htm#79228>`_.
-   Required.
+   :keyword region: An instance of type :class:`<region>`. Required.
 
    :description:
 
-The base class of events that occur in windows. Two types of event can
-occur:
+     The base class of events that occur in windows. Two types of event can
+     occur:
 
--  Changes to the configuration of the window.
--  Changes that require the window to be repainted.
+     - Changes to the configuration of the window.
+     - Changes that require the window to be repainted.
 
-The *region:* init-keyword specifies a region in which the event occurs.
+     The *region:* init-keyword specifies a region in which the event occurs.
 
    :operations:
 
-The following operation is exported from the *DUIM-Sheets* module.
+     The following operation is exported from the *DUIM-Sheets* module.
 
--  `event-region`_
+     - :gf:`event-region`
 
    See also
 
-`event-region`_
+   - :gf:`event-region`
+   - :class:`<window-configuration-event>`
+   - :class:`<window-repaint-event>`
 
-`<window-configuration-event>`_
+.. class:: <window-repaint-event>
+   :sealed:
+   :instantiable:
 
-`<window-repaint-event>`_
+   The class of events involving repainting of a window.
 
-<window-repaint-event>
-----------------------
-
-Sealed instantiable class
-'''''''''''''''''''''''''
-The class of events involving repainting of a window.
-
-   :superclasses:
-
-`<window-event>`_
-
-Init-keywords
-
-None.
+   :superclasses: :class:`<window-event>`
 
    :description:
 
-The class of events involving repainting of a window.
+     The class of events involving repainting of a window.
 
    :operations:
 
--  None.
+   See also
+
+   - :gf:`handle-repaint`
+   - :gf:`queue-repaint`
+   - :gf:`repaint-sheet`
+   - :class:`<window-configuration-event>`
+
+.. macro:: with-brush
+
+   Executes the supplied code using the specified brush characteristics.
+
+   :macrocall: with-brush ({*medium* } #rest {*brush-initargs* }\*) {*body* } end
+
+   :parameter medium: A Dylan body*bnf*.
+   :parameter brush-initargs: Dylan arguments*bnf*.
+   :parameter body: A Dylan body*bnf*.
+
+   :description:
+
+     Executes *body* using the brush characteristics specified by
+     *brush-initargs*, and applies the results to *medium*. The *medium*
+     specified should be an instance of type :class:`<medium>`. The
+     *brush-initargs* can be any valid arguments that specify an instance of
+     :class:`<brush>`.
 
    See also
 
-`handle-repaint`_
+   - :gf:`with-pen`
 
-`queue-repaint`_
+.. macro:: with-clipboard
 
-`repaint-sheet`_
+   Evaluates a body of code with a clipboard grabbed.
 
-`<window-configuration-event>`_
+   :macrocall: with-clipboard (*clipboard* = *sheet*) *body* end
 
-with-brush
-----------
+   :parameter clipboard: A Dylan variable-name*bnf*.
+   :parameter sheet: A Dylan variable-name*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
-Statement macro
-'''''''''''''''
-Executes the supplied code using the specified brush characteristics.
-
-Macro call
-
-with-brush ({*medium* } #rest {*brush-initargs* }\*) {*body* } end
-
-Arguments
-
--  *medium* A Dylan body*bnf*.
--  *brush-initargs* Dylan arguments*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :value values: Instances of :class:`<object>`.
 
    :description:
 
-Executes *body* using the brush characteristics specified by
-*brush-initargs*, and applies the results to *medium*. The *medium*
-specified should be an instance of type `See
-<medium>`_. The *brush-initargs* can be any valid
-arguments that specify an instance of `<brush> <dcs.htm#29492>`_.
+     Evaluates *body* with the clipboard grabbed, returning the results to
+     the clipboard.
+
+     The macro grabs a lock on the clipboard, using *open-clipboard*, and
+     then executes *body*. Once the results of evaluating *body* have been
+     sent to the clipboard, the clipboard lock is freed using
+     :gf:`close-clipboard`. The *clipboard* argument is a
+     Dylan variable-name*bnf* used locally in the call to *with-clipboard*.
+     The *sheet* argument is a Dylan variable-name*bnf* that evaluates to the
+     sheet associated with *clipboard*.
+
+     This macro is the easiest way of manipulating the clipboard from DUIM,
+     since it removes the need to create and destroy a clipboard lock
+     yourself.
+
+     You can add more than one format of your data to the clipboard within
+     the scope of this macro. So, for example, you could place an arbitrary
+     object onto the clipboard, for use within your own application, and a
+     string representation for other tools applications to see.
 
    See also
 
-`with-pen`_
+   - :class:`<clipboard>`
 
-with-clipboard
---------------
+.. macro:: with-clipping-region
 
-Statement macro
-'''''''''''''''
-Evaluates a body of code with a clipboard grabbed.
+   Executes the supplied code using the specified clipping region.
 
-   :signature: with-clipboard (*clipboard* = *sheet*) *body* end
+   :macrocall: with-clipping-region ({*medium* } {*region* }) {*body* } end
 
-Arguments
-
--  *clipboard* A Dylan variable-name*bnf*.
--  *sheet* A Dylan variable-name*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  *values* Instances of *<object>*.
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter region: A Dylan expression*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Evaluates *body* with the clipboard grabbed, returning the results to
-the clipboard.
+     Executes *body* using the clipping region specified by *region*, and
+     applies the results to *medium*. The *region* and *medium* expressions
+     should evaluate to instances of :class:`<region>` and
+     :class:`<medium>`, respectively.
 
-The macro grabs a lock on the clipboard, using *open-clipboard*, and
-then executes *body*. Once the results of evaluating *body* have been
-sent to the clipboard, the clipboard lock is freed using `See
-close-clipboard`_. The *clipboard* argument is a
-Dylan variable-name*bnf* used locally in the call to *with-clipboard*.
-The *sheet* argument is a Dylan variable-name*bnf* that evaluates to the
-sheet associated with *clipboard*.
+.. macro:: with-cursor-visible
 
-This macro is the easiest way of manipulating the clipboard from DUIM,
-since it removes the need to create and destroy a clipboard lock
-yourself.
+   Executes the supplied code using the specified cursor settings for a
+   sheet.
 
-You can add more than one format of your data to the clipboard within
-the scope of this macro. So, for example, you could place an arbitrary
-object onto the clipboard, for use within your own application, and a
-string representation for other tools applications to see.
+   :macrocall: with-cursor-visible ({*sheet* } {*visible?* }) {*body* } end
+
+   :parameter sheet: A Dylan expression*bnf*.
+   :parameter visible?: A Dylan expression*bnf*.
+   :parameter body: A Dylan body*bnf*.
+
+   :description:
+
+     Executes *body* on the specified *sheet*. If *visible?* is true, then the
+     pointer cursor associated with *sheet* is visible throughout the
+     operation. If *visible?* is false, then the pointer cursor is hidden.
+
+     The expression *sheet* should evaluate to an instance of :class:`<sheet>`.
+     The expression *visible?* should evaluate to a boolean value.
+
+.. macro:: with-drawing-options
+
+   Runs a body of code in the context of a set of drawing options.
+
+   :macrocall: with-drawing-options ({*medium* } #rest {*options* }\*) {*body* } end
+
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter options: Dylan arguments*bnf*.
+   :parameter body: A Dylan body*bnf*.
+
+   :description:
+
+     Runs a body of code in the context of a set of drawing options. The
+     options specified are passed to the function :gf:`do-with-drawing-options`
+     for execution.
+
+     The *medium* expression should evaluate to an instance of :class:`<medium>`.
+
+     Note that when using *with-drawing-options* in conjunction with a loop.
+     it is computationally much quicker to use a medium (as shown here) rather
+     than a sheet, and to place the call to with-drawing-options outside the
+     loop. If necessary, use :macro:`with-sheet-medium` to associate the sheet
+     with the medium, thus:
+
+     .. code-block:: dylan
+
+         with-sheet-medium (medium = sheet)
+           with-drawing-options (medium, brush: color)
+             for (x :: <integer> from 0 to 199)
+               for (y :: <integer> from 0 to 199)
+                 draw-point(medium, x, y)
+                end
+              end
+            end
+          end
+
+     Example
+
+     .. code-block:: dylan
+
+         with-drawing-options (medium, brush: $red)
+           draw-rectangle (medium, 0, 0, 100, 200, filled?: #t)
+         end;
 
    See also
 
-`<clipboard>`_
+   - :gf:`do-with-drawing-options`
+   - :gf:`with-sheet-medium`
 
-with-clipping-region
---------------------
+.. generic-function:: withdraw-sheet
 
-Statement macro
-'''''''''''''''
-Executes the supplied code using the specified clipping region.
-
-Macro call
-
-with-clipping-region ({*medium* } {*region* }) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *region* A Dylan expression*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
-
-   :description:
-
-Executes *body* using the clipping region specified by *region*, and
-applies the results to *medium*. The *region* and *medium* expressions
-should evaluate to instances of *`<region> <geom.htm#79228>`_* and
-*`<medium>`_*, respectively.
-
-with-cursor-visible
--------------------
-
-Statement macro
-'''''''''''''''
-Executes the supplied code using the specified cursor settings for a
-sheet.
-
-Macro call
-
-with-cursor-visible ({*sheet* } {*visible?* }) {*body* } end
-
-Arguments
-
--  *sheet* A Dylan expression*bnf*.
--  *visible?* A Dylan expression*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
-
-   :description:
-
-Executes *body* on the specified *sheet*. If *visible?* is true, then
-the pointer cursor associated with *sheet* is visible throughout the
-operation. If *visible?* is false, then the pointer cursor is hidden.
-
-The expression *sheet* should evaluate to an instance of `See
-<sheet>`_. The expression *visible?* should evaluate
-to a boolean value.
-
-with-drawing-options
---------------------
-
-Statement macro
-'''''''''''''''
-Runs a body of code in the context of a set of drawing options.
-
-Macro call
-
-with-drawing-options ({*medium* } #rest {*options* }\*) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *options* Dylan arguments*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
-
-   :description:
-
-Runs a body of code in the context of a set of drawing options. The
-options specified are passed to the function `See
-do-with-drawing-options`_ for execution.
-
-The *medium* expression should evaluate to an instance of *`See
-<medium>`_*.
-
-Note that when using *with-drawing-options* in conjunction with a loop.
-it is computationally much quicker to use a medium (as shown here)
-rather than a sheet, and to place the call to with-drawing-options
-outside the loop. If necessary, use `See
-with-sheet-medium`_ to associate the sheet with the
-medium, thus:
-
-with-sheet-medium (medium = sheet)
-
-with-drawing-options (medium, brush: color)
-
-for (x :: <integer> from 0 to 199)
-
-for (y :: <integer> from 0 to 199)
-
-draw-point(medium, x, y)
-
-end
-
-end
-
-end
-
-end
-
-Example
-
-with-drawing-options (medium, brush: $red)
-
-draw-rectangle (medium, 0, 0, 100, 200, filled?: #t)
-
-end;
-
-   See also
-
-`do-with-drawing-options`_
-
-`with-sheet-medium`_
-
-withdraw-sheet
---------------
-
-Generic function
-''''''''''''''''
-Withdraws the specified sheet from the current display.
+   Withdraws the specified sheet from the current display.
 
    :signature: withdraw-sheet *sheet* => ()
 
-Arguments
-
--  *sheet* An instance of type `<sheet>`_.
-
-Values
-
--  None.
+   :parameter sheet: An instance of type :class:`<sheet>`.
 
    :description:
 
-Withdraws the specified sheet from the current display.
+     Withdraws the specified sheet from the current display.
 
-with-frame-manager
-------------------
+.. macro:: with-frame-manager
 
-Statement macro
-'''''''''''''''
-Executes the supplied code in the context of the specified frame
-manager.
+   Executes the supplied code in the context of the specified frame
+   manager.
 
-Macro call
+   :macrocall: with-frame-manager ({*framem* }) {*body* } end
 
-with-frame-manager ({*framem* }) {*body* } end
-
-Arguments
-
--  *framem* A Dylan expression*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter framem: A Dylan expression*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes *body* in the context of *framem*, by dynamically binding the
-expression *framem* to *\*current-frame-manager\**.
+     Executes *body* in the context of *framem*, by dynamically binding the
+     expression *framem* to *\*current-frame-manager\**.
 
-In practice, you do not need to use *with-frame-manager* unless you are
-certain that your code needs to run on a non-primary frame manager.
+     In practice, you do not need to use *with-frame-manager* unless you are
+     certain that your code needs to run on a non-primary frame manager.
 
-The main place where you need to use this macro is when you call *make*
-to create a gadget *outside* of one of the pane or layout clauses in
-*define frame*.
+     The main place where you need to use this macro is when you call *make*
+     to create a gadget *outside* of one of the pane or layout clauses in
+     *define frame*.
 
-Unless you are developing code that needs to run on more than one
-platform, this is unlikely to be the case, and you can forego use of
-this macro.
+     Unless you are developing code that needs to run on more than one
+     platform, this is unlikely to be the case, and you can forego use of
+     this macro.
 
    See also
 
-`<frame-manager>`_
+   - :class:`<frame-manager>`
 
-with-identity-transform
------------------------
+.. macro:: with-identity-transform
 
-Statement macro
-'''''''''''''''
-Executes the supplied code while retaining the current transform.
+   Executes the supplied code while retaining the current transform.
 
-Macro call
+   :macrocall: with-identity-transform ({*medium* }) {*body* } end
 
-with-identity-transform ({*medium* }) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes *body* while retaining the current transform for *medium*.
+     Executes *body* while retaining the current transform for *medium*.
 
-The *medium* expression should evaluate to an instance of *`See
-<medium>`_*.
+     The *medium* expression should evaluate to an instance of
+     :class:`<medium>`.
 
-with-pen
---------
+.. macro:: with-pen
 
-Statement macro
-'''''''''''''''
-Executes the supplied code using the specified pen characteristics.
+   Executes the supplied code using the specified pen characteristics.
 
-Macro call
+   :macrocall: with-pen ({*medium* } #rest {*pen-initargs* }\*) {*body* } end
 
-with-pen ({*medium* } #rest {*pen-initargs* }\*) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *pen-initargs* Dylan arguments*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter pen-initargs: Dylan arguments*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes *body* using the pen characteristics specified by
-*pen-initargs*, and applies the results to the expression *medium*.
+     Executes *body* using the pen characteristics specified by
+     *pen-initargs*, and applies the results to the expression *medium*.
 
-The *medium* specified should be an instance of type `See
-<medium>`_. The *pen-initargs* can be any valid
-arguments that specify an instance of `<pen> <dcs.htm#41757>`_.
+     The *medium* specified should be an instance of type
+     :class:`<medium>`. The *pen-initargs* can be any valid
+     arguments that specify an instance of :class:`<pen>`.
 
    See also
 
-`with-brush`_
+   - :gf:`with-brush`
 
-with-pointer-grabbed
---------------------
+.. macro:: with-pointer-grabbed
 
-Statement macro
-'''''''''''''''
-Executes a body of code, forwarding all pointer events to a sheet.
+   Executes a body of code, forwarding all pointer events to a sheet.
 
-Macro call
+   :macrocall: with-pointer-grabbed ({*sheet* } #rest {*options* }\*) {*body* } end
 
-with-pointer-grabbed ({*sheet* } #rest {*options* }\*) {*body* } end
-
-Arguments
-
--  *sheet* A Dylan expression*bnf*.
--  *options* Dylan arguments*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter sheet: A Dylan expression*bnf*.
+   :parameter options: Dylan arguments*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes a body of code, forwarding all pointer events to *sheet*, even
-if the pointer leaves the sheet-region of *sheet*. The *sheet*
-specified should be an instance of type *<sheet>*.
+     Executes a body of code, forwarding all pointer events to *sheet*, even
+     if the pointer leaves the sheet-region of *sheet*. The *sheet*
+     specified should be an instance of type :class:`<sheet>`.
 
-The macro calls methods for *do-with-pointer-grabbed*. The code
-specified by *body* is used to create a stand-alone method that is used
-as the code that is run by *do-with-pointer-grabbed*.
+     The macro calls methods for *do-with-pointer-grabbed*. The code
+     specified by *body* is used to create a stand-alone method that is used
+     as the code that is run by *do-with-pointer-grabbed*.
 
    See also
 
-`do-with-pointer-grabbed`_
+   - :gf:`do-with-pointer-grabbed`
 
-with-rotation
--------------
+.. macro:: with-rotation
 
-Statement macro
-'''''''''''''''
-Executes a body of code with a specified rotation.
+   Executes a body of code with a specified rotation.
 
-Macro call
+   :macrocall: with-rotation ({*medium* } {*angle* }) {*body* } end
 
-with-rotation ({*medium* } {*angle* }) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *angle* A Dylan argument*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter angle: A Dylan argument*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes a body of code with a specified rotation. The rotation occurs
-within the expression *medium*. This macro calls `See
-with-transform`_ to perform the rotation.
+     Executes a body of code with a specified rotation. The rotation occurs
+     within the expression *medium*. This macro calls :macro:`with-transform`
+     to perform the rotation.
 
-The *medium* specified should be an instance of type `See
-<medium>`_. The *angle* should evaluate to an
-instance of type ``<real>``.
+     The *medium* specified should be an instance of type :class:`<medium>`.
+     The *angle* should evaluate to an instance of type ``<real>``.
 
    See also
 
-`with-scaling`_
+   - :gf:`with-scaling`
+   - :gf:`with-transform`
+   - :gf:`with-translation`
 
-`with-transform`_
+.. macro:: with-scaling
 
-`with-translation`_
+   Executes a body of code with a specified scaling.
 
-with-scaling
-------------
+   :macrocall: with-scaling ({*medium* } {*scale-x* } {*scale-y* }) {*body* } end
 
-Statement macro
-'''''''''''''''
-Executes a body of code with a specified scaling.
-
-Macro call
-
-with-scaling ({*medium* } {*scale-x* } {*scale-y* }) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *scale-x* A Dylan argument*bnf*.
--  *scale-y* A Dylan argument*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter scale-x: A Dylan argument*bnf*.
+   :parameter scale-y: A Dylan argument*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes a body of code with a specified scaling, denoted by *scale-x*
-and *scale-y*. The scaling occurs within the expression *medium*. This
-macro calls `with-transform`_ to perform the
-scaling.
+     Executes a body of code with a specified scaling, denoted by *scale-x*
+     and *scale-y*. The scaling occurs within the expression *medium*. This
+     macro calls :macro:`with-transform` to perform the
+     scaling.
 
-The *medium* specified should be an instance of type `See
-<medium>`_. The *scale-x* and*scale-y* should
-evaluate to an instance of type ``<real>``.
+     The *medium* specified should be an instance of type :class:`<medium>`.
+     The *scale-x* and*scale-y* should evaluate to an instance of type
+     ``<real>``.
 
    See also
 
-`with-rotation`_
+   - :gf:`with-rotation`
+   - :gf:`with-transform`
+   - :gf:`with-translation`
 
-`with-transform`_
+.. macro:: with-sheet-medium
 
-`with-translation`_
+   Associates a sheet with a medium.
 
-with-sheet-medium
------------------
+   :macrocall: with-sheet-medium ({*medium* = *sheet* }) {*body* } end
 
-Statement macro
-'''''''''''''''
-Associates a sheet with a medium.
-
-Macro call
-
-with-sheet-medium ({*medium* = *sheet* }) {*body* } end
-
-Arguments
-
--  *medium* A Dylan name*bnf*.
--  *sheet* A Dylan expression*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter medium: A Dylan name*bnf*.
+   :parameter sheet: A Dylan expression*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Associates a sheet with a medium.
+     Associates a sheet with a medium.
 
-Within *body*, the variable *medium* is bound to the medium allocated
-to *sheet*. The *sheet* specified should be an instance of type `See
-<sheet>`_. If *sheet* does not have a medium
-permanently allocated, one is allocated and associated with *sheet* for
-the duration of *body*, and then unassociated from *sheet* and
-deallocated when *body* has been exited. The values of the last form of
-*body* are returned as the values of *with-sheet-medium*.
+     Within *body*, the variable *medium* is bound to the medium allocated to
+     *sheet*. The *sheet* specified should be an instance of type
+     :class:`<sheet>`.  If *sheet* does not have a medium permanently
+     allocated, one is allocated and associated with *sheet* for the duration
+     of *body*, and then unassociated from *sheet* and deallocated when *body*
+     has been exited. The values of the last form of *body* are returned as the
+     values of *with-sheet-medium*.
 
-The *medium* argument is not evaluated, and must be a symbol that is
-bound to a medium. The *body* may have zero or more declarations as its
-first forms.
+     The *medium* argument is not evaluated, and must be a symbol that is bound
+     to a medium. The *body* may have zero or more declarations as its first
+     forms.
 
-This macro is a useful way of speeding up drawing operations, since
-drawing on a sheet requires finding the medium for that sheet. You can
-use *with-sheet-medium* to associate a known sheet with a medium, and
-then draw directly onto that medium, as shown in the example.
+     This macro is a useful way of speeding up drawing operations, since
+     drawing on a sheet requires finding the medium for that sheet. You can use
+     *with-sheet-medium* to associate a known sheet with a medium, and then
+     draw directly onto that medium, as shown in the example.
 
-Example
+     Example
 
-with-sheet-medium (medium = sheet)
+     .. code-block:: dylan
 
-with-drawing-options (medium, brush: color)
-
-for (x :: <integer> from 0 to 199)
-
-for (y :: <integer> from 0 to 199)
-
-draw-point(medium, x, y)
-
-end
-
-end
-
-end
-
-end
+         with-sheet-medium (medium = sheet)
+           with-drawing-options (medium, brush: color)
+             for (x :: <integer> from 0 to 199)
+               for (y :: <integer> from 0 to 199)
+                 draw-point(medium, x, y)
+               end
+             end
+           end
+         end
 
    See also
 
-`do-with-sheet-medium`_
+   - :gf:`do-with-sheet-medium`
+   - :gf:`with-drawing-options`
 
-`with-drawing-options`_
+.. macro:: with-text-style
 
-with-text-style
----------------
+   Runs a body of code in the context of a text style.
 
-Statement macro
-'''''''''''''''
-Runs a body of code in the context of a text style.
-
-Macro call
-
-with-text-style ({*medium* } #rest {*style-initargs* }\*) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *style-initargs* Dylan arguments*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :macrocall: with-text-style ({*medium* } #rest {*style-initargs* }\*) {*body* } end
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter style-initargs: Dylan arguments*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes *body* using the text style characteristics specified by
-*style-initargs*, and applies the results to *medium*.
+     Executes *body* using the text style characteristics specified by
+     *style-initargs*, and applies the results to *medium*.
 
-The *medium* specified should be an instance of type `See
-<medium>`_. The *style-initargs* can be any valid
-arguments that specify an instance of `See
-<text-style> <dcs.htm#85385>`_.
+     The *medium* specified should be an instance of type :class:`<medium>`.
+     The *style-initargs* can be any valid arguments that specify an instance
+     of :class:`<text-style>`.
 
-Methods for `do-with-text-style`_ are invoked to
-run the code.
+     Methods for :gf:`do-with-text-style` are invoked to run the code.
 
    See also
 
-`do-with-text-style`_
+   - :gf:`do-with-text-style`
 
-with-transform
---------------
+.. macro:: with-transform
 
-Statement macro
-'''''''''''''''
-Executes a body of code with a specified transform.
+   Executes a body of code with a specified transform.
 
-Macro call
+   :macrocall: with-transform ({*medium* } {*transform* }) {*body* } end
 
-with-transform ({*medium* } {*transform* }) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *transform* A Dylan expression*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter transform: A Dylan expression*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes a body of code with a specified *transform*. The transform
-occurs within *medium*. This macro is used by `See
-with-rotation`_, `See
-with-scaling`_, and `See
-with-translation`_, and calls methods for `See
-do-with-transform`_.
+     Executes a body of code with a specified *transform*. The transform occurs
+     within *medium*. This macro is used by :macro:`with-rotation`,
+     :macro:`with-scaling`, and :macro:`with-translation`, and calls methods
+     for :macro:`do-with-transform`.
 
-The *medium* specified should be an instance of type `See
-<medium>`_. The *transform* specified should be an
-instance of type `<transform> <geom.htm#33417>`_.
+     The *medium* specified should be an instance of type :class:`<medium>`.
+     The *transform* specified should be an instance of type
+     :class:`<transform>`.
 
    See also
 
-`do-with-transform`_
+   - :gf:`do-with-transform`
+   - :gf:`with-rotation`
+   - :gf:`with-scaling`
+   - :gf:`with-translation`
 
-`with-rotation`_
+.. macro:: with-translation
 
-`with-scaling`_
+   Executes a body of code with a specified translation.
 
-`with-translation`_
+   :macrocall: with-translation ({*medium* } {*dx* } {*dy* }) {*body* } end
 
-with-translation
-----------------
-
-Statement macro
-'''''''''''''''
-Executes a body of code with a specified translation.
-
-Macro call
-
-with-translation ({*medium* } {*dx* } {*dy* }) {*body* } end
-
-Arguments
-
--  *medium* A Dylan expression*bnf*.
--  *dx* A Dylan argument*bnf*.
--  *dy* A Dylan argument*bnf*.
--  *body* A Dylan body*bnf*.
-
-Values
-
--  None.
+   :parameter medium: A Dylan expression*bnf*.
+   :parameter dx: A Dylan argument*bnf*.
+   :parameter dy: A Dylan argument*bnf*.
+   :parameter body: A Dylan body*bnf*.
 
    :description:
 
-Executes a body of code with a specified translation, denoted by *dx*
-and *dy*. The translation occurs within *medium*. This macro calls
-`with-transform`_ to perform the translation.
+     Executes a body of code with a specified translation, denoted by *dx*
+     and *dy*. The translation occurs within *medium*. This macro calls
+     :macro:`with-transform` to perform the translation.
 
-The *medium* specified should be an instance of type `See
-<medium>`_. The *dx* and*dy* should evaluate to an
-instance of type ``<real>``.
+     The *medium* specified should be an instance of type :class:`<medium>`.
+     The *dx* and*dy* should evaluate to an instance of type ``<real>``.
 
    See also
 
-`with-rotation`_
-
-`with-scaling`_
-
-`with-transform`_
-
-
+   - :gf:`with-rotation`
+   - :gf:`with-scaling`
+   - :gf:`with-transform`
