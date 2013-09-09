@@ -41,9 +41,6 @@ subclasses defined. See `Subclasses of
 
 Overall class hierarchy for the DUIM-Layouts library
 
-.. figure:: images/layouts-2.png
-   :align: center
-   :alt: 
 <sheet>
 
 <basic-composite-pane>
@@ -106,9 +103,6 @@ The subclasses of *<layout>* are shown in `Subclasses of the
 
 Subclasses of the *<layout>* class
 
-.. figure:: images/layouts-2.png
-   :align: center
-   :alt: 
 <layout>
 
 <row-layout>
@@ -162,15 +156,11 @@ In addition to the basic types of layout described above, a subclass of
 -  *<grid-layout>* This is a specialized version of *<table-layout>*,
    in which all the cells in the table are forced to be the same size.
 
-Column, row, and pinboard layouts
-
-.. figure:: images/layouts-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/layouts-3.png
    :align: center
-   :alt: 
+
+   Column, row, and pinboard layouts
+
 DUIM-Layouts Module
 ===================
 
@@ -318,15 +308,11 @@ The class of column layouts. A column layout arranges its children in a
 column, automatically calculating the size and placement of each child
 within the specified parameters.
 
-Three buttons arranged in a column layout
-
-.. figure:: images/layouts-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/layouts-4.png
    :align: center
-   :alt: 
+
+   Three buttons arranged in a column layout
+
 The *border:* init-keyword provides a border of whitespace around the
 children in the layout, and the value of this init-keyword represents
 the size of the border in pixels. This basically has the same effect as
@@ -1288,15 +1274,11 @@ place children at any point in a pinboard layout, and the pinboard
 layout does not attempt to calculate an optimum position or size for any
 of them.
 
-Three buttons arranged in a pinboard layout
-
-.. figure:: images/layouts-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/layouts-6.png
    :align: center
-   :alt: 
+
+   Three buttons arranged in a pinboard layout
+
 A pinboard layout leaves the subsequent positions of any children placed
 in the layout alone. However, the size of each child is constrained
 according to any constraints that have been specified for those
@@ -1411,15 +1393,11 @@ The class of row layouts. A row layout arranges its children in a row,
 automatically calculating the size and placement of each child within
 the specified parameters.
 
-Three buttons arranged in a row layout
-
-.. figure:: images/layouts-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/layouts-7.png
    :align: center
-   :alt: 
+
+   Three buttons arranged in a row layout
+
 The *border:* init-keyword provides a border of whitespace around the
 children in the layout, and the value of this init-keyword represents
 the size of the border in pixels. This basically has the same effect as
@@ -1455,7 +1433,7 @@ horizontal space, as shown in the diagram below.
 
 .. figure:: images/layouts-8.png
    :align: center
-   :alt: 
+
    :operations:
 
 -  None.
@@ -2095,7 +2073,7 @@ the diagram below.
 
 .. figure:: images/layouts-9.png
    :align: center
-   :alt: 
+
 Alternatively, if the value *#(1, 2, 3)* is specified for the
 *y-ratios:* init-keyword of a table layout containing three rows of
 children, then the first row would claim a sixth of the available
@@ -2105,14 +2083,14 @@ in the diagram below.
 
 .. figure:: images/layouts-10.png
    :align: center
-   :alt: 
+
 Finally, if both the *x-ratios:* and *y-ratios:* init-keywords are
 specified, then each child in the layout is affected individually, as
 shown in the diagram below.
 
 .. figure:: images/layouts-11.png
    :align: center
-   :alt: 
+
 By default, all the children of a table layout are left-aligned. You can
 specify that they should be right or center-aligned using the
 *x-alignment:* keyword.

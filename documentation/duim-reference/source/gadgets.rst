@@ -233,9 +233,6 @@ as follows:
 
 Overall class hierarchy for the DUIM-Gadgets library
 
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
 <object>
 
 <gadget>
@@ -325,9 +322,6 @@ the <value-gadget> class`_.
 
 Subclasses of the *<value-gadget>* class
 
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
 <value-gadget>
 
 <text-gadget>
@@ -374,9 +368,6 @@ class`_.
 
 Subclasses of the *<page>* class
 
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
 <page>
 
 <tab-control-page>
@@ -388,44 +379,32 @@ Subclasses of the *<page>* class
 The *<tab-control-page>* class is used to define the elements that are
 associated with each tab in a tab control.
 
-A tab control page
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-3.png
    :align: center
-   :alt: 
+
+   A tab control page
+
 The *<property-page>* class performs a similar job for property frames
 (visually, a property frame looks like a tab control in a dialog box,
 and is one way of implementing a dialog box that has several pages of
 information. Property frames are so named because they are often used to
 display the user-configurable properties of an application.
 
-A property page
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-4.png
    :align: center
-   :alt: 
+
+   A property page
+
 The *<wizard-page>* class is used to define the elements in each page of
 a wizard frame. Wizard frames are another form of multi-page dialog, but
 consist of several physically distinct windows that are presented to the
 user in a strict order.
 
-A tab control page
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-5.png
    :align: center
-   :alt: 
+
+   A tab control page
+
 Subclasses of <button>
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -443,9 +422,6 @@ Overview`_.
 
 Subclasses of the *<button>* class
 
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
 <button>
 
 <check-button>
@@ -472,9 +448,6 @@ displayed in bold.
 
 Subclasses of the *<collection-gadget>* class
 
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
 <collection-gadget>
 
 <button-box>
@@ -567,15 +540,11 @@ gadget with the pointer device. Buttons encompass obvious controls such
 as push buttons, radio buttons, and check boxes, and, less obviously,
 menu items.
 
-A selection of button and equivalent menu buttons
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-6.png
    :align: center
-   :alt: 
+
+   A selection of button and equivalent menu buttons
+
 Text gadgets
 ============
 
@@ -618,30 +587,22 @@ equivalents. Separators are automatically added to collections of menu
 buttons so as to delineate them visually from other menu buttons in the
 same menu.
 
-A variety of simple collection gadgets
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-10.png
    :align: center
-   :alt: 
+
+   A variety of simple collection gadgets
+
 Value range gadgets
 ===================
 
 A value range gadget is any gadget whose value falls within a defined
 Dylan range.
 
-A variety of value range gadgets
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-11.png
    :align: center
-   :alt: 
+
+   A variety of value range gadgets
+
 Sliders, scroll bars, and scroll bars are all examples of value range
 gadgets. Value range gadgets provide immediate visual feedback of the
 value of the gadget at any time, as shown in `A variety of value
@@ -676,15 +637,11 @@ page available:
    order to perform a specified operation. For more information about
    wizard frames, see ` <frames.htm#89815>`_.
 
-A tab control page, a property page, and a wizard page
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-12.png
    :align: center
-   :alt: 
+
+   A tab control page, a property page, and a wizard page
+
 *Note:* The *<wizard-page>* and *<property-page>* classes are actually
 exposed by the DUIM-Frames library, rather than the DUIM-Gadgets
 library. See ` <frames.htm#89815>`_for full details on this library.
@@ -728,15 +685,11 @@ cursor. In addition, you can define status bars that display any textual
 information your application requires, and to this end, status bars can
 take a number of children.
 
-A status bar
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-13.png
    :align: center
-   :alt: 
+
+   A status bar
+
 In word processing applications, the status bar may also display the
 current position of the insertion point, and information about the
 current font family, size, and variation, if appropriate. In an e-mail
@@ -751,15 +704,11 @@ An instance of the class *<tab-control>* lets you define a sheet that
 contains several "pages" of information. Each page of information is
 displayed by clicking on the appropriate tab along the top of the sheet.
 
-A tab control
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-14.png
    :align: center
-   :alt: 
+
+   A tab control
+
 This children of a tab control are the pages of information themselves.
 Each child should be an instance of the *<page>* class. The various
 types of page available are described in `Page
@@ -985,15 +934,11 @@ Borders may appear raised from the area they surround, or lowered with
 respect to it. Alternatively, a border may be displayed as a thin ridge
 or groove. Input and output borders represent "logical" borders.
 
-Different types of border
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-16.png
    :align: center
-   :alt: 
+
+   Different types of border
+
 Borders are usually created using the `See
 with-border`_ macro, rather than by making direct
 instances of this class.
@@ -4061,15 +4006,11 @@ The class of gadgets that group their children using a labelled border.
 You can use this gadget class to group together a number of related
 items visually.
 
-A group box
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-22.png
    :align: center
-   :alt: 
+
+   A group box
+
 The *label:* init-keyword specifies a string or icon that is to be used
 as a label for the gadget.
 
@@ -4234,11 +4175,11 @@ Init-keywords
 
    :description:
 
-The class of list boxes.
-
 .. figure:: images/gadgets-23.png
    :align: center
-   :alt: 
+
+   The class of list boxes.
+
 The *borders:* init-keyword lets you specify a border around the list
 box. If specified, a border of the appropriate type is drawn around the
 gadget.
@@ -5276,11 +5217,11 @@ Init-keywords
 
    :description:
 
-The class of option boxes.
-
 .. figure:: images/gadgets-25.png
    :align: center
-   :alt: 
+
+   The class of option boxes.
+
 The *borders:* init-keyword lets you specify a border around the option
 box. If specified, a border of the appropriate type is drawn around the
 gadget.
@@ -5391,11 +5332,11 @@ Init-keywords
 
    :description:
 
-The class of progress bar windows.
-
 .. figure:: images/gadgets-27.png
    :align: center
-   :alt: 
+
+   The class of progress bar windows.
+
 The *orientation:* init-keyword lets you specify whether the progress
 bar should be horizontal or vertical.
 
@@ -5444,11 +5385,11 @@ None.
 
    :description:
 
-The class of grouped push buttons.
-
 .. figure:: images/gadgets-28.png
    :align: center
-   :alt: 
+
+   The class of grouped push buttons.
+
 The `gadget-value`_ of a push box is always the
 gadget value of the last push button in the box to be pressed. You
 should use the gadget value of a push box as the way of determining
@@ -5492,12 +5433,12 @@ Init-keywords
 
    :description:
 
-The class of push buttons.The push button gadget provides
-press-to-activate switch behavior.
-
 .. figure:: images/gadgets-29.png
    :align: center
-   :alt: 
+
+   The class of push buttons.The push button gadget provides
+   press-to-activate switch behavior.
+
 When the button is activated (by releasing the pointer button over it),
 its activate callback is invoked.
 
@@ -5562,11 +5503,11 @@ None.
 
    :description:
 
-The class of grouped push buttons in menus.
-
 .. figure:: images/gadgets-30.png
    :align: center
-   :alt: 
+
+   The class of grouped push buttons in menus.
+
 Internally, this class maps into the menu Windows control.
 
    :operations:
@@ -5604,11 +5545,11 @@ Init-keywords
 
    :description:
 
-The class of push buttons that appear on menus.
-
 .. figure:: images/gadgets-31.png
    :align: center
-   :alt: 
+
+   The class of push buttons that appear on menus.
+
 The *default?:* init-keyword sets the default value for the push menu
 button gadget.
 
@@ -5751,15 +5692,11 @@ None.
 
 The class of grouped radio buttons that can appear in menus.
 
-A radio menu box
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-34.png
    :align: center
-   :alt: 
+
+   A radio menu box
+
 Internally, this class maps into the menu Windows control.
 
    :operations:
@@ -6152,15 +6089,11 @@ Init-keywords
 
 The class of gadgets used as a visual separator.
 
-A separator
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-37.png
    :align: center
-   :alt: 
+
+   A separator
+
 The *orientation:* init-keyword specifies whether the separator is
 vertical or horizontal.
 
@@ -7093,15 +7026,11 @@ None.
 
 The class that represents a page in a tab control.
 
-A tab control page
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-42.png
    :align: center
-   :alt: 
+
+   A tab control page
+
    :operations:
 
 -  None.
@@ -7323,7 +7252,7 @@ The class of table controls.
 
 .. figure:: images/gadgets-43.png
    :align: center
-   :alt: 
+
 The *view:* init-keyword can be used to specify how the items in the
 table control are displayed. See `See
 <table-control-view>`_, for more details.
@@ -7363,15 +7292,11 @@ second column by invoking it on each item in the control, and so on.
 This is illustrated in `Defining column headings and contents in
 table controls`_.
 
-Defining column headings and contents in table controls
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-44.png
    :align: center
-   :alt: 
+
+   Defining column headings and contents in table controls
+
 If you do not specify both of these init-keywords, you must supply
 columns for the table control, using the `See
 <table-column>`_ class.
@@ -7578,7 +7503,7 @@ The class of multiple line text editors.
 
 .. figure:: images/gadgets-45.png
    :align: center
-   :alt: 
+
 The *columns:* and *lines:* init-keywords specify the number of columns
 and lines of characters visible in the text editor, respectively.
 
@@ -7635,7 +7560,7 @@ The class of single line text fields.
 
 .. figure:: images/gadgets-46.png
    :align: center
-   :alt: 
+
 The *x-alignment:* init-keyword is used to align the text in the text
 field.
 
@@ -7799,15 +7724,11 @@ more common commands in an application. Typically, the label for each
 button is an icon that pictorially represents the operation that
 clicking the button performs.
 
-A tool bar
-
-.. figure:: images/gadgets-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/gadgets-47.png
    :align: center
-   :alt: 
+
+   A tool bar
+
 A tool bar is often placed underneath the menu bar of an application,
 although its position is very often configurable, and a tool bar may
 often be "docked" against any edge of the application’s frame. In

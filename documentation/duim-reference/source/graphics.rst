@@ -233,15 +233,12 @@ pixel (its center) lies to one side of the line or the other, there is
 no issue. When the boundary passes through a decision point, which side
 the inside of the figure is on is used to decide.
 
-Two triangles
-
-.. figure:: images/graphics-2.png
-   :align: center
-   :alt: 
 
 .. figure:: images/graphics-4.png
    :align: center
-   :alt: 
+
+   Two triangles
+
 The reason for choosing the decision point half a pixel offset from the
 address point is to reduce the number of common figures (such as
 rectilinear lines and rectangles with integral coordinates) that invoke
@@ -254,15 +251,11 @@ has the figure on it, and since the same rule must be applied uniformly
 for all figures, there is no choice but to pick only two of the four
 points, leading to an undesirable lopsided figure.
 
-Choosing any two of the shaded pixels causes asymmetry
-
-.. figure:: images/graphics-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/graphics-5.png
    :align: center
-   :alt: 
+
+   Choosing any two of the shaded pixels causes asymmetry
+
 If all four boundary points had been chosen instead, the result would be
 a symmetrical figure. However, since this figure is symmetrical about a
 whole pixel, it is one pixel wider than it ought to be. The problem with
@@ -271,28 +264,20 @@ square`_, in which a circle is drawn over a square.
 In the left-hand figure, the decision point is at the center of the
 pixel, but in the right-hand figure, it is not.
 
-Two forms of a circle inscribed in a square
-
-.. figure:: images/graphics-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/graphics-6.png
    :align: center
-   :alt: 
+
+   Two forms of a circle inscribed in a square
+
 It is for this reason that the decision point is at the center of the
 pixel. This draws circles that look like the one in `An
 aesthetically pleasing circle`_.
 
-An aesthetically pleasing circle
-
-.. figure:: images/graphics-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/graphics-7.png
    :align: center
-   :alt: 
+
+   An aesthetically pleasing circle
+
 A consequence of these rendering conventions is that, when the start or
 end coordinate (minus half the line thickness, if the shape is a path)
 is not an integer, then rendering is not symmetric under reflection
@@ -317,15 +302,11 @@ both perfectly reasonable rasterizations of tilted lines that are a
 single device unit wide. The right-hand line is drawn as a tilted
 rectangle, the left as the "thinnest visible" line.
 
-Two examples of lines of thickness 1
-
-.. figure:: images/graphics-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/graphics-8.png
    :align: center
-   :alt: 
+
+   Two examples of lines of thickness 1
+
 For thick lines, a platform may choose to draw the exact tilted
 fractional rectangle, or the coordinates of that rectangle might be
 rounded so that it is distorted into another polygonal shape. The latter
@@ -333,15 +314,11 @@ case may be prove to be faster on some platforms. The two rasterizations
 depicted in `Two examples of lines of thickness
 2`_ are both reasonable.
 
-Two examples of lines of thickness 2
-
-.. figure:: images/graphics-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/graphics-9.png
    :align: center
-   :alt: 
+
+   Two examples of lines of thickness 2
+
 The decision about which side of the shape to take when a boundary line
 passes through the decision point is made arbitrarily, although this is
 compatible with the X11 definition. This is not necessarily the most
@@ -353,16 +330,12 @@ since those pixels are the ones whose centers have the figure
 immediately above them. This definition makes it simpler to draw
 rectilinear borders around rectilinear areas.
 
-Two possible definitions of horizontal lines. Left figure is X11
-definition
-
-.. figure:: images/graphics-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/graphics-10.png
    :align: center
-   :alt: 
+
+   Two possible definitions of horizontal lines. Left figure is X11
+   definition
+
 Drawing using path related functions
 ====================================
 
@@ -515,15 +488,11 @@ radius-2-dy* #key *start-angle end-angle* => ()
 
 Draws an arc in the current path on *drawable*.
 
-Description of the arguments for arc-to
-
-.. figure:: images/graphics-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/graphics-11.png
    :align: center
-   :alt: 
+
+   Description of the arguments for arc-to
+
 The center of the arc is defined by (*center-x*, *center-y*), the
 points furthest away from the center for each radius are calculated by
 adding *radius-1-dx* and *radius-1-dy* to *center-x* and *center-y*
@@ -644,7 +613,7 @@ this means that *radius-1-dy* and *radius-2-dx* must always be 0.
 
 .. figure:: images/graphics-12.png
    :align: center
-   :alt: 
+
 The arguments *start-angle* and *end-angle* define the extent of the arc
 that is drawn.
 
@@ -1010,7 +979,7 @@ width of the arrow-head respectively, in pixels.
 
 .. figure:: images/graphics-13.png
    :align: center
-   :alt: 
+
 The function *draw-arrow\** is identical to *draw-arrow*, except that
 it passes composite objects, rather than separate coordinates, in its
 arguments. You should be aware that using this function may lead to a
@@ -1187,7 +1156,7 @@ non-axis-aligned ellipses. For all practical purposes, this means that
 
 .. figure:: images/graphics-14.png
    :align: center
-   :alt: 
+
 The arguments *start-angle* and *end-angle* let you draw just a section
 of the ellipse, rather than the whole ellipse.
 
@@ -1409,7 +1378,7 @@ Ovals are similar to ellipses, except that they have straight edges.
 
 .. figure:: images/graphics-15.png
    :align: center
-   :alt: 
+
 If *filled?* is ``#t`` then the oval will be filled, using the current
 brush.
 
@@ -1667,7 +1636,7 @@ corners: only one rectangle is possible between and pair of points.
 
 .. figure:: images/graphics-16.png
    :align: center
-   :alt: 
+
 If *filled?* is ``#t`` then the rectangle will be filled, using the
 current brush.
 
@@ -1786,7 +1755,7 @@ Dashed lines start dashing at the starting point of the first segment.
 
 .. figure:: images/graphics-17.png
    :align: center
-   :alt: 
+
 If *filled?* is ``#t`` then the polygon will be filled, using the current
 brush.
 
@@ -1856,7 +1825,7 @@ the direction of the point (*towards-x*,*towards-y*).
 
 .. figure:: images/graphics-18.png
    :align: center
-   :alt: 
+
 If *start* and *end* are specified, then only a section of text is
 drawn, starting at character *start*, and ending with character *end*.
 By default, the whole of *text* is drawn.
@@ -1939,7 +1908,7 @@ first segment.
 
 .. figure:: images/graphics-19.png
    :align: center
-   :alt: 
+
 If *filled?* is ``#t`` then the triangle will be filled, using the current
 brush.
 

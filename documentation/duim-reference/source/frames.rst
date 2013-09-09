@@ -47,9 +47,6 @@ DUIM-Frames library.
 
 Overall class hierarchy for the DUIM-Frames library
 
-.. figure:: images/frames-2.png
-   :align: center
-   :alt: 
 <object>
 
 <gadget>
@@ -123,9 +120,6 @@ Subclasses of the <frame> class`_.
 
 Subclasses of the *<frame>* class
 
-.. figure:: images/frames-2.png
-   :align: center
-   :alt: 
 <frame>
 
 <simple-frame>
@@ -165,9 +159,6 @@ various events that can occur in frames. These subclasses are shown in
 
 Subclasses of the *<frame-event>* class
 
-.. figure:: images/frames-2.png
-   :align: center
-   :alt: 
 <frame-event>
 
 <frame-created-event>
@@ -2876,15 +2867,11 @@ automatically made the same size, and are placed at the bottom of the
 dialog by default. When at the bottom of the dialog, buttons are
 right-aligned.
 
-A typical dialog
-
-.. figure:: images/frames-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/frames-4.png
    :align: center
-   :alt: 
+
+   A typical dialog
+
 By default, all dialogs are modal, that is, when displayed, they take
 over the entire application thread, preventing the user from using any
 other part of the application until the dialog has been removed from the
@@ -6506,15 +6493,10 @@ The class of property frames. These are dialogs that can contain
 property sheets of some description. This is the class of dialogs with
 several pages, each presented as a label in a tab control.
 
-A property frame
-
-.. figure:: images/frames-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/frames-5.png
    :align: center
-   :alt: 
+   A property frame
+
 The *pages:* init-keyword defines the pages available for the property
 frame.
 
@@ -6575,15 +6557,11 @@ None.
 The class of property pages. These are pages that can be displayed in an
 instance of `<property-frame>`_.
 
-A property page
-
-.. figure:: images/frames-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/frames-6.png
    :align: center
-   :alt: 
+
+   A property page
+
 Internally, this class maps into the Windows property page control.
 
    :operations:
@@ -7136,15 +7114,11 @@ The class of wizard frames. These are frames that are used to create
 wizards (series of connected dialogs) that are used to guide the user
 through a structured task, such as installing an application.
 
-A wizard frame
-
-.. figure:: images/frames-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/frames-7.png
    :align: center
-   :alt: 
+
+   A wizard frame
+
 A wizard frame is a multi-page dialog, in which the user specifies
 requested information before proceeding to the next page in the
 sequence. At the end of the sequence, the user exits the dialog to send
@@ -7304,16 +7278,10 @@ instance of `<wizard-frame>`_, and are used for a
 single dialog in the structured task that the wizard guides the user
 through.
 
-A wizard page
-
-.. figure:: images/frames-2.png
-   :align: center
-   :alt: 
-
 .. figure:: images/frames-8.png
    :align: center
-   :alt: 
-   :operations:
+
+   A wizard page
 
 -  None.
 
