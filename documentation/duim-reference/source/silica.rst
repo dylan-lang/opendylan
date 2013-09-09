@@ -822,37 +822,32 @@ are exported from the *duim-sheets* module.
      the user to choose a color from the standard palette for whatever
      environment the application is running in.
 
-     The standard Choose Color dialog
-
-     .. figure:: images/silica-2.png
-        :align: center
-        :alt: 
-
      .. figure:: images/silica-3.png
         :align: center
-        :alt: 
 
-      If the *frame* argument is specified, the top-level sheet of *frame*
-      becomes the owner of the dialog.
+        The standard Choose Color dialog
 
-      Alternatively, you can specify the owner directly using the *owner*
-      argument, which takes an instance of :class:`<sheet>` as its value.
+     If the *frame* argument is specified, the top-level sheet of *frame*
+     becomes the owner of the dialog.
 
-      By default, both *frame* and *owner* are ``#f``, meaning the dialog has
-      no owner. You should not specify both of these values.
+     Alternatively, you can specify the owner directly using the *owner*
+     argument, which takes an instance of :class:`<sheet>` as its value.
 
-      If you wish, you can specify a *title* for the dialog; this is displayed
-      in the title bar of the frame containing the dialog.
+     By default, both *frame* and *owner* are ``#f``, meaning the dialog has
+     no owner. You should not specify both of these values.
 
-      Example
+     If you wish, you can specify a *title* for the dialog; this is displayed
+     in the title bar of the frame containing the dialog.
 
-      The following example illustrates how you can define a class of frame
-      that contains a button that displays the Choose Color dialog, using the
-      pre-built dialog classes for your target environment. The frame also
-      contains an ellipse whose color is set to the color chosen from the
-      dialog.
+     Example
 
-      .. code-block:: dylan
+     The following example illustrates how you can define a class of frame
+     that contains a button that displays the Choose Color dialog, using the
+     pre-built dialog classes for your target environment. The frame also
+     contains an ellipse whose color is set to the color chosen from the
+     dialog.
+
+     .. code-block:: dylan
 
           define frame <color-dialog-frame> (<simple-frame>)
             pane ellipse-pane (frame)
@@ -970,49 +965,44 @@ are exported from the *duim-sheets* module.
      currently connected to the computer. The function returns the name of
      the file chosen by the user.
 
-     Typical appearance of a choose-file dialog
-
-     .. figure:: images/silica-2.png
-        :align: center
-        :alt: 
-
      .. figure:: images/silica-4.png
         :align: center
-        :alt: 
 
-      If the *frame* argument is specified, the top-level sheet of *frame*
-      becomes the owner of the dialog.
+        Typical appearance of a choose-file dialog
 
-      Alternatively, you can specify the owner directly using the *owner*
-      argument, which takes an instance of :class:`<sheet>` as its value.
+     If the *frame* argument is specified, the top-level sheet of *frame*
+     becomes the owner of the dialog.
 
-      By default, both *frame* and *owner* are ``#f``, meaning the dialog has
-      no owner. You should not specify both of these values.
+     Alternatively, you can specify the owner directly using the *owner*
+     argument, which takes an instance of :class:`<sheet>` as its value.
 
-      If you wish, you can specify a *title* for the dialog; this is displayed
-      in the title bar of the frame containing the dialog.
+     By default, both *frame* and *owner* are ``#f``, meaning the dialog has
+     no owner. You should not specify both of these values.
 
-      The *direction* argument is used to specify whether the file chosen is
-      being opened (that is, information in the file is loaded into the
-      application) or saved to (that is, information in the application is
-      being saved to a file on disk).
+     If you wish, you can specify a *title* for the dialog; this is displayed
+     in the title bar of the frame containing the dialog.
 
-      The *filters* argument lets you specify the file filters that should be
-      offered to the user in the dialog. These filters are typically available
-      in a drop-down list box, and let the user display only certain types of
-      file, such as text files. Each filter is described as a sequence of
-      strings:
+     The *direction* argument is used to specify whether the file chosen is
+     being opened (that is, information in the file is loaded into the
+     application) or saved to (that is, information in the application is
+     being saved to a file on disk).
 
-      1.  The first string in the sequence is a description of the files that
-          are displayed when this filter is chosen.
-      2.  Each subsequent string is a regular expression that describes which
-          files to display in the dialog.
+     The *filters* argument lets you specify the file filters that should be
+     offered to the user in the dialog. These filters are typically available
+     in a drop-down list box, and let the user display only certain types of
+     file, such as text files. Each filter is described as a sequence of
+     strings:
 
-      For example, to specify a filter that lets the user choose to display
-      either text files, HTML files, or Dylan source files, the following
-      sequence should be passed to the filters argument:
+     1.  The first string in the sequence is a description of the files that
+         are displayed when this filter is chosen.
+     2.  Each subsequent string is a regular expression that describes which
+         files to display in the dialog.
 
-      .. code-block:: dylan
+     For example, to specify a filter that lets the user choose to display
+     either text files, HTML files, or Dylan source files, the following
+     sequence should be passed to the filters argument:
+
+     .. code-block:: dylan
 
           #[#["Text files", "\*.txt", "\*.text"],
 
@@ -1020,22 +1010,22 @@ are exported from the *duim-sheets* module.
 
           #["Dylan files", "\*.dylan"]
 
-      Here, text files are defined as any file with a filename suffix of
-      *.txt* or *.text*, HTML files have filenames with a suffix of either
-      *.htm* or *.html*, and Dylan files have filenames with a suffix of
-      *.dylan*.
+     Here, text files are defined as any file with a filename suffix of
+     *.txt* or *.text*, HTML files have filenames with a suffix of either
+     *.htm* or *.html*, and Dylan files have filenames with a suffix of
+     *.dylan*.
 
-      The *default* argument is used to specify a default filename to pass to
-      the dialog. This is a convenient way to suggest a file in which some
-      information may be saved, or a file to be loaded into an application.
+     The *default* argument is used to specify a default filename to pass to
+     the dialog. This is a convenient way to suggest a file in which some
+     information may be saved, or a file to be loaded into an application.
 
-      Example
+     Example
 
-      The following example illustrates how you can define a class of frame
-      that contains buttons to display both Open and Save As dialogs, using
-      the pre-built dialog classes for your target environment.
+     The following example illustrates how you can define a class of frame
+     that contains buttons to display both Open and Save As dialogs, using
+     the pre-built dialog classes for your target environment.
 
-      .. code-block:: dylan
+     .. code-block:: dylan
 
           define frame <open-save-dialog-frame> (<simple-frame>)
             pane open-file-button (frame)
@@ -3976,15 +3966,10 @@ are exported from the *duim-sheets* module.
      Use this function as a way of easily displaying simple messages to the
      user.
 
-     Simple output from notify-user
-
-     .. figure:: images/silica-2.png
-        :align: center
-        :alt: 
-
      .. figure:: images/silica-5.png
         :align: center
-        :alt: 
+
+        Simple output from notify-user
 
      The *message-string* is the message that is displayed in the dialog. The
      arguments frame, owner, title, and documentation let you specify
