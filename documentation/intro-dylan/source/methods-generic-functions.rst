@@ -187,7 +187,7 @@ over" (or captures the binding of) the variable named ``string``.
 
 .. _generic-functions:
 
-Generic functions
+Generic Functions
 =================
 
 A :term:`generic function` represents zero or more
@@ -256,22 +256,21 @@ Functions may accept :term:`keyword arguments`,
 extra parameters which are identified by a label rather than by their
 position in the argument list. Keyword arguments are often used in a
 fashion similar to :term:`default parameter values`
-in C++. For example, the following hypothetical method might print
-records to an output device:
+in C++, and they are always optional.
+
+The following hypothetical method might print records to an output device:
 
 .. code-block:: dylan
 
     define method print-records
         (records :: <collection>, #key init-codes = "", lines-per-page = 66)
      => ()
-      send-init-codes(init-codes);
+      send-init-codes(init-codes)
       // ...print the records
     end method;
 
-This method could be invoked in one of several ways. The first
-specifies no keyword arguments, and the latter two specify some
-combination of them. Note that order of keyword arguments doesn't
-matter.
+The arguments following ``#key`` are keyword arguments. You could call this
+method in several ways:
 
 .. code-block:: dylan
 
@@ -279,67 +278,152 @@ matter.
     print-records(recs, lines-per-page: 65);
     print-records(recs, lines-per-page: 120, init-codes: "***42\n");
 
-Programmers have quite a bit of flexibility in specifying keyword
-arguments. They may optionally omit the default value for a keyword
-(in which case ``#f`` is used). Default value specifiers may actually
-be function calls themselves, and may rely on required parameters
-already being in scope. Parameter names may be different from keyword
-names, a handy tool for preventing name conflicts.  For example, if
-you want to have a parameter named ``end``, which is a reserved word
-in Dylan:
+The first line calls the method without using any of the keyword arguments. The
+second line uses one of the keyword arguments and the third uses both. Note
+that the order of the keyword arguments does not matter.
+
+With all three calls, the ``init-codes`` and ``lines-per-page`` variables are
+available in the body of the method, even though keyword arguments are omitted
+in two of the calls. When a keyword argument is omitted, it is given the default
+value specified in the method definition. Therefore, in the first call, the 
+``lines-per-page`` variable has the value ``66``, and in the first and second
+calls, the ``init-codes`` variable has the value ``""``.
+
+Programmers have quite a bit of flexibility in specifying keyword arguments.
+
+* The default value specifier (e.g. the ``= 66`` above) may be omitted, in
+  which case ``#f`` is used.
+* The type of the keyword argument may be specified or omitted, just as with
+  regular arguments.
+* The keyword name can be different from the variable name used in the body of
+  the method—a handy tool for preventing name conflicts.
+* The default value specifier can be a complex expression, and it can even use
+  earlier parameters.
+* They keyword arguments allowed or required by each method can be specified by
+  the generic function. For more on this, see `Parameter Lists and Generic
+  Functions`_ below.
+
+The following method uses some of these features:
 
 .. code-block:: dylan
 
     define method subseq
-        (seq :: <sequence>, #key start :: <integer> = 0, end: _end)
+        (seq :: <sequence>, #key start :: <integer> = 0, end: _end :: <integer> = seq.size)
+      assert(start <= _end, "start is after end");
       ...
     end;
 
-A generic function restricts the parameter lists of its methods. This table
-shows the different kinds of parameter lists that a generic function can have,
-and what effects they have on the parameter lists of its methods.
+Firstly, the ``start:`` and ``end:`` keyword arguments are both specialized as
+``<integer>``. The caller can only supply integers for these parameters.
+Secondly, the ``start:`` keyword argument is associated with the ``start``
+variable in the body of the method as usual, but because the Dylan language
+does not allow a variable named ``end``, that keyword argument is instead
+associated with the ``_end`` variable. Finally, if the ``end:`` keyword argument
+were omitted, the value of the ``_end`` variable would be the size of the
+``seq`` argument/variable.
 
-   =================================  =========  =============  =============  =========
-   Generic function's parameter list  ``#key``   ``#key a, b``  ``#all-keys``  ``#rest``    
-   =================================  =========  =============  =============  =========
-   ``(x)``                            Forbidden  Forbidden      Forbidden      Forbidden
-   ``(x, #key)``                      Required   Allowed        Allowed        Allowed  
-   ``(x, #key a, b)``                 Required   Required       Allowed        Allowed  
-   ``(x, #key, #all-keys)``           Required   Allowed        Automatic      Allowed  
-   ``(x, #key a, b, #all-keys)``      Required   Required       Automatic      Allowed  
-   ``(x, #rest r)``                   Forbidden  Forbidden      Forbidden      Required 
-   =================================  =========  =============  =============  =========
+Rest Arguments
+==============
 
-   Automatic
-      Every method effectively has ``#all-keys`` in its parameter list.
+An argument list can also include ``#rest``, which is used with a variable name:
 
-A method can expand on the keyword parameters specified by its generic function.
+.. code-block:: dylan
+
+   define method format (format-string, #rest format-parameters)
+     ...
+   end method
+
+Any extra arguments are passed to the body of the method as a
+:drm:`<sequence>` in the specified variable. For example, if the above method
+were called like so:
+
+.. code-block:: dylan
+
+   format("Today will be %s with a high of %d", "cloudy", 52);
+   
+The ``format-parameters`` variable in the body of the method would have the
+value ``#[ "cloudy", 52 ]``.
+
+Parameter Lists and Generic Functions
+=====================================
+
+A generic function restricts the parameter lists of its methods, but methods
+can expand on the generic function's parameter list if the generic function
+allows it. This section describes how that works. It is a little more advanced
+than rest of this introduction, so you may want to skip this section for now
+and refer back to it later.
+
+We described the ``#key`` and ``#rest`` parameter list tokens above. The
+``#key`` token may also be used by itself, e.g., ``define method foo (arg,
+#key)``. And there is a third parameter list token, ``#all-keys``, that
+indicates that a method permits other keyword arguments than those listed.
+These features are only useful when working with a generic function and its
+family of methods. When used together, these tokens must appear in the order
+``#rest``, ``#key``, ``#all-keys``.
+
+The table below shows the different kinds of parameter lists that a generic
+function can have, and what effect each has on the parameter lists of the
+methods that it contains.
+
+   +-----------------------------------+-------------------------------------------------------+
+   | Generic function's parameter list | Methods' parameter lists                              |
+   |                                   +-----------+---------------+---------------+-----------+
+   |                                   | ``#key``  | ``#key a, b`` | ``#all-keys`` | ``#rest`` |
+   +===================================+===========+===============+===============+===========+
+   | ``(x)``                           | Forbidden | Forbidden     | Forbidden     | Forbidden |
+   +-----------------------------------+-----------+---------------+---------------+-----------+
+   | ``(x, #key)``                     | Required  | Allowed       | Allowed       | Allowed   |
+   +-----------------------------------+-----------+---------------+---------------+-----------+
+   | ``(x, #key a, b)``                | Required  | Required      | Allowed       | Allowed   |
+   +-----------------------------------+-----------+---------------+---------------+-----------+
+   | ``(x, #key, #all-keys)``          | Required  | Allowed       | Automatic     | Allowed   |
+   +-----------------------------------+-----------+---------------+---------------+-----------+
+   | ``(x, #key a, b, #all-keys)``     | Required  | Required      | Automatic     | Allowed   |
+   +-----------------------------------+-----------+---------------+---------------+-----------+
+   | ``(x, #rest r)``                  | Forbidden | Forbidden     | Forbidden     | Required  |
+   +-----------------------------------+-----------+---------------+---------------+-----------+
+   
+   Required:
+      Each method must have this element in its parameter list.
+   Allowed:
+      Each method may have this element in its parameter list, but is not
+      required to.
+   Forbidden:
+      No method may have this element in its parameter list.
+   Automatic:
+      Each method effectively has ``#all-keys`` in its parameter list, even if
+      it is not present.
+
 This table shows the different kinds of parameter lists that a method can have,
-what the ``r`` argument contains for each, and which keywords are permitted by
+what the ``r`` variable contains for each, and which keywords are permitted by
 each. It is a run-time error to call a method with a keyword argument that it
 does not permit.
 
-   ======================================  =================  =========================  ==============
-   Method's parameter list                 Contents of ``r``  Permits ``a:`` and ``b:``  Permits ``c:``
-   ======================================  =================  =========================  ==============
+   ======================================  =================  =========================  ======================
+   Method's parameter list                 Contents of ``r``  Permits ``a:`` and ``b:``  Permits other keywords
+   ======================================  =================  =========================  ======================
    ``(x)``                                 —                  No                         No            
-   ``(x, #key)``                           —                  Next method                Next method   
-   ``(x, #key a, b)``                      —                  Yes                        Next method  
+   ``(x, #key)``                           —                  If next method permits     If next method permits
+   ``(x, #key a, b)``                      —                  Yes                        If next method permits
    ``(x, #key, #all-keys)``                —                  Yes                        Yes           
    ``(x, #key a, b, #all-keys)``           —                  Yes                        Yes           
    ``(x, #rest r)``                        Extra arguments    No                         No            
-   ``(x, #rest r, #key)``                  Keywords/values    Next method                Next method   
-   ``(x, #rest r, #key a, b)``             Keywords/values    Yes                        Next method 
+   ``(x, #rest r, #key)``                  Keywords/values    If next method permits     If next method permits
+   ``(x, #rest r, #key a, b)``             Keywords/values    Yes                        If next method permits
    ``(x, #rest r, #key, #all-keys)``       Keywords/values    Yes                        Yes           
    ``(x, #rest r, #key a, b, #all-keys)``  Keywords/values    Yes                        Yes           
-   ======================================  =================  =========================  ==============
+   ======================================  =================  =========================  ======================
 
-   Keywords/values
+   Extra arguments:
+      The local variable ``r`` is set to a :drm:`<sequence>` containing all the
+      arguments passed to the method beyond the required arguments (i.e., the
+      sequence will not contain ``x``).
+   Keywords/values:
       The local variable ``r`` is set to a :drm:`<sequence>` containing all the
       keywords and values passed to the method. The first element of the
       sequence is one of the keywords, the second is the corresponding value,
       the third is another keyword, the fourth is its corresponding value, etc.
-   Next method
+   If next method permits:
       The method only permits a keyword if some other applicable method permits
       it. In other words, it permits all the keywords in the :drm:`next-method`
       chain, effectively inheriting them. This rule is handy when you want to
@@ -351,17 +435,19 @@ To illustrate the "next method" rule, say we have the following definitions:
 .. code-block:: dylan
    
    define class <shape> (<object>) ... end;
-   define class <polygon> (<shape>) ... end;
-   define class <ellipse> (<shape>) ... end;
-
-   define class <circle> (<ellipse>) ... end;
-   define class <triangle> (<polygon>) ... end;
-   
    define generic draw (s :: <shape>, #key);
    
-   define method draw (s :: <circle>, #key radius) ... end;
+   define class <polygon> (<shape>) ... end;
+   define class <triangle> (<polygon>) ... end;
+
+   define class <ellipse> (<shape>) ... end;
+   define class <circle> (<ellipse>) ... end;
+
    define method draw (s :: <polygon>, #key sides) ... end;
    define method draw (s :: <triangle>, #key) ... end;
+   
+   define method draw (s :: <ellipse>, #key) ... end;
+   define method draw (s :: <circle>, #key radius) ... end;
 
 The ``draw`` methods for ``<polygon>`` and ``<triangle>`` permit the ``sides:``
 keyword. The method for ``<triangle>`` permits ``sides:`` because the method for
