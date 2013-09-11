@@ -46,6 +46,7 @@ and your module, and then...
     match-group(match, 2) => error: <invalid-match-group>
     // group 0 is the entire match
     ...
+  end;
 
   compile-regex("*") => error: <invalid-regex>
 
@@ -56,14 +57,14 @@ Reference
 .. class:: <regex>
    :sealed:
 
-      A compiled regular expression object.  These should only be
-      created via :func:`compile-regex`.
+   A compiled regular expression object.  These should only be
+   created via :func:`compile-regex`.
 
 
 .. class:: <regex-error>
    :sealed:
 
-     The superclass of all regular expression-related errors.
+   The superclass of all regular expression-related errors.
 
    :superclasses: <format-string-condition>, <error>
 
@@ -71,8 +72,8 @@ Reference
 .. class:: <invalid-regex>
    :sealed:
 
-      Signalled by :func:`compile-regex` when the given regular
-      expression cannot be compiled.
+   Signalled by :func:`compile-regex` when the given regular
+   expression cannot be compiled.
 
    :superclasses: :class:`<regex-error>`
    :keyword pattern:
@@ -81,7 +82,7 @@ Reference
 .. generic-function:: regex-error-pattern
    :sealed:
 
-      Return the pattern that caused an :class:`<invalid-regex>` error.
+   Return the pattern that caused an :class:`<invalid-regex>` error.
 
    :signature: regex-error-pattern *error* => *pattern*
 
@@ -92,7 +93,7 @@ Reference
 .. class:: <invalid-match-group>
    :sealed:
 
-      Signalled when an invalid group identifier is passed to :func:`match-group`.
+   Signalled when an invalid group identifier is passed to :func:`match-group`.
 
    :superclasses: :class:`<regex-error>`
 
@@ -100,7 +101,7 @@ Reference
 .. class:: <regex-match>
    :sealed:
 
-      Stores the match groups and other information about a specific regex search result.
+   Stores the match groups and other information about a specific regex search result.
 
    :superclasses: :drm:`<object>`
    :keyword regular-expression:
@@ -109,7 +110,7 @@ Reference
 .. generic-function:: compile-regex
    :sealed:
 
-      Compile a string into a :class:`<regex>`.
+   Compile a string into a :class:`<regex>`.
 
    :signature: compile-regex *pattern* #key *case-sensitive* *verbose* *multi-line* *dot-matches-all* *use-cache* => *regex*
 
@@ -129,7 +130,7 @@ Reference
 .. generic-function:: regex-pattern
    :sealed:
 
-      Return the :drm:`<string>` from which *regex* was created.
+   Return the :drm:`<string>` from which *regex* was created.
 
    :signature: regex-pattern *regex* => *pattern*
 
@@ -140,7 +141,7 @@ Reference
 .. generic-function:: regex-group-count
    :sealed:
 
-      Return the number of groups in a :class:`<regex>`.
+   Return the number of groups in a :class:`<regex>`.
 
    :signature: regex-group-count *regex* => *num-groups*
 
@@ -151,7 +152,7 @@ Reference
 .. generic-function:: regex-position
    :sealed:
 
-      Find the position of *pattern* in *text*.
+   Find the position of *pattern* in *text*.
 
    :signature: regex-position *pattern* *text* #key *start* *end* *case-sensitive* => *regex-start*, #rest *marks*
 
@@ -178,7 +179,7 @@ Reference
 .. generic-function:: regex-replace
    :sealed:
 
-      Replace occurrences of *pattern* within *big* with *replacement*.
+   Replace occurrences of *pattern* within *big* with *replacement*.
 
    :signature: regex-replace *big* *pattern* *replacement* #key *start* *end* *count* *case-sensitive* => *new-string*
 
@@ -200,7 +201,7 @@ Reference
 .. generic-function:: regex-search
    :sealed:
 
-      Search for a *pattern* within *text*.
+   Search for a *pattern* within *text*.
 
    :signature: regex-search *pattern* *text* #key *anchored* *start* *end* *case-sensitive* => *match*
 
@@ -224,7 +225,7 @@ Reference
 .. generic-function:: regex-search-strings
    :sealed:
 
-      Find all matches for a regular expression within a string.
+   Find all matches for a regular expression within a string.
 
    :signature: regex-search-strings *pattern* *text* #key *anchored* *start* *end* *case-sensitive* => #rest *strings*
 
@@ -244,7 +245,7 @@ Reference
 .. generic-function:: match-group
    :sealed:
 
-      Return information about a specific match group in a :class:`<regex-match>`.
+   Return information about a specific match group in a :class:`<regex-match>`.
 
    :signature: match-group *match* *group* => *text* *start-index* *end-index*
 
