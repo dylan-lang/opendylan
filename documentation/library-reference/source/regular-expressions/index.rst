@@ -47,7 +47,7 @@ and your module, and then...
     // group 0 is the entire match
     ...
 
-  compile-regex("*") => error: <invaled-regex>
+  compile-regex("*") => error: <invalid-regex>
 
 
 Reference
