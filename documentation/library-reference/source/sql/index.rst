@@ -5,6 +5,319 @@ The SQL library
 .. current-library:: sql
 .. current-module:: sql
 
+Introduction
+============
+
+Open Dylan's SQL-ODBC library provides a generic Dylan protocol for interfacing
+applications to any database management system (DBMS) supporting Microsoft's
+Open Database ConnectivityTM (ODBC) interface and the industry-standard database
+query language, SQL. The SQL-OBDC library supports the full SQL language defined
+in the ANSI SQL-89 and ANSI SQL-92 specifications, as well as any extensions
+defined by a DBMS.
+
+A low-level interface to the Microsoft ODBC API is also available in the ODBC-FFI
+library. Functional Objects built the ODBC-FFI library using the C-FFI library
+and the same C-to-Dylan name mapping scheme as described in the Win32 API FFI
+library documentation. See the C FFI and Win32 library reference for details
+of that scheme. The ODBC-FFI library is otherwise undocumented.
+
+Implementation
+--------------
+
+The SQL-ODBC library is built on top of a generic SQL library. This SQL library
+does not include the low-level code necessary to communicate with any particular
+DBMS. In itself, the SQL library simply provides a convenient high-level mechanism
+for integrating database operations into Dylan applications. It is designed to
+form the high-level part of "implementation libraries" that contain lower-level
+code to supporting a particular DBMS protocol, such as ODBC. The SQL-ODBC
+library is, then, one such implementation library.
+
+Our intention is that the SQL library will provide a common high-level Dylan
+interface to any DBMS. Applications written using the SQL-ODBC library will
+therefore be simple to port to any future DBMSes for which implementation
+libraries are written.
+
+Using the SQL-ODBC library in applications
+------------------------------------------
+
+The SQL-ODBC library is available to applications as the SQL-ODBC library,
+which exports the modules SQL-ODBC and SQL. (You should not need to use the
+SQL module, but it will be visible during debugging sessions.)
+
+
+Object-oriented languages and relational databases
+--------------------------------------------------
+
+The SQL-ODBC library does not provide the means to "objectify" a relational
+database or an SQL statement. That is, it does not treat a databases or
+statements in an object-oriented fashion or provide support for doing so.
+
+This is because the object-oriented programming model is very
+different from the relational database model. The two most significant
+differences follow.
+
+First, the relational database model has only simple datatypes
+(string, integer, floating point number, and so on) and does not
+provide a means of defining new types, as object-oriented programming
+languages do.
+
+Second, objects in an object-oriented program have unique identities
+that allow two objects of the same value to be distinguished from one
+another. By contrast, SQL rows (the SQL notion nearest to the notion
+of an object) do not have unique identities: if two rows in a given
+table have identical values, they are indistinguishable.
+
+Result-retrieval protocol
+-------------------------
+
+The SQL-ODBC library provides an abstract Dylan protocol for handling
+SQL result sets, the means by which SQL SELECT statement results are
+retrieved. The library allows result sets to be processed as Dylan
+collections. The various Dylan collection protocols and functions work
+as you would expect on a result set.
+
+Processing results
+------------------
+
+SQL SELECT statements return database records. You process the results
+of an SQL SELECT statement using a result set. Result sets are the
+focal point of the SQL-ODBC library's encapsulation of the protocol
+for retrieving database records. Using result sets allows you to
+concentrate on the logic of your application instead of the logic of
+record retrieval.
+
+Result sets retrieve their records from the database synchronously. As
+result sets retrieve their records, you can specify conversion of
+records to application-specific objects which are added to the result
+set in place of the record. Result sets retrieve their records one at
+a time.
+
+Bridging the object-relational gap
+----------------------------------
+
+Relational DBMSes do not in general deal with objects or classes.
+Since Dylan is an object-oriented language, this creates a gap between
+Dylan and the DBMS.
+
+The SQL-ODBC library bridges this gap by allowing you to specify a
+liaison function for results. A liaison function acts as an
+interpreter for results, taking the records retrieved from the
+relational DBMS and converting each into suitable Dylan objects. A
+default liaison method exists for use in situations where your
+application does not know the appropriate conversion, for example when
+processing SQL SELECT statements typed in by the application user. The
+default method transforms each record retrieved into a Dylan
+collection, where each element of the collection corresponds to a
+column of the record. See Section 1.5.4 on page 36 for more on liaison
+functions.
+
+Error handling
+--------------
+
+As in any application, errors at run time can occur when applications
+talk to databases. The SQL-ODBC library captures the errors and
+warnings that a DBMS generates and signals a corresponding Dylan error
+or warning condition. Your application can then process the condition
+using the Dylan condition system.
+
+Examples used in this document
+------------------------------
+
+The following tables depict example database tables to which this
+document's code examples refer.
+
+Table 1.1 Table "Book" used in this document's code examples.
+
++-------------------------------------------------+-------------------+---------------+
+| Title                                           | Publisher         | ISBN          |
++=================================================+===================+===============+
+| An Introduction to Database Systems             | Addison Wesley    | 0-201-14201-5 |
++-------------------------------------------------+-------------------+---------------+
+| Transaction Processing: Concepts and Techniques | Morgan Kaufmann   | 1-55860-190-2 |
++-------------------------------------------------+-------------------+---------------+
+| Fundamentals of Database Systems                | Benjamin/Cummings | 0-8053-1748-1 |
++-------------------------------------------------+-------------------+---------------+
+| Relational Database Writings, 1991-1994         | Addison-Wesley    | 0-201-82459-0 |
++-------------------------------------------------+-------------------+---------------+
+
+Table 1.2 Table "Author" used in this document's code examples.
+
++-----------+-----------+------------+
+| Author ID | Last Name | First Name |
++===========+===========+============+
+| 1         | Date      | Chris      |
++-----------+-----------+------------+
+| 2         | Gray      | Jim        |
++-----------+-----------+------------+
+| 3         | Reuter    | Andreas    |
++-----------+-----------+------------+
+| 4         | Elmasri   | Ramez      |
++-----------+-----------+------------+
+| 5         | Navathe   | Shamkant   |
++-----------+-----------+------------+
+
+Table 1.3 Table "Book_author" used in this document's code examples.
+
++-----------+---------------+
+| Author_ID | ISBN          |
++===========+===============+
+| 1         | 0-201-14201-5 |
++-----------+---------------+
+| 2         | 1-55860-190-2 |
++-----------+---------------+
+| 3         | 1-55860-190-2 |
++-----------+---------------+
+| 4         | 0-8053-1748-1 |
++-----------+---------------+
+| 5         | 0-8053-1748-1 |
++-----------+---------------+
+| 1         | 0-201-82459-0 |
++-----------+---------------+
+
+Connecting to a database
+========================
+
+Before it can query a database, your application must connect to it.
+Most DBMSes operate a form of login procedure to verify connections,
+using a user name and password for the purpose. The popular DBMSes
+each have different protocols for identifying themselves, their users,
+their databases, and connections to those databases.
+
+The SQL-ODBC library provides a general-purpose connection protocol
+that is not specific to any DBMS, and represents DBMSes, databases,
+database connections, user names and passwords with generic Dylan
+classes, thereby hiding the idiosyncrasies of the various DBMSes from
+Dylan applications. The classes that the SQL-ODBC library defines are
+shown in Table 1.4.
+
+Table 1.4 Dylan DBMS classes.
+
++------------------------+-----------------------+-----------------------+
+| Entity                 | Abstract Dylan class  | SQL-ODBC class        |
++========================+=======================+=======================+
+| DBMS                   | :class:`<dbms>`       | ``<odbc-dbms>``       |
++------------------------+-----------------------+-----------------------+
+| Database               | :class:`<database>`   | ``<odbc-database>``   |
++------------------------+-----------------------+-----------------------+
+| User name and password | :class:`<user>`       | ``<odbc-user>``       |
++------------------------+-----------------------+-----------------------+
+| Active connection      | :class:`<connection>` | ``<odbc-connection>`` |
++------------------------+-----------------------+-----------------------+
+
+You should create DBMS-specific instances of these classes to connect
+to a database.
+
+Executing SQL statements
+========================
+
+The SQL-ODBC library provides a way of processing SQL statements: the
+execute function, which you must apply to instances of the
+:class:`<sql-statement>` class.
+
+The null value
+--------------
+
+SQL offers the null value to represent missing information, or
+information that is not applicable in a particular context. All
+columns of a table can accept the null value -- unless prohibited by
+integrity constraints -- regardless of the domain of the column.
+Hence, the null value is included in all domains of a relational
+database and can be viewed as an out-of-band value.
+
+Relational database theory adopted a three-valued logic system --
+"true", "false", and "null" (or "unknown") -- in order to process
+expressions involving the null value. This system has interesting (and
+sometimes frustrating) consequences when evaluating arithmetic and
+comparison expressions. If an operand of an arithmetic expression is
+the null value, the expression evaluates to the null value. If a
+comparand of a comparison expression is the null value, the expression
+may evaluate to the null/unknown truth-value.
+
+For example:
+
+* ``a + b``, where a contains the null value or b contains the null
+  value, evaluates to the null value
+* ``a + b``, where a contains the null value and b contains the null
+  value, evaluates to the null value
+* ``a = b``, where a contains the null value or b contains the null
+  value, evaluates to unknown
+* ``a = b``, where a contains the null value and b contains the null
+  value, evaluates to unknown
+* ``a | b``, where a is true and b contains the null value, evaluates
+  to true
+* ``a & b``, where a is false and b contains the null value, evaluates
+  to false
+
+The SQL ``SELECT`` statements return records for which the ``WHERE``
+clause (or ``WHERE`` predicate) evaluates to true (not to false and
+not to the null value). In order to test for the presence or absence
+of the null value, SQL provides a special predicate of the form::
+
+    column-name is [not] null
+
+The null value is effectively a universal value that is difficult to
+use efficiently in Dylan. To identify when null values are returned
+from or need to be sent to a DBMS server, the SQL-ODBC library
+supports indicator objects. Indicator objects indicate when a column
+of a record retrieved from a database contains the null value, or when
+a client application wishes to set a column to the null value.
+
+Input indicators and output indicators
+--------------------------------------
+
+It is difficult for database applications written in traditional
+programming languages to represent the semantics of the null value,
+because it is a universal value which is in the domain of all types,
+and the three-valued logic system which accompanies null values does
+not easily translate to the two-value logic system in traditional
+programming languages.
+
+In Dylan, a universal value can be achieved if we ignore type
+specialization, but this inhibits optimization and method dispatching.
+Even if we were to forgo type specialization, the evaluation of
+arithmetic and comparison expressions is a problem since Dylan's logic
+system is boolean and not three-valued. Therefore, the SQL-ODBC
+library has a goal of identifying null values and translating them
+into Dylan values that can be recognized as representing null values.
+
+In order to identify null values during SQL statement processing, the
+<sql-statement> class supports an input indicator and output
+indicator. An input indicator is a marker value or values which
+identifies an input host variable as containing the null value. An
+output indicator is a substitution value which semantically identifies
+columns of a retrieved record as containing the null value.
+
+If the SQL-ODBC library encounters a null value when retrieving
+records from a database, and there is no appropriate indicator object,
+it signals a <data-exception> condition. The condition is signaled
+from result-set functions (including the collection protocol) and not
+the execute function.
+
+During the execution of an SQL statement to which an input indicator
+value was supplied, each input host variable is compared (with the
+function \==) to the input indicator and, if it holds the input
+indicator value, the null value is substituted for it.
+
+The input indicator may be a single value or a sequence of values. A
+single value is useful when it is in the domain of all input host
+variables; if the host variables have not been specialized, any newly
+created value will do. Otherwise, a sequence of values must be used.
+Input indicators that are general instances of <sequence> use their
+positional occurrence within the SQL statement as the key for the
+sequence.
+
+The SQL SELECT statement is the only SQL statement that returns non-
+status results back to the client application. During the retrieval of
+these results, the SQL-ODBC library substitutes the output indicator,
+if supplied, for null values found in the columns of each record.
+
+The output indicator may be a single value or a sequence of values. If
+the output indicator is a general instance of <sequence>, the element
+of the sequence whose key corresponds to the column index is used as
+the substitution value. Otherwise, the output indicator value itself
+is used as the substitution value.
+
+
 The SQL module
 --------------
 
@@ -147,6 +460,17 @@ The SQL module
 
    :keyword dbms:
 
+   :description:
+
+     The ``<connection>`` class represents a database connection. More
+     formally, we can say that it identifies a context in which a
+     client application can execute SQL statements. The exact
+     composition of a connection depends on the DBMS and the client
+     platform. Implementation libraries like SQL-ODBC define a
+     subclass of ``<connection>`` that implements the necessary
+     requirements to identify the execution context to the client
+     application.
+
 .. class:: <constraint>
    :abstract:
 
@@ -220,6 +544,13 @@ The SQL module
 
    :superclasses: ``<object>``
 
+   :description:
+
+     The ``<database>`` class identifies a database to a DBMS. Exactly what a
+     database is depends on the DBMS in use. Implementation libraries
+     like SQL-ODBC supply an instantiable subclass of ``<database>`` to provide
+     whatever implementation is necessary for identifying a database to a
+     specific DBMS.
 
 .. class:: <datetime-field-overflow>
    :open:
@@ -240,6 +571,12 @@ The SQL module
 
    :superclasses: ``<object>``
 
+   :description:
+
+     The ``<dbms>`` class identifies a database management system (DBMS) to a
+     client application. Implementation libraries like SQL-ODBC supply an
+     instantiable subclass of ``<dbms>`` to provide whatever implementation is
+     necessary for identifying a DBMS to an application.
 
 .. class:: <dependent-privilege-descriptors-still-exist>
    :open:
@@ -815,6 +1152,39 @@ The SQL module
    :keyword output-indicator:
    :keyword text:
 
+   :description:
+
+     The ``<sql-statement>`` class represents SQL statements and their
+     indicator values and coercion policy. You can use this class to
+     represent any SQL statement, be it static or dynamic. You can
+     send SQL statements to the DBMS for execution by calling the
+     :gf:`execute` function on an instance of ``<sql-statement>``. The
+     :gf:`execute` function returns the results of executing the SQL
+     statement, if there are any.
+
+     In the :gf:`make` method on ``<sql-statement>``, you can specify that
+     values should be substituted into the SQL statement when it is
+     executed. You do not specify the values until calling :gf:`execute`
+     on the statement, when you can pass the substitution values
+     with the ``parameter:`` keyword.
+
+     The values are substituted wherever a question mark (``?``) occurs in
+     the SQL statement string. We call the question marks anonymous host
+     variables because there is no Dylan variable name. Substitution occurs
+     positionally: the first value replaces the first anonymous host variable,
+     the second value replaces the second anonymous host variable, and so on.
+     If the number of values is greater than the number of anonymous host
+     variables, the extra parameters are ignored. If the number of anonymous
+     host variables is greater than the number of parameters, a condition
+     is signaled.
+
+     When the SQL statement is ``SELECT``, you can also specify a result-set
+     policy and a liaison function in the call to :gf:`execute`. A result-set
+     policy describes behavioral and performance characteristics of the
+     result-set object that the execute function returns. A liaison function
+     creates Dylan objects from the records retrieved from the database. These
+     objects become the elements of the result set instead of the record object.
+
 .. class:: <sql-table>
    :open:
    :abstract:
@@ -1039,6 +1409,20 @@ The SQL module
 
    :superclasses: ``<object>``
 
+   :description:
+
+     The ``<user>`` class identifies a user to a DBMS. Exactly what a "user"
+     means depends on the DBMS. Implementation libraries like SQL-ODBC
+     supply an instantiable subclass of ``<user>`` to provide whatever
+     implementation is necessary for identifying a user to a specific DBMS.
+
+     When connecting to a DBMS that did not have any users per se,
+     instances of ``<user>`` would merely satisfy the API protocol,
+     and would not identify a specific user -- any instance of ``<user>``
+     would identify all users to the DBMS. However, most DBMSes do
+     require a user name and password to identify a specific user.
+     Indeed, some DBMSes require stringent authorization information
+     in order to identify a user, such as multiple passwords.
 
 .. class:: <using-clause-does-not-match-dynamic-parameter-specification>
    :open:
