@@ -5,6 +5,9 @@ The SQL library
 .. current-library:: sql
 .. current-module:: sql
 
+.. contents::
+   :local:
+
 Introduction
 ============
 
@@ -126,53 +129,53 @@ Examples used in this document
 The following tables depict example database tables to which this
 document's code examples refer.
 
-Table 1.1 Table "Book" used in this document's code examples.
+.. table:: Table 1.1 Table "Book" used in this document's code examples.
 
-+-------------------------------------------------+-------------------+---------------+
-| Title                                           | Publisher         | ISBN          |
-+=================================================+===================+===============+
-| An Introduction to Database Systems             | Addison Wesley    | 0-201-14201-5 |
-+-------------------------------------------------+-------------------+---------------+
-| Transaction Processing: Concepts and Techniques | Morgan Kaufmann   | 1-55860-190-2 |
-+-------------------------------------------------+-------------------+---------------+
-| Fundamentals of Database Systems                | Benjamin/Cummings | 0-8053-1748-1 |
-+-------------------------------------------------+-------------------+---------------+
-| Relational Database Writings, 1991-1994         | Addison-Wesley    | 0-201-82459-0 |
-+-------------------------------------------------+-------------------+---------------+
+    +-------------------------------------------------+-------------------+---------------+
+    | Title                                           | Publisher         | ISBN          |
+    +=================================================+===================+===============+
+    | An Introduction to Database Systems             | Addison Wesley    | 0-201-14201-5 |
+    +-------------------------------------------------+-------------------+---------------+
+    | Transaction Processing: Concepts and Techniques | Morgan Kaufmann   | 1-55860-190-2 |
+    +-------------------------------------------------+-------------------+---------------+
+    | Fundamentals of Database Systems                | Benjamin/Cummings | 0-8053-1748-1 |
+    +-------------------------------------------------+-------------------+---------------+
+    | Relational Database Writings, 1991-1994         | Addison-Wesley    | 0-201-82459-0 |
+    +-------------------------------------------------+-------------------+---------------+
 
-Table 1.2 Table "Author" used in this document's code examples.
+.. table:: Table 1.2 Table "Author" used in this document's code examples.
 
-+-----------+-----------+------------+
-| Author ID | Last Name | First Name |
-+===========+===========+============+
-| 1         | Date      | Chris      |
-+-----------+-----------+------------+
-| 2         | Gray      | Jim        |
-+-----------+-----------+------------+
-| 3         | Reuter    | Andreas    |
-+-----------+-----------+------------+
-| 4         | Elmasri   | Ramez      |
-+-----------+-----------+------------+
-| 5         | Navathe   | Shamkant   |
-+-----------+-----------+------------+
+    +-----------+-----------+------------+
+    | Author ID | Last Name | First Name |
+    +===========+===========+============+
+    | 1         | Date      | Chris      |
+    +-----------+-----------+------------+
+    | 2         | Gray      | Jim        |
+    +-----------+-----------+------------+
+    | 3         | Reuter    | Andreas    |
+    +-----------+-----------+------------+
+    | 4         | Elmasri   | Ramez      |
+    +-----------+-----------+------------+
+    | 5         | Navathe   | Shamkant   |
+    +-----------+-----------+------------+
 
-Table 1.3 Table "Book_author" used in this document's code examples.
+.. table:: Table 1.3 Table "Book_author" used in this document's code examples.
 
-+-----------+---------------+
-| Author_ID | ISBN          |
-+===========+===============+
-| 1         | 0-201-14201-5 |
-+-----------+---------------+
-| 2         | 1-55860-190-2 |
-+-----------+---------------+
-| 3         | 1-55860-190-2 |
-+-----------+---------------+
-| 4         | 0-8053-1748-1 |
-+-----------+---------------+
-| 5         | 0-8053-1748-1 |
-+-----------+---------------+
-| 1         | 0-201-82459-0 |
-+-----------+---------------+
+    +-----------+---------------+
+    | Author_ID | ISBN          |
+    +===========+===============+
+    | 1         | 0-201-14201-5 |
+    +-----------+---------------+
+    | 2         | 1-55860-190-2 |
+    +-----------+---------------+
+    | 3         | 1-55860-190-2 |
+    +-----------+---------------+
+    | 4         | 0-8053-1748-1 |
+    +-----------+---------------+
+    | 5         | 0-8053-1748-1 |
+    +-----------+---------------+
+    | 1         | 0-201-82459-0 |
+    +-----------+---------------+
 
 Connecting to a database
 ========================
@@ -190,19 +193,19 @@ classes, thereby hiding the idiosyncrasies of the various DBMSes from
 Dylan applications. The classes that the SQL-ODBC library defines are
 shown in Table 1.4.
 
-Table 1.4 Dylan DBMS classes.
+.. table:: Table 1.4 Dylan DBMS classes.
 
-+------------------------+-----------------------+-----------------------+
-| Entity                 | Abstract Dylan class  | SQL-ODBC class        |
-+========================+=======================+=======================+
-| DBMS                   | :class:`<dbms>`       | ``<odbc-dbms>``       |
-+------------------------+-----------------------+-----------------------+
-| Database               | :class:`<database>`   | ``<odbc-database>``   |
-+------------------------+-----------------------+-----------------------+
-| User name and password | :class:`<user>`       | ``<odbc-user>``       |
-+------------------------+-----------------------+-----------------------+
-| Active connection      | :class:`<connection>` | ``<odbc-connection>`` |
-+------------------------+-----------------------+-----------------------+
+    +------------------------+-----------------------+-----------------------+
+    | Entity                 | Abstract Dylan class  | SQL-ODBC class        |
+    +========================+=======================+=======================+
+    | DBMS                   | :class:`<dbms>`       | ``<odbc-dbms>``       |
+    +------------------------+-----------------------+-----------------------+
+    | Database               | :class:`<database>`   | ``<odbc-database>``   |
+    +------------------------+-----------------------+-----------------------+
+    | User name and password | :class:`<user>`       | ``<odbc-user>``       |
+    +------------------------+-----------------------+-----------------------+
+    | Active connection      | :class:`<connection>` | ``<odbc-connection>`` |
+    +------------------------+-----------------------+-----------------------+
 
 You should create DBMS-specific instances of these classes to connect
 to a database.
@@ -281,7 +284,7 @@ library has a goal of identifying null values and translating them
 into Dylan values that can be recognized as representing null values.
 
 In order to identify null values during SQL statement processing, the
-<sql-statement> class supports an input indicator and output
+:class:`<sql-statement>` class supports an input indicator and output
 indicator. An input indicator is a marker value or values which
 identifies an input host variable as containing the null value. An
 output indicator is a substitution value which semantically identifies
@@ -289,22 +292,22 @@ columns of a retrieved record as containing the null value.
 
 If the SQL-ODBC library encounters a null value when retrieving
 records from a database, and there is no appropriate indicator object,
-it signals a <data-exception> condition. The condition is signaled
-from result-set functions (including the collection protocol) and not
-the execute function.
+it signals a :class:`<data-exception>` condition. The condition is
+signaled from result-set functions (including the collection protocol)
+and not the execute function.
 
 During the execution of an SQL statement to which an input indicator
 value was supplied, each input host variable is compared (with the
-function \==) to the input indicator and, if it holds the input
+function ``\==``) to the input indicator and, if it holds the input
 indicator value, the null value is substituted for it.
 
 The input indicator may be a single value or a sequence of values. A
 single value is useful when it is in the domain of all input host
 variables; if the host variables have not been specialized, any newly
 created value will do. Otherwise, a sequence of values must be used.
-Input indicators that are general instances of <sequence> use their
-positional occurrence within the SQL statement as the key for the
-sequence.
+Input indicators that are general instances of :drm:`<sequence>` use
+their positional occurrence within the SQL statement as the key for
+the sequence.
 
 The SQL SELECT statement is the only SQL statement that returns non-
 status results back to the client application. During the retrieval of
@@ -312,14 +315,266 @@ these results, the SQL-ODBC library substitutes the output indicator,
 if supplied, for null values found in the columns of each record.
 
 The output indicator may be a single value or a sequence of values. If
-the output indicator is a general instance of <sequence>, the element
-of the sequence whose key corresponds to the column index is used as
-the substitution value. Otherwise, the output indicator value itself
-is used as the substitution value.
+the output indicator is a general instance of :drm:`<sequence>`, the
+element of the sequence whose key corresponds to the column index is
+used as the substitution value. Otherwise, the output indicator value
+itself is used as the substitution value.
 
+Data retrieval using result-set collection
+==========================================
+
+Executing an SQL SELECT statement by invoking the execute function on
+the instance of :class:`<sql-statement>` that represents the statement
+yields a result set.
+
+A result set is a Dylan collection which encapsulates the protocol
+necessary to retrieve data from a database. The SQL-ODBC library
+defines two subclasses of :class:`<result-set>` that provide different
+behaviors and performance characteristics. The type of the result set
+returned by the execute function is determined by the result-set
+policy supplied to the function or macro.
+
+There are two subclasses of :class:`<result-set>`:
+:class:`<forward-only-result-set>` and :class:`<scrollable-result-set>`.
+
+The :class:`<forward-only-result-set>` class provides an efficient
+means of accessing the elements of a result set. Efficiency is
+achieved by performing minimal processing on each record retrieved and
+by maintaining in memory only the current record. Implicit in this
+behavior is that records you have accessed previously are no longer
+available to your application; if you maintain references to previous
+records behavior is unpredictable. The key for each access must always
+be greater than or equal to the previous access's key; otherwise, a
+condition is signaled.
+
+The :class:`<scrollable-result-set>` class allows your application to
+access elements of the result-set collection in any order, meaning
+that records you have accessed previously can be revisited. Scrollable
+result sets retrieve records synchronously.
+
+Example:
+
+This example returns a list of authors who have published two or more books.
+
+.. code-block:: dylan
+
+    (result-set-policy: make(<scrollable-result-set-policy>))
+        select last_name, first_name, count(*)
+        from author, book_author
+        where book_author.author_id = author.author_id
+        group by last_name, first_name
+        having count(*) > 2
+      end;
+    => #(#("Date", "Chris", 2))
+
+    let query = make(<sql-statement>,
+                    text: "select last_name, first_name, count(*)"
+                          "from author, book_author"
+                          "where book_author.author_id"
+                             "= author.author_id"
+                          "group by last_name, first_name having"
+                              "count(*) >= 2");
+    execute(query, result-set-policy: $scrollable-result-set-policy);
+
+Result-set collections
+======================
+
+A result-set collection, in spirit, contains the result of an SQL
+``SELECT`` statement. To provide these results, result-set collections
+and their methods control the retrieval of elements from the database.
+Each element of a result set is a record and each element of a record
+is a value. The SQL-ODBC library does not provide any classes to
+represent columns; the elements of a record are just Dylan objects.
+
+Result-set classes, in conjunction with the methods defined on them,
+provide a protocol to retrieve data from a database. Result-sets do
+not necessarily contain the records from the database. A result set
+could cache a small subset of the records retrieved for performance
+reasons. The logic for retrieving a record from a result set (from the
+database) is as follows:
+
+1. Perform an internal fetch: values are stored into bindings
+   established during SQL statement preparation. A record object is
+   created during the preparation of the SQL statement which represents
+   the values of the record (collection of values).
+
+2. Invoke the liaison method on the record object. The result of the
+   liaison function is the result of the collection access.
+
+The columns of a record are processed when the columns are retrieved
+from the record object. This includes checking for null values and
+performing data coercion if a :gf:`coercion-policy` is supplied.
+
+Record class
+------------
+
+An instance of the :class:`<record>` class is a placeholder for
+records retrieved from the database. The record class is a collection
+whose elements are the columns of the records retrieved from the
+database. If the record object has a coercion policy (obtained through
+the :gf:`result-set-policy`), datatype coercion is performed on the
+elements of the record object as they are retrieved from the
+collection.
+
+The elements of a record collection are ephemeral under the result-set
+retrieval protocol: the values for the elements of the collection can
+change when the next record of the result set is accessed. A result
+set may maintain more than one record object to improve performance.
+
+Record collections support the forward- and backward-iteration
+protocols. The result of calling :drm:`type-for-copy` on the
+:class:`<record>` class is :class:`<simple-object-vector>`.
+
+Applications cannot instantiate the :class:`<record>` class. However,
+the functions returned by the forward- and backward-iteration protocol
+methods on the result-set classes return instances of this class.
+
+The values in a record object have a short lifespan: they are only
+valid until the next fetch is performed.
+
+Result-set policy class
+-----------------------
+
+Applications use result-set policy classes to specify the behavior and
+performance characteristics of a result set, as well as its type. The
+type of the result set is determined by the result-set policy object.
+The type of the record object is determined by the :gf:`coercion-policy`
+slot of :class:`<sql-statement>`.
+
+If ``result-set-policy.scrollable?`` is ``#t``, the result set will be an
+instance of :class:`<scrollable-result-set>` otherwise it will be an instance
+of :class:`<forward-only-result-set>`. If ``statement.coercion-policy ~=
+$no-coercion`` then the record will be an instance of :class:`<coercion-record>`;
+otherwise, it will be an instance of :class:`<record>`.
+
+.. table:: Table 1.5 Result set policies and classes.
+
+    +-------------+-----------------+------------------------------------+
+    | Scrollable? | Coercion policy | Result set class                   |
+    +=============+=================+====================================+
+    | ``#f``      | ``#f``          | :class:`<forward-only-result-set>` |
+    +-------------+-----------------+------------------------------------+
+    | ``#t``      | -               | :class:`<scrollable-result-set>`   |
+    +-------------+-----------------+------------------------------------+
+
+Result-set classes
+------------------
+
+Result-sets are the focal point for the encapsulation of the protocol
+required to retrieve records from a database. The SQL-ODBC library
+provides three result-set classes with different performance and
+behavioral characteristics. These classes are :class:`<result-set>`,
+:class:`<forward-only-result-set>`, and :class:`<scrollable-result-set>`.
+
+Liaison functions
+-----------------
+
+Liaison functions convert records retrieved from a database query to
+Dylan objects. These functions bridge the conceptual gap between
+relational databases and Dylan's object-orientation.
+
+To create a Dylan object from a retrieved record, the liaison function
+must understand the form of the records coming from the database and
+the mappings of records to Dylan objects. These Dylan objects make up
+the elements of the result set: the results of the liaison function
+are added to the result set each time it is called. As your
+application iterates over a result set, the liaison function provides
+the objects that the application processes.
+
+If you do not provide a liaison function for a result set, the SQL-
+ODBC library supplies a ``default-liaison`` function to perform the
+conversion. If a coercion policy is provided, the ``default-liaison``
+function is :drm:`copy-sequence`. The new sequence is safe in that it is a
+normal Dylan collection with no relationship to databases, SQL
+statements, or result sets. If a coercion policy is not provided, the
+``default-liaison`` is the identity function.
+
+You can specify the identity function as the liaison function to
+process the actual record objects. If no type coercion is performed by
+the functions on the record class, this function will have the lowest
+overhead, but there are some restrictions: the values retrieved from
+the record may become invalid when the state of the iteration protocol
+changes.
+
+The liaison function can, potentially, cause the greatest number of
+problems for an application using SQL-ODBC since there is no type
+safety between the liaison function, the record class and the SQL
+``SELECT`` statement. You must ensure that the liaison function is in sync
+with the SQL ``SELECT`` statement since there is no support in SQL-ODBC
+for this.
+
+Example:
+
+.. code-block:: dylan
+
+    define class <book> (<object>)
+      slot title :: <string>, init-keyword: title:;
+      slot publisher :: <string>, init-keyword: publisher:;
+      slot isbn :: <string>, init-keyword: isbn:;
+      slot author :: <string>, init-keyword: author:;
+    end class;
+
+    begin
+      let booker =
+        method (record :: <record>) => (book :: <book>)
+          let (title, publisher, isbn, last_name, first_name) =
+            apply(values, record);
+
+          make(<book>, title: title, publisher: publisher,
+               isbn: isbn, author: concatenate(last_name, ", ",
+               first_name));
+        end method;
+    let query = make(<sql-statement>,
+                     statement: "select title, publisher, isbn,
+                                   last_name, first_name
+                                 from book, author, book_author
+                                 where book.isbn = book_author.isbn
+                                   and book_author.author_id =
+                                         author.author_id
+                                 order by author.last_name,
+                                          author.first_name");
+    execute(query, liaison: booker
+            result-set-policy:
+              make(<forward-only-result-set-policy>));
+    end;
+
+Coercion policies
+-----------------
+
+In the SQL-ODBC library, the element method on the record class
+encapsulates all coercions of data retrieved from a database. This
+method can return columns with or without coercion: as low-level SQL
+data-types (no conversion), as Dylan data-types, or as user-defined
+types. The ``coercion-policy:`` init-keyword of the
+:class:`<sql-statement>` class determines this behavior.
+
+If the ``coercion-policy:`` init-keyword is :const:`$no-coercion`,
+coercions are not performed. Hence, your application will be
+processing objects with low-level SQL datatypes. This option has the
+lowest overhead but the most restrictions: the values returned from
+the element method may not be valid (values may change as storage may
+be reused) after the next call to the ``next-state`` method returned
+by ``forward-iteration-protocol``.
+
+The value of :const:`$default-coercion` for the ``coercion-policy:``
+init-keyword (the default value) indicates that default coercion
+should be performed: the data retrieved from the database is coerced
+to the corresponding Dylan objects.
+
+A sequence for the ``coercion-policy:`` init-keyword instructs the SQL
+library to perform specific data coercion on the data retrieved from
+the database. Essentially, each element of the limited sequence is a
+data coercion function which will be invoked using the objects
+returned from the database as the argument.
+
+When there is a one-to-one correspondence between an SQL datatype and
+a built-in or user-defined Dylan datatype, use the :class:`<record>`
+class to perform the conversion. When multiple columns define a Dylan
+object or one column defines multiple Dylan objects, use the liaison
+function to perform the conversion.
 
 The SQL module
---------------
+==============
 
 .. constant:: $default-coercion
 
