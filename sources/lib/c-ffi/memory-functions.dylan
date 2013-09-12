@@ -53,5 +53,6 @@ define inline function clear-memory! (pointer :: <C-pointer>,
   let raw-pointer = primitive-unwrap-c-pointer(pointer);
   let raw-zero = primitive-unwrap-machine-word(as(<machine-word>, 0));
   let raw-size = primitive-unwrap-machine-word(as(<machine-word>, size));
-  primitive-fill!(raw-pointer, raw-zero, raw-zero, raw-size, raw-zero);
+  primitive-fill!(raw-pointer, raw-zero, raw-zero, raw-size,
+                  primitive-cast-raw-as-pointer(raw-zero));
 end function;
