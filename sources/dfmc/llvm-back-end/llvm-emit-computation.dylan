@@ -192,7 +192,8 @@ define method emit-result-assignment
 
   if (named?(temp) & *temporary-locals?*)
     let name = hygienic-mangle(back-end, temp.name, temp.frame-offset);
-    unless (llvm-builder-local-defined?(back-end, name))
+    if (instance?(result, <llvm-instruction>)
+          & ~llvm-builder-local-defined?(back-end, name))
       ins--local(back-end, name, result);
     end;
   end if;
