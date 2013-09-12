@@ -42,7 +42,7 @@ define module result-set
         //       function    Instance of <function>.
         // Returns the liaison function associated with result-set.
         // The liaison function is invoked by SQL on each record
-        // retrieved from the database. The results of the liaision 
+        // retrieved from the database. The results of the liaison
         // function make up the content of the result-set.
         // Liaison signature: fn(record :: <record>) => (obj :: <object>)
 
@@ -124,7 +124,7 @@ define module result-set
   create
     <coercion-policy>,
         // Constant module variable
-        // Type: type-union(singleton($default-conercion), <object>)
+        // Type: type-union(singleton($default-coercion), <object>)
 
     default-conversion,
         // GF: default-conversion value => converted-value
@@ -153,7 +153,7 @@ define module result-set
         //       indicator   Instance of <object>.
         //       index       Instance of <integer>.
         //       null-value  Instance of <object>.
-        // Returns the apporiate null-value from indicator as indicated
+        // Returns the appropriate null-value from indicator as indicated
         // by the index.
 
   create
