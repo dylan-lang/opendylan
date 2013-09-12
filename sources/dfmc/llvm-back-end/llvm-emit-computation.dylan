@@ -1463,8 +1463,12 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <values>) => ();
+  let (values-rest-constant?, values-rest) = fast-constant-value?(c.rest-value);
   let (fixed, rest)
-    = if (c.rest-value & instance?(generator(c.rest-value), <stack-vector>))
+    = if (values-rest-constant?)
+        let values-rest-refs = map(make-object-reference, values-rest);
+        values(concatenate(c.fixed-values, values-rest-refs), #f)
+      elseif (c.rest-value & instance?(generator(c.rest-value), <stack-vector>))
         let sv-c :: <stack-vector> = generator(c.rest-value);
         values(concatenate(c.fixed-values, sv-c.arguments), #f)
       else
