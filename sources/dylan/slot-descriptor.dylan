@@ -68,6 +68,10 @@ define generic as-slot-descriptor-class (allocation);
 
 //// RUN-TIME
 
+define method debug-name (slot-descriptor :: <slot-descriptor>)
+  slot-descriptor.slot-getter & debug-name(slot-descriptor.slot-getter)
+end method debug-name;
+
 define method getter=
     (descriptor-1 :: <slot-descriptor>, descriptor-2 :: <slot-descriptor>)
   descriptor-1.slot-getter == descriptor-2.slot-getter

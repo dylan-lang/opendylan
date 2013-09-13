@@ -64,6 +64,11 @@ Now, it reports::
 Libraries
 ---------
 
+dylan-extensions
+^^^^^^^^^^^^^^^^
+
+The ``debug-name`` method now has a specialization for ``<slot-descriptor>``.
+
 I/O
 ^^^
 
