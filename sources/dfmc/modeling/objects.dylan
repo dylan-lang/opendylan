@@ -825,7 +825,7 @@ define primary &class <slot-descriptor> (<slot-keyword-initialization-descriptor
   slot emitted-type-name = #f;
 
   // TODO: Should these actually be compile-stage overrides on the 
-  // accessor functions themseves? That would be a more general 
+  // accessor functions themselves? That would be a more general
   // purpose mechanism.
 
   weak slot model-object-getter = #f,

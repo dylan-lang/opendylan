@@ -241,7 +241,7 @@ define method do-implementation-class-cross-class-initializations (iclass :: <im
     check-for-illegally-inherited-slots(iclass.direct-slot-descriptors, all-super-iclasses);
     finalize-inheritance(iclass, all-super-iclasses, scu, mask);
     if (recurse?)
-      // If we're now type complete, and have direect subclasses, some of them may
+      // If we're now type complete, and have direct subclasses, some of them may
       // now be type-complete.
       for (subc :: <class> in direct-subclasses(iclass))
         do-implementation-class-cross-class-initializations(scu-entry(subc, scu), scu, recurse?: #t);
