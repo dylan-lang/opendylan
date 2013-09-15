@@ -264,7 +264,7 @@ The SQL-ODBC library provides a way of processing SQL statements: the
 * :gf:`execute`
 * :class:`<sql-statement>`
 * :gf:`coercion-policy`
-* :gf:`coercion-policy-setter``
+* :gf:`coercion-policy-setter`
 * :gf:`datatype-hints`
 * :gf:`datatype-hints-setter`
 * :gf:`execute`
