@@ -431,6 +431,7 @@ static void print_user_defined (STREAM stream, D instance, BOOL escape_p, int pr
 static void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   enum dylan_type_enum type = dylan_type(instance);
   switch (type) {
+    case integer_type:
       print_integer(stream, instance, escape_p, print_depth); break;
     case character_type:
       print_character(stream, instance, escape_p, print_depth); break;
