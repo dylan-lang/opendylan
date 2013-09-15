@@ -66,7 +66,7 @@ define constant $sql-statement-finalization-lock :: <lock> = make(<lock>);
 // sql-statements on all other threads just to finalize a single instance.
 // The alternative, each instance of <odbc-sql-statement> could have it's
 // own lock object but I don't like the idea of creating many locks. So,
-// I don't expect this syncronization issue to occur much so doing the
+// I don't expect this synchronization issue to occur much so doing the
 // heavy-handed thing shouldn't be a big deal (I think).
 define method finalize
     (statement :: <odbc-sql-statement>)
