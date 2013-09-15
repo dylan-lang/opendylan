@@ -5,6 +5,9 @@ The finalization Module
 .. current-library:: common-dylan
 .. current-module:: finalization
 
+.. contents::
+   :local:
+
 Common Dylan provides a finalization interface in the *finalization*
 module of *common-dylan*. This section explains finalization, the
 finalization interface provided, and how to use the interface in
@@ -39,7 +42,7 @@ The following sections give a broad overview of how finalization works
 and how to use the interface.
 
 Registering objects for finalization
-====================================
+------------------------------------
 
 Finalization works through cooperation with the garbage collector.
 Objects that are no longer referenced by the application that created
@@ -66,7 +69,7 @@ The garbage collector will not reclaim the objects until they have been
 finalized.
 
 Draining the finalization queue
-===============================
+-------------------------------
 
 Objects in the finalization queue wait there until the application
 drains it by calling the function :func:`drain-finalization-queue`. This
@@ -81,7 +84,7 @@ for details of how you can set up a thread to do so.
    about finalization ordering.
 
 Finalizers
-==========
+----------
 
 The :func:`drain-finalization-queue` function
 finalizes each object in the finalization queue by calling the generic
@@ -105,10 +108,10 @@ created in a local binding before it goes out of scope.
 The :func:`drain-finalization-queue` function
 makes each call to :gf:`finalize` inside
 whatever dynamic handler environment is present when
-``drain-finalization-queue`` is called. If the call to
-``drain-finalization-queue`` is aborted via a non-local exit during a call
-to ``finalize``, the finalization queue retains all the objects that had
-been added to it but which had not been passed to ``finalize``.
+:gf:`drain-finalization-queue` is called. If the call to
+:gf:`drain-finalization-queue` is aborted via a non-local exit during a call
+to :gf:`finalize`, the finalization queue retains all the objects that had
+been added to it but which had not been passed to :gf:`finalize`.
 
 There is a default method for :gf:`finalize` on
 :drm:`<object>`. The method does nothing. It is available so that it is safe
@@ -116,7 +119,7 @@ for all finalizers to call :drm:`next-method`, a practice that we strongly
 encourage. See `Writing finalizers`_.
 
 After finalization
-==================
+------------------
 
 Once an object in the finalization queue has been finalized, it
 typically becomes available for reclamation by the garbage collector.
@@ -128,7 +131,7 @@ register, it will not be queued up for finalization again.
    resurrecting objects`_.
 
 Upon application exit
-=====================
+---------------------
 
 There are no guarantees that objects which are registered for
 finalization will actually be finalized before the application exits.
@@ -139,7 +142,7 @@ Where it is necessary to guarantee an action at the time the application
 exits, you should use a more explicit mechanism.
 
 The effects of multiple registrations
-=====================================
+-------------------------------------
 
 Sometimes objects are registered for finalization more than once. The
 effects of multiple registration are defined as follows:
@@ -156,11 +159,11 @@ at least once whenever an object has ben determined to be unreachable by
 the garbage collector.
 
 To remain robust under multiple registration, finalizers should be
-idempotent: that is, the effect of multiple ``finalize`` calls on an
+idempotent: that is, the effect of multiple :gf:`finalize` calls on an
 object should is the same as the effect of a single call.
 
 The effects of resurrecting objects
-===================================
+-----------------------------------
 
 If a finalizer makes an object reachable again, by storing a reference
 to the object in a variable, slot, or collection, we say it has
@@ -174,23 +177,23 @@ their resources, it is common for finalization to render objects
 unusable. We do not recommend resurrection if there is any possibility
 of the object being left in an unusable state, or if the object
 references any other objects whose transitive closure might include an
-object left in such a state by another call to ``finalize``.
+object left in such a state by another call to :gf:`finalize`.
 
 If you do resurrect objects, note that they will not be finalized again
 unless you re-register them.
 
 The effects of finalizing objects directly
-==========================================
+------------------------------------------
 
 Any object that has been finalized directly, through the application
-itself calling ``finalize`` on it, may not yet be unreachable. Like any
+itself calling :gf:`finalize` on it, may not yet be unreachable. Like any
 normal object it only becomes eligible for reclamation when it is
 unreachable. If such an object was also registered for finalization
-using ``finalize-when-unreachable``, it can end up being finalized again
+using :gf:`finalize-when-unreachable`, it can end up being finalized again
 via the queue mechanism.
 
 Finalization and weak tables
-============================
+----------------------------
 
 If an object is both registered for finalization and is weakly referred
 to from a weak table, finalization occurs *first*, with weak references
@@ -210,14 +213,14 @@ finalization interface. This section contains useful information about
 writing finalizers.
 
 Class-based finalization
-========================
+------------------------
 
 If your application defines a class for which all instances require
 finalization, call :func:`finalize-when-unreachable` in its ``initialize``
 method.
 
 Parallels with INITIALIZE methods
-=================================
+---------------------------------
 
 The default method on :drm:`<object>` is provided to make it safe to call
 :drm:`next-method` in all finalizers. This situation is parallel to that for
@@ -229,7 +232,7 @@ By contrast, finalizers should call ``next-method`` last, in case they
 depend on the superclass finalizer not being run.
 
 Simplicity and robustness
-=========================
+-------------------------
 
 Write finalizers that are simple and robust. They might be called in any
 context, including within other threads; with careful design, your
@@ -256,7 +259,7 @@ graph (in some graph-specific well-ordered fashion) and call the
 ``finalize`` method for each object in the graph requiring finalization.
 
 Singleton finalizers
-====================
+--------------------
 
 Do not write singleton methods on :gf:`finalize`. The singleton method
 itself would refer to the object, and hence prevent it from becoming
@@ -269,7 +272,7 @@ This section answers questions about using finalization in an
 application.
 
 How can my application drain the finalization queue automatically?
-==================================================================
+------------------------------------------------------------------
 
 If you would prefer the queue to be drained asynchronously, use the
 automatic finalization interface. For more details, see
@@ -286,7 +289,7 @@ should always behave correctly if they are used in an application that
 does use it.
 
 When should my application drain the finalization queue?
-========================================================
+--------------------------------------------------------
 
 If you do not use automatic finalization, drain the queue synchronously
 at useful points in your application, such as whenever you call
