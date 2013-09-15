@@ -210,12 +210,70 @@ shown in Table 1.4.
 You should create DBMS-specific instances of these classes to connect
 to a database.
 
+See also :macro:`with-database`.
+
+Connection protocol functions, methods, and macros
+--------------------------------------------------
+
+* :macro:`with-dbms`
+* :gf:`dbms`
+* :gf:`database`
+* :gf:`user`
+
+Connecting and disconnecting
+----------------------------
+
+The SQL-ODBC library provides DBMS-independent functions to connect to
+and disconnect from databases. Connecting to a database establishes a
+context (an instance of :class:`<connection>`) in which SQL statements
+may be executed within an application. You can make connections by
+calling the :gf:`connect` function on a DBMS-specific instance of
+:class:`<database>` and :class:`<user>`.
+
+An application can connect to multiple databases served by a DBMS if
+the DBMS supports the feature. Multiple-connection support can be
+determined by calling the :gf:`multiple-connections?` function
+on the DBMS object.
+
+Keeping connections open requires system resources. An application can
+disconnect from connections that it no longer needs in order to reduce
+its use of system resources. When the application terminates, the
+SQL-ODBC library disconnects all open connections. If a connection is
+not explicitly terminated using the :gf:`disconnect` generic function,
+and a client application has no references to it, the connection is
+terminated when the garbage collector notices that the object can be
+reclaimed. After a connection has been disconnected, the
+:class:`<connection>` object cannot be reused, and so references to it
+should be dropped.
+
+* :gf:`connect`
+* :gf:`connections`
+* :gf:`default-connection`
+* :gf:`disconnect`
+* :gf:`disconnect-all`
+* :macro:`with-connection`
+
 Executing SQL statements
 ========================
 
 The SQL-ODBC library provides a way of processing SQL statements: the
-execute function, which you must apply to instances of the
+:gf:`execute` function, which you must apply to instances of the
 :class:`<sql-statement>` class.
+
+* :class:`<database-statement>`
+* :gf:`execute`
+* :class:`<sql-statement>`
+* :gf:`coercion-policy`
+* :gf:`coercion-policy-setter``
+* :gf:`datatype-hints`
+* :gf:`datatype-hints-setter`
+* :gf:`execute`
+* :gf:`input-indicator`
+* :gf:`input-indicator-setter`
+* :gf:`output-indicator`
+* :gf:`output-indicator-setter`
+* :gf:`text`
+* :gf:`text-setter`
 
 The null value
 --------------
@@ -264,6 +322,9 @@ from or need to be sent to a DBMS server, the SQL-ODBC library
 supports indicator objects. Indicator objects indicate when a column
 of a record retrieved from a database contains the null value, or when
 a client application wishes to set a column to the null value.
+
+* :class:`<null-value>`
+* :const:`$null-value`
 
 Input indicators and output indicators
 --------------------------------------
@@ -573,6 +634,165 @@ class to perform the conversion. When multiple columns define a Dylan
 object or one column defines multiple Dylan objects, use the liaison
 function to perform the conversion.
 
+Data types and conversions
+==========================
+
+The datatypes that relational DBMSes use are different from those
+Dylan uses. The SQL-ODBC library provides classes that represent
+these low-level relational datatypes, along with a table that
+defines the mapping from these datatypes to Dylan datatypes
+(Table 1.6). The methods on the record class consult this mapping
+when performing data coercion.
+
+The datatypes of host variables are limited to the Dylan datatypes
+that appear in Table 1.6. Host variables come in two flavors: read
+and write. Host variables appearing in an into clause of an SQL
+``SELECT`` statement are write parameters, and all other host
+variables are read parameters.
+
+.. table:: Table 1.6 Mapping from DBMS to Dylan datatypes
+
+   +-------------------+------------------------------+--------------------------+
+   | DBMS type         | SQL type                     | Dylan type               |
+   +===================+==============================+==========================+
+   | sql_char          | :class:`<sql-char>`          | :drm:`<character>`       |
+   +-------------------+------------------------------+--------------------------+
+   | sql_varchar       | :class:`<sql-varchar>`       | :drm:`<string>`          |
+   +-------------------+------------------------------+--------------------------+
+   | sql_longvarchar   | :class:`<sql-longvarchar>`   | :drm:`<string>`          |
+   +-------------------+------------------------------+--------------------------+
+   | sql_decimal       | :class:`<sql-decimal>`       | :drm:`<string>`          |
+   +-------------------+------------------------------+--------------------------+
+   | sql_numeric       | :class:`<sql-numeric>`       | :drm:`<string>`          |
+   +-------------------+------------------------------+--------------------------+
+   | sql_bit           | :class:`<sql-bit>`           | :drm:`<integer>`         |
+   +-------------------+------------------------------+--------------------------+
+   | sql_tinyint       | :class:`<sql-tinyint>`       | :drm:`<integer>`         |
+   +-------------------+------------------------------+--------------------------+
+   | sql_smallint      | :class:`<sql-smallint>`      | :drm:`<integer>`         |
+   +-------------------+------------------------------+--------------------------+
+   | sql_integer       | :class:`<sql-integer>`       | :drm:`<integer>`         |
+   +-------------------+------------------------------+--------------------------+
+   | sql_bigint        | :class:`<sql-bigint>`        | :drm:`<integer>`         |
+   +-------------------+------------------------------+--------------------------+
+   | sql_real          | :class:`<sql-real>`          | :drm:`<single-float>`    |
+   +-------------------+------------------------------+--------------------------+
+   | sql_float         | :class:`<sql-float>`         | :drm:`<single-float>`,   |
+   |                   |                              | :drm:`<double-float>` or |
+   |                   |                              | :drm:`<extended-float>`  |
+   +-------------------+------------------------------+--------------------------+
+   | sql_double        | :class:`<sql-double>`        | :drm:`<double-float>`    |
+   +-------------------+------------------------------+--------------------------+
+   | sql_binary        | :class:`<sql-binary>`        | :class:`<binary>`        |
+   +-------------------+------------------------------+--------------------------+
+   | sql_varbinary     | :class:`<sql-varbinary>`     | :class:`<binary>`        |
+   +-------------------+------------------------------+--------------------------+
+   | sql_longvarbinary | :class:`<sql-longvarbinary>` | :class:`<binary>`        |
+   +-------------------+------------------------------+--------------------------+
+   | sql_date          | :class:`<sql-date>`          | :class:`<date>`          |
+   +-------------------+------------------------------+--------------------------+
+   | sql_time          | :class:`<sql-time>`          | :class:`<time>`          |
+   +-------------------+------------------------------+--------------------------+
+   | sql_timestamp     | :class:`<sql-timestamp>`     | :class:`<timestamp>`     |
+   +-------------------+------------------------------+--------------------------+
+
+To retrieve integer elements from databases that may contain more than 30-bit data,
+you must use the :lib:`generic-arithmetic` library or a run-time error will occur.
+The Dylan SQL-ODBC library must also be prepared.
+
+Example library and module definition:
+
+.. code-block:: dylan
+
+    define library sql-example
+      use common-dylan;
+      use generic-arithmetic;
+      use sql-odbc;
+
+      export sql-example;
+    end library;
+
+    define module sql-example
+      use generic-arithmetic-common-dylan;
+      use sql-odbc;
+    end module;
+
+Warning and error conditions
+============================
+
+The SQL-ODBC library defines condition classes for each category of
+error and warning defined in SQL-92. (SQL-92 calls them classes
+rather than categories.)
+
+When an error or warning occurs, SQL-ODBC detects it, creates a
+condition object, and signals it. You can then handle the condition
+using the Dylan condition system.
+
+Some DBMSes can detect and report multiple errors or warnings during
+the execution of a single SQL statement. The DBMS reports these
+errors and warnings to the SQL-ODBC library using SQL-92's concept of
+diagnostics; the first error or warning in the diagnostic area is the
+same error or warning indicated by the SQLSTATE status parameter.
+The SQL-ODBC library signals a condition which corresponds to the
+error or warning indicated by SQLSTATE.
+
+While handling the first condition, your application can process
+any additional errors or warnings that may have occurred by signaling
+the next DBMS condition; to obtain the next DBMS condition, call
+:func:`next-dbms-condition` on the condition being handled.
+
+Database introspection
+======================
+
+The SQL-ODBC library offers introspection features to allow you to
+determine the structure of a database at run time. A database
+structure is a hierarchy comprising catalogs, schemas, tables and
+columns. A catalog is a named collection of schemas, a schema is a
+named collection of tables, and a table is a named collection of
+columns. For security reasons, the SQL-ODBC library does not provide
+any means of obtaining a list of databases available from a particular
+DBMS; your application must provide access to a particular database
+via a connection object.
+
+For DBMSes which do not support catalogs or schemas, the SQL-ODBC
+library uses a default value that your application can use to perform
+introspection.
+
+Database objects and integrity constraints
+------------------------------------------
+
+You can interrogate schema and table database objects for a collection
+of constraints defined against them. A constraint is a data integrity
+rule which the DBMS enforces at all times. These constraints are
+unique, primary key, referential and check.
+
+The unique constraint specifies that one or more columns within a
+table must have a unique value or set of values for each record in the
+table (however, the set of columns are not necessarily a key). The
+primary key constraint is similar to the unique constraint, except the
+set of columns must uniquely identify records within the table.
+
+The referential constraint specifies the relationship between a column
+or a group of columns in one table to another table; this constraint
+also specifies the action to take when records within the table are
+updated or deleted.
+
+Finally, the check constraint is a general constraint on a table which
+must never be false and, due to three-valued logic, an unknown or null
+value will satisfy the constraint.
+
+An assertion is a constraint on a schema. It is similar to the check
+constraint but it normally involves more than one table. The
+significant difference between an assertion and a check is that an
+assertion must always be true, whereas a check must never be false.
+
+The nullability of a column is a column constraint which can be
+determined by introspection on the desired column.
+
+Syntactically, SQL-92 supports table and column constraints;
+semantically, however, all constraints are enforced at the table
+level.
+
 The SQL module
 ==============
 
@@ -587,6 +807,11 @@ The SQL module
 .. constant:: $no-indicator
 
 .. constant:: $null-value
+
+   :description:
+
+     References the canonical null value. It is an instance of
+     :class:`<null-value>`.
 
 .. constant:: $read-committed
 
@@ -654,6 +879,8 @@ The SQL module
 
 
 .. constant:: <coercion-policy>
+
+   Determines what data coercion is to be performed on a result set.
 
 .. class:: <coercion-record>
    :open:
@@ -792,6 +1019,10 @@ The SQL module
 
    :superclasses: ``<object>``
 
+   :description:
+
+     This class represents statements which can be executed by a DBMS
+     server.
 
 .. class:: <database>
    :open:
@@ -1132,6 +1363,10 @@ The SQL module
 
    :superclasses: ``<object>``
 
+   :description:
+
+     Instances of this class represent the canonical null value. This
+     class is the root class for all null-value classes.
 
 .. class:: <numeric-value-out-of-range>
    :open:
@@ -1401,11 +1636,25 @@ The SQL module
 
    :superclasses: :class:`<database-statement>`
 
-   :keyword coercion-policy:
-   :keyword datatype-hints:
-   :keyword input-indicator:
-   :keyword output-indicator:
-   :keyword text:
+   :keyword coercion-policy: An instance of
+      ``false-or(<coercion-policy>)``. The coercion policy
+      is a sequence of functions, or the value :const:`$default-coercion`,
+      or the value :const:`$no-coercion`, used to perform data coercion
+      when the SQL statement to be executed is a ``SELECT`` statement.
+   :keyword datatype-hints: An instance of ``false-or(<sequence>)``. This
+      is a hint for parameter binding when the SQL statement to be executed
+      is a ``SELECT`` statement.
+   :keyword input-indicator: An instance of :drm:`<object>`. The
+      input indicator is a marker value used to identify null
+      values in host variables.
+   :keyword output-indicator: An instance of :drm:`<object>`. The
+      output indicator is a substitution value to be used whenever
+      the column of a retrieved record contains the null value.
+   :keyword text: An instance of :drm:`<string>`. Required. Contains the
+      text of the SQL statement. If you want to include host variables,
+      place a question mark (``?``) at the point in the string at which you
+      want a host variable to be substituted.
+
 
    :description:
 
@@ -1793,18 +2042,28 @@ The SQL module
 
 .. generic-function:: coercion-policy
 
-   :signature: coercion-policy (object) => (#rest results)
+   :signature: coercion-policy (sql-statement) => (coercion-policy)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter sql-statement: An instance of :class:`<sql-statement>`.
+   :value coercion-policy: An instance of :class:`<coercion-policy>`.
+
+   :description:
+
+      Returns the coercion policy for sql-statement. This
+      method is only relevant to SQL ``SELECT`` statements.
 
 .. generic-function:: coercion-policy-setter
 
-   :signature: coercion-policy-setter (value object) => (#rest results)
+   :signature: coercion-policy-setter (new-coercion-policy sql-statement) => (new-coercion-policy)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter new-coercion-policy: An instance of :class:`<coercion-policy>`.
+   :parameter sql-statement: An instance of :class:`<sql-statement>`.
+   :value new-coercion-policy: An instance of :class:`<coercion-policy>`.
+
+   :description:
+
+     Sets the ``coercion-policy`` slot of ``sql-statement``
+     to ``new-coercion-policy``.
 
 .. generic-function:: column-name
    :open:
@@ -2140,10 +2399,71 @@ The SQL module
 .. generic-function:: execute
    :open:
 
+   Prepares an SQL statement for execution on the specified connection
+   and then executes the statement.
+
    :signature: execute (database-statement #key #all-keys) => (result-set)
 
    :parameter database-statement: An instance of ``type-union(<database-statement>, <string>)``.
+   :parameter #key connection: An instance of :class:`<connection>`.
+   :parameter #key parameters: An instance of ``false-or(<sequence>)``.
+   :parameter #key result-set-policy: An instance of ``false-or(<result-set-policy>)``.
+   :parameter #key liaison: An instance of ``false-or(<function>)``
+      whose signature is ``liaison(<record>) => <object>``. Default
+      value: :gf:`default-liaison`.
    :value result-set: An instance of ``false-or(<result-set>)``.
+
+   :description:
+
+     Prepares the SQL statement represented by sql-statement for
+     execution on the connection, then sends it to the DBMS for
+     execution.
+
+     If connection is not supplied, execute uses the connection
+     returned by default-connection instead.
+
+     The liaison function is invoked on each record as it is retrieved
+     from the database. If a liaison function is not provided, a
+     default value of :gf:`default-liaison` is used; each result-set
+     class has its own :gf:`default-liaison`.
+
+     In the SQL-ODBC library, the ``database-statement`` will be an
+     instance of :class:`<sql-statement>`. If anonymous host
+     variables--that is, question marks (``?``)--appear in
+     ``database-statement``, pass suitable substitution
+     values in the call to this function.
+
+   :example:
+
+     This example executes two SQL statements against the database
+     represented by ``the-connection``. The first SQL statement
+     inserts a new book record into the book table. The second SQL
+     statement queries for the list of titles and their ISBN
+     published by Addison Wesley.
+
+     .. code-block:: dylan
+
+        with-connection(the-connection)
+          let insert-stmt :: <sql-statement> =
+          make(<sql-statement>,
+            text: "insert into book (title, publisher, isbn) 
+                       values (?, ?, ?)",
+            input-indicator: $null-value);
+          execute(insert-stmt,
+                  parameters: #("Large Databases", "Addison-Wesley",
+                                $null-value));
+
+        let query-stmt :: <sql-statement> =
+          make(<sql-statement>, 
+          text: "select title, isbn from book 
+                     where publisher = ?",
+                     output-indicator: $null-value);
+          execute(query-stmt, parameters: #("Addison-Wesley"));
+        end with-connection;
+
+        => #(#("An Introduction to Database Systems", "0-201-14201-5"),
+             #("Relational Database Writings, 1991-1994", "0-8053-1748-1), #("Large Databases", $null-value))
+
 
 .. generic-function:: fields
 
