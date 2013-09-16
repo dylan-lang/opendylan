@@ -413,6 +413,7 @@ define module-with-models dfmc-modeling
       &getter limited-collection-class,
       &getter limited-collection-concrete-class,
       &getter limited-collection-element-type,
+      &getter limited-collection-element-type-fill,
       &getter limited-collection-size,
       &getter limited-collection-dimensions,
       lookup-any-limited-collection-element-type,

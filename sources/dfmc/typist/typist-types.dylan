@@ -842,6 +842,7 @@ define as-type-estimate-rules
                                           class:          ^limited-collection-class(t),
                                           concrete-class: ^limited-collection-concrete-class(t),
                                           of:             as(<type-estimate>, ^limited-collection-element-type(t)),
+                                          // *** Should add element-type-fill?
                                           size:           ^limited-collection-size(t),
                                           dimensions:     ^limited-collection-dimensions(t) &
                                                             as(limited(<vector>, of: <integer>),

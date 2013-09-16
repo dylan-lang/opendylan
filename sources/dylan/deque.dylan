@@ -107,29 +107,33 @@ end method reverse;
 // <OBJECT-DEQUE>
 //
 
-define class <object-deque> (<deque>, <limited-collection>)
+define class <object-deque>
+    (<deque>, <limited-collection>, <limited-fillable-collection>)
   slot representation :: <island-deque>,
     init-value: make(<island-deque>);
 end class <object-deque>;
 
-
+define sealed domain make (singleton(<object-deque>));
 define sealed domain element-type (<object-deque>);
+define sealed domain element-type-fill (<object-deque>);
+
 
 ///
 /// LIMITED DEQUES
 ///
 
 define method limited-deque
-     (of :: <type>) => (type :: <limited-deque-type>)
+     (of :: <type>, default-fill :: <object>) => (type :: <limited-deque-type>)
   make(<limited-deque-type>,
        class:          <deque>,
        element-type:   of,
+       default-fill:   default-fill,
        concrete-class: <object-deque>);
 end method;
 
-define method limited
-    (class == <deque>, #key of, #all-keys) => (type :: <type>)
-  limited-deque(of)
+define sealed inline method limited-deque-default-fill
+    (of :: <type>) => (fill == #f)
+  #f
 end method;
 
 /// TODO: COULD BE EXPENSIVE UNLESS TYPES ARE CACHED
@@ -137,10 +141,11 @@ end method;
 define sealed inline method type-for-copy (x :: <object-deque>)
  => (type :: <type>)
   let elt-type = element-type(x);
-  if (elt-type == <object>)
+  let elt-fill = element-type-fill(x);
+  if (elt-type == <object> & elt-fill == #f)
     object-class(x)
   else
-    limited-deque(elt-type)
+    limited-deque(elt-type, elt-fill)
   end if
 end method type-for-copy;
 
@@ -236,7 +241,7 @@ define sealed inline method trusted-size-setter
       end;
     difference > 0 =>
       for (i :: <integer> from 0 below difference)
-        trusted-push-last(collection, #f)
+        trusted-push-last(collection, element-type-fill(collection))
       end;
   end case;
   new-size
@@ -246,11 +251,6 @@ define sealed method size-setter (new-size :: <integer>, collection :: <object-d
  => (new-size :: <integer>)
   // TODO: write a faster version of this method.
   check-nat(new-size);
-  let size = size(collection);
-  unless (new-size <= size)
-    // expected to fail when #f is incompatible with element-type
-    check-type(#f, element-type(collection))
-  end unless;
   trusted-size(collection) := new-size;
 end method size-setter;
 
@@ -408,7 +408,7 @@ define method grow! (deque :: <object-deque>)
   let old-rep-first-index = old-rep.first-index;
   let old-rep-last-index = old-rep.last-index;
   let old-rep-size = (old-rep-last-index - old-rep-first-index) + 1;
-  let new-rep = make(<island-deque>, size: old-rep-size * 2, fill: #f);
+  let new-rep = make(<island-deque>, size: old-rep-size * 2, fill: element-type-fill(deque));
   new-rep.first-index := truncate/(old-rep-size, 2);
   for (src-index :: <integer>
          from old-rep-first-index to old-rep-last-index,
@@ -662,9 +662,6 @@ define method concatenate-as-two
          d
   end
 end;
-
-define sealed domain make (singleton(<object-deque>));
-define sealed domain element-type (<object-deque>);
 
 define sealed method as (class == <list>, v :: <object-deque>)
  => (l :: <list>)

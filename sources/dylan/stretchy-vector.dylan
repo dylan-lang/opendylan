@@ -67,7 +67,7 @@ end class <stretchy-vector>;
 
 
 define open generic limited-stretchy-vector
-     (of :: false-or(<type>)) => (type :: <type>);
+     (of :: false-or(<type>), fill) => (type :: <type>);
 
 
 /////////////////
@@ -123,8 +123,6 @@ define open primary class <limited-stretchy-vector-representation> (<object>)
   slot %size :: <integer>, required-init-keyword: size:;
 end class;
 
-define open generic collection-fill
-    (x :: <limited-stretchy-vector>) => (res);
 define open generic stretchy-representation
     (x :: <limited-stretchy-vector>)
  => (res :: <limited-stretchy-vector-representation>);
@@ -145,7 +143,7 @@ define open generic stretchy-vector-element-setter
  => (value :: <object>);
 
 
-define method collection-fill (x :: <limited-stretchy-vector>) => (res)
+define sealed method element-type-fill (x :: <limited-stretchy-vector>) => (res)
   #f
 end method;
 
@@ -194,7 +192,7 @@ define method trusted-size-setter
       stretchy-vector-element(nv, i) := stretchy-vector-element(v, i)
     finally
       for (j :: <integer> from i below new-size)
-        stretchy-vector-element(nv, j) := collection-fill(vector)
+        stretchy-vector-element(nv, j) := element-type-fill(vector)
       end for;
     end for;
     vector.stretchy-representation := nv;
@@ -203,7 +201,7 @@ define method trusted-size-setter
     let s = v.%size;
     v.%size := new-size;
     for (i :: <integer> from new-size below s)
-      stretchy-vector-element(v, i) := collection-fill(vector)
+      stretchy-vector-element(v, i) := element-type-fill(vector)
     end for;
     new-size;
   else
@@ -215,7 +213,6 @@ define method size-setter
     (new-size :: <integer>, vector :: <limited-stretchy-vector>)
          => (new-size :: <integer>)
   check-nat(new-size);
-  let size = size(vector);
   trusted-size(vector) := new-size;
 end method size-setter;
 
@@ -246,7 +243,7 @@ define method remove!
       end case
     else
       for (i :: <integer> from dst-index below src-index)
-        stretchy-vector-element(src, i) := collection-fill(vector)
+        stretchy-vector-element(src, i) := element-type-fill(vector)
       end;
       src.%size := dst-index
     end if
@@ -267,6 +264,11 @@ define macro limited-stretchy-vector-minus-constructor-definer
            slot stretchy-representation :: "<stretchy-" ## ?name ## "-vector-representation>",
              init-value: "$empty-<stretchy-" ## ?name ## "-vector-representation>";
          end class "<stretchy-" ## ?name ## "-vector>";
+
+         define sealed class "<stretchy-" ## ?name ## "-with-fill-vector>"
+             ("<stretchy-" ## ?name ## "-vector>", <limited-fillable-collection>)
+           inherited slot element-type-fill, init-value: ?fill;
+         end class "<stretchy-" ## ?name ## "-with-fill-vector>";
 
          define sealed domain stretchy-representation
            ("<stretchy-" ## ?name ## "-vector>");
@@ -311,11 +313,12 @@ define macro limited-stretchy-vector-minus-constructor-definer
            vector
          end method as;
 
-         define sealed inline method collection-fill
+         // DEP-0007. This method existed previously under the name "collection-fill".
+         define sealed inline method element-type-fill
              (vector :: "<stretchy-" ## ?name ## "-vector>") => (res)
            ?fill
          end method;
-
+         
          define sealed inline method stretchy-representation-type
              (vector :: "<stretchy-" ## ?name ## "-vector>")
           => (res :: singleton("<stretchy-" ## ?name ## "-vector-representation>"))
@@ -507,6 +510,18 @@ define macro limited-stretchy-vector-minus-constructor-definer
            new-vector
          end method;
 
+         define sealed /* copy-down- */ method as
+             (class  == "<stretchy-" ## ?name ## "-with-fill-vector>",
+              collection :: <collection>)
+          => (sv :: "<stretchy-" ## ?name ## "-with-fill-vector>");
+           let new-vector :: "<stretchy-" ## ?name ## "-with-fill-vector>"
+             = make("<stretchy-" ## ?name ## "-with-fill-vector>");
+           for (item in collection)
+             new-vector := add!(new-vector, item);
+           end for;
+           new-vector
+         end method;
+
          // SHOULD BE COPY DOWNS BUT FAILS TO WORK
 
          define sealed /* copy-down- */ method as
@@ -518,8 +533,7 @@ define macro limited-stretchy-vector-minus-constructor-definer
              make("<stretchy-" ## ?name ## "-vector>", size: 0);
            else
              let new-vector :: "<stretchy-" ## ?name ## "-vector>"
-               = make("<stretchy-" ## ?name ## "-vector>",
-                      size: size, fill: collection[0]);
+               = make("<stretchy-" ## ?name ## "-vector>", size: size);
              let d = new-vector.stretchy-representation;
              without-bounds-checks
                for (item in collection, index :: <integer> from 0)
@@ -530,6 +544,26 @@ define macro limited-stretchy-vector-minus-constructor-definer
              end if
          end method;
 
+         define sealed /* copy-down- */ method as
+             (class == "<stretchy-" ## ?name ## "-with-fill-vector>",
+              collection :: <array>)
+          => (sv :: "<stretchy-" ## ?name ## "-with-fill-vector>");
+           let size = size(collection);
+           if (size = 0)
+             make("<stretchy-" ## ?name ## "-with-fill-vector>", size: 0);
+           else
+             let new-vector :: "<stretchy-" ## ?name ## "-with-fill-vector>"
+               = make("<stretchy-" ## ?name ## "-with-fill-vector>", size: size);
+             let d = new-vector.stretchy-representation;
+             without-bounds-checks
+               for (item in collection, index :: <integer> from 0)
+                 stretchy-vector-element(d, index) := item
+               end;
+             end without-bounds-checks;
+             new-vector
+             end if
+         end method;
+         
          define sealed copy-down-method trusted-size-setter
              (new-size :: <integer>,
               vector :: "<stretchy-" ## ?name ## "-vector>")
@@ -597,6 +631,11 @@ define macro limited-stretchy-vector-minus-selector-definer
            "<" ## ?name ## ">"
          end method;
 
+         define sealed inline method limited-stretchy-vector-default-fill
+             (of == "<" ## ?name ## ">") => (fill :: "<" ## ?name ## ">")
+           ?fill
+         end method;
+
          define sealed method element-setter
              (new-value :: "<" ## ?name ## ">",
               collection :: "<stretchy-" ## ?name ## "-vector>",
@@ -622,40 +661,54 @@ define macro limited-stretchy-vector-minus-selector-definer
              (vector :: "<stretchy-" ## ?name ## "-vector>")
           => (type :: <type>)
            "<stretchy-" ## ?name ## "-vector>"
-         end method type-for-copy }
+         end method type-for-copy;
+
+         define sealed inline method type-for-copy
+             (vector :: "<stretchy-" ## ?name ## "-with-fill-vector>")
+          => (type :: <type>)
+           limited-stretchy-vector(element-type(vector), element-type-fill(vector))
+         end method type-for-copy;
+        }
 end macro;
 
 define macro limited-stretchy-vector-definer
   { define limited-stretchy-vector "<" ## ?:name ## ">" (#key ?fill:expression) }
     => { define limited-stretchy-vector-minus-selector "<" ## ?name ## ">" (<limited-stretchy-vector>)
            (fill: ?fill);
+           
          define method concrete-limited-stretchy-vector-class
-             (of == "<" ## ?name ## ">") => (res :: <class>)
-           "<stretchy-" ## ?name ## "-vector>"
+             (of == "<" ## ?name ## ">", default-fill == ?fill)
+          => (res :: <class>, fully-specified?)
+           values("<stretchy-" ## ?name ## "-vector>", #t)
+         end method;
+         
+         define method concrete-limited-stretchy-vector-class
+             (of == "<" ## ?name ## ">", default-fill :: "<" ## ?name ## ">")
+          => (res :: <class>, fully-specified?)
+           values("<stretchy-" ## ?name ## "-with-fill-vector>", #f)
          end method }
 end macro;
 
 define limited-stretchy-vector <object>         (fill: #f);
 
 define method limited-stretchy-vector
-    (of :: <type>) => (type :: <vector-type>)
-  let concrete-class
-    = concrete-limited-stretchy-vector-class(of);
-  let default-concrete-class
-    = <stretchy-element-type-vector>;
-  if (size | concrete-class == default-concrete-class)
+    (of :: <type>, default-fill :: <object>) => (type :: <vector-type>)
+  let (concrete-class, fully-specified?)
+    = concrete-limited-stretchy-vector-class(of, default-fill);
+  if (~fully-specified?)
     make(<limited-stretchy-vector-type>,
          class:          <stretchy-vector>,
          element-type:   of,
-         concrete-class: default-concrete-class);
+         default-fill:   default-fill,
+         concrete-class: concrete-class);
   else
     concrete-class
   end if;
 end method;
 
-define method limited
-    (class == <stretchy-vector>, #key of :: <type> = <object>, #all-keys) => (type :: <type>)
-  limited-stretchy-vector(of)
+define sealed inline method limited-stretchy-vector-default-fill
+    (of :: <type>) => (fill == #f)
+  #f
 end method;
 
 define inline copy-down-method map-into-stretchy-one

@@ -297,6 +297,14 @@ define open abstract primary &class <limited-collection> (<collection>)
     init-value:   <object>;
 end &class;
 
+// DEP-0007: This is a mixin class for concrete limited classes with user-
+// specified default-fill: values.
+define abstract &class <limited-fillable-collection> (<collection>)
+  constant &slot element-type-fill :: <object>,
+    init-keyword: element-type-fill:,
+    init-value:   #f;
+end &class;
+
 define open   abstract &class <array> (<mutable-sequence>) end;
 define open   abstract &class <vector> (<array>) end;
 

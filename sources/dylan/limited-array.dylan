@@ -17,7 +17,7 @@ define sealed domain element-type (<simple-element-type-array>);
 
 define sealed method make
     (class == <simple-element-type-array>,
-     #key dimensions = unsupplied(), element-type, fill = #f)
+     #key dimensions = unsupplied(), element-type = <object>, fill = #f)
  => (array :: <simple-element-type-array>)
   let (dimensions, size) = compute-array-dimensions-and-size(dimensions);
   unless (size = 0)
@@ -31,8 +31,15 @@ define sealed method make
 end method;
 
 define method concrete-limited-array-class
-    (of :: <type>) => (res :: <class>)
-  <simple-element-type-array>
+    (of :: <type>, default-fill)
+ => (res :: <class>, fully-specified?)
+  values(<simple-element-type-with-fill-array>, #f)
+end method;
+
+define method concrete-limited-array-class
+    (of :: <type>, default-fill == #f)
+ => (res :: <class>, fully-specified?)
+  values(<simple-element-type-array>, #f)
 end method;
 
 define sealed inline method element-setter
@@ -48,17 +55,28 @@ end method element-setter;
 
 define sealed inline method type-for-copy
     (array :: <simple-element-type-array>) => (type :: <limited-mutable-sequence-type>)
-  limited-array(element-type(array), #f)
+  limited-array(element-type(array), element-type-fill(array), #f)
 end method type-for-copy;
-
 
 /// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
 define method concrete-limited-array-class
-    (of :: <limited-integer>) => (res :: <class>)
+    (of :: <limited-integer>, default-fill)
+ => (res :: <class>, fully-specified?)
   select (of by subtype?)
-    <byte>        => <simple-byte-array>;
-    <double-byte> => <simple-double-byte-array>;
-    otherwise     => <simple-element-type-array>;
+    <byte>        => values(<simple-byte-array>, #f);
+    <double-byte> => values(<simple-double-byte-array>, #f);
+    otherwise     => next-method();
+  end select;
+end method;
+
+/// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
+define method concrete-limited-array-class
+    (of :: <limited-integer>, default-fill == 0)
+ => (res :: <class>, fully-specified?)
+  select (of by subtype?)
+    <byte>        => values(<simple-byte-array>, #t);
+    <double-byte> => values(<simple-double-byte-array>, #t);
+    otherwise     => next-method();
   end select;
 end method;
 

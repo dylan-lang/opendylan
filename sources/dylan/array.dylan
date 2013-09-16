@@ -35,7 +35,7 @@ define open generic dimension
   (array :: <array>, axis :: <integer>) => (dim :: <integer>);
 
 define open generic limited-array
-    (of :: <type>, dimensions :: false-or(<sequence>))
+    (of :: <type>, default-fill :: <object>, dimensions :: false-or(<sequence>))
  => (type :: <type>);
 
 

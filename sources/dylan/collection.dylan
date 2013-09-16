@@ -283,11 +283,9 @@ define method map-as-one
   if (collection-size = 0)
     make(type, size: 0)
   else
-    let result =
-      make(type, dimensions: collection.dimensions,
-           fill: function(collection.first));
+    let result = make(type, dimensions: collection.dimensions);
     without-bounds-checks
-      for (i :: <integer> from 1 below collection-size)
+      for (i :: <integer> from 0 below collection-size)
         result[i] := function(collection[i])
       end for
     end without-bounds-checks;
@@ -303,11 +301,9 @@ define method map-as-one
   if (collection-size = 0)
     make(type, size: 0)
   else
-    let result =
-      make(type, size: collection.size,
-           fill: function(collection.first));
+    let result = make(type, size: collection-size);
     without-bounds-checks
-      for (i :: <integer> from 1 below collection-size)
+      for (i :: <integer> from 0 below collection-size)
         result[i] := function(collection[i])
       end for
     end without-bounds-checks;
@@ -1095,7 +1091,12 @@ define constant <element-type> = <object>; // KLUDGE FOR LIMITED COLLECTIONSXS
 
 /// define open abstract primary class <limited-collection> ... end;
 
-// The element type for limited collections.
+// User-defined collections can define their own element-type and element-type-fill
+// on open collection classes, like what the Dylan library itself does with
+// <string>. But since users cannot define their own limited collections, we
+// can seal over that domain.
+
+// The element type for collections.
 define open generic element-type (t :: <collection>)
   => type :: <type>;
 
@@ -1103,6 +1104,18 @@ define sealed domain element-type (<limited-collection>);
 
 define inline method element-type (t :: <collection>) => (type == <object>)
   <object>
+end method;
+
+// The default element type fill for collections. (DEP-0007)
+define open generic element-type-fill (t :: <collection>)
+  => object :: <object>;
+
+define sealed domain element-type-fill (<limited-collection>);
+
+// #f is allowed by the DEP, but it would be better if we could easily check to
+// see whether the collection supports fill: and return an error if not the case.
+define inline method element-type-fill (t :: <collection>) => (object == #f)
+  #f
 end method;
 
 

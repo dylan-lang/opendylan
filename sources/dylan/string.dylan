@@ -58,10 +58,30 @@ define macro shared-string-definer
            end if
          end method;
 
+         define sealed concrete primary class "<" ## ?name ## "-with-fill-string>"
+             ("<" ## ?name ## "-string>", <limited-fillable-collection>)
+           inherited slot element-type-fill, init-value: ?fill;
+         end class;
+         
+         define method make
+             (class == "<" ## ?name ## "-with-fill-string>",
+              #key fill :: "<" ## ?name ## "-character>" = ?fill, size :: <integer> = 0)
+          => (res :: "<" ## ?name ## "-with-fill-string>")
+           system-allocate-repeated-instance
+             ("<" ## ?name ## "-with-fill-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
+         end method;
+         
          define sealed inline method concrete-limited-string-class
-             (of == "<" ## ?name ## "-character>")
-          => (type :: singleton("<" ## ?name ## "-string>"))
-           "<" ## ?name ## "-string>"
+             (of == "<" ## ?name ## "-character>", default-fill == ?fill)
+          => (type :: singleton("<" ## ?name ## "-string>"), fully-specified?)
+           values("<" ## ?name ## "-string>", #t)
+         end method;
+         
+         define sealed inline method concrete-limited-string-class
+             (of == "<" ## ?name ## "-character>",
+              default-fill :: "<" ## ?name ## "-character>")
+          => (type :: singleton("<" ## ?name ## "-with-fill-string>"), fully-specified?)
+           values("<" ## ?name ## "-with-fill-string>", #f)
          end method;
 
          define inline sealed method element
@@ -123,12 +143,27 @@ define macro shared-string-definer
              (object :: "<" ## ?name ## "-string>") => (c :: <class>)
            "<" ## ?name ## "-string>"
          end method type-for-copy;
+         
+         define sealed inline method type-for-copy
+             (object :: "<" ## ?name ## "-with-fill-string>") => (c :: <class>)
+           limited-string(element-type(object), element-type-fill(object), #f)
+         end method type-for-copy;
 
          define sealed inline method element-type
              (t :: "<" ## ?name ## "-string>") => (type :: <type>)
            "<" ## ?name ## "-character>"
          end method;
+         
+         define sealed inline method element-type-fill
+             (t :: "<" ## ?name ## "-string>") => (fill :: "<" ## ?name ## "-character>")
+           ?fill
+         end method;
 
+         define sealed inline method limited-string-default-fill
+             (of == "<" ## ?name ## "-character>") => (fill :: "<" ## ?name ## "-character>")
+           ?fill
+         end method;
+         
          define sealed inline method as
              (class == "<" ## ?name ## "-string>", string :: "<" ## ?name ## "-string>")
           => (s :: "<" ## ?name ## "-string>")
@@ -293,6 +328,7 @@ end macro;
 define macro string-definer
   { define string ?:name (#key ?fill:expression) }
     => { define shared-string ?name (fill: ?fill);
+      
          define sealed concrete primary class "<" ## ?name ## "-string>" (<string>, <vector>)
            repeated sealed inline slot string-element :: "<" ## ?name ## "-character>",
              init-value: ?fill,
@@ -316,18 +352,25 @@ define constant <string-type>
   = type-union(subclass(<string>), <limited-string-type>);
 
 define method limited-string
-    (of :: <type>, size :: false-or(<integer>)) => (type :: <string-type>)
-  let concrete-class
-    = concrete-limited-string-class(of);
-  if (size)
+    (of :: <type>, default-fill :: <character>, size :: false-or(<integer>))
+ => (type :: <string-type>)
+  let (concrete-class, fully-specified?)
+    = concrete-limited-string-class(of, default-fill);
+  if (size | ~fully-specified?)
     make(<limited-string-type>,
          class:          <string>,
          element-type:   of,
+         default-fill:   default-fill,
          concrete-class: concrete-class,
          size:           size)
   else
     concrete-class
   end if;
+end method;
+
+define sealed inline method limited-string-default-fill
+    (of :: <type>) => (fill == ' ')
+  ' '
 end method;
 
 //
