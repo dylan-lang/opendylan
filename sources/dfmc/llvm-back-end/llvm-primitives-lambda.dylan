@@ -111,13 +111,13 @@ define side-effecting stateless indefinite-extent &unimplemented-primitive-descr
   //---*** Fill this in...
 end;
 
-define side-effecting stateless indefinite-extent &unimplemented-primitive-descriptor primitive-mep-apply-with-optionals // runtime
+define side-effecting stateless indefinite-extent can-unwind &unimplemented-primitive-descriptor primitive-mep-apply-with-optionals // runtime
     (function :: <object>, next-methods :: <object>, args :: <object>)
  => (#rest values);
   //---*** Fill this in...
 end;
 
-define side-effecting stateless indefinite-extent &unimplemented-primitive-descriptor primitive-engine-node-apply-with-optionals // runtime
+define side-effecting stateless indefinite-extent can-unwind &unimplemented-primitive-descriptor primitive-engine-node-apply-with-optionals // runtime
     (function :: <object>, next-methods :: <object>, args :: <object>)
  => (#rest values);
   //---*** Fill this in...
@@ -129,7 +129,7 @@ define side-effecting stateless indefinite-extent &unimplemented-primitive-descr
   //---*** Fill this in...
 end;
 
-define side-effecting stateless indefinite-extent mapped-parameter &runtime-primitive-descriptor primitive-apply
+define side-effecting stateless indefinite-extent can-unwind mapped-parameter &runtime-primitive-descriptor primitive-apply
     (fn :: <function>, arguments :: <simple-object-vector>)
  => (#rest values)
   let word-size = back-end-word-size(be);
@@ -190,8 +190,9 @@ define side-effecting stateless indefinite-extent mapped-parameter &runtime-prim
 
     // Call the function
     let result
-      = ins--tail-call(be, xep-cast, parameter-values,
-                       calling-convention: $llvm-calling-convention-c);
+      = op--call(be, xep-cast, parameter-values,
+                 calling-convention: $llvm-calling-convention-c,
+                 tail-call?: #t);
     add!(result-phi-arguments, result);
     add!(result-phi-arguments, be.llvm-builder-basic-block);
     ins--br(be, return-bb);
