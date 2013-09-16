@@ -493,6 +493,11 @@ methods on the result-set classes return instances of this class.
 The values in a record object have a short lifespan: they are only
 valid until the next fetch is performed.
 
+See also:
+
+* :class:`<coercion-policy>`
+* :class:`<record>`
+
 Result-set policy class
 -----------------------
 
@@ -517,6 +522,10 @@ otherwise, it will be an instance of :class:`<record>`.
     +-------------+-----------------+------------------------------------+
     | ``#t``      | -               | :class:`<scrollable-result-set>`   |
     +-------------+-----------------+------------------------------------+
+
+See also:
+
+* :class:`<result-set-policy>`
 
 Result-set classes
 ------------------
@@ -740,6 +749,41 @@ While handling the first condition, your application can process
 any additional errors or warnings that may have occurred by signaling
 the next DBMS condition; to obtain the next DBMS condition, call
 :func:`next-dbms-condition` on the condition being handled.
+
+Diagnostics
+-----------
+
+SQL-92 defines a diagnostics area as a DBMS-managed data structure
+that captures specific information about the execution of a SQL
+statement, with the exception of the ``GET DIAGNOSTICS`` statement.
+A diagnostics area consists of two sections, a header and a
+collection of diagnostic details.
+
+The header contains information about the last SQL statement
+executed, while the diagnostic details contain information about
+each error or warning that resulted from the execution of the SQL
+statement.
+
+The size of the diagnostic details section is the default value
+for the DBMS implementation. This size is always greater than one,
+since the first diagnostic detail corresponds to sqlstate. A DBMS
+may only fill in one diagnostic detail regardless of the number
+of errors or warnings that occur. If multiple diagnostic details
+are filled in, there is no presumption of precedence or importance.
+
+The SQL-ODBC library provides wrapper classes for these constructs
+and accessors for the information they represent.
+
+See also:
+
+* :gf:`row-count`
+* :class:`<diagnostic>`
+* :gf:`condition-number`
+* :gf:`returned-sqlstate`
+* :gf:`class-origin`
+* :gf:`subclass-origin`
+* :gf:`connection-name`
+* :gf:`message-text`
 
 Database introspection
 ======================
@@ -1133,8 +1177,29 @@ The SQL module
    :open:
    :abstract:
 
+   The class for result sets that support a one-shot forward iteration protocol.
+
    :superclasses: :class:`<result-set>`
 
+   :description:
+
+      Instances of this class represent the results of an SQL ``SELECT``
+      statement, and support a one-shot :drm:`forward-iteration-protocol`.
+      By one-shot, we mean each element of the collection can be visited
+      only once, and no previously visited element can be revisited. A
+      condition is signaled if the application tries to revisit a record.
+      Thus, :drm:`backward-iteration-protocol` is not supported on this
+      collection.
+
+      This collection class is useful when the result of a query is
+      large and each element can be processed individually.
+
+      The function :drm:`type-for-copy` returns
+      :drm:`<simple-object-vector>` when applied to objects of this class.
+
+   See also:
+
+   * :class:`<scrollable-result-set>`
 
 .. class:: <implicit-zero-bit-padding>
    :open:
@@ -1407,9 +1472,24 @@ The SQL module
    :open:
    :abstract:
 
+   The class of records retrieved from a DBMS table as the result of
+   executing an SQL ``SELECT`` statement.
+
    :superclasses: :class:`<database-collection>`
 
    :keyword indicator-policy:
+
+   The class of records retrieved from a DBMS table as the result of
+   executing an SQL ``SELECT`` statement.
+
+   Instances of this class represent a record that was retrieved from
+   a DBMS table as the result of executing an SQL ``SELECT`` statement.
+
+   If the value passed to ``coercion-policy:`` is a sequence whose
+   size is less than the degree of the record, the extra columns
+   are converted to their equivalent Dylan type using the default
+   coercion. If the size of the sequence is greater than the degree
+   of the record, the extra elements of the sequence are ignored.
 
 .. class:: <referential-constraint>
    :abstract:
@@ -1440,12 +1520,21 @@ The SQL module
 .. class:: <result-set-policy>
    :open:
 
+   Specifies the behavior and performance characteristics of a result set.
+
    :superclasses: ``<object>``
 
    :keyword asynchronous:
-   :keyword rowset-size:
-   :keyword scroll-window:
-   :keyword scrollable:
+   :keyword rowset-size: An instance of ``type-union(<integer>, #"all")``.
+   :keyword scroll-window: An instance of :drm:`<integer>`. A cache size hint.
+   :keyword scrollable: An instance of :drm:`<boolean>`. Default value: ``#f``.
+
+   Specifies the behavior and performance characteristics of a result set.
+
+   The ``rowset-size`` slot is the number of records to retrieve each
+   time an internal fetch is performed. If ``rowset-size`` is
+   ``#"all"``, all records are retrieved the first time a fetch is
+   performed. Currently, ``rowset-size`` is ignored.
 
 .. class:: <result-set>
    :open:
@@ -1454,6 +1543,20 @@ The SQL module
    :superclasses: :class:`<database-collection>`
 
    :keyword liaison:
+
+   :description:
+
+     Instances of this class represent the results of an SQL ``SELECT``
+     statement.
+
+     This class is the root class for all result-set classes. The
+     :drm:`type-for-copy` function returns :drm:`<simple-object-vector>`
+     for objects of this class.
+
+   See also:
+
+   * :class:`<forward-only-result-set>`
+   * :class:`<scrollable-result-set>`
 
 .. class:: <schema-not-found>
 
@@ -1472,7 +1575,21 @@ The SQL module
    :open:
    :abstract:
 
+   The class for result sets that support both forward and backward iteration.
+
    :superclasses: :class:`<result-set>`
+
+   :description:
+
+     Instances of this class support both the forward- and
+     backward-iteration-protocol.
+
+     The :drm:`type-for-copy` function returns :drm:`<simple-object-vector>`
+     for objects of this class.
+
+   See also:
+
+   * :class:`<forward-only-result-set>`
 
 
 .. class:: <search-condition-too-long-for-information-schema>
@@ -2141,6 +2258,8 @@ The SQL module
 .. generic-function:: connection-name
    :open:
 
+   Returns the name of the connection that was used to execute the SQL statement.
+
    :signature: connection-name (diag) => (connection-name)
 
    :parameter diag: An instance of :class:`<diagnostic>`.
@@ -2802,19 +2921,40 @@ The SQL module
 .. generic-function:: text
    :open:
 
+   Returns a string containing the text of an SQL statement.
+
    :signature: text (sql-statement) => (sql-statement-text)
 
    :parameter sql-statement: An instance of :class:`<sql-statement>`.
    :value sql-statement-text: An instance of ``<string>``.
 
+   :description:
+
+     Returns a string containing the text of ``sql-statement``.
+
+   See also:
+
+   * :gf:`text-setter`
+
 .. generic-function:: text-setter
    :open:
+
+   Changes the text of an SQL statement.
 
    :signature: text-setter (new-text sql-statement) => (new-text)
 
    :parameter new-text: An instance of ``<string>``.
    :parameter sql-statement: An instance of :class:`<sql-statement>`.
    :value new-text: An instance of ``<string>``.
+
+   :description:
+
+     Changes the text of the SQL statement in ``sql-statement``
+     to ``new-text``.
+
+   See also:
+
+   * :gf:`text`
 
 .. generic-function:: transaction-mode
 
