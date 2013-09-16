@@ -669,9 +669,10 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
     (uis-global.llvm-value-type,
      llvm-pointer-to(be, llvm-lambda-type(be, uis-iep)));
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  ins--tail-call(be, uis-global, vector(x, tagged-position, undef, undef),
-                 calling-convention:
-                   llvm-calling-convention(be, uis-iep));
+  op--call(be, uis-global, vector(x, tagged-position, undef, undef),
+           calling-convention:
+             llvm-calling-convention(be, uis-iep),
+           tail-call?: #t);
   ins--unreachable(be);
 
   // Not uninitialized

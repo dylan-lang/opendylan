@@ -37,6 +37,12 @@ define method llvm-back-end-data-layout
     "a0:0:64-f80:32:32-n8:16:32"
 end method;
 
+define method llvm-back-end-unwind-exception-size
+    (back-end :: <llvm-x86-back-end>)
+ => (number-words :: <integer>)
+  8
+end method;
+
 // x86_64
 
 define abstract class <llvm-x86_64-back-end> (<llvm-x86-back-end>)
@@ -53,6 +59,12 @@ define method llvm-back-end-data-layout
   "e-p:64:64:64-i1:8:8-i8:8:8-i16:16:16-i32:32:32-"
     "i64:64:64-f32:32:32-f64:64:64-v64:64:64-v128:128:128-"
     "a0:0:64-s0:64:64-f80:128:128-n8:16:32:64"
+end method;
+
+define method llvm-back-end-unwind-exception-size
+    (back-end :: <llvm-x86_64-back-end>)
+ => (number-words :: <integer>)
+  4
 end method;
 
 // PowerPC (32-bit)
@@ -183,6 +195,12 @@ register-back-end(<llvm-x86-freebsd-back-end>, #"llvm", #"x86-freebsd");
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86-freebsd-back-end>) => (triple :: <string>);
   "i386-unknown-freebsd"
+end method;
+
+define method llvm-back-end-unwind-exception-size
+    (back-end :: <llvm-x86-freebsd-back-end>)
+ => (number-words :: <integer>)
+  5
 end method;
 
 // x86_64-freebsd

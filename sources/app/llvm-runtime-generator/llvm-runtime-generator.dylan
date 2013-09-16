@@ -211,20 +211,24 @@ define function generate-runtime-header
     format(stream, "#define LLVM_RUNTIME_H_\n\n");
 
     begin
-      let teb-type = llvm-teb-struct-type(be);
-      format(stream, "struct %s {\n", teb-type.^debug-name);
-      for (member in teb-type.raw-aggregate-members)
-	let member-type = member.member-raw-type;
-	format(stream, "  %s %s",
-	       member-type.raw-type-c-name,
-	       raw-mangle(be, as(<string>, member.member-name)));
-	if (instance?(member, <raw-aggregate-array-member>))
-	  format(stream, "[%d]", member.member-array-length);
-	end if;
-	format(stream, ";\n");
-      end for;
+      let types
+        = vector(llvm-teb-struct-type(be),
+                 llvm-bef-struct-type(be));
+      for (type in types)
+        format(stream, "struct %s {\n", type.^debug-name);
+        for (member in type.raw-aggregate-members)
+          let member-type = member.member-raw-type;
+          format(stream, "  %s %s",
+                 member-type.raw-type-c-name,
+                 raw-mangle(be, as(<string>, member.member-name)));
+          if (instance?(member, <raw-aggregate-array-member>))
+            format(stream, "[%d]", member.member-array-length);
+          end if;
+          format(stream, ";\n");
+        end for;
 
-      format(stream, "};\n\n");
+        format(stream, "};\n\n");
+      end for;
     end;
 
     format(stream, "#endif // LLVM_RUNTIME_H_\n");

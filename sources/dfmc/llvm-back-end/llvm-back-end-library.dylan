@@ -42,6 +42,8 @@ define module dfmc-llvm-back-end
     llvm-thread-local-support?,
     llvm-teb-struct-type,
 
+    llvm-bef-struct-type,
+
     *loose-mode?*,
     *interactive-mode?*,
     llvm-retract-cached,

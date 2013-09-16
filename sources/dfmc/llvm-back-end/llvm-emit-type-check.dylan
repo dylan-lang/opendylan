@@ -70,11 +70,12 @@ define method op--type-check-error
   let tce-name = emit-name(back-end, module, tce-iep);
   let tce-global = llvm-builder-global(back-end, tce-name);
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
-  ins--tail-call(back-end, tce-global,
-                 vector(object, type-ref, undef, undef),
-                 type: llvm-reference-type(back-end, back-end.%mv-struct-type),
-                 calling-convention:
-                   llvm-calling-convention(back-end, tce-iep));
+  op--call(back-end, tce-global,
+           vector(object, type-ref, undef, undef),
+           tail-call?: #t,
+           type: llvm-reference-type(back-end, back-end.%mv-struct-type),
+           calling-convention:
+             llvm-calling-convention(back-end, tce-iep));
   ins--unreachable(back-end);
 end method;
 
@@ -108,10 +109,10 @@ define method do-emit-instance-cmp
   // Call it and return the truth value
   let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
   let call
-    = ins--call(back-end, iep-func, vector(object, type-ref, undef, undef),
-                calling-convention:
-                  llvm-calling-convention(back-end,
-                                          typical-instance?-iep));
+    = op--call(back-end, iep-func, vector(object, type-ref, undef, undef),
+               calling-convention:
+                 llvm-calling-convention(back-end,
+                                         typical-instance?-iep));
   let result = ins--extractvalue(back-end, call, 0);
   ins--icmp-ne(back-end, result, emit-reference(back-end, module, &false));
 end method;

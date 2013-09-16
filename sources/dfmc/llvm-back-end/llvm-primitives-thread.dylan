@@ -56,7 +56,7 @@ define method initialize-teb-struct-type (back-end :: <llvm-back-end>) => ()
   // Record TEB structure field indicies
   for (member in back-end.llvm-teb-struct-type.raw-aggregate-members,
        index from 0)
-    back-end.%teb-struct-field-index[member.member-name] := i32(index);
+    back-end.%raw-struct-field-index[member.member-name] := i32(index);
   end for;
 end method;
 
@@ -90,7 +90,7 @@ define method op--teb-getelementptr
     (be :: <llvm-back-end>, field :: <symbol>, #rest indices)
  => (pointer :: <llvm-value>);
   let teb = op--teb(be);
-  let index = be.%teb-struct-field-index[field];
+  let index = be.%raw-struct-field-index[field];
   apply(ins--gep-inbounds, be, teb, 0, index, indices)
 end method;
 

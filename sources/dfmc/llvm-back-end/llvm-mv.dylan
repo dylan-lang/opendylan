@@ -262,3 +262,159 @@ define method op--restore-temporary
     ins--block(back-end, continue-bb);
   end if;
 end method;
+
+// Store an MV into a Bind Exit Frame for non-local return
+define method op--set-bef-value
+    (back-end :: <llvm-back-end>, bef :: <llvm-value>,
+     mv :: <llvm-global-mv>)
+ => ();
+  let word-size = back-end-word-size(back-end);
+  let bef-type = llvm-reference-type(back-end, back-end.llvm-bef-struct-type);
+  let bef-cast = ins--bitcast(back-end, bef, llvm-pointer-to(back-end, bef-type));
+
+  // Store the value count
+  let count = ins--extractvalue(back-end, mv.llvm-mv-struct, 1);
+  let count-ext = ins--zext(back-end, count, back-end.%type-table["iWord"]);
+  let count-ptr
+    = op--bef-getelementptr(back-end, bef-cast, #"bef-mv-count");
+  ins--store(back-end, count-ext, count-ptr);
+
+  // Store the primary value
+  let primary = ins--extractvalue(back-end, mv.llvm-mv-struct, 0);
+  let primary-ptr
+    = op--bef-getelementptr(back-end, bef-cast, #"bef-mv-area", 0);
+  ins--store(back-end, primary, primary-ptr);
+
+  let copy-bb = make(<llvm-basic-block>);
+  let continue-bb = make(<llvm-basic-block>);
+
+  // Determine how many values are in the TEB MV area
+  // (i.e., everything beyond the primary value)
+  let mv-area-count = ins--sub(back-end, count-ext, 1);
+  let cmp = ins--icmp-sgt(back-end, mv-area-count, 0);
+  ins--br(back-end, cmp, copy-bb, continue-bb);
+
+  // Copy MV area values
+  ins--block(back-end, copy-bb);
+  let dst-ptr
+    = op--bef-getelementptr(back-end, bef-cast, #"bef-mv-area", 1);
+  let dst-cast = ins--bitcast(back-end, dst-ptr, $llvm-i8*-type);
+  let src-ptr = op--teb-getelementptr(back-end, #"teb-mv-area", 1);
+  let src-cast = ins--bitcast(back-end, src-ptr, $llvm-i8*-type);
+  let byte-count = ins--mul(back-end, mv-area-count, word-size);
+  ins--call-intrinsic(back-end, "llvm.memcpy",
+                      vector(dst-cast, src-cast, byte-count,
+                             i32(word-size), $llvm-false));
+  ins--br(back-end, continue-bb);
+
+  ins--block(back-end, continue-bb);
+end method;
+
+define method op--set-bef-value
+    (back-end :: <llvm-back-end>, bef :: <llvm-value>,
+     mv :: <llvm-local-mv>)
+ => ();
+  let word-size = back-end-word-size(back-end);
+  let rest-class :: <&class> = dylan-value(#"<simple-object-vector>");
+  let bef-type = llvm-reference-type(back-end, back-end.llvm-bef-struct-type);
+  let bef-cast
+    = ins--bitcast(back-end, bef, llvm-pointer-to(back-end, bef-type));
+
+  let (value-count, rest-cast, rest-count)
+    = if (mv.llvm-mv-rest)
+        let rest-cast
+          = op--object-pointer-cast(back-end, mv.llvm-mv-rest, rest-class);
+        let rest-count
+          = call-primitive(back-end, primitive-vector-size-descriptor,
+                           rest-cast);
+        values(ins--add(back-end, mv.llvm-mv-fixed.size, rest-count),
+               rest-cast,
+               rest-count)
+      else
+        values(mv.llvm-mv-fixed.size, #f, #f)
+      end if;
+
+  // Store the value count
+  let count-ptr
+    = op--bef-getelementptr(back-end, bef-cast, #"bef-mv-count");
+  ins--store(back-end, value-count, count-ptr);
+
+  // Store the fixed values
+  for (value in mv.llvm-mv-fixed, index from 0)
+    let value-ptr
+      = op--bef-getelementptr(back-end, bef-cast, #"bef-mv-area", index);
+    ins--store(back-end, value, value-ptr);
+  end for;
+
+  // Store the rest values
+  if (mv.llvm-mv-rest)
+    let byte-count = ins--mul(back-end, rest-count, word-size);
+
+    let dst-ptr
+      = op--bef-getelementptr(back-end, bef-cast, #"bef-mv-area",
+                              mv.llvm-mv-fixed.size);
+    let dst-cast = ins--bitcast(back-end, dst-ptr, $llvm-i8*-type);
+
+    let repeated-slot-ptr
+      = op--getslotptr(back-end, rest-cast, rest-class, #"vector-element", 0);
+    let src-cast = ins--bitcast(back-end, repeated-slot-ptr, $llvm-i8*-type);
+
+    ins--call-intrinsic(back-end, "llvm.memcpy",
+                        vector(dst-cast, src-cast, byte-count,
+                               i32(word-size), $llvm-false));
+  end if;
+end method;
+
+
+define side-effect-free stateless dynamic-extent auxiliary &runtime-primitive-descriptor primitive-bef-values
+    (bind-exit-frame :: <raw-pointer>) => (#rest values);
+  let word-size = back-end-word-size(be);
+  let module = be.llvm-builder-module;
+
+  let bef-type = llvm-reference-type(be, be.llvm-bef-struct-type);
+  let bef-cast
+    = ins--bitcast(be, bind-exit-frame, llvm-pointer-to(be, bef-type));
+
+  let copy-bb = make(<llvm-basic-block>);
+  let continue-bb = make(<llvm-basic-block>);
+
+  // Retrieve the value count
+  let count-ptr
+    = op--bef-getelementptr(be, bef-cast, #"bef-mv-count");
+  let count = ins--load(be, count-ptr);
+
+  // Determine how many values belong in the TEB MV area
+  let mv-area-count = ins--sub(be, count, 1);
+
+  let cmp = ins--icmp-sgt(be, mv-area-count, 0);
+  ins--br(be, cmp, copy-bb, continue-bb);
+
+  // Copy values to MV area
+  ins--block(be, copy-bb);
+  let dst-ptr = op--teb-getelementptr(be, #"teb-mv-area", 1);
+  let dst-cast = ins--bitcast(be, dst-ptr, $llvm-i8*-type);
+  let src-ptr
+    = op--bef-getelementptr(be, bef-cast, #"bef-mv-area", 1);
+  let src-cast = ins--bitcast(be, src-ptr, $llvm-i8*-type);
+  let byte-count = ins--mul(be, mv-area-count, word-size);
+  ins--call-intrinsic(be, "llvm.memcpy",
+                      vector(dst-cast, src-cast, byte-count,
+                             i32(word-size), $llvm-false));
+  ins--br(be, continue-bb);
+
+  ins--block(be, continue-bb);
+
+  // Retrieve the primary value
+  let cmp = ins--icmp-ne(be, 0, count);
+  let primary
+    = ins--if (be, cmp)
+        let primary-ptr
+          = op--bef-getelementptr(be, bef-cast, #"bef-mv-area", 0);
+        ins--load(be, primary-ptr)
+      ins--else
+        emit-reference(be, module, &false)
+      end ins--if;
+
+  let count-trunc = ins--trunc(be, count, $llvm-i8-type);
+  op--global-mv-struct(be, primary, count-trunc)
+end;

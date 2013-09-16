@@ -68,8 +68,11 @@ define abstract class <llvm-back-end> (<back-end>, <llvm-builder>)
   // Precomputed Thread Environment Block structure type
   slot llvm-teb-struct-type :: <&raw-struct-type>;
 
+  // Precomputed Bind Exit Frame structure type
+  slot llvm-bef-struct-type :: <&raw-struct-type>;
+
   // gep indices for each field
-  constant slot %teb-struct-field-index :: <object-table>
+  constant slot %raw-struct-field-index :: <object-table>
     = make(<object-table>);
 end;
 
@@ -96,6 +99,9 @@ define sealed method initialize
 
   // Initialize TEB structure
   initialize-teb-struct-type(back-end);
+
+  // Initialize NLX bind exit frame structure
+  initialize-bef-struct-type(back-end);
 
   // Initialize predefined/raw LLVM types
   initialize-type-table(back-end);

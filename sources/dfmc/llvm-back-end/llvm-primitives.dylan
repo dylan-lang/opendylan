@@ -220,9 +220,15 @@ define macro primitive-call-emitter-method
            let attribute-list = function.llvm-function-attribute-list;
            llvm-builder-declare-global(be, function.llvm-global-name,
                                        function);
-           ins--call(be, function, parameters,
-                     calling-convention: calling-convention,
-                     attribute-list: attribute-list)
+           if (member?(#"can-unwind", ?descriptor.primitive-attributes))
+             op--call(be, function, parameters,
+                      calling-convention: calling-convention,
+                      attribute-list: attribute-list)
+           else
+             ins--call(be, function, parameters,
+                       calling-convention: calling-convention,
+                       attribute-list: attribute-list)
+           end if
          end }
 values:
     { } => { }
