@@ -47,16 +47,22 @@ define macro &primitive-descriptor-definer
                  = primitive-emitter-method (?parameters) => (?values)
                      ?body
                    end;
+               let declarator
+                 = vector(name: ?"name",
+                          parameter-names:
+                            primitive-parameter-names(?parameters),
+                          parameter-types-spec:
+                            primitive-parameter-types(?parameters),
+                          value-types-spec:
+                            primitive-parameter-types(?values));
                let attributes = #[?adjectives];
                make(<llvm-primitive-descriptor>,
                     emitter: emitter,
                     mapped-emitter:
-                      make-primitive-mapped-emitter
-                        (emitter, attributes,
-                         parameter-types-spec:
-                           primitive-parameter-types(?parameters),
-                         value-types-spec:
-                           primitive-parameter-types(?values)),
+                      apply(make-primitive-mapped-emitter,
+                            emitter, attributes,
+                            declarator),
+                    declarator: declarator,
                     attributes: attributes);
              end;
          do-define-llvm-primitive-descriptor(?#"name", ?name ## "-descriptor") }
@@ -493,6 +499,21 @@ define function call-primitive
      #rest arguments)
  => (#rest results)
   apply(primitive.primitive-emitter, back-end, arguments)
+end function;
+
+define method llvm-primitive-values-rest?
+    (back-end :: <llvm-back-end>, desc :: <llvm-primitive-descriptor>)
+ => (rest? :: <boolean>);
+  apply(primitive-rest-values-test, back-end,
+        desc.primitive-function-declarator)
+end method;
+
+define function primitive-rest-values-test
+    (back-end :: <llvm-back-end>,
+     #key value-types-spec :: <simple-object-vector> = #[],
+     #all-keys)
+ => (rest? :: <boolean>);
+  ~empty?(value-types-spec) & value-types-spec.last == #"rest"
 end function;
 
 

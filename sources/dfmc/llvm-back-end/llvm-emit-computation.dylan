@@ -819,7 +819,10 @@ define method emit-primitive-call
     = map(curry(emit-reference, back-end, m), c.arguments);
   let (#rest results)
     = apply(descriptor.primitive-mapped-emitter, back-end, arguments);
-  if (results.size = 1)
+  if (llvm-primitive-values-rest?(back-end, descriptor))
+    let mv = make(<llvm-global-mv>, struct: results.first);
+    computation-result(back-end, c, mv);
+  elseif (results.size = 1)
     computation-result(back-end, c, results.first);
   else
     computation-result(back-end, c, make(<llvm-local-mv>, fixed: results));
