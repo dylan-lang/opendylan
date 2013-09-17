@@ -283,9 +283,12 @@ define method map-as-one
   if (collection-size = 0)
     make(type, size: 0)
   else
-    let result = make(type, dimensions: collection.dimensions);
+    // For compatibility, use fill: rather than relying on element-type-fill.
+    let result =
+      make(type, dimensions: collection.dimensions,
+           fill: function(collection.first));
     without-bounds-checks
-      for (i :: <integer> from 0 below collection-size)
+      for (i :: <integer> from 1 below collection-size)
         result[i] := function(collection[i])
       end for
     end without-bounds-checks;
@@ -301,9 +304,12 @@ define method map-as-one
   if (collection-size = 0)
     make(type, size: 0)
   else
-    let result = make(type, size: collection-size);
+    // For compatibility, use fill: rather than relying on element-type-fill.
+    let result =
+      make(type, size: collection.size,
+           fill: function(collection.first));
     without-bounds-checks
-      for (i :: <integer> from 0 below collection-size)
+      for (i :: <integer> from 1 below collection-size)
         result[i] := function(collection[i])
       end for
     end without-bounds-checks;

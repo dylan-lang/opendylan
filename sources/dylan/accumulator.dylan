@@ -237,7 +237,9 @@ define method convert-accumulator-as
     check-key-test-eq(target, acc);
     target
   else
-    let target = make(type, size: acc.acc-size);
+    // For compatibility, use fill: rather than relying on element-type-fill.
+    let target =
+      make(type, size: acc.acc-size, fill: acc.acc-buffer[acc.acc-index]);
     check-key-test-eq(target, acc);
     with-fip-of target /* with-setter? */
       for (e in acc,
@@ -259,7 +261,9 @@ define method convert-accumulator-as
     check-key-test-eq(target, acc);
     target
   else
-    let target = make(type, size: acc.acc-size);
+    // For compatibility, use fill: rather than relying on element-type-fill.
+    let target =
+      make(type, size: acc.acc-size, fill: acc.acc-buffer[acc.acc-index]);
     check-key-test-eq(target, acc);
     for (e in acc, i from 0) target[i] := e end;
     target

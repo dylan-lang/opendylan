@@ -524,7 +524,7 @@ define method ^limited-collection
           select-default-fill(class, of)
         end if;
     // PARALLELS RUNTIME METHODS ON LIMITED
-    let res = select (class)
+    select (class)
       dylan-value(#"<range>")  // TODO: NOT YET IMPLEMENTED
         => class;
       dylan-value(#"<string>")

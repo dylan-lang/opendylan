@@ -175,7 +175,10 @@ define method concatenate-as(
              end;
         otherwise =>
           without-bounds-checks
-            let result = make(type, size: total-sz);
+            // For compatibility, use fill: rather than relying on element-type-fill.
+            let fill = if (non-empty-index = 0) first-seq[0]
+                       else rest-seqs[non-empty-index - 1][0] end;
+            let result = make(type, size: total-sz, fill: fill);
             with-fip-of result
               let state = initial-state;
               for (val in first-seq)
@@ -205,7 +208,9 @@ define method concatenate-as-two
     empty?(first-seq) => as(type, second-seq);
     empty?(second-seq) => as(type, first-seq);
     otherwise =>
-      let result = make(type, size: first-seq.size + second-seq.size);
+      // For compatibility, use fill: rather than relying on element-type-fill.
+      let result = make(type, size: first-seq.size + second-seq.size,
+                              fill: first-seq[0]);
       without-bounds-checks
         for (val in first-seq, key from 0)
           result[key] := val;
@@ -512,8 +517,9 @@ define method copy-sequence
 
   if (first = last) as(type-for-copy(source), #())
   else
+    // For compatibility, use fill: rather than relying on element-type-fill.
     let result =
-      make(type-for-copy(source), size: last - first);
+      make(type-for-copy(source), size: last - first, fill: source[0]);
 
     with-fip-of source
       for (index from 0 below first,

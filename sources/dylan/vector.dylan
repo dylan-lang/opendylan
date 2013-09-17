@@ -169,8 +169,9 @@ define method reverse (vector :: <vector>) => (v :: <vector>)
   if (size = 0)
     make(vector.type-for-copy, size: 0)
   else
+    // For compatibility, use fill: rather than relying on element-type-fill.
     let new-vector :: <vector>
-      = make(vector.type-for-copy, size: size);
+      = make(vector.type-for-copy, size: size, fill: vector[0]);
     without-bounds-checks
       for (from :: <integer> from 0, to from size - 1 to 0 by -1)
         new-vector[to] := vector[from]
@@ -265,8 +266,10 @@ define sealed method copy-sequence
   if (sz <= 0)
     make(type-for-copy(source), size: 0)
   else
+    // For compatibility, use fill: rather than relying on element-type-fill.
+    let fill = source[0];
     let result :: <vector>
-      = make(type-for-copy(source), size: sz);
+      = make(type-for-copy(source), size: sz, fill: fill);
     without-bounds-checks
       for (j :: <integer> from 0 below sz,
            i :: <integer> from first)
@@ -412,9 +415,11 @@ define method as
       if (new-size = 0)
         make(class, size: new-size)
       else
+        // For compatibility, use fill: rather than relying on element-type-fill.
         let new-vector
           = with-fip-of collection
-              make(class, size: new-size);
+              let fill = current-element(collection, initial-state);
+              make(class, size: new-size, fill: fill);
             end with-fip-of;
         for (index :: <integer> from 0 below new-size, item in collection)
           element(new-vector, index) := item;
@@ -436,6 +441,7 @@ define method concatenate-as
   block (return)
     let total-sz :: <integer> = vector.size;
     let num-non-empty :: <integer> = if (total-sz = 0) 0 else 1 end;
+    let fill = unsupplied();
 
     for (v in more-vectors)
       unless (instance?(v, type))
@@ -445,6 +451,9 @@ define method concatenate-as
       unless (sz = 0)
         total-sz := total-sz + sz;
         num-non-empty := num-non-empty + 1;
+        when (unsupplied?(fill))
+          fill := v[0];
+        end when;
       end unless;
     end for;
 
@@ -461,7 +470,8 @@ define method concatenate-as
                end for
              end;
         otherwise =>
-          let result = make(type, size: total-sz);
+          // For compatibility, use fill: rather than relying on element-type-fill.
+          let result = make(type, size: total-sz, fill: fill);
           for (i :: <integer> from 0 below size(vector))
             result[i] := vector[i];
           finally
