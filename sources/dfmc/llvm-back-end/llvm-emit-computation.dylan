@@ -1317,12 +1317,23 @@ end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <multiple-value-spill>) => ()
-  // FIXME
+  let value = c.computation-value;
+  let spill = op--protect-temporary(back-end, value, temporary-value(value));
+  computation-result(back-end, c, spill);
 end method;
 
 define method emit-computation
     (back-end :: <llvm-back-end>, m :: <llvm-module>, c :: <multiple-value-unspill>) => ()
-  // FIXME
+  let comp = c.computation-value;
+  let spill-value
+    = if (instance?(comp.generator, <multiple-value-spill>))
+        comp.generator.computation-value;
+      else
+        error("emit-computation <multiple-value-spill>");
+      end if;
+  op--restore-temporary(back-end, spill-value, temporary-value(spill-value),
+                        temporary-value(comp));
+  computation-result(back-end, c, temporary-value(spill-value));
 end method;
 
 define method emit-computation

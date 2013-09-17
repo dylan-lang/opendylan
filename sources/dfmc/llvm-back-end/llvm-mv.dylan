@@ -174,3 +174,91 @@ define method op--global-mv-struct
   llvm-constrain-type(count.llvm-value-type, $llvm-i8-type);
   ins--insertvalue(back-end, value-struct, count, 1)
 end method;
+
+// Save a multiple-value temporary to be restored later
+define method op--protect-temporary
+    (back-end :: <llvm-back-end>, temp, value)
+ => (spill :: <llvm-value>);
+  // Nothing to do
+  emit-reference(back-end, back-end.llvm-builder-module, &false)
+end method;
+
+define method op--protect-temporary
+    (back-end :: <llvm-back-end>, temp :: <multiple-value-temporary>,
+     mv :: <llvm-global-mv>)
+ => (spill :: <llvm-value>);
+  if (temp.required-values > 1 | temp.rest-values?)
+    let copy-bb = make(<llvm-basic-block>);
+    let continue-bb = make(<llvm-basic-block>);
+
+    // Allocate a local spill area
+    let maximum-count
+      = if (temp.rest-values?)
+          mv.llvm-mv-maximum - 1
+        else
+          temp.required-values - 1
+        end;
+    let word-size = back-end-word-size(back-end);
+    let spill = ins--alloca(back-end, $llvm-object-pointer-type, maximum-count);
+    let spill-cast = ins--bitcast(back-end, spill, $llvm-i8*-type);
+
+    // Determine how many values are in the TEB MV area
+    let count = ins--extractvalue(back-end, mv.llvm-mv-struct, 1);
+    let count-ext = ins--zext(back-end, count, back-end.%type-table["iWord"]);
+    let mv-area-count = ins--sub(back-end, count-ext, 1);
+    let cmp = ins--icmp-sgt(back-end, mv-area-count, 0);
+    ins--br(back-end, cmp, copy-bb, continue-bb);
+
+    // Copy MV area values
+    ins--block(back-end, copy-bb);
+    let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", 1);
+    let ptr-cast = ins--bitcast(back-end, ptr, $llvm-i8*-type);
+    let byte-count = ins--mul(back-end, mv-area-count, word-size);
+    ins--call-intrinsic(back-end, "llvm.memcpy",
+                        vector(spill-cast, ptr-cast, byte-count,
+                               i32(word-size), $llvm-false));
+    ins--br(back-end, continue-bb);
+
+    ins--block(back-end, continue-bb);
+    spill
+  else
+    emit-reference(back-end, back-end.llvm-builder-module, &false)
+  end if;
+end method;
+
+define method op--restore-temporary
+    (back-end :: <llvm-back-end>, temp, value, spill :: <llvm-value>)
+ => ();
+  // Nothing to do
+end method;
+
+define method op--restore-temporary
+    (back-end :: <llvm-back-end>, temp :: <multiple-value-temporary>,
+     mv :: <llvm-global-mv>, spill :: <llvm-value>)
+ => ();
+  if (temp.required-values > 1 | temp.rest-values?)
+    let copy-bb = make(<llvm-basic-block>);
+    let continue-bb = make(<llvm-basic-block>);
+
+    // Determine how many values need to be restored to the TEB MV area
+    let count = ins--extractvalue(back-end, mv.llvm-mv-struct, 1);
+    let count-ext = ins--zext(back-end, count, back-end.%type-table["iWord"]);
+    let mv-area-count = ins--sub(back-end, count-ext, 1);
+    let cmp = ins--icmp-sgt(back-end, mv-area-count, 0);
+    ins--br(back-end, cmp, copy-bb, continue-bb);
+
+    // Copy spill values to the MV area
+    ins--block(back-end, copy-bb);
+    let word-size = back-end-word-size(back-end);
+    let spill-cast = ins--bitcast(back-end, spill, $llvm-i8*-type);
+    let ptr = op--teb-getelementptr(back-end, #"teb-mv-area", 1);
+    let ptr-cast = ins--bitcast(back-end, ptr, $llvm-i8*-type);
+    let byte-count = ins--mul(back-end, mv-area-count, word-size);
+    ins--call-intrinsic(back-end, "llvm.memcpy",
+                        vector(ptr-cast, spill-cast, byte-count,
+                               i32(word-size), $llvm-false));
+    ins--br(back-end, continue-bb);
+
+    ins--block(back-end, continue-bb);
+  end if;
+end method;
