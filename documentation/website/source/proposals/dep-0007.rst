@@ -9,7 +9,7 @@ Status:          Draft
 Type:            Standards Track
 Affects-DRM:     Yes
 Created:         28-Jul-2013
-Last-Modified:   10-Aug-2013
+Last-Modified:   16-Sep-2013
 Post-History:    28-Jul-2013
 Target-Version:  2013.2
 ===============  ===============
@@ -119,14 +119,6 @@ function will return the element type described in
 `Element Types <http://opendylan.org/books/drm/Element_Types>`__ of the [DRM]_.
 
 
-``map``, ``map-as``, etc.
--------------------------
-
-Every function that instantiates a new collection using the first value of an
-existing collection as the ``fill:`` initialization argument will instead use
-the new collection's default fill argument (i.e., omit the ``fill:`` argument).
-
-
 Motivation
 ==========
 
@@ -156,10 +148,12 @@ collection. But in a user-defined limited collection, such as
 And if the collection is empty, the workaround described in the DRM of using
 the first element of the collection cannot be used.
 
-This DEP solves both problems. It describes a way for a collection type to
-specify a valid default for ``fill:`` providing a superior alternative to the
-workaround described in the DRM's note to implementors, and also describes a
-way for ``size-setter`` to populate a collection with valid values.
+This DEP solves that problem by describing a way for ``size-setter`` to
+populate a collection with valid values. This DEP also improves the
+interface/implementation separation of limited collections by allowing a
+library author to specify a valid default for ``fill:`` in a type-defining
+``limited`` call rather than requiring the client to know and use a valid
+``fill:`` value in every call to ``make``.
 
 Additionally, this DEP adds the ``element-type`` method. This method is useful
 for code that transforms or manipulates one collection into a different form.
@@ -184,6 +178,29 @@ is necessary because the [DRM]_ allows the ``limited`` function on *C* to
 return *C* itself as a type, implying that the default fill and element type
 information associated with the limited collection has to be available on a
 per-instance basis. Plus, creating getters on types is not idiomatic to Dylan.
+
+A previous draft had changed the behavior of ``map``, etc., so that they would
+instantiate their resulting collection with the collection's default fill
+value. This turned out to be problematic. Most limited collections used in the
+Open Dylan source code do not have a ``false-or`` element type, and the element
+type they do have lacks a sensible "blank" value such as ``#f``, ``0``, or
+``""`` to use as a default fill. Strictly speaking, such a collection is poorly
+formed because it can never be directly instantiated with a specific size;
+however, that situation never occurs in the Open Dylan source code. Instead,
+the source code instantiates such a collection indirectly via ``map`` or
+``as``. Those functions fill the collection with a value derived from the first
+element of the argument(s), as described by the DRM's note to implementors
+quoted above. The value is not the "correct" value for any element but the
+first, but of course each other element is given its own "correct" value
+immediately thereafter, with the fill value merely acting as a placeholder.
+Under the previous draft this fill behavior would have been removed and all
+those limited collections would have needed to be changed; in order to tolerate
+being instantiated "empty", they would have needed a ``false-or`` element type.
+That would have been a significant lapse in backwards compatibility with the
+Open Dylan source code and presumably with other source code as well.
+Therefore, I revised this DEP to leave ``map``, etc., functioning as they
+always have. Those "poorly-formed" limited collections are still poorly formed,
+but…they work in their environment.
 
 I had originally considered a more extensive change where each instance of a
 fillable collection class would not only track its *default* fill value, but
@@ -216,17 +233,9 @@ to the fillable collection classes. Therefore, code that calls ``limited``
 without the ``default-fill:`` argument will get a type whose default ``fill:``
 value is the same as the ``fill:`` value in current versions of Open Dylan.
 
-Existing code that relies on the first element being used as a new collection's
-fill value will probably behave differently. This sort of code seems unlikely to
-exist.
-
-Existing code that uses the first element as a new collection's fill value will
-work as before, but will not longer be consistent with the behavior of ``map``,
-etc.
-
 Existing subclasses of ``<collection>`` that define their own ``fill:``
-init-keyword will still work, assuming they also define a default value that is
-of the element type of the subclass.
+init-keyword will still work, assuming they also specify a default value for
+that keyword that is of the element type of the subclass.
 
 New code may use ``element-type`` or ``element-type-fill`` in conjunction with
 an existing subclass of ``<collection>`` with restricted types that does not
