@@ -416,3 +416,41 @@ define side-effect-free stateless dynamic-extent auxiliary &runtime-primitive-de
   let count-trunc = ins--trunc(be, count, $llvm-i8-type);
   op--global-mv-struct(be, primary, count-trunc)
 end;
+
+
+/// values primitive
+
+define side-effect-free stateless dynamic-extent mapped-parameter &primitive-descriptor primitive-values
+    (arguments :: <simple-object-vector>) => (#rest values);
+  let module = be.llvm-builder-module;
+
+  let entry-block = be.llvm-builder-basic-block;
+  let return-primary = make(<llvm-basic-block>);
+  let return-common = make(<llvm-basic-block>);
+
+  // Read the vector size
+  let count = call-primitive(be, primitive-vector-size-descriptor, arguments);
+
+  // Is it empty?
+  let cmp = ins--icmp-eq(be, count, 0);
+  ins--br(be, cmp, return-common, return-primary);
+
+  ins--block(be, return-primary);
+  let mv-area-count = ins--sub(be, count, 1);
+  let src-ptr
+    = op--getslotptr(be, arguments, #"<simple-object-vector>",
+                     #"vector-element", 1);
+  op--copy-into-mv-area(be, 1, src-ptr, mv-area-count);
+  let value0
+    = call-primitive(be, primitive-vector-element-descriptor,
+                     arguments, llvm-back-end-value-function(be, 0));
+  let primary-block = be.llvm-builder-basic-block;
+  ins--br(be, return-common);
+
+  ins--block(be, return-common);
+  let primary = ins--phi*(be,
+                          emit-reference(be, module, &false), entry-block,
+                          value0, primary-block);
+  let count-trunc = ins--trunc(be, count, $llvm-i8-type);
+  op--global-mv-struct(be, primary, count-trunc)
+end;
