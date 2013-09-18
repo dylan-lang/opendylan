@@ -29,7 +29,7 @@ define function darwin-sysctl
   when (raw-as-integer(%call-c-function ("sysctl")
     (mib :: <raw-byte-string>, cnt :: <raw-c-unsigned-int>,
      out :: <raw-byte-string> , osize :: <raw-byte-string>,
-     in :: <raw-byte-string>, isize :: <raw-byte-string>)
+     in :: <raw-byte-string>, isize :: <raw-c-unsigned-int>)
     => (ret :: <raw-c-signed-int>)
     (primitive-string-as-raw(rmib), integer-as-raw(size(rmib)),
      primitive-unwrap-machine-word($machine-word-zero),
@@ -50,7 +50,7 @@ define function darwin-sysctl
     when(raw-as-integer(%call-c-function ("sysctl")
       (mib :: <raw-byte-string>, cnt :: <raw-c-unsigned-int>,
        out :: <raw-byte-string>, osize :: <raw-byte-string>,
-       in :: <raw-byte-string>, isize :: <raw-byte-string>)
+       in :: <raw-byte-string>, isize :: <raw-c-unsigned-int>)
       => (ret :: <raw-c-signed-int>)
       (primitive-string-as-raw(rmib), integer-as-raw(size(mib)),
        primitive-string-as-raw(out), primitive-string-as-raw(rosize),
