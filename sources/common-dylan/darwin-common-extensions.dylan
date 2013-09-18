@@ -15,14 +15,14 @@ define constant $KERN_PROCARGS2 = 49;
 define function darwin-sysctl
   (mib :: <vector>) => (ret :: false-or(<byte-string>))
   let wsize = raw-as-integer(primitive-word-size());
-  let rmib = make(<byte-string>, size: size(mib) * wsize, fill: '\0');
+  let rmib = make(<byte-string>, size: size(mib) * 4, fill: '\0');
   let rosize = make(<byte-string>, size: wsize, fill: '\0');
 
   // create the real mib vector
   for (i from 0 below size(mib))
     primitive-c-signed-int-at
       (primitive-cast-raw-as-pointer(primitive-string-as-raw(rmib)),
-        integer-as-raw(0), integer-as-raw(i * wsize)) := integer-as-raw(mib[i])
+        integer-as-raw(0), integer-as-raw(i * 4)) := integer-as-raw(mib[i])
   end for;
 
   // get the size of the available data

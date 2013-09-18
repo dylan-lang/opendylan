@@ -104,6 +104,11 @@ Two new functions have been added: ``current-process-id`` and
 Bug Fixes
 =========
 
+Common Dylan
+------------
+
+``application-arguments()`` will now work on ``x86_64-darwin``.
+
 I/O
 ---
 
