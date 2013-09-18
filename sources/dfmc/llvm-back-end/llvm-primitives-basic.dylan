@@ -752,11 +752,3 @@ define side-effect-free stateless dynamic-extent &primitive-descriptor primitive
   let result = ins--and(be, above, below);
   op--boolean(be, result)
 end;
-
-
-/// Multiple Values
-
-define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-values
-    (size :: <integer>, #rest arguments) => (#rest values)
-  //---*** Fill this in...
-end;
