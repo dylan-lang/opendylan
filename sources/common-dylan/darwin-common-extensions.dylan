@@ -15,21 +15,21 @@ define constant $KERN_PROCARGS2 = 49;
 define function darwin-sysctl
   (mib :: <vector>) => (ret :: false-or(<byte-string>))
   let wsize = raw-as-integer(primitive-word-size());
-  let rmib = make(<byte-string>, size: size(mib) * wsize, fill: '\0');
+  let rmib = make(<byte-string>, size: size(mib) * 4, fill: '\0');
   let rosize = make(<byte-string>, size: wsize, fill: '\0');
 
   // create the real mib vector
   for (i from 0 below size(mib))
     primitive-c-signed-int-at
       (primitive-cast-raw-as-pointer(primitive-string-as-raw(rmib)),
-        integer-as-raw(0), integer-as-raw(i * wsize)) := integer-as-raw(mib[i])
+        integer-as-raw(0), integer-as-raw(i * 4)) := integer-as-raw(mib[i])
   end for;
 
   // get the size of the available data
   when (raw-as-integer(%call-c-function ("sysctl")
     (mib :: <raw-byte-string>, cnt :: <raw-c-unsigned-int>,
      out :: <raw-byte-string> , osize :: <raw-byte-string>,
-     in :: <raw-byte-string>, isize :: <raw-byte-string>)
+     in :: <raw-byte-string>, isize :: <raw-c-unsigned-int>)
     => (ret :: <raw-c-signed-int>)
     (primitive-string-as-raw(rmib), integer-as-raw(size(rmib)),
      primitive-unwrap-machine-word($machine-word-zero),
@@ -50,7 +50,7 @@ define function darwin-sysctl
     when(raw-as-integer(%call-c-function ("sysctl")
       (mib :: <raw-byte-string>, cnt :: <raw-c-unsigned-int>,
        out :: <raw-byte-string>, osize :: <raw-byte-string>,
-       in :: <raw-byte-string>, isize :: <raw-byte-string>)
+       in :: <raw-byte-string>, isize :: <raw-c-unsigned-int>)
       => (ret :: <raw-c-signed-int>)
       (primitive-string-as-raw(rmib), integer-as-raw(size(mib)),
        primitive-string-as-raw(out), primitive-string-as-raw(rosize),
