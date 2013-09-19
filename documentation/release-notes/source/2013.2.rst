@@ -69,6 +69,10 @@ dylan-extensions
 
 The ``debug-name`` method now has a specialization for ``<slot-descriptor>``.
 
+The ``debug-message`` method is now a function and doesn't perform any
+generic dispatch, making it safe to use it almost anywhere, including
+within the dispatch code.
+
 I/O
 ^^^
 
