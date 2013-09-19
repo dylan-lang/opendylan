@@ -37,11 +37,14 @@ define sealed inline method debugging-part?
 end method debugging-part?;
 
 /// DEBUG MESSAGE
-
-define sealed method debug-message
-    (format-string :: <string>, #rest format-args) => ()
-  primitive-debug-message(as(<byte-string>, format-string), format-args);
-end method debug-message;
+///
+/// This is a function and is set up to avoid any generic dispatch
+/// so that it can be used at any point in time, including inside
+/// dispatch.
+define function debug-message
+    (format-string :: <byte-string>, #rest format-args) => ()
+  primitive-debug-message(format-string, format-args);
+end function debug-message;
 
 /// DEBUG OUT
 ///
