@@ -99,18 +99,9 @@ define method emit-extern
     (back-end :: <llvm-back-end>, module :: <llvm-module>,
      ep :: <&shared-entry-point>)
  => ();
-  let name = emit-name(back-end, module, ep);
-  unless (element(module.llvm-global-table, name, default: #f))
-    let function-type = llvm-entry-point-type(back-end, ep);
-    let function
-      = make(<llvm-function>,
-             name: name,
-             type: llvm-pointer-to(back-end, function-type),
-             arguments: #(),
-             linkage: #"external",
-             calling-convention: llvm-calling-convention(back-end, ep));
-    llvm-builder-define-global(back-end, name, function);
-  end unless;
+  let (desc :: <llvm-entry-point-descriptor>, count :: false-or(<integer>))
+    = llvm-entry-point-info(back-end, ep);
+  llvm-entry-point-function(back-end, desc, count);
 end method;
 
 // FFI
