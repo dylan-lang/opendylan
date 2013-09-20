@@ -56,7 +56,7 @@ define module dfmc-llvm-back-end
     llvm-reference-type,
     llvm-lambda-type,
     llvm-c-function-type,
-    llvm-entry-point-type,
+    llvm-entry-point-info,
 
     <llvm-primitive-descriptor>,
     primitive-attributes,

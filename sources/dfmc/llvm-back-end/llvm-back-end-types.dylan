@@ -381,28 +381,3 @@ define method llvm-c-function-type
        return-type: return-type,
        varargs?: #f)
 end method;
-
-// Shared generic entry points
-
-define method llvm-entry-point-type
-    (back-end :: <llvm-back-end>, o :: <&shared-entry-point>)
- => (type :: <llvm-function-type>);
-  let module = back-end.llvm-builder-module;
-  let base-name
-    = emit-name-internal(back-end, back-end.llvm-builder-module, o);
-  let name = concatenate("EPFN.", base-name);
-  let type-table = module.llvm-type-table;
-  let type = element(type-table, name, default: #f);
-  if (type)
-    type
-  else
-    let return-type = llvm-reference-type(back-end, back-end.%mv-struct-type);
-
-    // FIXME
-    element(type-table, name)
-      := make(<llvm-function-type>,
-              return-type: return-type,
-              parameter-types: #(),
-              varargs?: #f)
-  end if
-end method;
