@@ -13,19 +13,19 @@ define function target-machine-word-mask () => (mask :: <abstract-integer>)
   *target-machine-word-mask*
   | begin
       local method build (n :: <integer>) => (mask :: <machine-word>)
-	      iterate loop (i :: <integer> = n, m = coerce-integer-to-machine-word(0))
-	        if (i = 0)
-		  m
-		else
-		  loop(i - 1, machine-word-logior(machine-word-unsigned-shift-left(m, 8),
-						  coerce-integer-to-machine-word(#xFF)))
-		end
-	      end
-	    end method;
+              iterate loop (i :: <integer> = n, m = coerce-integer-to-machine-word(0))
+                if (i = 0)
+                  m
+                else
+                  loop(i - 1, machine-word-logior(machine-word-unsigned-shift-left(m, 8),
+                                                  coerce-integer-to-machine-word(#xFF)))
+                end
+              end
+            end method;
       let native-word-size = truncate/($machine-word-size, 8);
-      *target-machine-word-mask* 
-	:= make(<double-integer>, low:  build(min(native-word-size, word-size())),
-				  high: build(max(0, word-size() - native-word-size)))
+      *target-machine-word-mask*
+        := make(<double-integer>, low:  build(min(native-word-size, word-size())),
+                                  high: build(max(0, word-size() - native-word-size)))
     end
 end function target-machine-word-mask;
 
@@ -54,25 +54,25 @@ define inline-only function extract-mw-operand-unsigned (rx :: <&raw-machine-wor
     <&raw-machine-word> =>
       let x = ^raw-object-value(rx);
       select (x by instance?)
-	<abstract-integer> =>
-	  generic/logand(x, target-machine-word-mask());
-	<byte-character> =>
-	  // No need to mask as <byte-character>s are always positive and "small" ...
-	  as(<integer>, x);
-	<machine-word> => 
-	  //---*** NOTE: Should be coerce-machine-word-to-unsigned-abstract-integer(x)
-	  //---*** but the primitive that implements it is broken!
-	  generic/logand(make(<double-integer>, 
-			      low: x, high: coerce-integer-to-machine-word(0)),
-			 target-machine-word-mask())
+        <abstract-integer> =>
+          generic/logand(x, target-machine-word-mask());
+        <byte-character> =>
+          // No need to mask as <byte-character>s are always positive and "small" ...
+          as(<integer>, x);
+        <machine-word> =>
+          //---*** NOTE: Should be coerce-machine-word-to-unsigned-abstract-integer(x)
+          //---*** but the primitive that implements it is broken!
+          generic/logand(make(<double-integer>,
+                              low: x, high: coerce-integer-to-machine-word(0)),
+                         target-machine-word-mask())
       end
   end
 end function extract-mw-operand-unsigned;
 
 define inline-only function sign-extend (x :: <abstract-integer>) => (x :: <abstract-integer>)
   generic/ash(generic/lsh(generic/logand(x, target-machine-word-mask()),
-			  sign-extension-shift()),
-	      - sign-extension-shift())
+                          sign-extension-shift()),
+              - sign-extension-shift())
 end function sign-extend;
 
 /// Extracts the operand to a <machine-word> primitive as an <abstract-integer>
@@ -87,20 +87,20 @@ define inline-only function extract-mw-operand-signed (rx :: <&raw-machine-word>
     <&raw-machine-word> =>
       let x = ^raw-object-value(rx);
       select (x by instance?)
-	<integer> =>
-	  x;
-	<abstract-integer> =>
-	  // TODO: the compiler should figure this out, but it doesn't
-	  let x :: <abstract-integer> = x;
-	  sign-extend(x);
-	<byte-character> =>
-	  // No need to mask as <byte-character>s are always positive and "small" ...
-	  as(<integer>, x);
-	<machine-word> => 
-	  //---*** NOTE: Should be coerce-machine-word-to-unsigned-abstract-integer(x)
-	  //---*** but the primitive that implements it is broken!
-	  sign-extend(make(<double-integer>,
-			   low: x, high: coerce-integer-to-machine-word(0)));
+        <integer> =>
+          x;
+        <abstract-integer> =>
+          // TODO: the compiler should figure this out, but it doesn't
+          let x :: <abstract-integer> = x;
+          sign-extend(x);
+        <byte-character> =>
+          // No need to mask as <byte-character>s are always positive and "small" ...
+          as(<integer>, x);
+        <machine-word> =>
+          //---*** NOTE: Should be coerce-machine-word-to-unsigned-abstract-integer(x)
+          //---*** but the primitive that implements it is broken!
+          sign-extend(make(<double-integer>,
+                           low: x, high: coerce-integer-to-machine-word(0)));
       end
   end
 end function extract-mw-operand-signed;
@@ -113,12 +113,12 @@ define inline-only function make-raw-literal-with-overflow (object :: <abstract-
   if (instance?(object, <integer>))
     make-raw-literal(object)
   elseif (begin
-	    let inverse-mask = generic/lognot(target-machine-word-mask());
-	    let sign 
-	      = generic/ash(generic/logand(object, inverse-mask), - sign-extension-shift());
-	    let signed-result = sign-extend(object);
-	    (sign = 0 & ~negative?(signed-result)) | (sign = -1 & negative?(signed-result))
-	  end)
+            let inverse-mask = generic/lognot(target-machine-word-mask());
+            let sign
+              = generic/ash(generic/logand(object, inverse-mask), - sign-extension-shift());
+            let signed-result = sign-extend(object);
+            (sign = 0 & ~negative?(signed-result)) | (sign = -1 & negative?(signed-result))
+          end)
     make-raw-literal(object)
   else
     // Should cause the folder/optimizer to punt ...

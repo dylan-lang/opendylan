@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define custom &machine-word-primitive primitive-integer? 
+define custom &machine-word-primitive primitive-integer?
     (x :: <object>) => (result :: <boolean>)
   make-raw-literal(instance?(x, <integer>))
 end;
@@ -41,14 +41,14 @@ define custom &machine-word-primitive primitive-wrap-machine-word
     <&raw-integer> =>
       make(<&machine-word>, data: make(<&raw-machine-word>, value: ^raw-object-value(x)));
     <&raw-byte-character> =>
-      make(<&machine-word>, data: make(<&raw-machine-word>, 
-				       value: as(<integer>, ^raw-object-value(x))));
-    <&raw-machine-word> => 
+      make(<&machine-word>, data: make(<&raw-machine-word>,
+                                       value: as(<integer>, ^raw-object-value(x))));
+    <&raw-machine-word> =>
       let raw-value = ^raw-object-value(x);
       if (instance?(raw-value, <&machine-word>))
-	raw-value
+        raw-value
       else
-	make(<&machine-word>, data: make(<&raw-machine-word>, value: raw-value))
+        make(<&machine-word>, data: make(<&raw-machine-word>, value: raw-value))
       end;
   end
 end;
@@ -97,7 +97,7 @@ define &simple-machine-word-primitive primitive-wrap-unsigned-abstract-integer
     (x :: <raw-machine-word>) => (result :: <abstract-integer>);
 define custom &machine-word-primitive primitive-unwrap-abstract-integer
     (x :: <abstract-integer>) => (result :: <raw-machine-word>)
-  make-raw-literal(x) 
+  make-raw-literal(x)
 end;
 
 define &simple-machine-word-primitive primitive-machine-word-boole
@@ -150,28 +150,28 @@ end;
 define inline function bit-field-extract
     (offset :: <abstract-integer>, size :: <abstract-integer>, x :: <abstract-integer>)
  => (res :: <abstract-integer>)
-  generic/ash(generic/logand(x, generic/ash(generic/-(generic/ash(1, size), 1), offset)), 
-	      generic/negative(offset))
+  generic/ash(generic/logand(x, generic/ash(generic/-(generic/ash(1, size), 1), offset)),
+              generic/negative(offset))
 end function bit-field-extract;
 
 define inline function bit-field-deposit
-    (field :: <abstract-integer>, 
+    (field :: <abstract-integer>,
      offset :: <abstract-integer>, size :: <abstract-integer>, x :: <abstract-integer>)
  => (res :: <abstract-integer>)
   generic/logior(generic/logand(x, generic/lognot(generic/ash(generic/-(generic/ash(1, size),
-									1), 
-							      offset))),
-		 generic/ash(field, offset))
+                                                                        1),
+                                                              offset))),
+                 generic/ash(field, offset))
 end function bit-field-deposit;
 
 define &machine-word-primitive primitive-machine-word-bit-field-deposit
-    (field :: <raw-machine-word>, offset :: <raw-machine-word>, size :: <raw-machine-word>, x :: <raw-machine-word>) 
+    (field :: <raw-machine-word>, offset :: <raw-machine-word>, size :: <raw-machine-word>, x :: <raw-machine-word>)
  => (result :: <raw-machine-word>)
   bit-field-deposit(field, offset, size, x)
 end;
 
 define &machine-word-primitive primitive-machine-word-bit-field-extract
-    (offset :: <raw-machine-word>, size :: <raw-machine-word>, x :: <raw-machine-word>) 
+    (offset :: <raw-machine-word>, size :: <raw-machine-word>, x :: <raw-machine-word>)
  => (result :: <raw-machine-word>)
   bit-field-extract(offset, size, x)
 end;
