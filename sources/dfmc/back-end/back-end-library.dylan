@@ -25,19 +25,19 @@ define module dfmc-back-end
   use dfmc-c-ffi;
   use dfmc-back-end-protocol, export: all;
 
-  export 
+  export
 
     *current-environment*,
 
     allocate-registers,
-    
+
     back-end-word-size,
     back-end-lambda-size,
     back-end-record-repeated-object-sizes?,
 
     maybe-label!,
     label!,
-    label, 
+    label,
     label?,
     \with-labeling-from-dynamic,
     *init-labeling-state*, // !@#$ hygiene
@@ -108,7 +108,7 @@ define module dfmc-back-end
     single-heap-stats,
     diff-heap-stats,
     *retract-dfm?*,
-	 
+
     library-imported-object?,
     library-imported-binding?,
 

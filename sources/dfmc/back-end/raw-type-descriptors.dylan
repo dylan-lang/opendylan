@@ -28,12 +28,12 @@ end symbolic-class <&raw-type-descriptor>;
 define method compute-size (size :: type-union(<integer>, singleton(#"w")))
   if (size == #"w")
     word-size()
-  else 
+  else
     size
   end if
 end method;
 
-define method raw-type-size 
+define method raw-type-size
     (type :: <&raw-type-descriptor>) => (res :: <integer>)
   compute-size(type.%raw-type-size);
 end method;
@@ -43,31 +43,31 @@ define method raw-type-alignment
   compute-size(type.%raw-type-alignment);
 end method;
 
-define macro raw-type-descriptor-definer 
+define macro raw-type-descriptor-definer
   { define raw-type-descriptor "raw-" ## ?:name
-      (?back-end:name :: ?back-end-type:expression, 
+      (?back-end:name :: ?back-end-type:expression,
        #key ?c-name:expression, ?size, ?alignment, ?boxer, ?unboxer) }
     => { begin
            define constant "raw-" ## ?name ## "-descriptor"
               = make(<&raw-type-descriptor>,
-                     size: 
+                     size:
                        ?size,
-                     alignment: 
+                     alignment:
                        ?alignment,
-                     getter-name: 
+                     getter-name:
                        coagulate-name("%raw-" ## ?name ## "-at"),
-                     setter-name: 
+                     setter-name:
                        coagulate-name("%raw-" ## ?name ## "-at-setter"),
-		     c-name: 
+                     c-name:
                        ?c-name,
-		     // TODO: ONLY VALID FOR CERTAIN DYLAN RAW-TYPES
+                     // TODO: ONLY VALID FOR CERTAIN DYLAN RAW-TYPES
                      boxed-class-name:
                        coagulate-name("<" ## ?name ## ">"),
-                     boxer-name: 
+                     boxer-name:
                        ?boxer,
-                     unboxer-name: 
+                     unboxer-name:
                        ?unboxer);
-           define sideways method "raw-" ## ?name (?back-end :: ?back-end-type) 
+           define sideways method "raw-" ## ?name (?back-end :: ?back-end-type)
             => (rtd :: <&raw-type-descriptor>)
              "raw-" ## ?name ## "-descriptor"
            end;
@@ -89,11 +89,11 @@ boxer:
   { "raw-" ## ?:name }
     => { coagulate-name("primitive-raw-as-" ## ?name) }
 unboxer:
-  { raw-machine-word } 
+  { raw-machine-word }
     => { #"primitive-unwrap-machine-word" }
-  { raw-byte } 
+  { raw-byte }
     => { #"integer-as-raw" }
-  { raw-double-byte } 
+  { raw-double-byte }
     => { #"integer-as-raw" }
   { "raw-" ## ?:name }
     => { coagulate-name("primitive-" ## ?name ## "-as-raw") }
@@ -101,20 +101,20 @@ end macro raw-type-descriptor-definer;
 
 define macro raw-type-descriptors-aux-definer
   { define raw-type-descriptors-aux
-        (?back-end:name :: ?back-end-type:expression) 
+        (?back-end:name :: ?back-end-type:expression)
       ?:name, ?c-name:expression, ?size:*, ?alignment:*; ?stuff:*
-    end } 
+    end }
     => { begin
            define raw-type-descriptor ?name
-             (?back-end :: ?back-end-type, 
+             (?back-end :: ?back-end-type,
                c-name: ?c-name, size: ?size, alignment: ?alignment,
                boxer: ?name, unboxer: ?name);
-           define raw-type-descriptors-aux (?back-end :: ?back-end-type) 
+           define raw-type-descriptors-aux (?back-end :: ?back-end-type)
              ?stuff
            end
          end }
   { define raw-type-descriptors-aux
-      (?back-end:name :: ?back-end-type:expression) end } 
+      (?back-end:name :: ?back-end-type:expression) end }
     => { }
 end macro raw-type-descriptors-aux-definer;
 
@@ -148,7 +148,7 @@ define raw-type-descriptors (back-end :: <back-end>)
 
   raw-c-signed-char,        "signed char",        1, 1;
   raw-c-unsigned-char,      "unsigned char",      1, 1;
-  // raw-c-char,		    "char",		  1, 1;
+  // raw-c-char             "char",               1, 1;
   raw-c-signed-short,       "short",              2, 2;
   raw-c-unsigned-short,     "unsigned short",     2, 2;
   raw-c-signed-int,         "int",                4, 4;

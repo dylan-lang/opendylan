@@ -32,7 +32,7 @@ define method mangle-namespace-into
 end method;
 
 define function module-mangled-name (back-end :: <back-end>,
-				     module :: <module>)
+                                     module :: <module>)
  => (name :: <byte-string>)
   module.emitted-name
    | begin
@@ -51,7 +51,7 @@ define method mangleable (name :: <variable-name-fragment>) => (name)
   fragment-identifier(name)
 end method;
 
-define method local-mangle 
+define method local-mangle
     (back-end :: <back-end>, name) => (res :: <byte-string>)
   mangle-name-locally(mangler(back-end), mangleable(name))
 end method;
@@ -62,7 +62,7 @@ define method hygienic-mangle
 end method;
 
 define method global-mangle-with-module
-    (back-end :: <back-end>, name, module :: <module>) 
+    (back-end :: <back-end>, name, module :: <module>)
  => (res :: <byte-string>)
   let mangler = mangler-reset(back-end.mangler);
   mangle-name-into(mangler, name);
@@ -70,19 +70,19 @@ define method global-mangle-with-module
   mangler-as-string(mangler)
 end method;
 
-define method global-mangle 
+define method global-mangle
     (back-end :: <back-end>, name :: <variable-name-fragment>)
  => (res :: <byte-string>)
   global-mangle(back-end, lookup-binding(name, reference?: #f))
 end method;
 
-define method global-mangle 
+define method global-mangle
     (back-end :: <back-end>, o :: <module-binding>) => (res :: <byte-string>)
   global-mangle-with-module(back-end, o.binding-identifier, o.binding-home)
 end method;
 
 define function binding-mangled-name (back-end :: <back-end>,
-				      binding :: <module-binding>)
+                                      binding :: <module-binding>)
  => (name :: <byte-string>)
   let name = binding.emitted-name;
   if (instance?(name, <byte-string>))
@@ -98,7 +98,7 @@ define method global-mangle
   global-mangle(back-end, lookup-binding(o.form-variable-name, reference?: #f))
 end method;
 
-define method global-mangle 
+define method global-mangle
     (back-end :: <back-end>, o :: <&object>) => (res :: <byte-string>)
   global-mangle(back-end, model-definition(o))
 end method;
@@ -107,7 +107,7 @@ end method;
 // dylan-module() isn't available when some of the initial mangling
 // is done.
 
-define method global-mangle 
+define method global-mangle
     (back-end :: <back-end>, name :: <byte-string>) => (res :: <byte-string>)
   let mangler = mangler-reset(back-end.mangler);
   mangle-name-into(mangler, name);

@@ -32,7 +32,7 @@ define method immutable-literal-equal? (obj1, obj2)
   literal-equal?(obj1, obj2)
 end method;
 
-define sealed method table-protocol 
+define sealed method table-protocol
     (table :: <literal-table>) => (test :: <function>, hash :: <function>)
   values(immutable-literal-equal?, literal-hash-test)
 end method table-protocol;
@@ -51,7 +51,7 @@ end method table-protocol;
 //     end;
 //   end;
 // end function;
-	  
+
 // Default methods
 
 define method literal-mergable? (object) => (well?)
@@ -80,7 +80,7 @@ end method;
 // vectors are mergable just because they are pointed to from a
 // mergable object.
 define method immutable-literal-equal? (object1 :: <simple-object-vector>,
-					object2 :: <simple-object-vector>)
+                                        object2 :: <simple-object-vector>)
  => (well?);
   object-class(object1) == object-class(object2)
     & object1.size == object2.size
@@ -91,22 +91,22 @@ define method literal-hash (vec :: <simple-object-vector>, depth :: <integer>, s
  => (id :: <integer>, state :: <hash-state>);
   if (depth == 0)
     local method next-hash-code (hash, index, state)
-	    let (elt-hash, state) = literal-hash(vec[index], depth + 1, state);
-	    values(merge-hash-ids(hash, elt-hash, ordered: #t), state)
+            let (elt-hash, state) = literal-hash(vec[index], depth + 1, state);
+            values(merge-hash-ids(hash, elt-hash, ordered: #t), state)
           end method next-hash-code;
     let sz = size(vec);
     select (sz)
       0 =>
-	values(21011959, state);
+        values(21011959, state);
       1 =>
-	next-hash-code(1, 0, state);
+        next-hash-code(1, 0, state);
       2 =>
-	let (hash, state) = next-hash-code(2, 0, state);
-	next-hash-code(hash, 1, state);
+        let (hash, state) = next-hash-code(2, 0, state);
+        next-hash-code(hash, 1, state);
       otherwise =>
-	let (hash, state) = next-hash-code(sz, 0, state);
-	let (hash, state) = next-hash-code(hash, ash(sz, -1), state);
-	next-hash-code(hash, sz - 1, state);
+        let (hash, state) = next-hash-code(sz, 0, state);
+        let (hash, state) = next-hash-code(hash, ash(sz, -1), state);
+        next-hash-code(hash, sz - 1, state);
     end select
   else
     object-hash(vec, state)
@@ -126,13 +126,13 @@ end method;
 // use literals...
 define method immutable-literal-equal? (pair1 :: <pair>, pair2 :: <pair>) => (well?)
   iterate loop (fast1 :: <pair> = pair1, fast2 :: <pair> = pair2,
-		slow1 :: <pair> = pair1, slow2 :: <pair> = pair2)
+                slow1 :: <pair> = pair1, slow2 :: <pair> = pair2)
     // Can't catch loops through 'head' here, so just avoid the problem by not
     // recursing through pair's in 'head'.
     let h1 = fast1.head;
     let h2 = fast2.head;
     if (h1 ~== h2
-	  & (instance?(h1, <pair>) | ~immutable-literal-equal?(h1, h2)))
+          & (instance?(h1, <pair>) | ~immutable-literal-equal?(h1, h2)))
       #f
     elseif (fast1.tail == fast2.tail) // e.g. both #()
       #t
@@ -146,14 +146,14 @@ define method immutable-literal-equal? (pair1 :: <pair>, pair2 :: <pair>) => (we
       let h1 = fast1.head;
       let h2 = fast2.head;
       if (h1 ~== h2
-	    & (instance?(h1, <pair>) | ~immutable-literal-equal?(h1, h2)))
-	#f
+            & (instance?(h1, <pair>) | ~immutable-literal-equal?(h1, h2)))
+        #f
       elseif (fast1.tail == fast2.tail)
-	#t
+        #t
       elseif (~instance?(fast1.tail, <pair>) | ~instance?(fast2.tail, <pair>))
-	immutable-literal-equal?(fast1.tail, fast2.tail)
+        immutable-literal-equal?(fast1.tail, fast2.tail)
       else
-	loop(fast1.tail, fast2.tail, slow1.tail, slow2.tail);
+        loop(fast1.tail, fast2.tail, slow1.tail, slow2.tail);
       end;
     end;
   end;
@@ -164,15 +164,15 @@ define method literal-hash (pair :: <pair>, depth :: <integer>, state :: <hash-s
   if (depth == 0)
     let hd = pair.head;
     let (hash, state) = if (instance?(hd, <pair>)) object-hash(hd, state);
-			else literal-hash(hd, 0, state) end;
+                        else literal-hash(hd, 0, state) end;
     let tl = pair.tail;
     if (tl == pair)
       values(hash, state)
     elseif (instance?(tl, <pair>))
       let hd = tl.head;
       let (elt-hash, state)
-	     = if (instance?(hd, <pair>)) object-hash(hd, state);
-	       else literal-hash(hd, 0, state) end;
+             = if (instance?(hd, <pair>)) object-hash(hd, state);
+               else literal-hash(hd, 0, state) end;
       values(merge-hash-ids(hash, elt-hash, ordered: #t), state);
     else
       let (elt-hash, state) = literal-hash(tl, 0, state);
@@ -277,27 +277,27 @@ end method;
 
 define method literal-equal? (s1 :: <&signature>, s2 :: <&signature>) => (well?)
   local method vec-equal? (v1, v2, n)
-	  block (return)
-	    for (i from 0 below n)
-	      unless (literal-equal?(v1[i], v2[i])) return(#f) end;
-	    finally #t
-	    end;
-	  end
-	end;
+          block (return)
+            for (i from 0 below n)
+              unless (literal-equal?(v1[i], v2[i])) return(#f) end;
+            finally #t
+            end;
+          end
+        end;
   object-class(s1) == object-class(s2)
     & s1.^signature-properties == s2.^signature-properties
     & vec-equal?(s1.^signature-required, s2.^signature-required,
-		 s1.^signature-number-required)
+                 s1.^signature-number-required)
     & vec-equal?(s1.^signature-values, s2.^signature-values,
-		 s1.^signature-number-values)
+                 s1.^signature-number-values)
     & literal-equal?(s1.^signature-rest-value, s2.^signature-rest-value)
     & begin
-	let n = s1.^signature-number-keys;
-	when (n == s2.^signature-number-keys)
-	  n == 0 |
-	    (vec-equal?(s1.^signature-keys, s2.^signature-keys, n) &
-	     vec-equal?(s1.^signature-key-types, s2.^signature-key-types, n))
-	end
+        let n = s1.^signature-number-keys;
+        when (n == s2.^signature-number-keys)
+          n == 0 |
+            (vec-equal?(s1.^signature-keys, s2.^signature-keys, n) &
+             vec-equal?(s1.^signature-key-types, s2.^signature-key-types, n))
+        end
       end
 end;
 

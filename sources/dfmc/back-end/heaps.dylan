@@ -15,12 +15,12 @@ define variable *literal-merging-stats* = #f; // make(<table>);
 //   Claiming is the act of taking an object as being the responsibility
 //   of the current heap. When an object is claimed, it is recorded
 //   appropriately if special in some way (bindings, code, etc.) and
-//   placed on the pending queue. Objects on the pending queue are 
+//   placed on the pending queue. Objects on the pending queue are
 //   internal elements of the heap that have yet to have their references
 //   walked.
 //
 //   The bindings belonging to a particular compilation record are
-//   static and evident - no descent or tracing is required to 
+//   static and evident - no descent or tracing is required to
 //   work out the set, they can just be accessed directly from
 //   the record's definition objects.
 //
@@ -31,26 +31,26 @@ define variable *literal-merging-stats* = #f; // make(<table>);
 //   example.
 
 // Any bindings are queried in order to claim their value, so a form
-// doesn't have to explicitly return any object that is reached 
+// doesn't have to explicitly return any object that is reached
 // directly via that route.
 
 // If the init method has ended up doing no computation, we don't emit it.
 
-define function maybe-init-method 
-    (init-method :: false-or(<&lambda>)) 
+define function maybe-init-method
+    (init-method :: false-or(<&lambda>))
  => (maybe-method :: false-or(<&lambda>))
   if (init-method)
     case
-      code(^iep(init-method)) 
+      code(^iep(init-method))
         => init-method; // Previously emitted code?
-      ~body(init-method) 
+      ~body(init-method)
         // The no body & no code case means the method is being re-emitted,
-        // except that it wasn't emitted the first time because it was 
+        // except that it wasn't emitted the first time because it was
         // empty.
         => #f;
       ~empty-method?(init-method)
-        => init-method; 
-      otherwise 
+        => init-method;
+      otherwise
         => #f;
     end
   end
@@ -90,7 +90,7 @@ define class <model-heap> (<object>)
 
   constant slot heap-deferred-model-references :: <object-table>
     = make(<object-table>);
-  constant slot heap-record-repeated-object-sizes? :: <boolean> 
+  constant slot heap-record-repeated-object-sizes? :: <boolean>
     = back-end-record-repeated-object-sizes?(current-back-end());
 end class;
 
@@ -142,7 +142,7 @@ end method;
 
 define variable *heap-record-back-pointers?* = #f;
 
-define sideways method retract-compilation-record-heap 
+define sideways method retract-compilation-record-heap
     (cr :: <compilation-record>) => ()
   unless (*heap-record-back-pointers?*)
     let heap = compilation-record-model-heap(cr);
@@ -175,7 +175,7 @@ define method dbg? (model)
     <&iep> => dbg?(model.function);
     <&mm-wrapper> => dbg?(model.^mm-wrapper-implementation-class.^iclass-class);
     otherwise => model & ~direct-object?(model)
-	           & dbg?(model.model-definition | model.^debug-name);
+                   & dbg?(model.model-definition | model.^debug-name);
   end;
 end method;
 */
@@ -223,12 +223,12 @@ define method compute-compilation-record-heap
     apply(emit-compilation-record-heap, cr, flags);
   end;
   let heap = compilation-record-model-heap(cr);
-  compilation-record-approximate-model-heap-size(cr) 
+  compilation-record-approximate-model-heap-size(cr)
     := heap-approximate-size(heap);
-  compilation-record-data-size(cr) 
+  compilation-record-data-size(cr)
     := heap-size(heap) * word-size();
   when (compilation-record-interactive?(cr)
-	  | library-forms-dynamic?(compilation-record-original-library(cr)))
+          | library-forms-dynamic?(compilation-record-original-library(cr)))
     compilation-record-heap-referenced-objects(cr)
       := as(<vector>, heap-referenced-objects(heap));
   end when;
@@ -255,7 +255,7 @@ define method compute-compilation-record-reachable-heap
     (cr :: <compilation-record>) => ()
   with-dependent ($compilation of cr)
     trace-heap-from-roots(compilation-record-model-heap(cr),
-			  incoming?: #t);
+                          incoming?: #t);
   end with-dependent;
   // CHECK-HEAP(cr);
 end method;
@@ -267,7 +267,7 @@ define method emit-compilation-record-heap
     apply(emit-all, current-back-end(), cr, flags);
   end with-dependent;
 end;
-  
+
 
 /*
 define function CHECK-HEAP (cr :: <compilation-record>)
@@ -278,18 +278,18 @@ define function CHECK-HEAP (cr :: <compilation-record>)
     if (instance?(object, <&class>))
       let binding = model-variable-binding(object);
       if (binding)
-	let info = element(object-names, binding, default: #());
-	object-names[binding] := pair(object, info);
-	unless (info == #())
-	  error("Duplicate objects for %s:%s", binding, object-names[binding]);
-	end;
+        let info = element(object-names, binding, default: #());
+        object-names[binding] := pair(object, info);
+        unless (info == #())
+          error("Duplicate objects for %s:%s", binding, object-names[binding]);
+        end;
       end;
     end;
   end;
 end function;
 */
 
-define method install-compilation-record-heap 
+define method install-compilation-record-heap
     (cr :: <compilation-record>) => ()
   // Make sure any old one is properly retracted and that old object file
   // is marked obsolete (i.e. cr-needs-linking? is set)
@@ -305,12 +305,12 @@ define method install-compilation-record-heap
     (combined-cr :: <library-compilation-record>) => ()
   let ld = combined-cr.compilation-record-library;
   local method cr-lines (cr :: <compilation-record>)
-	  let lines = cr.compilation-record-source-line-count | 0;
-	  // For some reason, this count seems to be consistently off by 2.
-	  let fudged-lines = if (lines >= 2) lines - 2 else lines end;
-	  fudged-lines
-	    + cr.compilation-record-source-record.source-record-start-line
-	end;
+          let lines = cr.compilation-record-source-line-count | 0;
+          // For some reason, this count seems to be consistently off by 2.
+          let fudged-lines = if (lines >= 2) lines - 2 else lines end;
+          fudged-lines
+            + cr.compilation-record-source-record.source-record-start-line
+        end;
   for (cr in ld.library-description-compilation-records,
        lines = 0 then lines + cr-lines(cr))
     cr.compilation-record-preceeding-line-count := lines
@@ -330,8 +330,8 @@ end method;
 
 
 define function claim-init-method (heap :: <model-heap>,
-				   code :: false-or(<&lambda>),
-				   system? :: <boolean>)
+                                   code :: false-or(<&lambda>),
+                                   system? :: <boolean>)
   when (code)
     mark-emitted-name(heap, code);
     maybe-claim-computations-references(heap, code, #f);
@@ -345,7 +345,7 @@ define function claim-init-form (heap :: <model-heap>, form :: <top-level-form>)
   claim-init-method(heap, sys-init, #t);
   #t
 end claim-init-form;
-  
+
 define function claim-compilation-record-roots
     (heap :: <model-heap>, cr :: <compilation-record>)
   for (form :: <top-level-form> in compilation-record-top-level-forms(cr))
@@ -360,9 +360,9 @@ define inline function claim-form-roots
   unless (empty?(bindings) & form-ignored?(form))
     for (binding :: <module-binding> in bindings)
       unless (binding-previously-defined?(binding))
-	if (*precomputing-heap?* | model-externally-visible?(binding))
-	  maybe-claim-heap-element(heap, #f, binding, #t);
-	end;
+        if (*precomputing-heap?* | model-externally-visible?(binding))
+          maybe-claim-heap-element(heap, #f, binding, #t);
+        end;
       end;
     end;
     if (*precomputing-heap?*)
@@ -375,22 +375,22 @@ define inline function claim-form-roots
     else
       let (init, system-init) = form-init-code(form);
       when (init | system-init)
-	unless (process-pending-init-form(heap, form))
-	  make-init-form-pending(heap, form);
-	end;
+        unless (process-pending-init-form(heap, form))
+          make-init-form-pending(heap, form);
+        end;
       end;
     end;
   end;
 end claim-form-roots;
 
 define method process-pending-init-form (heap :: <model-heap>,
-					 form :: <top-level-form>)
+                                         form :: <top-level-form>)
  => (processed? :: <boolean>)
   claim-init-form(heap, form);
 end process-pending-init-form;
 
 define method process-pending-init-form (heap :: <model-heap>,
-					 form :: <modifying-form>)
+                                         form :: <modifying-form>)
  => (processed? :: <boolean>)
   // For a modifying form (method or domain) any init code just installs
   // the object with varying degrees of runtime checking.  If we can decide
@@ -398,8 +398,8 @@ define method process-pending-init-form (heap :: <model-heap>,
   // init form.
   let model = form-model(form);
   when (~model |
-	  model-externally-visible?(model) |
-	  model-externally-accessible?(heap, model))
+          model-externally-visible?(model) |
+          model-externally-accessible?(heap, model))
     // TODO: Why do we do this?  Should we only export if the generic
     // is exported?  How else could somebody get access to it?
     when (model) maybe-export(heap, model, #t) end;
@@ -407,13 +407,13 @@ define method process-pending-init-form (heap :: <model-heap>,
   end;
 end process-pending-init-form;
 
-  
+
 // If true, assume constant/variable init forms are side-effect-free, and
 // hence can be ignored when the variable they initialize is ignored.
 define variable *assume-side-effect-free-init-forms?* = #f;
 
 define method process-pending-init-form (heap :: <model-heap>,
-					 form :: <binding-defining-form>)
+                                         form :: <binding-defining-form>)
  => (processed? :: <boolean>)
   // The init code in define constant/variable can be ignored if
   // (1) none of the bindings defined by the form are actually created
@@ -427,18 +427,18 @@ define method process-pending-init-form (heap :: <model-heap>,
   // but the functions referencing it seem to be around???
   // (display-class-breakpoints).
   when (~*assume-side-effect-free-init-forms?* |
-	  any?(method (binding :: <module-binding>)
-		 debug-assert(internal-binding?(heap, binding),
-			      "Local form with non-local binding?");
-		 heap-element-claimed?(heap, binding)
-	       end,
-	       form-defined-bindings(form)))
+          any?(method (binding :: <module-binding>)
+                 debug-assert(internal-binding?(heap, binding),
+                              "Local form with non-local binding?");
+                 heap-element-claimed?(heap, binding)
+               end,
+               form-defined-bindings(form)))
     claim-init-form(heap, form)
   end;
 end process-pending-init-form;
 
 define method process-pending-init-form (heap :: <library-model-heap>,
-					 form :: <generic-definition>)
+                                         form :: <generic-definition>)
  => (processed? :: <boolean>)
   // A generic definition is just like a define constant...
   let binding = form-variable-binding(form);
@@ -449,20 +449,20 @@ define method process-pending-init-form (heap :: <library-model-heap>,
 end process-pending-init-form;
 
 define method process-pending-init-form (heap :: <model-heap>,
-					 form :: <class-definition>)
+                                         form :: <class-definition>)
  => (processed? :: <boolean>)
   // The init code in a define class can be ignored if the class
   // itself is not created, since it just installs the class (e.g. in
   // subclass lists of external superclasses).
   let binding = form-variable-binding(form);
-  debug-assert(internal-binding?(heap, binding), "Local form with non-local binding?");  
+  debug-assert(internal-binding?(heap, binding), "Local form with non-local binding?");
   when (heap-element-claimed?(heap, binding) |
-	  begin
-	    let class = binding-model-object(binding);
-	    debug-assert(~class | internal-object?(heap, class),
-			 "Local class with non-local model?");
-	    ~class | heap-element-claimed?(heap, class)
-	  end)
+          begin
+            let class = binding-model-object(binding);
+            debug-assert(~class | internal-object?(heap, class),
+                         "Local class with non-local model?");
+            ~class | heap-element-claimed?(heap, class)
+          end)
     claim-init-form(heap, form)
   end;
 end process-pending-init-form;
@@ -497,7 +497,7 @@ end;
 define inline-only function first-compilation-record? (cr :: <compilation-record>)
   cr == first(library-description-compilation-records(compilation-record-library(cr)))
 end function;
-  
+
 
 define method add-heap-init-code
     (heap :: <compilation-record-model-heap>,
@@ -507,7 +507,7 @@ define method add-heap-init-code
   let cr = heap.heap-compilation-record;
   when (first-compilation-record?(cr))
     add-whole-library-init-code(compilation-record-library(cr),
-				code, system-code);
+                                code, system-code);
   end;
   add-compilation-record-init-code(cr, code, system-code, exceptions);
 end add-heap-init-code;
@@ -549,7 +549,7 @@ define function form-init-code
   let init = maybe-init-method(form.form-init-method);
   let sys-init = maybe-init-method(form.form-system-init-method);
   debug-assert(~(init | sys-init) | ~form-compile-stage-only?(form),
-	       "Compile-stage form %s with non-empty inits!", form);
+               "Compile-stage form %s with non-empty inits!", form);
   values(init, sys-init)
 end;
 
@@ -568,16 +568,16 @@ end;
 
 define thread variable *heap-pending* :: false-or(<heap-pending>) = #f;
 
-// when combining:	incoming? = #f, *precomputing-heap?* = #f
+// when combining:        incoming? = #f, *precomputing-heap?* = #f
 // when not combining (tight mode):
-//    pre-heaping:	incoming? = #f, *precomputing-heap?* = #t
+//    pre-heaping:        incoming? = #f, *precomputing-heap?* = #t
 //    heaping:          incoming? = #t, *precomputing-heap?* = #f
 // When loose-mode/interactive
 //    heaping:          incoming? = #f, *precomputing-heap?* = #f
 define method trace-heap-from-roots (heap :: <model-heap>, #key incoming? = #f)
  => ()
   debug-out(#"heap", "Trace %= from roots preheaping?=%s incoming?=%s\n",
-	    heap.heap-compilation-record, *precomputing-heap?*, incoming?);
+            heap.heap-compilation-record, *precomputing-heap?*, incoming?);
   dynamic-bind (*heap-pending* = make(<heap-pending>, heap: heap))
     when (~incoming? & *literal-merging-stats*)
       *literal-merging-stats* := make(<table>);
@@ -587,18 +587,18 @@ define method trace-heap-from-roots (heap :: <model-heap>, #key incoming? = #f)
 
     when (incoming?)
       for (ct-ref? keyed-by element in heap-incoming-references(heap))
-	// Even though we can't go back and change the original pointers in
-	// other CR's, these objects must participate in literal merging
-	// to avoid the case where non-eq incoming and internal versions
-	// of an object get defined, causing link-time conflicts.  Since at
-	// link-time, incoming references are by name only, it's not important
-	// to change the original pointers in other CR's.
-	let element = maybe-merge-literal(element);
-	maybe-claim-heap-element-derived(heap, #f, element, ct-ref?);
+        // Even though we can't go back and change the original pointers in
+        // other CR's, these objects must participate in literal merging
+        // to avoid the case where non-eq incoming and internal versions
+        // of an object get defined, causing link-time conflicts.  Since at
+        // link-time, incoming references are by name only, it's not important
+        // to change the original pointers in other CR's.
+        let element = maybe-merge-literal(element);
+        maybe-claim-heap-element-derived(heap, #f, element, ct-ref?);
       end;
     end;
 
-    // All compilation units need these because the back-end inserts 
+    // All compilation units need these because the back-end inserts
     // references to them that may not be evident in the code.
     maybe-claim-heap-element(heap, #f, dylan-value(#"<class>"), #f);
     maybe-claim-heap-element(heap, #f, dylan-value(#"<object>"), #f);
@@ -614,7 +614,7 @@ define method trace-heap-from-roots (heap :: <model-heap>, #key incoming? = #f)
       let system-code = heap.heap-root-system-init-code;
       let exceptions = make(<object-set>);
       for (form in *heap-pending*.heap-pending-init-forms)
-	add!(exceptions, form);
+        add!(exceptions, form);
       end;
       add-heap-init-code(heap, code, system-code, exceptions);
     end;
@@ -622,7 +622,7 @@ define method trace-heap-from-roots (heap :: <model-heap>, #key incoming? = #f)
 /*
      unless (empty?(*heap-pending*.heap-pending-init-forms))
        for (form in *heap-pending*.heap-pending-init-forms)
-	 format-out(">>>>>> Zapped init form: %=\n", form);
+         format-out(">>>>>> Zapped init form: %=\n", form);
        end;
      end;
 */
@@ -689,12 +689,12 @@ define inline method remove-if! (list :: <list>, remove? :: <function>)
       let object = this.head;
       let next = this.tail;
       if (~remove?(object))
-	loop(list, this, next)
+        loop(list, this, next)
       elseif (last == #f)
-	loop(next, last, next)
+        loop(next, last, next)
       else
-	last.tail := next;
-	loop(list, last, next)
+        last.tail := next;
+        loop(list, last, next)
       end;
     end if;
   end iterate;
@@ -716,7 +716,7 @@ define function drain-pending-elements (heap :: <model-heap>)
       // everything else should be already claimed.
       remove-unclaimed-pending-models(heap);
       if (~empty?(*heap-pending*.heap-pending-elements))
-	drain-pending-elements(heap)
+        drain-pending-elements(heap)
       end;
     end;
   end;
@@ -727,30 +727,30 @@ define method maybe-claim-generic-function-modifying-models
     (heap :: <model-heap>, gf :: <&generic-function>)
   let methods = ^generic-function-methods(gf);
   let domains = if (instance?(gf, <&incremental-generic-function>))
-		  ^generic-function-domains(gf)
-		else // else domains not referenced at runtime...
-		  #()
-		end;
+                  ^generic-function-domains(gf)
+                else // else domains not referenced at runtime...
+                  #()
+                end;
   if (*precomputing-heap?*)
     do-claim-generic-function-modifying-models(heap, gf);
   else
     let methods = choose(method (m)
-			   ~process-generic-function-model(heap, gf, m)
-			 end,
-			 methods);
+                           ~process-generic-function-model(heap, gf, m)
+                         end,
+                         methods);
     let domains = choose(method (d)
-			   ~process-generic-function-model(heap, gf, d)
-			 end,
-			 domains);
+                           ~process-generic-function-model(heap, gf, d)
+                         end,
+                         domains);
     if (methods == #() & domains == #())
       do-claim-generic-function-modifying-models(heap, gf);
     else
       *heap-pending*.heap-pending-generics
-	:= make(<non-empty-pending-generic-info>,
-		function: gf,
-		methods: methods,
-		domains: domains,
-		next: *heap-pending*.heap-pending-generics)
+        := make(<non-empty-pending-generic-info>,
+                function: gf,
+                methods: methods,
+                domains: domains,
+                next: *heap-pending*.heap-pending-generics)
     end;
   end;
 end maybe-claim-generic-function-modifying-models;
@@ -762,7 +762,7 @@ end do-claim-generic-function-modifying-models;
 
 define method do-claim-generic-function-modifying-models
     (heap :: <model-heap>, gf :: <&incremental-generic-function>)
-  maybe-claim-heap-element(heap, gf, gf.^generic-function-methods, #f);  
+  maybe-claim-heap-element(heap, gf, gf.^generic-function-methods, #f);
   // TODO: The way generic function domains are stored, only the last one is
   // actually referenced directly from the gf.
   for (domain in gf.^generic-function-domains)
@@ -779,14 +779,14 @@ define method claim-generic-model
   end;
   maybe-claim-heap-element(heap, gf, model, #f);
   debug-assert(begin
-		 let form = model.model-definition;
-		 ~form | begin
-			   let (init, sys-init) = form-init-code(form);
-			   ~init & ~sys-init
-			 end
-	       end,
-	       "Init form on non-ct generic model %s",
-	       format-to-string("%s", model.model-definition));
+                 let form = model.model-definition;
+                 ~form | begin
+                           let (init, sys-init) = form-init-code(form);
+                           ~init & ~sys-init
+                         end
+               end,
+               "Init form on non-ct generic model %s",
+               format-to-string("%s", model.model-definition));
 end;
 
 define constant <pending-generic-info> = false-or(<non-empty-pending-generic-info>);
@@ -801,30 +801,30 @@ define sealed-constructor <non-empty-pending-generic-info>;
 
 define inline method remove-if! (pgfs :: <pending-generic-info>, remove? :: <function>)
   iterate loop (all :: <pending-generic-info> = pgfs,
-		last :: <pending-generic-info> = #f,
-		this :: <pending-generic-info> = pgfs)
+                last :: <pending-generic-info> = #f,
+                this :: <pending-generic-info> = pgfs)
     if (this == #f)
       all
     else
       let next = this.pending-generic-next;
       if (~remove?(this))
-	loop(all, this, next)
+        loop(all, this, next)
       elseif (last == #f)
-	loop(next, last, next)
+        loop(next, last, next)
       else
-	last.pending-generic-next := next;
-	loop(all, last, next)
+        last.pending-generic-next := next;
+        loop(all, last, next)
       end;
     end if;
   end iterate;
 end method remove-if!;
-				 
-  
+
+
 define method process-generic-function-model
     (heap :: <model-heap>, gf :: <&generic-function>, model)
  => (processed? :: <boolean>)
   when (model-externally-visible?(model) |
-	  model-externally-accessible?(heap, model))
+          model-externally-accessible?(heap, model))
     // Claim it and remove from list.
     claim-generic-model(heap, gf, model);
     #t
@@ -836,23 +836,23 @@ define function process-pending-generic-models (heap :: <model-heap>)
   *heap-pending*.heap-pending-generics := #f;
   let rest
     = remove-if!(pgfs,
-		 method (pgf :: <non-empty-pending-generic-info>)
-		   let gf = pgf.pending-generic-function;
-		   pgf.pending-generic-unclaimed-methods
-		     := remove-if!(pgf.pending-generic-unclaimed-methods,
-				   curry(process-generic-function-model,
-					 heap, gf));
-		   pgf.pending-generic-unclaimed-domains
-		     := remove-if!(pgf.pending-generic-unclaimed-domains,
-				   curry(process-generic-function-model,
-					 heap, gf));
-		   when (pgf.pending-generic-unclaimed-methods == #() &
-			 pgf.pending-generic-unclaimed-domains == #())
-		     // Claim them and remove from list
-		     do-claim-generic-function-modifying-models(heap, gf);
-		     #t
-		   end;
-		 end method);
+                 method (pgf :: <non-empty-pending-generic-info>)
+                   let gf = pgf.pending-generic-function;
+                   pgf.pending-generic-unclaimed-methods
+                     := remove-if!(pgf.pending-generic-unclaimed-methods,
+                                   curry(process-generic-function-model,
+                                         heap, gf));
+                   pgf.pending-generic-unclaimed-domains
+                     := remove-if!(pgf.pending-generic-unclaimed-domains,
+                                   curry(process-generic-function-model,
+                                         heap, gf));
+                   when (pgf.pending-generic-unclaimed-methods == #() &
+                         pgf.pending-generic-unclaimed-domains == #())
+                     // Claim them and remove from list
+                     do-claim-generic-function-modifying-models(heap, gf);
+                     #t
+                   end;
+                 end method);
   // Concatenate
   iterate loop (last = #f, this = *heap-pending*.heap-pending-generics)
     if (this)
@@ -881,7 +881,7 @@ define method remove-unclaimed-pending-models-1
   debug-assert(gf.%generic-function-methods-initialized?, "Uninitialized gf?");
   gf.%generic-function-methods
     := choose(method (m) ~member?(m, methods) end,
-	      gf.%generic-function-methods);
+              gf.%generic-function-methods);
   do-claim-generic-function-modifying-models(heap, gf);
 end remove-unclaimed-pending-models-1;
 
@@ -890,7 +890,7 @@ define method remove-unclaimed-pending-models-1
   debug-assert(gf.%generic-function-domains-initialized?, "Uninitialized gf?");
   gf.%generic-function-domains
     := choose(method (d) ~member?(d, domains) end,
-	      gf.%generic-function-domains);
+              gf.%generic-function-domains);
   for (d :: <&domain> in gf.%generic-function-domains,
        a = #f then begin ^domain-next(d) := a; d end)
   finally ^incremental-gf-domain-info(gf) := a
@@ -914,14 +914,14 @@ define method model-externally-accessible? (heap :: <model-heap>, model :: <&dom
   // method is skipped.
   let types = ^domain-types(model);
   ~types | block (return)
-	     for (type in types,
-		  count from 0 below model.^domain-number-required)
-	       unless (type-can-have-instances?(heap, type))
-		 return(#f)
-	       end;
-	     end;
-	     #t
-	   end;
+             for (type in types,
+                  count from 0 below model.^domain-number-required)
+               unless (type-can-have-instances?(heap, type))
+                 return(#f)
+               end;
+             end;
+             #t
+           end;
 end;
 
 define method model-externally-accessible? (heap :: <model-heap>, model :: <&method>)
@@ -931,16 +931,16 @@ define method model-externally-accessible? (heap :: <model-heap>, model :: <&met
   // not exist.
   let sig = ^function-signature(model);
   ~sig | block (return)
-	   for (type in sig.^signature-required,
-		count from 0 below sig.^signature-number-required)
-	     unless (type-can-have-instances?(heap, type))
-	       // If a specializer can't have instances, the method can't possibly
-	       // be applicable, so it might as well not exist.
-	       return(#f);
-	     end;
-	   end;
-	   #t
-	 end;
+           for (type in sig.^signature-required,
+                count from 0 below sig.^signature-number-required)
+             unless (type-can-have-instances?(heap, type))
+               // If a specializer can't have instances, the method can't possibly
+               // be applicable, so it might as well not exist.
+               return(#f);
+             end;
+           end;
+           #t
+         end;
 end;
 
 define method type-can-have-instances? (heap :: <model-heap>, type)
@@ -971,9 +971,9 @@ end;
 
 // *** DEBUGGING
 define method maybe-claim-heap-element (heap ::<model-heap>,
-					parent,
-					e :: <heap-deferred-model>,
-					ct-ref?)
+                                        parent,
+                                        e :: <heap-deferred-model>,
+                                        ct-ref?)
   error("Who is claiming %= from %=?", e, parent)
 end;
 
@@ -999,7 +999,7 @@ define method process-heap-deferred-models (cr :: <compilation-record>)
     for (refs keyed-by model in heap.heap-deferred-model-references)
       let value = compute-heap-deferred-model(heap, model);
       for (ref in refs)
-	install-deferred-model-reference(heap, ref, value)
+        install-deferred-model-reference(heap, ref, value)
       end;
     end;
   end;
@@ -1012,7 +1012,7 @@ define method compute-heap-deferred-model
   let all-classes = make(<stretchy-object-vector>);
   for (obj in ld.library-externally-visible-models)
     when (instance?(obj, <&class>) & ~instance?(obj, <virtual-object>)
-	    & ~heap-imported-object?(heap, obj))
+            & ~heap-imported-object?(heap, obj))
       all-classes := add!(all-classes, obj);
     end;
   end;
@@ -1020,8 +1020,8 @@ define method compute-heap-deferred-model
   // Nothing really cares about the order, but force an order so can
   // have reproducible heaping.
   sort!(all-classes, test: method (c1 :: <&class>, c2 :: <&class>)
-			     defined-after?(c1.model-definition, c2.model-definition)
-			   end);
+                             defined-after?(c1.model-definition, c2.model-definition)
+                           end);
 
   // Assign class dispatch keys in the dylan library.  Dispatch keys are integers, so
   // they don't need to get claimed, so it's ok to assign them this late.
@@ -1033,44 +1033,44 @@ define method compute-heap-deferred-model
   end;
   // Update direct-subclasses slots
   local method mark-carefully (heap, parent, obj)
-	  if (heap-imported-object?(heap, obj))
-	    record-external-heap-element-reference(heap, parent, obj, #f);
-	  elseif (~internal-object?(heap, obj))
-	    debug-assert(heap-element-referenced?(heap, obj, #f),
-			"Introducing new reference in all-class computation?");
-	  else
-	    mark-heap-element(heap, parent, obj);
-	    let &class = &object-class(obj);
-	    debug-assert(heap-imported-object?(heap,  &class)
-			   | model-externally-visible?(&class),
-			 "Introducing new object in all-class computation?");
-	    maybe-claim-heap-element(heap, obj, &class, #f);
-	  end;
-	end method;
+          if (heap-imported-object?(heap, obj))
+            record-external-heap-element-reference(heap, parent, obj, #f);
+          elseif (~internal-object?(heap, obj))
+            debug-assert(heap-element-referenced?(heap, obj, #f),
+                        "Introducing new reference in all-class computation?");
+          else
+            mark-heap-element(heap, parent, obj);
+            let &class = &object-class(obj);
+            debug-assert(heap-imported-object?(heap,  &class)
+                           | model-externally-visible?(&class),
+                         "Introducing new object in all-class computation?");
+            maybe-claim-heap-element(heap, obj, &class, #f);
+          end;
+        end method;
   for (obj in all-classes)
     let ic :: <&implementation-class> = obj.^class-implementation-class;
     // debug-assert(%direct-subclasses-initialized?(ic));
     let subclasses :: <list> = ic.^direct-subclasses;
     let claimed-subclasses
       = if (every?(model-externally-visible?, subclasses))
-	  subclasses // don't copy...
-	else
-	  mapped-model(choose(model-externally-visible?, subclasses));
-	end;
+          subclasses // don't copy...
+        else
+          mapped-model(choose(model-externally-visible?, subclasses));
+        end;
     ic.^direct-subclasses := claimed-subclasses;
     let ic-heap = if (internal-object?(heap, ic)) // includes combined heap case
-		    heap
-		  else
-		    record-external-heap-element-reference(heap, #f, obj, #f);
-		    ic.model-compilation-record.compilation-record-model-heap;
-		  end;
+                    heap
+                  else
+                    record-external-heap-element-reference(heap, #f, obj, #f);
+                    ic.model-compilation-record.compilation-record-model-heap;
+                  end;
     for (pair = claimed-subclasses then pair.tail, until: pair == #())
       mark-carefully(ic-heap, ic, pair);
       let subc = pair.head;
       if (internal-object?(ic-heap, subc))
-	debug-assert(heap-element-claimed?(ic-heap, subc));
+        debug-assert(heap-element-claimed?(ic-heap, subc));
       else
-	record-external-heap-element-reference(ic-heap, ic, subc, #f);
+        record-external-heap-element-reference(ic-heap, ic, subc, #f);
       end;
     finally
       mark-carefully(ic-heap, ic, #());
@@ -1081,17 +1081,17 @@ define method compute-heap-deferred-model
   mark-carefully(heap, #f, classvec);
   classvec
 end method;
-  
-define method record-repeated-size-explicitly 
+
+define method record-repeated-size-explicitly
     (heap :: <model-heap>, class, size) => ()
   when (heap-record-repeated-object-sizes?(heap))
     let sizes :: <function>
       = if (internal-object?(heap, class))
-	  heap-defined-repeated-object-sizes
-	else
-	  heap-referenced-repeated-object-sizes
-	end if;
-    heap.sizes[class] 
+          heap-defined-repeated-object-sizes
+        else
+          heap-referenced-repeated-object-sizes
+        end if;
+    heap.sizes[class]
       := add-new!(element(heap.sizes, class, default: #()), size);
   end when;
 end method;
@@ -1107,7 +1107,7 @@ define method record-repeated-size (heap :: <model-heap>, object) => ()
   end when;
 end method;
 
-define method record-heap-load-bound-reference 
+define method record-heap-load-bound-reference
     (heap :: <model-heap>, object, ref) => ()
   let ref-table = heap-load-bound-references(heap);
   let refs = element(ref-table, object, default: #());
@@ -1116,11 +1116,11 @@ end method;
 
 /// INTERNAL ALREADY TRACED OBJECT DETERMINATION
 
-define inline method internal-object? 
+define inline method internal-object?
     (heap :: <compilation-record-model-heap>, object)
   // TODO: SHOULD BE DEBUG-ASSERT
   // if (instance?(object, <&implementation-class>)
-  // 	& object.model-compilation-record ~== heap.heap-compilation-record)
+  //         & object.model-compilation-record ~== heap.heap-compilation-record)
   //   break("About to assert implementation-class %= external.", ^iclass-class(object))
   // end if;
   object.model-compilation-record == heap.heap-compilation-record
@@ -1138,7 +1138,7 @@ define inline function library-imported-object? (ld :: <library-description>, ob
   model-library(object) ~== ld
 end function;
 
-define inline function library-imported-binding? 
+define inline function library-imported-binding?
     (ld :: <library-description>, object :: <module-binding>)
   debug-assert(valid-binding-home-library-in?(ld, object));
   binding-imported-into-library?(object);
@@ -1148,17 +1148,17 @@ define inline function heap-imported-object? (heap :: <model-heap>, object)
   library-imported-object?(heap-library(heap), object)
 end function;
 
-define inline function heap-imported-binding? 
+define inline function heap-imported-binding?
     (heap :: <model-heap>, object :: <module-binding>)
   library-imported-binding?(heap-library(heap), object)
 end function;
 
 
-define inline method internal-object? 
+define inline method internal-object?
     (heap :: <library-model-heap>, object)
   // TODO: SHOULD BE DEBUG-ASSERT
   // if (instance?(object, <&implementation-class>)
-  // 	& heap-imported-object?(heap, object))
+  //         & heap-imported-object?(heap, object))
   //   break("About to assert implementation-class %= external.", ^iclass-class(object))
   // end if;
   ~heap-imported-object?(heap, object)
@@ -1174,8 +1174,8 @@ define macro with-merged-literal
      ?:body
     end }
     => { let (?variable, changed?) = maybe-merge-literal(?lvalue);
-	 if (changed?) ?lvalue := ?variable end;
-	 ?body }
+         if (changed?) ?lvalue := ?variable end;
+         ?body }
 end macro;
 
 // external visibility
@@ -1218,14 +1218,14 @@ end;
 
 define method maybe-export (heap :: <model-heap>, e, ct-ref?)
   unless (direct-object?(e) | heap-imported-object?(heap, e)
-	    | ~model-has-definition?(e))
+            | ~model-has-definition?(e))
     do-export(heap, e);
   end;
 end method;
 
 define method maybe-export (heap :: <model-heap>, e :: <&iep>, ct-ref?)
   unless (direct-object?(e) | heap-imported-object?(heap, e)
-	    | ~model-has-definition?(e.function))
+            | ~model-has-definition?(e.function))
     do-export(heap, e);
   end;
 end method;
@@ -1233,7 +1233,7 @@ end method;
 define method maybe-export (heap :: <model-heap>, e :: <&mm-wrapper>, ct-ref?)
   let class = e.^mm-wrapper-implementation-class.^iclass-class;
   unless (direct-object?(e) | heap-imported-object?(heap, e)
-	    | ~model-has-definition?(class))
+            | ~model-has-definition?(class))
     do-export(heap, e);
   end;
 end method;
@@ -1255,14 +1255,14 @@ define function maybe-export-sequence (heap :: <model-heap>, s :: <sequence>, ct
 end;
 
 define method export-references (heap :: <model-heap>,
-				 e :: <module-binding>,
-				 ct?)
+                                 e :: <module-binding>,
+                                 ct?)
   let form = untracked-binding-definition(e, default: #f);
   if (instance?(form, <shared-symbols-definition>))
     for (symbol in form-shared-symbols(form))
       unless (model-externally-visible?(symbol))
-	model-externally-visible?(symbol) := #t;
-	maybe-claim-heap-element(heap, e, symbol, ct?);
+        model-externally-visible?(symbol) := #t;
+        maybe-claim-heap-element(heap, e, symbol, ct?);
       end;
     end;
   else
@@ -1272,7 +1272,7 @@ define method export-references (heap :: <model-heap>,
     when (type) maybe-export(heap, type, ct?) end;
   end;
 end;
-  
+
 define function merged-binding-value (binding :: <module-binding>)
   let value = binding-model-or-hollow-object(binding);
   let (value, changed?) = maybe-merge-literal(value);
@@ -1286,7 +1286,7 @@ define function merged-binding-type (binding :: <module-binding>)
   let (value, changed?) = maybe-merge-literal(value);
   if (changed?) binding-cached-type-model-object(binding) := value end;
   value
-end;  
+end;
 
 define method export-references
     (heap :: <model-heap>, e :: <&library>, ct?) => ()
@@ -1430,13 +1430,13 @@ define method export-signature-references
     let reqs = ^signature-required(sig);
     for (count from 0 below ^signature-number-required(sig))
       with-merged-literal (type = reqs[count])
-	maybe-export(heap, type, ct?);
+        maybe-export(heap, type, ct?);
       end;
     end;
     let vals = ^signature-values(sig);
     for (count from 0 below ^signature-number-values(sig))
       with-merged-literal (type = vals[count])
-	maybe-export(heap, type, ct?);
+        maybe-export(heap, type, ct?);
       end;
     end;
   end;
@@ -1453,17 +1453,17 @@ define method export-references
   end;
 end method;
 
-define method embedded-inline-only-function? 
+define method embedded-inline-only-function?
     (object) => (well? :: <boolean>)
   #f
 end method;
 
-define method embedded-inline-only-function? 
+define method embedded-inline-only-function?
     (m :: <&method>) => (well? :: <boolean>)
   ~model-has-definition?(m) & lambda-top-level?(m)
 end method;
 
-define method embedded-inline-only-function? 
+define method embedded-inline-only-function?
     (gf :: <&generic-function>) => (well? :: <boolean>)
   if (~model-has-definition?(gf))
     // signal("*** Embedded inline-only generic %= encountered.", gf);
@@ -1551,13 +1551,13 @@ end method;
 
 // Claim world.
 
-define function heap-element-seen? 
+define function heap-element-seen?
     (heap :: <model-heap>, object) => (well?)
   heap-element-claimed?(heap, object)
     | member?(object, *heap-pending*.heap-compile-time-elements)
 end;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element, ct-ref?) => ()
   if (direct-object?(element))
     #f
@@ -1568,7 +1568,7 @@ define method maybe-claim-heap-element
   end;
 end method;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, binding :: <module-binding>, ct-ref?) => ()
   if (~internal-binding?(heap, binding) | binding-previously-defined?(binding))
     record-external-heap-element-reference(heap, parent, binding, ct-ref?);
@@ -1577,14 +1577,14 @@ define method maybe-claim-heap-element
   end;
 end method;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <interactor-binding>, ct-ref?) => ()
   #f
 end method;
 
 // Exceptions.
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, object :: <&class>, ct-ref?)
   // TO DO: should avoid doing all this work if already claimed.
   object.^direct-subclasses; // force subclasses to be computed
@@ -1595,27 +1595,27 @@ define method maybe-claim-heap-element
   maybe-claim-heap-element-derived(heap, object, wrapper, ct-ref?);
 end method;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, e :: <&virtual-class>, ct-ref?)
 end;
 
 
 // TODO: For debugging only
 // @@@@GSB - check this check
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&mm-wrapper>, ct-ref?)
-  debug-assert(model-creator(element) 
-		 == model-creator(element.^mm-wrapper-implementation-class.^iclass-class),
-	       "Class wrapper created in wrong context");
+  debug-assert(model-creator(element)
+                 == model-creator(element.^mm-wrapper-implementation-class.^iclass-class),
+               "Class wrapper created in wrong context");
   next-method();
 end method;
 
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <virtual-object>, ct-ref?)
 end method;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&runtime-object>, ct-ref?)
   // ALWAYS EXTERNAL
   do-record-external-heap-element-reference(heap, element, ct-ref?);
@@ -1626,7 +1626,7 @@ end method;
 // reference the external string.  I'm not sure why we would have such
 // references at all, perhaps because of inlining.
 // [Now have references due to model merging]
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <string>, ct-ref?) => ()
   if (~internal-object?(heap, element) & model-has-definition?(element))
     record-external-heap-element-reference(heap, parent, element, ct-ref?);
@@ -1639,7 +1639,7 @@ define method maybe-claim-heap-element
 end method;
 
 // Ditto here.
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <simple-object-vector>, ct-ref?) => ()
   if (~internal-object?(heap, element) & model-has-definition?(element))
     record-external-heap-element-reference(heap, parent, element, ct-ref?);
@@ -1681,20 +1681,20 @@ define method do-record-external-heap-element-reference
     (heap :: <model-heap>, object, ct-ref?) => ()
   mark-heap-element-referenced(heap, object, ct-ref?);
   if (~heap-imported-object?(heap, object))
-    let element-heap 
+    let element-heap
       = compilation-record-model-heap(model-compilation-record(object));
     if (element-heap & element-heap ~== heap)
       let refs = heap-incoming-references(element-heap);
       refs[object] := ct-ref? & element(refs, object, default: #t);
       unless (model-externally-visible?(object))
-	model-externally-visible?(object) := #t;
-	make-binding-externally-visible(heap, object);
+        model-externally-visible?(object) := #t;
+        make-binding-externally-visible(heap, object);
       end;
       // TODO: Is there a nicer way of handling this? This canonicalises
       // an iep, getting rid of any deferred iep's to that we don't get
       // multiply claimed aliases.
       if (instance?(object, <&iep>))
-	model-externally-visible?(object.function.iep) := #t;
+        model-externally-visible?(object.function.iep) := #t;
       end;
     end;
   end;
@@ -1743,18 +1743,18 @@ define method record-external-heap-element-reference
   record-external-heap-ct-element-reference(heap, parent, element, ct-ref?)
 end method;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <float>, ct-ref?)
 end method;
 
-// 
+//
 // Contiguous static list dumping
-// 
+//
 // This is a temporary hacky requirement for dynamic linking
 // of generic-function methods from the generic's lists, to
 // enable a single runtime indirection to be performed in fixing
 // up the methods at DLL load-time
-// 
+//
 // TODO: make static collection subset of generic-function methods
 //       a simple-vector to remove this hack
 //
@@ -1762,7 +1762,7 @@ end method;
 
 
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <pair>, ct-ref?)
   next-method();
   with-merged-literal (element-tail = element.tail)
@@ -1773,19 +1773,19 @@ define method maybe-claim-heap-element
 end method;
 
 
-define function claim-heap-element 
+define function claim-heap-element
     (heap :: <model-heap>, parent, e, ct-ref?) => (new?)
   unless (heap-element-claimed?(heap, e) |
-	    (ct-ref? & member?(e, *heap-pending*.heap-compile-time-elements)))
+            (ct-ref? & member?(e, *heap-pending*.heap-compile-time-elements)))
     if (ct-ref? & element-compile-stage-only?(e))
       add!(*heap-pending*.heap-compile-time-elements, e);
     else
       mark-heap-element(heap, parent, e);
       if (~ct-ref? & member?(e, *heap-pending*.heap-compile-time-elements))
-	remove!(*heap-pending*.heap-compile-time-elements, e);
-	// May have already been processed, but as a compile-time.  Need
-	// to re-process as run-time.
-	maybe-claim-heap-element-references(heap, e, #f);
+        remove!(*heap-pending*.heap-compile-time-elements, e);
+        // May have already been processed, but as a compile-time.  Need
+        // to re-process as run-time.
+        maybe-claim-heap-element-references(heap, e, #f);
       end;
 
     end;
@@ -1798,7 +1798,7 @@ end;
 // Explicitly mark model-objects as runtime;
 // Shared library back-ends require this knowledge to implement
 // dynamic linking of derived model objects
-// 
+//
 // Nosa  Feb 24, 1999
 
 define method mark-run-time-element(heap :: <model-heap>, e) => ()
@@ -1813,7 +1813,7 @@ end method;
 // boundary, need to also define and export the binding for it;
 // dynamic linking of the model or database resolution may indirect
 // through the binding to retrieve the runtime value for the model
-// 
+//
 // Nosa  Feb 24, 1999
 
 define method make-binding-externally-visible
@@ -1831,7 +1831,7 @@ end;
 
 define constant <binding-anchored-object> = type-union(<&function>, <&class>);
 
-// ...define and export their bindings 
+// ...define and export their bindings
 
 define method make-binding-externally-visible
     (heap :: <model-heap>, o :: <binding-anchored-object>) => ()
@@ -1846,7 +1846,7 @@ define method make-binding-externally-visible
       model-externally-visible?(b) := #t;
 
       if (internal-binding?(heap, b) & ~binding-previously-defined?(b))
-	claim-heap-element(heap, #f, b, element-compile-stage-only?(b));
+        claim-heap-element(heap, #f, b, element-compile-stage-only?(b));
       end;
     end;
   end;
@@ -1878,37 +1878,37 @@ define function maybe-merge-literal (object)
       values(std-object, #t)
     end;
   elseif (*heap-pending* & *heap-pending*.heap-merged-literals &
-	    literal-mergable?(object) &
-	    internal-object?(*heap-pending*.heap-pending-heap, object))
+            literal-mergable?(object) &
+            internal-object?(*heap-pending*.heap-pending-heap, object))
     let tab = *heap-pending*.heap-merged-literals;
     let std-object = element(tab, object, default: #f);
     if (std-object)
       let changed? = (std-object ~== object);
       when (changed?)
-	// TODO: what a horrible kludge!!! Really should maintain all the
-	// refs to the object, and if need to select a new standard object,
-	// because found one with a definition, should back-patch all refs
-	// to point to the new one....
-	when (object.model-has-definition?)
-	  if (std-object.model-has-definition?)
-	    debug-out(#"heap",
+        // TODO: what a horrible kludge!!! Really should maintain all the
+        // refs to the object, and if need to select a new standard object,
+        // because found one with a definition, should back-patch all refs
+        // to point to the new one....
+        when (object.model-has-definition?)
+          if (std-object.model-has-definition?)
+            debug-out(#"heap",
                       "######### Fudging MODEL DEF %s into %s\n",
                       format-to-string("%s", object.model-definition),
                       format-to-string("%s", std-object.model-definition));
-	    // Patch so external references to object get the correct name
-	    object.model-definition := std-object.model-definition;
-	  else
-	    debug-out(#"heap",
+            // Patch so external references to object get the correct name
+            object.model-definition := std-object.model-definition;
+          else
+            debug-out(#"heap",
                       "######### Fudging MODEL DEF %s into anonymous\n",
                       format-to-string("%s", object.model-definition));
-	    std-object.model-definition := object.model-definition;
-	  end;
-	end;
-	when (*literal-merging-stats*)
-	  *literal-merging-stats*[std-object]
-	    := add!(element(*literal-merging-stats*, std-object, default: #()),
-		    object);
-	end;
+            std-object.model-definition := object.model-definition;
+          end;
+        end;
+        when (*literal-merging-stats*)
+          *literal-merging-stats*[std-object]
+            := add!(element(*literal-merging-stats*, std-object, default: #()),
+                    object);
+        end;
       end;
       values(std-object, changed?);
     else
@@ -1926,7 +1926,7 @@ define method maybe-claim-heap-element-references-internal
   for-layout-fixed-slot-value (val described-by slotd in element)
     claim-instance-slot-value(heap, element, slotd, val, ct?);
   end;
-  for-layout-repeated-slot-value 
+  for-layout-repeated-slot-value
       (val described-by slotd keyed-by index in element)
     let (val, changed?) = maybe-merge-literal(val);
     if (changed?) ^repeated-slot-value(element, slotd, index) := val end;
@@ -1943,7 +1943,7 @@ define method maybe-claim-heap-element-references-internal
   end;
 end method;
 
-define method maybe-claim-heap-element-references-internal 
+define method maybe-claim-heap-element-references-internal
     (heap :: <model-heap>, element :: <&generic-function>, ct?) => ()
   if (ct?)
     with-merged-literal (sig = ^function-signature(element))
@@ -1960,8 +1960,8 @@ define method maybe-claim-heap-element-references-internal
     for-layout-fixed-slot-value (val described-by slotd in element)
       let getter = slotd.model-object-getter;
       unless (slotd.model-object-getter == ^generic-function-methods |
-	      slotd.model-object-setter == ^incremental-gf-domain-info-setter)
-	claim-instance-slot-value(heap, element, slotd, val, ct?);
+              slotd.model-object-setter == ^incremental-gf-domain-info-setter)
+        claim-instance-slot-value(heap, element, slotd, val, ct?);
       end;
     end;
   end;
@@ -1976,8 +1976,8 @@ define method maybe-claim-heap-element-references-internal
     // Don't claim ^direct-subclasses, handled by deferred processing
     unless (slotd.model-object-setter == ^direct-subclasses-setter)
       claim-instance-slot-value(heap, element, slotd, val, ct?,
-				merge?: slotd.model-object-setter
-				          ~== ^class-slot-storage-setter);
+                                merge?: slotd.model-object-setter
+                                          ~== ^class-slot-storage-setter);
     end;
   end;
 end;
@@ -1987,19 +1987,19 @@ define function claim-instance-slot-value
     (heap :: <model-heap>, element, slotd :: <&slot-descriptor>, val, ct?,
      #key merge? = #t)
   let val = if (merge? & slotd.model-object-setter)
-	      let (val, changed?) = maybe-merge-literal(val);
-	      if (changed?) ^slot-value(element, slotd) := val end;
-	      val
-	    else
-	      val
-	    end;
+              let (val, changed?) = maybe-merge-literal(val);
+              if (changed?) ^slot-value(element, slotd) := val end;
+              val
+            else
+              val
+            end;
   if (load-bound-object?(val))
     record-heap-load-bound-reference
       (heap, val,
        make(<load-bound-instance-slot-reference>,
-	    referenced-object:  val,
-	    referencing-object: element,
-	    referencing-slot:   slotd));
+            referenced-object:  val,
+            referencing-object: element,
+            referencing-slot:   slotd));
   end;
   maybe-claim-heap-element(heap, element, val, ct?);
 end claim-instance-slot-value;
@@ -2013,7 +2013,7 @@ define method maybe-claim-heap-element-references-internal
   maybe-claim-heap-element(heap, element, &object-class(element), ct?);
 end method;
 
-define method maybe-claim-heap-element-references-internal 
+define method maybe-claim-heap-element-references-internal
     (heap :: <model-heap>, element :: <module-binding>, ct?) => ()
   let value = merged-binding-value(element);
   unless (instance?(value, <unknown>))
@@ -2059,11 +2059,11 @@ define method mark-heap-element (heap :: <model-heap>, parent, object)
   unless (*precomputing-heap?*)
     if (*heap-record-back-pointers?*)
       unless (member?(model-object, heap-defined-objects(heap)))
-	// record parents
-	heap-back-pointers(heap)[object]
-	  := parent;
-	     // pair(parent, 
-	     //      element(heap-back-pointers(heap), object, default: #()));
+        // record parents
+        heap-back-pointers(heap)[object]
+          := parent;
+             // pair(parent,
+             //      element(heap-back-pointers(heap), object, default: #()));
       end unless;
     end if;
     // explicitly mark runtime model objects at definition-time
@@ -2078,7 +2078,7 @@ define method heap-element-claimed? (heap :: <model-heap>, object)
   direct-object?(object) | member?(object, heap-defined-objects(heap))
 end;
 
-define method mark-heap-element 
+define method mark-heap-element
     (heap :: <model-heap>, parent, binding :: <module-binding>)
   debug-assert(internal-binding?(heap, binding));
   let defined = heap-defined-bindings(heap);
@@ -2092,7 +2092,7 @@ define method heap-element-claimed? (heap :: <model-heap>, binding :: <module-bi
 end;
 
 define method make-heap-element-pending (heap :: <model-heap>, element)
-  // Breadth first: 
+  // Breadth first:
   // push-last(*heap-pending*.heap-pending-elements, element);
   // Depth first:
   push(*heap-pending*.heap-pending-elements, element);
@@ -2106,7 +2106,7 @@ end method;
 // and special methods are defined in the emit code to do nothing for
 // symbols. Only the copies, the uninterned symbols, are dumped.
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, symbol :: <symbol>, ct-ref?) => ()
   if (~internal-object?(heap, symbol) & model-has-definition?(symbol))
     record-external-heap-element-reference(heap, parent, symbol, ct-ref?);
@@ -2116,9 +2116,9 @@ define method maybe-claim-heap-element
       let copy = mapped-model(deep-copy-symbol(symbol));
       model-definition(copy) := model-definition(symbol);
       when (model-externally-visible?(symbol)
-	      // TODO: Can't find copy later if export symbol later...
-	      | model-has-definition?(copy))
-	model-externally-visible?(copy) := #t;
+              // TODO: Can't find copy later if export symbol later...
+              | model-has-definition?(copy))
+        model-externally-visible?(copy) := #t;
       end;
       claim-heap-element(heap, parent, copy, ct-ref?);
     end;
@@ -2128,7 +2128,7 @@ end method;
 // Special case hacks to ensure symbols and such get dumped in each
 // compilation unit.
 
-define method load-bound-object? 
+define method load-bound-object?
     (element :: <symbol>) => (boolean)
   ~model-has-definition?(element)
 end method;
@@ -2137,7 +2137,7 @@ end method;
 /// ffi support
 
 
-  
+
 define method maybe-claim-heap-element-references-internal
     (heap :: <model-heap>, element :: <&raw-aggregate-type>, ct?) => ()
   do-record-external-heap-element-reference(heap, element, ct?);
@@ -2149,7 +2149,7 @@ define method maybe-claim-heap-element-references-internal
   end;
 end;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&c-function>, ct-ref?)
   unless (element.binding-name)
     mark-emitted-name(heap, element);
@@ -2158,11 +2158,11 @@ define method maybe-claim-heap-element
   maybe-claim-c-signature-elements(heap, element.c-signature);
 end method;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&c-callable-function>, ct-ref?)
   next-method();
   maybe-claim-c-signature-elements(heap, element.c-signature);
-end method;  
+end method;
 
 define method maybe-claim-c-signature-elements
     (heap :: <model-heap>, sig :: <&signature>)
@@ -2180,7 +2180,7 @@ define method maybe-claim-c-signature-elements
   end;
 end method;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&c-variable>, ct-ref?)
   do-record-external-heap-element-reference(heap, element, ct-ref?);
 end method;
@@ -2233,9 +2233,9 @@ define method compress-code-references
     (code-vector-sizes(x),     refs, refs-size + value-refs-size);
   let y :: <compressed-code-references>
     = make(<compressed-code-references>,
-	   references:              refs,
-	   value-references-offset: refs-size,
-	   vector-sizes-offset:     refs-size + value-refs-size);
+           references:              refs,
+           value-references-offset: refs-size,
+           vector-sizes-offset:     refs-size + value-refs-size);
   y
 end method;
 
@@ -2327,30 +2327,30 @@ end method;
 define function lambda-heap-for-sure
     (m :: <&lambda>) => (z :: <compressed-code-references>)
   lambda-heap(m)
-  | (lambda-heap(m) 
+  | (lambda-heap(m)
        := begin
-	    let refs = make(<code-references>);
-	    for-computations (c in m)
-	      if (instance?(c, <simple-call>)
-		    // object-class(c) == <simple-call>
-		    & call-iep?(c)
-		    // Check for an empty environment too?
-		    & instance?(c.function, <object-reference>))
-		maybe-claim-value-reference
-		  (refs, c.function.reference-value.^iep);
-		for (arg in c.arguments)
-		  maybe-claim-value-references(refs, arg);
-		end;
-		// This is so ugly.
-		if (instance?(c, <method-call>))
-		  maybe-claim-value-references(refs, c.next-methods);
-		end;
-	      else
-		do-used-value-references
-		  (curry(maybe-claim-value-references, refs), c);
-		maybe-claim-computation-references(refs, c);
-	      end;
-	    end for-computations;
+            let refs = make(<code-references>);
+            for-computations (c in m)
+              if (instance?(c, <simple-call>)
+                    // object-class(c) == <simple-call>
+                    & call-iep?(c)
+                    // Check for an empty environment too?
+                    & instance?(c.function, <object-reference>))
+                maybe-claim-value-reference
+                  (refs, c.function.reference-value.^iep);
+                for (arg in c.arguments)
+                  maybe-claim-value-references(refs, arg);
+                end;
+                // This is so ugly.
+                if (instance?(c, <method-call>))
+                  maybe-claim-value-references(refs, c.next-methods);
+                end;
+              else
+                do-used-value-references
+                  (curry(maybe-claim-value-references, refs), c);
+                maybe-claim-computation-references(refs, c);
+              end;
+            end for-computations;
             compress-code-references(refs)
           end);
 end function;
@@ -2366,31 +2366,31 @@ define method maybe-claim-computations-references
     for (j from i below code-vector-sizes-offset(refs))
       let e = refs-data[j];
       let e = if (~instance?(e, <object-reference>))
-		e
-	      elseif (*precomputing-heap?*)
-		e.reference-value
-	      else // update both the reference itself and the lambda heap
-		with-merged-literal (value = e.reference-value)
-		  refs-data[j] := value;
-		  when (instance?(value, <heap-deferred-model>))
-		    record-deferred-model-reference(heap, e, value);
-		    record-deferred-model-reference(heap, pair(refs-data, j), value);
-		  end;
-		  value
-		end;
-	      end;
+                e
+              elseif (*precomputing-heap?*)
+                e.reference-value
+              else // update both the reference itself and the lambda heap
+                with-merged-literal (value = e.reference-value)
+                  refs-data[j] := value;
+                  when (instance?(value, <heap-deferred-model>))
+                    record-deferred-model-reference(heap, e, value);
+                    record-deferred-model-reference(heap, pair(refs-data, j), value);
+                  end;
+                  value
+                end;
+              end;
       if (load-bound-reference?(m, e))
-	record-heap-load-bound-reference(heap, e,
-					 make(<load-bound-code-reference>,
-					      referenced-object: e));
+        record-heap-load-bound-reference(heap, e,
+                                         make(<load-bound-code-reference>,
+                                              referenced-object: e));
       end;
       if (~instance?(e, <heap-deferred-model>))
-	maybe-claim-heap-element(heap, m, e, ct?);
+        maybe-claim-heap-element(heap, m, e, ct?);
       end;
     finally
       let class = &object-class(dylan-value(#"%empty-vector"));
       for (k from j below size(refs-data))
-	record-repeated-size-explicitly(heap, class, refs-data[k]);
+        record-repeated-size-explicitly(heap, class, refs-data[k]);
       end for;
     end for;
   end for;
@@ -2399,10 +2399,10 @@ end method;
 
 /// LAMBDA
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&lambda>, ct-ref?) => ()
   next-method();
-  // Eagerly claim the iep so that it doesn't get moved away from 
+  // Eagerly claim the iep so that it doesn't get moved away from
   // the function.
   // TODO: maybe this should be a method on claim-heap-element, since only
   // care about the internal case.
@@ -2423,7 +2423,7 @@ end;
 // TODO: PERFORMANCE: This code is pretty ugly and slow - perhaps there
 // should be C-callable and C-callable-wrapper ieps instead of functions?
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&iep>, ct-ref?) => ()
   let fn = element.function;
   debug-assert(model-creator(element) == model-creator(fn));
@@ -2438,10 +2438,10 @@ define method maybe-claim-heap-element-references-internal
   // next-method();
   let l = i.function;
   if (~instance?(l, <&generic-function>) & (l.body | l.lambda-heap))
-    // This just in case the function itself doesn't get claimed 
+    // This just in case the function itself doesn't get claimed
     // at some point.
     if (~model-has-definition?(l))
-      mark-emitted-name(heap, l); 
+      mark-emitted-name(heap, l);
     end;
     maybe-claim-computations-references(heap, l, ct?);
   end;
@@ -2456,12 +2456,12 @@ define method maybe-claim-heap-element-references-internal
   debug-assert(ct?, "Non-compile-time virtual object %=?", e);
 end;
 
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <model-heap>, parent, element :: <&any-kernel-ep>, ct-ref?) => ();
 end method;
 
 /*
-define method maybe-claim-heap-element 
+define method maybe-claim-heap-element
     (heap :: <library-model-heap>, parent, element :: <&deferred-iep>, ct-ref?) => ()
   if (compiling-dylan-library?())
     maybe-claim-heap-element(heap, parent, element.function.iep);

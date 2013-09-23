@@ -17,7 +17,7 @@ end method;
 // Direct objects are always emitted in-line. References to indirect objects
 // are genuine references to previously dumped structures.
 
-define method emit-reference 
+define method emit-reference
    (back-end :: <back-end>, stream :: <stream>, o) => (reference)
  signal("Don't know how to emit a reference to %=", o);
  format(stream, "%=", o);
@@ -26,7 +26,7 @@ end method;
 // VIRTUAL OBJECTS
 
 define method emit-reference
-    (back-end :: <back-end>, stream :: <stream>, o :: <virtual-object>) 
+    (back-end :: <back-end>, stream :: <stream>, o :: <virtual-object>)
  => (reference)
   break("Illegal to reference a virtual object %=\n", o);
 end method;
@@ -80,20 +80,20 @@ end method;
 
 /// NAMES
 
-define method emit-name-internal 
-    (back-end :: <back-end>, stream, o :: <symbol>) 
+define method emit-name-internal
+    (back-end :: <back-end>, stream, o :: <symbol>)
  => (name)
   emit-symbol-name(back-end, stream, o, as(<string>, o));
 end method;
 
-define method emit-symbol-name 
-    (back-end :: <back-end>, stream, o, name :: <string>) 
+define method emit-symbol-name
+    (back-end :: <back-end>, stream, o, name :: <string>)
  => (name :: <string>)
   mangle-symbol(local-mangle(back-end, as-lowercase(name)));
 end method;
 
-define method emit-name-internal 
-    (back-end :: <back-end>, stream, o :: <uninterned-symbol>) 
+define method emit-name-internal
+    (back-end :: <back-end>, stream, o :: <uninterned-symbol>)
  => (name)
   emit-symbol-name(back-end, stream, o, symbol-name(o));
 end method;
@@ -109,29 +109,29 @@ define method emit-anonymous-name
          := mangle-constant(mangle-integer(number)));
 end method;
 
-define generic emit-method-name 
-    (back-end :: <back-end>, stream, 
+define generic emit-method-name
+    (back-end :: <back-end>, stream,
      o :: <&method>, defn) => (name :: <string>);
 
 // !@#$ temporary method until incr compilation method numbering is in place
 
 define method emit-method-name
-    (back-end :: <back-end>, stream, 
+    (back-end :: <back-end>, stream,
      o :: <&method>, defn :: <method-definition>) => (name :: <string>)
   let generic-library-name
     = debug-name(home-library(binding-home
-				(form-variable-binding(defn))));
+                                (form-variable-binding(defn))));
   let method-library-name
     = debug-name(language-definition(form-library(defn)));
   mangle-generic-method(mangler(back-end),
-			global-mangle(back-end, defn),
-			method-number(defn),
-			method-library-name,
-			generic-library-name);
+                        global-mangle(back-end, defn),
+                        method-number(defn),
+                        method-library-name,
+                        generic-library-name);
 end method;
 
 define method emit-method-name
-    (back-end :: <back-end>, stream, 
+    (back-end :: <back-end>, stream,
      o :: <&method>, defn :: <constant-definition>) => (name :: <string>)
   mangle-constant(global-mangle(back-end, defn));
 end method;
@@ -142,29 +142,29 @@ end method;
 
 define method find-anonymous-method-parents-name (o :: <&lambda>) => (res)
   local method method-debug-string (object :: <&method>) => (res)
-	  let debug-name = object.debug-name;
-	  if (instance?(debug-name, <variable-name-fragment>))
-	    debug-name.fragment-identifier
-	  elseif (debug-name)
-	    as(<symbol>, debug-name)
-	  else 
-	    #f
-	  end
-	end method;
+          let debug-name = object.debug-name;
+          if (instance?(debug-name, <variable-name-fragment>))
+            debug-name.fragment-identifier
+          elseif (debug-name)
+            as(<symbol>, debug-name)
+          else
+            #f
+          end
+        end method;
   let env = environment(o);
   when (env)
     let next-env = lambda-environment(outer(env));
-    iterate find-top 
+    iterate find-top
         (next-env :: <lambda-lexical-environment> = next-env,
-	 env      :: <lambda-lexical-environment> = env) 
+         env      :: <lambda-lexical-environment> = env)
       case
-	top-level-environment?(next-env) 
-	  => let lambda = lambda(env);
-	     lambda-top-level?(lambda) & method-debug-string(lambda);
-	lambda-initializer?(lambda(next-env))
-	  => method-debug-string(lambda(env));
-	otherwise
-	  => find-top(lambda-environment(outer(next-env)), next-env);
+        top-level-environment?(next-env)
+          => let lambda = lambda(env);
+             lambda-top-level?(lambda) & method-debug-string(lambda);
+        lambda-initializer?(lambda(next-env))
+          => method-debug-string(lambda(env));
+        otherwise
+          => find-top(lambda-environment(outer(next-env)), next-env);
       end case
     end iterate;
   end when;
@@ -174,32 +174,32 @@ define method emit-method-name
     (back-end :: <back-end>, stream, o :: <&method>, defn) => (name :: <string>)
   if (o.debug-name)
     debug-assert(o.emitted-name, "Missing emitted-name for %s", o);
-    mangle-local-method(raw-mangle(back-end, as-lowercase(as(<string>, o.debug-name))), 
-			o.emitted-name);
+    mangle-local-method(raw-mangle(back-end, as-lowercase(as(<string>, o.debug-name))),
+                        o.emitted-name);
   else
     let name = find-anonymous-method-parents-name(o);
     if (name)
       debug-assert(o.emitted-name, "Missing emitted-name for %s", o);
-      mangle-local-method(concatenate(raw-mangle(back-end, "anonymous-of-"), 
-				      raw-mangle(back-end, as-lowercase(as(<string>, name)))), 
-			  o.emitted-name);
-    else 
+      mangle-local-method(concatenate(raw-mangle(back-end, "anonymous-of-"),
+                                      raw-mangle(back-end, as-lowercase(as(<string>, name)))),
+                          o.emitted-name);
+    else
       emit-anonymous-name(back-end, stream, o);
     end if
   end if;
 end method;
 
-define method emit-name-internal 
+define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&method>) => (name)
   emit-method-name(back-end, stream, o, o.model-definition);
 end method;
 
 
-define method emit-name-internal 
+define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&singular-terminal-engine-node>)
  => (name :: <string>);
   concatenate($singular-terminal-engine-node-prefix,
-	      raw-mangle(back-end, o.^object-class.^debug-name))
+              raw-mangle(back-end, o.^object-class.^debug-name))
 end method;
 
 define method emit-name-internal
@@ -207,8 +207,8 @@ define method emit-name-internal
   let defn = o.model-definition;
   if (defn)
     mangle-domain(global-mangle(back-end, defn),
-		  domain-number(defn),
-		  raw-mangle(back-end, library-description-emit-name(form-library(defn))));
+                  domain-number(defn),
+                  raw-mangle(back-end, library-description-emit-name(form-library(defn))));
   else
     // This can happen e.g. when we copy a sealed inline-only method due to
     // a non-inlineable access -- corresponding domain gets copied along with
@@ -218,10 +218,10 @@ define method emit-name-internal
 end method;
 
 
-/// !@#$ THIS SHOULD BE DONE WHEN NAMING THE OBJECT -- 
+/// !@#$ THIS SHOULD BE DONE WHEN NAMING THE OBJECT --
 /// !@#$ NORMAL MANGLING WILL TAKE CARE OF THIS
 
-define method emit-slot-descriptor-name 
+define method emit-slot-descriptor-name
     (back-end :: <back-end>, stream, o :: <&slot-initial-value-descriptor>, name :: false-or(<string>))
  => (name :: <string>)
   if (name)
@@ -235,8 +235,8 @@ define method emit-slot-descriptor-name
     (back-end :: <back-end>, stream, o :: <&slot-initial-value-descriptor>, defn :: <variable-defining-form>)
  => (name :: <string>)
   emit-slot-descriptor-name-internal(back-end, stream, o,
-				     global-mangle(back-end, defn),
-				     debug-name(language-definition(form-library(defn))))
+                                     global-mangle(back-end, defn),
+                                     debug-name(language-definition(form-library(defn))))
 end method;
 
 define method emit-slot-descriptor-name-internal
@@ -249,40 +249,40 @@ define method emit-slot-descriptor-name-internal
   let owner-name = owner-defn-binding.binding-identifier;
 
   mangle-slot-descriptor(mangler(back-end),
-			 slot-name,
-			 slot-library,
-			 raw-mangle(back-end, owner-name),
-			 owner-defn-binding.binding-home.debug-name,
-			 owner-library-name);
+                         slot-name,
+                         slot-library,
+                         raw-mangle(back-end, owner-name),
+                         owner-defn-binding.binding-home.debug-name,
+                         owner-library-name);
 
 end method;
 
 
-define method emit-name-internal 
+define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&slot-descriptor>)
  => (name)
   let getter-defn = o.^slot-getter.model-definition;
   emit-slot-descriptor-name(back-end, stream, o, getter-defn);
 end method;
 
-define method emit-name-internal 
-    (back-end :: <back-end>, stream, 
+define method emit-name-internal
+    (back-end :: <back-end>, stream,
      o :: <&inherited-slot-descriptor>)
  => (name)
   let getter-defn = o.^inherited-slot-getter.model-definition;
   emit-slot-descriptor-name(back-end, stream, o, getter-defn);
 end method;
 
-define method emit-name-internal 
+define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&init-arg-descriptor>)
  => (name)
   emit-slot-descriptor-name
-    (back-end, stream, o, 
+    (back-end, stream, o,
      raw-mangle(back-end, as-lowercase(as(<string>, o.^init-keyword))));
 end method;
 
-define method emit-name-internal 
-    (back-end :: <back-end>, stream, o :: <&mm-wrapper>) 
+define method emit-name-internal
+    (back-end :: <back-end>, stream, o :: <&mm-wrapper>)
  => (name)
   mangle-wrapper(global-mangle(back-end, ^iclass-class(^mm-wrapper-implementation-class(o))));
 end method;
@@ -294,18 +294,18 @@ define method emit-name-internal
 end method;
 
 
-define method emit-name-internal 
+define method emit-name-internal
     (back-end :: <back-end>, stream, o) => (name)
   let defn = o.model-definition;
   if (defn) // !@#$ handle case with multiple variables / definition
     debug-assert(~instance?(defn, <domain-definition>) & ~instance?(o, <&domain>),
-		 "emit-name-internal for domain %=", o);
+                 "emit-name-internal for domain %=", o);
     mangle-constant(global-mangle(back-end, defn));
   else
     emit-anonymous-name(back-end, stream, o);
   end if;
 end method;
- 
+
 define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&primitive>) => (name)
   raw-mangle(back-end, o.binding-name)
@@ -341,7 +341,7 @@ define method emit-name-internal
 end method;
 
 define method emit-iep-name
-    (back-end :: <back-end>, stream, o :: <&c-callable-function>) 
+    (back-end :: <back-end>, stream, o :: <&c-callable-function>)
  => (name)
   emit-namestring(back-end, stream, o)
 end method;

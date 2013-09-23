@@ -34,7 +34,7 @@ define method new-label! (state :: <labeling-state>)
   end block;
 end method;
 
-define method maybe-label-with-state! 
+define method maybe-label-with-state!
     (c :: <computation>, state :: <labeling-state>)
   c.%label | set-label!(c, state)
 end method;
@@ -45,7 +45,7 @@ end method;
 
 define thread variable *init-labeling-state* = #f;
 
-define macro with-labeling-from-dynamic 
+define macro with-labeling-from-dynamic
   { with-labeling-from-dynamic ?:body end }
   => { dynamic-bind (*init-labeling-state* = make(<labeling-state>))
          ?body

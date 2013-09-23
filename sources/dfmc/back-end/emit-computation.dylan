@@ -10,5 +10,5 @@ define compiler-open class <emitter> (<code-walker>)
   constant slot emitter-stream :: <stream>, required-init-keyword: stream:;
 end class;
 
-define compiler-open generic make-emitter 
+define compiler-open generic make-emitter
     (back-end :: <back-end>, stream :: <stream>) => (emitter :: <emitter>);

@@ -61,7 +61,7 @@ define method walk
   maybe-walk(walker, c.next-computation);
 end method;
 
-define method walk 
+define method walk
     (walker :: <code-walker>, c :: <unwind-protect>) => ()
   do-walk(walker, c);
   maybe-walk(walker, c.body);
@@ -78,7 +78,7 @@ define method walk (walker :: <code-walker>, c :: <end-exit-block>) => ()
   do-walk(walker, c);
   // The following new code forces a jump to be emitted over any
   // following code that isn't actually next in the flow.
-  maybe-walk(walker, c.next-computation); 
+  maybe-walk(walker, c.next-computation);
 end method;
 
 define method walk (walker :: <code-walker>, c :: <end-protected-block>) => ()

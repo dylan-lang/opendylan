@@ -12,32 +12,32 @@ define method heap-required-instance-size
   ^instance-storage-size(class)
 end method;
 
-define method heap-required-instance-size 
+define method heap-required-instance-size
     (class == <simple-object-vector>) => (res :: <integer>)
   2
 end method;
 
-define method heap-required-instance-size 
+define method heap-required-instance-size
     (class == <byte-string>) => (res :: <integer>)
   2
 end method;
 
-define method heap-required-instance-size 
+define method heap-required-instance-size
     (class == <uninterned-symbol>) => (res :: <integer>)
   2
 end method;
 
-define method heap-required-instance-size 
+define method heap-required-instance-size
     (class :: subclass(<list>)) => (res :: <integer>)
   3
 end method;
 
-define method heap-required-instance-size 
+define method heap-required-instance-size
     (class :: <class>) => (res :: <integer>)
   1 // size(slot-descriptors(class))
 end method;
 
-define method heap-required-instance-size 
+define method heap-required-instance-size
     (class == <boolean>) => (res :: <integer>)
   1
 end method;
@@ -53,7 +53,7 @@ define method heap-instance-size
   round/(size(element), 4) + 2
 end method;
 
-define method heap-instance-size 
+define method heap-instance-size
     (element :: <simple-object-vector>) => (res :: <integer>)
   size(element) + 2
 end method;
@@ -93,7 +93,7 @@ define method heap-stats (ld :: <library-description>)
   end without-dependency-tracking;
 end method;
 
-define method all-heap-stats 
+define method all-heap-stats
     (ld :: <library-description>, #rest all-keys, #key, #all-keys)
   let total-count = 0;
   let total-size  = 0;
@@ -115,24 +115,24 @@ define inline function compile-time-only? (object)
 end function;
 
 define function single-heap-stats (heap :: <model-heap>, display?)
-  let parents 
+  let parents
     = heap-back-pointers(heap);
   let compile-time-only-objects
     = collecting ()
-	for (rents keyed-by object in parents)
-	  when (compile-time-only?(object))
-	    collect(object)
-	  end when;
-	end for;
+        for (rents keyed-by object in parents)
+          when (compile-time-only?(object))
+            collect(object)
+          end when;
+        end for;
       end collecting;
   do(curry(remove-key!, parents), compile-time-only-objects);
   let (total-count, total-size, stats)
     = walker-instance-statistics
         (display?, identity, heap-instance-class, heap-debug-name,
-	 heap-instance-size, heap-required-instance-size,
-	 parents,
-	 aggregate-set: *aggregate-set*,
-	 filter-set:    *filter-set*);
+         heap-instance-size, heap-required-instance-size,
+         parents,
+         aggregate-set: *aggregate-set*,
+         filter-set:    *filter-set*);
   stats
 end function;
 
@@ -146,7 +146,7 @@ define method diff-heap-stats
   */
 end method;
 
-// define function do-defined-objects 
+// define function do-defined-objects
 //     (fn :: <function>, ld :: <library-description>)
 //   let heaps
 //      = map(compilation-record-model-heap, compilation-context-records(ld));

@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define variable *retract-dfm?* = #t;
 
-define compiler-open generic emit-all 
+define compiler-open generic emit-all
     (back-end :: <back-end>, record, #rest flags, #key, #all-keys);
 
 define compiler-open generic emit-dfm
@@ -26,7 +26,7 @@ end method emit-dfm;
 // TODO: I guess emit-code should be exported too, but each back-end
 // currently just defines a local emit-code generic.
 // define compiler-open generic emit-code
-//     (back-end :: <back-end>, object) => (); 
+//     (back-end :: <back-end>, object) => ();
 define compiler-open generic emit-object     // structure
     (back-end :: <back-end>, stream, object);
 define compiler-open generic emit-reference  // reference
@@ -37,14 +37,14 @@ define compiler-open generic emit-name-internal       // binding name
     (back-end :: <back-end>, stream, object);
 define compiler-open generic string-emitter       // binding name
     (back-end :: <back-end>, stream, object);
-define compiler-open generic back-end-word-size 
+define compiler-open generic back-end-word-size
   (back-end :: <back-end>) => (number-bytes :: <integer>);
-define compiler-open generic back-end-record-repeated-object-sizes? 
+define compiler-open generic back-end-record-repeated-object-sizes?
   (back-end :: <back-end>) => (well? :: <boolean>);
 define compiler-open generic back-end-lambda-size
   (back-end :: <back-end>, lambda :: <&lambda>) => (number-bytes :: <integer>);
 
-define method back-end-record-repeated-object-sizes? 
+define method back-end-record-repeated-object-sizes?
     (back-end :: <back-end>) => (well? :: <boolean>)
   #f
 end method;
@@ -54,7 +54,7 @@ define method back-end-lambda-size
   0
 end method;
 
-define compiler-open generic initialize-back-end 
+define compiler-open generic initialize-back-end
   (back-end :: <back-end>) => ();
 
 define method initialize-back-end
@@ -68,13 +68,13 @@ define macro with-back-end-initialization
     end }
     => { let back-end = ?back-end;
 
-	// initialize back-end variables on entry
-	initialize-back-end(back-end);
+        // initialize back-end variables on entry
+        initialize-back-end(back-end);
 
-	 ?body;
+         ?body;
 
-	// free back-end variables on exit
-	initialize-back-end(back-end);
+        // free back-end variables on exit
+        initialize-back-end(back-end);
        }
 end macro;
 
