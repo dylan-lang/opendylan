@@ -822,7 +822,7 @@ are exported from the *duim-sheets* module.
      the user to choose a color from the standard palette for whatever
      environment the application is running in.
 
-     .. figure:: images/silica-3.png
+     .. figure:: images/sheets-3.png
         :align: center
 
         The standard Choose Color dialog
@@ -965,7 +965,7 @@ are exported from the *duim-sheets* module.
      currently connected to the computer. The function returns the name of
      the file chosen by the user.
 
-     .. figure:: images/silica-4.png
+     .. figure:: images/sheets-4.png
         :align: center
 
         Typical appearance of a choose-file dialog
@@ -3966,7 +3966,7 @@ are exported from the *duim-sheets* module.
      Use this function as a way of easily displaying simple messages to the
      user.
 
-     .. figure:: images/silica-5.png
+     .. figure:: images/sheets-5.png
         :align: center
 
         Simple output from notify-user

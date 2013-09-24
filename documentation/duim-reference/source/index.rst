@@ -11,7 +11,7 @@ Contents:
    geom
    ext-geom
    dcs
-   silica
+   sheets
    graphics
    layouts
    gadgets

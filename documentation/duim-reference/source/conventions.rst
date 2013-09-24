@@ -61,7 +61,7 @@ co-ordinate geometry that is only required for more specialist uses.
 
 The :doc:`dcs` module provides color support to the DUIM library.
 
-The :doc:`silica` module provides basic support for sheets. Sheets are
+The :doc:`sheets` module provides basic support for sheets. Sheets are
 the basic unit of window applications, and can be nested hierarchically
 to build up a complete user interface.
 
