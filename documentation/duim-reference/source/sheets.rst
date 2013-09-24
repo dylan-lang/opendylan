@@ -47,15 +47,15 @@ A sheet is the basic unit in a DUIM window. Inside any window, sheets
 are nested in a parent-child hierarchy. All sheets have the following
 attributes:
 
--  *sheet-region*, expressed in the sheet’s own coordinate system.
--  *sheet-transform*, which maps the sheet’s coordinate system to the
+-  :gf:`sheet-region`, expressed in the sheet’s own coordinate system.
+-  :gf:`sheet-transform`, which maps the sheet’s coordinate system to the
    coordinate system of its parent.
--  *sheet-parent*, which is ``#f`` if the sheet has no parent.
--  *sheet-mapped?*, which tells if the sheet is visible on a display,
+-  :gf:`sheet-parent`, which is ``#f`` if the sheet has no parent.
+-  :gf:`sheet-mapped?`, which tells if the sheet is visible on a display,
    ignoring issues of occluding windows.
 
-The *sheet-transform* is an instance of a concrete subclass of
-:class:`<transform>`. The *sheet-region* can be an instance of any concrete
+The :gf:`sheet-transform` is an instance of a concrete subclass of
+:class:`<transform>`. The :gf:`sheet-region` can be an instance of any concrete
 subclass of :class:`<region>`, but is usually represented by the region class
 :class:`<bounding-box>`.
 
@@ -63,7 +63,7 @@ Some sheets (menu bars, button boxes, or tool bars, for instance) also
 have single or multiple children, in which case they have additional
 attributes:
 
--  A *sheet-children* slot. This is a sequence of sheets. Each sheet in
+-  A :gf:`sheet-children` slot. This is a sequence of sheets. Each sheet in
    the sequence is a child of the current sheet.
 -  Methods to add, remove, and replace a child.
 -  Methods to map over children.
@@ -76,20 +76,20 @@ to a sheet that is larger than its parent does not cause the parent’s
 region to grow. Shrinking the region of a parent does not cause the
 children to shrink. You must maintain the region yourself, either by
 explicitly setting the sheet’s region and transform, or by using the
-layout facilities (*compose-space* and *allocate-space*)*.*
+layout facilities (:gf:`compose-space` and :gf:`allocate-space`).
 
 As a convenience, there are some glue functions that mediate between
-geometry and layout: *set-sheet-position*, *set-sheet-size*,
-and*set-sheet-edges*.
+geometry and layout: :gf:`set-sheet-position`, :gf:`set-sheet-size`,
+and :gf:`set-sheet-edges`.
 
 Some classes of sheet can receive input. These have:
 
--  A *sheet-event-queue* slot.
+-  A :gf:`sheet-event-queue` slot.
 -  Methods for :class:`<handle-event>`.
 
-Sheets that can be repainted have methods for *handle-repaint*.
+Sheets that can be repainted have methods for :gf:`handle-repaint`.
 
-Sheets that can do output, have a *sheet-medium* slot.
+Sheets that can do output, have a :gf:`sheet-medium` slot.
 
 Some sheets act as *controls* such as push buttons, scroll bars, and
 sliders. These are represented by the :class:`<gadget>` class and its
@@ -115,20 +115,20 @@ manages:
 There is a protocol for using the Windows clipboard. In order to
 manipulate the Windows clipboard from within DUIM, the clipboard needs
 to be locked, so that its contents can be manipulated. DUIM uses the
-functions *open-clipboard* and *close-clipboard* to create and free
-clipboard locks. The *open-clipboard* function creates an instance of
+functions :gf:`open-clipboard` and :gf:`close-clipboard` to create and free
+clipboard locks. The :gf:`open-clipboard` function creates an instance of
 the class :class:`<clipboard>` which is used to hold the contents of the
 clipboard for the duration of the lock. For general use of the
-clipboard, use the macro *with-clipboard*, rather than calling
-*open-clipboard* and *close-clipboard* explicitly. This lets you
+clipboard, use the macro :macro:`with-clipboard`, rather than calling
+:gf:`open-clipboard` and :gf:`close-clipboard` explicitly. This lets you
 manipulate the clipboard easily, sending the results of any code
 evaluated to the clipboard.
 
-Once a clipboard lock has been created, you can use *add-clipboard-data*
-and *add-clipboard-data-as* to add data to the clipboard. Use
-*get-clipboard-data-as* to query the contents of the clipboard, and use
-*clear-clipboard* to empty the locked clipboard. Finally, use
-*clipboard-data-available?* to see if the clipboard contains data of a
+Once a clipboard lock has been created, you can use :gf:`add-clipboard-data`
+and :gf:`add-clipboard-data-as` to add data to the clipboard. Use
+:gf:`get-clipboard-data-as` to query the contents of the clipboard, and use
+:gf:`clear-clipboard` to empty the locked clipboard. Finally, use
+:gf:`clipboard-data-available?` to see if the clipboard contains data of a
 particular type.
 
 You can put arbitrary Dylan objects onto the clipboard, and retrieve
@@ -139,9 +139,11 @@ own domain than would normally be possible.
 The DUIM GUI test suite contains a demonstration of how to use the
 clipboard in DUIM, in the file
 
-Examples\\duim\\duim-gui-test-suite\\clipboard.dylan
+::
 
-in the Harlequin Dylan installation directory.
+    sources/duim/tests/gui/clipboard.dylan
+
+in the Open Dylan installation directory.
 
 The class hierarchy for DUIM-Sheets
 ===================================
@@ -6306,7 +6308,7 @@ are exported from the *duim-sheets* module.
      scaling.
 
      The *medium* specified should be an instance of type :class:`<medium>`.
-     The *scale-x* and*scale-y* should evaluate to an instance of type
+     The *scale-x* and *scale-y* should evaluate to an instance of type
      ``<real>``.
 
    See also
