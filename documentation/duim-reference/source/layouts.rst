@@ -30,17 +30,15 @@ and describes the class hierarchy present.
 The <layout> class and its subclasses
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The base class for the majority of DUIM layouts is the *<layout>* class,
-which is itself a subclass of *<sheet>*. All other layout-oriented
-classes are subclasses of *<sheet>*.
+The base class for the majority of DUIM layouts is the :class:`<layout>` class,
+which is itself a subclass of :class:`<sheet>`. All other layout-oriented
+classes are subclasses of :class:`<sheet>`.
 
-The immediate subclasses of *<sheet>* that are exposed by the
+The immediate subclasses of :class:`<sheet>` that are exposed by the
 DUIM-Layouts library are shown in `The class hierarchy for
-DUIM-Layouts`_. Only
-*<basic-composite-pane>*, *<leaf-pane>*, and *<layout>* have any
-subclasses defined. See `Subclasses of
-\<layout\>`_ for details of the subclasses of
-*<layout>*.
+DUIM-Layouts`_. Only :class:`<basic-composite-pane>`, :class:`<leaf-pane>`,
+and :class:`<layout>` have any subclasses defined. See `Subclasses of
+\<layout\>`_ for details of the subclasses of :class:`<layout>`.
 
 .. table:: Overall class hierarchy for the DUIM-Layouts library
 
@@ -67,7 +65,7 @@ subclasses defined. See `Subclasses of
     +---------+------------------------+---------------------------------+
 
 All the actual layouts provided by the DUIM-Layouts library are
-subclasses of the base *<layout>* class, and are described in
+subclasses of the base :class:`<layout>` class, and are described in
 `Subclasses of \<layout\>`_. In addition, a number of
 different types of pane are supplied by the DUIM-Layouts library.
 
@@ -81,8 +79,8 @@ different types of pane are supplied by the DUIM-Layouts library.
    these modules, see :doc:`geom`, and :doc:`graphics`, respectively.
 -  :class:`<top-level-sheet>` This class is used for any sheets that are at the
    top level of the hierarchy of windows on the screen: that is, there is no
-   other sheet that is the parent of an instance of *<top-level-sheet>*.
--  :class:`<leaf-pane>` In contrast to *<top-level-sheet>*, an instance of
+   other sheet that is the parent of an instance of :class:`<top-level-sheet>`.
+-  :class:`<leaf-pane>` In contrast to :class:`<top-level-sheet>`, an instance of
    :class:`<leaf-pane>` cannot have any children, and is at the end of the
    hierarchy of windows on the screen.
 -  :class:`<simple-pane>` This class is the most basic type of pane, and is
@@ -91,7 +89,7 @@ different types of pane are supplied by the DUIM-Layouts library.
 Subclasses of <layout>
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The subclasses of *<layout>* are shown in :ref:`subclasses-of-the-layout-class`
+The subclasses of :class:`<layout>` are shown in :ref:`subclasses-of-the-layout-class`
 
 
 .. _subclasses-of-the-layout-class:
@@ -140,14 +138,14 @@ The classes of layout available are as follows:
 -  :class:`<pinboard-layout>` This does not constrain the position of its
    children in any way. It is up to you to position each child individually,
    like pins on a pinboard.
--  :class:`<fixed-layout>` This class is like *<pinboard-layout>*, in that you
-   must specify the position of each child. Unlike *<pinboard-layout>*,
+-  :class:`<fixed-layout>` This class is like :class:`<pinboard-layout>`, in that you
+   must specify the position of each child. Unlike :class:`<pinboard-layout>`,
    however, you must also specify the size of each child.
 
 In addition to the basic types of layout described above, a subclass of
-*<table-layout>* is provided, as follows:
+:class:`<table-layout>` is provided, as follows:
 
--  :class:`<grid-layout>` This is a specialized version of *<table-layout>*,
+-  :class:`<grid-layout>` This is a specialized version of :class:`<table-layout>`,
    in which all the cells in the table are forced to be the same size.
 
 .. figure:: images/layouts-3.png
@@ -177,7 +175,7 @@ are exported from the *duim-layouts* module.
      Allocates space within a layout for its children. During the space
      allocation pass, a composite pane arranges its children within the
      available space and allocates space to them according to their space
-     requirements and its own composition rules by calling *allocate-space*
+     requirements and its own composition rules by calling :gf:`allocate-space`
      on each of the child panes. For example, :class:`<column-layout>` arranges
      all its children in a vertical column. The *width* and *height* arguments
      are the width and height of *pane* in device units, that is, pixels. These
@@ -185,7 +183,7 @@ are exported from the *duim-layouts* module.
 
      This function actually calls :class:`do-allocate-space` to perform the
      calculations.  Client code may specialize :class:`do-allocate-space`, but
-     not call it. Call *allocate-space* instead.
+     not call it. Call :gf:`allocate-space` instead.
 
    See also
 
@@ -200,9 +198,9 @@ are exported from the *duim-layouts* module.
    :keyword region: An instance of type :class:`<region>`. Default value: :const`$nowhere`.
    :keyword transform: An instance of type :class:`<transform>`. Default value: :const:`$identity-transform`.
    :keyword port: An instance of type *false-or(* :class:`<port>` *)*. Default value: ``#f``.
-   :keyword style-descriptor: An instance of type *false-or(* ``<object>`` *)*. Default value: ``#f``.
-   :keyword help-context: An instance of type ``<object-table>``. Default value: *make(<object-table>)*.
-   :keyword help-source: An instance of type *<object-table>*. Default value: *make(<object-table>)*.
+   :keyword style-descriptor: An instance of type ``false-or(<object>)``. Default value: ``#f``.
+   :keyword help-context: An instance of type ``<object-table>``. Default value: ``make(<object-table>)``.
+   :keyword help-source: An instance of type ``<object-table>``. Default value: ``make(<object-table>)``.
 
    :description:
 
@@ -250,9 +248,9 @@ are exported from the *duim-layouts* module.
    :keyword y-spacing: An instance of type ``<integer>``. Default value: 0.
    :keyword equalize-heights?: An instance of type ``<boolean>``. Default value: ``#f``.
    :keyword equalize-widths?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :keyword x-alignment: An instance of type *one-of(#"left", #"right", #"center")*. Default value: *#"left"*.
-   :keyword ratios: An instance of type *false-or(limited(<sequence>), of: <integer>))*. Default value: ``#f``.
-   :keyword y-ratios: An instance of type *false-or(limited(<sequence>), of: <integer>))*. Default value: ``#f``.
+   :keyword x-alignment: An instance of type ``one-of(#"left", #"right", #"center")``. Default value: ``#"left"``.
+   :keyword ratios: An instance of type ``false-or(limited(<sequence>), of: <integer>))``. Default value: ``#f``.
+   :keyword y-ratios: An instance of type ``false-or(limited(<sequence>), of: <integer>))``. Default value: ``#f``.
 
    :description:
 
@@ -343,22 +341,22 @@ are exported from the *duim-layouts* module.
      Returns the amount of space required for *pane*, which is a child of
      a composite pane. During the space composition pass, a composite pane will
      typically ask each of its children how much space it requires by calling
-     *compose-space*. They answer by returning instances of
+     ``compose-space``. They answer by returning instances of
      :class:`<space-requirement>`. The composite pane then forms its own space
      requirement by composing the space requirements of its children according
      to its own rules for laying out its children.
 
-     The value returned by *compose-space* is an instance of
+     The value returned by ``compose-space`` is an instance of
      :class:`<space-requirement>` that represents how much space *pane*
      requires.
 
      The *width* and *height* arguments are real numbers that the
-     *compose-space* method for a pane may use as "recommended" values for the
+     ``compose-space`` method for a pane may use as "recommended" values for the
      width and height of the pane. These are used to drive top-down layout.
 
      This function actually calls :class:`do-compose-space` to perform the
      space calculations. Client code may specialize :class:`do-compose-space`
-     but should not call it. Call *compose-space* instead.
+     but should not call it. Call ``compose-space`` instead.
 
    See also
 
@@ -403,9 +401,9 @@ are exported from the *duim-layouts* module.
      Panes are sheets which represent a "useful unit" in a GUI. There is no
      protocol class called *<pane>*.
 
-     A.  In most cases (such as when defining a frame using *define frame*),
+     A.  In most cases (such as when defining a frame using ``define frame``),
          a pane class groups existing gadgets (or panes) to form effectively a
-         new gadget, without actually creating a new class of *<gadget>*.
+         new gadget, without actually creating a new class of :class:`<gadget>`.
      B.  Sometimes, a pane class implements some complex output-only sheet.
      C.  Sometimes, a pane class implements the `See
          <sheet> <silica.htm#13118>`_ part of a ` <gadgets.htm#34543>`_.
@@ -446,7 +444,7 @@ are exported from the *duim-layouts* module.
      calculate space requirements for a pane. When calculating space
      requirements for classes of pane you have defined yourself, you should
      add methods to this function, but not call it directly. Call
-     *allocate-space* instead.
+     :gf:`allocate-space` instead.
 
    See also
 
@@ -472,7 +470,7 @@ are exported from the *duim-layouts* module.
      calculate space requirements for a child. When calculating space
      requirements for children in classes of pane you have defined yourself,
      you should specialize this function by adding methods for it. However,
-     you should not call *do-compose-space* explicitly: call
+     you should not call ``do-compose-space`` explicitly: call
      :gf:`compose-space` instead.
 
    :example:
@@ -531,7 +529,7 @@ are exported from the *duim-layouts* module.
 
      The *display-function:* init-keyword defines the display function for the
      pane. This gets called by the :gf:`handle-repaint` method for
-     *<simple-pane>*.
+     :class:`<simple-pane>`.
 
    See also
 
@@ -827,16 +825,17 @@ are exported from the *duim-layouts* module.
      Subclass this class if you want to create a basic leaf pane.
 
      -  If you want to do output to it, mix in one of the
-        *<sheet-with-medium-mixin>* classes.
+        :class:<sheet-with-medium-mixin>` classes.
      -  If you want to do input from it, min in one of the
-        *<sheet-with-event-queue>* classes.
+        :class:`<sheet-with-event-queue>` classes.
      -  If you want to repaint it, mix in one of the
-        *<sheet-with-repainting-mixin>* classes.
+        :class:`<sheet-with-repainting-mixin>` classes.
 
 
-.. generic-function:: make
+.. method:: make
+   :specializer: <space-requirement>
 
-   Creates an instance of *<space-requirement>*.
+   Creates an instance of :class:`<space-requirement>`.
 
    :signature: make *space-requirement-class* #key *width min-width max-width height min-height max-height* => *space-req*
 
@@ -852,7 +851,7 @@ are exported from the *duim-layouts* module.
 
    :description:
 
-     Creates an instance of *<space-requirement>*.
+     Creates an instance of :class:`<space-requirement>`.
 
      The various width and height arguments let you control the values of
      corresponding init-keywords to :class:`<space-requirement>`, thereby
@@ -908,7 +907,7 @@ are exported from the *duim-layouts* module.
 
    :parameter pane: An instance of type :class:`<sheet>`.
 
-   :keyword pane-display-function: An instance of type *false-or(<function>)*.
+   :keyword pane-display-function: An instance of type ``false-or(<function>)``.
 
    :description:
 
@@ -1039,9 +1038,9 @@ are exported from the *duim-layouts* module.
    :keyword spacing: An instance of type ``<integer>``. Default value: 0.
    :keyword equalize-heights?: An instance of type ``<boolean>``. Default value: ``#f``.
    :keyword equalize-widths?: An instance of type ``<boolean>``. Default value: ``#f``.
-   :keyword y-alignment: An instance of type *one-of(#"top", #"bottom", #"center")*. Default value: *#"top"*.
-   :keyword x-ratios: An instance of type *false-or(<sequence>)*. Default value: ``#f``.
-   :keyword ratios: An instance of type *false-or(<sequence>)*. Default value: ``#f``.
+   :keyword y-alignment: An instance of type ``one-of(#"top", #"bottom", #"center")``. Default value: ``#"top"``.
+   :keyword x-ratios: An instance of type ``false-or(<sequence>)``. Default value: ``#f``.
+   :keyword ratios: An instance of type ``false-or(<sequence>)``. Default value: ``#f``.
 
    :description:
 
@@ -1081,7 +1080,7 @@ are exported from the *duim-layouts* module.
      The value passed to *ratios:* needs to be a sequence of as many integers
      as there are children in the layout. Each child is then allocated the
      appropriate portion of horizontal space in the layout. For example, if
-     the value *#(1, 2, 3)* is specified for the *ratios:* init-keyword of a
+     the value ``#(1, 2, 3)`` is specified for the *ratios:* init-keyword of a
      row layout containing three children, then the first child would claim a
      sixth of the available horizontal space, the second child would claim a
      third of the horizontal space, and the third child would claim half the
@@ -1119,15 +1118,15 @@ are exported from the *duim-layouts* module.
 
    :superclasses: :class:`<layout>`
 
-   :keyword display-function: An instance of type *false-or(<function>)*. Default value: ``#f``.
+   :keyword display-function: An instance of type ``false-or(<function>)``. Default value: ``#f``.
 
    :description:
 
      The class of simple panes.
 
      The *display-function:* init-keyword defines the display function for
-     the pane. This gets called by the
-     :gf:`handle-repaint` method for *<simple-pane>*.
+     the pane. This gets called by the :gf:`handle-repaint` method for
+     :class:`<simple-pane>`.
 
    See also
 
@@ -1165,7 +1164,7 @@ are exported from the *duim-layouts* module.
    :keyword height: An instance of type ``<integer>``. Default value: :const:`$fill`.
    :keyword min-height: An instance of type ``<integer>``. Default value: *height*.
    :keyword max-height: An instance of type ``<integer>``. Default value: *height*.
-   :keyword label: An instance of type *type-union(* ``<string>``, :class:`<image>` *)*.
+   :keyword label: An instance of type ``type-union(<string>,`` :class:`<image>` ``)``.
 
    :description:
 
@@ -1268,7 +1267,7 @@ are exported from the *duim-layouts* module.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
 
-   :value height: An instance of type *<number>*.
+   :value height: An instance of type ``<number>``.
 
    :description:
 
@@ -1289,7 +1288,7 @@ are exported from the *duim-layouts* module.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
 
-   :value max-height: An instance of type *<number>*.
+   :value max-height: An instance of type ``<number>``.
 
    :description:
 
@@ -1311,7 +1310,7 @@ are exported from the *duim-layouts* module.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
 
-   :value max-width: An instance of type *<number>*.
+   :value max-width: An instance of type ``<number>``.
 
    :description:
 
@@ -1333,7 +1332,7 @@ are exported from the *duim-layouts* module.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
 
-   :value min-height: An instance of type *<number>*.
+   :value min-height: An instance of type ``<number>``.
 
    :description:
 
@@ -1355,7 +1354,7 @@ are exported from the *duim-layouts* module.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
 
-   :value min-width: An instance of type *<number>*.
+   :value min-width: An instance of type ``<number>``.
 
    :description:
 
@@ -1377,7 +1376,7 @@ are exported from the *duim-layouts* module.
    :parameter sheet: An instance of type :class:`<sheet>`.
    :parameter space-req: An instance of type :class:`<space-requirement>`.
 
-   :value width: An instance of type *<number>*.
+   :value width: An instance of type ``<number>``.
 
    :description:
 
@@ -1437,9 +1436,9 @@ are exported from the *duim-layouts* module.
 
    :signature: stack-layout-mapped-page *stack-layout* => *page*
 
-   :parameter stack-layout: An instance of *<stack-layout>*.
+   :parameter stack-layout: An instance of :class:`<stack-layout>`.
 
-   :value page: An instance of *<sheet>*.
+   :value page: An instance of :class:`<sheet>`.
 
    :description:
 
@@ -1451,10 +1450,10 @@ are exported from the *duim-layouts* module.
 
    :signature: stack-layout-mapped-page *page* *stack-layout* => *page*
 
-   :parameter page: An instance of *<sheet>*.**
-   :parameter stack-layout: An instance of *<stack-layout>*.
+   :parameter page: An instance of :class:`<sheet>`.
+   :parameter stack-layout: An instance of :class:`<stack-layout>`.
 
-   :value page: An instance of *<sheet>*.
+   :value page: An instance of :class:`<sheet>`.
 
    :description:
 
@@ -1507,15 +1506,15 @@ are exported from the *duim-layouts* module.
    :superclasses: :class:`<layout>`
 
    :keyword border: An instance of type ``<integer>``. Default value: 0.
-   :keyword rows: An instance of type *false-or(<integer>)*. Default value: ``#f``.
-   :keyword columns: An instance of type *false-or(<integer>)*. Default value: ``#f``.
-   :keyword contents: An instance of type *limited(<sequence>, of: limited(<sequence>, of: <sheet>))*.
+   :keyword rows: An instance of type ``false-or(<integer>)``. Default value: ``#f``.
+   :keyword columns: An instance of type ``false-or(<integer>)``. Default value: ``#f``.
+   :keyword contents: An instance of type ``limited(<sequence>, of: limited(<sequence>, of: <sheet>))``.
    :keyword x-spacing: An instance of type ``<integer>``. Default value: 0.
    :keyword y-spacing: An instance of type ``<integer>``. Default value: 0.
-   :keyword x-ratios: An instance of type *false-or(<sequence>)*. Default value: ``#f``.
-   :keyword y-ratios: An instance of type *false-or(<sequence>)*. Default value: ``#f``.
-   :keyword x-alignment: An instance of type *one-of(#"left", #"right", #"center")*. Default value: *#"left"*.
-   :keyword y-alignment: An instance of type *one-of(#"top", #"bottom", #"center")*. Default value: *#"top"*.
+   :keyword x-ratios: An instance of type ``false-or(<sequence>)``. Default value: ``#f``.
+   :keyword y-ratios: An instance of type ``false-or(<sequence>)``. Default value: ``#f``.
+   :keyword x-alignment: An instance of type ``one-of(#"left", #"right", #"center")``. Default value: ``#"left"``.
+   :keyword y-alignment: An instance of type ``one-of(#"top", #"bottom", #"center")``. Default value: ``#"top"``.
 
    :description:
 
@@ -1554,7 +1553,7 @@ are exported from the *duim-layouts* module.
      The two init-keywords can be used on their own, or together, as
      described in the examples below.
 
-     For example, if the value *#(1, 2, 3)* is specified for the *x-ratios:*
+     For example, if the value ``#(1, 2, 3)`` is specified for the *x-ratios:*
      init-keyword of a table layout containing three columns of children,
      then the first column would claim a sixth of the available horizontal
      space, the second column would claim a third of the horizontal space,
@@ -1564,7 +1563,7 @@ are exported from the *duim-layouts* module.
      .. figure:: images/layouts-9.png
         :align: center
 
-     Alternatively, if the value *#(1, 2, 3)* is specified for the
+     Alternatively, if the value ``#(1, 2, 3)`` is specified for the
      *y-ratios:* init-keyword of a table layout containing three rows of
      children, then the first row would claim a sixth of the available
      vertical space, the second row would claim a third of the vertical
@@ -1598,14 +1597,14 @@ are exported from the *duim-layouts* module.
 
    .. code-block:: dylan
 
-       \*t\* := make(<vector>, size: 9);
+       *t* := make(<vector>, size: 9);
        for (i from 1 to 9)
-         \*t\*[i - 1] := make(<button>, label: format-to-string("%d", i))
+         *t*[i - 1] := make(<button>, label: format-to-string("%d", i))
        end;
 
        contain(make(<table-layout>,
                     x-spacing: 10, y-spacing: 0,
-                    children: \*t\*, columns: 3));
+                    children: *t*, columns: 3));
 
    See also
 
@@ -1658,8 +1657,8 @@ are exported from the *duim-layouts* module.
    :keyword display: An instance of type *false-or(* :class:`<display>` *)*. Default value: ``#f``.
    :keyword frame: An instance of type *false-or(* :class:`<frame>` *)*. Default value: ``#f``.
    :keyword frame-manager: An instance of type *false-or(* :class:`<frame-manager>` *)*. Default value: ``#f``.
-   :keyword container: An instance of type *false-or(<object>)*. Default value: ``#f``.
-   :keyword container-region: An instance of type *false-or(:class:`<region>`)*. Default value: ``#f``.
+   :keyword container: An instance of type ``false-or(<object>)``. Default value: ``#f``.
+   :keyword container-region: An instance of type ``false-or(`` :class:`<region>` ``)``. Default value: ``#f``.
 
    :description:
 
