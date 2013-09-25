@@ -28,10 +28,71 @@ define side-effecting stateless dynamic-extent &unimplemented-primitive-descript
   //---*** Fill this in...
 end;
 
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-set-accessor-method-xep
-    (accessor-method :: <accessor-method>)
+define side-effecting stateless dynamic-extent mapped &primitive-descriptor primitive-set-accessor-method-xep
+    (accessor-method :: <accessor-method>, what :: <integer>)
  => (accessor-method :: <accessor-method>);
-  //---*** Fill this in...
+  // Basic blocks
+  let case0-bb = make(<llvm-basic-block>);
+  let case1-bb = make(<llvm-basic-block>);
+  let case2-bb = make(<llvm-basic-block>);
+  let case3-bb = make(<llvm-basic-block>);
+  let case4-bb = make(<llvm-basic-block>);
+  let case5-bb = make(<llvm-basic-block>);
+  let return   = make(<llvm-basic-block>);
+
+  let xep-slot-ptr
+    = op--getslotptr(be, accessor-method, #"<function>", #"xep");
+  let raw-what = op--untag-integer(be, what);
+  ins--switch*(be, raw-what, return,
+               0, case0-bb,
+               1, case1-bb,
+               2, case2-bb,
+               3, case3-bb,
+               4, case4-bb,
+               5, case5-bb);
+
+  local method xep-ref
+            (descriptor :: <llvm-entry-point-descriptor>)
+         => (reference :: <llvm-value>);
+          make(<llvm-cast-constant>,
+               operator: #"BITCAST",
+               type: $llvm-object-pointer-type,
+               operands: vector(llvm-entry-point-function(be, descriptor, #f)))
+        end method;
+
+  ins--block(be, case0-bb);
+
+  ins--store(be, xep-ref(slotacc-single-q-instance-getter-xep-descriptor),
+             xep-slot-ptr);
+  ins--br(be, return);
+
+  ins--block(be, case1-bb);
+  ins--store(be, xep-ref(slotacc-single-q-instance-setter-xep-descriptor),
+             xep-slot-ptr);
+  ins--br(be, return);
+
+  ins--block(be, case2-bb);
+  ins--store(be, xep-ref(slotacc-single-q-class-getter-xep-descriptor),
+             xep-slot-ptr);
+  ins--br(be, return);
+
+  ins--block(be, case3-bb);
+  ins--store(be, xep-ref(slotacc-single-q-class-setter-xep-descriptor),
+             xep-slot-ptr);
+  ins--br(be, return);
+
+  ins--block(be, case4-bb);
+  ins--store(be, xep-ref(slotacc-repeated-instance-getter-xep-descriptor),
+             xep-slot-ptr);
+  ins--br(be, return);
+
+  ins--block(be, case5-bb);
+  ins--store(be, xep-ref(slotacc-repeated-instance-setter-xep-descriptor),
+             xep-slot-ptr);
+  ins--br(be, return);
+
+  ins--block(be, return);
+  accessor-method
 end;
 
 

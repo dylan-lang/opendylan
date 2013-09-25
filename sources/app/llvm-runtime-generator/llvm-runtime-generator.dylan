@@ -31,7 +31,13 @@ define constant $runtime-referenced-objects
 
 define constant $runtime-referenced-functions
   = #[#"type-check-error",
-      #"argument-count-error"];
+      #"argument-count-error",
+      #"%slotacc-single-Q-instance-getter",
+      #"%slotacc-single-Q-class-getter",
+      #"%slotacc-single-Q-instance-setter",
+      #"%slotacc-single-Q-class-setter",
+      #"%slotacc-repeated-instance-getter",
+      #"%slotacc-repeated-instance-setter"];
 
 define function generate-runtime-heap
     (be :: <llvm-back-end>, m :: <llvm-module>) => ();
