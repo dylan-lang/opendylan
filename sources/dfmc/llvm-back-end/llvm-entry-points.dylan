@@ -667,3 +667,79 @@ define variable-arity outer entry-point-descriptor rest-key-mep
   make(<llvm-undef-constant>,
        type: llvm-reference-type(be, be.%mv-struct-type))
 end entry-point-descriptor;
+
+
+/// Accessor entry points
+
+define method op--slotacc-xep
+    (be :: <llvm-back-end>, iep-name :: <symbol>,
+     function :: <llvm-value>, n :: <llvm-value>, #rest arguments)
+ => (call :: <llvm-value>);
+  let error-bb = make(<llvm-basic-block>);
+  let call-bb  = make(<llvm-basic-block>);
+
+  // Check argument count
+  let cmp = ins--icmp-ne(be, n, arguments.size);
+  ins--br(be, cmp, error-bb, call-bb);
+
+  // If argument counts do not match, throw an error
+  ins--block(be, error-bb);
+  op--argument-count-error(be, function, n);
+
+  // Chain to the accessor IEP
+  ins--block(be, call-bb);
+  let f = dylan-value(iep-name).^iep;
+  let name = emit-name(be, be.llvm-builder-module, f);
+  let undef = make(<llvm-undef-constant>, type: $llvm-object-pointer-type);
+  ins--tail-call(be, llvm-builder-global(be, name),
+                 concatenate(arguments, vector(undef, undef)),
+                 type: llvm-reference-type(be, be.%mv-struct-type),
+                 calling-convention: llvm-calling-convention(be, f))
+end method;
+
+define singular outer entry-point-descriptor slotacc-single-q-instance-getter-xep
+    (function :: <function>, n :: <raw-integer>, a :: <getter-method>, inst)
+ => (#rest values);
+  op--slotacc-xep(be, #"%slotacc-single-Q-instance-getter", function, n,
+                  a, inst)
+end entry-point-descriptor;
+
+define singular outer entry-point-descriptor slotacc-single-q-class-getter-xep
+    (function :: <function>, n :: <raw-integer>,
+     a :: <getter-method>, inst)
+ => (#rest values);
+  op--slotacc-xep(be, #"%slotacc-single-Q-class-getter", function, n,
+                  a, inst)
+end entry-point-descriptor;
+
+define singular outer entry-point-descriptor slotacc-single-q-instance-setter-xep
+    (function :: <function>, n :: <raw-integer>,
+     value, a :: <setter-method>, inst)
+ => (#rest values);
+  op--slotacc-xep(be, #"%slotacc-single-Q-instance-setter", function, n,
+                  value, a, inst)
+end entry-point-descriptor;
+
+define singular outer entry-point-descriptor slotacc-single-q-class-setter-xep
+    (function :: <function>, n :: <raw-integer>,
+     value, a :: <setter-method>, inst)
+ => (#rest values);
+  op--slotacc-xep(be, #"%slotacc-single-Q-class-setter", function, n,
+                  value, a, inst)
+end entry-point-descriptor;
+
+define singular outer entry-point-descriptor slotacc-repeated-instance-getter-xep
+    (function :: <function>, n :: <raw-integer>,
+     a :: <repeated-getter-method>, inst, idx)
+ => (#rest values);
+  op--slotacc-xep(be, #"%slotacc-repeated-instance-getter", function, n,
+                  a, inst, idx)
+end entry-point-descriptor;
+
+define singular outer entry-point-descriptor slotacc-repeated-instance-setter-xep
+    (function :: <function>, n :: <raw-integer>,
+     value, a :: <repeated-setter-method>, inst, idx)
+ => (#rest values);
+  op--slotacc-xep(be, #"%slotacc-repeated-instance-setter", function, n,
+                  value, a, inst, idx)
+end entry-point-descriptor;
