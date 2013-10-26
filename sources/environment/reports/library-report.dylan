@@ -17,7 +17,7 @@ define constant $default-dtd
 define constant $default-organization
   = "Dylan Hackers";
 define constant $default-copyright
-  = "Copyright (c) 2012 Dylan Hackers. All rights reserved.";
+  = "Copyright (c) 2013 Dylan Hackers. All rights reserved.";
 define constant $default-version
   = "1.0";
 
