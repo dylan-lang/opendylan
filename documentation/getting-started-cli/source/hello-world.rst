@@ -2,11 +2,11 @@ Hello World
 ===========
 
 You have just downloaded Open Dylan and installed it in
-``/opt/opendylan-2012.1``.  So how do you write the canonical Hello
+``/opt/opendylan-2013.1``.  So how do you write the canonical Hello
 World app?  This example assumes bash is being used.  You may need
 to adjust for your local shell.  ::
 
-  $ export PATH=/opt/opendylan-2012.1/bin:$PATH
+  $ export PATH=/opt/opendylan-2013.1/bin:$PATH
   $ make-dylan-app hello-world
   $ cd hello-world
   $ dylan-compiler -build hello-world.lid
