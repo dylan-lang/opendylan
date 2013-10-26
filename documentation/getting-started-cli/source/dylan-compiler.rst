@@ -11,7 +11,7 @@ arguments at a shell. For example::
     Hacker Edition
     Version 2013.1
     Copyright (c) 1997-2004, Functional Objects, Inc.
-    Portions Copyright (c) 2004-2012, Dylan Hackers
+    Portions Copyright (c) 2004-2013, Dylan Hackers
     Portions Copyright (c) 2001-2012, Ravenbrook Ltd.
     >
 
