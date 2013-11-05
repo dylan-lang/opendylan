@@ -787,7 +787,7 @@ end;
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-shift-left-low/high
     (x :: <raw-machine-word>, shift :: <raw-machine-word>)
  => (low :: <raw-machine-word>, high :: <raw-machine-word>);
-  // Extend the operands to double the word width and perform the multiply
+  // Extend the operands to double the word width and perform the shift
   let iDoubleWord-type = be.%type-table["iDoubleWord"];
   let double-x = ins--zext(be, x, iDoubleWord-type);
   let double-shift = ins--sext(be, shift, iDoubleWord-type);
@@ -1328,6 +1328,7 @@ define side-effect-free stateless dynamic-extent &unimplemented-primitive-descri
      x-high :: <raw-machine-word>,
      shift :: <raw-machine-word>)
  => (result :: <raw-machine-word>);
+  //---*** Fill this in...
 end;
 
 define side-effect-free stateless dynamic-extent &primitive-descriptor primitive-machine-word-unsigned-double-shift-right
