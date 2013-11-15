@@ -20,6 +20,7 @@ define library common-dylan
     machine-words,
     simple-random,
     simple-profiling,
+    simple-timers,
     simple-io,
     byte-vector,
     transcendentals;
@@ -34,6 +35,13 @@ define module simple-profiling
          stop-profiling-type,
          profiling-type-result;
 end module simple-profiling;
+
+define module simple-timers
+  create <timer>,
+         timer-start,
+         timer-stop,
+         timer-running?;
+end module simple-timers;
 
 define module byte-vector
   use dylan-extensions,
@@ -280,5 +288,6 @@ define module common-dylan-internals
   use locators-protocol;
   use simple-random;
   use simple-profiling;
+  use simple-timers;
   use simple-io;
 end module common-dylan-internals;
