@@ -16,6 +16,7 @@ Files: library
        numerics
        format
        byte-vector
+       timers
        transcendentals
        machine-words/utilities
        machine-words/machine-word
@@ -27,6 +28,7 @@ Files: library
        machine-words/signal-overflow
        machine-words/double
        machine-words/unsigned-double
+C-Source-Files: timer_helpers.c
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

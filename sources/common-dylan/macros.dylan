@@ -27,10 +27,11 @@ define macro timing
   { timing ()
       ?body:body
     end }
-    => { primitive-start-timer();
+    => { let timer = make(<timer>);
+         timer-start(timer);
          ?body;
-         let elapsed-time = primitive-stop-timer();
-         values(elapsed-time[0], elapsed-time[1]) }
+         let (seconds, microseconds) = timer-stop(timer);
+         values(seconds, microseconds) }
 end macro timing;
 
 /// Generic profiling macro
@@ -144,18 +145,21 @@ end method profiling-type-result;
 define method start-profiling-type
     (state :: <profiling-state>, keyword :: <cpu-profiling-type>) => ()
   unless (element(state, #"cpu-profiling", default: #f))
-    primitive-start-timer();
-    state[#"cpu-profiling"] := #t
+    let timer = make(<timer>);
+    timer-start(timer);
+    state[#"cpu-profiling"] := #t;
+    state[#"cpu-profiling-timer"] := timer;
   end;
 end method start-profiling-type;
 
 define method stop-profiling-type
     (state :: <profiling-state>, keyword :: <cpu-profiling-type>) => ()
   when (element(state, #"cpu-profiling", default: #f))
-    let elapsed-time = primitive-stop-timer();
-    state[#"cpu-time-seconds"]      := elapsed-time[0];
-    state[#"cpu-time-microseconds"] := elapsed-time[1];
-    state[#"cpu-profiling"]         := #f
+    let (seconds, microseconds) = timer-stop(state[#"cpu-profiling-timer"]);
+    state[#"cpu-time-seconds"]      := seconds;
+    state[#"cpu-time-microseconds"] := microseconds;
+    state[#"cpu-profiling"]         := #f;
+    state[#"cpu-profiling-timer"]   := #f;
   end
 end method stop-profiling-type;
 
