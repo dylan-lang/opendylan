@@ -192,7 +192,7 @@ The COMMAND-LINE-PARSER module
 
    :parameter #key usage: An instance of :drm:`<string>` or ``#f``.  A
      brief synopsis of the overall command-line syntax.  The default
-     is ``#f``, in which case "Usage: <application-name> [options]\n"
+     is ``#f``, in which case "Usage: <application-name> [options]\\n"
      will be displayed, where <application-name> is the result of
      calling ``locator-base(application-name())``.
 
