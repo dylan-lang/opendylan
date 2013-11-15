@@ -40,6 +40,7 @@ define module simple-timers
   create <timer>,
          timer-start,
          timer-stop,
+         timer-accumulated-time,
          timer-running?;
 end module simple-timers;
 

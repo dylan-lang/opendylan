@@ -19,6 +19,17 @@ define method timer-start
   timer.timer-started-nanoseconds := nsec;
 end;
 
+define method timer-accumulated-time
+    (timer :: <timer>)
+ => (second :: <integer>, microseconds :: <integer>)
+  if (timer.timer-running?)
+    let (sec, nsec) = %timer-current-time();
+    %timer-diff-times(timer.timer-started-seconds, timer.timer-started-nanoseconds, sec, nsec)
+  else
+    values(0, 0)
+  end if
+end;
+
 define method timer-stop
     (timer :: <timer>)
  => (seconds :: <integer>, microseconds :: <integer>)
