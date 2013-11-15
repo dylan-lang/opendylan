@@ -3982,85 +3982,6 @@ void primitive_exit_application (DSINT code) {
 }
 
 
-/*
- * TIMING PRIMITIVES
- */
-
-/* Win32 (PC) */
-
-#if defined(OPEN_DYLAN_PLATFORM_WINDOWS)
-
-// XXX PER_THREAD
-static _int64 start, stop, frequency;
-extern int __stdcall QueryPerformanceCounter(_int64*);
-extern int __stdcall QueryPerformanceFrequency(_int64*);
-
-void primitive_start_timer()
-{
-    QueryPerformanceCounter(&start);
-}
-
-D primitive_stop_timer()
-{
-  SOV* value = make_vector(2);
-  D* data = (D*)vector_data(value);
-  long seconds = 0,
-       microseconds = 0;
-
-    QueryPerformanceCounter(&stop);
-    if (QueryPerformanceFrequency(&frequency)) {
-      stop -= start;
-      seconds = (long)(stop / frequency);
-      microseconds = (long)((stop % frequency) * 1000000 / frequency);
-    }
-
-    data[0] = I(seconds);
-    data[1] = I(microseconds);
-
-    return((D)value);
-}
-
-
-/* UNIX courtesy of Ian Piumarta */
-
-#else
-
-#include <sys/time.h>
-#include <sys/resource.h>
-
-// XXX PER_THREAD
-static struct rusage start, stop;
-
-void primitive_start_timer()
-{
-  getrusage(RUSAGE_SELF, &start);
-}
-
-D primitive_stop_timer()
-{
-  getrusage(RUSAGE_SELF, &stop);
-
-  stop.ru_utime.tv_usec -= start.ru_utime.tv_usec;
-  stop.ru_utime.tv_sec -= start.ru_utime.tv_sec;
-
-  if (stop.ru_utime.tv_usec < 0) {
-    stop.ru_utime.tv_usec += 1000000;
-    stop.ru_utime.tv_sec -= 1;
-  }
-
-  SOV* value = make_vector(2);
-  D* data = (D*)vector_data(value);
-  data[0] = I(stop.ru_utime.tv_sec);
-  data[1] = I(stop.ru_utime.tv_usec);
-  return((D)value);
-
-  /*
-  printf("%d.%03d", stop.ru_utime.tv_sec, stop.ru_utime.tv_usec / 1000);
-  */
-}
-
-#endif
-
 /* TOP LEVEL INITIALIZATION */
 
 extern Wrapper KLbyte_stringGVKdW;
