@@ -23,12 +23,5 @@ define method as-direct-ref
 end method;
 
 
-
-define generic-runtime-primitive start-timer;
-
-define generic-runtime-primitive stop-timer;
-
-
-
 define used-by-client generic-runtime-primitive exit-application;
 

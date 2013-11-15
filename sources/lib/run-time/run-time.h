@@ -1777,11 +1777,6 @@ extern D primitive_resolve_symbol (D symbol);
 extern D primitive_string_as_symbol (D string);
 extern D primitive_preboot_symbols ();
 
-/* TIMER PRIMITIVES */
-
-extern void primitive_start_timer();
-extern D    primitive_stop_timer();
-
 /* ENGINE NODE HANDLER ASSIGNMENTS */
 
 #define ENGINE_absent 0

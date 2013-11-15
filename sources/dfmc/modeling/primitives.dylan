@@ -602,6 +602,3 @@ define raw-field-primitive c-int <raw-c-unsigned-int>;
 
 define side-effecting stateless dynamic-extent &primitive primitive-exit-application
     (code :: <raw-integer>) => ();
-define side-effecting stateless dynamic-extent &primitive primitive-start-timer () => ();
-define side-effecting stateless dynamic-extent &primitive primitive-stop-timer 
-    () => (time :: <simple-object-vector>);

@@ -11,13 +11,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define side-effecting stateless dynamic-extent &c-primitive-descriptor primitive-exit-application
     (code :: <raw-integer>) => ();
 
-define side-effecting stateless dynamic-extent &c-primitive-descriptor primitive-start-timer () => ();
-
-define side-effecting stateless dynamic-extent &unimplemented-primitive-descriptor primitive-stop-timer
-    () => (time :: <simple-object-vector>);
-  //---*** Fill this in...
-end;
-
 
 /// Support for keyboard-break handling
 
