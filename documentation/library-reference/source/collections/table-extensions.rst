@@ -80,7 +80,7 @@ init-keyword. The legal values for this keyword are:
 -  *#f* Creates a table with strong keys and values. This is the default
    value.
 
-The TABLE-EXTENSIONS module
+The table-extensions Module
 ===========================
 
 This section contains a reference description for each item exported
