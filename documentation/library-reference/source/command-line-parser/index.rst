@@ -26,16 +26,16 @@ Quick Start
 
 Let's say you want to parse a command line that looks like this::
 
-  frob --name=zoo --debug -r a -r b -r c one two three
+  frob --name=zoo --debug -r a -r b -r c --choice=foo one two three
 
 The "frob" command accepts a --name argument that takes a value, a
 boolean --debug (or --nodebug) a -r argument that may be repeated, and
-then any number of positional arguments (here "one", "two", and
+then at least one positional argument (here "one", "two", and
 "three").  Here's how to create a parser for the frob command:
 
 .. code-block:: dylan
 
-  let parser = make(<command-line-parser>);
+  let parser = make(<command-line-parser>, min-positional-options: 1);
   add-option(parser,
              make(<parameter-option>,
                   names: #("name"),
@@ -51,9 +51,14 @@ then any number of positional arguments (here "one", "two", and
                   names: #("r"),
                   variable: "RAD",  // shows up in --help output
                   help: "Free radicals"));
+  add-option(parser,
+             make(<choice-option>,
+                  names: #("choice"),
+                  choices: #("foo", "bar", "baz"),
+                  default: "foo"));
 
-There is also a :class:`<keyed-option>` which is not shown here.
-See the reference section for more info.
+There are additional option classes not shown here.  See the reference
+section for more info.
 
 Now parse the command line:
 
@@ -75,6 +80,7 @@ And to access the option values:
   let debug? :: <boolean> = get-option-value(parser, "debug");
   let name :: false-or(<string>) = get-option-value(parser, "name");
   let dash-r :: <deque> = get-option-value(parser, "r");
+  let choice :: <string> = get-option-value(parser, "choice");
   let args :: <sequence> = positional-options(parser);
 
 
@@ -82,7 +88,7 @@ Reference
 =========
 
 
-The COMMAND-LINE-PARSER module
+The command-line-parser Module
 ------------------------------
 
 .. class:: <command-line-parser>
@@ -102,11 +108,25 @@ The COMMAND-LINE-PARSER module
 
    :keyword help-option:
 
-     A ``<flag-option>`` that will be added to the parser as the
+     A :class:`<flag-option>` that will be added to the parser as the
      option that signals a request for help.  The main purpose of this
      init keyword is to make it possible to use something other than
      ``--help`` and ``-h`` to request help.  This keyword has no
      effect if ``provide-help-option?`` is ``#f``.
+
+   :keyword min-positional-options:
+
+     The minimum number of positional (unnamed) options.  An
+     :drm:`<integer>`, defaulting to zero.  If fewer positional
+     options than this are supplied, :class:`<usage-error>` is
+     signaled.
+
+   :keyword max-positional-options:
+
+     The maximum number of positional (unnamed) options.  An
+     :drm:`<integer>`, defaulting to ``$maximum-integer``.  If more
+     positional options than this are supplied, :class:`<usage-error>`
+     is signaled.
 
 .. class:: <command-line-parser-error>
    :open:
@@ -153,7 +173,7 @@ The COMMAND-LINE-PARSER module
    :description:
 
      If any of the option names specified are already used by other
-     options then ``<command-line-parser-error>`` is signaled.
+     options then :class:`<command-line-parser-error>` is signaled.
 
 .. function:: parse-command-line
 
@@ -293,7 +313,7 @@ Option Classes
 .. class:: <flag-option>
    :sealed:
 
-   Defines a flag option, i.e., one defines a boolean value.
+   Defines a simple flag option, i.e., one that specifies a boolean value.
 
    :superclasses: :class:`<option>`
 
@@ -419,7 +439,7 @@ Option Classes
    :description:
 
      These are a bit obscure. The best example is gcc's ``-D`` option.
-     The final value is a ``<string-table>`` containing each specified
+     The final value is a :class:`<string-table>` containing each specified
      key, with one of the following values:
 
      * ``#t``: The user specified "-Dkey"
@@ -436,7 +456,7 @@ Option Classes
 .. macro:: option-parser-definer
 
 
-The OPTION-PARSER-PROTOCOL module
+The option-parser-protocol Module
 ---------------------------------
 
 This module exports an API that can be used to extend the existing
