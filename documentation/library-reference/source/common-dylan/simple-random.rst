@@ -37,11 +37,11 @@ integers. Given an instance of :class:`<random>`, the function
 
    :signature: random *upperbound* #key *random* => *random-integer*
 
-   :parameter range: An instance of :drm:`<integer>`.
+   :parameter upperbound: An instance of :drm:`<integer>`.
    :parameter #key random: An instance of :class:`<random>`.
    :value random-integer: An instance of :drm:`<integer>`.
 
    :description:
 
      Returns a pseudorandomly generated number greater than or equal to zero
-     and less than *range*.
+     and less than *upperbound*.
