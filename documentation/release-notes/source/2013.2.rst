@@ -64,6 +64,12 @@ Now, it reports::
 Libraries
 ---------
 
+command-line-parser
+^^^^^^^^^^^^^^^^^^^
+
+Two new init keywords have been added to the :class:`<command-line-parser>`
+class: ``min-positional-options:`` and ``max-positional-options:``.
+
 dylan-extensions
 ^^^^^^^^^^^^^^^^
 
