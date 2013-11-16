@@ -104,6 +104,32 @@ Two new functions have been added: ``current-process-id`` and
 ``getppid`` respectively.  On Windows they are equivalent to
 ``GetCurrentProcessId`` and ``method () 0 end`` respectively.
 
+Testworks
+^^^^^^^^^
+
+* New assert-\* macros replace the check-\* macros, which are now
+  deprecated.  The assert-\* macros make the assertion description
+  optional and if it isn't provided they use a description based on
+  the printed representation of the argument expressions.
+
+* ``assert-equal`` shows some additional details about why collections
+  failed to match.  (There are still improvements to be made here.)
+
+* There are three new command-line options:
+
+  + A ``--report-file`` option to output the report to a file.
+  + A ``--list-suites`` option to list suite names.
+  + A ``--list-tests`` option to list test names.
+
+* Benchmarks have been removed.  Instead, timing and allocation stats
+  are automatically recorded for all tests.  Relatedly, the
+  ``--profile`` option has been removed.
+
+* The Testworks code has been simplified and overhauled in general.
+
+* There is a new report format, "surefire", which outputs Surefire
+  XML, for use with Jenkins.  (This was in 2013.1 but there was no
+  release note.)
 
 Bug Fixes
 =========
