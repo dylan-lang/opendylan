@@ -152,6 +152,9 @@ Common Dylan
 
 ``application-arguments()`` will now work on ``x86_64-darwin``.
 
+The ``debug-message()`` function will now work around a possible clang compiler
+issue that causes a crash when printing integers.
+
 I/O
 ---
 

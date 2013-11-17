@@ -428,37 +428,28 @@ static void print_user_defined (STREAM stream, D instance, BOOL escape_p, int pr
   format(stream, " 0x%lx}", instance);
 }
 
+typedef void (*DEBUG_PRINT_FUNCPTR)(STREAM, D, BOOL, int);
 static void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   enum dylan_type_enum type = dylan_type(instance);
-  switch (type) {
-    case integer_type:
-      print_integer(stream, instance, escape_p, print_depth); break;
-    case character_type:
-      print_character(stream, instance, escape_p, print_depth); break;
-    case float_type:
-      print_float (stream, instance, escape_p, print_depth); break;
-    case dylan_boolean_type:
-      print_boolean(stream, instance, escape_p, print_depth); break;
-    case string_type:
-      print_string (stream, instance, escape_p, print_depth); break;
-    case vector_type:
-      print_vector(stream, instance, escape_p, print_depth); break;
-    case pair_type:
-      print_pair(stream, instance, escape_p, print_depth); break;
-    case empty_list_type:
-      print_empty_list(stream, instance, escape_p, print_depth); break;
-    case symbol_type:
-      print_symbol(stream, instance, escape_p, print_depth); break;
-    case simple_condition_type:
-      print_simple_condition(stream, instance, escape_p, print_depth); break;
-    case class_type:
-      print_class(stream, instance, escape_p, print_depth); break;
-    case function_type:
-      print_function(stream, instance, escape_p, print_depth); break;
-    case unknown_type:
-      format(stream, "?%lx", instance); break;
-    default:
-      print_user_defined(stream, instance, escape_p, print_depth); break;
+  static DEBUG_PRINT_FUNCPTR printers[] = {
+    [integer_type]          = print_integer,
+    [character_type]        = print_character,
+    [float_type]            = print_float,
+    [dylan_boolean_type]    = print_boolean,
+    [string_type]           = print_string,
+    [vector_type]           = print_vector,
+    [pair_type]             = print_pair,
+    [empty_list_type]       = print_empty_list,
+    [symbol_type]           = print_symbol,
+    [simple_condition_type] = print_simple_condition,
+    [class_type]            = print_class,
+    [function_type]         = print_function,
+    [user_defined_type]     = print_user_defined
+  };
+  if (type == unknown_type) {
+    format(stream, "?%lx", instance);
+  } else {
+    (printers[type])(stream, instance, escape_p, print_depth);
   }
 }
 
