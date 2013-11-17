@@ -428,6 +428,9 @@ static void print_user_defined (STREAM stream, D instance, BOOL escape_p, int pr
   format(stream, " 0x%lx}", instance);
 }
 
+/*
+// This switch statement sometimes doesn't work right; it uses the default: case
+// when type is integer_type, for example. Possibly a compiler bug.
 static void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
   enum dylan_type_enum type = dylan_type(instance);
   switch (type) {
@@ -459,6 +462,33 @@ static void print_object (STREAM stream, D instance, BOOL escape_p, int print_de
       format(stream, "?%lx", instance); break;
     default:
       print_user_defined(stream, instance, escape_p, print_depth); break;
+  }
+}
+*/
+
+// Replaced above function with the following equivalent.
+typedef typeof(print_user_defined) DEBUG_PRINT_FUNC;
+static void print_object (STREAM stream, D instance, BOOL escape_p, int print_depth) {
+  enum dylan_type_enum type = dylan_type(instance);
+  static DEBUG_PRINT_FUNC *printers[] = {
+    [integer_type]          = print_integer,
+    [character_type]        = print_character,
+    [float_type]            = print_float,
+    [dylan_boolean_type]    = print_boolean,
+    [string_type]           = print_string,
+    [vector_type]           = print_vector,
+    [pair_type]             = print_pair,
+    [empty_list_type]       = print_empty_list,
+    [symbol_type]           = print_symbol,
+    [simple_condition_type] = print_simple_condition,
+    [class_type]            = print_class,
+    [function_type]         = print_function,
+    [user_defined_type]     = print_user_defined
+  };
+  if (type == unknown_type) {
+    format(stream, "?%lx", instance);
+  } else {
+    (printers[type])(stream, instance, escape_p, print_depth);
   }
 }
 
