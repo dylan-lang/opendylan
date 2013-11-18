@@ -8,6 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Native file accessor class for POSIX platforms
 
+define constant $preferred-buffer-size = 1024 * 16;
+
 define sealed class <native-file-accessor> (<external-file-accessor>)
   slot file-descriptor :: false-or(<integer>) = #f,
     init-keyword: file-descriptor:;
@@ -61,8 +63,8 @@ define method accessor-open
        file-size: initial-file-size = #f, // :: false-or(<integer>)?
      #all-keys) => ()
   accessor.file-descriptor := initial-file-descriptor;
-  let (preferred-size, positionable?) = unix-fd-info(initial-file-descriptor);
-  accessor.accessor-preferred-buffer-size := preferred-size;
+  accessor.accessor-preferred-buffer-size := $preferred-buffer-size;
+  let positionable? = unix-fd-positionable?(initial-file-descriptor);
   accessor.accessor-positionable? := positionable?;
   if (positionable? & ~initial-file-position)
     accessor.file-position := unix-lseek(initial-file-descriptor, 0, $seek_cur);
