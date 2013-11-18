@@ -69,7 +69,7 @@ void timer_get_point_in_time(uint32_t time[2])
 void timer_get_point_in_time(uint32_t time[2])
 {
 #if _POSIX_TIMERS > 0
-  timespec now;
+  struct timespec now;
 
 # if _POSIX_MONOTONIC_CLOCK > 0
   clock_gettime(CLOCK_MONOTONIC, &now);
