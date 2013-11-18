@@ -45,6 +45,7 @@ It also re-exports these modules which are defined in the *dylan* library:
    machine-words
    simple-io
    simple-random
+   simple-timers
    threads
    transcendentals
 

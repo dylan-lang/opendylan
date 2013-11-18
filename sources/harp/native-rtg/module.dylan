@@ -21,8 +21,6 @@ define module harp-native-rtg
 
   export
 
-    genop--start-timer,
-    genop--stop-timer,
     genop--exit-application,
     genop--spy-fixup-imported-dylan-data,
     genop--spy-fixup-unimported-dylan-data,
