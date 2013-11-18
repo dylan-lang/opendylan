@@ -28,7 +28,6 @@
 +++ external: "Ktype_check_errorVKiI" +++
 +++ external: "Kstack_overflow_errorVKiI" +++
 +++ external: "Kgrounded_instanceQVKeI" +++
-+++ external: "MMCollectCount" +++
 +++ external: "dylan__malloc__misc" +++
 +++ external: "dylan__malloc__ambig" +++
 +++ external: "dylan__malloc__exact" +++
@@ -290,9 +289,7 @@
 	DATA 16640
 	DATA "Kempty_float"
 	DATA 17408
-	DATA "Kdenormal_float"+++ external: "c_primitive_start_timer" +++
-+++ external: "c_primitive_stop_timer" +++
-+++ external: "exit" +++
+	DATA "Kdenormal_float"+++ external: "exit" +++
 +++ external: "tlv_create_key" +++
 +++ external: "tlv_destroy_key" +++
 +++ external: "tlv_get_value" +++
@@ -590,46 +587,6 @@ End scope at 33
 +++ ending code for primitive_inside_debuggerQ +++
 
 +++ No Source Code Locators for primitive_inside_debuggerQ +++
-
-
-+++ Exported function definition primitive_gc_state +++
-
-+++ starting code for primitive_gc_state +++
-
-#() [0->5] (level:0) is red with stack state before
-#({basic-block #({tag 2:30}) 30 45})
-  rem	"This is a dummy first basic block."
-
-#({tag 2:30}) [30->45] (level:0) is #f with stack state #f
-#({basic-block #() 5 10})
-  preserve-registers-entry	
-  allocate-local-area	
-  allocate-raw-area	
-
-#() [5->10] (level:0) is red with stack state with
-#({basic-block #() 10 20})
-  call-alien	{constant "MMCollectCount"}, 0
-
-#() [10->20] (level:0) is red with stack state with
-#({basic-block #({tag 1:25}) 25 30})
-  asl	eax, eax, 2
-  add	eax, eax, 1
-
-#({tag 1:25}) [25->30] (level:0) is #f with stack state #f
-#({basic-block #() 20 25})
-  preserve-registers-exit	
-
-#() [20->25] (level:0) is red with stack state #f
-#()
-  rts-and-drop	0
-
-+++ ending code for primitive_gc_state +++
-
-+++ Live variable scopes for primitive_gc_state +++
-Start scope at 3 with frame for no variables
-End scope at 14
-
-+++ No Source Code Locators for primitive_gc_state +++
 
 
 +++ Exported function definition primitive_allocate +++
@@ -977,44 +934,6 @@ Start scope at 3 with frame for no variables
 End scope at 12
 
 +++ No Source Code Locators for primitive_untraced_allocate +++
-
-
-+++ Exported function definition primitive_byte_allocate +++
-
-+++ starting code for primitive_byte_allocate +++
-
-#() [0->5] (level:0) is red with stack state before
-#({basic-block #({tag 2:20}) 20 35})
-  rem	"This is a dummy first basic block."
-
-#({tag 2:20}) [20->35] (level:0) is #f with stack state #f
-#({basic-block #() 5 10})
-  preserve-registers-entry	
-  allocate-local-area	
-  allocate-raw-area	
-
-#() [5->10] (level:0) is red with stack state with
-#({basic-block #() 10 10})
-  call	{constant "primitive_error"}, 0
-
-#() [10->10] (level:0) is red with stack state with
-#({basic-block #({tag 1:15}) 15 20})
-
-#({tag 1:15}) [15->20] (level:0) is #f with stack state #f
-#({basic-block #() 10 15})
-  preserve-registers-exit	
-
-#() [10->15] (level:0) is red with stack state #f
-#()
-  rts-and-drop	0
-
-+++ ending code for primitive_byte_allocate +++
-
-+++ Live variable scopes for primitive_byte_allocate +++
-Start scope at 3 with frame for no variables
-End scope at 7
-
-+++ No Source Code Locators for primitive_byte_allocate +++
 
 
 +++ Exported function definition primitive_byte_allocate_filled +++
@@ -4594,82 +4513,6 @@ End scope at 109
 +++ ending code for primitive_remove_optionals +++
 
 +++ No Source Code Locators for primitive_remove_optionals +++
-
-
-+++ Exported function definition primitive_start_timer +++
-
-+++ starting code for primitive_start_timer +++
-
-#() [0->5] (level:0) is red with stack state before
-#({basic-block #({tag 2:20}) 20 35})
-  rem	"This is a dummy first basic block."
-
-#({tag 2:20}) [20->35] (level:0) is #f with stack state #f
-#({basic-block #() 5 10})
-  preserve-registers-entry	
-  allocate-local-area	
-  allocate-raw-area	
-
-#() [5->10] (level:0) is red with stack state with
-#({basic-block #() 10 10})
-  call-alien	{constant "c_primitive_start_timer"}, 0
-
-#() [10->10] (level:0) is red with stack state with
-#({basic-block #({tag 1:15}) 15 20})
-
-#({tag 1:15}) [15->20] (level:0) is #f with stack state #f
-#({basic-block #() 10 15})
-  preserve-registers-exit	
-
-#() [10->15] (level:0) is red with stack state #f
-#()
-  rts-and-drop	0
-
-+++ ending code for primitive_start_timer +++
-
-+++ Live variable scopes for primitive_start_timer +++
-Start scope at 3 with frame for no variables
-End scope at 8
-
-+++ No Source Code Locators for primitive_start_timer +++
-
-
-+++ Exported function definition primitive_stop_timer +++
-
-+++ starting code for primitive_stop_timer +++
-
-#() [0->5] (level:0) is red with stack state before
-#({basic-block #({tag 2:20}) 20 35})
-  rem	"This is a dummy first basic block."
-
-#({tag 2:20}) [20->35] (level:0) is #f with stack state #f
-#({basic-block #() 5 10})
-  preserve-registers-entry	
-  allocate-local-area	
-  allocate-raw-area	
-
-#() [5->10] (level:0) is red with stack state with
-#({basic-block #() 10 10})
-  call-alien	{constant "c_primitive_stop_timer"}, 0
-
-#() [10->10] (level:0) is red with stack state with
-#({basic-block #({tag 1:15}) 15 20})
-
-#({tag 1:15}) [15->20] (level:0) is #f with stack state #f
-#({basic-block #() 10 15})
-  preserve-registers-exit	
-
-#() [10->15] (level:0) is red with stack state #f
-#()
-  rts-and-drop	0
-
-+++ ending code for primitive_stop_timer +++
-
-+++ Live variable scopes for primitive_stop_timer +++
-Start scope at 3 with frame for no variables
-End scope at 8
-
-+++ No Source Code Locators for primitive_stop_timer +++
 
 
 +++ Exported function definition primitive_exit_application +++
