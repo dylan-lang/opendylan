@@ -29,6 +29,7 @@ void timer_get_point_in_time(uint32_t time[2])
 #include <assert.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
+#include <stdint.h>
 #include <unistd.h>
 
 void timer_get_point_in_time(uint32_t time[2])
@@ -61,6 +62,7 @@ void timer_get_point_in_time(uint32_t time[2])
 
 #else
 
+#include <stdint.h>
 #include <time.h>
 #include <unistd.h>
 
