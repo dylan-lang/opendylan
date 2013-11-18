@@ -14,13 +14,13 @@ system.
 
 .. class:: <timer>
 
-   THe timer class.
+   The timer class.
 
    :superclasses: <object>
 
    :description:
 
-     THe timer class. Timers start out stopped and must be started
+     The timer class. Timers start out stopped and must be started
      with :gf:`timer-start`.
 
 .. generic-function:: timer-start
