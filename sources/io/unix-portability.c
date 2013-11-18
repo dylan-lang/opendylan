@@ -12,11 +12,11 @@ long io_lseek (int fd, long offset, int whence) {
   return lseek(fd, offset, whence);
 }
 
-int io_fd_info(int fd) {
+int io_fd_positionable(int fd) {
   struct stat st;
   if (fstat(fd, &st) < 0) {
     return -1;
   }
 
-  return st.st_blksize | ((st.st_mode & S_IFMT) == S_IFREG);
+  return (st.st_mode & S_IFMT) == S_IFREG;
 }

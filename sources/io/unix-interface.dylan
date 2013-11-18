@@ -95,16 +95,16 @@ define function unix-fsync (fd :: <integer>) => (result :: <integer>)
   end
 end function unix-fsync;
 
-define function unix-fd-info
+define function unix-fd-positionable?
     (fd :: <integer>)
- => (preferred-size :: <integer>, positionable? :: <boolean>);
+ => (positionable? :: <boolean>);
   let info :: <integer>
-    = raw-as-integer(%call-c-function ("io_fd_info")
+    = raw-as-integer(%call-c-function ("io_fd_positionable")
                        (fd :: <raw-c-unsigned-int>) => (result :: <raw-c-signed-int>)
                        (integer-as-raw(fd))
                      end);
-  values(logand(info, lognot(1)), odd?(info))
-end function unix-fd-info;
+  ~zero?(info)
+end function unix-fd-positionable?;
 
 define function unix-isatty
     (fd :: <integer>) 
