@@ -27,3 +27,4 @@ guide.
    dylan-environment
    dylan-mode-for-emacs
    debugging-with-gdb-lldb
+   windows

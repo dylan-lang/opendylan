@@ -21,6 +21,9 @@ First you must set PATH so that ``make-dylan-app`` and
 ``dylan-compiler`` will be found.  ``./_build/bin`` is where
 dylan-compiler puts the executables it builds.
 
+.. note:: Some of these differ on Windows, so please be sure
+   to read :doc:`windows` if you are on Windows.
+
 ``make-dylan-app`` creates a directory with the same name as the
 application and three files:
 
