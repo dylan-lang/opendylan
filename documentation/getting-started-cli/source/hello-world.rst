@@ -23,6 +23,7 @@ dylan-compiler puts the executables it builds.
 
 .. note:: Some of these differ on Windows, so please be sure
    to read :doc:`windows` if you are on Windows.
+   :class: alert alert-block alert-warning
 
 ``make-dylan-app`` creates a directory with the same name as the
 application and three files:
