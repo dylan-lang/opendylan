@@ -283,7 +283,7 @@ define method make-project
              as(<symbol>, os-name))
     end;
 
-    let (architecture, operating-system) = platform-namestring-info();
+    let (architecture, operating-system) = platform-namestring-info(platform-name);
 
     // choose harp for platforms that have it, c for others
     let back-end =
