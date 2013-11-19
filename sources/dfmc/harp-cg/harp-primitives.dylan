@@ -1339,17 +1339,6 @@ define inline method op--instance?(back-end :: <harp-back-end>, result, x, y) =>
 end method op--instance?;
 
 
-define method op--boole(back-end :: <harp-back-end>, result, s :: <constant-reference>, x, y) => ()
-
-  select(s.cr-refers-to by \=)
-    "IKJboole_ior_" => ins--or(back-end, result, x, y);
-    "IKJboole_xor_" => ins--eor(back-end, result, x, y);
-    "IKJboole_and_" => ins--and(back-end, result, x, y);
-  end select;
-
-end method op--boole;
-
-
 define method op--logbit?(back-end :: <harp-back-end>, result, index, x) => (result :: <test-result>)
 
   make(<test-result>,
@@ -1914,7 +1903,6 @@ define &primitive-descriptor primitive-wrap-abstract-integer;
 define &primitive-descriptor primitive-wrap-unsigned-abstract-integer;
 define &primitive-descriptor primitive-unwrap-abstract-integer;
 
-define &primitive-descriptor primitive-machine-word-boole, emitter: op--boole;
 define &primitive-descriptor primitive-machine-word-logand, emitter: ins--and;
 define &primitive-descriptor primitive-machine-word-logior, emitter: ins--or;
 define &primitive-descriptor primitive-machine-word-logxor, emitter: ins--eor;

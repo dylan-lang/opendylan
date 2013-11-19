@@ -210,18 +210,6 @@ DMINT primitive_machine_word_divide(DMINT x, DMINT y) {
   MV2((DMINT)z.quot, (DMINT)z.rem);
 }
 
-D IKJboole_ior_, IKJboole_xor_;
-
-DMINT primitive_machine_word_boole(D s, DMINT x, DMINT y) {
-  if (s == IKJboole_ior_) {
-    return(x | y);
-  } else if (s == IKJboole_xor_) {
-    return(x ^ y);
-  } else { /* if (s == IKJboole_and) */
-    return(x & y);
-  }
-}
-
 DMINT primitive_machine_word_floorS_quotient(DMINT x, DMINT y) {
   ldiv_t z = ldiv(x, y);
   if (z.rem && ((y < 0) ? (z.rem > 0) : (z.rem < 0))) {

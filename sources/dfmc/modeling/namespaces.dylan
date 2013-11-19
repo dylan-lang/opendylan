@@ -300,7 +300,6 @@ define &module dylan-primitives
     primitive-wrap-abstract-integer,
     primitive-wrap-unsigned-abstract-integer,
     primitive-unwrap-abstract-integer,
-    primitive-machine-word-boole,
     primitive-machine-word-logand,
     primitive-machine-word-logior,
     primitive-machine-word-logxor,

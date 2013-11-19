@@ -311,9 +311,8 @@ define method %file-property-setter
 		     (path :: <raw-byte-string>, attributes :: <raw-c-unsigned-long>)
 		  => (success? :: <raw-c-signed-int>)
 		   (primitive-string-as-raw(as(<byte-string>, file)),
-                    primitive-machine-word-boole
-                      (#"boole-xor",
-                       primitive-unwrap-machine-word(attributes),
+                    primitive-machine-word-logxor
+                      (primitive-unwrap-machine-word(attributes),
                        integer-as-raw($FILE_ATTRIBUTE_READONLY)))
 		 end))
         win32-file-system-error("set attributes of", "%s", file)

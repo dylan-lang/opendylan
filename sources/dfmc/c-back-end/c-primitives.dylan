@@ -108,7 +108,6 @@ define generic emit-primitive-call
 // define &primitive-descriptor primitive-wrap-abstract-integer;
 // define &primitive-descriptor primitive-wrap-unsigned-abstract-integer;
 // define &primitive-descriptor primitive-unwrap-abstract-integer;
-// define &primitive-descriptor primitive-machine-word-boole;
 // define &primitive-descriptor primitive-machine-word-logand;
 // define &primitive-descriptor primitive-machine-word-logior;
 // define &primitive-descriptor primitive-machine-word-logxor;

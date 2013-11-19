@@ -3984,22 +3984,6 @@ void primitive_exit_application (DSINT code) {
 
 /* TOP LEVEL INITIALIZATION */
 
-extern Wrapper KLbyte_stringGVKdW;
-
-define_byte_string(BS9, 9);
-
-static BS9 bs_boole_ior_ = {
-  &KLbyte_stringGVKdW /* instance-header */,
-  I(9) /* size_ */,
-  "boole-ior"
-};
-
-static BS9 bs_boole_xor_ = {
-  &KLbyte_stringGVKdW /* instance-header */,
-  I(9) /* size_ */,
-  "boole-xor"
-};
-
 void GC_set_max_heap_size(unsigned long);
 
 static void call_application_exit_functions(void) {
@@ -4042,9 +4026,5 @@ void _Init_Run_Time ()
 #endif
 
     initialize_threads_primitives();
-
-    // get some symbols we need
-    IKJboole_xor_ = primitive_string_as_symbol(&bs_boole_xor_);
-    IKJboole_ior_ = primitive_string_as_symbol(&bs_boole_ior_);
   }
 }

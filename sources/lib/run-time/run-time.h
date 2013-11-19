@@ -1357,8 +1357,6 @@ extern DMINT primitive_unwrap_abstract_integer(D);
 #define primitive_box_integer(x)                          (I(x))
 #define primitive_unbox_integer(x)                        (R(x))
 
-extern DMINT primitive_machine_word_boole(D, DMINT, DMINT);
-
 #define primitive_machine_word_logand(x, y)               ((x) & (y))
 #define primitive_machine_word_logior(x, y)               ((x) | (y))
 #define primitive_machine_word_logxor(x, y)               ((x) ^ (y))

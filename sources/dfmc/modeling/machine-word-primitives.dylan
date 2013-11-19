@@ -100,9 +100,6 @@ define custom &machine-word-primitive primitive-unwrap-abstract-integer
   make-raw-literal(x)
 end;
 
-define &simple-machine-word-primitive primitive-machine-word-boole
-    (s :: <symbol>, x :: <raw-machine-word>, y :: <raw-machine-word>)
- => (result :: <raw-machine-word>);
 define &machine-word-primitive primitive-machine-word-logand
     (x :: <raw-machine-word>, y :: <raw-machine-word>) => (result :: <raw-machine-word>)
   generic/logand(x, y)
