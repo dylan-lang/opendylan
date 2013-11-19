@@ -24,14 +24,14 @@ dylan-compiler puts the executables it builds.
 ``make-dylan-app`` creates a directory with the same name as the
 application and three files:
 
-    1. hello-world.lid -- This says what other files are part of the
-       project.  The order in which the files are listed here determines
-       the order in which the code in them is loaded.
+1. hello-world.lid -- This says what other files are part of the
+   project.  The order in which the files are listed here determines
+   the order in which the code in them is loaded.
 
-    2. library.dylan contains simple library and module definitions.
-       These can be extended as your project grows more complex.
+2. library.dylan contains simple library and module definitions.
+   These can be extended as your project grows more complex.
 
-    3. hello-world.dylan contains the main program.
+3. hello-world.dylan contains the main program.
 
 The first time you build hello-world it builds all used libraries, all
 the way down to the dylan library itself.  Subsequent compiles will only
