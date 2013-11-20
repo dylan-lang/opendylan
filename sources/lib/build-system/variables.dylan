@@ -18,7 +18,6 @@ define variable $system-release      :: false-or(<directory-locator>) = #f;
 define variable $system-install      :: false-or(<directory-locator>) = #f;
 define variable $system-lib          :: false-or(<directory-locator>) = #f;
 define variable $system-bin          :: false-or(<directory-locator>) = #f;
-define variable $redistributable-bin :: false-or(<directory-locator>) = #f;
 
 define method configure-build-system () => ()
   $personal-install := user-install-path();
@@ -34,8 +33,6 @@ define method configure-build-system () => ()
   $system-install := system-install-path() | $system-release;
   $system-lib := subdirectory-locator($system-install, "lib");
   $system-bin := subdirectory-locator($system-install, "bin");
-  $redistributable-bin
-    := subdirectory-locator($system-install, "redistributable");
 end method;
 
 configure-build-system();
