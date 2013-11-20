@@ -28,3 +28,4 @@ guide.
    dylan-mode-for-emacs
    debugging-with-gdb-lldb
    windows
+   environment-variables
