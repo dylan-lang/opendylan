@@ -72,7 +72,7 @@ version that was pulled in with the existing submodule.
 
 As an example, if you pull in the HTTP library, it has
 a number of submodules, so you don't need to pull each
-of those in directory, but can reference them through
+of those in directly, but can reference them through
 the ``ext/http/`` directory. (Note in this case that
 the ``http`` library uses a non-standard name for the
 directory holding its submodules.)
