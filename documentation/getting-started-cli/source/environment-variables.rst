@@ -31,12 +31,6 @@ where the Open Dylan compiler looks for or places files.
 ``OPEN_DYLAN_USER_PROJECTS``:
     Unknown purpose. Appears to be largely unused.
 
-``OPEN_DYLAN_USER_BUILD``:
-    The directory within the 'user root' where
-    things are built.
-
-    Defaults to ``build``.
-
 ``OPEN_DYLAN_USER_ROOT``:
     The directory where build output is placed.
     This is the 'user root'.
@@ -44,3 +38,9 @@ where the Open Dylan compiler looks for or places files.
     On Windows, see :doc:`windows`. On all other
     platforms, this defaults to the directory ``_build``
     in the current directory.
+
+``OPEN_DYLAN_USER_BUILD``:
+    The directory within the 'user root' where
+    things are built.
+
+    Defaults to ``build``.
