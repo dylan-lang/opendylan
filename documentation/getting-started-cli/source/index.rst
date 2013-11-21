@@ -22,6 +22,7 @@ guide.
    copyright
    hello-world
    source-registries
+   adding-new-libraries
    quick-tips
    dylan-compiler
    dylan-environment
