@@ -17,8 +17,8 @@ hello-world::
 What's going on here?  First of all, the registry mechanism makes it
 possible to have platform specific libraries.  Anything
 platform-independent can be put under the "generic" directory.  Other
-supported platform names are x86_64-freebsd, x86-linux, x86-win32, etc.
-For a full list see `the Open Dylan registry
+supported platform names are ``x86_64-freebsd``, ``x86-linux``,
+``x86-win32``, etc. For a full list see `the Open Dylan registry
 <https://github.com/dylan-lang/opendylan/tree/master/sources/registry>`_.
 
 Platform-specific registry directories are searched before the
