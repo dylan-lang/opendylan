@@ -173,7 +173,7 @@ D primitive_wrap_abstract_integer(DMINT x) {
     xd = primitive_allocate_filled
            (3, &KLdouble_integerGVKeW, 2, (D)0, 0, 0);
     (DBI)xd->low = (DUMINT)x;
-    /* Propogate the sign of x through the high word of the <double-integer> */
+    /* Propagate the sign of x through the high word of the <double-integer> */
     (DBI)xd->high = (x < 0) ? -1 : 0;
     return(xd);
   } else {
