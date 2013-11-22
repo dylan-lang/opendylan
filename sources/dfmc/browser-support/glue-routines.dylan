@@ -83,8 +83,7 @@ end function;
 
 define function compilation-context-compiler-settings
     (ld :: dfmc-<library-description>)
-  list(operating-system: ld.dfmc-library-description-os-name,
-       architecture: ld.dfmc-library-description-architecture-name,
+  list(platform-name: ld.dfmc-library-description-platform-name,
 	   back-end: ld.dfmc-library-description-compiler-back-end-name,
        mode: ld.dfmc-library-description-compilation-mode,
        build-location: ld.dfmc-library-description-build-location,
@@ -93,17 +92,13 @@ end function;
 
 define function compilation-context-compiler-settings-setter
     (settings, ld :: dfmc-<library-description>)
-  local method setter (ld, #key operating-system = unsupplied(),
-		                architecture = unsupplied(),
+  local method setter (ld, #key platform-name = unsupplied(),
                         back-end = unsupplied(),
 		                mode = unsupplied(),
 		                build-location = unsupplied(),
 		                library-pack = unsupplied())
-	  if (supplied?(operating-system))
-	    ld.dfmc-library-description-os-name := operating-system
-	  end;
-	  if (supplied?(architecture))
-	    ld.dfmc-library-description-architecture-name := architecture
+	  if (supplied?(platform-name))
+	    ld.dfmc-library-description-platform-name := platform-name
 	  end;
       if (supplied?(back-end))
         ld.dfmc-library-description-compiler-back-end-name := back-end

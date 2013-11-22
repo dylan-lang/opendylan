@@ -257,7 +257,7 @@ end;
 define open generic make-project (c :: subclass(<project>),
                              #key key, source-record-class,
                                   // initial compiler settings
-                                  architecture, operating-system, mode,
+                                  platform-name, mode,
                                   load-namespace?,
                                   #all-keys)
  => project :: <project>;
@@ -265,16 +265,25 @@ define open generic make-project (c :: subclass(<project>),
 define method make-project
     (c :: subclass(<project>), #rest keys,
      #key key, parent = #f, load-namespace? = #t,
-     source-record-class, architecture = #f, operating-system = #f, mode)
+     source-record-class, platform-name = #f, mode)
  => (project :: <project>)
 //  with-project-manager-transaction
   with-lock($pm-lock)
   with-used-project-cache
-    unless (architecture & operating-system)
-      let (default-architecture, default-os) = default-platform-info();
-      unless (architecture) architecture := default-architecture end;
-      unless (operating-system) operating-system := default-os end;
+    unless (platform-name)
+      platform-name := target-platform-name();
     end;
+
+    local method platform-namestring-info (platform) => (architecture, os)
+      let name = as-lowercase(as(<string>, platform));
+      let separator-position = position(name, '-');
+      let architecture-name = copy-sequence(name, end: separator-position);
+      let os-name = copy-sequence(name, start: separator-position + 1);
+      values(as(<symbol>, architecture-name),
+             as(<symbol>, os-name))
+    end;
+
+    let (architecture, operating-system) = platform-namestring-info(platform-name);
 
     // choose harp for platforms that have it, c for others
     let back-end =
@@ -292,8 +301,8 @@ define method make-project
               parent & parent.project-name);
     let project =
       apply(make, c,
-            architecture:, architecture, operating-system:, operating-system,
-                compiler-back-end:, back-end,
+            platform-name: platform-name,
+            compiler-back-end:, back-end,
             keys);
 
     if (mode) project-compilation-mode(project) := mode end;
@@ -438,8 +447,7 @@ define function project-set-compilation-parameters(project :: <project>,
         end;
   if (project.project-personal-library?)
     add-setting(mode: project-compilation-mode(project));
-    add-setting(architecture: project-architecture(project));
-    add-setting(operating-system: project-operating-system(project));
+    add-setting(platform-name: project-platform-name(project));
     add-setting(back-end: project-compiler-back-end(project));
   end;
   add-setting(build-location: project-build-location(project));
@@ -751,10 +759,9 @@ define sideways method used-library-context
         // KLUDGE: used by project-compiler-setting and who knows what else..
         project.project-current-compilation-context := context;
         let key = used-library-project-key(project, used-library-dylan-name);
-        let architecture = project-compiler-setting(project, architecture:);
-        let os = project-compiler-setting(project, operating-system:);
-        let subproject = find-platform-project(key, architecture, os) |
-                           make-used-project(project, key, architecture, os);
+        let platform-name = project-compiler-setting(project, platform-name:);
+        let subproject = find-platform-project(key, platform-name) |
+                           make-used-project(project, key, platform-name);
         let subcontext = project-current-compilation-context(subproject);
         if (~subcontext)
           debug-out(#"project-manager",
@@ -858,15 +865,13 @@ define function choose-project (test :: <function>)
        *all-open-projects*);
 end function;
 
-define function find-platform-project (key, architecture, os)
-  //  debug-out(#"project-manager", "looking up project %s:%s:%s \n", key, architecture, os);
+define function find-platform-project (key, platform-name)
+  //  debug-out(#"project-manager", "looking up project %s:%s \n", key, platform-name);
   let project =
     choose-project(method(project)
                        project-key?(project, key) &
-                       (architecture == #"unknown" |
-                          project-compiler-setting(project, architecture:) == architecture) &
-                       (os == #"unknown" |
-                          project-compiler-setting(project, operating-system:) == os)
+                       (platform-name == #"unknown" |
+                          project-compiler-setting(project, platform-name:) == platform-name)
                    end);
   //  unless (project)
   //    debug-out(#"project-manager", "Not found: creating new project\n");
@@ -874,29 +879,13 @@ define function find-platform-project (key, architecture, os)
   project
 end function;
 
-define function platform-namestring (architecture, os)
-  concatenate(as-lowercase(as(<string>, architecture)),
-              "-",
-              as-lowercase(as(<string>, os)))
-end function;
-
-define function platform-namestring-info (platform) => (architecture, os)
-  let name = as-lowercase(as(<string>, platform));
-  let separator-position = position(name, '-');
-  let architecture-name = copy-sequence(name, end: separator-position);
-  let os-name = copy-sequence(name, start: separator-position + 1);
-  values(as(<symbol>, architecture-name),
-         as(<symbol>, os-name))
-end function;
-
-define function target-platform-name-setter (platform)
-  let (old-architecture, old-os) = default-platform-info();
-  let (new-architecture, new-os) = platform-namestring-info(platform);
-  unless (new-architecture == old-architecture & new-os == old-os)
+define function target-platform-name-setter (new-platform-name)
+  let (old-platform-name) = target-platform-name();
+  unless (new-platform-name == old-platform-name)
     for (project in *all-open-projects*)
-      note-platform-change(project, new-architecture, new-os);
+      note-platform-change(project, new-platform-name);
     end;
-    set-default-platform-info(new-architecture, new-os);
+    environment-variable("OPEN_DYLAN_TARGET_PLATFORM") := new-platform-name;
   end;
 end function;
 

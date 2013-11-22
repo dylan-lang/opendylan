@@ -98,7 +98,7 @@ define class <llvm-x86-windows-back-end> (<llvm-x86-back-end>,
                                         <llvm-windows-back-end>)
 end class;
 
-register-back-end(<llvm-x86-windows-back-end>, #"llvm", #"x86", #"win32");
+register-back-end(<llvm-x86-windows-back-end>, #"llvm", #"x86-win32");
 
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86-windows-back-end>) => (triple :: <string>);
@@ -118,7 +118,7 @@ define class <llvm-x86-darwin-back-end> (<llvm-x86-back-end>,
                                          <llvm-darwin-back-end>)
 end class;
 
-register-back-end(<llvm-x86-darwin-back-end>, #"llvm", #"x86", #"darwin");
+register-back-end(<llvm-x86-darwin-back-end>, #"llvm", #"x86-darwin");
 
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86-darwin-back-end>) => (triple :: <string>);
@@ -139,7 +139,7 @@ define class <llvm-x86_64-darwin-back-end> (<llvm-x86_64-back-end>,
 end class;
 
 register-back-end(<llvm-x86_64-darwin-back-end>,
-                  #"llvm", #"x86_64", #"darwin");
+                  #"llvm", #"x86_64-darwin");
 
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86_64-darwin-back-end>) => (triple :: <string>);
@@ -152,7 +152,7 @@ define class <llvm-x86-linux-back-end> (<llvm-x86-back-end>,
                                         <llvm-unix-back-end>)
 end class;
 
-register-back-end(<llvm-x86-linux-back-end>, #"llvm", #"x86", #"linux");
+register-back-end(<llvm-x86-linux-back-end>, #"llvm", #"x86-linux");
 
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86-linux-back-end>) => (triple :: <string>);
@@ -165,7 +165,7 @@ define class <llvm-x86_64-linux-back-end> (<llvm-x86_64-back-end>,
                                            <llvm-unix-back-end>)
 end class;
 
-register-back-end(<llvm-x86_64-linux-back-end>, #"llvm", #"x86_64", #"linux");
+register-back-end(<llvm-x86_64-linux-back-end>, #"llvm", #"x86_64-linux");
 
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86_64-linux-back-end>) => (triple :: <string>);
@@ -178,7 +178,7 @@ define class <llvm-x86-freebsd-back-end> (<llvm-x86-back-end>,
                                           <llvm-unix-back-end>)
 end class;
 
-register-back-end(<llvm-x86-freebsd-back-end>, #"llvm", #"x86", #"freebsd");
+register-back-end(<llvm-x86-freebsd-back-end>, #"llvm", #"x86-freebsd");
 
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86-freebsd-back-end>) => (triple :: <string>);
@@ -192,7 +192,7 @@ define class <llvm-x86_64-freebsd-back-end> (<llvm-x86_64-back-end>,
 end class;
 
 register-back-end(<llvm-x86_64-freebsd-back-end>,
-                  #"llvm", #"x86_64", #"freebsd");
+                  #"llvm", #"x86_64-freebsd");
 
 define method llvm-back-end-target-triple
     (back-end :: <llvm-x86_64-freebsd-back-end>) => (triple :: <string>);

@@ -90,9 +90,8 @@ end;
 define class <registry-entry-not-found-error> (<simple-error>)
 end class <registry-entry-not-found-error>;
 
-define function compute-library-location (key, architecture, os)
-  let platform = platform-namestring(architecture, os);
-  let registries = find-registries(platform);
+define function compute-library-location (key, platform-name)
+  let registries = find-registries(as(<string>, platform-name));
 
   let (lid-location, registry)
     = find-library-locator(key, registries);

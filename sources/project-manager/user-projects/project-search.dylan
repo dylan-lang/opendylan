@@ -12,7 +12,7 @@ define constant $user-projects-path = user-projects-path();
 // this method tries to find the subproject in the cache
 //
 define method search-for-subproject(project :: <user-project>, key :: <symbol>,
-				    architecture, os)
+                                    platform-name)
  => (location);
   let used-project-location = #f;
   let cached-location = element(project.%used-projects-cache, key, default: #f);
@@ -41,7 +41,7 @@ end;
 define method search-for-project(key :: <symbol>, 
 				 #key search-path = $user-projects-path, 
 				 depth = #f,
-				 architecture, os)
+				 platform-name)
   let project-file-name = concatenate(as(<string>, key), $user-project-suffix);
   local method lookup(projects-directory :: <directory-locator>, return :: <function>)
 	  search-debug("search-for-project in %s\n", projects-directory);
@@ -289,11 +289,11 @@ define function project-initialize-caches(project :: <user-project>)
 end;
 
 define method make-used-project (project :: <user-project>,
-				 key :: <symbol>, architecture, os)
+				 key :: <symbol>, platform-name)
  => project :: <project>;
   project-initialize-caches(project);
   // search in the cache
-  let subproject-location = search-for-subproject(project, key, architecture, os);
+  let subproject-location = search-for-subproject(project, key, platform-name);
   let subproject = subproject-location & 
     block()
       let build-entry = second(element(project.%used-projects-cache, key));
@@ -312,7 +312,7 @@ define method make-used-project (project :: <user-project>,
 			       parent: project,
 			       key: key,
 			       read-only?: read-only?,
-			       architecture: architecture, operating-system: os);
+			       platform-name: platform-name);
       used-project
     exception(<file-does-not-exist-error>)
       // this is extraneous, since it's been checked in search-for-subproject
@@ -329,16 +329,16 @@ define method make-used-project (project :: <user-project>,
 */
   subproject | 
     make-project(<project>, parent: project,
-		 key: key, architecture: architecture, operating-system: os);
+		 key: key, platform-name: platform-name);
 
 end method;
 
 define method make-used-project (project :: <system-project>,
-				 key :: <symbol>, architecture, os)
+				 key :: <symbol>, platform-name)
                                => project :: <project>;
   // TO DO:
   // this may be an incorrect assumption
   // i.e. that <system-project>s cannot use <user-project>s
   // debug-out(#"project-manager", "Project: %s making used project: %s", project, key);
-  make-project(<project>, parent: project, key: key, architecture: architecture, operating-system: os)
+  make-project(<project>, parent: project, key: key, platform-name: platform-name)
 end method;

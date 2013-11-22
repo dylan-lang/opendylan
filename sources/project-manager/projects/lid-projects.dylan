@@ -96,12 +96,9 @@ define open abstract class <lid-project> (<project>)
   slot project-compiler-back-end :: <symbol>,
     init-keyword: compiler-back-end:,
     setter: project-compiler-back-end-slot-setter;
-  slot project-architecture,
-    init-keyword: architecture:,
-    setter: project-architecture-slot-setter;
-  slot project-operating-system,
-    init-keyword: operating-system:,
-    setter: project-operating-system-slot-setter;
+  slot project-platform-name,
+    init-keyword: platform-name:,
+    setter: project-platform-name-slot-setter;
   slot project-target-type :: <project-target-type> = #"executable",
     init-keyword: target-type:,
     setter: project-target-type-slot-setter;
@@ -300,14 +297,9 @@ define method project-compiler-back-end-setter(back-end, project :: <lid-project
   project-compiler-setting(project, back-end:) := back-end;
 end;
 
-define method project-architecture-setter(architecture, project :: <lid-project>)
-  project-architecture-slot(project) := architecture;
-  project-compiler-setting(project, architecture:) := architecture;
-end;
-
-define method project-operating-system-setter(os, project :: <lid-project>)
-  project-operating-system-slot(project) := os;
-  project-compiler-setting(project, opearating-system:) := os;
+define method project-platform-name-setter(platform-name, project :: <lid-project>)
+  project-platform-name-slot(project) := platform-name;
+  project-compiler-setting(project, platform-name:) := platform-name;
 end;
 
 define method project-major-version-setter(version :: <integer>,
@@ -370,7 +362,8 @@ define method initialize (project :: <lid-project>, #rest keys,
                           library-name = #f,
                           lid-file-info = #f,
                           source-record-class = #f,
-                          architecture, operating-system, mode, #all-keys)
+                          platform-name,
+                          mode, #all-keys)
   next-method();
   assert(source-record-class, "<lid-project>: source-record-class not supplied");
   project-source-record-class(project) := source-record-class;
@@ -390,7 +383,7 @@ define method initialize (project :: <lid-project>, #rest keys,
 end method;
 
 define method reinitialize-lid-project(project :: <lid-project>,
-                                       #key architecture, operating-system, mode,
+                                       #key platform-name, mode,
                                        #all-keys) => ();
   let properties = project-lid-file-info(project);
 

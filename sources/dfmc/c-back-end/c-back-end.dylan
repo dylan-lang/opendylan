@@ -14,7 +14,7 @@ define class <c-back-end> (<back-end>)
 			  size: $initial-string-stream-contents-size));
 end;
 
-register-back-end(<c-back-end>, #"c", #f, #f);
+register-back-end(<c-back-end>, #"c", #f);
 
 define method initialize (back-end :: <c-back-end>, #key, #all-keys) => ()
   next-method();

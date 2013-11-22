@@ -222,13 +222,11 @@ end function;
 
 define function generate-runtime
     (lid-locator :: <file-locator>,
-     architecture :: <symbol>,
-     operating-system :: <symbol>)
+     platform-name :: <symbol>)
  => ();
   with-booted-dylan-context (lid-locator: lid-locator,
                              back-end: #"llvm",
-                             architecture: architecture,
-                             operating-system: operating-system)
+                             platform-name: platform-name)
     without-dependency-tracking
       let back-end :: <llvm-back-end> = current-back-end();
       with-back-end-initialization(back-end)
@@ -250,15 +248,15 @@ define function generate-runtime
 
 	// Write out the generated module
         let output-basename
-          = format-to-string("%s-%s-runtime", architecture, operating-system);
+          = format-to-string("%s-runtime", platform-name);
         let output-locator
           = make(<file-locator>, base: output-basename, extension: "bc");
         llvm-save-bitcode-file(m, output-locator);
 
 	// Write out the generated header file
 	let header-basename
-	  = format-to-string("llvm-%s-%s-runtime",
-			     architecture, operating-system);
+	  = format-to-string("llvm-%s-runtime",
+			     platform-name);
 	let header-locator
 	  = make(<file-locator>, base: header-basename, extension: "h");
 	generate-runtime-header(back-end, header-locator)
@@ -274,17 +272,11 @@ begin
   let arguments = application-arguments();
   if (arguments.size = 2)
     let lid-locator = as(<file-locator>, arguments[0]);
-    let name = arguments[1];
-
-    // Split name into architecture and os portions
-    let separator-position = position(name, '-');
-    let architecture-name = copy-sequence(name, end: separator-position);
-    let os-name = copy-sequence(name, start: separator-position + 1);
+    let platform-name = arguments[1];
 
     // Generate runtime support for the requested platform
     generate-runtime(lid-locator,
-                     as(<symbol>, architecture-name),
-                     as(<symbol>, os-name));
+                     as(<symbol>, platform-name));
   else
     format(*standard-error*,
            "Usage: llvm-runtime-generator dylan.lid architecture-os\n");
