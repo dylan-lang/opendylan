@@ -98,30 +98,12 @@ define inline function %timer-diff-times
     (started-seconds :: <machine-word>, started-nanoseconds :: <machine-word>,
      stopped-seconds :: <machine-word>, stopped-nanoseconds :: <machine-word>)
  => (seconds :: <integer>, microseconds :: <integer>)
-  let secs = 0;
-  let nsecs = 0;
-  with-storage (timeloc, 8)
-    %call-c-function ("timer_accumulated_time")
-        (starting-secs :: <raw-c-unsigned-int>,
-         starting-nsecs :: <raw-c-unsigned-int>,
-         stopping-secs :: <raw-c-unsigned-int>,
-         stopping-nsecs :: <raw-c-unsigned-int>,
-         time :: <raw-c-pointer>)
-     => (nothing :: <raw-c-void>)
-      (primitive-unwrap-machine-word(started-seconds),
-       primitive-unwrap-machine-word(started-nanoseconds),
-       primitive-unwrap-machine-word(stopped-seconds),
-       primitive-unwrap-machine-word(stopped-nanoseconds),
-       primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(timeloc)))
-    end;
-    secs := raw-as-integer(
-              primitive-c-unsigned-int-at(primitive-unwrap-machine-word(timeloc),
-                                          integer-as-raw(0),
-                                          integer-as-raw(0)));
-    nsecs := raw-as-integer(
-               primitive-c-unsigned-int-at(primitive-unwrap-machine-word(timeloc),
-                                           integer-as-raw(1),
-                                           integer-as-raw(0)));
-  end with-storage;
-  values(secs, nsecs)
+  let seconds :: <integer> = coerce-machine-word-to-integer(\%-(stopped-seconds, started-seconds));
+  let nanoseconds = \%-(stopped-nanoseconds, started-nanoseconds);
+  let microseconds :: <integer> = coerce-machine-word-to-integer(\%floor/(nanoseconds, 1000));
+  if (negative?(microseconds))
+    values(seconds - 1, microseconds + 1000000)
+  else
+    values(seconds, microseconds)
+  end if
 end;

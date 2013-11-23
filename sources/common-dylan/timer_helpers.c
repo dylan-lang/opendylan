@@ -87,22 +87,3 @@ void timer_get_point_in_time(uint32_t time[2])
 }
 
 #endif
-
-void timer_accumulated_time(uint32_t starting_sec,
-                            uint32_t starting_nsec,
-                            uint32_t stopping_sec,
-                            uint32_t stopping_nsec,
-                            uint32_t accumulated_time[2])
-{
-  int32_t seconds = stopping_sec - starting_sec;
-  int32_t nanoseconds = stopping_nsec - starting_nsec;
-
-  if (nanoseconds < 0) {
-    seconds -= 1;
-    nanoseconds += 1000000000;
-  }
-
-  accumulated_time[0] = seconds;
-  // microseconds!
-  accumulated_time[1] = nanoseconds / 1000;
-}
