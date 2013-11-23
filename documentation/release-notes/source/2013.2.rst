@@ -98,6 +98,10 @@ This method allows avoiding to import the ``streams`` and ``standard-io``
 modules when all you want is to flush the stream corresponding to
 ``format-out``.
 
+I/O buffering has been improved on non-Windows platforms. It now defaults
+to buffering 16k instead of 512 bytes. This leads to some substantial
+compile time improvements on hosts with slow drives.
+
 logging
 ^^^^^^^
 
