@@ -64,6 +64,13 @@ Now, it reports::
 Libraries
 ---------
 
+common-dylan
+^^^^^^^^^^^^
+
+A new module ``simple-timers`` has been added. This replaces the old
+primitives ``primitive-start-timer`` and ``primitive-start-timer``
+which have been removed.
+
 command-line-parser
 ^^^^^^^^^^^^^^^^^^^
 
@@ -78,13 +85,6 @@ The ``debug-name`` method now has a specialization for ``<slot-descriptor>``.
 The ``debug-message`` method is now a function and doesn't perform any
 generic dispatch, making it safe to use it almost anywhere, including
 within the dispatch code.
-
-common-dylan
-^^^^^^^^^^^^
-
-A new module ``simple-timers`` has been added. This replaces the old
-primitives ``primitive-start-timer`` and ``primitive-start-timer``
-which have been removed.
 
 I/O
 ^^^
