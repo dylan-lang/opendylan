@@ -2,13 +2,13 @@
 #include <signal.h>
 #include "mm.h"
 
-#if defined(OPEN_DYLAN_PLATFORM_LINUX) && defined(OPEN_DYLAN_ARCH_x86)
+#if defined(OPEN_DYLAN_PLATFORM_LINUX) && defined(OPEN_DYLAN_ARCH_X86)
 #include "x86-linux-exceptions.c"
-#elif defined(OPEN_DYLAN_PLATFORM_FREEBSD) && defined(OPEN_DYLAN_ARCH_x86)
+#elif defined(OPEN_DYLAN_PLATFORM_FREEBSD) && defined(OPEN_DYLAN_ARCH_X86)
 #include "x86-freebsd-exceptions.c"
-#elif defined(OPEN_DYLAN_PLATFORM_DARWIN) && defined(OPEN_DYLAN_ARCH_x86)
+#elif defined(OPEN_DYLAN_PLATFORM_DARWIN) && defined(OPEN_DYLAN_ARCH_X86)
 #include "x86-darwin-exceptions.c"
-#elif defined(OPEN_DYLAN_PLATFORM_WINDOWS) && defined(OPEN_DYLAN_ARCH_x86)
+#elif defined(OPEN_DYLAN_PLATFORM_WINDOWS) && defined(OPEN_DYLAN_ARCH_X86)
 #include "x86-windows-exceptions.c"
 #else
 #define EXCEPTION_PREAMBLE()
