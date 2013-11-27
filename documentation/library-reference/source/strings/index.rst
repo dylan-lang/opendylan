@@ -1324,3 +1324,23 @@ Miscellaneous Functions
 
      strip-right(" \tabc\n") => " \tabc"
      strip-right("*foo*", test: curry(\=, '*')) => "*foo"
+
+	 
+Other Useful Functions
+======================
+
+There are a number of functions outside the strings library itself that can be used with strings.
+
+Built-In
+--------
+  * :drm:`copy-sequence`
+  * :drm:`concatenate`
+  * :drm:`replace-subsequence!`
+  * :drm:`subsequence-position`
+  
+common-extensions Module
+------------------------
+  * :gf:`concatenate!`
+  * :gf:`float-to-string`
+  * :gf:`integer-to-string`
+  * :gf:`string-to-integer`
