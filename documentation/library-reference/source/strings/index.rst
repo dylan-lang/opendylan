@@ -1333,10 +1333,17 @@ There are a number of functions outside the strings library itself that can be u
 
 Built-In
 --------
+
+.. hlist::
+
   * :drm:`copy-sequence`
   * :drm:`concatenate`
   * :drm:`replace-subsequence!`
   * :drm:`subsequence-position`
+  * :drm:`size`
+  * :drm:`empty?`
+  * :drm:`reverse`
+  * :drm:`reverse!`
   
 common-extensions Module
 ------------------------
