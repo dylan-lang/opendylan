@@ -50,6 +50,65 @@ extern void walkstack();
                           | _FPU_MASK_OM        \
                           | _FPU_MASK_UM))
 
+static inline void chain_sigaction(const struct sigaction *act,
+                                   int sig, siginfo_t *info, void *uap)
+{
+  if (act->sa_flags & SA_SIGINFO) {
+    /* Inner handler uses the same (sa_sigaction) convention... call it */
+    (*act->sa_sigaction)(sig, info, uap);
+  } else {
+    /* Inner handler uses the old (sa_handler) convention, with a
+     * struct sigcontext passed as a structure argument. The content
+     * of struct sigcontext is identical to the content of the
+     * ucontext_t uc_mcontext field.
+     */
+    ucontext_t *uc = (ucontext_t *) uap;
+    asm volatile(/* Preserve scratch registers on the stack */
+                 "push\t%%eax\n\t"
+                 "push\t%%edx\n\t"
+
+                 /* Reserve stack space for the sigcontext argument */
+                 "subl\t%[mcontext_bytes],%%esp\n\t"
+
+                 /* Copy the sigcontext onto the stack as the second
+                  * argument
+                  */
+                 "cld\n\t"
+                 "movl\t%[mcontext_words],%%ecx\n\t"
+                 "lea\t%[mcontext],%%esi\n\t"
+                 "lea\t(%%esp),%%edi\n\t"
+                 "rep\tmovsl\n\t"
+
+                 /* Push the signal number onto the stack as the first
+                  * argument
+                  */
+                 "push\t%[sig]\n\t"
+
+                 /* Call the handler */
+                 "call\t*%[handler]\n\t"
+
+                 /* Restore scratch registers */
+                 "movl\t4+%c0(%%esp),%%edx\n\t"
+                 "movl\t8+%c0(%%esp),%%eax\n\t"
+
+                 /* Copy the sigcontext back into uc->uc_mcontext */
+                 "movl\t%[mcontext_words],%%ecx\n\t"
+                 "lea\t4(%%esp),%%esi\n\t"
+                 "lea\t%[mcontext],%%edi\n\t"
+                 "rep\tmovsl\n\t"
+
+                 /* Restore the stack pointer */
+                 "addl\t%[mcontext_bytes]+12,%%esp\n\t"
+                 : /* no outputs */
+                 : [mcontext_bytes] "i" (sizeof(uc->uc_mcontext)),
+                   [mcontext_words] "i" (sizeof(uc->uc_mcontext) / 4),
+                   [mcontext] "m" (uc->uc_mcontext),
+                   [handler] "g" (act->sa_handler),
+                   [sig] "g" (sig)
+                 : "memory", "cc", "ecx", "esi", "edi");
+  }
+}
+
 static unsigned exception_handler_level = 0;
 static struct sigaction outer_FPEHandler;
 static struct sigaction outer_SEGVHandler;
@@ -180,13 +239,11 @@ static void DylanSEGVHandler (int sig, siginfo_t *info, void *uap)
     }
   }
 
-  assert(outer_SEGVHandler.sa_flags & SA_SIGINFO);
-  (*outer_SEGVHandler.sa_sigaction)(sig, info, uap);
+  chain_sigaction(&outer_SEGVHandler, sig, info, uap);
 }
 
-static void DylanTRAPHandler (int sig, siginfo_t *info, void *uap)
+static void DylanTRAPHandler (int sig, siginfo_t *info, void *sc)
 {
   walkstack();
-  assert(outer_TRAPHandler.sa_flags & SA_SIGINFO);
-  (*outer_TRAPHandler.sa_sigaction)(sig, info, uap);
+  chain_sigaction(&outer_TRAPHandler, sig, info, sc);
 }
