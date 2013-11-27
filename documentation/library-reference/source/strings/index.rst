@@ -1347,7 +1347,8 @@ Built-In
   
 common-extensions Module
 ------------------------
-  * :gf:`concatenate!`
-  * :gf:`float-to-string`
-  * :gf:`integer-to-string`
-  * :gf:`string-to-integer`
+
+* :gf:`concatenate!`
+* :gf:`float-to-string`
+* :gf:`integer-to-string`
+* :gf:`string-to-integer`
