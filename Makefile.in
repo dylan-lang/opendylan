@@ -423,7 +423,8 @@ CHECK_APPS = \
 	jam-test-suite-app \
 	channels-tests \
 	command-line-parser-test-suite-app \
-	logging-test-suite-app
+	logging-test-suite-app \
+	hash-algorithms-test
 
 CHECK_ENV = \
 	OPEN_DYLAN_TARGET_PLATFORM=$(OPEN_DYLAN_TARGET_PLATFORM) \

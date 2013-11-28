@@ -19,3 +19,6 @@
 [submodule "sources/lib/logging"]
 	path = sources/lib/logging
 	url = git://github.com/dylan-lang/logging.git
+[submodule "sources/lib/hash-algorithms"]
+	path = sources/lib/hash-algorithms
+	url = git://github.com/dylan-lang/hash-algorithms.git

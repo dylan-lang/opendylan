@@ -9,6 +9,7 @@ Dylan Library Reference
    dylan/index
    common-dylan/index
    collections/index
+   hash-algorithms/index
    io/index
    logging/index
    numbers

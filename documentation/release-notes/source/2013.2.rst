@@ -86,6 +86,13 @@ The ``debug-message`` method is now a function and doesn't perform any
 generic dispatch, making it safe to use it almost anywhere, including
 within the dispatch code.
 
+hash-algorithms
+^^^^^^^^^^^^^^^
+
+A hash algorithms library has been added that supports the MD5, SHA-1, SHA256,
+SHA384, and SHA512 algorithms. `Documentation <http://opendylan.org/documentation/library-reference/hash-algorithms/>`_
+is available. This library was written by Hannes Mehnert.
+
 I/O
 ^^^
 
