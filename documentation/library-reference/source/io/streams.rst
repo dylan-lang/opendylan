@@ -41,8 +41,8 @@ condition will be signalled. So, for instance, the following example
 text means only that the result of using *pull-stream-element* in the
 case described is undefined:
 
-It is an error to apply *pull-stream-element* to an element that has
-already been read from the stream.
+    It is an error to apply *pull-stream-element* to an element that has
+    already been read from the stream.
 
 A given function is only guaranteed to raise an exception in response to
 an error if the documentation for that function specifically states that
@@ -52,15 +52,15 @@ specific error condition is not stated in the documentation. Consider
 the following hypothetical example, which states that an implementation
 must signal an error, but does not say what error must be signaled:
 
-When *index* is a ``<stream-index>``, if it is invalid for some reason,
-this function signals an error.
+    When *index* is a ``<stream-index>``, if it is invalid for some reason,
+    this function signals an error.
 
 By contrast, the following example names the class of which the
 condition signaled is guaranteed to be a general instance:
 
-If the end of the stream is encountered and no value was supplied for
-*on-end-of-stream*, *read-last-element* signals an
-:class:`<end-of-stream-error>` condition.
+    If the end of the stream is encountered and no value was supplied for
+    *on-end-of-stream*, *read-last-element* signals an
+    :class:`<end-of-stream-error>` condition.
 
 If the name of the condition class is given, applications are permitted
 to specialize error handlers on that class.
