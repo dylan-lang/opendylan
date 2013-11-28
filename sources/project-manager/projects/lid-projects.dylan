@@ -500,7 +500,7 @@ define function lid-build-settings (source-loc, properties)
   let rc-names = element(properties, #"rc-files", default: #f);
   if (rc-names) add-setting(rc-files: map(source-dir, rc-names)) end;
   let jam-names = element(properties, #"jam-includes", default: #f);
-  if (jam-names) add-setting(rc-files: map(source-dir, jam-names)) end;
+  if (jam-names) add-setting(jam-includes: map(source-dir, jam-names)) end;
   //
   //---*** NOTE: Gwydion uses Executable: as well to name the file but,
   //---*** in their implementation, its presence also indicates that
