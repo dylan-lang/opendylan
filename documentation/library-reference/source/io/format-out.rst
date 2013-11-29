@@ -60,3 +60,15 @@ This section contains a reference entry for each item exported from the
 
    Formats its arguments on the standard output. There is one method for
    :gf:`format-out`, and it is specialized to instances of :drm:`<byte-string>`.
+
+.. function:: force-out
+
+   Forces pending output from :var:`*standard-output*` to the operating
+   system.
+
+   :signature: force-out () => ()
+
+   :description:
+
+      Forces pending output from :var:`*standard-output*` to the operating
+      system using :gf:`force-output`.
