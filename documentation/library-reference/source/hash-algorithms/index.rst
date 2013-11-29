@@ -28,8 +28,8 @@ If you want a printable digest, use :meth:`hexdigest(<byte-vector>)`:
 
     let hexdigest = hexdigest(sha1("Some text"));
 
-If you want to hash multiple strings, you can use the :gf:`update-hash`
-and :gf:`digest` functions:
+If you want to hash multiple strings into a single digest (useful when streaming),
+you can use the :gf:`update-hash` and :gf:`digest` functions:
 
 .. code-block:: dylan
 
