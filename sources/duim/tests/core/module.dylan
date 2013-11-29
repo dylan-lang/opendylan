@@ -19,12 +19,7 @@ define module duim-test-suite
   use duim-internals;
   use duim-gadget-panes-internals;
   use duim-extended-geometry;
-  // use postscript-duim;	---*** No postscript for Kansas
 
   export duim-suite,
          duim-test-suite;
-
-  // export postscript-duim-suite;
-
-  export run-all-tests;
 end module duim-test-suite;

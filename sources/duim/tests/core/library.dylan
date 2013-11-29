@@ -15,7 +15,6 @@ define library duim-test-suite
   use duim-core;
   use duim-gadget-panes;
   use duim-extended-geometry;
-  // use postscript-duim;	---*** No postscript for Kansas!
 
   export duim-test-suite;
 end library duim-test-suite;
