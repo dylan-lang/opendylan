@@ -1323,7 +1323,7 @@ are exported from the *streams* module.
    :signature: force-output *output-stream* #key *synchronize?* => ()
 
    :parameter output-stream: An instance of :class:`<stream>`.
-   :parameter synchronize?: An instance of :drm:`<boolean>`. Default value: ``#f``.
+   :parameter #key synchronize?: An instance of :drm:`<boolean>`. Default value: ``#f``.
 
    :description:
 
@@ -2270,7 +2270,7 @@ are exported from the *streams* module.
    :signature: stream-contents *positionable-stream* #key *clear-contents?*  => *sequence*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :parameter clear-contents?: An instance of :drm:`<boolean>`. Default value: ``#t``.
+   :parameter #key clear-contents?: An instance of :drm:`<boolean>`. Default value: ``#t``.
    :value sequence: An instance of :drm:`<sequence>`.
 
    :description:
