@@ -75,12 +75,54 @@ The hash-algorithms Module
    :parameter hash: An instance of :class:`<hash>`.
    :parameter input: An instance of :drm:`<byte-string>`.
 
+   :description:
+
+      Add more data to the hash. This is useful when streaming data or the data is
+      available in multiple strings and you wish to avoid the overhead of concatenation.
+
+      Calling ``update-hash`` multiple times is equivalent to calling it once with
+      a concatenation of the arguments:
+
+      .. code-block:: dylan
+
+        let hash-separate = make(<sha1>);
+        update-hash(hash-separate, "Some");
+        update-hash(hash-separate, " ");
+        update-hash(hash-separate, "text");
+        let digest-separate = digest(hash-separate);
+
+        let hash-combined = make(<sha1>);
+        update-hash(hash-combined, "Some text");
+        let digest-combined = digest(hash-combined);
+
+        // digest-separate and digest-combined will be the same
+
+   See also:
+
+   * :gf:`digest`
+   * :meth:`hexdigest(<hash>)`
+   * :meth:`hexdigest(<byte-vector>)`
+
 .. generic-function:: digest
 
    :signature: digest (hash) => (digest)
 
    :parameter hash: An instance of :class:`<hash>`.
    :value digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
+
+   :description:
+
+      The return value *digest* is binary data and may include null bytes. To display
+      this result in text form, use :meth:`hexdigest(<hash>)` or
+      :meth:`hexdigest(<byte-vector>)`.
+
+      Use :gf:`update-hash` to add data to the hash.
+
+   See also:
+
+   * :gf:`update-hash`
+   * :meth:`hexdigest(<hash>)`
+   * :meth:`hexdigest(<byte-vector>)`
 
 .. method:: hexdigest
    :specializer: <hash>
@@ -92,6 +134,11 @@ The hash-algorithms Module
    :parameter hash: An instance of :class:`<hash>`.
    :value hexdigest: An instance of :drm:`<byte-string>`.
 
+   See also:
+
+   * :gf:`digest`
+   * :meth:`hexdigest(<byte-vector>)`
+
 .. method:: hexdigest
    :specializer: <byte-vector>
 
@@ -101,6 +148,11 @@ The hash-algorithms Module
 
    :parameter digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
    :value hexdigest: An instance of :drm:`<byte-string>`.
+
+   See also:
+
+   * :gf:`digest`
+   * :meth:`hexdigest(<hash>)`
 
 MD5
 ---
