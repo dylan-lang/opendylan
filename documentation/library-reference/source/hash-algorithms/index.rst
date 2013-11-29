@@ -165,7 +165,7 @@ MD5
 
    :signature: md5 (string) => (digest)
 
-   :parameter string: An instance of :drm:`<string>`.
+   :parameter string: An instance of :drm:`<byte-string>`.
    :value digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
 
 SHA-1
@@ -179,7 +179,7 @@ SHA-1
 
    :signature: sha1 (string) => (digest)
 
-   :parameter string: An instance of :drm:`<string>`.
+   :parameter string: An instance of :drm:`<byte-string>`.
    :value digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
 
 SHA-2
@@ -193,7 +193,7 @@ SHA-2
 
    :signature: sha256 (string) => (digest)
 
-   :parameter string: An instance of :drm:`<string>`.
+   :parameter string: An instance of :drm:`<byte-string>`.
    :value digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
 
 .. class:: <sha224>
@@ -204,7 +204,7 @@ SHA-2
 
    :signature: sha224 (string) => (digest)
 
-   :parameter string: An instance of :drm:`<string>`.
+   :parameter string: An instance of :drm:`<byte-string>`.
    :value digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
 
 .. class:: <sha384>
@@ -215,7 +215,7 @@ SHA-2
 
    :signature: sha384 (string) => (digest)
 
-   :parameter string: An instance of :drm:`<string>`.
+   :parameter string: An instance of :drm:`<byte-string>`.
    :value digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
 
 .. class:: <sha512>
@@ -226,5 +226,5 @@ SHA-2
 
    :signature: sha512 (string) => (digest)
 
-   :parameter string: An instance of :drm:`<string>`.
+   :parameter string: An instance of :drm:`<byte-string>`.
    :value digest: An instance of :class:`collections:byte-vector:<byte-vector>`.
