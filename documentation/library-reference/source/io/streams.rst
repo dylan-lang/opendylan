@@ -427,13 +427,13 @@ represented abstractly; for instance, contiguous elements could be
 treated as a single database record. The three possible element types
 are:
 
-- `<byte-character>`_
+- :type:`<byte-character>`
   The file is accessed as a sequence of 8-bit characters.
 
-- `<unicode-character>`_
+- :type:`<unicode-character>`
   The file is accessed as a sequence of 16-bit Unicode characters.
 
-- `<byte>`_
+- :type:`<byte>`
   The file is accessed as a sequence of unsigned 8-bit integers.
 
 The *asynchronous?:* init-keyword allows asynchronous writing of stream
@@ -648,19 +648,19 @@ Useful types when using buffers
 
 The following types are used in operations that involve buffers.
 
-<byte>
+:type:`<byte>`
    A type representing limited integers in the range 0 to 255 inclusive.
 
-<byte-character>
+:type:`<byte-character>`
    A type representing 8-bit characters that instances of
    :drm:`<byte-string>` can contain.
 
-<unicode-character>
+:type:`<unicode-character>`
    A type representing Unicode characters that instances of
    :drm:`<unicode-string>` can contain.
 
-<byte-vector>
-   A subtype of :drm:`<vector>` whose element-type is `<byte>`_.
+:type:`<byte-vector>`
+   A subtype of :drm:`<vector>` whose element-type is :type:`<byte>`.
 
 Wrapper streams
 ---------------
@@ -947,7 +947,7 @@ are exported from the *streams* module.
    :sealed:
    :instantiable:
 
-   A subclass of :drm:`<vector>` whose *element-type* is `<byte>`_.
+   A subclass of :drm:`<vector>` whose *element-type* is :type:`<byte>`.
 
    :superclasses: <vector>
 
@@ -963,7 +963,7 @@ are exported from the *streams* module.
 
    :description:
 
-     A subclass of :drm:`<vector>` whose *element-type* is `<byte>`_.
+     A subclass of :drm:`<vector>` whose *element-type* is :type:`<byte>`.
 
      Instances of ``<buffer>`` contain a data vector and two indices:
      the inclusive start and the exclusive end of valid data in the
@@ -1004,48 +1004,34 @@ are exported from the *streams* module.
      In general, it should not be necessary to supply a value for the
      *buffer-size:* init-keyword.
 
-<byte>
-^^^^^^
+.. type:: <byte>
 
    :type:    A type representing limited integers in the range 0 to 255 inclusive.
 
-Supertypes
-
-:drm:`<integer>`
-
-Init-keywords
-
-None.
+   :supertypes: :drm:`<integer>`
 
    :description:
 
-A type representing limited integers in the range 0 to 255 inclusive.
+      A type representing limited integers in the range 0 to 255 inclusive.
 
-Operations
+   :operations:
 
-- :gf:`type-for-file-stream`
+     - :gf:`type-for-file-stream`
 
-<byte-character>
-^^^^^^^^^^^^^^^^
+.. type:: <byte-character>
 
    :type:    A type representing 8-bit characters that instances of :drm:`<byte-string>` can contain.
 
-Supertypes
-
-:drm:`<character>`
-
-Init-keywords
-
-None.
+   :supertypes: :drm:`<character>`
 
    :description:
 
-A type representing 8-bit characters that instances of :drm:`<byte-string>`
-can contain.
+      A type representing 8-bit characters that instances of :drm:`<byte-string>`
+      can contain.
 
-Operations
+   :operations:
 
-- :gf:`type-for-file-stream`
+     - :gf:`type-for-file-stream`
 
 .. class:: <byte-string-stream>
    :open:
@@ -1095,7 +1081,7 @@ Operations
 .. class:: <byte-vector>
    :sealed:
 
-   A subtype of :drm:`<vector>` whose element-type is `<byte>`_.
+   A subtype of :drm:`<vector>` whose element-type is :type:`<byte>`.
 
    :superclasses: <vector>
 
@@ -1103,11 +1089,11 @@ Operations
 
    :description:
 
-     A subclass of :drm:`<vector>` whose element-type is `<byte>`_.
+     A subclass of :drm:`<vector>` whose element-type is :type:`<byte>`.
 
    See also
 
-   - `<byte>`_
+   - :type:`<byte>`
 
 .. generic-function:: close
    :open:
@@ -1507,8 +1493,8 @@ Operations
    :parameter #key if-does-not-exist: One of ``#f``, ``#"signal"``, or
      ``#"create"``. Default value: depends on the value of *direction*.
    :parameter #key buffer-size: An instance of :drm:`<integer>`.
-   :parameter #key element-type: One of `<byte-character>`_,
-     `<unicode-character>`_, or `<byte>`_, or ``#f``.
+   :parameter #key element-type: One of :type:`<byte-character>`,
+     :type:`<unicode-character>`, or :type:`<byte>`, or ``#f``.
    :value file-stream-instance: An instance of :class:`<file-stream>`.
 
    :description:
@@ -1773,33 +1759,24 @@ Operations
      - :gf:`stream-position-setter`
      - :gf:`unread-element`
 
-<position-type>
-^^^^^^^^^^^^^^~
+.. type:: <position-type>
 
    :type:    A type representing positions in a stream.
 
-Equivalent
+   :equivalent: ``type-union(<stream-position>, <integer>)``
 
-type-union(<stream-position>, <integer>)
-
-Supertypes
-
-None.
-
-Init-keywords
-
-None.
+   :supertypes: None.
 
    :description:
 
-A type used to represent a position in a stream. In practice, positions
-within a stream are defined as instances of :drm:`<integer>`, but this type,
-together with the :class:`<stream-position>` class, allows for cases where
-this might not be possible.
+      A type used to represent a position in a stream. In practice, positions
+      within a stream are defined as instances of :drm:`<integer>`, but this type,
+      together with the :class:`<stream-position>` class, allows for cases where
+      this might not be possible.
 
-See also
+   See also
 
-- :class:`<stream-position>`
+   - :class:`<stream-position>`
 
 .. generic-function:: read
    :open:
@@ -2680,8 +2657,8 @@ See also
    :signature: type-for-file-stream *filename* *element-type* #rest #all-keys => *file-stream-type*
 
    :parameter filename: An instance of :drm:`<object>`.
-   :parameter element-type: One of `<byte-character>`_,
-     `<unicode-character>`_, or `<byte>`_, or ``#f``.
+   :parameter element-type: One of :type:`<byte-character>`,
+     :type:`<unicode-character>`, or :type:`<byte>`, or ``#f``.
    :value file-stream-type: An instance of :drm:`<type>`.
 
    :description:
@@ -2722,27 +2699,20 @@ See also
    - :meth:`make(<sequence-stream>)`
    - :class:`<sequence-stream>`
 
-<unicode-character>
-^^^^^^^^^^^^^^^^^^~
+.. type:: <unicode-character>
 
    :type:    The type that represents Unicode characters.
 
-Supertypes
-
-:drm:`<character>`
-
-Init-keywords
-
-None.
+   :supertypes: :drm:`<character>`
 
    :description:
 
-A type representing Unicode characters that instances of
-:drm:`<unicode-string>` can contain.
+      A type representing Unicode characters that instances of
+      :drm:`<unicode-string>` can contain.
 
-Operations
+   :operations:
 
-- :gf:`type-for-file-stream`
+     - :gf:`type-for-file-stream`
 
 .. class:: <unicode-string-stream>
    :open:
