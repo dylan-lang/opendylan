@@ -10,6 +10,11 @@ extern void dylan_float_underflow_handler();
 
 /* ---*** TODO: Implement all of this */
 
+int inside_dylan_ffi_barrier() {
+  // Temporary until actually implemented.
+  return 0;
+}
+
 #include <sys/signal.h>
 #include <fenv.h>
 
