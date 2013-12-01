@@ -184,20 +184,14 @@ define common-extensions function-test float-to-string ()
 end function-test float-to-string;
 
 define common-extensions function-test ignorable ()
-  check-true("ignorable doesn't crash",
-             begin
-               ignorable(test-function);
-               #t
-             end)
-end function-test ignorable;
+  assert-no-errors(ignorable(this-is-undefined),
+                   "ignorable doesn't crash on undefined variables");
+end;
 
 define common-extensions function-test ignore ()
-  check-true("ignore doesn't crash",
-             begin
-               ignore(test-function);
-               #t
-             end)
-end function-test ignore;
+  assert-no-errors(ignore(this-is-undefined),
+                   "ignore doesn't crash on undefined variables");
+end;
 
 define constant $integer-string-mappings
   = #[#[0,     10,  "0"],

@@ -23,21 +23,4 @@ define suite duim-suite ()
   suite duim-events-suite;
   suite duim-gestures-suite;
   suite duim-commands-suite;
-  // suite postscript-duim-suite;	---*** remove PostScript for Kansas
 end suite duim-suite;
-
-
-/// run-all-tests is a simple entry point
-
-define method run-all-tests 
-    (#key debug? = *debug?*,
-          progress-function = null-progress-function)
- => (result :: <result>)
-  perform-suite(duim-suite, 
-                debug?: debug?,
-                progress-function: progress-function)
-end method run-all-tests;
-
-//--- We can't do this, because the combined test suite applications
-//--- also run the test suite, so this gets run twice!
-// run-all-tests();
