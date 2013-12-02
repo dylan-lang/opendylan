@@ -275,12 +275,13 @@ define function last-line-from
       end;
   block(return)
     for (this = line then next(this), until: ~next(this))
-      when (verbose?) *format-function*("this = %=", this); end;
+      when (verbose?)
+        test-output("this = %=", this);
+      end;
       unless(previous(next(this)) == this)
         when (verbose?)
-          *format-function*
-            ("this.next = %=, this.next.previous = %=",
-             this.next, this.next.previous);
+          test-output("this.next = %=, this.next.previous = %=",
+                      this.next, this.next.previous);
         end when;
         return(#f);
       end;
@@ -289,6 +290,8 @@ define function last-line-from
   end
 end function;
 
+// TODO(cgay): These should probably use assert-* instead of just
+// logging debug output.
 define function check-buffer-bps
     (buffer :: <basic-buffer>, #key verbose? :: <boolean> = #f)
  => (okay? :: <boolean>)
@@ -299,7 +302,7 @@ define function check-buffer-bps
            then node-next(node),
          until: ~node)
       when (verbose?)
-        *format-function*("node: %=", node);
+        test-output("node: %=", node);
       end when;
       let start-bp = interval-start-bp(node);
       let start-line = bp-line(start-bp);
@@ -314,23 +317,23 @@ define function check-buffer-bps
           & ~simple-bp?(start-bp) & ~simple-bp?(end-bp))
         when (verbose?)
           ~line-previous(start-line)
-            | *format-function*("start line has a previous line\n");
+            | test-output("start line has a previous line\n");
           start-index == 0
-            | *format-function*("start index not == 0\n");
+            | test-output("start index not == 0\n");
           ~line-next(end-line)
-            | *format-function*("end line has a next line\n");
+            | test-output("end line has a next line\n");
           end-index == line-length(end-line)
-            | *format-function*
+            | test-output
                 ("end index %= not == line length %=", end-index,
                  line-length(end-line));
           ~moving-bp?(start-bp)
-            | *format-function*("start BP is a <moving-bp>\n");
+            | test-output("start BP is a <moving-bp>\n");
           moving-bp?(end-bp)
-            | *format-function*("end BP is not a <moving-bp>\n");
+            | test-output("end BP is not a <moving-bp>\n");
           ~simple-bp?(start-bp)
-            | *format-function*("start BP is not a <permanent-bp>\n");
+            | test-output("start BP is not a <permanent-bp>\n");
           ~simple-bp?(end-bp)
-            | *format-function*("end BP is not a <permanent-bp>\n");
+            | test-output("end BP is not a <permanent-bp>\n");
         end when;
         return(#f);
       end unless;
@@ -349,13 +352,13 @@ define function check-buffer-bps
                      & 0 <= _index & _index <= line-length(line))
              when (verbose?)
                moving-bp?(bp)
-                 | *format-function*("line BP is not a <moving-bp>\n");
+                 | test-output("line BP is not a <moving-bp>\n");
                _line == line
-                 | *format-function*("line BP is on wrong line\n");
+                 | test-output("line BP is on wrong line\n");
                0 <= _index
-                 | *format-function*("line BP has index < 0\n");
+                 | test-output("line BP has index < 0\n");
                _index <= line-length(line)
-                 | *format-function*("line BP has index > line length\n");
+                 | test-output("line BP has index > line length\n");
              end when;
              return(#f);
            end unless;

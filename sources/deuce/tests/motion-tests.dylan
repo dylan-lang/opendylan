@@ -71,14 +71,14 @@ define test motion-basic-test ()
     let line1-2-start = line-start(*line1-2*);
     let line1-2-end = line-end(*line1-2*);
     // ... check initial position
-    *format-function*("Checking initial position\n");
+    test-output("Checking initial position\n");
     check-bp-position
       (line1-2-start, start-of-line?, make-bp(*line1-2*, 0));
     check-bp-position
       (line1-2-end, end-of-line?, make-bp(*line1-2*, len));
 
     // ... move within line
-    *format-function*("Moving within line\n");
+    test-output("Moving within line\n");
     increment-bp!(line1-2-start);
     check-bp-position
       (line1-2-start, not-start-of-line?, make-bp(*line1-2*, 1));
@@ -87,7 +87,7 @@ define test motion-basic-test ()
       (line1-2-end, not-end-of-line?, make-bp(*line1-2*, len - 1));
 
     // ... move past line ends
-    *format-function*("Moving past line ends\n");
+    test-output("Moving past line ends\n");
     decrement-bp!(line1-2-start);
     decrement-bp!(line1-2-start);
     check-bp-position
@@ -98,15 +98,15 @@ define test motion-basic-test ()
       (line1-2-end, start-of-line?, make-bp(*line1-3*, 0));
 
     // Test moving past ends of nodes, with and without fixup.
-    *format-function*("Moving out of node/section interval\n");
+    test-output("Moving out of node/section interval\n");
     test-moving-out-of-interval(*node2*);
 
     // Test moving past ends of buffer, with and without fixup.
-    *format-function*("Moving out of buffer interval\n");
+    test-output("Moving out of buffer interval\n");
     test-moving-out-of-interval(*buffer*);
 
     // Test moving past ends of arbitrary interval.
-    *format-function*("Moving out of arbitrary interval\n");
+    test-output("Moving out of arbitrary interval\n");
     test-moving-out-of-interval(*part-sections-interval*);
 
 
@@ -431,7 +431,7 @@ define test motion-bp-info-test ()
                 = (bp->char-index(char-index->bp(*buffer*, char-index))
                    == char-index);
               unless (consistent1 & consistent2)
-                *format-function*
+                test-output
                   ("char index <-> bp conversion self-consistency failed"
                    "  at char %=, line %=, index %d"
                    "  bp is %=, char-index is %=\n",
@@ -457,7 +457,7 @@ define test motion-bp-info-test ()
                 = (bp->line-index(line-index->bp(*buffer*, line-index))
                    == line-index);
               unless (consistent1 & consistent2)
-                *format-function*
+                test-output
                   ("line index <-> bp conversion self-consistency failed"
                    "  at line %=,"
                    "  bp is %=, line-index is %=\n",
