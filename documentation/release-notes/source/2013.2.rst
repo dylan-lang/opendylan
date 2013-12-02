@@ -68,7 +68,7 @@ common-dylan
 ^^^^^^^^^^^^
 
 A new module ``simple-timers`` has been added. This replaces the old
-primitives ``primitive-start-timer`` and ``primitive-start-timer``
+primitives ``primitive-start-timer`` and ``primitive-stop-timer``
 which have been removed.
 
 command-line-parser
