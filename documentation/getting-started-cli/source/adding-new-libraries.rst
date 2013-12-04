@@ -7,7 +7,7 @@ how we currently handle inter-library dependencies.
 Adding a Git Submodule
 ----------------------
 
-The current way of handing inter-library dependencies is to
+The current way of handling inter-library dependencies is to
 use git submodules. This allows you to specify a precise version
 that you rely upon, but assumes that we're all using git.
 
