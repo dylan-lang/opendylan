@@ -211,7 +211,7 @@ are exported from the *duim-dcs* module.
 
 .. constant:: $boole-1
 
-   The logical operator that is always he same as the first integer
+   The logical operator that is always the same as the first integer
    argument to the *boole* function.
 
    :type: :class:`<integer>`
@@ -224,7 +224,7 @@ are exported from the *duim-dcs* module.
 
 .. constant:: $boole-2
 
-   The logical operator that is always he same as the second integer
+   The logical operator that is always the same as the second integer
    argument to the *boole* function.
 
    :type: :class:`<integer>`
@@ -237,7 +237,7 @@ are exported from the *duim-dcs* module.
 
 .. constant:: $boole-c1
 
-   The logical operator that is always he same as the complement of the
+   The logical operator that is always the same as the complement of the
    first integer argument to the *boole* function.
 
    :type: :class:`<integer>`
@@ -250,7 +250,7 @@ are exported from the *duim-dcs* module.
 
 .. constant:: $boole-c2
 
-   The logical operator that is always he same as the complement of the
+   The logical operator that is always the same as the complement of the
    second integer argument to the *boole* function.
 
    :type: :class:`<integer>`
