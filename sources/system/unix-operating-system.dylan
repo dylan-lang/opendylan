@@ -14,7 +14,7 @@ define macro with-storage
          block ()
            ?name := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw
-                         (%call-c-function ("malloc")
+                         (%call-c-function ("MMAllocMisc")
                             (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
                             (integer-as-raw(?size))
                           end));
@@ -26,9 +26,10 @@ define macro with-storage
          cleanup
            if (primitive-machine-word-not-equal?
                  (primitive-unwrap-machine-word(?name), integer-as-raw(0)))
-             %call-c-function ("free")
-               (p :: <raw-c-pointer>) => (void :: <raw-c-void>)
-                 (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)))
+             %call-c-function ("MMFreeMisc")
+               (p :: <raw-c-pointer>, nbytes :: <raw-c-unsigned-long>) => (void :: <raw-c-void>)
+                 (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(?name)),
+                  integer-as-raw(?size))
              end;
              #f
            end
@@ -377,9 +378,10 @@ define function run-application
              end)
         cleanup
           if (environment)
-            %call-c-function ("free")
-              (p :: <raw-c-pointer>) => (void :: <raw-c-void>)
-                (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(envp)))
+            %call-c-function ("MMFreeMisc")
+              (p :: <raw-c-pointer>, nbytes :: <raw-c-unsigned-long>) => (void :: <raw-c-void>)
+                (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(envp)),
+                 integer-as-raw(envp-size))
             end;
           end if;
         end block;
@@ -456,7 +458,7 @@ define function %waitpid
   end with-storage
 end function;
 
-// The result returned from this must be freed with free.
+// The result returned from this must be freed with MMFreeMisc.
 define function make-envp
     (environment :: <explicit-key-collection>)
  => (result :: <machine-word>, size :: <integer>)
@@ -501,7 +503,7 @@ define function make-envp
   let new-envp
     = primitive-wrap-machine-word
         (primitive-cast-pointer-as-raw
-           (%call-c-function ("malloc")
+           (%call-c-function ("MMAllocMisc")
               (nbytes :: <raw-c-unsigned-long>) => (p :: <raw-c-pointer>)
               (integer-as-raw(envp-size))
             end));
