@@ -1916,7 +1916,7 @@ Defining specialized designator classes
          typedef int bool;
 
          bool bool_function (bool b);
-         void bool_pointer_function (bool *b);
+         void bool_pointer_function (bool * b);
 
          //eof
 
@@ -1944,10 +1944,10 @@ Defining specialized designator classes
 
      .. code-block:: c
 
-         typedef char *string;
+         typedef char * string;
 
          string string-filter(string s);
-         void string-modifier(string *s);
+         void string-modifier(string * s);
 
          //eof
 
