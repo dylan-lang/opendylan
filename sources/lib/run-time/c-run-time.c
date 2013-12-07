@@ -664,34 +664,11 @@ INLINE void transfer_varargs(va_list ap, int n, D* arguments) {
 
 extern D LobjectGVKd;
 extern D Ktype_check_errorVKiI(D argument, D specializer);
-extern Wrapper KLfunction_classGVKiW;
-
-
 
 #define INSTANCEP(x, y) (primitive_instanceQ((x), (y)) != DFALSE)
 
-
-/*
-int FUNCTIONP(D x) {
-  OBJECT* object = (OBJECT*)x;
-  Wrapper* objectwrapper = (Wrapper*)(object->class);
-  OBJECT* objectclass = (OBJECT*)(objectwrapper->class);
-  Wrapper* classwrapper = (Wrapper*)(objectclass->class);
-  return(classwrapper == &KLfunction_classGVKiW);
-}
-*/
-
-/* **** This assumes the object is indirect and properly headered, so is really
-   **** only useful in limited circumstances, like discriminating between a
-   **** method and an engine-node in a few places where we are wedged.
-   **** If we get instance bits up, it should use those, since depending on the
-   **** metaclass to be something in particular is pretty fragile.
-   */
 #define FUNCTIONP(x) \
-   ( /* ((Wrapper*)(((OBJECT*)(((Wrapper*)(((OBJECT*)(x))->class))->class))->class)) */ \
-     /* OBJECT_WRAPPER(OBJECT_CLASS(x)) == &KLfunction_classGVKiW */ \
-     (R((((Wrapper*)OBJECT_WRAPPER(x)))->subtype_mask) & 64) \
-     )
+    (R((((Wrapper*)OBJECT_WRAPPER(x)))->subtype_mask) & 64)
 
 FORCE_INLINE D PERFORM_INLINE_TYPE_CHECK(D value, D type) {
   if (unlikely(type != LobjectGVKd && !INSTANCEP(value, type))) {
