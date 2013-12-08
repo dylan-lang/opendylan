@@ -1050,7 +1050,7 @@ define generic grow-size-function (t :: <table>)
 // ---------------- <table> ----------------
 
 define open abstract primary class <table>
-    (<mutable-explicit-key-collection>, <stretchy-collection>, <limited-collection>)
+    (<limited-element-type-collection>, <mutable-explicit-key-collection>, <stretchy-collection>)
   slot table-vector :: <table-vector>,
     init-value: initial-table-vector();
   constant slot initial-entries :: <integer>,
@@ -1167,7 +1167,6 @@ define function gethash
     // --- Signal some more specific class of error?
     key-missing-error(table, key, default);
   else
-    check-type(default, element-type(table));
     default;
   end if;
 end;

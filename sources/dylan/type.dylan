@@ -192,27 +192,25 @@ define generic has-instances?
 // instantiated by calling make on that value.
 //
 // The tables are only *generally* accurate. A limited <deque> only has one
-// concrete class, and a limited <string> only comes in <byte-character> and
-// <unicode-character> variations of T. The concrete-limited-X-class functions
+// concrete class, and a limited <string> comes in <limited-byte-string> and
+// <limited-unicode-string> flavors. The concrete-limited-X-class functions
 // return the specific concrete class for each case.
 //
 // of:    default-fill:  size:/dimensions: | limited value            concrete class
 // -----  -------------  ----------------- + -----------------------  ----------------------
 // T      unspecified    unspecified       | <simple-T-X>             <simple-T-X>
 // T      unspecified    specified         | <limited-X-type>         <simple-T-X>
-// T      specified      unspecified       | <limited-X-type>         <simple-T-with-fill-X>
-// T      specified      specified         | <limited-X-type>         <simple-T-with-fill-X>
+// T      specified      unspecified       | <limited-X-type>         <simple-T-X>
+// T      specified      specified         | <limited-X-type>         <simple-T-X>
 // other  unspecified    unspecified       | <simple-element-type-X>  <simple-element-type-X>
 // other  unspecified    specified         | <limited-X-type>         <simple-element-type-X>
-// other  specified      unspecified       | <limited-X-type>         <simple-element-type-with-fill-X>
-// other  specified      specified         | <limited-X-type>         <simple-element-type-with-fill-X>
+// other  specified      unspecified       | <limited-X-type>         <simple-element-type-X>
+// other  specified      specified         | <limited-X-type>         <simple-element-type-X>
 //
 // concrete class                     properties in each instance
 // ---------------------------------  -------------------------------
-// <simple-T-X>                       none
-// <simple-T-with-fill-X>             element-type-fill
-// <simple-element-type-X>            element-type
-// <simple-element-type-with-fill-X>  element-type, element-type-fill
+// <simple-T-X>                       element-type-fill
+// <simple-element-type-X>            element-type, element-type-fill
 //
 // X is the collection type and T one of the predefined limited collection
 // element types, e.g., a <simple-T-X> may be <simple-float-vector>.
@@ -229,7 +227,7 @@ define method limited
     (class == <string>, 
      #key of :: <type> = <character>,
           size :: false-or(<integer>),
-          default-fill :: <character> = limited-string-default-fill(of),
+          default-fill :: <object> = limited-string-default-fill(of),
      #all-keys) 
  => (type :: <type>)
   limited-string(of, default-fill, size)
@@ -259,7 +257,7 @@ end method;
 define method limited
     (class == <stretchy-vector>,
      #key of :: <type> = <object>,
-          default-fill :: <object> = limited-stretchy-vector-default-fill(of),
+          default-fill :: <object>,
      #all-keys)
  => (type :: <type>)
   limited-stretchy-vector(of, default-fill)
@@ -269,7 +267,7 @@ define method limited
     (class == <simple-vector>,
      #key of :: <type> = <object>,
           size :: false-or(<integer>),
-          default-fill :: <object> = limited-vector-default-fill(of),
+          default-fill :: <object>,
      #all-keys) 
  => (type :: <type>)
   limited-vector(of, default-fill, size)
@@ -278,7 +276,7 @@ end method;
 define method limited
     (class == <deque>, 
      #key of :: <type> = <object>,
-          default-fill :: <object> = limited-deque-default-fill(of),
+          default-fill :: <object>,
      #all-keys)
  => (type :: <type>)
   limited-deque(of, default-fill)
@@ -289,7 +287,7 @@ define method limited
      #key of :: <type> = <object>,
           size: sz :: false-or(<integer>),
           dimensions :: false-or(<sequence>),
-          default-fill :: <object> = limited-array-default-fill(of),
+          default-fill :: <object>,
      #all-keys)
  => (type :: <type>)
   if (sz)
@@ -401,6 +399,17 @@ define sealed inline method make
 end method;
 
 define sealed inline method make
+    (t :: <limited-deque-type>, #rest all-keys, #key fill = unsupplied(), #all-keys)
+ => (res :: <deque>)
+  let fill :: <object> = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
+  apply(make, limited-collection-concrete-class(t),
+        element-type: limited-collection-element-type(t),
+        element-type-fill: limited-collection-element-type-fill(t),
+        fill: fill,
+        all-keys)
+end method;
+
+define sealed inline method make
     (t :: <limited-array-type>, #rest all-keys,
      #key size = unsupplied(), dimensions = unsupplied(), fill = unsupplied(),
      #all-keys)
@@ -412,6 +421,7 @@ define sealed inline method make
     else
       apply(make, concrete-limited-vector-class(t, fill),
             element-type: limited-collection-element-type(t),
+            element-type-fill: limited-collection-element-type-fill(t),
             fill:         fill,
             size:         size,
             all-keys)
@@ -431,6 +441,7 @@ define sealed inline method make
         end if;
     apply(make, limited-collection-concrete-class(t),
           element-type: limited-collection-element-type(t),
+          element-type-fill: limited-collection-element-type-fill(t),
           dimensions:   dims,
           fill:         fill,
           all-keys)
@@ -446,47 +457,10 @@ define sealed inline method make
   let fill :: <object> = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
   apply(make, concrete-class,
         element-type: limited-collection-element-type(t),
+        element-type-fill: limited-collection-element-type-fill(t),
         size:         size,
         fill:         fill,
         all-keys);
-end method;
-
-// The following make methods ensure that collection instances made from
-// <limited-fillable-type> have the correct default fill: values. These methods
-// are on specific <limited-X-type> classes; if we instead relied on a make
-// method on <limited-fillable-type>, make might actually dispatch to the
-// <limited-stretchy-collection> or <limited-collection> methods before the
-// <limited-fillable-type> method. Since the stretchy collection and collection
-// methods do not call next-method(), that would leave fill: unset.
-
-define sealed inline method make
-    (t :: <limited-deque-type>, #rest all-keys, #key fill = unsupplied(), #all-keys)
- => (res :: <deque>)
-  if (~supplied?(fill))
-    apply(next-method, t, fill: limited-collection-element-type-fill(t), all-keys)
-  else
-    next-method()
-  end if
-end method;
-
-define sealed inline method make
-    (t :: <limited-string-type>, #rest all-keys, #key fill = unsupplied(), #all-keys)
- => (res :: <string>)
-  if (~supplied?(fill))
-    apply(next-method, t, fill: limited-collection-element-type-fill(t), all-keys)
-  else
-    next-method()
-  end if
-end method;
-
-define sealed inline method make
-    (t :: <limited-stretchy-vector-type>, #rest all-keys, #key fill = unsupplied(), #all-keys)
- => (res :: <stretchy-vector>)
-  if (~supplied?(fill))
-    apply(next-method, t, fill: limited-collection-element-type-fill(t), all-keys)
-  else
-    next-method()
-  end if
 end method;
 
 define function limited-collection-instance?

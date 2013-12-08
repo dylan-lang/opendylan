@@ -48,7 +48,8 @@ end method;
 
 // Mappings should be listed in order, from best match to worst match. This matters
 // for matching the default-fill; matching the tighter limited integer type; and for
-// matching defaults. The lookup function will return the first suitable match.
+// matching the fallback class. The lookup function will return the first suitable
+// match.
 define macro limited-element-type-mappings-definer
   { define limited-element-type-mappings (?collection:name)
       ?mappings:*
@@ -230,19 +231,19 @@ end method;
 
 define limited-element-type-mappings (<string>)
   <byte-character>, fill: as(<byte-character>, ' ')
-    => <byte-string>;
+    => <limited-byte-string>;
   <byte-character>
-    => <byte-with-fill-string>;
+    => <limited-byte-string>;
 
   <unicode-character>, fill: as(<unicode-character>, ' ')
-    => <unicode-string>;
+    => <limited-unicode-string>;
   <unicode-character>
-    => <unicode-with-fill-string>;
+    => <limited-unicode-string>;
 
   any, fill: as(<byte-character>, ' ')
-    => <byte-string>;
+    => <limited-byte-string>;
   otherwise
-    => <byte-with-fill-string>;
+    => <limited-byte-string>;
 end limited-element-type-mappings;
     
 define method select-limited-string (of, default-fill, size)
@@ -264,31 +265,31 @@ define limited-element-type-mappings (<vector>)
   <machine-word>, fill: as(<machine-word>, 0)
     => <simple-machine-word-vector>;
   <machine-word>
-    => <simple-machine-word-with-fill-vector>;
+    => <simple-machine-word-vector>;
 
   <single-float>, fill: as(<single-float>, 0.0)
     => <simple-single-float-vector>;
   <single-float>
-    => <simple-single-float-with-fill-vector>;
+    => <simple-single-float-vector>;
 
   <double-float>, fill: as(<double-float>, 0.0)
     => <simple-double-float-vector>;
   <double-float>
-    => <simple-double-float-with-fill-vector>;
+    => <simple-double-float-vector>;
 
   limited(<integer>, min: 0, max: 255), fill: 0
     => <simple-byte-vector>;
   limited(<integer>, min: 0, max: 255)
-    => <simple-byte-with-fill-vector>;
+    => <simple-byte-vector>;
   limited(<integer>, min: 0, max: 65535), fill: 0
     => <simple-double-byte-vector>;
   limited(<integer>, min: 0, max: 65535)
-    => <simple-double-byte-with-fill-vector>;
+    => <simple-double-byte-vector>;
 
   <integer>, fill: 0
     => <simple-integer-vector>;
   <integer>
-    => <simple-integer-with-fill-vector>;
+    => <simple-integer-vector>;
 
   <object>, fill: #f
     => <simple-object-vector>;
@@ -296,7 +297,7 @@ define limited-element-type-mappings (<vector>)
   any, fill: #f
     => <simple-element-type-vector>;
   otherwise
-    => <simple-element-type-with-fill-vector>;
+    => <simple-element-type-vector>;
 end limited-element-type-mappings;
     
 define method select-limited-vector (of, default-fill, size)

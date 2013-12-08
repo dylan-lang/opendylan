@@ -291,16 +291,29 @@ define sealed concrete &class <empty-list> (<list>)
   inherited &slot head, init-value: #(), init-keyword: head:;
 end &class <empty-list>;
 
+// This is a marker class for all concrete limited collection classes.
 define open abstract primary &class <limited-collection> (<collection>)
+end &class;
+
+// This is a mixin class for concrete limited classes with user-specified
+// element types. Concrete limited classes with predefined types such as
+// <simple-byte-vector> do not need it.
+define abstract primary &class <limited-element-type-collection>
+    (<limited-collection>)
   constant &slot element-type :: <type>,
     init-keyword: element-type:,
     init-value:   <object>;
 end &class;
 
-// DEP-0007: This is a mixin class for concrete limited classes with user-
-// specified default-fill: values.
-define abstract &class <limited-fillable-collection> (<collection>)
-  constant &slot element-type-fill :: <object>,
+// DEP-0007: This is a mixin class for all fillable concrete limited classes.
+// Each instance of a limited collection must track its default fill value.
+//
+// This can't actually be constant because the make function needs to be able
+// to set it explicitly. system-allocate-repeated-instance can only populate
+// all slots with a single value, and that value was chosen to be element-type.
+define abstract &class <limited-fillable-collection>
+    (<limited-collection>)
+  /*constant*/ &slot element-type-fill :: <object>,
     init-keyword: element-type-fill:,
     init-value:   #f;
 end &class;

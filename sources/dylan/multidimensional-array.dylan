@@ -55,11 +55,6 @@ define macro limited-array-minus-constructor-definer
              size-init-value:   0;
          end class;
 
-         define primary class "<simple-" ## ?name ## "-with-fill-array>"
-             ("<simple-" ## ?name ## "-array>", <limited-fillable-collection>)
-           inherited slot element-type-fill, init-value: ?fill;
-         end class;
-         
          define sealed domain initialize ("<simple-" ## ?name ## "-array>");
          define sealed domain size ("<simple-" ## ?name ## "-array>");
          define sealed domain empty? ("<simple-" ## ?name ## "-array>");
@@ -72,14 +67,13 @@ define macro limited-array-minus-constructor-definer
 
          define inline sealed method element
              (array :: "<simple-" ## ?name ## "-array>", index :: <integer>,
-              #key default = unsupplied()) => (object :: "<" ## ?name ## ">")
+              #key default = unsupplied()) => (object)
            if (element-range-check(index, size(array)))
              "row-major-" ## ?name ## "-array-element"(array, index)
            else
              if (unsupplied?(default))
                element-range-error(array, index)
              else
-               check-type(default, element-type(array));
                default
              end if
            end if
@@ -124,16 +118,6 @@ define macro limited-array-minus-selector-definer
            "<" ## ?name ## ">"
          end method;
          
-         define sealed inline method element-type-fill
-             (t :: "<simple-" ## ?name ## "-array>") => (fill :: <object>)
-           ?fill
-         end method;
-         
-         define sealed inline method limited-array-default-fill
-             (of == "<" ## ?name ## ">") => (fill :: "<" ## ?name ## ">")
-           ?fill
-         end method;
-         
          define sealed method element-setter
              (new-value :: "<" ## ?name ## ">",
               array :: "<simple-" ## ?name ## "-array>", index :: <integer>)
@@ -144,47 +128,39 @@ define macro limited-array-minus-selector-definer
              element-range-error(array, index)
            end if
          end method element-setter;
-
+         
          define sealed method make
              (class == "<simple-" ## ?name ## "-array>",
-              #key dimensions = unsupplied(), fill = ?fill)
+              #key dimensions = unsupplied(), fill = ?fill,
+                   element-type-fill = ?fill)
           => (array :: "<simple-" ## ?name ## "-array>")
            let (dimensions, size) = compute-array-dimensions-and-size(dimensions);
            ?=next-method(class,
-                         dimensions: dimensions,
-                         size:       size,
-                         fill:       fill)
+                         dimensions:        dimensions,
+                         size:              size,
+                         element-type-fill: element-type-fill,
+                         fill:              fill)
          end method make;
          
-         define sealed method make
-             (class == "<simple-" ## ?name ## "-with-fill-array>",
-              #key dimensions = unsupplied(), fill = ?fill)
-          => (array :: "<simple-" ## ?name ## "-with-fill-array>")
-           let (dimensions, size) = compute-array-dimensions-and-size(dimensions);
-           ?=next-method(class,
-                         dimensions: dimensions,
-                         size:       size,
-                         fill:       fill)
-         end method make
-         }
+         define sealed inline method type-for-copy
+             (array :: "<simple-" ## ?name ## "-array>")
+          => (type :: <limited-mutable-sequence-type>)
+           limited-array(element-type(array), element-type-fill(array), #f)
+         end method type-for-copy
+       }
 end macro;
 
 define macro limited-array-definer
   { define limited-array "<" ## ?:name ## ">" (#key ?fill:expression) }
-    => { define limited-array-minus-selector "<" ## ?name ## ">" (<simple-array>) (fill: ?fill);
+    => { define limited-array-minus-selector "<" ## ?name ## ">"
+             (<limited-fillable-collection>, <simple-array>) (fill: ?fill);
     
-         define method concrete-limited-array-class
-             (of == "<" ## ?name ## ">", default-fill == ?fill)
-          => (res :: <class>, fully-specified?)
-           values("<simple-" ## ?name ## "-array>", #t)
-         end method;
-         
          define method concrete-limited-array-class
              (of == "<" ## ?name ## ">", default-fill)
           => (res :: <class>, fully-specified?)
-           values("<simple-" ## ?name ## "-with-fill-array>", #f)
-         end method
-         }
+           values("<simple-" ## ?name ## "-array>", default-fill = ?fill)
+         end method;
+       }
 end macro;
 
 define limited-array <object> (fill: #f);
@@ -206,9 +182,4 @@ define method limited-array
   else
     concrete-class
   end if;
-end method;
-
-define sealed inline method limited-array-default-fill
-    (of :: <type>) => (fill == #f)
-  #f
 end method;

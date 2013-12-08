@@ -7,11 +7,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define limited-array <integer>       (fill: 0);
 
-define limited-array-minus-selector <byte>          (<simple-array>) (fill: 0);
-define limited-array-minus-selector <double-byte>   (<simple-array>) (fill: 0);
+define limited-array-minus-selector <byte>
+    (<limited-fillable-collection>, <simple-array>) (fill: 0);
+define limited-array-minus-selector <double-byte>
+    (<limited-fillable-collection>, <simple-array>) (fill: 0);
 
-define limited-array-minus-constructor <element-type> (<simple-array>, <limited-collection>)
-  (fill: #f);
+define limited-array-minus-constructor <element-type>
+    (<limited-element-type-collection>, <limited-fillable-collection>, <simple-array>) (fill: #f);
 
 define sealed domain element-type (<simple-element-type-array>);
 
@@ -32,12 +34,6 @@ end method;
 
 define method concrete-limited-array-class
     (of :: <type>, default-fill)
- => (res :: <class>, fully-specified?)
-  values(<simple-element-type-with-fill-array>, #f)
-end method;
-
-define method concrete-limited-array-class
-    (of :: <type>, default-fill == #f)
  => (res :: <class>, fully-specified?)
   values(<simple-element-type-array>, #f)
 end method;
@@ -62,20 +58,10 @@ end method type-for-copy;
 define method concrete-limited-array-class
     (of :: <limited-integer>, default-fill)
  => (res :: <class>, fully-specified?)
+  let fully-specified? = (default-fill = 0);
   select (of by subtype?)
-    <byte>        => values(<simple-byte-array>, #f);
-    <double-byte> => values(<simple-double-byte-array>, #f);
-    otherwise     => next-method();
-  end select;
-end method;
-
-/// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
-define method concrete-limited-array-class
-    (of :: <limited-integer>, default-fill == 0)
- => (res :: <class>, fully-specified?)
-  select (of by subtype?)
-    <byte>        => values(<simple-byte-array>, #t);
-    <double-byte> => values(<simple-double-byte-array>, #t);
+    <byte>        => values(<simple-byte-array>, fully-specified?);
+    <double-byte> => values(<simple-double-byte-array>, fully-specified?);
     otherwise     => next-method();
   end select;
 end method;

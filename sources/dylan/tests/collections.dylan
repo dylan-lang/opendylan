@@ -90,7 +90,9 @@ define method test-collection-of-size
                 shallow-copy(collection), collection);
     test-collection(individual-name, collection)
   end;
-  test-limited-collection-of-size(name, class, collection-size)
+  if (instantiable-as-limited?(class))
+    test-limited-collection-of-size(name, class, collection-size)
+  end if
 end method test-collection-of-size;
 
 define method test-limited-collection-of-size
@@ -192,43 +194,37 @@ define method make-collections-of-size
   end
 end method make-collections-of-size;
 
+define variable $base-type-for-limited-collection = make(<table>);
+
 define method make-limited-collections-of-size
     (class :: <class>, collection-size :: <integer>)
  => (collections :: <sequence>)
   let sequences = make(<stretchy-vector>);
   let element-types = limited-collection-element-types(class);
   for (element-type :: <type> in element-types)
-    let type = limited(class, of: element-type);
-    if (subtype?(<integer>, element-type))
-      add!(sequences, as(type, range(from: 1, to: collection-size)))
-    end;
-    if (subtype?(<character>, element-type))
-      add!(sequences,
-           if (collection-size < size($default-string))
-             as(type, copy-sequence($default-string, end: collection-size));
-           else
-             make(type, size: collection-size, fill: 'a');
-           end)
-    end;
-    if (subtype?(<vector>, element-type))
-      add!(sequences,
-           if (collection-size < size($default-vectors))
-             as(type, copy-sequence($default-vectors, end: collection-size));
-           else
-             make(type, size: collection-size, fill: #[]);
-           end)
-    end
+    let default-fill = limited-collection-default-fill(element-type);
+    let type = limited(class, of: element-type, default-fill: default-fill);
+    let collection =
+        case
+          subtype?(<integer>, element-type) =>
+            as(type, range(from: 1, to: collection-size));
+          subtype?(<character>, element-type) =>
+            if (collection-size < size($default-string))
+              as(type, copy-sequence($default-string, end: collection-size));
+            else
+              make(type, size: collection-size, fill: 'a');
+            end;
+          subtype?(<vector>, element-type) =>            
+            if (collection-size < size($default-vectors))
+              as(type, copy-sequence($default-vectors, end: collection-size));
+            else
+              make(type, size: collection-size, fill: #[]);
+            end;
+        end case;
+    add!(sequences, collection);
+    $base-type-for-limited-collection[collection] := class;
   end;
-  // Only return one for size 0, because they are all the same
-  if (collection-size = 0)
-    if (size(sequences) > 0)
-      vector(sequences[0])
-    else
-      #[]
-    end if
-  else
-    sequences
-  end
+  sequences
 end method make-limited-collections-of-size;
 
 define method make-limited-collections-of-size
@@ -241,6 +237,8 @@ define method make-limited-collections-of-size
     table-1[i] := i + 1;
     table-2[i] := char;
   end;
+  $base-type-for-limited-collection[table-1] := <table>;
+  $base-type-for-limited-collection[table-2] := <table>;
   vector(table-1, table-2)
 end method make-limited-collections-of-size;
 
@@ -268,7 +266,7 @@ define method expected-element
       else
         'a'
       end;
-    <integer>, <real> =>
+    <number>, <integer>, <real> =>
       index + 1;
     <vector> =>
       if (size(collection) < size($default-vectors))
@@ -322,6 +320,17 @@ define method limited-collection-element-types
     (class :: subclass(<string>)) => (element-types :: <sequence>)
   #[]
 end method limited-collection-element-types;
+
+
+define function limited-collection-default-fill
+    (element-type :: <type>) => (fill :: <object>)
+  select (element-type by subtype?)
+    <integer> => 42;
+    <character> => 'q';
+    <vector> => #[ "default-fill" ];
+  end select
+end function;
+
 
 define generic collection-default (type :: <type>) => (res);
 
@@ -602,6 +611,14 @@ define method proper-collection?
     end
   end
 end method proper-collection?;
+
+define function instantiable-as-limited? (class :: <class>) 
+ => (inst? :: <boolean>)
+  select (class by subtype?)
+    <simple-object-vector>, <list> => #f;
+    otherwise => #t;
+  end select
+end function;
 
 
 /// collection-valid-as-class?
@@ -981,14 +998,21 @@ end method valid-type-for-copy?;
 define method valid-type-for-copy?
     (type :: <type>, collection :: <mutable-collection>)
  => (valid-type? :: <boolean>)
-  //--- The DRM pg. 293 says that this should be == object-class(collection)
-  //--- but that doesn't work in the emulator. Which should it be?
-  if (instance?(collection, <limited-collection>))
-    instance?(collection, type)
-  else
-    subtype?(object-class(collection), type)
-  end if
+  subtype?(object-class(collection), type)
+    & next-method()
 end method valid-type-for-copy?;
+
+define method valid-type-for-copy?
+    (type :: <type>, collection :: <limited-collection>)
+ => (valid-type? :: <boolean>)
+  let base-type = element($base-type-for-limited-collection, collection, default: #f);
+  if (base-type)
+    subtype?(type, base-type)
+      & make(type, dimensions: #[0]).element-type = collection.element-type
+  else
+    next-method()
+  end if
+end method;
 
 define method valid-type-for-copy?
     (type :: <type>, collection :: <range>)
@@ -1011,14 +1035,12 @@ define method test-size-setter
     (name :: <string>, collection :: <stretchy-collection>) => ()
   if (instance?(collection, <sequence>))
     let new-size = size(collection) + 5;
-    if (instance?(#f, collection-element-type(collection)))
-      check-equal(format-to-string("%s resizes", name),
-                  begin
-                    size(collection) := new-size;
-                    size(collection)
-                  end,
-                  new-size)
-    end;
+    check-equal(format-to-string("%s resizes", name),
+                begin
+                  size(collection) := new-size;
+                  size(collection)
+                end,
+                new-size)
     check-equal(format-to-string("%s emptied", name),
                 begin
                   size(collection) := 0;
@@ -1383,9 +1405,7 @@ define method test-nth-setter
                    nth-setter(item, copy);
                    copy[n] = item
                  end);
-    instance?(sequence, <stretchy-collection>)
-      & (n = size(sequence) | 
-           instance?(#f, collection-element-type(sequence))) =>
+    instance?(sequence, <stretchy-collection>) =>
       check-true(name,
                  begin
                    let copy = shallow-copy(sequence);

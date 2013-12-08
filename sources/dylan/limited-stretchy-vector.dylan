@@ -17,25 +17,16 @@ define limited-stretchy-vector <byte-character> (fill: ' ');
 // defined by limited-stretchy-vector-definer which works only for the <byte>
 // singletons.
 
-define limited-stretchy-vector-minus-selector <byte> (<limited-stretchy-vector>) (fill: 0);
+define limited-stretchy-vector-minus-selector <byte> (<limited-stretchy-vector>)
+  (fill: 0);
 
 /// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
 define method concrete-limited-stretchy-vector-class
     (of :: <limited-integer>, default-fill)
  => (res :: <class>, fully-specified?)
+  let fully-specified? = (default-fill = 0);
   select (of by subtype?)
-    <byte>        => values(<stretchy-byte-with-fill-vector>, #f);
-    // <double-byte> => <stretchy-double-byte-vector>;
-    otherwise     => next-method();
-  end select;
-end method;
-
-/// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
-define method concrete-limited-stretchy-vector-class
-    (of :: <limited-integer>, default-fill == 0)
- => (res :: <class>, fully-specified?)
-  select (of by subtype?)
-    <byte>        => values(<stretchy-byte-vector>, #t);
+    <byte>        => values(<stretchy-byte-vector>, fully-specified?);
     // <double-byte> => <stretchy-double-byte-vector>;
     otherwise     => next-method();
   end select;
@@ -43,11 +34,11 @@ end method;
 
 
 // Assemble the general <stretchy-element-type-vector>, using the functions
-// below and the generic <limited-collection> functions that allow for arbitrary
+// below and the generic <limited-element-type-collection> functions that allow for arbitrary
 // element types.
 
 define limited-stretchy-vector-minus-constructor <element-type>
-  (<limited-stretchy-vector>, <limited-collection>) (fill: #f);
+  (<limited-element-type-collection>, <limited-stretchy-vector>) (fill: #f);
 
 define method initialize
     (vector :: <stretchy-element-type-vector>,
@@ -59,19 +50,12 @@ define method initialize
     check-type(fill, element-type);
   end unless;
   stretchy-initialize(vector, capacity, size, fill);
-  vector
 end method initialize;
 
 define sealed domain element-type (<stretchy-element-type-vector>);
 
 define method concrete-limited-stretchy-vector-class
     (of :: <type>, default-fill)
- => (res :: <class>, fully-specified?)
-  values(<stretchy-element-type-with-fill-vector>, #f)
-end method;
-
-define method concrete-limited-stretchy-vector-class
-    (of :: <type>, default-fill == #f)
  => (res :: <class>, fully-specified?)
   values(<stretchy-element-type-vector>, #f)
 end method;

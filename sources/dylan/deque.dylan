@@ -108,7 +108,7 @@ end method reverse;
 //
 
 define class <object-deque>
-    (<deque>, <limited-collection>, <limited-fillable-collection>)
+    (<limited-element-type-collection>, <limited-fillable-collection>, <deque>)
   slot representation :: <island-deque>,
     init-value: make(<island-deque>);
 end class <object-deque>;
@@ -129,11 +129,6 @@ define method limited-deque
        element-type:   of,
        default-fill:   default-fill,
        concrete-class: <object-deque>);
-end method;
-
-define sealed inline method limited-deque-default-fill
-    (of :: <type>) => (fill == #f)
-  #f
 end method;
 
 /// TODO: COULD BE EXPENSIVE UNLESS TYPES ARE CACHED
@@ -280,7 +275,6 @@ define sealed method element
     if (unsupplied?(default))
       element-range-error(collection, index)
     else
-      check-type(default, element-type(collection));
       default
     end if
   else

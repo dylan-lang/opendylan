@@ -20,48 +20,43 @@ define limited-vector <double-float>  (fill: as(<double-float>, 0.0));
 // limited-vector-definer which works only for the <byte> or <double-byte>
 // singletons.
 
-define limited-vector-minus-selector <byte>          (<simple-vector>) (fill: 0);
-define limited-vector-minus-selector <double-byte>   (<simple-vector>) (fill: 0);
+define limited-vector-minus-selector <byte>
+    (<limited-fillable-collection>, <simple-vector>) (fill: 0);
+define limited-vector-minus-selector <double-byte>
+    (<limited-fillable-collection>, <simple-vector>) (fill: 0);
 
 /// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
 define inline method concrete-limited-vector-class
     (of :: <limited-integer>, default-fill)
  => (res :: <class>, fully-specified?)
+  let fully-specified? = (default-fill = 0);
   select (of by subtype?)
-    <byte>        => values(<simple-byte-with-fill-vector>, #f);
-    <double-byte> => values(<simple-double-byte-with-fill-vector>, #f);
-    otherwise     => next-method();
-  end select;
-end method;
-
-/// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
-define inline method concrete-limited-vector-class
-    (of :: <limited-integer>, default-fill == 0)
- => (res :: <class>, fully-specified?)
-  select (of by subtype?)
-    <byte>        => values(<simple-byte-vector>, #t);
-    <double-byte> => values(<simple-double-byte-vector>, #t);
+    <byte>        => values(<simple-byte-vector>, fully-specified?);
+    <double-byte> => values(<simple-double-byte-vector>, fully-specified?);
     otherwise     => next-method();
   end select;
 end method;
 
 
 // Assemble the general <simple-element-type-vector>, using the functions below
-// and the generic <limited-collection> functions that allow for arbitrary
+// and the generic <limited-element-type-collection> functions that allow for arbitrary
 // element types.
 
-define limited-vector-minus-constructor <element-type>  (<limited-collection>, <simple-vector>)
-  (fill: #f);
+define limited-vector-minus-constructor <element-type>
+    (<limited-element-type-collection>, <limited-fillable-collection>, <simple-vector>) (fill: #f);
 
 define method make
     (class == <simple-element-type-vector>,
-     #key fill = #f, element-type :: <type> = <object>, size :: <integer> = 0)
+     #key fill = #f, element-type :: <type> = <object>, size :: <integer> = 0,
+          element-type-fill: default-fill = #f)
  => (vector :: <simple-element-type-vector>)
   unless (size = 0)
     check-type(fill, element-type);
   end unless;
-  system-allocate-repeated-instance
+  let instance = system-allocate-repeated-instance
     (<simple-element-type-vector>, <element-type>, element-type, size, fill);
+  instance.element-type-fill := default-fill;
+  instance
 end method;
 
 define sealed domain element-type (<simple-element-type-vector>);

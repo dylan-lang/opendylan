@@ -56,8 +56,11 @@ define constant <collection-type>
 define constant <mutable-collection-type>
   = type-union(subclass(<mutable-collection>), <limited-mutable-collection-type>);
 
+// type should be an instantiable subtype of <mutable-collection>. That is
+// almost expressible by saying <mutable-collection-type>, but the "subclass"
+// used therein is not quite the same as "subtype?".
 define sealed generic map-as
-    (type :: <mutable-collection-type>, fn :: <function>,
+    (type :: <type>, fn :: <function>,
      collection :: <collection>, #rest more-collections :: <collection>)
  => (new-collection :: <mutable-collection>);
 
@@ -281,12 +284,12 @@ define method map-as-one
  => (new-collection :: <array>); // actually :: type
   let collection-size = collection.size;
   if (collection-size = 0)
-    make(type, size: 0)
+    make-sequence(type, shaped-like: collection)
   else
     // For compatibility, use fill: rather than relying on element-type-fill.
     let result =
-      make(type, dimensions: collection.dimensions,
-           fill: function(collection.first));
+      make-sequence(type, shaped-like: collection,
+                    fill: function(collection.first));
     without-bounds-checks
       for (i :: <integer> from 1 below collection-size)
         result[i] := function(collection[i])
@@ -302,12 +305,12 @@ define method map-as-one
  => (new-collection :: <vector>); // actually :: type
   let collection-size = collection.size;
   if (collection-size = 0)
-    make(type, size: 0)
+    make-sequence(type, shaped-like: collection)
   else
     // For compatibility, use fill: rather than relying on element-type-fill.
     let result =
-      make(type, size: collection.size,
-           fill: function(collection.first));
+      make-sequence(type, shaped-like: collection,
+                    fill: function(collection.first));
     without-bounds-checks
       for (i :: <integer> from 1 below collection-size)
         result[i] := function(collection[i])
