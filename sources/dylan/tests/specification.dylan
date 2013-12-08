@@ -280,15 +280,17 @@ define protocol-spec collections ()
   function head-setter (<object>, <pair>) => (<object>);
   function tail-setter (<object>, <pair>) => (<object>);
   open generic-function add (<sequence>, <object>) => (<sequence>);
-  open generic-function add! (<sequence>, <object>) => (<sequence>);
+  //--- DRM defines add! for <sequence>, but OD supports it for all <collection>.
+  open generic-function add! (<collection>, <object>) => (<collection>);
   open generic-function add-new
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
   open generic-function add-new!
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
   open generic-function remove 
       (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
+  //--- DRM defines remove! for <sequence>, but OD supports it for all <collection>.
   open generic-function remove!
-      (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
+      (<collection>, <object>, #"key", #"test", #"count") => (<collection>);
   open generic-function push (<deque>, <object>) => (<object>);
   open generic-function pop (<deque>) => (<object>);
   open generic-function push-last (<deque>, <object>) => (<object>);
