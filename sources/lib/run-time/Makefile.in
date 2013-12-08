@@ -76,6 +76,8 @@ CFLAGS		= $(PLATFORM_CFLAGS) -Wall -O -g $(GC_CFLAGS) -I$(srcdir)
 
 OBJS		= $(OBJDIR)/break.o \
 		  $(OBJDIR)/collector.o \
+		  $(OBJDIR)/debug-print.o \
+		  $(OBJDIR)/trace.o \
 		  $(OBJDIR)/unix-spy-interfaces.o \
 		  $(OBJDIR)/unix-support.o
 
@@ -90,8 +92,6 @@ LLVM_RUNTIME_OBJS =
 C_RUNTIME_OBJS    = $(OBJDIR)/c-run-time.o \
                     $(OBJDIR)/c-support.o \
                     $(OBJDIR)/c-primitives-math.o \
-                    $(OBJDIR)/trace.o \
-                    $(OBJDIR)/debug-print.o \
                     $(OBJDIR)/posix-threads.o
 
 ifeq ($(GC_CHOICE),mps)
