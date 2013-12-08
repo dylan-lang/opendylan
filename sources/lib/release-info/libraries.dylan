@@ -123,31 +123,31 @@ end method find-library-info;
 define method info-location
     (info :: <library-info>) => (location :: <file-locator>)
   /*---*** This is ultimately the right implementation
-  merge-locators(make(<file-locator>, 
-		      name: info.info-project,
-		      directory: info.info-source-directory),
-		 info.info-library-pack.info-location)
+  merge-locators(make(<file-locator>,
+                      name: info.info-project,
+                      directory: info.info-source-directory),
+                 info.info-library-pack.info-location)
   */
-  merge-locators(make(<file-locator>, 
-		      name: info.info-project,
-		      directory: info.info-source-directory),
-		 release-sources-directory())
+  merge-locators(make(<file-locator>,
+                      name: info.info-project,
+                      directory: info.info-source-directory),
+                 release-sources-directory())
 end method info-location;
 
 define method info-location
     (info :: <example-info>) => (location :: <file-locator>)
-  merge-locators(make(<file-locator>, 
-		      name: info.info-project,
-		      directory: info.info-source-directory),
-		 release-examples-directory())
+  merge-locators(make(<file-locator>,
+                      name: info.info-project,
+                      directory: info.info-source-directory),
+                 release-examples-directory())
 end method info-location;
 
 define method info-location
     (info :: <test-suite-info>) => (location :: <file-locator>)
-  merge-locators(make(<file-locator>, 
-		      name: info.info-project,
-		      directory: info.info-source-directory),
-		 release-sources-directory())
+  merge-locators(make(<file-locator>,
+                      name: info.info-project,
+                      directory: info.info-source-directory),
+                 release-sources-directory())
 end method info-location;
 
 
@@ -184,10 +184,10 @@ define function installed-library-packs
        i from 0)
     library-packs[i] := library-pack
   end;
-  sort!(library-packs, 
-	test: method (info1 :: <library-pack-info>, info2 :: <library-pack-info>)
-		info1.info-name < info2.info-name
-	      end)
+  sort!(library-packs,
+        test: method (info1 :: <library-pack-info>, info2 :: <library-pack-info>)
+                info1.info-name < info2.info-name
+              end)
 end function installed-library-packs;
 
 define class <basic-library-pack-info> (<library-pack-info>)
@@ -213,7 +213,7 @@ define function install-numbered-library-pack-info
     (info :: <library-pack-info>) => ()
   let pack :: <integer> = info.info-pack-number;
   assert(pack > 0 & pack <= $maximum-library-packs,
-	 "Library pack number must be between 1 and %d, inclusive", $maximum-library-packs);
+         "Library pack number must be between 1 and %d, inclusive", $maximum-library-packs);
   $release-library-packs[pack] := info
 end function install-numbered-library-pack-info;
 
@@ -221,34 +221,34 @@ define method find-library-pack-info
     (pack :: <symbol>) => (info :: false-or(<library-pack-info>))
   element(*library-packs*, pack, default: #f)
     | block (return)
-	for (i :: <integer> from 1 to $maximum-library-packs)
-	  let info :: false-or(<library-pack-info>) = $release-library-packs[i];
-	  when (info)
-	    when (info.info-name = pack)
-	      return(info)
-	    end
-	  end
-	end;
-	return(#f)
+        for (i :: <integer> from 1 to $maximum-library-packs)
+          let info :: false-or(<library-pack-info>) = $release-library-packs[i];
+          when (info)
+            when (info.info-name = pack)
+              return(info)
+            end
+          end
+        end;
+        return(#f)
       end
 end method find-library-pack-info;
 
 define method find-library-pack-info
     (pack :: <integer>) => (info :: false-or(<library-pack-info>))
-  pack > 0 & pack <= $maximum-library-packs 
+  pack > 0 & pack <= $maximum-library-packs
     & $release-library-packs[pack]
 end method find-library-pack-info;
 
 define macro library-pack-definer
-  { define library-pack ?pack-name:name 
+  { define library-pack ?pack-name:name
       ?options:*
     end }
     => { let info
            = make(<numbered-library-pack-info>,
-		  name: ?#"pack-name",
-		  ?options,
-		  title: ?"pack-name" ## " Library Pack",
-		  description: "{None}");
+                  name: ?#"pack-name",
+                  ?options,
+                  title: ?"pack-name" ## " Library Pack",
+                  description: "{None}");
          install-numbered-library-pack-info(info) }
 end macro library-pack-definer;
 
@@ -261,39 +261,39 @@ define method read-library-pack
   let library-nodes = select-nodes(node, "libraries/library");
   let library-pack
     = make(<basic-library-pack-info>,
-	   name: name,
-	   title: node-attribute(node, "title"),
-	   number: number & string-to-integer(number),
-	   description: select-node-text(node, "description") | "",
-	   author: select-node-text(node, "author"),
-	   company: select-node-text(node, "company"),
-	   copyright: select-node-text(node, "copyright"),
-	   location: locator-directory(locator),
-	   libraries: map(interpret-library-xml, library-nodes),
-	   examples: map(method (node :: <xml-node>)
-			   interpret-library-xml(node, class: <example-info>)
-			 end,
-			 select-nodes(node, "examples/library")),
-	   test-suites: map(method (node :: <xml-node>)
-			      interpret-library-xml(node, class: <test-suite-info>)
-			    end,
-			    select-nodes(node, "test-suites/library")));
+           name: name,
+           title: node-attribute(node, "title"),
+           number: number & string-to-integer(number),
+           description: select-node-text(node, "description") | "",
+           author: select-node-text(node, "author"),
+           company: select-node-text(node, "company"),
+           copyright: select-node-text(node, "copyright"),
+           location: locator-directory(locator),
+           libraries: map(interpret-library-xml, library-nodes),
+           examples: map(method (node :: <xml-node>)
+                           interpret-library-xml(node, class: <example-info>)
+                         end,
+                         select-nodes(node, "examples/library")),
+           test-suites: map(method (node :: <xml-node>)
+                              interpret-library-xml(node, class: <test-suite-info>)
+                            end,
+                            select-nodes(node, "test-suites/library")));
   for (library :: <library-info> in library-pack.info-libraries,
        library-node :: <xml-node> in library-nodes)
     let releases
       = map(method (release-node :: <xml-node>) => (info :: <library-release-info>)
-	       interpret-library-release-xml(library.info-name, release-node)
-	     end,
-	     select-nodes(library-node, "release"));
+               interpret-library-release-xml(library.info-name, release-node)
+             end,
+             select-nodes(library-node, "release"));
     if (~empty?(releases))
       let this-release = releases[0];
       let binary = this-release.info-binary;
       let binary-name
-	= if (binary) 
-	    binary.info-binary-name
-	  else 
-	    format-to-string("%s.%s", library.info-name, "dll")
-	  end;
+        = if (binary)
+            binary.info-binary-name
+          else
+            format-to-string("%s.%s", library.info-name, "dll")
+          end;
       library.info-library-pack := library-pack;
       library.info-releases     := releases;
       library.info-binary       := binary;
@@ -312,7 +312,7 @@ define method read-library-pack
 end method read-library-pack;
 
 define method interpret-library-xml
-    (node :: <xml-node>, 
+    (node :: <xml-node>,
      #key class :: subclass(<library-info>) = <library-info>)
  => (info :: <library-info>)
   let sources-node = select-single-node(node, "sources");
@@ -334,8 +334,8 @@ define method interpret-library-release-xml
        version: node-attribute(node, "version"),
        platform: node-attribute(node, "platform"),
        relative-location: as(<directory-locator>,
-			     format-to-string("build/%s/Releases/Functional Developer 2.1",
-					      name)),
+                             format-to-string("build/%s/Releases/Functional Developer 2.1",
+                                              name)),
        binary: binary-node & interpret-library-binary-xml(name, binary-node),
        database: select-node-text(node, "database") | format-to-string("%s.%s", name, "ddb"),
        lib: select-node-text(node, "lib") | format-to-string("%s.%s", name, "lib"))
@@ -347,12 +347,12 @@ define method interpret-library-binary-xml
   make(<library-binary-info>,
        binary-name: node-attribute(node, "file"),
        merged-libraries: map(method (merge-node :: <xml-node>)
-			       let library-name = as(<symbol>, merge-node.node-text);
-			       let library = element(*libraries*, library-name);
-			       library.info-merge-parent := merge-parent;
-			       library
-			     end,
-			     select-nodes(node, "merge")))
+                               let library-name = as(<symbol>, merge-node.node-text);
+                               let library = element(*libraries*, library-name);
+                               library.info-merge-parent := merge-parent;
+                               library
+                             end,
+                             select-nodes(node, "merge")))
 end method interpret-library-binary-xml;
 
 // Install the default library packs
@@ -399,11 +399,11 @@ define method merged-project-libraries
   let parent-binary-info = parent-info & parent-info.info-binary;
   let parent = if (parent-info) parent-info.info-name else library end;
   values(parent,
-	 if (parent-binary-info)
+         if (parent-binary-info)
            map(info-name, parent-binary-info.info-merged-libraries);
-	 else
-	   #[]
-	 end)
+         else
+           #[]
+         end)
 end method merged-project-libraries;
 
 
@@ -432,26 +432,26 @@ define method installed-library-categories
   for (library-pack-info :: <library-pack-info> in installed-library-packs())
     for (library-info :: <library-info> in library-pack-info.libraries-function)
       for (category-name :: <string> in library-info.info-categories)
-	let parent-category :: <library-category-info> = root-category;
-	for (level-title :: <string> in %split(category-name, '/'))
-	  let level-name :: <symbol> = as(<symbol>, level-title);
-	  let category :: <library-category-info>
-	    = block (return)
-		for (category-info :: <library-category-info> in parent-category.info-subcategories)
-		  if (category-info.info-name == level-name)
-		    return(category-info)
-		  end
-		end;
-		let category :: <library-category-info>
-		  = make(<library-category-info>, 
-			 name:  level-name,
-			 title: level-title);
-		add!(parent-category.info-subcategories, category);
-		category
-	      end;
-	  parent-category := category
-	end;
-	add!(parent-category.info-libraries, library-info)
+        let parent-category :: <library-category-info> = root-category;
+        for (level-title :: <string> in %split(category-name, '/'))
+          let level-name :: <symbol> = as(<symbol>, level-title);
+          let category :: <library-category-info>
+            = block (return)
+                for (category-info :: <library-category-info> in parent-category.info-subcategories)
+                  if (category-info.info-name == level-name)
+                    return(category-info)
+                  end
+                end;
+                let category :: <library-category-info>
+                  = make(<library-category-info>,
+                         name:  level-name,
+                         title: level-title);
+                add!(parent-category.info-subcategories, category);
+                category
+              end;
+          parent-category := category
+        end;
+        add!(parent-category.info-libraries, library-info)
       end
     end
   end;
@@ -472,20 +472,20 @@ define sealed method %split
   let new-position :: <integer> = old-position;
   let results :: <stretchy-object-vector> = make(<stretchy-object-vector>);
   local method add-substring
-	    (start :: <integer>, _end :: <integer>, #key last? :: <boolean> = #f) => ()
-	  if (trim?)
-	    while (start < _end & string[start] = ' ')
-	      start := start + 1
-	    end;
-	    while (start < _end & string[_end - 1] = ' ')
-	      _end := _end - 1
-	    end
-	  end;
-	  // Don't ever return just a single empty string
-	  if (~last? | start ~== _end | ~empty?(results))
-	    add!(results, copy-sequence(string, start: start, end: _end))
-	  end
-	end method add-substring;
+            (start :: <integer>, _end :: <integer>, #key last? :: <boolean> = #f) => ()
+          if (trim?)
+            while (start < _end & string[start] = ' ')
+              start := start + 1
+            end;
+            while (start < _end & string[_end - 1] = ' ')
+              _end := _end - 1
+            end
+          end;
+          // Don't ever return just a single empty string
+          if (~last? | start ~== _end | ~empty?(results))
+            add!(results, copy-sequence(string, start: start, end: _end))
+          end
+        end method add-substring;
   while (new-position < end-position)
     if (string[new-position] = character)
       add-substring(old-position, new-position);
@@ -557,10 +557,10 @@ define macro example-group-definer
     end }
     => { let info
            = make(<example-group-info>,
-		  name: ?#"group-name",
-		  edition: ?#"edition",
-		  examples: vector(?examples),
-		  ?options);
+                  name: ?#"group-name",
+                  edition: ?#"edition",
+                  examples: vector(?examples),
+                  ?options);
          install-example-group(info) }
  options:
   { } => { }
@@ -580,8 +580,8 @@ define macro example-group-definer
  example:
   { example ?name:expression, ?example-options:* }
     => { make(<example-info>,
-	      name: ?#"name",
-	      ?example-options) }
+              name: ?#"name",
+              ?example-options) }
 end macro example-group-definer;
 
 define class <example-group-info> (<group-info>)
@@ -620,9 +620,9 @@ define function install-example-group
   let name = info-name(info);
   let groups = info-examples($root-example-group);
   remove!(groups, name,
-	  test: method (info, name)
-		  info-name(info) == name
-		end);
+          test: method (info, name)
+                  info-name(info) == name
+                end);
   add!(groups, info)
 end function install-example-group;
 
@@ -639,9 +639,9 @@ define function install-dll-group
     (info :: <dll-group-info>) => ()
   let name = info-name(info);
   remove!($release-dll-groups, name,
-	  test: method (info, name)
-		  info-name(info) == name
-		end);
+          test: method (info, name)
+                  info-name(info) == name
+                end);
   add!($release-dll-groups, info)
 end function install-dll-group;
 
@@ -650,7 +650,7 @@ define function find-dll-group-info
   block (return)
     for (dll-group :: <dll-group-info> in $release-dll-groups)
       when (info-name(dll-group) == name)
-	return(dll-group)
+        return(dll-group)
       end
     end
   end
@@ -662,11 +662,11 @@ define macro dll-group-definer
     end }
     => { let info
            = make(<dll-group-info>,
-		  name: ?#"group-name",
-		  libraries: vector(?libraries),
-		  ?options,
-		  title: ?"group-name",
-		  description: "{None}");
+                  name: ?#"group-name",
+                  libraries: vector(?libraries),
+                  ?options,
+                  title: ?"group-name",
+                  description: "{None}");
          install-dll-group(info) }
  libraries:
   { } => { }
@@ -675,22 +675,22 @@ define macro dll-group-definer
  library:
   { library ?name:expression, ?library-options:* }
     => { make(<library-info>,
-	      name: ?#"name",
-	      ?library-options,
-	      title: ?"name",
-	      description: "{None}",
-	      modules: #[]) }
+              name: ?#"name",
+              ?library-options,
+              title: ?"name",
+              description: "{None}",
+              modules: #[]) }
 end macro dll-group-definer;
 
 define macro renamed-dll-definer
   { define renamed-dll ?group-name:name = ?dll-name:expression }
     => { let info
            = make(<dll-group-info>,
-		  name: ?#"group-name",
-		  title: ?"group-name",
-		  dll-name: ?dll-name,
-		  libraries: #[],
-		  description: "{None}");
+                  name: ?#"group-name",
+                  title: ?"group-name",
+                  dll-name: ?dll-name,
+                  libraries: #[],
+                  description: "{None}");
          install-dll-group(info) }
 end macro renamed-dll-definer;
 
@@ -717,9 +717,9 @@ define function install-library-group
     (info :: <library-group-info>) => ()
   let name = info-name(info);
   remove!($release-library-groups, name,
-	  test: method (info, name)
-		  info-name(info) == name
-		end);
+          test: method (info, name)
+                  info-name(info) == name
+                end);
   add!($release-library-groups, info)
 end function install-library-group;
 
@@ -729,9 +729,9 @@ define macro library-group-definer
     end }
     => { let info
            = make(<library-group-info>,
-		  name: ?#"group-name",
-		  libraries: vector(?libraries),
-		  ?options);
+                  name: ?#"group-name",
+                  libraries: vector(?libraries),
+                  ?options);
          install-library-group(info) }
  libraries:
   { } => { }
@@ -740,8 +740,8 @@ define macro library-group-definer
  library:
   { library ?name:expression, ?library-options:* }
     => { make(<library-info>,
-	      name: ?#"name",
-	      ?library-options) }
+              name: ?#"name",
+              ?library-options) }
 end macro library-group-definer;
 */
 

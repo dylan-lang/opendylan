@@ -149,11 +149,11 @@ define method make-collections-of-size
   end;
   if (subtype?(<character>, element-type))
     add!(sequences,
-	 if (collection-size < size($default-string))
-	   as(class, copy-sequence($default-string, end: collection-size));
-	 else
-	   as(class, make(<vector>, size: collection-size, fill: 'a'));
-	 end)
+         if (collection-size < size($default-string))
+           as(class, copy-sequence($default-string, end: collection-size));
+         else
+           as(class, make(<vector>, size: collection-size, fill: 'a'));
+         end)
   end;
   // Only return one for size 0, because they are all the same
   if (collection-size = 0)
@@ -204,19 +204,19 @@ define method make-limited-collections-of-size
     end;
     if (subtype?(<character>, element-type))
       add!(sequences,
-	   if (collection-size < size($default-string))
-	     as(type, copy-sequence($default-string, end: collection-size));
-	   else
-	     make(type, size: collection-size, fill: 'a');
-	   end)
+           if (collection-size < size($default-string))
+             as(type, copy-sequence($default-string, end: collection-size));
+           else
+             make(type, size: collection-size, fill: 'a');
+           end)
     end;
     if (subtype?(<vector>, element-type))
       add!(sequences,
-	   if (collection-size < size($default-vectors))
-	     as(type, copy-sequence($default-vectors, end: collection-size));
-	   else
-	     make(type, size: collection-size, fill: #[]);
-	   end)
+           if (collection-size < size($default-vectors))
+             as(type, copy-sequence($default-vectors, end: collection-size));
+           else
+             make(type, size: collection-size, fill: #[]);
+           end)
     end
   end;
   // Only return one for size 0, because they are all the same
@@ -256,9 +256,9 @@ define method expected-element
   if (element-type = <object>)
     element-type := 
       select (collection[0] by instance?)
-	<character> => <character>;
-	<integer>   => <integer>;
-	<vector>    => <vector>;
+        <character> => <character>;
+        <integer>   => <integer>;
+        <vector>    => <vector>;
       end;
   end;
   select (element-type by subtype?)
@@ -272,9 +272,9 @@ define method expected-element
       index + 1;
     <vector> =>
       if (size(collection) < size($default-vectors))
-	$default-vectors[index];
+        $default-vectors[index];
       else 
-	#[]
+        #[]
       end if;
   end
 end method expected-element;
@@ -416,7 +416,7 @@ define method test-collection
 
             // Generic functions on <mutable-collection>
             test-element-setter,
-	    test-fill!,		// missing from the DRM.
+            test-fill!,         // missing from the DRM.
 
             // Methods on <mutable-collection>
             test-type-for-copy
@@ -595,9 +595,9 @@ define method proper-collection?
     while (#t)
       let tail-element = tail(pair);
       select (tail-element by instance?)
-	<empty-list> => return(#t);
-	<pair>       => pair := tail-element;
-	otherwise    => return(#f);
+        <empty-list> => return(#t);
+        <pair>       => pair := tail-element;
+        otherwise    => return(#f);
       end
     end
   end
@@ -632,17 +632,17 @@ define method collection-valid-as-class?
     <array> => #f;
     otherwise =>
       proper-collection?(collection)
-	& begin
-	    let element-type = collection-type-element-type(class);
-	    select (element-type)
-	      <object> => #t;
-	      otherwise =>
-		every?(method (item)
-			 instance?(item, element-type)
-		       end,
-		       collection)
-	    end
-	  end;
+        & begin
+            let element-type = collection-type-element-type(class);
+            select (element-type)
+              <object> => #t;
+              otherwise =>
+                every?(method (item)
+                         instance?(item, element-type)
+                       end,
+                       collection)
+            end
+          end;
   end
 end method collection-valid-as-class?;
 
@@ -690,14 +690,14 @@ define method test-as
   do-protocol-classes
     (method (class)
        if (protocol-class-instantiable?(spec, class)
-	     & collection-valid-as-class?(class, collection))
-	 let collection-size = size(collection);
-	 check-true(format-to-string("%s as %s", name, class),
-		    begin
-		      let new-collection = as(class, collection);
-		      instance?(new-collection, class)
-			& size(new-collection) = collection-size
-		    end);
+             & collection-valid-as-class?(class, collection))
+         let collection-size = size(collection);
+         check-true(format-to-string("%s as %s", name, class),
+                    begin
+                      let new-collection = as(class, collection);
+                      instance?(new-collection, class)
+                        & size(new-collection) = collection-size
+                    end);
        end
      end,
      spec,
@@ -709,21 +709,21 @@ define method test-do
   if (proper-collection?(collection))
     let do-results
       = run-iteration-test(method (f)
-			     do(f, collection)
-			   end);
+                             do(f, collection)
+                           end);
     check-true(format-to-string("%s 'do' using collection once", name),
-	       iteration-test-equal?(do-results, collection));
+               iteration-test-equal?(do-results, collection));
     let do-results
       = run-iteration-test(method (f)
-			     do(f, collection, collection)
-			   end);
+                             do(f, collection, collection)
+                           end);
     check-true(format-to-string("%s 'do' using collection twice", name),
-	       iteration-test-equal?(do-results, collection, collection));
+               iteration-test-equal?(do-results, collection, collection));
   else
     check-condition(format-to-string("%s 'do' errors because improper",
-				     name),
-		    <error>,
-		    do(identity, collection))
+                                     name),
+                    <error>,
+                    do(identity, collection))
   end
 end method test-do;
 
@@ -732,17 +732,17 @@ define method test-map
   if (proper-collection?(collection))
     let new-collection = #f;
     check-equal(format-to-string("%s 'map' with identity", name),
-		new-collection := map(identity, collection), collection);
+                new-collection := map(identity, collection), collection);
     check-true(format-to-string("%s 'map' creates new collection", name),
-	       empty?(collection) | new-collection ~== collection);
+               empty?(collection) | new-collection ~== collection);
     check-instance?(format-to-string("%s 'map' uses type-for-copy", name),
-		    type-for-copy(collection),
-		    new-collection);
+                    type-for-copy(collection),
+                    new-collection);
   else
     check-condition(format-to-string("%s 'map' errors because improper",
-				     name),
-		    <error>,
-		    map(identity, collection))
+                                     name),
+                    <error>,
+                    map(identity, collection))
   end
 end method test-map;
 
@@ -753,26 +753,26 @@ define method test-map-as
     let spec = $collections-protocol-spec;
     do-protocol-classes
       (method (class)
-	 //--- Arrays don't take size: as an argument
-	 if (protocol-class-instantiable?(spec, class)
-	       & collection-valid-as-class?(class, collection))
-	   check-true(format-to-string("%s 'map-as' %s with identity", name, 
-				       class),
-		      begin
-			let new-collection
-			  = map-as(class, identity, collection);
-			instance?(new-collection, class)
-			  & size(new-collection) = collection-size
-		      end);
-	 end
+         //--- Arrays don't take size: as an argument
+         if (protocol-class-instantiable?(spec, class)
+               & collection-valid-as-class?(class, collection))
+           check-true(format-to-string("%s 'map-as' %s with identity", name, 
+                                       class),
+                      begin
+                        let new-collection
+                          = map-as(class, identity, collection);
+                        instance?(new-collection, class)
+                          & size(new-collection) = collection-size
+                      end);
+         end
        end,
        spec,
        superclass: <mutable-collection>)
   else
     check-condition(format-to-string("%s 'map-as' errors because improper",
-				     name),
-		    <error>,
-		    map(identity, collection))
+                                     name),
+                    <error>,
+                    map(identity, collection))
   end
 end method test-map-as;
 
@@ -781,13 +781,13 @@ define method test-map-into
   if (proper-collection?(collection))
     let new-collection = make(<vector>, size: size(collection));
     check-equal(format-to-string("%s 'map-into' with identity", name),
-		map-into(new-collection, identity, collection),
-		collection)
+                map-into(new-collection, identity, collection),
+                collection)
   else
     check-condition(format-to-string("%s 'map-into' errors because improper",
-				     name),
-		    <error>,
-		    map-into(make(<vector>, size: 100), identity, collection))
+                                     name),
+                    <error>,
+                    map-into(make(<vector>, size: 100), identity, collection))
   end
 end method test-map-into;
 
@@ -795,14 +795,14 @@ define method test-any?
     (name :: <string>, collection :: <collection>) => ()
   if (proper-collection?(collection))
     check-equal(format-to-string("%s any? always matching", name),
-		any?(always(#t), collection),
-		~empty?(collection));
+                any?(always(#t), collection),
+                ~empty?(collection));
     check-false(format-to-string("%s any? never matching", name),
-		any?(always(#f), collection));
+                any?(always(#f), collection));
   else
     check-condition(format-to-string("%s any? errors because improper", name),
-		    <error>,
-		    any?(always(#t), collection))
+                    <error>,
+                    any?(always(#t), collection))
   end
 end method test-any?;
 
@@ -810,13 +810,13 @@ define method test-every?
     (name :: <string>, collection :: <collection>) => ()
   if (proper-collection?(collection))
     check-true(format-to-string("%s every? always matching", name),
-	       every?(always(#t), collection));
+               every?(always(#t), collection));
     check-true(format-to-string("%s every? never matching", name),
-	       empty?(collection) | ~every?(always(#f), collection))
+               empty?(collection) | ~every?(always(#f), collection))
   else
-    check-condition(format-to-string("%s every? errors becaue improper", name),
-		    <error>,
-		    every?(always(#t), collection))
+    check-condition(format-to-string("%s every? errors because improper", name),
+                    <error>,
+                    every?(always(#t), collection))
   end
 end method test-every?;
 
@@ -835,8 +835,8 @@ define method test-element
               default);
   unless (type == <object>)
     check-condition(format-to-string("%s element wrong default type errors", name),
-		    <error>,
-		    element(collection, -1, default: #"wrong-default-type"));
+                    <error>,
+                    element(collection, -1, default: #"wrong-default-type"));
   end unless;
   for (key in key-sequence(collection))
     check-equal(format-to-string("%s element %=", name, key),
@@ -925,16 +925,16 @@ define method test-shallow-copy
     (name :: <string>, collection :: <collection>) => ()
   let copy = #f;
   check-instance?(format-to-string("%s shallow-copy uses type-for-copy", name),
-		  type-for-copy(collection),
-		  copy := shallow-copy(collection));
+                  type-for-copy(collection),
+                  copy := shallow-copy(collection));
   if (copy)
     let new-copy-needed?
       = instance?(collection, <mutable-collection>) & ~empty?(collection);
     if (new-copy-needed?)
       check-true(format-to-string("%s shallow-copy creates new object", name),
-		 copy ~== collection);
+                 copy ~== collection);
       check-true(format-to-string("%s shallow-copy creates correct elements", name),
-		 copy = collection)
+                 copy = collection)
     end
   end
 end method test-shallow-copy;
@@ -1013,18 +1013,18 @@ define method test-size-setter
     let new-size = size(collection) + 5;
     if (instance?(#f, collection-element-type(collection)))
       check-equal(format-to-string("%s resizes", name),
-		  begin
-		    size(collection) := new-size;
-		    size(collection)
-		  end,
-		  new-size)
+                  begin
+                    size(collection) := new-size;
+                    size(collection)
+                  end,
+                  new-size)
     end;
     check-equal(format-to-string("%s emptied", name),
-		begin
-		  size(collection) := 0;
-		  size(collection)
-		end,
-		0);
+                begin
+                  size(collection) := 0;
+                  size(collection)
+                end,
+                0);
   end
 end method test-size-setter;
 
@@ -1043,38 +1043,38 @@ define method test-concatenate-as
   do-protocol-classes
     (method (class)
        if (protocol-class-instantiable?(spec, class)
-	     & collection-valid-as-class?(class, sequence)
-	     //---*** Currently pairs crash concatenate-as
-	     & class ~== <pair>)
-	 let sequence-size = size(sequence);
-	 let sequence-empty? = empty?(sequence);
-	 check-true(format-to-string("%s concatenate-as %s identity", name, class),
-		    begin
-		      let collection = concatenate-as(class, sequence);
-		      instance?(collection, class)
-			& (collection = sequence)
-		    end);
-	 check-true(format-to-string("%s concatenate-as %s", name, class),
-		    begin
-		      let collection = concatenate-as(class, sequence, sequence);
-		      instance?(collection, class)
-			& (size(collection) = sequence-size * 2)
-			& (sequence-empty?
-			   | (collection[0] = sequence[0]
-			      & collection[sequence-size] = sequence[0]))
-		    end);
-	 check-true(format-to-string("%s concatenate-as %s three times",
-				     name, class),
-		    begin
-		      let collection
-			= concatenate-as(class, sequence, sequence, sequence);
-		      instance?(collection, class)
-			& (size(collection) = sequence-size * 3)
-			& (sequence-empty?
-			   | (collection[0] = sequence[0]
-			      & collection[sequence-size] = sequence[0]
-			      & collection[sequence-size * 2] = sequence[0]))
-		    end);
+             & collection-valid-as-class?(class, sequence)
+             //---*** Currently pairs crash concatenate-as
+             & class ~== <pair>)
+         let sequence-size = size(sequence);
+         let sequence-empty? = empty?(sequence);
+         check-true(format-to-string("%s concatenate-as %s identity", name, class),
+                    begin
+                      let collection = concatenate-as(class, sequence);
+                      instance?(collection, class)
+                        & (collection = sequence)
+                    end);
+         check-true(format-to-string("%s concatenate-as %s", name, class),
+                    begin
+                      let collection = concatenate-as(class, sequence, sequence);
+                      instance?(collection, class)
+                        & (size(collection) = sequence-size * 2)
+                        & (sequence-empty?
+                           | (collection[0] = sequence[0]
+                              & collection[sequence-size] = sequence[0]))
+                    end);
+         check-true(format-to-string("%s concatenate-as %s three times",
+                                     name, class),
+                    begin
+                      let collection
+                        = concatenate-as(class, sequence, sequence, sequence);
+                      instance?(collection, class)
+                        & (size(collection) = sequence-size * 3)
+                        & (sequence-empty?
+                           | (collection[0] = sequence[0]
+                              & collection[sequence-size] = sequence[0]
+                              & collection[sequence-size * 2] = sequence[0]))
+                    end);
        end
      end,
      spec,
@@ -1192,7 +1192,7 @@ define method test-copy-sequence
     (name :: <string>, sequence :: <sequence>) => ()
   check-true(format-to-string("%s copy-sequence", name),
              begin
-	       let new-sequence = copy-sequence(sequence);
+               let new-sequence = copy-sequence(sequence);
                valid-copy-of-sequence?(new-sequence, sequence)
              end)
 end method test-copy-sequence;
@@ -1209,9 +1209,9 @@ define method valid-reversed-sequence?
   instance?(new-sequence, <sequence>)
     & size(new-sequence) = old-size
     & every?(method (i)
-	       old-sequence[i] = new-sequence[old-size - i - 1]
-	     end,
-	     range(from: 0, below: old-size))
+               old-sequence[i] = new-sequence[old-size - i - 1]
+             end,
+             range(from: 0, below: old-size))
 end method valid-reversed-sequence?;
 
 define method test-reverse
@@ -1278,9 +1278,9 @@ define method sequence-sorted?
     (sequence :: <sequence>, #key test = test-less-or-equal?)
  => (sorted? :: <boolean>)
   every?(method (i)
-	   test(sequence[i], sequence[i + 1])
-	 end,
-	 range(from: 0, below: size(sequence) - 1))
+           test(sequence[i], sequence[i + 1])
+         end,
+         range(from: 0, below: size(sequence) - 1))
 end method sequence-sorted?;
 
 define method test-sorted-sequence
@@ -1289,15 +1289,15 @@ define method test-sorted-sequence
  => ()
   let old-size = size(old-sequence);
   check-instance?(format-to-string("%s returns a sequence", name),
-		  <sequence>,
-		  new-sequence);
+                  <sequence>,
+                  new-sequence);
   check-true(format-to-string("%s all elements in order", name),
-	     size(new-sequence) = old-size
-	       & sequence-sorted?(new-sequence, test: test)
-	       & every?(method (x)
-			  member?(x, old-sequence)
-			end,
-			new-sequence))
+             size(new-sequence) = old-size
+               & sequence-sorted?(new-sequence, test: test)
+               & every?(method (x)
+                          member?(x, old-sequence)
+                        end,
+                        new-sequence))
 end method test-sorted-sequence;
 
 define method test-sort-options
@@ -1311,9 +1311,9 @@ define method test-sort-options
   check-true(format-to-string("%s copies if necessary", name),
              begin
                copy := copy-function(sequence);
-	       let new-copy-needed?
-		 = sort-function == sort
-		     & ~sequence-sorted?(sequence, test: test);
+               let new-copy-needed?
+                 = sort-function == sort
+                     & ~sequence-sorted?(sequence, test: test);
                sorted-sequence := sort-function(copy, test: test);
                ~new-copy-needed? | sorted-sequence ~== copy
              end);
@@ -1327,16 +1327,16 @@ define method test-sort
  => ()
   let sort-name
     = format-to-string("%s sort%s",
-		       name, if (sort-function == sort!) "!" else "" end);
+                       name, if (sort-function == sort!) "!" else "" end);
   test-sort-options(sort-name,
-		    sequence,
-		    sort-function: sort-function);
+                    sequence,
+                    sort-function: sort-function);
   test-sort-options(format-to-string("reversed %s", sort-name),
-		    sequence, 
-		    sort-function: sort-function, copy-function: reverse);
+                    sequence, 
+                    sort-function: sort-function, copy-function: reverse);
   test-sort-options(format-to-string("%s with > test", sort-name),
-		    sequence, 
-		    sort-function: sort-function, test: test-greater?);
+                    sequence, 
+                    sort-function: sort-function, test: test-greater?);
 end method test-sort;
 
 define method test-sort!
@@ -1372,30 +1372,30 @@ define method test-nth-setter
     = select (collection-element-type(sequence) by subtype?)
         <character> => 'z';
         <number>    => 100;
-	<vector>    => #['z'];
+        <vector>    => #['z'];
         <object>    => 100;
       end;
   case
     n < size(sequence) =>
       check-true(name,
-		 begin
+                 begin
                    let copy = shallow-copy(sequence);
-		   nth-setter(item, copy);
-		   copy[n] = item
-		 end);
+                   nth-setter(item, copy);
+                   copy[n] = item
+                 end);
     instance?(sequence, <stretchy-collection>)
       & (n = size(sequence) | 
-	   instance?(#f, collection-element-type(sequence))) =>
+           instance?(#f, collection-element-type(sequence))) =>
       check-true(name,
-		 begin
+                 begin
                    let copy = shallow-copy(sequence);
-		   nth-setter(item, copy);
-		   size(copy) = n + 1
-		     & copy[n] = item
-		 end);
+                   nth-setter(item, copy);
+                   size(copy) = n + 1
+                     & copy[n] = item
+                 end);
     otherwise =>
       check-condition(format-to-string("%s generates an error", name),
-		      <error>,
+                      <error>,
                       begin
                         let copy = shallow-copy(sequence);
                         nth-setter(item, copy)
