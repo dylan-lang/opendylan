@@ -162,7 +162,7 @@ void untraced_fill_byte_char_mem(void **object, byte_char fill, int count, int c
 __inline  \
 void untraced_fill_ ## type ## _mem(void **object, type fill, size_t count, size_t count_slot, dylan_bool_t ztq) \
 { \
-  int index = 0; \
+  size_t index = 0; \
   type *mem = (type*)(object + count_slot + 1); \
   unused(ztq); \
   object[count_slot] = (void*)((count << 2) + 1); \
