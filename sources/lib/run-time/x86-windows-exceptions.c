@@ -85,7 +85,7 @@ LONG DylanExceptionFilter (LPEXCEPTION_POINTERS info)
         // calling the Dylan handler) we destructively modify the execution
         // context, so that when Windows continues from the exception, it
         // actually continues in the Dylan handler calling code instead.
-        // This handler will never return - instead it will ultimatly NLX
+        // This handler will never return - instead it will ultimately NLX
 
         info->ContextRecord->Eip = (unsigned long) &call_dylan_stack_overflow_handler;
         return(EXCEPTION_CONTINUE_EXECUTION);
