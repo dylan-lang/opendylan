@@ -9,7 +9,7 @@ Status:          Draft
 Type:            Standards Track
 Affects-DRM:     Yes
 Created:         28-Jul-2013
-Last-Modified:   16-Sep-2013
+Last-Modified:   29-Nov-2013
 Post-History:    28-Jul-2013
 Target-Version:  2013.2
 ===============  ===============
@@ -71,9 +71,10 @@ The ``limited`` methods on fillable collection classes each return a limited
 type designated *L*. The ``fill:`` init-keyword of all *L* will have a default
 value identical to the default value listed above instead of ``#f``.
 
-The defaulted or supplied ``default-fill:`` argument must be an instance of the
-element type of the collection; it is an error to supply a default filler
-object that the collection cannot accommodate.
+The defaulted or supplied ``default-fill:`` argument should be an instance of
+the element type of the collection. However, it is not an error to supply a
+default filler object that the collection cannot accommodate, since a call to
+``make`` may specify a filler object of the correct type.
 
 
 ``element-type-fill``
@@ -83,10 +84,10 @@ A new open generic function will be added to the Dylan library::
 
    element-type-fill (coll :: <collection>) => (fill-object :: <object>)
 
-For instances of fillable collection classes returned by ``limited``, this
-function will return the (possibly defaulted) ``default-fill:`` argument to
-``limited``. For instances of all other fillable collection classes, this
-function will return the following:
+For instances of a limited fillable collection class type, this function will
+return the (possibly defaulted) ``default-fill:`` argument to ``limited``. For
+instances of all other fillable collection classes, this function will return
+the following:
 
 ====================  ============  
 Class                 Return Value
@@ -142,7 +143,7 @@ to grow it. The DRM states:
    *new-size* but not ``fill:``.
 
 That is, new elements are the default ``fill:`` value for the collection. This
-will be to ``#f``, ``0``, or ``' '`` depending on the type of limited
+will be ``#f``, ``0``, or ``' '`` depending on the type of limited
 collection. But in a user-defined limited collection, such as
 ``limited(<vector>, of: <shape>)``, the default causes a spurious type error.
 And if the collection is empty, the workaround described in the DRM of using
@@ -166,7 +167,7 @@ element type. Adding the ``element-type`` method solves that problem.
 Rationale
 =========
 
-I named ``element-type-fill`` that rather than ``default-fill`` because the
+I named ``element-type-fill`` as such rather than ``default-fill`` because the
 latter name is a little more misleading. A user can define a subclass of a
 collection and provide a new default value for the ``fill:`` init-keyword
 without needing to define a new ``element-type-fill`` method; he only needs to
@@ -227,20 +228,33 @@ This DEP does not change the limited collection type relationships described in
 the `Limited Collection Types <http://opendylan.org/books/drm/Limited_Collection_Types>`__
 section of the [DRM]_.
 
-The default value of the new ``default-fill:`` parameter to ``limited`` is the
-same as the previously hard-coded default value of the ``fill:`` init-parameter
-to the fillable collection classes. Therefore, code that calls ``limited``
-without the ``default-fill:`` argument will get a type whose default ``fill:``
-value is the same as the ``fill:`` value in current versions of Open Dylan.
+Before this DEP, the Open Dylan implementation of limited collections
+effectively specified a ``default-fill:`` argument for certain combinations of
+collection and element type, as follows:
+
+=====================  =====================================================
+Collection             Element Types     
+=====================  =====================================================
+``<array>``            ``<byte>``, ``<double-byte>``, ``<machine-word>``,
+                       ``<integer>``, ``<single-float>``, ``<double-float>``
+``<vector>``           ``<byte>``, ``<double-byte>``, ``<machine-word>``,
+                       ``<integer>``, ``<single-float>``, ``<double-float>``
+``<stretchy-vector>``  ``<byte>``, ``<byte-character>``
+=====================  =====================================================
+
+Programs that relied on this behavior should instead specify either the
+``default-fill:`` argument to ``limited`` or the ``fill:`` init-keyword to 
+``make``.
 
 Existing subclasses of ``<collection>`` that define their own ``fill:``
 init-keyword will still work, assuming they also specify a default value for
 that keyword that is of the element type of the subclass.
 
 New code may use ``element-type`` or ``element-type-fill`` in conjunction with
-an existing subclass of ``<collection>`` with restricted types that does not
-define those methods. Those functions will then return ``<object>`` and ``#f``,
-which may not be appropriate for the existing collection.
+an existing subclass of ``<collection>`` that does not define those methods but
+nonetheless has restricted element types. ``element-type`` and
+``element-type-fill`` will then return ``<object>`` and ``#f``, which may not
+be correct for that collection's allowed element types.
 
 The only other backwards compatibility issue is a namespace collision if the
 user defines his own unrelated "element-type" or "element-type-fill" bindings.
@@ -251,5 +265,19 @@ Reference Implementation
 
 I have begun a reference implementation.
 
+The implementation currently includes an ``element-type-fill`` slot in every
+instance of a ``<simple-T-X>`` class (e.g. ``<simple-byte-vector>``). Ideally,
+the ``<simple-T-X>`` class would hard code a common ``element-type-fill`` value
+like ``0`` or ``' '``, and an additional subclass ``<simple-T-X-with-fill>``
+would include the ``element-type-fill`` slot if the user wants a more unusual
+fill value. Unfortunately, it appears that the implementation of repeated slots
+does not allow for subclasses of a class with repeated slots.
+
+A possible remedy is to implement two subclasses of a ``<simple-T-X>`` class:
+``<simple-T-X-common-fill>`` and ``<simple-T-X-custom-fill>``. ``<simple-T-X>``
+would become abstract and the two concrete subclasses would define the repeated
+slot. The code specifically allows for this in the ``dfmc-modeling`` module's
+``limited-element-type-mappings-definer`` macro; it can return a different
+concrete class depending on the ``default-fill:`` argument to ``limited``.
 
 .. [DRM] `Dylan Reference Manual`:title-reference:
