@@ -1,8 +1,12 @@
 Environment Variables
 =====================
 
-There are a number of environment variables which control
-where the Open Dylan compiler looks for or places files.
+Open Dylan uses a variety of environment variables to control
+behavior, where to look for files, or where to place output
+files.
+
+``OPEN_DYLAN_TARGET_PLATFORM``:
+    Used in :doc:`cross-compilation`.
 
 ``OPEN_DYLAN_RELEASE_INSTALL``:
     Unknown purpose.

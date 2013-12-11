@@ -30,3 +30,4 @@ guide.
    debugging-with-gdb-lldb
    windows
    environment-variables
+   cross-compilation
