@@ -119,7 +119,7 @@ generic functions and constants.
    :primary:
    :instantiable:
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :keyword name: An instance of :drm:`<string>` representing a symbolic
      internet address.
@@ -241,7 +241,7 @@ protocols.
    :abstract:
    :primary:
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :description:
 
@@ -309,13 +309,13 @@ IPV4 addresses
 .. method:: host-order
    :specializer: <ipv4-numeric-address>
 
-   :signature: host-order *ip4-numeric-address* => *machine-word*
+   :signature: host-order *ipv4-numeric-address* => *machine-word*
 
    :description:
 
      Returns the numeric address in host order as an instance of
      :class:`<machine-word>`. The argument is an instance of
-     :class:`<ip4-numeric-address>`.
+     :class:`<ipv4-numeric-address>`.
 
 .. method:: network-order
    :specializer: <ipv4-numeric-address>
@@ -326,13 +326,13 @@ IPV4 addresses
 
      Returns the numeric address in network order as an instance of
      :class:`<machine-word>`. The argument is an instance of
-     :class:`<ip4-numeric-address>`.
+     :class:`<ipv4-numeric-address>`.
 
 .. method:: as
    :specializer: <string>, <ipv4-numeric-address>
 
    Returns the presentation (dotted string) form of an instance of
-   :class:`<ip4-numeric-address>`.
+   :class:`<ipv4-numeric-address>`.
 
    :signature: as *string* *ipv4-numeric-address* => *string*
 
@@ -378,7 +378,7 @@ The <abstract-socket> class
    :uninstantiable:
    :free:
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :keyword socket-descriptor: A Windows handle or UNIX fd (file
      descriptor) for the socket. In general users of the sockets API
@@ -638,7 +638,7 @@ The class of TCP client sockets.
    :keyword port: An instance of :drm:`<integer>` representing the remote
      port to connect to. Required unless ``service:`` is supplied.
    :keyword element-type: An instance of :drm:`<class>`. Useful values for
-     :class:`<tcp-streams>` are :class:`<byte-character>`` and ``<byte>``.
+     :class:`<tcp-streams>` are :class:`<byte-character>` and ``<byte>``.
      This keyword is an inherited streams class keyword. See
      :doc:`../io/streams` for a full description.
 
@@ -707,7 +707,7 @@ The class of UDP server sockets.
 
 .. class:: <udp-server-socket>
 
-   :superclass: <server-socket>
+   :superclass: :class:`<server-socket>`
 
    :keyword element-type: Establishes a new default for the element-type of
       :class:`<UDP-socket>` instances returned by calling :gf:`accept` with this
@@ -843,7 +843,7 @@ This section lists the socket condition classes in the Network library.
 
      The socket or server socket has been closed.
 
-     Most operations on closed instances of :class:`<tcp-socket>``
+     Most operations on closed instances of :class:`<tcp-socket>`
      return instances of :class:`<stream-closed-error>` (from the
      Streams library) rather than instances of :class:`<socket-closed>`.
 
