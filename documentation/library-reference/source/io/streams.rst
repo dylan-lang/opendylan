@@ -486,8 +486,8 @@ Closing streams
 ^^^^^^^^^^^^^^^
 
 It is important to call :gf:`close` on streams when you have finished with
-them. Typically, external streams such as ``<file-stream>`` and
-``<console-stream>`` allocate underlying system resources when they are
+them. Typically, external streams such as :class:`<file-stream>` and
+:class:`<console-stream>` allocate underlying system resources when they are
 created, and these resources are not recovered until the stream is
 closed. The total number of such streams that can be open at one time
 may be system dependent. It may be possible to add reasonable
