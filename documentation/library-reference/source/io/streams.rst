@@ -516,7 +516,7 @@ of seriously degrading streams performance for all applications whose
 transaction models are different from the model implied by the chosen
 default locking scheme. Instead, the Streams module provides the user
 with a single, per instance slot, *stream-lock:*, which is inherited by
-all subclasses of ``<stream>``. You should use the generic functions
+all subclasses of :class:`<stream>`. You should use the generic functions
 :gf:`stream-lock` and :gf:`stream-lock-setter`, together with other
 appropriate functions and macros from the Threads library, to implement
 a locking strategy appropriate to your application and its stream
