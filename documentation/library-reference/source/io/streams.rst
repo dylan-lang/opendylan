@@ -326,7 +326,7 @@ File streams
 File streams are intended only for accessing the contents of files. More
 general file handling facilities, such as renaming, deleting, moving,
 and parsing directory names, are provided by the File-System module: see
-` <file-system.htm#46956>`_ for details. The make method on
+:doc:`/system/file-system` for details. The make method on
 :class:`<file-stream>` does not create direct instances of
 :class:`<file-stream>`, but instead an instance of a subclass determined
 by :gf:`type-for-file-stream`.
