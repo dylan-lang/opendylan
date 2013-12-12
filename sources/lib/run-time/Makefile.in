@@ -91,6 +91,7 @@ LLVM_RUNTIME_OBJS =
 
 C_RUNTIME_OBJS    = $(OBJDIR)/c-run-time.o \
                     $(OBJDIR)/c-support.o \
+                    $(OBJDIR)/c-primitives-debug.o \
                     $(OBJDIR)/c-primitives-math.o \
                     $(OBJDIR)/posix-threads.o
 
