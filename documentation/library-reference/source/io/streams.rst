@@ -949,7 +949,7 @@ are exported from the *streams* module.
 
    A subclass of :drm:`<vector>` whose *element-type* is :type:`<byte>`.
 
-   :superclasses: <vector>
+   :superclasses: :drm:`<vector>`
 
    :keyword size: An instance of :drm:`<integer>` specifying the size of
      the buffer. Default value: 0.
@@ -1071,11 +1071,11 @@ are exported from the *streams* module.
 
    :operations:
 
-     - :meth:`make(<byte-string-stream-class>)`
+     - :meth:`make(<byte-string-stream>)`
 
    See also
 
-   - :meth:`make(<byte-string-stream-class>)`
+   - :meth:`make(<byte-string-stream>)`
    - :class:`<sequence-stream>`
 
 .. class:: <byte-vector>
