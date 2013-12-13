@@ -1083,7 +1083,7 @@ are exported from the *streams* module.
 
    A subtype of :drm:`<vector>` whose element-type is :type:`<byte>`.
 
-   :superclasses: <vector>
+   :superclasses: :drm:`<vector>`
 
    :keyword: See Superclasses.
 
