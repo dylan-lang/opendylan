@@ -1181,7 +1181,7 @@ are exported from the *streams* module.
 
    Error type signaled on reaching the end of an input stream.
 
-   :superclasses: <error>
+   :superclasses: :drm:`<error>`
 
    :keyword stream: An instance of :class:`<stream>`.
 
@@ -1228,7 +1228,7 @@ are exported from the *streams* module.
 
    The base class for all errors related to file I/O.
 
-   :superclasses: <error>
+   :superclasses: :drm:`<error>`
 
    :keyword locator: An instance of ``<locator>``.
 
