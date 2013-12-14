@@ -187,7 +187,7 @@ are exported from the *duim-extended-geometry* module.
 
    :signature: ellipse? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -362,7 +362,7 @@ are exported from the *duim-extended-geometry* module.
 
    :signature: elliptical-arc? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -428,7 +428,7 @@ are exported from the *duim-extended-geometry* module.
 
    :signature: line? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -812,7 +812,7 @@ are exported from the *duim-extended-geometry* module.
 
    :signature: polygon? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -932,7 +932,7 @@ are exported from the *duim-extended-geometry* module.
    :signature: polyline? *object* => *boolean*
 
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
 
    :value boolean: An instance of type ``<boolean>``.
@@ -1037,7 +1037,7 @@ are exported from the *duim-extended-geometry* module.
 
    :signature: rectangle? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 

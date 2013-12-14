@@ -193,7 +193,7 @@ Machine-Words module, which is exported by the Common Dylan library.
      The class of objects that can represent a limited range of integral
      values.
 
-   :supers: :class:`<object>`
+   :supers: :drm:`<object>`
 
    :description:
 

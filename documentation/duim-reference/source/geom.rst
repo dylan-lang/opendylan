@@ -174,7 +174,7 @@ are exported from the *duim-geometry* module.
 
    :signature: area? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
    :value boolean: An instance of type ``<boolean>``.
 
    :description:
@@ -245,7 +245,7 @@ are exported from the *duim-geometry* module.
 
    :signature: bounding-box? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
    :value boolean: An instance of type ``<boolean>``.
 
    :description:
@@ -1328,7 +1328,7 @@ are exported from the *duim-geometry* module.
 
    :signature: path? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
    :value boolean: An instance of type ``<boolean>``.
 
    :description:
@@ -1379,7 +1379,7 @@ are exported from the *duim-geometry* module.
 
    :signature: point? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
    :value boolean: An instance of type ``<boolean>``.
 
    :description:
@@ -1552,7 +1552,7 @@ are exported from the *duim-geometry* module.
 
    :signature: region? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
    :value boolean: An instance of type ``<boolean>``.
 
    :description:
@@ -1751,7 +1751,7 @@ are exported from the *duim-geometry* module.
 
    :signature: region-set? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
    :value boolean: An instance of type ``<boolean>``.
 
    :description:
@@ -2030,7 +2030,7 @@ are exported from the *duim-geometry* module.
 
    :signature: transform? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
    :value boolean: An instance of type ``<boolean>``.
 
    :description:

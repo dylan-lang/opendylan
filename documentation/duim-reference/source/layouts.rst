@@ -1156,7 +1156,7 @@ are exported from the *duim-layouts* module.
 
    The class of all space requirement objects.
 
-   :superclasses: :class:`<object>`
+   :superclasses: :drm:`<object>`
 
    :keyword width: An instance of type ``<integer>``. Default value: :const:`$fill`.
    :keyword min-width: An instance of type ``<integer>``. Default value: *width*.
@@ -1246,7 +1246,7 @@ are exported from the *duim-layouts* module.
 
    :signature: space-requirement? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 

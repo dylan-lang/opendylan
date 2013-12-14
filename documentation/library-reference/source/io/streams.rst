@@ -326,7 +326,7 @@ File streams
 File streams are intended only for accessing the contents of files. More
 general file handling facilities, such as renaming, deleting, moving,
 and parsing directory names, are provided by the File-System module: see
-` <file-system.htm#46956>`_ for details. The make method on
+:doc:`/system/file-system` for details. The make method on
 :class:`<file-stream>` does not create direct instances of
 :class:`<file-stream>`, but instead an instance of a subclass determined
 by :gf:`type-for-file-stream`.
@@ -486,8 +486,8 @@ Closing streams
 ^^^^^^^^^^^^^^^
 
 It is important to call :gf:`close` on streams when you have finished with
-them. Typically, external streams such as ``<file-stream>`` and
-``<console-stream>`` allocate underlying system resources when they are
+them. Typically, external streams such as :class:`<file-stream>` and
+:class:`<console-stream>` allocate underlying system resources when they are
 created, and these resources are not recovered until the stream is
 closed. The total number of such streams that can be open at one time
 may be system dependent. It may be possible to add reasonable
@@ -516,7 +516,7 @@ of seriously degrading streams performance for all applications whose
 transaction models are different from the model implied by the chosen
 default locking scheme. Instead, the Streams module provides the user
 with a single, per instance slot, *stream-lock:*, which is inherited by
-all subclasses of ``<stream>``. You should use the generic functions
+all subclasses of :class:`<stream>`. You should use the generic functions
 :gf:`stream-lock` and :gf:`stream-lock-setter`, together with other
 appropriate functions and macros from the Threads library, to implement
 a locking strategy appropriate to your application and its stream
@@ -949,7 +949,7 @@ are exported from the *streams* module.
 
    A subclass of :drm:`<vector>` whose *element-type* is :type:`<byte>`.
 
-   :superclasses: <vector>
+   :superclasses: :drm:`<vector>`
 
    :keyword size: An instance of :drm:`<integer>` specifying the size of
      the buffer. Default value: 0.
@@ -1071,11 +1071,11 @@ are exported from the *streams* module.
 
    :operations:
 
-     - :meth:`make(<byte-string-stream-class>)`
+     - :meth:`make(<byte-string-stream>)`
 
    See also
 
-   - :meth:`make(<byte-string-stream-class>)`
+   - :meth:`make(<byte-string-stream>)`
    - :class:`<sequence-stream>`
 
 .. class:: <byte-vector>
@@ -1083,7 +1083,7 @@ are exported from the *streams* module.
 
    A subtype of :drm:`<vector>` whose element-type is :type:`<byte>`.
 
-   :superclasses: <vector>
+   :superclasses: :drm:`<vector>`
 
    :keyword: See Superclasses.
 
@@ -1181,7 +1181,7 @@ are exported from the *streams* module.
 
    Error type signaled on reaching the end of an input stream.
 
-   :superclasses: <error>
+   :superclasses: :drm:`<error>`
 
    :keyword stream: An instance of :class:`<stream>`.
 
@@ -1228,7 +1228,7 @@ are exported from the *streams* module.
 
    The base class for all errors related to file I/O.
 
-   :superclasses: <error>
+   :superclasses: :drm:`<error>`
 
    :keyword locator: An instance of ``<locator>``.
 
@@ -2174,7 +2174,7 @@ are exported from the *streams* module.
 
    The superclass of all stream classes.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :keyword outer-stream: The name of the stream wrapping the stream.
      Default value: the stream itself (that is, the stream is not
@@ -2449,7 +2449,7 @@ are exported from the *streams* module.
    :signature: stream-position *positionable-stream* => *position*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :value position: An instance of `<position-type>`_.
+   :value position: An instance of :class:`<position-type>`.
 
    :description:
 

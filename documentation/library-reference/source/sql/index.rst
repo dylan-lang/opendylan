@@ -982,7 +982,7 @@ The SQL module
    :open:
    :abstract:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :keyword dbms:
 
@@ -1053,7 +1053,7 @@ The SQL module
 .. class:: <database-object>
    :abstract:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :keyword name:
 
@@ -1061,7 +1061,7 @@ The SQL module
    :open:
    :abstract:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :description:
 
@@ -1072,7 +1072,7 @@ The SQL module
    :open:
    :abstract:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :description:
 
@@ -1099,7 +1099,7 @@ The SQL module
    :open:
    :abstract:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :description:
 
@@ -1117,7 +1117,7 @@ The SQL module
 
 .. class:: <diagnostic-table>
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :keyword general-key:
 
@@ -1426,7 +1426,7 @@ The SQL module
 .. class:: <null-value>
    :open:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :description:
 
@@ -1522,7 +1522,7 @@ The SQL module
 
    Specifies the behavior and performance characteristics of a result set.
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :keyword asynchronous:
    :keyword rowset-size: An instance of ``type-union(<integer>, #"all")``.
@@ -1646,7 +1646,7 @@ The SQL module
    :open:
    :abstract:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
 
 .. class:: <sql-date>
@@ -1975,7 +1975,7 @@ The SQL module
 .. class:: <transaction>
    :open:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :keyword diagnostics-size:
    :keyword isolation-level:
@@ -2028,7 +2028,7 @@ The SQL module
    :open:
    :abstract:
 
-   :superclasses: ``<object>``
+   :superclasses: :drm:`<object>`
 
    :description:
 
@@ -2098,16 +2098,16 @@ The SQL module
 
    :signature: acquire-null-value (indicator index) => (null-value)
 
-   :parameter indicator: An instance of ``<object>``.
+   :parameter indicator: An instance of :drm:`<object>`.
    :parameter index: An instance of ``<integer>``.
-   :value null-value: An instance of ``<object>``.
+   :value null-value: An instance of :drm:`<object>`.
 
 .. generic-function:: asynchronous
 
    :signature: asynchronous (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: catalog-from-name
    :open:
@@ -2146,8 +2146,8 @@ The SQL module
 
    :signature: class-code (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: class-origin
    :open:
@@ -2209,8 +2209,8 @@ The SQL module
 
    :signature: condition-number (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: conditions-not-recorded?
    :open:
@@ -2252,7 +2252,7 @@ The SQL module
 
    :signature: connection (o) => (result)
 
-   :parameter o: An instance of ``<object>``.
+   :parameter o: An instance of :drm:`<object>`.
    :value result: An instance of :class:`<connection>`.
 
 .. generic-function:: connection-name
@@ -2271,7 +2271,7 @@ The SQL module
    :signature: connection-setter (c o) => (result)
 
    :parameter c: An instance of :class:`<connection>`.
-   :parameter o: An instance of ``<object>``.
+   :parameter o: An instance of :drm:`<object>`.
    :value result: An instance of :class:`<connection>`.
 
 .. generic-function:: connections
@@ -2319,9 +2319,9 @@ The SQL module
    :signature: convert-value (coercion-policy value key) => (converted-value)
 
    :parameter coercion-policy: An instance of :class:`<coercion-policy>`.
-   :parameter value: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
    :parameter key: An instance of ``<integer>``.
-   :value converted-value: An instance of ``<object>``.
+   :value converted-value: An instance of :drm:`<object>`.
 
 .. generic-function:: cursor-name
    :open:
@@ -2343,31 +2343,31 @@ The SQL module
 
    :signature: database-object-name (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: database-object-name-setter
 
    :signature: database-object-name-setter (value object) => (#rest results)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: datatype-hints
 
    :signature: datatype-hints (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: datatype-hints-setter
 
    :signature: datatype-hints-setter (value object) => (#rest results)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: dbms
    :open:
@@ -2406,8 +2406,8 @@ The SQL module
 
    :signature: default-conversion (value) => (converted-value)
 
-   :parameter value: An instance of ``<object>``.
-   :value converted-value: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :value converted-value: An instance of :drm:`<object>`.
 
 .. generic-function:: default-dbms
 
@@ -2445,7 +2445,7 @@ The SQL module
    :signature: default-value (column) => (default)
 
    :parameter column: An instance of :class:`<column>`.
-   :value default: An instance of ``<object>``.
+   :value default: An instance of :drm:`<object>`.
 
 .. generic-function:: diagnostic-to-string
    :open:
@@ -2459,16 +2459,16 @@ The SQL module
 
    :signature: diagnostics-size (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: diagnostics-size-setter
 
    :signature: diagnostics-size-setter (value object) => (#rest results)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: disconnect
    :open:
@@ -2489,8 +2489,8 @@ The SQL module
 
    :signature: domain (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: dynamic-function
    :open:
@@ -2588,40 +2588,40 @@ The SQL module
 
    :signature: fields (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: fields-setter
 
    :signature: fields-setter (value object) => (#rest results)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. function:: find-diagnostic
 
    :signature: find-diagnostic (table diagnostic-set-key sqlstate) => (diagnostic-detail-class)
 
    :parameter table: An instance of :class:`<diagnostic-table>`.
-   :parameter diagnostic-set-key: An instance of ``<object>``.
+   :parameter diagnostic-set-key: An instance of :drm:`<object>`.
    :parameter sqlstate: An instance of ``<string>``.
-   :value diagnostic-detail-class: An instance of ``<object>``.
+   :value diagnostic-detail-class: An instance of :drm:`<object>`.
 
 .. generic-function:: indexed-table
 
    :signature: indexed-table (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: indexed-table-setter
 
    :signature: indexed-table-setter (value object) => (#rest results)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: indexes
    :open:
@@ -2635,8 +2635,8 @@ The SQL module
 
    :signature: indicator-policy (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: input-indicator
    :open:
@@ -2673,8 +2673,8 @@ The SQL module
 
    :signature: installation-functions (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: is-null?
 
@@ -2688,31 +2688,31 @@ The SQL module
 
    :signature: isolation-level (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: isolation-level-setter
 
    :signature: isolation-level-setter (value object) => (#rest results)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: liaison
 
    :signature: liaison (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: liaison-setter
 
    :signature: liaison-setter (value object) => (#rest results)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: make-dbms-specific
    :open:
@@ -2721,8 +2721,8 @@ The SQL module
 
    :parameter type: An instance of ``<class>``.
    :parameter dbms: An instance of :class:`<dbms>`.
-   :parameter #rest more-args: An instance of ``<object>``.
-   :value instance: An instance of ``<object>``.
+   :parameter #rest more-args: An instance of :drm:`<object>`.
+   :value instance: An instance of :drm:`<object>`.
 
 .. generic-function:: message-text
    :open:
@@ -2752,8 +2752,8 @@ The SQL module
 
    :signature: nullable? (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: output-indicator
    :open:
@@ -2776,8 +2776,8 @@ The SQL module
 
    :signature: possible-explanation (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: record-available?
    :open:
@@ -2792,8 +2792,8 @@ The SQL module
 
    :signature: record-coercion-policy (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. function:: register-diagnostic-installer
 
@@ -2828,8 +2828,8 @@ The SQL module
 
    :signature: rowset-size (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: schema-from-name
    :open:
@@ -2853,15 +2853,15 @@ The SQL module
 
    :signature: scroll-window (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: scrollable?
 
    :signature: scrollable? (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. macro:: sql
 
@@ -2888,8 +2888,8 @@ The SQL module
 
    :signature: subclass-code (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: subclass-origin
    :open:
@@ -2960,23 +2960,23 @@ The SQL module
 
    :signature: transaction-mode (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: transaction-mode-setter
 
    :signature: transaction-mode-setter (value object) => (#rest results)
 
-   :parameter value: An instance of ``<object>``.
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter value: An instance of :drm:`<object>`.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: unique-index?
 
    :signature: unique-index? (object) => (#rest results)
 
-   :parameter object: An instance of ``<object>``.
-   :value #rest results: An instance of ``<object>``.
+   :parameter object: An instance of :drm:`<object>`.
+   :value #rest results: An instance of :drm:`<object>`.
 
 .. generic-function:: user
    :open:

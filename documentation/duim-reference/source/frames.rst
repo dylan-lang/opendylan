@@ -357,7 +357,7 @@ Arguments
 -  *string* An instance of type *false-or(<string>)*.
 -  *type* An instance of type *one-of(#"command", #"function", #"menu",
    #"divider")*.
--  *value* An instance of type ``<object>``.
+-  *value* An instance of type :drm:`<object>`.
 -  *documentation* An instance of type *<string>*.
 -  *after* An instance of type *one-of(#"start", #"end", #"sort")*, or
    an instance of *<string>*. Default value: *#"end"*.
@@ -528,8 +528,8 @@ Arguments
 
 -  *frame* An instance of type `<frame>`_.
 -  *function* An instance of type ``<function>``.
--  *arg* An instance of type ``<object>``.
--  *args* Instances of type ``<object>``.
+-  *arg* An instance of type :drm:`<object>`.
+-  *args* Instances of type :drm:`<object>`.
 
 
    :description:
@@ -556,7 +556,7 @@ Arguments
 
 -  *frame* An instance of type `<frame>`_.
 -  *function* An instance of type ``<function>``.
--  *args* Instances of type ``<object>``.
+-  *args* Instances of type :drm:`<object>`.
 
 
    :description:
@@ -739,7 +739,7 @@ Returns true if the specified object is a command.
 
 Arguments
 
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
 Values
 
@@ -890,7 +890,7 @@ The class of command tables.
 
 Init-keywords
 
--  *name:* An instance of type ``<object>``. Required.
+-  *name:* An instance of type :drm:`<object>`. Required.
 -  *inherit-from:* An instance of type *limited(<sequence>, of:
    <command-table>)*. Required.
 -  *resource-id:* An instance of type *false-or(<object>)*. Default
@@ -972,7 +972,7 @@ Returns true if the specified object is a command table.
 
 Arguments
 
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
 Values
 
@@ -1089,7 +1089,7 @@ Init-keywords
    <image> <dcs.htm#51234>`_))*. Default value: ``#f``
 -  *type:* An instance of type *one-of(#"command", #"function", #"menu",
    #"divider")*.
--  *value:* An instance of type ``<object>``. Default value: ``#f``.
+-  *value:* An instance of type :drm:`<object>`. Default value: ``#f``.
 -  *options:* An instance of type *<sequence>*. Default value: *#()*.
 -  *accelerator:* An instance of type *false-or(* `See
    <gesture> <silica.htm#76256>`_*)*. Default value: ``#f``.
@@ -1168,7 +1168,7 @@ Arguments
 
 Values
 
--  *name* An instance of type ``<object>``.
+-  *name* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -1235,7 +1235,7 @@ Values
 
 -  *string* An instance of type *false-or(<string>)*.
 -  *success* An instance of type ``<boolean>``.
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 -  *nmatches* An instance of type ``<integer>``.
 -  *completions* An instance of type *<sequence>*.
 
@@ -1323,7 +1323,7 @@ Values
 
 -  *string* An instance of type *false-or(<string>)*.
 -  *success* An instance of type ``<boolean>``.
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 -  *nmatches* An instance of type ``<integer>``.
 -  *completions* An instance of type *<sequence>*.
 
@@ -1451,7 +1451,7 @@ Arguments
 -  *object* An instance of type *type-union(`See
    <sheet> <silica.htm#13118>`_, <class>, `See
    <frame>`_)*.
--  *initargs* Instances of type ``<object>``.
+-  *initargs* Instances of type :drm:`<object>`.
 
 Values
 
@@ -3872,7 +3872,7 @@ Arguments
 
 Values
 
--  *values* Instances of type ``<object>``.
+-  *values* Instances of type :drm:`<object>`.
 
    :description:
 
@@ -4024,8 +4024,8 @@ Returns a frame of the specified type, creating one if necessary.
 
 Arguments
 
--  *frame-class* An instance of type ``<object>``.
--  *initargs* An instance of type ``<object>``.
+-  *frame-class* An instance of type :drm:`<object>`.
+-  *initargs* An instance of type :drm:`<object>`.
 -  *create?* An instance of type ``<boolean>``. Default value: ``#t``.
 -  *activate?* An instance of type ``<boolean>``. Default value: ``#t``.
 -  *own-thread?* An instance of type ``<boolean>``. Default value: ``#t``.
@@ -4262,7 +4262,7 @@ Returns true if the specified object is a frame.
 
 Arguments
 
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
 Values
 
@@ -6234,7 +6234,7 @@ Arguments
 
 Values
 
--  *options* An instance of type ``<object>``.
+-  *options* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -6264,7 +6264,7 @@ Arguments
 
 Values
 
--  *type* An instance of type ``<object>``.
+-  *type* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -6294,7 +6294,7 @@ Arguments
 
 Values
 
--  *value* An instance of type ``<object>``.
+-  *value* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -6646,7 +6646,7 @@ Arguments
 
 Values
 
--  *values* Instances of type ``<object>``.
+-  *values* Instances of type :drm:`<object>`.
 
    :description:
 
@@ -6936,7 +6936,7 @@ Arguments
 
 Values
 
--  *values* Instances of type ``<object>``.
+-  *values* Instances of type :drm:`<object>`.
 
    :description:
 
@@ -7034,7 +7034,7 @@ Arguments
 
 Values
 
--  *values* Instances of type ``<object>``.
+-  *values* Instances of type :drm:`<object>`.
 
    :description:
 
