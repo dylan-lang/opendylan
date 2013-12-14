@@ -2174,7 +2174,7 @@ are exported from the *streams* module.
 
    The superclass of all stream classes.
 
-   :superclasses: <object>
+   :superclasses: :drm:`<object>`
 
    :keyword outer-stream: The name of the stream wrapping the stream.
      Default value: the stream itself (that is, the stream is not
