@@ -2449,7 +2449,7 @@ are exported from the *streams* module.
    :signature: stream-position *positionable-stream* => *position*
 
    :parameter positionable-stream: An instance of :class:`<positionable-stream>`.
-   :value position: An instance of `<position-type>`_.
+   :value position: An instance of :class:`<position-type>`.
 
    :description:
 
