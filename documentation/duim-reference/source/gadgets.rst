@@ -1672,7 +1672,7 @@ Arguments
 -  *list-or-table* An instance of *type-union
     (`<list-control>`_*, `See
    <table-control>`_).
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
 Values
 
@@ -1879,7 +1879,7 @@ Returns true if the specified object is a gadget.
 
 Arguments
 
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
 Values
 
@@ -2052,7 +2052,7 @@ Arguments
 
 Values
 
--  *client* An instance of type ``<object>``.
+-  *client* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -2092,12 +2092,12 @@ Sets the client of the specified gadget.
 
 Arguments
 
--  *client* An instance of type ``<object>``.
+-  *client* An instance of type :drm:`<object>`.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
 
--  *client* An instance of type ``<object>``.
+-  *client* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -2431,7 +2431,7 @@ Arguments
 
 Values
 
--  *id* An instance of type ``<object>``.
+-  *id* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -2484,12 +2484,12 @@ Sets the ID of the specified gadget.
 
 Arguments
 
--  *id* An instance of type ``<object>``.
+-  *id* An instance of type :drm:`<object>`.
 -  *gadget* An instance of type `<gadget>`_.
 
 Values
 
--  *id* An instance of type ``<object>``.
+-  *id* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -3480,7 +3480,7 @@ Arguments
 
 Values
 
--  *gadget-value* An instance of type ``<object>``.
+-  *gadget-value* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -3842,7 +3842,7 @@ Sets the gadget value of the specified gadget.
 
 Arguments
 
--  *gadget-value* An instance of type ``<object>``.
+-  *gadget-value* An instance of type :drm:`<object>`.
 -  *gadget* An instance of type `See
    <value-gadget>`_.
 -  *do-callback?* An instance of type ``<boolean>``. Default value: ``#f``
@@ -3850,7 +3850,7 @@ Arguments
 
 Values
 
--  *gadget-value* An instance of type ``<object>``.
+-  *gadget-value* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -4061,7 +4061,7 @@ Arguments
 
 Values
 
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -4564,7 +4564,7 @@ The class that represents an item in a list control.
 
 Init-keywords
 
--  *object:* An instance of type ``<object>``. Default value: ``#f``.
+-  *object:* An instance of type :drm:`<object>`. Default value: ``#f``.
 
    :description:
 
@@ -4597,7 +4597,7 @@ Arguments
 -  *list-or-table* An instance of *type-union
     (`<list-control>`_, `See
    <table-control>`_)*.
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 -  *frame-manager* An instance of type `See
    <frame-manager> <silica.htm#32466>`_.
 
@@ -4701,7 +4701,7 @@ Creates a node which can be inserted in the specified tree control.
 Arguments
 
 -  *tree* An instance of *`<tree-control>`_*.
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
 Values
 
@@ -5126,7 +5126,7 @@ Arguments
 
 Values
 
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -6517,7 +6517,7 @@ Init-keywords
    ``#f``.
 -  *progress-bar:* An instance of *false-or(`See
    <progress-bar>`_)*. Default value: ``#f``.
--  *value:* An instance of type ``<object>``.
+-  *value:* An instance of type :drm:`<object>`.
 -  *value-range:* An instance of type *<range>*.
 
    :description:
@@ -7451,7 +7451,7 @@ The class that represents an item in a table control.
 
 Init-keywords
 
--  *object:* An instance of type ``<object>``.
+-  *object:* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -8236,7 +8236,7 @@ Init-keywords
 -  *parent-nodes:* An instance of type *<sequence>*.
 -  *child-nodes:* An instance of type *<sequence>*.
 -  *generation:* An instance of type ``<integer>``. Default value: 0.
--  *object:* An instance of type ``<object>``.
+-  *object:* An instance of type :drm:`<object>`.
 
    :description:
 
@@ -8303,7 +8303,7 @@ The class of gadgets that can have values.
 
 Init-keywords
 
--  *value:* An instance of type ``<object>``.
+-  *value:* An instance of type :drm:`<object>`.
 
 *value-changed-callback:*
 
@@ -8464,7 +8464,7 @@ Returns true if the specified object is a viewport.
 
 Arguments
 
--  *object* An instance of type ``<object>``.
+-  *object* An instance of type :drm:`<object>`.
 
 Values
 

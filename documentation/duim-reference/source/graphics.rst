@@ -1787,7 +1787,7 @@ are exported from the *duim-graphics* module.
 
    :signature: pixmap? *object* => *pixmap?*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value pixmap?: An instance of type ``<boolean>``.
 
@@ -1876,8 +1876,8 @@ are exported from the *duim-graphics* module.
    :macrocall: with-output-to-pixmap (*medium*, #rest *options*) *body* end => *pixmap*
 
    :parameter medium: An instance of type :class:`<pixmap-medium>`.
-   :parameter options: An instance of type ``<object>``.
-   :parameter body: An instance of type ``<object>``.
+   :parameter options: An instance of type :drm:`<object>`.
+   :parameter body: An instance of type :drm:`<object>`.
 
    :value pixmap: An instance of type :class:`<pixmap>`.
 

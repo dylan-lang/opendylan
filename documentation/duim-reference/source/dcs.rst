@@ -22,7 +22,7 @@ The class hierarchy for DUIM-DCs
 ================================
 
 A number of base classes are exposed in the DUIM-DCs library, each of
-which is a subclass of :class:`<object>`. They are shown in the following table
+which is a subclass of :drm:`<object>`. They are shown in the following table
 
 +----------+--------------+------------------------------+
 | <object> |              |                              |
@@ -401,7 +401,7 @@ are exported from the *duim-dcs* module.
 
    The protocol class for brushes.
 
-   :superclasses: :class:`<object>`
+   :superclasses: :drm:`<object>`
 
    :keyword foreground: An instance of type :class:`<ink>`.
    :keyword background: An instance of type :class:`<ink>`.
@@ -444,7 +444,7 @@ are exported from the *duim-dcs* module.
 
    :signature: brush? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -729,7 +729,7 @@ are exported from the *duim-dcs* module.
 
    :signature: color? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -1015,7 +1015,7 @@ are exported from the *duim-dcs* module.
 
    :signature: default-foreground *object* => *background*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value background: An instance of type :class:`<ink>`.
 
@@ -1036,7 +1036,7 @@ are exported from the *duim-dcs* module.
    :signature: default-foreground-setter *background* *object* => *background*
 
    :parameter background: An instance of type :class:`<ink>`.
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value background: An instance of type :class:`<ink>`.
 
@@ -1056,7 +1056,7 @@ are exported from the *duim-dcs* module.
 
    :signature: default-foreground *object* => *foreground*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value foreground: An instance of type :class:`<ink>`.
 
@@ -1077,7 +1077,7 @@ are exported from the *duim-dcs* module.
    :signature: default-foreground-setter *foreground* *object* => *foreground*
 
    :parameter foreground: An instance of type :class:`<ink>`.
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value foreground: An instance of type :class:`<ink>`.
 
@@ -1097,7 +1097,7 @@ are exported from the *duim-dcs* module.
 
    :signature: default-text-style *object* => *text-style*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value text-style: An instance of type :class:`<text-style>`.
 
@@ -1118,7 +1118,7 @@ are exported from the *duim-dcs* module.
    :signature: default-text-style-setter *text-style* *object* => *text-style*
 
    :parameter text-style: An instance of type :class:`<text-style>`.
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value text-style: An instance of type :class:`<text-style>`.
 
@@ -1480,7 +1480,7 @@ are exported from the *duim-dcs* module.
 
    :signature: image? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -1564,7 +1564,7 @@ are exported from the *duim-dcs* module.
    The class of objects that represent a way of arranging colors and
    opacities in the drawing plane.
 
-   :superclasses: :class:`<object>`
+   :superclasses: :drm:`<object>`
 
    :description:
 
@@ -1590,7 +1590,7 @@ are exported from the *duim-dcs* module.
 
    :signature: ink? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -1747,7 +1747,7 @@ are exported from the *duim-dcs* module.
    :signature: make-device-font *port* *font* => *device-font*
 
    :parameter port: An instance of type ``<silica>``.
-   :parameter font: An instance of type ``<object>``.
+   :parameter font: An instance of type :drm:`<object>`.
 
    :value device-font: A font object or the name of a font.
 
@@ -1991,7 +1991,7 @@ are exported from the *duim-dcs* module.
 
    The protocol class for color palettes.
 
-   :superclasses: :class:`<object>`
+   :superclasses: :drm:`<object>`
 
    :description:
 
@@ -2016,7 +2016,7 @@ are exported from the *duim-dcs* module.
 
    :signature: palette? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -2095,7 +2095,7 @@ are exported from the *duim-dcs* module.
 
    :signature: pattern? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -2113,7 +2113,7 @@ are exported from the *duim-dcs* module.
 
    The protocol class for pens.
 
-   :superclasses: :class:`<object>`
+   :superclasses: :drm:`<object>`
 
    :keyword width: An instance of type ``<integer>``. Default value: *1*.
    :keyword units: An instance of type *one-of(#"normal", #"point", #"device")* . Default value: *#"normal"*.
@@ -2154,7 +2154,7 @@ are exported from the *duim-dcs* module.
 
    :signature: pen? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -2326,7 +2326,7 @@ are exported from the *duim-dcs* module.
 
    :signature: read-image-as *class* *locator* *image-type* #key #all-keys => *image*
 
-   :parameter class: An instance of type ``<object>``.
+   :parameter class: An instance of type :drm:`<object>`.
    :parameter locator: An instance of type :class:`<string>`.
    :parameter image-type: On Windows, *#"bitmap"* or *#"icon"*.
 
@@ -2432,7 +2432,7 @@ are exported from the *duim-dcs* module.
 
    :signature: stencil? *object* => *boolean*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value boolean: An instance of type ``<boolean>``.
 
@@ -2451,7 +2451,7 @@ are exported from the *duim-dcs* module.
 
    The protocol class for text styles.
 
-   :superclasses: :class:`<object>`
+   :superclasses: :drm:`<object>`
 
    :keyword family: An instance of type *one-of(#"fix", #"serif", #"sans-serif", #f)*. Default value: ``#f``.
    :keyword weight: An instance of type *one-of(#"normal", #"condensed", #"thin", #"extra-light", #"light", #"medium", #"demibold", #"bold", #"extra-bold", #"black", #f)*.
@@ -2519,7 +2519,7 @@ are exported from the *duim-dcs* module.
 
    :signature: text-style? *object* => *text-style?*
 
-   :parameter object: An instance of type ``<object>``.
+   :parameter object: An instance of type :drm:`<object>`.
 
    :value text-style?: An instance of type ``<boolean>``.
 
