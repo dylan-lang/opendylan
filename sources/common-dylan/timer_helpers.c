@@ -9,12 +9,15 @@ typedef int            int32_t;
 
 void timer_get_point_in_time(uint32_t time[2])
 {
+  LARGE_INTEGER liNow, liFrequency;
   int64_t now, frequency;
   long seconds = 0,
        microseconds = 0;
 
-  QueryPerformanceCounter(&now);
-  if (QueryPerformanceFrequency(&frequency)) {
+  QueryPerformanceCounter(&liNow);
+  if (QueryPerformanceFrequency(&liFrequency)) {
+    now = liNow.QuadPart;
+    frequency = liFrequency.QuadPart;
     seconds = (long)(now / frequency);
     microseconds = (long)((now % frequency) * 1000000 / frequency);
   }
