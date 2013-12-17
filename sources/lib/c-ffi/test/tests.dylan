@@ -1221,8 +1221,7 @@ end suite c-ffi-suite;
 /// The dylan top level for the tests
 /// This gets called via a C-callable function from C
 define method run-dylan-tests () => ();
-  *debug?* := #f;
-  perform-suite(c-ffi-suite);
+  run-test-application(c-ffi-suite);
 end;
 
 define c-callable-wrapper run-dylan-tests-pointer of run-dylan-tests
