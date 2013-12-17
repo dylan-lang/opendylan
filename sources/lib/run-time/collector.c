@@ -22,12 +22,6 @@
  *  the trampoline.
  */
 
-#ifdef OPEN_DYLAN_PLATFORM_UNIX
-#define RUN_TIME_API
-#else
-#define RUN_TIME_API __declspec( dllexport )
-#endif
-
 #ifndef GC_USE_MPS
 #  define NO_ALLOCATION_COUNT_FOR_PROFILER 1
 #endif

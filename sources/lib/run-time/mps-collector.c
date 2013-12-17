@@ -416,6 +416,7 @@ MMAllocHandler MMReserveWrapperHandler(MMAllocHandler handler)
   return h;
 }
 
+RUN_TIME_API
 void *MMAllocMisc(size_t size)
 {
   mps_res_t res;
@@ -433,6 +434,7 @@ void *MMAllocMisc(size_t size)
   return p;
 }
 
+RUN_TIME_API
 MMAllocHandler MMAllocMiscHandler(MMAllocHandler handler)
 {
   MMAllocHandler h = misc_handler;
@@ -440,6 +442,7 @@ MMAllocHandler MMAllocMiscHandler(MMAllocHandler handler)
   return h;
 }
 
+RUN_TIME_API
 void MMFreeMisc(void *old, size_t size)
 {
   mps_free(misc_pool, (mps_addr_t)old, size);

@@ -160,11 +160,13 @@ void *MMAllocateWrapper(size_t size, void *wrapper, gc_teb_t gc_teb)
   return GC_MALLOC_ATOMIC(size);
 }
 
+RUN_TIME_API
 void *MMAllocMisc(size_t size)
 {
   return GC_MALLOC_ATOMIC(size);
 }
 
+RUN_TIME_API
 void MMFreeMisc(void *old, size_t size)
 {
   unused(size);
