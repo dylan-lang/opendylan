@@ -49,7 +49,7 @@ define method format-to-string (control-string :: <byte-string>, #rest args)
   // use a smaller string to collect the contents.
   let s :: <byte-string-stream>
     = make(<byte-string-stream>,
-	   contents: make(<byte-string>, size: 32), direction: #"output", stream-lock: #f);
+	   contents: make(<byte-string>, size: 32), direction: #"output");
   apply(format, s, control-string, args);
   s.stream-contents
 end method;
@@ -155,8 +155,7 @@ define method format (stream :: <stream>, control-string :: <byte-string>,
 	    let s :: <byte-string-stream>
 	      = make(<byte-string-stream>,
 		     contents: make(<byte-string>, size: 80),
-		     direction: #"output",
-		     stream-lock: #f);
+		     direction: #"output");
 	    if (do-dispatch(control-string[field-spec-end], s,
 			    element(args, arg-i, default: #f)))
 	      arg-i := arg-i + 1;
