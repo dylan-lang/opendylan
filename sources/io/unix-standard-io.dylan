@@ -10,8 +10,12 @@ define variable *standard-input*
   = make(<file-stream>, locator: 0, file-descriptor: 0, direction: #"input");
 
 define variable *standard-output*
-  = make(<file-stream>, locator: 1, file-descriptor: 1, direction: #"output");
+  = make(<file-stream>, locator: 1,
+         file-descriptor: 1, direction: #"output",
+         stream-lock: make(<recursive-lock>));
 
 define variable *standard-error*
-  = make(<file-stream>, locator: 2, file-descriptor: 2, direction: #"output");
+  = make(<file-stream>, locator: 2,
+         file-descriptor: 2, direction: #"output",
+         stream-lock: make(<recursive-lock>));
 
