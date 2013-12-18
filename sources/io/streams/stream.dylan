@@ -23,7 +23,7 @@ define open abstract primary class <basic-stream> (<stream>)
     init-keyword: element-type:;
   slot private-stream-direction-value :: <integer>; //  = $input,
    //   init-keyword: direction:;
-  slot private-stream-lock-value :: false-or(<lock>) = make(<recursive-lock>),
+  slot private-stream-lock-value :: false-or(<lock>) = #f,
     init-keyword: stream-lock:;
 end class <basic-stream>;
 
