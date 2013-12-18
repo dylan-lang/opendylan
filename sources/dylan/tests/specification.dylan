@@ -152,6 +152,12 @@ define protocol-spec collections ()
   open generic-function sort!
       (<sequence>, #"key", #"test", #"stable") => (<sequence>);
 
+  /// DEP-0007
+  open generic-function element-type
+      (<collection>) => (<type>);
+  open generic-function element-type-fill
+      (<collection>) => (<object>);
+
   /// Mapping and reducing
   function do (<function>, <collection>, #"rest") => (singleton(#f));
   function map (<function>, <collection>, #"rest") => (<collection>);

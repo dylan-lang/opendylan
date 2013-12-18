@@ -1065,8 +1065,6 @@ define open abstract primary class <table>
   // slot rehash-table-vector :: false-or(<table-vector>) = #f;
 end class <table>;
 
-define sealed domain element-type (<table>);
-
 define class <object-table> (<table>)
 end class <object-table>;
 

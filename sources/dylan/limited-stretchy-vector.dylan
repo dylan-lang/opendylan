@@ -34,8 +34,8 @@ end method;
 
 
 // Assemble the general <stretchy-element-type-vector>, using the functions
-// below and the generic <limited-element-type-collection> functions that allow for arbitrary
-// element types.
+// below and the generic <limited-element-type-collection> functions that allow
+// for arbitrary element types.
 
 define limited-stretchy-vector-minus-constructor <element-type>
   (<limited-element-type-collection>, <limited-stretchy-vector>) (fill: #f);
@@ -43,16 +43,16 @@ define limited-stretchy-vector-minus-constructor <element-type>
 define method initialize
     (vector :: <stretchy-element-type-vector>,
      #key size :: <integer> = 0, capacity :: <integer> = size,
-          element-type :: <type> = <object>, fill =  #f)
+          element-type :: <type> = <object>, fill =  #f,
+          element-type-fill: default-fill = #f)
  => ()
   next-method();
   unless (size = 0)
     check-type(fill, element-type);
   end unless;
+  vector.element-type-fill := default-fill;
   stretchy-initialize(vector, capacity, size, fill);
 end method initialize;
-
-define sealed domain element-type (<stretchy-element-type-vector>);
 
 define method concrete-limited-stretchy-vector-class
     (of :: <type>, default-fill)

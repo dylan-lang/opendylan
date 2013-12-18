@@ -59,8 +59,6 @@ define method make
   instance
 end method;
 
-define sealed domain element-type (<simple-element-type-vector>);
-
 define inline sealed method element-setter
     (new-value, vector :: <simple-element-type-vector>, index :: <integer>) => (object)
   check-type(new-value, element-type(vector));

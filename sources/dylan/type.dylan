@@ -401,12 +401,24 @@ end method;
 define sealed inline method make
     (t :: <limited-deque-type>, #rest all-keys, #key fill = unsupplied(), #all-keys)
  => (res :: <deque>)
-  let fill :: <object> = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
+  let fill = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
   apply(make, limited-collection-concrete-class(t),
         element-type: limited-collection-element-type(t),
         element-type-fill: limited-collection-element-type-fill(t),
         fill: fill,
         all-keys)
+end method;
+
+define sealed inline method make
+    (t :: <limited-stretchy-vector-type>, #rest all-keys,
+     #key fill = unsupplied(), #all-keys)
+ => (res :: <stretchy-vector>)
+  let fill = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
+  apply(make, limited-collection-concrete-class(t),
+        element-type: limited-collection-element-type(t),
+        element-type-fill: limited-collection-element-type-fill(t),
+        fill: fill,
+        all-keys);
 end method;
 
 define sealed inline method make

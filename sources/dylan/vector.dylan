@@ -656,7 +656,6 @@ define macro limited-vector-shared-definer
          define sealed domain type-for-copy ("<simple-" ## ?name ## "-vector>");
          define sealed domain shallow-copy ("<simple-" ## ?name ## "-vector>");
          define sealed domain size ("<simple-" ## ?name ## "-vector>");
-         define sealed domain element-type ("<simple-" ## ?name ## "-vector>");
          define sealed domain empty? ("<simple-" ## ?name ## "-vector>");
          define sealed domain add ("<simple-" ## ?name ## "-vector>", <object>);
          define sealed domain add! ("<simple-" ## ?name ## "-vector>", <object>);

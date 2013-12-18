@@ -20,6 +20,9 @@ define method test-collection-class
     (class :: subclass(<collection>), #key name, instantiable?, #all-keys)
  => ()
   if (instantiable?)
+    if (instantiable-as-limited?(class))
+      test-limited(name, class)
+    end if;
     test-collection-of-size(format-to-string("Empty %s", name), class, 0);
     test-collection-of-size(format-to-string("One item %s", name), class, 1);
     test-collection-of-size(format-to-string("Even size %s", name), class, 4);
@@ -88,6 +91,17 @@ define method test-collection-of-size
                 size(collection), collection-size);
     check-equal(format-to-string("%s = shallow-copy", individual-name),
                 shallow-copy(collection), collection);
+    // This check is done differently for limited collections.
+    unless (instantiable-as-limited?(class))
+      check-true(format-to-string("%s element-type", individual-name),
+                 subtype?(collection-element-type(collection),
+                          collection-type-element-type(class)));
+      if (collection-type-is-fillable?(class))
+        check-equal(format-to-string("%s element-type-fill", individual-name),
+                    collection-element-type-fill(collection),
+                    collection-type-element-type-fill(class));
+      end if;
+    end unless;
     test-collection(individual-name, collection)
   end;
   if (instantiable-as-limited?(class))
@@ -98,19 +112,29 @@ end method test-collection-of-size;
 define method test-limited-collection-of-size
     (name :: <string>, class :: <class>, collection-size :: <integer>) => ()
   let collections = #[];
+  let element-types = #[];
   let name = format-to-string("Limited %s", name);
+  let (collections, element-types)
+    = make-limited-collections-of-size(class, collection-size);
   check(format-to-string("%s creation", name),
-        always(#t),
-        collections := make-limited-collections-of-size(class, collection-size));
-  for (collection in collections)
+        always(#t), collections);
+  for (collection in collections, expected-element-type in element-types)
     let individual-name
       = format-to-string("%s of %s", name, element-type(collection));
+    let expected-fill = limited-collection-default-fill(expected-element-type);
     check-equal(format-to-string("%s empty?", individual-name),
                 empty?(collection), collection-size == 0);
     check-equal(format-to-string("%s size", individual-name),
                 size(collection), collection-size);
     check-equal(format-to-string("%s = shallow-copy", individual-name),
                 shallow-copy(collection), collection);
+    check-true(format-to-string("%s element-type", individual-name),
+               subtype?(collection-element-type(collection),
+                        expected-element-type));
+    if (collection-type-is-fillable?(class))
+      check-equal(format-to-string("%s element-type-fill", individual-name),
+                  collection-element-type-fill(collection), expected-fill);
+    end if;
     test-collection(individual-name, collection)
   end
 end method test-limited-collection-of-size;
@@ -198,7 +222,7 @@ define variable $base-type-for-limited-collection = make(<table>);
 
 define method make-limited-collections-of-size
     (class :: <class>, collection-size :: <integer>)
- => (collections :: <sequence>)
+ => (collections :: <sequence>, element-types :: <sequence>)
   let sequences = make(<stretchy-vector>);
   let element-types = limited-collection-element-types(class);
   for (element-type :: <type> in element-types)
@@ -224,12 +248,12 @@ define method make-limited-collections-of-size
     add!(sequences, collection);
     $base-type-for-limited-collection[collection] := class;
   end;
-  sequences
+  values(sequences, element-types)
 end method make-limited-collections-of-size;
 
 define method make-limited-collections-of-size
     (class :: subclass(<table>), collection-size :: <integer>)
- => (tables :: <sequence>)
+ => (tables :: <sequence>, element-types :: <sequence>)
   let table-1 = make(limited(<table>, of: <integer>));
   let table-2 = make(limited(<table>, of: <character>));
   for (i from 0 below collection-size,
@@ -239,13 +263,13 @@ define method make-limited-collections-of-size
   end;
   $base-type-for-limited-collection[table-1] := <table>;
   $base-type-for-limited-collection[table-2] := <table>;
-  vector(table-1, table-2)
+  values(vector(table-1, table-2), vector(<integer>, <character>))
 end method make-limited-collections-of-size;
 
 define method make-limited-collections-of-size
     (class :: subclass(<list>), collection-size :: <integer>)
- => (pairs :: <sequence>)
-  #[]
+ => (pairs :: <sequence>, element-types :: <sequence>)
+  values(#[], #[])
 end method make-limited-collections-of-size;
 
 define method expected-element 
@@ -291,7 +315,7 @@ end method collection-type-element-type;
 
 define method collection-type-element-type
     (class :: subclass(<range>)) => (element-type :: <class>)
-  <integer>
+  <number>
 end method collection-type-element-type;
 
 define method collection-type-element-type
@@ -299,11 +323,36 @@ define method collection-type-element-type
   <character>
 end method collection-type-element-type;
 
+define method collection-type-element-type-fill
+    (class :: subclass(<collection>)) => (fill)
+  #f
+end method;
+
+define method collection-type-element-type-fill
+    (class :: subclass(<string>)) => (fill)
+  ' '
+end method;
+
+define method collection-type-is-fillable?
+    (class :: subclass(<collection>)) => (fillable? :: <boolean>)
+  case
+    class == <mutable-sequence> => #f;
+    class == <pair> => #f;
+    class == <empty-list> => #f;
+    otherwise => subtype?(class, <mutable-sequence>);
+  end
+end method;
+
 
 define method collection-element-type
     (collection :: <collection>) => (element-type :: <type>)
   element-type(collection)
 end method collection-element-type;
+
+define method collection-element-type-fill
+    (collection :: <collection>) => (element-type-fill :: <object>)
+  element-type-fill(collection)
+end method collection-element-type-fill;
 
 
 define method limited-collection-element-types
@@ -328,6 +377,7 @@ define function limited-collection-default-fill
     <integer> => 42;
     <character> => 'q';
     <vector> => #[ "default-fill" ];
+    otherwise => #f;
   end select
 end function;
 
@@ -614,10 +664,13 @@ end method proper-collection?;
 
 define function instantiable-as-limited? (class :: <class>) 
  => (inst? :: <boolean>)
-  select (class by subtype?)
-    <simple-object-vector>, <list> => #f;
+  case
+    class == <simple-object-vector> => #f;
+    class == <byte-string> => #f;
+    class == <unicode-string> => #f;
+    subtype?(class, <list>) => #f;
     otherwise => #t;
-  end select
+  end case
 end function;
 
 
@@ -700,6 +753,12 @@ end method collection-valid-as-class?;
 
 
 /// Collection testing
+
+define method test-limited
+    (name :: <string>, class :: <type>) => ()
+  check-true(format-to-string("Limited %s with invalid default-fill", name),
+             limited(class, of: <character>, default-fill: #f))
+end method;
 
 define method test-as
     (name :: <string>, collection :: <collection>) => ()
@@ -1007,8 +1066,10 @@ define method valid-type-for-copy?
  => (valid-type? :: <boolean>)
   let base-type = element($base-type-for-limited-collection, collection, default: #f);
   if (base-type)
+    let instance-of-type = make(type, dimensions: #[0]);
     subtype?(type, base-type)
-      & make(type, dimensions: #[0]).element-type = collection.element-type
+      & instance-of-type.element-type = collection.element-type
+      & instance-of-type.element-type-fill = collection.element-type-fill
   else
     next-method()
   end if
@@ -1040,13 +1101,21 @@ define method test-size-setter
                   size(collection) := new-size;
                   size(collection)
                 end,
-                new-size)
+                new-size);
     check-equal(format-to-string("%s emptied", name),
                 begin
                   size(collection) := 0;
                   size(collection)
                 end,
                 0);
+    if (instance?(collection, <limited-collection>))
+      check-equal(format-to-string("%s size-setter fills with default", name),
+                  begin
+                    size(collection) := new-size;
+                    element(collection, new-size - 1)
+                  end,
+                  limited-collection-default-fill(collection.element-type))
+    end if
   end
 end method test-size-setter;
 
@@ -1686,6 +1755,10 @@ define collections function-test reverse () end;
 define collections function-test reverse! () end;
 define collections function-test sort () end;
 define collections function-test sort! () end;
+
+/// DEP-0007
+define collections function-test element-type () end;
+define collections function-test element-type-fill () end;
 
 /// Mapping and reducing
 define collections function-test do () end;

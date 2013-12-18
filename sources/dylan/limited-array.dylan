@@ -15,21 +15,21 @@ define limited-array-minus-selector <double-byte>
 define limited-array-minus-constructor <element-type>
     (<limited-element-type-collection>, <limited-fillable-collection>, <simple-array>) (fill: #f);
 
-define sealed domain element-type (<simple-element-type-array>);
-
 define sealed method make
     (class == <simple-element-type-array>,
-     #key dimensions = unsupplied(), element-type = <object>, fill = #f)
+     #key dimensions = unsupplied(), element-type = <object>, fill = #f,
+          element-type-fill: default-fill = #f)
  => (array :: <simple-element-type-array>)
   let (dimensions, size) = compute-array-dimensions-and-size(dimensions);
   unless (size = 0)
     check-type(fill, element-type);
   end unless;
   next-method(class,
-              element-type: element-type,
-              dimensions:   dimensions,
-              size:         size,
-              fill:         fill)
+              element-type:      element-type,
+              element-type-fill: default-fill,
+              dimensions:        dimensions,
+              size:              size,
+              fill:              fill)
 end method;
 
 define method concrete-limited-array-class

@@ -1101,29 +1101,20 @@ define constant <element-type> = <object>; // KLUDGE FOR LIMITED COLLECTIONSXS
 /// define open abstract primary class <limited-collection> ... end;
 
 // User-defined collections can define their own element-type and element-type-fill
-// on open collection classes, like what the Dylan library itself does with
-// <string>. But since users cannot define their own limited collections, we
-// can seal over that domain.
+// on open collection classes. But since users cannot define their own limited
+// collections, we can seal over that domain.
 
-// The element type for collections.
-define open generic element-type (t :: <collection>)
-  => type :: <type>;
-
+define open generic element-type (coll :: <collection>) => (type :: <type>);
 define sealed domain element-type (<limited-collection>);
 
-define inline method element-type (t :: <collection>) => (type == <object>)
+define inline method element-type (coll :: <collection>) => (type :: <type>)
   <object>
 end method;
 
-// The default element type fill for collections. (DEP-0007)
-define open generic element-type-fill (t :: <collection>)
-  => object :: <object>;
-
+define open generic element-type-fill (coll :: <collection>) => (object :: <object>);
 define sealed domain element-type-fill (<limited-collection>);
 
-// #f is allowed by the DEP, but it would be better if we could easily check to
-// see whether the collection supports fill: and return an error if not the case.
-define inline method element-type-fill (t :: <collection>) => (object == #f)
+define inline method element-type-fill (coll :: <collection>) => (object)
   #f
 end method;
 

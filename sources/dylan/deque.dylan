@@ -114,8 +114,6 @@ define class <object-deque>
 end class <object-deque>;
 
 define sealed domain make (singleton(<object-deque>));
-define sealed domain element-type (<object-deque>);
-define sealed domain element-type-fill (<object-deque>);
 
 
 ///

@@ -404,6 +404,12 @@ define method limited-string
   end if;
 end method;
 
+define sealed inline method concrete-limited-string-class
+    (of == <character>, default-fill)
+ => (type :: subclass(<string>), fully-specified?)
+  values(<limited-byte-string>, default-fill = limited-string-default-fill(of))
+end method;
+
 define sealed inline method limited-string-default-fill
     (of :: <type>) => (fill == ' ')
   ' '

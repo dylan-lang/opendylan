@@ -177,31 +177,30 @@ define method trusted-size-setter
     (new-size :: <integer>, vector :: <limited-stretchy-vector>)
          => (new-size :: <integer>)
   // TODO: could remove fills and do this in size-setter
+  let f = element-type-fill(vector);
   let v = vector.stretchy-representation;
-  if (new-size > v.size)
+  let v-capacity = v.size;
+  let v-size = v.%size;
+  if (new-size > v-capacity)
     let nv :: <limited-stretchy-vector-representation>
       = make(stretchy-representation-type(vector),
              capacity: new-size.power-of-two-ceiling,
              size:     new-size);
-    for (i :: <integer> from 0 below v.%size)
+    for (i :: <integer> from 0 below v-size)
       stretchy-vector-element(nv, i) := stretchy-vector-element(v, i)
     finally
       for (j :: <integer> from i below new-size)
-        stretchy-vector-element(nv, j) := element-type-fill(vector)
+        stretchy-vector-element(nv, j) := f
       end for;
     end for;
     vector.stretchy-representation := nv;
-    new-size;
-  elseif (new-size < v.%size)
-    let s = v.%size;
-    v.%size := new-size;
-    for (i :: <integer> from new-size below s)
-      stretchy-vector-element(v, i) := element-type-fill(vector)
-    end for;
-    new-size;
   else
-    v.%size := new-size
+    for (i :: <integer> from v-size below new-size)
+      stretchy-vector-element(v, i) := f
+    end for;
+    v.%size := new-size;
   end if;
+  new-size
 end method trusted-size-setter;
 
 define method size-setter
@@ -465,7 +464,6 @@ define macro limited-stretchy-vector-minus-constructor-definer
                   identity-copy-state)
          end method backward-iteration-protocol;
 
-         define sealed domain element-type ("<stretchy-" ## ?name ## "-vector>");
          define sealed domain make (singleton("<stretchy-" ## ?name ## "-vector>"));
          define sealed domain initialize ("<stretchy-" ## ?name ## "-vector>");
 
@@ -576,7 +574,6 @@ define macro limited-stretchy-vector-minus-selector-definer
            ?=next-method();
            vector.element-type-fill := default-fill;
            stretchy-initialize(vector, capacity, size, fill);
-           vector
          end method initialize;
 
          define sealed inline method element-type
