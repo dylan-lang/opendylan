@@ -202,11 +202,8 @@ end method read-line-into!;
 define method write-line
     (stream :: <stream>, elements :: <string>,
      #key start: start-index = 0, end: _end = #f) => ()
-  with-stream-locked (stream)
-    write(stream, elements, start: start-index, end: _end | elements.size);
-    new-line(stream)
-  end;
-  #f
+  write(stream, elements, start: start-index, end: _end | elements.size);
+  new-line(stream);
 end method write-line;
 
 
@@ -306,18 +303,15 @@ define method write-text
      #key start: start-index :: <integer> = 0,
           end: end-index :: <integer> = text.size)
  => ()
-  with-stream-locked (stream)
-    let old-index :: <integer> = start-index;
-    for (index :: <integer> from start-index below end-index)
-      if (text[index] == '\n')
-	write(stream, text, start: old-index, end: index);
-	new-line(stream);
-	old-index := index + 1;
-      end
-    end;
-    write(stream, text, start: old-index, end: end-index)
+  let old-index :: <integer> = start-index;
+  for (index :: <integer> from start-index below end-index)
+    if (text[index] == '\n')
+      write(stream, text, start: old-index, end: index);
+      new-line(stream);
+      old-index := index + 1;
+    end
   end;
-  #f
+  write(stream, text, start: old-index, end: end-index);
 end method write-text;
 
 define inline method write-text

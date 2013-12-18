@@ -347,14 +347,6 @@ define macro with-stream-locked
        end }
 end macro with-stream-locked;
 
-define function assert-locked(stream :: <stream>)
-  if (stream.stream-lock)
-    if (~stream.stream-locked?)
-      error("Stream not locked");
-    end;
-  end;
-end function;
-
 
 /// "High performance" functions
 
