@@ -479,6 +479,7 @@ DMINT primitive_machine_word_double_divide(DMINT xl, DMINT xh, DMINT y) {
   MV2(q, r);
 }
 
+#ifndef OPEN_DYLAN_COMPILER_GCC_LIKE
 DMINT primitive_machine_word_count_low_zeros(DMINT x) {
   if (x == 0) return(DMINT)(primitive_word_size() * 8);
   DMINT mask4 = (DMINT)0xF;
@@ -504,6 +505,7 @@ DMINT primitive_machine_word_count_high_zeros(DMINT x) {
   int index = (int)(uindex >> (primitive_word_size() * 8 - 4));
   return(DMINT)(count + t[index]);
 }
+#endif
 
 static void multiply_double (DMINT x, DMINT y, DUMINT* zl, DUMINT* zh) {
 #ifdef NO_LONGLONG
