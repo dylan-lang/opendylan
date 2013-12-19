@@ -9,7 +9,7 @@ Status:          Draft
 Type:            Standards Track
 Affects-DRM:     Yes
 Created:         28-Jul-2013
-Last-Modified:   29-Nov-2013
+Last-Modified:   17-Dec-2013
 Post-History:    28-Jul-2013
 Target-Version:  2013.2
 ===============  ===============
@@ -70,6 +70,11 @@ unspecified values equivalent to a space character.
 The ``limited`` methods on fillable collection classes each return a limited
 type designated *L*. The ``fill:`` init-keyword of all *L* will have a default
 value identical to the default value listed above instead of ``#f``.
+
+The ``type-for-copy`` method on instances of *L* will return a limited type *L2*
+as described in the [DRM]_, but with the additional requirement that *L2* will
+have the same default filler object as *L* (i.e., the same ``default-fill:``
+argument).
 
 The defaulted or supplied ``default-fill:`` argument should be an instance of
 the element type of the collection. However, it is not an error to supply a
@@ -263,15 +268,21 @@ user defines his own unrelated "element-type" or "element-type-fill" bindings.
 Reference Implementation
 ========================
 
-I have begun a reference implementation.
+The reference implementation includes the following implementation-specified
+behavior:
 
-The implementation currently includes an ``element-type-fill`` slot in every
-instance of a ``<simple-T-X>`` class (e.g. ``<simple-byte-vector>``). Ideally,
-the ``<simple-T-X>`` class would hard code a common ``element-type-fill`` value
-like ``0`` or ``' '``, and an additional subclass ``<simple-T-X-with-fill>``
-would include the ``element-type-fill`` slot if the user wants a more unusual
-fill value. Unfortunately, it appears that the implementation of repeated slots
-does not allow for subclasses of a class with repeated slots.
+   * ``limited(<string>, …)`` returns a ``limited(<byte-string>, …)``.
+   * ``element-type-fill`` on an instance of a non-fillable collection class
+     returns ``#f`` (as opposed to signaling an error).
+
+The reference implementation currently includes an ``element-type-fill`` slot
+in every instance of a ``<simple-T-X>`` class (e.g. ``<simple-byte-vector>``).
+Ideally, the ``<simple-T-X>`` class would hard code a common
+``element-type-fill`` value like ``0`` or ``' '``, and an additional subclass
+``<simple-T-X-with-fill>`` would include the ``element-type-fill`` slot if the
+user wants a more unusual fill value. Unfortunately, it appears that the
+implementation of repeated slots does not allow for subclasses of a class with
+repeated slots.
 
 A possible remedy is to implement two subclasses of a ``<simple-T-X>`` class:
 ``<simple-T-X-common-fill>`` and ``<simple-T-X-custom-fill>``. ``<simple-T-X>``
