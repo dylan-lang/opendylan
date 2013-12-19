@@ -25,9 +25,15 @@ define sealed class <byte-string-stream> (<string-stream>)
   inherited slot stream-sequence = make(<byte-string>);
 end class <byte-string-stream>;
 
+define sealed domain lock-stream (<byte-string-stream>);
+define sealed domain unlock-stream (<byte-string-stream>);
+
 define sealed class <unicode-string-stream> (<string-stream>)
   inherited slot stream-sequence = make(<unicode-string>);
 end class <unicode-string-stream>;
+
+define sealed domain lock-stream (<unicode-string-stream>);
+define sealed domain unlock-stream (<unicode-string-stream>);
 
 
 /// Macros
