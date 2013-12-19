@@ -371,3 +371,69 @@ a Table-extensions module, which you can read about in
      It returns a hash ID (an integer) and the result of merging the
      initial state with the associated hash state for the object,
      computed in some implementation-dependent manner.
+
+Limited Collections
+-------------------
+
+To improve type safety of limited collections, Open Dylan implements an
+extension to the :drm:`make` and :drm:`limited` functions. Normally, when
+calling :drm:`make` on a collection that supports the ``fill:`` init-keyword,
+that keyword defaults to ``#f``. This value can be inappropriate for a limited
+collection. The :drm:`limited` function in Open Dylan accepts a
+``default-fill:`` keyword argument which replaces the default of ``#f`` with a
+user-specified value; this value is used by :drm:`make` and :drm:`size-setter`
+when initializing or adding elements to those collections.
+
+Open Dylan also implements the :func:`element-type` and
+:func:`element-type-fill` functions to further improve type safety.
+
+.. function:: limited
+
+   Open Dylan implements the following altered signatures.
+
+   :signature: limited singleton(<array>) #key *of* *size* *dimensions* *default-fill* => *type*
+   :signature: limited singleton(<vector>) #key *of* *size* *default-fill* => *type*
+   :signature: limited singleton(<simple-vector>) #key *of* *size* *default-fill* => *type*
+   :signature: limited singleton(<stretchy-vector>) #key *of* *default-fill* => *type*
+   :signature: limited singleton(<deque>) #key *of* *default-fill* => *type*
+   :signature: limited singleton(<string>) #key *of* *size* *default-fill* => *type*
+   
+   :param #key default-fill:
+      The default value of the ``fill:`` keyword argument to the :drm:`make`
+      function, replacing ``#f``. Optional. If not supplied, the default
+      value for the ``default-fill:`` argument and thus for the ``fill:``
+      argument to :drm:`make` is ``#f`` (or ``' '`` for strings).
+   
+   :example:
+      
+      .. code-block:: dylan
+        
+        define constant <answers-vector>
+            = limited(<vector>, of: <object>, default-fill: 42);
+        let some-answers = make(<answers-vector>, size: 3);
+        // #[ 42, 42, 42 ]
+
+.. generic-function:: element-type
+   :open:
+
+   Returns the element type of a collection.
+   
+   :signature: element-type *collection* => *type*
+   
+   :param collection: An instance of :drm:`<collection>`.
+   :value type:       The permitted element type of the collection.
+
+.. generic-function:: element-type-fill
+   :open:
+   
+   Returns a valid object that may be used for new elements of a collection.
+   
+   :signature: element-type-fill *collection* => *object*
+   
+   :param collection: An instance of :drm:`<collection>` that supports the
+                      ``fill:`` init-keyword.
+   :value object:     An object.
+   
+   :discussion: For limited collections, this object will be the defaulted or
+                supplied ``default-fill:`` argument to the :func:`limited`
+                function.
