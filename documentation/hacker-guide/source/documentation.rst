@@ -15,6 +15,15 @@ reStructuredText markup and Sphinx extensions to it, and see the
 details about the Dylan language extensions. (You may use the ``rst2html`` tool
 to generate an HTML page from an ``.rst`` file.)
 
+Guidelines
+==========
+
+Gender
+------
+
+Try to avoid all gender-specific pronouns. In preference, use third person
+plural pronouns such as "they", "their", "them".
+
 Generating Documentation
 ========================
 
