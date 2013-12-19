@@ -709,12 +709,10 @@ Unicode character stream wrapping an 8-bit character stream.
     define method read-element (s :: <unicode-stream>,
       #key on-end-of-stream)
      => (ch :: <unicode-character>)
-      with-stream-locked (s)
-        let first-char = read-element(s.inner-stream,
-                                      on-end-of-stream);
-        let second-char = read-element(s.inner-stream,
-                                       on-end-of-stream)
-      end;
+      let first-char = read-element(s.inner-stream,
+                                    on-end-of-stream);
+      let second-char = read-element(s.inner-stream,
+                                     on-end-of-stream)
       convert-byte-pair-to-unicode(first-char, second-char)
     end method;
 
@@ -723,10 +721,8 @@ Unicode character stream wrapping an 8-bit character stream.
      => ()
       let (first-char, second-char) =
         convert-unicode-to-byte-pair(c);
-      with-stream-locked (s)
-        write-element(s.inner-stream, first-char);
-        write-element(s.inner-stream, second-char)
-      end;
+      write-element(s.inner-stream, first-char);
+      write-element(s.inner-stream, second-char)
       c
     end method;
 
@@ -2928,12 +2924,10 @@ are exported from the *streams* module.
        define method read-element (s :: <unicode-stream>,
          #key on-end-of-stream)
         => (ch :: <unicode-character>)
-         with-stream-locked (s)
-           let first-char = read-element(s.inner-stream,
-                                         on-end-of-stream);
-           let second-char = read-element(s.inner-stream,
-                                          on-end-of-stream);
-         end;
+         let first-char = read-element(s.inner-stream,
+                                       on-end-of-stream);
+         let second-char = read-element(s.inner-stream,
+                                        on-end-of-stream);
          convert-byte-pair-to-unicode(first-char, second-char)
        end method;
 
@@ -2942,10 +2936,8 @@ are exported from the *streams* module.
         => ()
          let (first-char, second-char)
            = convert-unicode-to-byte-pair(c);
-         with-stream-locked (s)
-           write-element(s.inner-stream, first-char);
-           write-element(s.inner-stream, second-char)
-         end;
+         write-element(s.inner-stream, first-char);
+         write-element(s.inner-stream, second-char)
          c
        end method;
 
