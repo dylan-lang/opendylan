@@ -206,42 +206,32 @@ define method print (object, stream :: <stream>,
                           circle? :: <boolean-or-unsupplied> = $unsupplied,
                           pretty? :: <boolean-or-unsupplied> = $unsupplied,
                           escape? :: <boolean-or-unsupplied> = $unsupplied) => ()
-  block ()
+  // Set slots with those values supplied by the user.
+  dynamic-bind (*print-length*  = if (supplied?(length))  length  else *print-length* end,
+                *print-level*   = if (supplied?(level))   level   else *print-level* end,
+                *print-circle?* = if (supplied?(circle?)) circle? else *print-circle?* end,
+                *print-pretty?* = if (supplied?(pretty?)) pretty? else *print-pretty?* end,
+                *print-escape?* = if (supplied?(escape?)) escape? else *print-escape?* end)
     //
-    // Lock the stream so that all the calls to print-object build output
-    // contiguously, without intervening threads screwing up the print
-    // request.
-    lock-stream(stream);
+    // Make the stream defaulting the slots to the global default values for
+    // the keyword arguments.  No need to lock this stream because only this
+    // thread should have any references to it ... barring extreme user
+    // silliness.
+    let p-stream = if (*print-circle?*)
+                     make(<circular-print-stream>, inner-stream: stream)
+                   else
+                     stream
+                   end;
     //
-    // Set slots with those values supplied by the user.
-    dynamic-bind (*print-length*  = if (supplied?(length))  length  else *print-length* end,
-                  *print-level*   = if (supplied?(level))   level   else *print-level* end,
-                  *print-circle?* = if (supplied?(circle?)) circle? else *print-circle?* end,
-                  *print-pretty?* = if (supplied?(pretty?)) pretty? else *print-pretty?* end,
-                  *print-escape?* = if (supplied?(escape?)) escape? else *print-escape?* end)
-      //
-      // Make the stream defaulting the slots to the global default values for
-      // the keyword arguments.  No need to lock this stream because only this
-      // thread should have any references to it ... barring extreme user
-      // silliness.
-      let p-stream = if (*print-circle?*)
-                       make(<circular-print-stream>, inner-stream: stream)
-                     else
-                       stream
-                     end;
-      //
-      // When printing circularly, we first print to a "null stream" so that we
-      // can find the circular references.
-      if (*print-circle?*)
-        start-circle-printing(object, p-stream);
-      end;
-      //
-      // Determine whether, and how, to print object.
-      maybe-print-object(object, p-stream);
-    end
-  cleanup
-    unlock-stream(stream);
-  end;
+    // When printing circularly, we first print to a "null stream" so that we
+    // can find the circular references.
+    if (*print-circle?*)
+      start-circle-printing(object, p-stream);
+    end;
+    //
+    // Determine whether, and how, to print object.
+    maybe-print-object(object, p-stream);
+  end
 end method;
 
 define method print (object, stream :: <circular-print-stream>,
