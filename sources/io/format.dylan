@@ -121,70 +121,68 @@ define method format (stream :: <stream>, control-string :: <byte-string>,
                       #rest args)
     => ();
   let control-len :: <integer> = control-string.size;
-  with-stream-locked (stream)
-    block (exit)
-      let start :: <integer> = 0;
-      let arg-i :: <integer> = 0;
-      while (start < control-len)
-        // Skip to dispatch char.
-        for (i :: <integer> = start then (i + 1),
-             until: ((i == control-len)
-                     | (control-string[i] == $dispatch-char)
-                     | (control-string[i] == '\n')))
-        finally
-          if (i ~== start)
-            write(stream, control-string, start: start, end: i);
-          end;
-          if (i == control-len)
-            exit();
-          else
-            start := i + 1;
-          end;
-        end for;
-        if (control-string[start - 1] == '\n')
-          new-line(stream)
+  block (exit)
+    let start :: <integer> = 0;
+    let arg-i :: <integer> = 0;
+    while (start < control-len)
+      // Skip to dispatch char.
+      for (i :: <integer> = start then (i + 1),
+           until: ((i == control-len)
+                   | (control-string[i] == $dispatch-char)
+                   | (control-string[i] == '\n')))
+      finally
+        if (i ~== start)
+          write(stream, control-string, start: start, end: i);
+        end;
+        if (i == control-len)
+          exit();
         else
-          // Parse for field within which to pad output.
-          let (field, field-spec-end)
-            = if (char-classes[as(<byte>, control-string[start])] == #"digit")
-                parse-integer(control-string, start);
-              end;
-          if (field)
-            // Capture output in string and compute padding.
-            // Assume the output is very small in length.
-            let s :: <byte-string-stream>
-              = make(<byte-string-stream>,
-                     contents: make(<byte-string>, size: 80),
-                     direction: #"output");
-            if (do-dispatch(control-string[field-spec-end], s,
-                            element(args, arg-i, default: #f)))
-              arg-i := arg-i + 1;
+          start := i + 1;
+        end;
+      end for;
+      if (control-string[start - 1] == '\n')
+        new-line(stream)
+      else
+        // Parse for field within which to pad output.
+        let (field, field-spec-end)
+          = if (char-classes[as(<byte>, control-string[start])] == #"digit")
+              parse-integer(control-string, start);
             end;
-            let output :: <byte-string> = s.stream-contents;
-            let output-len :: <integer> = output.size;
-            let padding :: <integer> = (abs(field) - output-len);
-            case
-              (padding < 0) =>
-                write(stream, output);
-              (field > 0) =>
-                write(stream, make(<byte-string>, size: padding, fill: ' '));
-                write(stream, output);
-              otherwise =>
-                write(stream, output);
-                write(stream, make(<byte-string>, size: padding, fill: ' '));
-            end;
-            start := field-spec-end + 1;  // Add one to skip dispatch char.
-          else
-            if (do-dispatch(control-string[start], stream,
-                            element(args, arg-i, default: #f)))
-              arg-i := arg-i + 1;
-            end;
-            start := start + 1;  // Add one to skip dispatch char.
-          end
+        if (field)
+          // Capture output in string and compute padding.
+          // Assume the output is very small in length.
+          let s :: <byte-string-stream>
+            = make(<byte-string-stream>,
+                   contents: make(<byte-string>, size: 80),
+                   direction: #"output");
+          if (do-dispatch(control-string[field-spec-end], s,
+                          element(args, arg-i, default: #f)))
+            arg-i := arg-i + 1;
+          end;
+          let output :: <byte-string> = s.stream-contents;
+          let output-len :: <integer> = output.size;
+          let padding :: <integer> = (abs(field) - output-len);
+          case
+            (padding < 0) =>
+              write(stream, output);
+            (field > 0) =>
+              write(stream, make(<byte-string>, size: padding, fill: ' '));
+              write(stream, output);
+            otherwise =>
+              write(stream, output);
+              write(stream, make(<byte-string>, size: padding, fill: ' '));
+          end;
+          start := field-spec-end + 1;  // Add one to skip dispatch char.
+        else
+          if (do-dispatch(control-string[start], stream,
+                          element(args, arg-i, default: #f)))
+            arg-i := arg-i + 1;
+          end;
+          start := start + 1;  // Add one to skip dispatch char.
         end
-      end while;
-    end block;
-  end with-stream-locked;
+      end
+    end while;
+  end block;
 end method;
 
 /// do-dispatch -- Internal.
