@@ -71,6 +71,10 @@ A new module ``simple-timers`` has been added. This replaces the old
 primitives ``primitive-start-timer`` and ``primitive-stop-timer``
 which have been removed.
 
+``byte-storage-address`` and ``byte-storage-offset-address`` functions
+have been added for passing byte storage data to the C-FFI. These are
+implemented for ``<byte-string>``, ``<byte-vector>``, and ``<buffer>``.
+
 command-line-parser
 ^^^^^^^^^^^^^^^^^^^
 

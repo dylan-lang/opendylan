@@ -192,3 +192,30 @@ define sealed method copy-bytes
     copy-bytes-range-error(src, src-start, dst, dst-start, n);
   end if;
 end method;
+
+define open generic byte-storage-address
+    (the-buffer)
+ => (result-offset :: <machine-word>);
+
+define open generic byte-storage-offset-address
+    (the-buffer, data-offset :: <integer>)
+ => (result-offset :: <machine-word>);
+
+define constant <byte-vector-like> = type-union(<byte-string>, <byte-vector>);
+
+define sealed inline method byte-storage-address
+    (the-buffer :: <byte-vector-like>)
+ => (result-offset :: <machine-word>)
+      primitive-wrap-machine-word
+        (primitive-repeated-slot-as-raw
+           (the-buffer, primitive-repeated-slot-offset(the-buffer)))
+end method;
+
+define sealed inline method byte-storage-offset-address
+    (the-buffer :: <byte-vector-like>, data-offset :: <integer>)
+ => (result-offset :: <machine-word>)
+  u%+(data-offset,
+      primitive-wrap-machine-word
+        (primitive-repeated-slot-as-raw
+           (the-buffer, primitive-repeated-slot-offset(the-buffer))))
+end method;

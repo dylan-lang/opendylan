@@ -123,6 +123,7 @@ define module streams-internals
   use dylan-extensions;
   use dylan-direct-c-ffi;
   use byte-vector;
+  use machine-words;
   use threads;
   use streams,
     export: all;

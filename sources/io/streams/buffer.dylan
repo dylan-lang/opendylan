@@ -221,3 +221,24 @@ define sealed /*inline*/ method type-for-copy (object :: <buffer>)
  => (c :: <class>)
   <buffer>
 end method type-for-copy;
+
+//
+// byte-storage-address
+//
+
+define sealed inline method byte-storage-address
+    (the-buffer :: <buffer>)
+ => (result-offset :: <machine-word>)
+      primitive-wrap-machine-word
+        (primitive-repeated-slot-as-raw
+           (the-buffer, primitive-repeated-slot-offset(the-buffer)))
+end method;
+
+define sealed inline method byte-storage-offset-address
+    (the-buffer :: <buffer>, data-offset :: <integer>)
+ => (result-offset :: <machine-word>)
+  u%+(data-offset,
+      primitive-wrap-machine-word
+        (primitive-repeated-slot-as-raw
+           (the-buffer, primitive-repeated-slot-offset(the-buffer))))
+end method;
