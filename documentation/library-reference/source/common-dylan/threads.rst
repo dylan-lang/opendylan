@@ -1469,7 +1469,9 @@ Dynamic binding
    :macrocall:
      .. code-block:: dylan
 
-       dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...) *body* end;
+       dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...)
+         *body*
+       end;
 
    :description:
 
@@ -1523,58 +1525,58 @@ portable code should not depend upon this feature.
 
 The extended form is described below.
 
-dynamic-bind
-------------
+.. macro:: dynamic-bind (extended)
+   :statement:
 
-Statement macro
-'''''''''''''''
+   Executes a body of code in a context in which variables or other places
+   are dynamically rebound.
 
-Summary
+   :macrocall:
+     .. code-block:: dylan
 
-Executes a body of code in a context in which variables or other places
-are dynamically rebound.
+        dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...)
+          *body*
+        end;
 
-Macro call
+     (This is the same as the simple form.)
 
-dynamic-bind (*place1* = *init1*, *place2* = *init2*, ...) body end;
+   :description:
 
-(This is the same as the simple form.)
+     If *place* is not a name, then it may have the syntax of a call to a
+     function. This permits an extended form for ``dynamic-bind``, by analogy
+     with the extended form for ``:=``. In this case, if the place appears
+     syntactically as ``name(arg1, ... argn)``, then the macro expands into
+     a call to the function
 
-Description
+     .. code-block:: dylan
 
-If *place* is not a name, then it may have the syntax of a call to a
-function. This permits an extended form for *dynamic-bind*, by analogy
-with the extended form for *:=*. In this case, if the place appears
-syntactically as *name(* *arg1* *,*... *argn* *)*, then the macro
-expands into a call to the function
+        name-dynamic-binder(*init*, *body-method*, *arg1*, ... *argn*)
 
-name-dynamic-binder(*init*, *body-method*, *arg1*, ... *argn*)
+     where *init* is the initial value for the binding, and *body-method*
+     is function with no parameters whose body is the body of the
+     ``dynamic-bind``. The extended form also permits the other ``.`` and
+     ``[]`` syntaxes for function calls.
 
-where *init* is the initial value for the binding, and *body-method* is
-function with no parameters whose body is the *body of* the
-*dynamic-bind*. The extended form also permits the other "*.* " and
-"*[]* "syntaxes for function calls.
+     There are no features in the current version of the Threads module
+     which make use of the extended form of ``dynamic-bind``.
 
-There are no features in the current version of the Threads module
-which make use of the extended form of *dynamic-bind*.
+   :example:
 
-Example
+     The following example shows the extended form of ``dynamic-bind``.
 
-The following example shows the extended form of *dynamic-bind*.
+     .. code-block:: dylan
 
-.. code-block:: dylan
+         dynamic-bind (object.a-slot = new-slot-val())
+           inner-body(object)
+         end;
 
-    dynamic-bind (object.a-slot = new-slot-val())
-      inner-body(object)
-    end;
+     This expands into code equivalent to the following:
 
-This expands into code equivalent to the following:
+     .. code-block:: dylan
 
-.. code-block:: dylan
-
-    a-slot-dynamic-binder(new-slot-val(),
-                          method () inner-body(object) end,
-                          object)
+         a-slot-dynamic-binder(new-slot-val(),
+                               method () inner-body(object) end,
+                               object)
 
 Locked variables
 ================
