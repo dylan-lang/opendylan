@@ -121,7 +121,7 @@ define method accessor-write-from
         inaddr.sin-family-value := the-remote-host.address-family;
         inaddr.sin-addr-value := the-remote-host.numeric-host-address.network-order;
         inaddr.sin-port-value := accessor-htons(remote-port(accessor));
-        let remaining = count;
+        let remaining :: <buffer-index> = count;
         let addr = pointer-cast(<LPSOCKADDR>, inaddr);
         while (remaining > 0)
           let nwritten =
