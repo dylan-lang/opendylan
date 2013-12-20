@@ -96,6 +96,13 @@ is available. This library was written by Hannes Mehnert.
 I/O
 ^^^
 
+Streams no longer default to having a lock, and the library as a whole
+no longer attempts to be thread-safe by default. If you need thread safety
+for a stream, use ``with-stream-locked`` at the application level to
+ensure that a stream is not accessed simultaneously from multiple threads.
+``format-out`` and the new ``force-out`` lock ``*standard-output*`` so
+that they are still thread-safe.
+
 A function ``stream-console?`` has been added to the ``<file-stream>`` class,
 this can be used to determine whether console output has been directed to a
 file.

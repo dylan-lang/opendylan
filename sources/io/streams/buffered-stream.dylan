@@ -158,11 +158,9 @@ define macro with-input-buffer
        ?body:body
      end }
   => { begin
-         with-stream-locked(?stream)
-           let ?buffer :: false-or(<buffer>) 
-             = get-input-buffer(?stream, bytes: ?bytes);
-           ?body
-         end
+         let ?buffer :: false-or(<buffer>) 
+           = get-input-buffer(?stream, bytes: ?bytes);
+         ?body
        end }
 end macro with-input-buffer;
 
@@ -221,11 +219,9 @@ define macro with-output-buffer
       ?body:body
     end }
   => { begin
-         with-stream-locked(?stream)
-           let ?buffer :: false-or(<buffer>)
-             = get-output-buffer(?stream, bytes: ?bytes);
-           ?body
-         end
+         let ?buffer :: false-or(<buffer>)
+           = get-output-buffer(?stream, bytes: ?bytes);
+         ?body
        end }
 end macro with-output-buffer;
 
@@ -366,26 +362,24 @@ end method force-output-buffers;
 // next and  end pointers reset by this method.
 define method do-force-output-buffers
     (stream :: <double-buffered-stream>) => ()
-  with-stream-locked(stream)
-    // This method ignores the buffer-dirty? flag.  This is backward
-    // compatible with the old streams library.
-    let sb :: <buffer> = stream-output-buffer(stream);
-    let start :: <buffer-index> = sb.buffer-start;
-    let count = sb.buffer-end - start;
-    if (count > 0)		// implies valid output buffer
-      let nwritten
-        = accessor-write-from(stream.accessor, stream, start, count);
-      if (nwritten ~= count)
-        error("Bad write count")
-      end
-    end;
-    accessor-force-output(stream.accessor, stream);
-    sb.buffer-dirty? := #f;
-    // Don't reset the buffer next and end pointers here.  That is out to the
-    // discretion of subclasses.  Aligned buffers for instance should not
-    // have their pointers reset.
-    values()
+  // This method ignores the buffer-dirty? flag.  This is backward
+  // compatible with the old streams library.
+  let sb :: <buffer> = stream-output-buffer(stream);
+  let start :: <buffer-index> = sb.buffer-start;
+  let count = sb.buffer-end - start;
+  if (count > 0)		// implies valid output buffer
+    let nwritten
+      = accessor-write-from(stream.accessor, stream, start, count);
+    if (nwritten ~= count)
+      error("Bad write count")
+    end
   end;
+  accessor-force-output(stream.accessor, stream);
+  sb.buffer-dirty? := #f;
+  // Don't reset the buffer next and end pointers here.  That is out to the
+  // discretion of subclasses.  Aligned buffers for instance should not
+  // have their pointers reset.
+  values()
 end method do-force-output-buffers;
 
 

@@ -517,12 +517,12 @@ transaction models are different from the model implied by the chosen
 default locking scheme. Instead, the Streams module provides the user
 with a single, per instance slot, *stream-lock:*, which is inherited by
 all subclasses of :class:`<stream>`. You should use the generic functions
-:gf:`stream-lock` and :gf:`stream-lock-setter`, together with other
-appropriate functions and macros from the Threads library, to implement
-a locking strategy appropriate to your application and its stream
-transaction model. The functions in the Streams module are not of
-themselves thread safe, and make no guarantees about the atomicity of
-read and write operations.
+:gf:`lock-stream` and :gf:`unlock-stream` or the macro
+:macro:`with-stream-locked`, together with other appropriate functions
+and macros from the Threads library, to implement a locking strategy
+appropriate to your application and its stream transaction model. The
+functions in the Streams module are not of themselves thread safe,
+and make no guarantees about the atomicity of read and write operations.
 
 Reading from and writing to streams
 -----------------------------------
@@ -709,12 +709,10 @@ Unicode character stream wrapping an 8-bit character stream.
     define method read-element (s :: <unicode-stream>,
       #key on-end-of-stream)
      => (ch :: <unicode-character>)
-      with-stream-locked (s)
-        let first-char = read-element(s.inner-stream,
-                                      on-end-of-stream);
-        let second-char = read-element(s.inner-stream,
-                                       on-end-of-stream)
-      end;
+      let first-char = read-element(s.inner-stream,
+                                    on-end-of-stream);
+      let second-char = read-element(s.inner-stream,
+                                     on-end-of-stream)
       convert-byte-pair-to-unicode(first-char, second-char)
     end method;
 
@@ -723,10 +721,8 @@ Unicode character stream wrapping an 8-bit character stream.
      => ()
       let (first-char, second-char) =
         convert-unicode-to-byte-pair(c);
-      with-stream-locked (s)
-        write-element(s.inner-stream, first-char);
-        write-element(s.inner-stream, second-char)
-      end;
+      write-element(s.inner-stream, first-char);
+      write-element(s.inner-stream, second-char)
       c
     end method;
 
@@ -1438,6 +1434,31 @@ are exported from the *streams* module.
    - :class:`<file-error>`
    - :class:`<file-exists-error>`
    - :class:`<incomplete-read-error>`
+
+.. generic-function:: lock-stream
+   :open:
+
+   Locks a stream.
+
+   :signature: lock-stream *stream*
+
+   :parameter stream: An instance of :class:`<stream>`.
+
+   :description:
+
+     Locks a stream. It is suggested that :macro:`with-stream-locked`
+     be used instead of direct usages of :gf:`lock-stream` and
+     :gf:`unlock-stream`.
+
+     See `Locking streams`_ for more detail and discussion on using
+     streams from multiple threads.
+
+   See also:
+
+   - :gf:`stream-lock`
+   - :gf:`stream-lock-setter`
+   - :gf:`unlock-stream`
+   - :macro:`with-stream-locked`
 
 .. method:: make
    :specializer: <byte-string-stream>
@@ -2195,6 +2216,7 @@ are exported from the *streams* module.
      - :gf:`discard-input`
      - :gf:`discard-output`
      - :gf:`force-output`
+     - :gf:`lock-stream
      - :gf:`new-line`
      - :gf:`outer-stream`
      - :gf:`outer-stream-setter`
@@ -2215,6 +2237,8 @@ are exported from the *streams* module.
      - :gf:`stream-lock-setter`
      - :gf:`stream-open?`
      - :gf:`synchronize-output`
+     - :gf:`unlock-stream`
+     - :macro:`with-stream-locked`
      - :gf:`write`
      - :gf:`write-element`
 
@@ -2760,6 +2784,31 @@ are exported from the *streams* module.
    - :meth:`make(<unicode-string-stream>)`
    - :class:`<sequence-stream>`
 
+.. generic-function:: unlock-stream
+   :open:
+
+   Unlocks a stream.
+
+   :signature: unlock-stream *stream*
+
+   :parameter stream: An instance of :class:`<stream>`.
+
+   :description:
+
+     Unlocks a stream. It is suggested that :macro:`with-stream-locked`
+     be used instead of direct usages of :gf:`lock-stream` and
+     :gf:`unlock-stream`.
+
+     See `Locking streams`_ for more detail and discussion on using
+     streams from multiple threads.
+
+   See also:
+
+   - :gf:`lock-stream`
+   - :gf:`stream-lock`
+   - :gf:`stream-lock-setter`
+   - :macro:`with-stream-locked`
+
 .. generic-function:: unread-element
    :open:
 
@@ -2866,6 +2915,38 @@ are exported from the *streams* module.
    - :class:`<file-stream>`
    - :meth:`make(<file-stream>)`
 
+.. macro:: with-stream-locked
+   :statement:
+
+   Run a body of code while the stream is locked.
+
+   :macrocall:
+     .. code-block:: dylan
+
+       with-stream-locked (*stream-var*)
+         *body*
+       end => *values*
+
+   :parameter stream-var: An Dylan variable-name *bnf*.
+   :parameter body: A Dylan body *bnf*.
+   :value values: Instances of :drm:`<object>`.
+
+   :description:
+
+     Provides a safe mechanism for locking streams for use from multiple
+     threads. The macro evaluates a *body* of code after locking the stream,
+     and then unlocks the stream. The macro calls :gf:`unlock-stream` upon
+     exiting *body*.
+
+     The values of the last expression in *body* are returned.
+
+   See also:
+
+   - :gf:`lock-stream`
+   - :gf:`stream-lock`
+   - :gf:`stream-lock-setter`
+   - :gf:`unlock-stream`
+
 .. class:: <wrapper-stream>
    :open:
    :instantiable:
@@ -2928,12 +3009,10 @@ are exported from the *streams* module.
        define method read-element (s :: <unicode-stream>,
          #key on-end-of-stream)
         => (ch :: <unicode-character>)
-         with-stream-locked (s)
-           let first-char = read-element(s.inner-stream,
-                                         on-end-of-stream);
-           let second-char = read-element(s.inner-stream,
-                                          on-end-of-stream);
-         end;
+         let first-char = read-element(s.inner-stream,
+                                       on-end-of-stream);
+         let second-char = read-element(s.inner-stream,
+                                        on-end-of-stream);
          convert-byte-pair-to-unicode(first-char, second-char)
        end method;
 
@@ -2942,10 +3021,8 @@ are exported from the *streams* module.
         => ()
          let (first-char, second-char)
            = convert-unicode-to-byte-pair(c);
-         with-stream-locked (s)
-           write-element(s.inner-stream, first-char);
-           write-element(s.inner-stream, second-char)
-         end;
+         write-element(s.inner-stream, first-char);
+         write-element(s.inner-stream, second-char)
          c
        end method;
 

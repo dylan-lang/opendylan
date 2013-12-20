@@ -23,7 +23,7 @@ define open abstract primary class <basic-stream> (<stream>)
     init-keyword: element-type:;
   slot private-stream-direction-value :: <integer>; //  = $input,
    //   init-keyword: direction:;
-  slot private-stream-lock-value :: false-or(<lock>) = make(<recursive-lock>),
+  slot private-stream-lock-value :: false-or(<lock>) = #f,
     init-keyword: stream-lock:;
 end class <basic-stream>;
 
@@ -346,14 +346,6 @@ define macro with-stream-locked
 	 end 
        end }
 end macro with-stream-locked;
-
-define function assert-locked(stream :: <stream>)
-  if (stream.stream-lock)
-    if (~stream.stream-locked?)
-      error("Stream not locked");
-    end;
-  end;
-end function;
 
 
 /// "High performance" functions

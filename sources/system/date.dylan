@@ -346,8 +346,7 @@ define method format-date (format :: <string>, date :: <date>)
     end;
   let date-stream = make(<string-stream>,
                          contents: make(<string>, size: 64),
-                         direction: #"output",
-                         stream-lock: #f);
+                         direction: #"output");
   let format? :: <boolean> = #f;
   let use-dots? :: <boolean> = #f;
   for (char in format)

@@ -547,8 +547,7 @@ define method open-output-stream
   let full-name = concatenate(file-name, ".", extension);
   make(<file-stream>,
        locator: as(<file-locator>, full-name),
-       direction: #"output",
-       stream-lock: #f);
+       direction: #"output");
 end method;
 
 define method open-output-stream
@@ -560,8 +559,7 @@ define method open-output-stream
   let full-name = concatenate(file-name, ".", extension);
   make(stream-type,
        locator: as(<file-locator>, full-name),
-       direction: #"output",
-       stream-lock: #f);
+       direction: #"output");
 end method;
 
 define method open-output-stream

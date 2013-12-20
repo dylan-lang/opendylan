@@ -24,6 +24,8 @@ end method make;
 
 define sealed domain make (singleton(<simple-wrapper-stream>));
 define sealed domain initialize (<simple-wrapper-stream>);
+define sealed domain lock-stream (<simple-wrapper-stream>);
+define sealed domain unlock-stream (<simple-wrapper-stream>);
 
 
 define open generic inner-stream

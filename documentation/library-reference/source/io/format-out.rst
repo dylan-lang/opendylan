@@ -11,10 +11,9 @@ Introduction
 The Format-Out module is a convenient repackaging of two libraries that
 provides a simple way to send text to the platform’s standard output
 stream. For this purpose, Format-Out uses the Format module and the
-Standard-IO module and defines a function :gf:`format-out`. The Format-Out
-module exports all the identifiers described in this document. The
-Format-Out module re-exports two modules, ``format`` from the Format
-library and ``standard-io`` from the Standard-IO library.
+Standard-IO module and defines the functions :gf:`format-out` and
+:gf:`force-out`. The Format-Out module exports all the identifiers
+described in this document.
 
 :doc:`format` and :doc:`standard-io` give full details of the Format and
 Standard-IO libraries.
@@ -40,6 +39,8 @@ This section contains a reference entry for each item exported from the
      :var:`*standard-output*` from the *standard-io* module,
      *control-string*, and *arguments*.
 
+     This function is thread-safe.
+
    See also
 
    - :gf:`format`
@@ -58,8 +59,10 @@ This section contains a reference entry for each item exported from the
 
    :description:
 
-   Formats its arguments on the standard output. There is one method for
-   :gf:`format-out`, and it is specialized to instances of :drm:`<byte-string>`.
+     Formats its arguments on the standard output. There is one method for
+     :gf:`format-out`, and it is specialized to instances of :drm:`<byte-string>`.
+
+     This function is thread-safe.
 
 .. function:: force-out
 
@@ -70,5 +73,7 @@ This section contains a reference entry for each item exported from the
 
    :description:
 
-      Forces pending output from :var:`*standard-output*` to the operating
-      system using :gf:`force-output`.
+     Forces pending output from :var:`*standard-output*` to the operating
+     system using :gf:`force-output`.
+
+     This function is thread-safe.
