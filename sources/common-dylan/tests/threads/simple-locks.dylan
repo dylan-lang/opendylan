@@ -174,6 +174,7 @@ end test counter-threads-timeout;
 
 define suite simple-locks-suite ()
   test simple-lock-owning;
+  test simple-lock-multiple-claim;
   test simple-lock-claim;
   test simple-lock-claim-timeout;
   test counter-threads;

@@ -69,7 +69,7 @@ define test conds ()
 		list(a, b, c)
 	      end,
 	      #(9, 8, 7));
-end test;
+end test conds;
 
 define test cases ()
   check-equal("CASE STOP WHEN TEST IS FIVE = FIVE", 
@@ -114,7 +114,7 @@ define test cases ()
 		list(a, b, c)
 	      end,
 	      #(9, 8, 7));
-end test;
+end test cases;
 
 define function student (career)
   select (career)
@@ -777,6 +777,12 @@ define suite dylan-control-suite ()
   test truths;
   test nots;
   test conds;
+  test cases;
+  test ors;
+  test ands;
+  test fors;
+  test begins;
+  test selects;
   test required-calls;
   test rest-calls;
   test keyword-calls;
