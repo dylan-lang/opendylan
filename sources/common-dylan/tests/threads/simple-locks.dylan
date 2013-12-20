@@ -6,6 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
+
 define constant *print-lock* = make(<lock>);
 
 define method format-l (#rest args)
@@ -22,7 +23,6 @@ end method;
 //
 define test simple-lock-owning
     (description: "Basic claiming/releasing of simple lock")
-
   let lock = make(<lock>);
   check-true("<lock> is a simple lock", instance?(lock, <simple-lock>));
   check-false("Lock not owned before claim", owned?(lock));
@@ -32,24 +32,21 @@ define test simple-lock-owning
   check-false("Lock not owned after release", owned?(lock));
   check-true("Wait-for lock with timeout", wait-for(lock, timeout: 10));
   release(lock);
-
 end test simple-lock-owning;
 
 
 //////////
 // Checks that when a lock which is already owned is claimed a second time
 // that an error is raised. This is what I think should happen in our
-// implementation, but I don't think the threads library spec. what
+// implementation, but I don't think the threads library specifies what
 // should happen in this case.
 //
 define test simple-lock-multiple-claim
     (description: "Claiming simple lock when already owned")
-
   let lock = make(<simple-lock>);
   check-true("First claim", wait-for(lock));
   check-condition("Second claim", <error>, wait-for(lock));
-
-end test;
+end test simple-lock-multiple-claim;
 
 
 //////////
@@ -58,7 +55,6 @@ end test;
 //
 define test simple-lock-claim
     (description: "Claim a lock from another thread")
-
   let lock = make(<simple-lock>);
   let thread = make(<thread>, name: "Test thread",
                     function: method ()
@@ -71,8 +67,7 @@ define test simple-lock-claim
   join-thread(thread);
   check-true("Wait for lock owned by other thread", result);
   check-true("Really did get lock", owned?(lock));
-
-end test;
+end test simple-lock-claim;
 
 
 //////////
@@ -81,7 +76,6 @@ end test;
 //
 define test simple-lock-claim-timeout
     (description: "timed wait for lock")
-
   let lock = make(<simple-lock>);
   let thread = make(<thread>, name: "Test thread",
                     function: method ()
@@ -93,8 +87,7 @@ define test simple-lock-claim-timeout
   let result = wait-for(lock, timeout: 1);
   join-thread(thread);
   check-false("Wait for lock timeout", result);
-
-end test;
+end test simple-lock-claim-timeout;
 
 
 //////////
@@ -107,7 +100,6 @@ end test;
 //
 define test counter-threads
     (description: "Multiple threads incrementing a counter")
-
   let n = 70;
   let iterations = 10;
   let vec = make(<vector>, size: n);
@@ -133,8 +125,7 @@ define test counter-threads
     join-thread(vec[i]);
   end for;
   check-equal("Value of counter", counter, n * iterations);
-
-end test;
+end test counter-threads;
 
 
 //////////
@@ -148,7 +139,6 @@ end test;
 //
 define test counter-threads-timeout
     (description: "Multiple threads incrementing a counter with lock timeouts")
-
   let n = 10;
   let iterations = 10;
   let vec = make(<vector>, size: n);
@@ -179,11 +169,10 @@ define test counter-threads-timeout
     results := results + result;
   end for;
   check-equal("Value of counter", counter, results);
+end test counter-threads-timeout;
 
-end test;
 
-
-define suite simple-locks-suite (description: "Simple locks")
+define suite simple-locks-suite ()
   test simple-lock-owning;
   test simple-lock-claim;
   test simple-lock-claim-timeout;
