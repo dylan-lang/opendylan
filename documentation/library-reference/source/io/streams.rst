@@ -1029,6 +1029,26 @@ are exported from the *streams* module.
 
      - :gf:`type-for-file-stream`
 
+.. method:: byte-storage-address
+   :specializer: <buffer>
+   :sealed:
+
+   Returns the address of the raw byte storage of a :drm:`<buffer>`.
+
+   See also:
+
+   - :gf:`byte-storage-address`
+
+.. method:: byte-storage-offset-address
+   :specializer: <buffer>
+   :sealed:
+
+   Returns the address of the raw byte storage of a :drm:`<buffer>`, with an offset.
+
+   See also:
+
+   - :gf:`byte-storage-offset-address`
+
 .. class:: <byte-string-stream>
    :open:
    :instantiable:

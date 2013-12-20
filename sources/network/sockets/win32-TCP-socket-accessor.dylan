@@ -232,19 +232,6 @@ define method accessor-read-into!
   end
 end method;
 
-// Function for adding the base address of a <buffer>'s repeated slots
-// to an offset and returning the result as a <machine-word>.  This is
-// necessary for passing <buffer> contents across the FFI.
-
-define function buffer-offset
-    (the-buffer :: <buffer>, data-offset :: <integer>)
- => (result-offset :: <machine-word>)
-  u%+(data-offset,
-      primitive-wrap-machine-word
-        (primitive-repeated-slot-as-raw
-           (the-buffer, primitive-repeated-slot-offset(the-buffer))))
-end function;
-
 // There is an interesting non-blocking version of recv in  the
 // LispWorks sockets stuff called stream--stream-read-buffer.
 
@@ -304,7 +291,7 @@ define function win32-recv
   //   >0 when that many bytes were read
   //    0 when the peer is closed
   //   -1 ($SOCKET-ERROR) for error or no bytes available
-  win32-recv-buffer(descriptor, buffer-offset(the-buffer, offset),
+  win32-recv-buffer(descriptor, byte-storage-offset-address(the-buffer, offset),
                     count, 0)
 end function;
 
@@ -397,7 +384,7 @@ define function win32-send
     (descriptor :: <accessor-socket-descriptor>, the-buffer :: <buffer>,
      offset :: <integer>, count :: <integer> )
  => (nwritten :: <integer>)
-  win32-send-buffer(descriptor, buffer-offset(the-buffer, offset), count, 0)
+  win32-send-buffer(descriptor, byte-storage-offset-address(the-buffer, offset), count, 0)
 end function;
 
 define method accessor-newline-sequence

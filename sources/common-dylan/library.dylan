@@ -90,6 +90,8 @@ define module common-extensions
   create <closable-object>,
          <stream>,
          close,
+         byte-storage-address,
+         byte-storage-offset-address,
          integer-length,
          decode-float,
          scale-float,
