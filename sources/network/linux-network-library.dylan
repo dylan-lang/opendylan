@@ -252,7 +252,7 @@ define module sockets
   create
     \interruptible-system-call;
   create
-    socket-descriptor-setter, <platform-socket>, buffer-offset,
+    socket-descriptor-setter, <platform-socket>,
     accessor-close-socket, <unix-socket-accessor>, current-socket-manager,
     socket-manager-lock, accessor-accept, default-element-type;
 end module sockets;

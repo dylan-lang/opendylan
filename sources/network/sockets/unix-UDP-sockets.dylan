@@ -77,7 +77,7 @@ define method accessor-read-into!
           let nread =
             interruptible-system-call
               (unix-recv-buffer-from(the-descriptor,
-                                     buffer-offset(the-buffer, offset),
+                                     byte-storage-offset-address(the-buffer, offset),
                                      count,
                                      0,
                                      addr,
@@ -130,7 +130,7 @@ define method accessor-write-from
           let nwritten =
             interruptible-system-call
               (unix-send-buffer-to(accessor.socket-descriptor,
-                                   buffer-offset(buffer,
+                                   byte-storage-offset-address(buffer,
                                                  offset + count - remaining),
                                    remaining,
                                    0,
