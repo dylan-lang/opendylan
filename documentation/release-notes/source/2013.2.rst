@@ -132,6 +132,13 @@ The main reason for this change was ongoing confusion by the way the network
 library initialized itself (calling ``gethostname`` and passing its result
 to ``gethostbyname``, which does not work on all computers).
 
+runtime
+^^^^^^^
+
+The C runtime will now use compiler primitives for the primitives
+``primitive-machine-word-count-low-zeros`` and
+``primitive-machine-word-count-high-zeros``.
+
 System
 ^^^^^^
 

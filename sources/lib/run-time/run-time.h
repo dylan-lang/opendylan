@@ -1370,8 +1370,13 @@ extern DMINT primitive_unwrap_abstract_integer(D);
 #define primitive_machine_word_bit_field_deposit(f, o, s, x)      (((x) & ~(((1 << (s)) - 1) << (o))) | ((f) << (o)))
 #define primitive_machine_word_bit_field_extract(o, s, x)         (((x) & (((1 << (s)) - 1) << (o))) >> (o))
 
+#ifdef OPEN_DYLAN_COMPILER_GCC_LIKE
+#define primitive_machine_word_count_low_zeros(x) __builtin_ctzl(x)
+#define primitive_machine_word_count_high_zeros(x) __builtin_clzl(x)
+#else
 extern DMINT primitive_machine_word_count_low_zeros(DMINT);
 extern DMINT primitive_machine_word_count_high_zeros(DMINT);
+#endif
 
 #define primitive_machine_word_add(x, y)                  ((x) + (y))
 
