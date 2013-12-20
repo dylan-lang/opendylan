@@ -1602,8 +1602,8 @@ Locked variables
 
    :operations:
 
-     - `conditional-update!` Atomically compare and conditionally assign
-       to the variable.
+     - :macro:`conditional-update!` Atomically compare and conditionally
+       assign to the variable.
      - :macro:`atomic-increment!` Atomically increment the variable.
      - :macro:`atomic-decrement!`  Atomically decrement the variable.
 
@@ -1753,7 +1753,7 @@ Conditional update
 
        atomic-decrement!(*place*)
 
-       atomic-decrement!(*place, by*)
+       atomic-decrement!(*place*, *by*)
 
    :parameter place: A Dylan variable-namebnf.
      If the implementation provides the extended form of
@@ -1772,59 +1772,50 @@ An extended form of conditional-update!
 ---------------------------------------
 
 Some implementations of the Threads module may provide an extended form
-of *conditional-update!* for updating places other than locked
+of ``conditional-update!`` for updating places other than locked
 variables. The implementation of this extended form requires the use of
 non-standard features in the Dylan macro system, and hence cannot be
 written as a portable macro. These non-standard extensions are subject
 to discussion amongst the Dylan language designers, and may eventually
 become features. Until such time as standardization occurs,
 implementations are not mandated to implement the extended form of
-*conditional-update!*, and portable code should not depend upon the
+``conditional-update!``, and portable code should not depend upon the
 feature.
 
-conditional-update!
--------------------
+.. macro:: conditional-update! (extended)
+   :statement:
 
-Statement macro
-'''''''''''''''
+   Performs an atomic test-and-set operation.
 
-Summary
+   :macrocall:
+     .. code-block:: dylan
 
-Performs an atomic test-and-set operation.
+       conditional-update!(*local-name* = *place*)
+         *body*
+         [success *success-expr* ]
+         [failure *failure-expr* ]
+       end
 
-Macro call
+   :parameter local-name: A Dylan variable-name *bnf*.
+   :parameter place: A Dylan variable-name *bnf* or a function call.
+   :parameter body: A Dylan body *bnf*.
 
-::
+   :description:
 
-    conditional-update!(*local-name* = *place*)
-      *body*
-      [success *success-expr* ]
-      [failure *failure-expr* ]
-    end
+     This extended form of *conditional-update!* additionally accepts a
+     *place* that has the syntax of a call to a function. This extended form
+     for *conditional-update!* is analogous to that for *:=*. In this case,
+     if the *place* appears syntactically as
 
-Arguments
+     .. code-block:: dylan
 
--  *local-name* A Dylan variable-name*bnf*.
--  *place* A Dylan variable-namebnf or a function call.
--  *body* A Dylan body*bnf*.
+       *name* (*arg* 1, … *arg* n)
 
-Values
+     The macro expands into this call:
 
--  See Description.
+     .. code-block:: dylan
 
-Description
+       *name* -conditional-updater(*new-value*, *local-name*, *arg* 1, ...  *arg* n)
 
-This extended form of *conditional-update!* additionally accepts a
-*place* that has the syntax of a call to a function. This extended form
-for *conditional-update!* is analogous to that for *:=*. In this case,
-if the *place* appears syntactically as
-
-*name* (*arg* 1, … *arg* n)
-
-The macro expands into this call:
-
-*name* -conditional-updater(*new-value*, *local-name*, *arg* 1, …
-*arg* n)
-
-If the result of this function call is ``#f``, the conditional update is
-deemed to have failed.
+     If the result of this function call is ``#f``, the conditional update is
+     deemed to have failed.
