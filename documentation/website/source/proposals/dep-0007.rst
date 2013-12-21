@@ -9,7 +9,7 @@ Status:          Draft
 Type:            Standards Track
 Affects-DRM:     Yes
 Created:         28-Jul-2013
-Last-Modified:   17-Dec-2013
+Last-Modified:   19-Dec-2013
 Post-History:    28-Jul-2013
 Target-Version:  2013.2
 ===============  ===============
@@ -73,13 +73,13 @@ value identical to the default value listed above instead of ``#f``.
 
 The ``type-for-copy`` method on instances of *L* will return a limited type *L2*
 as described in the [DRM]_, but with the additional requirement that *L2* will
-have the same default filler object as *L* (i.e., the same ``default-fill:``
+have the same default fill value as *L* (i.e., the same ``default-fill:``
 argument).
 
 The defaulted or supplied ``default-fill:`` argument should be an instance of
 the element type of the collection. However, it is not an error to supply a
-default filler object that the collection cannot accommodate, since a call to
-``make`` may specify a filler object of the correct type.
+default fill value that the collection cannot accommodate, since a call to
+``make`` may specify a fill value of the correct type.
 
 
 ``element-type-fill``
@@ -87,7 +87,7 @@ default filler object that the collection cannot accommodate, since a call to
 
 A new open generic function will be added to the Dylan library::
 
-   element-type-fill (coll :: <collection>) => (fill-object :: <object>)
+   element-type-fill (coll :: <collection>) => (fill-value :: <object>)
 
 For instances of a limited fillable collection class type, this function will
 return the (possibly defaulted) ``default-fill:`` argument to ``limited``. For
@@ -175,7 +175,7 @@ Rationale
 I named ``element-type-fill`` as such rather than ``default-fill`` because the
 latter name is a little more misleading. A user can define a subclass of a
 collection and provide a new default value for the ``fill:`` init-keyword
-without needing to define a new ``element-type-fill`` method; he only needs to
+without needing to define a new ``element-type-fill`` method; they only need to
 do that when restricting the element type of a collection.
 
 The ``element-type-fill`` and ``element-type`` methods take an *instance* of a
@@ -262,7 +262,7 @@ nonetheless has restricted element types. ``element-type`` and
 be correct for that collection's allowed element types.
 
 The only other backwards compatibility issue is a namespace collision if the
-user defines his own unrelated "element-type" or "element-type-fill" bindings.
+user defines their own unrelated "element-type" or "element-type-fill" bindings.
 
 
 Reference Implementation
