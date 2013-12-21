@@ -45,7 +45,7 @@ project, and also make sure you have a registry entry for it.  See
 You should now have a buffer called ``*dime-repl nil*`` that looks
 like this::
 
-    Welcome to dswank - the Hacker Edition Version 2013.1 SLIME interface
+    Welcome to dswank - the Hacker Edition Version 2013.2 SLIME interface
     opendylan> 
 
 This is the Open Dylan compiler interactive shell.  You can issue

@@ -6,7 +6,7 @@ Introduction
 ============
 
 This document describes the 2013.2 release of Open Dylan, released
-XXX XX, 2013.
+December 23, 2013.
 
 * `Download the release <http://opendylan.org/download/index.html>`_
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
