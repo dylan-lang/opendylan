@@ -217,6 +217,7 @@ Common Dylan
 
 The ``debug-message()`` function will now work around a possible clang compiler
 issue that causes a crash when printing integers.
+
 Dylan
 -----
 
