@@ -223,12 +223,3 @@ Dylan
 
 ``element`` will no longer signal a type error when it returns its ``default:``
 value and that value does not match the element type of a limited collection.
-
-I/O
----
-
-Several cases of missing locking were fixed in the ``io`` library.
-The added locking may cause changes in performance.
-If you encounter this you can mitigate it by disabling locking on affected streams.
-We are considering a switch to an opt-in locking scheme to improve performance.
-
