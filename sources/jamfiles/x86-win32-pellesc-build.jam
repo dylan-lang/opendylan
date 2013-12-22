@@ -26,6 +26,8 @@ LINK    ?= polink ;
   BINDIR ?= $(_bin:P=$(PERSONAL_ROOT:E=$(.:P))) ;
 }
 
+libcmt	?= pocrt.lib ;
+
 LINKFLAGS ?= /NODEFAULTLIB /DEBUG /DEBUGTYPE:CV ;
 
 include $(SYSTEM_LIBDIR)/x86-win32-vc6-build.jam ;
