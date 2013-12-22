@@ -3,7 +3,9 @@
 #
 
 CC      ?= pocc ;
-CCFLAGS ?= -DWIN32 -D_WIN32 -D_MT -D_DLL -MD -Ze ;
+CCFLAGS ?= -DWIN32 -D_WIN32 -D_MT -D_DLL -MD -Ze
+           -DOPEN_DYLAN_PLATFORM_WINDOWS
+           -DOPEN_DYLAN_ARCH_X86 ;
 RC      ?= porc ;
 LINK    ?= polink ;
 
