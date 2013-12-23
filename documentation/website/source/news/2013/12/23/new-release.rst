@@ -8,6 +8,10 @@ Dear Dylan Hacker,
 
 It is a pleasure for us to announce a new release of Open Dylan.
 
+Dylan is a multi-paradigm functional and object-oriented programming language. It is dynamic while providing a programming model designed to support efficient machine code generation, including fine-grained control over dynamic and static behaviors.
+
+For more information on Open Dylan, see our `website <http://opendylan.org/>`_ and our `documentation <http://opendylan.org/documentation/>`_.
+
 We have extensive `release notes <http://opendylan.org/documentation/release-notes/2013.2.html>`_,
 but this release has been about iterative improvement rather than major changes.
 
