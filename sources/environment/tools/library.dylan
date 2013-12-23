@@ -8,6 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library environment-tools
   use dylan;
+  use build-system;
   use environment-protocols;
   use environment-manager;
   use editor-manager;

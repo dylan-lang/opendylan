@@ -11,6 +11,8 @@ define module environment-tools
 
   use dylan-extensions, import: { \last-handler-definer };
 
+  use build-system;
+
   use duim-internals,
     exclude: { position, string-pluralize,
 	       get-property,
