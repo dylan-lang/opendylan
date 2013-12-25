@@ -71,10 +71,9 @@ environment variable to have it leave the files somewhere else:
 
   $ export OPEN_DYLAN_USER_ROOT=~/opendylan-build
 
-For generating the initial boilerplate for a new Dylan project, a perl
-script named make-dylan-app is provided.  It takes one argument, the
-name of the new library, and generates a set of Dylan files that you
-can then modify.
+For generating the initial boilerplate for a new Dylan project, a program
+named make-dylan-app is provided.  It takes one argument, the name of the 
+new library, and generates a set of Dylan files that you can then modify.
 
   $ make-dylan-app my-lib
   $ cd my-lib
