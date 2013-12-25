@@ -120,6 +120,12 @@ External Libraries and Tools
 `HTTP reference </documentation/http/>`_ [`pdf </documentation/http/HTTPLibraries.pdf>`__] [`epub </documentation/http/HTTPLibraries.epub>`__]
     Dylan provides libraries for writing HTTP clients and servers.
 
+`Tracing reference </documentation/tracing/>`_ [`pdf </documentation/tracing/TracingUserGuide.pdf>`__] [`epub </documentation/tracing/TracingUserGuide.epub>`__]
+    Tracing is an alternative to traditional logging and performance measurements.
+
+`Binary-Data reference </documentation/binary-data/>`_ [`pdf </documentation/binary-data/BinaryData.pdf>`__] [`epub </documentation/binary-data/BinaryData.epub>`__]
+    The binary-data library provides an extension to the Dylan language for parsing and assembling binary data using high level Dylan objects.
+
 Articles
 ========
 
