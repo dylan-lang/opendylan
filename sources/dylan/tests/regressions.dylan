@@ -241,6 +241,7 @@ define test issue-440 ()
 end;
 
 define suite dylan-regressions ()
+  test bug-2766;
   test bug-5800;
   test bug-5580;
   test bug-5325;
