@@ -87,7 +87,7 @@ The order in which the designated source files are specified with the
 *Files:* keyword in the LID file determines the initialization order
 across the files within the defined library.
 
-All the files specified must reside in the same folder (directory) as
+All the files must be specified relative to the same folder (directory) as
 the LID file.
 
 Synopsis:
@@ -124,16 +124,27 @@ LID file keyword
 
 The name of the library’s author.
 
-Version:
---------
+Major-Version:
+--------------
 
 LID file keyword
 
 .. code-block:: dylan
 
-    Version: *arbitrary text*
+    Major-Version: *number*
 
-The current version number of the library.
+The current major version number of the library.
+
+Minor-Version:
+--------------
+
+LID file keyword
+
+.. code-block:: dylan
+
+    Minor-Version: *number*
+
+The current minor version number of the library.
 
 Description:
 ------------
