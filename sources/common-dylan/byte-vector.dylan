@@ -10,7 +10,7 @@ License:      See License.txt in this distribution for details.
 ///// BYTE-VECTOR
 /////
 
-define constant <byte-vector> = limited(<vector>, of: <byte>);
+define constant <byte-vector> = limited(<vector>, of: <byte>, default-fill: as(<byte>, 0));
 
 /// Fast byte vector copying
 

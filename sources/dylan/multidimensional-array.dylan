@@ -15,7 +15,7 @@ define sealed inline method empty? (array :: <simple-array>) => (b :: <boolean>)
   array.size = 0
 end method empty?;
 
-define constant <dimensions>      = limited(<vector>, of: <integer>);
+define constant <dimensions>      = limited(<vector>, of: <integer>, default-fill: 0);
 define constant $empty-dimensions = make(<dimensions>, size: 0);
 
 define inline function compute-size-from-dimensions
@@ -135,6 +135,9 @@ define macro limited-array-minus-selector-definer
                    element-type-fill = ?fill)
           => (array :: "<simple-" ## ?name ## "-array>")
            let (dimensions, size) = compute-array-dimensions-and-size(dimensions);
+           unless (size = 0)
+             check-type(fill, "<" ## ?name ## ">")
+           end unless;
            ?=next-method(class,
                          dimensions:        dimensions,
                          size:              size,

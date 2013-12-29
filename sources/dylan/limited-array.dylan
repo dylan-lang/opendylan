@@ -5,15 +5,19 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define limited-array <integer>       (fill: 0);
+define limited-array <integer> (fill: 0);
 
-define limited-array-minus-selector <byte>
-    (<limited-fillable-collection>, <simple-array>) (fill: 0);
-define limited-array-minus-selector <double-byte>
-    (<limited-fillable-collection>, <simple-array>) (fill: 0);
+define limited-array-minus-selector
+    <byte> (<limited-fillable-collection>, <simple-array>)
+    (fill: as(<byte>, 0));
 
-define limited-array-minus-constructor <element-type>
-    (<limited-element-type-collection>, <limited-fillable-collection>, <simple-array>) (fill: #f);
+define limited-array-minus-selector
+    <double-byte> (<limited-fillable-collection>, <simple-array>)
+    (fill: as(<double-byte>, 0));
+
+define limited-array-minus-constructor
+    <element-type> (<limited-element-type-collection>, <limited-fillable-collection>, <simple-array>)
+    (fill: #f);
 
 define sealed method make
     (class == <simple-element-type-array>,
@@ -67,5 +71,5 @@ define method concrete-limited-array-class
 end method;
 
 define limited-array <machine-word>  (fill: as(<machine-word>, 0));
-define limited-array <single-float>  (fill: 0.0);
+define limited-array <single-float>  (fill: as(<single-float>, 0.0));
 define limited-array <double-float>  (fill: as(<double-float>, 0.0));

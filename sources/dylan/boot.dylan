@@ -1213,6 +1213,7 @@ define shared-symbols %shared-dylan-symbols
   #"domain-types",
   #"each-subclass",
   #"element-type",
+  #"element-type-fill",
   #"end",
   #"failure",
   #"fill",

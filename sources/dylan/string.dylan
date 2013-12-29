@@ -299,9 +299,12 @@ define macro limited-string-definer
 
          define method make
              (class == "<limited-" ## ?name ## "-string>",
-              #key fill :: "<" ## ?name ## "-character>" = ?fill, size :: <integer> = 0,
+              #key fill = ?fill, size :: <integer> = 0,
                    element-type-fill: default-fill = ?fill)
           => (res :: "<limited-" ## ?name ## "-string>")
+           unless (size = 0)
+             check-type(fill, "<" ## ?name ## "-character>")
+           end unless;
            let instance = system-allocate-repeated-instance
              ("<limited-" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
            instance.element-type-fill := default-fill;
@@ -343,11 +346,12 @@ define macro string-definer
        
        define method make
            (class == "<" ## ?name ## "-string>",
-            #key fill :: "<" ## ?name ## "-character>" = ?fill, size :: <integer> = 0)
+            #key fill = ?fill, size :: <integer> = 0)
         => (res :: "<" ## ?name ## "-string>")
          if (size = 0)
            empty(class)
          else
+           check-type(fill, "<" ## ?name ## "-character>");
            system-allocate-repeated-instance
              ("<" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
          end if
@@ -385,7 +389,7 @@ end macro;
 // LIMITED STRINGS
 //
 
-define limited-string byte (fill: ' ');
+define limited-string byte (fill: as(<byte-character>, ' '));
 
 define method limited-string
     (of :: <type>, default-fill :: <character>, size :: false-or(<integer>))
@@ -424,11 +428,12 @@ end method;
 define string-without-class byte (fill: ' ', class-name: byte);
 
 define method make
-    (class == <byte-string>, #key fill :: <byte-character> = ' ', size :: <integer> = 0)
+    (class == <byte-string>, #key fill = ' ', size :: <integer> = 0)
  => (res :: <byte-string>)
   if (size = 0)
     empty(class)
   else
+    check-type(fill, <byte-character>);
     system-allocate-repeated-instance
       (<byte-string>, <byte-character>, unbound(), size, fill);
   end if

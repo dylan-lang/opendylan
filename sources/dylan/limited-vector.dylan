@@ -7,9 +7,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Assemble <simple-X-vector> that works for the <X> singletons.
 
-define limited-vector <integer>       (fill: 0);
+define limited-vector <integer>       (fill: as(<integer>, 0));
 define limited-vector <machine-word>  (fill: as(<machine-word>, 0));
-define limited-vector <single-float>  (fill: 0.0);
+define limited-vector <single-float>  (fill: as(<single-float>, 0.0));
 define limited-vector <double-float>  (fill: as(<double-float>, 0.0));
 
 
@@ -20,10 +20,12 @@ define limited-vector <double-float>  (fill: as(<double-float>, 0.0));
 // limited-vector-definer which works only for the <byte> or <double-byte>
 // singletons.
 
-define limited-vector-minus-selector <byte>
-    (<limited-fillable-collection>, <simple-vector>) (fill: 0);
-define limited-vector-minus-selector <double-byte>
-    (<limited-fillable-collection>, <simple-vector>) (fill: 0);
+define limited-vector-minus-selector
+    <byte> (<limited-fillable-collection>, <simple-vector>)
+    (fill: as(<byte>, 0));
+define limited-vector-minus-selector
+    <double-byte> (<limited-fillable-collection>, <simple-vector>)
+    (fill: as(<double-byte>, 0));
 
 /// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
 define inline method concrete-limited-vector-class
@@ -42,8 +44,9 @@ end method;
 // and the generic <limited-element-type-collection> functions that allow for arbitrary
 // element types.
 
-define limited-vector-minus-constructor <element-type>
-    (<limited-element-type-collection>, <limited-fillable-collection>, <simple-vector>) (fill: #f);
+define limited-vector-minus-constructor
+    <element-type> (<limited-element-type-collection>, <limited-fillable-collection>, <simple-vector>)
+    (fill: #f);
 
 define method make
     (class == <simple-element-type-vector>,

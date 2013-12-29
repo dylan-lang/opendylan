@@ -50,6 +50,15 @@ end method;
 // for matching the default-fill; matching the tighter limited integer type; and for
 // matching the fallback class. The lookup function will return the first suitable
 // match.
+//
+// In the mappings later in this file, each element type entry has a line with
+// a fill: option, followed by one without, but both returning the same concrete
+// class. The difference between them is that when the user calls limited() with
+// a matching default-fill: argument, the first line matches and the limited()
+// function returns the concrete class directly; but if the user uses a different
+// default-fill: argument, the second line matches and limited() returns a
+// limited type specification that is not the concrete class itself nor even
+// a <class> at all.
 define macro limited-element-type-mappings-definer
   { define limited-element-type-mappings (?collection:name)
       ?mappings:*

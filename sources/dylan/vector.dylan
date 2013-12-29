@@ -757,9 +757,12 @@ define macro limited-vector-minus-selector-definer
          // in order to propagate limited collection type information.
          define method make
              (class == "<simple-" ## ?name ## "-vector>",
-               #key fill :: "<" ## ?name ## ">" = ?fill, size :: <integer> = 0,
+               #key fill = ?fill, size :: <integer> = 0,
                     element-type-fill: default-fill = ?fill)
           => (vector :: "<simple-" ## ?name ## "-vector>")
+           unless (size = 0)
+             check-type(fill, "<" ## ?name ## ">")
+           end unless;
            let instance = system-allocate-repeated-instance
              ("<simple-" ## ?name ## "-vector>", "<" ## ?name ## ">", unbound(), size, fill);
            instance.element-type-fill := default-fill;

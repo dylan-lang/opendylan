@@ -7,7 +7,9 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Assemble <stretchy-X-vector> that works for the <X-character> singletons.
 
-define limited-stretchy-vector <byte-character> (fill: ' ');
+define limited-stretchy-vector
+    <byte-character>
+    (fill: as(<byte-character>, ' '));
 
 
 // Assemble <stretchy-byte-vector>, but rely on the
@@ -17,8 +19,9 @@ define limited-stretchy-vector <byte-character> (fill: ' ');
 // defined by limited-stretchy-vector-definer which works only for the <byte>
 // singletons.
 
-define limited-stretchy-vector-minus-selector <byte> (<limited-stretchy-vector>)
-  (fill: 0);
+define limited-stretchy-vector-minus-selector
+    <byte> (<limited-stretchy-vector>)
+    (fill: as(<byte>, 0));
 
 /// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
 define method concrete-limited-stretchy-vector-class
@@ -37,8 +40,9 @@ end method;
 // below and the generic <limited-element-type-collection> functions that allow
 // for arbitrary element types.
 
-define limited-stretchy-vector-minus-constructor <element-type>
-  (<limited-element-type-collection>, <limited-stretchy-vector>) (fill: #f);
+define limited-stretchy-vector-minus-constructor
+    <element-type> (<limited-element-type-collection>, <limited-stretchy-vector>)
+    (fill: #f);
 
 define method initialize
     (vector :: <stretchy-element-type-vector>,

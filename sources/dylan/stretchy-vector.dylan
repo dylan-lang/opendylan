@@ -568,10 +568,12 @@ define macro limited-stretchy-vector-minus-selector-definer
          define method initialize
              (vector :: "<stretchy-" ## ?name ## "-vector>",
               #key size :: <integer> = 0, capacity :: <integer> = size,
-                   fill :: "<" ## ?name ## ">" = ?fill,
-                   element-type-fill: default-fill = ?fill)
+                   fill = ?fill, element-type-fill: default-fill = ?fill)
           => ()
            ?=next-method();
+           unless (size = 0)
+             check-type(fill, "<" ## ?name ## ">")
+           end unless;
            vector.element-type-fill := default-fill;
            stretchy-initialize(vector, capacity, size, fill);
          end method initialize;
@@ -622,7 +624,7 @@ define macro limited-stretchy-vector-definer
          end method }
 end macro;
 
-define limited-stretchy-vector <object>         (fill: #f);
+define limited-stretchy-vector <object> (fill: #f);
 
 define method limited-stretchy-vector
     (of :: <type>, default-fill :: <object>) => (type :: <vector-type>)
