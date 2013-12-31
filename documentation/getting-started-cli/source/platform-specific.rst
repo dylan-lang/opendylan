@@ -94,3 +94,7 @@ The ``io`` library is laid out in the following manner:
 3. ``*-file-accessor.dylan`` uses the functions from (2) to produce a
    platform-independent API (*e.g.* ``accessor-read-into!``).
 4. Only those methods from (3) are exported from the module. 
+
+.. note:: Most libraries that are portable aren't as complex in
+   their layout as the ``io`` library and don't require separate
+   modules.
