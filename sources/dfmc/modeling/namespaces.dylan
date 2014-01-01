@@ -2359,7 +2359,8 @@ define &module internal
     %true, %false, %empty-list, %empty-vector, %empty-string;
 
   export
-    <handler>, *current-handlers*, make-handler;
+    <handler>, *current-handlers*, make-handler,
+    condition-format-arguments-vector;
 
   export
     %shared-dylan-symbols, %shared-streams-symbols;

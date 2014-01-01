@@ -41,14 +41,14 @@ define module dfmc-conditions
              <run-time-error-warning>,  \run-time-error-warning-definer,
              <style-warning>,           \style-warning-definer,
            <program-note>,              \program-note-definer,
-             <performance-note>,          \performance-note-definer,
-             <portability-note>,          \portability-note-definer,
+             <performance-note>,        \performance-note-definer,
+             <portability-note>,        \portability-note-definer,
            <program-restart>,           \program-restart-definer;
 
   // the signalling protocol
   create note,
          raise,
-	 restart,
+         restart,
          simple-note,
          simple-raise;
 
@@ -66,14 +66,14 @@ define module dfmc-conditions
   create serious-note?,
          interesting-note?,
          obsolete-condition?,
-	 <ignore-serious-note>;
+         <ignore-serious-note>;
 
   // formatting and reporting
   create <detail-level>,
          report-condition,
-	 format-condition,
-	 present-program-error,
-	 present-program-note;
+         format-condition,
+         present-program-error,
+         present-program-note;
 
   // recording
   create library-conditions-table,
