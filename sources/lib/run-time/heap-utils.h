@@ -47,7 +47,7 @@ extern BOOL map_aggregation_class (void *wrapper, ag_class_t agclass);
 extern void clear_aggregation_classes (void);
 
 
-/* mid-level interface for maintaing wrapper stats */
+/* mid-level interface for maintaining wrapper stats */
 
 
 #include "wrapper-stats.h"

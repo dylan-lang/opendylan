@@ -219,7 +219,7 @@ char* class_name_from_wrapper (void* wrapper)
 }
 
 void display_integer (int integer, mps_lib_FILE *stream)
-{  /* This is naieve. Assume no more than 7 digits */
+{  /* This is naive. Assume no more than 7 digits */
   int remainder = integer;
   int leading = 1;
   int power;
