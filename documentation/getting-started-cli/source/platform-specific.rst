@@ -10,12 +10,12 @@ https://github.com/dylan-lang/opendylan/tree/master/sources/io/ and
 https://github.com/dylan-lang/opendylan/tree/master/sources/system/.
 
 
-Lid File
+LID File
 --------
 
-For further details of the lid file format, see `Lid file`_.
+For further details of the LID file format, see `LID file`_.
 
-.. _Lid file: http://opendylan.org/documentation/library-reference/lid.html
+.. _LID file: http://opendylan.org/documentation/library-reference/lid.html
 
 1) Library
 
@@ -48,7 +48,6 @@ For further details of the lid file format, see `Lid file`_.
    RC-Files:       ..                        version.rc
    =============== ========================= =========================
 
-
 3) Linked Libraries (from dylan-lang/opendylan/sources/system)
 
    Each platform's project will probably require a different set of
@@ -64,6 +63,18 @@ For further details of the lid file format, see `Lid file`_.
 
    .. note:: An example from the ``system`` library was used as the
       ``io`` library doesn't link directly against any C libraries.
+
+
+LID File Inheritance
+--------------------
+
+When LID files are almost identical, it can be useful to create
+a base LID file and inherit it, overriding whatever is necessary
+for each platform. A per-platform LID file might look like::
+
+    Library:        uv
+    LID:            uv-posix.lid
+    C-libraries:    -framework CoreServices
 
 
 Registry
