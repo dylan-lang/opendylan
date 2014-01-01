@@ -22,8 +22,6 @@ Makefile
 /sources/lib/run-time/dylan-plinth.lib
 /sources/lib/run-time/dylan-support.lib
 /sources/lib/run-time/heap-*.obj
-/sources/lib/run-time/minvcrt.exp
-/sources/lib/run-time/minvcrt.lib
 /sources/lib/run-time/mpsiowin32.obj
 /sources/lib/run-time/obj-*
 /sources/lib/run-time/pentium-run-time.lib

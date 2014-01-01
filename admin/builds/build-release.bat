@@ -43,8 +43,6 @@ echo -     /statistics
 echo -       Turns on a reasonable default set of statistics [default: none]
 echo -     /debugger
 echo -       Runs the builds under batch-debug [default: no debugging]
-echo -     /fullcrt
-echo -       will build the pentium run time using full version of the C runtime
 echo -     /verbose
 echo -       Show more information during building
 echo - 
@@ -122,7 +120,6 @@ set STRIP_RUNTIME=no
 set OLD_RUNTIME_PREFIX=D3
 set RUNTIME_PREFIX=Dx
 set USE_ENVIRONMENT=yes
-set USE_FULL_C_RUNTIME=no
 set VERBOSE=no
 
 set OPEN_DYLAN_USER_SOURCES=
@@ -181,8 +178,6 @@ if "%1"=="-internal"           GOTO SET_INTERNAL
 if "%1"=="/internal"           GOTO SET_INTERNAL
 if "%1"=="-external"           GOTO SET_EXTERNAL
 if "%1"=="/external"           GOTO SET_EXTERNAL
-if "%1"=="-fullcrt"            GOTO SET_FULLCRT
-if "%1"=="/fullcrt"            GOTO SET_FULLCRT
 if "%1%"=="/verbose"           GOTO SET_VERBOSE
 if "%1%"=="-verbose"           GOTO SET_VERBOSE
 set ERROR_MESSAGE=Invalid command line argument %1
@@ -322,11 +317,6 @@ set WARNINGS=yes
 shift
 goto PARAM_LOOP
 
-:SET_FULLCRT
-set USE_FULL_C_RUNTIME=yes
-shift
-goto PARAM_LOOP
-
 :SET_VERBOSE
 set VERBOSE=yes
 shift
@@ -366,9 +356,6 @@ set OPEN_DYLAN_TARGET_PLATFORM=x86-win32
 REM // Pentium runtime build options
 set PENTIUM_RUNTIME_OPTIONS=
 set QUOTED_PENTIUM_RUNTIME_OPTIONS=
-if "%USE_FULL_C_RUNTIME%"=="no" goto setup_build_options
-set PENTIUM_RUNTIME_OPTIONS=%PENTIUM_RUNTIME_OPTIONS% fullcrt=yes
-set QUOTED_PENTIUM_RUNTIME_OPTIONS=PENTIUM_RUNTIME_OPTIONS="%PENTIUM_RUNTIME_OPTIONS%"
 
 REM // Build options
 :SETUP_BUILD_OPTIONS
