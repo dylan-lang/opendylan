@@ -64,6 +64,12 @@ end class <simple-condition>;
 
 define constant <format-string-condition> = <simple-condition>;
 
+// debug-message and its C primitive require the arguments as a vector.
+define function condition-format-arguments-vector
+    (condition :: <simple-condition>) => (vector :: <simple-object-vector>)
+  as(<simple-object-vector>, condition.condition-format-arguments)
+end function;
+
 define method signal (condition :: <condition>, #rest noise)
   unless (empty?(noise))
     error("Can only supply format arguments when supplying a format string.")

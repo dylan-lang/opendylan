@@ -137,7 +137,7 @@ char* dylan_string_data (D instance) {
 extern D Lsimple_conditionGVKe;
 extern FN KinstanceQVKd;
 extern FN Kcondition_format_stringVKd;
-extern FN Kcondition_format_argumentsVKd;
+extern FN Kcondition_format_arguments_vectorVKi;
 
 bool dylan_simple_condition_p (D instance) {
   return DTRUE == CALL2(&KinstanceQVKd, instance, Lsimple_conditionGVKe);
@@ -148,7 +148,7 @@ D dylan_simple_condition_format_string (D instance) {
 }
 
 D dylan_simple_condition_format_args (D instance) {
-  return CALL1(&Kcondition_format_argumentsVKd, instance);
+  return CALL1(&Kcondition_format_arguments_vectorVKi, instance);
 }
 
 /* CLASS */
