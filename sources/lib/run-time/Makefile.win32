@@ -107,12 +107,12 @@ install-plinth: install-dylan-plinth
 
 
 install-mmdw:
-  echo Building pentium run time: install-mmdw
+	echo Building pentium run time: install-mmdw
 	if exist $(MMDWDEST) del /q /f $(MMDWDEST)
 	if not exist $(RELEASEMMDW) pushd $(SDK4MEMORY_POOL_SYSTEM)\code \
 	& $(MAKE) /k /f w3i3mv.nmk mmdw.lib > $(BUILD_LOGS)\make-mmdw.log \
 	& popd
-  copy $(RELEASEMMDW) $(MMDWDEST)
+	copy $(RELEASEMMDW) $(MMDWDEST)
 
 install-symbolic-mmdw: $(SYMBOLICMMDW)
   echo Building pentium run time: install-symbolic-mmdw
@@ -141,6 +141,6 @@ install: ensure-dirs install-stripped install-build
 # (The files runtime.obj & dylan-support.obj are checked out from HOPE)
 clean:
 	pushd . & (del /f /q *collector.obj break.obj $(HEAPOBJS) windows-threads-primitives.obj windows-spy-interfaces.obj) & popd
-        pushd . & (del /f /q *pentium-run-time.lib $(USERLIB)) & popd
-        pushd . & (del /f /q $(DYLANPLINTH) $(PLINTHOBJS)) & popd
+	pushd . & (del /f /q *pentium-run-time.lib $(USERLIB)) & popd
+	pushd . & (del /f /q $(DYLANPLINTH) $(PLINTHOBJS)) & popd
 
