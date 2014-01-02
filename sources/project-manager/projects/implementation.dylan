@@ -274,26 +274,13 @@ define method make-project
       platform-name := default-platform-name();
     end;
 
-    local method platform-namestring-info (platform) => (architecture, os)
-      let name = as-lowercase(as(<string>, platform));
-      let separator-position = position(name, '-');
-      let architecture-name = copy-sequence(name, end: separator-position);
-      let os-name = copy-sequence(name, start: separator-position + 1);
-      values(as(<symbol>, architecture-name),
-             as(<symbol>, os-name))
-    end;
-
-    let (architecture, operating-system) = platform-namestring-info(platform-name);
-
     // choose harp for platforms that have it, c for others
     let back-end =
       session-property(#"compiler-back-end")
-    | select (architecture)
-        #"x86" =>
-          select(operating-system)
-            #"darwin" => #"c";
-            otherwise => #"harp";
-          end;
+    | select (platform-name)
+        #"x86-freebsd" => #"harp";
+        #"x86-linux" => #"harp";
+        #"x86-win32" => #"harp";
         otherwise => #"c";
       end;
 
