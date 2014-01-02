@@ -739,6 +739,11 @@ define sideways method target-os-name () => (name :: <symbol>)
   as(<symbol>, os-name)
 end method;
 
+define sideways method target-platform-name () => (name :: <symbol>)
+  let ld = current-library-description();
+  ld.library-description-platform-name
+end method;
+
 define sideways method form-dynamic? (form :: <top-level-form>)
  => (well? :: <boolean>)
   form-interactive?(form) |
