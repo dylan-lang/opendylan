@@ -271,7 +271,7 @@ define method make-project
   with-lock($pm-lock)
   with-used-project-cache
     unless (platform-name)
-      platform-name := target-platform-name();
+      platform-name := default-platform-name();
     end;
 
     local method platform-namestring-info (platform) => (architecture, os)
@@ -880,7 +880,7 @@ define function find-platform-project (key, platform-name)
 end function;
 
 define function target-platform-name-setter (new-platform-name)
-  let (old-platform-name) = target-platform-name();
+  let (old-platform-name) = default-platform-name();
   unless (new-platform-name == old-platform-name)
     for (project in *all-open-projects*)
       note-platform-change(project, new-platform-name);

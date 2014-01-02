@@ -8,10 +8,10 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $platform-variable = "OPEN_DYLAN_TARGET_PLATFORM";
 define constant $default-platform = $platform-name;
 
-define function target-platform-name ()
+define function default-platform-name ()
  => (platform-name :: <symbol>)
   as(<symbol>, environment-variable($platform-variable) | $default-platform)
-end function target-platform-name;
+end function default-platform-name;
 
 define function main(name, arguments)
   let state = make(<jam-state>);
@@ -19,7 +19,7 @@ define function main(name, arguments)
   // Useful built-in variables
   jam-variable(state, "OS") := vector(as(<string>, $os-name));
   jam-variable(state, "OSPLAT") := vector(as(<string>, $machine-name));
-  jam-variable(state, "TARGET_PLATFORM") := vector(as(<string>, target-platform-name()));
+  jam-variable(state, "TARGET_PLATFORM") := vector(as(<string>, default-platform-name()));
 
   select($os-name)
     #"win32" =>

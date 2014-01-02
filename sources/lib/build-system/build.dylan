@@ -11,17 +11,17 @@ define constant $build-log-file = "build.log";
 define constant $platform-variable = "OPEN_DYLAN_TARGET_PLATFORM";
 define constant $default-platform = $platform-name;
 
-define function target-platform-name ()
+define function default-platform-name ()
  => (platform-name :: <symbol>)
   as(<symbol>, environment-variable($platform-variable) | $default-platform)
-end function target-platform-name;
+end function default-platform-name;
 
 define settings <build-system-settings> (<open-dylan-user-settings>)
   key-name "Build-System";
   slot build-script :: <string>
     = as(<string>,
          merge-locators(as(<file-locator>,
-                           concatenate(as(<string>, target-platform-name()),
+                           concatenate(as(<string>, default-platform-name()),
                                        "-build.jam")),
                         $system-lib));
 end settings <build-system-settings>;
