@@ -723,14 +723,6 @@ define sideways method compiling-dylan-library? () => (well? :: <boolean>)
     dylan-library-library-description?(current-library-description())
 end method;
 
-define sideways method target-architecture-name () => (name :: <symbol>)
-  let platform-name = as(<string>,
-                         library-description-platform-name(current-library-description()));
-  let separator-position = position(platform-name, '-');
-  let architecture-name = copy-sequence(platform-name, end: separator-position);
-  as(<symbol>, architecture-name)
-end method;
-
 define sideways method target-os-name () => (name :: <symbol>)
   let platform-name = as(<string>,
                          library-description-platform-name(current-library-description()));
