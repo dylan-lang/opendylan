@@ -47,8 +47,6 @@ define module environment-internal-commands
     exclude: { build-project };
   use registry-projects,
     import: { find-registries };
-  use projects-implementation,
-    import: { default-platform-info };
 
   use build-system;
   use dood;
