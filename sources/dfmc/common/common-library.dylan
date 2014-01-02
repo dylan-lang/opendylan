@@ -153,7 +153,6 @@ define module dfmc-common
       current-top-level-library-description?,
     current-library-in-context?,
     current-back-end,
-    current-back-end-name,
     target-architecture-name, target-os-name,
     compiling-dylan-library?,
 
