@@ -15,3 +15,10 @@ XXX XX, 2014.
 Improvements
 ============
 
+Bug Fixes
+=========
+
+C Run-time
+^^^^^^^^^^
+
+``debug-message`` no longer crashes when printing some conditions.
