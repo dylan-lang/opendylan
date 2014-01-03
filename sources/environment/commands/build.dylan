@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Build properties
 
-// Compilation mode
+// Compiler back-end
 
 define class <compiler-back-end-property> (<environment-property>)
 end class <compiler-back-end-property>;
@@ -35,6 +35,8 @@ define method set-property
   ignore(save?);
   session-property(#"compiler-back-end") := back-end;
 end method set-property;
+
+// Compilation mode
 
 define class <compilation-mode-property> (<project-property>)
 end class <compilation-mode-property>;
