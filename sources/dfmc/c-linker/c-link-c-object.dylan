@@ -25,49 +25,28 @@ define method emit-parameter-types
   format(stream, ")");
 end method;
 
-define method emit-forward
-    (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ();
-  emit-c-function-forward(back-end, stream, o, target-os-name());
-end;
-
 ///--- Emitting extern declarations for these functions will produce parameter
 ///--- lists that conflict with their declarations in the system header files.
 define constant $generic-names-not-to-emit = #["pseudo_primitive_command_name",
 					       "pseudo_primitive_command_arguments"];
 
-define method emit-c-function-forward
-    (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>,
-     os :: <object>)
- => ();
+define method emit-forward
+    (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ();
   unless(member?(o.binding-name, $generic-names-not-to-emit, test: \=))
     let sig-values = o.primitive-signature.^signature-values;
     let return-type = first(sig-values, default: dylan-value(#"<object>"));
-    format-emit*(back-end, stream, "~ ^ ^ ", 
-		 if (o.binding-name) "extern" else "typedef" end, 
-		 return-type,
-		 o);
-    emit-parameter-types(back-end, stream, o);
-    format-emit*(back-end, stream, ";\n");
-  end;
-end method;
-
-///--- Emitting extern declarations for these functions will produce parameter
-///--- lists that conflict with their declarations in the system header files.
-define constant $win32-names-not-to-emit = #["pseudo_primitive_command_name",
-					     "pseudo_primitive_command_arguments"];
-
-define method emit-c-function-forward
-    (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>,
-     os == #"win32")
- => ();
-  unless(member?(o.binding-name, $win32-names-not-to-emit, test: \=))
-    let sig-values = o.primitive-signature.^signature-values;
-    let return-type = first(sig-values, default: dylan-value(#"<object>"));
-    format-emit*(back-end, stream, "~ ^ ~ ^ ", 
-		 if (o.binding-name) "extern" else "typedef" end, 
-		 return-type,
-		 o.c-modifiers,
-		 o);
+    if (target-os-name() == #"win32")
+      format-emit*(back-end, stream, "~ ^ ~ ^ ",
+		   if (o.binding-name) "extern" else "typedef" end,
+		   return-type,
+		   o.c-modifiers,
+		   o);
+    else
+      format-emit*(back-end, stream, "~ ^ ^ ",
+		   if (o.binding-name) "extern" else "typedef" end,
+		   return-type,
+		   o);
+    end if;
     emit-parameter-types(back-end, stream, o);
     format-emit*(back-end, stream, ";\n");
   end;
