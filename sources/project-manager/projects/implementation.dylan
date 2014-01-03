@@ -655,6 +655,7 @@ define method project-remove-build-products(project :: <base-project>,
     build-system(if (recursive?) #["clean-all"] else #["clean"] end,
                  directory: project.project-build-location,
                  compiler-back-end: project.project-compiler-back-end,
+                 target-platform: project.project-platform-name,
                  progress-callback: ignore);
   end;
   // no-op for system projects

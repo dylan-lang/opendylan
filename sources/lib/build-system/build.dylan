@@ -82,6 +82,7 @@ define method build-system
           progress-callback :: <function> = ignore,
           build-script = default-build-script(),
           compiler-back-end,
+          target-platform,
           project-build-info,
           force?,
           configure? = #t)
@@ -108,6 +109,7 @@ define method build-system
       let jam
         = make-jam-state(build-script,
                          compiler-back-end: compiler-back-end,
+                         target-platform: target-platform,
                          progress-callback: wrap-progress-callback,
                          build-directory: directory);
       with-build-directory (directory)
