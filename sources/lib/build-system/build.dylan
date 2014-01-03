@@ -16,6 +16,15 @@ define function default-platform-name ()
   as(<symbol>, environment-variable($platform-variable) | $default-platform)
 end function default-platform-name;
 
+define function default-platform-name-setter
+  (new-platform-name :: <symbol>)
+ => ()
+  unless (new-platform-name == default-platform-name())
+    environment-variable("OPEN_DYLAN_TARGET_PLATFORM")
+      := as(<string>, new-platform-name);
+  end;
+end function default-platform-name-setter;
+
 define settings <build-system-settings> (<open-dylan-user-settings>)
   key-name "Build-System";
   slot build-script :: <string>

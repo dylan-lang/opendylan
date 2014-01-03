@@ -42,6 +42,7 @@ define module build-system
     build-system,
 
     default-platform-name,
+    default-platform-name-setter,
 
     default-build-script,
     default-build-script-setter,
