@@ -69,7 +69,7 @@ define method emit-lambda-interface-using-function
     write(stream, "static ");
   end;
   emit-return-types(back-end, stream, o);
-  if (target-os-name() == #"win32")
+  if (target-platform-name() == #"x86-win32")
     unless (empty?(fun.c-modifiers))
       format-emit*(back-end, stream, " ~", fun.c-modifiers)
     end;

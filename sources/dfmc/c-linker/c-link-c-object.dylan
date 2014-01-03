@@ -35,7 +35,7 @@ define method emit-forward
   unless(member?(o.binding-name, $generic-names-not-to-emit, test: \=))
     let sig-values = o.primitive-signature.^signature-values;
     let return-type = first(sig-values, default: dylan-value(#"<object>"));
-    if (target-os-name() == #"win32")
+    if (target-platform-name() == #"x86-win32")
       format-emit*(back-end, stream, "~ ^ ~ ^ ",
 		   if (o.binding-name) "extern" else "typedef" end,
 		   return-type,
