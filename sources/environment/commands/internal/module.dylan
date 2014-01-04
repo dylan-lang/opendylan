@@ -24,6 +24,8 @@ define module environment-internal-commands
               project-compiler-back-end-setter => env/project-compiler-back-end-setter,
               project-compilation-mode => env/project-compilation-mode,
               project-compilation-mode-setter => env/project-compilation-mode-setter,
+              project-platform-name => env/project-platform-name,
+              project-platform-name-setter => env/project-platform-name-setter,
               project-target-type => env/project-target-type,
               <project-target-type> => env/<project-target-type>,
               project-target-type-setter => env/project-target-type-setter,

@@ -467,6 +467,7 @@ define module environment-protocols
          project-server-path,
          project-compilation-mode, project-compilation-mode-setter,
          project-compiler-back-end, project-compiler-back-end-setter,
+         project-platform-name, project-platform-name-setter,
          project-target-type, project-target-type-setter,
          project-interface-type, project-interface-type-setter,
          project-base-address, project-base-address-setter,
