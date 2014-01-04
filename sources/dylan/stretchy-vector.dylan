@@ -178,6 +178,7 @@ define method trusted-size-setter
          => (new-size :: <integer>)
   // TODO: could remove fills and do this in size-setter
   let f = element-type-fill(vector);
+  check-type(f, vector.element-type);
   let v = vector.stretchy-representation;
   let v-capacity = v.size;
   let v-size = v.%size;
@@ -236,8 +237,10 @@ define method remove!
           grovel(count, src-index + 1, dst-index + 1)
       end case
     else
+      let fill = vector.element-type-fill;
+      check-type(fill, vector.element-type);
       for (i :: <integer> from dst-index below src-index)
-        stretchy-vector-element(src, i) := element-type-fill(vector)
+        stretchy-vector-element(src, i) := fill
       end;
       src.%size := dst-index
     end if

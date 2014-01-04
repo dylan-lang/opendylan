@@ -233,8 +233,10 @@ define sealed inline method trusted-size-setter
         pop-last(collection)
       end;
     difference > 0 =>
+      let fill = collection.element-type-fill;
+      check-type(fill, collection.element-type);
       for (i :: <integer> from 0 below difference)
-        trusted-push-last(collection, element-type-fill(collection))
+        trusted-push-last(collection, fill)
       end;
   end case;
   new-size
@@ -396,11 +398,13 @@ end method reverse!;
 // PRIVATE
 
 define method grow! (deque :: <object-deque>)
+  let fill = deque.element-type-fill;
+  check-type(fill, deque.element-type);
   let old-rep = deque.representation;
   let old-rep-first-index = old-rep.first-index;
   let old-rep-last-index = old-rep.last-index;
   let old-rep-size = (old-rep-last-index - old-rep-first-index) + 1;
-  let new-rep = make(<island-deque>, size: old-rep-size * 2, fill: element-type-fill(deque));
+  let new-rep = make(<island-deque>, size: old-rep-size * 2, fill: fill);
   new-rep.first-index := truncate/(old-rep-size, 2);
   for (src-index :: <integer>
          from old-rep-first-index to old-rep-last-index,

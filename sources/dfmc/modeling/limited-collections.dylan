@@ -328,32 +328,32 @@ define limited-element-type-mappings (<array>)
   <machine-word>, fill: as(<machine-word>, 0)
     => <simple-machine-word-array>;
   <machine-word>
-    => <simple-machine-word-with-fill-array>;
+    => <simple-machine-word-array>;
 
   <single-float>, fill: as(<single-float>, 0.0)
     => <simple-single-float-array>;
   <single-float>
-    => <simple-single-float-with-fill-array>;
+    => <simple-single-float-array>;
 
   <double-float>, fill: as(<double-float>, 0.0)
     => <simple-double-float-array>;
   <double-float>
-    => <simple-double-float-with-fill-array>;
+    => <simple-double-float-array>;
 
   limited(<integer>, min: 0, max: 255), fill: 0
     => <simple-byte-array>;
   limited(<integer>, min: 0, max: 255)
-    => <simple-byte-with-fill-array>;
+    => <simple-byte-array>;
 
   limited(<integer>, min: 0, max: 65535), fill: 0
     => <simple-double-byte-array>;
   limited(<integer>, min: 0, max: 65535)
-    => <simple-double-byte-with-fill-array>;
+    => <simple-double-byte-array>;
 
   <integer>, fill: 0
     => <simple-integer-array>;
   <integer>
-    => <simple-integer-with-fill-array>;
+    => <simple-integer-array>;
 
   <object>, fill: #f
     => <simple-object-array>;
@@ -361,7 +361,7 @@ define limited-element-type-mappings (<array>)
   any, fill: #f
     => <simple-element-type-array>;
   otherwise
-    => <simple-element-type-with-fill-array>;
+    => <simple-element-type-array>;
 end limited-element-type-mappings;
     
 define method select-limited-array (of, default-fill, sz, dimensions)
@@ -389,12 +389,12 @@ define limited-element-type-mappings (<stretchy-vector>)
   <byte-character>, fill: as(<byte-character>, ' ')
     => <stretchy-byte-character-vector>;
   <byte-character>
-    => <stretchy-byte-character-with-fill-vector>;
+    => <stretchy-byte-character-vector>;
 
   limited(<integer>, min: 0, max: 255), fill: 0
     => <stretchy-byte-vector>;
   limited(<integer>, min: 0, max: 255)
-    => <stretchy-byte-with-fill-vector>;
+    => <stretchy-byte-vector>;
 
   <object>, fill: #f
     => <stretchy-object-vector>;
@@ -402,7 +402,7 @@ define limited-element-type-mappings (<stretchy-vector>)
   any, fill: #f
     => <stretchy-element-type-vector>;
   otherwise
-    => <stretchy-element-type-with-fill-vector>;
+    => <stretchy-element-type-vector>;
 end limited-element-type-mappings;
     
 define method select-limited-stretchy-vector (of, default-fill)
@@ -482,114 +482,63 @@ define method select-limited-deque (of, default-fill)
   end if
 end method;
 
-define method select-default-fill (class, of)
-  select (class)
-    dylan-value(#"<string>")
-      => select (of by ^subtype?)
-           dylan-value(#"<unicode-character>")
-             => as(<unicode-character>, ' ');
-           otherwise
-             => as(<byte-character>, ' ');
-         end select;
-    dylan-value(#"<deque>")
-      => #f;
-    dylan-value(#"<stretchy-vector>")
-      => select (of by ^subtype?)
-           dylan-value(#"<byte-character>")
-             => as(<byte-character>, ' ');
-           dylan-value(#"<integer>")
-             => 0;
-           otherwise
-             => #f;
-         end select;
-    dylan-value(#"<vector>"),
-    dylan-value(#"<simple-vector>"),
-    dylan-value(#"<array>")
-      => select (of by ^subtype?)
-           dylan-value(#"<machine-word>")
-             => as(<machine-word>, 0);
-           dylan-value(#"<single-float>")
-             => 0.0;
-           dylan-value(#"<double-float>")
-             => as(<double-float>, 0.0);
-           dylan-value(#"<integer>")
-             => 0;
-           otherwise
-             => #f;
-         end select;
-    otherwise
-      => #f;
-  end select
-end method;
-
 define method ^limited-collection 
     (class :: <&class>, #rest all-keys,
      #key of, default-fill, size, dimensions, #all-keys)
-  if (of)
-    let keywords = choose-by(even?, range(), all-keys);
-    let default-fill
-      = if (member?(#"default-fill", keywords))
-          default-fill
-        else
-          select-default-fill(class, of)
-        end if;
-    // PARALLELS RUNTIME METHODS ON LIMITED
-    select (class)
-      dylan-value(#"<range>")  // TODO: NOT YET IMPLEMENTED
-        => class;
-      dylan-value(#"<string>")
-        => select-limited-string(of, default-fill, size);
-      dylan-value(#"<deque>")
-        => select-limited-deque(of, default-fill);
-      dylan-value(#"<stretchy-vector>") 
-        => select-limited-stretchy-vector(of, default-fill);
-      dylan-value(#"<vector>"), dylan-value(#"<simple-vector>")
-        => select-limited-vector(of, default-fill, size);
-      dylan-value(#"<array>") 
-        => select-limited-array(of, default-fill, size, dimensions);
-      dylan-value(#"<set>")
-        => select-limited-set(of, size);
-      dylan-value(#"<table>"), dylan-value(#"<object-table>")
-        => select-limited-table(of, size);
-      // UNINSTANTIATEABLE LIMITED COLLECTION TYPES
-      dylan-value(#"<collection>")
-        => ^make(<&limited-collection-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<explicit-key-collection>")
-        => ^make(<&limited-explicit-key-collection-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<mutable-collection>")
-        => ^make(<&limited-mutable-collection-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<stretchy-collection>")
-        => ^make(<&limited-stretchy-collection-type>,
-                 class:          class,
-                 element-type:   of);
-      dylan-value(#"<mutable-explicit-key-collection>")
-        => ^make(<&limited-mutable-explicit-key-collection-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<sequence>")
-        => ^make(<&limited-sequence-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<mutable-sequence>")
-        => ^make(<&limited-mutable-sequence-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      otherwise 
-        => #f;
-    end select  
-  else
-    class
-  end if;
+  // PARALLELS RUNTIME METHODS ON LIMITED
+  select (class)
+    dylan-value(#"<range>")  // TODO: NOT YET IMPLEMENTED
+      => class;
+    dylan-value(#"<string>")
+      => select-limited-string(of, default-fill, size);
+    dylan-value(#"<deque>")
+      => select-limited-deque(of, default-fill);
+    dylan-value(#"<stretchy-vector>") 
+      => select-limited-stretchy-vector(of, default-fill);
+    dylan-value(#"<vector>"), dylan-value(#"<simple-vector>")
+      => select-limited-vector(of, default-fill, size);
+    dylan-value(#"<array>") 
+      => select-limited-array(of, default-fill, size, dimensions);
+    dylan-value(#"<set>")
+      => select-limited-set(of, size);
+    dylan-value(#"<table>"), dylan-value(#"<object-table>")
+      => select-limited-table(of, size);
+    // UNINSTANTIATEABLE LIMITED COLLECTION TYPES
+    dylan-value(#"<collection>")
+      => ^make(<&limited-collection-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<explicit-key-collection>")
+      => ^make(<&limited-explicit-key-collection-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<mutable-collection>")
+      => ^make(<&limited-mutable-collection-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<stretchy-collection>")
+      => ^make(<&limited-stretchy-collection-type>,
+               class:          class,
+               element-type:   of);
+    dylan-value(#"<mutable-explicit-key-collection>")
+      => ^make(<&limited-mutable-explicit-key-collection-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<sequence>")
+      => ^make(<&limited-sequence-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<mutable-sequence>")
+      => ^make(<&limited-mutable-sequence-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    otherwise 
+      => #f;
+  end select  
 end method;
