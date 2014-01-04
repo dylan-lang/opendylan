@@ -22,17 +22,13 @@ define function default-platform-name-setter
   unless (new-platform-name == default-platform-name())
     environment-variable("OPEN_DYLAN_TARGET_PLATFORM")
       := as(<string>, new-platform-name);
+    $build-system-settings.build-script := calculate-build-script();
   end;
 end function default-platform-name-setter;
 
 define settings <build-system-settings> (<open-dylan-user-settings>)
   key-name "Build-System";
-  slot build-script :: <string>
-    = as(<string>,
-         merge-locators(as(<file-locator>,
-                           concatenate(as(<string>, default-platform-name()),
-                                       "-build.jam")),
-                        $system-lib));
+  slot build-script :: <string> = calculate-build-script();
 end settings <build-system-settings>;
 
 define constant $build-system-settings = make(<build-system-settings>);
@@ -47,6 +43,15 @@ define function default-build-script-setter
   $build-system-settings.build-script := as(<string>, script);
   script
 end function default-build-script-setter;
+
+define function calculate-build-script ()
+ => (script :: <string>)
+  as(<string>,
+     merge-locators(as(<file-locator>,
+                       concatenate(as(<string>, default-platform-name()),
+                                   "-build.jam")),
+                    $system-lib));
+end function calculate-build-script;
 
 
 
