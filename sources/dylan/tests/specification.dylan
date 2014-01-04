@@ -6,156 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library-spec dylan ()
-  module dylan;
-  suite dylan-control-suite;
-  suite dylan-regressions;
-  suite types;
-end library-spec dylan;
-
-define module-spec dylan ()
-  /// Constants
-
-  //--- $permanent-hash-state isn't part of our implementation
-  // constant $permanent-hash-state :: <object>;
-
-  /// The core classes
-  sealed class <boolean> (<object>);
-  sealed class <character> (<object>);
-  sealed instantiable class <class> (<type>);
-  open abstract class <object> ();
-  sealed instantiable class <singleton> (<type>);
-  sealed class <symbol> (<object>);
-  sealed abstract class <type> (<object>);
-
-  /// Functions
-  sealed abstract class <function> (<object>);
-  sealed instantiable class <generic-function> (<function>);
-  sealed class <method> (<function>);
-
-  /// Constructing and initializing instances
-  open generic-function make 
-      (<type>, #"rest", #"key", #"all-keys") => (<object>);
-  open generic-function initialize 
-      (<object>, #"key", #"all-keys") => (#"rest");
-  open generic-function slot-initialized?
-      (<object>, <generic-function>) => (<boolean>);
-  function list 
-      (#"rest") => (<list>);
-  function pair
-      (<object>, <object>) => (<pair>);
-  function range
-      (#"key", #"from", #"to", #"above", #"below", #"by", #"size") => (<range>);
-  function singleton
-      (<object>) => (<singleton>);
-  function limited
-      (<class>, #"key", #"all-keys") => (<type>);
-  function type-union
-      (<type>, #"rest") => (<type>);
-  function vector
-      (#"rest") => (<simple-object-vector>);
-
-  /// Equality and comparison functions
-  function \~ (<object>) => (<boolean>);
-  function \== (<object>, <object>) => (<boolean>);
-  function \~== (<object>, <object>) => (<boolean>);
-  open generic-function \= (<object>, <object>) => (<boolean>);
-  function \~= (<object>, <object>) => (<boolean>);
-  open generic-function \< (<object>, <object>) => (<boolean>);
-  function \> (<object>, <object>) => (<boolean>);
-  function \<= (<object>, <object>) => (<boolean>);
-  function \>= (<object>, <object>) => (<boolean>);
-  function min (<object>, #"rest") => (<object>);
-  function max (<object>, #"rest") => (<object>);
-
-  /// Coercing and copying functions
-  function identity (<object>) => (<object>);
-  function values (#"rest") => (#"rest");
-  open generic-function as (<type>, <object>) => (<object>);
-  open generic-function as-uppercase (<object>) => (<object>);
-  open generic-function as-uppercase! (<object>) => (<object>);
-  open generic-function as-lowercase (<object>) => (<object>);
-  open generic-function as-lowercase! (<object>) => (<object>);
-  open generic-function shallow-copy (<object>) => (#"rest");
-  open generic-function type-for-copy (<object>) => (<type>);
-
-  /// Type functions
-  function instance? (<object>, <type>) => (<boolean>);
-  function subtype? (<type>, <type>) => (<boolean>);
-  function object-class (<object>) => (<class>);
-  function all-superclasses (<class>) => (<sequence>);
-  function direct-superclasses (<class>) => (<sequence>);
-  function direct-subclasses (<class>) => (<sequence>);
-
-  /// Functional operations
-  function compose (<function>, #"rest") => (<function>);
-  function complement (<function>) => (<function>);
-  function disjoin (<function>, #"rest") => (<function>);
-  function conjoin (<function>, #"rest") => (<function>);
-  function curry (<function>, #"rest") => (<function>);
-  function rcurry (<function>, #"rest") => (<function>);
-  function always (<object>) => (<function>);
-
-  /// Function handling functions
-  function apply (<function>, <object>, #"rest") => (#"rest");
-  function generic-function-methods (<generic-function>) => (<sequence>);
-  function add-method
-      (<generic-function>, <method>) => (<method>, false-or(<method>));
-  function generic-function-mandatory-keywords
-      (<generic-function>) => (false-or(<collection>));
-  function function-specializers (<function>) => (<sequence>);
-  function function-arguments 
-      (<function>)
-   => (<integer>, <boolean>, type-union(one-of(#f, #"all"), <collection>));
-  function function-return-values
-      (<function>)
-   => (<sequence>, <type>, type-union(singleton(#t), <type>));
-  function applicable-method?
-      (<function>, #"rest") => (<boolean>);
-  function sorted-applicable-methods
-      (<generic-function>, #"rest")
-   => (<sequence>, <sequence>);
-  function find-method
-      (<generic-function>, <sequence>)
-   => (false-or(<method>));
-  function remove-method
-      (<generic-function>, <method>)
-   => (<method>);
-
-  /// Defining macros
-  macro-test class-definer-test;
-  macro-test constant-definer-test;
-  macro-test domain-definer-test;
-  macro-test generic-definer-test;
-  macro-test library-definer-test;
-  macro-test method-definer-test;
-  macro-test module-definer-test;
-  macro-test variable-definer-test;
-
-  /// Statement macros
-  macro-test begin-test;
-  macro-test block-test;
-  macro-test case-test;
-  macro-test for-test;
-  macro-test if-test;
-  macro-test method-test;
-  macro-test select-test;
-  macro-test unless-test;
-  macro-test until-test;
-  macro-test while-test;
-
-  /// Function macros
-  macro-test colon-equal-test;
-  macro-test or-test;
-  macro-test and-test;
-
-  /// Other protocols
-  protocol arithmetic;
-  protocol collections;
-  protocol conditions;
-  protocol dylan-extensions;
-end module-spec dylan;
-
 define protocol-spec arithmetic ()
   /// Numbers
   open abstract class <number> (<object>);
@@ -415,3 +265,153 @@ define protocol-spec dylan-extensions ()
 
   macro-test function-definer-test;
 end protocol-spec dylan-extensions;
+
+define module-spec dylan ()
+  /// Constants
+
+  //--- $permanent-hash-state isn't part of our implementation
+  // constant $permanent-hash-state :: <object>;
+
+  /// The core classes
+  sealed class <boolean> (<object>);
+  sealed class <character> (<object>);
+  sealed instantiable class <class> (<type>);
+  open abstract class <object> ();
+  sealed instantiable class <singleton> (<type>);
+  sealed class <symbol> (<object>);
+  sealed abstract class <type> (<object>);
+
+  /// Functions
+  sealed abstract class <function> (<object>);
+  sealed instantiable class <generic-function> (<function>);
+  sealed class <method> (<function>);
+
+  /// Constructing and initializing instances
+  open generic-function make 
+      (<type>, #"rest", #"key", #"all-keys") => (<object>);
+  open generic-function initialize 
+      (<object>, #"key", #"all-keys") => (#"rest");
+  open generic-function slot-initialized?
+      (<object>, <generic-function>) => (<boolean>);
+  function list 
+      (#"rest") => (<list>);
+  function pair
+      (<object>, <object>) => (<pair>);
+  function range
+      (#"key", #"from", #"to", #"above", #"below", #"by", #"size") => (<range>);
+  function singleton
+      (<object>) => (<singleton>);
+  function limited
+      (<class>, #"key", #"all-keys") => (<type>);
+  function type-union
+      (<type>, #"rest") => (<type>);
+  function vector
+      (#"rest") => (<simple-object-vector>);
+
+  /// Equality and comparison functions
+  function \~ (<object>) => (<boolean>);
+  function \== (<object>, <object>) => (<boolean>);
+  function \~== (<object>, <object>) => (<boolean>);
+  open generic-function \= (<object>, <object>) => (<boolean>);
+  function \~= (<object>, <object>) => (<boolean>);
+  open generic-function \< (<object>, <object>) => (<boolean>);
+  function \> (<object>, <object>) => (<boolean>);
+  function \<= (<object>, <object>) => (<boolean>);
+  function \>= (<object>, <object>) => (<boolean>);
+  function min (<object>, #"rest") => (<object>);
+  function max (<object>, #"rest") => (<object>);
+
+  /// Coercing and copying functions
+  function identity (<object>) => (<object>);
+  function values (#"rest") => (#"rest");
+  open generic-function as (<type>, <object>) => (<object>);
+  open generic-function as-uppercase (<object>) => (<object>);
+  open generic-function as-uppercase! (<object>) => (<object>);
+  open generic-function as-lowercase (<object>) => (<object>);
+  open generic-function as-lowercase! (<object>) => (<object>);
+  open generic-function shallow-copy (<object>) => (#"rest");
+  open generic-function type-for-copy (<object>) => (<type>);
+
+  /// Type functions
+  function instance? (<object>, <type>) => (<boolean>);
+  function subtype? (<type>, <type>) => (<boolean>);
+  function object-class (<object>) => (<class>);
+  function all-superclasses (<class>) => (<sequence>);
+  function direct-superclasses (<class>) => (<sequence>);
+  function direct-subclasses (<class>) => (<sequence>);
+
+  /// Functional operations
+  function compose (<function>, #"rest") => (<function>);
+  function complement (<function>) => (<function>);
+  function disjoin (<function>, #"rest") => (<function>);
+  function conjoin (<function>, #"rest") => (<function>);
+  function curry (<function>, #"rest") => (<function>);
+  function rcurry (<function>, #"rest") => (<function>);
+  function always (<object>) => (<function>);
+
+  /// Function handling functions
+  function apply (<function>, <object>, #"rest") => (#"rest");
+  function generic-function-methods (<generic-function>) => (<sequence>);
+  function add-method
+      (<generic-function>, <method>) => (<method>, false-or(<method>));
+  function generic-function-mandatory-keywords
+      (<generic-function>) => (false-or(<collection>));
+  function function-specializers (<function>) => (<sequence>);
+  function function-arguments 
+      (<function>)
+   => (<integer>, <boolean>, type-union(one-of(#f, #"all"), <collection>));
+  function function-return-values
+      (<function>)
+   => (<sequence>, <type>, type-union(singleton(#t), <type>));
+  function applicable-method?
+      (<function>, #"rest") => (<boolean>);
+  function sorted-applicable-methods
+      (<generic-function>, #"rest")
+   => (<sequence>, <sequence>);
+  function find-method
+      (<generic-function>, <sequence>)
+   => (false-or(<method>));
+  function remove-method
+      (<generic-function>, <method>)
+   => (<method>);
+
+  /// Defining macros
+  macro-test class-definer-test;
+  macro-test constant-definer-test;
+  macro-test domain-definer-test;
+  macro-test generic-definer-test;
+  macro-test library-definer-test;
+  macro-test method-definer-test;
+  macro-test module-definer-test;
+  macro-test variable-definer-test;
+
+  /// Statement macros
+  macro-test begin-test;
+  macro-test block-test;
+  macro-test case-test;
+  macro-test for-test;
+  macro-test if-test;
+  macro-test method-test;
+  macro-test select-test;
+  macro-test unless-test;
+  macro-test until-test;
+  macro-test while-test;
+
+  /// Function macros
+  macro-test colon-equal-test;
+  macro-test or-test;
+  macro-test and-test;
+
+  /// Other protocols
+  protocol arithmetic;
+  protocol collections;
+  protocol conditions;
+  protocol dylan-extensions;
+end module-spec dylan;
+
+define library-spec dylan ()
+  module dylan;
+  suite dylan-control-suite;
+  suite dylan-regressions;
+  suite types;
+end library-spec dylan;

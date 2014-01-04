@@ -4,7 +4,6 @@ Author:       Andy Armstrong
 Target-Type:	dll
 Files:  library
 	module
-	specification
 	macros
 	control
         constants
@@ -15,6 +14,7 @@ Files:  library
 	numbers
 	regressions
 	types
+	specification
 Major-version: 2
 Minor-version: 1
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

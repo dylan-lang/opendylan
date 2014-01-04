@@ -2,7 +2,6 @@ Library:   apple-dylan-test-suite
 Author:    Shri Amit(amit)
 Synopsis:  Apple Dylan Test Suite
 Files:	apple-dylan-test-suite-lib
-	apple-dylan-test-suite
 	test-array
 	test-assignment
 	test-character
@@ -30,6 +29,7 @@ Files:	apple-dylan-test-suite-lib
 	test-sequence3
 	test-sequence4
 	test-sequence5
+	apple-dylan-test-suite
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

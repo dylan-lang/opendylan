@@ -6,18 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library-spec system ()
-  module operating-system;
-  module date;
-  module locators;
-  module file-system;
-  module settings;
-  module simple-xml;
-  suite universal-streams-suite;
-  suite additional-streams-suite;
-  suite system-regressions;
-end library-spec system;
-
 define module-spec date ()
   // Classes
   sealed class <date> (<number>);
@@ -277,3 +265,15 @@ define module-spec simple-xml ()
   function select-nodes (<xml-element>, <string>) => (<vector>);
   function select-single-node (<xml-element>, <string>) => (false-or(<xml-element>));
 end module-spec simple-xml;
+
+define library-spec system ()
+  module operating-system;
+  module date;
+  module locators;
+  module file-system;
+  module settings;
+  module simple-xml;
+  suite universal-streams-suite;
+  suite additional-streams-suite;
+  suite system-regressions;
+end library-spec system;

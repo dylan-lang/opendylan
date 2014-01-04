@@ -3,7 +3,6 @@ Synopsis:     Common Dylan library test suite
 Author:       Andy Armstrong
 Target-Type:  dll
 Files: library
-       specification
        variables
        classes
        functions
@@ -28,6 +27,7 @@ Files: library
        threads/exclusive-locks-spec
        threads/notifications-spec
        threads/misc-spec
+       specification
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.

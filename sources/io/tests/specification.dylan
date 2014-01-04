@@ -6,21 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library-spec io ()
-  module streams;
-  // module streams-internals;
-  module pprint;
-  module print;
-  // module print-internals;
-  // module format;
-  // module format-internals;
-  // module standard-io;
-  // module format-out;
-  suite universal-streams-suite;
-  suite additional-streams-suite;
-  suite format-test-suite;
-end library-spec io;
-
 define module-spec streams ()
 
   // Constants
@@ -177,3 +162,18 @@ define module-spec print ()
 
   macro-test printing-object-test;
 end module-spec print;
+
+define library-spec io ()
+  module streams;
+  // module streams-internals;
+  module pprint;
+  module print;
+  // module print-internals;
+  // module format;
+  // module format-internals;
+  // module standard-io;
+  // module format-out;
+  suite universal-streams-suite;
+  suite additional-streams-suite;
+  suite format-test-suite;
+end library-spec io;
