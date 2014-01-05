@@ -3,7 +3,7 @@ Copyright
 *********
 
 
-Copyright © 2011-2013 Dylan Hackers.
+Copyright © 2011-2014 Dylan Hackers.
 
 Portions copyright © 1995-2000 Functional Objects, Inc.
 
