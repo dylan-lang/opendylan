@@ -28,12 +28,12 @@ define method open-emit-output
            make-harp-outputter(back-end, filename,
                                print-harp?: harp-output?,
                                type: #"downloader"));
-    target-os-name() == #"linux" | target-os-name() == #"freebsd" =>
+    target-platform-name() == #"x86-linux" | target-platform-name() == #"x86-freebsd" =>
       add!(outputters,
            make-harp-outputter(back-end, filename,
                                print-harp?: harp-output?,
                                type: #"elf-as-outputter"));
-    target-os-name() == #"darwin" =>
+    target-platform-name() == #"x86-darwin" =>
       add!(outputters,
            make-harp-outputter(back-end, filename,
                                print-harp?: harp-output?,

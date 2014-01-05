@@ -312,7 +312,7 @@ define method replace-project-with?(c :: subclass(<project>),
  => (yes-or-no :: <boolean>, project :: false-or(<project>), key);
   debug-assert(project-file | key);
   unless (platform-name)
-    platform-name := target-platform-name();
+    platform-name := default-platform-name();
   end;
   let key = if(key) key else library-name-from-file(project-file) end;
   let project = key & find-platform-project(key, platform-name);
@@ -413,7 +413,7 @@ define method make-project (c == <user-project>,
                             mode)
  => (project :: <project>);
   unless (platform-name)
-    platform-name := target-platform-name();
+    platform-name := default-platform-name();
   end;
 
   unless(key)

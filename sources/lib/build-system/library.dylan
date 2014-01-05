@@ -41,7 +41,8 @@ define module build-system
   export
     build-system,
 
-    target-platform-name,
+    default-platform-name,
+    default-platform-name-setter,
 
     default-build-script,
     default-build-script-setter,

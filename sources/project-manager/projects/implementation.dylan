@@ -271,29 +271,16 @@ define method make-project
   with-lock($pm-lock)
   with-used-project-cache
     unless (platform-name)
-      platform-name := target-platform-name();
+      platform-name := default-platform-name();
     end;
-
-    local method platform-namestring-info (platform) => (architecture, os)
-      let name = as-lowercase(as(<string>, platform));
-      let separator-position = position(name, '-');
-      let architecture-name = copy-sequence(name, end: separator-position);
-      let os-name = copy-sequence(name, start: separator-position + 1);
-      values(as(<symbol>, architecture-name),
-             as(<symbol>, os-name))
-    end;
-
-    let (architecture, operating-system) = platform-namestring-info(platform-name);
 
     // choose harp for platforms that have it, c for others
     let back-end =
       session-property(#"compiler-back-end")
-    | select (architecture)
-        #"x86" =>
-          select(operating-system)
-            #"darwin" => #"c";
-            otherwise => #"harp";
-          end;
+    | select (platform-name)
+        #"x86-freebsd" => #"harp";
+        #"x86-linux" => #"harp";
+        #"x86-win32" => #"harp";
         otherwise => #"c";
       end;
 
@@ -668,6 +655,7 @@ define method project-remove-build-products(project :: <base-project>,
     build-system(if (recursive?) #["clean-all"] else #["clean"] end,
                  directory: project.project-build-location,
                  compiler-back-end: project.project-compiler-back-end,
+                 target-platform: project.project-platform-name,
                  progress-callback: ignore);
   end;
   // no-op for system projects
@@ -880,7 +868,7 @@ define function find-platform-project (key, platform-name)
 end function;
 
 define function target-platform-name-setter (new-platform-name)
-  let (old-platform-name) = target-platform-name();
+  let (old-platform-name) = default-platform-name();
   unless (new-platform-name == old-platform-name)
     for (project in *all-open-projects*)
       note-platform-change(project, new-platform-name);

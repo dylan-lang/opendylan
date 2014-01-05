@@ -9,7 +9,7 @@ define library dfmc-back-end-protocol
   use dylan;
   use dfmc-mangling;
   use dfmc-common;
-  use build-system;
+  use dfmc-namespace;
   export dfmc-back-end-protocol;
 end library;
 
@@ -18,8 +18,8 @@ define module dfmc-back-end-protocol
   use dylan-extensions, import: { false-or };
   use dfmc-common;
   use dfmc-mangling, export: all;
-  use build-system, import: { target-platform-name };
-  
+  use dfmc-namespace;
+
   export 
     <back-end>,
     <local-variable>,

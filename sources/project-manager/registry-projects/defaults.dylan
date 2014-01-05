@@ -15,10 +15,10 @@ define function lookup-personal-registries ()
 end function;
 
 define function make-registry-from-path
-    (path :: <directory-locator>, platform, 
+    (path :: <directory-locator>, platform-name,
      #key personal? = #f)
  => (platform-registry :: <registry>, generic-registry :: <registry>);
-  let platform-registry = subdirectory-locator(path, platform);
+  let platform-registry = subdirectory-locator(path, as(<string>, platform-name));
   let generic-registry  = subdirectory-locator(path, "generic");
 
   values(make(<registry>,
@@ -91,7 +91,7 @@ define class <registry-entry-not-found-error> (<simple-error>)
 end class <registry-entry-not-found-error>;
 
 define function compute-library-location (key, platform-name)
-  let registries = find-registries(as(<string>, platform-name));
+  let registries = find-registries(platform-name);
 
   let (lid-location, registry)
     = find-library-locator(key, registries);

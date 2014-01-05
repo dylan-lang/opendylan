@@ -38,6 +38,8 @@ define module dfmc-environment-projects
               project-compilation-mode-setter => env/project-compilation-mode-setter,
               project-compiler-back-end => env/project-compiler-back-end,
               project-compiler-back-end-setter => env/project-compiler-back-end-setter,
+              project-platform-name => env/project-platform-name,
+              project-platform-name-setter => env/project-platform-name-setter,
               project-target-type => env/project-target-type,
               <project-target-type> => env/<project-target-type>,
               project-target-type-setter => env/project-target-type-setter,

@@ -878,6 +878,23 @@ define sealed method env/project-compiler-back-end-setter
   back-end
 end method env/project-compiler-back-end-setter;
 
+define sealed method env/project-platform-name
+    (project :: <dfmc-project-object>)
+ => (platform-name :: <symbol>)
+  project-platform-name(project.ensure-project-proxy);
+end method env/project-platform-name;
+
+define sealed method env/project-platform-name-setter
+    (platform-name :: <symbol>, project :: <dfmc-project-object>)
+ => (platform-name :: <symbol>)
+  let proxy = project.ensure-project-proxy;
+  unless (proxy.project-platform-name == platform-name)
+    proxy.project-platform-name := platform-name;
+    save-project(proxy);
+  end;
+  platform-name
+end method env/project-platform-name-setter;
+
 define sealed method env/project-target-type
     (project :: <dfmc-project-object>)
  => (target-type :: env/<project-target-type>)
