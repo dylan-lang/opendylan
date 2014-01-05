@@ -39,7 +39,7 @@ define module-spec jam ()
    => (false-or(<sequence>));
 
   function jam-target-bind
-      (<jam-state>, <string>) => (<physical-locator>, <jam-target>);
+      (<jam-state>, <string>) => (<physical-locator>, <object>);
 
   function jam-target-build
       (<jam-state>, <sequence>, #"key", #"force?", #"progress-callback")

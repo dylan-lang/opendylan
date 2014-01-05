@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright 2004 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant <jam-arg> = type-union(<byte-string>, <jam-statement>);
+define constant <jam-arg> = type-union(<string>, <jam-statement>);
 
 define abstract class <jam-statement> (<object>)
   // source-location info?

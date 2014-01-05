@@ -32,14 +32,14 @@ define method jam-state-copy(jam :: <jam-state>) => (jam :: <jam-state>);
 end method;
 
 define method jam-variable
-    (jam :: <jam-state>, name :: <byte-string>,
+    (jam :: <jam-state>, name :: <string>,
      #key default :: false-or(<sequence>) = #[])
  => (value :: false-or(<sequence>));
   element(jam.%jam-variables, name, default: default)
 end method;
 
 define method jam-variable-setter
-    (value :: false-or(<sequence>), jam :: <jam-state>, name :: <byte-string>)
+    (value :: false-or(<sequence>), jam :: <jam-state>, name :: <string>)
  => (value :: false-or(<sequence>));
   if (value)
     jam.%jam-variables[name] := value;
@@ -50,13 +50,13 @@ define method jam-variable-setter
 end method;
 
 define method jam-rule
-    (jam :: <jam-state>, name :: <byte-string>)
+    (jam :: <jam-state>, name :: <string>)
  => (rule :: false-or(<function>));
   element(jam.%jam-rules, name, default: #f);
 end method;
 
 define method jam-rule-setter
-    (value :: <function>, jam :: <jam-state>, name :: <byte-string>)
+    (value :: <function>, jam :: <jam-state>, name :: <string>)
  => (value :: <function>);
   element(jam.%jam-rules, name) := value;
 end method;

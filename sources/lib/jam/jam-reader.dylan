@@ -38,7 +38,7 @@ end;
 
 define function jam-read
     (jam :: <jam-state>,
-     input-data :: <byte-string>,
+     input-data :: <string>,
      jamfile :: false-or(<locator>))
  => ();
   local

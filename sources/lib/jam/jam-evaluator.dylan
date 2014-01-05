@@ -849,7 +849,7 @@ define class <jam-ge-expression> (<jam-composite-expression>) end;
 /// Rule invocation interface
 
 define method jam-invoke-rule
-    (jam :: <jam-state>, rulename :: <byte-string>, #rest lol)
+    (jam :: <jam-state>, rulename :: <string>, #rest lol)
  => (result :: <sequence>);
   let action = element(jam.%jam-actions, rulename, default: #f);
 
