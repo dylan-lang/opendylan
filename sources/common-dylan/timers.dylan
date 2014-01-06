@@ -4,14 +4,14 @@ Author:   Bruce Mitchener, Jr.
 License:  See License.txt in this distribution for details.
 Warranty: Distributed WITHOUT WARRANTY OF ANY KIND
 
-define class <timer> (<object>)
+define class <profiling-timer> (<object>)
   slot timer-running? :: <boolean> = #f;
   slot timer-started-seconds :: <machine-word>;
   slot timer-started-nanoseconds :: <machine-word>;
-end class <timer>;
+end class <profiling-timer>;
 
 define method timer-start
-    (timer :: <timer>)
+    (timer :: <profiling-timer>)
  => ()
   timer.timer-running? := #t;
   let (sec, nsec) = %timer-current-time();
@@ -20,7 +20,7 @@ define method timer-start
 end;
 
 define method timer-accumulated-time
-    (timer :: <timer>)
+    (timer :: <profiling-timer>)
  => (second :: <integer>, microseconds :: <integer>)
   if (timer.timer-running?)
     let (sec, nsec) = %timer-current-time();
@@ -31,7 +31,7 @@ define method timer-accumulated-time
 end;
 
 define method timer-stop
-    (timer :: <timer>)
+    (timer :: <profiling-timer>)
  => (seconds :: <integer>, microseconds :: <integer>)
   if (timer.timer-running?)
     let (sec, nsec) = %timer-current-time();
