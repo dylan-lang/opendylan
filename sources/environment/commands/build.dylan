@@ -154,7 +154,7 @@ define method set-property
   // Also update this in case we have a project loaded.
   let project-context = context.context-project-context;
   if (project-context)
-    project-context.context-build-script := build-script;
+    project-context.context-build-script := default-build-script();
   end;
 end method set-property;
 
