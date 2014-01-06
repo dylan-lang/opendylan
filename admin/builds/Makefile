@@ -297,6 +297,7 @@ SIMPLE_DAYTIME_CLIENT_SOURCE = $(NETWORK_EXAMPLES_SOURCE)\simple-daytime-client
 SIMPLE_DAYTIME_CLIENT_INSTALL_DIRECTORY = $(NETWORK_EXAMPLES_INSTALL_DIRECTORY)\simple-daytime-client
 SIMPLE_DAYTIME_SERVER_SOURCE = $(NETWORK_EXAMPLES_SOURCE)\simple-daytime-server
 SIMPLE_DAYTIME_SERVER_INSTALL_DIRECTORY = $(NETWORK_EXAMPLES_INSTALL_DIRECTORY)\simple-daytime-server
+MAKE_DYLAN_APP_SOURCE = $(TOOLS_DIRECTORY)\make-dylan-app
 
 #
 # CORBA projects
@@ -377,6 +378,7 @@ PARSER_COMPILER = $(INSTALL_BIN_DIRECTORY)\parser-compiler.exe
 TESTWORKS_REPORT = $(INSTALL_BIN_DIRECTORY)\testworks-report.exe
 WIN32_ENVIRONMENT = $(INSTALL_BIN_DIRECTORY)\win32-environment.exe
 WITH_SPLASH_SCREEN = $(INSTALL_BIN_DIRECTORY)\with-splash-screen.exe
+MAKE_DYLAN_APP = $(INSTALL_BIN_DIRECTORY)\make-dylan-app.exe
 
 BIG_INTEGERS_DLL = $(RUNTIME_PREFIX)bigint
 CHANNELS_DLL = $(RUNTIME_PREFIX)chnnls
@@ -406,6 +408,7 @@ OLE_CONTROL_FRAMEWORK_DLL = $(RUNTIME_PREFIX)olecfr
 OLE_DIALOGS_DLL = $(RUNTIME_PREFIX)oledlg
 OLE_SERVER_DLL = $(RUNTIME_PREFIX)olesvr
 SQL_ODBC_DLL = $(RUNTIME_PREFIX)db
+STRINGS_DLL = $(RUNTIME_PREFIX)strings
 SYSTEM_DLL = $(RUNTIME_PREFIX)system
 TESTWORKS_DLL = $(RUNTIME_PREFIX)tstwks
 TESTWORKS_SPECS_DLL = $(RUNTIME_PREFIX)tstspc
@@ -753,6 +756,7 @@ dll-wrap: $(DLL_WRAP)
 map-statistics: $(MAP_STATISTICS)
 parser-compiler: $(PARSER_COMPILER)
 testworks-report: $(TESTWORKS_REPORT)
+make-dylan-app: $(MAKE_DYLAN_APP)
 
 project-manager-libraries: tools-interface user-projects
 core-compiler-libraries: file-source-records release-info dood binary-manager coff-manager binary-builder coff-builder build-system parser-run-time dfmc-management dfmc-browser-support project-manager-libraries dfmc-debug-back-end
@@ -1072,7 +1076,7 @@ rel-environment: dylan-environment-with-tools win32-environment with-splash-scre
 libraries: user-libraries win32-libraries duim ole-libraries duim-ole database-libraries network dylan-orb naming-client midi
 example-projects: console-example-projects duim-example-projects win32-example-projects ole-example-projects duim-ole-example-projects network-example-projects corba-example-projects
 install-examples: install-examples-css install-console-examples install-duim-examples install-win32-examples install-basic-doc-examples install-templates install-database-examples install-ole-examples install-duim-ole-examples install-network-examples install-corba-examples install-enhanced-doc-examples install-midi-examples
-tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger map-statistics parser-compiler
+tools: install-wdbgdylan dll-wrap dylan-playground gui-dylan-playground create-id console-scepter naming-service remote-debugger testworks-libraries debugger map-statistics parser-compiler make-dylan-app
 release: release-info dylan-compiler-with-tools compiler environment rel-environment libraries tools install-runtime-dlls install-examples
 
 reinstall-examples:
@@ -2022,6 +2026,14 @@ $(TESTWORKS_REPORT):
   $(ENSURE_RUNTIME_LIBRARY) $(TESTWORKS_DLL) testworks
   $(ENSURE_SOURCES) testworks-report $(TESTWORKS_REPORT_SOURCE)
   $(BUILD_APPLICATION) testworks-report
+
+$(MAKE_DYLAN_APP):
+  $(ENSURE_RUNTIME_LIBRARY) $(COMMON_DYLAN_DLL) common-dylan
+  $(ENSURE_RUNTIME_LIBRARY) $(IO_DLL) io
+  $(ENSURE_RUNTIME_LIBRARY) $(SYSTEM_DLL) system
+  $(ENSURE_RUNTIME_LIBRARY) $(STRINGS_DLL) strings
+  $(ENSURE_SOURCES) make-dylan-app $(MAKE_DYLAN_APP_SOURCE)
+  $(BUILD_APPLICATION) make-dylan-app
 
 # Test Suites
 
