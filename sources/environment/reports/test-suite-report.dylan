@@ -27,12 +27,6 @@ define method write-report-as
   let module-names = namespace-exported-names(project, library);
   format(stream, "Module: %s-test-suite\n", library-name);
   format(stream, "\n");
-  format(stream, "define library-spec %s ()\n", library-name);
-  for (name :: <module-name-object> in module-names)
-    format(stream, "  module %s;\n",
-	   as-lowercase(environment-object-primitive-name(project, name)))
-  end;
-  format(stream, "end library-spec %s;\n", library-name);
   for (name :: <module-name-object> in module-names)
     let module = name-value(project, name);
     let module-name = environment-object-primitive-name(project, name);
@@ -71,8 +65,15 @@ define method write-report-as
       format(stream, "  //---*** Fill this in...\n");
       format(stream, "end %s-test %s%s;\n",
 	     class-name, print-name, test-suffix)
-    end
-  end
+    end;
+  end;
+  format(stream, "\n");
+  format(stream, "define library-spec %s ()\n", library-name);
+  for (name :: <module-name-object> in module-names)
+    format(stream, "  module %s;\n",
+	   as-lowercase(environment-object-primitive-name(project, name)))
+  end;
+  format(stream, "end library-spec %s;\n", library-name);
 end method write-report-as;
 
 define method write-binding-spec
