@@ -5,10 +5,6 @@ Copyright:    Original Code is Copyright 2004 Gwydion Dylan Maintainers
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library-spec jam ()
-  module jam;
-end library-spec jam;
-
 define module-spec jam ()
   instantiable class <jam-state> (<object>);
 
@@ -302,3 +298,6 @@ define jam function-test jam-target-build ()
   //---*** Fill this in...
 end function-test jam-target-build;
 
+define library-spec jam ()
+  module jam;
+end library-spec jam;

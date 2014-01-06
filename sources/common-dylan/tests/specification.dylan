@@ -6,23 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define library-spec common-dylan ()
-  module common-extensions;
-  module streams-protocol;
-  module locators-protocol;
-  module finalization;
-  module simple-io;
-  module simple-random;
-  module simple-profiling;
-  module transcendentals;
-  module byte-vector;
-  module machine-words;
-  module threads;
-  suite common-dylan-regressions;
-  suite threads-test-suite; //---*** NOTE: Should be changed to module test
-  suite test-stream-suite;
-end library-spec common-dylan;
-
 define module-spec common-extensions ()
   // Numerics
   function integer-length (<integer>) => (<integer>);
@@ -50,7 +33,6 @@ define module-spec common-extensions ()
   function unsupplied () => (<object>);
   function unsupplied? (<object>) => (<boolean>);
   function supplied? (<object>) => (<boolean>);
-
   constant $unfound    :: <object>;
   function unfound () => (<object>);
   function unfound? (<object>) => (<boolean>);
@@ -71,7 +53,6 @@ define module-spec common-extensions ()
    => (<sequence>);
   function join
     (<sequence>, <sequence>, #"key" #"key", #"conjunction") => (<sequence>);
-
   open generic-function remove-all-keys! (<mutable-collection>) => ();
   open generic-function difference
       (<sequence>, <sequence>, #"key", #"test") => (<sequence>);
@@ -491,3 +472,21 @@ define module-spec threads ()
   macro-test atomic-decrement!-test;
   macro-test atomic-increment!-test;
 end module-spec threads;
+
+define library-spec common-dylan ()
+  module common-extensions;
+  module streams-protocol;
+  module locators-protocol;
+  module finalization;
+  module simple-io;
+  module simple-random;
+  module simple-profiling;
+  module transcendentals;
+  module byte-vector;
+  module machine-words;
+  module threads;
+  suite common-dylan-regressions;
+  suite threads-test-suite; //---*** NOTE: Should be changed to module test
+  suite test-stream-suite;
+end library-spec common-dylan;
+

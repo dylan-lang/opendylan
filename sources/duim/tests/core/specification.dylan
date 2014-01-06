@@ -6,21 +6,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-/// The DUIM library specification
-
-define library-spec duim ()
-  module duim-utilities;
-  module duim-geometry;
-  module duim-dcs;
-  module duim-sheets;
-  module duim-graphics;
-  module duim-layouts;
-  module duim-gadgets;
-  module duim-frames;
-  module duim-extended-geometry;
-end library-spec duim;
-
-
 /// Utilities
 
 define module-spec duim-utilities ()
@@ -127,20 +112,6 @@ end module-spec duim-dcs;
 
 /// DUIM-Sheets classes
 
-define module-spec duim-sheets ()
-  open abstract class <caret> (<object>);
-  open abstract class <display> (<sheet>);
-  open abstract class <clipboard> (<object>);
-  open abstract class <frame> (<object>);
-  open abstract class <frame-manager> (<object>);
-  open abstract instantiable class <medium> (<object>);
-  open abstract instantiable class <pointer> (<object>);
-  open abstract class <port> (<object>);
-  open abstract class <sheet> (<object>);
-  sealed instantiable class <undefined-text-style-mapping> (<error>);
-  protocol duim-events;
-end module-spec duim-sheets;
-           
 define protocol-spec duim-events ()
   open abstract class <event> (<object>);
   open abstract class <sheet-event> (<event>);
@@ -165,6 +136,20 @@ define protocol-spec duim-events ()
   open abstract class <frame-event> (<event>);
   sealed instantiable class <timer-event> (<frame-event>);
 end protocol-spec duim-events;
+           
+define module-spec duim-sheets ()
+  open abstract class <caret> (<object>);
+  open abstract class <display> (<sheet>);
+  open abstract class <clipboard> (<object>);
+  open abstract class <frame> (<object>);
+  open abstract class <frame-manager> (<object>);
+  open abstract instantiable class <medium> (<object>);
+  open abstract instantiable class <pointer> (<object>);
+  open abstract class <port> (<object>);
+  open abstract class <sheet> (<object>);
+  sealed instantiable class <undefined-text-style-mapping> (<error>);
+  protocol duim-events;
+end module-spec duim-sheets;
            
 
 /// Graphics
@@ -258,17 +243,6 @@ end module-spec duim-gadgets;
 
 /// Frames
 
-define module-spec duim-frames ()
-  open abstract instantiable class <simple-frame> (<frame>);
-  open abstract instantiable class <dialog-frame> (<simple-frame>);
-  open instantiable class <property-frame> (<dialog-frame>);
-  open instantiable class <property-page> (<page>);
-  open instantiable class <wizard-frame> (<dialog-frame>);
-  open instantiable class <wizard-page> (<page>);
-  protocol duim-commands;
-  protocol duim-frame-events;
-end module-spec duim-frames;
-
 define protocol-spec duim-commands ()
   open abstract class <command> (<object>);
   sealed instantiable class <functional-command> (<command>);
@@ -285,6 +259,17 @@ define protocol-spec duim-frame-events ()
   sealed instantiable class <frame-unmapped-event> (<frame-event>);
   sealed instantiable class <application-exited-event> (<frame-exited-event>);
 end protocol-spec duim-frame-events;
+
+define module-spec duim-frames ()
+  open abstract instantiable class <simple-frame> (<frame>);
+  open abstract instantiable class <dialog-frame> (<simple-frame>);
+  open instantiable class <property-frame> (<dialog-frame>);
+  open instantiable class <property-page> (<page>);
+  open instantiable class <wizard-frame> (<dialog-frame>);
+  open instantiable class <wizard-page> (<page>);
+  protocol duim-commands;
+  protocol duim-frame-events;
+end module-spec duim-frames;
 
 
 /// Extended Geometry
@@ -317,3 +302,18 @@ define module-spec duim-gadget-panes ()
   sealed instantiable class <tree-node-pane> (<tree-node>);
 end module-spec duim-gadget-panes;
 */
+
+
+/// The DUIM library specification
+
+define library-spec duim ()
+  module duim-utilities;
+  module duim-geometry;
+  module duim-dcs;
+  module duim-sheets;
+  module duim-graphics;
+  module duim-layouts;
+  module duim-gadgets;
+  module duim-frames;
+  module duim-extended-geometry;
+end library-spec duim;

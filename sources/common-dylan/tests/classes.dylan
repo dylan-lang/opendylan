@@ -28,6 +28,7 @@ end class-test <arithmetic-error>;
 ///       attempting any compile-time optimizations of the original expressions.
 
 define common-extensions class-test <division-by-zero-error> ()
+  /* Commented out due to https://github.com/dylan-lang/opendylan/issues/633
   check-condition("floor/(1, 0) signals <division-by-zero-error>",
                   <division-by-zero-error>,
                   begin
@@ -37,6 +38,10 @@ define common-extensions class-test <division-by-zero-error> ()
                       x := floor/(x, 0);
                     end
                   end);
+  */
+  // Placeholder so we don't forget the above bug.
+  check-true("floor/(1, 0) signals <division-by-zero-error>", #f);
+
   check-condition("1.0s0 / 0.0s0 signals <division-by-zero-error>",
                   <division-by-zero-error>,
                   begin
