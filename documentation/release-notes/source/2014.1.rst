@@ -12,14 +12,15 @@ XXX XX, 2014.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2014.1>`_
 
-Improvements
-============
 
-Libraries
----------
+C Run-time
+==========
+
+``debug-message`` no longer crashes when printing some conditions.
+
 
 Testworks
-^^^^^^^^^
+=========
 
 Compiler warnings are now produced when a test or suite is unused.
 For example, it is easy to forget to add a test to any suite.  As a
@@ -28,12 +29,3 @@ code in a bottom-up style.  That is, you must define tests and suites
 *before* including them in a suite definition in your source file.  If
 you don't, you will receive a warning about an "Illegal forward
 reference".
-
-
-Bug Fixes
-=========
-
-C Run-time
-^^^^^^^^^^
-
-``debug-message`` no longer crashes when printing some conditions.
