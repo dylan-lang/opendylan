@@ -159,12 +159,7 @@ end method empty?;
 
 define inline method add! (vector :: <limited-stretchy-vector>, new-element)
  => (v :: <limited-stretchy-vector>)
-  let old-size = vector.size;
-  trusted-size(vector) := old-size + 1;
-  check-type(new-element, element-type(vector));
-  without-bounds-checks
-    vector[old-size] := new-element;
-  end without-bounds-checks;
+  vector[vector.size] := new-element;
   vector
 end method add!;
 
@@ -174,11 +169,10 @@ end method add!;
 //
 
 define method trusted-size-setter
-    (new-size :: <integer>, vector :: <limited-stretchy-vector>)
-         => (new-size :: <integer>)
-  // TODO: could remove fills and do this in size-setter
-  let f = element-type-fill(vector);
-  check-type(f, vector.element-type);
+    (new-size :: <integer>, vector :: <limited-stretchy-vector>,
+     #key fill = vector.element-type-fill)
+ => (new-size :: <integer>)
+  check-type(fill, vector.element-type);
   let v = vector.stretchy-representation;
   let v-capacity = v.size;
   let v-size = v.%size;
@@ -191,13 +185,13 @@ define method trusted-size-setter
       stretchy-vector-element(nv, i) := stretchy-vector-element(v, i)
     finally
       for (j :: <integer> from i below new-size)
-        stretchy-vector-element(nv, j) := f
+        stretchy-vector-element(nv, j) := fill
       end for;
     end for;
     vector.stretchy-representation := nv;
   else
     for (i :: <integer> from v-size below new-size)
-      stretchy-vector-element(v, i) := f
+      stretchy-vector-element(v, i) := fill
     end for;
     v.%size := new-size;
   end if;
@@ -518,7 +512,8 @@ define macro limited-stretchy-vector-minus-constructor-definer
 
          define sealed copy-down-method trusted-size-setter
              (new-size :: <integer>,
-              vector :: "<stretchy-" ## ?name ## "-vector>")
+              vector :: "<stretchy-" ## ?name ## "-vector>",
+              #key fill = vector.element-type-fill)
           => (new-size :: <integer>);
 
          define sealed copy-down-method size-setter
@@ -594,17 +589,18 @@ define macro limited-stretchy-vector-minus-selector-definer
            if (index < 0)
              element-range-error(collection, index)
            end if;
-           if (index >= collection.size)
-             if (index = collection.size)
-               trusted-size(collection) := index + 1;
-             else
-               collection.size := index + 1
-             end if
-           end if;
            // We assume here that the underlying vector only grows.
            // If this ceases to be true the following code will need to be changed.
-           "stretchy-" ## ?name ## "-vector-element"
-             (collection.stretchy-representation, index) := new-value
+           if (index = collection.size)
+             trusted-size-setter(index + 1, collection, fill: new-value);
+             new-value
+           else
+             if (index > collection.size)
+               collection.size := index + 1
+             end if;
+             "stretchy-" ## ?name ## "-vector-element"
+               (collection.stretchy-representation, index) := new-value
+           end if;
          end method element-setter;
 
          define sealed inline method type-for-copy

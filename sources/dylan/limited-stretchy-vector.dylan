@@ -72,7 +72,7 @@ define sealed inline method element-setter
   let collection-size = collection.size;
   if (index >= collection-size)
     if (index = collection-size)
-      collection.trusted-size := index + 1
+      trusted-size-setter(index + 1, collection, fill: new-value)
     else
       collection.size := index + 1
     end if

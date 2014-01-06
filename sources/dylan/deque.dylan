@@ -222,8 +222,9 @@ end method size;
 // SIZE-SETTER
 //
 
-define sealed inline method trusted-size-setter
-    (new-size :: <integer>, collection :: <object-deque>)
+define sealed method trusted-size-setter
+    (new-size :: <integer>, collection :: <object-deque>,
+     #key fill = collection.element-type-fill)
  => (new-size :: <integer>)
   // TODO: write a faster version of this method.
   let difference = new-size - collection.size;
@@ -233,7 +234,6 @@ define sealed inline method trusted-size-setter
         pop-last(collection)
       end;
     difference > 0 =>
-      let fill = collection.element-type-fill;
       check-type(fill, collection.element-type);
       for (i :: <integer> from 0 below difference)
         trusted-push-last(collection, fill)
@@ -315,11 +315,12 @@ define sealed method element-setter
   if (index < 0) element-range-error(collection, index) end;
   if (index > rep-size-minus-1)
     if (collection.size = index)
-      trusted-size(collection) := index + 1;
+      trusted-size-setter(index + 1, collection, fill: new-value);
+      new-value
     else
       collection.size := index + 1;
+      collection[index] := new-value // Let's try again
     end if;
-    collection[index] := new-value // Let's try again
   else
     // Even if multiple threads are running, and rep-first-index and
     // rep-last-index are incorrect, they should be within the bounds of
@@ -627,7 +628,7 @@ define sealed method copy-sequence
     let rep-first-index = rep.first-index;
     let rep-last-index = rep.last-index;
     let deque-size = (rep-last-index - rep-first-index) + 1;
-    let target = make(<object-deque>, size: deque-size, element-type: element-type(source));
+    let target = make(type-for-copy(source), size: deque-size);
     let target-rep = target.representation;
     for (from :: <integer> from rep-first-index to rep-last-index,
          to :: <integer> from target-rep.first-index to target-rep.last-index)
