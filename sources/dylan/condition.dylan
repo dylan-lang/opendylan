@@ -70,6 +70,10 @@ define function condition-format-arguments-vector
   as(<simple-object-vector>, condition.condition-format-arguments)
 end function;
 
+// Ignore this since we don't use it outside of the runtime and we don't
+// export it.
+ignore(condition-format-arguments-vector);
+
 define method signal (condition :: <condition>, #rest noise)
   unless (empty?(noise))
     error("Can only supply format arguments when supplying a format string.")
