@@ -6,6 +6,7 @@ extern void dylan_stack_overflow_handler(void *base_address, int size, unsigned 
 extern void dylan_integer_overflow_handler();
 extern void dylan_integer_divide_0_handler();
 extern void dylan_float_divide_0_handler();
+extern void dylan_float_invalid_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
@@ -89,6 +90,10 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
       RestoreFPState();
       uc->uc_mcontext.mc_eip = (long) dylan_float_divide_0_handler;
       break;
+
+    case FPE_FLTINV:
+      RestoreFPState();
+      uc->uc_mcontext.mc_eip = (long) dylan_float_invalid_handler;
 
     case FPE_FLTOVF:
       RestoreFPState();
