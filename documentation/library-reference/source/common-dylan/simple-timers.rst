@@ -12,7 +12,7 @@ Timers offer microsecond resolution on all supported platforms. Timers
 attempt to be monotonic where that capability is supported by the operating
 system.
 
-.. class:: <timer>
+.. class:: <profiling-timer>
 
    The timer class.
 
@@ -29,7 +29,7 @@ system.
 
    :signature: timer-start timer => ()
 
-   :parameter timer: An instance of :class:`<timer>`.
+   :parameter timer: An instance of :class:`<profiling-timer>`.
 
    See also:
 
@@ -41,7 +41,7 @@ system.
 
    :signature: timer-stop timer => (seconds, microseconds)
 
-   :parameter timer: An instance of :class:`<timer>`.
+   :parameter timer: An instance of :class:`<profiling-timer>`.
    :value seconds: An instance of :drm:`<integer>`.
    :value microseconds: An instance of :drm:`<integer>`.
 
@@ -55,7 +55,7 @@ system.
 
    :signature: timer-accumulated-time timer => (seconds, microseconds)
 
-   :parameter timer: An instance of :class:`<timer>`.
+   :parameter timer: An instance of :class:`<profiling-timer>`.
    :value seconds: An instance of :drm:`<integer>`.
    :value microseconds: An instance of :drm:`<integer>`.
 
@@ -65,5 +65,5 @@ system.
 
    :signature: timer-running? timer => (running?)
 
-   :parameter timer: An instance of :class:`<timer>`.
+   :parameter timer: An instance of :class:`<profiling-timer>`.
    :value running?: An instance of :drm:`<boolean>`.

@@ -27,7 +27,7 @@ define macro timing
   { timing ()
       ?body:body
     end }
-    => { let timer = make(<timer>);
+    => { let timer = make(<profiling-timer>);
          timer-start(timer);
          ?body;
          let (seconds, microseconds) = timer-stop(timer);
@@ -145,7 +145,7 @@ end method profiling-type-result;
 define method start-profiling-type
     (state :: <profiling-state>, keyword :: <cpu-profiling-type>) => ()
   unless (element(state, #"cpu-profiling", default: #f))
-    let timer = make(<timer>);
+    let timer = make(<profiling-timer>);
     timer-start(timer);
     state[#"cpu-profiling"] := #t;
     state[#"cpu-profiling-timer"] := timer;

@@ -37,7 +37,7 @@ define module simple-profiling
 end module simple-profiling;
 
 define module simple-timers
-  create <timer>,
+  create <profiling-timer>,
          timer-start,
          timer-stop,
          timer-accumulated-time,

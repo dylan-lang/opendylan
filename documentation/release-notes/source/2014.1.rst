@@ -19,6 +19,12 @@ C Run-time
 ``debug-message`` no longer crashes when printing some conditions.
 
 
+Common Dylan
+============
+
+The ``<timer>`` class has been renamed to ``<profiling-timer>``.
+
+
 Testworks
 =========
 
