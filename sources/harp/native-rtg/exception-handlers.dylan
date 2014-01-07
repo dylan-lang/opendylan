@@ -20,6 +20,9 @@ define extensions-iep runtime-external dylan-integer-divide-by-0-error
 define extensions-iep runtime-external dylan-float-divide-by-0-error
    = "float-divide-by-0";
 
+define extensions-iep runtime-external dylan-float-invalid-error
+   = "float-invalid";
+
 define extensions-iep runtime-external dylan-float-overflow-error
    = "float-overflow";
 
@@ -64,6 +67,21 @@ define c-runtime-primitive dylan-float-divide-0-handler
 
   ins--clear-float-exceptions(be);
   op--call-iep(be, dylan-float-divide-by-0-error);
+
+  // Control should never get here - but code the tail anyway
+  ins--rts(be);
+end c-runtime-primitive;
+
+
+define c-runtime-primitive dylan-float-invalid-handler
+  // On entry: no args
+  //
+  //   Calls a Dylan error reporting function
+  // On exit:
+  //  Should never exit directly (only via a NLX)
+
+  ins--clear-float-exceptions(be);
+  op--call-iep(be, dylan-float-invalid-error);
 
   // Control should never get here - but code the tail anyway
   ins--rts(be);
