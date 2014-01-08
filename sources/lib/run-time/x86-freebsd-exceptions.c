@@ -52,6 +52,9 @@ static void EstablishDylanExceptionHandlers (struct sigaction * oldFPEHandler,
   sigaction(SIGTRAP, &newTRAPHandler, oldTRAPHandler);
 
   signal(SIGPIPE, SIG_IGN);
+
+  // set up FP exception masks
+  RestoreFPState();
 }
 
 static void RemoveDylanExceptionHandlers (struct sigaction * oldFPEHandler,
@@ -65,8 +68,7 @@ static __inline
 void RestoreFPState ()
 {
   fpresetsticky(fpgetsticky());
-  fpsetmask(FP_X_INV | FP_X_DZ | FP_X_OFL);
-  return;
+  fpsetmask(FP_X_INV | FP_X_DZ | FP_X_OFL | FP_X_UFL);
 }
 
 static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
