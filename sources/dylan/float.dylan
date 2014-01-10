@@ -121,6 +121,10 @@ define function float-divide-by-0 ()
   error(make(<division-by-zero-error>))
 end function float-divide-by-0;
 
+define function float-invalid ()
+  error(make(<arithmetic-domain-error>))
+end function float-invalid;
+
 define function float-overflow ()
   error(make(<arithmetic-overflow-error>))
 end function float-overflow;
