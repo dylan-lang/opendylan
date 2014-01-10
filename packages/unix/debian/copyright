@@ -7,7 +7,7 @@ Copyright:
 
     Copyright (c) 1995-2004 Functional Objects, Inc.
     Portions copyright (c) 2004-2014 Dylan Hackers.
-    Portions copyright (c) 2001-2012 Ravenbrook Limited.
+    Portions copyright (c) 2001-2013 Ravenbrook Limited.
 
 License:
 
@@ -16,7 +16,7 @@ License:
 
     Portions copyright (c) 2004-2014 Dylan Hackers.
 
-    Portions copyright (c) 2001-2012 Ravenbrook Limited.  See
+    Portions copyright (c) 2001-2013 Ravenbrook Limited.  See
     MPS-License.txt in this directory for the Memory Pool System license
     terms.
 
@@ -42,7 +42,7 @@ License:
     
                    MEMORY POOL SYSTEM OPEN SOURCE LICENSE
     
-    Copyright (C) 2001-2012 Ravenbrook Limited <http://www.ravenbrook.com/>.
+    Copyright (C) 2001-2013 Ravenbrook Limited <http://www.ravenbrook.com/>.
     All rights reserved.  This is an open source license.  Contact
     Ravenbrook for commercial licensing options.
     
