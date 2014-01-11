@@ -64,16 +64,37 @@ define method emit-lambda-interface-using-function
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>,
      fun :: <&c-callable-function>)
  => ();
+  emit-c-callable-lambda-interface
+    (back-end, stream, o, fun, target-os-name());
+end;
+
+define method emit-c-callable-lambda-interface
+    (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>,
+     fun :: <&c-callable-function>, os :: <object>)
   let global-name = fun.binding-name;
   unless (global-name)
     write(stream, "static ");
   end;
   emit-return-types(back-end, stream, o);
-  if (target-platform-name() == #"x86-win32")
-    unless (empty?(fun.c-modifiers))
-      format-emit*(back-end, stream, " ~", fun.c-modifiers)
-    end;
+  format-emit*(back-end, stream, " ^ ", o);
+  if (fun.parameters)
+    emit-parameters(back-end, stream, o, o.parameters, fun.c-signature);
+  else
+    emit-signature-types(back-end, stream, o, fun.signature-spec, fun.c-signature);
   end if;
+end method;
+
+define method emit-c-callable-lambda-interface
+    (back-end :: <c-back-end>, stream :: <stream>, o :: <&iep>,
+     fun :: <&c-callable-function>, os == #"win32")
+  let global-name = fun.binding-name;
+  unless (global-name)
+    write(stream, "static ");
+  end;
+  emit-return-types(back-end, stream, o);
+  unless (empty?(fun.c-modifiers))
+    format-emit*(back-end, stream, " ~", fun.c-modifiers)
+  end;
   format-emit*(back-end, stream, " ^ ", o);
   if (fun.parameters)
     emit-parameters(back-end, stream, o, o.parameters, fun.c-signature);

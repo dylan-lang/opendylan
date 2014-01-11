@@ -13,7 +13,6 @@ define library dfmc-c-linker
   use dfmc-c-back-end;
   use dfmc-linker;
   use dfmc-management;
-  use release-info;
 
   export dfmc-c-linker;
 end library;
@@ -27,6 +26,5 @@ define module dfmc-c-linker
   use dfmc-c-back-end;
   use dfmc-linker;
   use dfmc-management;
-  use release-info;
 end module;
 

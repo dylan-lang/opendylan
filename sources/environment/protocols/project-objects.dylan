@@ -248,13 +248,6 @@ define open generic project-compiler-back-end-setter
     (back-end :: <symbol>, project :: <project-object>)
  => (back-end :: <symbol>);
 
-define open generic project-platform-name
-    (project :: <project-object>) => (platform-name :: <symbol>);
-
-define open generic project-platform-name-setter
-    (platform-name :: <symbol>, project :: <project-object>)
- => (platform-name :: <symbol>);
-
 define open generic project-target-type
     (project :: <project-object>) => (target-type :: <project-target-type>);
 

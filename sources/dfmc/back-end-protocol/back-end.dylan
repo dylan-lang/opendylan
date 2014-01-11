@@ -65,10 +65,9 @@ define function find-back-end-object
 end;
 
 define sideways method current-back-end () => (back-end)
-  let ld = current-library-description();
-  if (ld)
-    let name = library-description-compiler-back-end-name(ld);
-    let platform-name = library-description-platform-name(ld);
+  if (current-library-description())
+    let name = current-back-end-name();
+    let platform-name = target-platform-name();
     find-back-end-object(name, platform-name)
   end;
 end;

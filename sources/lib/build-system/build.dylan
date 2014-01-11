@@ -11,24 +11,19 @@ define constant $build-log-file = "build.log";
 define constant $platform-variable = "OPEN_DYLAN_TARGET_PLATFORM";
 define constant $default-platform = $platform-name;
 
-define function default-platform-name ()
+define function target-platform-name ()
  => (platform-name :: <symbol>)
   as(<symbol>, environment-variable($platform-variable) | $default-platform)
-end function default-platform-name;
-
-define function default-platform-name-setter
-  (new-platform-name :: <symbol>)
- => ()
-  unless (new-platform-name == default-platform-name())
-    environment-variable("OPEN_DYLAN_TARGET_PLATFORM")
-      := as(<string>, new-platform-name);
-    $build-system-settings.build-script := calculate-build-script();
-  end;
-end function default-platform-name-setter;
+end function target-platform-name;
 
 define settings <build-system-settings> (<open-dylan-user-settings>)
   key-name "Build-System";
-  slot build-script :: <string> = calculate-build-script();
+  slot build-script :: <string>
+    = as(<string>,
+         merge-locators(as(<file-locator>,
+                           concatenate(as(<string>, target-platform-name()),
+                                       "-build.jam")),
+                        $system-lib));
 end settings <build-system-settings>;
 
 define constant $build-system-settings = make(<build-system-settings>);
@@ -43,15 +38,6 @@ define function default-build-script-setter
   $build-system-settings.build-script := as(<string>, script);
   script
 end function default-build-script-setter;
-
-define function calculate-build-script ()
- => (script :: <string>)
-  as(<string>,
-     merge-locators(as(<file-locator>,
-                       concatenate(as(<string>, default-platform-name()),
-                                   "-build.jam")),
-                    $system-lib));
-end function calculate-build-script;
 
 
 
@@ -87,7 +73,6 @@ define method build-system
           progress-callback :: <function> = ignore,
           build-script = default-build-script(),
           compiler-back-end,
-          target-platform,
           project-build-info,
           force?,
           configure? = #t)
@@ -114,7 +99,6 @@ define method build-system
       let jam
         = make-jam-state(build-script,
                          compiler-back-end: compiler-back-end,
-                         target-platform: target-platform,
                          progress-callback: wrap-progress-callback,
                          build-directory: directory);
       with-build-directory (directory)

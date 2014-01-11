@@ -81,8 +81,7 @@ define function make-jam-state
     (build-script :: <file-locator>,
      #key progress-callback :: <function> = ignore,
           build-directory :: <directory-locator>,
-          compiler-back-end,
-          platform-name)
+          compiler-back-end)
  => (jam :: <jam-state>);
   // Ensure that the build-script hasn't been modified, and that the
   // working directory hasn't changed, and that SYSTEM_ROOT and
@@ -109,7 +108,7 @@ define function make-jam-state
     // Useful built-in variables
     jam-variable(state, "OS") := vector(as(<string>, $os-name));
     jam-variable(state, "OSPLAT") := vector(as(<string>, $machine-name));
-    jam-variable(state, "TARGET_PLATFORM") := vector(as(<string>, platform-name | default-platform-name()));
+    jam-variable(state, "TARGET_PLATFORM") := vector(as(<string>, target-platform-name()));
 
     select ($os-name)
       #"win32" =>

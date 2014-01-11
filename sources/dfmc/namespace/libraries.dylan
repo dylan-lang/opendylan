@@ -723,9 +723,27 @@ define sideways method compiling-dylan-library? () => (well? :: <boolean>)
     dylan-library-library-description?(current-library-description())
 end method;
 
-define sideways method target-platform-name () => (name :: <symbol>)
+define sideways method current-back-end-name () => (name :: false-or(<symbol>))
   let ld = current-library-description();
-  ld.library-description-platform-name
+  if (ld)
+    library-description-compiler-back-end-name(ld);
+  end;
+end method;
+
+define sideways method target-architecture-name () => (name :: <symbol>)
+  let platform-name = as(<string>,
+                         library-description-platform-name(current-library-description()));
+  let separator-position = position(platform-name, '-');
+  let architecture-name = copy-sequence(platform-name, end: separator-position);
+  as(<symbol>, architecture-name)
+end method;
+
+define sideways method target-os-name () => (name :: <symbol>)
+  let platform-name = as(<string>,
+                         library-description-platform-name(current-library-description()));
+  let separator-position = position(platform-name, '-');
+  let os-name = copy-sequence(platform-name, start: separator-position + 1);
+  as(<symbol>, os-name)
 end method;
 
 define sideways method form-dynamic? (form :: <top-level-form>)

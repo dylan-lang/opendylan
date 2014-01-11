@@ -39,7 +39,6 @@ define method initialize (project :: <registry-project-layout>, #rest keys,
   apply(next-method, project, 
 	source-record-class:, source-class,
 	lid-location:, lid-location, 
-        platform-name: platform-name,
 	keys);
 
   let (builds-dir, db-dir, profile-dir) = project-build-locations(project);

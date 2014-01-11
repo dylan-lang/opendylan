@@ -323,7 +323,7 @@ end;
 /// but this overrides that when packing struct members.
 /// this might better be done as a method on the current back end.
 define function get-default-pack-option () => (x :: <integer>)
-  if (target-platform-name() == #"x86-win32")
+  if (target-architecture-name() == #"x86" & target-os-name() == #"win32")
     8
   else
     // anything harmlessly large

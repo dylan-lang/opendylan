@@ -119,15 +119,11 @@ end method;
 
 define method back-end-word-size
     (object :: <c-back-end>) => (size :: <integer>)
-  select (target-platform-name())
-    "x86_64-darwin",
-    "x86_64-freebsd",
-    "x86_64-linux",
-    "x86_64-win32"
-      => 8;
-    otherwise
-      => 4;
-  end select;
+  if (member?(target-architecture-name(), #(#"alpha", #"x86_64")))
+    8 
+  else
+    4 
+  end;
 end method;
 
 define function format-emit

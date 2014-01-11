@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /// Build properties
 
-// Compiler back-end
+// Compilation mode
 
 define class <compiler-back-end-property> (<environment-property>)
 end class <compiler-back-end-property>;
@@ -35,8 +35,6 @@ define method set-property
   ignore(save?);
   session-property(#"compiler-back-end") := back-end;
 end method set-property;
-
-// Compilation mode
 
 define class <compilation-mode-property> (<project-property>)
 end class <compilation-mode-property>;
@@ -115,47 +113,6 @@ define method set-property
   if (save?)
     default-build-script() := build-script;
   end
-end method set-property;
-
-// Target platform
-
-define class <target-platform-property> (<environment-property>)
-end class <target-platform-property>;
-
-define command-property target-platform => <target-platform-property>
-  (summary:       "current target platform",
-   documentation: "The current target platform.",
-   type:          <symbol>,
-   persistent?:   #t)
-end command-property target-platform;
-
-define method show-property
-  (context :: <environment-context>, property :: <target-platform-property>)
- => ()
-  let project = context.context-project;
-  if (project)
-    message(context, "Target platform: %s (project)", project.project-platform-name);
-  else
-    message(context, "Target platform: %s (global)", default-platform-name());
-  end if;
-end method show-property;
-
-define method set-property
-  (context :: <environment-context>, property :: <target-platform-property>,
-   platform-name :: <symbol>,
-   #key save?)
- => ()
-  ignore(save?);
-  let project = context.context-project;
-  if (project)
-    project.project-platform-name := platform-name;
-  end if;
-  default-platform-name() := platform-name;
-  // Also update this in case we have a project loaded.
-  let project-context = context.context-project-context;
-  if (project-context)
-    project-context.context-build-script := build-script;
-  end;
 end method set-property;
 
 
@@ -437,7 +394,6 @@ define command-group build
   property compiler-back-end;
   property compilation-mode;
   property build-script;
-  property target-platform;
   command  build;
   command  link;
   command  clean;
