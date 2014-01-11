@@ -5,20 +5,6 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define suite channels-tests-suite ()
-  test channels-test-1;
-  test channels-test-2;
-  test channels-test-3;
-  test channels-test-4;
-  test channels-test-5;
-  test channels-test-6;
-  test channels-test-7;
-  test channels-test-8;
-  test channels-test-9;
-  test channels-test-10;
-  test channels-test-11;
-end suite;
-
 /// TO TEST:
 /// actual uses in environment
 /// typical uses
@@ -170,5 +156,19 @@ define test channels-test-11 (name: "Override channel")
   check-true("Result now #T", result = #t);
   check-true("Count now 3", count = 3);
 end test;
+
+define suite channels-tests-suite ()
+  test channels-test-1;
+  test channels-test-2;
+  test channels-test-3;
+  test channels-test-4;
+  test channels-test-5;
+  test channels-test-6;
+  test channels-test-7;
+  test channels-test-8;
+  test channels-test-9;
+  test channels-test-10;
+  test channels-test-11;
+end suite;
 
 run-test-application(channels-tests-suite);
