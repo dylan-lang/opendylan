@@ -229,7 +229,6 @@
 +++ external: "Kmachine_word_overflowVKmI" +++
 +++ external: "Kinteger_divide_by_0VKeI" +++
 +++ external: "Kfloat_divide_by_0VKeI" +++
-+++ external: "Kfloat_invalidVKeI" +++
 +++ external: "Kfloat_overflowVKeI" +++
 +++ external: "Kfloat_underflowVKeI" +++
 
@@ -19170,45 +19169,6 @@ Start scope at 7 with frame for no variables
 End scope at 13
 
 +++ No Source Code Locators for dylan_float_divide_0_handler +++
-
-
-+++ Exported function definition dylan_float_invalid_handler +++
-
-+++ starting code for dylan_float_invalid_handler +++
-
-#() [0->5] (level:0) is red with stack state before
-#({basic-block #({tag 2:25}) 25 40})
-  rem	"This is a dummy first basic block."
-
-#({tag 2:25}) [25->40] (level:0) is #f with stack state #f
-#({basic-block #() 5 15})
-  preserve-registers-entry	
-  allocate-local-area	
-  allocate-raw-area	
-
-#() [5->15] (level:0) is red with stack state with
-#({basic-block #() 15 15})
-  clear-float-exceptions	
-  call	{constant "Kfloat_invalidVKeI"}, 0
-
-#() [15->15] (level:0) is red with stack state with
-#({basic-block #({tag 1:20}) 20 25})
-
-#({tag 1:20}) [20->25] (level:0) is #f with stack state #f
-#({basic-block #() 15 20})
-  preserve-registers-exit	
-
-#() [15->20] (level:0) is red with stack state #f
-#()
-  rts	
-
-+++ ending code for dylan_float_invalid_handler +++
-
-+++ Live variable scopes for dylan_float_invalid_handler +++
-Start scope at 7 with frame for no variables
-End scope at 13
-
-+++ No Source Code Locators for dylan_float_invalid_handler +++
 
 
 +++ Exported function definition dylan_float_overflow_handler +++

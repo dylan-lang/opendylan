@@ -17,7 +17,6 @@ extern void dylan_stack_overflow_handler(void *base_address, int size, unsigned 
 extern void dylan_integer_overflow_handler();
 extern void dylan_integer_divide_0_handler();
 extern void dylan_float_divide_0_handler();
-extern void dylan_float_invalid_handler();
 extern void dylan_float_overflow_handler();
 extern void dylan_float_underflow_handler();
 
@@ -44,11 +43,10 @@ extern void walkstack();
 #define INTO_OPCODE 0xCE        /* x86 INTO instruction */
 
 /* FPU Control Word mask enabling exceptions for divide-by-zero,
- * invalid, overflow, and underflow
+ * overflow, and underflow
  */
 #define DYLAN_FPU_CW (_FPU_DEFAULT              \
                       & ~(_FPU_MASK_ZM          \
-                          | _FPU_MASK_IM        \
                           | _FPU_MASK_OM        \
                           | _FPU_MASK_UM))
 
@@ -200,11 +198,6 @@ static void DylanFPEHandler (int sig, siginfo_t *info, void *uap)
     case FPE_FLTDIV:
       RestoreFPState(uc);
       uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_float_divide_0_handler;
-      break;
-
-    case FPE_FLTINV:
-      RestoreFPState(uc);
-      uc->uc_mcontext.gregs[REG_EIP] = (long) dylan_float_invalid_handler;
       break;
 
     case FPE_FLTOVF:

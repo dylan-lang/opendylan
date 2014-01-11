@@ -111,13 +111,6 @@ end class <division-by-zero-error>;
 define sealed domain make (singleton(<division-by-zero-error>));
 define sealed domain initialize (<division-by-zero-error>);
 
-define sealed class <arithmetic-domain-error> (<arithmetic-error>)
-  inherited slot condition-format-string = "Arithmetic domain error";
-end class <arithmetic-domain-error>;
-
-define sealed domain make (singleton(<arithmetic-domain-error>));
-define sealed domain initialize (<arithmetic-domain-error>);
-
 define sealed class <arithmetic-overflow-error> (<arithmetic-error>)
   inherited slot condition-format-string = "Arithmetic overflow";
 end class <arithmetic-overflow-error>;
