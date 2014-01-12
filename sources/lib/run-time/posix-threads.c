@@ -18,6 +18,7 @@
 #include <inttypes.h>
 
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #include <limits.h>
@@ -196,6 +197,8 @@ static TEB* make_teb(void)
 {
   TEB* teb = (TEB*)GC_MALLOC_UNCOLLECTABLE(sizeof(TEB));
 
+  memset(teb, 0, sizeof(TEB));
+
   teb->uwp_frame = &teb->top_uwp_frame;
 
   set_teb(teb);
@@ -258,6 +261,7 @@ static void *make_tlv_vector(size_t n)
 
   // fill int the vector
   vector = GC_MALLOC_UNCOLLECTABLE(size);
+  memset(vector, 0, size);
   vector[0] = NULL;
   vector[1] = I(n);
 
@@ -358,6 +362,8 @@ add_tlv_vector(DTHREAD *thread, TEB *teb, TLV_VECTOR tlv_vector)
   TLV_VECTOR_LIST new_element = GC_MALLOC_UNCOLLECTABLE(sizeof(struct tlv_vector_list_element));
 
   assert(new_element != NULL);
+
+  memset(new_element, 0, sizeof(struct tlv_vector_list_element));
 
   trace_tlv("Adding vector %p for thread %p", tlv_vector, thread);
 
