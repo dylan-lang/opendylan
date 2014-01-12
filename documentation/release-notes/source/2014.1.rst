@@ -25,6 +25,19 @@ Common Dylan
 The ``<timer>`` class has been renamed to ``<profiling-timer>``.
 
 
+hash-algorithms
+===============
+
+A crash resulting from memory corruption when using sha-1 has been
+fixed.
+
+
+make-dylan-app
+==============
+
+``make-dylan-app`` is now included in the Windows distribution.
+
+
 Testworks
 =========
 
