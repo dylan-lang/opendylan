@@ -446,6 +446,7 @@ check:	bootstrap-stage-$(CHECK_COMPILER_STAGE)
 	  --compiler="$(abs_builddir)/Bootstrap.$(CHECK_COMPILER_STAGE)/bin/dylan-compiler -build -save" \
 	  $(CHECK_APPS) && \
 	  for app in $(CHECK_APPS); do \
+	    echo "Executing test app $$app ..."; \
 	    $(abs_builddir)/Bootstrap.$(CHECK_STAGE)/bin/$$app $(OPEN_DYLAN_CHECK_FLAGS); \
 	  done
 
