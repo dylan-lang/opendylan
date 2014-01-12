@@ -1,7 +1,8 @@
-Library:   c-ffi-test
-Author:    Peter Benson
-Files:     c-ffi-test-library
-           tests
+Library:      c-ffi-test
+Target-Type:  dll
+Author:       Peter Benson
+Files:        c-ffi-test-library
+              tests
 C-Source-Files: main.c
 C-Header-Files: main.h
 C-Libraries:    $(libcmt)

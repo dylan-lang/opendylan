@@ -1,4 +1,5 @@
 Library:      jam-test-suite
+Target-Type:  dll
 Author:       Peter S. Housel
 Files:        library
               jam-test
