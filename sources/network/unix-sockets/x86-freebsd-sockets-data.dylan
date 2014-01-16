@@ -12,6 +12,8 @@ define C-struct <sockaddr>
   pointer-type-name: <sockaddr*>;
 end C-struct;
 
+ignore(sa-len, sa-len-setter);
+
 define constant $SOL-SOCKET    = #xFFFF;
 
 define constant $SO-ACCEPTCONN = #x2;
