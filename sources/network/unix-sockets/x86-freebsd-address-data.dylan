@@ -51,6 +51,7 @@ define C-struct <sockaddr-in>
   pointer-type-name: <sockaddr-in*>;
 end C-struct;
 
+ignore(sin-len, sin-len-setter);
 ignore(sin-data, sin-data-setter);
 
 // IP_PROTO*
