@@ -43,6 +43,17 @@ Publications about Dylan
 
     https://dl.acm.org/citation.cfm?id=1622123.1622148
 
+**Secure Networking** (by Andreas Bogk and Hannes Mehnert at 23rd Chaos Communication Congress `pdf <http://www.itu.dk/~hame/secure-networking.pdf>`__
+
+    We noticed a lack of a decent secure framework for handling
+    network packets, we have designed and implemented major parts of a
+    TCP/IP stack in the high level programming language “Dylan”,
+    focusing on security, performance and code reuse. This paper
+    describes the `binary-data
+    <https://github.com/dylan-lang/binary-data>`__ library, as well as
+    `network night vision
+    <https://github.com/dylan-hackers/network-night-vision>`__.
+
 **Efficient Compression of Generic Function Dispatch Tables** (by Eric Kidd  - Technical Report Dartmouth College 2001 `pdf <http://www.cs.dartmouth.edu/reports/TR2001-404.pdf>`__ `bib <../_static/documentation/kidd2001.bib>`__)
     A generic function is similar to an overloaded operator, but
     provides a way to select an appropriate behavior at run-time
