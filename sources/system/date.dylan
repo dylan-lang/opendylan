@@ -316,14 +316,9 @@ define table *day-of-week-names* = {
   #"friday" => "Friday", #"saturday" => "Saturday",
   #"sunday" => "Sunday" };
 
-define variable *short-month-names* =
+define constant $short-month-names =
   #["Jan", "Feb", "Mar", "Apr", "May", "Jun",
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-define variable *month-names* =
-  #["January", "February", "March", "April",
-    "May", "June", "July", "August", "September",
-    "October", "November", "December"];
 
 define constant $digits = #['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
@@ -372,8 +367,8 @@ define method format-date (format :: <string>, date :: <date>)
         'e' => wrap(" ", day);
         'A' => *day-of-week-names*[day-of-week];
         'a' => *short-day-of-week-names*[day-of-week];
-        'B' => *month-names*[month - 1];
-        'b' => *short-month-names*[month - 1];
+        'B' => $month-names[month - 1];
+        'b' => $short-month-names[month - 1];
         'z' => concatenate(if (negative?(time-zone-offset))
                   "-" else "+"
                 end if, wrap("0", floor/(absolute-time-zone-offset, 60)),
@@ -445,8 +440,8 @@ define method parse-date-string (date :: <string>, format :: <string>)
         'S' => date.date-seconds := string-to-integer(read(date-stream, 2));
         'm' => date.date-month := string-to-integer(read(date-stream, 2));
         'd', 'e' => date.date-day := string-to-integer(read(date-stream, 2));
-        'B' => parse-month(*month-names*);
-        'b' => parse-month(*short-month-names*);
+        'B' => parse-month($month-names);
+        'b' => parse-month($short-month-names);
         'z' => date.date-time-zone-offset := begin
                 let sign = read(date-stream, 1);
                 let hours =  read(date-stream, 2);
