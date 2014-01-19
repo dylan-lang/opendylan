@@ -304,13 +304,13 @@ define function clone-date (date :: <date>) => (date :: <date>)
 end function clone-date;
 
 ///
-define table *short-day-of-week-names* = {
+define table $short-day-of-week-names = {
   #"monday" => "Mon", #"tuesday" => "Tue",
   #"wednesday" => "Wed", #"thursday" => "Thu",
   #"friday" => "Fri", #"saturday" => "Sat",
   #"sunday" => "Sun" };
 
-define table *day-of-week-names* = {
+define table $day-of-week-names = {
   #"monday" => "Monday", #"tuesday" => "Tuesday",
   #"wednesday" => "Wednesday", #"thursday" => "Thursday",
   #"friday" => "Friday", #"saturday" => "Saturday",
@@ -365,8 +365,8 @@ define method format-date (format :: <string>, date :: <date>)
         'm' => wrap("0", month);
         'd' => wrap("0", day);
         'e' => wrap(" ", day);
-        'A' => *day-of-week-names*[day-of-week];
-        'a' => *short-day-of-week-names*[day-of-week];
+        'A' => $day-of-week-names[day-of-week];
+        'a' => $short-day-of-week-names[day-of-week];
         'B' => $month-names[month - 1];
         'b' => $short-month-names[month - 1];
         'z' => concatenate(if (negative?(time-zone-offset))
