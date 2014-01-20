@@ -247,7 +247,7 @@ define function integer-to-string
               "Base %d is not between 2 and 36",
               base);
   let negative-integer? = negative?(integer);
-  let buffer = make(<string-buffer>);
+  let buffer :: <string-buffer> = make(<string-buffer>);
   if (zero?(integer))
     buffer := add!(buffer, '0');
   end;
@@ -263,7 +263,7 @@ define function integer-to-string
     buffer := add!(buffer, integer-to-character(remainder));
     integer := quotient
   end;
-  let remaining = string-size - buffer.size;
+  let remaining :: <integer> = string-size - buffer.size;
   if (negative-integer?)
     remaining := remaining - 1;
   end;
@@ -273,7 +273,12 @@ define function integer-to-string
   if (negative-integer?)
     buffer := add!(buffer, '-');
   end;
-  as(<string>, reverse!(buffer));
+  let buffer-size = buffer.size;
+  let string = make(<byte-string>, size: buffer-size);
+  for (digit in buffer, index :: <integer> from buffer-size - 1 to 0 by -1)
+    string[index] := digit;
+  end for;
+  string
 end function integer-to-string;
 
 // Given a string, parse an integer from it.  Skips left whitespace.
