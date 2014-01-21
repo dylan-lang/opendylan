@@ -1293,9 +1293,9 @@ Date module.
 
    :signature: format-date *format* *date* => *formatted-date*
 
-   :parameter format: An instance of :drm:`<string>`.
+   :parameter format: An instance of :drm:`<byte-string>`.
    :parameter date: An instance of :class:`<date>`.
-   :value formatted-date: An instance of :drm:`<string>`.
+   :value formatted-date: An instance of :drm:`<byte-string>`.
 
    :description:
 

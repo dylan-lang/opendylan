@@ -24,6 +24,8 @@ Common Dylan
 
 The ``<timer>`` class has been renamed to ``<profiling-timer>``.
 
+The function ``integer-to-string`` is now faster.
+
 
 hash-algorithms
 ===============
@@ -43,6 +45,12 @@ strings
 
 String comparison and equality operations are now 10 times faster
 when they are known to be on byte-strings.
+
+
+system
+======
+
+The function ``format-date`` is now faster.
 
 
 Testworks
