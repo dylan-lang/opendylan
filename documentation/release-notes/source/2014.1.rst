@@ -38,6 +38,13 @@ make-dylan-app
 ``make-dylan-app`` is now included in the Windows distribution.
 
 
+strings
+=======
+
+String comparison and equality operations are now 10 times faster
+when they are known to be on byte-strings.
+
+
 Testworks
 =========
 
