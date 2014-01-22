@@ -33,6 +33,8 @@ hash-algorithms
 A crash resulting from memory corruption when using sha-1 has been
 fixed.
 
+The library now builds on Windows.
+
 
 make-dylan-app
 ==============
