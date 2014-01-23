@@ -35,7 +35,7 @@ end class <export-clause>;
 // <Namespace> is an abstract class providing a partial implementation
 // of namespaces, capturing the commonality in this area between Dylan's
 // libraries and modules. Namespaces are considered to be environments
-// which inherit names through filtering and have a distingushed
+// which inherit names through filtering and have a distinguished
 // interface for clients, extending the environment protocol. The
 // environment protocol itself is used to lookup names from "within"
 // the namespace.
