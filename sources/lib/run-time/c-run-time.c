@@ -110,7 +110,12 @@ D primitive_allocate (DSINT size) {
 }
 
 D primitive_byte_allocate (DSINT number_words, DSINT number_bytes) {
-  return((D)allocate(number_words * sizeof(D) + number_bytes));
+  size_t size = (number_words * sizeof(D)) + number_bytes;
+#if defined(GC_USE_BOEHM)
+  return((D)GC_MALLOC_ATOMIC(size));
+#elif defined(GC_USE_MALLOC)
+  return((D)malloc(size));
+#endif
 }
 
 D primitive_untraced_allocate (DSINT size) {
