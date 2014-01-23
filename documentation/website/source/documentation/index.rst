@@ -114,6 +114,9 @@ External Libraries and Tools
 `Binary-Data reference </documentation/binary-data/>`_ [`pdf </documentation/binary-data/BinaryData.pdf>`__] [`epub </documentation/binary-data/BinaryData.epub>`__]
     The binary-data library provides an extension to the Dylan language for parsing and assembling binary data using high level Dylan objects.
 
+`Concurrency reference </documentation/concurrency/>`_ [`pdf </documentation/concurrency/ConcurrencyUserGuide.pdf`__] [`epub </documentation/concurrency/ConcurrencyUserGuide.epub`__]
+    The concurrency utility library.
+
 `HTTP reference </documentation/http/>`_ [`pdf </documentation/http/HTTPLibraries.pdf>`__] [`epub </documentation/http/HTTPLibraries.epub>`__]
     Dylan provides libraries for writing HTTP clients and servers.
 
