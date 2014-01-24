@@ -299,7 +299,7 @@ Programmers have quite a bit of flexibility in specifying keyword arguments.
   the method—a handy tool for preventing name conflicts.
 * The default value specifier can be a complex expression, and it can even use
   earlier parameters.
-* They keyword arguments allowed or required by each method can be specified by
+* The keyword arguments allowed or required by each method can be specified by
   the generic function. For more on this, see `Parameter Lists and Generic
   Functions`_ below.
 
@@ -320,7 +320,7 @@ variable in the body of the method as usual, but because the Dylan language
 does not allow a variable named ``end``, that keyword argument is instead
 associated with the ``_end`` variable. Finally, if the ``end:`` keyword argument
 were omitted, the value of the ``_end`` variable would be the size of the
-``seq`` argument/variable.
+``seq`` argument.
 
 Rest Arguments
 ==============
@@ -339,10 +339,10 @@ were called like so:
 
 .. code-block:: dylan
 
-   format("Today will be %s with a high of %d", "cloudy", 52);
+   format("Today will be %s with a high of %d.", "cloudy", 52);
    
 The ``format-parameters`` variable in the body of the method would have the
-value ``#[ "cloudy", 52 ]``.
+value ``#["cloudy", 52]``.
 
 Parameter Lists and Generic Functions
 =====================================
