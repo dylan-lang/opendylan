@@ -115,8 +115,13 @@ define method display-help
   format(stream, 
 	 "For documentation on a group, use:    HELP %sGROUP group.\n"
 	 "For documentation on a command, use:  HELP command\n"
-	 "For a complete list of commands, use: SHOW COMMANDS\n",
-	 $option-prefix)
+	 "For a complete list of commands, use: SHOW COMMANDS\n"
+	 "\n"
+	 "For full documentation, see %sdocumentation/\n"
+	 "For a guide to the command line tools, see %sdocumentation/getting-started-cli/\n",
+	 $option-prefix,
+	 release-web-address(),
+	 release-web-address())
 end method display-help;
 
 define method display-help
