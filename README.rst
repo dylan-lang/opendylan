@@ -18,7 +18,7 @@ Ravenbrook at http://www.ravenbrook.com/project/mps/ and must be
 downloaded and built separately. If you are using Windows, you
 must download the `older 1.108 release
 <http://www.ravenbrook.com/project/mps/release/1.108.0/>`_. On
-other platforms, the `current 1.111 release
+other platforms, the `1.111 release
 <http://www.ravenbrook.com/project/mps/release/1.111.0/>`_ is
 required.
 
