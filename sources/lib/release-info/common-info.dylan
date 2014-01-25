@@ -22,7 +22,7 @@ define constant $help-filename                = "opendylan.chm";
 
 /// Release constants
 define constant $release-product-name     = "Open Dylan";
-define constant $release-version          = "2013.2";
+define constant $release-version          = "2014.1pre";
 
 define constant $release-copyright
   = "Copyright (c) 1997-2004, Functional Objects, Inc.\n"
