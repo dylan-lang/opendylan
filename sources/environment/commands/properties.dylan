@@ -97,6 +97,24 @@ define method show-property
 end method show-property;
 
 
+/// Copyright property
+
+define class <copyright-property> (<command-property>)
+end class <copyright-property>;
+
+define command-property copyright => <copyright-property>
+  (summary:       "Copyright information",
+   documentation: "Copyright information.")
+end command-property copyright;
+
+define method show-property
+    (context :: <server-context>, property :: <copyright-property>)
+ => ()
+  let stream = context.context-server.server-output-stream;
+  format(stream, release-copyright());
+end method;
+
+
 /// Commands
 
 define class <commands-property> (<command-property>)
@@ -225,6 +243,7 @@ define command-group property
     (summary: "property handling commands",
      documentation: "Commands to manipulate properties.")
   property properties;
+  property copyright;
   property commands;
   command  set;
   command  show;
