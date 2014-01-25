@@ -16,7 +16,7 @@ define constant $release-support-address
   = "bugs@opendylan.org";
 
 define constant $release-web-address
-  = "http://www.opendylan.org/";
+  = "http://opendylan.org/";
 
 define constant $bug-report-template-filename = "bug-report.txt";
 define constant $license-agreement-filename   = "License.txt";
