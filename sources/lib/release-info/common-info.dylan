@@ -12,9 +12,6 @@ define constant $release-full-copyright =
   "are subject to the following license terms.\n"
   "\n";
 
-define constant $release-support-address
-  = "bugs@opendylan.org";
-
 define constant $release-web-address
   = "http://opendylan.org/";
 
@@ -67,11 +64,6 @@ define function release-full-copyright
 		   release-version(),
 		   $release-full-copyright)
 end function release-full-copyright;
-
-define function release-support-address
-    () => (address :: <string>)
-  $release-support-address
-end function release-support-address;
 
 define function release-web-address
     () => (address :: <string>)

@@ -25,7 +25,6 @@ define module release-info
          release-version,
          release-short-version,
          release-copyright,
-         release-support-address,
          release-web-address,
          release-full-name,
          release-full-copyright;
