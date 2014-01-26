@@ -19,7 +19,7 @@ define method print-contents (frag :: <function-call-fragment>, stream) => ()
   format(stream, ")");
 end method;
 
-define method print-contents 
+define method print-contents
     (frag :: <literal-constant-fragment>, stream) => ()
   format(stream, "%=", fragment-value(frag));
 end method;
