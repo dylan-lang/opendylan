@@ -8,44 +8,44 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define compiler-sideways method print-object
     (o :: <variable-defining-form>, stream :: <stream>) => ()
-  format(stream, "{%s %s}", 
-         o.object-class, 
+  format(stream, "{%s %s}",
+         o.object-class,
          map(fragment-identifier, form-variable-names(o)));
 end method;
 
 define compiler-sideways method print-object
     (o :: <&converter-definition>, stream :: <stream>) => ()
-  format(stream, "{ define &converter %s }", 
+  format(stream, "{ define &converter %s }",
          fragment-identifier(form-variable-name(o)));
 end method;
 
 define compiler-sideways method print-object
     (o :: <&macro-definition>, stream :: <stream>) => ()
-  format(stream, "{ define &macro %s }", 
+  format(stream, "{ define &macro %s }",
          fragment-identifier(form-variable-name(o)));
 end method;
 
 define compiler-sideways method print-object
     (o :: <&definition-definition>, stream :: <stream>) => ()
-  format(stream, "{ define &definition %s }", 
+  format(stream, "{ define &definition %s }",
          fragment-identifier(form-variable-name(o)));
 end method;
 
 define compiler-sideways method print-object
     (o :: <macro-definition>, stream :: <stream>) => ()
-  format(stream, "{ define macro %s }", 
+  format(stream, "{ define macro %s }",
          fragment-identifier(form-variable-name(o)));
 end method;
 
 define compiler-sideways method print-object
     (o :: <constant-definition>, stream :: <stream>) => ()
-  format(stream, "{ define constant %s }", 
+  format(stream, "{ define constant %s }",
          fragment-identifier(form-variable-name(o)));
 end method;
 
 define compiler-sideways method print-object
     (o :: <variable-definition>, stream :: <stream>) => ()
-  format(stream, "{ define variable %s }", 
+  format(stream, "{ define variable %s }",
          fragment-identifier(form-variable-name(o)));
 end method;
 
@@ -76,7 +76,7 @@ end method;
 
 define compiler-sideways method print-object
     (o :: <class-definition>, stream :: <stream>) => ()
-  format(stream, "{ define class %s }", 
+  format(stream, "{ define class %s }",
          fragment-identifier(form-variable-name(o)));
 end method;
 
@@ -84,7 +84,7 @@ define compiler-sideways method print-object
     (o :: <slot-definition>, stream :: <stream>) => ()
   format(stream, "{ ");
   print-adjectives(form-adjectives(o), stream);
-  format(stream, "slot %s }", 
+  format(stream, "slot %s }",
          fragment-identifier(form-variable-name(o)));
 end method;
 
@@ -99,7 +99,7 @@ end method;
 
 define method print-contents (sig-spec :: <signature-spec>, stream) => ()
   let sep = #f;
-  local method print-sep () 
+  local method print-sep ()
     if (sep) format(stream, ", ") else sep := #t end;
   end;
   format(stream, "(");
@@ -143,7 +143,7 @@ end method;
 
 define method print-specializers (sig-spec :: <signature-spec>, stream) => ()
   let sep = #f;
-  local method print-sep () 
+  local method print-sep ()
     if (sep) format(stream, ", ") else sep := #t end;
   end;
   format(stream, "(");

@@ -37,7 +37,7 @@ define method describe-repeated-slot (o, desc :: <&repeated-slot-descriptor>)
   let repeated-size = ^slot-value(o, ^size-slot-descriptor(desc));
   let repeated-name = ^debug-name(^slot-getter(desc));
   for (i from 0 below repeated-size)
-    format-out("%s[%=]: %=\n", 
+    format-out("%s[%=]: %=\n",
                repeated-name, i, ^repeated-slot-value(o, desc, i));
   end;
 end method;
