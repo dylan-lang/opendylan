@@ -8,30 +8,30 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //// VARIABLES
 
-define compiler-sideways method print-object (o :: <binding>, stream :: <stream>) => ()
+define compiler-sideways method print-object
+    (o :: <binding>, stream :: <stream>) => ()
   format(stream, "%s", o.name);
-//  let te = type-estimate(o);
-//  format(stream, "::%=", te);
 end method;
 
-define compiler-sideways method print-object (o :: <module-binding>, stream :: <stream>) => ()
+define compiler-sideways method print-object
+    (o :: <module-binding>, stream :: <stream>) => ()
   format(stream, "{%s in %s}", o.name, o.binding-home.debug-name);
-// defined? is no longer just a slot, it's a database lookup and as such
-// is tracked by dependency tracking, so it's not safe to use it here.
-//  if (~o.defined?) format(stream, " // undefined") end;
 end method;
 
-define compiler-sideways method print-object (o :: <environment>, stream :: <stream>) => ()
+define compiler-sideways method print-object
+    (o :: <environment>, stream :: <stream>) => ()
   format(stream, "[GLOBAL ENV]");
 end method;
 
-define compiler-sideways method print-object (o :: <module>, stream :: <stream>) => ()
+define compiler-sideways method print-object
+    (o :: <module>, stream :: <stream>) => ()
   format(stream, "[%sMODULE %s]",
 	 if (instance?(o, <interactive-module>)) "Interactive " else "" end,
 	 o.debug-name);
 end method;
 
-define compiler-sideways method print-object (o :: <library>, stream :: <stream>) => ()
+define compiler-sideways method print-object
+    (o :: <library>, stream :: <stream>) => ()
   format(stream, "[%sLIBRARY %s]",
 	 if (instance?(o, <interactive-library>)) "Interactive " else "" end,
 	 o.debug-name);
@@ -42,7 +42,8 @@ define compiler-sideways method print-object
   format(stream, "[ENV]");
 end method;
 
-define compiler-sideways method print-object (o :: <temporary>, stream :: <stream>) => ()
+define compiler-sideways method print-object
+    (o :: <temporary>, stream :: <stream>) => ()
   block ()
     print-temporary-properties(stream, o);
     if (named?(o))
@@ -57,30 +58,32 @@ define compiler-sideways method print-object (o :: <temporary>, stream :: <strea
       end if;
     end if;
     if (instance?(o, <multiple-value-temporary>))
-      format(stream, "(%d%s)", o.required-values, 
+      format(stream, "(%d%s)", o.required-values,
         if (o.rest-values?) ",#rest" else "" end)
     end if;
-//    let te = type-estimate(o);
-//    format(stream, "::%=", te);
   exception (<error>)
   end block;
 end method;
 
-define compiler-sideways method print-referenced-object (o :: <object>, stream :: <stream>) => ()
+define compiler-sideways method print-referenced-object
+    (o :: <object>, stream :: <stream>) => ()
   print-object(o, stream)
 end method;
 
-define compiler-sideways method print-object (o :: <object-reference>, stream :: <stream>) => ()
+define compiler-sideways method print-object
+    (o :: <object-reference>, stream :: <stream>) => ()
   format(stream, "^");
   print-referenced-object(o.reference-value, stream);
 end method;
 
-define compiler-sideways method print-object (o :: <defined-constant-reference>, stream :: <stream>) => ()
+define compiler-sideways method print-object
+    (o :: <defined-constant-reference>, stream :: <stream>) => ()
   format(stream, "^");
   print-referenced-object(o.referenced-binding, stream);
 end method;
 
-define method print-temporary-properties (stream, o :: <temporary>)
+define method print-temporary-properties
+    (stream :: <stream>, o :: <temporary>)
   case o.cell?        => format(stream, "@");
        o.closed-over? => format(stream, "&");
   end case;
@@ -90,13 +93,9 @@ define method print-temporary-properties (stream, o :: <temporary>)
 end method;
 
 define method print-temporary-properties
-    (stream, o :: <multiple-value-temporary>)
+    (stream :: <stream>, o :: <multiple-value-temporary>)
   next-method();
   format(stream, "*");
-  //if (o.mvt-local?)
-  //  let num-vals = required-values(o);
-  //  format(stream, "L(%s)", num-vals);
-  //end if;
 end method print-temporary-properties;
 
 //// COMPUTATIONS
@@ -120,27 +119,22 @@ define compiler-sideways method print-object
       format(stream, "%s := ", c.temporary);
     end if;
     print-computation(stream, c);
-  /*
-  if (current-library-description())
-    format(stream, " :: %=", type-estimate(c))
-  end if;
-  */
   exception (<error>)
   end block;
   values()
 end method print-object;
 
 define method print-computation
-    (stream :: <stream>, c :: <computation>) => ();
+    (stream :: <stream>, c :: <computation>) => ()
   format(stream, "[%= computation]", c.object-class);
 end method print-computation;
 
-define method print-computation (stream :: <stream>, c :: <nop>) => ();
+define method print-computation (stream :: <stream>, c :: <nop>) => ()
   format(stream, "[NOP]");
 end method print-computation;
 
 define method print-computation
-    (stream :: <stream>, c :: <keyword-default>) => ();
+    (stream :: <stream>, c :: <keyword-default>) => ()
   format(stream, "[KEYWORD-DEFAULT %=, %d]",
 	 c.computation-value, c.keyword-default-value-index);
 end method print-computation;
@@ -161,16 +155,16 @@ define method print-computation (s :: <stream>, c :: <make-closure>)
 end method;
 
 define method print-computation (s :: <stream>, c :: <initialize-closure>)
-  format(s, "INIT-CLOSURE(%=, %s)", 
+  format(s, "INIT-CLOSURE(%=, %s)",
          computation-closure(c), computation-closure-method(c));
 end method;
 
-define method print-computation (s :: <stream>, c :: <variable-reference>) 
+define method print-computation (s :: <stream>, c :: <variable-reference>)
   format(s, "^%=", c.referenced-binding);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <temporary-transfer>)
-  format(stream, "%=", c.computation-value);
+define method print-computation (s :: <stream>, c :: <temporary-transfer>)
+  format(s, "%=", c.computation-value);
 end method;
 
 define method entry-point-character (c :: <function-call>, o :: <object>)
@@ -222,17 +216,17 @@ define method print-args (stream :: <stream>, arguments)
   end;
 end method print-args;
 
-define method tail-position-and-computable? 
+define method tail-position-and-computable?
     (c :: <call>) => (tail-position?, computable?)
-  block () 
+  block ()
     values(c.tail-position?, #t)
   exception (<error>)
     values(#f, #f)
   end;
 end method;
 
-define method print-tail-call-annotation 
-    (stream :: <stream>, c :: <call>) 
+define method print-tail-call-annotation
+    (stream :: <stream>, c :: <call>)
   let (tail?, computable?) = tail-position-and-computable?(c);
   if (tail?)
     format(stream, " // tail call");
@@ -241,7 +235,7 @@ define method print-tail-call-annotation
   end if;
 end method;
 
-define method print-computation (stream :: <stream>, c :: <function-call>) 
+define method print-computation (stream :: <stream>, c :: <function-call>)
   format(stream, "[%s%s %=(",
 	 c.operation-name,
          entry-point-character(c, call-effective-function(c)),
@@ -251,112 +245,114 @@ define method print-computation (stream :: <stream>, c :: <function-call>)
   print-tail-call-annotation(stream, c);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <slot-value>) 
-  format(stream, "SLOT-VALUE%s(%=, %s)", 
+define method print-computation (stream :: <stream>, c :: <slot-value>)
+  format(stream, "SLOT-VALUE%s(%=, %s)",
          if (computation-guaranteed-initialized?(c)) "-INITD" else "" end,
 	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)));
 end method;
 
-define method print-computation (stream :: <stream>, c :: <slot-value-setter>) 
-  format(stream, "SLOT-VALUE(%=, %s) := %=", 
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)), 
+define method print-computation (stream :: <stream>, c :: <slot-value-setter>)
+  format(stream, "SLOT-VALUE(%=, %s) := %=",
+	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
 	 computation-new-value(c));
 end method;
 
-define method print-computation (stream :: <stream>, c :: <repeated-slot-value>) 
-  format(stream, "REPEATED-SLOT-VALUE(%=, %s, %=)", 
+define method print-computation (stream :: <stream>, c :: <repeated-slot-value>)
+  format(stream, "REPEATED-SLOT-VALUE(%=, %s, %=)",
 	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
 	 computation-index(c));
 end method;
 
-define method print-computation 
-    (stream :: <stream>, c :: <repeated-slot-value-setter>) 
-  format(stream, "REPEATED-SLOT-VALUE(%=, %s, %=) := %=", 
-	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)), 
+define method print-computation
+    (stream :: <stream>, c :: <repeated-slot-value-setter>)
+  format(stream, "REPEATED-SLOT-VALUE(%=, %s, %=) := %=",
+	 computation-instance(c), ^debug-name(computation-slot-descriptor(c)),
 	 computation-index(c),
 	 computation-new-value(c));
 end method;
 
-define method print-computation (stream :: <stream>, c :: <stack-vector>) 
+define method print-computation (stream :: <stream>, c :: <stack-vector>)
   format(stream, "[STACK-VECTOR (");
   print-args(stream, c.arguments);
   format(stream, ")]");
 end method;
 
-define method print-computation (stream :: <stream>, c :: <loop>) 
+define method print-computation (stream :: <stream>, c :: <loop>)
   format(stream, "[LOOP %=]", loop-parameters(c));
 end method;
 
-define method print-computation (stream :: <stream>, c :: <loop-call>) 
+define method print-computation (stream :: <stream>, c :: <loop-call>)
   format(stream, "[CONTINUE %=]", loop-call-arguments(c));
 end method;
 
-define method print-computation (stream :: <stream>, c :: <primitive-call>) 
+define method print-computation (stream :: <stream>, c :: <primitive-call>)
   format(stream, "[PRIMOP %s(", primitive-name(c.primitive));
   print-args(stream, c.arguments);
   format(stream, ")]");
   print-tail-call-annotation(stream, c);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <primitive-indirect-call>)
+define method print-computation
+    (stream :: <stream>, c :: <primitive-indirect-call>)
   format(stream, "[INDIRECT-PRIMOP (");
   print-args(stream, c.arguments);
   format(stream, ")]");
   print-tail-call-annotation(stream, c);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <c-variable-pointer-call>)
+define method print-computation
+    (stream :: <stream>, c :: <c-variable-pointer-call>)
   format(stream, "[C-VARIABLE-PRIMOP %=", c.c-variable);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <if>) 
+define method print-computation (stream :: <stream>, c :: <if>)
   format(stream, "if (%s) ... else ... end", c.test);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <if-merge>) 
+define method print-computation (stream :: <stream>, c :: <if-merge>)
   format(stream, "[IF-MERGE %= %=]",
 	 merge-left-value(c), merge-right-value(c));
 end method;
 
-define method print-computation (stream :: <stream>, c :: <loop-merge>) 
+define method print-computation (stream :: <stream>, c :: <loop-merge>)
   format(stream, "[LOOP-MERGE%s %= %=]",
 	 if (loop-merge-initial?(c)) "i" else "" end,
          merge-left-value(c), merge-right-value(c));
 end method;
 
-define method print-computation (stream :: <stream>, c :: <bind-exit-merge>) 
+define method print-computation (stream :: <stream>, c :: <bind-exit-merge>)
   format(stream, "[BIND-EXIT-MERGE %= %=]",
 	 merge-left-value(c), merge-right-value(c));
 end method;
 
-define method print-computation (stream :: <stream>, c :: <return>) 
+define method print-computation (stream :: <stream>, c :: <return>)
   format(stream, "return %s", c.computation-value);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <bind>) 
+define method print-computation (stream :: <stream>, c :: <bind>)
   format(stream, "[BIND]");
 end method;
 
-define method print-computation (stream :: <stream>, c :: <definition>) 
+define method print-computation (stream :: <stream>, c :: <definition>)
   format(stream, "define %s = %=", c.assigned-binding, c.computation-value);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <redefinition>) 
+define method print-computation (stream :: <stream>, c :: <redefinition>)
   format(stream, "redefine %s = %=", c.assigned-binding, c.computation-value);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <type-definition>) 
-  format(stream, "define-type %s = %=", 
+define method print-computation (stream :: <stream>, c :: <type-definition>)
+  format(stream, "define-type %s = %=",
          c.typed-binding, c.computation-value);
 end method;
 
-define method print-computation 
-    (stream :: <stream>, c :: <type-redefinition>) 
-  format(stream, "redefine-type %s = %=", 
+define method print-computation
+    (stream :: <stream>, c :: <type-redefinition>)
+  format(stream, "redefine-type %s = %=",
          c.typed-binding, c.computation-value);
 end method;
 
-define method print-computation (stream :: <stream>, c :: <set!>) 
+define method print-computation (stream :: <stream>, c :: <set!>)
   format(stream, "%s := %=", c.assigned-binding, c.computation-value);
 end method;
 
@@ -495,17 +491,3 @@ end method print-computation;
 define method print-computation (stream :: <stream>, c :: <set-cell-value!>);
   format(stream, "cell-value(%s) := %s", c.computation-cell, c.computation-value)
 end method print-computation;
-
-// C-FFI
-
-/* ********************
-define method print-computation (s :: <stream>, c :: <begin-with-stack-structure>)
-  format(s, "[BEGIN WITH-STACK-STRUCTURE %=, %=]", 
-         wss-var(c), wss-size-temp(c));
-end method;
-
-define method print-computation (s :: <stream>, c :: <end-with-stack-structure>)
-  format(s, "[END WITH-STACK-STRUCTURE]");
-end method;
-
-******************** */
