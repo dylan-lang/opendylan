@@ -20,31 +20,47 @@ Open Dylan Downloads
 .. table::
    :class: table-striped
 
-   +---------------------------+--------------------+--------------------+---------------+
-   | Platform                  | Version            | Date Released      | Revision ID   |
-   +===========================+====================+====================+===============+
-   | `Windows (32 bit)`_       | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ |
-   +---------------------------+--------------------+--------------------+---------------+
-   | `Mac OS X Lion+ (Intel)`_ | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ |
-   +---------------------------+--------------------+--------------------+---------------+
-   | `Linux (x86)`_            | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ |
-   +---------------------------+--------------------+--------------------+---------------+
-   | `Linux (x86-64)`_         | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ |
-   +---------------------------+--------------------+--------------------+---------------+
-   | `FreeBSD (x86)`_          | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ |
-   +---------------------------+--------------------+--------------------+---------------+
+   +---------------------------+--------------------+--------------------+---------------+------------------+
+   | Platform                  | Version            | Date Released      | Revision ID   | Install Notes    +
+   +===========================+====================+====================+===============+==================+
+   | `Windows (32 bit)`_       | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Windows Notes`_ +
+   +---------------------------+--------------------+--------------------+---------------+------------------+
+   | `Mac OS X Lion+ (Intel)`_ | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Unix Notes`_    +
+   +---------------------------+--------------------+--------------------+---------------+------------------+
+   | `Linux (x86)`_            | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Unix Notes`_    +
+   +---------------------------+--------------------+--------------------+---------------+------------------+
+   | `Linux (x86-64)`_         | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Unix Notes`_    +
+   +---------------------------+--------------------+--------------------+---------------+------------------+
+   | `FreeBSD (x86)`_          | 2013.2             | Dec. 23, 2013      | `ce9b14dab6`_ | `Unix Notes`_    +
+   +---------------------------+--------------------+--------------------+---------------+------------------+
 
 Old builds (including PowerPC Mac OS X and 64 bit FreeBSD) can be found by
 browsing the `download directories`_.
+
+All of our source code is available under an open source license in the `"dylan-lang" organization on GitHub`_.
 
 .. raw:: html
 
      </div>
      <div class="span4">
-       <div class="hero-unit">
-         <h2>Source Code</h2>
-         <p>All of our source code is available under an open source license in the <a href="https://github.com/dylan-lang/">"dylan-lang" organization on GitHub</a>.</p>
-       </div>
+       <h2>Get Started!</h2>
+
+If you're new to Dylan, you'll want to check out these handy resources:
+
+* `Introduction to Dylan <http://opendylan.org/documentation/intro-dylan/>`_:
+   A tutorial written for those with solid programming
+   experience in C++ or another object-oriented, static language. It
+   provides a gentler introduction to Dylan than does the Dylan
+   Reference Manual (DRM).
+* `Getting Started with the Open Dylan Command Line Tools <http://opendylan.org/documentation/getting-started-cli/>`_:
+   An introduction to the usage of the command line tools.
+* `Dylan Programming Guide <http://opendylan.org/books/dpg/>`_:
+   A book length Dylan tutorial.
+* `Open Dylan Documentation <http://opendylan.org/documentation/>`_:
+   All of the Open Dylan documentation.
+
+.. raw:: html
+
      </div>
    </div>
 
@@ -71,6 +87,7 @@ You may instead start a Pelles C interactive shell and run
 ``C:\Program Files\Open Dylan\bin\win32-environment.exe``, but this
 won't help if you want to run Open Dylan via the Start menu.
 
+-----------------------
 
 Installation on Mac OS X, FreeBSD, Linux
 ----------------------------------------
@@ -83,6 +100,8 @@ and no IDE.
 
 64 bit Linux requires that the Boehm GC is installed
 (For example, ``apt-get install libgc-dev`` on Ubuntu).
+
+-----------------------
 
 Installation from source
 ------------------------
@@ -97,5 +116,8 @@ dependencies and how to build it.
 .. _Linux (x86): http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-x86-linux.tar.bz2
 .. _Linux (x86-64): http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-x86_64-linux.tar.bz2
 .. _FreeBSD (x86): http://opendylan.org/downloads/opendylan/2013.2/opendylan-2013.2-x86-freebsd.tar.bz2
+.. _Windows Notes: #installation-on-windows
+.. _Unix Notes: #installation-on-mac-os-x-freebsd-linux
 .. _download directories: http://opendylan.org/downloads/opendylan/
+.. _"dylan-lang" organization on GitHub: https://github.com/dylan-lang/
 .. _ce9b14dab6: https://github.com/dylan-lang/opendylan/tree/v2013.2
