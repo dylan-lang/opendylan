@@ -8,7 +8,7 @@ define method program-note-to-ppml(o :: <program-note>)  => (ppml :: <ppml>)
   local method print-condition
           (o :: <program-note>, subnote? :: <boolean>) => (ppml :: <ppml>)
     let loc = o.condition-source-location;
-    let location = 
+    let location =
       if (loc)
         let start-offset = source-location-start-offset(loc);
         let start-line = source-offset-line(start-offset);
@@ -23,34 +23,35 @@ define method program-note-to-ppml(o :: <program-note>)  => (ppml :: <ppml>)
       end;
     let classification = condition-classification(o);
     let ctxt = condition-context-id(o);
-    let context = 
+    let context =
       if (ctxt)
-        ppml-block(vector(
-          ppml-string(" in "), ppml-string(ctxt), ppml-string(": ")));
+        ppml-block(vector(ppml-string(" in "),
+                          ppml-string(ctxt),
+                          ppml-string(": ")));
       else
         ppml-string(": ");
       end;
 
     let body = apply(format-to-ppml, o.condition-format-string,
                                      o.condition-format-arguments);
-    let notes = 
-      ppml-block(map(method (o) print-condition(o, #t) end,
-                     o.subnotes), offset: 0, type: #"consistent");
+    let notes =
+      ppml-block(map(method (o) print-condition(o, #t) end, o.subnotes),
+                 offset: 0,
+                 type: #"consistent");
     if (subnote?)
-      ppml-block(vector(
-        ppml-block(vector(ppml-string("* "), body), offset: 2),
-        ppml-break(offset: if (empty?(o.subnotes)) 0 else 2 end),
-        notes), offset: 0)
+      ppml-block(vector(ppml-block(vector(ppml-string("* "), body), offset: 2),
+                        ppml-break(offset: if (empty?(o.subnotes)) 0 else 2 end),
+                        notes),
+                 offset: 0)
     else
-      ppml-block(vector(
-        classification, 
-        location, 
-        ppml-break(offset: 2, space: 0), 
-        context,
-        ppml-break(offset: 2, space: 0), 
-        body,
-        ppml-break(offset: if (empty?(o.subnotes)) 0 else 2 end),
-        notes), offset: 0);
+      ppml-block(vector(classification,
+                        location,
+                        ppml-break(offset: 2, space: 0),
+                        context,
+                        ppml-break(offset: 2, space: 0),
+                        body,
+                        ppml-break(offset: if (empty?(o.subnotes)) 0 else 2 end),
+                        notes), offset: 0);
     end;
   end method print-condition;
 
@@ -78,8 +79,7 @@ define compiler-sideways method print-object
     (condition :: <program-note>, stream :: <stream>) => ()
   ppml-print(program-note-to-ppml(condition),
              make(<ppml-printer>, margin: 100,
-                  output-function:
-                    method (s :: <string>) write(stream, s) end,
+                  output-function: method (s :: <string>) write(stream, s) end,
                   newline-function: method () write(stream, "\n") end));
   let loc = condition.condition-source-location;
   if (loc)
@@ -95,8 +95,8 @@ define compiler-sideways method print-object
   let body = apply(format-to-ppml, condition.condition-format-string,
                                    condition.condition-format-arguments);
   let ppml-condition = ppml-block(vector(ppml-string("Warning: "),
-                                         ppml-break(offset: 2, space: 0), 
-                                         body), 
+                                         ppml-break(offset: 2, space: 0),
+                                         body),
                                   offset: 0);
   ppml-print(ppml-condition,
              make(<ppml-printer>, margin: 100,
@@ -111,13 +111,12 @@ define compiler-sideways method print-object
   let body = apply(format-to-ppml, condition.condition-format-string,
                                    condition.condition-format-arguments);
   let ppml-condition = ppml-block(vector(ppml-string("Error: "),
-                                         ppml-break(offset: 2, space: 0), 
-                                         body), 
+                                         ppml-break(offset: 2, space: 0),
+                                         body),
                                   offset: 0);
   ppml-print(ppml-condition,
              make(<ppml-printer>, margin: 100,
-                  output-function:
-                    method (s :: <string>) write(stream, s) end,
+                  output-function: method (s :: <string>) write(stream, s) end,
                   newline-function: method () write(stream, "\n") end));
 end method print-object;
 
@@ -126,14 +125,15 @@ end method print-object;
 // TODO: remove some of this junk when I found out how to retrieve reasonable
 //       print names from some of these objects.
 
-define compiler-sideways method as (class == <ppml>, o :: <class>) => (ppml :: <ppml>)
+define compiler-sideways method as
+    (class == <ppml>, o :: <class>) => (ppml :: <ppml>)
   ppml-string(as(<string>, o.debug-name))
 end method;
 
-define compiler-sideways method debug-name(class == <boolean>) "<boolean>" end;
-define compiler-sideways method debug-name(class == <integer>) "<integer>" end;
-define compiler-sideways method debug-name(class == <string>) "<string>" end;
-define compiler-sideways method debug-name(class == <byte-string>) "<byte-string>" end;
+define compiler-sideways method debug-name (class == <boolean>) "<boolean>" end;
+define compiler-sideways method debug-name (class == <integer>) "<integer>" end;
+define compiler-sideways method debug-name (class == <string>) "<string>" end;
+define compiler-sideways method debug-name (class == <byte-string>) "<byte-string>" end;
 
 define method panic-debug-name(o :: <object>) => (dn :: <string>)
   // Last-ditch attempt: just print it to a string.
@@ -146,15 +146,13 @@ end;
 define compiler-sideways method as(class == <ppml>, cte :: <type-estimate-class>)
     => (ppml :: <ppml>)
   let name = type-estimate-class(cte).^debug-name;
-  ppml-string(
-    if (name) name else type-estimate-class(cte).panic-debug-name end)
+  ppml-string(if (name) name else type-estimate-class(cte).panic-debug-name end)
 end;
 
 define compiler-sideways method as(class == <ppml>, rte :: <type-estimate-raw>)
   => (ppml :: <ppml>)
   let name = type-estimate-debug-name(type-estimate-raw(rte));
-  ppml-string(
-    if (name) name else panic-debug-name(type-estimate-raw(rte)) end)
+  ppml-string(if (name) name else panic-debug-name(type-estimate-raw(rte)) end)
 end;
 
 define compiler-sideways method as(class == <ppml>, vte :: <type-estimate-values>)
@@ -166,14 +164,14 @@ define compiler-sideways method as(class == <ppml>, vte :: <type-estimate-values
 
   let ppml-vals =
     if (rest-vals)
-      concatenate(map(curry(as, <ppml>), fixed-vals), 
+      concatenate(map(curry(as, <ppml>), fixed-vals),
                   list(ppml-block(vector(ppml-string("#rest "),
                                          as(<ppml>, rest-vals)))))
     else
       map(curry(as, <ppml>), fixed-vals)
     end;
 
-  // This was producing confusing error messages, in which you had to 
+  // This was producing confusing error messages, in which you had to
   // the values() wrapper get any understanding.  And values(x) ~= x
   // in terms of <type-estimate>s, anyway.
   //
@@ -189,21 +187,23 @@ define compiler-sideways method as(class == <ppml>, vte :: <type-estimate-values
 		       right-bracket: ppml-string(")"))
 end;
 
-define compiler-sideways method as(class == <ppml>, un :: <type-estimate-union>)
-    => (ppml :: <ppml>)
+define compiler-sideways method as
+    (class == <ppml>, un :: <type-estimate-union>)
+ => (ppml :: <ppml>)
   ppml-separator-block(map(curry(as, <ppml>), type-estimate-unionees(un)),
-    left-bracket:  ppml-string("type-union("),
-    right-bracket: ppml-string(")"))
+                       left-bracket:  ppml-string("type-union("),
+                       right-bracket: ppml-string(")"))
 end;
 
-define compiler-sideways method as(class == <ppml>, teli :: <type-estimate-limited-instance>)
-    => (ppml :: <ppml>)
-  format-to-ppml("singleton(%= :: %=)", 
+define compiler-sideways method as
+    (class == <ppml>, teli :: <type-estimate-limited-instance>)
+ => (ppml :: <ppml>)
+  format-to-ppml("singleton(%= :: %=)",
                  type-estimate-singleton(teli), type-estimate-class(teli))
 end;
 
 define compiler-sideways method as (class == <ppml>, o :: <&object>)
-    => (ppml :: <ppml>)
+ => (ppml :: <ppml>)
   ppml-string(format-to-string("%=", o))
 end method;
 
@@ -213,21 +213,20 @@ define compiler-sideways method ^function-name (o :: <&callable-object>)
   as(<string>, debug-string(o))
 end method;
 
-define compiler-sideways method as (class == <ppml>, o :: <&generic-function>) 
-    => (ppml :: <ppml>)
+define compiler-sideways method as (class == <ppml>, o :: <&generic-function>)
+ => (ppml :: <ppml>)
   let sig = model-signature(o);
   if (sig)
-    ppml-block(vector(
-      ppml-string(o.^function-name),
-      ppml-break(),
-      as(<ppml>, sig)))
+    ppml-block(vector(ppml-string(o.^function-name),
+                      ppml-break(),
+                      as(<ppml>, sig)))
   else
     ppml-string(o.^function-name)
   end;
 end method;
 
-define compiler-sideways method as (class == <ppml>, o :: <&method>) 
-    => (ppml :: <ppml>)
+define compiler-sideways method as (class == <ppml>, o :: <&method>)
+ => (ppml :: <ppml>)
   let ppml = make(<stretchy-vector>);
   add!(ppml, ppml-string("method"));
   if (o.named?)
@@ -242,51 +241,50 @@ define compiler-sideways method as (class == <ppml>, o :: <&method>)
   ppml-block(ppml)
 end method;
 
-define compiler-sideways method as (class == <ppml>, o :: <&class>) => (ppml :: <ppml>)
+define compiler-sideways method as (class == <ppml>, o :: <&class>)
+ => (ppml :: <ppml>)
   ppml-string(o.^debug-name)
 end method;
 
-define compiler-sideways method as(class == <ppml>, sig-spec :: <signature-spec>)
-    => (ppml :: <ppml>)
+define compiler-sideways method as
+    (class == <ppml>, sig-spec :: <signature-spec>)
+ => (ppml :: <ppml>)
   let avl = #();
   if (spec-argument-rest-variable-spec(sig-spec))
-    avl := pair(ppml-block(vector(
-                 ppml-string("#rest "),
-                 as(<ppml>, spec-argument-rest-variable-spec(sig-spec)))), avl)
+    let rest = as(<ppml>, spec-argument-rest-variable-spec(sig-spec));
+    avl := pair(ppml-block(vector(ppml-string("#rest "), rest)), avl);
   end;
   if (spec-argument-next-variable-spec(sig-spec))
-    avl := pair(ppml-block(vector(
-                 ppml-string("#next "),
-                 as(<ppml>, spec-argument-next-variable-spec(sig-spec)))), avl)
+    let next = as(<ppml>, spec-argument-next-variable-spec(sig-spec));
+    avl := pair(ppml-block(vector(ppml-string("#next "), next)), avl);
   end;
 
-  let vvl 
+  let vvl
     = if (spec-value-rest-variable-spec(sig-spec))
-	list(ppml-block(vector(
-              ppml-string("#rest "),
-              as(<ppml>, spec-value-rest-variable-spec(sig-spec)))))
+        let rest = as(<ppml>, spec-value-rest-variable-spec(sig-spec));
+	list(ppml-block(vector(ppml-string("#rest "), rest)))
       else
 	#()
       end if;
 
-  ppml-block(vector(
-    ppml-string("("), 
-    ppml-separator-block(
-      concatenate-as(<vector>, map(curry(as, <ppml>), 
-                                   spec-argument-required-variable-specs(sig-spec))
-                             , avl)),
-    ppml-string(")"),
-    ppml-string(" =>"), ppml-break(),
-    ppml-string("("), 
-    ppml-separator-block(
-      concatenate-as(<vector>, map(curry(as, <ppml>), 
-                                   spec-value-required-variable-specs(sig-spec))
-                             , vvl)),
-    ppml-string(")")))
+  let required = spec-argument-required-variable-specs(sig-spec);
+  let req = concatenate-as(<vector>, map(curry(as, <ppml>), required), avl);
+  let vals = spec-value-required-variable-specs(sig-spec);
+  let val = concatenate-as(<vector>, map(curry(as, <ppml>), vals), vvl);
+
+  ppml-block(vector(ppml-string("("),
+                    ppml-separator-block(req),
+                    ppml-string(")"),
+                    ppml-string(" =>"),
+                    ppml-break(),
+                    ppml-string("("),
+                    ppml-separator-block(val),
+                    ppml-string(")")))
 end;
 
-define compiler-sideways method as(class == <ppml>, var :: <variable-spec>)
-    => (ppml :: <ppml>)
+define compiler-sideways method as
+    (class == <ppml>, var :: <variable-spec>)
+ => (ppml :: <ppml>)
   if (spec-type-expression(var))
     ppml-block(vector(as(<ppml>, spec-variable-name(var)),
                       ppml-string(" :: "),
@@ -296,25 +294,29 @@ define compiler-sideways method as(class == <ppml>, var :: <variable-spec>)
   end
 end;
 
-define compiler-sideways method as(class == <ppml>, o :: <variable-name-fragment>)
-    => (ppml :: <ppml>)
+define compiler-sideways method as
+    (class == <ppml>, o :: <variable-name-fragment>)
+ => (ppml :: <ppml>)
   ppml-string(as(<string>, fragment-identifier(o)))
 end;
 
-define compiler-sideways method as(class == <ppml>, frag :: <function-call-fragment>)
-    => (ppml :: <ppml>)
-  ppml-block(vector(
-    as(<ppml>, fragment-function(frag)),
-    ppml-string("("),
-    ppml-separator-block(map(curry(as, <ppml>), fragment-arguments(frag))),
-    ppml-string(")")))
+define compiler-sideways method as
+    (class == <ppml>, frag :: <function-call-fragment>)
+ => (ppml :: <ppml>)
+  ppml-block(vector(as(<ppml>, fragment-function(frag)),
+                    ppml-string("("),
+                    ppml-separator-block(map(curry(as, <ppml>),
+                                             fragment-arguments(frag))),
+                    ppml-string(")")))
 end;
 
-define compiler-sideways method as(class == <ppml>, frag :: <literal-constant-fragment>)
-    => (ppml :: <ppml>)
+define compiler-sideways method as
+    (class == <ppml>, frag :: <literal-constant-fragment>)
+ => (ppml :: <ppml>)
   as(<ppml>, fragment-value(frag))
 end;
 
-define compiler-sideways method as(class == <ppml>, o :: <module-binding>) => (ppml :: <ppml>)
+define compiler-sideways method as
+    (class == <ppml>, o :: <module-binding>) => (ppml :: <ppml>)
   ppml-browser-aware-object(o)
 end;
