@@ -11,9 +11,9 @@ define macro graph-class-definer
          define graph-class-accessors ?name (?slots) end }
 end macro;
 
-define generic used-temporary-accessors 
+define generic used-temporary-accessors
     (c :: <computation>) => (res :: <simple-object-vector>);
-define generic class-used-temporary-accessors 
+define generic class-used-temporary-accessors
     (c :: subclass(<computation>)) => (res :: <simple-object-vector>);
 
 define macro graph-class-aux-definer
@@ -44,9 +44,9 @@ define macro graph-class-accessors-definer
 methods:
   { }
     => { }
-  { ?modifiers:* temporary slot ?:name :: ?:expression ?init:*, ?stuff:*; 
+  { ?modifiers:* temporary slot ?:name :: ?:expression ?init:*, ?stuff:*;
     ... }
-    => { make(<temporary-accessors>, 
+    => { make(<temporary-accessors>,
 	      getter: ?name, setter: ?name ## "-setter"), ... }
   { ?other:*; ... }
     => { ... }
@@ -56,16 +56,16 @@ define macro graph-class-accessors-aux-definer
   { define graph-class-accessors-aux ?:name () end }
     => { }
   { define graph-class-accessors-aux ?:name (?methods:*) end }
-    => { define constant "$" ## ?name ## "-accessors" :: <simple-object-vector> 
+    => { define constant "$" ## ?name ## "-accessors" :: <simple-object-vector>
            = vector(?methods);
-         define method class-used-temporary-accessors 
+         define method class-used-temporary-accessors
              (c :: subclass(?name), #next next-method)
 	  => (res :: <simple-object-vector>)
            concatenate("$" ## ?name ## "-accessors", next-method())
          end method;
          define constant "$" ## ?name ## "-total-temporary-accessors"
            = class-used-temporary-accessors(?name);
-         define method used-temporary-accessors 
+         define method used-temporary-accessors
 	     (c :: ?name) => (res :: <simple-object-vector>)
            "$" ## ?name ## "-total-temporary-accessors"
          end method }
@@ -101,7 +101,7 @@ end method;
 define macro for-all-used-lambdas
   { for-all-used-lambdas (?:variable in ?:expression) ?:body end }
     => { do-all-lambdas
-           (method (?variable) if (lambda-used?(?variable)) ?body end end, 
+           (method (?variable) if (lambda-used?(?variable)) ?body end end,
            ?expression) }
 end macro;
 
@@ -132,31 +132,31 @@ end method;
 
 define macro for-computations
   { for-computations (?:variable from ?first:expression before ?last:expression)
-      ?:body 
+      ?:body
     end }
   => { walk-lambda-computations
-         (method (previous, ?variable) ignore(previous); ?body end, 
+         (method (previous, ?variable) ignore(previous); ?body end,
 	  ?first, before: ?last, previous?: #t) }
   { for-computations (?:variable previous ?previous:variable from ?first:expression)
-      ?:body 
+      ?:body
     end }
   => { walk-lambda-computations
 	(method (?previous, ?variable) ?body end, ?first, previous?: #t) }
   { for-computations (?:variable from ?first:expression)
-      ?:body 
+      ?:body
     end }
   => { walk-lambda-computations
 	(method (previous, ?variable) ignore(previous); ?body end, ?first, previous?: #t) }
   { for-computations (?:variable previous ?previous:variable in ?:expression)
-      ?:body 
+      ?:body
     end }
   => { for-computations (?variable previous ?previous from ?expression.body)
-         ?body 
+         ?body
        end }
   { for-computations (?:variable in ?:expression)
-      ?:body 
+      ?:body
     end }
   => { for-computations (?variable from ?expression.body)
-         ?body 
+         ?body
        end }
 end macro;

@@ -35,14 +35,10 @@ end method ensure;
 /// driver
 
 define method ensure-invariants (f :: <&lambda>, #key before, after) => ();
-  local method make-message (string, name)
-          // should just use format
-          concatenate(string, " ", as-lowercase(as(<string>, name)), ": ")
-        end method make-message;
   dynamic-bind (*checker-message* =
 		  case
-		    before => make-message("before", before);
-		    after  => make-message("after",  after);
+		    before => format-to-string("before %s: ", before.as-lowercase);
+		    after  => format-to-string("after %s: ",  after.as-lowercase);
 		      otherwise #f
 		  end case)
     ensure-invariants*(f);
@@ -85,7 +81,7 @@ define function check-lambda (f) => ();
 end function check-lambda;
 
 define method check-computation (c :: <computation>) => ();
-  // TODO: need equivalent 
+  // TODO: need equivalent
   // check-computation-counts(c, next-computations, previous-computations);
   // check-computation-counts(c, previous-computations, next-computations);
 end method check-computation;
@@ -225,18 +221,3 @@ define method check-computation (c :: <exit>) => ();
 	 c, c.entry-state.exits);
 end method check-computation;
 
-
-/*
-/// move to utilities?  maybe functional-extensions?
-
-define method count (collection :: <collection>, value, #key test = \==)
-  let n = 0;
-  for (e in collection)
-    if (test(e, value))
-      n := n + 1;
-    end if;
-  finally
-    n
-  end for
-end method count;
-*/

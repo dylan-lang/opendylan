@@ -25,8 +25,8 @@ end method final-computation;
 
 //// connecting two computations
 
-define function join-2x2! 
-    (xf :: false-or(<computation>), xl :: false-or(<computation>), 
+define function join-2x2!
+    (xf :: false-or(<computation>), xl :: false-or(<computation>),
      yf :: false-or(<computation>), yl :: false-or(<computation>))
  => (zf :: false-or(<computation>), zl :: false-or(<computation>))
   if (xl)
@@ -55,21 +55,21 @@ define function join-2x2!
 end function;
 
 define inline function join-2x2-t!
-    (xf :: false-or(<computation>), xl :: false-or(<computation>), 
-     yf :: false-or(<computation>), yl :: false-or(<computation>), 
+    (xf :: false-or(<computation>), xl :: false-or(<computation>),
+     yf :: false-or(<computation>), yl :: false-or(<computation>),
      t :: false-or(<value-reference>))
  => (zf :: false-or(<computation>), zl :: false-or(<computation>), t :: false-or(<value-reference>))
   let (zf, zl) = join-2x2!(xf, xl, yf, yl);
   values(zf, zl, t)
 end function;
 
-define inline function join-1x1! 
+define inline function join-1x1!
     (c1 :: false-or(<computation>), c2 :: false-or(<computation>))
  => (c1 :: false-or(<computation>), c2 :: false-or(<computation>))
   join-2x2!(c1, c1, c2, c2)
 end function;
 
-define inline function join-1x1-t! 
+define inline function join-1x1-t!
     (c1 :: false-or(<computation>), c2 :: false-or(<computation>),
      t :: false-or(<value-reference>))
  => (c1 :: false-or(<computation>), c2 :: false-or(<computation>),
@@ -78,17 +78,17 @@ define inline function join-1x1-t!
 end function;
 
 
-define inline function join-2x1! 
-    (xf :: false-or(<computation>), xl :: false-or(<computation>), 
+define inline function join-2x1!
+    (xf :: false-or(<computation>), xl :: false-or(<computation>),
      y :: false-or(<computation>))
  => (zf :: false-or(<computation>), zl :: false-or(<computation>))
   join-2x2!(xf, xl, y, y)
 end function;
 
 define inline function join-2x1-t!
-    (xf :: false-or(<computation>), xl :: false-or(<computation>), 
+    (xf :: false-or(<computation>), xl :: false-or(<computation>),
      y :: false-or(<computation>), t :: false-or(<value-reference>))
- => (zf :: <computation>, zl :: <computation>, 
+ => (zf :: <computation>, zl :: <computation>,
      t :: false-or(<value-reference>))
   let (zf, zl) = join-2x1!(xf, xl, y);
   values(zf, zl, t)
@@ -112,7 +112,7 @@ define method redirect-previous-computation!
 end method;
 
 define method redirect-previous-computation!
-    (prev-c :: <computation>, 
+    (prev-c :: <computation>,
      old-c :: <computation>, new-c :: <computation>) => ()
   next-computation(prev-c) := new-c
 end method;
@@ -120,7 +120,7 @@ end method;
 define method redirect-previous-computation!
     (prev-c :: <if>, old-c :: <computation>, new-c :: <computation>) => ()
   // if (next-computation(prev-c) == old-c)
-  //   assert(instance?(old-c, <if-merge>), 
+  //   assert(instance?(old-c, <if-merge>),
   //          "next-compution of if must be merge");
   //   if (instance?(new-c, <if-merge>))
   //     next-computation(prev-c) := new-c;
@@ -130,7 +130,7 @@ define method redirect-previous-computation!
   //     alternative(prev-c) := new-c;
   //   else
   //     error("Ambiguous insertion of computation into empty if");
-  //   end if      
+  //   end if
   if (consequent(prev-c) == old-c)
     consequent(prev-c) := new-c
   elseif (alternative(prev-c) == old-c)
@@ -161,7 +161,7 @@ define method redirect-previous-computation!
 end method;
 
 define method redirect-previous-computation!
-    (prev-c :: <unwind-protect>, 
+    (prev-c :: <unwind-protect>,
      old-c :: <computation>, new-c :: <computation>) => ()
   if (body(prev-c) == old-c)
     body(prev-c) := new-c
@@ -185,13 +185,13 @@ define method redirect-next-computation!
 end method;
 
 define method redirect-next-computation!
-    (next-c :: <computation>, 
+    (next-c :: <computation>,
      old-c :: <computation>, new-c :: false-or(<computation>)) => ()
   previous-computation(next-c) := new-c
 end method;
 
 define method redirect-next-computation!
-    (next-c :: <binary-merge>, 
+    (next-c :: <binary-merge>,
      old-c :: <computation>, new-c :: false-or(<computation>)) => ()
   if (merge-left-previous-computation(next-c) == old-c)
     merge-left-previous-computation(next-c) := new-c
@@ -207,7 +207,7 @@ end method;
 
 /*
 define method redirect-next-computation!
-    (next-c :: <if-merge>, 
+    (next-c :: <if-merge>,
      old-c :: <computation>, new-c :: false-or(<computation>)) => ()
   if (previous-computation(next-c) == old-c)
     assert(instance?(old-c, <if>), "previous-compution of merge must be if");
@@ -219,7 +219,7 @@ define method redirect-next-computation!
       merge-right-previous-computation(next-c) := new-c;
     else
       error("Ambiguous insertion of computation into empty if");
-    end if      
+    end if
   else
     next-method();
   end if;
@@ -245,7 +245,7 @@ define method insert-computation-before!
 end method insert-computation-before!;
 
 define method insert-computations-before-reference!
-    (old-c :: <computation>, 
+    (old-c :: <computation>,
      new-first-c :: <computation>, new-last-c :: <computation>,
      ref :: <value-reference>)
  => ()
@@ -259,8 +259,8 @@ define method insert-computation-before-reference!
 end method;
 
 define method insert-computations-before-reference!
-    (old-c :: <if-merge>, 
-     new-first-c :: <computation>, new-last-c :: <computation>, 
+    (old-c :: <if-merge>,
+     new-first-c :: <computation>, new-last-c :: <computation>,
      ref :: <value-reference>)
  => ()
   let if-c = previous-computation(old-c);
@@ -285,14 +285,14 @@ define method insert-computations-before-reference!
 	   next-computation(prev-c) := new-first-c;
 	 end if;
 	 previous-computation(new-first-c) := prev-c;
-    otherwise 
+    otherwise
       => insert-computations-before!(old-c, new-first-c, new-last-c);
   end case;
 end method;
 
 define method insert-computations-before-reference!
-    (old-c :: <loop-merge>, 
-     new-first-c :: <computation>, new-last-c :: <computation>, 
+    (old-c :: <loop-merge>,
+     new-first-c :: <computation>, new-last-c :: <computation>,
      ref :: <value-reference>)
  => ()
   if (merge-left-value(old-c) == ref)
@@ -330,7 +330,7 @@ end method;
 define method delete-computation! (c :: <computation>) => ();
   let completion-c = c.next-computation;
   if (completion-c)
-    if (instance?(completion-c, <return>)) 
+    if (instance?(completion-c, <return>))
       re-optimize-tail-computations(c.previous-computation); // revisit tail?
     end if;
     if (instance?(completion-c, <end-block>)   // gts,98feb24
@@ -380,14 +380,14 @@ define method delete-computation! (c :: <bind-exit>) => ();
 
     redirect-previous-computations!(c, body-first-c);  // fixup next-computation values
     redirect-next-computations!(merge-c, body-last-c); // fixup previous-computation's
-    replace-temporary-in-users!(temporary(merge-c), 
+    replace-temporary-in-users!(temporary(merge-c),
 				bind-exit-merge-body-temporary(merge-c));
     next-computation(body-last-c) := next-c;
     previous-computation(body-first-c) := prev-c;
     remove-computation-references!(merge-c);
     remove-computation-references!(end-c);
     remove-computation-references!(c);
-  else 
+  else
     next-method();
   end if;
 end method;
@@ -399,7 +399,7 @@ define method delete-computation! (c :: <exit>) => ();
   if (me-block(entry-state(c)))
     re-optimize(me-block(entry-state(c)));
   end if;
-  next-method();  
+  next-method();
 end method;
 
 define method delete-computation! (c :: <unwind-protect>) => ();
@@ -409,24 +409,24 @@ define method delete-computation! (c :: <unwind-protect>) => ();
   let end-c = protected-end(c);
   let next-c = next-computation(c);
   let end-cleanup = c.cleanups & c.cleanups-end;
-                      
-  // At most one of the body and the cleanup can be 
+
+  // At most one of the body and the cleanup can be
   // non-empty (otherwise, we shouldn't be deleting this node)
   debug-assert(~(has-cleanups?(c) & has-body?(c)));
 
   let (first-c, last-c, using-cleanup?)
     = if (has-cleanups?(c))   // body must be empty
         values(c.cleanups,
-               previous-computation(c.cleanups-end), 
+               previous-computation(c.cleanups-end),
                #t);
       elseif (has-body?(c))   // cleanup #f or empty
-        values(c.body, 
-               previous-computation(c.protected-end), 
+        values(c.body,
+               previous-computation(c.protected-end),
                #f);
       else                    // neither body nor cleanup
         values(next-c, prev-c, #f)
       end if;
-  
+
   redirect-previous-computations!(c, first-c);  // fixup next-computation values
   redirect-next-computations!(c, last-c);   // fixup previous-computation's
   next-computation(last-c) := next-c;
@@ -450,7 +450,7 @@ define method insert-computations-after!
     (old-c :: <computation>, first :: <computation>, last :: <computation>)
  => ();
   // HACK: DEFEATED ASSERTION FOR NOW
-  // assert(~first.previous-computation 
+  // assert(~first.previous-computation
   //         /* & empty?(last.next-computations) */);
   redirect-next-computations!(old-c, last);
   last.next-computation := old-c.next-computation;
@@ -478,7 +478,7 @@ define method insert-computations-before!
 end method insert-computations-before!;
 
 
-define function delete-computation-block! 
+define function delete-computation-block!
     (start :: <computation>, before, #key on-deletion = identity) => ()
   let queue :: <list> = #();
   walk-computations(method (c)
@@ -503,7 +503,7 @@ define function delete-computation-block!
   end;
 end;
 
-define function remove-computation-block-references! 
+define function remove-computation-block-references!
     (start :: <computation>, before, #key on-deletion = identity) => ()
   let queue :: <list> = #();
   walk-computations(method (c)
@@ -530,7 +530,7 @@ define function remove-computation-block-references!
 end;
 
 define method remove-computation-references! (c :: <computation>)
-  // gts-debug("refs", "remove-computation-references, c=%=, c.used-temp-accessors=%=.\n", 
+  // gts-debug("refs", "remove-computation-references, c=%=, c.used-temp-accessors=%=.\n",
   //           c, c.used-temporary-accessors);
   mark-as-dead(c);
   let t = temporary(c);
@@ -615,7 +615,7 @@ end;
 
 define function replace-computation!
     (old-c :: <computation>, new-first :: false-or(<computation>),
-     new-last :: false-or(<computation>), 
+     new-last :: false-or(<computation>),
      new-ref :: false-or(<value-reference>)) => ()
   if (new-first)
     // Put the new code in.  (Must happen before temporary replacement.)
@@ -662,7 +662,7 @@ end method;
 // with the temporary result new-t.
 
 define method replace-temporary-references!
-    (c :: <computation>, t :: <value-reference>, 
+    (c :: <computation>, t :: <value-reference>,
        new-t :: false-or(<value-reference>))
  => (renamed? :: <boolean>)
   debug-assert
@@ -696,7 +696,7 @@ define method replace-temporary-references!
 end method replace-temporary-references!;
 
 define method rename-temporary!
-    (old-t :: <named-temporary-mixin>, new-t :: <named-temporary-mixin>) 
+    (old-t :: <named-temporary-mixin>, new-t :: <named-temporary-mixin>)
  => (renamed? :: <boolean>)
   unless (named?(new-t))
     name(new-t) := name(old-t);
@@ -705,7 +705,7 @@ define method rename-temporary!
 end method;
 
 define method rename-temporary!
-    (old-t :: <value-reference>, new-t :: <value-reference>) 
+    (old-t :: <value-reference>, new-t :: <value-reference>)
  => (renamed? :: <boolean>)
   // when (named?(old-t) & instance?(new-t, <temporary>))
   //   break("UNABLE TO RENAME %= TO %=\n", new-t, old-t);
@@ -730,7 +730,7 @@ define function replace-temporary-in-users!
 end;
 
 define method rename-temporary-references!
-    (c :: <computation>, t :: <value-reference>, 
+    (c :: <computation>, t :: <value-reference>,
      new-t :: <value-reference>) => (renamed? :: <boolean>)
   replace-temporary-references!(c, t, new-t)
 end method;
