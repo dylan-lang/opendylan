@@ -49,8 +49,8 @@ define method output-lambda-computations
   indentd-format(stream, depth, "END\n");
 end method;
 
-define compiler-sideways method print-method (stream :: <stream>,
-      o :: <&lambda>, #key css)
+define compiler-sideways method print-method
+    (stream :: <stream>, o :: <&lambda>, #key css)
   output-lambda-computations(stream, 0, o);
 end method;
 

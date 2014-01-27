@@ -84,19 +84,28 @@ end method;
 
 define method print-temporary-properties
     (stream :: <stream>, o :: <temporary>)
-  case o.cell?        => format(stream, "@");
-       o.closed-over? => format(stream, "&");
-  end case;
+  format(stream, o.temporary-properties);
+end method;
+
+define method temporary-properties (o :: <temporary>)
+ => (res :: <string>)
+  let fst
+    = case o.cell?        => "@";
+           o.closed-over? => "&";
+           otherwise      => "";
+      end case;
   if (instance?(o, <stack-vector-temporary>))
-    format(stream, "V");
+    concatenate(fst, "V");
+  else
+    fst
   end if;
 end method;
 
-define method print-temporary-properties
-    (stream :: <stream>, o :: <multiple-value-temporary>)
-  next-method();
-  format(stream, "*");
-end method print-temporary-properties;
+define method temporary-properties (o :: <multiple-value-temporary>)
+ => (res :: <string>)
+  concatenate(next-method(), "*")
+end method;
+
 
 //// COMPUTATIONS
 
