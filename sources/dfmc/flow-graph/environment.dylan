@@ -11,28 +11,28 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // concrete.
 
 define /* abstract */ class <lexical-variable>
-    (<named-temporary-mixin>, <temporary>, <binding>) 
+    (<named-temporary-mixin>, <temporary>, <binding>)
 end class;
 
-define method rest-variable? (var :: <lexical-variable>) 
+define method rest-variable? (var :: <lexical-variable>)
   #f
 end method;
 
-define method keyword-variable? (var :: <lexical-variable>) 
+define method keyword-variable? (var :: <lexical-variable>)
   #f
 end method;
 
-define class <lexical-specialized-variable> (<lexical-variable>) 
+define class <lexical-specialized-variable> (<lexical-variable>)
   slot specializer, required-init-keyword: specializer:;
 end class;
 
 // !@#$ super hack -- happens on rest parameters
 define method specializer (object) dylan-value(#"<object>") end;
 
-define class <lexical-local-variable> (<lexical-specialized-variable>) 
+define class <lexical-local-variable> (<lexical-specialized-variable>)
 end class;
 
-define class <lexical-required-variable> (<lexical-specialized-variable>) 
+define class <lexical-required-variable> (<lexical-specialized-variable>)
 end class;
 
 define /* abstract */ class <lexical-optional-variable> (<lexical-variable>)
@@ -40,14 +40,14 @@ end class;
 
 define class <lexical-rest-variable> (<lexical-optional-variable>) end class;
 
-define method rest-variable? (variable :: <lexical-rest-variable>) 
+define method rest-variable? (variable :: <lexical-rest-variable>)
   #t
 end method;
 
-define class <lexical-keyword-variable> (<lexical-optional-variable>) 
+define class <lexical-keyword-variable> (<lexical-optional-variable>)
 end class;
 
-define method keyword-variable? (variable :: <lexical-keyword-variable>) 
+define method keyword-variable? (variable :: <lexical-keyword-variable>)
   #t
 end method;
 
@@ -61,20 +61,20 @@ define method outer (environment :: <module>)
 end method;
 
 define class <lexical-environment> (<environment>)
-  slot outer :: false-or(<lexical-environment>), 
+  slot outer :: false-or(<lexical-environment>),
     required-init-keyword: outer:;
   // slot cached-lexical-variables-in-scope = #f;
 end class;
 
 define inline method top-level-environment? (env :: <lexical-environment>)
-  ~outer(env) 
+  ~outer(env)
 end method;
 
 /// TODO: THIS HACK WILL ONLY WORK UNTIL WE USE LIMITED VECTORS OF TMPS
 
 define constant $weak-temporaries = as(<stretchy-vector>, #[#"weak"]);
 
-define inline function weak-temporaries? 
+define inline function weak-temporaries?
     (tmps :: <stretchy-object-vector>) => (well? :: <boolean>)
   size(tmps) = 1 & tmps[0] == #"weak"
 end function;
@@ -101,16 +101,18 @@ define method approximate-number-temporaries (fun :: <&lambda>) => (res :: <inte
   2 ^ lambda-log-number-temporaries(fun)
 end method;
 
-define method compute-temporaries 
+define method compute-temporaries
     (env :: <lambda-lexical-environment>) => (res :: <stretchy-object-vector>)
   let fun  = lambda(env);
-  let tmps = make(<stretchy-vector>, capacity: approximate-number-temporaries(fun));
+  let tmps = make(<stretchy-vector>,
+                  capacity: approximate-number-temporaries(fun));
   for (parameter in parameters(fun))
     environment(parameter) := env;
     add!(tmps, parameter)
   end for;
   frame-size(env) := size(tmps);
-  local method maybe-add-temporary! (c :: <computation>, tmp :: false-or(<temporary>))
+  local method maybe-add-temporary!
+            (c :: <computation>, tmp :: false-or(<temporary>))
 	  when (tmp)
 	    generator(tmp)    := c;
 	    environment(tmp)  := env;
@@ -132,27 +134,27 @@ end method;
 define class <top-level-environment> (<lambda-lexical-environment>)
 end class;
 
-define method compute-temporaries 
+define method compute-temporaries
     (env :: <top-level-environment>) => (res :: <stretchy-object-vector>)
   make(<stretchy-object-vector>)
 end method;
 
-define method number-temporaries 
+define method number-temporaries
     (e :: <lambda-lexical-environment>) => (res :: <integer>)
   size(temporaries(e))
 end method;
 
-define inline method clear-temporaries! 
+define inline method clear-temporaries!
     (env :: <lambda-lexical-environment>)
   size(env.temporaries) := 0;
 end method;
 
-define inline method remove-temporary! 
+define inline method remove-temporary!
     (env :: <lambda-lexical-environment>, t :: <temporary>)
   remove!(env.temporaries, t)
 end method;
 
-define inline method add-temporary! 
+define inline method add-temporary!
     (env :: <lambda-lexical-environment>, t :: <temporary>)
   add!(env.temporaries, t)
 end method;
@@ -194,10 +196,10 @@ define method strip-environment (env :: <lambda-lexical-environment>)
   remove-entries!(env);
   remove-loops!(env);
   let number-temporaries = size(temporaries(env));
-  lambda-log-number-temporaries(lambda(env)) 
+  lambda-log-number-temporaries(lambda(env))
     := if (number-temporaries = 0)
 	 0
-       else 
+       else
 	 round/(log(as(<float>, number-temporaries)), log(2.0))
        end if;
   /*
@@ -206,7 +208,7 @@ define method strip-environment (env :: <lambda-lexical-environment>)
   unless (size(tmps*) = size(tmps))
     for (tmp in tmps)
       when (used?(tmp) & ~member?(tmp, tmps*))
-	format-out("IN %= RECONSTRUCTED TEMPORARIES %= INVALID %= MISSING %=\n", 
+	format-out("IN %= RECONSTRUCTED TEMPORARIES %= INVALID %= MISSING %=\n",
 		   lambda(env), tmps*, tmps, tmp);
 	broken("BAD RECONSTRUCTION %= %=", lambda(env), tmp);
       end when;
@@ -237,7 +239,7 @@ define method assignments-setter
   end if;
 end method;
 
-define method frame-size 
+define method frame-size
     (env :: <lambda-lexical-environment>) => (res :: <integer>)
   number-temporaries(env)
 end method;
@@ -266,15 +268,15 @@ end;
 
 define method add-inner!
     (env :: <top-level-environment>,
-     inner :: <lambda-lexical-environment>) 
+     inner :: <lambda-lexical-environment>)
 end method;
 
-define method add-inner! 
-    (env :: <module>, inner :: <lambda-lexical-environment>) 
+define method add-inner!
+    (env :: <module>, inner :: <lambda-lexical-environment>)
 end method;
 
-define method add-inner! (env :: <lambda-lexical-environment>,
-			  inner :: <lambda-lexical-environment>) 
+define method add-inner!
+    (env :: <lambda-lexical-environment>, inner :: <lambda-lexical-environment>)
   env.inners := add-new!(env.inners, inner);
 end method;
 
@@ -283,15 +285,13 @@ define class <local-lexical-environment> (<lexical-environment>)
   constant slot binding-type, required-init-keyword: type:;
   constant slot binding-value, required-init-keyword: value:;
   // SAVE SLOTS
-  // slot %lambda-environment :: false-or(<lambda-lexical-environment>) = #f, 
+  // slot %lambda-environment :: false-or(<lambda-lexical-environment>) = #f,
   //   init-keyword: environment:;
 end class;
 
 define function make-local-lexical-environment
-    (name :: <variable-name-fragment>,
-     value,
-     type,
-     env :: <environment>) => (new-env :: <local-lexical-environment>)
+    (name :: <variable-name-fragment>, value, type, env :: <environment>)
+ => (new-env :: <local-lexical-environment>)
   make(<local-lexical-environment>,
        id: name,
        type: type,
@@ -309,14 +309,14 @@ define method lambda-environment (env :: <local-lexical-environment>)
     | (%lambda-environment(env) := lambda-environment(outer(env)))
 end;
 
-define method lambda-environment-setter 
+define method lambda-environment-setter
     (value :: <lambda-lexical-environment>, env :: <local-lexical-environment>)
   %lambda-environment(env) := value;
 end;
 */
 
-define method add-inner! (env :: <local-lexical-environment>,
-			  inner :: <lambda-lexical-environment>) 
+define method add-inner!
+    (env :: <local-lexical-environment>, inner :: <lambda-lexical-environment>)
   add-inner!(env.outer, inner)
 end method;
 
@@ -337,16 +337,16 @@ define method next-frame-offset (env :: <lambda-lexical-environment>)
   offset
 end method;
 
-define method add-variable! 
+define method add-variable!
     (env :: <lambda-lexical-environment>,
      name :: <variable-name-fragment>,
      variable :: <lexical-variable>)
   env.bindings[name] := variable;
 end method;
 
-define method lookup 
-    (env :: <lambda-lexical-environment>, name :: <variable-name-fragment>, 
-       #rest options, #key default, reference? = #t)
+define method lookup
+    (env :: <lambda-lexical-environment>, name :: <variable-name-fragment>,
+     #rest options, #key default, reference? = #t)
  => (binding, type, environment)
   let v = element(env.bindings, name, default: #f);
   if (v)
@@ -356,9 +356,9 @@ define method lookup
   end
 end method;
 
-define method lookup 
-    (env :: <local-lexical-environment>, name :: <variable-name-fragment>, 
-       #rest options, #key default, reference? = #t)
+define method lookup
+    (env :: <local-lexical-environment>, name :: <variable-name-fragment>,
+     #rest options, #key default, reference? = #t)
  => (binding, type, environment)
   if (same-name-when-local?(binding-id(env), name))
     values(binding-value(env), binding-type(env), env)
@@ -374,10 +374,7 @@ define function lookup-in-top-level-environment
   let val = if (env) element(env, name, default: $unfound)
 	    else $unfound end;
   if (found?(val))
-    values(make(<interactor-binding>, name: name, interactor-id: val), #f, #f);
-  // TODO: Remove the following clause - for testing only.
-  // elseif (member?(fragment-name(name), #(#"$$interactive")))
-  //   make(<interactor-binding>, name: name, interactor-id: val);            
+    values(make(<interactor-binding>, name: name, interactor-id: val), #f, #f)
   else
     values(lookup-binding(name, reference?: reference?), #f, #f)
   end;
@@ -391,7 +388,7 @@ define method lookup
   lookup-in-top-level-environment(name, default, reference?)
 end method;
 
-define method lookup 
+define method lookup
     (env :: <top-level-environment>,
      name :: <variable-name-fragment>,
      #key default, reference? = #t)
@@ -438,7 +435,7 @@ define method closure-size
     if (index >= closure-size)
       count
     else
-      let self? = #f 
+      let self? = #f
         /* closure-self-reference?(closure[index], environment) */;
       loop(count + if (self?) 0 else 1 end, index + 1)
     end if
@@ -523,33 +520,33 @@ end;
 
 // define generic do-lexical-variables-in-scope
 //     (f :: <function>, env :: false-or(<environment>)) => ();
-// 
+//
 // define method do-lexical-variables-in-scope
 //     (f :: <function>, env == #f) => ()
 // end method;
-// 
+//
 // define method do-lexical-variables-in-scope
 //     (f :: <function>, env :: <module>) => ()
 // end method;
-// 
-// define method do-lexical-variables-in-scope 
+//
+// define method do-lexical-variables-in-scope
 //     (f :: <function>, env :: <lexical-environment>) => ()
 //   do-lexical-variables-in-scope(f, env.outer);
 // end method;
-// 
-// define method do-lexical-variables-in-scope 
+//
+// define method do-lexical-variables-in-scope
 //     (f :: <function>, env :: <lambda-lexical-environment>) => ()
 //   for (var in env.bindings) f(var) end;
 //   next-method();
 // end method;
-// 
-// define method do-lexical-variables-in-scope 
+//
+// define method do-lexical-variables-in-scope
 //     (f :: <function>, env :: <local-lexical-environment>) => ()
 //   f(binding-value(env));
 //   next-method();
 // end method;
-// 
-// define method lexical-variables-in-scope 
+//
+// define method lexical-variables-in-scope
 //     (env :: <environment>) => (variables :: <list>)
 //   env.cached-lexical-variables-in-scope
 //     | (env.cached-lexical-variables-in-scope
@@ -567,7 +564,7 @@ end method;
 define sideways method fragment-module
     (form :: <variable-name-fragment>) => (module :: <module>)
   let module = fragment-context(form);
-  if (module) 
+  if (module)
     if (instance?(module, <pair>))
       // Local environment + module.
       tail(module);

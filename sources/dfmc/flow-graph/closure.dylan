@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //   visit: functions,
 //   mandatory?: #t;
 
-define method analyze-environments 
+define method analyze-environments
     (f :: <&lambda>) => (changed? :: <boolean>);
   compute-closure(f.environment);
   // convert-closure(f.environment);
@@ -20,13 +20,13 @@ define method analyze-environments
   ~empty?(f.environment.closure)
 end method;
 
-define method analyze-block  
+define method analyze-block
     (env :: <lambda-lexical-environment>, entry :: <entry-state>)
  => (local? :: <boolean>)
   // TODO: no intervening blocks (currently overly conservative)
-  entry.local-entry-state? 
+  entry.local-entry-state?
     := every?(curry(local-exit?, env), entry.exits)
-         & size(env.entries) == 1;  
+         & size(env.entries) == 1;
 end method;
 
 define method local-exit?
@@ -35,10 +35,10 @@ define method local-exit?
   exit.environment == env
 end method;
 
-// If a temporary has references outside its generating environment 
+// If a temporary has references outside its generating environment
 // after all the optimizations have been run, it has been closed over.
-// The temporary itself is flagged as closed over, and then it is added 
-// to the set of temporaries in the closure of the referencing 
+// The temporary itself is flagged as closed over, and then it is added
+// to the set of temporaries in the closure of the referencing
 // environment. In order for the temporary to be available at the
 // point of creation of that closure, it must also be added to the
 // closure set of the environment that creates that closure if it
@@ -47,7 +47,7 @@ end method;
 
 define method closure-call? (t :: <temporary>, c :: <simple-call>)
   let f-t = function(c);
-  t == f-t & instance?(generator(f-t), <make-closure>) 
+  t == f-t & instance?(generator(f-t), <make-closure>)
     & ~member?(f-t, arguments(c))
 end method;
 
@@ -83,7 +83,7 @@ define method compute-closure (env :: <lambda-lexical-environment>) => ()
       let reference-environment = reference.environment;
       unless (reference-environment == env)
         // format-out("      REF %=\n", reference);
-        let strength 
+        let strength
           = if (closure-call?(tmp, reference) | closure-setup?(reference))
               $weak-closure-entry
             else
@@ -103,7 +103,7 @@ define method ref-users (ref :: <make-closure>) => (user)
   users(ref.temporary)
 end method;
 
-define function do-over-lambda-users 
+define function do-over-lambda-users
     (f :: <function>, env :: <lambda-lexical-environment>) => ()
   local method do-over (code)
           for (ref in references(code))
@@ -113,7 +113,7 @@ define function do-over-lambda-users
 	  end for
 	end method;
   let lambda = lambda(env);
-  do-over(lambda); do-over(lambda.iep); 
+  do-over(lambda); do-over(lambda.iep);
 end function;
 
 define function do-over-lambda-using-computations
@@ -128,13 +128,13 @@ define function do-over-lambda-using-computations
 	  end for
 	end method;
   let lambda = lambda(env);
-  do-over(lambda); do-over(lambda.iep); 
+  do-over(lambda); do-over(lambda.iep);
 end function;
 
 define function close-over-lambda-users
-    (tmp :: <temporary>, 
-     reference-environment :: <lambda-lexical-environment>, 
-     home-environment :: <lambda-lexical-environment>, 
+    (tmp :: <temporary>,
+     reference-environment :: <lambda-lexical-environment>,
+     home-environment :: <lambda-lexical-environment>,
      strength :: <closure-entry-strength>) => ()
   do-over-lambda-users
     (method (env)
@@ -143,7 +143,7 @@ define function close-over-lambda-users
      reference-environment);
 end function;
 
-define function close-over 
+define function close-over
     (tmp :: <temporary>,
      reference-environment :: <lambda-lexical-environment>,
      home-environment :: <lambda-lexical-environment>,
@@ -153,7 +153,7 @@ define function close-over
     // Do nothing.
   elseif (member?(tmp, reference-environment.closure))
     // Merge in the given closure strength.
-    tmp.closed-over? 
+    tmp.closed-over?
       := merge-closure-entry-strengths(tmp.closed-over?, strength);
   elseif (lookup-alias(reference-environment.lifture, tmp))
     // An alias has been made since we last looked, so there can no longer
@@ -163,27 +163,27 @@ define function close-over
     //            tmp, lambda(reference-environment),
     //            lambda(home-environment));
     // If all calls to the referencing function are known, we may choose
-    // to lambda lift instead of close.    
+    // to lambda lift instead of close.
     if (reference-liftable?(tmp, reference-environment))
       lift-reference(tmp, reference-environment);
       close-over-lambda-users
         (tmp, reference-environment, home-environment, strength);
     else
-      reference-environment.closure 
+      reference-environment.closure
         := add-new!(reference-environment.closure, tmp);
-      tmp.closed-over? 
+      tmp.closed-over?
         := merge-closure-entry-strengths(tmp.closed-over?, strength);
       close-over-lambda-users
         (tmp, reference-environment, home-environment, strength);
       let reference-lambda = reference-environment.lambda;
       // if (lambda-used?(reference-lambda))
-        // If there's now a creation point alias, use that within this 
+        // If there's now a creation point alias, use that within this
         // environment instead.
-        let create-env 
+        let create-env
           = reference-lambda.references.first.environment;
         let alias = lookup-alias(create-env.lifture, tmp);
         if (alias)
-          alias.closed-over? 
+          alias.closed-over?
             := merge-closure-entry-strengths(alias.closed-over?, strength);
           for (user in tmp.users)
             let user-env = user.environment;
@@ -211,7 +211,7 @@ define function lambda-make-closure
     (lambda :: <&lambda>) => (res :: false-or(<make-closure>))
   block (return)
     for (user in users(lambda))
-      if (instance?(user, <make-closure>)) 
+      if (instance?(user, <make-closure>))
         return(user)
       end if;
     end for;
@@ -219,8 +219,8 @@ define function lambda-make-closure
   end block;
 end function;
 
-define function reference-liftable? 
-    (tmp :: <temporary>, ref-env :: <lambda-lexical-environment>) 
+define function reference-liftable?
+    (tmp :: <temporary>, ref-env :: <lambda-lexical-environment>)
  => (well? :: <boolean>)
   ~cell?(tmp)
     & ~instance?(tmp, <entry-state>)
@@ -232,7 +232,7 @@ define function reference-liftable?
         do-over-lambda-using-computations
           (method (c :: <computation>)
              if (~closure-call?(f-ref, c))
-               // Do we also need to check that they can all see the 
+               // Do we also need to check that they can all see the
                // closed over temps?
                // format-out("convert-closure: non-call %=.\n", c);
                return(#f)
@@ -248,16 +248,16 @@ define function lift-reference
  => ()
   // format-out("convert-closure: lifting with lifture: %=\n",
   //            ref-env.lifture);
-  // format-out("convert-closure: %s from %s in:\n", 
+  // format-out("convert-closure: %s from %s in:\n",
   //             closed-ref, closed-ref.environment.lambda);
   // format-out("convert-closure: ref %=\n", ref-env.lambda);
   // We need to add an argument to the function, and modify all
-  // callers. Any callers within the scope of the function 
-  // are modified to refer to the new argument. Otherwise, 
+  // callers. Any callers within the scope of the function
+  // are modified to refer to the new argument. Otherwise,
   // they refer to the original.
   // for (closed-ref in closed-ref*)
   // format-out("convert-closure: fixing %=\n", closed-ref);
-  let new-arg-name 
+  let new-arg-name
     = name(closed-ref) | dylan-variable-name(#"implicit-argument");
   let new-temp = add-function-argument(ref-env, new-arg-name);
   ref-env.lifture
@@ -271,7 +271,7 @@ define function lift-reference
         else
           // format-out("convert-closure: no-alias fixing %=\n", c);
           add-call-argument(c, closed-ref);
-        end;             
+        end;
       end,
       ref-env);
   for (user in closed-ref.users)
@@ -309,12 +309,12 @@ define function lookup-alias (lifture :: <list>, tmp) => (alias)
   end
 end function;
 
-define function add-alias 
+define function add-alias
     (lifture :: <list>, tmp, aliased-tmp) => (lifture :: <list>)
   pair(tmp, pair(aliased-tmp, lifture))
 end function;
 
-define function nested-environment? 
+define function nested-environment?
     (test-env :: <lexical-environment>, target-env :: <lexical-environment>)
  => (well? :: <boolean>)
   block (found)
@@ -325,8 +325,8 @@ define function nested-environment?
   end;
 end function;
 
-define method add-function-argument 
-    (env :: <lambda-lexical-environment>, name) 
+define method add-function-argument
+    (env :: <lambda-lexical-environment>, name)
  => (arg :: <lexical-required-variable>)
   let f = env.lambda;
   let object-type = dylan-value(#"<object>");
@@ -336,7 +336,7 @@ define method add-function-argument
   let new-sig
      = make(<&signature>,
             number-required: sig-n-required + 1,
-            required: concatenate(vector(object-type), 
+            required: concatenate(vector(object-type),
                                   copy-sequence(^signature-required(sig),
                                                 end: sig-n-required)),
             key?: ^signature-key?(sig),
@@ -357,37 +357,37 @@ define method add-function-argument
   ^function-signature(f) := new-sig;
   let sig-spec = signature-spec(f);
   let new-sig-spec
-    = make(<signature-spec>, 
-           argument-required-variable-specs: 
+    = make(<signature-spec>,
+           argument-required-variable-specs:
              concatenate(vector(make(<required-variable-spec>,
                                      variable-name: name)),
                          spec-argument-required-variable-specs(sig-spec)),
-           argument-next-variable-spec:    
-             spec-argument-next-variable-spec(sig-spec),      
-           argument-rest-variable-spec:      
+           argument-next-variable-spec:
+             spec-argument-next-variable-spec(sig-spec),
+           argument-rest-variable-spec:
              spec-argument-rest-variable-spec(sig-spec),
-           argument-key?:      
+           argument-key?:
              spec-argument-key?(sig-spec),
-           argument-key-variable-specs:      
+           argument-key-variable-specs:
              spec-argument-key-variable-specs(sig-spec),
-           value-required-variable-specs:      
+           value-required-variable-specs:
              spec-value-required-variable-specs(sig-spec),
-           value-rest-variable-spec:      
+           value-rest-variable-spec:
              spec-value-rest-variable-spec(sig-spec));
   signature-spec(f) := new-sig-spec;
-  let arg = make(<lexical-required-variable>, 
+  let arg = make(<lexical-required-variable>,
                  name: name,
                  environment: env,
                  specializer: object-type);
   let argv = vector(arg);
   f.parameters
     := concatenate(argv, f.parameters);
-  env.temporaries 
+  env.temporaries
     := concatenate-as(<stretchy-vector>, argv, env.temporaries);
   arg
 end method;
 
-define method add-call-argument 
+define method add-call-argument
     (c :: <simple-call>, arg :: <value-reference>) => ()
   add-user!(arg, c);
   c.arguments := concatenate(vector(arg), c.arguments);

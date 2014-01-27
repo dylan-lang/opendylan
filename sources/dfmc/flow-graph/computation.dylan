@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define abstract dood-class <computation> (<queueable-item-mixin>)
 
-  slot computation-source-location :: false-or(<source-location>) 
+  slot computation-source-location :: false-or(<source-location>)
          = parent-source-location(),
     init-keyword: source-location:;
 
@@ -19,11 +19,11 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
   slot next-computation :: false-or(<computation>) = #f,
     init-keyword: next-computation:;
 
-  slot temporary :: false-or(<temporary>) = #f, 
+  slot temporary :: false-or(<temporary>) = #f,
     init-keyword: temporary:;
 
   // ONLY NEED THIS IF BACK-END NEEDS TO KNOW VARIABLES IN SCOPE
-  // slot lexical-environment :: false-or(<local-lexical-environment>) = #f, 
+  // slot lexical-environment :: false-or(<local-lexical-environment>) = #f,
   //  /* required- */ init-keyword: lexical-environment:;
 
   weak slot environment :: false-or(<lambda-lexical-environment>),
@@ -43,7 +43,7 @@ define sealed domain initialize-packed-slots (<computation>);
 
 // TODO: CORRECTNESS: Why this type-union?
 
-define generic computation-value 
+define generic computation-value
     (computation :: type-union(<computation>, <binding-reference>)) => value;
 
 //// <computation> operations
@@ -53,6 +53,7 @@ define generic next-computation (computation :: <computation>)
 define generic next-computation-setter
     (next, computation :: <computation>)
  => (next);
+
 define generic previous-computation (computation :: <computation>)
  => (previous);
 define generic previous-computation-setter
@@ -61,7 +62,7 @@ define generic previous-computation-setter
 
 //// <computation> initialization
 
-define inline method make-in-environment 
+define inline method make-in-environment
    (env :: <environment>, class :: <class>, #rest initargs, #key, #all-keys)
   let lambda-environment = lambda-environment(env);
   apply(make, class,
@@ -82,7 +83,7 @@ define inline method make-with-temporary
 			  initargs);
   let the-temporary =
     temporary-class &
-      make(temporary-class, 
+      make(temporary-class,
 	   generator:   computation,
 	   environment: lambda-environment);
   computation.temporary := the-temporary;
@@ -106,14 +107,13 @@ define /* inline */ method make
 end method;
 
 define inline function register-used-temporaries (c :: <computation>)
-  do-used-temporaries(method (t) add-user!(t, c) end,
-		      c);
+  do-used-temporaries(method (t) add-user!(t, c) end, c);
 end;
 
 define class <temporary-accessors> (<object>)
-  constant slot temporary-getter :: <function>, 
+  constant slot temporary-getter :: <function>,
     required-init-keyword: getter:;
-  constant slot temporary-zetter :: <function>, 
+  constant slot temporary-zetter :: <function>,
     required-init-keyword: setter:;
 end class;
 
@@ -150,7 +150,7 @@ define method used-temporary-accessors
   #[]
 end method;
 
-define method class-used-temporary-accessors 
+define method class-used-temporary-accessors
     (c :: subclass(<computation>)) => (res :: <simple-object-vector>)
   #[]
 end method;
@@ -173,7 +173,7 @@ define class <binding-reference> (<object>)
 end class;
 
 define class <module-binding-reference> (<binding-reference>)
-  /* constant */ slot referenced-binding :: <module-binding>, 
+  /* constant */ slot referenced-binding :: <module-binding>,
     required-init-keyword:  value:;
 end class;
 
@@ -181,7 +181,7 @@ end class;
 //   local-binding-in-requesting-library(c.%referenced-binding);
 // end method;
 
-define method computation-value 
+define method computation-value
     (reference :: <module-binding-reference>) => (cv)
   reference.referenced-binding.binding-value-slot
 end method;
@@ -197,7 +197,7 @@ define class <interactor-binding-reference>
     (<value-reference>, <binding-reference>)
   constant slot referenced-binding :: <interactor-binding>,
     required-init-keyword: value:;
-end class;                                                                     
+end class;
 
 define class <object-reference> (<value-reference>)
   slot reference-value, required-init-keyword: value:;
@@ -222,11 +222,11 @@ end class;
 /// TODO: COULD SPLIT OUT COMPUTATION-SIGNATURE-VALUE
 
 define graph-class <make-closure> (<computation>)
-  slot computation-closure-method :: <&method>, 
+  slot computation-closure-method :: <&method>,
     required-init-keyword: method:;
   slot computation-init-closure :: false-or(<initialize-closure>) = #f,
     init-keyword: init-closure:;
-  temporary slot computation-signature-value = #f, 
+  temporary slot computation-signature-value = #f,
     init-keyword: signature:;
 end graph-class;
 
@@ -239,18 +239,18 @@ define function method-top-level? (m :: <&method>) => (well? :: <boolean>)
   model-has-definition?(m)
 end function;
 
-define function computation-top-level-closure? 
+define function computation-top-level-closure?
     (c :: <make-closure>) => (res :: <boolean>)
   method-top-level?(computation-closure-method(c))
 end function;
 
-define function computation-init-closure? 
+define function computation-init-closure?
     (c :: <make-closure>) => (res :: <boolean>)
   ~computation-init-closure(c)
 end function;
 
 define method initialize
-    (computation :: <make-closure>, 
+    (computation :: <make-closure>,
      #rest all-keys, #key method: the-method, #all-keys)
   next-method();
   apply(initialize-packed-slots, computation, all-keys);
@@ -258,7 +258,7 @@ define method initialize
 end method;
 
 define graph-class <initialize-closure> (<computation>)
-  slot computation-closure-method :: <&method>, 
+  slot computation-closure-method :: <&method>,
     required-init-keyword: method:;
   temporary slot computation-closure :: false-or(<value-reference>),
     required-init-keyword: closure:;
@@ -267,9 +267,9 @@ end graph-class;
 /// ASSIGNMENT
 
 define abstract graph-class <assignment> (<computation>)
-  temporary slot computation-value :: false-or(<value-reference>), 
+  temporary slot computation-value :: false-or(<value-reference>),
     required-init-keyword: value:;
-  constant slot %assigned-binding :: <binding>, 
+  constant slot %assigned-binding :: <binding>,
     required-init-keyword: binding:;
 end graph-class;
 
@@ -302,7 +302,7 @@ end graph-class <conditional-update!>;
 /// TYPE REFERENCE
 
 define class <type-reference> (<value-reference>)
-  constant slot %typed-binding :: <module-binding>, 
+  constant slot %typed-binding :: <module-binding>,
     required-init-keyword:  binding:;
 end class;
 
@@ -322,9 +322,9 @@ end method;
 // type rather than its value.
 
 define abstract graph-class <any-type-definition> (<computation>)
-  temporary slot computation-value :: false-or(<value-reference>), 
+  temporary slot computation-value :: false-or(<value-reference>),
     required-init-keyword: value:;
-  constant slot %typed-binding :: <binding>, 
+  constant slot %typed-binding :: <binding>,
     required-init-keyword: binding:;
 end graph-class;
 
@@ -403,11 +403,11 @@ end packed-slots;
 
 define constant loop-merge-loop
   = merge-left-previous-computation;
-define constant loop-merge-loop-setter      
+define constant loop-merge-loop-setter
   = merge-left-previous-computation-setter;
 define constant loop-merge-call
   = merge-right-previous-computation;
-define constant loop-merge-call-setter 
+define constant loop-merge-call-setter
   = merge-right-previous-computation-setter;
 
 define constant loop-merge-parameter
@@ -423,9 +423,10 @@ define /* inline */ method make
     (class :: subclass(<loop-merge>), #rest all-keys,
      #key loop, call, parameter, argument)
  => (res :: <loop-merge>)
-  apply(next-method, class, 
-        left-value: parameter, right-value: argument,
-        left-previous-computation:  loop, 
+  apply(next-method, class,
+        left-value: parameter,
+        right-value: argument,
+        left-previous-computation: loop,
         right-previous-computation: call,
         all-keys)
 end method;
@@ -448,7 +449,7 @@ define constant bind-exit-merge-body-temporary
 /// SLOT-VALUE
 
 define abstract graph-class <any-slot-value> (<computation>)
-  slot computation-slot-descriptor :: <&slot-descriptor>, 
+  slot computation-slot-descriptor :: <&slot-descriptor>,
     required-init-keyword: slot-descriptor:;
   temporary slot computation-instance :: <value-reference>,
     required-init-keyword: instance:;
@@ -458,7 +459,7 @@ define constant $log-max-number-slots = 16;
 // define constant $max-number-slots     = 2 ^ $log-max-number-slots;
 
 define packed-slots item-properties (<any-slot-value>, <queueable-item-mixin>)
-  boolean slot computation-guaranteed-initialized? = #f, 
+  boolean slot computation-guaranteed-initialized? = #f,
    init-keyword: guaranteed-initialized?:;
   field   slot computation-slot-offset = 0, field-size: $log-max-number-slots,
    init-keyword: slot-offset:;
@@ -470,8 +471,8 @@ define inline method initialize
   apply(initialize-packed-slots, c, all-keys);
 end method;
 
-define compiler-open generic computation-repeated-byte? 
-  (c :: <any-repeated-slot-value>) => (res :: <boolean>);
+define compiler-open generic computation-repeated-byte?
+    (c :: <any-repeated-slot-value>) => (res :: <boolean>);
 
 define abstract graph-class <any-repeated-slot-value> (<any-slot-value>)
   temporary slot computation-index :: <value-reference>,
@@ -505,7 +506,7 @@ define constant $compatibility-checked-compatible   = 1;
 define constant $compatibility-checked-incompatible = 2;
 
 define abstract graph-class <call> (<computation>)
-  temporary slot arguments :: <simple-object-vector>, 
+  temporary slot arguments :: <simple-object-vector>,
     required-init-keyword: arguments:;
 end graph-class;
 
@@ -528,7 +529,7 @@ define constant $dispatch-untried = 0;
 define constant $dispatch-tried   = 1;
 
 define abstract graph-class <function-call> (<call>)
-  temporary slot function :: false-or(<value-reference>), 
+  temporary slot function :: false-or(<value-reference>),
     required-init-keyword: function:;
 end graph-class;
 
@@ -548,7 +549,7 @@ end graph-class;
 
 define thread variable *inlining-depth* = 0;
 
-define graph-class <simple-call> (<function-call>) 
+define graph-class <simple-call> (<function-call>)
 end graph-class;
 
 define constant $log-max-inlining-depth = 4;
@@ -575,15 +576,15 @@ define graph-class <method-call> (<congruent-call-mixin>, <simple-call>)
 end graph-class;
 
 define /* inline */ method make
-    (call-class == <method-call>, 
+    (call-class == <method-call>,
      #rest all-keys, #key next-methods, arguments, #all-keys)
  => (object)
   if (next-methods)
     next-method()
   else
-    apply(next-method,  call-class, 
-          next-methods: first(arguments), 
-          arguments:    copy-sequence(arguments, start: 1), 
+    apply(next-method,  call-class,
+          next-methods: first(arguments),
+          arguments:    copy-sequence(arguments, start: 1),
           all-keys)
   end if;
 end method;
@@ -599,21 +600,21 @@ end graph-class;
 
 define graph-class <apply> (<function-call>) end graph-class;
 
-define graph-class <method-apply> (<congruent-call-mixin>, <apply>) 
+define graph-class <method-apply> (<congruent-call-mixin>, <apply>)
   temporary slot next-methods :: <value-reference>,
                  required-init-keyword: next-methods:;
 end graph-class;
 
 define /* inline */ method make
-    (call-class == <method-apply>, 
-      #rest all-keys, #key next-methods, arguments, #all-keys)
+    (call-class == <method-apply>,
+     #rest all-keys, #key next-methods, arguments, #all-keys)
  => (object)
   if (next-methods)
     next-method()
   else
-    apply(next-method,  call-class, 
-          next-methods: first(arguments), 
-          arguments:    copy-sequence(arguments, start: 1), 
+    apply(next-method,  call-class,
+          next-methods: first(arguments),
+          arguments:    copy-sequence(arguments, start: 1),
           all-keys)
   end
 end method;
@@ -623,7 +624,7 @@ define graph-class <engine-node-apply> (<congruent-call-mixin>, <apply>)
   temporary slot engine-node :: <&engine-node>,
                  required-init-keyword: engine-node:;
 end graph-class;
-  
+
 
 /// IF
 
@@ -657,10 +658,10 @@ define graph-class <unwind-protect> (<block>)
   slot protected-end :: false-or(<computation>) = #f;
   slot cleanups :: false-or(<computation>) = #f,
     init-keyword: cleanups:;
-  slot cleanups-end :: false-or(<end-cleanup-block>) = #f;  // to support deletion 
+  slot cleanups-end :: false-or(<end-cleanup-block>) = #f;  // to support deletion
 end graph-class;
 
-define method protected-temporary(c :: <unwind-protect>) 
+define method protected-temporary(c :: <unwind-protect>)
     => (t)
 //  let temp = c.protected-end & temporary(previous-computation(c.protected-end));
   let temp = c.protected-end & return-temp(c.protected-end);
@@ -686,7 +687,7 @@ end function;
 define abstract graph-class <end> (<computation>) end graph-class;
 
 define graph-class <return> (<end>)
-  temporary slot computation-value :: false-or(<value-reference>), 
+  temporary slot computation-value :: false-or(<value-reference>),
     required-init-keyword: value:;
 end graph-class;
 
@@ -749,9 +750,9 @@ end function;
 /// LOOP CALL
 
 define graph-class <loop-call> (<computation>)
-  constant slot loop-call-loop :: <loop>, 
+  constant slot loop-call-loop :: <loop>,
    required-init-keyword: loop:;
-  slot loop-call-merges :: <simple-object-vector> = #[], 
+  slot loop-call-merges :: <simple-object-vector> = #[],
    init-keyword: merges:;
 end graph-class;
 
@@ -761,7 +762,7 @@ define graph-class <bind> (<computation>)
   slot bind-return :: <return>;
 end graph-class;
 
-define method previous-computation-setter 
+define method previous-computation-setter
     (new-value :: false-or(<computation>), c :: <bind>) => (new-value)
   if (new-value)
     error("<bind> computations may not have previous-computations");
@@ -772,13 +773,13 @@ end method previous-computation-setter;
 /// MULTIPLE VALUES
 
 define graph-class <values> (<computation>)
-  temporary slot fixed-values :: <simple-object-vector>, 
+  temporary slot fixed-values :: <simple-object-vector>,
     required-init-keyword: values:;
-  temporary slot rest-value :: false-or(<value-reference>)= #f, 
+  temporary slot rest-value :: false-or(<value-reference>)= #f,
     init-keyword: rest-value:;
 end graph-class <values>;
 
-define abstract graph-class <extract-value-computation> (<computation>) 
+define abstract graph-class <extract-value-computation> (<computation>)
   temporary slot computation-value :: <multiple-value-temporary>,
     required-init-keyword: value:;
 end graph-class <extract-value-computation>;
@@ -794,14 +795,14 @@ define packed-slots item-properties (<extract-value-computation>, <queueable-ite
   field slot index = 0, field-size: 8;
 end packed-slots;
 
-define graph-class <extract-single-value> (<extract-value-computation>) 
+define graph-class <extract-single-value> (<extract-value-computation>)
 end graph-class <extract-single-value>;
 
 define leaf packed-slots item-properties (<extract-single-value>, <extract-value-computation>)
   boolean slot extract-value-index-guaranteed? = #f;
 end packed-slots;
 
-define graph-class <extract-rest-value> (<extract-value-computation>) 
+define graph-class <extract-rest-value> (<extract-value-computation>)
 end graph-class <extract-rest-value>;
 
 define graph-class <multiple-value-spill> (<temporary-transfer-computation>)
@@ -810,7 +811,7 @@ end graph-class <multiple-value-spill>;
 define graph-class <multiple-value-unspill> (<temporary-transfer-computation>)
 end graph-class <multiple-value-unspill>;
 
-define abstract graph-class <adjust-multiple-values-computation> 
+define abstract graph-class <adjust-multiple-values-computation>
     (<temporary-transfer-computation>)
 end graph-class <adjust-multiple-values-computation>;
 
@@ -837,13 +838,13 @@ end graph-class <adjust-multiple-values-rest>;
 
 /// TYPES
 
-define abstract graph-class <check-type-computation> 
+define abstract graph-class <check-type-computation>
     (<temporary-transfer-computation>)
 end graph-class;
 
 define abstract graph-class <single-value-check-type-computation>
     (<check-type-computation>)
-  temporary slot type :: false-or(<value-reference>), 
+  temporary slot type :: false-or(<value-reference>),
     required-init-keyword: type:;
 end graph-class;
 
@@ -866,7 +867,7 @@ define graph-class <assignment-check-type> (<check-type>)
 end graph-class;
 
 define abstract graph-class <multiple-value-check-type-computation>
-  (<check-type-computation>)
+    (<check-type-computation>)
   temporary slot types :: <simple-object-vector>, required-init-keyword: types:;
 end graph-class;
 
@@ -876,15 +877,15 @@ end graph-class;
 
 define graph-class <multiple-value-check-type-rest>
     (<multiple-value-check-type-computation>)
-  temporary slot rest-type :: false-or(<value-reference>), 
+  temporary slot rest-type :: false-or(<value-reference>),
     required-init-keyword: rest-type:;
 end graph-class;
 
-define abstract graph-class <result-check-type-computation> 
+define abstract graph-class <result-check-type-computation>
     (<check-type-computation>)
 end graph-class;
 
-define abstract graph-class <single-value-result-check-type> 
+define abstract graph-class <single-value-result-check-type>
     (<single-value-check-type-computation>, <result-check-type-computation>)
 end graph-class;
 
@@ -908,25 +909,25 @@ end graph-class;
 /// INDIRECT ASSIGNMENT
 
 define graph-class <make-cell> (<computation>)
-  temporary slot computation-value :: false-or(<value-reference>), 
+  temporary slot computation-value :: false-or(<value-reference>),
     required-init-keyword: value:;
 end graph-class <make-cell>;
 
 define graph-class <get-cell-value> (<computation>)
-  temporary slot computation-cell :: <cell>, 
+  temporary slot computation-cell :: <cell>,
     required-init-keyword: cell:;
 end graph-class <get-cell-value>;
 
 define graph-class <set-cell-value!> (<computation>)
-  temporary slot computation-cell :: <cell>, 
+  temporary slot computation-cell :: <cell>,
     required-init-keyword: cell:;
-  temporary slot computation-value :: false-or(<value-reference>), 
+  temporary slot computation-value :: false-or(<value-reference>),
     required-init-keyword: value:;
 end graph-class <set-cell-value!>;
 
 /// SOURCE LOCATION PROTOCOL
 
-define generic dfm-source-location 
+define generic dfm-source-location
     (c :: <computation>) => (location-or-false);
 
 define method dfm-source-location (c :: <computation>) => (location)
@@ -934,10 +935,10 @@ define method dfm-source-location (c :: <computation>) => (location)
 end method;
 
 define compiler-open generic dfm-context-id
-    (c :: type-union(<computation>, <environment>)) 
+    (c :: type-union(<computation>, <environment>))
  => (context-id-or-false);
 
-define inline function do-with-parent-computation 
+define inline function do-with-parent-computation
     (f :: <function>, c :: false-or(<computation>))
   with-parent-source-location (c & computation-source-location(c))
     f();

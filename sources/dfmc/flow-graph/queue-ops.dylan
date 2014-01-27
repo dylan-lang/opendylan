@@ -13,10 +13,10 @@ define method init-optimization-queue (code :: <&lambda>) => ()
   code.optimization-queue := queue;
   if (code.body)
     walk-lambda-computations
-      (method (item :: <queueable-item-mixin>) 
-         item.item-status := $queueable-item-absent; 
-         add-to-queue!(queue, item); 
-       end, 
+      (method (item :: <queueable-item-mixin>)
+         item.item-status := $queueable-item-absent;
+         add-to-queue!(queue, item);
+       end,
        code.body);
   end if;
   reverse-queue!(queue);
@@ -26,32 +26,6 @@ end method;
 // typically used to enable reconsideration of  computations which are
 // *potentially* subject to optimization as a result optimization of
 // another computation.
-
-/* TODO: OBSOLETE?
-define generic re-optimize-using-queue
-  (c :: <computation> , queue :: <optimization-queue>) => ();
-
-// by default we just add the computation back to the queue.
-define method re-optimize-using-queue
-    (c :: <computation> , q :: <optimization-queue>) => ()
-  add-to-queue!(q , c);
-  values();
-end method;
-
-define method re-optimize-users-using-queue
-    (t :: <temporary>, q :: <optimization-queue>)
-  for (c in t.users)
-    re-optimize-using-queue(c, q);
-  end;
-end method;
-
-define method re-optimize-generators-using-queue
-    (s :: <vector>, q :: <optimization-queue>)
-  for (t in s)
-    re-optimize-using-queue(t.generator, q);
-  end;
-end method;
-*/
 
 define generic re-optimize (c :: false-or(<computation>)) => ();
 
@@ -140,7 +114,7 @@ end method;
 
 /// LOCAL USERS
 
-define function in-environment? 
+define function in-environment?
     (env :: <lexical-environment>, c :: <computation>) => (b :: <boolean>)
   iterate loop (e = c.environment)
     if (e == env)
@@ -171,7 +145,7 @@ define method re-optimize-local-users
   re-optimize-if-local(env, o);
 end method;
 
-define method re-optimize-local-users 
+define method re-optimize-local-users
     (env :: <lexical-environment>, o :: <referenced-object>)
   for (c in o.users)
     re-optimize-local-users(env, c);

@@ -8,13 +8,13 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// Queueable items have a next link that points to the rest of the queue.
 /// They can only belong to one queue. The status field says whether an item
 /// should be ignored when processing the queue (#"dead"), whether its
-/// in a queue (#"absent" or #f). Items will only be added to a queue if 
+/// in a queue (#"absent" or #f). Items will only be added to a queue if
 /// they are #"absent".
 ///
 /// Maybe we should just add the slots to  <computation> directly?
 ///
-/// A thought: if we use the queue itself to indicate that the item was in a 
-/// queue rather than #f then we wouldn't have to pass the queue around as an 
+/// A thought: if we use the queue itself to indicate that the item was in a
+/// queue rather than #f then we wouldn't have to pass the queue around as an
 /// argument everywhere.
 
 define abstract class <queueable-item-mixin> (<object>)
@@ -34,8 +34,8 @@ define method mark-as-dead (x :: <queueable-item-mixin>) => ()
 end method mark-as-dead;
 
 /// <QUEUE-MIXIN>
-/// Basically holds the queue. Queue operations such as adding and popping 
-/// etc are defined on this class and <queueable-item-mixin>. The operations 
+/// Basically holds the queue. Queue operations such as adding and popping
+/// etc are defined on this class and <queueable-item-mixin>. The operations
 /// maintain as far as possible the integrity of the queue.
 
 define constant <queue> = <stretchy-object-vector>;
@@ -43,7 +43,7 @@ define constant <queue> = <stretchy-object-vector>;
 /// Protocol for <queue>s and <queueable-item-mixin>s
 
 // adds an (#"absent") item to a queue.
-define generic add-to-queue! 
+define generic add-to-queue!
   (queue :: <queue>, item :: <queueable-item-mixin>) => ();
 
 // returns the first non-dead item from a queue. Will pop dead items if found.
@@ -51,7 +51,7 @@ define generic queue-head
   (queue :: <queue>) => ( item :: false-or(<queueable-item-mixin>));
 
 // pop items from the queue until it pops a non dead item, which it returns
-define generic queue-pop 
+define generic queue-pop
   (queue :: <queue>) => ( item :: false-or(<queueable-item-mixin>));
 
 define generic reverse-queue! (queue :: <queue>) => ();
@@ -59,10 +59,12 @@ define generic reverse-queue! (queue :: <queue>) => ();
 /// Default implementation of protocol for <queue>s and <queueable-item-mixin>s
 
 define method print-queue-out (queue)
-  do-queue(method (i) format-out("  ELT %= STATUS %=\n", i, i.item-status) end, queue);
+  do-queue(method (i)
+             format-out("  ELT %= STATUS %=\n", i, i.item-status)
+           end, queue);
 end method;
 
-define method queue-pop! (queue :: <queue>) 
+define method queue-pop! (queue :: <queue>)
  => (item :: false-or(<queueable-item-mixin>))
   let new-size = size(queue) - 1;
   unless (new-size = -1)
@@ -73,12 +75,12 @@ define method queue-pop! (queue :: <queue>)
   end unless
 end method;
 
-define inline method queue-push! 
+define inline method queue-push!
     (queue :: <queue>, item :: <queueable-item-mixin>) => ()
   add!(queue, item)
 end method;
 
-define method add-to-queue! 
+define method add-to-queue!
     (queue :: <queue>, item :: <queueable-item-mixin>) => ()
   if (item.item-status == $queueable-item-absent)
     item.item-status := $queueable-item-present;
@@ -86,7 +88,7 @@ define method add-to-queue!
   end if;
 end method add-to-queue!;
 
-define method pop-dead! (queue :: <queue>) 
+define method pop-dead! (queue :: <queue>)
        => (item :: false-or(<queueable-item-mixin>))
   iterate loop (i :: <integer> = size(queue) - 1)
     unless (i < 0)
@@ -101,12 +103,12 @@ define method pop-dead! (queue :: <queue>)
   end iterate;
 end method;
 
-define inline method queue-head (queue :: <queue>) 
+define inline method queue-head (queue :: <queue>)
  => (item :: false-or(<queueable-item-mixin>))
   pop-dead!(queue);
 end method;
 
-define method queue-pop (queue :: <queue>) 
+define method queue-pop (queue :: <queue>)
        => (item :: false-or(<queueable-item-mixin>))
   let item = pop-dead!(queue);
   if (item)

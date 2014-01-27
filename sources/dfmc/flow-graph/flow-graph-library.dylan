@@ -24,12 +24,12 @@ define module dfmc-flow-graph
   use dfmc-imports;
   use dfmc-namespace;
   use dfmc-modeling,
-    export: 
-      {frame-size,
-       name, name-setter, 
-       body, body-setter,
-       environment, environment-setter,
-       function, function-setter};
+    export:
+      { frame-size,
+        name, name-setter,
+        body, body-setter,
+        environment, environment-setter,
+        function, function-setter };
   use dfmc-reader;
 
   export
@@ -40,7 +40,7 @@ define module dfmc-flow-graph
     $strong-closure-entry,
     do-over-lambda-users,
     analyze-environments;
-  
+
   export // computations
     <computation>,
     previous-computation, previous-computation-setter,
@@ -61,7 +61,7 @@ define module dfmc-flow-graph
     walk-all-lambda-computations,
     walk-computation-references,
     walk-lambda-references, walk-all-lambda-references,
-    
+
     <nop-computation>,
     <nop>,
     <value-reference>,
@@ -78,8 +78,8 @@ define module dfmc-flow-graph
     <make-closure>,
       lambda-make-closure,
       computation-closure-method, computation-closure-method-setter,
-      computation-init-closure, computation-init-closure-setter, 
-      computation-init-closure?, 
+      computation-init-closure, computation-init-closure-setter,
+      computation-init-closure?,
       method-top-level?,
       computation-top-level-closure?,
       computation-signature-value, computation-signature-value-setter,
@@ -221,11 +221,11 @@ define module dfmc-flow-graph
     <adjust-multiple-values>,
     <adjust-multiple-values-rest>,
     number-of-required-values,
-    
+
     \for-lambda,
     \for-used-lambda, do-used-lambdas, lambda-used?, lambda-users,
-    \for-all-lambdas, do-all-lambdas, 
-    \for-all-used-lambdas, 
+    \for-all-lambdas, do-all-lambdas,
+    \for-all-used-lambdas,
     \for-computations,
     do-used-value-references,
 
@@ -290,7 +290,7 @@ define module dfmc-flow-graph
     temporaries, temporaries-setter,
     \for-temporary,
     add-temporary!, remove-temporary!,
-    clear-temporaries!,	 
+    clear-temporaries!,
     ensure-lambda-body,
     add-inner!,
     extract-lambda,
@@ -305,7 +305,7 @@ define module dfmc-flow-graph
     lambda-environment,
     lookup,
     inner-environment?;
-    
+
   export // temporaries
     <temporary>,
     <named-temporary-mixin>,
@@ -340,9 +340,9 @@ define module dfmc-flow-graph
   export // utilities
     lambda-has-free-lexical-references?,
     final-computation,
-    join!, 
-    join-1x1!, join-1x1-t!, 
-    join-2x1!, join-2x1-t!, 
+    join!,
+    join-1x1!, join-1x1-t!,
+    join-2x1!, join-2x1-t!,
     join-2x2!, join-2x2-t!,
     redirect-previous-computations!,
     redirect-next-computations!,
@@ -376,7 +376,7 @@ define module dfmc-flow-graph
 
     add-to-queue!,
     queue-head,
-    queue-pop, 
+    queue-pop,
     reverse-queue!,
     add-to-queue!,
     print-queue-out,
