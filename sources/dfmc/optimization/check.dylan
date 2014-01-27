@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define program-warning <calling-inline-only-function-out-of-line>
   slot condition-inline-only-function,
     required-init-keyword: inline-only-function:;
-  format-string 
+  format-string
     "Failed to inline call to the inline-only function %s - making a "
     "local copy to call out of line";
   format-arguments inline-only-function;
@@ -24,7 +24,7 @@ define method check-optimized-computations (o :: <&lambda>)
   walk-lambda-references(checker, o);
 end method;
 
-define method check-optimized-reference 
+define method check-optimized-reference
     (c :: <computation>, ref, object, check-forward-refs? :: <boolean>) => ()
   //do nothing
 end method;
@@ -32,29 +32,30 @@ end method;
 define serious-program-warning <forward-binding-reference>
   slot condition-binding-name,
     required-init-keyword: binding-name:;
-  slot condition-current-form, 
+  slot condition-current-form,
     required-init-keyword: current-form:;
   format-string    "Illegal forward reference to the binding %= from within %=.";
   format-arguments binding-name, current-form;
 end serious-program-warning;
 
-define method check-optimized-reference 
+define method check-optimized-reference
     (c :: <computation>, ref :: <binding-reference>, b :: <binding>,
      check-forward-refs? :: <boolean>) => ()
   if (check-forward-refs?)
     if(defined-after?(*current-dependent*, binding-definition(b)))
       let model = binding-model-or-hollow-object(b);
       if (~model)
-        note(<forward-binding-reference>, 
-          source-location: *current-dependent* & form-source-location(*current-dependent*),
-          binding-name: binding-variable-name(b),
-          current-form: *current-dependent*);
+        note(<forward-binding-reference>,
+             source-location: *current-dependent*
+                                & form-source-location(*current-dependent*),
+             binding-name: binding-variable-name(b),
+             current-form: *current-dependent*);
       end if;
     end if;
   end if;
 end method;
 
-define method check-optimized-reference 
+define method check-optimized-reference
     (c :: <computation>, ref :: <object-reference>, f :: <&function>,
      check-forward-refs? :: <boolean>) => ()
   if (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
@@ -63,14 +64,14 @@ define method check-optimized-reference
   end;
 end method;
 
-define method check-optimized-reference 
+define method check-optimized-reference
     (c :: <function-call>, ref :: <object-reference>, f :: <&generic-function>,
      check-forward-refs? :: <boolean>) => ()
   next-method();
   incf-dynamic-dispatch-count();
 end method;
 
-define method check-optimized-reference 
+define method check-optimized-reference
     (c :: <engine-node-call>, ref :: <object-reference>, e :: <&cache-header-engine-node>,
      check-forward-refs? :: <boolean>) => ()
   // format-out(">>> check-optimized-reference CHEN (%=) %= %= %=\n", object-class(c), c, ref, e);
@@ -99,12 +100,12 @@ define method check-optimized-computations (c :: <values>)
   if (every?(rcurry(instance?, <extract-single-value>), effective-users))
     format-out("All users of %= are inline\n", c);
     break("Stop");
-    let effective-generators 
+    let effective-generators
       = generators-through-merges(effective-users.first);
   end;
 end method;
 
-define method users-through-merges 
+define method users-through-merges
     (c :: <computation>) => (users :: <list>)
   collecting ()
     iterate walk (c* = c.temporary.users)
@@ -119,7 +120,7 @@ define method users-through-merges
   end;
 end method;
 
-define method generators-through-merges 
+define method generators-through-merges
     (c :: <extract-single-value>) => (users :: <list>)
   collecting ()
     iterate walk (c = c.computation-value.generator)
@@ -138,12 +139,12 @@ end method;
 // that is itself declared inline and so is a copy that has ended up
 // inlined elsewhere. In that case, we have to copy again.
 
-define method inlined-inline-only-function? 
+define method inlined-inline-only-function?
     (m :: <&method>) => (well? :: <boolean>)
   ~model-has-definition?(m) & lambda-top-level?(m)
 end method;
 
-define method inlined-inline-only-function? 
+define method inlined-inline-only-function?
     (gf :: <&generic-function>) => (well? :: <boolean>)
   if (~model-has-definition?(gf))
     // signal("*** Inlined inline-only generic %= encountered.", gf);
@@ -163,21 +164,21 @@ define method check-optimized-computations (c :: <function-call>)
       // format-out("Doing: %=\n", f);
       if (instance?(f, <&generic-function>))
         // format-out("Going for the copy...\n");
-        let copy 
+        let copy
           = find-inline-copy
               (form-compilation-record(*current-dependent*), f);
         // format-out("Made the copy.\n");
         simplify-call-to-call-to-object!(c, copy);
       elseif (instance?(f, <&method>))
         // format-out("Going for the method copy...\n");
-        let copy 
+        let copy
           = find-inline-copy
               (form-compilation-record(*current-dependent*), f);
         // format-out("Made the copy.\n");
         simplify-call-to-call-to-object!(c, copy);
       else
-	// break("Function in function-call is %=", f);
-	#f
+        // break("Function in function-call is %=", f);
+        #f
       end;
     end;
   end;
@@ -327,8 +328,8 @@ define method deep-copy
 end method;
 
 define method force-copy-method-into
-    (table :: false-or(<table>), 
-       copier :: <inline-only-copier>, m :: <&method>) 
+    (table :: false-or(<table>),
+     copier :: <inline-only-copier>, m :: <&method>)
  => (m :: <&method>)
   let copy = maybe-do-deep-copy(copier, m);
   when (table)
@@ -339,12 +340,12 @@ define method force-copy-method-into
 end method;
 
 define method force-copy-method-into
-    (table :: false-or(<table>), 
-       copier :: <inline-only-copier>, m :: <&lambda>) 
+    (table :: false-or(<table>),
+     copier :: <inline-only-copier>, m :: <&lambda>)
  => (m :: <&method>)
   let copy = next-method();
   ensure-lambda-body(m);
-  // Also need to force copy this top level method's iep and mep and 
+  // Also need to force copy this top level method's iep and mep and
   // correct their back-pointers.
   copy.^iep          := maybe-do-deep-copy(copier, m.^iep);
   copy.^iep.function := copy;
@@ -356,9 +357,9 @@ define method force-copy-method-into
   end if;
   ensure-method-dfm(copy);
   walk-lambda-computations
-    (method (c) item-status(c) := $queueable-item-absent; end, copy.body); 
+    (method (c) item-status(c) := $queueable-item-absent; end, copy.body);
   if (model-library(m) ~== model-library(copy))
-    // force reoptimization if in another library 
+    // force reoptimization if in another library
     // otherwise avoid nasty reoptimization race conditions
     lambda-optimized?(copy) := #f;
   end if;
@@ -375,16 +376,16 @@ define method force-copy-method-into
   end;
   copy
 end method;
- 
+
 define method force-copy-domain-into
-    (table :: false-or(<table>), 
-       copier :: <inline-only-copier>, x :: <&domain>) 
+    (table :: false-or(<table>),
+     copier :: <inline-only-copier>, x :: <&domain>)
  => (x :: <&domain>)
   let copy = maybe-do-deep-copy(copier, x);
   copy.model-definition := #f;
   copy
 end method;
- 
+
 define method make-inline-copy-in
     (table :: <table>, gf :: <&generic-function>)
  => (new-gf :: <&generic-function>)
@@ -398,16 +399,16 @@ define method make-inline-copy-in
   element(table, gf-copy) := gf-copy;
   gf-copy.model-definition := #f;
   // Force a copy of each method.
-  %generic-function-methods(gf-copy) 
-    := map(curry(force-copy-method-into, #f, copier), 
-	   ^generic-function-methods-known(gf));
-  %generic-function-methods-initialized?(gf-copy) 
+  %generic-function-methods(gf-copy)
+    := map(curry(force-copy-method-into, #f, copier),
+           ^generic-function-methods-known(gf));
+  %generic-function-methods-initialized?(gf-copy)
     := #t;
   // Force a copy of each domain.
-  %generic-function-domains(gf-copy) 
-    := map(curry(force-copy-domain-into, #f, copier), 
-	   ^generic-function-domains-known(gf));
-  %generic-function-domains-initialized?(gf-copy) 
+  %generic-function-domains(gf-copy)
+    := map(curry(force-copy-domain-into, #f, copier),
+           ^generic-function-domains-known(gf));
+  %generic-function-domains-initialized?(gf-copy)
     := #t;
   gf-copy
 end method;
@@ -419,7 +420,7 @@ define method make-inline-copy-in
   force-copy-method-into(table, copier, m)
 end method;
 
-define function find-inline-copy 
+define function find-inline-copy
     (record :: <compilation-record>, f :: <&function>)
  => (local-copy :: <&function>)
   let table = compilation-record-inline-only-table(record);
