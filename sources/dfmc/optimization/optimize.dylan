@@ -163,14 +163,12 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
               eliminate-assignments(f);
             end;
           end for-all-lambdas;
-          if (*flow-types-through-conditionals?*)
-            for-all-lambdas (f in code)
-              opt-format-out("PASS ONE(A) %=\n", f);
-              if (f == code | lambda-used?(f))
-                maybe-rename-temporaries-in-conditionals(f);
-              end;
-            end for-all-lambdas;
-          end;
+          for-all-lambdas (f in code)
+            opt-format-out("PASS ONE(A) %=\n", f);
+            if (f == code | lambda-used?(f))
+              maybe-rename-temporaries-in-conditionals(f);
+            end;
+          end for-all-lambdas;
           for-all-lambdas (f in code)
             if (f == code | lambda-used?(f))
               opt-format-out("PASS TWO %=\n", f);
