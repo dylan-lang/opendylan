@@ -15,8 +15,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //   mandatory?: #t,
 //   before: analyze-calls;
 
-define variable *flow-types-through-conditionals?* = #t;
-
 define method eliminate-assignments (f :: <&lambda>)
   for (t in f.environment.temporaries)
     if (~empty?(t.assignments) & ~cell?(t))
