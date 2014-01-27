@@ -83,17 +83,6 @@ define method check-optimized-reference
 end method;
 
 /*
-define method check-optimized-computations (o :: <&lambda>)
-  for-computations (c in o)
-    check-optimized-computations(c)
-  end;
-end method;
-
-define method check-optimized-computations (c :: <computation>)
-end method;
-*/
-
-/*
 define method check-optimized-computations (c :: <values>)
   format-out("Checking values: %=\n", c);
   let effective-users = users-through-merges(c);
@@ -155,11 +144,6 @@ end method;
 define method check-optimized-computations (c :: <function-call>)
   let f = function-value(c);
   if (f)
-    /*
-    if (inlined-inline-only-function?(f))
-      format-out(">>> Inlined inline only: %=\n", f);
-    end;
-    */
     if (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
       // format-out("Doing: %=\n", f);
       if (instance?(f, <&generic-function>))
@@ -184,87 +168,6 @@ define method check-optimized-computations (c :: <function-call>)
   end;
 end method;
 
-//// Generic function copying.
-
-/*
-define class <inline-only-copier> (<copier>) end class;
-
-define dont-copy-object <source-location>    using <inline-only-copier>;
-define dont-copy-object <fragment>           using <inline-only-copier>;
-define dont-copy-object <signature-spec>     using <inline-only-copier>;
-define dont-copy-object <&class>             using <inline-only-copier>;
-define dont-copy-object <environment>        using <inline-only-copier>;
-define dont-copy-object <computation>        using <inline-only-copier>;
-define dont-copy-object <object-reference>   using <inline-only-copier>;
-define dont-copy-object <binding>            using <inline-only-copier>;
-// define dont-copy-object <&iep>               using <inline-only-copier>;
-define dont-copy-object <&gf-iep>            using <inline-only-copier>;
-define dont-copy-object <&mep>               using <inline-only-copier>;
-define dont-copy-object <&engine-node>       using <inline-only-copier>;
-define dont-copy-object <optimization-queue> using <inline-only-copier>;
-define dont-copy-object <mapped-unbound>     using <inline-only-copier>;
-
-define dont-copy-slots  <model-properties> using <inline-only-copier> =
-  { private-model-creator => (*current-dependent* |
-     error("Attempt to copy a model outside of proper compilation-context")),
-    private-model-definition => #f };
-
-define dont-copy-slots  <&generic-function> using <inline-only-copier> =
-  { %generic-function-methods => #() };
-
-define dont-copy-slots  <emitted-object> using <inline-only-copier> =
-  { emitted-name      => #f,
-    emitted-type-name => #f };
-
-define dont-copy-slots  <&domain> using <inline-only-copier> =
-  { domain-next => #f } ;
-
-define method deep-copy
-    (copier :: <inline-only-copier>, object :: <&iep>)
- => (copy :: <&iep>)
-  // break("Copying iep");
-  let copy = next-method();
-  // break("Copied iep");
-  copy
-end method;
-
-define method deep-copy
-    (copier :: <inline-only-copier>, object :: <&mep>)
- => (copy :: <&mep>)
-  next-method();
-end method;
-
-define method deep-copy
-    (copier :: <inline-only-copier>, object :: <&generic-function>)
- => (copy :: <&generic-function>)
-  let copy = next-method();
-  %generic-function-methods(copy) 
-    := maybe-do-deep-copy(copier, ^generic-function-methods-known(object));
-  %generic-function-methods-initialized?(copy) 
-    := #t;
-  %generic-function-domains(copy)
-    := maybe-do-deep-copy(copier, ^generic-function-domains(object));
-  %generic-function-domains-initialized?(copy)
-    := #t;
-  copy
-end method;
-
-
-
-define method deep-copy
-    (copier :: <inline-only-copier>, object :: <&method>)
- => (copy :: <&method>)
-  let copy = next-method();
-  /*
-  if (copy ~== object)
-    break("Copied %=", object);
-    run-optimizations(copy);
-  end;
-  */
-  copy
-end method;
-*/
-
 // We want to copy a complete method so we use the standard dfm copier
 // except we force the top level method to be copied, even though it
 // has a definition.
@@ -277,7 +180,7 @@ define dont-copy-object <&absent-engine-node>   using <inline-only-copier>;
 define dont-copy-object <unknown>        using <inline-only-copier>;
 define dont-copy-object <&engine-node-ep> using <inline-only-copier>;
 
-define method deep-copy 
+define method deep-copy
     (copier :: <inline-only-copier>, object :: <&engine-node>) => (value)
   if (instance?(object, <&cache-header-engine-node>))
     let copy = next-method();
@@ -290,23 +193,6 @@ define method deep-copy
     object;
   end;
 end method;
-
-/* BOLLOX: Pay no attention to this...
-
-// If we do copy something with a definition, remove it so that it
-// looks local. This will only apply to the forced generic function
-// and method object copies.
-
-define dont-copy-slots <model-properties> using <inline-only-copier> =
-  { model-definition => #f };
-
-define method walker-shallow-getters 
-    (walker_ :: <inline-only-copier> , x_ :: subclass (<model-properties>))
- => (res :: <sequence>)
-  next-method();
-end method;
-
-*/
 
 define dont-copy-slots  <&generic-function> using <inline-only-copier> =
   { %generic-function-methods => #() };
@@ -424,14 +310,6 @@ define function find-inline-copy
     (record :: <compilation-record>, f :: <&function>)
  => (local-copy :: <&function>)
   let table = compilation-record-inline-only-table(record);
-  let existing = element(table, f, default: #f);
-  if (existing)
-    // format-out(">>> Using local copy: %=\n", existing);
-    existing
-  else
-    // format-out("  >>> Making local copy in %=: %=\n", record, f);
-    let copy = make-inline-copy-in(table, f);
-    // format-out("  <<< Made local copy: %=\n", f);
-    copy
-  end
+  element(table, f, default: #f)
+    | make-inline-copy-in(table, f)
 end function;

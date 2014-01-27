@@ -26,8 +26,6 @@ define method delete-useless-environments (f :: <&lambda>)
       // the iep and xep will make reference to it.
       if (lambda-used?(inner-lambda))
         collect-into(used, inner-env);
-      else
-        // format-out("Eliminating environment of: %=\n", inner-env.lambda);
       end;
     end;
     env.inners := collected(used);
@@ -92,7 +90,6 @@ define method useless? (c :: <computation>) => (well? :: <boolean>)
   // with a computation that's created with no uses and whose value
   // is ignored, we never get this effect.
   let t = c.temporary;
-  // format-out("c = %=; t.users = %=\n", c, if (t) t.users else #[] end);
   ~(t & t.used?) & c.side-effect-free?
 end method useless?;
 

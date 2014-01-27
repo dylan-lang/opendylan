@@ -165,7 +165,6 @@ define method do-primitive-coercion-inverses
     (env :: <environment>, call, arg, arg-gen :: <primitive-call>, p2, kind)
   if (primitive(arg-gen) == p2)
     replace-computation-with-temporary!(call, arguments(arg-gen)[0]);
-    // format-out("users of %=: %=.\n", arg-gen, users(temporary(arg-gen)));
     #t
   else
     do-primitive-move-coercion(env, call, arg, arg-gen)
@@ -173,10 +172,8 @@ define method do-primitive-coercion-inverses
 end method;
 
 define method in-loop? (inside-c :: <computation>, outside-c :: <computation>)
-  // format-out("  IN-LOOP?\n");
   iterate loop
       (prev :: false-or(<computation>) = previous-computation(inside-c))
-    // format-out("    FOUND %=\n", prev);
     case
       instance?(prev, <loop>) => #t;
       prev == outside-c       => #f;
@@ -188,12 +185,10 @@ end method;
 
 define method do-primitive-move-coercion
     (env :: <environment>, c :: <primitive-call>, arg, arg-gen)
-  // format-out("MAYBE MOVING %= GEN %= NEXT-COMP %= ARG %= NUSERS %=\n", c, arg-gen, next-computation(arg-gen), arg, size(users(arg)));
   if (arg-gen &
       next-computation(arg-gen) ~== c &
       size(users(arg)) = 1 &
       in-loop?(c, arg-gen))
-    // format-out("MOVING %=\n", c);
     redirect-previous-computations!(c, c.next-computation);
     redirect-next-computations!(c, c.previous-computation);
     insert-computation-after!(arg-gen, c);
@@ -244,7 +239,6 @@ define method do-primitive-coercion-inverses
     let orig-rhs-ref = merge-right-value(merge-node);
 
     // clone coercion primitive call
-
     let (new-lhs-call, new-lhs-ref)
       = make-with-temporary
         (env, <primitive-call>,
@@ -258,7 +252,6 @@ define method do-primitive-coercion-inverses
 
     // create an inverse coercion, for other users (besides this call)
     // of the merge value
-
     let (inverse-coercion-call, inverse-coercion-ref)
       = make-with-temporary
         (env, <primitive-call>,
@@ -288,13 +281,11 @@ define method do-primitive-coercion-inverses
 
     // Current call (the coercion) is now obsolete.  Replace all users
     // of this call with the temporary gen'ed by the merge node.
-
     replace-computation-with-temporary!(call, arg);
 
     // NOW MERGING RAW VALUES
 
     re-optimize-type-estimate(merge-node);
-
     #t
   end if;
 end method;
@@ -321,7 +312,6 @@ end method;
 define method do-primitive-coercion-inverses
     (env :: <environment>, call, arg, arg-gen, p2, kind)
   do-primitive-move-coercion(env, call, arg, arg-gen);
-  // #f
 end method;
 
 define primitive-coercion-inverses
@@ -409,7 +399,8 @@ define function simple-make-c-pointer-internal-call?
       let rest-arg  = arguments[2];
       let rest-args = maybe-vector-element-references(rest-arg);
       // ONLY ADDRESS ARGUMENT
-      if (rest-args & size(rest-args) == 2 & constant-value(rest-args[0]) == #"address")
+      if (rest-args & size(rest-args) == 2
+            & constant-value(rest-args[0]) == #"address")
         #t
       else
         #f
@@ -465,7 +456,6 @@ end method;
 
 define method do-optimize-primitive-repeated-slot-offset
     (env :: <environment>, call, call-args)
-  // format-out("OPTIMIZING REPEATED SLOT OFFSET %=\n", arguments);
   let arg = call-args[0];
   let arg-type = type-estimate(arg);
   let class = ^type-estimate-class-of(arg-type);
@@ -608,7 +598,6 @@ define method do-optimize-machine-word-fold-tag/untag-ops
       = apply(machine-word-primitives-call-to-and-arguments?,
               env, call, test, primitive-names);
     if (reference)
-      // format-out("TAG/UNTAG %=\n", reference);
       replace-computation-with-temporary!(call, reference);
       #t
     end if
@@ -632,8 +621,6 @@ define method do-optimize-primitive-machine-word-logxor
          method (xor :: <integer>, ior :: <integer>, shift :: <integer>)
            let max = ash(1, shift);
            let result = ior < max & xor < max & ior = xor;
-           // format-out("matching XOR %= IOR %= SHIFT %= -> %=\n",
-           //            xor, ior, shift, result);
            result
          end method,
          #f,
@@ -643,8 +630,6 @@ define method do-optimize-primitive-machine-word-logxor
         (env, call, call-args,
          method (xor :: <integer>, ior :: <integer>, andy :: <integer>)
            let result = ior = xor & logand(andy, xor) = 0;
-           // format-out("matching XOR %= IOR %= AND %= -> %=\n",
-           //            xor, ior, andy, result);
            result
          end method,
          #f,
@@ -668,8 +653,6 @@ define method machine-word-primitive-call-to-and-matching-argument?
     let (constant?, raw-value-1) = fast-constant-value?(arg-1);
     if (constant?)
       let value-1 :: <integer> = as(<integer>, ^raw-object-value(raw-value-1));
-      // format-out("MATCHING %= TEST-ARG %= VALUE %=\n",
-      //            test, test-arg, value-1);
       if (test(value-1, test-arg))
         gen
       end if
@@ -711,7 +694,6 @@ define method do-optimize-machine-word-obsoleted-by-right-shift
     = apply(machine-word-primitives-call-to-and-matching-arguments?,
             env, call-args, primitive-names-and-tests);
   if (generator)
-    // format-out("RIGHT SHIFTED\n");
     replace-call-argument!(call, arguments(generator)[0], 0);
     re-optimize(generator);
     #t
@@ -726,7 +708,6 @@ define method do-optimize-machine-word-obsoleted-by-logand
     = apply(machine-word-primitives-call-to-and-matching-arguments?,
             env, call-args, primitive-names-and-tests);
   if (generator)
-    // format-out("LOGAND'D\n");
     replace-call-argument!(call, arguments(generator)[0], 0);
     re-optimize(generator);
     #t
@@ -745,10 +726,7 @@ end function;
 
 define function obsolete-right-shifted-logand?
     (x :: <integer>, test-arg :: <integer>) => (res :: <boolean>)
-  let result = logand(lognot(x), (ash(1, test-arg) - 1)) = 0;
-  // format-out("OBSO AND %= %= %= %= -> %=\n",
-  //            x, test-arg, lognot(x), (ash(1, test-arg) - 1), result);
-  result
+  logand(lognot(x), (ash(1, test-arg) - 1)) = 0
 end function;
 
 define method do-optimize-primitive-machine-word-logand
@@ -777,10 +755,7 @@ define method do-optimize-primitive-machine-word-logior
     | do-optimize-machine-word-fold-tag/untag-ops
         (env, call, call-args,
          method (ior-1 :: <integer>, xor :: <integer>, ior-2 :: <integer>)
-           let result = ior-1 = xor & xor = ior-2;
-           // format-out("matching IOR-1 %= XOR %= IOR-2 %= -> %=\n",
-           //            ior-1, xor, ior-2, result);
-           result
+           ior-1 = xor & xor = ior-2
          end,
          #f,
          #"primitive-machine-word-logxor",
@@ -847,17 +822,13 @@ define method do-optimize-machine-word-shifts
   let arg-0 = call-args[0];
   let arg-1 = call-args[1];
   let gen   = generator(arg-0);
-  // format-out("OPTIMIZING SHIFT INVERSES %= %=\n", call, gen);
   if (primitive-call-to?(gen, other-shift-name))
-    // format-out("FOUND %=\n", other-shift-name);
     let (constant?, raw-amount-0) = fast-constant-value?(arg-1);
     if (constant?)
-      // format-out("  SHIFT AMOUNT %=\n", raw-amount-0);
       let call-args = arguments(gen);
       let arg-1     = call-args[1];
       let (constant?, raw-amount-1) = fast-constant-value?(arg-1);
       if (constant?)
-        // format-out("  SHIFT AMOUNT %=\n", raw-amount-1);
         let amount-0 = as(<integer>, ^raw-object-value(raw-amount-0));
         let amount-1 = as(<integer>, ^raw-object-value(raw-amount-1));
         if (amount-0 = amount-1)
@@ -933,7 +904,6 @@ end &optimizer-function;
 //// VALUES
 
 define method do-optimize-values (env :: <environment>, call, call-args)
-  // format-out("OPTIMIZING VALUES %=\n", call-args);
   let values-args = maybe-vector-element-references(call-args[0]);
   let (required, rest)
     = if (values-args)
@@ -1297,7 +1267,6 @@ end &optimizer-function;
 define &optimizer-function defaulted-initialization-arguments
     (env, call, arguments)
   block (return)
-    // return(#f); // Off temporarily
     if (size(arguments) ~== 1)
       return(#f)
     end;
@@ -1361,7 +1330,6 @@ define function do-optimize-concatenate-2
     end;
     let arg1 = arguments.first;
     let arg2 = arguments.second;
-    // format-out("arg1 %= arg2 %=\n", arg1, arg2);
     case
       constant-empty-vector?(arg1)
         => replace-computation-with-temporary!(call, arg2);
@@ -1467,7 +1435,7 @@ define &optimizer-function map (env, call, arguments)
   do-optimize-map (env, call, arguments)
 end &optimizer-function;
 
-define function do-optimize-map(env, call, arguments)
+define function do-optimize-map (env, call, arguments)
   let (arg-constant?, arg-value) = constant-value?(arguments[2]);
   if (arg-constant? & empty?(arg-value))
     let (first, last, function-t) =

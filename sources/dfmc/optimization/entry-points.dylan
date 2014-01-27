@@ -65,29 +65,23 @@ define method analyze-calls (c :: <primitive-call>)
   maybe-optimize-function-call(c, c.primitive, c.arguments);
 end method;
 
-define variable *call-upgrading?* = #t;
-
 define method analyze-calls (c :: <function-call>)
   // If what's being called is not a valid function, or there is some
   // clear incompatibility between the arguments and the function,
   // don't attempt to do anything with the call.
   let ef = call-effective-function(c);
   let call-ok? = maybe-check-function-call(c);
-  if (*call-upgrading?*)
-    if (call-ok? & ef)
-      maybe-upgrade-call(c, ef) |
-        maybe-optimize-function-call
-          (c, call-effective-function(c), c.arguments)
-    elseif (*profile-all-calls?*
-              & instance?(c, <simple-call>) & ~instance?(c, <engine-node-call>)
-              & instance?(ef, <&generic-function>))
-      upgrade-gf-to-profiling-call-site-cache(c, ef, #[]);
-    else
-      #f
-    end if
+  if (call-ok? & ef)
+    maybe-upgrade-call(c, ef) |
+      maybe-optimize-function-call
+      (c, call-effective-function(c), c.arguments)
+  elseif (*profile-all-calls?*
+          & instance?(c, <simple-call>) & ~instance?(c, <engine-node-call>)
+          & instance?(ef, <&generic-function>))
+    upgrade-gf-to-profiling-call-site-cache(c, ef, #[]);
   else
     #f
-  end if;
+  end if
 end method;
 
 define method maybe-upgrade-call
@@ -433,19 +427,6 @@ end method;
 //// IEP UPGRADES
 ////
 
-// define method maybe-refine-call-temporary!
-//     (f :: <&lambda>, t :: <multiple-value-temporary>) => ()
-// //  let sig-spec = signature-spec(f);
-// // the mv-temp slots now record what is desired (the <value-context>)
-// // not what is received.
-// //  t.required-values := spec-value-number-required(sig-spec);
-// //  t.rest-values?    := spec-value-rest?(sig-spec);
-// end method;
-
-// define method maybe-refine-call-temporary!
-//     (f :: <&function>, t :: false-or(<temporary>)) => ()
-// end method;
-
 define method upgrade-to-congruent-call!
     (c :: <simple-call>, f :: <&generic-function>)
   // maybe-refine-call-temporary!(f, c.temporary);
@@ -485,7 +466,6 @@ end method;
 
 define method maybe-upgrade-required-call (c :: <simple-call>, f :: <&lambda>)
  => (res :: singleton(#t))
-  // format-out("UPGRADING %=\n", f);
   // check-required-arguments(c, f);
   maybe-upgrade-to-self-call(c, f)
     | upgrade-to-congruent-call!(c, f);
@@ -599,16 +579,6 @@ end method;
 
 define method maybe-upgrade-rest-call
     (call :: <method-call>, func :: <&lambda>) => (res :: singleton(#t))
-  /*
-  unless (lambda-rest?(func))
-    let number-required = best-function-number-required(func);
-    let args      = arguments(call);
-    let empty-ref = make-object-reference(#[]);
-    remove-user!(args[number-required], call);
-    add-user!(empty-ref, call);
-    args[number-required] := empty-ref;
-  end unless;
-  */
   upgrade-to-congruent-call!(call, func);
   #t
 end method;

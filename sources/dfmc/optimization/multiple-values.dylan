@@ -20,7 +20,6 @@ end method single-value-propagation;
 define method single-value-propagation (c :: <extract-single-value>)
   let mv-t = c.computation-value;
   let t = extract-single-value(mv-t, mv-t.generator, c.index);
-//  format-out("single-val-prop: c=%=, mv-t=%=, mv-t-gen=%=, t=%=.\n", c, mv-t, mv-t.generator, t);
   if (t)
     replace-temporary-in-users!(c.temporary, t);
     t
@@ -179,8 +178,6 @@ define method extract-single-value
       end if
     end if
   else
-//    format-out("extract-single-value, can't extract: c=%=, merge-users=%=.\n", c, merge-users);
-//    format-out("\ttemporary(c)=%=, t=%=.\n", temporary(c), t);
     #f;
   end if
 end method extract-single-value;

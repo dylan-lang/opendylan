@@ -202,7 +202,8 @@ end;
 
 define method fold-function-call (t :: <multiple-value-temporary>,
                                   function, arguments) => (call-values)
-  let (#rest call-values) = apply(function, map(fast-constant-argument-value, arguments));
+  let (#rest call-values)
+    = apply(function, map(fast-constant-argument-value, arguments));
   call-values
 end;
 
@@ -210,7 +211,6 @@ define method replace-call-with-values (call-values,
                                         call :: <call>,
                                         t :: <multiple-value-temporary>) => ()
   let values-temps = map(make-object-reference, call-values);
-  // format-out("XXX doing %=.\n", call);
   let padded-values
     = apply(pad-multiple-values,
             call.environment,
@@ -223,7 +223,6 @@ define method replace-call-with-values (call-values,
                         temporary-class: <multiple-value-temporary>);
   values-t.required-values := size(padded-values);
   values-t.rest-values? := #f;
-  // format-out("\tgot %=.\n", values-c);
   replace-computation!(call, values-c, values-c, values-t);
 end;
 
@@ -252,81 +251,19 @@ define function maybe-fold-function-call (call, t, function, arg-t*)
   end;
 end;
 
-// define function variable-slot-access?
-//     (function :: <&function>, folder-function :: <function>, call-arguments)
-//  => (well? :: <boolean>)
-//   // TODO: This ^iep thing is a hack and a half. Remove it when we can
-//   // prove it's not necessary.
-//   if (folder-function ~== ^iep & size(call-arguments) == 1)
-//     let arg = constant-value(call-arguments.first);
-//     let class = ^object-class(arg); // Because we get a raw sometimes! 8(
-//     if (instance?(class, <&class>))
-//       let slotd = ^slot-descriptor(class, function);
-//       if (slotd & ^slot-setter(slotd))
-//         format-out("!!!Slot access denied: %=.%=\n", arg, function);
-//         // #t
-//         #f
-//       end;
-//     end;
-//   end;
-// end function;
-
 define method constant-fold (c :: <function-call>)
   let (function-constant?, function) = fast-constant-value?(function(c));
   let call-arguments = arguments(c);
   if (function-constant? &
         every?(fast-constant-argument-value?, call-arguments))
     let compile-stage-function = lookup-compile-stage-function(function);
-    if (compile-stage-function
-          /* & ~variable-slot-access?
-               (function, compile-stage-function, call-arguments) */ )
+    if (compile-stage-function)
       maybe-fold-function-call(c, temporary(c),
                                compile-stage-function,
                                call-arguments)
     end
   end
 end method;
-
-/*
-define method read-only-slot-access? (ref) => (well? :: <boolean>)
-  #f
-end method;
-
-/// HACK: DON'T HARD CODE THIS INFORMATION HERE
-/// HACK: WANT TO INFER THIS WITH SIMILAR WALK TO DYNAMIC-EXTENT
-define method read-only-slot-access? (ref :: <simple-call>) => (well? :: <boolean>)
-  let (constant-value?, fun) = fast-constant-value?(function(ref));
-  if (constant-value?)
-    select (fun)
-      dylan-value(#"element-range-error") => #t;
-      dylan-value(#"aref-rank-error")     => #t;
-      otherwise                           => #f;
-    end select;
-  else
-    #f
-  end if;
-end method;
-
-define method read-only-slot-access? (ref :: <slot-value>) => (well? :: <boolean>)
-  #t
-end method;
-
-define method read-only-slot-access? (ref :: <repeated-slot-value>) => (well? :: <boolean>)
-  #t
-end method;
-
-define method read-only-slot-access? (ref :: <slot-value-setter>) => (well? :: <boolean>)
-  #f
-end method;
-
-define method read-only-slot-access? (ref :: <repeated-slot-value-setter>) => (well? :: <boolean>)
-  #f
-end method;
-
-define method read-only-reference? (ref :: <value-reference>)
-  every?(read-only-slot-access?, users(ref))
-end method;
-*/
 
 // TODO: HIDE TAG DETAILS TO MAKE THIS LESS SPECIFIC
 
@@ -359,24 +296,6 @@ define method constant-fold (c :: <repeated-slot-value>)
   else
     #f
   end if;
-  // REALLY NEED OTHER DIRECTION CAUSE THIS DIRECTION IS NOW THE DEFAULT
-  /*
-  let gen-index = generator(computation-index(c));
-  if (primitive-call-to?(gen-index, #"primitive-machine-word-shift-right"))
-    let (constant?, raw-amount)
-      = fast-constant-value?(arguments(gen-index)[1]);
-    if (constant?)
-      let amount :: <integer> = as(<integer>, ^raw-object-value(raw-amount));
-      if (amount = $number-tag-bits)
-        let new-index = arguments(gen-index)[0];
-        remove-user!(computation-index(c), c);
-        add-user!(new-index, c);
-        computation-index(c) := new-index;
-        computation-index-tagged?(c) := #t;
-      end if;
-    end if;
-  end if;
-  */
 end method;
 
 define method constant-fold (c :: <repeated-slot-value-setter>)
@@ -384,33 +303,10 @@ define method constant-fold (c :: <repeated-slot-value-setter>)
 end method;
 
 define method constant-fold (c :: <stack-vector>)
-  /*
-  let args = c.arguments;
-  if (every?(fast-constant-argument-value?, args))
-    let vec = map-as(<vector>, compose(compile-stage, fast-constant-argument-value), args);
-    let ref = make-value-reference(vec, <immutable-object-reference>);
-    replace-computation-with-temporary!(c, ref);
-    #t
-  else
-    #f
-  end if;
-  */
   #f
 end method;
 
 define method constant-fold (c :: <primitive-call>)
-  /*
-  let function = primitive(c);
-  let call-arguments = arguments(c);
-  if (every?(fast-constant-value?, call-arguments))
-    let compile-stage-function = lookup-compile-stage-function(function);
-    if (compile-stage-function)
-      maybe-fold-function-call(c, temporary(c),
-                               compile-stage-function,
-                               call-arguments)
-    end
-  end
-  */
   let arguments = c.arguments;
   if (every?(fast-constant-argument-value?, arguments))
     block ()
@@ -430,7 +326,7 @@ define method constant-fold (c :: <primitive-call>)
       end if;
     exception (e :: <error>)
       // format-out("Failed to fold %= on: %=\n", c, e);
-    end block;
+    end
   end if;
 end method;
 
@@ -441,12 +337,6 @@ end;
 define method constant-fold (c :: <extract-rest-value>)
   single-value-propagation(c)
 end;
-
-/*
-define method constant-fold (c :: <adjust-multiple-values-computation>)
-  next-method();
-end method;
-*/
 
 define method constant-fold (c :: <adjust-multiple-values>)
   let env = environment(c);
@@ -526,18 +416,12 @@ define function weak-closure?
 end function;
 
 define method prune-closure (env :: <lambda-lexical-environment>) => ()
-  // format-out("PRUNING CLOSURE %= :: ", lambda(env));
-  // for (tmp in env.closure)
-  //   format-out("%= %= ", tmp, closed-over?(tmp));
-  // end for;
-  // format-out("\n");
   unless (empty?(env.closure))
     block (return)
       local method ensure-weak-closure (env) weak-closure?(env) | return() end;
       if (weak-closure?(env))
         do-over-lambda-users(ensure-weak-closure, env);
         // We would've leapt out by now on any failure.
-        // format-out("  DELETING CLOSURE %= %=\n", lambda(env), env.closure);
         do (method (tmp) closed-over?(tmp) := $no-closure-entry end,
             env.closure);
         env.closure := #()
@@ -562,7 +446,6 @@ define method constant-fold-closure (f :: <&lambda>)
               computation-init-closure(c) := #f;
             end if;
           end method;
-    // format-out("CONSTANT-FOLDING-CLOSURE %=\n", lambda);
     if (empty?(closure))
       if (~sigtmp & ~closed-over?(temporary(c)))
         // format-out("DELETING MAKE-CLOSURE\n");
@@ -574,7 +457,6 @@ define method constant-fold-closure (f :: <&lambda>)
       end if
     elseif (~any?(method (tmp) instance?(generator(tmp), <make-closure>) end,
                   closure))
-      // format-out("DELETING UNNECESSARY INIT-CLOSURE %=\n", f);
       maybe-delete-init-closure(computation-init-closure(c));
     end if;
   end if;
@@ -585,14 +467,11 @@ define method constant-fold (c :: <initialize-closure>)
   if (instance?(closure, <temporary>))
     let make-closure-c = generator(closure);
     if (size(users(closure)) = 1)
-      // format-out("DELETE INIT-CLOSURE TMP %= USERS %=\n",
-      //            closure.generator, users(closure));
       delete-computation!(c);
       re-optimize(make-closure-c);
       #t
     end if;
   else
-    // format-out("DELETE INIT-CLOSURE REF %=\n", closure);
     delete-computation!(c);
     #t
   end if;
@@ -618,58 +497,6 @@ define method constant-fold (c :: <make-closure>)
   //   #t
   end if;
 end method;
-
-/*
-define method constant-fold (c :: <make-closure>)
-  let lambda = computation-closure-method(c);
-  let sigtmp = computation-signature-value(c);
-  local method fold ()
-          let ref = make(<method-reference>, value: lambda);
-          add-user!(lambda, ref);
-          re-optimize-users(c.temporary);
-          replace-computation-with-temporary!(c, ref);
-        end method,
-        method maybe-fold-signature (sigtmp)
-          if (sigtmp)
-            let (constant-value?, constant-value)
-              = fast-constant-value?(sigtmp);
-            if (constant-value?)
-              ^function-signature(lambda) := constant-value;
-              computation-signature-value(c) := #f;
-              re-optimize-users(c.temporary);
-              re-optimize-type-estimate(c);
-              #t
-            end if;
-          end if;
-        end method,
-        method maybe-fold-closure (sigtmp)
-          if (sigtmp)
-            maybe-fold-signature(sigtmp);
-          else
-            fold();
-            #t
-          end if;
-        end method;
-  if (computation-maybe-free-references?(c))
-    maybe-fold-signature(sigtmp);
-  else
-    if (computation-no-free-references?(c))
-      maybe-fold-closure(sigtmp)
-    elseif (environment(lambda))
-      let free-refs = lambda-has-free-lexical-references?(lambda);
-      if (free-refs)
-        computation-maybe-free-references?(c) := #t;
-      else
-        computation-no-free-references?(c) := #t;
-        maybe-fold-closure(sigtmp);
-        #t
-      end if
-    else
-      maybe-fold-signature(sigtmp);
-    end if;
-  end if
-end method;
-*/
 
 define method constant-fold (c :: <adjust-multiple-values-rest>)
   let values-t = computation-value(c);
@@ -764,10 +591,6 @@ define method constant-fold (c :: <type-definition>)
   let value = computation-value(c);
   let constant? = extractable-constant-value?(value);
   if (constant?)
-    /*
-    format-out("Installing constant type for %= - %=\n",
-               typed-binding(c), value);
-    */
     binding-type-model-object(typed-binding(c))
       := extract-and-optimize-constant(value);
     delete-computation!(c);
@@ -889,11 +712,6 @@ end method evaluate-type-checks?;
 //     multiple value bind checks from return type checks by class
 //     so that error messages can be made more meaningful, preferably
 //     reporting the variable names involved where possible.
-
-// *** This has no callers?  (Which is good, since it has no implementation!)
-// define method check-type-check
-//     (c :: <multiple-value-check-type-computation>, check-estimate)
-// end method;
 
 define function make-type-estimate-for-fixed-check (type-temp*)
   // Construct the type estimate which is used for fixed-return-value
@@ -1241,8 +1059,3 @@ define method constant-fold (c :: <slot-value>)
   end if;
 end method;
 
-/*
-define method constant-fold (c :: <set-cell-value!>)
-  #f;
-end method;
-*/

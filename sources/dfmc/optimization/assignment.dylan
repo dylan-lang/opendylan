@@ -196,7 +196,6 @@ define method maybe-rename-temporaries-in-conditional
     for-computations(tc from then-f before c.next-computation)
       let now-changed? = rename-temporary-references!(tc, to-be-renamed, tt-t);
       changed? := (changed? | now-changed?);
-      // was: changed? := (changed? | rename-temporary-references!(tc, to-be-renamed, tt-t));
     end;
     if (changed?)
       insert-computation-before!(then-f, tt-c);

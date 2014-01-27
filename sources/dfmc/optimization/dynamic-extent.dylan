@@ -4,14 +4,8 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define variable *perform-dynamic-extent-analysis?* = #t;
-define variable *trace-dynamic-extent-analysis?* = #f;
-
 define function analyze-dynamic-extent-for (f :: <&method>) => ()
-  if (*perform-dynamic-extent-analysis?*)
-    get-extent-of-parameters-for(f);
-  end;
-  values()
+  get-extent-of-parameters-for(f);
 end;
 
 /// Dynamic extent analysis:
@@ -149,11 +143,8 @@ end;
 
 
 define function color-extent(f :: <&method>, extent :: <dynamic-extent>)
-  if (*trace-dynamic-extent-analysis?*)
-    format-out("Extent of %=: %=\n", f /*.^debug-name*/, extent);
-  end;
-
   let m = model-definition(f);
+
   if (m & extent)
     let sig-spec = m.form-signature;
     local method color (o)
@@ -168,23 +159,7 @@ define function color-extent(f :: <&method>, extent :: <dynamic-extent>)
 
     let reqs-size = reqs.size;
 
-    if (*trace-dynamic-extent-analysis?*)
-      if (extent == #t)
-        for (r in reqs) color(r) end;
-        color(sig-spec.spec-argument-rest-variable-spec);
-        for (k in keys) color(k) end;
-      else
-        for (i in extent)
-          if (i < reqs-size)
-            color(reqs[i])
-          elseif (i = reqs-size)
-            color(sig-spec.spec-argument-rest-variable-spec)
-          else
-            color(keys[i - reqs-size - 1])
-          end
-        end;
-      end;
-    elseif (extent == #t | member?(reqs-size, extent))
+    if (extent == #t | member?(reqs-size, extent))
       color(sig-spec.spec-argument-rest-variable-spec)
     end;
   end
@@ -225,10 +200,6 @@ end;
 
 
 define function color-closure(c :: <make-closure>)
-  if (*trace-dynamic-extent-analysis?*)
-    format-out("%= has dynamic extent.\n", c.computation-closure-method);
-  end;
-
   let body = c.computation-closure-method.body;
   if (body & dfm-source-location(body))
     let loc = dfm-source-location(body);
@@ -537,9 +508,6 @@ define method really-dynamic-extent?
         // source-location stuff doesn't appear to provide this information
         // in the case of local methods... So, I'll keep the facility for
         // dumping a textual description for now.
-        if (*trace-dynamic-extent-analysis?*)
-          format-out("The #rest parameter %= has dynamic extent.\n", rest-param)
-        end
       end;
       dyn-ext?
     else // There must have been a %dynamic-extent
