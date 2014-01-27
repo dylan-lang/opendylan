@@ -58,7 +58,6 @@ define method try-inlining-call (c :: <function-call>, function)
 
   // Calls where the function is something other than an IEP
   // probably shouldn't ever be inlined.
-
   #f
 end method try-inlining-call;
 
@@ -71,17 +70,9 @@ define method try-inlining-call (c :: <simple-call>, code :: <&iep>)
   // TODO: inline letrec-bound functions
   if (*inlining?*)
     let fun = code.function;
-    // format-out("INLINING %=\nTOP? %= REFUSEDONCE? %= USEDONCE? %= \n",
-    //            c, lambda-top-level?(fun),
-    //            function-reference-used-once?(c.function),
-    //            function-used-once?(code));
     if (lambda-top-level?(fun))
       if (method-inlineable?(fun)
-            // & ~member?(fun, call-inlining-stack(c))
             & call-inlining-depth(c) < $max-inlining-depth)
-        // when (lambda-inlineable?(fun))
-        //   debug-out(#"inlining", "AUTO INLINING %= INTO %=\n", fun, c.environment.lambda);
-        // end when;
         inline-call-copied(c, code);
       end if;
     elseif (function-reference-used-once?(c.function) // the temporary
@@ -101,8 +92,6 @@ end method try-inlining-call;
 
 define method function-used-once?
     (f :: <&lambda>) => (used-once? :: <boolean>);
-  // format-out("%= USERS %= IUSERS %=\n",
-  //            f, f.users, f.iep.users);
   (size(users(f)) + size(users(f.iep))) = 1
 end method function-used-once?;
 
@@ -191,7 +180,6 @@ define method do-inline-call
   redirect-arguments!(c, f, mapped);
   let return-t = return-c.computation-value;
   re-optimize-users(c.temporary);
-  // format-out("RE-OPT %=\n", users(c.temporary));
   let (first, last, tmp)
     = if (~c.temporary | instance?(c.temporary, <multiple-value-temporary>))
         // is the call's temporary expecting different values than the
@@ -231,10 +219,6 @@ define method do-inline-call
 end method;
 
 define method inline-call (c :: <function-call>, f :: <&iep>)
-  // format-out("MOVE INLINING %= %=\n", f.function, c);
-  // print-method-out(c.environment.lambda);
-  // format-out("--- OF ---\n");
-  // print-method-out(f.function);
   if (*colorize-dispatch*)
     color-dispatch(c, #"inlining")
   end;
@@ -258,11 +242,7 @@ end method inline-call;
 
 define method inline-call-copied (c :: <function-call>, f :: <&iep>)
   let code = f.function;
-  // format-out("COPY INLINING %= %=\n", code, c);
-  // print-method-out(c.environment.lambda);
-  // format-out("--- OF ---\n");
   ensure-method-dfm(code);
-  // print-method-out(code);
   if (code.body)
     if (*colorize-dispatch*)
       color-dispatch(c, #"inlining")
@@ -270,7 +250,6 @@ define method inline-call-copied (c :: <function-call>, f :: <&iep>)
     dynamic-bind (*inlining-depth* = call-inlining-depth(c) + 1)
       let copier = current-dfm-copier(estimated-copier-table-size(code));
       do-inline-call(c, f, curry(deep-copy, copier));
-      // print-method-out(c.environment.lambda);
     end dynamic-bind;
   else
     lambda-inlineable?(code) := #f;
@@ -445,16 +424,8 @@ end;
 
 define method redirect-arguments!
     (c :: <function-call>, f :: <&lambda>, mapped :: <function>) => ()
-  redirect-args! (c.arguments, f.parameters, mapped)
+  redirect-args!(c.arguments, f.parameters, mapped)
 end method redirect-arguments!;
-
-// old version:
-//define method redirect-arguments!
-//    (c :: <function-call>, f :: <&lambda>, mapped :: <function>) => ()
-//  for (parameter in f.parameters, argument in c.arguments)
-//    replace-temporary-in-users!(mapped(parameter), argument);
-//  end for;
-//end method redirect-arguments!;
 
 define method move-code-into!
     (f :: <&lambda>, env :: <environment>, mapped :: <function>)

@@ -71,12 +71,7 @@ define module dfmc-optimization
     *trace-optimizations?*,
     *trace-optimizing-method*,
     *trace-optimizing-library*,
-    *trace-optimizing-file*,
-    *dump-dfm?*,
-    *dump-dfm-method*,
-    *dump-dfm-library*,
-    *dump-dfm-file*,
-    *call-upgrading?*;
+    *trace-optimizing-file*;
 
   export
     best-function-key?,

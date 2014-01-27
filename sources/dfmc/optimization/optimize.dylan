@@ -79,10 +79,6 @@ define variable *trace-optimizations?*     = #f;
 define variable *trace-optimizing-library* = #f;
 define variable *trace-optimizing-file*    = #f;
 define variable *trace-optimizing-method*  = #f;
-define variable *dump-dfm?*                = #f;
-define variable *dump-dfm-library*         = #f;
-define variable *dump-dfm-file*            = #f;
-define variable *dump-dfm-method*          = #f;
 
 // HACK: SHOULD BE ELSEWHERE
 
@@ -129,15 +125,6 @@ define function tracing-optimizations?
     & (*trace-optimizations?*
          | (*trace-optimizing-method*
               & debug-string(code) == *trace-optimizing-method*))
-end function;
-
-define function dumping-dfm?
-    (code :: <&lambda>) => (well? :: <boolean>)
-  tracing-library?(*dump-dfm-library*)
-    & tracing-file?(*dump-dfm-file*, code)
-    & (*dump-dfm?*
-         | (*dump-dfm-method*
-              & debug-string(code) == *dump-dfm-method*))
 end function;
 
 define sealed method really-run-compilation-passes (code :: <&lambda>)
@@ -230,9 +217,6 @@ define sealed method really-run-compilation-passes (code :: <&lambda>)
         optimization-queue(f) := #f;
         strip-environment(environment(f));
       end for-all-lambdas;
-      when (dumping-dfm?(code))
-        print-method-out(code);
-      end when;
     end block;
   end unless;
   end dynamic-bind;
