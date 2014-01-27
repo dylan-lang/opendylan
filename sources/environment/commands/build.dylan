@@ -382,7 +382,6 @@ end method do-execute-command;
   room
   break
   dood statistics
-  trace-optimizations
 */
 
 
