@@ -115,6 +115,34 @@ define module command-lines
   export $system-command-group;
 end module command-lines;
 
+define module environment-visualization-communication
+  use dylan;
+  use common-dylan, exclude: { format-to-string };
+  // visualization
+  use format;
+  use standard-io;
+  use streams;
+  use sockets;
+//  use lisp-reader;
+//  use file-source-records, import: { <flat-file-source-record>, source-record-location };
+
+  use serialization;
+  use json-serialization;
+  use sexpr-serialization;
+
+  export connect-to-server,
+    disconnect-from-server,
+    write-to-visualizer,
+    <graph-visualization>,
+    visualization-host,
+    visualization-port,
+    visualization-type,
+    visualization-type-setter,
+    visualization-filter,
+    visualization-filter-setter,
+    visualization-socket;
+end;
+
 define module environment-commands
   use build-system;
   use environment-imports;
@@ -128,6 +156,8 @@ define module environment-commands
 
   use commands;
   use command-lines;
+
+  use environment-visualization-communication;
 
   // Environment context
   export <environment-context>,
