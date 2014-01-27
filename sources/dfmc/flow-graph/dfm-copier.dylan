@@ -33,7 +33,8 @@ define dont-copy-slots  <queueable-item-mixin>       using <dfm-copier> =
 
 define dont-copy-slots  <computation>                using <dfm-copier> =
   { computation-source-location => parent-source-location(),
-    computation-type => #f };
+    computation-type => #f,
+    %node-id => #f };
 
 define dont-copy-slots  <bind-exit>                  using <dfm-copier> =
   { %label => #f };
@@ -58,6 +59,10 @@ define dont-copy-slots  <&lambda>                    using <dfm-copier> =
 define dont-copy-slots  <&iep>                       using <dfm-copier> =
   { code              => #f };
 
+define dont-copy-slots  <temporary>                  using <dfm-copier> =
+  { %node-id     => #f };
+define dont-copy-slots  <object-reference>           using <dfm-copier> =
+  { %node-id     => #f };
 // If a call checked incompatible out of line, it might still become
 // compatible inline (and so amenable to upgrading and inlining), so
 // we reset its state in the inline copy.
@@ -151,7 +156,9 @@ define method do-deep-copy
   if (*dfm-copier-environment-context*)
     let state = entry-state(object);
     exits(state) := add-new!(exits(state), copy);
-    add-user!(state, copy);
+    dynamic-bind (*computation-tracer* = #f)
+      add-user!(state, copy);
+    end
   end if;
   copy
 end method;

@@ -88,13 +88,15 @@ define dood-class <lambda-lexical-environment> (<lexical-environment>)
 end dood-class;
 
 define method ensure-lambda-body (fun :: <&lambda>) => ()
-  let env = environment(fun);
-  when (env & weak-temporaries?(temporaries(env)))
-    for-all-lambdas (lambda in fun)
-      let env = environment(lambda);
-      temporaries(env) := compute-temporaries(env);
-    end for-all-lambdas;
-  end when;
+  dynamic-bind (*computation-tracer* = #f)
+    let env = environment(fun);
+    when (env & weak-temporaries?(temporaries(env)))
+      for-all-lambdas (lambda in fun)
+        let env = environment(lambda);
+        temporaries(env) := compute-temporaries(env);
+      end for-all-lambdas;
+    end when;
+  end
 end method;
 
 define method approximate-number-temporaries (fun :: <&lambda>) => (res :: <integer>)
@@ -151,7 +153,10 @@ end method;
 
 define inline method remove-temporary!
     (env :: <lambda-lexical-environment>, t :: <temporary>)
-  remove!(env.temporaries, t)
+  remove!(env.temporaries, t);
+  if (*computation-tracer*)
+    *computation-tracer*(#"remove-temporary", t, env, 0);
+  end;
 end method;
 
 define inline method add-temporary!

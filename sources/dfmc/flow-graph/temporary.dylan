@@ -15,14 +15,28 @@ end method;
 // Like a value continuation
 
 define dood-class <temporary> (<value-reference>)
-  weak slot generator :: false-or(<computation>) = #f,
+  weak slot %generator :: false-or(<computation>) = #f,
     reinit-expression: #f,
     init-keyword: generator:;
   weak slot environment :: false-or(<lambda-lexical-environment>),
     reinit-expression: #f,
     required-init-keyword: environment:;
   slot temporary-properties :: <integer> = 0;
+  weak slot %node-id :: false-or(<integer>) = #f,
+    reinit-expression: #f;
 end dood-class;
+
+define method generator (t :: <temporary>) => (res :: false-or(<computation>))
+  t.%generator
+end;
+
+define method generator-setter
+    (g :: false-or(<computation>), t :: <temporary>)
+ => (res :: false-or(<computation>))
+  maybe-trace-change(#"generator-setter", t, %generator, g);
+  t.%generator := g
+end;
+
 
 // Seal construction over the <temporary> world.
 
@@ -61,10 +75,11 @@ define packed-slots temporary-properties (<temporary>, <object>)
 end packed-slots;
 
 define method initialize
-    (temporary :: <temporary>, #rest all-keys, #key environment)
+    (temporary :: <temporary>, #rest all-keys, #key environment, generator)
   next-method();
   apply(initialize-packed-slots, temporary, all-keys);
   add-temporary!(environment, temporary);
+  temporary.node-id;
   temporary.frame-offset
     := min(next-frame-offset(environment), $max-frame-offset);
   temporary
@@ -80,9 +95,18 @@ end class;
 
 define class <cell> (<named-temporary>)
   slot assignments :: <list> = #();
-  slot cell-type :: <&type>,
+  slot %cell-type :: <&type>,
     init-keyword: cell-type:;
 end class;
+
+define method cell-type (c :: <cell>) => (t :: <&type>)
+  c.%cell-type
+end;
+
+define method cell-type-setter (new :: <&type>, c :: <cell>) => (t :: <&type>)
+  maybe-trace-change(#"cell-type-setter", c, %cell-type, new);
+  c.%cell-type := new
+end;
 
 define method cell? (t :: <temporary>) #f end;
 define method cell? (t :: <cell>) #t end;
