@@ -66,23 +66,38 @@ define compilation-pass delete-useless-environments,
 
 */
 
-define inline method opt-format-out (string :: <string>, #rest args)
+define inline method opt-trace
+    (key :: <symbol>, description :: <string>,  object)
   if (*trace-optimizations?*)
-    apply(format-out, string, args)
-  end if
+    *trace-optimizing-callback*(key, description, object)
+  end;
 end method;
 
 define constant $max-reoptimization-iterations = 50;
 define constant $max-optimization-iterations   = 10000;
 
-define variable *trace-optimizations?*     = #f;
-define variable *trace-optimizing-library* = #f;
-define variable *trace-optimizing-file*    = #f;
-define variable *trace-optimizing-method*  = #f;
+//boolean indicating that we're active!
+define variable *trace-optimizations?*      :: <boolean>            = #f;
+//callback function called for trace events
+define variable *trace-optimizing-callback* :: false-or(<function>) = #f;
+//library filter:
+//  #f                         -- trace everything
+//  #t                         -- trace top level library
+//  library-name (as <symbol>) -- only specific library
+define variable *trace-optimizing-library*
+  :: type-union(<symbol>, <boolean>) = #f;
+//file filter
+// #f       -- no filter
+// filename -- only trace this filename
+define variable *trace-optimizing-file*     :: false-or(<string>)   = #f;
+//method filter
+// #f                   -- no filter
+// method (as <symbol>) -- filter by method name
+define variable *trace-optimizing-method*   :: false-or(<symbol>)   = #f;
 
 // HACK: SHOULD BE ELSEWHERE
 
-define function debug-string (object)
+define function debug-string (object) => (res :: false-or(<symbol>))
   let debug-name = object.debug-name;
   if (instance?(debug-name, <variable-name-fragment>))
     debug-name.fragment-identifier
@@ -122,103 +137,130 @@ define function tracing-optimizations?
     (code :: <&lambda>) => (well? :: <boolean>)
   tracing-library?(*trace-optimizing-library*)
     & tracing-file?(*trace-optimizing-file*, code)
-    & (*trace-optimizations?*
+    & ((*trace-optimizing-callback* & #t)
+         | *trace-optimizations?*
          | (*trace-optimizing-method*
               & debug-string(code) == *trace-optimizing-method*))
 end function;
 
 define sealed method really-run-compilation-passes (code :: <&lambda>)
-  dynamic-bind
-     (*trace-optimizations?* = tracing-optimizations?(code))
-  unless (~code.body | lambda-optimized?(code))
-    block ()
-      for-all-lambdas (f in code)
-        lambda-optimized?(f) := #t;
-      end for-all-lambdas;
-      // opt-format-out("OPTIMIZING %=\n", code);
-      with-simple-abort-retry-restart
-          ("Abort all analysis passes and continue.",
-           "Restart all analysis passes.")
-        with-dependent-context ($compilation of model-creator(code))
-          opt-format-out("READY %=\n", code);
-          for-all-lambdas (f in code)
-            opt-format-out("PASS ONE %=\n", f);
-            // make sure we've got some DFM to play with
-            // elaborate-top-level-definitions(f);
-            // finish pseudo-SSA conversion
-            if (f == code | ~maybe-delete-function-body(f))
-              eliminate-assignments(f);
-            end;
-          end for-all-lambdas;
-          for-all-lambdas (f in code)
-            opt-format-out("PASS ONE(A) %=\n", f);
-            if (f == code | lambda-used?(f))
-              maybe-rename-temporaries-in-conditionals(f);
-            end;
-          end for-all-lambdas;
-          for-all-lambdas (f in code)
-            if (f == code | lambda-used?(f))
-              opt-format-out("PASS TWO %=\n", f);
-              if (*trace-optimizations?*)
-                print-method-out(code);
-              end if;
-              // Now we're ready for some fun.
-              run-optimizations(f);
-            end;
-          end for-all-lambdas;
-          iterate loop (count = 0)
-            let something? = #f;
+  dynamic-bind(*trace-optimizations?* = tracing-optimizations?(code))
+    unless (~code.body | lambda-optimized?(code))
+      block ()
+        for-all-lambdas (f in code)
+          lambda-optimized?(f) := #t;
+        end for-all-lambdas;
+        with-simple-abort-retry-restart
+            ("Abort all analysis passes and continue.",
+             "Restart all analysis passes.")
+          with-dependent-context ($compilation of model-creator(code))
+            opt-trace(#"start-phase-for-code",
+                      "static single assignment conversion",
+                      code);
             for-all-lambdas (f in code)
-              if (f == code | lambda-used?(f))
-                opt-format-out("PASS THREE %=\n", f);
-                something? := something? | run-optimizations(f);
+              opt-trace(#"start-phase-for-lambda",
+                        "static single assignment conversion", f);
+              // make sure we've got some DFM to play with
+              // elaborate-top-level-definitions(f);
+              // finish pseudo-SSA conversion
+              if (f == code | ~maybe-delete-function-body(f))
+                eliminate-assignments(f);
               end;
             end for-all-lambdas;
-            if (something?)
-              if (count < $max-reoptimization-iterations)
-                loop(count + 1)
-              else
-                opt-format-out("MAX REOPTIMIZATIONS FOR %= REACHED\n", code);
-              end if;
-            end;
-          end iterate;
-          // now carry out the global stuff like environment analysis
-          for-all-lambdas (f in code)
-            if (f == code | lambda-used?(f) | lambda-top-level?(f))
-              opt-format-out("PASS FOUR %=\n", f);
-              share-common-subexpressions(f);
-              delete-useless-environments(f);
-            end;
-          end for-all-lambdas;
-          for-all-lambdas (f in code)
-            if (f == code | lambda-used?(f) | lambda-top-level?(f))
-              opt-format-out("PASS FIVE %=\n", f);
-              analyze-dynamic-extent-for(f);
-              analyze-environments(f);
-              check-optimized-computations(f);
-            end;
-          end for-all-lambdas;
-          for-all-lambdas (f in code)
-            if (f == code | lambda-used?(f) | lambda-top-level?(f))
-              opt-format-out("PASS SIX %=\n", f);
-              prune-closure(environment(f));
-            end;
-          end for-all-lambdas;
-          for-all-lambdas (f in code)
-            if (f == code | lambda-used?(f) | lambda-top-level?(f))
-              opt-format-out("PASS SIX %=\n", f);
-              constant-fold-closure(f);
-            end;
-          end for-all-lambdas;
-        end with-dependent-context;
-      end with-simple-abort-retry-restart;
-    cleanup
-      for-all-lambdas (f in code)
-        optimization-queue(f) := #f;
-        strip-environment(environment(f));
-      end for-all-lambdas;
-    end block;
-  end unless;
+            opt-trace(#"start-phase-for-code", "rename temporaries", code);
+            for-all-lambdas (f in code)
+              opt-trace(#"start-phase-for-lambda", "rename temporaries", f);
+              if (f == code | lambda-used?(f))
+                maybe-rename-temporaries-in-conditionals(f);
+              end;
+            end for-all-lambdas;
+            opt-trace
+              (#"start-phase-for-code",
+               "dead code removal, constant fold, call upgrading, inlining",
+               code);
+            for-all-lambdas (f in code)
+              if (f == code | lambda-used?(f))
+                opt-trace
+                  (#"start-phase-for-lambda",
+                   "dead code removal, constant fold, call upgrading, inlining",
+                   f);
+                // Now we're ready for some fun.
+                run-optimizations(f);
+              end;
+            end for-all-lambdas;
+            iterate loop (count = 0)
+              let something? = #f;
+              for-all-lambdas (f in code)
+                opt-trace
+                  (#"start-phase-for-lambda",
+                   "dead code removal, constant fold, call upgrading, inlining",
+                   f);
+                if (f == code | lambda-used?(f))
+                  something? := something? | run-optimizations(f);
+                end;
+              end for-all-lambdas;
+              if (something?)
+                if (count < $max-reoptimization-iterations)
+                  loop(count + 1)
+                else
+                  opt-trace(#"debug-string", "MAX REOPTIMIZATIONS REACHED", code);
+                end if;
+              end;
+            end iterate;
+            // now carry out the global stuff like environment analysis
+            opt-trace
+              (#"start-phase-for-code",
+               "common subexpression elimination, useless environment deletion",
+               code);
+            for-all-lambdas (f in code)
+              if (f == code | lambda-used?(f) | lambda-top-level?(f))
+                opt-trace
+                  (#"start-phase-for-lambda",
+                   "common subexpression elimination, useless environment deletion",
+                   f);
+                share-common-subexpressions(f);
+                delete-useless-environments(f);
+              end;
+            end for-all-lambdas;
+            opt-trace(#"start-phase-for-code",
+                      "analyze dynamic-extend, check optimized computations",
+                      code);
+            for-all-lambdas (f in code)
+              if (f == code | lambda-used?(f) | lambda-top-level?(f))
+                opt-trace(#"start-phase-for-lambda",
+                          "analyze dynamic-extend, check optimized computations",
+                          f);
+                analyze-dynamic-extent-for(f);
+                analyze-environments(f);
+                check-optimized-computations(f);
+              end;
+            end for-all-lambdas;
+            opt-trace(#"start-phase-for-code", "prune closures", code);
+            for-all-lambdas (f in code)
+              if (f == code | lambda-used?(f) | lambda-top-level?(f))
+                opt-trace(#"start-phase-for-lambda", "prune closures", f);
+                prune-closure(environment(f));
+              end;
+            end for-all-lambdas;
+            opt-trace(#"start-phase-for-code", "constant fold closures", code);
+            for-all-lambdas (f in code)
+              if (f == code | lambda-used?(f) | lambda-top-level?(f))
+                opt-trace(#"start-phase-for-lambda",
+                          "constant fold closures",
+                          f);
+                constant-fold-closure(f);
+              end;
+            end for-all-lambdas;
+            opt-trace(#"finished-phase-for-code", "finished optimizations", code);
+          end with-dependent-context;
+        end with-simple-abort-retry-restart;
+      cleanup
+        for-all-lambdas (f in code)
+          optimization-queue(f) := #f;
+          strip-environment(environment(f));
+        end for-all-lambdas;
+      end block;
+    end unless;
   end dynamic-bind;
 end method;
 
@@ -236,16 +278,9 @@ define method run-optimizations (code) => (b :: <boolean>)
   let something? = queue-head(queue);
   for (count from 0 below $max-optimization-iterations,
        item = something? then queue-head(queue), while: item)
-    // do-queue(method (i) opt-format-out("  ELT %=\n", i) end, queue);
+    opt-trace(#"highlight-queue", "optimizations", queue);
     if (do-optimize(item))
       something? := #t;
-      if (*trace-optimizations?*)
-        format-out("---------\n");
-        unless (instance?(item, <nop>))
-          print-method-out(code);
-          format-out("---------\n");
-        end unless;
-      end if
     else
       unless (item.item-status == $queueable-item-dead)
         queue-pop(queue);
@@ -253,7 +288,7 @@ define method run-optimizations (code) => (b :: <boolean>)
     end if
   finally
     if (count = $max-optimization-iterations)
-      opt-format-out("MAX OPTIMIZATIONS FOR %= REACHED\n", code);
+      opt-trace(#"debug-string", "MAX REOPTIMIZATIONS REACHED", code);
     end if;
   end;
   if (something?) #t else #f end;
@@ -282,15 +317,13 @@ end function;
 define inline method run-optimizer
     (name :: <string>, optimize :: <function>, c :: <computation>)
  => (b :: <boolean>)
-  opt-format-out("%s %= \n", name, c);
-  // with-parent-computation (c)
-    optimize(c) & #t;
-  // end;
+  opt-trace(#"optimizing", concatenate("running optimizer on ", name), c);
+  optimize(c) & #t;
 end method;
 
 define compiler-sideways method re-optimize-type-estimate (c :: <computation>)
  => ()
-  let tmp   = temporary(c);
+  let tmp = temporary(c);
   if (tmp)
     type-estimate-retract(c)
   end if;
