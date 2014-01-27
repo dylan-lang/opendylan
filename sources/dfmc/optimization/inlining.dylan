@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // define compilation-pass try-inlining,
 //   visit: computations,
-//   optimization: low, 
+//   optimization: low,
 //   after: analyze-calls,
 //   before: single-value-propagation,
 //   triggered-by: analyze-calls,
@@ -58,7 +58,6 @@ define method try-inlining-call (c :: <function-call>, function)
 
   // Calls where the function is something other than an IEP
   // probably shouldn't ever be inlined.
-
   #f
 end method try-inlining-call;
 
@@ -71,21 +70,13 @@ define method try-inlining-call (c :: <simple-call>, code :: <&iep>)
   // TODO: inline letrec-bound functions
   if (*inlining?*)
     let fun = code.function;
-    // format-out("INLINING %=\nTOP? %= REFUSEDONCE? %= USEDONCE? %= \n", 
-    //            c, lambda-top-level?(fun), 
-    //            function-reference-used-once?(c.function),
-    // 	          function-used-once?(code));
     if (lambda-top-level?(fun))
       if (method-inlineable?(fun)
-            // & ~member?(fun, call-inlining-stack(c))
-	    & call-inlining-depth(c) < $max-inlining-depth)
-	// when (lambda-inlineable?(fun))
-	//   debug-out(#"inlining", "AUTO INLINING %= INTO %=\n", fun, c.environment.lambda);
-	// end when;
-	inline-call-copied(c, code);
+            & call-inlining-depth(c) < $max-inlining-depth)
+        inline-call-copied(c, code);
       end if;
     elseif (function-reference-used-once?(c.function) // the temporary
-	      & function-used-once?(code)             // the value
+              & function-used-once?(code)             // the value
               & ~inner-environment?(environment(c), environment(code)))
       inline-call(c, code)
     elseif (lambda-inlineable?(fun) == #t) // currently only bind-exit returns
@@ -99,29 +90,8 @@ define method try-inlining-call (c :: <simple-call>, code :: <&iep>)
   end if;
 end method try-inlining-call;
 
-/* TODO: OBSOLETE?
-define method function-called-more-than-twice? 
-    (ref :: <value-reference>, f :: <&lambda-or-code>)
- => (called-more-than-twice? :: <boolean>);
-  local method caller-count
-            (refd-object :: <referenced-object>) => (res :: <integer>)
-          let count :: <integer> = 0;
-          for (user in users(refd-object))
-            if (instance?(user, <function-call>))
-              count := count + 1;
-            end if;
-          end for;
-          count
-        end method;
-  let f = f.function;
-  (caller-count(ref) + caller-count(f.iep)) > 2
-end method;
-*/
-
 define method function-used-once?
     (f :: <&lambda>) => (used-once? :: <boolean>);
-  // format-out("%= USERS %= IUSERS %=\n",
-  //            f, f.users, f.iep.users);
   (size(users(f)) + size(users(f.iep))) = 1
 end method function-used-once?;
 
@@ -162,8 +132,8 @@ end method inline-call;
 // longer needed is to re-use that.
 
 define function replace-call-computation!
-    (env :: <lexical-environment>, 
-     call :: <call>, first :: <computation>, last :: <computation>, 
+    (env :: <lexical-environment>,
+     call :: <call>, first :: <computation>, last :: <computation>,
      ref :: false-or(<value-reference>))
   // format-out("MATCHING %= TO %=\n", temporary(call), ref);
   let (first, new-last, ref)
@@ -182,13 +152,13 @@ define method maybe-update-inlined-next-methods
            "calling method %= inappropriately %=", f, c);
     let nmcs =
       collecting ()
-	walk-lambda-computations
-	  (method (c) 
+        walk-lambda-computations
+          (method (c)
              when (primitive-call-to?(c, #"primitive-next-methods-parameter"))
                collect(c)
              end when
-           end method, 
-           mapped-body); 
+           end method,
+           mapped-body);
       end collecting;
     for (nmc in nmcs)
       // REPLACE NEXT-METHODS QUERY IN BODY WITH NEXT-METHODS FROM CALL
@@ -210,7 +180,6 @@ define method do-inline-call
   redirect-arguments!(c, f, mapped);
   let return-t = return-c.computation-value;
   re-optimize-users(c.temporary);
-  // format-out("RE-OPT %=\n", users(c.temporary));
   let (first, last, tmp)
     = if (~c.temporary | instance?(c.temporary, <multiple-value-temporary>))
         // is the call's temporary expecting different values than the
@@ -220,7 +189,7 @@ define method do-inline-call
                | rest-values?(c.temporary) ~= rest-values?(return-t)))
           let (adjust, adjust-temp) =
             make-with-temporary
-              (target-env, 
+              (target-env,
                if (rest-values?(c.temporary))
                  <adjust-multiple-values-rest> else <adjust-multiple-values>
                end,
@@ -237,7 +206,7 @@ define method do-inline-call
       else
         let (extract-c, extract-t)
           = make-with-temporary
-              (target-env, <extract-single-value>, 
+              (target-env, <extract-single-value>,
                temporary-class: temporary-class(c.temporary),
                value: return-t);
         re-optimize(extract-c);
@@ -250,16 +219,12 @@ define method do-inline-call
 end method;
 
 define method inline-call (c :: <function-call>, f :: <&iep>)
-  // format-out("MOVE INLINING %= %=\n", f.function, c);
-  // print-method-out(c.environment.lambda);
-  // format-out("--- OF ---\n");
-  // print-method-out(f.function);
   if (*colorize-dispatch*)
     color-dispatch(c, #"inlining")
   end;
   re-optimize-users(c.function); // MAYBE DELETE MAKE/INIT-CLOSURE IF PRESENT
   let f-body = f.body;
-  let inherited-location 
+  let inherited-location
     = if (~computation-source-location(f-body))
         parent-source-location()
       else
@@ -271,17 +236,13 @@ define method inline-call (c :: <function-call>, f :: <&iep>)
        computation-source-location(c)
          := computation-source-location(c) | inherited-location
      end,
-     f-body); 
+     f-body);
   do-inline-call(c, f, identity);
 end method inline-call;
 
 define method inline-call-copied (c :: <function-call>, f :: <&iep>)
   let code = f.function;
-  // format-out("COPY INLINING %= %=\n", code, c);
-  // print-method-out(c.environment.lambda);
-  // format-out("--- OF ---\n");
   ensure-method-dfm(code);
-  // print-method-out(code);
   if (code.body)
     if (*colorize-dispatch*)
       color-dispatch(c, #"inlining")
@@ -289,12 +250,11 @@ define method inline-call-copied (c :: <function-call>, f :: <&iep>)
     dynamic-bind (*inlining-depth* = call-inlining-depth(c) + 1)
       let copier = current-dfm-copier(estimated-copier-table-size(code));
       do-inline-call(c, f, curry(deep-copy, copier));
-      // print-method-out(c.environment.lambda);
     end dynamic-bind;
   else
     lambda-inlineable?(code) := #f;
     debug-out(#"inlining", "LOST %='s BODY FOR INLINING", code);
-  end if; 
+  end if;
 end method;
 
 define method extract-lambda-body-extent (body, env) => (first, last, return-c)
@@ -345,8 +305,8 @@ define method find-copy-downable-methods
   let methods-known = ^generic-function-methods-known(gf);
   unless (all-applicable-methods-guaranteed-known?(gf, req-te*))
     note(<unknown-copy-down-method-domain>,
-	 meth: m,
-	 source-location: m.model-source-location);
+         meth: m,
+         source-location: m.model-source-location);
   end;
   // Lose all methods that are known statically always to be more
   // specific than ourselves, leaving only methods known to be
@@ -354,10 +314,10 @@ define method find-copy-downable-methods
   // specific.
   let methods
     = choose(method (them :: <&method>)
-	       them == m
-		 | ~guaranteed-method-precedes?(them, m, req-te*)
-	     end method,
-	     methods-known);
+               them == m
+                 | ~guaranteed-method-precedes?(them, m, req-te*)
+             end method,
+             methods-known);
   guaranteed-sorted-applicable-methods(methods, req-te*);
 end method;
 
@@ -368,26 +328,26 @@ define compiler-sideways method copy-down-body (m :: <&copy-down-method>) => ()
 
   let meth = any?(real-method, sorted-applicable-methods) |
               begin
-		let others = choose(real-method, others);
-		if (others.size == 1)
-		  others.first
-		else
-		  let lib = model-library(m);
-		  let kludge = any?(method (a) model-library(a) == lib & a end,
-				    others);
-		  if (kludge)
-		    note(<ambiguous-copy-down-method>,
-			 meth: m,
-			 other-methods: others,
-			 source-location: m.model-source-location);
-		    kludge
-		  end;
-		end;
-	      end;
+                let others = choose(real-method, others);
+                if (others.size == 1)
+                  others.first
+                else
+                  let lib = model-library(m);
+                  let kludge = any?(method (a) model-library(a) == lib & a end,
+                                    others);
+                  if (kludge)
+                    note(<ambiguous-copy-down-method>,
+                         meth: m,
+                         other-methods: others,
+                         source-location: m.model-source-location);
+                    kludge
+                  end;
+                end;
+              end;
   if (~meth)
     note(<missing-copy-down-method>,
-	 meth: m,
-	 source-location: m.model-source-location);
+         meth: m,
+         source-location: m.model-source-location);
   else
     let  callee = meth.^iep ;
     let  f = callee.function ;
@@ -410,12 +370,12 @@ define compiler-sideways method copy-down-body (m :: <&copy-down-method>) => ()
 
     let stale-temporaries
       = collecting ()
-	  for-temporary (tmp in target-env)
-	    unless (member?(tmp, m.parameters))
-	      collect(tmp)
-	    end unless;
-	  end for-temporary;
-	end collecting;
+          for-temporary (tmp in target-env)
+            unless (member?(tmp, m.parameters))
+              collect(tmp)
+            end unless;
+          end for-temporary;
+        end collecting;
 
     for (tmp in stale-temporaries)
       remove-temporary!(target-env, tmp);
@@ -430,7 +390,7 @@ define compiler-sideways method copy-down-body (m :: <&copy-down-method>) => ()
       remove-temporary!(target-env, param);
     end for;
 
-    // markt: fix for keyword default vector.  Shame not to share these, 
+    // markt: fix for keyword default vector.  Shame not to share these,
     // but that is more complex to get right for the linker.
     if (instance?(f, <&keyword-method>))
       m.keyword-specifiers := mapper (f.keyword-specifiers) ;
@@ -462,21 +422,13 @@ define function redirect-args! (args, params, mapped :: <function>) => ()
   end
 end;
 
-define method redirect-arguments! 
+define method redirect-arguments!
     (c :: <function-call>, f :: <&lambda>, mapped :: <function>) => ()
-  redirect-args! (c.arguments, f.parameters, mapped)
+  redirect-args!(c.arguments, f.parameters, mapped)
 end method redirect-arguments!;
 
-// old version:
-//define method redirect-arguments! 
-//    (c :: <function-call>, f :: <&lambda>, mapped :: <function>) => ()
-//  for (parameter in f.parameters, argument in c.arguments)
-//    replace-temporary-in-users!(mapped(parameter), argument);
-//  end for;
-//end method redirect-arguments!;
-
-define method move-code-into! 
-    (f :: <&lambda>, env :: <environment>, mapped :: <function>) 
+define method move-code-into!
+    (f :: <&lambda>, env :: <environment>, mapped :: <function>)
  => (mapped-body)
   // THESE SHOULD BE IN ENVIRONMENT.DYLAN
   let f-env = f.environment;
@@ -509,9 +461,10 @@ define method move-code-into!
   let old-q = lambda.optimization-queue;
   lambda.optimization-queue := make(<optimization-queue>, code: mapped-body);
 
-  walk-lambda-computations
-    (method (c :: <computation>) c.environment := env; re-optimize-into!(c, lambda); end, 
-     mapped-body); 
+  walk-lambda-computations(method (c :: <computation>)
+                             c.environment := env; re-optimize-into!(c, lambda);
+                           end,
+                           mapped-body);
 
   let mapped-q = lambda.optimization-queue;
   lambda.optimization-queue := old-q;

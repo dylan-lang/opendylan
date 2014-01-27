@@ -6,7 +6,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-// TODO: It's probably the right thing to do the detailed compatibility 
+// TODO: It's probably the right thing to do the detailed compatibility
 // checking even in loose mode and it's not going to be exploited. Take
 // care that the checking doesn't get switched off by the loose mode
 // switch.
@@ -45,9 +45,9 @@ define constant <type-or-est> = type-union(<&type>, <type-estimate>);
 /// Returns true only if all instances conforming to the type-estimate
 /// are guaranteed to be instances of the given Dylan type.
 ///
-/// Test case: 
+/// Test case:
 ///
-/// define sealed abstract class <a> (<object>) end; 
+/// define sealed abstract class <a> (<object>) end;
 /// define open   concrete class <b> (<object>) end;
 /// define        concrete class <c> (<a>, <b>) end;
 ///
@@ -93,27 +93,28 @@ define method guaranteed-joint?(t1 :: <type-estimate>, t2 :: <type-estimate>)
 end;
 
 define method guaranteed-joint?(t1 :: <type-estimate-limited-instance>,
-				t2 :: <&type>)
+                                t2 :: <&type>)
  => (res :: <boolean>)
-  // Singleton type estimates can be decided quickly, w/o typist overhead. 
+  // Singleton type estimates can be decided quickly, w/o typist overhead.
   ^instance?(type-estimate-singleton(t1), t2)
 end;
-   
+
 // Disambiguating methods
 define method guaranteed-joint?(t1 :: <type-estimate-limited-instance>,
-				t2 :: <&top-type>)
+                                t2 :: <&top-type>)
  => (res :: singleton(#t))
   #t
 end;
+
 define method guaranteed-joint?(t1 :: <type-estimate-limited-instance>,
-				t2 :: <&bottom-type>)
+                                t2 :: <&bottom-type>)
  => (res :: singleton(#f))
   #f
 end;
 
 define method guaranteed-joint?(t1 :: <&singleton>, t2 :: <&type>)
  => (res :: <boolean>)
-  // Singleton model types can be decided quickly, w/o typist overhead. 
+  // Singleton model types can be decided quickly, w/o typist overhead.
   ^instance?(^singleton-object(t1), t2)
 end;
 
@@ -122,6 +123,7 @@ define method guaranteed-joint?(t1 :: <&singleton>, t2 :: <&top-type>)
  => (res :: singleton(#t))
   #t
 end;
+
 define method guaranteed-joint?(t1 :: <&singleton>, t2 :: <&bottom-type>)
  => (res :: singleton(#f))
   #f
@@ -157,7 +159,7 @@ define method guaranteed-joint? (t1 :: <type-estimate-bottom>, t2 :: <&bottom-ty
   // Believe it or not, this comes up in checking the "return" type of error!
   #t
 end;
-  
+
 define method guaranteed-joint? (t1 :: <&bottom-type>, t2 :: <type-estimate-bottom>)
  => (res :: singleton(#t))
   // But bottom is joint with itself.
@@ -180,7 +182,7 @@ define method guaranteed-joint? (t1 :: <&bottom-type>, t2 :: <&bottom-type>)
 end;
 
 ///
-/// guaranteed-disjoint?(t1, t2) -- #t if any instance of t1 is guaranteed 
+/// guaranteed-disjoint?(t1, t2) -- #t if any instance of t1 is guaranteed
 ///    never to be an instance of t2.  NB: If t1 is a subtype of t2, then EVERY
 ///    instance of t1 is an instance of t2.  If t2 is a subtype of t1, then SOME
 ///    (indirect) instances of t1 are (direct) instances of t2.  So t1 & t2
@@ -191,28 +193,28 @@ end;
 ///    DRM p.49 gives disjointness rules.
 ///
 
-define generic guaranteed-disjoint?(t1 :: <type-or-est>, t2 :: <type-or-est>)
+define generic guaranteed-disjoint? (t1 :: <type-or-est>, t2 :: <type-or-est>)
   => (res :: <boolean>);
 
-define method guaranteed-disjoint?(t1 :: <&type>, t2 :: <type-estimate>)
+define method guaranteed-disjoint? (t1 :: <&type>, t2 :: <type-estimate>)
  => (res :: <boolean>)
   // Coerce first arg to a <type-estimate>.
   type-estimate-disjoint?(as(<type-estimate>, t1), t2)
 end;
 
-define method guaranteed-disjoint?(t1 :: <type-estimate>, t2 :: <&type>)
+define method guaranteed-disjoint? (t1 :: <type-estimate>, t2 :: <&type>)
  => (res :: <boolean>)
   // Coerce second arg to a <type-estimate>.
   type-estimate-disjoint?(t1, as(<type-estimate>, t2))
 end;
 
-define method guaranteed-disjoint?(t1 :: <&type>, t2 :: <&type>)
+define method guaranteed-disjoint? (t1 :: <&type>, t2 :: <&type>)
  => (res :: <boolean>)
   // Coerce both args to a <type-estimate>.
   type-estimate-disjoint?(as(<type-estimate>, t1), as(<type-estimate>, t2))
 end;
 
-define method guaranteed-disjoint?(t1 :: <type-estimate>, t2 :: <type-estimate>)
+define method guaranteed-disjoint? (t1 :: <type-estimate>, t2 :: <type-estimate>)
  => (res :: <boolean>)
   // Both are <type-estimate>s, so hand off
   type-estimate-disjoint?(t1, t2)
@@ -224,113 +226,115 @@ end;
 /// frequently-occurring cases.
 ///
 
-define method guaranteed-disjoint?(t1 :: <type-estimate-limited-instance>,
-	                           t2 :: <&type>)
+define method guaranteed-disjoint? (t1 :: <type-estimate-limited-instance>,
+                                    t2 :: <&type>)
  => (res :: <boolean>)
   // Singleton type estimates can be quickly decided here.
   ~^instance?(type-estimate-singleton(t1), t2)
 end;
-   
-define method guaranteed-disjoint?(t1 :: <&type>,
-                                   t2 :: <type-estimate-limited-instance>)
+
+define method guaranteed-disjoint? (t1 :: <&type>,
+                                    t2 :: <type-estimate-limited-instance>)
  => (res :: <boolean>)
   // Singleton type estimates can be quickly decided here.
   ~^instance?(type-estimate-singleton(t2), t1)
 end;
 
-define method guaranteed-disjoint?(t1 :: <&singleton>, t2 :: <&type>)
+define method guaranteed-disjoint? (t1 :: <&singleton>, t2 :: <&type>)
  => (res :: <boolean>)
   // Singleton model types can be quickly decided here.
   ~^instance?(^singleton-object(t1), t2)
 end;
 
-define method guaranteed-disjoint?(t1 :: <&type>, t2 :: <&singleton>)
+define method guaranteed-disjoint? (t1 :: <&type>, t2 :: <&singleton>)
  => (res :: <boolean>)
   // Singleton model types can be quickly decided here.
   ~^instance?(^singleton-object(t2), t1)
 end;
 
-define method guaranteed-disjoint?(c1 :: <&class>, c2 :: <&class>)
+define method guaranteed-disjoint? (c1 :: <&class>, c2 :: <&class>)
  => (res :: <boolean>)
-  // Going through the typist would involve wrapping & then unwrapping the 
+  // Going through the typist would involve wrapping & then unwrapping the
   // <type-estimate>, so just apply directly to the eventual oracle.
   ^classes-guaranteed-disjoint?(c1, c2)
 end;
 
-define method guaranteed-disjoint?(c1 :: <&class>, c2 :: <type-estimate-class>)
+define method guaranteed-disjoint? (c1 :: <&class>, c2 :: <type-estimate-class>)
  => (res :: <boolean>)
-  // Going through the typist would involve wrapping & then unwrapping the 
+  // Going through the typist would involve wrapping & then unwrapping the
   // <type-estimate>, so just apply directly to the eventual oracle.
   ^classes-guaranteed-disjoint?(c1, type-estimate-class(c2))
 end;
 
-define method guaranteed-disjoint?(c1 :: <type-estimate-class>, c2 :: <&class>)
+define method guaranteed-disjoint? (c1 :: <type-estimate-class>, c2 :: <&class>)
  => (res :: <boolean>)
-  // Going through the typist would involve wrapping & then unwrapping the 
+  // Going through the typist would involve wrapping & then unwrapping the
   // <type-estimate>, so just apply directly to the eventual oracle.
   ^classes-guaranteed-disjoint?(type-estimate-class(c1), c2)
 end;
 
-define method guaranteed-disjoint?(c1 :: <&class>, c2 :: <type-estimate-limited-collection>)
+define method guaranteed-disjoint? (c1 :: <&class>,
+                                    c2 :: <type-estimate-limited-collection>)
  => (res :: <boolean>)
-  // Going through the typist would involve wrapping & then unwrapping the 
+  // Going through the typist would involve wrapping & then unwrapping the
   // <type-estimate>, so just apply directly to the eventual oracle.
   ^classes-guaranteed-disjoint?
     (c1, type-estimate-concrete-class(c2) | type-estimate-class(c2))
 end;
 
-define method guaranteed-disjoint?(c1 :: <type-estimate-limited-collection>, c2 :: <&class>)
+define method guaranteed-disjoint? (c1 :: <type-estimate-limited-collection>,
+                                    c2 :: <&class>)
  => (res :: <boolean>)
-  // Going through the typist would involve wrapping & then unwrapping the 
+  // Going through the typist would involve wrapping & then unwrapping the
   // <type-estimate>, so just apply directly to the eventual oracle.
   ^classes-guaranteed-disjoint?
     (type-estimate-concrete-class(c1) | type-estimate-class(c1), c2)
 end;
 
-define method guaranteed-disjoint?(c1 :: <type-estimate-limited-instance>,
-				   c2 :: <&class>)
+define method guaranteed-disjoint? (c1 :: <type-estimate-limited-instance>,
+                                    c2 :: <&class>)
  => (res :: <boolean>)
-  // Going through the typist would involve wrapping & then unwrapping the 
+  // Going through the typist would involve wrapping & then unwrapping the
   // <type-estimate>, so just apply directly to the eventual oracle.
   ~^instance?(type-estimate-singleton(c1), c2)
 end;
 
 
-define method guaranteed-disjoint?(c1 :: <type-estimate-class>, 
-                                   c2 :: <type-estimate-class>)
+define method guaranteed-disjoint? (c1 :: <type-estimate-class>,
+                                    c2 :: <type-estimate-class>)
  => (res :: <boolean>)
-  // Going through the typist would involve wrapping & then unwrapping the 
+  // Going through the typist would involve wrapping & then unwrapping the
   // <type-estimate>, so just apply directly to the eventual oracle.
   ^classes-guaranteed-disjoint?(type-estimate-class(c1),type-estimate-class(c2))
 end;
 
-define method guaranteed-disjoint?(c1 :: <type-estimate-limited-collection>, 
-                                   c2 :: <type-estimate-limited-collection>)
+define method guaranteed-disjoint? (c1 :: <type-estimate-limited-collection>,
+                                    c2 :: <type-estimate-limited-collection>)
  => (res :: <boolean>)
-  // Going through the typist would involve wrapping & then unwrapping the 
+  // Going through the typist would involve wrapping & then unwrapping the
   // <type-estimate>, so just apply directly to the eventual oracle.
   type-estimate-disjoint?(c1, c2)
 end;
 
 // I just happen to know that <top> will only occur on the right
-define method guaranteed-disjoint?(c1 :: <type-estimate>, 
-                                   c2 :: <&top-type>)
+define method guaranteed-disjoint? (c1 :: <type-estimate>,
+                                    c2 :: <&top-type>)
  => (res :: singleton(#f))
   #f
 end;
 
-define method guaranteed-disjoint?(c1 :: <&type>, 
-                                   c2 :: <&top-type>)
+define method guaranteed-disjoint? (c1 :: <&type>,
+                                    c2 :: <&top-type>)
  => (res :: singleton(#f))
   #f
 end;
 
-define method guaranteed-disjoint?(t1 :: <type-estimate>, t2 :: <&bottom-type>)
+define method guaranteed-disjoint? (t1 :: <type-estimate>, t2 :: <&bottom-type>)
  => (res :: singleton(#t))
   #t
 end;
 
-define method guaranteed-disjoint?(t1 :: <&type>, t2 :: <&bottom-type>)
+define method guaranteed-disjoint? (t1 :: <&type>, t2 :: <&bottom-type>)
  => (res :: singleton(#t))
   #t
 end;
@@ -342,14 +346,14 @@ end;
 ///    are guaranteed not to be instances of the given Dylan type.
 ///
 
-define function potentially-joint? 
+define function potentially-joint?
     (type-estimate :: <type-estimate>, type :: <&type>) => (res :: <boolean>)
   // Not provably DISjoint.
   ~guaranteed-disjoint?(type-estimate, type)
 end;
 
 ///
-/// effectively-disjoint?(t1, t2) -- #t if any instance of t1 is unlikely 
+/// effectively-disjoint?(t1, t2) -- #t if any instance of t1 is unlikely
 ///    to be an instance of t2. This function is only used for warnings
 ///    generation. No optimizations may be made based on this notion of
 ///    disjointness.
@@ -365,12 +369,12 @@ define method null-type? (t :: <type-estimate>) => (well? :: <boolean>)
     & type-estimate-singleton(t) == #f
 end method;
 
-define method denull-type-estimate 
+define method denull-type-estimate
     (t :: <type-estimate>) => (t :: <type-estimate>)
   t
 end method;
 
-define method denull-type-estimate 
+define method denull-type-estimate
     (t :: <type-estimate-limited-instance>) => (t :: <type-estimate>)
   if (type-estimate-singleton(t) == #f)
     make(<type-estimate-bottom>)
@@ -379,7 +383,7 @@ define method denull-type-estimate
   end;
 end method;
 
-define method maybe-type-estimate-union 
+define method maybe-type-estimate-union
     (unionees :: <list>) => (t :: <type-estimate>)
   if (empty?(unionees.tail))
     unionees.head
@@ -388,7 +392,7 @@ define method maybe-type-estimate-union
   end
 end method;
 
-define method denull-type-estimate 
+define method denull-type-estimate
     (t :: <type-estimate-union>) => (t :: <type-estimate>)
   let unionees = type-estimate-unionees(t);
   if (any?(null-type?, unionees))
@@ -404,16 +408,16 @@ end method;
 
 define method union-of-values? (t :: <type-estimate>) => (well? :: <boolean>)
   instance?(t, <type-estimate-union>)
-    & every?(rcurry(instance?, <type-estimate-values>), 
+    & every?(rcurry(instance?, <type-estimate-values>),
              type-estimate-unionees(t))
 end method;
 
-define method flatten-union-of-values 
+define method flatten-union-of-values
     (t :: <type-estimate>) => (t :: <type-estimate>)
   t
 end method;
 
-define method flatten-union-of-values 
+define method flatten-union-of-values
     (union :: <type-estimate-union>) => (vals :: <type-estimate-values>)
   let unionees = type-estimate-unionees(union);
   let vals1 = unionees.first;
@@ -423,24 +427,22 @@ define method flatten-union-of-values
     = make(<simple-object-vector>, size: n-fixed, fill: #());
   let rest-unionees = #();
   for (vals :: <type-estimate-values> in unionees)
-    for (i from 0, 
+    for (i from 0,
          fixed-i :: <type-estimate> in type-estimate-fixed-values(vals))
-      fixed-unionees-sequence[i] 
+      fixed-unionees-sequence[i]
         := add-new!(fixed-unionees-sequence[i], fixed-i);
-    end;  
+    end;
     if (rest?)
-      rest-unionees 
+      rest-unionees
         := add-new!(rest-unionees, type-estimate-rest-values(vals));
     end;
   end;
-  let result = 
-  make(<type-estimate-values>, 
+  make(<type-estimate-values>,
        fixed: map(method (unionees :: <list>)
                     maybe-type-estimate-union(unionees)
                   end,
                   fixed-unionees-sequence),
-       rest: rest? & maybe-type-estimate-union(rest-unionees));
-  result
+       rest: rest? & maybe-type-estimate-union(rest-unionees))
 end method;
 
 define method effectively-disjoint?
@@ -452,7 +454,7 @@ define method effectively-disjoint?
     effectively-disjoint?
       (flatten-union-of-values(t1), flatten-union-of-values(t2));
   else
-    // When neither is just null on its own, we apply the denulling 
+    // When neither is just null on its own, we apply the denulling
     // heuristic.
     let denulled-t1 = denull-type-estimate(t1);
     let denulled-t2 = denull-type-estimate(t2);
@@ -477,7 +479,7 @@ define method effectively-disjoint?
             => (value :: <type-estimate>, rest? :: <boolean>)
           // Get the ith value type, using #rest value if necessary
           case
-            i < size(type-estimate-fixed-values(val)) 
+            i < size(type-estimate-fixed-values(val))
               // Wants a positional value
               => values(type-estimate-fixed-values(val)[i], #f);
             type-estimate-rest-values(val)
@@ -547,7 +549,7 @@ end method;
 ///    argument to a generic function. The predicate returns #t if type1
 ///    is more specific than type2 for all instances conforming to
 ///    type-estimate (according to the rules on page 94 of the September
-///    '95 DRM). 
+///    '95 DRM).
 ///
 /// So, for example, in:
 ///
@@ -569,29 +571,29 @@ end method;
 /// monotonicity!
 ///
 
-define generic guaranteed-preceding-specializer?(t1  :: <type-or-est>,
-                                                 t2  :: <type-or-est>,
-                                                 arg :: <type-or-est>) 
+define generic guaranteed-preceding-specializer? (t1  :: <type-or-est>,
+                                                  t2  :: <type-or-est>,
+                                                  arg :: <type-or-est>)
   => (always-precedes? :: <boolean>);
 
 // *** Stub for later improvement.
-define method guaranteed-preceding-specializer? (type1  :: <&type>, 
-                                                 type2  :: <&type>, 
+define method guaranteed-preceding-specializer? (type1  :: <&type>,
+                                                 type2  :: <&type>,
                                                  arg-te :: <type-estimate>)
  => (res :: <boolean>)
   ^subtype?(type1, type2)
 end;
 
-define generic slot-fixed-offset-in (sd :: <&slot-descriptor>, 
-				     te :: <type-estimate>)
+define generic slot-fixed-offset-in (sd :: <&slot-descriptor>,
+                                     te :: <type-estimate>)
     // Is this slot at fixed offset, when referenced from something of type te?
     // When this is called, we know that the slot accessor method is
     // applicable, so we only have to deal with type estimates that
     // apply to objects which could be of classes which inherit the slot.
  => (offset :: false-or(<integer>));
 
-define method slot-fixed-offset-in (sd :: <&slot-descriptor>, 
-				    te :: <type-estimate-class>)
+define method slot-fixed-offset-in (sd :: <&slot-descriptor>,
+                                    te :: <type-estimate-class>)
  => (offset :: false-or(<integer>))
   // Unwrapping trampoline
   let class = type-estimate-class(te);
@@ -599,15 +601,15 @@ define method slot-fixed-offset-in (sd :: <&slot-descriptor>,
     ^slot-fixed-offset(sd, class)
 end;
 
-define method slot-fixed-offset-in (sd :: <&slot-descriptor>, 
-				    te :: <type-estimate-limited-collection>)
+define method slot-fixed-offset-in (sd :: <&slot-descriptor>,
+                                    te :: <type-estimate-limited-collection>)
  => (offset :: false-or(<integer>))
   let class = type-estimate-concrete-class(te);
   slot-fixed-offset-in(sd, as(<type-estimate>, class));
 end;
 
-define method slot-fixed-offset-in (sd :: <&slot-descriptor>, 
-				    te :: <type-estimate-union>)
+define method slot-fixed-offset-in (sd :: <&slot-descriptor>,
+                                    te :: <type-estimate-union>)
  => (offset :: false-or(<integer>))
   // Unwrapping trampoline
   let offset = #f;
@@ -620,45 +622,45 @@ define method slot-fixed-offset-in (sd :: <&slot-descriptor>,
     for (te in type-estimate-unionees(te))
       let te-offset = slot-fixed-offset-in(sd, te);
       if (te-offset)
-	if (offset)
-	  unless (offset = te-offset)
-	    return(#f);
-	  end;
-	else
-	  offset := te-offset;
-	end;
+        if (offset)
+          unless (offset = te-offset)
+            return(#f);
+          end;
+        else
+          offset := te-offset;
+        end;
       else
-	return(#f);
+        return(#f);
       end;
     end;
     offset
   end
 end;
 
-define generic slot-guaranteed-initialized-in? (sd :: <&slot-descriptor>, 
-						te :: <type-estimate>)
+define generic slot-guaranteed-initialized-in? (sd :: <&slot-descriptor>,
+                                                te :: <type-estimate>)
  => (initialized? :: <boolean>);
 
-define method slot-guaranteed-initialized-in? (sd :: <&slot-descriptor>, 
-					       te :: <type-estimate-class>)
+define method slot-guaranteed-initialized-in? (sd :: <&slot-descriptor>,
+                                               te :: <type-estimate-class>)
  => (initialized? :: <boolean>)
   // Unwrapping trampoline
   slot-guaranteed-initialized-in-class?(sd, type-estimate-class(te))
 end;
 
-define method slot-guaranteed-initialized-in? (sd :: <&slot-descriptor>, 
-					       te :: <type-estimate-union>)
+define method slot-guaranteed-initialized-in? (sd :: <&slot-descriptor>,
+                                               te :: <type-estimate-union>)
  => (initialized? :: <boolean>)
   // Unwrapping trampoline
   every?(curry(slot-guaranteed-initialized-in?, sd),
-	 type-estimate-unionees(te))
+         type-estimate-unionees(te))
 end;
 
 //// Extended entry point analysis.
 
 // At this point we know that the call is interface-compatible with the
 // generic function since this has to be true for upgrading to be
-// attempted. 
+// attempted.
 
 // If we can prove this generic call will have a known applicable method
 // chain of size one (or more some day), upgrade the call to a call to
@@ -667,14 +669,14 @@ end;
 define variable *profile-all-calls?* = #f;
 define variable *partial-dispatch?*  = #f;
 
-define inline function call-site-caches-ok? 
+define inline function call-site-caches-ok?
     (c :: <simple-call>, f :: <&generic-function>) => (well? :: <boolean>)
   let f = lambda(environment(c));
   if (lambda-initializer?(f))
     #f
   // elseif (compiling-dylan-library?())
   //  #f
-  else 
+  else
     #t
   end if;
 end function;
@@ -690,60 +692,31 @@ define method maybe-upgrade-call
   if (dispatch-state(c) == $dispatch-untried)
     let arg-te* :: <argument-sequence> = argument-type-estimates(c);
     //  effectives is non-empty only if all methods are known:
-    let effectives :: <method-sequence> = estimate-effective-methods(f, arg-te*, c);
+    let effectives :: <method-sequence> =
+      estimate-effective-methods(f, arg-te*, c);
     dispatch-state(c) := $dispatch-tried;
     // Try method upgrading
-    (~empty?(effectives) & maybe-upgrade-gf-to-method-call(c, f, arg-te*, effectives))
+    (~empty?(effectives)
+       & maybe-upgrade-gf-to-method-call(c, f, arg-te*, effectives))
       |
       (call-site-caches-ok?(c, f)
-	 & case
-	     *partial-dispatch?*
-	       => maybe-upgrade-gf-to-partial-dispatch(c, f, arg-te*);
-	     *profile-all-calls?*
-	       => upgrade-gf-to-profiling-call-site-cache(c, f, arg-te*);
-	     otherwise
-	       => maybe-upgrade-gf-to-call-site-cache(c, f, arg-te*);
-	   end case)
+         & case
+             *partial-dispatch?*
+               => maybe-upgrade-gf-to-partial-dispatch(c, f, arg-te*);
+             *profile-all-calls?*
+               => upgrade-gf-to-profiling-call-site-cache(c, f, arg-te*);
+             otherwise
+               => maybe-upgrade-gf-to-call-site-cache(c, f, arg-te*);
+           end case)
       |
       next-method()
   else
     next-method();
   end;
 end;
-//define method maybe-upgrade-call 
-//    (c :: <simple-call>, f :: <&generic-function>) => (res :: <boolean>)
-//  // The dispatch state prevents analysis being done again on a second
-//  // pass over the code, either due to feedback or to the call 
-//  // computation being copied by inlining.
-//  // TODO: If things become more precise after inlining, allow dispatch
-//  // to be selectively redone by recording the previous inputs? Except
-//  // that CPA won't work like this anyway.
-//  if (dispatch-state(c) == $dispatch-untried)
-//    let arg-te* :: <argument-sequence> = argument-type-estimates(c);
-//    let effectives :: <method-sequence> = estimate-effective-methods(f, arg-te*, c);
-//    dispatch-state(c) := $dispatch-tried;
-//    // Try method upgrading
-//    if (*profile-all-calls?*)
-//      upgrade-gf-to-profiling-call-site-cache(c, f, arg-te*)
-//    else
-//      (~empty?(effectives) & maybe-upgrade-gf-to-method-call(c, f, arg-te*, effectives))
-//	|
-//	if (*partial-dispatch?*)
-//	  maybe-upgrade-gf-to-partial-dispatch(c, f, arg-te*)
-//	else
-//	  maybe-upgrade-gf-to-call-site-cache(c, f, arg-te*)
-//	end 
-//	|
-//	next-method()
-//    end if
-//  else
-//    next-method();
-//  end;
-//end;
-
 
 define function maybe-upgrade-gf-to-method-call
-    (c :: <simple-call>, f :: <&generic-function>, 
+    (c :: <simple-call>, f :: <&generic-function>,
      arg-te* :: <argument-sequence>, effectives :: <method-sequence>)
  => (res :: <boolean>)
   // if we've got this far, all methods are known (== effectives)
@@ -751,25 +724,25 @@ define function maybe-upgrade-gf-to-method-call
   if (instance?(effective, <&accessor-method>))
     let slot-descriptor = get-method-slot-descriptor(effective);
     if (instance?(slot-descriptor, <&any-instance-slot-descriptor>)
-	  & size(effectives) = 1) // TODO: HANDLE NEXT-METHOD 
+          & size(effectives) = 1) // TODO: HANDLE NEXT-METHOD
       // gsb:  no, there is nothing to handle with next-method here.
       let arg-te = arg-te*[accessor-method-dispatch-arg(effective)];
       let offset = slot-fixed-offset-in(slot-descriptor, arg-te);
       if (offset)
-	if (*colorize-dispatch*)
-	  color-dispatch(c, #"slot-accessor-fixed-offset")
-	end;
-	incf-static-dispatch-count();
-	upgrade-call-to-slot-accessor(c, effective, slot-descriptor,
-				      offset, arg-te);
-	#t
+        if (*colorize-dispatch*)
+          color-dispatch(c, #"slot-accessor-fixed-offset")
+        end;
+        incf-static-dispatch-count();
+        upgrade-call-to-slot-accessor(c, effective, slot-descriptor,
+                                      offset, arg-te);
+        #t
       else
-	// the g.f. dispatcher does a better job than direct-calling
-	// the accessor method, so leave it as a g.f. call
-	if (*colorize-dispatch*)
-	  color-dispatch(c, #"lambda-call")
-	end;
-	#f
+        // the g.f. dispatcher does a better job than direct-calling
+        // the accessor method, so leave it as a g.f. call
+        if (*colorize-dispatch*)
+          color-dispatch(c, #"lambda-call")
+        end;
+        #f
       end
     else
       // if 1st of several effective methods is a slot access,
@@ -780,7 +753,7 @@ define function maybe-upgrade-gf-to-method-call
       #f   // ditto if any effectives are a slot access
   else
     // and if no effectives are slot accesses, upgrade to method call
-    let method-call 
+    let method-call
       = upgrade-to-method-call!
       (c, effective, tail(effectives), <method-call>);
     re-optimize(method-call); // Is this the right place to do this?
@@ -789,65 +762,12 @@ define function maybe-upgrade-gf-to-method-call
   end
 end function;
 
-/*
- * define function maybe-upgrade-gf-to-method-call
- *      (c :: <simple-call>, f :: <&generic-function>, 
- *      arg-te* :: <argument-sequence>, effectives :: <method-sequence>)
- *  => (res :: <boolean>)
- *   let effective = head(effectives);
- *   if (instance?(effective, <&accessor-method>))
- *     let slot-descriptor = get-method-slot-descriptor(effective);
- *     if (instance?(slot-descriptor, <&any-instance-slot-descriptor>)
- * 	  & size(effectives) = 1) // TODO: HANDLE NEXT-METHOD 
- *       // gsb:  no, there is nothing to handle with next-method here.
- *       let arg-te = arg-te*[accessor-method-dispatch-arg(effective)];
- *       let offset = slot-fixed-offset-in(slot-descriptor, arg-te);
- *       if (offset)
- * 	if (*colorize-dispatch*)
- * 	  color-dispatch(c, #"slot-accessor-fixed-offset")
- * 	end;
- * 	upgrade-call-to-slot-accessor(c, effective, slot-descriptor,
- * 				      offset, arg-te);
- * 	#t
- *       else
- * 	// the g.f. dispatcher does a better job than direct-calling
- * 	// the accessor method, so leave it as a g.f. call
- * 	if (*colorize-dispatch*)
- * 	  color-dispatch(c, #"failed-to-select-where-all-known")
- * 	end;
- * 	#f
- *       end
- *     else
- *       // the g.f. dispatcher does a better job than direct-calling
- *       // the accessor method, so leave it as a g.f. call
- *       if (*colorize-dispatch*)
- * 	color-dispatch(c, #"failed-to-select-where-all-known")
- *       end;
- *       #f
- *     end
- *   elseif (any?(rcurry(instance?, <&accessor-method>), tail(effectives)))
- *       if (*colorize-dispatch*)
- * 	color-dispatch(c, #"failed-to-select-where-all-known")
- *       end;
- *       #f
- *   else
- *     let method-call 
- *       = upgrade-to-method-call!
- *       (c, effective, tail(effectives), <method-call>);
- *     re-optimize(method-call); // Is this the right place to do this?
- *     maybe-upgrade-call(method-call, effective);
- *     #t
- *   end
- * end function;
- * 
- */
-
 ///
 /// GF PARTIAL DISPATCH CALLS
 ///
 
-define function compute-partial-dispatch-cache-mask 
-    (g :: <&generic-function>, arg-te* :: <argument-sequence>, 
+define function compute-partial-dispatch-cache-mask
+    (g :: <&generic-function>, arg-te* :: <argument-sequence>,
      call :: <simple-call>, effectives :: <method-sequence>)
  => (mask :: <integer>, arg-te* :: false-or(<argument-sequence>))
   let gsig = ^function-signature(g);
@@ -858,46 +778,45 @@ define function compute-partial-dispatch-cache-mask
     let nargs :: <integer> = min(nargs, $partial-dispatch-arguments-limit);
     let obj :: <&class> = dylan-value(#"<object>");
     let mask :: <integer> = 0;
-    let ans :: <argument-sequence> 
+    let ans :: <argument-sequence>
       = (collecting (as <argument-sequence>)
-	   for (m :: <integer> = 1 then ash(m, 1),
-		arg-te in arg-te*, 
-		lim :: <integer> from 0 below nargs)
-	     let t = as(<&type>, arg-te);
-	     unless (t == obj)
-	       mask := logior(mask, m);
-	       if (instance?(t, <&singleton>))
-		 debug-out(#"partial-dispatch", ">>> Got singleton %= \n", ^singleton-object(t));
-		 let object
-		   = ^singleton-object(t);
-		 let type 
-		   = if (instance?(object, <&class>) | object == #f)
-		       t
-		     else 
-		       ^object-class(object)
-		     end if;
-		 collect(type)
-	       else 
-		 debug-out(#"partial-dispatch", ">>> Got type %= \n", t);
-		 collect(t)
-	       end if
-	     end unless;
-	   end for
-	end collecting);
+           for (m :: <integer> = 1 then ash(m, 1),
+                arg-te in arg-te*,
+                lim :: <integer> from 0 below nargs)
+             let t = as(<&type>, arg-te);
+             unless (t == obj)
+               mask := logior(mask, m);
+               if (instance?(t, <&singleton>))
+                 debug-out(#"partial-dispatch", ">>> Got singleton %= \n", ^singleton-object(t));
+                 let object
+                   = ^singleton-object(t);
+                 let type
+                   = if (instance?(object, <&class>) | object == #f)
+                       t
+                     else
+                       ^object-class(object)
+                     end if;
+                 collect(type)
+               else
+                 debug-out(#"partial-dispatch", ">>> Got type %= \n", t);
+                 collect(t)
+               end if
+             end unless;
+           end for
+        end collecting);
     values(mask, mask ~== 0 & ans)
   end if
 end function;
 
-		    
 define method maybe-upgrade-gf-to-partial-dispatch
-    (c :: <simple-call>, f :: <&generic-function>, 
+    (c :: <simple-call>, f :: <&generic-function>,
      arg-te* :: <argument-sequence>)
  => (res :: <boolean>)
   maybe-upgrade-gf-to-partial-dispatch-1(c, f, arg-te*, 0)
 end method;
 
 define method maybe-upgrade-gf-to-partial-dispatch
-    (c :: <engine-node-call>, f :: <&generic-function>, 
+    (c :: <engine-node-call>, f :: <&generic-function>,
      arg-te* :: <argument-sequence>)
  => (res :: <boolean>)
   maybe-upgrade-gf-to-partial-dispatch-1
@@ -905,16 +824,15 @@ define method maybe-upgrade-gf-to-partial-dispatch
 end method;
 
 define function maybe-upgrade-gf-to-partial-dispatch-1
-    (c :: <simple-call>, f :: <&generic-function>, 
+    (c :: <simple-call>, f :: <&generic-function>,
      arg-te* :: <argument-sequence>, premask :: <integer>)
  => (res :: <boolean>)
-  
   let candidates :: <method-sequence> =
     if (all-applicable-methods-guaranteed-known?(f, arg-te*))
       let methods-known
-	= ^generic-function-methods-known(f);
-      let (leading-sorted, others) 
-	= guaranteed-sorted-applicable-methods(methods-known, arg-te*);
+        = ^generic-function-methods-known(f);
+      let (leading-sorted, others)
+        = guaranteed-sorted-applicable-methods(methods-known, arg-te*);
       concatenate(leading-sorted, others)
     else
       #()
@@ -926,27 +844,27 @@ define function maybe-upgrade-gf-to-partial-dispatch-1
   local method collect-failure-types ()
           collecting ()
             for (i :: <integer> from 0, spec in arg-te*)
-	      unless (logbit?(i, mask))
+              unless (logbit?(i, mask))
                 collect(list(i, spec))
-	      end
-	    end;
-	  end
-	end method;
+              end
+            end;
+          end
+        end method;
   if (mask == premask) // Already dealing with all possible arg positions.
     note-when(*trace-call-cache-failure*,
-	      <failed-to-eliminate-partial-type-checking>,
-	      source-location:       dfm-source-location(c),
-	      context-id:            dfm-context-id(c),
-	      failed-parameters:     collect-failure-types(),
-	      failed-generic:        f.model-variable-name,
-	      failed-type-estimates: arg-te*);
+              <failed-to-eliminate-partial-type-checking>,
+              source-location:       dfm-source-location(c),
+              context-id:            dfm-context-id(c),
+              failed-parameters:     collect-failure-types(),
+              failed-generic:        f.model-variable-name,
+              failed-type-estimates: arg-te*);
     #f
   else
     // let trymask :: <integer> = logand(mask, lognot(premask));
     format-when(*trace-call-cache-success*,
-		"Call site cache upgrade from %d to %d on %=\n", 
-		premask, mask, c);
-    let engine-call 
+                "Call site cache upgrade from %d to %d on %=\n",
+                premask, mask, c);
+    let engine-call
       = upgrade-to-partial-dispatch-call!
           (c, f, mask, success-types, <engine-node-call>);
     re-optimize(engine-call);
@@ -961,13 +879,13 @@ define method maybe-wrap-profiling-engine-node
  => (res :: <&cache-header-engine-node>)
   if (*profile-all-calls?*)
     // accumulated in checking phase to allow for generics to change id
-    let engine-node 
+    let engine-node
       = ^make(<&profiling-call-site-cache-header-engine-node>,
-	      next:     call-site-cache,
-	      function: g);
+              next:     call-site-cache,
+              function: g);
     ^cache-header-engine-node-parent(call-site-cache) := engine-node;
     engine-node
-  else 
+  else
     call-site-cache
   end if
 end method;
@@ -984,68 +902,60 @@ end method;
 
 
 define method upgrade-to-partial-dispatch-call!
-    (call :: <function-call>, g :: <&generic-function>, 
+    (call :: <function-call>, g :: <&generic-function>,
      type-mask :: <integer>, types :: <argument-sequence>,
      new-call-class :: <class>)
-  let env 
-    = environment(call);
-  let function-ref
-    = make-object-reference(g);
+  let env = environment(call);
+  let function-ref = make-object-reference(g);
   let call-site-cache
-    = ^make(<&partial-dispatch-cache-header-engine-node> , 
-	    function:  g,
-	    types:     types,
-	    type-mask: type-mask);
+    = ^make(<&partial-dispatch-cache-header-engine-node>,
+            function:  g,
+            types:     types,
+            type-mask: type-mask);
   let engine-node-ref
     = make-object-reference(maybe-wrap-profiling-engine-node(g, call-site-cache));
-  let (first-c, last-c, new-arguments)
-    = method-call-arguments(call, g);
+  let (first-c, last-c, new-arguments) = method-call-arguments(call, g);
   let (call-c, call-t)
     = make-with-temporary
         (env, new-call-class,
-	 temporary-class: call-temporary-class(call),
-	 function:        function-ref,
-	 engine-node:     engine-node-ref,
-	 arguments:       new-arguments);
+         temporary-class: call-temporary-class(call),
+         function:        function-ref,
+         engine-node:     engine-node-ref,
+         arguments:       new-arguments);
   maybe-set-profiling-engine-node-call(reference-value(engine-node-ref), call-c);
   let (first-c, last-c) = join-2x1!(first-c, last-c, call-c);
   compatibility-state(call-c) := compatibility-state(call);
-  replace-call-computation!
-    (env, call, first-c, last-c, call-t);
+  replace-call-computation!(env, call, first-c, last-c, call-t);
   call-c
 end method;
 
 
 define method upgrade-to-profiling-call-site-cache-call!
-    (call :: <function-call>, g :: <&generic-function>, 
+    (call :: <function-call>, g :: <&generic-function>,
      types :: <argument-sequence>,
      new-call-class :: <class>)
-  let env 
-    = environment(call);
-  let function-ref
-    = make-object-reference(g);
+  let env = environment(call);
+  let function-ref = make-object-reference(g);
   let call-site-cache
     = ^make(<&simple-call-site-cache-header-engine-node>, function: g);
   let engine-node-ref
     = make-object-reference(maybe-wrap-profiling-engine-node(g, call-site-cache));
-  let (first-c, last-c, new-arguments)
-    = method-call-arguments(call, g);
+  let (first-c, last-c, new-arguments) = method-call-arguments(call, g);
   let (call-c, call-t)
     = make-with-temporary
         (env, new-call-class,
-	 temporary-class: call-temporary-class(call),
-	 function:        function-ref,
-	 engine-node:     engine-node-ref,
-	 arguments:       new-arguments);
+         temporary-class: call-temporary-class(call),
+         function:        function-ref,
+         engine-node:     engine-node-ref,
+         arguments:       new-arguments);
   maybe-set-profiling-engine-node-call(reference-value(engine-node-ref), call-c);
   let (first-c, last-c) = join-2x1!(first-c, last-c, call-c);
   compatibility-state(call-c) := compatibility-state(call);
-  replace-call-computation!
-    (env, call, first-c, last-c, call-t);
+  replace-call-computation!(env, call, first-c, last-c, call-t);
   call-c
 end method;
 
-define method upgrade-gf-to-profiling-call-site-cache 
+define method upgrade-gf-to-profiling-call-site-cache
     (c :: <simple-call>, f :: <&generic-function>, arg-te* :: <argument-sequence>)
   let engine-call = upgrade-to-profiling-call-site-cache-call!(c, f, arg-te*, <engine-node-call>);
   re-optimize(engine-call);
@@ -1057,13 +967,13 @@ end method;
 /// GF TYPECHECKED CALLS
 ///
 
-define function get-gf-typechecked-cache-mask (g :: <&generic-function>) 
+define function get-gf-typechecked-cache-mask (g :: <&generic-function>)
  => (m :: <pair>)
   ^generic-function-cache-info(g)
     | (begin
-	 let ans = compute-gf-typechecked-cache-mask(g);
-	 if (^%gf-cache(g) == #f) ^%gf-cache(g) := head(ans) end;
-	 ^generic-function-cache-info(g) := ans
+         let ans = compute-gf-typechecked-cache-mask(g);
+         if (^%gf-cache(g) == #f) ^%gf-cache(g) := head(ans) end;
+         ^generic-function-cache-info(g) := ans
        end)
 end function;
 
@@ -1076,7 +986,8 @@ define function compute-gf-typechecked-cache-mask (g :: <&generic-function>)
     // Don't do anything if there aren't at least two methods, or two arguments.
     #(0 . #f)
   elseif (^generic-function-sealed?(g))
-    let nargs :: <integer> = min(nargs, $simple-typechecked-cache-arguments-limit);
+    let nargs :: <integer>
+      = min(nargs, $simple-typechecked-cache-arguments-limit);
     let meth-1 :: <&method> = head(meths);
     let spec1 = ^function-specializers(meth-1);
     let obj :: <&class> = dylan-value(#"<object>");
@@ -1091,44 +1002,43 @@ define function compute-gf-typechecked-cache-mask (g :: <&generic-function>)
     // @@@@ This should be done more generally...
     for (meth :: <&method> in meths, until: (logand(mask, 3) == 0))
       if (instance?(meth, <&accessor-method>))
-	^ensure-slots-initialized(^signature-required(^function-signature(meth))
-				    [accessor-method-dispatch-arg(meth)]);
-	let sd = ^method-slot-descriptor(meth);
+        ^ensure-slots-initialized(^signature-required(^function-signature(meth))
+                                    [accessor-method-dispatch-arg(meth)]);
+        let sd = ^method-slot-descriptor(meth);
         // (gts,98jan15) sd could be #f in the case of a duplicate slot.
-        // warning will have been given, and duplicate slot removed from class' 
+        // warning will have been given, and duplicate slot removed from class'
         // direct slots.  The method, added during parsing, lives on, though.
-	if (sd & ~slot-offset-fixed-in-class?(sd, ^slot-owner(sd)))
-	  mask := logand(mask, lognot(ash(1, accessor-method-dispatch-arg(meth))))
-	end if
+        if (sd & ~slot-offset-fixed-in-class?(sd, ^slot-owner(sd)))
+          mask := logand(mask, lognot(ash(1, accessor-method-dispatch-arg(meth))))
+        end if
       end if
     end for;
     // Go over remaining methods, look for differing specializers.
     for (meth :: <&method> in tail(meths), until: (mask == 0))
       let spec2 = ^function-specializers(meth);
       for (i :: <integer> from 0 below nargs, m :: <integer> = 1 then ash(m, 1))
-	if (logbit?(i, mask) & ~^type-equivalent?(spec1[i], spec2[i]))
-	  mask := logand(mask, lognot(m))
-	end if
+        if (logbit?(i, mask) & ~^type-equivalent?(spec1[i], spec2[i]))
+          mask := logand(mask, lognot(m))
+        end if
       end for
     end for;
     format-when(*trace-call-cache-success* | *trace-call-cache-failure*,
-		"Computed cache mask of %d for %=\n", mask, g);
+                "Computed cache mask of %d for %=\n", mask, g);
     if (mask == 0) #(0 . #f) else pair(mask, spec1) end
   else
     #(0 . #f)
   end if
 end function;
 
-		    
 define method maybe-upgrade-gf-to-call-site-cache
-    (c :: <simple-call>, f :: <&generic-function>, 
+    (c :: <simple-call>, f :: <&generic-function>,
      arg-te* :: <argument-sequence>)
  => (res :: <boolean>)
   maybe-upgrade-gf-to-call-site-cache-1(c, f, arg-te*, 0)
 end method;
 
 define method maybe-upgrade-gf-to-call-site-cache
-    (c :: <engine-node-call>, f :: <&generic-function>, 
+    (c :: <engine-node-call>, f :: <&generic-function>,
      arg-te* :: <argument-sequence>)
  => (res :: <boolean>)
   let e :: <&simple-typechecked-cache-header-engine-node>
@@ -1137,7 +1047,7 @@ define method maybe-upgrade-gf-to-call-site-cache
 end method;
 
 define function maybe-upgrade-gf-to-call-site-cache-1
-    (c :: <simple-call>, f :: <&generic-function>, 
+    (c :: <simple-call>, f :: <&generic-function>,
      arg-te* :: <argument-sequence>, premask :: <integer>)
  => (res :: <boolean>)
   let stuff :: <pair> = get-gf-typechecked-cache-mask(f);
@@ -1148,49 +1058,49 @@ define function maybe-upgrade-gf-to-call-site-cache-1
     let trymask :: <integer> = logand(mask, lognot(premask));
     let specs :: <simple-object-vector> = tail(stuff);
     local method frobnicate (m :: <integer>, i :: <integer>, resultm :: <integer>)
-	    if (m == 0)
-	      if (resultm == premask)
-		note-when(*trace-call-cache-failure*,
-			  <failed-to-eliminate-partial-type-checking>,
-			  source-location: dfm-source-location(c),
-			  context-id:      dfm-context-id(c),
-			  failed-parameters: collecting ()
-					       for (i :: <integer> from 0 below best-function-number-required(f), 
-						    spec in best-function-specializers(f))
-						 if (logbit?(i, trymask)) 
-						   collect(list(i, spec))
-						 end
-					       end;
-					     end,
-			  failed-generic: f.model-variable-name,
-			  failed-type-estimates: arg-te*);
-		#f
-	      else
-		format-when(*trace-call-cache-success*,
-			    "Call site cache upgrade from %d to %d on %=\n", 
-			    premask, resultm, c);
-		let engine-call 
-		  = upgrade-to-simple-typechecked-gf-cache!
-		      (c, f, resultm, <engine-node-call>);
-		re-optimize(engine-call);
-		maybe-upgrade-call(engine-call, f);
-		#t
-	      end if
-	    else
-	      frobnicate(ash(m, -1), i + 1,
-			 if (logbit?(0, m) &
+            if (m == 0)
+              if (resultm == premask)
+                note-when(*trace-call-cache-failure*,
+                          <failed-to-eliminate-partial-type-checking>,
+                          source-location: dfm-source-location(c),
+                          context-id:      dfm-context-id(c),
+                          failed-parameters: collecting ()
+                                               for (i :: <integer> from 0 below best-function-number-required(f),
+                                                    spec in best-function-specializers(f))
+                                                 if (logbit?(i, trymask))
+                                                   collect(list(i, spec))
+                                                 end
+                                               end;
+                                             end,
+                          failed-generic: f.model-variable-name,
+                          failed-type-estimates: arg-te*);
+                #f
+              else
+                format-when(*trace-call-cache-success*,
+                            "Call site cache upgrade from %d to %d on %=\n",
+                            premask, resultm, c);
+                let engine-call
+                  = upgrade-to-simple-typechecked-gf-cache!
+                      (c, f, resultm, <engine-node-call>);
+                re-optimize(engine-call);
+                maybe-upgrade-call(engine-call, f);
+                #t
+              end if
+            else
+              frobnicate(ash(m, -1), i + 1,
+                         if (logbit?(0, m) &
                              guaranteed-joint?(arg-te*[i], specs[i]))
-			   logior(resultm, ash(1, i))
-			 else
-			   resultm
-			 end if)
-	    end if
-	  end method;
+                           logior(resultm, ash(1, i))
+                         else
+                           resultm
+                         end if)
+            end if
+          end method;
     frobnicate(trymask, 0, premask)
   end if
 end function;
 
-define method maybe-upgrade-call 
+define method maybe-upgrade-call
     (c :: <engine-node-call>, f :: <&generic-function>) => (res :: <boolean>)
   let signature = f.^function-signature;
   let required-count = signature.^signature-number-required;
@@ -1203,41 +1113,41 @@ define method maybe-upgrade-call
     else
       let effective = effectives.head;
       if (instance?(effective, <&accessor-method>))
-	let slot-descriptor = get-method-slot-descriptor(effective);
-	if (instance?(slot-descriptor, <&any-instance-slot-descriptor>)
-	      & size(effectives) = 1) // TODO: HANDLE NEXT-METHOD 
-	  // gsb:  no, there is nothing to handle with next-method here.
-	  let arg-te = arg-te*[accessor-method-dispatch-arg(effective)];
-	  let offset = slot-fixed-offset-in(slot-descriptor, arg-te);
-	  if (offset)
-	    if (*colorize-dispatch*)
-	      color-dispatch(c, #"slot-accessor-fixed-offset")
-	    end if;
-	    incf-static-dispatch-count();
-	    upgrade-call-to-slot-accessor(c, effective, slot-descriptor,
-					  offset, arg-te);
-	    #t
-	  else
-	    // the g.f. dispatcher does a better job than direct-calling
-	    // the accessor method, so leave it as a g.f. call
-	    if (*colorize-dispatch*)
-	      color-dispatch(c, #"lambda-call")
-	    end if;
-	    #f
-	  end if
-	else
-	  // if 1st of several effective methods is a slot access,
-	  // neither color nor upgrade
-	  #f
-	end if
+        let slot-descriptor = get-method-slot-descriptor(effective);
+        if (instance?(slot-descriptor, <&any-instance-slot-descriptor>)
+              & size(effectives) = 1) // TODO: HANDLE NEXT-METHOD
+          // gsb:  no, there is nothing to handle with next-method here.
+          let arg-te = arg-te*[accessor-method-dispatch-arg(effective)];
+          let offset = slot-fixed-offset-in(slot-descriptor, arg-te);
+          if (offset)
+            if (*colorize-dispatch*)
+              color-dispatch(c, #"slot-accessor-fixed-offset")
+            end if;
+            incf-static-dispatch-count();
+            upgrade-call-to-slot-accessor(c, effective, slot-descriptor,
+                                          offset, arg-te);
+            #t
+          else
+            // the g.f. dispatcher does a better job than direct-calling
+            // the accessor method, so leave it as a g.f. call
+            if (*colorize-dispatch*)
+              color-dispatch(c, #"lambda-call")
+            end if;
+            #f
+          end if
+        else
+          // if 1st of several effective methods is a slot access,
+          // neither color nor upgrade
+          #f
+        end if
       elseif (any?(rcurry(instance?, <&accessor-method>), effectives))
-	next-method();
+        next-method();
       else
-	let method-call
+        let method-call
           = upgrade-to-method-call!
               (c, effective, effectives.tail, <method-call>);
-	maybe-upgrade-call(method-call, effective);
-	#t;
+        maybe-upgrade-call(method-call, effective);
+        #t;
       end;
     end;
   else
@@ -1245,10 +1155,10 @@ define method maybe-upgrade-call
   end;
 end method;
 
-define method maybe-upgrade-call 
+define method maybe-upgrade-call
     (c :: <apply>, f :: <&generic-function>) => (res :: <boolean>)
   // The dispatch state prevents analysis being done again on a second
-  // pass over the code, either due to feedback or to the call 
+  // pass over the code, either due to feedback or to the call
   // computation being copied by inlining.
   // TODO: If things become more precise after inlining, allow dispatch
   // to be selectively redone by recording the previous inputs? Except
@@ -1265,13 +1175,13 @@ define method maybe-upgrade-call
     else
       let effective = effectives.head;
       if (any?(rcurry(instance?, <&accessor-method>), effectives))
-	next-method();
+        next-method();
       else
-	let method-apply
+        let method-apply
           = upgrade-to-method-call!
               (c, effective, effectives.tail, <method-apply>);
-	maybe-upgrade-call(method-apply, effective);
-	#t;
+        maybe-upgrade-call(method-apply, effective);
+        #t;
       end;
     end;
   else
@@ -1279,47 +1189,47 @@ define method maybe-upgrade-call
   end;
 end method;
 
-// Suppose we can't statically resolve a dispatch, but one or more of the 
-// arguments is a type-union.  Suppose the call to each tuple in the 
-// "CPA expansion" can be statically resolved to a slot access, and the offset 
-// and slot kind are identical in each case.  Then we can still statically 
+// Suppose we can't statically resolve a dispatch, but one or more of the
+// arguments is a type-union.  Suppose the call to each tuple in the
+// "CPA expansion" can be statically resolved to a slot access, and the offset
+// and slot kind are identical in each case.  Then we can still statically
 // dispatch as the code will be identical in each case, even though the slots
 // are semantically different.  Detecting this case may help us to implement
 // methods on limited collections without having to duplicate large chunks of
 // code.  The following code identifies this situation.
-// This code is only temporary, as a different approach will probably be 
+// This code is only temporary, as a different approach will probably be
 // required for Andy S's typist, and the following code duplicates too much of
 // maybe-upgrade-call.
 
 // Unfortunately calling estimate-effective-methods generates a whole bunch
-// of spurious typing errors when I do this, and so the call to 
+// of spurious typing errors when I do this, and so the call to
 // maybe-upgrade-union-call is currently disabled.
 
 // define method maybe-upgrade-union-call
-//     (c :: <simple-call>, f :: <&generic-function>, arg-te* :: <argument-sequence>) 
+//     (c :: <simple-call>, f :: <&generic-function>, arg-te* :: <argument-sequence>)
 //         => (res :: <boolean>)
-// 
+//
 //   block (return)
 //     let products = list(arg-te*);
-// 
+//
 //     // Compute a partial CPA expansion.  We are only interested in detecting
 //     // slot accesses so only expand out at most the first two arguments.
 //     for (i :: <integer> from 0 below min(arg-te*.size, 2))
 //       let arg-te = arg-te*[i];
 //       if (instance?(arg-te, <type-estimate-union>))
-//         products := 
+//         products :=
 //           reduce(method(l, te)
-//                    reduce(method(l, p) 
+//                    reduce(method(l, p)
 //                             let new-p = copy-sequence(p);
-//                             new-p[i] := te; 
-//                             pair(new-p, l) 
+//                             new-p[i] := te;
+//                             pair(new-p, l)
 //                           end, l, products)
 //                  end, #(), type-estimate-unionees(arg-te));
 //       end;
 //     end;
-// 
+//
 //     unless (products.size > 1) return (#f) end;  // There were no unions...
-// 
+//
 //     local method compute-offset-if-possible(new-arg-te*)
 //       let effectives = estimate-effective-methods(f, new-arg-te*, c);
 //       if (effectives.size ~= 1) return(#f) end;
@@ -1334,35 +1244,35 @@ end method;
 //       unless (offset) return (#f) end;
 //       values(offset, slot-descriptor, arg-te, effective)
 //     end;
-// 
+//
 //     let (offset,sd,arg-te,effective) = compute-offset-if-possible(products[0]);
 //     let slot-type = ^slot-type(sd);
 //     let initialized? = slot-guaranteed-initialized-in?(sd, arg-te);
-// 
+//
 //     for (i :: <integer> from 1 below products.size)
 //       let (offset-i, sd-i, arg-te-i)
 //         = compute-offset-if-possible(products[i]);
 //       unless ( (offset-i = offset)
 //              & (sd-i.object-class = sd.object-class)
 //              & (^slot-type(sd-i) = slot-type)
-//              & (initialized? = 
+//              & (initialized? =
 //                   slot-guaranteed-initialized-in?(sd-i, arg-te-i)))
 //         return (#f)
 //       end
 //     end;
-// 
+//
 //     if (*colorize-dispatch*)
 //       color-dispatch(c, #"slot-accessor-fixed-offset")
 //     end;
-// 
+//
 //     incf-static-dispatch-count();
 //     upgrade-call-to-slot-accessor(c, effective, sd, offset, arg-te);
 //     #t;
 //   end
-// end;        
+// end;
 
 define method upgrade-call-to-slot-accessor
-    (c :: <simple-call>, m :: <&getter-method>, 
+    (c :: <simple-call>, m :: <&getter-method>,
      sd :: <&instance-slot-descriptor>, offset :: <integer>,
      te :: <type-estimate>)
  => ()
@@ -1401,32 +1311,32 @@ define method upgrade-call-to-slot-accessor
   replace-call-computation!(env, c, sv-c, sv-c, new-value-t)
 end;
 
-define compiler-sideways method computation-repeated-byte? 
+define compiler-sideways method computation-repeated-byte?
     (c :: <any-repeated-slot-value>) => (res :: <boolean>)
   repeated-representation-byte?
     (^slot-type(computation-slot-descriptor(c)))
 end method;
 
 define method convert-boxer-call
-    (env :: <lambda-lexical-environment>, function :: <&primitive>, 
+    (env :: <lambda-lexical-environment>, function :: <&primitive>,
      arguments :: <argument-sequence>)
   make-with-temporary
     (env, <primitive-call>, primitive: function, arguments: arguments);
 end method;
 
 define method convert-boxer-call
-    (env :: <lambda-lexical-environment>, function :: <&function>, 
+    (env :: <lambda-lexical-environment>, function :: <&function>,
      arguments :: <argument-sequence>)
   let function-ref = make-object-reference(function);
-  let (call-c, call-t) = 
+  let (call-c, call-t) =
     make-with-temporary
       (env, <simple-call>, function: function-ref, arguments: arguments);
   re-optimize(call-c);
   values(call-c, call-t)
 end method;
 
-define method maybe-convert-unbox 
-    (env :: <lambda-lexical-environment>, 
+define method maybe-convert-unbox
+    (env :: <lambda-lexical-environment>,
      ref :: <value-reference>, type :: <&type>)
  => (unboxer-c :: false-or(<computation>), unboxed-ref :: <value-reference>)
   let (raw-rep-type?, boxer, unboxer) =
@@ -1440,8 +1350,8 @@ define method maybe-convert-unbox
   values(unboxer-c, unboxed-ref)
 end method;
 
-define method maybe-convert-box 
-    (env :: <lambda-lexical-environment>, 
+define method maybe-convert-box
+    (env :: <lambda-lexical-environment>,
      ref :: <value-reference>, type :: <&type>)
  => (boxer-c :: false-or(<computation>), boxed-ref :: <temporary>)
   let (raw-rep-type?, boxer) =
@@ -1463,15 +1373,14 @@ define method upgrade-call-to-slot-accessor
   let env = environment(c);
   let args = arguments(c);
 
-  let function 
-    = make-dylan-reference(#"interpret-integer-as-raw");
+  let function = make-dylan-reference(#"interpret-integer-as-raw");
   let (raw-index-c, raw-index-t) =
     make-with-temporary
       (env, <simple-call>, function: function, arguments: vector(args[1]));
-  
+
   let (sv-c, sv-t)
     = make-with-temporary
-        (env, <repeated-slot-value>, 
+        (env, <repeated-slot-value>,
          guaranteed-initialized?: slot-guaranteed-initialized-in?(sd, te),
          index-tagged?: #t,
          slot-descriptor: sd,
@@ -1492,10 +1401,10 @@ define method upgrade-call-to-slot-accessor
       // work for itself that the value is still in range.
       let (first-int-c, last-int-c, int-t)
         = join-2x1-t!(first-c, last-c, boxer-c, boxed-t);
-      let (gt-c, gt-t) 
+      let (gt-c, gt-t)
         = make-with-temporary
             (env, <guarantee-type>,
-             value: boxed-t, 
+             value: boxed-t,
              type:  make-object-reference(type));
       join-2x1-t!(first-int-c, last-int-c, gt-c, gt-t);
     else
@@ -1504,8 +1413,7 @@ define method upgrade-call-to-slot-accessor
 
   re-optimize(sv-c);
   re-optimize(raw-index-c);
-  replace-call-computation!
-    (env, c, first-c, last-c, typed-value-t);
+  replace-call-computation!(env, c, first-c, last-c, typed-value-t);
 end;
 
 define method upgrade-call-to-slot-accessor
@@ -1517,8 +1425,7 @@ define method upgrade-call-to-slot-accessor
   let args = arguments(c);
   let new-value-t = args[0];
 
-  let function 
-    = make-dylan-reference(#"interpret-integer-as-raw");
+  let function = make-dylan-reference(#"interpret-integer-as-raw");
   let (raw-index-c, raw-index-t) =
     make-with-temporary
       (env, <simple-call>, function: function, arguments: vector(args[2]));
@@ -1531,7 +1438,7 @@ define method upgrade-call-to-slot-accessor
 
   let (sv-c, sv-t)
     = make-with-temporary
-        (env, <repeated-slot-value-setter>, 
+        (env, <repeated-slot-value-setter>,
          slot-descriptor: sd,
          slot-offset: offset,
          index-tagged?: #t,
@@ -1543,8 +1450,7 @@ define method upgrade-call-to-slot-accessor
     = join-2x1!(first-c, last-c, sv-c);
 
   re-optimize(raw-index-c);
-  replace-call-computation!
-    (env, c, first-c, last-c, new-value-t);
+  replace-call-computation! (env, c, first-c, last-c, new-value-t);
 end;
 
 define method argument-type-estimates
@@ -1571,7 +1477,7 @@ next-method();
 end;
 
 
-define function required-argument-type-estimates 
+define function required-argument-type-estimates
     (c :: <function-call>, required-count :: <integer>)
  => (estimates :: <argument-sequence>)
   collecting (as <argument-sequence>)
@@ -1584,14 +1490,14 @@ end;
 // Compute a reference to the given function and destructively modify the
 // call to refer to it rather than to what it currently refers to.
 
-define method simplify-call-to-call-to-object! 
+define method simplify-call-to-call-to-object!
     (call :: <function-call>, f :: <&function>) => ()
   let ref-temp = make-object-reference(f);
   replace-call-function!(call, ref-temp);
 end method;
 
 define method method-call-arguments
-    (call :: <simple-call>, func :: <&lambda>) 
+    (call :: <simple-call>, func :: <&lambda>)
  => (first-c :: false-or(<computation>), last-c :: false-or(<computation>),
      arguments :: <argument-sequence>)
   congruent-style-call-arguments(call, func)
@@ -1611,7 +1517,7 @@ define function congruent-style-call-arguments
   if (~call-congruent?(call) & best-function-optionals?(func))
     let number-required =
       best-function-number-required(func);
-    if (number-required = call.arguments.size) 
+    if (number-required = call.arguments.size)
       let new-arguments = make(<vector>, size: number-required + 1);
       for (i :: <integer> from 0 below number-required)
         new-arguments[i] := call.arguments[i];
@@ -1620,10 +1526,10 @@ define function congruent-style-call-arguments
       new-arguments[number-required] := rest-t;
       add-user!(rest-t, call);
       values(#f, #f, new-arguments)
-    else  
+    else
       let (rest-c, rest-t)
         = generate-stack-vector
-            (call.environment, 
+            (call.environment,
              copy-sequence(call.arguments, start: number-required));
       let new-arguments = make(<vector>, size: number-required + 1);
       for (i :: <integer> from 0 below number-required)
@@ -1638,20 +1544,20 @@ define function congruent-style-call-arguments
 end function;
 
 define method method-call-arguments
-    (call :: <apply>, func :: <&lambda>) 
+    (call :: <apply>, func :: <&lambda>)
  => (first-c :: false-or(<computation>), last-c :: false-or(<computation>),
      arguments :: <argument-sequence>)
   values(#f, #f, arguments(call))
 end method;
 
 define method method-call-arguments
-    (call :: <engine-node-call>, func :: <&lambda>) 
+    (call :: <engine-node-call>, func :: <&lambda>)
  => (first-c :: false-or(<computation>), last-c :: false-or(<computation>),
      arguments :: <argument-sequence>)
   values(#f, #f, arguments(call))
 end method;
 
-define method replace-call-function! 
+define method replace-call-function!
     (call :: <function-call>, temp :: <value-reference>) => ()
   remove-user!(call.function, call);
   add-user!(temp, call);
@@ -1674,20 +1580,18 @@ define function incf-dynamic-dispatch-count ()
     := ^library-number-dynamic-dispatches(&lib) + 1;
 end function;
 
-define method upgrade-to-method-call! 
+define method upgrade-to-method-call!
     (call :: <function-call>, f :: <&function>, next-methods :: <method-sequence>,
      new-call-class :: <class>)
  => (method-call :: <function-call>)
   let env = environment(call);
-  let function-ref 
-    = make-object-reference(f);
+  let function-ref = make-object-reference(f);
   let next-methods-ref :: <immutable-object-reference>
     = make-value-reference(next-methods, <immutable-object-reference>);
-  let (first-c, last-c, new-arguments)
-    = method-call-arguments(call, f);
+  let (first-c, last-c, new-arguments) = method-call-arguments(call, f);
   let (call-c, call-t)
     = make-with-temporary
-        (env, new-call-class, 
+        (env, new-call-class,
          temporary-class: call-temporary-class(call),
          function:        function-ref,
          next-methods:    next-methods-ref,
@@ -1695,35 +1599,31 @@ define method upgrade-to-method-call!
   let (first-c, last-c) = join-2x1!(first-c, last-c, call-c);
   incf-static-dispatch-count();
   compatibility-state(call-c) := compatibility-state(call);
-  replace-call-computation!
-    (env, call, first-c, last-c, call-t);
+  replace-call-computation!(env, call, first-c, last-c, call-t);
   call-c
 end method;
 
 define method upgrade-to-simple-typechecked-gf-cache!
-    (call :: <function-call>, g :: <&generic-function>, 
+    (call :: <function-call>, g :: <&generic-function>,
      mask :: <integer>, new-call-class :: <class>)
   let env = environment(call);
-  let function-ref 
-    = make-object-reference(g);
+  let function-ref = make-object-reference(g);
   let engine-node-ref
     = make-object-reference
         (^make(<&simple-typechecked-cache-header-engine-node>,
-	       function: g,
-	       checkedmask: mask));
-  let (first-c, last-c, new-arguments)
-    = method-call-arguments(call, g);
+               function: g,
+               checkedmask: mask));
+  let (first-c, last-c, new-arguments) = method-call-arguments(call, g);
   let (call-c, call-t)
     = make-with-temporary
         (env, new-call-class,
-	 temporary-class: call-temporary-class(call),
-	 function: function-ref,
-	 engine-node: engine-node-ref,
-	 arguments: new-arguments);
+         temporary-class: call-temporary-class(call),
+         function: function-ref,
+         engine-node: engine-node-ref,
+         arguments: new-arguments);
   let (first-c, last-c) = join-2x1!(first-c, last-c, call-c);
   compatibility-state(call-c) := compatibility-state(call);
-  replace-call-computation!
-    (env, call, first-c, last-c, call-t);
+  replace-call-computation!(env, call, first-c, last-c, call-t);
   call-c
 end method;
 
@@ -1734,7 +1634,7 @@ end method;
 define program-warning <non-function-in-call>
   slot condition-type-estimate,
     required-init-keyword: type-estimate:;
-  format-string 
+  format-string
     "Function value in call is not a function - inferred type is %s.";
   format-arguments type-estimate;
 end program-warning;
@@ -1752,14 +1652,14 @@ define method maybe-check-function-call
     // more than once.
     let state = c.compatibility-state;
     select (state)
-      $compatibility-checked-compatible 
+      $compatibility-checked-compatible
         => #t;
       $compatibility-checked-incompatible
         => #f;
       $compatibility-unchecked
         => let ok? = check-function-call(c);
-           c.compatibility-state 
-             := if (ok?) 
+           c.compatibility-state
+             := if (ok?)
                   $compatibility-checked-compatible
                 else
                   $compatibility-checked-incompatible
@@ -1769,10 +1669,10 @@ define method maybe-check-function-call
   end;
 end method;
 
-// Do a conservative check of as many things about this call as we 
+// Do a conservative check of as many things about this call as we
 // possibly can. It's conservative in the sense that it warns only
 // if there's guaranteed to be a problem. If we work out ways of
-// extending the language appropriately so that we don't get 
+// extending the language appropriately so that we don't get
 // swamped with information, a mode conservative the other way
 // would be very useful.
 
@@ -1780,9 +1680,9 @@ define method check-function-call (c :: <function-call>) => (ok-to-analyse?)
   block (return)
     let function-temp = c.function;
     let function-object = constant-value(function-temp);
-    if (instance?(function-object, <&code>)) 
+    if (instance?(function-object, <&code>))
       // We must already have checked to have upgraded this far.
-      return(#t) 
+      return(#t)
     end;
     let function-te = type-estimate(function-temp);
     // If we've hit bottom, there's been an error already.   gts,98mar25
@@ -1797,7 +1697,7 @@ define method check-function-call (c :: <function-call>) => (ok-to-analyse?)
            type-estimate:   function-te);
       return(#f);
     end;
-    // TODO: We could actually use the type estimate to check the validity of 
+    // TODO: We could actually use the type estimate to check the validity of
     // the arguments in the absence of knowing the function itself.
     if (~function-object)
       return(#f);
@@ -1842,8 +1742,7 @@ define method initialize (c :: <incompatible-call>, #key)
   let def = c.condition-function.model-definition;
   if (def)
     let names = form-variable-names(def);
-    c.condition-function 
-      := if (names.size = 1) names.first else def end;
+    c.condition-function := if (names.size = 1) names.first else def end;
   end;
 end method;
 
@@ -1852,9 +1751,9 @@ define program-warning <unknown-keyword-in-call> (<incompatible-call>)
     required-init-keyword: known-keywords:;
   slot condition-supplied-keyword,
     required-init-keyword: supplied-keyword:;
-  format-string 
+  format-string
     "Unknown keyword in call to %s - %s supplied, %s recognized";
-  format-arguments 
+  format-arguments
     function, supplied-keyword, known-keywords;
 end program-warning;
 
@@ -1866,12 +1765,12 @@ define program-warning <argument-count-mismatch-in-call> (<incompatible-call>)
   format-arguments function, supplied-count, required-count;
 end program-warning;
 
-define program-warning <too-few-arguments-in-call> 
+define program-warning <too-few-arguments-in-call>
     (<argument-count-mismatch-in-call>)
   format-string "Too few arguments in call to %s - %s supplied, %s expected.";
 end program-warning;
 
-define program-warning <too-many-arguments-in-call> 
+define program-warning <too-many-arguments-in-call>
     (<argument-count-mismatch-in-call>)
   format-string "Too many arguments in call to %s - %s supplied, %s expected.";
 end program-warning;
@@ -1887,9 +1786,9 @@ end program-warning;
 define program-warning <non-keywords-in-call> (<incompatible-call>)
   slot condition-supplied-keyword-type-estimates,
     required-init-keyword: supplied-keyword-type-estimates:;
-  format-string 
+  format-string
     "Non-symbol keyword arguments in call to %s - inferred types are %s.";
-  format-arguments 
+  format-arguments
     function, supplied-keyword-type-estimates;
 end program-warning;
 
@@ -1900,22 +1799,22 @@ define program-warning <argument-type-mismatch-in-call> (<incompatible-call>)
     required-init-keyword: supplied-type-estimate:;
   slot condition-arg-name,                         // gts
     required-init-keyword: arg:;                   // gts
-  format-string 
+  format-string
     "Invalid type for argument %s in call to %s:  %s supplied, %s expected.";
-  format-arguments 
+  format-arguments
     arg, function, supplied-type-estimate, required-type;
 end program-warning;
 
-define program-warning <values-argument-type-mismatch-in-call> 
+define program-warning <values-argument-type-mismatch-in-call>
     (<incompatible-call>)
   slot condition-required-types,
     required-init-keyword: required-types:;
   slot condition-supplied-type-estimate,
     required-init-keyword: supplied-type-estimate:;
-  format-string 
+  format-string
     "Invalid #rest values in multiple-value call to %s - "
     "#rest %s supplied, %s expected.";
-  format-arguments 
+  format-arguments
     function, supplied-type-estimate, required-types;
 end program-warning;
 
@@ -1926,27 +1825,27 @@ end program-warning;
 // only return true if we know for certain that the input types are
 // compatible).
 
-define inline function maybe-trim-sig-types 
-    (v :: <argument-sequence>, n :: <integer>) 
+define inline function maybe-trim-sig-types
+    (v :: <argument-sequence>, n :: <integer>)
  => (res :: <argument-sequence>)
   if (n = size(v)) v else copy-sequence(v, end: n) end if
 end function;
 
 // rest-type-estimate seems never sent (i.e. always defaults to #f).  (gts, 10/97)
 define method check-call-compatibility
-    (f :: <&function>, call :: <function-call>, arg-te* :: <argument-sequence>, 
-       #key rest-type-estimate = #f)
+    (f :: <&function>, call :: <function-call>, arg-te* :: <argument-sequence>,
+     #key rest-type-estimate = #f)
  => (compatible?);
   //  let signature = ^function-signature(f);
   let signature
     // Special kludge for raw slot accessors, whose generic gets created
     // with <object> in all specializers, but really should be the raw...
     = (instance?(f, <&generic-function>)
-	 & ^generic-function-sealed?(f)
-	 & begin
-	     let methods = ^generic-function-methods-known(f);
-	     methods.size == 1 & methods.first.^function-signature
-	   end)
+         & ^generic-function-sealed?(f)
+         & begin
+             let methods = ^generic-function-methods-known(f);
+             methods.size == 1 & methods.first.^function-signature
+           end)
       | ^function-signature(f);
   block (return)
     let required-types = ^signature-required(signature);
@@ -1963,14 +1862,11 @@ define method check-call-compatibility
            supplied-count: supplied-count);
       return(#f);
     end;
-    let accepts-keys? 
+    let accepts-keys?
       = ^signature-key?(signature) | ^signature-all-keys?(signature);
-    let accepts-rest?
-      = ^signature-rest?(signature);
-    let fixed-number-required? 
-      = ~(accepts-keys? | accepts-rest?);
-    if (fixed-number-required? 
-          & supplied-count > required-count)
+    let accepts-rest? = ^signature-rest?(signature);
+    let fixed-number-required? = ~(accepts-keys? | accepts-rest?);
+    if (fixed-number-required? & supplied-count > required-count)
       note(<too-many-arguments-in-call>,
            source-location: dfm-source-location(call),
            context-id:      dfm-context-id(call),
@@ -1981,8 +1877,8 @@ define method check-call-compatibility
     end;
     if (accepts-keys? & ~rest-type-estimate)
       let fixed-count
-        = if (instance?(call, <method-call>)) 
-            required-count + 1 
+        = if (instance?(call, <method-call>))
+            required-count + 1
           else
             required-count
           end;
@@ -2019,14 +1915,14 @@ define method check-call-compatibility
     end;
     let guaranteed-compatible? = #t;
     let guaranteed-incompatible? = #f;
-    for (arg-te in arg-te*, required-type in required-types, 
+    for (arg-te in arg-te*, required-type in required-types,
          i :: <integer> from 0 below required-count)
       if (~guaranteed-joint?(arg-te, required-type))
         guaranteed-compatible? := #f;
         // if (guaranteed-disjoint?(arg-te, required-type))
         if (effectively-disjoint?(arg-te, required-type))
-	  guaranteed-incompatible? := #t;
-          let required-specs 
+          guaranteed-incompatible? := #t;
+          let required-specs
             = spec-argument-required-variable-specs(signature-spec(f));
           note(<argument-type-mismatch-in-call>,
                source-location: dfm-source-location(call),
@@ -2034,8 +1930,8 @@ define method check-call-compatibility
                function: f,
                required-type:  required-type,
                supplied-type-estimate: arg-te,
-	       arg: spec-variable-name(required-specs[i]));
-	end if;
+               arg: spec-variable-name(required-specs[i]));
+        end if;
       end if;
     end for;
     if (guaranteed-incompatible?)
@@ -2053,7 +1949,7 @@ define method check-call-compatibility
                  source-location: dfm-source-location(call),
                  context-id:      dfm-context-id(call),
                  function: f,
-                 required-types: 
+                 required-types:
                    copy-sequence(required-types, start: supplied-count),
                  supplied-type-estimate: rest-type-estimate);
             return(#f);
@@ -2063,7 +1959,7 @@ define method check-call-compatibility
     end;
     // TODO: CORRECTNESS: Remove this hack, its contol flags, and its
     // associated condition below.
-    if (~guaranteed-compatible? 
+    if (~guaranteed-compatible?
          & instance?(f, <&method>)
          & compiling-dylan-library?())
        if (*warn-about-bogus-upgrades*)
@@ -2072,7 +1968,7 @@ define method check-call-compatibility
               context-id:      dfm-context-id(call),
               function: f,
               required-types:  maybe-trim-sig-types
-		                 (required-types, required-count),
+                                 (required-types, required-count),
               supplied-type-estimates: arg-te*);
        end;
        if (*colorize-bogus-upgrades*)
@@ -2091,9 +1987,9 @@ define program-warning <bogus-upgrade-possible> (<incompatible-call>)
     required-init-keyword: required-types:;
   slot condition-supplied-type-estimates,
     required-init-keyword: supplied-type-estimates:;
-  format-string 
+  format-string
     "Bogus call upgrade possible for call to %s - %s supplied and considered compatible, %s expected.";
-  format-arguments 
+  format-arguments
     function, supplied-type-estimates, required-types;
 end program-warning;
 
@@ -2111,7 +2007,7 @@ define program-warning <unrecognized-keyword-arguments-in-call>
 end program-warning;
 
 define method check-call-compatibility
-    (f :: <&method>, call :: <function-call>, arg-te* :: <argument-sequence>, 
+    (f :: <&method>, call :: <function-call>, arg-te* :: <argument-sequence>,
      #key rest-type-estimate = #f)
  => (compatible?)
   let compatible? = next-method();
@@ -2121,8 +2017,8 @@ define method check-call-compatibility
     // Do any extra checking possible for bare method calls.
     block (return)
       let signature = ^function-signature(f);
-      if (~rest-type-estimate 
-            & ^signature-key?(signature) 
+      if (~rest-type-estimate
+            & ^signature-key?(signature)
             & ~ ^signature-all-keys?(signature))
         let recognized-keys = ^signature-keys(signature);
         collecting (unrecognized-keys)
@@ -2130,12 +2026,12 @@ define method check-call-compatibility
           let arg-count = size(arg-temps);
           let key-start = ^signature-number-required(signature);
           for (i :: <integer> from key-start below arg-count by 2)
-            // TODO: I'd like to do this using the type estimate, but it 
+            // TODO: I'd like to do this using the type estimate, but it
             // doesn't currently have singleton precision.
             // TODO: Check the declared types of the keyword in the method
             // being called here too.
             let (arg-value-constant?, arg-value) =
-	      constant-value?(arg-temps[i]);
+              constant-value?(arg-temps[i]);
             if (arg-value-constant?
                   & ^symbol?(arg-value)
                   & ~member?(arg-value, recognized-keys))
@@ -2168,14 +2064,14 @@ end method;
 // TODO: Do better. Reuse more code, but keep the more specific error
 // reporting.
 
-define program-warning <too-many-arguments-in-apply-call> 
+define program-warning <too-many-arguments-in-apply-call>
     (<argument-count-mismatch-in-call>)
-  format-string 
+  format-string
     "Too many arguments in application of %s - "
     "%s supplied positionally to apply, only %s expected.";
 end program-warning;
 
-define program-warning <argument-type-mismatch-in-apply-call> 
+define program-warning <argument-type-mismatch-in-apply-call>
     (<incompatible-call>)
   slot condition-required-type,
     required-init-keyword: required-type:;
@@ -2183,32 +2079,32 @@ define program-warning <argument-type-mismatch-in-apply-call>
     required-init-keyword: supplied-type-estimate:;
   slot condition-arg-name,                         // gts
     required-init-keyword: arg:;                   // gts
-  format-string 
+  format-string
     "Invalid type for argument %s in application of %s: "  // gts
     "type %s supplied, but %s expected.";
-  format-arguments 
+  format-arguments
     arg, function, supplied-type-estimate, required-type;
 end program-warning;
 
 define method check-call-compatibility
-    (f :: <&function>, call :: <apply>, arg-te* :: <argument-sequence>, 
-       #key rest-type-estimate = #f)
+    (f :: <&function>, call :: <apply>, arg-te* :: <argument-sequence>,
+     #key rest-type-estimate = #f)
  => (compatible?)
   check-apply-compatibility
     (f, call, arg-te*, rest-type-estimate: rest-type-estimate);
 end method;
 
 define method check-call-compatibility
-    (f :: <&method>, call :: <apply>, arg-te* :: <argument-sequence>, 
-       #key rest-type-estimate = #f)
+    (f :: <&method>, call :: <apply>, arg-te* :: <argument-sequence>,
+     #key rest-type-estimate = #f)
  => (compatible?)
   check-apply-compatibility
     (f, call, arg-te*, rest-type-estimate: rest-type-estimate);
 end method;
 
 define method check-apply-compatibility
-    (f :: <&function>, call :: <apply>, arg-te* :: <argument-sequence>, 
-       #key rest-type-estimate = #f)
+    (f :: <&function>, call :: <apply>, arg-te* :: <argument-sequence>,
+     #key rest-type-estimate = #f)
  => (compatible?)
   let arg-te* = copy-sequence(arg-te*, end: arg-te*.size - 1);
   let signature = ^function-signature(f);
@@ -2218,14 +2114,11 @@ define method check-apply-compatibility
     let required-types = ^signature-required(signature);
     let required-count = ^signature-number-required(signature);
     let supplied-count = size(arg-te*);
-    let accepts-keys? 
+    let accepts-keys?
       = ^signature-key?(signature) | ^signature-all-keys?(signature);
-    let accepts-rest?
-      = ^signature-rest?(signature);
-    let fixed-number-required? 
-      = ~(accepts-keys? | accepts-rest?);
-    if (fixed-number-required? 
-          & supplied-count > required-count)
+    let accepts-rest? = ^signature-rest?(signature);
+    let fixed-number-required? = ~(accepts-keys? | accepts-rest?);
+    if (fixed-number-required? & supplied-count > required-count)
       note(<too-many-arguments-in-apply-call>,
            source-location: dfm-source-location(call),
            context-id:      dfm-context-id(call),
@@ -2237,21 +2130,21 @@ define method check-apply-compatibility
     let guaranteed-compatible? = #t;
     let guaranteed-incompatible? = #f;
     let intersect-count = min(required-count, supplied-count);
-    for (arg-te in arg-te*, required-type in required-types, 
+    for (arg-te in arg-te*, required-type in required-types,
          i :: <integer> from 0 below required-count)
       if (~guaranteed-joint?(arg-te, required-type))
         guaranteed-compatible? := #f;
         // if (guaranteed-disjoint?(arg-te, required-type))
         if (effectively-disjoint?(arg-te, required-type))
-	  guaranteed-incompatible? := #t;
+          guaranteed-incompatible? := #t;
           note(<argument-type-mismatch-in-apply-call>,
                source-location: dfm-source-location(call),
                context-id:      dfm-context-id(call),
                function: f,
                required-type: required-type,
                supplied-type-estimate: arg-te,
-	       arg: best-function-specializers(f)[i]);
-	end if;
+               arg: best-function-specializers(f)[i]);
+        end if;
       end if;
     end for;
     if (guaranteed-incompatible?)
@@ -2259,15 +2152,15 @@ define method check-apply-compatibility
     end if;
     // TODO: CORRECTNESS: Remove this hack, its contol flags, and its
     // associated condition below.
-    if (~guaranteed-compatible? 
+    if (~guaranteed-compatible?
          & instance?(f, <&method>)
-	 & compiling-dylan-library?())
+         & compiling-dylan-library?())
        if (*warn-about-bogus-upgrades*)
          note(<bogus-apply-upgrade-possible>,
               source-location: dfm-source-location(call),
               context-id:      dfm-context-id(call),
               function: f,
-              required-types: 
+              required-types:
                  copy-sequence(required-types, end: intersect-count),
               supplied-type-estimates: arg-te*);
        end;
@@ -2288,11 +2181,11 @@ define program-warning <bogus-apply-upgrade-possible>
     required-init-keyword: required-types:;
   slot condition-supplied-type-estimates,
     required-init-keyword: supplied-type-estimates:;
-  format-string 
+  format-string
     "Invalid argument types in application of %s - "
     "%s supplied positionally to apply, %s expected in the corresponding "
     "positions.";
-  format-arguments 
+  format-arguments
     function, supplied-type-estimates, required-types;
 end program-warning;
 
@@ -2301,13 +2194,13 @@ end program-warning;
 define program-warning <no-applicable-methods-in-call> (<incompatible-call>)
   slot condition-supplied-type-estimates,
     required-init-keyword: supplied-type-estimates:;
-  format-string 
+  format-string
     "No applicable methods for call to %s - inferred argument types %s.";
-  format-arguments 
+  format-arguments
     function, supplied-type-estimates;
 end program-warning;
 
-// TODO: Write a proper optimization note framework to use here and 
+// TODO: Write a proper optimization note framework to use here and
 // elsewhere.
 
 define performance-note <optimization-note> end;
@@ -2370,22 +2263,22 @@ define method color-location (loc :: <compiler-range-source-location>, decision)
     // decision at all.
     when (instance?(decisions, <list>))
       cr.compilation-record-dispatch-decisions :=
-	pair(vector(loc.source-location-start-offset,
-		    loc.source-location-end-offset,
-		    decision),
-	     decisions);
+        pair(vector(loc.source-location-start-offset,
+                    loc.source-location-end-offset,
+                    decision),
+             decisions);
     end;
   end;
 end;
 
 define method estimate-effective-methods
-    (f :: <&generic-function>, arg-te* :: <argument-sequence>, 
+    (f :: <&generic-function>, arg-te* :: <argument-sequence>,
      call-or-method :: type-union(<function-call>, <&method>))
  => (effectives :: <method-sequence>)
   estimate-effective-methods-from-scratch(f, arg-te*, call-or-method);
   /*
   let n-required = ^signature-number-required(^function-signature(f));
-  let arg-te* = if (size(arg-te*) == n-required) 
+  let arg-te* = if (size(arg-te*) == n-required)
                   arg-te*
                 else
                   copy-sequence(arg-te*, end: n-required);
@@ -2403,10 +2296,10 @@ define method estimate-effective-methods
 end method;
 
 define method estimate-effective-methods-from-scratch
-    (f :: <&generic-function>, arg-te* :: <argument-sequence>, 
+    (f :: <&generic-function>, arg-te* :: <argument-sequence>,
     call-or-method :: type-union(<function-call>, <&method>))
  => (effectives :: <method-sequence>)
-  let (call, lambda) 
+  let (call, lambda)
      = if (instance?(call-or-method, <function-call>))
          values(call-or-method, #f)
        else
@@ -2420,56 +2313,56 @@ define method estimate-effective-methods-from-scratch
       = if (call)
           methods-known
         else
-          // Lose all methods that are known statically always to be more 
+          // Lose all methods that are known statically always to be more
           // specific than ourselves, leaving only methods known to be
-          // less specific and those that are potentially more or less 
+          // less specific and those that are potentially more or less
           // specific.
-          choose(method (them :: <&method>) 
-                   them == lambda 
+          choose(method (them :: <&method>)
+                   them == lambda
                      | ~guaranteed-method-precedes?(them, lambda, arg-te*)
                  end method,
                  methods-known)
         end if;
-    let (leading-sorted, others) 
+    let (leading-sorted, others)
       = guaranteed-sorted-applicable-methods(methods, arg-te*);
 
     if (empty?(leading-sorted) & empty?(others))
       note-when
-	(call,
-	 <no-applicable-methods-in-call>,
-	 source-location: dfm-source-location(call),
-	 context-id:      dfm-context-id(call),
-	 function:        f,
-	 supplied-type-estimates: arg-te*);
+        (call,
+         <no-applicable-methods-in-call>,
+         source-location: dfm-source-location(call),
+         context-id:      dfm-context-id(call),
+         function:        f,
+         supplied-type-estimates: arg-te*);
       #()
     else
       let chain
         = guaranteed-complete-method-chain(leading-sorted, others, arg-te*);
 
       if (chain)
-	if (call)
-	  maybe-note
-	    (<selected-where-all-known>,
-	     source-location: dfm-source-location(call),
-	     context-id:      dfm-context-id(call),
-	     selected-method: chain.first.model-definition,
-	     type-estimates:  arg-te*);
+        if (call)
+          maybe-note
+            (<selected-where-all-known>,
+             source-location: dfm-source-location(call),
+             context-id:      dfm-context-id(call),
+             selected-method: chain.first.model-definition,
+             type-estimates:  arg-te*);
 
-	  if (*colorize-dispatch* & empty?(chain))
-	    color-dispatch(call, #"failed-to-select-where-all-known")
-	  end;
+          if (*colorize-dispatch* & empty?(chain))
+            color-dispatch(call, #"failed-to-select-where-all-known")
+          end;
         else
           // Prune out everything that precedes us in the next method
           // chain. Note that the method calling next-method might not
           // actually be on this list if more specific methods override
           // entirely (i.e. don't call next-method) because of the way
           // the chain is constructed.
-          for (cursor :: <list> = chain then cursor.tail, 
-                 until: empty?(cursor) | cursor.head == lambda)
+          for (cursor :: <list> = chain then cursor.tail,
+               until: empty?(cursor) | cursor.head == lambda)
           finally
             cursor
           end;
-	end if;
+        end if;
 
         chain
       else
@@ -2503,16 +2396,16 @@ define method estimate-effective-methods-from-scratch
   end;
 end method;
 
-define method guaranteed-complete-method-chain 
-    (leading-sorted :: <method-sequence>, 
-       others :: <method-sequence>, arg-te* :: <argument-sequence>) 
+define method guaranteed-complete-method-chain
+    (leading-sorted :: <method-sequence>,
+       others :: <method-sequence>, arg-te* :: <argument-sequence>)
  => (method-chain :: false-or(<method-sequence>))
   block (return)
     collecting (chain)
       for (m in leading-sorted)
         let sig = ^function-signature(m);
         if (arguments-guaranteed-joint?
-              (arg-te*, ^signature-required(sig), 
+              (arg-te*, ^signature-required(sig),
                ^signature-number-required(sig)))
           collect-into(chain, m);
           if (~m.^next?)
@@ -2522,13 +2415,13 @@ define method guaranteed-complete-method-chain
           return(#f);
         end;
       finally
-	/* TODO: THIS IS BAD BAD BAD
+        /* TODO: THIS IS BAD BAD BAD
         if (empty?(others))
           // TODO: Might be an error because the last one calls next method?
         end;
         collected(chain);
         */
-	#f
+        #f
       end;
     end;
   end;
@@ -2543,7 +2436,7 @@ end method;
 // usefully ordered.
 
 define method guaranteed-sorted-applicable-methods
-  (methods :: <method-sequence>, arg-te* :: <argument-sequence>) 
+  (methods :: <method-sequence>, arg-te* :: <argument-sequence>)
     => (leading-sorted :: <method-sequence>, others :: <method-sequence>)
   let leading-sorted = #();
   let others = #();
@@ -2602,7 +2495,7 @@ define constant $method1-precedes  = #"method1";
 define constant $method2-precedes  = #"method2";
 
 define method guaranteed-method-precedes?
-    (m1 :: <&method>, m2 :: <&method>, arg-te* :: <argument-sequence>) 
+    (m1 :: <&method>, m2 :: <&method>, arg-te* :: <argument-sequence>)
   guaranteed-method-relationship(m1, m2, arg-te*) == $method1-precedes
 end method;
 
@@ -2610,7 +2503,7 @@ end method;
 // conservative "guaranteed-xxx" predicates.
 
 define method guaranteed-method-relationship
-    (m1 :: <&method>, m2 :: <&method>, arg-te* :: <argument-sequence>) 
+    (m1 :: <&method>, m2 :: <&method>, arg-te* :: <argument-sequence>)
  => (relationship)
   let specs1 = m1.^function-specializers;
   let specs2 = m2.^function-specializers;
@@ -2621,7 +2514,7 @@ define method guaranteed-method-relationship
       spec1 == spec2
         => ; // continue
       guaranteed-preceding-specializer?(spec1, spec2, arg-te)
-	=> unless (^subtype?(spec2, spec1)) precedes-somewhere? := #t end;
+        => unless (^subtype?(spec2, spec1)) precedes-somewhere? := #t end;
       guaranteed-preceding-specializer?(spec2, spec1, arg-te)
         => follows-somewhere? := #t;
       otherwise
@@ -2646,7 +2539,7 @@ end method;
 // Do we know all the methods on this generic function for the given
 // argument type estimates.
 
-define method all-applicable-methods-guaranteed-known? 
+define method all-applicable-methods-guaranteed-known?
     (f :: <&generic-function>, arg-te* :: <argument-sequence>) => (known?)
   if (^generic-function-sealed?(f))
     let binding = model-variable-binding(f);
@@ -2675,7 +2568,7 @@ define method all-domain-methods-guaranteed-known?
     = if (current-library-description?(ld))
         binding-method-definitions(model-variable-binding(f))
       else
-	with-dependent-context ($compilation of model-creator(domain))
+        with-dependent-context ($compilation of model-creator(domain))
           // We don't do cross-library dependency tracking right now.
           without-dependency-tracking
             binding-method-definitions(model-variable-binding(f));
@@ -2692,7 +2585,7 @@ define method all-domain-methods-guaranteed-known?
 end method;
 
 // TODO: This test of domain inclusion is insufficient. If the generic is
-// individually sealed over both branches of a test union type, we 
+// individually sealed over both branches of a test union type, we
 // should win here.
 
 //   domain <integer>
@@ -2702,7 +2595,7 @@ end method;
 // Coalescing domain declarations could be tricky to get right. It might
 // be easier to expand any type estimate unions here? Unions aren't the
 // only things, though. Limited integers have the same problem (although
-// they could be considered unions). In fact, there are examples of 
+// they could be considered unions). In fact, there are examples of
 // classes alone.
 
 //   sealed <a> (<object>)
@@ -2715,8 +2608,8 @@ end method;
 // Easier if we canonicalize the type a union of known concrete subtypes
 // I guess.
 
-define method arguments-guaranteed-joint? 
-    (arg-te* :: <argument-sequence>, domain-type* :: <argument-sequence>, max :: <integer>) 
+define method arguments-guaranteed-joint?
+    (arg-te* :: <argument-sequence>, domain-type* :: <argument-sequence>, max :: <integer>)
  => (joint?)
   block (return)
     for (arg-te in arg-te*, domain-type in domain-type*,
@@ -2730,8 +2623,8 @@ define method arguments-guaranteed-joint?
   // every?(guaranteed-joint?, arg-te*, domain-type*);
 end method;
 
-define method arguments-potentially-joint? 
-    (arg-te* :: <argument-sequence>, domain-type* :: <argument-sequence>, max :: <integer>) 
+define method arguments-potentially-joint?
+    (arg-te* :: <argument-sequence>, domain-type* :: <argument-sequence>, max :: <integer>)
  => (joint?)
   block (return)
     for (arg-te in arg-te*, domain-type in domain-type*,

@@ -1,5 +1,5 @@
 Module: dfmc-optimization
-Author: Bob Cassels 
+Author: Bob Cassels
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.
 License:      See License.txt in this distribution for details.
@@ -15,8 +15,8 @@ define method constant-fold (c :: <computation>)
   #f
 end method;
 
-define method fold-if-merge! 
-    (c :: <if>, sav-first :: <computation>, sav-last  :: <computation>, 
+define method fold-if-merge!
+    (c :: <if>, sav-first :: <computation>, sav-last  :: <computation>,
      sav-value :: false-or(<value-reference>), del-first :: <computation>)
  => ()
   let f = lambda(environment(c));
@@ -34,7 +34,7 @@ define method fold-if-merge!
     redirect-previous-computations!(c, sav-first);
   end if;
   // SPLICE SAVED BRANCH ENDING IN PLACE OF MERGE
-  re-optimize(nc); 
+  re-optimize(nc);
   if (sav-last == c)
     redirect-next-computations!(merge-c, pc);
   else
@@ -49,18 +49,18 @@ define method fold-if-merge!
   remove-computation-references!(merge-c);
   // RIP OUT DEAD BRANCH
   remove-computation-block-references!
-    (del-first, merge-c, 
+    (del-first, merge-c,
      on-deletion: if (*colorize-dispatch*) color-as-eliminated-if-call else identity end);
   // REMOVE LAST OF IF
   remove-computation-references!(c);
 end method;
 
-define method primitive-call-temporary? 
+define method primitive-call-temporary?
     (ref :: <value-reference>, name :: <symbol>) => (res :: singleton(#f))
   #f
 end method;
 
-define method primitive-call-temporary? 
+define method primitive-call-temporary?
     (ref :: <temporary>, name :: <symbol>)
  => (res :: type-union(<boolean>, <primitive-call>))
   let gen = generator(ref);
@@ -69,13 +69,13 @@ end method;
 
 define method constant-fold-if (c :: <if>, test-value)
   let merge = c.next-computation;
-  let (sav-first, sav-last, sav-value, del-first) 
-    = if (test-value) 
-	 values(consequent(c), merge-left-previous-computation(merge),  
-		 merge-left-value(merge), alternative(c))
-      else 
-	 values(alternative(c), merge-right-previous-computation(merge),  
-		 merge-right-value(merge), consequent(c))
+  let (sav-first, sav-last, sav-value, del-first)
+    = if (test-value)
+         values(consequent(c), merge-left-previous-computation(merge),
+                 merge-left-value(merge), alternative(c))
+      else
+         values(alternative(c), merge-right-previous-computation(merge),
+                 merge-right-value(merge), consequent(c))
       end if;
   fold-if-merge!(c, sav-first, sav-last, sav-value, del-first);
   #t
@@ -102,7 +102,7 @@ define method constant-fold (c :: <if>)
   end if;
 end method;
 
-define function invert-if-branches! (c :: <if>) 
+define function invert-if-branches! (c :: <if>)
   let merge              = next-computation(c);
   let old-consequent     = consequent(c);
   let old-alternative    = alternative(c);
@@ -127,19 +127,19 @@ end;
 define method constant-fold (c :: <binary-merge>)
   let left-value = merge-left-value(c);
   let right-value = merge-right-value(c);
-  if (left-value & right-value) 
+  if (left-value & right-value)
     let left-g  = generator(left-value);
     let right-g = generator(right-value);
     if (left-value == right-value |
-	  guaranteed-joint?(type-estimate(left-value),
-			    dylan-value(#"<bottom>")))
+          guaranteed-joint?(type-estimate(left-value),
+                            dylan-value(#"<bottom>")))
       // unless (left-value == right-value)
       //   format-out(" MERGE %= BOTTOM LV %=\n", c, left-value);
       // end unless;
       replace-computation-with-temporary!(c, right-value);
       #t
     elseif (guaranteed-joint?(type-estimate(right-value),
-			      dylan-value(#"<bottom>")))
+                              dylan-value(#"<bottom>")))
       // unless (left-value == right-value)
       //   format-out(" MERGE %= BOTTOM RV %=\n", c, right-value);
       // end unless;
@@ -149,18 +149,18 @@ define method constant-fold (c :: <binary-merge>)
   end if;
 end method;
 
-define method constant-fold (c :: <if-merge>) 
-  #f 
+define method constant-fold (c :: <if-merge>)
+  #f
 end method;
 
 /// HACK: TEMPORARY UNTIL WE CAN FIX RECURSIVE TYPE-INFERENCE
 
-define method constant-fold (c :: <loop-merge>) 
+define method constant-fold (c :: <loop-merge>)
   // next-method();
   #f
 end method;
 
-define method constant-fold (c :: <bind-exit-merge>) 
+define method constant-fold (c :: <bind-exit-merge>)
   // next-method();
   #f
 end method;
@@ -188,34 +188,34 @@ define inline function fast-constant-argument-value (ref) => (value)
 end function;
 
 define method fold-function-call (t == #f,
-				  function, arguments) => (call-values)
+                                  function, arguments) => (call-values)
   apply(function, map(fast-constant-argument-value, arguments));
   // result ignored
   #f
 end;
 
 define method replace-call-with-values (call-value,
-					call :: <call>,
-					t == #f) => ()
+                                        call :: <call>,
+                                        t == #f) => ()
   delete-computation!(call);
 end;
 
 define method fold-function-call (t :: <multiple-value-temporary>,
-				  function, arguments) => (call-values)
-  let (#rest call-values) = apply(function, map(fast-constant-argument-value, arguments));
+                                  function, arguments) => (call-values)
+  let (#rest call-values)
+    = apply(function, map(fast-constant-argument-value, arguments));
   call-values
 end;
 
 define method replace-call-with-values (call-values,
-					call :: <call>,
-					t :: <multiple-value-temporary>) => ()
+                                        call :: <call>,
+                                        t :: <multiple-value-temporary>) => ()
   let values-temps = map(make-object-reference, call-values);
-  // format-out("XXX doing %=.\n", call);
-  let padded-values 
-    = apply(pad-multiple-values, 
-            call.environment, 
+  let padded-values
+    = apply(pad-multiple-values,
+            call.environment,
             temporary-value-context(t),
-            values-temps);              
+            values-temps);
   let (values-c, values-t) =
     make-with-temporary(environment(call),
                         <values>,
@@ -223,18 +223,17 @@ define method replace-call-with-values (call-values,
                         temporary-class: <multiple-value-temporary>);
   values-t.required-values := size(padded-values);
   values-t.rest-values? := #f;
-  // format-out("\tgot %=.\n", values-c);
   replace-computation!(call, values-c, values-c, values-t);
 end;
 
 define method fold-function-call (t :: <temporary>,
-				  function, arguments) => (call-value)
+                                  function, arguments) => (call-value)
   apply(function, map(fast-constant-argument-value, arguments))
 end;
- 
+
 define method replace-call-with-values (call-value,
-					call :: <call>,
-					t :: <temporary>) => ()
+                                        call :: <call>,
+                                        t :: <temporary>) => ()
   replace-computation-with-temporary!(call, make-object-reference(call-value));
 end;
 
@@ -243,7 +242,7 @@ define function maybe-fold-function-call (call, t, function, arg-t*)
     block ()
       values(fold-function-call(t, function, arg-t*), #t)
     exception (e :: <error>)
-      values(#f, #f)		// silently fail to fold
+      values(#f, #f)            // silently fail to fold
     end;
   if (okay?)
     re-optimize-generators(call.arguments);
@@ -252,81 +251,19 @@ define function maybe-fold-function-call (call, t, function, arg-t*)
   end;
 end;
 
-// define function variable-slot-access?
-//     (function :: <&function>, folder-function :: <function>, call-arguments)
-//  => (well? :: <boolean>)
-//   // TODO: This ^iep thing is a hack and a half. Remove it when we can
-//   // prove it's not necessary.
-//   if (folder-function ~== ^iep & size(call-arguments) == 1)
-//     let arg = constant-value(call-arguments.first);
-//     let class = ^object-class(arg); // Because we get a raw sometimes! 8(
-//     if (instance?(class, <&class>))
-//       let slotd = ^slot-descriptor(class, function);
-//       if (slotd & ^slot-setter(slotd))
-//         format-out("!!!Slot access denied: %=.%=\n", arg, function);
-//         // #t
-//         #f
-//       end;
-//     end;
-//   end;
-// end function;
-
 define method constant-fold (c :: <function-call>)
   let (function-constant?, function) = fast-constant-value?(function(c));
   let call-arguments = arguments(c);
   if (function-constant? &
-	every?(fast-constant-argument-value?, call-arguments))
+        every?(fast-constant-argument-value?, call-arguments))
     let compile-stage-function = lookup-compile-stage-function(function);
-    if (compile-stage-function 
-          /* & ~variable-slot-access?
-               (function, compile-stage-function, call-arguments) */ )
+    if (compile-stage-function)
       maybe-fold-function-call(c, temporary(c),
-			       compile-stage-function,
-			       call-arguments)
+                               compile-stage-function,
+                               call-arguments)
     end
   end
 end method;
-
-/*
-define method read-only-slot-access? (ref) => (well? :: <boolean>)
-  #f
-end method;
-
-/// HACK: DON'T HARD CODE THIS INFORMATION HERE
-/// HACK: WANT TO INFER THIS WITH SIMILAR WALK TO DYNAMIC-EXTENT
-define method read-only-slot-access? (ref :: <simple-call>) => (well? :: <boolean>)
-  let (constant-value?, fun) = fast-constant-value?(function(ref));
-  if (constant-value?)
-    select (fun)
-      dylan-value(#"element-range-error") => #t;
-      dylan-value(#"aref-rank-error")     => #t;
-      otherwise                           => #f;
-    end select;
-  else 
-    #f
-  end if;
-end method;
-
-define method read-only-slot-access? (ref :: <slot-value>) => (well? :: <boolean>)
-  #t
-end method;
-
-define method read-only-slot-access? (ref :: <repeated-slot-value>) => (well? :: <boolean>)
-  #t
-end method;
-
-define method read-only-slot-access? (ref :: <slot-value-setter>) => (well? :: <boolean>)
-  #f
-end method;
-
-define method read-only-slot-access? (ref :: <repeated-slot-value-setter>) => (well? :: <boolean>)
-  #f
-end method;
-
-define method read-only-reference? (ref :: <value-reference>)
-  every?(read-only-slot-access?, users(ref))
-end method;
-*/
 
 // TODO: HIDE TAG DETAILS TO MAKE THIS LESS SPECIFIC
 
@@ -344,39 +281,21 @@ define method constant-fold (c :: <repeated-slot-value>)
     let vec = maybe-vector-element-references(instance-ref);
     if (vec)
       let index
-	= ash(as(<integer>, ^raw-object-value(raw-index)),
-	      if (computation-index-tagged?(c)) 
-		-$number-tag-bits
-	      else
-		0
-	      end);
+        = ash(as(<integer>, ^raw-object-value(raw-index)),
+              if (computation-index-tagged?(c))
+                -$number-tag-bits
+              else
+                0
+              end);
       let ref = element(vec, index);
       replace-computation-with-temporary!(c, ref);
       #t
-    else 
+    else
       #f
     end if;
-  else 
+  else
     #f
   end if;
-  // REALLY NEED OTHER DIRECTION CAUSE THIS DIRECTION IS NOW THE DEFAULT
-  /*
-  let gen-index = generator(computation-index(c));
-  if (primitive-call-to?(gen-index, #"primitive-machine-word-shift-right"))
-    let (constant?, raw-amount) 
-      = fast-constant-value?(arguments(gen-index)[1]);
-    if (constant?)
-      let amount :: <integer> = as(<integer>, ^raw-object-value(raw-amount));
-      if (amount = $number-tag-bits)
-	let new-index = arguments(gen-index)[0];
-	remove-user!(computation-index(c), c);
-	add-user!(new-index, c);
-	computation-index(c) := new-index;
-	computation-index-tagged?(c) := #t;
-      end if;
-    end if;
-  end if;
-  */
 end method;
 
 define method constant-fold (c :: <repeated-slot-value-setter>)
@@ -384,33 +303,10 @@ define method constant-fold (c :: <repeated-slot-value-setter>)
 end method;
 
 define method constant-fold (c :: <stack-vector>)
-  /*
-  let args = c.arguments;
-  if (every?(fast-constant-argument-value?, args))
-    let vec = map-as(<vector>, compose(compile-stage, fast-constant-argument-value), args);
-    let ref = make-value-reference(vec, <immutable-object-reference>);
-    replace-computation-with-temporary!(c, ref);
-    #t
-  else 
-    #f
-  end if;
-  */
   #f
 end method;
 
 define method constant-fold (c :: <primitive-call>)
-  /*
-  let function = primitive(c);
-  let call-arguments = arguments(c);
-  if (every?(fast-constant-value?, call-arguments))
-    let compile-stage-function = lookup-compile-stage-function(function);
-    if (compile-stage-function)
-      maybe-fold-function-call(c, temporary(c),
-			       compile-stage-function,
-			       call-arguments)
-    end
-  end
-  */
   let arguments = c.arguments;
   if (every?(fast-constant-argument-value?, arguments))
     block ()
@@ -420,7 +316,8 @@ define method constant-fold (c :: <primitive-call>)
       if (function)
         let result
           = apply(function,
-                  map(compose(compile-stage, fast-constant-argument-value), arguments));
+                  map(compose(compile-stage, fast-constant-argument-value),
+                      arguments));
         unless (instance?(result, <unknown>))
           let result-c-tmp = make-object-reference(result);
           replace-computation-with-temporary!(c, result-c-tmp);
@@ -429,7 +326,7 @@ define method constant-fold (c :: <primitive-call>)
       end if;
     exception (e :: <error>)
       // format-out("Failed to fold %= on: %=\n", c, e);
-    end block;
+    end
   end if;
 end method;
 
@@ -441,38 +338,32 @@ define method constant-fold (c :: <extract-rest-value>)
   single-value-propagation(c)
 end;
 
-/*
-define method constant-fold (c :: <adjust-multiple-values-computation>)
-  next-method();
-end method;
-*/
-
 define method constant-fold (c :: <adjust-multiple-values>)
   let env = environment(c);
   let values-t = computation-value(c);
   let values-te = type-estimate(values-t);
   let n = number-of-required-values(c);
   local method right-number-of-values? (te :: <type-estimate>)
-	  size(type-estimate-fixed-values(te)) = n &
-	    ~type-estimate-rest-values(te)
-	end;
+          size(type-estimate-fixed-values(te)) = n &
+            ~type-estimate-rest-values(te)
+        end;
   if (select (values-te by instance?)
-	<type-estimate-bottom> => 
-	  #f;
-	<type-estimate-values> =>
-	  right-number-of-values?(values-te);
-	<type-estimate-union> =>
-	  every?(right-number-of-values?,
-		 type-estimate-unionees(values-te));
+        <type-estimate-bottom> =>
+          #f;
+        <type-estimate-values> =>
+          right-number-of-values?(values-te);
+        <type-estimate-union> =>
+          every?(right-number-of-values?,
+                 type-estimate-unionees(values-te));
       end)
     replace-computation-with-temporary!(c, values-t);
     #t
   elseif (n == 0)
     let (values-c, values-t) =
       make-with-temporary(env,
-			  <values>,
-			  values: #[],
-			  temporary-class: <multiple-value-temporary>);
+                          <values>,
+                          values: #[],
+                          temporary-class: <multiple-value-temporary>);
     replace-computation!(c, values-c, values-c, values-t);
     #t
   else
@@ -481,36 +372,36 @@ define method constant-fold (c :: <adjust-multiple-values>)
       let fixed-values = fixed-values(values-generator);
       let count = size(fixed-values);
       let (values-first, values-last, values-t) =
-	if (count > n)
-	  make-with-temporary*(env,
-			       <values>,
-			       values: copy-sequence(fixed-values, end: n),
-			       temporary-class: <multiple-value-temporary>)
-	elseif (~rest-value(values-generator))
-	  let false-t =
-	    make-object-reference(#f);
-	  let adjusted-fixed-values =
-	    replace-subsequence!(make(<simple-object-vector>,
-				      size: n,
-				      fill: false-t),
-				 fixed-values,
-				 end: count);
-	  let (values-c, values-t) =
-	    make-with-temporary(env,
-				<values>,
-				values: adjusted-fixed-values,
-				temporary-class: <multiple-value-temporary>);
-	  values(values-c, values-c, values-t);
-	else
-	  #f
-	end;
+        if (count > n)
+          make-with-temporary*(env,
+                               <values>,
+                               values: copy-sequence(fixed-values, end: n),
+                               temporary-class: <multiple-value-temporary>)
+        elseif (~rest-value(values-generator))
+          let false-t =
+            make-object-reference(#f);
+          let adjusted-fixed-values =
+            replace-subsequence!(make(<simple-object-vector>,
+                                      size: n,
+                                      fill: false-t),
+                                 fixed-values,
+                                 end: count);
+          let (values-c, values-t) =
+            make-with-temporary(env,
+                                <values>,
+                                values: adjusted-fixed-values,
+                                temporary-class: <multiple-value-temporary>);
+          values(values-c, values-c, values-t);
+        else
+          #f
+        end;
       if (values-t)
         values-t.required-values := count;
         values-t.rest-values? := #f;
-	replace-computation!(c, values-first, values-last, values-t);
-	#t
+        replace-computation!(c, values-first, values-last, values-t);
+        #t
       else
-	#f
+        #f
       end
     else
       #f
@@ -518,26 +409,20 @@ define method constant-fold (c :: <adjust-multiple-values>)
   end
 end;
 
-define function weak-closure? 
+define function weak-closure?
     (env :: <lambda-lexical-environment>) => (well? :: <boolean>)
-  every?(method (tmp) closed-over?(tmp) ~== $strong-closure-entry end, 
+  every?(method (tmp) closed-over?(tmp) ~== $strong-closure-entry end,
          env.closure)
 end function;
 
 define method prune-closure (env :: <lambda-lexical-environment>) => ()
-  // format-out("PRUNING CLOSURE %= :: ", lambda(env));
-  // for (tmp in env.closure)
-  //   format-out("%= %= ", tmp, closed-over?(tmp));
-  // end for;
-  // format-out("\n");
   unless (empty?(env.closure))
     block (return)
       local method ensure-weak-closure (env) weak-closure?(env) | return() end;
       if (weak-closure?(env))
         do-over-lambda-users(ensure-weak-closure, env);
         // We would've leapt out by now on any failure.
-        // format-out("  DELETING CLOSURE %= %=\n", lambda(env), env.closure);
-        do (method (tmp) closed-over?(tmp) := $no-closure-entry end, 
+        do (method (tmp) closed-over?(tmp) := $no-closure-entry end,
             env.closure);
         env.closure := #()
       end if;
@@ -561,19 +446,17 @@ define method constant-fold-closure (f :: <&lambda>)
               computation-init-closure(c) := #f;
             end if;
           end method;
-    // format-out("CONSTANT-FOLDING-CLOSURE %=\n", lambda);
     if (empty?(closure))
       if (~sigtmp & ~closed-over?(temporary(c)))
-	// format-out("DELETING MAKE-CLOSURE\n");
-	// print-method-out(lambda);
-	let ref = make(<method-reference>, value: lambda);
-	add-user!(lambda, ref);
-	replace-computation-with-temporary!(c, ref);
+        // format-out("DELETING MAKE-CLOSURE\n");
+        // print-method-out(lambda);
+        let ref = make(<method-reference>, value: lambda);
+        add-user!(lambda, ref);
+        replace-computation-with-temporary!(c, ref);
         maybe-delete-init-closure(computation-init-closure(c));
       end if
-    elseif (~any?(method (tmp) instance?(generator(tmp), <make-closure>) end, 
+    elseif (~any?(method (tmp) instance?(generator(tmp), <make-closure>) end,
                   closure))
-      // format-out("DELETING UNNECESSARY INIT-CLOSURE %=\n", f);
       maybe-delete-init-closure(computation-init-closure(c));
     end if;
   end if;
@@ -584,14 +467,11 @@ define method constant-fold (c :: <initialize-closure>)
   if (instance?(closure, <temporary>))
     let make-closure-c = generator(closure);
     if (size(users(closure)) = 1)
-      // format-out("DELETE INIT-CLOSURE TMP %= USERS %=\n", 
-      //            closure.generator, users(closure));
       delete-computation!(c);
       re-optimize(make-closure-c);
       #t
     end if;
   else
-    // format-out("DELETE INIT-CLOSURE REF %=\n", closure);
     delete-computation!(c);
     #t
   end if;
@@ -618,73 +498,21 @@ define method constant-fold (c :: <make-closure>)
   end if;
 end method;
 
-/*
-define method constant-fold (c :: <make-closure>)
-  let lambda = computation-closure-method(c);
-  let sigtmp = computation-signature-value(c);
-  local method fold ()
-          let ref = make(<method-reference>, value: lambda);
-          add-user!(lambda, ref);
-          re-optimize-users(c.temporary);
-          replace-computation-with-temporary!(c, ref);
-        end method,
-        method maybe-fold-signature (sigtmp)
-          if (sigtmp)
-	    let (constant-value?, constant-value) 
-              = fast-constant-value?(sigtmp);
-	    if (constant-value?)
-	      ^function-signature(lambda) := constant-value;
-	      computation-signature-value(c) := #f;
-	      re-optimize-users(c.temporary);
-	      re-optimize-type-estimate(c);
-	      #t
-	    end if;
-          end if;
-        end method,
-        method maybe-fold-closure (sigtmp)
-          if (sigtmp)
-            maybe-fold-signature(sigtmp);
-          else
-            fold();
-            #t
-          end if;
-        end method;
-  if (computation-maybe-free-references?(c))
-    maybe-fold-signature(sigtmp);
-  else
-    if (computation-no-free-references?(c))
-      maybe-fold-closure(sigtmp)
-    elseif (environment(lambda))
-      let free-refs = lambda-has-free-lexical-references?(lambda);
-      if (free-refs)
-        computation-maybe-free-references?(c) := #t;
-      else
-        computation-no-free-references?(c) := #t;
-        maybe-fold-closure(sigtmp);
-        #t
-      end if
-    else
-      maybe-fold-signature(sigtmp);
-    end if;
-  end if
-end method;
-*/
-
 define method constant-fold (c :: <adjust-multiple-values-rest>)
   let values-t = computation-value(c);
   let values-te = type-estimate(values-t);
   let n = number-of-required-values(c);
   local method right-number-of-values? (te :: <type-estimate>)
-	  size(type-estimate-fixed-values(te)) >= n 
-	end;
+          size(type-estimate-fixed-values(te)) >= n
+        end;
   if (select (values-te by instance?)
-	<type-estimate-bottom> => 
-	  #f;
-	<type-estimate-values> =>
-	  right-number-of-values?(values-te);
-	<type-estimate-union> =>
-	  every?(right-number-of-values?,
-		 type-estimate-unionees(values-te));
+        <type-estimate-bottom> =>
+          #f;
+        <type-estimate-values> =>
+          right-number-of-values?(values-te);
+        <type-estimate-union> =>
+          every?(right-number-of-values?,
+                 type-estimate-unionees(values-te));
       end)
     replace-computation-with-temporary!(c, values-t);
     #t
@@ -695,23 +523,23 @@ define method constant-fold (c :: <adjust-multiple-values-rest>)
       let fixed-values = fixed-values(values-generator);
       let count = size(fixed-values);
       if (count < n & ~rest-value(values-generator))
-	let false-t =
-	  make-object-reference(#f);
-	let adjusted-fixed-values =
-	  replace-subsequence!(make(<simple-object-vector>,
-				    size: n,
-				    fill: false-t),
-			       fixed-values,
-			       end: count);
-	let (values-c, values-t) =
-	  make-with-temporary(env,
-			      <values>,
-			      values: adjusted-fixed-values,
-			      temporary-class: <multiple-value-temporary>);
+        let false-t =
+          make-object-reference(#f);
+        let adjusted-fixed-values =
+          replace-subsequence!(make(<simple-object-vector>,
+                                    size: n,
+                                    fill: false-t),
+                               fixed-values,
+                               end: count);
+        let (values-c, values-t) =
+          make-with-temporary(env,
+                              <values>,
+                              values: adjusted-fixed-values,
+                              temporary-class: <multiple-value-temporary>);
         values-t.required-values := n;
         values-t.rest-values? := #f;
-	replace-computation!(c, values-c, values-c, values-t);
-	#t
+        replace-computation!(c, values-c, values-c, values-t);
+        #t
       end
     else
       #f
@@ -744,12 +572,12 @@ define method constant-fold (c :: <definition>)
           let definition
             = untracked-binding-definition(binding, default: #f);
           if (definition & form-dynamic?(definition))
-	    #f
-	  else
-	    binding-model-object(binding)
-	      := extract-and-optimize-constant(value);
-	    delete-computation!(c);
-	    #t
+            #f
+          else
+            binding-model-object(binding)
+              := extract-and-optimize-constant(value);
+            delete-computation!(c);
+            #t
           end if;
         else
           #f
@@ -763,10 +591,6 @@ define method constant-fold (c :: <type-definition>)
   let value = computation-value(c);
   let constant? = extractable-constant-value?(value);
   if (constant?)
-    /*
-    format-out("Installing constant type for %= - %=\n",
-               typed-binding(c), value);
-    */
     binding-type-model-object(typed-binding(c))
       := extract-and-optimize-constant(value);
     delete-computation!(c);
@@ -784,10 +608,10 @@ define method constant-fold (c :: <keyword-default>)
     let constant? = extractable-constant-value?(value);
     if (constant?)
       keyword-default-value-specifiers(c)[keyword-default-value-index(c) * 2 +
-					    1]
-	:= extract-and-optimize-constant(value);
+                                            1]
+        := extract-and-optimize-constant(value);
       replace-temporary-in-users!(merge-temp,
-				  keyword-default-value-keyword-variable(c));
+                                  keyword-default-value-keyword-variable(c));
       re-optimize(merge);
       delete-useless-computations(merge);
       #t
@@ -829,7 +653,7 @@ define program-warning <run-time-type-error>
     required-init-keyword: inferred-type:;
   slot condition-expected-type,
     required-init-keyword: expected-type:;
-  format-string 
+  format-string
     "Type check can fail - %s inferred, %s expected.";
   format-arguments
     inferred-type, expected-type;
@@ -837,7 +661,7 @@ end program-warning;
 
 define program-warning <run-time-result-type-error>
     (<run-time-type-error>)
-  format-string 
+  format-string
     "Result type check can fail - %s inferred, %s expected.";
 end program-warning;
 
@@ -852,18 +676,17 @@ end method;
 define method evaluate-type-checks? (c :: <check-type>)
   let (type-constant?, the-type) = fast-constant-value?(type(c));
   if (type-constant? & instance?(the-type, <&type>))
-    let the-estimate 
-      = type-estimate(computation-value(c));
+    let the-estimate = type-estimate(computation-value(c));
     if (guaranteed-joint?(the-estimate, the-type))
       #t
     else
       // if (guaranteed-disjoint?(the-estimate, the-type))
       if (effectively-disjoint?(the-estimate, the-type))
-	note(<run-time-type-error>,
-	     source-location: dfm-source-location(c),
-	     context-id:      dfm-context-id(c),
-	     inferred-type: the-estimate,
-	     expected-type: the-type);
+        note(<run-time-type-error>,
+             source-location: dfm-source-location(c),
+             context-id:      dfm-context-id(c),
+             inferred-type: the-estimate,
+             expected-type: the-type);
       end;
       #f
     end;
@@ -872,33 +695,27 @@ end method evaluate-type-checks?;
 
 define method evaluate-type-checks? (c :: <constrain-type>)
   unless (type(c))
-    let the-estimate 
-      = type-estimate(computation-value(c));
+    let the-estimate = type-estimate(computation-value(c));
     type-estimate-subtype?
       (the-estimate, as(<type-estimate>, dylan-value(#"<object>")))
   end;
 end method evaluate-type-checks?;
 
-// TODO: Calls to "values" aren't being type-inferred correctly at the 
+// TODO: Calls to "values" aren't being type-inferred correctly at the
 // moment. When they are, beef up this checking appropriately. Things
 // to do:
 //
 //   o Spot too few multiple values as a special case so that it can be
 //     reported more usefully than "#f isn't of type xyz".
 //
-//   o Get more specific summary information somehow - distinguish 
+//   o Get more specific summary information somehow - distinguish
 //     multiple value bind checks from return type checks by class
 //     so that error messages can be made more meaningful, preferably
 //     reporting the variable names involved where possible.
 
-// *** This has no callers?  (Which is good, since it has no implementation!)
-// define method check-type-check 
-//     (c :: <multiple-value-check-type-computation>, check-estimate)
-// end method;
-
 define function make-type-estimate-for-fixed-check (type-temp*)
   // Construct the type estimate which is used for fixed-return-value
-  // type-checking done by <multiple-value-check-type>.  
+  // type-checking done by <multiple-value-check-type>.
   let object-te = as(<type-estimate>, dylan-value(#"<object>"));
   local method type-temporary-type-estimate (type-temp) => (te :: <type-estimate>)
           // Construct type-estimate for this temp, erring on side of generality
@@ -916,24 +733,24 @@ define function make-type-estimate-for-fixed-check (type-temp*)
      rest:  #f)
 end;
 
-define function trim-type-estimate-to-fixed-values 
+define function trim-type-estimate-to-fixed-values
   (te :: <type-estimate>, n :: <integer>) => (te :: <type-estimate>)
   // Extract exactly n values from te, and make a new values te.
   // Used to trim computation te to fixed values in optimization below.
   select (te by instance?)
-    <type-estimate-bottom> 
+    <type-estimate-bottom>
       => te;
-    <type-estimate-values> 
+    <type-estimate-values>
       => make-type-estimate
-	   (<type-estimate-values>, 
-	    fixed: map(curry(type-estimate-values-ref, te), 
-		       range(from: 0, below: n)),
-	    rest:  #f);
+           (<type-estimate-values>,
+            fixed: map(curry(type-estimate-values-ref, te),
+                       range(from: 0, below: n)),
+            rest:  #f);
     <type-estimate-union>
       => make-type-estimate
-	   (<type-estimate-union>, 
-	    unionees: map(rcurry(trim-type-estimate-to-fixed-values, n),
-			  type-estimate-unionees(te)));
+           (<type-estimate-union>,
+            unionees: map(rcurry(trim-type-estimate-to-fixed-values, n),
+                          type-estimate-unionees(te)));
   end
 end;
 
@@ -941,9 +758,9 @@ define function evaluate-fixed-values-type-checks
   (c :: <multiple-value-check-type-computation>, values-te :: <type-estimate>)
     => (statically-checked? :: <boolean>)
   // See if the fixed values match.  If so, mark them as statically checked,
-  // so the back end won't generate code for the type check.  #rest done 
+  // so the back end won't generate code for the type check.  #rest done
   // elsewhere; see evaluate-type-checks(<multiple-value-check-type-rest>).
-  // 
+  //
   // Do the check all together, as in:
   //   type-union(values(<a>, <b>), values(<b>, <a>)) vs values(<a>, <a>)
   // This will complain; position-by-position check wouldn't expose the error.
@@ -966,16 +783,16 @@ define function evaluate-fixed-values-type-checks
   //  format-out("\n    fixed-values-te = %s",   check-estimate, fixed-values-te)
   //end;
   local method canonical-undefined-values? (te :: <type-estimate>)
-	 => (canonical-undefined? :: <boolean>)
-	  // Is this <bottom> or values(#rest <bottom>)?
-	  select (te by instance?)
-	    <type-estimate-bottom> => #t;
-	    <type-estimate-values> => empty?(type-estimate-fixed-values(te)) &
-		                      instance?(type-estimate-rest-values(te), 
-						<type-estimate-bottom>);
-	    otherwise              => #f;
-	  end
-	end;
+         => (canonical-undefined? :: <boolean>)
+          // Is this <bottom> or values(#rest <bottom>)?
+          select (te by instance?)
+            <type-estimate-bottom> => #t;
+            <type-estimate-values> => empty?(type-estimate-fixed-values(te)) &
+                                      instance?(type-estimate-rest-values(te),
+                                                <type-estimate-bottom>);
+            otherwise              => #f;
+          end
+        end;
   // if (~canonical-undefined-values?(values-te) &
   //     type-estimate-disjoint?(fixed-values-te, check-estimate))
   if (~canonical-undefined-values?(values-te) &
@@ -990,27 +807,27 @@ define function evaluate-fixed-values-type-checks
   end;
   local method evaluate-single-type? (i :: <integer>) => (ev? :: <boolean>)
           // #t if ith value type-checks.  Mark it as statically done if so.
-	  let type = checked-types[i];
-	  if (type)                       // Not already checked
-	    let (the-type-constant?, the-type) = fast-constant-value?(type);
-	    if (the-type-constant?           & 
+          let type = checked-types[i];
+          if (type)                       // Not already checked
+            let (the-type-constant?, the-type) = fast-constant-value?(type);
+            if (the-type-constant?           &
                 instance?(the-type, <&type>) &
                 type-estimate-values-element-subtype?
                   (values-te, i, as(<type-estimate>, the-type)))
-	      // NB: succeeds if values-te is bottom, too -- no point in 
+              // NB: succeeds if values-te is bottom, too -- no point in
               //     checking type of result you'll never get!
-	      remove-user!(type, c);
-	      checked-types[i] := #f;   // don't bother checking this type
-	      #t
-	    end
+              remove-user!(type, c);
+              checked-types[i] := #f;   // don't bother checking this type
+              #t
+            end
           else
             #t
-	  end
-	end;
+          end
+        end;
   every?(evaluate-single-type?, range(from: 0, below: ntypes))
 end;
 
-define method evaluate-type-checks? 
+define method evaluate-type-checks?
     (c :: <multiple-value-check-type-computation>)
   // If fixed types check statically, mark as checked.
   evaluate-fixed-values-type-checks(c, type-estimate(computation-value(c)))
@@ -1022,7 +839,7 @@ define method evaluate-type-checks? (c :: <multiple-value-check-type-rest>)
   let values-te       = type-estimate(computation-value(c));
   evaluate-fixed-values-type-checks(c, values-te) &  // Fixed types check?
   (~check-rest-type |                                // #f means already checked
-    begin 
+    begin
       let (rest-type-constant?, rest-type) = fast-constant-value?(check-rest-type);
       if (rest-type-constant? &                      // Type is constant
           instance?(rest-type, <&type>) &            //   and matches values-te
@@ -1048,14 +865,14 @@ define inline method make-with-matching-temporary
   c
 end method;
 
-define method copy-type-check 
-    (c :: <single-value-check-type-computation>, 
-       checked-ref :: <value-reference>)
+define method copy-type-check
+    (c :: <single-value-check-type-computation>,
+     checked-ref :: <value-reference>)
  => (c-copy :: <single-value-check-type-computation>)
   let env = environment(c);
   let checked-c = checked-ref.generator;
-  let loc 
-    = (checked-c & computation-source-location(checked-c)) 
+  let loc
+    = (checked-c & computation-source-location(checked-c))
         | parent-source-location();
   make-with-matching-temporary
     (env, object-class(c), c.temporary,
@@ -1065,14 +882,14 @@ define method copy-type-check
      temporary-class: temporary-class(temporary(c)))
 end method;
 
-define method copy-type-check 
+define method copy-type-check
     (c :: <assignment-check-type>,
        checked-ref :: <value-reference>)
  => (c-copy :: <assignment-check-type>)
   let env = environment(c);
   let checked-c = checked-ref.generator;
-  let loc 
-    = (checked-c & computation-source-location(checked-c)) 
+  let loc
+    = (checked-c & computation-source-location(checked-c))
         | parent-source-location();
   make-with-matching-temporary
     (env, object-class(c), c.temporary,
@@ -1083,14 +900,14 @@ define method copy-type-check
      temporary-class: temporary-class(temporary(c)))
 end method;
 
-define method copy-type-check 
+define method copy-type-check
     (c :: <multiple-value-check-type-computation>,
        checked-ref :: <value-reference>)
  => (c-copy :: <multiple-value-check-type-computation>)
   let env = environment(c);
   let checked-c = checked-ref.generator;
-  let loc 
-    = (checked-c & computation-source-location(checked-c)) 
+  let loc
+    = (checked-c & computation-source-location(checked-c))
         | parent-source-location();
   make-with-matching-temporary
     (env, object-class(c), c.temporary,
@@ -1100,17 +917,17 @@ define method copy-type-check
      temporary-class: temporary-class(temporary(c)))
 end method;
 
-define method copy-type-check 
+define method copy-type-check
     (c :: <multiple-value-check-type-rest>,
        checked-ref :: <value-reference>)
  => (c-copy :: <multiple-value-check-type-rest>)
   let env = environment(c);
   let checked-c = checked-ref.generator;
-  let loc 
-    = (checked-c & computation-source-location(checked-c)) 
+  let loc
+    = (checked-c & computation-source-location(checked-c))
         | parent-source-location();
   make-with-matching-temporary
-    (env, object-class(c), c.temporary, 
+    (env, object-class(c), c.temporary,
      source-location: loc,
      value: checked-ref,
      types: copy-sequence(types(c)), // because they're modified
@@ -1120,7 +937,7 @@ end method;
 
 define method constant-fold (c :: <check-type-computation>)
   let value-c = generator(computation-value(c));
-  if (value-c & instance?(value-c, <if-merge>) 
+  if (value-c & instance?(value-c, <if-merge>)
         // The following is because we seem to have a bogus class hierarchy
         // here 8(
         // We mustn't propagate a constraint type above its station, since
@@ -1128,7 +945,7 @@ define method constant-fold (c :: <check-type-computation>)
         // branch, say).
         & ~instance?(c, <constrain-type>)
         // The following is a blunt instrument that ensures that we don't
-        // promote type checks inappropriately across conditionals or 
+        // promote type checks inappropriately across conditionals or
         // ahead of computations that might cause the check never to
         // get reached. We could be much smarter about this.
         & value-c == c.previous-computation)
@@ -1136,7 +953,7 @@ define method constant-fold (c :: <check-type-computation>)
 
     // Duplicate the type check in the branches of the merge.
 
-    // Make a copy of the check computation that refers to the 
+    // Make a copy of the check computation that refers to the
     // value generated by the branch.
     let left-ref = merge-left-value(merge-c);
     let left-check = copy-type-check(c, left-ref);
@@ -1147,7 +964,7 @@ define method constant-fold (c :: <check-type-computation>)
     insert-computation-before-reference!(merge-c, left-check, left-ref);
     merge-replace-left-value!(merge-c, left-ref, left-check.temporary);
 
-    // Make a copy of the check computation that refers to the 
+    // Make a copy of the check computation that refers to the
     // value generated by the branch.
     let right-ref = merge-right-value(merge-c);
     let right-check = copy-type-check(c, right-ref);
@@ -1187,24 +1004,24 @@ define method constant-fold (c :: <slot-value>)
           )
       let val = ^slot-value(instance, sd);
       unless (val == &unbound)
-	let ref
-	  = make-value-reference
-	      (val, 
-	       if (^slot-getter(sd) == dylan-value(#"tail"))
-		 debug-assert
-		   (instance?(instance-ref, <immutable-object-reference>),
-		    "FOLDING TAIL OF MUTABLE REF %=", instance);
-		 // maintain immutability
-		 <immutable-object-reference>
-	       else
-		 <object-reference>
-	       end if);
-	replace-computation-with-temporary!(c, ref);
-	#t
+        let ref
+          = make-value-reference
+              (val,
+               if (^slot-getter(sd) == dylan-value(#"tail"))
+                 debug-assert
+                   (instance?(instance-ref, <immutable-object-reference>),
+                    "FOLDING TAIL OF MUTABLE REF %=", instance);
+                 // maintain immutability
+                 <immutable-object-reference>
+               else
+                 <object-reference>
+               end if);
+        replace-computation-with-temporary!(c, ref);
+        #t
       end unless;
     end if;
-  elseif (instance?(instance-ref, <stack-vector-temporary>) 
-	    & ^slot-getter(sd) == dylan-value(#"size"))
+  elseif (instance?(instance-ref, <stack-vector-temporary>)
+            & ^slot-getter(sd) == dylan-value(#"size"))
     let ref = make-object-reference(number-values(instance-ref));
     replace-computation-with-temporary!(c, ref);
     #t
@@ -1212,38 +1029,33 @@ define method constant-fold (c :: <slot-value>)
     let type = type-estimate(instance-ref);
     if (instance?(type, <type-estimate-limited-collection>))
       select (^slot-getter(sd))
-	dylan-value(#"dimensions")
-	  => if (type-estimate-dimensions(type))
-	       let dims = as(<simple-object-vector>, type-estimate-dimensions(type));
-	       let ref  = make-value-reference(dims, <immutable-object-reference>);
-	       replace-computation-with-temporary!(c, ref);
-	       #t;
-	     else 
-	       #f
-	     end if;
-	dylan-value(#"size")
-	  => if (type-estimate-size(type))
-	       let ref  = make-value-reference(type-estimate-size(type), <immutable-object-reference>);
-	       replace-computation-with-temporary!(c, ref);
-	       #t;
-	     else 
-	       #f
-	     end if;
-	dylan-value(#"element-type") 
-	  => let ref = make-object-reference(as(<&type>, type-estimate-of(type)));
-	     replace-computation-with-temporary!(c, ref);
+        dylan-value(#"dimensions")
+          => if (type-estimate-dimensions(type))
+               let dims = as(<simple-object-vector>, type-estimate-dimensions(type));
+               let ref  = make-value-reference(dims, <immutable-object-reference>);
+               replace-computation-with-temporary!(c, ref);
+               #t;
+             else
+               #f
+             end if;
+        dylan-value(#"size")
+          => if (type-estimate-size(type))
+               let ref  = make-value-reference(type-estimate-size(type), <immutable-object-reference>);
+               replace-computation-with-temporary!(c, ref);
+               #t;
+             else
+               #f
+             end if;
+        dylan-value(#"element-type")
+          => let ref = make-object-reference(as(<&type>, type-estimate-of(type)));
+             replace-computation-with-temporary!(c, ref);
              #t;
         otherwise
-	  => #f;
+          => #f;
       end select;
-    else 
+    else
       #f
     end if
   end if;
 end method;
 
-/*
-define method constant-fold (c :: <set-cell-value!>)
-  #f;
-end method;
-*/
