@@ -76,6 +76,7 @@ define method delete-useless-computations (c :: <if-merge>)
     if (consequent(if-c) == alternative(if-c))
       delete-computation!(c);
       delete-computation!(if-c);
+      status := #t;
     end if;
     status
   end if

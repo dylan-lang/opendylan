@@ -310,6 +310,7 @@ define method extract-lambda-body-extent (body, env) => (first, last, return-c)
     let last = return-c.previous-computation;
     first.previous-computation := #f;
     last.next-computation      := #f;
+    remove-computation-references!(bind-c);
     values(first, last, return-c)
   end if
 end method;
