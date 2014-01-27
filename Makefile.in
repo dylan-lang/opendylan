@@ -425,6 +425,7 @@ CHECK_APPS = \
 	channels-tests \
 	command-line-parser-test-suite-app \
 	logging-test-suite-app \
+	regular-expressions-test-suite \
 	hash-algorithms-test
 
 CHECK_ENV = \
