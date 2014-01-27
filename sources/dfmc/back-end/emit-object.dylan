@@ -347,6 +347,11 @@ define method emit-iep-name
 end method;
 
 define method emit-name-internal
+    (back-end :: <back-end>, stream, o :: <&objc-msgsend>) => (name)
+  "objc_msgSend"
+end method;
+
+define method emit-name-internal
     (back-end :: <back-end>, stream, o :: <&raw-type>)
  => (name)
   o.raw-type-c-name;

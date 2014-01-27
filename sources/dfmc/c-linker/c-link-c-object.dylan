@@ -108,6 +108,10 @@ define method emit-forward
   format(stream, "extern void *%s;\n", v.name);
 end method;
 
+define method emit-forward
+    (back-end :: <c-back-end>, stream :: <stream>, o :: <&objc-msgsend>) => ();
+  format(stream, "extern void objc_msgSend%s(void);\n", o.c-modifiers);
+end;
 
 
 define method emit-raw-struct-member

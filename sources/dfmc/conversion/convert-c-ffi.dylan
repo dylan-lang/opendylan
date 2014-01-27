@@ -159,6 +159,29 @@ define &converter %c-callable-function
     (env, context, name, method-form, c-modifiers, other-name, export);
 end &converter;
 
+define method convert-%objc-msgsend
+    (env :: <environment>, context :: <value-context>,
+     signature, arguments, modifiers)
+  let sig-spec = parse-primitive-signature(name, signature);
+  let (ffi-signature, signature) = make-ffi-signature(sig-spec);
+  let function
+    = make(<&objc-msgsend>,
+           c-signature: ffi-signature,
+           signature: signature,
+           c-modifiers: as-string(modifiers));
+  convert-primitive-call(env, context, <primitive-call>, function, arguments);
+end method;
+
+define &converter %objc-msgsend
+  { %objc-msgsend (?target:expression, ?selector:expression, #key ?c-modifiers:expression = "")
+        (?parameters:*) => (?results:*)
+      (?arguments:*) end }
+  => convert-%objc-msgsend (env, context,
+                            #{ (target :: <raw-machine-word>, selector :: <raw-machine-word>, ?parameters) => (?results) },
+                            pair(target, pair(selector, parse-expressions(arguments))),
+                            as-string(c-modifiers))
+end &converter;
+
 
 
 define compiler-sideways method compute-and-install-form-model-objects

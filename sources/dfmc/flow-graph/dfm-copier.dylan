@@ -241,10 +241,15 @@ define method do-deep-copy
 end method;
 
 // Unlike primitves, of which they're a slightly suspect subclass,
-// raw c-function objects don't have definitions of their own and
-// must be copied.
+// raw c-function and objc-msgsend objects don't have definitions
+// of their own and must be copied.
 define method deep-copy
     (copier :: <dfm-copier>, object :: <&c-function>) => (value)
+  maybe-do-deep-copy(copier, object)
+end method;
+
+define method deep-copy
+    (copier :: <dfm-copier>, object :: <&objc-msgsend>) => (value)
   maybe-do-deep-copy(copier, object)
 end method;
 

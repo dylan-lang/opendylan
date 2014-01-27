@@ -2164,6 +2164,15 @@ define method maybe-claim-heap-element
   maybe-claim-c-signature-elements(heap, element.c-signature);
 end method;
 
+define method maybe-claim-heap-element
+    (heap :: <model-heap>, parent, element :: <&objc-msgsend>, ct-ref?)
+  unless (element.binding-name)
+    mark-emitted-name(heap, element);
+  end unless;
+  do-record-external-heap-element-reference(heap, element, ct-ref?);
+  maybe-claim-c-signature-elements(heap, element.c-signature);
+end method;
+
 define method maybe-claim-c-signature-elements
     (heap :: <model-heap>, sig :: <&signature>)
   for (type in ^signature-required(sig),

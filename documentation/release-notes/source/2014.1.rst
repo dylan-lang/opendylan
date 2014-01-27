@@ -27,6 +27,32 @@ The ``<timer>`` class has been renamed to ``<profiling-timer>``.
 The function ``integer-to-string`` is now faster.
 
 
+dylan-direct-c-ffi
+==================
+
+Much like ``%call-c-function`` for low-level C-FFI, there is now
+a ``%objc-msgsend`` for low-level Objective C messaging integration.
+More information about this will be forthcoming in an ``objc-dylan``
+bridge library.
+
+``%objc-msgsend`` takes the target and selector as ``<raw-machine-word>``
+values. As with ``%call-c-function``, all values passed in and returned
+should be raw values.
+
+If you need the ``objc_msgSend_stret`` or other variants, pass
+``c-modifiers: "_stret"`` or similar after the selector. The value
+passed here will be appended to ``objc_msgSend`` so it works for all
+variants, including sending to the super (``objc_msgSendSuper``, etc).
+
+.. code-block:: dylan
+
+    %objc-msgsend (target, selector)
+       (argument :: <raw-type>)
+     => ()
+      (argument-as-raw)
+    end;
+
+
 hash-algorithms
 ===============
 
