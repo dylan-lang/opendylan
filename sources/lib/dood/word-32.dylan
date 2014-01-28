@@ -13,6 +13,26 @@ end method;
 define constant $word-size      = 32;
 define constant $bytes-per-word = 4;
 
+define inline-only function dood-word-shift-right
+    (x :: <dood-word>, y :: <integer>) => (z :: <dood-word>)
+  machine-word-shift-right(x, y)
+end function;
+
+define inline-only function dood-word-shift-left
+    (x :: <dood-word>, y :: <integer>) => (z :: <dood-word>)
+  machine-word-shift-left-with-overflow(x, y)
+end function;
+
+define inline-only function dood-word-logior
+    (x :: <dood-word>, y :: <dood-word>) => (z :: <dood-word>)
+  machine-word-logior(x, y)
+end function;
+
+define inline-only function dood-word-logand
+    (x :: <dood-word>, y :: <dood-word>) => (z :: <dood-word>)
+  machine-word-logand(x, y)
+end function;
+
 define inline function decode-word-bytes (value :: <dood-word>) 
  => (b1 :: <dood-word>, b2 :: <dood-word>, 
      b3 :: <dood-word>, b4 :: <dood-word>)
