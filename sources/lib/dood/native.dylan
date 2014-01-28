@@ -41,26 +41,6 @@ define constant <dood-table> = <pointer-id-table>;
 define constant <dood-table> = <object-table>;
 define constant <dood-word>  = <machine-word>;
 
-define inline-only function dood-word-shift-right
-    (x :: <dood-word>, y :: <integer>) => (z :: <dood-word>)
-  machine-word-shift-right(x, y)
-end function;
-
-define inline-only function dood-word-shift-left
-    (x :: <dood-word>, y :: <integer>) => (z :: <dood-word>)
-  machine-word-shift-left-with-overflow(x, y)
-end function;
-
-define inline-only function dood-word-logior
-    (x :: <dood-word>, y :: <dood-word>) => (z :: <dood-word>)
-  machine-word-logior(x, y)
-end function;
-
-define inline-only function dood-word-logand
-    (x :: <dood-word>, y :: <dood-word>) => (z :: <dood-word>)
-  machine-word-logand(x, y)
-end function;
-
 define constant dood-instance-slot-descriptors
   = instance-slot-descriptors;
 
