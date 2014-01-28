@@ -5,7 +5,7 @@ A Call For Help
 ===============
 
 We have a number of projects where we currently lack the knowledge,
-experience or available people to begin or complete them.
+experience, or available people to begin or complete them.
 
 We're making a call to the community of interested people to say
 that we're more than willing to help people get started with
