@@ -39,7 +39,10 @@ http://opendylan.org/download/.
 ----------
 
 We have a number of projects where we currently lack the knowledge,
-experience, or available people to begin or complete them.
+experience, or available people to begin or complete them. This
+isn't to say that we've been idle! We've been improving performance
+of our core libraries, optimizing our `HTTP`_ code, creating a
+stand-alone `binary-data_` library and many other things.
 
 We're making a call to the community of interested people to say
 that we're more than willing to help people get started with
@@ -152,6 +155,8 @@ Our Windows installer also needs some support, particularly in the
 bundling of the PellesC compiler to improve the first time experience
 for Windows users.
 
+.. _HTTP: https://github.com/dylan-lang/http
+.. _binary data: https://github.com/dylan-lang/binary-data
 .. _partial list of open projects: https://github.com/dylan-lang/opendylan/wiki
 .. _get in touch: http://opendylan.org/community/
 .. _Twitter: http://twitter.com/DylanLanguage
