@@ -64,13 +64,15 @@ someone that knows GTK+ well.
 Code Mirror Editor Support
 --------------------------
 
-We'd like to have Code Mirror support for Dylan. This would initially
+We'd like to have `Code Mirror`_ support for Dylan. This would initially
 involve correcting our existing syntax highlighting and then moving
 into further improvements like supporting auto-indentation and other
 Code Mirror features.
 
-This would improve the experience of editing Dylan in the Light Table
-IDE.
+This would improve the experience of editing Dylan in the `Light Table
+IDE`_.
+
+This would involve writing JavaScript code.
 
 Library Improvements
 --------------------
@@ -93,3 +95,5 @@ bundling of the PellesC compiler to improve the first time experience
 for Windows users.
 
 .. _partial list of open projects: https://github.com/dylan-lang/opendylan/wiki
+.. _Code Mirror: http://codemirror.net/
+.. _Light Table IDE: http://www.lighttable.com/
