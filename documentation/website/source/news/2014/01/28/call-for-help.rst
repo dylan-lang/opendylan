@@ -13,7 +13,9 @@ Dylan and to help deal with problems that arise in the course of
 making progress on some of our open projects.
 
 We have a `partial list of open projects`_ in our wiki, but we'd like
-to call special attention to a subset of them.
+to call special attention to a subset of them. If none of the projects
+below sound interesting, feel free to check out the list on the wiki
+to see the others.
 
 Read on to see how you can help!
 
