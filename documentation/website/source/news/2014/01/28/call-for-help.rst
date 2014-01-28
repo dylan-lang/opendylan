@@ -42,7 +42,7 @@ We have a number of projects where we currently lack the knowledge,
 experience, or available people to begin or complete them. This
 isn't to say that we've been idle! We've been improving performance
 of our core libraries, optimizing our `HTTP`_ code, creating a
-stand-alone `binary-data_` library and many other things.
+stand-alone `binary-data`_ library and many other things.
 
 We're making a call to the community of interested people to say
 that we're more than willing to help people get started with
