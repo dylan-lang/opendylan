@@ -9,7 +9,7 @@ Status:          Draft
 Type:            Standards Track
 Affects-DRM:     Yes
 Created:         28-Jul-2013
-Last-Modified:   21-Dec-2013
+Last-Modified:   25-Dec-2013
 Post-History:    19-Dec-2013, 28-Jul-2013
 Target-Version:  2014.1
 ===============  ========================
@@ -250,6 +250,15 @@ Collection             Element Types
 Programs that relied on this behavior should instead specify either the
 ``default-fill:`` argument to ``limited`` or the ``fill:`` init-keyword to 
 ``make``.
+
+An additional side-effect of this relates to the ``subclass`` function in type
+specializers. The ``subclass`` function does not work with every limited
+collection type, because limited collection types are not classes. That is,
+``limited(<vector>, of: <color>)`` is not congruent to ``subclass(<vector>)``,
+and never has been. However, ``subclass`` will work with the above combinations
+of collection and element type, assuming the correct ``default-fill:`` is
+provided. That is, ``limited(<vector>, of: <integer>, default-fill: 0)`` is
+congruent to ``subclass(<vector>)``.
 
 Existing subclasses of ``<collection>`` that define their own ``fill:``
 init-keyword will still work, assuming they also specify a default value for
