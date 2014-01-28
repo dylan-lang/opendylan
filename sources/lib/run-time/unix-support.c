@@ -61,16 +61,15 @@ int mps_lib_fputs_(const char *s, int end, FILE *stream)
 }
 
 // this is our stack walker, used in SIGTRAP
-static long getebp () {
 #ifdef OPEN_DYLAN_ARCH_X86
+static long getebp () {
     long ebp;
     asm("mov (%%ebp), %0"
         :"=r"(ebp));
     return ebp;
-#else
     return 0;
-#endif
 }
+#endif
 
 void walkstack() {
 #ifdef OPEN_DYLAN_ARCH_X86

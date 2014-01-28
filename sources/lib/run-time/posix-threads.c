@@ -38,6 +38,10 @@
 /* get prctl */
 #include <sys/prctl.h>
 #endif
+#ifdef OPEN_DYLAN_PLATFORM_FREEBSD
+/* get pthread_set_name_np */
+#include <pthread_np.h>
+#endif
 
 
 static void timespec_add_msecs(struct timespec *tp, long msecs) {
