@@ -756,7 +756,8 @@ define module-with-models dfmc-modeling
       alternate-name,
     <&c-variable>,
       dll-import?,
-      dll-export?;
+      dll-export?,
+    <&objc-msgsend>;
 
   // collections
 

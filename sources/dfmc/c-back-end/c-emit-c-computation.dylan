@@ -13,6 +13,12 @@ end method;
 
 define method emit-call
     (b :: <c-back-end>, s :: <stream>, d :: <integer>,
+     c :: <primitive-call>, f :: <&objc-msgsend>)
+  emit-primitive-call(b, s, d, c, f);
+end method;
+
+define method emit-call
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <c-variable-pointer-call>, f)
   format-emit(b, s, d, "&~;", c.c-variable.name);
 end method;
@@ -38,6 +44,38 @@ end method;
 define method emit-c-function-arguments
     (back-end :: <c-back-end>, s :: <stream>, d :: <integer>,
      c :: <&c-function>, arguments)
+ => ()
+  write(s, "(");
+  for (arg in arguments,
+       parm in c.c-signature.^signature-required,
+       first? = #t then #f)
+    unless (first?) write(s, ", "); end;
+    emit-c-function-argument-out(back-end, s, d, arg, parm);
+  end;
+  write(s, ")");
+end;
+
+define method emit-primitive-call
+    (b :: <c-back-end>, s :: <stream>, d :: <integer>,
+     c :: <primitive-call>, f :: <&objc-msgsend>)
+  let sig-values = f.primitive-signature.^signature-values;
+  let return-type = first(sig-values, default: dylan-value(#"<object>"));
+  format-emit(b, s, d, "((^(*)(", return-type);
+  for (type in f.c-signature.^signature-required,
+       first? = #t then #f)
+    unless (first?)
+      format(s, ", ");
+    end unless;
+    format-emit(b, s, d, "^", type);
+  end for;
+  format(s, "))objc_msgSend%s)", f.c-modifiers);
+  emit-objc-msgsend-arguments(b, s, d, f, c.arguments);
+  write(s, ";");
+end method;
+
+define method emit-objc-msgsend-arguments
+    (back-end :: <c-back-end>, s :: <stream>, d :: <integer>,
+     c :: <&objc-msgsend>, arguments)
  => ()
   write(s, "(");
   for (arg in arguments,

@@ -1149,7 +1149,8 @@ define &module dylan-direct-c-ffi
     \%call-c-function,
     \%call-c-function-indirect,
     \%c-callable-function,
-    \%c-variable-pointer;
+    \%c-variable-pointer,
+    \%objc-msgsend;
 end &module;
 
 define &module dylan-c-ffi-hygiene-glitches

@@ -42,3 +42,19 @@ end &class;
 define class <&c-variable> (<named-object>, <emitted-object>)
   constant slot dll-import? = #f, init-keyword: import:;
 end class <&c-variable>;
+
+define class <&objc-msgsend> (<&primitive>)
+  constant slot c-modifiers :: <string> = "",
+    init-keyword: c-modifiers:;
+  constant slot c-signature :: <&signature>,
+    init-keyword: c-signature:;
+end class;
+
+define method initialize
+    (x :: <&objc-msgsend>, #rest all-keys, #key, #all-keys)
+  next-method();
+  // Unlike with the built-in primitives, we err on the side of caution...
+  primitive-side-effecting?(x) := #t;
+  primitive-stateless?(x)      := #f;
+  primitive-dynamic-extent?(x) := #f;
+end method;

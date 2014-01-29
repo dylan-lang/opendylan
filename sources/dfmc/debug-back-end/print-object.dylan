@@ -188,6 +188,10 @@ define method primitive-name (o :: <&primitive>) => (name)
   end;
 end method;
 
+define method primitive-name (o :: <&objc-msgsend>) => (name)
+  "objc_msgSend"
+end method;
+
 define compiler-sideways method print-object
     (o :: <&primitive>, stream :: <stream>) => ()
   format(stream, "&[PRIMITIVE %s]", primitive-name(o));
