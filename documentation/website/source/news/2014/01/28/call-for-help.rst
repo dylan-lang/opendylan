@@ -156,7 +156,7 @@ bundling of the PellesC compiler to improve the first time experience
 for Windows users.
 
 .. _HTTP: https://github.com/dylan-lang/http
-.. _binary data: https://github.com/dylan-lang/binary-data
+.. _binary-data: https://github.com/dylan-lang/binary-data
 .. _partial list of open projects: https://github.com/dylan-lang/opendylan/wiki
 .. _get in touch: http://opendylan.org/community/
 .. _Twitter: http://twitter.com/DylanLanguage
