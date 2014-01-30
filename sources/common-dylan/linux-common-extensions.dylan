@@ -9,14 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define inline-only function get-application-commandline
  () => (res :: <string>, arguments == #f)
-  let pid
-    = raw-as-integer(%call-c-function("getpid")
-                       () => (pid :: <raw-c-signed-int>)
-                       ()
-                    end);
-
-  let cmdline-path
-    = concatenate("/proc/", integer-to-string(pid), "/cmdline");
+  let cmdline-path = "/proc/self/cmdline";
   let cmdline-fd = -1;
   let cmdline :: <byte-string> = "";
   block ()
@@ -62,13 +55,7 @@ end;
 
 define inline-only function get-application-filename
     () => (filename :: false-or(<byte-string>))
-  let pid
-    = raw-as-integer(%call-c-function("getpid")
-                       () => (pid :: <raw-c-signed-int>)
-                       ()
-                    end);
-  let exe-path
-    = concatenate("/proc/", integer-to-string(pid), "/exe");
+  let exe-path = "/proc/self/exe";
   let buffer = make(<byte-string>, size: 8192, fill: '\0');
   let count
     = raw-as-integer(%call-c-function ("readlink")
