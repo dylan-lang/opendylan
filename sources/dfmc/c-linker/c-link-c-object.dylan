@@ -34,7 +34,7 @@ define method emit-forward
     (back-end :: <c-back-end>, stream :: <stream>, o :: <&c-function>) => ();
   unless(member?(o.c-function-name, $generic-names-not-to-emit, test: \=))
     let sig-values = o.primitive-signature.^signature-values;
-    let return-type = first(sig-values, default: dylan-value(#"<object>"));
+    let return-type = first(sig-values, default: dylan-value(#"<raw-c-void>"));
     if (target-os-name() == #"win32")
       format-emit*(back-end, stream, "~ ^ ~ ^ ",
                    if (o.c-function-name) "extern" else "typedef" end,

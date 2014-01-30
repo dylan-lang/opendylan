@@ -47,6 +47,26 @@ C-FFI
   using this construct would result in a compilation error in the generated
   C code.
 
+* Using ``%call-c-function`` or ``%objc-msgsend`` with a void result type
+  no longer requires specifying a result type of ``<raw-c-void>``. Simply
+  putting an empty value list is sufficient:
+
+  .. code-block:: dylan
+
+     %call-c-function ("SetLastError", c-modifiers: "__stdcall")
+         (dwErrorCode :: <raw-c-unsigned-long>) => ()
+       (integer-as-raw(0))
+     end;
+
+  Previously, this required specifying the result type explicitly:
+
+  .. code-block:: dylan
+
+     %call-c-function ("SetLastError", c-modifiers: "__stdcall")
+         (dwErrorCode :: <raw-c-unsigned-long>) => (nothing :: <raw-c-void>)
+       (integer-as-raw(0))
+     end;
+
 Compiler
 ========
 
