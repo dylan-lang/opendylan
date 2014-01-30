@@ -90,7 +90,7 @@ define method function-valtype (fntype :: <object>, cache :: <type-cache>)
    => (valtype :: <type-estimate>);
   // Anything else just punts to the general case.  E.g., class <function>
   // goes here.  We could try to check for disjointness from <callable-object>,
-  // but that happense in the rest of the compiler
+  // but that happens in the rest of the compiler
   // (see optimization/dispatch.dylan).
   make(<type-estimate-values>)
 end;
