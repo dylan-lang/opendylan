@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define macro graph-class-definer
   { define ?mods:* graph-class ?:name (?supers:*) ?slots:* end }
     => { define ?mods graph-class-aux ?name (?supers) (?slots) end;
-         define graph-class-accessors ?name (?slots) end }
+         define graph-class-accessors ?name (?slots) end; }
 end macro;
 
 define generic used-temporary-accessors
@@ -69,6 +69,18 @@ define macro graph-class-accessors-aux-definer
 	     (c :: ?name) => (res :: <simple-object-vector>)
            "$" ## ?name ## "-total-temporary-accessors"
          end method }
+end macro;
+
+define macro graph-class-tracer
+  { graph-class-tracer(?type:name ; "%" ## ?:name ; ?ftype:expression) }
+    => { define method ?name (c :: ?type) => (res :: ?ftype)
+           c."%" ## ?name
+         end;
+         define method ?name ## "-setter" (new :: ?ftype, c :: ?type) => (res :: ?ftype)
+           maybe-trace-change(as(<symbol>, ?"name" ## "-setter"),
+                              c, "%" ## ?name, new);
+           "%" ## ?name ## "-setter"(new, c)
+         end; }
 end macro;
 
 define macro for-temporary

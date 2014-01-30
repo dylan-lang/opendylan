@@ -462,7 +462,15 @@ define method move-code-into!
   lambda.optimization-queue := make(<optimization-queue>, code: mapped-body);
 
   walk-lambda-computations(method (c :: <computation>)
-                             c.environment := env; re-optimize-into!(c, lambda);
+                             c.environment := env;
+                             re-optimize-into!(c, lambda);
+                             if (instance?(c, <call>))
+                               do(node-id,
+                                  choose(rcurry(instance?,
+                                                type-union(<object-reference>,
+                                                           <temporary>)),
+                                         c.arguments));
+                             end;
                            end,
                            mapped-body);
 

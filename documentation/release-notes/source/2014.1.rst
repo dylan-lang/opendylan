@@ -12,6 +12,28 @@ XXX XX, 2014.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2014.1>`_
 
+DFMC
+====
+
+The intermediate language of the compiler, named Dylan Flow Machine,
+has been instrumented with tracing facilities. Changes to the control
+and data flow, as well as optimization information, can be sent to
+an external TCP socket via a property in the interactive
+``dylan-compiler``: ``set visualization <host>:<port>``.
+
+Compiling the ``dylan`` library with tracing enables emits roughly
+250MB data. Therefore, a filter property can be set ``set
+visualization-filter <method-name>`` if interested only in
+optimization of a single method.
+
+The ``visualization-type`` property can be set to either ``json`` or
+``sexp``.
+
+The protocol itself is currently undocumented, but each message
+consists of a property list containing a ``type`` key, and various
+other information. A screencast showing an earlier implementation of
+this optimization visualization `can be seen here
+<https://opendylan.org/~hannes/test4.avi>`__.
 
 C Run-time
 ==========

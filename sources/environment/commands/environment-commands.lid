@@ -6,8 +6,10 @@ Files: library
        module
        command-line
        properties
+       visualization-communication
        basic-commands
        system-commands
+       visualization
        general
        projects
        library-packs

@@ -96,10 +96,6 @@ define imported-interactor-command all-open-projects;
 define imported-interactor-command registries;
 
 define imported-interactor-command update-libraries;
-
-define imported-interactor-command trace-optimizations;
-
-define imported-interactor-command untrace-optimizations;
 */
 
 /// Recovery Protocol

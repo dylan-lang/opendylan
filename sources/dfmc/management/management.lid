@@ -1,6 +1,7 @@
 library: dfmc-management
 Target-Type:	dll
 files:   management-library
+         visualization
 	 progress-reports
 	 passes
 	 interface

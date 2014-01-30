@@ -17,6 +17,7 @@ define command-group environment
   group browsing;
   group reports;
   group build;
+  group visualizer;
 end command-group environment;
 
 define method context-command-group

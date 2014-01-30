@@ -312,7 +312,8 @@ define sealed method build-project
           progress-callback :: false-or(<function>), error-handler,
           save-databases? = #f,
           process-subprojects? = #t,
-          messages = #"external")
+          messages = #"external",
+          visualization = #f)
  => (built? :: <boolean>)
   block ()
     let project = project-object.ensure-project-proxy;
@@ -335,7 +336,8 @@ define sealed method build-project
                                  abort-on-serious-warnings?: #f,
                                  assembler-output?: assembler-output?,
                                  dfm-output?:       dfm-output?,
-                                 harp-output?:      harp-output?)
+                                 harp-output?:      harp-output?,
+                                 visualization:     visualization)
               else
                 compile-library(project,
                                 force-parse?:   clean?,
@@ -345,7 +347,8 @@ define sealed method build-project
                                 abort-on-serious-warnings?: #f,
                                 assembler-output?: assembler-output?,
                                 dfm-output?:       dfm-output?,
-                                harp-output?:      harp-output?)
+                                harp-output?:      harp-output?,
+                                visualization:     visualization)
               end
             end
           end

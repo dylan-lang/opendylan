@@ -69,6 +69,7 @@ define module dfmc-optimization
     *partial-dispatch?*,
 
     *trace-optimizations?*,
+    *trace-optimizing-callback*,
     *trace-optimizing-method*,
     *trace-optimizing-library*,
     *trace-optimizing-file*;
