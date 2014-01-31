@@ -15,7 +15,6 @@ define library environment-commands
 
   use build-system;
   use network;
-  use lisp-reader;
   use environment-protocols;
   use environment-manager;
   use environment-reports;
