@@ -14,7 +14,6 @@ define library environment-commands
   use commands;
 
   use build-system;
-  use network;
   use environment-protocols;
   use environment-manager;
   use environment-reports;
@@ -23,9 +22,6 @@ define library environment-commands
 
   use dfmc-environment-projects;
 
-  use serialization;
-
   export command-lines,
-         environment-commands,
-         environment-visualization-communication;
+         environment-commands;
 end library environment-commands;

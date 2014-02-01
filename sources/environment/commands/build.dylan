@@ -167,9 +167,7 @@ define method do-execute-command
  => ()
   let project = command.%project | context.context-project;
   let messages = #"internal";
-  let viz = context.context-visualization;
   block ()
-    viz & connect-to-server(viz);
     if (build-project
           (project,
            process-subprojects?: command.%subprojects?,
@@ -180,8 +178,7 @@ define method do-execute-command
            output:               command.%output,
            progress-callback:    curry(note-build-progress, context),
            warning-callback:     curry(note-compiler-warning, context),
-           error-handler:        curry(compiler-condition-handler, context),
-           visualization:        viz & curry(write-to-visualizer, viz)))
+           error-handler:        curry(compiler-condition-handler, context)))
       if (command.%link?)
         let project-context = context.context-project-context;
         let build-script
@@ -202,8 +199,6 @@ define method do-execute-command
     else
       message(context, "Build of '%s' aborted",   project.project-name)
     end;
-  cleanup
-    viz & disconnect-from-server(viz);
   exception (error :: <file-system-error>)
     command-error("%s", error)
   end
