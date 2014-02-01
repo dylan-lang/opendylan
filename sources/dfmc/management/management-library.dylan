@@ -16,18 +16,8 @@ define library dfmc-management
   use dfmc-linker;
   use dfmc-typist;
   use dfmc-c-ffi;
-  use dfmc-debug-back-end;
   export dfmc-management;
 end library;
-
-define module dfmc-visualization
-  use dylan;
-  use dfmc-imports;
-  use dfmc-core;
-  use dfmc-debug-back-end, import: { print-specializers, structured-output };
-  use dfmc-reader, import: { fragment-name, <name-fragment> };
-  export visualize, trace-computations, init-visualization;
-end;
 
 define module dfmc-management
   use dylan;
@@ -42,7 +32,6 @@ define module dfmc-management
   use dfmc-linker;
   use dfmc-typist;
   use dfmc-c-ffi;
-  use dfmc-visualization;
   export
     install-project-sources,
     parse-project-sources,
