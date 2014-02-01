@@ -347,8 +347,7 @@ define open generic build-project
     (project :: <project-object>,
      #key clean?, link?, release?, output,
           warning-callback, progress-callback, error-handler,
-          save-databases?, process-subprojects?, messages,
-          visualization)
+          save-databases?, process-subprojects?, messages)
  => (built? :: <boolean>);
 
 define open generic clean-project

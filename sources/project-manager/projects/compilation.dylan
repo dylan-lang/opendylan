@@ -376,7 +376,6 @@ define method update-libraries (project :: <project>,
                                      harp-output? = #f, dfm-output? = #f,
                                      debug-info? = #t, gc? = #f, gc-stats? = #f,
                                      flush? = #f,
-                                     visualization,
                                      // More fine-grained forcing controls..
                                      force-parse?   = force?,
                                      force-compile? = force?,
@@ -468,8 +467,7 @@ define method update-libraries (project :: <project>,
                                 debug-info?: debug-info?,
                                 gc?: gc?, gc-stats?: gc-stats?,
                                 save?: save?,
-                                flush?: flush?,
-                                visualization: visualization);
+                                flush?: flush?);
               if(save?)
                 proj.%database-saved := #t;
                 note-database-saved(proj)
