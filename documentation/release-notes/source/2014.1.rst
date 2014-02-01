@@ -32,11 +32,13 @@ Compiling the ``dylan`` library with tracing enables emits lots of
 data (250MB). Therefore, a filtering can be established on a file
 name, method name, and/or library name. The variables
 ``*trace-dfm-library*``, ``*trace-dfm-file*``, and
-``*trace-dfm-method*`` are of type ``false-or(<symbol>)`` and also
-exported from the dfmc-flow-graph library.
+``*trace-dfm-method*`` are of type ``false-or(<symbol>)`` and exported
+from the dfmc-flow-graph library.
 
-A screencast showing an earlier implementation of
-this optimization visualization `can be seen here
+An example user of this interface is on ``GitHub
+<https://github.com/hannesm/visualization-middleware>`__.  A
+screencast showing an earlier implementation of this optimization
+visualization `can be seen here
 <https://opendylan.org/~hannes/test4.avi>`__.
 
 C Run-time
