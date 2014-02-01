@@ -66,13 +66,7 @@ define module dfmc-optimization
     *colorize-bogus-upgrades*,
 
     *profile-all-calls?*,
-    *partial-dispatch?*,
-
-    *trace-optimizations?*,
-    *trace-optimizing-callback*,
-    *trace-optimizing-method*,
-    *trace-optimizing-library*,
-    *trace-optimizing-file*;
+    *partial-dispatch?*;
 
   export
     best-function-key?,

@@ -33,7 +33,7 @@ end;
 define method generator-setter
     (g :: false-or(<computation>), t :: <temporary>)
  => (res :: false-or(<computation>))
-  maybe-trace-change(#"generator-setter", t, %generator, g);
+  trace-dfm-connection(#"generator-setter", t, g);
   t.%generator := g
 end;
 
@@ -104,7 +104,7 @@ define method cell-type (c :: <cell>) => (t :: <&type>)
 end;
 
 define method cell-type-setter (new :: <&type>, c :: <cell>) => (t :: <&type>)
-  maybe-trace-change(#"cell-type-setter", c, %cell-type, new);
+  trace-dfm-node(#"cell-type-setter", c, new);
   c.%cell-type := new
 end;
 

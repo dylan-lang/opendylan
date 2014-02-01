@@ -61,7 +61,6 @@ define module dfmc-flow-graph
     walk-all-lambda-computations,
     walk-computation-references,
     walk-lambda-references, walk-all-lambda-references,
-    *computation-tracer*, node-id,
 
     <nop-computation>,
     <nop>,
@@ -402,4 +401,20 @@ define module dfmc-flow-graph
     number-temporaries,
     estimated-copier-table-size,
     current-dfm-copier;
+
+  export
+    //for compiler internals
+    init-flow-graph,
+    tracing-dfm?,
+    trace-dfm-phase,
+    trace-dfm-node,
+    trace-dfm-nodes,
+    node-id,
+
+    //set by a client
+    *trace-dfm-outputter*,
+    *trace-dfm-callback*,
+    *trace-dfm-method*,
+    *trace-dfm-library*,
+    *trace-dfm-file*;
 end module;

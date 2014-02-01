@@ -539,7 +539,7 @@ define method remove-computation-references! (c :: <computation>)
     remove-temporary!(env, t);
   end;
   do-used-temporaries(method (t) remove-user!(t, c) end, c);
-  maybe-trace-connection(#"remove-computation", c, #f);
+  trace-dfm-node(#"remove-computation", c, #f);
 end method remove-computation-references!;
 
 define method remove-computation-references! (c :: <make-closure>)

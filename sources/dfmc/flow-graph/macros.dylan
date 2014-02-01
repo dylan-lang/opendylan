@@ -77,8 +77,8 @@ define macro graph-class-tracer
            c."%" ## ?name
          end;
          define method ?name ## "-setter" (new :: ?ftype, c :: ?type) => (res :: ?ftype)
-           maybe-trace-change(as(<symbol>, ?"name" ## "-setter"),
-                              c, "%" ## ?name, new);
+           trace-dfm-reconnection(as(<symbol>, ?"name" ## "-setter"),
+                                  c, "%" ## ?name, new);
            "%" ## ?name ## "-setter"(new, c)
          end; }
 end macro;

@@ -17,22 +17,28 @@ DFMC
 
 The intermediate language of the compiler, named Dylan Flow Machine,
 has been instrumented with tracing facilities. Changes to the control
-and data flow, as well as optimization information, can be sent to
-an external TCP socket via a property in the interactive
-``dylan-compiler``: ``set visualization <host>:<port>``.
+and data flow, as well as optimization information, can be received by
+setting the ``*trace-dfm-callback*`` (exported from the
+dfmc-flow-graph) variable to a unary function. The variable
+``*trace-dfm-output*`` should also be set (``structured-output``,
+exported from the dfmc-debug-back-end library might be useful).
 
-Compiling the ``dylan`` library with tracing enables emits roughly
-250MB data. Therefore, a filter property can be set ``set
-visualization-filter <method-name>`` if interested only in
-optimization of a single method.
+The argument to the ``*trace-dfm-callback`` itself is a property list
+containing at least a ``type`` key, a source location (``method``,
+``file``, ``library`` keys), likely a ``nodeid`` key, and various
+other information.
 
-The ``visualization-type`` property can be set to either ``json`` or
-``sexp``.
+Compiling the ``dylan`` library with tracing enables emits lots of
+data (250MB). Therefore, a filtering can be established on a file
+name, method name, and/or library name. The variables
+``*trace-dfm-library*``, ``*trace-dfm-file*``, and
+``*trace-dfm-method*`` are of type ``false-or(<symbol>)`` and exported
+from the dfmc-flow-graph library.
 
-The protocol itself is currently undocumented, but each message
-consists of a property list containing a ``type`` key, and various
-other information. A screencast showing an earlier implementation of
-this optimization visualization `can be seen here
+An example user of this interface is on ``GitHub
+<https://github.com/hannesm/visualization-middleware>`__.  A
+screencast showing an earlier implementation of this optimization
+visualization `can be seen here
 <https://opendylan.org/~hannes/test4.avi>`__.
 
 C Run-time

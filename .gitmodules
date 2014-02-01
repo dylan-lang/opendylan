@@ -22,6 +22,3 @@
 [submodule "sources/lib/hash-algorithms"]
 	path = sources/lib/hash-algorithms
 	url = git://github.com/dylan-lang/hash-algorithms.git
-[submodule "sources/lib/serialization"]
-	path = sources/lib/serialization
-	url = git://github.com/dylan-foundry/serialization.git
