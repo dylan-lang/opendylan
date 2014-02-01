@@ -156,7 +156,7 @@ define method do-deep-copy
   if (*dfm-copier-environment-context*)
     let state = entry-state(object);
     exits(state) := add-new!(exits(state), copy);
-    dynamic-bind (*computation-tracer* = #f)
+    dynamic-bind (*trace-dfm-callback* = #f)
       add-user!(state, copy);
     end
   end if;

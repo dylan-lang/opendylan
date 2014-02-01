@@ -42,7 +42,7 @@ define method computation-type (c :: <computation>) => (res)
 end;
 
 define method computation-type-setter (new, c :: <computation>) => (res)
-  maybe-trace-change(#"computation-type-setter", c, %computation-type, new);
+  trace-dfm-node(#"computation-type-setter", c, new);
   c.%computation-type := new
 end;
 
@@ -79,8 +79,8 @@ end;
 define method next-computation-setter
     (next, computation :: <computation>)
  => (next);
-  maybe-trace-change(#"next-computation-setter",
-                     computation, %next-computation, next);
+  trace-dfm-reconnection(#"next-computation-setter",
+                         computation, %next-computation, next);
   computation.%next-computation := next
 end;
 
@@ -127,7 +127,7 @@ define /* inline */ method make
     (class :: subclass(<computation>), #rest initargs, #key next-computation, #all-keys)
  => (object)
   let c = next-method();
-  maybe-trace-change(#"next-computation-setter", c, %next-computation, next-computation);
+  trace-dfm-reconnection(#"next-computation-setter", c, %next-computation, next-computation);
   register-used-temporaries(c);
   c
 end method;
@@ -584,7 +584,7 @@ end;
 
 define method call-iep?-setter (new :: <boolean>, c :: <function-call>)
  => (res :: <boolean>)
-  maybe-trace-change(#"call-iep?-setter", c, %call-iep?, new);
+  trace-dfm-node(#"call-iep?-setter", c, new);
   c.%call-iep? := new
 end;
 
@@ -737,7 +737,7 @@ define method next-computation-setter
     while (comp.next-computation)
       comp := comp.next-computation;
     end;
-    maybe-trace-change(#"next-computation-setter", comp, %next-computation, new);
+    trace-dfm-reconnection(#"next-computation-setter", comp, %next-computation, new);
   end;
   c.%next-computation := new;
 end;
@@ -759,7 +759,7 @@ graph-class-tracer(<unwind-protect> ; %cleanups-end ; false-or(<end-cleanup-bloc
 define method next-computation-setter
     (new :: false-or(<computation>), c :: <unwind-protect>)
  => (res :: false-or(<computation>))
-  maybe-trace-change(#"next-computation-setter", c, %next-computation, new);
+  trace-dfm-reconnection(#"next-computation-setter", c, %next-computation, new);
   c.%next-computation := new
 end;
 
@@ -838,7 +838,7 @@ end;
 define method next-computation-setter (next, c :: <loop>) => (next)
   walk-computations(method(b)
                       if (instance?(b, <end-loop>) & b.ending-loop == c)
-                        maybe-trace-connection(#"end-of-loop" b, next);
+                        trace-dfm-connection(#"end-of-loop", b, next);
                       end;
                     end, c.loop-body, #f);
   c.%next-computation := next
@@ -851,7 +851,7 @@ end graph-class;
 define method make (class == <end-loop>,
                     #rest rest, #key loop, #all-keys) => (res :: <end-loop>)
   let el = next-method();
-  maybe-trace-connection(#"end-of-loop", el, loop.next-computation);
+  trace-dfm-connection(#"end-of-loop", el, loop.next-computation);
   el
 end;
 
@@ -887,7 +887,7 @@ end graph-class;
 define method make (c == <loop-call>,
                     #rest all-keys, #key loop, #all-keys) => (res :: <loop-call>)
   let l = next-method();
-  maybe-trace-connection(#"set-loop-call-loop", l, loop);
+  trace-dfm-connection(#"set-loop-call-loop", l, loop);
   l
 end;
 

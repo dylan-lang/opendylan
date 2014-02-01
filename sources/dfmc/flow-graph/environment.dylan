@@ -88,7 +88,7 @@ define dood-class <lambda-lexical-environment> (<lexical-environment>)
 end dood-class;
 
 define method ensure-lambda-body (fun :: <&lambda>) => ()
-  dynamic-bind (*computation-tracer* = #f)
+  dynamic-bind (*trace-dfm-callback* = #f)
     let env = environment(fun);
     when (env & weak-temporaries?(temporaries(env)))
       for-all-lambdas (lambda in fun)
@@ -154,9 +154,7 @@ end method;
 define inline method remove-temporary!
     (env :: <lambda-lexical-environment>, t :: <temporary>)
   remove!(env.temporaries, t);
-  if (*computation-tracer*)
-    *computation-tracer*(#"remove-temporary", t, env, 0);
-  end;
+  trace-dfm-node(#"remove-temporary", t, #f);
 end method;
 
 define inline method add-temporary!
