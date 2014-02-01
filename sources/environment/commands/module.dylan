@@ -123,8 +123,6 @@ define module environment-visualization-communication
   use standard-io;
   use streams;
   use sockets;
-//  use lisp-reader;
-//  use file-source-records, import: { <flat-file-source-record>, source-record-location };
 
   use serialization;
   use json-serialization;
@@ -139,8 +137,7 @@ define module environment-visualization-communication
     visualization-type,
     visualization-type-setter,
     visualization-filter,
-    visualization-filter-setter,
-    visualization-socket;
+    visualization-filter-setter;
 end;
 
 define module environment-commands

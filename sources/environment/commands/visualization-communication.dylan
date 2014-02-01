@@ -51,18 +51,7 @@ define function write-to-visualizer (v :: <graph-visualization>, data)
     force-output(v.visualization-socket);
   end;
 end;
-/*
-define function read-from-visualizer (v :: <graph-visualization>) => (result)
-  let stream = v.visualization-socket;
-  //let stream = *standard-input*;
-  let length = string-to-integer(read(stream, 6), base: 16);
-  let line = read(stream, length);
-  //format(*standard-output*, "read: %s\n", line);
-  //let expr = read-lisp(make(<string-stream>, direction: #"input", contents: line));
-  //format(*standard-output*, "parsed: %=\n", expr);
-  //expr;
-end;
-*/
+
 define function connect-to-server
  (v :: <graph-visualization>)
   unless (v.visualization-socket)
@@ -77,14 +66,13 @@ define function connect-to-server
               end,
               stream: v.visualization-socket);
 
-    write-to-visualizer(v, list(#"type", #"hello",
-                                #"connection-identifier", v.connection-id));
-//    v.system-info := read-from-visualizer(v);
+    write-to-visualizer(v,
+                        list(#"type", #"hello",
+                             #"connection-identifier", v.connection-id));
   end;
 end;
 
-define function disconnect-from-server
- (v :: <graph-visualization>)
+define function disconnect-from-server (v :: <graph-visualization>)
   if (v.visualization-socket)
     close(v.visualization-socket);
     v.visualization-socket := #f;

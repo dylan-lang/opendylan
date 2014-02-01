@@ -29,23 +29,36 @@ define method node-id (c :: <computation>) => (res :: <integer>)
   c.%node-id;
 end;
 
-define method node-id (t :: type-union(<object-reference>, <temporary>))
+define method node-id (t :: <temporary>)
  => (res :: false-or(<integer>))
   unless (instance?(t.%node-id, <integer>))
     t.%node-id := next-node-id();
-    let gen = block (ret)
-                ret(t.generator);
-                ret(t.users.first);
+    let gen = block ()
+                t.generator
               exception (e :: <condition>)
                 #f
               end;
-    maybe-trace-connection(#"add-temporary", t, gen);
+    maybe-trace-connection(#"new-temporary", t, gen);
     if (t.users.size > 0)
       if (t.generator)
         let new = t.generator.computation-type;
         *computation-tracer*
           & *computation-tracer*(#"type-setter", t, new, t.generator);
       end;
+      do(curry(maybe-trace-connection, #"add-temporary-user", t),
+         t.users);
+    end;
+  end;
+  t.%node-id
+end;
+
+define method node-id (t :: <object-reference>)
+ => (res :: false-or(<integer>))
+  unless (instance?(t.%node-id, <integer>))
+    if (t.users.size > 0)
+      t.%node-id := next-node-id();
+      let user = t.users.first;
+      maybe-trace-connection(#"new-object-reference", t, user);
       do(curry(maybe-trace-connection, #"add-temporary-user", t),
          t.users);
     end;
@@ -74,7 +87,7 @@ end;
 
 define method add-user! (t :: <temporary>, c :: <computation>)
   if (t.environment ~== c.environment)
-    maybe-trace-connection(#"add-temporary", t, c);
+    maybe-trace-connection(#"new-temporary", t, c);
   end;
   next-method();
   maybe-trace-connection(#"add-temporary-user", t, c);

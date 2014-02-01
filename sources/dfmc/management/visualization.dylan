@@ -151,7 +151,13 @@ define function trace-computations
                       #"nodeid", id,
                       #"formid", new-or-other.fo,
                       #"other", safe-node-id(write-data, new-or-other)));
-    #"add-temporary" =>
+    #"new-temporary" =>
+      write-data(list(#"type", key,
+                      #"nodeid", id,
+                      #"formid", node.fo,
+                      #"description", safe-structured-output(write-data, node, id),
+                      #"other", safe-node-id(write-data, new-or-other)));
+    #"new-object-reference" =>
       write-data(list(#"type", key,
                       #"nodeid", id,
                       #"formid", new-or-other.fo,
@@ -250,7 +256,7 @@ define function visualize
       let id = safe-node-id(write-data, object);
       write-data(list(#"type", key,
                       #"formid", fo,
-                      #"nodeids", id,
+                      #"nodeid", id,
                       #"description", desc));
 
     otherwise =>
