@@ -20,7 +20,7 @@ end class;
 // correctly preempted.
 define constant $empty-buffer =
   make-<power-of-two-buffer>(size: 2, known-power-of-two-size: #t, 
-			     use-count: 3);
+                             use-count: 3);
 
 define constant $free-stream-ids :: <object-deque> = make(<deque>);
 define constant $stream-id-to-stream-map :: <stretchy-object-vector>
@@ -112,18 +112,18 @@ define sealed method initialize
   next-method();
   let (buffer-size, shift-amount) = 
     round-to-power-of-two( if (requested-buffer-size) 
-			     round-to-power-of-two(requested-buffer-size)
-			   elseif (stream)
-			     accessor-preferred-buffer-size(stream.accessor)
-			   else 1024 end);
+                             round-to-power-of-two(requested-buffer-size)
+                           elseif (stream)
+                             accessor-preferred-buffer-size(stream.accessor)
+                           else 1024 end);
   the-vector.size-for-buffers := buffer-size;
   the-vector.buffer-shift-amount := - shift-amount;
   let number-of-buffers =
     round-to-power-of-two(requested-number-of-buffers);
   the-vector.buffers := make(<simple-object-vector>,
-			     // limited(<vector>, of: <power-of-two-buffer>);
-			     size: number-of-buffers,
-			     fill: $empty-buffer);
+                             // limited(<vector>, of: <power-of-two-buffer>);
+                             size: number-of-buffers,
+                             fill: $empty-buffer);
   the-vector.buffer-vector-size-mask := number-of-buffers - 1;
 end method initialize;
 
@@ -154,9 +154,9 @@ define sealed method initialize
       input-buffer-vector
     else 
       make(<buffer-vector>,
-	   stream: the-stream, 
-	   buffer-size: requested-buffer-size, 
-	   number-of-buffers: requested-number-of-buffers);
+           stream: the-stream, 
+           buffer-size: requested-buffer-size, 
+           number-of-buffers: requested-number-of-buffers);
     end if;
   the-stream.stream-id := new-stream-id(the-stream);
 end method initialize;
@@ -167,7 +167,7 @@ define sealed method make
  => (stream :: <multi-buffered-stream>)
   let type
     = apply(type-for-multi-buffered-stream, locator, element-type, 
-	    encoding, initargs);
+            encoding, initargs);
   let direction = multi-buffered-stream-direction(direction);
   if (type == class)
     apply(next-method, class, direction: direction, initargs)
@@ -240,7 +240,7 @@ define sealed method stream-size
   // accessor file size, otherwise use the accessor file size.
   let last-buffer :: false-or(<power-of-two-buffer>) = 
     if ((the-stream.buffer-map.size > 0) 
-	  & ~buffer-map-entry-empty?(the-stream.buffer-map.last)) 
+          & ~buffer-map-entry-empty?(the-stream.buffer-map.last)) 
       let index = buffer-map-entry-index(the-stream.buffer-map.last);
       the-stream.buffer-vector.buffers[index] 
     end if;
@@ -298,7 +298,7 @@ define sealed method do-get-input-buffer
 end method do-get-input-buffer;
 
 define sealed method do-get-buffer (the-stream :: <multi-buffered-stream>,
-			     #key wait? = #t, bytes = 1)
+                             #key wait? = #t, bytes = 1)
  => (the-buffer :: <power-of-two-buffer>, eof? :: <boolean>)
   let the-position :: <integer> = the-stream.stream-position; // current-position?
   let eof? = #f;
@@ -314,16 +314,16 @@ define sealed method do-get-buffer (the-stream :: <multi-buffered-stream>,
   let map-entry = buffer-map[buffer-map-index];
   let buffer-index :: <buffer-index> 
     = if (buffer-map-entry-empty?(map-entry))
-	let buffer-index = 
-	  preempt-buffer(the-stream, the-position, wait?: wait?, bytes: bytes);
-	unless (buffer-map-entry-dirty?(map-entry))
-	  *multi-buffer-working-set* := *multi-buffer-working-set* + 1;
-	end unless;
-	buffer-map[buffer-map-index]
-	  := buffer-map-entry-deposit-index(buffer-index, map-entry);
-	buffer-index
+        let buffer-index = 
+          preempt-buffer(the-stream, the-position, wait?: wait?, bytes: bytes);
+        unless (buffer-map-entry-dirty?(map-entry))
+          *multi-buffer-working-set* := *multi-buffer-working-set* + 1;
+        end unless;
+        buffer-map[buffer-map-index]
+          := buffer-map-entry-deposit-index(buffer-index, map-entry);
+        buffer-index
       else 
-	buffer-map-entry-index(map-entry)
+        buffer-map-entry-index(map-entry)
       end;
   let the-buffer :: <power-of-two-buffer>
     = buffer-vector.buffers[buffer-index];
@@ -351,8 +351,8 @@ define function grow-buffer-map
   iterate loop (map-index :: <integer> = the-stream.buffer-map.size)
     unless (map-index > new-index)
       add!(the-stream.buffer-map, 
-	   buffer-map-entry-deposit-empty
-	     (#t, buffer-map-entry-deposit-dirty(#f, 0)));
+           buffer-map-entry-deposit-empty
+             (#t, buffer-map-entry-deposit-dirty(#f, 0)));
       loop(map-index + 1)
     end unless;
   end iterate;
@@ -403,13 +403,13 @@ define function preempt-buffer
  => (buffer-index :: <integer>);
   if (closed?(the-stream))
     error(make(<stream-closed-error>, stream: the-stream,
-	       format-string: 
-		   "Stream closed: Can't read, write or set-position"));
+               format-string: 
+                   "Stream closed: Can't read, write or set-position"));
   end if;
   let the-buffer-vector :: <buffer-vector> = the-stream.buffer-vector;
   let buffer-index :: <integer> = 
     logand(the-buffer-vector.buffer-preemption-index + 1, 
-	   the-buffer-vector.buffer-vector-size-mask);
+           the-buffer-vector.buffer-vector-size-mask);
   let the-buffer :: <power-of-two-buffer> = 
     the-buffer-vector.buffers[buffer-index];
   if (the-buffer.buffer-use-count < 3) 
@@ -417,20 +417,20 @@ define function preempt-buffer
   end if;
   let (buffer-index :: <integer>, the-buffer :: <power-of-two-buffer>)
     = iterate loop (index :: <integer> = buffer-index,
-		    buffer :: <power-of-two-buffer> = the-buffer)
+                    buffer :: <power-of-two-buffer> = the-buffer)
         if (buffer.buffer-use-count = 3)
-	  values(index, buffer)
-	else
-	  let buffer-index :: <buffer-index> =
-	    logand(index + 1, 
-		   the-stream.buffer-vector.buffer-vector-size-mask);
-	  let the-buffer :: <power-of-two-buffer> =
-	    the-buffer-vector.buffers[buffer-index];
-	  if (the-buffer.buffer-use-count < 3)
-	    the-buffer.buffer-use-count := the-buffer.buffer-use-count + 1;
-	  end if;
-	  loop(buffer-index, the-buffer)
-	end if
+          values(index, buffer)
+        else
+          let buffer-index :: <buffer-index> =
+            logand(index + 1, 
+                   the-stream.buffer-vector.buffer-vector-size-mask);
+          let the-buffer :: <power-of-two-buffer> =
+            the-buffer-vector.buffers[buffer-index];
+          if (the-buffer.buffer-use-count < 3)
+            the-buffer.buffer-use-count := the-buffer.buffer-use-count + 1;
+          end if;
+          loop(buffer-index, the-buffer)
+        end if
       end iterate;
   the-stream.buffer-vector.buffer-preemption-index := buffer-index;
   let new-buffer-position :: <integer> = 37; // doesn't matter
@@ -438,7 +438,7 @@ define function preempt-buffer
     the-buffer :=
       make-<power-of-two-buffer>
         (stream-id: the-stream.stream-id,
-	 size: the-stream.buffer-vector.size-for-buffers, 
+         size: the-stream.buffer-vector.size-for-buffers, 
          known-power-of-two-size?: #t, fill: 0);
     the-buffer-vector.buffers[buffer-index] := the-buffer;
     new-buffer-position := logand(the-buffer.buffer-off-page-bits, the-position); 
@@ -483,7 +483,7 @@ define function preempt-buffer
     new-buffer-position := logand(the-buffer.buffer-off-page-bits, the-position); 
     let start = 0; let the-size = the-buffer.buffer-size;
     load-buffer-and-fill(the-stream, the-buffer, new-buffer-position, start,
-			 the-size);
+                         the-size);
   end if;
   *multi-buffer-reads* := *multi-buffer-reads* + 1;
   the-buffer.buffer-position := new-buffer-position;
@@ -549,13 +549,13 @@ define sealed method force-output-buffers
     let map-entry       = stream.buffer-map.last;
     let map-entry-index = buffer-map-entry-index(map-entry);
     when (~buffer-map-entry-empty?(map-entry)
-	    & stream.buffer-vector.buffers[map-entry-index].buffer-dirty?
-	    & stream.buffer-vector.buffers[map-entry-index].buffer-end = 0)
+            & stream.buffer-vector.buffers[map-entry-index].buffer-dirty?
+            & stream.buffer-vector.buffers[map-entry-index].buffer-end = 0)
       // special case set beginning position to last buffer but didn't write
       // anything into that buffer.  Make sure that the previous buffer is
       // marked dirty
       stream-position(stream) := 
-	stream.buffer-vector.buffers[map-entry-index].buffer-position - 1;
+        stream.buffer-vector.buffers[map-entry-index].buffer-position - 1;
       let previous-buffer = do-get-buffer(stream);
       previous-buffer.buffer-dirty? := #t;
     end when;
@@ -570,18 +570,18 @@ define sealed method force-output-buffers
   end for;
   if (read-only?(stream) & ~empty? (sordid-buffers))
     error(make(<stream-not-writable>, stream: stream,
-	       format-string: 
-		 "Internal error closing stream: buffer for read-only" 
-		 "<multi-buffered-stream> (dood stream) was"
-		 "modified. Can't write the modified buffer."
-		 ));
+               format-string: 
+                 "Internal error closing stream: buffer for read-only" 
+                 "<multi-buffered-stream> (dood stream) was"
+                 "modified. Can't write the modified buffer."
+                 ));
   else 
     sordid-buffers := 
       sort!(sordid-buffers, 
-	    test:
-	      method (buffer-1 :: <buffer>, buffer-2 :: <buffer>)
-		buffer-1.buffer-position < buffer-2.buffer-position
-	      end method);
+            test:
+              method (buffer-1 :: <buffer>, buffer-2 :: <buffer>)
+                buffer-1.buffer-position < buffer-2.buffer-position
+              end method);
     for (buffer in sordid-buffers)
       force-buffer(buffer, stream);
     end for;
@@ -597,9 +597,9 @@ define method close
   if (stream-open?(stream))
     if (abort?)
       for (buffer in stream.buffer-vector.buffers)
-	if (buffer.buffer-owning-stream == stream.stream-id)
-	  buffer.buffer-dirty? := #f;
-	end if;
+        if (buffer.buffer-owning-stream == stream.stream-id)
+          buffer.buffer-dirty? := #f;
+        end if;
       end for;
     end if;
     next-method();
@@ -607,7 +607,7 @@ define method close
     // vector to be #f (and remember to check for false buffers everywhere)
     for (buffer in stream.buffer-vector.buffers)
       if (buffer.buffer-owning-stream == stream.stream-id)
-	buffer.buffer-owning-stream := #f;
+        buffer.buffer-owning-stream := #f;
       end;
     end for;
     $stream-id-to-stream-map[stream.stream-id] := #f;
@@ -616,7 +616,7 @@ define method close
     // now zero out the buffer map
     for (map-index from 0 below stream.buffer-map.size)
       stream.buffer-map[map-index]
-	:= buffer-map-entry-deposit-empty(#t, stream.buffer-map[map-index]);
+        := buffer-map-entry-deposit-empty(#t, stream.buffer-map[map-index]);
     end for;
     // Now zero out the stream shared buffer buffers so that any attempt
     // to use the stream forces a call to do-get-buffer which in turn
@@ -661,8 +661,8 @@ define sealed method stream-position-setter
   else 
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-		 format-string: 
-		   "Can't set position of closed stream"));
+                 format-string: 
+                   "Can't set position of closed stream"));
     else       
        error(make(<stream-position-error>, stream: stream, 
                   size: stream.accessor.accessor-size, position: position));
@@ -682,21 +682,21 @@ define function multi-buffered-stream-position-setter
     if((the-buffer.buffer-position + the-buffer.buffer-next) == the-position)
       /* do nothing, already there*/
     elseif (logand(the-buffer.buffer-off-page-bits, the-position)
-	      == the-buffer.buffer-position)
-	/* set position to same page */
-	the-buffer.buffer-next 
+              == the-buffer.buffer-position)
+        /* set position to same page */
+        the-buffer.buffer-next 
           := logand(the-buffer.buffer-on-page-bits, the-position);
     elseif (the-position >= 0)
       stream.current-position := the-position;
       stream-shared-buffer(stream) := #f;
     else 
       if (closed?(stream))
-	error(make(<stream-closed-error>, stream: stream,
-		   format-string: 
-		     "Can't set position of closed stream"));
+        error(make(<stream-closed-error>, stream: stream,
+                   format-string: 
+                     "Can't set position of closed stream"));
       else       
-	error(make(<stream-position-error>, stream: stream, 
-		   size: stream.accessor.accessor-size, position: position));
+        error(make(<stream-position-error>, stream: stream, 
+                   size: stream.accessor.accessor-size, position: position));
       end if;
     end if;
   elseif (the-position >= 0)
@@ -704,11 +704,11 @@ define function multi-buffered-stream-position-setter
   else 
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-		 format-string: 
-		   "Can't set position of closed stream"));
+                 format-string: 
+                   "Can't set position of closed stream"));
     else       
       error(make(<stream-position-error>, stream: stream, 
-		 size: stream.accessor.accessor-size, position: position));
+                 size: stream.accessor.accessor-size, position: position));
     end if; 
   end if;
   the-position
@@ -721,18 +721,18 @@ define sealed method adjust-stream-position
   let size-of-stream :: <integer> = stream-size(stream);
   let position-from-start
     = select (from)
-	#"current" => stream-position(stream) + delta;
-	#"start"   => delta;
-	#"end"     => size-of-stream + delta;
+        #"current" => stream-position(stream) + delta;
+        #"start"   => delta;
+        #"end"     => size-of-stream + delta;
       end;
   if (position-from-start < 0)
     if (closed?(stream))
       error(make(<stream-closed-error>, stream: stream,
-		 format-string: 
-		   "Can't set position of closed stream"));
+                 format-string: 
+                   "Can't set position of closed stream"));
     else       
       error(make(<stream-position-error>, stream: stream, 
-		 size: stream.accessor.accessor-size, position: position));
+                 size: stream.accessor.accessor-size, position: position));
     end if; 
   else
     // Don't call next-method() it just figures out everything above again
@@ -760,7 +760,7 @@ define inline function write-4-aligned-bytes-from-word
     let bi :: <buffer-index> = sb.buffer-next;
     primitive-element
         (primitive-repeated-slot-as-raw(sb, primitive-repeated-slot-offset(sb)),
-	 integer-as-raw(0), integer-as-raw(bi))
+         integer-as-raw(0), integer-as-raw(bi))
       := primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(word));
     sb.buffer-next := bi + 4;
     sb.buffer-end  := max(bi + 4, sb.buffer-end);
@@ -778,10 +778,10 @@ define inline function read-4-aligned-bytes-as-word
       let bi :: <buffer-index> = sb.buffer-next;
       sb.buffer-next := bi + 4;
       primitive-wrap-machine-word
-	(primitive-cast-pointer-as-raw
-	   (primitive-element
-	      (primitive-repeated-slot-as-raw(sb, primitive-repeated-slot-offset(sb)),
-	       integer-as-raw(0), integer-as-raw(bi))))
+        (primitive-cast-pointer-as-raw
+           (primitive-element
+              (primitive-repeated-slot-as-raw(sb, primitive-repeated-slot-offset(sb)),
+               integer-as-raw(0), integer-as-raw(bi))))
     else
       error("End of stream in read-4-aligned-bytes");
       as(<machine-word>, 0) // HACK: AVOID BOXING
@@ -858,7 +858,7 @@ define function read-8-aligned-bytes
       sb.buffer-next := bi + 8;
       without-bounds-checks
         values(sb[bi], sb[bi + 1], sb[bi + 2], sb[bi + 3], sb[bi + 4],
-	       sb[bi + 5], sb[bi + 6], sb[bi + 7])
+               sb[bi + 5], sb[bi + 6], sb[bi + 7])
       end without-bounds-checks;
     else
       error("End of stream in read-8-aligned-bytes");

@@ -64,7 +64,7 @@ define method dood-compute-lazy-slot-descriptors
   collecting (as <dood-slot-sequence-type>)
     for (sd in dood-instance-slot-descriptors(class))
       when (member?(slot-getter(sd), lazy-getters))
-	collect(as-dood-slot-descriptor(class, sd))
+        collect(as-dood-slot-descriptor(class, sd))
       end when;
     end for;
   end collecting;
@@ -92,13 +92,13 @@ define method dood-compute-weak-slot-descriptors
   collecting (as <dood-defaulted-slot-sequence-type>)
     for (sd in dood-instance-slot-descriptors(class))
       for (weak-getter in weak-getters)
-	if (slot-getter(sd) == dood-default-getter(weak-getter))
+        if (slot-getter(sd) == dood-default-getter(weak-getter))
           let thunk = dood-default-thunk(weak-getter);
           if (thunk)
-  	    collect(make-dood-defaulted-descriptor
+            collect(make-dood-defaulted-descriptor
                      (as-dood-slot-descriptor(class, sd), thunk));
           end if;
-	end if;
+        end if;
       end for;
     end for;
   end collecting;
@@ -126,7 +126,7 @@ define method dood-compute-deep-slot-descriptors
   collecting (as <dood-slot-sequence-type>)
     for (sd in dood-base-deep-slot-descriptors(class))
       when (~member?(slot-getter(sd), lazy-getters) & ~member?(slot-getter(sd), weak-getters))
-	collect(as-dood-slot-descriptor(class, sd))
+        collect(as-dood-slot-descriptor(class, sd))
       end when;
     end for;
   end collecting;
@@ -141,18 +141,18 @@ define function dood-class
     (begin 
        let dood-class :: <dood-class>
          = make(<dood-class>, 
-		repeated-slot?: 
-		  if (dood-repeated-slot?(dood, class)) #t else #f end,
-		repeated-byte-slot?: 
-		  dood-repeated-byte-slot?(dood, class),
-		lazy-slot-descriptors:
-		  dood-compute-lazy-slot-descriptors(class),
-		weak-slot-descriptors:
-		  dood-compute-weak-slot-descriptors(class),
-		deep-slot-descriptors:
-		  dood-compute-deep-slot-descriptors(class),
-		segment:
-		  dood-slow-lookup-segment(dood, class));
+                repeated-slot?: 
+                  if (dood-repeated-slot?(dood, class)) #t else #f end,
+                repeated-byte-slot?: 
+                  dood-repeated-byte-slot?(dood, class),
+                lazy-slot-descriptors:
+                  dood-compute-lazy-slot-descriptors(class),
+                weak-slot-descriptors:
+                  dood-compute-weak-slot-descriptors(class),
+                deep-slot-descriptors:
+                  dood-compute-deep-slot-descriptors(class),
+                segment:
+                  dood-slow-lookup-segment(dood, class));
        element(dood-classes(dood), class)
          := dood-class;
        dood-class-instance-size(dood-class)
@@ -170,10 +170,10 @@ define function dood-all-slot-descriptors
      repeated-byte-slot? :: <boolean>)
   let dood-class = dood-class(dood, class);
   values(dood-class-lazy-slot-descriptors(dood-class),
-	 dood-class-weak-slot-descriptors(dood-class),
-	 dood-class-deep-slot-descriptors(dood-class),
-	 dood-class-repeated-slot?(dood-class),
-	 dood-class-repeated-byte-slot?(dood-class))
+         dood-class-weak-slot-descriptors(dood-class),
+         dood-class-deep-slot-descriptors(dood-class),
+         dood-class-repeated-slot?(dood-class),
+         dood-class-repeated-byte-slot?(dood-class))
 end function;
 
 define inline function dood-slot-descriptors-of
@@ -216,13 +216,13 @@ define inline function dood-instance-size-using-class
   dood-class-instance-size(dood-class)
     + if (dood-class-repeated-slot?(dood-class))
         let size = dood-repeated-size(dood, object);
-	1 + if (dood-class-repeated-byte-slot?(dood-class))
-	      bytes-to-words(size)
-	    else
-	      size
-	    end if 
+        1 + if (dood-class-repeated-byte-slot?(dood-class))
+              bytes-to-words(size)
+            else
+              size
+            end if 
       else
-	0
+        0
       end if
 end function;
 

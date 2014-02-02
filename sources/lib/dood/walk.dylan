@@ -115,18 +115,18 @@ define inline function maybe-walk-object
     otherwise =>
       let maybe-address = dood-walked-address-using-table(dood, object);
       if (maybe-address)
-	let address :: <address> = maybe-address;  // TYPE ONLY
-	let disk-object
-	  = if ($tag-pairs? & instance?(object, <pair>)) 
-	      lookup-proxy(dood, object) | object;
-	    else
-	      object
-	    end if;
-	tag-as-address(disk-object, address)
+        let address :: <address> = maybe-address;  // TYPE ONLY
+        let disk-object
+          = if ($tag-pairs? & instance?(object, <pair>)) 
+              lookup-proxy(dood, object) | object;
+            else
+              object
+            end if;
+        tag-as-address(disk-object, address)
       elseif (queue?)
-	$lazy-pointer
+        $lazy-pointer
       else 
-	dood-walk-indirect-object(dood, info, parent, object)
+        dood-walk-indirect-object(dood, info, parent, object)
       end if;
   end case
 end function;
@@ -192,7 +192,7 @@ define inline function walk-lazy-slot
   let (value, lazy?)
     = dood-lazy-slot-value-using
         (dood, object, slotd, offset, force?, flush?, commit?,
-	 force-proxy, mark-proxy);
+         force-proxy, mark-proxy);
   if (force-lazy? | ~(lazy? | flush?))
     walk-slot(dood, info, object, value, queue?: $queue-lazy-walk?);
   end if;
@@ -213,17 +213,17 @@ define method walk-slots (dood :: <dood>, info :: <walk-info>, object) => ()
     walk-slot(dood, info, object, value);
   finally
     for (slotd :: <dood-slot-descriptor> in lazy-slotds,
-	 // TODO: this is inefficient -- only for lazy-slot-value
-	 offset :: <integer> from size(deep-slotds)) 
+         // TODO: this is inefficient -- only for lazy-slot-value
+         offset :: <integer> from size(deep-slotds)) 
       walk-lazy-slot
-	(dood, info, object, slotd, offset,
-	 dood-force-lazy-slot-value-proxy, mark-lazy-slot-using);
+        (dood, info, object, slotd, offset,
+         dood-force-lazy-slot-value-proxy, mark-lazy-slot-using);
     finally
       if (repeated-slot?)
         if (repeated-byte-slot?)
-	  if (walk-info-commit?(info))
-	    dood-write-string(dood, object)
-	  end if
+          if (walk-info-commit?(info))
+            dood-write-string(dood, object)
+          end if
         else
           for (value in object)
             walk-slot(dood, info, object, value);
@@ -314,7 +314,7 @@ define function walk-object
   // end if;
   // dood-register-walked-object(dood, object);
   when (*dump-all-objects?*
-	  & *walk-progress-function* == $default-walk-progress-function)
+          & *walk-progress-function* == $default-walk-progress-function)
     block ()
       format-out("%5d %=\n", count, object);
     exception (<error>)

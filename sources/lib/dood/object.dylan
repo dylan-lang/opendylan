@@ -22,12 +22,12 @@ define method dood-slow-lookup-segment
     (dood :: <dood>, class :: <class>) => (res :: false-or(<dood-segment>))
   let segment :: false-or(<dood-segment>)
     = block (return)
-	for (segment in dood-segments(dood))
-	  when (dood-segment-instance?(segment, class))
-	    return(segment)
-	  end when;
-	end for;
-	#f
+        for (segment in dood-segments(dood))
+          when (dood-segment-instance?(segment, class))
+            return(segment)
+          end when;
+        end for;
+        #f
       end block;
   segment
 end method;
@@ -46,10 +46,10 @@ end method;
 
 define macro with-segment-excursion
   { with-segment-excursion (?dood:expression, ?segment:expression) ?:body end }
-     =>	{ let saved-segment = dood-current-segment(?dood);
-	  dood-current-segment(?dood) := ?segment;
-	  ?body;
-	  dood-current-segment(?dood) := saved-segment }
+     => { let saved-segment = dood-current-segment(?dood);
+          dood-current-segment(?dood) := ?segment;
+          ?body;
+          dood-current-segment(?dood) := saved-segment }
 end macro;
 
 define inline method dood-address-page-mask 
@@ -72,7 +72,7 @@ define inline method dood-fits-in-page?
   let fits?
     = size < logand(address + size, dood-address-page-mask(dood));
   // format-out("FITS? %= ADDR %= SIZE %= MASK %=\n", 
-  // 	        fits?, address, size, dood-address-page-mask(dood));
+  //            fits?, address, size, dood-address-page-mask(dood));
   fits?
 end method;
 
@@ -82,8 +82,8 @@ define inline method dood-number-pages
     = ash(size, - dood-address-page-bit-offset(dood))
         + if (logand(size, dood-address-page-mask(dood)) > 0) 1 else 0 end;
   // format-out("NUMBER-PAGES %= SIZE %= OFFSET %= OVERFLOW %=\n",
-  // 	        number-pages, size, dood-address-page-bit-offset(dood),
-  // 	        logand(size, dood-address-page-mask(dood)));
+  //            number-pages, size, dood-address-page-bit-offset(dood),
+  //            logand(size, dood-address-page-mask(dood)));
   number-pages
 end method;
 
@@ -105,14 +105,14 @@ define method dood-allocate-in
  => (address :: <address>)
   let address
     = if (dood-segment-initialized?(segment)
-	    & dood-segment-fits-in-page?(dood, segment, size))
-	segment.dood-segment-free-address
+            & dood-segment-fits-in-page?(dood, segment, size))
+        segment.dood-segment-free-address
       else
-	let address = dood-allocate-pages(dood, dood-number-pages(dood, size));
-	// format-out("ALLOCATING %= PAGES @ %d IN %s\n", 
-	// 	   dood-number-pages(dood, size), address,
-	// 	   dood-segment-name(dood-segment-state-segment(segment)));
-	address
+        let address = dood-allocate-pages(dood, dood-number-pages(dood, size));
+        // format-out("ALLOCATING %= PAGES @ %d IN %s\n", 
+        //         dood-number-pages(dood, size), address,
+        //         dood-segment-name(dood-segment-state-segment(segment)));
+        address
       end if;
   dood-segment-free-address(segment) := address + size;
   address
@@ -124,8 +124,8 @@ define method dood-allocate
   let segment = dood-lookup-segment-state(dood, dood-class, object);
   let address = dood-allocate-in(dood, segment, size);
   // format-out("ALLOCATING %= (%d) @ %d IN %s\n", 
-  // 	     object-class(object), size, address, 
-  // 	     dood-segment-name(dood-segment-state-segment(segment)));
+  //         object-class(object), size, address, 
+  //         dood-segment-name(dood-segment-state-segment(segment)));
   address
 end method;
 
@@ -190,10 +190,10 @@ define inline function mark-lazy-slot-using
     let (found?, address-or-object) = shallow-read-object(dood);
     dood-slot-value(x, slotd) 
       := if (found?)
-	   address-or-object
-	 else 
-	   make-slot-value-proxy(dood, address-or-object, offset, slotd);
-	 end if;
+           address-or-object
+         else 
+           make-slot-value-proxy(dood, address-or-object, offset, slotd);
+         end if;
   end when;
 end function;
 
@@ -332,7 +332,7 @@ define function dood-read-object-of-at
       dood-read-string-into!(dood, size, object)
     else
        for (i :: <integer> from 0 below size)
-	 dood-read-slot!(dood, object, i, work, element-setter);
+         dood-read-slot!(dood, object, i, work, element-setter);
       end for;
     end if;
   end if;
@@ -419,22 +419,22 @@ define inline function maybe-read-pointer
     $tag-pairs? & pair?(pointer) =>
       let value = dood-object(dood, address, default: $address-not-found);
       if (value == $address-not-found)
-	if (read?)
-	  read-pair(dood, address);
-	else 
-	  default
-	end if
+        if (read?)
+          read-pair(dood, address);
+        else 
+          default
+        end if
       else
         value
       end if;
     address?(pointer) =>
       let value = dood-object(dood, address, default: $address-not-found);
       if (value == $address-not-found)
-	if (read?)
-	  read-address(dood, address);
-	else 
-	  default
-	end if
+        if (read?)
+          read-address(dood, address);
+        else 
+          default
+        end if
       else
         value
       end if;
