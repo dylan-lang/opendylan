@@ -84,7 +84,7 @@ define method ^initialize-class
           // !@#$ end hack to deal with references to self
         else
           let true-value
-            = if(eval) ^top-level-eval(val) else val end;
+            = if (eval) ^top-level-eval(val) else val end;
           unless (true-value)
             raise(unresolved-condition,
                   source-location: model-source-location(designator));
@@ -172,17 +172,17 @@ define method ^initialize-class
     // any designator with a referenced-type is a pointer and has itself as
     // a low level type.
     designator.^low-level-type := self;
-    if(~designator.^mapped-import-type
+    if (~designator.^mapped-import-type
          | designator.^mapped-import-type == designator-super)
       designator.^mapped-import-type := designator;
     end if;
-    if(~designator.^mapped-export-type
+    if (~designator.^mapped-export-type
          | designator.^mapped-export-type == designator-super)
       designator.^mapped-export-type := designator;
     end if;
   end if;
   // !@#$ deal with size-of, alignment-of?
-end method ^initialize-class;        
+end method ^initialize-class;
 
 
 

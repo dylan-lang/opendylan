@@ -118,7 +118,7 @@ end;
 /// called from the C tests
 define c-callable-wrapper simple-callable
     of method () => ()
-	 values() end
+         values() end
   c-name: "call_me";
 end;
 
@@ -139,7 +139,7 @@ end;
 /// Be very careful to get correspondence right with C code.
 define c-callable-wrapper more-interesting-callable of
     method (p1 :: <integer>, p2 :: <integer>, p4 :: <integer>,
-	    p5 :: <integer>, p6 ::  <minimal*> ) => (r, p3, p4, p5)
+            p5 :: <integer>, p6 ::  <minimal*>) => (r, p3, p4, p5)
       check-equal("slot value of struct passed into dylan", p6.slot-1, 171717);
       check-equal("parameter 1 passed into interesting callable ", p1, 1);
       check-equal("parameter 2 passed into interesting callable", p2, 2);
@@ -160,8 +160,8 @@ end;
 
 define c-callable-wrapper another-interesting-callable of
     method (p1 :: <integer>, p2 :: <integer>, p3 :: <c-unsigned-char*>,
-	    p4 :: <C-unsigned-char*>, p5 ::  <minimal*>,
-	    p6 :: <minimal*>)
+            p4 :: <C-unsigned-char*>, p5 ::  <minimal*>,
+            p6 :: <minimal*>)
      => (r :: <integer>)
       values(p1)
     end
@@ -211,11 +211,11 @@ end;
 /// try some things with a variable defined via define c-variable
 define test variable-address-test (description: "Variable Address Tests")
   check-equal("set c-address",
-	       (pointer-value($foos-address) := 1), 1);
+               (pointer-value($foos-address) := 1), 1);
   check-equal("c-address value", pointer-value($foos-address), 1);
   check-equal("c-address value from c-variable", foo-value(), 1);
   check-equal("set c-variable: %s should be %s",
-	       (foo-value() := 777), 777);
+               (foo-value() := 777), 777);
   check-equal("c-address value 777", pointer-value($foos-address), 777);
   check-equal("c-variable value 777", foo-value(), 777);
   // !@#$ need more tests that check for agreement with C
@@ -226,31 +226,31 @@ end;
 define test c-struct-test (description: "C-Struct Tests")
   format-out("minimal-size: %s", size-of(<minimal>));
   check-equal("<minimal> struct size",
-	      struct-minimal-size(), size-of(<minimal>));
+              struct-minimal-size(), size-of(<minimal>));
   format-out("maximal-size: %s", size-of(<maximal>));
   check-equal("<maximal> struct size",
-	      struct-maximal-size(), size-of(<maximal>));
+              struct-maximal-size(), size-of(<maximal>));
   let minimal-struct = make(<minimal*>);
   check-equal("set simple struct-slot", (minimal-struct.slot-1 := 777), 777);
   check-equal("simple struct slot value", minimal-struct.slot-1, 777);
   check-equal( "set struct simple address valued slot",
-	      minimal-struct.slot-2 := $foos-address,
-	      $foos-address);
+              minimal-struct.slot-2 := $foos-address,
+              $foos-address);
   check-equal("struct simple address valued slot value",
-	      pointer-address($foos-address),
-	      pointer-address(minimal-struct.slot-2));
+              pointer-address($foos-address),
+              pointer-address(minimal-struct.slot-2));
   check-equal("stuct set pointer value address valued slot",
-	  pointer-value(minimal-struct.slot-2) := 12345,
-	  12345);
+          pointer-value(minimal-struct.slot-2) := 12345,
+          12345);
   check-equal("struct pointer value check alias",
-	      foo-value(), pointer-value(minimal-struct.slot-2));
+              foo-value(), pointer-value(minimal-struct.slot-2));
   check-equal("struct pointer value check value",
-	      pointer-value(minimal-struct.slot-2), 12345);
+              pointer-value(minimal-struct.slot-2), 12345);
   check-equal("define c-pointer-type does correct aliasing",
-	      <minimal*>, <Pminimal>);
+              <minimal*>, <Pminimal>);
   let maximal-struct = make(<maximal*>);
   // do some tests here that deal with maximal
-  // !@#$ Need more tests to see if accessors get the same thing as C code 
+  // !@#$ Need more tests to see if accessors get the same thing as C code
   //      for corresponding C structs
 end;
 
@@ -261,27 +261,27 @@ define test c-function-test (description: "C Function Tests")
   format-out("Running c-function tests\n");
   for (i from 0 below (ash(1, 8 * size-of(<C-unsigned-char>)) - 2) by 17)
     check-equal("c-function unsigned char increment",
-		increment-unsigned-char(i), i + 1);
+                increment-unsigned-char(i), i + 1);
   end;
 
-  for(i from 0 below (ash(1, (8 * size-of(<C-signed-char>)) - 1) - 2) by 17)
+  for (i from 0 below (ash(1, (8 * size-of(<C-signed-char>)) - 1) - 2) by 17)
     check-equal("c-function signed char increment",
-		increment-signed-char(i), i + 1);
+                increment-signed-char(i), i + 1);
     check-equal("c-function signed char negative increment",
-		increment-signed-char(- i), (- i) + 1);
+                increment-signed-char(- i), (- i) + 1);
   end;
-  for(i from 0 below (ash(1, 8 * size-of(<C-unsigned-char>)) - 2) by 17)
+  for (i from 0 below (ash(1, 8 * size-of(<C-unsigned-char>)) - 2) by 17)
     check-equal("c-function unsigned short increment",
-		increment-unsigned-short(i), i + 1);
+                increment-unsigned-short(i), i + 1);
   end;
-  for(i from 0 below (ash(1, (8 * size-of(<C-signed-char>)) - 1) - 2) by 17)
+  for (i from 0 below (ash(1, (8 * size-of(<C-signed-char>)) - 1) - 2) by 17)
     check-equal("c-function signed short increment",
-		increment-signed-short(i), i + 1);
+                increment-signed-short(i), i + 1);
     check-equal("c-function signed short negative increment",
-		increment-signed-short(- i), (- i) + 1);
+                increment-signed-short(- i), (- i) + 1);
   end;
   // !@#$ do more here
-end;  
+end;
 
 /// ---------
 /// C string tests
@@ -317,8 +317,8 @@ end;
 /// Treat X as a C-string and set the OFFSETth element to NEW
 define c-callable-wrapper $c-string-value-setter of
     method (new :: <character>,
-	    x :: <C-string>,
-	    offset :: <integer>) => (r :: <character>);
+            x :: <C-string>,
+            offset :: <integer>) => (r :: <character>);
       pointer-value(x, index: offset) := new;
     end
   parameter new :: <c-character>;
@@ -334,28 +334,28 @@ end;
 /// foreign function, ans via element to make sure that every view of it
 /// is correct.
 define function check-a-c-string (name-string, a-string, seed) => ();
-  for(i from 0 below size(a-string))
+  for (i from 0 below size(a-string))
     let this-char = as(<byte-character>, as(<integer>, seed) + i);
     check-equal(concatenate(name-string,
-			    " c-string get value from alias before"),
-		c-string-value(a-string, i),
-		a-string[i]);
+                            " c-string get value from alias before"),
+                c-string-value(a-string, i),
+                a-string[i]);
     check-equal(concatenate(name-string,
-			    " c-string set value"),
-		c-string-value(a-string, i) := this-char,
-		this-char);
+                            " c-string set value"),
+                c-string-value(a-string, i) := this-char,
+                this-char);
     check-equal(concatenate(name-string,
-			    " c-string set value"),
-		c-string-value(a-string, i),
-		this-char);
+                            " c-string set value"),
+                c-string-value(a-string, i),
+                this-char);
     check-equal(concatenate(name-string,
-			    " c-string get value alias"),
-		a-string[i],
-		this-char);
+                            " c-string get value alias"),
+                a-string[i],
+                this-char);
     check-equal(concatenate(name-string,
-			    " c-string get value from alias"),
-		c-string-value(a-string, i),
-		a-string[i]);
+                            " c-string get value from alias"),
+                c-string-value(a-string, i),
+                a-string[i]);
   end;
 end;
 
@@ -363,25 +363,25 @@ end;
 
 /// c-string-test
 /// make sure that <C-string>s behave as strings and collections, and that
-/// views onto a <byte-string> as a <c-string> from a foreign function 
+/// views onto a <byte-string> as a <c-string> from a foreign function
 /// all correspond.
-define test c-string-test () 
+define test c-string-test ()
   format-out("Running c-string tests\n");
   let a-string = shallow-copy("This is a test string");
   check-a-c-string("<byte-string>", a-string, 'A');
   let c-string = #f;
   check-true("Create a C-string with map-as",
-	     instance?(c-string := map-as(<c-string>, identity, a-string),
-		       <C-string>));
+             instance?(c-string := map-as(<c-string>, identity, a-string),
+                       <C-string>));
   check-equal("size works on c-strings", size(a-string), size(c-string));
-  for(item in a-string,
+  for (item in a-string,
       index from 0 below size(a-string))
     check-equal("elements of c-string", item, c-string[index]);
   end;
-  for(item in c-string,
+  for (item in c-string,
       index from 0 below size(c-string))
     check-equal("elements of c-string forward-iteration",
-		item, a-string[index]);
+                item, a-string[index]);
   end;
   check-a-c-string("<C-string>", c-string, 'B');
 end;
@@ -392,7 +392,7 @@ end;
 define macro check-class
   { check-class(?base:name) }
     => { check-true(concatenate("the class <C-", ?"base", "> exists"),
-				instance?("<c-" ## ?base ## ">", <class>)) }
+                                instance?("<c-" ## ?base ## ">", <class>)) }
 end macro;
 
 define macro check-classes
@@ -406,7 +406,7 @@ end;
 define macro check-function
   { check-function(?base:name) }
     => { check-true(concatenate("the function ", ?"base", " exists"),
-		      instance?(?base, <function>)) }
+                      instance?(?base, <function>)) }
 end macro;
 
 define macro check-functions
@@ -556,7 +556,7 @@ define test bug-217 ()
 end;
 
 
-// 
+//
 // -------------
 // tests for bug 321
 
@@ -745,7 +745,7 @@ define test bug-321 ()
               0);
 end;
 
-// 
+//
 // -------------
 // tests for bug 290
 
@@ -759,7 +759,7 @@ define test bug-290 ()
 end;
 
 
-// 
+//
 // -------------
 // tests for bug 313
 
@@ -775,7 +775,7 @@ define test bug-313 ()
   check-equal("bug 313  mix it up value 2", b, 7 + 7);
 end;
 
-// 
+//
 // -------------
 // tests for bug 17
 
@@ -797,7 +797,7 @@ define test bug-17 ()
                instance?(make(<bar-bar>), <bar-bar>)); // fails
 end;
 
-// 
+//
 // -------------
 // tests for bug 134
 
@@ -825,7 +825,7 @@ define test bug-134 ()
 end;
 
 
-// 
+//
 // -------------
 // tests for bug 213
 
@@ -835,11 +835,11 @@ define c-struct <HENV-213>
 end C-struct;
 
 define test bug-213 ()
-  check-true("bug 213 make returns", 
+  check-true("bug 213 make returns",
              instance?(make(<henv-213*>), <henv-213*>));
 end;
 
-// 
+//
 // -------------
 // tests for bug 209
 
@@ -853,7 +853,7 @@ define c-callable-wrapper wilma of betty
   c-name: "betty";
 end c-callable-wrapper;
 
-define c-function call-betty 
+define c-function call-betty
   parameter a :: <c-int>;
   result r :: <C-int>;
   c-name: "betty";
@@ -863,7 +863,7 @@ define test bug-209 ()
   check-equal("bug 209 call betty", call-betty(2), 4);
 end;
 
-// 
+//
 // -------------
 // tests for bug 289
 
@@ -879,12 +879,12 @@ define test bug-289 ()
 end;
 
 
-// 
+//
 // -------------
 // tests for bug 394
 
 define C-struct <DDEACK>
-  bitfield slot bAppReturnCode-value :: <C-unsigned-short>, width: 8; 
+  bitfield slot bAppReturnCode-value :: <C-unsigned-short>, width: 8;
   bitfield slot reserved-value :: <C-unsigned-short>, width: 6;
   bitfield slot fBusy-value    :: <C-unsigned-short>, width: 1;
   bitfield slot fAck-value     :: <C-unsigned-short>, width: 1;
@@ -950,43 +950,43 @@ define test bug-394 ()
   // use c-struct setters and getters
   bAppReturnCode-value(dde) := 127;
   check-equal("by-value ddeack return correct value",
-	      Vack-return-slot(dde), 127);
+              Vack-return-slot(dde), 127);
   reserved-value(dde) := 31;
   check-equal("by-value ddeack reserved correct value",
-	      Vack-reserved-slot(dde), 31);
+              Vack-reserved-slot(dde), 31);
   fBusy-value(dde) := 1;
   check-equal("by-value ddeack busy correct value",
-	      Vack-busy-slot(dde), 1);
+              Vack-busy-slot(dde), 1);
   fAck-value(dde) := 1;
   check-equal("by-value ddeack ack correct value",
-	      Vack-ack-slot(dde), 1);
+              Vack-ack-slot(dde), 1);
   // Use foreign function setter and c-struct getters
   Vack-return-slot-setter(120, dde);
   check-true("by-value ack return setter doesn't set",
-	      (bAppReturnCode-value(dde) ~= 120));
+              (bAppReturnCode-value(dde) ~= 120));
   check-equal("by-value ack return setter leaves value alone",
-	      bAppReturnCode-value(dde), 127);
+              bAppReturnCode-value(dde), 127);
   Vack-reserved-slot-setter(20, dde);
   check-true("by-value ack reserved setter doesn't set",
-	      (Reserved-value(dde) ~= 20));
+              (Reserved-value(dde) ~= 20));
   check-equal("by-value ack reserved setter leaves value alone",
-	      Reserved-value(dde), 31);
+              Reserved-value(dde), 31);
   Vack-busy-slot-setter(0, dde);
   check-true("by-value ack busy setter doesn't set",
-	      (fBusy-value(dde) ~= 0));
+              (fBusy-value(dde) ~= 0));
   check-equal("by-value ack busy setter leaves value alone",
-	      fBusy-value(dde), 1);
+              fBusy-value(dde), 1);
   Vack-ack-slot-setter(0, dde);
   check-true("by-value ack ack setter doesn't set",
-	      (fAck-value(dde) ~= 0));
+              (fAck-value(dde) ~= 0));
   check-equal("by-value ack ack setter leaves value alone",
-	      fAck-value(dde), 1);
+              fAck-value(dde), 1);
 
 
 
 end;
 
-// 
+//
 // -------------
 // tests for indirect: option to define c-function
 
@@ -1008,7 +1008,7 @@ define test c-function-indirect ()
 end;
 
 
-// 
+//
 // -------------
 // tests for <c-dylan-object>
 
@@ -1018,31 +1018,31 @@ define c-struct <test-dylan-object>
 end;
 
 define test c-dylan-object-test ()
-  let obj = pair(1, 2);		// make an object
+  let obj = pair(1, 2);                // make an object
   register-c-dylan-object(obj);  // register it
   let struct = make(<test-dylan-object*>);
   let handle = export-c-dylan-object(obj);
-  object-handle(struct) := handle;  
+  object-handle(struct) := handle;
   check-equal("<C-dylan-object> importing handle",
-	     import-c-dylan-object(handle), obj);
+             import-c-dylan-object(handle), obj);
   check-equal("<C-dylan-object> extracting handle from struct",
-	     import-c-dylan-object(object-handle(struct)),
-	     obj);
+             import-c-dylan-object(object-handle(struct)),
+             obj);
   // do more here.
-  // ... 
+  // ...
   unregister-c-dylan-object(obj);
   destroy(struct);
 end;
 
 
 
-// 
+//
 // -------------
 // tests for bug 393
 
 
 define function main-bug-393 ()
-  for ( i from 0 below 200 )
+  for (i from 0 below 200)
     let buf = make(<c-string>, size: 10 + i);
     destroy(buf);
   end for;
@@ -1051,11 +1051,11 @@ end main-bug-393;
 
 define test bug-393 ()
   check-true("bug-393 try it",
-	     main-bug-393());
+             main-bug-393());
 end;
-	     
 
-// 
+
+//
 // -------------
 // tests for bug 414
 
@@ -1077,7 +1077,7 @@ define test bug-414 ()
 end;
 
 
-// 
+//
 // -------------
 // tests for passing c structs by value
 
@@ -1150,42 +1150,42 @@ define test struct-by-value ()
   // use c-struct setters and getters
   bAppReturnCode-value(dde) := 127;
   check-equal("by-value return code setter and getter",
-	      bAppReturnCode-value(dde),
-	      127);
+              bAppReturnCode-value(dde),
+              127);
   reserved-value(dde) := 31;
   check-equal("by-value reserved setter and getter",
-	      reserved-value(dde),
-	      31);
+              reserved-value(dde),
+              31);
   fBusy-value(dde) := 1;
   check-equal("by-value busy setter and getter",
-	      fBusy-value(dde),
-	      1);
+              fBusy-value(dde),
+              1);
   fAck-value(dde) := 1;
   check-equal("by-value ack setter and getter",
-	      fAck-value(dde),
-	      1);  
+              fAck-value(dde),
+              1);
   // Use foreign function setter and c-struct getters
   ack-return-slot(dde) := 120;
   check-equal("by-value return code ff setter and getter",
-	      bAppReturnCode-value(dde),
-	      120);
+              bAppReturnCode-value(dde),
+              120);
   ack-reserved-slot(dde) := 20;
   check-equal("by-value reserved ff setter and getter",
-	      reserved-value(dde),
-	      20);
+              reserved-value(dde),
+              20);
   ack-busy-slot(dde) := 0;
   check-equal("by-value busy ff setter and getter",
-	      fBusy-value(dde),
-	      0);
+              fBusy-value(dde),
+              0);
   ack-ack-slot(dde) := 0;
   check-equal("by-value ack ff setter and getter",
-	      fAck-value(dde),
-	      0);
+              fAck-value(dde),
+              0);
   let widths = make(<LPOLEMENUGROUPWIDTHS>);
   for (i from 0 below 6)
     pointer-value(width-value(widths), index: i) := i + 47;
     check-equal("by-value array-slot values",
-		OMGW-width(widths, i), i + 47);
+                OMGW-width(widths, i), i + 47);
   end;
 end;
 */
@@ -1249,7 +1249,7 @@ define c-callable-wrapper dylan-always-one of always-one
 end;
 
 // -------------
- 
+
 
 /// set up bookkeeping around running the tests
 define method c-ffi-test-begin () => ();
@@ -1269,10 +1269,10 @@ end;
 /// so we can report them here.
 define method c-ffi-test-final-report (abort) => ();
   format-out("%s running C FFI tests\n",
-	 if (abort) "Aborted" else "Finished" end);
+         if (abort) "Aborted" else "Finished" end);
   let c-lossage-count = c-failure-count();
   format-out("Encountered %= failures from C\n",
-	     c-lossage-count);
+             c-lossage-count);
   format-out("out of a total of %= tests from C.\n", c-test-count());
 end;
 

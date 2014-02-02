@@ -35,22 +35,22 @@ define macro mapped-integer-type-definer
         ?signedness:name
         ?alias-base:* }
     =>
-    { 
+    {
 define open simple-c-mapped-subtype "<C-" ## ?base-name ## ">"
   ("<C-raw-" ## ?base-name ## ">")
   export-map <integer>,
     export-function:
       method (x :: <integer>) => (m :: <machine-word>)
-	check-export-range
-	  (x, size-of("<C-raw-" ## ?base-name ## ">" ), ?#"signedness");
-	as(<machine-word>, x)
+        check-export-range
+          (x, size-of("<C-raw-" ## ?base-name ## ">"), ?#"signedness");
+        as(<machine-word>, x)
       end;
   import-map <ffi-integer>,
     import-function:
       method (x :: <machine-word>) => (i :: <ffi-integer>);
-	check-import-range
-	  (x, size-of("<C-raw-"## ?base-name ## ">"), ?#"signedness");
-	as(<abstract-integer>, x)
+        check-import-range
+          (x, size-of("<C-raw-"## ?base-name ## ">"), ?#"signedness");
+        as(<abstract-integer>, x)
       end;
   pointer-type "<C-" ## ?base-name ## "*>";
 end;
@@ -60,12 +60,12 @@ define open simple-c-mapped-subtype "<C-unsafe-" ## ?base-name ## ">"
   export-map <integer>,
     export-function:
       method (x :: <integer>) => (m :: <machine-word>);
-	as(<machine-word>, x)
+        as(<machine-word>, x)
       end;
   import-map <ffi-integer>,
     import-function:
       method (x :: <machine-word>) => (i :: <ffi-integer>);
-	as(<abstract-integer>, x);
+        as(<abstract-integer>, x);
       end;
   pointer-type "<C-unsafe-" ## ?base-name ##"*>";
 end;
@@ -74,24 +74,24 @@ define open simple-c-mapped-subtype "<C-both-" ## ?base-name ## ">"
   ("<C-raw-" ## ?base-name ## ">")
   map <ffi-integer>,
     export-function: method (x :: <ffi-integer>)
-		      => (m :: <machine-word>);
-		       export-to-machine-word
-			 (x, size-of("<C-raw-" ## ?base-name ## ">"),
-					      ?#"signedness");
-		     end,
+                      => (m :: <machine-word>);
+                       export-to-machine-word
+                         (x, size-of("<C-raw-" ## ?base-name ## ">"),
+                                              ?#"signedness");
+                     end,
     import-function:
       method (x :: <machine-word>) => (i :: <ffi-integer>);
-	check-import-range
-	  (x, size-of("<C-raw-" ## ?base-name ## ">"), ?#"signedness");
-	as(<abstract-integer>, x);
+        check-import-range
+          (x, size-of("<C-raw-" ## ?base-name ## ">"), ?#"signedness");
+        as(<abstract-integer>, x);
       end;
   pointer-type "<C-both-" ## ?base-name ## "*>";
 end;
 
  define aliased-designators ?alias-base ?base-name
 }
-end macro;    
-        
+end macro;
+
 define mapped-integer-type <C-unsigned-int> unsigned #f;
 define mapped-integer-type <C-signed-int> signed int;
 define mapped-integer-type <C-unsigned-long> unsigned #f;
@@ -118,16 +118,16 @@ define constant <C-raw-short*> = <C-raw-signed-short*>;
 
 
 define inline method export-to-machine-word (thing :: <integer>,
-					     size :: <integer>,
-					     signedness :: <symbol>)
+                                             size :: <integer>,
+                                             signedness :: <symbol>)
  => (m :: <machine-word>);
   check-export-range(thing, size, signedness);
   as(<machine-word>, thing);
 end;
 
 define inline method export-to-machine-word (thing :: <machine-word>,
-					     size :: <integer>,
-					     signedness :: <symbol>)
+                                             size :: <integer>,
+                                             signedness :: <symbol>)
  => (m :: <machine-word>);
   check-export-range(thing, size, signedness);
   thing

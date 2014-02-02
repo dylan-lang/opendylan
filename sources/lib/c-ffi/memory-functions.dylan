@@ -19,8 +19,8 @@ define inline function copy-into! (destination :: <C-pointer>,
   let raw-zero = primitive-unwrap-machine-word(as(<machine-word>, 0));
   let raw-size = primitive-unwrap-machine-word(as(<machine-word>, size));
   primitive-replace!(raw-destination, raw-zero, raw-zero,
-		     raw-source, raw-zero, raw-zero,
-		     raw-size);
+                     raw-source, raw-zero, raw-zero,
+                     raw-size);
 end function;
 
 define inline function copy-bytes! (destination :: <C-pointer>,
@@ -30,8 +30,8 @@ define inline function copy-bytes! (destination :: <C-pointer>,
   let raw-zero = primitive-unwrap-machine-word(as(<machine-word>, 0));
   let raw-size = primitive-unwrap-machine-word(as(<machine-word>, size));
   primitive-replace-bytes!(raw-destination, raw-zero, raw-zero,
-			   raw-source, raw-zero, raw-zero,
-			   raw-size);
+                           raw-source, raw-zero, raw-zero,
+                           raw-size);
 end function;
 
 define inline function equal-memory? (pointer-1 :: <C-pointer>,
@@ -43,8 +43,8 @@ define inline function equal-memory? (pointer-1 :: <C-pointer>,
   let raw-zero = primitive-unwrap-machine-word(as(<machine-word>, 0));
   let raw-size = primitive-unwrap-machine-word(as(<machine-word>, size));
   primitive-compare-words(raw-pointer-1, raw-zero,
-			  raw-pointer-2, raw-zero,
-			  raw-size);
+                          raw-pointer-2, raw-zero,
+                          raw-size);
 end function;
 
 define inline function clear-memory! (pointer :: <C-pointer>,

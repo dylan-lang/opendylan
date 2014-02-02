@@ -279,7 +279,7 @@ define &macro simple-c-mapped-subtype-definer
     apply(method
               (#key import-function, export-function,import-type,
                export-type, pointer-type-name) => (template);
-            unless(pointer-type-name)
+            unless (pointer-type-name)
               pointer-type-name := gensym("mapped-pointer-to-", name);
             end;
             let concrete-pointer-type
@@ -509,7 +509,7 @@ define &macro export-function-body
   begin
     let (designator-super, super-expr)
       = block (gotit)
-          for(c-expr in supers)
+          for (c-expr in supers)
             let c = ^eval-designator(c-expr);
             if (designator-class?(c))
               gotit(c, c-expr)
@@ -538,7 +538,7 @@ define &macro import-function-body
   begin
     let (designator-super, super-expr)
       = block (gotit)
-          for(c-expr in supers)
+          for (c-expr in supers)
             let c = ^eval-designator(c-expr);
             if (designator-class?(c))
               gotit(c, c-expr)

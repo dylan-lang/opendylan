@@ -318,7 +318,7 @@ define method as (c == <abstract-aggregate-field-indicator>,
   end unless;
   assure-raw-type-info(slot-type-model);
   let len = ^top-level-eval(slot.array-length);
-  unless(instance?(len, <integer>) & len > 0)
+  unless (instance?(len, <integer>) & len > 0)
     // Don't need to generate an error as expand-slot-accessor will do that
     len := 1;
   end unless;
@@ -337,7 +337,7 @@ define method as (c == <abstract-aggregate-field-indicator>,
   end unless;
   assure-raw-type-info(slot-type-model);
   let width = ^top-level-eval(slot.bitfield-width);
-  unless(instance?(width, <integer>) & width > 0)
+  unless (instance?(width, <integer>) & width > 0)
     note(<invalid-bitfield-slot-width>,
          source-location: fragment-source-location(slot.bitfield-width),
          definition-name: #{ *unkown* },

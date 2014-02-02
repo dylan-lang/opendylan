@@ -159,7 +159,7 @@ define method parse-early-options
     let result-fragment = #f;
     let vname = result-spec.name;
     let type = ~void?(result-spec) & result-spec.designator-name;
-    if(~void?(result-spec))
+    if (~void?(result-spec))
       collect-into(return-values, #{ ?vname :: import-type-for(?type) });
       result-fragment := #{ (result ?vname :: ?type) };
     else
@@ -281,7 +281,7 @@ define method c-function-parse-parameter-spec
      c-function-argument,
      extra-return-value)
   let ref-type-model = ^referenced-type(model);
-  unless(designator-class?(ref-type-model))
+  unless (designator-class?(ref-type-model))
     note(<output-parameter-not-a-pointer>,
          source-location: fragment-source-location(spec.designator-name),
          designator-name: spec.designator-name,
@@ -370,7 +370,7 @@ define method c-function-parse-input-output-parameters
     let model = spec.model-type;
     unless (model)
       model := ^eval-designator(spec.designator-name);
-      unless(designator-class?(model))
+      unless (designator-class?(model))
         generate-unresolved-designator-error(spec.designator-name,
           name, #{ c-function-parameter }, #());
         model := ^eval-designator(#{ <C-void*> });
@@ -878,7 +878,7 @@ define method  expand-make-c-callable
   end if;
 
   let options-form
-    = if(modifiers)
+    = if (modifiers)
         if (c-name)
           #{ ?c-name, c-modifiers: ?modifiers, export: ?export }
         else
@@ -909,8 +909,8 @@ define method  expand-make-c-callable
                      end),
                    #[])};
 end;
-        
-        
+
+
 define method callable-box-input-parameters
     (parameters :: <sequence>)
  => (box-forms :: <sequence>);
@@ -962,7 +962,7 @@ define method callable-output-parameter-handling
   let pointer-setting-forms = make(<stretchy-vector>);
   let return-value-binds = make(<stretchy-vector>);
 
-  if(result-desc & ~void?(result-desc))
+  if (result-desc & ~void?(result-desc))
     let nom = result-desc.name;
     let type = result-desc.designator-name;
     let form = #{ ?nom :: export-type-for(?type) };
@@ -1120,7 +1120,7 @@ define method expand-c-function-body
 
   do(method (desc)
        desc.model-type := ^eval-designator(desc.designator-name);
-       unless(designator-class?(desc.model-type))
+       unless (designator-class?(desc.model-type))
          generate-unresolved-designator-error(desc.designator-name,
            dylan-name, #{ c-function-parameter }, #());
          desc.model-type := ^eval-designator(#{ <C-void*> });

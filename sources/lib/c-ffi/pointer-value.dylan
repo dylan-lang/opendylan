@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //
 // ELEMENT
 //
-define sideways inline method element 
+define sideways inline method element
     (ptr :: <C-statically-typed-pointer>, index :: <integer>, #key default)
  => (o :: <object>);
   pointer-value(ptr, index: index);
@@ -17,7 +17,7 @@ end method element;
 //
 // ELEMENT-SETTER
 //
-define sideways inline method element-setter 
+define sideways inline method element-setter
     (new :: <object>, ptr :: <C-statically-typed-pointer>, index :: <integer>)
  => (o :: <object>);
   pointer-value-setter(new, ptr, index: index);
@@ -40,17 +40,17 @@ end function pointer-address;
 //
 define macro pointer-value-method-definer
   { define pointer-value-method ?pointer-class:name ?accessor:name
-                                ?result-class:name 
+                                ?result-class:name
   }
   =>
   { define sideways method pointer-value
-	(ptr :: ?pointer-class, #key index :: <integer> = 0)
+        (ptr :: ?pointer-class, #key index :: <integer> = 0)
      => (result :: ?result-class);
       ?accessor(ptr, scaled-index: index)
     end method pointer-value;
     define sideways method pointer-value-setter
-	(new-value :: ?result-class, ptr :: ?pointer-class,
-	 #key index :: <integer> = 0)
+        (new-value :: ?result-class, ptr :: ?pointer-class,
+         #key index :: <integer> = 0)
      => (new-value :: ?result-class);
       ?accessor(ptr, scaled-index: index) := new-value
     end method pointer-value-setter;
@@ -73,7 +73,7 @@ define pointer-value-method <C-double*> C-double-at <double-float>;
 define pointer-value-method <C-long-double*> C-long-double-at <extended-float>;
 */
 
-// TODO: CORRECTNESS: Pointers to pointers don't seem to have 
+// TODO: CORRECTNESS: Pointers to pointers don't seem to have
 // <C-pointer-to-pointer> as a superclass uniformly. As a hack,
 // we can detect pointers to pointers by omission - i.e. if
 // it ain't caught by one of the above methods, then it may be
@@ -86,19 +86,19 @@ define sideways method pointer-value
   let ref-type = referenced-type(object-class(ptr));
   if (subtype?(ref-type, <C-pointer>))
     make-c-pointer(ref-type,
-		   primitive-cast-pointer-as-raw
-		     (primitive-c-pointer-at
-			(primitive-unwrap-c-pointer(ptr),
-			 integer-as-raw(index),
-			 integer-as-raw(0))),
-		   #[]);
+                   primitive-cast-pointer-as-raw
+                     (primitive-c-pointer-at
+                        (primitive-unwrap-c-pointer(ptr),
+                         integer-as-raw(index),
+                         integer-as-raw(0))),
+                   #[]);
   else
     next-method();
   end if;
 end method pointer-value;
 
 
-define sideways method pointer-value-setter 
+define sideways method pointer-value-setter
     (new :: <C-pointer>,
      ptr :: <C-statically-typed-pointer>, /* <C-pointer-to-pointer> */
      #key index :: <integer> = 0)
@@ -106,9 +106,9 @@ define sideways method pointer-value-setter
   let ref-type = referenced-type(object-class(ptr));
   if (subtype?(ref-type, <C-pointer>))
     primitive-c-pointer-at-setter(primitive-unwrap-c-pointer(new),
-				  primitive-unwrap-c-pointer(ptr),
-				  integer-as-raw(index),
-				  integer-as-raw(0));
+                                  primitive-unwrap-c-pointer(ptr),
+                                  integer-as-raw(index),
+                                  integer-as-raw(0));
     new;
   else
     next-method();
@@ -125,9 +125,9 @@ define inline sideways method pointer-value-address
   let clss = object-class(ptr);
   let object-size :: <integer> = size-of(referenced-type(clss));
   make-c-pointer(clss,
-		 primitive-machine-word-add
-		   (primitive-cast-pointer-as-raw
-		      (primitive-unwrap-c-pointer(ptr)),
-		    integer-as-raw(index * object-size)),
-		 #[]);
+                 primitive-machine-word-add
+                   (primitive-cast-pointer-as-raw
+                      (primitive-unwrap-c-pointer(ptr)),
+                    integer-as-raw(index * object-size)),
+                 #[]);
 end method pointer-value-address;
