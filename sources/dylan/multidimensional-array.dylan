@@ -160,7 +160,7 @@ define macro limited-array-definer
     
          define method concrete-limited-array-class
              (of == "<" ## ?name ## ">", default-fill)
-          => (res :: <class>, fully-specified?)
+          => (res :: <class>, fully-specified? :: <boolean>)
            values("<simple-" ## ?name ## "-array>", default-fill = ?fill)
          end method;
        }

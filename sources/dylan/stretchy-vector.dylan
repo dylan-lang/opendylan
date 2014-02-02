@@ -618,7 +618,7 @@ define macro limited-stretchy-vector-definer
            
          define method concrete-limited-stretchy-vector-class
              (of == "<" ## ?name ## ">", default-fill)
-          => (res :: <class>, fully-specified?)
+          => (res :: <class>, fully-specified? :: <boolean>)
            values("<stretchy-" ## ?name ## "-vector>", default-fill = ?fill)
          end method }
 end macro;

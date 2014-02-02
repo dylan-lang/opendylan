@@ -38,7 +38,7 @@ end method;
 
 define method concrete-limited-array-class
     (of :: <type>, default-fill)
- => (res :: <class>, fully-specified?)
+ => (res :: <class>, fully-specified? :: <boolean>)
   values(<simple-element-type-array>, #f)
 end method;
 
@@ -61,7 +61,7 @@ end method type-for-copy;
 /// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
 define method concrete-limited-array-class
     (of :: <limited-integer>, default-fill)
- => (res :: <class>, fully-specified?)
+ => (res :: <class>, fully-specified? :: <boolean>)
   let fully-specified? = (default-fill = 0);
   select (of by subtype?)
     <byte>        => values(<simple-byte-array>, fully-specified?);

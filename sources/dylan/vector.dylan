@@ -784,7 +784,7 @@ define macro limited-vector-definer
     
          define sealed inline method concrete-limited-vector-class
              (of == "<" ## ?name ## ">", default-fill :: "<" ## ?name ## ">")
-          => (type :: singleton("<simple-" ## ?name ## "-vector>"), fully-specified?)
+          => (type :: singleton("<simple-" ## ?name ## "-vector>"), fully-specified? :: <boolean>)
            values("<simple-" ## ?name ## "-vector>", default-fill = ?fill)
          end method }
 end macro;
@@ -795,7 +795,7 @@ define constant object-vector-element-setter = vector-element-setter;
 
 define inline method concrete-limited-vector-class
      (of :: <type>, default-fill)
- => (res :: <class>, fully-specified?)
+ => (res :: <class>, fully-specified? :: <boolean>)
   values(<simple-element-type-vector>, #f)
 end method;
 

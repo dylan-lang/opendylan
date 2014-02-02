@@ -318,7 +318,7 @@ define macro limited-string-definer
 
          define sealed inline method concrete-limited-string-class
              (of == "<" ## ?name ## "-character>", default-fill)
-          => (type :: singleton("<limited-" ## ?name ## "-string>"), fully-specified?)
+          => (type :: singleton("<limited-" ## ?name ## "-string>"), fully-specified? :: <boolean>)
            values("<limited-" ## ?name ## "-string>", default-fill = ?fill)
          end method;
 
@@ -410,7 +410,7 @@ end method;
 
 define sealed inline method concrete-limited-string-class
     (of == <character>, default-fill)
- => (type :: subclass(<string>), fully-specified?)
+ => (type :: subclass(<string>), fully-specified? :: <boolean>)
   values(<limited-byte-string>, default-fill = limited-string-default-fill(of))
 end method;
 

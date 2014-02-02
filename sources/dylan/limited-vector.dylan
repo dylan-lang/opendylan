@@ -30,7 +30,7 @@ define limited-vector-minus-selector
 /// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
 define inline method concrete-limited-vector-class
     (of :: <limited-integer>, default-fill)
- => (res :: <class>, fully-specified?)
+ => (res :: <class>, fully-specified? :: <boolean>)
   let fully-specified? = (default-fill = 0);
   select (of by subtype?)
     <byte>        => values(<simple-byte-vector>, fully-specified?);

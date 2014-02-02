@@ -26,7 +26,7 @@ define limited-stretchy-vector-minus-selector
 /// REALLY NEED SUBTYPE SPECIALIZERS TO GET THIS TO HAPPEN IN MACRO
 define method concrete-limited-stretchy-vector-class
     (of :: <limited-integer>, default-fill)
- => (res :: <class>, fully-specified?)
+ => (res :: <class>, fully-specified? :: <boolean>)
   let fully-specified? = (default-fill = 0);
   select (of by subtype?)
     <byte>        => values(<stretchy-byte-vector>, fully-specified?);
@@ -60,7 +60,7 @@ end method initialize;
 
 define method concrete-limited-stretchy-vector-class
     (of :: <type>, default-fill)
- => (res :: <class>, fully-specified?)
+ => (res :: <class>, fully-specified? :: <boolean>)
   values(<stretchy-element-type-vector>, #f)
 end method;
 
