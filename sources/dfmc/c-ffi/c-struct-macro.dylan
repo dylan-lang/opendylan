@@ -157,7 +157,7 @@ define method parse-syntax-c-struct-slots (parsed-slot-specs :: <sequence>)
     let spec-kind = fragment-identifier(fragment-function(frag));
     let descriptor
       = parse-slot-descriptor(spec-kind, cook-keys(fragment-arguments(frag)));
-    if(instance?(descriptor, <abstract-c-struct/union-slot-descriptor>))
+    if (instance?(descriptor, <abstract-c-struct/union-slot-descriptor>))
       add!(slots, descriptor);
     else
       if (parse-name-or-false(descriptor.pointer-type-name) ~== #f)
@@ -782,7 +782,7 @@ define method do-define-c-struct/union
                       accum);
           end;
           // add definitions for setter and address-getter if needed.
-          if(slot.setter-name)
+          if (slot.setter-name)
             let real-setter-name
               // do defaulting for setter function name
               = if (slot.setter-name == #"not-given")
@@ -1847,7 +1847,7 @@ define method hex-string (i :: <integer>)
   local method hexit (i :: <integer>, l :: <list>) => (l :: <string>);
           let (quotient :: <integer>, remainder :: <integer>)
             = truncate/(i, #x10);
-          if(zero?(quotient))
+          if (zero?(quotient))
             as(<string>,
                map(method (i :: <integer>) "0123456789ABCDEF"[i] end,
                    pair(remainder,l)))

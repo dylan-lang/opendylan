@@ -5,7 +5,7 @@ Major-Version: 2
 Minor-Version: 1
 Library-Pack:  Core
 RC-Files:      version.rc
-Target-Type:	dll
+Target-Type:   dll
 Files: win32-c-ffi-library
        pointer-ref
        pointer-value
@@ -14,6 +14,7 @@ Files: win32-c-ffi-library
        c-types
        c-utility-classes
        memory-functions
+       tracing
        c-type-cast
        win32-core-types
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.

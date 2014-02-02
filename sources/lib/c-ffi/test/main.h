@@ -26,18 +26,18 @@ typedef struct max
   unsigned char max_6;
   unsigned char *max_7;
 } maximal;
-  
+
 
 void simplest_foreign_function(void);
 void ffi_no_result(unsigned short);
 unsigned short ffi_no_parameters(void);
 extern unsigned char ffi1(/* unsigned long p1, */
-			  /* unsigned char p2, */
-			  unsigned char *p3 /* , */
-			  /* unsigned char *p4, */
-			  /* minimal* p5, */
-			  /* minimal* p6 */
-			  );
+                          /* unsigned char p2, */
+                          unsigned char *p3 /* , */
+                          /* unsigned char *p4, */
+                          /* minimal* p5, */
+                          /* minimal* p6 */
+                          );
 extern void run_dylan_tests(void);
 
 
@@ -48,11 +48,11 @@ extern signed long dylan_always_one(void);
 
 
 extern unsigned char call_me_more(unsigned long p1,
-				  unsigned char p2,
-				  unsigned char* p3,
-				  unsigned char* p4,
-				  unsigned char* p5,
-				  minimal* p6);
+                                  unsigned char p2,
+                                  unsigned char* p3,
+                                  unsigned char* p4,
+                                  unsigned char* p5,
+                                  minimal* p6);
 
 extern unsigned long foo;
 
@@ -79,7 +79,7 @@ typedef union Tunion_test1
 
 typedef struct Tunion_test2
 {
-  char struct_pad_1;  
+  char struct_pad_1;
   union_test union_struct_1;
   char struct_pad_2;
 } union_test_2;

@@ -11,7 +11,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define open generic c-type-cast (type :: <type>, value :: <object>)
  => (value :: <object>);
 
-//	between boolean and integer
+// between boolean and integer
 
 define sealed inline method c-type-cast
     (class :: type-union(singleton(<boolean>), singleton(<C-boolean>)),
@@ -33,7 +33,7 @@ define sealed inline method c-type-cast
   value
 end method c-type-cast;
 
-//	between character and integer
+// between character and integer
 
 define sealed inline method c-type-cast
     (class :: type-union(singleton(<character>), singleton(<C-character>)),
@@ -54,7 +54,7 @@ define sealed inline method c-type-cast
   value
 end method c-type-cast;
 
-//	between pointer and integer
+// between pointer and integer
 
 define sealed inline method c-type-cast
     (class == <machine-word>, pointer :: <C-pointer>)
@@ -75,19 +75,19 @@ define sealed inline method c-type-cast
   c-type-cast(type, pointer-address(pointer))
 end method c-type-cast;
 
-//	between different pointer types
+// between different pointer types
 
 define sealed method c-type-cast
     (class :: subclass(<C-pointer>), pointer :: <C-pointer>)
  => (new-pointer :: <C-pointer>)
-  if ( instance?(pointer, class) )
+  if (instance?(pointer, class))
     pointer
   else
     make(class, address: pointer-address(pointer))
   end if
 end method c-type-cast;
 
-//	between different integer types
+// between different integer types
 
 define sealed inline method c-type-cast
     (type == <C-unsigned-short>, value :: <abstract-integer>)
@@ -105,7 +105,7 @@ define sealed method c-type-cast
     (type == <C-signed-short>, value :: <abstract-integer>)
  => (value :: <integer>)
   let word :: <integer> = logand(value, #xFFFF);
-  if ( zero?(logand(word, #x8000)) )
+  if (zero?(logand(word, #x8000)))
     word
   else // extend the sign bit
     logior(word, lognot(#xFFFF));
@@ -114,8 +114,8 @@ end method c-type-cast;
 
 define sealed inline method c-type-cast
     (type :: type-union(singleton(<C-signed-short>),
-			singleton(<C-signed-char>),
-			singleton(<C-unsigned-char>)),
+                        singleton(<C-signed-char>),
+                        singleton(<C-unsigned-char>)),
      value :: <machine-word>) => (value :: <integer>)
   c-type-cast(type, c-type-cast(<C-unsigned-short>, value))
 end method c-type-cast;
@@ -130,56 +130,56 @@ define sealed method c-type-cast
     (type == <C-signed-char>, value :: <abstract-integer>)
  => (value :: <integer>)
   let byte :: <integer> = logand(value, #xFF);
-  if ( zero?(logand(byte, #x80)) )
+  if (zero?(logand(byte, #x80)))
     byte
   else // extend the sign bit
     logior(byte, lognot(#xFF));
   end if
 end method c-type-cast;
 
-define sealed inline method c-type-cast 
-    ( type :: type-union(singleton(<C-raw-signed-int>),
-			 singleton(<C-raw-unsigned-int>),
-			 singleton(<C-raw-signed-long>),
-			 singleton(<C-raw-unsigned-long>)),
-      value :: <object> )
+define sealed inline method c-type-cast
+    (type :: type-union(singleton(<C-raw-signed-int>),
+                        singleton(<C-raw-unsigned-int>),
+                        singleton(<C-raw-signed-long>),
+                        singleton(<C-raw-unsigned-long>)),
+     value :: <object>)
  => (value :: <machine-word>)
   c-type-cast(<machine-word>, value)
 end method c-type-cast;
 
-define sealed inline method c-type-cast 
-    ( type :: type-union(singleton(<C-signed-int>),
-			 singleton(<C-unsigned-int>),
-			 singleton(<C-signed-long>),
-			 singleton(<C-unsigned-long>)),
-      value :: <object> )
+define sealed inline method c-type-cast
+    (type :: type-union(singleton(<C-signed-int>),
+                        singleton(<C-unsigned-int>),
+                        singleton(<C-signed-long>),
+                        singleton(<C-unsigned-long>)),
+     value :: <object>)
  => (value :: <integer>)
   c-type-cast(<integer>, value)
 end method c-type-cast;
 
 define constant <C-both-integer> :: <type> =
   type-union(singleton(<C-both-signed-int>),
-	     singleton(<C-both-unsigned-int>),
-	     singleton(<C-both-signed-long>),
-	     singleton(<C-both-unsigned-long>));
+             singleton(<C-both-unsigned-int>),
+             singleton(<C-both-signed-long>),
+             singleton(<C-both-unsigned-long>));
 
-define sealed inline method c-type-cast 
-    ( type :: <C-both-integer>,
-      value :: type-union(<integer>, <machine-word>) )
+define sealed inline method c-type-cast
+    (type :: <C-both-integer>,
+     value :: type-union(<integer>, <machine-word>))
  => (value :: type-union(<integer>, <machine-word>))
   value
 end method c-type-cast;
 
-define sealed inline method c-type-cast 
-    ( type :: <C-both-integer>,
-      value :: type-union(<boolean>, <character>) )
+define sealed inline method c-type-cast
+    (type :: <C-both-integer>,
+     value :: type-union(<boolean>, <character>))
  => (value :: <integer>)
   c-type-cast(<integer>, value)
 end method c-type-cast;
 
-define sealed inline method c-type-cast 
-    ( type :: <C-both-integer>,
-      value :: <object> )
+define sealed inline method c-type-cast
+    (type :: <C-both-integer>,
+     value :: <object>)
  => (value :: <machine-word>)
   c-type-cast(<machine-word>, value)
 end method c-type-cast;
@@ -197,13 +197,13 @@ end method c-type-cast;
 
 define sealed inline method c-type-cast
     (class :: type-union(subclass(<abstract-integer>),
-			 singleton(<machine-word>)),
+                         singleton(<machine-word>)),
      value :: type-union(<abstract-integer>, <machine-word>))
  => (value :: type-union(<abstract-integer>, <machine-word>))
   as(class, value)
 end method c-type-cast;
 
-//	floating point
+// floating point
 
 define inline method c-type-cast
     (type == <C-float>, value :: <number>) => (value :: <single-float>)

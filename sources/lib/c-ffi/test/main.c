@@ -11,7 +11,7 @@ void run_tests_from_c()
   printf("running c-ffi tests from C\n");
   printf("finished running c-ffi tests from C\n");
   printf("running c-ffi tests from dylan\n");
-  run_dylan_tests(); 
+  run_dylan_tests();
   printf("finished running c-ffi tests from dylan\n");
   printf("done c-ffi tests\n");
 }
@@ -45,7 +45,7 @@ unsigned char ffi1(unsigned char* p3)
   return('B');
 }
 
-/* 
+/*
  * check struct sizes
  */
 
@@ -77,9 +77,9 @@ void run_c_tests()
   printf("calling call_me_too\n");
   call_me_too();
   printf("called call_me_too\n");
-  
+
   {
-    minimal p6;  
+    minimal p6;
     unsigned char p3 = 3;
     unsigned char p4 = 4;
     unsigned char p5 = 5;
@@ -88,37 +88,37 @@ void run_c_tests()
     p6.slot_1 = 171717;
     retval = call_me_more(1, 2, &p3, &p4, &p5, &p6);
     RUN_TEST((retval == 4),
-	       "return value from interesting callback: %d should be %d",
-	       retval, 4);
+               "return value from interesting callback: %d should be %d",
+               retval, 4);
     RUN_TEST((p3 == 1),
-	       "output parameter 3 for interesting callback: %d should be %d",
-	       p3, 1);
+               "output parameter 3 for interesting callback: %d should be %d",
+               p3, 1);
     RUN_TEST((p4 == 2),
-	       "output parameter 4 for interesting callback: %d should be %d",
-	       p4, 2);
+               "output parameter 4 for interesting callback: %d should be %d",
+               p4, 2);
     RUN_TEST((p5 == 4),
-	     "output parameter 5 for interesting callback: %d should be %d",
-	     p5, 4);
+             "output parameter 5 for interesting callback: %d should be %d",
+             p5, 4);
     RUN_TEST((p6.slot_1 == 0xfffff00),
-	     "parameter 6 for interesting callback: 0x%x should be 0x%x",
-	     p6.slot_1, 0xfffff00);
+             "parameter 6 for interesting callback: 0x%x should be 0x%x",
+             p6.slot_1, 0xfffff00);
   }
 
-  for(i = 0; i < sizeof(signed long) * 8; i++, target = target << 1)
+  for (i = 0; i < sizeof(signed long) * 8; i++, target = target << 1)
     {
       RUN_TEST((dylan_int_identity(target) == target),
-	       "signed callback dylan identity on %d",
-	       target, 0);
+               "signed callback dylan identity on %d",
+               target, 0);
     }
   target = -1;
-  for(i = 0; i < sizeof(signed long) * 8; i++, target = target << 1)
+  for (i = 0; i < sizeof(signed long) * 8; i++, target = target << 1)
     {
       RUN_TEST((dylan_int_identity(target) == target),
-	       "negative signed callback identity on %d",
-	       target, 0);
+               "negative signed callback identity on %d",
+               target, 0);
     }
   RUN_TEST((dylan_always_one() == 1),
-	   "signed constant one callback", 0, 0);
+           "signed constant one callback", 0, 0);
 }
 
 

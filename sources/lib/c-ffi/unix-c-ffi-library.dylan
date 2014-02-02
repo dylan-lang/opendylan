@@ -78,7 +78,7 @@ define module c-ffi-interface
     <C-signed-long*>,
     <C-unsafe-signed-long*>,
     <C-both-signed-long*>,
-    
+
     <C-long>,
     <C-unsafe-long>,
     <C-both-long>,

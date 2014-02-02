@@ -6,11 +6,11 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define sideways inline method make (class :: subclass(<C-pointer>),
-			     #rest keys,
-			     #key address = #f,
-			          allocator :: <function> = default-allocator,
-			          element-count :: <integer> = 1,
-			          extra-bytes :: <integer> = 0)
+                             #rest keys,
+                             #key address = #f,
+                                  allocator :: <function> = default-allocator,
+                                  element-count :: <integer> = 1,
+                                  extra-bytes :: <integer> = 0)
  => (ptr :: <C-pointer>);
 
   let instantiable-class = concrete-class(class) | class;
@@ -21,13 +21,13 @@ define sideways inline method make (class :: subclass(<C-pointer>),
     let ref-type = referenced-type(class);
     if (ref-type)
       make-c-pointer-internal
-	(instantiable-class,
-	 allocator((size-of(ref-type) * element-count) + extra-bytes),
-	 keys);
+        (instantiable-class,
+         allocator((size-of(ref-type) * element-count) + extra-bytes),
+         keys);
     else
       // TODO: Error here. Can't allocate anything
       make-c-pointer-internal
-	(instantiable-class, as(<machine-word>, 0), keys);
+        (instantiable-class, as(<machine-word>, 0), keys);
     end if;
   end if;
 end method make;
@@ -39,7 +39,7 @@ define open generic destroy (ptr :: <C-pointer>, #key) => ();
 
 
 define inline method destroy (ptr :: <C-statically-typed-pointer>,
-			      #key deallocator :: <function> = default-deallocator)
+                              #key deallocator :: <function> = default-deallocator)
  => ();
   deallocator(pointer-address(ptr));
 end method destroy;
@@ -69,19 +69,19 @@ define macro with-stack-structure
   end }
     =>
     // !@#$ really needs to use the compiler primitive that I don't
-    // know about yet 
+    // know about yet
     { begin
-	let with-stack-struct-temp = #f;
-	block ()
-	  with-stack-struct-temp := make(?type, ?keys);
-	  let ?name :: ?type = with-stack-struct-temp;
-	  ?body;
-	  afterwards		// this should be cleanup,
-				// but Gray complained of slowness
-	    if(with-stack-struct-temp)
-	      destroy(with-stack-struct-temp)
-	    end if;
-	end block;
+        let with-stack-struct-temp = #f;
+        block ()
+          with-stack-struct-temp := make(?type, ?keys);
+          let ?name :: ?type = with-stack-struct-temp;
+          ?body;
+          afterwards                // this should be cleanup,
+                                // but Gray complained of slowness
+            if (with-stack-struct-temp)
+              destroy(with-stack-struct-temp)
+            end if;
+        end block;
       end }
     keys:
     { } => { }
@@ -93,19 +93,19 @@ define macro with-c-string
      ?:body
      end }
     => { begin
-	   let string = ?string;
+           let string = ?string;
            let pinned-string = primitive-pin-object(string);
-	   block ()
+           block ()
              let raw-address
-	       = primitive-cast-pointer-as-raw(primitive-string-as-raw(pinned-string));
+               = primitive-cast-pointer-as-raw(primitive-string-as-raw(pinned-string));
              let str-address = primitive-wrap-machine-word(raw-address);
              let ?var = make(<c-string>, address: str-address);
-	     ?body
-	   cleanup
-	     primitive-unpin-object(pinned-string);
-	     #f
-	   end;
-	 end }
+             ?body
+           cleanup
+             primitive-unpin-object(pinned-string);
+             #f
+           end;
+         end }
 end macro;
 
 /*

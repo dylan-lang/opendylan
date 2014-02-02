@@ -254,7 +254,7 @@ define method do-define-c-pointer-type
 end;
 */
 
-                
+
 
 define &class <c-pointer-type-class> (<designator-class>)
 end;
@@ -355,7 +355,7 @@ define &macro install-pointer-type
            end;
          end;
 
-         if(found-class &
+         if (found-class &
             // either the already defined class came from this exact library,
             // or it was defined in the same library as the referenced type.
             // !@#$ could also use the found-class if it came from a
@@ -387,7 +387,7 @@ define &macro install-pointer-type
              := ^eval-designator(temp-concrete-pointer-type-name);
            // indicate that this is (maybe) not the real thing.
            temp-pointer-type.proxy? := #t;
-           #{ ?temp-pointer-type-name }        
+           #{ ?temp-pointer-type-name }
          else
            // no class already defined, but the referenced type was in our
            // library so we can install the pointer type at compile time
@@ -395,7 +395,7 @@ define &macro install-pointer-type
            referenced-type.^abstract-pointer-type := temp-pointer-type;
            referenced-type.^concrete-pointer-type
              := ^eval-designator(temp-concrete-pointer-type-name);
-           #{ ?temp-pointer-type-name }        
+           #{ ?temp-pointer-type-name }
          end if;
 
        else

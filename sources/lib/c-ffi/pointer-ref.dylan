@@ -4,33 +4,33 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define macro pointer-ref-method-definer 
+define macro pointer-ref-method-definer
   { define pointer-ref-method ?function-name:name
-			      ?pointer-type:name ?raw-type:name
+                              ?pointer-type:name ?raw-type:name
                               ?boxed-class:name ?getter:name ?boxer:name
                               ?unboxer:name
                               end }
   =>
   { define inline-only function ?function-name
-	   (c-pointer :: <C-pointer>,
-	    #key byte-index :: <integer> = 0,
-	         scaled-index :: <integer> = 0)
-	=> (value :: ?boxed-class)
+           (c-pointer :: <C-pointer>,
+            #key byte-index :: <integer> = 0,
+                 scaled-index :: <integer> = 0)
+        => (value :: ?boxed-class)
          ?boxer(?getter(primitive-unwrap-c-pointer(c-pointer),
-			integer-as-raw(scaled-index),
-			integer-as-raw(byte-index)))
+                        integer-as-raw(scaled-index),
+                        integer-as-raw(byte-index)))
        end function ?function-name;
        define inline-only function ?function-name ## "-setter"
-	   (new-value :: ?boxed-class,
-	    c-pointer :: <C-pointer>,
-	    #key byte-index :: <integer> = 0,
-	         scaled-index :: <integer> = 0)
-	=> (res :: ?boxed-class)
+           (new-value :: ?boxed-class,
+            c-pointer :: <C-pointer>,
+            #key byte-index :: <integer> = 0,
+                 scaled-index :: <integer> = 0)
+        => (res :: ?boxed-class)
          ?getter ## "-setter"
            (?unboxer(new-value),
-	    primitive-unwrap-c-pointer(c-pointer),
-	    integer-as-raw(scaled-index),
-	    integer-as-raw(byte-index));
+            primitive-unwrap-c-pointer(c-pointer),
+            integer-as-raw(scaled-index),
+            integer-as-raw(byte-index));
          new-value
        end function ?function-name ## "-setter";
      }
@@ -145,12 +145,12 @@ define pointer-ref-method C-long-double-at
 
 
 define inline function C-pointer-at (class :: subclass(<C-pointer>),
-				     pointer :: <C-pointer>,
-				     #key byte-index :: <integer> = 0,
-				          scaled-index :: <integer> = 0)
+                                     pointer :: <C-pointer>,
+                                     #key byte-index :: <integer> = 0,
+                                          scaled-index :: <integer> = 0)
  => (value :: <C-pointer>);
   make(class,
-       address:	primitive-wrap-machine-word
+       address: primitive-wrap-machine-word
                   (primitive-cast-pointer-as-raw
                     (primitive-c-pointer-at
                       (primitive-unwrap-c-pointer(pointer),
@@ -159,13 +159,13 @@ define inline function C-pointer-at (class :: subclass(<C-pointer>),
 end function;
 
 define inline function C-pointer-at-setter (new-value :: <C-pointer>,
-					    pointer :: <C-pointer>,
-					    #key byte-index :: <integer> = 0,
-					         scaled-index :: <integer> = 0)
+                                            pointer :: <C-pointer>,
+                                            #key byte-index :: <integer> = 0,
+                                                 scaled-index :: <integer> = 0)
  => (new-value :: <C-pointer>);
   primitive-c-pointer-at(primitive-unwrap-c-pointer(pointer),
-			 integer-as-raw(scaled-index),
-			 integer-as-raw(byte-index))
+                         integer-as-raw(scaled-index),
+                         integer-as-raw(byte-index))
     := primitive-unwrap-c-pointer(new-value);
   new-value
 end function;
@@ -175,10 +175,10 @@ end function;
 // might be useful someday
 
 define function pointer-add (result-class :: <designator-class>,
-			     object :: <c-pointer>,
-			     byte-offset :: <integer>)
+                             object :: <c-pointer>,
+                             byte-offset :: <integer>)
  => (new-pointer :: <c-pointer>);
-  // 
+  //
   make(result-class, address: pointer-address(object) + byte-offset);
 end;
 */

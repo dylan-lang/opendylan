@@ -10,6 +10,7 @@ Files: unix-c-ffi-library
        c-types
        c-utility-classes
        memory-functions
+       tracing
        c-type-cast
        unix-core-types
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
