@@ -216,7 +216,7 @@ define module dfmc-reader
       <template-macro-call-fragment>;
 
   export
-    <template>, <template-closure>, template-fragments;
+    <template>, template-fragments;
 
   //// Fragment source location utilities.
 
