@@ -1406,9 +1406,6 @@ define method nested-fragment?
   values(#t, #f, #f);
 end method;
 
-// TODO: Remove. This for backward compatibility only.
-define constant <template-closure> = <template>;
-
 define sealed domain make (subclass(<template>));
 define sealed domain initialize (<template>);
 
