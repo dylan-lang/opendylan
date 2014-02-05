@@ -3145,9 +3145,9 @@ using :macro:`define c-mapped-subtype`.
 
    :signature: copy-bytes! *destination-pointer*, *source-pointer*, *size* => ()
 
-   :parameter destination-pointer* An instance of type :class:`<C-pointer>`.
-   :parameter source-pointer* An instance of type :class:`<C-pointer>`.
-   :parameter size* An instance of :drm:`<integer>`.
+   :parameter destination-pointer: An instance of type :class:`<C-pointer>`.
+   :parameter source-pointer: An instance of type :class:`<C-pointer>`.
+   :parameter size: An instance of :drm:`<integer>`.
 
    :description:
 
@@ -3162,9 +3162,9 @@ using :macro:`define c-mapped-subtype`.
 
    :signature: copy-into! *destination-pointer*, *source-pointer*, *size*) => ()
 
-   :parameter destination-pointer* An instance of type :class:`<C-pointer>`.
-   :parameter source-pointer* An instance of type :class:`<C-pointer>`.
-   :parameter size* An instance of :drm:`<integer>`.
+   :parameter destination-pointer: An instance of type :class:`<C-pointer>`.
+   :parameter source-pointer: An instance of type :class:`<C-pointer>`.
+   :parameter size: An instance of :drm:`<integer>`.
 
    :description:
 
