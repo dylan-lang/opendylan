@@ -109,7 +109,7 @@ define method native-clock-to-tm (time :: <machine-word>) => (tm :: <machine-wor
       := primitive-unwrap-machine-word(time);
     let tm = primitive-wrap-machine-word
                (primitive-cast-pointer-as-raw
-		  (%call-c-function ("localtime")
+		  (%call-c-function ("system_localtime")
 		       (time :: <raw-c-pointer>) => (tm :: <raw-c-pointer>)
 		     (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(timeloc)))
 		   end));
