@@ -10,6 +10,7 @@ Files:   c-ffi-library
          c-pointer-types
          offsets
          c-variable-macro
+         objective-c
          errors
 Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
               All rights reserved.

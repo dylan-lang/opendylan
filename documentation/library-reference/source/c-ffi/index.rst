@@ -536,6 +536,9 @@ which are worth describing here:
    found by the C-FFI if you pass a *c-name* argument to the corresponding
    C-FFI definition.
 
+   The sole exception to this is the ``define objc-selector`` form which
+   instead takes a ``selector:`` keyword.
+
 -  A *pointer-type-name* argument. All the type-defining forms allow you
    to name the type for a pointer to the type being defined. This is
    normally specified throughout the *pointer-type-name:* keyword
@@ -2759,6 +2762,53 @@ Describing Dylan functions for use by C
 
        ? c-sort(some-c-strings, callback-for-<);
        {<C-string> array}
+
+Objective C
+-----------
+
+A full-featured Objective C bridge is provided separately, however, parts
+of that bridge are implemented within this library.
+
+.. macro:: define objc-selector
+   :defining:
+
+   Describe Objective C selectors to the *c-ffi*.
+
+   :macrocall:
+     .. code-block:: dylan
+
+       define objc-selector *name*
+         [*parameter-spec*; ...]
+         [*result-spec*;]
+         [*function-option*, ...;]
+       end [C-function] [*name*]
+
+   :parameter name: A Dylan variable name.
+   :parameter parameter-spec:
+   :parameter result-spec:
+   :parameter function-option: A property list.
+
+   :description:
+
+     Defining an Objective C selector is much the same as :macro:`define C-function`,
+     except:
+
+     * There must be at least one parameter specification. The first parameter specifies
+       the target of the method, so it should be either an Objective C class or an
+       object instance.
+     * Rather than specifying a ``c-name:`` for the function, a ``selector`` is specified
+       instead.
+     * The ``c-modifiers`` keyword can be used to select alternate versions of ``objc_msgSend``
+       when calling into the Objective C run-time.
+
+   :example:
+     .. code-block:: dylan
+
+        define objc-selector sel/alloc
+          parameter target :: <objc/class>;
+          result objc-instance :: <objc/instance-address>;
+          selector: "alloc";
+        end;
 
 Variables
 ---------
