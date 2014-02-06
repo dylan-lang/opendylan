@@ -12,110 +12,110 @@ XXX XX, 2014.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2014.1>`_
 
-DFMC
-====
+Compiler
+========
 
-The intermediate language of the compiler, named Dylan Flow Machine,
-has been instrumented with tracing facilities. Changes to the control
-and data flow, as well as optimization information, can be received by
-setting the ``*trace-dfm-callback*`` (exported from the
-dfmc-flow-graph) variable to a unary function. The variable
-``*trace-dfm-output*`` should also be set (``structured-output``,
-exported from the dfmc-debug-back-end library might be useful).
+* The intermediate language of the compiler, named Dylan Flow Machine,
+  has been instrumented with tracing facilities. Changes to the control
+  and data flow, as well as optimization information, can be received by
+  setting the ``*trace-dfm-callback*`` (exported from the
+  dfmc-flow-graph) variable to a unary function. The variable
+  ``*trace-dfm-output*`` should also be set (``structured-output``,
+  exported from the dfmc-debug-back-end library might be useful).
 
-The argument to the ``*trace-dfm-callback`` itself is a property list
-containing at least a ``type`` key, a source location (``method``,
-``file``, ``library`` keys), likely a ``nodeid`` key, and various
-other information.
+  The argument to the ``*trace-dfm-callback`` itself is a property list
+  containing at least a ``type`` key, a source location (``method``,
+  ``file``, ``library`` keys), likely a ``nodeid`` key, and various
+  other information.
 
-Compiling the ``dylan`` library with tracing enables emits lots of
-data (250MB). Therefore, a filtering can be established on a file
-name, method name, and/or library name. The variables
-``*trace-dfm-library*``, ``*trace-dfm-file*``, and
-``*trace-dfm-method*`` are of type ``false-or(<symbol>)`` and exported
-from the dfmc-flow-graph library.
+  Compiling the ``dylan`` library with tracing emits lots of
+  data (250MB). Therefore, a filtering can be established on a file
+  name, method name, and/or library name. The variables
+  ``*trace-dfm-library*``, ``*trace-dfm-file*``, and
+  ``*trace-dfm-method*`` are of type ``false-or(<symbol>)`` and are exported
+  from the dfmc-flow-graph library.
 
-An example user of this interface is on ``GitHub
-<https://github.com/hannesm/visualization-middleware>`__.  A
-screencast showing an earlier implementation of this optimization
-visualization `can be seen here
-<https://opendylan.org/~hannes/test4.avi>`__.
+  An example user of this interface is on `GitHub
+  <https://github.com/hannesm/visualization-middleware>`_.  A
+  screencast showing an earlier implementation of this optimization
+  visualization `can be seen here
+  <https://opendylan.org/~hannes/test4.avi>`_.
 
 C Run-time
 ==========
 
-``debug-message`` no longer crashes when printing some conditions.
+* ``debug-message`` no longer crashes when printing some conditions.
 
 
 Common Dylan
 ============
 
-The ``<timer>`` class has been renamed to ``<profiling-timer>``.
+* The ``<timer>`` class has been renamed to ``<profiling-timer>``.
 
-The function ``integer-to-string`` is now faster.
+* The function ``integer-to-string`` is now faster.
 
 
 dylan-direct-c-ffi
 ==================
 
-Much like ``%call-c-function`` for low-level C-FFI, there is now
-a ``%objc-msgsend`` for low-level Objective C messaging integration.
-More information about this will be forthcoming in an ``objc-dylan``
-bridge library.
+* Much like ``%call-c-function`` for low-level C-FFI, there is now
+  a ``%objc-msgsend`` for low-level Objective C messaging integration.
+  More information about this will be forthcoming in an ``objc-dylan``
+  bridge library.
 
-``%objc-msgsend`` takes the target and selector as ``<raw-machine-word>``
-values. As with ``%call-c-function``, all values passed in and returned
-should be raw values.
+  ``%objc-msgsend`` takes the target and selector as ``<raw-machine-word>``
+  values. As with ``%call-c-function``, all values passed in and returned
+  should be raw values.
 
-If you need the ``objc_msgSend_stret`` or other variants, pass
-``c-modifiers: "_stret"`` or similar after the selector. The value
-passed here will be appended to ``objc_msgSend`` so it works for all
-variants, including sending to the super (``objc_msgSendSuper``, etc).
+  If you need the ``objc_msgSend_stret`` or other variants, pass
+  ``c-modifiers: "_stret"`` or similar after the selector. The value
+  passed here will be appended to ``objc_msgSend`` so it works for all
+  variants, including sending to the super (``objc_msgSendSuper``, etc).
 
-.. code-block:: dylan
+  .. code-block:: dylan
 
-    %objc-msgsend (target, selector)
-       (argument :: <raw-type>)
-     => ()
-      (argument-as-raw)
-    end;
+      %objc-msgsend (target, selector)
+         (argument :: <raw-type>)
+       => ()
+        (argument-as-raw)
+      end;
 
 
 hash-algorithms
 ===============
 
-A crash resulting from memory corruption when using sha-1 has been
-fixed.
+* A crash resulting from memory corruption when using sha-1 has been
+  fixed.
 
-The library now builds on Windows.
+* The library now builds on Windows.
 
 
 make-dylan-app
 ==============
 
-``make-dylan-app`` is now included in the Windows distribution.
+* ``make-dylan-app`` is now included in the Windows distribution.
 
 
 strings
 =======
 
-String comparison and equality operations are now 10 times faster
-when they are known to be on byte-strings.
+* String comparison and equality operations are now 10 times faster
+  when they are known to be on byte-strings.
 
 
 system
 ======
 
-The function ``format-date`` is now faster.
+* The function ``format-date`` is now faster.
 
 
 Testworks
 =========
 
-Compiler warnings are now produced when a test or suite is unused.
-For example, it is easy to forget to add a test to any suite.  As a
-side effect of this change, it is now necessary to organize test suite
-code in a bottom-up style.  That is, you must define tests and suites
-*before* including them in a suite definition in your source file.  If
-you don't, you will receive a warning about an "Illegal forward
-reference".
+* Compiler warnings are now produced when a test or suite is unused.
+  For example, it is easy to forget to add a test to any suite.  As a
+  side effect of this change, it is now necessary to organize test
+  suite code in a bottom-up style.  That is, you must define tests and
+  suites *before* including them in a suite definition in your source
+  file.  If you don't, you will receive a warning about an "Illegal
+  forward reference".
