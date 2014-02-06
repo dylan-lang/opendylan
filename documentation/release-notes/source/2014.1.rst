@@ -119,3 +119,7 @@ Testworks
   suites *before* including them in a suite definition in your source
   file.  If you don't, you will receive a warning about an "Illegal
   forward reference".
+
+* Benchmarks are once again supported.  See the `documentation
+  <http://opendylan.org/documentation/testworks/usage.html>`_ for
+  details.
