@@ -73,28 +73,33 @@ sets of slots. This section describes some of the more important slots
 available. The following slots are common across most (though not
 necessarily all) gadget classes.
 
--  ``gadget-label`` This slot holds the label that is associated with a
+``gadget-label``
+   This slot holds the label that is associated with a
    gadget.
--  For an item on a menu or a button, for example, this label appears on
+
+   For an item on a menu or a button, for example, this label appears on
    the gadget itself. For a gadget such as a text field or a border, the
    label may be displayed next to the gadget.
--  A label is usually a text string, but can often be an icon, such as
+
+   A label is usually a text string, but can often be an icon, such as
    is often found on the buttons of an application’s toolbar.
--  If a gadget does not have a label, ``gadget-label`` returns ``#f``.
+
+   If a gadget does not have a label, ``gadget-label`` returns ``#f``.
 
 ``gadget-enabled?``
-
--  This slot specifies whether or not the gadget is active—that is,
+   This slot specifies whether or not the gadget is active—that is,
    whether the user of your application can interact with the gadget.
    All gadgets have a ``gadget-enabled?`` slot. The ``gadget-enabled?`` slot
    returns either ``#t`` or ``#f``. When a gadget is disabled, it is
    usually grayed out on the screen, and cannot be interacted with in
    any way.
--  ``gadget-value`` This slot holds the value of the gadget. Most gadgets
+``gadget-value``
+   This slot holds the value of the gadget. Most gadgets
    can have a value of some kind; these are general instances of the
    ``<value-gadget>`` class. However, gadgets such as borders that are
    placed around elements have no associated value.
--  Generally speaking, you can think of the gadget value as a value that
+
+   Generally speaking, you can think of the gadget value as a value that
    the user of your application has assigned to the gadget. The
    ``gadget-value-type`` depends on the class of gadget involved. For a
    text field, the gadget value is the string typed into the text field.
@@ -102,7 +107,8 @@ necessarily all) gadget classes.
    list, the gadget value is the selected item. For a radio button, the
    gadget value is a boolean that denotes whether the button is selected
    or not.
--  If a gadget does not have any values, ``gadget-value`` returns ``#f``.
+
+   If a gadget does not have any values, ``gadget-value`` returns ``#f``.
 
 All of the slots described above can also be specified as init-keyword
 values when creating an instance of a gadget. In all cases, the
@@ -194,6 +200,8 @@ returns ``#f`` if the check button is not selected.
 
 You can set the ``gadget-value`` with the ``:=`` operator.
 
+.. code-block:: dylan
+
     gadget-value(*my-check-button*) := #t;
 
 Supplying a value for a push button is a useful way of sending
@@ -252,8 +260,7 @@ displayed in windows on the screen. For each of those buttons, there is
 an analogous type of button that is displayed as an item in a menu.
 
 |image0| The ``<push-menu-button>`` class is used to create a standard
-menu item. This class is the menu-specific equivalent to ``<push-button>``
-.
+menu item. This class is the menu-specific equivalent to ``<push-button>``.
 
 Like push buttons, you can make a given push menu button the default
 command in a menu by specifying the ``default?:`` init-keyword. The label
@@ -306,36 +313,36 @@ All collection gadgets share certain essential properties. These can
 either be specified when an instance of a gadget is created, using an
 init-keyword, or set interactively via a slot value.
 
--  ``gadget-items`` This slot contains a Dylan collection representing the
+``gadget-items``
+   This slot contains a Dylan collection representing the
    contents of a collection gadget.
 
 ``gadget-label-key``
-
--  The label key is a function that is used to compute the label of each
+   The label key is a function that is used to compute the label of each
    item in a collection gadget, and therefore defines the "printed
    representation" of each item. If ``gadget-label-key`` is not explicitly
    defined for a collection gadget, its items are labeled numerically.
 
 ``gadget-value-key``
-
--  Similar to the label key, the value key is used to compute a value
+   Similar to the label key, the value key is used to compute a value
    for each item in a collection gadget. The gadget value of a
    collection gadget is the value of any selected items in the
    collection gadget.
 
 ``gadget-selection-mode``
-
--  The selection mode of a collection gadget determines how many items
+   The selection mode of a collection gadget determines how many items
    in the gadget can be selected at any time. This takes one of three
    symbolic values: ``#"single"`` (only one item can be selected at any
    time), ``#"multiple"`` (any number of items can be selected at once),
    ``#"none"`` (no items can be selected at all).
--  Note that you can use ``gadget-selection-mode`` to read the selection
+
+   Note that you can use ``gadget-selection-mode`` to read the selection
    mode of a gadget, but you cannot reset the selection mode of a gadget
    once it has been created. Instead, use the ``selection-mode:``
    init-keyword to specify the selection mode when the gadget is
    created.
--  Generally, different subclasses of collection gadget specify this
+
+   Generally, different subclasses of collection gadget specify this
    property automatically. For example, a radio box is single selection,
    and a check box is multiple selection.
 
@@ -383,8 +390,9 @@ box is created.
 For all boxes, the ``gadget-value`` is the selected button. In the
 illustration above the ``gadget-value`` is 2.
 
-::
-    gadget-value(*my-radio-box*);
+.. code-block:: dylan-repl
+
+    ? gadget-value(*my-radio-box*);
     => 2
 
 You can set the ``gadget-value`` to 3 and the selected button changes to
@@ -397,9 +405,9 @@ You can set the ``gadget-value`` to 3 and the selected button changes to
 As with all collection gadgets, use ``gadget-items`` to set or return the
 collection that defines the contents of a radio box.
 
-::
+.. code-block:: dylan-repl
 
-    gadget-items(*my-radio-box*);
+    ? gadget-items(*my-radio-box*);
     => #[1, 2, 3]
 
 .. figure:: images/rangebox.png
@@ -1021,25 +1029,31 @@ any layout will be gadgets or other layouts.
 There are six main classes of layouts, as follows:
 
 ``<column-layout>``
-
--  This lays out its children in a single column, with all its children
+   This lays out its children in a single column, with all its children
    left-aligned by default.
--  ``<row-layout>`` This lays out its children in a single row.
+
+``<row-layout>``
+   This lays out its children in a single row.
 
 ``<pinboard-layout>``
-
--  This does not constrain the position of its children in any way. It
+   This does not constrain the position of its children in any way. It
    is up to you to position each child individually, like pins on a
    pinboard.
--  ``<fixed-layout>`` This class is similar to pinboard layouts, in that
+
+``<fixed-layout>``
+   This class is similar to pinboard layouts, in that
    you must specify the position of each child. Unlike pinboard layouts,
    however, you must also specify the size of each child.
--  ``<stack-layout>`` This lays out its children one on top of another,
+
+``<stack-layout>``
+   This lays out its children one on top of another,
    with all the children aligned at the top left corner by default. It
    is used to design property sheets, tab controls, or wizards, which
    contain several layouts, only one of which is visible at any one
    time.
--  ``<table-layout>`` This lays out its children in a table, according to
+
+``<table-layout>``
+   This lays out its children in a table, according to
    a specified number of rows and columns.
 
 Row layouts and column layouts
@@ -1248,39 +1262,48 @@ layouts have been designed so as to avoid the need for direct low level
 manipulation. However, if you design your own classes of sheet, you need
 to support these properties.
 
--  ``sheet-region`` The sheet region is used to define the area of the
+``sheet-region``
+   The sheet region is used to define the area of the
    screen that "belongs to" a sheet. This is essential for deciding in
    which sheet a particular event occurs. For example, the
    ``sheet-region`` for a gadget defines the area of the screen in which
    its callbacks are invoked, should an event occur.
--  The sheet region is expressed in the sheet’s own coordinate system.
+
+   The sheet region is expressed in the sheet’s own coordinate system.
    It can be an instance of any concrete subclass of ``<region>``, but is
    usually represented by the region class ``<bounding-box>``.
--  The sheet-region is defined relative to the region of its parent,
+
+   The sheet-region is defined relative to the region of its parent,
    rather than an absolute region of the screen.
 
 ``sheet-transform``
-
--  This maps the sheet’s coordinate system to the coordinate system of
+   This maps the sheet’s coordinate system to the coordinate system of
    its parent. This is an instance of a concrete subclass of
    ``<transform>``.
--  Providing the sheet transform means that you do not have to worry
+
+   Providing the sheet transform means that you do not have to worry
    about the absolute screen position of any given element of an
    interface. Instead, you can specify its location relative to its
    parent in the sheet hierarchy. For example, you can arrange gadgets
    in an interface in terms of the layout that contains them, rather
    than in absolute terms.
--  ``sheet-parent`` This is ``#f`` if the sheet has no parent, or another
+
+``sheet-parent``
+   This is ``#f`` if the sheet has no parent, or another
    sheet otherwise. This slot is used to describe any hierarchy of
    sheets.
--  ``sheet-mapped?`` This is a boolean that specifies whether the sheet is
+
+``sheet-mapped?``
+   This is a boolean that specifies whether the sheet is
    visible on a display, ignoring issues of occluding windows.
--  ``sheet-frame`` This returns the frame a sheet belongs to.
+
+``sheet-frame``
+   This returns the frame a sheet belongs to.
 
 Many sheet classes, such as ``<menu-bar>`` or ``<tool-bar>``, have single
 or multiple children, in which case they have additional attributes:
 
--  ``sheet-children`` The value of this slot is a sequence of sheets. Each
+- ``sheet-children`` The value of this slot is a sequence of sheets. Each
    sheet in the sequence is a child of the current sheet.
 -  Methods to add, remove, and replace a child.
 -  Methods to map over children.
