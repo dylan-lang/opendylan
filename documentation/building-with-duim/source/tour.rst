@@ -954,8 +954,7 @@ types available.
 The most common type of callback is the activate callback. This is the
 callback that is invoked whenever a general instance ``<action-gadget>``
 is activated: for instance, if a push button is clicked. All the gadget
-classes you have seen so far are general instances of ``<action-gadget>``
-.
+classes you have seen so far are general instances of ``<action-gadget>``.
 
 The following code creates a push button that has an activate callback
 defined:

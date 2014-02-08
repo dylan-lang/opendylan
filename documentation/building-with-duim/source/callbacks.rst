@@ -535,8 +535,7 @@ of code are run. The line
 
     frame.frame-task-list := task-list;
 
-assigns the ``frame-task-list`` slot of frame to the value of ``task-list``
-.
+assigns the ``frame-task-list`` slot of frame to the value of ``task-list``.
 
 The line
 
