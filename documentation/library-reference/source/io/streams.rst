@@ -2236,7 +2236,7 @@ are exported from the *streams* module.
      - :gf:`discard-input`
      - :gf:`discard-output`
      - :gf:`force-output`
-     - :gf:`lock-stream
+     - :gf:`lock-stream`
      - :gf:`new-line`
      - :gf:`outer-stream`
      - :gf:`outer-stream-setter`
