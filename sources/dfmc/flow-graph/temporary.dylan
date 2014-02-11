@@ -18,13 +18,26 @@ define dood-class <temporary> (<value-reference>)
   weak slot %generator :: false-or(<computation>) = #f,
     reinit-expression: #f,
     init-keyword: generator:;
-  weak slot environment :: false-or(<lambda-lexical-environment>),
+  weak slot %environment :: false-or(<lambda-lexical-environment>),
     reinit-expression: #f,
     required-init-keyword: environment:;
   slot temporary-properties :: <integer> = 0;
   weak slot %node-id :: false-or(<integer>) = #f,
     reinit-expression: #f;
 end dood-class;
+
+define method environment (c :: <temporary>)
+ => (res :: false-or(<lambda-lexical-environment>))
+  c.%environment
+end;
+
+define method environment-setter
+    (e :: false-or(<lambda-lexical-environment>), c :: <temporary>)
+ => (res :: false-or(<lambda-lexical-environment>))
+  c.%environment := e;
+  c.node-id;
+  e
+end;
 
 define method generator (t :: <temporary>) => (res :: false-or(<computation>))
   t.%generator

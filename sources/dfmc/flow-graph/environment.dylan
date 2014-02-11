@@ -88,15 +88,13 @@ define dood-class <lambda-lexical-environment> (<lexical-environment>)
 end dood-class;
 
 define method ensure-lambda-body (fun :: <&lambda>) => ()
-  dynamic-bind (*trace-dfm-callback* = #f)
-    let env = environment(fun);
-    when (env & weak-temporaries?(temporaries(env)))
-      for-all-lambdas (lambda in fun)
-        let env = environment(lambda);
-        temporaries(env) := compute-temporaries(env);
-      end for-all-lambdas;
-    end when;
-  end
+  let env = environment(fun);
+  when (env & weak-temporaries?(temporaries(env)))
+    for-all-lambdas (lambda in fun)
+      let env = environment(lambda);
+      temporaries(env) := compute-temporaries(env);
+    end for-all-lambdas;
+  end when;
 end method;
 
 define method approximate-number-temporaries (fun :: <&lambda>) => (res :: <integer>)

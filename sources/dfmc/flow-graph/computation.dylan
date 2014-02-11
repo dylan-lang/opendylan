@@ -26,7 +26,7 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
   // slot lexical-environment :: false-or(<local-lexical-environment>) = #f,
   //  /* required- */ init-keyword: lexical-environment:;
 
-  weak slot environment :: false-or(<lambda-lexical-environment>),
+  weak slot %environment :: false-or(<lambda-lexical-environment>),
     reinit-expression: #f,
     required-init-keyword: environment:;
 
@@ -36,6 +36,22 @@ define abstract dood-class <computation> (<queueable-item-mixin>)
   weak slot %node-id :: false-or(<integer>) = #f,
     reinit-expression: #f;
 end dood-class <computation>;
+
+define method environment (c :: <computation>)
+ => (res :: false-or(<lambda-lexical-environment>))
+  c.%environment
+end;
+
+define method environment-setter
+    (e :: false-or(<lambda-lexical-environment>), c :: <computation>)
+ => (res :: false-or(<lambda-lexical-environment>))
+  if (slot-initialized?(c, %environment) & (c.environment ~= e))
+    c.%node-id := #f;
+  end;
+  c.%environment := e;
+  c.node-id;
+  e
+end;
 
 define method computation-type (c :: <computation>) => (res)
   c.%computation-type
@@ -127,7 +143,9 @@ define /* inline */ method make
     (class :: subclass(<computation>), #rest initargs, #key next-computation, #all-keys)
  => (object)
   let c = next-method();
-  trace-dfm-reconnection(#"next-computation-setter", c, %next-computation, next-computation);
+  if (next-computation)
+    trace-dfm-reconnection(#"next-computation-setter", c, %next-computation, next-computation);
+  end;
   register-used-temporaries(c);
   c
 end method;

@@ -414,6 +414,7 @@ define module dfmc-flow-graph
     //set by a client
     *trace-dfm-outputter*,
     *trace-dfm-callback*,
+    *trace-dfm-method-printer*,
     *trace-dfm-method*,
     *trace-dfm-library*,
     *trace-dfm-file*;
