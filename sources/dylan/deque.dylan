@@ -222,7 +222,7 @@ end method size;
 // SIZE-SETTER
 //
 
-define sealed method trusted-size-setter
+define sealed inline method trusted-size-setter
     (new-size :: <integer>, collection :: <object-deque>,
      #key fill = collection.element-type-fill)
  => (new-size :: <integer>)

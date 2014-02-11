@@ -170,7 +170,6 @@ define method reverse (vector :: <vector>) => (v :: <vector>)
   if (size = 0)
     make(vector.type-for-copy, size: 0)
   else
-    // For compatibility, use fill: rather than relying on element-type-fill.
     let new-vector :: <vector>
       = make(vector.type-for-copy, size: size, fill: vector[0]);
     without-bounds-checks
@@ -267,7 +266,6 @@ define sealed method copy-sequence
   if (sz <= 0)
     make(type-for-copy(source), size: 0)
   else
-    // For compatibility, use fill: rather than relying on element-type-fill.
     let fill = source[0];
     let result :: <vector>
       = make(type-for-copy(source), size: sz, fill: fill);
@@ -416,7 +414,6 @@ define method as
       if (new-size = 0)
         make(class, size: new-size)
       else
-        // For compatibility, use fill: rather than relying on element-type-fill.
         let new-vector
           = with-fip-of collection
               let fill = current-element(collection, initial-state);
@@ -471,7 +468,6 @@ define method concatenate-as
                end for
              end;
         otherwise =>
-          // For compatibility, use fill: rather than relying on element-type-fill.
           let result = make(type, size: total-sz, fill: fill);
           for (i :: <integer> from 0 below size(vector))
             result[i] := vector[i];

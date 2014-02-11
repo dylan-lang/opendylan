@@ -252,7 +252,6 @@ define method concatenate-as(
              end;
         otherwise =>
           without-bounds-checks
-            // For compatibility, use fill: rather than relying on element-type-fill.
             let fill = if (non-empty-index = 0) first-seq[0]
                        else rest-seqs[non-empty-index - 1][0] end;
             let result = make-sequence(type, size: total-sz, fill: fill);
@@ -285,7 +284,6 @@ define method concatenate-as-two
     empty?(first-seq) => as(type, second-seq);
     empty?(second-seq) => as(type, first-seq);
     otherwise =>
-      // For compatibility, use fill: rather than relying on element-type-fill.
       let result = make-sequence(type, size: first-seq.size + second-seq.size,
                                  fill: first-seq[0]);
       without-bounds-checks
@@ -594,7 +592,6 @@ define method copy-sequence
 
   if (first = last) as(type-for-copy(source), #())
   else
-    // For compatibility, use fill: rather than relying on element-type-fill.
     let result =
       make-sequence(type-for-copy(source), shaped-like: source,
                     size: last - first, fill: source[0]);

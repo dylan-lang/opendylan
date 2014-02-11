@@ -237,7 +237,6 @@ define method convert-accumulator-as
     check-key-test-eq(target, acc);
     target
   else
-    // For compatibility, use fill: rather than relying on element-type-fill.
     let target =
       make-sequence(type, size: acc.acc-size, fill: acc.acc-buffer[acc.acc-index]);
     check-key-test-eq(target, acc);
@@ -261,7 +260,6 @@ define method convert-accumulator-as
     check-key-test-eq(target, acc);
     target
   else
-    // For compatibility, use fill: rather than relying on element-type-fill.
     let target =
       make(type, size: acc.acc-size, fill: acc.acc-buffer[acc.acc-index]);
     check-key-test-eq(target, acc);

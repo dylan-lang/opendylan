@@ -286,7 +286,6 @@ define method map-as-one
   if (collection-size = 0)
     make-sequence(type, shaped-like: collection)
   else
-    // For compatibility, use fill: rather than relying on element-type-fill.
     let result =
       make-sequence(type, shaped-like: collection,
                     fill: function(collection.first));
@@ -307,7 +306,6 @@ define method map-as-one
   if (collection-size = 0)
     make-sequence(type, shaped-like: collection)
   else
-    // For compatibility, use fill: rather than relying on element-type-fill.
     let result =
       make-sequence(type, shaped-like: collection,
                     fill: function(collection.first));
