@@ -30,7 +30,7 @@ define generic make-sequence
      #all-keys)
  => (new-instance :: <sequence>);
 
-define method make-sequence
+define inline method make-sequence
     (type :: <sequence-type>, #rest all-keys,
      #key shaped-like: template :: false-or(<sequence>),
           size: desired-size :: false-or(<integer>))
@@ -46,7 +46,7 @@ define method make-sequence
   end if
 end method;
 
-define method make-sequence
+define inline method make-sequence
     (type :: <array-type>, #rest all-keys,
      #key shaped-like: template :: false-or(<sequence>),
           size: desired-size :: false-or(<integer>))
@@ -71,7 +71,7 @@ define method make-sequence
   end if
 end method;
 
-define method make-sequence
+define inline method make-sequence
     (type :: <vector-type>, #rest all-keys,
      #key shaped-like: template :: false-or(<sequence>),
           size: desired-size :: false-or(<integer>))
