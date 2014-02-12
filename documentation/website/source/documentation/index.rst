@@ -123,7 +123,7 @@ External Libraries and Tools
 `Melange </documentation/melange/>`_ [`pdf </documentation/melange/MelangeUserGuide.pdf>`__] [`epub </documentation/melange/MelangeUserGuide.epub>`__]
     Generates Dylan code to wrap C libraries.
 
-`Objective C Bridge </documentation/objective-c/>`_ [`pdf </documentation/objective-c/ObjectiveCBridgeUserGuide.pdf>`__ [`epub </documentation/objective-c/ObjectiveCBridgeUserGuide.epub`__]
+`Objective C Bridge </documentation/objective-c/>`_ [`pdf </documentation/objective-c/ObjectiveCBridgeUserGuide.pdf>`__] [`epub </documentation/objective-c/ObjectiveCBridgeUserGuide.epub>`__]
     Provides a bridge between Objective C and Dylan, allowing integration with Objective C libraries.
 
 `Testworks </documentation/testworks/>`_ [`pdf </documentation/testworks/TestworksUserGuide.pdf>`__] [`epub </documentation/testworks/TestworksUserGuide.epub>`__]
