@@ -10,6 +10,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define variable *trace-dfm-callback* :: false-or(<function>) = #f;
 //outputter function called on control and data flow node
 define variable *trace-dfm-outputter* :: false-or(<function>) = #f;
+//method uniquifier.. - use dfmc-debug-back-end and:
+// compose(print-specializers, signature-spec)
+define variable *trace-dfm-method-printer* :: false-or(<function>) = #f;
+
+
+
 //library filter:
 //  #f                         -- trace everything
 //  #t                         -- trace top level library
@@ -111,19 +117,30 @@ define function init-flow-graph ()
   *lambda-string-table* := make(<table>);
 end;
 
-define function safe-name (x :: <&lambda>) => (res :: false-or(<symbol>))
-  let name = debug-string(x);
-  if (name == #"top-level-initializer")
-    let fresh-name = element(*lambda-string-table*, x, default: #f);
-    fresh-name
-      | begin
-          *lambda-string-table*[x]
-            := as(<symbol>,
-                  concatenate(as(<string>, name),
-                              integer-to-string(*lambda-string-table*.size)));
-        end
+define function safe-name (x :: <&lambda>) => (res :: <symbol>)
+  let debug-str = x.debug-string;
+  let uniquify
+    = if (*trace-dfm-method-printer*)
+        *trace-dfm-method-printer*(x.signature-spec)
+      end;
+  let debug-name = as(<symbol>, format-to-string("%s%s", debug-str, uniquify | ""));
+  let unique-name = element(*lambda-string-table*, debug-name, default: #f);
+  if (unique-name)
+    let debug-string = as(<string>, debug-name);
+    let name-suffix = find-key(unique-name, curry(\=, x));
+    if (name-suffix)
+      if (name-suffix == 0)
+        as(<symbol>, output(debug-string))
+      else
+        as(<symbol>, output(concatenate(debug-string, "-", name-suffix.integer-to-string)))
+      end
+    else
+      *lambda-string-table*[debug-name] := pair(x, unique-name);
+      as(<symbol>, output(concatenate(debug-string, "-", unique-name.size.integer-to-string)))
+    end
   else
-    name
+    *lambda-string-table*[debug-name] := list(x);
+    as(<symbol>, output(debug-string))
   end;
 end;
 
@@ -275,13 +292,14 @@ end;
 
 define method node-id (c :: <computation>) => (res :: <integer>)
   unless (instance?(c.%node-id, <integer>))
-    c.%node-id := next-node-id();
-    trace-dfm-node(#"new-computation", c, c);
-    if (c.next-computation)
-      c.next-computation := c.next-computation; //side effect: trace!
-    end;
-    if (c.temporary)
-      c.temporary.node-id; //side effect: adding temporary
+    if (c.environment & c.environment.lambda)
+      c.%node-id := next-node-id();
+      trace-dfm-node(#"new-computation", c, c);
+      if (c.temporary)
+        c.temporary.node-id; //side effect: adding temporary
+      end;
+    else
+      error("computation without environment or lambda %=", c)
     end;
   end;
   c.%node-id;
@@ -290,16 +308,18 @@ end;
 define method node-id (t :: <temporary>)
  => (res :: false-or(<integer>))
   unless (instance?(t.%node-id, <integer>))
-    t.%node-id := next-node-id();
-    let gen = block ()
-                t.generator
-              exception (e :: <condition>)
-                #f
-              end;
-    trace-dfm-node(#"new-temporary", t, t);
-    if (t.users.size > 0)
-      do(curry(trace-dfm-connection, #"add-temporary-user", t),
-         t.users);
+    if (t.environment & t.environment.lambda)
+      t.%node-id := next-node-id();
+      let gen = block ()
+                  t.generator
+                exception (e :: <condition>)
+                  #f
+                end;
+      trace-dfm-node(#"new-temporary", t, t);
+      if (t.users.size > 0)
+        do(curry(trace-dfm-connection, #"add-temporary-user", t),
+           t.users);
+      end;
     end;
   end;
   t.%node-id

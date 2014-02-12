@@ -5,106 +5,34 @@ Copyright:    Dylan Hackers 2014
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define method output-structured-header
-    (lambda :: <&lambda>) => (res)
-  local method single-header (o)
-          let res = #();
-          res := add!(res, #"METHOD");
-          res := add!(res, as(<string>, o.debug-string));
-          res := add!(res, o.body & o.body.node-id | 0);
-          res := add!(res, map(node-id, o.parameters | #()));
-          reverse!(add!(res, map(method(x)
-                                   let str = make(<string-stream>,
-                                                  direction: #"output");
-                                   print-object(x, str);
-                                   str.stream-contents
-                                 end, o.parameters | #())));
-        end;
-  let result = #();
-  result := add!(result, single-header(lambda));
-  for-used-lambda (sub-f in lambda)
-    result := add!(result, single-header(sub-f));
-  end;
-  result
-end;
-
-define method structured-output (o :: <&lambda>) => (res)
-  let res = output-structured-header(o);
-  for-used-lambda (sub-f in o)
-    res := add!(res, structured-output(sub-f));
-  end;
-  if (o.body)
-    res := concatenate(res, structured-output-computations(o.body, #f));
-  end;
-  res
-end;
-
-define method structured-output-computations
-    (c :: <computation>, last) => (res)
-  let res = #();
-  iterate loop (c = c)
-    if (c & c ~== last)
-      res := add!(res, structured-output(c));
-      loop(next-computation(c))
-    end if;
-  end iterate;
-  reverse!(res)
-end method;
-
-define method structured-output-computations
-    (c == #f, last) => (res)
-  #()
-end;
-
-define function get-node-ids
-    (c :: false-or(<computation>), last :: false-or(<computation>))
-  let res = make(<stretchy-vector>);
-  if (c)
-    walk-computations(method(a)
-                        if (a)
-                          add!(res, a.node-id)
-                        end
-                      end, c, last);
-  end;
-  res
-end;
-
 define method structured-output
-    (c :: <computation>) => (res)
-  list(c.node-id, c.get-structured-output)
+    (c :: <computation>) => (res :: <string>)
+  c.get-structured-output
 end method;
 
 define method structured-output
-    (c :: type-union(<temporary>, <object-reference>)) => (res)
-  list(c.node-id, c.get-structured-output)
+    (c :: type-union(<temporary>, <object-reference>)) => (res :: <string>)
+  c.get-structured-output
 end method;
 
-define method structured-output (c :: <loop>) => (res)
-  list(c.node-id, #"LOOP", #())
+define method structured-output (c :: <loop>) => (res :: <string>)
+  "LOOP"
 end method;
 
-define method structured-output (c :: <loop-call>) => (res)
-  list(c.node-id, #"LOOP-CALL", 0)
+define method structured-output (c :: <loop-call>) => (res :: <string>)
+  "LOOP-CALL"
 end method;
 
-define method structured-output (c :: <if>) => (res)
-  list(c.node-id, #"IF",
-       list(format-to-string("%=", c.test)), #(), #())
+define method structured-output (c :: <if>) => (res :: <string>)
+  concatenate("IF ", format-to-string("%=", c.test))
 end method;
 
-define method structured-output (c :: <bind-exit>) => (res)
-  let res = #();
-  res := add!(res, get-node-ids(c.body, c.next-computation));
-  res := add!(res, #"BIND-EXIT");
-  add!(res, c.node-id)
+define method structured-output (c :: <bind-exit>) => (res :: <string>)
+  "bind-exit"
 end method;
 
-define method structured-output (c :: <unwind-protect>) => (res)
-  let res = #();
-  res := add!(res, get-node-ids(c.cleanups, c.next-computation));
-  res := add!(res, get-node-ids(c.body, c.next-computation));
-  res := add!(res, #"UNWIND-PROTECT");
-  add!(res, c.node-id)
+define method structured-output (c :: <unwind-protect>) => (res :: <string>)
+  "UNWIND-PROTECT"
 end method;
 
 //helper function which does the actual work!
