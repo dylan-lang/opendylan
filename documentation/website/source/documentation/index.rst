@@ -111,22 +111,22 @@ References
 External Libraries and Tools
 ============================
 
-`Binary-Data reference </documentation/binary-data/>`_ [`pdf </documentation/binary-data/BinaryData.pdf>`__] [`epub </documentation/binary-data/BinaryData.epub>`__]
+`Binary-Data </documentation/binary-data/>`_ [`pdf </documentation/binary-data/BinaryData.pdf>`__] [`epub </documentation/binary-data/BinaryData.epub>`__]
     The binary-data library provides an extension to the Dylan language for parsing and assembling binary data using high level Dylan objects.
 
-`Concurrency reference </documentation/concurrency/>`_ [`pdf </documentation/concurrency/ConcurrencyUserGuide.pdf>`__] [`epub </documentation/concurrency/ConcurrencyUserGuide.epub>`__]
+`Concurrency </documentation/concurrency/>`_ [`pdf </documentation/concurrency/ConcurrencyUserGuide.pdf>`__] [`epub </documentation/concurrency/ConcurrencyUserGuide.epub>`__]
     The concurrency utility library.
 
-`HTTP reference </documentation/http/>`_ [`pdf </documentation/http/HTTPLibraries.pdf>`__] [`epub </documentation/http/HTTPLibraries.epub>`__]
+`HTTP </documentation/http/>`_ [`pdf </documentation/http/HTTPLibraries.pdf>`__] [`epub </documentation/http/HTTPLibraries.epub>`__]
     Dylan provides libraries for writing HTTP clients and servers.
 
-`Melange reference </documentation/melange/>`_ [`pdf </documentation/melange/MelangeUserGuide.pdf>`__] [`epub </documentation/melange/MelangeUserGuide.epub>`__]
+`Melange </documentation/melange/>`_ [`pdf </documentation/melange/MelangeUserGuide.pdf>`__] [`epub </documentation/melange/MelangeUserGuide.epub>`__]
     Generates Dylan code to wrap C libraries.
 
-`Testworks User Guide </documentation/testworks/>`_ [`pdf </documentation/testworks/TestworksUserGuide.pdf>`__] [`epub </documentation/testworks/TestworksUserGuide.epub>`__]
+`Testworks </documentation/testworks/>`_ [`pdf </documentation/testworks/TestworksUserGuide.pdf>`__] [`epub </documentation/testworks/TestworksUserGuide.epub>`__]
     Testworks is Dylan's unit testing framework.
 
-`Tracing reference </documentation/tracing/>`_ [`pdf </documentation/tracing/TracingUserGuide.pdf>`__] [`epub </documentation/tracing/TracingUserGuide.epub>`__]
+`Tracing </documentation/tracing/>`_ [`pdf </documentation/tracing/TracingUserGuide.pdf>`__] [`epub </documentation/tracing/TracingUserGuide.epub>`__]
     Tracing is an alternative to traditional logging and performance measurements.
 
 Articles
