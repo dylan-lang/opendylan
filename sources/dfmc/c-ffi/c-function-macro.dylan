@@ -698,7 +698,7 @@ end property;
 define constant $c-parameter-properties =
   list(<input-adjective-property>, <output-adjective-property>);
 
-define method parse-c-function-spec (form-name, specs :: <sequence>)
+define method parse-c-function-spec (form-name, specs :: <sequence>, #key name-symbol = #"c-name")
  => (arg-specs :: <sequence>,
      result-spec :: <C-ffi-result-descriptor>,
      c-name :: false-or(<fragment>),
@@ -777,7 +777,7 @@ define method parse-c-function-spec (form-name, specs :: <sequence>)
                         void?: #t,
                         name: gensym());
   end unless;
-  values(arg-specs, result-spec, get-property(options, #"c-name"), options)
+  values(arg-specs, result-spec, get-property(options, name-symbol), options)
 end method parse-c-function-spec;
 
 

@@ -41,6 +41,27 @@ Compiler
   visualization `can be seen here
   <https://opendylan.org/~hannes/test4.avi>`_.
 
+C-FFI
+=====
+
+* There is a new ``objc-selector-definer`` compiler macro. This supports
+  the Objective C / Dylan bridge by allowing the definition of Objective
+  C selectors and functions for sending them, complete with type
+  information.
+
+  An example usage from the Objective C / Dylan bridge library is:
+
+  .. code-block:: dylan
+
+     define objc-selector sel/alloc
+       parameter target :: <objc/class>;
+       result objc-instance :: <objc/instance-address>;
+       selector: "alloc";
+     end;
+
+  This must be used in conjunction with the Objective C / Dylan
+  bridge library.
+
 C Run-time
 ==========
 

@@ -1161,6 +1161,7 @@ define &module dylan-c-ffi-hygiene-glitches
   create
     \with-stack-block,
     \c-function-body,
+    \objc-msgsend-body,
     \make-c-callable,
     \export-type-for,
     \import-type-for,
@@ -1247,6 +1248,7 @@ define &module dylan-c-ffi
     c-mapped-subtype-definer,
     c-subtype-definer,
     c-function-definer,
+    objc-selector-definer,
     c-callable-wrapper-definer,
     c-address-definer,
     c-variable-definer;
