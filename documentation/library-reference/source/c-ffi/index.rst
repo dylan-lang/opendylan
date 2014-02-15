@@ -2527,15 +2527,14 @@ Describing C functions to Dylan
 
      .. code-block:: dylan
 
-       define constant foo =
-         method (string, count)
-           let c-string = %as-c-representation(<C-char*>,
-                                               string);
-           let c-count = %as-c-representation(<C-int>, count);
-           let c-result = %call-c-function("foo", c-string,
-                                           c-count);
-           %as-dylan-representation(<C-int>, c-result);
-         end;
+       define functon foo (string, count)
+         let c-string = %as-c-representation(<C-char*>,
+                                             string);
+         let c-count = %as-c-representation(<C-int>, count);
+         let c-result = %call-c-function("foo", c-string,
+                                         c-count);
+         %as-dylan-representation(<C-int>, c-result);
+       end;
 
      with the declared type.
 
