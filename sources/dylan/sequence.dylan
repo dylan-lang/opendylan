@@ -98,11 +98,8 @@ define sealed generic concatenate
     (sequence1 :: <sequence>, #rest sequences :: <sequence>)
  => (result-sequence :: <sequence>);
 
-// type should be subtype of <mutable-sequence>. That is almost expressible by
-// saying <mutable-sequence-type>, but the "subclass" used therein is not quite
-// the same as "subtype?".
 define sealed generic concatenate-as
-    (type :: <type>,
+    (type :: <mutable-sequence-type>,
      sequence1 :: <sequence>, #rest more-sequences :: <sequence>)
  => (result-sequence :: <mutable-sequence>);
 

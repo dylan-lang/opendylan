@@ -56,11 +56,8 @@ define constant <collection-type>
 define constant <mutable-collection-type>
   = type-union(subclass(<mutable-collection>), <limited-mutable-collection-type>);
 
-// type should be an instantiable subtype of <mutable-collection>. That is
-// almost expressible by saying <mutable-collection-type>, but the "subclass"
-// used therein is not quite the same as "subtype?".
 define sealed generic map-as
-    (type :: <type>, fn :: <function>,
+    (type :: <mutable-collection-type>, fn :: <function>,
      collection :: <collection>, #rest more-collections :: <collection>)
  => (new-collection :: <mutable-collection>);
 
