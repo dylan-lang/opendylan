@@ -2598,7 +2598,7 @@ Describing Dylan functions for use by C
      *c-function* macro, except that the modifiers apply to the C
      function wrapper which is generated. See :macro:`define C-function`.
 
-     If dylan-rep-name is specified, it is bound to an instance of a
+     If *dylan-rep-name* is specified, it is bound to an instance of a
      function-pointer designator class identifying the generated
      C-callable wrapper function. You can pass this pointer to C code
      for use as, for example, a callback.
