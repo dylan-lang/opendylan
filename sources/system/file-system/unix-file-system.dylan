@@ -187,10 +187,11 @@ define function %copy-file
   run-application
     (concatenate
        ("cp -p",
-        " ",
+        " \"",
         as(<string>, source),
-        " ",
-        as(<string>, destination)))
+        "\" \"",
+        as(<string>, destination),
+        "\""))
 end function %copy-file;
 
 
