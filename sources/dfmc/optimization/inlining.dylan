@@ -63,30 +63,26 @@ end method try-inlining-call;
 
 //// INLINING POLICY
 
-define variable *inlining?* = #t;
-
 define method try-inlining-call (c :: <simple-call>, code :: <&iep>)
   // TODO: size heuristic
   // TODO: inline letrec-bound functions
-  if (*inlining?*)
-    let fun = code.function;
-    if (lambda-top-level?(fun))
-      if (method-inlineable?(fun)
-            & call-inlining-depth(c) < $max-inlining-depth)
-        inline-call-copied(c, code);
-      end if;
-    elseif (function-reference-used-once?(c.function) // the temporary
-              & function-used-once?(code)             // the value
-              & ~inner-environment?(environment(c), environment(code)))
-      inline-call(c, code)
-    elseif (lambda-inlineable?(fun) == #t) // currently only bind-exit returns
-      with-dfm-copier-environment (environment(code))
-        inline-call-copied(c, code)
-      end with-dfm-copier-environment;
-      // #f
-    else
-      #f
+  let fun = code.function;
+  if (lambda-top-level?(fun))
+    if (method-inlineable?(fun)
+          & call-inlining-depth(c) < $max-inlining-depth)
+      inline-call-copied(c, code);
     end if;
+  elseif (function-reference-used-once?(c.function) // the temporary
+          & function-used-once?(code)             // the value
+          & ~inner-environment?(environment(c), environment(code)))
+    inline-call(c, code)
+  elseif (lambda-inlineable?(fun) == #t) // currently only bind-exit returns
+    with-dfm-copier-environment (environment(code))
+      inline-call-copied(c, code)
+    end with-dfm-copier-environment;
+    // #f
+  else
+    #f
   end if;
 end method try-inlining-call;
 
