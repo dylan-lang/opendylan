@@ -45,7 +45,6 @@ define module dfmc-optimization
     maybe-upgrade-call,
 
     // inlining.dylan
-    *inlining?*,
     try-inlining,
     inline-call,
 
