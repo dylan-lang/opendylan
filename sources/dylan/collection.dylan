@@ -56,9 +56,13 @@ define constant <collection-type>
 define constant <mutable-collection-type>
   = type-union(subclass(<mutable-collection>), <limited-mutable-collection-type>);
 
+// This generic is defined on <type> because the DRM says so and the test suite
+// expects it to be so. However, the only implemented method is on
+// <mutable-collection-type> and this generic is sealed, so there should not be
+// a dispatch hit.
 define sealed generic map-as
-    (type :: <mutable-collection-type>, fn :: <function>,
-     collection :: <collection>, #rest more-collections :: <collection>)
+    (type :: <type>, fn :: <function>, collection :: <collection>,
+     #rest more-collections :: <collection>)
  => (new-collection :: <mutable-collection>);
 
 define sealed generic map-into

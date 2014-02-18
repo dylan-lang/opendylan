@@ -98,9 +98,11 @@ define sealed generic concatenate
     (sequence1 :: <sequence>, #rest sequences :: <sequence>)
  => (result-sequence :: <sequence>);
 
+// This generic is defined on <type> because the DRM says so and the test suite
+// expects it to be so. However, the methods top out with <mutable-collection-type>
+// and this generic is sealed, so there should not be a dispatch hit.
 define sealed generic concatenate-as
-    (type :: <mutable-sequence-type>,
-     sequence1 :: <sequence>, #rest more-sequences :: <sequence>)
+    (type :: <type>, sequence1 :: <sequence>, #rest more-sequences :: <sequence>)
  => (result-sequence :: <mutable-sequence>);
 
 define sealed generic first
