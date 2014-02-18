@@ -27,5 +27,5 @@ include $(SYSTEM_ROOT)/lib/posix-build.jam ;
 #
 
 actions together LinkDLL bind NEEDLIBS {
-  $(LINK) -dynamiclib -o $(<) -install_name @rpath/$(<:BS=$(SUFDLL)) $(LINKFLAGS) $(>) -L"$(LIBPATH)" $(NEEDLIBS) $(LINKLIBS)
+  $(LINK) -dynamiclib -o $(<:Q) -install_name @rpath/$(<:BS=$(SUFDLL)) $(LINKFLAGS) $(>:Q) -L"$(LIBPATH)" $(NEEDLIBS:Q) $(LINKLIBS)
 }

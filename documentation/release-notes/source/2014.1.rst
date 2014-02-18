@@ -12,6 +12,14 @@ XXX XX, 2014.
 * `Report bugs <https://github.com/dylan-lang/opendylan/issues>`_
 * `Source code <https://github.com/dylan-lang/opendylan/tree/v2014.1>`_
 
+Build System
+============
+
+* The Jam files for Linux, FreeBSD and OS X have been updated to support
+  doing a build when there are spaces in the path to the current working
+  directory. This was previously only handled correctly for Windows.
+
+
 Compiler
 ========
 
