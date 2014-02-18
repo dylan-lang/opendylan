@@ -101,7 +101,7 @@ end method;
 
 define abstract &class <limited-type> (<type>) end &class;
 
-define &class <limited-collection-type> (<limited-type>) 
+define primary &class <limited-collection-type> (<limited-type>) 
   constant &slot limited-collection-class :: <class>,
     required-init-keyword: class:;
   constant &slot limited-collection-element-type :: <type>,

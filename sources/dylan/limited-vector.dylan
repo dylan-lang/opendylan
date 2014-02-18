@@ -56,8 +56,9 @@ define method make
   unless (size = 0)
     check-type(fill, element-type);
   end unless;
-  let instance = system-allocate-repeated-instance
-    (<simple-element-type-vector>, <element-type>, element-type, size, fill);
+  let instance :: <simple-element-type-vector> 
+    = system-allocate-repeated-instance
+        (<simple-element-type-vector>, <element-type>, element-type, size, fill);
   instance.element-type-fill := default-fill;
   instance
 end method;

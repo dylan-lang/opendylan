@@ -302,11 +302,18 @@ define macro limited-string-definer
               #key fill = ?fill, size :: <integer> = 0,
                    element-type-fill: default-fill = ?fill)
           => (res :: "<limited-" ## ?name ## "-string>")
-           unless (size = 0)
-             check-type(fill, "<" ## ?name ## "-character>")
-           end unless;
-           let instance = system-allocate-repeated-instance
-             ("<limited-" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
+           // The user is not obligated to provide a fill value of the right type
+           // if we won't be needing it, but the fill variable does have to be the
+           // right type for the compiler to optimize system-allocate-repeated-instance.
+           let fill :: "<" ## ?name ## "-character>"
+             = if (size = 0)
+                 ?fill
+               else
+                 check-type(fill, "<" ## ?name ## "-character>")
+               end;
+           let instance :: "<limited-" ## ?name ## "-string>" 
+             = system-allocate-repeated-instance
+                 ("<limited-" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
            instance.element-type-fill := default-fill;
            instance
          end method;
@@ -351,7 +358,11 @@ define macro string-definer
          if (size = 0)
            empty(class)
          else
-           check-type(fill, "<" ## ?name ## "-character>");
+           // The user is not obligated to provide a fill value of the right type
+           // if we won't be needing it, but the fill variable does have to be the
+           // right type for the compiler to optimize system-allocate-repeated-instance.
+           let fill :: "<" ## ?name ## "-character>"
+             = check-type(fill, "<" ## ?name ## "-character>");
            system-allocate-repeated-instance
              ("<" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
          end if
@@ -428,12 +439,16 @@ end method;
 define string-without-class byte (fill: ' ', class-name: byte);
 
 define method make
-    (class == <byte-string>, #key fill = ' ', size :: <integer> = 0)
+    (class == <byte-string>, #key fill = as(<byte-character>, ' '),
+     size :: <integer> = 0)
  => (res :: <byte-string>)
   if (size = 0)
     empty(class)
   else
-    check-type(fill, <byte-character>);
+    // The user is not obligated to provide a fill value of the right type
+    // if we won't be needing it, but the fill variable does have to be the
+    // right type for the compiler to optimize system-allocate-repeated-instance.
+    let fill :: <byte-character> = check-type(fill, <byte-character>);
     system-allocate-repeated-instance
       (<byte-string>, <byte-character>, unbound(), size, fill);
   end if

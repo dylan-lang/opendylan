@@ -756,11 +756,18 @@ define macro limited-vector-minus-selector-definer
                #key fill = ?fill, size :: <integer> = 0,
                     element-type-fill: default-fill = ?fill)
           => (vector :: "<simple-" ## ?name ## "-vector>")
-           unless (size = 0)
-             check-type(fill, "<" ## ?name ## ">")
-           end unless;
-           let instance = system-allocate-repeated-instance
-             ("<simple-" ## ?name ## "-vector>", "<" ## ?name ## ">", unbound(), size, fill);
+           // The user is not obligated to provide a fill value of the right type
+           // if we won't be needing it, but the fill variable does have to be the
+           // right type for the compiler to optimize system-allocate-repeated-instance.
+           let fill :: "<" ## ?name ## ">"
+             = if (size = 0)
+                 ?fill
+               else
+                 check-type(fill, "<" ## ?name ## ">")
+               end;
+           let instance :: "<simple-" ## ?name ## "-vector>"
+             = system-allocate-repeated-instance
+                 ("<simple-" ## ?name ## "-vector>", "<" ## ?name ## ">", unbound(), size, fill);
            instance.element-type-fill := default-fill;
            instance
          end method;
