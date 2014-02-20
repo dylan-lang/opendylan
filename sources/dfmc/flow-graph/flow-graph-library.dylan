@@ -149,9 +149,9 @@ define module dfmc-flow-graph
     call-congruent?, call-congruent?-setter,
     <stack-vector>,
     <function-call>,
-    // *** function, function-setter,
+    // *** function, function-setter
     <primitive-call>,
-    primitive, primitive-setter,
+    primitive,
     <primitive-indirect-call>,
     <c-variable-pointer-call>,
       c-variable, c-variable-setter,

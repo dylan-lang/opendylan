@@ -141,33 +141,6 @@ define method inlined-inline-only-function?
   end;
 end method;
 
-define method check-optimized-computations (c :: <function-call>)
-  let f = function-value(c);
-  if (f)
-    if (model-compile-stage-only?(f) | inlined-inline-only-function?(f))
-      // format-out("Doing: %=\n", f);
-      if (instance?(f, <&generic-function>))
-        // format-out("Going for the copy...\n");
-        let copy
-          = find-inline-copy
-              (form-compilation-record(*current-dependent*), f);
-        // format-out("Made the copy.\n");
-        simplify-call-to-call-to-object!(c, copy);
-      elseif (instance?(f, <&method>))
-        // format-out("Going for the method copy...\n");
-        let copy
-          = find-inline-copy
-              (form-compilation-record(*current-dependent*), f);
-        // format-out("Made the copy.\n");
-        simplify-call-to-call-to-object!(c, copy);
-      else
-        // break("Function in function-call is %=", f);
-        #f
-      end;
-    end;
-  end;
-end method;
-
 // We want to copy a complete method so we use the standard dfm copier
 // except we force the top level method to be copied, even though it
 // has a definition.

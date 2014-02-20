@@ -1487,15 +1487,6 @@ define function required-argument-type-estimates
   end;
 end;
 
-// Compute a reference to the given function and destructively modify the
-// call to refer to it rather than to what it currently refers to.
-
-define method simplify-call-to-call-to-object!
-    (call :: <function-call>, f :: <&function>) => ()
-  let ref-temp = make-object-reference(f);
-  replace-call-function!(call, ref-temp);
-end method;
-
 define method method-call-arguments
     (call :: <simple-call>, func :: <&lambda>)
  => (first-c :: false-or(<computation>), last-c :: false-or(<computation>),
@@ -1555,13 +1546,6 @@ define method method-call-arguments
  => (first-c :: false-or(<computation>), last-c :: false-or(<computation>),
      arguments :: <argument-sequence>)
   values(#f, #f, arguments(call))
-end method;
-
-define method replace-call-function!
-    (call :: <function-call>, temp :: <value-reference>) => ()
-  remove-user!(call.function, call);
-  add-user!(temp, call);
-  call.function := temp
 end method;
 
 define function incf-static-dispatch-count ()
