@@ -614,11 +614,11 @@ define method make (c :: subclass(<function-call>),
   f
 end;
 
-
 /// PRIMITIVE CALL
 
 define graph-class <primitive-call> (<call>)
-  slot primitive :: false-or(<&primitive>), required-init-keyword: primitive:;
+  constant slot primitive :: false-or(<&primitive>),
+    required-init-keyword: primitive:;
 end graph-class;
 
 /// SIMPLE CALL -- a direct call to a function, with explicit arguments
