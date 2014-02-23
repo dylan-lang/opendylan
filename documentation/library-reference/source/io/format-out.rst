@@ -11,9 +11,9 @@ Introduction
 The Format-Out module is a convenient repackaging of two libraries that
 provides a simple way to send text to the platform’s standard output
 stream. For this purpose, Format-Out uses the Format module and the
-Standard-IO module and defines the functions :gf:`format-out` and
-:gf:`force-out`. The Format-Out module exports all the identifiers
-described in this document.
+Standard-IO module and defines the functions :gf:`format-out`,
+:gf:`force-out`, :gf:`format-err`, and :gf:`force-err`. The Format-Out
+module exports all the identifiers described in this document.
 
 :doc:`format` and :doc:`standard-io` give full details of the Format and
 Standard-IO libraries.
@@ -74,6 +74,60 @@ This section contains a reference entry for each item exported from the
    :description:
 
      Forces pending output from :var:`*standard-output*` to the operating
+     system using :gf:`force-output`.
+
+     This function is thread-safe.
+
+.. generic-function:: format-err
+
+   Formats its arguments on the standard error.
+
+   :signature: format-err *control-string* #rest *arguments* => ()
+
+   :parameter control-string: An instance of :drm:`<string>`.
+   :parameter #rest arguments: Instances of :drm:`<object>`.
+
+   :description:
+
+     Calls the :gf:`format` function from the *format* module on
+     :var:`*standard-error*` from the *standard-io* module,
+     *control-string*, and *arguments*.
+
+     This function is thread-safe.
+
+   See also
+
+   - :gf:`format`
+   - :var:`*standard-error*`
+
+.. method:: format-err
+   :sealed:
+   :specializer: <byte-string>
+
+   Formats its arguments on the standard error.
+
+   :signature: format-err *control-string* #rest *arguments* => ()
+
+   :parameter control-string: An instance of :drm:`<byte-string>`.
+   :parameter #rest arguments: Instances of :drm:`<object>`.
+
+   :description:
+
+     Formats its arguments on the standard error. There is one method for
+     :gf:`format-err`, and it is specialized to instances of :drm:`<byte-string>`.
+
+     This function is thread-safe.
+
+.. function:: force-err
+
+   Forces pending output from :var:`*standard-error*` to the operating
+   system.
+
+   :signature: force-err () => ()
+
+   :description:
+
+     Forces pending output from :var:`*standard-error*` to the operating
      system using :gf:`force-output`.
 
      This function is thread-safe.

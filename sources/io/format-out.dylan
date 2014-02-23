@@ -18,3 +18,14 @@ define method force-out () => ()
   end;
 end method;
 
+define method format-err (format-string :: <string>, #rest args) => ()
+  with-stream-locked (*standard-error*)
+    apply(format, *standard-error*, format-string, args);
+  end;
+end method;
+
+define method force-err () => ()
+  with-stream-locked (*standard-error*)
+    force-output(*standard-error*);
+  end;
+end method;
