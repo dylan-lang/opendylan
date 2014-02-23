@@ -119,6 +119,14 @@ hash-algorithms
 * The library now builds on Windows.
 
 
+IO
+==
+
+* New functions ``format-err`` and ``force-err`` have been added that
+  do the same thing as ``format-out`` and ``force-out``, but operate
+  on ``*standard-error*`` rather than ``*standard-output*``.
+
+
 make-dylan-app
 ==============
 

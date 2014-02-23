@@ -331,6 +331,8 @@ end module standard-io;
 define module format-out
   create format-out,
     force-out;
+  create format-err,
+    force-err;
 end module format-out;
 
 define module io-internals
