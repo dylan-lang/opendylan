@@ -56,9 +56,13 @@ define constant <collection-type>
 define constant <mutable-collection-type>
   = type-union(subclass(<mutable-collection>), <limited-mutable-collection-type>);
 
+// This generic is defined on <type> because the DRM says so and the test suite
+// expects it to be so. However, the only implemented method is on
+// <mutable-collection-type> and this generic is sealed, so there should not be
+// a dispatch hit.
 define sealed generic map-as
-    (type :: <mutable-collection-type>, fn :: <function>,
-     collection :: <collection>, #rest more-collections :: <collection>)
+    (type :: <type>, fn :: <function>, collection :: <collection>,
+     #rest more-collections :: <collection>)
  => (new-collection :: <mutable-collection>);
 
 define sealed generic map-into
@@ -281,11 +285,11 @@ define method map-as-one
  => (new-collection :: <array>); // actually :: type
   let collection-size = collection.size;
   if (collection-size = 0)
-    make(type, size: 0)
+    make-sequence(type, shaped-like: collection)
   else
     let result =
-      make(type, dimensions: collection.dimensions,
-           fill: function(collection.first));
+      make-sequence(type, shaped-like: collection,
+                    fill: function(collection.first));
     without-bounds-checks
       for (i :: <integer> from 1 below collection-size)
         result[i] := function(collection[i])
@@ -301,11 +305,11 @@ define method map-as-one
  => (new-collection :: <vector>); // actually :: type
   let collection-size = collection.size;
   if (collection-size = 0)
-    make(type, size: 0)
+    make-sequence(type, shaped-like: collection)
   else
     let result =
-      make(type, size: collection.size,
-           fill: function(collection.first));
+      make-sequence(type, shaped-like: collection,
+                    fill: function(collection.first));
     without-bounds-checks
       for (i :: <integer> from 1 below collection-size)
         result[i] := function(collection[i])
@@ -1095,14 +1099,22 @@ define constant <element-type> = <object>; // KLUDGE FOR LIMITED COLLECTIONSXS
 
 /// define open abstract primary class <limited-collection> ... end;
 
-// The element type for limited collections.
-define open generic element-type (t :: <collection>)
-  => type :: <type>;
+// User-defined collections can define their own element-type and element-type-fill
+// on open collection classes. But since users cannot define their own limited
+// collections, we can seal over that domain.
 
+define open generic element-type (coll :: <collection>) => (type :: <type>);
 define sealed domain element-type (<limited-collection>);
 
-define inline method element-type (t :: <collection>) => (type == <object>)
+define inline method element-type (coll :: <collection>) => (type :: <type>)
   <object>
+end method;
+
+define open generic element-type-fill (coll :: <collection>) => (object :: <object>);
+define sealed domain element-type-fill (<limited-collection>);
+
+define inline method element-type-fill (coll :: <collection>) => (object)
+  #f
 end method;
 
 

@@ -45,7 +45,7 @@ end function;
 //
 
 define open generic limited-vector
-     (of :: false-or(<type>), size :: false-or(<integer>)) => (type :: <type>);
+     (of :: false-or(<type>), fill, size :: false-or(<integer>)) => (type :: <type>);
 
 
 /////////////////
@@ -108,6 +108,7 @@ end method empty?;
 // EMPTY
 //
 
+// This method returns a shared sequence of the given type with the default fill.
 define open generic empty
     (class :: <sequence-type>) => (res :: <sequence>);
 
@@ -651,7 +652,6 @@ define macro limited-vector-shared-definer
          define sealed domain type-for-copy ("<simple-" ## ?name ## "-vector>");
          define sealed domain shallow-copy ("<simple-" ## ?name ## "-vector>");
          define sealed domain size ("<simple-" ## ?name ## "-vector>");
-         define sealed domain element-type ("<simple-" ## ?name ## "-vector>");
          define sealed domain empty? ("<simple-" ## ?name ## "-vector>");
          define sealed domain add ("<simple-" ## ?name ## "-vector>", <object>);
          define sealed domain add! ("<simple-" ## ?name ## "-vector>", <object>);
@@ -702,6 +702,7 @@ define macro limited-vector-minus-constructor-definer
   { define limited-vector-minus-constructor "<" ## ?:name ## ">" (?superclasses:*)
       (#key ?fill:expression) }
     => { define limited-vector-shared "<" ## ?name ## ">";
+    
          define sealed concrete primary class "<simple-" ## ?name ## "-vector>" (?superclasses)
            repeated sealed inline slot ?name ## "-vector-element" :: "<" ## ?name ## ">",
              init-value:        ?fill,
@@ -710,18 +711,17 @@ define macro limited-vector-minus-constructor-definer
              size-init-keyword: size:,
              size-init-value:   0;
          end class;
-
+         
          define inline sealed method element
              (vector :: "<simple-" ## ?name ## "-vector>", index :: <integer>,
               #key default = unsupplied())
-          => (object :: "<" ## ?name ## ">")
+          => (object)
            if (element-range-check(index, size(vector)))
              element-no-bounds-check(vector, index)
            else
              if (unsupplied?(default))
                element-range-error(vector, index)
              else
-               check-type(default, element-type(vector));
                default
              end if
            end if
@@ -733,14 +733,17 @@ define macro limited-vector-minus-selector-definer
   { define limited-vector-minus-selector "<" ## ?:name ## ">" (?superclasses:*) (#key ?fill:expression) }
     => { define limited-vector-minus-constructor "<" ## ?name ## ">" (?superclasses) (fill: ?fill);
          define limited-vector-element-setter "<" ## ?name ## ">";
+         
          define constant "$empty-<simple-" ## ?name ## "-vector>"
            = system-allocate-repeated-instance
                ("<simple-" ## ?name ## "-vector>", "<" ## ?name ## ">", unbound(), 0, ?fill);
+
          define sealed inline method empty
              (class == "<simple-" ## ?name ## "-vector>")
           => (res :: "<simple-" ## ?name ## "-vector>")
            "$empty-<simple-" ## ?name ## "-vector>"
          end method empty;
+         
          define sealed inline method element-type
              (t :: "<simple-" ## ?name ## "-vector>") => (type :: <type>)
            "<" ## ?name ## ">"
@@ -749,27 +752,44 @@ define macro limited-vector-minus-selector-definer
          // This method is not inline, because the typist needs to find it
          // in order to propagate limited collection type information.
          define method make
-              (class == "<simple-" ## ?name ## "-vector>",
-               #key fill :: "<" ## ?name ## ">" = ?fill, size :: <integer> = 0)
-           => (vector :: "<simple-" ## ?name ## "-vector>")
-           if (size = 0)
-             empty(class)
-           else
-             system-allocate-repeated-instance
-               ("<simple-" ## ?name ## "-vector>", "<" ## ?name ## ">", unbound(), size, fill);
-           end if
+             (class == "<simple-" ## ?name ## "-vector>",
+               #key fill = ?fill, size :: <integer> = 0,
+                    element-type-fill: default-fill = ?fill)
+          => (vector :: "<simple-" ## ?name ## "-vector>")
+           // The user is not obligated to provide a fill value of the right type
+           // if we won't be needing it, but the fill variable does have to be the
+           // right type for the compiler to optimize system-allocate-repeated-instance.
+           let fill :: "<" ## ?name ## ">"
+             = if (size = 0)
+                 ?fill
+               else
+                 check-type(fill, "<" ## ?name ## ">")
+               end;
+           let instance :: "<simple-" ## ?name ## "-vector>"
+             = system-allocate-repeated-instance
+                 ("<simple-" ## ?name ## "-vector>", "<" ## ?name ## ">", unbound(), size, fill);
+           instance.element-type-fill := default-fill;
+           instance
          end method;
+         
+         define sealed inline method type-for-copy
+             (vector :: "<simple-" ## ?name ## "-vector>")
+          => (type :: <type>)
+           limited-vector(element-type(vector), element-type-fill(vector), #f)
+         end method type-for-copy
          }
 end macro;
 
 define macro limited-vector-definer
   { define limited-vector "<" ## ?:name ## ">" (#key ?fill:expression) }
-    => { define limited-vector-minus-selector "<" ## ?name ## ">" (<simple-vector>) (fill: ?fill);
+    => { define limited-vector-minus-selector "<" ## ?name ## ">"
+             (<limited-fillable-collection>, <simple-vector>) (fill: ?fill);
+    
          define sealed inline method concrete-limited-vector-class
-             (of == "<" ## ?name ## ">")
-          => (type :: singleton("<simple-" ## ?name ## "-vector>"))
-           "<simple-" ## ?name ## "-vector>"
-         end method; }
+             (of == "<" ## ?name ## ">", default-fill :: "<" ## ?name ## ">")
+          => (type :: singleton("<simple-" ## ?name ## "-vector>"), fully-specified? :: <boolean>)
+           values("<simple-" ## ?name ## "-vector>", default-fill = ?fill)
+         end method }
 end macro;
 
 define limited-vector-shared+element-setter <object>;
@@ -777,26 +797,28 @@ define constant object-vector-element = vector-element;
 define constant object-vector-element-setter = vector-element-setter;
 
 define inline method concrete-limited-vector-class
-     (of :: <type>) => (res :: <class>)
-  <simple-element-type-vector>
+     (of :: <type>, default-fill)
+ => (res :: <class>, fully-specified? :: <boolean>)
+  values(<simple-element-type-vector>, #f)
 end method;
 
 define method limited-vector
-    (of :: <type>, size :: false-or(<integer>)) => (type :: <vector-type>)
-  let concrete-class
-    = concrete-limited-vector-class(of);
-  let default-concrete-class
-    = <simple-element-type-vector>;
-  if (size | concrete-class == default-concrete-class)
+    (of :: <type>, default-fill :: <object>, size :: false-or(<integer>))
+ => (type :: <vector-type>)
+  let (concrete-class, fully-specified?)
+    = concrete-limited-vector-class(of, default-fill);
+  if (size | ~fully-specified?)
     make(<limited-vector-type>,
-         class:          <vector>,
+         class:          <simple-vector>,
          element-type:   of,
+         default-fill:   default-fill,
          concrete-class: concrete-class,
          size:           size)
   else
     concrete-class
   end if;
 end method;
+
 
 //
 // <SIMPLE-OBJECT-VECTOR>
@@ -825,7 +847,8 @@ end method;
 //
 
 define method limited-vector
-     (of == <object>, size :: false-or(<integer>)) => (res :: <class>)
+    (of == <object>, default-fill == #f, size :: false-or(<integer>))
+ => (res :: <class>)
   <simple-object-vector>
 end method;
 

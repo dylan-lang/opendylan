@@ -7,6 +7,86 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // BOOTED: define ... class <sequence> ... end;
 
+define constant <sequence-type>
+  = type-union(subclass(<sequence>), <limited-sequence-type>);
+
+define constant <mutable-sequence-type>
+  = type-union(subclass(<mutable-sequence>), <limited-mutable-sequence-type>);
+
+
+// Instances of <array> must have the dimensions: init-keyword, but generic
+// sequence methods won't know to provide that. This function creates an
+// <array> or other sequence with the appropriate init-keywords.
+//
+// The shaped-like: argument creates a sequence with the same dimensions or size
+// as the given one. The size: argument creates a sequence with the given size;
+// in the case of an <array>, that sequence will be a <vector>. If both are
+// given, the sequence will have the same dimensions/size as the shaped-like:
+// argument so long as that doesn't conflict with the size: argument.
+
+define generic make-sequence
+    (type :: <sequence-type>,
+     #key shaped-like :: false-or(<sequence>), size :: false-or(<integer>),
+     #all-keys)
+ => (new-instance :: <sequence>);
+
+define inline method make-sequence
+    (type :: <sequence-type>, #rest all-keys,
+     #key shaped-like: template :: false-or(<sequence>),
+          size: desired-size :: false-or(<integer>))
+ => (new-instance :: <sequence>)
+  if (template)
+    if (~desired-size | desired-size = template.size)
+      apply(make, type, size: template.size, all-keys)
+    else
+      apply(make, type, size: desired-size, all-keys)
+    end if
+  else
+    apply(make, type, all-keys)
+  end if
+end method;
+
+define inline method make-sequence
+    (type :: <array-type>, #rest all-keys,
+     #key shaped-like: template :: false-or(<sequence>),
+          size: desired-size :: false-or(<integer>))
+ => (new-instance :: <array>)
+  let all-keys = remove-keyword-arguments(all-keys, #[ size: ]);
+  if (instance?(template, <array>))
+    if (~desired-size | desired-size = template.size)
+      apply(make, type, dimensions: template.dimensions, all-keys)
+    else
+      apply(make, type, dimensions: vector(desired-size), all-keys)
+    end if
+  elseif (template)
+    if (~desired-size | desired-size = template.size)
+      apply(make, type, dimensions: vector(template.size), all-keys)
+    else
+      apply(make, type, dimensions: vector(desired-size), all-keys)
+    end if
+  elseif (desired-size)
+    apply(make, type, dimensions: vector(desired-size), all-keys)
+  else
+    apply(make, type, all-keys)
+  end if
+end method;
+
+define inline method make-sequence
+    (type :: <vector-type>, #rest all-keys,
+     #key shaped-like: template :: false-or(<sequence>),
+          size: desired-size :: false-or(<integer>))
+ => (new-instance :: <vector>)
+  if (template)
+    if (~desired-size | desired-size = template.size)
+      apply(make, type, size: template.size, all-keys)
+    else
+      apply(make, type, size: desired-size, all-keys)
+    end if
+  else
+    apply(make, type, all-keys)
+  end if
+end method;
+
 
 ////////////
 // INTERFACE
@@ -18,15 +98,11 @@ define sealed generic concatenate
     (sequence1 :: <sequence>, #rest sequences :: <sequence>)
  => (result-sequence :: <sequence>);
 
-define constant <sequence-type>
-  = type-union(subclass(<sequence>), <limited-sequence-type>);
-
-define constant <mutable-sequence-type>
-  = type-union(subclass(<mutable-sequence>), <limited-mutable-sequence-type>);
-
+// This generic is defined on <type> because the DRM says so and the test suite
+// expects it to be so. However, the methods top out with <mutable-collection-type>
+// and this generic is sealed, so there should not be a dispatch hit.
 define sealed generic concatenate-as
-    (type :: <mutable-sequence-type>,
-     sequence1 :: <sequence>, #rest more-sequences :: <sequence>)
+    (type :: <type>, sequence1 :: <sequence>, #rest more-sequences :: <sequence>)
  => (result-sequence :: <mutable-sequence>);
 
 define sealed generic first
@@ -177,7 +253,7 @@ define method concatenate-as(
           without-bounds-checks
             let fill = if (non-empty-index = 0) first-seq[0]
                        else rest-seqs[non-empty-index - 1][0] end;
-            let result = make(type, size: total-sz, fill: fill);
+            let result = make-sequence(type, size: total-sz, fill: fill);
             with-fip-of result
               let state = initial-state;
               for (val in first-seq)
@@ -207,8 +283,8 @@ define method concatenate-as-two
     empty?(first-seq) => as(type, second-seq);
     empty?(second-seq) => as(type, first-seq);
     otherwise =>
-      let result = make(type, size: first-seq.size + second-seq.size,
-                              fill: first-seq[0]);
+      let result = make-sequence(type, size: first-seq.size + second-seq.size,
+                                 fill: first-seq[0]);
       without-bounds-checks
         for (val in first-seq, key from 0)
           result[key] := val;
@@ -516,7 +592,8 @@ define method copy-sequence
   if (first = last) as(type-for-copy(source), #())
   else
     let result =
-      make(type-for-copy(source), size: last - first, fill: source[0]);
+      make-sequence(type-for-copy(source), shaped-like: source,
+                    size: last - first, fill: source[0]);
 
     with-fip-of source
       for (index from 0 below first,

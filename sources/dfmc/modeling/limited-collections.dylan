@@ -15,6 +15,29 @@ define class <limited-element-type-mapping> (<object>)
     required-init-keyword: limited-integer-mappings:;
 end class;
 
+define class <limited-element-type-mapping-item> (<object>)
+  // #f is don't care
+  constant slot mapping-element-type :: false-or(type-union(<pair>, <symbol>)),
+    required-init-keyword: element-type:;
+  constant slot mapping-consider-fill-value? :: <boolean> = #f,
+    init-keyword: consider-fill-value?:;
+  constant slot mapping-fill-value :: <object> = #f,
+    init-keyword: fill-value:;
+  constant slot mapping-concrete-class :: <symbol>,
+    required-init-keyword: concrete-class:;
+end class;
+
+define method make
+    (class == <limited-element-type-mapping-item>, #rest all-keys, #key)
+ => (item :: <limited-element-type-mapping-item>)
+  let keywords = choose-by(even?, range(), all-keys);
+  if (member?(#"fill-value", keywords))
+    apply(next-method, class, consider-fill-value?:, #t, all-keys)
+  else
+    next-method();
+  end if
+end make;
+
 define constant $limited-element-type-mappings
   = make(<stretchy-vector>);
 
@@ -23,6 +46,19 @@ define method install-limited-element-type-mappings
   add!($limited-element-type-mappings, pair(collection, mappings));
 end method;
 
+// Mappings should be listed in order, from best match to worst match. This matters
+// for matching the default-fill; matching the tighter limited integer type; and for
+// matching the fallback class. The lookup function will return the first suitable
+// match.
+//
+// In the mappings later in this file, each element type entry has a line with
+// a fill: option, followed by one without, but both returning the same concrete
+// class. The difference between them is that when the user calls limited() with
+// a matching default-fill: argument, the first line matches and the limited()
+// function returns the concrete class directly; but if the user uses a different
+// default-fill: argument, the second line matches and limited() returns a
+// limited type specification that is not the concrete class itself nor even
+// a <class> at all.
 define macro limited-element-type-mappings-definer
   { define limited-element-type-mappings (?collection:name)
       ?mappings:*
@@ -49,18 +85,40 @@ define macro limited-element-type-mappings-aux-definer
     { otherwise
         => ?concrete-class:name; ... }
       => { ... }
+    { any,
+      fill: ?fill:expression
+        => ?concrete-class:name; ... }
+      => { make(<limited-element-type-mapping-item>,
+                element-type: #f, fill-value: ?fill,
+                concrete-class: ?#"concrete-class"), ... }
+    { ?element-type:name,
+      fill: ?fill:expression
+        => ?concrete-class:name; ... }
+      => { make(<limited-element-type-mapping-item>,
+                element-type: ?#"element-type", fill-value: ?fill,
+                concrete-class: ?#"concrete-class"), ... }
     { ?element-type:name
         => ?concrete-class:name; ... }
-      => { pair(?#"element-type", ?#"concrete-class"), ... }
+      => { make(<limited-element-type-mapping-item>,
+                element-type: ?#"element-type",
+                concrete-class: ?#"concrete-class"), ... }
     { ?anything:*
         => ?concrete-class:name; ... }
       => { ... }
   limited-integer-mappings:
     { } 
       => { }
+    { limited(<integer>, min: ?min:expression, max: ?max:expression),
+      fill: ?fill:expression
+        => ?concrete-class:name; ... }
+      => { make(<limited-element-type-mapping-item>,
+                element-type: pair(?min, ?max), fill-value: ?fill,
+                concrete-class: ?#"concrete-class"), ... }
     { limited(<integer>, min: ?min:expression, max: ?max:expression)
         => ?concrete-class:name; ... }
-      => { pair(pair(?min, ?max), ?#"concrete-class"), ... }
+      => { make(<limited-element-type-mapping-item>,
+                element-type: pair(?min, ?max),
+                concrete-class: ?#"concrete-class"), ... }
     { ?anything:*
         => ?concrete-class:name; ... }
       => { ... }
@@ -76,28 +134,60 @@ define macro limited-element-type-mappings-aux-definer
 end macro;
 
 define method lookup-limited-collection-concrete-class
-    (element-type :: <&type>, mappings :: <limited-element-type-mapping>)
- => (concrete-class :: <&class>, default :: <&class>)
+    (element-type :: <&type>, element-type-fill, mappings :: <limited-element-type-mapping>)
+ => (concrete-class :: <&class>, includes-element-type? :: <boolean>, includes-default-fill? :: <boolean>)
   let default = dylan-value(limited-element-type-mapping-default(mappings));
   block (return)
     if (instance?(element-type, <&limited-integer>))
-      for (limited-integer-mapping in limited-limited-integer-element-type-mappings(mappings))
-        let limited-integer-min-max
-          = head(limited-integer-mapping);
-        let limited-integer
-          = ^limited-integer(min: head(limited-integer-min-max), max: tail(limited-integer-min-max));
-        if (^subtype?(element-type, limited-integer))
-          return(dylan-value(tail(limited-integer-mapping)), default);
+      for (limited-integer-mapping :: <limited-element-type-mapping-item>
+           in limited-limited-integer-element-type-mappings(mappings))
+        let match-element-type? = true?(limited-integer-mapping.mapping-element-type);
+        let match-fill-value? = limited-integer-mapping.mapping-consider-fill-value?;
+        let matching-element-type?
+          = if (match-element-type?)
+              let limited-integer-min-max :: <pair>
+                = limited-integer-mapping.mapping-element-type;
+              let limited-integer
+                = ^limited-integer(min: head(limited-integer-min-max), max: tail(limited-integer-min-max));
+              ^subtype?(element-type, limited-integer)
+            else
+              #t
+            end if;
+        let matching-default-fill?
+          = if (match-fill-value?)
+              element-type-fill == limited-integer-mapping.mapping-fill-value
+            else
+              #t
+            end if;
+        if (matching-element-type? & matching-default-fill?)
+          return(dylan-value(limited-integer-mapping.mapping-concrete-class),
+                 match-element-type?, match-fill-value?)
         end if
       end for;
     else 
-      for (class-mapping in limited-class-element-type-mappings(mappings))
-        if (element-type == dylan-value(head(class-mapping)))
-          return(dylan-value(tail(class-mapping)), default);
+      for (class-mapping :: <limited-element-type-mapping-item>
+           in limited-class-element-type-mappings(mappings))
+        let match-element-type? = true?(class-mapping.mapping-element-type);
+        let match-fill-value? = class-mapping.mapping-consider-fill-value?;
+        let matching-element-type?
+          = if (match-element-type?)
+              element-type == dylan-value(class-mapping.mapping-element-type)
+            else
+              #t
+            end if;
+        let matching-default-fill?
+          = if (match-fill-value?)
+              element-type-fill == class-mapping.mapping-fill-value
+            else
+              #t
+            end if;
+        if (matching-element-type? & matching-default-fill?)
+          return(dylan-value(class-mapping.mapping-concrete-class),
+                 match-element-type?, match-fill-value?);
         end if
       end for;
     end if;
-    values(default, default)
+    values(default, #f, #f)
   end block;
 end method;
 
@@ -105,15 +195,25 @@ define method lookup-limited-collection-element-type
     (concrete-class :: <&class>, mappings :: <limited-element-type-mapping>)
  => (element-type :: false-or(<&type>))
   block (return)
-    for (class-mapping in limited-class-element-type-mappings(mappings))
-      if (concrete-class == dylan-value(tail(class-mapping)))
-        return(dylan-value(head(class-mapping)));
+    for (class-mapping :: <limited-element-type-mapping-item>
+         in limited-class-element-type-mappings(mappings))
+      if (concrete-class == dylan-value(class-mapping.mapping-concrete-class))
+        if (class-mapping.mapping-element-type)
+          return(dylan-value(class-mapping.mapping-element-type));
+        else
+          return(#f)
+        end if
       end if
     end for;
-    for (limited-integer-mapping in limited-limited-integer-element-type-mappings(mappings))
-      let limited-integer = head(limited-integer-mapping);
-      if (concrete-class == dylan-value(tail(limited-integer-mapping)))
-        return(^limited-integer(min: head(limited-integer), max: tail(limited-integer)))
+    for (limited-integer-mapping :: <limited-element-type-mapping-item>
+         in limited-limited-integer-element-type-mappings(mappings))
+      if (concrete-class == dylan-value(limited-integer-mapping.mapping-concrete-class))
+        if (limited-integer-mapping.mapping-element-type)
+          let limited-integer = limited-integer-mapping.mapping-element-type;
+          return(^limited-integer(min: head(limited-integer), max: tail(limited-integer)))
+        else
+          return(#f)
+        end if
       end if
     end for;
     if (concrete-class == dylan-value(limited-element-type-mapping-default(mappings)))
@@ -139,19 +239,31 @@ define method lookup-any-limited-collection-element-type
 end method;
 
 define limited-element-type-mappings (<string>)
-  <byte-character>    => <byte-string>;
-  <unicode-character> => <unicode-string>;
-  otherwise           => <byte-string>;
+  <byte-character>, fill: as(<byte-character>, ' ')
+    => <limited-byte-string>;
+  <byte-character>
+    => <limited-byte-string>;
+
+  <unicode-character>, fill: as(<unicode-character>, ' ')
+    => <limited-unicode-string>;
+  <unicode-character>
+    => <limited-unicode-string>;
+
+  any, fill: as(<byte-character>, ' ')
+    => <limited-byte-string>;
+  otherwise
+    => <limited-byte-string>;
 end limited-element-type-mappings;
     
-define method select-limited-string (of, size)
-  let concrete-class 
-    = lookup-limited-collection-concrete-class(of, $<string>-mappings);
-  if (size)
+define method select-limited-string (of, default-fill, size)
+  let (concrete-class, includes-element-type?, includes-default-fill?)
+    = lookup-limited-collection-concrete-class(of, default-fill, $<string>-mappings);
+  if (size | ~includes-element-type? | ~includes-default-fill?)
     ^make(<&limited-vector-type>,
           class:          dylan-value(#"<string>"),
           concrete-class: concrete-class,
           element-type:   of,
+          default-fill:   default-fill,
           size:           size);
   else 
     concrete-class
@@ -159,32 +271,53 @@ define method select-limited-string (of, size)
 end method;
 
 define limited-element-type-mappings (<vector>)
-  <object>
-    => <simple-object-vector>;
-  <integer>
-    => <simple-integer-vector>;
+  <machine-word>, fill: as(<machine-word>, 0)
+    => <simple-machine-word-vector>;
   <machine-word>
     => <simple-machine-word-vector>;
+
+  <single-float>, fill: as(<single-float>, 0.0)
+    => <simple-single-float-vector>;
   <single-float>
     => <simple-single-float-vector>;
+
+  <double-float>, fill: as(<double-float>, 0.0)
+    => <simple-double-float-vector>;
   <double-float>
     => <simple-double-float-vector>;
+
+  limited(<integer>, min: 0, max: 255), fill: 0
+    => <simple-byte-vector>;
   limited(<integer>, min: 0, max: 255)
     => <simple-byte-vector>;
+  limited(<integer>, min: 0, max: 65535), fill: 0
+    => <simple-double-byte-vector>;
   limited(<integer>, min: 0, max: 65535)
     => <simple-double-byte-vector>;
+
+  <integer>, fill: 0
+    => <simple-integer-vector>;
+  <integer>
+    => <simple-integer-vector>;
+
+  <object>, fill: #f
+    => <simple-object-vector>;
+
+  any, fill: #f
+    => <simple-element-type-vector>;
   otherwise
     => <simple-element-type-vector>;
 end limited-element-type-mappings;
     
-define method select-limited-vector (of, size)
-  let (concrete-class, default-concrete-class)
-    = lookup-limited-collection-concrete-class(of, $<vector>-mappings);
-  if (size | concrete-class == default-concrete-class)
+define method select-limited-vector (of, default-fill, size)
+  let (concrete-class, includes-element-type?, includes-default-fill?)
+    = lookup-limited-collection-concrete-class(of, default-fill, $<vector>-mappings);
+  if (size | ~includes-element-type? | ~includes-default-fill?)
     ^make(<&limited-vector-type>,
           class:          dylan-value(#"<simple-vector>"),
           concrete-class: concrete-class,
           element-type:   of,
+          default-fill:   default-fill,
           size:           size);
   else 
     concrete-class
@@ -192,37 +325,59 @@ define method select-limited-vector (of, size)
 end method;
 
 define limited-element-type-mappings (<array>)
-  <object>
-    => <simple-object-array>;
-  <integer>
-    => <simple-integer-array>;
+  <machine-word>, fill: as(<machine-word>, 0)
+    => <simple-machine-word-array>;
   <machine-word>
     => <simple-machine-word-array>;
+
+  <single-float>, fill: as(<single-float>, 0.0)
+    => <simple-single-float-array>;
   <single-float>
     => <simple-single-float-array>;
+
+  <double-float>, fill: as(<double-float>, 0.0)
+    => <simple-double-float-array>;
   <double-float>
     => <simple-double-float-array>;
+
+  limited(<integer>, min: 0, max: 255), fill: 0
+    => <simple-byte-array>;
   limited(<integer>, min: 0, max: 255)
     => <simple-byte-array>;
+
+  limited(<integer>, min: 0, max: 65535), fill: 0
+    => <simple-double-byte-array>;
   limited(<integer>, min: 0, max: 65535)
     => <simple-double-byte-array>;
+
+  <integer>, fill: 0
+    => <simple-integer-array>;
+  <integer>
+    => <simple-integer-array>;
+
+  <object>, fill: #f
+    => <simple-object-array>;
+
+  any, fill: #f
+    => <simple-element-type-array>;
   otherwise
     => <simple-element-type-array>;
 end limited-element-type-mappings;
     
-define method select-limited-array (of, sz, dimensions)
+define method select-limited-array (of, default-fill, sz, dimensions)
   if (sz)       
-    select-limited-vector(of, sz)
+    select-limited-vector(of, default-fill, sz)
   elseif (dimensions & size(dimensions) = 1)
-    select-limited-vector(of, first(dimensions))
+    select-limited-vector(of, default-fill, first(dimensions))
   else
-    let (concrete-class, default-concrete-class)
-      = lookup-limited-collection-concrete-class(of, $<array>-mappings);
-    if (dimensions | concrete-class == default-concrete-class)
+    let (concrete-class, includes-element-type?, includes-default-fill?)
+      = lookup-limited-collection-concrete-class(of, default-fill, $<array>-mappings);
+    if (size | ~includes-element-type? | ~includes-default-fill?)
       ^make(<&limited-array-type>,
             class:          dylan-value(#"<array>"),
             concrete-class: concrete-class,
             element-type:   of,
+            default-fill:   default-fill,
             dimensions:     dimensions);
     else 
       concrete-class
@@ -231,23 +386,33 @@ define method select-limited-array (of, sz, dimensions)
 end method;
 
 define limited-element-type-mappings (<stretchy-vector>)
-  <object>
-    => <stretchy-object-vector>;
+  <byte-character>, fill: as(<byte-character>, ' ')
+    => <stretchy-byte-character-vector>;
   <byte-character>
     => <stretchy-byte-character-vector>;
+
+  limited(<integer>, min: 0, max: 255), fill: 0
+    => <stretchy-byte-vector>;
   limited(<integer>, min: 0, max: 255)
     => <stretchy-byte-vector>;
+
+  <object>, fill: #f
+    => <stretchy-object-vector>;
+
+  any, fill: #f
+    => <stretchy-element-type-vector>;
   otherwise
     => <stretchy-element-type-vector>;
 end limited-element-type-mappings;
     
-define method select-limited-stretchy-vector (of)
-  let (concrete-class, default-concrete-class)
-    = lookup-limited-collection-concrete-class(of, $<stretchy-vector>-mappings);
-  if (concrete-class == default-concrete-class)
+define method select-limited-stretchy-vector (of, default-fill)
+  let (concrete-class, includes-element-type?, includes-default-fill?)
+    = lookup-limited-collection-concrete-class(of, default-fill, $<stretchy-vector>-mappings);
+  if (~includes-element-type? | ~includes-default-fill?)
     ^make(<&limited-stretchy-vector-type>,
           class:          dylan-value(#"<stretchy-vector>"),
           concrete-class: concrete-class,
+          default-fill:   default-fill,
           element-type:   of);
   else 
     concrete-class
@@ -262,9 +427,9 @@ define limited-element-type-mappings (<table>)
 end limited-element-type-mappings;
     
 define method select-limited-table (of, size)
-  let (concrete-class, default-concrete-class)
-    = lookup-limited-collection-concrete-class(of, $<table>-mappings);
-  if (size | concrete-class == default-concrete-class)
+  let (concrete-class, includes-element-type?, includes-default-fill?)
+    = lookup-limited-collection-concrete-class(of, #f, $<table>-mappings);
+    if (size | ~includes-element-type?)
     ^make(<&limited-table-type>,
           class:          dylan-value(#"<table>"),
           concrete-class: dylan-value(#"<object-table>"),
@@ -283,9 +448,9 @@ define limited-element-type-mappings (<set>)
 end limited-element-type-mappings;
     
 define method select-limited-set (of, size)
-  let (concrete-class, default-concrete-class)
-    = lookup-limited-collection-concrete-class(of, $<set>-mappings);
-  if (size | concrete-class == default-concrete-class)
+  let (concrete-class, includes-element-type?, includes-default-fill?)
+    = lookup-limited-collection-concrete-class(of, #f, $<set>-mappings);
+  if (size | ~includes-element-type?)
     ^make(<&limited-set-type>,
           class:          dylan-value(#"<set>"),
           concrete-class: concrete-class,
@@ -297,19 +462,20 @@ define method select-limited-set (of, size)
 end method;
 
 define limited-element-type-mappings (<deque>)
-  <object>
+  <object>, fill: #f
     => <object-deque>;
   otherwise
     => <object-deque>;
 end limited-element-type-mappings;
     
-define method select-limited-deque (of)
-  let (concrete-class, default-concrete-class)
-    = lookup-limited-collection-concrete-class(of, $<deque>-mappings);
-  if (size | concrete-class == default-concrete-class)
+define method select-limited-deque (of, default-fill)
+  let (concrete-class, includes-element-type?, includes-default-fill?)
+    = lookup-limited-collection-concrete-class(of, default-fill, $<deque>-mappings);
+  if (size | ~includes-element-type? | ~includes-default-fill?)
     ^make(<&limited-deque-type>,
           class:          dylan-value(#"<deque>"),
           concrete-class: concrete-class,
+          default-fill:   default-fill,
           element-type:   of);
   else 
     concrete-class
@@ -317,65 +483,62 @@ define method select-limited-deque (of)
 end method;
 
 define method ^limited-collection 
-    (class :: <&class>, #rest all-keys, #key of, size, dimensions, #all-keys)
-  if (of) 
-    // PARALLELS RUNTIME METHODS ON LIMITED
-    select (class)
-      dylan-value(#"<range>")  // TODO: NOT YET IMPLEMENTED
-        => class;
-      dylan-value(#"<string>")
-        => select-limited-string(of, size);
-      dylan-value(#"<deque>")
-        => select-limited-deque(of);
-      dylan-value(#"<stretchy-vector>") 
-        => select-limited-stretchy-vector(of);
-      dylan-value(#"<vector>"), dylan-value(#"<simple-vector>")
-        => select-limited-vector(of, size);
-      dylan-value(#"<array>") 
-        => select-limited-array(of, size, dimensions);
-      dylan-value(#"<set>")
-        => select-limited-set(of, size);
-      dylan-value(#"<table>"), dylan-value(#"<object-table>")
-        => select-limited-table(of, size);
-      // UNINSTANTIATEABLE LIMITED COLLECTION TYPES
-      dylan-value(#"<collection>")
-        => ^make(<&limited-collection-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<explicit-key-collection>")
-        => ^make(<&limited-explicit-key-collection-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<mutable-collection>")
-        => ^make(<&limited-mutable-collection-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<stretchy-collection>")
-        => ^make(<&limited-stretchy-collection-type>,
-                 class:          class,
-                 element-type:   of);
-      dylan-value(#"<mutable-explicit-key-collection>")
-        => ^make(<&limited-mutable-explicit-key-collection-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<sequence>")
-        => ^make(<&limited-sequence-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      dylan-value(#"<mutable-sequence>")
-        => ^make(<&limited-mutable-sequence-type>,
-                 class:          class,
-                 element-type:   of,
-                 size:           size);
-      otherwise 
-        => #f;
-    end select  
-  else
-    class
-  end if;
+    (class :: <&class>, #rest all-keys,
+     #key of, default-fill, size, dimensions, #all-keys)
+  // PARALLELS RUNTIME METHODS ON LIMITED
+  select (class)
+    dylan-value(#"<range>")  // TODO: NOT YET IMPLEMENTED
+      => class;
+    dylan-value(#"<string>")
+      => select-limited-string(of, default-fill, size);
+    dylan-value(#"<deque>")
+      => select-limited-deque(of, default-fill);
+    dylan-value(#"<stretchy-vector>") 
+      => select-limited-stretchy-vector(of, default-fill);
+    dylan-value(#"<vector>"), dylan-value(#"<simple-vector>")
+      => select-limited-vector(of, default-fill, size);
+    dylan-value(#"<array>") 
+      => select-limited-array(of, default-fill, size, dimensions);
+    dylan-value(#"<set>")
+      => select-limited-set(of, size);
+    dylan-value(#"<table>"), dylan-value(#"<object-table>")
+      => select-limited-table(of, size);
+    // UNINSTANTIATEABLE LIMITED COLLECTION TYPES
+    dylan-value(#"<collection>")
+      => ^make(<&limited-collection-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<explicit-key-collection>")
+      => ^make(<&limited-explicit-key-collection-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<mutable-collection>")
+      => ^make(<&limited-mutable-collection-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<stretchy-collection>")
+      => ^make(<&limited-stretchy-collection-type>,
+               class:          class,
+               element-type:   of);
+    dylan-value(#"<mutable-explicit-key-collection>")
+      => ^make(<&limited-mutable-explicit-key-collection-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<sequence>")
+      => ^make(<&limited-sequence-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    dylan-value(#"<mutable-sequence>")
+      => ^make(<&limited-mutable-sequence-type>,
+               class:          class,
+               element-type:   of,
+               size:           size);
+    otherwise 
+      => #f;
+  end select  
 end method;

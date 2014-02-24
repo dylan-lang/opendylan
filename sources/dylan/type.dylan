@@ -186,6 +186,35 @@ define generic has-instances?
 
 //// Limited types
 
+// The user can create eight kinds of limited collections, depending on which
+// limited keyword arguments he specifies. These tables shows each combination, 
+// the value returned by limited, and the corresponding concrete class that gets
+// instantiated by calling make on that value.
+//
+// The tables are only *generally* accurate. A limited <deque> only has one
+// concrete class, and a limited <string> comes in <limited-byte-string> and
+// <limited-unicode-string> flavors. The concrete-limited-X-class functions
+// return the specific concrete class for each case.
+//
+// of:    default-fill:  size:/dimensions: | limited value            concrete class
+// -----  -------------  ----------------- + -----------------------  ----------------------
+// T      unspecified    unspecified       | <simple-T-X>             <simple-T-X>
+// T      unspecified    specified         | <limited-X-type>         <simple-T-X>
+// T      specified      unspecified       | <limited-X-type>         <simple-T-X>
+// T      specified      specified         | <limited-X-type>         <simple-T-X>
+// other  unspecified    unspecified       | <simple-element-type-X>  <simple-element-type-X>
+// other  unspecified    specified         | <limited-X-type>         <simple-element-type-X>
+// other  specified      unspecified       | <limited-X-type>         <simple-element-type-X>
+// other  specified      specified         | <limited-X-type>         <simple-element-type-X>
+//
+// concrete class                     properties in each instance
+// ---------------------------------  -------------------------------
+// <simple-T-X>                       element-type-fill
+// <simple-element-type-X>            element-type, element-type-fill
+//
+// X is the collection type and T one of the predefined limited collection
+// element types, e.g., a <simple-T-X> may be <simple-float-vector>.
+
 // BOOTED: define ... class <limited-type> ... end;
 
 define generic limited (class :: <class>, #key, #all-keys)
@@ -193,10 +222,15 @@ define generic limited (class :: <class>, #key, #all-keys)
 
 define generic limits (type :: <limited-type>)
   => (class :: <class>);
-
+  
 define method limited
-    (class == <string>, #key of, size, #all-keys) => (type :: <type>)
-  limited-string(of, size)
+    (class == <string>, 
+     #key of :: <type> = <character>,
+          size :: false-or(<integer>),
+          default-fill :: <object> = limited-string-default-fill(of),
+     #all-keys) 
+ => (type :: <type>)
+  limited-string(of, default-fill, size)
 end method;
 
 define method limited
@@ -214,17 +248,38 @@ define method limited
 end method;
 
 define method limited
-    (class == <vector>,
-     #key of :: <type> = <object>, size :: false-or(<integer>), #all-keys)
+    (class == <vector>, #rest all-keys, #key, #all-keys) 
  => (type :: <type>)
-  limited-vector(of, size)
+  // Delegate to <simple-vector> per DRM without defaulting any keyword args.
+  apply(limited, <simple-vector>, all-keys)
+end method;
+
+define method limited
+    (class == <stretchy-vector>,
+     #key of :: <type> = <object>,
+          default-fill :: <object>,
+     #all-keys)
+ => (type :: <type>)
+  limited-stretchy-vector(of, default-fill)
 end method;
 
 define method limited
     (class == <simple-vector>,
-     #key of :: <type> = <object>, size, size :: false-or(<integer>), #all-keys)
+     #key of :: <type> = <object>,
+          size :: false-or(<integer>),
+          default-fill :: <object>,
+     #all-keys) 
  => (type :: <type>)
-  limited-vector(of, size)
+  limited-vector(of, default-fill, size)
+end method;
+
+define method limited
+    (class == <deque>, 
+     #key of :: <type> = <object>,
+          default-fill :: <object>,
+     #all-keys)
+ => (type :: <type>)
+  limited-deque(of, default-fill)
 end method;
 
 define method limited
@@ -232,6 +287,7 @@ define method limited
      #key of :: <type> = <object>,
           size: sz :: false-or(<integer>),
           dimensions :: false-or(<sequence>),
+          default-fill :: <object>,
      #all-keys)
  => (type :: <type>)
   if (sz)
@@ -239,11 +295,11 @@ define method limited
       error("Dimensions %= incompatible to size %= in call to limited(<array>)",
             dimensions, sz);
     end if;
-    limited-vector(of, sz)
+    limited-vector(of, default-fill, sz)
   elseif (dimensions & size(dimensions) = 1)
-    limited-vector(of, first(dimensions))
+    limited-vector(of, default-fill, first(dimensions))
   else
-    limited-array(of, dimensions)
+    limited-array(of, default-fill, dimensions)
   end if
 end method;
 
@@ -343,15 +399,42 @@ define sealed inline method make
 end method;
 
 define sealed inline method make
+    (t :: <limited-deque-type>, #rest all-keys, #key fill = unsupplied(), #all-keys)
+ => (res :: <deque>)
+  let fill = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
+  apply(make, limited-collection-concrete-class(t),
+        element-type: limited-collection-element-type(t),
+        element-type-fill: limited-collection-element-type-fill(t),
+        fill: fill,
+        all-keys)
+end method;
+
+define sealed inline method make
+    (t :: <limited-stretchy-vector-type>, #rest all-keys,
+     #key fill = unsupplied(), #all-keys)
+ => (res :: <stretchy-vector>)
+  let fill = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
+  apply(make, limited-collection-concrete-class(t),
+        element-type: limited-collection-element-type(t),
+        element-type-fill: limited-collection-element-type-fill(t),
+        fill: fill,
+        all-keys);
+end method;
+
+define sealed inline method make
     (t :: <limited-array-type>, #rest all-keys,
-     #key size = unsupplied(), dimensions = unsupplied(), #all-keys)
+     #key size = unsupplied(), dimensions = unsupplied(), fill = unsupplied(),
+     #all-keys)
  => (res :: <array>)
+  let fill = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
   if (supplied?(size))
     if (limited-collection-dimensions(t))
       error("Incompatible size %= and limited array type %=.", size, t);
     else
-      apply(make, concrete-limited-vector-class(t),
+      apply(make, concrete-limited-vector-class(t, fill),
             element-type: limited-collection-element-type(t),
+            element-type-fill: limited-collection-element-type-fill(t),
+            fill:         fill,
             size:         size,
             all-keys)
     end if
@@ -370,20 +453,25 @@ define sealed inline method make
         end if;
     apply(make, limited-collection-concrete-class(t),
           element-type: limited-collection-element-type(t),
+          element-type-fill: limited-collection-element-type-fill(t),
           dimensions:   dims,
+          fill:         fill,
           all-keys)
   end if
 end method;
 
 define sealed inline method make
     (t :: <limited-vector-type>, #rest all-keys,
-     #key size = unsupplied(), #all-keys)
+     #key size = unsupplied(), fill = unsupplied(), #all-keys)
  => (res :: <vector>)
   let concrete-class = limited-collection-concrete-class(t);
   let size :: <integer> = limited-collection-size(t) | (supplied?(size) & size) | 0;
+  let fill :: <object> = (supplied?(fill) & fill) | limited-collection-element-type-fill(t);
   apply(make, concrete-class,
         element-type: limited-collection-element-type(t),
+        element-type-fill: limited-collection-element-type-fill(t),
         size:         size,
+        fill:         fill,
         all-keys);
 end method;
 
