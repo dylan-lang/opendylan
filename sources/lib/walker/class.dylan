@@ -10,7 +10,7 @@ define constant <slot-sequence-type>
   = limited(<vector>, of: <slot-descriptor>);
 
 define constant <walker-slot-sequence-type>
-  = limited(<vector>, of: <walker-slot-descriptor>, default-fill: 0);
+  = limited(<vector>, of: <walker-slot-descriptor>);
 
 define inline function walker-slot-value 
     (object, slot-descriptor :: <walker-slot-descriptor>) => (value)

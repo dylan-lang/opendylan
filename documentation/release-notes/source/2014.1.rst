@@ -84,26 +84,6 @@ Common Dylan
 * The function ``integer-to-string`` is now faster.
 
 
-Dylan
-=====
-
-Open Dylan now implements
-`DEP-0007 (Type-Safe Limited Collections) <http://opendylan.org/proposals/dep-0007.html>`_.
-This adds a ``default-fill:`` argument to ``limited``, a corresponding
-``element-type-fill`` generic function, and an ``element-type`` generic
-function applicable to all collections. With this, limited collections will now
-be easier and safer to use—with one caveat:
-
-As described in the DEP-0007 document, Open Dylan had previously ensured that
-some numeric limited collection types would automatically be filled with ``0``
-when instantiated *with* a non-zero size but *without* a ``fill:`` init-keyword.
-This is no longer the case. Code that relied on this behavior must be updated
-to provide valid ``fill:`` or ``default-fill:`` values.
-
-``element`` will no longer signal a type error when it returns its ``default:``
-value and that value does not match the element type of a limited collection.
-
-
 dylan-direct-c-ffi
 ==================
 

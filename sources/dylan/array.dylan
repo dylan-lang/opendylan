@@ -8,9 +8,6 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // BOOTED: define ... class <array> ... end;
 
-define constant <array-type>
-  = type-union(subclass(<array>), <limited-array-type>);
-
 
 ////////////
 // INTERFACE
@@ -38,7 +35,7 @@ define open generic dimension
   (array :: <array>, axis :: <integer>) => (dim :: <integer>);
 
 define open generic limited-array
-    (of :: <type>, default-fill :: <object>, dimensions :: false-or(<sequence>))
+    (of :: <type>, dimensions :: false-or(<sequence>))
  => (type :: <type>);
 
 
@@ -188,10 +185,11 @@ end method make;
 define method shallow-copy (array :: <array>) => (array :: <array>)
   let size = size(array);
   if (size = 0)
-    make(array.type-for-copy, dimensions: array.dimensions);
+    make(array.type-for-copy, dimensions: dimensions);
   else
+    let dimensions :: <sequence> = array.dimensions;
     let new-array :: <array> =
-      make(array.type-for-copy, dimensions: array.dimensions, fill: array[0]);
+      make(array.type-for-copy, dimensions: dimensions, fill: array[0]);
 
     for (key :: <integer> from 0 below size)
       new-array[key] := array[key];

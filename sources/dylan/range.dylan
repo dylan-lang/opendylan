@@ -104,11 +104,6 @@ end function;
 
 /// collection and sequence operations
 
-// DEP-0007: element-type is a generic function on every collection.
-define inline method element-type (range :: <range>) => (result == <number>)
-  <number>
-end method element-type;
-
 define sealed inline method type-for-copy
     (range :: <range>) => (result == <list>)
   <list>

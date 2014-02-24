@@ -130,17 +130,15 @@ define protocol-spec collections ()
   function head-setter (<object>, <pair>) => (<object>);
   function tail-setter (<object>, <pair>) => (<object>);
   open generic-function add (<sequence>, <object>) => (<sequence>);
-  //--- DRM defines add! for <sequence>, but OD supports it for all <collection>.
-  open generic-function add! (<collection>, <object>) => (<collection>);
+  open generic-function add! (<sequence>, <object>) => (<sequence>);
   open generic-function add-new
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
   open generic-function add-new!
       (<sequence>, <object>, #"key", #"test") => (<sequence>);
   open generic-function remove 
       (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
-  //--- DRM defines remove! for <sequence>, but OD supports it for all <collection>.
   open generic-function remove!
-      (<collection>, <object>, #"key", #"test", #"count") => (<collection>);
+      (<sequence>, <object>, #"key", #"test", #"count") => (<sequence>);
   open generic-function push (<deque>, <object>) => (<object>);
   open generic-function pop (<deque>) => (<object>);
   open generic-function push-last (<deque>, <object>) => (<object>);
@@ -151,12 +149,6 @@ define protocol-spec collections ()
       (<sequence>, #"key", #"test", #"stable") => (<sequence>);
   open generic-function sort!
       (<sequence>, #"key", #"test", #"stable") => (<sequence>);
-
-  /// DEP-0007
-  open generic-function element-type
-      (<collection>) => (<type>);
-  open generic-function element-type-fill
-      (<collection>) => (<object>);
 
   /// Mapping and reducing
   function do (<function>, <collection>, #"rest") => (singleton(#f));
