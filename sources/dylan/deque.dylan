@@ -107,26 +107,29 @@ end method reverse;
 // <OBJECT-DEQUE>
 //
 
-define class <object-deque>
-    (<limited-element-type-collection>, <limited-fillable-collection>, <deque>)
+define class <object-deque> (<deque>, <limited-collection>)
   slot representation :: <island-deque>,
     init-value: make(<island-deque>);
 end class <object-deque>;
 
-define sealed domain make (singleton(<object-deque>));
 
+define sealed domain element-type (<object-deque>);
 
 ///
 /// LIMITED DEQUES
 ///
 
 define method limited-deque
-     (of :: <type>, default-fill :: <object>) => (type :: <limited-deque-type>)
+     (of :: <type>) => (type :: <limited-deque-type>)
   make(<limited-deque-type>,
        class:          <deque>,
        element-type:   of,
-       default-fill:   default-fill,
        concrete-class: <object-deque>);
+end method;
+
+define method limited
+    (class == <deque>, #key of, #all-keys) => (type :: <type>)
+  limited-deque(of)
 end method;
 
 /// TODO: COULD BE EXPENSIVE UNLESS TYPES ARE CACHED
@@ -134,11 +137,10 @@ end method;
 define sealed inline method type-for-copy (x :: <object-deque>)
  => (type :: <type>)
   let elt-type = element-type(x);
-  let elt-fill = element-type-fill(x);
-  if (elt-type == <object> & elt-fill == #f)
+  if (elt-type == <object>)
     object-class(x)
   else
-    limited-deque(elt-type, elt-fill)
+    limited-deque(elt-type)
   end if
 end method type-for-copy;
 
@@ -223,8 +225,7 @@ end method size;
 //
 
 define sealed inline method trusted-size-setter
-    (new-size :: <integer>, collection :: <object-deque>,
-     #key fill = collection.element-type-fill)
+    (new-size :: <integer>, collection :: <object-deque>)
  => (new-size :: <integer>)
   // TODO: write a faster version of this method.
   let difference = new-size - collection.size;
@@ -234,9 +235,8 @@ define sealed inline method trusted-size-setter
         pop-last(collection)
       end;
     difference > 0 =>
-      check-type(fill, collection.element-type);
       for (i :: <integer> from 0 below difference)
-        trusted-push-last(collection, fill)
+        trusted-push-last(collection, #f)
       end;
   end case;
   new-size
@@ -246,6 +246,11 @@ define sealed method size-setter (new-size :: <integer>, collection :: <object-d
  => (new-size :: <integer>)
   // TODO: write a faster version of this method.
   check-nat(new-size);
+  let size = size(collection);
+  unless (new-size <= size)
+    // expected to fail when #f is incompatible with element-type
+    check-type(#f, element-type(collection))
+  end unless;
   trusted-size(collection) := new-size;
 end method size-setter;
 
@@ -275,6 +280,7 @@ define sealed method element
     if (unsupplied?(default))
       element-range-error(collection, index)
     else
+      check-type(default, element-type(collection));
       default
     end if
   else
@@ -315,12 +321,11 @@ define sealed method element-setter
   if (index < 0) element-range-error(collection, index) end;
   if (index > rep-size-minus-1)
     if (collection.size = index)
-      trusted-size-setter(index + 1, collection, fill: new-value);
-      new-value
+      trusted-size(collection) := index + 1;
     else
       collection.size := index + 1;
-      collection[index] := new-value // Let's try again
     end if;
+    collection[index] := new-value // Let's try again
   else
     // Even if multiple threads are running, and rep-first-index and
     // rep-last-index are incorrect, they should be within the bounds of
@@ -399,13 +404,11 @@ end method reverse!;
 // PRIVATE
 
 define method grow! (deque :: <object-deque>)
-  let fill = deque.element-type-fill;
-  check-type(fill, deque.element-type);
   let old-rep = deque.representation;
   let old-rep-first-index = old-rep.first-index;
   let old-rep-last-index = old-rep.last-index;
   let old-rep-size = (old-rep-last-index - old-rep-first-index) + 1;
-  let new-rep = make(<island-deque>, size: old-rep-size * 2, fill: fill);
+  let new-rep = make(<island-deque>, size: old-rep-size * 2, fill: #f);
   new-rep.first-index := truncate/(old-rep-size, 2);
   for (src-index :: <integer>
          from old-rep-first-index to old-rep-last-index,
@@ -628,7 +631,7 @@ define sealed method copy-sequence
     let rep-first-index = rep.first-index;
     let rep-last-index = rep.last-index;
     let deque-size = (rep-last-index - rep-first-index) + 1;
-    let target = make(type-for-copy(source), size: deque-size);
+    let target = make(<object-deque>, size: deque-size, element-type: element-type(source));
     let target-rep = target.representation;
     for (from :: <integer> from rep-first-index to rep-last-index,
          to :: <integer> from target-rep.first-index to target-rep.last-index)
@@ -659,6 +662,9 @@ define method concatenate-as-two
          d
   end
 end;
+
+define sealed domain make (singleton(<object-deque>));
+define sealed domain element-type (<object-deque>);
 
 define sealed method as (class == <list>, v :: <object-deque>)
  => (l :: <list>)

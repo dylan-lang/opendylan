@@ -731,7 +731,8 @@ define &module dylan-extensions
     <mutable-object-with-elements>;
 
   create
-    <limited-collection>;
+    <limited-collection>,
+    element-type;
 
   create
     <limited-collection-type>,
@@ -740,8 +741,6 @@ define &module dylan-extensions
       limited-collection-element-type,
       limited-collection-size,
       limited-collection-dimensions,
-    <limited-fillable-type>,
-      limited-collection-element-type-fill,
     <limited-explicit-key-collection-type>,
     <limited-mutable-collection-type>,
     <limited-stretchy-collection-type>,
@@ -792,6 +791,7 @@ define &module dylan-extensions
       stretchy-representation-type,
       stretchy-vector-element,
       stretchy-vector-element-setter,
+      collection-fill,
     limited-stretchy-vector,
     limited-array,
     limited-vector,
@@ -1337,7 +1337,6 @@ end &module;
 /// Last checked: 19th Jan 96, against DRM Draft of September 29, 1995.
 /// Modified: 27 Mar 97 to add function-definer, an approved new feature, by GMP.
 /// Modified: 8 Apr 97 to rename <small-integer> => <integer>, by GMP.
-/// Modified: 10 Aug 13 to add element-type and element-type-fill for DEP-0007, by DJV.
 
 define &module dylan
 
@@ -1481,7 +1480,6 @@ define &module dylan
    <mutable-collection>,
    <stretchy-collection>,
 
-   element-type,
    size,
    size-setter,
    empty?,
@@ -1501,7 +1499,6 @@ define &module dylan
    <sequence>,
    <mutable-sequence>,
 
-   element-type-fill,
    add,
    add!,
    add-new,

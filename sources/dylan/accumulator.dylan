@@ -233,12 +233,12 @@ define method convert-accumulator-as
     (type :: <mutable-sequence-type>, acc :: <sequence-accumulator>)
  => (result :: <mutable-sequence>);  // actually :: type;
   if (size(acc) = 0)
-    let target = make-sequence(type, size: 0);
+    let target = make(type, size: 0);
     check-key-test-eq(target, acc);
     target
   else
     let target =
-      make-sequence(type, size: acc.acc-size, fill: acc.acc-buffer[acc.acc-index]);
+      make(type, size: acc.acc-size, fill: acc.acc-buffer[acc.acc-index]);
     check-key-test-eq(target, acc);
     with-fip-of target /* with-setter? */
       for (e in acc,
@@ -275,7 +275,7 @@ define method convert-accumulator-as
   let sz = size(acc);
 
   if (sz = 0)
-    let target = make-sequence(type, size: 0);
+    let target = make(type, size: 0);
     check-key-test-eq(target, acc);
     target
   else // Use a temp for fast random update and coerce when done

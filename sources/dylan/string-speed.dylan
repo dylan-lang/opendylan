@@ -106,7 +106,7 @@ define sealed method copy-sequence
  => (result-sequence :: <byte-string>);
   let last :: <integer> = check-start-compute-end(source, first, last);
   let sz :: <integer> = last - first;
-  let target :: <byte-string> = make(type-for-copy(source), size: sz);
+  let target :: <byte-string> = make(<byte-string>, size: sz);
   primitive-replace-bytes!
     (target, primitive-repeated-slot-offset(target), integer-as-raw(0),
      source, primitive-repeated-slot-offset(source), integer-as-raw(first),
