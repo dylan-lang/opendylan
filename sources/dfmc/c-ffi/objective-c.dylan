@@ -46,14 +46,35 @@ define &macro objc-selector-definer
                     end
                   end
                 };
+
+    let type-encoding-expr = get-property(options, #"type-encoding");
+    let type-encoding = #f;
+    if (type-encoding-expr)
+      type-encoding := ^top-level-eval(type-encoding-expr);
+      unless (instance?(type-encoding, <string>))
+        note(<invalid-type-encoding-value>,
+             source-location: fragment-source-location(type-encoding-expr),
+             definition-name: dylan-name,
+             type-encoding-expression: type-encoding-expr);
+        type-encoding := #f;
+      end unless;
+    end if;
+
+    unless (type-encoding)
+      note(<missing-type-encoding>,
+           source-location: fragment-source-location(form),
+           definition-name: dylan-name);
+      type-encoding := "dummy_type_encodingr";
+    end unless;
+
     if (define-gf?)
-      #{ define constant ?dylan-name = ?=objc/register-selector(?selector);
+      #{ define constant ?dylan-name = ?=objc/register-selector(?selector, ?type-encoding);
          define ?inline-policy method "%send-" ## ?dylan-name ?parameter-list-fragment
           => ?return-values-fragment;
            ?body
          end }
     else
-      #{ define constant ?dylan-name = ?=objc/register-selector(?selector);
+      #{ define constant ?dylan-name = ?=objc/register-selector(?selector, ?type-encoding);
          define ?inline-policy function "%send-" ## ?dylan-name ?parameter-list-fragment
           => ?return-values-fragment;
            ?body

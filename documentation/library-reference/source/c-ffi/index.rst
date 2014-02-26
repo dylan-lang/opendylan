@@ -2799,6 +2799,8 @@ of that bridge are implemented within this library.
        instead.
      * The ``c-modifiers`` keyword can be used to select alternate versions of ``objc_msgSend``
        when calling into the Objective C run-time.
+     * An additional keyword, ``type-encoding:`` must be supplied with a valid type encoding
+       for the selector. See the Objective C bridge documentation for more details.
 
    :example:
      .. code-block:: dylan
