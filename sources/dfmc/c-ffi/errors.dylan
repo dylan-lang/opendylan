@@ -48,6 +48,20 @@ define program-error <missing-selector>
   format-arguments definition-name;
 end;
 
+define program-error <invalid-type-encoding-value>
+  slot condition-definition-name, init-keyword: definition-name:;
+  slot condition-type-encoding-expression, init-keyword: type-encoding-expression:;
+  format-string "The expression supplied for the type-encoding keyword in the "
+    "definition of %= does not evaluate to a string constant.";
+  format-arguments definition-name;
+end;
+
+define program-error <missing-type-encoding>
+  slot condition-definition-name, required-init-keyword: definition-name:;
+  format-string "Missing type-encoding keyword in the definition of %=.";
+  format-arguments definition-name;
+end;
+
 define program-error <no-designator-superclass>
   slot condition-designator-name, required-init-keyword: designator-name:;
   format-string "The designator class %= does not have a superclass "
