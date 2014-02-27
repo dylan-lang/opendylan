@@ -10,7 +10,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 /// String buffers
 
 //---*** Oh for a stretchy string...
-define constant <string-buffer> = limited(<stretchy-vector>, of: <byte-character>);
+define constant <string-buffer> = limited(<stretchy-vector>, of: <byte-character>,
+                                          default-fill: as(<byte-character>, ' '));
 
 //---*** Is there a more efficient way to do this?
 define function print-string

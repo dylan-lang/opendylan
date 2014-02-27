@@ -45,50 +45,32 @@ end method make;
 //
 
 define macro shared-string-definer
-  { define shared-string ?:name (#key ?fill:expression) }
-    => { define method make
-             (class == "<" ## ?name ## "-string>",
-              #key fill :: "<" ## ?name ## "-character>" = ?fill, size :: <integer> = 0)
-          => (res :: "<" ## ?name ## "-string>")
-           if (size = 0)
-             empty(class)
-           else
-             system-allocate-repeated-instance
-               ("<" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
-           end if
-         end method;
-
-         define sealed inline method concrete-limited-string-class
-             (of == "<" ## ?name ## "-character>")
-          => (type :: singleton("<" ## ?name ## "-string>"))
-           "<" ## ?name ## "-string>"
-         end method;
-
-         define inline sealed method element
-             (string :: "<" ## ?name ## "-string>", index :: <integer>,
+  { define shared-string ?:name (#key ?fill:expression, ?class-name:name) }
+    => { define inline sealed method element
+             (string :: "<" ## ?class-name ## "-string>", index :: <integer>,
               #key default = unsupplied())
-          => (character :: "<" ## ?name ## "-character>")
+          => (character)
            if (element-range-check(index, size(string)))
              string-element(string, index)
            else
              if (unsupplied?(default))
                element-range-error(string, index)
              else
-               check-type(default, element-type(string));
                default
              end if
            end if
          end method element;
 
          define inline sealed method element-no-bounds-check
-             (string :: "<" ## ?name ## "-string>", index :: <integer>, #key default)
+             (string :: "<" ## ?class-name ## "-string>",
+              index :: <integer>, #key default)
           => (character :: "<" ## ?name ## "-character>")
            string-element(string, index)
          end method element-no-bounds-check;
 
          define inline sealed method element-setter
              (new-value :: "<" ## ?name ## "-character>",
-              string :: "<" ## ?name ## "-string>", index :: <integer>)
+              string :: "<" ## ?class-name ## "-string>", index :: <integer>)
           => (character :: "<" ## ?name ## "-character>")
            if (element-range-check(index, size(string)))
              string-element(string, index) := new-value
@@ -99,64 +81,60 @@ define macro shared-string-definer
 
          define inline sealed method element-setter
              (new-value :: <character>,
-              string :: "<" ## ?name ## "-string>", index :: <integer>)
+              string :: "<" ## ?class-name ## "-string>", index :: <integer>)
           => (character :: "<" ## ?name ## "-character>")
            string[index] := as("<" ## ?name ## "-character>", new-value);
          end method element-setter;
 
          define inline sealed method element-no-bounds-check-setter
              (new-value :: "<" ## ?name ## "-character>",
-              string :: "<" ## ?name ## "-string>", index :: <integer>)
+              string :: "<" ## ?class-name ## "-string>", index :: <integer>)
           => (character :: "<" ## ?name ## "-character>")
            string-element(string, index) := new-value
          end method element-no-bounds-check-setter;
 
          define inline sealed method element-no-bounds-check-setter
              (new-value :: <character>,
-              string :: "<" ## ?name ## "-string>", index :: <integer>)
+              string :: "<" ## ?class-name ## "-string>", index :: <integer>)
           => (character :: "<" ## ?name ## "-character>")
            string-element(string, index)
              := as("<" ## ?name ## "-character>", new-value);
          end method element-no-bounds-check-setter;
 
-         define sealed inline method type-for-copy
-             (object :: "<" ## ?name ## "-string>") => (c :: <class>)
-           "<" ## ?name ## "-string>"
-         end method type-for-copy;
-
          define sealed inline method element-type
-             (t :: "<" ## ?name ## "-string>") => (type :: <type>)
+             (t :: "<" ## ?class-name ## "-string>") => (type :: <type>)
            "<" ## ?name ## "-character>"
          end method;
-
+         
          define sealed inline method as
-             (class == "<" ## ?name ## "-string>", string :: "<" ## ?name ## "-string>")
-          => (s :: "<" ## ?name ## "-string>")
+             (class == "<" ## ?class-name ## "-string>",
+              string :: "<" ## ?class-name ## "-string>")
+          => (s :: "<" ## ?class-name ## "-string>")
            string
          end method as;
 
          define method as
-             (class == "<" ## ?name ## "-string>", collection :: <collection>)
-          => (s :: "<" ## ?name ## "-string>")
-           let new-string :: "<" ## ?name ## "-string>"
-             = make("<" ## ?name ## "-string>", size: collection.size);
-           replace-subsequence!(new-string, collection);
+             (class == "<" ## ?class-name ## "-string>", coll :: <collection>)
+          => (s :: "<" ## ?class-name ## "-string>")
+           let new-string :: "<" ## ?class-name ## "-string>"
+             = make("<" ## ?class-name ## "-string>", size: coll.size);
+           replace-subsequence!(new-string, coll);
            new-string
          end method as;
 
-         define inline function ?name ## "-string-current-element"
-             (string :: "<" ## ?name ## "-string>", state :: <integer>)
+         define inline function ?class-name ## "-string-current-element"
+             (string :: "<" ## ?class-name ## "-string>", state :: <integer>)
            string-element(string, state)
          end function;
 
-         define inline function ?name ## "-string-current-element-setter"
-             (new-value :: <character>, string :: "<" ## ?name ## "-string>",
+         define inline function ?class-name ## "-string-current-element-setter"
+             (new-value :: <character>, string :: "<" ## ?class-name ## "-string>",
               state :: <integer>)
            string-element(string, state) := as("<" ## ?name ## "-character>", new-value);
          end function;
 
          define sealed inline method forward-iteration-protocol
-             (sequence :: "<" ## ?name ## "-string>")
+             (sequence :: "<" ## ?class-name ## "-string>")
           => (initial-state :: <integer>, limit :: <integer>,
               next-state :: <function>, finished-state? :: <function>,
               current-key :: <function>,
@@ -167,13 +145,13 @@ define macro shared-string-definer
                   sequence-next-state,
                   sequence-finished-state?,
                   sequence-current-key,
-                  ?name ## "-string-current-element",
-                  ?name ## "-string-current-element-setter",
+                  ?class-name ## "-string-current-element",
+                  ?class-name ## "-string-current-element-setter",
                   identity-copy-state)
          end method forward-iteration-protocol;
 
          define sealed inline method backward-iteration-protocol
-             (sequence :: "<" ## ?name ## "-string>")
+             (sequence :: "<" ## ?class-name ## "-string>")
           => (final-state :: <integer>,
               limit :: <integer>,
               previous-state :: <function>,
@@ -187,22 +165,23 @@ define macro shared-string-definer
                   sequence-previous-state,
                   sequence-finished-state?,
                   sequence-current-key,
-                  ?name ## "-string-current-element",
-                  ?name ## "-string-current-element-setter",
+                  ?class-name ## "-string-current-element",
+                  ?class-name ## "-string-current-element-setter",
                   identity-copy-state)
          end method backward-iteration-protocol;
 
-         define sealed domain size ("<" ## ?name ## "-string>");
-         define sealed domain make (singleton("<" ## ?name ## "-string>"));
-         define sealed domain initialize ("<" ## ?name ## "-string>");
+         define sealed domain size ("<" ## ?class-name ## "-string>");
+         define sealed domain make (singleton("<" ## ?class-name ## "-string>"));
+         define sealed domain initialize ("<" ## ?class-name ## "-string>");
 
          define inline sealed method empty?
-             (string :: "<" ## ?name ## "-string>") => (result :: <boolean>)
+             (string :: "<" ## ?class-name ## "-string>") => (result :: <boolean>)
            string.size = 0
          end method empty?;
 
          define sealed method \<
-             (string-1 :: "<" ## ?name ## "-string>", string-2 :: "<" ## ?name ## "-string>")
+             (string-1 :: "<" ## ?class-name ## "-string>", 
+              string-2 :: "<" ## ?class-name ## "-string>")
           => (well? :: <boolean>)
            let min-size :: <integer> = min(string-1.size, string-2.size);
            iterate grovel (index :: <integer> = 0)
@@ -221,7 +200,8 @@ define macro shared-string-definer
          end method \<;
 
          define sealed method \=
-             (string-1 :: "<" ## ?name ## "-string>", string-2 :: "<" ## ?name ## "-string>")
+             (string-1 :: "<" ## ?class-name ## "-string>", 
+              string-2 :: "<" ## ?class-name ## "-string>")
           => (eq :: <boolean>)
            unless (string-1.size ~= string-2.size)
              for (c1 :: "<" ## ?name ## "-character>" in string-1,
@@ -235,7 +215,8 @@ define macro shared-string-definer
          end;
 
          define sealed method case-insensitive-equal
-             (string-1 :: "<" ## ?name ## "-string>", string-2 :: "<" ## ?name ## "-string>")
+             (string-1 :: "<" ## ?class-name ## "-string>",
+              string-2 :: "<" ## ?class-name ## "-string>")
           => (eq :: <boolean>)
            unless (string-1.size ~= string-2.size)
              for (c1 :: "<" ## ?name ## "-character>" in string-1,
@@ -248,10 +229,11 @@ define macro shared-string-definer
            end
          end;
 
-         define sealed method as-lowercase (string :: "<" ## ?name ## "-string>")
-          => (new-string :: "<" ## ?name ## "-string>")
-           let new-string :: "<" ## ?name ## "-string>"
-             = make("<" ## ?name ## "-string>", size: string.size);
+         define sealed method as-lowercase
+             (string :: "<" ## ?class-name ## "-string>")
+          => (new-string :: "<" ## ?class-name ## "-string>")
+           let new-string :: "<" ## ?class-name ## "-string>"
+             = make("<" ## ?class-name ## "-string>", size: string.size);
            for (i :: <integer> from 0 below string.size)
              string-element(new-string, i)
                := as-lowercase(string-element(string, i))
@@ -259,8 +241,9 @@ define macro shared-string-definer
            new-string
          end method as-lowercase;
 
-         define sealed method as-lowercase! (string :: "<" ## ?name ## "-string>")
-           => (string :: "<" ## ?name ## "-string>")
+         define sealed method as-lowercase!
+              (string :: "<" ## ?class-name ## "-string>")
+           => (string :: "<" ## ?class-name ## "-string>")
            for (i :: <integer> from 0 below string.size)
              string-element(string, i)
                := as-lowercase(string-element(string, i))
@@ -268,10 +251,11 @@ define macro shared-string-definer
            string
          end method as-lowercase!;
 
-         define sealed method as-uppercase (string :: "<" ## ?name ## "-string>")
-          => (new-string :: "<" ## ?name ## "-string>")
-           let new-string :: "<" ## ?name ## "-string>"
-             = make("<" ## ?name ## "-string>", size: string.size);
+         define sealed method as-uppercase
+             (string :: "<" ## ?class-name ## "-string>")
+          => (new-string :: "<" ## ?class-name ## "-string>")
+           let new-string :: "<" ## ?class-name ## "-string>"
+             = make("<" ## ?class-name ## "-string>", size: string.size);
            for (i :: <integer> from 0 below string.size)
              string-element(new-string, i)
                := as-uppercase(string-element(string, i))
@@ -279,8 +263,9 @@ define macro shared-string-definer
            new-string
          end method as-uppercase;
 
-         define sealed method as-uppercase! (string :: "<" ## ?name ## "-string>")
-          => (string :: "<" ## ?name ## "-string>")
+         define sealed method as-uppercase!
+             (string :: "<" ## ?class-name ## "-string>")
+          => (string :: "<" ## ?class-name ## "-string>")
            for (i :: <integer> from 0 below string.size)
              string-element(string, i)
                := as-uppercase(string-element(string, i))
@@ -290,10 +275,20 @@ define macro shared-string-definer
          }
 end macro;
 
-define macro string-definer
-  { define string ?:name (#key ?fill:expression) }
-    => { define shared-string ?name (fill: ?fill);
-         define sealed concrete primary class "<" ## ?name ## "-string>" (<string>, <vector>)
+//
+// LIMITED AND NOT LIMITED STRINGS
+//
+
+define constant <string-type>
+  = type-union(subclass(<string>), <limited-string-type>);
+
+// Defines class and methods for a <limited-X-class>.
+define macro limited-string-definer
+  { define limited-string ?:name (#key ?fill:expression) }
+    => { define shared-string ?name (fill: ?fill, class-name: "limited-" ## ?name);
+    
+         define sealed concrete primary class "<limited-" ## ?name ## "-string>"
+             (<limited-fillable-collection>, <string>, <vector>)
            repeated sealed inline slot string-element :: "<" ## ?name ## "-character>",
              init-value: ?fill,
              init-keyword: fill:,
@@ -302,32 +297,137 @@ define macro string-definer
              size-init-value: 0;
          end class;
 
-         define constant "$empty-<" ## ?name ## "-string>"
-           = system-allocate-repeated-instance
-               ("<" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), 0, ?fill);
+         define method make
+             (class == "<limited-" ## ?name ## "-string>",
+              #key fill = ?fill, size :: <integer> = 0,
+                   element-type-fill: default-fill = ?fill)
+          => (res :: "<limited-" ## ?name ## "-string>")
+           // The user is not obligated to provide a fill value of the right type
+           // if we won't be needing it, but the fill variable does have to be the
+           // right type for the compiler to optimize system-allocate-repeated-instance.
+           let fill :: "<" ## ?name ## "-character>"
+             = if (size = 0)
+                 ?fill
+               else
+                 check-type(fill, "<" ## ?name ## "-character>")
+               end;
+           let instance :: "<limited-" ## ?name ## "-string>" 
+             = system-allocate-repeated-instance
+                 ("<limited-" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
+           instance.element-type-fill := default-fill;
+           instance
+         end method;
+       
+         define sealed inline method type-for-copy
+             (object :: "<limited-" ## ?name ## "-string>") => (c :: <type>)
+           limited-string(element-type(object), element-type-fill(object), #f)
+         end method type-for-copy;
 
-         define sealed method empty
-             (class == "<" ## ?name ## "-string>") => (res :: "<" ## ?name ## "-string>")
-           "$empty-<" ## ?name ## "-string>"
-         end method; }
+         define sealed inline method concrete-limited-string-class
+             (of == "<" ## ?name ## "-character>", default-fill)
+          => (type :: singleton("<limited-" ## ?name ## "-string>"), fully-specified? :: <boolean>)
+           values("<limited-" ## ?name ## "-string>", default-fill = ?fill)
+         end method;
+
+         define sealed inline method limited-string-default-fill
+             (of == "<" ## ?name ## "-character>") => (fill :: "<" ## ?name ## "-character>")
+           ?fill
+         end method;
+       }
 end macro;
 
-define constant <string-type>
-  = type-union(subclass(<string>), <limited-string-type>);
+// Defines class and methods for an <X-string>. The <byte-string> class was
+// defined from boot, so use string-without-class alone for it.
+define macro string-definer
+  { define string ?:name (#key ?fill:expression) }
+  => { define string-without-class ?name (fill: ?fill);
+
+       define sealed concrete primary class "<" ## ?name ## "-string>" (<string>, <vector>)
+         repeated sealed inline slot string-element :: "<" ## ?name ## "-character>",
+           init-value: ?fill,
+           init-keyword: fill:,
+           size-getter: size,
+           size-init-keyword: size:,
+           size-init-value: 0;
+       end class;
+       
+       define method make
+           (class == "<" ## ?name ## "-string>",
+            #key fill = ?fill, size :: <integer> = 0)
+        => (res :: "<" ## ?name ## "-string>")
+         if (size = 0)
+           empty(class)
+         else
+           // The user is not obligated to provide a fill value of the right type
+           // if we won't be needing it, but the fill variable does have to be the
+           // right type for the compiler to optimize system-allocate-repeated-instance.
+           let fill :: "<" ## ?name ## "-character>"
+             = check-type(fill, "<" ## ?name ## "-character>");
+           system-allocate-repeated-instance
+             ("<" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), size, fill);
+         end if
+       end method;
+
+       define constant "$empty-<" ## ?name ## "-string>"
+         = system-allocate-repeated-instance
+             ("<" ## ?name ## "-string>", "<" ## ?name ## "-character>", unbound(), 0, ?fill);
+
+       define sealed method empty
+           (class == "<" ## ?name ## "-string>") => (res :: "<" ## ?name ## "-string>")
+         "$empty-<" ## ?name ## "-string>"
+       end method;
+     }
+end macro;
+
+// Defines methods for an <X-string> class.
+define macro string-without-class-definer
+  { define string-without-class ?:name (#key ?fill:expression) }
+    => { define shared-string ?name (fill: ?fill, class-name: ?name);
+      
+         define sealed inline method type-for-copy
+             (object :: "<" ## ?name ## "-string>") => (c :: <class>)
+           "<" ## ?name ## "-string>"
+         end method type-for-copy;
+      
+         define sealed inline method element-type-fill
+             (t :: "<" ## ?name ## "-string>") => (fill :: "<" ## ?name ## "-character>")
+           ?fill
+         end method;
+  }
+end macro;
+
+//
+// LIMITED STRINGS
+//
+
+define limited-string byte (fill: as(<byte-character>, ' '));
 
 define method limited-string
-    (of :: <type>, size :: false-or(<integer>)) => (type :: <string-type>)
-  let concrete-class
-    = concrete-limited-string-class(of);
-  if (size)
+    (of :: <type>, default-fill :: <character>, size :: false-or(<integer>))
+ => (type :: <string-type>)
+  let (concrete-class, fully-specified?)
+    = concrete-limited-string-class(of, default-fill);
+  if (size | ~fully-specified?)
     make(<limited-string-type>,
          class:          <string>,
          element-type:   of,
+         default-fill:   default-fill,
          concrete-class: concrete-class,
          size:           size)
   else
     concrete-class
   end if;
+end method;
+
+define sealed inline method concrete-limited-string-class
+    (of == <character>, default-fill)
+ => (type :: subclass(<string>), fully-specified? :: <boolean>)
+  values(<limited-byte-string>, default-fill = limited-string-default-fill(of))
+end method;
+
+define sealed inline method limited-string-default-fill
+    (of :: <type>) => (fill == ' ')
+  ' '
 end method;
 
 //
@@ -336,8 +436,23 @@ end method;
 
 // BOOTED: define ... class <byte-string> ... end;
 
+define string-without-class byte (fill: ' ', class-name: byte);
 
-define shared-string byte (fill: ' ');
+define method make
+    (class == <byte-string>, #key fill = as(<byte-character>, ' '),
+     size :: <integer> = 0)
+ => (res :: <byte-string>)
+  if (size = 0)
+    empty(class)
+  else
+    // The user is not obligated to provide a fill value of the right type
+    // if we won't be needing it, but the fill variable does have to be the
+    // right type for the compiler to optimize system-allocate-repeated-instance.
+    let fill :: <byte-character> = check-type(fill, <byte-character>);
+    system-allocate-repeated-instance
+      (<byte-string>, <byte-character>, unbound(), size, fill);
+  end if
+end method;
 
 define sealed method empty
     (class == <byte-string>) => (res :: <byte-string>)

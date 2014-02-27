@@ -291,12 +291,6 @@ define sealed concrete &class <empty-list> (<list>)
   inherited &slot head, init-value: #(), init-keyword: head:;
 end &class <empty-list>;
 
-define open abstract primary &class <limited-collection> (<collection>)
-  constant &slot element-type :: <type>,
-    init-keyword: element-type:,
-    init-value:   <object>;
-end &class;
-
 define open   abstract &class <array> (<mutable-sequence>) end;
 define open   abstract &class <vector> (<array>) end;
 
@@ -336,6 +330,48 @@ end &class <byte-string>;
 
 // HACK: SHOULDN'T GENERATE THESE IN THE FIRST PLACE
 ignore(^string-element-values); ignore(^string-element-setter);
+
+// This is a marker class for all concrete limited collection classes.
+define open abstract primary &class <limited-collection> (<collection>)
+end &class;
+
+// This is a mixin class for concrete limited classes with user-specified
+// element types. Concrete limited classes with predefined types such as
+// <simple-byte-vector> do not need it.
+define abstract primary &class <limited-element-type-collection>
+    (<limited-collection>)
+  constant &slot element-type :: <type>,
+    init-keyword: element-type:,
+    init-value:   <object>;
+end &class;
+
+define open generic ^element-type (coll :: <&collection>) => (type :: <&type>);
+define sealed domain ^element-type (<&limited-collection>);
+
+define method ^element-type (coll :: <&collection>) => (type :: <&type>)
+  dylan-value(#"<object>")
+end method;
+
+// DEP-0007: This is a mixin class for all fillable concrete limited classes.
+// Each instance of a limited collection must track its default fill value.
+//
+// The element-type-fill slot can't actually be constant because the make
+// function needs to be able to set it explicitly after allocating the object.
+// system-allocate-repeated-instance can only populate all slots with a single
+// value, and that value was chosen to be element-type.
+define abstract &class <limited-fillable-collection>
+    (<limited-collection>)
+  /*constant*/ &slot element-type-fill :: <object>,
+    init-keyword: element-type-fill:,
+    init-value:   #f;
+end &class;
+
+define open generic ^element-type-fill (coll :: <&collection>) => (object);
+define sealed domain ^element-type-fill (<&limited-collection>);
+
+define method ^element-type-fill (coll :: <&collection>) => (object);
+  #f
+end method;
 
 // Built-in collection functions
 

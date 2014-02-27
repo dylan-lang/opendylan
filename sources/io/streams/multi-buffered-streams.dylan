@@ -41,7 +41,8 @@ define function new-stream-id(the-stream :: <multi-buffered-stream>)
 end function; 
  
 define constant <buffer-map-entry> = <integer>;
-define constant <buffer-map> = limited(<stretchy-vector>, of: <buffer-map-entry>);
+define constant <buffer-map> = limited(<stretchy-vector>, of: <buffer-map-entry>,
+                                       default-fill: 0);
 
 define constant $buffer-map-index-size = 24; // TODO: MACHINE INDEP
 
