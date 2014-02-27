@@ -337,7 +337,7 @@ install-stage: $(prefix)/sources
 
 install: @bootstrap_target@ 3-stage-bootstrap install-stage
 
-version = $(shell $(abs_builddir)/Bootstrap.3/bin/dylan-compiler -shortversion)
+version ?= $(shell $(abs_builddir)/Bootstrap.3/bin/dylan-compiler -shortversion)
 
 ###
 # release packs a tarball
