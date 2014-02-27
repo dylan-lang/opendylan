@@ -15,31 +15,8 @@ define sealed inline method empty? (array :: <simple-array>) => (b :: <boolean>)
   array.size = 0
 end method empty?;
 
-define constant <dimensions>      = limited(<vector>, of: <integer>, default-fill: 0);
+define constant <dimensions>      = limited(<vector>, of: <integer>);
 define constant $empty-dimensions = make(<dimensions>, size: 0);
-
-define inline function compute-size-from-dimensions
-    (dimensions :: false-or(<sequence>))
- => (size :: false-or(<integer>))
-  dimensions
-    & if (dimensions.size = 0)
-        0
-      else
-        reduce(\*, 1, dimensions)
-      end if
-end function;
-
-define function compute-array-dimensions-and-size
-    (dimensions)
- => (dimensions :: <sequence>, size :: <integer>)
-  if (supplied?(dimensions))
-    let canonical-dimensions = as(<dimensions>, dimensions);
-    values(canonical-dimensions, compute-size-from-dimensions(canonical-dimensions));
-  else
-    error(make(<missing-keyword-error>,
-               format-string: "No dimensions in call to make(<array>)"));
-  end if;
-end function;
 
 define macro limited-array-minus-constructor-definer
   { define limited-array-minus-constructor "<" ## ?:name ## ">" (?superclasses:*)
@@ -67,13 +44,14 @@ define macro limited-array-minus-constructor-definer
 
          define inline sealed method element
              (array :: "<simple-" ## ?name ## "-array>", index :: <integer>,
-              #key default = unsupplied()) => (object)
+              #key default = unsupplied()) => (object :: "<" ## ?name ## ">")
            if (element-range-check(index, size(array)))
              "row-major-" ## ?name ## "-array-element"(array, index)
            else
              if (unsupplied?(default))
                element-range-error(array, index)
              else
+               check-type(default, element-type(array));
                default
              end if
            end if
@@ -107,6 +85,29 @@ define macro limited-array-minus-constructor-definer
          }
 end macro;
 
+define inline function compute-size-from-dimensions
+    (dimensions :: false-or(<sequence>))
+ => (size :: false-or(<integer>))
+  dimensions
+    & if (dimensions.size = 0)
+        0
+      else
+        reduce(\*, 1, dimensions)
+      end if
+end function;
+
+define function compute-array-dimensions-and-size
+    (dimensions)
+ => (dimensions :: <sequence>, size :: <integer>)
+  if (supplied?(dimensions))
+    let canonical-dimensions = as(<dimensions>, dimensions);
+    values(canonical-dimensions, compute-size-from-dimensions(canonical-dimensions));
+  else
+    error(make(<missing-keyword-error>,
+               format-string: "No dimensions in call to make(<array>)"));
+  end if;
+end function;
+
 define macro limited-array-minus-selector-definer
   { define limited-array-minus-selector "<" ## ?:name ## ">" (?superclasses:*)
       (#key ?fill:expression) }
@@ -117,7 +118,7 @@ define macro limited-array-minus-selector-definer
              (t :: "<simple-" ## ?name ## "-array>") => (type :: <type>)
            "<" ## ?name ## ">"
          end method;
-         
+
          define sealed method element-setter
              (new-value :: "<" ## ?name ## ">",
               array :: "<simple-" ## ?name ## "-array>", index :: <integer>)
@@ -128,57 +129,40 @@ define macro limited-array-minus-selector-definer
              element-range-error(array, index)
            end if
          end method element-setter;
-         
+
          define sealed method make
-             (class == "<simple-" ## ?name ## "-array>",
-              #key dimensions = unsupplied(), fill = ?fill,
-                   element-type-fill = ?fill)
+             (class == "<simple-" ## ?name ## "-array>", #key dimensions = unsupplied(), fill)
           => (array :: "<simple-" ## ?name ## "-array>")
            let (dimensions, size) = compute-array-dimensions-and-size(dimensions);
-           unless (size = 0)
-             check-type(fill, "<" ## ?name ## ">")
-           end unless;
            ?=next-method(class,
-                         dimensions:        dimensions,
-                         size:              size,
-                         element-type-fill: element-type-fill,
-                         fill:              fill)
-         end method make;
-         
-         define sealed inline method type-for-copy
-             (array :: "<simple-" ## ?name ## "-array>")
-          => (type :: <limited-mutable-sequence-type>)
-           limited-array(element-type(array), element-type-fill(array), #f)
-         end method type-for-copy
-       }
+                         dimensions: dimensions,
+                         size:       size,
+                         fill:       fill)
+         end method make }
 end macro;
 
 define macro limited-array-definer
   { define limited-array "<" ## ?:name ## ">" (#key ?fill:expression) }
-    => { define limited-array-minus-selector "<" ## ?name ## ">"
-             (<limited-fillable-collection>, <simple-array>) (fill: ?fill);
-    
+    => { define limited-array-minus-selector "<" ## ?name ## ">" (<simple-array>) (fill: ?fill);
          define method concrete-limited-array-class
-             (of == "<" ## ?name ## ">", default-fill)
-          => (res :: <class>, fully-specified? :: <boolean>)
-           values("<simple-" ## ?name ## "-array>", default-fill = ?fill)
-         end method;
-       }
+             (of == "<" ## ?name ## ">") => (res :: <class>)
+           "<simple-" ## ?name ## "-array>"
+         end method }
 end macro;
 
 define limited-array <object> (fill: #f);
 
 define method limited-array
-    (of :: <type>, default-fill :: <object>, dimensions :: false-or(<sequence>))
- => (type :: <type>)
-  let (concrete-class, fully-specified?)
-    = concrete-limited-array-class(of, default-fill);
-  if (dimensions | ~fully-specified?)
+    (of :: <type>, dimensions :: false-or(<sequence>)) => (type :: <type>)
+  let concrete-class
+    = concrete-limited-vector-class(of);
+  let default-concrete-class
+    = <simple-element-type-vector>;
+  if (dimensions | concrete-class == default-concrete-class)
     let size = compute-size-from-dimensions(dimensions);
     make(<limited-array-type>,
          class:          <array>,
          element-type:   of,
-         default-fill:   default-fill,
          concrete-class: concrete-class,
          size:           size,
          dimensions:     dimensions);

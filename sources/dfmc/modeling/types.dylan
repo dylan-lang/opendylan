@@ -101,7 +101,7 @@ end method;
 
 define abstract &class <limited-type> (<type>) end &class;
 
-define primary &class <limited-collection-type> (<limited-type>) 
+define &class <limited-collection-type> (<limited-type>) 
   constant &slot limited-collection-class :: <class>,
     required-init-keyword: class:;
   constant &slot limited-collection-element-type :: <type>,
@@ -115,14 +115,6 @@ define primary &class <limited-collection-type> (<limited-type>)
   constant &slot limited-collection-dimensions /* :: false-or(<sequence>) */,
     init-value:   #f,
     init-keyword: dimensions:;
-end &class;
-
-// DEP-0007: This mixin applies to all collection classes for which the
-// fill: init-keyword is valid, i.e. all subclasses of <mutable-sequence>
-// except for <mutable-sequence>, <pair>, and <empty-list>.
-define abstract &class <limited-fillable-type> (<limited-type>)
-  constant &slot limited-collection-element-type-fill :: <object>,
-    required-init-keyword: default-fill:;
 end &class;
 
 define &class <limited-explicit-key-collection-type> (<limited-collection-type>) 
@@ -145,15 +137,13 @@ define &class <limited-mutable-sequence-type>
   (<limited-mutable-collection-type>, <limited-sequence-type>) 
 end &class;
 
-define &class <limited-array-type>
-  (<limited-mutable-sequence-type>, <limited-fillable-type>)
+define &class <limited-array-type> (<limited-mutable-sequence-type>)
 end &class;
 
 define &class <limited-vector-type> (<limited-array-type>)
 end &class;
 
-define &class <limited-string-type>
-  (<limited-mutable-sequence-type>, <limited-fillable-type>)
+define &class <limited-string-type> (<limited-mutable-sequence-type>)
 end &class;
 
 define &class <limited-stretchy-vector-type> 
@@ -161,8 +151,7 @@ define &class <limited-stretchy-vector-type>
 end &class;
 
 define &class <limited-deque-type> 
-  (<limited-stretchy-collection-type>, <limited-mutable-sequence-type>,
-   <limited-fillable-type>)
+  (<limited-stretchy-collection-type>, <limited-mutable-sequence-type>)
 end &class;
 
 define &class <limited-table-type> (<limited-mutable-explicit-key-collection-type>) 
@@ -265,8 +254,6 @@ define method ^known-disjoint? (t1 :: <&limited-collection-type>, t2 :: <&class>
  => (known-disjoint? :: <boolean>)
   ^known-disjoint?(t2, t1)
 end method ^known-disjoint?;
-
-//// Limited types.
 
 define &override-function ^limited 
     (type :: <&type>, #rest keys) => (type :: <&type>)

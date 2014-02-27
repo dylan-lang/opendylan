@@ -30,9 +30,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///   - Limited Instance: singleton(x) denotes anything == to x.
 ///
 ///   - Limited Collection: some collections support of: to limit the type of 
-///     their elements, default-fill: to provide a valid default fill value for
-///     size-setter or make, size: to limit their overall size, and dimensions:
-///     if they happen to be arrays.
+///     their elements, size: to limit their overall size, and dimensions: if 
+///     they happen to be arrays.
 ///
 ///     More details:
 ///       <collection>, <explicit-key-collection>, <mutable-collection>,
@@ -42,21 +41,21 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 ///       <table>, <object-table> support of:, size: and return an instantiable
 ///          type that supports a size: initialization.
 ///
-///       <array> supports of:, default-fill:, size:, dimensions: and returns an
-///          instantiable type that supports dimensions: and fill:
-///          initializations.  Note constraint between fill: and of:.
+///       <array> supports of:, size:, dimensions: and returns an instantiable
+///          type that supports dimensions: and fill: initializations.  Note
+///          constraint between fill: (default #f) and of:.
 ///
-///       <vector>, <simple-vector> support of:, default-fill:, size: and
-///          return an instantiable type which takes size: and fill: keys. Note
-///          constraint between fill: and of:.
-///
-///       <stretchy-vector>, <deque> support of: and default-fill: and return an 
+///       <vector>, <simple-vector> support of:, size: and return an 
 ///          instantiable type which takes size: and fill: keys.  Note 
-///          constraint between fill: and of:.
+///          constraint between fill: (default #f) and of:.
 ///
-///       <string> supports of:, default-fill:, size: and returns an
-///          instantiable type supporting size: and fill:.  of: must be subtype
-///          of character.
+///       <stretchy-vector>, <deque> support of: and return an 
+///          instantiable type which takes size: and fill: keys.  Note 
+///          constraint between fill: (default #f) and of:.
+///
+///       <string> supports of:, size: and returns an instantiable type 
+///          supporting size: and fill:.  of: must be subtype of character.
+///          Default for fill: is ' '. 
 ///
 ///       <range> supports of: (subtype of <real>).  Result takes from:, to:, 
 ///          below:, above:, by:, size:.
