@@ -26,6 +26,7 @@ guide.
    quick-tips
    dylan-compiler
    dylan-environment
+   editor-support
    dylan-mode-for-emacs
    debugging-with-gdb-lldb
    windows
