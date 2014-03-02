@@ -205,7 +205,7 @@ define sealed domain initialize (<mail-body-section>);
 
 // This is a subclass of <diagram-line> because it is meant to be part of the
 // structure of the buffer.  If it were a subclass of <structural-diagram-line>,
-// users could accidently delete the line, which we don't want.
+// users could accidentally delete the line, which we don't want.
 define sealed class <divider-line> (<diagram-line>)
 end class <divider-line>;
 
