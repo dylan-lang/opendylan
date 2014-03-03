@@ -32,9 +32,24 @@ implement collection classes, similar to those found in C++'s
 Standard Template Library. A few of the most important classes are
 shown here:
 
-.. figure: missing.png
+.. table:: Several Standard Dylan Classes
+   :class: table-striped
 
-   Several Standard Dylan Classes
+   +-----------------------+-----------------+
+   | Primitive Types       | Collections     |
+   +=======================+=================+
+   | :drm:`<character>`    | :drm:`<string>` |
+   +-----------------------+-----------------+
+   | :drm:`<integer>`      | :drm:`<list>`   |
+   +-----------------------+-----------------+
+   | :drm:`<boolean>`      | :drm:`<vector>` |
+   +-----------------------+-----------------+
+   | :drm:`<single-float>` | :drm:`<table>`  |
+   +-----------------------+-----------------+
+   | :drm:`<double-float>` | :drm:`<pair>`   |
+   +-----------------------+-----------------+
+   | :drm:`<symbol>`       | :drm:`<deque>`  |
+   +-----------------------+-----------------+
 
 The built-in collection classes include a number of common data
 structures. Arrays, tables, vectors, ranges and deques should be
