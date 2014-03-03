@@ -1,6 +1,17 @@
+opendylan (2013.2) stable; urgency=low
+ 
+  * Testworks has seen substantial improvements.
+  * Streams now default to being unlocked.
+  * We’ve begun to work on improving cross-compilation.
+  * Logging and hash-algorithms libraries have been added to the core release.
+  * Common Dylan has improved timers (simple-timers) replacing the old compiler primitives.
+  * Documentation has been improved.
+  * More detailed list found at http://opendylan.org/documentation/release-notes/2013.2.html
+ 
+ -- Wim Vander Schelden <wim@fixnum.org> Fri, 07 Feb 2014 15:29:52 +0100
+ 
 opendylan (1.0beta5-1) unstable; urgency=low
-
+ 
   * Initial release
-
- -- Stefan Rupp <struppi@opendylan.org>  Mon, 05 Nov 2009 23:55:24 +0100
-
+ 
+ -- Stefan Rupp <struppi@opendylan.org> Mon, 05 Nov 2009 23:55:24 +0100
