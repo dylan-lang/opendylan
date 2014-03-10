@@ -5,7 +5,7 @@ Copyright:    Original Code is Copyright (c) 1995-2004 Functional Objects, Inc.
 License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
-define constant search-debug = method(#rest args) end;
+define constant search-debug = method (#rest args) end;
 
 define constant $user-projects-path = user-projects-path();
 
@@ -91,7 +91,7 @@ define function process-directory-entry (dir :: <pathname>,
 
 define method do-directory-recursively (f :: <function>,
                                         directory :: <directory-locator>,
-                                        #key test = method(dir, name, type)
+                                        #key test = method (dir, name, type)
                                                       #t
                                                     end,
                                              recursive-level = 0)
@@ -240,7 +240,7 @@ define function project-initialize-caches (project :: <user-project>)
                                                 #"tools-cache",
                                                 default: #[]),
                                         1,
-                                        convert: method(e) as(<symbol>, e) end);
+                                        convert: method (e) as(<symbol>, e) end);
           project.%tools-cache := make(<table>);
           local method convert(f,d)
                   values(merge-locators(as(<file-locator>, f),

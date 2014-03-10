@@ -37,7 +37,7 @@ define function read-file-library-description-internal
       let properties = read-file-header(location);
       let lid-entry = element(properties, #"lid", default: #f);
       local method merge-properties(p1, p2)
-              do(method(key) p2[key] := p1[key] end,
+              do(method (key) p2[key] := p1[key] end,
                  key-sequence(p1));
               p2
             end;

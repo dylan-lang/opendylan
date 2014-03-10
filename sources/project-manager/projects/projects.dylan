@@ -395,7 +395,7 @@ define method all-used-projects (project :: <project>, #key system? = #t)
     if (system?)
       all
     else
-      choose(method(p) p.project-personal-library? end, all)
+      choose(method (p) p.project-personal-library? end, all)
     end
   else
     #[]
@@ -414,7 +414,7 @@ define method directly-used-projects (project :: <project>, #key system? = #t)
     if (system?)
       all
     else
-      choose(method(p) p.project-personal-library? end, all)
+      choose(method (p) p.project-personal-library? end, all)
     end
   else
     #[]

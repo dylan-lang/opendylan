@@ -120,7 +120,7 @@ end;
 define method project-source-canonical-source-record
     (project :: <lid-project>, file :: <file-locator>)
  => (record :: false-or(<source-record>), modified? :: <boolean>);
-  let sr = any?(method(sr) sr.source-record-location = file & sr end,
+  let sr = any?(method (sr) sr.source-record-location = file & sr end,
                 project.project-canonical-source-records);
   values(sr, sr & source-record-modified?(sr))
 end;

@@ -290,9 +290,9 @@ define function save-tools-cache (project :: <user-project>, stream :: <stream>)
     for (tool in tools)
       let cache = element(project.%tools-cache, tool, default: #[]);
       let list-cache = #();
-      do(method(e)
-             list-cache := pair(project-relative-file(project, first(e)),
-                                pair(as-iso8601-string(second(e)), list-cache))
+      do(method (e)
+           list-cache := pair(project-relative-file(project, first(e)),
+                              pair(as-iso8601-string(second(e)), list-cache))
          end,
          cache);
       save-list-value(stream, tool, list-cache);
@@ -351,7 +351,7 @@ define method destructure-flat-assoc-list (list-seq :: <sequence>, rank == 1,
                                                 collection-class = <stretchy-vector>)
  => (collection :: <vector>)
   let collection = make(collection-class);
-  do(method(l) add!(collection, convert(l)) end, list-seq);
+  do(method (l) add!(collection, convert(l)) end, list-seq);
   collection
 end;
 

@@ -23,7 +23,7 @@ end;
 define function project-target-execution-context
     (project :: <interactive-project>, target)
  => (ec :: false-or(<project-execution-context>))
-  any?(method(c) target & c.context-debug-target == target & c end,
+  any?(method (c) target & c.context-debug-target == target & c end,
        project.project-execution-contexts)
 end;
 
@@ -207,8 +207,8 @@ end;
 define method project-id-interactive-record
     (project :: <interactive-project>, id)
  => (sr :: false-or(<interactive-source-record>))
-  any?(method(c)
-           element(c.context-interactive-sources-table, id, default: #f)
+  any?(method (c)
+         element(c.context-interactive-sources-table, id, default: #f)
        end,
        project.project-execution-contexts)
 end method;

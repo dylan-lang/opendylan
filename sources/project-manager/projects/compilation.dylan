@@ -399,14 +399,14 @@ define method update-libraries (project :: <project>,
     with-progress-reports
       block (finish)
         let handler <abort-compilation> =
-          method(c, next)
-              internal-message("Aborting compilation of %s due to errors",
-                               project.project-name);
-              project-progress-text(project,
-                                    "Aborting compilation of %s due to errors",
-                                    project.project-name);
-              aborted? := #t;
-              finish()
+          method (c, next)
+            internal-message("Aborting compilation of %s due to errors",
+                             project.project-name);
+            project-progress-text(project,
+                                  "Aborting compilation of %s due to errors",
+                                  project.project-name);
+            aborted? := #t;
+            finish()
           end;
         let context = project-current-compilation-context(project);
         let all-contexts-to-recompile =
@@ -443,19 +443,19 @@ define method update-libraries (project :: <project>,
             block (continue)
               let proj = compilation-context-project(cc);
               let handler <abort-compilation> =
-                method(c, next)
-                    internal-message("Aborting compilation of %s due to warnings",
-                                     proj.project-name);
-                    project-progress-text(proj,
-                                          "Aborting compilation of %s due to warnings",
-                                          proj.project-name);
-                    aborted? := #t;
-                    if (continue-after-abort?)
-                      skip-heaping := #t;
-                      continue()
-                    else
-                      finish()
-                    end
+                method (c, next)
+                  internal-message("Aborting compilation of %s due to warnings",
+                                   proj.project-name);
+                  project-progress-text(proj,
+                                        "Aborting compilation of %s due to warnings",
+                                        proj.project-name);
+                  aborted? := #t;
+                  if (continue-after-abort?)
+                    skip-heaping := #t;
+                    continue()
+                  else
+                    finish()
+                  end
                 end;
               parse-and-compile(cc, strip?, #t,
                                 abort-on-all-warnings?: abort-on-all-warnings?,
@@ -479,10 +479,10 @@ define method update-libraries (project :: <project>,
           end for;
         end dynamic-bind;
     cleanup
-      do(method(p)
-             p.project-personal-library? &
-             compilation-definitions-inconsistent?(p.project-current-compilation-context) &
-             %database-invalidated(p)
+      do(method (p)
+           p.project-personal-library? &
+           compilation-definitions-inconsistent?(p.project-current-compilation-context) &
+           %database-invalidated(p)
          end,
          // TO DO: cannot ask for used contexts I think
          // should unset namespace loaded ?

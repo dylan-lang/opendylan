@@ -54,7 +54,7 @@ end;
 //
 define method project-add-file-of-type
     (type == $dylan-file-type, project :: <user-project>, file-locator :: <file-locator>)
-  if (~empty?(choose(method(source-file)
+  if (~empty?(choose(method (source-file)
                        locator-base(source-file) = locator-base(file-locator)
                      end,
                      project.project-source-files)))
@@ -182,7 +182,7 @@ define method project-remove-file-of-type
      file-locator :: <file-locator>)
   let base-name = locator-base(file-locator);
   p.project-source-files := remove!(p.project-source-files, base-name,
-                                    test: method(f, name)
+                                    test: method (f, name)
                                             debug-out(#"project-manager",
                                                       "? %s(%s) = %s",
                                                       as(<string>, f),
@@ -285,7 +285,7 @@ end;
 
 define method project-sort-files (p :: <user-project>, test-function)
   p.project-source-files := sort!(p.project-source-files,
-                                  test: method(a, b)
+                                  test: method (a, b)
                                           test-function(locator-base(a),
                                                         locator-base(b))
                                         end);

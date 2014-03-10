@@ -682,7 +682,7 @@ define function %cached-subprojects (project :: <user-project>)
  => (projects :: <sequence>)
   let table = project.%user-project-used-projects;
   let keys = table.key-sequence;
-  map(method(k) table[k] end, keys);
+  map(method (k) table[k] end, keys);
 end;
 
 define method all-used-projects (project :: <user-project>, #key system?)
@@ -850,18 +850,18 @@ define method note-loading-namespace (project :: <user-project>) => ()
                                    end;
               block (return)
                 let handler <tool-warning-condition>
-                  = method(e, next-handler)
-                        user-warning("%s", condition-to-string(e));
-                        unless (tool-warning-recoverable?(e))
-                          return()
-                        end;
+                  = method (e, next-handler)
+                      user-warning("%s", condition-to-string(e));
+                      unless (tool-warning-recoverable?(e))
+                        return()
+                      end;
                     end;
                 let handler <tool-yes-no-question>
-                  = method(e, next-handler)
-                        let question = apply(format-to-string, e.condition-format-string,
-                                             e.condition-format-arguments);
-                        signal(make(<yes-or-no-condition>,
-                                    yes-or-no: question))
+                  = method (e, next-handler)
+                      let question = apply(format-to-string, e.condition-format-string,
+                                           e.condition-format-arguments);
+                      signal(make(<yes-or-no-condition>,
+                                  yes-or-no: question))
                     end;
                 let (success?, hdp-modified?, new-projects)
                   = tool(full-path, project.user-disk-project-file, last-run);

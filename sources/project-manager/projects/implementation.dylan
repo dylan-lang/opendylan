@@ -552,7 +552,7 @@ define function close-subproject (project :: <project>, #key system?)
     if (empty?(project.project-owners))
       let subprojects = directly-used-projects(project);
       %close-project(project, subprojects: subprojects);
-      do(method(p) close-subproject(p, system?: system?) end, subprojects);
+      do(method (p) close-subproject(p, system?: system?) end, subprojects);
       #t
     else
       debug-out(#"project-manager", "Project %s not closed, owners: %s\n",
@@ -576,10 +576,10 @@ define method close-project (project :: <project>, #key system? = #f)
     let closed? = close-subproject(project, system?: system?);
     // this is needed to close subprojects even if they were not compiled against.
     // close-unused-projects(system?: system?);
-    map(method(%project)
-            debug-out(#"project-manager",
-                      "Project: %s\n\towners: %s\n", %project.project-name,
-                      map(project-name, %project.%project-owners))
+    map(method (%project)
+          debug-out(#"project-manager",
+                    "Project: %s\n\towners: %s\n", %project.project-name,
+                    map(project-name, %project.%project-owners))
         end,
         *all-open-projects*);
     closed?
@@ -868,10 +868,10 @@ end function;
 define function find-platform-project (key, platform-name)
   //  debug-out(#"project-manager", "looking up project %s:%s \n", key, platform-name);
   let project =
-    choose-project(method(project)
-                       project-key?(project, key) &
+    choose-project(method (project)
+                     project-key?(project, key) &
                        (platform-name == #"unknown" |
-                          project-compiler-setting(project, platform-name:) == platform-name)
+                        project-compiler-setting(project, platform-name:) == platform-name)
                    end);
   //  unless (project)
   //    debug-out(#"project-manager", "Not found: creating new project\n");
