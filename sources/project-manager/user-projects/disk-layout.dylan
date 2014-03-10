@@ -19,14 +19,14 @@ end;
 
 define method initialize (project :: <user-disk-project-layout>, #rest keys,
                           #key project-file :: <file-locator>,
-                          source-record-class, platform-name,
-                          build-dir, database-dir, profile-dir,
-                          read-only? = #f,
+                               source-record-class, platform-name,
+                               build-dir, database-dir, profile-dir,
+                               read-only? = #f,
                           #all-keys)
   debug-assert(locator-extension(project-file) = $user-project-suffix,
                "project file doesn't have %s extension",
                $user-project-suffix);
-  let source-class = if(source-record-class) source-record-class
+  let source-class = if (source-record-class) source-record-class
                      else <file-source-record> end;
   verify-project-layout(project,
                         project-file: project-file,
@@ -49,10 +49,9 @@ define method initialize (project :: <user-disk-project-layout>, #rest keys,
   end
 end method;
 
-define function build-location-name(project-name :: <string>)
- => (name :: <string>);
+define function build-location-name (project-name :: <string>)
+ => (name :: <string>)
   concatenate(project-name, "-build")
-
 end;
 
 /*---*** andrewa: not currently used...
@@ -65,12 +64,12 @@ end;
 
 define method verify-project-layout(project :: <user-disk-project-layout>,
                                     #key project-file :: <file-locator>,
-                                    create? = #t,
-                                    read-only? = #f,
-                                    platform-name,
-                                    build-dir :: false-or(<directory-locator>),
-                                    profile-dir :: false-or(<directory-locator>),
-                                    database-dir :: false-or(<directory-locator>));
+                                         create? = #t,
+                                         read-only? = #f,
+                                         platform-name,
+                                         build-dir :: false-or(<directory-locator>),
+                                         profile-dir :: false-or(<directory-locator>),
+                                         database-dir :: false-or(<directory-locator>));
   let project-location = project-file.locator-directory;
   let project-name = locator-base(project-file);
 
@@ -80,7 +79,7 @@ define method verify-project-layout(project :: <user-disk-project-layout>,
   user-disk-project-source(project) := project-location;
 
   let build-location =
-    if(build-dir)
+    if (build-dir)
       build-dir
     else
       let override-build = user-build-path();
@@ -111,46 +110,48 @@ define method verify-project-layout(project :: <user-disk-project-layout>,
             base:      project-name,
             extension: $dylan-profile-suffix);
 
-  if(read-only? & ~file-exists?(project-database-location(project)))
+  if (read-only? & ~file-exists?(project-database-location(project)))
     error("Project %s is read-only and no compiler database was found")
   end;
 
 end;
 
-define method project-source-location(layout :: <user-disk-project-layout>)
+define method project-source-location
+    (layout :: <user-disk-project-layout>)
  => (location :: <directory-locator>)
-  layout.user-disk-project-source;
+  layout.user-disk-project-source
 end;
 
 define method project-location
-    (project :: <user-disk-project-layout>) => (location :: <file-locator>)
+    (project :: <user-disk-project-layout>)
+ => (location :: <file-locator>)
   project.user-disk-project-file
 end method project-location;
 
 // define variable *default-project-layout-class* = <user-disk-project-layout>;
 
-define method %library-name-from-file(type :: subclass(<lid-project>),
-                                      loc :: <file-locator>)
- => (name :: false-or(<symbol>));
+define method %library-name-from-file
+    (type :: subclass(<lid-project>), loc :: <file-locator>)
+ => (name :: false-or(<symbol>))
   // this means that we are going to read each project file twice for now
   // TO DO: to be fixed later
   let properties =
-    block()
+    block ()
       read-file-header(loc);
-    exception(e :: <file-system-error>)
+    exception (e :: <file-system-error>)
       apply(user-warning, e.condition-format-string, e.condition-format-arguments);
       #f
-    exception(e :: <file-does-not-exist-error>)
+    exception (e :: <file-does-not-exist-error>)
       user-warning("File %s does not exist", as(<string>, loc));
       #f
-    exception(e :: <badly-formed-file-header>)
+    exception (e :: <badly-formed-file-header>)
       apply(user-warning, e.condition-format-string, e.condition-format-arguments);
     end;
   properties &
     begin
       let lib-entry = element(properties, #"library", default: #f);
       let name =
-        if(lib-entry)
+        if (lib-entry)
           as(<symbol>, first(lib-entry))
         else
           user-warning("HDP or LID file %s is missing library: keyword", loc);

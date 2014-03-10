@@ -8,8 +8,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 /*---*** andrewa: isn't used, any reason why we can't just remove it?
 define constant <compiler-operation-type> = one-of(#"all", #"parse", #"compile-only",
-						   #"compile+link", #"link");
-define thread variable 
+                                                   #"compile+link", #"link");
+define thread variable
   *current-compiler-operation* :: false-or(<compiler-operation-type>) = #f;
 */
 
@@ -23,68 +23,67 @@ define thread variable *number-of-libraries-for-operation* :: <integer> = 1;
 define macro with-project-progress
   { with-project-progress (?project:expression) ?:body end }
   => { with-library-progress(?project.project-current-compilation-context,
-			     *operation-increment* / *number-of-libraries-for-operation*)
-	 ?body
+                             *operation-increment* / *number-of-libraries-for-operation*)
+         ?body
        end with-library-progress }
 end macro with-project-progress;
 
 // for use by clients (like the environment)
-define open generic project-progress-report(project :: <base-project>, 
-					    sofar :: <integer>,
-					    abort-safe? :: <boolean>);
+define open generic project-progress-report (project :: <base-project>,
+                                             sofar :: <integer>,
+                                             abort-safe? :: <boolean>);
 
-define method project-progress-report(project :: <base-project>, 
-				      sofar :: <integer>,
-				      abort-safe? :: <boolean>)
+define method project-progress-report
+    (project :: <base-project>, sofar :: <integer>, abort-safe? :: <boolean>)
   // do nothing
   #f
 end;
 
-define open generic project-condition-report(project :: <base-project>, 
-					     condition :: <condition>);
+define open generic project-condition-report (project :: <base-project>,
+                                              condition :: <condition>);
 
-define method project-condition-report(project :: <base-project>, 
-				       condition :: <condition>)
+define method project-condition-report (project :: <base-project>,
+                                        condition :: <condition>)
   condition-message(condition)
 end;
 
-define open generic project-progress-text(project :: <base-project>, #rest args);
+define open generic project-progress-text (project :: <base-project>, #rest args);
 
-define method project-progress-text(project :: <base-project>, #rest args)
+define method project-progress-text (project :: <base-project>, #rest args)
   apply(project-message, project, args)
 end;
 
-define open generic project-stage-text(project :: <base-project>, #rest args);
+define open generic project-stage-text (project :: <base-project>, #rest args);
 
-define method project-stage-text(project :: <base-project>, #rest args)
+define method project-stage-text (project :: <base-project>, #rest args)
   //--- andrewa: nobody wants to see these in stand-alone, they are
   //--- only of use in the environment.
   #f
 end;
 
-define open generic project-internal-progress-text(project :: <base-project>, #rest args);
+define open generic project-internal-progress-text (project :: <base-project>, #rest args);
 
-define method project-internal-progress-text(project :: <base-project>, #rest args)
+define method project-internal-progress-text (project :: <base-project>, #rest args)
   apply(internal-message, args);
 end;
 
 // implementations of generics exported by the compiler
-define sideways method library-progress-text(context, #rest args)
+define sideways method library-progress-text (context, #rest args)
   if (context)
     apply(project-progress-text, context.compilation-context-project, args)
   end
 end;
 
-define sideways method library-stage-text(context, #rest args)
+define sideways method library-stage-text (context, #rest args)
   if (context)
     let project = context.compilation-context-project;
     let message = apply(format-to-string, args);
-    project-stage-text(project, "%s library %s", message, 
-		       as(<string>, project.project-library-name)); 
+    project-stage-text(project, "%s library %s", message,
+                       as(<string>, project.project-library-name));
   end
 end;
 
-define sideways method internal-progress-text(context, #rest args)
+define sideways method internal-progress-text (context, #rest args)
   if (context)
     apply(project-internal-progress-text, context.compilation-context-project, args)
   else
@@ -92,16 +91,16 @@ define sideways method internal-progress-text(context, #rest args)
   end
 end;
 
-define sideways method library-progress-report(context, sofar :: <float>, 
-					       #key abort-safe? :: <boolean>)
+define sideways method library-progress-report (context, sofar :: <float>,
+                                                #key abort-safe? :: <boolean>)
 //  debug-out(#"project-manager", "Progress %d", round(100 * sofar));
   project-progress-report(context.compilation-context-project,
-			  round(100 * sofar),
-			  abort-safe?)
+                          round(100 * sofar),
+                          abort-safe?)
 end;
 
-define sideways method library-condition-report(context, 
-						condition :: <condition>)
+define sideways method library-condition-report (context,
+                                                 condition :: <condition>)
   if (context)
     project-condition-report(context.compilation-context-project, condition)
   else
@@ -109,7 +108,8 @@ define sideways method library-condition-report(context,
   end
 end;
 
-define function project-dump-conditions(project :: <project>, stream :: <stream>)
+define function project-dump-conditions
+    (project :: <project>, stream :: <stream>)
  => (warning-count, serious-warning-count, error-count);
   let context = project.project-current-compilation-context;
   conditions-for(context, stream)
@@ -130,8 +130,9 @@ define function show-compiler-messages? () => (messages? :: <boolean>)
   *show-compiler-messages?*
 end function show-compiler-messages?;
 
-define function show-compiler-messages?-setter 
-    (messages? :: <boolean>) => (messages? :: <boolean>)
+define function show-compiler-messages?-setter
+    (messages? :: <boolean>)
+ => (messages? :: <boolean>)
   *show-compiler-messages?* := messages?
 end function show-compiler-messages?-setter;
 
@@ -140,13 +141,14 @@ define variable *show-internal-messages* :: <symbol> = #"always";
 define function show-internal-compiler-messages? () => (messages? :: <boolean>)
   show-compiler-messages?()
     & select (*show-internal-messages*)
-	#"always"           => #t;
-	#"never"            => #f;
+        #"always"           => #t;
+        #"never"            => #f;
       end
 end function show-internal-compiler-messages?;
 
-define function show-internal-compiler-messages?-setter 
-    (messages? :: <boolean>) => (messages? :: <boolean>)
+define function show-internal-compiler-messages?-setter
+    (messages? :: <boolean>)
+ => (messages? :: <boolean>)
   *show-internal-messages* := if (messages?) #"always" else #"never" end;
   messages?
 end function show-internal-compiler-messages?-setter;
@@ -154,16 +156,17 @@ end function show-internal-compiler-messages?-setter;
 define variable *last-project* :: false-or(<project>) = #f;
 
 define function project-message
-    (project :: <project>, #rest args) => ()
+    (project :: <project>, #rest args)
+ => ()
   if (show-compiler-messages?() & ~show-internal-compiler-messages?())
     unless (project = *last-project*)
       let name = project.project-name;
       let location = project.project-location;
       if (name | location)
-	format-out("%s Project now", $message-prefix);
-	name & format-out(" %s", name);
-	location & format-out(" from %s", as(<string>, location));
-	format-out("\n")
+        format-out("%s Project now", $message-prefix);
+        name & format-out(" %s", name);
+        location & format-out(" from %s", as(<string>, location));
+        format-out("\n")
       end;
       *last-project* := project
     end;
@@ -173,8 +176,7 @@ define function project-message
   end
 end function project-message;
 
-define function internal-message
-    (#rest args) => ()
+define function internal-message (#rest args) => ()
   if (show-internal-compiler-messages?())
     format-out("%s ", $message-prefix);
     apply(format-out, args);
@@ -182,8 +184,7 @@ define function internal-message
   end
 end function internal-message;
 
-define function condition-message
-    (condition :: <condition>) => ()
+define function condition-message (condition :: <condition>) => ()
   if (show-compiler-messages?())
     format-out("%=\n", condition)
   end

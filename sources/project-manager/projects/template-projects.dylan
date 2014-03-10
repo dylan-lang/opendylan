@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 ///
-/// Naming conventions.  
+/// Naming conventions.
 ///
 /// (The temptation to make scratch'n'sniff jokes is almost irresistible!)
 ///
@@ -32,12 +32,13 @@ define class <string-template-project> (<project>)
 end class;
 
 define method project-inter-library-binding
-    (project ::  <string-template-project>, used-project :: <project>) 
+    (project ::  <string-template-project>, used-project :: <project>)
  => (mode :: one-of(#"tight", #"loose"));
   #"loose"
 end;
 
-define method project-key? (project :: <string-template-project>, key)
+define method project-key?
+    (project :: <string-template-project>, key)
  => (result :: singleton(#f))
   #f
 end method;
@@ -71,31 +72,31 @@ define method print-object (ssr :: <string-template-source-record>, s :: <stream
   format(s, "{Test SR: %s}", source-record-name(ssr))
 end;
 
-define method call-with-source-record-input-stream 
+define method call-with-source-record-input-stream
     (fn :: <function>, ssr :: <string-template-source-record>, #key)
   fn(make(<string-stream>, contents: as(<string>, ssr.source-record-contents)))
 end method;
 
-define method project-source-record-id (project :: <project>,
-					sr :: <string-template-source-record>)
+define method project-source-record-id
+    (project :: <project>, sr :: <string-template-source-record>)
  => (id :: <string>);
   source-record-name(sr)
 end method;
 
 
 define method make (c == <string-template-project>, #rest initargs,
-		    #key template :: <string>, #all-keys) 
+                    #key template :: <string>, #all-keys)
  => (res)
   apply(next-method, c,
-	source-records: list(make(<string-template-source-record>,
-				  contents: $scratch-lib+mod-bv,
-				  name: $scratch-lib+mod-def-file$,
-				  module: #"dylan-user"),
-			     make(<string-template-source-record>,
-				  contents: as(<byte-vector>, template),
-				  name: $scratch-source-file$,
-				  module: $scratch-module-name$)),
-	initargs)
+        source-records: list(make(<string-template-source-record>,
+                                  contents: $scratch-lib+mod-bv,
+                                  name: $scratch-lib+mod-def-file$,
+                                  module: #"dylan-user"),
+                             make(<string-template-source-record>,
+                                  contents: as(<byte-vector>, template),
+                                  name: $scratch-source-file$,
+                                  module: $scratch-module-name$)),
+        initargs)
 end method;
 
 
@@ -104,17 +105,17 @@ end method;
 /// The main entry point.
 ///
 
-define function compile-template 
+define function compile-template
     (template,
      #key compiler :: <function> = compile-library,
           platform-name, mode)
-    => (context, sr)
+ => (context, sr)
   // Compile a template in a scratch library & module: compile-template(#{1});.
   // Give compiler: compile-library-until-optimized to get optimized DFM only.
   let project = make(<string-template-project>,
-		     template: template,
-		     platform-name: platform-name,
-		     mode: mode);
+                     template: template,
+                     platform-name: platform-name,
+                     mode: mode);
   project.project-current-compilation-context
     := open-compilation-context(project, build-settings: #());
   project.project-current-compilation-context.library-description-compiler-back-end-name
@@ -141,8 +142,8 @@ end;
 // tests in.
 define function dylan-library-compilation-context ()
   any?(method (project)
-	 let context = project.project-current-compilation-context;
-	 dylan-library-compilation-context?(context) & context
+         let context = project.project-current-compilation-context;
+         dylan-library-compilation-context?(context) & context
        end,
        *all-open-projects*);
 end function;

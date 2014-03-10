@@ -55,7 +55,7 @@ define module user-projects
   use dfmc-common;
   use dfmc-derived-information,
     import: { project-library-definition,
-	     compilation-context-library-name };
+              compilation-context-library-name };
   export
     <system-project>,
     <user-project>,
