@@ -15,28 +15,28 @@ define function lookup-personal-registries ()
 end function;
 
 define function make-registry-from-path
-    (path :: <directory-locator>, platform, 
+    (path :: <directory-locator>, platform,
      #key personal? = #f)
  => (platform-registry :: <registry>, generic-registry :: <registry>);
   let platform-registry = subdirectory-locator(path, platform);
   let generic-registry  = subdirectory-locator(path, "generic");
 
   values(make(<registry>,
-	      location: platform-registry,
-	      root: path.locator-directory,
-	      personal?: personal?),
-	 make(<registry>,
-	      location: generic-registry,
-	      root: path.locator-directory,
-	      personal?: personal?))
+              location: platform-registry,
+              root: path.locator-directory,
+              personal?: personal?),
+         make(<registry>,
+              location: generic-registry,
+              root: path.locator-directory,
+              personal?: personal?))
 end;
 
-define function find-registries(platform-name)
+define function find-registries (platform-name)
   let registries = project-dynamic-environment(#"registries");
   if (registries)
     registries
   else
-    project-dynamic-environment(#"registries") 
+    project-dynamic-environment(#"registries")
       := find-registries-internal(platform-name)
   end
 end;
@@ -50,39 +50,39 @@ define function find-registries-internal
   let personal-path = lookup-personal-registries();
   personal-path &
     map(method (path :: <directory-locator>)
-	  debug-out(#"project-manager",
+          debug-out(#"project-manager",
                     "Making personal registries for %s",
                     as(<string>, path));
-	  let (platform-registry, generic-registry)
-	    = make-registry-from-path(path, platform-name, personal?: #t);
-	  platform-personal-registries 
-	    := add!(platform-personal-registries, platform-registry);
-	  generic-personal-registries
-	    := add!(generic-personal-registries, generic-registry);
-	end,
-	reverse(personal-path));
+          let (platform-registry, generic-registry)
+            = make-registry-from-path(path, platform-name, personal?: #t);
+          platform-personal-registries
+            := add!(platform-personal-registries, platform-registry);
+          generic-personal-registries
+            := add!(generic-personal-registries, generic-registry);
+        end,
+        reverse(personal-path));
 
   let generic-system-registries = #();
   let platform-system-registries = #();
-  map(method (path :: <directory-locator>) 
-	debug-out(#"project-manager",
+  map(method (path :: <directory-locator>)
+        debug-out(#"project-manager",
                   "Making system registries for %s",
                   as(<string>, path));
-	let (platform-registry, generic-registry) 
-	  = make-registry-from-path(path, platform-name, personal?: #t);
+        let (platform-registry, generic-registry)
+          = make-registry-from-path(path, platform-name, personal?: #t);
         //XXX: set to #f here to prevent rebuilds all over the place
-	platform-system-registries
-	  := add!(platform-system-registries, platform-registry);
-	generic-system-registries
-	  := add!(generic-system-registries, generic-registry);
+        platform-system-registries
+          := add!(platform-system-registries, platform-registry);
+        generic-system-registries
+          := add!(generic-system-registries, generic-registry);
       end,
       reverse(lookup-system-registries()));
 
-  let registries 
-    = concatenate(platform-personal-registries, 
-		  platform-system-registries,
-		  generic-personal-registries,
-		  generic-system-registries);
+  let registries
+    = concatenate(platform-personal-registries,
+                  platform-system-registries,
+                  generic-personal-registries,
+                  generic-system-registries);
 
   registries;
 end;
@@ -97,8 +97,8 @@ define function compute-library-location (key, platform-name)
     = find-library-locator(key, registries);
   unless (lid-location)
     signal(make(<registry-entry-not-found-error>,
-	       format-string: "The project %= does not appear in the registry",
-	       format-arguments: vector(key)));
+               format-string: "The project %= does not appear in the registry",
+               format-arguments: vector(key)));
   end;
 
   values(lid-location, registry)
@@ -107,7 +107,7 @@ end;
 
 define function project-build-locations
     (project :: <registry-project-layout>)
- => (builds-locator   :: false-or(<directory-locator>), 
+ => (builds-locator   :: false-or(<directory-locator>),
      database-locator :: <directory-locator>,
      profile-locator  :: <directory-locator>)
   let builds-locator = user-build-path();
@@ -121,7 +121,7 @@ define function project-build-locations
   values(builds-locator, database-locator, profile-locator);
 end function;
 
-define function library-build-locator 
+define function library-build-locator
     (builds-loc :: <directory-locator>, library-name :: <symbol>)
  => (build-locator :: <directory-locator>)
   let directory
@@ -130,7 +130,7 @@ define function library-build-locator
   directory
 end function;
 
-define function library-database-locator 
+define function library-database-locator
     (database-loc :: <directory-locator>, library-name :: <symbol>)
  => (locator :: <file-locator>)
   make(<file-locator>,
@@ -139,7 +139,7 @@ define function library-database-locator
        extension: $dylan-database-suffix)
 end function;
 
-define function library-profile-locator 
+define function library-profile-locator
     (profile-loc :: <directory-locator>, library-name :: <symbol>)
  => (profile-locator :: <file-locator>)
   make(<file-locator>,

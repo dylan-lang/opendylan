@@ -9,18 +9,18 @@ define class <registry> (<object>)
     required-init-keyword: location:;
   constant slot registry-root :: <directory-locator>,
     required-init-keyword: root:;
-  constant slot registry-personal? :: <boolean>, 
+  constant slot registry-personal? :: <boolean>,
     required-init-keyword: personal?:;
 end class <registry>;
 
 define method print-object (registry :: <registry>, stream :: <stream>)
  => ();
   format(stream, "{%s registry in %s}",
-	 if (registry.registry-personal?) "personal" else "system" end,
-	 as(<string>, registry.registry-location));
+         if (registry.registry-personal?) "personal" else "system" end,
+         as(<string>, registry.registry-location));
 end method;
 
-define class <registry-project-layout> (<project-layout>) 
+define class <registry-project-layout> (<project-layout>)
   // Name under which is listed in registry
   constant slot project-registered-name :: <symbol>,
     required-init-keyword: key:;
@@ -29,26 +29,26 @@ define class <registry-project-layout> (<project-layout>)
 end;
 
 define method initialize (project :: <registry-project-layout>, #rest keys,
-			  #key key, source-record-class, platform-name, #all-keys)
+                          #key key, source-record-class, platform-name, #all-keys)
   assert(instance?(key, <symbol>), "<registry-project-layout>: key not a symbol");
-  let source-class = if(source-record-class) source-record-class
-		     else <file-source-record> end;
+  let source-class = if (source-record-class) source-record-class
+                     else <file-source-record> end;
   let (lid-location, registry)
     =  compute-library-location(key, platform-name);
   project.project-personal-library? := registry.registry-personal?;
-  apply(next-method, project, 
-	source-record-class:, source-class,
-	lid-location:, lid-location, 
-	keys);
+  apply(next-method, project,
+        source-record-class:, source-class,
+        lid-location:, lid-location,
+        keys);
 
   let (builds-dir, db-dir, profile-dir) = project-build-locations(project);
   let personal? = project.project-personal-library?;
 
-  project-build-location(project) := 
+  project-build-location(project) :=
     personal? & library-build-locator(builds-dir, key);
-  project-database-location(project) := 
+  project-database-location(project) :=
     library-database-locator(db-dir, key);
-  project-profile-location(project) := 
+  project-profile-location(project) :=
     library-profile-locator(profile-dir, key);
   let db = project-database-location(project);
   unless (file-exists?(db))
@@ -61,7 +61,7 @@ define method initialize (project :: <registry-project-layout>, #rest keys,
     end;
     if (personal? & ~project.project-source-files)
       error("There is no source and no database to load for the project %s",
-	    key)
+            key)
     end
   end;
 end method;
@@ -76,11 +76,11 @@ define method project-location
 end method project-location;
 
 define method initialize (project :: <registry-project>, #rest keys,
-			  #key key, #all-keys)
+                          #key key, #all-keys)
   next-method();
   unless (project-lid-library-name(project) == key)
     user-warning("Library in project %s is actually called %s.\n",
-		 key, project-lid-library-name(project));
+                 key, project-lid-library-name(project));
   end;
 end;
 
@@ -91,7 +91,7 @@ define method note-platform-change (project :: <registry-project>,
   let old-platform-name = project-compiler-setting(project, platform-name:);
   unless (old-platform-name == new-platform-name)
     let key = project.project-registered-name;
-    let (lid-location, registry) = 
+    let (lid-location, registry) =
       compute-library-location(key, new-platform-name);
     if (lid-location ~= project.project-lid-location)
       // Have different sources for different platforms, so can't reuse.
@@ -103,12 +103,12 @@ define method note-platform-change (project :: <registry-project>,
       let personal? = registry.registry-personal?;
       project.project-personal-library? := personal?;
       let (builds-dir, db-dir, profile-dir) = project-build-locations(project);
-      project-build-location(project) := 
-	personal? & library-build-locator(builds-dir, key);
-      project-database-location(project) := 
-	library-database-locator(db-dir, key);
-      project-profile-location(project) := 
-	library-profile-locator(profile-dir, key);
+      project-build-location(project) :=
+        personal? & library-build-locator(builds-dir, key);
+      project-database-location(project) :=
+        library-database-locator(db-dir, key);
+      project-profile-location(project) :=
+        library-profile-locator(profile-dir, key);
       project-platform-name(project) := new-platform-name;
     end;
   end;
@@ -119,10 +119,10 @@ define method note-project-loaded (project :: <registry-project>)
 end method;
 
 define method note-compiling-definitions (project :: <registry-project>)
-  // nothing to do here now 
+  // nothing to do here now
 end method;
 
-define method update-project-location(project :: <registry-project>)
+define method update-project-location (project :: <registry-project>)
   let platform-name = project.project-platform-name;
   let key = project-registered-name(project);
   let (lid-location, registry) =
@@ -131,11 +131,11 @@ define method update-project-location(project :: <registry-project>)
   project.project-personal-library? := personal?;
   project.project-lid-location := lid-location;
   let (builds-dir, db-dir, profile-dir) = project-build-locations(project);
-  project-build-location(project) := 
+  project-build-location(project) :=
     personal? & library-build-locator(builds-dir, key);
-  project-database-location(project) := 
+  project-database-location(project) :=
     library-database-locator(db-dir, key);
-  project-profile-location(project) := 
+  project-profile-location(project) :=
     library-profile-locator(profile-dir, key);
 end;
 
@@ -144,7 +144,7 @@ define method project-current-source-records (project :: <registry-project>)
  => sr*;
 
   if (project-personal-library?(project))
-    block()
+    block ()
       compute-compiler-source-records(project)
     exception (<file-does-not-exist-error>)
       update-project-location(project);
@@ -158,18 +158,18 @@ define method project-current-source-records (project :: <registry-project>)
 end method;
 
 
-define method make-used-project (project :: <registry-project>,
-				 key :: <symbol>, platform-name)
-                               => project :: <registry-project>;
+define method make-used-project
+    (project :: <registry-project>, key :: <symbol>, platform-name)
+ => (project :: <registry-project>)
   make-project(<registry-project>,
-	       key: key,
-	       source-record-class: project.project-source-record-class,
-	       platform-name: platform-name)
+               key: key,
+               source-record-class: project.project-source-record-class,
+               platform-name: platform-name)
 end method;
 
-define method project-key? (project :: <registry-project>,
-			    key :: <symbol>)
-                          => key?;
+define method project-key?
+    (project :: <registry-project>, key :: <symbol>)
+ => (key?)
   project.project-registered-name == key |
     project.project-lid-library-name == key
 end method;
@@ -180,9 +180,9 @@ define method project-source-location
   project.project-lid-location.locator-directory
 end;
 
-define method update-project-files (project :: <registry-project>) => ();
+define method update-project-files (project :: <registry-project>) => ()
   // TODO: this needs to update database location if library-name
-  // has changed 
+  // has changed
   let lid-location = project.project-lid-location;
   let lid-date = file-property(lid-location, #"write-date");
   unless (project.project-lid-date = lid-date)
@@ -190,8 +190,8 @@ define method update-project-files (project :: <registry-project>) => ();
     let build-settings = lid-build-settings(lid-location, properties);
     unless (library-name == project.project-lid-library-name)
       user-warning("Library in project %s changed from %s to %s\n",
-		project.project-name,
-		project.project-lid-library-name, library-name);
+                   project.project-name,
+                   project.project-lid-library-name, library-name);
     end;
     project.project-lid-library-name := library-name;
     project.project-source-files := files;

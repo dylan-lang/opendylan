@@ -104,11 +104,11 @@ define open abstract class <lid-project> (<project>)
     setter: project-target-type-slot-setter;
 end class;
 
-define method project-read-only?(project :: <lid-project>) => (flag :: <boolean>);
+define method project-read-only? (project :: <lid-project>) => (flag :: <boolean>);
   ~project.project-personal-library?
 end;
 
-define method project-dylan-sources(project :: <lid-project>)
+define method project-dylan-sources (project :: <lid-project>)
  => (sources :: <vector>);
   project.project-source-files | #[]
 end;
@@ -117,17 +117,17 @@ end;
 // TO DO: we are checking only the locator equivalency
 // is this OK long term ?
 
-define method
-    project-source-canonical-source-record(project :: <lid-project>, file :: <file-locator>)
+define method project-source-canonical-source-record
+    (project :: <lid-project>, file :: <file-locator>)
  => (record :: false-or(<source-record>), modified? :: <boolean>);
   let sr = any?(method(sr) sr.source-record-location = file & sr end,
                 project.project-canonical-source-records);
   values(sr, sr & source-record-modified?(sr))
 end;
 
-define method project-keyword-property (project :: <lid-project>,
-                                        key :: <symbol>,
-                                        #key default = unsupplied())
+define method project-keyword-property
+    (project :: <lid-project>, key :: <symbol>,
+     #key default = unsupplied())
  => (value);
   let properties = project-lid-file-info(project);
   let value = element(properties, key, default: $unfound);
@@ -144,9 +144,10 @@ define function project-keyword-property-setter
   properties[key] := value
 end;
 
-define method project-build-settings(project :: <lid-project>)
- => (settings :: <sequence>);
-  unless(project.project-build-settings-slot)
+define method project-build-settings
+    (project :: <lid-project>)
+ => (settings :: <sequence>)
+  unless (project.project-build-settings-slot)
     let src-location = project-source-location(project);
     let properties = project-lid-file-info(project);
     project.project-build-settings-slot :=
@@ -156,9 +157,9 @@ define method project-build-settings(project :: <lid-project>)
 end;
 
 
-define method project-build-property(project :: <lid-project>,
-                                     key :: <symbol>)
- => (property);
+define method project-build-property
+    (project :: <lid-project>, key :: <symbol>)
+ => (property)
   case
     member?(key, $list-build-keyword) =>
       project-keyword-property(project, key, default: #f);
@@ -172,26 +173,26 @@ define method project-build-property(project :: <lid-project>,
 end;
 
 /** TODO: commented out for the sake of the emulator
-define method project-build-property(project :: <lid-project>,
-                                     key :: <symbol>)
- => (property == #f);
+define method project-build-property
+    (project :: <lid-project>, key :: <symbol>)
+ => (property == #f)
   error("project-build-property: %s is not a build property", key);
   #f
 end;
 
-define method project-build-property(project :: <lid-project>,
-                                     key :: <extra-build-keyword>)
- => (property :: false-or(<sequence>));
+define method project-build-property
+    (project :: <lid-project>, key :: <extra-build-keyword>)
+ => (property :: false-or(<sequence>))
   project-keyword-property(project, key, default: #f);
 end;
 **/
 
 /** TO DO: commented out for the sake of emulator
-define method project-build-property(project :: <lid-project>,
-                                     key :: <simple-build-keyword>)
- => (property :: false-or(<string>));
+define method project-build-property
+    (project :: <lid-project>, key :: <simple-build-keyword>)
+ => (property :: false-or(<string>))
   let property = project-keyword-property(project, key, default: #f);
-  if(property)
+  if (property)
     first(property)
   else
     #f
@@ -199,10 +200,9 @@ define method project-build-property(project :: <lid-project>,
 end;
 **/
 
-define method project-build-property-setter(property,
-                                            project :: <lid-project>,
-                                            key :: <symbol>)
- => (property);
+define method project-build-property-setter
+    (property, project :: <lid-project>, key :: <symbol>)
+ => (property)
   case
     member?(key, $list-build-keyword) =>
       // invalidate current settings
@@ -219,18 +219,18 @@ define method project-build-property-setter(property,
 end;
 
 /*
-define method project-build-property-setter(value :: false-or(<sequence>),
-                                            project :: <lid-project>,
-                                            key :: <extra-build-keyword>)
- => (property :: false-or(<sequence>));
+define method project-build-property-setter
+    (value :: false-or(<sequence>), project :: <lid-project>,
+     key :: <extra-build-keyword>)
+ => (property :: false-or(<sequence>))
   // invalidate current settings
   project.project-build-settings-slot := #f;
   project-keyword-property(project, key) := value
 end;
 
-define method project-build-property-setter(value :: false-or(<sequence>),
-                                            project :: <lid-project>,
-                                            key :: <symbol>)
+define method project-build-property-setter
+    (value :: false-or(<sequence>), project :: <lid-project>,
+     key :: <symbol>)
  => (property == #f)
   error("project-build-property-setter: %s is not an extra build property", key);
   #f
@@ -238,8 +238,8 @@ end;
 */
 
 //---*** andrewa: it would be nice to preserve the case here...
-define method project-executable-name(project :: <lid-project>)
- => (name :: <string>);
+define method project-executable-name (project :: <lid-project>)
+ => (name :: <string>)
   let executable-properties
     = project-keyword-property(project, #"executable", default: #f);
   let symbol
@@ -251,83 +251,87 @@ define method project-executable-name(project :: <lid-project>)
   as-lowercase(as(<string>, symbol))
 end;
 
-define method project-executable-name-setter(name :: <string>,
-                                             project :: <lid-project>)
- => (name :: <string>);
+define method project-executable-name-setter
+    (name :: <string>, project :: <lid-project>)
+ => (name :: <string>)
   // invalidate current settings
   project.project-build-settings-slot := #f;
   project-keyword-property(project, #"executable") := list(name);
   name
 end;
 
-define method project-target-type-setter(type :: <project-target-type>,
-                                         project :: <lid-project>)
- => (type :: <project-target-type>);
+define method project-target-type-setter
+    (type :: <project-target-type>, project :: <lid-project>)
+ => (type :: <project-target-type>)
   project-keyword-property(project, #"target-type") := list(type);
   project.project-target-type-slot := type
 end;
 
-define method project-library-loose-bindings-setter(bindings :: <sequence>,
-                                                    project :: <lid-project>)
- => (bindings :: <sequence>);
+define method project-library-loose-bindings-setter
+    (bindings :: <sequence>, project :: <lid-project>)
+ => (bindings :: <sequence>)
   project-keyword-property(project, #"loose-library-bindings") := bindings;
   project.project-library-loose-bindings-slot := bindings
 end;
 
-define method project-library-tight-bindings-setter(bindings :: <sequence>,
-                                                    project :: <lid-project>)
- => (bindings :: <sequence>);
+define method project-library-tight-bindings-setter
+    (bindings :: <sequence>, project :: <lid-project>)
+ => (bindings :: <sequence>)
   let properties = project-lid-file-info(project);
   properties[#"tight-library-bindings"] := bindings;
   project.project-library-tight-bindings-slot := bindings
 end;
 
 define method project-name
-    (project :: <lid-project>) => (name :: <symbol>)
+    (project :: <lid-project>)
+ => (name :: <symbol>)
   project.project-registered-name
 end method project-name;
 
 define method project-library-name
-    (project :: <lid-project>) => (name :: <symbol>)
+    (project :: <lid-project>)
+ => (name :: <symbol>)
   project.project-lid-library-name
 end method project-library-name;
 
-define method project-compiler-back-end-setter(back-end, project :: <lid-project>)
+define method project-compiler-back-end-setter
+    (back-end, project :: <lid-project>)
   project-compiler-back-end-slot(project) := back-end;
   project-compiler-setting(project, back-end:) := back-end;
 end;
 
-define method project-platform-name-setter(platform-name, project :: <lid-project>)
+define method project-platform-name-setter
+    (platform-name, project :: <lid-project>)
   project-platform-name-slot(project) := platform-name;
   project-compiler-setting(project, platform-name:) := platform-name;
 end;
 
-define method project-major-version-setter(version :: <integer>,
-                                           project :: <lid-project>)
- => (version :: <integer>);
+define method project-major-version-setter
+    (version :: <integer>, project :: <lid-project>)
+ => (version :: <integer>)
   project-keyword-property(project, #"major-version")
     := list(integer-to-string(version));
   project.project-major-version-slot := version
 end;
 
-define method project-minor-version-setter(version :: <integer>,
-                                           project :: <lid-project>)
- => (version :: <integer>);
+define method project-minor-version-setter
+    (version :: <integer>, project :: <lid-project>)
+ => (version :: <integer>)
   project-keyword-property(project, #"minor-version")
     := list(integer-to-string(version));
   project.project-minor-version-slot := version
 end;
 
-define method project-library-pack-setter(library-pack :: <integer>,
-                                          project :: <lid-project>)
- => (version :: <integer>);
+define method project-library-pack-setter
+    (library-pack :: <integer>, project :: <lid-project>)
+ => (version :: <integer>)
   project-keyword-property(project, #"library-pack")
     := list(integer-to-string(library-pack));
   project.project-library-pack-slot := library-pack;
   project-compiler-setting(project, library-pack:) := library-pack
 end;
 
-define method project-compilation-mode-setter(mode, project :: <lid-project>)
+define method project-compilation-mode-setter (mode, project :: <lid-project>)
   project-compilation-mode-slot(project) := mode;
   project-keyword-property(project, #"compilation-mode") := list(mode);
   // TO DO: this is a conservative approach to avoid a crash in compiler/dood
@@ -336,14 +340,14 @@ define method project-compilation-mode-setter(mode, project :: <lid-project>)
   project-compiler-setting(project, mode:) := mode;
 end;
 
-define method project-library-version(p :: <lid-project>)
- => (major-ver :: <integer>, minor-ver :: <integer>);
+define method project-library-version (p :: <lid-project>)
+ => (major-ver :: <integer>, minor-ver :: <integer>)
   values(p.project-major-version, p.project-minor-version)
 end;
 
 define method project-inter-library-binding
     (project ::  <lid-project>, used-project :: <lid-project> )
- => (mode :: one-of(#"tight", #"loose"));
+ => (mode :: one-of(#"tight", #"loose"))
   let binding = project-dynamic-environment(#"default-binding");
   let default-binding = binding & as(<symbol>, binding);
   let loose-bindings = project.project-library-loose-bindings;
@@ -359,11 +363,12 @@ end;
 
 define method initialize (project :: <lid-project>, #rest keys,
                           #key lid-location = #f,
-                          library-name = #f,
-                          lid-file-info = #f,
-                          source-record-class = #f,
-                          platform-name,
-                          mode, #all-keys)
+                               library-name = #f,
+                               lid-file-info = #f,
+                               source-record-class = #f,
+                               platform-name,
+                               mode,
+                          #all-keys)
   next-method();
   assert(source-record-class, "<lid-project>: source-record-class not supplied");
   project-source-record-class(project) := source-record-class;
@@ -382,9 +387,11 @@ define method initialize (project :: <lid-project>, #rest keys,
 
 end method;
 
-define method reinitialize-lid-project(project :: <lid-project>,
-                                       #key platform-name, mode,
-                                       #all-keys) => ();
+define method reinitialize-lid-project
+    (project :: <lid-project>,
+     #key platform-name, mode,
+     #all-keys)
+ => ()
   let properties = project-lid-file-info(project);
 
   let compilation-mode
@@ -403,7 +410,7 @@ define method reinitialize-lid-project(project :: <lid-project>,
   project-compilation-mode-slot(project) := compilation-mode;
 
   let major-version = element(properties, #"major-version", default: #f);
-  if(major-version)
+  if (major-version)
     major-version := string-to-integer(major-version.first);
   else
     major-version := *default-library-major-version*
@@ -412,7 +419,7 @@ define method reinitialize-lid-project(project :: <lid-project>,
   project-major-version-slot(project) := major-version;
 
   let minor-version = element(properties, #"minor-version", default: #f);
-  if(minor-version) minor-version := string-to-integer(minor-version.first)
+  if (minor-version) minor-version := string-to-integer(minor-version.first)
   else minor-version := *default-library-minor-version* end;
   project-minor-version-slot(project) := minor-version;
 
@@ -427,9 +434,9 @@ define method reinitialize-lid-project(project :: <lid-project>,
   end;
   project-library-pack-slot(project) := library-pack | *default-library-library-pack*;
 
-// those two slots are defaulted in the class definition
+  // those two slots are defaulted in the class definition
   let target-type = element(properties, #"target-type", default: #f);
-  if(target-type)
+  if (target-type)
     let target = as(<symbol>, first(target-type));
     if (instance?(target, <project-target-type>))
       project-target-type-slot(project) := target;
@@ -439,12 +446,12 @@ define method reinitialize-lid-project(project :: <lid-project>,
   end;
 
   let loose-bindings = element(properties, #"loose-library-bindings", default: #());
-  if(loose-bindings)
+  if (loose-bindings)
     project-library-loose-bindings-slot(project)
       := map(curry(as, <symbol>), loose-bindings)
   end;
   let tight-bindings = element(properties, #"tight-library-bindings", default: #());
-  if(tight-bindings)
+  if (tight-bindings)
     project-library-tight-bindings-slot(project)
       := map(curry(as, <symbol>), tight-bindings)
   end;
@@ -543,7 +550,7 @@ end function;
 
 define open generic update-project-files (project :: <lid-project>) => ();
 
-define open generic update-project-location(project :: <lid-project>);
+define open generic update-project-location (project :: <lid-project>);
 
 define open generic project-compiler-source-files
     (project :: <lid-project>)
@@ -551,13 +558,13 @@ define open generic project-compiler-source-files
 
 define method project-compiler-source-files
     (project :: <lid-project>)
- => (location :: false-or(<sequence>));
+ => (location :: false-or(<sequence>))
   project.project-source-files;
 end;
 
 define function project-files-to-source-records
     (project :: <lid-project>, #key directory, files, id-source-record)
- => sr*;
+ => (sr*)
   //debug-out(#"project-manager", "to-source-records: directory: %s, files: %s",
   //          as(<string>, directory),
   //          map(curry(as, <string>), files));
@@ -575,7 +582,7 @@ end;
 
 define function compute-compiler-source-records
     (project :: <lid-project>)
- => sr*;
+ => (sr*)
   update-project-files(project);
   local
     method id-source-record (id)
@@ -618,9 +625,9 @@ define method copy-extra-records (project :: <lid-project>,
                       = make(<file-locator>,
                              directory: project.project-build-location,
                              name: locator-name(source-file));
-                    block()
+                    block ()
                       copy-file(source-file, target-file, if-exists: #"replace")
-                    exception(e :: <file-system-error>)
+                    exception (e :: <file-system-error>)
                       apply(user-warning, condition-format-string(e),
                             condition-format-arguments(e))
                     end block;

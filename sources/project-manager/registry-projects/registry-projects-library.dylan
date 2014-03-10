@@ -51,5 +51,5 @@ define module registry-projects-internal
 end;
 
 define module registry-projects
-  use registry-projects-internal, export: all; 
+  use registry-projects-internal, export: all;
 end;

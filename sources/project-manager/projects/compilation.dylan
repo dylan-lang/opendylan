@@ -29,11 +29,11 @@ define method link-library (key, #rest keys, #key, #all-keys)
   end;
 end method;
 
-define open generic save-project(project :: <project>,
-                                 #rest keys, #key save-db? = #f, #all-keys);
+define open generic save-project
+    (project :: <project>, #rest keys, #key save-db? = #f, #all-keys);
 
-define method save-project(project :: <project>,
-                           #rest keys, #key save-db? = #f, flush?, #all-keys)
+define method save-project
+    (project :: <project>, #rest keys, #key save-db? = #f, flush?, #all-keys)
   let context = project-current-compilation-context(project);
   if (save-db? & context)
     save-project-database(project, flush?: flush?)
@@ -53,7 +53,8 @@ define method save-project-database (project :: <project>, #key flush?) => ()
   note-database-saved(project)
 end method save-project-database;
 
-define method project-build-info(project :: <string>)
+define method project-build-info
+    (project :: <string>)
  => (found? :: <boolean>, personal? :: <boolean>, build-location)
   let project = lookup-named-project(project, create?: #f);
   if (project)
@@ -63,13 +64,13 @@ define method project-build-info(project :: <string>)
   end if;
 end method;
 
-define method link-library(project :: <project>, #rest keys,
-                           #key target-type,
-                                extent = #"changes",
-                                build-script,
-                                progress-callback = ignore,
-                                mode, release?,
-                           #all-keys)
+define method link-library (project :: <project>, #rest keys,
+                            #key target-type,
+                                 extent = #"changes",
+                                 build-script,
+                                 progress-callback = ignore,
+                                 mode, release?,
+                            #all-keys)
  => (linked? :: <boolean>)
   let type = target-type | project-target-type(project);
   let build-options
@@ -124,14 +125,14 @@ define function lookup-named-project (key, #key create? = #t)
     let project =
       choose-project(rcurry(project-key?, key));
 
-    if(project)
+    if (project)
       verify-project-database(project);
-      if(project.%database-in-memory &
+      if (project.%database-in-memory &
            ~project-dynamic-environment(#"compiler-transaction"))
         project.project-top-level? := #t
       end;
       project
-    elseif(create?)
+    elseif (create?)
       make-project(*default-project-class*, key: key);
     else
       #f
@@ -139,9 +140,10 @@ define function lookup-named-project (key, #key create? = #t)
   end;
 end function;
 
-define function ensure-project-database(project :: <project>, #key parse? = #f)
+define function ensure-project-database
+    (project :: <project>, #key parse? = #f)
  => (context, in-memory? :: <boolean>, current? :: <boolean>, saved? :: <boolean>);
-  if(~project.%database-in-memory & parse?)
+  if (~project.%database-in-memory & parse?)
    with-used-project-cache
     // Have to update sources, since compiler can't read old ones.
     canonicalize-project-sources(project, update-sources?: #t);
@@ -156,7 +158,7 @@ define function ensure-project-database(project :: <project>, #key parse? = #f)
          project.%database-saved)
 end;
 
-define function resignal-project-warning(c :: <condition>, #key abort?)
+define function resignal-project-warning (c :: <condition>, #key abort?)
   apply(user-warning, c.condition-format-string, c.condition-format-arguments);
   apply(internal-message, c.condition-format-string, c.condition-format-arguments);
   if (abort?)
@@ -173,54 +175,54 @@ end;
 // Entry points
 
 define function project-load-namespace (project :: <project>, #rest keys)
- => (compilation-contexts-to-recompile :: <sequence>);
+ => (compilation-contexts-to-recompile :: <sequence>)
   with-lock($pm-lock)
-  with-used-project-cache
-    block()
-      debug-out(#"driver", "project-load-namespace %s, %s\n", project, keys);
-      debug-out(#"project-manager",
-                "project-load-namespace of %s, %s",
-                project.project-name, keys);
-      project-stage-text(project, "Loading namespace for library %s",
-                         as(<string>, project.project-library-name));
-
-      if(project-dynamic-environment(#"compiler-transaction"))
-        remove-all-personal-owners(project);
+    with-used-project-cache
+      block ()
+        debug-out(#"driver", "project-load-namespace %s, %s\n", project, keys);
+        debug-out(#"project-manager",
+                  "project-load-namespace of %s, %s",
+                  project.project-name, keys);
+        project-stage-text(project, "Loading namespace for library %s",
+                           as(<string>, project.project-library-name));
+  
+        if (project-dynamic-environment(#"compiler-transaction"))
+          remove-all-personal-owners(project);
+        end;
+        apply(canonicalize-project-sources, project, keys);
+        project.project-top-level? := #t;
+        // Calling this can cause premature closing of projects which are in
+        // the process of being opened (or have been opened) via a using projects'
+        // hdp file, but haven't been needed by the compiler yet, and hence
+        // are not recorded as having owners and being used..
+        // close-unused-projects();
+        let context = project-current-compilation-context(project);
+        let all-used-contexts = all-known-compilation-contexts(context);
+        let personal-contexts = choose(method (c)
+                                         let p = c.compilation-context-project;
+                                         project-personal-library?(p)
+                                       end,
+                                       all-used-contexts);
+        project.project-namespace-loaded := #t;
+        personal-contexts
+      exception (c :: <source-record-error>)
+        resignal-project-warning(c, abort?: #t)
       end;
-      apply(canonicalize-project-sources, project, keys);
-      project.project-top-level? := #t;
-      // Calling this can cause premature closing of projects which are in
-      // the process of being opened (or have been opened) via a using projects'
-      // hdp file, but haven't been needed by the compiler yet, and hence
-      // are not recorded as having owners and being used..
-      // close-unused-projects();
-      let context = project-current-compilation-context(project);
-      let all-used-contexts = all-known-compilation-contexts(context);
-      let personal-contexts = choose(method (c)
-                                       let p = c.compilation-context-project;
-                                       project-personal-library?(p)
-                                     end,
-                                     all-used-contexts);
-      project.project-namespace-loaded := #t;
-      personal-contexts
-    exception(c :: <source-record-error>)
-      resignal-project-warning(c, abort?: #t)
-    end;
-  end with-used-project-cache
+    end with-used-project-cache
   end with-lock
 end;
 
-define function parse-project(project :: <project>,
-                              #rest keys,
-                              #key force-parse?,
-                              update-used? = #t,
-                              force-parse-used?)
- => (aborted? :: <boolean>);
+define function parse-project (project :: <project>,
+                               #rest keys,
+                               #key force-parse?,
+                                    update-used? = #t,
+                                    force-parse-used?)
+ => (aborted? :: <boolean>)
   debug-assert(~%project-closed?(project), "Attempt to compile closed project");
-  block()
+  block ()
     apply(%parse-project, project, keys);
     #f
-  exception(c :: <abort-compilation>)
+  exception (c :: <abort-compilation>)
     internal-message("Aborting compilation of %s due to warnings",
                      project.project-name);
     project-progress-text(project, "Aborting compilation of %s due to warnings",
@@ -229,7 +231,7 @@ define function parse-project(project :: <project>,
   end;
 end;
 
-define function %database-invalidated(project :: <project>)
+define function %database-invalidated (project :: <project>)
   let already-seen :: <object-table> = make(<object-table>);
   local method note-invalid
             (project :: <project>)
@@ -242,12 +244,12 @@ define function %database-invalidated(project :: <project>)
   note-invalid(project)
 end;
 
-define function %parse-project(project :: <project>,
-                               #key force-parse?,
-                               update-used? = #t,
-                               force-parse-used?)
- => (compilation-contexts-to-recompile :: <sequence>);
-  block()
+define function %parse-project (project :: <project>,
+                                #key force-parse?,
+                                     update-used? = #t,
+                                     force-parse-used?)
+ => (compilation-contexts-to-recompile :: <sequence>)
+  block ()
     let personal-contexts =
       project-load-namespace(project,
                              update-sources?: #t,
@@ -261,7 +263,7 @@ define function %parse-project(project :: <project>,
     end;
 
     personal-contexts
-  exception(c :: <source-record-error>)
+  exception (c :: <source-record-error>)
     resignal-project-warning(c, abort?: #t)
   end;
 end;
@@ -273,7 +275,7 @@ define variable *strip-default-policy* = #"tight";
 
 define function parse-and-compile
     (context, strip-policy, parse?, #rest keys)
-  block()
+  block ()
     let project = compilation-context-project(context);
     let settings = project-build-settings(project);
     let strip? = if (strip-policy == #"tight")
@@ -292,14 +294,14 @@ define function parse-and-compile
               build-settings: settings,
               strip?: strip?,
               keys);
-      if(status) note-compiled-definitions(project)
+      if (status) note-compiled-definitions(project)
       else
         debug-out(#"project-manager",
                   "Compile-project-definitions for project %s returned #f",
                   project.project-name)
       end;
     end;
-  exception(c :: <source-record-error>)
+  exception (c :: <source-record-error>)
     resignal-project-warning(c, abort?: #t)
   end;
 end function;
@@ -317,7 +319,7 @@ define method compile-library (project :: <project>,
                                     force-batch? = force-compile?,
                                     force-objects? = force-compile?,
                                #all-keys)
- => (aborted? :: <boolean>);
+ => (aborted? :: <boolean>)
   debug-assert(~%project-closed?(project), "Attempt to compile closed project");
   debug-assert(project.project-personal-library?, "Attempt to compile read-only project");
   if (project.project-read-only?)
@@ -332,14 +334,14 @@ define method compile-library (project :: <project>,
                      force-parse?: force-parse?,
                      update-used?: #t,
                      force-parse-used?: #f);
-      block(finish)
+      block (finish)
         apply(parse-and-compile,
               context, strip?, #f,
               compile-all?: force-batch?,
               compile-if-built?: force-objects?,
               flags);
           #f
-      exception(c :: <abort-compilation>)
+      exception (c :: <abort-compilation>)
         internal-message("Aborting compilation of %s due to warnings",
                          project.project-name);
         project-progress-text(project, "Aborting compilation of %s due to warnings",
@@ -383,7 +385,7 @@ define method update-libraries (project :: <project>,
                                      // This isn't very useful yet...
                                      force-objects? = force-compile?,
                                      recursive? = #t)
- => (aborted? :: <boolean>);
+ => (aborted? :: <boolean>)
   if (gc-stats?) enable-gc-messages() end;
   debug-assert(~%project-closed?(project), "Attempt to compile closed project");
   debug-assert(project.project-personal-library?,
@@ -395,7 +397,7 @@ define method update-libraries (project :: <project>,
   let aborted? = #f;
   with-used-project-cache
     with-progress-reports
-      block(finish)
+      block (finish)
         let handler <abort-compilation> =
           method(c, next)
               internal-message("Aborting compilation of %s due to errors",
@@ -433,7 +435,7 @@ define method update-libraries (project :: <project>,
                                "Number of libraries to compile: %d", count);
 
           let skip-heaping = #f;
-          if(empty?(contexts-to-recompile))
+          if (empty?(contexts-to-recompile))
             aborted? := #t;
             finish()
           end;
@@ -448,7 +450,7 @@ define method update-libraries (project :: <project>,
                                           "Aborting compilation of %s due to warnings",
                                           proj.project-name);
                     aborted? := #t;
-                    if(continue-after-abort?)
+                    if (continue-after-abort?)
                       skip-heaping := #t;
                       continue()
                     else
@@ -468,7 +470,7 @@ define method update-libraries (project :: <project>,
                                 gc?: gc?, gc-stats?: gc-stats?,
                                 save?: save?,
                                 flush?: flush?);
-              if(save?)
+              if (save?)
                 proj.%database-saved := #t;
                 note-database-saved(proj)
               end;
