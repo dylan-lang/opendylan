@@ -16,6 +16,9 @@ HARP_RUNTIME_LIBRARY  = $(OBJDIR)/libdylan-harp-runtime.a
 LLVM_RUNTIME_LIBRARY  = $(OBJDIR)/libdylan-llvm-runtime.a
 C_RUNTIME_LIBRARY     = $(OBJDIR)/libdylan-c-runtime.a
 
+.PHONY: install install-c-runtime install-llvm-runtime \
+	install-harp-runtime clean
+
 # For all platforms, we want to build an LLVM and a C runtime.
 # but for now, we'll modify this below to only build HARP on
 # some platforms where we need HARP because we don't actually

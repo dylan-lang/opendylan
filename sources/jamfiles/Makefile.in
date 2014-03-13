@@ -20,7 +20,7 @@ SCRIPTS         = \
                   $(srcdir)/x86_64-linux-build.jam \
                   $(srcdir)/arm-linux-build.jam
 
-default:
+.PHONY: install
 
 install:
 	cp config.jam $(SCRIPTS) $(LIBDEST)
