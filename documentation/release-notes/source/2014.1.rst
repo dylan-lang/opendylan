@@ -27,9 +27,9 @@ Compiler
   has been instrumented with tracing facilities. Changes to the control
   and data flow, as well as optimization information, can be received by
   setting the ``*trace-dfm-callback*`` (exported from the
-  dfmc-flow-graph) variable to a unary function. The variable
-  ``*trace-dfm-output*`` should also be set (``structured-output``,
-  exported from the dfmc-debug-back-end library might be useful).
+  ``dfmc-flow-graph``) variable to a unary function. The variable
+  ``*trace-dfm-outputter*`` should also be set (``structured-output``,
+  exported from the ``dfmc-debug-back-end`` library might be useful).
 
   The argument to the ``*trace-dfm-callback`` itself is a property list
   containing at least a ``type`` key, a source location (``method``,
@@ -41,7 +41,7 @@ Compiler
   name, method name, and/or library name. The variables
   ``*trace-dfm-library*``, ``*trace-dfm-file*``, and
   ``*trace-dfm-method*`` are of type ``false-or(<symbol>)`` and are exported
-  from the dfmc-flow-graph library.
+  from the ``dfmc-flow-graph`` library.
 
   An example user of this interface is on `GitHub
   <https://github.com/hannesm/visualization-middleware>`_.  A
