@@ -144,18 +144,20 @@ define method emit-raw-character-data // !@#$ should be <byte-character>
     (back-end :: <c-back-end>, stream :: <stream>, c :: <character>)
  => ()
   select (c) 
-    '\\' => write(stream, "\\\\");
-    '\"' => write(stream, "\\\"");
-    '\'' => write(stream, "\\'");
-    '\n' => write(stream, "\\n");
-    '\f' => write(stream, "\\f");
-    '\t' => write(stream, "\\t");
-    '\r' => write(stream, "\\r");
+    '\\' => write(stream, "'\\\\'");
+    '\"' => write(stream, "'\\\"'");
+    '\'' => write(stream, "'\\''");
+    '\n' => write(stream, "'\\n'");
+    '\f' => write(stream, "'\\f'");
+    '\t' => write(stream, "'\\t'");
+    '\r' => write(stream, "'\\r'");
     otherwise =>
       if (c.graphic?)
+	write-element(stream, '\'');
 	write-element(stream, c);
+	write-element(stream, '\'');
       else
-	format(stream, "\\x%x", as(<integer>, c));
+	format(stream, "0x%x", as(<integer>, c));
       end if;
   end select
 end method;
@@ -163,9 +165,9 @@ end method;
 define method emit-object // !@#$ should be <byte-character>
     (back-end :: <c-back-end>, stream :: <stream>, c :: <character>)
  => ()
-  write(stream, "C('");
+  write(stream, "C(");
   emit-raw-character-data(back-end, stream, c);
-  write(stream, "')");
+  write(stream, ")");
 end method;
 
 /*

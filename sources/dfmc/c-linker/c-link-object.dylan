@@ -129,6 +129,33 @@ define method emit-object-slot
   // write(stream, " */");
 end method;
 
+define constant $delete-character = as(<character>, 127);
+
+define method graphic? (character :: <character>)
+  let code :: <integer> = as(<integer>, character);
+  code >= as(<integer>, ' ') & code < as(<integer>, $delete-character)
+end method graphic?;
+
+define method emit-raw-character-data
+    (back-end :: <c-back-end>, stream :: <stream>, c :: <byte-character>)
+ => ()
+  select (c)
+    '\\' => write(stream, "\\\\");
+    '\"' => write(stream, "\\\"");
+    '\'' => write(stream, "\\'");
+    '\n' => write(stream, "\\n");
+    '\f' => write(stream, "\\f");
+    '\t' => write(stream, "\\t");
+    '\r' => write(stream, "\\r");
+    otherwise =>
+      if (c.graphic?)
+        write-element(stream, c);
+      else
+        format(stream, "\\x%x", as(<integer>, c));
+      end if;
+  end select
+end method;
+
 define method emit-object-slot
     (back-end :: <c-back-end>, stream :: <stream>, 
      class, slotd :: <&repeated-slot-descriptor>, o) => ()

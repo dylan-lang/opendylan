@@ -49,6 +49,10 @@ Compiler
   visualization `can be seen here
   <https://opendylan.org/~hannes/test4.avi>`_.
 
+* The C back-end would emit character constants that current versions
+  of clang considered an error. The C back-end now generates a better
+  representation.
+
 C-FFI
 =====
 
