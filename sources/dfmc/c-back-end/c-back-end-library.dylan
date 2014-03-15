@@ -40,7 +40,6 @@ define module dfmc-c-back-end
     c-repeated-type-name,
     c-local-mangle, c-global-mangle, c-raw-mangle,
     format-emit, format-emit*,
-    emit-raw-character-data,
     emit-lambda-interface,
     emit-parameters;
 end module;
