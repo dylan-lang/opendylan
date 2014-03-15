@@ -4,7 +4,7 @@ Copyright: Original Code is Copyright (c) 2012 Dylan Hackers. All rights reserve
 License: See License.txt in this distribution for details.
 Warranty: Distributed WITHOUT WARRANTY OF ANY KIND
 
-// The <template> class is used to encapuslate constant format strings
+// The <template> class is used to encapsulate constant format strings
 // ("templates") and its arguments.
 
 define class <template> (<object>)
