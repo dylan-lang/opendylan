@@ -46,8 +46,7 @@ define method main () => ()
 
     exit-application(0);
   exception (e :: <simple-error>)
-    format(*standard-error*, "%s\n", e);
-    force-output(*standard-output*);
+    format-err("%s\n", e);
     exit-application(1);
   end;
 end method main;

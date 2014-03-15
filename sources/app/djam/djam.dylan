@@ -65,7 +65,7 @@ define function main(name, arguments)
   block ()
     let handler <warning>
       = method (w :: <warning>, next :: <function>)
-          format(*standard-error*, "djam: %s\n", w);
+          format-err("djam: %s\n", w);
         end;
     
     let targets = make(<stretchy-vector>);
@@ -109,7 +109,7 @@ define function main(name, arguments)
                        force?: force?, progress-callback: progress);
     end if;
   exception (e :: <error>)
-    format(*standard-error*, "djam: %s\n", e);
+    format-err("djam: %s\n", e);
     exit-application(1);
   end block;
 end function;
