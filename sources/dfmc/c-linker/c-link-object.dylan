@@ -151,7 +151,12 @@ define method emit-raw-character-data
       if (c.graphic?)
         write-element(stream, c);
       else
-        format(stream, "\\x%x", as(<integer>, c));
+        // Emit this as a separate string and rely on the C compiler to
+        // concatenate neighboring strings. We do this because the C
+        // compiler will eat valid hex digits after the actual thing
+        // we emit. So, "H\<e4>ello" will fail to compile because the
+        // C compiler treats it as "H""\xE4E""llo".
+        format(stream, "\"\"\\x%x\"\"", as(<integer>, c));
       end if;
   end select
 end method;
