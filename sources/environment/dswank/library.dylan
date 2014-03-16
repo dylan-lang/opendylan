@@ -27,6 +27,7 @@ end library;
 define module dswank
   use common-dylan, exclude: { format-to-string };
   use lisp-reader;
+  use format-out;
   use format;
   use streams;
   use standard-io;

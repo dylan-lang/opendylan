@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 let $default-terminal-string = "define constant $%s-token = %d;";
 
 define function usage ()
-  format(*standard-error*,
+  format-err(
 	 "Usage: %s [-t term-string] input-file [ output-file ]\n"
 	   "Finds and processes the 'define parser' form in the input file,\n"
 	   "creating an output file with that form replaced by the compiled\n"
@@ -41,13 +41,13 @@ define function main () => ();
 	      loop(index + 2)
 	    end;
 	  otherwise =>
-	    format(*standard-error*, "Unknown flag: %s\n", arg);
+	    format-err("Unknown flag: %s\n", arg);
 	    usage();
 	end;
       elseif (nargs > index + 2)
 	usage();
       elseif (~file-exists?(args[index]))
-        format(*standard-error*, "File not found: %s\n", args[index]);
+        format-err("File not found: %s\n", args[index]);
 	usage();
       else
 	compile-grammar-file(args[index],

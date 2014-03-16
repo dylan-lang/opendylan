@@ -10,6 +10,8 @@ end library make-dylan-app;
 define module make-dylan-app
   use common-dylan,
     exclude: { format-to-string };
+  use format-out,
+    import: { format-err };
   use format,
     import: { format,
               format-to-string };
@@ -17,8 +19,6 @@ define module make-dylan-app
     import: { create-directory,
               with-open-file,
               working-directory };
-  use standard-io,
-    import: { *standard-error* };
   use locators,
     import: { <directory-locator>,
               <file-locator>,

@@ -100,7 +100,7 @@ end function is-valid-dylan-name?;
 
 define function main (app-name :: <string>, arguments :: <vector>) => ()
   if (arguments.size < 1)
-    format(*standard-error*, "usage: make-dylan-app project-name\n");
+    format-err("usage: make-dylan-app project-name\n");
     exit-application(1);
   else
     let pathname :: <string> = arguments[0];
@@ -110,11 +110,10 @@ define function main (app-name :: <string>, arguments :: <vector>) => ()
         make-dylan-app(pathname);
         exit-application(0);
       exception (condition :: <condition>)
-        format(*standard-error*, "error: %=\n", condition);
+        format-err("error: %=\n", condition);
       end block;
     else
-      format(*standard-error*,
-             "error: Invalid name! Please use a valid Dylan library name.\n");
+      format-err("error: Invalid name! Please use a valid Dylan library name.\n");
       exit-application(1);
     end if;
 
