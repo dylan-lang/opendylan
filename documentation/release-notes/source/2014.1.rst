@@ -87,6 +87,11 @@ Common Dylan
 
 * The function ``integer-to-string`` is now faster.
 
+* On Mac OS X, application-filename() now returns the full absolute
+  path. It also handles symlinks correctly now. This means that
+  a symlink to a Dylan executable will function correctly as it
+  already did on Linux and FreeBSD.
+
 
 dylan-direct-c-ffi
 ==================
