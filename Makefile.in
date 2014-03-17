@@ -12,6 +12,11 @@ fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl $(FDMAKE_OPTIONS)
 
 DYLANCOMPILER   = @DYLANCOMPILER@
 
+# Only check that submodules are up to date if in a Git repository
+ifeq (, $(wildcard $(srcdir)/.git))
+SKIP_SUBMODULE_CHECK = 1
+endif
+
 .PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
