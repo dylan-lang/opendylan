@@ -29,7 +29,7 @@ end
  
 # Add libgc dependency for 64 bit x86
 if(`uname -m` =~ /x86_64/)
-  additional_fpm_flags << ' -d "libgc-dev (> 0)"'
+  additional_fpm_flags << ' -d "libgc-dev (>= 0)"'
 end
  
 puts "Configuring with #{configure_flags}"
@@ -59,7 +59,7 @@ Dir.chdir srcdir
 # Generate the actual deb package
 FPM_CMD=<<EOF
 fpm -s dir -t deb -n opendylan --deb-changelog packages/unix/debian/changelog -v #{VERSION} -C #{STAGING_DIR} -p opendylan-VERSION_ARCH.deb \
-    -d "gcc (> 0)" -d "libc6-dev (> 0)" #{additional_fpm_flags} -m "Wim Vander Schelden <wim@fixnum.org>" \
+    -d "gcc (>= 0)" -d "libc6-dev (>= 0)" #{additional_fpm_flags} -m "Wim Vander Schelden <wim@fixnum.org>" \
     --license MIT --description "A Dylan compiler 
     Dylan is a multi-paradigm programming language. It is a
     object-oriented language and is well suited for a
