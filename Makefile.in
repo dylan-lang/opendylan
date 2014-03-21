@@ -12,11 +12,6 @@ fdmake          = @PERL@ $(srcdir)/admin/builds/fdmake.pl $(FDMAKE_OPTIONS)
 
 DYLANCOMPILER   = @DYLANCOMPILER@
 
-# Only check that submodules are up to date if in a Git repository
-ifeq (, $(wildcard $(srcdir)/.git))
-SKIP_SUBMODULE_CHECK = 1
-endif
-
 .PHONY: 1-stage-bootstrap 1-stage-bootstrap-reentry \
 	2-stage-bootstrap 2-stage-bootstrap-reentry \
 	3-stage-bootstrap 3-stage-bootstrap-reentry \
@@ -26,18 +21,25 @@ endif
 
 all: @bootstrap_target@
 
+# Only check that submodules are up to date if in a Git repository
+ifeq (, $(wildcard $(srcdir)/.git))
+SKIP_SUBMODULE_CHECK = 1
+endif
+
+ifeq (1,$(SKIP_SUBMODULE_CHECK))
 check-submodules:
-	@ if [ "$$SKIP_SUBMODULE_CHECK" != "1" ]; then \
-	  for sms in `cd $(srcdir) && git submodule status | grep -v "^ " | cut -c 1`; do \
-	    if [ "$$sms" != " " ]; then \
-	      echo "**** ERROR ****"; \
-	      echo "One or more submodules is not up to date."; \
-	      echo "Please run 'git submodule update --init'."; \
-	      echo "If you want to skip this check, pass SKIP_SUBMODULE_CHECK=1 to make."; \
-	      exit 1; \
-	    fi; \
-	  done; \
-	fi;
+else
+check-submodules:
+	@for sms in `cd $(srcdir) && git submodule status | grep -v "^ " | cut -c 1`; do \
+	  if [ "$$sms" != "x" ]; then \
+	    echo "**** ERROR ****"; \
+	    echo "One or more submodules is not up to date."; \
+	    echo "Please run 'git submodule update --init'."; \
+	    echo "If you want to skip this check, pass SKIP_SUBMODULE_CHECK=1 to make."; \
+	    exit 1; \
+	  fi; \
+	done;
+endif
 
 ###
 # 3-stage bootstrap includes stages 1 and 2 and 3: it rebuilds the compiler
