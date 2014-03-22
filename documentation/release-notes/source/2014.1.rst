@@ -19,6 +19,16 @@ Build System
   doing a build when there are spaces in the path to the current working
   directory. This was previously only handled correctly for Windows.
 
+* The arguments to configure have changed for specifying which garbage
+  collector to use. The arguments are now::
+
+    --with-gc=mps|boehm
+    --with-gc-path=path/to/gc
+
+  If the GC is Boehm and it is installed system-wide, then the
+  ``with-gc-path`` parameter should not be needed. It is always
+  necessary for MPS and is needed for Boehm if Boehm is installed
+  into a non-standard location.
 
 Compiler
 ========

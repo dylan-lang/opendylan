@@ -24,7 +24,9 @@ system("./autogen.sh") # Will return errors, but safe to ignore
  
 # Add MPS configure flag for 32 bit x86
 if(`uname -m` =~ /i686/)
-  configure_flags << " --with-mps=#{Dir.pwd}/mps-kit"
+  configure_flags << " --with-gc=mps --with-gc-path=#{Dir.pwd}/mps-kit"
+else
+  configure_flags << " --with-gc=boehm"
 end
  
 # Add libgc dependency for 64 bit x86
