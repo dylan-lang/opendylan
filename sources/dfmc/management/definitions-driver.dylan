@@ -130,33 +130,6 @@ define function compilation-source-line-count
   end;
 end function;
 
-/*
-// This only makes sense when comparing emulated with emulated or
-// native with native. In units of floops per second, where a floop
-// is the inner for loop.
-
-define constant *lum-floop-mark* = 0.225;
-
-define variable *platform-floop-mark* = #f;
-
-define function platform-floop-mark ()
-  *platform-floop-mark*
-    | begin
-        progress-line("Computing platform floop mark...");
-        let (secs, msecs)
-          = timing ()
-              for (i from 0 below 50000)
-                make(<vector>, size: 1024);
-              end;
-            end;
-        let time = secs + msecs / 1000000.0;
-        let rating = 1 / time;
-        progress-line("Floop mark is: %=", rating);
-        *platform-floop-mark* := rating
-      end;
-end function;
-*/
-
 define function dump-timings-for (ld :: <compilation-context>) => ()
   let props = uniquify-timing-properties(compilation-timing-properties(ld));
   progress-line("Time taken per phase:");
@@ -209,13 +182,6 @@ define function dump-timings-for (ld :: <compilation-context>) => ()
       progress-line("  --");
       progress-line("  Database %d bytes.", dood-size);
     end when;
-    /*
-    let floop = platform-floop-mark();
-    let floop% = round((floop / *lum-floop-mark*) * 100.0);
-    progress-line("  Normalized rate is %= lines per minute "
-                  "(machine rated at %=%% of lum).",
-                  lpm * *lum-floop-mark* / floop, floop%);
-    */
   end;
   retract-compilation-timings(ld);
 end function;
