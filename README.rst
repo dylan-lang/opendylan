@@ -80,8 +80,9 @@ To go on and do the build::
   export PATH=/path/to/opendylan/bin:$PATH
   ./autogen.sh
   ./configure \
-     --with-mps=/path/to/mps-kit \  # if using the HARP back-end
-     --with-gc=/path/to/boehm-gc-installation \ # if using the C back-end
+     --with-gc=boehm # or mps if using the HARP back-end
+     --with-gc-path=/path/to/mps-kit \  # if using the HARP back-end
+     --with-gc-path=/path/to/boehm-gc-installation \ # if using the C back-end
      --prefix=/opt/opendylan-current
   make 3-stage-bootstrap
   sudo make install

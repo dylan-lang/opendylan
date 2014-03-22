@@ -97,13 +97,33 @@ if ! $MAKE --version | grep -q "GNU" 2> /dev/null; then
   AC_MSG_ERROR([OpenDylan requires GNU make to build.])
 fi
 
-AC_ARG_WITH(mps,
-            AS_HELP_STRING([--with-mps=PATH],
-                           [Path to MPS distribution and build.]))
+AC_ARG_WITH(gc-path,
+            AS_HELP_STRING([--with-gc-path=PATH],
+                           [Path to GC distribution and build.]))
 
 AC_ARG_WITH(gc,
-            AS_HELP_STRING([--with-gc=PATH],
-                           [Path of Boehm GC installation.]))
+            AS_HELP_STRING([--with-gc=mps|boehm],
+                           [Which GC (MPS or Boehm) to use.]))
+
+AS_IF([test x${with_gc} == x],
+      [
+        with_gc=boehm
+      ])
+
+AC_ARG_WITH(mps,
+           AS_HELP_STRING([--with-mps=PATH],
+                          [Deprecated option. Use --with-gc and --with-gc-path instead.]))
+AS_IF([test x${with_mps} != x],
+      [
+        AC_MSG_WARN([You are using a deprecated configure flag. Please use --with-gc and --with-gc-path instead.])
+        with_gc=mps
+        with_gc_path=${with_mps}
+      ])
+
+AC_MSG_CHECKING([which GC to use])
+AC_MSG_RESULT(${with_gc})
+AC_MSG_CHECKING([which GC path to use])
+AC_MSG_RESULT(${with_gc_path})
 
 if test "$cross_compiling" != "yes"; then
     AS_IF([test x${GC_USE_STATIC_BOEHM} == xtrue],
@@ -121,76 +141,71 @@ if test "$cross_compiling" != "yes"; then
           ]
     )
 
-    AS_IF([test x$with_mps != x],
+    AS_IF([test x${with_gc} == xmps],
           [
             AS_IF([test x${SUPPORT_GC_MPS} == xno],
               [
                 AC_MSG_ERROR([The platform that you are building for requires the Boehm GC.])
               ]
             )
-            GC_CFLAGS="-DGC_USE_MPS -I${with_mps}/code"
+            GC_CFLAGS="-DGC_USE_MPS -I${with_gc_path}/code"
             GC_CHOICE="mps"
             old_CPPFLAGS=$CPPFLAGS
-            CPPFLAGS="-I${with_mps}/code"
+            CPPFLAGS="-I${with_gc_path}/code"
             AC_CHECK_HEADER([mps.h],[],[AC_MSG_ERROR([Incorrect path to MPS specified. Please make sure you specified an absolute path to the root MPS directory.])])
             CPPFLAGS=$old_CPPFLAGS
             # This is to help catch people who haven't updated to the new MPS yet.
-            AC_CHECK_FILE([${with_mps}/code/lii4gc.gmk],[AC_MSG_ERROR([You have an old version of MPS and need to update.])],[])
+            AC_CHECK_FILE([${with_gc_path}/code/lii4gc.gmk],[AC_MSG_ERROR([You have an old version of MPS and need to update.])],[])
           ]
     )
-    AS_IF([test x$with_gc != x],
+    AS_IF([test x$with_gc == xboehm],
           [
             AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
-              [
-                AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
-              ]
-            )
-            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc}/include"
-            GC_LFLAGS="-L${with_gc}/lib ${GC_LIB}"
-            AC_CHECK_FILE([${with_gc}/lib/${GC_LIB_NAME}],
-                          [
-                            GC_LIBRARY="${with_gc}/lib/${GC_LIB_NAME}"
-                          ],
-                          [])
+                  [
+                    AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
+                  ])
+            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS -I${with_gc_path}/include"
+            GC_LFLAGS="-L${with_gc_path}/lib ${GC_LIB}"
+            AS_IF([test x${with_gc_path} != x],
+                  [
+                     AC_CHECK_FILE([${with_gc_path}/lib/${GC_LIB_NAME}],
+                                   [
+                                     GC_LIBRARY="${with_gc_path}/lib/${GC_LIB_NAME}"
+                                   ],
+                                   [])
+                  ])
+            AS_IF([test x${GC_LIBRARY} == x],
+                  [
+                    AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
+                                  [
+                                    GC_LIBRARY="/usr/lib/${GC_LIB_NAME}"
+                                  ],
+                                  [
+                                    AC_CHECK_FILE([/usr/local/lib/${GC_LIB_NAME}],
+                                                  [
+                                                    GC_LIBRARY="/usr/local/lib/${GC_LIB_NAME}"
+                                                  ],
+                                                  [
+                                                    AC_CHECK_FILE([/usr/lib/${MULTIARCH}/${GC_LIB_NAME}],
+                                                                  [
+                                                                    GC_LIBRARY="/usr/lib/${MULTIARCH}/${GC_LIB_NAME}"
+                                                                  ],
+                                                                  [])
+                                                  ])
+                                  ])
+                  ])
             GC_CHOICE="boehm"
-          ]
-    )
-    AS_IF([test x${with_gc}x${with_mps} == xx],
-          [
-            AS_IF([test x${SUPPORT_GC_BOEHM} == xno],
-              [
-                AC_MSG_ERROR([The platform that you are building for requires the MPS GC.])
-              ]
-            )
-            GC_CFLAGS="-DGC_USE_BOEHM -DGC_THREADS"
-            GC_LFLAGS="${GC_LIB}"
-            GC_CHOICE="boehm"
-            AC_CHECK_FILE([/usr/lib/${GC_LIB_NAME}],
-                          [
-                            GC_LIBRARY="/usr/lib/${GC_LIB_NAME}"
-                          ],
-                          [
-                            AC_CHECK_FILE([/usr/local/lib/${GC_LIB_NAME}],
-                                          [
-                                            GC_LIBRARY="/usr/local/lib/${GC_LIB_NAME}"
-                                          ],
-                                          [
-                                            AC_CHECK_FILE([/usr/lib/${MULTIARCH}/${GC_LIB_NAME}],
-                                                          [
-                                                            GC_LIBRARY="/usr/lib/${MULTIARCH}/${GC_LIB_NAME}"
-                                                          ],
-                                                          [])
-                                          ])
-                          ])
-          ]
-    )
+          ])
 fi
 
 AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} == xboehmx],
       [
         AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc])
-      ]
-)
+      ])
+AS_IF([test x${GC_CHOICE} == x],
+      [
+        AC_MSG_ERROR([Invalid GC choice. Please select either 'boehm' or 'mps'.])
+      ])
 AC_SUBST(GC_CFLAGS)
 AC_SUBST(GC_LFLAGS)
 AC_SUBST(GC_LIBRARY)
