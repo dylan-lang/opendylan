@@ -23,13 +23,11 @@ case $host in
   i*86-*-linux*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-linux;
       SUPPORT_GC_MPS=yes;
-      SUPPORT_GC_BOEHM=no
       MULTIARCH=i386-linux-gnu
     ;;
   i*86-*-freebsd*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-freebsd;
       SUPPORT_GC_MPS=yes;
-      SUPPORT_GC_BOEHM=no
     ;;
   i*86-*-darwin*)
       OPEN_DYLAN_TARGET_PLATFORM=x86-darwin;
