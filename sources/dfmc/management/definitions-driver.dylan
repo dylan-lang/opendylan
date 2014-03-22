@@ -177,10 +177,20 @@ define function dump-timings-for (ld :: <compilation-context>) => ()
       let name = snap-phase(prop);
       let time = snap-time(prop);
       let time-string = snap-time-string(prop);
-      let percentage-time = round((time / total-time) * 100);
+      let percentage-time
+        = block ()
+            round((time / total-time) * 100);
+          exception (<arithmetic-overflow-error>)
+            0
+          end;
       let space = snap-space(prop);
       let space-string = snap-space-string(prop);
-      let percentage-space = round((space / total-space) * 100);
+      let percentage-space
+        = block ()
+            round((space / total-space) * 100);
+          exception (<arithmetic-overflow-error>)
+            0
+          end;
       table-line(name, percentage-time, time-string, percentage-space, space-string);
     end;
     progress-line("  --");
