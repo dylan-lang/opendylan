@@ -11,7 +11,8 @@ define module dfmc-environment-database
   use print, import: { print };
   use environment-protocols,
     rename: { project-read-only? => env/project-read-only?,
-	      project-target-type => env/project-target-type };
+	      project-target-type => env/project-target-type,
+              project-executable-name => env/project-executable-name };
 
   use dfmc-derived-information,
     rename: { <source-location> => dfmc/<source-location>,

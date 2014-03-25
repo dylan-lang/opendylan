@@ -878,6 +878,23 @@ define sealed method env/project-compiler-back-end-setter
   back-end
 end method env/project-compiler-back-end-setter;
 
+define sealed method env/project-executable-name
+    (project :: <dfmc-project-object>)
+ => (executable-name :: <string>)
+  project-executable-name(project.ensure-project-proxy)
+end method env/project-executable-name;
+
+define sealed method env/project-executable-name-setter
+    (executable-name :: <string>, project :: <dfmc-project-object>)
+ => (executable-name :: <string>)
+  let proxy = project.ensure-project-proxy;
+  unless (proxy.project-executable-name == executable-name)
+    proxy.project-executable-name := executable-name;
+    save-project(proxy)
+  end;
+  executable-name
+end method env/project-executable-name-setter;
+
 define sealed method env/project-target-type
     (project :: <dfmc-project-object>)
  => (target-type :: env/<project-target-type>)

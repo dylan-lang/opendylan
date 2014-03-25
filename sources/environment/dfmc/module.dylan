@@ -20,6 +20,8 @@ define module dfmc-environment
               save-project =>  env/save-project,
               project-compilation-mode => env/project-compilation-mode,
               project-compilation-mode-setter => env/project-compilation-mode-setter,
+              project-executable-name => env/project-executable-name,
+              project-executable-name-setter => env/project-executable-name-setter,
               project-target-type => env/project-target-type,
               <project-target-type> => env/<project-target-type>,
               project-target-type-setter => env/project-target-type-setter,

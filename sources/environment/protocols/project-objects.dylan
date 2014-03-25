@@ -248,6 +248,13 @@ define open generic project-compiler-back-end-setter
     (back-end :: <symbol>, project :: <project-object>)
  => (back-end :: <symbol>);
 
+define open generic project-executable-name
+    (project :: <project-object>) => (executable-name :: <string>);
+
+define open generic project-executable-name-setter
+    (executable-name :: <string>, project :: <project-object>)
+ => (executable-name :: <string>);
+
 define open generic project-target-type
     (project :: <project-object>) => (target-type :: <project-target-type>);
 
