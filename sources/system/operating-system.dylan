@@ -7,8 +7,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define constant $platform-name
-    = as(<symbol>, 
-         concatenate(as(<string>, $machine-name), "-", 
+    = as(<symbol>,
+         concatenate(as(<string>, $machine-name), "-",
                      as(<string>, $os-name)));
 
 define macro with-application-output
@@ -19,7 +19,7 @@ define macro with-application-output
   => { begin
          let _stream = #f;
          let _process = #f;
-	 block ()
+         block ()
            let (exit-code, signal, process, ostream)
              = run-application(?command, asynchronous?: #t, output: #"stream",
                                ?keys);
@@ -30,6 +30,6 @@ define macro with-application-output
          cleanup
            if (_process) wait-for-application-process(_process) end;
            if (_stream & stream-open?(_stream)) close(_stream) end;
-	 end
+         end
        end }
 end macro with-application-output;
