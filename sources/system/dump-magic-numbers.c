@@ -15,9 +15,9 @@
 #define PRINT_CONSTANT(value, name) \
 	printf("define constant $%s = %d;\n", name, value);
 #define PRINT_SIZEOF(type, name) \
-	printf("define constant $%s-size = %d;\n", name, sizeof(type))
+	printf("define constant $%s-size = %zu;\n", name, sizeof(type))
 #define PRINT_OFFSETOF(type, member, name) \
-	printf("define constant $%s-offset = %d;\n", name, offsetof(type, member))
+	printf("define constant $%s-offset = %zu;\n", name, offsetof(type, member))
 
 int
 main(void) {
