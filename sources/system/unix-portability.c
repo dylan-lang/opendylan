@@ -2,6 +2,7 @@
 #include <signal.h>
 #include <errno.h>
 #include <dlfcn.h>
+#include <dirent.h>
 
 #ifdef __APPLE__
 #include <crt_externs.h>
@@ -67,4 +68,24 @@ int system_spawn(char *program, char **argv, char **envp, char *dir,
 void *system_dlopen(const char *name)
 {
   return dlopen(name, RTLD_NOW | RTLD_GLOBAL);
+}
+
+DIR *system_opendir(const char *dirname)
+{
+  return opendir(dirname);
+}
+
+int system_closedir(DIR *dirp)
+{
+  return closedir(dirp);
+}
+
+struct dirent *system_readdir(DIR *dirp)
+{
+  return readdir(dirp);
+}
+
+const char *system_dirent_name(struct dirent *dirent)
+{
+  return dirent->d_name;
 }

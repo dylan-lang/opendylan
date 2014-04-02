@@ -50,8 +50,6 @@ main(void) {
 
 	PRINT_OFFSETOF(struct group, gr_name, "gr-name");
 
-	PRINT_OFFSETOF(struct dirent, d_name, "d-name");
-
 
 	PRINT_USEDBY("unix-date-interface.dylan");
 

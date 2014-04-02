@@ -116,9 +116,10 @@ end function group-name;
 
 define inline-only function dirent-name (dirent :: <machine-word>) => (name :: <byte-string>)
   primitive-raw-as-string
-    (primitive-cast-raw-as-pointer
-       (primitive-machine-word-add(primitive-unwrap-machine-word(dirent),
-                                  integer-as-raw($d-name-offset))))
+    (%call-c-function ("system_dirent_name")
+       (dirent :: <raw-c-pointer>) => (name :: <raw-byte-string>)
+       (primitive-unwrap-machine-word(dirent))
+     end);
 end function dirent-name;
 
 
