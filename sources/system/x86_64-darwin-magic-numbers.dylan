@@ -21,7 +21,6 @@ define constant $st-ctime-offset = 64;
 define constant $pw-name-offset = 0;
 define constant $pw-dir-offset = 48;
 define constant $gr-name-offset = 0;
-define constant $d-name-offset = 21;
 
 // Used by unix-date-interface.dylan
 define constant $tm-sec-offset = 0;

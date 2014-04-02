@@ -469,7 +469,7 @@ define function %do-directory
   block ()
     directory-fd := primitive-wrap-machine-word
                       (primitive-cast-pointer-as-raw
-			 (%call-c-function ("opendir")
+			 (%call-c-function ("system_opendir")
 			      (path :: <raw-byte-string>) => (dir-fd :: <raw-c-pointer>)
 			    (primitive-string-as-raw(as(<byte-string>, directory)))
 			  end));
@@ -480,7 +480,7 @@ define function %do-directory
     end;
     let dirent = primitive-wrap-machine-word
                    (primitive-cast-pointer-as-raw
-		      (%call-c-function ("readdir")
+		      (%call-c-function ("system_readdir")
 			   (dir-fd :: <raw-c-pointer>) => (dirent :: <raw-c-pointer>)
 			 (primitive-cast-raw-as-pointer
 			    (primitive-unwrap-machine-word(directory-fd)))
@@ -500,7 +500,7 @@ define function %do-directory
       end;
       dirent := primitive-wrap-machine-word
 	          (primitive-cast-pointer-as-raw
-		     (%call-c-function ("readdir")
+		     (%call-c-function ("system_readdir")
 			  (dir-fd :: <raw-c-pointer>) => (dirent :: <raw-c-pointer>)
 			(primitive-cast-raw-as-pointer
 			   (primitive-unwrap-machine-word(directory-fd)))
@@ -517,7 +517,7 @@ define function %do-directory
     if (primitive-machine-word-not-equal?
 	  (primitive-unwrap-machine-word(directory-fd),
 	   integer-as-raw($INVALID_DIRECTORY_FD)))
-      %call-c-function ("closedir") 
+      %call-c-function ("system_closedir") 
           (dir :: <raw-c-pointer>) => (failed? :: <raw-c-signed-int>)
         (primitive-cast-raw-as-pointer(primitive-unwrap-machine-word(directory-fd)))
       end
