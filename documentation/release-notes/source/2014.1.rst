@@ -167,6 +167,8 @@ system
   spaces.
 * The ``#"write-date`` file property has been removed. It was identical to
   ``#"modification-date"``, so use that instead.
+* Iterating over a directory with ``do-directory`` will no longer crash
+  on ``x86_64-darwin``.
 
 
 Testworks
