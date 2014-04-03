@@ -184,7 +184,7 @@ define method update-project-files (project :: <registry-project>) => ()
   // TODO: this needs to update database location if library-name
   // has changed
   let lid-location = project.project-lid-location;
-  let lid-date = file-property(lid-location, #"write-date");
+  let lid-date = file-property(lid-location, #"modification-date");
   unless (project.project-lid-date = lid-date)
     let (library-name, files, properties) = read-lid-data(lid-location);
     let build-settings = lid-build-settings(lid-location, properties);

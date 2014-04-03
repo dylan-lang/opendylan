@@ -43,7 +43,7 @@ end method;
 
 define function unique-file-id-iso(location :: <locator>)
  => (id :: <string>)
-  let date :: <date> = file-property(location, #"write-date");
+  let date :: <date> = file-property(location, #"modification-date");
   as-iso8601-string(date)
 end;
 
