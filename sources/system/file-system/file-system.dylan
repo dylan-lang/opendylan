@@ -225,7 +225,6 @@ define generic file-properties
 define method file-properties
     (file :: <file-system-locator>) => (properties :: <explicit-key-collection>)
   let properties = %file-properties(file);
-  properties[#"write-date"] := properties[#"modification-date"];
   properties
 end method file-properties;
 
@@ -249,11 +248,6 @@ define method file-property (file :: <string>, key :: <symbol>) => (value)
 end method file-property;
 
 define generic %file-property (file :: <file-system-locator>, key :: <symbol>) => (value);
-
-define method %file-property (file :: <file-system-locator>, key == #"write-date")
- => (write-date :: false-or(<date>))
-  %file-property(file, #"modification-date")
-end method %file-property;
 
 define method %file-property (file :: <file-system-locator>, key :: <symbol>) => (value)
   error(make(<file-system-error>,
@@ -279,12 +273,6 @@ end method file-property-setter;
 
 define generic %file-property-setter
     (new-value, file :: <pathname>, key :: <symbol>) => (new-value);
-
-define method %file-property-setter 
-    (new-write-date :: false-or(<date>), file :: <file-system-locator>, key == #"write-date")
- => (new-write-date :: false-or(<date>))
-  %file-property-setter(new-write-date, file, #"modification-date")
-end method %file-property-setter;
 
 define method %file-property-setter
     (new-value, file :: <file-system-locator>, key :: <symbol>) => (new-value)

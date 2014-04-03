@@ -376,7 +376,7 @@ define method initialize (project :: <lid-project>, #rest keys,
   unless (library-name & lid-file-info)
     assert(lid-location, "<lid-project>: lid-location not supplied");
     project-lid-location(project) := lid-location;
-    project-lid-date(project) := file-property(lid-location, #"write-date");
+    project-lid-date(project) := file-property(lid-location, #"modification-date");
     let (library-name, files, properties) = read-lid-data(lid-location);
     project-lid-library-name(project) := library-name;
     project-lid-file-info(project) := properties;

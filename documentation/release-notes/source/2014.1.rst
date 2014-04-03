@@ -165,6 +165,8 @@ system
 * The function ``format-date`` is now faster.
 * The ``copy-file`` method on Unix no longer fails when the path contains
   spaces.
+* The ``#"write-date`` file property has been removed. It was identical to
+  ``#"modification-date"``, so use that instead.
 
 
 Testworks

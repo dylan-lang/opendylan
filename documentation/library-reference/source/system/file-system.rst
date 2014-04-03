@@ -321,8 +321,7 @@ File-System module.
    :parameter file: An instance of :class:`<pathname>`.
    :parameter #key key: One of ``#"author"``, ``#"size"``,
      ``#"creation-date"``, ``#"access-date"``, ``#"modification-date"``,
-     ``#"write-date"``, ``#"readable?"``, ``#"writeable?"``,
-     ``#"executable?"``.
+     ``#"readable?"``, ``#"writeable?"``, ``#"executable?"``.
    :value property: The value of the property specified by *key*. The
      type of the value returned depends on the value of *key*: see the
      description for details.
@@ -349,8 +348,6 @@ File-System module.
        +--------------------------+-------------------------------+
        | ``#"modification-date"`` | :class:`<date>`               |
        +--------------------------+-------------------------------+
-       | ``#"write-date"``        | :class:`<date>`               |
-       +--------------------------+-------------------------------+
        | ``#"readable?"``         | :drm:`<boolean>`              |
        +--------------------------+-------------------------------+
        | ``#"writeable?"``        | :drm:`<boolean>`              |
@@ -361,8 +358,7 @@ File-System module.
      Not all platforms implement all of the above keys. Some platforms
      may support additional keys. The ``#"author"`` key is supported on
      all platforms but may return ``#f`` if it is not meaningful on a
-     given platform. The ``#"modification-date"`` and ``#"write-date"``
-     keys are identical. Use of an unsupported key signals an error.
+     given platform. Use of an unsupported key signals an error.
 
      All keys listed above are implemented by Win32, though note that
      ``#"author"`` always returns ``#f``.
@@ -384,8 +380,7 @@ File-System module.
    :parameter file: An instance of :class:`<pathname>`.
    :parameter key: One of ``#"author"``, ``#"size"``,
      ``#"creation-date"``, ``#"access-date"``, ``#"modification-date"``,
-     ``#"write-date"``, ``#"readable?"``, ``#"writeable?"``,
-     ``#"executable?"``.
+     ``#"readable?"``, ``#"writeable?"``, ``#"executable?"``.
    :value new-value: The type of this depends on the value of *key*. See
      the description for details.
 
@@ -412,8 +407,6 @@ File-System module.
        +--------------------------+-------------------------------+
        | ``#"modification-date"`` | :class:`<date>`               |
        +--------------------------+-------------------------------+
-       | ``#"write-date"``        | :class:`<date>`               |
-       +--------------------------+-------------------------------+
        | ``#"readable?"``         | :drm:`<boolean>`              |
        +--------------------------+-------------------------------+
        | ``#"writeable?"``        | :drm:`<boolean>`              |
@@ -426,8 +419,7 @@ File-System module.
      value of *key*.
 
      Not all platforms implement all of the above keys. Some platforms may
-     support additional keys. The ``#"modification-date"`` and ``#"write-date"``
-     keys are identical. Use of an unsupported key signals an error.
+     support additional keys. Use of an unsupported key signals an error.
 
      The only property that can be set on Win32 is ``#"writeable?"``.
 
