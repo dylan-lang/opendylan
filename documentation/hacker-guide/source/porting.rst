@@ -240,4 +240,17 @@ except that now you are building ``dylan-compiler``::
       dylan-compiler -build-script path/to/custom-build.jam \
         -build dylan-compiler
 
-Good luck!
+Building without a Cross-Compiler
+----------------------------------
+
+When you don't have an actual cross-compiler when porting
+to a new platform, the recommended solution is to use a shared
+file system and custom compiler scripts.
+
+* Set up a file system that is shared between the build host
+  and the target host.
+* On the build host, create a script for running the C compiler via ssh
+  on the target host.
+* Use this custom script to build the run-time library.
+* Set up a custom build script as described above and use it
+  to compile a test application and the Dylan compiler.
