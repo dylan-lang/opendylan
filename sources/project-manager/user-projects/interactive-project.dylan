@@ -166,7 +166,7 @@ end method;
 
 define method macroexpand-expression
     (project :: <interactive-project>, module :: <symbol>, source :: <byte-string>,
-     #key expansion-stream, trace-stream)
+     #key expansion-stream)
  => ()
   //--- We have to use <interactive-source-record> since it is the only
   //--- one that takes a string!
@@ -178,8 +178,7 @@ define method macroexpand-expression
   let context = project.project-browsing-context;
 
   macroexpand-source(context, record,
-                     expansion-stream: expansion-stream,
-                     trace-stream: trace-stream)
+                     expansion-stream: expansion-stream)
 end;
 
 define function parse-expression

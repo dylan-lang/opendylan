@@ -167,14 +167,12 @@ end /* function */;
 
 define method macroexpand-source 
     (ld :: <library-description>, sr :: <source-record>,
-       #key expansion-stream :: false-or(<stream>) = #f, 
-            trace-stream :: false-or(<stream>) = #f)
+       #key expansion-stream :: false-or(<stream>) = #f)
  => (warnings :: <sequence>)
   let ild = lookup-interactive-context(#"dummy-macroexpansion-target", ld);
   block ()
     macroexpand-source(ild, sr, 
-                       expansion-stream: expansion-stream,
-                       trace-stream: trace-stream);
+                       expansion-stream: expansion-stream);
   cleanup
     close-library-description(ild);
   end;
@@ -182,8 +180,7 @@ end method;
 
 define method macroexpand-source 
     (ild :: <interactive-library-description>, sr :: <source-record>,
-       #key expansion-stream :: false-or(<stream>) = #f, 
-            trace-stream :: false-or(<stream>) = #f)
+       #key expansion-stream :: false-or(<stream>) = #f)
  => (warnings :: <sequence>)
   let sr* = list(sr);
   // with-program-conditions
@@ -195,8 +192,7 @@ define method macroexpand-source
         block ()
           install-interactive-layer-sources(layer, sr*);
           debug-assert(~layer.compiled-to-definitions?);
-          with-macroexpansion-output 
-              (expansion-stream: expansion-stream, trace-stream: trace-stream)
+          with-macroexpansion-output (expansion-stream: expansion-stream)
             compute-library-definitions(layer);
           end;
           debug-assert(~any?(compilation-record-model-heap,
