@@ -1042,11 +1042,8 @@ define method do-macroexpand
     with-busy-cursor (frame)
       with-compiler-locked (frame, timeout: timeout)
 	let text = as(<string>, interval);
-	//--- We don't have a trace stream yet...
-	let trace-stream = #f;
 	project-macroexpand-code(project, module, text,
-				 expansion-stream: stream,
-				 trace-stream:     trace-stream)
+				 expansion-stream: stream)
       end
     end
   end

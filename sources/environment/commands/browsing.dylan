@@ -241,8 +241,7 @@ define method do-execute-command
   let module  = context.context-project-context.context-module;
   project-macroexpand-code
     (project, module, command.command-code,
-     expansion-stream: stream,
-     trace-stream:     #f)
+     expansion-stream: stream)
 end method do-execute-command;
 
 

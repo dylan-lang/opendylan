@@ -217,7 +217,6 @@ define function compile-macro-template (template) => (template)
 end function;
 
 define thread variable *expansion-stream* = #f;
-define thread variable *trace-stream* = #f;
 
 define function traced-expander? 
     (exp :: <rewrite-rule-expander>) => (well? :: <boolean>)
@@ -262,14 +261,12 @@ end macro;
 define open generic do-with-macroexpansion-output (thunk :: <method>, #key);
 
 define method do-with-macroexpansion-output
-    (thunk :: <method>, #key expansion-stream, trace-stream)
+    (thunk :: <method>, #key expansion-stream)
   dynamic-bind (*expansion-stream* = expansion-stream)
-    dynamic-bind (*trace-stream* = trace-stream)
-      thunk()
-    end;
+    thunk()
   end;
 end method;
 
 define method compiling-for-macroexpansion? () => (well? :: <boolean>)
-  (*expansion-stream* | *trace-stream*) & #t
+  (*expansion-stream*) & #t
 end method;

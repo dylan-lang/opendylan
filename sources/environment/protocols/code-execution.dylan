@@ -47,7 +47,7 @@ define open generic project-execute-code
 
 define open generic project-macroexpand-code
     (server :: <server>, module :: <module-object>, code :: <string>,
-     #key expansion-stream :: <stream>, trace-stream :: <stream>)
+     #key expansion-stream :: <stream>)
  => ();
 
 define open generic project-runtime-context
@@ -121,14 +121,12 @@ end method;
 
 define method project-macroexpand-code
     (project :: <project-object>, module :: <module-object>, code :: <string>,
-     #key expansion-stream :: false-or(<stream>) = #f,
-          trace-stream :: false-or(<stream>) = #f)
+     #key expansion-stream :: false-or(<stream>) = #f)
  => ()
   let database = ensure-database-server(project, module, error?: #t);
   project-macroexpand-code
     (database, module, code,
-     expansion-stream: expansion-stream,
-     trace-stream: trace-stream)
+     expansion-stream: expansion-stream)
 end method;
 
 define method project-runtime-context

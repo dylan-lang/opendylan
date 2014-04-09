@@ -202,7 +202,7 @@ define module dfmc-macro-expander
 
   export
     \with-macroexpansion-output, do-with-macroexpansion-output,
-    *expansion-stream*, *trace-stream*,
+    *expansion-stream*,
     compiling-for-macroexpansion?;
 
 end module;
