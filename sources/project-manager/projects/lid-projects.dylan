@@ -615,6 +615,7 @@ define method copy-extra-records (project :: <lid-project>,
                           c-header-files = #(),
                           c-object-files = #(),
                           rc-files = #(),
+                          jam-includes = #(),
                           c-libraries = #())
           local method do-one-set (source-files)
                   for (source-file in source-files)
@@ -634,7 +635,7 @@ define method copy-extra-records (project :: <lid-project>,
                   end for
                 end method do-one-set;
           if (~empty?(c-source-files) | ~empty?(c-header-files) | ~empty?(c-object-files)
-                | ~empty?(rc-files))
+                | ~empty?(rc-files) | ~empty?(jam-includes))
             debug-out(#"project-manager",
                       "Copying extra files for: %s",
                       project);
@@ -642,6 +643,7 @@ define method copy-extra-records (project :: <lid-project>,
             do-one-set(c-header-files);
             do-one-set(c-object-files);
             do-one-set(rc-files);
+            do-one-set(jam-includes);
           end
         end method doit;
   apply(doit, build-settings)
