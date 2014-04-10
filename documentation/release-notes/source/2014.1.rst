@@ -30,6 +30,9 @@ Build System
   necessary for MPS and is needed for Boehm if Boehm is installed
   into a non-standard location.
 
+* A bug introduced in 2013.2 that broke the handling of ``jam-includes``
+  has been fixed.
+
 Compiler
 ========
 
