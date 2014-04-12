@@ -29,10 +29,17 @@ Open Dylan is written in Dylan, thus a Dylan compiler is needed to
 bootstrap it. Binary releases are available from
 http://opendylan.org/download/
 
-Once installed, the following command-line will produce a binary in
-_build/bin/hello-world in the current working directory::
+Once installed, the following commands will build and run a
+hello-world binary::
 
+  make-dylan-app hello-world
+  cd hello-world
   dylan-compiler -build hello-world
+  _build/bin/hello-world
+
+Note: If there is no _build directory already, dylan-compiler will
+create it and build all used libraries.  Subsequent builds will be
+much faster.
 
 
 Compilation of the compiler itself
