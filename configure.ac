@@ -81,6 +81,14 @@ done
 AC_CHECK_PROGS(DYLANCOMPILER, dylan-compiler opendylan minimal-console-compiler, no)
 test "$DYLANCOMPILER" = no && AC_MSG_ERROR([
 dylan-compiler, opendylan or minimal-console-compiler is required to bootstrap Open Dylan. Please download and install a build from http://opendylan.org/download/index.html])
+# In 2014.1 and later we need -verbose so fdmake.pl gets warning count summaries.
+AC_MSG_CHECKING(if $DYLANCOMPILER supports the -verbose flag)
+if $DYLANCOMPILER -version -verbose >/dev/null 2>&1 ; then
+  DYLANCOMPILER="$DYLANCOMPILER -verbose"
+  AC_MSG_RESULT(yes)
+else
+  AC_MSG_RESULT(no)
+fi
 test "$DYLANCOMPILER" = dylan-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"
 test "$DYLANCOMPILER" = opendylan && DYLANCOMPILER="$DYLANCOMPILER -build"
 test "$DYLANCOMPILER" = minimal-console-compiler && DYLANCOMPILER="$DYLANCOMPILER -build"

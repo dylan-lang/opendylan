@@ -131,6 +131,8 @@ define class <abstract-link-command> (<project-command>)
     init-keyword: subprojects?:;
   constant slot %unify? :: <boolean> = #f,
     init-keyword: unify?:;
+  constant slot %verbose? :: <boolean> = #f,
+    init-keyword: verbose?:;
 end class <abstract-link-command>;
 
 define class <build-project-command> (<abstract-link-command>)
@@ -160,13 +162,14 @@ define command-line build => <build-project-command>
   keyword target :: <symbol> = "the target [dll or executable]";
   flag force         = "force relink the executable [off by default]";
   flag unify         = "combine the libraries into a single executable [off by default]";
+  flag verbose       = "show verbose output [off by default]";
 end command-line build;
 
 define method do-execute-command
     (context :: <environment-context>, command :: <build-project-command>)
  => ()
   let project = command.%project | context.context-project;
-  let messages = #"internal";
+  let messages = if (command.%verbose?) #"internal" else #"external" end;
   block ()
     if (build-project
           (project,
@@ -176,7 +179,7 @@ define method do-execute-command
            save-databases?:      command.%save?,
            messages:             messages,
            output:               command.%output,
-           progress-callback:    curry(note-build-progress, context),
+           progress-callback:    curry(note-build-progress, context, command.%verbose?),
            warning-callback:     curry(note-compiler-warning, context),
            error-handler:        curry(compiler-condition-handler, context)))
       if (command.%link?)
@@ -192,7 +195,7 @@ define method do-execute-command
            process-subprojects?: command.%subprojects?,
            unify?:               command.%unify?,
            messages:             messages,
-           progress-callback:    curry(note-build-progress, context),
+           progress-callback:    curry(note-build-progress, context, command.%verbose?),
            error-handler:        curry(compiler-condition-handler, context))
       end;
       message(context, "Build of '%s' completed", project.project-name)
@@ -205,22 +208,22 @@ define method do-execute-command
 end method do-execute-command;
 
 define method note-build-progress
-    (context :: <environment-context>,
+    (context :: <environment-context>, verbose? :: <boolean>,
      position :: <integer>, range :: <integer>,
      #key heading-label, item-label)
  => ()
   let project-context = context.context-project-context;
-  // let last-heading = project-context.context-last-heading;
-  // Let's not show headings
-  // if (heading-label & ~empty?(heading-label) & heading-label ~= last-heading)
-  //   project-context.context-last-heading := heading-label;
-  //   message(context, "%s", heading-label)
-  // end;
+  let last-heading = project-context.context-last-heading;
+  if (heading-label & ~empty?(heading-label) & heading-label ~= last-heading)
+    project-context.context-last-heading := heading-label;
+    message(context, "%s", heading-label)
+  end;
+
   let last-item-label = project-context.context-last-item-label;
-  if (item-label & ~empty?(item-label) & item-label ~= last-item-label)
+  if (verbose? & item-label & ~empty?(item-label) & item-label ~= last-item-label)
     project-context.context-last-item-label := item-label;
-    message(context, "%s", item-label)
-  end
+    message(context, "%s", item-label);
+  end;
 end method note-build-progress;
 
 define method note-compiler-warning
@@ -321,6 +324,7 @@ define command-line link => <link-project-command>
   flag force       = "force relink the executable [off by default]";
   flag subprojects = "link subprojects as well if necessary [on by default]";
   flag unify       = "combine the libraries into a single executable [off by default]";
+  flag verbose     = "show verbose output [off by default]";
 end command-line link;
 
 define method do-execute-command
@@ -330,14 +334,14 @@ define method do-execute-command
   let project = command.%project | context.context-project;
   let build-script
     = command.%build-script | project-context.context-build-script;
-  let messages = #"internal";
+  let messages = if (command.%verbose?) #"internal" else #"external" end;
   link-project(project,
                build-script:         build-script,
                target:               command.%target,
                force?:               command.%force?,
                process-subprojects?: command.%subprojects?,
                unify?:               command.%unify?,
-               progress-callback:    curry(note-build-progress, context),
+               progress-callback:    curry(note-build-progress, context, command.%verbose?),
                error-handler:        curry(compiler-condition-handler, context),
                messages:             messages)
 end method do-execute-command;

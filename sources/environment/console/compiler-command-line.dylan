@@ -25,6 +25,7 @@ define command-line main => <main-command>
   flag shortversion     = "displays the shortversion";
   flag debugger         = "enter the debugger if this program crashes";
   flag echo-input       = "echoes all input to the console";
+  flag verbose          = "show verbose output";
 
   flag import           = "import the project";
   flag build            = "build the project";
