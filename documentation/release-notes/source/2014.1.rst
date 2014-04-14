@@ -66,6 +66,9 @@ Compiler
   of clang considered an error. The C back-end now generates a better
   representation.
 
+* The output of ``dylan-compiler`` is less verbose by default.  Use
+  the ``-verbose`` flag to get the old behavior.
+
 C-FFI
 =====
 
