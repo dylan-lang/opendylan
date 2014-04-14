@@ -50,7 +50,7 @@ endif
 
 3-stage-bootstrap: check-submodules
 	$(MAKE) 3-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose"
 3-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2 bootstrap-stage-3
 
 ###
@@ -59,7 +59,7 @@ endif
 
 2-stage-bootstrap: check-submodules
 	$(MAKE) 2-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build"
+	  BOOTSTRAP_2_COMPILER="$(abs_builddir)/Bootstrap.1/bin/dylan-compiler -build -verbose"
 2-stage-bootstrap-reentry: bootstrap-stage-1 bootstrap-stage-2
 
 ###
@@ -68,7 +68,7 @@ endif
 
 1-stage-bootstrap: check-submodules
 	$(MAKE) 1-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER)"
+	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER) -verbose"
 1-stage-bootstrap-reentry: bootstrap-stage-2
 
 ###
@@ -213,7 +213,7 @@ BOOTSTRAP_3_ENV = \
 BOOTSTRAP_3_LIBRARIES = dylan-compiler parser-compiler dswank make-dylan-app
 
 BOOTSTRAP_3_COMPILER = \
-	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build
+	$(abs_builddir)/Bootstrap.2/bin/dylan-compiler -build -verbose
 
 $(abs_builddir)/Bootstrap.3:
 	mkdir $(abs_builddir)/Bootstrap.3
