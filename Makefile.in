@@ -68,7 +68,7 @@ endif
 
 1-stage-bootstrap: check-submodules
 	$(MAKE) 1-stage-bootstrap-reentry \
-	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER) -verbose"
+	  BOOTSTRAP_2_COMPILER="$(DYLANCOMPILER)"
 1-stage-bootstrap-reentry: bootstrap-stage-2
 
 ###
