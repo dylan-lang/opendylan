@@ -258,7 +258,7 @@ define common-extensions function-test position ()
                 3);
     check-false("test position with wrong item",
                 position(sequence, 'w'));
-    check-false("test posision with skip greater than existance",
+    check-false("test position with skip greater than existence",
                 position(sequence, 'a', skip: 2));
 
     check-equal("test position with start at first",

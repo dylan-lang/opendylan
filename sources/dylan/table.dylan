@@ -169,7 +169,7 @@ define generic entry-count (tv :: <table-vector>)
 
 // ---------------- accessing keys and values ----------------
 // Keys and values are stored in separate "virtual" vectors.  Whether either
-// of those vectors is colocated with the table-vector is no business of
+// of those vectors is collocated with the table-vector is no business of
 // anyone but the functions for getting the vectors, the functions for
 // accessing elements, and $entry-index-delta.
 //
@@ -188,7 +188,7 @@ define generic entry-count (tv :: <table-vector>)
 // additional complications because we would not be able to use special
 // markers in the key vector to indicate empty or deleted, and would instead
 // have to use some other mechanism which might introduce difficult threads
-// issuses.  Also note that we don't need to do bounds checking when
+// issues.  Also note that we don't need to do bounds checking when
 // accessing the elements of the entry-key vector.
 
 define sealed primary class <entry-vector> (<vector>)
@@ -1363,7 +1363,7 @@ define function try-to-remhash
     //
     // The combination of these two tests is also sufficient to protect
     // against an in place rehash, assuming that deleted entries aren't
-    // reusued by puthash.
+    // reused by puthash.
     let keys = entry-keys(tv);
     if (~table-entry-deleted?(entry-key(keys, index))
         & rehash-token-valid?(tv, token))
@@ -1471,10 +1471,10 @@ end method remove-all-keys!;
 // gethash), using the value from the deleted entry as the default.  This
 // can produce somewhat surprising results in some cases, but the data
 // structure integrity is maintained and it is possible to explain these
-// anomolies in terms of the state having "pre-fetched" the value.
+// anomalies in terms of the state having "pre-fetched" the value.
 //
 // A different approach that would deal with weak tables but could still
-// lead to problems with remove-key!() would be to record the existance
+// lead to problems with remove-key!() would be to record the existence
 // of an iteration state in the vector and prohibit weak entry removal for
 // any table vector that was undergoing iteration, with a termination
 // method for iteration states that removed that record.  A complication
