@@ -308,6 +308,8 @@ end macro with-project-location-handler;
 define sealed method build-project
     (project-object :: <dfmc-project-object>,
      #key clean? = #f, link? = #t, release? = #f, output = #[],
+          abort-on-all-warnings? = #f,
+          abort-on-serious-warnings? = #f,
           warning-callback :: false-or(<function>),
           progress-callback :: false-or(<function>), error-handler,
           save-databases? = #f,
@@ -331,8 +333,8 @@ define sealed method build-project
                 update-libraries(project,
                                  force?: clean?,
                                  save?:  save-databases?,
-                                 abort-on-all-warnings?:     #f,
-                                 abort-on-serious-warnings?: #f,
+                                 abort-on-all-warnings?: abort-on-all-warnings?,
+                                 abort-on-serious-warnings?: abort-on-serious-warnings?,
                                  assembler-output?: assembler-output?,
                                  dfm-output?:       dfm-output?,
                                  harp-output?:      harp-output?)
@@ -341,8 +343,8 @@ define sealed method build-project
                                 force-parse?:   clean?,
                                 force-compile?: clean?,
                                 save?: save-databases?,
-                                abort-on-all-warnings?:     #f,
-                                abort-on-serious-warnings?: #f,
+                                abort-on-all-warnings?: abort-on-all-warnings?,
+                                abort-on-serious-warnings?: abort-on-serious-warnings?,
                                 assembler-output?: assembler-output?,
                                 dfm-output?:       dfm-output?,
                                 harp-output?:      harp-output?)
