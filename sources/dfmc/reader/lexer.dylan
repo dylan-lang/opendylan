@@ -15,10 +15,8 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define constant $max-lexer-code :: <integer> = 255;
 
 
-// state machine.
+// state machine
 
-// <state> -- internal.
-//
 // A particular state in the state machine.
 //
 define class <state> (<object>)
@@ -46,26 +44,25 @@ end class <state>;
 define sealed domain make (singleton(<state>));
 define sealed domain initialize (<state>);
 
-define method print-object (state :: <state>, stream :: <stream>) => ();
+define method print-object
+    (state :: <state>, stream :: <stream>) => ()
   pprint-fields(state, stream, name: state.name);
 end method print-object;
 
 
+// Make as many entries as necessary to represent the transitions
+// from 'on' to new-state.  'on' can be an integer, a character, or
+// a byte-string.  If a byte-string, then it supports ranges:
+//   "-abc-gz" = match on dash, a, b, c through g, and z
+//
+// Also check to see if this entry clashes with any earlier entries.
+// If so, it means someone messed up editing the state machine.
+//
 define method add-transition
     (table :: <simple-object-vector>,
      on :: type-union(<integer>, <character>, <byte-string>),
      new-state :: <symbol>)
-    => ();
-  //
-  // Make as many entries are necessary to represent the transitions
-  // from on to new-state.  On can be either an integer, a character,
-  // or a byte-string.  If a byte-string, then it supports ranges
-  // as in a-z.
-  //
-  // We also check to see if this entry classes with any earlier
-  // entries.  If so, it means someone messed up editing the
-  // state machine.
-  //
+ => ()
   select (on by instance?)
     <integer> =>
       if (table[on])
@@ -103,14 +100,13 @@ define method add-transition
   end select;
 end method add-transition;
 
+// Utility function for making states.  Expands the sequence of
+// transitions into a transition table and makes the state object.
+//
 define method state
     (name :: <symbol>,
      result :: type-union(<false>, <symbol>, <class>, <function>),
      #rest transitions)
-  //
-  // Utility function for making states.  We expand the sequence
-  // of transitions into a transition table and make the state object.
-  //
   let table = size(transitions) > 0
     & make(<vector>, size: $max-lexer-code + 1, fill: #f);
   for (transition in transitions)
@@ -123,8 +119,11 @@ define method state
 end method state;
 
 
-define method compile-state-machine (#rest states)
-    => start-state :: <state>;
+// Build a state machine and return the start state, which must be
+// named #"start".
+//
+define method compile-state-machine
+    (#rest states) => (start-state :: <state>)
   //
   // make a hash table mapping state names to states.
   //
@@ -154,7 +153,7 @@ define method compile-state-machine (#rest states)
   end for;
   //
   // Return the start state, 'cause that is what we want
-  // $Initial-State to hold.
+  // $initial-state to hold.
   element(state-table, #"start");
 end method compile-state-machine;
 
@@ -180,8 +179,6 @@ end method feature-present?;
 
 // lexer
 
-// <lexer> -- exported.
-//
 // An object holding the current lexer state.
 //
 define class <lexer> (<tokenizer>)
@@ -215,7 +212,8 @@ end class <lexer>;
 define sealed domain make (singleton(<lexer>));
 define sealed domain initialize (<lexer>);
 
-define method print-object (lexer :: <lexer>, stream :: <stream>) => ();
+define method print-object
+    (lexer :: <lexer>, stream :: <stream>) => ()
   pprint-fields(lexer, stream,
                 source: lexer.source.compilation-record-source-record,
                 posn: lexer.posn,
@@ -242,16 +240,13 @@ define inline function make-lexer-source-location
   loc
 end function;
 
-// skip-multi-line-comment -- internal.
-//
 // Skip a multi-line comment, taking into account nested comments.
 //
 // Basically, we just implement a state machine via tail recursive local
 // methods.
 //
-define method skip-multi-line-comment (lexer :: <lexer>,
-                                       start :: <integer>)
-    => result :: false-or(<integer>);
+define method skip-multi-line-comment
+    (lexer :: <lexer>, start :: <integer>) => (result :: false-or(<integer>))
   let contents = lexer.source.contents;
   let length = contents.size;
   local
@@ -343,10 +338,6 @@ define method skip-multi-line-comment (lexer :: <lexer>,
   next(seen-nothing, start, 1);
 end method;
 
-// internal-get-token -- internal.
-//
-// Tokenize the next token and return it.
-//
 
 define macro fragment-builder
   { fragment-builder(?:name) }
@@ -361,7 +352,8 @@ end macro;
 
 // TODO: Lose the hand inlining of maybe-done when the compiler's smarter.
 
-define method get-token (lexer :: <lexer>) => res :: <fragment>;
+define method get-token
+    (lexer :: <lexer>) => (res :: <fragment>)
   //
   // Basically, just record where we are starting, and keep
   // advancing the state machine until there are no more possible
@@ -463,7 +455,7 @@ define method get-token (lexer :: <lexer>) => res :: <fragment>;
                 result-end := #f;
                 let result-start :: <integer> = result-start;
                 repeat
-                  ($Initial-State, result-start
+                  ($initial-state, result-start
                      /* , result-kind, result-start, result-end */);
               else
                 values(posn, result-kind, result-start, result-end)
@@ -516,7 +508,7 @@ define method get-token (lexer :: <lexer>) => res :: <fragment>;
               result-end := #f;
               let result-start :: <integer> = result-start;
               repeat
-                ($Initial-State, result-start
+                ($initial-state, result-start
                    /* , result-kind, result-start, result-end */);
             else
               values(posn, result-kind, result-start, result-end)
@@ -528,7 +520,7 @@ define method get-token (lexer :: <lexer>) => res :: <fragment>;
       end method repeat;
     let (posn, result-kind, result-start, result-end)
       = repeat
-          ($Initial-State, lexer.posn
+          ($initial-state, lexer.posn
              /* , #f, lexer.posn, #f */);
     if (~result-kind)
       //
@@ -582,7 +574,8 @@ end method get-token;
 
 // This indirection is only here for profiling purposes.
 
-define inline function do-process-token (f, lexer :: <lexer>, source-location)
+define inline function do-process-token
+    (f, lexer :: <lexer>, source-location)
   lexer.last-token := f(lexer, source-location);
 end function;
 
@@ -677,88 +670,79 @@ end method unget-token;
 
 // Constructors.
 
-// make-binary-operator, make-tilde, make-minus, make-equal, make-double-equal
-//   -- internal.
-//
-// Make various kinds of operators.
-//
 define method make-binary-operator
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <binary-operator-fragment>;
+ => (res :: <binary-operator-fragment>)
   make(<binary-operator-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        kind: $binary-operator-only-token,
        name: extract-symbol(source-location),
-       module: *Current-Module*);
+       module: *current-module*);
 end method make-binary-operator;
-//
+
 define method make-tilde
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <unary-operator-fragment>;
+ => (res :: <unary-operator-fragment>)
   make(<unary-operator-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        name: #"~",
-       module: *Current-Module*);
+       module: *current-module*);
 end method make-tilde;
-//
+
 define method make-minus
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <unary-and-binary-operator-fragment>;
+ => (res :: <unary-and-binary-operator-fragment>)
   make(<unary-and-binary-operator-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        kind: $unary-and-binary-operator-token,
        name: #"-",
-       module: *Current-Module*);
+       module: *current-module*);
 end method make-minus;
-//
+
 define method make-equal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <equal-fragment>;
+ => (res :: <equal-fragment>)
   make(<equal-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position);
 end method make-equal;
-//
+
 define method make-double-equal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <binary-operator-fragment>;
+ => (res :: <binary-operator-fragment>)
   make(<binary-operator-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        kind: $equal-equal-token,
        name: #"==",
-       module: *Current-Module*);
+       module: *current-module*);
 end method make-double-equal;
 
 
-// make-quoted-name -- internal.
-//
 // Make a <quoted-name-token> for \-quoted operator.
 //
 define method make-quoted-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <variable-name-fragment>;
+ => (res :: <variable-name-fragment>)
   make(<escaped-name-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
        name: extract-symbol(source-location,
                             start: source-location.start-posn + 1),
-       module: *Current-Module*);
+       module: *current-module*);
 end method make-quoted-name;
 
-// make-identifier -- internal.
-//
 // Extract the name from the source location, figure out what kind of word it
 // is, and make it.
 //
 define method make-identifier
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <variable-name-fragment>;
+ => (res :: <variable-name-fragment>)
   let name = extract-symbol(source-location);
-  let module = *Current-Module*;
+  let module = *current-module*;
   make(<variable-name-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
@@ -767,22 +751,16 @@ define method make-identifier
        module: module);
 end method make-identifier;
 
-// make-history-name -- internal.
-//
 // We allow extended $[0-9]+ syntax for getting at history bindings.
 // For now, these aren't distinguished syntactically from other names.
 //
 define method make-history-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <variable-name-fragment>;
+ => (res :: <variable-name-fragment>)
   make-identifier(lexer, source-location);
 end method make-history-name;
 
 
-// make-constrained-name -- internal.
-//
-// Make a constrained name.
-//
 define method make-constrained-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
   let colon-posn
@@ -822,10 +800,6 @@ define method make-constrained-name
   end;
 end method;
 
-// make-qualified-name -- internal.
-//
-// Make a qualified name.
-//
 define method make-qualified-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
   let colon1-posn
@@ -873,13 +847,11 @@ define method make-qualified-name
        context: module);
 end method;
 
-// escape-character -- internal.
-//
 // Return the real character that corresponds to the \-quoted
 // character in a string or character literal.
 //
 define method escape-character
-    (char :: <character>) => escaped-char :: <character>;
+    (char :: <character>) => (escaped-char :: <character>)
   select (char)
     'a' => '\a';
     'b' => '\b';
@@ -918,9 +890,7 @@ define method hex-escape-character
   end;
 end method;
 
-// decode-string -- internal.
-//
-// Like extract string, except process escape characters.  Also, we
+// Like extract-string, except process escape characters.  Also, we
 // default to starting one character in from either end, under the
 // assumption that the string will be surrounded by quotes.
 //
@@ -928,7 +898,7 @@ define method decode-string
     (source-location :: <lexer-source-location>,
      #key start :: <integer> = source-location.start-posn + 1,
      end: finish :: <integer> = source-location.end-posn - 1)
-    => result :: <byte-string>;
+ => (res :: <byte-string>)
   let contents = source-location.source-location-record.contents;
   local method skip-hex-escape (contents, posn)
     if (contents[posn] == as(<integer>, '>'))
@@ -978,13 +948,11 @@ define method decode-string
   result;
 end method decode-string;
 
-// make-quoted-symbol -- internal.
-//
 // Make a <literal-token> when confronted with the #"foo" syntax.
 //
 define method make-quoted-symbol
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <symbol-syntax-symbol-fragment>;
+ => (res :: <symbol-syntax-symbol-fragment>)
   let sym = as(<symbol>,
                decode-string(source-location,
                              start: source-location.start-posn + 2));
@@ -994,13 +962,11 @@ define method make-quoted-symbol
        value: as-fragment-value(sym));
 end method make-quoted-symbol;
 
-// make-keyword-symbol -- internal.
-//
 // Make a <literal-token> when confronted with the foo: syntax.
 //
 define method make-keyword-symbol
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <keyword-syntax-symbol-fragment>;
+ => (res :: <keyword-syntax-symbol-fragment>)
   let sym = extract-symbol(source-location,
                            end: source-location.end-posn - 1);
 
@@ -1010,10 +976,6 @@ define method make-keyword-symbol
        value: as-fragment-value(sym));
 end method make-keyword-symbol;
 
-// parse-integer -- internal.
-//
-// Parse and return an integer in the supplied radix.
-//
 
 define constant $zero-code    :: <integer> = as(<integer>, '0');
 define constant $nine-code    :: <integer> = as(<integer>, '9');
@@ -1022,13 +984,15 @@ define constant $lower-a-code :: <integer> = as(<integer>, 'a');
 define constant $upper-f-code :: <integer> = as(<integer>, 'F');
 define constant $lower-f-code :: <integer> = as(<integer>, 'f');
 
+// Parse and return an integer in the supplied radix.
+//
 define method parse-integer
     (source-location :: <lexer-source-location>,
      #key radix :: <integer> = 10,
           start :: <integer> = source-location.start-posn,
           end: finish :: <integer> = source-location.end-posn,
           stop-at-non-digit? = #f)
-    => res :: <extended-integer>;
+ => (res :: <extended-integer>)
   let contents :: <byte-vector>
     = source-location.source-location-record.contents;
   // We do our working in negative integers to avoid representation
@@ -1080,14 +1044,11 @@ define method parse-integer
   end;
 end method parse-integer;
 
-// parse-integer-literal -- all internal.
-//
 // Parse an integer and return a <literal-token> holding it.
 //
-
 define method parse-integer-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <abstract-integer-fragment>;
+ => (res :: <abstract-integer-fragment>)
   let contents = source-location.source-location-record.contents;
   let posn = source-location.start-posn;
   let extended = #f;
@@ -1134,13 +1095,11 @@ define method parse-integer-literal
   end;
 end method parse-integer-literal;
 
-// make-character-literal -- internal.
-//
 // Return a <literal-token> holding the character token.
 //
 define method make-character-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <character-fragment>;
+ => (res :: <character-fragment>)
   let contents = source-location.source-location-record.contents;
   let posn = source-location.start-posn + 1;
   let char = as(<character>, contents[posn]);
@@ -1161,13 +1120,9 @@ define method make-character-literal
             end));
 end method make-character-literal;
 
-// make-string-literal -- internal.
-//
-// Should be obvious by now.
-//
 define method make-string-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <string-fragment>;
+ => (res :: <string-fragment>)
   make(<string-fragment>,
        record: source-location.source-location-record,
        source-position: source-location.source-location-source-position,
@@ -1175,11 +1130,9 @@ define method make-string-literal
        value: as-fragment-value(decode-string(source-location)));
 end method make-string-literal;
 
-// parse-ratio-literal -- internal.
-//
 define method parse-ratio-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    // => res :: <fragment>;
+  // => (res :: <fragment>)
   note(<ratios-not-supported>,
        source-location:
           record-position-as-location
@@ -1221,11 +1174,12 @@ define constant <default-float> = <single-float>;
 
 define constant $max-mantissa-digits = 18;
 
-define method atof (string :: <byte-string>,
-                    #key start :: <integer> = 0,
-                         end: finish :: <integer> = string.size)
-    => (class :: one-of(#f, #"single", #"double", #"extended"),
-        value :: <float>);
+define method atof
+    (string :: <byte-string>,
+     #key start :: <integer> = 0,
+          end: finish :: <integer> = string.size)
+ => (class :: one-of(#f, #"single", #"double", #"extended"),
+     value :: <float>)
   let class = #f;
   let posn = start;
   let sign = 1;
@@ -1366,11 +1320,9 @@ define method atof (string :: <byte-string>,
   end
 end method atof;
 
-// parse-fp-literal -- internal.
-//
 define method parse-fp-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <number-fragment>;
+ => (res :: <number-fragment>)
   let (class, value) = atof(extract-string(source-location));
 
   // TODO: Decide how to maintain precision and representation,
@@ -1381,12 +1333,9 @@ define method parse-fp-literal
        value: as-fragment-float-value(class, value));
 end method parse-fp-literal;
 
-// make-hash-word
-//
-
 define method make-hash-word
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <fragment>;
+ => (res :: <fragment>)
   let name
     = extract-symbol(source-location,
                      start: source-location.start-posn + 1);
@@ -1415,7 +1364,7 @@ define constant $escape-code = as(<integer>, '\\');
 
 define method make-hash-literal
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
-    => res :: <fragment>;
+ => (res :: <fragment>)
   let name-string
     = extract-string
         (source-location,
@@ -1465,7 +1414,7 @@ define method make-hash-literal
         := extract-string(source-location, start: data-start, end: i);
       lexer.posn := i;
     end;
-    let module = *Current-Module*;
+    let module = *current-module*;
     let parser-symbol = as(<symbol>, concatenate(name-string, "-parser"));
     let parser-name
       = make(<variable-name-fragment>,
@@ -1593,7 +1542,7 @@ end method parse-conditional;
 */
 
 // A very simple heuristic is used here - we just skip forward until we
-// come across the next flush-left character that doesn't like "end".
+// come across the next flush-left character that doesn't look like "end".
 
 // TODO: CORRECTNESS: Multiplatform newline sequence handling.
 
@@ -1644,7 +1593,8 @@ define inline function at-end-word?
       end;
 end function;
 
-define method skip-to-next-top-level-form (lexer :: <lexer>) => ()
+define method skip-to-next-top-level-form
+    (lexer :: <lexer>) => ()
   let contents = lexer.source.contents;
   let length = contents.size;
   local method walk (i :: <integer>)

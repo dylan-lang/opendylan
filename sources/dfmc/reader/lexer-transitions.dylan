@@ -11,15 +11,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Copyright (c) 1994  Carnegie Mellon University
 // All rights reserved.
 
-// $Initial-State -- internal.
-//
-// Build the state graph and save the initial state.
-//
-
 define constant $ascii-8-bit-extensions
   = as(<string>, vector(as(<character>, 128), '-', as(<character>, 255)));
 
-define constant $Initial-State :: <state>
+// Build the state graph and save the initial state.
+//
+define constant $initial-state :: <state>
   = compile-state-machine
       (state(#"start", #f,
              pair(" \t\f\r", #"whitespace"),
