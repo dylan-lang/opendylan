@@ -43,7 +43,7 @@ define function merge-hash-ids (id1 :: <integer>, id2 :: <integer>, #key ordered
  => (id :: <integer>)
   let id3 = if (ordered)
               // Left rotate id1 5 bits while being
-              // carefule to avoid <integer> overflow.
+              // careful to avoid <integer> overflow.
               machine-word-as-hash-index
                 (machine-word-unsigned-rotate-left
                    (coerce-integer-to-machine-word(id1), 5))

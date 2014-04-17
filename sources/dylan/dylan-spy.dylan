@@ -159,7 +159,7 @@ define method spy-invoke-numbered-restart (index :: <integer>) => ()
      end method);
 
   // If we get here, the debugger has asked the spy to call a restart that
-  // does not exist according to the numering convention. This can only
+  // does not exist according to the numbering convention. This can only
   // mean that the debugger's internal implementation is screwed, and
   // we are well justified signalling an error!
 

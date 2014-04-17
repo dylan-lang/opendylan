@@ -575,7 +575,7 @@ define function remove-method (g :: <generic-function>, m :: <method>)
 end function;
 
 
-// For the environbment?
+// For the environment?
 define function remove-method-via-specializers (g :: <generic-function>, specs, lib :: <library>)
  => (removed? :: false-or(<method>));
   %remove-method-from-library(g, specs, lib, #t, domain-match?)

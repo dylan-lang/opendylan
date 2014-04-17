@@ -422,7 +422,7 @@ define function class-not-instantiable (ic :: <implementation-class>) => ()
     error("Cannot instantiate an abstract class - %=", c)
   elseif (~class-complete?(ic))
     unless (#f /* attempt-deferred-finalization(ic) */)
-      error("Cannot instantate %= - its superclass expressions have not finished executing", c)
+      error("Cannot instantiate %= - its superclass expressions have not finished executing", c)
     end unless
   else
     // Or, we're broken..
