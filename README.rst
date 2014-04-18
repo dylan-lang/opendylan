@@ -94,6 +94,10 @@ To go on and do the build::
   make 3-stage-bootstrap
   sudo make install
 
+If you have installed the Boehm GC via your operating system package
+manager, you may not need to specify the location of the Boehm GC. It will
+be found automatically if it is in ``/usr`` or ``/usr/local``.
+
 This will build a fully bootstrapped compiler with the first generation
 in ``Bootstrap.1/bin/dylan-compiler``, the second generation in
 ``Bootstrap.2/bin/dylan-compiler``, and the third in
