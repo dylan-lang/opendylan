@@ -85,7 +85,7 @@ end method;
 ///// PROJECT-VALID-CODE? (Environment Protocol Method)
 //    Sends a string of dylan code, and the appropriate contextual
 //    information, to the interactive parser. The parser will inform us
-//    whether the string consitutes valid dylan code, and will also
+//    whether the string constitutes valid dylan code, and will also
 //    return a sequence of compiler warnings resulting from the analysis.
 
 define method project-valid-code?
