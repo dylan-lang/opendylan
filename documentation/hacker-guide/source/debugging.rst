@@ -24,6 +24,14 @@ error.
 Dumping DFM Output
 ------------------
 
-To be documented...
+DFM is a relatively readable intermediate language used by the
+compiler.  It can be useful for debugging the compiler, but also for
+optimizing Dylan code in general since it shows (for example) where
+the compiler wasn't able to optimize method dispatch.
+
+The main point you need to know is to add the ``-dfm`` flag when you
+invoke ``dylan-compiler``.  This will generate DFM output files in
+your ``_build/build/`` directory.
+
 
 .. _Debugging with GDB or LLDB: http://opendylan.org/documentation/getting-started-cli/debugging-with-gdb-lldb.html
