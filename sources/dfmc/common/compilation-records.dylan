@@ -41,9 +41,9 @@ define dood-class <compilation-record> (<dood-mapped-object>)
   slot compilation-record-approximate-model-heap-size :: <integer> = 0;
   slot compilation-record-data-size :: <integer> = 0;
   slot compilation-record-code-size :: <integer> = 0;
-  // The total line count of preceeding sources (in combined mode) if any,
+  // The total line count of preceding sources (in combined mode) if any,
   // for use in the back end.  Only valid during code emission.
-  weak slot compilation-record-preceeding-line-count :: <integer> = 0,
+  weak slot compilation-record-preceding-line-count :: <integer> = 0,
     reinit-expression: 0;
 end;
 

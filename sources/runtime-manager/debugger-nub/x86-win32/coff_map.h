@@ -38,7 +38,7 @@ BOOL closest_symbol_in_coff_map
 
 COFF_SYMBOL_ENTRY *following_coff_symbol (COFF_SYMBOL_ENTRY *x);
 
-COFF_SYMBOL_ENTRY *preceeding_coff_symbol (COFF_SYMBOL_ENTRY *x);
+COFF_SYMBOL_ENTRY *preceding_coff_symbol (COFF_SYMBOL_ENTRY *x);
 
 COFF_SYMBOL_ENTRY *following_standard_coff_symbol (COFF_SYMBOL_ENTRY *x);
 

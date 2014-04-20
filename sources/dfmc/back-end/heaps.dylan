@@ -295,7 +295,7 @@ define method install-compilation-record-heap
   // is marked obsolete (i.e. cr-needs-linking? is set)
   with-dependent ($compilation of cr)
     retract-compilation-record-heap(cr);
-    cr.compilation-record-preceeding-line-count := 0;
+    cr.compilation-record-preceding-line-count := 0;
     compilation-record-model-heap(cr)
       := make(<compilation-record-model-heap>, compilation-record: cr)
   end with-dependent;
@@ -313,7 +313,7 @@ define method install-compilation-record-heap
         end;
   for (cr in ld.library-description-compilation-records,
        lines = 0 then lines + cr-lines(cr))
-    cr.compilation-record-preceeding-line-count := lines
+    cr.compilation-record-preceding-line-count := lines
   end;
   compilation-record-model-heap(combined-cr)
     := make(<library-model-heap>, library: ld);

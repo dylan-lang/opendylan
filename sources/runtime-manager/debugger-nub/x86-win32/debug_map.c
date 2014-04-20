@@ -29,7 +29,7 @@ DWORD cv_symbol_address
 // and you can safely pass a value of 0.
 
 DWORD size_of_subsection_prolog (WORD subsection_type);
-// Returns the number of bytes that preceed "useful" information in
+// Returns the number of bytes that precede "useful" information in
 // subsection formats. These "prologs" contain data that might be useful
 // in the future, but we aren't interested in them for the time being.
 

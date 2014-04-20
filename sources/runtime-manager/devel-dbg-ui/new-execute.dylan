@@ -2554,7 +2554,7 @@ define method execute-debugger-command
                                   (closest.remote-symbol-address));
       end if;
       if (previous)
-        debugger-message ("Which is preceeded by %s at %s",
+        debugger-message ("Which is preceded by %s at %s",
                           previous.remote-symbol-name,
                           formatted-hex-to-string
                                   (previous.remote-symbol-address));

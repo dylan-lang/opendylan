@@ -262,7 +262,7 @@ define method object-source-location-lines (loc :: <compiler-range-source-locati
  => (start-line :: <integer>, end-line :: <integer>);
   let cr = loc.source-location-record;
   let sr = cr.compilation-record-source-record;
-  let offset = cr.compilation-record-preceeding-line-count
+  let offset = cr.compilation-record-preceding-line-count
                  + sr.source-record-start-line;
   let start-line = loc.source-location-start-offset.source-offset-line;
   let end-line = loc.source-location-end-offset.source-offset-line;

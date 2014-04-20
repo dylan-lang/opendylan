@@ -995,7 +995,7 @@ define function used-compilation-contexts
 end function;
 
 // Returns all compilation-contexts used by context, plus context itself,
-// sorted so that a library preceeds all the libraries it uses.  context
+// sorted so that a library precedes all the libraries it uses.  context
 // itself is first in the list.  The return value is explicitly a list so
 // you can use .tail to get just the used contexts.
 define function all-known-compilation-contexts

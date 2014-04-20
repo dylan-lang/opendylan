@@ -555,7 +555,7 @@ end function;
   
 
 // Returns all library descriptions used by ld, plus ld itself, sorted
-// so that a library preceeds all the libraries it uses.  ld itself is
+// so that a library precedes all the libraries it uses.  ld itself is
 // first in the list.  The return value is explicitly a list so you can
 // use .tail to get just the used library descriptions.
 define method all-library-descriptions (ld :: <project-library-description>)

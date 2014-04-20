@@ -544,7 +544,7 @@ COFF_SYMBOL_ENTRY *following_coff_symbol (COFF_SYMBOL_ENTRY *x)
   return ((COFF_SYMBOL_ENTRY *) (((DWORD) x) + SIZEOF_SYMBOL_ENTRY));
 }
 
-COFF_SYMBOL_ENTRY *preceeding_coff_symbol (COFF_SYMBOL_ENTRY *x)
+COFF_SYMBOL_ENTRY *preceding_coff_symbol (COFF_SYMBOL_ENTRY *x)
 {
   return ((COFF_SYMBOL_ENTRY *) (((DWORD) x) - SIZEOF_SYMBOL_ENTRY));
 }

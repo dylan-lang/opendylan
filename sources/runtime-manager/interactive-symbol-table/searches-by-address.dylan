@@ -205,7 +205,7 @@ end method;
 define method symbol-table-nearest-symbols
     (st :: <interactive-symbol-table>, addr :: <remote-value>)
       => (closest :: false-or(<remote-symbol>),
-          preceeding :: false-or(<remote-symbol>),
+          preceding :: false-or(<remote-symbol>),
           following :: false-or(<remote-symbol>))
 
   if (st.performing-multiple-definitions?)

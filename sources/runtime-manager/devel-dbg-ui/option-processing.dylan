@@ -112,7 +112,7 @@ end class;
 ///// PROCESS-COMMAND-LINE-OPTIONS
 //    Modifies *current-debugger-options* by parsing and processing the
 //    command line that was passed to the debugger. It is vital that
-//    only those options _preceeding_ the name of the target program are
+//    only those options _preceding_ the name of the target program are
 //    taken into account.
 
 define method process-command-line-options () => ()

@@ -53,7 +53,7 @@ end method;
 
 
 // add-cv4-string adds a string to the CodeView record in normal format - 
-// i.e. preceeded by a length byte.
+// i.e. preceded by a length byte.
 
 define method add-cv4-string 
     (builder :: <coff-builder>, str :: <string>, 

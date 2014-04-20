@@ -228,7 +228,7 @@ define method collect-nearest-symbols
 
   // For nearest-symbols, the nub creates a quick lookup table with
   // three entries: 1. The nearest symbol, 2. The closest symbol
-  // preceeding the nearest, 3. The closest symbol following the
+  // preceding the nearest, 3. The closest symbol following the
   // nearest (in that order).
 
   // Pull nub information for the nearest symbol, and make a
