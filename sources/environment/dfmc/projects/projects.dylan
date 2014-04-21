@@ -538,7 +538,7 @@ define sealed method link-project
      #key progress-callback, error-handler, process-subprojects? = #t,
           build-script, target, force?, unify?, release?, messages)
  => ()
-  ignore(progress-callback, messages);
+  ignore(messages);
   let project = project-object.ensure-project-proxy;
   let name = dfmc-project-library-name(project);
   with-progress-reporting (project-object, progress-callback,
