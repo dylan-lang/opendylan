@@ -149,6 +149,15 @@ if test "$cross_compiling" != "yes"; then
           ]
     )
 
+    AS_IF([test x${with_gc} == xmalloc],
+          [
+            GC_CFLAGS="-DGC_USE_MALLOC"
+            GC_LFLAGS=""
+            GC_LIBRARY=""
+            GC_USE_STATIC_BOEHM=false
+            GC_CHOICE="malloc"
+          ]
+    )
     AS_IF([test x${with_gc} == xmps],
           [
             AS_IF([test x${SUPPORT_GC_MPS} == xno],
