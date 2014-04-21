@@ -139,7 +139,7 @@ if test "$cross_compiling" != "yes"; then
             GC_LIB_NAME=libgc.a
           ],
           [
-            AS_IF([test x${OPEN_DYLAN_TARGET_PLATFORM} == xx86-darwin],
+            AS_IF([test x${OPEN_DYLAN_TARGET_PLATFORM} == xx86-darwin -o x${OPEN_DYLAN_TARGET_PLATFORM} == xx86_64-darwin],
                   [
                     GC_LIB_NAME=libgc.dylib
                   ],
