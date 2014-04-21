@@ -278,6 +278,12 @@ define program-warning <ambiguous-copy-down-method>
   format-arguments meth;
 end;
 
+define program-warning <ambiguous-copy-down-method-option>
+  slot condition-method, required-init-keyword: meth:;
+  format-string "One option was %s";
+  format-arguments meth;
+end;
+
 define program-warning <unknown-copy-down-method-domain>
   slot condition-method, required-init-keyword: meth:;
   format-string "Domain not fully known for copy-down method %s";
@@ -335,7 +341,13 @@ define compiler-sideways method copy-down-body (m :: <&copy-down-method>) => ()
                     note(<ambiguous-copy-down-method>,
                          meth: m,
                          other-methods: others,
-                         source-location: m.model-source-location);
+                         source-location: m.model-source-location,
+                         subnotes: map(method (m)
+                                         make(<ambiguous-copy-down-method-option>,
+                                              meth: m,
+                                              source-location: m.model-source-location)
+                                       end,
+                                       others));
                     kludge
                   end;
                 end;
