@@ -113,6 +113,7 @@ define method execute-main-command
 	build-script: command.%build-script,
 	target:      target,
 	force?:      command.%force? | command.%clean?,
+	verbose?:    command.%verbose?,
 	subprojects: command.%subprojects?,
 	unify?:      command.%unify?)
   end;
