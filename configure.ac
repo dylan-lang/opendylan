@@ -217,7 +217,7 @@ fi
 
 AS_IF([test x${GC_CHOICE}x${GC_LIBRARY} == xboehmx],
       [
-        AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc])
+        AC_MSG_ERROR([Could not find ${GC_LIB_NAME}. Please specify the path to the Boehm GC installation via --with-gc-path])
       ])
 AS_IF([test x${GC_CHOICE} == x],
       [
