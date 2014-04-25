@@ -382,7 +382,7 @@ define sealed method make
   let base = base | if (pos) copy-sequence(name, end: pos) else name end;
   let extension = extension | if (pos) copy-sequence(name, start: pos + 1) end;
   if (~base)
-    locator-error("Attemped to create a file locator without a base")
+    locator-error("Attempted to create a file locator without a base")
   end;
   next-method(class,
 	      directory: directory,
