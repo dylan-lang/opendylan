@@ -92,8 +92,6 @@ define module-spec common-extensions ()
       (<string>, #"key", #"base", #"start", #"end", #"default")
    => (<integer>, <integer>);
 
-  function format-to-string (<string>, #"rest") => (<string>);
-
   // Control constructs
   macro-test iterate-test; // the macro iterate
   macro-test when-test;    // the macro when (which we're discussing)
@@ -192,9 +190,10 @@ define module-spec finalization ()
   function finalize-when-unreachable (<object>) => (<object>);
 end module-spec finalization;
 
-define module-spec simple-io ()
+define module-spec simple-format ()
   function format-out (<string>, #"rest") => ();
-end module-spec simple-io;
+  function format-to-string (<string>, #"rest") => (<string>);
+end module-spec simple-format;
 
 define module-spec simple-random ()
   sealed instantiable class <random> (<object>);
@@ -478,7 +477,7 @@ define library-spec common-dylan ()
   module streams-protocol;
   module locators-protocol;
   module finalization;
-  module simple-io;
+  module simple-format;
   module simple-random;
   module simple-profiling;
   module transcendentals;

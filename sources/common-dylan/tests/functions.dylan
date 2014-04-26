@@ -484,37 +484,6 @@ define common-extensions function-test register-application-exit-function ()
   //---*** Fill this in...
 end function-test register-application-exit-function;
 
-define common-extensions function-test format-to-string ()
-  check-instance?("format-to-string returns a string",
-                  <string>,
-                  format-to-string("Hello"));
-  check-condition("format-to-string crashes when missing an argument",
-                  <error>, format-to-string("Hello %s"));
-  check-condition("format-to-string crashes with argument of wrong type",
-                  <error>, format-to-string("Hello %c", 10));
-  check-condition("format-to-string crashes with invalid directive %z",
-                  <error>, format-to-string("Hello %z", 10));
-  check-equal("format-to-string(\"%d\", 10)",
-              format-to-string("%d", 10),
-              "10");
-  check-equal("format-to-string(\"%b\", 7)",
-              format-to-string("%b", 7),
-              "111");
-  check-equal("format-to-string(\"%o\", 16)",
-              format-to-string("%o", 16),
-              "20");
-  check-equal("format-to-string(\"%x\", 257)",
-              format-to-string("%x", 257),
-              "101");
-  check-equal("format-to-string(\"%c\", 'a')",
-              format-to-string("%c", 'a'),
-              "a");
-  check-equal("format-to-string(\"%%\")",
-              format-to-string("%%"),
-              "%");
-  format-object-tests()
-end function-test format-to-string;
-
 define common-extensions function-test unfound ()
   //---*** Fill this in...
 end function-test unfound;
@@ -554,9 +523,9 @@ define common-extensions function-test false? ()
 end function-test false?;
 
 
-/// simple-io module
+/// simple-format module
 
-define simple-io function-test format-out ()
+define simple-format function-test format-out ()
   check-false("format-out doesn't crash", format-out("Hello"));
   check-condition("format-out crashes when missing an argument",
                   <error>, format-out("Hello %s"));
@@ -565,6 +534,37 @@ define simple-io function-test format-out ()
   check-condition("format-out crashes with invalid directive %z",
                   <error>, format-out("Hello %z", 10));
 end function-test format-out;
+
+define simple-format function-test format-to-string ()
+  check-instance?("format-to-string returns a string",
+                  <string>,
+                  format-to-string("Hello"));
+  check-condition("format-to-string crashes when missing an argument",
+                  <error>, format-to-string("Hello %s"));
+  check-condition("format-to-string crashes with argument of wrong type",
+                  <error>, format-to-string("Hello %c", 10));
+  check-condition("format-to-string crashes with invalid directive %z",
+                  <error>, format-to-string("Hello %z", 10));
+  check-equal("format-to-string(\"%d\", 10)",
+              format-to-string("%d", 10),
+              "10");
+  check-equal("format-to-string(\"%b\", 7)",
+              format-to-string("%b", 7),
+              "111");
+  check-equal("format-to-string(\"%o\", 16)",
+              format-to-string("%o", 16),
+              "20");
+  check-equal("format-to-string(\"%x\", 257)",
+              format-to-string("%x", 257),
+              "101");
+  check-equal("format-to-string(\"%c\", 'a')",
+              format-to-string("%c", 'a'),
+              "a");
+  check-equal("format-to-string(\"%%\")",
+              format-to-string("%%"),
+              "%");
+  format-object-tests()
+end function-test format-to-string;
 
 define constant $format-object-mappings
   = vector(vector(10, "10", "10"),

@@ -18,7 +18,7 @@ The Common Dylan library exports the following modules:
   *common-extensions* and *dylan* modules.  This is a convenience module
   that is very widely used.
 
-- :doc:`simple-io` Simple formatting facilities. For more flexible
+- :doc:`simple-format` Simple formatting facilities. For more flexible
   formatting and printing, see the :doc:`io <../io/index>` library.
 
 - :doc:`simple-random` A facility for generating pseudo-random integers.
@@ -45,7 +45,7 @@ It also re-exports these modules which are defined in the *dylan* library:
    common-extensions
    finalization
    machine-words
-   simple-io
+   simple-format
    simple-random
    simple-timers
    threads
