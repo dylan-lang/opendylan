@@ -238,7 +238,7 @@ define inline function make-lexer-source-location
          (make-source-offset(start-char, start-line, start-col),
           make-source-offset(end-char, end-line, end-col));
   loc
-end function;
+end function make-lexer-source-location;
 
 // Skip a multi-line comment, taking into account nested comments.
 //
@@ -336,7 +336,7 @@ define method skip-multi-line-comment
   // Start out not having seen anything.
   //
   next(seen-nothing, start, 1);
-end method;
+end method skip-multi-line-comment;
 
 
 define macro fragment-builder
@@ -348,7 +348,7 @@ define macro fragment-builder
                 source-position:
                   source-location.source-location-source-position)
          end }
-end macro;
+end macro fragment-builder;
 
 // TODO: Lose the hand inlining of maybe-done when the compiler's smarter.
 
@@ -577,7 +577,7 @@ end method get-token;
 define inline function do-process-token
     (f, lexer :: <lexer>, source-location)
   lexer.last-token := f(lexer, source-location);
-end function;
+end;
 
 /*
 define function get-token (lexer :: <lexer>) => (token :: <fragment>)
@@ -798,7 +798,7 @@ define method make-constrained-name
   else
     make-qualified-name(lexer, source-location);
   end;
-end method;
+end method make-constrained-name;
 
 define method make-qualified-name
     (lexer :: <lexer>, source-location :: <lexer-source-location>)
@@ -845,7 +845,7 @@ define method make-qualified-name
        kind: classify-expansion-word-in(module, name),
        name: name,
        context: module);
-end method;
+end method make-qualified-name;
 
 // Return the real character that corresponds to the \-quoted
 // character in a string or character literal.
@@ -888,7 +888,7 @@ define method hex-escape-character
   else
     as(<character>, code);
   end;
-end method;
+end method hex-escape-character;
 
 // Like extract-string, except process escape characters.  Also, we
 // default to starting one character in from either end, under the
@@ -1436,7 +1436,7 @@ define method make-hash-literal
              arguments: list(data-string));
     call
   end;
-end method;
+end method make-hash-literal;
 
 define constant $comma-code = as(<integer>, ',');
 define constant $semicolon-code = as(<integer>, ';');
@@ -1457,7 +1457,7 @@ define function delimiter-code?
     $lbrace-code, $rbrace-code            => #t;
     otherwise => #f;
   end;
-end function;
+end function delimiter-code?;
 
 
 // Conditional compilation stuff.
@@ -1565,7 +1565,7 @@ define inline function at-newline?
   else
     values(#f, posn);
   end;
-end function;
+end function at-newline?;
 
 define inline function at-whitespace?
     (contents :: <byte-vector>, posn :: <integer>, length :: <integer>)
@@ -1575,7 +1575,7 @@ define inline function at-whitespace?
         let c = contents[posn];
         c == $space-code | c == $newline-code | c == $tab-code
       end;
-end function;
+end function at-whitespace?;
 
 // TODO: CORRECTNESS: Allow for names prefixed end like "ending ... end".
 
@@ -1591,7 +1591,7 @@ define inline function at-end-word?
         & (n == $lower-n-code | n == $upper-n-code)
         & (d == $lower-d-code | d == $upper-d-code)
       end;
-end function;
+end function at-end-word?;
 
 define method skip-to-next-top-level-form
     (lexer :: <lexer>) => ()
@@ -1617,4 +1617,4 @@ define method skip-to-next-top-level-form
     end;
   end;
   lexer.posn := walk(lexer.posn);
-end method;
+end method skip-to-next-top-level-form;
