@@ -57,7 +57,7 @@ end module;
 define module-with-models dfmc-modeling
   use dylan;
   use dylan-extensions,
-    import: { $machine-word-size, immutable-vector };
+    import: { $machine-word-size, immutable-vector, *permissibly-ambiguous-generics* };
   use machine-word-lowlevel,
     import: { coerce-integer-to-machine-word,
 	      machine-word-logior,
