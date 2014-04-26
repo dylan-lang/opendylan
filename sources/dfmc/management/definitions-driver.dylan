@@ -742,8 +742,7 @@ define method compute-source-record-top-level-forms (cr :: <compilation-record>)
         let cr-name = source-record-module-name(sr);
         with-input-from-source-record (stream = sr)
           local method read (state, record-forms)
-            let (fragment, new-state)
-              = read-top-level-fragment(stream, cr, state);
+            let (fragment, new-state) = read-top-level-fragment(cr, state);
             let fragment-forms
               = if (fragment)
                   top-level-convert-forms(cr, fragment)

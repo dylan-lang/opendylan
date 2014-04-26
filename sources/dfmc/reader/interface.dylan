@@ -11,10 +11,12 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 // Read a single top level constituent.
 
 define compiler-open generic read-top-level-fragment
-  (s, record, lexer, #key on-end-of-stream) => (fragment, lexer);
+    (record :: <compilation-record>, lexer :: false-or(<lexer>))
+ => (fragment, lexer);
 
 define method read-top-level-fragment
-    (s, record, lexer, #key on-end-of-stream) => (fragment, lexer)
+    (record :: <compilation-record>, lexer :: false-or(<lexer>))
+ => (fragment, lexer)
   with-classification-cache
     let lexer
       = lexer | make(<lexer>,
@@ -27,11 +29,11 @@ define method read-top-level-fragment
     end method;
     dynamic-bind (*fragment-context* = compilation-record-module(record))
       block ()
-        let f
+        let fragment
           = run-parser(#f, dylan-parser, lex,
                        // make(<parser-lexer>, function: lex),
                        on-error: parser-error-handler);
-        values(f, lexer);
+        values(fragment, lexer);
         // This only parses, discarding most forms:
         /*
         for (f = run-parser(#f, dylan-parser, lex, on-error: parser-error-handler)
@@ -44,15 +46,14 @@ define method read-top-level-fragment
           values(f, lexer);
         end;
         */
-      exception (e :: <reader-error>)
-        signal(e);
+      exception (ex :: <reader-error>)
+        signal(ex);
         skip-to-next-top-level-form(lexer);
-        read-top-level-fragment
-          (s, record, lexer, on-end-of-stream: on-end-of-stream);
+        read-top-level-fragment(record, lexer);
       end;
-    end;
-  end;
-end method;
+    end dynamic-bind;
+  end with-classification-cache;
+end method read-top-level-fragment;
 
 define function source-lines-read (lexer :: <lexer>) => (lines :: <integer>)
   (lexer.line | -1) + 1
