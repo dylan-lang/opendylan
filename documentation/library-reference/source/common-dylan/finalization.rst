@@ -201,7 +201,7 @@ being removed afterwards. That is, reachability is defined in terms of
 strong references only, as far as finalization is concerned. Weak
 references die only when an object’s storage is finally reclaimed.
 
-For more on weak tables, see :ref:`Weak tables <weak-tables>`.
+For more on weak tables, see :doc:`Weak tables <../dylan/weak-tables>`.
 
 Writing finalizers
 ==================
