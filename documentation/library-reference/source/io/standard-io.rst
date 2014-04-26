@@ -56,7 +56,7 @@ are exported from the *standard-io* module.
 
    The standard input stream.
 
-   :type: <stream>
+   :type: :class:`<stream>`
 
    :value: The standard input stream for the platform on which the
      application is running.
@@ -84,7 +84,7 @@ are exported from the *standard-io* module.
 
    The standard output stream.
 
-   :type: <stream>
+   :type: :class:`<stream>`
 
    :value: The standard output stream for the platform on which the
      application is running.
@@ -112,7 +112,7 @@ are exported from the *standard-io* module.
 
    The standard error stream.
 
-   :type: <stream>
+   :type: :class:`<stream>`
 
    :value: The standard error stream for the platform on which the
      application is running.

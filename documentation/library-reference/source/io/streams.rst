@@ -82,17 +82,19 @@ including:
 
 -  A standard object-printing package such as Smalltalk’s *printOn:* or
    Lisp’s *print-object*, or a formatted printing facility such as
-   Lisp’s *format*. These facilities are provided by the Print, Format,
-   and Format-out libraries. For convenience, the Common Dylan
-   library also provides simple formatting capabilities.
+   Lisp’s *format*. These facilities are provided by the
+   :doc:`Print <print>`, :doc:`Format <format>`,
+   and :doc:`Format-out <format-out>` libraries. For convenience,
+   the :doc:`Common Dylan <../common-dylan/index>` library also
+   provides simple formatting capabilities.
 -  General object dumping and loading.
 -  A comprehensive range of I/O facilities for using memory-mapped
    files, network connections, and so on.
 -  An interface for naming files. The Locators module provides such an
    interface.
 -  An interface to operating system functionality, such as file renaming
-   or deleting operations. The File-System module provides such an
-   interface.
+   or deleting operations. The :doc:`File-System <../system/file-system>`
+   module provides such an interface.
 
 Concepts
 --------
