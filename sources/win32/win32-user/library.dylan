@@ -953,7 +953,6 @@ define module Win32-default-handler
   use Win32-common;
   use Win32-user;
   use Win32-kernel;
-  use simple-io;
   export
     *error-module-handle*,
     win32-last-handler;
