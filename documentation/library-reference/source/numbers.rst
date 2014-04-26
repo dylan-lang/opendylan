@@ -8,7 +8,7 @@ Integers
 Introduction
 ============
 
-This chapter describes the Common Dylan implementation of arithmetic
+This chapter describes the Open Dylan implementation of arithmetic
 functions, especially integer arithmetic. It describes a number of
 extensions to the Dylan language, which are available from the Dylan
 library. It also describes a generic arithmetic facility that, through

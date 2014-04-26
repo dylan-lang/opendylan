@@ -12,7 +12,7 @@ The Collections library’s Table Extensions module extends the Dylan
 language’s standard table features. It is available to applications as
 the *table-extensions* module.
 
-.. note:: Common Dylan provides a slightly different table implementation
+.. note:: Open Dylan provides a slightly different table implementation
    from that described by the DRM. See :doc:`../dylan/language-differences`
    for details of these differences.
 
@@ -64,7 +64,7 @@ keyword useless.
 Weak tables
 -----------
 
-Common Dylan allows all general instances of the built-in class
+Open Dylan allows all general instances of the built-in class
 :drm:`<table>` to be *weak*. See :doc:`weak tables <../dylan/weak-tables>` of
 this volume for information about weakness.
 

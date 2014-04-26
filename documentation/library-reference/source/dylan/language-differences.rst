@@ -7,7 +7,7 @@ Language differences
 Tables
 ------
 
-For efficiency, Common Dylan adopts a slightly different table protocol
+For efficiency, Open Dylan adopts a slightly different table protocol
 to that described by the DRM. Hashing functions take an additional
 hash-state argument and merge it into the hash-state result. The
 function :drm:`merge-hash-codes` is replaced by :func:`merge-hash-ids` because

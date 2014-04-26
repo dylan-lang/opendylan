@@ -22,7 +22,7 @@ by the garbage collector preserving entries (a key/value pair) solely
 because the table object itself has a reference to the entry’s key or
 value.
 
-Common Dylan provides weakness options for instances of :drm:`<table>`. A
+Open Dylan provides weakness options for instances of :drm:`<table>`. A
 table can have *weak keys* or *weak values*:
 
 .. code-block:: dylan
