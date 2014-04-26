@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Useful module for hacking around in listeners...
 define module duim-user
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use standard-io;
   use print;
@@ -21,8 +21,7 @@ end module duim-user;
 define module duim-internals-user
   use common-dylan,
     exclude: { position,
-	       \without-bounds-checks,
-               format-to-string };
+	       \without-bounds-checks };
   use streams;
   use standard-io;
   use print;

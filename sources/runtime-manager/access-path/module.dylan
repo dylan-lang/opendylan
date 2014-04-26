@@ -528,7 +528,7 @@ define module access-path-nub
 end module;
 
 define module access-path-implementation
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions,
      import: {<machine-word>, 
               <double-integer>, 

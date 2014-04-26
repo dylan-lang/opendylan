@@ -13,7 +13,7 @@ define library llvm-tablegen
 end library llvm-tablegen;
 
 define module llvm-tablegen
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use print;
   use format;

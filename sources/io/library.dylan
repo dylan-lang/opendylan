@@ -336,8 +336,7 @@ define module format-out
 end module format-out;
 
 define module io-internals
-  use common-dylan,
-    exclude: { format-to-string };
+  use common-dylan;
   use dylan-direct-c-ffi;
   use threads;
   use streams-internals;

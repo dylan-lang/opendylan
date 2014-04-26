@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 // Implementation module
 define module duim-examples
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use format;
   use format-out;
   use operating-system;

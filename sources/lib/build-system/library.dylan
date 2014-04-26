@@ -21,7 +21,7 @@ define library build-system
 end library build-system;
 
 define module build-system
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-primitives;
   use threads;
   use operating-system;

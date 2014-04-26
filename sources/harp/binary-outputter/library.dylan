@@ -24,7 +24,7 @@ end library;
 
 
 define module binary-outputter
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions;
   use byte-vector;
   use table-extensions, import: {<string-table>};

@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module asp-view
   use dylan;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use format;
   use streams;
   use date;

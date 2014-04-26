@@ -15,7 +15,7 @@ define library minimal-console-scepter
 end library;
 
 define module console-scepter
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use simple-debugging;
   use file-system;
   use format;

@@ -51,7 +51,7 @@ define module utilities
 end module;
 
 define module repository
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use duim-internals,         // for string-capitalize
     exclude: { position };
   use release-info;
@@ -101,7 +101,7 @@ define module repository
 end module;
 
 define module environment-project-wizard
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use duim;
   use win32-duim;
   use duim-internals,         // for port-default-frame-manager, string-capitalize

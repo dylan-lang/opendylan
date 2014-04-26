@@ -33,7 +33,7 @@ end module standalone-deuce;
 
 define module standalone-deuce-internals
   use common-dylan,
-    exclude: { position, position-if, format-to-string };
+    exclude: { position, position-if };
   use threads;
   use plists;
   use streams-internals,

@@ -60,7 +60,7 @@ end module;
 
 define module sql-odbc-test
   use dylan;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use memory-manager;
   use threads;
   use sql-odbc;

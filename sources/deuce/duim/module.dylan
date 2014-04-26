@@ -39,7 +39,7 @@ end module duim-deuce;
 
 define module duim-deuce-internals
   use common-dylan,
-    exclude: { position, position-if, format-to-string };
+    exclude: { position, position-if };
   use threads;
   use plists;
 

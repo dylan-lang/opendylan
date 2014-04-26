@@ -33,7 +33,7 @@ end module;
 
 
 define module dfmc-harp-browser-support
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions, import: {case-insensitive-equal};
   use dfmc-imports, 
     exclude: { source-record-start-line, source-record-end-line };

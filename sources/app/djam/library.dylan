@@ -14,7 +14,7 @@ define library djam
 end library;
 
 define module djam
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use format-out;
   use format;
   use streams;

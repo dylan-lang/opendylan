@@ -500,7 +500,7 @@ define module llvm-internals
               encode-single-float, encode-double-float,
               debug-name, address-of };
   use machine-word-lowlevel;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use format;
   use print;

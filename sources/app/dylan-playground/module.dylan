@@ -7,9 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module dylan-playground
-  use common-dylan,
-    //---*** This shouldn't be necessary!
-    exclude: { format-to-string };
+  use common-dylan;
   use simple-random;
   use threads;
   use finalization;

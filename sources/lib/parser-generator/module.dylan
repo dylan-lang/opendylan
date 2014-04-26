@@ -8,7 +8,7 @@ define module parser-generator
   use dylan;
   use dylan-extensions;
   use simple-debugging, import: { debug-out };
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use streams;
   use format;
   use standard-io;

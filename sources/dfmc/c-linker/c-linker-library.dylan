@@ -19,7 +19,7 @@ define library dfmc-c-linker
 end library;
 
 define module dfmc-c-linker
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dfmc-core;
   use dfmc-imports;
   use dfmc-conversion;

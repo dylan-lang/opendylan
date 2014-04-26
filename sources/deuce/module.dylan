@@ -333,7 +333,7 @@ end module deuce;
 // Implementation and extension module
 define module deuce-internals
   use common-dylan,
-    exclude: { position, position-if, count, format-to-string };
+    exclude: { position, position-if, count };
   use dylan-extensions,
     import: { \without-bounds-checks,
               element-no-bounds-check,

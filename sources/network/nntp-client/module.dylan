@@ -7,7 +7,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module nntp-client
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use format-out;
   use format;

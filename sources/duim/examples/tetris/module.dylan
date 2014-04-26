@@ -17,6 +17,6 @@ define module tetris
   use table-extensions;
   use machine-words;
   use finalization;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use simple-random;
 end module tetris;

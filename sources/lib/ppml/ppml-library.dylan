@@ -11,7 +11,7 @@ define library ppml
 end library;
 
 define module ppml
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use format;
   use print;

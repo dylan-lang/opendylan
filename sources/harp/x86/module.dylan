@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module harp-x86
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions,  import: {<abstract-integer>, <simple-integer-vector>};
   use big-integers, prefix: "generic-";
   use streams;

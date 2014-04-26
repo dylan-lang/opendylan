@@ -18,7 +18,7 @@ define module employee-explorer
   use table-extensions;
   use machine-words;
   use finalization;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use simple-random;
   use sql-odbc, exclude: { command-function };
 end module employee-explorer;

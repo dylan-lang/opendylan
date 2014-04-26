@@ -9,7 +9,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 
 define module harp-x86-rtg
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use format;
   use print;

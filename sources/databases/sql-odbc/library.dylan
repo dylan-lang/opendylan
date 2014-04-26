@@ -233,7 +233,7 @@ end module;
 
 define module sql-odbc-implementation
   use dylan;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use generic-arithmetic, prefix: "big/";
   use dylan-extensions;
   use machine-words;

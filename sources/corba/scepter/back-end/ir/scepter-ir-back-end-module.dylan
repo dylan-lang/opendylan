@@ -6,7 +6,7 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module scepter-ir-back-end-internal
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-orb;
   use format;
   use streams;

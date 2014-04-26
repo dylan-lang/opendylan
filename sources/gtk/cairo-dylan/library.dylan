@@ -13,7 +13,7 @@ define library cairo
 end library;
 
 define module cairo
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use c-ffi;
   use dylan-direct-c-ffi;
   use gobject-glue; // For g-value-to-dylan-helper

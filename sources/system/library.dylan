@@ -340,7 +340,7 @@ define module settings-internals
 end module settings-internals;
 
 define module system-internals
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions;
   use dylan-direct-c-ffi;
   use threads;

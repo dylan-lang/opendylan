@@ -12,7 +12,7 @@ define library lisp-reader
 end library;
 
 define module lisp-reader
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use streams;
   use format;
   use standard-io;

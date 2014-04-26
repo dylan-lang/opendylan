@@ -19,7 +19,7 @@ define library dfmc-llvm-back-end
 end library;
 
 define module dfmc-llvm-back-end
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use generic-arithmetic,
     prefix: "generic/";
   use dfmc-core;

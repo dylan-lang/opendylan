@@ -21,7 +21,7 @@ end library;
 
 define module mnemonic-assembler
   use generic-arithmetic-dylan;
-  use common-extensions, exclude: { format-to-string };
+  use common-extensions;
   use byte-vector;
   use format;
   use format-out;

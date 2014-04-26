@@ -24,7 +24,7 @@ end library dfmc-harp-x86-cg;
 
 define module dfmc-harp-x86-cg
 
- use common-dylan, exclude: { format-to-string };
+ use common-dylan;
  use streams-internals;
 
  use harp-x86,

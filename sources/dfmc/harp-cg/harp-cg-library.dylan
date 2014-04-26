@@ -26,7 +26,7 @@ define library dfmc-harp-cg
 end library;
 
 define module dfmc-harp-cg
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use dylan-extensions,
     import: {decode-single-float, decode-double-float,
 	     <machine-word>, <double-integer>, $minimum-unsigned-machine-word},

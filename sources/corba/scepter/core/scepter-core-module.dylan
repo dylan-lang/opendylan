@@ -148,7 +148,7 @@ define module scepter-error
 end module;
 
 define module scepter-driver-implementation
-  use generic-arithmetic-common-dylan, exclude: { format-to-string };
+  use generic-arithmetic-common-dylan;
   use simple-debugging;
   use file-system;
   use format;
@@ -168,7 +168,7 @@ end module;
 define module scepter-back-end-implementation
   use date;
   use format;
-  use generic-arithmetic-common-dylan, exclude: { format-to-string };
+  use generic-arithmetic-common-dylan;
   use streams;
   use scepter-back-end;
   use scepter-front-end;
@@ -177,7 +177,7 @@ end module;
 
 define module scepter-front-end-implementation
   use date;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use format;
   use streams;
   use locators;
@@ -186,7 +186,7 @@ define module scepter-front-end-implementation
 end module;
 
 define module scepter-error-implementation
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use format;
   use scepter-error;
   use scepter-driver;

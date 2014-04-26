@@ -8,8 +8,7 @@ define library make-dylan-app
 end library make-dylan-app;
 
 define module make-dylan-app
-  use common-dylan,
-    exclude: { format-to-string };
+  use common-dylan;
   use format-out,
     import: { format-err };
   use format,

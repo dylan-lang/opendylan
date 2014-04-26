@@ -677,7 +677,7 @@ end module;
 
 define module sql-implementation
   use dylan;
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use threads;
   use finalization;
   use sql;

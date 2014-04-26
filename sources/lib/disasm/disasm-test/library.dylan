@@ -16,7 +16,7 @@ define library disasm-test
 end library;
 
 define module disasm-test
-  use common-dylan, exclude: { format-to-string };
+  use common-dylan;
   use byte-vector;
   use format;
   use format-out;

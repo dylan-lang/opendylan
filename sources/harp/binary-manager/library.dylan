@@ -20,8 +20,7 @@ end library;
 
 
 define module binary-manager
-  use common-dylan,
-    exclude: { format-to-string };
+  use common-dylan;
   use byte-vector;
   use table-extensions, import: {<string-table>};
   use format;
