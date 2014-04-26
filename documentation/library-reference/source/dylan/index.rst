@@ -2,9 +2,6 @@
 Dylan Language Extensions
 *************************
 
-.. current-library:: dylan
-.. current-module:: dylan
-
 Introduction
 ============
 
@@ -16,21 +13,13 @@ Open Dylan provides an implementation of the Dylan language
 described by the DRM, with a few exceptions that are documented in
 :doc:`language-differences`.
 
-Open Dylan provides the Dylan language in the *dylan* module of the
-*dylan* library.
+Open Dylan provides the Dylan language in the ``dylan`` module of the
+``dylan`` library.
 
 This chapter is an introduction to Open Dylan's extensions to the
-Dylan language.  These extensions are either built in to the *dylan*
-library or are available in a separate library, *common-dylan*.
-
-Using Open Dylan’s language extensions
-======================================
-
-There are a number of ways to use Open Dylan’s language extensions
-in your applications.
-
-A few extensions have become part of the *dylan* library. You can read
-about these extensions in `The core of the common extensions`_.
+Dylan language.  These extensions are either built in to the ``dylan``
+library or are available in a separate library, :doc:`common-dylan
+<../common-dylan/index>`.
 
 The majority of the extensions are in the :doc:`common-extensions
 <../common-dylan/common-extensions>` module
@@ -58,28 +47,18 @@ convenient "dialect" of Dylan, exported from the module ``common-dylan``:
       use common-extensions, export: all;
     end module;
 
-The core of the common extensions
-=================================
-
 This section describes the common language extensions, that is,
 extensions made to the Dylan library as it is defined in DRM. These
-extensions are available to applications in the *dylan* library’s
-*dylan* module.
+extensions are available to applications in the ``dylan`` library’s
+``dylan`` module.
 
 .. toctree::
    :titlesonly:
 
+   language-differences
    define-function
    for-iteration
    weak-tables
    inlining
 
 All the other language extensions are described in :doc:`../common-dylan/index`.
-
-Actual deviations from the DRM are described in :doc:`language-differences`.
-
-.. toctree::
-   :hidden:
-
-   language-differences
-
