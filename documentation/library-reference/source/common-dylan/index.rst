@@ -19,9 +19,11 @@ The Common Dylan library exports the following modules:
   that is very widely used.
 
 - :doc:`simple-io` Simple formatting facilities. For more flexible
-  formatting and printing, see the *io* library.
+  formatting and printing, see the :doc:`io <../io/index>` library.
 
 - :doc:`simple-random` A facility for generating pseudo-random integers.
+
+- :doc:`simple-timers` A facility for tracking intervals of time.
 
 - :doc:`transcendentals` A set of open generic functions for ANSI
   C-like behavior over real numbers.
