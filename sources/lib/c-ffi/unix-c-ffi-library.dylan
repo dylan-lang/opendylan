@@ -6,7 +6,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library c-ffi
   use dylan;
-  use common-dylan, import: { machine-words, simple-io };
+  use common-dylan, import: { machine-words };
   export c-ffi;
   export unix-core;
 end;
@@ -205,5 +205,4 @@ define module c-ffi-implementation
   use dylan-primitives;
   use dylan-c-ffi;
   use machine-words;
-  use simple-io;
 end;
