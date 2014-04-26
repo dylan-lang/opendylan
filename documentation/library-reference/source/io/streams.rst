@@ -1033,7 +1033,7 @@ are exported from the *streams* module.
    :specializer: <buffer>
    :sealed:
 
-   Returns the address of the raw byte storage of a :drm:`<buffer>`.
+   Returns the address of the raw byte storage of a :class:`<buffer>`.
 
    See also:
 
@@ -1043,7 +1043,7 @@ are exported from the *streams* module.
    :specializer: <buffer>
    :sealed:
 
-   Returns the address of the raw byte storage of a :drm:`<buffer>`, with an offset.
+   Returns the address of the raw byte storage of a :class:`<buffer>`, with an offset.
 
    See also:
 

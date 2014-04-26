@@ -238,7 +238,7 @@ The extensions are:
      An assertion or "assert" is a simple and popular development tool
      for testing conditions in program code.
 
-     This macro is identical to *assert*, except that the assert is
+     This macro is identical to :macro:`assert`, except that the assert is
      defined to take place only while debugging.
 
      The Open Dylan compiler removes debug-assertions when it compiles
@@ -247,13 +247,17 @@ The extensions are:
      The *format-string* is a format string as defined on page 112 of
      the DRM.
 
+   See also
+
+   - :macro:`assert`
+
 .. function:: debug-message
 
    Formats a string and outputs it to the debugger.
 
    :signature: debug-message *format-string* #rest *format-args* => ()
 
-   :parameter format-string:An instance of :drm:`<string>`.
+   :parameter format-string: An instance of :drm:`<string>`.
    :parameter #rest format-args: Instances of :drm:`<object>`.
 
    :description:
@@ -1204,11 +1208,11 @@ The extensions are:
      A unique value that can be used to indicate that a search operation
      failed.
 
-  See also
+   See also
 
-  - :func:`found?`
-  - :func:`unfound?`
-  - :func:`unfound`
+   - :func:`found?`
+   - :func:`unfound?`
+   - :func:`unfound`
 
 .. function:: unfound
 

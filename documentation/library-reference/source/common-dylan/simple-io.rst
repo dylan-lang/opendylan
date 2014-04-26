@@ -7,10 +7,11 @@ The simple-io Module
 
 Common Dylan provides several libraries relevant to formatting and
 printing strings, or otherwise using strings for output. These libraries
-include *format*, *format-out*, *print*, and *standard-io*. The facilities
-provided by these libraries will be excess to many users’ requirements,
-who may prefer to use the *simple-io* module that the
-*common-dylan* library exports.
+include :doc:`format <../io/format>`, :doc:`format-out <../io/format-out>`,
+:doc:`print <../io/print>`, and :doc:`standard-io <../io/standard-io>`. The
+facilities provided by these libraries will be excess to many users’
+requirements, who may prefer to use the ``simple-io`` module that the
+``common-dylan`` library exports.
 
 .. function:: format-out
 
@@ -26,5 +27,6 @@ who may prefer to use the *simple-io* module that the
      Formats its arguments to the standard output.
 
      This function does not use the :var:`*standard-output*` stream
-     defined by the Standard-IO module in the IO library.
+     defined by the :doc:`Standard-IO <../io/standard-io>` module in the
+     :doc:`IO <../io/index>` library.
 

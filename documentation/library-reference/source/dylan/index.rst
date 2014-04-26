@@ -32,16 +32,17 @@ in your applications.
 A few extensions have become part of the *dylan* library. You can read
 about these extensions in `The core of the common extensions`_.
 
-The majority of the extensions are in the *common-extensions* module
-of the *common-dylan* library. That library also exports a number of
-smaller modules that contain other basic facilities such as simplified
-formatting (*simple-io*), pseudo-random integer generation
-(*simple-random*), and object finalization (*finalization*).
+The majority of the extensions are in the :doc:`common-extensions
+<../common-dylan/common-extensions>` module
+of the :doc:`common-dylan <../common-dylan/index>` library. That library
+also exports a number of smaller modules that contain other basic
+facilities such as :doc:`simplified formatting <../common-dylan/simple-io>`,
+:doc:`pseudo-random integer generation <../common-dylan/simple-random>`,
+and :doc:`object finalization <../common-dylan/finalization>`.
 
-Open Dylan provides a convenience library, *common-dylan*, that
-combines the *dylan* and *common-extensions* modules to provide a
-convenient "dialect" of Dylan, exported from the module
-*common-dylan*:
+Open Dylan provides a convenience library, ``common-dylan``, that
+combines the ``dylan`` and ``common-extensions`` modules to provide a
+convenient "dialect" of Dylan, exported from the module ``common-dylan``:
 
 .. code-block:: dylan
 
