@@ -5,7 +5,6 @@ Files:   reader-library
          infix-parser
          fragments
          name-table
-         tokenizer
          lexer-support
          lexer
          lexer-transitions

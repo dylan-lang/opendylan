@@ -181,7 +181,7 @@ end method feature-present?;
 
 // An object holding the current lexer state.
 //
-define class <lexer> (<tokenizer>)
+define class <lexer> (<object>)
   //
   // The compilation record we are currently tokenizing.
   constant slot source :: <compilation-record>, required-init-keyword: source:;
