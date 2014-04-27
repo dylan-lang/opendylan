@@ -179,7 +179,7 @@ end method feature-present?;
 
 // lexer
 
-// An object holding the current lexer state.
+// Holds the current lexer state.
 //
 define class <lexer> (<object>)
   //
@@ -193,7 +193,7 @@ define class <lexer> (<object>)
   slot line :: <integer>, required-init-keyword: start-line:;
   //
   // The position that this line started at.
-  slot line-start :: <integer>, required-init-keyword: start-posn:;
+  slot line-start :: <integer>, required-init-keyword: line-start:;
   //
   // A list of tokens that have been unread.
   // slot pushed-tokens :: <list>, init-value: #();

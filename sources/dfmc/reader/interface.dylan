@@ -22,7 +22,8 @@ define method read-top-level-fragment
       = lexer | make(<lexer>,
                      source: record,
                      start-posn: 0,
-                     start-line: 1);
+                     start-line: 1,
+                     line-start: 0);
     local method lex ()
       let fragment = get-token(lexer);
       values(fragment-kind(fragment), fragment, fragment)
