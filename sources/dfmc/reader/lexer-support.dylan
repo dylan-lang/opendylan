@@ -18,9 +18,9 @@ define class <lexer-source-location> (<source-location>)
   slot start-posn :: <integer>,
     required-init-keyword: start-posn:;
   slot end-posn :: <integer>,
-    required-init-keyword: start-posn:;
+    required-init-keyword: end-posn:;
   slot source-location-source-position = #f;
-end class;
+end class <lexer-source-location>;
 
 define sealed domain make (singleton(<lexer-source-location>));
 define sealed domain initialize (<lexer-source-location>);
