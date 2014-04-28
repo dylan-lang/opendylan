@@ -6,7 +6,8 @@ define constant $main-template-simple :: <string>
      "Author: \n"
      "Copyright: \n"
      "\n"
-     "define function main (name :: <string>, arguments :: <vector>)\n"
+     "define function main\n"
+     "    (name :: <string>, arguments :: <vector>)\n"
      "  format-out(\"Hello, world!\\n\");\n"
      "  exit-application(0);\n"
      "end function main;\n"
@@ -19,12 +20,12 @@ define constant $library-template-simple :: <string>
      "define library %s\n"
      "  use common-dylan;\n"
      "  use io;\n"
-     "end library;\n"
+     "end library %s;\n"
      "\n"
      "define module %s\n"
      "  use common-dylan, exclude: { format-to-string };\n"
      "  use format-out;\n"
-     "end module;\n");
+     "end module %s;\n");
 
 define constant $lid-template-simple :: <string>
   = ("Library: %s\n"
