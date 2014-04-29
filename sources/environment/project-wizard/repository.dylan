@@ -191,7 +191,7 @@ begin
 		  #(#"finalization"),
 		  #"threads",
 		  // from 'common-extensions'
-		  #"simple-io",
+		  #"simple-format",
 		  #(#"simple-random"),
 		  #(#"byte-vector"),
 		  #(#"machine-words"),
