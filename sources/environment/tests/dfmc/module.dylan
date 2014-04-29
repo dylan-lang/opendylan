@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module dfmc-environment-test-suite
   use common-dylan;
-  use simple-io;
+  use simple-format;
   use locators;
 
   use source-records;

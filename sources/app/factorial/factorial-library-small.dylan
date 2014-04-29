@@ -14,6 +14,6 @@ end;
 define module factorial
   // Single top-level module, so it exports nothing.
   use common-dylan;
-  use simple-io;
+  use simple-format;
   use simple-profiling;
 end;

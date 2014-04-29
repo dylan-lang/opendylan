@@ -12,7 +12,7 @@ define module release-info
   use operating-system;
   use locators;
   use settings;
-  use simple-io;
+  use simple-format;
   use simple-xml;
   use file-source-records, import: {read-file-header};
   use file-system; // import: {file-exists?, do-directory};

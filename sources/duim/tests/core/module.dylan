@@ -10,7 +10,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 define module duim-test-suite
   use common-dylan,
     exclude: { position };
-  use simple-io;
+  use simple-format;
   use threads;
 
   use testworks;

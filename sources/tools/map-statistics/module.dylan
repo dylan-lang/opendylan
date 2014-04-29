@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module map-statistics
   use common-dylan;
-  use simple-io;
+  use simple-format;
   use operating-system;
   use file-system;
   use streams;

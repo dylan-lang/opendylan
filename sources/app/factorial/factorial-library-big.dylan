@@ -16,6 +16,6 @@ end;
 define module factorial
   // Single top-level module, so it exports nothing.
   use generic-arithmetic-common-dylan;
-  use simple-io;
+  use simple-format;
   use simple-profiling;
 end;

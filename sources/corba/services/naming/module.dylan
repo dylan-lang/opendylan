@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module naming-service
   use common-dylan;
-  use simple-io;
+  use simple-format;
   use table-extensions;
   use dylan-orb;
   use naming-skeletons;

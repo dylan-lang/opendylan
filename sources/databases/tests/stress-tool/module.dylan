@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module database-stress-tool
   use common-dylan;
-  use simple-io;
+  use simple-format;
   use simple-profiling;
   use sql-odbc;
 

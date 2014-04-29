@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define library commands
   use dylan;
-  use common-dylan, import: { common-extensions, simple-io };
+  use common-dylan, import: { common-extensions, simple-format };
 
   export commands,
 	 commands-internals;

@@ -21,7 +21,7 @@ define module c-ffi-test
   use machine-words;
   use c-ffi;
 //    exclude: { test-function };
-  use simple-io;
+  use simple-format;
 
   export c-ffi-suite
 end;

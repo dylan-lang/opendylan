@@ -23,7 +23,7 @@ end library parameter-type-tests-server;
 define module parameter-type-tests
   use machine-words;
   use simple-random;
-  use simple-io;
+  use simple-format;
   use big-integers;
   use generic-arithmetic-common-dylan;
   use c-ffi;

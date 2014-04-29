@@ -14,7 +14,7 @@ define module deltablue
   use common-dylan;
   use dylan-extensions;
   use dispatch-engine;
-  use simple-io;
+  use simple-format;
   use operating-system;
   use dispatch-profiler;
 end module;

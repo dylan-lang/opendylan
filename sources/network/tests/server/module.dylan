@@ -8,7 +8,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 define module sockets-tests-server
   use common-dylan;
-  use simple-io;
+  use simple-format;
   use threads;
   use sockets;
   use date;

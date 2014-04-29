@@ -10,7 +10,7 @@ define module fft-test
   use finalization;
   use common-dylan;
   use dylan-extensions, import: { \without-bounds-checks };
-  use simple-io;
+  use simple-format;
   use simple-random;
   use simple-profiling;
   use transcendentals;

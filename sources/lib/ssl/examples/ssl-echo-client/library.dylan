@@ -17,6 +17,6 @@ define module ssl-echo-client
   use dylan;
   use streams;
   use standard-io;
-  use simple-io;
+  use simple-format;
   use sockets;
 end module;

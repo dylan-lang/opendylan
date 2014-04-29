@@ -10,5 +10,5 @@ end;
 
 define module richards
   use common-dylan;
-  use simple-io;
+  use simple-format;
 end;

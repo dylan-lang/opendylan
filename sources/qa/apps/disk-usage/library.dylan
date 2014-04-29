@@ -17,7 +17,7 @@ end library disk-usage;
 
 define module disk-usage
   use generic-arithmetic-common-dylan;
-  use simple-io;
+  use simple-format;
   use operating-system;
   use file-system;
   use locators;

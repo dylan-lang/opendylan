@@ -16,7 +16,7 @@ end library collections-test-suite;
 
 define module collections-test-suite
   use common-dylan;
-  use simple-io;
+  use simple-format;
   use testworks;
 
   use byte-vector;

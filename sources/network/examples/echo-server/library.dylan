@@ -15,7 +15,7 @@ end library;
 define module echo-server
   use dylan;
   use streams;
-  use simple-io;
+  use simple-format;
   use threads;
   use sockets;
 end module;
