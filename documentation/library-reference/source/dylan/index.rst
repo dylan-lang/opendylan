@@ -60,6 +60,7 @@ extensions are available to applications in the ``dylan`` library’s
    for-iteration
    weak-tables
    inlining
+   macro-system-extensions
    parser-expansions
 
 All the other language extensions are described in :doc:`../common-dylan/index`.
