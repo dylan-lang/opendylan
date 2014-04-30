@@ -8,7 +8,7 @@ Introduction
 This chapter is an overview of the libraries involved during
 compilation, information was gathered while hacking on the compiler.
 It focuses only on DFMC, the Dylan Flow Machine Compiler, located in
-``source/dfmc`` of the opendylan repository.
+``sources/dfmc`` of the opendylan repository.
 
 But first look how to get there: lets consider the command-line
 compiler, invoked with ``-build hello-world``. This is parsed by the
