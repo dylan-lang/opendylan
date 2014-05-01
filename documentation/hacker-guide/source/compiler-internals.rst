@@ -10,44 +10,53 @@ compilation, information was gathered while hacking on the compiler.
 It focuses only on DFMC, the Dylan Flow Machine Compiler, located in
 ``sources/dfmc`` of the opendylan repository.
 
-But first look how to get there: lets consider the command-line
-compiler, invoked with ``-build hello-world``. This is parsed by the
-executable (in ``environment/console/command-line.dylan``, in method
-``execute-main-command``: this has some code like ``if (build?)
-run(<build-project-command>, ...``.
+But first look how to get there: let's consider the command-line
+compiler, invoked with ::
 
-This ``<build-project-command>`` is defined in
-``environment/commands/build.dylan``, there a method
-``do-execute-command`` is specified with a ``<build-project-command>``
-as argument. This runs the method ``build-project``, defined in
-``environment/dfmc/projects/projects.dylan``, calling
-``compile-library``.
+  dylan-compiler -build hello-world
 
-This is defined in ``project-manager/projects/compilation.dylan`` and
-calls ``parse-and-compile``, which calls ``parse-project-sources``
-(defined in ``dfmc/management/definitions-driver``) and
-``compile-project-definitions``, which is defined in
-``dfmc/browser-support/glue-routines.dylan``, calling
-``dfmc-compile-library-from-definitions``, finally defined in
-``dfmc/management/world.dylan`` (here under the name
-``compile-library-from-definitions``).
+There is a fairly long call chain to perform the compilation, starting
+with command-line parsing in
+sources/environment/console/command-line.dylan, which looks like
+this::
+
+  do-execute-command(..., <build-project-command>)
+    (defined in sources/environment/commands/build.dylan)
+  build-project
+    (defined in sources/environment/dfmc/projects/projects.dylan)
+  compile-library
+  parse-and-compile
+    (defined in sources/project-manager/projects/compilation.dylan)
+  parse-project-sources
+    (defined in sources/dfmc/management/definitions-driver.dylan)
+  compile-project-definitions
+    (defined in sources/dfmc/browser-support/glue-routines.dylan)
+  compile-library-from-definitions
+    (defined in sources/dfmc/management/world.dylan called here
+    under the name ``dfmc-compile-library-from-definitions`` due
+    to a prefixed import.).
 
 To explain these long call chains, we need some more understanding of
-the different libraries of the compiler: environment is the public
-API, project-manager is a bunch of hacks to care about finding the
-project (by using the registry) and calling the compiler, and the
-linker (to create a dll/so and executable) afterwards. The libraries
-``dfmc/browser-support`` and ``environment/dfmc`` are the glue from
-environment to DFMC.
+the different libraries of the compiler:
 
-The big picture is pretty simple: management drives the different
-libraries, some are the front-end (reader, macro-expander) translating
-into definitions; some intermediate language (conversion,
-optimization, typist) which work on the flow-graph; others are
-back-end, including linker. There is some support needed for the
-actual runtime, which is sketched in modeling (parts of which are put
-into the dylan runtime library), namespace (which handles namespaces
-and defines the dylan library and its modules).
+* **environment** is the public API
+* **project-manager** is a bunch of hacks for
+
+  + finding the project source (via the registry)
+  + calling the compiler and linker (to create a dll/so and executable) afterwards.
+
+* **dfmc/browser-support** and **environment/dfmc** are the glue from
+  environment to DFMC.
+
+The big picture is pretty simple: **management** drives the different
+libraries, some are the front-end (**reader**, **macro-expander**)
+translating into definitions; some intermediate language
+(**conversion**, **optimization**, **typist**) which work on the
+flow-graph; others are back-end, including **linker**. There is some
+support needed for the actual runtime, which is sketched in
+**modeling** (parts of which are put into the dylan runtime library),
+**namespace** (which handles namespaces and defines the dylan library
+and its modules).
 
 First we need to introduce some terminology and recapitulate some
 conventions:
@@ -64,7 +73,7 @@ conventions:
 * interactive compilation: IDE feature to play around, adding a single
   definition to a library
 
-DFMC is well structured, but sadly some libraries use each others,
+DFMC is well structured, but sadly some libraries use each other,
 which they shouldn't (typist, conversion, optimization).
 
 In the remainder of this guide, we will focus on a simple example,
@@ -80,7 +89,7 @@ dfmc-management
 ===============
 
 The library dfmc-management drives the compilation process, prints
-general information what is happening at the moment (progress,
+general information about what is happening at the moment (progress,
 warnings) and takes care of some global settings like opening and
 closing source records, etc.
 
@@ -96,9 +105,9 @@ console output (warnings, stats).
 The very first method, ``compute-library-definitions``, calls
 ``ensure-library-definitions-installed``, which calls
 ``update-compilation-record-definitions``, which mainly calls
-``compute-source-record-top-level-forms``. This opens the compilation
-record as a stream and calls ``read-top-level-fragment`` to get a
-fragment and then ``top-level-convert-forms``.
+``compute-source-record-top-level-forms``. This passes the compilation
+record to ``read-top-level-fragment`` to get a fragment and then calls
+``top-level-convert-forms``.
 
 The reader library defines the ``read-top-level-fragment``, the
 definitions library the ``top-level-convert-forms``. Thus, a fragment
@@ -141,11 +150,12 @@ more tokens were required).
 Every ``<fragment>``, the base class of the abstract syntax tree, has
 a compilation-record and a source-position.
 
-So, ``read-top-level-fragment`` returns the following parse tree::
+So, for the above hello-world method, ``read-top-level-fragment``
+returns the following parse tree::
 
     <body-definition-fragment>:
       fragment-macro: <simple-variable-name-fragment>
-                                           fragment-name: #"method-definer"
+      fragment-name: #"method-definer"
       fragment-modifiers: #()
       fragment-body-fragment:
         <simple-variable-name-fragment>:
@@ -181,7 +191,7 @@ So, ``read-top-level-fragment`` returns the following parse tree::
             <parens-fragment>:
               fragment-left-delimiter: <lparen-fragment>
               fragment-nested-fragments:
-                <fragment-syntax-symbol-fragment>:
+                <keyword-syntax-symbol-fragment>:
                   fragment-value: #"to"
                 <simple-variable-name-fragment>:
                   fragment-name: #"x"
@@ -189,7 +199,9 @@ So, ``read-top-level-fragment`` returns the following parse tree::
           fragment-right-delimiter: <rparen-fragment>
         <semicolon-fragment>
     
-NB: the type hierarchy for <body-definition-fragment> is: <definition-fragment>, <macro-call-fragment>, <compund-fragment>, <fragment>, <object>
+NB: the type hierarchy for <body-definition-fragment> is:
+<definition-fragment>, <macro-call-fragment>, <compound-fragment>,
+<fragment>, <object>
 
 
 dfmc-definitions
@@ -199,24 +211,25 @@ Once the abstract syntax tree is generated (by the reader), it's time
 to convert this into definitions, which are the names in dylan. There
 are several top-level definitions in dylan, namely: binding, class,
 constant, (copy-down), domain, function, generic, macro, method,
-module, namespace (library) and variable. Every definition has it's
+module, namespace (library) and variable. Every definition has its
 own class, inheriting from ``<top-level-form>`` (defined in
 common/top-level-forms.dylan). A top level form at least contains
 information about its compilation record, source location, parent
 form, sequence number and dependencies and referenced variables.
 Additional information available are adjectives, the word defined, its
-library, original library, top level methods. As a side note,
-dependency tracking is also defined in
+library, original library, top level methods.
+
+As a side note, dependency tracking is also defined in
 ``common/top-level-forms.dylan``.
 
 The main entry point for the definition library is
-``top-level-convert`` on a fragment, defined in
+``top-level-convert(parent, fragment)``, defined in
 ``top-level-convert.dylan``.
 
 The building of definition objects relies heavily on the
 macro-expander, especially on procedural macros described in
-D-Expressions: Lisp Power, Dylan Style
-(http://people.csail.mit.edu/jrb/Projects/dexprs.pdf). Open Dylan
+`D-Expressions: Lisp Power, Dylan Style
+<http://people.csail.mit.edu/jrb/Projects/dexprs.pdf>`_. Open Dylan
 extends the definitions with compiler, optimizer, primitive and
 shared-symbols, mainly used internally in the compiler.
 
@@ -230,9 +243,7 @@ case. The first matches any ``define method`` syntax and calls
 ``parse-method-adjectives`` and ``parse-method-signature``, and
 instantiates a ``<method-definition>`` object.
 
-For our small example, ``do-define-method`` creates a single object:
-
-The result of our small example is::
+For our hello-world example, ``do-define-method`` creates a single object::
 
     <method-definition>
       private-form-body: <body-fragment>
