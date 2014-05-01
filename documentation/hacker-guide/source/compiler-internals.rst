@@ -288,33 +288,32 @@ expanded.
 Excursion into run-time and compile-time
 ========================================
 
-NB: not sure whether this should be here or somewhere different.
+.. TODO: not sure whether this should be here or somewhere different.
 
 Some objects are defined in the compiler, but are injected into the
 Dylan world. How does this happen?
 
-So, in the Dylan library you see ``// BOOTED:`` comments here and
+In the Dylan library you see ``// BOOTED:`` comments here and
 there. The source location of well-known basic types and functions is
-dylan:dylan-user:boot-dylan-definitions().
+``dylan:dylan-user:boot-dylan-definitions``.
 
 There is no definition of this specific method.
 
-The method dfmc-definitions:top-level-convert.dylan:
-boot-definitions-form? checks exactly for this name. The method
-top-level-convert-forms behaves differently if boot-definitions-form?
-returns true, namely it calls booted-source-sequence(), which is
-defined in boot-definitions.dylan. This method grabs the boot-record
-and returns it sorted as a vector.
+The method ``boot-definitions-form?`` (in dfmc-definitions) checks
+exactly for this name. The method ``top-level-convert-forms`` behaves
+differently if ``boot-definitions-form?`` returns true, namely it
+calls ``booted-source-sequence`` (in boot-definitions.dylan) which
+grabs the boot-record and returns it sorted as a vector.
 
-But what is a boot-record after all? Well, it's definition is all in
+But what is a boot-record after all? Well, its definition is all in
 boot-definitions.dylan, with the explanation "records the set of
 things that must be inserted into a Dylan world at the very
-start. Some of things are core definitions, such as converters and
+start. Some things are core definitions, such as converters and
 macros, and these are booted at the definition level. The rest are
 expressed as source to be fed to the compiler."
 
 The constant ``*boot-record*`` is filled by do-define-core-\*. These
-are called by dfmc-modeling. Namely, primitives (which names and
+are called by **dfmc-modeling**. Namely, primitives (which names and
 signatures are installed), macros, modules, libraries, classes.
 
 Be aware that the actual implementation of the primitives is in the
@@ -322,10 +321,10 @@ runtime (either ``sources/lib/run-time/run-time.c`` or the
 runtime-generator generates a runtime.o containing those definitions),
 but some crucial bits, like the adjectives (``side-effect-free``,
 ``dynamic-extent``, ``stateless`` and ``opposited``) are in
-dfmc-modeling and used in the optimization!
+**dfmc-modeling** and are used in the optimization!
 
-The core classes are emitted from modeling with actual constructors
-(be aware that the runtime layout is also recorded in run-time.h).
+The core classes are emitted from modeling with actual constructors.
+Be aware that the runtime layout is also recorded in run-time.h.
 
 The dylan library and module definitions are in
 modeling/namespaces.dylan.
@@ -356,8 +355,8 @@ of: <string>)`` gets converted to a ``<&limited-vector-type>``
 instance. Thus, it contains a poor-mans eval.
 
 Also, creates init-expressions, which may be needed for the
-runtime, since everything can be dynamic, each top-level-form may
-need initializing which are called when the library is loaded.
+runtime. Since everything can be dynamic, each top-level form may need
+initializing.  This happens when the library is loaded.
 
 Also sets up a lexical environment for the definitions, and checks
 bindings.
@@ -369,13 +368,13 @@ checked.
 After Dylan code is converted, it is in a representation which can
 be passed to a backend to generate code. Modeling objects have
 corresponding compile and run time objects, and are prefixed with
-an ampersand (``<&object>``).
+an ampersand, e.g., ``<&object>``.
 
 dfmc-modeling
 =============
 
 Contains modeling of runtime and compile time objects. Since some
-calls are tried to be done at compile time rather than at runtime,
+calls are attempted at compile time rather than at runtime,
 it provides these compile time methods with a mechanism to override
 the runtime methods (``define &override-function``). An example for
 this is ``^instance?``, compile time methods are prefixed with a ``^``,
@@ -391,16 +390,16 @@ dfmc-flow-graph
 
 The flow graph consists of instances of the ``<computation>`` class,
 like ``<if>``, ``<loop-call>``, ``<assignment>``, ``<merge>``. The flow
-graph is in a (pseudo) single state assignment form. Every time any
+graph is in a (pseudo) static single assignment (SSA) form. Every time any
 algorithm alters the flow graph, it disconnects the deprecated
 computation and inserts new computations. New temporaries are
 introduced if a binding is assigned to a new value. Subclasses of
 ``<computation>`` model control flow, ``<temporary>`` (as well as
-``<referenced-object>``) data flow.
+``<referenced-object>``) model data flow.
 
 Computations are a doubly-linked list, with special cases for merge
 nodes, loops, if, bind-exit and unwind-protect. Every computation
-may have computation-type field, which is bound to a
+may have a computation-type field, which is bound to a
 ``<type-variable>``. It also may have a temporary slot, which is its
 return value. Several cases, single and multiple return values, are
 supported. The temporary has a link to its generator, a list of
@@ -460,7 +459,7 @@ dfmc-optimization
 
 This library contains several optimizations: dead code removal,
 constant folding, common subexpression elimination, inlining,
-dispatch upgrading and tail call analyzation.
+dispatch upgrading and tail call analysis.
 
 Main entry point from management is ``really-run-compilation-passes``.
 This loops over all lambdas in the given code fragment, converts
@@ -468,7 +467,7 @@ assigned variables to a ``<cell>`` representation, renames temporaries
 in conditionals, then runs the "optimizer". This builds an
 optimization queue, initially containing all computations. It calls
 do-optimize on each element of the optimization-queue, as long as
-it returns ``#f`` (protocol is, that, if an optimization was successful,
+it returns ``#f``. (The protocol is that if an optimization was successful,
 it returns ``#t``, if it was not successful, ``#f``). For different types
 of computations different optimizations are run. Default
 optimizations are deletion of useless computations and constant
