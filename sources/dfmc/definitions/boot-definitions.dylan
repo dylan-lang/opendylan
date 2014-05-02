@@ -7,7 +7,7 @@ Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 //// The boot framework.
 
 // The boot-record records the set of things that must be inserted into
-// a Dylan world at the very start. Some of things are core definitions
+// a Dylan world at the very start. Some things are core definitions
 // such as converters and macros, and these are booted at the definition
 // level. The rest are expressed as source to be fed to the compiler. 
 

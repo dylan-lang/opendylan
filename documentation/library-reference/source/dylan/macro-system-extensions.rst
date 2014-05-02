@@ -163,8 +163,8 @@ template calls:
     vars:
       { }
         => { }
-      {?:variable=?:expression,... }
-        => {?variable,... }
+      { ?:variable=?:expression, ... }
+        => { ?variable, ... }
 
     inits:
       { }
@@ -205,7 +205,7 @@ example, here’s the trace for ``user(1, 2, 3)``::
     { mcreverse } < 3,2,1
     { user } < list(3,2,1)
 
-Like normal macro calls, a new hygiene context in created for ``?@{ }``
+Like normal macro calls, a new hygiene context is created for ``?@{ }``
 calls, so you could define ``gensym`` thusly:
 
 .. code-block:: dylan
