@@ -109,6 +109,13 @@ Common Dylan
   already did on Linux and FreeBSD.
 
 
+Dylan
+=====
+
+* There is now an specialized implementation of ``member?`` defined
+  for searching for a ``<byte-character>`` in a ``<byte-string>``.
+
+
 dylan-direct-c-ffi
 ==================
 

@@ -6,6 +6,30 @@ License:      See License.txt in this distribution for details.
 Warranty:     Distributed WITHOUT WARRANTY OF ANY KIND
 
 //
+// MEMBER?
+//
+
+define sealed method member?
+    (ch :: <byte-character>, big :: <byte-string>,
+     #key test :: <function> = \==)
+ => (found? :: <boolean>)
+  let sz = big.size;
+  if (test == \==)
+    for (key :: <integer> from 0 below sz,
+         until: (big[key] == ch))
+    finally
+      if (key < sz) #t end if;
+    end for;
+  else
+    for (key :: <integer> from 0 below sz,
+         until: test(big[key], ch))
+    finally
+      if (key < sz) #t end if;
+    end for;
+  end if;
+end method member?;
+
+//
 // SUBSEQUENCE-POSITION
 //
 
