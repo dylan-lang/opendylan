@@ -1340,6 +1340,7 @@ Built-In
   * :drm:`concatenate`
   * :drm:`replace-subsequence!`
   * :drm:`subsequence-position`
+  * :drm:`member?`
   * :drm:`size`
   * :drm:`empty?`
   * :drm:`reverse`
