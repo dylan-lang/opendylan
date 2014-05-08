@@ -1941,7 +1941,7 @@ define method check-call-compatibility
         end;
       end;
     end;
-    // TODO: CORRECTNESS: Remove this hack, its contol flags, and its
+    // TODO: CORRECTNESS: Remove this hack, its control flags, and its
     // associated condition below.
     if (~guaranteed-compatible?
          & instance?(f, <&method>)
@@ -2134,7 +2134,7 @@ define method check-apply-compatibility
     if (guaranteed-incompatible?)
       return (#f);
     end if;
-    // TODO: CORRECTNESS: Remove this hack, its contol flags, and its
+    // TODO: CORRECTNESS: Remove this hack, its control flags, and its
     // associated condition below.
     if (~guaranteed-compatible?
          & instance?(f, <&method>)
