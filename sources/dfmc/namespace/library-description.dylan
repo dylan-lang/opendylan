@@ -991,7 +991,7 @@ define method profile-area-output-locator (ld :: <library-description>,
   when (directory)
     ensure-directories-exist(directory);
   end;
-  let directory = directory & as(<directory-locator>, directory);
+  let directory = directory & locator-directory(directory);
   if (name)
     make(<file-locator>, directory: directory, name: name)
   elseif (base)
