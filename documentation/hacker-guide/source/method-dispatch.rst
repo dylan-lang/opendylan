@@ -177,11 +177,33 @@ Analysis
 Performance Highlighting
 ------------------------
 
+The compiler records dispatch decisions as they're made within
+the optimizer. This work is performed within `sources/dfmc/optimization/dispatch.dylan`_
+(look for calls to ``color-dispatch``). It is worth noting
+that the dispatch decisions are compacted by ``compact-coloring-info``
+in `sources/dfmc/management/compilation-driver.dylan`_.
+
 In the IDE, Open Dylan supports performance highlighting to indicate how
-much optimization the compiler was able to apply.
+much optimization the compiler was able to apply. This is performed
+within `sources/environment/deuce/dylanworks-mode.dylan`_ by examining
+the results from ``source-record-colorization-info``.
 
 This information is also available in ``.el`` files within the build
-directory that can be used with the ``dylan-mode`` in emacs.
+directory that can be used with the ``dylan-mode`` in emacs. The
+generation of the ``.el`` files is performed by ``project-dump-emacs-dispatch-colors``
+in `sources/project-manager/projects/implementation.dylan`_.
+
+The available dispatch decisions that are recorded for highlighting
+are:
+
+* ``#"not-all-methods-known"``
+* ``#"failed-to-select-where-all-known"``
+* ``#"lambda-call"``
+* ``#"inlining"``
+* ``#"slot-accessor-fixed-offset"``
+* ``#"eliminated"``
+* ``#"dynamic-extent"``
+* ``#"bogus-upgrade"``
 
 *Link to documentation on both of these features, perhaps embed
 some screenshots.*
@@ -211,4 +233,7 @@ Future Work
 .. _sources/dylan/slot-dispatch.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dylan/slot-dispatch.dylan
 .. _sources/dfmc/modeling/functions.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/modeling/functions.dylan
 .. _sources/dfmc/optimization/dispatch.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/optimization/dispatch.dylan
+.. _sources/dfmc/management/compilation-driver.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/dfmc/management/compilation-driver.dylan
+.. _sources/environment/deuce/dylanworks-mode.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/environment/deuce/dylanworks-mode.dylan
+.. _sources/project-manager/projects/implementation.dylan: https://github.com/dylan-lang/opendylan/tree/master/sources/project-manager/projects/implementation.dylan
 .. _sources/lib/dispatch-profiler: https://github.com/dylan-lang/opendylan/tree/master/sources/lib/dispatch-profiler
