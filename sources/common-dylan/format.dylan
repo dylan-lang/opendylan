@@ -247,7 +247,7 @@ define function integer-to-string
               "Base %d is not between 2 and 36",
               base);
   let negative-integer? = negative?(integer);
-  let buffer :: <string-buffer> = make(<string-buffer>);
+  let buffer :: <string-buffer> = make(<string-buffer>, capacity: 16);
   if (zero?(integer))
     buffer := add!(buffer, '0');
   end;
