@@ -459,12 +459,13 @@ Log Targets
    This should not be called except by the logging library itself.
    Implementers of new log target classes may override it.
 
-   :signature: log-to-target (target formatter object #rest args) => ()
+   :signature: log-to-target (target level formatter object args) => ()
 
    :parameter target: An instance of ``<log-target>``.
+   :parameter level: An instance of ``<log-level>``.
    :parameter formatter: An instance of ``<log-formatter>``.
    :parameter object: An instance of :drm:`<object>`.
-   :parameter #rest args: An instance of :drm:`<object>`.
+   :parameter args: An instance of :drm:`<sequence>`.
 
 .. generic-function:: write-message
    :open:
@@ -472,11 +473,11 @@ Log Targets
    This should not be called except by the logging library itself.
    Implementers of new log target classes may override it.
 
-   :signature: write-message (target object #rest args) => ()
+   :signature: write-message (target object args) => ()
 
    :parameter target: An instance of ``<log-target>``.
    :parameter object: An instance of :drm:`<object>`.
-   :parameter #rest args: An instance of :drm:`<object>`.
+   :parameter args: An instance of :drm:`<sequence>`.
 
 .. constant:: $null-log-target
 
