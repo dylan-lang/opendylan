@@ -198,21 +198,32 @@ dylan_value primitive_compare_words(dylan_value base1, DSINT offset1,
                            size * sizeof(dylan_value))));
 }
 
+DSINT round_up_to_word(DSINT val) {
+  size_t a = sizeof(void *);
+  return (val + a - 1) & ~((unsigned long)a - 1);
+}
+
 dylan_value primitive_byte_allocate_filled_terminated
     (DSINT size, DSINT number_bytes, dylan_value class_wrapper, DSINT number_slots,
      dylan_value fill_value, DSINT repeated_size, DSINT repeated_size_offset)
 {
-  dylan_value* object = primitive_byte_allocate(size, number_bytes);
-  instance_header_setter(class_wrapper, object);
-  primitive_fillX(object, 1, 0, number_slots, fill_value);
-  primitive_fill_bytesX
-    (object, repeated_size_offset + 1, 0, repeated_size,
-     (unsigned char)R(fill_value));
-  ((char*)(&object[repeated_size_offset + 1]))[repeated_size] = (char)0;
-  if (repeated_size_offset > 0) {
-    object[repeated_size_offset] = I(repeated_size);
+  size = round_up_to_word(size * sizeof(dylan_value) + number_bytes);
+  int byte_fill = R(fill_value);
+  if (number_slots == 0) {
+    return primitive_alloc_leaf_rbfz(size,
+                                     class_wrapper,
+                                     repeated_size,
+                                     repeated_size_offset,
+                                     byte_fill);
+  } else {
+    return primitive_alloc_leaf_s_rbfz(size,
+                                       class_wrapper,
+                                       number_slots,
+                                       fill_value,
+                                       repeated_size,
+                                       repeated_size_offset,
+                                       byte_fill);
   }
-  return((dylan_value)object);
 }
 
 /* This one still zero-terminates. TODO: turn that off */
@@ -274,10 +285,22 @@ dylan_value primitive_byte_allocate_leaf_filled
 
 define_repeated_allocator(object, dylan_value, primitive_alloc_rf, primitive_alloc_s_rf)
 define_repeated_allocator(double_byte, DDBYTE, primitive_alloc_leaf_rhf, primitive_alloc_s_rhf)
-define_repeated_allocator(word, DWORD, primitive_alloc_leaf_rf, primitive_alloc_s_rf)
-define_repeated_allocator(double_word, DDWORD, primitive_alloc_leaf_rdwf, primitive_alloc_s_rdwf)
 define_repeated_allocator(single_float, DSFLT, primitive_alloc_leaf_rsff, primitive_alloc_s_rsff)
 define_repeated_allocator(double_float, DDFLT, primitive_alloc_leaf_rdff, primitive_alloc_s_rdff)
+
+dylan_value primitive_word_allocate_filled
+    (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
+     DSINT repeated_size, DSINT repeated_size_offset, DWORD repeated_fill_value) {
+  size = (size * sizeof(dylan_value)) + (repeated_size * sizeof(DWORD));
+  if (number_slots == 0) {
+    return primitive_alloc_leaf_rf(size, class_wrapper, repeated_size,
+                                   repeated_size_offset, &repeated_fill_value);
+  } else {
+    return primitive_alloc_s_rf(size, class_wrapper, number_slots, fill_value,
+                        repeated_size, repeated_size_offset,
+                        &repeated_fill_value);
+  }
+}
 
 dylan_value primitive_allocate_filled
     (DSINT size, dylan_value class_wrapper, DSINT number_slots, dylan_value fill_value,
