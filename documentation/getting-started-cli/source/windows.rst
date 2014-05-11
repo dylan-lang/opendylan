@@ -12,7 +12,9 @@ On Windows, the ``dylan-compiler`` executable is called
 
 The IDE is ``win32-environment.exe``.
 
-Both are located in ``C:\Program Files\Open Dylan\bin\``.
+Both are located in ``C:\Program Files\Open Dylan\bin\`` on
+a 32 bit Windows version. On 64 bit Windows, they can be found
+within ``C:\Program Files (x86)\Open Dylan\bin\``.
 
 Build Products Location
 -----------------------
