@@ -350,7 +350,9 @@ define module llvm-builder
     ins--switch*,
     ins--invoke,
     ins--resume,
-    ins--unreachable;
+    ins--unreachable,
+
+    ins--if;
 end module;
 
 define module llvm-debug
